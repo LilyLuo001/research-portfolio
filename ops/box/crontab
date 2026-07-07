@@ -6,13 +6,13 @@
 # (cron has a minimal env, so we set PATH and source the box .env explicitly)
 
 # every 30 min: expire stale leases so abandoned tasks re-queue
-*/30 * * * *  cd $HOME/portfolio/research-portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
+*/30 * * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
 
 # 02:00 nightly: run the overnight L1 batch layer (sentinel-fenced, budget-capped)
-0 2 * * *  cd $HOME/portfolio/research-portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/dispatch.py --smoke >> ops/box/cron.log 2>&1
+0 2 * * *  cd $HOME/portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/dispatch.py --smoke >> ops/box/cron.log 2>&1
 
 # 21:00 nightly: write the evening digest, then push briefs + digest to GitHub
-0 21 * * *  cd $HOME/portfolio/research-portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
+0 21 * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 
 # NOTE: models.py is wired for live dispatch. The 02:00 line runs --smoke as a
 # nightly health check; run real batches with:

@@ -1,15 +1,12 @@
 name: portfolio-ci
 
 # Gates every pull request. "Done = the contract passes" — enforced by GitHub,
-# not by human vigilance. Four things run:
+# not by human vigilance. Four things run (all from the repo root, which is now
+# the project root):
 #   1. selfcheck  — DAG / contract / vendor-independence integrity of the queue
 #   2. plan       — the scheduler executes without error
 #   3. econlib    — pytest, only once SH-econlib has produced tests (skips before)
 #   4. DAX guards — NDA-aggregate grep + pre-registration tag guard (release blockers)
-#
-# NOTE: all project code lives one level down in research-portfolio/, so Python
-# steps set working-directory: research-portfolio, while the git-based DAX guards
-# run at the repo root and address paths as research-portfolio/...
 
 on:
   pull_request:
@@ -32,25 +29,21 @@ jobs:
           python-version: "3.11"
 
       - name: Install backbone dependencies
-        working-directory: research-portfolio
-        run: pip install --quiet pyyaml pandas pyarrow pytest
+        run: pip install --quiet pyyaml pandas pyarrow pytest requests
 
       - name: Selfcheck — queue DAG + contracts + vendor independence
-        working-directory: research-portfolio
         run: python ops/runner/selfcheck.py
 
       - name: Plan — scheduler runs clean
-        working-directory: research-portfolio
         run: python ops/runner/runner.py --plan
 
       - name: Econlib tests (skipped until SH-econlib exists)
-        working-directory: research-portfolio
         run: |
           if find . -path ./.git -prune -o -name 'test_*.py' -print | grep -q .; then
-            echo "econlib tests found — running pytest"
+            echo "tests found — running pytest"
             pytest -q
           else
-            echo "no econlib tests yet (SH-econlib not built) — skipping"
+            echo "no tests yet — skipping"
           fi
 
       - name: DAX guard — no OpenAI NDA aggregates in the repo
@@ -60,8 +53,7 @@ jobs:
           # is excluded so COMPLIANCE.md / CLAUDE.md discussing "NDA" don't self-trip.
           markers='NDA-RESTRICTED|openai[_-]nda|nda[_-]usage|usage[_-]nda'
           hits=$(git grep -nIE "$markers" -- \
-              'research-portfolio' \
-              ':(exclude)research-portfolio/docs/**' \
+              ':(exclude)docs/**' \
               ':(exclude)*.md' \
               ':(exclude).github/**' || true)
           if [ -n "$hits" ]; then
@@ -69,7 +61,7 @@ jobs:
             echo "$hits"
             exit 1
           fi
-          ndapaths=$(git ls-files 'research-portfolio/dax/analysis/outcomes/*nda*' || true)
+          ndapaths=$(git ls-files 'dax/analysis/outcomes/*nda*' || true)
           if [ -n "$ndapaths" ]; then
             echo "::error::NDA-named file under dax/analysis/outcomes/"
             echo "$ndapaths"
@@ -82,7 +74,7 @@ jobs:
           if git rev-parse -q --verify refs/tags/v1.0-preregistered >/dev/null 2>&1; then
             echo "v1.0-preregistered present — DAX analysis/outcomes/ unlocked"
           else
-            committed=$(git ls-files 'research-portfolio/dax/analysis/outcomes/*' || true)
+            committed=$(git ls-files 'dax/analysis/outcomes/*' || true)
             if [ -n "$committed" ]; then
               echo "::error::dax/analysis/outcomes/ committed before the v1.0-preregistered tag"
               echo "$committed"
