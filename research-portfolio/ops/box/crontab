@@ -14,6 +14,8 @@
 # 21:00 nightly: write the evening digest, then push briefs + digest to GitHub
 0 21 * * *  cd $HOME/portfolio/research-portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 
-# NOTE: the 02:00 line runs --smoke (dry-run) until you wire the real POST in
-# models.py and confirm a live batch. Swap it for a real `dispatch.py --task ...
-# --worker ... --items ... --live --cost N` command per overnight job once ready.
+# NOTE: models.py is wired for live dispatch. The 02:00 line runs --smoke as a
+# nightly health check; run real batches with:
+#   dispatch.py --worker <w> --items <batch.jsonl> --live --cost <N> --out <answers.json>
+# Once a per-task L1 driver exists (iterate the plan's ready L1 set -> build items
+# -> dispatch -> --complete on sentinel pass), swap the 02:00 line for it.

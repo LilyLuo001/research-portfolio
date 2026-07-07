@@ -5,28 +5,30 @@ credential; talks only to the cheap non-Anthropic APIs via models.py, under each
 vendor's own commercial terms (see ops/COMPLIANCE.md). This is the half of the
 architecture that is actually 24/7.
 
-It ties together the three pieces the box needs:
-  - models.py   : the thin per-vendor client (dry-run until keys are set)
-  - budget.py   : the 80%-of-envelope hard stop, so a runaway loop can't overspend
-  - sentinels   : known-answer items mixed into every batch; if the model misses
-                  them the WHOLE batch is voided rather than poisoning downstream.
+It ties together the pieces the box needs:
+  - models.py : per-vendor client (real POST when a key is set; dry-run otherwise)
+  - budget.py : monthly + daily + per-vendor caps, checked before each live batch
+  - sentinels : known-answer items mixed into every batch; if the model misses
+                them the WHOLE batch is voided rather than poisoning downstream.
 
 Usage:
-  python ops/runner/dispatch.py --smoke          # keyless end-to-end self-test (SH-l1-smoke)
-  python ops/runner/dispatch.py --task E2-T6b-nav --items items.jsonl   # real batch
-  python ops/runner/dispatch.py --workers                              # show which keys are live
+  python ops/runner/dispatch.py --smoke                     # keyless self-test (SH-l1-smoke)
+  python ops/runner/dispatch.py --workers                   # which keys are live
+  python ops/runner/dispatch.py --worker kimi --items batch.jsonl --live \
+         --cost 0.5 --out answers.json                      # one real batch
 
 A batch is COMPLETE only if (a) budget allowed it, (b) every sentinel came back
-correct. Anything else prints VOID and writes nothing downstream.
+correct. Anything else prints VOID/SKIP/ERROR and writes nothing downstream.
+Each JSONL item in --items is an object with at least an "id" and a "prompt".
 """
 import argparse, json, os, sys, pathlib
 import models, budget
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 
-# Two known-answer sentinels. In a real batch these are drawn from the task's own
-# domain (a holding you already verified, an event whose date you know); here they
-# are trivially checkable so the fence itself can be tested without a live model.
+# Trivially-checkable sentinels for the keyless self-test. In a real batch these
+# are drawn from the task's own domain (a holding you already verified, an event
+# whose date you know) so the fence proves the model handled real content.
 SMOKE_SENTINELS = [
     {"id": "S1", "prompt": "Reply with exactly: 2+2", "expect": "4"},
     {"id": "S2", "prompt": "Reply with exactly: capital of France", "expect": "Paris"},
@@ -35,73 +37,78 @@ SMOKE_SENTINELS = [
 
 def worker_status():
     """Which L1 vendors have a key present in the environment (box-only .env)."""
-    out = {}
-    for worker, (key_env, _url) in models.ENDPOINTS.items():
-        out[worker] = bool(os.getenv(key_env))
-    return out
+    return {w: bool(os.getenv(env)) for w, (env, _u) in models.ENDPOINTS.items()}
 
 
-def _answer_sentinels(result, sentinels, corrupt=False):
-    """Extract this batch's sentinel answers. On a live run this parses `result`;
-    in dry-run there is no model output, so we simulate the correct answers (or a
-    corrupted one when `corrupt` is set, to prove the fence actually voids)."""
-    answers = {}
+def build_prompt(items, sentinels):
+    """One batch prompt: the real items plus the sentinels, as a JSON array. The
+    model is asked (by models.SYSTEM) to return an id -> answer JSON object."""
+    fenced = list(items) + [{"id": s["id"], "prompt": s["prompt"]} for s in sentinels]
+    return json.dumps(fenced, ensure_ascii=False)
+
+
+def _simulate_answers(items, sentinels, corrupt=False):
+    """Dry-run only: fabricate a correct answer map (or a wrong sentinel, to prove
+    the fence voids a bad batch) so the harness runs offline with no key."""
+    ans = {it["id"]: "ok" for it in items}
     for i, s in enumerate(sentinels):
-        if corrupt and i == 0:
-            answers[s["id"]] = "WRONG"
-        else:
-            answers[s["id"]] = s["expect"]
-    return answers
+        ans[s["id"]] = "WRONG" if (corrupt and i == 0) else s["expect"]
+    return ans
 
 
-def sentinels_pass(sentinels, answers):
-    bad = [s["id"] for s in sentinels
-           if answers.get(s["id"], "").strip() != s["expect"]]
-    return (len(bad) == 0), bad
-
-
-def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False):
-    """Dispatch one sentinel-fenced batch. Returns (status, detail).
-    status in {'DONE','VOID-SENTINEL','SKIP-BUDGET','SKIP-NOKEY'}."""
+def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False, out=None):
+    """Dispatch one sentinel-fenced batch.
+    Returns (status, detail, answers) with status in
+    {DONE, VOID-SENTINEL, SKIP-BUDGET, SKIP-NOKEY, ERROR}."""
     key_env, _url = models.ENDPOINTS[worker]
     if live and not os.getenv(key_env):
-        return "SKIP-NOKEY", f"{worker}: no {key_env} in env"
+        return "SKIP-NOKEY", f"{worker}: no {key_env} in env", None
     if live:
-        ok, why = budget.can_dispatch(worker, est_cost)
+        ok, why = budget.can_dispatch(worker, est_cost)   # pre-check with your estimate
         if not ok:
-            return "SKIP-BUDGET", f"{worker}: {why}"
+            return "SKIP-BUDGET", f"{worker}: {why}", None
 
-    fenced = items + [{"id": s["id"], "prompt": s["prompt"]} for s in sentinels]
-    prompt = json.dumps(fenced, ensure_ascii=False)
-    ok, result = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live)
-
-    answers = _answer_sentinels(result, sentinels, corrupt=_corrupt)
-    passed, bad = sentinels_pass(sentinels, answers)
-    if not passed:
-        return "VOID-SENTINEL", f"{worker}: sentinels failed {bad} — batch discarded"
+    prompt = build_prompt(items, sentinels)
+    ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live)
+    if not ok:
+        return "ERROR", f"{worker}: {res.get('error', 'dispatch failed')}", None
 
     if live:
-        budget.log(worker, est_cost)
-    mode = "LIVE" if live else "dry-run"
-    return "DONE", f"{worker}: {len(items)} items + {len(sentinels)} sentinels OK ({mode})"
+        answers = models.parse_answers(res["text"])
+        cost = models.estimate_cost(worker, res.get("usage"))
+    else:
+        answers = _simulate_answers(items, sentinels, corrupt=_corrupt)
+        cost = 0.0
+
+    passed, bad = models.verify_sentinels(answers, sentinels)
+    if not passed:
+        return "VOID-SENTINEL", f"{worker}: sentinels failed {bad} — batch discarded", None
+
+    if live:
+        budget.log(worker, cost)                          # log ACTUAL token cost
+        if out:
+            pathlib.Path(out).write_text(json.dumps(answers, ensure_ascii=False, indent=2))
+
+    mode = f"LIVE ¥{cost:.3f}" if live else "dry-run"
+    return "DONE", f"{worker}: {len(items)} items + {len(sentinels)} sentinels OK ({mode})", answers
 
 
 def cmd_smoke():
-    """SH-l1-smoke: one sentinel-fenced dummy batch end-to-end against every L1
-    worker, keyless (dry-run). Also proves the fence voids a corrupted batch."""
+    """SH-l1-smoke: one sentinel-fenced dummy batch per L1 worker, keyless
+    (dry-run), plus a negative control proving the fence voids a bad batch."""
     st = worker_status()
     print("L1 worker keys present:", {w: ("yes" if v else "no") for w, v in st.items()})
     dummy = [{"id": "d1", "prompt": "echo ok"}]
     print("\n▶ dry-run batch per worker (proves the dispatch path + sentinel fence):")
     failures = 0
     for worker in models.ENDPOINTS:
-        status, detail = run_batch(worker, dummy, SMOKE_SENTINELS, live=False)
+        status, detail, _ = run_batch(worker, dummy, SMOKE_SENTINELS, live=False)
         print(f"   [{status:>13}] {detail}")
-        if status not in ("DONE",):
+        if status != "DONE":
             failures += 1
 
     print("\n▶ negative control (inject a wrong sentinel — MUST void):")
-    status, detail = run_batch("deepseek", dummy, SMOKE_SENTINELS, live=False, _corrupt=True)
+    status, detail, _ = run_batch("deepseek", dummy, SMOKE_SENTINELS, live=False, _corrupt=True)
     print(f"   [{status:>13}] {detail}")
     fence_works = (status == "VOID-SENTINEL")
 
@@ -117,11 +124,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true", help="keyless end-to-end self-test")
     ap.add_argument("--workers", action="store_true", help="show which L1 keys are live")
-    ap.add_argument("--task", help="task id this batch feeds")
     ap.add_argument("--worker", help="which L1 vendor to dispatch to")
-    ap.add_argument("--items", help="path to a JSONL of batch items")
-    ap.add_argument("--cost", type=float, default=0.0, help="estimated ¥ cost of this batch")
-    ap.add_argument("--live", action="store_true", help="actually POST (needs the key + models.py wired)")
+    ap.add_argument("--items", help="path to a JSONL of batch items ({id, prompt, ...})")
+    ap.add_argument("--cost", type=float, default=0.0, help="estimated ¥ cost (budget pre-check)")
+    ap.add_argument("--out", help="write the answer map to this path on success")
+    ap.add_argument("--live", action="store_true", help="actually POST (needs the key set)")
     a = ap.parse_args()
 
     if a.smoke:
@@ -132,7 +139,8 @@ def main():
         return 0
     if a.worker and a.items:
         items = [json.loads(l) for l in pathlib.Path(a.items).read_text().splitlines() if l.strip()]
-        status, detail = run_batch(a.worker, items, SMOKE_SENTINELS, est_cost=a.cost, live=a.live)
+        status, detail, _ = run_batch(a.worker, items, SMOKE_SENTINELS,
+                                      est_cost=a.cost, live=a.live, out=a.out)
         print(f"[{status}] {detail}")
         return 0 if status == "DONE" else 1
     ap.print_help()
