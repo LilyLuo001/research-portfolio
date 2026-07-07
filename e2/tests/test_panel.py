@@ -7,7 +7,7 @@ import pandas as pd
 from build_panel import build_panel
 from assert_panel import run_assertions
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]   # research-portfolio/
+ROOT = pathlib.Path(__file__).resolve().parents[2]   # project root (= repo root)
 
 
 def _load_contracts():

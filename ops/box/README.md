@@ -21,7 +21,7 @@ the model APIs do). Then:
 
 ```bash
 git clone <your repo url> ~/portfolio
-cd ~/portfolio/research-portfolio
+cd ~/portfolio
 
 python3 -m venv .venv && . .venv/bin/activate
 pip install pyyaml pandas pyarrow requests

@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
+.pytest_cache/
+.venv/
 
 # box-only secrets + runtime logs (never leave the always-on box)
 ops/box/.env

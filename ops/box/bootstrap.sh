@@ -43,9 +43,9 @@ else
   exit 1
 fi
 
-# the project is nested one level under the git root
-PROJECT="$ROOT/research-portfolio"
-[ -d "$PROJECT" ] || { echo "ERROR: $PROJECT not found (unexpected layout)"; exit 1; }
+# the repo root IS the project root
+PROJECT="$ROOT"
+[ -f "$PROJECT/ops/runner/runner.py" ] || { echo "ERROR: $PROJECT is not the portfolio repo"; exit 1; }
 cd "$PROJECT"
 
 # --- 2. virtualenv + dependencies ------------------------------------------
