@@ -66,9 +66,10 @@ def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False
     key_env, _url = models.ENDPOINTS[worker]
     if live and not os.getenv(key_env):
         return "SKIP-NOKEY", f"{worker}: no {key_env} in env"
-    if live and not budget.can_dispatch(est_cost):
-        return "SKIP-BUDGET", (f"{worker}: MTD ¥{budget.mtd_spend():.1f} + ¥{est_cost:.1f} "
-                               f"would exceed 80% of ¥{budget.MONTHLY_CAP}")
+    if live:
+        ok, why = budget.can_dispatch(worker, est_cost)
+        if not ok:
+            return "SKIP-BUDGET", f"{worker}: {why}"
 
     fenced = items + [{"id": s["id"], "prompt": s["prompt"]} for s in sentinels]
     prompt = json.dumps(fenced, ensure_ascii=False)

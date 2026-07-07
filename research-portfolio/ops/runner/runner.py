@@ -24,6 +24,7 @@ Usage:
 """
 import argparse, json, os, sys, datetime, pathlib, subprocess
 import yaml
+import budget
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 RUN = ROOT / "ops" / "runner"
@@ -268,7 +269,7 @@ def cmd_digest(q, accounts):
     lines.append("\n## overnight L1 (already dispatched by the scheduler)")
     lines += [f"- {tag} → {t['id']}" for t, tag in l1] or ["- none"]
     lines.append("\n## budget")
-    lines.append("- (wire budget.py here: MTD spend vs ¥300–500, 80% dispatch ceiling)")
+    lines += budget.report()
     out = DIGEST / f"{d}.md"
     out.write_text("\n".join(lines))
     print(f"wrote {out}")
