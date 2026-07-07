@@ -302,7 +302,8 @@ def main():
     ap.add_argument("--plan", action="store_true")
     ap.add_argument("--digest", action="store_true")
     ap.add_argument("--brief")
-    ap.add_argument("--complete")
+    ap.add_argument("--complete", nargs="+", metavar="TASK",
+                    help="mark one or more tasks complete")
     ap.add_argument("--gate", nargs=2, metavar=("TASK", "pass|fail"))
     ap.add_argument("--reap", action="store_true")
     a = ap.parse_args()
@@ -311,7 +312,9 @@ def main():
     if a.plan: cmd_plan(q, accounts)
     elif a.digest: cmd_digest(q, accounts)
     elif a.brief: cmd_brief(q, a.brief)
-    elif a.complete: cmd_complete(a.complete)
+    elif a.complete:
+        for tid in a.complete:
+            cmd_complete(tid)
     elif a.gate: cmd_gate(a.gate[0], a.gate[1])
     elif a.reap: cmd_reap()
     else: ap.print_help()

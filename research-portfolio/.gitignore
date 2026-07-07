@@ -1,2 +1,9 @@
 __pycache__/
 *.pyc
+
+# box-only secrets + runtime logs (never leave the always-on box)
+ops/box/.env
+ops/box/cron.log
+ops/runner/spend_log.jsonl
+# runner completion/gate state — box-owned runtime
+ops/runner/state.json
