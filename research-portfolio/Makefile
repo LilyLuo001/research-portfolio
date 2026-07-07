@@ -1,7 +1,8 @@
-.PHONY: plan digest brief reap leases init cron selfcheck ci
+.PHONY: plan digest brief reap leases init cron selfcheck ci smoke
 plan:    ; python ops/runner/runner.py --plan
 selfcheck:; python ops/runner/selfcheck.py
 ci:      ; python ops/runner/selfcheck.py && python ops/runner/runner.py --plan   # same gate CI runs
+smoke:   ; python ops/runner/dispatch.py --smoke                                  # L1 overnight-layer self-test (SH-l1-smoke)
 digest:  ; python ops/runner/runner.py --digest
 reap:    ; python ops/runner/runner.py --reap
 leases:  ; python ops/runner/lease.py list
