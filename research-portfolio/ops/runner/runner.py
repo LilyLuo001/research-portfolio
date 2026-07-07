@@ -22,7 +22,7 @@ Usage:
   python runner.py --complete E2-T6a-panel  # mark done (simulates contract PASS)
   python runner.py --reap                 # expire stale leases
 """
-import argparse, json, os, sys, datetime, pathlib
+import argparse, json, os, sys, datetime, pathlib, subprocess
 import yaml
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -57,6 +57,37 @@ def live_leases():
             continue
     return live
 
+def remote_task_branches():
+    """In-flight lease signal read straight from the shared git remote.
+
+    Every seat works task <id> on branch `task/<id>` (CLAUDE.md, lease.py). So an
+    OPEN `task/<id>` branch on origin means some seat — possibly on a different
+    machine or Pro account — is already on that task. Treating the branch
+    namespace itself as a lease closes the one gap the local .lease files can't:
+    two seats that never share a filesystem still can't be handed the same task.
+
+    `--plan` is documented as offline-friendly, so any failure (no network, no
+    remote, git absent) degrades silently to "" and we fall back to local leases.
+    Merged branches are irrelevant: a completed task is filtered by `state` before
+    the leased check, so a leftover merged `task/<id>` branch never blocks anything.
+    """
+    try:
+        r = subprocess.run(
+            ["git", "-C", str(ROOT), "ls-remote", "--heads", "origin", "task/*"],
+            capture_output=True, text=True, timeout=10,
+        )
+    except Exception:
+        return set()
+    if r.returncode != 0:
+        return set()
+    prefix = "refs/heads/task/"
+    ids = set()
+    for line in r.stdout.splitlines():
+        ref = line.split("\t")[-1].strip()      # "<sha>\trefs/heads/task/<id>"
+        if ref.startswith(prefix):
+            ids.add(ref[len(prefix):])
+    return ids
+
 # ---------------------------------------------------------------------------
 
 def index_tasks(q):
@@ -69,8 +100,13 @@ def ready_set(q, state):
     tasks = index_tasks(q)
     done = set(state["completed"])
     gates = set(state["gates_cleared"])
-    leased = set(live_leases().keys())
+    # A task is "leased" if a local .lease file is live OR an open task/<id>
+    # branch exists on the remote. The branch namespace IS the lease, so two
+    # seats on different machines/accounts can never be assigned the same task.
+    branch_leases = remote_task_branches()
+    leased = set(live_leases().keys()) | branch_leases
     ready, gated, blocked = [], [], []
+    in_flight = []                         # not-yet-done tasks someone already holds
     for t in q["tasks"]:
         tid = t["id"]
         if tid in done:
@@ -81,9 +117,10 @@ def ready_set(q, state):
         if t.get("human_gate") and tid not in gates:
             gated.append(tid); continue
         if tid in leased:
+            in_flight.append(tid)
             continue
         ready.append(t)
-    return ready, gated, blocked
+    return ready, gated, blocked, in_flight
 
 def vendor_of(worker, q):
     return q["meta"]["vendor_families"].get(worker, "unknown")
@@ -144,14 +181,14 @@ def assign(ready, accounts, q):
 
 def cmd_plan(q, accounts):
     state = load_state()
-    ready, gated, blocked = ready_set(q, state)
+    ready, gated, blocked, in_flight = ready_set(q, state)
     problems = check_cross_vendor(q)
     l2, l1 = assign(ready, accounts, q)
 
     print("=" * 70)
     print(f"PORTFOLIO PLAN  ({datetime.date.today()})   "
           f"completed={len(state['completed'])}  ready={len(ready)}  "
-          f"gated={len(gated)}  blocked={len(blocked)}")
+          f"in_flight={len(in_flight)}  gated={len(gated)}  blocked={len(blocked)}")
     print("=" * 70)
     print("\n▶ L2 — human-driven prime blocks (each on its OWNED seat, no collision):")
     if not l2: print("   (none ready)")
@@ -161,6 +198,9 @@ def cmd_plan(q, accounts):
     if not l1: print("   (none ready)")
     for t, tag in l1:
         print(f"   [{tag:>12}]  {t['id']:<20} :: {t.get('notes','')[:56]}")
+    print("\n▷ IN FLIGHT — a seat already holds these (live lease or open task/<id> branch):")
+    if not in_flight: print("   (none)")
+    for tid in in_flight: print(f"   ↻ {tid}")
     print("\n⏸ HUMAN GATES waiting on you (branch parked, portfolio still moving):")
     for g in gated: print(f"   ⚑ {g}")
     if problems:
@@ -212,7 +252,7 @@ cap cuts the session, the next one resumes from the last commit, losing minutes)
 
 def cmd_digest(q, accounts):
     state = load_state()
-    ready, gated, blocked = ready_set(q, state)
+    ready, gated, blocked, in_flight = ready_set(q, state)
     l2, l1 = assign(ready, accounts, q)
     DIGEST.mkdir(exist_ok=True)
     d = datetime.date.today().isoformat()
@@ -221,6 +261,8 @@ def cmd_digest(q, accounts):
                  f"{len(gated)} awaiting you, {len(blocked)} blocked upstream\n")
     lines.append("## ⚑ decisions needed (reply in ops/decisions.md)")
     lines += [f"- **{g}** — clear with `gate {g} pass`" for g in gated] or ["- none"]
+    lines.append("\n## in flight (a seat already holds these — do not re-assign)")
+    lines += [f"- `{tid}`" for tid in in_flight] or ["- none"]
     lines.append("\n## tomorrow's proposed prime blocks")
     lines += [f"- seat **{s}** → `{t['id']}` ({t['worker']})" for t, s in l2] or ["- none"]
     lines.append("\n## overnight L1 (already dispatched by the scheduler)")
