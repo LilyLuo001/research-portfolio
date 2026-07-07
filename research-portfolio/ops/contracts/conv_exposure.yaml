@@ -1,0 +1,11 @@
+# P1-T2 output — consumed by T4,T5,T6,T7
+producer: P1-T2-wrds
+primary_key: [permno, wave_id]
+columns:
+  permno: {required: true}
+  wave_id: {required: true}
+  effective_date: {required: true}
+  conv_exp: {required: true, min: 0}
+  n_funds: {min: 0}
+  mcap_decile: {min: 1, max: 10}
+  pre_etf_ownership: {min: 0}

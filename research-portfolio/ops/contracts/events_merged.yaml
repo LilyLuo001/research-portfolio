@@ -1,0 +1,16 @@
+# P1-T1 output — consumed by T2, T0-monitor
+producer: P1-T1-arb
+primary_key: [fund_name, effective_date]
+strict_columns: false
+columns:
+  fund_name: {required: true}
+  family: {}
+  mutual_fund_ticker: {}
+  etf_ticker: {}
+  announce_date: {}
+  effective_date: {required: true}
+  asset_class: {}          # equity_US/equity_intl/fixed_income/other
+  AUM_at_conversion_USD: {}
+  source_accession: {required: true}
+  source_url: {}
+  confidence: {}           # H/M/L

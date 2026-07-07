@@ -1,0 +1,7 @@
+producer: E2-T4b-impl
+primary_key: [address, date, asset]
+columns:
+  address: {required: true}
+  date: {required: true}
+  asset: {required: true}
+  balance: {required: true, min: 0}

@@ -1,0 +1,12 @@
+# DAX-W5 output — all index variants
+producer: DAX-W5-index
+primary_key: [onet_soc, month, mapping, cost_variant, delta, f_grid]
+columns:
+  onet_soc: {required: true}
+  month: {required: true}
+  mapping: {required: true}       # GDPval/Tolan/Eloundou
+  cost_variant: {required: true}  # list/0.6x/open-weight
+  delta: {required: true}
+  f_grid: {required: true}
+  dax: {required: true, min: 0, max: 1}
+  delta_dax: {}

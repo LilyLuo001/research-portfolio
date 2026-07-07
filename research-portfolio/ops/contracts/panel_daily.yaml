@@ -1,0 +1,17 @@
+# E2-T6a output — the spine of E2. Full 15-assertion battery lives in
+# assert_panel.py (E2-T6a); this contract is the cross-task handshake subset.
+producer: E2-T6a-panel
+primary_key: [market_id, date]
+columns:
+  market_id: {required: true}
+  date: {required: true}
+  gross_usd: {required: true, min: 0}
+  net_usd: {min: 0}
+  lambda: {}
+  utilization: {min: 0, max: 1}
+  borrow_apy: {min: 0, max: 5}
+  spread: {}
+  hhi: {min: 0, max: 1}
+  nav: {}
+  nav_source: {required: true}
+  is_active: {required: true}

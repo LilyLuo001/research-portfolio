@@ -1,0 +1,97 @@
+# ============================================================================
+# accounts.yaml — Claude Pro seat partition (the non-collision scheme)
+# ----------------------------------------------------------------------------
+# CORE IDEA: seats are partitioned by PROJECT SUBTREE, not by role. The three
+# projects share almost no mutable state (only shared/ and ops/), so if each
+# seat owns one project directory, two seats can NEVER edit the same files.
+# Coordination is entirely through git + task leases — seats never talk to
+# each other. That is the whole anti-cross-talk protocol.
+#
+# A seat may only touch paths under its owned_paths. To work on a task it must:
+#   1. see the task is READY in queue.yaml (deps' contracts pass, gate cleared)
+#   2. hold an unexpired lease on it (ops/leases/<id>.lease, git-committed)
+#   3. work on branch task/<id> in its OWN git worktree
+#   4. merge to main only after the output passes the contract validator
+#
+# COMPLIANCE NOTE (important — read ops/COMPLIANCE.md): these seats are driven
+# BY YOU, in the official Claude Code / claude.ai apps. The runner NEVER holds
+# a Claude credential and NEVER calls a subscription programmatically. It only
+# prepares briefs you execute by hand. Scripting a subscription OAuth token
+# into an automation harness is the high-risk pattern; this design avoids it by
+# construction.
+# ============================================================================
+
+scaling:
+  # Works at 3 seats, better at 5. Marginal value of seats 4–5 is parallel
+  # frontier bandwidth (run DAX + E2 + P1 pipeline blocks the same afternoon
+  # instead of serially), NOT 24/7 — the 24/7 layer is free scripts + cheap APIs.
+  three_seat_fallback:
+    A: [dax, shared]      # DAX seat also owns the backbone
+    B: [e2]
+    C: [p1]
+  five_seat_default: use the `seats:` block below
+
+seats:
+  A:
+    name: DAX-prime
+    owned_paths: [dax/]
+    worker_kinds: [code_pro, project_pro]
+    rationale: >
+      DAX is highest ceiling (priority 1). One seat carries its whole L2 load:
+      W0/W2/W4/W5/W6/W8 pipeline in Claude Code, W1 memo + W10a release in a
+      claude.ai Project. Memo quality is the one irreplaceable frontier consumer
+      — give it multiple Project sessions, not one shot.
+
+  B:
+    name: E2-prime
+    owned_paths: [e2/]
+    worker_kinds: [code_pro, project_pro]
+    rationale: >
+      E2 races to the fastest publishable artifact (T15 note) and the highest
+      commercial-value product (T9a engine). Keeping it on one seat means the
+      panel→facts→note→engine chain never waits on another project's block.
+
+  C:
+    name: P1-prime
+    owned_paths: [p1/]
+    worker_kinds: [code_pro, project_pro]
+    rationale: >
+      P1 is cleanest-but-smallest (priority 3). Mostly warm: in months 1–2 it
+      runs only cheap L1 tasks; this seat wakes for T2a, then T1-arb/T2/T5.
+
+  D:
+    name: infra-and-float
+    owned_paths: [shared/, ops/]
+    worker_kinds: [code_pro, project_pro]
+    rationale: >
+      Builds runner + econlib in weeks 1–2 (highest-ROI code in the portfolio),
+      then maintains the backbone. Low ongoing L2 draw → this is the ESCALATION
+      and ARBITRATION floater: when any L1 worker fails twice, the escalated
+      task is leased to D so it never steals a project seat's scarce block.
+      shared/ is READ-ONLY to A/B/C — they import econlib as a versioned package,
+      never edit it. Only D mutates shared/. This removes the one cross-project
+      write-collision surface.
+
+  E:
+    name: writing-and-judgment-float
+    owned_paths: []             # roving; leases whichever project is in spec/writing phase
+    worker_kinds: [project_pro]
+    rationale: >
+      Per arch §5, at any time usually ONE project is in a spec/writing phase.
+      A single writing-focused Project seat serves channel-A spec design,
+      arbitration write-ups, red-team arbitration, and paper drafting for
+      whoever is hot — and by construction won't collide, because only one
+      project writes at a time. Drop this seat first if going 3–4.
+
+# How the runner assigns a ready task to a seat (deterministic, no negotiation):
+assignment_rule: |
+  For each READY task with owner_account = X and no live lease:
+    candidate_seats = [s for s in seats if s.name==X or (X is 'float' and s is D/E free)]
+    pick the seat whose owned_paths contains the task's project dir AND is idle.
+    If none idle, the task waits (portfolio never blocks — other branches run).
+  Ties across projects broken by meta.priority_order (dax > e2 > p1).
+
+lease:
+  ttl_hours: 6                  # a prime block is 60–90 min; 6h covers interruptions
+  reaper: runner.py --reap      # stale leases → digest as "abandoned, re-queue?"
+  claim_is: git-commit of ops/leases/<id>.lease then push  # non-fast-forward = someone beat you

@@ -1,0 +1,8 @@
+producer: P1-T7-robust
+primary_key: [grid_id]
+columns:
+  grid_id: {required: true}
+  coef: {required: true}
+  se: {required: true}
+  n: {required: true}
+sentinel_note: "grid rows tagged sentinel must equal main-spec coef or batch is void"
