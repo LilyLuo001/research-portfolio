@@ -1,55 +1,54 @@
-# E2-T6b-nav — 发行方 NAV/收益率口径调和 (Gemini web UI, 1M context).
-# Source prompt: docs/E2_执行手册_v1_1_完整版.md T6b (verbatim fields).
+# E2-T6b-nav — 发行方 NAV/收益率口径调和 (Gemini grounding, fields verbatim
+# from docs/E2_执行手册_v1_1_完整版.md T6b).
 # Output feeds nav_daily.csv construction and E2-T6a-panel's A5–A7 assertions.
 #
-# manual: true — run by hand through the Gemini web UI (long-context doc
-# reading; free tier). The l1_driver skips this spec; instead:
-#     python ops/l1/gemini_helper.py E2-T6b-nav
-# IMPORTANT: T6b is a document-reading task — attach/paste each issuer's
-# NAV/收益率 interface docs and legal-file excerpts into the SAME Gemini
-# conversation before or alongside this prompt. Findings must cite a location
-# in those documents; anything not in them is UNKNOWN.
-manual: true
+# Auto-dispatched with google_search grounding: the model retrieves each
+# issuer's own NAV/收益率 docs online and every conclusion must carry a
+# first-hand URL. The v1.0/v1.1 manual's upload-and-read variant (higher
+# fidelity for legal-file excerpts) remains available as the FALLBACK: set
+# `manual: true` and run `python ops/l1/gemini_helper.py E2-T6b-nav`,
+# uploading the issuer documents into the Gemini conversation first.
+# NOTE (v1.1 T6 验收): the resulting口径 registry still requires your
+# manual sign-off before T6a consumes it — this batch is raw extraction.
 worker: gemini_free
-est_cost: 0.0             # free tier / human time
-manual_note: |
-  先在 Gemini 会话中上传各发行方的 NAV/收益率接口文档与法律文件节选
-  (Securitize/Midas/Superstate/Centrifuge/Circle/OpenEden/Pareto),
-  再粘贴本 prompt。每个结论必须能定位到上传文档中的具体位置;
-  文档中找不到的一律 UNKNOWN, 禁止用行业惯例填空。
+web_search: true
+est_cost: 0.0             # free tier
 items:
   - id: t6b-securitize
     prompt: |
+      【规则: 结论只可依据联网检索到的发行方一手来源(官方文档、法律文件、
+      官网、API 文档); 每个字段附一手URL; 找不到一手来源的字段一律 UNKNOWN,
+      禁止用行业惯例填空; 禁止凭训练记忆作答。】
       对 Securitize 发行的 sACRED(底层 ACRED)输出一行口径登记表:
       [资产, 分红机制(rebasing/累积/其他), NAV 定义(每份净值/兑换率/其他),
       发布频率, 发布时间(时区), 周末与节假日是否发布, 年化收益率的计算口径,
-      费率扣除位置, 数据获取端点, 文档原文引用(逐字, ≤25词, 附页码/URL),
+      费率扣除位置, 数据获取端点, 文档原文引用(逐字, ≤25词, 附URL),
       UNKNOWN 项]。
   - id: t6b-midas
     prompt: |
-      对 Midas 发行的 mF-ONE 与 mTBILL 各输出一行口径登记表(字段同 t6b-securitize)。
+      对 Midas 发行的 mF-ONE 与 mTBILL 各输出一行口径登记表(字段与规则同 t6b-securitize)。
   - id: t6b-superstate
     prompt: |
-      对 Superstate 发行的 USTB 与 USCC 各输出一行口径登记表(字段同 t6b-securitize)。
+      对 Superstate 发行的 USTB 与 USCC 各输出一行口径登记表(字段与规则同 t6b-securitize)。
   - id: t6b-centrifuge
     prompt: |
-      对 Centrifuge 发行的 JAAA 与 JTRSY 各输出一行口径登记表(字段同 t6b-securitize)。
+      对 Centrifuge 发行的 JAAA 与 JTRSY 各输出一行口径登记表(字段与规则同 t6b-securitize)。
   - id: t6b-circle
     prompt: |
-      对 Circle 发行的 USYC 输出一行口径登记表(字段同 t6b-securitize)。
+      对 Circle 发行的 USYC 输出一行口径登记表(字段与规则同 t6b-securitize)。
   - id: t6b-openeden
     prompt: |
-      对 OpenEden 发行的 cUSDO 输出一行口径登记表(字段同 t6b-securitize)。
+      对 OpenEden 发行的 cUSDO 输出一行口径登记表(字段与规则同 t6b-securitize)。
   - id: t6b-pareto
     prompt: |
       对 Pareto 的 FalconX Credit Vault(AA_FalconXUSDC)输出一行口径登记表
-      (字段同 t6b-securitize)。
+      (字段与规则同 t6b-securitize)。
   - id: t6b-conflicts
     prompt: |
       基于以上全部登记行, 输出"口径冲突与调和建议"一节: 指出哪些资产的 NAV
       不可直接横向比较(rebasing vs 累积、兑换率 vs 每份净值、费前 vs 费后),
       以及建议的统一变换。此节只允许引用上面各行已登记的事实。
-# Known-answer fence, checked by gemini_helper.py before saving. Facts from
+# Known-answer fence (dispatch voids the batch on a miss). Facts from
 # docs/E2_研究计划_RWA内嵌杠杆.md (§10 已核实 items / §2.4).
 sentinels:
   - id: S1

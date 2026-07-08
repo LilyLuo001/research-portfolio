@@ -3,20 +3,15 @@
 # channel A (E2-T1-facts, Kimi $web_search), DIFFERENT vendor family, then
 # machine-diff the two answer maps.
 #
-# manual: true — Gemini grounding is NOT wired in models.py; the l1_driver
-# skips this spec and a human runs it through the web UI instead:
+# Auto-dispatched: models.py grounds Gemini via the google_search tool
+# (web_search: true below). Free tier bills ¥0 but the daily grounding quota
+# is limited — verify at ai.google.dev/pricing before arming. FALLBACK: if
+# the quota is exhausted or GEMINI_API_KEY is absent, set `manual: true`
+# here and run the human channel instead:
 #     python ops/l1/gemini_helper.py E2-T1-facts-B
-# The helper prepends ops/l1/C0.md (the shared context pack), prints the full
-# prompt for copy-paste, parses the pasted reply, checks the sentinels, and
-# writes ops/l1/out/E2-T1-facts-B.json in the same schema dispatch.py uses.
-manual: true
 worker: gemini_free
-web_search: true          # run in the web UI with grounding/search ON
-est_cost: 0.0             # free tier / human time
-manual_note: |
-  在 Gemini web UI 中开启 grounding/联网搜索后粘贴整个 prompt。
-  Item 的问题与 channel A (E2-T1-facts) 完全一致 — 不要改写措辞,
-  两通道产出将逐 id 机器比对。
+web_search: true
+est_cost: 0.0             # free tier
 items:
   - id: t1a-oracles
     prompt: |
@@ -50,7 +45,7 @@ items:
       输出: [结论, 置信度, 一手来源URL, 检索日期, 备注]; 金库地址必须来自
       链上浏览器或 Coinbase/Morpho 官方页面, 不得来自记忆。
       最后附一节"下游影响提示": 哪个结论会改变研究设计(对照计划 §2.4/§10)。
-# Known-answer fence, checked by gemini_helper.py before saving. Facts marked
+# Known-answer fence (dispatch voids the batch on a miss). Facts marked
 # 已核实 in docs/E2_研究计划_RWA内嵌杠杆.md §10/§1.3 — deliberately different
 # items than channel A's fence so the two fences fail independently.
 sentinels:

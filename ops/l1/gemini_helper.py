@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """
-gemini_helper.py — the human API for the manual Gemini channel-B tasks.
+gemini_helper.py — the human API for manual Gemini specs (the FALLBACK path).
 
-Gemini grounding is not wired in models.py, so `manual: true` specs in ops/l1/
-(E2-T1-facts-B, E2-T6b-nav, …) are run by a human through the Gemini web UI.
-This script does everything around that one copy-paste:
+Gemini grounding IS wired in models.py (google_search tool), so channel-B
+tasks normally auto-dispatch through the nightly driver. Mark a spec
+`manual: true` to route it here instead — when the free grounding quota is
+exhausted, GEMINI_API_KEY is absent, or a task needs documents uploaded into
+the web UI (e.g. issuer legal files for E2-T6b-nav). This script does
+everything around that one copy-paste:
 
   1. finds the manual specs whose queue task is READY and has no output yet;
   2. prints the exact, complete prompt — ops/l1/C0.md (the shared context
