@@ -26,9 +26,9 @@ cd ~/portfolio
 python3 -m venv .venv && . .venv/bin/activate
 pip install pyyaml pandas pyarrow requests
 
-# L1 API keys live ONLY on this box, never in the repo:
-cp ops/box/env.example ops/box/.env
-$EDITOR ops/box/.env          # fill in the keys you have; leave the rest blank
+# L1 API keys live ONLY on this box, never in the repo. Enter them with hidden,
+# one-at-a-time prompts (press Enter to keep an existing key when rotating):
+ops/box/setkeys.sh
 # ops/box/.env is git-ignored — confirm: git check-ignore ops/box/.env
 
 git config user.email "you@example.com"     # the box commits briefs/digest as you

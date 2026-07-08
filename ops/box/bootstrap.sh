@@ -57,13 +57,18 @@ python -m pip install --quiet --upgrade pip
 python -m pip install --quiet pyyaml pandas pyarrow requests
 echo "   deps ready: $(python -c 'import yaml,pandas,pyarrow,requests; print("pyyaml pandas pyarrow requests")')"
 
-# --- 3. L1 keys scaffold (box-only, git-ignored) ---------------------------
+# --- 3. L1 keys (box-only, git-ignored) — hidden entry via setkeys.sh -------
 if [ ! -f ops/box/.env ]; then
-  cp ops/box/env.example ops/box/.env
-  say "created ops/box/.env from the template"
-  echo "   >>> EDIT ops/box/.env and fill in the L1 API keys you have, then re-run."
+  if [ -t 0 ]; then
+    say "let's enter your L1 API keys now (hidden input)"
+    bash ops/box/setkeys.sh
+  else
+    cp ops/box/env.example ops/box/.env
+    say "created ops/box/.env from the template (non-interactive shell)"
+    echo "   >>> run  ops/box/setkeys.sh  to enter your keys with hidden prompts."
+  fi
 else
-  echo "   ops/box/.env already present — leaving it untouched"
+  echo "   ops/box/.env already present — run ops/box/setkeys.sh to add/rotate keys."
 fi
 git check-ignore -q ops/box/.env && echo "   (.env is git-ignored — good)" || \
   echo "   WARNING: ops/box/.env is NOT git-ignored — do not commit it!"
