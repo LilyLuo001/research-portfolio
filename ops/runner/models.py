@@ -106,29 +106,55 @@ def dispatch(worker, prompt, sentinels=None, dry_run=True, web_search=False):
         return False, {"error": f"{type(e).__name__}: {e}"}
 
 
+# Transient statuses worth retrying overnight: rate limits (free-tier Gemini
+# limits per-minute, so waits are tens of seconds) and vendor 5xx blips.
+RETRY_STATUSES = {429, 500, 502, 503, 504}
+MAX_RETRIES = 3
+RETRY_BASE_DELAY = 20   # seconds; doubles per attempt (20, 40, 80)
+
+
+def _raise_with_body(r):
+    """raise_for_status, but append the response body to the message. A bare
+    '400 Bad Request' from an overnight run is undiagnosable the next morning;
+    the vendor's error body (bad param, content filter, quota name) is the
+    only thing that says WHY."""
+    import requests
+    try:
+        r.raise_for_status()
+    except requests.HTTPError as e:
+        body = " ".join((r.text or "").split())[:400]
+        raise requests.HTTPError(f"{e} :: {body}", response=r) from None
+
+
+def _post_json(url, key, payload, extra_headers=None):
+    """One JSON POST with retry/backoff on transient statuses. Honors a numeric
+    Retry-After when the vendor sends one."""
+    import time, requests
+    headers = {"Content-Type": "application/json"}
+    if key:
+        headers["Authorization"] = f"Bearer {key}"
+    if extra_headers:
+        headers.update(extra_headers)
+    delay = RETRY_BASE_DELAY
+    for attempt in range(MAX_RETRIES + 1):
+        r = requests.post(url, headers=headers, json=payload, timeout=TIMEOUT)
+        if r.status_code not in RETRY_STATUSES or attempt == MAX_RETRIES:
+            _raise_with_body(r)
+            return r.json()
+        try:
+            wait = float(r.headers.get("Retry-After", ""))
+        except ValueError:
+            wait = delay
+        time.sleep(min(wait, 120))
+        delay *= 2
+
+
 def _post_openai(url, key, model, prompt):
-    import requests
-    r = requests.post(
-        url,
-        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-        json={"model": model, "temperature": 0,
-              "messages": [{"role": "system", "content": SYSTEM},
-                           {"role": "user", "content": prompt}]},
-        timeout=TIMEOUT,
-    )
-    r.raise_for_status()
-    d = r.json()
+    d = _post_json(url, key,
+                   {"model": model, "temperature": 0,
+                    "messages": [{"role": "system", "content": SYSTEM},
+                                 {"role": "user", "content": prompt}]})
     return True, {"text": d["choices"][0]["message"]["content"], "usage": d.get("usage", {})}
-
-
-def _post_json(url, key, payload):
-    import requests
-    r = requests.post(url,
-                      headers={"Authorization": f"Bearer {key}",
-                               "Content-Type": "application/json"},
-                      json=payload, timeout=TIMEOUT)
-    r.raise_for_status()
-    return r.json()
 
 
 def _post_kimi_search(url, key, model, prompt):
@@ -166,22 +192,18 @@ def _post_kimi_search(url, key, model, prompt):
     return False, {"error": f"web_search exceeded {MAX_SEARCH_ROUNDS} rounds without finishing"}
 
 
-def _post_plain_json(endpoint, payload):
-    import requests
-    r = requests.post(endpoint, json=payload, timeout=TIMEOUT)
-    r.raise_for_status()
-    return r.json()
-
-
 def _post_gemini(url, key, prompt, web_search=False):
     """generateContent, optionally grounded with Google Search (see module
     docstring). Grounded replies may split across several parts and carry the
-    executed queries in groundingMetadata.webSearchQueries."""
-    endpoint = f"{url}/{MODELS['gemini_free']}:generateContent?key={key}"
+    executed queries in groundingMetadata.webSearchQueries. The key travels in
+    the x-goog-api-key header, NOT the URL query string — a ?key= URL is
+    reproduced verbatim in every HTTPError message and ends up in terminal
+    scrollback, night reports, and pasted logs."""
+    endpoint = f"{url}/{MODELS['gemini_free']}:generateContent"
     payload = {"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}]}
     if web_search:
         payload["tools"] = [{"google_search": {}}]
-    d = _post_plain_json(endpoint, payload)
+    d = _post_json(endpoint, None, payload, extra_headers={"x-goog-api-key": key})
     cand = d["candidates"][0]
     text = "".join(p.get("text", "") for p in cand["content"]["parts"])
     um = d.get("usageMetadata", {})
@@ -195,18 +217,24 @@ def _post_gemini(url, key, prompt, web_search=False):
 
 def parse_answers(text):
     """Pull the JSON answer-map out of a model response (tolerates stray prose or
-    ```json fences). Returns {} if nothing parseable is found."""
-    import re, json
+    ```json fences). Tries a strict parse of each '{'-rooted candidate in turn —
+    a single greedy {.*} regex breaks as soon as surrounding prose contains any
+    other brace, which search-grounded answers often do. Returns {} if nothing
+    parseable is found."""
+    import json
     if not text:
         return {}
-    m = re.search(r"\{.*\}", text, re.S)
-    if not m:
-        return {}
-    try:
-        obj = json.loads(m.group(0))
-        return obj if isinstance(obj, dict) else {}
-    except (ValueError, TypeError):
-        return {}
+    dec = json.JSONDecoder()
+    idx = text.find("{")
+    while idx != -1:
+        try:
+            obj, _ = dec.raw_decode(text, idx)
+            if isinstance(obj, dict):
+                return obj
+        except ValueError:
+            pass
+        idx = text.find("{", idx + 1)
+    return {}
 
 
 def _norm(s):

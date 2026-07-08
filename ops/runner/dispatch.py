@@ -79,16 +79,28 @@ def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False
     if live:
         answers = models.parse_answers(res["text"])
         cost = models.estimate_cost(worker, res.get("usage"))
+        budget.log(worker, cost)      # tokens are billed whether or not the fence passes
     else:
         answers = _simulate_answers(items, sentinels, corrupt=_corrupt)
         cost = 0.0
 
     passed, bad = models.verify_sentinels(answers, sentinels)
     if not passed:
-        return "VOID-SENTINEL", f"{worker}: sentinels failed {bad} — batch discarded", None
+        why = f"sentinels failed {bad}"
+        if live and not answers:
+            why = "reply had no parseable JSON answer-map (all sentinels void)"
+        if live and out:
+            # discarded downstream, but keep the raw reply for the morning
+            # post-mortem — a voided batch you can't inspect can't be fixed.
+            void = pathlib.Path(out).with_suffix(".void.json")
+            void.write_text(json.dumps(
+                {"worker": worker, "bad_sentinels": bad, "parsed_answers": answers,
+                 "raw_text": res["text"], "usage": res.get("usage", {})},
+                ensure_ascii=False, indent=2))
+            why += f" — raw reply kept at {void.name}"
+        return "VOID-SENTINEL", f"{worker}: {why} — batch discarded", None
 
     if live:
-        budget.log(worker, cost)                          # log ACTUAL token cost
         if out:
             pathlib.Path(out).write_text(json.dumps(answers, ensure_ascii=False, indent=2))
 
