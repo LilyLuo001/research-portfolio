@@ -118,11 +118,27 @@ def parse_answers(text):
         return {}
 
 
+def _norm(s):
+    """Casefold and drop non-alphanumerics so 'Paris', 'paris.', ' PARIS ' all
+    compare equal — tolerant of formatting without being so loose it lets a wrong
+    answer through."""
+    import re
+    return re.sub(r"[^0-9a-z]+", "", str(s).lower())
+
+
 def verify_sentinels(answers, sentinels):
     """Return (ok, bad_ids): a batch is trustworthy only if every known-answer
-    sentinel came back correct."""
-    bad = [s["id"] for s in (sentinels or [])
-           if str(answers.get(s["id"], "")).strip() != str(s["expect"]).strip()]
+    sentinel came back correct. A sentinel passes when the normalized expected
+    value equals the model's normalized answer, or (for multi-char answers) is
+    contained in it — so a slightly chatty 'The capital is Paris' still passes,
+    while a short numeric answer must match exactly (no '4' matching '42')."""
+    bad = []
+    for s in (sentinels or []):
+        got = _norm(answers.get(s["id"], ""))
+        exp = _norm(s["expect"])
+        ok = got == exp or (len(exp) >= 3 and exp in got)
+        if not ok:
+            bad.append(s["id"])
     return (len(bad) == 0, bad)
 
 

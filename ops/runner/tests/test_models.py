@@ -29,6 +29,17 @@ def test_verify_sentinels():
     assert not ok and bad == ["S1"]
 
 
+def test_verify_sentinels_tolerant_but_not_loose():
+    s = [{"id": "S1", "expect": "4"}, {"id": "S2", "expect": "Paris"}]
+    # tolerant of case / punctuation / mild chattiness
+    assert models.verify_sentinels({"S1": "4", "S2": "The capital is Paris."}, s)[0]
+    assert models.verify_sentinels({"S1": 4, "S2": " paris "}, s)[0]
+    # but a short numeric answer must be exact: '42' must not satisfy '4'
+    assert models.verify_sentinels({"S1": "42", "S2": "Paris"}, s) == (False, ["S1"])
+    # the old-bug case: a literal echo of the prompt is still caught
+    assert not models.verify_sentinels({"S1": "2+2", "S2": "capital of France"}, s)[0]
+
+
 def test_estimate_cost():
     # deepseek input price 0.5 ¥/1M -> 1M prompt tokens = 0.5
     assert abs(models.estimate_cost("deepseek", {"prompt_tokens": 1_000_000}) - 0.5) < 1e-9

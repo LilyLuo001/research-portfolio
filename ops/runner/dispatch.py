@@ -30,8 +30,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 # are drawn from the task's own domain (a holding you already verified, an event
 # whose date you know) so the fence proves the model handled real content.
 SMOKE_SENTINELS = [
-    {"id": "S1", "prompt": "Reply with exactly: 2+2", "expect": "4"},
-    {"id": "S2", "prompt": "Reply with exactly: capital of France", "expect": "Paris"},
+    {"id": "S1", "prompt": "What is 2+2? Reply with only the number.", "expect": "4"},
+    {"id": "S2", "prompt": "What is the capital of France? Reply with only the city name.",
+     "expect": "Paris"},
 ]
 
 

@@ -5,8 +5,10 @@
 # --- shared prologue: cd into the repo, load L1 keys, use the venv python ---
 # (cron has a minimal env, so we set PATH and source the box .env explicitly)
 
-# every 30 min: expire stale leases so abandoned tasks re-queue
-*/30 * * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
+# every 30 min: pull the latest code, then expire stale leases so abandoned
+# tasks re-queue. The pull keeps the box current after merges (ff-only so it
+# never conflicts with the box's own digest pushes; failures are logged, not fatal).
+*/30 * * * *  cd $HOME/portfolio && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
 
 # 02:00 nightly: run the overnight L1 batch layer (sentinel-fenced, budget-capped)
 0 2 * * *  cd $HOME/portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/dispatch.py --smoke >> ops/box/cron.log 2>&1
