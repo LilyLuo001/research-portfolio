@@ -9,6 +9,8 @@ for each one looks for a batch spec at ops/l1/<task_id>.yaml:
     worker:     (optional) override the queue's worker tier for this batch
     est_cost:   ¥ estimate for the budget pre-check
     web_search: true to enable Kimi's $web_search builtin round-trip
+    manual:     true = human-run channel (Gemini web UI); driver skips it and
+                ops/l1/gemini_helper.py produces the output instead
     items:      list of {id, prompt, ...} — the batch to send
     sentinels:  list of {id, prompt, expect} — REQUIRED known-answer fence
 
@@ -82,6 +84,12 @@ def run(live=False, force=False):
             night[tid] = "HAS-OUTPUT"
             continue
         spec = yaml.safe_load(spec_path.read_text()) or {}
+        if spec.get("manual"):
+            # human-run channel (e.g. Gemini web UI grounding, not wired in
+            # models.py) — never auto-dispatch; gemini_helper.py owns it.
+            print(f"  · {tid:<20} manual channel — run: python ops/l1/gemini_helper.py {tid}")
+            night[tid] = "MANUAL"
+            continue
         sentinels = spec.get("sentinels")
         if not sentinels:
             print(f"  ✖ {tid:<20} SKIP: spec has no sentinels (unsafe without a fence)")

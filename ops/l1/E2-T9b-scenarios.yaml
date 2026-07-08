@@ -28,5 +28,14 @@ items:
       【规则: 同上。】
       参数(4): DeFi 借贷市场在挤兑日的借款利率上冲幅度的已记录案例。
       输出格式同上; 案例必须可定位到链上数据看板或事后分析报告的 URL。
-sentinels: []   # FILL BEFORE ARMING — a stress fact you verified, e.g. a
-# documented utilization-spike date you already confirmed on a dashboard.
+# Known-answer fence: facts marked 已核实 (verified) in
+# docs/E2_研究计划_RWA内嵌杠杆.md §10; distinct from E2-T1-facts' fence.
+sentinels:
+  - id: S1
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "sACRED 首发 Polygon(2025-04) | 已核实"
+    prompt: "In which year and month was the sACRED token first launched (on Polygon)? Reply with YYYY-MM only, nothing else."
+    expect: "2025-04"
+  - id: S2
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "FalconX CV 2025-08 | 已核实"
+    prompt: "In which year and month did the FalconX Credit Vault (the AA_FalconXUSDC market's collateral asset) launch? Reply with YYYY-MM only, nothing else."
+    expect: "2025-08"
