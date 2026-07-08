@@ -10,14 +10,15 @@
 # never conflicts with the box's own digest pushes; failures are logged, not fatal).
 */30 * * * *  cd $HOME/portfolio && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
 
-# 02:00 nightly: run the overnight L1 batch layer (sentinel-fenced, budget-capped)
-0 2 * * *  cd $HOME/portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/dispatch.py --smoke >> ops/box/cron.log 2>&1
+# 02:00 nightly: run every READY L1 batch that has a spec in ops/l1/ (sentinel-
+# fenced, budget-capped). Tasks without a spec are skipped ("waiting for input").
+0 2 * * *  cd $HOME/portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/l1_driver.py --live >> ops/box/cron.log 2>&1
 
 # 21:00 nightly: write the evening digest, then push briefs + digest to GitHub
 0 21 * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 
-# NOTE: models.py is wired for live dispatch. The 02:00 line runs --smoke as a
-# nightly health check; run real batches with:
+# NOTE: give each ready L1 task a spec at ops/l1/<task_id>.yaml (see ops/l1/README.md)
+# and the 02:00 job will run it. L1 output lands in ops/l1/out/ as raw extraction;
+# validate it against the task's contract and clear any human gate before --complete.
+# Ad-hoc one-off batch:
 #   dispatch.py --worker <w> --items <batch.jsonl> --live --cost <N> --out <answers.json>
-# Once a per-task L1 driver exists (iterate the plan's ready L1 set -> build items
-# -> dispatch -> --complete on sentinel pass), swap the 02:00 line for it.
