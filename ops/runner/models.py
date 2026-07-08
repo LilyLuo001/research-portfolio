@@ -16,6 +16,13 @@ pure-function tests) import fine on a machine without it.
 
 Env keys: DEEPSEEK_API_KEY, KIMI_API_KEY, GLM_API_KEY, QWEN_API_KEY,
 GEMINI_API_KEY (Gemini free tier = ¥0 cross-vendor channel B).
+
+KNOWN LIMITATION: this client sends plain chat completions only. Kimi tasks that
+the queue assigns for their `$web_search` builtin (P1-T0-crash-B, E2-T1-facts,
+E2-T9b, DAX-W0.5-legwork) need the Moonshot builtin-function round-trip
+(tool_calls -> resubmit), which is NOT implemented yet. Until it is, run those
+tasks in the Kimi app/console by hand, or wire the round-trip against Moonshot's
+current docs first — do not assume the shape from memory (meta-rule 1).
 """
 import os
 

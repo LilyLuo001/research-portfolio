@@ -10,10 +10,14 @@ downstream may consume an output that hasn't passed.
 
   python contracts.py <contract_name> <path/to/output>
 
-Checks: required columns present, dtypes, primary-key uniqueness, row-count vs
-declared manifest, and any custom assertions listed in the contract YAML.
+Four contract formats (the YAML's `format:` key; default is tabular):
+  tabular   — required columns, primary-key uniqueness, non-null, min/max ranges
+  markdown  — file exists and contains every `required_sections` heading text
+  directory — directory exists and contains every `required_files` entry
+  pytest    — `must_pass` test files exist under the path and pytest exits 0
+  flat_kv   — JSON object whose keys cover every `required_keys_prefix`
 """
-import sys, pathlib, yaml
+import sys, pathlib, subprocess, yaml
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 CONTRACTS = ROOT / "ops" / "contracts"
@@ -24,15 +28,88 @@ def load_contract(name):
         print(f"UNKNOWN: no contract '{name}' in {CONTRACTS}"); sys.exit(2)
     return yaml.safe_load(p.read_text())
 
+def _fail(name, path, fails):
+    print(f"FAIL [{name}] {path}:")
+    for f in fails: print("   -", f)
+    return 1
+
+
+def check_markdown(c, name, p):
+    text = p.read_text()
+    fails = [f"missing required section '{s}'"
+             for s in c.get("required_sections", []) if s not in text]
+    if fails:
+        return _fail(name, p, fails)
+    print(f"PASS [{name}] {p}  (markdown, {len(c.get('required_sections', []))} sections present)")
+    return 0
+
+
+def check_directory(c, name, p):
+    if not p.is_dir():
+        return _fail(name, p, ["path is not a directory"])
+    fails = [f"missing required file '{f}'"
+             for f in c.get("required_files", []) if not (p / f).exists()]
+    if fails:
+        return _fail(name, p, fails)
+    print(f"PASS [{name}] {p}  (directory, {len(c.get('required_files', []))} required files present)")
+    return 0
+
+
+def check_pytest(c, name, p):
+    p = p.resolve()
+    must = c.get("must_pass", [])
+    missing = [t for t in must if not (p / t).exists()]
+    if missing:
+        return _fail(name, p, [f"missing test file '{t}'" for t in missing])
+    r = subprocess.run([sys.executable, "-m", "pytest", "-q", *(str(p / t) for t in must)],
+                       cwd=str(p), capture_output=True, text=True)
+    if r.returncode != 0:
+        tail = (r.stdout or r.stderr).splitlines()[-15:]
+        return _fail(name, p, ["pytest failed:"] + tail)
+    print(f"PASS [{name}] {p}  (pytest, {len(must)} test files green)")
+    return 0
+
+
+def check_flat_kv(c, name, p):
+    import json
+    try:
+        obj = json.loads(p.read_text())
+    except ValueError as e:
+        return _fail(name, p, [f"not valid JSON: {e}"])
+    if not isinstance(obj, dict):
+        return _fail(name, p, ["top level is not a JSON object"])
+    fails = []
+    for pref in c.get("required_keys_prefix", []):
+        if not any(k.startswith(pref) for k in obj):
+            fails.append(f"no key with required prefix '{pref}'")
+    nested = [k for k, v in obj.items() if isinstance(v, (dict, list))]
+    if nested:
+        fails.append(f"keys must be flat scalars, found nested values under: {nested[:5]}")
+    if fails:
+        return _fail(name, p, fails)
+    print(f"PASS [{name}] {p}  (flat_kv, {len(obj)} keys)")
+    return 0
+
+
 def check(name, path):
     c = load_contract(name)
+    p = pathlib.Path(path)
+    if not p.exists():
+        print(f"FAIL: {path} does not exist"); return 1
+    fmt = c.get("format", "tabular")
+    if fmt == "markdown":
+        return check_markdown(c, name, p)
+    if fmt == "directory":
+        return check_directory(c, name, p)
+    if fmt == "pytest":
+        return check_pytest(c, name, p)
+    if fmt == "flat_kv":
+        return check_flat_kv(c, name, p)
+
     try:
         import pandas as pd
     except ImportError:
         print("NEED pandas to validate data files"); return 2
-    p = pathlib.Path(path)
-    if not p.exists():
-        print(f"FAIL: {path} does not exist"); return 1
     if p.suffix == ".parquet":
         df = pd.read_parquet(p)
     elif p.suffix in (".csv", ".tsv"):
@@ -70,9 +147,7 @@ def check(name, path):
                 fails.append(f"'{col}' has values above {spec['max']}")
 
     if fails:
-        print(f"FAIL [{name}] {path}:")
-        for f in fails: print("   -", f)
-        return 1
+        return _fail(name, path, fails)
     print(f"PASS [{name}] {path}  ({len(df)} rows, {len(df.columns)} cols)")
     return 0
 

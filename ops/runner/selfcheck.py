@@ -86,6 +86,12 @@ def main():
         if w in ("code_pro", "project_pro") and owner is None:
             problems.append(f"{tid}: worker '{w}' needs an owner_account seat")
 
+        # 8. docs/ inputs must exist NOW (data inputs are produced later, but a
+        #    manual/amendment reference that doesn't resolve is a typo)
+        for inp in t.get("inputs") or []:
+            if inp.startswith("docs/") and not (ROOT / inp).exists():
+                problems.append(f"{tid}: input '{inp}' not found (typo in the docs filename?)")
+
     # 8. every contract file parses and is non-empty
     for cf in sorted(CONTRACTS.glob("*.yaml")):
         try:

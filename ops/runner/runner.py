@@ -19,8 +19,14 @@ Usage:
   python runner.py --plan                 # show ready set + assignment (offline)
   python runner.py --brief DAX-W5-index   # write ops/briefs/DAX-W5-index.md
   python runner.py --digest               # write ops/digest/<date>.md
-  python runner.py --complete E2-T6a-panel  # mark done (simulates contract PASS)
+  python runner.py --complete E2-T6a-panel  # mark done (AFTER contracts.py passed)
+  python runner.py --fail E2-T4b-impl     # record a failed attempt (2-strike ladder)
+  python runner.py --apply-decisions      # apply gate verdicts from ops/decisions.md
   python runner.py --reap                 # expire stale leases
+
+State (completed / gates / attempts) lives in ops/runner/state.json and is
+GIT-TRACKED: the repo is the only shared state, so a fresh seat clone must see
+what is already done or the runner would re-assign finished work.
 """
 import argparse, json, os, sys, datetime, pathlib, subprocess
 import yaml
@@ -38,9 +44,12 @@ def load(p):
         return yaml.safe_load(f)
 
 def load_state():
-    if STATE.exists():
-        return json.loads(STATE.read_text())
-    return {"completed": [], "gates_cleared": []}
+    s = json.loads(STATE.read_text()) if STATE.exists() else {}
+    s.setdefault("completed", [])
+    s.setdefault("gates_cleared", [])
+    s.setdefault("gates_failed", [])
+    s.setdefault("attempts", {})       # task id -> failed-attempt count (two-strike ladder)
+    return s
 
 def save_state(s):
     STATE.write_text(json.dumps(s, indent=2))
@@ -96,6 +105,19 @@ def index_tasks(q):
 
 def deps_satisfied(t, done):
     return all(d in done for d in t.get("depends_on", []) or [])
+
+def escalations(q, state):
+    """Tasks whose failed-attempt count hit max_attempts: the two-strike ladder
+    (arch §3 rule 4). They stay READY but must be re-assigned one tier up —
+    L1 workers escalate to the next L1 tier or a Claude Code block on seat D;
+    a failed L2 task escalates to the human."""
+    out = []
+    for t in q["tasks"]:
+        n = state["attempts"].get(t["id"], 0)
+        if n >= t.get("max_attempts", 2) and t["id"] not in state["completed"]:
+            out.append((t, n))
+    return out
+
 
 def ready_set(q, state):
     tasks = index_tasks(q)
@@ -204,6 +226,11 @@ def cmd_plan(q, accounts):
     for tid in in_flight: print(f"   ↻ {tid}")
     print("\n⏸ HUMAN GATES waiting on you (branch parked, portfolio still moving):")
     for g in gated: print(f"   ⚑ {g}")
+    esc = escalations(q, state)
+    if esc:
+        print("\n⇧ ESCALATED (two-strike ladder — re-assign one tier up / seat D):")
+        for t, n in esc:
+            print(f"   ⇧ {t['id']:<20} {n} failed attempts on '{t['worker']}'")
     if problems:
         print("\n✖ CROSS-VENDOR INDEPENDENCE PROBLEMS:")
         for p in problems: print("   ", p)
@@ -243,7 +270,7 @@ cap cuts the session, the next one resumes from the last commit, losing minutes)
 
 ## definition of done
 - output written to its contracted path; `python ops/runner/contracts.py {contract or '<none>'} <path>` returns PASS
-- lineage JSON emitted (inputs, hashes, code version, timestamp)
+- lineage JSON emitted: `python ops/runner/lineage.py <output> <inputs...>` (inputs, hashes, code version, timestamp)
 - merge task/{tid} → main; `python ops/runner/runner.py --complete {tid}`
 - `/clear` before the next task; one task per session.
 """
@@ -260,8 +287,11 @@ def cmd_digest(q, accounts):
     lines = [f"# Daily digest — {d}", ""]
     lines.append(f"progress: **{len(state['completed'])} done**, {len(ready)} ready, "
                  f"{len(gated)} awaiting you, {len(blocked)} blocked upstream\n")
-    lines.append("## ⚑ decisions needed (reply in ops/decisions.md)")
+    lines.append("## ⚑ decisions needed (reply in ops/decisions.md — one `gate <TASK> pass|fail` per line; the box applies it on its next cycle)")
     lines += [f"- **{g}** — clear with `gate {g} pass`" for g in gated] or ["- none"]
+    esc = escalations(q, state)
+    lines.append("\n## ⇧ escalated (two-strike ladder — needs a tier-up re-assignment)")
+    lines += [f"- `{t['id']}` — {n} failed attempts on `{t['worker']}`" for t, n in esc] or ["- none"]
     lines.append("\n## in flight (a seat already holds these — do not re-assign)")
     lines += [f"- `{tid}`" for tid in in_flight] or ["- none"]
     lines.append("\n## tomorrow's proposed prime blocks")
@@ -274,20 +304,62 @@ def cmd_digest(q, accounts):
     out.write_text("\n".join(lines))
     print(f"wrote {out}")
 
-def cmd_complete(tid):
+def cmd_complete(q, tid):
+    t = index_tasks(q).get(tid)
+    if t and t.get("output_contract"):
+        print(f"reminder: {tid} is DONE only if its output passed "
+              f"`contracts.py {t['output_contract']} <path>` — completing on your word.")
     s = load_state()
     if tid not in s["completed"]:
         s["completed"].append(tid)
+    s["attempts"].pop(tid, None)
     save_state(s)
-    print(f"marked complete: {tid}")
+    print(f"marked complete: {tid}  (state.json is git-tracked — commit it with your merge)")
+
+def cmd_fail(tid):
+    """Record one failed attempt (the two-strike ladder's counter)."""
+    s = load_state()
+    s["attempts"][tid] = s["attempts"].get(tid, 0) + 1
+    save_state(s)
+    n = s["attempts"][tid]
+    print(f"recorded attempt {n} for {tid}"
+          + (" — ESCALATE (shows in plan/digest)" if n >= 2 else ""))
 
 def cmd_gate(tid, verdict):
     s = load_state()
     if verdict == "pass" and tid not in s["gates_cleared"]:
         s["gates_cleared"].append(tid)
         s["completed"].append(tid)   # a cleared gate is also 'done' for downstream deps
+    elif verdict == "fail" and tid not in s["gates_failed"]:
+        s["gates_failed"].append(tid)   # kill-switch record; branch stays parked
     save_state(s)
     print(f"gate {tid} -> {verdict}")
+
+def cmd_apply_decisions():
+    """Parse ops/decisions.md (the L3 reply channel) and apply gate verdicts.
+    Recognized lines:  gate <TASK> pass|fail   |   complete <TASK>
+    Applied lines are prefixed '# applied:' so they are never re-run."""
+    dec = ROOT / "ops" / "decisions.md"
+    if not dec.exists():
+        print("no ops/decisions.md — nothing to apply"); return
+    q = load(RUN / "queue.yaml")
+    known = set(index_tasks(q))
+    out, applied = [], 0
+    for line in dec.read_text().splitlines():
+        parts = line.strip().split()
+        if parts and not line.lstrip().startswith("#"):
+            if (len(parts) == 3 and parts[0] == "gate"
+                    and parts[2] in ("pass", "fail") and parts[1] in known):
+                cmd_gate(parts[1], parts[2]); applied += 1
+                out.append(f"# applied: {line}"); continue
+            if len(parts) == 2 and parts[0] == "complete" and parts[1] in known:
+                cmd_complete(q, parts[1]); applied += 1
+                out.append(f"# applied: {line}"); continue
+            if parts[0] in ("gate", "complete"):
+                print(f"IGNORED (unknown task id): {line.strip()}")
+        out.append(line)
+    dec.write_text("\n".join(out) + "\n")
+    print(f"applied {applied} decision(s) from {dec}")
 
 def cmd_reap():
     now = datetime.datetime.utcnow()
@@ -305,7 +377,11 @@ def main():
     ap.add_argument("--brief")
     ap.add_argument("--complete", nargs="+", metavar="TASK",
                     help="mark one or more tasks complete")
+    ap.add_argument("--fail", metavar="TASK",
+                    help="record one failed attempt (two-strike escalation counter)")
     ap.add_argument("--gate", nargs=2, metavar=("TASK", "pass|fail"))
+    ap.add_argument("--apply-decisions", action="store_true",
+                    help="apply gate/complete lines from ops/decisions.md")
     ap.add_argument("--reap", action="store_true")
     a = ap.parse_args()
     q = load(RUN / "queue.yaml")
@@ -315,8 +391,10 @@ def main():
     elif a.brief: cmd_brief(q, a.brief)
     elif a.complete:
         for tid in a.complete:
-            cmd_complete(tid)
+            cmd_complete(q, tid)
+    elif a.fail: cmd_fail(a.fail)
     elif a.gate: cmd_gate(a.gate[0], a.gate[1])
+    elif a.apply_decisions: cmd_apply_decisions()
     elif a.reap: cmd_reap()
     else: ap.print_help()
 

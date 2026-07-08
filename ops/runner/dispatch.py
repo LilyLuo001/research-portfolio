@@ -127,6 +127,8 @@ def main():
     ap.add_argument("--workers", action="store_true", help="show which L1 keys are live")
     ap.add_argument("--worker", help="which L1 vendor to dispatch to")
     ap.add_argument("--items", help="path to a JSONL of batch items ({id, prompt, ...})")
+    ap.add_argument("--sentinels", help="JSONL of DOMAIN known-answer items ({id, prompt, expect}) "
+                                        "— required for a meaningful fence on real batches")
     ap.add_argument("--cost", type=float, default=0.0, help="estimated ¥ cost (budget pre-check)")
     ap.add_argument("--out", help="write the answer map to this path on success")
     ap.add_argument("--live", action="store_true", help="actually POST (needs the key set)")
@@ -140,7 +142,17 @@ def main():
         return 0
     if a.worker and a.items:
         items = [json.loads(l) for l in pathlib.Path(a.items).read_text().splitlines() if l.strip()]
-        status, detail, _ = run_batch(a.worker, items, SMOKE_SENTINELS,
+        if a.sentinels:
+            sentinels = [json.loads(l) for l in
+                         pathlib.Path(a.sentinels).read_text().splitlines() if l.strip()]
+        else:
+            sentinels = SMOKE_SENTINELS
+            if a.live:
+                print("WARNING: live batch with only the trivial smoke sentinels — "
+                      "the fence proves dispatch works, NOT that the model handled "
+                      "your domain content. Pass --sentinels with known-answer "
+                      "items drawn from this task's own data.")
+        status, detail, _ = run_batch(a.worker, items, sentinels,
                                       est_cost=a.cost, live=a.live, out=a.out)
         print(f"[{status}] {detail}")
         return 0 if status == "DONE" else 1

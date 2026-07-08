@@ -7,5 +7,7 @@ __pycache__/
 ops/box/.env
 ops/box/cron.log
 ops/runner/spend_log.jsonl
-# runner completion/gate state — box-owned runtime
-ops/runner/state.json
+# NOTE: ops/runner/state.json is deliberately TRACKED, not ignored — completion
+# and gate state must be visible to every seat's clone (the repo is the only
+# shared state), or a fresh seat re-assigns finished tasks. Only spend logs and
+# secrets stay box-local.
