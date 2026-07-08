@@ -1,0 +1,35 @@
+# P1-T0-crash-B — collision-check channel B (Kimi $web_search).
+# Source prompt: docs/Project_1.md T0 阶段B + docs/P1_修订补丁_v1_1.md 修订1.
+# Channel A is Pro Research mode (human-driven, seat C); this is the union sweep.
+#
+# ARMING (human, required): fill `sentinels` with 1–3 known-answer items you
+# have personally verified (e.g. a paper you know exists on SSRN with its
+# posting year). The driver refuses to run this spec while sentinels is empty.
+worker: kimi
+web_search: true
+est_cost: 1.5          # ~a dozen searches + long answers; tune after first run
+items:
+  - id: sweep-saglam-tuzun
+    prompt: |
+      任务: 在 SSRN / NBER / arXiv q-fin / Federal Reserve (FEDS) 检索
+      Saglam、Tuzun、Wermers 三位作者 2025-01 以来关于 mutual fund → ETF
+      conversion 的任何新版本工作论文或正式发表(特别是 Saglam–Tuzun 2025
+      FEDS Note 的完整版扩展)。
+      输出: 每条命中 = [标题, 作者, 日期, 状态(WP/发表), 可点击链接, 与"基金
+      转换→盈余信息纳入效率"主题的重叠度(高/中/低), 判断理由(引用其摘要
+      原文 ≤25 词)]。
+      硬性规则: 每条必须附可点击 URL, 链接打不开的条目删除; 禁止凭训练记忆
+      列论文; 查不到即答 UNKNOWN 并说明检索路径; 重叠度"高"≥1 条时在末尾
+      单列 ALERT 一节。
+  - id: sweep-keywords
+    prompt: |
+      任务: 在 SSRN / NBER / arXiv q-fin 检索最近 6 个月新增工作论文,
+      关键词: mutual fund ETF conversion; ETF wrapper earnings information;
+      fund conversion price discovery; ETF conversion informational efficiency。
+      输出与硬性规则同上一条(逐条 URL、引用式理由、无记忆条目、UNKNOWN 合法)。
+      特别标记任何研究"转换事件 × 价格效率/盈余信息"的论文。
+sentinels: []   # FILL BEFORE ARMING — e.g.:
+# sentinels:
+#   - {id: S1,
+#      prompt: "On what date was the Saglam-Tuzun FEDS Note on mutual-fund-to-ETF conversions published? Reply with the year-month only.",
+#      expect: "<the year-month YOU verified on federalreserve.gov>"}

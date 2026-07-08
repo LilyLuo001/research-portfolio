@@ -93,8 +93,8 @@ MARK="# portfolio-box (managed by bootstrap.sh)"
 read -r -d '' CRON_BLOCK <<EOF || true
 $MARK
 */30 * * * *  cd $PROJECT && $VENV_PY ops/runner/runner.py --apply-decisions >> ops/box/cron.log 2>&1; cd $PROJECT && $VENV_PY ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
-0 2 * * *     cd $PROJECT && set -a && . ops/box/.env && set +a && $VENV_PY ops/runner/dispatch.py --smoke >> ops/box/cron.log 2>&1
-0 21 * * *    cd $PROJECT && $VENV_PY ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest \$(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
+0 2 * * *     cd $PROJECT && set -a && . ops/box/.env && set +a && $VENV_PY ops/runner/l1_driver.py --live >> ops/box/cron.log 2>&1
+0 21 * * *    cd $PROJECT && $VENV_PY ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest ops/runner/state.json ops/decisions.md && git commit -q -m "box: nightly digest \$(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 $MARK-end
 EOF
 

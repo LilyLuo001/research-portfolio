@@ -1,0 +1,52 @@
+# E2-T1-facts — 制度事实核验 channel A (Kimi $web_search).
+# Source prompt: docs/E2_执行手册_Prompt与Agent指派.md T1a (verbatim questions).
+# Channel B (E2-T1-facts-B, Gemini grounding) is NOT yet wired in models.py —
+# run the union check by hand on high-value items until it is (v1.1 appendix A).
+#
+# Each item embeds the C0 discipline core; the full C0 pack is in the manual
+# §0.3 — keep prompts consistent with it when editing.
+#
+# ARMING (human, required): sentinels must be facts you personally verified
+# on-chain or in issuer docs (e.g. an oracle implementation you already
+# checked on a block explorer).
+worker: kimi
+web_search: true
+est_cost: 3.0
+items:
+  - id: t1a-oracles
+    prompt: |
+      【C0 纪律: 只依据联网检索到的一手来源(协议官方文档、发行方法律文件、
+      链上浏览器、官方博客); 二手媒体只可作线索; 禁止凭训练记忆作答; 查不到
+      → UNKNOWN 并写明尝试过的检索路径; 推断必须显式标注"推断:"; 来源冲突
+      时两个都列出。】
+      问题(T1a-1): 下列 Morpho RWA 市场各自使用的 oracle 具体实现是什么
+      (NAVLink/发行方直喂/硬编码/其他)? 逐市场回答: sACRED, mF-ONE,
+      AA_FalconXUSDC, syrupUSDC, mTBILL, cUSDO。
+      输出: 每市场一行 [对象, 结论, 置信度(高/中/低), 一手来源URL(可多条),
+      检索日期, 备注]。
+  - id: t1a-redemption
+    prompt: |
+      【C0 纪律: 同上 — 一手来源、逐条 URL、UNKNOWN 合法、禁止记忆。】
+      问题(T1a-2): sACRED, mF-ONE, AA_FalconXUSDC, syrupUSDC, mTBILL, cUSDO
+      各抵押资产发行方的赎回条款: 结算周期(T+N)、最低赎回额、是否存在赎回
+      门槛(gate)条款、门槛触发条件。
+      输出: 每资产一行 [对象, 结论, 置信度, 一手来源URL, 检索日期, 备注]。
+  - id: t1a-navlink
+    prompt: |
+      【C0 纪律: 同上。】
+      问题(T1a-3): Aave Horizon 各 reserve 的 NAVLink 喂价更新频率
+      (每日/每工作日/其他)与周末是否更新。
+      输出: 每 reserve 一行 [对象, 结论, 置信度, 一手来源URL, 检索日期, 备注]。
+  - id: t1a-coinbase-vault
+    prompt: |
+      【C0 纪律: 同上。】
+      问题(T1a-4): Coinbase USDC 出借所路由的 Morpho 金库(curator、金库地址),
+      该金库当前与历史上是否配置过任何 RWA 抵押市场。
+      输出: [结论, 置信度, 一手来源URL, 检索日期, 备注]; 金库地址必须来自
+      链上浏览器或 Coinbase/Morpho 官方页面, 不得来自记忆。
+      最后附一节"下游影响提示": 哪个结论会改变研究设计(对照计划 §2.4/§10)。
+sentinels: []   # FILL BEFORE ARMING — facts you verified yourself, e.g.:
+# sentinels:
+#   - {id: S1,
+#      prompt: "Which protocol's singleton contract defines markets with the CreateMarket event and five parameters (collateralToken/loanToken/oracle/irm/lltv)? One word.",
+#      expect: "Morpho"}   # only if YOU consider this check meaningful; prefer facts from your own registry work

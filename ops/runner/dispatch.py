@@ -57,7 +57,8 @@ def _simulate_answers(items, sentinels, corrupt=False):
     return ans
 
 
-def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False, out=None):
+def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False, out=None,
+              web_search=False):
     """Dispatch one sentinel-fenced batch.
     Returns (status, detail, answers) with status in
     {DONE, VOID-SENTINEL, SKIP-BUDGET, SKIP-NOKEY, ERROR}."""
@@ -70,7 +71,8 @@ def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False
             return "SKIP-BUDGET", f"{worker}: {why}", None
 
     prompt = build_prompt(items, sentinels)
-    ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live)
+    ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live,
+                              web_search=web_search)
     if not ok:
         return "ERROR", f"{worker}: {res.get('error', 'dispatch failed')}", None
 

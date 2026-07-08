@@ -105,6 +105,17 @@ tasks:
     max_attempts: 2
     notes: "second channel for the collision sweep (different vendor family)."
 
+  - id: P1-T0-monitor
+    project: p1
+    owner_account: null
+    worker: kimi
+    depends_on: [P1-T0-crash]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "AMEND P1-1 月度维持: monthly Saglam–Tuzun / collision sweep (manual T0 阶段B). RECURRING: stays open; re-arm each month by deleting ops/l1/out/P1-T0-monitor.json — the L1 driver re-runs it the next night. Spec: ops/l1/P1-T0-monitor.yaml (web_search)."
+
   - id: P1-T2a-power
     project: p1
     owner_account: C
@@ -304,8 +315,8 @@ tasks:
   # ===== E2 main line (races to publishable note) =====
   # T2/T3/T5 are panel_daily's REAL data producers (flows.parquet,
   # oracle_updates.parquet, decomposition.parquet — E2 manual T6a inputs).
-  # NOTE: their verbatim prompts live in the E2 v1.0 manual, which is NOT yet
-  # in docs/ — only v1.1/v1.2 deltas are. Add it before briefing these tasks.
+  # Verbatim prompts: docs/E2_执行手册_Prompt与Agent指派.md (v1.0) — see
+  # docs/README.md for the v1.0/v1.1/v1.2 precedence order.
   - id: E2-T2-dune
     project: e2
     owner_account: null

@@ -1,0 +1,32 @@
+# E2-T9b-scenarios — stress-scenario calibration retrieval (Kimi $web_search).
+# Source prompt: docs/E2_执行手册_v1_1_完整版.md T9b (verbatim parameters).
+# Output feeds scenarios.yaml for the T9a engine; every value needs a
+# first-hand URL or it enters the file as UNKNOWN.
+worker: kimi
+web_search: true
+est_cost: 2.0
+items:
+  - id: clo-drawdown
+    prompt: |
+      【规则: 逐参数一手来源(监管报告、基金年报、学术论文、指数发布方);
+      无一手来源 → UNKNOWN; 禁止凭记忆给数; 推断显式标注。】
+      参数(1): AAA 级 CLO 在 2020-03 前后的市值/NAV 最大回撤区间。
+      输出: [参数, 建议取值区间, 一手来源URL(逐条), 来源类型, 置信度, 备注]。
+  - id: private-credit-nav
+    prompt: |
+      【规则: 同上。】
+      参数(2): 非交易型私募信贷基金(BDC/interval fund)在近两次信用压力期的
+      NAV 下修幅度与赎回门槛(gate)触发案例。
+      输出格式同上; gate 案例逐案附来源 URL。
+  - id: tbill-nav-move
+    prompt: |
+      【规则: 同上。】
+      参数(3): 短久期 T-bill 基金单日 NAV 变动的历史极值量级。
+      输出格式同上。此类"历史极值"数字最易被模型记忆污染 — 无 URL 即 UNKNOWN。
+  - id: defi-rate-spike
+    prompt: |
+      【规则: 同上。】
+      参数(4): DeFi 借贷市场在挤兑日的借款利率上冲幅度的已记录案例。
+      输出格式同上; 案例必须可定位到链上数据看板或事后分析报告的 URL。
+sentinels: []   # FILL BEFORE ARMING — a stress fact you verified, e.g. a
+# documented utilization-spike date you already confirmed on a dashboard.

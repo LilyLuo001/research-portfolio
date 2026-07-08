@@ -1,0 +1,19 @@
+# P1-T0-monitor — monthly collision-sweep maintenance (AMEND P1-1 月度维持).
+# Same sweep as P1-T0-crash-B, re-armed monthly: delete
+# ops/l1/out/P1-T0-monitor.json at the start of each month and the driver
+# re-runs it that night. Fill sentinels before first arming (see
+# P1-T0-crash-B.yaml for the pattern).
+worker: kimi
+web_search: true
+est_cost: 1.0
+items:
+  - id: monthly-sweep
+    prompt: |
+      任务: 月度撞车监控。在 SSRN/NBER/arXiv q-fin 检索最近 30 天新增论文,
+      关键词 [mutual fund ETF conversion; wrapper; earnings information;
+      price discovery], 重点标记 Saglam / Tuzun / Wermers 的任何新版本。
+      输出: [标题, 作者, 日期, 链接, 与本项目重叠度(高/中/低), 引用式理由
+      (摘要原文 ≤25 词)]。主题重叠 ≥60% 的论文单列 ALERT 一节。
+      硬性规则: 逐条可点击 URL; 禁止凭记忆列论文; 链接打不开的条目删除;
+      "低"重叠也必须给引用式理由。
+sentinels: []   # FILL BEFORE ARMING (same pattern as P1-T0-crash-B.yaml)

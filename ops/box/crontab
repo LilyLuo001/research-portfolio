@@ -16,7 +16,7 @@
 0 2 * * *  cd $HOME/portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/l1_driver.py --live >> ops/box/cron.log 2>&1
 
 # 21:00 nightly: write the evening digest, then push briefs + digest to GitHub
-0 21 * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
+0 21 * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest ops/runner/state.json ops/decisions.md && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 
 # NOTE: give each ready L1 task a spec at ops/l1/<task_id>.yaml (see ops/l1/README.md)
 # and the 02:00 job will run it. L1 output lands in ops/l1/out/ as raw extraction;

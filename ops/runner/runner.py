@@ -296,7 +296,24 @@ def cmd_digest(q, accounts):
     lines += [f"- `{tid}`" for tid in in_flight] or ["- none"]
     lines.append("\n## tomorrow's proposed prime blocks")
     lines += [f"- seat **{s}** → `{t['id']}` ({t['worker']})" for t, s in l2] or ["- none"]
-    lines.append("\n## overnight L1 (already dispatched by the scheduler)")
+    lines.append("\n## overnight L1 results (last driver run)")
+    night_p = ROOT / "ops" / "l1" / "out" / "_last_night.json"
+    if night_p.exists():
+        night = json.loads(night_p.read_text())
+        lines.append(f"- run of {night.get('date')} ({'live' if night.get('live') else 'dry-run'}):")
+        for tid, status in sorted(night.get("results", {}).items()):
+            note = {"DONE": "output in ops/l1/out/ — validate + complete",
+                    "HAS-OUTPUT": "output awaiting validation/--complete",
+                    "NO-SPEC": "waiting for input — write ops/l1/<id>.yaml",
+                    "NO-SENTINELS": "spec needs verified sentinels",
+                    "VOID-SENTINEL": "batch VOIDED (fence tripped) — attempt recorded",
+                    "ERROR": "dispatch error — attempt recorded",
+                    "SKIP-BUDGET": "budget cap hit",
+                    "SKIP-NOKEY": "no API key on box"}.get(status, "")
+            lines.append(f"    - `{tid}`: {status}" + (f" — {note}" if note else ""))
+    else:
+        lines.append("- no driver run recorded yet")
+    lines.append("\n## L1 queue (ready for the next overnight run)")
     lines += [f"- {tag} → {t['id']}" for t, tag in l1] or ["- none"]
     lines.append("\n## budget")
     lines += budget.report()
