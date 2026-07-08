@@ -160,6 +160,46 @@ def test_web_search_rejected_for_non_kimi(monkeypatch):
     assert not ok and "only wired for kimi" in res["error"]
 
 
+# --- gemini google_search grounding ------------------------------------------
+
+def test_gemini_grounded_dispatch(monkeypatch):
+    """web_search=True must declare the google_search tool, join multi-part
+    replies, and surface the executed query count as usage['search_count']."""
+    seen = {}
+
+    def fake_post(endpoint, payload):
+        seen["endpoint"] = endpoint
+        seen["payload"] = payload
+        return {"candidates": [{
+                    "content": {"parts": [{"text": '{"i1": '}, {"text": '"daily"}'}]},
+                    "groundingMetadata": {"webSearchQueries": ["q1", "q2"]}}],
+                "usageMetadata": {"promptTokenCount": 50, "candidatesTokenCount": 5}}
+
+    monkeypatch.setattr(models, "_post_plain_json", fake_post)
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    ok, res = models.dispatch("gemini_free", "verify things", dry_run=False, web_search=True)
+    assert ok and res["text"] == '{"i1": "daily"}'
+    assert seen["payload"]["tools"] == [{"google_search": {}}]
+    assert res["usage"] == {"prompt_tokens": 50, "completion_tokens": 5, "search_count": 2}
+
+
+def test_gemini_ungrounded_has_no_tools(monkeypatch):
+    def fake_post(endpoint, payload):
+        assert "tools" not in payload
+        return {"candidates": [{"content": {"parts": [{"text": "{}"}]}}]}
+
+    monkeypatch.setattr(models, "_post_plain_json", fake_post)
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    ok, res = models.dispatch("gemini_free", "x", dry_run=False)
+    assert ok and "search_count" not in res["usage"]
+
+
+def test_gemini_grounded_searches_bill_zero():
+    # the per-search fee is kimi's; gemini free-tier grounding must stay ¥0
+    assert models.estimate_cost(
+        "gemini_free", {"prompt_tokens": 1_000_000, "search_count": 5}) == 0.0
+
+
 def test_web_search_round_limit(monkeypatch):
     tool_leg = {
         "choices": [{"finish_reason": "tool_calls", "message": {

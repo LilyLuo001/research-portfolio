@@ -71,6 +71,27 @@ def test_spec_without_sentinels_is_skipped(monkeypatch, tmp_path, capsys):
     assert "no sentinels" in capsys.readouterr().out
 
 
+def test_manual_spec_is_never_auto_dispatched(monkeypatch, tmp_path, capsys):
+    """A `manual: true` spec (Gemini web UI channel) must be skipped by the
+    nightly driver — gemini_helper.py owns it — even though it has sentinels."""
+    _wire(monkeypatch, tmp_path,
+          [{"id": "E2-T1-facts-B", "worker": "kimi", "human_gate": False}])
+    (tmp_path / "l1" / "E2-T1-facts-B.yaml").write_text(yaml.dump({
+        "manual": True,
+        "items": [{"id": "i1", "prompt": "x"}],
+        "sentinels": [{"id": "S1", "prompt": "2+2?", "expect": "4"}]}))
+
+    def fake_run_batch(*a, **k):
+        raise AssertionError("must not auto-dispatch a manual-channel spec")
+
+    monkeypatch.setattr(dispatch, "run_batch", fake_run_batch)
+    assert l1_driver.run(live=True) == 0
+    assert "gemini_helper" in capsys.readouterr().out
+    import json
+    night = json.loads((tmp_path / "l1" / "out" / "_last_night.json").read_text())
+    assert night["results"]["E2-T1-facts-B"] == "MANUAL"
+
+
 def test_existing_output_is_not_resent(monkeypatch, tmp_path, capsys):
     """A still-open task with output already on disk must not re-bill nightly."""
     _wire(monkeypatch, tmp_path, [{"id": "E2-T1-facts", "worker": "kimi", "human_gate": False}])

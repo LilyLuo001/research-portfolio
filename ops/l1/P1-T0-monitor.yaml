@@ -16,4 +16,14 @@ items:
       (摘要原文 ≤25 词)]。主题重叠 ≥60% 的论文单列 ALERT 一节。
       硬性规则: 逐条可点击 URL; 禁止凭记忆列论文; 链接打不开的条目删除;
       "低"重叠也必须给引用式理由。
-sentinels: []   # FILL BEFORE ARMING (same pattern as P1-T0-crash-B.yaml)
+# Known-answer fence: institutional facts from docs/基金转换实验_博士研究计划.md §2.
+# Distinct from P1-T0-crash-B's sentinels so the two fences fail independently.
+sentinels:
+  - id: S1
+    # source: 基金转换实验_博士研究计划.md §2 "2019-09, SEC Rule 6c-11 ('ETF Rule')"
+    prompt: "Under which SEC rule, adopted in 2019, were ETF creation and operation standardized (the so-called 'ETF Rule')? Reply in the exact form 6c-NN, nothing else."
+    expect: "6c-11"
+  - id: S2
+    # source: 基金转换实验_博士研究计划.md §2 "2025-12, SEC 放开 dual share class 豁免"
+    prompt: "In which year and month did the SEC grant exemptive relief allowing mutual funds to add ETF share classes (dual share class relief)? Reply with YYYY-MM only, nothing else."
+    expect: "2025-12"

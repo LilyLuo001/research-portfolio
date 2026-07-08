@@ -37,8 +37,20 @@ items:
       [item, finding, verbatim quote (<=25 words), source URL]. Rules: only
       the official repository/paper/host pages count; UNKNOWN if terms are
       not stated; do not paraphrase license language — quote it.
-sentinels: []   # FILL BEFORE ARMING — e.g. a current price you verified:
-# sentinels:
-#   - {id: S1,
-#      prompt: "What is OpenAI's current API input price per 1M tokens for <model you checked>? Number and currency only.",
-#      expect: "<the price YOU read on openai.com/api/pricing>"}
+# Known-answer fence: release chronology stated in docs/DAX_ERE_Proposal_v3.md
+# §2.1 ("GPT-4 release in March 2023, the launch of GPT-4o at half the GPT-4
+# Turbo price in May 2024, o1 in September 2024") — the same vintages this
+# task must price, so the fence exercises the task's own domain.
+sentinels:
+  - id: S1
+    # source: DAX_ERE_Proposal_v3.md §2.1 (GPT-4o launch, the lead identification event)
+    prompt: "In which year and month did OpenAI launch GPT-4o? Reply with YYYY-MM only, nothing else."
+    expect: "2024-05"
+  - id: S2
+    # source: DAX_ERE_Proposal_v3.md §2.1 (GPT-4 release)
+    prompt: "In which year and month did OpenAI first release GPT-4? Reply with YYYY-MM only, nothing else."
+    expect: "2023-03"
+  - id: S3
+    # source: DAX_ERE_Proposal_v3.md §2.1 (o1 release)
+    prompt: "In which year and month did OpenAI release o1, its first o-series reasoning model (preview)? Reply with YYYY-MM only, nothing else."
+    expect: "2024-09"

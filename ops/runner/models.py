@@ -27,8 +27,13 @@ on top of tokens (KIMI_SEARCH_FEE, ¥). Kimi host/model are env-overridable
 (KIMI_BASE_URL, KIMI_MODEL) — the platform is rebranding moonshot.cn → kimi.com,
 so verify both against https://platform.kimi.com/docs before going live.
 
-Gemini grounding (channel-B web tasks) is still NOT wired — plain generateContent
-only. Run E2-T1-facts-B style grounding by hand until it is.
+Gemini grounding (channel-B web tasks): pass web_search=True and the
+generateContent payload declares {"google_search": {}} — Google runs the
+searches server-side and the response carries groundingMetadata (we surface
+len(webSearchQueries) as usage["search_count"]; free tier bills ¥0, but the
+free grounding quota is LIMITED PER DAY — verify current limits at
+ai.google.dev/pricing before arming a nightly batch). If the quota runs out,
+set `manual: true` in the spec and fall back to ops/l1/gemini_helper.py.
 """
 import os
 
@@ -90,10 +95,11 @@ def dispatch(worker, prompt, sentinels=None, dry_run=True, web_search=False):
                       "usage": {}}
     try:
         if worker == "gemini_free":
-            return _post_gemini(url, key, prompt)
+            return _post_gemini(url, key, prompt, web_search=web_search)
         if web_search:
             if worker != "kimi":
-                return False, {"error": f"web_search is only wired for kimi, not {worker}"}
+                return False, {"error": f"web_search is only wired for kimi and "
+                                        f"gemini_free, not {worker}"}
             return _post_kimi_search(url, key, MODELS[worker], prompt)
         return _post_openai(url, key, MODELS[worker], prompt)
     except Exception as e:  # network / HTTP / parse — void the batch, don't crash
@@ -160,18 +166,30 @@ def _post_kimi_search(url, key, model, prompt):
     return False, {"error": f"web_search exceeded {MAX_SEARCH_ROUNDS} rounds without finishing"}
 
 
-def _post_gemini(url, key, prompt):
+def _post_plain_json(endpoint, payload):
     import requests
-    endpoint = f"{url}/{MODELS['gemini_free']}:generateContent?key={key}"
-    r = requests.post(endpoint,
-                      json={"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}]},
-                      timeout=TIMEOUT)
+    r = requests.post(endpoint, json=payload, timeout=TIMEOUT)
     r.raise_for_status()
-    d = r.json()
-    text = d["candidates"][0]["content"]["parts"][0]["text"]
+    return r.json()
+
+
+def _post_gemini(url, key, prompt, web_search=False):
+    """generateContent, optionally grounded with Google Search (see module
+    docstring). Grounded replies may split across several parts and carry the
+    executed queries in groundingMetadata.webSearchQueries."""
+    endpoint = f"{url}/{MODELS['gemini_free']}:generateContent?key={key}"
+    payload = {"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}]}
+    if web_search:
+        payload["tools"] = [{"google_search": {}}]
+    d = _post_plain_json(endpoint, payload)
+    cand = d["candidates"][0]
+    text = "".join(p.get("text", "") for p in cand["content"]["parts"])
     um = d.get("usageMetadata", {})
     usage = {"prompt_tokens": um.get("promptTokenCount", 0),
              "completion_tokens": um.get("candidatesTokenCount", 0)}
+    if web_search:
+        gm = cand.get("groundingMetadata") or {}
+        usage["search_count"] = len(gm.get("webSearchQueries") or [])
     return True, {"text": text, "usage": usage}
 
 
@@ -216,8 +234,9 @@ def verify_sentinels(answers, sentinels):
 
 
 def estimate_cost(worker, usage):
-    """¥ cost of one call from its token usage (+ per-search fee for kimi
-    $web_search legs, reported by dispatch as usage['search_count'])."""
+    """¥ cost of one call from its token usage. The per-search fee applies to
+    kimi's $web_search legs only (usage['search_count']); Gemini free-tier
+    grounded searches report a search_count too but bill ¥0."""
     if not usage:
         return 0.0
     p = PRICES.get(worker)
@@ -226,5 +245,6 @@ def estimate_cost(worker, usage):
         pin = usage.get("prompt_tokens", 0) or 0
         pout = usage.get("completion_tokens", 0) or 0
         cost = (pin * p[0] + pout * p[1]) / 1_000_000.0
-    cost += (usage.get("search_count", 0) or 0) * KIMI_SEARCH_FEE
+    if worker == "kimi":
+        cost += (usage.get("search_count", 0) or 0) * KIMI_SEARCH_FEE
     return cost

@@ -1,19 +1,17 @@
-# E2-T1-facts — 制度事实核验 channel A (Kimi $web_search).
-# Source prompt: docs/E2_执行手册_Prompt与Agent指派.md T1a (verbatim questions).
-# Channel B (E2-T1-facts-B) runs the SAME questions through Gemini with
-# google_search grounding (auto-dispatched; gemini_helper.py is the manual
-# fallback). Union-check the two answer maps id-by-id per v1.1 appendix A
-# before anything goes downstream.
+# E2-T1-facts-B — 制度事实核验 channel B (Gemini web UI, grounding).
+# Dual-channel rule (CLAUDE.md rule 2 / v1.1 appendix A): same questions as
+# channel A (E2-T1-facts, Kimi $web_search), DIFFERENT vendor family, then
+# machine-diff the two answer maps.
 #
-# Each item embeds the C0 discipline core; the full C0 pack is in the manual
-# §0.3 — keep prompts consistent with it when editing.
-#
-# ARMING (human, required): sentinels must be facts you personally verified
-# on-chain or in issuer docs (e.g. an oracle implementation you already
-# checked on a block explorer).
-worker: kimi
+# Auto-dispatched: models.py grounds Gemini via the google_search tool
+# (web_search: true below). Free tier bills ¥0 but the daily grounding quota
+# is limited — verify at ai.google.dev/pricing before arming. FALLBACK: if
+# the quota is exhausted or GEMINI_API_KEY is absent, set `manual: true`
+# here and run the human channel instead:
+#     python ops/l1/gemini_helper.py E2-T1-facts-B
+worker: gemini_free
 web_search: true
-est_cost: 3.0
+est_cost: 0.0             # free tier
 items:
   - id: t1a-oracles
     prompt: |
@@ -47,18 +45,15 @@ items:
       输出: [结论, 置信度, 一手来源URL, 检索日期, 备注]; 金库地址必须来自
       链上浏览器或 Coinbase/Morpho 官方页面, 不得来自记忆。
       最后附一节"下游影响提示": 哪个结论会改变研究设计(对照计划 §2.4/§10)。
-# Known-answer fence: facts marked 已核实 (verified) in
-# docs/E2_研究计划_RWA内嵌杠杆.md §10 事实核验状态表 / §1.3.
+# Known-answer fence (dispatch voids the batch on a miss). Facts marked
+# 已核实 in docs/E2_研究计划_RWA内嵌杠杆.md §10/§1.3 — deliberately different
+# items than channel A's fence so the two fences fail independently.
 sentinels:
   - id: S1
-    # source: E2_研究计划_RWA内嵌杠杆.md §10 "Morpho 隔离市场/CreateMarket 事件结构 | 已核实"
-    prompt: "Which DeFi lending protocol's singleton contract defines isolated markets via a CreateMarket event with exactly five parameters (collateralToken, loanToken, oracle, irm, lltv)? Reply with the protocol name only, one word."
-    expect: "Morpho"
-  - id: S2
-    # source: E2_研究计划_RWA内嵌杠杆.md §10 "Horizon 2025-08 上线 … | 已核实"
-    prompt: "In which year and month did Aave Horizon (the permissioned Aave instance for RWA collateral) launch? Reply with YYYY-MM only, nothing else."
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "FalconX CV 2025-08 | 已核实"
+    prompt: "In which year and month did the FalconX Credit Vault (the AA_FalconXUSDC market's collateral asset) launch? Reply with YYYY-MM only, nothing else."
     expect: "2025-08"
-  - id: S3
-    # source: E2_研究计划_RWA内嵌杠杆.md §10 "sACRED 首发 Polygon(2025-04) | 已核实"
-    prompt: "On which blockchain was the sACRED token first launched in April 2025? Reply with the chain name only, one word."
-    expect: "Polygon"
+  - id: S2
+    # source: E2_研究计划_RWA内嵌杠杆.md §2.4 "Aave Horizon 采用 Chainlink SmartData/NAVLink 喂 NAV"
+    prompt: "Which oracle provider supplies the SmartData/NAVLink NAV feeds used by Aave Horizon? Reply with the provider name only, one word."
+    expect: "Chainlink"
