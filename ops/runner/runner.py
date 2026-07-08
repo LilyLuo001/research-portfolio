@@ -342,6 +342,17 @@ def cmd_fail(tid):
     print(f"recorded attempt {n} for {tid}"
           + (" — ESCALATE (shows in plan/digest)" if n >= 2 else ""))
 
+def cmd_clear_fail(tid, quiet=False):
+    """Reset a task's failed-attempt counter. For strikes that turned out to be
+    infrastructure (vendor billing/outage), not the model failing the task —
+    e.g. after fixing depleted Gemini credits — or after a later success."""
+    s = load_state()
+    had = s["attempts"].pop(tid, None)
+    if had is not None:
+        save_state(s)
+    if not quiet:
+        print(f"cleared {had or 0} recorded attempt(s) for {tid}")
+
 def cmd_gate(tid, verdict):
     s = load_state()
     if verdict == "pass" and tid not in s["gates_cleared"]:
@@ -396,6 +407,9 @@ def main():
                     help="mark one or more tasks complete")
     ap.add_argument("--fail", metavar="TASK",
                     help="record one failed attempt (two-strike escalation counter)")
+    ap.add_argument("--clear-fail", nargs="+", metavar="TASK",
+                    help="reset failed-attempt counter(s) — for strikes caused by "
+                         "vendor billing/outage rather than the task itself")
     ap.add_argument("--gate", nargs=2, metavar=("TASK", "pass|fail"))
     ap.add_argument("--apply-decisions", action="store_true",
                     help="apply gate/complete lines from ops/decisions.md")
@@ -410,6 +424,9 @@ def main():
         for tid in a.complete:
             cmd_complete(q, tid)
     elif a.fail: cmd_fail(a.fail)
+    elif a.clear_fail:
+        for tid in a.clear_fail:
+            cmd_clear_fail(tid)
     elif a.gate: cmd_gate(a.gate[0], a.gate[1])
     elif a.apply_decisions: cmd_apply_decisions()
     elif a.reap: cmd_reap()

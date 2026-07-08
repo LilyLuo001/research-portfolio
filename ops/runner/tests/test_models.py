@@ -163,32 +163,34 @@ def test_web_search_rejected_for_non_kimi(monkeypatch):
 # --- gemini google_search grounding ------------------------------------------
 
 def test_gemini_grounded_dispatch(monkeypatch):
-    """web_search=True must declare the google_search tool, join multi-part
-    replies, and surface the executed query count as usage['search_count']."""
+    """web_search=True must declare the google_search tool, send the key in the
+    x-goog-api-key header (never the URL), join multi-part replies, and surface
+    the executed query count as usage['search_count']."""
     seen = {}
 
-    def fake_post(endpoint, payload):
-        seen["endpoint"] = endpoint
-        seen["payload"] = payload
+    def fake_post(url, key, payload, extra_headers=None):
+        seen.update(url=url, key=key, payload=payload, headers=extra_headers)
         return {"candidates": [{
                     "content": {"parts": [{"text": '{"i1": '}, {"text": '"daily"}'}]},
                     "groundingMetadata": {"webSearchQueries": ["q1", "q2"]}}],
                 "usageMetadata": {"promptTokenCount": 50, "candidatesTokenCount": 5}}
 
-    monkeypatch.setattr(models, "_post_plain_json", fake_post)
-    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    monkeypatch.setattr(models, "_post_json", fake_post)
+    monkeypatch.setenv("GEMINI_API_KEY", "sekrit")
     ok, res = models.dispatch("gemini_free", "verify things", dry_run=False, web_search=True)
     assert ok and res["text"] == '{"i1": "daily"}'
     assert seen["payload"]["tools"] == [{"google_search": {}}]
+    assert seen["headers"] == {"x-goog-api-key": "sekrit"}
+    assert "sekrit" not in seen["url"]              # key must never ride the URL
     assert res["usage"] == {"prompt_tokens": 50, "completion_tokens": 5, "search_count": 2}
 
 
 def test_gemini_ungrounded_has_no_tools(monkeypatch):
-    def fake_post(endpoint, payload):
+    def fake_post(url, key, payload, extra_headers=None):
         assert "tools" not in payload
         return {"candidates": [{"content": {"parts": [{"text": "{}"}]}}]}
 
-    monkeypatch.setattr(models, "_post_plain_json", fake_post)
+    monkeypatch.setattr(models, "_post_json", fake_post)
     monkeypatch.setenv("GEMINI_API_KEY", "x")
     ok, res = models.dispatch("gemini_free", "x", dry_run=False)
     assert ok and "search_count" not in res["usage"]
@@ -198,6 +200,55 @@ def test_gemini_grounded_searches_bill_zero():
     # the per-search fee is kimi's; gemini free-tier grounding must stay ¥0
     assert models.estimate_cost(
         "gemini_free", {"prompt_tokens": 1_000_000, "search_count": 5}) == 0.0
+
+
+# --- retry/backoff fast-fail on exhausted billing ----------------------------
+
+class _FakeResp:
+    def __init__(self, status, body="", payload=None):
+        self.status_code = status
+        self.text = body
+        self.headers = {}
+        self._payload = payload or {}
+
+    def json(self):
+        return self._payload
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            import requests
+            raise requests.HTTPError(f"{self.status_code} Client Error", response=self)
+
+
+def _fake_requests(monkeypatch, responses, sleeps):
+    import requests
+    seq = list(responses)
+    monkeypatch.setattr(requests, "post", lambda *a, **k: seq.pop(0))
+    import time
+    monkeypatch.setattr(time, "sleep", lambda s: sleeps.append(s))
+
+
+def test_rate_limit_429_is_retried(monkeypatch):
+    sleeps = []
+    _fake_requests(monkeypatch,
+                   [_FakeResp(429, "You exceeded your current quota"),
+                    _FakeResp(200, payload={"ok": True})], sleeps)
+    assert models._post_json("http://x", "k", {}) == {"ok": True}
+    assert sleeps == [20]                            # one backoff, then success
+
+
+def test_depleted_credits_429_fails_fast(monkeypatch):
+    """'prepayment credits are depleted' cannot succeed on retry — the run must
+    fail immediately with the body surfaced, not sleep through 3 backoffs."""
+    import pytest, requests
+    sleeps = []
+    _fake_requests(monkeypatch,
+                   [_FakeResp(429, '{"error": {"message": "Your prepayment '
+                                   'credits are depleted.", '
+                                   '"status": "RESOURCE_EXHAUSTED"}}')], sleeps)
+    with pytest.raises(requests.HTTPError, match="depleted"):
+        models._post_json("http://x", "k", {})
+    assert sleeps == []                              # zero retries, zero waiting
 
 
 def test_web_search_round_limit(monkeypatch):

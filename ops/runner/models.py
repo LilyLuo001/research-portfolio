@@ -62,7 +62,11 @@ MODELS = {
 # Public docs quote ~$0.005/search; verify current billing before going live.
 KIMI_SEARCH_FEE = float(os.getenv("KIMI_SEARCH_FEE", "0.04"))
 WEB_SEARCH_TOOLS = [{"type": "builtin_function", "function": {"name": "$web_search"}}]
-MAX_SEARCH_ROUNDS = 8   # hard stop so a confused model can't loop searches forever
+# Hard stop so a confused model can't loop searches forever. Sized for real
+# batches: a spec like P1-T0-crash-B estimates "~a dozen searches" for its items
+# ALONE, and the sentinels need their own lookups — at 8 the model runs dry
+# before it can verify the fence. Cost stays capped by budget.py either way.
+MAX_SEARCH_ROUNDS = int(os.getenv("MAX_SEARCH_ROUNDS", "24"))
 
 # APPROXIMATE prices, ¥ per 1M tokens as (input, output). These feed budget.py's
 # caps only — VERIFY against each vendor's current pricing and tune freely; they
@@ -112,6 +116,11 @@ RETRY_STATUSES = {429, 500, 502, 503, 504}
 MAX_RETRIES = 3
 RETRY_BASE_DELAY = 20   # seconds; doubles per attempt (20, 40, 80)
 
+# 429 bodies that mean "account/billing exhausted", not "slow down": retrying
+# cannot succeed, so fail fast and surface the body (seen live 2026-07: Gemini
+# "Your prepayment credits are depleted" — needed AI Studio billing, not a wait).
+NO_RETRY_MARKERS = ("credits are depleted", "prepayment")
+
 
 def _raise_with_body(r):
     """raise_for_status, but append the response body to the message. A bare
@@ -138,7 +147,9 @@ def _post_json(url, key, payload, extra_headers=None):
     delay = RETRY_BASE_DELAY
     for attempt in range(MAX_RETRIES + 1):
         r = requests.post(url, headers=headers, json=payload, timeout=TIMEOUT)
-        if r.status_code not in RETRY_STATUSES or attempt == MAX_RETRIES:
+        exhausted = (r.status_code == 429
+                     and any(m in (r.text or "") for m in NO_RETRY_MARKERS))
+        if r.status_code not in RETRY_STATUSES or exhausted or attempt == MAX_RETRIES:
             _raise_with_body(r)
             return r.json()
         try:

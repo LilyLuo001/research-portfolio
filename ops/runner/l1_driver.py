@@ -28,9 +28,12 @@ Deliberately conservative:
   - A task whose output ops/l1/out/<task_id>.json already exists is NOT re-sent
     (a still-open task would otherwise re-bill every night). Re-arm a batch by
     deleting its output (or --force to re-run everything ready).
-  - VOID-SENTINEL / ERROR in live mode records a failed attempt in state.json
+  - VOID-SENTINEL in live mode records a failed attempt in state.json
     (runner --fail), so two bad nights surface the task in the ESCALATED section
-    of the plan and digest (arch §3 two-strike ladder).
+    of the plan and digest (arch §3 two-strike ladder). ERROR (HTTP / quota /
+    billing) does NOT strike — it isn't evidence about the model's work — and a
+    DONE clears any stale strikes. Reset counters by hand with
+    `runner.py --clear-fail <task>` (e.g. after fixing vendor billing).
 
 Each run writes ops/l1/out/_last_night.json (per-task statuses); the evening
 digest folds it into the "overnight L1 results" section (arch §2 L3 item ①).
@@ -106,8 +109,14 @@ def run(live=False, force=False):
         night[tid] = status
         if status == "DONE":
             dispatched += 1
-        elif live and status in ("VOID-SENTINEL", "ERROR"):
-            runner.cmd_fail(tid)     # two-strike ladder: bad nights count as attempts
+            if live:
+                runner.cmd_clear_fail(tid, quiet=True)   # success wipes stale strikes
+        elif live and status == "VOID-SENTINEL":
+            # Only a tripped fence strikes: the model completed and failed the
+            # known-answer check. ERROR (HTTP/quota/billing) says nothing about
+            # the model's work — it stays visible in the night report + digest
+            # but must not burn the task's two-strike ladder.
+            runner.cmd_fail(tid)
 
     if live or force:
         (OUT / "_last_night.json").write_text(json.dumps(

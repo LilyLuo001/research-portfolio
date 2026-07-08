@@ -7,8 +7,12 @@ __pycache__/
 ops/box/.env
 ops/box/cron.log
 ops/runner/spend_log.jsonl
-# L1 batch outputs — raw extraction, produced on the box
-ops/l1/out/
+# L1 batch outputs — raw extraction, produced on the box… EXCEPT the debug
+# surface: void post-mortems and the night report flow back through git so a
+# failed night can be diagnosed from any seat, not just on the box.
+ops/l1/out/*
+!ops/l1/out/*.void.json
+!ops/l1/out/_last_night.json
 # NOTE: ops/runner/state.json is deliberately TRACKED, not ignored — completion
 # and gate state must be visible to every seat's clone (the repo is the only
 # shared state), or a fresh seat re-assigns finished tasks. Only spend logs and
