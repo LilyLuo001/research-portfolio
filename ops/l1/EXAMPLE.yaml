@@ -1,0 +1,12 @@
+# Template spec. Copy to ops/l1/<task_id>.yaml (a real ready L1 task id, e.g.
+# E2-T1-facts.yaml) and fill in. This EXAMPLE.yaml is ignored by the driver
+# because "EXAMPLE" is not a task id in queue.yaml.
+worker: kimi              # optional; omit to use the task's worker from queue.yaml
+est_cost: 0.3             # ¥ estimate for the budget pre-check
+items:
+  - {id: i001, prompt: "Your first batch item prompt."}
+  - {id: i002, prompt: "Your second item prompt."}
+sentinels:                # REQUIRED — at least one known-answer item
+  - {id: S1, prompt: "What is 2+2? Reply with only the number.", expect: "4"}
+  - {id: S2, prompt: "A fact you have already verified, phrased for a 1-line answer.",
+     expect: "the answer you know"}
