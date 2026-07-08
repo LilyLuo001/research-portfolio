@@ -16,13 +16,28 @@ pure-function tests) import fine on a machine without it.
 
 Env keys: DEEPSEEK_API_KEY, KIMI_API_KEY, GLM_API_KEY, QWEN_API_KEY,
 GEMINI_API_KEY (Gemini free tier = ¥0 cross-vendor channel B).
+
+Kimi `$web_search`: implemented as the Moonshot builtin-function round-trip —
+declare {"type": "builtin_function", "function": {"name": "$web_search"}}; when
+the model answers finish_reason=="tool_calls", echo tool_call.function.arguments
+back as the tool message content (the search itself runs server-side), and loop
+until a normal finish. Pass web_search=True to dispatch() (spec key
+`web_search: true` in ops/l1/<task>.yaml). Each search leg bills a per-call fee
+on top of tokens (KIMI_SEARCH_FEE, ¥). Kimi host/model are env-overridable
+(KIMI_BASE_URL, KIMI_MODEL) — the platform is rebranding moonshot.cn → kimi.com,
+so verify both against https://platform.kimi.com/docs before going live.
+
+Gemini grounding (channel-B web tasks) is still NOT wired — plain generateContent
+only. Run E2-T1-facts-B style grounding by hand until it is.
 """
 import os
 
 ENDPOINTS = {
     "deepseek":   ("DEEPSEEK_API_KEY", "https://api.deepseek.com/v1/chat/completions"),
     "deepseek_r": ("DEEPSEEK_API_KEY", "https://api.deepseek.com/v1/chat/completions"),
-    "kimi":       ("KIMI_API_KEY",     "https://api.moonshot.cn/v1/chat/completions"),
+    "kimi":       ("KIMI_API_KEY",
+                   os.getenv("KIMI_BASE_URL", "https://api.moonshot.cn/v1").rstrip("/")
+                   + "/chat/completions"),
     "glm":        ("GLM_API_KEY",      "https://open.bigmodel.cn/api/paas/v4/chat/completions"),
     "qwen":       ("QWEN_API_KEY",     "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"),
     "gemini_free":("GEMINI_API_KEY",   "https://generativelanguage.googleapis.com/v1beta/models"),
@@ -32,11 +47,17 @@ ENDPOINTS = {
 MODELS = {
     "deepseek":   "deepseek-chat",
     "deepseek_r": "deepseek-reasoner",
-    "kimi":       "moonshot-v1-32k",
+    "kimi":       os.getenv("KIMI_MODEL", "moonshot-v1-32k"),
     "glm":        "glm-4-flash",
     "qwen":       "qwen-plus",
     "gemini_free":"gemini-2.5-flash",
 }
+
+# Moonshot builtin web search: per-invocation fee on top of tokens (¥).
+# Public docs quote ~$0.005/search; verify current billing before going live.
+KIMI_SEARCH_FEE = float(os.getenv("KIMI_SEARCH_FEE", "0.04"))
+WEB_SEARCH_TOOLS = [{"type": "builtin_function", "function": {"name": "$web_search"}}]
+MAX_SEARCH_ROUNDS = 8   # hard stop so a confused model can't loop searches forever
 
 # APPROXIMATE prices, ¥ per 1M tokens as (input, output). These feed budget.py's
 # caps only — VERIFY against each vendor's current pricing and tune freely; they
@@ -56,17 +77,24 @@ SYSTEM = ("You are a batch worker. Respond with ONLY a single JSON object mappin
 TIMEOUT = 120
 
 
-def dispatch(worker, prompt, sentinels=None, dry_run=True):
+def dispatch(worker, prompt, sentinels=None, dry_run=True, web_search=False):
     """Send one batch. Returns (ok, {"text", "usage"}) or (False, {"error"}).
-    Dry-run (or missing key) returns a stub so the scheduler runs offline."""
+    Dry-run (or missing key) returns a stub so the scheduler runs offline.
+    web_search=True (kimi only) runs the $web_search builtin round-trip; the
+    returned usage carries an extra "search_count" for cost accounting."""
     key_env, url = ENDPOINTS[worker]
     key = os.getenv(key_env)
     if dry_run or not key:
-        return True, {"text": f"[DRY-RUN {worker}] would POST {len(prompt)} chars to {url}",
+        tag = " +$web_search" if web_search else ""
+        return True, {"text": f"[DRY-RUN {worker}{tag}] would POST {len(prompt)} chars to {url}",
                       "usage": {}}
     try:
         if worker == "gemini_free":
             return _post_gemini(url, key, prompt)
+        if web_search:
+            if worker != "kimi":
+                return False, {"error": f"web_search is only wired for kimi, not {worker}"}
+            return _post_kimi_search(url, key, MODELS[worker], prompt)
         return _post_openai(url, key, MODELS[worker], prompt)
     except Exception as e:  # network / HTTP / parse — void the batch, don't crash
         return False, {"error": f"{type(e).__name__}: {e}"}
@@ -85,6 +113,51 @@ def _post_openai(url, key, model, prompt):
     r.raise_for_status()
     d = r.json()
     return True, {"text": d["choices"][0]["message"]["content"], "usage": d.get("usage", {})}
+
+
+def _post_json(url, key, payload):
+    import requests
+    r = requests.post(url,
+                      headers={"Authorization": f"Bearer {key}",
+                               "Content-Type": "application/json"},
+                      json=payload, timeout=TIMEOUT)
+    r.raise_for_status()
+    return r.json()
+
+
+def _post_kimi_search(url, key, model, prompt):
+    """Moonshot builtin $web_search round-trip (see module docstring).
+
+    The model decides when to search; each tool_calls turn is answered by
+    echoing the call's own `arguments` back as the tool result — the search
+    executes on Moonshot's side. Token usage is summed across all legs and
+    the number of search invocations is returned as usage["search_count"]."""
+    messages = [{"role": "system", "content": SYSTEM},
+                {"role": "user", "content": prompt}]
+    total = {"prompt_tokens": 0, "completion_tokens": 0, "search_count": 0}
+    for _ in range(MAX_SEARCH_ROUNDS):
+        d = _post_json(url, key, {"model": model, "temperature": 0,
+                                  "messages": messages, "tools": WEB_SEARCH_TOOLS})
+        u = d.get("usage", {}) or {}
+        total["prompt_tokens"] += u.get("prompt_tokens", 0) or 0
+        total["completion_tokens"] += u.get("completion_tokens", 0) or 0
+        choice = d["choices"][0]
+        msg = choice["message"]
+        if choice.get("finish_reason") == "tool_calls":
+            messages.append(msg)
+            for tc in msg.get("tool_calls") or []:
+                name = tc.get("function", {}).get("name", "")
+                args = tc.get("function", {}).get("arguments", "{}")
+                if name == "$web_search":
+                    total["search_count"] += 1
+                    content = args           # builtin: echo the arguments as-is
+                else:
+                    content = '{"error": "unsupported tool in this harness"}'
+                messages.append({"role": "tool", "tool_call_id": tc.get("id"),
+                                 "name": name, "content": content})
+            continue
+        return True, {"text": msg.get("content", ""), "usage": total}
+    return False, {"error": f"web_search exceeded {MAX_SEARCH_ROUNDS} rounds without finishing"}
 
 
 def _post_gemini(url, key, prompt):
@@ -143,10 +216,15 @@ def verify_sentinels(answers, sentinels):
 
 
 def estimate_cost(worker, usage):
-    """¥ cost of one call from its token usage. Missing usage -> 0.0."""
-    p = PRICES.get(worker)
-    if not p or not usage:
+    """¥ cost of one call from its token usage (+ per-search fee for kimi
+    $web_search legs, reported by dispatch as usage['search_count'])."""
+    if not usage:
         return 0.0
-    pin = usage.get("prompt_tokens", 0) or 0
-    pout = usage.get("completion_tokens", 0) or 0
-    return (pin * p[0] + pout * p[1]) / 1_000_000.0
+    p = PRICES.get(worker)
+    cost = 0.0
+    if p:
+        pin = usage.get("prompt_tokens", 0) or 0
+        pout = usage.get("completion_tokens", 0) or 0
+        cost = (pin * p[0] + pout * p[1]) / 1_000_000.0
+    cost += (usage.get("search_count", 0) or 0) * KIMI_SEARCH_FEE
+    return cost

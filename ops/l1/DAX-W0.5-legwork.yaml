@@ -1,0 +1,44 @@
+# DAX-W0.5-legwork — vintage + GDPval-license feasibility legwork (Kimi).
+# Source: docs/DAX_Amendment_v1_1.md Amendment 4 items (a)–(c). Feeds the
+# human/Project-session feasibility note (DAX-W0.5-feasibility), which the
+# PI signs at DAX-GATE-feasibility before any W3 protocol or W4 spend.
+#
+# ARMING (human, required): fill `sentinels` with facts you have verified on
+# the vendors' own pages (e.g. a model's current per-token price you checked).
+worker: kimi
+web_search: true
+est_cost: 2.0
+items:
+  - id: vintages-accessible
+    prompt: |
+      Task: For each OpenAI model generation relevant to a Nov-2021-to-present
+      capability event registry (GPT-3.5 family, GPT-4, GPT-4-Turbo, GPT-4o,
+      o1, and any later flagship/price-cut releases), determine which are
+      API-accessible TODAY, at what price (input/output per 1M tokens), citing
+      OpenAI's own pricing/deprecation pages. Output one row per vintage:
+      [model id, accessible today (yes/no/deprecated-date), current price,
+      source URL, retrieval date]. Rules: primary sources only (OpenAI docs/
+      pricing/deprecations pages); no answers from memory; UNKNOWN with your
+      search path if a page cannot be found; conflicting sources -> list both.
+  - id: openweight-standins
+    prompt: |
+      Task: For each RETIRED OpenAI vintage found above, list candidate
+      open-weight stand-in models proposed by published research or credible
+      benchmarks as capability-comparable (e.g. contemporaneous open models
+      with published benchmark parity claims). Output: [retired vintage,
+      candidate stand-in, parity evidence (benchmark + number), source URL,
+      caveat]. Rules: every parity claim needs a URL to the benchmark/paper;
+      no memory-based claims; explicitly mark "推断:" for any inference.
+  - id: gdpval-license
+    prompt: |
+      Task: Find the license terms for the GDPval open/gold subset: what may
+      be redistributed, what usage is permitted (research/commercial), any
+      attribution requirements, and where the dataset is hosted. Output:
+      [item, finding, verbatim quote (<=25 words), source URL]. Rules: only
+      the official repository/paper/host pages count; UNKNOWN if terms are
+      not stated; do not paraphrase license language — quote it.
+sentinels: []   # FILL BEFORE ARMING — e.g. a current price you verified:
+# sentinels:
+#   - {id: S1,
+#      prompt: "What is OpenAI's current API input price per 1M tokens for <model you checked>? Number and currency only.",
+#      expect: "<the price YOU read on openai.com/api/pricing>"}

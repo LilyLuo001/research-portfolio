@@ -100,3 +100,76 @@ def test_live_batch_blocked_by_budget(monkeypatch, tmp_path):
         "deepseek", [{"id": "d1", "prompt": "do"}], dispatch.SMOKE_SENTINELS,
         est_cost=5.0, live=True)                             # 5 > daily cap 1
     assert status == "SKIP-BUDGET" and "daily cap" in why
+
+
+# --- kimi $web_search builtin round-trip ------------------------------------
+
+def _search_then_answer(responses):
+    """Return a fake _post_json that pops canned responses in order."""
+    seq = list(responses)
+
+    def fake(url, key, payload):
+        # every leg must declare the builtin tool and echo prior tool messages
+        assert payload["tools"] == models.WEB_SEARCH_TOOLS
+        return seq.pop(0)
+    return fake
+
+
+def test_kimi_web_search_round_trip(monkeypatch):
+    tool_leg = {
+        "choices": [{"finish_reason": "tool_calls", "message": {
+            "role": "assistant", "content": "",
+            "tool_calls": [{"id": "c1", "type": "builtin_function",
+                            "function": {"name": "$web_search",
+                                         "arguments": '{"query": "NAV publish frequency"}'}}]}}],
+        "usage": {"prompt_tokens": 100, "completion_tokens": 10},
+    }
+    final_leg = {
+        "choices": [{"finish_reason": "stop",
+                     "message": {"role": "assistant", "content": '{"i1": "daily"}'}}],
+        "usage": {"prompt_tokens": 300, "completion_tokens": 20},
+    }
+    calls = []
+    real_fake = _search_then_answer([tool_leg, final_leg])
+
+    def spy(url, key, payload):
+        calls.append(payload)
+        return real_fake(url, key, payload)
+
+    monkeypatch.setattr(models, "_post_json", spy)
+    monkeypatch.setenv("KIMI_API_KEY", "x")
+    ok, res = models.dispatch("kimi", "verify things", dry_run=False, web_search=True)
+    assert ok and res["text"] == '{"i1": "daily"}'
+    # usage summed across legs + one search counted
+    assert res["usage"] == {"prompt_tokens": 400, "completion_tokens": 30, "search_count": 1}
+    # second leg must carry the echoed tool result (arguments as-is)
+    tool_msgs = [m for m in calls[1]["messages"] if m.get("role") == "tool"]
+    assert tool_msgs == [{"role": "tool", "tool_call_id": "c1", "name": "$web_search",
+                          "content": '{"query": "NAV publish frequency"}'}]
+
+
+def test_kimi_web_search_cost_includes_search_fee():
+    usage = {"prompt_tokens": 1_000_000, "completion_tokens": 0, "search_count": 2}
+    # kimi: 12¥/1M input -> 12.0, plus 2 searches
+    assert abs(models.estimate_cost("kimi", usage) - (12.0 + 2 * models.KIMI_SEARCH_FEE)) < 1e-9
+
+
+def test_web_search_rejected_for_non_kimi(monkeypatch):
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "x")
+    ok, res = models.dispatch("deepseek", "x", dry_run=False, web_search=True)
+    assert not ok and "only wired for kimi" in res["error"]
+
+
+def test_web_search_round_limit(monkeypatch):
+    tool_leg = {
+        "choices": [{"finish_reason": "tool_calls", "message": {
+            "role": "assistant", "content": "",
+            "tool_calls": [{"id": "c", "function": {"name": "$web_search",
+                                                    "arguments": "{}"}}]}}],
+        "usage": {},
+    }
+    monkeypatch.setattr(models, "_post_json",
+                        _search_then_answer([tool_leg] * models.MAX_SEARCH_ROUNDS))
+    monkeypatch.setenv("KIMI_API_KEY", "x")
+    ok, res = models.dispatch("kimi", "x", dry_run=False, web_search=True)
+    assert not ok and "exceeded" in res["error"]

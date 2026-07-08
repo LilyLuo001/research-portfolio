@@ -25,12 +25,18 @@ the repo. That is the entire coordination protocol.
 
 ## first run (offline, no keys needed)
 ```
-make init
 make plan            # shows the ready set + collision-free seat assignment
-make brief T=SH-runner
-make complete T=SH-runner   # simulate finishing a task, then re-run make plan
+make brief T=<task>  # write a prime-block brief for a ready task
+make complete T=<task>      # AFTER its contract passes; commit state.json with the merge
+make fail T=<task>          # record a failed attempt (2 strikes -> escalation in plan/digest)
 make gate T=DAX-GATE-feasibility V=pass
+make decisions       # apply gate verdicts written in ops/decisions.md
+make replicate       # weekly portfolio-wide replay: selfcheck + all tests + smoke
 ```
+
+Completion/gate state lives in the git-tracked `ops/runner/state.json` — the
+repo is the only shared state, so every seat's clone sees what is already done.
+Human gate replies go in `ops/decisions.md`; the box applies them every 30 min.
 
 ## bootstrap sequence (arch §6)
 1. `make init` — create the monorepo (manuals already copied to docs/).

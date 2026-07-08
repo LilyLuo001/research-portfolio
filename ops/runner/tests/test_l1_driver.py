@@ -29,7 +29,8 @@ def test_dispatches_task_with_spec(monkeypatch, tmp_path, capsys):
     }))
     seen = {}
 
-    def fake_run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False, out=None):
+    def fake_run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False,
+                       out=None, web_search=False):
         seen.update(worker=worker, n=len(items), live=live)
         import pathlib
         pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
@@ -68,3 +69,55 @@ def test_spec_without_sentinels_is_skipped(monkeypatch, tmp_path, capsys):
     monkeypatch.setattr(dispatch, "run_batch", fake_run_batch)
     assert l1_driver.run(live=True) == 0
     assert "no sentinels" in capsys.readouterr().out
+
+
+def test_existing_output_is_not_resent(monkeypatch, tmp_path, capsys):
+    """A still-open task with output already on disk must not re-bill nightly."""
+    _wire(monkeypatch, tmp_path, [{"id": "E2-T1-facts", "worker": "kimi", "human_gate": False}])
+    (tmp_path / "l1" / "E2-T1-facts.yaml").write_text(yaml.dump({
+        "items": [{"id": "i1", "prompt": "x"}],
+        "sentinels": [{"id": "S1", "prompt": "2+2?", "expect": "4"}]}))
+    (tmp_path / "l1" / "out").mkdir()
+    (tmp_path / "l1" / "out" / "E2-T1-facts.json").write_text('{"i1": "old answer"}')
+
+    def fake_run_batch(*a, **k):
+        raise AssertionError("must not re-dispatch a task that already has output")
+
+    monkeypatch.setattr(dispatch, "run_batch", fake_run_batch)
+    assert l1_driver.run(live=True) == 0
+    assert "not re-sending" in capsys.readouterr().out
+
+
+def test_void_records_attempt_and_night_report(monkeypatch, tmp_path):
+    _wire(monkeypatch, tmp_path, [{"id": "E2-T9b-scenarios", "worker": "kimi", "human_gate": False}])
+    (tmp_path / "l1" / "E2-T9b-scenarios.yaml").write_text(yaml.dump({
+        "items": [{"id": "i1", "prompt": "x"}],
+        "sentinels": [{"id": "S1", "prompt": "2+2?", "expect": "4"}]}))
+    monkeypatch.setattr(dispatch, "run_batch",
+                        lambda *a, **k: ("VOID-SENTINEL", "fence tripped", None))
+    failed = []
+    monkeypatch.setattr(runner, "cmd_fail", lambda tid: failed.append(tid))
+
+    assert l1_driver.run(live=True) == 0
+    assert failed == ["E2-T9b-scenarios"]          # two-strike ladder fed
+    import json
+    night = json.loads((tmp_path / "l1" / "out" / "_last_night.json").read_text())
+    assert night["results"]["E2-T9b-scenarios"] == "VOID-SENTINEL"
+
+
+def test_web_search_flag_threads_through(monkeypatch, tmp_path):
+    _wire(monkeypatch, tmp_path, [{"id": "P1-T0-crash-B", "worker": "kimi", "human_gate": False}])
+    (tmp_path / "l1" / "P1-T0-crash-B.yaml").write_text(yaml.dump({
+        "web_search": True,
+        "items": [{"id": "i1", "prompt": "sweep"}],
+        "sentinels": [{"id": "S1", "prompt": "2+2?", "expect": "4"}]}))
+    seen = {}
+
+    def fake_run_batch(worker, items, sentinels, est_cost=0.0, live=False,
+                       _corrupt=False, out=None, web_search=False):
+        seen["web_search"] = web_search
+        return "DONE", "ok", {}
+
+    monkeypatch.setattr(dispatch, "run_batch", fake_run_batch)
+    assert l1_driver.run(live=True) == 0
+    assert seen == {"web_search": True}

@@ -105,6 +105,17 @@ tasks:
     max_attempts: 2
     notes: "second channel for the collision sweep (different vendor family)."
 
+  - id: P1-T0-monitor
+    project: p1
+    owner_account: null
+    worker: kimi
+    depends_on: [P1-T0-crash]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "AMEND P1-1 月度维持: monthly Saglam–Tuzun / collision sweep (manual T0 阶段B). RECURRING: stays open; re-arm each month by deleting ops/l1/out/P1-T0-monitor.json — the L1 driver re-runs it the next night. Spec: ops/l1/P1-T0-monitor.yaml (web_search)."
+
   - id: P1-T2a-power
     project: p1
     owner_account: C
@@ -206,7 +217,7 @@ tasks:
     owner_account: A
     worker: project_pro
     depends_on: [DAX-GATE-feasibility]
-    inputs: [docs/DAX_Execution_Plan_with_AI_Agents.md, docs/DAX_Amendment_v1.1.md]
+    inputs: [docs/DAX_Execution_Plan_with_AI_Agents.md, docs/DAX_Amendment_v1_1.md]
     output_contract: null
     human_gate: false
     max_attempts: 3
@@ -279,6 +290,17 @@ tasks:
     max_attempts: 2
     notes: "10% stratified audit split DeepSeek-reasoning + Gemini-free (cross-vendor)."
 
+  - id: DAX-W3-mapB
+    project: dax
+    owner_account: A
+    worker: code_pro
+    depends_on: [DAX-W3-mapA, DAX-W2-data]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Mapping B (Tolan 2020 style): benchmark→ability→task layer. Mapping C (Eloundou rescoring) = DAX-W3-bulk with the frozen rubric. Both feed W5's three-mapping grid + the amendment-1 cross-mapping IV."
+
   - id: DAX-W4-panel
     project: dax
     owner_account: A
@@ -291,6 +313,67 @@ tasks:
     notes: "capability/cost panel. SPEND IS PROJECT DATA COST — own budget line, NOT the ¥500 agent budget (arch §4, amend 5). Cannot fit in ¥500/mo — flag to funder."
 
   # ===== E2 main line (races to publishable note) =====
+  # T2/T3/T5 are panel_daily's REAL data producers (flows.parquet,
+  # oracle_updates.parquet, decomposition.parquet — E2 manual T6a inputs).
+  # Verbatim prompts: docs/E2_执行手册_Prompt与Agent指派.md (v1.0) — see
+  # docs/README.md for the v1.0/v1.1/v1.2 precedence order.
+  - id: E2-T2-dune
+    project: e2
+    owner_account: null
+    worker: deepseek
+    depends_on: [E2-T1-facts]
+    inputs: [e2/registry.csv]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Dune SQL + subgraph queries (manual T2, prompt in v1.0). Only user-supplied table names; NEED_INFO otherwise. Two failures → Sonnet."
+
+  - id: E2-T3-index
+    project: e2
+    owner_account: B
+    worker: code_pro
+    depends_on: [E2-T2-dune]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "index pipeline (manual T3, prompt in v1.0) → flows.parquet, oracle_updates.parquet, rates.parquet + reconcile."
+
+  - id: E2-T5-design
+    project: e2
+    owner_account: B
+    worker: project_pro
+    depends_on: [E2-T3-index]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "AMEND E2-5: decomposition algorithm design+impl → claude.ai (Pro). 不省钱区 → decomposition.parquet."
+
+  - id: E2-T5-blind
+    project: e2
+    owner_account: null
+    worker: deepseek_r
+    depends_on: [E2-T3-index]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_of: E2-T5-design
+    max_attempts: 2
+    notes: "AMEND E2-5: cross-vendor blind review of the decomposition design."
+
+  - id: E2-GATE-t5
+    project: e2
+    owner_account: null
+    worker: script
+    depends_on: [E2-T5-design, E2-T5-blind]
+    inputs: []
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "human arbitration of design/blind-review divergences + the 10 ground-truth manual labels (v1.2: 更加不可省)."
+
   - id: E2-T4a-design
     project: e2
     owner_account: B
@@ -326,12 +409,12 @@ tasks:
     project: e2
     owner_account: null
     worker: deepseek
-    depends_on: [E2-T4b-impl, E2-T6b-nav]
+    depends_on: [E2-T4b-impl, E2-T6b-nav, E2-T3-index, E2-GATE-t5]
     inputs: []
     output_contract: panel_daily
     human_gate: false
     max_attempts: 2
-    notes: "build_panel.py + assert_panel.py 15 assertions. Contract check is the gate to T7/T15."
+    notes: "build_panel.py + assert_panel.py 15 assertions. Contract check is the gate to T7/T15. Scaffolding (synthetic inputs) is merged; DONE means the panel built from the REAL T3/T4b/T5/T6b outputs passes A1–A15."
 
   - id: E2-T7-facts
     project: e2
@@ -505,6 +588,17 @@ tasks:
     max_attempts: 1
     notes: "human門 3: DECISION_NEEDED on caliber conflicts."
 
+  - id: P1-T4-replication
+    project: p1
+    owner_account: C
+    worker: code_pro
+    depends_on: [P1-T2-wrds]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Saglam–Tuzun core-table replication (manual T4) — kill-switch 第3关: direction match + magnitude within 2x = PASS. No specification searching; report the first run."
+
   - id: P1-T5-main
     project: p1
     owner_account: C
@@ -532,7 +626,7 @@ tasks:
     project: dax
     owner_account: A
     worker: code_pro
-    depends_on: [DAX-GATE1-memo, DAX-W4-panel, DAX-W3-audit]
+    depends_on: [DAX-GATE1-memo, DAX-W4-panel, DAX-W3-audit, DAX-W3-mapB]
     inputs: []
     output_contract: dax_panel
     human_gate: false
@@ -572,11 +666,22 @@ tasks:
     notes: "AMEND DAX-3: DECOUPLED public index release (Month 4–5). Index panel + chronology + codebook + protocol + code. EXCLUDES outcomes/first-stage/NDA. CI NDA check = release blocker. Portfolio's highest-value external milestone."
 
   # ===== E2 background =====
+  - id: E2-T9b-scenarios
+    project: e2
+    owner_account: null
+    worker: kimi
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "scenario calibration (manual T9b): scenarios.yaml draft, every value with a first-hand URL; no URL → UNKNOWN. Feeds T9a."
+
   - id: E2-T9a-engine
     project: e2
     owner_account: B
     worker: code_pro
-    depends_on: [E2-T6a-panel]
+    depends_on: [E2-T6a-panel, E2-T9b-scenarios]
     inputs: []
     output_contract: null
     human_gate: false

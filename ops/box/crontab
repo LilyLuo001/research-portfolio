@@ -5,17 +5,18 @@
 # --- shared prologue: cd into the repo, load L1 keys, use the venv python ---
 # (cron has a minimal env, so we set PATH and source the box .env explicitly)
 
-# every 30 min: pull the latest code, then expire stale leases so abandoned
+# every 30 min: pull the latest code, apply any human decisions from
+# ops/decisions.md (the L3 reply channel), then expire stale leases so abandoned
 # tasks re-queue. The pull keeps the box current after merges (ff-only so it
 # never conflicts with the box's own digest pushes; failures are logged, not fatal).
-*/30 * * * *  cd $HOME/portfolio && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
+*/30 * * * *  cd $HOME/portfolio && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --apply-decisions >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
 
 # 02:00 nightly: run every READY L1 batch that has a spec in ops/l1/ (sentinel-
 # fenced, budget-capped). Tasks without a spec are skipped ("waiting for input").
 0 2 * * *  cd $HOME/portfolio && set -a && . ops/box/.env && set +a && .venv/bin/python ops/runner/l1_driver.py --live >> ops/box/cron.log 2>&1
 
 # 21:00 nightly: write the evening digest, then push briefs + digest to GitHub
-0 21 * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
+0 21 * * *  cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest ops/runner/state.json ops/decisions.md && git commit -q -m "box: nightly digest $(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 
 # NOTE: give each ready L1 task a spec at ops/l1/<task_id>.yaml (see ops/l1/README.md)
 # and the 02:00 job will run it. L1 output lands in ops/l1/out/ as raw extraction;

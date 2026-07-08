@@ -8,6 +8,7 @@ A spec describes one sentinel-fenced batch:
 
 ```yaml
 worker: kimi            # optional — defaults to the task's worker in queue.yaml
+web_search: true        # optional — Kimi $web_search builtin round-trip (kimi only)
 est_cost: 0.5           # ¥ estimate, for the budget pre-check
 items:                  # the real batch (each needs a unique id)
   - {id: r001, prompt: "Verify: <issuer> NAV publish frequency? cite the doc."}
@@ -16,6 +17,17 @@ sentinels:              # REQUIRED known-answer fence (drawn from YOUR domain)
   - {id: S1, prompt: "What is 2+2? number only.", expect: "4"}
   - {id: S2, prompt: "<a fact you already verified>", expect: "<its answer>"}
 ```
+
+**Drafts in this directory** (P1-T0-crash-B, P1-T0-monitor, DAX-W0.5-legwork,
+E2-T1-facts, E2-T9b-scenarios) carry real items lifted from the manuals but
+`sentinels: []` — the fence must be facts *you* verified, so the human arms
+each spec by filling sentinels. Until then the driver skips it as unsafe.
+
+**Re-runs:** a task whose `out/<task_id>.json` exists is not re-sent (an open
+task would otherwise re-bill every night). Re-arm by deleting the output (the
+monthly P1-T0-monitor works exactly this way) or run the driver with --force.
+Live VOID-SENTINEL / ERROR results record a failed attempt (two-strike ladder);
+each run writes out/_last_night.json, which the evening digest reports.
 
 Output (the model's `id -> answer` map) is written to `ops/l1/out/<task_id>.json`.
 `out/` is git-ignored — L1 output is **raw extraction**: a downstream code step
