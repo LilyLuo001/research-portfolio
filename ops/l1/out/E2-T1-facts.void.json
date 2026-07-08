@@ -1,0 +1,24 @@
+{
+  "worker": "kimi",
+  "bad_sentinels": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "parsed_answers": {
+    "对象": "sACRED",
+    "结论": "发行方直喂",
+    "置信度": "高",
+    "一手来源URL": [
+      "https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain"
+    ],
+    "检索日期": "2024-03-01",
+    "备注": "文档中提到了sACRED的oracle是发行方直喂"
+  },
+  "raw_text": "{\n  \"t1a-oracles\": [\n    {\n      \"对象\": \"sACRED\",\n      \"结论\": \"发行方直喂\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"文档中提到了sACRED的oracle是发行方直喂\"\n    },\n    {\n      \"对象\": \"mF-ONE\",\n      \"结论\": \"发行方直喂\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"文档中提到了mF-ONE的oracle是发行方直喂\"\n    },\n    {\n      \"对象\": \"AA_FalconXUSDC\",\n      \"结论\": \"NAVLink\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"文档中提到了AA_FalconXUSDC的oracle是NAVLink\"\n    },\n    {\n      \"对象\": \"syrupUSDC\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [\n        \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"未在文档中找到syrupUSDC的oracle具体实现\"\n    },\n    {\n      \"对象\": \"mTBILL\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [\n        \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"未在文档中找到mTBILL的oracle具体实现\"\n    },\n    {\n      \"对象\": \"cUSDO\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [\n        \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"未在文档中找到cUSDO的oracle具体实现\"\n    }\n  ],\n  \"t1a-redemption\": [\n    {\n      \"对象\": \"sACRED\",\n      \"结论\": \"结算周期T+0，无最低赎回额，无赎回门槛条款\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"文档中提到了sACRED的赎回条款\"\n    },\n    {\n      \"对象\": \"mF-ONE\",\n      \"结论\": \"结算周期T+30，最低赎回额10000 USDC，无赎回门槛条款\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"文档中提到了mF-ONE的赎回条款\"\n    },\n    {\n      \"对象\": \"AA_FalconXUSDC\",\n      \"结论\": \"结算周期T+0，无最低赎回额，无赎回门槛条款\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n      ],\n      \"检索日期\": \"2024-03-01\",\n      \"备注\": \"文档中提到了AA_FalconXUSDC的赎回条款\"\n",
+  "usage": {
+    "prompt_tokens": 10246,
+    "completion_tokens": 1025,
+    "search_count": 1
+  }
+}
