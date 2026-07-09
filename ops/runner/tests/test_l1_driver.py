@@ -31,7 +31,7 @@ def test_dispatches_task_with_spec(monkeypatch, tmp_path, capsys):
     seen = {}
 
     def fake_run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False,
-                       out=None, web_search=False):
+                       out=None, web_search=False, max_items_per_call=None):
         seen.update(worker=worker, n=len(items), live=live)
         import pathlib
         pathlib.Path(out).parent.mkdir(parents=True, exist_ok=True)
@@ -171,10 +171,12 @@ def test_web_search_flag_threads_through(monkeypatch, tmp_path):
     seen = {}
 
     def fake_run_batch(worker, items, sentinels, est_cost=0.0, live=False,
-                       _corrupt=False, out=None, web_search=False):
+                       _corrupt=False, out=None, web_search=False,
+                       max_items_per_call=None):
         seen["web_search"] = web_search
+        seen["max_items_per_call"] = max_items_per_call
         return "DONE", "ok", {}
 
     monkeypatch.setattr(dispatch, "run_batch", fake_run_batch)
     assert l1_driver.run(live=True) == 0
-    assert seen == {"web_search": True}
+    assert seen == {"web_search": True, "max_items_per_call": None}

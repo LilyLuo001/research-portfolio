@@ -104,7 +104,8 @@ def run(live=False, force=False):
 
         status, detail, _ = dispatch.run_batch(worker, items, sentinels,
                                                est_cost=est, live=live, out=str(outp),
-                                               web_search=bool(spec.get("web_search")))
+                                               web_search=bool(spec.get("web_search")),
+                                               max_items_per_call=spec.get("max_items_per_call"))
         print(f"  {_MARK.get(status, '?')} {tid:<20} [{status}] {detail}")
         night[tid] = status
         if status == "DONE":

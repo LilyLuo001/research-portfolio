@@ -68,58 +68,81 @@ def _simulate_answers(items, sentinels, corrupt=False):
 
 
 def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False, out=None,
-              web_search=False):
-    """Dispatch one sentinel-fenced batch.
+              web_search=False, max_items_per_call=None):
+    """Dispatch one sentinel-fenced batch, optionally chunked.
+    With max_items_per_call set, items are split into chunks of that size, the
+    FULL sentinel set rides along with every chunk, chunks go out sequentially,
+    and the answer maps merge into one output. Fence stays strict: any chunk
+    whose sentinels fail voids the WHOLE task (one attempt, not one per chunk).
     Returns (status, detail, answers) with status in
     {DONE, VOID-SENTINEL, SKIP-BUDGET, SKIP-NOKEY, ERROR}."""
     key_env, _url = models.ENDPOINTS[worker]
     if live and not os.getenv(key_env):
         return "SKIP-NOKEY", f"{worker}: no {key_env} in env", None
+
+    if max_items_per_call and max_items_per_call > 0:
+        chunks = [items[i:i + max_items_per_call]
+                  for i in range(0, len(items), max_items_per_call)]
+    else:
+        chunks = [items]
+    n_chunks = len(chunks)
+
     if live:
-        ok, why = budget.can_dispatch(worker, est_cost)   # pre-check with your estimate
+        # sentinels re-ship with every chunk, so scale the estimate accordingly
+        ok, why = budget.can_dispatch(worker, est_cost * n_chunks)
         if not ok:
             return "SKIP-BUDGET", f"{worker}: {why}", None
 
-    prompt = build_prompt(items, sentinels)
-    ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live,
-                              web_search=web_search)
-    if not ok:
-        return "ERROR", f"{worker}: {res.get('error', 'dispatch failed')}", None
+    merged = {}
+    total_cost = 0.0
+    for ci, chunk in enumerate(chunks):
+        prompt = build_prompt(chunk, sentinels)
+        ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live,
+                                  web_search=web_search)
+        if not ok:
+            return "ERROR", f"{worker}: {res.get('error', 'dispatch failed')}", None
 
-    if live:
-        answers = models.parse_answers(res["text"])
-        cost = models.estimate_cost(worker, res.get("usage"))
-        budget.log(worker, cost)      # tokens are billed whether or not the fence passes
-    else:
-        answers = _simulate_answers(items, sentinels, corrupt=_corrupt)
-        cost = 0.0
+        if live:
+            answers = models.parse_answers(res["text"])
+            cost = models.estimate_cost(worker, res.get("usage"))
+            budget.log(worker, cost)  # tokens are billed whether or not the fence passes
+            total_cost += cost
+        else:
+            answers = _simulate_answers(chunk, sentinels, corrupt=_corrupt and ci == 0)
+            cost = 0.0
 
-    passed, bad = models.verify_sentinels(answers, sentinels)
-    if not passed:
-        why = f"sentinels failed {bad}"
-        if live and res.get("finish_reason") == "length":
-            why = (f"reply TRUNCATED at the output-token cap before the "
-                   f"sentinels (finish_reason=length; missed {bad})")
-        elif live and not answers:
-            why = "reply had no parseable JSON answer-map (all sentinels void)"
-        if live and out:
-            # discarded downstream, but keep the raw reply for the morning
-            # post-mortem — a voided batch you can't inspect can't be fixed.
-            void = pathlib.Path(out).with_suffix(".void.json")
-            void.write_text(json.dumps(
-                {"worker": worker, "bad_sentinels": bad, "parsed_answers": answers,
-                 "finish_reason": res.get("finish_reason"),
-                 "raw_text": res["text"], "usage": res.get("usage", {})},
-                ensure_ascii=False, indent=2))
-            why += f" — raw reply kept at {void.name}"
-        return "VOID-SENTINEL", f"{worker}: {why} — batch discarded", None
+        passed, bad = models.verify_sentinels(answers, sentinels)
+        if not passed:
+            why = f"sentinels failed {bad}"
+            if live and res.get("finish_reason") == "length":
+                why = (f"reply TRUNCATED at the output-token cap before the "
+                       f"sentinels (finish_reason=length; missed {bad})")
+            elif live and not answers:
+                why = "reply had no parseable JSON answer-map (all sentinels void)"
+            if n_chunks > 1:
+                why = f"chunk {ci + 1}/{n_chunks}: " + why
+            if live and out:
+                # discarded downstream, but keep the raw reply for the morning
+                # post-mortem — a voided batch you can't inspect can't be fixed.
+                void = pathlib.Path(out).with_suffix(".void.json")
+                void.write_text(json.dumps(
+                    {"worker": worker, "bad_sentinels": bad, "parsed_answers": answers,
+                     "finish_reason": res.get("finish_reason"),
+                     "chunk": ci + 1, "n_chunks": n_chunks,
+                     "raw_text": res["text"], "usage": res.get("usage", {})},
+                    ensure_ascii=False, indent=2))
+                why += f" — raw reply kept at {void.name}"
+            return "VOID-SENTINEL", f"{worker}: {why} — batch discarded", None
 
-    if live:
-        if out:
-            pathlib.Path(out).write_text(json.dumps(answers, ensure_ascii=False, indent=2))
+        merged.update(answers)
 
-    mode = f"LIVE ¥{cost:.3f}" if live else "dry-run"
-    return "DONE", f"{worker}: {len(items)} items + {len(sentinels)} sentinels OK ({mode})", answers
+    if live and out:
+        pathlib.Path(out).write_text(json.dumps(merged, ensure_ascii=False, indent=2))
+
+    mode = f"LIVE ¥{total_cost:.3f}" if live else "dry-run"
+    chunk_note = f" in {n_chunks} chunks" if n_chunks > 1 else ""
+    return ("DONE", f"{worker}: {len(items)} items + {len(sentinels)} sentinels "
+            f"OK{chunk_note} ({mode})", merged)
 
 
 def cmd_smoke():

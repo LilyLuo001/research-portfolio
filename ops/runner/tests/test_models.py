@@ -355,3 +355,36 @@ def test_web_search_round_limit(monkeypatch):
     monkeypatch.setenv("KIMI_API_KEY", "x")
     ok, res = models.dispatch("kimi", "x", dry_run=False, web_search=True)
     assert not ok and "exceeded" in res["error"]
+
+
+# --- chunked dispatch (max_items_per_call) ----------------------------------
+
+def _chunk_fixtures():
+    items = [{"id": f"i{n}", "prompt": "q"} for n in range(3)]
+    sentinels = [{"id": "S1", "prompt": "check", "expect": "ok"}]
+    return items, sentinels
+
+
+def test_chunked_dry_run_merges_all_chunks():
+    items, sentinels = _chunk_fixtures()
+    status, detail, answers = dispatch.run_batch("kimi", items, sentinels,
+                                                 max_items_per_call=1)
+    assert status == "DONE"
+    assert "3 chunks" in detail
+    assert set(answers) == {"i0", "i1", "i2", "S1"}
+
+
+def test_chunked_sentinel_failure_voids_whole_task():
+    items, sentinels = _chunk_fixtures()
+    status, detail, answers = dispatch.run_batch("kimi", items, sentinels,
+                                                 max_items_per_call=1, _corrupt=True)
+    assert status == "VOID-SENTINEL"
+    assert "chunk 1/3" in detail
+    assert answers is None
+
+
+def test_unchunked_path_unchanged():
+    items, sentinels = _chunk_fixtures()
+    status, detail, answers = dispatch.run_batch("kimi", items, sentinels)
+    assert status == "DONE"
+    assert "chunk" not in detail
