@@ -254,6 +254,19 @@ def test_gemini_ungrounded_has_no_tools(monkeypatch):
     assert ok and "search_count" not in res["usage"]
 
 
+def test_gemini_max_tokens_maps_to_length(monkeypatch):
+    """Gemini says MAX_TOKENS where OpenAI says length — dispatch.py's
+    truncation diagnosis must fire for both vendors."""
+    def fake_post(url, key, payload, extra_headers=None):
+        return {"candidates": [{"content": {"parts": [{"text": '{"x": "cut'}]},
+                                "finishReason": "MAX_TOKENS"}]}
+
+    monkeypatch.setattr(models, "_post_json", fake_post)
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    ok, res = models.dispatch("gemini_free", "x", dry_run=False)
+    assert ok and res["finish_reason"] == "length"
+
+
 def test_gemini_grounded_searches_bill_zero():
     # the per-search fee is kimi's; gemini free-tier grounding must stay ¥0
     assert models.estimate_cost(

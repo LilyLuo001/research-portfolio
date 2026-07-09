@@ -52,11 +52,11 @@ ENDPOINTS = {
 MODELS = {
     "deepseek":   "deepseek-chat",
     "deepseek_r": "deepseek-reasoner",
-    # kimi-latest = Moonshot's alias for their newest model. The old default
-    # moonshot-v1-32k (2024-era) under-searched (1 search/batch), fabricated
-    # retrieval dates from its training era, and skipped items — observed live
-    # 2026-07. The manual specs K2.6; verify the exact id + $web_search support
-    # at platform.kimi.com/docs and pin via KIMI_MODEL if needed.
+    # PIN KIMI_MODEL in ops/box/.env — run `python ops/runner/models.py --list
+    # kimi` (with the key in env) to see which ids YOUR key can use, and pick
+    # the newest K-series one. History: moonshot-v1-32k (2024-era) worked but
+    # under-searched and fabricated dates; 'kimi-latest' 404'd on this account
+    # ("Not found the model kimi-latest or Permission denied", 2026-07-09).
     "kimi":       os.getenv("KIMI_MODEL", "kimi-latest"),
     "glm":        "glm-4-flash",
     "qwen":       "qwen-plus",
@@ -239,7 +239,10 @@ def _post_gemini(url, key, prompt, web_search=False):
     if web_search:
         gm = cand.get("groundingMetadata") or {}
         usage["search_count"] = len(gm.get("webSearchQueries") or [])
-    return True, {"text": text, "usage": usage}
+    fr = cand.get("finishReason")
+    # normalize to the OpenAI-style value dispatch.py checks for truncation
+    finish = "length" if fr == "MAX_TOKENS" else (fr.lower() if fr else None)
+    return True, {"text": text, "usage": usage, "finish_reason": finish}
 
 
 def parse_answers(text):
@@ -306,3 +309,45 @@ def estimate_cost(worker, usage):
     if worker == "kimi":
         cost += (usage.get("search_count", 0) or 0) * KIMI_SEARCH_FEE
     return cost
+
+
+def list_models(worker):
+    """Ask the vendor which model ids THIS key can use. Vendors rebrand and
+    gate models per account (live 2026-07: 'kimi-latest' 404'd with
+    'Permission denied') — the /models endpoint is the ground truth, not docs
+    or guesses. Returns a list of id strings; raises on HTTP errors."""
+    import requests
+    key_env, url = ENDPOINTS[worker]
+    key = os.getenv(key_env)
+    if not key:
+        raise RuntimeError(f"no {key_env} in env — source ops/box/.env first")
+    if worker == "gemini_free":
+        r = requests.get(url, headers={"x-goog-api-key": key}, timeout=30)
+        _raise_with_body(r)
+        return [m.get("name", "") for m in r.json().get("models", [])]
+    base = url.rsplit("/chat/completions", 1)[0]
+    r = requests.get(f"{base}/models",
+                     headers={"Authorization": f"Bearer {key}"}, timeout=30)
+    _raise_with_body(r)
+    return [m.get("id", "") for m in r.json().get("data", [])]
+
+
+def main():
+    import argparse
+    ap = argparse.ArgumentParser(description="L1 model-client utilities")
+    ap.add_argument("--list", metavar="WORKER", choices=sorted(ENDPOINTS),
+                    help="list the model ids this worker's API key can use "
+                         "(needs the key in env; pin your pick via KIMI_MODEL etc.)")
+    a = ap.parse_args()
+    if a.list:
+        for mid in list_models(a.list):
+            marker = "  <- current default" if mid == MODELS.get(a.list) else ""
+            print(f"{mid}{marker}")
+        return 0
+    ap.print_help()
+    return 0
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())
