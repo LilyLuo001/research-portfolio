@@ -22,6 +22,25 @@ Paste the corresponding verbatim prompt from the manual/amendment for DAX-W0.5-f
 then work. Plan → execute → **commit early and often** (if the 5h window or weekly
 cap cuts the session, the next one resumes from the last commit, losing minutes).
 
+## Wave-1 specifics (L2-PIPELINE.md, added 2026-07-09)
+- the kimi legwork batch is PARKED (kimi $web_search benched, Wave-0
+  decision) — do the legwork INLINE in this Project session (Pro Research).
+  The checklist is the three item prompts in `ops/l1/DAX-W0.5-legwork.yaml`:
+  (1) vintage API accessibility + current prices from OpenAI's own
+  pricing/deprecation pages, (2) open-weight stand-ins for retired vintages
+  with benchmark-parity URLs, (3) GDPval license terms quoted verbatim.
+  Same discipline as the batch spec: primary sources only, per-row URL +
+  retrieval date, UNKNOWN with the search path if a page can't be found.
+- the prior kimi output was QUARANTINED for fabrications (invented
+  gdpval.mit.edu URL, fabricated retrieval date) — do not reuse anything
+  from ops/l1/out/ for this task; there is no valid prior output.
+- output path the gate reads: `dax/memo/feasibility_note.md`
+  (DAX-GATE-feasibility's declared input). PI signs it at the gate → that
+  unlocks DAX-W1-memo, W2-data, W3-mapA, W4-panel.
+- seat note: queue owner is A, but if seat A is on DAX-W0-infra this block
+  goes to floater seat E (runner assignment rule 2) — either way it lands
+  on branch task/DAX-W0.5-feasibility, merged after review.
+
 ## definition of done
 - output written to its contracted path; `python ops/runner/contracts.py <none> <path>` returns PASS
 - lineage JSON emitted: `python ops/runner/lineage.py <output> <inputs...>` (inputs, hashes, code version, timestamp)

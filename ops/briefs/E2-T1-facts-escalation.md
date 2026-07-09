@@ -1,4 +1,13 @@
 # PRIME-BLOCK BRIEF — E2-T1-facts (ESCALATED to seat D)
+
+> **⛔ SUPERSEDED 2026-07-09 (same day) — do NOT lease this task.**
+> A delegated Anthropic L2 session already executed the block: channel A at
+> `ops/l1/out/E2-T1-facts.json` (sentinels 3/3 PASS), union check at
+> `e2/t1_union_check.md` incl. on-chain explorer verification. What remains
+> is OWNER work only: arbitrate the union check's 3 conflicts, then write
+> `complete E2-T1-facts` in ops/decisions.md. Kept for the record of the
+> escalation design; see L2-PIPELINE.md §3 for live status.
+
 _hand-written 2026-07-09 per the two-strike ladder (arch §3 rule 4): 4 kimi
 strikes recorded, task parked NEED_HUMAN in ops/decisions.md. A failed L1
 worker escalates to a Claude Code block on seat D so it never steals a
