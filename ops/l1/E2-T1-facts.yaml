@@ -11,6 +11,24 @@
 # ARMING (human, required): sentinels must be facts you personally verified
 # on-chain or in issuer docs (e.g. an oracle implementation you already
 # checked on a block explorer).
+#
+# PARKED 2026-07-09 after 3 kimi strikes — strike post-mortems, so nobody has
+# to re-read the void.json files:
+#   1. kimi-latest 404 → infra artifact, fixed by the KIMI_MODEL=kimi-k2.6 pin.
+#   2. prose drift: reply opened a JSON block and never closed it (an
+#      instruction-following miss on the long Chinese batch, NOT garbage) —
+#      fixed generically in dispatch.py (6d223e7: output contract restated
+#      after the items, scoped to the final reply).
+#   3. with that fix in: k2.6 stalls on the multi-round $web_search leg and
+#      truncates at the output cap before the sentinels (finish_reason=length)
+#      — a server-side clamp; no L1_MAX_TOKENS value changes it.
+# NEXT CHEAP RETRY (before spending any seat time): split this 4-item batch
+# into one-item batches — fewer search rounds and a smaller reply per call is
+# exactly what the stall/truncation failure mode calls for. manual:true keeps
+# the nightly driver from re-billing and re-striking it meanwhile; when
+# re-running, clear the infra-artifact strikes with runner.py --clear-fail
+# plus a note.
+manual: true
 worker: kimi
 web_search: true
 est_cost: 3.0
