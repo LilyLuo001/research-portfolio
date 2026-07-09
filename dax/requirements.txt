@@ -1,0 +1,17 @@
+# DAX Python stack (W0 req 3) — pin on first real install (pip freeze after
+# `pip install -r requirements.txt` in a Python 3.11 venv on the analysis box;
+# versions below are floors, not locks, until W2 starts).
+pandas>=2.1
+polars>=0.20
+statsmodels>=0.14
+linearmodels>=5.3
+pyfixest>=0.24
+ipumspy>=0.4
+sentence-transformers>=2.2
+pyyaml
+pyarrow
+requests
+pytest
+# R 4.x side (installed separately, not via pip): did, HonestDiD, fixest,
+# didimputation — lock with renv::snapshot() when the first R stage lands.
+# IPUMS API key: env var IPUMS_API_KEY on the analysis box only — never in repo.
