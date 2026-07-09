@@ -89,7 +89,7 @@ SYSTEM = ("You are a batch worker. Respond with ONLY a single JSON object mappin
           "each input item's id to its answer. No prose, no markdown fences. "
           "Answer EVERY item, including the short check questions.")
 
-TIMEOUT = 120
+TIMEOUT = 420  # kimi K2 web-search legs can exceed 120s (live 2026-07-09)
 
 # Vendors cap completions LOW when max_tokens is unset (Moonshot ~1024 — seen
 # live 2026-07: a 4-item batch truncated mid-JSON at completion_tokens=1025,
@@ -172,8 +172,9 @@ def _post_json(url, key, payload, extra_headers=None):
 
 
 def _post_openai(url, key, model, prompt):
+    # kimi K2-series models reject any temperature other than 1 (live 2026-07-09)
     d = _post_json(url, key,
-                   {"model": model, "temperature": 0,
+                   {"model": model, "temperature": 1 if model.startswith("kimi") else 0,
                     "max_tokens": MAX_OUTPUT_TOKENS,
                     "messages": [{"role": "system", "content": SYSTEM},
                                  {"role": "user", "content": prompt}]})
@@ -193,7 +194,8 @@ def _post_kimi_search(url, key, model, prompt):
                 {"role": "user", "content": prompt}]
     total = {"prompt_tokens": 0, "completion_tokens": 0, "search_count": 0}
     for _ in range(MAX_SEARCH_ROUNDS):
-        d = _post_json(url, key, {"model": model, "temperature": 0,
+        d = _post_json(url, key, {"model": model,
+                                  "temperature": 1 if model.startswith("kimi") else 0,
                                   "max_tokens": MAX_OUTPUT_TOKENS,
                                   "messages": messages, "tools": WEB_SEARCH_TOOLS})
         u = d.get("usage", {}) or {}
