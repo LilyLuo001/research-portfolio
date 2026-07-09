@@ -26,7 +26,8 @@ def claim(task, account, ttl):
     f = LEASES / f"{task}.lease"
     if f.exists():
         d = json.loads(f.read_text())
-        exp = datetime.datetime.fromisoformat(d["expires_at"])
+        # fromisoformat is 3.7+; box venv is 3.6
+        exp = datetime.datetime.strptime(d["expires_at"][:19], "%Y-%m-%dT%H:%M:%S")
         if exp > datetime.datetime.utcnow():
             print(f"REFUSED: {task} already leased by seat {d['account']} "
                   f"until {d['expires_at']}Z"); return 1
@@ -64,7 +65,8 @@ def lst():
     now = datetime.datetime.utcnow()
     for f in sorted(LEASES.glob("*.lease")):
         d = json.loads(f.read_text())
-        exp = datetime.datetime.fromisoformat(d["expires_at"])
+        # fromisoformat is 3.7+; box venv is 3.6
+        exp = datetime.datetime.strptime(d["expires_at"][:19], "%Y-%m-%dT%H:%M:%S")
         state = "LIVE" if exp > now else "STALE"
         print(f"{state:5} {d['task']:<22} seat {d['account']}  expires {d['expires_at']}Z")
 
