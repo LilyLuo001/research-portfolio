@@ -60,7 +60,8 @@ def live_leases():
     for f in LEASES.glob("*.lease"):
         try:
             d = json.loads(f.read_text())
-            exp = datetime.datetime.fromisoformat(d["expires_at"])
+            # fromisoformat is 3.7+; box venv is 3.6
+            exp = datetime.datetime.strptime(d["expires_at"][:19], "%Y-%m-%dT%H:%M:%S")
             if exp > now:
                 live[d["task"]] = d
         except Exception:
@@ -410,7 +411,8 @@ def cmd_reap():
     reaped = []
     for f in LEASES.glob("*.lease"):
         d = json.loads(f.read_text())
-        if datetime.datetime.fromisoformat(d["expires_at"]) <= now:
+        # fromisoformat is 3.7+; box venv is 3.6
+        if datetime.datetime.strptime(d["expires_at"][:19], "%Y-%m-%dT%H:%M:%S") <= now:
             reaped.append(d["task"]); f.unlink()
     print("reaped stale leases:", reaped or "none")
 
