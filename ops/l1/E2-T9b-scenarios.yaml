@@ -2,6 +2,18 @@
 # Source prompt: docs/E2_执行手册_v1_1_完整版.md T9b (verbatim parameters).
 # Output feeds scenarios.yaml for the T9a engine; every value needs a
 # first-hand URL or it enters the file as UNKNOWN.
+#
+# PARKED 2026-07-09 after 4 kimi strikes. Strikes 1–2 are infra artifacts
+# (kimi-latest 404, pre-temperature-fix era) — clear them with --clear-fail +
+# note when re-running. Strikes 3–4 are the real failure: k2.6 truncates the
+# reply at the output cap before the sentinels (finish_reason=length) even at
+# L1_MAX_TOKENS=16384 — the clamp is server-side, no env value changes it
+# (ops/l1/out/E2-T9b-scenarios.void.json).
+# NEXT CHEAP RETRY (before spending any seat time): split this 4-item batch
+# into one-item batches — each parameter is an independent retrieval, and a
+# one-item reply fits comfortably under the clamp. manual:true keeps the
+# nightly driver from re-billing and re-striking it meanwhile.
+manual: true
 worker: kimi
 web_search: true
 est_cost: 2.0
