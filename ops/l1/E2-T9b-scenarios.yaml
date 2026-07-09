@@ -11,9 +11,10 @@
 # (ops/l1/out/E2-T9b-scenarios.void.json).
 # NEXT CHEAP RETRY (before spending any seat time): split this 4-item batch
 # into one-item batches — each parameter is an independent retrieval, and a
-# one-item reply fits comfortably under the clamp. manual:true keeps the
-# nightly driver from re-billing and re-striking it meanwhile.
-manual: true
+# one-item reply fits comfortably under the clamp.
+# UNPARKED 2026-07-09 (same day): driver `max_items_per_call: 1` executes exactly this
+# plan (per-item fenced calls + resume); strikes cleared with note.
+max_items_per_call: 1
 worker: kimi
 web_search: true
 est_cost: 2.0

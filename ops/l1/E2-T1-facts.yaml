@@ -24,11 +24,11 @@
 #      — a server-side clamp; no L1_MAX_TOKENS value changes it.
 # NEXT CHEAP RETRY (before spending any seat time): split this 4-item batch
 # into one-item batches — fewer search rounds and a smaller reply per call is
-# exactly what the stall/truncation failure mode calls for. manual:true keeps
-# the nightly driver from re-billing and re-striking it meanwhile; when
-# re-running, clear the infra-artifact strikes with runner.py --clear-fail
-# plus a note.
-manual: true
+# exactly what the stall/truncation failure mode calls for.
+# UNPARKED 2026-07-09 (same day): the driver now supports `max_items_per_call: 1`
+# (per-item fenced calls, per-item resume at out/<task>.<item>.json) — this
+# executes the retry plan above; strikes cleared via --clear-fail with note.
+max_items_per_call: 1
 worker: kimi
 web_search: true
 est_cost: 3.0

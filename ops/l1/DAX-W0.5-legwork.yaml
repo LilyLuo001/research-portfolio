@@ -5,6 +5,14 @@
 #
 # ARMING (human, required): fill `sentinels` with facts you have verified on
 # the vendors' own pages (e.g. a model's current per-token price you checked).
+# QUALITY QUARANTINE 2026-07-09: the first DONE output was produced by the
+# legacy moonshot-v1-32k run and slipped past the fence — content review found
+# a fabricated retrieval date (2024-02-26), OpenAI models offered as
+# "open-weight stand-ins" (fails the task on its face), and an invented
+# gdpval.mit.edu URL. Output deleted (inbox payload e); re-runs on kimi-k2.6
+# one item per call (max_items_per_call). Lesson: this fence's facts (famous GPT dates) were
+# too easy relative to the task — row-level quality is the reviewer's job.
+max_items_per_call: 1
 worker: kimi
 web_search: true
 est_cost: 2.0
