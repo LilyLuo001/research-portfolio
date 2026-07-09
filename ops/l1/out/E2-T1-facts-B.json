@@ -1,0 +1,163 @@
+{
+  "t1a-oracles": [
+    [
+      "sACRED",
+      "RedStone (as provider for ACRED, which sACRED is based on).",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpDwNpE8Z-1ur0OltbPZC_6GB7eRUz7gSntb09XPCiP-nvAM4H1n03drC8BYKXTD1cgEBehsQjtLeaho56svKZylf5yPnmb6mZ9wng4SVUECA8C6Pak-14NCn_9RM4fX2k_Yh5hxRjSYJxJ7ZyseuHn9xa-4QGEPVyHjBPjLkCHU7LV9dOngM2hP8tfkIO5qlaQxvtTtzjaDbgcUr_p706QLDn9YMQz75o"
+      ],
+      "July 9, 2026",
+      "sACRED is a version of ACRED, which uses RedStone oracles."
+    ],
+    [
+      "mF-ONE",
+      "Issuer direct feed (Fasanara produces NAV), with Midas submitting pricing to eOracle for independent verification and publication, and Steakhouse applying market-level discounts.",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQiaLEPUujHyQX7NzR0OmJg-_XHyiyd1use01igQZ_xD6oN9vwn3_dVTr4f4V9zJkC1ALECqSM2rZ3LowxnOekOycFGRMMhhccB6MgXdr7igUDN8UQ417-PWA_"
+      ],
+      "July 9, 2026",
+      "Midas implemented a verifiable price oracle for mF-ONE."
+    ],
+    [
+      "AA_FalconXUSDC",
+      "Chainlink Price Feed Oracle (inferred, as MorphoChainlinkOracleV2 is a common implementation for Morpho markets and Chainlink is a compatible type).",
+      "Medium",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGR5kMB2ws64Rhnp6GFosg4IqROcvP-nfSeSRGdq0TVvzsCiIA8KCCPQCoSoSk2wqyXOp2pZhl3JBQyZEmSidc8jclOw2-FOHvK01uQbfGsIlKagUSEBINWyuKTGQvaj2uTCcdl3UoAZW4",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEGpXBGN4AokHpJXynBNxVUJwb_FBtEXGbToAkN0ThgIYJyUR-SlJSGLqGYitG2Vm_R8lO55CTfV-hbQWywI2CHCVU64zU0u-8XVhztKFi1KaGT4-l21Wv8j7ziuZkB969dpJ9XEaY1Z0D3Bqj3z4YwPYLaIL2sOnitRzM"
+      ],
+      "July 9, 2026",
+      "Morpho is oracle-agnostic, and FalconX is an institutional player likely using a robust price feed. Specific implementation for this market not explicitly named as NAVLink or direct feed from FalconX."
+    ],
+    [
+      "syrupUSDC",
+      "API3's OEV infrastructure.",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEQDdyRUShomMsf76WMzr0OoF8K9vJzK8rlxS0HXUzts_2zZ2WtXmrlkcdVIGnhtN8LhIpL95vGfuk-45YFGVn02wEKQLlT6fcLsj_BsLtPfYF5VnQ7qEEl05xed6y9IoWnNlsTJS5WNFF2JPOTM0k7MMS1cteZpPTdIJ8GpeYJVd0koEAVChsh_SmXoIkT"
+      ],
+      "July 9, 2026",
+      "Explicitly stated as leveraging API3's OEV infrastructure."
+    ],
+    [
+      "mTBILL",
+      "UNKNOWN. Attempts made to find 'Morpho mTBILL oracle implementation' and 'Maple Finance mTBILL oracle'.",
+      "Low",
+      [],
+      "July 9, 2026",
+      "No primary source explicitly details the oracle implementation for mTBILL on Morpho."
+    ],
+    [
+      "cUSDO",
+      "Hybrid: Chainlink (for USDC), ERC-4626 contract (for cUSDO to USDO conversion), and hardcoded ($1 for USDO).",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt6VBWs82HraG3mzKu63vw4BKAtLrfEHbExpnE9w6AvHN2eUS-CcrzztjQjU86OKIPjF1VAcIuKlyIH2MHj96jw4ON47K2jA5mG3Wi01F0_-Qq_XkPAVkJQvZEZwehuSRQzMeDpysFs6GOKG6yKk1XHjW4L78J3uxedbFy_Mt8dH1ERkuZswv89uHCD2H3SCXcgFEatTNlxVMDEpQnVG32oUp3-KOrgDu4beCuoaY"
+      ],
+      "July 9, 2026",
+      "Oracle mechanism detailed in a post-mortem report."
+    ]
+  ],
+  "t1a-redemption": [
+    [
+      "sACRED",
+      "Settlement period: Quarterly repurchase offers. Minimum redemption amount: Not explicitly stated for individual redemption, but the fund has a 5% quarterly repurchase cap. Redemption gate: Yes, a 5% quarterly repurchase cap. Trigger conditions: When total redemption requests exceed the 5% cap, requests are prorated. For example, Apollo could only honor about 45% of requests when 11.2% were made.",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8dp6vp703ZNnqwgrq84-V7Z_e4f0EvEZMx7LcOyfH5vU6XfXUJq90KRzNMxXOWREA0vZDUWnHMHjaO6lSnvUSdu0siYCQ4N4E_ALVYcWhTpju4rksHO457rbMQGtMEtaF-CLRBPDozltL0o4E4rMQv3VC48CzKhA2OZ2E3yXzfBDWP0TJesIXnzLAEzrYSvz_dEMpSx4XahvFtL1SXk3kbg",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHGFGKgXXd9yvx219V8mPVFGlxdKyEQ0aC8chVJTtRxukPObhsjeZWQXRwFH3BwHW7Yopb6KDjfHJpPi437nItRGFOshYJO4qWZb6OgIaMlrQUBKVnkZ-IpGTsejhcOTs6VWWXH3kWJF8-NptrEVHKAb93ArA7hQYEzdtoUGlaSAr4UQW-j",
+        "https://vertexaisearch.cloud.google.google.com/grounding-api-redirect/AUZIYQEROMJHCA5WQXrqSkwbpbvWT-RhNrNRSg69e2Ic8H0iDWej3vrc4nk6EwdNF3WvhzMPrAf-Am_PtUU9T37LoJJc-yWa-n6o_xQeLIZvqQ2vZFAfeN7FYZIhgPqH_V_djXXAzII9Ep7sgimK3LFKj06JIMEjF19ZVUPz9QOTG9CEzm5GxCpQUyp3iHMb"
+      ],
+      "July 9, 2026",
+      "sACRED is a tokenized feeder fund for Apollo Diversified Credit Fund, which operates as an interval fund."
+    ],
+    [
+      "mF-ONE",
+      "Settlement period: Instant liquidity for unwinding mF-ONE positions in Morpho vaults (no redemption delays specified). For the underlying Fasanara F-ONE, redemption terms (settlement, minimum, gates, trigger conditions) are UNKNOWN from primary sources.",
+      "Medium",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQiaLEPUujHyQX7NzR0OmJg-_XHyiyd1use01igQZ_xD6oN9vwn3_dVTr4f4V9zJkC1ALECqSM2rZ3LowxnOekOycFGRMMhhccB6MgXdr7igUDN8UQ417-PWA_"
+      ],
+      "July 9, 2026",
+      "Midas designed for instant unwinding of mF-ONE positions in Morpho vaults, but details for the underlying Fasanara F-ONE were not found."
+    ],
+    [
+      "AA_FalconXUSDC",
+      "Settlement period: Cycle-based (one-to-four-week cycles, with a 31-day notice period for redemptions). The redemption process involves a withdrawal request at the end of Cycle I and funds claim at the end of the following Cycle II. Minimum redemption amount: Not specified. Redemption gate: No explicit 'gate' clause, but cycle-based processing and waiting for borrower repayment act as a structural delay. An early-exit option is available within 72 hours under specific conditions. Trigger conditions for early exit: If the interest rate of the next lending cycle is lower than the previous one by 1% or more.",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFMNkxjpL1lz43QUEAJ4EHcC1FAviKPIcHkemQYDoGKJthQKEm752lupM-wtffz-rIZlQKFoP6TC-FUPtGEA9w8Z0eyxb4m1wHbf_AsCLFr6fIPoy6GIcD0lwSnPxtSdrFoSq0yJcPmgn-feQ0B17SOZ3EEkxjECqRfzXw",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMFu2xxFJyRmwlbzB69R5ko_BXugwTMemF1iXHdaZhCoCMOui0auDamAIcys_bQDYE4RNHmUXeOefOImBn91OASY7r9IMy7pKmobN48o36y5j8lfSibFbu5_5Y9FQE6Vai0zJN",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1iupekRWwr6D45yNI5nXoxZiS1uirma3qwtEWfHLYS0LMPovVACthrLBccgjl2N9QuvwvWRcvuvIO12OOwXzoOmBllSaPzA5S0rw8vKUDsBCU8-8Yy64ZjvqdVYky9FDvCBBV2E3vFK7yl3E_WLaqJap7ygxN4c5dPCuGn33vwwiCeBH8bJWv7lzS83-9AzwqrUYWubZ4xWxEAYFLUUrbeZU",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGH_4roRzeik7_LxH3WryJG-E242Tqjr9BRfviov7050WQ7RfN6DWYRxBBoO2KJVc7nn7-6ZMwf1qBuJJbyvHBXRXuCJQruzDayCxsRcgGSFw76qnACt8atJxVrxO9J0l4Ci6TWPVYaht86p2ncGhWQbMcvSqd4KCY7"
+      ],
+      "July 9, 2026",
+      "Redemption terms for ParetoFAL-USDC, related to AA_FalconXUSDC, are detailed."
+    ],
+    [
+      "syrupUSDC",
+      "Settlement period: Normally instant, but can take up to 30 days in rare cases. Minimum redemption amount: Not specified. Redemption gate: No explicit 'gate' clause, but withdrawals are processed on a 'first-in, first-out basis as liquidity becomes available,' which can lead to delays up to 30 days. Trigger conditions: Implied by limited liquidity or high demand.",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkLacj-Rpc-CXXiQjN1qgE88e0hkScFYSLd1Se_X4q5NljTAPMbeo38Y34jvkqc-iI56Fn0CN9VbyIzRbkI_y3X6Axl967b4j9KxZM9XK8qAYNC7p4cuJ5ooiHztGakmBhq_i9",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGti8HQOwetdbjCbPRIhWkAlmLGB7IHWBUDiVoqnDPHAUa-dpSYh45YucSg4dMm7cinHGsNu6WSxHMizA3uDYmwMpDswjja_QotoGR-uZK6f8yHQiinKBkUnHQb5kfjlA=="
+      ],
+      "July 9, 2026",
+      "Maple Finance documentation for syrupUSDC details redemption. Maple Finance also serviced over $800M in redemptions within 72 hours during an incident without interruption."
+    ],
+    [
+      "mTBILL",
+      "UNKNOWN. Attempts made to find 'Maple Finance mTBILL redemption terms'.",
+      "Low",
+      [],
+      "July 9, 2026",
+      "No primary source explicitly details redemption terms for mTBILL."
+    ],
+    [
+      "cUSDO",
+      "UNKNOWN. Attempts made to find 'Centrifuge cUSDO redemption terms'.",
+      "Low",
+      [],
+      "July 9, 2026",
+      "No primary source explicitly details redemption terms for cUSDO."
+    ]
+  ],
+  "t1a-navlink": [
+    [
+      "All Aave Horizon reserves",
+      "Update frequency: Real-time/every few hours, driven by issuer reports and Chainlink Decentralized Oracle Network (DON) validation. Weekend updates: Yes, implied by continuous operations and event-driven updates, though actual weekend issuer reports for traditional RWAs might be less frequent. [cite: 13, 19, 21, 24, 30, 36, 37 (initial search results)]",
+      "High",
+      [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEfkny-v3qXI1d7Y32ATeFzLFzcSuG-4BPD_az9468PqVikjFEz6HcYThl2vd2iGV1spQs5wAVMDpCfXL-w6noo1nIH_TC-vAeqkU6lCGP6yx79PrZVTdoYr-WhaTnI",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHh11QNDbxC4WMyua6-86eVHCnPVJUX-c628F0EVCPz4HnA2739Z7xgQIsHu0kX0QfFtdLjuCmddBOoRnKXMcOpYuQACm0ABoGlhcrieBM0YBcIVTlY5DL97BYSp5SzBX45DPT0fyclo2rmAg==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXLCwBq7ow2jEh7twf8xPzZhNI8nnAtIYoCkfPcqEgDXfSAPy8mrv7ygJ2Zm1oA6UElGMeMVslqy43MUCT_JA4JVPD4FOno-mHAfnoX04mPQx-gYWbNQtPfaNXNKK-ZN3nGz-Khn0TFG_pSUE",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG_qaShMiQ4VsL7PJi4Lz5IcKk-QUI8LsGGsxULmf8NYRDYEXSZr5sHFMW3yKWO2Ty9Opg89cVRhWoqn18e_4ErVnloZf_SR_KJHabaSd0-wu2V9tPQcOMJHCvfCPQ0cA==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHtgTUD2ak5udvBN7FFhHla6NVK_R1sy6zr835zwsRF_cDUWWMtnxXRuReT-3NQ041OPd2XVKXGkamLmcTVjYl0su1LicbwLwx_Af8ccbvw7IhoZ6FFslrkQGjTYIKlyIymHnBTj5m4aJUmq3U3r39ppBy37fWEkHfpklffw==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGUilddizPhK5RegnreoW-xrleZ1vniv1L7eFwa44sOvDo15It2BhmysOKNh8Cfn9853MLbJRvm7ZLECQQegN5Mly4oQR_D5nWAkJSxy_Y8FOreg3rcE3qRKLiVZ2yqF0ff8cda-HUqZFIIv87JcuL8_NnCvAM5PUXA6qSorU06Bz4s5AMr85KU4AQSjW2ycEa0cgIBvxOqY5pp3XCQLaCJRJa9WzAo5Cj2QofcZbz7",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFT3oRRSeS5CCvL4vb3SdbNDC0nJFr7SyNXHFgXjy0z3DKgd2DukEwhlaXRUQeLM__oA3QrgxMtuoBJ3tsWpdtfHr-qvrT8uVAvXLW4lvWG9a7AwhTf32UppTo2cYrnUUmFHEIrh9qIDyUHaS97pYZyG7f4MOTnvXfjKzNnONKxMg9fZvaT7lqMDwYsHcUBPUFDiMFjceAXnxrCUEHdJ3DoZM9Re8QMwjVldntdBI4T43CpmDXB_i4"
+      ],
+      "July 9, 2026",
+      "Aave Horizon uses Chainlink SmartData and NAVLink for real-time RWA NAVs, with underlying data refreshed frequently and event-driven updates from issuers."
+    ]
+  ],
+  "t1a-coinbase-vault": {
+    "conclusion": "Coinbase USDC lending is routed through Morpho vaults curated by Steakhouse Financial. The specific vault address for 'Steakhouse Prime Instant USDC Base' is 0xbeef0e0834849aCC03f0089F01f4F1Eeb06873C9. This vault has configured RWA collateral markets, as its strategy involves lending against 'blue chip crypto and real world asset (RWA) collateral markets'.",
+    "confidence": "High",
+    "一手来源URL": [
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQiaLEPUujHyQX7NzR0OmJg-_XHyiyd1use01igQZ_xD6oN9vwn3_dVTr4f4V9zJkC1ALECqSM2rZ3LowxnOekOycFGRMMhhccB6MgXdr7igUDN8UQ417-PWA_",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTjtbiLD5ho-6hZvWcr1oZXtR2J0GYf1daix6BnZoUh1fa8K2Vp10_rdebmF_jghd_Q_k-Y8EYhLycpMVnkWsu7uAXBu-hJWx_kAbBOOc5ISxK86_7VzCIUg1BTKiGd9I-iUa_URpUQ1kEQRC8xc-gZXrim8t38pvHp8jiQjhUy8wx",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkffLWzXCtKeFdiMSfB5iMtvemiTFx7N2MUf2Q8ODsx1_J-zDnFeiH175UTVrN4PuLfdKUD9CArGIJ6nIgxOtcKXksX7bcJhANn8E_EVCr-PhqoHsaj3DIrBfAwA0A9Nd3sC5FbfP8PAoha2XabL3jIK89BSo2r-rtbcfR0h-tYOmiJgEWZaxwR2kpFcKUAr1OIeFbEXcrMamwr17svg==",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF3f1hV5A4rLiuSjc0zm6sKSSEVxlbLULJYMpE2O4E-UcAbBWEk6qhmtOXcY65LiBPaXcuqXiV5sbZHdNkMVH5TloCe-EyuP9T0jG5a_64KFJyoDkkMePEezY1Sa7fp92XOaDoc57KCaYlvi04UZZw1zWo-fP33Z4ZeETK2PZyqvpTQwOHBNWykVss=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFI0AMP1nVw6ykUkk3EWjsr4QtPtgIzOLheoUzd50AL3pjqhWd85_gfgdKsOJxvkhgxuQpJWDzrZ5Opptht4OtnMkQ7oaNbl44Z2eQgjTChbE4nLQ_mi12k0-xGuNVGEFsn3fdJLOtoHVGoqh5YRx_RC1KG98uDYLEvzlMTQilen0mVZdKqCMqi0vFocWK2GVlCIgy0b-nqxzJqQg9q",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFH39OBG_oxkdv4fH8f1ByJSjd8zBzLFEokgQpBlr5bJupLzPLHx4q-cCn-w1WyQYp58N3Izue1EY-efqhYFszER22CBUDpX7urVjVHH93_5oDsstmVibSkc0CcMMey0KRRWaMY-Shp_qCCRC_7PJ84jEvpiSqhj-cX3lMMKEZYwC0xX-tkDOz2hGCAsq8Y3Ye5vjfEImTJ",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJSuGjnlgxa87vWtDt6iBuZywJ0QNltgg6ZXZ4oe9WKn9bWqbKnAs3EuOcpN2cn8mZkJd34ZC0ZrJ4U7KbmP9DNBk7D2zOrzBIfI0N2yton3ix-aIxu8T4vqHMhJXKNBJ-PtUcjDXULyq7DgvPeYEh-mu345b-uLCDWuDlk6yhgPsgrchZbw=="
+    ],
+    "retrieval_date": "July 9, 2026",
+    "备注": "The Coinbase integration uses Morpho vaults curated by Steakhouse Financial on the Base blockchain. The Steakhouse Prime Instant USDC Base vault is confirmed to allocate to RWA collateral markets.",
+    "下游影响提示": "This conclusion confirms that Coinbase's USDC lending, via Morpho and Steakhouse Financial, includes exposure to RWA collateral. This will change research design by validating the inclusion of these specific RWA markets in the analysis of institutional DeFi and potential spillover effects between traditional finance and DeFi. It informs the scope of RWA exposure for a major retail platform."
+  },
+  "S1": "Polygon",
+  "S2": "Chainlink"
+}

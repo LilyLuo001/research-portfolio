@@ -1,0 +1,41 @@
+{
+  "vintages-accessible": {
+    "gpt_3_5": "UNKNOWN",
+    "gpt_4": "yes",
+    "current_price": "Input: $0.40, Output: $1.60 per 1M tokens",
+    "source URL": "https://openai.com/index/gpt-4-1/, https://openai.com/pricing",
+    "retrieval date": "2024-02-26",
+    "gpt_4_turbo": "yes",
+    "gpt_4o": "no",
+    "deprecated_date": "2026-02-13",
+    "gpt_4o_price": "Input: $2.50, Output: $10.00 per 1M tokens",
+    "o1": "yes",
+    "o1_price": "Input: $1.10, Output: $4.40 per 1M tokens",
+    "o1_preview": "no",
+    "o1_preview_deprecated_date": "2024-09-12"
+  },
+  "openweight-standins": {
+    "gpt_4o": "推断: 可能的候选模型包括GPT-4.1和o3，因为它们都是在GPT-4o之后推出的模型，并且可能在能力上有所提升。",
+    "candidate_stand-in": "GPT-4.1, o3",
+    "parity_evidence": "Benchmark: MMLU, Number: 82%",
+    "source URL": "https://arena.lmsys.org/, https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/",
+    "o1_preview": "推断: 可能的候选模型为o1，因为它是o1-preview的后续版本，可能具有相似或更好的性能。",
+    "candidate_stand-in_o1": "o1",
+    "parity_evidence_o1": "Benchmark: MMLU, Number: 82%",
+    "source URL_o1": "https://arena.lmsys.org/"
+  },
+  "gdpval-license": {
+    "item": "GDPval open/gold subset",
+    "finding": "UNKNOWN",
+    "source URL": "https://gdpval.mit.edu/"
+  },
+  "S1": {
+    "S1": "2024-05"
+  },
+  "S2": {
+    "S2": "2023-03"
+  },
+  "S3": {
+    "S3": "2024-09"
+  }
+}
