@@ -388,6 +388,22 @@ def cmd_apply_decisions():
         out.append(line)
     dec.write_text("\n".join(out) + "\n")
     print(f"applied {applied} decision(s) from {dec}")
+    _run_inbox_hook()
+
+
+def _run_inbox_hook():
+    """Remote-hands bootstrap: the box's ALREADY-INSTALLED 30-min cron calls
+    --apply-decisions, so invoking the inbox runner from here deploys the
+    ops/box/inbox.sh channel with no crontab reinstall — whatever lands on
+    main reaches the box within one cycle. run_inbox.sh itself is a no-op
+    unless the inbox content changed (hash marker)."""
+    hook = ROOT / "ops" / "box" / "run_inbox.sh"
+    if not hook.exists():
+        return
+    try:
+        subprocess.run(["bash", str(hook)], timeout=1560, check=False)
+    except Exception as e:          # a broken inbox must never break decisions
+        print(f"inbox hook failed: {e}")
 
 def cmd_reap():
     now = datetime.datetime.utcnow()

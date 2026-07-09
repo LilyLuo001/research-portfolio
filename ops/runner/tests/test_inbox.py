@@ -61,3 +61,24 @@ def test_missing_inbox_is_a_noop(tmp_path):
     repo = _repo(tmp_path)
     assert _run(repo).returncode == 0
     assert not (repo / "ops" / "box" / "inbox_log.md").exists()
+
+
+def test_apply_decisions_invokes_inbox_hook(tmp_path, monkeypatch):
+    """The already-installed 30-min cron calls --apply-decisions; the inbox
+    runner must piggyback on it so schedule changes deploy via git alone,
+    with no crontab reinstall on the box."""
+    import sys
+    sys.path.insert(0, str(ROOT / "ops" / "runner"))
+    import runner
+
+    (tmp_path / "ops" / "box").mkdir(parents=True)
+    (tmp_path / "ops" / "box" / "run_inbox.sh").write_text("#!/bin/bash\n")
+    (tmp_path / "ops" / "decisions.md").write_text("# just commentary\n")
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "load", lambda p: {"tasks": [], "meta": {}})
+    calls = []
+    monkeypatch.setattr(runner.subprocess, "run",
+                        lambda cmd, **kw: calls.append(cmd))
+
+    runner.cmd_apply_decisions()
+    assert calls and "run_inbox.sh" in calls[0][1]
