@@ -6,7 +6,10 @@ __pycache__/
 # box-only secrets + runtime logs (never leave the always-on box)
 ops/box/.env
 ops/box/cron.log
+ops/box/.inbox_done
 ops/runner/spend_log.jsonl
+# NOTE: ops/box/inbox.sh and inbox_log.md are deliberately TRACKED — they are
+# the remote-hands channel (commands in, results out) between operator and box.
 # L1 batch outputs — raw extraction, produced on the box… EXCEPT the debug
 # surface: void post-mortems and the night report flow back through git so a
 # failed night can be diagnosed from any seat, not just on the box.

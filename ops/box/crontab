@@ -9,7 +9,7 @@
 # ops/decisions.md (the L3 reply channel), then expire stale leases so abandoned
 # tasks re-queue. The pull keeps the box current after merges (ff-only so it
 # never conflicts with the box's own digest pushes; failures are logged, not fatal).
-*/30 * * * *  cd $HOME/portfolio && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --apply-decisions >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
+*/30 * * * *  cd $HOME/portfolio && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --apply-decisions >> ops/box/cron.log 2>&1; cd $HOME/portfolio && .venv/bin/python ops/runner/runner.py --reap >> ops/box/cron.log 2>&1; cd $HOME/portfolio && bash ops/box/run_inbox.sh >> ops/box/cron.log 2>&1
 
 # 02:00 nightly: run every READY L1 batch that has a spec in ops/l1/ (sentinel-
 # fenced, budget-capped). Tasks without a spec are skipped ("waiting for input").
