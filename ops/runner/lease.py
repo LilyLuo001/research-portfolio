@@ -19,7 +19,7 @@ LEASES = ROOT / "ops" / "leases"
 
 def _git(*args):
     return subprocess.run(["git", "-C", str(ROOT), *args],
-                          capture_output=True, text=True)
+                          stdout=__import__('subprocess').PIPE, stderr=__import__('subprocess').STDOUT, text=True)
 
 def claim(task, account, ttl):
     LEASES.mkdir(exist_ok=True)
@@ -70,7 +70,8 @@ def lst():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub = ap.add_subparsers(dest="cmd")
+    sub.required = True  # kwarg form is 3.7+; box venv is 3.6
     c = sub.add_parser("claim"); c.add_argument("task"); c.add_argument("--account", required=True); c.add_argument("--ttl", type=int, default=6)
     r = sub.add_parser("release"); r.add_argument("task")
     sub.add_parser("list")
