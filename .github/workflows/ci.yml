@@ -69,6 +69,20 @@ jobs:
           fi
           echo "NDA check clean"
 
+      - name: DAX guard — built artifacts carry lineage (W0 req 4)
+        run: |
+          missing=""
+          for f in $(git ls-files 'dax/data_built/*' 'dax/capability_panel/*' 'dax/index/*' \
+                     | grep -vE '\.lineage\.json$|\.gitkeep$|\.md$'); do
+            [ -f "$f.lineage.json" ] || missing="$missing$f\n"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::DAX artifacts missing .lineage.json:"
+            printf "$missing"
+            exit 1
+          fi
+          echo "lineage check clean"
+
       - name: DAX guard — outcomes stay sealed until pre-registration
         run: |
           if git rev-parse -q --verify refs/tags/v1.0-preregistered >/dev/null 2>&1; then
