@@ -1,0 +1,88 @@
+{
+  "seed": 20260709,
+  "n_stocks": 3000,
+  "theta_bps": 25.0,
+  "conservatism": 1.5,
+  "scenarios": {
+    "optimistic": {
+      "theta_10bps": {
+        "n_treated": 2608,
+        "n_control": 392,
+        "median_dose_treated_bps": 43.41525043657745,
+        "analytic_mde80_sigma": 0.1526
+      },
+      "theta_25bps": {
+        "n_treated": 2056,
+        "n_control": 944,
+        "median_dose_treated_bps": 50.39995553168167,
+        "analytic_mde80_sigma": 0.1108
+      },
+      "theta_50bps": {
+        "n_treated": 1039,
+        "n_control": 1961,
+        "median_dose_treated_bps": 64.78655160238645,
+        "analytic_mde80_sigma": 0.1081
+      }
+    },
+    "base": {
+      "theta_10bps": {
+        "n_treated": 2563,
+        "n_control": 437,
+        "median_dose_treated_bps": 38.04037119032374,
+        "analytic_mde80_sigma": 0.1458
+      },
+      "theta_25bps": {
+        "n_treated": 1936,
+        "n_control": 1064,
+        "median_dose_treated_bps": 43.23916616889871,
+        "analytic_mde80_sigma": 0.1075
+      },
+      "theta_50bps": {
+        "n_treated": 639,
+        "n_control": 2361,
+        "median_dose_treated_bps": 59.858639745332894,
+        "analytic_mde80_sigma": 0.1256
+      }
+    },
+    "pessimistic": {
+      "theta_10bps": {
+        "n_treated": 2459,
+        "n_control": 541,
+        "median_dose_treated_bps": 33.29115566918358,
+        "analytic_mde80_sigma": 0.1338
+      },
+      "theta_25bps": {
+        "n_treated": 1779,
+        "n_control": 1221,
+        "median_dose_treated_bps": 38.371774933866824,
+        "analytic_mde80_sigma": 0.1047
+      },
+      "theta_50bps": {
+        "n_treated": 357,
+        "n_control": 2643,
+        "median_dose_treated_bps": 58.16496228394122,
+        "analytic_mde80_sigma": 0.1589
+      }
+    }
+  },
+  "kill_switch": {
+    "min_treated_for_0.5sigma": 33,
+    "min_treated_for_1.0sigma": 8,
+    "note": "smaller side of the treated/control split must exceed this count for the conservative MDE80 to stay under the target"
+  },
+  "verification_subsample": {
+    "n_treated": 150,
+    "n_control": 250,
+    "reps": 150,
+    "power_by_delta": {
+      "0.05": 0.073,
+      "0.1": 0.247,
+      "0.2": 0.787,
+      "0.3": 0.993,
+      "0.5": 1.0,
+      "1.0": 1.0
+    },
+    "analytic_se_subsample": 0.0693,
+    "note": "econlib stacked_did on a subsampled panel (verifies the analytic power curve Phi(delta/se - 1.96) at the SUBSAMPLE size, WITHOUT the x1.5 conservatism; scenario MDEs use the full treated/control counts analytically)"
+  }
+}
