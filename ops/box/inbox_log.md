@@ -160,3 +160,40 @@ recorded attempt 4 for E2-T9b-scenarios — ESCALATE (shows in plan/digest)
   }
 }[exit: 0]
 ```
+
+## 2026-07-09T14:00:02Z — inbox 7b34518c7358 @ git eb3ca77
+```
+== python module diagnostics (payload d found none) ==
+no module command in this shell
+/share/pkg
+/share/pkg.7
+/share/pkg.8
+== complete P1-T0-crash-B (reviewed — see payload header) ==
+marked complete: P1-T0-crash-B  (state.json is git-tracked — commit it with your merge)
+== quarantine weak-model DAX output ==
+== clear parked strikes (infra artifacts + stall failures now split-retried) ==
+cleared 1 recorded attempt(s) for E2-T1-facts
+cleared 4 recorded attempt(s) for E2-T9b-scenarios
+== live pass: split per-item retries on kimi-k2.6 ==
+L1 driver — 5 ready L1 task(s), mode=LIVE
+  ✖ DAX-W0.5-legwork     [VOID-SENTINEL] kimi: chunk 1/3: reply had no parseable JSON answer-map (all sentinels void) — raw reply kept at DAX-W0.5-legwork.void.json — batch discarded
+recorded attempt 1 for DAX-W0.5-legwork
+  · E2-T1-facts          manual channel — run: python ops/l1/gemini_helper.py E2-T1-facts
+  ✓ E2-T1-facts-B        output already at E2-T1-facts-B.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  · E2-T6b-nav           manual channel — run: python ops/l1/gemini_helper.py E2-T6b-nav
+  · E2-T9b-scenarios     manual channel — run: python ops/l1/gemini_helper.py E2-T9b-scenarios
+  spent today: 3.068 / 70 daily cap (MTD 4.0 / 500)
+  0 batch(es) written to ops/l1/out/ — validate + gate downstream before --complete.
+== capture outputs (incl. per-item partials for provenance) ==
+{
+  "date": "2026-07-09",
+  "live": true,
+  "results": {
+    "DAX-W0.5-legwork": "VOID-SENTINEL",
+    "E2-T1-facts": "MANUAL",
+    "E2-T1-facts-B": "HAS-OUTPUT",
+    "E2-T6b-nav": "MANUAL",
+    "E2-T9b-scenarios": "MANUAL"
+  }
+}[exit: 0]
+```
