@@ -5,20 +5,12 @@
     "S2",
     "S3"
   ],
-  "parsed_answers": {
-    "对象": "sACRED",
-    "结论": "发行方直喂",
-    "置信度": "高",
-    "一手来源URL": [
-      "https://github.com/morpho-org/morpho-blue-oracles"
-    ],
-    "检索日期": "2024-03-07",
-    "备注": "根据官方文档，sACRED市场使用的是发行方直喂的oracle实现方式。"
-  },
-  "raw_text": "{\n    \"t1a-oracles\": [\n        {\n            \"对象\": \"sACRED\",\n            \"结论\": \"发行方直喂\",\n            \"置信度\": \"高\",\n            \"一手来源URL\": [\n                \"https://github.com/morpho-org/morpho-blue-oracles\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"根据官方文档，sACRED市场使用的是发行方直喂的oracle实现方式。\"\n        },\n        {\n            \"对象\": \"mF-ONE\",\n            \"结论\": \"发行方直喂\",\n            \"置信度\": \"高\",\n            \"一手来源URL\": [\n                \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"根据官方文档，mF-ONE市场使用的是发行方直喂的oracle实现方式。\"\n        },\n        {\n            \"对象\": \"AA_FalconXUSDC\",\n            \"结论\": \"NAVLink\",\n            \"置信度\": \"高\",\n            \"一手来源URL\": [\n                \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"根据官方文档，AA_FalconXUSDC市场使用的是NAVLink的oracle实现方式。\"\n        },\n        {\n            \"对象\": \"syrupUSDC\",\n            \"结论\": \"UNKNOWN\",\n            \"置信度\": \"低\",\n            \"一手来源URL\": [\n                \"https://github.com/morpho-org/morpho-blue-oracles\",\n                \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"检索过程中未找到syrupUSDC市场使用的oracle具体实现方式的明确信息。\"\n        },\n        {\n            \"对象\": \"mTBILL\",\n            \"结论\": \"UNKNOWN\",\n            \"置信度\": \"低\",\n            \"一手来源URL\": [\n                \"https://github.com/morpho-org/morpho-blue-oracles\",\n                \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"检索过程中未找到mTBILL市场使用的oracle具体实现方式的明确信息。\"\n        },\n        {\n            \"对象\": \"cUSDO\",\n            \"结论\": \"UNKNOWN\",\n            \"置信度\": \"低\",\n            \"一手来源URL\": [\n                \"https://github.com/morpho-org/morpho-blue-oracles\",\n                \"https://superearn-fe42391a.mintlify.app/en/protocol/opportunity-set\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"检索过程中未找到cUSDO市场使用的oracle具体实现方式的明确信息。\"\n        }\n    ],\n    \"t1a-redemption\": [\n        {\n            \"对象\": \"sACRED\",\n            \"结论\": \"结算周期T+0，无最低赎回额，无赎回门槛条款\",\n            \"置信度\": \"高\",\n            \"一手来源URL\": [\n                \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"根据官方文档，sACRED的赎回条款为T+0，无最低赎回额，无赎回门槛条款。\"\n        },\n        {\n            \"对象\": \"mF-ONE\",\n            \"结论\": \"结算周期T+30，最低赎回额10000 USDC，无赎回门槛条款\",\n            \"置信度\": \"高\",\n            \"一手来源URL\": [\n                \"https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain\"\n            ],\n            \"检索日期\": \"2024-03-07\",\n            \"备注\": \"根据官方文档，mF-ONE的赎回条款为T+30，最低赎回额10000 USDC，无赎回门槛条款。\"\n        },\n        {\n            \"对象\": \"AA",
+  "parsed_answers": {},
+  "finish_reason": "stop",
+  "raw_text": "I'll search for the specific information needed for each question. Let me conduct multiple targeted searches. <function_calls>\n<invoke name=\"web_search\">\n<parameter name=\"query\">Morpho Blue CreateMarket event collateralToken loanToken oracle irm lltv five parameters</parameter>\n</invoke>\n<invoke name=\"web_search\">\n<parameter name=\"query\">Aave Horizon launch date permissioned RWA instance</parameter>\n</invoke>\n<invoke name=\"web_search\">\n<parameter name=\"query\">sACRED token launch April 2025 blockchain</parameter>\n</invoke>\n<invoke name=\"web_search\">\n<parameter name=\"query\">Morpho RWA sACRED oracle implementation NAVLink</parameter>\n</invoke>\n<invoke name=\"web_search\">\n<parameter name=\"query\">Morpho mTBILL oracle implementation Midas</parameter>\n</invoke>\n<invoke name=\"web_search\">\n<parameter name=\"web_search\">\n<parameter name=\"query\">Morpho cUSDO oracle syrupUSDC oracle implementation</parameter>\n</invoke>\n</function_calls>",
   "usage": {
-    "prompt_tokens": 10240,
-    "completion_tokens": 1025,
+    "prompt_tokens": 9925,
+    "completion_tokens": 643,
     "search_count": 1
   }
 }

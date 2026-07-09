@@ -128,3 +128,35 @@ L1 driver — 6 ready L1 task(s), mode=LIVE
   "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
 }[exit: 0]
 ```
+
+## 2026-07-09T10:55:18Z — inbox c9659bf9a3ff @ git aaafa28
+```
+== python venv upgrade (3.6.8 -> newest module python3) ==
+newest python3 module: none found
+== live L1 pass (kimi-k2.6, temperature fix from this same pull) ==
+L1 driver — 6 ready L1 task(s), mode=LIVE
+  ✓ P1-T0-crash-B        output already at P1-T0-crash-B.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  ✓ DAX-W0.5-legwork     output already at DAX-W0.5-legwork.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  ✖ E2-T1-facts          [VOID-SENTINEL] kimi: reply had no parseable JSON answer-map (all sentinels void) — raw reply kept at E2-T1-facts.void.json — batch discarded
+recorded attempt 3 for E2-T1-facts — ESCALATE (shows in plan/digest)
+  ✓ E2-T1-facts-B        output already at E2-T1-facts-B.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  · E2-T6b-nav           manual channel — run: python ops/l1/gemini_helper.py E2-T6b-nav
+  ✖ E2-T9b-scenarios     [VOID-SENTINEL] kimi: sentinels failed ['S1', 'S2'] — raw reply kept at E2-T9b-scenarios.void.json — batch discarded
+recorded attempt 4 for E2-T9b-scenarios — ESCALATE (shows in plan/digest)
+  spent today: 2.279 / 70 daily cap (MTD 3.2 / 500)
+  0 batch(es) written to ops/l1/out/ — validate + gate downstream before --complete.
+== capture any new DONE outputs ==
+== night report ==
+{
+  "date": "2026-07-09",
+  "live": true,
+  "results": {
+    "P1-T0-crash-B": "HAS-OUTPUT",
+    "DAX-W0.5-legwork": "HAS-OUTPUT",
+    "E2-T1-facts": "VOID-SENTINEL",
+    "E2-T1-facts-B": "HAS-OUTPUT",
+    "E2-T6b-nav": "MANUAL",
+    "E2-T9b-scenarios": "VOID-SENTINEL"
+  }
+}[exit: 0]
+```

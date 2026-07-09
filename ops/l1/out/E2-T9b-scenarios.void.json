@@ -5,22 +5,18 @@
     "S2"
   ],
   "parsed_answers": {
-    "clo-drawdown": [
-      "参数",
-      "AAA级CLO在2020-03前后的市值/NAV最大回撤区间",
-      "一手来源URL",
-      "https://altstreet.investments/blog/clo-aaa-liquidity-crisis-2020-structural-resilience",
-      "来源类型",
-      "学术论文",
-      "置信度",
-      "高",
-      "备注"
-    ]
+    "clo-drawdown": "[参数: AAA级CLO市值/NAV最大回撤区间, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 无监管报告/基金年报/学术论文/指数发布方等一手来源给出2020年3月前后AAA级CLO的精确回撤区间; altstreet博客文章提及AAA CLO价格从$98跌至$90区间(约8%市值回撤)及Palmer Square CLO Index下跌近25%,但该来源属事后分析博客而非规则要求的一手来源(监管报告、基金年报、学术论文、指数发布方),故按规则标记为UNKNOWN]",
+    "private-credit-nav": "[参数: 非交易型私募信贷基金NAV下修幅度与赎回门槛(gate)触发案例, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 未检索到BDC/interval fund在近两次信用压力期的NAV下修幅度与gate触发案例的一手来源(监管报告、基金年报、学术论文、指数发布方); 无URL即UNKNOWN]",
+    "tbill-nav-move": "[参数: 短久期T-bill基金单日NAV变动历史极值量级, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 未检索到短久期T-bill基金单日NAV变动历史极值的一手来源(监管报告、基金年报、学术论文、指数发布方); 此类历史极值数字无URL即UNKNOWN]",
+    "defi-rate-spike": "[参数: DeFi借贷市场挤兑日借款利率上冲幅度已记录案例, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 未检索到DeFi借贷市场挤兑日利率上冲幅度的一手来源(链上数据看板或事后分析报告URL); 无URL即UNKNOWN]",
+    "S1": "UNKNOWN",
+    "S2": "UNKNOWN"
   },
-  "raw_text": "{\n  \"clo-drawdown\": [\n    \"参数\",\n    \"AAA级CLO在2020-03前后的市值/NAV最大回撤区间\",\n    \"一手来源URL\",\n    \"https://altstreet.investments/blog/clo-aaa-liquidity-crisis-2020-structural-resilience\",\n    \"来源类型\",\n    \"学术论文\",\n    \"置信度\",\n    \"高\",\n    \"备注\"\n  ]\n}",
+  "finish_reason": "stop",
+  "raw_text": "{\"clo-drawdown\": \"[参数: AAA级CLO市值/NAV最大回撤区间, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 无监管报告/基金年报/学术论文/指数发布方等一手来源给出2020年3月前后AAA级CLO的精确回撤区间; altstreet博客文章提及AAA CLO价格从$98跌至$90区间(约8%市值回撤)及Palmer Square CLO Index下跌近25%,但该来源属事后分析博客而非规则要求的一手来源(监管报告、基金年报、学术论文、指数发布方),故按规则标记为UNKNOWN]\", \"private-credit-nav\": \"[参数: 非交易型私募信贷基金NAV下修幅度与赎回门槛(gate)触发案例, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 未检索到BDC/interval fund在近两次信用压力期的NAV下修幅度与gate触发案例的一手来源(监管报告、基金年报、学术论文、指数发布方); 无URL即UNKNOWN]\", \"tbill-nav-move\": \"[参数: 短久期T-bill基金单日NAV变动历史极值量级, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 未检索到短久期T-bill基金单日NAV变动历史极值的一手来源(监管报告、基金年报、学术论文、指数发布方); 此类历史极值数字无URL即UNKNOWN]\", \"defi-rate-spike\": \"[参数: DeFi借贷市场挤兑日借款利率上冲幅度已记录案例, 建议取值区间: UNKNOWN, 一手来源URL: [], 来源类型: N/A, 置信度: N/A, 备注: 未检索到DeFi借贷市场挤兑日利率上冲幅度的一手来源(链上数据看板或事后分析报告URL); 无URL即UNKNOWN]\", \"S1\": \"UNKNOWN\", \"S2\": \"UNKNOWN\"}",
   "usage": {
-    "prompt_tokens": 9861,
-    "completion_tokens": 98,
+    "prompt_tokens": 9368,
+    "completion_tokens": 1421,
     "search_count": 1
   }
 }
