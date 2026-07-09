@@ -45,7 +45,17 @@ def build_prompt(items, sentinels):
     """One batch prompt: the real items plus the sentinels, as a JSON array. The
     model is asked (by models.SYSTEM) to return an id -> answer JSON object."""
     fenced = list(items) + [{"id": s["id"], "prompt": s["prompt"]} for s in sentinels]
-    return json.dumps(fenced, ensure_ascii=False)
+    # restate the output contract AFTER the items: on long Chinese prompts kimi
+    # drifts into prose and opens-but-never-closes the JSON (E2-T1-facts, 2026-07-09).
+    # Scope it to the FINAL reply only — an unscoped "JSON only" made kimi emit its
+    # search queries as JSON text instead of calling $web_search (same day).
+    return (json.dumps(fenced, ensure_ascii=False)
+            + "\n\n输出要求: 先用检索工具完成所有必要的联网检索(正常调用工具, 不要把"
+              "检索词写进回复正文)。检索完成后, 最终回复只输出一个完整闭合的 JSON 对象, "
+              "将每个 id 映射到其完整回答字符串; 最终回复中不得有 JSON 之外的文字或代码栏。"
+              "Use the search tool normally during retrieval; your FINAL reply must be "
+              "ONLY one complete, closed JSON object mapping every id (including the "
+              "short check questions) to its answer.")
 
 
 def _simulate_answers(items, sentinels, corrupt=False):
