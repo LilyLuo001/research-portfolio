@@ -6,7 +6,7 @@ exec 9>ops/box/.cron.lock
 flock -n 9 || exit 0
 
 .venv/bin/python ops/runner/runner.py --digest
-git add ops/briefs ops/digest ops/runner/state.json ops/decisions.md ops/l1/out
+git add ops/briefs ops/digest ops/runner/state.json ops/decisions.md ops/l1/out e2/scans
 git commit -q -m "box: nightly digest $(date +%F)" || exit 0
 git push -q origin HEAD:main \
   || { git pull --rebase -q origin main && git push -q origin HEAD:main; }
