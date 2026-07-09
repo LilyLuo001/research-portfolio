@@ -30,26 +30,30 @@ cascades from that.
 Today ≈ 2. After Waves 0–2 below ≈ 7–8. Check it in the digest every evening;
 if it drops toward 0 again, an L2 block or gate is overdue.
 
-## 2. Wave 0 — decisions, no seat time (~15 min, tonight)
+## 2. Wave 0 — decisions, no seat time (~15 min) — ✅ EXECUTED 2026-07-09
 
-Standing items already in `ops/decisions.md` / digest, blocking the night shift:
+Owner approved; decision log in `ops/decisions.md`. What changed vs the
+original draft: the chunked-kimi retry idea is DEAD — it was already tried on
+the night of 2026-07-09 (DAX-W0.5-legwork) and voided in a third distinct
+failure mode (plan-then-stop: an `<antThinking>` block and nothing else).
+**kimi $web_search is benched for retrieval batches until the vendor fixes it.**
 
-1. **E2-T1-facts vendor decision** (NEED_HUMAN, strike 4 on kimi).
-   Recommended per the two-strike ladder: escalate to a **seat-D Claude Code
-   block** — brief written: `ops/briefs/E2-T1-facts-escalation.md`. Channel-B
-   output (`ops/l1/out/E2-T1-facts-B.json`) already exists for the union
-   check, so the block is arbitration + gap-fill, not a full redo.
-2. **Validate E2-T1-facts-B** (`HAS-OUTPUT` since last night): eyeball the
-   JSON, remember the FalconX Credit Vault row is flagged (owner confirmed
-   2025-08; channel B said 2025-06 — see decisions.md).
-3. **DAX-W0.5-legwork retry**: 1 attempt recorded (VOID-SENTINEL). Either
-   re-arm it tonight with `max_items_per_call: 1` (the chunking fix that is
-   now in dispatch.py), or simply let the W0.5 feasibility session do the
-   legwork inline (Wave 1, seat E) — do NOT let the feasibility block wait
-   on this batch.
-4. **E2-T9b-scenarios / E2-T6b-nav un-park**: both are parked on the same
-   kimi/quota question as item 1. Decide alongside it; if seat D absorbs
-   T1-facts, re-arm T9b on the chunked kimi path and T6b on gemini_free.
+1. **E2-T1-facts** → escalated to seat D per the two-strike ladder
+   (`ops/briefs/E2-T1-facts-escalation.md`); stays `manual: true` for the
+   driver. → Wave 1, block 3.
+2. **E2-T1-facts-B** → validated (structure, 6/6 asset coverage, URL-or-
+   UNKNOWN discipline, sentinels correct) and marked complete. Union-block
+   flags recorded in decisions.md (aggregate navlink row, dict-shaped
+   coinbase-vault item, "inferred" FalconX oracle row).
+3. **DAX-W0.5-legwork** → parked at attempt 1 (kimi bench; avoids strike 2 +
+   nightly re-bill). Seat E does the legwork inline in the W0.5 feasibility
+   session — the spec's three item prompts are that session's checklist.
+4. **E2-T9b-scenarios** → un-parked, re-routed kimi→gemini_free (no channel
+   pair → no cross-vendor issue; ¥0; S2 fence risk noted in the spec).
+   Runs tonight **once this branch is merged to main** (the box pulls main).
+   **E2-T6b-nav** → stays manual by design: run
+   `python ops/l1/gemini_helper.py E2-T6b-nav` with issuer docs uploaded —
+   owner 30-min item, schedule alongside a Wave-1 block.
 
 ## 3. Wave 1 — prime blocks (run in parallel, one per seat, days 1–2)
 

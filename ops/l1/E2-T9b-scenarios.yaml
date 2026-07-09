@@ -20,11 +20,22 @@
 # $web_search family; per the standing rule, not spending here until the
 # vendor question is settled. No strike added (this task did not run).
 # Needs the same seat-D re-assignment / vendor decision as E2-T1-facts.
-manual: true
+# UN-PARKED + RE-ROUTED 2026-07-09 (Wave 0, owner-approved — see
+# ops/briefs/L2-PIPELINE.md and the decision log in ops/decisions.md):
+# the vendor question is settled — kimi $web_search is benched (three failure
+# families across three tasks; the last, plan-then-stop, in
+# out/DAX-W0.5-legwork.void.json). This task has NO dual-channel pair, so
+# re-routing to gemini_free (google family, grounded, ¥0) violates no
+# cross-vendor constraint; gemini grounding already produced the one clean
+# retrieval output in the portfolio (E2-T1-facts-B.json, fence passed).
+# KNOWN RISK: sentinel S2 (FalconX CV = 2025-08, owner-verified) is the exact
+# fact gemini answered WRONG (2025-06) in the T1-facts-B *void* run before
+# passing on retry. If S2 trips again, that is the fence working — record the
+# strike, do NOT weaken the sentinel.
 max_items_per_call: 1
-worker: kimi
+worker: gemini_free
 web_search: true
-est_cost: 2.0
+est_cost: 0.0             # free tier
 items:
   - id: clo-drawdown
     prompt: |
