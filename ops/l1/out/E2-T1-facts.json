@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "task": "E2-T1-facts",
+    "channel": "A — re-assigned from kimi to Anthropic L2 session per NEED_HUMAN resolution (owner-delegated, 2026-07-09)",
+    "worker": "claude_l2 (anthropic)",
+    "检索日期": "2026-07-09",
+    "sentinels": {"S1": "Morpho", "S2": "2025-08", "S3": "Polygon", "result": "3/3 PASS"},
+    "note": "cross-vendor independence vs channel B preserved (anthropic ≠ google). Union check: e2/t1_union_check.md"
+  },
+  "t1a-oracles": [
+    {"对象": "sACRED", "结论": "RedStone NAV 喂价 (Trusted Single Source Oracle: 基金管理人/transfer agent 发布经验证的 NAV; RedStone 为 Securitize 首要 oracle 伙伴, 覆盖 ACRED)", "置信度": "高", "一手来源URL": ["https://blog.redstone.finance/2025/06/05/sacred-goes-defi-the-first-private-credit-fund-earning-onchain-yield/", "https://blog.redstone.finance/2026/07/06/tokenize-the-world-redstones-role-in-the-securitize-ecosystem/", "https://app.morpho.org/polygon/market/0x8513df298cab92cafba1bae394420b7150aa40a5fac649c7168404bd5174a54c/sacred-usdc"], "检索日期": "2026-07-09", "备注": "B 通道此行为 UNKNOWN — A 通道补全"},
+    {"对象": "mF-ONE", "结论": "eOracle: Fasanara 产生 NAV → Midas 提交 eOracle 独立验证与发布 → Steakhouse 应用市场级折扣; NAV 每周更新", "置信度": "高", "一手来源URL": ["https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain", "https://eo.app/blog/case-study-midas-mf-one-institutional-private-credit-meets-defi-composability", "https://morpho.org/stories/midas/"], "检索日期": "2026-07-09", "备注": "与 B 通道一致"},
+    {"对象": "AA_FalconXUSDC", "结论": "推断: Pareto Credit Vault NAV 喂价 (rwa.xyz 记 NAV $1.09); 链上 oracle 合约实现未定位 → 部分 UNKNOWN", "置信度": "中", "一手来源URL": ["https://app.rwa.xyz/assets/AA_FalconXUSDC", "https://www.falconx.io/newsroom/bringing-institutional-lending-on-chain-exploring-falconxs-credit-vault", "https://paragraph.com/@pareto/falconx-credit-vault-pareto-expands-monad"], "检索日期": "2026-07-09", "备注": "与 B 通道的不确定性一致; 需链上核对市场 oracle 地址"},
+    {"对象": "syrupUSDC", "结论": "冲突待仲裁: A 通道检索到 Chainlink syrupUSDC-USDC Exchange Rate feed (Base); B 通道称 API3 OEV。Ethereum 主市场 (0x729bad…cf44) 的 oracle 未从一手来源定位", "置信度": "中", "一手来源URL": ["https://data.chain.link/feeds/base/base/syrupusdc-usdc-exchange-rate", "https://app.morpho.org/ethereum/market/0x729badf297ee9f2f6b3f717b96fd355fc6ec00422284ce1968e76647b258cf44/syrupusdc-usdc"], "检索日期": "2026-07-09", "备注": "可能 per-chain 不同 oracle — 逐市场链上核对后再入 registry"},
+    {"对象": "mTBILL", "结论": "OpenEden 官方 price feed 服务计算 NAV/token 并写入其 on-chain price oracle", "置信度": "高", "一手来源URL": ["https://docs.openeden.com/tbill/token-price"], "检索日期": "2026-07-09", "备注": "与 B 通道一致 (B 补充 AggregatorV3 兼容)"},
+    {"对象": "cUSDO", "结论": "被利用市场使用 Aerodrome sAMM cUSDO/USDC LP oracle — 2025-05-25 发生 oracle 操纵事件, 市场转 close-only; 其他 cUSDO 市场或用 hardcoded dummy feed", "置信度": "高 (事件), 中 (全部市场覆盖)", "一手来源URL": ["https://forum.morpho.org/t/post-mortem-aerodrome-cusdo-usdc-amm-lp-oracle-manipulation-on-morpho-lending-market/1794", "https://docs.openeden.com/usdo/cusdo-token"], "检索日期": "2026-07-09", "备注": "post-mortem 是 E2 脆弱性章节的直接案例素材; 与 B 通道结论相容"}
+  ],
+  "t1a-redemption": [
+    {"对象": "sACRED (底层 ACRED)", "结论": "ACRED 为 interval fund: 季度 tender, 每季 ≥5% 份额按 NAV 回购 (SEC N-23C3A); Securitize 层面同时宣传 native redemptions at daily NAV — 两种口径并存, 以 SEC 文件为准入 registry", "置信度": "高", "一手来源URL": ["https://www.sec.gov/Archives/edgar/data/1676197/000139834426005861/fp0098101-1_n23c3a.htm", "https://securitize.io/learn/press/apollo-and-securitize-announce-partnership-and-launch-tokenized-access-to-credit-fund"], "检索日期": "2026-07-09", "备注": "关键更正: 早期 kimi 通道的 'T+0 无门槛' 与 SEC 文件矛盾 — 季度 gate 对杠杆脆弱性叙事至关重要"},
+    {"对象": "mF-ONE", "结论": "T+30, 最低赎回 10,000 USDC (Steakhouse 文章口径; Midas 官方法律文件待独立核对)", "置信度": "中", "一手来源URL": ["https://kitchen.steakhouse.financial/p/midas-fasanara-mf-one-in-morpho-onchain"], "检索日期": "2026-07-09", "备注": "与 B 通道同源同结论 — 注意两通道共享了同一来源, 独立性弱"},
+    {"对象": "AA_FalconXUSDC", "结论": "月度付息+月度赎回 (falconx newsroom); 最低投资 250,000 USDC; 除 10% performance fee 外无赎回费; B 通道称 1–4 周 cycle + 31 天通知 + 72h 提前退出 — 措辞冲突待核", "置信度": "中", "一手来源URL": ["https://www.falconx.io/newsroom/bringing-institutional-lending-on-chain-exploring-falconxs-credit-vault", "https://app.rwa.xyz/assets/AA_FalconXUSDC"], "检索日期": "2026-07-09", "备注": "按 decisions.md FalconX 决议, 本资产所有 B 通道行须加严审查"},
+    {"对象": "syrupUSDC", "结论": "FIFO 提款队列: 常态多数当日完成 (近月均值 <5 分钟), 官方口径上限 30 天 (贷款满配时队列变长); 无最低赎回额记载", "置信度": "高", "一手来源URL": ["https://maplefinance.gitbook.io/maple/syrupusdc-for-lenders/risk", "https://docs.maple.finance/maple-institutional-for-lenders/withdrawal-process", "https://www.cork.tech/blog/measuring-time-to-cash-in-maple-vaults"], "检索日期": "2026-07-09", "备注": "与 B 通道一致 (软 gate = 队列)"},
+    {"对象": "mTBILL", "结论": "金库 USDC 流动性足 → 即时结算; 不足 → T+1 个美国工作日 (周末/长假 T+2); 最低赎回 1 USDC", "置信度": "高", "一手来源URL": ["https://docs.openeden.com/tbill/redemptions", "https://docs.openeden.com/tbill/faq"], "检索日期": "2026-07-09", "备注": "与 B 通道一致"},
+    {"对象": "cUSDO", "结论": "cUSDO 为 USDO 的非 rebasing wrapper, 合约层可随时 unwrap; 底层 USDO 的发行方赎回条款未从一手来源核实 → UNKNOWN", "置信度": "中", "一手来源URL": ["https://docs.openeden.com/usdo/cusdo-token"], "检索日期": "2026-07-09", "备注": "检索路径: docs.openeden.com/usdo (cusdo-token, faq)"}
+  ],
+  "t1a-navlink": [
+    {"对象": "Aave Horizon 各 reserve", "结论": "Horizon 采用 Chainlink SmartData/NAVLink (上线 reserve: Superstate USTB/USCC, Centrifuge JAAA/JTRSY, 随后 Circle USYC, VanEck VBILL); USTB 存在专门的 'NAV per Share NAVLink' feed。逐 feed 更新频率 (heartbeat/deviation 参数) 未能从公开页面检索到 → UNKNOWN, 需在 data.chain.link 各 feed 页或链上读取", "置信度": "中", "一手来源URL": ["https://aave.com/blog/horizon-launch", "https://data.chain.link/feeds/ethereum/mainnet/ustb-nav", "https://securitize.io/learn/blog/Securitize-and-VanEck-Bring-VBILL-to-Aave-Horizon-and-Adopt-Chainlink-NAVLink-Feeds"], "检索日期": "2026-07-09", "备注": "B 通道 '每美国工作日, 周末不更新' 标注为推断 — 与本行 UNKNOWN 不矛盾, 但 registry 不得收推断值"}
+  ],
+  "t1a-coinbase-vault": {
+    "结论": "Coinbase USDC 出借由 Morpho + Steakhouse Financial 在 Base 上承接 (curator = Steakhouse)。两个金库: Prime 保守层 (BTC/ETH 抵押市场) 与 High Yield 层 (含 Ethena USDtb — T-bill 支持的稳定币)。故该路由的金库配置了 RWA-backed 抵押敞口 (USDtb)。金库合约地址: 本通道未从链上浏览器取得 → UNKNOWN (B 通道给出的 0xbeeF010f…8183 / 0xbeeff249…8845 须经 explorer 核对后方可采信)",
+    "置信度": "高 (结论), UNKNOWN (地址)",
+    "一手来源URL": ["https://www.coinbase.com/blog/earn-competitive-yields-by-lending-your-usdc", "https://kitchen.steakhouse.financial/p/lend-your-usdc-on-coinbase", "https://morpho.org/blog/morpho-is-now-powering-usdc-lending-on-coinbase/"],
+    "检索日期": "2026-07-09",
+    "下游影响提示": "与 B 通道一致: High-Yield 金库的 USDtb (RWA-backed) 敞口要求 §2.4/§10 对照设计承认抵押品类型混合, 不能假设 Coinbase-Morpho 通道为纯 crypto-native"
+  },
+  "S1": "Morpho",
+  "S2": "2025-08",
+  "S3": "Polygon"
+}
