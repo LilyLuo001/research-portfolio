@@ -41,6 +41,50 @@ _per v1.1 appendix A. A: `ops/l1/out/E2-T1-facts.json` (2026-07-09). B:
   官方 post-mortem: https://forum.morpho.org/t/post-mortem-aerodrome-cusdo-usdc-amm-lp-oracle-manipulation-on-morpho-lending-market/1794
   — RWA 抵押 × 可操纵 oracle 的实锤案例, §脆弱性 直接引用。
 
+## Explorer verification (2026-07-09, on-chain reads via public RPC eth_call; 仲裁仍归 owner)
+_方法: 直接 `eth_call` Morpho Blue (`0xBBBB…FFCb`) `idToMarketParams` + oracle/feed
+getter 探针 (BASE_FEED_*, BASE_VAULT, description, api3ServerV1, aggregator),
+Ethereum via ethereum-rpc.publicnode.com, Base via base-rpc.publicnode.com;
+市场清单交叉引用 blue-api.morpho.org。链上读数即一手来源。_
+
+### 冲突 1 (oracles/syrupUSDC) — 链上证据
+- **Ethereum 主市场** `0x729bad…cf44` (syrupUSDC/USDC, lltv 0.915, listed):
+  oracle = `0x80032f4cb6E3573b9ed61E888AF658E48Fb790cC`。该合约四个外部 feed
+  getter (BASE_FEED_1/2, QUOTE_FEED_1/2) 全为零, 仅 `BASE_VAULT() =`
+  syrupUSDC token (`0x80ac24aA…f5Cc0b`), `price()` 正常 → **纯 vault 汇率
+  oracle (convertToAssets), 无任何外部数据 feed** — 既非 Chainlink 数据 feed,
+  亦非 API3。同一 oracle 合约还服务 ETH 上 syrupUSDC/USDT 与 /AUSD 市场。
+- **Base listed 市场** `0x52f04b…48a5` (syrupUSDC/USDC, lltv 0.915): oracle =
+  `0x8e5581119B7a6737dD829Dc2FC364F498c0da50C`, 其 `BASE_FEED_1 =
+  0x311d3a3fAA1D5939C681e33C2CDAC041FF388eb2`, `description() =
+  "syrupUSDC-USDC Exchange Rate"`, `latestRoundData()` 可读, 且为 proxy →
+  `aggregator() = 0xc6c99357…7d42` (Chainlink EACAggregatorProxy 结构) →
+  **与 A 通道 "Chainlink Exchange-Rate feed (Base)" 一致**。
+- **API3**: 两条链上与 syrupUSDC 相关的全部 oracle (含 3 个 ETH unlisted
+  市场的 oracle) 均无 `api3ServerV1()` 接口 → **B 通道 "API3 OEV" 在链上
+  未获得任何支持**。
+- 残余不确定性: Base feed 的 Chainlink 归属基于接口结构 (proxy+aggregator+
+  description); data.chain.link 页面比对可作最终背书。ETH 另有 3 个 unlisted
+  syrupUSDC/USDC 市场使用不同 oracle (`0x4F570B…`, `0x426e27…`, `0xDddd77…`),
+  说明 per-market 差异真实存在 — B 的答案可能来自其中之一, 但均非 API3。
+
+### 冲突 3 (coinbase-vault 地址) — 链上证据
+- `0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183`: **Base 有码, Ethereum 无码**。
+  链上读数: name = "Steakhouse USDC", symbol = steakUSDC, asset = Base USDC
+  (`0x833589…2913`), curator = `0x827e8607…ecdb`; Morpho API: listed=true
+  (Vault V1)。
+- `0xbeeff2490FEffa212faC2f6553682C219E6a8845`: **Base 有码, Ethereum 无码**。
+  链上读数: name = "Steakhouse High Yield USDC Edition", symbol = sirloinUSDC,
+  asset = Base USDC, curator 同上; Morpho API 以 **Vault V2** 端点
+  (`vaultV2ByAddress`) 返回同名 → 是 V2 vault, 不在 V1 清单里。
+- 结论性质: 两地址均通过链上确认 (C0 的 explorer 门槛满足), 名称/curator/
+  asset 与 "Steakhouse curator, Base, High-Yield 层" 的双通道一致行吻合。
+  ⚠️ 注意第二个 vault 是 Morpho Vault V2 — registry 若记录 vault 类型,
+  此处须标 V2。
+
+### 冲突 2 (redemption/AA_FalconXUSDC)
+非链上可核事项 (Pareto/FalconX 法律文件) — 不在本节范围, 仍待 owner 仲裁。
+
 ## 状态
 - 一致行 + A 补全行足以支撑 E2-T2-dune 的市场清单起草 (registry.csv 的 oracle/
   redemption 列可先填这些行)。
