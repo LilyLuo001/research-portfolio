@@ -14,6 +14,13 @@
 # one-item reply fits comfortably under the clamp.
 # UNPARKED 2026-07-09 (same day): driver `max_items_per_call: 1` executes exactly this
 # plan (per-item fenced calls + resume); strikes cleared with note.
+# RE-PARKED 2026-07-09 (no run billed): the chunked one-item retry was tried
+# first on E2-T1-facts and came back red in a NEW way — clean parseable JSON
+# but sentinels answered UNKNOWN (finish_reason=stop). Same worker, same
+# $web_search family; per the standing rule, not spending here until the
+# vendor question is settled. No strike added (this task did not run).
+# Needs the same seat-D re-assignment / vendor decision as E2-T1-facts.
+manual: true
 max_items_per_call: 1
 worker: kimi
 web_search: true
