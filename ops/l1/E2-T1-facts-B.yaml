@@ -53,8 +53,9 @@ sentinels:
     # source: E2_研究计划_RWA内嵌杠杆.md §10 "sACRED 首发 Polygon(2025-04) | 已核实"
     # (Replaced the FalconX-CV-launch sentinel after live run 2026-07-09:
     # channel B answered 2025-06 with grounded sources vs the plan's 已核实
-    # 2025-08 — a genuine A/B conflict, logged as NEED_HUMAN in
-    # ops/decisions.md. A fence fact must be unambiguous; that one wasn't.)
+    # 2025-08. RESOLVED by owner 2026-07-09: 2025-08 is correct — the model
+    # was wrong WITH sources, so the fact stays out of the fence (search-
+    # ambiguous), and B's AA_FalconXUSDC rows get extra scrutiny at union.)
     prompt: "On which blockchain was the sACRED token first launched in April 2025? Reply with the chain name only, one word."
     expect: "Polygon"
   - id: S2
