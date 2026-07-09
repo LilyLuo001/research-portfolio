@@ -2,17 +2,25 @@
 # from docs/E2_执行手册_v1_1_完整版.md T6b).
 # Output feeds nav_daily.csv construction and E2-T6a-panel's A5–A7 assertions.
 #
-# Auto-dispatched with google_search grounding: the model retrieves each
-# issuer's own NAV/收益率 docs online and every conclusion must carry a
-# first-hand URL. The v1.0/v1.1 manual's upload-and-read variant (higher
-# fidelity for legal-file excerpts) remains available as the FALLBACK: set
-# `manual: true` and run `python ops/l1/gemini_helper.py E2-T6b-nav`,
-# uploading the issuer documents into the Gemini conversation first.
+# MANUAL (upload-and-read, per the v1.1 design) — the grounded one-shot
+# variant was tried live 2026-07-09 and failed: 6/8 issuer rows came back
+# all-UNKNOWN after 11 searches and both sentinels were wrong
+# (ops/l1/out/E2-T6b-nav.void.json). A NAV/费率 口径 registry needs the
+# issuers' actual documents in context, not search snippets. Run it with:
+#     python ops/l1/gemini_helper.py E2-T6b-nav
+# uploading each issuer's interface docs + legal-file excerpts into the
+# Gemini conversation (grounding ON) before pasting the prompt.
 # NOTE (v1.1 T6 验收): the resulting口径 registry still requires your
-# manual sign-off before T6a consumes it — this batch is raw extraction.
+# manual sign-off before T6a consumes it — this output is raw extraction.
+manual: true
 worker: gemini_free
-web_search: true
-est_cost: 0.0             # free tier
+web_search: true          # turn grounding ON in the web UI too
+est_cost: 0.0             # free tier / human time
+manual_note: |
+  先在 Gemini 会话中上传各发行方的 NAV/收益率接口文档与法律文件节选
+  (Securitize/Midas/Superstate/Centrifuge/Circle/OpenEden/Pareto),
+  再粘贴本 prompt。结论优先定位到上传文档的具体位置; 文档没有而检索
+  到一手来源的, 附 URL; 两者皆无 → UNKNOWN, 禁止用行业惯例填空。
 items:
   - id: t6b-securitize
     prompt: |

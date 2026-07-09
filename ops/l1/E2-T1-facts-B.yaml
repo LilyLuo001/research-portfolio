@@ -50,9 +50,13 @@ items:
 # items than channel A's fence so the two fences fail independently.
 sentinels:
   - id: S1
-    # source: E2_研究计划_RWA内嵌杠杆.md §10 "FalconX CV 2025-08 | 已核实"
-    prompt: "In which year and month did the FalconX Credit Vault (the AA_FalconXUSDC market's collateral asset) launch? Reply with YYYY-MM only, nothing else."
-    expect: "2025-08"
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "sACRED 首发 Polygon(2025-04) | 已核实"
+    # (Replaced the FalconX-CV-launch sentinel after live run 2026-07-09:
+    # channel B answered 2025-06 with grounded sources vs the plan's 已核实
+    # 2025-08 — a genuine A/B conflict, logged as NEED_HUMAN in
+    # ops/decisions.md. A fence fact must be unambiguous; that one wasn't.)
+    prompt: "On which blockchain was the sACRED token first launched in April 2025? Reply with the chain name only, one word."
+    expect: "Polygon"
   - id: S2
     # source: E2_研究计划_RWA内嵌杠杆.md §2.4 "Aave Horizon 采用 Chainlink SmartData/NAVLink 喂 NAV"
     prompt: "Which oracle provider supplies the SmartData/NAVLink NAV feeds used by Aave Horizon? Reply with the provider name only, one word."

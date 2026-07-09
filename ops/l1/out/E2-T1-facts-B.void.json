@@ -1,0 +1,189 @@
+{
+  "worker": "gemini_free",
+  "bad_sentinels": [
+    "S1"
+  ],
+  "parsed_answers": {
+    "t1a-oracles": [
+      {
+        "对象": "sACRED",
+        "结论": "UNKNOWN",
+        "置信度": "低",
+        "一手来源URL": [],
+        "检索日期": "2026-07-09",
+        "备注": "未找到sACRED在Morpho市场中使用的具体oracle实现细节。搜索到的'Sacred Oracle'指的是精神或商业甲骨文牌组，而非区块链预言机。Morpho文档中未直接提及sACRED的oracle实现，[40]提及的ACRED与sACRED非同一资产。"
+      },
+      {
+        "对象": "mF-ONE",
+        "结论": "发行方直喂 (Fasanara生成NAV，Midas提交给eOracle进行独立验证和发布，Steakhouse应用市场级折扣)。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvodhWTbMREZ7av-QLMggtwD60J1aeGyixgiJ_BzcRN1F1zqYksvj6YlHpGMB77gbHxySkTzabyNI0DIvrBzrt8XR4_Se7y-tK4ZRegKVDnR2QO8KUQQGslsmWjA=="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      },
+      {
+        "对象": "AA_FalconXUSDC",
+        "结论": "UNKNOWN",
+        "置信度": "中",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAzGk7uU3D1CXYmYC2Dgq1stZE6Dey6UB8_XgMfg1HwV5GXDm8PuTYLVf8iPba3bPSlw-30XcwKNP3TPXmje5PlmbJitD3L99LMsJ4jnbHxKh1FKAoW0xKFhruBdUyVfBiJ66QoWCKaMs9xA8BzpqnutlhjA6MZUrIF8U=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4mbdQf7mfE9gc7mde4m8L_TZ4ZuQygKaBJTXnw72DczuaCbAjbjLtZ5RmALqjQauNPu06I5W3qHjkDNCHirz5k51-vTxN4sT_2Nzf562Fl4sS-JCu3jn81kK00cRShkQiXAPcxMDXJj92cCfRDna59fc489yYaXjZ2NAqrtr7pRwOEPE0UQWCB5cH-gJWDkiZoEqqtWicRErqO3qGn4M2-rU=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHj_qeiFaqIg6gjGbJ02xFX6BVYIG_Kmcmoznw4yWeDi8aJd2Al8BzuqARksy5I5Ipd5eLoQVr959SlhjDSpzIWTgn4dRZoRITypfmJmZ9lVIEayrI9EHFSQVwPrfZB6rEf6jpA=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt3MFNG0uKs_50c8sTOldF9ARd2EEa1yx5ph2Q9NUvhF0Y-ftgqEPh33RkEzLcI2bl_gq_57jH7F4USC-Zm6ZBpQCMsgSZ-bkBOH4Y1mlRJyR3XoB_5z9u2J1cVKQreHcrVPJ7CY80V5mzCVMh1v3lzc6u_EAaRntQ_31qVjcl9bQw1QdDzWD-qCDqzqjk6lOeXI40z66FY3glGcecIJEcqqHLqDNb6vdI2FDr=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETd7YGeCzAIKR61aE-y2fmU7KcBsS6X4S_KNJHINBBI81nLFX6DICrYfLrCiYo1hYqxkiSEYnsbRgeHlTi7z0zJK62bXcc2WrIwbkiSrhXXDyUZRPVGWSwKGC-n1-sPON11u3Ey2mixldPTKp6nAERt7eibo6B1vlv9x-oLa2m4aNgto7siohHrSsuSB7eXNjtGCqVQlqTjcOiDcUrWe4gslrZ_EhyZw6MPSokTx3nJbbhiNgPgU=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGU9KV-lw_bOTUVYytmmGe-HG9QaQ8QAi-6GB6PfAA9NMmqEjeXt3DDPBk_r0FotZZSL7SNVoei9qFWwWtKflPjWgirxcgj3m01twSBrUhIhNwzBW69v_KGnadZZG7ACHC_zu9mK-jctz8W8nsVY2-KCKh9n3o7HgJk-4kGtLujIHD3zOsuK1egP6w="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": "尽管Morpho市场页面显示了价格[14]，但未明确指出AA_FalconXUSDC市场在Morpho中使用的具体oracle实现类型。根据对相关文章的检索，可以推断其可能为发行方（Pareto）提供的NAV喂价，但没有找到其链上实现方式的详细信息。"
+      },
+      {
+        "对象": "syrupUSDC",
+        "结论": "API3 OEV infrastructure。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHk2iOHXsPNlgYNVPITctLWY48VxNIFvpN85X7oiv2b4TzQjt3HT8z0_C6DyiZGgRe81hScXeeTiT9cwQk_rV9-2yp2cOrgFDdqsohDBPhOnr8mfzIvWm-WjiFYyp59v6oevfJTa8OFeRZ-UwKUVrESPt9PRjE6dsZxaYwPb6Teb0mgzRGaCASB-7kMcz7vvQ=="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      },
+      {
+        "对象": "mTBILL",
+        "结论": "OpenEden On-Chain Price Oracle (兼容AggregatorV3接口)。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaxykZLmephE6IIICA4eY5aTr-4MoArVjx1K6P_FQmKV703_bBeRbRBN1JaJIfHDlWz3dr_wxRwe1Hi62IUnAGGxkCTg8vjIjq3ee7GFSVai_hMPfqOjN0Mz1Es7EvprUTZNoERBnNo1iTpuqHTlGIdhGe5cDyRqlm_fY0z_RqviFFBiE=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhmCuinjHUbixuPDLeig45oDbVXsga9MI6HCcNRty9U1hd1eQfu14sqq0n5Y2R5SjzPQAkbHJg0ZzzqGNUQES2ZZmH2zqMs9paLi1ngISU7f9Oer0sj2s6LOkmnbVOwKX-6MY_fKCD54ZJ6W-7B1M19p4XtnQiKeM5wbSLZV8ou9XWJ2qS7UjvcmmVqJgS6aGNvcrDCgkTkSy3oM0yrBwpo60zVuw=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHx5q3VHPkYEJc4eTCS2FLPyudjnMnUUccX7vV5SYHIBs0D0LIWSlAf8Jytc2glAbeqzXzfpn6Z0MXZxQsL8hqiU6AwzSl8ncOpeBP-vMErZmH24UVxE8Nvsd4MVbtaBtrCmmcaXdTeIQq5Px5pRrzQXrsHgpC1L7EGnDrcU7rBcy1Wjg==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQGqy9sYCX5wFOSQGeXGU4p95jF7GZRj_TNbB6lytMKD6p8W9povGRdxkHfqaOzjszTcQwYYx5zB3b09VLtdxcDCemaefpytP6X1LhLTjFDoZhOLxgbmgWi0-EQOD8_bm4sg=="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      },
+      {
+        "对象": "cUSDO",
+        "结论": "硬编码 (USDO价格硬编码为$1) 结合AMM池储备。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFr2kWZsRosp3SXhso-BRv8aqNM87g51jcE1oCq8FC6l4mhQQKvHtpDx8Wp6ZMw-x0KcQXzEKFz948w3g2tjebb2Oj5ukBA698kGCJHH_NjXr6NNjWI1QHjqJZ79UkYZyEwgFEyntg6lDw3_xQ8nKMh2YHR7J_Mmn8-akJBKmkgfpXMqCBvYOqG3WaVZun84Og51PHY1AQmGiyphlVtD0RM_sqcJvkmHeOU6-KXHdnE="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      }
+    ],
+    "t1a-redemption": [
+      {
+        "对象": "sACRED",
+        "结论": "UNKNOWN",
+        "置信度": "低",
+        "一手来源URL": [],
+        "检索日期": "2026-07-09",
+        "备注": "未找到sACRED的赎回条款（结算周期、最低赎回额、赎回门槛）。搜索到的'Sacred Oracle'指的是精神或商业甲骨文牌组。"
+      },
+      {
+        "对象": "mF-ONE",
+        "结论": "UNKNOWN",
+        "置信度": "低",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvodhWTbMREZ7av-QLMggtwD60J1aeGyixgiJ_BzcRN1F1zqYksvj6YlHpGMB77gbHxySkTzabyNI0DIvrBzrt8XR4_Se7y-tK4ZRegKVDnR2QO8KUQQGslsmWjA=="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": "[9]提到了'即时赎回流动性'，但未提供具体的赎回条款，如结算周期、最低赎回额或门槛条款。"
+      },
+      {
+        "对象": "AA_FalconXUSDC",
+        "结论": "结算周期: 基于周期的（1-4周），在周期结束时提出提款请求，并在借款人还款的下一周期内领取资金。需提前31天通知。最低赎回额: 未明确说明。赎回门槛(gate)条款: 存在，与每月周期挂钩。门槛触发条件: 在周期结束时提出提款请求。可在72小时内提前退出。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAzGk7uU3D1CXYmYC2Dgq1stZE6Dey6UB8_XgMfg1HwV5GXDm8PuTYLVf8iPba3bPSlw-30XcwKNP3TPXmje5PlmbJitD3L99LMsJ4jnbHxKh1FKAoW0xKFhruBdUyVfBiJ66QoWCKaMs9xA8BzpqnutlhjA6MZUrIF8U=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4mbdQf7mfE9gc7mde4m8L_TZ4ZuQygKaBJTXnw72DczuaCbAjbjLtZ5RmALqjQauNPu06I5W3qHjkDNCHirz5k51-vTxN4sT_2Nzf562Fl4sS-JCu3jn81kK00cRShkQiXAPcxMDJj92cCfRDna59fc489yYaXjZ2NAqrtr7pRwOEPE0UQWCB5cH-gJWDkiZoEqqtWicRErqO3qGn4M2-rU=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHj_qeiFaqIg6gjGbJ02xFX6BVYIG_Kmcmoznw4yWeDi8aJd2Al8BzuqARksy5I5Ipd5eLoQVr959SlhjDSpzIWTgn4dRZoRITypfmJmZ9lVIEayrI9EHFSQVwPrfZB6rEf6jpA="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      },
+      {
+        "对象": "syrupUSDC",
+        "结论": "结算周期: 通过提款队列通常为30天窗口期，可选择通过二级市场以小幅折扣即时退出。最低赎回额: 未明确说明。赎回门槛(gate)条款: 提款队列作为软门槛。门槛触发条件: 暗示池中可能存在拥堵。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpfY7HLWWnlyZ5fF7hAq7DSxA0fy9E_k045p-9s2Bvhefz3quYiUiq_OurGnJeKIb4FAiVRkvJEV8p_2k9iu1fvdIe30HRN4iS3GzqfkchS5hTw76VcWEVD_6_pSyBxmv4b5BLlHV2uEnU3GBXMukTlYC77dRSamon9C_0S9XxzFCQ4COvKwc5KdndBpYhG_S_Ckk=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjaU4FKvLJdq4gWhkf9NWdR3liTnQ-Pyv5V-wndHj0XpnYwqAYv3H3cnivUV4lhquRA7Bc1uqbRPRyAfFAlp3cph1-iOnTmi7MUfHm7T6bibu6CdQdDmoMZV1MvCl0tT5yPbGNflkrI6pK_oxLdfDqjg==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGseyNwV9lQKvbmkdb-NTAhPz01ODbX20X_dOFxeKzysyaWUrpp74p9zT7oOwTVFi5MhrF8mEXieAp2wobwHw77cwH6jxjM_I-GkyPmpEnbVulSe1OVtZWUUMZ8l4H3Yv3BONlEVdTHN5xyla5UiX-E3MB8PY2K6bqHtp6JIctuGu-vaSoJ"
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      },
+      {
+        "对象": "mTBILL",
+        "结论": "结算周期: 通常为T+1个美国工作日。最低赎回额: 1 USDC（首次存款需100,000 USDC或更多）。赎回门槛(gate)条款: 存在赎回队列（FIFO），但没有明确的'门槛'条件来拒绝赎回。门槛触发条件: 未明确说明，但队列管理订单。",
+        "置信度": "高",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2kTpk-b77R36IQ1NLTP4SygaCz1rjufnfLOxAQokUJ90014DSCbsa-AUKpUsier8nZJI_cWUrXmrsrVGrAYy2mY-FXEUh6bJxsJx5nSxt3xOKayfTQk-mLwi7THdmWlRESq-ppw4=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSOKSXSovttbgkPBuVfKmxT_UnbUm7ogP_xHbuWvCDadcD0yTpJ7QpFP1qr4HvfC5J5TQDsDk-O-eo9sSAusX3_kG5fcL7zHV9H88DeCNXWAsTwyTRGky7vyAt6BJZFOIwuUsVCPorDRnkZPHr4dPS0KQ7zdwBdLkt88w3YCmMW6R1Zo0acgKnfYM=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHejnDIBFPY28Jwzxg2Acfm6Wwph8le7XDbo3BZk2x9ojq2XDSHTe2E4x4_-x9m2GZIq3S-PfCDI2Nzo7myFEOGYFLkjhwep8V_HMLkuebQb8Ntyr2kZ7RYIgrtYP3_",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhmCuinjHUbixuPDLeig45oDbVXsga9MI6HCcNRty9U1hd1eQfu14sqq0n5Y2R5SjzPQAkbHJg0ZzzqGNUQES2ZZmH2zqMs9paLi1ngISU7f9Oer0sj2s6LOkmnbVOwKX-6MY_fKCD54ZJ6W-7B1M19p4XtnQiKeM5wbSLZV8ou9XWJ2qS7UjvcmmVqJgS6aGNvcrDCgkTkSy3oM0yrBwpo60zVuw="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      },
+      {
+        "对象": "cUSDO",
+        "结论": "UNKNOWN",
+        "置信度": "低",
+        "一手来源URL": [],
+        "检索日期": "2026-07-09",
+        "备注": "未找到cUSDO的赎回条款（结算周期、最低赎回额、赎回门槛）。[13]讨论了预言机漏洞，但未提及赎回条款。"
+      }
+    ],
+    "t1a-navlink": [
+      {
+        "对象": "Aave Horizon 各 reserve",
+        "结论": "更新频率取决于发行方报告底层RWA的计划。例如，对于OpenEden TBILL等资产，NAV报告通常在每个美国工作日结束时发布。由于传统金融市场在周末关闭，推断NAV更新在周末不会进行[推断]。",
+        "置信度": "中",
+        "一手来源URL": [
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrd9bdehiZoIFmq3yBuVEQxXtwHbJxgrpmfaCJ7iGAEcKfvWLoz8uoackYtFoQMbAFYA02igXx3rjiHvLT5paEMcYgixv8Nd1NpstWNvbTqk121uXvu7lO8wOW7KbQLl44hn-5GgvVjwC6eb1YQ4CuzErfKSW4sj5DwXInDMBbkGY25IjMe4s9etpWXa6OEmaToOs5jzHkJXw8dphlvteDOePDXfNl9WxcJShJz8OibAf_syZ8bOK27bW0FigQwxO9oLOBQw==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHrXEEKRstb_B6OeL1pTw_k4BfIXKiUKEUSMCdFgIvFwlXqlMFOLrgvX3G3R3zHU9DzhaaHiYL3_ZtvxJmzYEYg-1pwUZPbp9-R3-x4oofDUC6MLkQsg0ExflP62o6WOMZnY5zTy7TK1fT_adA=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGspQyt0eL7lLTRMJ09Ohq0aCXZH1eJutZSOMfaMry8azImHuxolAQKv9tuJ2qOEK5j238zJcElueSxtBzPSha1ocUhHx7az8hT8RoZoF3okrMKL4bMYVvlfOQoXgik_Q==",
+          "https://vertexaisearch.cloud.google.google.com/grounding-api-redirect/AUZIYQERjr8LjIObQX42QRStRmO0yTwt3QT0RV3uysXIAYTdbsIB7_4ujB7khuMn9fvD01atAA7_kMwqV45YS0mCfDNUgIixY0GXPNNUttku0t3oW9D2vTuQ0DodDWtPJ3t6t-8=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHrMdPZcRIDZa-oMfsBK85lYChbentSRbhcny0_ivpk0rU2bLmwoCymkjTP6066z8HCP3h6pN8kU2-9YF42fftGK8SIbjz53gTEy-s2_s90VhUScDSOT4B-sFnoGeX99XpATbo6sIERmDpw4p7Y-QNWZiEIq-isIX4gsHsL3UVlaGYdtCcetiRKWhe73i4IvLqslM6dW3KdiJEY8hHiRs8GGpwzNZmxYvWQVGqedQRsNA==",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNq0xUWPRMqlGzlnz1zm906OA6YvytpIL7XDL-TjcpUt8ksQfxVJMP6gRc9I5ZUXrrBBk4Olp8iO3u3Xt5MCwZleHJ-Y6lGdsYCHx1lkMrFEDI_0wC0dw=",
+          "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQGqy9sYCX5wFOSQGeXGU4p95jF7GZRj_TNbB6lytMKD6p8W9povGRdxkHfqaOzjszTcQwYYx5zB3b09VLtdxcDCemaefpytP6X1LhLTjFDoZhOLxgbmgWi0-EQOD8_bm4sg=="
+        ],
+        "检索日期": "2026-07-09",
+        "备注": ""
+      }
+    ],
+    "t1a-coinbase-vault": {
+      "结论": "Coinbase USDC出借所路由的Morpho金库由Steakhouse Financial管理。其金库地址主要有两个（在Base链上）：Steakhouse USDC (Prime) Morpho Vault (v1): 0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183，以及Steakhouse High Yield USDC Edition (v2): 0xbeeff2490FEffa212faC2f6553682C219E6a8845。\n\n该金库当前与历史上均配置过RWA抵押市场。Steakhouse管理的这些金库旨在通过借出资金给蓝筹加密资产和RWA抵押市场来优化收益。具体来说，提供给Coinbase用户的“高收益USDC金库”通过向以Ethena支持的资产（包括T-bill支持的稳定币USDtb）提供贷款来产生收益，USDtb是一种RWA。“Prime USDC金库”也明确提及用于RWA抵押市场。",
+      "置信度": "高",
+      "一手来源URL": [
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGURPBVQtdmyQ2ok_zHggbNpXUHwptWf-unkEi2Fq0t5JW8NTcDF-3IBY3MC9eNHwk3HDFa3X3BCsMEszMBElVr3dRwj41k0oTX2RnaU1INYhTrFPmaa7k5Uvr281di9_Pl3OH35thSk1b5mfgs45IPAwJZzAx6lD3-fRI=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtkDtmGMYLC7H6n8egMtc_TI7_0VVfDGfFtwVrW2xYJAItiwJJtPc6XIib-d9Ig90BbX8QtmISEF5AELNtyRR3e0EprIDB_DPw2fHS9nknD-Q-N3DqYIX0ZrmUEPAO1IZyUHDms1yIQ7ftquVidMmX1Yv9RWLtnER6l8WbSSrU4XVyL4xelc0=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLE-Wn9Skt_8evOzl8nuSk_2dSaLRJsVNKol1OZ5TmDtNR58gaXnEIyXnIzRjvhW00h1rLvqMQnrSE-6kS6ubsCYD93NLupk5i2hAHGdh128e-oIj6uSyPt7RnqG09pIATlJDlCyRAD_HUSRyPe-qlyLWlRijplpTDLYUEzqBJSmjCBJpdKwoAvfCE55pmvMhbfNK9RLQV=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvL7Xm2zbVlFkQT3CnlJGI-LfsADK_TIsSuS-bVicVzOdsuugfomezsAGSGgBM3EwcDgljCo4TvCv0zBnnyI95rm49leDw5NJkuqzSSuW4h9h8tYEAeSmd-narJkug_1qTu3q59qhmKu8ds2oxo_O85ksJK9Lg9D-U7W8ZO1IK6XCcvdc=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJvtvJLANsw-BZ4FDihfOs87WtytrnANmgygQwjc5yjwntP-s0mfxHrU6Gedpx30EmWbODVucmMgwbJ-q4dWUUr6kNjUx-DTVhKw95oKVFHXWchf_JRLSKrmn3IPDjFAg2iqnBbP03l_lodJfQJ9yUZwQDEE1wUlvOS8Ym8iP3-sgcpVpQ=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTK88h1rXmmECnHH0LO2pdOkeszCJPQxMarzoziEsGVU8BXQNpqGheCE0I2cDPBITH0mlwpR_SL85zN3Sw_CSrtPzQkzXwmHO1UoGfrLNfgZYXCeX2dv4Ce6ratUa3b-08ih_XyGMRk-57QAGpqaN7cBWq1EMeC6GMs5o3Z_60r88G2swmRQ==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFEUyLwUAm5LZb3cWYMm4fYY3dcGTwKgG-uxK7sr0CyKGPnAL4QfLltLQZ4O6dK1B7d7Wzb9rKhZewdxXip2ZffSkRFac-I3P1FaETuzYNgIM6MYwhqzkDWmtRHpSWkLGemues1_G3oK58nBHWMWPyoUo_z8BuvN1nfDwZAbXx2i4zv_wmKvo_hJ1XqptuID0wek-0a0HCIun-YnNhUr0=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEA7fo09NYTaK_qPd9JGIqVCUomwbwadH0EyVoLGfsiwINCcHwi5TLPIuXEu-M0VIsJaOpZfxiOfIaDEZ4tYclRmgM2MWwjKwMMT1ri6BS0LLX_WdTYY2XHyOfpAenzBv7pMtgAN8MF9Z5tUYW8d9uF0PA8D4oUIjqSN5yBWTEKfoDPwfkIDXzNrEq-AvG-xZ8QcD1PwLfCpg9M=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGU1X_dBIM_u72Ml2noI2KP5OEbvW-rI3kbwlFBAyYd6xSD7iMYET0yS0boeVocbL99sDNVz1NGqQWXrHuJbz5sqW-lrlRno3yzv7QGKcJ2oeE6_MlwZ4_f-_bKzI4Fqz3vQXnfdFr7kDAn_xfU69M-CtE1vb6UBPlI5jEGx-eJR-IExZFSqA==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHycX3qEUh0lDGld1y44_5AkqZGwWLx286ZWeRlAwkiBKTGGI19Lg2A0iE0TiBKzTuFacBFZrnWsTrCyfRUF8FdLU-ZVvQIzLIMgCvd6Bn_u3VAwbf5JQFzTXtmDAWYe65S-xhi_Cj_xSMPQ4JKn8FkrZt12aMETYhy3tIwQjSgljCoyACDxUW07IuUWxNrGyXhCGS7scReDJVpw==",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHifFhfCgL507zaTWOxFcU7EhkHGQAQYR_yNJFeElm5rLtkJWbDQEx-CF7au0P3-gukLbmLIncf7Ir9wN8REiX5ehkH3Wr1sB-tYgiZRIO6IanjeYUuJYH95p7k20SwWxanIWC6mQWIeY7XFNQnyvSnSgeBEqrt96Ku5aqvEenzvYNtoUlI2iNKosI=",
+        "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQJ5tumJIuQ0BKIyXNOvKcjwMiJ-SWmiQvXLwFB71ljXJyZJdwrgpKLKpilpHKl-Yacp9u4EC5HWbW4bHR3HMrziH6E3RpLYCKGnHcJ2b19F8yAcIP18fGSLdAtz0GNvzoxaDKP4F1Hd3_33wT7IRDrgPSFmoSx_ipaaLA="
+      ],
+      "检索日期": "2026-07-09",
+      "备注": "",
+      "下游影响提示": "关于Coinbase通过Steakhouse-curated Morpho金库进行USDC借贷，其配置并使用了RWA抵押市场（例如，Ethena的T-bill支持的稳定币USDtb）的结论，将改变专注于隔离纯加密原生借贷敞口的研究设计。如果对照计划（§2.4或§10）假设Coinbase的Morpho整合仅使用加密抵押品，这一发现需要调整以考虑RWA敞口，可能需要对金库内的RWA支持与加密支持借贷进行单独分析，或调整范围以承认抵押品类型的多样性。"
+    },
+    "S1": "2025-06",
+    "S2": "Chainlink"
+  },
+  "finish_reason": null,
+  "raw_text": "```json\n{\n  \"t1a-oracles\": [\n    {\n      \"对象\": \"sACRED\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"未找到sACRED在Morpho市场中使用的具体oracle实现细节。搜索到的'Sacred Oracle'指的是精神或商业甲骨文牌组，而非区块链预言机。Morpho文档中未直接提及sACRED的oracle实现，[40]提及的ACRED与sACRED非同一资产。\"\n    },\n    {\n      \"对象\": \"mF-ONE\",\n      \"结论\": \"发行方直喂 (Fasanara生成NAV，Midas提交给eOracle进行独立验证和发布，Steakhouse应用市场级折扣)。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvodhWTbMREZ7av-QLMggtwD60J1aeGyixgiJ_BzcRN1F1zqYksvj6YlHpGMB77gbHxySkTzabyNI0DIvrBzrt8XR4_Se7y-tK4ZRegKVDnR2QO8KUQQGslsmWjA==\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    },\n    {\n      \"对象\": \"AA_FalconXUSDC\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"中\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAzGk7uU3D1CXYmYC2Dgq1stZE6Dey6UB8_XgMfg1HwV5GXDm8PuTYLVf8iPba3bPSlw-30XcwKNP3TPXmje5PlmbJitD3L99LMsJ4jnbHxKh1FKAoW0xKFhruBdUyVfBiJ66QoWCKaMs9xA8BzpqnutlhjA6MZUrIF8U=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4mbdQf7mfE9gc7mde4m8L_TZ4ZuQygKaBJTXnw72DczuaCbAjbjLtZ5RmALqjQauNPu06I5W3qHjkDNCHirz5k51-vTxN4sT_2Nzf562Fl4sS-JCu3jn81kK00cRShkQiXAPcxMDXJj92cCfRDna59fc489yYaXjZ2NAqrtr7pRwOEPE0UQWCB5cH-gJWDkiZoEqqtWicRErqO3qGn4M2-rU=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHj_qeiFaqIg6gjGbJ02xFX6BVYIG_Kmcmoznw4yWeDi8aJd2Al8BzuqARksy5I5Ipd5eLoQVr959SlhjDSpzIWTgn4dRZoRITypfmJmZ9lVIEayrI9EHFSQVwPrfZB6rEf6jpA=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGt3MFNG0uKs_50c8sTOldF9ARd2EEa1yx5ph2Q9NUvhF0Y-ftgqEPh33RkEzLcI2bl_gq_57jH7F4USC-Zm6ZBpQCMsgSZ-bkBOH4Y1mlRJyR3XoB_5z9u2J1cVKQreHcrVPJ7CY80V5mzCVMh1v3lzc6u_EAaRntQ_31qVjcl9bQw1QdDzWD-qCDqzqjk6lOeXI40z66FY3glGcecIJEcqqHLqDNb6vdI2FDr=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETd7YGeCzAIKR61aE-y2fmU7KcBsS6X4S_KNJHINBBI81nLFX6DICrYfLrCiYo1hYqxkiSEYnsbRgeHlTi7z0zJK62bXcc2WrIwbkiSrhXXDyUZRPVGWSwKGC-n1-sPON11u3Ey2mixldPTKp6nAERt7eibo6B1vlv9x-oLa2m4aNgto7siohHrSsuSB7eXNjtGCqVQlqTjcOiDcUrWe4gslrZ_EhyZw6MPSokTx3nJbbhiNgPgU=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGU9KV-lw_bOTUVYytmmGe-HG9QaQ8QAi-6GB6PfAA9NMmqEjeXt3DDPBk_r0FotZZSL7SNVoei9qFWwWtKflPjWgirxcgj3m01twSBrUhIhNwzBW69v_KGnadZZG7ACHC_zu9mK-jctz8W8nsVY2-KCKh9n3o7HgJk-4kGtLujIHD3zOsuK1egP6w=\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"尽管Morpho市场页面显示了价格[14]，但未明确指出AA_FalconXUSDC市场在Morpho中使用的具体oracle实现类型。根据对相关文章的检索，可以推断其可能为发行方（Pareto）提供的NAV喂价，但没有找到其链上实现方式的详细信息。\"\n    },\n    {\n      \"对象\": \"syrupUSDC\",\n      \"结论\": \"API3 OEV infrastructure。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHk2iOHXsPNlgYNVPITctLWY48VxNIFvpN85X7oiv2b4TzQjt3HT8z0_C6DyiZGgRe81hScXeeTiT9cwQk_rV9-2yp2cOrgFDdqsohDBPhOnr8mfzIvWm-WjiFYyp59v6oevfJTa8OFeRZ-UwKUVrESPt9PRjE6dsZxaYwPb6Teb0mgzRGaCASB-7kMcz7vvQ==\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    },\n    {\n      \"对象\": \"mTBILL\",\n      \"结论\": \"OpenEden On-Chain Price Oracle (兼容AggregatorV3接口)。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaxykZLmephE6IIICA4eY5aTr-4MoArVjx1K6P_FQmKV703_bBeRbRBN1JaJIfHDlWz3dr_wxRwe1Hi62IUnAGGxkCTg8vjIjq3ee7GFSVai_hMPfqOjN0Mz1Es7EvprUTZNoERBnNo1iTpuqHTlGIdhGe5cDyRqlm_fY0z_RqviFFBiE=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhmCuinjHUbixuPDLeig45oDbVXsga9MI6HCcNRty9U1hd1eQfu14sqq0n5Y2R5SjzPQAkbHJg0ZzzqGNUQES2ZZmH2zqMs9paLi1ngISU7f9Oer0sj2s6LOkmnbVOwKX-6MY_fKCD54ZJ6W-7B1M19p4XtnQiKeM5wbSLZV8ou9XWJ2qS7UjvcmmVqJgS6aGNvcrDCgkTkSy3oM0yrBwpo60zVuw=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHx5q3VHPkYEJc4eTCS2FLPyudjnMnUUccX7vV5SYHIBs0D0LIWSlAf8Jytc2glAbeqzXzfpn6Z0MXZxQsL8hqiU6AwzSl8ncOpeBP-vMErZmH24UVxE8Nvsd4MVbtaBtrCmmcaXdTeIQq5Px5pRrzQXrsHgpC1L7EGnDrcU7rBcy1Wjg==\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQGqy9sYCX5wFOSQGeXGU4p95jF7GZRj_TNbB6lytMKD6p8W9povGRdxkHfqaOzjszTcQwYYx5zB3b09VLtdxcDCemaefpytP6X1LhLTjFDoZhOLxgbmgWi0-EQOD8_bm4sg==\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    },\n    {\n      \"对象\": \"cUSDO\",\n      \"结论\": \"硬编码 (USDO价格硬编码为$1) 结合AMM池储备。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFr2kWZsRosp3SXhso-BRv8aqNM87g51jcE1oCq8FC6l4mhQQKvHtpDx8Wp6ZMw-x0KcQXzEKFz948w3g2tjebb2Oj5ukBA698kGCJHH_NjXr6NNjWI1QHjqJZ79UkYZyEwgFEyntg6lDw3_xQ8nKMh2YHR7J_Mmn8-akJBKmkgfpXMqCBvYOqG3WaVZun84Og51PHY1AQmGiyphlVtD0RM_sqcJvkmHeOU6-KXHdnE=\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    }\n  ],\n  \"t1a-redemption\": [\n    {\n      \"对象\": \"sACRED\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"未找到sACRED的赎回条款（结算周期、最低赎回额、赎回门槛）。搜索到的'Sacred Oracle'指的是精神或商业甲骨文牌组。\"\n    },\n    {\n      \"对象\": \"mF-ONE\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvodhWTbMREZ7av-QLMggtwD60J1aeGyixgiJ_BzcRN1F1zqYksvj6YlHpGMB77gbHxySkTzabyNI0DIvrBzrt8XR4_Se7y-tK4ZRegKVDnR2QO8KUQQGslsmWjA==\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"[9]提到了'即时赎回流动性'，但未提供具体的赎回条款，如结算周期、最低赎回额或门槛条款。\"\n    },\n    {\n      \"对象\": \"AA_FalconXUSDC\",\n      \"结论\": \"结算周期: 基于周期的（1-4周），在周期结束时提出提款请求，并在借款人还款的下一周期内领取资金。需提前31天通知。最低赎回额: 未明确说明。赎回门槛(gate)条款: 存在，与每月周期挂钩。门槛触发条件: 在周期结束时提出提款请求。可在72小时内提前退出。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGAzGk7uU3D1CXYmYC2Dgq1stZE6Dey6UB8_XgMfg1HwV5GXDm8PuTYLVf8iPba3bPSlw-30XcwKNP3TPXmje5PlmbJitD3L99LMsJ4jnbHxKh1FKAoW0xKFhruBdUyVfBiJ66QoWCKaMs9xA8BzpqnutlhjA6MZUrIF8U=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4mbdQf7mfE9gc7mde4m8L_TZ4ZuQygKaBJTXnw72DczuaCbAjbjLtZ5RmALqjQauNPu06I5W3qHjkDNCHirz5k51-vTxN4sT_2Nzf562Fl4sS-JCu3jn81kK00cRShkQiXAPcxMDJj92cCfRDna59fc489yYaXjZ2NAqrtr7pRwOEPE0UQWCB5cH-gJWDkiZoEqqtWicRErqO3qGn4M2-rU=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHj_qeiFaqIg6gjGbJ02xFX6BVYIG_Kmcmoznw4yWeDi8aJd2Al8BzuqARksy5I5Ipd5eLoQVr959SlhjDSpzIWTgn4dRZoRITypfmJmZ9lVIEayrI9EHFSQVwPrfZB6rEf6jpA=\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    },\n    {\n      \"对象\": \"syrupUSDC\",\n      \"结论\": \"结算周期: 通过提款队列通常为30天窗口期，可选择通过二级市场以小幅折扣即时退出。最低赎回额: 未明确说明。赎回门槛(gate)条款: 提款队列作为软门槛。门槛触发条件: 暗示池中可能存在拥堵。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHpfY7HLWWnlyZ5fF7hAq7DSxA0fy9E_k045p-9s2Bvhefz3quYiUiq_OurGnJeKIb4FAiVRkvJEV8p_2k9iu1fvdIe30HRN4iS3GzqfkchS5hTw76VcWEVD_6_pSyBxmv4b5BLlHV2uEnU3GBXMukTlYC77dRSamon9C_0S9XxzFCQ4COvKwc5KdndBpYhG_S_Ckk=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjaU4FKvLJdq4gWhkf9NWdR3liTnQ-Pyv5V-wndHj0XpnYwqAYv3H3cnivUV4lhquRA7Bc1uqbRPRyAfFAlp3cph1-iOnTmi7MUfHm7T6bibu6CdQdDmoMZV1MvCl0tT5yPbGNflkrI6pK_oxLdfDqjg==\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGseyNwV9lQKvbmkdb-NTAhPz01ODbX20X_dOFxeKzysyaWUrpp74p9zT7oOwTVFi5MhrF8mEXieAp2wobwHw77cwH6jxjM_I-GkyPmpEnbVulSe1OVtZWUUMZ8l4H3Yv3BONlEVdTHN5xyla5UiX-E3MB8PY2K6bqHtp6JIctuGu-vaSoJ\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    },\n    {\n      \"对象\": \"mTBILL\",\n      \"结论\": \"结算周期: 通常为T+1个美国工作日。最低赎回额: 1 USDC（首次存款需100,000 USDC或更多）。赎回门槛(gate)条款: 存在赎回队列（FIFO），但没有明确的'门槛'条件来拒绝赎回。门槛触发条件: 未明确说明，但队列管理订单。\",\n      \"置信度\": \"高\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2kTpk-b77R36IQ1NLTP4SygaCz1rjufnfLOxAQokUJ90014DSCbsa-AUKpUsier8nZJI_cWUrXmrsrVGrAYy2mY-FXEUh6bJxsJx5nSxt3xOKayfTQk-mLwi7THdmWlRESq-ppw4=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHSOKSXSovttbgkPBuVfKmxT_UnbUm7ogP_xHbuWvCDadcD0yTpJ7QpFP1qr4HvfC5J5TQDsDk-O-eo9sSAusX3_kG5fcL7zHV9H88DeCNXWAsTwyTRGky7vyAt6BJZFOIwuUsVCPorDRnkZPHr4dPS0KQ7zdwBdLkt88w3YCmMW6R1Zo0acgKnfYM=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHejnDIBFPY28Jwzxg2Acfm6Wwph8le7XDbo3BZk2x9ojq2XDSHTe2E4x4_-x9m2GZIq3S-PfCDI2Nzo7myFEOGYFLkjhwep8V_HMLkuebQb8Ntyr2kZ7RYIgrtYP3_\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFhmCuinjHUbixuPDLeig45oDbVXsga9MI6HCcNRty9U1hd1eQfu14sqq0n5Y2R5SjzPQAkbHJg0ZzzqGNUQES2ZZmH2zqMs9paLi1ngISU7f9Oer0sj2s6LOkmnbVOwKX-6MY_fKCD54ZJ6W-7B1M19p4XtnQiKeM5wbSLZV8ou9XWJ2qS7UjvcmmVqJgS6aGNvcrDCgkTkSy3oM0yrBwpo60zVuw=\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    },\n    {\n      \"对象\": \"cUSDO\",\n      \"结论\": \"UNKNOWN\",\n      \"置信度\": \"低\",\n      \"一手来源URL\": [],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"未找到cUSDO的赎回条款（结算周期、最低赎回额、赎回门槛）。[13]讨论了预言机漏洞，但未提及赎回条款。\"\n    }\n  ],\n  \"t1a-navlink\": [\n    {\n      \"对象\": \"Aave Horizon 各 reserve\",\n      \"结论\": \"更新频率取决于发行方报告底层RWA的计划。例如，对于OpenEden TBILL等资产，NAV报告通常在每个美国工作日结束时发布。由于传统金融市场在周末关闭，推断NAV更新在周末不会进行[推断]。\",\n      \"置信度\": \"中\",\n      \"一手来源URL\": [\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrd9bdehiZoIFmq3yBuVEQxXtwHbJxgrpmfaCJ7iGAEcKfvWLoz8uoackYtFoQMbAFYA02igXx3rjiHvLT5paEMcYgixv8Nd1NpstWNvbTqk121uXvu7lO8wOW7KbQLl44hn-5GgvVjwC6eb1YQ4CuzErfKSW4sj5DwXInDMBbkGY25IjMe4s9etpWXa6OEmaToOs5jzHkJXw8dphlvteDOePDXfNl9WxcJShJz8OibAf_syZ8bOK27bW0FigQwxO9oLOBQw==\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHrXEEKRstb_B6OeL1pTw_k4BfIXKiUKEUSMCdFgIvFwlXqlMFOLrgvX3G3R3zHU9DzhaaHiYL3_ZtvxJmzYEYg-1pwUZPbp9-R3-x4oofDUC6MLkQsg0ExflP62o6WOMZnY5zTy7TK1fT_adA=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGspQyt0eL7lLTRMJ09Ohq0aCXZH1eJutZSOMfaMry8azImHuxolAQKv9tuJ2qOEK5j238zJcElueSxtBzPSha1ocUhHx7az8hT8RoZoF3okrMKL4bMYVvlfOQoXgik_Q==\",\n        \"https://vertexaisearch.cloud.google.google.com/grounding-api-redirect/AUZIYQERjr8LjIObQX42QRStRmO0yTwt3QT0RV3uysXIAYTdbsIB7_4ujB7khuMn9fvD01atAA7_kMwqV45YS0mCfDNUgIixY0GXPNNUttku0t3oW9D2vTuQ0DodDWtPJ3t6t-8=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHrMdPZcRIDZa-oMfsBK85lYChbentSRbhcny0_ivpk0rU2bLmwoCymkjTP6066z8HCP3h6pN8kU2-9YF42fftGK8SIbjz53gTEy-s2_s90VhUScDSOT4B-sFnoGeX99XpATbo6sIERmDpw4p7Y-QNWZiEIq-isIX4gsHsL3UVlaGYdtCcetiRKWhe73i4IvLqslM6dW3KdiJEY8hHiRs8GGpwzNZmxYvWQVGqedQRsNA==\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNq0xUWPRMqlGzlnz1zm906OA6YvytpIL7XDL-TjcpUt8ksQfxVJMP6gRc9I5ZUXrrBBk4Olp8iO3u3Xt5MCwZleHJ-Y6lGdsYCHx1lkMrFEDI_0wC0dw=\",\n        \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQGqy9sYCX5wFOSQGeXGU4p95jF7GZRj_TNbB6lytMKD6p8W9povGRdxkHfqaOzjszTcQwYYx5zB3b09VLtdxcDCemaefpytP6X1LhLTjFDoZhOLxgbmgWi0-EQOD8_bm4sg==\"\n      ],\n      \"检索日期\": \"2026-07-09\",\n      \"备注\": \"\"\n    }\n  ],\n  \"t1a-coinbase-vault\": {\n    \"结论\": \"Coinbase USDC出借所路由的Morpho金库由Steakhouse Financial管理。其金库地址主要有两个（在Base链上）：Steakhouse USDC (Prime) Morpho Vault (v1): 0xbeeF010f9cb27031ad51e3333f9aF9C6B1228183，以及Steakhouse High Yield USDC Edition (v2): 0xbeeff2490FEffa212faC2f6553682C219E6a8845。\\n\\n该金库当前与历史上均配置过RWA抵押市场。Steakhouse管理的这些金库旨在通过借出资金给蓝筹加密资产和RWA抵押市场来优化收益。具体来说，提供给Coinbase用户的“高收益USDC金库”通过向以Ethena支持的资产（包括T-bill支持的稳定币USDtb）提供贷款来产生收益，USDtb是一种RWA。“Prime USDC金库”也明确提及用于RWA抵押市场。\",\n    \"置信度\": \"高\",\n    \"一手来源URL\": [\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGURPBVQtdmyQ2ok_zHggbNpXUHwptWf-unkEi2Fq0t5JW8NTcDF-3IBY3MC9eNHwk3HDFa3X3BCsMEszMBElVr3dRwj41k0oTX2RnaU1INYhTrFPmaa7k5Uvr281di9_Pl3OH35thSk1b5mfgs45IPAwJZzAx6lD3-fRI=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtkDtmGMYLC7H6n8egMtc_TI7_0VVfDGfFtwVrW2xYJAItiwJJtPc6XIib-d9Ig90BbX8QtmISEF5AELNtyRR3e0EprIDB_DPw2fHS9nknD-Q-N3DqYIX0ZrmUEPAO1IZyUHDms1yIQ7ftquVidMmX1Yv9RWLtnER6l8WbSSrU4XVyL4xelc0=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFLE-Wn9Skt_8evOzl8nuSk_2dSaLRJsVNKol1OZ5TmDtNR58gaXnEIyXnIzRjvhW00h1rLvqMQnrSE-6kS6ubsCYD93NLupk5i2hAHGdh128e-oIj6uSyPt7RnqG09pIATlJDlCyRAD_HUSRyPe-qlyLWlRijplpTDLYUEzqBJSmjCBJpdKwoAvfCE55pmvMhbfNK9RLQV=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvL7Xm2zbVlFkQT3CnlJGI-LfsADK_TIsSuS-bVicVzOdsuugfomezsAGSGgBM3EwcDgljCo4TvCv0zBnnyI95rm49leDw5NJkuqzSSuW4h9h8tYEAeSmd-narJkug_1qTu3q59qhmKu8ds2oxo_O85ksJK9Lg9D-U7W8ZO1IK6XCcvdc=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJvtvJLANsw-BZ4FDihfOs87WtytrnANmgygQwjc5yjwntP-s0mfxHrU6Gedpx30EmWbODVucmMgwbJ-q4dWUUr6kNjUx-DTVhKw95oKVFHXWchf_JRLSKrmn3IPDjFAg2iqnBbP03l_lodJfQJ9yUZwQDEE1wUlvOS8Ym8iP3-sgcpVpQ=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTK88h1rXmmECnHH0LO2pdOkeszCJPQxMarzoziEsGVU8BXQNpqGheCE0I2cDPBITH0mlwpR_SL85zN3Sw_CSrtPzQkzXwmHO1UoGfrLNfgZYXCeX2dv4Ce6ratUa3b-08ih_XyGMRk-57QAGpqaN7cBWq1EMeC6GMs5o3Z_60r88G2swmRQ==\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFEUyLwUAm5LZb3cWYMm4fYY3dcGTwKgG-uxK7sr0CyKGPnAL4QfLltLQZ4O6dK1B7d7Wzb9rKhZewdxXip2ZffSkRFac-I3P1FaETuzYNgIM6MYwhqzkDWmtRHpSWkLGemues1_G3oK58nBHWMWPyoUo_z8BuvN1nfDwZAbXx2i4zv_wmKvo_hJ1XqptuID0wek-0a0HCIun-YnNhUr0=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEA7fo09NYTaK_qPd9JGIqVCUomwbwadH0EyVoLGfsiwINCcHwi5TLPIuXEu-M0VIsJaOpZfxiOfIaDEZ4tYclRmgM2MWwjKwMMT1ri6BS0LLX_WdTYY2XHyOfpAenzBv7pMtgAN8MF9Z5tUYW8d9uF0PA8D4oUIjqSN5yBWTEKfoDPwfkIDXzNrEq-AvG-xZ8QcD1PwLfCpg9M=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGU1X_dBIM_u72Ml2noI2KP5OEbvW-rI3kbwlFBAyYd6xSD7iMYET0yS0boeVocbL99sDNVz1NGqQWXrHuJbz5sqW-lrlRno3yzv7QGKcJ2oeE6_MlwZ4_f-_bKzI4Fqz3vQXnfdFr7kDAn_xfU69M-CtE1vb6UBPlI5jEGx-eJR-IExZFSqA==\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHycX3qEUh0lDGld1y44_5AkqZGwWLx286ZWeRlAwkiBKTGGI19Lg2A0iE0TiBKzTuFacBFZrnWsTrCyfRUF8FdLU-ZVvQIzLIMgCvd6Bn_u3VAwbf5JQFzTXtmDAWYe65S-xhi_Cj_xSMPQ4JKn8FkrZt12aMETYhy3tIwQjSgljCoyACDxUW07IuUWxNrGyXhCGS7scReDJVpw==\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHifFhfCgL507zaTWOxFcU7EhkHGQAQYR_yNJFeElm5rLtkJWbDQEx-CF7au0P3-gukLbmLIncf7Ir9wN8REiX5ehkH3Wr1sB-tYgiZRIO6IanjeYUuJYH95p7k20SwWxanIWC6mQWIeY7XFNQnyvSnSgeBEqrt96Ku5aqvEenzvYNtoUlI2iNKosI=\",\n      \"https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFQJ5tumJIuQ0BKIyXNOvKcjwMiJ-SWmiQvXLwFB71ljXJyZJdwrgpKLKpilpHKl-Yacp9u4EC5HWbW4bHR3HMrziH6E3RpLYCKGnHcJ2b19F8yAcIP18fGSLdAtz0GNvzoxaDKP4F1Hd3_33wT7IRDrgPSFmoSx_ipaaLA=\"\n    ],\n    \"检索日期\": \"2026-07-09\",\n    \"备注\": \"\",\n    \"下游影响提示\": \"关于Coinbase通过Steakhouse-curated Morpho金库进行USDC借贷，其配置并使用了RWA抵押市场（例如，Ethena的T-bill支持的稳定币USDtb）的结论，将改变专注于隔离纯加密原生借贷敞口的研究设计。如果对照计划（§2.4或§10）假设Coinbase的Morpho整合仅使用加密抵押品，这一发现需要调整以考虑RWA敞口，可能需要对金库内的RWA支持与加密支持借贷进行单独分析，或调整范围以承认抵押品类型的多样性。\"\n  },\n  \"S1\": \"2025-06\",\n  \"S2\": \"Chainlink\"\n}\n```",
+  "usage": {
+    "prompt_tokens": 753,
+    "completion_tokens": 8903,
+    "search_count": 34
+  }
+}
