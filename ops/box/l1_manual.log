@@ -20,3 +20,15 @@ recorded attempt 2 for E2-T1-facts — ESCALATE (shows in plan/digest)
 recorded attempt 3 for E2-T9b-scenarios — ESCALATE (shows in plan/digest)
   spent today: 1.942 / 70 daily cap (MTD 2.8 / 500)
   0 batch(es) written to ops/l1/out/ — validate + gate downstream before --complete.
+[VOID-SENTINEL] kimi: sentinels failed ['S1', 'S2', 'S3'] — raw reply kept at E2-T1-facts.void.json — batch discarded
+[VOID-SENTINEL] kimi: reply had no parseable JSON answer-map (all sentinels void) — raw reply kept at E2-T1-facts.void.json — batch discarded
+L1 driver — 6 ready L1 task(s), mode=LIVE
+  ✓ P1-T0-crash-B        output already at P1-T0-crash-B.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  ✓ DAX-W0.5-legwork     output already at DAX-W0.5-legwork.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  ✖ E2-T1-facts          [VOID-SENTINEL] kimi: chunk 1/4: sentinels failed ['S2', 'S3'] — raw reply kept at E2-T1-facts.void.json — batch discarded
+recorded attempt 1 for E2-T1-facts
+  ✓ E2-T1-facts-B        output already at E2-T1-facts-B.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  · E2-T6b-nav           manual channel — run: python ops/l1/gemini_helper.py E2-T6b-nav
+  · E2-T9b-scenarios     manual channel — run: python ops/l1/gemini_helper.py E2-T9b-scenarios
+  spent today: 2.910 / 70 daily cap (MTD 3.8 / 500)
+  0 batch(es) written to ops/l1/out/ — validate + gate downstream before --complete.

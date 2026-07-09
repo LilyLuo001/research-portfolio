@@ -20,3 +20,4 @@
 # (AA_FalconXUSDC collateral) launch date — research plan §10 says 2025-08
 # (marked 已核实), but Gemini channel B answered 2025-06 backed by grounded
 # searches (raw reply: ops/l1/out/E2-T1-facts-B.void.json).
+# NEED_HUMAN (2026-07-09, E2-T1-facts): 4 kimi failure modes exhausted (kimi-latest 404, prose-drift, plan-then-stop/truncation, UNKNOWN on armed sentinels even chunked 1-item). Re-parked with strike standing. Needs seat-D re-assignment or vendor change; channel B output (E2-T1-facts-B.json) exists for the union check.

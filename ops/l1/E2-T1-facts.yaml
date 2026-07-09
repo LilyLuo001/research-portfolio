@@ -28,6 +28,15 @@
 # UNPARKED 2026-07-09 (same day): the driver now supports `max_items_per_call: 1`
 # (per-item fenced calls, per-item resume at out/<task>.<item>.json) — this
 # executes the retry plan above; strikes cleared via --clear-fail with note.
+#   4. RE-PARKED 2026-07-09 (supervised chunked rerun, 1 item/call): chunk 1/4
+#      returned clean, fully-parseable JSON (format problem solved), but the
+#      model answered S2/S3 sentinels 'UNKNOWN' (S1 'Morpho' correct),
+#      finish_reason=stop — it declines to verify known facts even with a
+#      single item and one search leg. Vendor capability limit, not format.
+#      Strike stands (genuine model failure). Do not iterate further on kimi;
+#      needs seat-D re-assignment or vendor change. Channel B output
+#      (E2-T1-facts-B.json) exists for the union check meanwhile.
+manual: true
 max_items_per_call: 1
 worker: kimi
 web_search: true
