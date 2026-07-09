@@ -12,7 +12,8 @@ FAM = {"meta": {"vendor_families": {"kimi": "moonshot", "deepseek": "deepseek"}}
 
 def _wire(monkeypatch, tmp_path, ready_tasks):
     monkeypatch.setattr(runner, "load", lambda p: FAM)
-    monkeypatch.setattr(runner, "load_state", lambda: {"completed": [], "gates_cleared": []})
+    monkeypatch.setattr(runner, "load_state",
+                        lambda: {"completed": [], "gates_cleared": [], "attempts": {}})
     monkeypatch.setattr(runner, "ready_set", lambda q, s: (ready_tasks, [], [], []))
     monkeypatch.setattr(l1_driver, "L1", tmp_path / "l1")
     monkeypatch.setattr(l1_driver, "OUT", tmp_path / "l1" / "out")
@@ -124,6 +125,41 @@ def test_void_records_attempt_and_night_report(monkeypatch, tmp_path):
     import json
     night = json.loads((tmp_path / "l1" / "out" / "_last_night.json").read_text())
     assert night["results"]["E2-T9b-scenarios"] == "VOID-SENTINEL"
+
+
+def test_error_does_not_strike(monkeypatch, tmp_path):
+    """HTTP/quota/billing errors are vendor-side: visible in the night report,
+    but they must not burn the task's two-strike ladder (the fence never ran)."""
+    _wire(monkeypatch, tmp_path, [{"id": "E2-T1-facts-B", "worker": "kimi", "human_gate": False}])
+    (tmp_path / "l1" / "E2-T1-facts-B.yaml").write_text(yaml.dump({
+        "items": [{"id": "i1", "prompt": "x"}],
+        "sentinels": [{"id": "S1", "prompt": "2+2?", "expect": "4"}]}))
+    monkeypatch.setattr(dispatch, "run_batch",
+                        lambda *a, **k: ("ERROR", "429 credits depleted", None))
+    failed = []
+    monkeypatch.setattr(runner, "cmd_fail", lambda tid: failed.append(tid))
+
+    assert l1_driver.run(live=True) == 0
+    assert failed == []                            # no strike for vendor errors
+    import json
+    night = json.loads((tmp_path / "l1" / "out" / "_last_night.json").read_text())
+    assert night["results"]["E2-T1-facts-B"] == "ERROR"   # …but still visible
+
+
+def test_done_clears_stale_strikes(monkeypatch, tmp_path):
+    """A success wipes strikes left by earlier bad nights (DAX pattern:
+    void night 1, DONE night 2 — the counter must not stay at 1)."""
+    _wire(monkeypatch, tmp_path, [{"id": "DAX-W0.5-legwork", "worker": "kimi", "human_gate": False}])
+    (tmp_path / "l1" / "DAX-W0.5-legwork.yaml").write_text(yaml.dump({
+        "items": [{"id": "i1", "prompt": "x"}],
+        "sentinels": [{"id": "S1", "prompt": "2+2?", "expect": "4"}]}))
+    monkeypatch.setattr(dispatch, "run_batch", lambda *a, **k: ("DONE", "ok", {"i1": "a"}))
+    cleared = []
+    monkeypatch.setattr(runner, "cmd_clear_fail",
+                        lambda tid, quiet=False: cleared.append(tid))
+
+    assert l1_driver.run(live=True) == 0
+    assert cleared == ["DAX-W0.5-legwork"]
 
 
 def test_web_search_flag_threads_through(monkeypatch, tmp_path):
