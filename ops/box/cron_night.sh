@@ -9,3 +9,6 @@ flock -n 9 || exit 0
 
 set -a; . ops/box/.env 2>/dev/null; set +a
 .venv/bin/python ops/runner/l1_driver.py --live
+# E2-T11a literature squat-scan (deterministic, no LLM, no budget spend);
+# outputs land in e2/scans/ and are committed by the 21:00 evening tick.
+.venv/bin/python e2/scan.py >> ops/box/scan.log 2>&1
