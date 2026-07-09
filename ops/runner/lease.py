@@ -19,7 +19,7 @@ LEASES = ROOT / "ops" / "leases"
 
 def _git(*args):
     return subprocess.run(["git", "-C", str(ROOT), *args],
-                          stdout=__import__('subprocess').PIPE, stderr=__import__('subprocess').STDOUT, text=True)
+                          stdout=__import__('subprocess').PIPE, stderr=__import__('subprocess').STDOUT, universal_newlines=True)
 
 def claim(task, account, ttl):
     LEASES.mkdir(exist_ok=True)
