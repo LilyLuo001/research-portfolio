@@ -156,6 +156,26 @@ def _search_then_answer(responses):
     return fake
 
 
+def test_k2_models_get_temperature_1_others_0(monkeypatch):
+    """Moonshot K2 models 400 on any temperature but 1 (live 2026-07-09)."""
+    assert models._temperature("kimi-k2.6") == 1
+    assert models._temperature("kimi-k2.7-code") == 1
+    assert models._temperature("moonshot-v1-32k") == 0
+    assert models._temperature("deepseek-chat") == 0
+    seen = {}
+
+    def fake(url, key, payload):
+        seen.update(payload)
+        return {"choices": [{"finish_reason": "stop",
+                             "message": {"content": "{}"}}], "usage": {}}
+
+    monkeypatch.setattr(models, "_post_json", fake)
+    monkeypatch.setitem(models.MODELS, "kimi", "kimi-k2.6")
+    monkeypatch.setenv("KIMI_API_KEY", "x")
+    ok, _ = models.dispatch("kimi", "x", dry_run=False)
+    assert ok and seen["temperature"] == 1
+
+
 def test_openai_path_sets_max_tokens_and_reports_finish_reason(monkeypatch):
     seen = {}
 

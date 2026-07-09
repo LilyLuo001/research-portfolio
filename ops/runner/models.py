@@ -171,10 +171,16 @@ def _post_json(url, key, payload, extra_headers=None):
         delay *= 2
 
 
+def _temperature(model):
+    """Moonshot K2-series models reject any temperature except 1 (observed
+    live 2026-07-09: 400 'invalid temperature: only 1 is allowed for this
+    model'). Everything else gets 0 for determinism."""
+    return 1 if model.startswith("kimi-k2") else 0
+
+
 def _post_openai(url, key, model, prompt):
-    # kimi K2-series models reject any temperature other than 1 (live 2026-07-09)
     d = _post_json(url, key,
-                   {"model": model, "temperature": 1 if model.startswith("kimi") else 0,
+                   {"model": model, "temperature": _temperature(model),
                     "max_tokens": MAX_OUTPUT_TOKENS,
                     "messages": [{"role": "system", "content": SYSTEM},
                                  {"role": "user", "content": prompt}]})
@@ -194,8 +200,7 @@ def _post_kimi_search(url, key, model, prompt):
                 {"role": "user", "content": prompt}]
     total = {"prompt_tokens": 0, "completion_tokens": 0, "search_count": 0}
     for _ in range(MAX_SEARCH_ROUNDS):
-        d = _post_json(url, key, {"model": model,
-                                  "temperature": 1 if model.startswith("kimi") else 0,
+        d = _post_json(url, key, {"model": model, "temperature": _temperature(model),
                                   "max_tokens": MAX_OUTPUT_TOKENS,
                                   "messages": messages, "tools": WEB_SEARCH_TOOLS})
         u = d.get("usage", {}) or {}
