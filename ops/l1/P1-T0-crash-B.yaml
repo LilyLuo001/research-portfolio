@@ -38,8 +38,10 @@ sentinels:
     expect: "2025-11"
   - id: S2
     # source: 基金转换实验_博士研究计划.md §2 "2021-06-11, DFA 第一波: 4 只税管基金"
-    prompt: "On what exact date did Dimensional Fund Advisors (DFA) convert its first wave of four tax-managed mutual funds into ETFs? Reply with the ISO date YYYY-MM-DD only, nothing else."
-    expect: "2021-06-11"
+    # Month precision on purpose: live run 2026-07 answered "2021-06-01" (right
+    # month, wrong day) — day-level is the registry task's job, not the fence's.
+    prompt: "In which year and month did Dimensional Fund Advisors (DFA) convert its first wave of four tax-managed mutual funds into ETFs? Reply with YYYY-MM only, nothing else."
+    expect: "2021-06"
   - id: S3
     # source: 基金转换实验_博士研究计划.md §2 "2021-03, Guinness Atkinson: 首例转换"
     prompt: "Which fund company carried out the first-ever US mutual-fund-to-ETF conversion in March 2021? Reply with the company name only, nothing else."

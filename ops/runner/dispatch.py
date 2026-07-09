@@ -87,7 +87,10 @@ def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False
     passed, bad = models.verify_sentinels(answers, sentinels)
     if not passed:
         why = f"sentinels failed {bad}"
-        if live and not answers:
+        if live and res.get("finish_reason") == "length":
+            why = (f"reply TRUNCATED at the output-token cap before the "
+                   f"sentinels (finish_reason=length; missed {bad})")
+        elif live and not answers:
             why = "reply had no parseable JSON answer-map (all sentinels void)"
         if live and out:
             # discarded downstream, but keep the raw reply for the morning
@@ -95,6 +98,7 @@ def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False
             void = pathlib.Path(out).with_suffix(".void.json")
             void.write_text(json.dumps(
                 {"worker": worker, "bad_sentinels": bad, "parsed_answers": answers,
+                 "finish_reason": res.get("finish_reason"),
                  "raw_text": res["text"], "usage": res.get("usage", {})},
                 ensure_ascii=False, indent=2))
             why += f" — raw reply kept at {void.name}"

@@ -52,7 +52,12 @@ ENDPOINTS = {
 MODELS = {
     "deepseek":   "deepseek-chat",
     "deepseek_r": "deepseek-reasoner",
-    "kimi":       os.getenv("KIMI_MODEL", "moonshot-v1-32k"),
+    # kimi-latest = Moonshot's alias for their newest model. The old default
+    # moonshot-v1-32k (2024-era) under-searched (1 search/batch), fabricated
+    # retrieval dates from its training era, and skipped items — observed live
+    # 2026-07. The manual specs K2.6; verify the exact id + $web_search support
+    # at platform.kimi.com/docs and pin via KIMI_MODEL if needed.
+    "kimi":       os.getenv("KIMI_MODEL", "kimi-latest"),
     "glm":        "glm-4-flash",
     "qwen":       "qwen-plus",
     "gemini_free":"gemini-2.5-flash",
@@ -81,9 +86,15 @@ PRICES = {
 }
 
 SYSTEM = ("You are a batch worker. Respond with ONLY a single JSON object mapping "
-          "each input item's id to its answer. No prose, no markdown fences.")
+          "each input item's id to its answer. No prose, no markdown fences. "
+          "Answer EVERY item, including the short check questions.")
 
 TIMEOUT = 120
+
+# Vendors cap completions LOW when max_tokens is unset (Moonshot ~1024 — seen
+# live 2026-07: a 4-item batch truncated mid-JSON at completion_tokens=1025,
+# never reached its sentinels, and voided). Ask for room explicitly.
+MAX_OUTPUT_TOKENS = int(os.getenv("L1_MAX_TOKENS", "8192"))
 
 
 def dispatch(worker, prompt, sentinels=None, dry_run=True, web_search=False):
@@ -163,9 +174,12 @@ def _post_json(url, key, payload, extra_headers=None):
 def _post_openai(url, key, model, prompt):
     d = _post_json(url, key,
                    {"model": model, "temperature": 0,
+                    "max_tokens": MAX_OUTPUT_TOKENS,
                     "messages": [{"role": "system", "content": SYSTEM},
                                  {"role": "user", "content": prompt}]})
-    return True, {"text": d["choices"][0]["message"]["content"], "usage": d.get("usage", {})}
+    choice = d["choices"][0]
+    return True, {"text": choice["message"]["content"], "usage": d.get("usage", {}),
+                  "finish_reason": choice.get("finish_reason")}
 
 
 def _post_kimi_search(url, key, model, prompt):
@@ -180,6 +194,7 @@ def _post_kimi_search(url, key, model, prompt):
     total = {"prompt_tokens": 0, "completion_tokens": 0, "search_count": 0}
     for _ in range(MAX_SEARCH_ROUNDS):
         d = _post_json(url, key, {"model": model, "temperature": 0,
+                                  "max_tokens": MAX_OUTPUT_TOKENS,
                                   "messages": messages, "tools": WEB_SEARCH_TOOLS})
         u = d.get("usage", {}) or {}
         total["prompt_tokens"] += u.get("prompt_tokens", 0) or 0
@@ -199,7 +214,8 @@ def _post_kimi_search(url, key, model, prompt):
                 messages.append({"role": "tool", "tool_call_id": tc.get("id"),
                                  "name": name, "content": content})
             continue
-        return True, {"text": msg.get("content", ""), "usage": total}
+        return True, {"text": msg.get("content", ""), "usage": total,
+                      "finish_reason": choice.get("finish_reason")}
     return False, {"error": f"web_search exceeded {MAX_SEARCH_ROUNDS} rounds without finishing"}
 
 
@@ -228,24 +244,27 @@ def _post_gemini(url, key, prompt, web_search=False):
 
 def parse_answers(text):
     """Pull the JSON answer-map out of a model response (tolerates stray prose or
-    ```json fences). Tries a strict parse of each '{'-rooted candidate in turn —
-    a single greedy {.*} regex breaks as soon as surrounding prose contains any
-    other brace, which search-grounded answers often do. Returns {} if nothing
-    parseable is found."""
+    ```json fences). Strictly parses each '{'-rooted candidate; a successful
+    parse consumes its whole span, so nested row-objects never shadow the outer
+    answer-map (seen live: a reply truncated mid-JSON made 'first parseable {'
+    return an inner per-asset row instead of the id->answer map). Among the
+    outermost candidates, the one with the most keys wins. Returns {} if
+    nothing parseable is found."""
     import json
     if not text:
         return {}
     dec = json.JSONDecoder()
+    best = {}
     idx = text.find("{")
     while idx != -1:
         try:
-            obj, _ = dec.raw_decode(text, idx)
-            if isinstance(obj, dict):
-                return obj
+            obj, end = dec.raw_decode(text, idx)
+            if isinstance(obj, dict) and len(obj) > len(best):
+                best = obj
+            idx = text.find("{", end)
         except ValueError:
-            pass
-        idx = text.find("{", idx + 1)
-    return {}
+            idx = text.find("{", idx + 1)
+    return best
 
 
 def _norm(s):
