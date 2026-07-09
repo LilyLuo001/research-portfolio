@@ -92,21 +92,23 @@ VENV_PY="$PROJECT/.venv/bin/python"
 MARK="# portfolio-box (managed by bootstrap.sh)"
 read -r -d '' CRON_BLOCK <<EOF || true
 $MARK
-*/30 * * * *  cd $PROJECT && $VENV_PY ops/runner/runner.py --apply-decisions >> ops/box/cron.log 2>&1; cd $PROJECT && $VENV_PY ops/runner/runner.py --reap >> ops/box/cron.log 2>&1
+*/30 * * * *  cd $PROJECT && git pull --ff-only -q origin main >> ops/box/cron.log 2>&1; cd $PROJECT && $VENV_PY ops/runner/runner.py --apply-decisions >> ops/box/cron.log 2>&1; cd $PROJECT && $VENV_PY ops/runner/runner.py --reap >> ops/box/cron.log 2>&1; cd $PROJECT && bash ops/box/run_inbox.sh >> ops/box/cron.log 2>&1
 0 2 * * *     cd $PROJECT && set -a && . ops/box/.env && set +a && $VENV_PY ops/runner/l1_driver.py --live >> ops/box/cron.log 2>&1
 0 21 * * *    cd $PROJECT && $VENV_PY ops/runner/runner.py --digest >> ops/box/cron.log 2>&1 && git add ops/briefs ops/digest ops/runner/state.json ops/decisions.md ops/l1/out && git commit -q -m "box: nightly digest \$(date +\%F)" && git push -q origin HEAD:main >> ops/box/cron.log 2>&1
 $MARK-end
 EOF
 
 if [ "$INSTALL_CRON" = "1" ]; then
-  say "installing cron schedule (idempotent)"
+  say "installing cron schedule (idempotent — replaces the managed block)"
   existing="$(crontab -l 2>/dev/null || true)"
   if printf '%s\n' "$existing" | grep -qF "$MARK"; then
-    echo "   already installed — leaving crontab unchanged"
-  else
-    { printf '%s\n' "$existing"; printf '%s\n' "$CRON_BLOCK"; } | crontab -
-    echo "   installed. verify with: crontab -l"
+    # strip the old managed block so schedule updates actually deploy
+    existing="$(printf '%s\n' "$existing" \
+      | awk -v s="$MARK" -v e="$MARK-end" '$0==s{skip=1} !skip{print} $0==e{skip=0}')"
+    echo "   replacing existing managed block"
   fi
+  { printf '%s\n' "$existing"; printf '%s\n' "$CRON_BLOCK"; } | crontab -
+  echo "   installed. verify with: crontab -l"
 else
   say "cron schedule (resolved to this box) — install with INSTALL_CRON=1, or paste into 'crontab -e':"
   printf '%s\n' "$CRON_BLOCK" | sed 's/^/   /'
