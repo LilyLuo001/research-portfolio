@@ -112,6 +112,8 @@ def build_spec(task_id, worker, rules, rows, channel_note):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--force", action="store_true")
+    ap.add_argument("--allow-thin-t1", action="store_true",
+                    help="waive the K-4 minimum-universe guard (owner-reviewed only)")
     ap.add_argument("--max-per-task", type=int, default=0, help="cap items (smoke)")
     args = ap.parse_args()
     man = os.path.join(PKG, "manifest.csv")
@@ -144,12 +146,16 @@ def main():
     # hand-run manifest had 9 vs 401 T13-family). Dozens of managers converted
     # 2021-2026; anything under this floor means harvest phrase coverage or
     # truncation is broken — fix the harvest, don't spec.
+    # NOT bypassed by --force: --force means "overwrite existing spec files",
+    # and payload i legitimately needs it for that — on 2026-07-10 it also
+    # silently waived this guard and armed a 9-filing T1 universe. Bypassing
+    # the floor now requires the dedicated flag below.
     MIN_T1 = 40
-    if 0 < len(t1) < MIN_T1 and not args.max_per_task and not args.force:
+    if 0 < len(t1) < MIN_T1 and not args.max_per_task and not args.allow_thin_t1:
         print("K-4 GUARD: only {0} conversion-family filings (< {1}) — "
               "refusing to write P1-T1 specs from this manifest. Re-run the "
-              "harvester with the expanded phrase family; --force only with "
-              "an owner-reviewed justification.".format(len(t1), MIN_T1))
+              "harvester with the expanded phrase family; --allow-thin-t1 "
+              "only with an owner-reviewed justification.".format(len(t1), MIN_T1))
         t1 = []
     plans = [
         ("P1-T1-events", "deepseek", T1_RULES, t1,

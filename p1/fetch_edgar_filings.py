@@ -87,16 +87,23 @@ def ua():
 
 
 def get(url, headers, tries=4):
+    # efts.sec.gov intermittently 500s and read-times-out on paginated queries
+    # (same offset succeeds on retry) — both observed 2026-07-10 during the
+    # K-4 re-run; the box's payload-i run died on exactly this
+    last = None
     for i in range(tries):
-        r = requests.get(url, headers=headers, timeout=30)
-        # efts.sec.gov intermittently 500s on paginated queries (same offset
-        # succeeds on retry) — observed 2026-07-10 during the K-4 re-run
+        try:
+            r = requests.get(url, headers=headers, timeout=30)
+        except requests.exceptions.RequestException as e:
+            last = e
+            time.sleep(2.0 * (i + 1))
+            continue
         if r.status_code in (429, 500, 502, 503):
             time.sleep(2.0 * (i + 1))
             continue
         r.raise_for_status()
         return r
-    raise RuntimeError("gave up after {0} tries: {1}".format(tries, url))
+    raise RuntimeError("gave up after {0} tries: {1} (last: {2})".format(tries, url, last))
 
 
 def search(query, headers, offset=0):
