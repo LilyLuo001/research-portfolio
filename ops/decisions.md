@@ -213,6 +213,25 @@
 #    redistribution in W10a until clarified). Awaiting PI signature:
 #    gate DAX-GATE-feasibility pass/fail.
 
+# SIGNED 2026-07-10 (owner, verbatim in-session — "I have reviewed the
+# drafted feasibility note and I fully agree with the CONDITIONAL GO verdict
+# and its three stipulations (the W4 deadline, the gpt-4.5-preview
+# exclusion, and the GDPval license constraints)"; owner directed the gate
+# sign-off be executed on their behalf):
+# - DAX-W0.5-feasibility deliverable (dax/memo/feasibility_note.md)
+#   accepted → task complete.
+# - DAX-GATE-feasibility = PASS with the note's three conditions binding:
+#   1. W4 capability/cost API capture scheduled before the 2026-10-23 /
+#      2026-12-11 shutdown waves (budget line flagged to funder).
+#   2. Retired vintages via cited open-weight stand-ins only, stand-in
+#      error into the amendment-1 EIV bounds; gpt-4.5-preview EXCLUDED.
+#   3. GDPval: task-by-ID referencing only; no GDPval-derived text in the
+#      W10a public release until license terms are clarified.
+# Owner also confirmed handling box infra repairs (venv, module, SSH,
+# EDGAR_CONTACT) manually.
+# applied: complete DAX-W0.5-feasibility
+# applied: gate DAX-GATE-feasibility pass
+
 # NEED_HUMAN (2026-07-10, box infra): the 02:03Z inbox run broke the L1 lane
 # — `.venv/bin/python` missing AND no python3 module visible from the login
 # shell (module system regression?), on top of the standing SCC SSH publickey
