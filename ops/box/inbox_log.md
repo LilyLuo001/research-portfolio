@@ -197,3 +197,97 @@ recorded attempt 1 for DAX-W0.5-legwork
   }
 }[exit: 0]
 ```
+
+## 2026-07-10T02:00:03Z — inbox e38a846d2b71 @ git 8ad1868
+```
+== python3 modules visible from a login shell ==
+python3/3.9.9
+python3/3.10.5
+python3/3.10.12
+python3/3.12.4
+python3/3.13.8
+picked: python3/3.13.8
+Python 3.13.8
+deps OK
+selfcheck PASSED — 59 tasks, 11 contracts, DAG + vendor independence clean.
+VENV SWAPPED to Python 3.13.8 (old kept at .venv-old)
+== sanity: the cron's python still works ==
+cron python OK: 3.13.8
+== P1 EDGAR harvester ==
+NEED_HUMAN: EDGAR_CONTACT is not set — add 'EDGAR_CONTACT=<your email>'
+to ops/box/.env (box-local, gitignored; SEC fair-use requires it).
+Harvester NOT started; this payload re-checks on nothing — bump the
+inbox-version after adding the var, or start by hand:
+  setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
+[exit: 0]
+```
+
+## 2026-07-10T02:03:25Z — inbox e38a846d2b71 @ git aef5d3f
+```
+ops/box/inbox.sh: line 16: .venv/bin/python: No such file or directory
+== python3 modules visible from a login shell ==
+picked: none
+SKIP: no python3 module found; needs an interactive look at 'module avail' on the SCC
+== sanity: the cron's python still works ==
+ops/box/inbox.sh: line 42: .venv/bin/python: No such file or directory
+== P1 EDGAR harvester ==
+NEED_HUMAN: EDGAR_CONTACT is not set — add 'EDGAR_CONTACT=<your email>'
+to ops/box/.env (box-local, gitignored; SEC fair-use requires it).
+Harvester NOT started; this payload re-checks on nothing — bump the
+inbox-version after adding the var, or start by hand:
+  setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
+[exit: 0]
+```
+
+## 2026-07-10T06:30:03Z — inbox 1885bd57e05e @ git efa42b4
+```
+== host identity (duplicate-checkout watch: the 02:03 run saw a venv-less host) ==
+scc1 : /usr3/graduate/qluo/portfolio : efa42b4
+== harvest completeness ==
+local filings: 423 / manifest rows: 423
+== generate extraction specs ==
+P1-T1-events: wrote 9 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T1-events.yaml
+P1-T1-events-B: wrote 9 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T1-events-B.yaml
+P1-T13-ant: wrote 414 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T13-ant.yaml
+P1-T13-ant-B: wrote 414 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T13-ant-B.yaml
+== validate specs parse + what tonight's driver would run (dry-run) ==
+ops/l1/P1-T1-events-B.yaml -> gemini_free 9 items, 3 sentinels
+ops/l1/P1-T1-events.yaml -> deepseek 9 items, 3 sentinels
+ops/l1/P1-T13-ant-B.yaml -> gemini_free 414 items, 3 sentinels
+ops/l1/P1-T13-ant-B.yaml -> gemini_free 414 items, 3 sentinels
+ops/l1/P1-T13-ant.yaml -> deepseek 414 items, 3 sentinels
+ops/l1/P1-T13-ant.yaml -> deepseek 414 items, 3 sentinels
+  · P1-T0-monitor        manual channel — run: python ops/l1/gemini_helper.py P1-T0-monitor
+  ✓ DAX-W0.5-legwork     output already at DAX-W0.5-legwork.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  · E2-T2-dune           manual channel — run: python ops/l1/gemini_helper.py E2-T2-dune
+  · E2-T6b-nav           manual channel — run: python ops/l1/gemini_helper.py E2-T6b-nav
+  ✓ P1-T1-events         [DONE] deepseek: 9 items + 3 sentinels OK in 2 chunks (dry-run)
+  ✓ P1-T1-events-B       [DONE] gemini_free: 9 items + 3 sentinels OK in 2 chunks (dry-run)
+  ✓ P1-T13-ant           [DONE] deepseek: 414 items + 3 sentinels OK in 69 chunks (dry-run)
+  ✓ P1-T13-ant-B         [DONE] gemini_free: 414 items + 3 sentinels OK in 69 chunks (dry-run)
+  ✓ E2-T9b-scenarios     [DONE] gemini_free: 4 items + 2 sentinels OK in 4 chunks (dry-run)
+  5 batch(es) would run (dry-run writes nothing). Run with --live on the box.
+== commit the generated specs so every seat sees tonight's plan ==
+== state ==
+{
+  "completed": [
+    "SH-runner",
+    "SH-econlib",
+    "P1-T0-crash-B",
+    "E2-T1-facts-B",
+    "P1-T2a-power",
+    "DAX-W0-infra",
+    "E2-T1-facts",
+    "P1-GATE-t2a",
+    "P1-T0-crash"
+  ],
+  "gates_cleared": [
+    "P1-GATE-t2a"
+  ],
+  "gates_failed": [],
+  "attempts": {
+    "DAX-W0.5-legwork": 1
+  },
+  "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
+}[exit: 0]
+```
