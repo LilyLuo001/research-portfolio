@@ -1,0 +1,77 @@
+# E2-T2-dune — D1 事件与市场清单: Dune SQL + subgraph 查询生成 (manual T2, v1.0).
+# Verbatim prompt source: docs/E2_执行手册_Prompt与Agent指派.md §T2 (类型 B: 代码,
+# 产出可执行验证). Worker deepseek per 修订5 (写 SQL/GraphQL 极便宜且够用);
+# two failures → escalate to a Claude Code block per the manual's 升级备选.
+#
+# READY-flip: this task becomes READY when the owner completes E2-T1-facts
+# (union check already supports the market-list draft — e2/t1_union_check.md
+# §状态). Spec written 2026-07-09 ahead of the flip so the first eligible
+# night is not wasted (cadence rule 2, ops/briefs/L2-PIPELINE.md).
+#
+# ARMING (owner, required — the prompt hard-requires owner-supplied inputs;
+# an unarmed run would NEED_INFO on every item and waste the batch):
+#   1. Paste YOUR Dune-account-visible table/field list into the 【ARMING-1】
+#      slot in q1 (the prompt forbids the model from using any other names).
+#   2. Paste Aave Horizon instance contract addresses + reserve-init ABI
+#      event signatures into 【ARMING-2】 in q2.
+#   3. e2/registry.csv DOES NOT EXIST yet — create it (asset symbols ->
+#      addresses, per C0 ID 约定) and paste its first 20 rows into 【ARMING-3】
+#      in q4. Addresses only from explorers/official pages (C0).
+#   4. Then delete `manual: true` below. Acceptance per manual: row counts
+#      reconcile with the Morpho UI market count; 5 market_ids hand-checked
+#      on an explorer.
+manual: true
+max_items_per_call: 1
+worker: deepseek
+web_search: false
+est_cost: 1.0
+items:
+  - id: q1-createmarket
+    prompt: |
+      【C0 纪律: 不得虚构任何表名或列名; 需要的字段不在清单里 → 输出 NEED_INFO
+      并说明缺什么; 所有假设写在代码注释; market_id 为 Morpho 官方 bytes32。】
+      任务(T2-Q1): 编写可直接在 Dune 上运行的 SQL: 从 morpho_blue 相关
+      spellbook 表提取全链所有 CreateMarket 事件, 字段: chain, block_time,
+      tx_hash, market_id, collateral_token, loan_token, oracle, irm, lltv。
+      只允许使用下方贴出的表名和字段。
+      【ARMING-1: 此处粘贴 owner Dune 账号可见的表名与字段清单】
+  - id: q2-horizon-reserves
+    prompt: |
+      【C0 纪律: 同上 — 合约地址与事件签名只用下方贴出的, 不得虚构。】
+      任务(T2-Q2): Dune SQL: Aave Horizon 部署实例的 reserve 初始化事件,
+      输出与 Q1 相同的市场行结构 (market_id 用 "horizon:<asset symbol>")。
+      【ARMING-2: 此处粘贴 Horizon 实例合约地址 + reserve 初始化 ABI 事件签名】
+  - id: q3-subgraph
+    prompt: |
+      【C0 纪律: 同上。】
+      任务(T2-Q3): 编写 Morpho 官方 subgraph 的 GraphQL 查询, 拉取市场元数据
+      (market id, collateral/loan token, oracle, irm, lltv, 创建区块), 作为
+      Q1 的交叉验证源。注明所用 subgraph 端点的公开 URL; 端点不确定 → NEED_INFO。
+  - id: q4-rwa-tag
+    prompt: |
+      【C0 纪律: 同上 — registry 之外的代币地址一律进未匹配清单, 不得凭记忆归类。】
+      任务(T2-Q4): SQL: 对 Q1 结果按 collateral_token 关联 registry.csv,
+      打标 is_rwa 布尔列, 并输出未匹配代币清单供人工分类。
+      【ARMING-3: 此处粘贴 e2/registry.csv 前 20 行】
+  - id: q5-reconcile
+    prompt: |
+      【C0 纪律: 代码必须可整体复制运行; 所有假设写在代码注释; 不确定的表结构
+      一律 NEED_INFO, 禁止猜测。】
+      任务(T2-交付2): 一段 Python(pandas), 读入 Q1-Q4 导出的 CSV, 做三方对账
+      (Dune vs subgraph vs registry), 输出 events.parquet + 差异报告
+      diff_report.md。对账不一致的市场逐行列出原因假设。
+# Known-answer fence: facts marked 已核实 in docs/E2_研究计划_RWA内嵌杠杆.md §10
+# (same fence family as E2-T1-facts; exercises the task's own domain).
+sentinels:
+  - id: S1
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "Morpho 隔离市场/CreateMarket 事件结构 | 已核实"
+    prompt: "Which DeFi lending protocol's singleton contract defines isolated markets via a CreateMarket event with exactly five parameters (collateralToken, loanToken, oracle, irm, lltv)? Reply with the protocol name only, one word."
+    expect: "Morpho"
+  - id: S2
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "Horizon 2025-08 上线 | 已核实"
+    prompt: "In which year and month did Aave Horizon (the permissioned Aave instance for RWA collateral) launch? Reply with YYYY-MM only, nothing else."
+    expect: "2025-08"
+  - id: S3
+    # source: E2_研究计划_RWA内嵌杠杆.md §10 "sACRED 首发 Polygon(2025-04) | 已核实"
+    prompt: "On which blockchain was the sACRED token first launched in April 2025? Reply with the chain name only, one word."
+    expect: "Polygon"
