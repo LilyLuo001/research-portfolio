@@ -83,7 +83,9 @@ def ua():
 def get(url, headers, tries=4):
     for i in range(tries):
         r = requests.get(url, headers=headers, timeout=30)
-        if r.status_code in (429, 503):
+        # efts.sec.gov intermittently 500s on paginated queries (same offset
+        # succeeds on retry) — observed 2026-07-10 during the K-4 re-run
+        if r.status_code in (429, 500, 502, 503):
             time.sleep(2.0 * (i + 1))
             continue
         r.raise_for_status()
