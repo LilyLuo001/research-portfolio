@@ -238,3 +238,56 @@ inbox-version after adding the var, or start by hand:
   setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
 [exit: 0]
 ```
+
+## 2026-07-10T06:30:03Z — inbox 1885bd57e05e @ git efa42b4
+```
+== host identity (duplicate-checkout watch: the 02:03 run saw a venv-less host) ==
+scc1 : /usr3/graduate/qluo/portfolio : efa42b4
+== harvest completeness ==
+local filings: 423 / manifest rows: 423
+== generate extraction specs ==
+P1-T1-events: wrote 9 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T1-events.yaml
+P1-T1-events-B: wrote 9 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T1-events-B.yaml
+P1-T13-ant: wrote 414 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T13-ant.yaml
+P1-T13-ant-B: wrote 414 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T13-ant-B.yaml
+== validate specs parse + what tonight's driver would run (dry-run) ==
+ops/l1/P1-T1-events-B.yaml -> gemini_free 9 items, 3 sentinels
+ops/l1/P1-T1-events.yaml -> deepseek 9 items, 3 sentinels
+ops/l1/P1-T13-ant-B.yaml -> gemini_free 414 items, 3 sentinels
+ops/l1/P1-T13-ant-B.yaml -> gemini_free 414 items, 3 sentinels
+ops/l1/P1-T13-ant.yaml -> deepseek 414 items, 3 sentinels
+ops/l1/P1-T13-ant.yaml -> deepseek 414 items, 3 sentinels
+  · P1-T0-monitor        manual channel — run: python ops/l1/gemini_helper.py P1-T0-monitor
+  ✓ DAX-W0.5-legwork     output already at DAX-W0.5-legwork.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  · E2-T2-dune           manual channel — run: python ops/l1/gemini_helper.py E2-T2-dune
+  · E2-T6b-nav           manual channel — run: python ops/l1/gemini_helper.py E2-T6b-nav
+  ✓ P1-T1-events         [DONE] deepseek: 9 items + 3 sentinels OK in 2 chunks (dry-run)
+  ✓ P1-T1-events-B       [DONE] gemini_free: 9 items + 3 sentinels OK in 2 chunks (dry-run)
+  ✓ P1-T13-ant           [DONE] deepseek: 414 items + 3 sentinels OK in 69 chunks (dry-run)
+  ✓ P1-T13-ant-B         [DONE] gemini_free: 414 items + 3 sentinels OK in 69 chunks (dry-run)
+  ✓ E2-T9b-scenarios     [DONE] gemini_free: 4 items + 2 sentinels OK in 4 chunks (dry-run)
+  5 batch(es) would run (dry-run writes nothing). Run with --live on the box.
+== commit the generated specs so every seat sees tonight's plan ==
+== state ==
+{
+  "completed": [
+    "SH-runner",
+    "SH-econlib",
+    "P1-T0-crash-B",
+    "E2-T1-facts-B",
+    "P1-T2a-power",
+    "DAX-W0-infra",
+    "E2-T1-facts",
+    "P1-GATE-t2a",
+    "P1-T0-crash"
+  ],
+  "gates_cleared": [
+    "P1-GATE-t2a"
+  ],
+  "gates_failed": [],
+  "attempts": {
+    "DAX-W0.5-legwork": 1
+  },
+  "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
+}[exit: 0]
+```
