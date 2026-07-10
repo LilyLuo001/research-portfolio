@@ -307,3 +307,135 @@ inbox-version after adding the var, or start by hand:
   setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
 [exit: 0]
 ```
+
+## 2026-07-10T12:30:04Z — inbox 1e10e62717df @ git 6dab499
+```
+== host identity ==
+scc1 : /usr3/graduate/qluo/portfolio : 6dab499
+== harvester re-run (expanded phrases; idempotent) ==
+Traceback (most recent call last):
+  File "/usr3/graduate/qluo/portfolio/p1/fetch_edgar_filings.py", line 190, in <module>
+    main()
+    ~~~~^^
+  File "/usr3/graduate/qluo/portfolio/p1/fetch_edgar_filings.py", line 131, in main
+    js = search(q, headers, offset)
+  File "/usr3/graduate/qluo/portfolio/p1/fetch_edgar_filings.py", line 96, in search
+    return get(url, headers).json()
+           ~~~^^^^^^^^^^^^^^
+  File "/usr3/graduate/qluo/portfolio/p1/fetch_edgar_filings.py", line 88, in get
+    r.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/usr3/graduate/qluo/portfolio/.venv/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://efts.sec.gov/LATEST/search-index?q=%22reorganization%20of%20the%20target%20fund%20into%22&forms=497,497K,N-14,N-8A,N-1A&startdt=2019-01-01&enddt=2026-07-10&from=40
+-- truncation warnings, if any:
+0 (or no log)
+== per-query hit counts (K-4 review surface) ==
+  228  "ActiveShares"
+  173  "proxy portfolio" "exchange-traded fund"
+   13  "semi-transparent exchange-traded fund"
+    6  "conversion of the fund into an exchange-traded fund"
+    3  "conversion of each fund into an ETF"
+== regenerate extraction specs (K-4 guard active) ==
+P1-T1-events: wrote 9 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T1-events.yaml
+P1-T1-events-B: wrote 9 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T1-events-B.yaml
+P1-T13-ant: wrote 414 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T13-ant.yaml
+P1-T13-ant-B: wrote 414 items -> /usr3/graduate/qluo/portfolio/ops/l1/P1-T13-ant-B.yaml
+== dry-run: what tonight would dispatch ==
+L1 driver — 8 ready L1 task(s), mode=dry-run
+  · P1-T0-monitor        manual channel — run: python ops/l1/gemini_helper.py P1-T0-monitor
+  ✓ DAX-W0.5-legwork     output already at DAX-W0.5-legwork.json — not re-sending (validate + --complete it, or delete the file / --force to re-run)
+  ✓ E2-T2-dune           [DONE] deepseek: 5 items + 3 sentinels OK in 5 chunks (dry-run)
+  · E2-T6b-nav           manual channel — run: python ops/l1/gemini_helper.py E2-T6b-nav
+  ✓ P1-T1-events         [DONE] deepseek: 9 items + 3 sentinels OK in 2 chunks (dry-run)
+  ✓ P1-T1-events-B       [DONE] gemini_free: 9 items + 3 sentinels OK in 2 chunks (dry-run)
+  ✓ P1-T13-ant           [DONE] deepseek: 414 items + 3 sentinels OK in 69 chunks (dry-run)
+  ✓ P1-T13-ant-B         [DONE] gemini_free: 414 items + 3 sentinels OK in 69 chunks (dry-run)
+  5 batch(es) would run (dry-run writes nothing). Run with --live on the box.
+== commit ==
+== K-1: fetch the authoritative DFA per-fund AUMs (SEC N-14; sec.gov 403s from every Claude session) ==
+ 
+ 
+ % of April 15, 2021 Net Assets 
+ 
+ 
+--
+ 
+ 
+ $465,000 (a) 
+ 
+ 
+--
+ 
+ 
+ Less than $0.01 
+ 
+ 
+--
+ 
+ 
+ $1,300,000 (b) 
+ 
+ 
+--
+ 
+ 
+ $0.01 
+ 
+ 
+--
+ (a) 
+ 
+ Dimensional has agreed to absorb Reorganization costs that exceed $1,000,000, which represents about 0.03% of the Portfolio&#8217;s net assets or less than $0.01 per share as of April 15, 2021. 
+ 
+ 
+--
+ (b) 
+ 
+ Dimensional has agreed to absorb Reorganization costs that exceed $1,300,000, which represents about 0.03% of the Portfolio&#8217;s net assets or $0.01 per share as of April 15, 2021. 
+ 
+ 
+--
+ experienced by a Target Portfolio, Dimensional has agreed to pay any expenses above a certain capped dollar amount as described below. More information about the Reorganization costs and expenses, as well as the cap on the amounts to be paid by a
+ Target Portfolio, appears below.&#160; The amounts indicated for each cost and expense are estimates based on information as of April 15, 2021. 
+ Total Reorganization Costs before Cap : Dimensional estimates that the total costs will be $465,000 for the International Reorganization
+ (International Value Portfolio into International Value ETF), and $2,700,000 for the World Reorganization (World ex U.S. Portfolio into World ex U.S. ETF). 
+ Cap on Reorganization Costs .&#160; The total Reorganization costs to be borne by a Target Portfolio are subject to a cap such that Dimensional will pay
+ any Reorganization costs that exceed $1,000,000 for the International Reorganization and $1,300,000 for the World Reorganization.&#160; As of April 15, 2021, these caps on costs represented about 0.03% of net assets and less than $0.01 per share for
+ the International Value Portfolio, and about 0.03% of net assets and $0.01 per share for the World ex U.S. Portfolio. 
+ Net Reorganization Costs after Cap .&#160; After application of the cost and expense cap discussed above, Dimensional
+ estimates that the World ex U.S. Portfolio will pay about $1,300,000, or 0.03% of net assets and $0.01 per share as of April 15, 2021, in Reorganization costs.&#160; Dimensional does not anticipate the cost and expense cap discussed above to be triggered for the International Value Portfolio.&#160; Accordingly, as noted above, Dimensional estimates that the International Value Portfolio
+ will pay about $465,000, or 0.01% of net assets and less than $0.01 per share &#160; as of April 15, 2021, in Reorganization costs. 
+ What are the federal income tax consequences of the Reorganizations? 
+ As a condition to the closing of each Reorganization, the Target Portfolio and the Acquiring Portfolio must receive an opinion of Stradley Ronon Stevens
+--
+ of a Reorganization, you may redeem your Target Portfolio shares, generally resulting in the recognition of gain or loss for U.S. federal income tax purposes. 
+ The World ex U.S. Portfolio expects that it will be required to sell securities in one or more foreign markets that does not permit the in-kind transfer
+ of securities.&#160; Based on information as of April 15, 2021, Dimensional estimates that the sale of these securities, which represent about 4% of the Portfolio&#8217;s net assets, will result in the payment of about $3,800,000 in capital gains taxes in
+ these foreign markets. This payment of capital gains taxes, however, is not expected to affect the Portfolio&#8217;s net asset value or price per share because the Portfolio&#8217;s accounting policy is to accrue, on a daily
+ basis, the taxes of capital gains for investments for one or more of these markets in the Portfolio&#8217;s net asset value and price per share.&#160; As a result, the expected payment of capital gains taxes in these foreign markets has already been
+== state ==
+{
+  "completed": [
+    "SH-runner",
+    "SH-econlib",
+    "P1-T0-crash-B",
+    "E2-T1-facts-B",
+    "P1-T2a-power",
+    "DAX-W0-infra",
+    "E2-T1-facts",
+    "P1-GATE-t2a",
+    "P1-T0-crash",
+    "E2-T9b-scenarios"
+  ],
+  "gates_cleared": [
+    "P1-GATE-t2a",
+    "DAX-GATE-feasibility"
+  ],
+  "gates_failed": [],
+  "attempts": {
+    "DAX-W0.5-legwork": 1
+  },
+  "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
+}[exit: 0]
+```
