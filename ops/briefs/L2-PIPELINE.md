@@ -77,27 +77,33 @@ Seat **B** has nothing ready — that is correct, don't burn the seat. B wakes
 in Wave 3 when E2-T2-dune output lands (→ E2-T3-index) and after the T1-facts
 union (→ E2-T4a-design).
 
-### Owner queue right now (updated 2026-07-10 after E2-T1 arbitration)
-E2-T1-facts arbitration DONE + `complete`d (union check §仲裁): conflicts
-1/3 ruled on on-chain evidence; conflict 2 (FalconX redemption) = UNKNOWN-
-pending, 403-blocked from the session — see item 5.
-1. **`gate P1-GATE-t2a pass|fail`** in decisions.md after reading
-   `p1/power_memo.md` (three-band ALL-PASS → pass recommended by the memo;
-   the signature is yours). Pass unlocks 4 overnight batches — but see the
-   ⚠ kimi-bench note in ops/briefs/P1-T2a-power.md before arming them.
+### Owner queue right now (updated 2026-07-10, post-signatures)
+Signed & applied 2026-07-10: E2-T1 arbitration + `complete E2-T1-facts`;
+`gate P1-GATE-t2a pass`; `complete P1-T0-crash`. The four P1 overnight
+batches are READY but **cannot be spec'd until the EDGAR filing package
+exists** (p1/fetch_edgar_filings.py docstring) — inbox payload g launches
+that harvester on the box, detached + resumable. P1-T0-monitor was parked
+at its READY-flip (kimi bench; re-route decision due at the 2026-08-01
+monthly re-arm).
+1. **On the box: add `EDGAR_CONTACT=<your email>` to `ops/box/.env`** if not
+   already there — SEC fair-use requires it; payload g refuses to start the
+   harvester without it and says so in inbox_log.md.
 2. **Seat E/A block: `DAX-W0.5-feasibility`** — deadline-driven (2026-07-23
    shutdown wave); re-verify the 403-blocked OpenAI rows in a browser.
 3. Supply E2-T2-dune's three ARMING inputs (your Dune table list, Horizon
    addresses, e2/registry.csv first rows — see the spec's ARMING block),
    then delete its `manual: true` → it dispatches that night on deepseek.
-4. Sign P1-T0-crash's CONTINUE verdict → `complete P1-T0-crash`.
-5. Browser check (~10 min): FalconX redemption terms via docs.pareto.credit
+4. Browser check (~10 min): FalconX redemption terms via docs.pareto.credit
    or Etherscan `0x433d5b17…be4d` Read Contract → upgrade the registry row
    from UNKNOWN-pending (path + hypothesis in e2/t1_union_check.md §仲裁).
-6. E2-T6b-nav manual run: `python ops/l1/gemini_helper.py E2-T6b-nav` with
+5. E2-T6b-nav manual run: `python ops/l1/gemini_helper.py E2-T6b-nav` with
    issuer docs uploaded (raw output — needs your sign-off before T6a).
-7. NEW — seat **B** is awake: `E2-T4a-design` (code_pro) became READY with
-   the T1 completion; generate its brief with `make brief T=E2-T4a-design`.
+6. Seat **B**: `E2-T4a-design` (code_pro) is READY; brief with
+   `make brief T=E2-T4a-design`.
+7. Once `p1/edgar_filings/manifest.csv` lands: spec the four P1-T1/T13
+   batches — channel A on the Anthropic lane (kimi benched; precedent
+   E2-T1/legwork), channel B on gemini_free; ARMING sentinels from facts
+   you have personally verified.
 
 Every block ends the standard way: contract/selfcheck pass → merge task/<id>
 → `make complete T=<id>` → **run `make plan` and re-arm any newly-READY L1

@@ -3,6 +3,16 @@
 # ops/l1/out/P1-T0-monitor.json at the start of each month and the driver
 # re-runs it that night. Fill sentinels before first arming (see
 # P1-T0-crash-B.yaml for the pattern).
+#
+# PARKED 2026-07-10 at READY-flip (P1-T0-crash completed): worker is kimi,
+# which is BENCHED for retrieval batches (Wave-0 decision, ops/decisions.md)
+# — an unparked spec would have dispatched THAT NIGHT and burned a strike.
+# Monthly cadence means nothing is lost tonight. DECISION DUE at the first
+# monthly re-arm (2026-08-01): either the kimi bench is lifted by then, or
+# re-route (gemini_free would collide with no channel pair here — it's legal;
+# or run it in the Anthropic lane like P1-T0-crash channel A). Un-park by
+# deleting `manual: true` after re-routing.
+manual: true
 worker: kimi
 web_search: true
 est_cost: 1.0

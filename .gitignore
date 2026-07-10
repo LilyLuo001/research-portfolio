@@ -21,3 +21,7 @@ ops/l1/out/*
 # and gate state must be visible to every seat's clone (the repo is the only
 # shared state), or a fresh seat re-assigns finished tasks. Only spend logs and
 # secrets stay box-local.
+# P1 EDGAR raw filing package: hundreds of .htm files stay box-local (same
+# rule as L1 raw outputs) — git carries only the manifest of locators.
+p1/edgar_filings/*
+!p1/edgar_filings/manifest.csv
