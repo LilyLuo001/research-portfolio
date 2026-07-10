@@ -197,3 +197,27 @@ recorded attempt 1 for DAX-W0.5-legwork
   }
 }[exit: 0]
 ```
+
+## 2026-07-10T02:00:03Z — inbox e38a846d2b71 @ git 8ad1868
+```
+== python3 modules visible from a login shell ==
+python3/3.9.9
+python3/3.10.5
+python3/3.10.12
+python3/3.12.4
+python3/3.13.8
+picked: python3/3.13.8
+Python 3.13.8
+deps OK
+selfcheck PASSED — 59 tasks, 11 contracts, DAG + vendor independence clean.
+VENV SWAPPED to Python 3.13.8 (old kept at .venv-old)
+== sanity: the cron's python still works ==
+cron python OK: 3.13.8
+== P1 EDGAR harvester ==
+NEED_HUMAN: EDGAR_CONTACT is not set — add 'EDGAR_CONTACT=<your email>'
+to ops/box/.env (box-local, gitignored; SEC fair-use requires it).
+Harvester NOT started; this payload re-checks on nothing — bump the
+inbox-version after adding the var, or start by hand:
+  setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
+[exit: 0]
+```

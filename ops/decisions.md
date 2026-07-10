@@ -75,8 +75,8 @@
 # Base-only + V1/V2 qualifiers; conflict 2 (FalconX redemption) = UNKNOWN-
 # pending, all sources 403'd from the session proxy — owner browser path in
 # the memo (docs.pareto.credit or Etherscan 0x433d5b17…be4d Read Contract).
-complete E2-T1-facts
+# applied: complete E2-T1-facts
 
 # Owner confirmed in-session 2026-07-10 ("yes i confirm, please proceed"):
-gate P1-GATE-t2a pass
-complete P1-T0-crash
+# applied: gate P1-GATE-t2a pass
+# applied: complete P1-T0-crash
