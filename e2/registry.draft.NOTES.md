@@ -1,36 +1,31 @@
-# registry.draft.csv — QUARANTINED DRAFT, NOT the C0 registry
+# registry.draft.csv — PROMOTED 2026-07-10; this file is now historical
 
-**This file is NOT `e2/registry.csv`.** Per C0, `registry.csv` is the sole
-authority for addresses and nothing may enter it without explorer/official-page
-verification. This draft fails that bar and must not be consumed by any task
-(E2-T2-dune q4 included) until promoted row-by-row.
+`e2/registry.csv` now exists and is the C0 sole authority. Promotion was by
+**owner formal sign-off, 2026-07-10 in-session** ("With that correction
+applied, I formally sign off on the draft registry rows for promotion to
+e2/registry.csv"), with one owner-directed correction applied:
 
-## Provenance
-Owner-relayed answer pack, 2026-07-10. The pack was produced by a model run
-(vendor unstated), not by direct owner explorer capture. This session cannot
-verify any row: etherscan.io / basescan / polygonscan and public RPC eth_call
-are all 403 (org egress policy, same as e2/t1_union_check.md §冲突2).
+- syrupUSDC/Base: token address owner-verified
+  (`0x660975730059246a68521a3e2fbd4740173100f5`, hex-identical to the draft
+  value); the pack-reconstructed **market_id cleared to UNKNOWN** per C0
+  (the reconstructed bytes32 was a fabrication — see original defect list
+  below, preserved for the record).
 
-## Why quarantined (specific defects, from the pack's own notes + inspection)
-1. **market_id integrity**: the pack's own note says the syrupUSDC/Base
-   market_id "was abbreviated and I reconstructed the full slot only
-   partially from context." A reconstructed bytes32 is a fabricated bytes32 —
-   Morpho market ids are keccak256 hashes and cannot be reconstructed.
-   Structurally, `0x52f04b0000…48a5` (long zero run) does not look like a
-   keccak digest. Other market_ids carry no per-id source either (the
-   source_url column points at the *token* page, which does not display
-   Morpho market ids).
-2. **mTBILL** has the identical address on ethereum and base
-   (`0xDD629E…e438`). Possible via deterministic deployment, but must be
-   confirmed on both explorers before either row is trusted.
-3. No row has been sighted by a human on the cited explorer page.
+## Residual risks carried into registry.csv (owner accepted at sign-off)
+1. All other market_id values remain pack-generated and unsighted — the
+   source_url column points at *token* pages, which do not display Morpho
+   market ids. The E2-T2 acceptance check (row counts vs. Morpho UI; 5
+   market_ids hand-checked on an explorer) is the downstream catch.
+2. mTBILL uses the identical address on ethereum and base — plausible via
+   deterministic deployment, unconfirmed on both explorers.
+3. syrupUSDC/Base market_id = UNKNOWN — fill from the T2-Q1 Dune output or
+   Morpho UI once available.
 
-## Promotion checklist (per row, owner or an explorer-capable session)
-- [ ] token_address: open the cited explorer URL; confirm symbol + contract.
-- [ ] market_id: verify via Morpho UI/API or on-chain
-      `idToMarketParams(market_id)` returning the matching collateral token
-      (on-chain read = first-hand, per union-check evidence tiering).
-- [ ] Fix or drop the syrupUSDC/Base row (defect 1) — do not promote as-is.
-- [ ] Confirm mTBILL dual-chain address (defect 2).
-- [ ] On promotion, move the row into `e2/registry.csv` (create with the same
-      header) and record retrieval date of the *verification*, not of the pack.
+## Original quarantine record (2026-07-10, pre-promotion)
+The pack was produced by a model run, not direct owner explorer capture;
+this session could not verify any row (explorers + RPC 403). Defects at
+quarantine time: (1) syrupUSDC/Base market_id admitted-reconstructed
+("abbreviated ... reconstructed the full slot only partially from
+context"), structurally non-keccak (long zero run); (2) mTBILL dual-chain
+identical address unconfirmed; (3) no row human-sighted on the cited
+explorer page.
