@@ -104,3 +104,43 @@
 #       statistically detectable.
 # 3. NEED_HUMAN infra item (SCC SSH publickey auth): acknowledged by owner —
 #    will log in manually (password+Duo) to fix on the server side.
+
+# RESOLVED 2026-07-10 (owner-relayed answer pack; conflict 2 of
+# e2/t1_union_check.md — FalconX/AA_FalconXUSDC redemption terms):
+# upgrade from UNKNOWN-pending to:
+#   monthly cycle ("Cycle length | One month"); 1-month notice
+#   ("Redemptions | Monthly, 1-month notice"); instant/early withdraw exists,
+#   enabled when the next-cycle rate is "lower than the previous one by 1% or
+#   more", claim "within 72 hours"; min redemption UNKNOWN (not stated);
+#   withdrawal fee UNKNOWN ("Performance fee | 10%" is a performance fee, not
+#   a redemption fee).
+# Sources (quotes relayed; session proxy cannot re-fetch, 403):
+#   https://docs.pareto.credit/product/credit-vaults/live-vaults.md
+#   https://docs.pareto.credit/product/users/lenders/guides/redeem.md
+#   https://docs.pareto.credit/developers/addresses/product/credit-vaults.md
+#   (lists Ethereum contract 0x433D5B175148dA32Ffe1e1A37a939E1b7e79be4d).
+# The union check's pre-registered hypothesis is CONFIRMED: channels A and B
+# described two sides of one mechanism (A = regular monthly epoch redemption;
+# B = the parameterized instant-withdraw path). Addendum recorded in
+# e2/t1_union_check.md §仲裁. Registry note: e2/registry.csv does not exist
+# yet — carry these terms into the AA_FalconXUSDC row when it is created.
+# Residual caveat: the relaying pack was itself a model run (vendor unstated);
+# channel A's "min 250k, no fee" claims did NOT re-surface and stay UNKNOWN.
+
+# STATUS 2026-07-10 (E2-T2-dune arming, owner pack): ARMING-1 (Dune table
+# list) and ARMING-2 (Horizon addresses + reserve-init ABI signatures) both
+# came back NEED_INFO — the pack could not see the owner's Dune account and
+# refused to invent Horizon addresses (correctly). ARMING-3 arrived as a
+# 17-row draft but is QUARANTINED (e2/registry.draft.csv + .NOTES.md:
+# admitted-reconstructed market_id, no explorer sighting, env 403).
+# E2-T2-dune therefore STAYS manual:true — do not delete the flag until
+# ARMING-1/2 are supplied and the draft rows are promoted per the checklist.
+
+# NEED_HUMAN (2026-07-10, DAX-W0.5): legwork tables landed
+# (dax/memo/w05_legwork_2026-07-10.md, two rows corroborated by an in-session
+# second channel) but the feasibility note is NOT gate-ready: (a) every price
+# cell UNKNOWN — owner browser capture of platform.openai.com/docs/pricing;
+# (b) GDPval license terms all UNKNOWN — owner browser capture of the
+# huggingface.co/datasets/openai/gdpval card; (c) gpt-4-1106-preview shutdown
+# CONFLICT (2026-03-26 vs 2026-10-23) — owner to read the deprecations page;
+# (d) vendor family of the owner's manual run unstated (dual-channel ledger).

@@ -134,3 +134,22 @@ Ethereum via ethereum-rpc.publicnode.com, Base via base-rpc.publicnode.com;
 - 冲突 1、3 已裁定并可入 registry; 冲突 2 记 UNKNOWN-pending (不阻塞
   E2-T2-dune 市场清单)。`complete E2-T1-facts` 据此执行 — 完成的是"提取+
   union 任务", registry 的 FalconX redemption 行仍为 UNKNOWN 直至 owner 核验。
+
+### 冲突 2 补遗 (2026-07-10) — owner 核验回传, UNKNOWN-pending 解除
+- owner 走了核验路径 1 (docs.pareto.credit), 回传引文 (本环境仍 403, 无法
+  复取, 引文按 owner 提交记录):
+  - 赎回周期 = 月度: "Cycle length | One month"
+    (docs.pareto.credit/product/credit-vaults/live-vaults.md)
+  - 通知期 = 1 个月: "Redemptions | Monthly, 1-month notice" (同页)
+  - instant/early withdraw 存在: 下一 cycle 利率 "lower than the previous
+    one by 1% or more" 时启用, "within 72 hours" 内 claim
+    (docs.pareto.credit/product/users/lenders/guides/redeem.md)
+  - 最低赎回额 = UNKNOWN (未见); 赎回费 = UNKNOWN ("Performance fee | 10%"
+    为业绩费, 非赎回费)
+  - 地址页列 Ethereum 合约 0x433D5B175148dA32Ffe1e1A37a939E1b7e79be4d
+    (docs.pareto.credit/developers/addresses/product/credit-vaults.md)
+- **本节 §推断 的预登记假设被证实**: A/B 各描述了同一机制的两个侧面
+  (A = 常规月度 epoch 赎回; B = 参数化 instant-withdraw 路径)。A 的
+  "min 250k, 无赎回费" 未再现, 维持 UNKNOWN。
+- registry 行动: e2/registry.csv 建表时按上述口径录入 AA_FalconXUSDC
+  redemption 行; 裁定记录另见 ops/decisions.md 2026-07-10 条目。
