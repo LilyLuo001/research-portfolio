@@ -39,5 +39,14 @@ git add p1/edgar_filings/manifest.csv ops/l1/P1-T1-events.yaml ops/l1/P1-T1-even
 git commit -q -m "box: K-4 remediation — expanded harvest + regenerated extraction specs (payload i)" \
   || echo "nothing new to commit"
 
+echo "== K-1: fetch the authoritative DFA per-fund AUMs (SEC N-14; sec.gov 403s from every Claude session) =="
+# Print the net-assets neighborhood into this log for extraction by the next
+# L2 session (CSV+memo+sim update as a unit per audit K-1).
+curl -s -m 60 -A "research-portfolio P1 K-1 check ${EDGAR_CONTACT:-unset@unset}" \
+  "https://www.sec.gov/Archives/edgar/data/1816125/000179420221000165/formn14.htm" \
+  | sed -e 's/<[^>]*>/ /g' | tr -s ' \n' ' \n' \
+  | grep -i -E -A2 -B2 "net assets|total assets|billion|\\\$[0-9,.]+" | head -60 \
+  || echo "N-14 fetch failed — owner browser click remains the path"
+
 echo "== state =="
 cat ops/runner/state.json
