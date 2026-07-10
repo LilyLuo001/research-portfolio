@@ -63,26 +63,33 @@ remains of them is **owner sign-off, not seat time**.
 
 | order | seat | task | worker | brief | status / why first |
 |---|---|---|---|---|---|
-| 1 | **C** | `P1-T2a-power` | code_pro | ops/briefs/P1-T2a-power.md | **OPEN — next up (owner working manually).** Feeds P1-GATE-t2a, which alone unlocks **4 pure-L1 batches** (P1-T1-events A/B, P1-T13-ant A/B). ⚠ its input `p1/events_from_note.csv` does not exist yet: building it from public FEDS-Note numbers (with raw-source locators, meta-rule 1) is step 1 of the block. |
-| 2 | **E** | `DAX-W0.5-feasibility` | project_pro | ops/briefs/DAX-W0.5-feasibility.md | **OPEN.** Feeds DAX-GATE-feasibility → W1-memo, W2-data, W3-mapA, W4-panel (the whole DAX line, priority 1). Kimi legwork benched → do the vintage/license legwork inline (checklist in the brief). |
-| 3 | ~~D~~ | `E2-T1-facts` escalation | code_pro | e2/t1_union_check.md | **✅ channel A + union check DONE** (sentinels 3/3; on-chain explorer verification appended). **Remaining: owner arbitrates the 3 conflicts in e2/t1_union_check.md, then `complete E2-T1-facts`** — that flips E2-T2-dune (deepseek, L1) to READY and reopens the whole E2 line. |
-| 4 | **A** | `DAX-W0-infra` | code_pro | ops/briefs/DAX-W0-infra.md | **OPEN.** Prereg-guard + NDA CI grep; must exist before any DAX data/outcome work starts in Wave 3. Short block. |
-| 5 | ~~C~~ | `P1-T0-crash` | project_pro | p1/t0_collision_sweep_channelA.md | **✅ channel A DONE** — verdict: no collision on P1's outcome variable, recommendation CONTINUE. **Remaining: owner signs the kill/pivot call, then `complete P1-T0-crash`** — unblocks the recurring P1-T0-monitor batch. |
+| 1 | ~~C~~ | `P1-T2a-power` | code_pro | p1/power_memo.md | **✅ DONE + contract PASS + `--complete`d** (merge b28ca5a): three-band ALL-PASS, kill-switch line set, events_from_note.csv built with locators. **P1-GATE-t2a is now LIVE — owner reads the memo, replies `gate P1-GATE-t2a pass|fail`.** |
+| 2 | **E/A** | `DAX-W0.5-feasibility` | project_pro | ops/briefs/DAX-W0.5-feasibility.md | **OPEN — now the most urgent block: HARD DEADLINE.** Legwork channel A (ac92fc2) found the gpt-3.5-turbo shutdown wave starts **2026-07-23** — the vintage window is closing, and rows resting on aggregator snapshots must be re-verified from a normal browser (OpenAI pages 403'd the lane's proxy). Feeds DAX-GATE-feasibility → the whole DAX line. |
+| 3 | ~~D~~ | `E2-T1-facts` escalation | code_pro | e2/t1_union_check.md | **✅ channel A + union check DONE** (sentinels 3/3; on-chain explorer verification appended). **Remaining: owner arbitrates the 3 conflicts, then `complete E2-T1-facts`** — flips E2-T2-dune (spec pre-written, needs owner ARMING inputs) and reopens the E2 line. |
+| 4 | ~~A~~ | `DAX-W0-infra` | code_pro | dax/README.md | **✅ DONE + `--complete`d** (merge 724e588): 3-layer prereg seal, lineage CI, NDA grep in .github/workflows/ci.yml. |
+| 5 | ~~C~~ | `P1-T0-crash` | project_pro | p1/t0_collision_sweep_channelA.md | **✅ channel A DONE** — no collision, recommendation CONTINUE. **Remaining: owner signs, then `complete P1-T0-crash`** — unblocks the recurring P1-T0-monitor batch. |
+
+Bonus night-shift unlock already merged: `p1/fetch_edgar_filings.py` (L0
+deterministic EDGAR harvester, d72d55c) — feeds P1-T1 the moment the gate
+passes.
 
 Seat **B** has nothing ready — that is correct, don't burn the seat. B wakes
 in Wave 3 when E2-T2-dune output lands (→ E2-T3-index) and after the T1-facts
 union (→ E2-T4a-design).
 
-### Owner queue right now (in order of downstream value)
-1. Arbitrate the 3 conflicts in `e2/t1_union_check.md` → write
-   `complete E2-T1-facts` in decisions.md (unlocks E2-T2-dune; its
-   `ops/l1/E2-T2-dune.yaml` spec still needs writing — seat B or D).
-2. Seat C block: `P1-T2a-power` (Wave-1 specifics are in the brief).
-3. Sign P1-T0-crash's CONTINUE verdict → `complete P1-T0-crash`.
-4. Seat E block: `DAX-W0.5-feasibility` (inline legwork checklist in brief).
+### Owner queue right now (updated 2026-07-10 — all sign-offs, no seat blocks except #2)
+1. **`gate P1-GATE-t2a pass|fail`** in decisions.md after reading
+   `p1/power_memo.md` (three-band ALL-PASS → pass recommended by the memo;
+   the signature is yours). Pass unlocks 4 overnight batches — but see the
+   ⚠ kimi-bench note in ops/briefs/P1-T2a-power.md before arming them.
+2. **Seat E/A block: `DAX-W0.5-feasibility`** — deadline-driven (2026-07-23
+   shutdown wave); re-verify the 403-blocked OpenAI rows in a browser.
+3. Arbitrate the 3 conflicts in `e2/t1_union_check.md` → `complete
+   E2-T1-facts` → then supply E2-T2-dune's three ARMING inputs (Dune table
+   list, Horizon addresses, e2/registry.csv) and delete its `manual: true`.
+4. Sign P1-T0-crash's CONTINUE verdict → `complete P1-T0-crash`.
 5. E2-T6b-nav manual run: `python ops/l1/gemini_helper.py E2-T6b-nav` with
    issuer docs uploaded (raw output — needs your sign-off before T6a).
-6. Seat A block: `DAX-W0-infra` (short).
 
 Every block ends the standard way: contract/selfcheck pass → merge task/<id>
 → `make complete T=<id>` → **run `make plan` and re-arm any newly-READY L1
@@ -131,3 +138,11 @@ blocks producing, L1 running every night:
 4. **Watch the digest's READY-L1 count.** < 3 runnable batches means the
    night shift is starving → the next morning's first block goes to whatever
    L2 task unlocks the most L1 nodes (this file's Wave-1 logic, re-applied).
+5. **Sessions run until blocked, never on a clock** (owner rule 2026-07-10,
+   also in CLAUDE.md). No agent session "stands by until HH:MM" or idles
+   waiting for a cron event — timed work belongs to the L0 cron alone. After
+   each item: `git pull` + `make plan` + take the next eligible item; end the
+   session only when everything actionable is blocked on the owner or another
+   seat, and say which. A session that has real pending work (e.g. verifying
+   a night run) hands it to the scheduler as a script or leaves a note in its
+   lane's log — it does not sleep in-session to wait for it.

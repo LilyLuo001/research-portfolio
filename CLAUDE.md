@@ -28,6 +28,12 @@ only shared state. You never message another agent.
 - Done = output passes `python ops/runner/contracts.py <contract> <path>` +
   lineage JSON emitted. Then merge to main and `runner.py --complete <task>`.
 - `/clear` between tasks. One task per session.
+- **Run until blocked, never on a clock** (owner rule 2026-07-10): after
+  finishing an item, immediately `git pull` + `make plan` and take the next
+  actionable item you're eligible for. No "standby until HH:MM", no idle
+  waiting on cron events — the L0 cron does the timed work, sessions do not.
+  End the session only when everything in reach is blocked on the owner or
+  another seat's output; say which, then stop.
 
 ## never
 - Never open DAX `analysis/outcomes/` before the `v1.0-preregistered` tag.
