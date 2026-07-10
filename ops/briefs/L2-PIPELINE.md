@@ -103,7 +103,12 @@ monthly re-arm).
 7. Once `p1/edgar_filings/manifest.csv` lands: spec the four P1-T1/T13
    batches — channel A on the Anthropic lane (kimi benched; precedent
    E2-T1/legwork), channel B on gemini_free; ARMING sentinels from facts
-   you have personally verified.
+   you have personally verified. First review per-query hit counts in
+   harvest.log (audit K-4: add reorganization-family phrases if thin).
+8. AUDIT K-1 browser check (~5 min): verify the four DFA per-fund AUMs —
+   the CSV's figures sum to $30.7bn but CSV+memo state ~$28.65bn; one of
+   them is wrong (ops/briefs/L2-AUDIT-2026-07-10.md). Fix CSV + memo
+   together and re-run the sim (seed fixed); gate verdict unaffected.
 
 Every block ends the standard way: contract/selfcheck pass → merge task/<id>
 → `make complete T=<id>` → **run `make plan` and re-arm any newly-READY L1

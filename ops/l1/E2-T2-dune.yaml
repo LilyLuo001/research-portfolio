@@ -20,6 +20,16 @@
 #   4. Then delete `manual: true` below. Acceptance per manual: row counts
 #      reconcile with the Morpho UI market count; 5 market_ids hand-checked
 #      on an explorer.
+#
+# ⚠ AUDIT FLAG (2026-07-10, ops/briefs/L2-AUDIT-2026-07-10.md item T-4):
+# S2/S3 sentinels ask post-2025 world knowledge (Horizon launch month,
+# sACRED chain) of a deepseek worker with web_search: false — a coding model
+# can miss these from parametric memory alone and void the batch, even
+# though the SQL task itself needs no such knowledge (the E2-T1-facts kimi
+# history shows exactly this UNKNOWN-on-sentinel failure mode). BEFORE
+# ARMING: swap S2/S3 for stable in-domain facts a code model must know
+# offline (e.g. Morpho Blue market_id type = bytes32; the five CreateMarket
+# params), keeping S1.
 manual: true
 max_items_per_call: 1
 worker: deepseek
