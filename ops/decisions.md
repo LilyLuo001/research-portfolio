@@ -172,3 +172,26 @@
 #   IPoolConfigurator.sol — exact match. STILL OWED before un-parking:
 #   ARMING-1 (owner Dune table list) + ARMING-3 promotion (registry.draft
 #   stays quarantined).
+
+# ROUTED 2026-07-10 (owner-directed in-session — "generate an L1 list fully
+# ready to run" for the execution agent): E2-T9b-scenarios goes to the
+# Anthropic lane NOW instead of waiting for the gemini_free nightly. Reason:
+# the box L1 lane is DOWN (02:03Z inbox run died pre-dispatch — venv broken,
+# no python3 module on SCC; NEED_HUMAN below) so the ¥0 path has no ETA; the
+# task has no dual-channel pair (no cross-vendor issue); precedent =
+# E2-T1-facts channel A. Brief: ops/briefs/E2-T9b-scenarios-escalation.md.
+# If the box lane revives first and lands a clean gemini output, that wins.
+# It is the ONLY L1 batch armable without owner input today — E2-T2-dune
+# (ARMING-1/3), E2-T6b-nav (owner terminal run), P1-T0-monitor (parked to
+# 2026-08-01), DAX-W0.5-legwork (superseded by owner inline run) all wait;
+# P1-T1-events(+B)/P1-T13-ant(+B) have no specs yet and their sentinels are
+# owner-owed (L2-PIPELINE item 7).
+
+# NEED_HUMAN (2026-07-10, box infra): the 02:03Z inbox run broke the L1 lane
+# — `.venv/bin/python` missing AND no python3 module visible from the login
+# shell (module system regression?), on top of the standing SCC SSH publickey
+# NEED_HUMAN. Nightly L1 dispatch (incl. any gemini runs) is dead until an
+# interactive fix on the SCC. Also EDGAR_CONTACT: inbox_log still shows the
+# harvester refusing to start, yet p1/edgar_filings/manifest.csv is committed
+# (547c577) — owner presumably ran it by hand; confirm and, if so, set
+# EDGAR_CONTACT anyway so the next payload doesn't re-block.
