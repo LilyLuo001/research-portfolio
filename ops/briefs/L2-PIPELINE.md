@@ -64,7 +64,7 @@ remains of them is **owner sign-off, not seat time**.
 | order | seat | task | worker | brief | status / why first |
 |---|---|---|---|---|---|
 | 1 | ~~C~~ | `P1-T2a-power` | code_pro | p1/power_memo.md | **✅ DONE + contract PASS + `--complete`d** (merge b28ca5a): three-band ALL-PASS, kill-switch line set, events_from_note.csv built with locators. **P1-GATE-t2a is now LIVE — owner reads the memo, replies `gate P1-GATE-t2a pass|fail`.** |
-| 2 | **E/A** | `DAX-W0.5-feasibility` | project_pro | ops/briefs/DAX-W0.5-feasibility.md | **OPEN — now the most urgent block: HARD DEADLINE.** Legwork channel A (ac92fc2) found the gpt-3.5-turbo shutdown wave starts **2026-07-23** — the vintage window is closing, and rows resting on aggregator snapshots must be re-verified from a normal browser (OpenAI pages 403'd the lane's proxy). Feeds DAX-GATE-feasibility → the whole DAX line. |
+| 2 | **E/A** | `DAX-W0.5-feasibility` | project_pro | ops/briefs/DAX-W0.5-feasibility.md | **OPEN — deadline-driven, dates CORRECTED by audit K-3** (L2-AUDIT §K-3 addendum): the 2026-04-22 notice has TWO shutdown dates — 2026-07-23 hits gpt-5-codex/o3-deep-research/computer-use-preview etc.; **gpt-3.5-turbo goes 2026-10-23** (instruct 09-28), same group as gpt-4/o1. Window ≈ 3.5 months, not 13 days. Feasibility note draft already uses 10-23 ✓. Confirm once on developers.openai.com/api/docs/deprecations in a browser. Feeds DAX-GATE-feasibility → the whole DAX line. |
 | 3 | ~~D~~ | `E2-T1-facts` escalation | code_pro | e2/t1_union_check.md | **✅ channel A + union check DONE** (sentinels 3/3; on-chain explorer verification appended). **Remaining: owner arbitrates the 3 conflicts, then `complete E2-T1-facts`** — flips E2-T2-dune (spec pre-written, needs owner ARMING inputs) and reopens the E2 line. |
 | 4 | ~~A~~ | `DAX-W0-infra` | code_pro | dax/README.md | **✅ DONE + `--complete`d** (merge 724e588): 3-layer prereg seal, lineage CI, NDA grep in .github/workflows/ci.yml. |
 | 5 | ~~C~~ | `P1-T0-crash` | project_pro | p1/t0_collision_sweep_channelA.md | **✅ channel A DONE** — no collision, recommendation CONTINUE. **Remaining: owner signs, then `complete P1-T0-crash`** — unblocks the recurring P1-T0-monitor batch. |
@@ -88,8 +88,9 @@ monthly re-arm).
 1. **On the box: add `EDGAR_CONTACT=<your email>` to `ops/box/.env`** if not
    already there — SEC fair-use requires it; payload g refuses to start the
    harvester without it and says so in inbox_log.md.
-2. **Seat E/A block: `DAX-W0.5-feasibility`** — deadline-driven (2026-07-23
-   shutdown wave); re-verify the 403-blocked OpenAI rows in a browser.
+2. **Seat E/A block: `DAX-W0.5-feasibility`** — deadline-driven, corrected
+   dates per audit K-3: gpt-3.5-turbo shutdown = **2026-10-23** (07-23 is a
+   different model set); re-verify the 403-blocked OpenAI rows in a browser.
 3. Supply E2-T2-dune's three ARMING inputs (your Dune table list, Horizon
    addresses, e2/registry.csv first rows — see the spec's ARMING block),
    then delete its `manual: true` → it dispatches that night on deepseek.
