@@ -77,19 +77,27 @@ Seat **B** has nothing ready — that is correct, don't burn the seat. B wakes
 in Wave 3 when E2-T2-dune output lands (→ E2-T3-index) and after the T1-facts
 union (→ E2-T4a-design).
 
-### Owner queue right now (updated 2026-07-10 — all sign-offs, no seat blocks except #2)
+### Owner queue right now (updated 2026-07-10 after E2-T1 arbitration)
+E2-T1-facts arbitration DONE + `complete`d (union check §仲裁): conflicts
+1/3 ruled on on-chain evidence; conflict 2 (FalconX redemption) = UNKNOWN-
+pending, 403-blocked from the session — see item 5.
 1. **`gate P1-GATE-t2a pass|fail`** in decisions.md after reading
    `p1/power_memo.md` (three-band ALL-PASS → pass recommended by the memo;
    the signature is yours). Pass unlocks 4 overnight batches — but see the
    ⚠ kimi-bench note in ops/briefs/P1-T2a-power.md before arming them.
 2. **Seat E/A block: `DAX-W0.5-feasibility`** — deadline-driven (2026-07-23
    shutdown wave); re-verify the 403-blocked OpenAI rows in a browser.
-3. Arbitrate the 3 conflicts in `e2/t1_union_check.md` → `complete
-   E2-T1-facts` → then supply E2-T2-dune's three ARMING inputs (Dune table
-   list, Horizon addresses, e2/registry.csv) and delete its `manual: true`.
+3. Supply E2-T2-dune's three ARMING inputs (your Dune table list, Horizon
+   addresses, e2/registry.csv first rows — see the spec's ARMING block),
+   then delete its `manual: true` → it dispatches that night on deepseek.
 4. Sign P1-T0-crash's CONTINUE verdict → `complete P1-T0-crash`.
-5. E2-T6b-nav manual run: `python ops/l1/gemini_helper.py E2-T6b-nav` with
+5. Browser check (~10 min): FalconX redemption terms via docs.pareto.credit
+   or Etherscan `0x433d5b17…be4d` Read Contract → upgrade the registry row
+   from UNKNOWN-pending (path + hypothesis in e2/t1_union_check.md §仲裁).
+6. E2-T6b-nav manual run: `python ops/l1/gemini_helper.py E2-T6b-nav` with
    issuer docs uploaded (raw output — needs your sign-off before T6a).
+7. NEW — seat **B** is awake: `E2-T4a-design` (code_pro) became READY with
+   the T1 completion; generate its brief with `make brief T=E2-T4a-design`.
 
 Every block ends the standard way: contract/selfcheck pass → merge task/<id>
 → `make complete T=<id>` → **run `make plan` and re-arm any newly-READY L1

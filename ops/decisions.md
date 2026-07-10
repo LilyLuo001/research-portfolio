@@ -67,3 +67,12 @@
 # trips, the Anthropic-session path is the escalation — no strike ambiguity,
 # the two paths are ordered, not parallel.
 # NEED_HUMAN (2026-07-09 ~16:00 UTC, infra): SSH publickey auth to SCC denied account-wide (scc1/2/3 all reject key SHA256:tKu/vjdm...) — broke between 15:27-16:20 UTC, previously masked by a persistent ControlMaster socket. Server-side cause (authorized_keys / home-dir perms / account state); needs owner interactive login (password+Duo) to inspect ~/.ssh/authorized_keys and home perms. Box cron + its PAT pushes are UNAFFECTED (02:00 T9b-gemini run + scanner will proceed); monitoring agent has failed over to GitHub-side watch from the Mac clone. Note: 02:00 L1 outputs only reach GitHub at the NEXT 21:00 EDT digest, so red-path response is delayed until access is restored.
+
+# ARBITRATED 2026-07-10 (owner-delegated in-session; record in
+# e2/t1_union_check.md §仲裁): conflict 1 (syrupUSDC oracle) = per-chain
+# on-chain ruling (ETH vault exchange-rate wrapper / Base Chainlink-pattern;
+# API3 rejected); conflict 3 (coinbase-vault) = both addresses adopted,
+# Base-only + V1/V2 qualifiers; conflict 2 (FalconX redemption) = UNKNOWN-
+# pending, all sources 403'd from the session proxy — owner browser path in
+# the memo (docs.pareto.credit or Etherscan 0x433d5b17…be4d Read Contract).
+complete E2-T1-facts

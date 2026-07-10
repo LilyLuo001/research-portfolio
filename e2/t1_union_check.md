@@ -89,3 +89,48 @@ Ethereum via ethereum-rpc.publicnode.com, Base via base-rpc.publicnode.com;
 - 一致行 + A 补全行足以支撑 E2-T2-dune 的市场清单起草 (registry.csv 的 oracle/
   redemption 列可先填这些行)。
 - `--complete E2-T1-facts` 待 owner 复核本 memo 三处冲突后执行。
+
+## 仲裁 (2026-07-10, owner 在会话中授权执行; 终审签字仍归 owner)
+
+### 冲突 1 — oracles/syrupUSDC: 裁定 = 按链上证据分链录入
+- **Ethereum 主市场** (`0x729bad…cf44`): oracle `0x80032f…90cC` = **纯 vault
+  汇率 oracle (convertToAssets), 无外部 feed** — 非 Chainlink 数据feed, 非 API3。
+- **Base listed 市场** (`0x52f04b…48a5`): **Chainlink 结构 Exchange-Rate feed**
+  (proxy→aggregator, description "syrupUSDC-USDC Exchange Rate")。
+- **B 通道 "API3 OEV" 弃用** — 两链所有相关 oracle 均无 api3ServerV1 接口。
+- registry 录入时必须保留 per-chain/per-market 维度 (ETH 另有 3 个 unlisted
+  市场用不同 oracle)。残余事项 (非阻塞): data.chain.link 页面比对作最终背书。
+- 证据等级: 链上 eth_call 一手读数 → 高置信, 即刻入 registry。
+
+### 冲突 3 — coinbase-vault 地址: 裁定 = 采信 B 的两地址, 带限定词
+- `0xbeeF010f…8183` = Steakhouse USDC (steakUSDC, **Vault V1**, Base);
+  `0xbeeff249…8845` = Steakhouse High Yield USDC (sirloinUSDC, **Vault V2**, Base)。
+- 两地址均 **仅 Base 有码** (Ethereum 无码), curator/name/asset 与双通道一致行
+  吻合 → C0 explorer 门槛满足, 入 registry, **必须带 "Base-only" 与 V1/V2 限定**。
+- 备注: B 通道在此行提供了正确地址 — 加严审查是逐行核对, 不是整通道否决;
+  本行通过核对, FalconX 行 (下) 未通过。
+
+### 冲突 2 — redemption/AA_FalconXUSDC: 裁定 = 不入 registry, 记 UNKNOWN-pending
+- 三个互不一致的版本并存, 无一来自本会话可直接检索的一手页面:
+  A = 月度赎回, min 250k, 无赎回费 (来源 falconx.io newsroom — 本环境 403);
+  B = 1–4 周 cycle + 31 天通知 + 72h 提前退出 (来源为不可溯源的 grounding
+  redirect; 且本资产 B 行在加严审查名单 — decisions.md FalconX 决议);
+  检索摘要另给出 "月度 cycle + 14 天通知" 第三版本 (摘要非一手, 仅作线索)。
+- 本会话验证尝试全部被环境代理 403: falconx.io, pareto.credit,
+  docs.pareto.credit, pharos.watch, ethereum-rpc.publicnode.com (eth_call)。
+- **按 C0: 无一手来源 → UNKNOWN。** registry 该行记 UNKNOWN-pending, 双列
+  两通道原文, 禁止任何版本先行入表。
+- **owner 浏览器核验路径 (~10 分钟, 二选一即可)**:
+  1. docs.pareto.credit → Credit Vault epoch/withdrawal 机制页 + FalconX
+     vault 专页 (cycle 长度、notice、instant-withdraw 条款、费率);
+  2. Etherscan 已验证合约 **`0x433d5b175148da32ffe1e1a37a939e1b7e79be4d`
+     (Pareto: Credit Vault FalconX USDC)** → Read Contract, 读 epoch/
+     withdraw 参数 (链上读数 = 一手, 与冲突1同证据等级)。
+- 推断 (显式标注, 待核): B 的 "72h + 下一 cycle 利率低 ≥1% 触发提前退出"
+  形似 Pareto instant-withdraw 机制的参数化描述 — 若属实, A/B 可能各描述了
+  同一机制的不同侧面 (常规 epoch 赎回 vs instant withdraw)。以文档/链上为准。
+
+### 结论
+- 冲突 1、3 已裁定并可入 registry; 冲突 2 记 UNKNOWN-pending (不阻塞
+  E2-T2-dune 市场清单)。`complete E2-T1-facts` 据此执行 — 完成的是"提取+
+  union 任务", registry 的 FalconX redemption 行仍为 UNKNOWN 直至 owner 核验。
