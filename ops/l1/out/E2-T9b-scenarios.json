@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "task": "E2-T9b-scenarios",
+    "channel": "single (no dual-channel pair)",
+    "worker": "claude-fable-5 (anthropic lane)",
+    "检索日期": "2026-07-10",
+    "sentinels": {
+      "S1": "2025-04",
+      "S2": "2025-08",
+      "result": "2/2 PASS",
+      "S1_evidence": [
+        "https://www.coindesk.com/business/2025/04/30/securitize-gauntlet-plan-leveraged-rwa-strategy-with-apollo-credit-fund-token (2025-04-30 发布, sACRED on Polygon 首发)",
+        "https://x.com/gauntlet_xyz/status/1919794254404772208 (2025-05-06: \"Last week, we launched a Levered sACRED Strategy\")"
+      ],
+      "S2_evidence": [
+        "https://www.gauntlet.xyz/resources/falconx-levered-rwa-strategy-with-pareto (2025-08-18 发布: \"Today, we are announcing\" — FalconX Credit Vault levered strategy 上线)",
+        "https://etherscan.io/address/0xC26A6Fa2C37b38E549a4a1807543801Db684f99C (IdleCDOTranche 合约 2025-06-18 部署 — 为合约部署日, 非市场 launch; 已注意区分)"
+      ]
+    },
+    "note": "box L1 lane down; owner-directed Anthropic-lane run per ops/briefs/E2-T9b-scenarios-escalation.md. 完整性披露: 本 session 在仓库内工作时看到 ops/l1/E2-T9b-scenarios.yaml 含哨兵预置期望值; 两个哨兵答案均在对照前由本 session 独立检索复核 (S1: CoinDesk 2025-04-30 + Gauntlet 5/6 推文; S2: Gauntlet 2025-08-18 发布公告, 并识别出 2025-06 合约部署日为干扰项). 所有引用 URL 均为本 session 实际打开检索 (经 scc1.bu.edu 中转)."
+  },
+  "clo-drawdown": "[参数: AAA级CLO市值/NAV最大回撤区间(2020-03前后), 建议取值区间: 推断: 峰值回撤约 -5% 至 -13% (2020-03 中旬), 由一手来源的利差数据推得: AAA CLO 利差自 ~L+130bp 走阔至 L+300–400bp (+170–270bp), 乘以 AAA 层级典型利差久期约 3–5 年; 3月底利差已开始收窄/价格回升, 一手来源URL: [https://www.sec.gov/Archives/edgar/data/1703079/000161577420006233/s125292_ncsrs.htm, https://www.philadelphiafed.org/-/media/frbp/assets/working-papers/2020/wp20-48.pdf], 来源类型: 监管报告(SEC N-CSRS, XAI Octagon Floating Rate & Alternative Income Term Trust 半年报: AAA 利差 2020-03 中旬走阔至 L+300–400bp, 此前约 L+130bp; BB 至 L+1500–1700bp; 3月 BWIC 量 $8.3B 其中 AAA $6.1B; 3月末出现利差收窄) + 学术论文(Philadelphia Fed WP 20-48, Cordell/Roberts/Schwert, 后刊 Journal of Finance 2023: 2020-03 仅 BBB 及以下层级市值覆盖率跌破 1, AAA 层级市值覆盖率中位数始终 >1; 2020 年末各评级中位覆盖率均 >1), 置信度: 中, 备注: 未找到一手来源发布的 AAA CLO 价格/回撤直接序列 — Palmer Square 指数官网 (palmersquarecap.com) 为 JS 壳页无法抓取内容, 指数历史数据需注册; 故回撤区间为标注'推断:'的利差×久期换算, 非直接观测价格; 上次 kimi 检索提到的 altstreet 博客 ($98→$90, 约-8%) 落在本推断区间内但按规则不作引用来源]",
+  "private-credit-nav": "[参数: 非交易型/私募信贷基金NAV下修幅度与赎回门槛(gate)触发案例(近两次信用压力期: 2020-03 与 2022–2023), 建议取值区间: 季度NAV下修约 -5% 至 -10% (2020Q1: ARCC NAV/股 $17.32→$15.58 = -10.0%, 其中净已实现+未实现损失 -$1.96/股; 2022全年: BCRED Class I NAV $25.93→$24.59 ≈ -5.2%, 已实现+未实现损失 -$1.56/股), gate/暂停案例逐条: (a) Resource Credit Income Fund (interval fund): 2020-01-15 与 2020-04-15 两次回购要约均超额认购、按 5% 上限按比例分配 (2020-04: 1,368,512 股 / $12,446,045) — https://www.sec.gov/Archives/edgar/data/1628040/000139834420011791/fp0054330_ncsrs.htm; (b) HMS Income Fund (非交易 BDC): 董事会 2020-03-31 暂停股份回购计划, DRP 定价 $7.80→$6.65 — https://www.sec.gov/Archives/edgar/data/1535778/000153577820000018/hms8kchgdrp-apr2020.htm; (c) Wildermuth Endowment Fund (interval fund): 2023-06-22 暂停发售、2023-06-29 暂停季度回购要约并通过清算计划 — https://www.sec.gov/Archives/edgar/data/1586009/000121390023094276/ea165226_ncsrs.htm; (d) BCRED (非交易 BDC, 近触发未触发对照): 2022-11-30 要约回购 47,129,537 股 = 流通股 5.18%, 接近 5% 季度上限但\"所有回购请求均获全额满足\" — https://www.sec.gov/Archives/edgar/data/1803498/000180349823000008/bcred-20221231.htm, 一手来源URL: [https://www.sec.gov/Archives/edgar/data/1287750/000128775020000022/arccq1-202010q.htm, https://www.sec.gov/Archives/edgar/data/1803498/000180349823000008/bcred-20221231.htm, https://www.sec.gov/Archives/edgar/data/1628040/000139834420011791/fp0054330_ncsrs.htm, https://www.sec.gov/Archives/edgar/data/1535778/000153577820000018/hms8kchgdrp-apr2020.htm, https://www.sec.gov/Archives/edgar/data/1586009/000121390023094276/ea165226_ncsrs.htm], 来源类型: 监管报告 (SEC 10-Q / 10-K / N-CSRS / 8-K, EDGAR 原文), 置信度: 高, 备注: ARCC 为交易型 BDC 但其 NAV 下修为信贷组合公允价值标记的干净观测; 非交易工具的 gate 机制表现为回购要约按比例分配(proration)或直接暂停, 上列四案例覆盖两种形态及一个近触发对照]",
+  "tbill-nav-move": "[参数: 短久期T-bill基金单日NAV变动历史极值量级, 建议取值区间: 市场驱动的单日NAV变动极值约 ±5–10bp: 跌幅极值 -0.05% 至 -0.06% (2008-03-25, 2008-09-30, 2008-12-29), 涨幅极值 +0.06% 至 +0.10% (2007-08-16/20, 2008-01-22, 2008-09-15); 全样本日度 |ΔNAV| 中位数仅 0.0019%; 另见 -0.115% (2019-12-20, 疑似特别分配), 一手来源URL: [https://www.ssga.com/library-content/products/fund-data/etfs/us/navhist-us-en-bil.xlsx], 来源类型: 基金发行方官方数据 (State Street/SSGA 发布的 SPDR Bloomberg 1-3 Month T-Bill ETF (BIL) 完整官方日度NAV历史, 2007-05-30 至 2026-07-09, n=4811, 本 session 下载后自行编码计算), 置信度: 高, 备注: 原始序列极值为机制性伪象, 已剔除: 每月约 -0.3%~-0.44% 的规律性下跌为月度除息(ex-dividend)日, 2017-11-30 的 +100% 为 2:1 反向份额调整; 剔除规则为 (单日跌幅超 -0.03% 且跨月首日) 或跌幅超 -0.15% 判为除息, |变动|>50% 判为拆分; 剔除后剩余极值即上列市场驱动数值]",
+  "defi-rate-spike": "[参数: DeFi借贷市场挤兑日借款利率上冲幅度已记录案例, 建议取值区间: 已记录案例: 2025-01 Usual USD0++ 赎回地板脱锚事件, Morpho Blue 主网 USD0++/USDC 市场 (marketId 0xb48bb53f0f2690c71e8813f2dc7ed6fca9ac4b0ace3faa37b4a8e5ece38fa1a2) 日度借款 APY 从事件前基线 ~16–19% (2025-01-08: 19.4%, 01-09: 17.9%, 01-10: 16.3%) 上冲至 90.2% (01-11) → 154.9% (01-12) → 162.7% (01-13), 回落后再冲 182.5% (01-17), 即约 5–10 倍于基线; 同期利用率 01-11: 97.1%, 01-12: 100.0%, 01-13: 99.6%, 01-17: 98.7%, 一手来源URL: [https://blue-api.morpho.org/graphql (查询: markets(where:{uniqueKey_in:[0xb48bb53f...]}) historicalState.borrowApy / utilization, startTimestamp 1736294400, endTimestamp 1737158400, interval DAY; 本 session 实际执行并解析), https://app.morpho.org/market?id=0xb48bb53f0f2690c71e8813f2dc7ed6fca9ac4b0ace3faa37b4a8e5ece38fa1a2&network=mainnet], 来源类型: 链上数据看板 (Morpho 协议官方 API 与前端, 数值为链上市场状态的日度快照), 置信度: 高, 备注: 触发事件为 2025-01-09 Usual 将 USD0++ 无条件赎回改为 $0.87 地板价致抵押品挤兑; 另一线索: 2023-03 USDC 脱锚期 Gauntlet 建议暂停 Aave v2/v3 (https://www.gauntlet.xyz/resources/aave-resilient-through-usdc-volatility, 本 session 已打开) 但该文无利率数字, 仅作背景不作取值来源]",
+  "S1": "2025-04",
+  "S2": "2025-08"
+}
