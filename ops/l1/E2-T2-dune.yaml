@@ -20,6 +20,12 @@
 #   4. Then delete `manual: true` below. Acceptance per manual: row counts
 #      reconcile with the Morpho UI market count; 5 market_ids hand-checked
 #      on an explorer.
+# ARMING STATUS 2026-07-10 (owner pack, see ops/decisions.md): ARMING-1 and
+# ARMING-2 came back NEED_INFO (still owed by owner). ARMING-3 exists only as
+# a QUARANTINED draft — e2/registry.draft.csv (defects + promotion checklist
+# in e2/registry.draft.NOTES.md; one market_id admitted-reconstructed). Do
+# NOT paste draft rows into q4 and do NOT delete `manual: true` until all
+# three slots hold verified inputs.
 manual: true
 max_items_per_call: 1
 worker: deepseek
