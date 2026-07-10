@@ -221,3 +221,20 @@ inbox-version after adding the var, or start by hand:
   setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
 [exit: 0]
 ```
+
+## 2026-07-10T02:03:25Z — inbox e38a846d2b71 @ git aef5d3f
+```
+ops/box/inbox.sh: line 16: .venv/bin/python: No such file or directory
+== python3 modules visible from a login shell ==
+picked: none
+SKIP: no python3 module found; needs an interactive look at 'module avail' on the SCC
+== sanity: the cron's python still works ==
+ops/box/inbox.sh: line 42: .venv/bin/python: No such file or directory
+== P1 EDGAR harvester ==
+NEED_HUMAN: EDGAR_CONTACT is not set — add 'EDGAR_CONTACT=<your email>'
+to ops/box/.env (box-local, gitignored; SEC fair-use requires it).
+Harvester NOT started; this payload re-checks on nothing — bump the
+inbox-version after adding the var, or start by hand:
+  setsid nohup .venv/bin/python p1/fetch_edgar_filings.py >> p1/edgar_filings/harvest.log 2>&1 &
+[exit: 0]
+```

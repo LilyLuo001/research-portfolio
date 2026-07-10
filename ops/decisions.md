@@ -80,3 +80,27 @@
 # Owner confirmed in-session 2026-07-10 ("yes i confirm, please proceed"):
 # applied: gate P1-GATE-t2a pass
 # applied: complete P1-T0-crash
+
+# SIGNED 2026-07-10 (owner, verbatim in seat-C session — expands the two
+# bare "# applied:" lines above with the owner's recorded justification):
+# 1. P1-T0-crash CONTINUE verdict signed. No collision on P1's outcome
+#    variable (Saglam–Tuzun line = volatility/liquidity; P1 = earnings-
+#    information incorporation). SSRN 3142081 adverse-selection-cost result
+#    to be explicitly differentiated at paper stage.
+# 2. P1-GATE-t2a PASS — "0.1σ MDE is entirely reasonable and economically
+#    significant in our literature context":
+#    a. Cohen's d baseline & ambition: 0.2σ is the standard "small"-effect
+#       benchmark; designing to a 0.1σ MDE is intentionally ambitious, to
+#       capture very faint but critical signals.
+#    b. Economic significance: across empirical economics (micro-
+#       interventions, macro shocks, informational-efficiency metrics such
+#       as PEAD/ERC), a 0.1σ improvement is often highly relevant for policy
+#       and market design — a "small but meaningful" shift in earnings-
+#       information incorporation.
+#    c. Cost/feasibility vs rigor: shrinking the MDE from 0.2σ to 0.1σ
+#       roughly quadruples the required sample size; setting it this tight
+#       proves the design's statistical rigor — sufficiently powered so that
+#       even a true effect somewhat below the MDE (e.g. ~70% of it) remains
+#       statistically detectable.
+# 3. NEED_HUMAN infra item (SCC SSH publickey auth): acknowledged by owner —
+#    will log in manually (password+Duo) to fix on the server side.
