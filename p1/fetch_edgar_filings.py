@@ -52,6 +52,14 @@ QUERIES = [
     '"convert the fund to an exchange-traded fund"',
     '"mutual fund to ETF conversion"',
     '"conversion of each fund into an ETF"',
+    # K-4 (audit 2026-07-10): SEC filings often use reorganization language,
+    # not conversion language — the original list found only 9 conversion-
+    # family filings for the whole 2019-2026 universe. Reorganization family:
+    '"reorganization of the fund into an exchange-traded fund"',
+    '"reorganization of each fund into an exchange-traded fund"',
+    '"reorganize the fund into an exchange-traded fund"',
+    '"reorganization of the target fund into"',
+    '"converting the fund to an exchange-traded fund"',
     '"semi-transparent exchange-traded fund"',
     '"ActiveShares"',
     '"proxy portfolio" "exchange-traded fund"',
@@ -59,7 +67,9 @@ QUERIES = [
 FORMS = "497,497K,N-14,N-8A,N-1A"
 START, END = "2019-01-01", time.strftime("%Y-%m-%d")
 SLEEP_S = 0.15
-MAX_PAGES = 20          # fts pages of 10 hits per query — cap for politeness
+MAX_PAGES = 60          # raised from 20 per audit K-4/T-1: "ActiveShares" alone
+                        # exceeded 200 hits; the T-1 warning now exposes any
+                        # residual truncation in harvest.log
 
 
 def ua():

@@ -139,6 +139,18 @@ def main():
               "re-run the harvester to fill".format(missing))
     if not t1 and not t13:
         sys.exit("NEED_INFO: no local filings readable — is this the box?")
+    # K-4 guard (audit 2026-07-10): a manifest with implausibly few conversion-
+    # family filings must not silently become P1-T1's event universe (the
+    # hand-run manifest had 9 vs 401 T13-family). Dozens of managers converted
+    # 2021-2026; anything under this floor means harvest phrase coverage or
+    # truncation is broken — fix the harvest, don't spec.
+    MIN_T1 = 40
+    if 0 < len(t1) < MIN_T1 and not args.max_per_task and not args.force:
+        print("K-4 GUARD: only {0} conversion-family filings (< {1}) — "
+              "refusing to write P1-T1 specs from this manifest. Re-run the "
+              "harvester with the expanded phrase family; --force only with "
+              "an owner-reviewed justification.".format(len(t1), MIN_T1))
+        t1 = []
     plans = [
         ("P1-T1-events", "deepseek", T1_RULES, t1,
          "Channel A. kimi benched -> deepseek; B channel is gemini (google) so cross-vendor holds."),

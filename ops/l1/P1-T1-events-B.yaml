@@ -2,6 +2,14 @@
 # EDGAR package (9 filings; manifest.csv is the locator source).
 # Channel B (channel_of P1-T1-events), google family.
 # Extraction reads embedded excerpts — no web_search needed.
+# PARKED 2026-07-10 (audit K-4, ops/briefs/L2-AUDIT-2026-07-10.md): generated
+# from the 423-filing hand-run manifest that is 95% T13-family with only 9
+# conversion hits — implausibly thin for the T1 event universe, and the
+# ActiveShares query exceeded the page cap so T13 truncation is unknowable.
+# Do NOT dispatch. Un-park = the patched harvester re-run (reorganization
+# phrases + MAX_PAGES 60) + make_extraction_specs.py --force regeneration
+# (inbox payload i does both on box recovery).
+manual: true
 worker: gemini_free
 web_search: false
 max_items_per_call: 6
