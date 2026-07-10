@@ -52,12 +52,19 @@ QUERIES = [
     '"convert the fund to an exchange-traded fund"',
     '"mutual fund to ETF conversion"',
     '"conversion of each fund into an ETF"',
-    # K-4 (audit 2026-07-10): SEC filings often use reorganization language,
-    # not conversion language — the original list found only 9 conversion-
-    # family filings for the whole 2019-2026 universe. Reorganization family:
+    # K-4 (audit 2026-07-10): conversion family was too narrow — filings often
+    # use reorganization/restructuring language. Union of both seats' K-4
+    # expansions. Terms anchored to ETF context; bare "reorganization"/
+    # "statutory trust" would match thousands of unrelated mergers and
+    # DE-trust filings. The '"into an exchange-traded fund"' anchor subsumes
+    # any phrase that contains it.
+    '"into an exchange-traded fund"',
     '"reorganization of the fund into an exchange-traded fund"',
-    '"reorganization of each fund into an exchange-traded fund"',
-    '"reorganize the fund into an exchange-traded fund"',
+    '"reorganization" "into an ETF"',
+    '"restructuring" "into an exchange-traded fund"',
+    '"statutory trust" "into an exchange-traded fund"',
+    '"fund conversion"',
+    '"conversion to an exchange-traded fund"',
     '"reorganization of the target fund into"',
     '"converting the fund to an exchange-traded fund"',
     '"semi-transparent exchange-traded fund"',
@@ -67,9 +74,9 @@ QUERIES = [
 FORMS = "497,497K,N-14,N-8A,N-1A"
 START, END = "2019-01-01", time.strftime("%Y-%m-%d")
 SLEEP_S = 0.15
-MAX_PAGES = 60          # raised from 20 per audit K-4/T-1: "ActiveShares" alone
-                        # exceeded 200 hits; the T-1 warning now exposes any
-                        # residual truncation in harvest.log
+MAX_PAGES = 100         # raised from 20 (audit T-1/K-4: ActiveShares hit 228 > old 200
+                        # cap; the broadened queries reach ~476 — 2026-07-10 re-run
+                        # confirmed no truncation warnings at 1000)
 
 
 def ua():
@@ -82,7 +89,9 @@ def ua():
 def get(url, headers, tries=4):
     for i in range(tries):
         r = requests.get(url, headers=headers, timeout=30)
-        if r.status_code in (429, 503):
+        # efts.sec.gov intermittently 500s on paginated queries (same offset
+        # succeeds on retry) — observed 2026-07-10 during the K-4 re-run
+        if r.status_code in (429, 500, 502, 503):
             time.sleep(2.0 * (i + 1))
             continue
         r.raise_for_status()
