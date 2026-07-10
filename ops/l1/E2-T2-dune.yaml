@@ -20,12 +20,17 @@
 #   4. Then delete `manual: true` below. Acceptance per manual: row counts
 #      reconcile with the Morpho UI market count; 5 market_ids hand-checked
 #      on an explorer.
-# ARMING STATUS 2026-07-10 (owner pack, see ops/decisions.md): ARMING-1 and
-# ARMING-2 came back NEED_INFO (still owed by owner). ARMING-3 exists only as
-# a QUARANTINED draft — e2/registry.draft.csv (defects + promotion checklist
-# in e2/registry.draft.NOTES.md; one market_id admitted-reconstructed). Do
-# NOT paste draft rows into q4 and do NOT delete `manual: true` until all
-# three slots hold verified inputs.
+# ARMING STATUS 2026-07-10 (updated after owner second pack, see
+# ops/decisions.md): ARMING-2 SUPPLIED and spliced into q2 below — owner
+# located the Horizon Pool via aave.com/docs + Etherscan label, did on-chain
+# reads (ADDRESSES_PROVIDER, getPoolConfigurator = first-hand tier), and the
+# ReserveInitialized signature was independently re-fetched in-session from
+# aave-dao/aave-v3-origin IPoolConfigurator.sol (exact match). Only an
+# Ethereum-mainnet deployment surfaced; no Base/Polygon Horizon instance.
+# STILL OWED: ARMING-1 (owner Dune table list — NEED_INFO) and ARMING-3
+# promotion (e2/registry.draft.csv stays QUARANTINED per its NOTES.md; one
+# market_id admitted-reconstructed). Do NOT paste draft rows into q4 and do
+# NOT delete `manual: true` until ARMING-1 lands and draft rows are promoted.
 manual: true
 max_items_per_call: 1
 worker: deepseek
@@ -46,7 +51,23 @@ items:
       【C0 纪律: 同上 — 合约地址与事件签名只用下方贴出的, 不得虚构。】
       任务(T2-Q2): Dune SQL: Aave Horizon 部署实例的 reserve 初始化事件,
       输出与 Q1 相同的市场行结构 (market_id 用 "horizon:<asset symbol>")。
-      【ARMING-2: 此处粘贴 Horizon 实例合约地址 + reserve 初始化 ABI 事件签名】
+      【ARMING-2 (armed 2026-07-10, owner-verified; 仅发现 Ethereum 主网部署):
+      instance: Aave Horizon RWA Market Pool
+      chain: ethereum (chainId 1)
+      pool address: 0xAe05Cd22df81871bc7cC2a04BeCfb516bFe332C8
+        (source: https://aave.com/docs/aave-v3/horizon; Etherscan 标签
+        "Aave: Horizon RWA Market Pool V3")
+      poolConfigurator address: 0x83cb1b4af26eef6463ac20afbac9c0e2e017202f
+        (来源: 对 Pool 的链上读数 getPoolConfigurator(); 另
+        ADDRESSES_PROVIDER() = 0x5d39e06b825c1f2b80bf2756a73e28efaa128ba0)
+      reserve-init 事件 (在 PoolConfigurator 上, 非 Pool 上):
+      ReserveInitialized(address indexed asset, address indexed aToken,
+        address stableDebtToken, address variableDebtToken,
+        address interestRateStrategyAddress)
+        (source: aave-dao/aave-v3-origin src/contracts/interfaces/
+        IPoolConfigurator.sol, 会话内复核一致)
+      注: 除上述地址与签名外不得使用任何其他地址; 若 Dune 无该实例的
+      decoded 表, 用 raw logs + 事件签名 topic0, 不得虚构表名。】
   - id: q3-subgraph
     prompt: |
       【C0 纪律: 同上。】
