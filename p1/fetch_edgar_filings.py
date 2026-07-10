@@ -52,6 +52,17 @@ QUERIES = [
     '"convert the fund to an exchange-traded fund"',
     '"mutual fund to ETF conversion"',
     '"conversion of each fund into an ETF"',
+    # K-4 (audit 2026-07-10): conversion family was too narrow — filings often
+    # use reorganization/restructuring language. Terms anchored to ETF context;
+    # bare "reorganization"/"statutory trust" would match thousands of
+    # unrelated mergers and DE-trust filings.
+    '"into an exchange-traded fund"',
+    '"reorganization of the fund into an exchange-traded fund"',
+    '"reorganization" "into an ETF"',
+    '"restructuring" "into an exchange-traded fund"',
+    '"statutory trust" "into an exchange-traded fund"',
+    '"fund conversion"',
+    '"conversion to an exchange-traded fund"',
     '"semi-transparent exchange-traded fund"',
     '"ActiveShares"',
     '"proxy portfolio" "exchange-traded fund"',
@@ -59,7 +70,7 @@ QUERIES = [
 FORMS = "497,497K,N-14,N-8A,N-1A"
 START, END = "2019-01-01", time.strftime("%Y-%m-%d")
 SLEEP_S = 0.15
-MAX_PAGES = 20          # fts pages of 10 hits per query — cap for politeness
+MAX_PAGES = 100         # raised from 20 (audit T-1/K-4: ActiveShares hit 228 > old 200 cap)
 
 
 def ua():
