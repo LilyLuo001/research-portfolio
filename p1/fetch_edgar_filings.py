@@ -123,6 +123,10 @@ def main():
             if total is None:
                 total = js.get("hits", {}).get("total", {}).get("value", 0)
                 print("query {0!r}: {1} hits".format(q, total))
+                if total > MAX_PAGES * 10:
+                    print("  WARNING: {0} hits > page cap {1} — results TRUNCATED; "
+                          "raise MAX_PAGES or narrow the query (audit 2026-07-10)"
+                          .format(total, MAX_PAGES * 10))
             got = list(hit_rows(js, q))
             if not got:
                 break
@@ -155,8 +159,11 @@ def main():
                 continue
             try:
                 resp = get(url, headers)
-                with open(dest, "wb") as fh:
+                # write-then-rename: a crash mid-write must not leave a partial
+                # file that the skip-if-exists resume would treat as complete
+                with open(dest + ".part", "wb") as fh:
                     fh.write(resp.content)
+                os.rename(dest + ".part", dest)
                 n_dl += 1
                 time.sleep(SLEEP_S)
             except Exception as e:                      # noqa: BLE001

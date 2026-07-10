@@ -133,11 +133,19 @@ sentinels:
     # source: E2_研究计划_RWA内嵌杠杆.md §10 "Morpho 隔离市场/CreateMarket 事件结构 | 已核实"
     prompt: "Which DeFi lending protocol's singleton contract defines isolated markets via a CreateMarket event with exactly five parameters (collateralToken, loanToken, oracle, irm, lltv)? Reply with the protocol name only, one word."
     expect: "Morpho"
+  # S2/S3 SWAPPED 2026-07-10 (audit T-4, ops/briefs/L2-AUDIT-2026-07-10.md):
+  # the originals asked post-2025 world knowledge (Horizon launch month,
+  # sACRED chain) of an offline deepseek worker (web_search: false) — the
+  # exact UNKNOWN-on-armed-sentinel failure mode from the kimi history, on a
+  # batch that is now ARMED and will dispatch. Replacements are stable
+  # in-domain facts a code model must know offline, each carrying an
+  # owner-verified locator inside THIS spec (ARMING-1 note b; ARMING-2
+  # source line, 会话内复核 vs aave-v3-origin IPoolConfigurator.sol).
   - id: S2
-    # source: E2_研究计划_RWA内嵌杠杆.md §10 "Horizon 2025-08 上线 | 已核实"
-    prompt: "In which year and month did Aave Horizon (the permissioned Aave instance for RWA collateral) launch? Reply with YYYY-MM only, nothing else."
-    expect: "2025-08"
+    # source: ARMING-1 (b) "market_id 即 `id` 列 (bytes32)" — owner Dune 账号核验 2026-07-10
+    prompt: "What is the Solidity type of a Morpho Blue market id (the CreateMarket event's id parameter)? Reply with the type name only, one word."
+    expect: "bytes32"
   - id: S3
-    # source: E2_研究计划_RWA内嵌杠杆.md §10 "sACRED 首发 Polygon(2025-04) | 已核实"
-    prompt: "On which blockchain was the sACRED token first launched in April 2025? Reply with the chain name only, one word."
-    expect: "Polygon"
+    # source: ARMING-2 "reserve-init 事件 (在 PoolConfigurator 上, 非 Pool 上)" — aave-v3-origin IPoolConfigurator.sol, 会话内复核 2026-07-10
+    prompt: "In Aave v3, which contract emits the ReserveInitialized event — the Pool or the PoolConfigurator? Reply with one word."
+    expect: "PoolConfigurator"
