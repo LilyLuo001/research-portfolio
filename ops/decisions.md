@@ -187,6 +187,32 @@
 # P1-T1-events(+B)/P1-T13-ant(+B) have no specs yet and their sentinels are
 # owner-owed (L2-PIPELINE item 7).
 
+# OWNER PACK 3 APPLIED 2026-07-10 (all four items owner-stated in-session):
+# 1. VENDOR ATTRIBUTION: first-pack DAX legwork run = codex gpt-5.5 (OpenAI
+#    family). Dual-channel ledger closed — in-session spot checks were
+#    Anthropic-lane, so corroborated rows are cross-vendor.
+# 2. CONFLICT-A ADJUDICATED: deprecations page governs; o1-preview, o1-mini,
+#    gpt-4-turbo-preview treated as discontinued.
+# 3. E2-T2-dune ARMING-1 SUPPLIED (owner Dune account tables:
+#    morpho_blue_ethereum/.../base morphoblue_evt_createmarket, 8 fields
+#    each). COVERAGE LIMIT recorded in the spec: eth+base only — no
+#    polygon/arbitrum tables visible, so Q1 cannot see the sACRED(polygon)/
+#    syrupUSDC(arbitrum) markets; q3 subgraph is the cross-chain check.
+# 4. REGISTRY PROMOTED: e2/registry.csv created from the draft under owner
+#    formal sign-off, with the owner-directed correction (syrupUSDC/base
+#    token address owner-verified; its fabricated market_id CLEARED to
+#    UNKNOWN). Residual risks accepted at sign-off and recorded in
+#    e2/registry.draft.NOTES.md: remaining market_ids are pack-generated/
+#    unsighted (T2 acceptance = the catch), mTBILL dual-chain address
+#    unconfirmed.
+# => E2-T2-dune manual:true DELETED — fully armed; dispatches on deepseek
+#    the first night the box L1 lane is back (see NEED_HUMAN below).
+# => dax/memo/feasibility_note.md DRAFTED (CONDITIONAL GO: W4 capture before
+#    2026-10-23/2026-12-11 shutdowns; stand-ins with EIV caveats,
+#    gpt-4.5-preview excluded; GDPval = no license declared → no
+#    redistribution in W10a until clarified). Awaiting PI signature:
+#    gate DAX-GATE-feasibility pass/fail.
+
 # NEED_HUMAN (2026-07-10, box infra): the 02:03Z inbox run broke the L1 lane
 # — `.venv/bin/python` missing AND no python3 module visible from the login
 # shell (module system regression?), on top of the standing SCC SSH publickey
