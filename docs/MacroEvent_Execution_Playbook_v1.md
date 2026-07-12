@@ -7,6 +7,12 @@
 > cheap tiers (DeepSeek / Kimi / GLM / Qwen + Gemini free). Escalation ladder tops out at a
 > Claude Code prime block. Re-check assignments quarterly with the three standard probe tasks.
 >
+> **Runtime layers.** Every task is decomposed across the portfolio's four layers — L0
+> deterministic backbone (scripts/cron, runs everything long), L1 automated cheap workers
+> (the overnight shift, no human in the loop), L2 Claude Pro seats (human-driven prime
+> blocks), L3 human gates — in §2; §7 gives the ready-to-merge `queue.yaml` nodes and §8 the
+> `ops/l1/` worker specs with sentinel fences and the L0 wiring checklist.
+>
 > **Standby protocol.** This is a **dormant task family** (`refraction/` project dir). Tasks
 > M0–M4 + GATE-0-FREEZE run now, to "Gate-0-passed, spec-frozen, pre-registered" standby.
 > M5 onward are blocked in `queue.yaml` behind the human gate **GATE-E2-VERDICT** (either
@@ -35,28 +41,58 @@ Chapter-specific additions:
 
 ---
 
-## §2 Model assignment table (v1.1 budget regime)
+## §2 Layer map — every task decomposed across the L0–L3 runtime (queue.yaml vocabulary)
 
-| Task | Role | Assignment | Channel-B / audit |
-|---|---|---|---|
-| M0 | Collision sweep + citation verification | claude.ai Research (Pro, zero marginal) | Kimi `$web_search` (union, R2) |
-| M1 | Macro calendar + surprise extraction | Kimi K2.6 (channel 甲) | Gemini Flash free (channel 乙); arbitration Claude Code |
-| M2 | Announcement panel + betas + lever (main build) | Claude Code (Sonnet; escalate Opus/Fable on the LOO-beta module) | Unit tests by DeepSeek V4 (spec-only, no implementation access) |
-| M2a | Gate-0 diagnostics (shrinkage sweep; distinctiveness) | Claude Code | Deterministic asserts; owner reads memo |
-| M2b | Power simulation + exit-D power bar | Claude Code (reuse P1 T2a machinery) | Sentinel: known-answer config row |
-| M3 | Estimation blueprint (spec) | claude.ai Project session (Pro) — channel 甲 | DeepSeek reasoning tier — channel 乙; diff; disputes → NEED_HUMAN |
-| M4 | Pre-trend triple + placebo-in-time | Claude Code | Gemini Flash free code audit (checklist) |
-| GATE-0-FREEZE | Pre-registration (OSF/AEA) | Human (owner + advisor) | Claude drafts the registration text (M3 outputs only) |
-| M5 | Main estimation implementation | Claude Code | Gemini Flash free audit: blueprint↔code line check; flag result-driven branches |
-| M6 | Wedge fingerprint + fundamental anchoring | Claude Code (P1 T3/T6 machinery re-targeted) | Plot-before-interpret rule (P1 T6) |
-| M7 | Robustness grid | DeepSeek V4 (备: Qwen3.7 Plus) | 2 sentinel rows (= main spec); mismatch voids batch |
-| M8 | Figures/tables | DeepSeek V4 Flash or Haiku 4.5 | Numbers only from disk files |
-| M9 | Paper writing | claude.ai Project (Pro), section per session | DeepSeek reasoning polish pass; numbers→file map |
-| M10 | Red team ×2 (non-Anthropic, cold second round) | DeepSeek reasoning (裁判甲) | Gemini free tier (裁判乙); structured attack checklist |
-| M11 | Chinese materials | Qwen3.7 Max | — |
-| M12 | Gatekeeping | Deterministic scripts (contracts.py) + cheap-tier checklist | Human at the six gates (§5) |
-| M13 (opt) | Creation-basket file extraction | Kimi + Gemini Flash dual channel | `NEED_HUMAN: coverage` first |
-| M14 (gated) | TAQ pilot → H1′/H5′ module | Claude Code | Runs only on pilot pass; never load-bearing |
+Layer semantics (Agent_Architecture_24x7.md §2):
+
+- **L0 — deterministic backbone** (`worker: script`, cron): free, truly 24/7, no LLM. Runs
+  every long computation (Rule Zero: L2 authors scripts, L0 runs them), all mechanical
+  contract validation, channel diffs, sentinel voiding, the R7 pre-outcome guard, and the
+  monthly re-arm of the monitor.
+- **L1 — automated cheap workers** (`worker: deepseek | deepseek_r | kimi | glm | qwen |
+  gemini_free`): the overnight shift — highly automated, dispatched by `l1_driver.py` from
+  `ops/l1/<task_id>.yaml` specs, no human in the loop, trustworthy **only inside sentinel
+  fences**. Carries all extraction, batch grids, unit tests, figures, every channel-B duty,
+  red-team readers, 中文材料.
+- **L2 — Claude Pro seats** (`worker: code_pro | project_pro`): scarce, human-driven,
+  scheduled prime blocks from prepared briefs (`ops/briefs/`). Reserved for pipeline
+  authorship, channel-甲 spec design, arbitration of channel diffs, escalations, writing.
+- **L3 — human gates** (`human_gate: true`): owner/advisor decisions via daily digest →
+  `ops/decisions.md`. Branches park at gates; the portfolio keeps moving.
+
+Global two-strike escalation ladder (arch §3): qwen/glm → deepseek → code_pro (Claude Code)
+→ human (L3); automatic on second failure; budget governor authorizes each step-up.
+
+| Task | L0 (deterministic) | L1 (automated cheap worker) | L2 (Pro seat, human-driven) | L3 (human gate) |
+|---|---|---|---|---|
+| ME-M0 blocking sweep | machine-diff of the two channels | **kimi** `$web_search` = channel B | **project_pro** (claude.ai Research, seat C) = channel A | positioning re-check only if ALERT fires |
+| ME-M0 monthly monitor | cron re-arms spec on the 1st (delete `ops/l1/out/ME-M0-monitor.json`) | **kimi**, sentinel-fenced, overnight | — (escalation target only) | reads ALERT lines in digest |
+| ME-M1 macro events | channel diff; contract check on merge | **kimi** 甲 + **gemini_free** 乙 (independent sentinel fences) | **code_pro** (seat C) arbitrates disagreement rows only | spot-check 10% of H rows, all M/L |
+| ME-GATE-consensus | — | — | — | CPI/NFP consensus license (`NEED_HUMAN`); FOMC lane never blocks |
+| ME-M2 panel + betas + lever | scheduler runs the checkpointed build overnight; lineage JSON per stage | **deepseek** writes unit tests from §5 schemas only (never sees the implementation) | **code_pro** (seat C) authors pipeline modules, ≤1 prime block each; escalate Opus/Fable on the LOO-beta module | — |
+| ME-M2a Gate-0 diagnostics | runs the shrinkage sweep; deterministic asserts | — | authored in the tail of the M2 block | thresholds `[VERIFY-IN-GATE-0]` supplied via decisions.md; owner reads gate0_memo |
+| ME-M2b power sim + exit-D bar | runs seeded simulation; commits power_bar.json pre-outcome (R7) | — | **code_pro** re-parameterizes P1 T2a | reads power memo |
+| ME-M3 estimation blueprint | machine-diff of the two blueprints | **deepseek_r** = channel 乙 | **project_pro** (seat C Project session) = channel 甲 | arbitrates EVERY divergence (DECISION_NEEDED) — mandatory |
+| ME-M4 pre-trend triple | runs the three exhibits from templates | — | **code_pro** adapts P1 T5 event-study templates | reads GATE0-RISK flags |
+| ME-GATE-0 + ME-GATE-prereg | registration-URL commit + tag enforced by R7 guard | — | **project_pro** drafts OSF/AEA text from frozen artifacts only | owner + advisor sign; human submits registration |
+| GATE-E2-VERDICT | runner holds ME-M5+ un-READY until verdict recorded | — | — | owner records E2 verdict (either way unblocks; sets priority) |
+| ME-M5 main estimation | R7 guard refuses to run if diagnostics/power-bar/prereg commits are missing; runs estimation | **gemini_free** results-blind code audit (blueprint↔code line check; red-flag result-driven branches) | **code_pro** implements the frozen blueprint | — |
+| ME-M6 wedge + anchoring | runs; enforces plot-before-interpret by file-order check | — | **code_pro** re-targets P1 T3/T6 machinery | — |
+| ME-M7 robustness grid | overnight dispatch; 2 sentinel rows auto-void batch on mismatch | **deepseek** (备 **qwen**), templated single-dimension variants | — (two-strike escalation only) | — |
+| ME-M8 figures/tables | numbers-from-disk lint | **deepseek** flash tier | — | — |
+| ME-M9 writing | numbers→file map trace check | **deepseek_r** independent polish pass | **project_pro** (seat E writing float), one section per session; frozen R6 language as input | numbers-map acceptance |
+| ME-M10 red team ×2 | attack-checklist coverage check | **deepseek_r** 裁判甲 + **gemini_free** 裁判乙, cold second round, never Anthropic | **project_pro** drafts point-by-point responses | approves each round's response plan |
+| ME-M11 中文材料 | — | **qwen** | — | — |
+| ME-M12 gatekeeping | `contracts.py` validates every §5 schema on merge | **gemini_free** judgment checklist (locator audit, red-line scan) | — | the six gates (§5) |
+| ME-M13 basket files (opt) | contract check | **kimi** 甲 + **gemini_free** 乙 | — | coverage/`NEED_HUMAN` gate first |
+| ME-M14 TAQ pilot (gated) | runs pilot script; pass/fail computed mechanically | — | **code_pro** authors the gated module | promote/drop H1′–H5′ decision |
+
+Reading the table by layer: **L1 owns** the monitor, M1, M7, M8, M10, M11, M13, every
+channel-B and audit seat, and unit tests — the fully automated share, run overnight on the
+Chinese-model pool + Gemini free. **L2 owns** authorship (M2/M2a/M2b/M4/M5/M6/M14 as
+script-writers, never runners), channel-甲 spec work (M0/M3), and writing (M9). **L0 owns**
+every actual long run, every diff, every guard, every contract check. **L3 owns** exactly
+the six gates plus the two standby gates — nothing else needs a human.
 
 ---
 
@@ -412,3 +448,461 @@ Plus the standby gate **GATE-E2-VERDICT** controlling promotion of M5+.
   cheap tier or deterministic, per R5.
 - **Race clock:** the Marta–Riva hair trigger (M0) is the one external event that re-opens
   positioning; if it fires, re-run the Plan §I.3 boundary table before any further spend.
+
+---
+
+## §7 queue.yaml task nodes (ready to merge — seat D action)
+
+Registration prerequisites (one seat-D block, task `SH-me-register`): add `me/` to seat C's
+`owned_paths` in ops/accounts.yaml; add the six new contract YAMLs to ops/contracts/
+(`macro_events`, `announcement_panel`, `betas_lever`, `gate0_diagnostics`, `power_bar`,
+`fingerprint` — schemas from §5; ME-M7 reuses the existing `robustness_results` contract);
+merge the nodes below. Project key `me` = the plan's "refraction" family.
+
+```yaml
+  # ---- ME standby build (runs NOW): M0–M4 + gates. owner_account C = P1 seat. ----
+  - id: SH-me-register
+    project: shared
+    owner_account: D
+    worker: code_pro
+    depends_on: []
+    inputs: [docs/MacroEvent_Execution_Playbook_v1.md]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Register me/ family: accounts.yaml owned_paths, 6 contract YAMLs, R7 guard script (DAX outcomes-guard pattern), monthly re-arm cron line."
+
+  - id: ME-M0-position
+    project: me
+    owner_account: C
+    worker: project_pro
+    depends_on: [SH-me-register]
+    inputs: [docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md]
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "BLOCKING sweep: Marta–Riva status (40% hair trigger) + [VERIFY-CHANNEL-B] citations. claude.ai Research mode."
+
+  - id: ME-M0-position-B
+    project: me
+    owner_account: null
+    worker: kimi
+    depends_on: [SH-me-register]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_of: ME-M0-position
+    max_attempts: 2
+    notes: "Channel B union sweep. NOTE: kimi benched for retrieval batches (Wave-0) — if bench holds, re-route to gemini_free or run in Anthropic lane like P1-T0-crash-A."
+
+  - id: ME-M0-monitor
+    project: me
+    owner_account: null
+    worker: kimi
+    depends_on: [ME-M0-position]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Monthly at standby (P1-T0-monitor pattern; same kimi-bench caveat). The ONLY task that runs while family is dormant."
+
+  - id: ME-M1-events
+    project: me
+    owner_account: null
+    worker: kimi
+    depends_on: [SH-me-register]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "Macro calendar + surprises, channel 甲 (USMPD/FOMC/BLS sources only)."
+
+  - id: ME-M1-events-B
+    project: me
+    owner_account: null
+    worker: gemini_free
+    depends_on: [SH-me-register]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_of: ME-M1-events
+    max_attempts: 2
+    notes: "Channel 乙, independent sentinel fence."
+
+  - id: ME-M1-arb
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-M1-events, ME-M1-events-B]
+    inputs: [ops/l1/out/ME-M1-events.json, ops/l1/out/ME-M1-events-B.json]
+    output_contract: macro_events
+    human_gate: false
+    max_attempts: 2
+    notes: "Diff arbitration on disagreement rows only → me/macro_events.csv. Human spot-check 10% H, all M/L."
+
+  - id: ME-GATE-consensus
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "CPI/NFP consensus license decision (Bloomberg at BU vs WRDS alt). Blocks only surprise_norm for CPI/NFP; FOMC lane proceeds."
+
+  - id: ME-M2-panel
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-M1-arb]
+    inputs: [me/macro_events.csv, p1/conv_exposure.parquet, p1/events_merged.csv]
+    output_contract: announcement_panel
+    human_gate: false
+    max_attempts: 2
+    notes: "Main build (~1 seat-week, Rule Zero: author scripts, scheduler runs). Also emits betas_lever contract. DeepSeek writes tests from schemas only."
+
+  - id: ME-M2a-gate0diag
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: [ME-M2-panel, ME-GATE-g0thresholds]
+    inputs: [me/betas_lever.parquet, ops/decisions.md]
+    output_contract: gate0_diagnostics
+    human_gate: false
+    max_attempts: 3
+    notes: "Deterministic shrinkage sweep + distinctiveness. R7: must be committed pre-outcome."
+
+  - id: ME-GATE-g0thresholds
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: [ME-M2-panel]
+    inputs: [me/gate0_memo_inputs.md]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Owner supplies the [VERIFY-IN-GATE-0] thresholds (SD(L) line, D_b mass line) in decisions.md — never chosen by an agent."
+
+  - id: ME-M2b-power
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-M2a-gate0diag]
+    inputs: [me/betas_lever.parquet, me/macro_events.csv, p1/t2a_power_sim.py]
+    output_contract: power_bar
+    human_gate: false
+    max_attempts: 2
+    notes: "P1 T2a re-parameterized; archives exit-D power bar pre-outcome (R7)."
+
+  - id: ME-M3-blueprint
+    project: me
+    owner_account: C
+    worker: project_pro
+    depends_on: [ME-M2a-gate0diag]
+    inputs: [docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md, me/gate0_diagnostics.json]
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "Estimation blueprint channel 甲 (claude.ai Project)."
+
+  - id: ME-M3-blueprint-B
+    project: me
+    owner_account: null
+    worker: deepseek_r
+    depends_on: [ME-M2a-gate0diag]
+    inputs: [docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md, me/gate0_diagnostics.json]
+    output_contract: null
+    human_gate: false
+    channel_of: ME-M3-blueprint
+    max_attempts: 2
+    notes: "Channel 乙 (cross-family per R2)."
+
+  - id: ME-GATE-m3arb
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: [ME-M3-blueprint, ME-M3-blueprint-B]
+    inputs: [me/blueprint_diff.md]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Every blueprint divergence = DECISION_NEEDED → owner/advisor arbitration in decisions.md. Frozen blueprint feeds M5 + prereg."
+
+  - id: ME-M4-pretrends
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-M2-panel]
+    inputs: [me/announcement_panel.parquet, me/betas_lever.parquet]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Pre-trend triple + placebo-in-time from P1 T5 templates. Non-flat → GATE0-RISK, never re-specified."
+
+  - id: ME-GATE-0
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: [ME-M2a-gate0diag, ME-M2b-power, ME-M4-pretrends, ME-GATE-m3arb]
+    inputs: [me/gate0_memo.md, me/power_memo.md, me/pretrend_results]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Owner+advisor sign Gate-0 verdicts incl. framing gate. Fail → exit matrix, no forcing."
+
+  - id: ME-GATE-prereg
+    project: me
+    owner_account: E
+    worker: project_pro
+    depends_on: [ME-GATE-0]
+    inputs: [me/blueprint_frozen.md, me/gate0_diagnostics.json, me/power_bar.json]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Draft OSF/AEA registration from frozen artifacts only; HUMAN submits; commit URL+timestamp. End of standby build."
+
+  - id: GATE-E2-VERDICT
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: []
+    inputs: [ops/decisions.md]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Owner records E2 approval verdict. Either way unblocks ME-M5+; verdict only sets priority (rejected → me takes E2's slot; approved → 4th-paper cadence on float)."
+
+  # ---- ME execution phase (dormant until ME-GATE-prereg + GATE-E2-VERDICT) ----
+  - id: ME-M5-main
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-GATE-prereg, GATE-E2-VERDICT, SH-econlib]
+    inputs: [me/blueprint_frozen.md, me/announcement_panel.parquet, me/betas_lever.parquet]
+    output_contract: main_results
+    human_gate: false
+    max_attempts: 2
+    notes: "R7 guard: runner refuses if gate0_diagnostics/power_bar/prereg commits missing or post-dated."
+
+  - id: ME-M5-audit
+    project: me
+    owner_account: null
+    worker: gemini_free
+    depends_on: [ME-M5-main]
+    inputs: [me/blueprint_frozen.md]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Results-blind blueprint↔code line audit; red-flag result-conditioned branches."
+
+  - id: ME-M6-wedge
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-M5-main]
+    inputs: [me/refraction_results, p1/outcomes IBES tables]
+    output_contract: fingerprint
+    human_gate: false
+    max_attempts: 2
+    notes: "Wedge paths + reversal portfolio + fundamental anchoring. Plot-before-interpret; mechanical verdict table."
+
+  - id: ME-M7-grid
+    project: me
+    owner_account: null
+    worker: deepseek
+    depends_on: [ME-M5-main]
+    inputs: [me/robustness_grid.csv]
+    output_contract: robustness_results
+    human_gate: false
+    max_attempts: 2
+    notes: "Templated variants; 2 sentinel rows; overnight batch. 备 qwen."
+
+  - id: ME-M8-figs
+    project: me
+    owner_account: null
+    worker: deepseek
+    depends_on: [ME-M6-wedge, ME-M7-grid]
+    inputs: [me/refraction_results, me/fingerprint_files, me/robustness_results.csv]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Journal-grade figures/tables; numbers only from disk."
+
+  - id: ME-M9-write
+    project: me
+    owner_account: E
+    worker: project_pro
+    depends_on: [ME-M8-figs]
+    inputs: [everything on disk + frozen R6 claim language]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Section per session; numbers→file map. Polish pass: deepseek_r."
+
+  - id: ME-GATE-numbers
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: [ME-M9-write]
+    inputs: [me/numbers_map.csv]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Owner accepts numbers→file map before red team."
+
+  - id: ME-M10-redteam
+    project: me
+    owner_account: null
+    worker: deepseek_r
+    depends_on: [ME-GATE-numbers]
+    inputs: [me/draft.pdf]
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "裁判甲; structured attack checklist (playbook §4 M10). Round 2 = cold session."
+
+  - id: ME-M10-redteam-B
+    project: me
+    owner_account: null
+    worker: gemini_free
+    depends_on: [ME-GATE-numbers]
+    inputs: [me/draft.pdf]
+    output_contract: null
+    human_gate: false
+    channel_of: ME-M10-redteam
+    max_attempts: 2
+    notes: "裁判乙. Never Anthropic (writer family)."
+
+  - id: ME-GATE-respond
+    project: me
+    owner_account: E
+    worker: project_pro
+    depends_on: [ME-M10-redteam, ME-M10-redteam-B]
+    inputs: [both referee reports]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "Claude drafts responses; owner approves plan; then revision + cold round 2."
+
+  - id: ME-M11-cn
+    project: me
+    owner_account: null
+    worker: qwen
+    depends_on: [ME-M9-write]
+    inputs: [me/draft.pdf]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "开题/预答辩/导师纪要; numbers from disk only."
+
+  - id: ME-GATE-basketdata
+    project: me
+    owner_account: null
+    worker: script
+    depends_on: [ME-GATE-0]
+    inputs: []
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "OPTIONAL branch: owner confirms ETF Global / issuer basket-file coverage before ME-M13 spend."
+
+  - id: ME-M13-baskets
+    project: me
+    owner_account: null
+    worker: kimi
+    depends_on: [ME-GATE-basketdata]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "Creation-basket extraction 甲; twin gemini_free node ME-M13-baskets-B (channel_of). Enhancement only (floor rule)."
+
+  - id: ME-M14-taq
+    project: me
+    owner_account: C
+    worker: code_pro
+    depends_on: [ME-GATE-0]
+    inputs: [me/macro_events.csv, p1/conv_exposure.parquet]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "GATED, non-blocking: TAQ pilot 30+30×20; pass ≥70% small-cap coverage → build H1'/H5' module; fail → drop, core unaffected."
+```
+
+## §8 L1 worker specs (`ops/l1/ME-*.yaml`) and L0 wiring
+
+**L1 spec pattern** (EXAMPLE.yaml format: `worker`, `est_cost`, `items`, mandatory
+`sentinels`). Each channel twin gets an **independent** sentinel fence (house rule — the two
+fences must fail independently). All sentinel `expect` values below are facts already
+verified in this repo (P1 plan §2, collision sweep, Plan v2.1 Appendix A) — never invent new
+ones from memory.
+
+`ops/l1/ME-M1-events.yaml` (channel 甲; twin `ME-M1-events-B.yaml` on gemini_free with
+sentinels S3/S4):
+
+```yaml
+worker: kimi
+web_search: true
+est_cost: 2.0
+items:
+  - id: fomc-calendar
+    prompt: |
+      [paste C0-ME] Task: from federalreserve.gov ONLY, list every SCHEDULED
+      FOMC meeting 2017-01..2026-06: statement release date + time ET.
+      Unscheduled/emergency meetings in a separate section, flagged. Every row
+      carries the federalreserve.gov URL it came from. Schema: event_id | type
+      | release_date | release_time_ET | source_url. No memory rows.
+  - id: usmpd-surprises
+    prompt: |
+      [paste C0-ME] Task: from the SF Fed U.S. Monetary Policy Event-Study
+      Database page, report: exact dataset name, download URL, variable name
+      of the 30-minute policy surprise, sample coverage dates. Do NOT
+      transcribe surprise values (the script ingests the file; you only
+      locate it).
+  - id: bls-calendar
+    prompt: |
+      [paste C0-ME] Task: from bls.gov release calendars ONLY, list every CPI
+      and Employment Situation release 2017-01..2026-06 with date + 08:30 ET
+      confirmation + URL. Same schema. Reschedules flagged, not dropped.
+sentinels:
+  - id: S1
+    # source: docs/基金转换实验_博士研究计划.md §2 (house-verified)
+    prompt: "On what date did DFA's first mutual-fund-to-ETF conversion wave take effect (the ~$30B anchor wave)? Reply YYYY-MM-DD only."
+    expect: "2021-06-11"
+  - id: S2
+    # source: p1/t0_collision_sweep_channelA.md (house-verified)
+    prompt: "In which year and month did the Federal Reserve publish the FEDS Note 'Implications of Growth in ETFs: Evidence from Mutual Fund to ETF Conversions'? Reply YYYY-MM only."
+    expect: "2025-11"
+```
+
+`ops/l1/ME-M0-monitor.yaml` — clone P1-T0-monitor.yaml's structure (incl. its `manual: true`
+kimi-bench parking note if the bench still holds at first arming) with the Plan §11 keyword
+set, the Marta–Riva ≥40% hair trigger spelled out in the item prompt, and fresh sentinels
+(suggested: S1 = SEC ETF Rule "6c-11"; S2 = dual-share-class relief "2025-12" — distinct
+from ME-M1's fence so the two fail independently).
+
+`ops/l1/ME-M3-blueprint-B.yaml`, `ME-M5-audit.yaml`, `ME-M7-grid.yaml`,
+`ME-M10-redteam*.yaml`, `ME-M11-cn.yaml`, `ME-M13-baskets*.yaml`: single-item specs whose
+prompts are §4's task prompts verbatim (each headed by C0-ME); M7's fence is its two
+sentinel grid rows rather than Q&A sentinels (validator compares them to the main-spec
+coefficients mechanically).
+
+**L0 wiring checklist (implemented by `SH-me-register`, seat D):**
+
+1. **R7 guard** — `me/guards/pre_outcome_check.py`, imported by every script under
+   `me/analysis/`: refuse to run unless `gate0_diagnostics.json`, `power_bar.json`, and the
+   pre-registration URL commit exist and predate the run (DAX `v1.0-preregistered` pattern).
+2. **Monthly re-arm cron** — first of month: delete `ops/l1/out/ME-M0-monitor.json`; the
+   overnight driver re-runs it (P1-T0-monitor pattern).
+3. **Channel-diff scripts** — `me/tools/diff_channels.py` for M1 (row-level) and M3
+   (section-level); output feeds the arbitration brief / DECISION_NEEDED list.
+4. **Contract YAMLs** — the six §5 schemas registered in ops/contracts/ so
+   `contracts.py <contract> <path>` gates every merge (M12's deterministic 80%).
+5. **Budget** — ME L1 spend rides the same governor (80% dispatch ceiling / 20% escalation
+   reserve); est_cost lines in every spec; standby-mode spend = ME-M0-monitor only (≈¥1/mo).
