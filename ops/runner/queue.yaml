@@ -728,10 +728,12 @@ tasks:
 # ---------------------------------------------------------------------------
 
   # ---------------------------------------------------------------------------
-  # REFRACTION (macro-event standby chapter) — manual: docs/Refraction_执行手册_v1_0.md
+  # REFRACTION (macro-event chapter) — manual: docs/Refraction_执行手册_v1_0.md
+  # A parallel, equal-importance project alongside P1/E2/DAX (NOT a backup for any).
   # DAG per manual §0.5: R0→R1→R2→R3 →GATE-PREREG→ R4 →GATE-OSF→ (+GATE-e2verdict)
   # → R5-arb → R6 → R7/R8 → R11 → R12; R9/R10 non-blocking bypaths; R13/R14 resident.
-  # R0–R3 run NOW to standby; R6+ additionally hard-checked at runtime by
+  # R0–R3 run NOW; GATE-e2verdict is purely a workflow/scheduling gate (seat-load
+  # sequencing); R6+ additionally hard-checked at runtime by
   # refraction/guards/prereg_guard.py (prereg-before-outcomes as a program invariant).
   # ---------------------------------------------------------------------------
 
@@ -845,7 +847,7 @@ tasks:
     output_contract: null
     human_gate: true
     max_attempts: 1
-    notes: "HUMAN: record E2 approval verdict (either way unblocks R5+; verdict only sets priority — rejected → refraction takes E2's slot, approved → 4th-paper cadence)."
+    notes: "HUMAN: record that the E2 verdict has arrived. WORKFLOW/SCHEDULING GATE ONLY — sequences refraction's heavy L2 phase (R5+) against the E2 decision window so seat frontier blocks don't contend. The verdict's content has no bearing on refraction's status: the four projects are parallel and independent."
 
   - id: REFR-R5-design
     project: refraction

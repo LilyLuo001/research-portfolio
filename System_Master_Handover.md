@@ -28,22 +28,24 @@ design choices is **Rule Zero: agents write scripts; scripts do the long-running
 
 ### 2.1 The business logic in one paragraph
 
-The advisor approved **P1** and **DAX** as chapters; **E2 is pending approval and may be
-rejected**. **Refraction** exists as the engineered hedge against that rejection: a fourth
-chapter built to top-field standard, held at "Gate-0-passed, pre-registered, dormant" for
-near-zero carrying cost, promoted the moment the E2 verdict lands (either way — if E2
-passes, Refraction becomes the fourth paper / job-market spare). The queue's ceiling
-priority is `dax > e2 > p1`, but the **scheduling fulcrum is the E2 verdict**
-(`REFR-GATE-e2verdict` in the queue). Graduation logic and ceiling logic are different
-orderings — do not confuse them when arbitrating seat time.
+The four projects are **strictly parallel, independent, and of equal importance** — none
+is a backup or hedge for another. Approval status is a fact, not a hierarchy: the advisor
+has approved **P1** and **DAX** as chapters, **E2's verdict is pending**, and
+**Refraction** is a full chapter built to top-field standard in its own right. Refraction
+runs in two phases (R0–R3 build + pre-registration now; R5+ estimation later); the gate
+between them, **`REFR-GATE-e2verdict`, is strictly a workflow/scheduling gate** — it
+sequences Refraction's heavy L2 estimation phase relative to the E2 decision window so the
+seats' frontier blocks don't contend, and its content has no bearing on Refraction's
+status. The queue's tie-break priority is `dax > e2 > p1` (ceiling-based); it is a
+contention rule for scarce seat time, not a statement of project importance.
 
 ### 2.2 Project by project
 
-| | P1 (approved) | E2 (pending) | DAX (approved) | Refraction (standby) |
+| | P1 (approved) | E2 (verdict pending) | DAX (approved) | Refraction (in build) |
 |---|---|---|---|---|
 | Question | Do mutual-fund→ETF conversions (wrapper changes, delegation constant) change how **earnings information** gets into stock prices? | RWA (real-world-asset) tokens with embedded leverage / looping in DeFi: panel, facts, risk engine | A monthly, cost-thresholded **Dynamic AI Exposure index**: when does AI substitution become privately cost-effective per occupation, and does crossing predict labor-market adjustment? | Do newly wrapped ETF **baskets refract scheduled macro news** (FOMC/CPI/NFP) into constituents — and is the refracted component information or noise? |
 | Identification asset | Conversion events + ConvExp exposure panel (EDGAR-harvested, dual-channel verified) — **the portfolio's crown jewel** | On-chain data (Dune SQL, subgraphs), dual-channel fact verification | GDPval-era capability × price panel; GPT-4o price-cut event; pre-registered stacked event studies | **Reuses P1's frozen assets read-only** + announcement-regime betas and a leave-one-out basket lever L |
-| Deliverable logic | JFE/RFS-class paper; races Saglam–Tuzun's 12–18-month window | Fastest publishable note (T15) + commercial engine (T9a) | OpenAI ERE proposal (`docs/DAX_ERE_Proposal_v3.md`); highest ceiling, external funder | Standby chapter; both main exits (efficiency / fragility) publishable |
+| Deliverable logic | JFE/RFS-class paper; races Saglam–Tuzun's 12–18-month window | Fastest publishable note (T15) + commercial engine (T9a) | OpenAI ERE proposal (`docs/DAX_ERE_Proposal_v3.md`); highest ceiling, external funder | Full chapter; both main exits (efficiency / fragility) publishable |
 | Manual | `docs/Project_1.md` + `P1_修订补丁_v1_1.md` | `docs/E2_执行手册_v1_1_完整版.md` + patches | `docs/DAX_Execution_Plan_with_AI_Agents.md` | `docs/Refraction_执行手册_v1_0.md` (R0–R14) — supersedes the English playbook |
 | Plan | `docs/基金转换实验_博士研究计划.md` | `docs/E2_研究计划_RWA内嵌杠杆.md` | ERE proposal + Amendment v1.1 | `docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md` (v2.1) |
 
@@ -150,7 +152,7 @@ orderings — do not confuse them when arbitrating seat time.
 
 ## 6. System-level recommendations for the next iteration
 
-1. **Merge or die: get PR #20 decided.** The standby chapter's entire machinery sits on an
+1. **Merge or die: get PR #20 decided.** The Refraction chapter's entire machinery sits on an
    unmerged branch. Either merge it to main (recommended — it passed selfcheck + 69 tests)
    or consciously park it; do not let it drift behind main.
 2. **Promote the guard patterns to `shared/`.** Three projects now hand-roll invariant
@@ -173,7 +175,8 @@ orderings — do not confuse them when arbitrating seat time.
 7. **Make the graduation-critical path explicit in queue meta.** `priority_order:
    [dax, e2, p1]` encodes ceiling, not graduation risk. Add a `graduation_critical:` note
    (or per-task priority overrides) so a zero-context scheduler doesn't starve the E2
-   verdict path or the Refraction standby build during contention.
+   verdict path or the Refraction R0–R3 build during contention — all four projects
+   carry equal standing, and the tie-break must not silently become a starvation rule.
 8. **Keep the supersession-banner discipline.** Two macro-chapter execution documents
    coexist (English playbook, Chinese 执行手册); the banner + ID mapping prevented a
    two-sources-of-truth failure. Any doc replaced by a newer version gets the banner, same

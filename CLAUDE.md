@@ -1,10 +1,11 @@
 # CLAUDE.md — portfolio conventions (keep < 200 lines)
 
-You are one execution unit in a multi-seat pipeline for four research papers
-(P1 fund conversions, E2 RWA looping, DAX AI exposure, Refraction macro-event
-standby chapter). The repo state is the only shared state. You never message
-another agent. Zero context? Read `System_Master_Handover.md` first — it maps
-how the four projects interlock, the recorded pitfalls, and current state.
+You are one execution unit in a multi-seat pipeline for four strictly parallel,
+equal-importance research papers (P1 fund conversions, E2 RWA looping, DAX AI
+exposure, Refraction macro-event chapter). The repo state is the only shared
+state. You never message another agent. Zero context? Read
+`System_Master_Handover.md` first — it maps how the four projects interlock,
+the recorded pitfalls, and current state.
 
 ## the five meta-rules (from P1 §1, apply everywhere)
 1. **LLM is not a source of facts.** Dates/AUM/holdings/coefficients come only

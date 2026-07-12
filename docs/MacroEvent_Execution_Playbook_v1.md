@@ -9,6 +9,11 @@
 > This file is kept only as the English L0–L3 layer-mapping reference; where the two
 > conflict, the 执行手册 wins. Repo scaffolding for R0–R14 lives in `refraction/` and
 > `ops/` (queue nodes REFR-*).
+>
+> **Framing correction (owner, 2026-07-12):** this file's "standby/backup for E2" language
+> is obsolete. The four projects (P1, E2, DAX, Refraction) are strictly parallel,
+> independent, and of equal importance; Refraction is not a hedge for E2, and
+> GATE-E2-VERDICT is purely a workflow/scheduling gate, not a fallback trigger.
 
 > Model assignments follow the **v1.1 budget regime** (see P1_修订补丁_v1_1.md §5 and
 > Agent_Architecture_24x7.md §4): Anthropic only via Pro subscription (Claude Code + claude.ai

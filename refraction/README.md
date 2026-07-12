@@ -1,4 +1,9 @@
-# refraction/ — "One Shock, Many Prices" (macro-event standby chapter)
+# refraction/ — "One Shock, Many Prices" (macro-event chapter)
+
+One of the portfolio's four strictly parallel, equal-importance projects (with
+P1, E2, DAX — see System_Master_Handover.md §2). `REFR-GATE-e2verdict` below is
+a workflow/scheduling gate sequencing this project's heavy estimation phase
+against the E2 decision window; it is not a fallback trigger.
 
 Manual: `docs/Refraction_执行手册_v1_0.md` (tasks **R0–R14**; C0-R context pack in §0.3).
 Plan: `docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md` (v2.1 final).
