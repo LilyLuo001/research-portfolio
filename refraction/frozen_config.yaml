@@ -1,0 +1,77 @@
+# ============================================================================
+# frozen_config.yaml — the single source for every tunable in the Refraction
+# pipeline (execution manual C0-R: "w_shrink ... 只能从 frozen_config.yaml 读取";
+# assert A6 statically scans code for magic numbers).
+#
+# FREEZE PROTOCOL:
+#   - Fields under `prereg:` and `beta.w_shrink` are null until GATE-PREREG.
+#     The owner fills them in the SAME commit as the OSF submission
+#     (REFR-GATE-OSF); guards/prereg_guard.py hard-refuses R6+ while null.
+#   - `gate0_thresholds:` are the Plan v2.1 §9 pre-committed lines, provisional
+#     until the owner confirms them in ops/decisions.md ([VERIFY-IN-GATE-0]);
+#     R3 reads them from here and must NOT choose thresholds itself.
+#   - After GATE-PREREG this file is frozen; any later change is a pre-
+#     registration deviation and must be disclosed per the R4 deviation policy.
+# ============================================================================
+version: "0.1"
+
+prereg:
+  osf_timestamp: null       # RFC3339, e.g. "2026-08-01T15:00:00Z"; set at REFR-GATE-OSF
+  osf_url: null
+  registered_spec: "SPEC-MAIN"   # see C0-R; γ always reported decomposed (mkt/tilt/fac)
+
+beta:
+  w_shrink: null            # FROZEN AT GATE-PREREG from inside the G2 feasibility window
+  w_shrink_sweep_grid: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  estimation: announcement_regime_pre_only    # lookahead ban applies (assert A4)
+  prior: characteristics_implied              # prior coefficients pre-period only
+  n_pre_min_for_estimation: 10                # provisional [VERIFY-IN-GATE-0]
+
+surprise:
+  standardize: sample_std          # S_std = S_raw / in-sample std, per type
+  exclude_unscheduled: true        # is_scheduled=false rows excluded by default
+  fomc_source: "SF Fed USMPD"      # R1a verifies structure; no memory of its schema
+  consensus_source: null           # NEED_HUMAN: Bloomberg ECO at BU vs WRDS alternative
+
+gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops/decisions.md
+  sd_L_min: 0.25                   # G2: SD(L̂) among ConvExp>=convexp_treated_min stocks
+  corr_L_convexp_max: 0.30         # G2
+  se_share_min: 0.70               # G2: share of treated names with SE(β̂) << SD(L̂)
+  se_to_sdL_ratio_max: 0.3333      # operationalizes "<<" for the line above
+  n_pre_median_min: 30             # G3
+  d_b_min: 0.10                    # G4 basket distinctiveness |β_b^LOO − 1|
+  mde_sigma_max: 0.5               # G5, for γ pooled AND γ_tilt AND γ_fac
+  sweep_window_min_gridpoints: 2   # G2: window narrower than this = knife-edge = FAIL
+  convexp_treated_min: 0.005       # binary-treatment line (P1 convention, 0.5%)
+
+sample:
+  announcements_start: "2017-01-01"
+  announcements_end: "2026-06-30"
+  waves_start: "2021-03-01"
+  waves_end: "2025-12-31"
+  asset_class: equity_US           # P1 filter: fixed income / international excluded
+  price_floor_usd: 5               # robustness exclusion, not main-spec filter
+
+panel:
+  announcement_types: [FOMC, CPI, NFP]
+  release_times_ET: {FOMC: "14:00", CPI: "08:30", NFP: "08:30"}
+  pre_quarters_required: 8         # assert A2: coverage ±8 quarters around wave
+
+wedge:
+  horizons_days: [1, 5, 20, 60]
+
+reversal_portfolio:                # R7-S2: ALL construction parameters live here
+  formation_lag_days: 1            # provisional; frozen at GATE-PREREG
+  holding_days: 20
+  weighting: value
+  rebalance: announcement
+
+heterogeneity:                     # frozen five-item set, interactions capped at 3
+  items: [amihud, analyst_coverage, basket_weight_or_inclusion, pre_etf_ownership, abs_L]
+  interaction_order_max: 3
+  romano_wolf_families: [spine1, spine2, spine3, spine4, heterogeneity]
+
+inference:
+  cluster_dims: [announcement_date, wave_industry]
+  ri_permutations: {conversion_dates: 1000, announcement_labels: 1000, lever_within_treated: 1000}
+  effective_cluster_warning_below: 10

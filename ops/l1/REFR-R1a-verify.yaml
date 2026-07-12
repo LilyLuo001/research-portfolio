@@ -1,0 +1,41 @@
+# REFR-R1a-verify — USMPD structure + macro release calendars + consensus
+# channel registry, first-hand sources only (manual §R1). Feeds R1b parser and
+# Gate-0 line G1.
+#
+# PARKED at creation (2026-07-12): kimi bench (same note as REFR-R0-collide;
+# un-park by deleting `manual: true` after bench decision or re-route).
+manual: true
+worker: kimi
+web_search: true
+est_cost: 2.0
+items:
+  - id: usmpd-structure
+    prompt: |
+      【粘贴 docs/Refraction_执行手册_v1_0.md §0.3 C0-R】
+      任务(R1a-1): 只依据联网检索到的一手来源(SF Fed 官网), 核验并登记
+      USMPD 当前版本: 下载地址、文件格式、更新至何时、官方文档对各 surprise
+      变量的定义(逐字引用≤25词+页码/URL)、是否区分 statement 与 press
+      conference 窗口、非预定会议如何标记。
+      该数据库结构你训练时的印象一律作废, 以本次检索为准。
+  - id: release-calendars
+    prompt: |
+      【粘贴 docs/Refraction_执行手册_v1_0.md §0.3 C0-R】
+      任务(R1a-2): 2017–2026 年 FOMC 预定会议日历、CPI 与就业报告(Employment
+      Situation)发布日历的官方来源页(逐年 URL, federalreserve.gov/bls.gov);
+      发布时刻的官方说明(ET)。输出登记表 [事实, 结论, 一手URL, 检索日期,
+      置信度, UNKNOWN]。
+  - id: consensus-channels
+    prompt: |
+      【粘贴 docs/Refraction_执行手册_v1_0.md §0.3 C0-R】
+      任务(R1a-3): CPI/NFP 市场共识数据的可得渠道清单(Bloomberg ECO 字段、
+      WRDS 内可能的替代库), 每个渠道注明: 覆盖起点、许可类型、UNKNOWN 项。
+      末尾"下游影响提示": 哪条结论影响 R1b 解析器与 Gate-0 第 1 行。
+sentinels:
+  - id: S1
+    # source: docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md §2 (house-verified)
+    prompt: "At what Eastern Time are scheduled FOMC statements released? Reply HH:MM only."
+    expect: "14:00"
+  - id: S2
+    # source: docs/基金转换实验_博士研究计划.md §2 (house-verified)
+    prompt: "In which year and month did the SEC grant dual-share-class exemptive relief (mutual funds adding ETF share classes)? Reply YYYY-MM only."
+    expect: "2025-12"

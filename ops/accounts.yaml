@@ -53,11 +53,15 @@ seats:
 
   C:
     name: P1-prime
-    owned_paths: [p1/]
+    owned_paths: [p1/, refraction/]
     worker_kinds: [code_pro, project_pro]
     rationale: >
       P1 is cleanest-but-smallest (priority 3). Mostly warm: in months 1–2 it
       runs only cheap L1 tasks; this seat wakes for T2a, then T1-arb/T2/T5.
+      Also owns refraction/ (macro-event standby chapter, REFR-* tasks): it
+      consumes P1's frozen identification assets read-only, and the two never
+      need heavy L2 blocks simultaneously — refraction is dormant behind
+      REFR-GATE-e2verdict except its R0–R3 standby build.
 
   D:
     name: infra-and-float

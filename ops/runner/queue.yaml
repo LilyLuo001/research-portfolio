@@ -726,3 +726,290 @@ tasks:
 # P1-T6/T8/T9/T10/T11 here as their upstream contracts come green. Kept out of
 # the bootstrap file to keep week-1 legible; add per §5 rotation.
 # ---------------------------------------------------------------------------
+
+  # ---------------------------------------------------------------------------
+  # REFRACTION (macro-event standby chapter) — manual: docs/Refraction_执行手册_v1_0.md
+  # DAG per manual §0.5: R0→R1→R2→R3 →GATE-PREREG→ R4 →GATE-OSF→ (+GATE-e2verdict)
+  # → R5-arb → R6 → R7/R8 → R11 → R12; R9/R10 non-blocking bypaths; R13/R14 resident.
+  # R0–R3 run NOW to standby; R6+ additionally hard-checked at runtime by
+  # refraction/guards/prereg_guard.py (prereg-before-outcomes as a program invariant).
+  # ---------------------------------------------------------------------------
+
+  - id: REFR-R0-collide
+    project: refraction
+    owner_account: null
+    worker: kimi
+    depends_on: []
+    inputs: [docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md]
+    output_contract: null
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "Channel-B citation sweep + Marta–Riva priority check (40% hair trigger). Spec: ops/l1/REFR-R0-collide.yaml (PARKED: kimi bench — see spec header)."
+
+  - id: REFR-R0-collide-B
+    project: refraction
+    owner_account: null
+    worker: gemini_free
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: false
+    channel_of: REFR-R0-collide
+    max_attempts: 2
+    notes: "Gemini grounding union re-run for the high-value items (Marta–Riva, Brogaard–Heath–Huang) — E2-T1 兜底 mode."
+
+  - id: REFR-R1a-verify
+    project: refraction
+    owner_account: null
+    worker: kimi
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "USMPD structure + FOMC/BLS calendars + consensus-channel registry, first-hand URLs only. Spec: ops/l1/REFR-R1a-verify.yaml (PARKED: kimi bench)."
+
+  - id: REFR-R1b-parse
+    project: refraction
+    owner_account: null
+    worker: deepseek
+    depends_on: [REFR-R1a-verify]
+    inputs: [refraction/frozen_config.yaml]
+    output_contract: surprises
+    human_gate: false
+    max_attempts: 2
+    notes: "build_calendar.py + build_surprises.py from R1a registry + OWNER-PASTED file heads (no memory of USMPD schema). Also emits macro_calendar.csv (contract: macro_calendar)."
+
+  - id: REFR-R2-panel
+    project: refraction
+    owner_account: C
+    worker: code_pro
+    depends_on: [REFR-R1b-parse]
+    inputs: [refraction/frozen_config.yaml, p1/conv_exposure.parquet, p1/events_merged.csv]
+    output_contract: panel_ann
+    human_gate: false
+    max_attempts: 2
+    notes: "Main build ~1 seat-week. HARD completion = refraction/pipeline/assert_panel.py all 14 asserts green (A4 lookahead, A6 no-magic-w_shrink, A9 LOO). PRE-DISPATCH NEED_HUMAN: CRSP table/var list pasted + holdings_weights口径 aligned with P1-T2 in writing (manual §2.3①)."
+
+  - id: REFR-R3-gate0
+    project: refraction
+    owner_account: null
+    worker: deepseek
+    depends_on: [REFR-R2-panel]
+    inputs: [refraction/frozen_config.yaml, p1/t2a_power_sim.py]
+    output_contract: gate_report
+    human_gate: false
+    max_attempts: 2
+    notes: "Gate-0 six lines G1–G6, pre-period + simulation ONLY (program refuses post outcome columns). Thresholds read from frozen_config, never chosen. Report states facts + PASS/FAIL, no recommendations."
+
+  - id: REFR-GATE-PREREG
+    project: refraction
+    owner_account: null
+    worker: script
+    depends_on: [REFR-R3-gate0]
+    inputs: [refraction/gate_report.md, ops/decisions.md]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "HUMAN: adjudicate six lines (Sonnet drafts判读 memo; verdict is owner's), freeze w_shrink inside G2 window + full config. Any core-line FAIL → Plan §10 exit matrix, no forcing. Pass → R4 within 48h."
+
+  - id: REFR-R4-prereg
+    project: refraction
+    owner_account: E
+    worker: project_pro
+    depends_on: [REFR-GATE-PREREG]
+    inputs: [refraction/gate_report.md, refraction/frozen_config.yaml]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "OSF prereg draft (Opus 档 via claude.ai). All numbers as {{gate.<key>}} placeholders injected by script — zero model-generated digits."
+
+  - id: REFR-GATE-OSF
+    project: refraction
+    owner_account: null
+    worker: script
+    depends_on: [REFR-R4-prereg]
+    inputs: [refraction/frozen_config.yaml]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "HUMAN: submit to OSF; fill prereg.osf_timestamp + osf_url + beta.w_shrink in frozen_config.yaml IN THE SAME COMMIT. This flips prereg_guard from BLOCKED to PASS — the machine side of prereg-before-outcomes."
+
+  - id: REFR-GATE-e2verdict
+    project: refraction
+    owner_account: null
+    worker: script
+    depends_on: []
+    inputs: [ops/decisions.md]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "HUMAN: record E2 approval verdict (either way unblocks R5+; verdict only sets priority — rejected → refraction takes E2's slot, approved → 4th-paper cadence)."
+
+  - id: REFR-R5-design
+    project: refraction
+    owner_account: E
+    worker: project_pro
+    depends_on: [REFR-R3-gate0, REFR-GATE-e2verdict]
+    inputs: [docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "C 类 not-cheap zone: R5a design = GPT-5 思考档 BY HAND (external, manual §R5); R5b blind review = Opus 档 (claude.ai). Eight mandatory items incl. b3/b4 completeness, γ collinearity, generated-regressor SEs, few-cluster failure assessment."
+
+  - id: REFR-GATE-R5arb
+    project: refraction
+    owner_account: null
+    worker: script
+    depends_on: [REFR-R5-design]
+    inputs: [ops/decisions.md]
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "HUMAN: adjudicate every R5a/R5b divergence in writing (decidable criteria, not '两者皆可') before implementation is dispatched."
+
+  - id: REFR-R6-py
+    project: refraction
+    owner_account: null
+    worker: deepseek
+    depends_on: [REFR-GATE-OSF, REFR-GATE-R5arb]
+    inputs: [refraction/frozen_config.yaml]
+    output_contract: refr_results
+    human_gate: false
+    channel_a: true
+    max_attempts: 2
+    notes: "Python implementation. STARTUP HARD CHECK: refraction/guards/prereg_guard.py assert_prereg_ok(). Per-spec JSON incl. γ decomposition, SE suite, RI p, effective clusters, sample hash."
+
+  - id: REFR-R6-r
+    project: refraction
+    owner_account: null
+    worker: glm
+    depends_on: [REFR-GATE-OSF, REFR-GATE-R5arb]
+    inputs: [refraction/frozen_config.yaml]
+    output_contract: null
+    human_gate: false
+    channel_of: REFR-R6-py
+    max_attempts: 2
+    notes: "R (fixest+boottest) independent implementation; per-spec point estimates cross-checked vs Py at 1e-6 (E2-T8c protocol)."
+
+  - id: REFR-R7-spines
+    project: refraction
+    owner_account: C
+    worker: code_pro
+    depends_on: [REFR-R6-py, REFR-R6-r]
+    inputs: [refraction/results, p1/ibes_sue.parquet]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Four spines + plots (Sonnet scripts, run in Claude Code). Zero hardcoded numbers; reversal-portfolio params from frozen_config; narrative digits as {{spines.<key>}} placeholders; ibes_sue READ-ONLY."
+
+  - id: REFR-R8-grid
+    project: refraction
+    owner_account: null
+    worker: deepseek
+    depends_on: [REFR-R6-py, REFR-R6-r]
+    inputs: [refraction/frozen_config.yaml]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Config-driven robustness grid = Plan §8 items 1–8 (beta battery, placebo-in-time, randomized L, twin-basket falsification, saturation gradient). L^twin reuses build_basket.py functions, never copied code. Prereg_guard startup check applies."
+
+  - id: REFR-GATE-etfglobal
+    project: refraction
+    owner_account: null
+    worker: script
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "HUMAN: confirm BU access to ETF Global / issuer daily basket files. Gates the R9 bypath only."
+
+  - id: REFR-R9a-basket-read
+    project: refraction
+    owner_account: null
+    worker: gemini_free
+    depends_on: [REFR-GATE-etfglobal]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "N-CEN/prospectus verbatim extraction (1M context; batch per issuer against middle-loss). UNKNOWN over industry-practice inference. Non-blocking bypath."
+
+  - id: REFR-R9b-basket-avail
+    project: refraction
+    owner_account: null
+    worker: kimi
+    depends_on: [REFR-GATE-etfglobal]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Daily creation-basket file availability registry (vendor/issuer channels, coverage starts, license). Non-blocking bypath."
+
+  - id: REFR-R10-taq
+    project: refraction
+    owner_account: C
+    worker: code_pro
+    depends_on: [REFR-R2-panel]
+    inputs: [refraction/frozen_config.yaml]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Two-stage with HARD in-code gate: pilot 30+30×20 coverage ≥70% incl. small caps, else GATE_FAIL and no enhancement outputs. Non-blocking bypath; stage 2 also behind prereg_guard."
+
+  - id: REFR-R11-write
+    project: refraction
+    owner_account: E
+    worker: project_pro
+    depends_on: [REFR-R7-spines, REFR-R8-grid]
+    inputs: [refraction/results, refraction/gate_report.md]
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Opus 档 intro/contrib/framework/conclusion; GLM/Qwen mid sections; flagship统稿. HARD RULE 4: if gate_report G4 flags 框架门触发, 'basket-specific refraction' language banned repo-wide → 'wrapper-induced beta compression'. Digits only as placeholders; bib whitelist."
+
+  - id: REFR-R12-redteam
+    project: refraction
+    owner_account: null
+    worker: deepseek_r
+    depends_on: [REFR-R11-write]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Parallel cheap referee; GPT-5 思考档主审 BY HAND (external, 异家 of writer). ≥3 Major, ≥2 outside FAQ, targeted attacks on basket≈market + generated-regressor SEs."
+
+  - id: REFR-R13-scan
+    project: refraction
+    owner_account: null
+    worker: script
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 3
+    notes: "Resident cron: arXiv+Semantic Scholar API scan (E2-T11 corrected architecture — no LLM web access). Keywords per manual §R13a, 中英双语."
+
+  - id: REFR-R13-triage
+    project: refraction
+    owner_account: null
+    worker: kimi
+    depends_on: [REFR-R13-scan]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Triage; Marta/Riva or 'replication technique/switch' hits → 毛刺节 regardless of overlap score, ALERT threshold 40% (others 60%)."
+
+  - id: REFR-R14-metaqa
+    project: refraction
+    owner_account: null
+    worker: gemini_free
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "Resident mechanical checklist (Flash-Lite/豆包 class ONLY): E2-T14 items + ⑥A4 lookahead PASS in manifest ⑦w_shrink only in frozen_config (A6 scan) ⑧post-outcome tasks carry runtime>OSF-timestamp proof."
