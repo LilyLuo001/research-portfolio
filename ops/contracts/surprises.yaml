@@ -1,0 +1,12 @@
+# REFR-R1b output — standardized surprise series (manual §R1; S_std NULL legal
+# for CPI/NFP rows lacking consensus, counted in manifest)
+producer: REFR-R1b-parse
+primary_key: [type, date_ET]
+columns:
+  type: {required: true}
+  date_ET: {required: true}
+  time_ET: {required: true}
+  S_raw: {}
+  S_std: {}
+  source: {required: true}
+  is_scheduled: {required: true}

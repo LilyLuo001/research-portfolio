@@ -1,6 +1,15 @@
 # Macro-Event Chapter ("Refraction") · Multi-Agent Execution Playbook v1.0
 ### Companion to `MacroEvent_Chapter_Plan_v2_1_FINAL.md` — same format as Project_1.md (P1), E2_执行手册, DAX_Execution_Plan
 
+> **[SUPERSEDED 2026-07-12]** The owner's `Refraction_执行手册_v1_0.md` (tasks **R0–R14**,
+> inheriting the E2 manual's architecture and capability review) is now the authoritative
+> execution manual for this chapter; its task IDs replace the ME-M* family below
+> (mapping: M0→R0/R13 · M1→R1 · M2→R2 · M2a/M2b→R3 · prereg→R4 · M3→R5 · M5→R6 ·
+> M6/spines→R7 · M7→R8 · M13→R9 · M14→R10 · M9→R11 · M10→R12 · M12→R14).
+> This file is kept only as the English L0–L3 layer-mapping reference; where the two
+> conflict, the 执行手册 wins. Repo scaffolding for R0–R14 lives in `refraction/` and
+> `ops/` (queue nodes REFR-*).
+
 > Model assignments follow the **v1.1 budget regime** (see P1_修订补丁_v1_1.md §5 and
 > Agent_Architecture_24x7.md §4): Anthropic only via Pro subscription (Claude Code + claude.ai
 > Projects/Research), no non-Anthropic flagship APIs; cross-vendor independence (R2) carried by

@@ -1,0 +1,9 @@
+# REFR-R1b output — scheduled macro announcement calendar (manual §R1)
+producer: REFR-R1b-parse
+primary_key: [type, date_ET]
+columns:
+  type: {required: true}
+  date_ET: {required: true}
+  time_ET: {required: true}
+  is_scheduled: {required: true}
+  source: {required: true}

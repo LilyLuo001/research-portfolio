@@ -1,0 +1,21 @@
+# REFR-R2 output — permno×announcement panel (C0-R schema). The 14 A-asserts
+# (refraction/pipeline/assert_panel.py) are the REAL gate; this contract is the
+# cheap mechanical floor the runner can check without pandas semantics.
+producer: REFR-R2-panel
+primary_key: [permno, announcement_id]
+columns:
+  permno: {required: true}
+  announcement_id: {required: true}
+  type: {required: true}
+  date_ET: {required: true}
+  time_ET: {required: true}
+  wave: {required: true}
+  is_treated: {required: true}
+  Post: {required: true}
+  ConvExp: {required: true, min: 0}
+  r_total: {required: true}
+  beta_i: {required: true}
+  beta_b_loo: {required: true}
+  L: {required: true}
+  L_mkt: {required: true}
+  L_tilt: {required: true}

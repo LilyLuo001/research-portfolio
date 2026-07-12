@@ -1,0 +1,61 @@
+# REFR-R0-collide — channel-B citation sweep + Marta–Riva priority verification
+# (manual §R0). Union re-run of high-value items on Gemini grounding is the
+# separate node REFR-R0-collide-B.
+#
+# PARKED at creation (2026-07-12): worker is kimi, which is BENCHED for
+# retrieval batches (Wave-0 decision, ops/decisions.md). Un-park by deleting
+# `manual: true` after either the bench lifts (decision due at 2026-08-01
+# re-arm) or you re-route: gemini_free is legal here ONLY if the B-node is
+# re-routed off google first (channel pair must stay cross-family), else run
+# this channel in the Anthropic lane like P1-T0-crash channel A.
+manual: true
+worker: kimi
+web_search: true
+est_cost: 3.0
+items:
+  - id: verify-channel-b
+    prompt: |
+      【粘贴 docs/Refraction_执行手册_v1_0.md §0.3 C0-R】
+      任务(R0): 逐条核验以下文献条目的 ①存在性 ②当前发表状态(WP/在审/已发表,
+      期刊卷期) ③可用 URL ④摘要与本项目研究问题的重叠度(高/中/低+引用式理由≤25词):
+      1. Andersen, Thyrsgaard, Todorov "Recalcitrant Betas" Quantitative Economics 12 (2021), doi:10.3982/qe1570
+      2. Bodilsen, Eriksen, Grønborg, Journal of Banking & Finance (2021), doi:10.1016/j.jbankfin.2021.106163
+      3. Brogaard, Heath, Huang "ETF Sampling and Index Arbitrage" JFQA (2025), doi:10.1017/s0022109025102378
+      4. Greenwood, Thesmar "Stock Price Fragility" JFE 102 (2011)
+      5. Dannhauser, Hoseinzade, RFS (2021)
+      6. Todorov, Review of Finance (2023)
+      7. Chen, Jiang, Financial Review (2024)
+      8. Staer (2017)
+      9. Liao, Coakley, Kellard, IRFA (2022)
+      10. Barberis, Shleifer, Wurgler "Comovement" JFE 75 (2005)
+      11. Boyer "Style-Related Comovement" JF (2011)
+      硬性规则: 无一手 URL → UNKNOWN + 已尝试检索路径; 禁止凭记忆补书目字段;
+      来源冲突两个都列。
+  - id: marta-riva-priority
+    prompt: |
+      【粘贴 docs/Refraction_执行手册_v1_0.md §0.3 C0-R】
+      特别任务(最高优先): Marta & Riva "Do ETFs Increase the Comovements of
+      Their Underlying Assets? Evidence from a Switch in ETF Replication
+      Technique" (SSRN 4079302) —— 检索其最新版本: 是否已发表/更名/扩展?
+      其结果窗口是否已扩展到"条件于公告/事件"的设定? 是否引入任何股票级
+      带符号杠杆? 逐项给 URL。该来源 ALERT 阈值 40%。
+  - id: collision-searches
+    prompt: |
+      【粘贴 docs/Refraction_执行手册_v1_0.md §0.3 C0-R】
+      三个碰撞检索(近 24 个月): ①mutual fund ETF conversion comovement
+      ②ETF basket macro announcement cross-section ③passive ownership
+      announcement day beta pricing。命中疑似占坑文献逐篇输出 [标题, 作者,
+      状态, 与计划哪个假说编号撞车, 引用式理由, URL]。
+      末尾输出"positioning 影响评估": 哪些发现要求修改计划 §1 边界表或 §10。
+# Known-answer fence — facts house-verified in this repo (P1 collision sweep;
+# Plan v2.1 Appendix A). Distinct from P1-T0-monitor's fence (6c-11 / 2025-12)
+# so the two fences fail independently.
+sentinels:
+  - id: S1
+    # source: p1/t0_collision_sweep_channelA.md (verified 2026-07-09)
+    prompt: "In which year and month did the Federal Reserve publish the FEDS Note 'Implications of Growth in ETFs: Evidence from Mutual Fund to ETF Conversions'? Reply YYYY-MM only."
+    expect: "2025-11"
+  - id: S2
+    # source: docs/基金转换实验_博士研究计划.md §2 (house-verified)
+    prompt: "On what date did DFA's first mutual-fund-to-ETF conversion wave take effect (the ~$30B single-day anchor wave)? Reply YYYY-MM-DD only."
+    expect: "2021-06-11"
