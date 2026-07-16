@@ -82,7 +82,7 @@ PRICES = {
     "kimi":       (12.0, 12.0),
     "glm":        (0.1, 0.1),
     "qwen":       (0.8, 2.0),
-    "gemini_free":(0.0, 0.0),   # free tier
+    "gemini_free":(2.2, 18.0),  # PAID key since 2026-07-17: 2.5-flash ash.30/\.50 per 1M x ~7.2 CNY
 }
 
 SYSTEM = ("You are a batch worker. Respond with ONLY a single JSON object mapping "

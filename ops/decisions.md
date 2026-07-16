@@ -253,3 +253,13 @@
 # revive via box repair or GEMINI key + l1_driver on SCC. P1-T1-events
 # channel A stands at 35/90 batches (rb_001–035 committed); lease held by C.
 # FLAG for owner review: this note records lane routing only, no gate calls.
+
+# FIX 2026-07-17 (owner-directed, SCC lane): P1 extraction sentinel fence
+# replaced. Old S1/S2 were world-knowledge trivia (S2 = 2025-11 FEDS note,
+# past every no-web worker cutoff) — gemini_free voided both P1-*-B batches
+# on chunk 1 while returning healthy extractions (see *.void.json). New S1/S2
+# are document-grounded (synthetic excerpt, answer known by construction);
+# S3 domain fact kept. Both infra strikes cleared (--clear-fail). Owner keys
+# arrived: gemini is a PAID key — models.py gemini_free price 0->real 2.5-flash
+# so the ledger logs real spend. Owner-approved run order: channel A (deepseek)
+# first, then channel B (gemini), P1 tasks only.
