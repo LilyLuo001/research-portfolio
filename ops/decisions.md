@@ -240,3 +240,16 @@
 # harvester refusing to start, yet p1/edgar_filings/manifest.csv is committed
 # (547c577) — owner presumably ran it by hand; confirm and, if so, set
 # EDGAR_CONTACT anyway so the next payload doesn't re-block.
+
+# ROUTED 2026-07-16 (owner-directed in-session, seat-C lane): a new
+# Anthropic-family execution lane is available — Opus 4.8 sessions on the
+# owner's BU SCC. Frontier tier stays on spec/audit/gates only (rule 5).
+# Prompt pack + structural workplan: ops/briefs/opus/ (P1-T1-events-A finish
+# w/ handoff in p1/t1_channelA_wip/handoff/, P1-T13-ant-A, P1-T1-arb
+# [blocked], REFR-R0-collide-A re-route, REFR-R1a, REFR-R1b [needs owner
+# USMPD heads], DAX-W1-memo, DAX-W2-data). Constraint enforced in the pack:
+# channel-B tasks (P1-T1-events-B, P1-T13-ant-B, REFR-R0-collide-B) must NOT
+# run on this lane — they stay gemini_free (cross-vendor, meta-rule 2);
+# revive via box repair or GEMINI key + l1_driver on SCC. P1-T1-events
+# channel A stands at 35/90 batches (rb_001–035 committed); lease held by C.
+# FLAG for owner review: this note records lane routing only, no gate calls.
