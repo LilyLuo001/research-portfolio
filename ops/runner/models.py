@@ -157,7 +157,18 @@ def _post_json(url, key, payload, extra_headers=None):
         headers.update(extra_headers)
     delay = RETRY_BASE_DELAY
     for attempt in range(MAX_RETRIES + 1):
-        r = requests.post(url, headers=headers, json=payload, timeout=TIMEOUT)
+        try:
+            r = requests.post(url, headers=headers, json=payload, timeout=TIMEOUT)
+        except (requests.exceptions.ChunkedEncodingError,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout):
+            # transport drops are the same transient class as 5xx blips; one
+            # un-retried drop at chunk 155/237 discarded a whole batch (2026-07-17)
+            if attempt == MAX_RETRIES:
+                raise
+            time.sleep(min(delay, 120))
+            delay *= 2
+            continue
         exhausted = (r.status_code == 429
                      and any(m in (r.text or "") for m in NO_RETRY_MARKERS))
         if r.status_code not in RETRY_STATUSES or exhausted or attempt == MAX_RETRIES:
