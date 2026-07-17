@@ -85,6 +85,32 @@ transparent conversion approved 2025-06-27, squarely in T13 scope.
 synthetic excerpt (Ridgeline). It certifies liveness/format per chunk, not
 extraction accuracy. §3–5 above are all fence-invisible error classes.
 
+## ADDENDUM 2026-07-17 — channel-B mop-up verified (main @ 7ba56d9)
+
+Coverage now COMPLETE: T1-B 1418/1418 parseable, T13-B 414/414; the two
+mangled accession keys are gone. Mop-up ran in 3 fenced rounds (61+5+1),
+document-grounded sentinels passed every round.
+
+Mop-up answer quality is far better than the original B run: ticker-field
+pollution 0/26 event rows (was 146 run-wide); only 3 non-ISO dates, two of
+which are month-only board dates that correctly normalize to NA. T13 mop-up
+agrees with channel A on disclosure_regime for all 13 IDs (basket-type
+differs only in casing/wording — normalize at arb).
+
+Verdict disagreements among the 67 re-run T1 IDs: 13 (A no_event/B event: 8;
+A event/B no_event: 5). Five are adjudicable against the reference channel:
+B wrong 3 (two MF-MF false positives — same bias class as §3 — and one
+missed Fidelity Merrimack event), A wrong 1 (missed Matrix Advisors Value
+Fund→ETF conversion, board 2024-11-01), 1 covered. The remaining 8
+(MainStay Epoch ×3, Transamerica ×2, John Hancock Capital Appreciation,
+Oberweis International Opportunities, Catalyst Small-Cap Insider Buying,
+PWAY) fall in reference batches 44+ — flag them as priority items for arb
+or the human gate.
+
+Normalized copies re-generated on the completed B: p1/t1_normalized/B.json
+now 1418 answers, 974 field normalizations. §3 (correlated false positives)
+and §5 (multi-fund undercount) remain OPEN — unchanged by the mop-up.
+
 ## Required mitigations before/at T1-arb
 1. B mop-up run: 60+7 T1 IDs, 13 T13 IDs.
 2. Arb pipeline: join strictly on spec ID; normalize dates to ISO (else NA);
