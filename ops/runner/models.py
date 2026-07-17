@@ -245,7 +245,10 @@ def _post_gemini(url, key, prompt, web_search=False):
     reproduced verbatim in every HTTPError message and ends up in terminal
     scrollback, night reports, and pasted logs."""
     endpoint = f"{url}/{MODELS['gemini_free']}:generateContent"
-    payload = {"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}]}
+    payload = {"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}],
+               # thinking off: batch extraction reads embedded text; default
+               # dynamic thinking ran ~97s/chunk live 2026-07-17 (8h/batch)
+               "generationConfig": {"thinkingConfig": {"thinkingBudget": 0}}}
     if web_search:
         payload["tools"] = [{"google_search": {}}]
     d = _post_json(endpoint, None, payload, extra_headers={"x-goog-api-key": key})
