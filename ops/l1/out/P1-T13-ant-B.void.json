@@ -1,0 +1,44 @@
+{
+  "worker": "gemini_free",
+  "bad_sentinels": [
+    "S1",
+    "S2"
+  ],
+  "parsed_answers": {
+    "0001193125-25-153842": {
+      "disclosure_regime": "semi_transparent",
+      "proxy_basket_type": "NA"
+    },
+    "0001193125-25-153841": {
+      "disclosure_regime": "semi_transparent",
+      "proxy_basket_type": "NA"
+    },
+    "0001398344-21-004385": {
+      "disclosure_regime": "semi_transparent",
+      "proxy_basket_type": "Portfolio Reference Basket"
+    },
+    "0001398344-21-006440": {
+      "disclosure_regime": "semi_transparent",
+      "proxy_basket_type": "Portfolio Reference Basket"
+    },
+    "0001398344-22-007007": {
+      "disclosure_regime": "semi_transparent",
+      "proxy_basket_type": "Portfolio Reference Basket"
+    },
+    "0001398344-23-006985": {
+      "disclosure_regime": "semi_transparent",
+      "proxy_basket_type": "Portfolio Reference Basket"
+    },
+    "S1": "Vanguard",
+    "S2": "2022-09",
+    "S3": "2021-06"
+  },
+  "finish_reason": "stop",
+  "chunk": 1,
+  "n_chunks": 69,
+  "raw_text": "```json\n{\n  \"0001193125-25-153842\": {\n    \"disclosure_regime\": \"semi_transparent\",\n    \"proxy_basket_type\": \"NA\"\n  },\n  \"0001193125-25-153841\": {\n    \"disclosure_regime\": \"semi_transparent\",\n    \"proxy_basket_type\": \"NA\"\n  },\n  \"0001398344-21-004385\": {\n    \"disclosure_regime\": \"semi_transparent\",\n    \"proxy_basket_type\": \"Portfolio Reference Basket\"\n  },\n  \"0001398344-21-006440\": {\n    \"disclosure_regime\": \"semi_transparent\",\n    \"proxy_basket_type\": \"Portfolio Reference Basket\"\n  },\n  \"0001398344-22-007007\": {\n    \"disclosure_regime\": \"semi_transparent\",\n    \"proxy_basket_type\": \"Portfolio Reference Basket\"\n  },\n  \"0001398344-23-006985\": {\n    \"disclosure_regime\": \"semi_transparent\",\n    \"proxy_basket_type\": \"Portfolio Reference Basket\"\n  },\n  \"S1\": \"Vanguard\",\n  \"S2\": \"2022-09\",\n  \"S3\": \"2021-06\"\n}\n```",
+  "usage": {
+    "prompt_tokens": 5380,
+    "completion_tokens": 374
+  }
+}
