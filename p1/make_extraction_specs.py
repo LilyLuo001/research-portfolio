@@ -46,18 +46,20 @@ T13_RULES = """【规则 (修订4 T13, schema 同 T1 增两列): disclosure_regi
 semi_transparent), proxy_basket_type。逐字段定位符; NA 不推断; 不含相关事件 →
 {"no_event": true}。范围: 2019-11 以来上市或转换的半透明主动 ETF。】"""
 
-SENTINELS = """# Known-answer fence: repo-verified facts (docs/P1_修订补丁_v1_1.md 修订3;
-# ops/l1/P1-T0-crash-B.yaml owner-armed fence; p1/events_from_note.csv).
+SENTINELS = """# Known-answer fence. S1/S2 are document-grounded (synthetic excerpt,
+# answer known by construction): both no-web workers failed the old trivia fence
+# 2026-07-17 (S2 asked about a 2025-11 publication past model cutoffs).
+# S3 keeps one repo-verified domain fact (docs/P1_修订补丁_v1_1.md 修订3).
 sentinels:
   - id: S1
-    prompt: "Which fund family completed the industry's largest mutual-fund-to-ETF conversion in June 2021? Reply with the family name only, one word."
-    expect: "Dimensional"
+    prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' What is the MUTUAL FUND ticker in this excerpt? Reply with the ticker only."
+    expect: "RMCGX"
   - id: S2
-    prompt: "In which year and month was the Saglam-Tuzun FEDS Note on mutual-fund-to-ETF conversions published? Reply with YYYY-MM only, nothing else."
-    expect: "2025-11"
+    prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' On what date is the conversion expected to become effective? Reply with YYYY-MM-DD only."
+    expect: "2022-04-22"
   - id: S3
-    prompt: "In which year and month did the Dimensional anchor-wave mutual-fund-to-ETF conversions become effective? Reply with YYYY-MM only, nothing else."
-    expect: "2021-06"
+    prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' What is the name of the trust in this excerpt? Reply with the trust name only."
+    expect: "Ridgeline Funds Trust"
 """
 
 

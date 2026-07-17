@@ -82,7 +82,7 @@ PRICES = {
     "kimi":       (12.0, 12.0),
     "glm":        (0.1, 0.1),
     "qwen":       (0.8, 2.0),
-    "gemini_free":(0.0, 0.0),   # free tier
+    "gemini_free":(2.2, 18.0),  # PAID key since 2026-07-17: 2.5-flash ash.30/\.50 per 1M x ~7.2 CNY
 }
 
 SYSTEM = ("You are a batch worker. Respond with ONLY a single JSON object mapping "
@@ -157,7 +157,18 @@ def _post_json(url, key, payload, extra_headers=None):
         headers.update(extra_headers)
     delay = RETRY_BASE_DELAY
     for attempt in range(MAX_RETRIES + 1):
-        r = requests.post(url, headers=headers, json=payload, timeout=TIMEOUT)
+        try:
+            r = requests.post(url, headers=headers, json=payload, timeout=TIMEOUT)
+        except (requests.exceptions.ChunkedEncodingError,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.Timeout):
+            # transport drops are the same transient class as 5xx blips; one
+            # un-retried drop at chunk 155/237 discarded a whole batch (2026-07-17)
+            if attempt == MAX_RETRIES:
+                raise
+            time.sleep(min(delay, 120))
+            delay *= 2
+            continue
         exhausted = (r.status_code == 429
                      and any(m in (r.text or "") for m in NO_RETRY_MARKERS))
         if r.status_code not in RETRY_STATUSES or exhausted or attempt == MAX_RETRIES:
@@ -234,7 +245,10 @@ def _post_gemini(url, key, prompt, web_search=False):
     reproduced verbatim in every HTTPError message and ends up in terminal
     scrollback, night reports, and pasted logs."""
     endpoint = f"{url}/{MODELS['gemini_free']}:generateContent"
-    payload = {"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}]}
+    payload = {"contents": [{"parts": [{"text": SYSTEM + "\n\n" + prompt}]}],
+               # thinking off: batch extraction reads embedded text; default
+               # dynamic thinking ran ~97s/chunk live 2026-07-17 (8h/batch)
+               "generationConfig": {"thinkingConfig": {"thinkingBudget": 0}}}
     if web_search:
         payload["tools"] = [{"google_search": {}}]
     d = _post_json(endpoint, None, payload, extra_headers={"x-goog-api-key": key})

@@ -1,0 +1,74 @@
+{
+  "worker": "gemini_free",
+  "bad_sentinels": [
+    "S1",
+    "S2"
+  ],
+  "parsed_answers": {
+    "0001193125-26-132001": {
+      "NEED_HUMAN": true,
+      "contradictory_statements": [
+        "This conversion is anticipated to occur in or around the fourth quarter of 2026.",
+        "The reorganization is currently expected to occur on or about September 25, 2026."
+      ]
+    },
+    "0001193125-26-131983": {
+      "NEED_HUMAN": true,
+      "contradictory_statements": [
+        "This conversion is anticipated to occur in or around the fourth quarter of 2026.",
+        "The reorganization is currently expected to occur on or about September 25, 2026."
+      ]
+    },
+    "0001655589-26-000781": {
+      "NEED_HUMAN": true,
+      "contradictory_statements": [
+        "This conversion is anticipated to occur in or around the fourth quarter of 2026.",
+        "The reorganization is currently expected to occur on or about September 25, 2026."
+      ]
+    },
+    "0001655589-26-000782": {
+      "NEED_HUMAN": true,
+      "contradictory_statements": [
+        "This conversion is anticipated to occur in or around the fourth quarter of 2026.",
+        "The reorganization is currently expected to occur on or about September 25, 2026."
+      ]
+    },
+    "0001193125-26-129258": {
+      "fund_name": "Cohen & Steers Future of Energy Fund, Inc.",
+      "family": "Cohen & Steers",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "March 10, 2026",
+      "effective_date": "NA",
+      "asset_class": "other",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001193125-26-129258",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1580956/000119312526129258/d100357d497k.htm",
+      "confidence": "M"
+    },
+    "0001133228-25-000086": {
+      "fund_name": "NA",
+      "family": "Fidelity Merrimack Street Trust",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "January 3, 2025",
+      "effective_date": "April 4, 2025",
+      "asset_class": "NA",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001133228-25-000086",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1562565/000113322825000086/fmst-efp13398_n14.htm",
+      "confidence": "M"
+    },
+    "S1": "Vanguard",
+    "S2": "2021-10",
+    "S3": "2021-06"
+  },
+  "finish_reason": "stop",
+  "chunk": 1,
+  "n_chunks": 237,
+  "raw_text": "{\"0001193125-26-132001\": {\"NEED_HUMAN\": true, \"contradictory_statements\": [\"This conversion is anticipated to occur in or around the fourth quarter of 2026.\", \"The reorganization is currently expected to occur on or about September 25, 2026.\"]}, \"0001193125-26-131983\": {\"NEED_HUMAN\": true, \"contradictory_statements\": [\"This conversion is anticipated to occur in or around the fourth quarter of 2026.\", \"The reorganization is currently expected to occur on or about September 25, 2026.\"]}, \"0001655589-26-000781\": {\"NEED_HUMAN\": true, \"contradictory_statements\": [\"This conversion is anticipated to occur in or around the fourth quarter of 2026.\", \"The reorganization is currently expected to occur on or about September 25, 2026.\"]}, \"0001655589-26-000782\": {\"NEED_HUMAN\": true, \"contradictory_statements\": [\"This conversion is anticipated to occur in or around the fourth quarter of 2026.\", \"The reorganization is currently expected to occur on or about September 25, 2026.\"]}, \"0001193125-26-129258\": {\"fund_name\": \"Cohen & Steers Future of Energy Fund, Inc.\", \"family\": \"Cohen & Steers\", \"mutual_fund_ticker\": \"NA\", \"etf_ticker\": \"NA\", \"announce_date\": \"March 10, 2026\", \"effective_date\": \"NA\", \"asset_class\": \"other\", \"AUM_at_conversion_USD\": \"NA\", \"source_accession\": \"0001193125-26-129258\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1580956/000119312526129258/d100357d497k.htm\", \"confidence\": \"M\"}, \"0001133228-25-000086\": {\"fund_name\": \"NA\", \"family\": \"Fidelity Merrimack Street Trust\", \"mutual_fund_ticker\": \"NA\", \"etf_ticker\": \"NA\", \"announce_date\": \"January 3, 2025\", \"effective_date\": \"April 4, 2025\", \"asset_class\": \"NA\", \"AUM_at_conversion_USD\": \"NA\", \"source_accession\": \"0001133228-25-000086\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1562565/000113322825000086/fmst-efp13398_n14.htm\", \"confidence\": \"M\"}, \"S1\": \"Vanguard\", \"S2\": \"2021-10\", \"S3\": \"2021-06\"}",
+  "usage": {
+    "prompt_tokens": 12768,
+    "completion_tokens": 777
+  }
+}

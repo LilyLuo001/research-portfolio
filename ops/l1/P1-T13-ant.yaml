@@ -3737,11 +3737,11 @@ items:
 # ops/l1/P1-T0-crash-B.yaml owner-armed fence; p1/events_from_note.csv).
 sentinels:
   - id: S1
-    prompt: "Which fund family completed the industry's largest mutual-fund-to-ETF conversion in June 2021? Reply with the family name only, one word."
-    expect: "Dimensional"
+    prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' What is the MUTUAL FUND ticker in this excerpt? Reply with the ticker only."
+    expect: "RMCGX"
   - id: S2
-    prompt: "In which year and month was the Saglam-Tuzun FEDS Note on mutual-fund-to-ETF conversions published? Reply with YYYY-MM only, nothing else."
-    expect: "2025-11"
+    prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' On what date is the conversion expected to become effective? Reply with YYYY-MM-DD only."
+    expect: "2022-04-22"
   - id: S3
-    prompt: "In which year and month did the Dimensional anchor-wave mutual-fund-to-ETF conversions become effective? Reply with YYYY-MM only, nothing else."
-    expect: "2021-06"
+    prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' What is the name of the trust in this excerpt? Reply with the trust name only."
+    expect: "Ridgeline Funds Trust"
