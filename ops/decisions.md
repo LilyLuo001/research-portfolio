@@ -263,3 +263,18 @@
 # arrived: gemini is a PAID key — models.py gemini_free price 0->real 2.5-flash
 # so the ledger logs real spend. Owner-approved run order: channel A (deepseek)
 # first, then channel B (gemini), P1 tasks only.
+
+ROUTED 2026-07-18 (owner-directed): P1 channel B vendor switched gemini_free →
+qwen (Qwen Max/qwen3.x-plus on DashScope, alibaba family) for stability + cost;
+gemini was pausing mid-run. Cross-vendor independence vs channel A (deepseek)
+preserved (alibaba ≠ deepseek). models.py: qwen id env-overridable via
+QWEN_MODEL (default qwen-max), price bumped to Max tier; queue + both B specs +
+make_extraction_specs.py updated. Owner pins the exact QWEN_MODEL in ops/box/.env.
+
+SCOPE CHANGE same date: deepseek v2-A accepted as PRIMARY T1 channel (1418/1418,
+97.2% agreement with the seat-C reference channel on its 45% overlap). Full
+independent channel B is SUPERSEDED by TARGETED arbitration: qwen re-runs only
+the contested/self-risky subset (ops/l1/P1-T1-events-arb-qwen.yaml, 140 items;
+rationale in p1/t1_flagged_for_arb.md). The gemini v1/v2 partial outputs remain
+archived for the record. T1-arb adjudicates deepseek-vs-qwen-vs-reference on the
+flagged set; un-flagged deepseek verdicts stand.

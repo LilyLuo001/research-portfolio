@@ -15,7 +15,8 @@ shape. `dispatch()` returns (ok, {"text", "usage"}); on any error it returns
 pure-function tests) import fine on a machine without it.
 
 Env keys: DEEPSEEK_API_KEY, KIMI_API_KEY, GLM_API_KEY, QWEN_API_KEY,
-GEMINI_API_KEY (Gemini free tier = ¥0 cross-vendor channel B).
+GEMINI_API_KEY. Channel B lane = qwen (DashScope, alibaba family) since
+2026-07-18; gemini_free retained for grounded/web tasks and history.
 
 Kimi `$web_search`: implemented as the Moonshot builtin-function round-trip —
 declare {"type": "builtin_function", "function": {"name": "$web_search"}}; when
@@ -59,7 +60,11 @@ MODELS = {
     # ("Not found the model kimi-latest or Permission denied", 2026-07-09).
     "kimi":       os.getenv("KIMI_MODEL", "kimi-latest"),
     "glm":        "glm-4-flash",
-    "qwen":       "qwen-plus",
+    # Channel B lane since 2026-07-18 (owner decision: gemini → Qwen-2.5-Max on
+    # DashScope for stability/cost). PIN QWEN_MODEL in ops/box/.env after
+    # verifying which Max-tier id YOUR key can call (dated snapshots exist);
+    # "qwen-max" is DashScope's rolling Max alias.
+    "qwen":       os.getenv("QWEN_MODEL", "qwen-max"),
     "gemini_free":"gemini-2.5-flash",
 }
 
@@ -81,7 +86,7 @@ PRICES = {
     "deepseek_r": (1.0, 8.0),
     "kimi":       (12.0, 12.0),
     "glm":        (0.1, 0.1),
-    "qwen":       (0.8, 2.0),
+    "qwen":       (2.4, 9.6),   # Max tier (was qwen-plus 0.8/2.0) — VERIFY on DashScope pricing page
     "gemini_free":(2.2, 18.0),  # PAID key since 2026-07-17: 2.5-flash ash.30/\.50 per 1M x ~7.2 CNY
 }
 

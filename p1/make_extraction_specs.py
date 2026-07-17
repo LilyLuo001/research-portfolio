@@ -214,12 +214,12 @@ def main():
     plans = [
         ("P1-T1-events", "deepseek", T1_RULES, t1,
          "Channel A. kimi benched -> deepseek; B channel is gemini (google) so cross-vendor holds."),
-        ("P1-T1-events-B", "gemini_free", T1_RULES, t1,
-         "Channel B (channel_of P1-T1-events), google family."),
+        ("P1-T1-events-B", "qwen", T1_RULES, t1,
+         "Channel B (channel_of P1-T1-events), alibaba family (qwen; was google 2026-07-18)."),
         ("P1-T13-ant", "deepseek", T13_RULES, t13,
          "Channel A (ANT/semi-transparent subset)."),
-        ("P1-T13-ant-B", "gemini_free", T13_RULES, t13,
-         "Channel B, google family."),
+        ("P1-T13-ant-B", "qwen", T13_RULES, t13,
+         "Channel B, alibaba family (qwen; was google 2026-07-18)."),
     ]
     for task_id, worker, rules, rows, note in plans:
         if not rows:

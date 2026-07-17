@@ -478,7 +478,7 @@ tasks:
   - id: P1-T1-events-B
     project: p1
     owner_account: null
-    worker: gemini_free
+    worker: qwen
     depends_on: [P1-GATE-t2a]
     inputs: []
     output_contract: null
@@ -523,7 +523,7 @@ tasks:
   - id: P1-T13-ant-B
     project: p1
     owner_account: null
-    worker: gemini_free
+    worker: qwen
     depends_on: [P1-GATE-t2a]
     inputs: []
     output_contract: null
