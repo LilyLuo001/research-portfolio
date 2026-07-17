@@ -1,0 +1,88 @@
+{
+  "worker": "gemini_free",
+  "bad_sentinels": [
+    "S1",
+    "S2"
+  ],
+  "parsed_answers": {
+    "0001133228-25-000086": {
+      "no_event": true
+    },
+    "0001193125-23-212089": {
+      "fund_name": "Hartford Quality Value Fund",
+      "family": "Hartford Funds",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "August 11, 2023",
+      "effective_date": "October 13, 2023",
+      "asset_class": "equity_US",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001193125-23-212089",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1501825/000119312523212089/d526971d497.htm",
+      "confidence": "H"
+    },
+    "0001193125-25-250212": {
+      "fund_name": "Columbia Integrated Large Cap Value Fund",
+      "family": "Columbia Threadneedle",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "October 22, 2025",
+      "effective_date": "March 16, 2026",
+      "asset_class": "equity_US",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001193125-25-250212",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1551950/000119312525250212/d96007d497.htm",
+      "confidence": "H"
+    },
+    "0001193125-25-091504": {
+      "fund_name": "BlackRock GA Disciplined Volatility Equity Fund",
+      "family": "BlackRock",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "April 23, 2025",
+      "effective_date": "NA",
+      "asset_class": "equity_US",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001193125-25-091504",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1761055/000119312525091504/d907028d497.htm",
+      "confidence": "M"
+    },
+    "0001193125-25-211485": {
+      "fund_name": "Columbia Integrated Large Cap Value Fund",
+      "family": "Columbia Threadneedle",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "October 22, 2025",
+      "effective_date": "NA",
+      "asset_class": "equity_US",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001193125-25-211485",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1551950/000119312525211485/d943977dn14.htm",
+      "confidence": "M"
+    },
+    "0001193125-22-257509": {
+      "fund_name": "Goldman Sachs Defensive Equity Fund",
+      "family": "Goldman Sachs",
+      "mutual_fund_ticker": "NA",
+      "etf_ticker": "NA",
+      "announce_date": "October 4, 2022",
+      "effective_date": "NA",
+      "asset_class": "equity_US",
+      "AUM_at_conversion_USD": "NA",
+      "source_accession": "0001193125-22-257509",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1479026/000119312522257509/d396592dn14.htm",
+      "confidence": "M"
+    },
+    "S1": "Vanguard",
+    "S2": "2023-08",
+    "S3": "2021-06"
+  },
+  "finish_reason": "stop",
+  "chunk": 1,
+  "n_chunks": 12,
+  "raw_text": "```json\n{\n  \"0001133228-25-000086\": {\n    \"no_event\": true\n  },\n  \"0001193125-23-212089\": {\n    \"fund_name\": \"Hartford Quality Value Fund\",\n    \"family\": \"Hartford Funds\",\n    \"mutual_fund_ticker\": \"NA\",\n    \"etf_ticker\": \"NA\",\n    \"announce_date\": \"August 11, 2023\",\n    \"effective_date\": \"October 13, 2023\",\n    \"asset_class\": \"equity_US\",\n    \"AUM_at_conversion_USD\": \"NA\",\n    \"source_accession\": \"0001193125-23-212089\",\n    \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1501825/000119312523212089/d526971d497.htm\",\n    \"confidence\": \"H\"\n  },\n  \"0001193125-25-250212\": {\n    \"fund_name\": \"Columbia Integrated Large Cap Value Fund\",\n    \"family\": \"Columbia Threadneedle\",\n    \"mutual_fund_ticker\": \"NA\",\n    \"etf_ticker\": \"NA\",\n    \"announce_date\": \"October 22, 2025\",\n    \"effective_date\": \"March 16, 2026\",\n    \"asset_class\": \"equity_US\",\n    \"AUM_at_conversion_USD\": \"NA\",\n    \"source_accession\": \"0001193125-25-250212\",\n    \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1551950/000119312525250212/d96007d497.htm\",\n    \"confidence\": \"H\"\n  },\n  \"0001193125-25-091504\": {\n    \"fund_name\": \"BlackRock GA Disciplined Volatility Equity Fund\",\n    \"family\": \"BlackRock\",\n    \"mutual_fund_ticker\": \"NA\",\n    \"etf_ticker\": \"NA\",\n    \"announce_date\": \"April 23, 2025\",\n    \"effective_date\": \"NA\",\n    \"asset_class\": \"equity_US\",\n    \"AUM_at_conversion_USD\": \"NA\",\n    \"source_accession\": \"0001193125-25-091504\",\n    \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1761055/000119312525091504/d907028d497.htm\",\n    \"confidence\": \"M\"\n  },\n  \"0001193125-25-211485\": {\n    \"fund_name\": \"Columbia Integrated Large Cap Value Fund\",\n    \"family\": \"Columbia Threadneedle\",\n    \"mutual_fund_ticker\": \"NA\",\n    \"etf_ticker\": \"NA\",\n    \"announce_date\": \"October 22, 2025\",\n    \"effective_date\": \"NA\",\n    \"asset_class\": \"equity_US\",\n    \"AUM_at_conversion_USD\": \"NA\",\n    \"source_accession\": \"0001193125-25-211485\",\n    \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1551950/000119312525211485/d943977dn14.htm\",\n    \"confidence\": \"M\"\n  },\n  \"0001193125-22-257509\": {\n    \"fund_name\": \"Goldman Sachs Defensive Equity Fund\",\n    \"family\": \"Goldman Sachs\",\n    \"mutual_fund_ticker\": \"NA\",\n    \"etf_ticker\": \"NA\",\n    \"announce_date\": \"October 4, 2022\",\n    \"effective_date\": \"NA\",\n    \"asset_class\": \"equity_US\",\n    \"AUM_at_conversion_USD\": \"NA\",\n    \"source_accession\": \"0001193125-22-257509\",\n    \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1479026/000119312522257509/d396592dn14.htm\",\n    \"confidence\": \"M\"\n  },\n  \"S1\": \"Vanguard\",\n  \"S2\": \"2023-08\",\n  \"S3\": \"2021-06\"\n}\n```",
+  "usage": {
+    "prompt_tokens": 22832,
+    "completion_tokens": 1269
+  }
+}

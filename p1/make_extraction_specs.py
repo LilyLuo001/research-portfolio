@@ -34,13 +34,65 @@ KEYWORDS = re.compile(r"convert|conversion|exchange-traded|semi-transparent|"
 WINDOW, MAX_WINDOWS, HEAD = 1500, 4, 1200
 TAG = re.compile(r"<[^>]+>")
 
-T1_RULES = """【规则 (manual §T1 verbatim): 每个字段必须能在本文件节选中找到原文依据;
-抽不到的字段填 NA, 不许推断; announce_date = 首次披露转换意向日期,
-effective_date = 声明的生效日, 缺一降 confidence; 不得用记忆补充其他事件;
-输出一行 JSON 对象, 字段: fund_name, family, mutual_fund_ticker, etf_ticker,
-announce_date, effective_date, asset_class(equity_US/equity_intl/fixed_income/other),
-AUM_at_conversion_USD, source_accession, source_url, confidence(H/M/L)。
-若节选不含转换事件 → {"no_event": true} 。同一基金日期矛盾 → NEED_HUMAN 并引两处原文。】"""
+T1_RULES = """【规则 v2 (manual §T1 + QC修订). Follow the STEPS in order for THIS filing's excerpt.
+
+STEP 1 — Identify every reorganization/conversion described. For each one name:
+  TARGET = the entity whose shareholders receive new shares (acquired/converted fund)
+  ACQUIRER = the entity that survives (acquiring/successor fund)
+STEP 2 — Classify both, quoting the excerpt:
+  TARGET must be an OPEN-END MUTUAL FUND (multi-class shares, bought/redeemed at NAV).
+  ACQUIRER must be an ETF (exchange-traded fund / "will operate as an exchange-traded
+  fund" / listed on an exchange).
+STEP 3 — Verdict:
+  EVENT only if TARGET=open-end mutual fund AND ACQUIRER=ETF. This includes:
+   (a) shell-ETF conversions and cross-trust reorganizations into a new ETF;
+   (b) acquisition of a mutual fund by an EXISTING ETF;
+   (c) RETROSPECTIVE statements of completed conversions ("the ETF is the successor
+       to the X Fund as a result of a reorganization on <date>") — record the event
+       with effective_date = the stated completion date.
+  NOT events — output {"no_event": true, "reason": "<code>"} with code:
+   MF_TO_MF   mutual fund merged into another MUTUAL FUND (acquirer not an ETF)
+   ETF_TO_ETF target is itself an ETF (trust adoption/re-domiciliation/rebrand)
+   CEF        target is a closed-end fund (incl. CEF→ETF: code CEF, add "flag":"CEF_to_ETF")
+   INTERVAL   acquirer is an interval fund or other non-ETF structure
+   SHARECLASS share-class conversion/aging (e.g. Class C→A), fund rename, no reorganization
+   MENTION    ETFs appear only as portfolio holdings/risk language/ordinary prospectus text
+  If the excerpt truly shows no reorganization at all, use code MENTION.
+
+OUTPUT — one JSON value per item id. Copy the item id EXACTLY as printed after 文件:
+(character-for-character; never re-type digits). Value is a PLAIN JSON object (never a
+quoted/escaped string):
+  {"events": [ {one object PER TARGET FUND named in the filing — enumerate ALL rows of
+   the Target/Acquiring fund table, a 4-fund filing yields 4 objects}, ... ]}
+  or the no_event object above.
+Each event object:
+  fund_name        target mutual fund's full name (from excerpt)
+  family           fund family/trust (from excerpt)
+  mutual_fund_ticker / etf_ticker
+                   a single 2-6 char UPPERCASE symbol from the excerpt, else "NA".
+                   NEVER a fund name. Multiple class tickers → "NA" and list them in evidence.
+  announce_date    YYYY-MM-DD only. Board-approval date if stated; else the document's own
+                   date; else the filed date. Vague ("May 2020","Q4 2026") → "NA".
+  date_basis       "board" | "document" | "filed" | "NA"
+  effective_date   YYYY-MM-DD only; the stated closing/completion date. Vague → "NA".
+  asset_class      equity_US / equity_intl / fixed_income / other — ONLY if locatable in the
+                   excerpt (bond/muni/high-yield/MBS→fixed_income; International/EM/Asia→
+                   equity_intl; explicit US equity→equity_US; managed-futures/multi-asset/
+                   long-short→other). Name alone insufficient → "NA".
+  AUM_at_conversion_USD  number from excerpt or "NA"
+  source_accession copy from the 文件 line
+  confidence       H = fund identity + (announce or effective) with explicit basis;
+                   M = identity clear, dates partly missing/document-dated;
+                   L = identity inferred from title only
+  evidence         ≤25-word quote fragment supporting the verdict (for events: the words
+                   showing the acquirer is an ETF; for no_event: the words showing why not)
+NEED_HUMAN only when TWO date statements INSIDE THIS ONE EXCERPT contradict for the same
+fund: {"NEED_HUMAN": true, "quotes": ["...", "..."]}. Different filings never contradict.
+Never fill any field from memory — excerpt-locatable or "NA".
+
+SELF-CHECK before emitting (do this, don't print it): every input item id appears exactly
+once in your answer map (count them); every event object quotes ETF-acquirer evidence;
+every date matches ^\\d{4}-\\d{2}-\\d{2}$ or is "NA"; no ticker field contains a space.】"""
 
 T13_RULES = """【规则 (修订4 T13, schema 同 T1 增两列): disclosure_regime(daily_full/
 semi_transparent), proxy_basket_type。逐字段定位符; NA 不推断; 不含相关事件 →

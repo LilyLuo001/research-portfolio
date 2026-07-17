@@ -67,6 +67,9 @@ def _simulate_answers(items, sentinels, corrupt=False):
     return ans
 
 
+CHUNK_FENCE_RETRIES = 2
+
+
 def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False, out=None,
               web_search=False, max_items_per_call=None):
     """Dispatch one sentinel-fenced batch, optionally chunked.
@@ -97,21 +100,30 @@ def run_batch(worker, items, sentinels, est_cost=0.0, live=False, _corrupt=False
     total_cost = 0.0
     for ci, chunk in enumerate(chunks):
         prompt = build_prompt(chunk, sentinels)
-        ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live,
-                                  web_search=web_search)
-        if not ok:
-            return "ERROR", f"{worker}: {res.get('error', 'dispatch failed')}", None
+        for fence_try in range(1 + CHUNK_FENCE_RETRIES):
+            ok, res = models.dispatch(worker, prompt, sentinels=sentinels, dry_run=not live,
+                                      web_search=web_search)
+            if not ok:
+                return "ERROR", f"{worker}: {res.get('error', 'dispatch failed')}", None
 
-        if live:
-            answers = models.parse_answers(res["text"])
-            cost = models.estimate_cost(worker, res.get("usage"))
-            budget.log(worker, cost)  # tokens are billed whether or not the fence passes
-            total_cost += cost
-        else:
-            answers = _simulate_answers(chunk, sentinels, corrupt=_corrupt and ci == 0)
-            cost = 0.0
+            if live:
+                answers = models.parse_answers(res["text"])
+                cost = models.estimate_cost(worker, res.get("usage"))
+                budget.log(worker, cost)  # tokens are billed whether or not the fence passes
+                total_cost += cost
+            else:
+                answers = _simulate_answers(chunk, sentinels, corrupt=_corrupt and ci == 0)
+                cost = 0.0
 
-        passed, bad = models.verify_sentinels(answers, sentinels)
+            passed, bad = models.verify_sentinels(answers, sentinels)
+            if passed or not live:
+                break
+            # One flaky chunk must not void a 200-chunk batch: re-POST it before
+            # giving up (2026-07-17 gemini closed the JSON map one brace early at
+            # chunk 161/237, leaving correct sentinel answers outside the object).
+            print(f"    ~ chunk {ci + 1}/{n_chunks}: sentinels failed {bad} "
+                  f"(try {fence_try + 1}/{1 + CHUNK_FENCE_RETRIES}) — retrying chunk",
+                  flush=True)
         if not passed:
             why = f"sentinels failed {bad}"
             if live and res.get("finish_reason") == "length":

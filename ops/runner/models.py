@@ -50,7 +50,7 @@ ENDPOINTS = {
 
 # model id per worker tier (edit to the vintages you actually provisioned)
 MODELS = {
-    "deepseek":   "deepseek-chat",
+    "deepseek":   "deepseek-v4-pro",
     "deepseek_r": "deepseek-reasoner",
     # PIN KIMI_MODEL in ops/box/.env — run `python ops/runner/models.py --list
     # kimi` (with the key in env) to see which ids YOUR key can use, and pick
@@ -77,7 +77,7 @@ MAX_SEARCH_ROUNDS = int(os.getenv("MAX_SEARCH_ROUNDS", "24"))
 # caps only — VERIFY against each vendor's current pricing and tune freely; they
 # do not need to be exact, just the right order of magnitude.
 PRICES = {
-    "deepseek":   (0.5, 2.0),
+    "deepseek":   (3.13, 6.27),  # v4-pro $0.435/$0.87 per M @7.2 CNY/USD
     "deepseek_r": (1.0, 8.0),
     "kimi":       (12.0, 12.0),
     "glm":        (0.1, 0.1),
@@ -193,6 +193,8 @@ def _post_openai(url, key, model, prompt):
     d = _post_json(url, key,
                    {"model": model, "temperature": _temperature(model),
                     "max_tokens": MAX_OUTPUT_TOKENS,
+                    **({"thinking": {"type": "disabled"}}
+                       if model.startswith("deepseek-v4") else {}),
                     "messages": [{"role": "system", "content": SYSTEM},
                                  {"role": "user", "content": prompt}]})
     choice = d["choices"][0]
@@ -278,16 +280,35 @@ def parse_answers(text):
     if not text:
         return {}
     dec = json.JSONDecoder()
-    best = {}
+    best, best_end = {}, -1
     idx = text.find("{")
     while idx != -1:
         try:
             obj, end = dec.raw_decode(text, idx)
             if isinstance(obj, dict) and len(obj) > len(best):
-                best = obj
+                best, best_end = obj, end
             idx = text.find("{", end)
         except ValueError:
             idx = text.find("{", idx + 1)
+    # Gemini (temp 0, deterministic per chunk) sometimes closes the answer map
+    # one brace early, leaving ', "id": {...}, "S1": ...}' dangling after it —
+    # seen live 2026-07-17 at chunks 50 and 161/237. The dangling tail is
+    # well-formed key/value pairs from the same reply, so re-wrap and merge
+    # them; sentinel VALUES are still fence-verified downstream.
+    if best and best_end != -1:
+        # a reply can close early several times (chunk 148/237 did it 4x), so
+        # keep consuming dangling segments until the tail is exhausted
+        rest = text[best_end:].lstrip()
+        while rest.startswith(","):
+            try:
+                extra, e2 = dec.raw_decode("{" + rest[1:])
+            except ValueError:
+                break
+            if not isinstance(extra, dict):
+                break
+            for k, v in extra.items():
+                best.setdefault(k, v)
+            rest = rest[e2:].lstrip()
     return best
 
 
