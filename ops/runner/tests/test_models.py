@@ -60,7 +60,9 @@ def test_verify_sentinels_tolerant_but_not_loose():
 def test_estimate_cost():
     # deepseek input price 0.5 ¥/1M -> 1M prompt tokens = 0.5
     assert abs(models.estimate_cost("deepseek", {"prompt_tokens": 1_000_000}) - 0.5) < 1e-9
-    assert models.estimate_cost("gemini_free", {"prompt_tokens": 1_000_000}) == 0.0
+    # gemini_free runs on a PAID key since 2026-07-17 (input 2.2 ¥/1M)
+    assert abs(models.estimate_cost("gemini_free", {"prompt_tokens": 1_000_000})
+               - models.PRICES["gemini_free"][0]) < 1e-9
     assert models.estimate_cost("deepseek", {}) == 0.0
 
 
@@ -287,10 +289,13 @@ def test_gemini_max_tokens_maps_to_length(monkeypatch):
     assert ok and res["finish_reason"] == "length"
 
 
-def test_gemini_grounded_searches_bill_zero():
-    # the per-search fee is kimi's; gemini free-tier grounding must stay ¥0
-    assert models.estimate_cost(
-        "gemini_free", {"prompt_tokens": 1_000_000, "search_count": 5}) == 0.0
+def test_gemini_grounded_searches_add_no_fee():
+    # the per-search fee is kimi's only; gemini grounding adds nothing beyond
+    # token cost (paid key since 2026-07-17, so tokens themselves now bill)
+    with_search = models.estimate_cost(
+        "gemini_free", {"prompt_tokens": 1_000_000, "search_count": 5})
+    without = models.estimate_cost("gemini_free", {"prompt_tokens": 1_000_000})
+    assert abs(with_search - without) < 1e-9
 
 
 # --- retry/backoff fast-fail on exhausted billing ----------------------------

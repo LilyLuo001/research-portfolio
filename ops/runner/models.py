@@ -317,8 +317,9 @@ def verify_sentinels(answers, sentinels):
 
 def estimate_cost(worker, usage):
     """¥ cost of one call from its token usage. The per-search fee applies to
-    kimi's $web_search legs only (usage['search_count']); Gemini free-tier
-    grounded searches report a search_count too but bill ¥0."""
+    kimi's $web_search legs only (usage['search_count']); Gemini grounded
+    searches report a search_count too but add no per-search fee (tokens
+    themselves bill at PRICES rates — paid key since 2026-07-17)."""
     if not usage:
         return 0.0
     p = PRICES.get(worker)
