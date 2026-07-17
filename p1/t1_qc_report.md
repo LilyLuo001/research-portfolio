@@ -111,6 +111,52 @@ Normalized copies re-generated on the completed B: p1/t1_normalized/B.json
 now 1418 answers, 974 field normalizations. §3 (correlated false positives)
 and §5 (multi-fund undercount) remain OPEN — unchanged by the mop-up.
 
+## ADDENDUM 2026-07-18 — v2-prompt re-run QC (main @ 8ac4289)
+
+### Channel A (deepseek-v4-pro) — PASS, arb-grade
+1418/1418 parsed, 0 unparseable, sentinels green. Schema fully honored:
+0 non-ISO dates, 0 bad tickers, 0 bad date_basis/confidence values; only
+13 no_event rows missing the evidence field. Verdicts 667 event / 751
+no_event (v1: 787/631) with reason codes on every no_event
+(MF_TO_MF 385, MENTION 195, SHARECLASS 66, CEF 52, ETF_TO_ETF 52,
+INTERVAL 1). Acceptance checks:
+- 46/47 known decoy filings now correctly no_event (one residual:
+  Ionic Inflation Protection ETF-to-ETF still coded event).
+- All 6 multi-fund checks exact (237 multi-event answers vs 0 in v1).
+- All 3 retrospective checks caught (Soundwatch, Matrix, FundX SAI ×4).
+- Duplicate-excerpt verdict splits 1/42 (v1: 10).
+- Agreement with the reference channel (batches 1–43): **97.2%**
+  (625/643; v1 ≈ 84%). Remaining 18 disagreements are mostly ETF-to-ETF
+  boundary cases (Ionic, Amplify/YieldShares, BondBloxx/SNLN) and
+  acquiring-ETF-prospectus retrospectives (Arin/Alpha Architect,
+  EA Bridgeway Omni, ETF Opportunities Trust) — hand these to arb/human
+  gate as a named list rather than re-running.
+
+### Channel B (gemini) — INCOMPLETE, 112/1418 usable
+The paused run left 115 answers misfiled in
+`ops/l1/out/P1-T1-events-B-mopup.json`: 112 valid (scattered chunks,
+positions 5–1372, NOT a prefix), 2 unparseable, 1 stray literal
+`"no_event"` key from a flattened chunk merge. The 112 valid rows are
+v2-schema-compliant (reason codes present; 4 bad tickers + 3 non-ISO
+dates total) and agree with v2-A on 107/112 (95.5%). One chunk (148/237)
+voided properly — its reply dropped all three sentinels (truncation
+artifact of the pauses; fence worked).
+→ Resume spec generated: `ops/l1/P1-T1-events-B-v2resume.yaml`
+  (1306 remaining IDs, est ¥13.5). On the box:
+  `python ops/l1/run_mopup.py P1-T1-events-B-v2resume --live`, then merge
+  the resume output + the 112 salvaged answers into P1-T1-events-B.json
+  (merge_mopup.py drops the stray key and reports gaps), `git add -f`,
+  push. If paused again: re-generate the remaining-ID subset the same way
+  and run another slice — the pattern is restartable.
+
+### Verdict
+v2 prompt fixed what it targeted: correlated FPs (F1) 46/47, multi-fund
+undercount (F2) fully, retrospectives (F3) fully, formats (F4/F5/F7)
+fully, flake (F9) 10→1. T1-arb can proceed on v2-A + completed v2-B once
+the resume lands; v1 outputs remain archived for the record. T13 has NOT
+been v2-re-run on either channel (owner call whether to bother — the T13
+attribute overlay agreed across channels except casing).
+
 ## Required mitigations before/at T1-arb
 1. B mop-up run: 60+7 T1 IDs, 13 T13 IDs.
 2. Arb pipeline: join strictly on spec ID; normalize dates to ISO (else NA);

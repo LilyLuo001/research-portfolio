@@ -58,8 +58,10 @@ def test_verify_sentinels_tolerant_but_not_loose():
 
 
 def test_estimate_cost():
-    # deepseek input price 0.5 ¥/1M -> 1M prompt tokens = 0.5
-    assert abs(models.estimate_cost("deepseek", {"prompt_tokens": 1_000_000}) - 0.5) < 1e-9
+    # deepseek: 1M prompt tokens bills exactly the PRICES input rate
+    # (rate itself changes with provisioned model vintage — v4-pro since 2026-07-17)
+    assert abs(models.estimate_cost("deepseek", {"prompt_tokens": 1_000_000})
+               - models.PRICES["deepseek"][0]) < 1e-9
     # gemini_free runs on a PAID key since 2026-07-17 (input 2.2 ¥/1M)
     assert abs(models.estimate_cost("gemini_free", {"prompt_tokens": 1_000_000})
                - models.PRICES["gemini_free"][0]) < 1e-9
@@ -93,7 +95,8 @@ def test_live_batch_done_logs_cost_and_writes_output(monkeypatch, tmp_path):
 
     assert status == "DONE"
     assert answers["d1"] == "done"
-    assert abs(budget.today_spend() - 1.0) < 1e-9          # 0.5¥/1M * 2M = 1.0 logged
+    expect = models.PRICES["deepseek"][0] * 2.0            # input rate ¥/1M * 2M tokens
+    assert abs(budget.today_spend() - expect) < 1e-9
     assert json.loads(out.read_text())["d1"] == "done"
 
 
