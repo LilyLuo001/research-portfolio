@@ -287,3 +287,14 @@ back as needs_fulltext (no closing date in excerpt windows) in p1/t1_arb/
 arb_report.md; 17 effective_date conflicts resolved to latest-filed. NEXT: human
 門 1 P1-T1-spotcheck (H 抽10%, M/L 全查) over events_merged.csv is READY for owner;
 needs_fulltext list also owner-actionable. Did NOT runner --complete (manual lane).
+
+GATE1 2026-07-18 (owner spotcheck of events_merged.csv): 9 false-positive rows
+caught — all ETF-to-ETF mis-verdicts on UN-REFEREED deepseek rows (not in the
+qwen-140 set). Applied via p1/t1_arb/apply_spotcheck.py: 6 filings→no_event, iM
+DBi events removed + Dolan McEniry held for recheck, Zevenbergen deferred
+(future-dated source). Fixed an over-merge (name-only grouping collided distinct
+same-named funds) by keying assemble on (fund_name, family) + a PK-collapse pass
+for cross-trust splits. events_merged.csv now 173 conversions, contract PASS.
+Corpus evidence-sweep confirms no other ETF-to-ETF survive. Results in
+p1/t1_spotcheck_results.md. Date-recovery (deepseek, box) had promoted held-back
+dates just prior (¥0.83, fence held).

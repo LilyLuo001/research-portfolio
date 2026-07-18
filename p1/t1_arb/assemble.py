@@ -46,7 +46,7 @@ COLS = ["fund_name", "family", "mutual_fund_ticker", "etf_ticker", "announce_dat
         "source_accession", "source_url", "confidence"]
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOP = re.compile(r"\b(the|fund|funds|portfolio|trust|inc|lp|llc|ltd|co|series|"
-                  r"class|shares?|etf|of)\b", re.I)
+                  r"class|shares?|etf|of|company|incorporated)\b", re.I)
 CONF_RANK = {"H": 3, "M": 2, "L": 1, "NA": 0, None: 0}
 
 
@@ -54,6 +54,13 @@ def norm(name):
     n = re.sub(r"[^a-z0-9 ]", " ", str(name).lower())
     n = STOP.sub(" ", n)
     return re.sub(r"\s+", " ", n).strip()
+
+
+def fam2(family):
+    """First two significant family words — disambiguates same-named funds across
+    families (e.g. Sanford Bernstein 'Emerging Markets Portfolio' vs Mirae
+    'Emerging Markets Fund') without splitting one conversion's own filings."""
+    return " ".join(norm(family).split()[:2])
 
 
 def isod(x):
@@ -78,6 +85,9 @@ def load_events():
             continue
         evs = v["events"] if "events" in v else [v]
         for e in evs:
+            sc = e.get("_spotcheck")
+            if sc and sc.get("disposition") in ("not_event", "recheck", "defer"):
+                continue                     # owner-gate correction: excluded from the clean set
             m = meta.get(fid, {})
             eff = str(e.get("effective_date", "NA"))
             if not ISO.match(eff) and fid in overlay and ISO.match(str(overlay[fid].get("effective_date", ""))):
@@ -132,7 +142,7 @@ def main():
     groups = collections.defaultdict(list)
     for r in rows:
         fn = r["fund_name"]
-        key = norm(fn) if fn not in ("NA", "", "None") else "__NA__:" + r["source_accession"]
+        key = (norm(fn), fam2(r["family"])) if fn not in ("NA", "", "None") else ("__NA__", r["source_accession"])
         groups[key].append(r)
 
     merged, held, audit = [], [], []
@@ -145,6 +155,32 @@ def main():
             held.append((row, info))
         else:
             merged.append((row, info))
+
+    # second pass — collapse cross-trust splits: the target trust and the acquiring
+    # ETF trust each file for one conversion, so fam2 splits them, but they resolve
+    # to the SAME (fund_name, effective_date). Merge those (that pair IS the
+    # contract PK). Genuinely distinct same-name funds differ in effective_date.
+    by_pk = collections.OrderedDict()
+    for row, info in merged:
+        pk = (row["fund_name"], row["effective_date"])
+        if pk in by_pk:
+            prow, pinfo = by_pk[pk]
+            for c in COLS:
+                if str(prow[c]) in ("NA", "", "None") and str(row[c]) not in ("NA", "", "None"):
+                    prow[c] = row[c]
+            prow["announce_date"] = min(d for d in (prow["announce_date"], row["announce_date"])
+                                        if isod(d)) if (isod(prow["announce_date"]) or isod(row["announce_date"])) else prow["announce_date"]
+            prow["confidence"] = max(prow["confidence"], row["confidence"], key=lambda c: CONF_RANK.get(c, 0))
+            pinfo["accessions"] += info["accessions"]
+            pinfo["n_filings"] += info["n_filings"]
+        else:
+            by_pk[pk] = (row, info)
+    merged = list(by_pk.values())
+
+    # a conversion whose date was found on one trust's filings may leave the other
+    # trust's filings dateless -> a held row duplicating a merged one. Drop those.
+    merged_names = {r["fund_name"] for r, _ in merged}
+    held = [(r, i) for r, i in held if r["fund_name"] not in merged_names]
 
     # primary-key collision guard: (fund_name, effective_date) must be unique
     seen = collections.Counter((r["fund_name"], r["effective_date"]) for r, _ in merged)
