@@ -75,3 +75,27 @@ stands. Final buckets over the 140:
 4. The reference channel itself has ≥4 confirmed errors (the ds+qwen-agree
    HUMAN rows) — my batches 1–43 are good but not gold; the owner gate is the
    real ground truth on the 11.
+
+## RESOLVED 2026-07-18 — owner adjudicated all 11 human-gate items
+Owner ruled on the 11 (excerpts in `p1/t1_human_gate_excerpts.md`). Every one
+differed from deepseek — expected, they were the residual hard cases:
+- 6 → **no_event** (deepseek over-called): #1 William Blair/ICM (MF→MF),
+  #2 Quaker/CCM MBS (ETF→ETF), #3 RBB/Emerald (acquirer a mutual fund),
+  #4 Ionic ETF, #5 Western Asset Bond ETF, #6 Highland/iBoxx SNLN (all ETF→ETF).
+- 5 → **event** (deepseek missed retrospective/live MF→ETF conversions):
+  #7 Guinness→SmartETFs ADIV, #8/#9 Arin Large Cap Theta Fund→EA ETF,
+  #10 Omni Tax-Managed Small-Cap Value→EA ETF, #11 OTG Latin America Fund→ETF.
+
+On the 8 two-model-vs-reference items the owner confirmed the **reference
+hand-read on all 8** (both LLMs were jointly wrong); on the 3 unreferenced
+splits the owner sided with **qwen** against deepseek all 3 times.
+
+### Final channel produced: `p1/t1_events_final.json`
+Deepseek v2-A (1418) with **21 verdicts corrected** (10 qwen+reference flips +
+11 owner-gate flips): 13 → no_event, 8 → event. Result **662 event / 756
+no_event** (deepseek v2-A alone was 667 / 751). Each corrected record carries an
+`_adjudication` provenance block; per-item mapping in `p1/t1_arb_resolution.json`
+(`final_verdict` / `final_source`). This is the T1 channel that feeds T1-arb →
+events_merged. Flip-to-event rows carry identities from the reference channel;
+their non-identity fields (tickers, exact dates) still route through the normal
+downstream field extraction.
