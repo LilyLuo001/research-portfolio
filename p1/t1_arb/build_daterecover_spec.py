@@ -121,7 +121,7 @@ def main():
     import yaml
     for it in items:
         body.append(f'  - id: "{it["id"]}"')
-        body.append(f'    _fund: {yaml.safe_dump(it["_fund"]).strip()}')
+        body.append(f'    _fund: {json.dumps(it["_fund"], ensure_ascii=False)}')
         body.append(f'    _accessions: {json.dumps(it["_accessions"])}')
         body.append("    prompt: |")
         for line in it["prompt"].splitlines():
