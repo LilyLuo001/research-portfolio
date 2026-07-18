@@ -278,3 +278,12 @@ the contested/self-risky subset (ops/l1/P1-T1-events-arb-qwen.yaml, 140 items;
 rationale in p1/t1_flagged_for_arb.md). The gemini v1/v2 partial outputs remain
 archived for the record. T1-arb adjudicates deepseek-vs-qwen-vs-reference on the
 flagged set; un-flagged deepseek verdicts stand.
+
+ASSEMBLED 2026-07-18 (seat C): P1-T1-arb → p1/events_merged.csv (contract PASS,
+139 conversions). Upstream channel adjudication (deepseek v2-A + qwen tiebreaker
++ owner gate, 21 flips) collapsed via p1/t1_arb/assemble.py: 1207 event-filings
+→ 248 conversion groups → 139 with resolvable fund_name+effective_date; 109 held
+back as needs_fulltext (no closing date in excerpt windows) in p1/t1_arb/
+arb_report.md; 17 effective_date conflicts resolved to latest-filed. NEXT: human
+門 1 P1-T1-spotcheck (H 抽10%, M/L 全查) over events_merged.csv is READY for owner;
+needs_fulltext list also owner-actionable. Did NOT runner --complete (manual lane).
