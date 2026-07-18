@@ -68,6 +68,10 @@ def pick_longest_nonNA(vals):
 def load_events():
     final = json.loads(FINAL.read_text())
     meta = json.loads(META.read_text())
+    # optional overlay: {source_accession: {"effective_date": "YYYY-MM-DD", ...}}
+    # produced by the full-text date-recovery pass (merge_daterecover.py). Absent = no-op.
+    overlay_p = HERE / "recovered_dates.json"
+    overlay = json.loads(overlay_p.read_text()).get("recovered", {}) if overlay_p.exists() else {}
     rows = []
     for fid, v in final.items():
         if fid == "_meta" or v.get("no_event") or v.get("NEED_HUMAN"):
@@ -75,13 +79,16 @@ def load_events():
         evs = v["events"] if "events" in v else [v]
         for e in evs:
             m = meta.get(fid, {})
+            eff = str(e.get("effective_date", "NA"))
+            if not ISO.match(eff) and fid in overlay and ISO.match(str(overlay[fid].get("effective_date", ""))):
+                eff = overlay[fid]["effective_date"]        # promoted from full-text recovery
             rows.append({
                 "fund_name": str(e.get("fund_name", "NA")),
                 "family": str(e.get("family", "NA")),
                 "mutual_fund_ticker": str(e.get("mutual_fund_ticker", "NA")),
                 "etf_ticker": str(e.get("etf_ticker", "NA")),
                 "announce_date": str(e.get("announce_date", "NA")),
-                "effective_date": str(e.get("effective_date", "NA")),
+                "effective_date": eff,
                 "asset_class": str(e.get("asset_class", "NA")),
                 "AUM_at_conversion_USD": str(e.get("AUM_at_conversion_USD", "NA")),
                 "source_accession": fid,
