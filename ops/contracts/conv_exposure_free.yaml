@@ -16,6 +16,17 @@ columns:
   stock_cik: {}                    # SEC issuer CIK (company_tickers.json)
   permno: {}                       # empty until a CRSP merge; kept for parallelism
   # ---- frozen conv_exposure columns, reproduced 1:1 ----
+# P1-T2 FREE-path output (EDGAR N-PORT + OpenFIGI + XBRL shares). Mirrors
+# conv_exposure.yaml but keyed on the public CUSIP instead of CRSP permno (no
+# free permno source). A cusip<->ticker<->cik crosswalk ships alongside so this
+# merges to the canonical permno-keyed conv_exposure if CRSP is obtained later.
+# The frozen conv_exposure.yaml is NOT modified.
+producer: P1-T2-free
+primary_key: [stock_cusip, wave_id]
+columns:
+  stock_cusip: {required: true}
+  ticker: {}
+  stock_cik: {}
   wave_id: {required: true}
   effective_date: {required: true}
   conv_exp: {required: true, min: 0}
