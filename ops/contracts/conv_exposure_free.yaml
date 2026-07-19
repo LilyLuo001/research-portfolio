@@ -1,3 +1,21 @@
+# P1-T2 FREE-PATH output — parallel to conv_exposure.yaml (no WRDS/CRSP).
+# Same holdings-based ConvExp, but sourced from EDGAR N-PORT + OpenFIGI + XBRL,
+# so every number carries a public locator (meta-rule 1) with zero paid data.
+#
+# Keyed on the public CUSIP (there is no permno without CRSP). Every frozen
+# conv_exposure column is reproduced 1:1 with the SAME name so a later CRSP
+# merge on the crosswalk recovers permno WITHOUT renaming a frozen column
+# (CLAUDE.md rule 3). The extra columns are additive provenance/crosswalk only.
+producer: P1-T2-free
+primary_key: [cusip, wave_id]
+strict_columns: false
+columns:
+  # ---- crosswalk keys (public) ----
+  cusip: {required: true}          # 9-char CUSIP from N-PORT holding
+  ticker: {}                       # resolved symbol (N-PORT field or OpenFIGI)
+  stock_cik: {}                    # SEC issuer CIK (company_tickers.json)
+  permno: {}                       # empty until a CRSP merge; kept for parallelism
+  # ---- frozen conv_exposure columns, reproduced 1:1 ----
 # P1-T2 FREE-path output (EDGAR N-PORT + OpenFIGI + XBRL shares). Mirrors
 # conv_exposure.yaml but keyed on the public CUSIP instead of CRSP permno (no
 # free permno source). A cusip<->ticker<->cik crosswalk ships alongside so this
@@ -15,3 +33,7 @@ columns:
   n_funds: {min: 0}
   mcap_decile: {min: 1, max: 10}
   pre_etf_ownership: {min: 0}
+  # ---- additive provenance / audit ----
+  shares_held: {min: 0}            # Σ fund shares held pre-conversion
+  shares_outstanding: {min: 0}     # issuer shares outstanding (XBRL dei)
+  source_accessions: {}            # ';'-joined N-PORT accession(s)
