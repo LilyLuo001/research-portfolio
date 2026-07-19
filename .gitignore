@@ -25,4 +25,9 @@ ops/l1/out/*
 # rule as L1 raw outputs) — git carries only the manifest of locators.
 p1/edgar_filings/*
 !p1/edgar_filings/manifest.csv
-p1/edgar_filings_1b/
+# P1-T2 free path: immutable raw-HTTP cache (N-PORT XML, XBRL, FIGI, prices)
+# stays box-local, same rule as raw filings. The parquet + diagnostics + code
+# are tracked; the cache is not.
+p1/t2_free/cache/
+# transient stdout dumps from detached runs (the FileHandler log is tracked)
+p1/t2_free/*.out
