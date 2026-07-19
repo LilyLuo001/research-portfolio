@@ -82,3 +82,60 @@ Before you secure the account, seat C can pre-write the offline pull scripts for
 P1-T3/T4 and refraction-R2 (like the T2 `holdings_pipeline.py` scaffold), each
 landing raw immutable + lineage and refusing to invent table/column names. Then
 the borrowed window is pure execution → ~3–5 days, one account, both papers.
+
+---
+
+## ADDENDUM — free alternatives (asked 2026-07-18)
+
+### 0. The real "free": BU institutional WRDS
+You're a BU affiliate (BU email; the plan already says "去 BU 确认" for USMPD/CPI
+licensing). BU Questrom/library almost certainly holds an **institutional WRDS
+subscription** — free to affiliates via a sponsored sub-account (advisor / course
+/ library request). Your *personal* account lapsing ≠ BU access gone. This is the
+cheapest legitimate path; try it before borrowing/buying.
+
+### 1. T2 / ConvExp / kill-switch = FULLY buildable for FREE (holdings, not prices)
+ConvExp = Σ(fund holding shares) / (shares outstanding). Every input is free +
+provenance-clean (satisfies meta-rule 1 with EDGAR/OpenFIGI locators):
+- **Fund holdings** → SEC **EDGAR NPORT-P** (each converting fund's last monthly
+  holdings filing before its effective_date). Free, XML, and *already named in the
+  spec* (Project_1.md line 108 lists "EDGAR N-PORT" alongside CRSP MF). All 131
+  funds convert 2021-2026 → NPORT-P (mandatory since 2019) covers the whole sample.
+- **CUSIP → ticker** → N-PORT's own fields + **OpenFIGI API** (free CUSIP↔ticker).
+- **Shares outstanding (denominator)** → EDGAR **XBRL frames** API
+  (`dei:EntityCommonStockSharesOutstanding`), point-in-time, free — the CRSP
+  `shrout` substitute.
+- **Stock key** → use ticker or CIK instead of `permno` (a `conv_exposure` contract
+  amendment), OR keep a ticker↔permno crosswalk to merge CRSP later.
+→ **The immediate blocker needs no WRDS at all.** Build ConvExp free, clear the
+kill-switch feasibility gate, THEN decide on WRDS for the returns phase — by which
+point you know the project passed its own go/no-go.
+
+### 2. Returns event study (T4/T5/R2) — free is workable for prototyping
+- **Daily prices/returns/current shares** → `yfinance` (Yahoo), **Stooq**, Tiingo
+  free tier — cover essentially all listed US stocks 2019-2026.
+- **Gaps vs CRSP**: (a) delisting returns (Yahoo drops delisted tickers; refraction
+  R2 explicitly wants "退市收益按 CRSP 规则" — not replicable free); (b) point-in-time
+  historical shrout (Yahoo gives current). Minor for short event windows and
+  large-cap-ish holdings; material for the *final publishable* run.
+
+### 3. IBES SUE & Compustat — free substitutes exist
+- **SUE** → skip analyst consensus (IBES, hard-free); use a **time-series /
+  seasonal-random-walk SUE** from EDGAR earnings — the original Foster-Olsen-Shevlin
+  definition, academically defensible with a footnote. Owner picks the definition.
+- **Fundamentals (GNZ decomposition)** → EDGAR **XBRL** financials (free, messier).
+
+### 4. TAQ intraday spreads — the one genuinely hard free item, but NON-BLOCKING
+Raw TAQ = terabytes; the WRDS-computed IID has no clean free equivalent. But T3
+spine-4 (cost side) and refraction R10 are both flagged **non-blocking bypass** in
+the specs — the main results don't need TAQ. Defer; only WRDS/Databento can serve
+it if you later want it.
+
+### Recommended path (free-first, WRDS-last)
+1. Build **T2/ConvExp free** from EDGAR N-PORT + OpenFIGI + XBRL shares → clear the
+   kill-switch. (Seat C can write this now — no account needed.)
+2. Prototype **T4/T5/R2 returns** on yfinance/Stooq → preliminary results.
+3. Only if the project clears its gates and you want CRSP-grade final numbers,
+   **borrow BU/an account for a 3-5 day sprint** to re-run the finalized pipeline
+   on CRSP + pull TAQ if the cost-side spine is wanted. Free data does 90% of the
+   build; WRDS becomes a short, final, provenance-upgrade pass — not a blocker.
