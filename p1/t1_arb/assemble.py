@@ -43,11 +43,13 @@ REPORT = HERE / "arb_report.md"
 
 COLS = ["fund_name", "family", "mutual_fund_ticker", "etf_ticker", "announce_date",
         "effective_date", "asset_class", "AUM_at_conversion_USD",
-        "source_accession", "source_url", "confidence"]
+        "source_accession", "source_url", "confidence",
+        "effective_date_approx", "date_precision"]
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOP = re.compile(r"\b(the|fund|funds|portfolio|trust|inc|lp|llc|ltd|co|series|"
                   r"class|shares?|etf|of|company|incorporated)\b", re.I)
 CONF_RANK = {"H": 3, "M": 2, "L": 1, "NA": 0, None: 0}
+PREC_RANK = {"month": 3, "quarter": 2, "pending": 1, "NA": 0, "": 0, None: 0}
 
 
 def norm(name):
@@ -79,6 +81,11 @@ def load_events():
     # produced by the full-text date-recovery pass (merge_daterecover.py). Absent = no-op.
     overlay_p = HERE / "recovered_dates.json"
     overlay = json.loads(overlay_p.read_text()).get("recovered", {}) if overlay_p.exists() else {}
+    # approximate-timing overlay (Pass 1b): {source_accession: {"effective_date_approx":
+    # "YYYY-Qn"|"YYYY-MM", "date_precision": "quarter"|"month"|"pending", ...}}.
+    # NEVER promotes effective_date (kept strict for verbatim ISO days); annotates held rows.
+    approx_p = HERE / "approx_dates.json"
+    approx = json.loads(approx_p.read_text()).get("approx", {}) if approx_p.exists() else {}
     rows = []
     for fid, v in final.items():
         if fid == "_meta" or v.get("no_event") or v.get("NEED_HUMAN"):
@@ -92,6 +99,7 @@ def load_events():
             eff = str(e.get("effective_date", "NA"))
             if not ISO.match(eff) and fid in overlay and ISO.match(str(overlay[fid].get("effective_date", ""))):
                 eff = overlay[fid]["effective_date"]        # promoted from full-text recovery
+            ap = approx.get(fid, {})
             rows.append({
                 "fund_name": str(e.get("fund_name", "NA")),
                 "family": str(e.get("family", "NA")),
@@ -104,6 +112,8 @@ def load_events():
                 "source_accession": fid,
                 "source_url": m.get("url") or "NA",
                 "confidence": str(e.get("confidence", "NA")),
+                "effective_date_approx": str(ap.get("effective_date_approx", "NA")),
+                "date_precision": str(ap.get("date_precision", "NA")),
                 "_filed": m.get("filed") or "0000-00-00",
             })
     return rows
@@ -112,6 +122,7 @@ def load_events():
 def consolidate(group):
     """One event row from all filings of one conversion."""
     by_filed = sorted(group, key=lambda r: r["_filed"])
+    best_prec = max(group, key=lambda r: PREC_RANK.get(r.get("date_precision"), 0))
     iso_eff = [(r["_filed"], r["effective_date"], r) for r in group if isod(r["effective_date"])]
     iso_ann = sorted(r["announce_date"] for r in group if isod(r["announce_date"]))
     eff_conflict = sorted({e for _, e, _ in iso_eff})
@@ -132,6 +143,8 @@ def consolidate(group):
         "source_accession": rep["source_accession"],
         "source_url": rep["source_url"],
         "confidence": max((r["confidence"] for r in group), key=lambda c: CONF_RANK.get(c, 0)),
+        "effective_date_approx": best_prec.get("effective_date_approx", "NA") if isod(eff) is False else "NA",
+        "date_precision": best_prec.get("date_precision", "NA") if isod(eff) is False else "NA",
     }
     return row, {"n_filings": len(group), "accessions": [r["source_accession"] for r in group],
                  "eff_conflict": eff_conflict if len(eff_conflict) > 1 else None}
@@ -224,9 +237,16 @@ def _write_report(rows, groups, merged, held, audit, pk_dups):
     L.append("Conversions confirmed as events but with no closing date in the excerpt "
              "windows (typical of N-14s saying 'as soon as practicable'); the date "
              "lands in a later 497 or completed-conversion filing outside our windows.\n")
+    n_approx = sum(1 for r, _ in held if str(r.get("date_precision", "NA")) not in ("NA", "", "None"))
+    L.append(f"Of these, **{n_approx}** now carry an approximate timing "
+             f"(`effective_date_approx` + `date_precision`) recovered by Pass 1b; "
+             f"`effective_date` stays NA (reserved for verbatim ISO days).\n")
     for row, info in sorted(held, key=lambda t: t[0]["fund_name"]):
         fn = row["fund_name"] if row["fund_name"] not in ("NA", "") else "(fund_name NA)"
-        L.append(f"- {fn} — announce {row['announce_date']} — "
+        ap = str(row.get("effective_date_approx", "NA"))
+        prec = str(row.get("date_precision", "NA"))
+        tag = f" — approx {ap} ({prec})" if prec not in ("NA", "", "None") else ""
+        L.append(f"- {fn} — announce {row['announce_date']}{tag} — "
                  f"{info['n_filings']} filing(s): {', '.join(info['accessions'])}")
     if pk_dups:
         L.append("\n## PRIMARY-KEY COLLISIONS (need disambiguation)")
