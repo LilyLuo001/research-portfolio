@@ -298,3 +298,13 @@ for cross-trust splits. events_merged.csv now 173 conversions, contract PASS.
 Corpus evidence-sweep confirms no other ETF-to-ETF survive. Results in
 p1/t1_spotcheck_results.md. Date-recovery (deepseek, box) had promoted held-back
 dates just prior (¥0.83, fence held).
+
+FULL-REVIEW 2026-07-18 (owner manual re-eval of all events): applied via
+p1/t1_arb/apply_full_review.py (record: owner_full_review.csv). 5 event→no_event
+(ETF/ETP-to-ETF: CSOP A50, WisdomTree GCC, iShares LifePath 2025, Sterling Core
+Bond, Impact Shares MBS); 1 no_event→event (Chestnut Street Exchange Fund);
+96 event rows→recheck (owner evidentiary standard: 'acquirer is an ETF' alone
+insufficient — must prove target was open-end/mutual fund); 11 no_event→
+recheck_noevent (blank/weak evidence). events_merged.csv 173→124 (recheck items
+quarantined pending full-text target-type proof). NEXT: recheck full-text pass
+(deepseek re-reads raw filings to confirm target fund type + pull MF ticker).

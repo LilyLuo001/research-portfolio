@@ -51,8 +51,13 @@ def main():
                          "study_status": "NEED_HUMAN", "evidence": json.dumps(v.get("quotes", ""))[:300]})
             continue
         if v.get("no_event"):
+            fsc = v.get("_spotcheck") or {}
+            status = f"no_event:{v.get('reason','')}"
+            if fsc.get("disposition"):
+                status = f"{fsc['disposition']}(was no_event:{v.get('reason','')})"
             rows.append({**{c: "" for c in COLS}, **base, "verdict": "no_event",
-                         "reason": v.get("reason", ""), "study_status": f"no_event:{v.get('reason','')}",
+                         "reason": v.get("reason", ""), "study_status": status,
+                         "spotcheck_disposition": fsc.get("disposition", ""),
                          "evidence": str(v.get("evidence", ""))[:300]})
             continue
         for e in (v["events"] if "events" in v else [v]):
