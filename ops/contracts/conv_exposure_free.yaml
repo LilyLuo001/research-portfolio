@@ -2,31 +2,27 @@
 # Same holdings-based ConvExp, but sourced from EDGAR N-PORT + OpenFIGI + XBRL,
 # so every number carries a public locator (meta-rule 1) with zero paid data.
 #
-# Keyed on the public CUSIP (there is no permno without CRSP). Every frozen
-# conv_exposure column is reproduced 1:1 with the SAME name so a later CRSP
-# merge on the crosswalk recovers permno WITHOUT renaming a frozen column
-# (CLAUDE.md rule 3). The extra columns are additive provenance/crosswalk only.
+# Keyed on the public CUSIP (there is no permno without CRSP). This is a NEW
+# contract for the free path — it does NOT modify the frozen conv_exposure.yaml
+# (which stays [permno, wave_id]); nothing downstream consumes a 'stock_cusip'
+# column, so 'cusip' is the canonical key here. A cusip<->ticker<->cik crosswalk
+# ships alongside so a later CRSP merge recovers permno without renaming a column.
+#
+# NOTE: an earlier revision of this file was merge-corrupted into two concatenated
+# YAML documents (a 'cusip' block + a leftover 'stock_cusip' scaffold block). Under
+# yaml.safe_load that silently resolved to the stray 'stock_cusip' key and made the
+# validator demand a column the parquet never had. This is the repaired single-doc
+# version, aligned 1:1 with the columns the pipeline actually emits.
 producer: P1-T2-free
 primary_key: [cusip, wave_id]
 strict_columns: false
 columns:
   # ---- crosswalk keys (public) ----
-  cusip: {required: true}          # 9-char CUSIP from N-PORT holding
+  cusip: {required: true}          # 9-char CUSIP from the N-PORT holding
   ticker: {}                       # resolved symbol (N-PORT field or OpenFIGI)
   stock_cik: {}                    # SEC issuer CIK (company_tickers.json)
   permno: {}                       # empty until a CRSP merge; kept for parallelism
-  # ---- frozen conv_exposure columns, reproduced 1:1 ----
-# P1-T2 FREE-path output (EDGAR N-PORT + OpenFIGI + XBRL shares). Mirrors
-# conv_exposure.yaml but keyed on the public CUSIP instead of CRSP permno (no
-# free permno source). A cusip<->ticker<->cik crosswalk ships alongside so this
-# merges to the canonical permno-keyed conv_exposure if CRSP is obtained later.
-# The frozen conv_exposure.yaml is NOT modified.
-producer: P1-T2-free
-primary_key: [stock_cusip, wave_id]
-columns:
-  stock_cusip: {required: true}
-  ticker: {}
-  stock_cik: {}
+  # ---- ConvExp core ----
   wave_id: {required: true}
   effective_date: {required: true}
   conv_exp: {required: true, min: 0}
