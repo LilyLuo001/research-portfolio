@@ -111,13 +111,18 @@ does not touch the treated set. This is a **preliminary/feasibility-grade** data
 the final publishable one.
 
 ## Remaining data issues to fix before the *final* run (not blockers for the gate)
-0. **The parquet FAILS its own contract (meta-rule 3).** `conv_exposure_free.yaml`
-   requires the primary-key column **`stock_cusip`**, but the shipped parquet names it
-   **`cusip`** → `contracts.py conv_exposure_free p1/conv_exposure_free.parquet` returns
-   `FAIL: missing column 'stock_cusip'`. The briefs/diagnostics claim a PASS that does not
-   hold. Fix: rename `cusip`→`stock_cusip` in the pipeline output (do **not** amend the
-   frozen contract). The added columns (`permno`, `shares_held`, `shares_outstanding`,
-   `source_accessions`) are fine as extras.
+0. **Contract mismatch — RESOLVED 2026-07-20.** Root cause was NOT a parquet bug: the
+   `conv_exposure_free.yaml` contract had been merge-corrupted into two concatenated YAML
+   documents (a `cusip` block + a leftover `stock_cusip` scaffold block). `yaml.safe_load`
+   silently kept the stray `stock_cusip` key, so the validator demanded a column the data
+   never had. The box's *documented* design keys on `cusip`, and the parquet + crosswalk +
+   NEED_HUMAN files all use `cusip`. Fix applied: repaired the contract to a single clean
+   `cusip`-keyed document (nothing downstream consumes `stock_cusip`; the frozen
+   `conv_exposure.yaml` stays `[permno, wave_id]`), and removed dead duplicate scaffold
+   (an appended second `main()`/`_write()` using `stock_cusip`) from
+   `build_nport_convexp.py` that would have mis-run on the next box execution.
+   `contracts.py conv_exposure_free p1/conv_exposure_free.parquet` now **PASSES**
+   (6,377 rows, 13 cols). No data mutation was needed.
 1. **Fix the corrupt `p1/t2_wrds/waves.csv`** (double-schema; regenerate 4-col cleanly).
    *(Done in this audit — `waves.csv` regenerated from `waves_members.csv`; verify the
    pipeline's `build_waves.py` doesn't re-corrupt it.)*
