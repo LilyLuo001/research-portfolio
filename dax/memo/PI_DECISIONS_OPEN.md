@@ -53,7 +53,7 @@ authorize the preregistration tag or outcome access yet.
 
 - [ ] Complete two-source event and price registry through 2026-08-06.
 - [ ] W1 power simulation on pre-event CPS moments.
-- [ ] Event-by-event table shell populated with W5-produced crossing counts
+- [x] Event-by-event table shell populated with W5-produced crossing counts
   before outcomes open, or an explicit signed rule for later mechanical fill.
 - [ ] Independent cross-vendor red-team of the completed memo.
 - [ ] Rendered PDF reviewed line by line by PI.

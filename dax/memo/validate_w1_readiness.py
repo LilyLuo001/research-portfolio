@@ -8,6 +8,7 @@ fail-closed gate check and returns nonzero until every blocker is resolved.
 from __future__ import annotations
 
 import argparse
+import csv
 import importlib.util
 import pathlib
 import re
@@ -17,6 +18,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 MEMO = HERE / "design_memo_v1.md"
 CHECKLIST = HERE / "PI_DECISIONS_OPEN.md"
 EVENT_VALIDATOR = HERE / "validate_event_registry.py"
+EVENT_TABLE_SHELL = HERE / "event_table_shell_v1.csv"
 DECISION_RE = re.compile(r"\[PI-DECISION (\d+)\]")
 CHECKLIST_ROW_RE = re.compile(
     r"^\|\s*(\d+)\s*\|.*\|\s*(OPEN|APPROVED|REJECTED)\s*\|\s*$",
@@ -56,6 +58,49 @@ def audit() -> dict[str, object]:
     event_validator = _load_event_validator()
     event_rows, event_errors = event_validator.validate()
     structural_errors.extend(f"event registry: {error}" for error in event_errors)
+
+    shell_fields = {
+        "event_id", "api_effective_date", "registry_status",
+        "source_verification", "primary_inclusion_rule", "window_rule",
+        "window_start", "window_end", "pre_months", "post_months",
+        "n_occupations", "n_treated_ge_0_01", "wage_bill_crossing_mass",
+        "dose_p25", "dose_p50", "dose_p75", "dose_p90",
+        "max_effective_weight_share", "w5_fill_status",
+    }
+    try:
+        with EVENT_TABLE_SHELL.open(newline="", encoding="utf-8") as handle:
+            reader = csv.DictReader(handle)
+            missing = shell_fields - set(reader.fieldnames or [])
+            shell_rows = list(reader)
+        if missing:
+            structural_errors.append(
+                f"event table shell is missing fields {sorted(missing)}"
+            )
+        registry_by_id = {row["event_id"]: row for row in event_rows}
+        shell_by_id = {row["event_id"]: row for row in shell_rows}
+        if len(shell_rows) != len(shell_by_id):
+            structural_errors.append("event table shell contains duplicate event IDs")
+        if set(shell_by_id) != set(registry_by_id):
+            structural_errors.append("event table shell IDs do not match the registry")
+        for event_id in set(shell_by_id) & set(registry_by_id):
+            shell_row = shell_by_id[event_id]
+            registry_row = registry_by_id[event_id]
+            locked_pairs = {
+                "api_effective_date": "api_effective_date",
+                "registry_status": "analysis_status",
+                "source_verification": "verification_status",
+            }
+            for shell_field, registry_field in locked_pairs.items():
+                if shell_row[shell_field] != registry_row[registry_field]:
+                    structural_errors.append(
+                        f"event table shell {event_id} {shell_field} diverges from registry"
+                    )
+            if not shell_row.get("w5_fill_status"):
+                structural_errors.append(
+                    f"event table shell {event_id} lacks a W5 fill status"
+                )
+    except FileNotFoundError:
+        structural_errors.append("event table shell is missing")
 
     open_decisions = sorted(
         number for number, status in checklist_rows.items() if status == "OPEN"

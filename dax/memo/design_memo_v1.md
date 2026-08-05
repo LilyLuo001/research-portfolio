@@ -68,6 +68,10 @@ four currently eligible core events, sixteen candidates, and the binding
 `gpt-4.5-preview` exclusion. Four candidates are explicitly pending a second
 independent date locator. Candidate status is resolved before Gate 1; W5 later
 applies the signed dose threshold without adding or deleting chronology rows.
+The mechanically fillable event-by-event table is frozen in
+`event_table_shell_v1.csv`. W5 may fill only its blank window, crossing-count,
+dose-distribution, and effective-weight fields after applying Decisions 1--3;
+it may not change event IDs, dates, thresholds, or column definitions.
 
 ### 1.3 Registry completion queue
 

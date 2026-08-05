@@ -1,0 +1,196 @@
+{
+  "status": "NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST",
+  "seed": 20260806,
+  "reps": 200,
+  "alpha_two_sided": 0.05,
+  "target_power": 0.8,
+  "effect_scale": "coefficient per 0.10 DAX increment",
+  "inputs": {
+    "preperiod_cells": "memo/power_calcs/synthetic/preperiod_cells.csv",
+    "preperiod_cells_sha256": "4b1f0fda046a66e941137fcd2f46b865e3c9ae4a5769aa7d6a49897660ab0aab",
+    "event_doses": "memo/power_calcs/synthetic/event_doses.csv",
+    "event_doses_sha256": "17b03538a628b861db2dca4252a73aab9d95e5fd13bb28c02389fff9a0c3424d"
+  },
+  "events": [
+    "GPT41_LAUNCH",
+    "GPT4O_LAUNCH",
+    "GPT4_LAUNCH",
+    "GPT5_LAUNCH"
+  ],
+  "samples": [
+    {
+      "education_group": "pooled",
+      "n_stack_cells": 6240,
+      "n_occupation_clusters": 60,
+      "n_nuisance_parameters": 357,
+      "serial_rho_employment": 0.8,
+      "serial_rho_hours": 0.8,
+      "employment_hours_noise_correlation": 0.789208,
+      "treated_cells_by_event": {
+        "GPT4_LAUNCH": 1066,
+        "GPT4O_LAUNCH": 1014,
+        "GPT41_LAUNCH": 936,
+        "GPT5_LAUNCH": 1014
+      },
+      "low_quality_cps_codes": [
+        "OCC012",
+        "OCC028",
+        "OCC031",
+        "OCC033"
+      ],
+      "employment": {
+        "median_cluster_se_per_0.10_dax": 0.00291343,
+        "mde80_per_0.10_dax": 0.00815761,
+        "baseline_employment_gap": 0.01667149,
+        "approved_mde_threshold": 0.00833575,
+        "adequately_powered": true,
+        "rejection_rate_by_effect": {
+          "-0.13": 1.0,
+          "-0.1": 1.0,
+          "-0.065": 1.0,
+          "-0.04": 1.0,
+          "-0.02": 1.0,
+          "0": 0.075,
+          "0.02": 1.0,
+          "0.04": 1.0,
+          "0.065": 1.0,
+          "0.1": 1.0,
+          "0.13": 1.0
+        }
+      },
+      "hours_unconditional": {
+        "median_cluster_se_per_0.10_dax": 0.08499522,
+        "mde80_per_0.10_dax": 0.23798661,
+        "rejection_rate_by_effect": {
+          "-4": 1.0,
+          "-3": 1.0,
+          "-2": 1.0,
+          "-1": 1.0,
+          "-0.5": 1.0,
+          "0": 0.05,
+          "0.5": 1.0,
+          "1": 1.0,
+          "2": 1.0,
+          "3": 1.0,
+          "4": 1.0
+        }
+      }
+    },
+    {
+      "education_group": "college",
+      "n_stack_cells": 3120,
+      "n_occupation_clusters": 60,
+      "n_nuisance_parameters": 357,
+      "serial_rho_employment": 0.8,
+      "serial_rho_hours": 0.8,
+      "employment_hours_noise_correlation": 0.778812,
+      "treated_cells_by_event": {
+        "GPT4_LAUNCH": 533,
+        "GPT4O_LAUNCH": 507,
+        "GPT41_LAUNCH": 468,
+        "GPT5_LAUNCH": 507
+      },
+      "low_quality_cps_codes": [
+        "OCC012",
+        "OCC028",
+        "OCC031",
+        "OCC033"
+      ],
+      "employment": {
+        "median_cluster_se_per_0.10_dax": 0.00395551,
+        "mde80_per_0.10_dax": 0.01107542,
+        "baseline_employment_gap": 0.01671557,
+        "approved_mde_threshold": 0.00835778,
+        "adequately_powered": false,
+        "rejection_rate_by_effect": {
+          "-0.13": 1.0,
+          "-0.1": 1.0,
+          "-0.065": 1.0,
+          "-0.04": 1.0,
+          "-0.02": 1.0,
+          "0": 0.065,
+          "0.02": 1.0,
+          "0.04": 1.0,
+          "0.065": 1.0,
+          "0.1": 1.0,
+          "0.13": 1.0
+        }
+      },
+      "hours_unconditional": {
+        "median_cluster_se_per_0.10_dax": 0.11548212,
+        "mde80_per_0.10_dax": 0.32334993,
+        "rejection_rate_by_effect": {
+          "-4": 1.0,
+          "-3": 1.0,
+          "-2": 1.0,
+          "-1": 1.0,
+          "-0.5": 0.99,
+          "0": 0.06,
+          "0.5": 0.995,
+          "1": 1.0,
+          "2": 1.0,
+          "3": 1.0,
+          "4": 1.0
+        }
+      }
+    },
+    {
+      "education_group": "noncollege",
+      "n_stack_cells": 3120,
+      "n_occupation_clusters": 60,
+      "n_nuisance_parameters": 357,
+      "serial_rho_employment": 0.8,
+      "serial_rho_hours": 0.8,
+      "employment_hours_noise_correlation": 0.796887,
+      "treated_cells_by_event": {
+        "GPT4_LAUNCH": 533,
+        "GPT4O_LAUNCH": 507,
+        "GPT41_LAUNCH": 468,
+        "GPT5_LAUNCH": 507
+      },
+      "low_quality_cps_codes": [
+        "OCC012",
+        "OCC028",
+        "OCC031",
+        "OCC033"
+      ],
+      "employment": {
+        "median_cluster_se_per_0.10_dax": 0.00433804,
+        "mde80_per_0.10_dax": 0.01214653,
+        "baseline_employment_gap": 0.0167674,
+        "approved_mde_threshold": 0.0083837,
+        "adequately_powered": false,
+        "rejection_rate_by_effect": {
+          "-0.13": 1.0,
+          "-0.1": 1.0,
+          "-0.065": 1.0,
+          "-0.04": 1.0,
+          "-0.02": 0.995,
+          "0": 0.045,
+          "0.02": 0.99,
+          "0.04": 1.0,
+          "0.065": 1.0,
+          "0.1": 1.0,
+          "0.13": 1.0
+        }
+      },
+      "hours_unconditional": {
+        "median_cluster_se_per_0.10_dax": 0.12513753,
+        "mde80_per_0.10_dax": 0.35038509,
+        "rejection_rate_by_effect": {
+          "-4": 1.0,
+          "-3": 1.0,
+          "-2": 1.0,
+          "-1": 1.0,
+          "-0.5": 0.99,
+          "0": 0.04,
+          "0.5": 0.975,
+          "1": 1.0,
+          "2": 1.0,
+          "3": 1.0,
+          "4": 1.0
+        }
+      }
+    }
+  ]
+}

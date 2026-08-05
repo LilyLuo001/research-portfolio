@@ -15,8 +15,9 @@ def test_w1_draft_is_structurally_coherent():
     assert report["structural_errors"] == []
 
 
-def test_w1_draft_remains_fail_closed_before_pi_signature():
+def test_w1_draft_remains_fail_closed_after_pi_defaults_are_approved():
     report = READINESS.audit()
     assert report["blockers"]
-    assert report["open_decisions"] == list(range(1, 18))
+    assert report["open_decisions"] == []
     assert report["pending_event_locators"]
+    assert report["unchecked_items"] == 4
