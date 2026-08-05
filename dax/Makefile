@@ -5,11 +5,15 @@
 PY := python
 STAGE_MISSING = @echo "stage '$@' not built yet — see docs/DAX_Execution_Plan_with_AI_Agents.md" && exit 2
 
-.PHONY: data map panel index validate firststage_synth outcomes robustness paper guard
+.PHONY: data map panel index validate firststage_synth outcomes robustness paper guard memo_check
 
 guard:  ## verify the pre-registration seal state
 	$(PY) -c "import sys; sys.path.insert(0,'analysis'); import preregistration_guard; print('outcomes UNLOCKED')" \
 	  || echo "outcomes SEALED (expected until GATE 1 tag)"
+
+memo_check:  ## validate the W1 draft and print remaining Gate-1 blockers
+	$(PY) memo/validate_event_registry.py
+	$(PY) memo/validate_w1_readiness.py
 
 data:            ; $(STAGE_MISSING)   # W2: O*NET/OEWS/IPUMS-CPS pulls -> data_raw/ (+checksums), data_built/
 map:             ; $(STAGE_MISSING)   # W3: mapping A/B/C -> mapping/

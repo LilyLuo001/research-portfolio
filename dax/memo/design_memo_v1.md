@@ -44,7 +44,15 @@ snapshots available for measurement. Every date and price requires two
 locators. Announcement-only events without API availability are recorded but
 do not receive an exposure dose until the API-effective date.
 
-### 1.2 Source-complete core events
+### 1.2 Machine-readable registry and source-complete core events
+
+The frozen registry source is `dax/memo/event_registry_v1.csv`. It records
+analysis status separately from evidence status: a `candidate` is chronology,
+not permission to estimate an event. `python dax/memo/validate_event_registry.py`
+fails if IDs or dates are malformed, either locator is absent, sources repeat,
+or an event marked `eligible` lacks verified status. The validator does not
+pretend to read source content; rows marked `pending_second_date_locator`
+remain ineligible until a second source independently dates API availability.
 
 | Event ID | API-effective date | Classification | Evidence 1 | Evidence 2 | Status |
 |---|---|---|---|---|---|
@@ -53,13 +61,19 @@ do not receive an exposure dose until the API-effective date.
 | `O1_PREVIEW` | 2024-09-12 | capability | OpenAI, [Introducing o1-preview](https://openai.com/index/introducing-openai-o1-preview/) | OpenAI API [changelog](https://developers.openai.com/api/docs/changelog) (September 2024) | date verified |
 | `GPT41_LAUNCH` | 2025-04-14 | capability + price | OpenAI, [Introducing GPT-4.1 in the API](https://openai.com/index/gpt-4-1/) | OpenAI API [changelog](https://developers.openai.com/api/docs/changelog) (April 2025) | date and launch prices verified |
 
+The current registry contains 21 dated chronology rows through 2026-08-06:
+four currently eligible core events, sixteen candidates, and the binding
+`gpt-4.5-preview` exclusion. Four candidates are explicitly pending a second
+independent date locator. Candidate status is resolved before Gate 1; W5 later
+applies the signed dose threshold without adding or deleting chronology rows.
+
 ### 1.3 Registry completion queue
 
-The following events are candidates, not filed rows, until two locators and
-dated prices are attached: GPT-4 Turbo/DevDay, GPT-4o mini, full o1, o3-mini,
-o3/o4-mini, GPT-5, GPT-5.4, GPT-5.5, GPT-5.6, and every intervening price
-change. W2 emits the source-complete price-history panel; W1 imports its event
-IDs without changing the rules below.
+Candidate rows now cover GPT-4 Turbo/DevDay, GPT-4o mini, full o1, o3-mini,
+o3/o4-mini, GPT-5-family launches through GPT-5.6, and located price changes.
+They remain non-filed analysis events until the CSV records two date locators
+and W2 attaches dated prices. W2 emits the source-complete price-history panel;
+W1 imports its event IDs without changing the rules below.
 
 The current official deprecations page contains both a historical 2025-09-26
 row saying `gpt-4-1106-preview` shut down on 2026-03-26 and a newer
