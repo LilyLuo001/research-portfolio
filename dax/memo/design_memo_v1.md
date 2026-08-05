@@ -1,6 +1,6 @@
 # Dynamic AI Exposure (DAX): pre-registered design memo v1
 
-**Status:** DRAFT FOR PI DECISION — not pre-registered
+**Status:** PI DEFAULTS APPROVED 2026-08-06 — EVIDENCE PENDING; not pre-registered
 
 **Draft date:** 2026-08-06
 
@@ -9,8 +9,10 @@
 **Outcome-data status:** SEALED until the signed tag `v1.0-preregistered`
 
 This memo translates the DAX proposal and Amendment v1.1 into an executable
-design. Bracketed `[PI-DECISION]` items are proposed defaults, not filed
-commitments. The PI must decide every such item before the tag is created.
+design. The PI approved all 17 bracketed `[PI-DECISION]` defaults and all six
+non-numeric confirmations on 2026-08-06. They are frozen design choices, but
+the tag remains prohibited until the evidence checklist, power task,
+independent red-team, and rendered review are complete.
 
 ## 0. Binding scope and feasibility conditions
 
