@@ -21,8 +21,11 @@ def valid_review():
     return {
         "verdict": "REVISE",
         "gate_recommendation": "BLOCK",
-        "major_issues": [issue, {**issue, "id": "M2"}, {**issue, "id": "M3"}],
-        "minor_issues": [],
+        "major_issues": [issue],
+        "minor_issues": [
+            {**issue, "id": "m1", "severity": "minor"},
+            {**issue, "id": "m2", "severity": "minor"},
+        ],
         "decision_checks": [
             {"decision": number, "implementable": True, "problem": "", "required_change": ""}
             for number in range(1, 18)

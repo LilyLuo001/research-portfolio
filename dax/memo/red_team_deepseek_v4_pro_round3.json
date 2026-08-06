@@ -1,0 +1,225 @@
+{
+  "status": "INDEPENDENT_CROSS_VENDOR_RED_TEAM",
+  "generated_at_utc": "2026-08-06T08:07:39.705984+00:00",
+  "reviewer_vendor": "DeepSeek",
+  "model": "deepseek-v4-pro",
+  "prompt_sha256": "67702e289843632f78cebad1947e8cf87d0385816dec517b474c4a5da86ef3dd",
+  "inputs": {
+    "dax/memo/design_memo_v1.md": "e01a2b51fbe259da0e3468747f0515f20cb6452b31bb0c88c40f040a4b31685a",
+    "dax/memo/PI_DECISIONS_OPEN.md": "7a07d1f76941cb1ee91d35641da1901592abee0102f604e487c4186f94561112",
+    "dax/memo/event_registry_v1.csv": "1b02038991d988ca65b74ad0af27d4c58844d1e588ff916b5ca3fd75f4e92a7e",
+    "dax/memo/event_table_shell_v1.csv": "03be8e7fd7a41f2c6d5ea06ac602fa1775d1f128594eb41aabc4a81f64293c13",
+    "dax/memo/red_team_remediation.md": "a13b218507e102c36433c00065b50c0610294ccbd1a581e693acf50a56873448",
+    "dax/memo/power_calcs/README.md": "3a9fc2ed7d53cf3a6a8678682d1c239cfbc2a0d502e3ae1646172983a9f24d4c",
+    "dax/memo/power_calcs/ipums_preperiod_extract_receipt.json": "1adc4cd39063a6f092b67c15aa6ec246968f3e5576d56d1a1fc1286ba241206e",
+    "dax/memo/power_calcs/synthetic/power_results.json": "ee74effcb3c72f67f287186582a7860ecea8b7801741432672d14e880539c6ae"
+  },
+  "usage": {
+    "prompt_tokens": 14884,
+    "completion_tokens": 3130,
+    "total_tokens": 18014,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 14884
+  },
+  "finish_reason": "stop",
+  "review": {
+    "verdict": "REVISE",
+    "gate_recommendation": "CONDITIONAL_GO",
+    "major_issues": [
+      {
+        "id": "M1",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 1.2 and event_registry_v1.csv",
+        "claim": "The event registry contains 16 candidate events, 4 of which are explicitly 'pending_second_date_locator' and 3 of which have a 'conflict_b' price status. The design memo states that candidates lacking two independent dated locators or a source-complete dated price row at Gate 1 are mechanically reclassified 'source_failed' and excluded. However, the memo does not specify a deterministic, pre-registered rule for resolving 'conflict_b' price status (e.g., GPT54_LAUNCH, GPT54_MINI_NANO_LAUNCH, GPT55_LAUNCH, GPT56_FAMILY_LAUNCH) into a verified price or a source_failed status before W5 dose construction.",
+        "why_it_matters": "Without a mechanical resolution rule for 'conflict_b' price status, the set of events entering the primary stacked analysis is not fully pre-specified. This introduces researcher degrees of freedom at Gate 1, as the decision to include or exclude these events could be influenced by knowledge of their potential dose or eventual outcomes, violating the outcome-seal integrity.",
+        "required_change": "Add a pre-registered rule to Section 1.2 or the registry completion queue that defines how 'conflict_b' price status is resolved at Gate 1. For example: 'An event with conflict_b price status is reclassified as source_failed and excluded from the primary event set unless W2 supplies a single, dated, source-complete price row with a documented resolution of the conflict before Gate 1 freeze. The conflict and its resolution must be recorded in the registry.'"
+      },
+      {
+        "id": "M2",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 3.2 and PI-DECISION 2",
+        "claim": "The window construction rule for compound events (multiple eligible rows in the same calendar month) states: 'compute its dose once from the joint pre-to-post state, so a task changed by multiple components contributes at most one crossing.' The memo does not specify the exact algorithm for computing this 'joint pre-to-post state' from multiple component events with potentially different capability and price changes. It is ambiguous whether the joint state is the logical OR of individual crossings, the maximum dose increment, or some other aggregation.",
+        "why_it_matters": "The dose assigned to a compound event directly determines the treatment variable in the stacked DiD. An ambiguous aggregation rule means the primary regressor is not uniquely defined, making the analysis non-replicable and the pre-registration incomplete. Different aggregation choices could lead to different crossing sets and estimated effects.",
+        "required_change": "Provide a precise, algorithmic definition of the 'joint pre-to-post state' for compound events. For example: 'For a compound event, the joint pre-event state is the state immediately before the earliest component's API-effective date, and the joint post-event state is the state immediately after the latest component's API-effective date. A task crosses if its feasibility status changes from 0 to 1 between these two joint states under the primary grid configuration. The dose increment is the change in the occupation's wage-bill share of crossed tasks.'"
+      },
+      {
+        "id": "M3",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 7 and PI-DECISION 11",
+        "claim": "The power analysis uses synthetic data labeled 'NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST'. The design memo requires the W1 power task to 'simulate the exact stacked structure using pre-event CPS moments only' and to use 'IPUMS-CPS occupation-month-education moments dated before 2023-03-01'. The provided synthetic power results do not satisfy this requirement, as they are based on synthetic inputs, not the actual pre-event CPS moments from the completed IPUMS extract 6.",
+        "why_it_matters": "The PI-approved power standards (Decision 11) are binding for the confirmatory interpretation of outcomes. Without an empirical power analysis using the actual pre-event data, the design cannot be certified as adequately powered before Gate 1. The synthetic smoke test explicitly states it 'cannot satisfy Gate 1', leaving a critical evidence gap.",
+        "required_change": "Run the power simulation using the actual pre-event CPS moments from the completed IPUMS extract 6 (receipt provided) and the frozen event-dose schema. Replace the synthetic power results with the empirical results. If the empirical power analysis shows the design is not adequately powered per Decision 11, the memo must explicitly activate the 'informative-power limitation' clause and the PI must reconsider the design before Gate 1."
+      }
+    ],
+    "minor_issues": [
+      {
+        "id": "m1",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 1.2",
+        "claim": "The registry lists GPT4_TURBO_PREVIEW as a 'candidate' with 'pending_w2' price status, but the feasibility memo notes a provenance conflict for its deprecation date. The design memo states W4 must test actual availability, but does not specify how a failure of availability (i.e., the model is already shut down before W4 capture) affects its candidate status or dose construction.",
+        "why_it_matters": "If the model is unavailable for measurement, its capability cannot be assessed, and its dose cannot be constructed. The current rule only covers reclassification for missing locators or prices, not for measurement failure due to early shutdown.",
+        "required_change": "Add a rule: 'If W4 determines that a candidate event's model snapshot is no longer accessible for measurement before the capture deadline, the event is reclassified as source_failed with reason measurement_unavailable and excluded from the primary event set.'"
+      },
+      {
+        "id": "m2",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 6.2",
+        "claim": "The first-stage analysis uses a normalized outcome '100 * (share_iet / premean_ie - 1)'. The memo does not specify how to handle cells where the pre-event mean share is zero, which would lead to division by zero.",
+        "why_it_matters": "This is a mechanical edge case that could cause the first-stage pipeline to fail or produce undefined values. While likely rare for classified task cells, it must be handled deterministically.",
+        "required_change": "Specify a rule for zero pre-event mean shares. For example: 'Cells with a pre-event mean share of exactly zero are excluded from the first-stage analysis, and their count and wage-bill weight are reported. If this exclusion causes the minimum estimability condition (Decision 13) to fail, the first stage is not interpreted.'"
+      },
+      {
+        "id": "m3",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 10.3",
+        "claim": "The minimum-distance delta calibration uses weights that are 'inverse estimated variances of observed jumps'. The memo does not specify how these variances are estimated, particularly given the small number of events and the complex stacked design.",
+        "why_it_matters": "The choice of variance estimator (e.g., cluster-robust, bootstrap, analytical) can affect the weights and thus the delta_hat estimate. While this is a post-first-stage calibration, the method should be pre-specified to avoid cherry-picking.",
+        "required_change": "Specify the variance estimator for the observed jumps. For example: 'The variance of each observed jump J_obs_e is estimated using a cluster-robust variance estimator at the occupation level from the first-stage regression of the normalized usage outcome on event-time indicators interacted with the crossing indicator.'"
+      }
+    ],
+    "decision_checks": [
+      {
+        "decision": 1,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 2,
+        "implementable": false,
+        "problem": "The rule for computing the 'joint pre-to-post state' for compound events is not algorithmically specified. See major issue M2.",
+        "required_change": "Provide a precise algorithmic definition of the joint state and resulting dose increment for compound events."
+      },
+      {
+        "decision": 3,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 4,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 5,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 6,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 7,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 8,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 9,
+        "implementable": false,
+        "problem": "The first-stage normalized outcome is undefined for cells with a zero pre-event mean share. See minor issue m2.",
+        "required_change": "Specify a rule for handling zero pre-event mean shares, such as exclusion with reporting."
+      },
+      {
+        "decision": 10,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 11,
+        "implementable": false,
+        "problem": "The power analysis has not been run on the actual pre-event CPS moments; only a synthetic smoke test exists. See major issue M3.",
+        "required_change": "Run the empirical power analysis using the completed IPUMS extract 6 and replace the synthetic results."
+      },
+      {
+        "decision": 12,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 13,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 14,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 15,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 16,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 17,
+        "implementable": false,
+        "problem": "The variance estimator for the observed jumps used in the calibration weights is not specified. See minor issue m3.",
+        "required_change": "Specify the variance estimator for J_obs_e, such as a cluster-robust estimator from the first-stage regression."
+      }
+    ],
+    "evidence_gap_checks": [
+      {
+        "item": "registry",
+        "satisfied": false,
+        "reason": "The registry contains 4 events with 'pending_second_date_locator' and 3 events with 'conflict_b' price status. The Gate-1 freeze rule for 'conflict_b' is not defined (M1), and the registry is not yet source-complete."
+      },
+      {
+        "item": "empirical_power",
+        "satisfied": false,
+        "reason": "The provided power results are from a synthetic smoke test explicitly labeled 'NOT_EVIDENCE'. The empirical power analysis using the actual pre-event CPS moments from IPUMS extract 6 has not been completed (M3)."
+      },
+      {
+        "item": "red_team",
+        "satisfied": true,
+        "reason": "The red_team_remediation.md log documents two rounds of independent review with specific findings and resolutions. The log is consistent with the design memo and does not claim to complete other evidence items."
+      },
+      {
+        "item": "pi_pdf_review",
+        "satisfied": false,
+        "reason": "The PI_DECISIONS_OPEN.md document states the PI approved all 17 decisions and 6 confirmations, but the evidence checklist item 'Rendered PDF reviewed line by line by PI' remains unchecked. No evidence of a line-by-line PDF review is provided in the packet."
+      }
+    ],
+    "outcome_seal_assessment": "The outcome-data seal is formally maintained: the design memo states outcomes are SEALED until the signed tag 'v1.0-preregistered', and no post-event outcome data or real usage aggregates are present in the packet. However, the seal's integrity is contingent on the Gate-1 freeze being complete and deterministic. The unresolved 'conflict_b' price status (M1) and the missing empirical power analysis (M3) mean the pre-registration is not yet fully specified, which could allow post-outcome design choices that effectively break the seal.",
+    "required_changes_before_gate": [
+      "Define a mechanical resolution rule for 'conflict_b' price status in the event registry to determine inclusion/exclusion at Gate 1 (M1).",
+      "Provide an algorithmic definition of the 'joint pre-to-post state' and resulting dose increment for compound events (M2).",
+      "Complete the empirical power analysis using the actual pre-event CPS moments from IPUMS extract 6 and replace the synthetic results; if power is inadequate, activate the informative-power limitation clause (M3).",
+      "Specify a rule for handling zero pre-event mean shares in the first-stage normalized outcome (m2).",
+      "Specify the variance estimator for observed jumps in the delta calibration weights (m3).",
+      "Add a rule for reclassifying candidate events whose model snapshots are unavailable for W4 measurement (m1)."
+    ],
+    "nonblocking_followups": [
+      "Verify that the IPUMS pre-period extract 6 contains all necessary moments (employment-hours covariance, within-code dose SD, max crosswalk weight) as specified in the power calc README.",
+      "Confirm that the W2 price-history panel will resolve all 'pending_w2' and 'conflict_b' price statuses with dated, source-complete rows before Gate 1.",
+      "Ensure the PI completes the line-by-line PDF review and the evidence checklist is updated before the 'v1.0-preregistered' tag is created.",
+      "Validate that the event_table_shell_v1.csv is mechanically fillable by W5 without ambiguity, especially the 'window_start' and 'window_end' fields given the compound-event and midpoint-trimming rules."
+    ]
+  }
+}

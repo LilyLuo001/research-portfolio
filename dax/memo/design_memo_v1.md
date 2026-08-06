@@ -72,6 +72,22 @@ The mechanically fillable event-by-event table is frozen in
 `event_table_shell_v1.csv`. W5 may fill only its blank window, crossing-count,
 dose-distribution, and effective-weight fields after applying Decisions 1--3;
 it may not change event IDs, dates, thresholds, or column definitions.
+At the Gate-1 freeze, any candidate still lacking two independent dated
+locators or a source-complete dated price row is mechanically reclassified
+`source_failed` and excluded from the primary event set. It remains in the
+chronology with the failed source fields and exclusion reason; it cannot be
+restored after outcomes open except through a dated deviation memo.
+This rule includes every unresolved `conflict_b`: W2 must select the price row
+supported by two independent dated locators and archive the conflicting rows,
+or the event becomes `source_failed`; averaging or choosing the lower price is
+prohibited. If W4 cannot recover either a qualifying historical snapshot or a
+feasibility-approved cited stand-in, the event is likewise excluded as
+`measurement_failed` and retained only in the descriptive chronology.
+Registry price status `relative_price_verified` means that two locators verify
+a relative price change but W2 has not yet attached the absolute pre/post price
+rows needed for dose construction; it is therefore not source-complete at
+Gate 1 unless W2 supplies those rows. `pending_w2` has no verified price change,
+and `n_a` is allowed only for a capability-only event whose price is unchanged.
 
 ### 1.3 Registry completion queue
 
@@ -142,17 +158,54 @@ window.
 
 ### 3.2 Four stacking parameters
 
-**[PI-DECISION 2] Window default.** Use event time `[-6,+6]` months, then trim
-each side at the midpoint to the adjacent eligible AI event. Retain an event
-only if at least three uncontaminated pre months and three uncontaminated post
-months remain. This preserves useful dynamics while making overlap rules
-mechanical.
+**[PI-DECISION 2] Window default.** Convert each API-effective date to its CPS
+calendar month and start with event time `[-6,+6]`. If multiple eligible rows
+fall in the same calendar month, replace them in the adjacency set with one
+compound labor-market event whose event-time origin is the first day of that
+CPS calendar month. Compute its dose once from the joint pre-to-post state, so
+a task changed by multiple components contributes at most one crossing; retain
+the component rows and exact API dates only in descriptive tables. For each
+remaining monthly event, retain a month
+on the pre side only when its integer month distance to the focal event is
+strictly smaller than its distance to the previous eligible event, and retain
+a month on the post side only when its distance to the focal event is strictly
+smaller than its distance to the next eligible event. A calendar month exactly
+equidistant between two events is excluded from both windows. Intersect these
+sets with `[-6,+6]`, then retain an event only if at least three uncontaminated
+pre months and three uncontaminated post months remain. For example, two April
+component rows and two December component rows become April 1 and December 1
+compound origins; the four components are removed from adjacency. The origins
+are eight month indices apart, so August is the tied midpoint and is excluded;
+April keeps May--July and December keeps September--November on their adjacent
+sides.
+
+The compound-state algorithm is mechanical: order components by exact
+API-effective timestamp and then `event_id`; define the pre state immediately
+before the first component; sequentially apply each verified capability,
+snapshot-availability, and price change; and define the post state immediately
+after the last component. Recompute `A_tom` on those two states for every task
+and set the compound `DeltaDAX` to the wage-bill share changing from zero to
+one. A one-to-zero change remains only in the signed non-monotone diagnostic.
 
 **[PI-DECISION 3] Minimum occupation dose default.** Define a treated
 occupation-event cell as `DeltaDAX >= 0.01`; retain smaller positive doses in
 continuous-dose estimation but exclude them from treated-bin summaries. One
 percentage point is economically interpretable and limits classification noise
 near zero.
+
+The Decision-1/Decision-3 order is fixed. W5 first computes raw, unthresholded
+`DeltaDAX` for every source-verified candidate using the frozen task panel,
+before windows or treated bins are constructed. Decision 1 is then evaluated
+on the unweighted median of those raw occupation-level wage-bill shares across
+mapped CPS occupation codes. Only events passing that eligibility rule enter
+the adjacency set used by Decision 2. Decision 3 is applied last and only to
+treated-bin summaries; values in `(0,0.01)` remain in the continuous regressor.
+Because Decisions 1 and 3 use the same weak threshold, every evaluable event
+passing Decision 1 necessarily has at least half of its mapped CPS occupations
+in the treated bin under the registered sample-median convention. An event
+with no mapped occupation has no defined median, fails Decision 1, and remains
+descriptive; no threshold is lowered. All Decision-1 passers enter the
+continuous-dose regression.
 
 **[PI-DECISION 4] Dose accumulation default.** The primary event coefficient
 uses the event increment `DeltaDAX_oe`, not the cumulative DAX level. Current
@@ -239,10 +292,24 @@ post-hoc pass thresholds except those explicitly added by PI signature.
 The named human team alone runs frozen code on real OpenAI aggregates. The
 agent-developed pipeline sees synthetic data only.
 
-**[PI-DECISION 9] Minimum behavioral effect.** Success requires a post-crossing
-increase of at least 5% relative to the cell's pre-event mean within-month
-usage share, with the pooled 90% confidence interval excluding zero. Asking to
-Doing composition is a mechanism outcome; default materiality is a two
+The first-stage unit is frozen O*NET task-or-IWA cell by event by calendar
+month. For cell `i` and month `t`, within-month usage share is the number of
+classified eligible ChatGPT messages assigned to `i` divided by all classified
+eligible messages in the same negotiated product population and calendar
+month, before cell suppression. For event `e`, the pre-event mean is the simple
+arithmetic mean of that share over every surviving clean pre month for which
+the cell is observed; the complete-case rule in Section 8 requires observation
+in all required pre and post months. The normalized outcome is
+`100 * (share_iet / premean_ie - 1)`.
+If `premean_ie=0`, the normalized outcome is undefined and the cell is excluded
+from the normalized first stage rather than regularized. Its raw share path is
+reported as an auxiliary diagnostic, along with the excluded task-mass share.
+
+**[PI-DECISION 9] Minimum behavioral effect.** Success requires the pooled
+post-crossing coefficient on that normalized outcome to be at least 5, meaning
+a 5% relative usage-share increase, with its 90% confidence interval excluding
+zero. Event-time coefficients remain required diagnostics. Asking-to-Doing
+composition is a mechanism outcome; default materiality is a two
 percentage-point increase in Doing share, reported with uncertainty but not a
 separate gate.
 
@@ -256,6 +323,15 @@ not the binding adoption margin.
 Population: U.S. persons ages 22–25 in monthly IPUMS-CPS, November 2021 through
 the latest frozen month, using person weights. Dose assignment occurs at the
 CPS occupation code after employment-weighted crosswalking to O*NET-SOC.
+For each event stack, a person's reference occupation is the most recent valid
+CPS occupation observed for the same `CPSIDP` strictly before the event month
+and no more than 15 calendar months earlier;
+that reference is held fixed throughout the stack. This preserves unemployed
+respondents and prevents an event-induced occupation change from redefining
+treatment. A person with no valid pre-event occupation observation is excluded
+from that event stack, and the exclusion count, weighted share, and lookback-
+duration distribution are reported. A registered robustness check caps the
+lookback at nine calendar months.
 
 Primary outcomes:
 
@@ -286,6 +362,11 @@ if the employment MDE is no larger than 6.5 percentage points or one-half of
 the corresponding baseline employment gap, whichever is smaller. Failure does
 not authorize sample/specification search; it triggers the proposal's
 informative-power limitation and reconsideration by the PI.
+For unconditional hours, also report the weighted pre-event high-dose versus
+zero-dose baseline gap. Its 80% MDE for a 0.10 DAX increase must be no larger
+than two hours per week or one-half of that baseline gap, whichever is smaller.
+If either co-primary outcome fails its standard, that outcome is retained and
+reported as informative but cannot receive confirmatory interpretation.
 
 Every output reports CPS-to-O*NET dose dispersion. **[PI-DECISION 12]** Flag a
 CPS code as low-quality when the weighted within-code standard deviation of
@@ -304,8 +385,11 @@ use only publicly described suppression predictors and is labeled secondary.
 only if: (a) observed cells cover at least 70% of the wage-bill-weighted crossed
 task mass; (b) at least 50 occupation/task cells remain; (c) at least three
 eligible events remain; and (d) no single event contributes more than 50% of
-the effective estimation weight. Otherwise report selection and MDEs without
-an effect interpretation.
+the effective estimation weight. For event `e`, that weight share is
+`sum_i w_ie * x_tilde_ie^2 / sum_j sum_i w_ij * x_tilde_ij^2`, where `w` is
+the event-normalized CPS person weight and `x_tilde` is the primary continuous
+dose-by-post regressor residualized on the complete frozen nuisance design.
+Otherwise report selection and MDEs without an effect interpretation.
 
 Only the PI and named RA may open or run code on real usage aggregates. The
 repository stores schemas, synthetic data, frozen code, and aggregate cleared
@@ -349,9 +433,16 @@ least at task and occupation-correlated levels, and rederive crossings.
 **[PI-DECISION 15] EIV acceptable bounds.** Before outcome work, require median
 absolute crossing-date shift no greater than one month, 90th-percentile shift
 no greater than three months, no more than 10% of occupation-event cells
-changing dose bin, and implied linear attenuation no worse than 0.80. Exceeding
-any bound does not permit selecting a quieter mapping; it triggers redesign or
-an explicitly weakened estimand.
+changing dose bin, and implied linear attenuation no worse than 0.80. In each
+EIV draw, construct the exact frozen stack and residualize both the unperturbed
+dose-by-post regressor `x_true` and perturbed regressor `x_obs` on the same
+nuisance matrix with the same event-normalized weights. The draw-specific
+attenuation factor is the weighted slope
+`Cov_w(x_obs_tilde,x_true_tilde) / Var_w(x_obs_tilde)`: the coefficient obtained
+from outcome-on-observed-dose when the true coefficient is one and no sampling
+noise is added. The 0.80 bound applies to the median factor across draws; report
+its 5th--95th percentile interval. Exceeding any bound does not permit selecting
+a quieter mapping; it triggers redesign or an explicitly weakened estimand.
 
 ### 10.2 Cross-mapping IV
 
@@ -377,6 +468,12 @@ where `J_pred_e(d)` is recomputed through the full crossing pipeline and
 weights are inverse estimated variances of observed jumps. Bootstrap resamples
 the eligible usage cells and events. This calibration is post-first-stage and
 cannot change this paper's primary grid `{1.0, 0.8, 0.6}`.
+Estimate each jump variance with a pre-registered two-way pigeonhole bootstrap:
+1,000 draws independently resample eligible task/IWA cells and eligible events
+with replacement, rerun the frozen first stage, and use the sample variance of
+the resulting event-specific jump. Set weight to the reciprocal of that
+variance, winsorized at the frozen 1st and 99th percentiles; a zero or
+non-estimable variance excludes that event from calibration and is reported.
 
 **[PI-DECISION 17] Calibration reporting.** Search a 0.01 delta grid on `[0,1]`,
 report the minimizer and percentile 95% bootstrap interval, and label estimates

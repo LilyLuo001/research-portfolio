@@ -1,0 +1,214 @@
+{
+  "status": "INDEPENDENT_CROSS_VENDOR_RED_TEAM",
+  "generated_at_utc": "2026-08-06T06:09:38.569357+00:00",
+  "reviewer_vendor": "DeepSeek",
+  "model": "deepseek-v4-pro",
+  "prompt_sha256": "342d6ade1177f5a141a99a4269c78d45cdf3450327b649323054eb660ca987cc",
+  "inputs": {
+    "dax/memo/design_memo_v1.md": "e16f0936996d424a7715319d424e3493810e38652e43fba0aeab348a5859f11c",
+    "dax/memo/PI_DECISIONS_OPEN.md": "7a07d1f76941cb1ee91d35641da1901592abee0102f604e487c4186f94561112",
+    "dax/memo/event_registry_v1.csv": "1b02038991d988ca65b74ad0af27d4c58844d1e588ff916b5ca3fd75f4e92a7e",
+    "dax/memo/event_table_shell_v1.csv": "03be8e7fd7a41f2c6d5ea06ac602fa1775d1f128594eb41aabc4a81f64293c13",
+    "dax/memo/power_calcs/README.md": "3a9fc2ed7d53cf3a6a8678682d1c239cfbc2a0d502e3ae1646172983a9f24d4c",
+    "dax/memo/power_calcs/synthetic/power_results.json": "46445daffd17195dcb2fa3b757814b27b6a1d18ecd989b16305c26ee6878769f"
+  },
+  "usage": {
+    "prompt_tokens": 12583,
+    "completion_tokens": 2470,
+    "total_tokens": 15053,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 12583
+  },
+  "finish_reason": "stop",
+  "review": {
+    "verdict": "REVISE",
+    "gate_recommendation": "BLOCK",
+    "major_issues": [
+      {
+        "id": "M1",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 3.2, PI-DECISION 2",
+        "claim": "The window trimming rule 'trim each side at the midpoint to the adjacent eligible AI event' is mechanically ambiguous and non-implementable without further specification.",
+        "why_it_matters": "The window definition directly determines which months are included in the pre- and post-event periods, affecting dose assignment, control group composition, and the interpretation of event-specific coefficients. An ambiguous rule cannot be mechanically applied by W5, risking ad-hoc decisions that break the pre-registration.",
+        "required_change": "Provide a precise, algorithmic definition of 'midpoint to the adjacent eligible AI event.' Specify whether the midpoint is calculated in days or months, how it is rounded, and how it interacts with the [-6,+6] cap when adjacent events are less than 12 months apart. Include a worked example in the memo."
+      },
+      {
+        "id": "M2",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 3.2, PI-DECISION 3 and Section 3.1",
+        "claim": "The treated-bin minimum dose threshold (DeltaDAX >= 0.01) and the event eligibility threshold (median-occupation wage-bill dose >= 0.01) are conflated and create a logical circularity.",
+        "why_it_matters": "Event eligibility (Decision 1) depends on the median occupation dose, which is a summary of the DeltaDAX distribution. However, DeltaDAX itself is only defined after the event is included and its window is set. The memo does not specify whether the eligibility check uses a preliminary, un-thresholded dose calculation or the final thresholded one. This circularity could lead to events being incorrectly included or excluded.",
+        "required_change": "Clarify the sequence: specify that a preliminary, un-thresholded DeltaDAX is calculated for all candidate events using the full window to determine eligibility. Then, apply the 0.01 threshold for treated-bin summaries only to events that pass the eligibility check. Alternatively, define a separate, pre-dose eligibility metric."
+      },
+      {
+        "id": "M3",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 7 and dax/memo/power_calcs/synthetic/power_results.json",
+        "claim": "The power analysis is based on synthetic data explicitly labeled 'NOT_EVIDENCE' and cannot satisfy the Gate 1 requirement for empirical power confirmation.",
+        "why_it_matters": "The design memo (Section 7) and the evidence checklist (PI_DECISIONS_OPEN.md) require a W1 power simulation on pre-event CPS moments. The provided synthetic output is a smoke test with no connection to real CPS data. The entire power justification for the sample size, MDEs, and the Decision 11 adequacy test is therefore unsubstantiated. The study may be severely underpowered for the primary employment outcome in subgroups, as the synthetic data already suggests for college and non-college samples.",
+        "required_change": "Replace the synthetic power results with a simulation using actual pre-event CPS moments from the specified period (before 2023-03-01). The simulation must strictly follow the design: use real occupation cluster sizes, person weights, crosswalk dose dispersion, and the observed covariance structure. The current synthetic file must be removed or clearly quarantined from the evidence trail."
+      }
+    ],
+    "minor_issues": [
+      {
+        "id": "m1",
+        "severity": "minor",
+        "location": "dax/memo/event_registry_v1.csv",
+        "claim": "The event registry contains four events with 'pending_second_date_locator' status, which blocks their eligibility but the memo does not specify a deadline or fallback procedure if the second locator is never found.",
+        "why_it_matters": "These events (O3_PRICE_CUT, GPT56_FAMILY_LAUNCH, etc.) are recent and potentially high-impact. An indefinite 'pending' status creates uncertainty about the final event set and the timeline for Gate 1 completion.",
+        "required_change": "Add a rule to the memo: if a second independent date locator is not located by a specific date (e.g., the Gate 1 deadline), the event is permanently excluded from the primary analysis and moved to a 'source_failed' status. Its exclusion must be documented."
+      },
+      {
+        "id": "m2",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 6.2, PI-DECISION 9",
+        "claim": "The minimum behavioral effect for the first stage is defined as a 5% relative increase in usage share, but the unit of analysis (occupation-task-month?) and the exact denominator for the 'cell's pre-event mean' are not specified.",
+        "why_it_matters": "The first stage is a critical validation step. Ambiguity in the calculation could lead to post-hoc choices that affect whether the test is passed.",
+        "required_change": "Define the exact cell (e.g., occupation-by-task-by-month) and the precise formula for the pre-event mean (e.g., simple average over the clean pre-event window months)."
+      }
+    ],
+    "decision_checks": [
+      {
+        "decision": 1,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 2,
+        "implementable": false,
+        "problem": "The 'midpoint to the adjacent eligible AI event' trimming rule is not mechanically defined. See major issue M1.",
+        "required_change": "Provide an algorithmic definition with rounding rules and a worked example."
+      },
+      {
+        "decision": 3,
+        "implementable": false,
+        "problem": "The 0.01 threshold for treated bins is defined on DeltaDAX, but its relationship to the event eligibility check in Decision 1 is circular. See major issue M2.",
+        "required_change": "Clarify the sequence of operations to break the circularity."
+      },
+      {
+        "decision": 4,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 5,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 6,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 7,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 8,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 9,
+        "implementable": false,
+        "problem": "The cell definition for the usage share calculation is ambiguous. See minor issue m2.",
+        "required_change": "Specify the exact cell and pre-event mean formula."
+      },
+      {
+        "decision": 10,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 11,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 12,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 13,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 14,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 15,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 16,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 17,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      }
+    ],
+    "evidence_gap_checks": [
+      {
+        "item": "registry",
+        "satisfied": false,
+        "reason": "The registry is incomplete. Four events have 'pending_second_date_locator' status, and all events except those with relative price verification have 'pending_w2' price status. The evidence checklist requires a 'Complete two-source event and price registry through 2026-08-06'."
+      },
+      {
+        "item": "empirical_power",
+        "satisfied": false,
+        "reason": "The provided power results are from a synthetic smoke test explicitly labeled 'NOT_EVIDENCE'. The checklist requires a 'W1 power simulation on pre-event CPS moments', which has not been performed."
+      },
+      {
+        "item": "red_team",
+        "satisfied": false,
+        "reason": "The evidence checklist in PI_DECISIONS_OPEN.md lists 'Independent cross-vendor red-team of the completed memo' as a required item. This review is that red-team, and its existence does not satisfy the item; the item is satisfied when the review is completed and its findings are addressed. The packet contains no evidence of a prior red-team review."
+      },
+      {
+        "item": "pi_pdf_review",
+        "satisfied": false,
+        "reason": "The checklist requires a 'Rendered PDF reviewed line by line by PI.' The packet contains markdown files and a CSV, not a rendered PDF, and there is no PI signature or confirmation of a line-by-line review of the final document."
+      }
+    ],
+    "outcome_seal_assessment": "The outcome data is declared SEALED until the signed tag 'v1.0-preregistered'. The memo describes a fail-closed guard on 'analysis/outcomes/'. This is a sound procedural seal. However, the seal's integrity is contingent on the pre-registration tag not being applied before the identified major issues are resolved, as the current design is not fully specified.",
+    "required_changes_before_gate": [
+      "Resolve the mechanical ambiguity in the event window trimming rule (PI-DECISION 2) by providing a precise algorithm.",
+      "Resolve the logical circularity between event eligibility (PI-DECISION 1) and the treated-bin dose threshold (PI-DECISION 3) by specifying the sequence of calculations.",
+      "Replace the synthetic power analysis with a valid simulation using real pre-event CPS moments, as required by the design memo and evidence checklist.",
+      "Complete the event registry by resolving all 'pending_second_date_locator' and 'pending_w2' statuses, or implement a documented exclusion rule for unresolved items.",
+      "Clarify the cell definition for the behavioral first stage calculation (PI-DECISION 9)."
+    ],
+    "nonblocking_followups": [
+      "Verify that the W4 capture plan for retired models with conflicting deprecation dates (gpt-4-1106-preview) is robust and tested before the shutdown date.",
+      "Ensure the crosswalk from CPS to O*NET-SOC is frozen and its quality flags (Decision 12) are pre-computed before outcome analysis.",
+      "Confirm that the 'survive-all-three' mapping rule is applied to the point estimate sign and not to statistical significance, as the text could be interpreted either way.",
+      "Specify the exact procedure for normalizing person weights to sum to one within each event stack, particularly how it interacts with the trimmed windows."
+    ]
+  }
+}

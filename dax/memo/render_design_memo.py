@@ -126,17 +126,17 @@ def make_styles():
             "DAXBody",
             parent=base["BodyText"],
             fontName="DAXArial",
-            fontSize=8.2,
-            leading=10.6,
-            spaceAfter=5,
+            fontSize=7.5,
+            leading=9.1,
+            spaceAfter=3,
             textColor=colors.HexColor("#20262b"),
         ),
         "bullet": ParagraphStyle(
             "DAXBullet",
             parent=base["BodyText"],
             fontName="DAXArial",
-            fontSize=8.2,
-            leading=10.6,
+            fontSize=7.5,
+            leading=9.1,
             leftIndent=15,
             firstLineIndent=-9,
             spaceAfter=3,
@@ -145,8 +145,8 @@ def make_styles():
             "DAXNumbered",
             parent=base["BodyText"],
             fontName="DAXArial",
-            fontSize=8.2,
-            leading=10.6,
+            fontSize=7.5,
+            leading=9.1,
             leftIndent=17,
             firstLineIndent=-12,
             spaceAfter=3,
@@ -295,11 +295,11 @@ def page_frame(canvas, document) -> None:
     width, height = letter
     canvas.setStrokeColor(colors.HexColor("#b8c4cc"))
     canvas.setLineWidth(0.4)
-    canvas.line(0.65 * inch, 0.52 * inch, width - 0.65 * inch, 0.52 * inch)
+    canvas.line(0.55 * inch, 0.49 * inch, width - 0.55 * inch, 0.49 * inch)
     canvas.setFont("DAXArial", 7)
     canvas.setFillColor(colors.HexColor("#5c6870"))
-    canvas.drawString(0.65 * inch, 0.34 * inch, "DAX design memo v1 - PI defaults approved; evidence pending")
-    canvas.drawRightString(width - 0.65 * inch, 0.34 * inch, f"Page {document.page}")
+    canvas.drawString(0.55 * inch, 0.31 * inch, "DAX design memo v1 - PI defaults approved; evidence pending")
+    canvas.drawRightString(width - 0.55 * inch, 0.31 * inch, f"Page {document.page}")
     canvas.restoreState()
 
 
@@ -310,10 +310,10 @@ def render(source: pathlib.Path, output: pathlib.Path) -> None:
     document = SimpleDocTemplate(
         str(output),
         pagesize=letter,
-        rightMargin=0.65 * inch,
-        leftMargin=0.65 * inch,
-        topMargin=0.62 * inch,
-        bottomMargin=0.67 * inch,
+        rightMargin=0.55 * inch,
+        leftMargin=0.55 * inch,
+        topMargin=0.55 * inch,
+        bottomMargin=0.62 * inch,
         title="Dynamic AI Exposure (DAX): pre-registered design memo v1",
         author="DAX research team",
         subject="PI-approved design defaults; Gate-1 evidence pending",

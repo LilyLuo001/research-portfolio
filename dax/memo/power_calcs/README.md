@@ -10,6 +10,23 @@ opening post-event outcomes. The empirical run requires two inputs:
 Until those inputs exist, `make synthetic_power` runs a deterministic smoke
 test. Its output is labeled `NOT_EVIDENCE` and cannot satisfy Gate 1.
 
+## Frozen IPUMS pre-period extract
+
+`ipums_preperiod_extract_v1.json` freezes the 16 monthly CPS samples from
+2021-11 through 2023-02, ages 22--25, and the variables needed for panel
+occupation assignment and the two primary outcomes. `ipums_extract.py`
+validates that no post-event or March ASEC sample enters before it submits,
+monitors, or downloads an extract. The committed receipt contains only the
+extract number, status, hashes, sizes, and errors; API keys, download URLs,
+email, and raw microdata are prohibited from the repository.
+
+IPUMS extract 6 completed on 2026-08-06 and its data/codebook checksums are in
+`ipums_preperiod_extract_receipt.json`. The compressed microdata remains in
+private SCC storage. Completion of this download is not the empirical-power
+evidence item: W5 must first supply the frozen real occupation-event dose panel,
+after which the exact pre-event moment table and registered power run can be
+produced without opening post-event outcomes.
+
 ## Pre-period cell schema
 
 | Field | Meaning |

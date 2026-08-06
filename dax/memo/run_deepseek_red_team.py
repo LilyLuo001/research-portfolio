@@ -18,7 +18,9 @@ INPUTS = [
     HERE / "PI_DECISIONS_OPEN.md",
     HERE / "event_registry_v1.csv",
     HERE / "event_table_shell_v1.csv",
+    HERE / "red_team_remediation.md",
     HERE / "power_calcs" / "README.md",
+    HERE / "power_calcs" / "ipums_preperiod_extract_receipt.json",
     HERE / "power_calcs" / "synthetic" / "power_results.json",
 ]
 
@@ -48,9 +50,10 @@ Attack identification, estimability, internal consistency, outcome-seal
 integrity, event provenance, power logic, multiple testing, window overlap,
 continuous-dose interpretation, crosswalk measurement error, and whether each
 of PI Decisions 1 through 17 is mechanically implementable. Be specific and
-unpleasantly rigorous. A useful review must contain at least three substantive
-major issues even if the overall recommendation is GO. Do not spend space on
-praise.
+unpleasantly rigorous. Return at least three substantive issue objects in
+total; classify an issue as major only when it actually requires a change
+before Gate 1, and otherwise classify it as minor. A PASS or GO review may
+have zero major issues. Do not spend space on praise.
 
 Return exactly one JSON object whose sole top-level key is W1_REVIEW. Its value
 must have this schema:
@@ -88,10 +91,13 @@ def validate_review(review: object) -> dict[str, object]:
     if review.get("gate_recommendation") not in {"BLOCK", "CONDITIONAL_GO", "GO"}:
         raise ValueError("invalid gate_recommendation")
     majors = review.get("major_issues")
-    if not isinstance(majors, list) or len(majors) < 3:
-        raise ValueError("red-team must return at least three major issues")
+    minors = review.get("minor_issues")
+    if not isinstance(majors, list) or not isinstance(minors, list):
+        raise ValueError("red-team issue lists are malformed")
+    if len(majors) + len(minors) < 3:
+        raise ValueError("red-team must return at least three substantive issues")
     issue_fields = {"id", "severity", "location", "claim", "why_it_matters", "required_change"}
-    for issue in majors + list(review.get("minor_issues") or []):
+    for issue in majors + minors:
         if not isinstance(issue, dict) or not issue_fields <= set(issue):
             raise ValueError("issue object does not match the required schema")
     checks = review.get("decision_checks")
