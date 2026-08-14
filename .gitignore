@@ -31,3 +31,6 @@ p1/edgar_filings/*
 p1/t2_free/cache/
 # transient stdout dumps from detached runs (the FileHandler log is tracked)
 p1/t2_free/*.out
+
+# W2 price harvester: local blobless mirror of the third-party price table
+dax/data_raw/_litellm_mirror/
