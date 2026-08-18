@@ -31,7 +31,7 @@ def test_fresh_red_team_blockers_are_machine_enforced():
     assert "power benchmark is not frozen from a verified dated locator" in blockers
     assert "entrant companion is demoted to exploratory" in blockers
     assert "real-dose residualized identification gate has not run" in blockers
-    assert "person-level empirical power receipt is missing" in blockers
+    assert "person-level empirical power gate did not pass" in blockers
 
 
 def test_red_team_item_is_unchecked_after_the_d1_design_change():

@@ -4,8 +4,8 @@ D1 (dax/memo/PI_DECISION_D1_2026-08-18.md) demoted this design to corroboration
 only; the confirmatory analysis is simulate_power_continuous.py. This engine
 also still gives every event a full [-6,+6] window and does NOT implement the
 memo section 3.2 adjacency rule (see dax/tests/test_window_survival.py), so its
-event set is wider than the stack rule permits. Treat its output as an upper
-bound on the secondary design's power, not as a result.
+event set is wider than the stack rule permits. Its cell-level output has no
+proved ordering relative to person-level power and is not Gate-1 evidence.
 Pre-event-only power simulation for the DAX stacked dose design."""
 
 from __future__ import annotations

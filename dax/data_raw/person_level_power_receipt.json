@@ -1,0 +1,62 @@
+{
+  "status": "PENDING_W5_DOSE_PANEL",
+  "gate_1_pass": false,
+  "unit": "person-month",
+  "cps_pre_event_contract": {
+    "rows": 71322,
+    "start_month": "2021-11",
+    "end_month": "2023-02",
+    "age_min": 22,
+    "age_max": 25,
+    "post_event_rows": 0
+  },
+  "cps_extract_name": "cps_extract.parquet",
+  "w5_dose_panel_name": "w5_dose_panel.parquet",
+  "w5_dose_panel_present": false,
+  "benchmark_value": null,
+  "benchmark_version_status": "UNRESOLVED",
+  "reps_planned": 999,
+  "seeds_planned": {
+    "employment": 20260819,
+    "hours_unconditional": 20260820
+  },
+  "effect_grids": {
+    "employment": [
+      -0.13,
+      -0.1,
+      -0.065,
+      -0.04,
+      -0.02,
+      0.0,
+      0.02,
+      0.04,
+      0.065,
+      0.1,
+      0.13
+    ],
+    "hours_unconditional": [
+      -4.0,
+      -3.0,
+      -2.0,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ]
+  },
+  "pending_dependencies": [
+    "real frozen W5 balanced occupation-month dose panel",
+    "verified exact locator for the PI-selected power benchmark"
+  ],
+  "substitutes_explicitly_rejected": [
+    "sparse entrant companion",
+    "occupation-month cell arithmetic",
+    "synthetic dose panel"
+  ],
+  "post_event_outcomes_read": false,
+  "generated_at_utc": "2026-08-18T17:15:15.462557+00:00"
+}

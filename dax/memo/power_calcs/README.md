@@ -1,10 +1,37 @@
 # DAX W1 power calculations
 
 This directory implements the PI-approved ex ante power specification without
-opening post-event outcomes. The empirical run requires two inputs:
+opening post-event outcomes. Gate 1 uses `person_level_power.py` and requires:
 
-1. `preperiod_cells.csv`: IPUMS-CPS occupation-month-education moments dated
-   before 2023-03-01.
+1. the private person-level IPUMS-CPS parquet containing only 2021-11 through
+   2023-02, ages 22--25; and
+2. W5's real balanced occupation-month DAX panel satisfying
+   `w5_dose_panel_contract.json`.
+
+The unit is person-month. The post-event design rotates observed pre-event
+person covariate records over W5's real months; all post-event outcomes and
+treatment effects are simulated by an occupation-level wild-cluster bootstrap.
+Inference uses CR1 standard errors clustered on the original CPS occupation.
+The registered controls are occupation, month, industry-by-month, frozen
+static-exposure-decile-by-month, and categorical age, sex, race, Hispanic
+origin, education, and month-in-sample effects.
+
+If the W5 panel is absent, the executable pending path is:
+
+```bash
+python dax/memo/power_calcs/person_level_power.py \
+  --cps-extract /private/path/cps_extract.parquet \
+  --dose-panel /private/path/w5_dose_panel.parquet \
+  --output dax/data_raw/person_level_power_receipt.json \
+  --reps 999 --seed 20260819 --emit-pending-if-dose-missing
+```
+
+The pending receipt is not a pass. The entrant companion, synthetic doses, and
+occupation-month arithmetic are explicitly rejected as substitutes.
+
+The legacy cell engines require two different inputs:
+
+1. `preperiod_cells.csv`: occupation-month-education moments before 2023-03;
 2. `event_doses.csv`: measurement-side occupation-event incremental doses.
 
 Until those inputs exist, `make synthetic_power` runs a deterministic smoke
@@ -70,17 +97,17 @@ test. All output records the seed and input SHA-256 hashes.
 
 ## After D1 and D3 (2026-08-18)
 
-**`simulate_power_continuous.py` is the primary engine.** D1 replaced the
+**`simulate_power_continuous.py` is a legacy cell-level planning engine.** D1 replaced the
 discrete stacked event study with a continuous cumulative-dose design, because
 with 21 events across 41 months the treatment is effectively continuous and
 every discrete option either collapsed to one estimable event or manufactured
 clean windows by ignoring events that happened. There is no event selection, no
 stacking, and no window rule; the regressor is the monthly DAX level itself.
 
-**`simulate_power.py` is now secondary.** It models the demoted stacked design
+**`simulate_power.py` is secondary and cell-level.** It models the demoted stacked design
 and still gives every event a full [-6,+6] window, which §3.2 does not permit
-(`dax/tests/test_window_survival.py` pins this). Treat its numbers as an upper
-bound on the secondary design, never as a result.
+(`dax/tests/test_window_survival.py` pins this). Neither cell engine has a
+proved monotone relation to person-level power; neither can satisfy Gate 1.
 
 **The pass bar is frozen and external.** Both engines read
 `power_standard.json` and neither derives a threshold from the sample it is
