@@ -170,3 +170,33 @@ def test_pretrend_horizons_are_frozen_not_chosen():
     horizons = [b["horizon"] for b in report["pretrend_placebo_lead"]]
     assert horizons == ["2023-12-01", "2024-12-01", "2025-12-01"]
     assert all(b["estimable"] for b in report["pretrend_placebo_lead"])
+
+
+# --- red-team M1: identification gate on the RESIDUALIZED dose matrix --------
+
+def test_residualized_gate_reports_variance_surviving_absorption():
+    """The raw dose matrix overstates identification; the residual is what counts."""
+    import datetime as dt
+
+    cells = [_cell(f"OCC{i}", dt.date(2022, m, 1)) for i in range(4) for m in (1, 2, 3)]
+    doses = [_dose(f"OCC{i}", dt.date(2023, 3, 1), 0.02 * (i + 1)) for i in range(4)]
+    months = spc.month_sequence(dt.date(2021, 11, 1), dt.date(2023, 9, 1))
+    panel = spc.build_panel(cells, doses, "college", months)
+    profile = spc.residualized_dose_profile(panel)
+
+    assert 0.0 <= profile["residual_variance_retained"] <= 1.0
+    assert "degenerate" in profile and isinstance(profile["degenerate"], bool)
+    assert profile["thresholds"]["leading_share_max"] == spc.DEGENERACY_LEADING_SHARE
+
+
+def test_proportional_doses_are_flagged_degenerate_after_absorption():
+    """One common path scaled per occupation leaves a single contrast."""
+    import datetime as dt
+
+    cells = [_cell(f"OCC{i}", dt.date(2022, m, 1)) for i in range(3) for m in (1, 2, 3)]
+    doses = [_dose(f"OCC{i}", dt.date(2023, 3, 1), 0.03 * (i + 1)) for i in range(3)]
+    months = spc.month_sequence(dt.date(2021, 11, 1), dt.date(2023, 9, 1))
+    panel = spc.build_panel(cells, doses, "college", months)
+    profile = spc.residualized_dose_profile(panel)
+    assert profile["degenerate"] is True, \
+        "a single common dose path must trip the degeneracy gate"

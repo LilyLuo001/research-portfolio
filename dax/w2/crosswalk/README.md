@@ -27,8 +27,26 @@ downstream use. Every provisional component must retain min/max bounds across
 its officially linked SOC/O*NET children or legacy sources. Equal shares are a
 diagnostic center, not a measured employment or task allocation.
 
-`build_crosswalk.py` predates this component-preserving production path and is
-not the canonical DAX builder.
+`build_crosswalk.py` predated this component-preserving production path and was
+**removed on 2026-08-19**, along with `sources.py`, `dax/tests/test_crosswalk.py`
+and `ops/contracts/cps_onet_crosswalk.yaml`.
+
+Reason, recorded so the decision is auditable rather than a silent deletion: the
+retired builder split a SOC's OEWS employment **equally** across its O*NET-SOC
+children and, when every target lacked employment, **renormalised to equal
+weights across the whole CPS code**. That is precisely the failure this builder
+was written to avoid — it converts an unknown allocation into a confident-looking
+point estimate, and `max_crosswalk_weight` (which drives the Decision 12
+low-quality flag) moves with the fabrication. This builder instead preserves
+unresolved components at their original Census/OEWS weight and emits `dose_min` /
+`dose_max` intervals via `dose_bounds.py`, with `point_estimate` available only
+for a `resolved_employment_weighted` code.
+
+Its contract was orphaned in any case: no task in `ops/runner/queue.yaml`
+referenced `cps_onet_crosswalk`, and the schema described a file the production
+path deliberately does not commit. Two builders for one artefact was the exact
+collision the W2 carve-out existed to prevent, so the weaker one is gone rather
+than left as a trap.
 
 ## Frozen downstream contract
 

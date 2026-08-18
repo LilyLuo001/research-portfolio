@@ -163,3 +163,30 @@ Any one of these unblocks it: revive the box, allowlist `web.archive.org` and
 `archive.org` in the environment's network policy, or run
 `python dax/w2/prices/build_price_panel.py --time-budget 600` on any host with
 egress and commit the resulting `price_histories.csv`.
+
+
+---
+
+# Crosswalk reassignment REVERSED — 2026-08-19
+
+The 2026-08-18 note reassigned the CPS-O*NET crosswalk to the W2-infra lane.
+That is now moot: seat C's `build_occ2010_crosswalk.py` supersedes it and is the
+canonical builder. `dax/w2/crosswalk/build_crosswalk.py`, `sources.py`,
+`dax/tests/test_crosswalk.py` and `ops/contracts/cps_onet_crosswalk.yaml` were
+removed on 2026-08-19.
+
+The retired builder was wrong in a way that mattered: it split a SOC's OEWS
+employment equally across O*NET-SOC children and, when every target lacked
+employment, renormalised the whole CPS code to equal weights — turning an
+unknown allocation into a confident-looking point estimate, and moving
+`max_crosswalk_weight`, which drives the Decision 12 flag. The production
+builder preserves unresolved components at original weight and emits
+`dose_min`/`dose_max` intervals through `dose_bounds.py`, with a point estimate
+only for `resolved_employment_weighted` codes. Its contract was orphaned anyway
+— no queue task referenced it.
+
+**Correction to the 2026-08-19 review:** `cps_onet_crosswalk.csv` being absent
+from `data_built/` is deliberate policy, not an omission. Detailed crosswalk,
+legacy fallback, gap audit and respondent-level CPS artifacts are restricted and
+must stay out of git; only sanitized receipts and aggregate reports are tracked,
+and `audit_standard_freeze.py` rejects tracked row-level restricted artifacts.

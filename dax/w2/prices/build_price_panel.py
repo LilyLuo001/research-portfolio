@@ -47,7 +47,7 @@ FIELDS = [
     "price_status",
     "channel_git_observed", "channel_git_locator",
     "channel_web_status", "channel_web_snapshot", "channel_web_locator",
-    "notes",
+    "date_coherence", "notes",
 ]
 
 VERIFIED = "verified"
@@ -93,9 +93,59 @@ def to_intervals(observations: list[channel_git.GitPriceObservation]) -> list[di
                 "channel_web_status": "not_attempted",
                 "channel_web_snapshot": "",
                 "channel_web_locator": "",
+                "date_coherence": "",
                 "notes": "" if index else "first observation; no lower bound on effective date",
             })
     return rows
+
+
+COHERENCE_OK = "ok"
+COHERENCE_EARLY = "precedes_registry_launch"
+COHERENCE_UNKNOWN = "no_registry_date"
+
+
+def apply_date_coherence(rows: list[dict[str, object]],
+                         events: list[dict[str, str]]) -> dict[str, int]:
+    """Flag prices dated before the model's own earliest registry event.
+
+    Found 2026-08-19: after Channel A ran, 15 rows across 5 models carried a
+    price whose upper-bound date PRECEDED the launch date the registry gives for
+    that model — and 9 of them were marked `verified`, meaning an archived page
+    apparently corroborated a price for a model that had not launched.
+
+    At least one of the two sources must be wrong: the registry date, or the
+    price observation (a third-party table seeded pre-launch, or a Channel A
+    match against a page that predates the model). The panel cannot say which,
+    so it says neither — it records the incoherence and refuses to leave the row
+    reading as clean corroboration.
+    """
+    earliest: dict[str, str] = {}
+    for event in events:
+        for model_id in event["model_ids"].split("|"):
+            model_id = model_id.strip()
+            if not model_id:
+                continue
+            date = event["api_effective_date"]
+            earliest[model_id] = min(earliest.get(model_id, "9999-99-99"), date)
+
+    counts = {COHERENCE_OK: 0, COHERENCE_EARLY: 0, COHERENCE_UNKNOWN: 0}
+    for row in rows:
+        launch = earliest.get(str(row["model_id"]))
+        observed = str(row["effective_date_latest"])
+        if launch is None:
+            row["date_coherence"] = COHERENCE_UNKNOWN
+        elif observed and observed < launch:
+            row["date_coherence"] = COHERENCE_EARLY
+            row["notes"] = (str(row["notes"]) +
+                            f"; priced on or before {observed} but the registry "
+                            f"dates this model to {launch}").lstrip("; ")
+            # A corroboration that is chronologically impossible is not evidence.
+            if row["price_status"] == VERIFIED:
+                row["price_status"] = CONFLICT
+        else:
+            row["date_coherence"] = COHERENCE_OK
+        counts[str(row["date_coherence"])] += 1
+    return counts
 
 
 def load_prior_corroboration(path: pathlib.Path) -> dict[tuple[str, str, str], dict[str, str]]:
@@ -281,6 +331,12 @@ def main() -> int:
         writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
+
+    coherence = apply_date_coherence(rows, events)
+    if coherence[COHERENCE_EARLY]:
+        print(f"date-coherence: {coherence[COHERENCE_EARLY]} rows priced before "
+              f"their model's registry launch — demoted from verified",
+              file=sys.stderr)
 
     write_coverage(rows, events, args.offline)
     write_lineage(str(OUTPUT), [str(REGISTRY)], extra={
