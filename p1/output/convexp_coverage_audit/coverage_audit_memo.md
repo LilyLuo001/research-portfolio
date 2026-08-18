@@ -150,10 +150,15 @@ the final publishable one.
    carries it would retroactively fail the artifact Gate 2 was signed on. Declare it
    (the commented-out line in `ops/contracts/conv_exposure_free.yaml`) in the same
    commit that lands the rebuilt parquet.
-5. Decide the **international sleeve's** treatment for the paper: document that
-   equity_intl conversions (esp. Mirae W020) are largely out of a US-listed event study,
-   or scope a separate non-US analysis. Either way it belongs in the sample-definition
-   footnote, not treated as missing data.
+5. Decide the **international sleeve's** treatment for the paper — still the owner's
+   call, but **now costed** (`international_sleeve_options.md` +
+   `international_sleeve_scoping.csv`, 2026-08-18). Headline: the DFA anchor wave is
+   untouched under every option, and dropping pure-international waves costs **8 stocks
+   at the ≥0.5% treated line (389 → 381)** against a power floor of ≥33. Excluding any
+   wave that merely *touches* an international fund is the expensive variant (≥1%:
+   24 → 16). Excluding international *funds* rather than *waves* cannot be done by
+   filtering the built parquet — cells are aggregated across a wave's funds — so it
+   would need a fund-level pipeline re-run on the box.
 
 _Numbers cross-checked against `ops/briefs/gate2_human_review_manifest.json`; full tables in
 this directory; methods + caveats in README.md._

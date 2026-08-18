@@ -373,3 +373,16 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 # Also note the queue's bookkeeping is stale against the repo: P1-T1-events(+B)
 # are not marked complete, so the runner still shows P1-T1-arb as blocked while
 # events_merged.csv and the spotcheck sign-off are committed.
+
+# P1-T2 item 5 COSTED 2026-08-18 (seat C; decision still owner's, nothing chosen):
+# p1/output/convexp_coverage_audit/international_sleeve_options.md attaches numbers
+# to the international-sleeve question. DFA anchor wave W002 is `no_intl`, so it
+# survives every option. Dropping pure-international waves costs 8 stocks at the
+# >=0.5% treated line (389 -> 381; power floor is >=33). Dropping any wave that
+# merely touches an international fund costs a third of the >=1% names (24 -> 16).
+# Excluding international FUNDS rather than WAVES is not a filter on the built
+# parquet — cells are aggregated across a wave's funds — it needs a fund-level
+# re-run on the box, best bundled with the re-run that activates audit items 2/4.
+# OWNER, one line please: Option A, A-strict, or A + fund-level rebuild? Record it
+# before T5 main estimation so the sample definition is fixed independently of any
+# outcome (no specification search).
