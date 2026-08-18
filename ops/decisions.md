@@ -308,3 +308,37 @@ insufficient — must prove target was open-end/mutual fund); 11 no_event→
 recheck_noevent (blank/weak evidence). events_merged.csv 173→124 (recheck items
 quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 (deepseek re-reads raw filings to confirm target fund type + pull MF ticker).
+
+# BLOCKED 2026-08-18 (seat C, refraction session — egress policy, not a vendor
+# failure): REFR-R0-collide channel A and REFR-R1a-verify were both attempted
+# in this Claude Code session per their briefs (ops/briefs/opus/OPUS-REFR-
+# R0-collide-A.md, OPUS-REFR-R1a-verify.md, routed to the Anthropic lane
+# 2026-07-16 after the kimi bench). Neither can be executed here: this
+# container's egress proxy answers 403 CONNECT for every primary source both
+# tasks require —
+#   www.frbsf.org (USMPD), www.federalreserve.gov (FOMC calendars),
+#   www.bls.gov (CPI/Employment Situation schedules),
+#   papers.ssrn.com, doi.org, export.arxiv.org, api.semanticscholar.org,
+#   www.jstor.org
+# WebSearch (result titles/URLs) works; WebFetch and curl do not. Search
+# snippets are second-hand summaries, so they cannot satisfy R1a's "逐字引用
+# ≤25词 + 页码/URL" or R0's per-claim first-hand URL rule. Per meta-rule 1 and
+# the 铁律, NOTHING was written from memory or from snippets and no partial
+# registry was emitted — an R1a table with unverifiable rows is worse than no
+# table, because R1b would parse it.
+# NEED_HUMAN: re-route both to a lane that can actually fetch — the SCC Opus
+# lane, a claude.ai session with web access, or an owner browser pass — or
+# have the owner widen this environment's egress allowlist to the seven hosts
+# above (frbsf/federalreserve/bls are the R1a critical path; ssrn/doi/arxiv/s2
+# are R0's). R1b stays blocked on R1a plus the owner-pasted USMPD file heads
+# either way, so this does not newly block the chapter; it just means the two
+# retrieval nodes stay READY and unclaimed.
+#
+# LANDED same session (the one REFR node that needs no external facts):
+# REFR-R13-scan — refraction/scan.py (resident monthly collision monitor,
+# arXiv + S2 APIs + generated SSRN URLs, §R13b Marta–Riva/replication-switch
+# 毛刺 flag + 40%/60% ALERT threshold computed in the script), 23 pytest cases
+# on synthetic payloads (network poisoned in tests), refraction/scans/
+# manifest.md, lineage JSON. NOT marked complete — R13 is resident, exactly as
+# E2-T11-scan is left ready forever. Cron wiring is a seat-D edit
+# (ops/box/cron_night.sh, monthly): see the manifest's handoff section.
