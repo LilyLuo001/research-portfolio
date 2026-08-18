@@ -90,8 +90,14 @@ def test_freeze_refuses_while_the_benchmark_version_is_unresolved():
     benchmark = standard["benchmark"]
 
     source = (ROOT / "memo" / "power_calcs" / "freeze_power_standard.py").read_text()
-    assert 'version_status") != "RESOLVED"' in source, \
+    assert 'benchmark.get("version_status") == "RESOLVED"' in source, \
         "the freezer must gate on the version being resolved"
+    assert 'benchmark.get("locator_status") == "VERIFIED"' in source, \
+        "a resolved label cannot substitute for a verified dated locator"
+
+    if benchmark["locator_status"] != "VERIFIED":
+        assert benchmark["relative_decline"] is None, \
+            "an unsourced value must not remain executable in the standard"
 
     if benchmark["version_status"] == "RESOLVED":
         # A resolved version must say who chose it and what it supersedes, and

@@ -88,3 +88,18 @@ def test_red_team_packet_covers_the_v2_design():
         assert required in source, f"v2 packet is missing {required}"
     assert "does not transfer" in source, \
         "the prompt must tell the reviewer not to defer to the superseded verdict"
+
+
+def test_fresh_reruns_remain_blocking_and_adjudication_does_not_self_clear():
+    import json
+
+    memo_dir = pathlib.Path(__file__).resolve().parents[1] / "memo"
+    reruns = sorted(memo_dir.glob("red_team_deepseek_v4_pro_rerun_20260818_round*.json"))
+    assert len(reruns) == 3
+    for path in reruns:
+        review = json.loads(path.read_text(encoding="utf-8"))["review"]
+        assert review["verdict"] == "REVISE"
+        assert review["gate_recommendation"] == "BLOCK"
+    adjudication = (memo_dir / "red_team_rerun_adjudication_20260818.md").read_text()
+    assert "**BLOCK.**" in adjudication
+    assert "does not self-certify" in adjudication

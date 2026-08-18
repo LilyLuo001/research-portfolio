@@ -40,6 +40,7 @@ OUTPUT = REPO / "dax" / "data_built" / "price_histories.csv"
 COVERAGE = REPO / "dax" / "data_built" / "price_coverage_report.md"
 MIRROR = REPO / "dax" / "data_raw" / "_litellm_mirror"
 WAYBACK_CACHE = REPO / "dax" / "data_raw" / "_wayback_cache"
+OFFICIAL_EVIDENCE = REPO / "dax" / "data_raw" / "official_dated_price_evidence.csv"
 
 FIELDS = [
     "model_id", "price_kind", "usd_per_1m",
@@ -109,9 +110,48 @@ def load_prior_corroboration(path: pathlib.Path) -> dict[tuple[str, str, str], d
         return {}
     prior: dict[tuple[str, str, str], dict[str, str]] = {}
     for row in csv.DictReader(path.open(encoding="utf-8")):
-        if row.get("channel_web_status") not in ("", "not_attempted", channel_wayback.UNREACHABLE):
+        if row.get("channel_web_status") == channel_wayback.CORROBORATED:
             prior[(row["model_id"], row["price_kind"], row["effective_date_latest"])] = row
     return prior
+
+
+def load_official_evidence(path: pathlib.Path = OFFICIAL_EVIDENCE) -> list[dict[str, str]]:
+    """Load human-audited, dated official release-page evidence."""
+    if not path.is_file():
+        return []
+    return list(csv.DictReader(path.open(encoding="utf-8")))
+
+
+def apply_official_evidence(rows: list[dict[str, object]],
+                            evidence: list[dict[str, str]]) -> int:
+    """Apply exact dated official matches as Channel A, fail closed on conflict."""
+    by_key: dict[tuple[str, str], list[dict[str, str]]] = {}
+    for item in evidence:
+        by_key.setdefault((item["model_id"], item["price_kind"]), []).append(item)
+    applied = 0
+    for row in rows:
+        candidates = by_key.get((str(row["model_id"]), str(row["price_kind"])), [])
+        if not candidates:
+            continue
+        matches = [item for item in candidates
+                   if abs(float(item["usd_per_1m"]) - float(row["usd_per_1m"])) < 1e-9]
+        if not matches:
+            row["price_status"] = CONFLICT
+            row["channel_web_status"] = channel_wayback.CONTRADICTED
+            row["notes"] = (str(row["notes"]) +
+                            "; dated official evidence reports a different price").lstrip("; ")
+            continue
+        item = sorted(matches, key=lambda x: x["source_date"])[0]
+        row["price_status"] = VERIFIED
+        row["channel_web_status"] = channel_wayback.CORROBORATED
+        row["channel_web_snapshot"] = item["source_date"]
+        row["channel_web_locator"] = item["archived_url"] or item["source_url"]
+        if item["source_date"] < str(row["effective_date_latest"]):
+            row["effective_date_latest"] = item["source_date"]
+        row["notes"] = (str(row["notes"]) +
+                        "; matched dated official release evidence").lstrip("; ")
+        applied += 1
+    return applied
 
 
 def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool,
@@ -200,7 +240,8 @@ def write_coverage(rows: list[dict[str, object]], events: list[dict[str, str]], 
         "",
         f"Channel B (git price table): **{len(rows)}** interval rows across "
         f"**{len(by_model)}** model snapshots.",
-        f"Channel A (archived pricing pages): **{'not run (offline)' if offline else 'run'}**.",
+        f"Channel A (dated official releases and archived pricing pages): "
+        f"**{'not run (offline)' if offline else 'run'}**.",
         "",
         "A row reaches `verified` only when both channels agree. Everything else",
         "stays `single_channel` or `conflict` and, per meta-rule 4, the event it",
@@ -271,6 +312,10 @@ def main() -> int:
         deadline = time.monotonic() + args.time_budget if args.time_budget else None
         apply_corroboration(rows, args.corroborate_limit, args.verbose,
                             deadline=deadline, prior=load_prior_corroboration(OUTPUT))
+        official_matches = apply_official_evidence(rows, load_official_evidence())
+        if official_matches:
+            print(f"dated official evidence: {official_matches} rows corroborated",
+                  file=sys.stderr)
     temporal_conflicts = apply_temporal_sanity(rows)
     if temporal_conflicts:
         print(f"temporal sanity: {temporal_conflicts} impossible git bounds marked conflict",
@@ -283,11 +328,18 @@ def main() -> int:
         writer.writerows(rows)
 
     write_coverage(rows, events, args.offline)
-    write_lineage(str(OUTPUT), [str(REGISTRY)], extra={
+    lineage_inputs = [str(REGISTRY)]
+    if OFFICIAL_EVIDENCE.is_file():
+        lineage_inputs.append(str(OFFICIAL_EVIDENCE))
+    write_lineage(str(OUTPUT), lineage_inputs, extra={
         "channels": {
             "git": {"repo": channel_git.DEFAULT_REPO, "path": channel_git.DEFAULT_PATH,
                     "observations": len(observations)},
             "wayback": {"run": not args.offline, "urls": list(channel_wayback.PRICING_URLS)},
+            "dated_official_release": {
+                "run": not args.offline,
+                "evidence_rows": len(load_official_evidence()),
+            },
         },
         "note": "no language model is involved in producing any value in this file",
     })

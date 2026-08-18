@@ -35,6 +35,15 @@ def test_corroborated_when_price_appears_near_model():
     assert status == cw.CORROBORATED, "dated snapshot id should fall back to its alias"
 
 
+def test_preview_id_falls_back_to_family_label():
+    text = (
+        "gpt-4.5-preview metadata " + ("filler " * 100) +
+        "GPT-4.5 Price Input: $75.00 Cached input: $37.50 Output: $150.00"
+    )
+    status, _ = cw.corroborate_in_text(text, "gpt-4.5-preview", 37.5)
+    assert status == cw.CORROBORATED
+
+
 def test_not_found_when_model_absent():
     status, _ = cw.corroborate_in_text("Pricing for gpt-3.5-turbo $0.50", "gpt-5-2025-08-07", 1.25)
     assert status == cw.NOT_FOUND
@@ -93,6 +102,37 @@ def test_unchanged_months_are_not_re_emitted():
     from build_price_panel import to_intervals
     rows = to_intervals([_obs("o3", "input", 2.0, "2025-05-31")])
     assert len(rows) == 1
+
+
+def test_monthly_commits_use_committer_not_author_date(monkeypatch, tmp_path):
+    seen = {}
+
+    def fake_run(args, cwd, timeout=300):
+        seen["args"] = args
+        return "abc123 2026-03-11\n"
+
+    monkeypatch.setattr(channel_git, "_run", fake_run)
+    assert channel_git.monthly_commits(tmp_path) == [("abc123", "2026-03-11")]
+    assert "--format=%H %cd" in seen["args"]
+
+
+def test_exact_dated_official_evidence_can_corroborate_channel_b():
+    from build_price_panel import apply_official_evidence, VERIFIED
+    rows = [{
+        "model_id": "gpt-4-0314", "price_kind": "input", "usd_per_1m": "30",
+        "effective_date_latest": "2023-09-30", "price_status": "single_channel",
+        "channel_web_status": "unreachable", "channel_web_snapshot": "",
+        "channel_web_locator": "", "notes": "",
+    }]
+    evidence = [{
+        "model_id": "gpt-4-0314", "price_kind": "input", "usd_per_1m": "30",
+        "source_date": "2023-03-14", "source_url": "https://openai.com/example",
+        "archived_url": "https://web.archive.org/example", "archived_sha256": "a" * 64,
+    }]
+    assert apply_official_evidence(rows, evidence) == 1
+    assert rows[0]["price_status"] == VERIFIED
+    assert rows[0]["effective_date_latest"] == "2023-03-14"
+    assert rows[0]["channel_web_locator"] == evidence[0]["archived_url"]
 
 
 def test_git_observation_before_dated_model_fails_closed():
