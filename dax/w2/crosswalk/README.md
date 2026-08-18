@@ -29,3 +29,25 @@ diagnostic center, not a measured employment or task allocation.
 
 `build_crosswalk.py` predates this component-preserving production path and is
 not the canonical DAX builder.
+
+## Frozen downstream contract
+
+`dose_bounds.py` is the required adapter between this crosswalk and any W3/W5
+dose builder. It exposes an unbounded `point_estimate` only for a whole CPS
+code whose status is `resolved_employment_weighted`. A provisional code emits
+`diagnostic_center`, `dose_min`, and `dose_max`, with `point_estimate=None`.
+Unresolved, partially unresolved, and absent codes emit no usable dose. This
+includes OCC2010 code 7630, which is absent from the official crosswalk.
+
+For equal SOC allocation, the interval spans all officially linked SOC/O*NET
+children in the Census route. For equal O*NET subdivision, it spans the linked
+children within that SOC. For the O*NET 25.0 bridge, call
+`legacy_profile_intervals` so each 2019 profile is first bounded across its
+official 2010 source profiles. A downstream implementation that consumes the
+equal-weight center without these bounds violates the frozen standard.
+
+`audit_standard_freeze.py` independently recomputes the production metrics,
+per-code sums and eligibility flags; verifies detailed-artifact hashes and
+permissions; checks legacy source/profile weights; confirms 7630 is
+fail-closed; and rejects tracked row-level restricted artifacts. Its sanitized
+receipt is `data_raw/occ2010_onet_standard_freeze_receipt.json`.
