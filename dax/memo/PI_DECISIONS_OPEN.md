@@ -55,5 +55,8 @@ authorize the preregistration tag or outcome access yet.
 - [ ] W1 power simulation on pre-event CPS moments.
 - [x] Event-by-event table shell populated with W5-produced crossing counts
   before outcomes open, or an explicit signed rule for later mechanical fill.
-- [ ] Independent cross-vendor red-team of the completed memo.
+- [x] Independent cross-vendor red-team completed in three SCC1 rounds; the
+  final review is `CONDITIONAL_GO`, its mechanical findings are incorporated,
+  and its separate registry, empirical-power, and PI PDF-review blockers remain
+  open.
 - [ ] Rendered PDF reviewed line by line by PI.
