@@ -30,8 +30,10 @@ builder treats an unreachable archive as "not yet corroborated", never as
 from __future__ import annotations
 
 import dataclasses
+import hashlib
 import html
 import json
+import pathlib
 import re
 import urllib.parse
 import urllib.request
@@ -73,13 +75,32 @@ class Corroboration:
     detail: str = ""
 
 
+# Archived snapshots are large and web.archive.org is slow, but many panel rows
+# resolve against the SAME captures. Without a cache the box run is ~850 fetches
+# and blows the 25-minute inbox timeout; with one it is ~150 and fits.
+CACHE_DIR: pathlib.Path | None = None
+
+
+def _cache_path(url: str) -> pathlib.Path | None:
+    if CACHE_DIR is None:
+        return None
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    return CACHE_DIR / (hashlib.sha256(url.encode()).hexdigest()[:32] + ".html")
+
+
 def _get(url: str, timeout: int = 45) -> str | None:
+    cached = _cache_path(url)
+    if cached is not None and cached.is_file():
+        return cached.read_text(encoding="utf-8", errors="replace")
     try:
         request = urllib.request.Request(url, headers={"User-Agent": "dax-w2-price-harvester"})
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            return response.read().decode("utf-8", errors="replace")
+            body = response.read().decode("utf-8", errors="replace")
     except Exception:
         return None
+    if cached is not None:
+        cached.write_text(body, encoding="utf-8")
+    return body
 
 
 def list_snapshots(url: str, from_year: int = 2021, to_year: int = 2026,

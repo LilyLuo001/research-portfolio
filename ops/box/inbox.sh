@@ -1,52 +1,76 @@
 #!/usr/bin/env bash
 # inbox.sh — commands for the box's next 30-min cycle (see run_inbox.sh).
-# inbox-version: 2026-07-10-i
+# inbox-version: 2026-08-14-a
 #
-# Payload i — K-4 remediation on box recovery (audit L2-AUDIT-2026-07-10):
-# the hand-run manifest was 95% T13-family (9 conversion hits) and the
-# ActiveShares query overran the old page cap, so ALL FOUR extraction specs
-# are parked. This payload: (1) re-runs the patched harvester (reorganization
-# phrase family, MAX_PAGES 60, T-1 truncation warnings, atomic writes) —
-# idempotent, only new filings download; (2) regenerates the four specs with
-# --force (K-4 guard refuses P1-T1 if conversion coverage is still thin);
-# (3) commits manifest + specs. Runs only when the box lane is back.
+# Payload a — W2 price panel, Channel A (archived official pricing pages).
+#
+# Why this runs here and not in a seat session: web.archive.org is blocked by
+# the Claude Code web sandbox's egress policy, so the corroboration channel
+# cannot run from a seat. Channel B (git history of a third-party price table)
+# already ran there and produced 71 interval rows, all `single_channel`. One
+# channel can never certify a price, so every row stays unusable for the
+# primary analysis until this payload confirms or contradicts it.
+#
+# Cost control: snapshots are cached on disk (dax/data_raw/_wayback_cache/,
+# git-ignored) because many rows resolve against the same captures — without it
+# the sweep is ~850 fetches and blows the 25-minute inbox timeout. The run is
+# also resumable: rows already carrying a Channel-A verdict are carried over,
+# so if the time budget stops the sweep early, RE-ARM THIS PAYLOAD (change the
+# version marker above) and the next cycle continues where it left off.
+#
+# Idempotent. Safe to re-run. Touches no outcome data; the pre-registration
+# seal is not involved.
 
 echo "== host identity =="
 echo "$(hostname) : $(pwd) : $(git rev-parse --short HEAD)"
 
-echo "== harvester re-run (expanded phrases; idempotent) =="
-.venv/bin/python p1/fetch_edgar_filings.py 2>&1 | tail -15
-echo "-- truncation warnings, if any:"
-grep -c "TRUNCATED" p1/edgar_filings/harvest.log 2>/dev/null || echo "0 (or no log)"
+echo "== preflight: can this host reach the archive? =="
+if curl -sS -o /dev/null -w "cdx http=%{http_code}\n" --max-time 30 \
+     "http://web.archive.org/cdx/search/cdx?url=openai.com/pricing&output=json&limit=1"; then
+  echo "archive reachable"
+else
+  echo "ARCHIVE UNREACHABLE FROM THE BOX — stopping."
+  echo "Channel A cannot run anywhere we currently control. Report this in the"
+  echo "digest; do NOT mark any price row verified on Channel B alone."
+  exit 0
+fi
 
-echo "== per-query hit counts (K-4 review surface) =="
-.venv/bin/python - << 'PYEOF'
-import csv, collections
-c = collections.Counter(r["query_phrase"] for r in csv.DictReader(open("p1/edgar_filings/manifest.csv")))
-for q, n in c.most_common():
-    print("%5d  %s" % (n, q))
+echo "== channel B mirror (blobless clone on first run; ~83MB, then incremental) =="
+.venv/bin/python - <<'PYEOF'
+import pathlib, sys
+sys.path.insert(0, "dax/w2/prices")
+import channel_git
+mirror = channel_git.ensure_mirror(pathlib.Path("dax/data_raw/_litellm_mirror"))
+print("mirror ready:", mirror)
 PYEOF
 
-echo "== regenerate extraction specs (K-4 guard active) =="
-.venv/bin/python p1/make_extraction_specs.py --force
+echo "== build price panel, both channels (Channel A capped at 600s) =="
+.venv/bin/python dax/w2/prices/build_price_panel.py \
+    --time-budget 600 --verbose 2>&1 | tail -30
 
-echo "== dry-run: what tonight would dispatch =="
-.venv/bin/python ops/runner/l1_driver.py 2>&1 | tail -12
+echo "== contract =="
+.venv/bin/python ops/runner/contracts.py price_histories dax/data_built/price_histories.csv
 
-echo "== commit =="
-git add p1/edgar_filings/manifest.csv ops/l1/P1-T1-events.yaml ops/l1/P1-T1-events-B.yaml \
-        ops/l1/P1-T13-ant.yaml ops/l1/P1-T13-ant-B.yaml 2>/dev/null || true
-git commit -q -m "box: K-4 remediation — expanded harvest + regenerated extraction specs (payload i)" \
-  || echo "nothing new to commit"
+echo "== two-channel status counts =="
+.venv/bin/python - <<'PYEOF'
+import collections, csv
+rows = list(csv.DictReader(open("dax/data_built/price_histories.csv")))
+print("panel rows:", len(rows))
+for status, n in sorted(collections.Counter(r["price_status"] for r in rows).items()):
+    print(f"  price_status={status:16} {n}")
+for status, n in sorted(collections.Counter(r["channel_web_status"] for r in rows).items()):
+    print(f"  channel_web={status:17} {n}")
+conflicts = [r for r in rows if r["price_status"] == "conflict"]
+if conflicts:
+    print("\nCONFLICTS — archived official page disagrees with the git table.")
+    print("These are human-gate items. Do not resolve them by picking a side.")
+    for r in conflicts[:20]:
+        print(f"  {r['model_id']} {r['price_kind']} ${r['usd_per_1m']} "
+              f"<= {r['effective_date_latest']} :: {r['notes'][:110]}")
+PYEOF
 
-echo "== K-1: fetch the authoritative DFA per-fund AUMs (SEC N-14; sec.gov 403s from every Claude session) =="
-# Print the net-assets neighborhood into this log for extraction by the next
-# L2 session (CSV+memo+sim update as a unit per audit K-1).
-curl -s -m 60 -A "research-portfolio P1 K-1 check ${EDGAR_CONTACT:-unset@unset}" \
-  "https://www.sec.gov/Archives/edgar/data/1816125/000179420221000165/formn14.htm" \
-  | sed -e 's/<[^>]*>/ /g' | tr -s ' \n' ' \n' \
-  | grep -i -E -A2 -B2 "net assets|total assets|billion|\\\$[0-9,.]+" | head -60 \
-  || echo "N-14 fetch failed — owner browser click remains the path"
-
-echo "== state =="
-cat ops/runner/state.json
+echo "== next action =="
+echo "If 'time budget reached' appeared above, re-arm: bump inbox-version and"
+echo "merge to main; the next cycle resumes from the cached verdicts."
+echo "When every row is verified/conflict, W2's price half is done and the"
+echo "registry's pending_second_date_locator rows can be re-adjudicated."

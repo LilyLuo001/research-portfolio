@@ -23,6 +23,7 @@ import argparse
 import csv
 import pathlib
 import sys
+import time
 
 HERE = pathlib.Path(__file__).resolve().parent
 REPO = HERE.parents[2]
@@ -37,6 +38,7 @@ REGISTRY = REPO / "dax" / "memo" / "event_registry_v1.csv"
 OUTPUT = REPO / "dax" / "data_built" / "price_histories.csv"
 COVERAGE = REPO / "dax" / "data_built" / "price_coverage_report.md"
 MIRROR = REPO / "dax" / "data_raw" / "_litellm_mirror"
+WAYBACK_CACHE = REPO / "dax" / "data_raw" / "_wayback_cache"
 
 FIELDS = [
     "model_id", "price_kind", "usd_per_1m",
@@ -94,8 +96,38 @@ def to_intervals(observations: list[channel_git.GitPriceObservation]) -> list[di
     return rows
 
 
-def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool) -> None:
+def load_prior_corroboration(path: pathlib.Path) -> dict[tuple[str, str, str], dict[str, str]]:
+    """Channel-A verdicts from an earlier run, keyed by primary key.
+
+    The box executes each inbox payload once inside a 25-minute timeout, so a
+    full corroboration sweep may need more than one cycle. Resuming makes a
+    partial run cumulative instead of wasted.
+    """
+    if not path.is_file():
+        return {}
+    prior: dict[tuple[str, str, str], dict[str, str]] = {}
+    for row in csv.DictReader(path.open(encoding="utf-8")):
+        if row.get("channel_web_status") not in ("", "not_attempted", channel_wayback.UNREACHABLE):
+            prior[(row["model_id"], row["price_kind"], row["effective_date_latest"])] = row
+    return prior
+
+
+def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool,
+                        deadline: float | None = None,
+                        prior: dict[tuple[str, str, str], dict[str, str]] | None = None) -> None:
     """Run Channel A over the panel, in place."""
+    prior = prior or {}
+    carried = 0
+    for row in rows:
+        key = (str(row["model_id"]), str(row["price_kind"]), str(row["effective_date_latest"]))
+        if key in prior:
+            for field in ("price_status", "channel_web_status",
+                          "channel_web_snapshot", "channel_web_locator", "notes"):
+                row[field] = prior[key][field]
+            carried += 1
+    if carried and verbose:
+        print(f"  resumed {carried} rows already corroborated", file=sys.stderr)
+
     snapshot_cache: dict[str, list[channel_wayback.Snapshot]] = {}
     for url in channel_wayback.PRICING_URLS:
         snapshots, status = channel_wayback.list_snapshots(url)
@@ -110,7 +142,12 @@ def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool
             row["notes"] = (str(row["notes"]) + "; archive unreachable from this host").lstrip("; ")
         return
 
-    for row in rows[:limit] if limit else rows:
+    pending = [r for r in rows if r["channel_web_status"] == "not_attempted"]
+    for index, row in enumerate(pending[:limit] if limit else pending):
+        if deadline is not None and time.monotonic() > deadline:
+            print(f"  time budget reached after {index} rows; "
+                  f"{len(pending) - index} left for the next run", file=sys.stderr)
+            break
         result = channel_wayback.corroborate(
             str(row["model_id"]), str(row["price_kind"]), float(row["usd_per_1m"]),
             every_snapshot, str(row["effective_date_latest"]),
@@ -187,8 +224,14 @@ def main() -> int:
     parser.add_argument("--mirror", type=pathlib.Path, default=MIRROR)
     parser.add_argument("--corroborate-limit", type=int, default=0,
                         help="cap Channel A checks (0 = no cap)")
+    parser.add_argument("--time-budget", type=int, default=0,
+                        help="seconds for Channel A before stopping cleanly "
+                             "(0 = unlimited); keep under the box inbox timeout")
+    parser.add_argument("--cache", type=pathlib.Path, default=WAYBACK_CACHE,
+                        help="on-disk cache of fetched snapshots")
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
+    channel_wayback.CACHE_DIR = args.cache
 
     models, events = registry_models()
     print(f"registry references {len(models)} model snapshots", file=sys.stderr)
@@ -200,7 +243,9 @@ def main() -> int:
 
     rows = to_intervals(observations)
     if not args.offline:
-        apply_corroboration(rows, args.corroborate_limit, args.verbose)
+        deadline = time.monotonic() + args.time_budget if args.time_budget else None
+        apply_corroboration(rows, args.corroborate_limit, args.verbose,
+                            deadline=deadline, prior=load_prior_corroboration(OUTPUT))
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT.open("w", newline="", encoding="utf-8") as handle:
