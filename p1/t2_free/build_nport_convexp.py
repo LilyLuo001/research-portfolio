@@ -37,37 +37,19 @@ Run:
   python p1/t2_free/build_nport_convexp.py
 Then:
   python ops/runner/contracts.py conv_exposure_free p1/conv_exposure_free.parquet
-"""
-import csv
-import io
-import json
-import logging
-"""P1-T2 FREE path — ConvExp from EDGAR N-PORT + OpenFIGI + XBRL. BOX (needs net).
 
-Replaces the WRDS/CRSP holdings pipeline with 100%-free, provenance-clean public
-sources (meta-rule 1 satisfied: every number carries an EDGAR/OpenFIGI locator):
-
-  fund holdings           -> SEC EDGAR NPORT-P (each converting fund's last monthly
-                             holdings filing before its effective_date)
-  CUSIP -> ticker         -> N-PORT's own identifiers, else OpenFIGI (free)
-  ticker -> stock CIK     -> SEC company_tickers.json
-  shares outstanding      -> SEC XBRL companyconcept dei:EntityCommonStockSharesOutstanding
-  ConvExp_{i,e}           -> Σ_f (fund f's share holding of i) / shares_outstanding_i
-
-Keyed on public CUSIP (no free CRSP permno). Output conforms to
-ops/contracts/conv_exposure_free.yaml; a cusip<->ticker<->cik crosswalk lets a
-later CRSP merge recover permno. Every raw pull is cached immutable under
-p1/t2_free/cache/ so re-runs are free and auditable.
-
-Run on box (internet + a polite SEC User-Agent required):
-  export SEC_UA="Boston University research <your-email>"      # SEC requires a UA
-  python p1/t2_free/build_nport_convexp.py
+Keyed on the public CUSIP (there is no free CRSP permno); output conforms to
+ops/contracts/conv_exposure_free.yaml, and the cusip<->ticker<->cik crosswalk
+shipped alongside lets a later CRSP merge recover permno without renaming a
+column.
 
 Inputs already in repo: p1/events_merged.csv, p1/t2_wrds/waves.csv,
-p1/t1_arb/id_meta.json (trust CIK per accession).
+p1/t1_arb/id_meta.json (trust CIK per accession). Runs on the BOX — it needs
+outbound HTTPS to SEC/OpenFIGI.
 """
 import csv
 import json
+import logging
 import os
 import pathlib
 import re
@@ -78,11 +60,6 @@ from datetime import datetime
 
 import requests
 
-try:
-    import pandas as pd
-except ImportError:
-    print("NEED pandas+pyarrow: pip install pandas pyarrow requests")
-    raise
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = ROOT / "p1" / "t2_free"

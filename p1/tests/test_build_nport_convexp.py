@@ -4,6 +4,7 @@ the val_usd column (coverage-audit memo items 2 and 4).
 Synthetic cells only — no EDGAR, no network. `_cell_rows` takes its
 shares-outstanding lookup as an argument precisely so this is possible.
 """
+import ast
 import csv
 import logging
 import pathlib
@@ -172,3 +173,20 @@ def test_importing_the_module_does_not_open_the_committed_run_log():
                 and pathlib.Path(getattr(h, "baseFilename", "")) == b.LOGFILE]
     assert attached == []
     assert callable(b._setup_run)
+
+
+def test_source_file_is_one_program_not_two():
+    """Three artifacts in this pipeline have been damaged by a second program
+    concatenated onto the first (the contract YAML, this file's duplicate main(),
+    build_waves.py's shadowing main()). A stray module-level docstring after the
+    imports is that defect's fingerprint."""
+    tree = ast.parse((ROOT / "p1" / "t2_free" / "build_nport_convexp.py").read_text())
+    stray = [n.lineno for n in tree.body[1:]
+             if isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant)
+             and isinstance(n.value.value, str)]
+    assert stray == []
+    defs = {}
+    for n in tree.body:
+        if isinstance(n, (ast.FunctionDef, ast.ClassDef)):
+            defs.setdefault(n.name, []).append(n.lineno)
+    assert not {k: v for k, v in defs.items() if len(v) > 1}
