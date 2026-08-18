@@ -165,7 +165,9 @@ def test_component_weights_and_reported_totals_reconcile():
     ]
     rows, _ = build(components=components)
     assert len(rows) == 2
-    assert {row["occupation_total_center"] for row in rows} == pytest.approx({0.3})
+    reported_totals = {row["occupation_total_center"] for row in rows}
+    assert len(reported_totals) == 1
+    assert next(iter(reported_totals)) == pytest.approx(0.3)
     damaged = copy.deepcopy(rows)
     damaged[0]["occupation_total_center"] += 0.01
     with pytest.raises(PANEL.PanelContractError, match="inconsistent occupation totals"):
