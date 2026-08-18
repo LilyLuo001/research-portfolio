@@ -356,3 +356,32 @@ final run must not, until that recovery pass lands.
 # applied: gate P1-T1-spotcheck pass
 # applied: complete P1-T2-wrds
 # applied: gate P1-T2-killswitch pass
+
+NEED_HUMAN 2026-08-18 (seat C, P1-T3-spec): T3 channel A cannot start. Its task
+prompt requires a literature-package locator for every variable's 口径 and a
+DECISION_NEEDED fork wherever the package disagrees — and there is no 文献包 in
+the repo. T0 阶段A (the structured literature matrix, Project_1.md §72-79) never
+ran and no queue id covers it; P1-T0-crash/-B/-monitor are all 阶段B collision
+work. Filling that column from model memory is exactly meta-rule 1's failure
+mode, so per §60 the response is CITE_REQUEST, itemised per variable in
+p1/t3_spec_preflight.md (10 conventions: GNZ decomposition, FERC, IPT,
+Hou-Moskowitz delay, SUE both sides of the analyst-vs-time-series fork,
+characteristic-adjusted CAR, Jegadeesh reversal, Amihud, 1-R2, TAQ/IID effective
+spread).
+
+Two options, owner's call: paste the package, or queue T0 阶段A as a proper
+dual-channel task (it is high-hallucination under meta-rule 2 — the collision
+sweep already caught one channel inventing an overlap verdict).
+
+Second, independent block on the same task: ZERO of the T3 outcome variables are
+computable on the free path. ConvExp is the treatment and exists; every outcome
+needs CRSP DSF, TAQ IID, IBES or Compustat, all gone with WRDS
+(ops/briefs/WRDS-access-assessment.md). P1-T4-replication is blocked the same way
+plus the Saglam-Tuzun PDF the owner was to supply. The spec can still be written
+before the data is procured, but the 数据表与字段 column needs the CRSP/TAQ/IBES
+table+variable list PASTED — same standing NEED_HUMAN the refraction R2 queue
+entry already carries.
+
+Not blocked by either, and offered again from the WRDS assessment: seat C can
+pre-write the offline pull scripts for T3/T4/R2 so a borrowed WRDS window is pure
+execution (~3-5 days instead of 3-6 weeks). Say the word and that runs next.
