@@ -309,6 +309,40 @@ recheck_noevent (blank/weak evidence). events_merged.csv 173→124 (recheck item
 quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 (deepseek re-reads raw filings to confirm target fund type + pull MF ticker).
 
+# BLOCKED 2026-08-18 (seat C, refraction session — egress policy, not a vendor
+# failure): REFR-R0-collide channel A and REFR-R1a-verify were both attempted
+# in this Claude Code session per their briefs (ops/briefs/opus/OPUS-REFR-
+# R0-collide-A.md, OPUS-REFR-R1a-verify.md, routed to the Anthropic lane
+# 2026-07-16 after the kimi bench). Neither can be executed here: this
+# container's egress proxy answers 403 CONNECT for every primary source both
+# tasks require —
+#   www.frbsf.org (USMPD), www.federalreserve.gov (FOMC calendars),
+#   www.bls.gov (CPI/Employment Situation schedules),
+#   papers.ssrn.com, doi.org, export.arxiv.org, api.semanticscholar.org,
+#   www.jstor.org
+# WebSearch (result titles/URLs) works; WebFetch and curl do not. Search
+# snippets are second-hand summaries, so they cannot satisfy R1a's "逐字引用
+# ≤25词 + 页码/URL" or R0's per-claim first-hand URL rule. Per meta-rule 1 and
+# the 铁律, NOTHING was written from memory or from snippets and no partial
+# registry was emitted — an R1a table with unverifiable rows is worse than no
+# table, because R1b would parse it.
+# NEED_HUMAN: re-route both to a lane that can actually fetch — the SCC Opus
+# lane, a claude.ai session with web access, or an owner browser pass — or
+# have the owner widen this environment's egress allowlist to the seven hosts
+# above (frbsf/federalreserve/bls are the R1a critical path; ssrn/doi/arxiv/s2
+# are R0's). R1b stays blocked on R1a plus the owner-pasted USMPD file heads
+# either way, so this does not newly block the chapter; it just means the two
+# retrieval nodes stay READY and unclaimed.
+#
+# LANDED same session (the one REFR node that needs no external facts):
+# REFR-R13-scan — refraction/scan.py (resident monthly collision monitor,
+# arXiv + S2 APIs + generated SSRN URLs, §R13b Marta–Riva/replication-switch
+# 毛刺 flag + 40%/60% ALERT threshold computed in the script), 23 pytest cases
+# on synthetic payloads (network poisoned in tests), refraction/scans/
+# manifest.md, lineage JSON. NOT marked complete — R13 is resident, exactly as
+# E2-T11-scan is left ready forever. Cron wiring is a seat-D edit
+# (ops/box/cron_night.sh, monthly): see the manifest's handoff section.
+
 NEED_HUMAN 2026-08-18 (seat C, refraction lane): two blockers found while
 executing the refraction queue, neither resolvable in-session.
 
@@ -336,11 +370,18 @@ executing the refraction queue, neither resolvable in-session.
    lease.py is ops/runner, outside the refraction lane, and the fix changes the
    portfolio's only coordination primitive — owner's call.
 
-DELIVERED same session (seat C, branch claude/refraction-research-plan-q14w8y,
-NOT merged to main): REFR-R13a collision-monitor script refraction/scan.py +
-refraction/tests/test_scan.py (27 cases, 46 green across the refraction suite),
-wired into ops/box/cron_night.sh and the evening commit list. Not marked
---complete: the lease never took (defect 2), the branch is not merged, and the
-script has never run against live APIs from this container. First box run
-produces refraction/scans/hits_*.jsonl, which is REFR-R13-triage's input.
+COLLISION 2026-08-18 (seat C, branch claude/refraction-research-plan-q14w8y):
+two seats built REFR-R13-scan simultaneously. The other seat held the lease and
+merged first (PR #38); this branch's independent refraction/scan.py and its
+tests were DISCARDED in the merge in favour of main's — theirs is complete and
+its author tokenizer handles the comma form correctly, so nothing was lost.
+This is defect 2 above with a cost attached: the lease refusal that sent this
+seat to a different task was spurious, and the collision it was supposed to
+prevent happened anyway. Fixing lease.py is now load-bearing, not cosmetic.
+
+What survives from this branch: the cron wiring PR #38 left open as a seat-D
+handoff (refraction/scans/manifest.md item 1) — refraction/scan.py is now in
+ops/box/cron_night.sh with refraction/scans in the evening commit list, so the
+resident monitor actually runs; plus amendment v2.2 and the sample-scale audit,
+which do not overlap the other seat's work.
 

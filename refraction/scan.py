@@ -1,33 +1,37 @@
 #!/usr/bin/env python3
-# refraction/scan.py — REFR-R13a: monthly collision monitor (plan §11).
-# Deterministic, NO LLM (manual §R13 指派: "不依赖 LLM 联网的脚本"): arXiv API +
-# Semantic Scholar API over a fixed bilingual keyword list, last 31 days.
-# SSRN has no stable public API — per spec this script only GENERATES manual
-# search URLs for a human to click; it does not fabricate an SSRN interface.
-# Architecture is E2-T11a's corrected one, ported as-is (manual §R13: "E2 T11
-# 修正后架构原样搬用"); the keyword list and the hair trigger are refraction's.
+# refraction/scan.py — REFR-R13a: monthly literature collision monitor for the
+# refraction chapter ("One Shock, Many Prices").
+#
+# Architecture is E2-T11's corrected one, carried over verbatim per manual
+# §R13 ("E2 T11 修正后架构原样搬用"): deterministic, NO LLM in the path —
+# arXiv API + Semantic Scholar API over a fixed bilingual keyword list, plus
+# GENERATED SSRN search URLs for a human to click (SSRN has no stable public
+# API; the spec forbids inventing one). The LLM appears only downstream, in
+# REFR-R13-triage, and only to judge overlap — never to discover papers.
+#
+# What this script adds over e2/scan.py, per manual §R13b:
+#   * the 毛刺节 (hair-trigger) section — any hit whose authors include Marta
+#     or Riva, or whose title contains "replication technique"/"switch", is
+#     listed separately WITH its full-text link no matter what its provisional
+#     overlap looks like, and carries ALERT threshold 0.40 instead of 0.60.
+#     The flag is computed HERE so a triage model cannot lose it.
 #
 # Outputs (under refraction/scans/):
-#   hits_YYYYMMDD.csv    [标题, 作者, 日期, 摘要, 链接, 来源, 毛刺, ALERT阈值]
-#   hits_YYYYMMDD.jsonl  same records, one JSON object per line (R13b input)
-#   hairtrigger_YYYYMMDD.md   the 毛刺节, pre-built; empty file if no hits
-#   ssrn_manual_YYYYMMDD.txt  SSRN search URLs for manual click-through
-#   seen_ids.json        cross-run dedup registry (id -> first_seen date)
+#   hits_YYYYMMDD.csv          [标题, 作者, 日期, 摘要, 链接, 来源, 毛刺, ALERT阈值, 关键词]
+#   hits_YYYYMMDD.jsonl        same records as JSON objects — R13b triage input
+#   burr_YYYYMMDD.md           毛刺节: hair-trigger hits + reasons + links (always written)
+#   ssrn_manual_YYYYMMDD.txt   SSRN search URLs for manual click-through
+#   seen_ids.json              cross-run dedup registry (id -> first_seen date)
 #
-# Why the hair trigger is computed HERE and not left to the R13b triage model:
-# manual §R13b mandates that Marta/Riva authors and replication-technique/switch
-# titles are listed in the 毛刺节 "无论初判重叠度如何" and carry a 40% (not 60%)
-# ALERT threshold. Author-name and title matching is purely mechanical, so it is
-# machine-enforced rather than left to a cheap model's discipline — the house
-# pattern for iron rules (cf. refraction/guards/prereg_guard.py). The triage
-# model still judges OVERLAP; it may not re-decide 毛刺 membership.
+# Exit code 0 on a clean run (0 new hits is a normal outcome); 1 only if EVERY
+# source leg failed, so cron surfaces a dead monitor instead of a silent green.
 #
-# Exit code 0 always on clean run (0 new hits is a normal outcome); nonzero
-# only on total source failure (both APIs unreachable) so cron surfaces it.
+# Cron: R13 is resident from R0 onward. The box wiring (one line in
+# ops/box/cron_night.sh) is a seat-D edit — see refraction/scans/manifest.md
+# §handoff; this seat owns refraction/ only.
 #
-# Cron: wire into ops/box/cron_night.sh next to e2/scan.py; outputs are
-# committed by the 21:00 evening digest tick. Box venv is Python 3.6 —
-# keep this file 3.6-compatible (no f-strings, no dataclasses, stdlib only).
+# Box venv is Python 3.6 — keep this file 3.6-compatible (no f-strings, no
+# dataclasses, stdlib only), same constraint as e2/scan.py.
 
 import argparse
 import csv
@@ -39,6 +43,7 @@ import re
 import sys
 import time
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 try:
     from urllib.request import urlopen, Request
@@ -47,58 +52,66 @@ try:
 except ImportError:  # pragma: no cover
     raise SystemExit("python3 required")
 
-from pathlib import Path
-
 HERE = Path(__file__).resolve().parent
 OUTDIR = HERE / "scans"
-SEEN_PATH = OUTDIR / "seen_ids.json"
+SEEN_NAME = "seen_ids.json"
 
-# 月度碰撞监测 (manual §R13 title) — E2's T11 is biweekly at 21d; this is monthly.
-WINDOW_DAYS = 31
+# Monthly cadence (manual §R13 "月度碰撞监测") with a 5-day overlap so a run
+# that slips by a few days cannot open a hole in coverage.
+WINDOW_DAYS = 35
 
-# Fixed bilingual list — the six English strings are verbatim from manual §R13a
-# (= plan §11 monitor keywords); the Chinese half satisfies its "中英双语".
-KEYWORDS = [
+# Keyword list — the six English phrases are VERBATIM from manual §R13a. The
+# manual asks for 中英双语; the Chinese lines are this seat's translations of
+# those same six phrases (translation, not a sourced fact — no bibliographic
+# content is derived from them).
+KEYWORDS_EN = [
     "ETF basket comovement announcement",
     "conversion comovement",
     "announcement day beta ETF",
     "ETF replication switch comovement",
     "creation basket transmission",
     "passive macro news cross-section",
-    "ETF 篮子 共动 宏观公告",
+]
+KEYWORDS_ZH = [
+    "ETF 篮子 共动 公告",
     "基金转换 共动",
     "公告日 beta ETF",
-    "复制方式转换 共动",
+    "ETF 复制方式 切换 共动",
     "申购篮子 传导",
-    "被动投资 宏观信息 横截面",
+    "被动投资 宏观新闻 截面",
 ]
+KEYWORDS = KEYWORDS_EN + KEYWORDS_ZH
 
-# manual §R13b: 毛刺节 membership. Marta–Riva is the nearest causal neighbour,
-# so plan §11 gives it a 40% hair trigger against the 60% general ALERT line.
-HAIR_AUTHORS = ["marta", "riva"]
-HAIR_TITLE_RE = re.compile(r"replication\s+(technique|switch)", re.I)
-ALERT_DEFAULT = 60
-ALERT_HAIR = 40
-
-# plan §11 monthly monitor watchlist — recorded on each hit for the triage step;
-# does NOT by itself set the hair trigger (only §R13b's two rules do).
-WATCH_AUTHORS = ["da", "shive", "greenwood", "marta", "riva", "brogaard",
-                 "heath", "huang", "sammon", "ernst", "saglam", "tuzun",
-                 "wermers"]
+# 毛刺 (hair-trigger) rules — manual §R13b, verbatim intent:
+#   "命中作者含 Marta 或 Riva, 或标题含 replication technique/switch 的条目,
+#    无论初判重叠度如何一律单列'毛刺节'并给全文链接 —— 该来源的 ALERT 阈值
+#    为 40% 而非 60%."
+# Author matching is token-exact (not substring) so "Rivas"/"Martarelli" do
+# not masquerade as the target authors. Title matching is deliberately broad:
+# a bare "switch" over-flags, and over-flagging costs a human 30 seconds while
+# under-flagging costs the chapter its priority claim.
+BURR_AUTHOR_TOKENS = ["marta", "riva"]
+BURR_TITLE_PATTERNS = ["replication technique", "switch", "复制方式", "切换"]
+ALERT_BURR = 0.40
+ALERT_DEFAULT = 0.60
 
 UA = "portfolio-refr-r13-scan/1.0 (research literature monitor)"
 ATOM = "{http://www.w3.org/2005/Atom}"
 
 
 def http_get(url, tries=4, base_sleep=5, headers=None):
+    """GET with backoff. Patched out wholesale in tests — no network in pytest."""
     last = None
     for i in range(tries):
         try:
             h = {"User-Agent": UA}
             h.update(headers or {})
             req = Request(url, headers=h)
-            with urlopen(req, timeout=60) as r:
+            r = urlopen(req, timeout=60)
+            try:
                 return r.read().decode("utf-8", "replace")
+            finally:
+                r.close()
         except HTTPError as e:
             last = e
             if e.code == 429:  # unauthenticated S2 pool is tight; back off hard
@@ -118,60 +131,6 @@ def norm_key(title):
     return re.sub(r"[^a-z0-9一-鿿]+", "", (title or "").lower())
 
 
-def _name_tokens(authors):
-    """Every alphabetic name token, lowercased. Deliberately over-inclusive."""
-    return [t for t in re.split(r"[^a-z\u4e00-\u9fff]+", (authors or "").lower()) if t]
-
-
-def _surnames(authors):
-    """Best-effort surnames. "Ada Marta; B. C. Riva" -> ["marta", "riva"];
-    comma form "Marta, Ada" -> ["marta"]. Tolerant of empty/odd input.
-
-    Used for the WATCHLIST, where precision matters (plan §11 tracks "Da",
-    which is also a common given-name/particle token). The hair trigger does
-    NOT use this — see classify_hit.
-    """
-    out = []
-    for a in (authors or "").split(";"):
-        a = a.strip().lower()
-        if not a:
-            continue
-        # "Last, First" — the surname is what precedes the comma.
-        head = a.split(",")[0] if "," in a else a
-        parts = [p for p in re.split(r"[\s.]+", head) if p]
-        if parts:
-            out.append(parts[-1])
-    return out
-
-
-def classify_hit(hit):
-    """Attach 毛刺 / ALERT-threshold / watchlist fields. Pure; no network.
-
-    manual §R13b: author contains Marta or Riva, OR title contains
-    'replication technique/switch' -> 毛刺节 regardless of overlap, ALERT 40%.
-    """
-    surnames = _surnames(hit.get("authors"))
-    # The hair trigger scans EVERY name token, not just the parsed surname:
-    # author strings arrive as "Ada Marta", "Marta, Ada" and "Marta A." from
-    # different sources, and a missed Marta–Riva hit is the single failure this
-    # trigger exists to prevent (plan §11). Over-inclusive by design; the cost
-    # of a false 毛刺 entry is one extra line for the triage step to read.
-    hit_authors = sorted(set(t for t in _name_tokens(hit.get("authors"))
-                             if t in HAIR_AUTHORS))
-    title_hit = bool(HAIR_TITLE_RE.search(hit.get("title") or ""))
-    reasons = []
-    if hit_authors:
-        reasons.append("author:" + "+".join(hit_authors))
-    if title_hit:
-        reasons.append("title:replication-technique/switch")
-    hit["hair_trigger"] = bool(reasons)
-    hit["hair_reason"] = "; ".join(reasons)
-    hit["alert_threshold_pct"] = ALERT_HAIR if reasons else ALERT_DEFAULT
-    hit["watchlist"] = "; ".join(
-        sorted(set(s for s in surnames if s in WATCH_AUTHORS)))
-    return hit
-
-
 def parse_date(s):
     if not s:
         return None
@@ -181,21 +140,41 @@ def parse_date(s):
         return None
 
 
-def arxiv_search(keyword, cutoff):
-    q = urlencode({
-        "search_query": 'all:"%s"' % keyword,
-        "sortBy": "submittedDate",
-        "sortOrder": "descending",
-        "max_results": "50",
-    })
-    body = http_get("https://export.arxiv.org/api/query?" + q)
+def _author_tokens(authors):
+    return set(t for t in re.split(r"[^A-Za-z一-鿿]+", (authors or "").lower()) if t)
+
+
+def burr_reasons(hit):
+    """Return the list of §R13b hair-trigger reasons this hit fires (may be empty)."""
+    reasons = []
+    toks = _author_tokens(hit.get("authors"))
+    for name in BURR_AUTHOR_TOKENS:
+        if name in toks:
+            reasons.append("author:" + name)
+    title = (hit.get("title") or "").lower()
+    for pat in BURR_TITLE_PATTERNS:
+        if pat in title:
+            reasons.append("title:" + pat)
+    return reasons
+
+
+def classify(hit):
+    """Attach burr flag + ALERT threshold. Runs on every hit, before triage."""
+    reasons = burr_reasons(hit)
+    hit["burr"] = bool(reasons)
+    hit["burr_reason"] = "; ".join(reasons)
+    hit["alert_threshold"] = ALERT_BURR if reasons else ALERT_DEFAULT
+    return hit
+
+
+def parse_arxiv_atom(body, cutoff, keyword):
     hits = []
     for entry in ET.fromstring(body).findall(ATOM + "entry"):
         pub = parse_date((entry.findtext(ATOM + "published") or ""))
         if pub is None or pub < cutoff:
             continue
         link = (entry.findtext(ATOM + "id") or "").strip()
-        hits.append(classify_hit({
+        hits.append(classify({
             "id": "arxiv:" + link.rsplit("/", 1)[-1],
             "title": re.sub(r"\s+", " ", entry.findtext(ATOM + "title") or "").strip(),
             "authors": "; ".join(
@@ -210,30 +189,31 @@ def arxiv_search(keyword, cutoff):
     return hits
 
 
-def s2_search_bulk(cutoff):
-    # One bulk call for ALL keywords (boolean OR) — the unauthenticated S2 pool
-    # 429s hard under separate /paper/search calls (E2-T11 observed this live
-    # 2026-07-09). Free key via env S2_API_KEY lifts the shared-pool limit.
+def arxiv_search(keyword, cutoff):
     q = urlencode({
-        "query": " | ".join('"%s"' % k for k in KEYWORDS),
-        "fields": "title,authors,abstract,url,publicationDate,externalIds",
-        # server-side prefilter; local date check below remains authoritative
-        "publicationDateOrYear": cutoff.isoformat() + ":",
+        "search_query": 'all:"%s"' % keyword,
+        "sortBy": "submittedDate",
+        "sortOrder": "descending",
+        "max_results": "50",
     })
-    key = os.getenv("S2_API_KEY")
-    body = http_get(
-        "https://api.semanticscholar.org/graph/v1/paper/search/bulk?" + q,
-        base_sleep=20, headers={"x-api-key": key} if key else None)
+    return parse_arxiv_atom(
+        http_get("https://export.arxiv.org/api/query?" + q), cutoff, keyword)
+
+
+def parse_s2(body, cutoff):
     hits = []
     for p in (json.loads(body).get("data") or []):
         pub = parse_date(p.get("publicationDate"))
         if pub is None or pub < cutoff:
             continue
         ext = p.get("externalIds") or {}
-        pid = ("doi:" + ext["DOI"]) if ext.get("DOI") else \
-              ("arxiv:" + ext["ArXiv"]) if ext.get("ArXiv") else \
-              ("s2:" + (p.get("paperId") or ""))
-        hits.append(classify_hit({
+        if ext.get("DOI"):
+            pid = "doi:" + ext["DOI"]
+        elif ext.get("ArXiv"):
+            pid = "arxiv:" + ext["ArXiv"]
+        else:
+            pid = "s2:" + (p.get("paperId") or "")
+        hits.append(classify({
             "id": pid,
             "title": (p.get("title") or "").strip(),
             "authors": "; ".join((a.get("name") or "") for a in (p.get("authors") or [])),
@@ -246,131 +226,150 @@ def s2_search_bulk(cutoff):
     return hits
 
 
+def s2_search_bulk(cutoff):
+    # One bulk call for ALL keywords (boolean OR): the unauthenticated S2 pool
+    # 429s hard under one /paper/search call per keyword (observed live on
+    # E2-T11, 2026-07-09). A free key in S2_API_KEY lifts the shared-pool cap.
+    q = urlencode({
+        "query": " | ".join('"%s"' % k for k in KEYWORDS),
+        "fields": "title,authors,abstract,url,publicationDate,externalIds",
+        # server-side prefilter; the local date check above stays authoritative
+        "publicationDateOrYear": cutoff.isoformat() + ":",
+    })
+    key = os.getenv("S2_API_KEY")
+    body = http_get(
+        "https://api.semanticscholar.org/graph/v1/paper/search/bulk?" + q,
+        base_sleep=20, headers={"x-api-key": key} if key else None)
+    return parse_s2(body, cutoff)
+
+
 def ssrn_manual_urls():
     # No stable public SSRN API (spec: do NOT fabricate one) — manual links only.
+    # The Marta–Riva working paper lives on SSRN, so this leg is the one that
+    # actually covers the priority risk; it is a human click-through by design.
     return ["https://www.ssrn.com/index.cfm/en/search/?term=" + quote_plus(k)
             for k in KEYWORDS]
 
 
-def dedup(batches, seen):
-    """Collapse batches into ordered unique hits, skipping anything in `seen`.
-
-    Keyed on the source id and on the normalized title, so the same paper
-    arriving from arXiv and S2 lands once. Pure; no network.
-    """
-    collected = {}
-    for h in batches:
-        key = h["id"] if not h["id"].startswith("s2:") else norm_key(h["title"])
-        tkey = norm_key(h["title"])
-        if key in collected or tkey in collected:
-            prev = collected.get(key) or collected.get(tkey)
-            if h["keyword"] not in prev["keyword"]:
-                prev["keyword"] += ", " + h["keyword"]
-            continue
-        if key in seen or tkey in seen:
-            continue
-        h["dedup_key"] = key
-        collected[key] = h
-        collected.setdefault(tkey, h)
-    uniq = list({id(h): h for h in collected.values()}.values())
-    return sorted(uniq, key=lambda h: (h["date"], h["title"]), reverse=True)
-
-
-def render_hairtrigger(hits, stamp):
-    """Pre-build the 毛刺节 that manual §R13b requires R13b to emit."""
-    hair = [h for h in hits if h.get("hair_trigger")]
-    lines = ["# 毛刺节 — REFR-R13 %s" % stamp, "",
-             "manual §R13b: these entries are listed REGARDLESS of the triage "
-             "model's overlap judgement, and carry ALERT threshold "
-             "%d%% (not %d%%). The triage step judges overlap only; it may not "
-             "re-decide membership of this section." % (ALERT_HAIR, ALERT_DEFAULT), ""]
-    if not hair:
-        lines.append("(empty this run — no Marta/Riva author hit, no "
-                     "replication-technique/switch title hit)")
-    for h in hair:
-        lines += ["## %s" % h["title"],
-                  "- 作者: %s" % (h["authors"] or "UNKNOWN"),
-                  "- 日期: %s" % h["date"],
-                  "- 全文链接: %s" % (h["url"] or "UNKNOWN"),
-                  "- 来源: %s" % h["source"],
-                  "- 毛刺理由: %s" % h["hair_reason"],
-                  "- ALERT 阈值: %d%%" % h["alert_threshold_pct"], ""]
-    if hair:
-        lines += ["---", "",
-                  "毛刺节非空 → manual §R13b requires the triage output to carry "
-                  "a separate 「计划 §10/§1 边界表影响评估」 section."]
-    return "\n".join(lines) + "\n"
-
-
-def load_seen():
-    if SEEN_PATH.exists():
-        return json.loads(SEEN_PATH.read_text())
+def load_seen(outdir):
+    p = Path(outdir) / SEEN_NAME
+    if p.exists():
+        return json.loads(p.read_text())
     return {}
 
 
-def main():
-    ap = argparse.ArgumentParser()
+def collect(legs, seen):
+    """Merge source legs, dedup within-run and against `seen`. Order preserved."""
+    collected, index = [], {}
+
+    def keys_of(h):
+        k = h["id"] if not h["id"].startswith("s2:") else norm_key(h["title"])
+        return k, norm_key(h["title"])
+
+    for batch in legs:
+        for h in batch:
+            k, tkey = keys_of(h)
+            prev = index.get(k) or index.get(tkey)
+            if prev is not None:
+                if h["keyword"] not in prev["keyword"]:
+                    prev["keyword"] += ", " + h["keyword"]
+                continue
+            if k in seen or tkey in seen:
+                continue
+            h["dedup_key"] = k
+            collected.append(h)
+            index[k] = h
+            index[tkey] = h
+    return collected
+
+
+def write_outputs(outdir, hits, stamp, cutoff, today, errors):
+    outdir = Path(outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+
+    with io.open(str(outdir / ("hits_%s.csv" % stamp)), "w",
+                 encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["标题", "作者", "日期", "摘要", "链接", "来源",
+                    "毛刺", "ALERT阈值", "关键词"])
+        for h in hits:
+            w.writerow([h["title"], h["authors"], h["date"], h["abstract"],
+                        h["url"], h["source"], "Y" if h["burr"] else "",
+                        h["alert_threshold"], h["keyword"]])
+
+    with io.open(str(outdir / ("hits_%s.jsonl" % stamp)), "w", encoding="utf-8") as f:
+        for h in hits:
+            f.write(json.dumps(h, ensure_ascii=False, sort_keys=True) + "\n")
+
+    burrs = [h for h in hits if h["burr"]]
+    with io.open(str(outdir / ("burr_%s.md" % stamp)), "w", encoding="utf-8") as f:
+        f.write("# 毛刺节 %s (manual §R13b; ALERT 阈值 %.2f, 其余 %.2f)\n\n"
+                % (stamp, ALERT_BURR, ALERT_DEFAULT))
+        f.write("窗口 %s..%s;本轮新命中 %d 条,其中毛刺 %d 条。\n\n"
+                % (cutoff.isoformat(), today.isoformat(), len(hits), len(burrs)))
+        if not burrs:
+            f.write("本轮无毛刺命中(Marta/Riva 作者、replication technique/switch 标题)。\n")
+        for h in burrs:
+            f.write("## %s\n\n- 作者: %s\n- 日期: %s\n- 来源: %s (关键词: %s)\n"
+                    "- 触发: %s\n- 全文链接: %s\n\n"
+                    % (h["title"], h["authors"], h["date"], h["source"],
+                       h["keyword"], h["burr_reason"], h["url"]))
+        if errors:
+            f.write("\n> 源错误 %d: %s\n" % (len(errors), "; ".join(errors)))
+
+    with io.open(str(outdir / ("ssrn_manual_%s.txt" % stamp)), "w", encoding="utf-8") as f:
+        f.write("# SSRN has no stable public API — click these by hand "
+                "(manual §R13a; Marta–Riva SSRN 4079302 lives here):\n")
+        for u in ssrn_manual_urls():
+            f.write(u + "\n")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="REFR-R13a collision scan")
     ap.add_argument("--full", action="store_true",
                     help="ignore seen_ids.json — report every in-window hit")
-    a = ap.parse_args()
+    ap.add_argument("--window-days", type=int, default=WINDOW_DAYS,
+                    help="lookback window in days (default %d)" % WINDOW_DAYS)
+    ap.add_argument("--out-dir", default=str(OUTDIR))
+    a = ap.parse_args(argv)
 
     today = datetime.datetime.utcnow().date()
-    cutoff = today - datetime.timedelta(days=WINDOW_DAYS)
-    OUTDIR.mkdir(exist_ok=True)
-    seen = {} if a.full else load_seen()
+    cutoff = today - datetime.timedelta(days=a.window_days)
+    outdir = Path(a.out_dir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    seen = {} if a.full else load_seen(outdir)
 
-    batches, errors, n_legs = [], [], len(KEYWORDS) + 1
-
+    legs, errors, n_legs = [], [], len(KEYWORDS) + 1
     for kw in KEYWORDS:
         try:
-            batches.extend(arxiv_search(kw, cutoff))
+            legs.append(arxiv_search(kw, cutoff))
         except Exception as e:
             errors.append("arxiv %r: %s" % (kw, e))
-        time.sleep(3)  # arXiv asks >=3s between calls
+        time.sleep(3)  # arXiv asks for >=3s between calls
     try:
-        batches.extend(s2_search_bulk(cutoff))
+        legs.append(s2_search_bulk(cutoff))
     except Exception as e:
         errors.append("s2-bulk: %s" % e)
 
     if len(errors) == n_legs:
-        print("FATAL: every API call failed:\n  " + "\n  ".join(errors), file=sys.stderr)
+        sys.stderr.write("FATAL: every API call failed:\n  "
+                         + "\n  ".join(errors) + "\n")
         return 1
 
-    hits = dedup(batches, seen)
+    hits = collect(legs, seen)
+    hits.sort(key=lambda h: (h["date"], h["title"]), reverse=True)
     stamp = today.strftime("%Y%m%d")
-
-    with io.open(str(OUTDIR / ("hits_%s.csv" % stamp)), "w",
-                 encoding="utf-8", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["标题", "作者", "日期", "摘要", "链接", "来源",
-                    "毛刺", "毛刺理由", "ALERT阈值", "监测名单"])
-        for h in hits:
-            w.writerow([h["title"], h["authors"], h["date"], h["abstract"],
-                        h["url"], h["source"], "Y" if h["hair_trigger"] else "",
-                        h["hair_reason"], h["alert_threshold_pct"], h["watchlist"]])
-
-    with io.open(str(OUTDIR / ("hits_%s.jsonl" % stamp)), "w", encoding="utf-8") as f:
-        for h in hits:
-            f.write(json.dumps(h, ensure_ascii=False) + "\n")
-
-    with io.open(str(OUTDIR / ("hairtrigger_%s.md" % stamp)), "w", encoding="utf-8") as f:
-        f.write(render_hairtrigger(hits, stamp))
-
-    with io.open(str(OUTDIR / ("ssrn_manual_%s.txt" % stamp)), "w", encoding="utf-8") as f:
-        f.write("# SSRN has no stable public API — click these by hand "
-                "(manual §R13a, E2 T11a item 2):\n")
-        for u in ssrn_manual_urls():
-            f.write(u + "\n")
+    write_outputs(outdir, hits, stamp, cutoff, today, errors)
 
     if not a.full:
         for h in hits:
             seen[h["dedup_key"]] = today.isoformat()
             seen[norm_key(h["title"])] = today.isoformat()
-        SEEN_PATH.write_text(json.dumps(seen, indent=0, sort_keys=True))
+        (outdir / SEEN_NAME).write_text(json.dumps(seen, indent=0, sort_keys=True))
 
-    n_hair = sum(1 for h in hits if h["hair_trigger"])
+    n_burr = sum(1 for h in hits if h["burr"])
     print("scan %s: %d new hit(s), %d 毛刺, window %s..%s, %d source error(s)%s"
-          % (stamp, len(hits), n_hair, cutoff, today, len(errors),
+          % (stamp, len(hits), n_burr, cutoff, today, len(errors),
              (" — " + "; ".join(errors)) if errors else ""))
     return 0
 
