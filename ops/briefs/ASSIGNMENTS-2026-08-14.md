@@ -16,10 +16,25 @@ workers can run it concurrently without touching the same files. The
 
 | File | Owner | Status |
 |---|---|---|
-| `dax/data_built/price_histories.csv` | **price-panel worker** (in flight) | claimed 2026-08-14 |
+| `dax/data_built/price_histories.csv` | **W2-infra worker** | claimed 2026-08-14 |
+| `dax/data_built/cps_onet_crosswalk.csv` | **W2-infra worker** | **REASSIGNED 2026-08-18** (was seat A) |
 | `dax/data_built/onet_timeshares.parquet` | **seat A** | unclaimed |
 | `dax/data_built/oews_wages.parquet` | **seat A** | unclaimed |
 | `dax/data_built/cps_extract.parquet` | **seat A** | unclaimed |
+
+### Reassignment notice — 2026-08-18, PI-directed
+
+The **employment-weighted CPS-O*NET-SOC crosswalk** (formerly item 4 of the
+seat-A brief) is reassigned from seat A to the W2-infra worker, by PI
+instruction. Seat A must **not** build it. Everything under
+`dax/w2/crosswalk/` and `ops/contracts/cps_onet_crosswalk.yaml` belongs to the
+W2-infra lane, alongside `dax/w2/prices/`.
+
+Rationale: the crosswalk and the price panel share the same problem shape —
+external public sources that must be fetched with locators and checksums,
+parsed deterministically, and emitted under a frozen contract with honest
+coverage reporting. Keeping them in one lane keeps that machinery in one place.
+Seat A keeps the three data extracts, which are genuinely different work.
 
 Seat A: do **not** write `price_histories.csv`, do not edit anything under
 `dax/w2/prices/`, and do not modify `ops/contracts/price_histories.yaml`.
@@ -39,9 +54,8 @@ Deliverables, all pre-period only (the outcome seal is closed and stays closed):
    pulled and checksum-recorded in
    `dax/memo/power_calcs/ipums_preperiod_extract_receipt.json` — **reuse it,
    do not re-pull**, and verify the SHA256s match before building.
-4. Employment-weighted many-to-many CPS↔O*NET-SOC crosswalk, emitting the
-   Decision-12 dispersion diagnostics (within-code dose SD, max mapping
-   weight) as first-class columns, not as a report.
+4. ~~Employment-weighted many-to-many CPS↔O*NET-SOC crosswalk.~~
+   **REASSIGNED 2026-08-18 to the W2-infra worker. Do not build this.**
 5. Frozen Felten / Eloundou / Webb static-score ensemble for the Decision-8
    convergent-validity check.
 
