@@ -8,10 +8,16 @@ the downstream cheap model is trusted to make.
 """
 import json
 import re
+import sys
+from pathlib import Path
 
 import pytest
 
-from refraction import scan
+# Same explicit insert as test_prereg_guard.py: under a bare `pytest` (what CI
+# runs) the repo root is not on sys.path, and relying on a sibling test file
+# being collected first to put it there makes this module's import order-dependent.
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from refraction import scan  # noqa: E402
 
 
 def mk(title="A paper on ETFs", authors="Jane Doe", src="arXiv", hid=None,
