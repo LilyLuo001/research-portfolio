@@ -50,5 +50,9 @@ dax/data_raw/_litellm_mirror/
 # W2 price harvester: cached archive snapshots (re-fetchable, not source of truth)
 dax/data_raw/_wayback_cache/
 
-# W2 crosswalk: cached agency source files (re-fetchable, checksummed in the receipt)
-dax/data_raw/_crosswalk_raw/
+# P1 WRDS sprint: raw pulls are large and licensed, and discovered_schema.json is
+# one connected session's machine-read inventory — both are box artifacts, not
+# source. p1/wrds/pull_scope.json IS tracked: it is derived offline from
+# committed files and is what you hand to whoever books the account.
+p1/wrds/raw/
+p1/wrds/discovered_schema.json

@@ -18,6 +18,7 @@ Output: p1/t2_wrds/waves.csv  (wave_id | effective_date | n_funds | is_anchor)
 """
 import csv
 import logging
+import os
 import pathlib
 import re
 import sys
@@ -32,6 +33,16 @@ ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 LOGFILE = HERE / "build_waves.log"
 log = logging.getLogger("build_waves")
+# The run log is committed, and FileHandler(mode="w") rewrites it with fresh
+# timestamps on every invocation — so the test that re-runs this script points
+# BUILD_WAVES_LOG at a tmp file instead of dirtying the working tree each time
+# anyone runs pytest.
+LOGFILE = pathlib.Path(os.environ.get("BUILD_WAVES_LOG")
+                       or (HERE / "build_waves.log"))
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout),
+              logging.FileHandler(LOGFILE, mode="w")])
 
 
 def _setup_run():
@@ -84,13 +95,13 @@ def main():
                  ANCHOR, wid[ANCHOR], len(waves[ANCHOR]))
 
     with open(WAVES, "w", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["wave_id", "effective_date", "n_funds", "is_anchor"])
         for d in ordered:
             w.writerow([wid[d], d, len(waves[d]), int(d == ANCHOR)])
 
     with open(MEMBERS, "w", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["wave_id", "effective_date", "fund_name", "family",
                     "mutual_fund_ticker", "etf_ticker", "source_accession",
                     "source_url"])

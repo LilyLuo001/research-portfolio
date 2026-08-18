@@ -41,3 +41,9 @@ columns:
   # rebuilt parquet:
   #   val_usd: {min: 0}
   source_accessions: {}            # ';'-joined N-PORT accession(s)
+# NOT YET DECLARED — `valusd` (Σ fund USD value of the position, from N-PORT).
+# The pipeline emits it as of 2026-08-18, but the committed parquet predates that
+# build and the validator treats every declared column as must-exist. Declare it
+# here (as `valusd: {min: 0}`) in the same commit that lands the next box build,
+# so value-weighted coverage becomes a contract-checked column rather than a
+# best-effort one. strict_columns is false, so the new column validates meanwhile.

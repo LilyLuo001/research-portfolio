@@ -559,11 +559,11 @@ tasks:
     worker: project_pro
     depends_on: [P1-T2-killswitch]
     inputs: []
-    output_contract: null
+    output_contract: variable_spec
     human_gate: false
     channel_a: true
     max_attempts: 3
-    notes: "变量构造规格书 channel A = claude.ai Project (Pro)."
+    notes: "变量构造规格书 channel A = claude.ai Project (Pro). BLOCKED on the 文献包: T0 阶段A never ran, so the spec's 文献口径 column has no admissible source — itemised CITE_REQUEST in p1/t3_spec_preflight.md. WRDS does not clear this."
 
   - id: P1-T3-spec-B
     project: p1
@@ -588,6 +588,31 @@ tasks:
     max_attempts: 1
     notes: "human門 3: DECISION_NEEDED on caliber conflicts."
 
+  # §126 names an implementation phase and an INDEPENDENT test phase after the
+  # spec is adjudicated; neither was ever encoded, so nothing in the DAG produced
+  # outcomes_panel.parquet even though §230 lists it as T5/T6/T7's input.
+  - id: P1-T3-impl
+    project: p1
+    owner_account: C
+    worker: code_pro
+    depends_on: [P1-T3-decision, P1-T2-wrds]
+    inputs: []
+    output_contract: outcomes_panel
+    human_gate: false
+    max_attempts: 2
+    notes: "§126 实现阶段: code the adjudicated spec, produce outcomes_panel.parquet (permno|yyyyq), 值域 assert per variable. Spine-two variables are buildable from plan §7 alone; spines one/four wait on the 文献包."
+
+  - id: P1-T3-tests
+    project: p1
+    owner_account: null
+    worker: deepseek
+    depends_on: [P1-T3-decision]
+    inputs: []
+    output_contract: null
+    human_gate: false
+    max_attempts: 2
+    notes: "§126 测试阶段: unit tests per variable constructor from the SPEC ONLY — the test author must not see the implementation, so an implementation error cannot confirm itself. Cross-vendor by construction (impl=Claude, tests=DeepSeek)."
+
   - id: P1-T4-replication
     project: p1
     owner_account: C
@@ -603,7 +628,7 @@ tasks:
     project: p1
     owner_account: C
     worker: code_pro
-    depends_on: [P1-T3-decision, SH-econlib]
+    depends_on: [P1-T3-impl, SH-econlib]
     inputs: []
     output_contract: main_results
     human_gate: false
