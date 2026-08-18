@@ -1,0 +1,32 @@
+{
+  "status": "ONET_25_0_TO_2019_PROVISIONAL_FALLBACK_PRIVATE",
+  "generated_at_utc": "2026-08-18T14:34:31.501413+00:00",
+  "sources": {
+    "onet_25_0_archive": {
+      "agency": "U.S. Department of Labor, O*NET Resource Center",
+      "vintage": "O*NET 25.0 (August 2020)",
+      "url": "https://www.onetcenter.org/dl_files/database/db_25_0_text.zip",
+      "sha256": "6a4b2448224f50686598f2dbdf91e4cac0a38e3c6bd588a3eb9f1957e4030f29"
+    },
+    "onet_2010_to_2019_crosswalk": {
+      "agency": "U.S. Department of Labor, O*NET Resource Center",
+      "vintage": "O*NET-SOC 2010 to O*NET-SOC 2019",
+      "url": "https://www.onetcenter.org/taxonomy/2019/walk/2010_to_2019_Crosswalk.csv?fmt=csv",
+      "sha256": "8f026a33134bfde5770308d1c6117cf70d9dd41c2b3467e6dd271d65bdeecc5a"
+    }
+  },
+  "inputs": {
+    "db_25_0_text.zip": "6a4b2448224f50686598f2dbdf91e4cac0a38e3c6bd588a3eb9f1957e4030f29",
+    "2010_to_2019_Crosswalk.csv": "8f026a33134bfde5770308d1c6117cf70d9dd41c2b3467e6dd271d65bdeecc5a",
+    "onet_timeshares.csv": "62c6360c030d73948858c4930de17bb8f11aa6966bbd339d3397464fb8d8a40e"
+  },
+  "output_name": "onet_25_0_to_2019_fallback_timeshares.csv",
+  "output_sha256": "ee7d339465bea8c9e31982f3932c931080251ce144219d98f586a8adb803ca66",
+  "n_rows": 908,
+  "n_fallback_onet_soc2019_codes": 41,
+  "n_equal_source_mix_codes": 4,
+  "bad_share_sums": 0,
+  "use_rule": "provisional bounds only; never overwrite a current usable O*NET 26.1 profile",
+  "raw_files_committed": false,
+  "detailed_fallback_committed": false
+}
