@@ -16,10 +16,25 @@ workers can run it concurrently without touching the same files. The
 
 | File | Owner | Status |
 |---|---|---|
-| `dax/data_built/price_histories.csv` | **price-panel worker** (in flight) | claimed 2026-08-14 |
+| `dax/data_built/price_histories.csv` | **W2-infra worker** | claimed 2026-08-14 |
+| `dax/data_built/cps_onet_crosswalk.csv` | **W2-infra worker** | **REASSIGNED 2026-08-18** (was seat A) |
 | `dax/data_built/onet_timeshares.parquet` | **seat A** | unclaimed |
 | `dax/data_built/oews_wages.parquet` | **seat A** | unclaimed |
 | `dax/data_built/cps_extract.parquet` | **seat A** | unclaimed |
+
+### Reassignment notice — 2026-08-18, PI-directed
+
+The **employment-weighted CPS-O*NET-SOC crosswalk** (formerly item 4 of the
+seat-A brief) is reassigned from seat A to the W2-infra worker, by PI
+instruction. Seat A must **not** build it. Everything under
+`dax/w2/crosswalk/` and `ops/contracts/cps_onet_crosswalk.yaml` belongs to the
+W2-infra lane, alongside `dax/w2/prices/`.
+
+Rationale: the crosswalk and the price panel share the same problem shape —
+external public sources that must be fetched with locators and checksums,
+parsed deterministically, and emitted under a frozen contract with honest
+coverage reporting. Keeping them in one lane keeps that machinery in one place.
+Seat A keeps the three data extracts, which are genuinely different work.
 
 Seat A: do **not** write `price_histories.csv`, do not edit anything under
 `dax/w2/prices/`, and do not modify `ops/contracts/price_histories.yaml`.
@@ -39,9 +54,8 @@ Deliverables, all pre-period only (the outcome seal is closed and stays closed):
    pulled and checksum-recorded in
    `dax/memo/power_calcs/ipums_preperiod_extract_receipt.json` — **reuse it,
    do not re-pull**, and verify the SHA256s match before building.
-4. Employment-weighted many-to-many CPS↔O*NET-SOC crosswalk, emitting the
-   Decision-12 dispersion diagnostics (within-code dose SD, max mapping
-   weight) as first-class columns, not as a report.
+4. ~~Employment-weighted many-to-many CPS↔O*NET-SOC crosswalk.~~
+   **REASSIGNED 2026-08-18 to the W2-infra worker. Do not build this.**
 5. Frozen Felten / Eloundou / Webb static-score ensemble for the Decision-8
    convergent-validity check.
 
@@ -90,9 +104,16 @@ D1 is resolved (`dax/memo/PI_DECISION_D1_2026-08-18.md`): the primary
 specification is now a continuous cumulative-dose design with **no event
 selection**. Consequences for the queue:
 
-- `DAX-W3-mapA` is **unblocked**. Mapping work feeds the monthly index, which
-  the continuous primary consumes directly; it is no longer contingent on which
-  events survive a window rule.
+- `DAX-W3-mapA` is **no longer blocked by the window rule** — but it is still
+  blocked by its declared dependency on `DAX-W2-data`, which is not complete.
+  CORRECTION 2026-08-18: an earlier revision of this file called it "unblocked"
+  without that qualification, which was wrong. `make plan` does not list it as
+  READY and will not until W2-data lands.
+- Note also that `DAX-W3-mapA` is the **GDPval mapping protocol and
+  adjudication**, per its queue entry. The employment-weighted CPS-O*NET
+  crosswalk is a `DAX-W2-data` deliverable (item 4 of the seat-A brief) and is
+  covered by the collision carve-out above. Whoever front-loads W3 must not
+  write the crosswalk.
 - W2 price work is now **strictly value-adding**. Under the old rule more
   verified events shrank the design; under the continuous primary every
   verified event adds dose variation. Finish the panel.
@@ -102,3 +123,43 @@ selection**. Consequences for the queue:
 - The memo itself needs §§3, 4, 7, 9 rewritten so it carries one primary, and
   a fresh red-team pass — the existing `CONDITIONAL_GO` reviewed the discrete
   design and does not transfer.
+
+---
+
+# URGENT — the box has been dead since 2026-07-10 (found 2026-08-18)
+
+`ops/box/inbox_log.md` ends at `2026-07-10T12:30Z`, and the last commit
+authored by `portfolio-box` is the same day. That is **39 days** of no L0/L1
+activity. Consequences:
+
+- The Channel A payload merged in PR #36 will never fire. The price panel is
+  stuck at `single_channel` for all 71 rows, and one channel can never certify
+  a price, so no price row can reach `verified`.
+- Every L1 batch `make plan` advertises as READY has been dispatching nowhere:
+  `P1-T1-events`, `P1-T13-ant`, `P1-T0-monitor`, `REFR-R0-collide`,
+  `REFR-R1a-verify`, `E2-T2-dune`, `E2-T6b-nav`, `REFR-R13-scan`.
+- Stale leases were never reaped, which is why `DAX-W1-memo` and
+  `P1-T1-events` still show in flight — `--reap` runs on the box's 30-min tick.
+- The evening digest has not been produced for five weeks.
+
+**Diagnosis order** (owner, ~15 minutes): is the host up; is cron running
+(`crontab -l`, `ops/box/cron.log` tail); does `git pull --ff-only origin main`
+succeed from the box checkout; is `ops/box/.env` still present after any
+reboot; did the 2026-07-09 merge-wedge lock (`ops/box/.cron.lock`) get left
+held by a killed process.
+
+Until it is back, treat every "overnight batch will handle it" assumption in
+the queue as false.
+
+## Channel A is blocked three ways
+
+| Route | State |
+|---|---|
+| This sandbox | `web.archive.org:443` denied by network policy (403 at the gateway) |
+| The box | dead since 2026-07-10 |
+| SSH to scc1.bu.edu | no ssh binary, no keys, TCP:22 blocked |
+
+Any one of these unblocks it: revive the box, allowlist `web.archive.org` and
+`archive.org` in the environment's network policy, or run
+`python dax/w2/prices/build_price_panel.py --time-budget 600` on any host with
+egress and commit the resulting `price_histories.csv`.

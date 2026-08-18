@@ -1,0 +1,46 @@
+{
+  "description": "DAX W1 pre-event power moments only, ages 22-25, 2021-11 through 2023-02, frozen 2026-08-06",
+  "dataStructure": {
+    "rectangular": {
+      "on": "P"
+    }
+  },
+  "dataFormat": "csv",
+  "caseSelectWho": "individuals",
+  "samples": {
+    "cps2021_11s": {},
+    "cps2021_12s": {},
+    "cps2022_01s": {},
+    "cps2022_02s": {},
+    "cps2022_03b": {},
+    "cps2022_04s": {},
+    "cps2022_05s": {},
+    "cps2022_06s": {},
+    "cps2022_07s": {},
+    "cps2022_08s": {},
+    "cps2022_09s": {},
+    "cps2022_10s": {},
+    "cps2022_11s": {},
+    "cps2022_12s": {},
+    "cps2023_01s": {},
+    "cps2023_02s": {}
+  },
+  "variables": {
+    "CPSIDP": {},
+    "MISH": {},
+    "AGE": {
+      "caseSelections": {
+        "general": ["22", "23", "24", "25"]
+      }
+    },
+    "SEX": {},
+    "RACE": {},
+    "HISPAN": {},
+    "EMPSTAT": {},
+    "OCC2010": {},
+    "IND1990": {},
+    "EDUC": {},
+    "WTFINL": {},
+    "UHRSWORKT": {}
+  }
+}
