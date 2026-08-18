@@ -1,0 +1,193 @@
+# p1/wrds/tables.yaml — the LOGICAL field spec for every WRDS pull P1 needs.
+#
+# ---------------------------------------------------------------------------
+# READ THIS BEFORE EDITING. This file does NOT assert what WRDS's schema is.
+# ---------------------------------------------------------------------------
+# CLAUDE.md meta-rule 1: a table or column name written from model memory is a
+# hallucination, and one wrong column name silently produces a wrong number
+# rather than an error. So the pull scripts refuse to build ANY query from a
+# name that has not been confirmed against the live server.
+#
+# Each entry below states, in plain language, WHAT WE NEED (`want:`). The
+# `candidates:` list is a set of UNVERIFIED hints scraped from this repo's own
+# history (ops/briefs/WRDS-access-assessment.md, p1/t2_wrds/holdings_pipeline.py)
+# — those were themselves written without a live connection, so they are search
+# terms, nothing more. `resolved:` starts null everywhere and is filled ONLY by
+# `python p1/wrds/pull.py resolve`, which matches against the real inventory
+# that `pull.py discover` reads off the server. Anything the resolver cannot
+# pin down unambiguously is reported as NEED_HUMAN for the owner to settle at
+# the WRDS web query tool — never guessed.
+#
+# So the sprint order is:  discover  ->  resolve  ->  (owner settles leftovers)
+#                          ->  pull   ->  verify
+# ---------------------------------------------------------------------------
+
+meta:
+  written_by: seat C, 2026-08-18
+  authority: >
+    Nothing in `candidates` is authoritative. `resolved` is authoritative only
+    after `pull.py discover` has run against a live connection and written
+    p1/wrds/discovered_schema.json. Editing `resolved` by hand is allowed ONLY
+    for entries the resolver flagged NEED_HUMAN, and only with the name copied
+    from the WRDS web query tool.
+
+# Which libraries to enumerate during discovery. Discovery is cheap metadata,
+# so over-listing costs nothing and under-listing costs a second connection.
+libraries: [crsp, crspq, comp, compa, ibes, taqmsec, wrdsapps]
+
+# ---------------------------------------------------------------------------
+# PULL 1 — mutual-fund holdings for the 131 converting funds (bounded, small)
+# ---------------------------------------------------------------------------
+pulls:
+  mf_holdings:
+    purpose: >
+      Pre-conversion share holdings of each converting fund, to rebuild ConvExp
+      on CRSP identifiers (the permno-keyed twin of the free-path parquet).
+    serves: [P1-T2-wrds, refraction-R2]
+    tables:
+      holdings:
+        want: fund-level security holdings, one row per (fund, report date, security)
+        candidates: [crsp.holdings]
+        resolved: null
+      fund_header:
+        want: mutual-fund identity — fund number, fund name, ticker
+        candidates: [crsp.fund_hdr, crsp.fund_names]
+        resolved: null
+      portno_map:
+        want: crosswalk between CRSP MF portfolio number and fund number
+        candidates: [crsp.portnomap]
+        resolved: null
+    columns:
+      fund_id:      {want: CRSP mutual-fund number, candidates: [crsp_fundno], resolved: null}
+      report_date:  {want: holdings report date, candidates: [report_dt], resolved: null}
+      security_id:  {want: stock identifier on the holdings row, candidates: [permno], resolved: null}
+      shares_held:  {want: number of shares held, candidates: [nbr_shares], resolved: null}
+      fund_ticker:  {want: mutual-fund ticker, candidates: [ticker], resolved: null}
+
+  # -------------------------------------------------------------------------
+  # PULL 2 — CUSIP <-> PERMNO reference (small, needed to merge the free path)
+  # -------------------------------------------------------------------------
+  stock_names:
+    purpose: >
+      CUSIP <-> PERMNO history, so p1/t2_free/conv_exposure_free_crosswalk.csv
+      merges to CRSP and the free-path ConvExp gains a permno key.
+    serves: [P1-T2-wrds, P1-T5-main]
+    tables:
+      stocknames:
+        want: security identifier history — permno, cusip, ticker, name, date range
+        candidates: [crsp.stocknames, crsp.dsenames]
+        resolved: null
+    columns:
+      security_id: {want: CRSP permanent security number, candidates: [permno], resolved: null}
+      cusip:       {want: CUSIP as carried by CRSP, candidates: [ncusip, cusip], resolved: null}
+      name_start:  {want: first date this identifier record is valid, candidates: [namedt], resolved: null}
+      name_end:    {want: last date this identifier record is valid, candidates: [nameendt], resolved: null}
+
+  # -------------------------------------------------------------------------
+  # PULL 3 — monthly stock file (shares outstanding, price, market cap)
+  # -------------------------------------------------------------------------
+  msf:
+    purpose: ConvExp denominator on CRSP identifiers + market-cap deciles.
+    serves: [P1-T2-wrds]
+    tables:
+      monthly_stock:
+        want: monthly stock file — price, shares outstanding, return, by permno-month
+        candidates: [crsp.msf]
+        resolved: null
+    columns:
+      security_id:   {want: permno, candidates: [permno], resolved: null}
+      date:          {want: month-end date, candidates: [date], resolved: null}
+      price:         {want: month-end price (may be negative when a bid/ask average), candidates: [prc], resolved: null}
+      shares_out:    {want: shares outstanding — CONFIRM THE UNITS, candidates: [shrout], resolved: null}
+    asserts:
+      shares_out_units: >
+        NEED_HUMAN unless confirmed on the server: the repo's existing scaffold
+        multiplies this by 1000 (i.e. assumes thousands). Confirm against the
+        WRDS variable documentation before any ConvExp is computed from it — a
+        1000x error here would not raise, it would just move every exposure.
+
+  # -------------------------------------------------------------------------
+  # PULL 4 — daily stock file over event windows (THE BIG ONE)
+  # -------------------------------------------------------------------------
+  dsf:
+    purpose: >
+      Daily returns for every T3/T5 outcome: CAR paths [0,+120], Hou-Moskowitz
+      delay, Amihud, 1-R2, variance ratios, reversal strategies.
+    serves: [P1-T3-spec, P1-T4-replication, P1-T5-main, refraction-R2]
+    tables:
+      daily_stock:
+        want: daily stock file — return, price, volume, by permno-day
+        candidates: [crsp.dsf]
+        resolved: null
+      daily_index:
+        want: daily market index return series (for market-model residuals)
+        candidates: [crsp.dsi]
+        resolved: null
+    columns:
+      security_id: {want: permno, candidates: [permno], resolved: null}
+      date:        {want: trading date, candidates: [date], resolved: null}
+      ret:         {want: daily return including distributions, candidates: [ret], resolved: null}
+      price:       {want: daily closing price, candidates: [prc], resolved: null}
+      volume:      {want: daily share volume, candidates: [vol], resolved: null}
+      open_price:  {want: daily open — refraction R2 needs the overnight/intraday split, candidates: [openprc], resolved: null}
+      mkt_ret:     {want: value-weighted market return, candidates: [vwretd], resolved: null}
+
+  # -------------------------------------------------------------------------
+  # PULL 5a — TAQ intraday indicators (effective spreads; spine four)
+  # -------------------------------------------------------------------------
+  taq_iid:
+    purpose: Effective spread and price impact — spine four, and the Saglam-Tuzun replication.
+    serves: [P1-T3-spec, P1-T4-replication, P1-T5-main]
+    tables:
+      intraday_indicators:
+        want: >
+          WRDS-computed daily intraday liquidity indicators (this is a WRDS
+          value-add product, not raw TAQ — raw TAQ is terabytes and is NOT wanted)
+        candidates: [wrdsapps.taq_iid, taqmsec.wrds_iid]
+        resolved: null
+    columns:
+      security_id: {want: the identifier this product keys on — symbol or permno, CONFIRM, candidates: [sym_root, permno], resolved: null}
+      date:        {want: trading date, candidates: [date], resolved: null}
+      eff_spread:  {want: dollar or proportional effective spread — CONFIRM WHICH, candidates: [ehalfspd, eff_spread], resolved: null}
+      price_impact: {want: price impact measure, candidates: [price_impact], resolved: null}
+    asserts:
+      spread_definition: >
+        NEED_HUMAN: spine four's spec must state which effective-spread convention
+        the chosen field implements (dollar vs proportional, quote-matching rule).
+        This is one of the ten CITE_REQUEST items in p1/t3_spec_preflight.md.
+
+  # -------------------------------------------------------------------------
+  # PULL 5b — IBES (SUE, coverage, dispersion)
+  # -------------------------------------------------------------------------
+  ibes:
+    purpose: >
+      Earnings surprise and analyst environment — the peer-announcement event
+      definition, and spine four's coverage/dispersion cross-section.
+    serves: [P1-T3-spec, P1-T5-main]
+    tables:
+      summary:
+        want: analyst consensus summary statistics per (security, forecast period)
+        candidates: [ibes.statsum_epsus, ibes.statsumu_epsus]
+        resolved: null
+      actuals:
+        want: reported actual EPS with announcement date
+        candidates: [ibes.actpsum_epsus, ibes.act_epsus]
+        resolved: null
+      identifiers:
+        want: IBES ticker <-> CUSIP crosswalk, to reach permno
+        candidates: [ibes.idsum]
+        resolved: null
+    columns:
+      security_id:  {want: IBES ticker, candidates: [ticker], resolved: null}
+      cusip:        {want: CUSIP for the CRSP merge, candidates: [cusip], resolved: null}
+      anndate:      {want: earnings announcement date, candidates: [anndats], resolved: null}
+      actual:       {want: reported actual EPS, candidates: [value, actual], resolved: null}
+      consensus:    {want: consensus forecast (mean or median — the SUE fork), candidates: [meanest, medest], resolved: null}
+      dispersion:   {want: forecast standard deviation, candidates: [stdev], resolved: null}
+      n_analysts:   {want: number of estimates, candidates: [numest], resolved: null}
+    asserts:
+      sue_convention: >
+        NEED_HUMAN before use: SUE from analyst expectations vs a time-series
+        model is the DECISION_NEEDED fork named in docs/Project_1.md §125. This
+        pull supports the analyst branch; the time-series branch needs Compustat
+        quarterly earnings instead. Do not pick one silently.

@@ -29,6 +29,12 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 WAVES = HERE / "waves.csv"
+# Wave MEMBERSHIP (which fund converted in which wave) lives in waves_members.csv,
+# not waves.csv. An earlier revision read waves.csv["source_accessions"], a column
+# that only ever existed in the merge-corrupted build_waves scaffold's 7-col
+# output; against the canonical 4-col waves.csv that is a KeyError. The free
+# pipeline (build_nport_convexp.py) already keys off members for the same reason.
+MEMBERS = HERE / "waves_members.csv"
 EVENTS = HERE.parent / "events_merged.csv"
 OUT_PARQUET = HERE.parent / "conv_exposure.parquet"
 DIAG = HERE / "convexp_diagnostics.md"
@@ -129,19 +135,24 @@ def convexp_for_wave(db, wave_id, eff_date, funds):
 
 
 def main():
+    if not MEMBERS.exists():
+        sys.exit(f"NEED_HUMAN: missing {MEMBERS} — run p1/t2_wrds/build_waves.py first.")
     waves = list(csv.DictReader(WAVES.open()))
+    members = list(csv.DictReader(MEMBERS.open()))
     events = list(csv.DictReader(EVENTS.open()))
-    ev_by_acc = {}
-    for e in events:
-        ev_by_acc.setdefault(e["source_accession"], e)
 
     db = connect()
     mapping, unmapped = map_funds(db, events)
     fundno_by_acc = {m["source_accession"]: m for m in mapping}
 
+    # wave_id -> the converting funds in it, via each member's source_accession
+    accs_by_wave = {}
+    for m in members:
+        accs_by_wave.setdefault(m["wave_id"], []).append(m["source_accession"])
+
     rows = []
     for w in waves:
-        accs = w["source_accessions"].split("|")
+        accs = accs_by_wave.get(w["wave_id"], [])
         funds = [fundno_by_acc[a] for a in accs if a in fundno_by_acc]
         rows += convexp_for_wave(db, w["wave_id"], w["effective_date"], funds)
 
