@@ -1,0 +1,7 @@
+scope,waves,cells,distinct_stocks,stocks_ge_0.25pct,stocks_ge_0.5pct,stocks_ge_1pct
+ALL (as built),49,6377,2241,761,389,24
+only no_intl,33,5259,1977,742,373,16
+only mixed_intl,7,800,676,9,8,5
+only pure_intl,9,318,286,11,8,3
+OPTION A: drop pure-international waves,40,6059,2055,750,381,21
+OPTION A-strict: drop any wave touching international,33,5259,1977,742,373,16

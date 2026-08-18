@@ -8,6 +8,19 @@ and no privileged data.
 The outcome seal was not opened. No `v1.0-preregistered` tag exists or was
 created. Nothing in this audit authorizes outcome work.
 
+## Resolution status as of 2026-08-18
+
+| # | State | Where |
+|---|---|---|
+| D1 | **RESOLVED** — continuous cumulative-dose primary | `PI_DECISION_D1_2026-08-18.md` |
+| D2 | **RESOLVED** — primary engine rebuilt; stacked engine demoted and labelled | `power_calcs/simulate_power_continuous.py` |
+| D3 | **RESOLVED** — pass bar frozen and external, fail-closed | `PI_DECISION_D3_2026-08-18.md` |
+| D4 | **PART 1 RESOLVED** (estimand named); Part 2 (entrant companion) left to the PI | `PI_DECISION_D4_2026-08-18.md` |
+| F2 | **RESOLVED** — 5 rows demoted, `date_conflict` column added, rule enforced in the validator | `validate_event_registry.py` |
+
+All decisions require PI counter-signature before they bind. None opened the
+outcome seal; no tag exists.
+
 ## Summary
 
 | # | Finding | Severity | Reproduce |

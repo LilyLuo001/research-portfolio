@@ -37,6 +37,15 @@ Run:
   python p1/t2_free/build_nport_convexp.py
 Then:
   python ops/runner/contracts.py conv_exposure_free p1/conv_exposure_free.parquet
+
+Keyed on the public CUSIP (there is no free CRSP permno); output conforms to
+ops/contracts/conv_exposure_free.yaml, and the cusip<->ticker<->cik crosswalk
+shipped alongside lets a later CRSP merge recover permno without renaming a
+column.
+
+Inputs already in repo: p1/events_merged.csv, p1/t2_wrds/waves.csv,
+p1/t1_arb/id_meta.json (trust CIK per accession). Runs on the BOX — it needs
+outbound HTTPS to SEC/OpenFIGI.
 """
 import csv
 import json
@@ -51,11 +60,6 @@ from datetime import datetime
 
 import requests
 
-try:
-    import pandas as pd
-except ImportError:
-    print("NEED pandas+pyarrow: pip install pandas pyarrow requests")
-    raise
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = ROOT / "p1" / "t2_free"
@@ -72,6 +76,7 @@ NH_STOCKS = HERE / "NEED_HUMAN_stocks.csv"
 # lets recover_denominators.py --online recompute ConvExp on a recovered
 # denominator (and lets the audit value-weight its coverage).
 DROPPED_CELLS = HERE / "dropped_cells_shares_held.csv"
+DROPPED_SIDECAR = HERE / "dropped_cells_shares_held.csv"
 
 SEC_UA = os.environ.get("SEC_UA", "").strip()
 OPENFIGI_KEY = os.environ.get("OPENFIGI_KEY", "").strip()
@@ -88,9 +93,9 @@ SERIES_MATCH_MIN = 0.34   # token-overlap threshold for fuzzy series match
 SERIES_EXACT = 0.999      # normalized-equal series name -> stop hunting
 NPORT = "NPORT-P"
 
-for d in (HERE, CACHE, CACHE / "sub", CACHE / "nport", CACHE / "xbrl",
-          CACHE / "figi", CACHE / "price", CACHE / "fts"):
-    d.mkdir(parents=True, exist_ok=True)
+LOGFILE = HERE / "build_nport_convexp.log"
+CACHE_DIRS = (HERE, CACHE, CACHE / "sub", CACHE / "nport", CACHE / "xbrl",
+              CACHE / "figi", CACHE / "price", CACHE / "fts")
 
 log = logging.getLogger("t2free")
 # The run log is an audit input (the coverage audit parses CONVEXP_GT1 lines out
@@ -102,6 +107,20 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
     handlers=[logging.StreamHandler(sys.stdout),
               logging.FileHandler(LOGFILE, mode="w")])
+
+
+def _setup_run():
+    """Create cache dirs and attach the run log. Called from main(), NOT at
+    import: the FileHandler opens build_nport_convexp.log in mode="w", and that
+    log is a committed provenance artifact (recover_denominators.py parses the
+    CONVEXP_GT1 lines out of it for real shares_held). Importing this module —
+    from a test, a REPL, or another script — must never truncate it."""
+    for d in CACHE_DIRS:
+        d.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout),
+                  logging.FileHandler(LOGFILE, mode="w")])
 
 SESS = requests.Session()
 
@@ -558,9 +577,69 @@ def _dropped(agg_cell, cusip, ticker, wave_id, eff, reason,
             "shares_out_bad": "" if shares_out_bad is None else shares_out_bad,
             "shares_out_date": shares_out_date,
             "source_accessions": ";".join(sorted(agg_cell["accs"]))}
+def _cell_rows(agg, tcik, so_lookup):
+    """Turn aggregated (cusip, wave) cells into ConvExp rows + drop records.
+
+    Pure given `so_lookup(stock_cik, effective_date) -> (shares_out, as_of)`, so
+    the whole drop taxonomy is testable without EDGAR (see p1/tests/).
+
+    Every drop record carries the cell's shares_held and val_usd. Those are the
+    numbers the pipeline used to throw away: the coverage audit could not produce
+    a value-weighted coverage figure, and recover_denominators.py could not
+    recompute ConvExp for a recovered denominator, precisely because a dropped
+    cell kept only (cusip, ticker, wave_id, reason). Keeping them costs nothing
+    — the holding was already parsed — and it is NOT an imputation: a dropped
+    cell still emits no ConvExp, it just records the numerator it had.
+    """
+    rows, nh_stocks = [], []
+    for (cusip, wid), a in sorted(agg.items()):
+        ticker = a["ticker"]
+        eff = a["effective_date"]
+
+        def drop(reason):
+            nh_stocks.append({
+                "cusip": cusip, "ticker": ticker, "wave_id": wid,
+                "reason": reason, "effective_date": eff,
+                "shares_held": a["shares_held"], "val_usd": a["valusd"],
+                "n_funds": len(a["funds"]),
+                "source_accessions": ";".join(sorted(a["accs"]))})
+
+        stock_cik = tcik.get(ticker.upper()) if ticker else None
+        if not stock_cik:
+            log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
+            drop("no_ticker" if not ticker else "ticker_not_in_sec_map")
+            continue
+        shares_out, so_end = so_lookup(stock_cik, eff)
+        if not shares_out or shares_out <= 0:
+            log.warning("NO_SHARES_OUT cusip=%s ticker=%s cik=%s wave=%s",
+                        cusip, ticker, stock_cik, wid)
+            drop("no_xbrl_shares_outstanding")
+            continue
+        conv_exp = a["shares_held"] / shares_out
+        if conv_exp > 1.0:
+            log.info("CONVEXP_GT1 cusip=%s ticker=%s wave=%s exp=%.3f "
+                     "(shares_held=%.0f > shares_out=%.0f as of %s) -> NEED_HUMAN",
+                     cusip, ticker, wid, conv_exp, a["shares_held"], shares_out, so_end)
+            drop(f"conv_exp>1 ({conv_exp:.3f}); shares_out date {so_end}")
+            continue
+        # implied price from the fund's own N-PORT valuation (valUSD/shares) —
+        # a real market price near the report date, no external feed needed.
+        implied_px = (a["valusd"] / a["shares_held"]) if a["shares_held"] else None
+        mcap = implied_px * shares_out if implied_px else None
+        rows.append({"cusip": cusip, "ticker": ticker, "stock_cik": stock_cik,
+                     "permno": "", "wave_id": wid, "effective_date": eff,
+                     "conv_exp": conv_exp, "n_funds": len(a["funds"]),
+                     "mcap_decile": None, "_mcap": mcap,
+                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
+                     "shares_held": a["shares_held"],
+                     "shares_outstanding": shares_out,
+                     "val_usd": a["valusd"],
+                     "source_accessions": ";".join(sorted(a["accs"]))})
+    return rows, nh_stocks
 
 
 def main():
+    _setup_run()
     if not SEC_UA:
         log.warning("SEC_UA is empty — SEC endpoints may 403. "
                     'export SEC_UA="Your Name <email>"')
@@ -644,8 +723,6 @@ def main():
              len(agg), len(fund_holdings))
 
     # ---- Step 4: ticker -> stock CIK -> shares outstanding ---------------- #
-    nh_stocks = []
-    rows = []
     # cache shares_out per (stock_cik, effective_date) within the run
     so_cache = {}
     for (cusip, wid), a in sorted(agg.items()):
@@ -691,6 +768,14 @@ def main():
                      "valusd": a["valusd"],
                      "shares_outstanding": shares_out,
                      "source_accessions": ";".join(sorted(a["accs"]))})
+
+    def so_lookup(stock_cik, eff):
+        ck = (stock_cik, eff)
+        if ck not in so_cache:
+            so_cache[ck] = shares_outstanding(stock_cik, eff)
+        return so_cache[ck]
+
+    rows, nh_stocks = _cell_rows(agg, tcik, so_lookup)
 
     if not rows:
         log.error("no ConvExp rows produced — see NEED_HUMAN files and log")
@@ -761,6 +846,39 @@ def _write_dropped_cells(nh_stocks):
     n_sh = sum(1 for r in nh_stocks if float(r.get("shares_held") or 0) > 0)
     log.info("dropped-cell sidecar -> %s (%d cells, %d with shares_held>0)",
              DROPPED_CELLS, len(nh_stocks), n_sh)
+        # NEED_HUMAN_stocks.csv keeps its FOUR-column schema exactly — the
+        # coverage audit reads it positionally-by-name and a widened header is
+        # how the conv_exposure_free contract broke once already. The extra
+        # fields go to the sidecar below instead.
+        with open(NH_STOCKS, "w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=["cusip", "ticker", "wave_id", "reason"],
+                               extrasaction="ignore")
+            w.writeheader()
+            w.writerows(nh_stocks)
+        log.info("NEED_HUMAN stocks -> %s (%d)", NH_STOCKS, len(nh_stocks))
+        _write_dropped_sidecar(nh_stocks)
+
+
+def _write_dropped_sidecar(nh_stocks):
+    """Emit dropped_cells_shares_held.csv — the numerator every dropped cell had.
+
+    Two consumers, both blocked without it (coverage audit memo items 2 and 4):
+      * recover_denominators.py --shares-held: recompute ConvExp once a
+        denominator is recovered, and so PROVE the >=0.5% treated set is
+        unchanged rather than merely expecting it;
+      * value-weighted coverage, which needs val_usd on the dropped side.
+    Leading columns are cusip,wave_id,shares_held in that order because that is
+    the shape recover_denominators.py documents.
+    """
+    cols = ["cusip", "wave_id", "shares_held", "val_usd", "ticker", "reason",
+            "effective_date", "n_funds", "source_accessions"]
+    with open(DROPPED_SIDECAR, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
+        w.writeheader()
+        for r in nh_stocks:
+            w.writerow({c: r.get(c, "") for c in cols})
+    log.info("dropped-cell shares_held sidecar -> %s (%d)",
+             DROPPED_SIDECAR, len(nh_stocks))
 
 
 def _diagnostics(df, fund_holdings, nh_funds, nh_stocks):

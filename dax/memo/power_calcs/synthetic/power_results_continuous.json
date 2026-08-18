@@ -1,0 +1,147 @@
+{
+  "status": "NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST",
+  "design": "D1 primary \u2014 continuous cumulative dose, no event selection",
+  "decision_refs": [
+    "dax/memo/PI_DECISION_D1_2026-08-18.md",
+    "dax/memo/PI_DECISION_D3_2026-08-18.md"
+  ],
+  "seed": 20260818,
+  "reps": 200,
+  "effect_scale": "coefficient per 0.10 DAX increment",
+  "panel": {
+    "start": "2021-11-01",
+    "end": "2026-02-01",
+    "n_months": 52,
+    "first_event": "2023-03-01"
+  },
+  "standard_status": "PLACEHOLDER_REQUIRES_REAL_CPS",
+  "inputs": {
+    "preperiod_cells": "synthetic/preperiod_cells.csv",
+    "preperiod_cells_sha256": "4b1f0fda046a66e941137fcd2f46b865e3c9ae4a5769aa7d6a49897660ab0aab",
+    "event_doses": "synthetic/event_doses.csv",
+    "event_doses_sha256": "17b03538a628b861db2dca4252a73aab9d95e5fd13bb28c02389fff9a0c3424d",
+    "power_standard_sha256": "79312623593e6e5005b7cd73a4a8022ba3657a69d3fef31067bb28eec36b83a8"
+  },
+  "n_events_in_dose_path": 4,
+  "pretrend_placebo_lead": [
+    {
+      "horizon": "2023-12-01",
+      "n_rows": 960,
+      "regressor_variance": 0.0578765079534416,
+      "estimable": true,
+      "eventual_dose_variance": 0.0005123738924673245
+    },
+    {
+      "horizon": "2024-12-01",
+      "n_rows": 960,
+      "regressor_variance": 0.19639860494968514,
+      "estimable": true,
+      "eventual_dose_variance": 0.0016884568949832644
+    },
+    {
+      "horizon": "2025-12-01",
+      "n_rows": 960,
+      "regressor_variance": 0.5883775555017856,
+      "estimable": true,
+      "eventual_dose_variance": 0.00451800793687264
+    }
+  ],
+  "samples": [
+    {
+      "education_group": "pooled",
+      "n_panel_cells": 6240,
+      "n_occupation_clusters": 60,
+      "n_nuisance_parameters": 422,
+      "n_months": 52,
+      "serial_rho_employment": 0.8,
+      "serial_rho_hours": 0.8,
+      "employment_hours_noise_correlation": 0.789091,
+      "dose_profile": {
+        "effective_rank": 4,
+        "leading_share": 0.908655
+      },
+      "employment": {
+        "median_cluster_se_per_0.10_dax": 0.00776446,
+        "mde80_per_0.10_dax": 0.02174049,
+        "approved_mde_ceiling": null,
+        "adequately_powered": null,
+        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
+        "break_even_baseline": 0.228847,
+        "break_even_note": "passes iff the frozen pre-event baseline employment level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+      },
+      "hours": {
+        "median_cluster_se_per_0.10_dax": 0.22224684,
+        "mde80_per_0.10_dax": 0.62229114,
+        "approved_mde_ceiling": null,
+        "adequately_powered": null,
+        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
+        "break_even_baseline": 6.550433,
+        "break_even_note": "passes iff the frozen pre-event baseline hours level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+      }
+    },
+    {
+      "education_group": "college",
+      "n_panel_cells": 3120,
+      "n_occupation_clusters": 60,
+      "n_nuisance_parameters": 422,
+      "n_months": 52,
+      "serial_rho_employment": 0.8,
+      "serial_rho_hours": 0.8,
+      "employment_hours_noise_correlation": 0.777835,
+      "dose_profile": {
+        "effective_rank": 4,
+        "leading_share": 0.908655
+      },
+      "employment": {
+        "median_cluster_se_per_0.10_dax": 0.0113332,
+        "mde80_per_0.10_dax": 0.03173297,
+        "approved_mde_ceiling": null,
+        "adequately_powered": null,
+        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
+        "break_even_baseline": 0.334031,
+        "break_even_note": "passes iff the frozen pre-event baseline employment level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+      },
+      "hours": {
+        "median_cluster_se_per_0.10_dax": 0.32565407,
+        "mde80_per_0.10_dax": 0.91183139,
+        "approved_mde_ceiling": null,
+        "adequately_powered": null,
+        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
+        "break_even_baseline": 9.598225,
+        "break_even_note": "passes iff the frozen pre-event baseline hours level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+      }
+    },
+    {
+      "education_group": "noncollege",
+      "n_panel_cells": 3120,
+      "n_occupation_clusters": 60,
+      "n_nuisance_parameters": 422,
+      "n_months": 52,
+      "serial_rho_employment": 0.8,
+      "serial_rho_hours": 0.8,
+      "employment_hours_noise_correlation": 0.79624,
+      "dose_profile": {
+        "effective_rank": 4,
+        "leading_share": 0.908655
+      },
+      "employment": {
+        "median_cluster_se_per_0.10_dax": 0.01210557,
+        "mde80_per_0.10_dax": 0.03389559,
+        "approved_mde_ceiling": null,
+        "adequately_powered": null,
+        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
+        "break_even_baseline": 0.356796,
+        "break_even_note": "passes iff the frozen pre-event baseline employment level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+      },
+      "hours": {
+        "median_cluster_se_per_0.10_dax": 0.34786425,
+        "mde80_per_0.10_dax": 0.97401991,
+        "approved_mde_ceiling": null,
+        "adequately_powered": null,
+        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
+        "break_even_baseline": 10.252841,
+        "break_even_note": "passes iff the frozen pre-event baseline hours level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+      }
+    }
+  ]
+}

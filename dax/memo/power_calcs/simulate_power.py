@@ -1,4 +1,12 @@
-"""Pre-event-only power simulation for the DAX stacked dose design."""
+"""SECONDARY design engine after D1 — discrete stacked event study.
+
+D1 (dax/memo/PI_DECISION_D1_2026-08-18.md) demoted this design to corroboration
+only; the confirmatory analysis is simulate_power_continuous.py. This engine
+also still gives every event a full [-6,+6] window and does NOT implement the
+memo section 3.2 adjacency rule (see dax/tests/test_window_survival.py), so its
+event set is wider than the stack rule permits. Treat its output as an upper
+bound on the secondary design's power, not as a result.
+Pre-event-only power simulation for the DAX stacked dose design."""
 
 from __future__ import annotations
 
@@ -307,16 +315,31 @@ def run_sample(cells: list[Cell], doses: list[Dose], education: str | None, reps
     weights = stack["weights"]
     increments = np.array([dose.increment for dose, _, _, _ in records])
     baseline = arrays["employment"]
+    baseline_hours = arrays["hours"]
     high = increments >= 0.01
     zero = increments == 0
     if high.any() and zero.any():
         high_mean = float(np.average(baseline[high], weights=weights[high]))
         zero_mean = float(np.average(baseline[zero], weights=weights[zero]))
         baseline_gap = abs(high_mean - zero_mean)
+        high_hours = float(np.average(baseline_hours[high], weights=weights[high]))
+        zero_hours = float(np.average(baseline_hours[zero], weights=weights[zero]))
+        baseline_hours_gap = abs(high_hours - zero_hours)
     else:
         baseline_gap = None
+        baseline_hours_gap = None
     employment_mde = float((Z_ALPHA_TWO_SIDED + Z_POWER_80) * np.median(se_emp))
-    threshold = min(0.065, 0.5 * baseline_gap) if baseline_gap is not None else 0.065
+    # D3 (PI_DECISION_D3_2026-08-18): the pass bar is a frozen constant, never
+    # a statistic of the sample being judged. The old rule was
+    # min(0.065, 0.5 * baseline_gap), which moved with the event set — dropping
+    # one event loosened it by 185%. baseline_gap is still REPORTED as a
+    # descriptive diagnostic; it no longer sets the threshold.
+    import json as _json
+    _standard = _json.loads((pathlib.Path(__file__).with_name("power_standard.json")).read_text())
+    _frozen = _standard["status"] == "FROZEN"
+    threshold = _standard["standard"]["employment_mde_ceiling"]
+    hours_mde = float((Z_ALPHA_TWO_SIDED + Z_POWER_80) * np.median(se_hours))
+    hours_threshold = _standard["standard"]["hours_mde_ceiling"]
 
     low_quality = sorted({
         moment.cps_occ for _, moment, _, _ in records
@@ -340,13 +363,18 @@ def run_sample(cells: list[Cell], doses: list[Dose], education: str | None, reps
             "median_cluster_se_per_0.10_dax": round(float(np.median(se_emp)), 8),
             "mde80_per_0.10_dax": round(employment_mde, 8),
             "baseline_employment_gap": None if baseline_gap is None else round(baseline_gap, 8),
-            "approved_mde_threshold": round(threshold, 8),
-            "adequately_powered": employment_mde <= threshold,
+            "approved_mde_ceiling": threshold,
+            "standard_status": _standard["status"],
+            "adequately_powered": (employment_mde <= threshold) if (_frozen and threshold is not None) else None,
             "rejection_rate_by_effect": power(beta_null_emp, se_emp, employment_grid),
         },
         "hours_unconditional": {
             "median_cluster_se_per_0.10_dax": round(float(np.median(se_hours)), 8),
-            "mde80_per_0.10_dax": round(float((Z_ALPHA_TWO_SIDED + Z_POWER_80) * np.median(se_hours)), 8),
+            "mde80_per_0.10_dax": round(hours_mde, 8),
+            "baseline_hours_gap": None if baseline_hours_gap is None else round(baseline_hours_gap, 8),
+            "approved_mde_ceiling": hours_threshold,
+            "standard_status": _standard["status"],
+            "adequately_powered": (hours_mde <= hours_threshold) if (_frozen and hours_threshold is not None) else None,
             "rejection_rate_by_effect": power(beta_null_hours, se_hours, hours_grid),
         },
     }
@@ -406,7 +434,9 @@ def main() -> int:
             {
                 "education_group": sample["education_group"],
                 "employment_mde80": sample["employment"]["mde80_per_0.10_dax"],
-                "adequately_powered": sample["employment"]["adequately_powered"],
+                "employment_adequately_powered": sample["employment"]["adequately_powered"],
+                "hours_mde80": sample["hours_unconditional"]["mde80_per_0.10_dax"],
+                "hours_adequately_powered": sample["hours_unconditional"]["adequately_powered"],
             }
             for sample in report["samples"]
         ],

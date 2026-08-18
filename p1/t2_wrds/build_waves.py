@@ -31,7 +31,7 @@ MEMBERS = HERE / "waves_members.csv"
 ANCHOR = "2021-06-11"  # DFA six-fund conversion — anchor wave
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
-HERE.mkdir(parents=True, exist_ok=True)
+LOGFILE = HERE / "build_waves.log"
 log = logging.getLogger("build_waves")
 # The run log is committed, and FileHandler(mode="w") rewrites it with fresh
 # timestamps on every invocation — so the test that re-runs this script points
@@ -45,7 +45,20 @@ logging.basicConfig(
               logging.FileHandler(LOGFILE, mode="w")])
 
 
+def _setup_run():
+    """Create the output dir and attach the run log — from main(), not at import.
+    The FileHandler opens build_waves.log mode="w" and that log is committed, so
+    merely importing this module must not truncate it (same rule as
+    p1/t2_free/build_nport_convexp.py)."""
+    HERE.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout),
+                  logging.FileHandler(LOGFILE, mode="w")])
+
+
 def main():
+    _setup_run()
     if not EVENTS.exists():
         log.error("MISSING input %s — run T1 first", EVENTS)
         sys.exit(2)
