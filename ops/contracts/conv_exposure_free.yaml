@@ -32,4 +32,12 @@ columns:
   # ---- additive provenance / audit ----
   shares_held: {min: 0}            # Σ fund shares held pre-conversion
   shares_outstanding: {min: 0}     # issuer shares outstanding (XBRL dei)
+  # PENDING — do NOT declare until the box re-runs the pipeline. contracts.py
+  # treats every declared column as mandatory, so declaring a column the
+  # committed parquet does not yet carry would fail the artifact Gate 2 was
+  # signed on. The pipeline now emits `val_usd` (Σ N-PORT valUSD per cell, for
+  # value-weighted coverage); strict_columns is false, so the extra column
+  # validates fine meanwhile. Declare it in the SAME commit that lands the
+  # rebuilt parquet:
+  #   val_usd: {min: 0}
   source_accessions: {}            # ';'-joined N-PORT accession(s)

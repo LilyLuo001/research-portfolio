@@ -31,13 +31,17 @@ Both scripts are idempotent, logged, and take `--repo/--outdir`. They read only:
 - **DFA anchor** = wave W002, effective 2021-06-11 (the pre-registered anchor event).
 
 ## Three caveats a reviewer must know
-1. **Value-weighting is NOT available.** The pipeline aggregates `shares_held` across
-   funds within a wave and, for *dropped* cells, retains only `cusip/ticker/wave` — no
-   `shares_held` or `valUSD`. So value-weighted *missingness* cannot be reconstructed
-   from pushed artifacts. We report exact **cell-count** coverage; `shares_held` exists
-   only for the 6,377 computed cells (+ the 18 stale cells, recovered from the log).
-   To get value weights: re-run the pipeline retaining `valUSD` on drop, or re-parse the
-   NPORT cache.
+1. **Value-weighting is NOT available *for this audit vintage*.** The pipeline
+   aggregated `shares_held` across funds within a wave and, for *dropped* cells,
+   retained only `cusip/ticker/wave` — no `shares_held` or `valUSD` — so value-weighted
+   *missingness* cannot be reconstructed from the artifacts this audit read. The numbers
+   in this directory are therefore exact **cell-count** coverage, and `shares_held`
+   exists only for the 6,377 computed cells (+ the 18 stale cells, recovered from the
+   log). **FIXED IN THE PIPELINE 2026-08-18 (not yet re-run):** `build_nport_convexp.py`
+   now emits `val_usd` on every computed row and writes
+   `p1/t2_free/dropped_cells_shares_held.csv` (cusip, wave_id, shares_held, val_usd, …)
+   for every dropped cell. Value-weighted coverage becomes computable — and this caveat
+   retires — on the next box run; nothing here can be recomputed before that.
 2. **`p1/t2_wrds/waves.csv` is committed CORRUPT** — two concatenated schemas (a 4-col
    header and a 7-col header in one file), unparseable. We derive wave attributes from
    the clean `waves_members.csv` instead. **This should be fixed in the pipeline.**

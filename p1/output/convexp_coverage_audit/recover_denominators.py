@@ -20,10 +20,12 @@ Two stages:
     - for each target, in priority order: SEC company_tickers (renamed US ticker) ->
       yfinance sharesOutstanding -> Stooq; cache every raw pull under cache/;
     - to recompute ConvExp it needs shares_held for the dropped cell, which the
-      current parquet does NOT retain. Supply it via --shares-held <csv with
-      cusip,wave_id,shares_held>, produced by the 1-line pipeline patch described in
-      the README (retain shares_held on drop). Without it, the online stage still
-      records recovered denominators but marks conv_exp_recovered as PENDING_SHARES.
+      parquet does not carry (a dropped cell emits no ConvExp row at all). The
+      pipeline now writes it to p1/t2_free/dropped_cells_shares_held.csv, which is
+      this flag's DEFAULT — no argument needed once the box has re-run
+      build_nport_convexp.py. Until that rebuild the file does not exist yet and
+      the online stage still records recovered denominators, marking
+      conv_exp_recovered as PENDING_SHARES exactly as before.
 
 Output columns added (never overwrite baseline):
   conv_exp_baseline, shares_out_baseline, shares_out_recovered, shares_out_source,
@@ -174,7 +176,9 @@ def main() -> None:
     ap.add_argument("--outdir", default=None)
     ap.add_argument("--online", action="store_true", help="do real lookups (box, needs net)")
     ap.add_argument("--shares-held", default=None,
-                    help="csv cusip,wave_id,shares_held for dropped cells (to recompute ConvExp)")
+                    help="csv cusip,wave_id,shares_held for dropped cells (to recompute "
+                         "ConvExp). Defaults to the pipeline's "
+                         "p1/t2_free/dropped_cells_shares_held.csv when it exists.")
     ap.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args()
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
@@ -193,6 +197,11 @@ def main() -> None:
 
     # shares_held sidecar for the *non-stale* dropped cells (optional, box-supplied)
     sh_side = {}
+    if not args.shares_held:
+        default_side = repo / "p1" / "t2_free" / "dropped_cells_shares_held.csv"
+        if default_side.exists():
+            args.shares_held = str(default_side)
+            LOG.info("using pipeline shares_held sidecar %s", default_side)
     if args.shares_held and pathlib.Path(args.shares_held).exists():
         for r in csv.DictReader(open(args.shares_held)):
             sh_side[(r["cusip"], r["wave_id"])] = float(r["shares_held"])

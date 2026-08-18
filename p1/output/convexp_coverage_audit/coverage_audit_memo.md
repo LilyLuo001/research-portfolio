@@ -126,14 +126,26 @@ the final publishable one.
 1. **Fix the corrupt `p1/t2_wrds/waves.csv`** (double-schema; regenerate 4-col cleanly).
    *(Done in this audit — `waves.csv` regenerated from `waves_members.csv`; verify the
    pipeline's `build_waves.py` doesn't re-corrupt it.)*
-2. **Retain `shares_held` on dropped cells** (1-line pipeline patch) so post-recovery
-   ConvExp — and therefore post-recovery treated counts — can be computed. Emit a
-   `dropped_cells_shares_held.csv` sidecar.
+2. **Retain `shares_held` on dropped cells** — **IMPLEMENTED 2026-08-18, awaiting a box
+   re-run.** Every drop record now carries `shares_held`, `val_usd`, `n_funds`,
+   `effective_date` and `source_accessions`, and `_write_dropped_sidecar()` emits
+   `p1/t2_free/dropped_cells_shares_held.csv` (leading columns `cusip, wave_id,
+   shares_held` — the shape `recover_denominators.py` documents, and now that flag's
+   default). `NEED_HUMAN_stocks.csv` deliberately keeps its four-column schema, since a
+   widened header is how the contract broke in item 0. Post-recovery ConvExp — and so
+   the *proof*, not just the expectation, that the ≥0.5% treated set is unchanged —
+   becomes computable the moment the box re-runs the pipeline.
 3. **Run `recover_denominators.py --online` on the box** (SEC-renamed → yfinance → Stooq):
    fixes the 18 stale, recovers ~1,800 renamed/acquired US names, and lets us *prove* the
    ≥0.5% treated set is unchanged.
-4. **Add `valUSD`** to the pipeline output to enable value-weighted coverage (the one
-   coverage view this audit could not produce).
+4. **Add `valUSD`** to the pipeline output — **IMPLEMENTED 2026-08-18, awaiting a box
+   re-run.** Computed rows now carry `val_usd` (Σ N-PORT valUSD for the cell) and
+   dropped cells carry it in the sidecar, which is both sides of the value-weighted
+   coverage view. The contract entry is deliberately NOT declared yet: `contracts.py`
+   treats every declared column as mandatory, so declaring `val_usd` before the parquet
+   carries it would retroactively fail the artifact Gate 2 was signed on. Declare it
+   (the commented-out line in `ops/contracts/conv_exposure_free.yaml`) in the same
+   commit that lands the rebuilt parquet.
 5. Decide the **international sleeve's** treatment for the paper: document that
    equity_intl conversions (esp. Mirae W020) are largely out of a US-listed event study,
    or scope a separate non-US analysis. Either way it belongs in the sample-definition
