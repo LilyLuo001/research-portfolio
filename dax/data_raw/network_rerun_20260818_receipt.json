@@ -15,14 +15,20 @@
     "validation": "raw Extract 6 checksum matches the frozen receipt; rebuilt parquet round-trip and content match are exact"
   },
   "cps_onet_crosswalk": {
-    "status": "PASS_PRIVATE_FAIL_CLOSED",
-    "rows": 874,
+    "status": "PASS_PRIVATE_COVERAGE_GATE_WITH_BOUNDS",
+    "rows": 1287,
     "cps_occ2010_codes": 503,
-    "output_sha256": "dbc8f89e7b9ad622fa9bd536f8bf7bdf4c3786468f2527fa0f272a60f8d74287",
-    "resolved_preperiod_weight_mass_share": 0.6551587329,
-    "provisional_preperiod_weight_mass_share": 0.1323912319,
-    "unresolved_preperiod_weight_mass_share": 0.2107453014,
+    "output_sha256": "eb68890bcfb31855d6a8f0704aab022c13c842d09e01eb57acd94e28dac4ddeb",
+    "resolved_component_weight_mass_share": 0.7716899944,
+    "provisional_bounded_component_weight_mass_share": 0.1921987433,
+    "mapped_component_weight_mass_share": 0.9638887378,
+    "unresolved_component_weight_mass_share": 0.0344065283,
     "absent_preperiod_weight_mass_share": 0.0017047339,
+    "max_unresolved_occupation_weight_share": 0.0044745164,
+    "coverage_gate_threshold": 0.9,
+    "max_unresolved_occupation_threshold": 0.01,
+    "coverage_gate_pass": true,
+    "bound_rule": "Every provisional component carries min/max dose bounds; equal shares are a diagnostic center only.",
     "storage": "detailed CSV private; sanitized build receipt committed"
   },
   "price_histories": {
@@ -44,13 +50,12 @@
     "major_issue_counts": [5, 4, 4]
   },
   "validation": {
-    "focused_tests": "28 passed",
+    "focused_tests": "35 passed",
     "price_contract": "PASS",
     "secret_and_restricted_data_scan": "PASS"
   },
   "remaining_blockers": [
-    "The newly merged dax/w2/crosswalk fetch path does not parse or fetch its pinned real source layouts; the mature fail-closed OCC2010 builder was used for the private production CSV.",
-    "Only 65.51587329% of observed preperiod CPS weight mass is currently resolved and downstream eligible in the mature crosswalk.",
+    "The crosswalk coverage gate now passes, but 19.21987433% of component mass is provisionally mapped and requires min/max bounds; only resolved components may enter an unbounded point estimate.",
     "Two price rows remain single-channel and nine remain conflicts; they are ineligible for primary dose construction until resolved.",
     "All three independent red-team runs recommend BLOCK; their major design findings require adjudication before Gate 1."
   ]
