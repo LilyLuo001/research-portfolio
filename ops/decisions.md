@@ -386,3 +386,22 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 # OWNER, one line please: Option A, A-strict, or A + fund-level rebuild? Record it
 # before T5 main estimation so the sample definition is fixed independently of any
 # outcome (no specification search).
+
+# WRDS-INDEPENDENT WORK COMPLETE 2026-08-18 (seat C, owner-directed: "identify
+# them and start working on them now"). Register: ops/briefs/WRDS-independent-
+# workplan.md — 18 problems that survive WRDS's arrival, six of which this seat
+# could execute with no access to anything. All six landed with tests (252
+# passing, from 137; selfcheck clean throughout):
+#   W-06 CRSP licensing guard (irreversible-failure item, done first)
+#   W-07 holdings_pipeline.py made real and testable, schema isolated+UNVERIFIED
+#   W-08 coverage_census.py — run FIRST when access lands, before the pipeline
+#   W-17 reconcile_convexp.py — free-path vs WRDS, bands frozen pre-data
+#   W-03b refraction R1b transform+assertions, and the exact owner paste-list
+#   W-05b fund-level asset-class filter (sleeve decision becomes one flag)
+#   W-18 yfinance/Stooq recovery retired as superseded-pending-WRDS (kept)
+# NOTHING on that register is now blocked on this seat. Owner-owed: the R1b
+# paste-list, the consensus source, the sleeve decision, the holdings_weights
+# alignment, the P1-T1 gate calls, prereg sequencing, and BOX INFRA — the SCC
+# SSH/venv breakage gates the WRDS pull itself, so it is the one worth fixing
+# while delivery is pending. Lane-owed: a web-capable session for R0/R1a, seat D
+# for the refraction cron line and for folding the data policy into COMPLIANCE.md.

@@ -62,21 +62,29 @@ Status key: **[NOW]** this seat can execute it without access to anything ·
 
 ---
 
-## Execution order for the **[NOW]** items
+## Execution order for the **[NOW]** items — ALL SIX DONE 2026-08-18
 
 Chosen by irreversibility first, then by what unblocks the most when access
-arrives:
+arrives. Every one landed with tests; nothing consumed WRDS, network, or an owner
+decision.
 
-1. **W-06** licensing guard — the only item on this list with an irreversible
-   failure mode (paid data committed to a repo cannot be un-published).
-2. **W-07 + W-08** the WRDS pipeline and its day-one census — the difference
-   between "access arrives and we start writing code" and "access arrives and we
-   run one command".
-3. **W-17** reconciliation design — must be fixed before numbers exist.
-4. **W-03b** the R1b transform/assert layer + the exact paste-list the owner
-   needs to supply for W-03.
-5. **W-05b** fund-level filter.
-6. **W-18** retirement note.
+| # | item | landed |
+|---|---|---|
+| 1 | **W-06** licensing guard — the only item with an irreversible failure mode | `p1/t2_wrds/README.md` data policy, `.gitignore` rules for raw pulls, `p1/tests/test_wrds_data_policy.py` (allowlist + restricted-marker grep + a `git check-ignore` test proving the rules bite) |
+| 2 | **W-07** the WRDS pipeline | rewritten from scaffold: all CRSP identifiers isolated in one UNVERIFIED `SCHEMA` dict (a test fails if one leaks out), batched fund lookup, per-permno as-of `shrout` within a lookback window, nulls instead of `""` in numeric contract columns, `pre_etf_ownership` left null rather than aliased to `conv_exp`, query-locator manifest, lineage |
+| 3 | **W-08** day-one census | `coverage_census.py` — `--introspect` verifies `SCHEMA` against the live account via `information_schema`; the default mode censuses all 131 funds for a pre-conversion holdings report and its staleness |
+| 4 | **W-17** reconciliation | `reconcile_convexp.py` with bands frozen before any number existed; verdict keys on the treated call against a pre-committed 95% floor; the 8-vs-9-character CUSIP trap handled explicitly; `NO_OVERLAP` never reads as `PASS` |
+| 5 | **W-03b** R1b's schema-free half | `refraction/pipeline/surprises.py` (standardization, scheduled-window policy, five assertions) + `refraction/R1b_input_requirements.md`, which turns "paste the file heads" into eight specific items. `parse_usmpd()` raises `NeedInfo` rather than guessing |
+| 6 | **W-05b** fund-level filter | `--exclude-asset-class` applied before aggregation — the only place a mixed wave can be split — so the sleeve decision is a flag, not a rewrite |
+| — | **W-18** retirement note | audit item 3 (yfinance/Stooq recovery) marked superseded-pending-WRDS in both the memo and the module, deliberately not deleted |
 
-Each lands as its own commit with tests. Nothing here consumes WRDS, network, or
-an owner decision; every item is inert-but-ready the day access is delivered.
+Test count over the session: 252 passing, from 137 at the start. Selfcheck clean
+throughout.
+
+## What is left, and on whom
+
+Nothing on this list is now blocked on this seat. The remaining items are
+**[OWNER]** — W-03 (the paste-list), W-04, W-05, W-09, W-14, W-15, W-16 — and
+**[LANE]** — W-01, W-02 (a web-capable session), W-10 (pre-dispatch), W-11, W-12,
+W-13 (seat D). W-15 is the one to fix while waiting: a WRDS credential is useless
+on a box that cannot run the job.
