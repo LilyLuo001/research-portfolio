@@ -17,6 +17,7 @@ What is guarded here:
 import ast
 import csv
 import importlib.util
+import os
 import pathlib
 import subprocess
 import sys
@@ -145,8 +146,9 @@ def test_build_waves_reproduces_committed_artifacts(tmp_path):
     waves = ROOT / "p1" / "t2_wrds" / "waves.csv"
     members = ROOT / "p1" / "t2_wrds" / "waves_members.csv"
     before = (waves.read_bytes(), members.read_bytes())
+    env = dict(os.environ, BUILD_WAVES_LOG=str(tmp_path / "build_waves.log"))
     subprocess.run([sys.executable, str(BUILD_WAVES)], check=True,
-                   capture_output=True, cwd=ROOT)
+                   capture_output=True, cwd=ROOT, env=env)
     assert waves.read_bytes() == before[0], "waves.csv is not reproducible"
     assert members.read_bytes() == before[1], "waves_members.csv is not reproducible"
 
