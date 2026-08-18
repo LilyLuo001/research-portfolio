@@ -495,3 +495,28 @@ nothing more.
 # OWNER, one line please: Option A, A-strict, or A + fund-level rebuild? Record it
 # before T5 main estimation so the sample definition is fixed independently of any
 # outcome (no specification search).
+
+## COMPLETED 2026-08-18 (Group B batch, spine-two)
+Task B3: `p1/pipeline/outcomes_spine2.py` — spine-two outcome builder, written
+before the data.
+- `compute_car_path`: market-model beta over (-252,-21) window; 121-element CAR
+  list, day 0 through day +120.
+- `decompose_permanent_reversal`: permanent = CAR(+120); reversal = sign(CAR₅) ×
+  max(0, sign(CAR₅) × (CAR₅ − CAR₁₂₀)); zero when move persists, non-zero when
+  partially given back.  §7 口径, no 文献包 required.
+- `build_spine2`: assembles event_cars (per-event), wedge (DiD path), var_ratios
+  (Jegadeesh variance ratio).  Own and peer events handled separately per §7.
+- 18 offline tests, all green.  213 repo-wide tests green.
+- `ops/contracts/outcomes_panel.yaml` updated with spine-two column declarations
+  (rule 3: declare in same commit as the builder).
+
+Group B status (all done):
+  B1 (3 contracts) ✅  B2 (panel guard) ✅  B3 (spine-two builder) ✅
+  B4 (Russell fallback) ✅  B5 (ConvExp reconcile) ✅
+
+## STOP 2026-08-18 — all P1 work in reach is blocked
+Everything forward is gated on one of:
+  A1: 文献包 — blocks P1-T3-spec → T3-decision → T3-impl → T3-tests → T5
+  WRDS: procurement in progress — blocks T2-impl, T4, T5
+  A3: Saglam–Tuzun PDF — blocks T4 transcription side
+None are resolvable in this container.

@@ -30,5 +30,5 @@
     "DAX-W0.5-legwork": 1,
     "E2-T2-dune": 1
   },
-  "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
+  "_note": "SH-runner and SH-econlib are merged to main and their gates pass. P1 non-WRDS Group B batch completed 2026-08-18: B1 (3 contracts), B2 (panel guard), B3 (spine-two builder), B4 (Russell fallback), B5 (ConvExp reconcile). All remaining P1 tasks blocked on: A1 文献包 (gates T3-spec), WRDS data (gates T2-impl/T4/T5), A3 PDF (gates T4 transcription side). No actionable P1 work remains in this container."
 }
