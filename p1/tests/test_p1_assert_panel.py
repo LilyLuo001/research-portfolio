@@ -5,18 +5,23 @@ Every check below gets a panel built to violate it, and a clean panel to prove i
 does not cry wolf. The panel itself does not exist yet — that is exactly why
 these are written now.
 """
+import importlib.util
 import pathlib
-import sys
 
 import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "p1" / "pipeline"))
 
 pytest.importorskip("pandas")
 import pandas as pd  # noqa: E402
 
-import assert_panel as ap  # noqa: E402
+# Loaded by explicit path under a unique module name. refraction/pipeline/ has a
+# file of the same basename, and a bare `import assert_panel` off sys.path would
+# make which one you get depend on collection order.
+_spec = importlib.util.spec_from_file_location(
+    "p1_assert_panel", ROOT / "p1" / "pipeline" / "assert_panel.py")
+ap = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(ap)
 
 EFF = "2021-06-11"          # the DFA anchor wave
 
