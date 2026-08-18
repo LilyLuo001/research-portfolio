@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """P1-T2 free-path ConvExp — conservative DENOMINATOR RECOVERY.
 
+STATUS 2026-08-18: SUPERSEDED-PENDING-WRDS, kept as the fallback. CRSP shrout
+covers the renamed/delisted US names this module chases via yfinance/Stooq, so
+the --online pass should not be run while WRDS delivery is pending. Still the
+free route if access slips, and still the only path for names CRSP omits.
+
 Goal: recover missing shares-outstanding denominators for the ~5,929 dropped
 stock cells WITHOUT WRDS and WITHOUT trusting any recovered number blindly. Every
 recovered denominator is quarantined with source + retrieval date + confidence and

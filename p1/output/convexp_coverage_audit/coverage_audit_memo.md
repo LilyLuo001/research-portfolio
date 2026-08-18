@@ -139,9 +139,16 @@ the final publishable one.
    widened header is how the contract broke in item 0. Post-recovery ConvExp — and so
    the *proof*, not just the expectation, that the ≥0.5% treated set is unchanged —
    becomes computable the moment the box re-runs the pipeline.
-3. **Run `recover_denominators.py --online` on the box** (SEC-renamed → yfinance → Stooq):
-   fixes the 18 stale, recovers ~1,800 renamed/acquired US names, and lets us *prove* the
-   ≥0.5% treated set is unchanged.
+3. **Run `recover_denominators.py --online` on the box** (SEC-renamed → yfinance → Stooq)
+   — **SUPERSEDED 2026-08-18, retained as fallback.** WRDS has been purchased, and CRSP
+   `shrout` covers the entire CRSP US universe including the renamed/delisted/acquired
+   names this stage was built to chase (permno is stable across ticker changes, which is
+   the whole reason those 1,828 cells dropped from a *current* SEC ticker map). Do not
+   spend on the online recovery pass while access is pending. It is deliberately NOT
+   deleted: if delivery slips or the subscription omits the needed tables, this is still
+   the free route, and it remains the only path for any name CRSP does not carry. The
+   *proof* that the ≥0.5% treated set is unchanged now comes from the WRDS build plus
+   `p1/t2_wrds/reconcile_convexp.py`.
 4. **Add `valUSD`** to the pipeline output — **IMPLEMENTED 2026-08-18, awaiting a box
    re-run.** Computed rows now carry `val_usd` (Σ N-PORT valUSD for the cell) and
    dropped cells carry it in the sidecar, which is both sides of the value-weighted
