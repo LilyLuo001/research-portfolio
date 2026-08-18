@@ -74,6 +74,11 @@ SCHEMA = {
     "monthly_stock": {"table": "crsp.msf",
                       "permno": "permno", "date": "date",
                       "shrout": "shrout", "price": "prc"},
+    # Used only by reconcile_convexp.py, to build the permno<->CUSIP bridge that
+    # lets the free EDGAR path and this path be compared at all.
+    "security_names": {"table": "crsp.stocknames",
+                       "permno": "permno", "ncusip": "ncusip", "ticker": "ticker",
+                       "start": "namedt", "end": "nameendt"},
 }
 SHROUT_UNITS_PER_SHARE = 1000.0   # CRSP shrout is in THOUSANDS of shares
 SHROUT_LOOKBACK_MONTHS = 6        # see as_of_shrout(): tolerate a stale-but-real obs

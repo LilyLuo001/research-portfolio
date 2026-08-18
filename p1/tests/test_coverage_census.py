@@ -57,11 +57,11 @@ def event(name="A Fund", ticker="AAAAX", eff="2021-06-11", acc="acc1"):
             "source_accession": acc, "family": "Fam"}
 
 
-ALL_COLUMNS = {
-    hp.SCHEMA["fund_header"]["table"]: ["crsp_fundno", "fund_name", "ticker"],
-    hp.SCHEMA["holdings"]["table"]: ["crsp_fundno", "permno", "nbr_shares", "report_dt"],
-    hp.SCHEMA["monthly_stock"]["table"]: ["permno", "date", "shrout", "prc"],
-}
+# Derived from SCHEMA rather than hand-copied: a new SCHEMA entry must not make
+# this fixture quietly wrong (it did exactly that once, when security_names was
+# added for the reconciliation).
+ALL_COLUMNS = {spec["table"]: [v for k, v in spec.items() if k != "table"]
+               for spec in hp.SCHEMA.values()}
 
 
 # --------------------------------------------------------------------------- #
@@ -69,6 +69,7 @@ ALL_COLUMNS = {
 # --------------------------------------------------------------------------- #
 
 def test_schema_check_passes_when_every_column_exists():
+    assert set(ALL_COLUMNS) == {s["table"] for s in hp.SCHEMA.values()}   # fixture covers all
     rep = cc.check_schema(hp.Recorder(FakeDB(columns=ALL_COLUMNS)))
     assert all(r["table_exists"] and not r["columns_missing"] for r in rep.values())
     assert cc.schema_verdict(rep).startswith("SCHEMA OK")
@@ -76,7 +77,8 @@ def test_schema_check_passes_when_every_column_exists():
 
 def test_schema_check_names_the_entry_to_correct():
     cols = dict(ALL_COLUMNS)
-    cols[hp.SCHEMA["holdings"]["table"]] = ["crsp_fundno", "permno", "report_dt"]  # no shares
+    h = hp.SCHEMA["holdings"]
+    cols[h["table"]] = [v for k, v in h.items() if k not in ("table", "shares")]
     rep = cc.check_schema(hp.Recorder(FakeDB(columns=cols)))
     assert rep["holdings"]["columns_missing"] == {"shares": hp.SCHEMA["holdings"]["shares"]}
     verdict = cc.schema_verdict(rep)

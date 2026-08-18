@@ -22,6 +22,7 @@ ALLOWED = {
     "p1/t2_wrds/build_waves.log",
     "p1/t2_wrds/holdings_pipeline.py",
     "p1/t2_wrds/coverage_census.py",
+    "p1/t2_wrds/reconcile_convexp.py",
     "p1/t2_wrds/waves.csv",
     "p1/t2_wrds/waves_members.csv",
 }
