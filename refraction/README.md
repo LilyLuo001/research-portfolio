@@ -12,6 +12,7 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 | `frozen_config.yaml` | Single source for every tunable. `prereg.*` and `beta.w_shrink` stay null until GATE-PREREG; Gate-0 thresholds pre-filled from Plan §9, owner confirms via ops/decisions.md |
 | `guards/prereg_guard.py` | Iron rules 4–5 as program invariants: `assert_prereg_ok()` (R6+ startup hard check: OSF timestamp + URL + frozen w_shrink + clock after timestamp) and `assert_no_lookahead()` (A4 semantics). CLI: `python guards/prereg_guard.py check frozen_config.yaml` |
 | `pipeline/assert_panel.py` | R2's 14 assertions (A1–A14) as importable checks + CLI; panel may be written only if all hard asserts pass |
+| `pipeline/surprises.py` + `R1b_input_requirements.md` | R1b's schema-free half: S_std standardization per type, the scheduled-window policy from frozen_config, and five acceptance assertions (duplicate keys, calendar reconciliation, non-finite S_std, release-time/timezone slip, sample window). `parse_usmpd()` raises NeedInfo listing exactly what the owner must paste rather than guessing USMPD's columns |
 | `scan.py` + `scans/manifest.md` | R13a resident collision monitor: arXiv + Semantic Scholar APIs + generated SSRN search URLs over the §R13a bilingual keywords; computes the §R13b Marta–Riva/replication-switch 毛刺 flag and the 40%/60% ALERT threshold per hit, before any model sees the row. No LLM in the discovery path |
 | `tests/` | 19 + 23 pytest cases on synthetic fixtures: clean world passes; each tampered world (dup keys, lookahead, magic w_shrink, broken LOO/lever/weights, ConvExp drift, silent drops, wrong release time, upstream mutation) is caught |
 | `ops/contracts/{macro_calendar,surprises,panel_ann,gate_report,refr_results}.yaml` | Mechanical output contracts for R1–R6 |
@@ -24,7 +25,7 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 | R0 collision sweep | L1 spec ready (parked: kimi bench) | bench decision or re-route |
 | R0 repo landing | **DONE (this PR)** | — |
 | R1a USMPD/calendar verification | L1 spec ready (parked, same) | — |
-| R1b parsers | not started (DeepSeek) | R1a output + owner-pasted file heads |
+| R1b parsers | **transform + assertions DONE** (`pipeline/surprises.py`, 20 tests); parse stage unimplemented BY DESIGN | R1a output + the owner paste-list in `R1b_input_requirements.md` |
 | R2 panel/beta/lever build | not started (Claude Code, ~1 seat-week) | R1b; owner-pasted CRSP table/variable list; holdings_weights口径 alignment with P1-T2 (manual §2.3 残余风险①) |
 | R3 Gate-0 diagnostics | not started (DeepSeek + Sonnet 判读起草) | R2 `--sweep` output |
 | GATE-PREREG | human | R3 gate_report |
