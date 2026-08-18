@@ -308,3 +308,51 @@ insufficient — must prove target was open-end/mutual fund); 11 no_event→
 recheck_noevent (blank/weak evidence). events_merged.csv 173→124 (recheck items
 quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 (deepseek re-reads raw filings to confirm target fund type + pull MF ticker).
+
+RECONCILED 2026-08-18 (seat C): runner state had drifted badly behind main. The
+whole T1 chain and T2 had landed, contracts green and both human gates signed,
+but nothing after P1-GATE-t2a was ever marked — so `make plan` still advertised
+finished L1 batches (P1-T1-events, P1-T1-events-B) as READY and gave seat C no
+L2 item at all. P1 looked idle when it was actually sitting one step from T3.
+Each line below is backed by a committed artifact, re-verified today:
+
+  P1-T1-events    ops/l1/out/P1-T1-events.json — deepseek v2-A, 1418/1418 filings,
+                  accepted as PRIMARY channel A by the ROUTED/SCOPE CHANGE entry
+                  of 2026-07-18 above.
+  P1-T1-events-B  full independent channel B was SUPERSEDED (same entry) by the
+                  TARGETED qwen arbitration over the 140 contested/self-risky
+                  items: ops/l1/out/P1-T1-events-arb-qwen.json. Cross-vendor
+                  independence is preserved (deepseek vs qwen), which is what
+                  meta-rule 2 is actually protecting.
+  P1-T1-arb       p1/events_merged.csv — `contracts.py events_merged` PASS,
+                  131 conversions after the recovery sweep (commit 1de3532).
+  P1-T1-spotcheck human門 1, signed: p1/t1_spotcheck_SIGNOFF.md (owner spotcheck
+                  + full manual re-review + full-text recovery sweep).
+  P1-T2-wrds      SUBSTITUTED, not run as specified. WRDS was never procured (see
+                  ops/briefs/WRDS-access-assessment.md), so the free EDGAR N-PORT
+                  + OpenFIGI + XBRL path stands in: p1/conv_exposure_free.parquet,
+                  `contracts.py conv_exposure_free` PASS, 6377 rows / 2241 stocks.
+                  The frozen `conv_exposure` contract (permno-keyed) has NO
+                  artifact and stays open for a future CRSP merge — the crosswalk
+                  in p1/t2_free/conv_exposure_free_crosswalk.csv exists so that
+                  merge recovers permno without renaming a column. Completing this
+                  id records the substitute, not the original contract.
+  P1-T2-killswitch human門 2, signed GO by the owner on the free-path coverage
+                  read (commit 0371290; numbers in the coverage audit memo:
+                  389 stocks >=0.5% pooled, 361 in the DFA anchor alone, against
+                  the P1-T2a floor of 33).
+
+Caveat carried forward, deliberately: the free ConvExp is FEASIBILITY-GRADE. Its
+48% cell-drop rate is ~55% international equity by construction (half of it one
+fund, Mirae W020) and every drop is a missing denominator, not a missing holding.
+The audit's expectation that recovery leaves the >=0.5% treated set unchanged is
+still an expectation — proving it needs the box run now unblocked by the
+dropped-cell sidecar (commit 570a6b8). T3/T4 may proceed on this dataset; the
+final run must not, until that recovery pass lands.
+
+# applied: complete P1-T1-events
+# applied: complete P1-T1-events-B
+# applied: complete P1-T1-arb
+# applied: gate P1-T1-spotcheck pass
+# applied: complete P1-T2-wrds
+# applied: gate P1-T2-killswitch pass
