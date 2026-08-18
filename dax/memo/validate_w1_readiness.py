@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import csv
 import importlib.util
+import json
 import pathlib
 import re
 
@@ -19,6 +20,10 @@ MEMO = HERE / "design_memo_v1.md"
 CHECKLIST = HERE / "PI_DECISIONS_OPEN.md"
 EVENT_VALIDATOR = HERE / "validate_event_registry.py"
 EVENT_TABLE_SHELL = HERE / "event_table_shell_v1.csv"
+POWER_STANDARD = HERE / "power_calcs" / "power_standard.json"
+ENTRANT_AUDIT = HERE.parent / "data_raw" / "entrant_companion_audit_receipt.json"
+IDENTIFICATION_GATE = HERE.parent / "data_raw" / "identification_gate_receipt.json"
+PERSON_POWER = HERE.parent / "data_raw" / "person_level_power_receipt.json"
 DECISION_RE = re.compile(r"\[PI-DECISION (\d+)\]")
 CHECKLIST_ROW_RE = re.compile(
     r"^\|\s*(\d+)\s*\|.*\|\s*(OPEN|APPROVED|REJECTED)\s*\|\s*$",
@@ -129,6 +134,33 @@ def audit() -> dict[str, object]:
         blockers.append(f"{unchecked_items} confirmation/evidence checklist items are unchecked")
     if draft_status:
         blockers.append("memo is still marked DRAFT FOR PI DECISION")
+
+    power_standard = json.loads(POWER_STANDARD.read_text(encoding="utf-8"))
+    benchmark = power_standard["benchmark"]
+    if (power_standard["status"] != "FROZEN"
+            or benchmark.get("locator_status") != "VERIFIED"):
+        blockers.append("power benchmark is not frozen from a verified dated locator")
+
+    if not ENTRANT_AUDIT.is_file():
+        blockers.append("entrant-companion audit receipt is missing")
+    else:
+        entrant = json.loads(ENTRANT_AUDIT.read_text(encoding="utf-8"))
+        if entrant.get("status") != "ENTRANT_COMPANION_GATE_READY":
+            blockers.append("entrant companion is demoted to exploratory")
+
+    if not IDENTIFICATION_GATE.is_file():
+        blockers.append("real-dose residualized identification gate has not run")
+    else:
+        identification = json.loads(IDENTIFICATION_GATE.read_text(encoding="utf-8"))
+        if identification.get("status") != "PASS_DYNAMIC_IDENTIFICATION":
+            blockers.append("real-dose residualized identification gate failed")
+
+    if not PERSON_POWER.is_file():
+        blockers.append("person-level empirical power receipt is missing")
+    else:
+        person_power = json.loads(PERSON_POWER.read_text(encoding="utf-8"))
+        if person_power.get("status") != "PASS_PERSON_LEVEL_POWER":
+            blockers.append("person-level empirical power gate did not pass")
 
     return {
         "structural_errors": structural_errors,

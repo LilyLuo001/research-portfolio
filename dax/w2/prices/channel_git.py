@@ -47,7 +47,7 @@ class GitPriceObservation:
     model_id: str
     price_kind: str
     usd_per_1m: float
-    observed_on: str          # commit date, ISO — the UPPER BOUND
+    observed_on: str          # committer date, ISO — the UPPER BOUND
     locator: str              # repo@sha:path — permanent, re-fetchable
     bound: str = "upper"
 
@@ -86,7 +86,11 @@ def monthly_commits(mirror: pathlib.Path, path: str = DEFAULT_PATH) -> list[tupl
     sample would buy precision the outcome data cannot use. It also keeps the
     harvest to ~one blob fetch per month instead of one per commit.
     """
-    out = _run(["git", "log", "--format=%H %ad", "--date=short", "--", path], mirror)
+    # Use the committer date, not the author date. A cherry-picked commit can
+    # retain an author date months before the content entered the observed
+    # branch. Treating that retained date as an observation created impossible
+    # pre-launch bounds for dated model snapshots.
+    out = _run(["git", "log", "--format=%H %cd", "--date=short", "--", path], mirror)
     latest_per_month: dict[str, tuple[str, str]] = {}
     for line in out.splitlines():          # git log is newest-first
         if not line.strip():

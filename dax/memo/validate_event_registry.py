@@ -15,12 +15,15 @@ import sys
 
 
 REGISTRY = pathlib.Path(__file__).with_name("event_registry_v1.csv")
+PRICE_PANEL = REGISTRY.parent.parent / "data_built" / "price_histories.csv"
 START = dt.date(2021, 11, 1)
 FREEZE_DATE = dt.date(2026, 8, 6)
 EVENT_ID = re.compile(r"^[A-Z][A-Z0-9_]*$")
 ANALYSIS_STATUSES = {"eligible", "candidate", "excluded_binding"}
 VERIFICATION_STATUSES = {"verified", "pending_second_date_locator"}
-PRICE_STATUSES = {"relative_price_verified", "pending_w2", "conflict_b", "n_a"}
+PRICE_STATUSES = {
+    "verified_w2", "relative_price_verified", "pending_w2", "conflict_b", "n_a"
+}
 REQUIRED = {
     "event_id",
     "api_effective_date",
@@ -47,6 +50,15 @@ def validate(path: pathlib.Path = REGISTRY) -> tuple[list[dict[str, str]], list[
                 f"extra={sorted(fields - REQUIRED)}"
             )
         rows = list(reader)
+
+    panel_statuses: dict[str, set[str]] = {}
+    price_panel = path.parent.parent / "data_built" / "price_histories.csv"
+    if price_panel.is_file():
+        with price_panel.open(newline="", encoding="utf-8") as handle:
+            for price_row in csv.DictReader(handle):
+                panel_statuses.setdefault(price_row["model_id"], set()).add(
+                    price_row["price_status"]
+                )
 
     seen: set[str] = set()
     for line_number, row in enumerate(rows, start=2):
@@ -79,6 +91,20 @@ def validate(path: pathlib.Path = REGISTRY) -> tuple[list[dict[str, str]], list[
             )
         if price_status not in PRICE_STATUSES:
             errors.append(f"{prefix}: invalid price_status={price_status!r}")
+        if price_status != "n_a" and panel_statuses:
+            models = [m.strip() for m in row.get("model_ids", "").split("|") if m.strip()]
+            fully_verified = bool(models) and all(
+                panel_statuses.get(model) == {"verified"} for model in models
+            )
+            if price_status == "verified_w2" and not fully_verified:
+                errors.append(
+                    f"{prefix}: verified_w2 but one or more model price rows are not verified"
+                )
+            if fully_verified and price_status != "verified_w2":
+                errors.append(
+                    f"{prefix}: all model price rows are verified but registry is "
+                    f"{price_status!r}, not 'verified_w2'"
+                )
         if analysis_status == "eligible" and verification_status != "verified":
             errors.append(f"{prefix}: eligible event is not date-verified")
         if analysis_status == "excluded_binding" and not row.get("notes", "").strip():
