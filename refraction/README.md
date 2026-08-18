@@ -49,7 +49,8 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
    Plan §9 provisional lines).
 5. OSF account + submission at GATE-PREREG (+48h), then fill `prereg.*` and
    `beta.w_shrink` in frozen_config.yaml in the same commit.
-6. **Egress policy blocks R1a from web-sandboxed sessions** (found 2026-08-18).
+6. **Egress policy blocks R0-collide-A and R1a from web-sandboxed sessions**
+   (found 2026-08-18).
    `frbsf.org`, `federalreserve.gov`, `bls.gov`, `export.arxiv.org` and
    `api.semanticscholar.org` all return 403 at the CONNECT stage from the
    Claude-on-the-web container. R1a's iron rule is first-hand pages fetched in

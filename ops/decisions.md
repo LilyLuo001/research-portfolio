@@ -312,7 +312,8 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 NEED_HUMAN 2026-08-18 (seat C, refraction lane): two blockers found while
 executing the refraction queue, neither resolvable in-session.
 
-1. REFR-R1a-verify is NOT executable from a Claude-on-the-web session. The
+1. REFR-R1a-verify AND REFR-R0-collide (channel A) are NOT executable from a
+   Claude-on-the-web session. The
    egress proxy answers 403 to CONNECT for www.frbsf.org, www.federalreserve.gov
    and www.bls.gov (also export.arxiv.org and api.semanticscholar.org). R1a's
    spec requires first-hand agency pages fetched in-session and explicitly voids
@@ -320,6 +321,11 @@ executing the refraction queue, neither resolvable in-session.
    primary pages, which does not meet that bar. NOT filled from memory — meta
    rule 1. Route R1a to the box/SCC lane, or add those five hosts to the egress
    allowlist. R1b remains blocked on R1a plus the owner-pasted USMPD file heads.
+   R0-collide-A fails the same way: its brief forbids bibliographic fields from
+   memory and requires a URL fetched in-session, and papers.ssrn.com (incl. the
+   Marta-Riva 4079302 priority item), arxiv.org, ideas.repec.org are all 403.
+   WebSearch returns titles and URLs but cannot fetch them, which does not meet
+   the "存在性+URL 双证" bar, so the 40% Marta-Riva ALERT check is NOT done.
 
 2. ops/runner/lease.py claim reports the wrong cause on any push failure. It
    maps every nonzero `git push` to "another seat claimed <task> first" and then
