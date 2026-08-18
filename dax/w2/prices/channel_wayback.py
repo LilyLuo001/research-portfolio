@@ -151,22 +151,35 @@ def price_tokens(usd_per_1m: float) -> list[str]:
 def corroborate_in_text(text: str, model_id: str, usd_per_1m: float) -> tuple[str, str]:
     """Is `model_id` present, and does `usd_per_1m` appear near it?"""
     haystack = text.lower()
-    needle = model_id.lower()
-    if needle not in haystack:
-        # Undated alias: gpt-4o-2024-05-13 may appear only as "gpt-4o".
-        alias = re.sub(r"-\d{4}-\d{2}-\d{2}$", "", needle)
-        if alias == needle or alias not in haystack:
-            return NOT_FOUND, f"model id {model_id!r} absent from snapshot"
-        needle = alias
+    exact = model_id.lower()
+    aliases = [exact]
+    # Official pages often display a family label rather than the API id:
+    # dated snapshots lose their date suffix and preview ids lose "-preview".
+    for candidate in list(aliases):
+        undated = re.sub(r"-\d{4}-\d{2}-\d{2}$", "", candidate)
+        if undated not in aliases:
+            aliases.append(undated)
+    for candidate in list(aliases):
+        unpreviewed = re.sub(r"-preview$", "", candidate)
+        if unpreviewed not in aliases:
+            aliases.append(unpreviewed)
+    present_aliases = [alias for alias in aliases if alias in haystack]
+    if not present_aliases:
+        return NOT_FOUND, f"model id {model_id!r} absent from snapshot"
 
     # Search a window around each mention rather than the whole page, so an
     # unrelated "$5.00" elsewhere on the page cannot fake a match.
-    for match in re.finditer(re.escape(needle), haystack):
-        window = haystack[max(0, match.start() - 400): match.end() + 400]
-        for token in price_tokens(usd_per_1m):
-            if re.search(rf"\${re.escape(token)}\b|\b{re.escape(token)}\b", window):
-                return CORROBORATED, f"matched {token!r} near {needle!r}"
-    return CONTRADICTED, f"{needle!r} present but no rendering of {usd_per_1m} nearby"
+    # Try every present alias. The exact API id can occur in navigation or
+    # serialized metadata while the visible pricing card uses the family name.
+    for needle in present_aliases:
+        for match in re.finditer(re.escape(needle), haystack):
+            window = haystack[max(0, match.start() - 400): match.end() + 400]
+            for token in price_tokens(usd_per_1m):
+                if re.search(rf"\${re.escape(token)}\b|\b{re.escape(token)}\b", window):
+                    return CORROBORATED, f"matched {token!r} near {needle!r}"
+    return CONTRADICTED, (
+        f"aliases {present_aliases!r} present but no rendering of {usd_per_1m} nearby"
+    )
 
 
 def corroborate(model_id: str, price_kind: str, usd_per_1m: float,

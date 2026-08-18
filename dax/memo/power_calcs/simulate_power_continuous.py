@@ -296,14 +296,17 @@ def judge(sample: dict[str, object], standard: dict[str, object]) -> None:
             # inventing the baseline, which no model may supply from memory.
             fraction = standard["standard"]["max_mde_fraction_of_benchmark"]
             decline = standard["benchmark"]["relative_decline"]
-            divisor = fraction * decline
+            divisor = (fraction * decline
+                       if isinstance(decline, (int, float)) and decline > 0 else None)
             block["break_even_baseline"] = (
                 round(float(block["mde80_per_0.10_dax"]) / divisor, 6)
-                if divisor > 0 else None
+                if divisor is not None and divisor > 0 else None
             )
             block["break_even_note"] = (
                 f"passes iff the frozen pre-event baseline {outcome} level "
                 f"exceeds this value, since ceiling = {fraction} x {decline} x baseline"
+                if divisor is not None else
+                "not computable because the benchmark value lacks verified dated evidence"
             )
 
 
