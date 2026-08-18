@@ -846,17 +846,6 @@ def _write_dropped_cells(nh_stocks):
     n_sh = sum(1 for r in nh_stocks if float(r.get("shares_held") or 0) > 0)
     log.info("dropped-cell sidecar -> %s (%d cells, %d with shares_held>0)",
              DROPPED_CELLS, len(nh_stocks), n_sh)
-        # NEED_HUMAN_stocks.csv keeps its FOUR-column schema exactly — the
-        # coverage audit reads it positionally-by-name and a widened header is
-        # how the conv_exposure_free contract broke once already. The extra
-        # fields go to the sidecar below instead.
-        with open(NH_STOCKS, "w", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=["cusip", "ticker", "wave_id", "reason"],
-                               extrasaction="ignore")
-            w.writeheader()
-            w.writerows(nh_stocks)
-        log.info("NEED_HUMAN stocks -> %s (%d)", NH_STOCKS, len(nh_stocks))
-        _write_dropped_sidecar(nh_stocks)
 
 
 def _write_dropped_sidecar(nh_stocks):
