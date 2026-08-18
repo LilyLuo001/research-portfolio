@@ -556,3 +556,23 @@ Known findings (from WebSearch, source-locatable):
 
 T4 transcription checklist at `p1/t4_replication/saglam_tuzun_stub.md`.
 Owner must open the PDF and fill the coefficient table for T4 to complete.
+
+## T3-SPEC CHANNEL A COMPLETE 2026-08-18
+
+`p1/t3_spec/变量规格书.md` produced; contract `variable_spec` PASS (5 required sections present).
+
+Spines covered: 一, 二, 四. Spine 三 excluded per §7 ("主结论不许依赖它").
+Sources: `p1/lit/literature_matrix.md` (WebSearch-sourced 文献包) + §7 of the research plan.
+All citations carry URL locators; no model-memory fill.
+
+Open items requiring human resolution:
+  DECISION_NEEDED D1 (SUE fork): IBES primary recommended — can be closed with owner sign-off.
+  DECISION_NEEDED D2–D4, D8–D9: require PDF access to resolve (GNZ exact formulas).
+  D5 (reversal formula): recommend §7 design choice; owner may override.
+  D6 (analyst dispersion minimum): recommend ≥ 2 analysts.
+  D7 (shared FERC): recommend shared spec; owner may override.
+  [NEED_PDF] cells: 17 items (GNZ formula details, DGTW compounding convention).
+  [WRDS_NEEDED] cells: 17 items (exact table/field names for CRSP/Compustat/IBES/TAQ-IID).
+
+Channel B (Deepseek) dispatch is now possible — P1-T3-spec-B is the next step.
+After B-channel output: diff the two specs; any splits go to T3-decision owner gate.
