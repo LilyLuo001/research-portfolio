@@ -13,7 +13,9 @@ occupation-title or task-pair similarity.
   `transformers/4.25.1` under Python 3.8.10
 - Encoding: tokenizer truncation at the model's Sentence Transformers limit of
   256 wordpieces, attention-mask mean pooling, then L2 normalization; cosine
-  similarity is the normalized-vector dot product.
+  similarity is the normalized-vector dot product. Because the release contract
+  defines similarity on `[0, 1]`, negative cosine values are clipped to zero;
+  this is below every grading threshold and therefore cannot change routing.
 
 The model is English, compact enough to execute deterministically on SCC CPU,
 and trained for sentence similarity. Its Apache-2.0 license and immutable
@@ -48,4 +50,3 @@ occupation labels, embeddings, nor derived textual content may enter Git or a
 release artifact. Because task-ID redistribution rights have not been
 affirmatively documented, the task-ID mapping and adjudication queue also stay
 private; Git receives only aggregate receipts and a hash-addressed manifest.
-
