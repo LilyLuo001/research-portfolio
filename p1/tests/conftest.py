@@ -6,4 +6,6 @@ FileHandler that opens it in mode="w" lives in _setup_run(), not at import.
 """
 import sys, pathlib
 
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "t2_free"))
+P1 = pathlib.Path(__file__).resolve().parents[1]
+for d in ("t2_free", "t2_wrds"):
+    sys.path.insert(0, str(P1 / d))
