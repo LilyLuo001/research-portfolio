@@ -308,3 +308,33 @@ insufficient — must prove target was open-end/mutual fund); 11 no_event→
 recheck_noevent (blank/weak evidence). events_merged.csv 173→124 (recheck items
 quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 (deepseek re-reads raw filings to confirm target fund type + pull MF ticker).
+
+NEED_HUMAN 2026-08-18 (seat C, refraction lane): two blockers found while
+executing the refraction queue, neither resolvable in-session.
+
+1. REFR-R1a-verify is NOT executable from a Claude-on-the-web session. The
+   egress proxy answers 403 to CONNECT for www.frbsf.org, www.federalreserve.gov
+   and www.bls.gov (also export.arxiv.org and api.semanticscholar.org). R1a's
+   spec requires first-hand agency pages fetched in-session and explicitly voids
+   model memory of the USMPD schema; WebSearch returns snippets but not the
+   primary pages, which does not meet that bar. NOT filled from memory — meta
+   rule 1. Route R1a to the box/SCC lane, or add those five hosts to the egress
+   allowlist. R1b remains blocked on R1a plus the owner-pasted USMPD file heads.
+
+2. ops/runner/lease.py claim reports the wrong cause on any push failure. It
+   maps every nonzero `git push` to "another seat claimed <task> first" and then
+   runs `git reset --hard origin/main`. On a branch with no configured upstream
+   the push fails for that reason alone, so a free task looks leased, and the
+   hard reset would discard uncommitted work on any non-main branch. Hit on
+   REFR-R1a-verify, for which no lease file exists on main. Left unpatched:
+   lease.py is ops/runner, outside the refraction lane, and the fix changes the
+   portfolio's only coordination primitive — owner's call.
+
+DELIVERED same session (seat C, branch claude/refraction-research-plan-q14w8y,
+NOT merged to main): REFR-R13a collision-monitor script refraction/scan.py +
+refraction/tests/test_scan.py (27 cases, 46 green across the refraction suite),
+wired into ops/box/cron_night.sh and the evening commit list. Not marked
+--complete: the lease never took (defect 2), the branch is not merged, and the
+script has never run against live APIs from this container. First box run
+produces refraction/scans/hits_*.jsonl, which is REFR-R13-triage's input.
+

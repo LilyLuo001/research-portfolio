@@ -12,3 +12,8 @@ set -a; . ops/box/.env 2>/dev/null; set +a
 # E2-T11a literature squat-scan (deterministic, no LLM, no budget spend);
 # outputs land in e2/scans/ and are committed by the 21:00 evening tick.
 .venv/bin/python e2/scan.py >> ops/box/scan.log 2>&1
+# REFR-R13a monthly collision monitor (same architecture, refraction keywords +
+# the Marta-Riva hair trigger); outputs land in refraction/scans/. Runs nightly
+# but is windowed to 31 days and deduped via seen_ids.json, so a daily tick is
+# just an early-detection cadence on a monthly window, not repeated work.
+.venv/bin/python refraction/scan.py >> ops/box/scan.log 2>&1

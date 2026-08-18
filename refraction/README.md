@@ -34,7 +34,8 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 | R9 creation baskets | `NEED_HUMAN`: ETF Global access at BU | — (bypass, non-blocking) |
 | R10 TAQ pilot | not started (Claude Code) | R2 permno list (bypass, non-blocking) |
 | R11 writing / R12 red team | not started | R7/R8 |
-| R13 collision scan script | not started (script + kimi triage) | — (resident) |
+| R13a collision scan script | **DONE** (`scan.py`, 27 tests, wired into `ops/box/cron_night.sh`) | — (resident) |
+| R13b triage | not started (Kimi) | first `refraction/scans/hits_*.jsonl` from a box run |
 | R14 Meta-QA | not started (Flash-Lite/豆包, mechanical only) | — (resident) |
 
 ## Open NEED_HUMAN items (also surface in the digest)
@@ -48,6 +49,23 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
    Plan §9 provisional lines).
 5. OSF account + submission at GATE-PREREG (+48h), then fill `prereg.*` and
    `beta.w_shrink` in frozen_config.yaml in the same commit.
+6. **Egress policy blocks R1a from web-sandboxed sessions** (found 2026-08-18).
+   `frbsf.org`, `federalreserve.gov`, `bls.gov`, `export.arxiv.org` and
+   `api.semanticscholar.org` all return 403 at the CONNECT stage from the
+   Claude-on-the-web container. R1a's iron rule is first-hand pages fetched in
+   session, and search-result snippets do not meet it, so R1a cannot be run
+   from this lane at all — it needs the box, the SCC lane, or an egress
+   allowlist. `refraction/scan.py` is unaffected: it is written to run on the
+   box, where those hosts are reachable.
+7. **`ops/runner/lease.py` misreports lease failures** (found 2026-08-18). Its
+   `claim` treats *any* nonzero `git push` return as "another seat claimed it
+   first", so an unrelated push failure (no upstream configured on the current
+   branch, auth, network) is reported as a lost race — and it then runs
+   `git reset --hard origin/main`, which discards uncommitted work on a
+   non-`main` branch. Observed against `REFR-R1a-verify`, which is NOT leased
+   by anyone. Suggested fix: inspect the push stderr for `non-fast-forward` /
+   `fetch first` before declaring a lost race, and refuse to hard-reset when
+   `HEAD` is not on the branch the lease targets.
 
 Frozen P1 inputs (read-only, hash-registered when they exist): events_merged.csv,
 conv_exposure.parquet, holdings_weights.parquet, ibes_sue.parquet.
