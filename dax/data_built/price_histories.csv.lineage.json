@@ -1,15 +1,15 @@
 {
-  "output": "/home/user/research-portfolio/dax/data_built/price_histories.csv",
-  "output_sha256": "9f4fe5159bcdef71c3961985ffc9199cf3d3ee61c39307ab11d54872622d6ea7",
+  "output": "/usr3/graduate/qluo/dax-run-20260818/dax/data_built/price_histories.csv",
+  "output_sha256": "522de797ca7462a983bbd19abad3611c3114d4470f674fc3cfe70f4a0f1a684a",
   "inputs": [
     {
-      "path": "/home/user/research-portfolio/dax/memo/event_registry_v1.csv",
+      "path": "/usr3/graduate/qluo/dax-run-20260818/dax/memo/event_registry_v1.csv",
       "sha256": "de537402422a7984a2b0c7c77e9f225ff99f69d0e512ba16e46b23b69dc4660e",
       "rows": null
     }
   ],
-  "code_version": "ec1d1778a591d6e5e18822559dd1278a8f3b18de",
-  "timestamp": "2026-08-18T11:37:29.615555+00:00",
+  "code_version": "db8c9c1f98eeaf84f07dca7bc90ed98c2a0b84b2",
+  "timestamp": "2026-08-18T13:13:31.942898+00:00",
   "channels": {
     "git": {
       "repo": "https://github.com/BerriAI/litellm",
@@ -17,7 +17,7 @@
       "observations": 71
     },
     "wayback": {
-      "run": false,
+      "run": true,
       "urls": [
         "openai.com/pricing",
         "openai.com/api/pricing",

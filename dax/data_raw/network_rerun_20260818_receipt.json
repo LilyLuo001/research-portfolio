@@ -1,0 +1,57 @@
+{
+  "status": "DAX_NETWORK_RERUN_EXECUTED_WITH_BLOCKERS",
+  "generated_at_utc": "2026-08-18T13:14:01Z",
+  "branch": "task/DAX-network-rerun-20260818",
+  "cps_extract": {
+    "status": "PASS",
+    "ipums_extract_number": 6,
+    "rows": 71322,
+    "columns": 20,
+    "months": 16,
+    "age_min": 22,
+    "age_max": 25,
+    "output_sha256": "bb0aae2e4a7286b141cb52155288a56de4961e4e8a2add46c8f2315569511878",
+    "storage": "private SCC backbone; raw and respondent-level data not committed",
+    "validation": "raw Extract 6 checksum matches the frozen receipt; rebuilt parquet round-trip and content match are exact"
+  },
+  "cps_onet_crosswalk": {
+    "status": "PASS_PRIVATE_FAIL_CLOSED",
+    "rows": 874,
+    "cps_occ2010_codes": 503,
+    "output_sha256": "dbc8f89e7b9ad622fa9bd536f8bf7bdf4c3786468f2527fa0f272a60f8d74287",
+    "resolved_preperiod_weight_mass_share": 0.6551587329,
+    "provisional_preperiod_weight_mass_share": 0.1323912319,
+    "unresolved_preperiod_weight_mass_share": 0.2107453014,
+    "absent_preperiod_weight_mass_share": 0.0017047339,
+    "storage": "detailed CSV private; sanitized build receipt committed"
+  },
+  "price_histories": {
+    "status": "PASS_CONTRACT_WITH_UNRESOLVED_ROWS",
+    "rows": 71,
+    "verified": 60,
+    "single_channel": 2,
+    "conflict": 9,
+    "temporal_sanity_conflicts": 6,
+    "contract": "PASS"
+  },
+  "cross_vendor_red_team": {
+    "status": "COMPLETE",
+    "reviewer_vendor": "DeepSeek",
+    "model": "deepseek-v4-pro",
+    "runs": 3,
+    "verdicts": ["REVISE", "REVISE", "REVISE"],
+    "gate_recommendations": ["BLOCK", "BLOCK", "BLOCK"],
+    "major_issue_counts": [5, 4, 4]
+  },
+  "validation": {
+    "focused_tests": "28 passed",
+    "price_contract": "PASS",
+    "secret_and_restricted_data_scan": "PASS"
+  },
+  "remaining_blockers": [
+    "The newly merged dax/w2/crosswalk fetch path does not parse or fetch its pinned real source layouts; the mature fail-closed OCC2010 builder was used for the private production CSV.",
+    "Only 65.51587329% of observed preperiod CPS weight mass is currently resolved and downstream eligible in the mature crosswalk.",
+    "Two price rows remain single-channel and nine remain conflicts; they are ineligible for primary dose construction until resolved.",
+    "All three independent red-team runs recommend BLOCK; their major design findings require adjudication before Gate 1."
+  ]
+}

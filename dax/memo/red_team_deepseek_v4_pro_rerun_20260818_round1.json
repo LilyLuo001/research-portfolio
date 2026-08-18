@@ -1,0 +1,274 @@
+{
+  "status": "INDEPENDENT_CROSS_VENDOR_RED_TEAM",
+  "generated_at_utc": "2026-08-18T13:06:59.206324+00:00",
+  "reviewer_vendor": "DeepSeek",
+  "model": "deepseek-v4-pro",
+  "prompt_sha256": "a42b79bd8b73a700a3c3e7661ab959f7d59cb5ac31d1550df1d23d453ad05c33",
+  "inputs": {
+    "dax/memo/design_memo_v1.md": "432ab6a99edb3fc6a30096ea9c49b53e884e9357bb1973c071ed4dc9312449ed",
+    "dax/memo/PI_DECISIONS_OPEN.md": "35bf9782ae5aca96597ea722f145003a564aaa059a7a24d2fd49d2ef34136d3c",
+    "dax/memo/event_registry_v1.csv": "de537402422a7984a2b0c7c77e9f225ff99f69d0e512ba16e46b23b69dc4660e",
+    "dax/memo/event_table_shell_v1.csv": "2321fa7996604cd9484ebfa6eb63d2f36f62340e3cd265c776bf7f67ff15d77c",
+    "dax/memo/red_team_remediation.md": "f79d138f2599416ce8f238ecf96bbef4617e97f98268ac3c525c04c45ca1e3d6",
+    "dax/memo/PI_DECISION_D1_2026-08-18.md": "395be2473bc02c11642acd54276da64a2f42d53362a005e92ce424163a883723",
+    "dax/memo/PI_DECISION_D3_2026-08-18.md": "402812368c87f2620920ff5f3958cc64025c0059035594fe778297fae18c94fe",
+    "dax/memo/PI_DECISION_D4_2026-08-18.md": "53f44da1925c560c08b1d0007c97045a8229961343db624b6587c422874746c8",
+    "dax/memo/design_audit_2026-08-14.md": "e5eb2a7c807603273502834e24b6765755f36e5f453df77b171df14a6df78d1a",
+    "dax/memo/power_calcs/README.md": "c750f46040e54f9535ed4dc4d05f3f92f700bc441bac0362eee0c180479317a8",
+    "dax/memo/power_calcs/power_standard.json": "79312623593e6e5005b7cd73a4a8022ba3657a69d3fef31067bb28eec36b83a8",
+    "dax/memo/power_calcs/ipums_preperiod_extract_receipt.json": "1adc4cd39063a6f092b67c15aa6ec246968f3e5576d56d1a1fc1286ba241206e",
+    "dax/memo/power_calcs/synthetic/power_results_continuous.json": "9e7e62d39af2488cb0638af77fd9bd0cb181d649f1e5b6966bb55f39b5a64d5c",
+    "dax/memo/power_calcs/synthetic/power_results.json": "ee74effcb3c72f67f287186582a7860ecea8b7801741432672d14e880539c6ae"
+  },
+  "usage": {
+    "prompt_tokens": 32919,
+    "completion_tokens": 5417,
+    "total_tokens": 38336,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 32919
+  },
+  "finish_reason": "stop",
+  "review": {
+    "verdict": "REVISE",
+    "gate_recommendation": "BLOCK",
+    "major_issues": [
+      {
+        "id": "M1",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a79.1 and \u00a73.1",
+        "claim": "The primary estimating equation absorbs occupation fixed effects (alpha_o) and calendar-month fixed effects (tau_t) while the regressor DAX_ot is a deterministic function of occupation and month: DAX_ot = DAX_o,0 + sum_{e: month(e)<=t} DeltaDAX_oe. With occupation and month effects absorbed, the residual variation in DAX_ot is the interaction of occupation-specific dose magnitude and timing. However, the memo never demonstrates that this interaction has sufficient independent variation once industry-by-month (gamma_jt) and static-exposure-decile-by-month (delta_{d(o),t}) effects are also absorbed. The static-exposure-decile-by-month term is particularly dangerous: if the decile assignment d(o) is derived from the same DAX index (or a correlated static exposure measure), then delta_{d(o),t} absorbs exactly the occupation-by-month variation that identifies beta. The memo does not specify how d(o) is constructed, whether it is frozen, or whether it is orthogonal to the dose path. The synthetic power output shows leading_share 0.909 and effective rank 4, which is close to the 0.95 degeneracy threshold and suggests the design may be nearly degenerate in practice.",
+        "why_it_matters": "If the static-exposure-decile-by-month effects absorb the identifying variation, beta is unidentified or weakly identified. The design would collapse to a cross-sectional exposure contrast with panel controls, and the dynamic interpretation would be invalid. The memo's own degeneracy diagnostic (section 9.2) acknowledges this risk but does not pre-register a remedy beyond relabeling the paper.",
+        "required_change": "Specify the exact construction of d(o) (the static-exposure decile), freeze it before outcome work, and require a pre-registered diagnostic showing the residual variation in DAX_ot after projecting out alpha_o, tau_t, gamma_jt, and delta_{d(o),t}. If the residual variation is below a pre-specified threshold, the design must be declared degenerate and the dynamic claim abandoned. Alternatively, drop the static-exposure-decile-by-month term from the primary specification and report it only as a robustness check."
+      },
+      {
+        "id": "M2",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a77.2 and PI_DECISIONS_OPEN.md M3/M4",
+        "claim": "The entrant-margin companion requires estimating pi_go, the frozen entry-occupation distribution, from 16 months of CPS entrants (2021-11 to 2023-02) at demographic-education cell by occupation granularity. The memo does not specify the number of demographic-education cells, the occupation granularity, or the expected cell counts. With ages 22-25, monthly CPS samples, and occupation-level granularity, many cells will have zero or single-digit entrant counts. The resulting pi_go will be dominated by sampling noise, and the EIV machinery (section 10.1) is calibrated for mapping error, not for entry-mix estimation error. The memo's own self-review flags this as M3: 'Entry mix pi_go may not be estimable at occupation granularity. Compute realised per-cell entrant counts and pre-register a pooling rule.' This is unresolved in the packet.",
+        "why_it_matters": "If pi_go is estimated with unusable precision, the companion's regressor EDAX_gt is a noisy description of historical entry rather than a valid instrument. The companion's central identifying assumption (IC-4) requires pi_go to be a valid instrument, but a noisy estimate attenuates the first stage and biases the companion toward null. The companion would be reported as informative but non-confirmatory, which defeats its purpose of addressing the entrant margin.",
+        "required_change": "Before Gate 1, compute realised per-cell entrant counts from the frozen pre-period extract and pre-register a pooling rule (e.g., collapsing demographic-education cells or occupation groups) that guarantees a minimum cell count. If no pooling rule achieves usable precision, the companion must be demoted to descriptive or dropped entirely."
+      },
+      {
+        "id": "M3",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a77.2 and PI_DECISIONS_OPEN.md M4",
+        "claim": "The entrant sample is defined as persons ages 22-25 with no valid occupation observation in the lookback window. This conflates true labour-market entrants with (a) CPSIDP linkage failures, (b) persons who were in the CPS but unemployed or out of the labour force for the entire lookback window, and (c) persons who entered the CPS sample for the first time due to rotation. The memo does not specify how to distinguish these groups using month-in-sample (MIS) or other CPS rotation variables. The self-review flags this as M4: 'The entrant sample conflates true entrants with CPSIDP linkage failures and long non-employment spells. Separate using month-in-sample before registering the companion.' This is unresolved in the packet.",
+        "why_it_matters": "If the entrant sample is contaminated by linkage failures and long non-employment spells, the companion's outcome (employment rate of the entrant cohort) is not measuring labour-market entry. The companion would be estimating a mixture of entry effects and measurement error, and the partition of the 22-25 population into incumbent and entrant margins would be invalid.",
+        "required_change": "Before Gate 1, specify how month-in-sample and CPSIDP linkage status are used to separate true entrants from linkage failures and long non-employment spells. Pre-register sensitivity analyses that vary the definition of entrant (e.g., MIS=1 only, MIS<=2, etc.) and report the composition of the entrant sample."
+      },
+      {
+        "id": "M4",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a77.4 and power_standard.json",
+        "claim": "The power standard's relative_decline is set to 0.19 in power_standard.json, but the locator_status is PENDING_EXCERPT and the version_note admits: '0.19 is PI-directed. It is NOT yet sourced to a locator: every host carrying the paper is egress-blocked from the build environment, so no version was read and the figure rests on web-search summaries.' The memo's own D3 decision document states: 'Under meta-rule 1 those two figures are not yet sourced to a locator and must not be frozen on this evidence.' Yet the JSON file has version_status: RESOLVED and relative_decline: 0.19. This is a contradiction: the standard is frozen on an unsourced figure.",
+        "why_it_matters": "The power standard determines whether the design is adequately powered. Freezing it on an unsourced figure violates the memo's own evidence rules and creates a specification-search channel: the PI chose the larger figure (0.19 vs 0.13), which loosens the pass bar by ~46%. If the figure is later corrected, the entire power analysis must be redone, and any Gate-1 decision based on the current standard is invalid.",
+        "required_change": "Either (a) revert to the sourced 0.13 figure from the proposal's citation until the August 2026 excerpt is supplied, or (b) mark the power standard as UNFROZEN and block Gate 1 until the excerpt is supplied and locator_status is VERIFIED. The current state of RESOLVED with PENDING_EXCERPT is internally inconsistent and must be resolved before any power-based decision."
+      },
+      {
+        "id": "M5",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a73.1 and \u00a79.1",
+        "claim": "The memo states in \u00a73.1 that 'The analysis unit is person-month in IPUMS-CPS' and in \u00a79.1 that the estimating equation is at the person level with person covariates X_i. However, the power simulation (power_results_continuous.json) operates on occupation-month cell moments with n_panel_cells=6240 and n_occupation_clusters=60, and the memo's own M5 resolution admits: 'The estimator is person-month: section 9.1 is estimated on person records... The power simulation operates on occupation-month cell moments.' The memo claims this is conservative because omitting X_i raises residual variance, but this argument is incomplete: the simulation also omits within-cell person variation, which can either raise or lower the standard error depending on the intraclass correlation. The memo does not provide a formal proof that the cell-level MDE is an upper bound on the person-level MDE.",
+        "why_it_matters": "If the cell-level approximation is not a valid upper bound, the power analysis may be optimistic or pessimistic in an unknown direction. The memo's claim that 'a design that passes in simulation passes a fortiori at person level' is asserted, not proven. This affects the validity of any power-based Gate-1 decision.",
+        "required_change": "Provide a formal derivation showing that the cell-level MDE is an upper bound on the person-level MDE under the stated assumptions, or run the power simulation at the person level using the frozen extract. If neither is possible before Gate 1, the power analysis must be labeled as provisional and the design cannot be declared adequately powered."
+      }
+    ],
+    "minor_issues": [
+      {
+        "id": "m1",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a79.3 and \u00a714",
+        "claim": "The pre-trend test uses D_o = DAX_o,2024-12 as the eventual exposure, but the memo does not specify how D_o is computed for occupations that have zero dose at the horizon. If many occupations have zero dose, the test is effectively comparing zero-dose to positive-dose occupations, which is a cross-sectional comparison rather than a test of differential pre-trends among treated occupations.",
+        "why_it_matters": "The pre-trend test may have low power to detect violations of IC-1 if the dose distribution is highly skewed, and the interpretation of phi is unclear when D_o is zero for a large share of occupations.",
+        "required_change": "Report the distribution of D_o and pre-register a sensitivity analysis that restricts the pre-trend test to occupations with positive dose at the horizon."
+      },
+      {
+        "id": "m2",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a77.2",
+        "claim": "The entrant companion's specification clusters on the entry-mix cell, but the memo does not specify the number of clusters or whether the cell is the same as the demographic-education cell used to estimate pi_go. If the number of clusters is small, the cluster-robust standard errors will be unreliable.",
+        "why_it_matters": "The companion's inference depends on the cluster structure, and a small number of clusters would invalidate the standard errors.",
+        "required_change": "Specify the number of entry-mix cells and pre-register a wild cluster bootstrap or other small-cluster correction if the number of clusters is below 40."
+      },
+      {
+        "id": "m3",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a710.2",
+        "claim": "The cross-mapping IV uses Tolan and Eloundou doses as instruments for GDPval dose, but the memo does not specify whether the IV is estimated on the cumulative level DAX_ot or the event increment DeltaDAX_oe. Section 10.2 refers to 'DeltaDAX' but the primary specification uses the cumulative level.",
+        "why_it_matters": "If the IV is specified on the wrong dose object, the IV/OLS ratio and weak-instrument diagnostics will not correspond to the primary specification.",
+        "required_change": "Clarify whether the cross-mapping IV is estimated on the cumulative level or the event increment, and align the notation with the primary specification."
+      },
+      {
+        "id": "m4",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a71.2 and event_registry_v1.csv",
+        "claim": "The registry contains 21 rows, but only 4 are currently eligible. The memo states that 'Candidate status is resolved before Gate 1' but does not specify what happens if the candidates cannot be resolved by the Gate-1 deadline. The continuous design's identifying variation depends on the number of source-verified events, and with only 4 events the dose path may have limited timing variation.",
+        "why_it_matters": "If the registry cannot be completed before Gate 1, the continuous design may be under-identified or degenerate, and the power analysis based on 4 events may not reflect the final design.",
+        "required_change": "Pre-register a fallback plan for the case where the registry cannot be completed before Gate 1, including a minimum number of source-verified events required for the continuous design to be interpretable."
+      },
+      {
+        "id": "m5",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a77.4 and power_standard.json",
+        "claim": "The power standard's baseline_employment_rate_22_25 and baseline_hours_unconditional_22_25 are null in power_standard.json, and the file status is PLACEHOLDER_REQUIRES_REAL_CPS. The memo states that the constant must be computed once over 2021-11 to 2023-02, but the extract receipt shows the data is in private SCC storage and not in the repository.",
+        "why_it_matters": "The power standard cannot be frozen until the real extract is available, and the Gate-1 decision depends on the frozen standard.",
+        "required_change": "Ensure the real extract is available on the build host before Gate 1, and run freeze_power_standard.py to compute the constant. If the extract cannot be made available, the design cannot be declared adequately powered."
+      },
+      {
+        "id": "m6",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a76.2",
+        "claim": "The usage-share first stage uses a complete-case rule that requires observation in all required pre and post months. This rule may systematically exclude cells that are suppressed in some months, and the memo does not specify how the excluded task-mass share is used to assess selection bias.",
+        "why_it_matters": "If suppression is correlated with dose or outcome, the complete-case rule introduces selection bias into the first stage.",
+        "required_change": "Pre-register a sensitivity analysis that relaxes the complete-case rule and reports the selection bias under alternative missingness assumptions."
+      }
+    ],
+    "decision_checks": [
+      {
+        "decision": 1,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 2,
+        "implementable": true,
+        "problem": "Decision 2 is retired from the primary and now governs only the secondary stacked corroboration. The memo states the secondary stack is 'not confirmatory' and 'expected to degrade as the registry completes.' The decision is mechanically implementable but its role is unclear: if the secondary stack is not confirmatory, why does it need a pre-registered window rule?",
+        "required_change": "Clarify the purpose of the secondary stack and whether Decision 2's window parameters are still binding or merely descriptive."
+      },
+      {
+        "decision": 3,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 4,
+        "implementable": true,
+        "problem": "Decision 4 is reversed under D1: the primary regressor is now the cumulative level DAX_ot rather than the event increment. The memo states this reversal explicitly, but the PI_DECISIONS_OPEN.md file still lists Decision 4 as 'APPROVED' with the original text 'event increment primary; prior DAX/dose as state controls.' This creates a contradiction between the approval record and the amended memo.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the D1 reversal of Decision 4, or add a cross-reference to the D1 amendment."
+      },
+      {
+        "decision": 5,
+        "implementable": true,
+        "problem": "Decision 5 is retired under D1, but the memo states that 'what survives from it is the monotonicity convention.' The PI_DECISIONS_OPEN.md file still lists Decision 5 as 'APPROVED' with the original text about prior crossers serving as controls. This is inconsistent with the amended memo.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the D1 retirement of Decision 5, or add a cross-reference to the D1 amendment."
+      },
+      {
+        "decision": 6,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 7,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 8,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 9,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 10,
+        "implementable": true,
+        "problem": "The memo states that the entrant companion 'forms its own family and is corrected within itself; it is not pooled with the primary family.' However, the memo does not specify whether the secondary stacked corroboration also forms its own family or is pooled with the primary. If the secondary stack is reported alongside the primary, its multiplicity correction is undefined.",
+        "required_change": "Specify the multiplicity correction for the secondary stacked corroboration."
+      },
+      {
+        "decision": 11,
+        "implementable": true,
+        "problem": "The numeric part of Decision 11 is superseded by D3, but the PI_DECISIONS_OPEN.md file still lists the original text 'employment MDE <=6.5 pp or half baseline gap' as APPROVED. The power_standard.json file has relative_decline=0.19 with locator_status PENDING_EXCERPT, which is internally inconsistent as noted in M4.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the D3 supersession, and resolve the locator_status contradiction in power_standard.json."
+      },
+      {
+        "decision": 12,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 13,
+        "implementable": true,
+        "problem": "The memo clarifies that Decision 13 governs the OpenAI usage first stage only, but the PI_DECISIONS_OPEN.md file still lists the original text without this clarification. The clause (c) three-event minimum is now restricted to the first stage, but the approval record does not reflect this.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the D1 scope clarification of Decision 13."
+      },
+      {
+        "decision": 14,
+        "implementable": true,
+        "problem": "The memo re-specifies Decision 14 as a placebo-lead test on eventual exposure D_o, but the PI_DECISIONS_OPEN.md file still lists the original text 'joint p>=0.10 and no Holm-adjusted individual lead' as APPROVED. The re-specified test is mechanically implementable, but the approval record is inconsistent with the amended memo.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the D1 re-specification of Decision 14."
+      },
+      {
+        "decision": 15,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 16,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 17,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      }
+    ],
+    "evidence_gap_checks": [
+      {
+        "item": "registry",
+        "satisfied": false,
+        "reason": "The registry contains 21 rows, but only 4 are currently eligible. The memo states that 'Candidate status is resolved before Gate 1' but the packet does not contain evidence that this resolution has occurred. The event_table_shell_v1.csv shows all rows as PENDING_W5_MECHANICAL_FILL or BLOCKED_SOURCE_THEN_W5_FILL, and the price_status for all eligible events is pending_w2 or relative_price_verified. The registry is not source-complete at Gate 1."
+      },
+      {
+        "item": "empirical_power",
+        "satisfied": false,
+        "reason": "The power_standard.json file has status PLACEHOLDER_REQUIRES_REAL_CPS, and the power_results_continuous.json file is stamped NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST. The memo states that the empirical power run requires the frozen real occupation-event dose panel and the exact pre-event moment table, neither of which is present in the packet. The extract receipt shows the data is in private SCC storage, not in the repository."
+      },
+      {
+        "item": "red_team",
+        "satisfied": false,
+        "reason": "The PI_DECISIONS_OPEN.md file explicitly states: 'Independent cross-vendor red-team of this draft. RETURNED TO UNCHECKED 2026-08-18: the three-round DeepSeek V4-Pro review reached CONDITIONAL_GO on the superseded discrete design. D1 replaced the primary specification, so that verdict does not transfer and must not be counted.' The red_team_remediation.md file describes the superseded design review, not the current continuous design."
+      },
+      {
+        "item": "pi_pdf_review",
+        "satisfied": false,
+        "reason": "The PI_DECISIONS_OPEN.md file lists 'Rendered PDF reviewed line by line by PI' as an unchecked evidence item. The packet does not contain a rendered PDF or evidence of PI line-by-line review."
+      }
+    ],
+    "outcome_seal_assessment": "The outcome seal appears intact: the memo states that the seal was closed throughout, dax/data_raw/ held no extract, and every quantity consulted was date arithmetic or synthetic power statistics. The power_results_continuous.json and power_results.json files are stamped NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST. However, the power_standard.json file has relative_decline=0.19 with version_status RESOLVED but locator_status PENDING_EXCERPT, which means the PI made a decision based on an unsourced figure. This does not violate the outcome seal per se, but it does violate the memo's own evidence rules and creates a specification-search channel.",
+    "required_changes_before_gate": [
+      "Resolve the power standard contradiction: either revert to the sourced 0.13 figure or mark the standard as UNFROZEN until the August 2026 excerpt is supplied and locator_status is VERIFIED.",
+      "Specify the construction of the static-exposure decile d(o) and pre-register a diagnostic showing residual variation in DAX_ot after projecting out all fixed effects. If residual variation is below a pre-specified threshold, declare the design degenerate.",
+      "Compute realised per-cell entrant counts from the frozen pre-period extract and pre-register a pooling rule for pi_go that guarantees minimum cell counts. If no pooling rule achieves usable precision, demote or drop the entrant companion.",
+      "Specify how month-in-sample and CPSIDP linkage status are used to separate true entrants from linkage failures and long non-employment spells in the entrant sample.",
+      "Provide a formal derivation that the cell-level MDE is an upper bound on the person-level MDE, or run the power simulation at the person level.",
+      "Update PI_DECISIONS_OPEN.md to reflect the D1, D3, and D4 amendments to Decisions 2, 4, 5, 11, 13, and 14, so the approval record is consistent with the amended memo.",
+      "Complete the registry before Gate 1: resolve all candidate rows to eligible or source_failed, and attach source-complete dated price rows for all eligible events."
+    ],
+    "nonblocking_followups": [
+      "Report the distribution of D_o in the pre-trend test and pre-register a sensitivity analysis restricting to occupations with positive dose.",
+      "Specify the number of entry-mix cells and pre-register a wild cluster bootstrap if the number of clusters is below 40.",
+      "Clarify whether the cross-mapping IV is estimated on the cumulative level or the event increment.",
+      "Pre-register a fallback plan for the case where the registry cannot be completed before Gate 1.",
+      "Pre-register a sensitivity analysis for the usage-share first stage that relaxes the complete-case rule.",
+      "Specify the multiplicity correction for the secondary stacked corroboration."
+    ]
+  }
+}

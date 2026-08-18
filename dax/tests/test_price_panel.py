@@ -95,6 +95,31 @@ def test_unchanged_months_are_not_re_emitted():
     assert len(rows) == 1
 
 
+def test_git_observation_before_dated_model_fails_closed():
+    from build_price_panel import apply_temporal_sanity, CONFLICT, VERIFIED
+    rows = [{
+        "model_id": "gpt-5.4-2026-03-05",
+        "channel_git_observed": "2026-01-14",
+        "price_status": VERIFIED,
+        "notes": "",
+    }]
+    assert apply_temporal_sanity(rows) == 1
+    assert rows[0]["price_status"] == CONFLICT
+    assert "cannot serve as an upper bound" in rows[0]["notes"]
+
+
+def test_git_observation_on_model_date_is_allowed():
+    from build_price_panel import apply_temporal_sanity, VERIFIED
+    rows = [{
+        "model_id": "gpt-5.4-2026-03-05",
+        "channel_git_observed": "2026-03-05",
+        "price_status": VERIFIED,
+        "notes": "",
+    }]
+    assert apply_temporal_sanity(rows) == 0
+    assert rows[0]["price_status"] == VERIFIED
+
+
 # --- Contract shape ---------------------------------------------------------
 
 def test_emitted_fields_match_the_frozen_contract():
