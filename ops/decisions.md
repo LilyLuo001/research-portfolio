@@ -419,3 +419,36 @@ entry already carries.
 Not blocked by either, and offered again from the WRDS assessment: seat C can
 pre-write the offline pull scripts for T3/T4/R2 so a borrowed WRDS window is pure
 execution (~3-5 days instead of 3-6 weeks). Say the word and that runs next.
+
+DESIGN FINDING 2026-08-18 (seat C, non-WRDS work): the Russell fallback design is
+available, and the amendment that mandates it undercounts the problem.
+
+P1_修订补丁 §修订3 makes Russell-reconstitution handling a forced T5 sub-spec,
+naming the 2021-06-11 DFA anchor as the exposed wave. Plan §133 gives three
+responses; response (iii) — replicate on 2022-2025 non-June waves and downgrade
+the conclusion if the effect is 2021-06 only — is computable today from
+events_merged.csv, so p1/design/russell_fallback_check.py counts it. Three
+results, all from committed data, none of them requiring WRDS:
+
+1. THE FALLBACK EXISTS: 54 waves / 86 funds / 53 families in 2022-2025 non-June.
+   §133(iii) is runnable as written. Worth knowing before T5 commits to it —
+   an empty fallback discovered later is discovered at the referee's desk.
+
+2. ELEVEN waves fall in June, not one. §修订3 names only the 2021-06 anchor, but
+   the reconstitution window catches 11 waves / 22 funds across all years. The
+   control and the drop-sample sub-specs must apply to all of them; scoping the
+   fix to the anchor alone leaves the same confound in ten other waves. This is
+   an amendment gap, not an implementation detail — recommend the T5 spec say
+   "June waves" rather than "the anchor wave".
+
+3. The plan's 2025 cutoff now costs 6 waves / 12 funds that have since become
+   effective. Extending the fallback to 2026 is a free power gain and should be
+   an explicit spec decision rather than an oversight inherited from the drafting
+   date.
+
+CAVEAT, stated because it limits all three: these are CONVERSION counts, not
+treated-stock counts. The anchor alone carries 361 stocks at ConvExp>=0.5% while
+the 86 fallback funds are spread over 54 waves, so per-wave treated counts will be
+far thinner. Whether the fallback has POWER — as opposed to a sample — cannot be
+settled until ConvExp is rebuilt on CRSP. Fund counts bound the design from above,
+nothing more.
