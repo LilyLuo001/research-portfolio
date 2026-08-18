@@ -56,3 +56,7 @@ dax/data_raw/_wayback_cache/
 # committed files and is what you hand to whoever books the account.
 p1/wrds/raw/
 p1/wrds/discovered_schema.json
+# P1-T2 free path: sidecar produced at pipeline runtime — contains shares_held for
+# dropped cells. Created by build_nport_convexp.py, consumed by recover_denominators.py.
+# Not committed: it contains N-PORT data (which is licensed) and changes with each run.
+p1/t2_free/dropped_cells_shares_held.csv

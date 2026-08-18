@@ -520,3 +520,39 @@ Everything forward is gated on one of:
   WRDS: procurement in progress — blocks T2-impl, T4, T5
   A3: Saglam–Tuzun PDF — blocks T4 transcription side
 None are resolvable in this container.
+
+## A1 PARTIALLY RESOLVED 2026-08-18 — 文献包 produced (web-search sourced)
+User enabled internet; WebSearch works; direct PDF fetch still blocked (federalreserve.gov,
+doi.org, ssrn.com, semanticscholar.org, ideas.repec.org all return EGRESS_BLOCKED via WebFetch).
+
+文献包 written at `p1/lit/literature_matrix.md` with 10 entries + SUE decision:
+  1. GNZ (2021) Management Science 67(1):22-47
+  2. FERC — Collins, Kothari, Shanken, Sloan (1994) JAE 18(3):289-324
+  3. IPT — Beekes, Brown (2007) SSRN 938982
+  4. Hou-Moskowitz (2005) RFS 18(3):981-1020
+  5a. SUE-IBES — Livnat, Mendenhall (2006) JAR 44(1):177-205
+  5b. SUE-TS — Foster, Olsen, Shevlin (1984) AR
+  6. DGTW (1997) JF 52(3):1035-1058
+  7. Jegadeesh (1990) JF 45(3):881-898
+  8. Amihud (2002) JFM 5(1):31-56
+  9. Roll (1988) JF 43(2):541-566; Durnev et al. (2003) JAR companion
+  10. Holden-Jacobsen (2014) JF 69(4):1747-1785
+
+12 cells marked [NEED_PDF] where exact formula details require the actual paper.
+URLs for all papers confirmed via WebSearch. T3-spec can start with this 文献包;
+[NEED_PDF] cells are handled like DECISION_NEEDED (flagged for reviewer fill).
+
+SUE fork recommendation: SUE-IBES primary, SUE-TS robustness — documented in matrix.
+
+## A3 PARTIALLY RESOLVED 2026-08-18 — Saglam-Tuzun stub produced
+PDF not accessible (federalreserve.gov egress blocked). URL confirmed:
+https://www.federalreserve.gov/econres/notes/feds-notes/implications-of-growth-in-etfs-evidence-from-mutual-fund-to-etf-conversions-20251119.html
+DOI: 10.17016/2380-7172.3909
+
+Known findings (from WebSearch, source-locatable):
+  - 125 converted funds, ~$80B total, ~$1.6B/month, June 2021 DFA event $30B+
+  - Conversions improve market quality: ↑ liquidity, ↓ volatility
+  - Identification and exact coefficients: [NEED_PDF]
+
+T4 transcription checklist at `p1/t4_replication/saglam_tuzun_stub.md`.
+Owner must open the PDF and fill the coefficient table for T4 to complete.
