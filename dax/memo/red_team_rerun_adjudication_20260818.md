@@ -9,7 +9,7 @@ clear this gate. The outcome seal remains closed.
 | Consolidated finding | Decision | Enforced action | Current status |
 |---|---|---|---|
 | M1: dynamic dose may be absorbed by the full nuisance design | Accept | Require a pre-outcome identification receipt computed on the real W5 occupation-month dose panel after residualizing on occupation, month, industry-by-month, and frozen static-decile-by-month effects. Dynamic claims require effective rank at least 2 and leading singular share at most 0.95. | Pending W5 dose panel; Gate 1 blocked |
-| M2: `pi_go` is sparse and the complement rule mixes entrants, linkage failures, and long non-employment | Accept | Demote the entrant companion to exploratory. Audit adjacent-month CPSIDP transitions in MISH 2–4 and 6–8; do not restore the registered companion without a PI-approved cell definition, pooling threshold, and sampling-error propagation rule. | Audit implemented; private run required |
+| M2: `pi_go` is sparse and the complement rule mixes entrants, linkage failures, and long non-employment | Accept | Demote the entrant companion to exploratory. Audit adjacent-month CPSIDP transitions in MISH 2–4 and 6–8; do not restore the registered companion without a PI-approved cell definition, pooling threshold, and sampling-error propagation rule. | Private audit complete: 1,623 linked entries; 822 cell-occupation pairs; median count 1, maximum 18; 100% below 20 |
 | M3: the executable 0.19 power benchmark has no dated page/section locator | Accept | Remove 0.19 from the executable standard, set the benchmark to unresolved, and make the freezer require `locator_status=VERIFIED`. A PI preference is not evidence. | Fixed; Gate 1 blocked pending locator or signed reversion to sourced 0.13 |
 | M4/M5: occupation-month simulated power is not proven to upper-bound the person-month estimator | Accept | Keep adequacy null until the real person-level pre-outcome power run uses the frozen CPS extract and real W5 doses. The cell simulation remains diagnostic only. | Pending W5 dose panel; Gate 1 blocked |
 
@@ -41,3 +41,14 @@ second dated event locator remain ineligible even when their price rows pass.
    pending.
 5. A new independent red-team run is required after these changes; this
    adjudication does not self-certify the revised design.
+
+## Entrant audit evidence
+
+The frozen pre-event extract contains 71,322 person-months. Among 50,537 rows
+whose rotation month implies that a prior-month interview should exist, 8,236
+do not link (16.30% unweighted; 16.55% weighted). Restricting to clean linked
+nonemployment-to-employment transitions leaves 1,623 entrants across 16
+demographic-education cells and 822 cell-occupation pairs. The pair-count
+median is 1 and the maximum is 18, so every pair is below the diagnostic
+minimum of 20. This is direct evidence that occupation-level `pi_go` is not
+estimable as registered; it is not merely a conjecture about sample size.

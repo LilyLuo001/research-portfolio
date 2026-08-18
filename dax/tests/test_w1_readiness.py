@@ -26,6 +26,14 @@ def test_w1_draft_remains_fail_closed_after_pi_defaults_are_approved():
     assert report["unchecked_items"] > 0
 
 
+def test_fresh_red_team_blockers_are_machine_enforced():
+    blockers = READINESS.audit()["blockers"]
+    assert "power benchmark is not frozen from a verified dated locator" in blockers
+    assert "entrant companion is demoted to exploratory" in blockers
+    assert "real-dose residualized identification gate has not run" in blockers
+    assert "person-level empirical power receipt is missing" in blockers
+
+
 def test_red_team_item_is_unchecked_after_the_d1_design_change():
     """The 2026-08-06 CONDITIONAL_GO reviewed the superseded discrete design.
 
