@@ -93,3 +93,28 @@ effect existed or was consulted.
 - [ ] Entrant companion power table, which requires the frozen entry mix
   `pi_go` and therefore the CPS extract.
 - [ ] Fresh independent cross-vendor red team of this draft (see above).
+
+### Adversarial pre-review findings, 2026-08-18 (must clear before the paid pass)
+
+From `red_team_selfreview_2026-08-18.md` — a self-review, NOT the independent
+cross-vendor pass, and not evidence for Gate 1.
+
+- [ ] **M1 (blocker)** Decision 14's joint pre-event dose test is not
+  computable: cumulative dose is identically zero across 2021-11..2023-02
+  (verified, variance 0.0). Re-specify as a placebo-lead test on eventual dose.
+- [ ] **M2** D3's 0.13 is described as both an employment and a payroll
+  decline. Resolve with a page citation **before** freezing the constant —
+  freezing is one-way.
+- [ ] **M3** Entry mix `pi_go` may not be estimable at occupation granularity.
+  Compute realised per-cell entrant counts and pre-register a pooling rule.
+- [ ] **M4** The entrant sample conflates true entrants with CPSIDP
+  linkage failures and long non-employment spells. Separate using
+  month-in-sample before registering the companion.
+- [ ] **M5** The memo states a person-month unit; the power engine builds an
+  occupation-month panel. Reconcile, or state the approximation and its cost.
+- [ ] **M6** The degeneracy trigger has no stated consequence for the paper's
+  claims. Decide in advance, not after seeing the leading share.
+
+M1, M2 and M5 are the same failure as the 2026-08-14 audit found: prose that
+was never executed against the code or data it governs. The paid cross-vendor
+pass should be spent on a v3 that has cleared them.

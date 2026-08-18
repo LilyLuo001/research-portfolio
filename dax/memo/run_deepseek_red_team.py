@@ -19,8 +19,17 @@ INPUTS = [
     HERE / "event_registry_v1.csv",
     HERE / "event_table_shell_v1.csv",
     HERE / "red_team_remediation.md",
+    # The four counter-signed amendments: a reviewer who cannot see WHY the
+    # primary changed will re-litigate the discrete design instead of
+    # attacking the one that replaced it.
+    HERE / "PI_DECISION_D1_2026-08-18.md",
+    HERE / "PI_DECISION_D3_2026-08-18.md",
+    HERE / "PI_DECISION_D4_2026-08-18.md",
+    HERE / "design_audit_2026-08-14.md",
     HERE / "power_calcs" / "README.md",
+    HERE / "power_calcs" / "power_standard.json",
     HERE / "power_calcs" / "ipums_preperiod_extract_receipt.json",
+    HERE / "power_calcs" / "synthetic" / "power_results_continuous.json",
     HERE / "power_calcs" / "synthetic" / "power_results.json",
 ]
 
@@ -46,10 +55,25 @@ pre-registration packet. You did not author any included file. Use only the
 packet below: do not browse, add outside facts, invent results, or treat the
 synthetic power output as empirical evidence.
 
-Attack identification, estimability, internal consistency, outcome-seal
-integrity, event provenance, power logic, multiple testing, window overlap,
-continuous-dose interpretation, crosswalk measurement error, and whether each
-of PI Decisions 1 through 17 is mechanically implementable. Be specific and
+This packet is version 2. The primary specification CHANGED on 2026-08-18
+from a stacked event study to a continuous cumulative-dose design, and an
+entrant-margin companion was added. A prior review of the SUPERSEDED design
+returned CONDITIONAL_GO; that verdict does not transfer and you must not defer
+to it. Review what is in front of you.
+
+Attack, at minimum: whether the continuous design is identified once occupation
+and calendar-month effects are absorbed; whether any pre-trend test is even
+computable when cumulative dose is identically zero throughout the pre-period;
+whether the frozen entry mix pi_go can be estimated with usable precision from
+16 months of CPS entrants and whether it is a valid instrument rather than a
+noisy description; whether the "entrant" sample is contaminated by CPSIDP
+linkage failure rather than being true labour-market entrants; whether the D3
+benchmark conflates a payroll decline with an employment-rate decline; whether
+the memo's person-month unit matches the occupation-month panel the engine
+actually builds; outcome-seal integrity; event provenance; multiple testing
+across the primary and companion families; crosswalk measurement error; and
+whether each of PI Decisions 1 through 17 is still mechanically implementable
+in its amended role. Be specific and
 unpleasantly rigorous. Return at least three substantive issue objects in
 total; classify an issue as major only when it actually requires a change
 before Gate 1, and otherwise classify it as minor. A PASS or GO review may
