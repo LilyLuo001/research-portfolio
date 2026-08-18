@@ -1,0 +1,39 @@
+# Mapping A (GDPval primary) — the headline mapping under memo section 5.
+#
+# One row per O*NET task. EVERY task appears exactly once, including unmatched
+# ones: the execution plan requires that unmatched tasks are never silently
+# dropped, and unmatched wage-bill share is the honest upper bound on how much
+# of the index is unmeasured.
+#
+# grade = A | B | C | unmatched
+#   A          auto-accepted: similarity >= 0.80 AND (margin >= 0.05 or no runner-up)
+#   B          adjudication queue — either high similarity with a thin margin
+#              (ambiguous between near-equal GDPval tasks), or mid similarity
+#   C          adjudication queue, weak match, machine pre-label not carried
+#   unmatched  no candidate at or above the 0.60 floor; gdpval_task_id blank,
+#              best sub-floor similarity retained in `similarity`
+#
+# margin is the gap to the runner-up candidate, blank when there is only one.
+# A high similarity with a thin margin is AMBIGUITY, not confidence — that is
+# why grade is not a function of similarity alone.
+#
+# LICENCE: the signed W0.5 feasibility condition permits GDPval BY TASK ID only.
+# No task text or derived task content may appear in this file or any release
+# artefact until redistribution rights are clarified. assert_release_safe()
+# enforces this in code; do not add a text column here.
+producer: DAX-W3-mapA
+primary_key: [onet_task_id]
+columns:
+  onet_task_id: {required: true}
+  gdpval_task_id: {}
+  similarity: {min: 0, max: 1}
+  runner_up_similarity: {min: 0, max: 1}
+  margin: {min: 0, max: 1}
+  grade: {required: true}
+  reason: {required: true}
+  onet_soc: {required: true}
+  occupation_coverage: {min: 0, max: 1}
+  coverage_below_floor: {required: true}
+  top_quartile_match_quality: {required: true}
+  adjudication_status: {required: true}
+  embedding_model: {required: true}

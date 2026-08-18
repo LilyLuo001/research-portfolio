@@ -1,0 +1,30 @@
+{
+  "status": "IPUMS_PRE_EVENT_EXTRACT_REQUEST",
+  "collection": "cps",
+  "api_version": 2,
+  "extract_number": 6,
+  "extract_status": "completed",
+  "checked_at_utc": "2026-08-06T07:19:15.105394+00:00",
+  "spec_path": "dax/memo/power_calcs/ipums_preperiod_extract_v1.json",
+  "spec_sha256": "2e7efcc3353b5e6203ea144d97af464af50150bbc603ece5c117f4a8bc095e19",
+  "extract_definition_sha256": "75ebce219dfd716b5ee3f2ab054af090bb4f8928d627afcb88cd05f911e926de",
+  "errors": {},
+  "files": {
+    "basicCodebook": {
+      "bytes": 55751,
+      "sha256": "45984e67f916ca63ec4a907b38a96b83685527211c7368c38f38a1c0d7c3f44f"
+    },
+    "data": {
+      "bytes": 1848674,
+      "sha256": "a17dd64b638c2fca3c685c2adb035c2bbde50925942cb7daaac3cf8a49c4edb6"
+    },
+    "stsCommandFile": {
+      "bytes": 39448,
+      "sha256": "680ca980d329ee14659b93536674ed22956f6eb52b2d1a23aa70a63bfae7afbe"
+    },
+    "ddiCodebook": {
+      "bytes": 135072,
+      "sha256": "8c2ee167672c6e0f1ce9ac85030c059fd54438a793185c145b9c5a6efd5dbfdb"
+    }
+  }
+}

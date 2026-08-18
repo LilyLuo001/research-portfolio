@@ -41,13 +41,14 @@ NOT — leave it alone):
    re-pulling silently. Only pull a new extract if a required variable is
    genuinely absent, and if you do, emit a new receipt in the same shape.
 
-Plus two supporting artifacts:
+Plus one supporting artifact:
 
-4. **CPS ↔ O*NET-SOC crosswalk**, many-to-many, employment-weighted. Decision
-   12's diagnostics are **columns, not a report**: per CPS code, the weighted
-   within-code standard deviation of O*NET dose and the maximum mapping
-   weight, so the low-quality flag (SD > 0.10 or max weight < 0.50) is
-   computable downstream without re-deriving it.
+4. **REASSIGNED — do not build.** The employment-weighted CPS ↔ O*NET-SOC
+   crosswalk moved to the W2-infra worker on 2026-08-18 by PI instruction. It
+   lives in `dax/w2/crosswalk/` under `ops/contracts/cps_onet_crosswalk.yaml`.
+   Do not write it, and do not edit anything under `dax/w2/`. If your build
+   needs it, consume the emitted CSV — do not re-derive it.
+
 5. **Frozen static-score ensemble** (Felten / Eloundou / Webb) at occupation
    level, for the Decision-8 Spearman ≥ 0.50 convergent-validity check. Freeze
    it now so the benchmark cannot drift later.

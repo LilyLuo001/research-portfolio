@@ -25,6 +25,18 @@ ops/l1/out/*
 # rule as L1 raw outputs) — git carries only the manifest of locators.
 p1/edgar_filings/*
 !p1/edgar_filings/manifest.csv
+# P1-T2 WRDS path: LICENSED DATA. Raw CRSP/Compustat/IBES pulls stay box-local —
+# a stricter version of the raw-filings rule above, because this is paid data
+# under a subscription agreement, not public filings. Git carries the derived
+# contract output (conv_exposure.parquet: ratios and counts) plus a manifest of
+# query locators (library.table, columns, filters, pull date), never rows.
+# Policy + what may be committed: p1/t2_wrds/README.md. Guarded by
+# p1/tests/test_wrds_data_policy.py, which fails CI if a raw pull is tracked.
+p1/t2_wrds/raw/
+p1/t2_wrds/cache/
+p1/t2_wrds/*.raw.csv
+p1/t2_wrds/*.raw.parquet
+
 # P1-T2 free path: immutable raw-HTTP cache (N-PORT XML, XBRL, FIGI, prices)
 # stays box-local, same rule as raw filings. The parquet + diagnostics + code
 # are tracked; the cache is not.
@@ -37,3 +49,6 @@ dax/data_raw/_litellm_mirror/
 
 # W2 price harvester: cached archive snapshots (re-fetchable, not source of truth)
 dax/data_raw/_wayback_cache/
+
+# W2 crosswalk: cached agency source files (re-fetchable, checksummed in the receipt)
+dax/data_raw/_crosswalk_raw/

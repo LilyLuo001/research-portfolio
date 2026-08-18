@@ -1,0 +1,50 @@
+{
+  "_doc": "Frozen power standard for DAX W1. See dax/memo/PI_DECISION_D3_2026-08-18.md. This file is the ONLY source of the pass bar. Nothing may recompute it from the analysis sample; freeze_power_standard.py fills it once from the frozen pre-event CPS extract and refuses to overwrite without --force.",
+  "status": "PLACEHOLDER_REQUIRES_REAL_CPS",
+  "frozen_at_utc": null,
+  "frozen_window": {
+    "start_month": "2021-11",
+    "end_month": "2023-02",
+    "rationale": "Ends the month before the first eligible event (GPT4_LAUNCH, 2023-03), so the constant cannot contain any post-treatment information."
+  },
+  "provenance": {
+    "cps_extract_path": null,
+    "cps_extract_sha256": null,
+    "n_person_records": null,
+    "weight_variable": null
+  },
+  "benchmark": {
+    "relative_decline": 0.19,
+    "quantity": "relative decline in EMPLOYMENT (headcount), not payroll",
+    "measured_in": "ADP administrative payroll data \u2014 'payroll' names the DATA SOURCE, not the outcome variable. This distinction is what M2 flagged.",
+    "population": "workers ages 22-25 in the most AI-exposed occupations",
+    "citation": "Brynjolfsson, E., B. Chandar, and R. Chen. 2025. \"Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence.\" Working paper.",
+    "locators": [
+      "docs/DAX_ERE_Proposal_v3.md:12 (the claim, in the project's own proposal)",
+      "docs/DAX_ERE_Proposal_v3.md:100 (the full reference)"
+    ],
+    "version_status": "RESOLVED",
+    "version_note": "Figure moved across revisions of the same paper: 0.13 (version cited by DAX_ERE_Proposal_v3), reportedly 0.16 (later revision), 0.19 (August 2026, ADP through June 2026). PI chose 0.19 on 2026-08-18. This loosens the pass bar by ~46% relative to 0.13; the choice was made before any outcome data existed and before the frozen baseline was computed, so it cannot have been informed by a result.",
+    "baseline_employment_rate_22_25": null,
+    "baseline_hours_unconditional_22_25": null,
+    "version_chosen": "August 2026 revision (ADP data through June 2026)",
+    "version_decided_by": "PI instruction, 2026-08-18",
+    "version_supersedes": 0.13,
+    "locator_status": "PENDING_EXCERPT",
+    "locator_caveat": "0.19 is PI-directed. It is NOT yet sourced to a locator: every host carrying the paper (digitaleconomy.stanford.edu, thedocs.worldbank.org, bharatchandar.substack.com) is egress-blocked from the build environment, so no version was read and the figure rests on web-search summaries. The PI accepted this after the gap was stated. Upgrade locator_status to VERIFIED and record page/section once the Canaries_August2026.pdf excerpt is supplied. Until then any writeup citing this constant must say the figure is taken from the August 2026 revision without a page cite."
+  },
+  "standard": {
+    "alpha_two_sided": 0.05,
+    "target_power": 0.8,
+    "max_mde_fraction_of_benchmark": 0.5,
+    "effect_scale": "coefficient per 0.10 DAX increment",
+    "employment_mde_ceiling": null,
+    "hours_mde_ceiling": null
+  },
+  "forbidden": [
+    "recomputing after the event set, mapping, dose definition, window rule or sample changes",
+    "recomputing on any post-event window",
+    "reporting adequately_powered while status is not FROZEN",
+    "treating failure as licence to search over specifications"
+  ]
+}

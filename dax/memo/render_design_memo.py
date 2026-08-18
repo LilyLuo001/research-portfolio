@@ -35,20 +35,61 @@ from reportlab.platypus import (
 HERE = pathlib.Path(__file__).resolve().parent
 DEFAULT_INPUT = HERE / "design_memo_v1.md"
 DEFAULT_OUTPUT = HERE / "design_memo_v1.pdf"
-FONT_DIR = pathlib.Path("/System/Library/Fonts/Supplemental")
+# The renderer originally hard-coded the owner's macOS font directory, so the
+# PDF could only be produced on one laptop. That is a single point of failure
+# for the artefact the PI actually reads: when the memo changes anywhere else,
+# the PDF silently goes stale. Font families are now tried in order and the
+# first complete set present on the host wins.
+FONT_CANDIDATES = (
+    {   # macOS (the original set, kept first so existing output is unchanged)
+        "DAXArial": "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "DAXArialBold": "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "DAXArialItalic": "/System/Library/Fonts/Supplemental/Arial Italic.ttf",
+        "DAXCourier": "/System/Library/Fonts/Supplemental/Courier New.ttf",
+    },
+    {   # Debian/Ubuntu, incl. CI and the box
+        "DAXArial": "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "DAXArialBold": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "DAXArialItalic": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf",
+        "DAXCourier": "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
+    },
+    {   # freefont fallback
+        "DAXArial": "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+        "DAXArialBold": "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+        "DAXArialItalic": "/usr/share/fonts/truetype/freefont/FreeSansOblique.ttf",
+        "DAXCourier": "/usr/share/fonts/truetype/freefont/FreeMono.ttf",
+    },
+)
 LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)]+)\)")
 
 
+def write_source_stamp(source: pathlib.Path, output: pathlib.Path) -> None:
+    """Record which memo revision this PDF was built from.
+
+    PR #35 merged a PDF one revision behind its memo, and the PI would have
+    reviewed the superseded draft. mtimes do not survive a git checkout, so the
+    stamp is a content hash and `test_pdf_matches_the_memo` compares it.
+    """
+    import hashlib
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    output.with_suffix(".pdf.source.sha256").write_text(
+        digest + "  " + source.name + "\n", encoding="utf-8")
+
+
 def register_fonts() -> None:
-    fonts = {
-        "DAXArial": FONT_DIR / "Arial.ttf",
-        "DAXArialBold": FONT_DIR / "Arial Bold.ttf",
-        "DAXArialItalic": FONT_DIR / "Arial Italic.ttf",
-        "DAXCourier": FONT_DIR / "Courier New.ttf",
-    }
+    fonts = next(
+        (candidate for candidate in FONT_CANDIDATES
+         if all(pathlib.Path(path).exists() for path in candidate.values())),
+        None,
+    )
+    if fonts is None:
+        raise FileNotFoundError(
+            "no complete font family found. Tried: "
+            + "; ".join(sorted({str(pathlib.Path(p).parent) for c in FONT_CANDIDATES for p in c.values()}))
+            + ". Install one (e.g. fonts-dejavu) rather than rendering the memo "
+              "on one machine only — a stale PDF is what the PI ends up reading."
+        )
     for name, path in fonts.items():
-        if not path.exists():
-            raise FileNotFoundError(f"required PDF font not found: {path}")
         pdfmetrics.registerFont(TTFont(name, str(path)))
     pdfmetrics.registerFontFamily(
         "DAXArial",
@@ -126,17 +167,17 @@ def make_styles():
             "DAXBody",
             parent=base["BodyText"],
             fontName="DAXArial",
-            fontSize=8.2,
-            leading=10.6,
-            spaceAfter=5,
+            fontSize=7.5,
+            leading=9.1,
+            spaceAfter=3,
             textColor=colors.HexColor("#20262b"),
         ),
         "bullet": ParagraphStyle(
             "DAXBullet",
             parent=base["BodyText"],
             fontName="DAXArial",
-            fontSize=8.2,
-            leading=10.6,
+            fontSize=7.5,
+            leading=9.1,
             leftIndent=15,
             firstLineIndent=-9,
             spaceAfter=3,
@@ -145,8 +186,8 @@ def make_styles():
             "DAXNumbered",
             parent=base["BodyText"],
             fontName="DAXArial",
-            fontSize=8.2,
-            leading=10.6,
+            fontSize=7.5,
+            leading=9.1,
             leftIndent=17,
             firstLineIndent=-12,
             spaceAfter=3,
@@ -295,11 +336,11 @@ def page_frame(canvas, document) -> None:
     width, height = letter
     canvas.setStrokeColor(colors.HexColor("#b8c4cc"))
     canvas.setLineWidth(0.4)
-    canvas.line(0.65 * inch, 0.52 * inch, width - 0.65 * inch, 0.52 * inch)
+    canvas.line(0.55 * inch, 0.49 * inch, width - 0.55 * inch, 0.49 * inch)
     canvas.setFont("DAXArial", 7)
     canvas.setFillColor(colors.HexColor("#5c6870"))
-    canvas.drawString(0.65 * inch, 0.34 * inch, "DAX design memo v1 - PI defaults approved; evidence pending")
-    canvas.drawRightString(width - 0.65 * inch, 0.34 * inch, f"Page {document.page}")
+    canvas.drawString(0.55 * inch, 0.31 * inch, "DAX design memo v1 - PI defaults approved; evidence pending")
+    canvas.drawRightString(width - 0.55 * inch, 0.31 * inch, f"Page {document.page}")
     canvas.restoreState()
 
 
@@ -310,10 +351,10 @@ def render(source: pathlib.Path, output: pathlib.Path) -> None:
     document = SimpleDocTemplate(
         str(output),
         pagesize=letter,
-        rightMargin=0.65 * inch,
-        leftMargin=0.65 * inch,
-        topMargin=0.62 * inch,
-        bottomMargin=0.67 * inch,
+        rightMargin=0.55 * inch,
+        leftMargin=0.55 * inch,
+        topMargin=0.55 * inch,
+        bottomMargin=0.62 * inch,
         title="Dynamic AI Exposure (DAX): pre-registered design memo v1",
         author="DAX research team",
         subject="PI-approved design defaults; Gate-1 evidence pending",
@@ -327,6 +368,7 @@ def render(source: pathlib.Path, output: pathlib.Path) -> None:
         onLaterPages=page_frame,
         canvasmaker=canvas_factory,
     )
+    write_source_stamp(source, output)
 
 
 def main() -> int:
