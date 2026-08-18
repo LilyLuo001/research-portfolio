@@ -55,8 +55,41 @@ authorize the preregistration tag or outcome access yet.
 - [ ] W1 power simulation on pre-event CPS moments.
 - [x] Event-by-event table shell populated with W5-produced crossing counts
   before outcomes open, or an explicit signed rule for later mechanical fill.
-- [x] Independent cross-vendor red-team completed in three SCC1 rounds; the
-  final review is `CONDITIONAL_GO`, its mechanical findings are incorporated,
-  and its separate registry, empirical-power, and PI PDF-review blockers remain
-  open.
+- [ ] Independent cross-vendor red-team **of this draft**. RETURNED TO
+  UNCHECKED 2026-08-18: the three-round DeepSeek V4-Pro review reached
+  `CONDITIONAL_GO` on the *superseded discrete design*. D1 replaced the primary
+  specification, so that verdict does not transfer and must not be counted.
+  The prior review is retained in `red_team_deepseek_v4_pro_round{1,2,3}.json`
+  as history, not as evidence for this version.
 - [ ] Rendered PDF reviewed line by line by PI.
+
+
+## Amendments counter-signed 2026-08-18
+
+The PI counter-signed the following on 2026-08-18. Each is a pre-tag amendment
+to a draft; the outcome seal was closed throughout and no estimated treatment
+effect existed or was consulted.
+
+- [x] **D1** — primary specification changed from a stacked event study to a
+  continuous cumulative-dose design; the stack is demoted to secondary
+  corroboration. `PI_DECISION_D1_2026-08-18.md`.
+- [x] **D3** — the power pass bar becomes a frozen absolute constant computed
+  once over the pre-event window, replacing a bar derived from the sample it
+  judged. `PI_DECISION_D3_2026-08-18.md`.
+- [x] **D4 Part 1** — the primary estimand is named as an incumbent margin.
+- [x] **D4 Part 2 — option (b) APPROVED**: the entrant-margin companion is
+  included as a registered secondary design with a frozen pre-period entry mix.
+  `PI_DECISION_D4_2026-08-18.md`, memo section 7.2.
+- [x] **F2** — five event rows demoted to `pending_second_date_locator`, a
+  `date_conflict` column added, and the release-dating standard enforced by
+  `validate_event_registry.py` rather than applied by hand.
+
+### Consequences still outstanding
+
+- [ ] Continuous-dose power simulation run against a **FROZEN** standard.
+  `power_standard.json` ships as `PLACEHOLDER_REQUIRES_REAL_CPS`; both engines
+  return `adequately_powered: null` until `freeze_power_standard.py` is run on
+  the real pre-event extract.
+- [ ] Entrant companion power table, which requires the frozen entry mix
+  `pi_go` and therefore the CPS extract.
+- [ ] Fresh independent cross-vendor red team of this draft (see above).

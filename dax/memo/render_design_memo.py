@@ -35,20 +35,61 @@ from reportlab.platypus import (
 HERE = pathlib.Path(__file__).resolve().parent
 DEFAULT_INPUT = HERE / "design_memo_v1.md"
 DEFAULT_OUTPUT = HERE / "design_memo_v1.pdf"
-FONT_DIR = pathlib.Path("/System/Library/Fonts/Supplemental")
+# The renderer originally hard-coded the owner's macOS font directory, so the
+# PDF could only be produced on one laptop. That is a single point of failure
+# for the artefact the PI actually reads: when the memo changes anywhere else,
+# the PDF silently goes stale. Font families are now tried in order and the
+# first complete set present on the host wins.
+FONT_CANDIDATES = (
+    {   # macOS (the original set, kept first so existing output is unchanged)
+        "DAXArial": "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "DAXArialBold": "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+        "DAXArialItalic": "/System/Library/Fonts/Supplemental/Arial Italic.ttf",
+        "DAXCourier": "/System/Library/Fonts/Supplemental/Courier New.ttf",
+    },
+    {   # Debian/Ubuntu, incl. CI and the box
+        "DAXArial": "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "DAXArialBold": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "DAXArialItalic": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf",
+        "DAXCourier": "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
+    },
+    {   # freefont fallback
+        "DAXArial": "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+        "DAXArialBold": "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf",
+        "DAXArialItalic": "/usr/share/fonts/truetype/freefont/FreeSansOblique.ttf",
+        "DAXCourier": "/usr/share/fonts/truetype/freefont/FreeMono.ttf",
+    },
+)
 LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)]+)\)")
 
 
+def write_source_stamp(source: pathlib.Path, output: pathlib.Path) -> None:
+    """Record which memo revision this PDF was built from.
+
+    PR #35 merged a PDF one revision behind its memo, and the PI would have
+    reviewed the superseded draft. mtimes do not survive a git checkout, so the
+    stamp is a content hash and `test_pdf_matches_the_memo` compares it.
+    """
+    import hashlib
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    output.with_suffix(".pdf.source.sha256").write_text(
+        digest + "  " + source.name + "\n", encoding="utf-8")
+
+
 def register_fonts() -> None:
-    fonts = {
-        "DAXArial": FONT_DIR / "Arial.ttf",
-        "DAXArialBold": FONT_DIR / "Arial Bold.ttf",
-        "DAXArialItalic": FONT_DIR / "Arial Italic.ttf",
-        "DAXCourier": FONT_DIR / "Courier New.ttf",
-    }
+    fonts = next(
+        (candidate for candidate in FONT_CANDIDATES
+         if all(pathlib.Path(path).exists() for path in candidate.values())),
+        None,
+    )
+    if fonts is None:
+        raise FileNotFoundError(
+            "no complete font family found. Tried: "
+            + "; ".join(sorted({str(pathlib.Path(p).parent) for c in FONT_CANDIDATES for p in c.values()}))
+            + ". Install one (e.g. fonts-dejavu) rather than rendering the memo "
+              "on one machine only — a stale PDF is what the PI ends up reading."
+        )
     for name, path in fonts.items():
-        if not path.exists():
-            raise FileNotFoundError(f"required PDF font not found: {path}")
         pdfmetrics.registerFont(TTFont(name, str(path)))
     pdfmetrics.registerFontFamily(
         "DAXArial",
@@ -327,6 +368,7 @@ def render(source: pathlib.Path, output: pathlib.Path) -> None:
         onLaterPages=page_frame,
         canvasmaker=canvas_factory,
     )
+    write_source_stamp(source, output)
 
 
 def main() -> int:
