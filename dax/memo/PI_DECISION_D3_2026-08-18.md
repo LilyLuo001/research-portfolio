@@ -48,8 +48,9 @@ employment bar = max_mde_fraction x benchmark_pp
 
 with, as pre-registered defaults:
 
-- `relative_decline = 0.13` — the young-worker employment decline cited in the
-  proposal, the effect the study exists to be able to detect.
+- `relative_decline = 0.13` — the young-worker relative decline in
+  **employment**, the effect the study exists to be able to detect. See the M2
+  adjudication below for why this is employment and not payroll.
 - `baseline_employment_rate_22_25` — the employment-population ratio for ages
   22–25, computed **once** over the frozen pre-event window
   (2021-11 → 2023-02), from the frozen CPS extract, person-weighted, pooled
@@ -104,3 +105,88 @@ invariant benchmark.
 ## Not resolved here
 
 D4 (entrant exclusion) and F2 (registry verification statuses) remain open.
+
+
+---
+
+# M2 adjudicated — 2026-08-18
+
+**Question.** Does the `0.13` refer to a decline in employment or in payroll?
+The two are different objects (payroll = employment x hours x wage), and a
+frozen constant built on the wrong one is unrecoverable.
+
+**Answer: a relative decline in EMPLOYMENT (headcount).** "Payroll" names the
+*data source*, not the outcome variable.
+
+**Evidence, channel 1 — the project's own proposal, in-tree.**
+
+> "U.S. payroll data, by contrast, show a 13 percent relative employment
+> decline among workers ages 22-25 in the most AI-exposed occupations
+> (Brynjolfsson, Chandar, and Chen 2025)."
+> — `docs/DAX_ERE_Proposal_v3.md:12`
+
+Full reference, `docs/DAX_ERE_Proposal_v3.md:100`:
+
+> Brynjolfsson, E., B. Chandar, and R. Chen. 2025. "Canaries in the Coal Mine?
+> Six Facts about the Recent Employment Effects of Artificial Intelligence."
+> Working paper.
+
+**Evidence, channel 2 — web search** (citations are a dual-channel task under
+meta-rule 2). Two independent queries returned the same characterisation: a 13
+percent *relative decline in employment* for ages 22-25 in the most AI-exposed
+occupations, estimated on ADP administrative payroll data, after controlling
+for firm-level shocks.
+
+**Consequence.** The D3 formula `0.5 x 0.13 x baseline_employment_rate` was
+already correct; `0.13` is a *relative* decline, so the absolute
+percentage-point benchmark is `0.13 x baseline rate`. The defect was purely
+terminological — the execution plan calls it "the 13% payroll estimate"
+(`docs/DAX_Execution_Plan_with_AI_Agents.md:95, :139`), which the memo
+inherited. Memo section 7.4 now states the distinction explicitly and carries
+the citation, and a test prevents the wording from drifting back.
+
+## New blocker surfaced while resolving M2: **M2b — which version?**
+
+The same paper has been revised, and the headline figure moved with it:
+
+| Version | Reported relative employment decline |
+|---|---|
+| The version the proposal cites (2025) | **0.13** |
+| A later revision | reportedly 0.16 |
+| August 2026, ADP data through June 2026 | reportedly 0.19 |
+
+**Evidence quality, stated honestly.** The 0.16 and 0.19 figures come from
+web-search result summaries only. `digitaleconomy.stanford.edu`,
+`thedocs.worldbank.org` and `bharatchandar.substack.com` are all egress-blocked
+from this environment, so **no version of the paper was actually read**. Under
+meta-rule 1 those two figures are not yet sourced to a locator and must not be
+frozen on this evidence.
+
+**Why this is a PI decision and not an agent's.** Two defensible options:
+
+- **Freeze 0.13** — benchmark against the figure the registered proposal cites.
+  Consistent with the pre-registration; arguably the point of a registered
+  benchmark is that it does not move.
+- **Freeze the current figure** — benchmark against the same paper's best
+  current estimate.
+
+The second loosens the pass bar by roughly 46% (0.19 vs 0.13) and therefore
+makes the design easier to pass. Choosing it *after* seeing that the design's
+margin is tight would be specification search, which is exactly the failure D3
+exists to prevent. An agent must not pick the option that benefits the
+analysis.
+
+`freeze_power_standard.py` now refuses to run while
+`benchmark.version_status != "RESOLVED"`, so this cannot be resolved by
+forgetting about it.
+
+**What would settle it.** The exact excerpt naming the headline figure from:
+
+> Brynjolfsson, Erik, Bharat Chandar, and Ruyu Chen.
+> "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of
+> Artificial Intelligence." Stanford Digital Economy Lab — **the August 2026
+> version** (`Canaries_August2026.pdf`), and ideally the November 2025 version
+> for the intermediate figure.
+
+With that excerpt the value gets a locator and `version_status` can be set to
+`RESOLVED` with the PI's chosen figure.

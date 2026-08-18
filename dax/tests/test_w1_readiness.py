@@ -61,3 +61,35 @@ def test_pdf_matches_the_memo():
         "of design_memo_v1.md. Re-run dax/memo/render_design_memo.py before "
         "asking the PI to review the PDF."
     )
+
+
+def test_benchmark_is_stated_as_employment_not_payroll():
+    """M2: 0.13 is a relative EMPLOYMENT decline; payroll is the data source.
+
+    The execution plan calls it "the 13% payroll estimate", and the memo
+    inherited that phrasing. A frozen constant built on the wrong quantity is
+    unrecoverable, so the distinction is pinned here.
+    """
+    memo = (ROOT / "memo" / "design_memo_v1.md").read_text(encoding="utf-8")
+    assert "relative decline in EMPLOYMENT" in memo
+    assert "docs/DAX_ERE_Proposal_v3.md:12" in memo, "the claim needs its locator"
+    assert "Canaries in the Coal Mine" in memo, "the citation must be in the memo"
+
+
+def test_freeze_refuses_while_the_benchmark_version_is_unresolved():
+    """M2b: 0.13 / 0.16 / 0.19 across versions of the same paper.
+
+    A larger figure loosens the pass bar, so choosing one after seeing that the
+    margin is tight would be specification search. The freezer must refuse
+    rather than rely on anyone remembering.
+    """
+    import json
+
+    standard = json.loads(
+        (ROOT / "memo" / "power_calcs" / "power_standard.json").read_text())
+    assert standard["benchmark"]["version_status"] != "RESOLVED", \
+        "if this is now RESOLVED, a PI must have chosen the version and given it a locator"
+
+    source = (ROOT / "memo" / "power_calcs" / "freeze_power_standard.py").read_text()
+    assert 'version_status") != "RESOLVED"' in source, \
+        "the freezer must gate on the version being resolved"

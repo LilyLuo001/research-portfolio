@@ -15,7 +15,16 @@
   },
   "benchmark": {
     "relative_decline": 0.13,
-    "relative_decline_source": "DAX proposal: young-worker employment/payroll decline in AI-exposed occupations; the effect the study exists to be able to detect.",
+    "quantity": "relative decline in EMPLOYMENT (headcount), not payroll",
+    "measured_in": "ADP administrative payroll data \u2014 'payroll' names the DATA SOURCE, not the outcome variable. This distinction is what M2 flagged.",
+    "population": "workers ages 22-25 in the most AI-exposed occupations",
+    "citation": "Brynjolfsson, E., B. Chandar, and R. Chen. 2025. \"Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence.\" Working paper.",
+    "locators": [
+      "docs/DAX_ERE_Proposal_v3.md:12 (the claim, in the project's own proposal)",
+      "docs/DAX_ERE_Proposal_v3.md:100 (the full reference)"
+    ],
+    "version_status": "UNRESOLVED_BLOCKS_FREEZE",
+    "version_note": "The figure has drifted across versions of the SAME paper: 0.13 in the version the proposal cites, reportedly 0.16 in a later revision, and reportedly 0.19 in the August 2026 version using ADP data through June 2026. The 0.16 and 0.19 figures come from web-search summaries only; the PDFs are egress-blocked here and were NOT read. Freezing is one-way, and the choice moves the pass bar in the direction that makes the design easier to pass, so it is a PI decision.",
     "baseline_employment_rate_22_25": null,
     "baseline_hours_unconditional_22_25": null
   },

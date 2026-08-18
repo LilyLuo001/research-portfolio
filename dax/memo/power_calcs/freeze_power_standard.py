@@ -90,6 +90,16 @@ def main() -> int:
               "memo first and pass --force.", file=sys.stderr)
         return 1
 
+    if standard["benchmark"].get("version_status") != "RESOLVED":
+        print("REFUSING TO FREEZE — the benchmark version is unresolved.",
+              file=sys.stderr)
+        print(standard["benchmark"].get("version_note", ""), file=sys.stderr)
+        print("\nM2 resolved the quantity (employment, not payroll). It did NOT "
+              "resolve WHICH version's figure to freeze. Set benchmark."
+              "version_status to RESOLVED, with the chosen value and a locator "
+              "to the text it came from, only on PI instruction.", file=sys.stderr)
+        return 1
+
     if not args.extract.is_file():
         raise SystemExit(f"NEED_HUMAN: extract not found at {args.extract}")
 

@@ -424,6 +424,14 @@ present it as such.
 Because the mechanism the paper is benchmarked against operates at entry, the
 entrant margin is studied directly rather than disclaimed.
 
+This is not an inference from the abstract. The source paper reports that the
+divergence "operates primarily through reduced hiring of young workers rather
+than increased separations" — so the incumbent margin the primary design
+measures is, by the benchmark literature's own account, the margin on which the
+effect is *weaker*. A design that measured only incumbents would be benchmarked
+against an effect it is structurally unable to see. That is the case for the
+companion, and it is why D4 Part 2 was approved rather than disclaimed.
+
 Sample: persons ages 22-25 with no valid occupation observation in the
 lookback window — exactly the complement of the primary sample, so the two
 partition the age range without overlap.
@@ -483,7 +491,26 @@ The standard is now a frozen absolute constant:
 
 `ceiling = max_mde_fraction x relative_decline x baseline_level`
 
-with `relative_decline = 0.13` from the proposal, `max_mde_fraction = 0.5`, and
+where **`relative_decline = 0.13` is a relative decline in EMPLOYMENT
+(headcount), not in payroll.** "Payroll" names the data source, not the
+outcome: the estimate comes from ADP administrative payroll records. The
+project's own proposal states it unambiguously — "U.S. payroll data, by
+contrast, show a 13 percent relative employment decline among workers ages
+22-25 in the most AI-exposed occupations" (`docs/DAX_ERE_Proposal_v3.md:12`,
+citing Brynjolfsson, Chandar and Chen 2025, "Canaries in the Coal Mine? Six
+Facts about the Recent Employment Effects of Artificial Intelligence",
+`docs/DAX_ERE_Proposal_v3.md:100`). Because it is a *relative* decline, the
+absolute percentage-point benchmark is `0.13 x baseline employment rate`, which
+is what the formula above computes.
+
+**Unresolved: which version's figure.** The same paper has been revised and the
+headline figure has moved — 0.13 in the version the proposal cites, and later
+revisions reportedly at 0.16 and 0.19. Freezing is one-way and a larger figure
+loosens the pass bar, so the choice is a PI decision and
+`freeze_power_standard.py` refuses to run until it is recorded. See
+`PI_DECISION_D3_2026-08-18.md`.
+
+With `max_mde_fraction = 0.5`, and
 `baseline_level` the pooled person-weighted pre-event level of the outcome
 (employment rate; mean unconditional hours) computed **once** over
 2021-11 to 2023-02 and never recomputed. The window ends the month before the

@@ -104,9 +104,22 @@ cross-vendor pass, and not evidence for Gate 1.
   at all three registered horizons (regressor variance 0.058 / 0.196 / 0.588
   vs exactly 0.0 for the superseded form), implemented in
   `placebo_lead_design` and pinned by three tests.
-- [ ] **M2** D3's 0.13 is described as both an employment and a payroll
-  decline. Resolve with a page citation **before** freezing the constant —
-  freezing is one-way.
+- [x] **M2 — ADJUDICATED 2026-08-18.** The 0.13 is a relative decline in
+  **employment** (headcount); "payroll" names the data source (ADP), not the
+  outcome. Sourced to `docs/DAX_ERE_Proposal_v3.md:12` and `:100`
+  (Brynjolfsson, Chandar & Chen 2025, "Canaries in the Coal Mine?"), confirmed
+  by a second web channel. The D3 formula was already correct; the memo now
+  states the distinction with its citation and a test pins it.
+- [ ] **M2b — NEW BLOCKER, PI decision required.** The same paper's headline
+  figure has moved across versions: 0.13 (the version the proposal cites),
+  reportedly 0.16, and reportedly 0.19 in the August 2026 revision. The latter
+  two are from search summaries only — every host carrying the PDF is
+  egress-blocked, so **no version was read**. Choosing the larger figure
+  loosens the pass bar ~46% and would be specification search if chosen after
+  seeing the margin. `freeze_power_standard.py` refuses until
+  `benchmark.version_status` is `RESOLVED`. **To settle it, provide the
+  headline-figure excerpt from `Canaries_August2026.pdf` (and ideally the
+  Nov 2025 version).**
 - [ ] **M3** Entry mix `pi_go` may not be estimable at occupation granularity.
   Compute realised per-cell entrant counts and pre-register a pooling rule.
 - [ ] **M4** The entrant sample conflates true entrants with CPSIDP
