@@ -23,6 +23,29 @@
     "power_standard_sha256": "63c9bfda29774e2e6d7b3aa4732a001b2e07f09a4e39deb7e711dcfafbb26039"
   },
   "n_events_in_dose_path": 4,
+  "pretrend_placebo_lead": [
+    {
+      "horizon": "2023-12-01",
+      "n_rows": 960,
+      "regressor_variance": 0.0578765079534416,
+      "estimable": true,
+      "eventual_dose_variance": 0.0005123738924673245
+    },
+    {
+      "horizon": "2024-12-01",
+      "n_rows": 960,
+      "regressor_variance": 0.19639860494968514,
+      "estimable": true,
+      "eventual_dose_variance": 0.0016884568949832644
+    },
+    {
+      "horizon": "2025-12-01",
+      "n_rows": 960,
+      "regressor_variance": 0.5883775555017856,
+      "estimable": true,
+      "eventual_dose_variance": 0.00451800793687264
+    }
+  ],
   "samples": [
     {
       "education_group": "pooled",

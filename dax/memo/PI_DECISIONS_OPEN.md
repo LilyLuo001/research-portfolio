@@ -99,9 +99,11 @@ effect existed or was consulted.
 From `red_team_selfreview_2026-08-18.md` — a self-review, NOT the independent
 cross-vendor pass, and not evidence for Gate 1.
 
-- [ ] **M1 (blocker)** Decision 14's joint pre-event dose test is not
-  computable: cumulative dose is identically zero across 2021-11..2023-02
-  (verified, variance 0.0). Re-specify as a placebo-lead test on eventual dose.
+- [x] **M1 (blocker) — FIXED 2026-08-18.** Decision 14 re-specified as a
+  placebo-lead test on eventual exposure `D_o` at a frozen horizon. Estimable
+  at all three registered horizons (regressor variance 0.058 / 0.196 / 0.588
+  vs exactly 0.0 for the superseded form), implemented in
+  `placebo_lead_design` and pinned by three tests.
 - [ ] **M2** D3's 0.13 is described as both an employment and a payroll
   decline. Resolve with a page citation **before** freezing the constant —
   freezing is one-way.

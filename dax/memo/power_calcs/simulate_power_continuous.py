@@ -101,6 +101,38 @@ def dax_paths(doses: list[Dose], months: list[dt.date]) -> dict[str, np.ndarray]
     return paths
 
 
+def placebo_lead_design(doses: list[Dose], pre_months: list[dt.date],
+                        horizon: dt.date) -> dict[str, object]:
+    """Decision 14's re-specified pre-trend test, as an estimable regressor.
+
+    The superseded form tested pre-event dose coefficients. Cumulative dose is
+    identically zero before the first event, so that regressor had no variance
+    and no coefficient — the test could never have run. The replacement uses
+    EVENTUAL exposure `D_o` (cumulative dose at a frozen horizon), a fixed
+    occupation characteristic that does vary in the pre-period, interacted with
+    time. It asks whether occupations destined for high exposure were already
+    trending differently before any exposure existed.
+
+    Returns the regressor and its variance so the caller can prove estimability
+    instead of asserting it.
+    """
+    eventual = {occupation: path[-1]
+                for occupation, path in dax_paths(doses, [horizon]).items()}
+    origin = pre_months[0]
+    rows = [(occupation, month,
+             eventual[occupation] * ((month.year - origin.year) * 12
+                                     + (month.month - origin.month)))
+            for occupation in sorted(eventual) for month in pre_months]
+    values = np.array([r[2] for r in rows], dtype=float)
+    return {
+        "horizon": horizon.isoformat(),
+        "n_rows": len(rows),
+        "regressor_variance": float(values.var()),
+        "estimable": bool(values.var() > 0),
+        "eventual_dose_variance": float(np.var(list(eventual.values()))),
+    }
+
+
 def assert_seal(cells: list[Cell], first_event: dt.date) -> None:
     """Refuse to proceed if the moment file reaches into the post-event period."""
     intruding = sorted({c.month for c in cells if c.month >= first_event})
@@ -325,6 +357,12 @@ def main() -> int:
             "power_standard_sha256": sha256(STANDARD),
         },
         "n_events_in_dose_path": len({d.event_id for d in doses}),
+        "pretrend_placebo_lead": [
+            placebo_lead_design(doses,
+                                [m for m in months if m < first_event],
+                                dt.date(year, 12, 1))
+            for year in (2023, 2024, 2025)
+        ],
         "samples": samples,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

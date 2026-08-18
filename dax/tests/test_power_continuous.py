@@ -128,3 +128,45 @@ def test_stacked_engine_no_longer_sets_its_own_bar():
             f"sample-derived pass bar is back, D3 forbids it: {line.strip()}"
         assert "_standard[" in line, \
             f"threshold must come from the frozen standard: {line.strip()}"
+
+
+def test_superseded_pretrend_test_was_not_computable():
+    """Why Decision 14 was re-specified: the old regressor had no variance.
+
+    Cumulative dose is identically zero before the first event, so a test of
+    'pre-event dose coefficients' had nothing to estimate. This test documents
+    the defect so the old form cannot be reinstated by accident.
+    """
+    import datetime as dt
+    import numpy as np
+
+    doses = [_dose("A", dt.date(2023, 3, 1), 0.04),
+             _dose("B", dt.date(2023, 3, 1), 0.09)]
+    pre = spc.month_sequence(dt.date(2021, 11, 1), dt.date(2023, 2, 1))
+    paths = spc.dax_paths(doses, pre)
+    assert np.array([paths[o] for o in paths]).var() == 0.0, \
+        "if pre-event dose now varies, the registry's first event moved"
+
+
+def test_replacement_pretrend_test_is_computable():
+    """Decision 14 as re-specified: eventual exposure does vary pre-period."""
+    import datetime as dt
+
+    doses = [_dose("A", dt.date(2023, 3, 1), 0.04),
+             _dose("B", dt.date(2023, 3, 1), 0.09)]
+    pre = spc.month_sequence(dt.date(2021, 11, 1), dt.date(2023, 2, 1))
+    design = spc.placebo_lead_design(doses, pre, dt.date(2024, 12, 1))
+    assert design["estimable"] is True
+    assert design["regressor_variance"] > 0
+    assert design["eventual_dose_variance"] > 0, \
+        "the placebo lead needs cross-occupation variation in eventual dose"
+
+
+def test_pretrend_horizons_are_frozen_not_chosen():
+    """D_o's horizon must be fixed in advance, not picked after seeing results."""
+    import json
+    report = json.loads(
+        (POWER / "synthetic" / "power_results_continuous.json").read_text())
+    horizons = [b["horizon"] for b in report["pretrend_placebo_lead"]]
+    assert horizons == ["2023-12-01", "2024-12-01", "2025-12-01"]
+    assert all(b["estimable"] for b in report["pretrend_placebo_lead"])

@@ -24,7 +24,7 @@ rediscovering things the author could find alone.
 
 ---
 
-## M1 — The pre-trend diagnostic is not computable. **Blocker.**
+## M1 — The pre-trend diagnostic is not computable. **Blocker. FIXED 2026-08-18.**
 
 `[PI-DECISION 14]` requires "a joint test of pre-event dose coefficients over
 2021-11 to 2023-02". Under the continuous design the regressor is cumulative
@@ -50,6 +50,14 @@ regressor does vary in the pre-period because it is a fixed occupation
 characteristic, and a non-zero coefficient is exactly the violation of interest
 — occupations destined for high exposure already trending differently. §9.3 and
 Decision 14 both need rewriting; the current text is unimplementable.
+
+**Resolution.** Decision 14 now specifies a placebo lead on eventual exposure
+`D_o = DAX_o,2024-12` interacted with time, restricted to pre-event months.
+`placebo_lead_design` computes it and reports its variance rather than
+asserting estimability: 0.058, 0.196 and 0.588 at the 2023-12 / 2024-12 /
+2025-12 horizons, against exactly 0.0 for the superseded form. Horizons are
+frozen in advance so `D_o` cannot be chosen after seeing a result. Three tests
+pin both the defect and the fix.
 
 ## M2 — The D3 benchmark conflates payroll with employment. **Major.**
 

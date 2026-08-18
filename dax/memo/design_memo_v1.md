@@ -581,7 +581,7 @@ threshold. The 17 approved decisions are unchanged in number and membership.
 
 ### 9.3 Required diagnostics
 
-- joint test of pre-event dose coefficients over 2021-11 to 2023-02;
+- **placebo-lead pre-trend test** over 2021-11 to 2023-02 (see Decision 14);
 - event-time-style plot in calendar time: `beta` estimated separately by
   12-month block, with the pre-event blocks shown;
 - binned dose-response using bins frozen from the pre-event dose distribution;
@@ -596,14 +596,38 @@ threshold. The 17 approved decisions are unchanged in number and membership.
 - placebos: FOMC dates, permuted mappings, backward-shuffled price histories,
   and a dose path shifted forward by 12 months.
 
-**[PI-DECISION 14] Pre-trend default.** Unchanged in substance and re-scoped to
-the continuous design: the conventional pre-trend diagnostic passes only if the
-joint pre-event dose test has p >= 0.10 and no single pre-event block
-confidence interval excludes zero after Holm correction. The pre-event window
-is approximately sixteen months, which is short; this diagnostic is therefore
-weaker here than it would be in a long pre-period, HonestDiD sensitivity
-remains mandatory regardless of the test result, and the shortness is reported
-as a limitation rather than absorbed silently.
+**[PI-DECISION 14]** *(re-specified 2026-08-18 — the previous form was not
+computable)* **Pre-trend test.**
+
+The superseded text required "a joint test of all pre-event dose coefficients".
+Under the continuous design the regressor is cumulative `DAX_ot`, which is
+**identically zero for every occupation** throughout 2021-11 to 2023-02: the
+first eligible event is 2023-03. A regressor with no variance has no
+coefficient, so that test could never have been run. It is replaced, not
+weakened.
+
+The pre-trend test is a **placebo lead on eventual exposure**. Let
+`D_o = DAX_o,2024-12`, the occupation's cumulative dose at a frozen horizon,
+which is a fixed occupation characteristic and therefore *does* vary in the
+pre-period. Restricted to pre-event months only, estimate
+
+`y_ot = phi * D_o * (t - t_0) + alpha_o + tau_t + gamma_jt + e_ot`
+
+and test `phi = 0`. This asks the question that matters: were occupations
+destined for high exposure already on different trajectories before any
+exposure existed? A non-zero `phi` is the violation of IC-1, and unlike the
+superseded test it is estimable.
+
+The design passes the conventional pre-trend diagnostic only if `phi` has
+p >= 0.10 and no single pre-period block interval excludes zero after Holm
+correction. The horizon 2024-12 is frozen here so that `D_o` cannot be chosen
+after seeing the result; the test is also reported at 2023-12 and 2025-12 as
+registered robustness, with the 2024-12 version as headline.
+
+The pre-event window is approximately sixteen months, which is short. This
+diagnostic is therefore weaker here than in a long pre-period, HonestDiD
+sensitivity remains mandatory regardless of the result, and the shortness is
+reported as a limitation rather than absorbed silently.
 
 ### 9.4 Secondary stacked corroboration
 
