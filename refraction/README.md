@@ -68,5 +68,13 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
    `fetch first` before declaring a lost race, and refuse to hard-reset when
    `HEAD` is not on the branch the lease targets.
 
+8. **CUSIP→PERMNO bridge for R2** (found 2026-08-18, amendment v2.2 §4).
+   `p1/conv_exposure_free.parquet` carries cusip/ticker/stock_cik but `permno`
+   is blank in all 6,377 rows, and the R2 panel joins CRSP on it. Needs a
+   CRSP-licensed crosswalk — not constructible from public files, so it rides
+   with the standing WRDS access item. Also gates R10.
+
 Frozen P1 inputs (read-only, hash-registered when they exist): events_merged.csv,
-conv_exposure.parquet, holdings_weights.parquet, ibes_sue.parquet.
+**conv_exposure_free.parquet** (the built free-path file; the plan's
+`conv_exposure.parquet` name does not exist — amendment v2.2 §3),
+holdings_weights.parquet, ibes_sue.parquet.
