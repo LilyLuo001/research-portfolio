@@ -87,9 +87,19 @@ def test_freeze_refuses_while_the_benchmark_version_is_unresolved():
 
     standard = json.loads(
         (ROOT / "memo" / "power_calcs" / "power_standard.json").read_text())
-    assert standard["benchmark"]["version_status"] != "RESOLVED", \
-        "if this is now RESOLVED, a PI must have chosen the version and given it a locator"
+    benchmark = standard["benchmark"]
 
     source = (ROOT / "memo" / "power_calcs" / "freeze_power_standard.py").read_text()
     assert 'version_status") != "RESOLVED"' in source, \
         "the freezer must gate on the version being resolved"
+
+    if benchmark["version_status"] == "RESOLVED":
+        # A resolved version must say who chose it and what it supersedes, and
+        # must not silently claim a locator it does not have.
+        assert benchmark.get("version_decided_by"), \
+            "a resolved version must record who decided it"
+        assert benchmark.get("locator_status") in {"VERIFIED", "PENDING_EXCERPT"}, \
+            "locator_status must be explicit, not absent"
+        if benchmark["locator_status"] == "PENDING_EXCERPT":
+            assert benchmark.get("locator_caveat"), \
+                "an unsourced PI-directed figure must carry its caveat in the file"

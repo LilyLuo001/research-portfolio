@@ -527,6 +527,28 @@ is forbidden. Failure does not authorise sample or specification search: it
 triggers the proposal's informative-power limitation and PI reconsideration,
 exactly as the original Decision 11 provided.
 
+**Unit of estimation versus unit of simulation (M5, resolved 2026-08-18).**
+The *estimator* is person-month: section 9.1 is estimated on person records,
+and the registered person covariates `X_i` enter there. The *power simulation*
+operates on occupation-month cell moments, because cell moments are what the
+frozen pre-event fixture provides and because the variance of `beta` is driven
+by the occupation cluster structure rather than by within-cell person
+variation. These are not the same object and the memo does not pretend they
+are.
+
+The approximation is **conservative in a stated direction**: the simulation
+omits `X_i`, so it does not credit the design with the residual variance those
+covariates would explain. Omitted explanatory covariates raise residual
+variance, raise the standard error, and raise the minimum detectable effect.
+The simulated MDE is therefore an upper bound on the person-level MDE, and a
+design that passes in simulation passes a fortiori at person level. A design
+that *fails* in simulation is not thereby condemned, and that asymmetry is
+registered here so it cannot be invoked selectively later.
+
+Once the frozen extract exists, the person-level estimator is run directly and
+its standard errors replace the simulated ones; the cell approximation is
+retained only for pre-data planning.
+
 The power simulation must model the continuous design on pre-event moments
 only, preserving occupation cluster sizes, person weights, crosswalk dose
 dispersion, the dose path, and the observed employment-hours covariance. The
@@ -601,6 +623,29 @@ with effective rank 1 is a degenerate design: report it as such, interpret
 `beta` as a single exposure contrast, and do not present event-time language.
 The threshold is a reporting trigger, not a pass/fail gate, and no estimate is
 withheld on the basis of it.
+
+**Consequence, pre-registered (M6, resolved 2026-08-18).** Deciding what a
+degenerate design means *after* seeing the leading share would be a
+specification choice made with knowledge of the data, so the consequence is
+fixed now. If the design is degenerate:
+
+1. The paper does not claim to identify a *dynamic* exposure effect. The
+   headline claim becomes a cross-sectional exposure contrast estimated with
+   panel controls, and every use of "timing", "event", or "dynamic" is struck
+   from the claims about `beta`.
+2. The DAX index's contribution over existing static measures is then argued on
+   the **crossing chronology** — which tasks cross when, and at what price —
+   not on the regression, since a degenerate dose matrix means the regression
+   is using little more than a static ranking.
+3. The Decision 8 convergent-validity result becomes load-bearing rather than
+   descriptive: if DAX is behaving as a static measure, its rank correlation
+   with the Felten-Eloundou-Webb ensemble is the evidence that it is measuring
+   the intended construct at all.
+4. The degeneracy statistic is reported in the abstract-level summary, not
+   buried in diagnostics.
+
+A design that is degenerate is still publishable. It is a different paper, and
+saying which paper in advance is the point.
 
 This is a required diagnostic rather than a numbered PI decision: it triggers
 reporting language, never inclusion or exclusion, so it commits the PI to no

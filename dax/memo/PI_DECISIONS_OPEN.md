@@ -110,7 +110,15 @@ cross-vendor pass, and not evidence for Gate 1.
   (Brynjolfsson, Chandar & Chen 2025, "Canaries in the Coal Mine?"), confirmed
   by a second web channel. The D3 formula was already correct; the memo now
   states the distinction with its citation and a test pins it.
-- [ ] **M2b — NEW BLOCKER, PI decision required.** The same paper's headline
+- [x] **M2b — DECIDED BY PI 2026-08-18: use 0.19** (August 2026 revision, ADP
+  through June 2026), superseding the 0.13 the proposal cites. Recorded in
+  `power_standard.json` with `locator_status: PENDING_EXCERPT` — the figure is
+  PI-directed and **not yet sourced to a page cite**, because every host
+  carrying the paper is egress-blocked. Any writeup citing this constant must
+  say so until the `Canaries_August2026.pdf` excerpt is supplied. The choice
+  was made before any outcome data existed and before the frozen baseline was
+  computed, so it cannot have been informed by a result.
+- ~~**M2b — NEW BLOCKER, PI decision required.**~~ The same paper's headline
   figure has moved across versions: 0.13 (the version the proposal cites),
   reportedly 0.16, and reportedly 0.19 in the August 2026 revision. The latter
   two are from search summaries only — every host carrying the PDF is
@@ -125,10 +133,18 @@ cross-vendor pass, and not evidence for Gate 1.
 - [ ] **M4** The entrant sample conflates true entrants with CPSIDP
   linkage failures and long non-employment spells. Separate using
   month-in-sample before registering the companion.
-- [ ] **M5** The memo states a person-month unit; the power engine builds an
-  occupation-month panel. Reconcile, or state the approximation and its cost.
-- [ ] **M6** The degeneracy trigger has no stated consequence for the paper's
-  claims. Decide in advance, not after seeing the leading share.
+- [x] **M5 — RESOLVED 2026-08-18.** The estimator is person-month; the power
+  simulation is occupation-month cells. Section 7.4 states the distinction and
+  the direction of the approximation: omitting `X_i` raises residual variance,
+  so the simulated MDE is an **upper bound** — passing in simulation implies
+  passing at person level, but failing does not condemn the design. The
+  asymmetry is registered so it cannot be invoked selectively.
+- [x] **M6 — RESOLVED 2026-08-18.** Section 9.2 now fixes the consequence in
+  advance: a degenerate dose matrix means the paper drops the dynamic claim,
+  argues the index's contribution on the crossing chronology instead of the
+  regression, promotes Decision 8 convergent validity to load-bearing, and
+  reports the statistic at summary level. Degenerate is still publishable — it
+  is a different paper, named in advance.
 
 M1, M2 and M5 are the same failure as the 2026-08-14 audit found: prose that
 was never executed against the code or data it governs. The paid cross-vendor
