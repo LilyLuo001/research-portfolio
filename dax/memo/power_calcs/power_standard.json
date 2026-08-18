@@ -1,0 +1,36 @@
+{
+  "_doc": "Frozen power standard for DAX W1. See dax/memo/PI_DECISION_D3_2026-08-18.md. This file is the ONLY source of the pass bar. Nothing may recompute it from the analysis sample; freeze_power_standard.py fills it once from the frozen pre-event CPS extract and refuses to overwrite without --force.",
+  "status": "PLACEHOLDER_REQUIRES_REAL_CPS",
+  "frozen_at_utc": null,
+  "frozen_window": {
+    "start_month": "2021-11",
+    "end_month": "2023-02",
+    "rationale": "Ends the month before the first eligible event (GPT4_LAUNCH, 2023-03), so the constant cannot contain any post-treatment information."
+  },
+  "provenance": {
+    "cps_extract_path": null,
+    "cps_extract_sha256": null,
+    "n_person_records": null,
+    "weight_variable": null
+  },
+  "benchmark": {
+    "relative_decline": 0.13,
+    "relative_decline_source": "DAX proposal: young-worker employment/payroll decline in AI-exposed occupations; the effect the study exists to be able to detect.",
+    "baseline_employment_rate_22_25": null,
+    "baseline_hours_unconditional_22_25": null
+  },
+  "standard": {
+    "alpha_two_sided": 0.05,
+    "target_power": 0.8,
+    "max_mde_fraction_of_benchmark": 0.5,
+    "effect_scale": "coefficient per 0.10 DAX increment",
+    "employment_mde_ceiling": null,
+    "hours_mde_ceiling": null
+  },
+  "forbidden": [
+    "recomputing after the event set, mapping, dose definition, window rule or sample changes",
+    "recomputing on any post-event window",
+    "reporting adequately_powered while status is not FROZEN",
+    "treating failure as licence to search over specifications"
+  ]
+}

@@ -31,6 +31,7 @@ REQUIRED = {
     "price_status",
     "source_1",
     "source_2",
+    "date_conflict",
     "notes",
 }
 
@@ -83,12 +84,36 @@ def validate(path: pathlib.Path = REGISTRY) -> tuple[list[dict[str, str]], list[
         if analysis_status == "excluded_binding" and not row.get("notes", "").strip():
             errors.append(f"{prefix}: binding exclusion lacks rationale")
 
+        # F2 (2026-08-18): a second locator that cannot date the RELEASE may not
+        # support `verified`. A model page confirms identity; a deprecations page
+        # dates retirement; a pricing page carries no history. Such a row may only
+        # be verified when the model snapshot id itself embeds a date matching
+        # api_effective_date. This is the standard the memo already states for
+        # GPT56_FAMILY_LAUNCH, now enforced instead of applied by hand.
+        weak_second = any(token in row.get("source_2", "")
+                          for token in ("/models/", "deprecations", "pricing"))
+        dated_slugs = [s for s in row.get("model_ids", "").split("|")
+                       if re.search(r"\d{4}-\d{2}-\d{2}", s)]
+        slug_dates_it = any(row.get("api_effective_date", "") in s for s in dated_slugs)
+        if (row.get("verification_status") == "verified"
+                and weak_second and not slug_dates_it):
+            errors.append(
+                f"{prefix}: verified on a second locator that cannot date the "
+                f"release, and no dated snapshot id matches api_effective_date"
+            )
+
+        conflict = row.get("date_conflict", "").strip()
+        if conflict and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", conflict):
+            errors.append(f"{prefix}: date_conflict must be an ISO date or blank")
+        if conflict and conflict == row.get("api_effective_date"):
+            errors.append(f"{prefix}: date_conflict duplicates api_effective_date")
+
         sources = [row.get("source_1", "").strip(), row.get("source_2", "").strip()]
         if any(not source.startswith("https://") for source in sources):
             errors.append(f"{prefix}: both sources must be HTTPS locators")
         if len(set(sources)) != 2:
             errors.append(f"{prefix}: source locators must be distinct")
-        for field in REQUIRED:
+        for field in REQUIRED - {"date_conflict"}:   # blank means "no conflict"
             if not row.get(field, "").strip():
                 errors.append(f"{prefix}: blank required field {field}")
 

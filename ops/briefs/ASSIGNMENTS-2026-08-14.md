@@ -102,3 +102,43 @@ selection**. Consequences for the queue:
 - The memo itself needs §§3, 4, 7, 9 rewritten so it carries one primary, and
   a fresh red-team pass — the existing `CONDITIONAL_GO` reviewed the discrete
   design and does not transfer.
+
+---
+
+# URGENT — the box has been dead since 2026-07-10 (found 2026-08-18)
+
+`ops/box/inbox_log.md` ends at `2026-07-10T12:30Z`, and the last commit
+authored by `portfolio-box` is the same day. That is **39 days** of no L0/L1
+activity. Consequences:
+
+- The Channel A payload merged in PR #36 will never fire. The price panel is
+  stuck at `single_channel` for all 71 rows, and one channel can never certify
+  a price, so no price row can reach `verified`.
+- Every L1 batch `make plan` advertises as READY has been dispatching nowhere:
+  `P1-T1-events`, `P1-T13-ant`, `P1-T0-monitor`, `REFR-R0-collide`,
+  `REFR-R1a-verify`, `E2-T2-dune`, `E2-T6b-nav`, `REFR-R13-scan`.
+- Stale leases were never reaped, which is why `DAX-W1-memo` and
+  `P1-T1-events` still show in flight — `--reap` runs on the box's 30-min tick.
+- The evening digest has not been produced for five weeks.
+
+**Diagnosis order** (owner, ~15 minutes): is the host up; is cron running
+(`crontab -l`, `ops/box/cron.log` tail); does `git pull --ff-only origin main`
+succeed from the box checkout; is `ops/box/.env` still present after any
+reboot; did the 2026-07-09 merge-wedge lock (`ops/box/.cron.lock`) get left
+held by a killed process.
+
+Until it is back, treat every "overnight batch will handle it" assumption in
+the queue as false.
+
+## Channel A is blocked three ways
+
+| Route | State |
+|---|---|
+| This sandbox | `web.archive.org:443` denied by network policy (403 at the gateway) |
+| The box | dead since 2026-07-10 |
+| SSH to scc1.bu.edu | no ssh binary, no keys, TCP:22 blocked |
+
+Any one of these unblocks it: revive the box, allowlist `web.archive.org` and
+`archive.org` in the environment's network policy, or run
+`python dax/w2/prices/build_price_panel.py --time-budget 600` on any host with
+egress and commit the resulting `price_histories.csv`.
