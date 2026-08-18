@@ -1,0 +1,76 @@
+{
+  "status": "BLOCKED_MISSING_FROZEN_W3_W4_INPUTS",
+  "generated_at_utc": "2026-08-18T17:21:30Z",
+  "input_commits": {
+    "seat_c_standard_freeze": "cf4a240d8d59ea3b476af78fc8d249b7c5a977e2",
+    "price_redteam": "c84a6e5f2b9b13caa93bb79b8d946dd66197d5e6",
+    "gate1_integration": "dd1f97b51137ce88ad044f86b5453d29a9eed696",
+    "event_evidence": "093aba628454d9bf740931654b5a51bc82bfe510",
+    "phase_a_contract": "45280d787db23af7065ee0a0c97b0ebea15d2300",
+    "phase_a_portability_fix": "0238e4623265c5b9baec1e6e9e4c53ca98250a38"
+  },
+  "qualified_input_summary": {
+    "event_registry_rows": 21,
+    "event_date_verified_rows": 20,
+    "event_date_pending_rows": 1,
+    "analysis_eligible_rows": 4,
+    "price_verified_rows": 20,
+    "crosswalk_mapping_rows": 1287,
+    "crosswalk_cps_codes": 503,
+    "fully_resolved_component_mass_share": 0.7716899944,
+    "bounded_provisional_component_mass_share": 0.1921987433,
+    "mapped_component_mass_share": 0.9638887378,
+    "unresolved_component_mass_share": 0.0344065283,
+    "absent_component_mass_share": 0.0017047339,
+    "crosswalk_reconciliation_errors": 0
+  },
+  "blocking_inputs": {
+    "mapping_a_gdpval": {
+      "status": "NOT_EXECUTED",
+      "required_artifact": "mapping_a_gdpval.csv",
+      "evidence": "The committed Mapping A protocol states that the embedding and adjudication run has not executed."
+    },
+    "w4_capability_cost_panel": {
+      "status": "MISSING",
+      "required_fields": [
+        "event_id",
+        "model_id",
+        "onet_task_id",
+        "capability_lower",
+        "capability_center",
+        "capability_upper",
+        "cost_lower",
+        "cost_center",
+        "cost_upper",
+        "task_duration",
+        "input_version",
+        "input_sha256",
+        "input_row_count"
+      ],
+      "evidence": "No frozen W3/W4 branch or dynamic capability/cost artifact exists on the remote or in the qualified private-input inventory."
+    },
+    "private_task_backbone": {
+      "status": "BLOCKED_MISSING_CAPABILITY_SCORES_AND_TASK_DURATION",
+      "dose_construction_status": "BLOCKED_MISSING_CAPABILITY_SCORES_AND_TASK_DURATION",
+      "cost_per_completed_task_status": "BLOCKED_MISSING_TASK_DURATION",
+      "rows": 31892,
+      "cps_codes": 503,
+      "backbone_usable_rows_before_w3_w4": 17241
+    }
+  },
+  "fail_closed_result": {
+    "real_panel_constructed": false,
+    "private_panel_committed": false,
+    "identification_gate_run": false,
+    "identification_result": null,
+    "outcome_data_opened": false,
+    "post_event_outcomes_opened": false,
+    "synthetic_or_static_scores_substituted": false,
+    "exclusion_reason": "The adoption inequality cannot be evaluated without frozen dynamic task capability intervals and task duration/cost inputs. Static occupation scores and verified prices are not substitutes."
+  },
+  "required_unblock": [
+    "Publish and freeze the W3 Mapping A output with version, SHA-256, row count, and adjudication status.",
+    "Publish and freeze the W4 event-by-task capability and cost interval panel, including task duration and complete lineage.",
+    "Rerun W5 from this exact branch state; do not reuse a synthetic or static exposure panel."
+  ]
+}
