@@ -90,9 +90,16 @@ D1 is resolved (`dax/memo/PI_DECISION_D1_2026-08-18.md`): the primary
 specification is now a continuous cumulative-dose design with **no event
 selection**. Consequences for the queue:
 
-- `DAX-W3-mapA` is **unblocked**. Mapping work feeds the monthly index, which
-  the continuous primary consumes directly; it is no longer contingent on which
-  events survive a window rule.
+- `DAX-W3-mapA` is **no longer blocked by the window rule** — but it is still
+  blocked by its declared dependency on `DAX-W2-data`, which is not complete.
+  CORRECTION 2026-08-18: an earlier revision of this file called it "unblocked"
+  without that qualification, which was wrong. `make plan` does not list it as
+  READY and will not until W2-data lands.
+- Note also that `DAX-W3-mapA` is the **GDPval mapping protocol and
+  adjudication**, per its queue entry. The employment-weighted CPS-O*NET
+  crosswalk is a `DAX-W2-data` deliverable (item 4 of the seat-A brief) and is
+  covered by the collision carve-out above. Whoever front-loads W3 must not
+  write the crosswalk.
 - W2 price work is now **strictly value-adding**. Under the old rule more
   verified events shrank the design; under the continuous primary every
   verified event adds dose variation. Finish the panel.
