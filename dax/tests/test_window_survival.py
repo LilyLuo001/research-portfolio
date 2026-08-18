@@ -98,3 +98,32 @@ def test_power_simulation_still_disagrees_with_the_rule():
         "clean-window rule was implemented, delete this test and re-derive the "
         "power result, which currently assumes 4 events where §3.2 allows 2"
     )
+
+
+def test_d1_option_comparison_is_reproducible():
+    """The rejected options must stay rejected for the reasons recorded.
+
+    If any of these flips, PI_DECISION_D1_2026-08-18.md is out of date and the
+    decision has to be revisited rather than silently inherited.
+    """
+    from validate_window_survival import compound_estimable, spaced_subset
+
+    rows = _registry_rows()
+    sets = scenarios(rows)
+    eligible = sets["A: only rows currently `eligible` (what the power sim assumed)"]
+    completed = sets["C: every non-excluded row becomes eligible (registry completed)"]
+
+    # Option 1: widening is inert — adjacency truncation binds, not width.
+    for width in (9, 12, 18):
+        assert len([w for w in survival(eligible, width) if w.estimable]) == 2
+
+    # Option 5: compounding never becomes monotone in evidence quality.
+    for gap in (0, 3, 4, 6):
+        assert compound_estimable(completed, gap) < MIN_EVENTS
+
+    # Option 4: a spaced subset only "works" by ignoring events that occurred.
+    picked, ignored = spaced_subset(completed, 7)
+    assert picked >= MIN_EVENTS and ignored > picked, (
+        "the spaced-subset option must remain visibly contaminated: it drops "
+        "more origins than it keeps, and those still deliver dose"
+    )

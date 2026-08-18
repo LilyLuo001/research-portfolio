@@ -1,10 +1,12 @@
 # Seat assignments — 2026-08-14 (owner-issued after the W1 design audit)
 
-Context: the 2026-08-14 audit (`dax/memo/design_audit_2026-08-14.md`, pending)
-found that the W1 stacking protocol yields **2 estimable events** from its own
-4 eligible rows, and **1** if the registry is completed as planned. W5/W3 must
-not be started until the window rule is resolved. These assignments are chosen
-to be **zero-waste under any resolution of that rule**.
+Context: the 2026-08-14 audit (`dax/memo/design_audit_2026-08-14.md`) found
+that the W1 stacking protocol yields **2 estimable events** from its own 4
+eligible rows, and **1** if the registry is completed as planned. These
+assignments were chosen to be zero-waste under any resolution of that rule.
+
+**Update 2026-08-18:** D1 is now resolved — see the standing rule at the foot
+of this file. The assignments below are unchanged and remain correct.
 
 ## Collision carve-out — read before claiming DAX-W2-data
 
@@ -76,11 +78,27 @@ No L2 P1 block is READY. Do the overnight-batch work instead:
    pre-red-team draft — do not review that one.
 2. **Rotate the GitHub PAT.** Flagged in `progress_audit_2026-08-06.md` defect
    3, and a token was subsequently pasted into a chat session.
-3. **Resolve the window rule (D1) and the power bar (D3).** Both are
-   `[PI-DECISION]` items; no agent may pick them. A quantified options pack is
-   the next DAX task after the price panel.
+3. **Counter-sign D1.** Decided under delegation 2026-08-18
+   (`dax/memo/PI_DECISION_D1_2026-08-18.md`); it does not bind until signed.
+4. **Resolve the power bar (D3)** — still open, still `[PI-DECISION]`, and it
+   blocks the power rebuild. D4 (entrant exclusion) and F2 (registry statuses)
+   also remain open.
 
-## Standing rule reaffirmed
+## Standing rule — UPDATED 2026-08-18
 
-Do not start `DAX-W3-mapA` or any W5 work until D1 is signed. Mapping and
-index construction built against the current window rule would be rework.
+D1 is resolved (`dax/memo/PI_DECISION_D1_2026-08-18.md`): the primary
+specification is now a continuous cumulative-dose design with **no event
+selection**. Consequences for the queue:
+
+- `DAX-W3-mapA` is **unblocked**. Mapping work feeds the monthly index, which
+  the continuous primary consumes directly; it is no longer contingent on which
+  events survive a window rule.
+- W2 price work is now **strictly value-adding**. Under the old rule more
+  verified events shrank the design; under the continuous primary every
+  verified event adds dose variation. Finish the panel.
+- `DAX-W1-power` must be **rebuilt**, not adjusted. The committed simulation
+  models a discrete four-event stack and does not carry over. It is blocked on
+  D3 (the pass bar is still estimated from the data it judges).
+- The memo itself needs §§3, 4, 7, 9 rewritten so it carries one primary, and
+  a fresh red-team pass — the existing `CONDITIONAL_GO` reviewed the discrete
+  design and does not transfer.
