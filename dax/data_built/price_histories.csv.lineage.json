@@ -1,0 +1,30 @@
+{
+  "output": "/home/user/research-portfolio/dax/data_built/price_histories.csv",
+  "output_sha256": "9f4fe5159bcdef71c3961985ffc9199cf3d3ee61c39307ab11d54872622d6ea7",
+  "inputs": [
+    {
+      "path": "/home/user/research-portfolio/dax/memo/event_registry_v1.csv",
+      "sha256": "1b02038991d988ca65b74ad0af27d4c58844d1e588ff916b5ca3fd75f4e92a7e",
+      "rows": null
+    }
+  ],
+  "code_version": "78e91315b3704310398d4c49fd8421a0a9e69575",
+  "timestamp": "2026-08-18T11:14:37.214126+00:00",
+  "channels": {
+    "git": {
+      "repo": "https://github.com/BerriAI/litellm",
+      "path": "model_prices_and_context_window.json",
+      "observations": 71
+    },
+    "wayback": {
+      "run": false,
+      "urls": [
+        "openai.com/pricing",
+        "openai.com/api/pricing",
+        "platform.openai.com/docs/pricing",
+        "developers.openai.com/api/docs/pricing"
+      ]
+    }
+  },
+  "note": "no language model is involved in producing any value in this file"
+}

@@ -1,0 +1,28 @@
+# W2 price panel — the cost input `c` in the DAX crossing rule
+# A_tom = 1[c/pi_eff + f*(1-pi_eff)/pi_eff < w].
+#
+# One row per (model snapshot, price kind, change point). Dates are INTERVALS,
+# never point estimates: effective_date_earliest is the last date the previous
+# price was observed, effective_date_latest the first date the new price was.
+# A blank earliest means the first observation, which has no lower bound.
+#
+# price_status is the two-channel verdict and is the field W5 must gate on:
+#   verified        both channels agree — usable in the primary analysis
+#   single_channel  only the git price table; date interval is an upper bound
+#   conflict        archived official page shows a different price — human gate
+# Absent prices are absent rows, never zero-filled (meta-rule 4).
+producer: DAX-W2-data
+primary_key: [model_id, price_kind, effective_date_latest]
+columns:
+  model_id: {required: true}
+  price_kind: {required: true}
+  usd_per_1m: {required: true, min: 0}
+  effective_date_earliest: {}
+  effective_date_latest: {required: true}
+  price_status: {required: true}
+  channel_git_observed: {}
+  channel_git_locator: {required: true}
+  channel_web_status: {required: true}
+  channel_web_snapshot: {}
+  channel_web_locator: {}
+  notes: {}
