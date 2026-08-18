@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import csv
 import pathlib
+import re
 import sys
 import time
 
@@ -52,6 +53,7 @@ FIELDS = [
 VERIFIED = "verified"
 SINGLE_CHANNEL = "single_channel"
 CONFLICT = "conflict"
+DATED_MODEL_RE = re.compile(r"-(20\d{2}-\d{2}-\d{2})$")
 
 
 def registry_models() -> tuple[set[str], list[dict[str, str]]]:
@@ -165,6 +167,29 @@ def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool
             row["notes"] = (str(row["notes"]) + f"; {result.detail}").lstrip("; ")
 
 
+def apply_temporal_sanity(rows: list[dict[str, object]]) -> int:
+    """Fail closed when a source claims to observe a dated model before its date.
+
+    Channel B uses git author dates as upper bounds. Those dates are not
+    trustworthy for a row whose dated model id is later than the commit date;
+    a later official snapshot can corroborate the price, but it cannot repair
+    the impossible Channel-B bound. Such rows remain visible as conflicts.
+    """
+    conflicts = 0
+    for row in rows:
+        match = DATED_MODEL_RE.search(str(row["model_id"]))
+        observed = str(row["channel_git_observed"])
+        if match and observed and observed < match.group(1):
+            row["price_status"] = CONFLICT
+            detail = (
+                f"Channel B observed {observed} before dated model snapshot "
+                f"{match.group(1)}; git date cannot serve as an upper bound"
+            )
+            row["notes"] = (str(row["notes"]) + f"; {detail}").lstrip("; ")
+            conflicts += 1
+    return conflicts
+
+
 def write_coverage(rows: list[dict[str, object]], events: list[dict[str, str]], offline: bool) -> None:
     by_model: dict[str, list[dict[str, object]]] = {}
     for row in rows:
@@ -246,10 +271,14 @@ def main() -> int:
         deadline = time.monotonic() + args.time_budget if args.time_budget else None
         apply_corroboration(rows, args.corroborate_limit, args.verbose,
                             deadline=deadline, prior=load_prior_corroboration(OUTPUT))
+    temporal_conflicts = apply_temporal_sanity(rows)
+    if temporal_conflicts:
+        print(f"temporal sanity: {temporal_conflicts} impossible git bounds marked conflict",
+              file=sys.stderr)
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

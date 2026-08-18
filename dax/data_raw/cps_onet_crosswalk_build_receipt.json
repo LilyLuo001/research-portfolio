@@ -1,0 +1,41 @@
+{
+  "status": "CPS_OCC2010_TO_ONET_SOC2019_CROSSWALK_PRIVATE",
+  "weight_rule": "Census total 2010-to-2018 conversion rate; May 2021 OEWS employment share across matched 2018 SOCs; unambiguous IPUMS collapsed-code bridges receive unit route weight; equal O*NET subdivision is provisional",
+  "fail_closed_rule": "Only cps_code_status=resolved_employment_weighted is downstream eligible",
+  "inputs": {
+    "census_2010_to_2018_occ_conversion_rates.xlsx": "73a8db545d5c484fd1f8ecd9745d0a08b51113b8a37e99dea2df55aeb08cb74d",
+    "census_2018_occ_to_soc.xlsx": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f",
+    "onet_soc_2019_to_2018_soc.xlsx": "bfc6722a92c2d607e5a99dee88b7826cf5aa91f7c0453182e0c8268e32a20a19",
+    "onet_timeshares.csv": "62c6360c030d73948858c4930de17bb8f11aa6966bbd339d3397464fb8d8a40e",
+    "oews_wages.csv": "12dfb4488335839ac9db3ce743e1ce600ed78e1e4ebdbb546749223723afb1c2",
+    "ipums_cps_2020_on_occ2010_crosswalk.xlsx": "98c36a41af47e8f1eb419a760efb58b1423acec50d730fd30dc7274e0ae586c5"
+  },
+  "output_name": "cps_onet_crosswalk.csv",
+  "output_sha256": "dbc8f89e7b9ad622fa9bd536f8bf7bdf4c3786468f2527fa0f272a60f8d74287",
+  "n_mapping_rows": 874,
+  "n_cps_codes": 503,
+  "n_ipums_single_source_fallback_codes": 15,
+  "n_resolved_employment_weighted_codes": 362,
+  "n_provisional_equal_within_soc_codes": 51,
+  "n_unresolved_codes": 90,
+  "bad_weight_sums": 0,
+  "n_observed_preperiod_cps_codes": 445,
+  "n_observed_preperiod_resolved_codes": 319,
+  "n_observed_preperiod_provisional_codes": 49,
+  "n_observed_preperiod_unresolved_codes": 76,
+  "observed_preperiod_weight_mass_shares": {
+    "absent_from_crosswalk": 0.0017047339,
+    "provisional_equal_within_soc": 0.1323912319,
+    "resolved_employment_weighted": 0.6551587329,
+    "unresolved": 0.2107453014
+  },
+  "observed_unresolved_reason_code_counts": {
+    "unresolved_missing_oews_employment": 4,
+    "unresolved_no_usable_onet": 72
+  },
+  "observed_codes_absent_from_official_crosswalk": [
+    "7630"
+  ],
+  "raw_workbooks_committed": false,
+  "detailed_crosswalk_committed": false
+}
