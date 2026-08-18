@@ -190,3 +190,56 @@ def test_source_file_is_one_program_not_two():
         if isinstance(n, (ast.FunctionDef, ast.ClassDef)):
             defs.setdefault(n.name, []).append(n.lineno)
     assert not {k: v for k, v in defs.items() if len(v) > 1}
+
+
+# --------------------------------------------------------------------------- #
+# fund-level asset-class filter (coverage-audit item 5 / register W-05b)       #
+# --------------------------------------------------------------------------- #
+
+MEMBERS = [
+    {"wave_id": "W029", "fund_name": "US Fund", "effective_date": "2023-01-05"},
+    {"wave_id": "W029", "fund_name": "Intl Fund", "effective_date": "2023-01-05"},
+    {"wave_id": "W020", "fund_name": "Mirae Fund", "effective_date": "2023-04-15"},
+]
+EVENTS_META = [
+    {"fund_name": "US Fund", "asset_class": "equity_US"},
+    {"fund_name": "Intl Fund", "asset_class": "equity_intl"},
+    {"fund_name": "Mirae Fund", "asset_class": "equity_intl"},
+]
+
+
+def test_nothing_is_excluded_by_default():
+    """The sample definition is the owner's call; the pipeline does not pick one."""
+    kept, dropped = b.filter_members_by_asset_class(MEMBERS, EVENTS_META, [])
+    assert len(kept) == 3 and dropped == []
+
+
+def test_filtering_keeps_the_us_half_of_a_mixed_wave():
+    """The whole reason this lives before aggregation: cells are summed per
+    (cusip, wave) across the wave's funds, so a mixed wave cannot be split
+    afterwards — a filter on the finished parquet can only drop W029 entirely."""
+    kept, dropped = b.filter_members_by_asset_class(
+        MEMBERS, EVENTS_META, ["equity_intl"])
+    assert [m["fund_name"] for m in kept] == ["US Fund"]
+    assert {m["fund_name"] for m in dropped} == {"Intl Fund", "Mirae Fund"}
+    assert "W029" in {m["wave_id"] for m in kept}          # the wave survives
+
+
+def test_filter_is_case_insensitive_and_ignores_blank_entries():
+    kept, _ = b.filter_members_by_asset_class(
+        MEMBERS, EVENTS_META, ["  EQUITY_INTL ", ""])
+    assert [m["fund_name"] for m in kept] == ["US Fund"]
+
+
+def test_a_fund_with_no_recorded_asset_class_is_kept_not_silently_dropped():
+    """25 rows of events_merged carry a blank asset_class. Dropping them on a
+    filter they were never classified for would be a silent sample change."""
+    members = MEMBERS + [{"wave_id": "W050", "fund_name": "Unknown Fund",
+                          "effective_date": "2024-01-01"}]
+    kept, _ = b.filter_members_by_asset_class(members, EVENTS_META, ["equity_intl"])
+    assert "Unknown Fund" in {m["fund_name"] for m in kept}
+
+
+def test_kept_members_carry_their_asset_class_for_the_manifest():
+    kept, _ = b.filter_members_by_asset_class(MEMBERS, EVENTS_META, ["equity_intl"])
+    assert kept[0]["asset_class"] == "equity_US"

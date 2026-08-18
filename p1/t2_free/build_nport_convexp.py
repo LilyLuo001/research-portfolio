@@ -47,6 +47,7 @@ Inputs already in repo: p1/events_merged.csv, p1/t2_wrds/waves.csv,
 p1/t1_arb/id_meta.json (trust CIK per accession). Runs on the BOX — it needs
 outbound HTTPS to SEC/OpenFIGI.
 """
+import argparse
 import csv
 import json
 import logging
@@ -606,7 +607,45 @@ def _cell_rows(agg, tcik, so_lookup):
     return rows, nh_stocks
 
 
-def main():
+def filter_members_by_asset_class(members, events, exclude):
+    """Drop wave members whose fund carries an excluded asset_class.
+
+    This is the ONLY way to act on the international-sleeve decision correctly.
+    ConvExp cells are aggregated per (cusip, wave) across the wave's funds, so a
+    mixed wave cannot be split after the build — filtering the finished parquet
+    can drop whole waves but never the international half of one. Excluding here,
+    before aggregation, keeps the US half of the 8 mixed waves that a
+    wave-level filter would throw away with them.
+
+    Nothing is excluded by default: the sample definition is the owner's call
+    (p1/output/convexp_coverage_audit/international_sleeve_options.md), and this
+    only makes acting on it a flag rather than a rewrite.
+    """
+    if not exclude:
+        return list(members), []
+    exclude = {e.strip().lower() for e in exclude if e.strip()}
+    ac = {}
+    for e in events:
+        ac[(e.get("fund_name") or "").strip()] = (e.get("asset_class") or "").strip()
+    kept, dropped = [], []
+    for m in members:
+        name = (m.get("fund_name") or "").strip()
+        cls = ac.get(name, "")
+        (dropped if cls.lower() in exclude else kept).append(
+            {**m, "asset_class": cls})
+    return kept, dropped
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="P1-T2 free-path ConvExp build")
+    ap.add_argument("--exclude-asset-class", action="append", default=[],
+                    metavar="CLASS",
+                    help="drop converting funds of this asset_class before "
+                         "aggregation (repeatable; e.g. --exclude-asset-class "
+                         "equity_intl). Default: exclude nothing — the sample "
+                         "definition is an owner decision, see the coverage "
+                         "audit's international_sleeve_options.md")
+    args = ap.parse_args(argv)
     _setup_run()
     if not SEC_UA:
         log.warning("SEC_UA is empty — SEC endpoints may 403. "
@@ -617,6 +656,16 @@ def main():
 
     members = list(csv.DictReader(open(MEMBERS, newline="")))
     log.info("loaded %d wave members", len(members))
+    if args.exclude_asset_class:
+        events_meta = list(csv.DictReader(open(ROOT / "p1" / "events_merged.csv",
+                                               newline="")))
+        members, excluded = filter_members_by_asset_class(
+            members, events_meta, args.exclude_asset_class)
+        log.info("ASSET_CLASS_FILTER %s: kept %d members, excluded %d",
+                 args.exclude_asset_class, len(members), len(excluded))
+        for m in excluded:
+            log.info("EXCLUDED_FUND %s (asset_class=%s, wave=%s)",
+                     m.get("fund_name"), m.get("asset_class"), m.get("wave_id"))
     tcik = ticker_cik_map()
 
     # ---- Step 1: per-fund holdings ---------------------------------------- #
@@ -821,4 +870,4 @@ def _diagnostics(df, fund_holdings, nh_funds, nh_stocks):
     log.info("wrote diagnostics -> %s", DIAG)
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
