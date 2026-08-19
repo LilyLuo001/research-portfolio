@@ -563,7 +563,7 @@ tasks:
     human_gate: false
     channel_a: true
     max_attempts: 3
-    notes: "变量构造规格书 channel A = claude.ai Project (Pro). BLOCKED on the 文献包: T0 阶段A never ran, so the spec's 文献口径 column has no admissible source — itemised CITE_REQUEST in p1/t3_spec_preflight.md. WRDS does not clear this."
+    notes: "变量构造规格书 channel A = claude.ai Project (Pro). DONE 2026-08-19: p1/t3_spec/变量规格书.md, contract variable_spec PASS, spines 一/二/四. Unblocked by the 文献包 at p1/lit/literature_matrix.md (T0 阶段A, web-sourced). Carries 9 DECISION_NEEDED + 17 [NEED_PDF] + 17 [WRDS_NEEDED] cells for the T3-decision gate."
 
   - id: P1-T3-spec-B
     project: p1

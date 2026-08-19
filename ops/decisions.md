@@ -576,3 +576,48 @@ Open items requiring human resolution:
 
 Channel B (Deepseek) dispatch is now possible — P1-T3-spec-B is the next step.
 After B-channel output: diff the two specs; any splits go to T3-decision owner gate.
+
+## P0-1 STATE RECONCILIATION 2026-08-19 (seat C)
+
+Executed the first item of `ops/briefs/PORTFOLIO-REVIEW-AND-PLAN-2026-08-19.md`.
+Seat note: `ops/` is seat D's owned path, but seat D has been dormant since
+2026-07-10 (no competing writer) and CLAUDE.md's working protocol requires every
+seat to write state.json + decisions.md as the final step of "done". Proceeded on
+that basis; only `shared/` carries the hard read-only bar.
+
+### Completed
+- **P1-T3-spec** — `p1/t3_spec/变量规格书.md`, `contracts.py variable_spec` PASS
+  (5 required sections). Registered via `runner.py --complete`. Its queue note was
+  also stale ("BLOCKED on the 文献包") and has been corrected — the 文献包 exists at
+  `p1/lit/literature_matrix.md`.
+
+### Examined and deliberately NOT completed
+- **P1-T13-ant / P1-T13-ant-B** — both outputs exist in `ops/l1/out/` and passed
+  their sentinel fence, but the meta-rule-2 diff had never been run. Ran it:
+  414 accessions covered by both channels, **287 agree / 127 substantive splits
+  (30.7%)** after normalising A's JSON-string-vs-object and enum-casing artifacts
+  (a naive diff reports a misleading 323). Two failure modes: 43 `no_event` vs
+  classified (existence disagreement), 84 `proxy_basket_type` differences.
+  `disclosure_regime` never differs where both see an event.
+  Split table + reading: `p1/t13_ant/`. Marking either complete would ratify an
+  un-arbitrated extraction. NEED_HUMAN recorded there.
+- **DAX-W0.5-legwork** — output exists and is well-formed, but the task is
+  "which OpenAI vintages are API-accessible today + price", i.e. freshness-bound
+  factual content now ~40 days stale, with `output_contract: null` (no mechanical
+  gate) and owned by seat A. Completing it would freeze stale facts on someone
+  else's project. Left for seat A to re-run or accept.
+- **REFR-R13-scan / E2-T11-scan** — resident-by-design, deliberately never
+  completed. Unchanged.
+- **E2-T6a** — still synthetic-input scaffolding. Unchanged.
+
+### Owner questions raised by the T13 diff (both settleable without the L1 lane)
+1. Does any P1 spine or robustness cut key on `proxy_basket_type`, or only on
+   `disclosure_regime`? If only the regime, 84 of 127 splits (66%) stop being
+   blockers and arbitration shrinks to the 43 existence disagreements.
+2. On a bare `no_event` (channel A) vs a `"na"`-basket classification (channel B),
+   which wins? This is a sample definition and must be fixed before it is read
+   against any outcome.
+
+`make plan` no longer offers P1-T3-spec as ready work. The remaining staleness in
+the plan output is upstream of this task: 14 L1 batches are still listed as
+dispatchable against a lane that has been dead 40 days (P0-3, owner decision).
