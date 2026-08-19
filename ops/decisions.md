@@ -447,3 +447,35 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 # not rebuild the module); the R1b and fetcher work carried no lease and ran on
 # the harness-pinned branch rather than task/<id>. scan.py and fetch_r1a_sources.py
 # have never run live — treat their first output as evidence to review.
+
+# REFRACTION GATE-0 DECISIONS 2026-08-19 — MADE UNDER DELEGATION, AWAITING PI
+# COUNTER-SIGNATURE (owner instruction: "go ahead and make these decisions for
+# me", following refraction/AUDIT-2026-08-19.md). Full reasoning and the evidence
+# table: refraction/DECISIONS-2026-08-19.md. Same standing as DAX's D1 memo —
+# recorded and machine-enforced, binding only once signed.
+# Legitimacy note: no Gate-0 diagnostic has run (R3 has not executed; there is no
+# panel, beta, or sweep output), so fixing these now IS pre-registration. Doing it
+# after a first diagnostic would have been specification search.
+#   D-A  d_b_mass_share_min = 0.50 — G4 clears at a MAJORITY of treated ConvExp
+#        mass (mass-weighted, not name-counted). Failing G4 costs language (the
+#        §10 framing gate), not the chapter, so a strict line is cheap insurance
+#        against overclaiming. 0.70 considered for consistency with G2 and
+#        rejected: G2's share is estimability, G4's is mechanism presence.
+#   D-B  pretrend_joint_p_min = 0.10 + pretrend_individual_lead_adjust = holm —
+#        DAX Decision 14 adopted verbatim; house precedent beats an invented
+#        number and gives one flatness standard portfolio-wide. CAVEAT recorded
+#        in-config: this is a failure-to-reject, so R3 must report pre-trend CIs
+#        beside the p and it is only meaningful against G5's archived power bar.
+#   D-C  Plan §9 vs §R3 conflict RESOLVED BY OBSERVATION, no arbitration needed:
+#        median n_pre is invariant in w_shrink, so the Plan's "inside the joint
+#        window" is satisfied automatically whenever the line holds, and if it
+#        fails it fails at every w = an empty window. R3 must route a G3 failure
+#        into the empty-window portfolio-level-or-kill branch.
+#   D-D  post_quarters_required = 4, waves_end = 2025-06-30 (was 2025-12-31).
+#        Evidence: 4 post-quarters costs 9 of 395 treated names (2.3%) while
+#        keeping 53 waves; a symmetric 8Q costs 28 waves and therefore effective
+#        clusters, buying 1 further treated name. waves_end is no longer hand-set
+#        — it is governed by the invariant waves_end + post_quarters_required <=
+#        announcements_end, enforced in tests, and assert A2 now reads the post
+#        bound from config instead of mirroring the pre bound.
+# TO REVERSE ANY OF THESE: now is the free moment — nothing downstream has run.

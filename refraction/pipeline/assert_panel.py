@@ -53,9 +53,24 @@ def a1_primary_key(panel: pd.DataFrame) -> dict:
 
 
 def a2_treated_coverage(panel: pd.DataFrame, calendar: pd.DataFrame,
-                        wave_effective: pd.Series, pre_quarters: int = 8) -> dict:
-    """Every treated permno covers all scheduled announcements within ±pre_quarters
-    quarters of its wave effective date; gaps are listed, any gap fails."""
+                        wave_effective: pd.Series, pre_quarters: int = 8,
+                        post_quarters: int | None = None) -> dict:
+    """Every treated permno covers all scheduled announcements in
+    [eff - pre_quarters, eff + post_quarters]; gaps are listed, any gap fails.
+
+    The window is ASYMMETRIC by decision (2026-08-19): the pre side carries beta
+    estimation, the post side carries the interaction plus the longest horizon.
+    `post_quarters=None` keeps the old symmetric behaviour for callers that have
+    not been updated.
+
+    KNOWN LIMIT — this assert cannot police the SAMPLE FRAME. It compares the
+    panel against the calendar, and the calendar is itself truncated at
+    `sample.announcements_end`, so a wave whose post-period is shorter than the
+    design requires still covers "every announcement in its window" and passes
+    green. That is why `waves_end` is derived from the invariant
+    `waves_end + post_quarters_required <= announcements_end` (checked in
+    tests/test_gate0_config.py) rather than left to be caught here.
+    """
     cal = calendar.copy()
     cal["date_ET"] = pd.to_datetime(cal["date_ET"])
     cal["q"] = cal["date_ET"].dt.to_period("Q")
@@ -65,7 +80,8 @@ def a2_treated_coverage(panel: pd.DataFrame, calendar: pd.DataFrame,
     for permno, grp in treated.groupby("permno"):
         wave = grp["wave"].iloc[0]
         eff_q = pd.Period(pd.to_datetime(wave_effective.loc[wave]), freq="Q")
-        window = cal[(cal["q"] >= eff_q - pre_quarters) & (cal["q"] <= eff_q + pre_quarters)]
+        post_q = pre_quarters if post_quarters is None else post_quarters
+        window = cal[(cal["q"] >= eff_q - pre_quarters) & (cal["q"] <= eff_q + post_q)]
         missing = set(window["announcement_id"]) - have.get(permno, set())
         if missing:
             gaps[str(permno)] = sorted(missing)
@@ -229,11 +245,14 @@ def run_all(panel, betas, weights, basket, convexp, calendar, wave_effective,
     g0 = config.get("gate0_thresholds", {})
     rel = config.get("panel", {}).get("release_times_ET", {})
     pre_q = int(config.get("panel", {}).get("pre_quarters_required", 8))
+    post_q = config.get("panel", {}).get("post_quarters_required")
+    post_q = None if post_q is None else int(post_q)
     if expected_pairs is None:
         expected_pairs = panel[["permno", "announcement_id"]].drop_duplicates()
     report = {
         "A1": a1_primary_key(panel),
-        "A2": a2_treated_coverage(panel, calendar, wave_effective, pre_quarters=pre_q),
+        "A2": a2_treated_coverage(panel, calendar, wave_effective, pre_quarters=pre_q,
+                                  post_quarters=post_q),
         "A3": a3_return_identity(panel),
         "A4": a4_no_lookahead(betas, wave_effective),
         "A5": a5_n_pre_distribution(betas, int(g0.get("n_pre_median_min", 30))),

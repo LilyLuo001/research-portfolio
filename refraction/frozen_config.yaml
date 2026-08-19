@@ -47,17 +47,42 @@ gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops
   # instead of inventing a threshold — iron rule 4 expressed as configuration.
   # Choosing either AFTER seeing the diagnostic is specification search, so the
   # owner must fill them in ops/decisions.md BEFORE Gate-0 runs.
-  d_b_mass_share_min: null         # G4: NEED_HUMAN — required share of treated mass
-                                   # with D_b >= d_b_min for the framing gate to clear
-  pretrend_joint_p_min: null       # G6: NEED_HUMAN — joint p above which the pre-trend
-                                   # triple counts as "flat/zero" (cf. DAX Decision 14,
-                                   # which uses joint p >= 0.10 and no Holm-adjusted lead)
+  d_b_mass_share_min: 0.50         # G4: DECIDED 2026-08-19 under delegation (memo:
+                                   # refraction/DECISIONS-2026-08-19.md, awaiting PI
+                                   # counter-signature). Share of treated ConvExp MASS
+                                   # (not name count) carried by names with
+                                   # D_b >= d_b_min. Majority line: below half,
+                                   # "basket-specific refraction" would describe a
+                                   # minority while the headline speaks for the whole
+                                   # sample — which is exactly what the §10 framing
+                                   # gate exists to catch. Failing G4 costs language,
+                                   # not the chapter, so a strict line is cheap.
+  pretrend_joint_p_min: 0.10       # G6: DECIDED 2026-08-19 under delegation. Adopts
+                                   # DAX Decision 14 verbatim — house precedent beats an
+                                   # invented number. "Flat/zero" = joint p >= 0.10 AND
+                                   # no individually significant lead after the
+                                   # adjustment below.
+  pretrend_individual_lead_adjust: holm   # G6 second clause, from the same precedent.
+                                   # NOTE: this line is a FAILURE TO REJECT, so it is
+                                   # only meaningful alongside G5's archived power bar —
+                                   # a wide confidence band is not evidence of flatness.
+                                   # R3 must report the pre-trend CIs next to the p.
   # --- G2 -------------------------------------------------------------------
   sd_L_min: 0.25                   # G2: SD(L̂) among ConvExp>=convexp_treated_min stocks
   corr_L_convexp_max: 0.30         # G2
   se_share_min: 0.70               # G2: share of treated names with SE(β̂) << SD(L̂)
   se_to_sdL_ratio_max: 0.3333      # operationalizes "<<" for the line above
-  n_pre_median_min: 30             # G3 in the 执行手册's split — but SEE THE CONFLICT:
+  n_pre_median_min: 30             # G3. CONFLICT RESOLVED 2026-08-19 under delegation:
+                                   # evaluate ONCE, as the 执行手册 does, because median
+                                   # n_pre is INVARIANT in w_shrink — shrinkage changes
+                                   # beta's precision and dispersion, never how many
+                                   # pre-period announcements a stock has. So the Plan's
+                                   # "inside the joint window" phrasing is satisfied
+                                   # automatically whenever the line holds at all, and
+                                   # if it fails it fails at EVERY w — which is an empty
+                                   # window, triggering the Plan's own portfolio-level-
+                                   # or-kill branch. The two texts agree operationally.
+                                   # Original conflict, for the record:
                                    # Plan §9 puts "median pre-period announcements ≥ 30"
                                    # INSIDE the G2 joint window (it must hold at the SAME
                                    # w_shrink as the other three), while 执行手册 §R3 G2
@@ -75,14 +100,33 @@ sample:
   announcements_start: "2017-01-01"
   announcements_end: "2026-06-30"
   waves_start: "2021-03-01"
-  waves_end: "2025-12-31"
+  waves_end: "2025-06-30"          # DECIDED 2026-08-19 under delegation (was 2025-12-31,
+                                   # which predated the current P1 event set and left the
+                                   # last waves with ~2 post-quarters). Set BY THE
+                                   # INVARIANT below, not by hand:
+                                   #   waves_end + post_quarters_required <= announcements_end
+                                   # Evidence: requiring 4 post-quarters costs 9 of 395
+                                   # treated names (2.3%) while keeping 53 waves; the
+                                   # treated set is dominated by early large waves, so
+                                   # late waves add cluster count, not treatment mass.
   asset_class: equity_US           # P1 filter: fixed income / international excluded
   price_floor_usd: 5               # robustness exclusion, not main-spec filter
 
 panel:
   announcement_types: [FOMC, CPI, NFP]
   release_times_ET: {FOMC: "14:00", CPI: "08:30", NFP: "08:30"}
-  pre_quarters_required: 8         # assert A2: coverage ±8 quarters around wave
+  pre_quarters_required: 8         # assert A2: announcement coverage BEFORE the wave.
+                                   # Asymmetric with the post side on purpose: beta
+                                   # estimation needs many pre-announcements (n_pre
+                                   # median >= 30) plus the Vasicek prior.
+  post_quarters_required: 4        # DECIDED 2026-08-19 under delegation. ~32 scheduled
+                                   # announcements per treated stock after conversion —
+                                   # ample for the Post x ConvExp x beta x S interaction —
+                                   # and leaves a quarter of runway inside the
+                                   # announcement window for the +60d wedge horizon and
+                                   # next-quarter SUE. Chosen over a symmetric 8Q because
+                                   # 8Q costs 28 waves (67 -> 39) and therefore effective
+                                   # clusters, while buying only 1 further treated name.
 
 wedge:
   horizons_days: [1, 5, 20, 60]

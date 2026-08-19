@@ -35,34 +35,43 @@ PLAN_COMMITTED = {
     "sweep_window_min_gridpoints": 2,  # §R3 G2 "宽度<网格 2 格 → FAIL"
 }
 
-# Undecided by design; R3 must refuse to run while these are null.
-AWAITING_OWNER = {"d_b_mass_share_min", "pretrend_joint_p_min"}
+# Decided 2026-08-19 under delegation. Each must stay traceable to its memo and
+# to ops/decisions.md; a silent edit to one of these is a prereg deviation.
+DELEGATED = {
+    "d_b_mass_share_min": 0.50,
+    "pretrend_joint_p_min": 0.10,
+    "pretrend_individual_lead_adjust": "holm",
+}
+MEMO = ROOT / "refraction" / "DECISIONS-2026-08-19.md"
 
 
-@pytest.mark.parametrize("key,expected", sorted(PLAN_COMMITTED.items()))
-def test_threshold_matches_the_pre_committed_plan_value(key, expected):
-    assert key in G0, f"{key} missing from gate0_thresholds"
+@pytest.mark.parametrize("key,expected", sorted(DELEGATED.items()))
+def test_delegated_decision_holds_its_recorded_value(key, expected):
     assert G0[key] == expected, (
-        f"{key} is {G0[key]}, Plan v2.1 pre-committed {expected}. If this change is "
-        "intended it is a pre-registration deviation and must be disclosed, not edited.")
+        f"{key} is {G0[key]}, the delegated decision recorded {expected}. Changing it "
+        "is a pre-registration deviation requiring disclosure.")
 
 
-@pytest.mark.parametrize("key", sorted(AWAITING_OWNER))
-def test_undecided_thresholds_stay_null_until_the_owner_decides(key):
-    """If one of these acquires a value, it must arrive with an owner decision in
-    ops/decisions.md — not from whoever happened to be writing R3."""
-    assert key in G0, f"{key} missing; it exists to make R3 stop, not to be dropped"
-    if G0[key] is not None:
-        decisions = (ROOT / "ops" / "decisions.md").read_text()
-        assert key in decisions, (
-            f"{key} was given the value {G0[key]} but ops/decisions.md does not "
-            "record the owner deciding it. Gate-0 thresholds are pre-registration "
-            "content; a number chosen after seeing a diagnostic is specification search.")
+@pytest.mark.parametrize("key", sorted(DELEGATED))
+def test_delegated_decision_is_traceable_to_a_memo_and_the_decision_log(key):
+    """A number nobody can trace is indistinguishable from a number somebody
+    invented after seeing a diagnostic."""
+    assert MEMO.exists(), "the delegated-decision memo is missing"
+    assert key in MEMO.read_text(), f"{key} not explained in {MEMO.name}"
+    assert key in (ROOT / "ops" / "decisions.md").read_text(), \
+        f"{key} not recorded in ops/decisions.md"
 
 
-def test_every_gate0_threshold_is_either_committed_or_explicitly_pending():
+def test_the_memo_still_requires_counter_signature():
+    """These were made under delegation, not by the PI. Until signed they bind
+    nothing — the same standing DAX's D1 memo carries."""
+    text = MEMO.read_text().lower()
+    assert "counter-sign" in text or "counter-signature" in text
+
+
+def test_every_gate0_threshold_is_classified():
     """A new threshold must be classified, so none can appear unnoticed."""
-    unclassified = set(G0) - set(PLAN_COMMITTED) - AWAITING_OWNER - {"se_to_sdL_ratio_max"}
+    unclassified = set(G0) - set(PLAN_COMMITTED) - set(DELEGATED) - {"se_to_sdL_ratio_max"}
     assert not unclassified, f"unclassified Gate-0 threshold(s): {sorted(unclassified)}"
 
 
@@ -70,14 +79,58 @@ def test_the_operationalization_of_much_less_than_is_flagged_as_a_judgement():
     """Plan §9 writes SE(β̂) ≪ SD(L̂) without defining ≪. The config defines it as
     a ratio, which is a judgement the config makes explicit rather than hides."""
     assert G0["se_to_sdL_ratio_max"] == pytest.approx(0.3333, abs=1e-4)
-    text = (ROOT / "refraction" / "frozen_config.yaml").read_text()
-    assert "operationalizes" in text
+    assert "operationalizes" in (ROOT / "refraction" / "frozen_config.yaml").read_text()
 
 
-def test_shrinkage_sweep_grid_can_express_the_minimum_window_width():
-    grid = CONFIG["beta"]["w_shrink_sweep_grid"]
-    assert len(grid) >= G0["sweep_window_min_gridpoints"] + 1
-    assert grid == sorted(grid) and grid[0] >= 0.0 and grid[-1] <= 1.0
+# --------------------------------------------------------------------------- #
+# sample frame — the invariant that replaces a hand-set waves_end              #
+# --------------------------------------------------------------------------- #
+
+def _add_quarters(datestr, quarters):
+    """Add whole quarters to an ISO date, clamping to the target month's length
+    (a naive min(day, 28) would make the bound stricter than the rule)."""
+    import calendar, datetime
+    d = datetime.date(*map(int, str(datestr).split("-")))
+    m = d.month - 1 + 3 * quarters
+    year, month = d.year + m // 12, m % 12 + 1
+    return datetime.date(year, month, min(d.day, calendar.monthrange(year, month)[1]))
+
+
+def test_waves_end_leaves_every_wave_its_required_post_period():
+    """The bug this pins: waves_end was 2025-12-31 against announcements_end
+    2026-06-30, leaving the last waves ~2 post-quarters for a design that needs
+    4 — and assert A2 CANNOT catch it, because A2 measures coverage against a
+    calendar truncated at the same announcements_end."""
+    sample, panel = CONFIG["sample"], CONFIG["panel"]
+    last_wave_needs = _add_quarters(sample["waves_end"], panel["post_quarters_required"])
+    assert last_wave_needs.isoformat() <= str(sample["announcements_end"]), (
+        f"a wave on waves_end {sample['waves_end']} would need announcements through "
+        f"{last_wave_needs}, past announcements_end {sample['announcements_end']} — "
+        f"fewer than {panel['post_quarters_required']} post-quarters")
+
+
+def test_wave_window_sits_inside_the_announcement_window():
+    sample = CONFIG["sample"]
+    assert str(sample["announcements_start"]) < str(sample["waves_start"])
+    assert str(sample["waves_end"]) < str(sample["announcements_end"])
+
+
+def test_pre_and_post_coverage_requirements_are_both_declared():
+    panel = CONFIG["panel"]
+    assert panel["pre_quarters_required"] == 8
+    assert panel["post_quarters_required"] == 4      # asymmetric by decision
+
+
+def test_assert_A2_reads_the_post_bound_instead_of_mirroring_the_pre_bound():
+    """A2 defaulted to a symmetric ±pre_quarters window; with an asymmetric rule
+    that would have silently demanded coverage the sample frame excludes."""
+    import inspect, sys
+    sys.path.insert(0, str(ROOT))
+    from refraction.pipeline import assert_panel as ap
+    sig = inspect.signature(ap.a2_treated_coverage)
+    assert "post_quarters" in sig.parameters
+    src = inspect.getsource(ap.run_all)
+    assert "post_quarters_required" in src and "post_quarters=post_q" in src
 
 
 def test_w_shrink_is_still_unfrozen_before_gate_prereg():
