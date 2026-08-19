@@ -4,7 +4,9 @@
     "waves_end": "2025-12-31",
     "asset_class": "equity_US",
     "convexp_treated_min": 0.005,
-    "effective_cluster_warning_below": 10
+    "effective_cluster_warning_below": 10,
+    "treated_waves_min": 10,
+    "largest_treated_wave_share_max": 0.5
   },
   "events": {
     "rows_total": 131,
@@ -67,5 +69,16 @@
     "FILENAME: plan §4/§5 name conv_exposure.parquet; the built file is p1/conv_exposure_free.parquet.",
     "CONCENTRATION: 90.7% of treated stock-waves sit in a single wave (W002). Outside it the treated sample is 37 stock-waves across 9 waves. Plan §6 states the design is 'few, DFA-heavy'; this is the magnitude. Bears on §8.1 drop-DFA, §9 G5 power and §10 exit C.",
     "PERMNO: 6377/6377 rows carry no permno; CRSP merge coverage for the R2 panel is that much lower."
-  ]
+  ],
+  "assessment": {
+    "verdict": "NOT_VIABLE_AS_PANEL",
+    "reasons": [
+      "largest_wave_share_of_treated=0.907 > largest_treated_wave_share_max=0.5"
+    ],
+    "thresholds_applied": {
+      "treated_waves_min": 10,
+      "largest_treated_wave_share_max": 0.5
+    },
+    "consequence": "Pre-registered (R-DEC-1): NOT_VIABLE_AS_PANEL means the chapter does not proceed as a multi-wave panel. It may proceed as a single-event study with claims scoped to that event, or wait for more conversions. Thresholds may not be relaxed to clear this."
+  }
 }

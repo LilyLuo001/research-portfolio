@@ -64,3 +64,39 @@ def test_stock_key_is_cusip_not_permno():
         pytest.skip("no conv_exposure build present")
     assert cx["distinct_stocks_cusip"] > 0
     assert "permno_blank_rows" in cx, "permno coverage stays a reported diagnostic"
+
+
+# --- R-DEC-1: the audit must reach a verdict, not just emit flags ------------
+
+def test_concentration_breach_yields_not_viable():
+    """One wave carrying most of the treated mass is a case study, not a panel."""
+    import sys, pathlib
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+    from sample_scale_audit import compute_verdict
+
+    out = {"conv_exposure": {"treated_distinct_waves": 10,
+                             "largest_wave_share_of_treated": 0.907}, "flags": ["x"]}
+    cfg = {"treated_waves_min": 10, "largest_treated_wave_share_max": 0.5}
+    assessment = compute_verdict(out, cfg)
+    assert assessment["verdict"] == "NOT_VIABLE_AS_PANEL"
+    assert any("largest_wave_share" in r for r in assessment["reasons"])
+
+
+def test_flags_without_a_breach_are_degraded_not_ok():
+    """'Flags present' must never read as 'flags acceptable'."""
+    import sys, pathlib
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+    from sample_scale_audit import compute_verdict
+
+    out = {"conv_exposure": {"treated_distinct_waves": 25,
+                             "largest_wave_share_of_treated": 0.2},
+           "flags": ["FILENAME: ..."]}
+    cfg = {"treated_waves_min": 10, "largest_treated_wave_share_max": 0.5}
+    assert compute_verdict(out, cfg)["verdict"] == "DEGRADED"
+
+
+def test_committed_audit_carries_its_verdict():
+    import json, pathlib
+    d = json.loads((pathlib.Path(__file__).resolve().parents[1]
+                    / "sample_scale_audit.json").read_text())
+    assert d["assessment"]["verdict"] == "NOT_VIABLE_AS_PANEL"

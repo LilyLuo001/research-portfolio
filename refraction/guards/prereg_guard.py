@@ -104,6 +104,30 @@ def assert_prereg_ok(config_path: str | Path, now: datetime | None = None) -> Pr
     return st
 
 
+def assert_consensus_source(config_path: str | Path) -> str:
+    """R-DEC-3: refuse to build surprises without a named consensus source.
+
+    `surprise.consensus_source` was null and NOTHING checked it — no code
+    reference, no queue gate — in a chapter whose entire treatment is the
+    surprise component of macro announcements. A standardized surprise built
+    against an unnamed consensus is not a measurement, and the licence question
+    (Bloomberg ECO at BU vs a WRDS alternative) was sitting in a README as an
+    open NEED_HUMAN with nothing blocking on it.
+
+    Call at the top of R1b/R2 surprise construction.
+    """
+    cfg = yaml.safe_load(Path(config_path).read_text(encoding="utf-8")) or {}
+    source = (cfg.get("surprise") or {}).get("consensus_source")
+    if not source or not str(source).strip():
+        raise PreregError(
+            "BLOCKED: surprise.consensus_source is empty. The consensus channel "
+            "must be named and licensed before any standardized surprise is "
+            "built (REFR-GATE-consensus). Do not substitute a proxy series "
+            "without a signed amendment — the surprise IS the treatment."
+        )
+    return str(source)
+
+
 def assert_no_lookahead(max_data_date, wave_effective_date, *, what: str = "estimation input",
                         permno=None, wave=None) -> None:
     """A4 semantics: the latest date used to build a pre-period quantity must be

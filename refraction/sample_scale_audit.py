@@ -39,6 +39,9 @@ def load_config():
         "convexp_treated_min": g["convexp_treated_min"],
         "effective_cluster_warning_below":
             cfg["inference"]["effective_cluster_warning_below"],
+        # R-DEC-1: concentration thresholds, promoted into gate0_thresholds.
+        "treated_waves_min": g.get("treated_waves_min"),
+        "largest_treated_wave_share_max": g.get("largest_treated_wave_share_max"),
     }
 
 
@@ -107,6 +110,47 @@ def audit_convexp(cfg):
     }
 
 
+def compute_verdict(out, cfg):
+    """Mechanical verdict from the Gate-0 concentration thresholds (R-DEC-1).
+
+    The audit previously emitted five flags and no conclusion, so a reader could
+    take "flags present" for "flags acceptable". The thresholds are read from
+    frozen_config and never chosen here — same rule R3 operates under.
+    """
+    waves_min = cfg.get("treated_waves_min")
+    share_max = cfg.get("largest_treated_wave_share_max")
+    conv = out.get("conv_exposure", {})
+    treated_waves = conv.get("treated_distinct_waves")
+    largest_share = conv.get("largest_wave_share_of_treated")
+
+    reasons, verdict = [], "OK"
+    if waves_min is not None and treated_waves is not None and treated_waves < waves_min:
+        verdict = "NOT_VIABLE_AS_PANEL"
+        reasons.append(
+            f"treated_distinct_waves={treated_waves} < treated_waves_min={waves_min}")
+    if share_max is not None and largest_share is not None and largest_share > share_max:
+        verdict = "NOT_VIABLE_AS_PANEL"
+        reasons.append(
+            f"largest_wave_share_of_treated={largest_share:.3f} > "
+            f"largest_treated_wave_share_max={share_max}")
+    if verdict == "OK" and out.get("flags"):
+        verdict = "DEGRADED"
+        reasons.append("flags present but no concentration threshold breached")
+
+    return {
+        "verdict": verdict,
+        "reasons": reasons,
+        "thresholds_applied": {"treated_waves_min": waves_min,
+                               "largest_treated_wave_share_max": share_max},
+        "consequence": (
+            "Pre-registered (R-DEC-1): NOT_VIABLE_AS_PANEL means the chapter does "
+            "not proceed as a multi-wave panel. It may proceed as a single-event "
+            "study with claims scoped to that event, or wait for more "
+            "conversions. Thresholds may not be relaxed to clear this."
+        ),
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", default=None)
@@ -149,6 +193,7 @@ def main():
                          "for the R2 panel is that much lower."
                          % (cx["permno_blank_rows"], cx["rows_total"]))
     out["flags"] = flags
+    out["assessment"] = compute_verdict(out, cfg)
 
     text = json.dumps(out, indent=2, ensure_ascii=False)
     if a.json:
