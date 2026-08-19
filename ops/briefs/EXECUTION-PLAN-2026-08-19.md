@@ -1,4 +1,9 @@
-# Portfolio execution plan — 2026-08-19
+# DAX execution plan — 2026-08-19
+
+**Scope note (2026-08-19):** this was requested as a DAX plan. Sections 1, 2
+and 4 are DAX. Section 5 lists P1/E2/refraction only as parallel context so a
+DAX executor does not collide with them — it is not their plan. Refraction has
+its own evaluation at `refraction/EVALUATION-2026-08-19.md`.
 
 Written to be executed by an agent with no memory of this session. Every item
 states its owner, its precondition, what "done" means mechanically, and what to
