@@ -86,11 +86,13 @@ PR #38 already merged and is closed — **these commits are not in it**, so a ne
 PR is required. Do not reuse #38.
 **Done when:** a new PR exists and CI (`backbone`) is green.
 
-### A-2 · Two uncommitted files
-`refraction/fetch_r1a_sources.py` and `refraction/tests/test_fetch_r1a_sources.py`
-are written and tested (11 cases, part of the 263) but **uncommitted** at
-snapshot. Review them, then either commit or delete deliberately — do not leave
-them untracked.
+### A-2 · Review the R1a fetcher (committed, never yet run against the network)
+`refraction/fetch_r1a_sources.py` + its 11 tests are committed and green, but the
+script has **never executed against a live network** — every lane that produced
+it was egress-blocked. Its first real run belongs to Lane B (B-1), and its output
+should be eyeballed once before anyone trusts the registry it writes. Treat a
+first run that returns all-UNKNOWN rows as evidence about egress, not as a
+finding about the sources.
 
 ### A-3 · `REFR-R14-metaqa` (resident, mechanical)
 Cheap-tier ONLY (`Flash-Lite`/豆包 class — manual §R14 restricts this
