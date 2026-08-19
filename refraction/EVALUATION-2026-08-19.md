@@ -167,3 +167,58 @@ fail-closed. The problem is that a first-rate measurement instrument has been
 pointed at a sample the plan over-estimated by roughly six times, and the
 instrument's own report of that fact is not wired to anything that can stop the
 work.
+
+---
+
+# 5. Decisions taken, 2026-08-19 (delegated — override any of them)
+
+Recorded in `ops/decisions.md` as R-DEC-1…6.
+
+| # | Decision | Reversible? |
+|---|---|---|
+| R-DEC-1 | Concentration becomes a Gate-0 line: `treated_waves_min: 10`, `largest_treated_wave_share_max: 0.5`, with a pre-registered consequence | yes, but not by relaxing the threshold |
+| R-DEC-2 | `wave_id` added to `inference.cluster_dims` | yes |
+| R-DEC-3 | `REFR-GATE-consensus` added (blocks R1b) + `assert_consensus_source()` refuses while null | yes |
+| R-DEC-4 | `sample_scale_audit` emits a mechanical verdict | yes |
+| R-DEC-5 | `REFR-GATE-e2verdict` cleared as deferred-priority — unblocks R5+ | trivially |
+| R-DEC-6 | `REFR-GATE-etfglobal` failed, parking the R9 bypath | trivially |
+
+**The threshold in R-DEC-1 is not a number I chose.** It is
+`inference.effective_cluster_warning_below`, already registered in
+`frozen_config.yaml`, promoted from a warning to a gate. Picking a new number
+after seeing 90.7% would have been specification search; promoting the
+project's own registered concern level is not.
+
+**Mechanical verdict as it now stands: `NOT_VIABLE_AS_PANEL`** — and precisely
+so. `treated_distinct_waves = 10` sits exactly at the minimum and *passes*; it
+is `largest_wave_share_of_treated = 0.907 > 0.5` that fails. The count is
+borderline; the concentration is not.
+
+## What I deliberately did not decide
+
+**Whether the chapter proceeds.** R-DEC-1 makes that question *decidable* and
+pre-registers the consequence; it does not answer it. The live options are:
+
+1. **Single-event study.** Own W002 as the event, scope every claim to it, drop
+   the multi-wave panel language. Honest, publishable, smaller.
+2. **Wait for conversions.** The wave window ends 2025-12-31; more conversions
+   may accumulate. Costs time, changes nothing structural.
+3. **Re-scope the treatment threshold.** `convexp_treated_min = 0.005` against a
+   p99 of 0.008 is why the treated set is thin. Lowering it widens the sample —
+   **but doing so now, having seen that 0.005 fails, is specification search.**
+   If it is considered, it needs a signed amendment arguing the threshold on
+   economic grounds, not on the sample it produces.
+
+Option 3 is the tempting one and the one to be most careful with.
+
+**The E2 research verdict.** R-DEC-5 clears a *scheduling* gate, nothing more.
+No judgment about E2's merit is recorded or implied.
+
+## Still open after these decisions
+
+- `REFR-GATE-consensus` — name and license the CPI/NFP consensus channel.
+  Now blocks R1b in the DAG instead of sitting in a README.
+- C4 `permno` blank on all 6,377 rows — R10's stated input does not exist.
+- C6 the R13 scanner has still never produced output; run it once by hand and
+  commit the first `hits_*` before trusting the cron.
+- C7 the queue still shows 0/25 while R0 and R13 have landed.

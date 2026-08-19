@@ -1,7 +1,12 @@
 {
   "output": "refraction/sample_scale_audit.json",
-  "output_sha256": "99d603db53493d656b58ab0c97f588300a16e808cb90e579ed6756999763e35a",
+  "output_sha256": "2c6f035ac41f16e8b7a634d79e48fe9137a75e58701da5efe7b1fbf5496462b3",
   "inputs": [
+    {
+      "path": "refraction/frozen_config.yaml",
+      "sha256": "3f754b07497255ffb0bec7a3cdb16500a64d255b3ce3870b3d2d8edd31e1788c",
+      "rows": null
+    },
     {
       "path": "p1/events_merged.csv",
       "sha256": "758b2aeb5655ab48f50f53717e2c74d0b35f4a8fcae8df9f1f30b61b2023a821",
@@ -11,13 +16,8 @@
       "path": "p1/conv_exposure_free.parquet",
       "sha256": "350c3c7aed6d1bf047a8970f4d5940f37f1ec89e012876cb0f081668a5d2b4e7",
       "rows": null
-    },
-    {
-      "path": "refraction/frozen_config.yaml",
-      "sha256": "3dec531e223818f1e1c3d4c429ee63c98c9fb56ee9b6c2d4cec4219afad7ceaf",
-      "rows": null
     }
   ],
-  "code_version": "a83734cd8fefedcf57a663c396e4fe303a72a5a3",
-  "timestamp": "2026-08-18T12:02:11.405305+00:00"
+  "code_version": "06d7c3738d0f230f9423efca2f6b188358fb0e54",
+  "timestamp": "2026-08-19T01:36:01.230917+00:00"
 }
