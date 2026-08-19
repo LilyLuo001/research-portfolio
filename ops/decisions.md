@@ -405,3 +405,45 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 # SSH/venv breakage gates the WRDS pull itself, so it is the one worth fixing
 # while delivery is pending. Lane-owed: a web-capable session for R0/R1a, seat D
 # for the refraction cron line and for folding the data policy into COMPLIANCE.md.
+
+# REFRACTION AUDIT 2026-08-19 (seat C, owner-requested quality review of
+# refraction/ only). Full findings: refraction/AUDIT-2026-08-19.md.
+# VERDICT: machinery sound (iron rules are program invariants, 14/14 panel
+# asserts present, 90 tests green, no post-period column touched). The defects
+# are missing NUMBERS and two spec conflicts, all of which must be settled
+# BEFORE Gate-0 — settling them after seeing a diagnostic is specification
+# search regardless of who does it.
+# FIXED IN THIS PASS:
+#   - G1 threshold was missing entirely: surprise_coverage_min: 0.95 transcribed
+#     from Plan §9 (transcription, not a choice; R3 would otherwise hardcode it).
+#   - G4 and G6 thresholds do not exist anywhere to transcribe -> added as
+#     explicit nulls (d_b_mass_share_min, pretrend_joint_p_min) so R3 fails on
+#     the config read. Iron rule 4 as configuration.
+#   - §0.4 manifests were missing for two landed deliverables -> refraction/
+#     MANIFEST.md now covers every artifact with digests, limitations, UNKNOWNs.
+#   - New test file pins every Gate-0 threshold to its Plan v2.1 value and fails
+#     if a null one acquires a value without an owner decision recorded here.
+# OWNER DECISIONS NEEDED BEFORE R3 (four):
+#   1. d_b_mass_share_min — G4 "sufficient treatment mass with D_b >= 0.1".
+#   2. pretrend_joint_p_min — G6 "flat/zero"; DAX Decision 14 (joint p >= 0.10,
+#      no Holm-adjusted individual lead) is the obvious precedent.
+#   3. Plan §9 vs 执行手册 §R3: Plan puts median n_pre >= 30 INSIDE the G2 joint
+#      window; the 手册 sweeps three conditions and treats n_pre as a separate
+#      G3 line. This decides whether the feasible w_shrink window is non-empty,
+#      and an empty window is the Plan's own trigger for portfolio-level-or-kill.
+#   4. sample.waves_end is 2025-12-31 but p1/t2_wrds/waves.csv now runs to
+#      2026-11-20 (11 waves past the cap, some future-dated). Is the cap current,
+#      and what minimum post-period must a wave have? Assert A2 CANNOT catch a
+#      truncated post window — it measures coverage against a calendar that is
+#      itself truncated at announcements_end — so this needs a config line, not
+#      a code fix.
+# DISCLOSE AT R4/OSF (not a defect): S_std uses the FULL-SAMPLE in-sample std per
+# C0-R, so an early announcement's scale embeds later variance. Does not breach
+# the lookahead ban (rule 4 names beta/priors/L/weights), but state it and name
+# expanding-window standardization as the robustness variant.
+# PROCESS DEVIATIONS ON THE RECORD: R1b's transform half was built by this Claude
+# Code seat though the queue routes REFR-R1b-parse to deepseek (no channel pair,
+# so no cross-vendor breach — but the DeepSeek executor should EXTEND the adapter,
+# not rebuild the module); the R1b and fetcher work carried no lease and ran on
+# the harness-pinned branch rather than task/<id>. scan.py and fetch_r1a_sources.py
+# have never run live — treat their first output as evidence to review.

@@ -53,6 +53,16 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 6. R0/R1a retrieval lane: the seat-C container's egress policy blocks every
    primary source (frbsf/federalreserve/bls/ssrn/doi/arxiv/s2) — both tasks
    need a web-capable lane or a widened allowlist (ops/decisions.md 2026-08-18).
+7. **Gate-0 numbers that do not exist yet** (audit 2026-08-19, blocks R3):
+   `gate0_thresholds.d_b_mass_share_min` (G4 mass share) and
+   `pretrend_joint_p_min` (G6 "flat/zero" criterion) are null on purpose so R3
+   stops instead of inventing them.
+8. **Plan §9 vs 执行手册 §R3 conflict**: is median n_pre ≥ 30 inside the G2 joint
+   window or a separate G3 line? It decides whether the feasible window is
+   non-empty. Adjudicate before R3.
+9. **Wave window**: `sample.waves_end` is 2025-12-31 but P1's wave file now runs
+   to 2026-11-20 (11 waves past the cap). Is the cap current, and what is the
+   minimum post-period a wave needs? A2 cannot detect a truncated post window.
 
 Frozen P1 inputs (read-only, hash-registered when they exist): events_merged.csv,
 conv_exposure.parquet, holdings_weights.parquet, ibes_sue.parquet.

@@ -34,11 +34,38 @@ surprise:
   consensus_source: null           # NEED_HUMAN: Bloomberg ECO at BU vs WRDS alternative
 
 gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops/decisions.md
+  # --- G1 -------------------------------------------------------------------
+  surprise_coverage_min: 0.95      # G1: share of 2017-2026 scheduled releases with a
+                                   # usable S_a. TRANSCRIBED from Plan §9 week-1 pass
+                                   # line ("≥95% ... FOMC series complete regardless"),
+                                   # not chosen here. Added 2026-08-19: it was missing,
+                                   # which would have forced R3 to hardcode it.
+  # --- G4 / G6: NUMBERS THAT DO NOT EXIST ANYWHERE YET -----------------------
+  # Both are null ON PURPOSE. Plan §9 states these lines qualitatively only
+  # ("sufficient treatment mass with D_b ≥ 0.1"; "all three flat/zero"), so there
+  # is no number to transcribe. Null makes R3 fail loudly on the config read
+  # instead of inventing a threshold — iron rule 4 expressed as configuration.
+  # Choosing either AFTER seeing the diagnostic is specification search, so the
+  # owner must fill them in ops/decisions.md BEFORE Gate-0 runs.
+  d_b_mass_share_min: null         # G4: NEED_HUMAN — required share of treated mass
+                                   # with D_b >= d_b_min for the framing gate to clear
+  pretrend_joint_p_min: null       # G6: NEED_HUMAN — joint p above which the pre-trend
+                                   # triple counts as "flat/zero" (cf. DAX Decision 14,
+                                   # which uses joint p >= 0.10 and no Holm-adjusted lead)
+  # --- G2 -------------------------------------------------------------------
   sd_L_min: 0.25                   # G2: SD(L̂) among ConvExp>=convexp_treated_min stocks
   corr_L_convexp_max: 0.30         # G2
   se_share_min: 0.70               # G2: share of treated names with SE(β̂) << SD(L̂)
   se_to_sdL_ratio_max: 0.3333      # operationalizes "<<" for the line above
-  n_pre_median_min: 30             # G3
+  n_pre_median_min: 30             # G3 in the 执行手册's split — but SEE THE CONFLICT:
+                                   # Plan §9 puts "median pre-period announcements ≥ 30"
+                                   # INSIDE the G2 joint window (it must hold at the SAME
+                                   # w_shrink as the other three), while 执行手册 §R3 G2
+                                   # sweeps only [SD≥0.25, corr≤0.3, share≥70%] and treats
+                                   # n_pre as a separate G3 line. Whether the ≥30 median is
+                                   # a joint constraint materially changes whether the
+                                   # feasible window is non-empty. NEED_HUMAN: adjudicate
+                                   # before R3 (recorded 2026-08-19).
   d_b_min: 0.10                    # G4 basket distinctiveness |β_b^LOO − 1|
   mde_sigma_max: 0.5               # G5, for γ pooled AND γ_tilt AND γ_fac
   sweep_window_min_gridpoints: 2   # G2: window narrower than this = knife-edge = FAIL
