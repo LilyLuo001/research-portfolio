@@ -90,14 +90,22 @@ def main() -> int:
               "memo first and pass --force.", file=sys.stderr)
         return 1
 
-    if standard["benchmark"].get("version_status") != "RESOLVED":
-        print("REFUSING TO FREEZE — the benchmark version is unresolved.",
+    benchmark = standard["benchmark"]
+    benchmark_ready = (
+        benchmark.get("version_status") == "RESOLVED"
+        and benchmark.get("locator_status") == "VERIFIED"
+        and isinstance(benchmark.get("relative_decline"), (int, float))
+        and benchmark["relative_decline"] > 0
+    )
+    if not benchmark_ready:
+        print("REFUSING TO FREEZE — the benchmark value or locator is unresolved.",
               file=sys.stderr)
-        print(standard["benchmark"].get("version_note", ""), file=sys.stderr)
+        print(benchmark.get("version_note", ""), file=sys.stderr)
         print("\nM2 resolved the quantity (employment, not payroll). It did NOT "
-              "resolve WHICH version's figure to freeze. Set benchmark."
-              "version_status to RESOLVED, with the chosen value and a locator "
-              "to the text it came from, only on PI instruction.", file=sys.stderr)
+              "resolve WHICH version's figure to freeze. Set version_status to "
+              "RESOLVED and locator_status to VERIFIED, with a positive numeric "
+              "value and exact page/section locator, only through a signed "
+              "amendment.", file=sys.stderr)
         return 1
 
     if not args.extract.is_file():
@@ -107,7 +115,6 @@ def main() -> int:
     measured = compute(args.extract, window["start_month"], window["end_month"],
                        args.weight_column)
 
-    benchmark = standard["benchmark"]
     benchmark["baseline_employment_rate_22_25"] = round(
         measured["baseline_employment_rate_22_25"], 6)
     benchmark["baseline_hours_unconditional_22_25"] = round(

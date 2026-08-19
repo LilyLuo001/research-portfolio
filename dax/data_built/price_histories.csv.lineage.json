@@ -1,13 +1,18 @@
 {
   "output": "dax/data_built/price_histories.csv",
-  "output_sha256": "bb02948c8788ce3076b27bb3f1b57ec3753bd2659f04e7a3e30263bd0279aba1",
+  "output_sha256": "bc772b0ca3b8f0e4ab7d9a6badb1971b55a08190a95000cbee7015b67e4ca83d",
   "inputs": [
     {
       "path": "dax/memo/event_registry_v1.csv",
-      "sha256": "de537402422a7984a2b0c7c77e9f225ff99f69d0e512ba16e46b23b69dc4660e",
+      "sha256": "79b1a095144f8576b84b638a112664577927586dbdf2b30a225fbcb7ebdae475",
+      "rows": null
+    },
+    {
+      "path": "dax/data_raw/official_dated_price_evidence.csv",
+      "sha256": "2b5bf0e711b1470fce14d6ae209452a7c2b8daf0776fe25b474e59c7f276e510",
       "rows": null
     }
   ],
-  "code_version": "39d75b921d416258dde5a9b8cae33244edb42a70",
-  "timestamp": "2026-08-18T18:12:01.857369+00:00"
+  "code_version": "ca21dcb6c87db63564d6c7660a99f9680dde4ed4",
+  "timestamp": "2026-08-19T00:26:56.877773+00:00"
 }

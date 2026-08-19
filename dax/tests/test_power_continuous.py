@@ -93,6 +93,19 @@ def test_break_even_inverts_the_ceiling_formula():
     assert sample["employment"]["break_even_baseline"] == pytest.approx(0.5, abs=1e-6)
 
 
+def test_unverified_benchmark_cannot_emit_even_a_break_even_number():
+    sample = {"employment": {"mde80_per_0.10_dax": 0.0325},
+              "hours": {"mde80_per_0.10_dax": 1.0}}
+    spc.judge(sample, {"status": "PLACEHOLDER_REQUIRES_REAL_CPS",
+                       "standard": {"employment_mde_ceiling": None,
+                                    "hours_mde_ceiling": None,
+                                    "max_mde_fraction_of_benchmark": 0.5},
+                       "benchmark": {"relative_decline": None}})
+    assert sample["employment"]["adequately_powered"] is None
+    assert sample["employment"]["break_even_baseline"] is None
+    assert "lacks verified dated evidence" in sample["employment"]["break_even_note"]
+
+
 def test_frozen_standard_produces_a_real_verdict():
     sample = {"employment": {"mde80_per_0.10_dax": 0.02},
               "hours": {"mde80_per_0.10_dax": 0.5}}
@@ -109,6 +122,9 @@ def test_shipped_standard_is_unfrozen_and_carries_no_numbers():
     """The repository must not ship a guessed constant."""
     standard = json.loads((POWER / "power_standard.json").read_text())
     assert standard["status"] == "PLACEHOLDER_REQUIRES_REAL_CPS"
+    assert standard["benchmark"]["relative_decline"] is None
+    assert standard["benchmark"]["version_status"] == "UNRESOLVED"
+    assert standard["benchmark"]["locator_status"] == "PENDING_EXCERPT"
     assert standard["benchmark"]["baseline_employment_rate_22_25"] is None
     assert standard["standard"]["employment_mde_ceiling"] is None
     assert standard["frozen_window"]["end_month"] < "2023-03", \

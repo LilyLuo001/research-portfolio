@@ -29,3 +29,11 @@ def test_binding_exclusion_is_preserved():
     rows, _ = REGISTRY.validate()
     excluded = {row["event_id"] for row in rows if row["analysis_status"] == "excluded_binding"}
     assert "GPT45_PREVIEW_LAUNCH" in excluded
+
+
+def test_w2_verified_price_status_is_backed_by_panel():
+    rows, errors = REGISTRY.validate()
+    assert not errors
+    priced = [row for row in rows if row["price_status"] != "n_a"]
+    assert priced
+    assert all(row["price_status"] == "verified_w2" for row in priced)

@@ -14,7 +14,7 @@
     "weight_variable": null
   },
   "benchmark": {
-    "relative_decline": 0.19,
+    "relative_decline": null,
     "quantity": "relative decline in EMPLOYMENT (headcount), not payroll",
     "measured_in": "ADP administrative payroll data \u2014 'payroll' names the DATA SOURCE, not the outcome variable. This distinction is what M2 flagged.",
     "population": "workers ages 22-25 in the most AI-exposed occupations",
@@ -23,15 +23,15 @@
       "docs/DAX_ERE_Proposal_v3.md:12 (the claim, in the project's own proposal)",
       "docs/DAX_ERE_Proposal_v3.md:100 (the full reference)"
     ],
-    "version_status": "RESOLVED",
-    "version_note": "Figure moved across revisions of the same paper: 0.13 (version cited by DAX_ERE_Proposal_v3), reportedly 0.16 (later revision), 0.19 (August 2026, ADP through June 2026). PI chose 0.19 on 2026-08-18. This loosens the pass bar by ~46% relative to 0.13; the choice was made before any outcome data existed and before the frozen baseline was computed, so it cannot have been informed by a result.",
+    "version_status": "UNRESOLVED",
+    "version_note": "Figure moved across revisions of the same paper: 0.13 (version cited by DAX_ERE_Proposal_v3), reportedly 0.16 (later revision), and reportedly 0.19 (August 2026). The PI expressed a preference for 0.19 on 2026-08-18, but no dated page/section locator for that number is present. Because 0.19 loosens the pass bar by about 46 percent relative to 0.13, the executable benchmark remains null and unfrozen until the evidence requirement is satisfied or the PI signs an amendment reverting to the proposal's sourced 0.13 figure.",
     "baseline_employment_rate_22_25": null,
     "baseline_hours_unconditional_22_25": null,
-    "version_chosen": "August 2026 revision (ADP data through June 2026)",
-    "version_decided_by": "PI instruction, 2026-08-18",
-    "version_supersedes": 0.13,
+    "version_chosen": null,
+    "version_decided_by": null,
+    "version_supersedes": null,
     "locator_status": "PENDING_EXCERPT",
-    "locator_caveat": "0.19 is PI-directed. It is NOT yet sourced to a locator: every host carrying the paper (digitaleconomy.stanford.edu, thedocs.worldbank.org, bharatchandar.substack.com) is egress-blocked from the build environment, so no version was read and the figure rests on web-search summaries. The PI accepted this after the gap was stated. Upgrade locator_status to VERIFIED and record page/section once the Canaries_August2026.pdf excerpt is supplied. Until then any writeup citing this constant must say the figure is taken from the August 2026 revision without a page cite."
+    "locator_caveat": "The reported 0.19 value has no dated page/section locator in the evidence packet and therefore cannot enter an executable power standard. Upgrade locator_status to VERIFIED and record the exact page/section only after the source excerpt is supplied."
   },
   "standard": {
     "alpha_two_sided": 0.05,
