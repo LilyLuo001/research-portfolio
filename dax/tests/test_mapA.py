@@ -139,3 +139,15 @@ def test_release_guard_ignores_empty_text_fields():
     """A blank column is not a licence violation; only content is."""
     assert_release_safe([{"onet_task_id": "T1", "gdpval_task_id": "G1",
                           "gdpval_task_text": ""}])
+
+
+def test_release_guard_recurses_into_nested_receipts():
+    with pytest.raises(SystemExit, match="inputs.gdpval.prompt"):
+        assert_release_safe([{"inputs": {"gdpval": {"prompt": "private content"}}}])
+
+
+def test_release_guard_refuses_onet_statements_and_derived_content():
+    for field in ("onet_task_statement", "task_statement", "rubric_json",
+                  "derived_task_content"):
+        with pytest.raises(SystemExit, match="REFUSED"):
+            assert_release_safe([{field: "private content"}])

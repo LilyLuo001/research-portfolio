@@ -1,7 +1,7 @@
 # Mapping A (GDPval primary) — protocol and adjudication
 
-**Task:** DAX-W3-mapA. **Status:** protocol drafted 2026-08-18; not executed.
-**Blocked on:** `DAX-W2-data` (O*NET task statements are not yet built).
+**Task:** DAX-W3-mapA. **Status:** executed 2026-08-18 UTC; independent
+adjudication and audit remain pending.
 **Binding constraint:** the signed W0.5 feasibility condition — GDPval is
 referenced **by task ID** for internal research; no GDPval task text or derived
 task content enters W10a until redistribution rights are clarified.
@@ -12,23 +12,26 @@ robustness constructions and cannot rescue a sign conflict.
 
 ## 0. What this protocol produces
 
-`dax/mapping/mapping_a_gdpval.csv`, keyed `onet_task_id × gdpval_task_id`, under
-`ops/contracts/mapping_a_gdpval.yaml`. Every O*NET task appears exactly once —
-matched, queued, or unmatched. Plus a protocol run report with similarity
-distributions, coverage tables, the adjudication queue, and inter-rater
-statistics.
+The private run produces `mapping_a_gdpval.csv`, keyed
+`onet_task_id × gdpval_task_id`, under `ops/contracts/mapping_a_gdpval.yaml`.
+Every O*NET task appears exactly once — matched, queued, or unmatched. The
+ID-level mapping, coverage rows, and adjudication queue remain outside Git;
+`mapA_run_receipt.json` and `mapA_private_artifacts_manifest.json` expose only
+safe counts, distributions, hashes, and status.
 
-## 1. Embedding step (specified, not yet run)
+## 1. Embedding step (frozen and executed)
 
-Embed all O*NET task statements and the GDPval open gold subset with a
-**pinned open embedding model**, recording model name, version, revision hash,
-and dimension in the run lineage. The model is pinned because a silent upgrade
-would change every similarity score and therefore every crossing, with no diff
-to show for it.
+All O*NET task statements and the GDPval open gold subset were embedded with
+`sentence-transformers/all-MiniLM-L6-v2` at immutable revision
+`1110a243fdf4706b3f48f1d95db1a4f5529b4d41` (Apache-2.0, 384 dimensions).
+The ex-ante choice and blocking memo was committed before any similarity was
+computed. See `mapA_ex_ante_model_choice.md`.
 
-Cosine similarity, computed pairwise within occupation-adjacent blocks to keep
-the comparison tractable. No language model judges a match at this stage; the
-scores are code output on text, which is what meta-rule 1 requires.
+Cosine similarity was computed within deterministic occupation-adjacent blocks:
+the 10 nearest of 44 GDPval occupation labels for each official O*NET title,
+with all 5 tasks per selected label retained. No language model judged a match
+at this stage; the scores are code output on text, which is what meta-rule 1
+requires.
 
 **Perturbation-robust variant.** The execution plan requires both average-case
 and perturbation-robust π. The battery — paraphrase, reformatting, distractor
@@ -127,26 +130,23 @@ the violation would occur.
 Internal working files may hold task text; the guard applies to anything on a
 release path. A blank column is not a violation — only content is.
 
-## 8. What is deliberately not decided here
+## 8. Frozen execution decisions
 
-- **The embedding model.** Pinning it is a choice with real consequences for
-  every downstream number, and it should be made once W2 shows what the O*NET
-  statements actually look like. Recorded as an open item, not defaulted.
-- **The occupation-adjacent blocking scheme** for pairwise comparison, which
-  trades recall against compute and needs the real corpus size to settle.
-- **Whether the 0.60 floor survives contact with the real similarity
-  distribution.** If the distribution is bimodal with a trough well away from
-  0.60, the floor should move *before* any matching is adjudicated, and that
-  move is a §11 deviation with the distribution attached as evidence.
+The model, revision, pooling, 10-occupation block, and all four grading
+thresholds were frozen before inspecting mapping outcomes. The observed
+distribution did not trigger any tuning: the 0.60 floor, 0.80 auto-accept
+threshold, 0.05 margin, and 0.70 occupation-coverage floor remain unchanged.
 
 ## 9. Status of this protocol
 
-Sections 2 through 7 are implemented and tested in
-`dax/mapping/mapA_adjudication.py` and `dax/tests/test_mapA.py` (14 tests). The
-embedding step of §1 is specified but not implemented, because it needs O*NET
-task statements from `DAX-W2-data`.
+`run_mapA.py` executed twice with byte-identical ID-level outputs. It conserved
+all 19,259 O*NET tasks: 0 auto-accepted, 37 queued as grade C, and 19,222
+unmatched. Matched-or-queued task coverage is 0.00192118; the available 2021
+annual task-allocation-mass coverage is 0.00224610. All 923 occupations fall
+below the 0.70 coverage floor. This low coverage is reported rather than
+repaired by post-outcome tuning.
 
-When W2 lands, the only genuinely new component is the embedding call. That is
-the point of front-loading this: the judgment-heavy part is settled while it is
-cheap to argue about, and it is settled in code that fails when violated rather
-than in prose that can be forgotten.
+The 37-row queue is frozen and remains private. No B/C judgment has been
+self-certified. W3 remains dependent on independent cross-vendor annotation
+and the PI-decision-7 T1 audit before any queued judgment can be treated as
+audited.
