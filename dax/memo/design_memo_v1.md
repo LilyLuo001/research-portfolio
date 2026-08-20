@@ -536,18 +536,16 @@ by the occupation cluster structure rather than by within-cell person
 variation. These are not the same object and the memo does not pretend they
 are.
 
-The approximation is **conservative in a stated direction**: the simulation
-omits `X_i`, so it does not credit the design with the residual variance those
-covariates would explain. Omitted explanatory covariates raise residual
-variance, raise the standard error, and raise the minimum detectable effect.
-The simulated MDE is therefore an upper bound on the person-level MDE, and a
-design that passes in simulation passes a fortiori at person level. A design
-that *fails* in simulation is not thereby condemned, and that asymmetry is
-registered here so it cannot be invoked selectively later.
+No ordering between the cell and person-level MDE is asserted. Omitting `X_i`
+can raise residual variance, but aggregation also removes within-cell outcome
+variation and changes weights and leverage; without additional assumptions
+those forces do not sign the difference. The cell result is therefore only a
+smoke-test/planning calculation and can neither pass nor fail Gate 1.
 
-Once the frozen extract exists, the person-level estimator is run directly and
-its standard errors replace the simulated ones; the cell approximation is
-retained only for pre-data planning.
+The Gate-1 calculation runs the person-month estimator directly on the frozen
+pre-event extract, with post-event outcomes simulated against W5's real dose
+panel. Its occupation-clustered rejection rates and MDEs are the only power
+result used for the gate.
 
 The power simulation must model the continuous design on pre-event moments
 only, preserving occupation cluster sizes, person weights, crosswalk dose

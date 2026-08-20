@@ -20,18 +20,23 @@
     "population": "workers ages 22-25 in the most AI-exposed occupations",
     "citation": "Brynjolfsson, E., B. Chandar, and R. Chen. 2025. \"Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence.\" Working paper.",
     "locators": [
-      "docs/DAX_ERE_Proposal_v3.md:12 (the claim, in the project's own proposal)",
-      "docs/DAX_ERE_Proposal_v3.md:100 (the full reference)"
+      "docs/DAX_ERE_Proposal_v3.md:12 (proposal states 13 percent relative employment decline)",
+      "docs/DAX_ERE_Proposal_v3.md:100 (proposal reference)",
+      "Brynjolfsson, Chandar, Chen, August 26 2025 version, abstract, printed p.1 (13 percent relative employment decline)",
+      "same August 26 2025 version, Section 5 Conclusion, printed p.26, fourth bullet (13%)",
+      "https://govextra.gov.il/media/uhkbolnl/canaries_brynjolfssonchandarchen.pdf (archived copy of authored August 26 2025 document; SHA-256 75012cdca09a734e64e6dd75e635551286549343dd7549252284dea9dc454a7d)",
+      "Brynjolfsson, Chandar, Chen, November 13 2025 version, abstract, printed p.1 and Section 5 Conclusion, printed p.16 (16%, not 19%)",
+      "https://digitaleconomy.stanford.edu/wp-content/uploads/2025/11/CanariesintheCoalMine_Nov25.pdf (SHA-256 3b342bf604ed5c8fad8a232c9879345bcb7b71583f33d2acead28d531467a188)"
     ],
     "version_status": "UNRESOLVED",
-    "version_note": "Figure moved across revisions of the same paper: 0.13 (version cited by DAX_ERE_Proposal_v3), reportedly 0.16 (later revision), and reportedly 0.19 (August 2026). The PI expressed a preference for 0.19 on 2026-08-18, but no dated page/section locator for that number is present. Because 0.19 loosens the pass bar by about 46 percent relative to 0.13, the executable benchmark remains null and unfrozen until the evidence requirement is satisfied or the PI signs an amendment reverting to the proposal's sourced 0.13 figure.",
+    "version_note": "Independent source audit on 2026-08-19 verified 0.13 in the authored August 26 2025 document and 0.16 in the official November 13 2025 revision. It found no authored paper/proposal version, page, section, table, or exact quotation stating 0.19. The PI expressed a preference for 0.19 on 2026-08-18, but selecting 0.13 merely because it is available would override that unresolved version choice. Because 0.19 loosens the pass bar by about 46 percent relative to 0.13, the executable benchmark remains null and unfrozen pending an exact 0.19 locator or a signed amendment selecting a sourced version.",
     "baseline_employment_rate_22_25": null,
     "baseline_hours_unconditional_22_25": null,
     "version_chosen": null,
     "version_decided_by": null,
     "version_supersedes": null,
     "locator_status": "PENDING_EXCERPT",
-    "locator_caveat": "The reported 0.19 value has no dated page/section locator in the evidence packet and therefore cannot enter an executable power standard. Upgrade locator_status to VERIFIED and record the exact page/section only after the source excerpt is supplied."
+    "locator_caveat": "No exact 0.19 statement was located in the primary Canaries paper/proposal materials inspected on 2026-08-19. The 0.13 and 0.16 versions are verifiable but neither authorizes silently substituting a different PI-selected benchmark. Upgrade locator_status to VERIFIED only with a dated exact 0.19 locator or a signed amendment selecting a sourced version."
   },
   "standard": {
     "alpha_two_sided": 0.05,
