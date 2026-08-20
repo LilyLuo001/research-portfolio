@@ -13,6 +13,20 @@
   "cps_extract_name": "cps_extract.parquet",
   "w5_dose_panel_name": "w5_dose_panel.parquet",
   "w5_dose_panel_present": false,
+  "w5_handoff_check": {
+    "checked_at_utc": "2026-08-20T07:23:09Z",
+    "qualified_handoff_available": false,
+    "published_branch": "task/DAX-w5-dose-panel-20260819",
+    "published_commit": "4255f76d08a6afebc51c0d8751eb0f808a5e4069",
+    "published_receipt": "dax/data_raw/w5_dose_panel_blocker_receipt.json",
+    "published_receipt_status": "BLOCKED_MISSING_FROZEN_W3_W4_INPUTS",
+    "published_real_panel_constructed": false,
+    "published_identification_gate_run": false,
+    "mapping_a_frozen_handoff_available": false,
+    "w4_frozen_handoff_available": false,
+    "power_run_executed": false,
+    "reason": "No published real W5 dose panel and no sanitized identification receipt exist at the checked refs; the published W5 receipt remains fail-closed."
+  },
   "benchmark_value": null,
   "benchmark_version_status": "UNRESOLVED",
   "reps_planned": 999,
@@ -58,5 +72,5 @@
     "synthetic dose panel"
   ],
   "post_event_outcomes_read": false,
-  "generated_at_utc": "2026-08-18T17:15:15.462557+00:00"
+  "generated_at_utc": "2026-08-20T07:23:09Z"
 }
