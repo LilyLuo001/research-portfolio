@@ -14,18 +14,32 @@
   "w5_dose_panel_name": "w5_dose_panel.parquet",
   "w5_dose_panel_present": false,
   "w5_handoff_check": {
-    "checked_at_utc": "2026-08-20T07:23:09Z",
+    "checked_at_utc": "2026-08-20T09:38:08Z",
     "qualified_handoff_available": false,
+    "published_status_receipt_available": true,
     "published_branch": "task/DAX-w5-dose-panel-20260819",
-    "published_commit": "4255f76d08a6afebc51c0d8751eb0f808a5e4069",
+    "published_commit": "b4e44618472db15a6225ffb850f57509f01b141b",
+    "verified_prerequisite_commit": "4255f76d08a6afebc51c0d8751eb0f808a5e4069",
     "published_receipt": "dax/data_raw/w5_dose_panel_blocker_receipt.json",
-    "published_receipt_status": "BLOCKED_MISSING_FROZEN_W3_W4_INPUTS",
+    "published_receipt_status": "BLOCKED_UNQUALIFIED_W3_AND_MISSING_W4_MEASUREMENTS",
     "published_real_panel_constructed": false,
     "published_identification_gate_run": false,
-    "mapping_a_frozen_handoff_available": false,
-    "w4_frozen_handoff_available": false,
+    "mapping_a": {
+      "source_commit": "48cfdcacbf24e07a3185e8253785bd31cc65d1f2",
+      "accepted_rows": 0,
+      "unaudited_grade_c_queue_rows": 37,
+      "unmatched_rows": 19222
+    },
+    "w4": {
+      "source_commit": "2c634087447af61bbd2cdf3031ebe41a9aa4909e",
+      "duration_covered_rows": 0,
+      "task_universe_rows": 220,
+      "captured_rows": 0,
+      "blocked_rows": 220,
+      "realized_cost_usd": 0.0
+    },
     "power_run_executed": false,
-    "reason": "No published real W5 dose panel and no sanitized identification receipt exist at the checked refs; the published W5 receipt remains fail-closed."
+    "reason": "The published W5 status is fail-closed and non-constructible: W3 has zero accepted mappings and W4 has zero duration coverage and zero captured measurements. No real dose panel or sanitized identification result exists."
   },
   "benchmark_value": null,
   "benchmark_version_status": "UNRESOLVED",
@@ -72,5 +86,5 @@
     "synthetic dose panel"
   ],
   "post_event_outcomes_read": false,
-  "generated_at_utc": "2026-08-20T07:23:09Z"
+  "generated_at_utc": "2026-08-20T09:38:08Z"
 }
