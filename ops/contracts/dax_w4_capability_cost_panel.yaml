@@ -1,0 +1,69 @@
+# DAX W4 private capability/cost panel. The public repository carries this
+# schema, code, tests, and sanitized receipts only. Prompt text, task text,
+# raw responses, item outcomes, and panel rows remain in the private store.
+producer: DAX-W4-panel
+privacy: private_rows_never_committed
+primary_key:
+  - task_id
+  - event_id
+  - model_requested
+  - perturbation_id
+  - repetition_id
+  - pi_variant
+required_columns:
+  task_id: task identifier only; task text is forbidden
+  event_id: frozen event-registry identifier
+  event_date: ISO-8601 API-effective date
+  model_requested: exact dated snapshot or filed open-weight stand-in; explicit null for a blocked alias
+  model_returned: provider-returned model identifier for captured rows; explicit null for failed/blocked rows
+  model_vintage_date: ISO-8601 date when the requested identifier is dated
+  measurement_route: direct | approved_open_weight_standin | blocked_alias
+  source_model_id: historical model represented by this measurement
+  approved_rule_id: signed direct/stand-in rule; null only for a blocked alias lacking such a rule
+  perturbation_id: baseline | paraphrase | reformat | distractor
+  repetition_id: positive integer
+  seed_requested: integer or null
+  seed_applied: boolean
+  correctness_measure: frozen grader identifier and version
+  success: boolean
+  pi_variant: average_case | perturbation_robust
+  pi_successes: nonnegative integer; zero when measurement is not estimable
+  pi_trials: positive integer for captured rows; zero when measurement is not estimable
+  pi: value in [0, 1] for captured rows; null otherwise
+  pi_ci_lower: value in [0, 1] for captured rows; null otherwise
+  pi_ci_upper: value in [0, 1] for captured rows; null otherwise
+  pi_uncertainty_method: wilson_95 | not_estimable
+  task_duration_source: authorized frozen primary-source locator
+  task_duration_value: positive number or null when blocked
+  task_duration_unit: second | minute | hour | null when blocked
+  task_duration_status: verified | blocked_missing
+  input_tokens: nonnegative integer
+  cached_input_tokens: nonnegative integer
+  output_tokens: nonnegative integer; includes reasoning tokens when provider bills that way
+  reasoning_tokens: nonnegative integer
+  latency_ms: nonnegative number
+  price_lineage_version: frozen W2 price-panel version
+  price_lineage_sha256: lowercase SHA-256
+  input_usd_per_1m: nonnegative number
+  cached_input_usd_per_1m: nonnegative number
+  output_usd_per_1m: nonnegative number
+  realized_api_cost_usd: nonnegative number from metered usage and frozen prices
+  realized_cost_method: metered_usage_x_frozen_price
+  failure_status: none | measurement_failed | blocked
+  failure_code: stable sanitized code
+  model_availability: account_available | account_unavailable | unprobed_missing_key | excluded_binding | blocked_missing_approved_snapshot_rule | standin_provider_unconfigured
+  availability_probe_method: models_list_metadata | minimal_generation | none
+  availability_probed_at_utc: ISO-8601 timestamp or null
+  prompt_ciphertext_sha256: lowercase SHA-256; plaintext is forbidden
+  response_ciphertext_sha256: lowercase SHA-256 or null for a failed/blocked row
+  mapping_commit: exact W3 commit SHA
+  mapping_receipt_sha256: lowercase SHA-256
+  harness_version: semantic/schema version
+  harness_commit: exact W4 commit SHA
+binding_rules:
+  - gpt-4.5-preview is excluded; it has no qualified stand-in
+  - a current alias never substitutes for a dated snapshot without an approved cited rule
+  - missing duration blocks the row; duration is never inferred from task text or constant-filled
+  - average-case and perturbation-robust pi are separate rows
+  - output_tokens already include reasoning_tokens for OpenAI Responses cost accounting
+  - failed and unavailable rows remain explicit and are never guess-filled
