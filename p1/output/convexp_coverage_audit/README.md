@@ -13,9 +13,14 @@ python p1/output/convexp_coverage_audit/build_coverage_audit.py       # baseline
 python p1/output/convexp_coverage_audit/recover_denominators.py       # recovery scope (offline)
 # on the BOX (outbound HTTPS), to actually recover denominators:
 export SEC_UA="Boston University research <email>"
+python p1/t2_wrds/build_waves.py                 # regenerate waves + members
+python p1/t2_free/build_nport_convexp.py         # now emits the shares_held sidecar
 python p1/output/convexp_coverage_audit/recover_denominators.py --online \
        --shares-held p1/t2_free/dropped_cells_shares_held.csv
 ```
+The two pipeline steps are new to this sequence: the sidecar only exists from a build
+made after 2026-08-18. Step-by-step operator instructions, including what to check
+before pushing, are in `ops/briefs/P1-T2-recovery-BOX.md`.
 Both scripts are idempotent, logged, and take `--repo/--outdir`. They read only:
 `p1/conv_exposure_free.parquet`, `p1/t2_free/NEED_HUMAN_stocks.csv`,
 `p1/t2_free/NEED_HUMAN_funds.csv`, `p1/events_merged.csv`,
@@ -31,6 +36,24 @@ Both scripts are idempotent, logged, and take `--repo/--outdir`. They read only:
 - **DFA anchor** = wave W002, effective 2021-06-11 (the pre-registered anchor event).
 
 ## Three caveats a reviewer must know
+1. **Value-weighting is not available FROM THE COMMITTED ARTIFACTS — fixed in the
+   pipeline, lands with the next box build.** The build behind every number in this
+   directory retained only `cusip/ticker/wave` on a dropped cell, so value-weighted
+   *missingness* cannot be reconstructed from what is pushed today; everything here is
+   exact **cell-count** coverage, and `shares_held` exists only for the 6,377 computed
+   cells (+ the 18 stale cells, recovered from the log). As of 2026-08-18
+   `build_nport_convexp.py` retains `shares_held`, `valusd` and `n_funds` on every drop
+   (sidecar `p1/t2_free/dropped_cells_shares_held.csv`) and carries `valusd` on the
+   computed rows, so the next box run makes both value-weighted coverage and
+   post-recovery ConvExp computable. **Re-run this audit after that build** — until
+   then, read the coverage numbers here as cell counts only.
+2. **`p1/t2_wrds/waves.csv` WAS committed corrupt** (two concatenated schemas in one
+   file, unparseable); the tables here derive wave attributes from the clean
+   `waves_members.csv`. Root cause found 2026-08-18: `build_waves.py` itself held two
+   concatenated modules, and the second — 7-col schema, and it never wrote
+   `waves_members.csv` at all — shadowed the canonical one. Dead module removed; the
+   repaired script reproduces the committed `waves.csv` byte-for-byte and is guarded by
+   `p1/tests/test_t2_free_dropped_cells.py`.
 1. **Value-weighting is NOT available *for this audit vintage*.** The pipeline
    aggregated `shares_held` across funds within a wave and, for *dropped* cells,
    retained only `cusip/ticker/wave` — no `shares_held` or `valUSD` — so value-weighted
@@ -89,3 +112,55 @@ date, original ticker/CUSIP, resolved ticker, shares-out, as-of date, confidence
 re-flags: `conv_exp_gt_1_reject`, `conv_exp_ge_0.25pct_verify`, `small_denominator_review`,
 `foreign_or_adr_outside_US_universe`. Baseline ConvExp is never overwritten; recovery
 lands in new columns (`*_recovered`, `recovery_status`, `recovery_flag`).
+
+---
+
+# HANDOFF to seat C — one test failure, a real schema decision (2026-08-19)
+
+`main` was **red and silently so**: `p1/t2_free/build_nport_convexp.py` had an
+`IndentationError`, which breaks pytest *collection*, so `pytest -q` exited
+nonzero with **zero tests run**. CI has been failing and every guard in the
+repo — the outcome seal, the GDPval licence guard, the freeze guard, the
+window-survival pins — was unenforced for that whole period.
+
+Cause: merge `d5f314f` ("Merge branch 'main' into claude/p1-continuation-zgdcem"),
+not an authored commit. `5ac104c` itself parses. The merge spliced two variants
+of the dropped-cell writer and left 11 lines of unreachable, over-indented code.
+
+I removed **only** those 11 lines. 332 tests now pass. I deliberately did not
+prune anything else in your module.
+
+## The one remaining failure is yours to decide
+
+`test_sidecar_is_written_alongside_need_human` fails. Two variants of the same
+output were developed in parallel and the merge kept one in the reachable path
+while a test expects the other:
+
+| | writer | constant | value column |
+|---|---|---|---|
+| kept by the merge | `_write_dropped_cells` | `DROPPED_CELLS` | `valusd` |
+| now unreachable | `_write_dropped_sidecar` | `DROPPED_SIDECAR` | `val_usd` |
+
+**Both constants point at the same path** (`dropped_cells_shares_held.csv`), so
+they collide — you cannot call both.
+
+Evidence for the decision, gathered rather than assumed:
+
+- The real consumer, `recover_denominators.py:206`, reads with `csv.DictReader`
+  and accesses `r["cusip"]`, `r["wave_id"]`, `r["shares_held"]` **by name**. So
+  `_write_dropped_sidecar`'s docstring claim that its column *order* matters
+  "because that is the shape recover_denominators.py documents" is not true of
+  the current consumer. Either variant satisfies it.
+- `test_t2_free_dropped_cells.py` and the coverage-audit README both expect
+  `valusd`; `test_build_nport_convexp.py` expects the sidecar variant. Two test
+  files encode the two variants, which is why one must fail.
+- The deeper problem: `_cell_rows` emits **both spellings** depending on path —
+  `valusd` at lines 573 and 713, `val_usd` at 602 and 635. Picking a writer
+  without fixing the record builder just moves the inconsistency.
+- Nothing in `convexp_coverage_audit/` reads either spelling from the sidecar
+  yet, so no downstream result changes today whichever you choose.
+
+Recommendation: fix `_cell_rows` to emit one spelling, delete the losing
+writer and its constant and test, and keep the survivor. I have not done this
+because the schema choice is yours and the value-weighted coverage work depends
+on it.

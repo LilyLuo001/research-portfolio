@@ -1,0 +1,20 @@
+# P1-T3 spec-phase output — 《变量构造规格书》.
+# docs/Project_1.md §230 freezes it as a T3 artifact consumed by T5 and T9.
+# Narrative, so the contract is existence plus the sections the T3 prompt
+# (§120-125) actually requires: one section per spine, and an explicit
+# DECISION_NEEDED register.
+#
+# The prompt's five-column requirement per variable — 数学定义 | 数据表与字段 |
+# 已知文献口径出处 | 边界情形处理 | 合理值域 — is not mechanically checkable
+# here; it is what the T3-decision human gate reads for. What IS checkable is
+# that no spine was quietly dropped and that the DECISION_NEEDED register exists
+# rather than the spec silently defaulting a contested convention, which §125
+# forbids.
+producer: P1-T3-spec
+format: markdown
+required_sections:
+  - "脊柱一"
+  - "脊柱二"
+  - "脊柱四"
+  - "DECISION_NEEDED"
+  - "合理值域"

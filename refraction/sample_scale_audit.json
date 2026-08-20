@@ -1,0 +1,84 @@
+{
+  "config": {
+    "waves_start": "2021-03-01",
+    "waves_end": "2025-12-31",
+    "asset_class": "equity_US",
+    "convexp_treated_min": 0.005,
+    "effective_cluster_warning_below": 10,
+    "treated_waves_min": 10,
+    "largest_treated_wave_share_max": 0.5
+  },
+  "events": {
+    "rows_total": 131,
+    "by_asset_class": {
+      "equity_US": 36,
+      "fixed_income": 36,
+      "equity_intl": 25,
+      "other": 9
+    },
+    "equity_US_total": 36,
+    "equity_US_in_wave_window": 32,
+    "distinct_effective_dates_in_window": 22,
+    "distinct_families_in_window": 23,
+    "undated_rows": 0,
+    "aum_populated_rows": 0,
+    "aum_sum_usd": null,
+    "plan_v2_1_stated_conversions": 203,
+    "plan_v2_1_stated_aum_usd": 260000000000.0
+  },
+  "conv_exposure": {
+    "status": "OK",
+    "path": "p1/conv_exposure_free.parquet",
+    "path_matches_plan_name": false,
+    "rows_total": 6377,
+    "distinct_waves": 49,
+    "distinct_stocks_cusip": 2241,
+    "convexp_treated_min": 0.005,
+    "treated_rows": 398,
+    "treated_distinct_stocks_cusip": 389,
+    "treated_distinct_waves": 10,
+    "waves_with_ge_10_treated": 2,
+    "largest_wave_share_of_treated": 0.907035175879397,
+    "largest_wave_id": "W002",
+    "treated_rows_by_wave": {
+      "W002": 361,
+      "W019": 12,
+      "W064": 8,
+      "W008": 6,
+      "W075": 3,
+      "W020": 3,
+      "W007": 2,
+      "W003": 1,
+      "W043": 1,
+      "W065": 1
+    },
+    "treated_rows_excl_largest_wave": 37,
+    "treated_waves_excl_largest": 9,
+    "conv_exp_quantiles": {
+      "0.5": 0.00023545917329853634,
+      "0.9": 0.0033105054125240566,
+      "0.99": 0.008036173932322243,
+      "1.0": 0.2608887789012232
+    },
+    "pre_etf_ownership_populated": 6377,
+    "permno_blank_rows": 6377
+  },
+  "flags": [
+    "SCALE: plan v2.1 §2 states 203 conversions; 32 equity_US rows fall in the §sample wave window [2021-03-01, 2025-12-31].",
+    "AUM: plan §2 quotes ~$260B; AUM_at_conversion_USD is empty in every row, so the figure is not reproducible from the file.",
+    "FILENAME: plan §4/§5 name conv_exposure.parquet; the built file is p1/conv_exposure_free.parquet.",
+    "CONCENTRATION: 90.7% of treated stock-waves sit in a single wave (W002). Outside it the treated sample is 37 stock-waves across 9 waves. Plan §6 states the design is 'few, DFA-heavy'; this is the magnitude. Bears on §8.1 drop-DFA, §9 G5 power and §10 exit C.",
+    "PERMNO: 6377/6377 rows carry no permno; CRSP merge coverage for the R2 panel is that much lower."
+  ],
+  "assessment": {
+    "verdict": "NOT_VIABLE_AS_PANEL",
+    "reasons": [
+      "largest_wave_share_of_treated=0.907 > largest_treated_wave_share_max=0.5"
+    ],
+    "thresholds_applied": {
+      "treated_waves_min": 10,
+      "largest_treated_wave_share_max": 0.5
+    },
+    "consequence": "Pre-registered (R-DEC-1): NOT_VIABLE_AS_PANEL means the chapter does not proceed as a multi-wave panel. It may proceed as a single-event study with claims scoped to that event, or wait for more conversions. Thresholds may not be relaxed to clear this."
+  }
+}

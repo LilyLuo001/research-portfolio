@@ -75,3 +75,41 @@ def test_lookahead_boundary():
         assert_no_lookahead(date(2023, 1, 2), date(2023, 1, 2))  # equal = violation
     with pytest.raises(LookaheadError):
         assert_no_lookahead("2023-06-01", "2023-01-02", permno=1001, wave="W1")
+
+
+# --- R-DEC-3: the consensus source must be named before surprises are built ---
+
+def test_consensus_source_guard_blocks_while_null(tmp_path):
+    """The chapter's treatment IS the surprise; an unnamed consensus is not one.
+
+    This was an open NEED_HUMAN with no gate node and no code check.
+    """
+    import sys, pathlib, yaml
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "guards"))
+    import prereg_guard as g
+
+    cfg = tmp_path / "c.yaml"
+    cfg.write_text(yaml.safe_dump({"surprise": {"consensus_source": None}}))
+    with pytest.raises(g.PreregError, match="consensus_source"):
+        g.assert_consensus_source(cfg)
+
+
+def test_consensus_source_guard_passes_when_named(tmp_path):
+    import sys, pathlib, yaml
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "guards"))
+    import prereg_guard as g
+
+    cfg = tmp_path / "c.yaml"
+    cfg.write_text(yaml.safe_dump({"surprise": {"consensus_source": "Bloomberg ECO"}}))
+    assert g.assert_consensus_source(cfg) == "Bloomberg ECO"
+
+
+def test_shipped_config_still_has_consensus_unnamed():
+    """Regression: if this passes, someone filled it — check it was licensed."""
+    import sys, pathlib, yaml
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "guards"))
+    import prereg_guard as g
+
+    config = pathlib.Path(__file__).resolve().parents[1] / "frozen_config.yaml"
+    with pytest.raises(g.PreregError):
+        g.assert_consensus_source(config)

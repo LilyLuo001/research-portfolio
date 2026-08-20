@@ -11,13 +11,25 @@
     "E2-T1-facts",
     "P1-GATE-t2a",
     "P1-T0-crash",
-    "E2-T9b-scenarios"
+    "E2-T9b-scenarios",
+    "P1-T1-events",
+    "P1-T1-events-B",
+    "P1-T1-arb",
+    "P1-T2-wrds",
+    "P1-T1-spotcheck",
+    "P1-T2-killswitch",
+    "REFR-GATE-e2verdict"
   ],
   "gates_cleared": [
     "P1-GATE-t2a",
-    "DAX-GATE-feasibility"
+    "DAX-GATE-feasibility",
+    "P1-T1-spotcheck",
+    "P1-T2-killswitch",
+    "REFR-GATE-e2verdict"
   ],
-  "gates_failed": [],
+  "gates_failed": [
+    "REFR-GATE-etfglobal"
+  ],
   "attempts": {
     "DAX-W0.5-legwork": 1,
     "E2-T2-dune": 1

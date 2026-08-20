@@ -9,7 +9,13 @@
 # price_status is the two-channel verdict and is the field W5 must gate on:
 #   verified        both channels agree — usable in the primary analysis
 #   single_channel  only the git price table; date interval is an upper bound
-#   conflict        archived official page shows a different price — human gate
+#   conflict        archived official page shows a different price, OR the price
+#                   predates the model's own registry launch date — human gate
+#
+# date_coherence = ok | precedes_registry_launch | no_registry_date
+#   A price dated before the model launched is chronologically impossible, so a
+#   `verified` on such a row is demoted to `conflict`: either the registry date
+#   or the price observation is wrong and the panel cannot say which.
 # Absent prices are absent rows, never zero-filled (meta-rule 4).
 producer: DAX-W2-data
 primary_key: [model_id, price_kind, effective_date_latest]
@@ -25,4 +31,5 @@ columns:
   channel_web_status: {required: true}
   channel_web_snapshot: {}
   channel_web_locator: {}
+  date_coherence: {required: true}
   notes: {}

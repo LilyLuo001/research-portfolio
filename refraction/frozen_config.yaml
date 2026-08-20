@@ -42,7 +42,18 @@ gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops
   d_b_min: 0.10                    # G4 basket distinctiveness |β_b^LOO − 1|
   mde_sigma_max: 0.5               # G5, for γ pooled AND γ_tilt AND γ_fac
   sweep_window_min_gridpoints: 2   # G2: window narrower than this = knife-edge = FAIL
-  convexp_treated_min: 0.005       # binary-treatment line (P1 convention, 0.5%)
+  convexp_treated_min: 0.005
+  # --- R-DEC-1 (2026-08-19): treated-side concentration becomes a Gate-0 line.
+  # G1-G6 as written contain no cluster or wave count, so Gate-0 could pass on a
+  # design whose treated mass sits in one wave. The number is NOT newly chosen:
+  # it is inference.effective_cluster_warning_below, already registered in this
+  # file, promoted from a warning to a gate. Promoting an existing threshold
+  # rather than inventing one is what keeps this from being a post-hoc choice.
+  treated_waves_min: 10
+  # No single wave may carry more than this share of treated stock-waves. Set at
+  # the natural "no majority" point rather than tuned; a design in which one
+  # wave is more than half the treated mass is a case study, not a panel.
+  largest_treated_wave_share_max: 0.5       # binary-treatment line (P1 convention, 0.5%)
 
 sample:
   announcements_start: "2017-01-01"
@@ -72,6 +83,13 @@ heterogeneity:                     # frozen five-item set, interactions capped a
   romano_wolf_families: [spine1, spine2, spine3, spine4, heterogeneity]
 
 inference:
-  cluster_dims: [announcement_date, wave_industry]
+  # R-DEC-2 (2026-08-19): wave_id added. The treated concentration lives in the
+  # WAVE dimension (90.7% of treated stock-waves in W002 per
+  # sample_scale_audit.json), and neither announcement_date nor wave_industry
+  # spans it — so standard errors clustered on the original two dimensions do
+  # not price the risk that nearly all treated variation comes from one
+  # conversion wave. G5's MDE is only honest once the clustering covers the
+  # dimension the concentration is in.
+  cluster_dims: [announcement_date, wave_industry, wave_id]
   ri_permutations: {conversion_dates: 1000, announcement_labels: 1000, lever_within_treated: 1000}
   effective_cluster_warning_below: 10

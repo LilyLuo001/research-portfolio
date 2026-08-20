@@ -1,0 +1,31 @@
+{
+  "contract": "DAX_W5_BALANCED_OCCUPATION_MONTH_DOSE_V1",
+  "unit": "one row per original CPS OCC2010 code and calendar month",
+  "format": ["parquet", "csv"],
+  "required_columns": {
+    "cps_occ": "integer-valued original CPS OCC2010 code",
+    "month": "first day of month, parseable as YYYY-MM-DD",
+    "dax": "cumulative DAX level in [0,1]",
+    "industry": "W5 frozen occupation industry label used by the identification gate",
+    "static_decile": "frozen occupation exposure decile, integer 1..10",
+    "weight": "strictly positive W5 design weight"
+  },
+  "hard_requirements": [
+    "unique cps_occ-month keys",
+    "balanced panel over at least two occupations",
+    "contiguous months spanning 2021-11 and at least 2023-03",
+    "static_decile constant within cps_occ",
+    "nonzero post-event DAX variation",
+    "no outcome-like columns"
+  ],
+  "forbidden_column_tokens": [
+    "employment", "hours", "wage", "earnings", "outcome", "empstat",
+    "uhrsworkt", "payroll"
+  ],
+  "not_substitutes": [
+    "entrant companion",
+    "occupation-month outcome cells",
+    "synthetic event doses"
+  ],
+  "executable_validator": "person_level_power.validate_w5_dose_panel"
+}

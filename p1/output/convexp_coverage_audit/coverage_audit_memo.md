@@ -123,6 +123,38 @@ the final publishable one.
    `build_nport_convexp.py` that would have mis-run on the next box execution.
    `contracts.py conv_exposure_free p1/conv_exposure_free.parquet` now **PASSES**
    (6,377 rows, 13 cols). No data mutation was needed.
+1. **Fix the corrupt `p1/t2_wrds/waves.csv` — RESOLVED 2026-08-18.** The audit had
+   regenerated the file; the open half was "verify `build_waves.py` doesn't re-corrupt
+   it," and it did. The script held two concatenated modules and the second one won:
+   7-col schema, and it never wrote `waves_members.csv` — the file the ConvExp pipeline
+   actually reads — so the next run would have rewritten `waves.csv` wrong and left the
+   members file stale. Same merge-corruption signature as issue 0 and as the duplicated
+   header in `build_nport_convexp.py` (also removed). Dead module dropped, entry point
+   restored, CSV writers pinned to LF; the repaired script now reproduces the committed
+   `waves.csv` byte-for-byte.
+2. **Retain `shares_held` on dropped cells — RESOLVED 2026-08-18.** All three drop sites
+   now route through `_dropped()` and the run emits
+   `p1/t2_free/dropped_cells_shares_held.csv` (cusip, ticker, wave_id, effective_date,
+   reason, shares_held, valusd, n_funds, shares_out_bad, shares_out_date,
+   source_accessions) — the sidecar `recover_denominators.py --online --shares-held`
+   consumes. `NEED_HUMAN_stocks.csv` keeps its frozen 4-column schema. **The sidecar
+   only materialises on the next box build**, so the proof below is unblocked, not yet
+   delivered.
+3. **Run `recover_denominators.py --online` on the box** (SEC-renamed → yfinance →
+   Stooq): fixes the 18 stale, recovers ~1,800 renamed/acquired US names, and lets us
+   *prove* the ≥0.5% treated set is unchanged. **This is now the single open blocker on
+   a publishable ConvExp** — everything it needs is in the repo. Paste-and-run operator
+   brief: `ops/briefs/P1-T2-recovery-BOX.md`.
+4. **Add `valUSD` — RESOLVED 2026-08-18 (in code).** `valusd` now rides on the computed
+   rows as well as the dropped-cell sidecar, so value-weighted coverage becomes
+   computable from the next build. It is deliberately NOT yet declared in
+   `ops/contracts/conv_exposure_free.yaml`: the validator treats every declared column
+   as must-exist, and the committed parquet predates the change. Declare it in the same
+   commit that lands the new build (`strict_columns: false` lets it validate meanwhile).
+5. Decide the **international sleeve's** treatment for the paper: document that
+   equity_intl conversions (esp. Mirae W020) are largely out of a US-listed event study,
+   or scope a separate non-US analysis. Either way it belongs in the sample-definition
+   footnote, not treated as missing data.
 1. **Fix the corrupt `p1/t2_wrds/waves.csv`** (double-schema; regenerate 4-col cleanly).
    *(Regenerated during this audit; the "verify `build_waves.py` doesn't re-corrupt it"
    check was run 2026-08-18 and **failed** — the script carried two concatenated programs
@@ -162,3 +194,12 @@ the final publishable one.
 
 _Numbers cross-checked against `ops/briefs/gate2_human_review_manifest.json`; full tables in
 this directory; methods + caveats in README.md._
+
+---
+**Status note 2026-08-18 (seat C).** Gate 2 is signed GO and the runner state now
+records it (see `ops/decisions.md` → RECONCILED). Issues 1, 2 and 4 above are closed in
+code; issue 3 is the remaining blocker and needs a box with outbound HTTPS. Every number
+in this memo still describes the pre-patch build — **re-run
+`build_coverage_audit.py` after the next box build before quoting any of it in the
+paper.** T3 (variable spec) and T4 (Saglam–Tuzun replication) may proceed on the current
+feasibility-grade dataset; the final estimation run may not._

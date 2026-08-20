@@ -1,0 +1,90 @@
+{
+  "status": "PENDING_W5_DOSE_PANEL",
+  "gate_1_pass": false,
+  "unit": "person-month",
+  "cps_pre_event_contract": {
+    "rows": 71322,
+    "start_month": "2021-11",
+    "end_month": "2023-02",
+    "age_min": 22,
+    "age_max": 25,
+    "post_event_rows": 0
+  },
+  "cps_extract_name": "cps_extract.parquet",
+  "w5_dose_panel_name": "w5_dose_panel.parquet",
+  "w5_dose_panel_present": false,
+  "w5_handoff_check": {
+    "checked_at_utc": "2026-08-20T09:38:08Z",
+    "qualified_handoff_available": false,
+    "published_status_receipt_available": true,
+    "published_branch": "task/DAX-w5-dose-panel-20260819",
+    "published_commit": "b4e44618472db15a6225ffb850f57509f01b141b",
+    "verified_prerequisite_commit": "4255f76d08a6afebc51c0d8751eb0f808a5e4069",
+    "published_receipt": "dax/data_raw/w5_dose_panel_blocker_receipt.json",
+    "published_receipt_status": "BLOCKED_UNQUALIFIED_W3_AND_MISSING_W4_MEASUREMENTS",
+    "published_real_panel_constructed": false,
+    "published_identification_gate_run": false,
+    "mapping_a": {
+      "source_commit": "48cfdcacbf24e07a3185e8253785bd31cc65d1f2",
+      "accepted_rows": 0,
+      "unaudited_grade_c_queue_rows": 37,
+      "unmatched_rows": 19222
+    },
+    "w4": {
+      "source_commit": "2c634087447af61bbd2cdf3031ebe41a9aa4909e",
+      "duration_covered_rows": 0,
+      "task_universe_rows": 220,
+      "captured_rows": 0,
+      "blocked_rows": 220,
+      "realized_cost_usd": 0.0
+    },
+    "power_run_executed": false,
+    "reason": "The published W5 status is fail-closed and non-constructible: W3 has zero accepted mappings and W4 has zero duration coverage and zero captured measurements. No real dose panel or sanitized identification result exists."
+  },
+  "benchmark_value": null,
+  "benchmark_version_status": "UNRESOLVED",
+  "reps_planned": 999,
+  "seeds_planned": {
+    "employment": 20260819,
+    "hours_unconditional": 20260820
+  },
+  "effect_grids": {
+    "employment": [
+      -0.13,
+      -0.1,
+      -0.065,
+      -0.04,
+      -0.02,
+      0.0,
+      0.02,
+      0.04,
+      0.065,
+      0.1,
+      0.13
+    ],
+    "hours_unconditional": [
+      -4.0,
+      -3.0,
+      -2.0,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ]
+  },
+  "pending_dependencies": [
+    "real frozen W5 balanced occupation-month dose panel",
+    "verified exact locator for the PI-selected power benchmark"
+  ],
+  "substitutes_explicitly_rejected": [
+    "sparse entrant companion",
+    "occupation-month cell arithmetic",
+    "synthetic dose panel"
+  ],
+  "post_event_outcomes_read": false,
+  "generated_at_utc": "2026-08-20T09:38:08Z"
+}

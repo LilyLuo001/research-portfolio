@@ -172,3 +172,58 @@ def test_emitted_fields_match_the_frozen_contract():
     assert set(FIELDS) == set(contract["columns"]), "meta-rule 3: schema is frozen"
     for key in contract["primary_key"]:
         assert key in FIELDS
+
+
+# --- date coherence against the registry (found after Channel A ran) ---------
+
+def _price_row(model, latest, status="verified"):
+    return {"model_id": model, "price_kind": "input", "usd_per_1m": "5",
+            "effective_date_earliest": "", "effective_date_latest": latest,
+            "price_status": status, "channel_git_observed": latest,
+            "channel_git_locator": "repo@x:f.json", "channel_web_status": "corroborated",
+            "channel_web_snapshot": latest, "channel_web_locator": "https://x",
+            "date_coherence": "", "notes": ""}
+
+
+def _event(model, date):
+    return {"model_ids": model, "api_effective_date": date}
+
+
+def test_price_before_the_models_launch_cannot_stay_verified():
+    """A corroboration dated before the model existed is not evidence.
+
+    Real case: Channel A returned `corroborated` for gpt-5.6-* at 2026-06-30
+    against a registry launch of 2026-07-09.
+    """
+    from build_price_panel import apply_date_coherence, COHERENCE_EARLY
+
+    rows = [_price_row("gpt-5.6-luna", "2026-06-30")]
+    counts = apply_date_coherence(rows, [_event("gpt-5.6-luna", "2026-07-09")])
+    assert counts[COHERENCE_EARLY] == 1
+    assert rows[0]["date_coherence"] == COHERENCE_EARLY
+    assert rows[0]["price_status"] == "conflict", \
+        "an impossible corroboration must be demoted, not left reading as clean"
+    assert "registry dates this model to 2026-07-09" in rows[0]["notes"]
+
+
+def test_coherence_uses_the_earliest_registry_date_not_the_last():
+    """A model appearing in several events is anchored to its FIRST one.
+
+    Anchoring to the last row makes a price look early whenever the model has a
+    later price-cut event — which produced a false positive on first run.
+    """
+    from build_price_panel import apply_date_coherence, COHERENCE_OK
+
+    rows = [_price_row("o3-2025-04-16", "2025-04-30")]
+    events = [_event("o3-2025-04-16", "2025-04-16"),
+              _event("o3-2025-04-16", "2025-06-10")]   # later price-cut event
+    apply_date_coherence(rows, events)
+    assert rows[0]["date_coherence"] == COHERENCE_OK
+
+
+def test_coherence_leaves_untracked_models_explicit():
+    from build_price_panel import apply_date_coherence, COHERENCE_UNKNOWN
+
+    rows = [_price_row("not-in-registry", "2025-01-01")]
+    apply_date_coherence(rows, [_event("something-else", "2025-01-01")])
+    assert rows[0]["date_coherence"] == COHERENCE_UNKNOWN

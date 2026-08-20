@@ -64,13 +64,27 @@ def audit() -> dict[str, object]:
     event_rows, event_errors = event_validator.validate()
     structural_errors.extend(f"event registry: {error}" for error in event_errors)
 
+    # Restructured 2026-08-19 for the D1 continuous primary, per the red team's
+    # required change ("remove or mark as superseded the discrete-design columns
+    # and add continuous-dose columns"). Under the continuous design every event
+    # contributes to the dose path, so the shell describes CONTRIBUTION rather
+    # than selection. The stack's window columns survive under a `secondary_`
+    # prefix because the stacked corroboration still uses them.
     shell_fields = {
         "event_id", "api_effective_date", "registry_status",
-        "source_verification", "primary_inclusion_rule", "window_rule",
-        "window_start", "window_end", "pre_months", "post_months",
+        "source_verification",
         "n_occupations", "n_treated_ge_0_01", "wage_bill_crossing_mass",
         "dose_p25", "dose_p50", "dose_p75", "dose_p90",
-        "max_effective_weight_share", "w5_fill_status",
+        # continuous primary
+        "dax_level_after_event_p50", "delta_dax_share_of_total_path",
+        "residualized_variance_share", "narrated_under_decision_1",
+        "leave_one_event_out_beta_shift",
+        # secondary stacked corroboration only
+        "secondary_inclusion_rule", "secondary_window_rule",
+        "secondary_window_start", "secondary_window_end",
+        "secondary_pre_months", "secondary_post_months",
+        "secondary_max_effective_weight_share",
+        "w5_fill_status",
     }
     try:
         with EVENT_TABLE_SHELL.open(newline="", encoding="utf-8") as handle:

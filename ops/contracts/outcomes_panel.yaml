@@ -1,0 +1,30 @@
+# P1-T3 implementation output — the quarterly outcome panel.
+# docs/Project_1.md §230 freezes this as: permno | yyyyq | 脊柱变量,
+# produced by T3's implementation phase (§126) and consumed by T5, T6, T7.
+#
+# WHY THIS IS DELIBERATELY THIN
+# The validator treats every DECLARED column as must-exist, so a column named
+# here that the build cannot yet produce turns the contract into a false
+# failure. Spines one and four (GNZ decomposition, FERC, IPT, Hou-Moskowitz,
+# Amihud, 1-R2, effective spread) are blocked on the literature package — their
+# 口径 has no admissible source yet (p1/t3_spec_preflight.md), so freezing their
+# column names now would be freezing a guess.
+#
+# What IS frozen is the part every downstream consumer actually keys on: the
+# panel grain, the merge keys, and the treatment variable. strict_columns is
+# false, so spine columns validate as they are added. Declare each one here in
+# the same commit that lands its builder — that is the rule-3 handshake.
+producer: P1-T3-impl
+primary_key: [permno, yyyyq]
+strict_columns: false
+columns:
+  # ---- grain + merge keys ----
+  permno: {required: true}          # CRSP permanent security number
+  yyyyq: {required: true}           # calendar quarter, e.g. 20212 — the panel grain
+  # ---- treatment, carried through from T2 so T5 needs one join, not two ----
+  conv_exp: {min: 0}                # treatment intensity at this stock's wave
+  wave_id: {}                       # which conversion wave treats this stock
+  effective_date: {}                # that wave's effective date
+  treated_post: {min: 0, max: 1}    # 1 if this quarter is after effective_date
+  # ---- controls the plan names as forced (P1_修订补丁 §修订3) ----
+  russell_change: {min: 0, max: 1}  # stock changed Russell status this quarter

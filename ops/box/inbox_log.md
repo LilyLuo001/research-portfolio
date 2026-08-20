@@ -439,3 +439,26 @@ L1 driver — 8 ready L1 task(s), mode=dry-run
   "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
 }[exit: 0]
 ```
+
+## 2026-08-19T01:34:59Z — inbox 925fd74c59a6 @ git 120f0c8
+```
+== host identity ==
+vm : /home/user/research-portfolio : 120f0c8
+== preflight: can this host reach the archive? ==
+cdx http=403
+archive reachable
+== channel B mirror (blobless clone on first run; ~83MB, then incremental) ==
+ops/box/inbox.sh: line 39: .venv/bin/python: No such file or directory
+== build price panel, both channels (Channel A capped at 600s) ==
+ops/box/inbox.sh: line 48: .venv/bin/python: No such file or directory
+== contract ==
+ops/box/inbox.sh: line 52: .venv/bin/python: No such file or directory
+== two-channel status counts ==
+ops/box/inbox.sh: line 55: .venv/bin/python: No such file or directory
+== next action ==
+If 'time budget reached' appeared above, re-arm: bump inbox-version and
+merge to main; the next cycle resumes from the cached verdicts.
+When every row is verified/conflict, W2's price half is done and the
+registry's pending_second_date_locator rows can be re-adjudicated.
+[exit: 0]
+```

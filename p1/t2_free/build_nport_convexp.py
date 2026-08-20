@@ -70,6 +70,12 @@ OUT = ROOT / "p1" / "conv_exposure_free.parquet"
 DIAG = HERE / "diagnostics.md"
 NH_FUNDS = HERE / "NEED_HUMAN_funds.csv"
 NH_STOCKS = HERE / "NEED_HUMAN_stocks.csv"
+# Sidecar: every DROPPED (cusip, wave) cell with the quantities the drop path
+# used to throw away. A dropped cell is a missing DENOMINATOR, never a missing
+# holding — shares_held/valUSD are known at drop time. Retaining them is what
+# lets recover_denominators.py --online recompute ConvExp on a recovered
+# denominator (and lets the audit value-weight its coverage).
+DROPPED_CELLS = HERE / "dropped_cells_shares_held.csv"
 DROPPED_SIDECAR = HERE / "dropped_cells_shares_held.csv"
 
 SEC_UA = os.environ.get("SEC_UA", "").strip()
@@ -92,6 +98,15 @@ CACHE_DIRS = (HERE, CACHE, CACHE / "sub", CACHE / "nport", CACHE / "xbrl",
               CACHE / "figi", CACHE / "price", CACHE / "fts")
 
 log = logging.getLogger("t2free")
+# The run log is an audit input (the coverage audit parses CONVEXP_GT1 lines out
+# of it), and FileHandler(mode="w") truncates on import — so tests and any other
+# importer redirect it with T2FREE_LOG instead of destroying the committed run.
+LOGFILE = pathlib.Path(os.environ.get("T2FREE_LOG")
+                       or (HERE / "build_nport_convexp.log"))
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout),
+              logging.FileHandler(LOGFILE, mode="w")])
 
 
 def _setup_run():
@@ -545,6 +560,23 @@ def shares_outstanding(stock_cik, on_date):
 # --------------------------------------------------------------------------- #
 # main                                                                         #
 # --------------------------------------------------------------------------- #
+def _dropped(agg_cell, cusip, ticker, wave_id, eff, reason,
+             shares_out_bad=None, shares_out_date=""):
+    """One dropped (cusip, wave) cell, with the quantities the pipeline knows.
+
+    The 4 keys NEED_HUMAN_stocks.csv has always carried come first; the rest ride
+    along for the sidecar (_write_need_human drops them with extrasaction=ignore,
+    so that file's frozen schema is unchanged).
+    """
+    return {"cusip": cusip, "ticker": ticker, "wave_id": wave_id, "reason": reason,
+            "effective_date": eff,
+            "shares_held": agg_cell["shares_held"],
+            "valusd": agg_cell["valusd"],
+            "n_funds": len(agg_cell["funds"]),
+            # only set on the conv_exp>1 path: the denominator we refused to use
+            "shares_out_bad": "" if shares_out_bad is None else shares_out_bad,
+            "shares_out_date": shares_out_date,
+            "source_accessions": ";".join(sorted(agg_cell["accs"]))}
 def _cell_rows(agg, tcik, so_lookup):
     """Turn aggregated (cusip, wave) cells into ConvExp rows + drop records.
 
@@ -693,6 +725,49 @@ def main():
     # ---- Step 4: ticker -> stock CIK -> shares outstanding ---------------- #
     # cache shares_out per (stock_cik, effective_date) within the run
     so_cache = {}
+    for (cusip, wid), a in sorted(agg.items()):
+        ticker = a["ticker"]
+        eff = a["effective_date"]
+        stock_cik = tcik.get(ticker.upper()) if ticker else None
+        if not stock_cik:
+            log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
+            nh_stocks.append(_dropped(
+                a, cusip, ticker, wid, eff,
+                "no_ticker" if not ticker else "ticker_not_in_sec_map"))
+            continue
+        ck = (stock_cik, eff)
+        if ck not in so_cache:
+            so_cache[ck] = shares_outstanding(stock_cik, eff)
+        shares_out, so_end = so_cache[ck]
+        if not shares_out or shares_out <= 0:
+            log.warning("NO_SHARES_OUT cusip=%s ticker=%s cik=%s wave=%s",
+                        cusip, ticker, stock_cik, wid)
+            nh_stocks.append(_dropped(a, cusip, ticker, wid, eff,
+                                      "no_xbrl_shares_outstanding"))
+            continue
+        conv_exp = a["shares_held"] / shares_out
+        if conv_exp > 1.0:
+            log.info("CONVEXP_GT1 cusip=%s ticker=%s wave=%s exp=%.3f "
+                     "(shares_held=%.0f > shares_out=%.0f as of %s) -> NEED_HUMAN",
+                     cusip, ticker, wid, conv_exp, a["shares_held"], shares_out, so_end)
+            nh_stocks.append(_dropped(
+                a, cusip, ticker, wid, eff,
+                f"conv_exp>1 ({conv_exp:.3f}); shares_out date {so_end}",
+                shares_out_bad=shares_out, shares_out_date=so_end))
+            continue
+        # implied price from the fund's own N-PORT valuation (valUSD/shares) —
+        # a real market price near the report date, no external feed needed.
+        implied_px = (a["valusd"] / a["shares_held"]) if a["shares_held"] else None
+        mcap = implied_px * shares_out if implied_px else None
+        rows.append({"cusip": cusip, "ticker": ticker, "stock_cik": stock_cik,
+                     "permno": "", "wave_id": wid, "effective_date": eff,
+                     "conv_exp": conv_exp, "n_funds": len(a["funds"]),
+                     "mcap_decile": None, "_mcap": mcap,
+                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
+                     "shares_held": a["shares_held"],
+                     "valusd": a["valusd"],
+                     "shares_outstanding": shares_out,
+                     "source_accessions": ";".join(sorted(a["accs"]))})
 
     def so_lookup(stock_cik, eff):
         ck = (stock_cik, eff)
@@ -747,17 +822,30 @@ def _write_need_human(nh_funds, nh_stocks):
             w.writerows(nh_funds)
         log.info("NEED_HUMAN funds -> %s (%d)", NH_FUNDS, len(nh_funds))
     if nh_stocks:
-        # NEED_HUMAN_stocks.csv keeps its FOUR-column schema exactly — the
-        # coverage audit reads it positionally-by-name and a widened header is
-        # how the conv_exposure_free contract broke once already. The extra
-        # fields go to the sidecar below instead.
+        # frozen 4-col schema — the coverage audit and recover_denominators.py
+        # both read this file; extrasaction keeps the new sidecar fields out.
         with open(NH_STOCKS, "w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=["cusip", "ticker", "wave_id", "reason"],
-                               extrasaction="ignore")
+                               extrasaction="ignore", lineterminator="\n")
             w.writeheader()
             w.writerows(nh_stocks)
         log.info("NEED_HUMAN stocks -> %s (%d)", NH_STOCKS, len(nh_stocks))
-        _write_dropped_sidecar(nh_stocks)
+        _write_dropped_cells(nh_stocks)
+
+
+def _write_dropped_cells(nh_stocks):
+    """The shares_held/valUSD sidecar for dropped cells (memo items 2 + 4)."""
+    cols = ["cusip", "ticker", "wave_id", "effective_date", "reason",
+            "shares_held", "valusd", "n_funds", "shares_out_bad",
+            "shares_out_date", "source_accessions"]
+    with open(DROPPED_CELLS, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore",
+                           lineterminator="\n")
+        w.writeheader()
+        w.writerows(nh_stocks)
+    n_sh = sum(1 for r in nh_stocks if float(r.get("shares_held") or 0) > 0)
+    log.info("dropped-cell sidecar -> %s (%d cells, %d with shares_held>0)",
+             DROPPED_CELLS, len(nh_stocks), n_sh)
 
 
 def _write_dropped_sidecar(nh_stocks):

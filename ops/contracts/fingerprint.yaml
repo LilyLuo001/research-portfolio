@@ -1,0 +1,19 @@
+# P1-T6 output — the return fingerprint (spine two).
+# docs/Project_1.md §230 freezes it as 日 × CAR × 置信带, consumed by T8 and T9.
+#
+# Unlike outcomes_panel (quarterly), this is EVENT TIME and daily: it is the
+# treated-minus-control CAR wedge along [0, +120] that
+# docs/基金转换实验_博士研究计划.md §7 spine two defines. Its columns come from
+# §7 itself, not from the literature package, which is why this one can be
+# frozen in full today.
+producer: P1-T6-fingerprint
+primary_key: [event_type, group, event_day]
+strict_columns: false
+columns:
+  event_type: {required: true}      # 'own' | 'peer' — §7 runs the two separately
+  group: {required: true}           # 'treated' | 'control' | 'diff' (the wedge)
+  event_day: {required: true, min: -60, max: 120}   # trading days relative to t=0
+  car: {required: true}             # cumulative abnormal return to this day
+  ci_lo: {}                         # confidence band, low
+  ci_hi: {}                         # confidence band, high
+  n_obs: {min: 0}                   # stocks contributing at this event day
