@@ -3,6 +3,15 @@
 import pathlib
 import sys
 
+import pytest
+
+
+# The deterministic runner is tested on SCC under its frozen PyTorch/
+# Transformers stack. Generic CI intentionally omits those large model-runtime
+# dependencies, so it must skip this module rather than fail during collection.
+pytest.importorskip("torch")
+pytest.importorskip("transformers")
+
 
 MAPPING = pathlib.Path(__file__).resolve().parents[1] / "mapping"
 sys.path.insert(0, str(MAPPING))
