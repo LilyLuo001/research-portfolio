@@ -50,6 +50,27 @@ dax/data_raw/_litellm_mirror/
 # W2 price harvester: cached archive snapshots (re-fetchable, not source of truth)
 dax/data_raw/_wayback_cache/
 
+# W2 crosswalk: cached agency source files (re-fetchable, checksummed in the receipt)
+dax/data_raw/_crosswalk_raw/
+
+# Mapping A: GDPval/O*NET ID-level outputs stay private until redistribution
+# rights are affirmatively documented. Git carries sanitized receipts only.
+dax/mapping/mapping_a_gdpval.csv
+dax/mapping/mapA_adjudication_queue.csv
+dax/mapping/mapA_occupation_coverage.csv
+
+# DAX W4 private capture state. Production paths belong outside the checkout;
+# these guards prevent an accidental in-repo runtime configuration from being
+# staged. The signed budget ceiling and sanitized aggregate receipts remain
+# trackable by design.
+dax/capability_panel/.env
+dax/capability_panel/private/
+dax/capability_panel/runtime/
+dax/capability_panel/*.fernet
+dax/capability_panel/*.sqlite*
+dax/capability_panel/*checkpoint*.jsonl
+dax/capability_panel/*private_panel*.csv
+dax/capability_panel/*private_panel*.parquet
 # P1 WRDS sprint: raw pulls are large and licensed, and discovered_schema.json is
 # one connected session's machine-read inventory — both are box artifacts, not
 # source. p1/wrds/pull_scope.json IS tracked: it is derived offline from

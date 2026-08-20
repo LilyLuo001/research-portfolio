@@ -30,7 +30,11 @@ synthetic_power:  ## smoke-test W1 power code; output is explicitly non-evidenti
 
 data:            ; $(STAGE_MISSING)   # W2: O*NET/OEWS/IPUMS-CPS pulls -> data_raw/ (+checksums), data_built/
 map:             ; $(STAGE_MISSING)   # W3: mapping A/B/C -> mapping/
-panel:           ; $(STAGE_MISSING)   # W4: capability/cost panel -> capability_panel/
+panel:  ## W4 preflight only; live execution remains gated by W3, duration, availability, and signed USD ceiling
+	$(PY) -m capability_panel.availability \
+	  --registry capability_panel/vintage_registry.json \
+	  --output data_raw/w4_availability_audit_receipt.json
+	@echo "W4 preflight complete; this target does not perform paid capture"
 index:           ; $(STAGE_MISSING)   # W5: DAX index -> index/
 validate:        ; $(STAGE_MISSING)   # W6: validation suite
 firststage_synth:; $(STAGE_MISSING)   # allowed pre-gate: synthetic first stage only

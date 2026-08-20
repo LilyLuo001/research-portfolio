@@ -27,6 +27,8 @@ downstream use. Every provisional component must retain min/max bounds across
 its officially linked SOC/O*NET children or legacy sources. Equal shares are a
 diagnostic center, not a measured employment or task allocation.
 
+`build_crosswalk.py` predates this component-preserving production path and is
+not the canonical DAX builder.
 `build_crosswalk.py` predated this component-preserving production path and was
 **removed on 2026-08-19**, along with `sources.py`, `dax/tests/test_crosswalk.py`
 and `ops/contracts/cps_onet_crosswalk.yaml`.

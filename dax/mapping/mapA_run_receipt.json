@@ -1,0 +1,209 @@
+{
+  "adjudication_queue": {
+    "acceptance_rule": "weighted Cohen kappa >= 0.70 and binary crossing-relevant agreement >= 0.90",
+    "ambiguity_count": 0,
+    "audit_rule": "10% stratified by occupation family, score decile, and ambiguity flag",
+    "grade_counts": {
+      "C": 37
+    },
+    "machine_judgments_certified_as_audited": false,
+    "occupation_family_counts": {
+      "11": 8,
+      "13": 4,
+      "19": 1,
+      "21": 1,
+      "27": 2,
+      "29": 3,
+      "33": 4,
+      "37": 1,
+      "41": 8,
+      "43": 3,
+      "51": 1,
+      "53": 1
+    },
+    "score_decile_counts": {
+      "1": 4,
+      "10": 3,
+      "2": 4,
+      "3": 4,
+      "4": 3,
+      "5": 4,
+      "6": 4,
+      "7": 3,
+      "8": 4,
+      "9": 4
+    },
+    "size": 37,
+    "status": "FROZEN_PENDING_INDEPENDENT_CROSS_VENDOR_ANNOTATION_AND_T1_AUDIT"
+  },
+  "blocking": {
+    "candidate_count": {
+      "max": 50.0,
+      "mean": 50.0,
+      "min": 50.0,
+      "n": 923,
+      "p01": 50.0,
+      "p05": 50.0,
+      "p10": 50.0,
+      "p25": 50.0,
+      "p50": 50.0,
+      "p75": 50.0,
+      "p90": 50.0,
+      "p95": 50.0,
+      "p99": 50.0
+    },
+    "gdpval_occupation_labels_per_block": 10,
+    "method": "top-k semantic adjacency between official O*NET titles and GDPval occupation labels",
+    "n_onet_occupations": 923
+  },
+  "determinism_verification": {
+    "byte_identical_private_outputs": true,
+    "independent_execution_count": 2,
+    "mapping_sha256": "d1ebd110134a69807a94211691a1e1ef49ea8b478173dfc76e6be37b87468868",
+    "occupation_coverage_sha256": "294ba2754a12161a9a74122dc27ae7492514144fee8ded1ea2ff3fd71841ecdd",
+    "queue_sha256": "edfc03e56ecab88a8c756a6fc069b18e23d50678ff32dc98325ca1c49e22a625"
+  },
+  "executed_at_utc": "2026-08-18T17:46:54Z",
+  "inputs": {
+    "gdpval_open_gold": {
+      "rows": 220,
+      "sha256": "f8422fab9b21d90c0ee5f0659842ab666d418cb8940842918f9f4b0df7ae0202"
+    },
+    "onet_source_zip": {
+      "occupations": 1016,
+      "sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a"
+    },
+    "onet_timeshares": {
+      "rows": 19259,
+      "sha256": "62c6360c030d73948858c4930de17bb8f11aa6966bbd339d3397464fb8d8a40e"
+    },
+    "wage_allocations": {
+      "available": true,
+      "interpretation": "OEWS mean annual wage allocated across O*NET tasks; not employment-weighted dollars per completed task",
+      "n_usable_tasks": 15274,
+      "source_sha256": "dc071f8e6b091bf220a034ad9d85c71428cfd9f3737391ca17d045bc2930708c",
+      "total_annual_task_allocation_mass": 56074210.00000092,
+      "vintage": 2021
+    }
+  },
+  "lineage": {
+    "applied_evidence_sha": "bc2d9d3d063041a7981f466b5e9e81b7abb5ab4e",
+    "controlled_base_sha": "4255f76d08a6afebc51c0d8751eb0f808a5e4069",
+    "integration_sha": "dd1f97b51137ce88ad044f86b5453d29a9eed696",
+    "source_evidence_sha": "093aba628454d9bf740931654b5a51bc82bfe510",
+    "stable_evidence_patch_id": "a59896b6804c00882d62cb768c9232abe8530101"
+  },
+  "model": {
+    "cache_manifest": {
+      "files": [
+        {
+          "bytes": 612,
+          "path": "config.json",
+          "sha256": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41"
+        },
+        {
+          "bytes": 90888945,
+          "path": "pytorch_model.bin",
+          "sha256": "c3a85f238711653950f6a79ece63eb0ea93d76f6a6284be04019c53733baf256"
+        },
+        {
+          "bytes": 112,
+          "path": "special_tokens_map.json",
+          "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3"
+        },
+        {
+          "bytes": 466247,
+          "path": "tokenizer.json",
+          "sha256": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037"
+        },
+        {
+          "bytes": 350,
+          "path": "tokenizer_config.json",
+          "sha256": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b"
+        },
+        {
+          "bytes": 231508,
+          "path": "vocab.txt",
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        }
+      ],
+      "manifest_sha256": "b2bcf096e938078347f0f3eb7099898f79d51b16d8122bef472ffd3dc3ecfa06",
+      "n_files": 6
+    },
+    "dimension": 384,
+    "id": "sentence-transformers/all-MiniLM-L6-v2",
+    "license": "Apache-2.0",
+    "max_length": 256,
+    "pooling": "attention-mask mean pooling then L2 normalization",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "runtime": {
+      "python": "3.10.12",
+      "torch": "1.12.1+cu116",
+      "transformers": "4.25.1"
+    }
+  },
+  "private_manifest_sha256": "c52ff93790e03c44a66930fb47d829f8c5283fa2c4cb10ad188329a434dea8a6",
+  "private_outputs": {
+    "mapA_adjudication_queue.csv": {
+      "bytes": 7015,
+      "rows": 37,
+      "sha256": "edfc03e56ecab88a8c756a6fc069b18e23d50678ff32dc98325ca1c49e22a625"
+    },
+    "mapA_occupation_coverage.csv": {
+      "bytes": 39760,
+      "rows": 923,
+      "sha256": "294ba2754a12161a9a74122dc27ae7492514144fee8ded1ea2ff3fd71841ecdd"
+    },
+    "mapping_a_gdpval.csv": {
+      "bytes": 4018481,
+      "rows": 19259,
+      "sha256": "d1ebd110134a69807a94211691a1e1ef49ea8b478173dfc76e6be37b87468868"
+    }
+  },
+  "release": {
+    "id_level_artifacts_committed": false,
+    "outcomes_opened": false,
+    "reason": "GDPval task-ID redistribution rights not affirmatively documented; manifest only",
+    "task_text_committed": false
+  },
+  "remaining_dependency": "independent cross-vendor annotation plus T1 stratified audit of queued B/C judgments",
+  "results": {
+    "accepted": 0,
+    "grade_counts": {
+      "C": 37,
+      "unmatched": 19222
+    },
+    "matched_or_queued_coverage": 0.00192118,
+    "n_occupations": 923,
+    "n_onet_tasks": 19259,
+    "occupations_below_coverage_floor": 923,
+    "partition_conserved": true,
+    "queued": 37,
+    "score_distribution": {
+      "max": 0.69632518,
+      "mean": 0.35343663,
+      "min": 0.06561486,
+      "n": 19259,
+      "p01": 0.15545312,
+      "p05": 0.20788618,
+      "p10": 0.2398796,
+      "p25": 0.29347748,
+      "p50": 0.35340324,
+      "p75": 0.41224307,
+      "p90": 0.46684716,
+      "p95": 0.49967726,
+      "p99": 0.55832087
+    },
+    "top_quartile_flag_count": 9,
+    "unmatched": 19222,
+    "wage_bill_coverage": 0.0022461,
+    "wage_bill_usable_task_count": 15274
+  },
+  "status": "MAPA_EXECUTED_QUEUE_FROZEN_AUDIT_PENDING",
+  "thresholds": {
+    "auto_accept_margin": 0.05,
+    "auto_accept_similarity": 0.8,
+    "occupation_coverage_floor": 0.7,
+    "similarity_floor": 0.6
+  }
+}

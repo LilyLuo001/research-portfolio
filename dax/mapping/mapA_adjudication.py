@@ -46,9 +46,22 @@ GRADE_B = "B"            # plausible but ambiguous -> human queue with pre-label
 GRADE_C = "C"            # weak -> human queue, no pre-label carried forward
 UNMATCHED = "unmatched"
 
-# Fields that would carry GDPval task content into an artefact.
-TEXT_FIELDS = ("gdpval_task_text", "task_text", "prompt", "rationale_text",
-               "gdpval_prompt", "excerpt")
+# Fields that would carry O*NET/GDPval task content into an artefact.  The
+# guard walks nested containers, because receipts often nest input metadata and
+# a top-level-only check would be easy to bypass accidentally.
+TEXT_FIELDS = (
+    "gdpval_task_text",
+    "onet_task_statement",
+    "task_statement",
+    "task_text",
+    "prompt",
+    "rationale_text",
+    "gdpval_prompt",
+    "excerpt",
+    "rubric_pretty",
+    "rubric_json",
+    "derived_task_content",
+)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -171,11 +184,23 @@ def assert_release_safe(records: list[dict[str, object]]) -> None:
     release until redistribution rights are clarified. Enforced here rather than
     trusted to prose.
     """
-    offending = sorted({field for record in records for field in record
-                        if field in TEXT_FIELDS and str(record[field]).strip()})
+    offending: set[str] = set()
+
+    def walk(value: object, path: str = "") -> None:
+        if isinstance(value, dict):
+            for field, child in value.items():
+                child_path = f"{path}.{field}" if path else str(field)
+                if field in TEXT_FIELDS and str(child).strip():
+                    offending.add(child_path)
+                walk(child, child_path)
+        elif isinstance(value, (list, tuple)):
+            for index, child in enumerate(value):
+                walk(child, f"{path}[{index}]")
+
+    walk(records)
     if offending:
         raise SystemExit(
             "REFUSED: GDPval task content in a release-path record — fields "
-            f"{offending}. The signed W0.5 feasibility condition permits GDPval "
+            f"{sorted(offending)}. The signed W0.5 feasibility condition permits GDPval "
             "by task ID only. Reference `gdpval_task_id` and drop the text."
         )
