@@ -58,3 +58,16 @@ dax/data_raw/_crosswalk_raw/
 dax/mapping/mapping_a_gdpval.csv
 dax/mapping/mapA_adjudication_queue.csv
 dax/mapping/mapA_occupation_coverage.csv
+
+# DAX W4 private capture state. Production paths belong outside the checkout;
+# these guards prevent an accidental in-repo runtime configuration from being
+# staged. The signed budget ceiling and sanitized aggregate receipts remain
+# trackable by design.
+dax/capability_panel/.env
+dax/capability_panel/private/
+dax/capability_panel/runtime/
+dax/capability_panel/*.fernet
+dax/capability_panel/*.sqlite*
+dax/capability_panel/*checkpoint*.jsonl
+dax/capability_panel/*private_panel*.csv
+dax/capability_panel/*private_panel*.parquet

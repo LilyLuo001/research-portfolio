@@ -11,6 +11,7 @@ sentence-transformers>=2.2
 pyyaml
 pyarrow
 requests
+cryptography>=42
 pytest
 # R 4.x side (installed separately, not via pip): did, HonestDiD, fixest,
 # didimputation — lock with renv::snapshot() when the first R stage lands.
