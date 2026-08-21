@@ -1,0 +1,54 @@
+{
+  "amendment": {
+    "commit": "992eb92d8ac7347b40b19fbfc8be96b90a06bbc0",
+    "decision_recorded_before_human_results": true,
+    "instruction_sha256": "34852dc1830f70b3a7d1c57ee8fc2939c4f574822097f6ba6f2577a447cff552",
+    "old_waiting_rule_superseded": true
+  },
+  "author_route": {
+    "author_contact_established": false,
+    "status": "AUTHOR_OUTREACH_BOUNCED_AUTHOR_DATA_ROUTE_UNAVAILABLE"
+  },
+  "budget": {
+    "authorization_status": "NEED_PI_BUDGET_AUTHORIZATION",
+    "expected_pilot_cost_usd": 3900,
+    "requested_cap_usd": 7000,
+    "realized_spend_usd": 0
+  },
+  "downstream": {
+    "identification_run": false,
+    "mapping_a_thresholds_changed": false,
+    "mapping_locked_test_opened": false,
+    "outcomes_opened": false,
+    "power_run": false,
+    "w4_paid_calls": false,
+    "w5_run": false
+  },
+  "duration_coverage": {
+    "covered_tasks": 0,
+    "expected_tasks": 220,
+    "gate_passed": false
+  },
+  "human_pilot": {
+    "adjacent_agreement_floor": 0.8,
+    "agreement_metrics": "NOT_EVALUABLE_NO_HUMAN_RESPONSES",
+    "available_verified_qualified_humans": 0,
+    "family_failure_rule": "at_least_3_complete_family_tasks_and_at_least_2_failures_and_pass_share_below_0.60",
+    "frozen_pilot_tasks": 40,
+    "human_responses_collected": 0,
+    "minimum_adjacent_pass_tasks": 32,
+    "minimum_round1_judgments": 120,
+    "pilot_gate": "NOT_EVALUABLE",
+    "production_reserve_tasks": 180,
+    "sample_status": "FROZEN_PRIVATE"
+  },
+  "verification": {
+    "compileall": "PASS",
+    "focused_tests": "25_PASS",
+    "full_tests": "477_PASS_1_SKIP_1_KNOWN_UNRELATED_P1_FAILURE",
+    "outcome_seal": "PASS_NO_PATH_CHANGE",
+    "runner_selfcheck": "PASS_87_TASKS_24_CONTRACTS",
+    "secret_scan": "PASS_4434_TRACKED_FILES_ZERO_SECRET_PATTERNS_AND_ZERO_STAGED_PRIVATE_DATA_FILES"
+  },
+  "status": "HUMAN_FALLBACK_ACTIVE_STOPPED_BEFORE_UNAUTHORIZED_RECRUITMENT_OR_SPENDING"
+}

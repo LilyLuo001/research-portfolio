@@ -114,8 +114,11 @@ across its three independent annotators is at most one, before adjudication.
 The aggregate pilot rule therefore requires at least 32 of 40 tasks to satisfy
 that criterion. Adjudication may explain disagreement but cannot retroactively
 convert a round-1 pilot failure into agreement. The family-concentration rule
-and stratified pilot-selection algorithm must be mechanically frozen before
-any pilot estimate is collected; if they are not, the pilot may not launch.
+uses the public GDPval sector as task family: a family is a systematic failure
+when at least three of its pilot tasks are complete, at least two fail adjacent
+agreement, and its adjacent-agreement pass share is below 60%. The stratified
+pilot-selection algorithm must be mechanically frozen before any pilot
+estimate is collected; if it is not, the pilot may not launch.
 
 ## 7. Recorded PI decision — task-duration source/fallback
 
@@ -133,4 +136,6 @@ any pilot estimate is collected; if they are not, the pilot may not launch.
 - Decision authority/date: PI/specification owner / 2026-08-21
 
 Current status is `HUMAN_FALLBACK_AUTHORIZED_PILOT_PREPARATION`. No human
-duration result exists yet.
+The 40-task sample is now frozen under seed
+`DAX-TD-PILOT40-20260821-BOUNCE-AMENDMENT`; recruitment remains blocked pending
+a verified qualified roster, governance review, and explicit pilot budget.

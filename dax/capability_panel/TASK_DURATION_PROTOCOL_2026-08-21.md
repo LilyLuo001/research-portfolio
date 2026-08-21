@@ -79,9 +79,11 @@ rationales, and identities remain private.
   document at least two independent occupational validators; alternative
   observed timings have at least three completions; or fallback estimates have
   at least three independent qualified annotators;
-- expert adjacent-bin agreement is tested against a prospectively
-  PI-approved floor after adjudication; **the numeric floor is NEED_HUMAN and
-  is not approved by this document**;
+- expert task-level adjacent-bin agreement requires the maximum minus minimum
+  of the three independent round-1 median bin indices to be at most one. The
+  prospectively PI-approved 40-task pilot floor is 80% (at least 32 of 40)
+  before adjudication; adjudication cannot retroactively change round-1 pilot
+  agreement;
 - every row has `adjudication_status = PASS` and a source locator;
 - sensitivity construction uses all three duration bounds, not only the median.
 
@@ -92,7 +94,9 @@ approved value must be supplied.
 
 ## Immediate next action
 
-First request task-level human timing metadata from the GDPval authors. In
-parallel, prepare the private three-annotator packet so the project does not
-depend on receiving unpublished data. No OpenAI API capture is authorized by
-this protocol.
+The author email was attempted first but bounced; no author contact was
+established. Under the prospective bounce amendment, immediately prepare the
+private 40-task three-human pilot without waiting until 2026-09-04. Do not
+collect responses until qualifications, consent/confidentiality/payment, any
+required IRB determination, and budget authority are satisfied. No OpenAI API
+capture is authorized by this protocol.

@@ -51,5 +51,7 @@ def test_fitting_runner_has_no_locked_label_argument_or_outcome_path():
 def test_duration_monitor_preserves_wait_and_zero_coverage():
     receipt = json.loads((ROOT / "capability_panel" / "gdpval_duration_monitor_20260821.json").read_text())
     assert receipt["fallback_eligibility_utc"] == "2026-09-04T13:04:55Z"
-    assert receipt["fallback_launched"] is False
+    assert receipt["old_waiting_rule_superseded"] is True
+    assert receipt["fallback_launched"] is True
+    assert receipt["pilot_annotation_launched"] is False
     assert receipt["task_duration_coverage"] == {"covered_tasks": 0, "expected_tasks": 220}
