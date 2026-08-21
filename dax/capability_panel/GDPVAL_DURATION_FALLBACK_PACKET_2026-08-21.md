@@ -1,9 +1,11 @@
 # GDPval qualified-human duration fallback packet — 2026-08-21
 
-**Status:** finalized for PI review; `NOT_LAUNCHED`. This packet does not
-authorize recruiting annotators, distributing private task material, or
-accepting estimates. It implements the source hierarchy in
-`TASK_DURATION_PROTOCOL_2026-08-21.md` only if separately signed.
+**Status:** prospectively approved by PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`; `NOT_YET_APPLICABLE` and
+`NOT_LAUNCHED`. It becomes applicable only if validated author data remain
+unavailable after 14 calendar days or an explicit author response activates
+the route. It implements the source hierarchy in
+`TASK_DURATION_PROTOCOL_2026-08-21.md`.
 
 ## 1. Estimand and task packet
 
@@ -104,17 +106,27 @@ Stop and return `NEED_HUMAN` for an unqualified annotator, confidentiality
 failure, missing task input, fewer than three independent estimates, material
 rubric ambiguity, or failure of the prospectively approved agreement rule.
 
-## 7. PI decision form — task-duration source/fallback
+For the authorized 40-task pilot, a task satisfies the adjacent-bin agreement
+criterion only when the maximum minus minimum round-1 **median** bin index
+across its three independent annotators is at most one, before adjudication.
+The aggregate pilot rule therefore requires at least 32 of 40 tasks to satisfy
+that criterion. Adjudication may explain disagreement but cannot retroactively
+convert a round-1 pilot failure into agreement. The family-concentration rule
+and stratified pilot-selection algorithm must be mechanically frozen before
+any pilot estimate is collected; if they are not, the pilot may not launch.
 
-- Send the GDPval author request first: YES / NO / REVISE
-- Minimum response period before fallback consideration: ____ days
-- Accept exact author task-level values under the stated validation rule: YES / NO
-- Approve three-independent-qualified-annotator fallback: YES / NO / REVISE
-- Adjacent-bin agreement floor after adjudication: ____
-- Pilot size and prospectively fixed pilot pass/revise rule: ____
-- Author data take precedence if later received: YES / NO / specify: ____
+## 7. Recorded PI decision — task-duration source/fallback
+
+- Send the GDPval author request first: YES
+- Minimum response period before fallback consideration: 14 calendar days
+- Accept exact author task-level values under the stated validation rule: YES
+- Approve three-independent-qualified-annotator fallback: YES, conditionally
+- Pilot size: 40 stratified tasks
+- Pilot pass rule: at least 80% of pilot tasks satisfy the adjacent-bin
+  criterion and no systematic family-concentrated failure invalidates that
+  family's use of the protocol
+- Author data take precedence if later received and validated: YES
 - Approved privacy/DUA/IRB conditions: ____
-- PI name/signature/date: ____
+- Decision authority/date: PI/specification owner / 2026-08-21
 
-Until signed, status remains
-`NEED_HUMAN_DURATION_SOURCE_OR_FALLBACK_NOT_LAUNCHED`.
+Current status is `AUTHORIZED_CONDITION_NOT_MET_NOT_LAUNCHED`.

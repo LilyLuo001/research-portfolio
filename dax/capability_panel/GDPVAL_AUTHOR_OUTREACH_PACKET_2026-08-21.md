@@ -1,9 +1,11 @@
 # GDPval task-duration author-outreach packet — 2026-08-21
 
-**Status:** draft only; not sent. No author response or private duration value
-is implied. The public 220-row GDPval release contains no task-level duration
-field, while the paper documents validated self-reported professional
-completion time in Appendix A.2.4 and aggregate statistics in Appendix A.4.
+**Status:** sending authorized by prospective PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`; not yet sent. No author response
+or private duration value is implied. The public 220-row GDPval release
+contains no task-level duration field, while the paper documents validated
+self-reported professional completion time in Appendix A.2.4 and aggregate
+statistics in Appendix A.4.
 
 ## 1. Draft message
 
@@ -113,15 +115,17 @@ schema provided its construction and units are documented.
   aggregate diagnostics and code will be released.
 - No outcome data is joined during the duration audit.
 
-## 5. Outreach authorization form
+## 5. Recorded outreach authorization
 
-- PI authorizes sending the draft request: YES / NO / REVISE
+- PI authorizes sending the draft request: YES
 - Approved sender and institutional contact information: ____
 - Approved secure transfer channel: ____
 - PI accepts exact-ID-only matching and no aggregate substitution: YES / NO
-- If authors decline or do not respond by ____ date, proceed to the separately
-  signed qualified-human fallback: YES / NO
+- Waiting period: 14 calendar days; one concise follow-up permitted
+- If authors decline or validated task-level data remain unavailable after the
+  waiting period, proceed to the signed qualified-human fallback: YES
 - Additional DUA/privacy conditions: ____
-- PI name/signature/date: ____
+- Decision authority/date: PI/specification owner / 2026-08-21
 
-Until signed, this packet remains `DRAFT_NOT_SENT`.
+This packet remains `AUTHORIZED_NOT_SENT` until a verifiable recipient and
+sending channel produce a dated transmission receipt.

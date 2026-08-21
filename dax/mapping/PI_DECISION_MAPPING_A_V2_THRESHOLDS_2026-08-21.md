@@ -1,10 +1,17 @@
 # PI decision packet: Mapping A v2 validation thresholds — 2026-08-21
 
-**Decision state:** `NEED_HUMAN — UNSIGNED`. This packet was written without
+**Decision state:** `PI_APPROVED_PROSPECTIVELY` at decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`. This packet was written without
 opening any development, calibration, or locked-test relation labels and
 without inspecting validation metrics. It authorizes no Mapping A production
 use. Locked-test labels must remain sealed until the method, metrics, and all
 numeric choices below are committed and signed.
+
+The binding selections are PPV >=0.95; FPR <=0.05; candidate recall@40 >=0.95;
+adjudication <=0.20; task-mass-weighted coverage >=0.80; independently binding
+family coverage >=0.70; PI-15 transport bounds; and conservative `U` treatment
+as non-`D`. The machine-readable copy is
+`mapA_v2_binding_thresholds_20260821.json`.
 
 ## 1. Fixed measurement definitions
 
@@ -73,20 +80,20 @@ is conjunctive; good coverage cannot compensate for failed PPV/FPR/reliability.
 | Binding weighting | unweighted / task-mass weighted / both must pass |
 | `U` in FPR denominator | count as non-`D` (conservative) / exclude with signed rationale: ____ |
 
-## 4. PI signature form — Mapping A thresholds
+## 4. Recorded PI decision — Mapping A thresholds
 
-- Candidate-generation/taxonomy/transport approved **for blind validation only**: YES / NO / REVISE
-- PPV floor: ____
-- FPR ceiling: ____
-- Candidate-recall `k` and floor: ____ / ____
-- Adjudication rule: ____
-- Task-mass coverage floor: ____
-- Occupation-family coverage rule: ____
-- Transport-sensitivity rule: ____
-- Binding weighting and `U` treatment: ____
-- Locked test may be opened once after this signed form is committed: YES / NO
-- PI name: ____
-- Signature/date: ____
+- Candidate-generation/taxonomy/transport approved **for blind validation only**: YES
+- PPV floor: 0.95
+- FPR ceiling: 0.05
+- Candidate-recall `k` and floor: 40 / 0.95
+- Adjudication ceiling: 0.20
+- Task-mass-weighted coverage floor: 0.80
+- Occupation-family coverage floor: 0.70, independently binding
+- Transport-sensitivity rule: existing signed PI-15 bounds
+- Binding weighting and `U` treatment: task-mass weighted; `U` counts as non-`D`
+- Locked test may be opened exactly once after decision commit and mechanical verification: YES
+- Decision authority/date: PI/specification owner / 2026-08-21
 
-Until signed, status remains
-`NEED_HUMAN_PROSPECTIVE_THRESHOLDS_LOCKED_LABELS_SEALED`.
+The thresholds are signed, but the preflight status is
+`BLOCKED_LABELS_AND_FROZEN_PREDICTION_RULE_ABSENT`; no locked result has been
+opened and production use remains unapproved.
