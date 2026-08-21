@@ -488,12 +488,15 @@ was estimated from the analysis sample, so it moved with the event set:
 dropping a single event loosened the bar by 185% while the estimator got 19%
 worse. A standard that moves with the specification it judges cannot fail.
 
-The standard will be a frozen absolute constant once its benchmark is resolved:
+The standard will be a frozen absolute constant once its real pre-event CPS
+baseline is frozen:
 
 `ceiling = max_mde_fraction x relative_decline x baseline_level`
 
-where `relative_decline` is currently **null and unresolved**. The sourced
-proposal-vintage candidate `0.13` is a relative decline in EMPLOYMENT
+where the prospectively PI-selected primary `relative_decline` is **0.13**.
+This is an external empirical calibration scale from the authenticated
+2025-08-26 authored version, not an estimate of the DAX treatment coefficient.
+It is a relative decline in EMPLOYMENT
 (headcount), not in payroll. "Payroll" names the data source, not the
 outcome: the estimate comes from ADP administrative payroll records. The
 project's own proposal states it unambiguously — "U.S. payroll data, by
@@ -502,16 +505,18 @@ contrast, show a 13 percent relative employment decline among workers ages
 citing Brynjolfsson, Chandar and Chen 2025, "Canaries in the Coal Mine? Six
 Facts about the Recent Employment Effects of Artificial Intelligence",
 `docs/DAX_ERE_Proposal_v3.md:100`). Because it is a *relative* decline, the
-absolute percentage-point benchmark under that candidate would be
+absolute percentage-point benchmark is
 `0.13 x baseline employment rate`.
 
-**Unresolved: which version's figure.** The same paper has been revised and the
-headline figure is 0.13 in the 2025-08-26 version and 0.16 in the verified
-2025-11-13 revision. Repository history asserted 0.19 for a supposed August
-2026 revision, but no authored primary locator has been found. Freezing is
-one-way and a larger figure loosens the pass bar, so the choice is a PI decision and
-`freeze_power_standard.py` refuses to run until it is recorded. See
-`PI_DECISION_D3_2026-08-18.md`.
+**Prespecified interpretation and sensitivities.** PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`, made before real power results,
+sets 0.16 from the authenticated 2025-11-13 revision as a version-update
+empirical sensitivity. The historical 0.19 value is retained only as a
+normative PI design-target sensitivity; its external empirical provenance
+remains unresolved and it is not a literature estimate. The external paper
+and DAX differ in exposure definition, sample, period, treatment unit, and
+estimand, so none of these values is represented as a directly comparable DAX
+causal coefficient. The value may not be changed after power results are seen.
 
 With `max_mde_fraction = 0.5`, and
 `baseline_level` the pooled person-weighted pre-event level of the outcome

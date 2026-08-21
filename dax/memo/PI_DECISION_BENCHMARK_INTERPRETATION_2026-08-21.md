@@ -1,7 +1,10 @@
 # PI decision memo: DAX benchmark interpretation and value — 2026-08-21
 
-**Decision state:** `NEED_HUMAN — UNSIGNED`. This memo does not change
-`power_calcs/power_standard.json`, run power, or authorize a force override.
+**Decision state:** `PI_APPROVED_PROSPECTIVELY` at decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`. The selected interpretation is an
+external empirical calibration scale, with 0.13 primary, 0.16 version-update
+sensitivity, and 0.19 historical normative PI-target sensitivity. This memo
+does not run power or authorize a force override.
 
 ## Evidence that is currently supportable
 
@@ -69,20 +72,15 @@ continue, but the real power verdict remains blocked.
 - Leaving the benchmark unresolved avoids premature specification but blocks
   an executable power gate.
 
-## PI decision form — benchmark interpretation/value
+## Recorded PI decision — benchmark interpretation/value
 
-1. Interpretation frame: external empirical scale (`E`) / normative PI target
-   (`N`) / remain unresolved (`U`): ____
-2. If `E`, source vintage: August 2025 `0.13` / November 2025 `0.16` / other
-   authenticated source with locator: ____
-3. If `N`, signed target value and substantive minimum-worthwhile-effect
-   rationale: ____
-4. Required sensitivities, stated prospectively: `0.13` / `0.16` / `0.19` /
-   other: ____
-5. Required deviation/comparability wording approved: YES / NO / REVISE
-6. Authorize a separate commit to update the executable standard only after
-   this form is signed: YES / NO
-7. PI name/signature/date: ____
+1. Interpretation frame: external empirical scale (`E`)
+2. Primary source vintage/value: August 2025 / `0.13`
+3. Required sensitivities: November 2025 empirical `0.16`; historical
+   normative PI target `0.19`
+4. Required deviation/comparability wording approved: YES
+5. Separate auditable executable-standard commit authorized: YES
+6. Decision authority/date: PI/specification owner / 2026-08-21
 
-Until signed, `power_standard.json` remains unchanged and the executable
-benchmark remains `UNRESOLVED`.
+The benchmark decision is resolved. The real baseline freeze and power run
+remain separate blocked stages and were not authorized by this decision alone.

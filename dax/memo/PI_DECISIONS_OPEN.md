@@ -113,11 +113,12 @@ cross-vendor pass, and not evidence for Gate 1.
   (Brynjolfsson, Chandar & Chen 2025, "Canaries in the Coal Mine?"), confirmed
   by a second web channel. The D3 formula was already correct; the memo now
   states the distinction with its citation and a test pins it.
-- [ ] **M2b — REOPENED/UNRESOLVED.** The PI selected 0.19 on 2026-08-18,
-  before outcome/power results, but the source audit found no authored locator.
-  Verified paper versions state 0.13 (2025-08-26) and 0.16 (2025-11-13).
-  `power_standard.json` is fail-closed at null. Resolve only with an exact 0.19
-  primary locator or a signed amendment selecting/reclassifying a benchmark.
+- [x] **M2b — RESOLVED PROSPECTIVELY 2026-08-21.** Before any real power
+  result, the PI selected 0.13 from the authenticated 2025-08-26 authored
+  version as the primary external empirical calibration scale. The verified
+  0.16 November revision and the historical normative 0.19 PI target are
+  required sensitivities. The latter is not a literature estimate. Decision
+  commit: `4577fecab7b4e142cb28d78d4aec0800637c7b05`.
 - [x] **M3/M4 — RESOLVED BY DEMOTION, not by measurement repair.** The private
   transition audit confirmed sparse `pi_go` and linkage contamination; the
   entrant companion is exploratory and cannot enter Gate 1. Restoration

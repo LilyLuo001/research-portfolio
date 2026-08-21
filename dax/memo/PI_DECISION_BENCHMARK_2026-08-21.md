@@ -15,7 +15,18 @@ first entered as an unverified search-summary claim and was then intentionally
 selected by the PI while its locator remained pending. That establishes the
 choice's history, not the claimed estimate's external provenance.
 
-## Options requiring PI decision
+## Recorded PI decision
+
+Prospective PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05` selected Option A's sourced
+proposal-vintage value as the primary **external empirical calibration scale**:
+0.13 primary, 0.16 authenticated version-update sensitivity, and 0.19 retained
+only as a historical normative PI-target sensitivity. The 0.19 value remains
+externally unsourced and is not a literature estimate.
+
+The option analysis below is retained as the pre-decision audit trail.
+
+## Options considered before the PI decision
 
 ### Option A — sourced proposal-vintage primary
 
@@ -62,8 +73,8 @@ Canaries estimate, unless an authored locator is later found.
 
 ## Signature state
 
-`NEED_HUMAN: PI must choose and sign Option A, B, or C before
-power_standard.json can be changed or frozen.`
-
-Until that signature, `relative_decline` remains null, `version_status` remains
-`UNRESOLVED`, and `adequately_powered` remains null.
+`PI_APPROVED_PROSPECTIVELY`: benchmark interpretation and value were decided
+before real power execution. `power_standard.json` may record the sourced 0.13
+benchmark in a separate auditable commit. It remains otherwise unfrozen until
+the real pre-event CPS baseline step is run; `adequately_powered` remains null
+until that later freeze and real power execution.
