@@ -77,9 +77,11 @@ effect existed or was consulted.
   once over the pre-event window, replacing a bar derived from the sample it
   judged. `PI_DECISION_D3_2026-08-18.md`.
 - [x] **D4 Part 1** — the primary estimand is named as an incumbent margin.
-- [x] **D4 Part 2 — option (b) APPROVED**: the entrant-margin companion is
-  included as a registered secondary design with a frozen pre-period entry mix.
-  `PI_DECISION_D4_2026-08-18.md`, memo section 7.2.
+- [x] **D4 Part 2 — option (b) was APPROVED, then failed its pre-event gate**:
+  the entrant companion is demoted to exploratory by the accepted red-team
+  adjudication and `entrant_companion_audit_receipt.json`. It may not return to
+  the Gate-1 evidence set without a PI-approved cell definition, pooling
+  threshold, and sampling-error propagation rule plus fresh review.
 - [x] **F2** — five event rows demoted to `pending_second_date_locator`, a
   `date_conflict` column added, and the release-dating standard enforced by
   `validate_event_registry.py` rather than applied by hand.
@@ -90,8 +92,9 @@ effect existed or was consulted.
   `power_standard.json` ships as `PLACEHOLDER_REQUIRES_REAL_CPS`; both engines
   return `adequately_powered: null` until `freeze_power_standard.py` is run on
   the real pre-event extract.
-- [ ] Entrant companion power table, which requires the frozen entry mix
-  `pi_go` and therefore the CPS extract.
+- [x] Entrant companion removed from the Gate-1 power table after its
+  occupation-level `pi_go` estimability gate failed (1,623 linked entries;
+  median cell-occupation count 1; maximum 18; 100% below 20).
 - [ ] Fresh independent cross-vendor red team of this draft (see above).
 
 ### Adversarial pre-review findings, 2026-08-18 (must clear before the paid pass)
@@ -110,35 +113,19 @@ cross-vendor pass, and not evidence for Gate 1.
   (Brynjolfsson, Chandar & Chen 2025, "Canaries in the Coal Mine?"), confirmed
   by a second web channel. The D3 formula was already correct; the memo now
   states the distinction with its citation and a test pins it.
-- [x] **M2b — DECIDED BY PI 2026-08-18: use 0.19** (August 2026 revision, ADP
-  through June 2026), superseding the 0.13 the proposal cites. Recorded in
-  `power_standard.json` with `locator_status: PENDING_EXCERPT` — the figure is
-  PI-directed and **not yet sourced to a page cite**, because every host
-  carrying the paper is egress-blocked. Any writeup citing this constant must
-  say so until the `Canaries_August2026.pdf` excerpt is supplied. The choice
-  was made before any outcome data existed and before the frozen baseline was
-  computed, so it cannot have been informed by a result.
-- ~~**M2b — NEW BLOCKER, PI decision required.**~~ The same paper's headline
-  figure has moved across versions: 0.13 (the version the proposal cites),
-  reportedly 0.16, and reportedly 0.19 in the August 2026 revision. The latter
-  two are from search summaries only — every host carrying the PDF is
-  egress-blocked, so **no version was read**. Choosing the larger figure
-  loosens the pass bar ~46% and would be specification search if chosen after
-  seeing the margin. `freeze_power_standard.py` refuses until
-  `benchmark.version_status` is `RESOLVED`. **To settle it, provide the
-  headline-figure excerpt from `Canaries_August2026.pdf` (and ideally the
-  Nov 2025 version).**
-- [ ] **M3** Entry mix `pi_go` may not be estimable at occupation granularity.
-  Compute realised per-cell entrant counts and pre-register a pooling rule.
-- [ ] **M4** The entrant sample conflates true entrants with CPSIDP
-  linkage failures and long non-employment spells. Separate using
-  month-in-sample before registering the companion.
-- [x] **M5 — RESOLVED 2026-08-18.** The estimator is person-month; the power
-  simulation is occupation-month cells. Section 7.4 states the distinction and
-  the direction of the approximation: omitting `X_i` raises residual variance,
-  so the simulated MDE is an **upper bound** — passing in simulation implies
-  passing at person level, but failing does not condemn the design. The
-  asymmetry is registered so it cannot be invoked selectively.
+- [ ] **M2b — REOPENED/UNRESOLVED.** The PI selected 0.19 on 2026-08-18,
+  before outcome/power results, but the source audit found no authored locator.
+  Verified paper versions state 0.13 (2025-08-26) and 0.16 (2025-11-13).
+  `power_standard.json` is fail-closed at null. Resolve only with an exact 0.19
+  primary locator or a signed amendment selecting/reclassifying a benchmark.
+- [x] **M3/M4 — RESOLVED BY DEMOTION, not by measurement repair.** The private
+  transition audit confirmed sparse `pi_go` and linkage contamination; the
+  entrant companion is exploratory and cannot enter Gate 1. Restoration
+  requires a new prospective PI decision and fresh review.
+- [x] **M5 — RESOLVED 2026-08-18.** The estimator is person-month; the cell
+  simulation is diagnostic only. Aggregation and omitted person covariates have
+  opposing, unsigned effects, so no upper-bound claim is made. Only the real
+  person-level power engine can support Gate 1.
 - [x] **M6 — RESOLVED 2026-08-18.** Section 9.2 now fixes the consequence in
   advance: a degenerate dose matrix means the paper drops the dynamic claim,
   argues the index's contribution on the crossing chronology instead of the

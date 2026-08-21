@@ -34,5 +34,43 @@
     "DAX-W0.5-legwork": 1,
     "E2-T2-dune": 1
   },
-  "_note": "SH-runner and SH-econlib are merged to main and their gates pass (selfcheck + econlib_smoke contract). E2-T6a is NOT marked complete: build_panel.py is synthetic-input scaffolding and its real upstream producers (E2-T2/T3/T5) are still open."
+  "task_status": {
+    "DAX-W0.5-legwork": {
+      "status": "superseded",
+      "next_gate": "None; owner-run feasibility legwork and signed feasibility gate supersede this batch."
+    },
+    "DAX-W1-memo": {
+      "status": "memo_reconciled_scientific_gates_open",
+      "next_gate": "Resolve Mapping A v2, duration, benchmark, real power, and fresh red-team gates before completion."
+    },
+    "DAX-W1-power": {
+      "status": "engine_complete_real_run_blocked",
+      "next_gate": "Requires a real W5 dose panel and a PI-authorized sourced benchmark; 999-replication run has not occurred."
+    },
+    "DAX-W2-data": {
+      "status": "execution_complete_receipts_present_contract_recheck_needed",
+      "next_gate": "Re-run the private dax_built_backbone directory contract on SCC before marking completed."
+    },
+    "DAX-W3-mapA": {
+      "status": "execution_failed_scientific_gate",
+      "next_gate": "Mapping A v1 has zero accepted rows; v2 production method and thresholds require PI approval and blind labels."
+    },
+    "DAX-W3-bulk": {
+      "status": "not_runnable_mapping_v2_unapproved",
+      "next_gate": "Do not spend on labels until the PI approves the v2 taxonomy, transport rule, and prospective thresholds."
+    },
+    "DAX-W3-audit": {
+      "status": "not_runnable_mapping_v2_unapproved",
+      "next_gate": "Runs only after an independently labeled v2 sample exists under the approved protocol."
+    },
+    "DAX-W4-panel": {
+      "status": "infrastructure_complete_execution_blocked",
+      "next_gate": "0/220 durations and 0 captured capability rows; Mapping A and duration gates plus future paid budget remain unresolved."
+    },
+    "DAX-W5-index": {
+      "status": "schema_complete_real_panel_blocked",
+      "next_gate": "Requires qualified W3 mapping and populated W4 measurements; no real dose panel or identification gate exists."
+    }
+  },
+  "_note": "DAX statuses were reconciled 2026-08-21 from committed receipts. Scientific failure and missing-input states are held rather than falsely marked complete or reassigned. SH-runner and SH-econlib are merged; E2-T6a remains incomplete because its real upstream producers are open."
 }

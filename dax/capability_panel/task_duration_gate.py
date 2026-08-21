@@ -12,10 +12,21 @@ from collections.abc import Iterable, Sequence
 
 
 PROTOCOL_VERSION = "DAX-TD-v1"
-ALLOWED_SOURCE_TYPES = {"observed_task_timing", "expert_annotation"}
+ALLOWED_SOURCE_TYPES = {
+    "gdpval_validated_self_report",
+    "observed_task_timing",
+    "expert_annotation",
+}
 MIN_ANNOTATORS = 3
 MIN_OBSERVED_COMPLETIONS = 3
-MIN_ADJACENT_BIN_AGREEMENT = 0.80
+ALLOWED_DURATION_UNITS = {"minutes"}
+ALLOWED_DURATION_BASIS = {
+    "validated_self_report",
+    "observed_completion",
+    "expert_estimate",
+}
+OBSERVED_MATCH_STATUS = "exact_task_id_version"
+ANNOTATION_MATCH_STATUS = "not_applicable_direct_annotation"
 
 
 class DurationGateError(ValueError):
@@ -26,6 +37,7 @@ def validate_duration_rows(
     rows: Iterable[dict[str, object]],
     *,
     expected_task_ids: Sequence[str],
+    pi_approved_adjacent_bin_agreement_floor: float | None = None,
 ) -> dict[str, object]:
     expected = set(expected_task_ids)
     if len(expected) != len(expected_task_ids) or not expected:
@@ -72,6 +84,13 @@ def validate_duration_rows(
             errors.append(f"{task_id}: adjudication is not PASS")
         if not str(record.get("source_locator", "")).strip():
             errors.append(f"{task_id}: missing source locator")
+        if str(record.get("duration_unit", "")).strip().lower() not in ALLOWED_DURATION_UNITS:
+            errors.append(f"{task_id}: duration_unit must be 'minutes'")
+        if str(record.get("duration_basis", "")).strip() not in ALLOWED_DURATION_BASIS:
+            errors.append(f"{task_id}: invalid or missing duration_basis")
+        imputation = str(record.get("imputation_method", "")).strip().lower()
+        if imputation not in {"", "none"}:
+            errors.append(f"{task_id}: duration imputation is prohibited")
 
         if source_type == "expert_annotation":
             try:
@@ -81,11 +100,28 @@ def validate_duration_rows(
                 n_annotators, agreement = 0, 0
             if n_annotators < MIN_ANNOTATORS:
                 errors.append(f"{task_id}: fewer than {MIN_ANNOTATORS} annotators")
-            if agreement < MIN_ADJACENT_BIN_AGREEMENT:
+            if str(record.get("match_status", "")) != ANNOTATION_MATCH_STATUS:
+                errors.append(f"{task_id}: unsupported expert-annotation match status")
+            if pi_approved_adjacent_bin_agreement_floor is None:
+                errors.append(f"{task_id}: PI-approved adjacent-bin agreement floor required")
+            elif not 0 <= pi_approved_adjacent_bin_agreement_floor <= 1:
+                errors.append(f"{task_id}: invalid PI-approved agreement floor")
+            elif agreement < pi_approved_adjacent_bin_agreement_floor:
                 errors.append(
                     f"{task_id}: adjacent-bin agreement below "
-                    f"{MIN_ADJACENT_BIN_AGREEMENT:.2f}"
+                    f"{pi_approved_adjacent_bin_agreement_floor:.2f}"
                 )
+        elif source_type == "gdpval_validated_self_report":
+            try:
+                n_validators = int(record.get("n_independent_validators", 0))
+            except (TypeError, ValueError):
+                n_validators = 0
+            if n_validators < 2:
+                errors.append(f"{task_id}: fewer than 2 independent validators")
+            if str(record.get("match_status", "")) != OBSERVED_MATCH_STATUS:
+                errors.append(f"{task_id}: GDPval timing requires exact task/version match")
+            if str(record.get("duration_basis", "")) != "validated_self_report":
+                errors.append(f"{task_id}: GDPval timing basis must be validated_self_report")
         elif source_type == "observed_task_timing":
             try:
                 n_observed = int(record.get("n_observed_completions", 0))
@@ -95,6 +131,19 @@ def validate_duration_rows(
                 errors.append(
                     f"{task_id}: fewer than {MIN_OBSERVED_COMPLETIONS} observed completions"
                 )
+            if str(record.get("match_status", "")) != OBSERVED_MATCH_STATUS:
+                errors.append(f"{task_id}: observed timing requires exact task/version match")
+
+    triples = {
+        (
+            str(row.get("duration_lower_minutes", "")),
+            str(row.get("duration_median_minutes", "")),
+            str(row.get("duration_upper_minutes", "")),
+        )
+        for row in by_id.values()
+    }
+    if len(by_id) > 1 and len(triples) == 1:
+        errors.append("constant-fill signature: all task duration bounds are identical")
 
     return {
         "status": "PASS" if not errors else "BLOCKED",
@@ -109,8 +158,13 @@ def assert_duration_gate(
     rows: Iterable[dict[str, object]],
     *,
     expected_task_ids: Sequence[str],
+    pi_approved_adjacent_bin_agreement_floor: float | None = None,
 ) -> dict[str, object]:
-    report = validate_duration_rows(rows, expected_task_ids=expected_task_ids)
+    report = validate_duration_rows(
+        rows,
+        expected_task_ids=expected_task_ids,
+        pi_approved_adjacent_bin_agreement_floor=pi_approved_adjacent_bin_agreement_floor,
+    )
     if report["status"] != "PASS":
         raise DurationGateError("duration gate blocked: " + "; ".join(report["errors"]))
     return report

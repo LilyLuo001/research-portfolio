@@ -52,4 +52,9 @@ def test_candidate_recall_gate_is_independent_of_similarity_thresholds():
     proposals = [CandidateProposal("O1", "G1", 1, 2, ("dense",))]
     assert candidate_recall(proposals, [("O1", "G1")]) == 1.0
     with pytest.raises(RuntimeError, match="candidate gate failed"):
-        assert_candidate_recall(0.94)
+        assert_candidate_recall(0.94, pi_approved_floor=0.95)
+
+
+def test_candidate_recall_gate_has_no_unapproved_default():
+    with pytest.raises(TypeError):
+        assert_candidate_recall(0.99)

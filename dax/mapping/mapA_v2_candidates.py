@@ -18,9 +18,6 @@ import dataclasses
 from collections.abc import Iterable, Sequence
 
 
-CANDIDATE_RECALL_FLOOR = 0.95
-
-
 @dataclasses.dataclass(frozen=True)
 class ScoreRow:
     onet_task_id: str
@@ -124,10 +121,14 @@ def candidate_recall(
     return len(predicted & positives) / len(positives)
 
 
-def assert_candidate_recall(recall: float, floor: float = CANDIDATE_RECALL_FLOOR) -> None:
+def assert_candidate_recall(recall: float, *, pi_approved_floor: float) -> None:
+    """Apply a prospectively PI-approved floor; this module supplies no default."""
     if not 0 <= recall <= 1:
         raise ValueError("candidate recall must lie in [0, 1]")
-    if recall < floor:
+    if not 0 <= pi_approved_floor <= 1:
+        raise ValueError("PI-approved candidate-recall floor must lie in [0, 1]")
+    if recall < pi_approved_floor:
         raise RuntimeError(
-            f"Mapping A v2 candidate gate failed: recall {recall:.4f} < {floor:.4f}"
+            "Mapping A v2 candidate gate failed: "
+            f"recall {recall:.4f} < {pi_approved_floor:.4f}"
         )

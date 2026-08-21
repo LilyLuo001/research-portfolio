@@ -22,6 +22,15 @@ def _git(*args):
                           stdout=__import__('subprocess').PIPE, stderr=__import__('subprocess').STDOUT, universal_newlines=True)
 
 def claim(task, account, ttl):
+    dirty = _git("status", "--porcelain")
+    if dirty.returncode != 0 or dirty.stdout.strip():
+        print("REFUSED: lease claim requires a clean working tree and index")
+        return 1
+    head_before = _git("rev-parse", "HEAD")
+    if head_before.returncode != 0:
+        print("REFUSED: cannot resolve the pre-claim HEAD")
+        return 1
+    head_before_sha = head_before.stdout.strip()
     LEASES.mkdir(exist_ok=True)
     f = LEASES / f"{task}.lease"
     if f.exists():
@@ -42,11 +51,18 @@ def claim(task, account, ttl):
     # git dance: the push is the real lock. Rejection => someone beat you.
     _git("add", str(f))
     c = _git("commit", "-m", f"lease: {task} by {account}")
+    if c.returncode != 0:
+        _git("reset", "--", str(f))
+        f.unlink(missing_ok=True)
+        print(f"REFUSED: could not commit lease for {task}")
+        return 1
     p = _git("push")
     if p.returncode != 0:
-        # non-fast-forward: another seat committed a lease first
+        # Restore exactly the pre-claim commit. Never hard-reset to origin/main:
+        # the caller may be on a task branch whose unpublished commits must be
+        # preserved. The clean-tree precondition makes this mixed reset safe.
+        _git("reset", "--mixed", head_before_sha)
         f.unlink(missing_ok=True)
-        _git("reset", "--hard", "origin/main")
         print(f"REFUSED: push rejected — another seat claimed {task} first. "
               f"Pull and take the next ready task."); return 1
     print(f"CLAIMED {task} for seat {account} (ttl {ttl}h). Work on branch task/{task}.")

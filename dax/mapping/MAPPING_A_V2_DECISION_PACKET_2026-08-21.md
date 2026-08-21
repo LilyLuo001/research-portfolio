@@ -12,7 +12,7 @@ embedding is not calibrated to the long, artifact-rich GDPval prompts.
 Preserve v1 and its hashes as a failed measurement attempt. Mapping A v2 is a
 new, versioned methodology; it must not overwrite the v1 receipt.
 
-## Recommended v2 methodology: calibrated many-to-many transport
+## Proposed v2 methodology: calibrated many-to-many transport
 
 Mapping A should estimate whether performance on a GDPval task transfers to an
 O*NET task, not whether two strings happen to have high cosine similarity.
@@ -40,35 +40,37 @@ O*NET task, not whether two strings happen to have high cosine similarity.
 - Draw O*NET tasks before any W4 outcomes are opened, stratified by major SOC
   family, task-allocation mass, and v1 score decile.
 - For a retrieval audit, independently adjudicate the full 220-task GDPval pool
-  for a manageable validation subsample. Candidate recall must be at least
-  0.95; otherwise increase k or redesign retrieval before bulk annotation.
+  for a manageable validation subsample and report candidate recall across the
+  frozen rank grid. The numerical recall floor is `NEED_HUMAN`; failure of the
+  eventual prospectively approved floor makes v2 fail and does not authorize
+  post-label tuning of k.
 - For relation labels, retain PI Decision 7: 10% stratified audit, weighted
   Cohen kappa at least 0.70, and at least 90% agreement on the binary
   crossing-relevant label.
 - Do not interpret candidate coverage as valid mapping coverage. The latter is
   counted only after adjudication/calibration.
 
-## Mapping gate
+## Prospective Mapping gate — thresholds not approved
 
-Mapping A v2 passes only when all of the following are true:
+The following are proposed measurement dimensions, not an active pass gate:
 
 - full 19,259 x 220 score-pool completeness is verified by hashes and counts;
-- held-out candidate recall is at least 0.95;
-- the independent-label reliability thresholds pass;
-- at least 0.90 of 2021 task-allocation mass has a calibrated central estimate
-  or a non-degenerate lower/upper interval;
-- no major SOC family has less than 0.80 task-allocation-mass coverage;
+- held-out candidate recall (numerical floor `NEED_HUMAN`);
+- the inherited PI-Decision-7 label-reliability thresholds;
+- 2021 task-allocation-mass coverage (numerical floor `NEED_HUMAN`);
+- major-SOC-family coverage distribution (numerical floor `NEED_HUMAN`);
 - every O*NET task is retained, including uncovered tasks;
 - all text-bearing and ID-level GDPval artifacts remain private.
 
-Failure at the 0.90 coverage gate does not authorize threshold tuning. The
+Failure at the eventual PI-approved coverage gate does not authorize threshold tuning. The
 fallback is to report partial-identification bounds and seek PI approval for a
 different primary measurement design. Mapping B/C may diagnose the failure but
 cannot silently replace Mapping A.
 
 ## Faculty decision required
 
-Approve or reject **calibrated many-to-many transport** as the new primary
-Mapping A methodology. Approval authorizes building the blind gold sample and
-running retrieval diagnostics; it does not authorize W4 spending or outcome
-access.
+The current authorization permits blind validation and method-freeze
+preparation only. After reviewing that evidence, approve, revise, or reject
+**calibrated many-to-many transport** as the primary Mapping A methodology.
+Nothing here authorizes W4 spending, W5 construction, identification, power,
+or outcome access.
