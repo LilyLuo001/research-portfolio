@@ -1,8 +1,10 @@
 # GDPval task-duration author-outreach packet — 2026-08-21
 
-**Status:** sending authorized by prospective PI decision commit
-`4577fecab7b4e142cb28d78d4aec0800637c7b05`; not yet sent. No author response
-or private duration value is implied. The public 220-row GDPval release
+**Status:** submitted through BU SCC mail transport at `2026-08-21T13:04:55Z`
+under prospective PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`. Submission succeeded locally;
+remote delivery/read and author response are not yet confirmed. No private
+duration value is implied. The public 220-row GDPval release
 contains no task-level duration field, while the paper documents validated
 self-reported professional completion time in Appendix A.2.4 and aggregate
 statistics in Appendix A.4.
@@ -127,5 +129,5 @@ schema provided its construction and units are documented.
 - Additional DUA/privacy conditions: ____
 - Decision authority/date: PI/specification owner / 2026-08-21
 
-This packet remains `AUTHORIZED_NOT_SENT` until a verifiable recipient and
-sending channel produce a dated transmission receipt.
+Current status is `SUBMITTED_DELIVERY_UNCONFIRMED_WAITING_14_DAYS`. The waiting
+period ends at `2026-09-04T13:04:55Z`; the fallback remains unlaunched.
