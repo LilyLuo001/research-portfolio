@@ -6,6 +6,12 @@ adjudication and audit remain pending.
 referenced **by task ID** for internal research; no GDPval task text or derived
 task content enters W10a until redistribution rights are clarified.
 
+**Supersession note (2026-08-21):** the executed method below is retained as
+Mapping A v1 and as failure evidence. Its 0.19% matched-or-queued coverage does
+not permit threshold tuning. The proposed v2 methodology and new approval gate
+are in `MAPPING_A_V2_DECISION_PACKET_2026-08-21.md`; v2 does not become primary
+until the PI approves calibrated many-to-many transport.
+
 This is the primary mapping. Under the memo's §5 hierarchy, Mapping A is what
 the headline estimate uses; Tolan (B) and Eloundou (C) are independent
 robustness constructions and cannot rescue a sign conflict.
