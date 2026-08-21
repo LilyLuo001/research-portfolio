@@ -6,8 +6,8 @@
   "paid_inference_calls": 0,
   "realized_cost_usd": 0.0,
   "local_approved_private_env_key_available": false,
-  "scc_private_env_inspected_in_this_recheck": false,
-  "scc_inspection_status": "BLOCKED_SSH_AUTHENTICATION_EXPIRED",
+  "scc_private_env_inspected_in_this_recheck": true,
+  "scc_inspection_status": "APPROVED_PRIVATE_ENV_FILE_ABSENT",
   "target_rows": 22,
   "last_mechanically_verified_status_counts": {
     "blocked_missing_approved_snapshot_rule": 5,
@@ -16,5 +16,5 @@
     "unprobed_missing_key": 14
   },
   "status": "UNPROBED_NO_APPROVED_CREDENTIAL_AVAILABLE_TO_PROCESS",
-  "remaining_action": "After SCC authentication is restored, inspect only the approved private env file permissions and run the free GET /v1/models metadata probe if OPENAI_API_KEY is configured; do not make inference calls."
+  "remaining_action": "Configure an approved private W4 environment file if a free account metadata probe is desired, then run only GET /v1/models; do not make inference calls."
 }
