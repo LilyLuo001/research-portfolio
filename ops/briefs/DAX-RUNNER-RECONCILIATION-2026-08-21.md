@@ -13,7 +13,7 @@ non-DONE statuses, and `runner.py --plan` prints them under
 | `DAX-W0.5-legwork` | Superseded by owner-run feasibility legwork and signed gate | `superseded` | None |
 | `DAX-W1-memo` | A5 source/PDF reconciliation complete; scientific gates remain | `memo_reconciled_scientific_gates_open` | Mapping, duration, benchmark, real power, fresh review |
 | `DAX-W1-power` | Person-level engine and fail-closed receipt exist; no real run | `engine_complete_real_run_blocked` | Real W5 panel and authorized benchmark |
-| `DAX-W2-data` | CPS, crosswalk, price, and source receipts report execution | `execution_complete_receipts_present_contract_recheck_needed` | Re-run private directory contract on SCC before marking complete |
+| `DAX-W2-data` | CPS, crosswalk, price, and source receipts report execution; SCC `dax_built_backbone` contract passed on 2026-08-21 with all four required private files | `complete` | None; downstream scientific gates remain independent |
 | `DAX-W3-mapA` | v1 executed deterministically but produced zero accepted mappings and 0.22461% wage-bill coverage | `execution_failed_scientific_gate` | PI-approved v2 method/thresholds plus blind labels |
 | `DAX-W3-bulk` / `DAX-W3-audit` | Old-v1 annotation continuation would not validate proposed v2 | `not_runnable_mapping_v2_unapproved` | Approve v2, then label and audit |
 | `DAX-W4-panel` | Contract/preflight/availability infrastructure exists; 0 captured rows and 0/220 durations | `infrastructure_complete_execution_blocked` | Mapping, duration, availability, and future budget gates |
