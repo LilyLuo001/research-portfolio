@@ -1,10 +1,12 @@
 # GDPval qualified-human duration fallback packet — 2026-08-21
 
 **Status:** prospectively approved by PI decision commit
-`4577fecab7b4e142cb28d78d4aec0800637c7b05`; `NOT_YET_APPLICABLE` and
-`NOT_LAUNCHED`. It becomes applicable only if validated author data remain
-unavailable after 14 calendar days or an explicit author response activates
-the route. It implements the source hierarchy in
+`4577fecab7b4e142cb28d78d4aec0800637c7b05` and activated by
+`PI_AMENDMENT_GDPVAL_OUTREACH_BOUNCE_2026-08-21.md` after the email bounced.
+Current stage is `HUMAN_FALLBACK_AUTHORIZED_PILOT_PREPARATION`: the 14-day wait
+is superseded, but no human response may be collected before the pilot sample,
+qualification framework, instructions, roster, consent/payment/IRB handling,
+and any required budget are ready. It implements the source hierarchy in
 `TASK_DURATION_PROTOCOL_2026-08-21.md`.
 
 ## 1. Estimand and task packet
@@ -93,8 +95,8 @@ than inventing a finite maximum.
 
 The annotation may launch only after all boxes are signed:
 
-- [ ] PI approves use of qualified-human estimates when exact author values are unavailable.
-- [ ] PI approves the numeric adjacent-bin agreement floor.
+- [x] PI approves use of qualified-human estimates when exact author values are unavailable.
+- [x] PI approves the numeric adjacent-bin agreement floor of 80% for the pilot.
 - [ ] Roster eligibility and conflict review is complete.
 - [ ] Compensation, consent, confidentiality, and any IRB determination are documented.
 - [ ] Versioned task packet and deterministic assignment script pass dry-run checks.
@@ -118,7 +120,8 @@ any pilot estimate is collected; if they are not, the pilot may not launch.
 ## 7. Recorded PI decision — task-duration source/fallback
 
 - Send the GDPval author request first: YES
-- Minimum response period before fallback consideration: 14 calendar days
+- Historical minimum response period: 14 calendar days, superseded after the
+  email bounced and no author contact was established
 - Accept exact author task-level values under the stated validation rule: YES
 - Approve three-independent-qualified-annotator fallback: YES, conditionally
 - Pilot size: 40 stratified tasks
@@ -129,4 +132,5 @@ any pilot estimate is collected; if they are not, the pilot may not launch.
 - Approved privacy/DUA/IRB conditions: ____
 - Decision authority/date: PI/specification owner / 2026-08-21
 
-Current status is `AUTHORIZED_CONDITION_NOT_MET_NOT_LAUNCHED`.
+Current status is `HUMAN_FALLBACK_AUTHORIZED_PILOT_PREPARATION`. No human
+duration result exists yet.

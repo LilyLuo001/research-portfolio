@@ -1,9 +1,10 @@
 # GDPval task-duration author-outreach packet — 2026-08-21
 
-**Status:** submitted through BU SCC mail transport at `2026-08-21T13:04:55Z`
-under prospective PI decision commit
-`4577fecab7b4e142cb28d78d4aec0800637c7b05`. Submission succeeded locally;
-remote delivery/read and author response are not yet confirmed. No private
+**Historical status:** submitted through BU SCC mail transport at
+`2026-08-21T13:04:55Z` under prospective PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`. The submission succeeded only
+locally and subsequently bounced; it was not delivered and no author contact
+was established. The corrected status is `AUTHOR_OUTREACH_BOUNCED`. No private
 duration value is implied. The public 220-row GDPval release
 contains no task-level duration field, while the paper documents validated
 self-reported professional completion time in Appendix A.2.4 and aggregate
@@ -129,5 +130,8 @@ schema provided its construction and units are documented.
 - Additional DUA/privacy conditions: ____
 - Decision authority/date: PI/specification owner / 2026-08-21
 
-Current status is `SUBMITTED_DELIVERY_UNCONFIRMED_WAITING_14_DAYS`. The waiting
-period ends at `2026-09-04T13:04:55Z`; the fallback remains unlaunched.
+Historical waiting status `SUBMITTED_DELIVERY_UNCONFIRMED_WAITING_14_DAYS` is
+superseded by `PI_AMENDMENT_GDPVAL_OUTREACH_BOUNCE_2026-08-21.md`. Current
+statuses are `AUTHOR_OUTREACH_BOUNCED`, `AUTHOR_DATA_ROUTE_UNAVAILABLE`, and
+`HUMAN_FALLBACK_AUTHORIZED`; the project must not wait until 2026-09-04 solely
+because the original rule named that date.

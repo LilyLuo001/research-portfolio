@@ -1,13 +1,15 @@
 {
   "checked_at_utc": "2026-08-21T13:38:00Z",
   "fallback_eligibility_utc": "2026-09-04T13:04:55Z",
+  "fallback_authorized_immediately": true,
   "fallback_launched": false,
   "followups_remaining": 1,
-  "legitimate_bounce_evidence_visible": false,
+  "legitimate_bounce_evidence_visible": true,
   "legitimate_reply_evidence_visible": false,
   "mail_transport_delivery_confirmation_fabricated": false,
-  "monitor_scope": "SCC_project_mail_headers_and_project_private_outreach_artifacts_only",
-  "status": "WAITING_AUTHOR_RESPONSE_NO_REPLY_OR_BOUNCE_VISIBLE_TO_PROJECT",
+  "monitor_scope": "PI-provided_external_bounce_fact_plus_SCC_project_artifacts; no_private_bounce_body_committed",
+  "old_waiting_rule_superseded": true,
+  "status": "AUTHOR_OUTREACH_BOUNCED_AUTHOR_DATA_ROUTE_UNAVAILABLE_HUMAN_FALLBACK_AUTHORIZED",
   "task_duration_coverage": {
     "covered_tasks": 0,
     "expected_tasks": 220

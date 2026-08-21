@@ -22,3 +22,22 @@
 
 This receipt proves local mail submission, not remote delivery or author
 receipt. A bounce, reply, or delivered-message record must be logged separately.
+
+## Subsequent delivery correction and PI amendment
+
+The PI reported on 2026-08-21, before any human-duration annotation result
+existed, that the email bounced and was not delivered. No author contact was
+established. This corrects the delivery status without deleting the historical
+local-submission receipt.
+
+- Corrected delivery status: `AUTHOR_OUTREACH_BOUNCED`
+- Author-data route: `AUTHOR_DATA_ROUTE_UNAVAILABLE`
+- Successful author outreach/contact: **NO**
+- Historical `sendmail` exit status: retained as evidence only of local
+  submission, not delivery
+- Prior waiting-period rule: superseded by
+  `PI_AMENDMENT_GDPVAL_OUTREACH_BOUNCE_2026-08-21.md`
+- Human fallback status: `HUMAN_FALLBACK_AUTHORIZED`
+- Evidence provenance: PI-provided external bounce fact, instruction SHA-256
+  `34852dc1830f70b3a7d1c57ee8fc2939c4f574822097f6ba6f2577a447cff552`;
+  no private bounce body or address metadata committed
