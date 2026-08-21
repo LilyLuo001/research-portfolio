@@ -11,12 +11,12 @@ non-DONE statuses, and `runner.py --plan` prints them under
 | Task | Artifact reality | Reconciled state | Next gate |
 |---|---|---|---|
 | `DAX-W0.5-legwork` | Superseded by owner-run feasibility legwork and signed gate | `superseded` | None |
-| `DAX-W1-memo` | A5 source/PDF reconciliation complete; scientific gates remain | `memo_reconciled_scientific_gates_open` | Mapping, duration, benchmark, real power, fresh review |
-| `DAX-W1-power` | Person-level engine and fail-closed receipt exist; no real run | `engine_complete_real_run_blocked` | Real W5 panel and authorized benchmark |
+| `DAX-W1-memo` | A5 source/PDF reconciliation complete; benchmark 0.13 and 0.16/0.19 sensitivities signed; other scientific gates remain | `memo_reconciled_scientific_gates_open` | Mapping labels/calibration, duration, real power, fresh review |
+| `DAX-W1-power` | Person-level engine and fail-closed receipt exist; benchmark is signed; no real run | `engine_complete_real_run_blocked` | Real W5 panel |
 | `DAX-W2-data` | CPS, crosswalk, price, and source receipts report execution; SCC `dax_built_backbone` contract passed on 2026-08-21 with all four required private files | `complete` | None; downstream scientific gates remain independent |
-| `DAX-W3-mapA` | v1 executed deterministically but produced zero accepted mappings and 0.22461% wage-bill coverage | `execution_failed_scientific_gate` | PI-approved v2 method/thresholds plus blind labels |
-| `DAX-W3-bulk` / `DAX-W3-audit` | Old-v1 annotation continuation would not validate proposed v2 | `not_runnable_mapping_v2_unapproved` | Approve v2, then label and audit |
-| `DAX-W4-panel` | Contract/preflight/availability infrastructure exists; 0 captured rows and 0/220 durations | `infrastructure_complete_execution_blocked` | Mapping, duration, availability, and future budget gates |
+| `DAX-W3-mapA` | v1 failed; signed v2 thresholds, prospective classifier/calibrator code, and independent 60+20+20 exhaustive-recall sample are frozen; labels absent | `v2_predecision_code_and_recall_sample_frozen` | Authorize capped USD 60 label budget, then dev/cal labels and frozen calibration gate |
+| `DAX-W3-bulk` / `DAX-W3-audit` | Three independent provider families are reachable; exact annotation protocol and costs are frozen; no inference has run | `paid_labeling_budget_authorization_pending` / `independent_labels_not_yet_generated` | Explicit capped label-budget authorization, then blind labeling |
+| `DAX-W4-panel` | Contract/preflight/availability infrastructure exists; 0 captured rows and 0/220 durations | `infrastructure_complete_execution_blocked` | Validated Mapping A; GDPval author wait through 2026-09-04; later W4 budget if required |
 | `DAX-W5-index` | Schema and blocker receipt exist; no real panel or identification result | `schema_complete_real_panel_blocked` | Qualified W3 and populated W4 |
 
 Downstream Gate 1 and power work remain blocked. No dependency was weakened,

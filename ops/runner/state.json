@@ -42,32 +42,32 @@
     },
     "DAX-W1-memo": {
       "status": "memo_reconciled_scientific_gates_open",
-      "next_gate": "Resolve Mapping A v2, duration, benchmark, real power, and fresh red-team gates before completion."
+      "next_gate": "Resolve Mapping A v2 labels/calibration, duration, real power, and fresh red-team gates before completion; benchmark 0.13 with 0.16/0.19 sensitivities is signed."
     },
     "DAX-W1-power": {
       "status": "engine_complete_real_run_blocked",
-      "next_gate": "Requires a real W5 dose panel and a PI-authorized sourced benchmark; 999-replication run has not occurred."
+      "next_gate": "Requires a real W5 dose panel; benchmark 0.13 with 0.16/0.19 sensitivities is signed, and the 999-replication run has not occurred."
     },
     "DAX-W3-mapA": {
-      "status": "execution_failed_scientific_gate",
-      "next_gate": "Mapping A v1 has zero accepted rows; v2 production method and thresholds require PI approval and blind labels."
+      "status": "v2_predecision_code_and_recall_sample_frozen",
+      "next_gate": "Signed v2 thresholds are resolved; authorize the capped USD 60 independent-label budget, then label development/calibration and apply the frozen calibration gate. Locked test remains unopened."
     },
     "DAX-W3-bulk": {
-      "status": "not_runnable_mapping_v2_unapproved",
-      "next_gate": "Do not spend on labels until the PI approves the v2 taxonomy, transport rule, and prospective thresholds."
+      "status": "paid_labeling_budget_authorization_pending",
+      "next_gate": "Taxonomy and thresholds are signed. Do not spend until the capped USD 60 independent-label budget is explicitly authorized."
     },
     "DAX-W3-audit": {
-      "status": "not_runnable_mapping_v2_unapproved",
-      "next_gate": "Runs only after an independently labeled v2 sample exists under the approved protocol."
+      "status": "independent_labels_not_yet_generated",
+      "next_gate": "Runs after budget authorization and independent labels under the frozen three-family escalation protocol."
     },
     "DAX-W4-panel": {
       "status": "infrastructure_complete_execution_blocked",
-      "next_gate": "0/220 durations and 0 captured capability rows; Mapping A and duration gates plus future paid budget remain unresolved."
+      "next_gate": "0/220 durations and 0 captured capability rows; await Mapping A validation and GDPval author response through 2026-09-04T13:04:55Z, then obtain any separately required W4 paid budget."
     },
     "DAX-W5-index": {
       "status": "schema_complete_real_panel_blocked",
       "next_gate": "Requires qualified W3 mapping and populated W4 measurements; no real dose panel or identification gate exists."
     }
   },
-  "_note": "DAX statuses were reconciled 2026-08-21 from committed receipts. Scientific failure and missing-input states are held rather than falsely marked complete or reassigned. SH-runner and SH-econlib are merged; E2-T6a remains incomplete because its real upstream producers are open."
+  "_note": "DAX statuses were reconciled 2026-08-21 from committed receipts and the signed PI decisions. Missing-input and budget states are held rather than falsely marked complete or attributed to missing PI decisions. SH-runner and SH-econlib are merged; E2-T6a remains incomplete because its real upstream producers are open."
 }

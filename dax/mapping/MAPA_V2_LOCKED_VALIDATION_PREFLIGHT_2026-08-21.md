@@ -19,29 +19,34 @@ label, validation metric, W5 value, power result, treatment effect, or outcome.
    frozen artifact is an unannotated sample.
 2. No round-1 dual-vendor label artifacts, adjudication artifact, or qualified
    human audit artifact exists in the approved private validation directory.
-3. The repository freezes retrieval and sampling, but it contains no frozen
-   classifier/calibrator that turns retrieval features into predicted `D`
-   labels. Therefore PPV and FPR currently have no executable prediction
-   denominator. The protocol itself says a calibrator "may" be fit and that no
-   final calibrator becomes binding without approval.
-4. Candidate recall cannot be evaluated without an independently adjudicated
-   complete-pool set of true `D` relations for sampled source tasks.
+3. Superseding pre-label work on the same date now freezes the executable
+   classifier/calibration procedure in `mapA_v2_prediction.py` and
+   `mapA_v2_prediction_spec_20260821.json`: ten retrieval-only features, L2
+   logistic regression, development-only five-fold PR-AUC model selection,
+   calibration-only Platt scaling, and the signed PPV/FPR constrained cutoff
+   rule. No fitted parameters or cutoff exist because labels remain absent.
+4. The independent exhaustive Recall@40 source sample is now frozen privately:
+   60 primary tasks plus two prospective 20-task reserves, each against all 220
+   GDPval tasks. Every source task used by any classifier split was excluded.
+   Candidate recall remains unevaluable until these full pools are adjudicated.
 5. Task-mass/family coverage and transport sensitivity likewise require final
    adjudicated `D/F/N/U` relations and, for PI-15 crossing diagnostics, later
    W4 inputs.
 
 ## Gate determination
 
-`BLOCKED_LABELS_AND_FROZEN_PREDICTION_RULE_ABSENT`
+`NEED_PI_BUDGET_AUTHORIZATION`
 
-It would be scientifically invalid to manufacture labels, select a classifier
-after seeing them, or report blank fields as validation results. Before the
-authorized one-time opening can run, the project needs:
+It would be scientifically invalid to manufacture labels or report blank fields
+as validation results. The provider preflight found three technically reachable
+independent API vendor families, but did not certify zero incremental cost. The
+exact capped request is recorded in `mapA_v2_labeling_preflight_receipt.json`.
+Before the authorized one-time opening can run, the project needs:
 
 - two independent vendor-family round-1 labels and the specified third-family/
   human adjudication, produced without paid work unless separately authorized;
-- a prospectively committed prediction/calibration algorithm, feature list,
-  fit split, decision rule for `D`, and exact evaluation schema; and
+- development/calibration fitting under the now-frozen algorithm, followed by
+  an immutable parameter and cutoff receipt; and
 - a release-safe evaluator that consumes the signed threshold JSON and emits
   only aggregate metrics and PASS/FAIL statuses.
 
