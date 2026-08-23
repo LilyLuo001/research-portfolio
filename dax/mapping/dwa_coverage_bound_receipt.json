@@ -1,13 +1,14 @@
 {
   "baseline_for_comparison": {
     "mapping_a_direct_match_task_coverage": 0.00192118,
-    "note": "from dax/mapping/PROTOCOL_mapA_gdpval.md section 9"
+    "mapping_a_direct_match_wage_bill_coverage": 0.0022461,
+    "note": "task-count baseline from PROTOCOL_mapA_gdpval.md section 9; wage-bill baseline from mapA_run_receipt.json results.wage_bill_coverage -- compare like with like"
   },
   "coverage_bound": {
     "share_of_all_tasks": 0.3389584090555065,
     "share_of_tasks_with_any_dwa": 0.34677290836653385,
     "tasks_covered": 6528,
-    "wage_bill_weighted_share": null
+    "wage_bill_weighted_share": 0.4169526386038046
   },
   "gdpval": {
     "n_matched_onet_socs": 43,
@@ -62,5 +63,16 @@
     "pinned_n_unique_onet_socs": 923,
     "pinned_n_unique_task_ids": 19259,
     "reconciled": true
+  },
+  "weights": {
+    "filters": {
+      "allocation_usable": "true",
+      "vintage": "2021"
+    },
+    "n_weighted_tasks": 15274,
+    "path": "/usr3/graduate/qluo/dax-private/w2_build_outputs/task_wage_allocations.csv",
+    "reconciled_against": "/usr3/graduate/qluo/dax_w3_bound/mapA_run_receipt.json",
+    "total_mass": 56074210.000001125,
+    "weight_column": "task_annual_wage_bill_allocation"
   }
 }
