@@ -1,0 +1,128 @@
+{
+  "cause_counts_by_relation": {
+    "D": {
+      "flag_counts": {
+        "capability_family_without_task_substitutability": 0,
+        "end_to_end_deliverable_vs_narrow_activity": 0,
+        "granularity_mismatch": 0,
+        "many_to_one_aggregation_in_measurement": 0,
+        "occupation_context_mismatch": 0,
+        "one_to_many_decomposition_required": 0,
+        "other_structural_cause": 0,
+        "pair_level_retrieval_failure": 0,
+        "taxonomy_definition_too_strict": 0,
+        "wording_or_domain_false_friend": 0,
+        "work_modality_mismatch": 0
+      },
+      "pairs": 0
+    },
+    "F": {
+      "flag_counts": {
+        "capability_family_without_task_substitutability": 24,
+        "end_to_end_deliverable_vs_narrow_activity": 24,
+        "granularity_mismatch": 24,
+        "many_to_one_aggregation_in_measurement": 24,
+        "occupation_context_mismatch": 0,
+        "one_to_many_decomposition_required": 24,
+        "other_structural_cause": 0,
+        "pair_level_retrieval_failure": 0,
+        "taxonomy_definition_too_strict": 0,
+        "wording_or_domain_false_friend": 0,
+        "work_modality_mismatch": 0
+      },
+      "pairs": 24
+    },
+    "N": {
+      "flag_counts": {
+        "capability_family_without_task_substitutability": 0,
+        "end_to_end_deliverable_vs_narrow_activity": 36,
+        "granularity_mismatch": 36,
+        "many_to_one_aggregation_in_measurement": 36,
+        "occupation_context_mismatch": 36,
+        "one_to_many_decomposition_required": 36,
+        "other_structural_cause": 0,
+        "pair_level_retrieval_failure": 36,
+        "taxonomy_definition_too_strict": 0,
+        "wording_or_domain_false_friend": 9,
+        "work_modality_mismatch": 27
+      },
+      "pairs": 36
+    },
+    "U": {
+      "flag_counts": {
+        "capability_family_without_task_substitutability": 0,
+        "end_to_end_deliverable_vs_narrow_activity": 0,
+        "granularity_mismatch": 0,
+        "many_to_one_aggregation_in_measurement": 0,
+        "occupation_context_mismatch": 0,
+        "one_to_many_decomposition_required": 0,
+        "other_structural_cause": 0,
+        "pair_level_retrieval_failure": 0,
+        "taxonomy_definition_too_strict": 0,
+        "wording_or_domain_false_friend": 0,
+        "work_modality_mismatch": 0
+      },
+      "pairs": 0
+    }
+  },
+  "incremental_api_spend_usd": 0,
+  "interpretation_limits": {
+    "counts_are_overlapping_except_primary": true,
+    "formal_validation_performance_claimed": false,
+    "locked_test_read": false,
+    "production_mapping_selected": false,
+    "taxonomy_or_label_changed": false
+  },
+  "mechanical_unit_diagnostics_words": {
+    "gdpval_prompt": {
+      "maximum": 1015,
+      "median": 276.0,
+      "minimum": 100
+    },
+    "gdpval_scoring_rubric": {
+      "maximum": 2117,
+      "median": 780.0,
+      "minimum": 252
+    },
+    "median_prompt_to_onet_statement_ratio": 19.01,
+    "onet_task_statement": {
+      "maximum": 24,
+      "median": 14.0,
+      "minimum": 2
+    }
+  },
+  "overlapping_structural_cause_counts": {
+    "capability_family_without_task_substitutability": 24,
+    "end_to_end_deliverable_vs_narrow_activity": 60,
+    "granularity_mismatch": 60,
+    "many_to_one_aggregation_in_measurement": 60,
+    "occupation_context_mismatch": 36,
+    "one_to_many_decomposition_required": 60,
+    "other_structural_cause": 0,
+    "pair_level_retrieval_failure": 36,
+    "taxonomy_definition_too_strict": 0,
+    "wording_or_domain_false_friend": 9,
+    "work_modality_mismatch": 27
+  },
+  "pairs": 60,
+  "primary_cause_counts": {
+    "capability_family_without_task_substitutability": 24,
+    "wording_or_domain_false_friend": 9,
+    "work_modality_mismatch": 27
+  },
+  "private_input_hashes": {
+    "cause_codes_sha256": "3ced2d9470d0bd015b7123becd058acbec7fcf91184cbf8b0933459f639615aa",
+    "labels_sha256": "b43a9118cc7ec64367a04bf06670251283c451cec2307b9987e6f6a208c53102",
+    "packets_sha256": "babcf96955fd8ace102509abef896d4287a44fd404014d8581faecccd903effa",
+    "sample_sha256": "160d2a44654530b2096ebfe6a208113aba21ba04467530875c0c38a68cbd07ad"
+  },
+  "relation_counts_unchanged": {
+    "D": 0,
+    "F": 24,
+    "N": 36,
+    "U": 0
+  },
+  "row_level_data_committed": false,
+  "scope": "existing_60_pair_development_calibration_diagnostic",
+  "status": "V2_CONCEPTUAL_FAILURE_DIAGNOSED_DEVELOPMENT_MATERIAL_ONLY"
+}
