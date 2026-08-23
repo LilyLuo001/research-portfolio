@@ -29,7 +29,10 @@ not permission to rewrite history.
 
 ## Private SCC locations
 
-- expected key file: `/usr3/graduate/qluo/dax-private/w4/.env`, mode `0600`;
+- expected key file: `/usr3/graduate/qluo/dax-private/w4/.env`, mode `0600`
+  — **verified absent 2026-08-23**; never provisioned. W4 capture is blocked
+  on this as well as on task duration. See
+  `ops/briefs/DAX-W4-availability-probe.md` §precondition zero;
 - variable names: `OPENAI_API_KEY` and `DAX_W4_ENCRYPTION_KEY`;
 - encrypted prompts/responses, task-ID manifest, checkpoints, and budget DB:
   `/usr3/graduate/qluo/dax-private/w4/` (mode `0700`).

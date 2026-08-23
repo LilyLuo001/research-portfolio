@@ -42,6 +42,33 @@ does not begin capture.
 
 If anything is ambiguous, emit `NEED_HUMAN: <reason>` and stop. Do not guess.
 
+## Precondition zero — the key must exist
+
+**Confirmed absent as of 2026-08-23.** A seat with SCC access verified that
+`/usr3/graduate/qluo/dax-private/w4/.env` does not exist, the `w4/` directory
+is empty, no `.env` exists anywhere under `dax-private/`, `OPENAI_API_KEY` is
+unset in the SCC environment, and the only other `.env` files in the home
+directory hold DeepSeek/Kimi/GLM/Qwen/Gemini keys — different vendors, scoped
+for other work, and not substitutable here.
+
+`dax/capability_panel/README.md` calls this the *expected* key file. It has
+never been provisioned. **W4 capture has therefore always been blocked on two
+unstarted prerequisites, not one:** the task-duration metadata at 0/220, and
+this key.
+
+Only the owner can resolve it, on the SCC, in their own terminal — the key must
+never be pasted into a chat, an argument, or a commit:
+
+```bash
+mkdir -p /usr3/graduate/qluo/dax-private/w4
+printf 'OPENAI_API_KEY=%s\n' 'sk-...' > /usr3/graduate/qluo/dax-private/w4/.env
+chmod 600 /usr3/graduate/qluo/dax-private/w4/.env
+```
+
+Until that file exists, the probe is not runnable and this task is blocked.
+The CLI now fails closed with `NEED_HUMAN` and a named precondition rather
+than writing a receipt, so a keyless run cannot be mistaken for a result.
+
 ## Preconditions
 
 ```bash
@@ -55,6 +82,10 @@ stat -c 'env mode: %a (want 600)' /usr3/graduate/qluo/dax-private/w4/.env
 # confirm outbound HTTPS without putting the key anywhere
 curl -sS -o /dev/null -w 'egress check: %{http_code}\n' https://api.openai.com/v1/models
 ```
+
+If the probe refuses, it prints `NEED_HUMAN:` and names exactly which
+precondition failed — key file absent, mode too loose, or no `OPENAI_API_KEY`
+line in it — and exits 2 without touching the output file.
 
 `401` from that curl is a **pass** — it proves egress works and that no key was
 sent. A hang or proxy error means you are on a node without outbound access:
