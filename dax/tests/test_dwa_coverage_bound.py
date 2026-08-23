@@ -266,3 +266,109 @@ def test_a_total_title_miss_is_refused_not_reported_as_zero(tmp_path):
         "--output", str(out),
     ]) == 2
     assert not out.exists(), "a refused run must not write a receipt"
+
+
+# --- weights: the fourth selection fault, found on the SCC -------------------
+# The pinned 2021 allocation file has 15 columns. "First column that is not the
+# task id" selects `vintage`, so every weight becomes the constant 2021.0. A
+# constant weight makes the weighted share exactly equal the unweighted one, so
+# the run emits the task-count number relabelled as a wage-bill share and reads
+# as "weighting makes no difference". That is a false finding, not a wrong
+# denominator -- worse than the three faults before it.
+
+WIDE_WEIGHTS = (
+    "vintage,onet_soc,task_id,task_time_share,task_annual_wage_bill_allocation,allocation_usable\n"
+    "2021,15-1252.00,1,0.5,1000.0,true\n"
+    "2021,29-1141.00,2,0.5,2000.0,true\n"
+    "2021,47-2111.00,3,0.5,3000.0,true\n"
+    "2021,47-2111.00,4,0.5,4000.0,true\n"
+    "2019,15-1252.00,1,0.5,999.0,true\n"
+)
+
+
+def _wide(tmp_path):
+    path = tmp_path / "task_wage_allocations.csv"
+    path.write_text(WIDE_WEIGHTS, encoding="utf-8")
+    return path
+
+
+def _run(tmp_path, weights_args, audit_tasks=4):
+    pd = pytest.importorskip("pandas")
+    pytest.importorskip("pyarrow")
+    parquet = tmp_path / "gdpval.parquet"
+    pd.DataFrame({"task_id": ["t1", "t2"], "sector": ["I", "H"],
+                  "occupation": ["Software Developers", "Registered Nurses"],
+                  "prompt": ["SENTINEL_TASK_TEXT_A", "SENTINEL_TASK_TEXT_B"]}).to_parquet(parquet)
+    audit = tmp_path / "audit.json"
+    audit.write_text(json.dumps({"onet": {"n_unique_task_ids": audit_tasks,
+                                          "n_unique_onet_socs": 3}}))
+    out = tmp_path / "receipt.json"
+    code = BOUND.main([
+        "--onet", str(_release(tmp_path)), "--gdpval-parquet", str(parquet),
+        "--output", str(out), "--expect-audit", str(audit),
+        "--expect-mapa", str(tmp_path / "nonexistent.json"),
+    ] + weights_args)
+    return code, out
+
+
+def test_a_wide_weights_file_refuses_to_guess_the_column(tmp_path):
+    code, out = _run(tmp_path, ["--task-weights", str(_wide(tmp_path))])
+    assert code == 2
+    assert not out.exists()
+
+
+def test_naming_the_column_and_filtering_produces_a_real_weighted_share(tmp_path):
+    code, out = _run(tmp_path, [
+        "--task-weights", str(_wide(tmp_path)),
+        "--weight-column", "task_annual_wage_bill_allocation",
+        "--weight-filter", "vintage=2021",
+        "--weight-filter", "allocation_usable=true",
+    ])
+    assert code == 0
+    receipt = json.loads(out.read_text())
+    prov = receipt["weights"]
+    assert prov["weight_column"] == "task_annual_wage_bill_allocation"
+    assert prov["n_weighted_tasks"] == 4
+    assert prov["total_mass"] == 10000.0
+    # tasks 1, 2, 4 are covered (task 4 via a shared DWA); 1000+2000+4000
+    weighted = receipt["coverage_bound"]["wage_bill_weighted_share"]
+    assert weighted == pytest.approx(0.7)
+    # the whole point: weighting must be able to differ from the count share
+    assert weighted != receipt["coverage_bound"]["share_of_all_tasks"]
+
+
+def test_colliding_vintages_are_refused_not_silently_overwritten(tmp_path):
+    """Unfiltered, task_id 1 appears for both 2019 and 2021; last write wins."""
+    code, out = _run(tmp_path, [
+        "--task-weights", str(_wide(tmp_path)),
+        "--weight-column", "task_annual_wage_bill_allocation",
+    ])
+    assert code == 2
+    assert not out.exists()
+
+
+def test_weights_are_reconciled_against_the_mapa_receipt(tmp_path):
+    pd = pytest.importorskip("pandas")
+    pytest.importorskip("pyarrow")
+    weights = _wide(tmp_path)
+    mapa = tmp_path / "mapA_run_receipt.json"
+    mapa.write_text(json.dumps({"inputs": {"wage_allocations": {
+        "n_usable_tasks": 15274,          # deliberately not the 4 in the fixture
+        "total_annual_task_allocation_mass": 56074210.00000092,
+    }}}))
+    parquet = tmp_path / "gdpval.parquet"
+    pd.DataFrame({"task_id": ["t1"], "sector": ["I"],
+                  "occupation": ["Software Developers"],
+                  "prompt": ["SENTINEL_TASK_TEXT_E"]}).to_parquet(parquet)
+    audit = tmp_path / "audit.json"
+    audit.write_text(json.dumps({"onet": {"n_unique_task_ids": 4, "n_unique_onet_socs": 3}}))
+    out = tmp_path / "receipt.json"
+    assert BOUND.main([
+        "--onet", str(_release(tmp_path)), "--gdpval-parquet", str(parquet),
+        "--output", str(out), "--expect-audit", str(audit),
+        "--expect-mapa", str(mapa),
+        "--task-weights", str(weights),
+        "--weight-column", "task_annual_wage_bill_allocation",
+        "--weight-filter", "vintage=2021",
+    ]) == 2
+    assert not out.exists(), "an unreconciled mass must not reach a receipt"

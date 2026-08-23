@@ -165,8 +165,19 @@ def main(argv: list[str] | None = None) -> int:
                     help="pinned input audit to reconcile the derived task "
                          "universe against; pass /dev/null to skip")
     ap.add_argument("--task-weights", type=pathlib.Path,
-                    help="optional CSV with task_id and a weight column, for "
-                         "wage-bill-weighted coverage")
+                    help="optional CSV with a task id column and a weight "
+                         "column, for wage-bill-weighted coverage")
+    ap.add_argument("--weight-column",
+                    help="name of the weight column; REQUIRED when the weights "
+                         "file has more than two columns -- the column is never "
+                         "guessed")
+    ap.add_argument("--weight-filter", action="append", default=[],
+                    metavar="COL=VALUE",
+                    help="restrict weight rows to COL == VALUE; repeatable")
+    ap.add_argument("--expect-mapa", type=pathlib.Path,
+                    default=pathlib.Path(__file__).resolve().parent / "mapA_run_receipt.json",
+                    help="Mapping A run receipt to reconcile the weight mass "
+                         "against; pass /dev/null to skip")
     args = ap.parse_args(argv)
 
     raw = _members(args.onet)
@@ -308,17 +319,105 @@ def main(argv: list[str] | None = None) -> int:
             return 2
 
     weighted = None
+    weight_provenance = None
     if args.task_weights and args.task_weights.exists():
         with args.task_weights.open(newline="", encoding="utf-8") as fh:
             wrows = list(csv.DictReader(fh))
-        if wrows:
-            wk_task = _col(wrows[0], "task", "id")
-            wk_val = next(k for k in wrows[0] if k != wk_task)
-            weights = {r[wk_task]: float(r[wk_val] or 0) for r in wrows}
-            total = sum(weights.values())
-            if total > 0:
-                hit = sum(weights.get(t, 0.0) for t in covered)
-                weighted = hit / total
+        if not wrows:
+            print("NEED_HUMAN: weights file has no rows", file=sys.stderr)
+            return 2
+        columns = [c for c in wrows[0] if c is not None]
+        wk_task = _col(wrows[0], "task", "id")
+
+        # Never infer the weight column. The pinned 2021 allocation file has 15
+        # columns; taking "the first that is not the task id" selects `vintage`,
+        # making every weight the constant 2021.0. A constant weight makes the
+        # weighted share exactly equal the unweighted one, so the run would emit
+        # the task-count number relabelled as a wage-bill share and read as
+        # "weighting makes no difference" -- a substantive false finding.
+        others = [c for c in columns if c != wk_task]
+        if args.weight_column:
+            if args.weight_column not in columns:
+                print(f"NEED_HUMAN: --weight-column {args.weight_column!r} is not "
+                      f"in the weights file; columns are {columns}", file=sys.stderr)
+                return 2
+            wk_val = args.weight_column
+        elif len(others) == 1:
+            wk_val = others[0]
+        else:
+            print(f"NEED_HUMAN: weights file has {len(columns)} columns, so the "
+                  f"weight column is ambiguous and will not be guessed. Pass "
+                  f"--weight-column. Candidates: {others}", file=sys.stderr)
+            return 2
+
+        filters = {}
+        for spec in args.weight_filter:
+            if "=" not in spec:
+                print(f"NEED_HUMAN: --weight-filter {spec!r} is not COL=VALUE",
+                      file=sys.stderr)
+                return 2
+            col, _, value = spec.partition("=")
+            if col not in columns:
+                print(f"NEED_HUMAN: --weight-filter column {col!r} is not in the "
+                      f"weights file; columns are {columns}", file=sys.stderr)
+                return 2
+            filters[col] = value
+        selected = [r for r in wrows
+                    if all(str(r[c]).strip().lower() == v.strip().lower()
+                           for c, v in filters.items())]
+
+        # The same file spans several vintages, so an unfiltered read collides
+        # task ids and silently keeps whichever row came last.
+        ids = [r[wk_task] for r in selected]
+        if len(ids) != len(set(ids)):
+            print(f"NEED_HUMAN: {len(ids) - len(set(ids))} duplicate task ids "
+                  f"after filtering {filters or '(none)'} -- weights would "
+                  f"collide last-write-wins. Add a --weight-filter that selects "
+                  f"one vintage.", file=sys.stderr)
+            return 2
+
+        weights = {r[wk_task]: float(r[wk_val] or 0) for r in selected}
+        mass = sum(weights.values())
+
+        # Reconcile against Mapping A, which used this same pinned file.
+        if args.expect_mapa and args.expect_mapa.exists() and args.expect_mapa.name != "null":
+            try:
+                mapa = json.loads(args.expect_mapa.read_text(encoding="utf-8"))
+                pinned = mapa.get("inputs", {}).get("wage_allocations", {})
+            except (json.JSONDecodeError, OSError):
+                pinned = {}
+            problems = []
+            want_sha = pinned.get("source_sha256")
+            if want_sha:
+                import hashlib
+                got_sha = hashlib.sha256(args.task_weights.read_bytes()).hexdigest()
+                if got_sha != want_sha:
+                    problems.append(f"file sha256 {got_sha[:12]} != pinned {want_sha[:12]}")
+            want_n = pinned.get("n_usable_tasks")
+            if want_n is not None and len(weights) != want_n:
+                problems.append(f"usable tasks {len(weights)} != pinned {want_n}")
+            want_mass = pinned.get("total_annual_task_allocation_mass")
+            if want_mass and abs(mass - want_mass) > abs(want_mass) * 1e-9:
+                problems.append(f"mass {mass!r} != pinned {want_mass!r}")
+            if problems:
+                print(f"NEED_HUMAN: weights do not reconcile with "
+                      f"{args.expect_mapa.name}: {'; '.join(problems)}.\n"
+                      f"  column used: {wk_val!r}; filters: {filters or '(none)'}\n"
+                      f"  A weighted share built on a different mass definition "
+                      f"is not comparable -- refusing to write a receipt.",
+                      file=sys.stderr)
+                return 2
+
+        if mass > 0:
+            weighted = sum(weights.get(task, 0.0) for task in covered) / mass
+        weight_provenance = {
+            "path": str(args.task_weights),
+            "weight_column": wk_val,
+            "filters": filters,
+            "n_weighted_tasks": len(weights),
+            "total_mass": mass,
+            "reconciled_against": str(args.expect_mapa),
+        }
 
     receipt = {
         "receipt_version": "dax-w3-dwa-coverage-bound-v1",
@@ -360,9 +459,13 @@ def main(argv: list[str] | None = None) -> int:
             "derived_n_onet_socs": len({s for s in task_soc.values()}),
             "reconciled": bool(expected),
         },
+        "weights": weight_provenance,
         "baseline_for_comparison": {
             "mapping_a_direct_match_task_coverage": 0.00192118,
-            "note": "from dax/mapping/PROTOCOL_mapA_gdpval.md section 9",
+            "mapping_a_direct_match_wage_bill_coverage": 0.0022461,
+            "note": "task-count baseline from PROTOCOL_mapA_gdpval.md section 9; "
+                    "wage-bill baseline from mapA_run_receipt.json "
+                    "results.wage_bill_coverage -- compare like with like",
         },
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
