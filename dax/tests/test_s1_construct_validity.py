@@ -133,3 +133,34 @@ def test_protocol_keeps_threshold_unsigned_and_hard_stops_closed():
     assert frozen["threshold"] is None
     assert frozen["threshold_status"] == "NEED_PROSPECTIVE_PI_THRESHOLD_SIGNATURE"
     assert not any(frozen["hard_stops"].values())
+
+
+def test_real_s1_receipts_are_aggregate_only_and_unresolved():
+    draw_receipt = json.loads((MAPPING / "s1_draw_receipt_20260823.json").read_text())
+    result = json.loads((MAPPING / "s1_construct_validity_result_receipt_20260823.json").read_text())
+    assert draw_receipt["sample_tasks"] == 120
+    assert draw_receipt["frame_tasks"] == 15274
+    assert draw_receipt["task_replacement_count"] == 0
+    assert draw_receipt["selected_task_text_inspected_before_draw"] is False
+    assert result["evaluable_class_counts"] == {
+        "directly_executable_digital": 0,
+        "executable_with_construct_valid_simulated_inputs": 14,
+        "executable_with_supplied_files_data": 10,
+        "otherwise_not_currently_evaluable": 2,
+        "requires_interpersonal_interaction": 57,
+        "requires_physical_world_action": 35,
+        "requires_unavailable_proprietary_system": 2,
+    }
+    assert result["construct_status_counts"] == {
+        "NON_EVALUABLE": 96, "PASS": 13, "REVISE": 11
+    }
+    assert result["formal_s1_gate_result"] == "UNRESOLVED"
+    assert result["threshold"] is None
+    assert result["recommendation"] == "PARTIAL_IDENTIFICATION_ONLY"
+    assert result["model_or_api_calls"] == 0
+    assert result["outcomes_opened"] is False
+    assert result["realized_spend_usd"] == 0
+    encoded = json.dumps({"draw": draw_receipt, "result": result})
+    assert "task_statement" not in encoded
+    assert "occupational_activity" not in encoded
+    assert "/usr3/" not in encoded
