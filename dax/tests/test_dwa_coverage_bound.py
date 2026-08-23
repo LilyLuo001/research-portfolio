@@ -52,27 +52,82 @@ def test_a_folded_header_is_refused_rather_than_parsed():
         BOUND._read_delimited("mangled.txt", folded.encode())
 
 
-def test_one_folded_column_cannot_satisfy_two_requirements():
-    """The deeper fault: substring lookup let a single column match everything.
+def test_reported_titles_table_cannot_win_over_occupation_data():
+    """The real O*NET 26.1 fault, found on the SCC.
 
-    This is what converted a parse error into a plausible wrong answer.
+    Sample of Reported Titles.txt offers 'O*NET-SOC Code' and 'Reported Job
+    Title'. Under substring matching those are two DISTINCT columns, one per
+    requirement, so the injective check passes and archive order hands it the
+    win. Its titles are colloquial incumbent-reported ones, so none of the 44
+    canonical GDPval labels match and the run refuses.
+
+    Exact column names separate them: Occupation Data has a column named
+    exactly 'Title'.
     """
-    folded = ["o*net-soc code\ttitle\tdescription"]
-    assert not BOUND._distinct_assignment(folded, ("o*net-soc code", "title"))
 
-    proper = ["o*net-soc code", "title", "description"]
-    assert BOUND._distinct_assignment(proper, ("o*net-soc code", "title"))
+    tables = {
+        "Sample of Reported Titles.txt": [
+            {"O*NET-SOC Code": "15-1252.00", "Reported Job Title": "Coder",
+             "Shown in My Next Move": "Y"},
+        ],
+        "Occupation Data.txt": [
+            {"O*NET-SOC Code": "15-1252.00", "Title": "Software Developers",
+             "Description": "x"},
+        ],
+    }
+    name, rows, alternatives = BOUND._select(
+        tables, required={"o*net-soc code", "title"})
+    assert name == "Occupation Data.txt"
+    assert alternatives == []
+    assert rows[0]["Title"] == "Software Developers"
 
 
-def test_distinct_assignment_backtracks():
-    """A greedy first-match would fail this; the requirement is a matching."""
-    columns = ["task id", "id"]
-    assert BOUND._distinct_assignment(columns, ("task id", "id"))
+def test_task_statements_and_tasks_to_dwas_are_not_confused():
+    """Both carry O*NET-SOC Code and Task ID; the DWA id separates them."""
+    tables = {
+        "Task Statements.txt": [
+            {"O*NET-SOC Code": "15-1252.00", "Task ID": "1", "Task": "x"},
+        ],
+        "Tasks to DWAs.txt": [
+            {"O*NET-SOC Code": "15-1252.00", "Task ID": "1", "DWA ID": "D01"},
+        ],
+    }
+    assert BOUND._select(tables, required={"task id", "dwa id"})[0] == "Tasks to DWAs.txt"
+    assert BOUND._select(
+        tables, required={"o*net-soc code", "task id"},
+        forbidden={"dwa id"})[0] == "Task Statements.txt"
+
+
+def test_selection_is_deterministic_not_archive_order():
+    """Ties break on sorted name, never on the order the zip happens to list."""
+    a = [{"O*NET-SOC Code": "1", "Title": "A"}]
+    b = [{"O*NET-SOC Code": "2", "Title": "B"}]
+    forward = BOUND._select({"zzz.txt": a, "aaa.txt": b}, required={"o*net-soc code", "title"})
+    reverse = BOUND._select({"aaa.txt": b, "zzz.txt": a}, required={"o*net-soc code", "title"})
+    assert forward[0] == reverse[0] == "aaa.txt"
+    assert forward[2] == ["zzz.txt"]
+
+
+def test_no_matching_table_is_refused():
+    with pytest.raises(BOUND.LayoutError, match="no table has exactly"):
+        BOUND._select({"x.txt": [{"unrelated": "1"}]}, required={"o*net-soc code", "title"})
+
+
+# The two tests that lived here exercised _distinct_assignment, an injective
+# substring-to-column matcher used when tables were selected by substring.
+# Exact-name selection (_select) replaced it and is strictly stronger, and the
+# folded-header case it guarded is now refused at parse time -- see
+# test_a_folded_header_is_refused_rather_than_parsed. Removed rather than left
+# testing a function that no longer exists.
 
 
 def _release(tmp_path: pathlib.Path) -> pathlib.Path:
     zip_path = tmp_path / "onet.zip"
     with zipfile.ZipFile(zip_path, "w") as zf:
+        # the decoy that beat Occupation Data under substring matching
+        zf.writestr("db/Sample of Reported Titles.txt",
+                    "O*NET-SOC Code\tReported Job Title\tShown in My Next Move\n"
+                    "15-1252.00\tCoder\tY\n29-1141.00\tFloor Nurse\tY\n")
         zf.writestr("db/Occupation Data.txt", OCCUPATION_TABLE
                     + f"47-2111.00\tElectricians\t{PROSE}\n")
         zf.writestr("db/Task Statements.txt",
@@ -118,6 +173,10 @@ def test_end_to_end_reaches_a_task_through_a_shared_dwa(tmp_path):
     assert receipt["coverage_bound"]["tasks_covered"] == 3
     assert receipt["coverage_bound"]["share_of_all_tasks"] == 0.75
     assert receipt["gdpval"]["unmatched_occupation_labels"] == []
+    used = receipt["sources"]["onet_tables_used"]
+    assert used["occupations"] == "Occupation Data.txt"
+    assert used["task_statements"] == "Task Statements.txt"
+    assert used["task_to_dwa"] == "Tasks to DWAs.txt"
     # counts and column names only; no task text may cross into the receipt
     serialised = json.dumps(receipt)
     assert "SENTINEL_TASK_TEXT" not in serialised

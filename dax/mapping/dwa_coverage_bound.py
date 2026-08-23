@@ -96,40 +96,42 @@ def _members(source: pathlib.Path) -> dict[str, bytes]:
         }
 
 
-def _find(tables: dict[str, list[dict[str, str]]], *required: str) -> tuple[str, list[dict[str, str]]] | None:
-    """Find the first table whose columns cover every required substring.
+def _select(
+    tables: dict[str, list[dict[str, str]]],
+    *,
+    required: set[str],
+    forbidden: set[str] = frozenset(),
+) -> tuple[str, list[dict[str, str]], list[str]]:
+    """Pick the table whose columns EXACTLY contain `required` and none of `forbidden`.
 
-    O*NET release file names are not assumed. Discovery is by column content so
-    a renamed or re-versioned release still works, and a miss is reported with
-    the full member list rather than guessed at.
+    Substring matching is too loose to identify an O*NET table. Searching for
+    a column merely *containing* "title" selects Sample of Reported Titles.txt
+    -- whose "Reported Job Title" is a colloquial incumbent-reported title --
+    ahead of Occupation Data.txt, because both offer a distinct column per
+    requirement and the sample file comes first in archive order. None of the
+    44 canonical GDPval labels then match, which the zero-match guard correctly
+    refuses, but the cause is table selection rather than parsing.
+
+    Exact names disambiguate: Occupation Data has a column named exactly
+    "Title"; the reported-titles sample does not. Ties are broken by sorted
+    name so the choice never depends on archive order, and every alternative
+    is returned for the receipt.
     """
-    for name, rows in tables.items():
+
+    hits = []
+    for name in sorted(tables):
+        rows = tables[name]
         if not rows:
             continue
-        cols = [c.lower() for c in rows[0] if c is not None]
-        if _distinct_assignment(cols, required):
-            return name, rows
-    return None
-
-
-def _distinct_assignment(columns: list[str], required: tuple[str, ...]) -> bool:
-    """True only if each required substring can claim a *different* column.
-
-    Requiring merely that every substring appears somewhere lets one folded
-    column satisfy all of them at once, which is how a delimiter mistake
-    turns into a plausible wrong answer instead of an error.
-    """
-
-    def assign(index: int, used: frozenset[int]) -> bool:
-        if index == len(required):
-            return True
-        for position, column in enumerate(columns):
-            if position not in used and required[index] in column:
-                if assign(index + 1, used | {position}):
-                    return True
-        return False
-
-    return assign(0, frozenset())
+        cols = {c.lower().strip() for c in rows[0] if c is not None}
+        if required <= cols and not (forbidden & cols):
+            hits.append(name)
+    if not hits:
+        raise LayoutError(
+            f"no table has exactly the columns {sorted(required)}"
+            + (f" while lacking {sorted(forbidden)}" if forbidden else "")
+        )
+    return hits[0], tables[hits[0]], hits[1:]
 
 
 def _col(row: dict[str, str], *substrings: str) -> str:
@@ -158,19 +160,31 @@ def main(argv: list[str] | None = None) -> int:
         print(f"NEED_HUMAN: {error}", file=sys.stderr)
         return 2
 
-    task_dwa = _find(tables, "task", "dwa")
-    task_stmt = _find(tables, "task id", "o*net-soc code")
-    if task_stmt is None:
-        task_stmt = _find(tables, "task", "soc")
-    occupations = _find(tables, "o*net-soc code", "title")
-
-    if task_dwa is None or task_stmt is None or occupations is None:
-        print("NEED_HUMAN: could not locate the required O*NET tables by column "
-              "content. Members seen:", file=sys.stderr)
-        for name, rows in sorted(tables.items()):
-            cols = list(rows[0]) if rows else []
+    # Exact column sets, so selection cannot drift onto a lookalike table.
+    # Task Statements and Tasks-to-DWAs both carry O*NET-SOC Code and Task ID;
+    # the DWA id is what separates them.
+    try:
+        task_dwa_name, task_dwa_rows, task_dwa_alts = _select(
+            tables, required={"task id", "dwa id"})
+        stmt_name, stmt_rows, stmt_alts = _select(
+            tables, required={"o*net-soc code", "task id"}, forbidden={"dwa id"})
+        occ_name, occ_rows, occ_alts = _select(
+            tables, required={"o*net-soc code", "title"})
+    except LayoutError as error:
+        print(f"NEED_HUMAN: {error}. Tables seen:", file=sys.stderr)
+        for name in sorted(tables):
+            cols = list(tables[name][0]) if tables[name] else []
             print(f"  {name}: {cols[:8]}", file=sys.stderr)
         return 2
+
+    selection = {
+        "task_to_dwa": task_dwa_name, "task_statements": stmt_name,
+        "occupations": occ_name,
+        "alternatives_not_chosen": {
+            "task_to_dwa": task_dwa_alts, "task_statements": stmt_alts,
+            "occupations": occ_alts,
+        },
+    }
 
     # --- GDPval: occupations, and a schema dump to settle whether OpenAI
     # released any O*NET linkage per task (the released card lists only
@@ -189,12 +203,11 @@ def main(argv: list[str] | None = None) -> int:
     # --- occupation title -> O*NET-SOC, exact on normalised title only.
     # Fuzzy matching here would silently inflate the bound; unmatched titles are
     # reported for human resolution instead (meta-rule 4).
-    occ_rows = occupations[1]
     soc_key = _col(occ_rows[0], "o*net-soc code")
     title_key = _col(occ_rows[0], "title")
     if soc_key == title_key:
-        print(f"NEED_HUMAN: occupation table resolved code and title to the same "
-              f"column {soc_key!r} -- the table did not parse", file=sys.stderr)
+        print(f"NEED_HUMAN: occupation table {occ_name} resolved code and title "
+              f"to the same column {soc_key!r} -- it did not parse", file=sys.stderr)
         return 2
     by_title: dict[str, list[str]] = defaultdict(list)
     for row in occ_rows:
@@ -217,17 +230,20 @@ def main(argv: list[str] | None = None) -> int:
     # GDPval occupations are drawn from O*NET titles by construction.
     if not matched_socs:
         print(f"NEED_HUMAN: none of the {len(gdp_occupations)} GDPval occupation "
-              f"labels matched an O*NET title. That is a parse or vintage fault, "
-              f"not a coverage result -- refusing to report 0.0", file=sys.stderr)
+              f"labels matched an O*NET title. That is a parse, vintage, or "
+              f"table-selection fault, not a coverage result -- refusing to "
+              f"report 0.0.\n  occupation table used: {occ_name} "
+              f"(columns {list(occ_rows[0])})\n  alternatives not chosen: "
+              f"{occ_alts}\n  first 3 GDPval labels: {gdp_occupations[:3]}",
+              file=sys.stderr)
         return 2
 
     # --- task -> soc, task -> dwa
-    stmt_rows = task_stmt[1]
     st_task = _col(stmt_rows[0], "task", "id")
     st_soc = _col(stmt_rows[0], "o*net-soc code")
     task_soc = {r[st_task]: r[st_soc] for r in stmt_rows}
 
-    td_rows = task_dwa[1]
+    td_rows = task_dwa_rows
     td_task = _col(td_rows[0], "task", "id")
     td_dwa = _col(td_rows[0], "dwa", "id")
     task_dwas: dict[str, set[str]] = defaultdict(set)
@@ -263,11 +279,7 @@ def main(argv: list[str] | None = None) -> int:
                           "DWA touched by a GDPval occupation is transportable",
         "sources": {
             "onet": str(args.onet),
-            "onet_tables_used": {
-                "task_to_dwa": task_dwa[0],
-                "task_statements": task_stmt[0],
-                "occupations": occupations[0],
-            },
+            "onet_tables_used": selection,
             "gdpval_parquet": str(args.gdpval_parquet),
         },
         "gdpval": {
