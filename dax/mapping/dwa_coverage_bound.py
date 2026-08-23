@@ -43,11 +43,41 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", text)
 
 
-def _read_delimited(raw: bytes) -> list[dict[str, str]]:
+class LayoutError(RuntimeError):
+    """A source table did not parse into the shape its header describes."""
+
+
+def _read_delimited(name: str, raw: bytes) -> list[dict[str, str]]:
+    """Parse an O*NET table, refusing any parse that collapses the header.
+
+    The delimiter is decided from the header line, never from a byte sample.
+    O*NET headers contain no commas, but prose columns do -- Occupation Data's
+    Description column alone carries more commas than the sample has tabs -- so
+    a whole-sample tab-vs-comma count picks comma and folds the entire header
+    into one column named "O*NET-SOC Code\tTitle\tDescription".
+
+    That failure is silent and dangerous rather than loud: the folded name
+    still contains every substring a caller searches for, so column lookup
+    "succeeds" and returns the same key for different fields. Zero occupation
+    titles then match, and the script reports a confident coverage bound of
+    0.0 -- a false negative that looks exactly like a real finding.
+
+    A correctly parsed header never contains the delimiter inside a column
+    name, so that is asserted here and the whole class is closed.
+    """
+
     text = raw.decode("utf-8-sig", errors="replace")
-    sample = text[:8192]
-    delimiter = "\t" if sample.count("\t") >= sample.count(",") else ","
-    return list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
+    header = text.split("\n", 1)[0].rstrip("\r")
+    delimiter = "\t" if "\t" in header else ","
+    rows = list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
+    if rows:
+        folded = [c for c in rows[0] if c is not None and ("\t" in c or "\r" in c)]
+        if folded:
+            raise LayoutError(
+                f"{name}: header did not split -- column name still contains a "
+                f"delimiter: {folded[0]!r}"
+            )
+    return rows
 
 
 def _members(source: pathlib.Path) -> dict[str, bytes]:
@@ -76,10 +106,30 @@ def _find(tables: dict[str, list[dict[str, str]]], *required: str) -> tuple[str,
     for name, rows in tables.items():
         if not rows:
             continue
-        cols = [c.lower() for c in rows[0]]
-        if all(any(req in c for c in cols) for req in required):
+        cols = [c.lower() for c in rows[0] if c is not None]
+        if _distinct_assignment(cols, required):
             return name, rows
     return None
+
+
+def _distinct_assignment(columns: list[str], required: tuple[str, ...]) -> bool:
+    """True only if each required substring can claim a *different* column.
+
+    Requiring merely that every substring appears somewhere lets one folded
+    column satisfy all of them at once, which is how a delimiter mistake
+    turns into a plausible wrong answer instead of an error.
+    """
+
+    def assign(index: int, used: frozenset[int]) -> bool:
+        if index == len(required):
+            return True
+        for position, column in enumerate(columns):
+            if position not in used and required[index] in column:
+                if assign(index + 1, used | {position}):
+                    return True
+        return False
+
+    return assign(0, frozenset())
 
 
 def _col(row: dict[str, str], *substrings: str) -> str:
@@ -102,7 +152,11 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     raw = _members(args.onet)
-    tables = {name: _read_delimited(blob) for name, blob in raw.items()}
+    try:
+        tables = {name: _read_delimited(name, blob) for name, blob in raw.items()}
+    except LayoutError as error:
+        print(f"NEED_HUMAN: {error}", file=sys.stderr)
+        return 2
 
     task_dwa = _find(tables, "task", "dwa")
     task_stmt = _find(tables, "task id", "o*net-soc code")
@@ -138,9 +192,17 @@ def main(argv: list[str] | None = None) -> int:
     occ_rows = occupations[1]
     soc_key = _col(occ_rows[0], "o*net-soc code")
     title_key = _col(occ_rows[0], "title")
+    if soc_key == title_key:
+        print(f"NEED_HUMAN: occupation table resolved code and title to the same "
+              f"column {soc_key!r} -- the table did not parse", file=sys.stderr)
+        return 2
     by_title: dict[str, list[str]] = defaultdict(list)
     for row in occ_rows:
         by_title[_norm(row[title_key])].append(row[soc_key])
+
+    if not by_title:
+        print("NEED_HUMAN: occupation table yielded no titles", file=sys.stderr)
+        return 2
 
     matched_socs: set[str] = set()
     unmatched: list[str] = []
@@ -150,6 +212,14 @@ def main(argv: list[str] | None = None) -> int:
             matched_socs.update(hits)
         else:
             unmatched.append(occ)
+
+    # A total miss is far more likely to be a parse fault than a real finding:
+    # GDPval occupations are drawn from O*NET titles by construction.
+    if not matched_socs:
+        print(f"NEED_HUMAN: none of the {len(gdp_occupations)} GDPval occupation "
+              f"labels matched an O*NET title. That is a parse or vintage fault, "
+              f"not a coverage result -- refusing to report 0.0", file=sys.stderr)
+        return 2
 
     # --- task -> soc, task -> dwa
     stmt_rows = task_stmt[1]
