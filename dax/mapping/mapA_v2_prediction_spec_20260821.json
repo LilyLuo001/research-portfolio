@@ -1,0 +1,85 @@
+{
+  "approval_scope": "prospective_code_freeze_before_any_label_inspection",
+  "calibration": {
+    "C": 1000000.0,
+    "class_weight": null,
+    "input": "development_model_decision_function",
+    "max_iterations": 5000,
+    "method": "one_variable_sigmoid_Platt_logistic",
+    "partition": "calibration_only",
+    "solver": "lbfgs",
+    "tolerance": 1e-12
+  },
+  "cutoff": {
+    "candidates": "distinct_observed_calibration_probabilities",
+    "constraints": {
+      "FPR_max": 0.05,
+      "PPV_min": 0.95
+    },
+    "no_feasible_cutoff": "MAPPING_A_V2_CALIBRATION_FAIL",
+    "objective": "maximum_recall",
+    "prediction_operator": "probability_greater_than_or_equal_to_cutoff",
+    "tie_break_in_order": [
+      "higher_PPV",
+      "lower_FPR",
+      "higher_cutoff"
+    ]
+  },
+  "development_selection": {
+    "C_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "class_weight": "balanced",
+    "criterion": "maximum_mean_five_fold_PR_AUC",
+    "fit_intercept": true,
+    "folds": 5,
+    "max_iterations": 5000,
+    "penalty": "l2",
+    "random_seed": 20260821,
+    "shuffle": true,
+    "solver": "liblinear",
+    "stratified": true,
+    "tie_break": "smallest_C_strongest_regularization",
+    "tolerance": 1e-08
+  },
+  "feature_names_in_order": [
+    "dense_cosine_similarity",
+    "dense_rank_percentile",
+    "bm25_score_log1p",
+    "lexical_rank_percentile",
+    "reciprocal_rank_fusion_k60",
+    "absolute_rank_gap_percentile",
+    "signed_dense_minus_lexical_rank_gap_percentile",
+    "both_channels_top10",
+    "both_channels_top40",
+    "either_channel_top40"
+  ],
+  "feature_rules": {
+    "agreement": "both_top10, both_top40, either_top40 indicators",
+    "bm25": "natural_log(1+nonnegative_BM25_score)",
+    "dense": "frozen_clipped_cosine_score_in_[0,1]",
+    "missing_or_nonfinite": "hard_fail_no_imputation",
+    "normalization": "StandardScaler fit on development only and fold-local within CV; population standard deviation; zero-variance scale retained as 1",
+    "rank_gap": "absolute and signed dense-minus-lexical ranks divided by 219",
+    "rank_percentile": "(rank-1)/219",
+    "rank_ties": "ascending_gdpval_task_id",
+    "rrf": "1/(60+dense_rank)+1/(60+lexical_rank)"
+  },
+  "forbidden_inputs": [
+    "LLM_generated_features",
+    "neural_classifier_features",
+    "occupation_outcomes",
+    "wages",
+    "W4_capability",
+    "W5_dose",
+    "power",
+    "treatment_effects",
+    "outcomes"
+  ],
+  "model": "L2_regularized_logistic_regression",
+  "target": "D_vs_non_D_where_non_D_is_F_N_or_U"
+}

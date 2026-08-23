@@ -1,0 +1,92 @@
+{
+  "receipt_version": "dax-pi-decision-execution-v1",
+  "prepared_date": "2026-08-21",
+  "signed_decision": {
+    "commit": "4577fecab7b4e142cb28d78d4aec0800637c7b05",
+    "file_sha256": "c425f70be69e7fd982cc38465e0dc1f49437477359b24d4bcbac64f6ced4fa4c",
+    "recorded_before_label_access": true
+  },
+  "mapping_a": {
+    "threshold_application_commit": "031ac84731e568d70edaeb6d58751291b94189bc",
+    "locked_result_opening_consumed": false,
+    "labels_accessed": false,
+    "validation_results_inspected": false,
+    "private_manifest_status": "BLIND_SAMPLE_FROZEN_LABELS_ABSENT",
+    "private_validation_pairs": 2586,
+    "locked_test_pairs": 533,
+    "rule_changed_after_label_opening": false,
+    "binding_gate_results": {
+      "ppv": "NOT_EVALUATED_LABELS_AND_FROZEN_PREDICTION_RULE_ABSENT",
+      "false_positive_rate": "NOT_EVALUATED_LABELS_AND_FROZEN_PREDICTION_RULE_ABSENT",
+      "candidate_recall_at_40": "NOT_EVALUATED_ADJUDICATED_COMPLETE_POOL_POSITIVES_ABSENT",
+      "adjudication_rate": "NOT_EVALUATED_ROUND_LABELS_ABSENT",
+      "task_mass_weighted_coverage": "NOT_EVALUATED_FINAL_D_RELATIONS_ABSENT",
+      "family_coverage": "NOT_EVALUATED_FINAL_D_RELATIONS_ABSENT",
+      "transport_sensitivity": "NOT_EVALUATED_FINAL_RELATIONS_AND_W4_INPUTS_ABSENT"
+    },
+    "gate_status": "BLOCKED_LABELS_AND_FROZEN_PREDICTION_RULE_ABSENT",
+    "production_approved": false
+  },
+  "task_duration": {
+    "outreach_commit": "bb6a72794ef93b0ea7bb99bb3b73606a293fea95",
+    "outreach_submitted_at_utc": "2026-08-21T13:04:55Z",
+    "outreach_submission_exit": 0,
+    "delivery_confirmed": false,
+    "waiting_period_end_utc": "2026-09-04T13:04:55Z",
+    "exact_author_task_values_available": 0,
+    "tasks_resolved": 0,
+    "tasks_unresolved": 220,
+    "fallback_authorized": true,
+    "fallback_applicable": false,
+    "fallback_launched": false,
+    "pilot_launched": false,
+    "gate_status": "BLOCKED_WAITING_FOR_AUTHOR_DATA_FALLBACK_CONDITION_NOT_MET"
+  },
+  "benchmark": {
+    "executable_standard_commit": "f614577f9efca6533c76d4b74c6a7ccaf8781d16",
+    "power_standard_sha256": "df5746c1d5187681ed1a72981ece8c58f1b4ccf7bbbdd73966009f6e1385ae15",
+    "primary_relative_decline": 0.13,
+    "interpretation": "external_empirical_calibration_scale_not_dax_coefficient",
+    "prespecified_sensitivities": [0.16, 0.19],
+    "historical_0_19_role": "normative_pi_design_target_external_provenance_unresolved",
+    "benchmark_status": "RESOLVED",
+    "real_baseline_frozen": false,
+    "real_power_run": false
+  },
+  "downstream_gates": {
+    "w3": "BLOCKED_MAPPING_A_VALIDATION_NOT_RUN",
+    "w4": "INFRASTRUCTURE_COMPLETE_EXECUTION_BLOCKED_MAPPING_DURATION_AVAILABILITY_AND_BUDGET",
+    "w5": "SCHEMA_COMPLETE_REAL_PANEL_BLOCKED",
+    "identification": "NOT_RUN",
+    "power": "NOT_RUN"
+  },
+  "verification": {
+    "python": "3.12.4",
+    "compileall_exit": 0,
+    "focused_passed": 207,
+    "focused_skipped": 1,
+    "selfcheck": "PASS_87_TASKS_24_CONTRACTS_DAG_VENDOR_INDEPENDENCE_CLEAN",
+    "runner_plan": {
+      "completed": 20,
+      "ready": 16,
+      "in_flight": 0,
+      "held": 8,
+      "gated": 2,
+      "blocked": 41
+    },
+    "full_suite_passed": 452,
+    "full_suite_skipped": 1,
+    "full_suite_failed": 1,
+    "known_failure": "p1/tests/test_build_nport_convexp.py::test_sidecar_is_written_alongside_need_human"
+  },
+  "seal_and_cost": {
+    "outcomes_opened": false,
+    "outcomes_written": false,
+    "v1_0_preregistered_created": false,
+    "paid_w4_calls": 0,
+    "other_paid_api_calls": 0,
+    "realized_api_spend_usd": 0.0,
+    "private_or_row_level_artifacts_committed": false
+  },
+  "status": "PARTIAL_EXECUTION_SCIENTIFIC_GATES_FAIL_CLOSED"
+}

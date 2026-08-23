@@ -51,6 +51,12 @@ def audit() -> dict[str, object]:
         structural_errors.append(
             f"memo PI decisions must appear once in order 1..17; found {memo_numbers}"
         )
+    if "Entrant-margin companion (registered secondary" in memo:
+        structural_errors.append(
+            "memo still describes the failed entrant companion as registered secondary"
+        )
+    if "demoted to exploratory" not in memo:
+        structural_errors.append("memo does not record the entrant-companion demotion")
 
     checklist_rows = {
         int(number): status for number, status in CHECKLIST_ROW_RE.findall(checklist)

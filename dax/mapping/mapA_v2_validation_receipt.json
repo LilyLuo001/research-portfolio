@@ -1,0 +1,75 @@
+{
+  "blind_sample": {
+    "counts_by_category": {
+      "agree_high": 388,
+      "apparent_negative": 440,
+      "dense_only_high": 439,
+      "lexical_only_high": 439,
+      "medium_uncertain": 440,
+      "rrf_best": 440
+    },
+    "counts_by_major_soc_family": {
+      "11": 118,
+      "13": 117,
+      "15": 117,
+      "17": 117,
+      "19": 117,
+      "21": 119,
+      "23": 116,
+      "25": 120,
+      "27": 118,
+      "29": 119,
+      "31": 116,
+      "33": 115,
+      "35": 118,
+      "37": 119,
+      "39": 116,
+      "41": 117,
+      "43": 118,
+      "45": 115,
+      "47": 118,
+      "49": 119,
+      "51": 119,
+      "53": 118
+    },
+    "counts_by_split": {
+      "calibration": 540,
+      "development": 1513,
+      "locked_test": 533
+    },
+    "seed": "DAX-MAPA-V2-20260821",
+    "selected_onet_tasks": 440,
+    "status": "BLIND_SAMPLE_FROZEN_LABELS_ABSENT",
+    "validation_pairs": 2586
+  },
+  "executed_at_utc": "2026-08-21T09:43:09.434481+00:00",
+  "id_level_artifacts_committed": false,
+  "labels_present": false,
+  "outcomes_opened": false,
+  "pi_threshold_status": "NEED_HUMAN_BEFORE_LOCKED_TEST_OPEN",
+  "private_artifact_hashes": {
+    "mapA_v2_full_scores.npz": "8c3d130fef574b1eb20e05eafb66f0892347246ef02dc290078c9cd1689b6e92",
+    "mapA_v2_ordered_ids.json": "dc265886beed2d916f5531842901fd375782af9e33669c092b1409d97a8100d9",
+    "mapA_v2_validation_pairs.csv": "92f64731b0a77737a8c8e0a7ade3280e79bcb3c861f1161ce0290b34dd9132dd"
+  },
+  "private_manifest_sha256": "67afa642c596c1de582d930a2137036419191f076b8a1126a79ab89f96ed57e4",
+  "retrieval": {
+    "bm25_b": 0.75,
+    "bm25_k1": 1.2,
+    "dense_dimension": 384,
+    "dense_max_wordpieces": 256,
+    "dense_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "dense_pooling": "attention-mask mean pooling then L2 normalization",
+    "dense_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "lexical": "Okapi BM25 over NFKC/casefold/[a-z0-9]+ tokens; no stemming/stop-word deletion",
+    "occupation_blocking": false
+  },
+  "status": "VALIDATION_SAMPLE_PREPARED_PI_THRESHOLDS_AND_LABELS_PENDING",
+  "task_text_committed": false,
+  "universes": {
+    "gdpval_tasks": 220,
+    "onet_tasks": 19259,
+    "scored_pairs": 4236980
+  },
+  "validation_result": "NOT_YET_APPLICABLE"
+}

@@ -1,0 +1,77 @@
+{
+  "receipt_version": "dax-v3-s1-construct-validity-execution-v1",
+  "prepared_date": "2026-08-23",
+  "base_sha": "5d33c61c5a2adf8f432ae092ec8e76b580a30670",
+  "protocol_freeze_sha": "23ba7d5932ad3a84cb8301e528abd38474ad9034",
+  "pre_draw_token_correction_sha": "f483c2eb93a4013990a2b1c86b991470fabf62c6",
+  "result_artifact_sha": "30524604c3cb0d620d97420c843b8fbccc6bc564",
+  "status": "S1_COMPLETE_THRESHOLD_UNSIGNED_PARTIAL_IDENTIFICATION_RECOMMENDED",
+  "sample": {
+    "prior_persisted_draw_found": false,
+    "first_deterministic_realization": true,
+    "tasks": 120,
+    "major_families": 22,
+    "redraws": 0,
+    "replacements": 0,
+    "selected_task_text_inspected_before_protocol_freeze": false,
+    "private_sample_sha256": "693cea853e8c22359a50650fea854233897a4b34b8e0c9de461a5f2d4583bc72"
+  },
+  "results": {
+    "evaluable_classes": {
+      "directly_executable_digital": 0,
+      "executable_with_supplied_files_data": 10,
+      "executable_with_construct_valid_simulated_inputs": 14,
+      "requires_unavailable_proprietary_system": 2,
+      "requires_physical_world_action": 35,
+      "requires_interpersonal_interaction": 57,
+      "otherwise_not_currently_evaluable": 2
+    },
+    "construct_statuses": {
+      "PASS": 13,
+      "REVISE": 11,
+      "NON_EVALUABLE": 96
+    },
+    "families_with_at_least_one_pass": 12,
+    "formal_s1_gate": "UNRESOLVED",
+    "threshold_status": "NEED_PROSPECTIVE_PI_THRESHOLD_SIGNATURE",
+    "scientific_recommendation": "PARTIAL_IDENTIFICATION_ONLY",
+    "audit_limit": "PRELIMINARY_SINGLE_CODEX_NOT_INDEPENDENT_DOMAIN_EXPERT_VALIDATION"
+  },
+  "artifacts": {
+    "S1_CONSTRUCT_VALIDITY_PROTOCOL_2026-08-23.md": "c90f9b3e88a86af36e4a542c9c37c4a8fa65b2340b280836b8de4ab636c25bb5",
+    "s1_construct_validity_spec_20260823.json": "eab078a8db38c0234690d2c42d151800d3f563b642904a8a1d7519e854e61b9e",
+    "run_s1_construct_validity.py": "31b4bd10fa5e19ed5a7b9a702e2d0af2397572bc98d931531c7ac45f403a5800",
+    "s1_draw_receipt_20260823.json": "30f831879e11195749a7fb484a1442b4073b622b916dfda0b990c6a20eed74cf",
+    "s1_construct_validity_result_receipt_20260823.json": "43b3dfc2ed626f3d7dd0325b113bbfd62b4fe6a923dc02646349afe2b37e946d",
+    "S1_PI_THRESHOLD_DECISION_PACKET_2026-08-23.md": "a34ef777e365d02bb341856bb4e6cf3f61f55fa3b3c0e70ab91e848c30554574",
+    "S1_CONSTRUCT_VALIDITY_PILOT_REPORT_2026-08-23.md": "1c9c3f893c37cebc473f773c6e7238135979fa45db96a19d9c00cf88416125aa",
+    "test_s1_construct_validity.py": "c94f83718943cf6e6c0dacefec7aa94368c47196615f49a2d0ab28d1edd57c96"
+  },
+  "execution": {
+    "model_evaluations": 0,
+    "api_or_model_metadata_calls": 0,
+    "w4_capture": false,
+    "w5": false,
+    "identification": false,
+    "power": false,
+    "outcomes_opened": false,
+    "human_reviewers_recruited": 0,
+    "realized_spend_usd": 0
+  },
+  "verification": {
+    "environment": "BU_SCC_PYTHON_3_12_4",
+    "focused_tests": "42_PASS",
+    "full_repository_tests": "491_PASS_2_SKIP_1_KNOWN_UNRELATED_P1_FAILURE",
+    "known_unrelated_failure": "p1/tests/test_build_nport_convexp.py::test_sidecar_is_written_alongside_need_human",
+    "python_compileall": "PASS",
+    "json_parse": "PASS",
+    "git_diff_check": "PASS",
+    "v1_v2_locked_artifacts_changed": false,
+    "power_standard_changed": false,
+    "outcome_related_path_changed": false,
+    "outcome_seal": "PASS",
+    "secret_private_data_scan": "PASS_ZERO_FINDINGS_ACROSS_NINE_BATCH_FILES",
+    "row_level_task_or_instance_data_committed": false,
+    "restricted_data_file_types_added": false
+  }
+}

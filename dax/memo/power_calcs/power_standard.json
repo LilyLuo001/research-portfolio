@@ -1,5 +1,5 @@
 {
-  "_doc": "Frozen power standard for DAX W1. See dax/memo/PI_DECISION_D3_2026-08-18.md. This file is the ONLY source of the pass bar. Nothing may recompute it from the analysis sample; freeze_power_standard.py fills it once from the frozen pre-event CPS extract and refuses to overwrite without --force.",
+  "_doc": "Frozen power standard for DAX W1. See dax/memo/PI_DECISION_D3_2026-08-18.md and prospective PI decision commit 4577fecab7b4e142cb28d78d4aec0800637c7b05. This file is the ONLY source of the pass bar. Nothing may recompute it from the analysis sample; freeze_power_standard.py fills it once from the frozen pre-event CPS extract and refuses to overwrite without --force.",
   "status": "PLACEHOLDER_REQUIRES_REAL_CPS",
   "frozen_at_utc": null,
   "frozen_window": {
@@ -14,7 +14,7 @@
     "weight_variable": null
   },
   "benchmark": {
-    "relative_decline": null,
+    "relative_decline": 0.13,
     "quantity": "relative decline in EMPLOYMENT (headcount), not payroll",
     "measured_in": "ADP administrative payroll data \u2014 'payroll' names the DATA SOURCE, not the outcome variable. This distinction is what M2 flagged.",
     "population": "workers ages 22-25 in the most AI-exposed occupations",
@@ -28,15 +28,30 @@
       "Brynjolfsson, Chandar, Chen, November 13 2025 version, abstract, printed p.1 and Section 5 Conclusion, printed p.16 (16%, not 19%)",
       "https://digitaleconomy.stanford.edu/wp-content/uploads/2025/11/CanariesintheCoalMine_Nov25.pdf (SHA-256 3b342bf604ed5c8fad8a232c9879345bcb7b71583f33d2acead28d531467a188)"
     ],
-    "version_status": "UNRESOLVED",
-    "version_note": "Independent source audit on 2026-08-19 verified 0.13 in the authored August 26 2025 document and 0.16 in the official November 13 2025 revision. It found no authored paper/proposal version, page, section, table, or exact quotation stating 0.19. The PI expressed a preference for 0.19 on 2026-08-18, but selecting 0.13 merely because it is available would override that unresolved version choice. Because 0.19 loosens the pass bar by about 46 percent relative to 0.13, the executable benchmark remains null and unfrozen pending an exact 0.19 locator or a signed amendment selecting a sourced version.",
+    "version_status": "RESOLVED",
+    "version_note": "Prospective PI decision commit 4577fecab7b4e142cb28d78d4aec0800637c7b05 selected 0.13 from the authenticated August 26 2025 authored version as the primary external empirical effect-size calibration scale. It is not the DAX treatment coefficient. The authenticated November 13 2025 value 0.16 and the historical PI design target 0.19 are prespecified sensitivities. The 0.19 sensitivity is normative and must not be represented as an externally sourced literature estimate unless a valid primary locator is later recovered.",
     "baseline_employment_rate_22_25": null,
     "baseline_hours_unconditional_22_25": null,
-    "version_chosen": null,
-    "version_decided_by": null,
-    "version_supersedes": null,
-    "locator_status": "PENDING_EXCERPT",
-    "locator_caveat": "No exact 0.19 statement was located in the primary Canaries paper/proposal materials inspected on 2026-08-19. The 0.13 and 0.16 versions are verifiable but neither authorizes silently substituting a different PI-selected benchmark. Upgrade locator_status to VERIFIED only with a dated exact 0.19 locator or a signed amendment selecting a sourced version."
+    "version_chosen": "August 26 2025 authored version, 0.13 relative employment decline",
+    "version_decided_by": "PI/specification owner, prospective decision commit 4577fecab7b4e142cb28d78d4aec0800637c7b05",
+    "version_supersedes": "Temporary 0.19 PI target adopted 2026-08-18 with unresolved external provenance",
+    "locator_status": "VERIFIED",
+    "locator_caveat": "VERIFIED applies to the primary 0.13 locator only. The 0.16 sensitivity has its separate authenticated November 13 2025 locator. The 0.19 sensitivity remains a historical normative PI design target with unresolved external empirical provenance.",
+    "interpretation": "external empirical effect-size calibration scale, not an estimate of the DAX treatment coefficient",
+    "comparability_caveat": "DAX differs from the external paper in exposure definition, sample, period, treatment unit, and estimand.",
+    "prespecified_sensitivities": [
+      {
+        "relative_decline": 0.16,
+        "role": "November 13 2025 authenticated version-update empirical sensitivity",
+        "locator_status": "VERIFIED"
+      },
+      {
+        "relative_decline": 0.19,
+        "role": "historical DAX PI normative design-target sensitivity",
+        "locator_status": "EXTERNAL_PROVENANCE_UNRESOLVED",
+        "must_not_be_described_as_literature_estimate": true
+      }
+    ]
   },
   "standard": {
     "alpha_two_sided": 0.05,

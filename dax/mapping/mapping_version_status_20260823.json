@@ -1,0 +1,40 @@
+{
+  "as_of_date": "2026-08-23",
+  "mapping_versions": {
+    "v1": {
+      "status": "FAILED_EMPIRICALLY_PRESERVED",
+      "auto_accepted": 0,
+      "queued": 37,
+      "unmatched": 19222,
+      "task_coverage": 0.00192118,
+      "thresholds_retuned_after_results": false
+    },
+    "v2": {
+      "status": "UNCHANGED_UNVALIDATED_FORMAL_RUN_NOT_LAUNCHED",
+      "preliminary_single_codex_counts": {
+        "D": 0,
+        "F": 24,
+        "N": 36,
+        "U": 0
+      },
+      "semantic_family_signal_observed": true,
+      "formal_independent_validation_run": false,
+      "formal_labeling_budget_spent_usd": 0,
+      "locked_test_opened": false,
+      "classifier_fitted": false,
+      "frozen_artifact_sha256": {
+        "MAPPING_A_V2_VALIDATION_PROTOCOL_2026-08-21.md": "d444ddb51a8f628bb44d9e80b805a46a83e81398db357d444628a8eb9179ac60",
+        "mapA_v2_binding_thresholds_20260821.json": "4b5c69c0aa5b1a729aab09c9bb3fc6758772a6894b118936f00fff9a290c6226",
+        "mapA_v2_codex_diagnostic_result_receipt_20260821.json": "00c0db7a09937b0707f231530a0b4b0a140dba3408d506dacc8569aff8eb4a40",
+        "mapA_v2_prediction_spec_20260821.json": "af949bb98e9cb7c072e8da0fa32795baa4fadc714c11caffa307e7ad2e44a1de"
+      }
+    },
+    "v3": {
+      "status": "PROSPECTIVE_ALTERNATIVES_PREPARED_PI_DECISION_REQUIRED",
+      "production_method_selected": false,
+      "downstream_run": false
+    }
+  },
+  "outcomes_opened": false,
+  "incremental_api_spend_usd": 0
+}

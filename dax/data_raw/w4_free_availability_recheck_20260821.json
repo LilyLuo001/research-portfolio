@@ -1,0 +1,20 @@
+{
+  "receipt_version": "dax-w4-free-availability-recheck-v1",
+  "checked_at_date": "2026-08-21",
+  "account_probe_performed": false,
+  "metadata_network_calls": 0,
+  "paid_inference_calls": 0,
+  "realized_cost_usd": 0.0,
+  "local_approved_private_env_key_available": false,
+  "scc_private_env_inspected_in_this_recheck": true,
+  "scc_inspection_status": "APPROVED_PRIVATE_ENV_FILE_ABSENT",
+  "target_rows": 22,
+  "last_mechanically_verified_status_counts": {
+    "blocked_missing_approved_snapshot_rule": 5,
+    "excluded_binding": 1,
+    "standin_provider_unconfigured": 2,
+    "unprobed_missing_key": 14
+  },
+  "status": "UNPROBED_NO_APPROVED_CREDENTIAL_AVAILABLE_TO_PROCESS",
+  "remaining_action": "Configure an approved private W4 environment file if a free account metadata probe is desired, then run only GET /v1/models; do not make inference calls."
+}

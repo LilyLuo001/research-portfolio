@@ -51,6 +51,13 @@ def test_memo_records_that_the_prior_review_does_not_transfer():
     assert "does **not** transfer" in memo
 
 
+def test_failed_entrant_companion_is_exploratory_not_registered_secondary():
+    memo = (ROOT / "memo" / "design_memo_v1.md").read_text(encoding="utf-8")
+    assert "Entrant-margin companion (registered secondary" not in memo
+    assert "demoted to exploratory" in memo
+    assert "No entrant power table enters Gate 1" in memo
+
+
 def test_pdf_matches_the_memo():
     """The rendered PDF must be built from the current memo, not a past one.
 
