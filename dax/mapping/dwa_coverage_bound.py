@@ -101,6 +101,7 @@ def _select(
     *,
     required: set[str],
     forbidden: set[str] = frozenset(),
+    unique: str | None = None,
 ) -> tuple[str, list[dict[str, str]], list[str]]:
     """Pick the table whose columns EXACTLY contain `required` and none of `forbidden`.
 
@@ -124,12 +125,23 @@ def _select(
         if not rows:
             continue
         cols = {c.lower().strip() for c in rows[0] if c is not None}
-        if required <= cols and not (forbidden & cols):
-            hits.append(name)
+        if not (required <= cols) or (forbidden & cols):
+            continue
+        if unique is not None:
+            # A universe table has one row per key. Task Ratings.txt satisfies
+            # every column requirement Task Statements.txt does, but its grain
+            # is task x scale x category, so its Task ID repeats. Grain is the
+            # thing that actually distinguishes them, so test grain.
+            key = next(c for c in rows[0] if c is not None and c.lower().strip() == unique)
+            values = [r[key] for r in rows]
+            if len(values) != len(set(values)):
+                continue
+        hits.append(name)
     if not hits:
         raise LayoutError(
             f"no table has exactly the columns {sorted(required)}"
             + (f" while lacking {sorted(forbidden)}" if forbidden else "")
+            + (f" with one row per {unique!r}" if unique else "")
         )
     return hits[0], tables[hits[0]], hits[1:]
 
@@ -148,6 +160,10 @@ def main(argv: list[str] | None = None) -> int:
                     help="O*NET release .zip or an extracted directory")
     ap.add_argument("--gdpval-parquet", type=pathlib.Path, required=True)
     ap.add_argument("--output", type=pathlib.Path, required=True)
+    ap.add_argument("--expect-audit", type=pathlib.Path,
+                    default=pathlib.Path(__file__).resolve().parent / "mapA_input_audit_receipt.json",
+                    help="pinned input audit to reconcile the derived task "
+                         "universe against; pass /dev/null to skip")
     ap.add_argument("--task-weights", type=pathlib.Path,
                     help="optional CSV with task_id and a weight column, for "
                          "wage-bill-weighted coverage")
@@ -167,7 +183,8 @@ def main(argv: list[str] | None = None) -> int:
         task_dwa_name, task_dwa_rows, task_dwa_alts = _select(
             tables, required={"task id", "dwa id"})
         stmt_name, stmt_rows, stmt_alts = _select(
-            tables, required={"o*net-soc code", "task id"}, forbidden={"dwa id"})
+            tables, required={"o*net-soc code", "task id", "task"},
+            forbidden={"dwa id"}, unique="task id")
         occ_name, occ_rows, occ_alts = _select(
             tables, required={"o*net-soc code", "title"})
     except LayoutError as error:
@@ -260,6 +277,36 @@ def main(argv: list[str] | None = None) -> int:
     covered = [t for t in all_tasks if task_dwas.get(t, set()) & reachable_dwas]
     tasks_with_any_dwa = [t for t in all_tasks if task_dwas.get(t)]
 
+    # The repo already pins what the task universe must look like. Three
+    # rounds of table-selection faults each produced a plausible number on a
+    # wrong universe; reconciling against the pin catches that whole class
+    # rather than one lookalike table at a time.
+    expected = None
+    if args.expect_audit and args.expect_audit.exists() and args.expect_audit.name != "null":
+        try:
+            audit = json.loads(args.expect_audit.read_text(encoding="utf-8"))
+            expected = audit.get("onet", {})
+        except (json.JSONDecodeError, OSError):
+            expected = None
+    if expected:
+        want_tasks = expected.get("n_unique_task_ids")
+        want_socs = expected.get("n_unique_onet_socs")
+        got_socs = len({s for s in task_soc.values()})
+        problems = []
+        if want_tasks is not None and len(all_tasks) != want_tasks:
+            problems.append(f"tasks {len(all_tasks)} != pinned {want_tasks}")
+        if want_socs is not None and got_socs != want_socs:
+            problems.append(f"O*NET-SOCs {got_socs} != pinned {want_socs}")
+        if problems:
+            print(f"NEED_HUMAN: derived task universe does not reconcile with "
+                  f"{args.expect_audit.name}: {'; '.join(problems)}.\n"
+                  f"  task_statements table used: {stmt_name} "
+                  f"(columns {list(stmt_rows[0])})\n"
+                  f"  alternatives not chosen: {stmt_alts}\n"
+                  f"  A coverage share computed on the wrong denominator is not "
+                  f"a finding -- refusing to write a receipt.", file=sys.stderr)
+            return 2
+
     weighted = None
     if args.task_weights and args.task_weights.exists():
         with args.task_weights.open(newline="", encoding="utf-8") as fh:
@@ -304,6 +351,14 @@ def main(argv: list[str] | None = None) -> int:
                 len(covered) / len(tasks_with_any_dwa) if tasks_with_any_dwa else 0.0
             ),
             "wage_bill_weighted_share": weighted,
+        },
+        "universe_reconciliation": {
+            "pinned_audit": str(args.expect_audit),
+            "pinned_n_unique_task_ids": (expected or {}).get("n_unique_task_ids"),
+            "pinned_n_unique_onet_socs": (expected or {}).get("n_unique_onet_socs"),
+            "derived_n_tasks": len(all_tasks),
+            "derived_n_onet_socs": len({s for s in task_soc.values()}),
+            "reconciled": bool(expected),
         },
         "baseline_for_comparison": {
             "mapping_a_direct_match_task_coverage": 0.00192118,

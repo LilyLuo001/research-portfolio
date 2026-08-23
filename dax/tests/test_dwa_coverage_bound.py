@@ -14,6 +14,7 @@ supports -- on a parsing mistake.
 """
 
 import importlib.util
+import json
 import pathlib
 import zipfile
 
@@ -82,6 +83,39 @@ def test_reported_titles_table_cannot_win_over_occupation_data():
     assert rows[0]["Title"] == "Software Developers"
 
 
+def test_task_ratings_cannot_stand_in_for_task_statements():
+    """The third selection fault, found on the SCC.
+
+    Task Ratings.txt carries O*NET-SOC Code and Task ID and no DWA ID, so it
+    met every column requirement, and 'Task Ratings' sorts before 'Task
+    Statements' -- the tie-break made the wrong pick deterministic. Its grain
+    is task x scale x category, so Task ID repeats; the real universe table
+    has one row per task. Grain is what separates them.
+    """
+
+    tables = {
+        "Task Ratings.txt": [
+            {"O*NET-SOC Code": "15-1252.00", "Task ID": "1", "Scale ID": "IM", "Category": "1"},
+            {"O*NET-SOC Code": "15-1252.00", "Task ID": "1", "Scale ID": "FT", "Category": "2"},
+        ],
+        "Task Statements.txt": [
+            {"O*NET-SOC Code": "15-1252.00", "Task ID": "1", "Task": "Write code"},
+            {"O*NET-SOC Code": "15-1252.00", "Task ID": "2", "Task": "Review code"},
+        ],
+    }
+    name, rows, alternatives = BOUND._select(
+        tables, required={"o*net-soc code", "task id", "task"},
+        forbidden={"dwa id"}, unique="task id")
+    assert name == "Task Statements.txt"
+    assert alternatives == []
+
+
+def test_a_repeating_key_disqualifies_a_universe_table():
+    repeating = {"x.txt": [{"Task ID": "1", "Task": "a"}, {"Task ID": "1", "Task": "b"}]}
+    with pytest.raises(BOUND.LayoutError, match="one row per"):
+        BOUND._select(repeating, required={"task id", "task"}, unique="task id")
+
+
 def test_task_statements_and_tasks_to_dwas_are_not_confused():
     """Both carry O*NET-SOC Code and Task ID; the DWA id separates them."""
     tables = {
@@ -93,9 +127,10 @@ def test_task_statements_and_tasks_to_dwas_are_not_confused():
         ],
     }
     assert BOUND._select(tables, required={"task id", "dwa id"})[0] == "Tasks to DWAs.txt"
+    tables["Task Statements.txt"][0]["Task"] = "x"
     assert BOUND._select(
-        tables, required={"o*net-soc code", "task id"},
-        forbidden={"dwa id"})[0] == "Task Statements.txt"
+        tables, required={"o*net-soc code", "task id", "task"},
+        forbidden={"dwa id"}, unique="task id")[0] == "Task Statements.txt"
 
 
 def test_selection_is_deterministic_not_archive_order():
@@ -136,6 +171,9 @@ def _release(tmp_path: pathlib.Path) -> pathlib.Path:
                     "29-1141.00\t2\tChart care\tCore\n"
                     "47-2111.00\t3\tPull wire\tCore\n"
                     "47-2111.00\t4\tPrepare reports\tCore\n")
+        zf.writestr("db/Task Ratings.txt",
+                    "O*NET-SOC Code\tTask ID\tScale ID\tCategory\tData Value\n"
+                    "15-1252.00\t1\tIM\t1\t4.2\n15-1252.00\t1\tFT\t2\t3.1\n")
         zf.writestr("db/Tasks to DWAs.txt",
                     "O*NET-SOC Code\tTask ID\tDWA ID\tDWA Title\n"
                     "15-1252.00\t1\tD01\tWrite code\n"
@@ -161,14 +199,15 @@ def test_end_to_end_reaches_a_task_through_a_shared_dwa(tmp_path):
         "prompt": ["SENTINEL_TASK_TEXT_A", "SENTINEL_TASK_TEXT_B"],
     }).to_parquet(parquet)
 
+    audit = tmp_path / "audit.json"
+    audit.write_text(json.dumps({"onet": {"n_unique_task_ids": 4, "n_unique_onet_socs": 3}}))
     out = tmp_path / "receipt.json"
     assert BOUND.main([
         "--onet", str(_release(tmp_path)),
         "--gdpval-parquet", str(parquet),
-        "--output", str(out),
+        "--output", str(out), "--expect-audit", str(audit),
     ]) == 0
 
-    import json
     receipt = json.loads(out.read_text())
     assert receipt["coverage_bound"]["tasks_covered"] == 3
     assert receipt["coverage_bound"]["share_of_all_tasks"] == 0.75
@@ -181,6 +220,32 @@ def test_end_to_end_reaches_a_task_through_a_shared_dwa(tmp_path):
     serialised = json.dumps(receipt)
     assert "SENTINEL_TASK_TEXT" not in serialised
     assert receipt["gdpval"]["schema"] == ["task_id", "sector", "occupation", "prompt"]
+
+
+def test_a_universe_that_misses_the_pinned_counts_is_refused(tmp_path):
+    """A share computed on the wrong denominator is not a finding.
+
+    Three rounds of selection faults each produced a plausible number on a
+    wrong universe. The repo already pins what the universe must be, so
+    reconcile against it rather than trusting selection.
+    """
+
+    pd = pytest.importorskip("pandas")
+    pytest.importorskip("pyarrow")
+    parquet = tmp_path / "gdpval.parquet"
+    pd.DataFrame({"task_id": ["t1"], "sector": ["X"],
+                  "occupation": ["Software Developers"],
+                  "prompt": ["SENTINEL_TASK_TEXT_D"]}).to_parquet(parquet)
+    audit = tmp_path / "audit.json"
+    audit.write_text(json.dumps({"onet": {"n_unique_task_ids": 19259,
+                                          "n_unique_onet_socs": 923}}))
+    out = tmp_path / "receipt.json"
+    assert BOUND.main([
+        "--onet", str(_release(tmp_path)),
+        "--gdpval-parquet", str(parquet),
+        "--output", str(out), "--expect-audit", str(audit),
+    ]) == 2
+    assert not out.exists()
 
 
 def test_a_total_title_miss_is_refused_not_reported_as_zero(tmp_path):
