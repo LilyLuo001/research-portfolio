@@ -184,11 +184,18 @@ outcome for anything touching human subjects review — the historical capabilit
 panel is permanently unrecoverable and no amount of subsequent benchmark work
 restores it.
 
-**The fix is small and the schema already supports it.**
-`dax/capability_panel/contract.py:248` already accepts
-`task_duration_status = "blocked_missing"` with null value, unit, and source.
-The row-level contract therefore already tolerates duration-free capture. Only
-the *preflight* gate conflates capture with cost-scoring. Split W4:
+**CORRECTED 2026-08-23.** This section originally claimed the fix was small
+because `contract.py:248` already accepts `blocked_missing` duration, so that
+"only the preflight gate conflates capture with cost-scoring." **That was
+wrong.** `contract.py:281` additionally requires `blocked_missing` to imply
+`failure_status = "blocked"`, which with lines 229-236 forces null pi and zero
+trials — so a *captured* row cannot carry missing duration. There are four
+coupling points, not three, and the fourth is a deliberate invariant rather
+than wiring. The amendment is correspondingly larger: it extends the frozen
+enum at `ops/contracts/dax_w4_capability_cost_panel.yaml:39` and replaces a
+structural safety property with a behavioural one whose guard does not yet
+exist. See `AMENDMENT_DRAFT_w4_capture_scoring_split.md` for the corrected
+analysis. The deadline argument below is unaffected. Split W4:
 
 - **Capture** (deadline-bound): prompts, raw completions, token counts,
   reasoning tokens, latency, provenance hashes. Requires a frozen stimulus set,
