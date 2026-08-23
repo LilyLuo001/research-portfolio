@@ -318,3 +318,58 @@ def blocked_row_cost_fields() -> dict[str, object]:
         "realized_api_cost_usd": 0.0,
         "realized_cost_method": "metered_usage_x_frozen_price",
     }
+
+
+SCOREABLE_DURATION_STATUS = "verified"
+
+
+class ScoringGuardError(ContractError):
+    """A row without verified task duration reached an economic scoring path."""
+
+
+def assert_scoreable(row: Mapping[str, object]) -> None:
+    """Refuse any row whose task duration is not verified.
+
+    Every consumer that derives an economic quantity from a W4 row must call
+    this before reading `pi`: the design memo section 2 crossing rule
+    `A_tom = 1[c/pi_eff + f*(1-pi_eff)/pi_eff < w]`, the wage comparison `w`,
+    the DAX index, and W5.
+
+    Today this guarantee is structural rather than behavioural. A row missing
+    duration carries `failure_status = "blocked"` and therefore null `pi`
+    (see `validate_row`), so it cannot reach a crossing computation because it
+    carries nothing to compute with. If the capture/scoring split of
+    `dax/memo/AMENDMENT_DRAFT_w4_capture_scoring_split.md` is signed, that stops
+    being true: capture-only rows will carry a real measured `pi` while their
+    duration is still unknown, and only this guard stands between them and the
+    index.
+
+    The guard admits `verified` alone. It is therefore already correct under
+    both worlds -- the current two-valued enum and the proposed
+    `deferred_scoring` third value -- and needs no change if the amendment is
+    signed. If the amendment is rejected it remains a correct statement of the
+    invariant that `validate_row` enforces structurally.
+    """
+
+    status = str(row.get("task_duration_status", "")).strip()
+    if status != SCOREABLE_DURATION_STATUS:
+        raise ScoringGuardError(
+            "task duration is not verified; this row may be captured but never "
+            f"scored (task_duration_status={status or 'missing'!r})"
+        )
+
+
+def scoreable_pi(row: Mapping[str, object]) -> float:
+    """Return `pi` for scoring, refusing rows whose duration is unverified.
+
+    Scoring consumers should read `pi` through this accessor rather than
+    indexing the row, so that the guard cannot be forgotten at the call site.
+    """
+
+    assert_scoreable(row)
+    pi = row.get("pi")
+    if not isinstance(pi, (int, float)) or isinstance(pi, bool):
+        raise ScoringGuardError("a scoreable row must carry a numeric pi")
+    if not 0.0 <= float(pi) <= 1.0:
+        raise ScoringGuardError("pi outside [0, 1]")
+    return float(pi)

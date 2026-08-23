@@ -831,6 +831,7 @@ def _write_need_human(nh_funds, nh_stocks):
             w.writerows(nh_stocks)
         log.info("NEED_HUMAN stocks -> %s (%d)", NH_STOCKS, len(nh_stocks))
         _write_dropped_cells(nh_stocks)
+        _write_dropped_sidecar(nh_stocks)
 
 
 def _write_dropped_cells(nh_stocks):
