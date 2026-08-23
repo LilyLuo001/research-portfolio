@@ -72,8 +72,13 @@ jobs:
       - name: DAX guard — built artifacts carry lineage (W0 req 4)
         run: |
           missing=""
+          # Source code is not a built artifact: lineage records which inputs
+          # produced an output, so a sidecar for contract.py would assert it is
+          # generated and would need regenerating on every edit. capability_panel/
+          # holds the harness and schema alongside its data, so .py is excluded
+          # here exactly as .md and .gitkeep already are.
           for f in $(git ls-files 'dax/data_built/*' 'dax/capability_panel/*' 'dax/index/*' \
-                     | grep -vE '\.lineage\.json$|\.gitkeep$|\.md$'); do
+                     | grep -vE '\.lineage\.json$|\.gitkeep$|\.md$|\.py$'); do
             [ -f "$f.lineage.json" ] || missing="$missing$f\n"
           done
           if [ -n "$missing" ]; then
