@@ -1,7 +1,9 @@
 # DAX Mapping A v3: O*NET-aligned benchmark PI decision packet
 
-**Date:** 2026-08-23  
-**Status:** `DESIGN_PREFLIGHT_COMPLETE_NEED_PROSPECTIVE_PI_SIGNATURE`  
+**Date:** 2026-08-23
+
+**Status:** `DESIGN_PREFLIGHT_COMPLETE_NEED_PROSPECTIVE_PI_SIGNATURE`
+
 **Base commit:** `3159b62f7f4d32c8e3bca5df22ce30d367145b1d`
 
 This packet implements the PI's methodological direction at the design level
@@ -114,19 +116,18 @@ separation and prevents non-evaluable tasks from being zero-filled.
 Sampling must precede model results and use known, nonzero inclusion
 probabilities. Candidate options are not ranked by expected model success.
 
-| Option | Design | Statistical consequence | Operational consequence |
-|---|---|---|---|
-| S1: stratified PPS precision target | Stratify by major occupation family, task type, and evaluability screen; sample with probability proportional to authorized task mass or wage-bill relevance. Choose `n` from a signed precision/design-effect target. | Direct design-weighted population inference; rare but low-mass strata may be thin; use survey weights and finite-population correction. | Efficient for aggregate DAX but may undersupply construct-validation examples in small families. |
-| S2: balanced family × modality | Freeze minimum cells across major families, digital/file/simulated/physical/interpersonal modes, and task types; allocate the remainder by mass. | Better family/construct contrasts but unequal weights and larger design effects for aggregate estimates. | More authoring diversity and expert specialties; clearer occupation-family diagnostics. |
-| S3: two-phase probability design | Phase 1 draws a representative construct/evaluability sample. Phase 2 subsamples expensive item construction using predeclared cost, stratum, and feasibility variables—never observed model success. | Requires two-phase inclusion weights and variance estimation; preserves inference if both probabilities are retained. | Avoids fully authoring obviously non-evaluable tasks while preserving their mass and classification uncertainty. |
-| S4: census of eligible frame | Construct every task classified as benchmark-evaluable and retain all other mass as non-evaluable. | Removes benchmark sampling error within the classified frame but not item, scoring, or classification error. | Likely prohibitive workload; does not solve physical/interpersonal external validity. |
+| Option | Proposed size (unsigned) | Design | Statistical consequence | Operational consequence / selection-bias risk |
+|---|---:|---|---|---|
+| S1: balanced construct pilot | `n=120` source tasks | Draw within major-family × modality/task-type strata with known probabilities; use only to validate task-boundary, evaluability, inputs, and scoring protocol. | Not powered as the production occupation-level estimator; yields early construct and workflow failure rates. | Lowest initial burden. Deliberately balanced selection is not population representative unless weighted; it must not become the production sample merely because models do well. |
+| S2: stratified PPS production sample | `n=384` source tasks | Stratify by major occupation family, task type, and evaluability class; sample with probability proportional to authorized task mass or signed wage-bill relevance. | Under SRS, binary worst-case half-width is about ±5 percentage points at 95%; survey design effects, repeated instances, and family estimates widen it. Use design weights and finite-population correction. | Moderate construction/capture burden. PPS can thin rare/low-mass families; strata/minimums must be frozen. Frame exclusions and unavailable systems can bias the identified subset. |
+| S3: two-phase probability design | Phase 1 `n=1,067`; Phase 2 `n=384` | Phase 1 classifies construct/evaluability on a representative draw. Phase 2 fully constructs/scorers a predeclared subsample using inclusion probabilities, cost and strata—never model success. | Phase 1 worst-case SRS half-width is about ±3 points for evaluability shares; Phase 2 retains the ±5-point planning scale for performance. Requires two-phase weights and variance. | Higher review but contains construction costs. Misclassification/nonresponse and incorrect two-phase weights are key risks; outcome-adaptive enrichment is forbidden. |
+| S4: census of eligible frame | Up to all `15,274` task-mass-usable records, after task/frame reconciliation | Construct every task classified as benchmark-evaluable and retain all other mass as non-evaluable. | Removes benchmark sampling error within the classified frame but not item, scoring, or classification error. | Prohibitive workload and historical-call burden; feasibility filtering may still create an externally invalid digital subset. |
 
-For scale only, a simple-random binary proportion has worst-case approximate
-95% sample sizes of 384 for a ±5 percentage-point half-width and 1,067 for a
-±3-point half-width before finite-population and design-effect adjustments.
-These are **illustrations, not selected sample sizes**. Clustering, repeated
-instances, family estimates, unequal weights, and classification error change
-the calculation.
+The proposed sizes are planning alternatives, not signed production choices.
+The `n=384` and `n=1,067` figures come from worst-case simple-random binary
+precision; they are not reverse-engineered from observed model performance.
+Clustering, repeated instances, family estimates, unequal weights, and
+classification error change the required final size.
 
 Decision dimensions are: target population; task-mass versus wage-bill target;
 precision for total and family estimates; required family/modality contrasts;
@@ -260,15 +261,26 @@ the same task boundary. `F` remains descriptive/sensitivity evidence only.
 
 ## H. Historical-model capture plan and urgency
 
-Define
+For the planning assumptions used only to compare designs—two equivalent
+instances, three repetitions, and no perturbations—define the per-model call
+vectors:
 
 ```text
-K = N_items * N_instances * N_repetitions * (1 + N_perturbations).
+K_S1 = 120   * 2 * 3 =    720
+K_S2 = 384   * 2 * 3 =  2,304
+K_S3 = 384   * 2 * 3 =  2,304  (Phase 1 classification makes no model call)
+K_S4 = 15,274 * 2 * 3 = 91,644
 ```
 
-Each technically available registry row requires `K` calls; blocked/excluded
-rows require zero calls unless a new signed rule makes them eligible. No values
-of those multipliers are selected in this packet.
+Each technically available registry row requires the applicable `K_S*` calls;
+blocked/excluded rows require zero calls unless a new signed rule makes them
+eligible. These multipliers and sizes are planning proposals, not authorization.
+For each direct row, estimated API cost is `K_S* × rho_m`, where `rho_m` is the
+metered cost of that frozen item/token profile at the model's signed price.
+For each stand-in row it is `K_S* × rho_host`. Exact row-level rates are not
+currently supported across the registry because the project has unprobed rows,
+unconfigured stand-in hosting, and a documented 2x price-table conflict.
+Blocked/excluded rows cost zero unless prospectively unblocked.
 
 Project-known status comes from `dax/capability_panel/vintage_registry.json`
 and the 2026-08-21 free-probe receipt: no account metadata probe was made; 14
@@ -277,25 +289,25 @@ aliases lack an approved snapshot rule, and one model is bindingly excluded.
 
 | Event / exact measurement target | Provider | Project-known status / technical possibility | Expected calls | Documented capture risk |
 |---|---|---|---:|---|
-| GPT4 launch / `meta-llama/Llama-3.1-405B-Instruct` | open-weight compatible | Approved stand-in; provider unconfigured; conditional | `K` if configured | No OpenAI API retirement; hosting availability/cost unresolved. |
-| GPT4 Turbo preview / `gpt-4-1106-preview` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-10-23 per project adjudication. |
-| GPT4 Turbo GA / `gpt-4-turbo-2024-04-09` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-10-23. |
-| GPT4o launch / `gpt-4o-2024-05-13` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-10-23. |
-| GPT4o-mini / `gpt-4o-mini-2024-07-18` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-10-23. |
-| o1 preview / `deepseek-ai/DeepSeek-R1` | open-weight compatible | Approved stand-in; provider unconfigured; conditional | `K` if configured | No OpenAI retirement; cross-workload parity limitation retained. |
-| o1 full / `o1-2024-12-17` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-10-23. |
-| o3-mini / `o3-mini-2025-01-31` | OpenAI | Account probe required; unverified possible | `K` if available | Project group note: capture before 2026-12-11; reverify exact row. |
+| GPT4 launch / `meta-llama/Llama-3.1-405B-Instruct` | open-weight compatible | Approved stand-in; provider unconfigured; conditional | `K_S*` if configured | No OpenAI API retirement; hosting availability/cost unresolved. |
+| GPT4 Turbo preview / `gpt-4-1106-preview` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-10-23 per project adjudication. |
+| GPT4 Turbo GA / `gpt-4-turbo-2024-04-09` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-10-23. |
+| GPT4o launch / `gpt-4o-2024-05-13` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-10-23. |
+| GPT4o-mini / `gpt-4o-mini-2024-07-18` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-10-23. |
+| o1 preview / `deepseek-ai/DeepSeek-R1` | open-weight compatible | Approved stand-in; provider unconfigured; conditional | `K_S*` if configured | No OpenAI retirement; cross-workload parity limitation retained. |
+| o1 full / `o1-2024-12-17` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-10-23. |
+| o3-mini / `o3-mini-2025-01-31` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Project group note: capture before 2026-12-11; reverify exact row. |
 | GPT4.5 preview / no target | none | Binding exclusion; technically not eligible | `0` | No qualified stand-in. |
-| GPT4.1 / `gpt-4.1-2025-04-14` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-12-11. |
-| o3 / `o3-2025-04-16` | OpenAI | Account probe required; unverified possible | `K` if available | Project group note: capture before 2026-12-11; reverify exact row. |
-| o4-mini / `o4-mini-2025-04-16` | OpenAI | Account probe required; unverified possible | `K` if available | Exact retirement deadline not documented in current project evidence; urgent probe. |
-| GPT5 / `gpt-5-2025-08-07` | OpenAI | Account probe required; unverified possible | `K` if available | Capture before 2026-12-11. |
-| GPT5.1 / `gpt-5.1-2025-11-13` | OpenAI | Account probe required; unverified possible | `K` if available | Project older-GPT5 group note points to 2026-12-11; exact row needs revalidation. |
-| GPT5.2 / `gpt-5.2-2025-12-11` | OpenAI | Account probe required; unverified possible | `K` if available | Same group risk; exact row needs revalidation. |
-| GPT5.4 / `gpt-5.4-2026-03-05` | OpenAI | Account probe required; unverified possible | `K` if available | Project note says older 5.4 snapshots before 2026-12-11; exact row needs revalidation. |
+| GPT4.1 / `gpt-4.1-2025-04-14` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-12-11. |
+| o3 / `o3-2025-04-16` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Project group note: capture before 2026-12-11; reverify exact row. |
+| o4-mini / `o4-mini-2025-04-16` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Exact retirement deadline not documented in current project evidence; urgent probe. |
+| GPT5 / `gpt-5-2025-08-07` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Capture before 2026-12-11. |
+| GPT5.1 / `gpt-5.1-2025-11-13` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Project older-GPT5 group note points to 2026-12-11; exact row needs revalidation. |
+| GPT5.2 / `gpt-5.2-2025-12-11` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Same group risk; exact row needs revalidation. |
+| GPT5.4 / `gpt-5.4-2026-03-05` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Project note says older 5.4 snapshots before 2026-12-11; exact row needs revalidation. |
 | GPT5.4-mini / no approved dated target | OpenAI | Blocked alias; not technically authorized | `0` | Snapshot rule needed; alias drift risk. |
 | GPT5.4-nano / no approved dated target | OpenAI | Blocked alias; not technically authorized | `0` | Snapshot rule needed; alias drift risk. |
-| GPT5.5 / `gpt-5.5-2026-04-23` | OpenAI | Account probe required; unverified possible | `K` if available | Project note says older 5.5 snapshots before 2026-12-11; exact row needs revalidation. |
+| GPT5.5 / `gpt-5.5-2026-04-23` | OpenAI | Account probe required; unverified possible | `K_S*` if available | Project note says older 5.5 snapshots before 2026-12-11; exact row needs revalidation. |
 | GPT5.6-sol / no approved dated target | OpenAI | Blocked alias; not technically authorized | `0` | Snapshot rule needed; current alias is not a historical capture. |
 | GPT5.6-terra / no approved dated target | OpenAI | Blocked alias; not technically authorized | `0` | Snapshot rule needed. |
 | GPT5.6-luna / no approved dated target | OpenAI | Blocked alias; not technically authorized | `0` | Snapshot rule needed. |
@@ -331,23 +343,29 @@ H_score     = N_captured_outputs * N_human_raters * H_rating
 Cost_human  = sum_role H_role * approved_rate_role.
 ```
 
-For scale only, if total definition/review work were 3.5 expert-hours per item,
-120, 384, and 1,067 items would require 420, 1,344, and 3,734.5 expert-hours,
-respectively, before output scoring. Neither 3.5 hours nor those sample sizes
-is approved.
+The following planning table makes the alternatives comparable. Construction
+assumes 3.5 expert-hours per fully constructed item; the S3 Phase-1 screen
+assumes 0.25 hour per source. Inference assumes two instances, three
+repetitions, no perturbations, and the 16 registry rows that are direct-but-
+unprobed or approved-stand-in-but-unconfigured. The USD sensitivity assumes
+5,000 noncached input and 1,000 output tokens per call and applies the
+project's documented low/high direct rate examples (`$0.15/$0.60` through
+`$30/$60` per million). It excludes hosting, tools, human scoring, retries,
+and unresolved price changes.
 
-Inference workload for the 16 registry rows that are direct-but-unprobed or
-approved-stand-in-but-unconfigured is:
+| Design | Construction workload | Calls per model | Calls across initial 16 rows | Direct-API price sensitivity only |
+|---|---:|---:|---:|---:|
+| S1 `n=120` pilot | 420 expert-hours | 720 | 11,520 | about `$16–$2,419` |
+| S2 `n=384` PPS | 1,344 expert-hours | 2,304 | 36,864 | about `$50–$7,741` |
+| S3 `1,067 -> 384` two-phase | about 1,611 expert-hours | 2,304 | 36,864 | about `$50–$7,741` |
+| S4 `n=15,274` census scale | 53,459 expert-hours | 91,644 | 1,466,304 | about `$1,980–$307,924` |
 
-```text
-Calls_initially_eligible = 16 * K.
-```
-
-If five blocked aliases later receive signed routes, the maximum becomes
-`21*K`; the excluded GPT4.5 row remains zero. For example only, two instances,
-three repetitions, and no perturbations imply 11,520 calls at 120 items,
-36,864 at 384, and 102,432 at 1,067 across the initial 16 rows. These call
-counts are not an authorization.
+If five blocked aliases later receive signed routes, multiply the relevant
+per-model calls by 21 rather than 16; the excluded GPT4.5 row remains zero.
+If all 1,067 S3 phase-1 tasks were later fully constructed, the scale would be
+6,402 calls per model, 102,432 over 16 rows, and roughly `$138–$21,511` under
+the same illustrative token/rate assumptions. None of these calls or dollar
+ranges is an authorization or budget recommendation.
 
 Metered inference cost is
 
@@ -382,14 +400,14 @@ the USD 60 v2-labeling budget do not automatically authorize this new benchmark.
 - Maintain the existing outcome seal until measurement design, benchmark,
   model capture, scoring, duration, and W5 rules are frozen.
 
-## K. Comparison against Alternatives A/B/C
+## K. Comparison against Alternatives A/B/C/D
 
-| Design | Estimand | Strength | Principal risk | Approved role in this direction |
+| Design | Estimand and measurement unit | Assumptions / identification | Expected coverage and validity risk | Complexity, cost, interpretation, and departure |
 |---|---|---|---|---|
-| O*NET-aligned benchmark | Full-task cost-effective displacement on a probability sample of O*NET-aligned instances | Measures capability at the intended task boundary | Construct validity, sampling, expert cost, historical capture urgency | Preferred prospective primary direction; not yet implementation-approved. |
-| A: strict direct-task substitution | Same full-task frontier on independently verified GDPval/O*NET equivalents | Most conservative semantic transport; clear lower bound | Extremely sparse and selected coverage | Separate robustness/lower-bound and sanity check. |
-| B: capability-family transport | Latent capability-family exposure unless separately calibrated | Broad descriptive signal | Family similarity does not identify task success or time savings | Descriptive/sensitivity only absent new validation. |
-| C: atomic decomposition | Full-task assembly or partial minutes saved, depending on choice | Mechanistic if component graph is valid | Highest ontology/dependency/duration burden; may change estimand | Not primary at this stage. |
+| A: strict direct-task substitution | Existing full-task frontier; unit is an independently equivalent GDPval/O*NET task pair. | Exchangeable inputs, operations, deliverable, quality, duration, cost, and failure consequence; independent D adjudication. | Very sparse, selected coverage. Lowest semantic false-link risk, but hidden context differences remain. | Moderate per link but high cost per covered mass. Most interpretable lower bound; new sparse-coverage/partial-identification amendment. |
+| B: capability-family exposure | Latent family capability by occupation task loading; not full-task displacement. | Stable ontology, measurement invariance, common-item calibration, and out-of-domain predictive validation. | Broad semantic coverage but high risk of false economic transfer; family involvement does not identify task success/time saving. | Moderate/high measurement-model cost. Interpretable as capability exposure only; major estimand departure if central. Descriptive/sensitivity role only. |
+| C: atomic decomposition | Either assembled full-task success or partial minutes saved; unit is an atomic component/task graph. | Complete reproducible decomposition, valid dependencies/assembly operator, component performance transfer, component duration and review time. | Potentially broad apparent coverage; high false-link and external-validity risk if generic atoms or dependencies are wrong. | Highest ontology, human-duration, and validation cost. Mechanistic but complex; major methodology deviation and possible estimand change. Not primary. |
+| D: O*NET-aligned benchmark | Existing full-task cost-effective frontier; unit is a frozen benchmark instance at the O*NET task boundary. | Probability sampling, construct-valid instances, equivalent repetitions, objective/independent scoring, and sample-to-task/occupation external validity. | Coverage determined by signed sample and evaluability bounds, not semantic retrieval. Lower cross-unit false-link risk; principal risks are construct validity, digital selection, and sampling error. | Highest new data-construction and historical-capture burden, but direct interpretation. Major measurement/data-source amendment. Preferred prospective primary direction, not yet implementation-approved. |
 
 Strict-D mass is never renormalized to the full occupation. It may provide a
 conservative identified subset, occupation lower bound, and falsification:
@@ -471,6 +489,33 @@ No line below is approved until dated and signed.
 | GDPval convergent-validity analyses permitted | `NEED_HUMAN` |
 | Capability-family descriptive outputs permitted and labeling restrictions | `NEED_HUMAN` |
 
-**PI name/signature:** `NEED_HUMAN`  
-**Date:** `NEED_HUMAN`  
+**PI name/signature:** `NEED_HUMAN`
+
+**Date:** `NEED_HUMAN`
+
 **Decision version/commit:** `NEED_HUMAN`
+
+## M. Recommended next step
+
+The scientifically defensible next step is a **no-model, outcome-blind
+construct-validity pilot on the prospectively drawn S1 `n=120` tasks**, after
+the PI signs the task boundary, sampling frame, evaluability rules, author and
+review qualifications, and the rule for rolling valid pilot items into a
+production probability sample. The pilot should ask only whether independent
+domain reviewers can reproducibly construct and score an instance at the same
+O*NET work-product boundary. It must not inspect model performance or optimize
+the protocol for apparent AI success.
+
+If that construct gate passes under a prospectively signed rule, the preferred
+production planning option is S3: classify `n=1,067` probability-drawn tasks
+and fully construct a predeclared `n=384` two-phase subsample with retained
+inclusion probabilities. Valid S1 items may roll into the relevant probability
+sample only if their selection probabilities and unchanged definitions permit
+it. The benchmark, price/call cap, and scoring rule should then be frozen early
+enough to capture the 2026-10-23 historical snapshots. Human duration may
+continue in parallel and join only before the economic frontier.
+
+This recommendation is based on construct validity, explicit missing-mass
+bounds, and historical-capture risk. It is not based on expected coverage or
+model success, and it is not a PI signature, recruitment approval, or spending
+authorization.

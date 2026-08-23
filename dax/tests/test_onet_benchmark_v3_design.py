@@ -99,10 +99,15 @@ def test_design_is_unsigned_and_preserves_all_safeguards():
     assert design["robustness_direction"] == "strict_direct_task_substitution"
     assert design["authorized_universe"]["existing_crosswalk_gate_is_not_benchmark_sample_coverage_approval"]
     assert len(design["sampling_options"]) >= 3
+    assert [option.get("proposed_sample_size_unsigned") for option in design["sampling_options"][:2]] == [120, 384]
+    assert design["sampling_options"][2]["proposed_phase_1_sample_size_unsigned"] == 1067
+    assert design["sampling_options"][2]["proposed_phase_2_sample_size_unsigned"] == 384
     assert design["scoring"]["minimum_success_threshold"] is None
     assert design["non_evaluable_rule"]["center"] is None
     assert design["historical_capture"]["paid_calls_in_this_batch"] == 0
     assert design["realized_spend_usd"] == 0
+    assert design["recommended_next_step"]["recruitment_or_spend_authorized"] is False
+    assert design["recommended_next_step"]["pi_signature_required"] is True
     assert design["signature_state"] == "NEED_HUMAN"
     assert not any(design["downstream"].values())
 

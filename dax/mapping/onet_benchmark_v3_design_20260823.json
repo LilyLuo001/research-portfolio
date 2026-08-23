@@ -46,36 +46,37 @@
   },
   "sampling_options": [
     {
-      "id": "S1_STRATIFIED_PPS_PRECISION_TARGET",
-      "selection_probability": "task_mass_or_wage_bill_relevance_within_predeclared_strata",
-      "sample_size_rule": "PI_selected_precision_and_design_effect_before_model_results",
-      "illustrative_srs_binary_sizes_not_selected": {
-        "95pct_half_width_5pp_worst_case": 384,
-        "95pct_half_width_3pp_worst_case": 1067
-      },
-      "strength": "design_weighted population inference",
-      "risk": "small strata and design effects require oversampling and survey variance methods"
+      "id": "S1_BALANCED_CONSTRUCT_VALIDITY_PILOT",
+      "proposed_sample_size_unsigned": 120,
+      "selection_probability": "known_probability_within_major_family_by_modality_task_type_strata",
+      "sample_size_rule": "planning_pilot_not_production_precision",
+      "strength": "early_task_boundary_evaluability_and_scoring_construct_audit",
+      "risk": "not_a_production_estimator_and_balanced_selection_requires_weights"
     },
     {
-      "id": "S2_BALANCED_STRATIFIED_FAMILY_BY_MODALITY",
-      "selection_probability": "known_nonzero_probability_with_minimum_cells_by_major_family_task_type_and_evaluability_screen",
-      "sample_size_rule": "PI_selected_minimum_per_cell_plus_mass_weighted remainder",
-      "strength": "construct and family coverage",
-      "risk": "less efficient for aggregate mass; weights may be variable"
+      "id": "S2_STRATIFIED_PPS_PRODUCTION_SAMPLE",
+      "proposed_sample_size_unsigned": 384,
+      "selection_probability": "task_mass_or_signed_wage_bill_relevance_within_predeclared_strata",
+      "sample_size_rule": "worst_case_srs_binary_95pct_half_width_5pp_before_design_effect",
+      "strength": "design_weighted_population_inference",
+      "risk": "small_strata_design_effects_and_digital_frame_exclusions"
     },
     {
       "id": "S3_TWO_PHASE_PROBABILITY_SAMPLE",
+      "proposed_phase_1_sample_size_unsigned": 1067,
+      "proposed_phase_2_sample_size_unsigned": 384,
       "selection_probability": "phase_1_representative_construct_screen_then_phase_2_subsample_by_predeclared_cost_and_stratum_not_observed_model_success",
-      "sample_size_rule": "PI_selected_phase_sizes_and_inclusion_probabilities_before evaluation",
-      "strength": "separates representativeness from expensive instance construction",
-      "risk": "requires two_phase_weights_and_variance; outcome_adaptive_enrichment_forbidden"
+      "sample_size_rule": "phase_1_3pp_and_phase_2_5pp_worst_case_srs_planning_scales_before_design_effect",
+      "strength": "separates_representativeness_from_expensive_instance_construction",
+      "risk": "requires_two_phase_weights_and_variance_outcome_adaptive_enrichment_forbidden"
     },
     {
       "id": "S4_CENSUS_OF_ELIGIBLE_FRAME",
+      "proposed_upper_bound_unsigned": 15274,
       "selection_probability": "one_for_every_authorized_task_after_evaluability_classification",
       "sample_size_rule": "all_eligible_records",
-      "strength": "no benchmark sampling error within classified frame",
-      "risk": "highest construction and review burden; non_evaluable external validity remains"
+      "strength": "no_benchmark_sampling_error_within_classified_frame",
+      "risk": "highest_construction_and_review_burden_non_evaluable_external_validity_remains"
     }
   ],
   "task_definition_model_evaluation_separation": {
@@ -111,6 +112,31 @@
     "benchmark_freeze_can_precede_task_duration_completion": true,
     "paid_calls_in_this_batch": 0,
     "model_availability_calls_in_this_batch": 0,
+    "planning_assumptions_unsigned": {
+      "instances_per_task": 2,
+      "repetitions_per_instance": 3,
+      "perturbations": 0,
+      "initially_conditional_model_rows": 16,
+      "calls_per_model_by_design": {
+        "S1": 720,
+        "S2": 2304,
+        "S3_phase_2": 2304,
+        "S4": 91644
+      },
+      "calls_across_16_rows_by_design": {
+        "S1": 11520,
+        "S2": 36864,
+        "S3_phase_2": 36864,
+        "S4": 1466304
+      },
+      "illustrative_direct_api_cost_sensitivity_usd": {
+        "S1": [16, 2419],
+        "S2": [50, 7741],
+        "S3_phase_2": [50, 7741],
+        "S4": [1980, 307924]
+      },
+      "authorization": false
+    },
     "call_count_formula": "N_items * N_instances * N_model_rows_technically_available * N_repetitions * (1 + N_perturbations)",
     "cost_formula": "sum_over_calls(non_cached_input_tokens*input_rate + cached_input_tokens*cached_rate + output_tokens*output_rate)/1000000",
     "exact_budget_status": "NOT_IDENTIFIED_UNTIL_SAMPLE_INSTANCES_REPETITIONS_TOKEN_CAPS_AND_PRICE_LINES_ARE_SIGNED"
@@ -120,6 +146,13 @@
     "one_diagnostic_pair_generalized": false,
     "coverage_required_to_equal_primary_benchmark": false,
     "unmatched_mass": "UNIDENTIFIED_NOT_RENORMALIZED"
+  },
+  "recommended_next_step": {
+    "action": "NO_MODEL_OUTCOME_BLIND_CONSTRUCT_VALIDITY_PILOT_ON_S1_THEN_PROSPECTIVE_PI_GATE",
+    "production_planning_preference_if_construct_gate_passes": "S3_TWO_PHASE_PROBABILITY_SAMPLE",
+    "basis": "construct_validity_missing_mass_transparency_and_historical_capture_urgency_not_expected_model_success",
+    "recruitment_or_spend_authorized": false,
+    "pi_signature_required": true
   },
   "diagnostic_evidence_preserved": {
     "v1": {
