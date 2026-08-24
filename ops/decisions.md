@@ -621,3 +621,37 @@ that basis; only `shared/` carries the hard read-only bar.
 `make plan` no longer offers P1-T3-spec as ready work. The remaining staleness in
 the plan output is upstream of this task: 14 L1 batches are still listed as
 dispatchable against a lane that has been dead 40 days (P0-3, owner decision).
+
+## P1 CONCENTRATION FINDING 2026-08-19 (seat C) — OWNER DECISION REQUIRED
+
+Computed from committed data during the P1 roadmap review:
+
+  ConvExp >=0.5%: 389 treated stocks; 361 (92.8%) are wave W002 alone.
+                  Excluding W002 leaves 36 stocks / 9 waves. Power floor is 33.
+  ConvExp >=1%  : 24 treated stocks; excluding W002 leaves 16 — BELOW the floor.
+
+W002 = 2021-06-11, four DFA (Dimensional) funds.
+
+Plan §8 item 1 named single-family dominance as "本设计最大软肋" and §10 outcome B
+pre-committed the fallback repositioning. This is no longer a contingency — it is
+the current state of the data. The exclude-DFA robustness cut is underpowered at
+>=1% and marginal at >=0.5%.
+
+OWNER, before T5: which paper is being written?
+  (a) single-event paper on the June 2021 DFA conversion (§10 outcome B);
+  (b) pooled, with the DFA-dominance caveat reported openly in the main text;
+  (c) widen the event set first (131 events vs a published industry 203) and
+      re-check concentration before choosing.
+Recording this AFTER seeing any outcome would be specification search.
+
+Two further pre-T5 items surfaced by the same review:
+  - Continuous-dose DiD: Callaway/Goodman-Bacon/Sant'Anna (NBER w32117) show
+    cross-dose comparisons under standard parallel trends carry selection bias;
+    dose-response identification needs STRONG parallel trends. The T5 blueprint
+    must state a stance. Plan §T5 asks for the "适配方案" but not this assumption.
+  - shared/econlib has NO continuous-dose estimator — callaway_santanna,
+    stacked_did and twfe_did are all binary/staggered on first_treat. T5 as
+    specified is not implementable until seat D adds one, or continuous is
+    demoted to robustness.
+
+Full analysis: p1/ROADMAP-2026-08-19.md
