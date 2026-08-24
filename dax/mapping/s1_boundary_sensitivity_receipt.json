@@ -1,0 +1,75 @@
+{
+  "record_version": "dax-s1-boundary-sensitivity-v1",
+  "what_this_is": "Sensitivity of the S1 headline to two unsigned choices that sit downstream of every per-task judgment: the weighting, and where the evaluable boundary is drawn. It is not a second annotation and does not substitute for one.",
+  "s1_qualifier": "S1 is single-annotator with formal_s1_gate_result UNRESOLVED and audit_limit PRELIMINARY_SINGLE_CODEX_NOT_INDEPENDENT_DOMAIN_EXPERT_VALIDATION. Every number below inherits that limit; these are diagnostics and carry no claim.",
+  "source_receipt": "dax/mapping/s1_construct_validity_result_receipt_20260823.json",
+  "non_evaluable_headline_by_weighting": {
+    "unweighted_count": {
+      "value": 0.8,
+      "numerator": 96,
+      "denominator": 120
+    },
+    "equal_family_weighted": {
+      "value": 0.8045454545454547
+    },
+    "task_mass_weighted_within_pilot": {
+      "value": 0.7428123089597806
+    }
+  },
+  "headline_spread_across_weightings": 0.06173314558567411,
+  "boundaries": {
+    "strict": {
+      "classes_counted_evaluable": [
+        "directly_executable_digital"
+      ],
+      "reading": "only tasks whose inputs and deliverable are natively digital and available in the frozen harness",
+      "identified_mass_share_B": 0.0,
+      "unidentified_mass_share": 1.0,
+      "kappa_multiplier": {
+        "0.0": 0.0,
+        "0.25": 0.25,
+        "0.5": 0.5,
+        "0.75": 0.75,
+        "1.0": 1.0
+      }
+    },
+    "medium": {
+      "classes_counted_evaluable": [
+        "directly_executable_digital",
+        "executable_with_supplied_files_data"
+      ],
+      "reading": "adds tasks needing supplied files or data, which the v3 taxonomy admits only 'if input validity passes'",
+      "identified_mass_share_B": 0.10861280380490569,
+      "unidentified_mass_share": 0.8913871961950943,
+      "kappa_multiplier": {
+        "0.0": 0.10861280380490569,
+        "0.25": 0.33145960285367926,
+        "0.5": 0.5543064019024528,
+        "0.75": 0.7771532009512264,
+        "1.0": 1.0
+      }
+    },
+    "broad": {
+      "classes_counted_evaluable": [
+        "directly_executable_digital",
+        "executable_with_supplied_files_data",
+        "executable_with_construct_valid_simulated_inputs"
+      ],
+      "reading": "adds simulated-input tasks, which the v3 taxonomy admits only after construct-validity review and requires to be reported separately",
+      "identified_mass_share_B": 0.2571876910402194,
+      "unidentified_mass_share": 0.7428123089597807,
+      "kappa_multiplier": {
+        "0.0": 0.2571876910402194,
+        "0.25": 0.44289076828016455,
+        "0.5": 0.6285938455201097,
+        "0.75": 0.8142969227600549,
+        "1.0": 1.0
+      }
+    }
+  },
+  "identified_share_spread": 0.2571876910402194,
+  "identified_share_ratio_widest_to_narrowest": null,
+  "directly_executable_digital_mass": 0.0,
+  "why_this_ranks_above_the_annotator_count": "Two annotators in perfect agreement leave both choices open. The boundary is definitional, not a judgment about any task, and it moves the identified share by more than a disagreement between careful annotators plausibly would.",
+  "the_degenerate_case": "Under the strict boundary the identified mass is exactly zero, because S1 found no directly-executable-digital task at all. At B = 0 the multiplier collapses to kappa: the index would carry no information from data and would be the missing-mass assumption alone. That is not a bound anyone can publish, and it is reached by a defensible reading of the project's own taxonomy."
+}
