@@ -1,3 +1,11 @@
 producer: DAX-W2-data
 format: directory
-required_files: [onet_timeshares.parquet, oews_wages.parquet, cps_extract.parquet, price_histories.csv]
+# onet_timeshares.parquet -> onet_task_weights.parquet, per [W2-D2] in
+# dax/memo/W2_DECISION_task_weight_2026-08-24.md. The old name asserted a
+# measured share of work time; O*NET 26.1 publishes none, and the quantity is a
+# share of importance-times-frequency rating mass. The file was never built
+# under the old name, so nothing is renamed in place -- but the contract named
+# it, and a contract naming an artifact by a claim its data cannot support is
+# the wrong thing to hold frozen. Reverting is one line if the owner takes the
+# alternative offered in that decision's signature block.
+required_files: [onet_task_weights.parquet, oews_wages.parquet, cps_extract.parquet, price_histories.csv]
