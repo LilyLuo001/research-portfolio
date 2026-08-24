@@ -1,0 +1,1093 @@
+{
+  "cost_usd": 0,
+  "model_calls": 0,
+  "part1_onet": {
+    "candidate_weight_columns": [
+      {
+        "categories": {
+          "1": "Yearly or less",
+          "2": "More than yearly",
+          "3": "More than monthly",
+          "4": "More than weekly",
+          "5": "Daily",
+          "6": "Several times daily",
+          "7": "Hourly or more"
+        },
+        "is_a_time_share": false,
+        "note": "A frequency distribution over how often a task is done. Says nothing about how long it takes, so it is not a share of work time.",
+        "scale_id": "FT",
+        "scale_max": 100,
+        "scale_min": 0,
+        "scale_name": "Frequency of Task (Categories 1-7)",
+        "shape": "SEVEN rows per (O*NET-SOC Code, Task ID), one per category; percent of incumbents in each frequency band",
+        "table": "Task Ratings.txt",
+        "value_column": "Data Value",
+        "verified_sums_to_100": {
+          "max": 100.02,
+          "median": 100.0,
+          "min": 99.98,
+          "n_task_occ_pairs": 17879,
+          "n_within_0.05_of_100": 17879
+        }
+      },
+      {
+        "is_a_time_share": false,
+        "observed_max": 5.0,
+        "observed_min": 1.33,
+        "scale_id": "IM",
+        "scale_max": 5,
+        "scale_min": 1,
+        "scale_name": "Importance",
+        "shape": "one row per (occupation, task)",
+        "table": "Task Ratings.txt"
+      },
+      {
+        "is_a_time_share": false,
+        "observed_max": 100.0,
+        "observed_min": 10.0,
+        "scale_id": "RT",
+        "scale_max": 100,
+        "scale_min": 0,
+        "scale_name": "Relevance of Task",
+        "shape": "one row per (occupation, task); percent of incumbents reporting the task as part of the job",
+        "table": "Task Ratings.txt"
+      },
+      {
+        "is_a_time_share": false,
+        "level": "GWA element (41 elements), NOT task",
+        "scale_id": "IM/LV",
+        "scale_name": "Importance / Level",
+        "table": "Work Activities.txt"
+      }
+    ],
+    "date_year_counts": {
+      "Task Ratings: Date year counts": {
+        "2004": 225,
+        "2005": 477,
+        "2006": 756,
+        "2007": 2826,
+        "2008": 1161,
+        "2009": 459,
+        "2011": 1539,
+        "2012": 4752,
+        "2013": 7659,
+        "2014": 11502,
+        "2015": 15111,
+        "2016": 15921,
+        "2017": 14994,
+        "2018": 16488,
+        "2019": 18153,
+        "2020": 30537,
+        "2021": 18351
+      },
+      "Task Statements: Date year counts": {
+        "2004": 25,
+        "2005": 53,
+        "2006": 114,
+        "2007": 314,
+        "2008": 129,
+        "2009": 51,
+        "2011": 179,
+        "2012": 528,
+        "2013": 862,
+        "2014": 1278,
+        "2015": 1679,
+        "2016": 1769,
+        "2017": 1666,
+        "2018": 1832,
+        "2019": 2017,
+        "2020": 4724,
+        "2021": 2039
+      },
+      "Tasks to DWAs: Date year counts": {
+        "2014": 18833,
+        "2015": 164,
+        "2016": 88,
+        "2017": 73,
+        "2018": 71,
+        "2019": 175,
+        "2020": 3591,
+        "2021": 538
+      },
+      "Work Activities: Date year counts": {
+        "2004": 164,
+        "2005": 246,
+        "2006": 328,
+        "2007": 1476,
+        "2008": 820,
+        "2009": 164,
+        "2011": 820,
+        "2012": 2378,
+        "2013": 3444,
+        "2014": 5084,
+        "2015": 6888,
+        "2016": 7872,
+        "2017": 6724,
+        "2018": 6970,
+        "2019": 7462,
+        "2020": 12546,
+        "2021": 8200
+      }
+    },
+    "external_precedent_not_adopted": {
+      "definition_as_stated": "Adjusted Task Score = simple average of three normalized ratings (frequency, importance, relevance), each divided by its maximum (7, 5, 100); missing ratings imputed with the occupation mean; SOC-6 scores summed into SOC-4; Weighted Task Share = task's Adjusted Task Score / sum over the occupation's tasks, so shares sum to 1 per occupation.",
+      "locator": "GDPval paper, Appendix 'Classifying Occupations as Digital', printed pp. 24-25, and footnotes 12-14",
+      "onet_release_used_by_that_paper": "O*NET 28.3, with 29.0 for two occupations; NOT 26.1",
+      "status": "RECORDED AS PRECEDENT ONLY. Not adopted, not implemented.",
+      "unresolved_before_this_could_be_reused": [
+        "The paper normalizes frequency by 'maximum frequency value is 7', implying a scalar 1-7 frequency rating. O*NET 26.1 has no such column: FT is a seven-row percentage distribution per occupation-task. Collapsing it to a scalar (modal category, expected category, or something else) is an unstated choice.",
+        "Weighted Task Share is a share of RATING MASS, not of work time. Calling it a time-share would misname it."
+      ],
+      "what": "The GDPval paper builds a 'Weighted Task Share' from exactly these three ratings."
+    },
+    "key_reconciliation": {
+      "ratings_with_no_statement": 0,
+      "statements_with_no_dwa": 434,
+      "statements_with_no_rating": 1380,
+      "task_ratings_pairs": 17879,
+      "task_statements_pairs": 19259,
+      "tasks_to_dwas_pairs": 18825
+    },
+    "source": {
+      "n_members": 38,
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/onet_26_1/db_26_1_text.zip",
+      "release": "O*NET 26.1 (text database)",
+      "sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a",
+      "sha256_matches_pin": true
+    },
+    "tables": {
+      "Abilities to Work Activities.txt": {
+        "columns": [
+          "Abilities Element ID",
+          "Abilities Element Name",
+          "Work Activities Element ID",
+          "Work Activities Element Name"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Abilities Element ID": 50,
+          "Abilities Element Name": 50,
+          "Work Activities Element ID": 41,
+          "Work Activities Element Name": 41
+        },
+        "rows": 381,
+        "scale_id_counts": null
+      },
+      "Abilities to Work Context.txt": {
+        "columns": [
+          "Abilities Element ID",
+          "Abilities Element Name",
+          "Work Context Element ID",
+          "Work Context Element Name"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Abilities Element ID": 33,
+          "Abilities Element Name": 33,
+          "Work Context Element ID": 36,
+          "Work Context Element Name": 36
+        },
+        "rows": 139,
+        "scale_id_counts": null
+      },
+      "Abilities.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Not Relevant",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 52,
+          "Element Name": 52,
+          "O*NET-SOC Code": 873,
+          "Scale ID": 2
+        },
+        "rows": 90792,
+        "scale_id_counts": {
+          "IM": 45396,
+          "LV": 45396
+        }
+      },
+      "Alternate Titles.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Alternate Title",
+          "Short Title",
+          "Source(s)"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Alternate Title": 42447,
+          "O*NET-SOC Code": 1012,
+          "Short Title": 1530
+        },
+        "rows": 52394,
+        "scale_id_counts": null
+      },
+      "Career Changers Matrix.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Related O*NET-SOC Code",
+          "Index"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 777,
+          "Related O*NET-SOC Code": 754
+        },
+        "rows": 7221,
+        "scale_id_counts": null
+      },
+      "Career Starters Matrix.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Related O*NET-SOC Code",
+          "Index"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 777,
+          "Related O*NET-SOC Code": 754
+        },
+        "rows": 7538,
+        "scale_id_counts": null
+      },
+      "Content Model Reference.txt": {
+        "columns": [
+          "Element ID",
+          "Element Name",
+          "Description"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 585,
+          "Element Name": 571
+        },
+        "rows": 585,
+        "scale_id_counts": null
+      },
+      "DWA Reference.txt": {
+        "columns": [
+          "Element ID",
+          "IWA ID",
+          "DWA ID",
+          "DWA Title"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "DWA ID": 2087,
+          "DWA Title": 2087,
+          "Element ID": 37,
+          "IWA ID": 332
+        },
+        "rows": 2087,
+        "scale_id_counts": null
+      },
+      "Education, Training, and Experience Categories.txt": {
+        "columns": [
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Category",
+          "Category Description"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 4,
+          "Element Name": 4,
+          "Scale ID": 4
+        },
+        "rows": 41,
+        "scale_id_counts": {
+          "OJ": 9,
+          "PT": 9,
+          "RL": 12,
+          "RW": 11
+        }
+      },
+      "Education, Training, and Experience.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Category",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 6,
+          "Element Name": 6,
+          "O*NET-SOC Code": 820,
+          "Scale ID": 5
+        },
+        "rows": 34297,
+        "scale_id_counts": {
+          "IM": 677,
+          "OJ": 7380,
+          "PT": 7380,
+          "RL": 9840,
+          "RW": 9020
+        }
+      },
+      "Emerging Tasks.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Task",
+          "Category",
+          "Original Task ID",
+          "Original Task",
+          "Write-in Total",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 170,
+          "Original Task ID": 37
+        },
+        "rows": 240,
+        "scale_id_counts": null
+      },
+      "IWA Reference.txt": {
+        "columns": [
+          "Element ID",
+          "IWA ID",
+          "IWA Title"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 37,
+          "IWA ID": 332,
+          "IWA Title": 332
+        },
+        "rows": 332,
+        "scale_id_counts": null
+      },
+      "Interests.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 9,
+          "Element Name": 9,
+          "O*NET-SOC Code": 874,
+          "Scale ID": 2
+        },
+        "rows": 7866,
+        "scale_id_counts": {
+          "IH": 2622,
+          "OI": 5244
+        }
+      },
+      "Job Zone Reference.txt": {
+        "columns": [
+          "Job Zone",
+          "Name",
+          "Experience",
+          "Education",
+          "Job Training",
+          "Examples",
+          "SVP Range"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {},
+        "rows": 5,
+        "scale_id_counts": null
+      },
+      "Job Zones.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Job Zone",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 923
+        },
+        "rows": 923,
+        "scale_id_counts": null
+      },
+      "Knowledge.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Not Relevant",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 33,
+          "Element Name": 33,
+          "O*NET-SOC Code": 873,
+          "Scale ID": 2
+        },
+        "rows": 57618,
+        "scale_id_counts": {
+          "IM": 28809,
+          "LV": 28809
+        }
+      },
+      "Level Scale Anchors.txt": {
+        "columns": [
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Anchor Value",
+          "Anchor Description"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 161,
+          "Element Name": 160,
+          "Scale ID": 1
+        },
+        "rows": 483,
+        "scale_id_counts": {
+          "LV": 483
+        }
+      },
+      "Occupation Data.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Title",
+          "Description"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 1016,
+          "Title": 1016
+        },
+        "rows": 1016,
+        "scale_id_counts": null
+      },
+      "Occupation Level Metadata.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Item",
+          "Response",
+          "N",
+          "Percent",
+          "Date"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 820
+        },
+        "rows": 29961,
+        "scale_id_counts": null
+      },
+      "Read Me.txt": {
+        "columns": [
+          "O*NET 26.1 Database"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {},
+        "rows": 10,
+        "scale_id_counts": null
+      },
+      "Sample of Reported Titles.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Reported Job Title",
+          "Shown in My Next Move"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 899,
+          "Reported Job Title": 6308
+        },
+        "rows": 7468,
+        "scale_id_counts": null
+      },
+      "Scales Reference.txt": {
+        "columns": [
+          "Scale ID",
+          "Scale Name",
+          "Minimum",
+          "Maximum"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Scale ID": 29
+        },
+        "rows": 29,
+        "scale_id_counts": {
+          "AO": 1,
+          "CF": 1,
+          "CN": 1,
+          "CT": 1,
+          "CTP": 1,
+          "CX": 1,
+          "CXP": 1,
+          "EX": 1,
+          "FM": 1,
+          "FT": 1,
+          "HW": 1,
+          "IH": 1,
+          "IJ": 1,
+          "IM": 1,
+          "IP": 1,
+          "LC": 1,
+          "LV": 1,
+          "OI": 1,
+          "OJ": 1,
+          "PT": 1,
+          "PX": 1,
+          "RE": 1,
+          "RL": 1,
+          "RT": 1,
+          "RW": 1,
+          "SR": 1,
+          "TI": 1,
+          "VH": 1,
+          "WS": 1
+        }
+      },
+      "Skills to Work Activities.txt": {
+        "columns": [
+          "Skills Element ID",
+          "Skills Element Name",
+          "Work Activities Element ID",
+          "Work Activities Element Name"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Skills Element ID": 32,
+          "Skills Element Name": 32,
+          "Work Activities Element ID": 39,
+          "Work Activities Element Name": 39
+        },
+        "rows": 232,
+        "scale_id_counts": null
+      },
+      "Skills to Work Context.txt": {
+        "columns": [
+          "Skills Element ID",
+          "Skills Element Name",
+          "Work Context Element ID",
+          "Work Context Element Name"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Skills Element ID": 19,
+          "Skills Element Name": 19,
+          "Work Context Element ID": 26,
+          "Work Context Element Name": 26
+        },
+        "rows": 96,
+        "scale_id_counts": null
+      },
+      "Skills.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Not Relevant",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 35,
+          "Element Name": 35,
+          "O*NET-SOC Code": 873,
+          "Scale ID": 2
+        },
+        "rows": 61110,
+        "scale_id_counts": {
+          "IM": 30555,
+          "LV": 30555
+        }
+      },
+      "Survey Booklet Locations.txt": {
+        "columns": [
+          "Element ID",
+          "Element Name",
+          "Survey Item Number",
+          "Scale ID"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 153,
+          "Element Name": 153,
+          "Scale ID": 19
+        },
+        "rows": 227,
+        "scale_id_counts": {
+          "AO": 1,
+          "CF": 30,
+          "CN": 1,
+          "FM": 2,
+          "HW": 1,
+          "IJ": 6,
+          "IM": 92,
+          "IP": 1,
+          "LC": 1,
+          "LV": 74,
+          "OJ": 1,
+          "PT": 1,
+          "PX": 1,
+          "RE": 2,
+          "RL": 1,
+          "RW": 1,
+          "SR": 1,
+          "TI": 9,
+          "WS": 1
+        }
+      },
+      "Task Categories.txt": {
+        "columns": [
+          "Scale ID",
+          "Category",
+          "Category Description"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Scale ID": 1
+        },
+        "rows": 7,
+        "scale_id_counts": {
+          "FT": 7
+        }
+      },
+      "Task Ratings.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Task ID",
+          "Scale ID",
+          "Category",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 873,
+          "Scale ID": 3,
+          "Task ID": 17879
+        },
+        "rows": 160911,
+        "scale_id_counts": {
+          "FT": 125153,
+          "IM": 17879,
+          "RT": 17879
+        }
+      },
+      "Task Statements.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Task ID",
+          "Task",
+          "Task Type",
+          "Incumbents Responding",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "O*NET-SOC Code": 923,
+          "Task ID": 19259,
+          "Task Type": 3
+        },
+        "rows": 19259,
+        "scale_id_counts": null
+      },
+      "Tasks to DWAs.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Task ID",
+          "DWA ID",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "DWA ID": 2085,
+          "O*NET-SOC Code": 923,
+          "Task ID": 18825
+        },
+        "rows": 23533,
+        "scale_id_counts": null
+      },
+      "Technology Skills.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Example",
+          "Commodity Code",
+          "Commodity Title",
+          "Hot Technology"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Commodity Code": 135,
+          "Commodity Title": 135,
+          "O*NET-SOC Code": 910
+        },
+        "rows": 31127,
+        "scale_id_counts": null
+      },
+      "Tools Used.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Example",
+          "Commodity Code",
+          "Commodity Title"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Commodity Code": 4127,
+          "Commodity Title": 4127,
+          "O*NET-SOC Code": 902
+        },
+        "rows": 41625,
+        "scale_id_counts": null
+      },
+      "UNSPSC Reference.txt": {
+        "columns": [
+          "Commodity Code",
+          "Commodity Title",
+          "Class Code",
+          "Class Title",
+          "Family Code",
+          "Family Title",
+          "Segment Code",
+          "Segment Title"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Class Code": 830,
+          "Class Title": 830,
+          "Commodity Code": 4262,
+          "Commodity Title": 4262,
+          "Family Code": 172,
+          "Family Title": 172,
+          "Segment Code": 35,
+          "Segment Title": 35
+        },
+        "rows": 4262,
+        "scale_id_counts": null
+      },
+      "Work Activities.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Not Relevant",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 41,
+          "Element Name": 41,
+          "O*NET-SOC Code": 873,
+          "Scale ID": 2
+        },
+        "rows": 71586,
+        "scale_id_counts": {
+          "IM": 35793,
+          "LV": 35793
+        }
+      },
+      "Work Context Categories.txt": {
+        "columns": [
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Category",
+          "Category Description"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 57,
+          "Element Name": 57,
+          "Scale ID": 2
+        },
+        "rows": 281,
+        "scale_id_counts": {
+          "CTP": 6,
+          "CXP": 275
+        }
+      },
+      "Work Context.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Category",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Not Relevant",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 57,
+          "Element Name": 57,
+          "O*NET-SOC Code": 873,
+          "Scale ID": 4
+        },
+        "rows": 280181,
+        "scale_id_counts": {
+          "CT": 1746,
+          "CTP": 4920,
+          "CX": 48015,
+          "CXP": 225500
+        }
+      },
+      "Work Styles.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "N",
+          "Standard Error",
+          "Lower CI Bound",
+          "Upper CI Bound",
+          "Recommend Suppress",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 16,
+          "Element Name": 16,
+          "O*NET-SOC Code": 873,
+          "Scale ID": 1
+        },
+        "rows": 13968,
+        "scale_id_counts": {
+          "IM": 13968
+        }
+      },
+      "Work Values.txt": {
+        "columns": [
+          "O*NET-SOC Code",
+          "Element ID",
+          "Element Name",
+          "Scale ID",
+          "Data Value",
+          "Date",
+          "Domain Source"
+        ],
+        "delimiter": "tab",
+        "distinct_id_like": {
+          "Element ID": 9,
+          "Element Name": 9,
+          "O*NET-SOC Code": 874,
+          "Scale ID": 2
+        },
+        "rows": 7866,
+        "scale_id_counts": {
+          "EX": 5244,
+          "VH": 2622
+        }
+      }
+    },
+    "task_to_iwa_dwa_structure": {
+      "direct_task_to_dwa": "Tasks to DWAs.txt (O*NET-SOC Code, Task ID, DWA ID)",
+      "dwa_ids_in_reference": 2087,
+      "dwa_ids_used_in_tasks_to_dwas": 2085,
+      "dwa_reference_rows": 2087,
+      "gwa_element_ids_behind_iwas": 37,
+      "iwa_reference_rows": 332,
+      "task_to_iwa": "NOT DIRECT. Reached only via DWA Reference.txt, which maps DWA ID -> IWA ID -> Element ID (GWA)."
+    },
+    "time_share_finding": {
+      "consequence": "Any 'occupation time-share' for onet_timeshares.parquet must be CONSTRUCTED from FT, IM, and/or RT by an explicit definitional choice. It cannot be read off O*NET. That choice is a design decision and is not made in this inventory.",
+      "direct_occupation_time_share_present": false,
+      "evidence": [
+        "Scales Reference.txt defines scale TI = '% Time' (min 1, max 5), but TI occurs in NO data table. It appears only in Scales Reference.txt (1 row) and Survey Booklet Locations.txt (9 rows).",
+        "Those 9 TI survey items are Work Context elements 4.C.2.d.1.a-i ('Spend Time Sitting', 'Spend Time Standing', ...). In the published data they carry scales CX (1-5) and CXP (percent of respondents per category), not TI, and they measure body position, not task time.",
+        "Element 4.C.3.d.8 'Duration of Typical Work Week' exists on scales CT (1-3) and CTP (percent per category: <40 hours / 40 hours / >40 hours), for 873 occupations. This is a whole-job work-week length, not a per-task allocation.",
+        "No column in any of the 38 members carries hours, minutes, or duration."
+      ],
+      "statement": "O*NET 26.1 contains no measured share of occupational work time by task, IWA, or DWA."
+    }
+  },
+  "part2_gdpval_human_time": {
+    "disposition": "PARTIAL",
+    "paper": {
+      "internal_inconsistency_flagged": {
+        "consequence": "Even the aggregate is ambiguous, which further weakens any attempt to scale it to task level.",
+        "description": "Two different averages are given for the same 220-task gold subset: 404 minutes (6.73 h) in A.2.4 p.13, and 9.49 hours (569.4 minutes) in Table 3 p.19. The paper does not reconcile them. Either could be the intended HT.",
+        "values": [
+          404,
+          569.4
+        ]
+      },
+      "measure_definition": {
+        "basis": "expert self-reported real-world time to complete each task, independently validated and corrected by multiple occupational reviewers",
+        "locator": "Appendix A.2.4 'Speed and Cost Analysis, continued', printed pp. 12-13",
+        "paper_caveat_verbatim_paraphrase": "because times were self-reported, experts may have under- or over-estimated",
+        "quantity": "Human expert professional completion time HT"
+      },
+      "per_occupation_search": "The paper's only by-occupation exhibits are Figure 11 (win rate by occupation) and Figure 10 (win rate by sector). Appendix A.2.4 says cost was computed from 'reported task completion hours per occupation', so per-occupation time existed for the authors, but no such table or figure is published.",
+      "per_occupation_values_published": false,
+      "per_task_values_published": false,
+      "published_granularity": [
+        {
+          "granularity": "single scalar over 220 gold tasks",
+          "locator": "Appendix A.2.4, printed p. 13",
+          "statement": "gold subset average HT = 404 minutes (6.73 hours); associated cost HC = $361"
+        },
+        {
+          "granularity": "seven-number distributional summary over 220 gold tasks",
+          "locator": "Appendix A.4 Table 3, printed p. 19",
+          "statement": "Avg time to complete (hrs), gold subset",
+          "values": {
+            "max": 100.0,
+            "mean": 9.49,
+            "min": 0.5,
+            "p25": 2.38,
+            "p50": 5.0,
+            "p75": 10.0,
+            "std": 13.75
+          }
+        },
+        {
+          "granularity": "seven-number distributional summary over the full set",
+          "locator": "Appendix A.4 Table 4, printed p. 19",
+          "statement": "Avg time to complete (hrs), full set",
+          "values": {
+            "max": 605.0,
+            "mean": 8.63,
+            "min": 0.25,
+            "p25": 2.0,
+            "p50": 4.0,
+            "p75": 8.0,
+            "std": 24.7
+          }
+        }
+      ],
+      "sha256": "37c7604bc9da68cd8d9345ad16938164fe985182ad723fcb09e9415f84dc25d4",
+      "sha256_matches_prior_audit_pin": true,
+      "url": "https://cdn.openai.com/pdf/d5eb7428-c4e9-4a33-bd86-86dd4bcf12ce/GDPval.pdf"
+    },
+    "public_dataset": {
+      "column_types": {
+        "deliverable_file_hf_uris": "list<element: string>",
+        "deliverable_file_urls": "list<element: string>",
+        "deliverable_files": "list<element: string>",
+        "occupation": "string",
+        "prompt": "string",
+        "reference_file_hf_uris": "list<element: string>",
+        "reference_file_urls": "list<element: string>",
+        "reference_files": "list<element: string>",
+        "rubric_json": "string",
+        "rubric_pretty": "string",
+        "sector": "string",
+        "task_id": "string"
+      },
+      "columns": [
+        "task_id",
+        "sector",
+        "occupation",
+        "prompt",
+        "reference_files",
+        "reference_file_urls",
+        "reference_file_hf_uris",
+        "deliverable_files",
+        "deliverable_file_urls",
+        "deliverable_file_hf_uris",
+        "rubric_pretty",
+        "rubric_json"
+      ],
+      "duration_columns_found": [],
+      "n_columns": 12,
+      "note": "rubric_pretty and rubric_json are present and are not listed on the public dataset card. Both were inspected. They carry grading rubrics only; no time, duration, or effort field at any nesting depth.",
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/gdpval/data/train-00000-of-00001.parquet",
+      "revision_per_prior_audit": "11e7900cdcac61bc4daf59e65feb238acda98fbf",
+      "rows": 220,
+      "rubric_json_duration_keys_found": [],
+      "rubric_json_keys_all": [
+        "author_type",
+        "criterion",
+        "form_content",
+        "read_only",
+        "required",
+        "rubric_item_id",
+        "score",
+        "tags"
+      ],
+      "rubric_json_parse_failures": 0,
+      "sha256": "f8422fab9b21d90c0ee5f0659842ab666d418cb8940842918f9f4b0df7ae0202",
+      "sha256_matches_pin": true
+    },
+    "recoverability_conclusion": {
+      "consistent_with_prior_audit": "dax/capability_panel/gdpval_duration_source_audit_receipt.json (DAX-TD-SOURCE-AUDIT-20260821). Its schema_fields list matches this independent read exactly, its parquet sha256 matches, and its gate_result BLOCKED stands. This pass adds: the rubric_json key set (no time key at any depth), independent verification of the paper hash, the Table 4 full-set row, and the 404-vs-569.4 inconsistency.",
+      "explicitly_not_done": "No per-task duration was derived from the 100x aggregate ratio, from the 404-minute mean, or from the Table 3 quantiles. An imputed duration is what the W4 gate forbids.",
+      "per_occupation_duration_recoverable": false,
+      "per_task_duration_recoverable": false,
+      "reason": "The only published quantities are set-level moments and quantiles. Recovering 220 task-level values from them is impossible without assumption; recovering per-occupation values is impossible without data the authors hold and did not publish.",
+      "unchanged_blocker": "Author route bounced; task-level values not public; human fallback pilot remains the only route and is pending budget and recruitment."
+    },
+    "summary": "Measured human completion time EXISTS and is documented, but only as whole-set distributional summaries. No per-task and no per-occupation values are published in either the paper or the pinned dataset."
+  },
+  "produced_utc": "2026-08-24T08:00:00+00:00",
+  "receipt_version": "dax-w2-onet-gdpval-input-inventory-v1",
+  "scope": "READ-ONLY INVENTORY. No builder written, no time-share defined, no duration derived. Counts, column headers, and locators only; no O*NET or GDPval task text."
+}

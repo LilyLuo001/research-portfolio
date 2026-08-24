@@ -1,0 +1,47 @@
+{
+  "output": "dax/w2/onet_gdpval_input_inventory_receipt_20260824.json",
+  "output_sha256": "fc4e57aea42cd58d220b866c9f013345ff827f1b024f46bbcb5bc2cdb176ed7c",
+  "inputs": [
+    {
+      "path": "dax/w2/inventory_onet_tables.py",
+      "sha256": "b926549ec2c8331b669c0ae739ae43597ade8515ebb327f6d216b311ebe3f85c",
+      "rows": null
+    },
+    {
+      "path": "dax/w2/inventory_gdpval_columns.py",
+      "sha256": "02378d567c8809dc163407ad6d7f429ea0ea9e75ead0739b385f8eb7f8d6549e",
+      "rows": null
+    },
+    {
+      "path": "dax/capability_panel/gdpval_duration_source_audit_receipt.json",
+      "sha256": "ee8a1f83144f7ba19ccb1accd781d30b5587c62e6798d2016f829ce02dd71d5d",
+      "rows": null
+    }
+  ],
+  "code_version": "0c74d6a6cd7f851c524a3f9ca937d5cbc4c74c16",
+  "timestamp": "2026-08-24T07:58:30.993486+00:00",
+  "remote_inputs": [
+    {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/onet_26_1/db_26_1_text.zip",
+      "sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a",
+      "host": "scc1.bu.edu",
+      "verified_against_pin": true
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/gdpval/data/train-00000-of-00001.parquet",
+      "sha256": "f8422fab9b21d90c0ee5f0659842ab666d418cb8940842918f9f4b0df7ae0202",
+      "host": "scc1.bu.edu",
+      "verified_against_pin": true
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/gdpval/GDPval_paper.pdf",
+      "sha256": "37c7604bc9da68cd8d9345ad16938164fe985182ad723fcb09e9415f84dc25d4",
+      "host": "scc1.bu.edu",
+      "verified_against_pin": true,
+      "note": "downloaded this pass from the URL recorded in gdpval_duration_source_audit_receipt.json; hash matches that receipt's pin"
+    }
+  ],
+  "read_only": true,
+  "cost_usd": 0,
+  "model_calls": 0
+}
