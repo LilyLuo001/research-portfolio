@@ -1,17 +1,23 @@
 {
   "_doc": "Frozen power standard for DAX W1. See dax/memo/PI_DECISION_D3_2026-08-18.md and prospective PI decision commit 4577fecab7b4e142cb28d78d4aec0800637c7b05. This file is the ONLY source of the pass bar. Nothing may recompute it from the analysis sample; freeze_power_standard.py fills it once from the frozen pre-event CPS extract and refuses to overwrite without --force.",
-  "status": "PLACEHOLDER_REQUIRES_REAL_CPS",
-  "frozen_at_utc": null,
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-08-24T07:20:40.683729+00:00",
   "frozen_window": {
     "start_month": "2021-11",
     "end_month": "2023-02",
     "rationale": "Ends the month before the first eligible event (GPT4_LAUNCH, 2023-03), so the constant cannot contain any post-treatment information."
   },
   "provenance": {
-    "cps_extract_path": null,
-    "cps_extract_sha256": null,
-    "n_person_records": null,
-    "weight_variable": null
+    "cps_extract_path": "dax/data_built/cps_preevent_power_panel.parquet",
+    "cps_extract_sha256": "eb92b1c6f2eb173f42de61aa63b591ffa74e27a94c059896d0eecae4d205aa76",
+    "n_person_records": 71322,
+    "weight_variable": "wtfinl",
+    "n_hours_unobserved": 3127,
+    "hours_unobserved_weight_share": 0.041102,
+    "hours_missingness_rule": "employed persons whose hours are unobserved are excluded from the hours baseline, never counted as zero; the employment rate is over every person in the window",
+    "hours_missingness_direction": "complete-case assigns the unobserved the mean of all observed persons, which includes the non-employed at zero; every unobserved record is employed, so the frozen baseline understates and the ceiling is conservative rather than neutral",
+    "unobserved_are_all_employed": true,
+    "employed_observed_hours_mean_sensitivity": 37.4529
   },
   "benchmark": {
     "relative_decline": 0.13,
@@ -30,8 +36,8 @@
     ],
     "version_status": "RESOLVED",
     "version_note": "Prospective PI decision commit 4577fecab7b4e142cb28d78d4aec0800637c7b05 selected 0.13 from the authenticated August 26 2025 authored version as the primary external empirical effect-size calibration scale. It is not the DAX treatment coefficient. The authenticated November 13 2025 value 0.16 and the historical PI design target 0.19 are prespecified sensitivities. The 0.19 sensitivity is normative and must not be represented as an externally sourced literature estimate unless a valid primary locator is later recovered.",
-    "baseline_employment_rate_22_25": null,
-    "baseline_hours_unconditional_22_25": null,
+    "baseline_employment_rate_22_25": 0.724972,
+    "baseline_hours_unconditional_22_25": 26.7108,
     "version_chosen": "August 26 2025 authored version, 0.13 relative employment decline",
     "version_decided_by": "PI/specification owner, prospective decision commit 4577fecab7b4e142cb28d78d4aec0800637c7b05",
     "version_supersedes": "Temporary 0.19 PI target adopted 2026-08-18 with unresolved external provenance",
@@ -58,8 +64,8 @@
     "target_power": 0.8,
     "max_mde_fraction_of_benchmark": 0.5,
     "effect_scale": "coefficient per 0.10 DAX increment",
-    "employment_mde_ceiling": null,
-    "hours_mde_ceiling": null
+    "employment_mde_ceiling": 0.04712318,
+    "hours_mde_ceiling": 1.736202
   },
   "forbidden": [
     "recomputing after the event set, mapping, dose definition, window rule or sample changes",
