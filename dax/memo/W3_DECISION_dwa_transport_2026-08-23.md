@@ -30,9 +30,28 @@ Mapping A executed deterministically and reported honestly:
 | task coverage | 0.00192118 |
 | wage-bill coverage | 0.0022461 |
 
-Two diagnostics, run before spending on formal validation, found D (direct
-substitute) = 0/60 on development pairs, and 1 plausible D across 108 audited
-candidate pairs.
+Two diagnostics were run before spending on formal validation. **Corrected
+2026-08-23 against the artifacts, which reached this branch after it was cut —
+see section 8.** An earlier draft of this paragraph described both inaccurately.
+
+- **v2 preliminary diagnostic**, 2026-08-21
+  (`mapA_v2_codex_diagnostic_result_receipt_20260821.json`): D=0, F=24, N=36,
+  U=0 across **60 pairs — 36 development and 24 calibration**, not 60
+  development pairs. Scope is `development_calibration_only`; development-only
+  counts are D=0, F=15, N=21. Status is
+  `PRELIMINARY_SINGLE_CODEX_DIAGNOSTIC_COMPLETE_NOT_FORMAL_VALIDATION`,
+  annotator `single_current_codex_session`,
+  `independent_multi_vendor_validation: false`.
+- **v3 source-side qualitative audit**, 2026-08-23
+  (`mapA_v3_source_audit_result_receipt_20260823.json`): 108 candidate pairs
+  from **6** source tasks, D=1, **F=55**, N=52, with the single plausible D
+  isolated to one source. This is a *separate exercise two days later*, not
+  part of the v2 diagnostic, and bundling the two merges different samples,
+  scopes and dates. Its F=55 also matters: over half those pairs are
+  capability-family matches, which is the finding, not the absence of matches.
+
+Both receipts set `formal_validation_performance_claimed: false`. These are
+diagnostics. The qualifiers travel with the numbers wherever they are cited.
 
 The cause is a unit-of-analysis mismatch: an O*NET task statement is a short
 occupational activity, a GDPval task is a composite professional assignment
@@ -168,13 +187,69 @@ re-run afterwards. The annotation costs the same in December. If it displaces
 provisioning the key, the project ends with a validated crosswalk and no
 capability panel to apply it to.
 
-## 8. Open provenance gap
+## 8. Provenance — resolved, and the premise was wrong
 
-The Mapping A v2 diagnostics and the S1 construct-validity pilot are cited in
-project discussion but **have no artifacts in this repository**. The repo state
-is the only shared state. Any figure from that work — including the S1 pass and
-non-evaluable shares — cannot enter the paper until its artifacts and locators
-are committed. This does not block the annotation; it blocks write-up.
+An earlier version of this section recorded the v2 and S1 figures as having no
+artifacts in the repository. **That is withdrawn.** Every cited figure is
+FOUND and recomputes exactly (audit:
+`dax/memo/W3_provenance_audit_2026-08-23.md`, commit `17297b3`).
+
+What actually happened is concurrency, not absence. This branch was cut from
+`1d4b11c` on 2026-08-20 17:50. The S1 artifacts were committed on 2026-08-23
+between 17:29 and 17:51 and reached `main` through PR #49; none of those
+commits is an ancestor of this branch's base. `dax/mapping/` held 8 files at
+the branch point and holds 54 on current `main`. The search behind the original
+section 8 was correct against the tree it ran on and wrong about the project.
+`main` has since been merged in, so the corrections in section 2 are made
+against the artifacts rather than against their absence.
+
+**The qualifiers are the substance of what was recovered.** Locating the files
+did not upgrade the evidence:
+
+- the v2 labels are single-annotator and carry
+  `independent_multi_vendor_validation: false`;
+- the S1 report is `..._UNSIGNED` with `formal_s1_gate_result: UNRESOLVED` and
+  its own weight limit describing the mass shares as descriptive, not
+  confirmatory;
+- both v2 and v3 receipts set `formal_validation_performance_claimed: false`.
+
+Nothing here is validated evidence. It is diagnostic material with its status
+recorded, and it must be cited that way.
+
+## 8a. Collision with the v3 decision packet — read before signing
+
+`dax/mapping/ONET_ALIGNED_BENCHMARK_V3_PI_DECISION_PACKET_2026-08-23.md` and
+`onet_benchmark_v3_design_20260823.json` arrived on `main` through the same
+PR #49, also dated 2026-08-23, also `signature_state: NEED_HUMAN`. **There are
+now two unsigned decision packets proposing different primary directions for
+the same stage.**
+
+| | v3 packet | this memo |
+|---|---|---|
+| primary | `onet_aligned_bridge_benchmark` | DWA transport of GDPval |
+| GDPval role | `central_transport_layer: false` | central, via DWAs |
+| measured coverage | not stated | 0.4169526 allocable wage mass |
+
+The v3 packet's `gdpval_role` block forbids *"whole_task_quantitative_transfer
+to O*NET without new validation"*. This memo does not propose whole-task
+transfer — the DWA layer is precisely the new validation that prohibition
+contemplates — so the two are reconcilable in principle. They are **not**
+reconcilable as written, because each nominates a different primary.
+
+Signing both creates two primaries. The PI should either reconcile them into
+one signed direction, or sign one and record the other as not selected. This
+memo does not assume precedence: it was drafted without sight of the v3 packet,
+which did not exist on this branch at drafting time.
+
+One substantive note for that reconciliation. The v3 design's
+`non_evaluable_rule` sets `lower_bound_contribution: zero_crossing_mass` and
+`upper_bound_contribution: all_non_evaluable_mass_crosses`. It is right to set
+`center: None` rather than invent a point estimate. But the upper rule is
+`1 - B(1 - E)` in the notation of
+`dax/memo/direction_review_2026-08-23.md` §1, which is *decreasing* in the
+evaluable share: occupations with the least evaluable mass receive the highest
+upper-bound exposure, inverting the treatment ordering. That critique applies
+whichever primary is chosen.
 
 ## 9. Signature
 
