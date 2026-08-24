@@ -245,7 +245,12 @@ def validate_row(row: Mapping[str, object], *, tolerance: float = 1e-12) -> None
             raise ContractError("verified duration requires second, minute, or hour")
         if not duration_source:
             raise ContractError("verified duration requires an authorized source")
-    elif duration_status == "blocked_missing":
+    elif duration_status in ("blocked_missing", "deferred_scoring"):
+        # deferred_scoring is the capture/scoring split (amendment section 3):
+        # duration is absent for the same reason and under the same no-inference
+        # rule, but the row was MEASURED, so it may carry pi. blocked_missing
+        # keeps its original meaning untouched -- see the coupling at the
+        # failure_status check below.
         if duration_value is not None or duration_unit is not None:
             raise ContractError("missing duration must remain null, never imputed")
         if duration_source:

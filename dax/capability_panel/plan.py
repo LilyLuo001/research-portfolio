@@ -145,8 +145,11 @@ def build_run_plan(
                         blockers.append(availability_status)
                     if model["provider"] != "openai" and model["status"] != "account_available":
                         blockers.append(str(model["status"]))
+                    # Duration no longer blocks CAPTURE (amendment section 3).
+                    # It blocks scoring, which assert_scoreable enforces.
+                    scoring_blockers: list[str] = []
                     if not duration_verified:
-                        blockers.append("blocked_missing_task_duration")
+                        scoring_blockers.append("deferred_missing_task_duration")
                     item = {
                         "item_id": stable_item_id((
                             mapping_commit, event_id, source_model, task_id,
@@ -170,7 +173,9 @@ def build_run_plan(
                         "deterministic_seed": int(stable_item_id((task_id, source_model, perturbation, repetition))[:8], 16),
                         "mapping_commit": mapping_commit,
                         "mapping_receipt_sha256": mapping_receipt_sha256,
-                        "task_duration_status": "verified" if duration_verified else "blocked_missing",
+                        "task_duration_status": "verified" if duration_verified else "deferred_scoring",
+                        "scoring_status": "scoreable" if duration_verified else "deferred_missing_task_duration",
+                        "scoring_blockers": scoring_blockers,
                         "task_duration_value": duration.get("value") if duration_verified else None,
                         "task_duration_unit": duration.get("unit") if duration_verified else None,
                         "task_duration_source": duration.get("source", "") if duration_verified else "",

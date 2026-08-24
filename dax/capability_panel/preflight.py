@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 import argparse
+import re
 import csv
 import datetime as dt
 import hashlib
 import json
 import pathlib
 from collections.abc import Mapping
+
+
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 class PreflightError(ValueError):
@@ -129,6 +133,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--evidence-patch-id", required=True)
     parser.add_argument("--w3-status", choices=("not_pushed", "pushed_validated"), required=True)
     parser.add_argument("--w3-commit")
+    parser.add_argument("--preservation-stimulus",
+                        help="PRESERVE-1: name a pinned stimulus set as "
+                             "<label>:<sha256>:<task_count>. Declares the "
+                             "preservation route, which consumes no mapping.")
     args = parser.parse_args(argv)
 
     registry = json.loads(args.registry.read_text(encoding="utf-8"))
@@ -139,15 +147,42 @@ def main(argv: list[str] | None = None) -> int:
     task_count = int(duration.get("n_unique_task_ids", 0))
     covered = task_count if duration_status == "VERIFIED" and duration_fields else 0
     budget = signed_budget_ceiling(args.budget_file)
+
+    # PRESERVE-1 resolves the task universe BEFORE anything consumes it. A
+    # preservation run takes its universe from a named pinned stimulus set,
+    # never from the duration receipt -- the receipt is precisely what is being
+    # deferred, so deriving task_count from it leaves the universe undefined
+    # exactly when it matters.
+    preservation = None
+    if args.preservation_stimulus:
+        parts = args.preservation_stimulus.split(":")
+        if len(parts) != 3 or not SHA256_RE.fullmatch(parts[1]) or not parts[2].isdigit():
+            raise PreflightError(
+                "--preservation-stimulus must be <label>:<sha256>:<task_count>")
+        preservation = {"label": parts[0], "sha256": parts[1],
+                        "task_count": int(parts[2])}
+        if preservation["task_count"] < 1:
+            raise PreflightError("preservation stimulus needs a positive task count")
+        task_count = preservation["task_count"]
+
     projection = direct_api_upper_bound(registry, args.prices, task_count=task_count)
     availability_counts = dict(availability.get("status_counts", {}))
     account_available = int(availability_counts.get("account_available", 0))
+
+    # Capture gates. Duration moved to scoring_gates (amendment section 3), and
+    # PRESERVE-2 records the W3 gate not_applicable for a declared preservation
+    # route rather than passing or waiving it. A run that DOES consume a mapping
+    # keeps the gate unchanged.
     gates = {
-        "w3_exact_commit": args.w3_status == "pushed_validated" and bool(args.w3_commit),
-        "task_duration_complete": task_count > 0 and covered == task_count,
+        "w3_exact_commit": (
+            "not_applicable" if preservation
+            else (args.w3_status == "pushed_validated" and bool(args.w3_commit))),
         "account_availability_probed": bool(availability.get("account_probe_performed")),
         "at_least_one_account_model_available": account_available > 0,
         "signed_repository_usd_ceiling": budget is not None,
+    }
+    scoring_gates = {
+        "task_duration_complete": task_count > 0 and covered == task_count,
     }
     receipt = {
         "receipt_version": "dax-w4-preflight-v1",
@@ -186,8 +221,12 @@ def main(argv: list[str] | None = None) -> int:
             "smoke_probe_cost_usd": 0.0,
             "full_paid_capture_started": False,
         },
+        "preservation_route": preservation,
         "gates": gates,
-        "full_capture_allowed": all(gates.values()),
+        "scoring_gates": scoring_gates,
+        "full_capture_allowed": all(
+            g is True or g == "not_applicable" for g in gates.values()),
+        "scoring_allowed": all(scoring_gates.values()),
         "captured_rows": 0,
         "blocked_rows": task_count,
         "private_panel_committed": False,
