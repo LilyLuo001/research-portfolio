@@ -86,20 +86,3 @@ the owner opening it in a browser and pasting the dated line.
 This is one candidate row of 21. It is not eligible, so it currently
 contributes nothing to the dose path, and clearing it adds one event rather
 than unblocking a stage.
-
-
-## Attempt log — 2026-08-24
-
-An SCC seat attempted verification and correctly stopped. `openai.com/api-fast-mode/`
-returned 403 with a bot-management interstitial from both a workstation (9,701
-bytes) and the SCC (9,913 bytes); `openai.com/index/gpt-5-6/` behaved
-identically. No attempt was made to defeat the challenge, on the grounds that a
-page obtained by circumventing an access control is not a citable locator —
-which is right, and is recorded so the next seat does not repeat the attempt.
-
-`verification_status` remains `pending_second_date_locator`. The registry
-validator passes: 21 rows; eligible=4, candidate=16, excluded=1, pending=1.
-
-**What would settle it:** a seat on a network that renders the page, or the
-owner opening it in a browser and pasting the dated line. Neither is urgent —
-the row is a candidate contributing no dose.
