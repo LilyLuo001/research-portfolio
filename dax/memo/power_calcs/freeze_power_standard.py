@@ -42,6 +42,10 @@ def compute(extract: pathlib.Path, start_month: str, end_month: str,
 
     frame = pd.read_parquet(extract) if extract.suffix == ".parquet" else pd.read_csv(extract)
     required = {"month", "age", weight_column, "employed", "hours_unconditional"}
+    # hours_observed is optional for backward compatibility, but when the panel
+    # distinguishes employed-with-unknown-hours from zero hours we must honour
+    # it: zero-filling those people depresses the baseline and permanently
+    # tightens hours_mde_ceiling, which is derived from it.
     missing = required - set(frame.columns)
     if missing:
         raise SystemExit(
@@ -64,12 +68,35 @@ def compute(extract: pathlib.Path, start_month: str, end_month: str,
     if total <= 0:
         raise SystemExit("NEED_HUMAN: person weights sum to zero in the frozen window")
 
+    # Employment rate is over every person in the window.
+    employment_rate = float((window["employed"].astype(float) * weights).sum() / total)
+
+    # Hours are averaged only over persons whose hours are observed: the
+    # non-employed at a defined zero, plus the employed with a numeric value.
+    # An employed person whose hours "vary" has genuinely unobserved hours;
+    # counting them as zero would be a guess-fill.
+    if "hours_observed" in window.columns:
+        observed = window["hours_observed"].astype(int) == 1
+    else:
+        observed = window["hours_unconditional"].notna()
+    obs_weights = weights[observed]
+    obs_total = float(obs_weights.sum())
+    if obs_total <= 0:
+        raise SystemExit("NEED_HUMAN: no person records with observed hours")
+    unobserved_share = 1.0 - obs_total / total
+    if window.loc[observed, "hours_unconditional"].isna().any():
+        raise SystemExit(
+            "NEED_HUMAN: a record marked hours_observed carries a null value. "
+            "The panel's observed flag and its hours column disagree.")
+
     return {
         "n_person_records": int(len(window)),
-        "baseline_employment_rate_22_25": float(
-            (window["employed"].astype(float) * weights).sum() / total),
+        "baseline_employment_rate_22_25": employment_rate,
         "baseline_hours_unconditional_22_25": float(
-            (window["hours_unconditional"].astype(float) * weights).sum() / total),
+            (window.loc[observed, "hours_unconditional"].astype(float)
+             * obs_weights).sum() / obs_total),
+        "n_hours_unobserved": int((~observed).sum()),
+        "hours_unobserved_weight_share": unobserved_share,
     }
 
 
@@ -132,6 +159,13 @@ def main() -> int:
         "cps_extract_sha256": sha256(args.extract),
         "n_person_records": measured["n_person_records"],
         "weight_variable": args.weight_column,
+        "n_hours_unobserved": measured["n_hours_unobserved"],
+        "hours_unobserved_weight_share": round(
+            measured["hours_unobserved_weight_share"], 6),
+        "hours_missingness_rule": (
+            "employed persons whose hours are unobserved are excluded from the "
+            "hours baseline, never counted as zero; the employment rate is over "
+            "every person in the window"),
     }
     standard["status"] = "FROZEN"
     standard["frozen_at_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()

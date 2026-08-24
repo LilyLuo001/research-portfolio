@@ -72,7 +72,12 @@ def main(argv: list[str] | None = None) -> int:
                     default=pathlib.Path("dax/data_built/cps_preevent_power_panel.parquet"))
     ap.add_argument("--employed-codes", help="EMPSTAT values meaning employed, e.g. 10,12")
     ap.add_argument("--hours-missing-codes", default="",
-                    help="UHRSWORKT values meaning not-a-number of hours, e.g. 997,999")
+                    help="UHRSWORKT values meaning not-in-universe, expected only "
+                         "on non-employed records, e.g. 999")
+    ap.add_argument("--hours-vary-codes", default="",
+                    help="UHRSWORKT values meaning the person IS employed but the "
+                         "hours are not a number, e.g. 997 'hours vary'. These are "
+                         "recorded unobserved, never zero.")
     ap.add_argument("--inspect", action="store_true",
                     help="report observed code distributions and exit without writing")
     args = ap.parse_args(argv)
@@ -121,16 +126,24 @@ def main(argv: list[str] | None = None) -> int:
 
     employed = _codes(args.employed_codes)
     hours_missing = _codes(args.hours_missing_codes)
+    hours_vary = _codes(args.hours_vary_codes)
     # Codes not named as employed are treated as not-employed. That is a real
     # choice, so it is reported and recorded rather than left implicit.
     treated_not_employed = sorted(c for c in emp_seen if c not in employed)
     unseen = sorted(employed - set(emp_seen))
-    if unseen:
-        print(f"NEED_HUMAN: --employed-codes names {unseen}, which do not occur "
-              f"in the extract. Observed EMPSTAT values are "
-              f"{sorted(emp_seen)}. Check the codes against the codebook.",
-              file=sys.stderr)
+    if not (employed & set(emp_seen)):
+        # None of the named codes occur: certainly wrong, and would classify
+        # every person as jobless.
+        print(f"NEED_HUMAN: none of --employed-codes {sorted(employed)} occur in "
+              f"the extract. Observed EMPSTAT values are {sorted(emp_seen)}. "
+              f"Every person would be recorded not employed.", file=sys.stderr)
         return 2
+    if unseen:
+        # Some named codes are absent. Suspicious but legitimate — a rare
+        # category can be missing from a short window — so warn and record it
+        # rather than blocking a correct build.
+        print(f"NOTE: --employed-codes names {unseen}, which do not occur in this "
+              f"extract. Proceeding; recorded in the receipt.")
     print(f"EMPSTAT treated as employed    : {sorted(employed)}")
     print(f"EMPSTAT treated as not employed: {treated_not_employed}")
 
@@ -142,14 +155,40 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     frame["employed"] = frame["EMPSTAT"].astype(int).isin(employed).astype(int)
-    hours = frame["UHRSWORKT"].astype(float)
-    hours = hours.where(~frame["UHRSWORKT"].astype(int).isin(hours_missing), other=float("nan"))
-    # Confirmed non-numeric decision: unconditional weekly hours, zero for the
-    # non-employed (design memo section 7 confirmations).
-    frame["hours_unconditional"] = hours.fillna(0.0).where(frame["employed"] == 1, 0.0)
+    raw_hours = frame["UHRSWORKT"].astype(int)
+
+    # Three distinct states, kept distinct. Collapsing them is how a frozen
+    # baseline goes quietly wrong:
+    #   not employed                  -> 0 hours, observed  (design memo s7)
+    #   employed, numeric hours       -> that value, observed
+    #   employed, "hours vary"        -> UNOBSERVED, never 0
+    # An employed record carrying a not-in-universe code is contradictory and
+    # is refused rather than swept into either bucket.
+    is_emp = frame["employed"] == 1
+    contradictory = int((is_emp & raw_hours.isin(hours_missing)).sum())
+    if contradictory:
+        print(f"NEED_HUMAN: {contradictory} records are employed but carry a "
+              f"not-in-universe hours code {sorted(hours_missing)}. That "
+              f"combination has no defined treatment; check --hours-missing-codes "
+              f"and --hours-vary-codes against the codebook.", file=sys.stderr)
+        return 2
+
+    vary = is_emp & raw_hours.isin(hours_vary)
+    frame["hours_observed"] = (~vary).astype(int)
+    hours = raw_hours.astype(float)
+    hours = hours.where(~raw_hours.isin(hours_missing | hours_vary), other=float("nan"))
+    frame["hours_unconditional"] = hours.where(is_emp, 0.0)
+    frame.loc[vary, "hours_unconditional"] = float("nan")
+
+    n_vary = int(vary.sum())
+    w = frame["WTFINL"].astype(float)
+    obs = frame["hours_observed"] == 1
+    mean_observed = float((frame.loc[obs, "hours_unconditional"] * w[obs]).sum() / w[obs].sum())
+    mean_zerofilled = float((frame["hours_unconditional"].fillna(0.0) * w).sum() / w.sum())
 
     out = frame.rename(columns={"AGE": "age", "WTFINL": "wtfinl", "CPSIDP": "cpsidp"})[
-        ["month", "age", "wtfinl", "employed", "hours_unconditional", "cpsidp"]]
+        ["month", "age", "wtfinl", "employed", "hours_unconditional",
+         "hours_observed", "cpsidp"]]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     out.to_parquet(args.output, index=False)
 
@@ -161,10 +200,22 @@ def main(argv: list[str] | None = None) -> int:
         "recodes": {
             "employed_empstat_codes": sorted(employed),
             "hours_missing_uhrsworkt_codes": sorted(hours_missing),
-            "hours_rule": "unconditional weekly hours, zero for the non-employed",
+            "hours_vary_uhrsworkt_codes": sorted(hours_vary),
+            "hours_rule": "unconditional weekly hours, zero for the non-employed; "
+                          "employed-with-hours-vary recorded UNOBSERVED, never zero",
+        },
+        "hours_missingness": {
+            "n_employed_hours_unobserved": n_vary,
+            "baseline_hours_over_observed": round(mean_observed, 6),
+            "baseline_hours_if_zero_filled": round(mean_zerofilled, 6),
+            "zero_fill_bias": round(mean_zerofilled - mean_observed, 6),
+            "note": "zero-filling employed-with-hours-vary would depress the "
+                    "baseline and permanently tighten hours_mde_ceiling, which "
+                    "is 0.5 * 0.13 * baseline_hours",
         },
         "observed_codes": {"empstat": dict(sorted(emp_seen.items()))},
         "empstat_treated_not_employed": treated_not_employed,
+        "empstat_named_employed_but_absent": unseen,
         "rows": int(len(out)),
         "months": sorted(out["month"].unique().tolist()),
         "weight_sum": float(out["wtfinl"].sum()),
