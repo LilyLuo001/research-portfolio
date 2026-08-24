@@ -49,6 +49,33 @@ summary rather than a source.
    event contributes no dose; a wrongly-verified one contaminates the dose
    path for every occupation. Pending is the safe state and costs nothing.
 
+## Verification attempted 2026-08-24 — still pending
+
+`https://openai.com/api-fast-mode/` was requested from two independent
+networks: this workstation (HTTP 403, 9,701 bytes) and `scc1.bu.edu`
+(HTTP 403, 9,913 bytes). `https://openai.com/index/gpt-5-6/` behaves the same.
+Every response is a bot-management interstitial — HTML carrying
+`<meta http-equiv="refresh" content="360">` and no article body.
+
+This is **not** the egress failure the previous session recorded. From the
+same SCC host, `www2.census.gov` and `www.onetcenter.org` both return 200, and
+`cdn.openai.com` served an 11.8 MB PDF in the preceding task. The block is
+origin-side and specific to `openai.com` page paths.
+
+No attempt was made to defeat the challenge. A page obtained by circumventing
+an access control is not a citable locator.
+
+So the page has still not been read, and under meta-rule 1 an unread page
+cannot date anything. **`verification_status` remains
+`pending_second_date_locator`; the row was not edited.**
+`validate_event_registry.py` passes with the row unchanged: 21 rows,
+eligible=4, candidate=16, excluded=1, pending_second_date_locator=1.
+
+The third-party write-ups were not filed, and should not be.
+
+What would actually settle this: a seat on a network that renders the page, or
+the owner opening it in a browser and pasting the dated line.
+
 ## Scale
 
 This is one candidate row of 21. It is not eligible, so it currently
