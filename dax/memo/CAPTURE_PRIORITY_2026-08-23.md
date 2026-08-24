@@ -1,5 +1,9 @@
 # Prospective capture priority under a $100 ceiling
 
+**AUTHORIZED 2026-08-24** by the owner's instruction, recorded in
+`dax/memo/PI_AUTHORIZATION_2026-08-24.md`, which carries the scope and
+the standing conditions. Owner counter-signature pending there.
+
 **Status:** prospective rule, unsigned. Must be signed **before** any capture
 runs; choosing an order after seeing which calls succeeded would be a
 specification choice.

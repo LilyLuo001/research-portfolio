@@ -1,5 +1,9 @@
 # Amendment draft — separate W4 capture from W4 scoring
 
+**AUTHORIZED 2026-08-24** by the owner's instruction, recorded in
+`dax/memo/PI_AUTHORIZATION_2026-08-24.md`, which carries the scope and
+the standing conditions. Owner counter-signature pending there.
+
 **Status:** UNSIGNED DRAFT prepared 2026-08-23, corrected 2026-08-23 after audit for PI consideration. No code
 change has been applied. The gate described here is still fail-closed in the
 repository as of this commit.

@@ -1,5 +1,9 @@
 # W3 reconciliation — the v3 packet is primary; DWA transport is demoted
 
+**AUTHORIZED 2026-08-24** by the owner's instruction, recorded in
+`dax/memo/PI_AUTHORIZATION_2026-08-24.md`, which carries the scope and
+the standing conditions. Owner counter-signature pending there.
+
 **Status:** recommendation with reasoning, recorded for PI signature. Both
 underlying packets remain `NEED_HUMAN`; this does not sign either.
 **Date:** 2026-08-23.
