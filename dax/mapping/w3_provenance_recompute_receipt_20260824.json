@@ -1,0 +1,256 @@
+{
+  "cited_vs_recomputed": {
+    "mapA_v2_D_of_60": {
+      "cited": "0/60",
+      "matches": true,
+      "recomputed": 0
+    },
+    "mapA_v2_F_of_60": {
+      "cited": "24/60",
+      "matches": true,
+      "recomputed": 24
+    },
+    "mapA_v2_N_of_60": {
+      "cited": "36/60",
+      "matches": true,
+      "recomputed": 36
+    },
+    "mapA_v2_split_qualification": "the 60 pairs are 36 development + 24 calibration; the cited phrase 'on development pairs' understates the sample. Development-only counts are D=0, F=15, N=21.",
+    "mapA_v3_attribution_correction": "this figure comes from the v3 source-side audit of 2026-08-23, not from the v2 codex diagnostic of 2026-08-21",
+    "mapA_v3_plausible_D_across_108": {
+      "cited": 1,
+      "matches": true,
+      "of_pairs": 108,
+      "recomputed": 1
+    },
+    "s1_NON_EVALUABLE_count": {
+      "cited": 96,
+      "matches": true,
+      "recomputed": 96
+    },
+    "s1_NON_EVALUABLE_mass_share": {
+      "cited": 0.7428,
+      "matches": true,
+      "recomputed": 0.7428123089597807
+    },
+    "s1_PASS_count": {
+      "cited": 13,
+      "matches": true,
+      "recomputed": 13
+    },
+    "s1_PASS_mass_share": {
+      "cited": 0.1279,
+      "matches": true,
+      "recomputed": 0.12786114520412104
+    },
+    "s1_REVISE_count": {
+      "cited": 11,
+      "matches": true,
+      "recomputed": 11
+    },
+    "s1_REVISE_mass_share": {
+      "cited": 0.1293,
+      "matches": true,
+      "recomputed": 0.12932654583609837
+    },
+    "s1_constructible_of_120": {
+      "cited": 24,
+      "matches": true,
+      "recomputed_executable_classes": 24,
+      "recomputed_pass_or_revise": 24
+    },
+    "s1_interpersonal_mass_share": {
+      "cited": 0.4755,
+      "matches": true,
+      "recomputed": 0.475527148175118
+    },
+    "s1_physical_mass_share": {
+      "cited": 0.2284,
+      "matches": true,
+      "recomputed": 0.2284296817003696
+    },
+    "s1_sample_tasks": {
+      "cited": 120,
+      "matches": true,
+      "recomputed": 120
+    }
+  },
+  "contains_task_text": false,
+  "disposition": {
+    "mapA_v2_diagnostic_label_counts": "FOUND",
+    "mapA_v3_source_audit_one_D_across_108": "FOUND",
+    "s1_construct_pilot_counts_and_mass_shares": "FOUND"
+  },
+  "incremental_api_spend_usd": 0,
+  "interpretation_limits": {
+    "formal_validation_performance_claimed": false,
+    "independent_multi_vendor_validation": false,
+    "note": "recomputation confirms the arithmetic and the provenance chain only; it does not upgrade the preliminary single-annotator status of the underlying labels",
+    "outcomes_opened": false,
+    "population_prevalence_claimed": false
+  },
+  "method": "read-only re-aggregation of preserved row-level label files; no resampling, no redraw, no model or API calls",
+  "model_or_api_calls": 0,
+  "private_inputs": {
+    "mapA_v2_diagnostic_labels": {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v2_codex_diagnostic/run_20260821/mapA_v2_codex_diagnostic_labels.csv",
+      "rows": 60,
+      "sha256": "b43a9118cc7ec64367a04bf06670251283c451cec2307b9987e6f6a208c53102"
+    },
+    "mapA_v2_diagnostic_sample": {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v2_codex_diagnostic/run_20260821/mapA_v2_codex_diagnostic_sample.csv",
+      "rows": 60,
+      "sha256": "160d2a44654530b2096ebfe6a208113aba21ba04467530875c0c38a68cbd07ad"
+    },
+    "mapA_v3_source_audit_candidates": {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_decision/source_audit_20260823/mapA_v3_source_audit_candidates.csv",
+      "rows": 108,
+      "sha256": "a481f39de0d44b130d98bc0a561afe538beede7b5f5a14403b9c0ee10cae4655"
+    },
+    "mapA_v3_source_audit_labels": {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_decision/.mapA_v3_source_audit_labels_private.csv",
+      "rows": 108,
+      "sha256": "19d023d64491d241c741564737602b1d496ee3c70595e2d39d3354e2509c7ced"
+    },
+    "s1_construct_annotations": {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_s1/run_20260823/s1_construct_annotations.csv",
+      "rows": 120,
+      "sha256": "d79510b9463ae262ddc8b01e14b74a672fa361dc0592246c80720d584796284f"
+    },
+    "s1_sample_120": {
+      "note": "carries a task_statement column; never committed, never printed",
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_s1/run_20260823/s1_sample_120.csv",
+      "rows": 120,
+      "sha256": "693cea853e8c22359a50650fea854233897a4b34b8e0c9de461a5f2d4583bc72"
+    }
+  },
+  "receipt_version": "dax-w3-provenance-recompute-v1",
+  "recomputed": {
+    "mapA_v2_diagnostic": {
+      "by_candidate_category": {
+        "agree_high": {
+          "F": 4,
+          "N": 6
+        },
+        "apparent_negative": {
+          "N": 10
+        },
+        "dense_only_high": {
+          "F": 7,
+          "N": 3
+        },
+        "lexical_only_high": {
+          "F": 3,
+          "N": 7
+        },
+        "medium_uncertain": {
+          "F": 3,
+          "N": 7
+        },
+        "rrf_best": {
+          "F": 7,
+          "N": 3
+        }
+      },
+      "label_counts_by_split": {
+        "calibration": {
+          "F": 9,
+          "N": 15
+        },
+        "development": {
+          "F": 15,
+          "N": 21
+        }
+      },
+      "labels_sha256": "b43a9118cc7ec64367a04bf06670251283c451cec2307b9987e6f6a208c53102",
+      "n_label_rows": 60,
+      "n_major_soc_families": 22,
+      "overall_label_counts": {
+        "F": 24,
+        "N": 36
+      },
+      "sample_sha256": "160d2a44654530b2096ebfe6a208113aba21ba04467530875c0c38a68cbd07ad",
+      "split_sizes": {
+        "calibration": 24,
+        "development": 36
+      }
+    },
+    "mapA_v3_source_audit": {
+      "aggregate_relation_counts": {
+        "D": 1,
+        "F": 55,
+        "N": 52
+      },
+      "candidates_sha256": "a481f39de0d44b130d98bc0a561afe538beede7b5f5a14403b9c0ee10cae4655",
+      "labels_sha256": "19d023d64491d241c741564737602b1d496ee3c70595e2d39d3354e2509c7ced",
+      "n_label_rows": 108,
+      "n_sources": 6,
+      "per_source_relation_counts": {
+        "1": {
+          "F": 14,
+          "N": 4
+        },
+        "2": {
+          "F": 11,
+          "N": 5
+        },
+        "3": {
+          "F": 6,
+          "N": 14
+        },
+        "4": {
+          "F": 12,
+          "N": 5
+        },
+        "5": {
+          "D": 1,
+          "F": 5,
+          "N": 8
+        },
+        "6": {
+          "F": 7,
+          "N": 16
+        }
+      },
+      "sources_with_any_D": 1
+    },
+    "s1_construct_pilot": {
+      "annotations_sha256": "d79510b9463ae262ddc8b01e14b74a672fa361dc0592246c80720d584796284f",
+      "construct_status_counts": {
+        "NON_EVALUABLE": 96,
+        "PASS": 13,
+        "REVISE": 11
+      },
+      "constructible_instances_executable_classes": 24,
+      "constructible_instances_pass_or_revise": 24,
+      "evaluable_class_counts": {
+        "executable_with_construct_valid_simulated_inputs": 14,
+        "executable_with_supplied_files_data": 10,
+        "otherwise_not_currently_evaluable": 2,
+        "requires_interpersonal_interaction": 57,
+        "requires_physical_world_action": 35,
+        "requires_unavailable_proprietary_system": 2
+      },
+      "n_annotation_rows": 120,
+      "n_major_families": 22,
+      "n_sample_rows": 120,
+      "sample_sha256": "693cea853e8c22359a50650fea854233897a4b34b8e0c9de461a5f2d4583bc72",
+      "task_mass_weighted_construct_status_shares_within_pilot": {
+        "NON_EVALUABLE": 0.7428123089597807,
+        "PASS": 0.12786114520412104,
+        "REVISE": 0.12932654583609837
+      },
+      "task_mass_weighted_evaluable_class_shares_within_pilot": {
+        "executable_with_construct_valid_simulated_inputs": 0.1485748872353137,
+        "executable_with_supplied_files_data": 0.10861280380490572,
+        "otherwise_not_currently_evaluable": 0.020400107999257882,
+        "requires_interpersonal_interaction": 0.475527148175118,
+        "requires_physical_world_action": 0.2284296817003696,
+        "requires_unavailable_proprietary_system": 0.018455371085034963
+      },
+      "total_task_mass": 391373.9537536
+    }
+  },
+  "recomputed_at_utc": "2026-08-24T00:00:00Z",
+  "row_level_data_committed": false
+}
