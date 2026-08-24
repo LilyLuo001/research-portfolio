@@ -28,7 +28,9 @@ def test_w1_draft_remains_fail_closed_after_pi_defaults_are_approved():
 
 def test_fresh_red_team_blockers_are_machine_enforced():
     blockers = READINESS.audit()["blockers"]
-    assert "power benchmark is not frozen from a verified dated locator" in blockers
+    # Cleared 2026-08-24 by the D3 freeze. Asserting its ABSENCE keeps the test
+    # meaningful: if the standard is ever un-frozen or reverted, this fails.
+    assert "power benchmark is not frozen from a verified dated locator" not in blockers
     assert "entrant companion is demoted to exploratory" in blockers
     assert "real-dose residualized identification gate has not run" in blockers
     assert "person-level empirical power gate did not pass" in blockers
