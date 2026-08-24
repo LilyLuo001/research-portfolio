@@ -89,9 +89,26 @@ def compute(extract: pathlib.Path, start_month: str, end_month: str,
             "NEED_HUMAN: a record marked hours_observed carries a null value. "
             "The panel's observed flag and its hours column disagree.")
 
+    # Complete-case is the decided estimator, but its implicit assumption is
+    # worth recording: it assigns the unobserved the mean of ALL observed
+    # persons, which includes the non-employed at zero. Every unobserved record
+    # here is employed, so the assumption understates the baseline and the
+    # resulting ceiling is tighter than the truth -- conservative, but not
+    # neutral. The stratum mean is recorded as a sensitivity, never used.
+    emp_obs = observed & (window["employed"].astype(int) == 1)
+    emp_obs_weight = float(weights[emp_obs].sum())
+    employed_observed_mean = (
+        float((window.loc[emp_obs, "hours_unconditional"].astype(float)
+               * weights[emp_obs]).sum() / emp_obs_weight)
+        if emp_obs_weight > 0 else None)
+    unobserved_all_employed = bool(
+        ((~observed) & (window["employed"].astype(int) == 0)).sum() == 0)
+
     return {
         "n_person_records": int(len(window)),
         "baseline_employment_rate_22_25": employment_rate,
+        "employed_observed_hours_mean": employed_observed_mean,
+        "unobserved_are_all_employed": unobserved_all_employed,
         "baseline_hours_unconditional_22_25": float(
             (window.loc[observed, "hours_unconditional"].astype(float)
              * obs_weights).sum() / obs_total),
@@ -166,6 +183,15 @@ def main() -> int:
             "employed persons whose hours are unobserved are excluded from the "
             "hours baseline, never counted as zero; the employment rate is over "
             "every person in the window"),
+        "hours_missingness_direction": (
+            "complete-case assigns the unobserved the mean of all observed "
+            "persons, which includes the non-employed at zero; every unobserved "
+            "record is employed, so the frozen baseline understates and the "
+            "ceiling is conservative rather than neutral"),
+        "unobserved_are_all_employed": measured["unobserved_are_all_employed"],
+        "employed_observed_hours_mean_sensitivity": (
+            None if measured["employed_observed_hours_mean"] is None
+            else round(measured["employed_observed_hours_mean"], 4)),
     }
     standard["status"] = "FROZEN"
     standard["frozen_at_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()
