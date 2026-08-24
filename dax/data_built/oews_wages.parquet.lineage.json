@@ -1,0 +1,26 @@
+{
+  "output": "dax/data_built/oews_wages.parquet",
+  "output_sha256": "3d6ef51fab6e0aeb20e1295f297acd63ff692ffa4178f7b84a3cd01851e2526a",
+  "inputs": [
+    {
+      "path": "dax/w2/build_oews_wages.py",
+      "sha256": "1ea4f6a50e5bacef89e093055afc26bbffa1f77dca49b7fcd961cd49eaf9c6a0",
+      "rows": null
+    }
+  ],
+  "code_version": "42ed9c833191af2272173bbe3b05b827659abb06",
+  "timestamp": "2026-08-24T12:18:16.129710+00:00",
+  "source_archive": {
+    "path": "/usr3/graduate/qluo/dax-private/public_raw/oews_2021/oesm21nat.zip",
+    "sha256": "83ad09f19e62104a39024d36ed67cae5c3f7d5b42ff165ca656e0e35241bcf31",
+    "host": "scc1.bu.edu",
+    "url": "https://www.bls.gov/oes/special.requests/oesm21nat.zip",
+    "member": "oesm21nat/national_M2021_dl.xlsx",
+    "sheet": "national_M2021_dl",
+    "verified_against_pin": true
+  },
+  "built_on": "scc1.bu.edu",
+  "rows": 831,
+  "cost_usd": 0,
+  "model_calls": 0
+}

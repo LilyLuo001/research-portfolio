@@ -1,0 +1,32 @@
+{
+  "output": "dax/data_built/oews_wages.receipt.json",
+  "output_sha256": "785385a5f94d33387a17c96154f49dd2f81627b5afd089d17c2776d92be1669c",
+  "inputs": [
+    {
+      "path": "dax/w2/build_oews_wages.py",
+      "sha256": "fdd4310452a795253ff053083b4cf07e0fcb2a33ed712513c9bdf19868e36692",
+      "rows": null
+    },
+    {
+      "path": "dax/data_built/oews_wages.parquet",
+      "sha256": "3d6ef51fab6e0aeb20e1295f297acd63ff692ffa4178f7b84a3cd01851e2526a",
+      "rows": null
+    }
+  ],
+  "code_version": "c65ea1f347024a6b84d9300dec9c00fee942fc4e",
+  "timestamp": "2026-08-24T12:55:36.047370+00:00",
+  "source_archive": {
+    "path": "/usr3/graduate/qluo/dax-private/public_raw/oews_2021/oesm21nat.zip",
+    "sha256": "83ad09f19e62104a39024d36ed67cae5c3f7d5b42ff165ca656e0e35241bcf31",
+    "host": "scc1.bu.edu",
+    "url": "https://www.bls.gov/oes/special.requests/oesm21nat.zip",
+    "member": "oesm21nat/national_M2021_dl.xlsx",
+    "sheet": "national_M2021_dl",
+    "verified_against_pin": true
+  },
+  "built_on": "scc1.bu.edu",
+  "rows": 831,
+  "cost_usd": 0,
+  "model_calls": 0,
+  "note": "Receipt sidecar for the same build that produced oews_wages.parquet; the parquet is the data output, this receipt is its provenance record."
+}
