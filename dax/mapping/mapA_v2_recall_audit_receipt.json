@@ -1,0 +1,72 @@
+{
+  "candidate_k": 40,
+  "candidate_rule": "union_of_dense_top40_and_lexical_top40_with_ID_tie_break",
+  "counts_by_agreement_band": {
+    "1": 33,
+    "2": 33,
+    "3": 34
+  },
+  "counts_by_batch": {
+    "initial_60": 60,
+    "reserve_1_20": 20,
+    "reserve_2_20": 20
+  },
+  "counts_by_major_family": {
+    "11": 4,
+    "13": 5,
+    "15": 5,
+    "17": 4,
+    "19": 5,
+    "21": 5,
+    "23": 4,
+    "25": 5,
+    "27": 4,
+    "29": 4,
+    "31": 4,
+    "33": 5,
+    "35": 5,
+    "37": 4,
+    "39": 4,
+    "41": 4,
+    "43": 5,
+    "45": 5,
+    "47": 5,
+    "49": 4,
+    "51": 5,
+    "53": 5
+  },
+  "counts_by_mass_band": {
+    "1": 26,
+    "2": 25,
+    "3": 29,
+    "4": 20
+  },
+  "counts_by_retrieval_confidence_band": {
+    "1": 29,
+    "2": 43,
+    "3": 28
+  },
+  "excluded_classifier_validation_source_tasks": 440,
+  "executed_at_utc": "2026-08-21T13:31:55.199186+00:00",
+  "frozen_pair_assessments": 22000,
+  "id_level_artifacts_committed": false,
+  "independent_of_all_classifier_splits": true,
+  "initial_pair_assessments": 13200,
+  "labels_present": false,
+  "outcomes_opened": false,
+  "primary_source_tasks": 60,
+  "private_artifact_hashes": {
+    "mapA_v2_recall_pair_universe.csv": "77c97e7c6948bd6393a55475a546dbd26581e630f9b79a46329f4df209badd85",
+    "mapA_v2_recall_source_tasks.csv": "fa9f8344cccd4d31715798b02344784eea22ccd3154f13bff1bd921bffefc6c3"
+  },
+  "private_manifest_sha256": "b89f4e73afd7085aa3202a68fe8ac6d3cbe539ce2d5fcf03c5d09fc569326ee2",
+  "recall_at_40": "NOT_EVALUABLE",
+  "reserve_expansion_rule": "20_more_only_if_completed_denominator_has_fewer_than_100_D; never_for_unfavorable_recall; max_100_sources",
+  "reserve_source_tasks": 40,
+  "seed": "DAX-MAPA-V2-RECALL40-20260821",
+  "source_tasks": 100,
+  "status": "RECALL40_PRIMARY_AND_RESERVES_FROZEN_LABELS_ABSENT",
+  "target_tasks_per_source": 220,
+  "task_text_committed": false,
+  "true_D_positives": "NOT_EVALUABLE"
+}

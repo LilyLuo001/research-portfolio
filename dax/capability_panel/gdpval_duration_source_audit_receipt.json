@@ -1,0 +1,54 @@
+{
+  "audit_id": "DAX-TD-SOURCE-AUDIT-20260821",
+  "author_outreach_status": "AUTHOR_OUTREACH_BOUNCED",
+  "author_contact_established": false,
+  "author_data_route": "AUTHOR_DATA_ROUTE_UNAVAILABLE",
+  "constant_fill_used": false,
+  "exact_task_level_durations_available": 0,
+  "expected_tasks": 220,
+  "gate_result": "BLOCKED",
+  "imputed_rows": 0,
+  "near_or_semantic_matches_used": 0,
+  "outcomes_read": false,
+  "primary_evidence": {
+    "aggregate_locator": "Appendix A.4 Table 3, printed p. 19",
+    "aggregate_values_used_as_task_values": false,
+    "definition": "validated self-reported real-world professional completion time",
+    "definition_locator": "Appendix A.2.4, printed pp. 12-13",
+    "gold_subset_aggregate_minutes": 404,
+    "gold_subset_table_mean_hours": 9.49,
+    "paper_sha256": "37c7604bc9da68cd8d9345ad16938164fe985182ad723fcb09e9415f84dc25d4",
+    "paper_url": "https://cdn.openai.com/pdf/d5eb7428-c4e9-4a33-bd86-86dd4bcf12ce/GDPval.pdf"
+  },
+  "private_row_audit": {
+    "row_count": 220,
+    "sha256": "617593e8ed9af63c02855c7961183435201c7a3af9937e8a877baa0379fda64f",
+    "task_ids_committed": false
+  },
+  "public_dataset": {
+    "duration_fields_found": [],
+    "parquet_sha256": "f8422fab9b21d90c0ee5f0659842ab666d418cb8940842918f9f4b0df7ae0202",
+    "revision": "11e7900cdcac61bc4daf59e65feb238acda98fbf",
+    "schema_fields": [
+      "deliverable_file_hf_uris",
+      "deliverable_file_urls",
+      "deliverable_files",
+      "occupation",
+      "prompt",
+      "reference_file_hf_uris",
+      "reference_file_urls",
+      "reference_files",
+      "rubric_json",
+      "rubric_pretty",
+      "sector",
+      "task_id"
+    ]
+  },
+  "public_rows_audited": 220,
+  "reason": "The paper documents the measure and aggregates, but the public parquet omits task-level values.",
+  "human_fallback_status": "HUMAN_FALLBACK_ACTIVE_PILOT_40_FROZEN_RECRUITMENT_AND_BUDGET_PENDING",
+  "old_waiting_rule_superseded": true,
+  "remaining_action": "Obtain explicit capped pilot budget, complete governance and real-human qualification/recruitment, then collect three independent estimates per frozen pilot task. Later validated exact-version author data still take precedence for matching tasks.",
+  "status": "BLOCKED_TASK_LEVEL_NOT_PUBLIC_AUTHOR_ROUTE_BOUNCED_HUMAN_PILOT_PENDING",
+  "task_text_committed": false
+}

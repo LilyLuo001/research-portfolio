@@ -118,13 +118,17 @@ def test_frozen_standard_produces_a_real_verdict():
     assert sample["hours"]["adequately_powered"] is False
 
 
-def test_shipped_standard_is_unfrozen_and_carries_no_numbers():
-    """The repository must not ship a guessed constant."""
+def test_shipped_standard_has_resolved_benchmark_but_unfrozen_baselines():
+    """The PI-selected sourced benchmark may precede the real CPS freeze."""
     standard = json.loads((POWER / "power_standard.json").read_text())
     assert standard["status"] == "PLACEHOLDER_REQUIRES_REAL_CPS"
-    assert standard["benchmark"]["relative_decline"] is None
-    assert standard["benchmark"]["version_status"] == "UNRESOLVED"
-    assert standard["benchmark"]["locator_status"] == "PENDING_EXCERPT"
+    assert standard["benchmark"]["relative_decline"] == 0.13
+    assert standard["benchmark"]["version_status"] == "RESOLVED"
+    assert standard["benchmark"]["locator_status"] == "VERIFIED"
+    assert [row["relative_decline"] for row in
+            standard["benchmark"]["prespecified_sensitivities"]] == [0.16, 0.19]
+    assert standard["benchmark"]["prespecified_sensitivities"][1][
+        "must_not_be_described_as_literature_estimate"] is True
     assert standard["benchmark"]["baseline_employment_rate_22_25"] is None
     assert standard["standard"]["employment_mde_ceiling"] is None
     assert standard["frozen_window"]["end_month"] < "2023-03", \

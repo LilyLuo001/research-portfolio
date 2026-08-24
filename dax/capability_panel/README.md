@@ -22,6 +22,11 @@ Without gate 4, only an explicitly invoked smoke mode may reserve at most USD
 0. Project/provider alerts are not treated as hard stops; the harness reserves
 cost atomically in SQLite before every request.
 
+The duration estimand, source hierarchy, annotation procedure, and acceptance
+rules are frozen in `TASK_DURATION_PROTOCOL_2026-08-21.md`.
+`task_duration_gate.py` rejects incomplete task coverage, LLM-only estimates,
+constants, and insufficiently replicated observed or expert estimates.
+
 `gpt-4.5-preview` is excluded. Retired models use only the filed open-weight
 stand-ins. Undated current aliases are blocked unless a separately approved,
 cited alias-to-snapshot rule is added; listing an alias in current API docs is

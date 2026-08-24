@@ -1,0 +1,55 @@
+{
+  "annotation_unit": "one_onet_gdpval_pair_per_call",
+  "blind_fields_forbidden": [
+    "classifier_probability",
+    "classifier_cutoff",
+    "downstream_coverage",
+    "W4_capability",
+    "W5_dose",
+    "identification",
+    "power",
+    "outcomes",
+    "whether_mapping_should_pass"
+  ],
+  "initial_round": {
+    "annotator_1": {
+      "model_route": "deepseek-v4-pro",
+      "vendor_family": "deepseek"
+    },
+    "annotator_2": {
+      "model_route": "qwen-plus",
+      "vendor_family": "alibaba"
+    },
+    "independent_contexts": true
+  },
+  "output_contract": {
+    "allowed_labels": [
+      "D",
+      "F",
+      "N",
+      "U"
+    ],
+    "format": "JSON object with keys relation_label and concise_rationale",
+    "max_output_tokens": 160
+  },
+  "provider_controls": {
+    "deepseek": "thinking disabled",
+    "gemini": "thinking budget zero",
+    "qwen": "thinking disabled",
+    "temperature": 0,
+    "successful_calls_per_vendor_per_pair": 1
+  },
+  "rubric": {
+    "D": "Successful completion demonstrates substantially the same work product, core operations, domain constraints, and quality criterion as the O*NET task.",
+    "F": "Tasks share a material capability or workflow, but success on one is not sufficient evidence of completing the other end to end.",
+    "N": "No material task-output or capability transfer supports the mapping.",
+    "U": "Available task information cannot distinguish D/F/N or required artifacts or constraints are missing."
+  },
+  "task_instruction": "Judge only the semantic relation between the O*NET source task and GDPval target task. Do not judge whether the research mapping should pass. Return exactly one D/F/N/U label and a concise rationale grounded only in the two task records and rubric.",
+  "third_round": {
+    "model_route": "gemini-2.5-flash",
+    "trigger": "round_1_disagreement_or_either_round_1_label_is_U",
+    "vendor_family": "google"
+  },
+  "unresolved_df": "prospectively_authorized_qualified_human_adjudicator"
+}

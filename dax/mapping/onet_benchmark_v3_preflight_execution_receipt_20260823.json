@@ -1,0 +1,59 @@
+{
+  "receipt_version": "dax-onet-benchmark-v3-preflight-v1",
+  "prepared_date": "2026-08-23",
+  "base_sha": "3159b62f7f4d32c8e3bca5df22ce30d367145b1d",
+  "design_artifact_commit": "c8c789a42ee78e4f6d038c2aee79d9203c651bee",
+  "status": "DESIGN_PREFLIGHT_COMPLETE_NEED_PROSPECTIVE_PI_SIGNATURE",
+  "direction": {
+    "primary": "onet_aligned_bridge_benchmark",
+    "robustness_lower_bound": "strict_direct_task_substitution",
+    "capability_family_role": "DESCRIPTIVE_SENSITIVITY_ONLY_UNLESS_SEPARATELY_VALIDATED",
+    "atomic_decomposition_primary": false,
+    "production_implementation_authorized": false
+  },
+  "artifacts": {
+    "ONET_ALIGNED_BENCHMARK_V3_PI_DECISION_PACKET_2026-08-23.md": "d6b496ea0960377ef50a1822eca0056ef4d309dfa3fe10edc4963ab9f9a26bb4",
+    "onet_benchmark_v3_contract.py": "3ddb3fcf921926fd747d9137c383019212c6eab21f3ef820d81b51bdd23a17ed",
+    "onet_benchmark_v3_design_20260823.json": "d550bb2febd9b0ae97e94e1db1a3ec4de34ede6bf0a6322d8b259beb3c8a78ee",
+    "test_onet_benchmark_v3_design.py": "1f6d9b17e54f117a805408f8bb93b1c3774d2ca2c9ef85e4885d00374d50aae6"
+  },
+  "v2_preservation": {
+    "advanced_as_central_mapping": false,
+    "formal_labeling_budget_spent_usd": 0,
+    "locked_test_opened": false,
+    "locked_test_results_inspected": false,
+    "classifier_fitted": false,
+    "labels_changed": false,
+    "thresholds_changed": false,
+    "transport_changed": false,
+    "historical_v1_v2_overwritten": false
+  },
+  "execution": {
+    "production_benchmark_items_constructed": 0,
+    "model_availability_api_calls": 0,
+    "paid_model_inference_calls": 0,
+    "human_participants_recruited": 0,
+    "w5_run": false,
+    "identification_run": false,
+    "power_run": false,
+    "outcomes_opened": false,
+    "v1_0_preregistered_created": false,
+    "realized_spend_usd": 0
+  },
+  "verification": {
+    "environment": "BU_SCC_PYTHON_3_12_4",
+    "focused_tests": "16_PASS",
+    "full_repository_tests": "486_PASS_2_SKIP_1_KNOWN_UNRELATED_P1_FAILURE",
+    "known_unrelated_failure": "p1/tests/test_build_nport_convexp.py::test_sidecar_is_written_alongside_need_human",
+    "python_compileall": "PASS",
+    "json_parse": "PASS",
+    "git_diff_check": "PASS",
+    "v2_frozen_hashes": "PASS",
+    "power_standard_unchanged": "PASS",
+    "outcome_seal": "PASS_NO_OUTCOME_PATH_CHANGE",
+    "secret_scan": "PASS_ZERO_FINDINGS_ACROSS_FIVE_BATCH_FILES",
+    "private_row_level_data_committed": false,
+    "restricted_data_file_types_added": false
+  },
+  "signature_state": "NEED_HUMAN"
+}

@@ -49,6 +49,7 @@ def load_state():
     s.setdefault("gates_cleared", [])
     s.setdefault("gates_failed", [])
     s.setdefault("attempts", {})       # task id -> failed-attempt count (two-strike ladder)
+    s.setdefault("task_status", {})    # audited non-DONE states; see DAX reconciliation receipt
     return s
 
 def save_state(s):
@@ -129,11 +130,15 @@ def ready_set(q, state):
     # seats on different machines/accounts can never be assigned the same task.
     branch_leases = remote_task_branches()
     leased = set(live_leases().keys()) | branch_leases
-    ready, gated, blocked = [], [], []
+    ready, gated, blocked, held = [], [], [], []
     in_flight = []                         # not-yet-done tasks someone already holds
     for t in q["tasks"]:
         tid = t["id"]
         if tid in done:
+            continue
+        reconciled = state.get("task_status", {}).get(tid)
+        if reconciled and reconciled.get("status") not in {"runnable", "complete"}:
+            held.append((tid, reconciled))
             continue
         if not deps_satisfied(t, done):
             blocked.append(tid); continue
@@ -144,7 +149,7 @@ def ready_set(q, state):
             in_flight.append(tid)
             continue
         ready.append(t)
-    return ready, gated, blocked, in_flight
+    return ready, gated, blocked, in_flight, held
 
 def vendor_of(worker, q):
     return q["meta"]["vendor_families"].get(worker, "unknown")
@@ -205,14 +210,15 @@ def assign(ready, accounts, q):
 
 def cmd_plan(q, accounts):
     state = load_state()
-    ready, gated, blocked, in_flight = ready_set(q, state)
+    ready, gated, blocked, in_flight, held = ready_set(q, state)
     problems = check_cross_vendor(q)
     l2, l1 = assign(ready, accounts, q)
 
     print("=" * 70)
     print(f"PORTFOLIO PLAN  ({datetime.date.today()})   "
           f"completed={len(state['completed'])}  ready={len(ready)}  "
-          f"in_flight={len(in_flight)}  gated={len(gated)}  blocked={len(blocked)}")
+          f"in_flight={len(in_flight)}  held={len(held)}  "
+          f"gated={len(gated)}  blocked={len(blocked)}")
     print("=" * 70)
     print("\n▶ L2 — human-driven prime blocks (each on its OWNED seat, no collision):")
     if not l2: print("   (none ready)")
@@ -225,6 +231,11 @@ def cmd_plan(q, accounts):
     print("\n▷ IN FLIGHT — a seat already holds these (live lease or open task/<id> branch):")
     if not in_flight: print("   (none)")
     for tid in in_flight: print(f"   ↻ {tid}")
+    print("\n◫ RECONCILED HOLD — artifact state is known; do not reassign as fresh work:")
+    if not held: print("   (none)")
+    for tid, detail in held:
+        print(f"   ◫ {tid:<20} {detail.get('status')} :: "
+              f"{detail.get('next_gate', '')[:72]}")
     print("\n⏸ HUMAN GATES waiting on you (branch parked, portfolio still moving):")
     for g in gated: print(f"   ⚑ {g}")
     esc = escalations(q, state)
@@ -281,7 +292,7 @@ cap cuts the session, the next one resumes from the last commit, losing minutes)
 
 def cmd_digest(q, accounts):
     state = load_state()
-    ready, gated, blocked, in_flight = ready_set(q, state)
+    ready, gated, blocked, in_flight, held = ready_set(q, state)
     l2, l1 = assign(ready, accounts, q)
     DIGEST.mkdir(exist_ok=True)
     d = datetime.date.today().isoformat()
@@ -295,6 +306,9 @@ def cmd_digest(q, accounts):
     lines += [f"- `{t['id']}` — {n} failed attempts on `{t['worker']}`" for t, n in esc] or ["- none"]
     lines.append("\n## in flight (a seat already holds these — do not re-assign)")
     lines += [f"- `{tid}`" for tid in in_flight] or ["- none"]
+    lines.append("\n## reconciled holds (known artifact state; not fresh-ready work)")
+    lines += [f"- `{tid}` — {detail.get('status')}: {detail.get('next_gate', '')}"
+              for tid, detail in held] or ["- none"]
     lines.append("\n## tomorrow's proposed prime blocks")
     lines += [f"- seat **{s}** → `{t['id']}` ({t['worker']})" for t, s in l2] or ["- none"]
     lines.append("\n## overnight L1 results (last driver run)")
