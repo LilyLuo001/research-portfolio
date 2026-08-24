@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import pathlib
 
 import pytest
@@ -56,3 +57,61 @@ def test_private_env_requires_owner_only_permissions(tmp_path):
         AVAIL.private_env_value(path, "OPENAI_API_KEY")
     path.chmod(0o600)
     assert AVAIL.private_env_value(path, "OPENAI_API_KEY") == "test-placeholder"
+
+
+def test_cli_refuses_to_write_an_unprobed_receipt_without_a_key(tmp_path, capsys, monkeypatch):
+    """A missing key must fail closed, not silently produce a non-result.
+
+    The committed receipt in dax/data_raw/ is a no-key run: every field a
+    reader skims is present, account_probe_performed is false, and the old CLI
+    exited 0. That is how a non-result gets mistaken for a result. The CLI now
+    refuses and leaves any existing receipt untouched.
+    """
+
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    out = tmp_path / "receipt.json"
+    code = AVAIL.main([
+        "--registry", str(REGISTRY_PATH), "--output", str(out),
+    ])
+    assert code == 2
+    assert not out.exists(), "a refused probe must not write a receipt"
+    assert "NEED_HUMAN" in capsys.readouterr().err
+
+
+def test_cli_names_the_failed_precondition(tmp_path, capsys, monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    missing = tmp_path / "absent" / ".env"
+    assert AVAIL.main([
+        "--registry", str(REGISTRY_PATH), "--env-file", str(missing),
+        "--output", str(tmp_path / "r.json"),
+    ]) == 2
+    assert "does not exist" in capsys.readouterr().err
+
+    loose = tmp_path / "loose.env"
+    loose.write_text("OPENAI_API_KEY=sk-test\n", encoding="utf-8")
+    loose.chmod(0o644)
+    assert AVAIL.main([
+        "--registry", str(REGISTRY_PATH), "--env-file", str(loose),
+        "--output", str(tmp_path / "r.json"),
+    ]) == 2
+    assert "chmod 600" in capsys.readouterr().err
+
+    wrong_var = tmp_path / "other.env"
+    wrong_var.write_text("DEEPSEEK_API_KEY=x\n", encoding="utf-8")
+    wrong_var.chmod(0o600)
+    assert AVAIL.main([
+        "--registry", str(REGISTRY_PATH), "--env-file", str(wrong_var),
+        "--output", str(tmp_path / "r.json"),
+    ]) == 2
+    assert "no OPENAI_API_KEY assignment" in capsys.readouterr().err
+
+
+def test_an_unprobed_receipt_still_requires_an_explicit_opt_in(tmp_path, monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    out = tmp_path / "receipt.json"
+    assert AVAIL.main([
+        "--registry", str(REGISTRY_PATH), "--output", str(out), "--allow-unprobed",
+    ]) == 0
+    receipt = json.loads(out.read_text())
+    assert receipt["account_probe_performed"] is False
+    assert receipt["probed_at_utc"] is None

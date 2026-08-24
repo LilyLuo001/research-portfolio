@@ -36,7 +36,7 @@ required_columns:
   task_duration_source: authorized frozen primary-source locator
   task_duration_value: positive number or null when blocked
   task_duration_unit: second | minute | hour | null when blocked
-  task_duration_status: verified | blocked_missing
+  task_duration_status: verified | deferred_scoring | blocked_missing
   input_tokens: nonnegative integer
   cached_input_tokens: nonnegative integer
   output_tokens: nonnegative integer; includes reasoning tokens when provider bills that way

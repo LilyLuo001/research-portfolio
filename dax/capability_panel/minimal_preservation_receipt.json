@@ -1,0 +1,59 @@
+{
+  "caveats": [
+    "upper bound at 4096 input / 2048 output token caps x latest verified W2 rates",
+    "output cap may understate deliverable-heavy tasks; planning figure, not a maximum",
+    "capture is not scoring: these runs store raw completions, and grading happens later",
+    "still requires the capture/scoring split amendment, an OpenAI key, and a signed ceiling"
+  ],
+  "full_plan_for_contrast": {
+    "perturbations": 4,
+    "repetitions": 3,
+    "rows": 14,
+    "tasks": 220,
+    "usd": 1922.63
+  },
+  "generated_at_utc": "2026-08-24T01:13:55.445134Z",
+  "purpose": "cost of preserving ONLY the snapshots that retire 2026-10-23, under a funding constraint; authorizes nothing",
+  "receipt_version": "dax-w4-minimal-preservation-v1",
+  "rows_retiring_2026_10_23": [
+    "gpt-4-1106-preview",
+    "gpt-4-turbo-2024-04-09",
+    "gpt-4o-2024-05-13",
+    "gpt-4o-mini-2024-07-18",
+    "o1-2024-12-17"
+  ],
+  "rows_retiring_later_or_unannounced": [
+    "gpt-4.1-2025-04-14",
+    "gpt-5-2025-08-07",
+    "gpt-5.1-2025-11-13",
+    "gpt-5.2-2025-12-11",
+    "gpt-5.4-2026-03-05",
+    "gpt-5.5-2026-04-23",
+    "o3-2025-04-16",
+    "o3-mini-2025-01-31",
+    "o4-mini-2025-04-16"
+  ],
+  "scenarios": {
+    "gdpval_220_all_perturbations": {
+      "perturbations": 4,
+      "repetitions": 1,
+      "tasks": 220,
+      "usd": 389.1
+    },
+    "gdpval_220_baseline_only": {
+      "note": "GDPval open set is already frozen and public, so it needs no design decision and is a stable stimulus; v3 packet section G permits model-vintage sanity checks and convergent validity",
+      "perturbations": 1,
+      "repetitions": 1,
+      "tasks": 220,
+      "usd": 97.28
+    },
+    "s1_24_baseline_only": {
+      "note": "cheapest, but the bridge benchmark is not frozen so these instances may not be the final ones",
+      "perturbations": 1,
+      "repetitions": 1,
+      "tasks": 24,
+      "usd": 10.61
+    }
+  },
+  "shutdown_source": "dax/memo/feasibility_note.md lines 51-56, from the official deprecations page"
+}

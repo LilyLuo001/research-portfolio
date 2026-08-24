@@ -77,3 +77,9 @@ dax/capability_panel/*private_panel*.parquet
 # committed files and is what you hand to whoever books the account.
 p1/wrds/raw/
 p1/wrds/discovered_schema.json
+
+# IPUMS-CPS person-level panels stay box-local under the same rule as the
+# W5 analysis panel: redistribution terms forbid committing microdata.
+# Their receipts (counts, hashes, code mappings) are committed instead.
+dax/data_built/cps_preevent_power_panel.parquet
+dax/data_built/cps_extract.parquet

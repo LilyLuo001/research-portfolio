@@ -1,0 +1,78 @@
+{
+  "baseline_for_comparison": {
+    "mapping_a_direct_match_task_coverage": 0.00192118,
+    "mapping_a_direct_match_wage_bill_coverage": 0.0022461,
+    "note": "task-count baseline from PROTOCOL_mapA_gdpval.md section 9; wage-bill baseline from mapA_run_receipt.json results.wage_bill_coverage -- compare like with like"
+  },
+  "coverage_bound": {
+    "share_of_all_tasks": 0.3389584090555065,
+    "share_of_tasks_with_any_dwa": 0.34677290836653385,
+    "tasks_covered": 6528,
+    "wage_bill_weighted_share": 0.4169526386038046
+  },
+  "gdpval": {
+    "n_matched_onet_socs": 43,
+    "n_occupation_labels": 44,
+    "n_occupation_labels_matched_to_soc": 43,
+    "onet_linkage_fields_present": [],
+    "rows": 220,
+    "schema": [
+      "task_id",
+      "sector",
+      "occupation",
+      "prompt",
+      "reference_files",
+      "reference_file_urls",
+      "reference_file_hf_uris",
+      "deliverable_files",
+      "deliverable_file_urls",
+      "deliverable_file_hf_uris",
+      "rubric_pretty",
+      "rubric_json"
+    ],
+    "unmatched_occupation_labels": [
+      "Buyers and Purchasing Agents"
+    ]
+  },
+  "interpretation": "UPPER BOUND on DWA-transport coverage; assumes every DWA touched by a GDPval occupation is transportable",
+  "onet": {
+    "n_distinct_dwas": 2085,
+    "n_reachable_dwas": 522,
+    "n_tasks": 19259,
+    "n_tasks_with_any_dwa": 18825
+  },
+  "receipt_version": "dax-w3-dwa-coverage-bound-v1",
+  "sources": {
+    "gdpval_parquet": "/usr3/graduate/qluo/dax-private/public_raw/gdpval/data/train-00000-of-00001.parquet",
+    "onet": "/usr3/graduate/qluo/dax-private/public_raw/onet_26_1/db_26_1_text.zip",
+    "onet_tables_used": {
+      "alternatives_not_chosen": {
+        "occupations": [],
+        "task_statements": [],
+        "task_to_dwa": []
+      },
+      "occupations": "Occupation Data.txt",
+      "task_statements": "Task Statements.txt",
+      "task_to_dwa": "Tasks to DWAs.txt"
+    }
+  },
+  "universe_reconciliation": {
+    "derived_n_onet_socs": 923,
+    "derived_n_tasks": 19259,
+    "pinned_audit": "/usr3/graduate/qluo/dax_w3_bound/mapA_input_audit_receipt.json",
+    "pinned_n_unique_onet_socs": 923,
+    "pinned_n_unique_task_ids": 19259,
+    "reconciled": true
+  },
+  "weights": {
+    "filters": {
+      "allocation_usable": "true",
+      "vintage": "2021"
+    },
+    "n_weighted_tasks": 15274,
+    "path": "/usr3/graduate/qluo/dax-private/w2_build_outputs/task_wage_allocations.csv",
+    "reconciled_against": "/usr3/graduate/qluo/dax_w3_bound/mapA_run_receipt.json",
+    "total_mass": 56074210.000001125,
+    "weight_column": "task_annual_wage_bill_allocation"
+  }
+}

@@ -118,21 +118,46 @@ def test_frozen_standard_produces_a_real_verdict():
     assert sample["hours"]["adequately_powered"] is False
 
 
-def test_shipped_standard_has_resolved_benchmark_but_unfrozen_baselines():
-    """The PI-selected sourced benchmark may precede the real CPS freeze."""
+def test_shipped_standard_is_frozen_with_its_selection_intact():
+    """Superseded 2026-08-24: this pinned the pre-freeze transitional state.
+
+    It asserted PLACEHOLDER_REQUIRES_REAL_CPS and null baselines, documenting
+    that the PI's sourced benchmark could precede the CPS freeze. The freeze has
+    since happened. Every selection guarantee it carried is retained below; only
+    the transitional assertions are replaced by the post-freeze invariants.
+    """
     standard = json.loads((POWER / "power_standard.json").read_text())
-    assert standard["status"] == "PLACEHOLDER_REQUIRES_REAL_CPS"
-    assert standard["benchmark"]["relative_decline"] == 0.13
-    assert standard["benchmark"]["version_status"] == "RESOLVED"
-    assert standard["benchmark"]["locator_status"] == "VERIFIED"
+    benchmark, spec = standard["benchmark"], standard["standard"]
+
+    # selection — unchanged by the freeze, and must stay so
+    assert benchmark["relative_decline"] == 0.13
+    assert benchmark["version_status"] == "RESOLVED"
+    assert benchmark["locator_status"] == "VERIFIED"
     assert [row["relative_decline"] for row in
-            standard["benchmark"]["prespecified_sensitivities"]] == [0.16, 0.19]
-    assert standard["benchmark"]["prespecified_sensitivities"][1][
+            benchmark["prespecified_sensitivities"]] == [0.16, 0.19]
+    assert benchmark["prespecified_sensitivities"][1][
         "must_not_be_described_as_literature_estimate"] is True
-    assert standard["benchmark"]["baseline_employment_rate_22_25"] is None
-    assert standard["standard"]["employment_mde_ceiling"] is None
     assert standard["frozen_window"]["end_month"] < "2023-03", \
         "the frozen window must end before the first eligible event"
+
+    # post-freeze invariants
+    assert standard["status"] == "FROZEN"
+    assert standard["frozen_at_utc"]
+    assert spec["employment_mde_ceiling"] is not None
+    assert spec["hours_mde_ceiling"] is not None
+    fraction = spec["max_mde_fraction_of_benchmark"]
+    assert spec["employment_mde_ceiling"] == pytest.approx(
+        fraction * benchmark["relative_decline"]
+        * benchmark["baseline_employment_rate_22_25"], abs=1e-9)
+    assert spec["hours_mde_ceiling"] == pytest.approx(
+        fraction * benchmark["relative_decline"]
+        * benchmark["baseline_hours_unconditional_22_25"], abs=1e-6)
+
+    # hours missingness must be recorded, not silently absorbed
+    prov = standard["provenance"]
+    assert prov["n_hours_unobserved"] > 0
+    assert prov["unobserved_are_all_employed"] is True
+    assert "conservative" in prov["hours_missingness_direction"]
 
 
 def test_stacked_engine_no_longer_sets_its_own_bar():

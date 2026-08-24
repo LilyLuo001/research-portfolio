@@ -9,6 +9,7 @@ import os
 import pathlib
 import re
 import stat
+import sys
 import urllib.error
 import urllib.request
 from collections.abc import Iterable, Mapping
@@ -146,20 +147,62 @@ def audit_registry(
     }
 
 
+def _key_diagnosis(env_file: pathlib.Path | None) -> str:
+    """Say which precondition failed, without ever revealing the key."""
+
+    if env_file is None:
+        return ("  no --env-file was given and OPENAI_API_KEY is unset in the "
+                "environment\n  fix: pass --env-file <path to the private .env>")
+    if not env_file.exists():
+        return (f"  --env-file {env_file} does not exist\n"
+                "  fix: check the path; on the SCC it is under the private w4 directory")
+    mode = stat.S_IMODE(env_file.stat().st_mode)
+    if mode & 0o077:
+        return (f"  --env-file {env_file} is mode {mode:04o}, which is group- or "
+                f"world-readable\n  fix: chmod 600 {env_file}")
+    return (f"  --env-file {env_file} exists and is mode {mode:04o}, but contains no "
+            "OPENAI_API_KEY assignment\n"
+            "  fix: add a line OPENAI_API_KEY=... to that file")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--registry", type=pathlib.Path, required=True)
     parser.add_argument("--env-file", type=pathlib.Path)
     parser.add_argument("--output", type=pathlib.Path, required=True)
+    parser.add_argument(
+        "--allow-unprobed",
+        action="store_true",
+        help="deliberately write a no-key receipt with every direct row "
+             "unprobed_missing_key; without this a missing key is an error",
+    )
     args = parser.parse_args(argv)
     registry = load_registry(args.registry)
+
     key = os.environ.get("OPENAI_API_KEY")
     if not key and args.env_file:
-        key = private_env_value(args.env_file, "OPENAI_API_KEY")
+        try:
+            key = private_env_value(args.env_file, "OPENAI_API_KEY")
+        except AvailabilityError as error:
+            # A refused permission mode is an operator precondition, not a bug.
+            print(f"NEED_HUMAN: {error}\n{_key_diagnosis(args.env_file)}", file=sys.stderr)
+            return 2
+
+    if not key and not args.allow_unprobed:
+        # Fail closed. Writing an unprobed receipt on a missing key produces a
+        # file that looks like a completed probe -- account_probe_performed is
+        # false, but every field a reader skims is present -- and exits 0, so
+        # nothing downstream notices the account was never contacted. Refuse,
+        # say which precondition failed, and leave any existing receipt alone.
+        print(f"NEED_HUMAN: no OPENAI_API_KEY, so the account was not probed\n{_key_diagnosis(args.env_file)}", file=sys.stderr)
+        return 2
+
     models = list_openai_models(key) if key else None
     receipt = audit_registry(registry, models)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if models is None:
+        print(f"wrote an UNPROBED receipt to {args.output} — the account was not contacted")
     return 0
 
 

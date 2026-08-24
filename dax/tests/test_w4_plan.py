@@ -50,7 +50,7 @@ def test_w3_receipt_requires_exact_commit_license_guard_and_adjudication():
         PLAN.validate_w3_receipt(broken, expected_commit=COMMIT)
 
 
-def test_plan_contains_ids_only_and_blocks_missing_duration_and_availability():
+def test_plan_contains_ids_only_and_defers_scoring_when_duration_is_absent():
     availability = AVAIL.audit_registry(REGISTRY, None)
     rows = PLAN.build_run_plan(
         ["task-B", "task-A"],
@@ -61,8 +61,13 @@ def test_plan_contains_ids_only_and_blocks_missing_duration_and_availability():
         mapping_receipt_sha256=HASH,
     )
     assert rows
+    # Availability still blocks capture: this registry was audited with no key,
+    # so every direct row is unprobed. Duration no longer does (amendment s3).
     assert all(row["plan_status"] == "blocked" for row in rows)
-    assert all("blocked_missing_task_duration" in row["blockers"] for row in rows)
+    assert not any("blocked_missing_task_duration" in row["blockers"] for row in rows), \
+        "duration must no longer appear as a CAPTURE blocker"
+    assert all(row["scoring_status"] == "deferred_missing_task_duration" for row in rows)
+    assert all("deferred_missing_task_duration" in row["scoring_blockers"] for row in rows)
     serialized = json.dumps(rows)
     assert "task_text" not in serialized and "prompt" not in serialized
     receipt = PLAN.sanitized_plan_receipt(rows)
@@ -79,7 +84,13 @@ def test_repetition_count_has_no_silent_default():
         )
 
 
-def test_unverified_duration_never_leaks_a_value_into_blocked_plan():
+def test_unverified_duration_never_leaks_a_value_into_the_plan():
+    """The no-inference rule survives the capture/scoring split.
+
+    A row may now be captured without duration, but an unauthorised value must
+    still never reach the plan -- that guarantee is what amendment section 3
+    explicitly does NOT relax.
+    """
     availability = AVAIL.audit_registry(REGISTRY, None)
     rows = PLAN.build_run_plan(
         ["task-A"],
@@ -98,7 +109,7 @@ def test_unverified_duration_never_leaks_a_value_into_blocked_plan():
         },
     )
     assert rows
-    assert all(row["task_duration_status"] == "blocked_missing" for row in rows)
+    assert all(row["task_duration_status"] == "deferred_scoring" for row in rows)
     assert all(row["task_duration_value"] is None for row in rows)
     assert all(row["task_duration_unit"] is None for row in rows)
     assert all(row["task_duration_source"] == "" for row in rows)

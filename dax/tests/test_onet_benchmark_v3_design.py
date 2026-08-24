@@ -119,10 +119,23 @@ def test_v2_frozen_files_and_power_standard_are_unchanged():
     assert design["v2_preservation"]["locked_test_opened"] is False
     assert design["v2_preservation"]["classifier_fitted"] is False
     assert design["v2_preservation"]["formal_labeling_budget_spent_usd"] == 0
+    # The power standard was legitimately FROZEN on 2026-08-24 by W1/W2, which
+    # rewrote status, provenance, both baselines and both MDE ceilings. A
+    # whole-file hash therefore breaks on correct work and, worse, says nothing
+    # about WHAT moved -- re-baselining it each time would quietly retire the
+    # guarantee. What this test exists to protect is narrower and permanent:
+    # that no benchmark SELECTION was changed while the v3 design was drafted.
+    # So pin the selection fields and exclude only the two baselines the
+    # freezer is supposed to write.
     power = ROOT / "memo" / "power_calcs" / "power_standard.json"
-    assert hashlib.sha256(power.read_bytes()).hexdigest() == (
-        "df5746c1d5187681ed1a72981ece8c58f1b4ccf7bbbdd73966009f6e1385ae15"
-    )
+    benchmark = json.loads(power.read_text())["benchmark"]
+    written_by_freeze = {"baseline_employment_rate_22_25",
+                         "baseline_hours_unconditional_22_25"}
+    selection = {k: v for k, v in benchmark.items() if k not in written_by_freeze}
+    assert hashlib.sha256(
+        json.dumps(selection, sort_keys=True).encode()).hexdigest() == (
+        "51057e3eda01531bc0b421480495a9a3f7a44bf52d84d3c9e050b18dc19f0229"
+    ), "the benchmark selection moved; a freeze must not reselect the benchmark"
 
 
 def test_historical_capture_registry_is_fully_accounted_for():
