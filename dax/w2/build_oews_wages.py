@@ -227,6 +227,16 @@ def main(argv: list[str] | None = None) -> int:
                              "coerced to zero"),
         "annual_only_occupations": sum(1 for r in kept if r["annual_only"]),
         "hourly_only_occupations": sum(1 for r in kept if r["hourly_only"]),
+        # An occupation releasing NEITHER mean has no wage at all. 41-9012
+        # Models is one in the 2021 national file. A downstream wage bill that
+        # reaches for `a_mean or h_mean * 2080` gets nothing for it and, unless
+        # this is surfaced, contributes a silent zero rather than a known gap.
+        "no_wage_released": [r["occ_code"] for r in kept
+                             if r["a_mean"] is None and r["h_mean"] is None],
+        "no_wage_rule": ("these occupations release neither an annual nor an "
+                         "hourly mean; they are a KNOWN GAP, not a zero wage, "
+                         "and any wage-bill step must exclude or impute them "
+                         "explicitly rather than summing through"),
         "crosswalk": ("NOT PERFORMED. OEWS is SOC coded, O*NET is 8-digit "
                       "O*NET-SOC; that mapping is a separate signed artifact "
                       "and is not invented here."),

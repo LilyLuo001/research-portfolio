@@ -24,6 +24,8 @@ ROWS = [
     ["29-1141", "Registered Nurses", "detailed", "3047530", "82750", "39.78", "", ""],
     ["35-3023", "Fast Food Workers", "detailed", "3673500", "*", "11.47", "", "TRUE"],
     ["29-1024", "Prosthodontists", "detailed", "660", "#", "#", "TRUE", ""],
+    # 41-9012 Models in the real 2021 national file releases NEITHER mean.
+    ["41-9012", "Models", "detailed", "3000", "*", "*", "", ""],
 ]
 
 
@@ -90,8 +92,8 @@ def test_o_group_filter_prevents_double_counting(tmp_path):
     code, out = _run(tmp_path, _archive(tmp_path))
     assert code == 0
     df = pd.read_parquet(out)
-    assert len(df) == 4, "total and major rows must be excluded"
-    assert set(df["occ_code"]) == {"15-1252", "29-1141", "35-3023", "29-1024"}
+    assert len(df) == 5, "total and major rows must be excluded"
+    assert set(df["occ_code"]) == {"15-1252", "29-1141", "35-3023", "29-1024", "41-9012"}
     rec = json.loads(out.with_suffix(".receipt.json").read_text())
     assert rec["rows_by_o_group"]["total"] == 1
     assert rec["rows_by_o_group"]["major"] == 1
@@ -115,7 +117,7 @@ def test_suppression_markers_are_never_coerced_to_zero(tmp_path):
     assert df.loc["29-1024", "a_mean_suppression"] == "at_or_above_top_code"
     assert (df["a_mean"] == 0).sum() == 0
     rec = json.loads(out.with_suffix(".receipt.json").read_text())
-    assert rec["suppression_counts"]["not_released"] == 1
+    assert rec["suppression_counts"]["not_released"] == 3
     assert rec["suppression_counts"]["at_or_above_top_code"] == 2
 
 
@@ -152,3 +154,24 @@ def test_no_crosswalk_is_invented(tmp_path):
     assert not any("onet" in c.lower() for c in df.columns)
     rec = json.loads(out.with_suffix(".receipt.json").read_text())
     assert rec["crosswalk"].startswith("NOT PERFORMED")
+
+
+def test_an_occupation_releasing_neither_mean_is_a_known_gap_not_a_zero(tmp_path):
+    """41-9012 Models releases neither an annual nor an hourly mean.
+
+    Surfaced by the first real SCC run. A wage-bill step reaching for
+    `a_mean or h_mean * 2080` gets nothing for such an occupation; unless the
+    receipt names it, that becomes a silent zero in the wage bill rather than a
+    known gap.
+    """
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    import pandas as pd
+    code, out = _run(tmp_path, _archive(tmp_path))
+    assert code == 0
+    rec = json.loads(out.with_suffix(".receipt.json").read_text())
+    assert "41-9012" in rec["no_wage_released"]
+    assert "29-1024" in rec["no_wage_released"], "top-coded both ways is also a gap"
+    assert "15-1252" not in rec["no_wage_released"]
+    assert "KNOWN GAP" in rec["no_wage_rule"]
+    df = pd.read_parquet(out).set_index("occ_code")
+    assert pd.isna(df.loc["41-9012", "a_mean"]) and pd.isna(df.loc["41-9012", "h_mean"])
