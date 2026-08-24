@@ -39,6 +39,13 @@ import pathlib
 import sys
 from collections import Counter
 
+HERE = pathlib.Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+from microdata_guard import (  # noqa: E402
+    MicrodataPathError, assert_not_committable)
+
+
 REQUIRED_SOURCE = {"YEAR", "MONTH", "AGE", "WTFINL", "EMPSTAT", "UHRSWORKT",
                    "CPSIDP", "OCC2010"}
 EPOCH_YEAR = 2000
@@ -177,10 +184,21 @@ def main(argv: list[str] | None = None) -> int:
     out = out[out_cols]
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    # Licensed IPUMS-CPS microdata. Refuse the write if it would land in a git
+    # work tree whose ignore rules do not cover it -- see microdata_guard.
+    # Reported as a refusal with exit 2, matching every other guard in this
+    # builder, rather than as a traceback an operator has to read upward.
+    try:
+        path_guard = assert_not_committable(args.output,
+                                            "the IPUMS-CPS person panel")
+    except MicrodataPathError as exc:
+        print(exc, file=sys.stderr)
+        return 2
     out.to_parquet(args.output, index=False)
 
     receipt = {
         "receipt_version": "dax-w2-cps-analysis-panel-v1",
+        "output_path_guard": path_guard,
         "scope": "W5 ANALYSIS PANEL. Not the pre-event power panel, which is "
                  "frozen at 2021-11..2023-02 and feeds power_standard.json.",
         "provenance": provenance,
