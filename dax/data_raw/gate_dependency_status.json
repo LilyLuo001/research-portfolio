@@ -1,0 +1,54 @@
+{
+  "record_version": "dax-gate-dependency-status-v1",
+  "what_this_is": "A derived view of which dependencies named by the Gate-1 power receipts are still outstanding, read live from power_standard.json rather than asserted. It is not itself a run receipt and it advances no gate.",
+  "generated_at_utc": "2026-08-24T13:15:41.582608+00:00",
+  "sources": {
+    "power_standard": "dax/memo/power_calcs/power_standard.json",
+    "person_level_power_receipt": "dax/data_raw/person_level_power_receipt.json",
+    "engine_validation_receipt": "dax/data_raw/person_level_power_engine_validation_receipt.json"
+  },
+  "dependencies_declared_by_receipt": [
+    "real frozen W5 balanced occupation-month dose panel",
+    "verified exact locator for the PI-selected power benchmark"
+  ],
+  "dependencies_still_pending": [
+    "real frozen W5 balanced occupation-month dose panel"
+  ],
+  "benchmark_dependency": {
+    "satisfied": true,
+    "standard_status": "FROZEN",
+    "locator_status": "VERIFIED",
+    "version_status": "RESOLVED",
+    "relative_decline": 0.13,
+    "employment_mde_ceiling": 0.04712318,
+    "hours_mde_ceiling": 1.736202,
+    "frozen_at_utc": "2026-08-24T07:20:40.683729+00:00",
+    "dependency": "verified exact locator for the PI-selected power benchmark"
+  },
+  "dose_panel_dependency": {
+    "satisfied": false,
+    "panel_name": "w5_dose_panel.parquet",
+    "published_receipt_status": "BLOCKED_UNQUALIFIED_W3_AND_MISSING_W4_MEASUREMENTS",
+    "reason": "The published W5 status is fail-closed and non-constructible: W3 has zero accepted mappings and W4 has zero duration coverage and zero captured measurements. No real dose panel or sanitized identification result exists.",
+    "dependency": "real frozen W5 balanced occupation-month dose panel"
+  },
+  "receipts_deliberately_not_rewritten": {
+    "person_level_power_receipt": {
+      "generated_at_utc": "2026-08-20T09:38:08Z",
+      "states_benchmark_version_status": "UNRESOLVED",
+      "states_benchmark_value": null,
+      "stale_because": "written before the 2026-08-24 freeze; its benchmark fields record the state of the world on 2026-08-20 and are correct as history"
+    },
+    "engine_validation_receipt": {
+      "validated_at_utc": "2026-08-18T17:18:00+00:00",
+      "states_reason_for_nonzero_exit": "benchmark is null/unresolved; synthetic dose is not accepted as Gate-1 evidence",
+      "adequately_powered": {
+        "employment": null,
+        "hours_unconditional": null
+      },
+      "stale_because": "its nonzero exit was attributed to a null benchmark AND a synthetic dose. The benchmark half no longer applies; the synthetic-dose half still does, so the exit code would not change. Re-running it on the SCC against the frozen standard would replace two null verdicts with real ones and is the only way to confirm that end to end."
+    }
+  },
+  "gates_advanced": [],
+  "gate_1_effect": "None. Both the person-level power gate and the identification gate still fail, for the single reason that no real W5 dose panel exists. That reason is untouched by the freeze and cannot be cleared before W3 mapping and W4 measurements land."
+}
