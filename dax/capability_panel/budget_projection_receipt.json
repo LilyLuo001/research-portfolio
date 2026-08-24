@@ -1,0 +1,37 @@
+{
+  "caveats": [
+    "upper bound at conservative token caps x latest verified W2 rates",
+    "output cap 2048 may UNDERSTATE deliverable-heavy tasks; treat as a planning figure, not a maximum",
+    "direct OpenAI rows only; open-weight stand-ins and blocked aliases excluded",
+    "stimulus set is not yet frozen, so task_count is scenario input not a decision"
+  ],
+  "generated_at_utc": "2026-08-24T01:08:44.208464Z",
+  "purpose": "input to the PI's budget_ceiling.json decision; authorizes nothing",
+  "receipt_version": "dax-w4-budget-projection-v1",
+  "scenarios": {
+    "bridge_benchmark_120": {
+      "direct_model_rows": 14,
+      "missing_price_model_rows": [],
+      "price_panel_sha256": "bc772b0ca3b8f0e4ab7d9a6badb1971b55a08190a95000cbee7015b67e4ca83d",
+      "task_count": 120,
+      "usd_3_repetitions": 1048.71,
+      "usd_per_repetition": 349.569024
+    },
+    "gdpval_open_set_220": {
+      "direct_model_rows": 14,
+      "missing_price_model_rows": [],
+      "price_panel_sha256": "bc772b0ca3b8f0e4ab7d9a6badb1971b55a08190a95000cbee7015b67e4ca83d",
+      "task_count": 220,
+      "usd_3_repetitions": 1922.63,
+      "usd_per_repetition": 640.8765440000002
+    },
+    "s1_constructible_24": {
+      "direct_model_rows": 14,
+      "missing_price_model_rows": [],
+      "price_panel_sha256": "bc772b0ca3b8f0e4ab7d9a6badb1971b55a08190a95000cbee7015b67e4ca83d",
+      "task_count": 24,
+      "usd_3_repetitions": 209.74,
+      "usd_per_repetition": 69.91380480000001
+    }
+  }
+}
