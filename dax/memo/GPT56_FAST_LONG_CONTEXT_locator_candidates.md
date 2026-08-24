@@ -20,8 +20,13 @@ does not independently **date** API availability, which is what the memo's
 
 ## Candidates found, and why they are not yet locators
 
-A web search surfaced the pages below. **Every OpenAI URL returns `000` from
-this session's egress proxy, so none has been read.** Under meta-rule 1 an
+A web search surfaced the pages below. **CORRECTED 2026-08-24.** An earlier version of this memo attributed the
+failure to this session's egress proxy. An SCC seat established that is wrong:
+from the same host `www2.census.gov` and `www.onetcenter.org` both return 200,
+and `cdn.openai.com` served an 11.8 MB PDF. The block is **origin-side and
+specific to openai.com page paths** — both candidate URLs return HTTP 403 with
+a bot-management interstitial carrying `<meta http-equiv="refresh">` and no
+article body, from two independent networks. **No OpenAI page has been read.** Under meta-rule 1 an
 unread page is not an extraction with a locator, and entering one would be the
 precise failure the registry exists to prevent — a date that traces to a
 summary rather than a source.
@@ -81,3 +86,20 @@ the owner opening it in a browser and pasting the dated line.
 This is one candidate row of 21. It is not eligible, so it currently
 contributes nothing to the dose path, and clearing it adds one event rather
 than unblocking a stage.
+
+
+## Attempt log — 2026-08-24
+
+An SCC seat attempted verification and correctly stopped. `openai.com/api-fast-mode/`
+returned 403 with a bot-management interstitial from both a workstation (9,701
+bytes) and the SCC (9,913 bytes); `openai.com/index/gpt-5-6/` behaved
+identically. No attempt was made to defeat the challenge, on the grounds that a
+page obtained by circumventing an access control is not a citable locator —
+which is right, and is recorded so the next seat does not repeat the attempt.
+
+`verification_status` remains `pending_second_date_locator`. The registry
+validator passes: 21 rows; eligible=4, candidate=16, excluded=1, pending=1.
+
+**What would settle it:** a seat on a network that renders the page, or the
+owner opening it in a browser and pasting the dated line. Neither is urgent —
+the row is a candidate contributing no dose.
