@@ -1,10 +1,10 @@
 {
   "output": "dax/w2/exposure_gate/CROSSWALK_GATE_RESULTS.json",
-  "output_sha256": "546a5ff649181409f80a0636bfdcf9b4ebc793f359a5586dc94a11f66d6e183b",
+  "output_sha256": "86ccc16ff370805868d2d7e993ea38de12ee94ecb466d702c2614d1082d5c985",
   "inputs": [
     {
       "path": "dax/w2/exposure_gate/reproduce_eig_crosswalk.py",
-      "sha256": "1fc4215eac3da7918d5721819bb50b3388190302ff1c1a11ff54481afc5529ff",
+      "sha256": "7832cdc81b0f9c57286c4295da6e018ff796d67c2f6d62d3d01303b1b410de39",
       "rows": null
     },
     {
@@ -56,8 +56,18 @@
       "path": "/projectnb/econdept/qluo/dax-private/public_raw/eig_ai_unemployment/01 Crosswalks.R",
       "sha256": "06bfa21b5a3c5019b76c3d1e25dd2aeee4551a82b2da4072bde5173ae5653b4e",
       "rows": null
+    },
+    {
+      "path": "dax/w2/exposure_gate/eloundou_occ.csv",
+      "sha256": "40c74f53de40aec91c0017d80690cbba915f83a8bb414bcf2f884692f1749acb",
+      "rows": null
+    },
+    {
+      "path": "dax/w2/exposure_gate/dingel_neiman_occ.csv",
+      "sha256": "42ff3ae084478b554526671710b53a16d39f88c3eebb24f56f46372d7243bd40",
+      "rows": null
     }
   ],
-  "code_version": "e1ca2cec0e10accf7edb7a71f01d98a90410f28d",
-  "timestamp": "2026-08-25T14:01:25.226555+00:00"
+  "code_version": "f5e77af268855a0fe5e63128c949bdf03407bf94",
+  "timestamp": "2026-08-25T14:35:00Z"
 }

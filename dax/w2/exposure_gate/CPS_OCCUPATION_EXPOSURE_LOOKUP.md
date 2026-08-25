@@ -17,9 +17,21 @@ Use `CPS_OCCUPATION_EXPOSURE_LOOKUP.csv` as follows:
   labelled harmonized-`OCC2010` sensitivity. It must not replace observed raw
   Census 2018 occupation after 2020.
 
-The three exposure definitions are distinct and must remain separate:
-`aioe_admin_equal`, `aioe_ability_direct`, and
-`aioe_oews2018_source_weighted`.
+The measures are distinct and must remain separate. The design's primary
+treatment is GPT-4-model-rated `dv_rating_beta`; `dv_rating_alpha` and
+`dv_rating_gamma` are required alternate definitions. The official Eloundou
+CSV calls the upper-bound field `gamma`, while the published paper calls the
+same E1+E2 construct Greek zeta. The lookup preserves the source field name and
+records this translation in the receipt. `dingel_neiman_telework` is the
+remote-feasibility control. The three AIOE construction variants remain
+available as additional measurement checks.
+
+Published O*NET detail rows are first averaged within six-digit SOC because no
+official employment counts exist below six-digit SOC. Where one Census 2018
+occupation contains multiple six-digit SOCs, the build uses May 2021 OEWS
+target-SOC employment weights. The 22 Census occupations with at least one
+missing OEWS component use an explicit equal-weight fallback. Target-component
+coverage and partial sums are retained in `CENSUS2018_EXPOSURE_VARIANTS.csv`.
 
 ## Uncertainty and missingness
 
@@ -42,9 +54,18 @@ and 38 are diffuse one-to-many conversions. Full-route coverage is 480 codes
 for equal-administrative AIOE, 463 for direct-ability AIOE, and 472 for the
 OEWS-2018 source-employment-weighted variant.
 
+For all three GPT-4-rated Eloundou definitions, 443 pre-2020 codes have full
+end-to-end coverage, 46 more have partial coverage, and 14 have none.
+Dingel--Neiman has 392 full, 56 partial, and 55 zero-coverage codes. Partial
+coverage is never promoted to a point exposure.
+
 The direct 2020+ lookup emits all 570 official Census 2018 detailed codes,
 including explicit zero-coverage rows. Nonmissing coverage is 545, 530, and
 535 codes for the same three variants, respectively.
+
+For 2020 onward, the three Eloundou definitions have 514 full, 33 partial, and
+23 zero-coverage Census codes. Dingel--Neiman has 442 full, 42 partial, and 86
+zero-coverage codes.
 
 Exact input and output checksums are in
 `CPS_OCCUPATION_EXPOSURE_LOOKUP_RECEIPT.json`.

@@ -64,6 +64,7 @@
   },
   "eig_repository_commit": "a65ce97d9fa6ed931af12fb37321fec363a9c15f",
   "eig_variant_note": "AIOE_admin is equal-mean administrative mapping; AIOE_sim is EIG O*NET bridge; AIOE_wgt is EIG direct ability-level reconstruction and is the Felten variable used in EIG main analysis. These are not interchangeable.",
+  "eloundou_notation_note": "The official source dataset names the upper-bound column dv_rating_gamma. The published paper denotes the same E1+E2 construct by Greek zeta. The exported field preserves the source column name and does not create a second numerical alias.",
   "flagship_mappings": [
     {
       "admin_equal": 1.2421155,
@@ -136,6 +137,19 @@
       ]
     }
   ],
+  "onet_to_census2018_aggregation": {
+    "across_soc_components": "May 2021 OEWS target-SOC employment weights; equal fallback is explicit when a component has no OEWS employment",
+    "dingel_neiman_weight_basis_counts": {
+      "equal_missing_oews_employment": 22,
+      "oews_2021_employment": 546
+    },
+    "eloundou_weight_basis_counts": {
+      "equal_missing_oews_employment": 22,
+      "oews_2021_employment": 546
+    },
+    "missing_exposure_rule": "fail closed with covered weight and unnormalized partial sum; never renormalize around a missing component",
+    "within_six_digit_soc": "equal mean across published O*NET detail occupations; no official employment weights exist below six-digit SOC"
+  },
   "pairwise_correlations": {
     "AIOE_admin": {
       "AIOE_admin": 1.0,
@@ -192,10 +206,21 @@
       "sha256": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f",
       "url": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2018-occupation-code-list-and-crosswalk.xlsx"
     },
+    "dingel_neiman_telework": {
+      "path": "/tmp/qluo_dax_crosswalk_gate_20260825/dax/w2/exposure_gate/dingel_neiman_occ.csv",
+      "sha256": "42ff3ae084478b554526671710b53a16d39f88c3eebb24f56f46372d7243bd40",
+      "url": "https://github.com/jdingel/DingelNeiman-workathome"
+    },
     "eig_crosswalk_code": {
       "path": "/projectnb/econdept/qluo/dax-private/public_raw/eig_ai_unemployment/01 Crosswalks.R",
       "sha256": "06bfa21b5a3c5019b76c3d1e25dd2aeee4551a82b2da4072bde5173ae5653b4e",
       "url": "https://github.com/EIG-Research/AI-unemployment/blob/a65ce97d9fa6ed931af12fb37321fec363a9c15f/code/01%20Crosswalks.R"
+    },
+    "eloundou_gpt4_occupation_exposure": {
+      "paper_notation_locator": "https://arxiv.org/abs/2303.10130",
+      "path": "/tmp/qluo_dax_crosswalk_gate_20260825/dax/w2/exposure_gate/eloundou_occ.csv",
+      "sha256": "40c74f53de40aec91c0017d80690cbba915f83a8bb414bcf2f884692f1749acb",
+      "url": "https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv"
     },
     "oews_2018": {
       "path": "/projectnb/econdept/qluo/dax-private/public_raw/oews_2018/oesm18nat.zip",
