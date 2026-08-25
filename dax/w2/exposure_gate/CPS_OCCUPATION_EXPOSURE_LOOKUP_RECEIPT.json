@@ -157,12 +157,14 @@
     "remote_work_control": "dingel_neiman_telework",
     "sensitivity": "harmonized OCC2010 only; never substitutes for observed post-2020 raw OCC"
   },
+  "gate": "vintage_aware_cps_occupation_exposure_lookup",
   "inputs": {
     "/projectnb/econdept/qluo/dax-private/public_raw/census/2018-occupation-code-list-and-crosswalk.xlsx": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f",
     "/projectnb/econdept/qluo/dax-private/public_raw/occupation_crosswalks/census_2010_to_2018_occ_conversion_rates.xlsx": "73a8db545d5c484fd1f8ecd9745d0a08b51113b8a37e99dea2df55aeb08cb74d",
     "/projectnb/econdept/qluo/dax-private/public_raw/occupation_crosswalks/ipums_cps_2020_on_occ2010_crosswalk.xlsx": "98c36a41af47e8f1eb419a760efb58b1423acec50d730fd30dc7274e0ae586c5",
     "dax/w2/exposure_gate/CENSUS2018_EXPOSURE_VARIANTS.csv": "3c8c1d26b73414cf1c173a264bcc0446e8b8ffca5c412f5f63edc5fe2eb2552a"
   },
+  "outcome_fields_read": false,
   "outputs": {
     "dax/w2/exposure_gate/CENSUS_OCC2010_TO_2018_BRIDGE.csv": {
       "rows": 595,
@@ -174,5 +176,6 @@
     }
   },
   "record_version": "dax-cps-occupation-exposure-lookup-v1",
-  "scope": "measurement only; no CPS microdata or outcomes read"
+  "scope": "measurement only; no CPS microdata or outcomes read",
+  "status": "PASS"
 }
