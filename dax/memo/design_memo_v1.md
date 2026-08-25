@@ -1,5 +1,13 @@
 # Dynamic AI Exposure (DAX): pre-registered design memo v1
 
+> **ARCHIVED 2026-08-25 — superseded as the active research object.**
+> This memo is retained in full and is not retracted. The DAX index was paused
+> because §0 condition 1 (W4 snapshot capture before the 2026-10-23 and
+> 2026-12-11 shutdown dates) could not be met: 0 of 22 vintages captured, and
+> the vintages are withdrawn on fixed external dates. That is a feasibility
+> failure, not a scientific refutation — see `DAX_ARCHIVE_2026-08-25.md`.
+> The active research object is `dax/paper/CHAPTER_SCOPE_v1.md`.
+
 **Status:** v2 draft — PRIMARY DESIGN AMENDED 2026-08-18; not pre-registered
 
 **Draft date:** 2026-08-06; amended 2026-08-18 (D1, D3, D4, F2)
