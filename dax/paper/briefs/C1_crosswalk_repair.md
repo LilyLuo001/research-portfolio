@@ -4,21 +4,47 @@
 
 ## Why this task exists
 
-AIOE and Dingel–Neiman publish on an identical list of 774 SOC 2010 codes.
-Merged against OEWS 2021 (SOC 2018) they drop 158 occupations carrying
-**19.65% of employment**, concentrated catastrophically: SOC major group 15
-matches 4 of its 21 OEWS occupations and loses **96.7%** of its employment.
-Software Developers (15-1252), Computer Systems Analysts (15-1211), Computer
-User Support Specialists (15-1232) and Project Management Specialists (13-1082)
-have no AIOE value at all.
+AIOE and Dingel–Neiman publish on an identical list of 774 SOC 2010 codes,
+with **full coverage of that taxonomy**. SOC 2018 renumbered essentially all of
+major group 15, so an exact-code merge onto OEWS 2021 drops 158 occupations
+carrying **19.65% of employment**, and **96.7%** of major group 15.
 
-Until this is repaired, "is the young-employment finding robust across exposure
-measures?" is unanswerable for AIOE, because AIOE structurally omits the
-occupations where the finding is claimed to occur.
+**Read that correctly.** Nothing is missing from AIOE. It covers Software
+Developers at 15-1132 (+1.2009) and 15-1133 (+1.2833); OEWS 2021 calls that
+occupation 15-1252. Computer Systems Analysts is 15-1121 in AIOE, 15-1211 in
+OEWS 2021. The 96.7% measures the cost of merging without a crosswalk. An
+earlier draft of this brief said AIOE "structurally omits" these occupations.
+That was false — see `dax/paper/CORRECTION_2026-08-25_vintage_gloss.md`.
+
+So this task is a **crosswalk decision**, not a repair of a broken measure. It
+matters because every paper in this literature makes this decision and none
+reports it, and because C3 tests whether the decision moves the coefficient.
 
 Measured evidence: `dax/w2/exposure_gate/AUDIT_RESULTS.md` §"Item 3".
 
-## Inputs you must fetch
+## Step 0 — reconcile against prior work FIRST
+
+**Do this before downloading anything from BLS.** Reported (unverified from
+this repo): Eckhardt & Goldschlag, *AI and Jobs: The Final Word (Until the Next
+One)* (2025), chose AIOE specifically because ability-level exposure makes
+crosswalking more accurate, compared two crosswalk approaches, and published
+their data on GitHub.
+
+1. Locate that repository and their crosswalked AIOE file.
+2. Merge it against `dax/data_built/oews_wages.parquet` and report coverage,
+   especially major group 15.
+3. **If their file resolves the target occupations**, adopt it as the primary
+   crosswalked measure, cite it, and reduce the rest of this task to a
+   documented comparison. You have saved a week and learned that the exact-code
+   merge — not the measure — was the problem.
+4. **If it does not**, proceed to build below, and record precisely what theirs
+   does not cover.
+
+Either way, record in the receipt: their repo URL, commit hash, file sha256,
+and their stated crosswalk method. Emit `NEED_HUMAN` if you cannot find it
+rather than assuming it does not exist.
+
+## Inputs you must fetch (only if Step 0 does not resolve it)
 
 The session that wrote this brief had no network access to bls.gov. Fetch with
 locators and checksums; record both in the receipt.

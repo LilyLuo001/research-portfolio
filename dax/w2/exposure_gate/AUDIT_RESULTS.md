@@ -59,7 +59,15 @@ AIOE and Dingel-Neiman are published on exactly the same list of 6-digit SOC cod
 
 *Repair status:* BLOCKED in this environment: mapping SOC 2010 to SOC 2018 requires the official BLS/Census crosswalk, and bls.gov and census.gov are unreachable from this session (proxy CONNECT returns 403). The audit therefore reports the loss rather than repairing it.
 
-### Largest OEWS-2021 occupations with no AIOE / Dingel–Neiman value
+### Largest OEWS-2021 occupations unmatched by an exact-code merge
+
+These occupations are **not absent from AIOE or Dingel–Neiman**. Both
+sources cover them under their SOC 2010 codes; SOC 2018 renumbered
+major group 15 almost entirely, so an exact-code merge onto the OEWS
+2021 taxonomy fails to find them. Software Developers, for instance, is
+15-1132 and 15-1133 in AIOE and 15-1252 in OEWS 2021. What the table
+measures is the cost of merging without a crosswalk, not a gap in the
+measures.
 
 | SOC | occupation | employment | share |
 |---|---|---:|---:|

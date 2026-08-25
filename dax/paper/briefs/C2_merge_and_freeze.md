@@ -54,6 +54,23 @@ the actual panel, clustering on occupation. Report MDE for:
 This is a design input, not a result, and it is computed on the pre-period
 only. **Do not estimate the treatment effect in this task.**
 
+## Novelty gate — runs BEFORE the freeze
+
+`CHAPTER_SCOPE_v1.md` §2.4 lists four second-hand claims about what is already
+published, none verified from this repo. Verify each and record the result with
+a locator. In particular:
+
+- Did EIG test whether the **crosswalk choice moves the coefficient**, or only
+  whether it improves measure construction? The chapter's question survives
+  only in the second case.
+- Did Brynjolfsson, Chandar & Chen add telework robustness in their Aug 2026
+  version? If so, demote telework to a supporting appendix.
+
+If the chapter's question turns out to be answered in public, **stop and emit
+`NEED_HUMAN` before the freeze.** Do not proceed to estimate a question someone
+has already published. This gate exists because it is cheaper to lose a week
+here than to write a chapter that a committee can dismiss with one citation.
+
 ## Freeze
 
 Emit `dax/paper/DESIGN_FREEZE_v1.md`: the estimating equation as it will be

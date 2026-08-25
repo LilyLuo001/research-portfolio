@@ -7,25 +7,36 @@ memo is archived, not retracted — see `dax/memo/DAX_ARCHIVE_2026-08-25.md`.
 
 ## 1. The question
 
-> Using nationally representative CPS data, is the reported deterioration in
-> young employment in AI-exposed occupations robust across alternative exposure
-> measures, occupational-code vintages, pre-existing trends, and remote-work
-> exposure?
+> Does the occupational-code crosswalk decision — which every paper in this
+> literature makes and none reports — change the estimated young-worker AI
+> exposure gradient, and what magnitudes can nationally representative data
+> detect at all?
 
-One bounded contribution. Not a structural index, not a theory of occupational
-adjustment, not a firm-level mechanism the data cannot observe.
+One bounded contribution: the sensitivity of a headline labour-market finding
+to an unglamorous measurement decision, plus the detectable range in public
+data. Not a structural index, not a theory of occupational adjustment, not a
+firm-level mechanism the data cannot observe.
+
+**Deliberately NOT "is the deterioration robust across measures?"** That
+question is crowded — see §2.4 — and arriving at a crowded question with a
+smaller sample is a bad position.
 
 ## 2. Why the question is worth asking
 
 Three facts, all measured in this repo, none taken on faith:
 
-1. **The standard exposure measures are on a stale taxonomy.** AIOE (Felten,
-   Raj & Seamans) and Dingel–Neiman publish on an identical list of SOC 2010
-   codes. Merged against OEWS 2021 they silently drop **19.65% of employment**,
-   and the loss is not uniform: SOC major group 15 matches 4 of its 21 OEWS
-   occupations and loses **96.7%** of its employment. Software Developers,
-   Computer Systems Analysts, Computer User Support Specialists and Project
-   Management Specialists have no AIOE value at all.
+1. **Merging the standard measures requires a crosswalk decision that papers
+   make silently.** AIOE (Felten, Raj & Seamans) and Dingel–Neiman publish on
+   an identical list of 774 SOC 2010 codes with full coverage. SOC 2018
+   renumbered essentially all of major group 15, so an **exact-code merge**
+   onto a 2018-vintage target drops **19.65% of employment** and **96.7%** of
+   major group 15.
+
+   This is a property of the merge, not of the measures. AIOE covers Software
+   Developers at 15-1132 (+1.20) and 15-1133 (+1.28); OEWS 2021 calls them
+   15-1252. Nothing is missing from AIOE. What is unresolved is whether the
+   crosswalk choice — and every paper in this literature makes one — moves the
+   estimated coefficient.
 2. **AI exposure and remote-work feasibility are entangled.** Employment-
    weighted R² against Dingel–Neiman teleworkability runs 0.09 (Eloundou α) to
    0.58 (AIOE). Emanuel, Harrington & Pallais attribute 64% of the rise in
@@ -39,17 +50,43 @@ Three facts, all measured in this repo, none taken on faith:
 
 Source: `dax/w2/exposure_gate/AUDIT_RESULTS.md`, receipt and lineage alongside.
 
+### 2.4 What is already crowded — VERIFY BEFORE THE FREEZE
+
+The following are reported second-hand and **none has been verified from this
+repo** (no network access at the time of writing). Each is cheap to check and
+each would reshape the chapter. Treat them as claims to confirm, not facts.
+
+| claim to verify | if true, consequence |
+|---|---|
+| Eckhardt & Goldschlag (EIG), *AI and Jobs: The Final Word (Until the Next One)* (2025), chose AIOE **because** ability-level exposure makes crosswalking more accurate, compared two crosswalk approaches, and published data on GitHub | the crosswalk *construction* is done. Reconcile against their file rather than rebuilding. §1's question survives only if they did not test the **coefficient's** sensitivity |
+| EIG report findings "similar across all the available measures" | "is it robust across measures?" is answered in public. Do not re-ask it |
+| Budget Lab SDID finds nulls | the estimate this chapter bounds may already be contested |
+| Brynjolfsson, Chandar & Chen (Aug 2026 version) added interest-rate controls (Zens et al.) **and telework robustness** | fact 2 above is substantially pre-empted; the telework angle becomes a supporting appendix, not a contribution |
+
+**Audit item 10 (novelty verification) is now a gate, not an open item.** It
+runs before the design freeze in C2, not after estimation.
+
 ## 3. The pre-commitment that makes this chapter completable
 
 **The chapter's claim is about what nationally representative data can and
 cannot establish.** It is therefore complete under either branch of the
 central estimate, using identical tables and figures:
 
-- **Estimates informative** → a robustness paper. Which exposure measures
-  sustain the finding, which do not, and what the disagreement is driven by.
-- **Estimates imprecise** → a bounding paper. Public data cannot adjudicate
-  this, and here is exactly why: coverage, vintage, and telework collinearity,
-  each quantified.
+- **Estimates informative** → a sensitivity paper. Whether and how far the
+  crosswalk decision moves the young-worker gradient, and which measures the
+  movement is largest for.
+- **Estimates imprecise** → a bounds paper, and it must be the *strong* version
+  of that. "Nationally representative data cannot adjudicate this" is a
+  footnote in someone else's paper, not a chapter. The chapter version is:
+  **state the minimum effect CPS can detect at conventional power, then report
+  whether the published proprietary-data estimate falls inside or outside that
+  interval.** If it falls inside, public data is simply silent and that is a
+  quantified statement about the evidence base. If it falls outside, the
+  proprietary estimate is larger than anything CPS could have missed, which is
+  a substantive finding about the two data sources.
+
+  This distinction is the difference between a chapter and a note. Do not write
+  the weak version.
 
 This is recorded *before* any estimate is produced. It is not a licence to
 report whichever branch looks better — **both branches are written from the
