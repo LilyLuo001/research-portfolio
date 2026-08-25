@@ -271,7 +271,7 @@ def main():
     )
     employment_variant = (
         employment_map.groupby("census_2018")
-        .apply(weighted_value, include_groups=False)
+        .apply(weighted_value)
         .rename("AIOE_oews2018_source_weighted")
         .reset_index()
     )
@@ -281,6 +281,18 @@ def main():
         .merge(direct, on="census_2018", how="outer")
         .merge(employment_variant, on="census_2018", how="outer")
     )
+    variant_export = variants.rename(
+        columns={
+            "AIOE_admin": "aioe_admin_equal",
+            "AIOE_wgt": "aioe_ability_direct",
+            "AIOE_oews2018_source_weighted": "aioe_oews2018_source_weighted",
+        }
+    )[[
+        "census_2018",
+        "aioe_admin_equal",
+        "aioe_ability_direct",
+        "aioe_oews2018_source_weighted",
+    ]].sort_values("census_2018")
     columns = [
         "AIOE_admin", "AIOE_sim", "AIOE_wgt", "AIOE_oews2018_source_weighted"
     ]
@@ -296,7 +308,7 @@ def main():
     )
     soc_employment = (
         soc_map.groupby("soc_2018")
-        .apply(weighted_value, include_groups=False)
+        .apply(weighted_value)
         .rename("source_weighted")
         .reset_index()
     )
@@ -507,6 +519,11 @@ def main():
         str(Path(__file__).with_name("CROSSWALK_GATE_RESULTS.json")),
     ))
     path.write_text(json.dumps(output, indent=2, sort_keys=True) + "\n")
+    variant_path = Path(os.environ.get(
+        "DAX_CENSUS2018_VARIANT_OUTPUT",
+        str(Path(__file__).with_name("CENSUS2018_EXPOSURE_VARIANTS.csv")),
+    ))
+    variant_export.to_csv(variant_path, index=False, float_format="%.12g")
     print(json.dumps(output, indent=2, sort_keys=True))
 
 
