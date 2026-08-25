@@ -27,6 +27,9 @@ WIDE_STRUCTURAL_RECEIPT = (
     / "power_calcs"
     / "ipums_ai_telework_extract_v2_structural_validation_receipt.json"
 )
+MARCH_PATCH_SPEC = (
+    ROOT / "memo" / "power_calcs" / "ipums_ai_telework_march_patch_v1.json"
+)
 
 
 def test_frozen_spec_is_pre_event_only():
@@ -126,3 +129,25 @@ def test_wide_extract_9_passed_outcome_blind_structural_validation():
     )
     assert receipt["column_count"] == 39
     assert receipt["errors"] == []
+
+
+def test_march_patch_is_exact_unsubmitted_basic_sample_request():
+    wide = json.loads(WIDE_SPEC.read_text(encoding="utf-8"))
+    patch = json.loads(MARCH_PATCH_SPEC.read_text(encoding="utf-8"))
+    assert patch["samples"] == {
+        "cps2017_03b": {},
+        "cps2018_03b": {},
+        "cps2019_03b": {},
+        "cps2020_03b": {},
+        "cps2021_03b": {},
+    }
+    assert patch["variables"] == wide["variables"]
+    assert len(patch["variables"]) == 32
+    assert patch["dataStructure"] == wide["dataStructure"]
+    assert patch["description"].startswith("PREPARED NOT SUBMITTED")
+    for suffix in ("submission_receipt", "download_receipt", "validation_receipt"):
+        artifact = (
+            ROOT / "memo" / "power_calcs"
+            / f"ipums_ai_telework_march_patch_v1_{suffix}.json"
+        )
+        assert not artifact.exists()

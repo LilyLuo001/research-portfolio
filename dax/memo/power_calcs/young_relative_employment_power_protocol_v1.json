@@ -1,5 +1,5 @@
 {
-  "status": "BLOCKED_PENDING_C1_AND_CODEBOOK_RECODES",
+  "status": "BLOCKED_PENDING_C1",
   "protocol_version": "cps-young-relative-employment-power-v1",
   "prepared_date": "2026-08-25",
   "post_outcomes_permitted": false,
@@ -10,13 +10,35 @@
     "submitted_spec_sha256": "bd798b9dfe11d00153856be3e05a7c52865a149dcc7405a5cbfd812eb3ca6c3a",
     "first_month": "2017-01",
     "last_month": "2026-07",
+    "requested_sample_count": 114,
+    "usable_basic_month_count": 109,
+    "usable_preperiod_month_count": 66,
     "missing_months": ["2025-10"],
+    "structural_asec_gaps": [
+      "2017-03",
+      "2018-03",
+      "2019-03",
+      "2020-03",
+      "2021-03"
+    ],
+    "structural_gap_rule": "omit; never substitute ASECWT for WTFINL",
+    "corrective_spec": "dax/memo/power_calcs/ipums_ai_telework_march_patch_v1.json",
+    "corrective_spec_status": "PREPARED_NOT_SUBMITTED",
     "pre_outcome_last_month": "2022-11",
     "download_status": "COMPLETED_CHECKSUM_VERIFIED",
     "structural_validation_status": "PASS",
     "row_count": 9262480,
     "output_column_count": 39,
     "outcomes_inspected_during_validation": false
+  },
+  "recode_contract": {
+    "path": "dax/memo/power_calcs/cps_recode_contract_v1.json",
+    "status": "PASS_METADATA_ONLY",
+    "microdata_read": false,
+    "employment_codes": [10, 12],
+    "occ2010_niu_code": 9999,
+    "weight_rule": "finite WTFINL strictly greater than zero; delivered CSV value used directly",
+    "raw_occ_role": "classification-vintage audit only; never exposure merge"
   },
   "estimand": {
     "outcome": "WTFINL-weighted employed headcount",

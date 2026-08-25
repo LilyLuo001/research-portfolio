@@ -2,7 +2,7 @@
 
 **Prepared:** 2026-08-25
 
-**Status:** `BLOCKED_NOT_FROZEN`
+**Status:** `BLOCKED_PENDING_C1`
 
 **Outcome seal:** no wide-extract outcome estimate may be run from this document.
 
@@ -14,22 +14,32 @@ only the new 2017--2026 wide panel remains outcome-sealed.
 ## 1. Inputs and gates
 
 1. IPUMS extract **9** is the only admissible wide extract. It supersedes
-   extract 8, contains 114 monthly samples from 2017-01 through 2026-07 with
-   2025-10 absent, and has submitted-spec SHA-256
+   extract 8. The request contains 114 monthly samples from 2017-01 through
+   2026-07 with 2025-10 absent and has submitted-spec SHA-256
    `bd798b9dfe11d00153856be3e05a7c52865a149dcc7405a5cbfd812eb3ca6c3a`.
    It completed and was checksum-verified after this candidate was started;
    the data SHA-256 is
    `3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9`.
    Structural validation passed without reading an outcome field: 9,262,480
-   rows, 114 months, ages 16--75, 39 output columns, and no errors.
+   rows, 114 requested sample months, ages 16--75, 39 output columns, and no
+   errors. The extract-9 codebook subsequently established that the March
+   2017--2021 samples are ASEC rather than monthly-basic samples and do not
+   supply `WTFINL`. They are structural gaps, leaving 109 usable basic months
+   overall and 66 usable pre-period months. `ASECWT` must never be substituted.
 2. The exact submitted request is
    `dax/memo/power_calcs/ipums_ai_telework_extract_v2.json`; the sanitized
    submission receipt is beside it. Extract 8 must never be analyzed.
 3. C1 must supply the official-crosswalk exposure panel and pass its coverage
    tests before this document can become `DESIGN_FREEZE_v1.md`.
-4. Before freezing, use the extract-9 codebook (not memory) to record exact
-   `EMPSTAT`, `OCC2010`, missing-value, and any `CLASSWKR` recodes.
-5. Power uses only 2017-01 through 2022-11 outcomes. Treatment estimates,
+4. The metadata-only contract
+   `dax/memo/power_calcs/cps_recode_contract_v1.json` records exact extract-9
+   `EMPSTAT`, `OCC`, `OCC2010`, `CLASSWKR`, `WKSTAT`, `WTFINL`, and age rules.
+   It was generated from the DDI and codebook without reading microdata.
+5. The unsubmitted corrective request
+   `dax/memo/power_calcs/ipums_ai_telework_march_patch_v1.json` asks only for
+   `cps2017_03b` through `cps2021_03b`, using the identical 32 variables and
+   age restriction. It is prepared, not authorized or submitted.
+6. Power uses only 2017-01 through 2022-11 outcomes. Treatment estimates,
    post-2022-11 summaries, and `dax/analysis/outcomes/` remain prohibited.
 
 ## 2. What CPS can and cannot test
@@ -56,8 +66,9 @@ comparable log magnitude.
 
 - Employed people ages 22--65 in the monthly basic CPS.
 - Young group: ages 22--25. Comparison group: ages 26--65.
-- Employment is defined from the extract-9 codebook; the expected IPUMS codes
-  `{10, 12}` are not binding until that codebook is checked.
+- Employment is defined from the extract-9 codebook as `EMPSTAT` codes
+  `{10, 12}` (at work; has job, not at work). `00`, `01`, `20`--`22`, and
+  `30`--`36` are excluded.
 - Occupation is used only for employed people. The chapter does not assign a
   current occupation to a non-employed person and does not estimate an
   individual employment probability conditional on current occupation.
@@ -136,7 +147,9 @@ chapter.
 
 Power is computed before post-period outcomes are opened.
 
-1. Build occupation x age-group x month headcounts from 2017-01--2022-11.
+1. Build occupation x age-group x month headcounts from the 66 usable monthly-
+   basic samples in 2017-01--2022-11. Omit the five ASEC March gaps unless the
+   corrective basic-month extract is separately authorized and validated.
 2. Preserve the same occupation support and the planned post-month calendar,
    including the missing 2025-10 month.
 3. Construct null pseudo-post panels by rotating whole pre-period calendar-
@@ -228,7 +241,9 @@ validate the primary PPML design or establish novelty.
 
 | gate | threshold fixed here | result | pass |
 |---|---|---|---|
-| extract 9 completed, checksummed, structurally valid | exact submitted hash; 9,262,480 rows; 114 months; outcome fields not read | PASS | yes |
+| extract 9 completed, checksummed, structurally valid | exact submitted hash; 9,262,480 rows; 114 requested samples; outcome fields not read | PASS | yes |
+| codebook recode contract | exact metadata-derived rules; no microdata read | PASS | yes |
+| usable basic-month coverage | 109 overall; 66 pre-period; five ASEC March gaps omitted | PASS_WITH_STRUCTURAL_GAPS | yes |
 | C1 exposure coverage | C1 predeclared gate | — | — |
 | Dallas Chart 1 pipeline | published endpoints within 0.02 pp, or documented unresolved input | — | — |
 | 19% detection power | >= 0.80 | — | — |
@@ -240,8 +255,9 @@ validate the primary PPML design or establish novelty.
 ## 11. Requirements before renaming this file
 
 Do not rename this candidate to `DESIGN_FREEZE_v1.md` and do not create a tag
-until C1 passes, exact codebook recodes and exposure-quintile cut points are
-filled, the power code passes synthetic
-tests, and the pre-period-only power receipt is committed. Because related
+until C1 passes, exposure-quintile cut points are filled, and the pre-period-
+only power receipt is committed. The exact codebook recodes are now recorded,
+and the power scaffold passes synthetic-only tests; neither result authorizes
+opening post-period outcomes or running real power before C1. Because related
 short-panel outcomes and published CPS figures already exist, any eventual tag
 must be called a **design freeze**, not a prospective preregistration.

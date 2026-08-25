@@ -15,7 +15,7 @@ DESIGN = ROOT / "paper" / "DESIGN_FREEZE_CANDIDATE_v1.md"
 
 def test_protocol_is_fail_closed_and_uses_only_pre_outcomes():
     protocol = json.loads(PROTOCOL.read_text(encoding="utf-8"))
-    assert protocol["status"] == "BLOCKED_PENDING_C1_AND_CODEBOOK_RECODES"
+    assert protocol["status"] == "BLOCKED_PENDING_C1"
     assert protocol["post_outcomes_permitted"] is False
     assert protocol["wide_extract"]["pre_outcome_last_month"] == "2022-11"
     assert protocol["wide_extract"]["structural_validation_status"] == "PASS"
@@ -23,6 +23,16 @@ def test_protocol_is_fail_closed_and_uses_only_pre_outcomes():
     assert protocol["wide_extract"]["row_count"] == 9262480
     assert protocol["timing"]["post_first_month"] == "2022-12"
     assert protocol["wide_extract"]["missing_months"] == ["2025-10"]
+    assert protocol["wide_extract"]["usable_basic_month_count"] == 109
+    assert protocol["wide_extract"]["usable_preperiod_month_count"] == 66
+    assert protocol["wide_extract"]["structural_asec_gaps"] == [
+        "2017-03", "2018-03", "2019-03", "2020-03", "2021-03",
+    ]
+    assert protocol["wide_extract"]["corrective_spec_status"] == (
+        "PREPARED_NOT_SUBMITTED"
+    )
+    assert protocol["recode_contract"]["status"] == "PASS_METADATA_ONLY"
+    assert protocol["recode_contract"]["microdata_read"] is False
 
 
 def test_external_declines_are_mapped_to_log_contrasts():
