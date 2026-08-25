@@ -79,12 +79,26 @@ def test_cells_use_raw_occ_role_join_and_omit_asec_march():
 
 
 def test_nonfull_route_coverage_and_duplicate_lookup_fail_closed():
-    lookup = lookup_fixture().iloc[:-1].copy()
-    with pytest.raises(ValueError, match="below 0.90"):
-        CELLS.build_cells(
-            fixture(), CONTRACT, lookup, bridge_fixture(),
-            require_complete_months=False,
-        )
+    frame = fixture()
+    extra = pd.DataFrame([
+        {"YEAR": 2017, "MONTH": 2, "AGE": age, "EMPSTAT": 10,
+         "OCC": 105, "OCC2010": 1020, "CLASSWKR": 22,
+         "WKSTAT": 11, "WTFINL": 1.0}
+        for age in (22, 40)
+    ])
+    frame = pd.concat([frame, extra], ignore_index=True)
+    bridge = pd.concat([bridge_fixture(), pd.DataFrame({
+        "census_2010": ["0105"], "census_2018": ["0105"],
+        "bridge_weight": [1.0],
+    })], ignore_index=True)
+    lookup = lookup_fixture().copy()
+    cells, receipt = CELLS.build_cells(
+        frame, CONTRACT, lookup, bridge,
+        require_complete_months=False,
+    )
+    assert receipt["status"] == "FAIL_PRIMARY_EXPOSURE_COVERAGE"
+    assert receipt["covered_route_mass_fraction"] == pytest.approx(10 / 12)
+    assert not cells.empty
     duplicate = pd.concat([lookup_fixture(), lookup_fixture().iloc[[0]]])
     with pytest.raises(ValueError, match=r"duplicate lookup_role\+occ_code"):
         CELLS.build_cells(

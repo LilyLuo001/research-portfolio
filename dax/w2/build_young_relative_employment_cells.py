@@ -286,11 +286,17 @@ def build_cells(
     covered_fraction = (
         1.0 - excluded_weight / total_route_weight if total_route_weight > 0 else 0.0
     )
-    if covered_fraction < MIN_PRIMARY_WEIGHT_COVERAGE:
-        raise ValueError(
-            f"primary exposure weight coverage {covered_fraction:.6f} is below "
-            f"{MIN_PRIMARY_WEIGHT_COVERAGE:.2f}"
-        )
+    coverage_pass = covered_fraction >= MIN_PRIMARY_WEIGHT_COVERAGE
+    missing_bridge_by_code = (
+        early_base.loc[missing_bridge]
+        .groupby("source_occ_code")["_weight"].sum()
+        .sort_values(ascending=False).head(25)
+    )
+    missing_exposure_by_code = (
+        merged.loc[~full_exposure]
+        .groupby("occ_code")["_weight"].sum()
+        .sort_values(ascending=False).head(25)
+    )
     merged = merged.loc[full_exposure].drop(columns="_merge").copy()
     route_mass = (
         merged.groupby(["lookup_role", "occ_code", "dv_rating_beta"], as_index=False)["_weight"]
@@ -324,7 +330,10 @@ def build_cells(
     general_wage = classwkr.isin(contract["class_of_worker"]["general_wage_salary_codes"])
     receipt = {
         "record_version": "cps-young-relative-employment-target-occ-cells-v3",
-        "status": "PASS_PREPERIOD_CELLS",
+        "status": (
+            "PASS_PREPERIOD_CELLS" if coverage_pass
+            else "FAIL_PRIMARY_EXPOSURE_COVERAGE"
+        ),
         "post_outcomes_read": False,
         "primary_occupation_variable": "OCC",
         "pre2020_mapping": "raw OCC probabilistically expanded to Census-2018 with official conversion rates",
@@ -343,6 +352,15 @@ def build_cells(
         "excluded_total_weight": excluded_weight,
         "covered_route_mass_fraction": covered_fraction,
         "minimum_coverage_threshold": MIN_PRIMARY_WEIGHT_COVERAGE,
+        "coverage_gate_pass": coverage_pass,
+        "largest_missing_bridge_source_codes": [
+            {"occ_code": str(code), "weight": float(value)}
+            for code, value in missing_bridge_by_code.items()
+        ],
+        "largest_nonfull_exposure_target_codes": [
+            {"occ_code": str(code), "weight": float(value)}
+            for code, value in missing_exposure_by_code.items()
+        ],
         "lookup_route_count": int(len(lookup)),
         "matched_route_count": int(route_mass.shape[0]),
         "quintile_measure": "dv_rating_beta",
@@ -395,7 +413,7 @@ def main() -> int:
         "post_outcomes_read": receipt["post_outcomes_read"],
         "covered_route_mass_fraction": receipt["covered_route_mass_fraction"],
     }, indent=2))
-    return 0
+    return 0 if receipt["status"] == "PASS_PREPERIOD_CELLS" else 2
 
 
 if __name__ == "__main__":
