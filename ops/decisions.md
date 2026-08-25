@@ -655,3 +655,40 @@ Two further pre-T5 items surfaced by the same review:
     demoted to robustness.
 
 Full analysis: p1/ROADMAP-2026-08-19.md
+
+## P1-B1 EVENT-SET RECONCILIATION 2026-08-19 (seat C) — two decisions now coupled
+
+`p1/t1_reconcile/` — offline, no WRDS. Regenerate with `sample_scenarios.py`.
+
+NEW FINDING 1 — V-1 (DFA) and V-6 (international sleeve) COMPOUND:
+  >=0.5%  excl DFA                 36 stocks  (floor 33) — powered by 3
+          excl DFA + Option A      28 stocks  — BELOW FLOOR
+          excl DFA + A-strict      20 stocks  — BELOW FLOOR
+  Four of the ten treated waves (W003/W020/W043/W075) are international-only and
+  sit almost entirely in the non-DFA remainder — the exact arm the exclude-DFA
+  robustness check depends on. These were being decided separately; they cannot be.
+  RECOMMENDATION for V-6: Option A, not A-strict. A-strict costs 8 more stocks in
+  the arm least able to afford them; the DFA anchor wave is no_intl either way.
+
+NEW FINDING 2 — the >=1% dose tier is underpowered AS BUILT: 24 stocks < 33.
+  §8 item 4 makes dose tiers a robustness axis, so the >=1% tier cannot carry a
+  robustness claim on its own. Report it as descriptive, or move the tier line.
+
+NEW FINDING 3 — asset_class is BLANK on 25/131 events (19.1%), 15 accessions.
+  This is the field defining the equity_US universe, so "36 equity_US" is a floor.
+  BUT: zero treated cells at either dose tier sit in a wave containing an
+  unclassified fund, so finishing the classification CANNOT change any scenario
+  above. V-1 must be decided on the numbers as they stand — the backlog is not an
+  escape hatch. Classification is prepared as a box task (sec.gov is EGRESS_BLOCKED
+  here — verified by curl and WebFetch): asset_class_TODO.csv carries a locator for
+  all 25 rows; apply_asset_class.py refuses a class without an evidence quote,
+  refuses to overwrite an existing class, and refuses a non-frozen value.
+
+V-4 COMPLETENESS, now reconciled: 131 events vs a published industry 203. P1's own
+T1 QC report already diagnosed both causes and both are still OPEN — §5 structural
+undercount (one JSON object per filing collapsed multi-fund filings; partially
+repaired, but Goldman is 1 row where the reference channel found 4+2) and §3
+correlated contamination (~18% of A-and-B-agreed events are CEF->ETF, CEF->MF or
+share-class aging; dual-channel agreement cannot screen it). The QC's reference
+channel covered families A-G only: 72 events audited, 59 in the unaudited H-Z region.
+131 is an undercount and an overcount at the same time, on different rows.
