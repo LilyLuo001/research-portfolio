@@ -12,7 +12,7 @@ import math
 import pathlib
 
 MODULE = (pathlib.Path(__file__).resolve().parents[1]
-          / "w2" / "exposure_gate" / "audit_common_support.py")
+          / "measurement" / "audit_common_support.py")
 SPEC = importlib.util.spec_from_file_location("audit_common_support", MODULE)
 assert SPEC and SPEC.loader
 audit = importlib.util.module_from_spec(SPEC)

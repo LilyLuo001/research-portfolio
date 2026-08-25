@@ -4,7 +4,7 @@
 
 ## The error
 
-`CHAPTER_SCOPE_v1.md` and `briefs/C1_crosswalk_repair.md` claimed that Software
+`RESEARCH_PLAN_v1.md` and `briefs/C1_crosswalk_repair.md` claimed that Software
 Developers, Computer Systems Analysts, Computer User Support Specialists and
 Project Management Specialists "have no AIOE value at all", and that AIOE
 "structurally omits the occupations where the finding is claimed to occur".
@@ -47,7 +47,7 @@ repair as stated is debugging, not a contribution.
 The chapter survives at a different altitude, and a narrower one: **does the
 crosswalk vintage decision change the estimated young-worker gradient?** Every
 paper in this literature makes that decision; none reports it. That is a
-legitimate methods contribution and it is what `CHAPTER_SCOPE_v1.md` §1 now
+legitimate methods contribution and it is what `RESEARCH_PLAN_v1.md` §1 now
 asks.
 
 ## The pattern, recorded

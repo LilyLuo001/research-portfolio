@@ -26,7 +26,7 @@ one replication package.
 support, SOC vintage, residual concentration, leave-one-out, the named
 occupations supplying identifying variation.
 
-## Framing — decided in advance, per `CHAPTER_SCOPE_v1.md` §3
+## Framing — decided in advance, per `RESEARCH_PLAN_v1.md` §3
 
 - **If the estimates are informative:** a robustness paper. Which measures
   sustain the finding, which do not, what drives the disagreement.

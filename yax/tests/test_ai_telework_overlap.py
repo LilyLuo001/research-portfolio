@@ -15,11 +15,11 @@ import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "ai_vs_telework_overlap", ROOT / "w2" / "exposure_gate" / "ai_vs_telework_overlap.py")
+    "ai_vs_telework_overlap", ROOT / "measurement" / "ai_vs_telework_overlap.py")
 G = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(G)
 
-RECEIPT = ROOT / "w2" / "exposure_gate" / "ai_telework_overlap_receipt.json"
+RECEIPT = ROOT / "measurement" / "ai_telework_overlap_receipt.json"
 
 
 def test_soc_truncation_handles_both_code_widths():

@@ -25,7 +25,7 @@ Report merge coverage honestly at every hop: unmatched CPS person-months and
 their weighted share. An unmatched person-month is a row with null exposure,
 never a dropped row.
 
-Variables per `CHAPTER_SCOPE_v1.md` §5, which is binding:
+Variables per `RESEARCH_PLAN_v1.md` §5, which is binding:
 
 - ages 16–75; young = 20–29 primary, 16–24 and 22–27 as pre-specified alternates
 - employment from `EMPSTAT` ∈ {10, 12}
@@ -56,7 +56,7 @@ only. **Do not estimate the treatment effect in this task.**
 
 ## Novelty gate — runs BEFORE the freeze
 
-`CHAPTER_SCOPE_v1.md` §2.4 lists four second-hand claims about what is already
+`RESEARCH_PLAN_v1.md` §2.4 lists four second-hand claims about what is already
 published, none verified from this repo. Verify each and record the result with
 a locator. In particular:
 
@@ -73,7 +73,7 @@ here than to write a chapter that a committee can dismiss with one citation.
 
 ## Freeze
 
-Emit `dax/paper/DESIGN_FREEZE_v1.md`: the estimating equation as it will be
+Emit `yax/DESIGN_FREEZE_v1.md`: the estimating equation as it will be
 run, the table shells with empty cells, and the sha256 of the analysis panel.
 Commit it. **Everything after this commit is an estimate, and the first run of
 each table is the reported run.**

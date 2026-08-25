@@ -6,7 +6,7 @@
 > 2026-12-11 shutdown dates) could not be met: 0 of 22 vintages captured, and
 > the vintages are withdrawn on fixed external dates. That is a feasibility
 > failure, not a scientific refutation — see `DAX_ARCHIVE_2026-08-25.md`.
-> The active research object is `dax/paper/CHAPTER_SCOPE_v1.md`.
+> The active research object is `yax/RESEARCH_PLAN_v1.md` (project YAX).
 
 **Status:** v2 draft — PRIMARY DESIGN AMENDED 2026-08-18; not pre-registered
 

@@ -26,12 +26,12 @@ observe; rescuing DAX; matching proprietary payroll precision.
 
 ## Read before starting
 
-- `dax/paper/CHAPTER_SCOPE_v1.md` — the frozen sample, specification and
+- `yax/RESEARCH_PLAN_v1.md` — the frozen sample, specification and
   deliverables. §5 and §6 are binding. You may not alter them; if one is wrong,
   stop and say so.
-- `dax/w2/exposure_gate/AUDIT_RESULTS.md` — what is already known about the
+- `yax/measurement/AUDIT_RESULTS.md` — what is already known about the
   exposure measures. Do not re-derive it.
-- `dax/memo/DAX_ARCHIVE_2026-08-25.md` — why the previous work stream stopped.
+- `../dax/memo/DAX_ARCHIVE_2026-08-25.md` — why the previous work stream stopped.
   Do not restart any of it.
 
 ## The five rules that override your defaults

@@ -1,5 +1,9 @@
 # Chapter scope v1 — 2026-08-25
 
+> **SUPERSEDED by `RESEARCH_PLAN_v1.md` (project YAX).** Retained for revision
+> history: this file records the scope before the power result was measured and
+> before the vintage gloss was corrected. Do not execute from it.
+
 **Third dissertation chapter. Independently authored. Not the job-market paper.**
 
 Supersedes `dax/memo/design_memo_v1.md` as the active research object. That
@@ -70,7 +74,7 @@ the contribution: AIOE and Dingel–Neiman cover the SOC 2010 taxonomy in full,
 and the 96.7% group-15 figure measures the cost of an exact-code merge, not a
 gap in the measures — see `CORRECTION_2026-08-25_vintage_gloss.md`.
 
-Sources: `dax/w2/exposure_gate/AUDIT_RESULTS.md`, the coverage-failure audit,
+Sources: `yax/measurement/AUDIT_RESULTS.md`, the coverage-failure audit,
 and the power aggregate, each with receipt and lineage.
 
 ### 2.4 What is already crowded — VERIFY BEFORE THE FREEZE
@@ -259,7 +263,7 @@ and placebo.
 
 ## 9. Execution
 
-Task briefs in `dax/paper/briefs/`. `C0_CONTEXT_PACK.md` is the header pasted
+Task briefs in `yax/briefs/`. `C0_CONTEXT_PACK.md` is the header pasted
 at the top of every task prompt; C1–C4 are one task each, run in order, one per
 session.
 

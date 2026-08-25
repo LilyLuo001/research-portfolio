@@ -14,13 +14,13 @@ Developers at 15-1132 (+1.2009) and 15-1133 (+1.2833); OEWS 2021 calls that
 occupation 15-1252. Computer Systems Analysts is 15-1121 in AIOE, 15-1211 in
 OEWS 2021. The 96.7% measures the cost of merging without a crosswalk. An
 earlier draft of this brief said AIOE "structurally omits" these occupations.
-That was false — see `dax/paper/CORRECTION_2026-08-25_vintage_gloss.md`.
+That was false — see `yax/CORRECTION_2026-08-25_vintage_gloss.md`.
 
 So this task is a **crosswalk decision**, not a repair of a broken measure. It
 matters because every paper in this literature makes this decision and none
 reports it, and because C3 tests whether the decision moves the coefficient.
 
-Measured evidence: `dax/w2/exposure_gate/AUDIT_RESULTS.md` §"Item 3".
+Measured evidence: `yax/measurement/AUDIT_RESULTS.md` §"Item 3".
 
 ## Step 0 — reconcile against prior work FIRST
 
@@ -59,7 +59,7 @@ unofficial crosswalk, a Census occupation crosswalk, or a fuzzy title match.
 
 ## What to build
 
-`dax/w2/exposure_gate/repair_soc_vintage.py`, emitting
+`yax/measurement/repair_soc_vintage.py`, emitting
 `dax/data_built/exposure_soc2018.parquet`.
 
 **Schema — frozen, do not rename:**
@@ -94,7 +94,7 @@ than proceeding to C2.
 
 ## Also produce
 
-Re-run `dax/w2/exposure_gate/audit_common_support.py` twice more, with `--oews`
+Re-run `yax/measurement/audit_common_support.py` twice more, with `--oews`
 pointing at 2019 and the recent year. This closes **audit item 2**, which is
 currently recorded as BLOCKED for exactly this reason. Save each receipt under
 a year-suffixed name; do not overwrite the 2021 receipt.

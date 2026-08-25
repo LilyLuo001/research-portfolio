@@ -25,7 +25,7 @@ alternative yourself.
    in the 1–3% range. If it is flat near 100% across the grid, stop: the
    simulation engine is understating variance and must be diagnosed first.
 3. MDE recomputed under a wild-cluster bootstrap.
-4. Novelty gate (`CHAPTER_SCOPE_v1.md` §2.4) answered.
+4. Novelty gate (`RESEARCH_PLAN_v1.md` §2.4) answered.
 5. `DESIGN_FREEZE_v1.md` committed and `v1.0-preregistered` tagged.
 
 Opening a post-period outcome before all five is the one irreversible mistake
@@ -46,7 +46,7 @@ oversized in this design — 6.6% rejection at a nominal 5%.
 **Table 1 — summary statistics.** Person-months, weighted, by age band and
 exposure quartile. Include the unmatched share.
 
-**Table 2 — primary TWFE.** `CHAPTER_SCOPE_v1.md` §6, primary measure,
+**Table 2 — primary TWFE.** `RESEARCH_PLAN_v1.md` §6, primary measure,
 clustered on occupation. Rows: baseline, + controls, + state × month, two-way
 occupation × month clustering.
 
@@ -66,7 +66,7 @@ standard error when telework enters.
 2022-10. Plus a placebo `Post` at 2018-11 on the 2017-2019 window, which must
 be null if the design is sound. **Report it whatever it shows.**
 
-**Figures 1–4** per `CHAPTER_SCOPE_v1.md` §7.
+**Figures 1–4** per `RESEARCH_PLAN_v1.md` §7.
 
 ## Reporting standard
 
@@ -90,6 +90,6 @@ bootstrap interval and the DGP's assumptions.
 - Six tables, four figures, in `dax/analysis/outcomes/` — uncommitted.
 - One receipt per table with N, clusters, weighted N, MDE, and the panel sha256.
 - A one-page `RESULTS_NOTE.md`, committed, stating which branch of the
-  `CHAPTER_SCOPE_v1.md` §3 pre-commitment the estimates fall into — informative
+  `RESEARCH_PLAN_v1.md` §3 pre-commitment the estimates fall into — informative
   or imprecise — and nothing more. No interpretation yet.
 - `pytest -q` green.

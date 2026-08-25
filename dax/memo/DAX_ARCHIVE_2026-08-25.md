@@ -69,13 +69,13 @@ These are verified, carry lineage, and remain usable by future work:
 | `dax/data_built/oews_wages.parquet` | OEWS 2021, 831 occupations |
 | `dax/data_built/onet_task_weights.parquet` | + variant sensitivity measured |
 | `dax/w2/crosswalk/build_occ2010_crosswalk.py` | 96.39% mapped component mass |
-| `dax/w2/exposure_gate/` | full measurement audit, receipts and figures |
+| `yax/measurement/` | full measurement audit, receipts and figures (moved) |
 | CPS analysis panel (SCC) | 242,474 person-months, 2021-11 → 2026-07 |
 | CPS pre-event panel (SCC) | 71,322 rows |
 
 ## What replaces it
 
-`dax/paper/CHAPTER_SCOPE_v1.md` — a self-contained third dissertation chapter
+`yax/RESEARCH_PLAN_v1.md` — YAX, a self-contained third dissertation chapter
 built on the CPS panels and the public exposure measures, requiring none of
 the blocked inputs above. The chapter needs no vendor API credentials, no
 model snapshot capture, and no NDA-restricted data.
@@ -92,5 +92,5 @@ model snapshot capture, and no NDA-restricted data.
    action in `ops/` (outside this seat's owned paths): retain lineage receipts
    and the no-specification-search rule, retire the rest.
 3. **`analysis/outcomes/` stays sealed.** The chapter defines its own
-   pre-registration in `CHAPTER_SCOPE_v1.md` §6; the `v1.0-preregistered` tag
+   pre-registration in `yax/RESEARCH_PLAN_v1.md` §9; the `v1.0-preregistered` tag
    convention carries over unchanged.
