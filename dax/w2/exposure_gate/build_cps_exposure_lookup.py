@@ -35,7 +35,14 @@ VARIANTS = (
     "aioe_admin_equal",
     "aioe_ability_direct",
     "aioe_oews2018_source_weighted",
+    "dv_rating_alpha",
+    "dv_rating_beta",
+    "dv_rating_gamma",
+    "dingel_neiman_telework",
 )
+
+AI_EXPOSURE_VARIANTS = VARIANTS[:-1]
+REMOTE_WORK_MEASURE = VARIANTS[-1]
 
 
 def sha256(path: Path) -> str:
@@ -77,10 +84,27 @@ def aggregate_routes(
         covered_mass = 0.0
         partial_sum = 0.0
         for target, _, weight in routes:
-            value = exposure_by_target.get(target, {}).get(variant)
-            if value is not None and not pd.isna(value):
-                covered_mass += weight
-                partial_sum += weight * float(value)
+            target_row = exposure_by_target.get(target, {})
+            value = target_row.get(variant)
+            target_coverage = target_row.get(
+                f"{variant}_target_soc_covered_weight"
+            )
+            target_partial = target_row.get(
+                f"{variant}_target_soc_partial_weighted_sum"
+            )
+            if target_coverage is None or pd.isna(target_coverage):
+                target_coverage = (
+                    1.0 if value is not None and not pd.isna(value) else 0.0
+                )
+            if target_partial is None or pd.isna(target_partial):
+                target_partial = (
+                    float(value)
+                    if value is not None and not pd.isna(value)
+                    else None
+                )
+            covered_mass += weight * float(target_coverage)
+            if target_partial is not None:
+                partial_sum += weight * float(target_partial)
         row[f"{variant}_covered_route_mass"] = covered_mass
         row[f"{variant}_partial_weighted_sum"] = (
             partial_sum if covered_mass > 0 else None
@@ -160,25 +184,17 @@ def build_tables(
     # occupation absent from every exposure construction.
     direct_codes = sorted(set(census_crosswalk[1]) | set(exposure_by_target))
     for code in direct_codes:
-        values = exposure_by_target.get(code, {})
-        out: dict[str, object] = {
-            "occ_code": code,
-            "n_routes": 1,
-            "max_route_weight": 1.0,
-            "route_entropy": 0.0,
+        out = aggregate_routes(
+            code,
+            [(code, census_crosswalk[1].get(code, ""), 1.0)],
+            exposure_by_target,
+            "none_direct_census_2018",
+        )
+        out.update({
             "ambiguity_status": "direct_observed_code",
-            "bridge_source": "none_direct_census_2018",
             "lookup_role": "raw_occ_main_2020_plus",
             "occ_vintage": "census_2018",
-        }
-        for variant in VARIANTS:
-            value = values.get(variant)
-            present = value is not None and not pd.isna(value)
-            out[variant] = float(value) if present else None
-            out[f"{variant}_covered_route_mass"] = 1.0 if present else 0.0
-            out[f"{variant}_partial_weighted_sum"] = (
-                float(value) if present else None
-            )
+        })
         direct_rows.append(out)
 
     lookup = pd.concat(
@@ -258,6 +274,14 @@ def main() -> None:
             "sensitivity": "harmonized OCC2010 only; never substitutes for observed post-2020 raw OCC",
             "missing_child_rule": "fail closed; partial sums reported, no renormalization around missing target exposure",
             "exposure_variants": list(VARIANTS),
+            "primary_exposure": "dv_rating_beta",
+            "remote_work_control": REMOTE_WORK_MEASURE,
+            "eloundou_notation": {
+                "source_column": "dv_rating_gamma",
+                "paper_symbol": "zeta",
+                "definition": "E1 + E2",
+                "rule": "preserve source column name; do not duplicate as a numerical alias",
+            },
         },
         "inputs": {
             str(path): sha256(path)

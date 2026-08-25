@@ -29,6 +29,8 @@ ABILITY_25_0 = RAW / "onet_25_0/db_25_0_excel.zip"
 ABILITY_25_1 = RAW / "onet_25_1/db_25_1_excel.zip"
 OEWS_2018 = RAW / "oews_2018/oesm18nat.zip"
 EIG_CODE = RAW / "eig_ai_unemployment/01 Crosswalks.R"
+ELOUNDOU = REPO / "dax/w2/exposure_gate/eloundou_occ.csv"
+DINGEL_NEIMAN = REPO / "dax/w2/exposure_gate/dingel_neiman_occ.csv"
 
 
 def sha256(path):
@@ -159,6 +161,63 @@ def weighted_value(group):
     return np.nan
 
 
+def onet_detail_to_census(
+    path, code_column, measures, soc18_census, target_soc_employment
+):
+    """Collapse O*NET detail rows to SOC 2018, then Census 2018.
+
+    The first mean preserves the source files' existing six-digit-SOC rule:
+    detail occupations within a six-digit SOC receive equal weight. The second
+    collapse uses OEWS 2021 employment weights across six-digit SOC components
+    of a broader Census occupation. No occupation titles are used. Missing
+    component exposure fails closed; it is never removed and renormalized.
+    """
+    frame = pd.read_csv(path, dtype={code_column: str})
+    missing = {code_column, *measures} - set(frame.columns)
+    if missing:
+        raise ValueError(f"{path} missing columns {sorted(missing)}")
+    frame["soc_2018"] = frame[code_column].str.strip().str[:7]
+    for measure in measures:
+        frame[measure] = pd.to_numeric(frame[measure], errors="coerce")
+    by_soc = frame.groupby("soc_2018", as_index=False)[list(measures)].mean()
+    mapped = soc18_census[["soc_2018", "census_2018"]].drop_duplicates().merge(
+        by_soc,
+        on="soc_2018",
+        how="left",
+    )
+    mapped = mapped.merge(
+        target_soc_employment[["soc_2018", "target_soc_employment"]],
+        on="soc_2018",
+        how="left",
+    )
+
+    rows = []
+    for census_code, group in mapped.groupby("census_2018", sort=True):
+        employment = group.target_soc_employment
+        if employment.notna().all() and employment.gt(0).all():
+            weights = employment / employment.sum()
+            basis = "oews_2021_employment"
+        else:
+            weights = pd.Series(1.0 / len(group), index=group.index)
+            basis = "equal_missing_oews_employment"
+        row = {
+            "census_2018": census_code,
+            "target_soc_component_count": int(len(group)),
+            "target_soc_weight_basis": basis,
+        }
+        for measure in measures:
+            available = group[measure].notna()
+            covered = float(weights.loc[available].sum())
+            partial = float((weights.loc[available] * group.loc[available, measure]).sum())
+            row[f"{measure}_target_soc_covered_weight"] = covered
+            row[f"{measure}_target_soc_partial_weighted_sum"] = (
+                partial if covered > 0 else np.nan
+            )
+            row[measure] = partial if abs(covered - 1.0) <= 1e-9 else np.nan
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
 def target_coverage(year, soc_values):
     archive = RAW / f"oews_{year}/oesm{str(year)[-2:]}nat.zip"
     with zipfile.ZipFile(archive) as zipped:
@@ -276,10 +335,66 @@ def main():
         .reset_index()
     )
 
+    oews_target_weights = pd.read_excel(
+        archive_xlsx(RAW / "oews_2021/oesm21nat.zip", "national_M2021_dl.xlsx"),
+        dtype=str,
+    )
+    oews_target_weights.columns = [
+        column.lower() for column in oews_target_weights.columns
+    ]
+    oews_target_weights = oews_target_weights.loc[
+        oews_target_weights.o_group.str.lower().eq("detailed"),
+        ["occ_code", "tot_emp"],
+    ].rename(columns={"occ_code": "soc_2018"})
+    oews_target_weights["target_soc_employment"] = pd.to_numeric(
+        oews_target_weights.tot_emp.str.replace(",", "", regex=False),
+        errors="coerce",
+    )
+    oews_target_weights = oews_target_weights[[
+        "soc_2018", "target_soc_employment"
+    ]]
+
+    eloundou_measures = (
+        "dv_rating_alpha", "dv_rating_beta", "dv_rating_gamma"
+    )
+    eloundou_target = onet_detail_to_census(
+        ELOUNDOU,
+        "O*NET-SOC Code",
+        eloundou_measures,
+        soc18_census,
+        oews_target_weights,
+    ).rename(columns={
+        "target_soc_component_count": "eloundou_target_soc_component_count",
+        "target_soc_weight_basis": "eloundou_target_soc_weight_basis",
+    })
+    telework_target = onet_detail_to_census(
+        DINGEL_NEIMAN,
+        "onetsoccode",
+        ("teleworkable",),
+        soc18_census,
+        oews_target_weights,
+    ).rename(
+        columns={
+            "teleworkable": "dingel_neiman_telework",
+            "target_soc_component_count": (
+                "dingel_neiman_target_soc_component_count"
+            ),
+            "target_soc_weight_basis": "dingel_neiman_target_soc_weight_basis",
+            "teleworkable_target_soc_covered_weight": (
+                "dingel_neiman_telework_target_soc_covered_weight"
+            ),
+            "teleworkable_target_soc_partial_weighted_sum": (
+                "dingel_neiman_telework_target_soc_partial_weighted_sum"
+            ),
+        }
+    )
+
     variants = (
         admin.merge(sim, on="census_2018", how="outer")
         .merge(direct, on="census_2018", how="outer")
         .merge(employment_variant, on="census_2018", how="outer")
+        .merge(eloundou_target, on="census_2018", how="outer")
+        .merge(telework_target, on="census_2018", how="outer")
     )
     variant_export = variants.rename(
         columns={
@@ -292,6 +407,22 @@ def main():
         "aioe_admin_equal",
         "aioe_ability_direct",
         "aioe_oews2018_source_weighted",
+        "dv_rating_alpha",
+        "dv_rating_beta",
+        "dv_rating_gamma",
+        "dingel_neiman_telework",
+        "eloundou_target_soc_component_count",
+        "eloundou_target_soc_weight_basis",
+        "dv_rating_alpha_target_soc_covered_weight",
+        "dv_rating_alpha_target_soc_partial_weighted_sum",
+        "dv_rating_beta_target_soc_covered_weight",
+        "dv_rating_beta_target_soc_partial_weighted_sum",
+        "dv_rating_gamma_target_soc_covered_weight",
+        "dv_rating_gamma_target_soc_partial_weighted_sum",
+        "dingel_neiman_target_soc_component_count",
+        "dingel_neiman_target_soc_weight_basis",
+        "dingel_neiman_telework_target_soc_covered_weight",
+        "dingel_neiman_telework_target_soc_partial_weighted_sum",
     ]].sort_values("census_2018")
     columns = [
         "AIOE_admin", "AIOE_sim", "AIOE_wgt", "AIOE_oews2018_source_weighted"
@@ -457,6 +588,34 @@ def main():
             "reconstruction and is the Felten variable used in EIG main "
             "analysis. These are not interchangeable."
         ),
+        "eloundou_notation_note": (
+            "The official source dataset names the upper-bound column "
+            "dv_rating_gamma. The published paper denotes the same E1+E2 "
+            "construct by Greek zeta. The exported field preserves the "
+            "source column name and does not create a second numerical alias."
+        ),
+        "onet_to_census2018_aggregation": {
+            "within_six_digit_soc": (
+                "equal mean across published O*NET detail occupations; no "
+                "official employment weights exist below six-digit SOC"
+            ),
+            "across_soc_components": (
+                "May 2021 OEWS target-SOC employment weights; equal fallback "
+                "is explicit when a component has no OEWS employment"
+            ),
+            "missing_exposure_rule": (
+                "fail closed with covered weight and unnormalized partial sum; "
+                "never renormalize around a missing component"
+            ),
+            "eloundou_weight_basis_counts": {
+                str(key): int(value) for key, value in
+                eloundou_target.eloundou_target_soc_weight_basis.value_counts().items()
+            },
+            "dingel_neiman_weight_basis_counts": {
+                str(key): int(value) for key, value in
+                telework_target.dingel_neiman_target_soc_weight_basis.value_counts().items()
+            },
+        },
         "sources": {
             "bls_soc_2010_to_2018": {
                 "path": str(BLS),
@@ -511,6 +670,17 @@ def main():
                 "path": str(AIOE),
                 "url": "https://github.com/AIOE-Data/AIOE",
                 "sha256": sha256(AIOE),
+            },
+            "eloundou_gpt4_occupation_exposure": {
+                "path": str(ELOUNDOU),
+                "url": "https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv",
+                "sha256": sha256(ELOUNDOU),
+                "paper_notation_locator": "https://arxiv.org/abs/2303.10130",
+            },
+            "dingel_neiman_telework": {
+                "path": str(DINGEL_NEIMAN),
+                "url": "https://github.com/jdingel/DingelNeiman-workathome",
+                "sha256": sha256(DINGEL_NEIMAN),
             },
         },
     }

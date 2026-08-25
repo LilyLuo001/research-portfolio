@@ -14,6 +14,7 @@ SPEC.loader.exec_module(GATE)
 
 
 def exposure(values):
+    assert len(values) == len(GATE.VARIANTS)
     return {
         variant: value for variant, value in zip(GATE.VARIANTS, values)
     }
@@ -21,8 +22,8 @@ def exposure(values):
 
 def test_route_weights_are_used_without_renormalization():
     rows = {
-        "1001": exposure((1.0, 2.0, 3.0)),
-        "1002": exposure((3.0, 6.0, 9.0)),
+        "1001": exposure((1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 0.0)),
+        "1002": exposure((3.0, 6.0, 9.0, 8.0, 10.0, 12.0, 1.0)),
     }
     result = GATE.aggregate_routes(
         "0100",
@@ -37,7 +38,7 @@ def test_route_weights_are_used_without_renormalization():
 
 
 def test_missing_child_fails_closed_and_keeps_partial_sum_visible():
-    rows = {"1001": exposure((2.0, 4.0, 6.0))}
+    rows = {"1001": exposure((2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 1.0))}
     result = GATE.aggregate_routes(
         "0100",
         [("1001", "11-1111", 0.25), ("1002", "11-1112", 0.75)],
@@ -49,14 +50,28 @@ def test_missing_child_fails_closed_and_keeps_partial_sum_visible():
     assert result["aioe_admin_equal_partial_weighted_sum"] == pytest.approx(0.5)
 
 
+def test_target_soc_partial_coverage_propagates_through_census_bridge():
+    row = exposure((1.0, 2.0, 3.0, None, 5.0, 6.0, 0.5))
+    row["dv_rating_alpha_target_soc_covered_weight"] = 0.8
+    row["dv_rating_alpha_target_soc_partial_weighted_sum"] = 0.4
+    result = GATE.aggregate_routes(
+        "0100", [("1001", "11-1111", 1.0)], {"1001": row}, "test"
+    )
+    assert pd.isna(result["dv_rating_alpha"])
+    assert result["dv_rating_alpha_covered_route_mass"] == pytest.approx(0.8)
+    assert result["dv_rating_alpha_partial_weighted_sum"] == pytest.approx(0.4)
+
+
 def test_variants_are_never_collapsed_into_one_measure():
     result = GATE.aggregate_routes(
         "0100",
         [("1001", "11-1111", 1.0)],
-        {"1001": exposure((1.0, 2.0, 3.0))},
+        {"1001": exposure((1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 0.5))},
         "test",
     )
-    assert [result[name] for name in GATE.VARIANTS] == [1.0, 2.0, 3.0]
+    assert [result[name] for name in GATE.VARIANTS] == [
+        1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 0.5
+    ]
 
 
 def test_ambiguity_is_explicit():
@@ -72,6 +87,10 @@ def test_output_design_keeps_direct_and_harmonized_roles_separate(monkeypatch):
             "aioe_admin_equal": [1.0],
             "aioe_ability_direct": [2.0],
             "aioe_oews2018_source_weighted": [3.0],
+            "dv_rating_alpha": [4.0],
+            "dv_rating_beta": [5.0],
+            "dv_rating_gamma": [6.0],
+            "dingel_neiman_telework": [0.5],
         }
     )
     monkeypatch.setattr(GATE, "read_total_conversion_rates", lambda _: {})
@@ -93,6 +112,8 @@ def test_output_design_keeps_direct_and_harmonized_roles_separate(monkeypatch):
     direct = lookup.loc[lookup.lookup_role.eq("raw_occ_main_2020_plus")].iloc[0]
     assert direct.occ_code == "1001"
     assert direct.aioe_ability_direct == 2.0
+    assert direct.dv_rating_beta == 5.0
+    assert direct.dingel_neiman_telework == 0.5
     assert bridge.bridge_weight.sum() == pytest.approx(1.0)
 
 
