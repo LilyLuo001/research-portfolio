@@ -7,48 +7,71 @@ memo is archived, not retracted — see `dax/memo/DAX_ARCHIVE_2026-08-25.md`.
 
 ## 1. The question
 
-> Does the occupational-code crosswalk decision — which every paper in this
-> literature makes and none reports — change the estimated young-worker AI
-> exposure gradient, and what magnitudes can nationally representative data
-> detect at all?
+> Does young employment deteriorate in AI-exposed occupations after the ChatGPT
+> release? Tested on nationally representative data, under a specification and
+> a coverage rule frozen before any post-period outcome was opened, and
+> reported against a stated minimum detectable effect.
 
-One bounded contribution: the sensitivity of a headline labour-market finding
-to an unglamorous measurement decision, plus the detectable range in public
-data. Not a structural index, not a theory of occupational adjustment, not a
-firm-level mechanism the data cannot observe.
+One bounded contribution: **a pre-registered, adequately powered, public-data
+test of a contested claim.** Not a structural index, not a theory of
+occupational adjustment, not a firm-level mechanism the data cannot observe.
 
-**Deliberately NOT "is the deterioration robust across measures?"** That
-question is crowded — see §2.4 — and arriving at a crowded question with a
-smaller sample is a bad position.
+The contribution is not the question — others ask it. It is the combination of
+three things nobody in this literature currently offers together:
+
+1. the specification fixed before the outcomes were visible, with the
+   pre-period file built outcome-blind and the post-period file sealed;
+2. a measured MDE from a 999-repetition simulation on the real panel, so a null
+   can be distinguished from an underpowered null;
+3. the exposure-coverage rule pre-specified in advance with all three variants
+   reported — see `COVERAGE_RULE_PRESPEC_v1.md`.
+
+The literature disagrees about magnitudes (ADP-based estimates large,
+public-data estimates reportedly null) and every side ran its specification
+after seeing its outcomes. That is the gap.
 
 ## 2. Why the question is worth asking
 
-Three facts, all measured in this repo, none taken on faith:
+Four facts, all measured on real data, none taken on faith:
 
-1. **Merging the standard measures requires a crosswalk decision that papers
-   make silently.** AIOE (Felten, Raj & Seamans) and Dingel–Neiman publish on
-   an identical list of 774 SOC 2010 codes with full coverage. SOC 2018
-   renumbered essentially all of major group 15, so an **exact-code merge**
-   onto a 2018-vintage target drops **19.65% of employment** and **96.7%** of
-   major group 15.
+1. **The design is powered — this is the fact that decides the chapter.** On
+   the real pre-period panel (490 occupation clusters, 66 months, 999
+   repetitions), simulated power against a 19% relative decline is **100%**,
+   and a **4.88%** relative decline still returns **98.6%** power. The MDE lies
+   below the original grid. A null in this design would therefore be an
+   informative null, not an underpowered one.
 
-   This is a property of the merge, not of the measures. AIOE covers Software
-   Developers at 15-1132 (+1.20) and 15-1133 (+1.28); OEWS 2021 calls them
-   15-1252. Nothing is missing from AIOE. What is unresolved is whether the
-   crosswalk choice — and every paper in this literature makes one — moves the
-   estimated coefficient.
-2. **AI exposure and remote-work feasibility are entangled.** Employment-
+   **Read with the caveats in §2.5.** Simulated power on a fitted DGP is an
+   upper bound, and the engine's own calibration is imperfect: the null rejects
+   at 6.6% against a nominal 5%, and interval coverage is 93–94%.
+
+2. **The exposure-coverage rule failed its own gate at 88.70%, and the failure
+   is diagnosed.** The top 25 target codes carry 93.4% of the excluded mass;
+   Janitors and Cooks alone are ~2.50% of eligible employment despite 99.38%
+   and 99.27% component coverage, because the strict rule discards a whole
+   occupation over a tiny unscored residual. All three candidate rules are
+   pre-specified in `COVERAGE_RULE_PRESPEC_v1.md` and all three are reported.
+
+3. **AI exposure and remote-work feasibility are entangled.** Employment-
    weighted R² against Dingel–Neiman teleworkability runs 0.09 (Eloundou α) to
    0.58 (AIOE). Emanuel, Harrington & Pallais attribute 64% of the rise in
-   young college-graduate unemployment to remote work; the young-worker AI
-   literature does not generally control for it.
-3. **The variation that would separate them is thin.** After removing
+   young college-graduate unemployment to remote work.
+
+4. **The variation separating them is concentrated.** After removing
    teleworkability, 14 occupations carry half the employment-weighted residual
    variance of Eloundou α; its effective number of contributing occupations is
    28 out of 669. Dropping SOC major group 43 moves its R² from 0.0909 to
-   0.0103.
+   0.0103. This bounds what any occupation-level decomposition can claim, and
+   it is reported as a limit on the design rather than as a finding about AI.
 
-Source: `dax/w2/exposure_gate/AUDIT_RESULTS.md`, receipt and lineage alongside.
+Merging the measures onto the CPS taxonomy requires a crosswalk decision that
+papers make silently. That decision is a **reported robustness dimension**, not
+the contribution: AIOE and Dingel–Neiman cover the SOC 2010 taxonomy in full,
+and the 96.7% group-15 figure measures the cost of an exact-code merge, not a
+gap in the measures — see `CORRECTION_2026-08-25_vintage_gloss.md`.
+
+Sources: `dax/w2/exposure_gate/AUDIT_RESULTS.md`, the coverage-failure audit,
+and the power aggregate, each with receipt and lineage.
 
 ### 2.4 What is already crowded — VERIFY BEFORE THE FREEZE
 
@@ -66,33 +89,46 @@ each would reshape the chapter. Treat them as claims to confirm, not facts.
 **Audit item 10 (novelty verification) is now a gate, not an open item.** It
 runs before the design freeze in C2, not after estimation.
 
-## 3. The pre-commitment that makes this chapter completable
+### 2.5 Reading the power result honestly — BINDING
 
-**The chapter's claim is about what nationally representative data can and
-cannot establish.** It is therefore complete under either branch of the
-central estimate, using identical tables and figures:
+The power number is the chapter's foundation, so it carries three standing
+constraints. None is optional.
 
-- **Estimates informative** → a sensitivity paper. Whether and how far the
-  crosswalk decision moves the young-worker gradient, and which measures the
-  movement is largest for.
-- **Estimates imprecise** → a bounds paper, and it must be the *strong* version
-  of that. "Nationally representative data cannot adjudicate this" is a
-  footnote in someone else's paper, not a chapter. The chapter version is:
-  **state the minimum effect CPS can detect at conventional power, then report
-  whether the published proprietary-data estimate falls inside or outside that
-  interval.** If it falls inside, public data is simply silent and that is a
-  quantified statement about the evidence base. If it falls outside, the
-  proprietary estimate is larger than anything CPS could have missed, which is
-  a substantive finding about the two data sources.
+1. **Report bootstrap power, not normal-critical-value power.** The engine
+   rejects at 6.6% under the null and covers at 93–94%. Inference is mildly
+   oversized, so the headline power figure must be recomputed under a
+   wild-cluster bootstrap before it appears in the manuscript.
+2. **The fine grid must show a gradient.** A healthy design has power falling
+   through 80% somewhere in the 1–3% range. If power is still near 100% at a
+   1% relative decline, the simulation is too smooth and is understating real
+   variance — treat that as an engine bug to be found, not a strong design, and
+   do not proceed to the freeze until it is explained.
+3. **Never write "100% power".** Write the MDE with its bootstrap interval and
+   the assumptions the DGP makes. Simulated power on a fitted model cannot
+   capture misspecification or unmodelled shocks, and the paper must say so.
 
-  This distinction is the difference between a chapter and a note. Do not write
-  the weak version.
+## 3. The pre-commitment
 
-This is recorded *before* any estimate is produced. It is not a licence to
-report whichever branch looks better — **both branches are written from the
-same pre-specified tables, and the first run is the reported run.** Section 6
-freezes the specification precisely so that this pre-commitment cannot decay
-into specification search.
+Power is now measured, so the old "informative vs imprecise" split is settled:
+the design is powered, and the branches are about **what the estimate shows**,
+not about whether it can show anything. All three are written from the same
+pre-specified tables and the first run is the reported run.
+
+- **A material decline** → the public-data test corroborates the proprietary-
+  data literature, with a magnitude and a stated MDE, under a frozen
+  specification. That is worth reporting precisely because nobody has done it
+  pre-registered.
+- **A null** → an *informative* null, which is the rarer and more useful
+  result. With an MDE below 5%, a null says the effect is smaller than the
+  published estimates, not that the data could not see it. This is the branch
+  that most needs the bootstrap in §2.5 to be airtight.
+- **Rules A, B and C disagree** → the finding is about the fragility of
+  occupation-level exposure measurement, reported as such, not resolved by
+  choosing a rule.
+
+**No branch is preferred and none is written before the run.** The chapter is
+complete under all three because the pre-registration and the MDE are the
+contribution; the sign of the coefficient is the content.
 
 ## 4. Data
 
@@ -100,7 +136,11 @@ into specification search.
 |---|---|---|
 | CPS analysis panel | IPUMS, SCC `dax-private/ipums/w5_analysis_extract_7/` | built, 242,474 person-months, 2021-11 → 2026-07 |
 | CPS pre-event panel | IPUMS, SCC `w1_preperiod_extract_6/` | built, 71,322 rows |
-| CPS wide panel (2017-01 →) | IPUMS, spec at `dax/memo/power_calcs/ipums_ai_telework_extract_v1.json` | **NOT SUBMITTED — critical path** |
+| CPS wide panel (2017-01 →) | IPUMS extract 9 | **BUILT AND VALIDATED — 9,262,480 rows** |
+| Pre-period file, outcome-blind | derived | **BUILT — 6,188,956 rows** |
+| Post-ChatGPT outcomes | derived | **SEALED — not opened** |
+| Occupation bridge + exposure lookup | Census 2010→2018 crosswalk, BLS SOC crosswalk | **BUILT** |
+| Power engine (PPML-equivalent) | this repo | **BUILT — 999 reps on real panel** |
 | AIOE | Felten, Raj & Seamans (2021) | vendored |
 | Eloundou α/β/γ, GPT-4 + human | Eloundou et al. (2023) | vendored |
 | Dingel–Neiman teleworkable | Dingel & Neiman (2020) | vendored |
@@ -109,11 +149,15 @@ into specification search.
 | SOC 2010 → 2018 crosswalk | BLS | **not obtained — blocks the repair** |
 | Webb (2020), Frey–Osborne (2017) | public | not obtained, optional |
 
-**The wide extract is on the critical path.** The existing panel begins
-2021-11, giving roughly twelve months of pre-period before the ChatGPT launch
-and placing the 2020 remote-work shock entirely outside the window. Pre-trends
-and remote work are two of the four robustness dimensions; neither can be
-addressed on the 2021-11 panel. Submit it first.
+The wide extract is no longer a blocker — it is built and validated, and the
+pre-period file was constructed **outcome-blind**, which is what makes the
+pre-registration claim in §1 true rather than aspirational. Keep it that way:
+the post-period file stays sealed until the tag.
+
+**Operational risk, unresolved.** This work currently lives only on two SCC
+working copies (`dax_design_power_20260825`, `dax-cps-sparse-20260825`) with
+commits cherry-picked between them and no remote. The code and receipts are not
+licensed data and belong on `origin`. Push before anything else.
 
 ## 5. Sample and variable definitions — frozen
 
@@ -148,12 +192,20 @@ addressed on the 2021-11 panel. Submit it first.
 - `Post_t` = 1 from 2022-11 (ChatGPT public release).
 - Standard errors clustered on **occupation**, which is the level of treatment.
   Report a two-way occupation × month cluster as a robustness row.
+- **Wild-cluster bootstrap is the primary inference**, not a robustness row.
+  The power engine rejects at 6.6% under a nominal 5% and covers at 93–94%, so
+  normal critical values are known to be oversized in this design. Report
+  bootstrap p-values and intervals in every main table.
 - `X_it`: education, sex, race, state, and a state × month fixed effect in the
   saturated row.
 
 **Event-time.** Same, with month-relative-to-2022-11 indicators, 2022-10
 omitted. Pre-period coefficients are the pre-trend test — **reported whatever
 they show**, never used to select a window.
+
+**Every main table carries three coverage-rule columns** — A strict, B
+sibling-imputed (primary), C renormalized — per
+`COVERAGE_RULE_PRESPEC_v1.md`. Not one primary plus footnotes.
 
 **The four robustness dimensions, each a pre-specified table:**
 
@@ -211,6 +263,16 @@ Task briefs in `dax/paper/briefs/`. `C0_CONTEXT_PACK.md` is the header pasted
 at the top of every task prompt; C1–C4 are one task each, run in order, one per
 session.
 
-Four weeks of work. Plan seven to nine calendar weeks: the IPUMS extract has
-queue time, the crosswalk repair has never been run against the official file,
-and there is no second person to unblock a failure.
+C1 and most of C2 are **done** — extract, bridge, exposure lookup, coverage
+audit, and the power engine all exist and run on real data. What remains before
+the freeze:
+
+1. the fine power grid, checked for a gradient per §2.5
+2. the wild-cluster bootstrap recomputation of the MDE
+3. the novelty gate in §2.4
+4. push everything to `origin`
+5. commit `COVERAGE_RULE_PRESPEC_v1.md` and `DESIGN_FREEZE_v1.md`, then tag
+   `v1.0-preregistered`
+
+Only then may C3 open a post-period outcome. Plan three to five calendar weeks
+from the freeze to a complete draft.
