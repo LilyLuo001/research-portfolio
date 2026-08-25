@@ -10,10 +10,15 @@ Expected schemas (C0-R):
   panel   : permno, announcement_id, type, date_ET, wave, is_treated, Post,
             ConvExp, r_total, <split cols>, beta_i, beta_b_loo, L, L_mkt,
             L_tilt, S_std (NULL legal for CPI/NFP w/o consensus), time_ET
-  betas   : permno, wave, beta_i, se_beta, n_pre_announcements, max_est_date
+  betas   : permno, wave, beta_i, se_beta, n_pre_announcements, max_est_date,
+            beta_b_loo                      (A9 reconstructs against this)
   weights : wave, permno, weight            (pre-period holdings weights)
   basket  : wave, beta_b_full               (full-basket announcement beta)
-  convexp : permno, wave, conv_exp          (P1 frozen file, read-only)
+  convexp : permno, wave_id, conv_exp, effective_date
+            P1 frozen file, READ-ONLY. Its primary key is [permno, wave_id] per
+            ops/contracts/conv_exposure.yaml — NOT `wave`. CLAUDE.md rule 3
+            forbids renaming a frozen column, so we adapt on read: every entry
+            point normalises via _read_p1_convexp(). effective_date drives A2/A4.
   calendar: announcement_id, type, date_ET  (scheduled only)
 
 Usage:
@@ -40,6 +45,45 @@ sys.path.insert(0, str(HERE.parents[2]))
 from refraction.guards.prereg_guard import LookaheadError, assert_no_lookahead  # noqa: E402
 
 DEFAULT_SPLITS = ("r_c2o", "r_o2c")
+
+# P1 freezes conv_exposure on [permno, wave_id] (ops/contracts/conv_exposure.yaml).
+# refraction's own panel_ann contract uses `wave`. Both are correct; the boundary
+# needs a translation, and it lives here so exactly one function knows about it.
+P1_WAVE_COL = "wave_id"
+
+
+def _read_p1_convexp(convexp: pd.DataFrame) -> pd.DataFrame:
+    """Normalise P1's frozen ConvExp frame to refraction's internal `wave` name.
+
+    Accepts either spelling so a caller that already normalised is not punished.
+    Raises on a frame carrying neither, rather than merging into an empty result.
+    """
+    if "wave" in convexp.columns:
+        return convexp
+    if P1_WAVE_COL in convexp.columns:
+        return convexp.rename(columns={P1_WAVE_COL: "wave"})
+    raise KeyError(
+        f"convexp frame has neither 'wave' nor '{P1_WAVE_COL}'; got "
+        f"{sorted(convexp.columns)}. Expected P1's frozen conv_exposure schema "
+        "(ops/contracts/conv_exposure.yaml, primary key [permno, wave_id]).")
+
+
+def assert_p1_join_key_usable(convexp: pd.DataFrame) -> None:
+    """P1's free-EDGAR path leaves `permno` blank pending the CRSP crosswalk.
+
+    Blank is the EMPTY STRING, not NaN, so a notna() liveness check passes on a
+    wholly unusable key. Refuse loudly instead of silently producing an empty
+    merge (WRDS-access-assessment.md: 'permno — left blank; the crosswalk
+    recovers it if CRSP access returns').
+    """
+    if "permno" not in convexp.columns:
+        raise KeyError("convexp frame has no `permno` column")
+    key = convexp["permno"].astype("string").fillna("").str.strip()
+    if (key == "").all():
+        raise ValueError(
+            f"UPSTREAM_ISSUE: every one of {len(convexp)} `permno` values is blank — "
+            "P1's free-EDGAR ConvExp has no CRSP crosswalk yet, so this frame "
+            "cannot be joined on. R2 must not run against it.")
 
 
 def _res(passed: bool, detail: str, **extra) -> dict:
@@ -108,11 +152,21 @@ def a5_n_pre_distribution(betas: pd.DataFrame, n_pre_median_min: int) -> dict:
                 median=med, share_ge_min=share30)
 
 
-def a6_no_magic_w_shrink(src_dir: Path) -> dict:
-    """Static scan: w_shrink must come from frozen_config.yaml, never a literal."""
+def a6_no_magic_w_shrink(src_dir: Path, skip_dirs=("tests", "__pycache__")) -> dict:
+    """Static scan: w_shrink must come from frozen_config.yaml, never a literal.
+
+    Scans the whole package, not just pipeline/ — the manual's rule is about the
+    code, and R6/R7 modules will land outside this directory.
+
+    Test files are excluded on purpose: the A6 tampered-world fixture has to
+    *write* a magic literal in order to prove the scan catches one, so scanning
+    the suite makes the check fail on its own bait.
+    """
     pattern = re.compile(r"w_shrink\s*(?::|=)\s*[0-9.]")
     hits = []
     for py in sorted(Path(src_dir).rglob("*.py")):
+        if any(part in skip_dirs for part in py.parts):
+            continue
         for i, line in enumerate(py.read_text().splitlines(), 1):
             if pattern.search(line) and "frozen_config" not in line:
                 hits.append(f"{py}:{i}: {line.strip()}")
@@ -148,15 +202,26 @@ def a9_loo_reconstruction(betas: pd.DataFrame, weights: pd.DataFrame,
     if m.empty:
         return _res(False, "UPSTREAM_ISSUE: no (permno, wave) rows join betas×weights×basket")
     take = m.sample(n=min(n_sample, len(m)), random_state=seed)
+    # w_i == 1 is a single-name basket: the LOO denominator vanishes. Report it
+    # rather than dividing and silently producing nan inside a correctness check.
+    degenerate = (take["weight"] - 1.0).abs() < 1e-12
+    n_deg = int(degenerate.sum())
+    take = take[~degenerate]
+    if take.empty:
+        return _res(False, f"UPSTREAM_ISSUE: all {n_deg} sampled rows are "
+                           "single-name baskets (w_i = 1); LOO is undefined")
     recon = (take["beta_b_full"] - take["weight"] * take["beta_i"]) / (1 - take["weight"])
     bad = (recon - take["beta_b_loo"]).abs() > tol
+    note = f"; {n_deg} single-name-basket rows skipped (w_i = 1)" if n_deg else ""
     return _res(int(bad.sum()) == 0,
-                f"{int(bad.sum())}/{len(take)} sampled rows fail LOO reconstruction (tol {tol})")
+                f"{int(bad.sum())}/{len(take)} sampled rows fail LOO "
+                f"reconstruction (tol {tol}){note}", single_name_baskets=n_deg)
 
 
 def a10_convexp_frozen(panel: pd.DataFrame, convexp: pd.DataFrame, tol: float = 0.0) -> dict:
     """Panel ConvExp must match the P1 frozen file row-for-row. Stocks absent from
     the frozen file are legal ONLY as controls, i.e. with ConvExp exactly 0."""
+    convexp = _read_p1_convexp(convexp)
     m = panel[["permno", "wave", "ConvExp"]].drop_duplicates().merge(
         convexp.rename(columns={"conv_exp": "conv_exp_frozen"}),
         on=["permno", "wave"], how="left")
@@ -237,7 +302,9 @@ def run_all(panel, betas, weights, basket, convexp, calendar, wave_effective,
         "A3": a3_return_identity(panel),
         "A4": a4_no_lookahead(betas, wave_effective),
         "A5": a5_n_pre_distribution(betas, int(g0.get("n_pre_median_min", 30))),
-        "A6": a6_no_magic_w_shrink(src_dir or HERE.parent),
+        # HERE.parent is refraction/pipeline/; the rule is "no magic numbers in
+        # the code", so scan the whole package (scan.py and guards/ included).
+        "A6": a6_no_magic_w_shrink(src_dir or HERE.parents[1]),
         "A7": a7_lever_identity(panel),
         "A8": a8_weights_sum(weights),
         "A9": a9_loo_reconstruction(betas, weights, basket),
@@ -265,7 +332,9 @@ def main(argv):
         return 2
     panel, betas, weights, basket, convexp, calendar = map(_read, argv[1:7])
     config = yaml.safe_load(Path(argv[7]).read_text())
-    src_dir = Path(argv[8]) if len(argv) > 8 else HERE.parent
+    src_dir = Path(argv[8]) if len(argv) > 8 else HERE.parents[1]
+    convexp = _read_p1_convexp(convexp)
+    assert_p1_join_key_usable(convexp)
     eff = convexp.drop_duplicates("wave").set_index("wave")["effective_date"] \
         if "effective_date" in convexp.columns else None
     if eff is None:
