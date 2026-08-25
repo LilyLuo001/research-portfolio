@@ -692,3 +692,59 @@ correlated contamination (~18% of A-and-B-agreed events are CEF->ETF, CEF->MF or
 share-class aging; dual-channel agreement cannot screen it). The QC's reference
 channel covered families A-G only: 72 events audited, 59 in the unaudited H-Z region.
 131 is an undercount and an overcount at the same time, on different rows.
+
+## DECISIONS 2026-08-19 (owner delegated to seat C: "make the decision for me")
+
+Owner delegated V-1, V-2, V-3, V-6 and refraction item 7 in-session, WRDS work
+excluded. All five are recorded BEFORE any outcome variable exists — no outcome
+has been computed, so none of these can have been informed by a result.
+
+### V-1 — which paper, given 92.8% DFA concentration: OPTION (b), POOLED-WITH-CAVEAT
+Primary specification stays the pooled staggered design over all treated waves.
+The DFA dominance is reported in the MAIN TEXT, not a footnote, and the
+exclude-DFA arm is reported ALWAYS, in the same table as the pooled result,
+whatever either shows.
+  Rejected (a) single-event DFA paper: discards nine waves of genuine
+    corroboration and the staggered design itself; §10 calls it 降半档.
+  Rejected (c) widen first: both widening routes (the §5 multi-fund re-pass and
+    the §3 contamination audit) need the L1 lane, which has been dead since
+    2026-07-10. Choosing (c) parks P1 behind an unavailable dependency.
+  PRE-COMMITMENT, binding: both arms appear together in the main results table.
+    If the effect is present pooled and absent excluding DFA, that is REPORTED as
+    the finding, not resolved by dropping the weaker arm. The exclude-DFA arm at
+    36 stocks (>=0.5%) is above the power floor of 33 and is therefore a real, if
+    weak, robustness check — it is not permitted to be quietly dropped later for
+    being underpowered, because it is being registered as underpowered now.
+
+### V-6 — international sleeve: OPTION A (drop pure-international waves)
+Not A-strict. A-strict costs 8 further stocks in the exclude-DFA arm — the arm
+least able to afford them (28 -> 20, both below the floor) — in exchange for a
+purity the DFA anchor wave does not need, being no_intl under every option.
+Recorded consequence: excl DFA + Option A = 28 stocks, BELOW the power floor.
+That combination is reported as underpowered, not suppressed.
+
+### V-3 — continuous vs binary dose: DOSE TERCILES PRIMARY
+Primary spec reports ATT by dose tercile. Continuous dose-response is demoted to
+robustness, pending the econlib estimator (ops/briefs/SH-econlib-continuous-dose.md).
+Forced by two independent facts, neither of which is a preference:
+  1. shared/econlib has no continuous-dose estimator at all, so a continuous
+     primary spec is not implementable today regardless of WRDS.
+  2. The >=1% tier holds 24 treated stocks against a floor of 33 — the fine dose
+     grid is underpowered whichever estimator exists.
+Terciles are implementable with the existing binary/staggered estimators.
+
+### V-2 — parallel trends stance: STANDARD for the primary, STRONG named for ACRT
+The tercile primary spec identifies ATT within tier and needs only standard
+parallel trends. Any dose-response/ACRT claim requires STRONG parallel trends
+(Callaway/Goodman-Bacon/Sant'Anna, NBER w32117) and is confined to the robustness
+section, where the assumption is stated in the table caption, not buried in an
+appendix. Cross-tier comparisons under standard parallel trends are reported as
+descriptive only — they carry selection bias by construction.
+
+### refraction item 7 — APPROVED, fail-closed
+run_all() gains strict=True. A11 and A14 now FAIL when their inputs are absent
+instead of passing vacuously; the CLI runs strict. Rationale: a hard assert that
+cannot fail is not a gate; the manual makes A14 an R2 acceptance criterion (§167);
+the change can only make the battery stricter; and R2 is not yet implemented, so
+nothing is broken by tightening now. strict=False remains for dev fixtures and
+must never produce a production manifest. refraction: 56 tests pass.

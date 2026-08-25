@@ -288,13 +288,29 @@ def a14_traceback_rows(panel: pd.DataFrame, upstream: dict[str, tuple[pd.DataFra
 HARD = ["A1", "A2", "A3", "A4", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14"]
 
 
+NOT_EXECUTED = "NOT EXECUTED — required input not supplied (strict mode)"
+
+
 def run_all(panel, betas, weights, basket, convexp, calendar, wave_effective,
             config: dict, expected_pairs=None, src_dir: Path | None = None,
-            upstream_for_a14: dict | None = None) -> dict:
+            upstream_for_a14: dict | None = None, strict: bool = True) -> dict:
+    """Run the A-battery.
+
+    strict=True (default, and what production must use): A11 and A14 FAIL when
+    their required inputs are absent. They are hard asserts; a hard assert that
+    cannot fail is not a gate. Before this was enforced, `expected_pairs`
+    defaulted to the panel itself — so A11 compared the panel against itself —
+    and A14 returned pass when handed no upstream frames, while `main()` supplied
+    neither. A CLI manifest could truthfully report `A11: pass, A14: pass` when
+    neither had run. The manual makes A14 an R2 acceptance criterion (§167).
+
+    strict=False is the dev path for fixtures that deliberately exercise a subset.
+    It must never be used to produce a production manifest.
+    """
     g0 = config.get("gate0_thresholds", {})
     rel = config.get("panel", {}).get("release_times_ET", {})
     pre_q = int(config.get("panel", {}).get("pre_quarters_required", 8))
-    if expected_pairs is None:
+    if expected_pairs is None and not strict:
         expected_pairs = panel[["permno", "announcement_id"]].drop_duplicates()
     report = {
         "A1": a1_primary_key(panel),
@@ -309,13 +325,20 @@ def run_all(panel, betas, weights, basket, convexp, calendar, wave_effective,
         "A8": a8_weights_sum(weights),
         "A9": a9_loo_reconstruction(betas, weights, basket),
         "A10": a10_convexp_frozen(panel, convexp),
-        "A11": a11_no_silent_drops(panel, expected_pairs),
+        "A11": (a11_no_silent_drops(panel, expected_pairs)
+                if expected_pairs is not None else
+                _res(False, f"A11 {NOT_EXECUTED}: expected_pairs. It must come from "
+                            "the upstream permno x announcement grid, not from the "
+                            "panel itself — comparing the panel to itself cannot "
+                            "detect a silent drop.")),
         "A12": a12_event_window_alignment(panel, rel),
         "A13": a13_column_missingness(panel),
         "A14": (a14_traceback_rows(panel, upstream_for_a14) if upstream_for_a14
-                else _res(True, "skipped: no upstream frames supplied (dev mode); "
-                                "REQUIRED on real data — R14 checks this is not skipped "
-                                "in the production manifest")),
+                else _res(not strict,
+                          f"A14 {NOT_EXECUTED}: upstream_for_a14. Manual §167 makes "
+                          "the 20-row upstream traceback an R2 acceptance criterion."
+                          if strict else
+                          "skipped: no upstream frames supplied (strict=False dev mode)")),
     }
     report["overall_pass"] = all(report[k]["pass"] for k in HARD)
     return report
@@ -340,8 +363,12 @@ def main(argv):
     if eff is None:
         print("FAIL: convexp file lacks effective_date (needed for A2/A4)")
         return 1
+    # The CLI produces production manifests, so it runs strict. It has no way to
+    # synthesise expected_pairs or the upstream frames, so A11/A14 will report
+    # NOT EXECUTED and the run will fail — correctly. Callers that can supply them
+    # should import run_all directly.
     rep = run_all(panel, betas, weights, basket, convexp, calendar, eff,
-                  config, src_dir=src_dir)
+                  config, src_dir=src_dir, strict=True)
     out = Path("assert_report.json")
     out.write_text(json.dumps(rep, indent=2, default=str))
     print(("PASS" if rep["overall_pass"] else "FAIL") + f" — report at {out}")
