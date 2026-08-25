@@ -1,0 +1,364 @@
+{
+  "record_version": "dax-ai-telework-overlap-v1",
+  "distributions": {
+    "teleworkable_share": {
+      "n": 774,
+      "zeros": 485,
+      "zero_share": 0.6266149870801033,
+      "min": 0.0,
+      "p25": 0.0,
+      "median": 0.0,
+      "p75": 1.0,
+      "max": 1.0,
+      "sd": 0.4678057688802909
+    },
+    "AIOE_Felten": {
+      "n": 774,
+      "zeros": 0,
+      "zero_share": 0.0,
+      "min": -2.669758,
+      "p25": -0.8657498,
+      "median": -0.0504534,
+      "p75": 1.014541,
+      "max": 1.527667,
+      "sd": 0.9993537955386852
+    },
+    "Eloundou_dv_rating_alpha": {
+      "n": 798,
+      "zeros": 160,
+      "zero_share": 0.20050125313283207,
+      "min": 0.0,
+      "p25": 0.04,
+      "median": 0.0967741935483871,
+      "p75": 0.17777777777777778,
+      "max": 1.0,
+      "sd": 0.16097808541474223
+    },
+    "Eloundou_dv_rating_beta": {
+      "n": 798,
+      "zeros": 47,
+      "zero_share": 0.05889724310776942,
+      "min": 0.0,
+      "p25": 0.13043478260869565,
+      "median": 0.3289473684210526,
+      "p75": 0.4891304347826087,
+      "max": 1.0,
+      "sd": 0.2201766246043445
+    },
+    "Eloundou_dv_rating_gamma": {
+      "n": 798,
+      "zeros": 47,
+      "zero_share": 0.05889724310776942,
+      "min": 0.0,
+      "p25": 0.17142857142857143,
+      "median": 0.5263157894736842,
+      "p75": 0.8461538461538463,
+      "max": 1.0,
+      "sd": 0.3438394431429556
+    },
+    "Eloundou_human_rating_alpha": {
+      "n": 798,
+      "zeros": 249,
+      "zero_share": 0.31203007518796994,
+      "min": 0.0,
+      "p25": 0.0,
+      "median": 0.10256410256410256,
+      "p75": 0.2222222222222222,
+      "max": 0.8,
+      "sd": 0.14161185183635883
+    },
+    "Eloundou_human_rating_beta": {
+      "n": 798,
+      "zeros": 56,
+      "zero_share": 0.07017543859649122,
+      "min": 0.0,
+      "p25": 0.09090909090909091,
+      "median": 0.2807017543859649,
+      "p75": 0.4482758620689655,
+      "max": 0.84375,
+      "sd": 0.20472480122421916
+    },
+    "Eloundou_human_rating_gamma": {
+      "n": 798,
+      "zeros": 56,
+      "zero_share": 0.07017543859649122,
+      "min": 0.0,
+      "p25": 0.15625,
+      "median": 0.43243243243243246,
+      "p75": 0.6851851851851851,
+      "max": 1.0,
+      "sd": 0.29357004328212627
+    }
+  },
+  "question": "Are AI exposure and remote-work feasibility separately identified in occupation-level data?",
+  "why_it_matters": "Emanuel, Harrington & Pallais attribute 64% of the rise in young college-graduate unemployment to remote work. Brynjolfsson, Chandar & Chen control for interest-rate exposure but not telework. If the two measures overlap heavily, the attribution in that literature is not identified from occupation-level data.",
+  "how_to_read": "corr_employment_weighted says how alike the measures are. off_diagonal_employment_share says how much employment sits in occupations where they DISAGREE -- that is the variation any decomposition is identified from. A high correlation with a thick off-diagonal is workable; a moderate correlation whose divergent cells hold little employment is not.",
+  "inputs": {
+    "dingel_neiman": "/tmp/claude-0/-home-user-research-portfolio/f3e36e66-2ee3-5ba1-be3f-3a113d2e18f2/scratchpad/exposure/dingel_neiman_occ.csv",
+    "eloundou": "/tmp/claude-0/-home-user-research-portfolio/f3e36e66-2ee3-5ba1-be3f-3a113d2e18f2/scratchpad/exposure/eloundou_occ.csv",
+    "aioe_felten": "/tmp/claude-0/-home-user-research-portfolio/f3e36e66-2ee3-5ba1-be3f-3a113d2e18f2/scratchpad/exposure/AIOE_DataAppendix.xlsx",
+    "employment_weights": "dax/data_built/oews_wages.parquet"
+  },
+  "note_on_dingel_neiman": "teleworkable is published as a binary at O*NET-SOC detail level; collapsed here to the share of an occupation's detail codes that are teleworkable, which is what the 6-digit SOC merge requires.",
+  "measures": {
+    "AIOE_Felten": {
+      "occupations_matched": 774,
+      "occupations_with_employment": 673,
+      "employment_covered": 113200940.0,
+      "corr_unweighted": 0.6904598695086388,
+      "corr_employment_weighted": 0.7610501557593459,
+      "r2_employment_weighted": 0.5791973395813246,
+      "cut_points": {
+        "ai_cut": 0.0873069,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 216,
+          "emp": 42567730.0,
+          "emp_share": 0.37603689509998767
+        },
+        "highAI_lowRemote": {
+          "n": 83,
+          "emp": 11226700.0,
+          "emp_share": 0.0991749715152542
+        },
+        "lowAI_highRemote": {
+          "n": 29,
+          "emp": 1932420.0,
+          "emp_share": 0.017070706303322216
+        },
+        "lowAI_lowRemote": {
+          "n": 345,
+          "emp": 57474090.0,
+          "emp_share": 0.5077174270814359
+        }
+      },
+      "off_diagonal_employment_share": 0.11624567781857642
+    },
+    "Eloundou_dv_rating_alpha": {
+      "occupations_matched": 683,
+      "occupations_with_employment": 669,
+      "employment_covered": 112594750.0,
+      "corr_unweighted": 0.30505758598103744,
+      "corr_employment_weighted": 0.30153858671630607,
+      "r2_employment_weighted": 0.09092551927886723,
+      "cut_points": {
+        "ai_cut": 0.08333333333333333,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 172,
+          "emp": 27644440.0,
+          "emp_share": 0.24552157183172396
+        },
+        "highAI_lowRemote": {
+          "n": 186,
+          "emp": 27876880.0,
+          "emp_share": 0.247585966486004
+        },
+        "lowAI_highRemote": {
+          "n": 70,
+          "emp": 16454020.0,
+          "emp_share": 0.14613487751427132
+        },
+        "lowAI_lowRemote": {
+          "n": 241,
+          "emp": 40619410.0,
+          "emp_share": 0.36075758416800074
+        }
+      },
+      "off_diagonal_employment_share": 0.39372084400027535
+    },
+    "Eloundou_dv_rating_beta": {
+      "occupations_matched": 683,
+      "occupations_with_employment": 669,
+      "employment_covered": 112594750.0,
+      "corr_unweighted": 0.630219709877732,
+      "corr_employment_weighted": 0.6486552664181304,
+      "r2_employment_weighted": 0.4207536546519758,
+      "cut_points": {
+        "ai_cut": 0.358974358974359,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 208,
+          "emp": 38562900.0,
+          "emp_share": 0.3424928782203433
+        },
+        "highAI_lowRemote": {
+          "n": 91,
+          "emp": 17397220.0,
+          "emp_share": 0.1545118222652477
+        },
+        "lowAI_highRemote": {
+          "n": 34,
+          "emp": 5535560.0,
+          "emp_share": 0.04916357112565195
+        },
+        "lowAI_lowRemote": {
+          "n": 336,
+          "emp": 51099070.0,
+          "emp_share": 0.453831728388757
+        }
+      },
+      "off_diagonal_employment_share": 0.20367539339089966
+    },
+    "Eloundou_dv_rating_gamma": {
+      "occupations_matched": 683,
+      "occupations_with_employment": 669,
+      "employment_covered": 112594750.0,
+      "corr_unweighted": 0.6570272937444981,
+      "corr_employment_weighted": 0.6736015709534058,
+      "r2_employment_weighted": 0.45373907639089617,
+      "cut_points": {
+        "ai_cut": 0.6052631578947368,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 209,
+          "emp": 39909170.0,
+          "emp_share": 0.3544496524038643
+        },
+        "highAI_lowRemote": {
+          "n": 83,
+          "emp": 15259010.0,
+          "emp_share": 0.1355215052211582
+        },
+        "lowAI_highRemote": {
+          "n": 33,
+          "emp": 4189290.0,
+          "emp_share": 0.037206796942130964
+        },
+        "lowAI_lowRemote": {
+          "n": 344,
+          "emp": 53237280.0,
+          "emp_share": 0.47282204543284656
+        }
+      },
+      "off_diagonal_employment_share": 0.17272830216328913
+    },
+    "Eloundou_human_rating_alpha": {
+      "occupations_matched": 683,
+      "occupations_with_employment": 669,
+      "employment_covered": 112594750.0,
+      "corr_unweighted": 0.47142149048526694,
+      "corr_employment_weighted": 0.4259074747704149,
+      "r2_employment_weighted": 0.1813971770653116,
+      "cut_points": {
+        "ai_cut": 0.14814814814814814,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 171,
+          "emp": 31860060.0,
+          "emp_share": 0.2829622162667442
+        },
+        "highAI_lowRemote": {
+          "n": 89,
+          "emp": 24312210.0,
+          "emp_share": 0.21592667508920266
+        },
+        "lowAI_highRemote": {
+          "n": 71,
+          "emp": 12238400.0,
+          "emp_share": 0.10869423307925104
+        },
+        "lowAI_lowRemote": {
+          "n": 338,
+          "emp": 44184080.0,
+          "emp_share": 0.3924168755648021
+        }
+      },
+      "off_diagonal_employment_share": 0.3246209081684537
+    },
+    "Eloundou_human_rating_beta": {
+      "occupations_matched": 683,
+      "occupations_with_employment": 669,
+      "employment_covered": 112594750.0,
+      "corr_unweighted": 0.6352075214708054,
+      "corr_employment_weighted": 0.6396941125372737,
+      "r2_employment_weighted": 0.4092085576148502,
+      "cut_points": {
+        "ai_cut": 0.33498318867776994,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 200,
+          "emp": 38597360.0,
+          "emp_share": 0.3427989315665251
+        },
+        "highAI_lowRemote": {
+          "n": 75,
+          "emp": 16980670.0,
+          "emp_share": 0.1508122714424962
+        },
+        "lowAI_highRemote": {
+          "n": 42,
+          "emp": 5501100.0,
+          "emp_share": 0.04885751777947018
+        },
+        "lowAI_lowRemote": {
+          "n": 352,
+          "emp": 51515620.0,
+          "emp_share": 0.45753127921150855
+        }
+      },
+      "off_diagonal_employment_share": 0.19966978922196638
+    },
+    "Eloundou_human_rating_gamma": {
+      "occupations_matched": 683,
+      "occupations_with_employment": 669,
+      "employment_covered": 112594750.0,
+      "corr_unweighted": 0.6594312754103699,
+      "corr_employment_weighted": 0.6901426259347992,
+      "r2_employment_weighted": 0.47629684413218026,
+      "cut_points": {
+        "ai_cut": 0.4883720930232558,
+        "remote_cut": 0.0,
+        "cut_rule": "employment-weighted median of each measure",
+        "caveat": "the telework cut is degenerate: its weighted median is zero because most employment is in occupations with no teleworkable detail code, so 'highRemote' means share > 0, not above-median. Read corr/R2, not the cells, as the headline."
+      },
+      "cells": {
+        "highAI_highRemote": {
+          "n": 202,
+          "emp": 37850400.0,
+          "emp_share": 0.3361648744723888
+        },
+        "highAI_lowRemote": {
+          "n": 81,
+          "emp": 13855680.0,
+          "emp_share": 0.12305795785327468
+        },
+        "lowAI_highRemote": {
+          "n": 40,
+          "emp": 6248060.0,
+          "emp_share": 0.05549157487360645
+        },
+        "lowAI_lowRemote": {
+          "n": 346,
+          "emp": 54640610.0,
+          "emp_share": 0.48528559280073
+        }
+      },
+      "off_diagonal_employment_share": 0.17854953272688115
+    }
+  }
+}
