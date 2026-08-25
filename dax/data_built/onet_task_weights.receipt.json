@@ -1,0 +1,125 @@
+{
+  "receipt_version": "dax-w2-onet-task-weights-v1",
+  "decision": "dax/memo/W2_DECISION_task_weight_2026-08-24.md",
+  "not_a_time_share": "[W2-D2] This is a share of importance-times-frequency RATING MASS. O*NET 26.1 publishes no measured share of work time by task. No release-path prose, table or column may describe task_weight_share as time.",
+  "definition": {
+    "primary": "share = (importance * frequency_score) normalised within occupation",
+    "frequency_score": "sum(category_index * percent) / sum(percent) over FT bands 1..7",
+    "variants_frozen_before_inspection": {
+      "importance_only_share": "IM / sum(IM) within occupation",
+      "equal_weight_share": "1 / n_tasks within occupation"
+    },
+    "source_of_definition": "[W2-D1] adopted unchanged from dax/w2/crosswalk/build_legacy_onet_fallback.py; not re-derived"
+  },
+  "suppression_rule": {
+    "selected": "formula_inputs",
+    "disqualifying_scales": [
+      "FT",
+      "IM"
+    ],
+    "why": "Recommend Suppress is published per rating row, so it flags one rating as unreliable rather than the pair. Only IM and FT enter the weight (importance x frequency_score); RT is carried as a column and never multiplied by anything, so suppressing it says nothing about the weight's reliability.",
+    "alternative_recorded": "any_scale also drops on RT. That is what build_legacy_onet_fallback.py does, and it diverges from the pinned onet_timeshares.csv the results were computed through: it removes RT-only-suppressed pairs, which shifts the within-occupation denominator and scales every surviving task's share upward."
+  },
+  "known_defect": {
+    "id": "W2-D3",
+    "what": "frequency_score treats FT's seven category indices as cardinal values. They are ordinal frequency bands.",
+    "bands": {
+      "1": "Yearly or less",
+      "2": "More than yearly",
+      "3": "More than monthly",
+      "4": "More than weekly",
+      "5": "Daily",
+      "6": "Several times daily",
+      "7": "Hourly or more"
+    },
+    "why_not_fixed_here": "correcting the spacing changes every weight and breaks the W2-D1 reconciliation with Mapping A's coverage and the DWA bound, which were computed through these weights",
+    "fix_path": "obtain the published FT band definitions; if spacing is not near-linear, re-derive the weight and re-run Mapping A coverage and the DWA bound in the same change so all three move together"
+  },
+  "vintage_caveat": {
+    "id": "W2-D5",
+    "release": "O*NET 26.1 (text database)",
+    "what": "O*NET 26.1 is cumulative. Task Ratings rows carry dates spanning many years; '2021 vintage' names the release, not each row's survey year. Any claim that the index rests on 2021 task structure must say this.",
+    "rating_row_year_counts": {
+      "2004": 225,
+      "2005": 477,
+      "2006": 756,
+      "2007": 2826,
+      "2008": 1161,
+      "2009": 459,
+      "2011": 1539,
+      "2012": 4752,
+      "2013": 7659,
+      "2014": 11502,
+      "2015": 15111,
+      "2016": 15921,
+      "2017": 14994,
+      "2018": 16488,
+      "2019": 18153,
+      "2020": 30537,
+      "2021": 18351
+    }
+  },
+  "source_archive": {
+    "path": "/usr3/graduate/qluo/dax-private/public_raw/onet_26_1/db_26_1_text.zip",
+    "sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a",
+    "verified_against_pin": true,
+    "release": "O*NET 26.1 (text database)",
+    "members_read": [
+      "Task Ratings.txt",
+      "Task Statements.txt"
+    ]
+  },
+  "counts": {
+    "dropped_recommend_suppress": 739,
+    "kept_suppressed_on_non_formula_scale_only": 51,
+    "occupations_with_weights": 873,
+    "pairs_with_any_suppressed_rating": 790,
+    "rated_pairs": 17879,
+    "rating_rows_FT": 125153,
+    "rating_rows_IM": 17879,
+    "rating_rows_RT": 17879,
+    "statements_without_ratings": 1380,
+    "tasks_with_weights": 17140
+  },
+  "ft_band_sums": {
+    "min": 99.97999999999998,
+    "max": 100.02000000000002,
+    "tolerance": 0.5
+  },
+  "shares_sum_to_one_within_occupation": true,
+  "reconciliation": {
+    "reconciled_against": "/usr3/graduate/qluo/dax-private/w2_build_outputs/onet_timeshares.csv",
+    "share_column_read": "task_time_share",
+    "reference_rows_total": 19259,
+    "reference_rows_with_positive_share": 17140,
+    "reference_rows_blank_or_zero": 2119,
+    "rows_built": 17140,
+    "shared_tasks_compared": 17140,
+    "shares_differing_beyond_tolerance": 0,
+    "reference_positive_tasks_missing_here": 0,
+    "tasks_built_that_reference_lacks": 0,
+    "reference_blank_tasks_absent_here": 2119,
+    "tolerance": 1e-06,
+    "scope_note": "A reference row absent here is expected where the reference carries unrated or suppressed tasks at zero or null share. That is a scope difference between artifacts, not a divergence in the weight definition.",
+    "overlap_fraction_of_reference_positive": 1.0,
+    "status": "RECONCILED"
+  },
+  "output": {
+    "path": "dax/data_built/onet_task_weights.parquet",
+    "rows": 17140,
+    "columns": [
+      "onet_soc",
+      "task_id",
+      "task_weight_share",
+      "importance_only_share",
+      "equal_weight_share",
+      "importance",
+      "frequency_score",
+      "relevance",
+      "n_tasks_in_occupation",
+      "rating_date",
+      "source_vintage"
+    ],
+    "share_column": "task_weight_share"
+  }
+}
