@@ -282,49 +282,124 @@ def check_shares_sum_to_one(rows, tolerance=1e-9):
 def reconcile(rows, path, tolerance=1e-6):
     """Prove this builder reproduces the pinned predecessor, per W2-D1.
 
-    The predecessor CSV carries the same definition under the old name. Shares
-    that differ mean the definition moved, which is the one outcome W2-D1
-    exists to prevent -- and it must be a refusal, not a warning, because the
-    divergence would be invisible in every downstream number.
+    An SCC run of the first version of this function returned NEED_HUMAN with
+    the right diagnosis: three artifacts encode three different task scopes.
+    They are three different QUANTITIES, not three candidate answers to one
+    question, and the first version wrongly treated the difference between
+    them as a divergence in the weight definition:
+
+      19,259  task statements -- the scope of onet_timeshares.csv
+      17,879  rated (occupation, task) pairs in Task Ratings.txt
+      15,274  tasks with a usable 2021 wage allocation, which is
+              `allocation_usable` in task_wage_allocations.csv and is a
+              wage-join concept downstream of the weights entirely
+
+    W2-D1's "15,274 usable tasks" names the third. It is not the weight file's
+    scope and never was. So a reference row this builder has no row for is
+    expected wherever the reference carries unrated or suppressed tasks at
+    zero or null share, and refusing on that asked the operator to invent a
+    suppression rule to explain a difference that needs no explaining.
+
+    What W2-D1 actually protects is the DEFINITION, so that is what is
+    checked: for every task present in both, the share must agree. Four things
+    still refuse, because each would be a real divergence:
+
+      * a shared task whose share differs beyond tolerance -- the definition moved;
+      * a reference task with a POSITIVE share that this builder has no row
+        for -- it dropped a task the predecessor weighted;
+      * a task this builder weighted that the reference does not carry at all
+        -- it invented one;
+    Reaching RECONCILED therefore means every positive-share task in the
+    reference was compared and agreed, which is what makes the verdict
+    evidence rather than a statement about whichever rows happened to overlap.
+
+    Reference rows at zero or null share with no row here are reported as a
+    count and a scope fact, not as a failure.
     """
     with open(path, newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
+        fields = reader.fieldnames or []
         share_column = next(
             (c for c in ("task_time_share", "task_weight_share",
-                         "legacy_task_time_share")
-             if c in (reader.fieldnames or [])), None)
+                         "legacy_task_time_share") if c in fields), None)
         if share_column is None:
             raise BuildError(
-                f"{path} carries no recognised share column; found "
-                f"{reader.fieldnames}")
-        expected = {(r["onet_soc"].strip() if "onet_soc" in r
-                     else r["O*NET-SOC Code"].strip(),
-                     r["task_id"].strip()): float(r[share_column])
-                    for r in reader}
+                f"{path} carries no recognised share column; found {fields}")
+        soc_column = next((c for c in ("onet_soc", "O*NET-SOC Code") if c in fields), None)
+        id_column = next((c for c in ("task_id", "Task ID") if c in fields), None)
+        if soc_column is None or id_column is None:
+            raise BuildError(
+                f"{path} lacks an occupation or task id column; found {fields}")
+
+        expected, blank = {}, {}
+        for r in reader:
+            key = (r[soc_column].strip(), r[id_column].strip())
+            raw = (r[share_column] or "").strip()
+            if raw == "":
+                blank[key] = None
+                continue
+            value = float(raw)
+            (expected if value > 0 else blank)[key] = value
 
     built = {(r["onet_soc"], r["task_id"]): r["task_weight_share"] for r in rows}
-    only_built = sorted(set(built) - set(expected))
-    only_expected = sorted(set(expected) - set(built))
-    diffs = [(k, built[k], expected[k]) for k in set(built) & set(expected)
+    shared = set(built) & set(expected)
+    positive_missing = sorted(set(expected) - set(built))
+    invented = sorted(set(built) - set(expected) - set(blank))
+    blank_absent = len(set(blank) - set(built))
+    diffs = [(k, built[k], expected[k]) for k in shared
              if abs(built[k] - expected[k]) > tolerance]
+
     result = {
         "reconciled_against": str(path),
         "share_column_read": share_column,
-        "rows_in_reference": len(expected),
+        "reference_rows_total": len(expected) + len(blank),
+        "reference_rows_with_positive_share": len(expected),
+        "reference_rows_blank_or_zero": len(blank),
         "rows_built": len(built),
-        "keys_only_in_built": len(only_built),
-        "keys_only_in_reference": len(only_expected),
+        "shared_tasks_compared": len(shared),
         "shares_differing_beyond_tolerance": len(diffs),
+        "reference_positive_tasks_missing_here": len(positive_missing),
+        "tasks_built_that_reference_lacks": len(invented),
+        "reference_blank_tasks_absent_here": blank_absent,
         "tolerance": tolerance,
+        "scope_note": (
+            "A reference row absent here is expected where the reference "
+            "carries unrated or suppressed tasks at zero or null share. That "
+            "is a scope difference between artifacts, not a divergence in the "
+            "weight definition."),
     }
-    if only_built or only_expected or diffs:
-        worst = max((abs(b - e) for _, b, e in diffs), default=0.0)
+
+    if diffs:
+        worst = max(abs(b - e) for _, b, e in diffs)
+        example = sorted(diffs, key=lambda d: -abs(d[1] - d[2]))[:3]
+        raise BuildError(
+            f"reconciliation FAILED against {path}: {len(diffs)} of "
+            f"{len(shared)} shared tasks differ in share (worst "
+            f"{worst:.3e}). W2-D1 requires this builder to reproduce the "
+            f"pinned DEFINITION; a divergence here is invisible in every "
+            f"downstream number. Examples (key, built, reference): {example}")
+    if positive_missing:
         raise BuildError(
             f"reconciliation FAILED against {path}: "
-            f"{len(only_built)} keys only here, {len(only_expected)} only "
-            f"there, {len(diffs)} shares differing (worst {worst:.3e}). "
-            f"W2-D1 requires this builder to reproduce the pinned definition; "
-            f"a divergence here would be invisible in every downstream number.")
+            f"{len(positive_missing)} tasks carry a POSITIVE share there and "
+            f"no row here, e.g. {positive_missing[:5]}. This builder dropped "
+            f"tasks the predecessor weighted, which is a scope change in the "
+            f"identified set rather than a difference between artifacts.")
+    if invented:
+        raise BuildError(
+            f"reconciliation FAILED against {path}: {len(invented)} tasks "
+            f"weighted here appear nowhere in the reference, e.g. "
+            f"{invented[:5]}. This builder invented rows.")
+    if not shared:
+        raise BuildError(
+            f"reconciliation is vacuous against {path}: no task appears in "
+            f"both. Nothing was compared, so nothing is reconciled.")
+
+    # No overlap floor: `positive_missing` above already refuses whenever the
+    # reference carries a positive-share task this builder lacks, so reaching
+    # here means every one of them was compared. A separate floor would be
+    # unreachable code pretending to be a guard.
+    result["overlap_fraction_of_reference_positive"] = 1.0
     result["status"] = "RECONCILED"
     return result
 
@@ -458,8 +533,10 @@ def main(argv=None):
           f"rated pairs: {stats['rated_pairs']}  "
           f"suppressed: {stats['dropped_recommend_suppress']}")
     if reconciliation:
-        print(f"reconciliation: {reconciliation['status']} against "
-              f"{reconciliation['rows_in_reference']} reference rows")
+        print(f"reconciliation: {reconciliation['status']} — "
+              f"{reconciliation['shared_tasks_compared']} shared tasks compared, "
+              f"{reconciliation['reference_rows_blank_or_zero']} reference rows "
+              f"blank or zero (scope difference, not divergence)")
     return 0
 
 

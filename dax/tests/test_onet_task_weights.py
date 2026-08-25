@@ -234,6 +234,79 @@ def test_reconciliation_passes_against_a_matching_reference(tmp_path):
     assert receipt["reconciliation"]["status"] == "RECONCILED"
 
 
+def test_a_wider_reference_scope_is_a_fact_not_a_failure(tmp_path):
+    """The SCC finding. onet_timeshares.csv spans 19,259 task statements while
+    only 17,879 are rated; the wage-join's 15,274 is a third quantity again.
+
+    The first version of this reconciler refused on that asymmetry, which
+    asked the operator to invent a suppression rule to explain a difference
+    between artifacts that needs no explaining.
+    """
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    ref = tmp_path / "onet_timeshares.csv"
+    ref.write_text("onet_soc,task_id,task_time_share\n"
+                   f"11-1011.00,1,{20/22!r}\n11-1011.00,2,{2/22!r}\n"
+                   "11-1011.00,9,\n"          # unrated: blank share
+                   "29-1141.00,8,0\n")        # suppressed: zero share
+    code, out = run(tmp_path, two_task_archive(tmp_path),
+                    ["--reconcile-against", str(ref)])
+    assert code == 0
+    rec = json.loads(out.with_suffix(".receipt.json").read_text())["reconciliation"]
+    assert rec["status"] == "RECONCILED"
+    assert rec["reference_rows_blank_or_zero"] == 2
+    assert rec["reference_blank_tasks_absent_here"] == 2
+    assert rec["shared_tasks_compared"] == 2
+
+
+def test_dropping_a_task_the_reference_weighted_is_refused(tmp_path):
+    """A positive-share task with no row here is a scope change in the
+    identified set, not a difference between artifacts."""
+    ref = tmp_path / "ref.csv"
+    ref.write_text("onet_soc,task_id,task_time_share\n"
+                   f"11-1011.00,1,{20/22!r}\n11-1011.00,2,{2/22!r}\n"
+                   "11-1011.00,3,0.5\n")
+    out = tmp_path / "w.parquet"
+    archive = two_task_archive(tmp_path)
+    code = B.main(["--archive", str(archive), "--expect-sha", B.sha256(archive),
+                   "--output", str(out), "--reconcile-against", str(ref)])
+    assert code == 2
+    assert not out.exists()
+
+
+def test_inventing_a_task_the_reference_lacks_is_refused(tmp_path):
+    ref = tmp_path / "ref.csv"
+    ref.write_text("onet_soc,task_id,task_time_share\n"
+                   f"11-1011.00,1,{20/22!r}\n")
+    out = tmp_path / "w.parquet"
+    archive = two_task_archive(tmp_path)
+    code = B.main(["--archive", str(archive), "--expect-sha", B.sha256(archive),
+                   "--output", str(out), "--reconcile-against", str(ref)])
+    assert code == 2
+
+
+def test_reconciled_implies_every_positive_reference_task_was_compared(tmp_path):
+    """RECONCILED must never come back from comparing whichever rows overlapped.
+
+    An earlier draft added a minimum-overlap floor for this. It was
+    unreachable: the positive-missing refusal already fires whenever the
+    reference carries a positive-share task the builder lacks, so by the time
+    a run reaches the verdict the overlap is necessarily complete. The floor
+    was removed rather than left in as a guard that cannot fire, and the
+    property it was meant to express is asserted here instead.
+    """
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    ref = tmp_path / "onet_timeshares.csv"
+    ref.write_text("onet_soc,task_id,task_time_share\n"
+                   f"11-1011.00,1,{20/22!r}\n11-1011.00,2,{2/22!r}\n"
+                   "11-1011.00,9,\n")
+    code, out = run(tmp_path, two_task_archive(tmp_path),
+                    ["--reconcile-against", str(ref)])
+    assert code == 0
+    rec = json.loads(out.with_suffix(".receipt.json").read_text())["reconciliation"]
+    assert rec["shared_tasks_compared"] == rec["reference_rows_with_positive_share"]
+    assert rec["overlap_fraction_of_reference_positive"] == 1.0
+
+
 def test_a_diverged_definition_is_refused_not_warned(tmp_path):
     """The one outcome W2-D1 exists to prevent, and it must stop the build:
     a divergence here is invisible in every downstream number."""

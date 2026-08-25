@@ -325,7 +325,14 @@ def evaluate(args: argparse.Namespace) -> dict[str, object]:
     initial_rows = 16
     total_calls = calls_per_model * initial_rows
     private_result = args.private_dir / "s1_constructed_items_and_audit.csv"
-    merged.to_csv(private_result, index=False, lineterminator="\n")
+    # Opening with newline="" pins the line ending to "\n" on every platform
+    # without the `lineterminator` keyword, which pandas only gained in 1.5
+    # (it was `line_terminator` before). The SCC carries an older pandas than
+    # CI installs, and this call is on the path the S1 second-annotator run
+    # has to take -- a crash here would block the replication rather than a
+    # test. Behaviour is unchanged on the version CI uses.
+    with open(private_result, "w", newline="", encoding="utf-8") as handle:
+        merged.to_csv(handle, index=False)
     private_result.chmod(0o600)
     receipt = {
         "status": "S1_CONSTRUCT_VALIDITY_PILOT_COMPLETE_THRESHOLD_UNSIGNED",
