@@ -110,10 +110,17 @@ def authenticate_cells(
     receipt_path: pathlib.Path,
     cells_path: pathlib.Path,
     lookup_path: pathlib.Path | None = None,
+    allow_failed_coverage: bool = False,
 ) -> dict[str, object]:
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
-    if receipt.get("status") != "PASS_PREPERIOD_CELLS":
+    allowed = {"PASS_PREPERIOD_CELLS"}
+    if allow_failed_coverage:
+        allowed.add("FAIL_PRIMARY_EXPOSURE_COVERAGE")
+    if receipt.get("status") not in allowed:
         raise RealPowerBlocked("cell receipt is not PASS_PREPERIOD_CELLS")
+    if (receipt.get("status") == "FAIL_PRIMARY_EXPOSURE_COVERAGE"
+            and receipt.get("coverage_gate_pass") is not False):
+        raise RealPowerBlocked("failed-coverage diagnostic lacks a binding failed gate")
     if receipt.get("post_outcomes_read") is not False:
         raise RealPowerBlocked("cell receipt does not preserve outcome seal")
     source_seal = receipt.get("source_seal", {})
@@ -181,6 +188,7 @@ def fit_grouped_logit_fe(
     occupation = np.asarray(occupation, dtype=int)
     month = np.asarray(month, dtype=int)
     regressors = np.asarray(regressors, dtype=float)
+    original_size = len(total)
     keep = total > 0
     young, total = young[keep], total[keep]
     occupation, month = occupation[keep], month[keep]
@@ -280,11 +288,15 @@ def fit_grouped_logit_fe(
         standard_error = np.sqrt(np.maximum(np.diag(variance), 0.0))
     else:
         standard_error = np.empty(0)
+    full_probability = np.full(original_size, 0.5, dtype=float)
+    full_residual = np.zeros(original_size, dtype=float)
+    full_probability[keep] = probability
+    full_residual[keep] = residual
     return FitResult(
         beta=beta,
         standard_error=standard_error,
-        fitted_probability=probability,
-        residual=residual,
+        fitted_probability=full_probability,
+        residual=full_residual,
         converged=converged,
         iterations=iteration,
     )
@@ -532,12 +544,17 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--synthetic-validation", action="store_true")
     parser.add_argument("--real-power", action="store_true")
+    parser.add_argument("--diagnostic-available-support", action="store_true")
     parser.add_argument("--cells", type=pathlib.Path)
     parser.add_argument("--cells-receipt", type=pathlib.Path)
     parser.add_argument("--c1-receipt", type=pathlib.Path)
     parser.add_argument("--lookup", type=pathlib.Path)
     parser.add_argument("--repetitions", type=int, default=999)
     parser.add_argument("--seed", type=int, default=20260825)
+    parser.add_argument(
+        "--effects",
+        help="optional comma-separated log-effect batch; default is the frozen grid",
+    )
     parser.add_argument("--output", type=pathlib.Path, required=True)
     args = parser.parse_args()
     if args.synthetic_validation == args.real_power:
@@ -551,14 +568,36 @@ def main() -> int:
         if args.repetitions < 999:
             raise RealPowerBlocked("real power requires at least 999 repetitions")
         c1 = authenticate_c1(args.c1_receipt, args.lookup)
-        authenticate_cells(args.cells_receipt, args.cells, args.lookup)
+        cell_receipt = authenticate_cells(
+            args.cells_receipt, args.cells, args.lookup,
+            allow_failed_coverage=args.diagnostic_available_support,
+        )
         import pandas as pd
         cells = pd.read_csv(args.cells)
-        result = run_power_simulation(cells, DEFAULT_EFFECTS, args.repetitions, args.seed)
+        effects = (
+            [float(value) for value in args.effects.split(",")]
+            if args.effects else DEFAULT_EFFECTS
+        )
+        if not effects or any(not math.isfinite(value) for value in effects):
+            raise RealPowerBlocked("effect batch must contain finite values")
+        result = run_power_simulation(cells, effects, args.repetitions, args.seed)
         result["real_power_executed"] = True
         result["cells_sha256"] = sha256_file(args.cells)
         result["lookup_sha256"] = sha256_file(args.lookup)
         result["c1_receipt_status"] = c1["status"]
+        result["primary_coverage_gate_pass"] = cell_receipt.get(
+            "coverage_gate_pass", True
+        )
+        result["covered_route_mass_fraction"] = cell_receipt.get(
+            "covered_route_mass_fraction"
+        )
+        if args.diagnostic_available_support:
+            if cell_receipt.get("status") != "FAIL_PRIMARY_EXPOSURE_COVERAGE":
+                raise RealPowerBlocked(
+                    "diagnostic override is only valid for the recorded coverage failure"
+                )
+            result["status"] = "DIAGNOSTIC_AVAILABLE_SUPPORT_ONLY"
+            result["design_freeze_permitted"] = False
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({

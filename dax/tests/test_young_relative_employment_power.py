@@ -5,6 +5,7 @@ import pathlib
 import sys
 
 import pytest
+import numpy as np
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -65,6 +66,27 @@ def test_cells_authentication_requires_audited_split(tmp_path):
         POWER.authenticate_cells(receipt, cells)
 
 
+def test_failed_coverage_receipt_requires_explicit_diagnostic_override(tmp_path):
+    cells = tmp_path / "cells.csv"
+    cells.write_text("month\n2021-01\n", encoding="utf-8")
+    receipt = tmp_path / "cells.json"
+    record = {
+        "status": "FAIL_PRIMARY_EXPOSURE_COVERAGE",
+        "coverage_gate_pass": False,
+        "post_outcomes_read": False,
+        "source_seal": {
+            "audited_split_status": "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT"
+        },
+        "cells_sha256": POWER.sha256_file(cells),
+    }
+    receipt.write_text(json.dumps(record), encoding="utf-8")
+    with pytest.raises(POWER.RealPowerBlocked, match="PASS_PREPERIOD_CELLS"):
+        POWER.authenticate_cells(receipt, cells)
+    assert POWER.authenticate_cells(
+        receipt, cells, allow_failed_coverage=True
+    )["coverage_gate_pass"] is False
+
+
 def test_synthetic_validation_recovers_registered_effect_and_is_not_real_power():
     receipt = POWER.synthetic_validation()
     assert receipt["status"] == (
@@ -86,3 +108,16 @@ def test_effect_grid_contains_all_authenticated_benchmarks():
             math.isclose(effect, math.log(1 - decline), abs_tol=1e-12)
             for effect in POWER.DEFAULT_EFFECTS
         )
+
+
+def test_zero_total_cells_are_preserved_in_fitted_output_shape():
+    fit = POWER.fit_grouped_logit_fe(
+        young=np.array([2.0, 0.0, 3.0, 4.0]),
+        total=np.array([10.0, 0.0, 10.0, 10.0]),
+        occupation=np.array([0, 0, 1, 1]),
+        month=np.array([0, 1, 0, 1]),
+        regressors=np.empty((4, 0)),
+    )
+    assert fit.fitted_probability.shape == (4,)
+    assert fit.residual.shape == (4,)
+    assert fit.residual[1] == 0.0
