@@ -39,6 +39,25 @@ Test suite: 90 passing in `refraction/tests/`, all on synthetic fixtures.
   standard deviation (per C0-R), so an early announcement's scale embeds later
   variance. Disclose it; name expanding-window standardization as the variant.
 
+## Deliverable 1b — R2 modules 2 and 3 (`pipeline/build_betas.py`, `build_basket.py`)
+
+- **Inputs**: all injected — announcement returns, surprises, wave membership,
+  holding weights, basket/market returns, characteristics. Every tunable is read
+  from `frozen_config.yaml` (`beta.*`); A6's static scan is green over the
+  pipeline source.
+- **Limitations**: module 1 (`build_returns.py`, the CRSP slice with the
+  open-price splits) and module 4 (panel assembly) are NOT built — both need a
+  price vendor. What exists is the mathematics, verified against the assertions
+  that were written before it: A4, A7, A8 and A9 all pass on output these modules
+  produced.
+- **UNKNOWN**: the characteristics set for the prior (nothing has been supplied;
+  the code raises rather than degrading to a grand mean), and CRSP's table and
+  variable names, which module 1 will need pasted.
+- **Design choice registered, for R5 to confirm**: `beta.shrink_mode: global`,
+  transcribed from C0-R's own wording. `vasicek_precision` is implemented as the
+  §8.4 alternative. The two modes trace different SD(L̂) paths across the sweep,
+  so the mode is part of what makes G2's window non-empty.
+
 ## Deliverable 2 — R1a fetcher (`fetch_r1a_sources.py`)
 
 - **Inputs**: seed landing pages only (`SEEDS`), never deep file URLs.

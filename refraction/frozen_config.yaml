@@ -24,6 +24,18 @@ beta:
   w_shrink: null            # FROZEN AT GATE-PREREG from inside the G2 feasibility window
   w_shrink_sweep_grid: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
   estimation: announcement_regime_pre_only    # lookahead ban applies (assert A4)
+  shrink_mode: global              # ADDED 2026-08-19 with R2 module 2. C0-R says the
+                                   # shrinkage weight "是全局配置项" — one knob for every
+                                   # stock — and that is what Gate-0's G2 sweeps, so
+                                   # `global` is transcription of the spec's own wording,
+                                   # not a preference. The alternative, `vasicek_precision`,
+                                   # scales the same knob by each estimate's precision so
+                                   # noisier betas shrink further; it is implemented and
+                                   # belongs to the §8.4 shrinkage battery.
+                                   # FOR R5 TO CONFIRM: the two modes trace DIFFERENT
+                                   # SD(L̂) paths across the sweep, so the mode is part of
+                                   # what makes the G2 window non-empty or empty. Both are
+                                   # available; only this one is registered.
   prior: characteristics_implied              # prior coefficients pre-period only
   n_pre_min_for_estimation: 10                # provisional [VERIFY-IN-GATE-0]
 

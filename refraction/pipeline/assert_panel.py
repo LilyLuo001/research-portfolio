@@ -129,6 +129,12 @@ def a6_no_magic_w_shrink(src_dir: Path) -> dict:
     pattern = re.compile(r"w_shrink\s*(?::|=)\s*[0-9.]")
     hits = []
     for py in sorted(Path(src_dir).rglob("*.py")):
+        # Test files are excluded: a test that PLANTS a magic w_shrink to prove
+        # this scanner catches it would otherwise trip the scanner in a real R2
+        # run — and the natural "fix" would be to weaken that test. A6 governs
+        # pipeline source, which is where a magic number would actually bite.
+        if "tests" in py.parts:
+            continue
         for i, line in enumerate(py.read_text().splitlines(), 1):
             if pattern.search(line) and "frozen_config" not in line:
                 hits.append(f"{py}:{i}: {line.strip()}")
