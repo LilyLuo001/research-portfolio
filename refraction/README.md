@@ -12,6 +12,7 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 | `frozen_config.yaml` | Single source for every tunable. `prereg.*` and `beta.w_shrink` stay null until GATE-PREREG; Gate-0 thresholds pre-filled from Plan §9, owner confirms via ops/decisions.md |
 | `guards/prereg_guard.py` | Iron rules 4–5 as program invariants: `assert_prereg_ok()` (R6+ startup hard check: OSF timestamp + URL + frozen w_shrink + clock after timestamp) and `assert_no_lookahead()` (A4 semantics). CLI: `python guards/prereg_guard.py check frozen_config.yaml` |
 | `pipeline/assert_panel.py` | R2's 14 assertions (A1–A14) as importable checks + CLI; panel may be written only if all hard asserts pass |
+| `pipeline/gate_diagnostics.py` | R3's six Gate-0 lines as decision logic: hard refusal of any post-period row, thresholds read from config with a null stopping the run, the G2 coupled-window sweep (empty → FAIL, narrower than the registered width → EDGE), mass-weighted G4 framing gate, Holm-adjusted G6, and a report that states facts and verdicts and never recommends |
 | `pipeline/build_betas.py` + `pipeline/build_basket.py` | R2's vendor-free core: announcement-regime betas (pre-period only, lookahead enforced per (permno, wave) by the guard), shrinkage toward a characteristics-implied prior with the w_shrink sweep Gate-0's G2 consumes, leave-one-out basket response, the L = L_mkt + L_tilt decomposition, and F_tilt. Point estimates REFUSE to run while `w_shrink` is null; sweep mode runs, because that is what Gate-0 reads |
 | `pipeline/surprises.py` + `R1b_input_requirements.md` | R1b's schema-free half: S_std standardization per type, the scheduled-window policy from frozen_config, and five acceptance assertions (duplicate keys, calendar reconciliation, non-finite S_std, release-time/timezone slip, sample window). `parse_usmpd()` raises NeedInfo listing exactly what the owner must paste rather than guessing USMPD's columns |
 | `scan.py` + `scans/manifest.md` | R13a resident collision monitor: arXiv + Semantic Scholar APIs + generated SSRN search URLs over the §R13a bilingual keywords; computes the §R13b Marta–Riva/replication-switch 毛刺 flag and the 40%/60% ALERT threshold per hit, before any model sees the row. No LLM in the discovery path |
@@ -28,7 +29,7 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 | R1a USMPD/calendar verification | L1 spec ready (parked, same) | — |
 | R1b parsers | **transform + assertions DONE** (`pipeline/surprises.py`, 20 tests); parse stage unimplemented BY DESIGN | R1a output + the owner paste-list in `R1b_input_requirements.md` |
 | R2 panel/beta/lever build | **modules 2–3 built** (`build_betas.py`, `build_basket.py`, 26 tests; output passes A4/A7/A8/A9). Modules 1 & 4 need a price vendor | R1b; CRSP prices; holdings_weights口径 alignment with P1-T2 (manual §2.3 残余风险①) |
-| R3 Gate-0 diagnostics | not started (DeepSeek + Sonnet 判读起草) | R2 `--sweep` output |
+| R3 Gate-0 diagnostics | **decision logic built** (`pipeline/gate_diagnostics.py`, 36 tests; emitted report passes the `gate_report` contract) | R2 `--sweep` output; the power-sim and pre-trend estimation adapters |
 | GATE-PREREG | human | R3 gate_report |
 | R4 OSF prereg | not started (Opus draft; human submits) | GATE-PREREG |
 | R5 econometric design 双旗舰 | not started (GPT-5 × Opus, by hand) | R3 |

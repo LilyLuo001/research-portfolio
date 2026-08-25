@@ -58,6 +58,23 @@ Test suite: 90 passing in `refraction/tests/`, all on synthetic fixtures.
   §8.4 alternative. The two modes trace different SD(L̂) paths across the sweep,
   so the mode is part of what makes G2's window non-empty.
 
+## Deliverable 1c — R3 Gate-0 decision logic (`pipeline/gate_diagnostics.py`)
+
+- **Inputs**: a PRE-ONLY panel/sweep, R1b's assert_report, and — handed in, not
+  computed here — power-simulation MDEs and pre-trend estimates.
+- **Invariants**: `refuse_post_period()` raises on any frame still carrying Post
+  rows; `threshold()` raises on a missing or null pass line rather than
+  defaulting; the report contains no recommendation language (all three tested).
+- **Limitations**: two estimation adapters are open — the (ConvExp, L, S)
+  re-parameterization of the P1-T2a power simulation, and the event-time /
+  placebo-in-time pre-trend estimates. The gate LOGIC around both is built and
+  tested; `analytic_mde_sigma()` reuses P1-T2a's own convention.
+- **UNKNOWN**: every G-line's realized value — nothing has been measured, because
+  R2 has no panel yet.
+- **Downstream**: emits `gate_report.md` + `gate_report.json`; the markdown
+  validates against the frozen `gate_report` contract (tested end to end). The
+  verdict at REFR-GATE-PREREG is the owner's; this module never recommends.
+
 ## Deliverable 2 — R1a fetcher (`fetch_r1a_sources.py`)
 
 - **Inputs**: seed landing pages only (`SEEDS`), never deep file URLs.
