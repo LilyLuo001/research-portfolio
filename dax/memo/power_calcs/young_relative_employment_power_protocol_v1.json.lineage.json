@@ -1,23 +1,28 @@
 {
   "output": "dax/memo/power_calcs/young_relative_employment_power_protocol_v1.json",
-  "output_sha256": "c2156a3e10b4fb203ba7b6ad0f002067a305e3e2cc7db0a2be72f6bf4aceac7c",
+  "output_sha256": "ff5c058f5f8815b0f2712ebf1e903d43c4e776c74648053b21a380913b6ae147",
   "inputs": [
     {
       "path": "dax/memo/power_calcs/cps_recode_contract_v1.json",
-      "sha256": "5135e66919c0984d178ad75c146c70a5119cfb8a3498208939cc41c47670f5ec",
+      "sha256": "ba7558d52d3e3f54ded0529a321f91df67faedd7e01887e813085aea47846a45",
       "rows": null
     },
     {
-      "path": "dax/memo/power_calcs/ipums_ai_telework_march_patch_v1.json",
-      "sha256": "7b99e452a8007c38279f82b489229e432ac1a568749e6a820ca7120cfe2d0abd",
+      "path": "dax/memo/power_calcs/ipums_extract9_preperiod_split_receipt_v1.json",
+      "sha256": "e43b5434ac105095a61ab8d3ab3884c0a1d33e388739d420a91ab7083f4714f9",
       "rows": null
     },
     {
       "path": "dax/memo/power_calcs/young_relative_employment_power.py",
-      "sha256": "3795420440ecad48a8f2375eaa823a076026898b6ca6f4b09b91b89b5b73224e",
+      "sha256": "8c58a72a80a019f770f69e9bbe22595b76da70fbd4619bc07057fbded6a96624",
+      "rows": null
+    },
+    {
+      "path": "dax/w2/build_young_relative_employment_cells.py",
+      "sha256": "62ff9d53440667e191b94b5af244cbdad2574f3dd42b0a1a51eaeae50dd43f9f",
       "rows": null
     }
   ],
-  "code_version": "1bee451eb7cd8be35f48c9e2032444b110aa63cf",
-  "timestamp": "2026-08-25T14:07:27.419990+00:00"
+  "code_version": "unknown",
+  "timestamp": "2026-08-25T14:42:50.450425+00:00"
 }
