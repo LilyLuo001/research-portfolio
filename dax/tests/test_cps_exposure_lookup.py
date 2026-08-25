@@ -1,6 +1,7 @@
 """Tests for the CPS occupation-vintage exposure lookup."""
 
 import importlib.util
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -145,3 +146,13 @@ def test_committed_lookup_is_exhaustive_and_fail_closed():
     # The variants remain genuinely distinct columns, not aliases.
     complete = direct[list(GATE.VARIANTS)].dropna()
     assert not complete[GATE.VARIANTS[0]].equals(complete[GATE.VARIANTS[1]])
+
+
+def test_committed_receipt_exposes_machine_gate_contract():
+    path = MODULE.with_name("CPS_OCCUPATION_EXPOSURE_LOOKUP_RECEIPT.json")
+    if not path.exists():
+        pytest.skip("generated receipt not present")
+    receipt = json.loads(path.read_text())
+    assert receipt["status"] == "PASS"
+    assert receipt["gate"] == "vintage_aware_cps_occupation_exposure_lookup"
+    assert receipt["outcome_fields_read"] is False

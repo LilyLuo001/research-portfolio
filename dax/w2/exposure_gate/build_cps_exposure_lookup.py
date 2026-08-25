@@ -267,6 +267,9 @@ def main() -> None:
     lookup.to_csv(args.lookup_output, index=False, float_format="%.12g")
     receipt = {
         "record_version": "dax-cps-occupation-exposure-lookup-v1",
+        "status": "PASS",
+        "gate": "vintage_aware_cps_occupation_exposure_lookup",
+        "outcome_fields_read": False,
         "scope": "measurement only; no CPS microdata or outcomes read",
         "design": {
             "main_2017_2019": "raw OCC on Census 2010 basis, official conversion-rate bridge",
