@@ -28,8 +28,18 @@ def test_contract_is_metadata_only_and_pins_extract9_sources():
 def test_primary_recode_is_exact_and_does_not_assign_nonemployed_occupation():
     contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
     assert contract["employment"]["employed_codes"] == [10, 12]
-    assert contract["occupation"]["primary_variable"] == "OCC2010"
-    assert contract["occupation"]["raw_variable_role"].endswith("never exposure merge")
+    assert contract["occupation"]["primary_variable"] == "OCC"
+    assert contract["occupation"]["primary_lookup_key"] == ["lookup_role", "occ_code"]
+    assert "official conversion rates" in (
+        contract["occupation"]["target_occupation_by_year"]["2017-2019"]
+    )
+    assert contract["occupation"]["target_occupation_by_year"]["2020-plus"] == (
+        "raw OCC directly observed on Census-2018"
+    )
+    assert contract["occupation"]["exposure_lookup_role"] == (
+        "raw_occ_main_2020_plus"
+    )
+    assert contract["occupation"]["occ2010_role"].startswith("sensitivity only")
     assert contract["occupation"]["missing_occ2010_codes"] == [9999]
     assert 9999 not in contract["occupation"]["valid_occ2010_codes"]
     assert 1020 in contract["occupation"]["valid_occ2010_codes"]

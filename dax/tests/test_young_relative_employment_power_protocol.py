@@ -33,6 +33,15 @@ def test_protocol_is_fail_closed_and_uses_only_pre_outcomes():
     )
     assert protocol["recode_contract"]["status"] == "PASS_METADATA_ONLY"
     assert protocol["recode_contract"]["microdata_read"] is False
+    assert protocol["recode_contract"]["primary_occupation"] == "OCC"
+    assert protocol["recode_contract"]["primary_lookup_key"] == [
+        "lookup_role", "occ_code",
+    ]
+    assert protocol["recode_contract"]["occ2010_role"] == "sensitivity_only"
+    split = protocol["outcome_blind_preperiod_split"]
+    assert split["status"] == "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT"
+    assert split["protected_fields_decoded_for_rejected_rows"] is False
+    assert split["postperiod_rows_written"] is False
 
 
 def test_external_declines_are_mapped_to_log_contrasts():
@@ -54,6 +63,10 @@ def test_power_and_continuation_rules_are_numerical():
     continuation = protocol["continuation"]
     assert simulation["minimum_repetitions"] >= 999
     assert simulation["target_power"] == 0.8
+    assert simulation["primary_donor_occupation_vintage"] == (
+        "Census-2018 target occupations in every year"
+    )
+    assert simulation["primary_donor_months_expected"] == 66
     assert continuation["detect_primary_benchmark_power_min"] == 0.8
     assert continuation["exclude_primary_benchmark_under_null_probability_min"] == 0.8
     assert continuation["extension_difference_log_points_min"] > 0

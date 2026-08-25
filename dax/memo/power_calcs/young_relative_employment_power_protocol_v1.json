@@ -31,6 +31,15 @@
     "output_column_count": 39,
     "outcomes_inspected_during_validation": false
   },
+  "outcome_blind_preperiod_split": {
+    "receipt": "dax/memo/power_calcs/ipums_extract9_preperiod_split_receipt_v1.json",
+    "status": "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT",
+    "rows_written_preperiod": 6188956,
+    "rows_rejected_postperiod": 3073524,
+    "protected_fields_decoded_for_rejected_rows": false,
+    "postperiod_rows_written": false,
+    "postperiod_outcomes_printed": false
+  },
   "recode_contract": {
     "path": "dax/memo/power_calcs/cps_recode_contract_v1.json",
     "status": "PASS_METADATA_ONLY",
@@ -38,15 +47,23 @@
     "employment_codes": [10, 12],
     "occ2010_niu_code": 9999,
     "weight_rule": "finite WTFINL strictly greater than zero; delivered CSV value used directly",
-    "raw_occ_role": "classification-vintage audit only; never exposure merge"
+    "primary_occupation": "OCC",
+    "primary_lookup_key": ["lookup_role", "occ_code"],
+    "mapping_2017_2019": "probabilistically expand raw Census-2010 OCC to Census-2018 with official conversion rates",
+    "mapping_2020_plus": "use raw OCC directly as Census-2018",
+    "exposure_lookup_role": "raw_occ_main_2020_plus",
+    "occ_code_format": "four-digit zero-padded target Census-2018 occupation",
+    "occ2010_role": "sensitivity_only"
   },
   "estimand": {
     "outcome": "WTFINL-weighted employed headcount",
-    "cell": ["occupation", "age_group", "month"],
+    "cell": ["census2018_occupation", "age_group", "month"],
     "young_ages": [22, 25],
     "comparison_ages": [26, 65],
     "primary_exposure": "dv_rating_beta",
     "primary_contrast": "exposure_quintile_5_vs_1",
+    "quintile_construction": "20/40/60/80 cuts from pre-period WTFINL employment ages 22-65 after target-occupation mapping",
+    "lookup_coverage_rule": "exclude non-full dv_rating_beta routes without renormalizing them and require at least 90 percent WTFINL coverage",
     "model": "PPML",
     "fixed_effects": [
       "occupation_x_age_group",
@@ -91,6 +108,10 @@
     "calendar_block_rotation": true,
     "wild_cluster_distribution": "Rademacher",
     "cluster_level": "occupation",
+    "estimator_implementation": "NumPy grouped-binomial conditional equivalent of registered two-age-group PPML",
+    "primary_donor_occupation_vintage": "Census-2018 target occupations in every year",
+    "primary_donor_months_expected": 66,
+    "pre2020_bridge_rule": "official conversion-rate expansion; weights split across target routes and never renormalized around missing exposure",
     "required_outputs": [
       "rejection_probability",
       "benchmark_exclusion_probability_under_null",

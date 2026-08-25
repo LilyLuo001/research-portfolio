@@ -130,15 +130,22 @@ def build(ddi: pathlib.Path, codebook: pathlib.Path) -> dict[str, object]:
             "categories": values["EMPSTAT"]["categories"],
         },
         "occupation": {
-            "primary_variable": "OCC2010",
-            "raw_variable": "OCC",
-            "raw_variable_role": "classification-vintage audit only; never exposure merge",
+            "primary_variable": "OCC",
+            "primary_lookup_key": ["lookup_role", "occ_code"],
+            "target_occupation_by_year": {
+                "2017-2019": "probabilistic expansion of raw Census-2010 OCC to Census-2018 using official conversion rates",
+                "2020-plus": "raw OCC directly observed on Census-2018"
+            },
+            "exposure_lookup_role": "raw_occ_main_2020_plus",
+            "occ_code_normalization": "integer OCC formatted as exactly four zero-padded digits",
             "raw_missing_codes": None,
             "raw_missing_note": "OCC is continuous and the extract-9 DDI enumerates no missing categories or invalid range.",
+            "primary_coverage_rule": "retain only full dv_rating_beta routes; require at least 90 percent of positive-WTFINL employed age-22-65 weight after the official bridge",
+            "occ2010_role": "sensitivity only; never the primary grouping or exposure join",
             "valid_occ2010_codes": valid_occ,
             "missing_occ2010_codes": [9999],
-            "valid_rule": "code must be enumerated by extract-9 DDI and its label must not be NIU",
-            "harmonization_caveat": "OCC2010 uses modal/forced assignment across vintages; retain OCC for boundary audits.",
+            "occ2010_valid_rule": "code must be enumerated by extract-9 DDI and its label must not be NIU",
+            "harmonization_caveat": "OCC2010 uses modal/forced assignment across vintages and is not admissible for the primary design.",
         },
         "class_of_worker": {
             "source_variable": "CLASSWKR",

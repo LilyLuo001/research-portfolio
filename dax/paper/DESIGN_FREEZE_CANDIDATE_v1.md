@@ -41,6 +41,11 @@ only the new 2017--2026 wide panel remains outcome-sealed.
    age restriction. It is prepared, not authorized or submitted.
 6. Power uses only 2017-01 through 2022-11 outcomes. Treatment estimates,
    post-2022-11 summaries, and `dax/analysis/outcomes/` remain prohibited.
+7. The audited raw-record splitter created a private pre-period source containing
+   6,188,956 rows and rejected 3,073,524 later rows. For rejected rows it
+   decoded only `YEAR` and `MONTH`; it did not split, decode, print, or write
+   protected outcome fields. Its sanitized receipt is
+   `dax/memo/power_calcs/ipums_extract9_preperiod_split_receipt_v1.json`.
 
 ## 2. What CPS can and cannot test
 
@@ -69,10 +74,17 @@ comparable log magnitude.
 - Employment is defined from the extract-9 codebook as `EMPSTAT` codes
   `{10, 12}` (at work; has job, not at work). `00`, `01`, `20`--`22`, and
   `30`--`36` are excluded.
+- Primary occupation starts from raw `OCC`. For 2017--2019, official Census
+  conversion rates probabilistically expand each Census-2010 code into its
+  Census-2018 target code(s), splitting the survey weight across routes. From
+  2020 onward raw `OCC` is already Census-2018 and is used directly. The same
+  target-occupation fixed effect therefore spans the full panel. `OCC2010` is
+  a separately labelled sensitivity only.
 - Occupation is used only for employed people. The chapter does not assign a
   current occupation to a non-employed person and does not estimate an
   individual employment probability conditional on current occupation.
-- Collapse `WTFINL` to occupation x age-group x month employment headcounts.
+- Collapse routed `WTFINL` to Census-2018 occupation x age-group x month
+  employment headcounts.
   A zero headcount is retained.
 
 ### Exposure
@@ -80,9 +92,12 @@ comparable log magnitude.
 - Primary measure: Eloundou GPT-4 beta, model-rated (`dv_rating_beta`), because
   it matches the measure named in the ADP paper. This reason is fixed without
   reference to a CPS outcome.
-- Create employment-weighted quintiles using a fixed pre-treatment occupation
-  distribution. C1 must record the weighting year and cut points before the
-  freeze. Quintile 1 is the reference and quintile 5 is the headline contrast.
+- After the target-occupation join, derive fixed `dv_rating_beta` quintile cuts using
+  pre-period `WTFINL` employment for ages 22--65. Record the exact 20/40/60/80
+  cuts and weighting window. Missing or partially covered exposure routes are
+  excluded without renormalization; at least 90 percent of eligible employment
+  weight must remain. Quintile 1 is the reference and quintile 5 is the
+  headline contrast.
 - Every other declared exposure measure and crosswalk is reported; none may be
   selected because its estimate is favorable.
 
@@ -147,15 +162,21 @@ chapter.
 
 Power is computed before post-period outcomes are opened.
 
-1. Build occupation x age-group x month headcounts from the 66 usable monthly-
+1. Build target-occupation x age-group x month headcounts from the 66 usable monthly-
    basic samples in 2017-01--2022-11. Omit the five ASEC March gaps unless the
-   corrective basic-month extract is separately authorized and validated.
+   corrective basic-month extract is separately authorized and validated. The
+   2017--2019 raw codes are expanded through the frozen official bridge, so all
+   66 usable months share the Census-2018 target units used after 2020.
 2. Preserve the same occupation support and the planned post-month calendar,
    including the missing 2025-10 month.
 3. Construct null pseudo-post panels by rotating whole pre-period calendar-
    month blocks; a donor month is shared by every occupation and age group so
    aggregate shocks and cross-occupation covariance are preserved.
-4. Fit the exact PPML equation. Use occupation-level Rademacher wild-cluster
+4. Fit the exact PPML equation. With two age groups, conditioning on each
+   occupation-month total gives an exactly equivalent grouped-binomial logit
+   with occupation and month effects. The committed NumPy engine uses this
+   conditional likelihood and weighted fixed-effect absorption. Use
+   occupation-level Rademacher wild-cluster
    multipliers on null scores/residual contributions. Do not resample persons
    as if CPS records were independent.
 5. Inject `beta_5` on the log mean at a grid containing zero, the three values
@@ -244,6 +265,9 @@ validate the primary PPML design or establish novelty.
 | extract 9 completed, checksummed, structurally valid | exact submitted hash; 9,262,480 rows; 114 requested samples; outcome fields not read | PASS | yes |
 | codebook recode contract | exact metadata-derived rules; no microdata read | PASS | yes |
 | usable basic-month coverage | 109 overall; 66 pre-period; five ASEC March gaps omitted | PASS_WITH_STRUCTURAL_GAPS | yes |
+| outcome-blind pre-period split | 6,188,956 rows retained; 3,073,524 post rows rejected before protected suffix decoding | PASS | yes |
+| raw-OCC primary contract | official pre-2020 target bridge + direct post-2020 target code; OCC2010 sensitivity only | PASS_CODE_AND_SYNTHETIC | yes |
+| real PPML-equivalent engine | exact conditional grouped-logit; injected -0.20 recovered within 1e-5 | PASS_SYNTHETIC_ONLY | yes |
 | C1 exposure coverage | C1 predeclared gate | — | — |
 | Dallas Chart 1 pipeline | published endpoints within 0.02 pp, or documented unresolved input | — | — |
 | 19% detection power | >= 0.80 | — | — |

@@ -1,9 +1,9 @@
 import importlib.util
+import json
 import math
 import pathlib
 import sys
 
-import pandas as pd
 import pytest
 
 
@@ -23,42 +23,66 @@ def test_post_calendar_preserves_october_2025_gap():
     assert "2025-10" not in months
 
 
-def test_donor_rotation_never_accepts_post_outcomes():
-    with pytest.raises(ValueError, match="post-period outcomes"):
-        POWER.donor_rotation(["2022-11", "2022-12"], ["2023-01"])
-    mapping = POWER.donor_rotation(["2022-10", "2022-11"], ["2022-12", "2023-01"])
-    assert mapping == {"2022-12": "2022-10", "2023-01": "2022-11"}
+def test_real_entry_requires_authenticated_beta_lookup(tmp_path):
+    lookup = tmp_path / "lookup.csv"
+    lookup.write_text("occ2010,exposure_quintile\n100,1\n", encoding="utf-8")
+    receipt_path = tmp_path / "c1.json"
+    receipt_path.write_text(json.dumps({"status": "BLOCKED"}), encoding="utf-8")
+    with pytest.raises(POWER.RealPowerBlocked, match="status is PASS"):
+        POWER.authenticate_c1(receipt_path, lookup)
+
+    receipt_path.write_text(json.dumps({
+        "status": "PASS",
+        "outputs": {
+            POWER.LOOKUP_OUTPUT_KEY: {"sha256": POWER.sha256_file(lookup)}
+        },
+        "design": {"primary_exposure": "aioe"},
+    }), encoding="utf-8")
+    with pytest.raises(POWER.RealPowerBlocked, match="dv_rating_beta"):
+        POWER.authenticate_c1(receipt_path, lookup)
+
+    receipt_path.write_text(json.dumps({
+        "status": "PASS",
+        "outputs": {
+            POWER.LOOKUP_OUTPUT_KEY: {"sha256": POWER.sha256_file(lookup)}
+        },
+        "design": {"primary_exposure": "dv_rating_beta"},
+    }), encoding="utf-8")
+    assert POWER.authenticate_c1(receipt_path, lookup)["status"] == "PASS"
 
 
-def test_effect_injection_hits_only_q5_young_post():
-    frame = pd.DataFrame({
-        "age_group": ["young_22_25", "older_26_65", "young_22_25", "young_22_25"],
-        "exposure_quintile": [5, 5, 1, 5],
-        "is_post": [True, True, True, False],
-        "mean_headcount": [100.0, 100.0, 100.0, 100.0],
-    })
-    result = POWER.inject_log_mean_effect(frame, math.log(0.81))
-    assert result["mean_headcount"].tolist() == pytest.approx([81.0, 100.0, 100.0, 100.0])
+def test_cells_authentication_requires_audited_split(tmp_path):
+    cells = tmp_path / "cells.csv"
+    cells.write_text("month,occ2010\n2021-01,100\n", encoding="utf-8")
+    receipt = tmp_path / "cells.json"
+    receipt.write_text(json.dumps({
+        "status": "PASS_PREPERIOD_CELLS",
+        "post_outcomes_read": False,
+        "source_seal": {"audited_split_status": "NOT_SUPPLIED_LIBRARY_CALL"},
+        "cells_sha256": POWER.sha256_file(cells),
+    }), encoding="utf-8")
+    with pytest.raises(POWER.RealPowerBlocked, match="audited pre-period split"):
+        POWER.authenticate_cells(receipt, cells)
 
 
-def test_wild_draw_is_cluster_constant_and_deterministic():
-    first = POWER.draw_rademacher_by_cluster([10, 10, 20, 30], seed=20260825)
-    second = POWER.draw_rademacher_by_cluster([30, 20, 10], seed=20260825)
-    assert first == second
-    assert set(first.values()) <= {-1.0, 1.0}
-
-
-def test_real_power_is_disabled_even_if_c1_placeholder_claims_pass():
-    with pytest.raises(POWER.RealPowerBlocked, match="until C1"):
-        POWER.assert_real_power_blocked(None)
-    with pytest.raises(POWER.RealPowerBlocked, match="remains disabled"):
-        POWER.assert_real_power_blocked({"status": "PASS"})
-
-
-def test_synthetic_receipt_cannot_be_mistaken_for_power():
-    receipt = POWER.synthetic_smoke()
-    assert receipt["status"] == "SYNTHETIC_ENGINE_VALIDATION_NOT_POWER"
+def test_synthetic_validation_recovers_registered_effect_and_is_not_real_power():
+    receipt = POWER.synthetic_validation()
+    assert receipt["status"] == (
+        "PASS_SYNTHETIC_REAL_ENGINE_VALIDATION_NOT_REAL_POWER"
+    )
     assert receipt["real_power_executed"] is False
     assert receipt["post_outcomes_read"] is False
-    assert receipt["primary_benchmark_log"] == round(math.log(0.81), 9)
-    assert receipt["q5_young_shifted_headcount"] == 81.0
+    assert receipt["conditional_ppml_equivalence_exercised"] is True
+    assert receipt["injected_log_effect"] == -0.2
+    assert receipt["recovered_log_effect"] == pytest.approx(-0.2, abs=1e-5)
+    assert receipt["recovery_absolute_error"] < 1e-5
+    assert receipt["simulation_smoke_effects"] == 2
+
+
+def test_effect_grid_contains_all_authenticated_benchmarks():
+    assert 0.0 in POWER.DEFAULT_EFFECTS
+    for decline in (0.13, 0.16, 0.19):
+        assert any(
+            math.isclose(effect, math.log(1 - decline), abs_tol=1e-12)
+            for effect in POWER.DEFAULT_EFFECTS
+        )

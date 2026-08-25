@@ -21,36 +21,118 @@ CONTRACT = json.loads(
 
 
 def fixture():
+    rows = []
+    for index, occ in enumerate(range(100, 105)):
+        for age in (22, 40):
+            rows.append({
+                "YEAR": 2017, "MONTH": 2, "AGE": age, "EMPSTAT": 10,
+                "OCC": occ, "OCC2010": 9999 if occ == 100 else 1020,
+                "CLASSWKR": 20 if occ == 100 else 22, "WKSTAT": 11,
+                "WTFINL": 1.0,
+            })
+    rows.append({
+        "YEAR": 2017, "MONTH": 3, "AGE": 22, "EMPSTAT": 10,
+        "OCC": 100, "OCC2010": 1020, "CLASSWKR": 22, "WKSTAT": 11,
+        "WTFINL": 100.0,
+    })
+    return pd.DataFrame(rows)
+
+
+def lookup_fixture():
     return pd.DataFrame({
-        "YEAR": [2017, 2017, 2017, 2017, 2017, 2017],
-        "MONTH": [2, 2, 2, 2, 2, 3],
-        "AGE": [22, 40, 25, 30, 30, 22],
-        "EMPSTAT": [10, 12, 21, 10, 10, 10],
-        "OCC": [1005, 1005, 1005, 0, 1005, 1005],
-        "OCC2010": [1020, 1020, 1020, 9999, 1020, 1020],
-        "CLASSWKR": [22, 23, 22, 22, 20, 22],
-        "WKSTAT": [11, 13, 50, 11, 11, 11],
-        "WTFINL": [2.0, 3.0, 4.0, 5.0, 7.0, 100.0],
+        "lookup_role": [CELLS.CURRENT_ROLE] * 5,
+        "occ_code": [f"{value:04d}" for value in range(100, 105)],
+        "dv_rating_beta": [1.0, 2.0, 3.0, 4.0, 5.0],
+        "dv_rating_beta_covered_route_mass": [1.0] * 5,
     })
 
 
-def test_cells_use_employed_codes_weights_age_groups_and_omit_asec_march():
-    cells, receipt = CELLS.build_cells(fixture(), CONTRACT, require_complete_months=False)
+def bridge_fixture():
+    return pd.DataFrame({
+        "census_2010": [f"{value:04d}" for value in range(100, 105)],
+        "census_2018": [f"{value:04d}" for value in range(100, 105)],
+        "bridge_weight": [1.0] * 5,
+    })
+
+
+def test_cells_use_raw_occ_role_join_and_omit_asec_march():
+    cells, receipt = CELLS.build_cells(
+        fixture(), CONTRACT, lookup_fixture(), bridge_fixture(),
+        require_complete_months=False,
+    )
     assert receipt["rows_structural_asec_omitted"] == 1
-    assert receipt["rows_employed_primary_age"] == 4
-    assert receipt["rows_unmatched_occupation"] == 1
-    assert receipt["general_wage_salary_code20_rows"] == 1
+    assert receipt["rows_employed_primary_age"] == 10
+    assert receipt["excluded_total_weight"] == 0
+    assert receipt["covered_route_mass_fraction"] == 1.0
+    assert receipt["general_wage_salary_code20_rows"] == 2
     assert receipt["private_wage_salary_sensitivity_ready"] is False
-    assert cells["employment_headcount"].sum() == pytest.approx(12.0)
+    assert cells["employment_headcount"].sum() == pytest.approx(10.0)
     assert set(cells["age_group"]) == {"young_22_25", "older_26_65"}
-    assert 9999 not in set(cells["occ2010"])
+    assert set(cells["lookup_role"]) == {CELLS.CURRENT_ROLE}
+    assert set(cells["occupation_key"]) == {
+        f"census2018:{value:04d}" for value in range(100, 105)
+    }
+    assert set(cells["exposure_quintile"]) == {1, 2, 3, 4, 5}
+    assert "OCC2010" not in cells.columns and "occ2010" not in cells.columns
+    assert receipt["primary_occupation_variable"] == "OCC"
+    assert receipt["occ2010_role"] == "sensitivity_only"
+
+
+def test_nonfull_route_coverage_and_duplicate_lookup_fail_closed():
+    lookup = lookup_fixture().iloc[:-1].copy()
+    with pytest.raises(ValueError, match="below 0.90"):
+        CELLS.build_cells(
+            fixture(), CONTRACT, lookup, bridge_fixture(),
+            require_complete_months=False,
+        )
+    duplicate = pd.concat([lookup_fixture(), lookup_fixture().iloc[[0]]])
+    with pytest.raises(ValueError, match=r"duplicate lookup_role\+occ_code"):
+        CELLS.build_cells(
+            fixture(), CONTRACT, duplicate, bridge_fixture(),
+            require_complete_months=False,
+        )
+
+
+def test_role_switches_at_2020_and_occ_code_is_zero_padded():
+    frame = fixture()
+    frame["YEAR"] = 2020
+    lookup = lookup_fixture().assign(lookup_role=CELLS.CURRENT_ROLE)
+    cells, _ = CELLS.build_cells(
+        frame, CONTRACT, lookup, bridge_fixture(), require_complete_months=False
+    )
+    assert set(cells["lookup_role"]) == {CELLS.CURRENT_ROLE}
+    assert set(cells["occ_code"]) == {"0100", "0101", "0102", "0103", "0104"}
 
 
 def test_post_rows_are_rejected():
     frame = fixture()
     frame.loc[0, ["YEAR", "MONTH"]] = [2022, 12]
     with pytest.raises(ValueError, match="post-period rows prohibited"):
-        CELLS.build_cells(frame, CONTRACT, require_complete_months=False)
+        CELLS.build_cells(
+            frame, CONTRACT, lookup_fixture(), bridge_fixture(),
+            require_complete_months=False,
+        )
+
+
+def test_pre2020_one_to_many_bridge_preserves_weight_and_target_units():
+    frame = fixture().iloc[:10].copy()
+    lookup = pd.DataFrame({
+        "lookup_role": [CELLS.CURRENT_ROLE] * 6,
+        "occ_code": ["0100", "0101", "0102", "0103", "0104", "0105"],
+        "dv_rating_beta": [1.0, 2.0, 3.0, 4.0, 5.0, 1.5],
+        "dv_rating_beta_covered_route_mass": [1.0] * 6,
+    })
+    bridge = pd.DataFrame({
+        "census_2010": ["0100", "0100", "0101", "0102", "0103", "0104"],
+        "census_2018": ["0100", "0105", "0101", "0102", "0103", "0104"],
+        "bridge_weight": [0.7, 0.3, 1.0, 1.0, 1.0, 1.0],
+    })
+    cells, receipt = CELLS.build_cells(
+        frame, CONTRACT, lookup, bridge, require_complete_months=False
+    )
+    assert cells["employment_headcount"].sum() == pytest.approx(10.0)
+    assert cells.loc[cells["occ_code"] == "0105", "employment_headcount"].sum() == pytest.approx(0.6)
+    assert receipt["covered_route_mass_fraction"] == pytest.approx(1.0)
 
 
 def test_file_seal_checks_only_dates_before_refusing_post(monkeypatch, tmp_path):
@@ -71,3 +153,22 @@ def test_expected_preperiod_has_five_asec_gaps():
     assert len(months) == 66
     assert months[0] == "2017-01" and months[-1] == "2022-11"
     assert all(f"{year}-03" not in months for year in range(2017, 2022))
+
+
+def test_split_receipt_hash_and_outcome_seal_are_binding(tmp_path):
+    source = tmp_path / "pre.csv"
+    source.write_text("YEAR,MONTH\n2022,11\n", encoding="utf-8")
+    receipt_path = tmp_path / "split.json"
+    receipt_path.write_text(json.dumps({
+        "status": "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT",
+        "cutoff_month": "2022-11",
+        "protected_fields_decoded_for_rejected_rows": False,
+        "postperiod_rows_written": False,
+        "output_sha256": CELLS.sha256_file(source),
+    }), encoding="utf-8")
+    receipt = CELLS.validate_split_receipt(receipt_path, source)
+    assert receipt["status"] == "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT"
+    receipt["protected_fields_decoded_for_rejected_rows"] = True
+    receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+    with pytest.raises(ValueError, match="post-outcome seal"):
+        CELLS.validate_split_receipt(receipt_path, source)
