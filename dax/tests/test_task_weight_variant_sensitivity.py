@@ -92,14 +92,35 @@ def test_the_record_refuses_to_be_a_selection_rule():
     assert "W2-D1" in rec["not_a_selection_rule"]
 
 
-def test_the_unverified_literature_claim_is_carried_as_unverified():
-    """W2-D2 recorded 0.999 as reported-not-verified because the source was
-    unreachable. It must not silently become a verified fact here."""
+def test_the_literature_claim_is_not_juxtaposed_with_a_different_quantity():
+    """The 0.999 claim is a BETWEEN-occupation correlation of occupation
+    aggregates; everything measured here is WITHIN-occupation.
+
+    An earlier version of this record put the measured within-occupation
+    median next to the claim, which invited reading one as a test of the
+    other. Aggregating averages within-occupation reordering away, so a high
+    between-occupation correlation and substantial within-occupation
+    disagreement are entirely compatible. The claim stays unverified.
+    """
     df = frame(occ("11-1011.00", [0.6, 0.3, 0.1], [0.5, 0.3, 0.2]))
     claim = V.build(df)["reported_literature_claim"]
+    assert claim["still_unverified"] is True
     assert "not verified" in claim["status_in_W2_D2"]
-    assert claim["measured_here_median_rank_corr_primary_vs_importance_only"] == \
-        pytest.approx(1.0)
+    assert "BETWEEN-occupation" in claim["not_comparable_to_the_numbers_here"]
+    assert not any("measured" in k for k in claim)
+
+
+def test_the_record_carries_the_spread_not_only_the_median():
+    """A median alone understates this: it can look respectable while a large
+    minority of occupations reorder heavily, and the minority decides whether
+    a headline is stable."""
+    df = frame(occ("11-1011.00", [0.6, 0.3, 0.1], [0.1, 0.3, 0.6])
+               + occ("29-1141.00", [0.6, 0.3, 0.1], [0.5, 0.3, 0.2]))
+    dist = V.build(df)["within_occupation_disagreement"]
+    assert dist["occupations"] == 2
+    # one occupation is perfectly reversed, so half fall below every threshold
+    assert dist["share_of_occupations_with_rank_corr_below"]["0.5"] == pytest.approx(0.5)
+    assert dist["share_of_occupations_with_rank_corr_below"]["0.99"] == pytest.approx(0.5)
 
 
 def test_equal_weight_reports_why_rank_correlation_is_undefined(): 

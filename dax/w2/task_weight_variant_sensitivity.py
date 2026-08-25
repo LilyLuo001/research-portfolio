@@ -112,6 +112,30 @@ def pairwise(frame, a, b):
     }
 
 
+def _distribution(pair):
+    """How the disagreement is spread, not just where its middle sits.
+
+    A median alone understates this badly: the median rank correlation is
+    respectable while a large minority of occupations reorder heavily, and it
+    is the minority that decides whether a headline is stable.
+    """
+    rhos = sorted(r["rank_corr"] for r in pair["per_occupation"]
+                  if r["rank_corr"] is not None)
+    mass = sorted(r["total_abs_share_gap"] / 2 for r in pair["per_occupation"])
+    if not rhos:
+        return {"rank_corr_available": False}
+    return {
+        "pair": pair["pair"],
+        "occupations": len(rhos),
+        "share_of_occupations_with_rank_corr_below": {
+            str(t): sum(1 for r in rhos if r < t) / len(rhos)
+            for t in (0.99, 0.95, 0.90, 0.80, 0.70, 0.50)},
+        "share_of_occupations_with_mass_moved_above": {
+            str(t): sum(1 for m in mass if m > t) / len(mass)
+            for t in (0.05, 0.10, 0.15)},
+    }
+
+
 def build(frame):
     import pandas as pd  # noqa: F401
 
@@ -126,8 +150,6 @@ def build(frame):
              pairwise(frame, VARIANTS[0], VARIANTS[2]),
              pairwise(frame, VARIANTS[1], VARIANTS[2])]
 
-    primary_vs_importance = pairs[0]
-    verdict_basis = primary_vs_importance["rank_corr"]["median"]
     return {
         "record_version": "dax-w2-task-weight-variant-sensitivity-v1",
         "decision": "dax/memo/W2_DECISION_task_weight_2026-08-24.md [W2-D4]",
@@ -144,9 +166,20 @@ def build(frame):
             "claim": "importance-weighted and unweighted occupation means "
                      "correlate at 0.999",
             "status_in_W2_D2": "reported, not verified -- source unreachable",
-            "measured_here_median_rank_corr_primary_vs_importance_only":
-                verdict_basis,
+            "still_unverified": True,
+            "not_comparable_to_the_numbers_here": (
+                "That claim is a BETWEEN-occupation correlation of "
+                "occupation-level aggregate scores. Everything measured here "
+                "is WITHIN-occupation agreement between task shares. A high "
+                "correlation of occupation aggregates is fully compatible "
+                "with substantial within-occupation reordering, because "
+                "aggregating averages the reordering away. An earlier version "
+                "of this record placed the two side by side, which invited "
+                "reading one as a test of the other. Reproducing the claim "
+                "needs a task-level score to aggregate, which requires "
+                "crossing data that does not exist yet."),
         },
+        "within_occupation_disagreement": _distribution(pairs[0]),
         "how_to_read_this": (
             "High rank correlation with small reallocated mass means the "
             "W2-D3 defect (ordinal FT bands treated as cardinal) is bounded in "

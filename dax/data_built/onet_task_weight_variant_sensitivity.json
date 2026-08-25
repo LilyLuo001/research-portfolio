@@ -18425,7 +18425,28 @@
   "reported_literature_claim": {
     "claim": "importance-weighted and unweighted occupation means correlate at 0.999",
     "status_in_W2_D2": "reported, not verified -- source unreachable",
-    "measured_here_median_rank_corr_primary_vs_importance_only": 0.8760620443511417
+    "still_unverified": true,
+    "not_comparable_to_the_numbers_here": "That claim is a BETWEEN-occupation correlation of occupation-level aggregate scores. Everything measured here is WITHIN-occupation agreement between task shares. A high correlation of occupation aggregates is fully compatible with substantial within-occupation reordering, because aggregating averages the reordering away. An earlier version of this record placed the two side by side, which invited reading one as a test of the other. Reproducing the claim needs a task-level score to aggregate, which requires crossing data that does not exist yet."
+  },
+  "within_occupation_disagreement": {
+    "pair": [
+      "task_weight_share",
+      "importance_only_share"
+    ],
+    "occupations": 873,
+    "share_of_occupations_with_rank_corr_below": {
+      "0.99": 0.993127147766323,
+      "0.95": 0.8900343642611683,
+      "0.9": 0.6185567010309279,
+      "0.8": 0.290950744558992,
+      "0.7": 0.13974799541809851,
+      "0.5": 0.032073310423825885
+    },
+    "share_of_occupations_with_mass_moved_above": {
+      "0.05": 0.8132875143184422,
+      "0.1": 0.21420389461626574,
+      "0.15": 0.006872852233676976
+    }
   },
   "how_to_read_this": "High rank correlation with small reallocated mass means the W2-D3 defect (ordinal FT bands treated as cardinal) is bounded in consequence and can be reported as a limitation. Low correlation or large reallocation means that defect is load-bearing, the headline must be reported across all three definitions, and the fix path in W2-D3 becomes required work rather than a note.",
   "not_a_selection_rule": "This never picks a weight. The primary is fixed by W2-D1 and changing it would break the reconciliation with Mapping A's coverage and the DWA bound."

@@ -1,0 +1,39 @@
+{
+  "output": "dax/data_built/onet_task_weights.receipt.json",
+  "output_sha256": "2ed3a76f6f5663de1f38d6db6e08c6ee937c7e5b5bb4372a6abcfd58f5d95dbe",
+  "inputs": [
+    {
+      "path": "dax/w2/build_onet_task_weights.py",
+      "sha256": "8cd98824c67a77fd23124d007fcdc8ac7c89670bc0635fced80d1a0d06b60d64",
+      "rows": null
+    },
+    {
+      "path": "dax/data_built/onet_task_weights.parquet",
+      "sha256": "e889c47c33cc4bed9e35feba68c03e3917efa67a2782f63e4044ea39288d9f3c",
+      "rows": null
+    }
+  ],
+  "code_version": "23f4c9b39d66791761200e9198b668dd06c4057e",
+  "timestamp": "2026-08-25T06:39:21.603538+00:00",
+  "source_archive": {
+    "path": "/usr3/graduate/qluo/dax-private/public_raw/onet_26_1/db_26_1_text.zip",
+    "sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a",
+    "release": "O*NET 26.1 (text database)",
+    "members_read": [
+      "Task Ratings.txt",
+      "Task Statements.txt"
+    ],
+    "verified_against_pin": true
+  },
+  "reconciled_against": {
+    "path": "/usr3/graduate/qluo/dax-private/w2_build_outputs/onet_timeshares.csv",
+    "sha256": "62c6360c030d73948858c4930de17bb8f11aa6966bbd339d3397464fb8d8a40e",
+    "status": "RECONCILED",
+    "shared_tasks_compared": 17140
+  },
+  "built_on": "scc1.bu.edu",
+  "rows": 17140,
+  "cost_usd": 0,
+  "model_calls": 0,
+  "note": "Receipt sidecar for the same build that produced onet_task_weights.parquet. The parquet is the data output; this receipt is its provenance record, and carries the same pinned archive so it is not the weaker document of the two."
+}
