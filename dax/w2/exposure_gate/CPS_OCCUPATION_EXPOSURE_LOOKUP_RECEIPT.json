@@ -1,0 +1,106 @@
+{
+  "coverage": {
+    "occ2010_sensitivity_all_years": {
+      "ambiguity_status": {
+        "one_to_many_diffuse": 38,
+        "one_to_many_dominant_route": 18,
+        "one_to_one": 447
+      },
+      "codes": 503,
+      "variants": {
+        "aioe_ability_direct": {
+          "full_coverage_codes": 463,
+          "partial_or_full_coverage_codes": 482,
+          "zero_coverage_codes": 21
+        },
+        "aioe_admin_equal": {
+          "full_coverage_codes": 480,
+          "partial_or_full_coverage_codes": 486,
+          "zero_coverage_codes": 17
+        },
+        "aioe_oews2018_source_weighted": {
+          "full_coverage_codes": 472,
+          "partial_or_full_coverage_codes": 479,
+          "zero_coverage_codes": 24
+        }
+      }
+    },
+    "raw_occ_main_2017_2019": {
+      "ambiguity_status": {
+        "one_to_many_diffuse": 38,
+        "one_to_many_dominant_route": 18,
+        "one_to_one": 447
+      },
+      "codes": 503,
+      "variants": {
+        "aioe_ability_direct": {
+          "full_coverage_codes": 463,
+          "partial_or_full_coverage_codes": 482,
+          "zero_coverage_codes": 21
+        },
+        "aioe_admin_equal": {
+          "full_coverage_codes": 480,
+          "partial_or_full_coverage_codes": 486,
+          "zero_coverage_codes": 17
+        },
+        "aioe_oews2018_source_weighted": {
+          "full_coverage_codes": 472,
+          "partial_or_full_coverage_codes": 479,
+          "zero_coverage_codes": 24
+        }
+      }
+    },
+    "raw_occ_main_2020_plus": {
+      "ambiguity_status": {
+        "direct_observed_code": 570
+      },
+      "codes": 570,
+      "variants": {
+        "aioe_ability_direct": {
+          "full_coverage_codes": 530,
+          "partial_or_full_coverage_codes": 530,
+          "zero_coverage_codes": 40
+        },
+        "aioe_admin_equal": {
+          "full_coverage_codes": 545,
+          "partial_or_full_coverage_codes": 545,
+          "zero_coverage_codes": 25
+        },
+        "aioe_oews2018_source_weighted": {
+          "full_coverage_codes": 535,
+          "partial_or_full_coverage_codes": 535,
+          "zero_coverage_codes": 35
+        }
+      }
+    }
+  },
+  "design": {
+    "exposure_variants": [
+      "aioe_admin_equal",
+      "aioe_ability_direct",
+      "aioe_oews2018_source_weighted"
+    ],
+    "main_2017_2019": "raw OCC on Census 2010 basis, official conversion-rate bridge",
+    "main_2020_plus": "raw OCC on Census 2018 basis, direct match",
+    "missing_child_rule": "fail closed; partial sums reported, no renormalization around missing target exposure",
+    "sensitivity": "harmonized OCC2010 only; never substitutes for observed post-2020 raw OCC"
+  },
+  "inputs": {
+    "/projectnb/econdept/qluo/dax-private/public_raw/census/2018-occupation-code-list-and-crosswalk.xlsx": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f",
+    "/projectnb/econdept/qluo/dax-private/public_raw/occupation_crosswalks/census_2010_to_2018_occ_conversion_rates.xlsx": "73a8db545d5c484fd1f8ecd9745d0a08b51113b8a37e99dea2df55aeb08cb74d",
+    "/projectnb/econdept/qluo/dax-private/public_raw/occupation_crosswalks/ipums_cps_2020_on_occ2010_crosswalk.xlsx": "98c36a41af47e8f1eb419a760efb58b1423acec50d730fd30dc7274e0ae586c5",
+    "dax/w2/exposure_gate/CENSUS2018_EXPOSURE_VARIANTS.csv": "fd8f7992aa48b6bc2b354e0c275887a87283880e379bb7a5a05c0bd1bcbae703"
+  },
+  "outputs": {
+    "dax/w2/exposure_gate/CENSUS_OCC2010_TO_2018_BRIDGE.csv": {
+      "rows": 595,
+      "sha256": "fe3d52404b75bbc17ba89b58d03085aba36d99ee9e90ccba92d35eaa6b474dfb"
+    },
+    "dax/w2/exposure_gate/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv": {
+      "rows": 1576,
+      "sha256": "cd2e6aa56fb92a295dd22323073f41309d907e3924ae15ee24a610ebb75c4998"
+    }
+  },
+  "record_version": "dax-cps-occupation-exposure-lookup-v1",
+  "scope": "measurement only; no CPS microdata or outcomes read"
+}

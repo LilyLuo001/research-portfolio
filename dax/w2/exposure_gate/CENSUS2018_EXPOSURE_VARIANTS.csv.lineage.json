@@ -1,0 +1,15 @@
+{
+  "output": "dax/w2/exposure_gate/CENSUS2018_EXPOSURE_VARIANTS.csv",
+  "output_sha256": "fd8f7992aa48b6bc2b354e0c275887a87283880e379bb7a5a05c0bd1bcbae703",
+  "inputs": [
+    {"path": "dax/w2/exposure_gate/reproduce_eig_crosswalk.py", "sha256": "c408a67384d4ba5c524618770d589d16d0ed723f95999dd6f37350f42144e6f1"},
+    {"path": "dax/w2/exposure_gate/AIOE_DataAppendix.xlsx", "sha256": "c123b4c64840aff3568ae6c97256678719b88a74d45b6362dbefb5af34667b95"},
+    {"path": "/projectnb/econdept/qluo/dax-private/public_raw/bls/soc_2010_to_2018_crosswalk.xlsx", "sha256": "f3a847561562d3e5a30eb848f2902a5f7b02e9c48b3d7f2cc8879899fbc242a7"},
+    {"path": "/projectnb/econdept/qluo/dax-private/public_raw/census/2018-occupation-code-list-and-crosswalk.xlsx", "sha256": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f"},
+    {"path": "/projectnb/econdept/qluo/dax-private/public_raw/oews_2018/oesm18nat.zip", "sha256": "7ad399c96360c6abd3977574af958d49582f8dd33372b6d433b31669ddeb156c"},
+    {"path": "/projectnb/econdept/qluo/dax-private/public_raw/onet_25_0/db_25_0_excel.zip", "sha256": "a6380206c65e9c25e5fabee8b94c84a04f0c310491edb7665295a961df0d6afb"},
+    {"path": "/projectnb/econdept/qluo/dax-private/public_raw/onet_25_1/db_25_1_excel.zip", "sha256": "7979b3b963337746cbbf9090943de93c34c71a0075817785cd3c2edefd029f79"}
+  ],
+  "code_version": "2fcb4d2e69394b4260edbd11c070f737aed865c8",
+  "timestamp": "2026-08-25T14:11:48Z"
+}
