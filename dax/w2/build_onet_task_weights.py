@@ -202,6 +202,44 @@ SUPPRESSION_RULES = {
 }
 
 
+def suppression_breakdown(ratings, disqualifying):
+    """Which scale combinations Recommend Suppress actually flags in 26.1.
+
+    Whether a clause of the rule ever fires is a property of the release, not
+    of the rule. On 26.1 no pair carries a suppressed IM without a suppressed
+    FT, so the IM clause selects nothing FT has not already selected and the
+    rule would behave identically without it. That bounds how much of the
+    reconciliation rests on the IM clause -- none of it -- and it is a fact
+    about this release that a later one could break, at which point the clause
+    would start doing work silently.
+    """
+    combos = Counter("+".join(sorted(rec["suppressed_scales"]))
+                     for rec in ratings.values() if rec["suppressed_scales"])
+    per_scale = Counter()
+    for rec in ratings.values():
+        for scale in rec["suppressed_scales"]:
+            per_scale[scale] += 1
+    # Pairs a clause drops that no other disqualifying clause would have
+    # dropped anyway. Zero means removing the clause changes no output here.
+    sole_effect = {
+        scale: sum(count for combo, count in combos.items()
+                   if scale in combo.split("+")
+                   and not (set(combo.split("+")) & (set(disqualifying) - {scale})))
+        for scale in sorted(disqualifying)}
+    return {
+        "pairs_by_suppressed_scale_combination": dict(sorted(combos.items())),
+        "pairs_by_suppressed_scale": dict(sorted(per_scale.items())),
+        "pairs_dropped_only_by_this_clause": sole_effect,
+        "clauses_inert_on_this_release": sorted(
+            s for s, n in sole_effect.items() if n == 0),
+        "why_this_is_recorded": (
+            "A clause that drops no pair on its own is inert on this release: "
+            "the rule produces the same weights without it. That is a property "
+            "of O*NET 26.1, not of the rule, and it is recorded so a reader "
+            "sees it rather than rediscovering it from the raw ratings."),
+    }
+
+
 def usable(key, rec, stats, ft_sums, disqualifying=SCALES_THAT_DISQUALIFY):
     """Decide whether a rated pair can carry a weight. Never guesses a value."""
     suppressed = rec["suppressed_scales"]
@@ -518,6 +556,8 @@ def main(argv=None):
         "suppression_rule": {
             "selected": args.suppression_rule,
             "disqualifying_scales": sorted(disqualifying),
+            "observed_in_this_release": suppression_breakdown(
+                ratings, disqualifying),
             "why": (
                 "Recommend Suppress is published per rating row, so it flags "
                 "one rating as unreliable rather than the pair. Only IM and FT "

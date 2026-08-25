@@ -17,6 +17,27 @@
       "FT",
       "IM"
     ],
+    "observed_in_this_release": {
+      "pairs_by_suppressed_scale_combination": {
+        "FT": 663,
+        "FT+IM": 58,
+        "FT+RT": 18,
+        "RT": 51
+      },
+      "pairs_by_suppressed_scale": {
+        "FT": 739,
+        "IM": 58,
+        "RT": 69
+      },
+      "pairs_dropped_only_by_this_clause": {
+        "FT": 681,
+        "IM": 0
+      },
+      "clauses_inert_on_this_release": [
+        "IM"
+      ],
+      "why_this_is_recorded": "A clause that drops no pair on its own is inert on this release: the rule produces the same weights without it. That is a property of O*NET 26.1, not of the rule, and it is recorded so a reader sees it rather than rediscovering it from the raw ratings."
+    },
     "why": "Recommend Suppress is published per rating row, so it flags one rating as unreliable rather than the pair. Only IM and FT enter the weight (importance x frequency_score); RT is carried as a column and never multiplied by anything, so suppressing it says nothing about the weight's reliability.",
     "alternative_recorded": "any_scale also drops on RT. That is what build_legacy_onet_fallback.py does, and it diverges from the pinned onet_timeshares.csv the results were computed through: it removes RT-only-suppressed pairs, which shifts the within-occupation denominator and scales every surviving task's share upward."
   },
