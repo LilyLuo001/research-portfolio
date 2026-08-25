@@ -28,9 +28,15 @@ The gate reports a property of the *design*, not of the world. Selecting the
 exposure measure on that property is measure selection by another name, and it
 is what meta-rule "never specification-search" forbids.
 
-**The measure must be justified economically, prospectively, and all measures
-reported.** The prospective justification, recorded here before any employment
-result is examined:
+**The measure must be justified economically, and all measures reported.**
+
+**Stated precisely, because the weaker claim is the true one:** measure roles
+were fixed **after** examining treatment overlap and **before** examining any
+labour-market outcome. That is acceptable and standard. Calling the choice
+wholly prospective would be misleading, because the exposure-telework
+correlations had already been seen when the roles were written down.
+
+The justification, recorded before any employment result is examined:
 
 - **α (E1)** — tasks a language model accelerates directly, with no
   complementary investment.

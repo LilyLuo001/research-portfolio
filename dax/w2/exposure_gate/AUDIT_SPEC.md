@@ -44,6 +44,31 @@ See `CORRECTION_2026-08-25.md` for what the gate was over-read to mean.
     published this overlap. The commit message for the gate already asserted
     novelty; that assertion is unverified and should be treated as open.
 
+## Status — 2026-08-25
+
+Items 1, 3, 4, 5, 6 and 7 are implemented in `audit_common_support.py`; results
+in `AUDIT_RESULTS.md`, receipt in `audit_common_support_receipt.json`, figures
+in `figures/`. Two additions requested after this spec was written are folded
+in: SOC-vintage sensitivity (every measure re-run on the common sample of all
+four sources) and Kish effective sample size with within-group residual
+variance under item 4.
+
+| item | status |
+|---|---|
+| 1 Pearson + Spearman, weighted + unweighted | done |
+| 2 alternative OEWS weight years | **BLOCKED** — only OEWS 2021 is in the repo and bls.gov is unreachable from the session (proxy `CONNECT` 403) |
+| 3 crosswalk coverage and aggregation rules | done; the SOC 2010→2018 **repair** is BLOCKED for the same reason |
+| 4 within 2-digit groups | done |
+| 5 leave-one-major-group-out | done |
+| 6 residual distributions + named occupations | done |
+| 7 quartiles among positive-telework occupations | done, and the quartiles **do not exist** — the collapsed teleworkable share is 1.0 for 89.4% of positive occupations, so the audit reports a fully-vs-partially contrast and flags the degeneracy instead |
+| 8 CPS power on the real structure | open |
+| 9 Webb (2020) and Frey–Osborne (2017) | open — not obtained, needs network |
+| 10 novelty verification | open |
+
+Item 7's outcome revises this spec rather than satisfying it: the spec assumed
+a `>0` subsample with interior variation. It does not have one.
+
 ## Decision rule, fixed now
 
 The audit does **not** select a measure. It reports whether each measure's
