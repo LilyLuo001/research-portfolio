@@ -168,6 +168,105 @@ def test_a_suppressed_pair_is_dropped_whole(tmp_path):
     assert receipt["counts"]["dropped_recommend_suppress"] == 1
 
 
+def rating_rows_suppressing(soc, task, importance, freq_pcts, scales,
+                            date="07/2021"):
+    """Rows where only the named scales carry Recommend Suppress = Y.
+
+    O*NET publishes the flag per rating row, so this is the real shape: a pair
+    can have a suppressed RT and perfectly good IM and FT.
+    """
+    out = []
+    for cat, pct in zip(range(1, 8), freq_pcts):
+        out.append(_row(RATING_COLS, **{
+            "O*NET-SOC Code": soc, "Task ID": task, "Scale ID": "FT",
+            "Category": cat, "Data Value": pct,
+            "Recommend Suppress": "Y" if "FT" in scales else "N", "Date": date}))
+    for scale, value in (("IM", importance), ("RT", 90.0)):
+        out.append(_row(RATING_COLS, **{
+            "O*NET-SOC Code": soc, "Task ID": task, "Scale ID": scale,
+            "Category": "", "Data Value": value,
+            "Recommend Suppress": "Y" if scale in scales else "N", "Date": date}))
+    return out
+
+
+def test_an_rt_only_suppression_is_kept_because_rt_is_not_in_the_formula(tmp_path):
+    """The SCC finding, in one test.
+
+    51 tasks across 26 occupations were RT-only-suppressed. The weight is
+    importance x frequency_score over IM and FT; RT is carried as a column and
+    never multiplied by anything. Dropping these discards a weight whose two
+    inputs are both unsuppressed.
+    """
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    import pandas as pd
+    archive = make_archive(
+        tmp_path,
+        rating_rows("11-1011.00", "1", 4.0, DAILY)
+        + rating_rows_suppressing("11-1011.00", "2", 2.0, YEARLY, {"RT"}))
+    code, out = run(tmp_path, archive)
+    assert code == 0
+    df = pd.read_parquet(out)
+    assert sorted(df["task_id"]) == ["1", "2"]
+    receipt = json.loads(out.with_suffix(".receipt.json").read_text())
+    assert receipt["counts"]["kept_suppressed_on_non_formula_scale_only"] == 1
+    assert receipt["counts"].get("dropped_recommend_suppress", 0) == 0
+
+
+def test_the_any_scale_rule_drops_it_and_moves_every_other_share(tmp_path):
+    """Why the predicate is the sole divergence rather than a rounding matter.
+
+    Removing the RT-only pair shrinks the occupation's denominator, so every
+    surviving task's share rises. On the real data that reached 9 percentage
+    points, and all 351 differing shares sat inside the 26 affected
+    occupations with zero differing outside.
+    """
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    import pandas as pd
+    rows = (rating_rows("11-1011.00", "1", 4.0, DAILY)
+            + rating_rows_suppressing("11-1011.00", "2", 2.0, YEARLY, {"RT"}))
+    archive = make_archive(tmp_path, rows)
+
+    code, kept = run(tmp_path, archive)
+    assert code == 0
+    kept_share = pd.read_parquet(kept).set_index("task_id").loc["1", "task_weight_share"]
+
+    dropped_out = tmp_path / "dropped.parquet"
+    assert B.main(["--archive", str(archive), "--expect-sha", B.sha256(archive),
+                   "--output", str(dropped_out),
+                   "--suppression-rule", "any_scale"]) == 0
+    dropped = pd.read_parquet(dropped_out)
+
+    assert list(dropped["task_id"]) == ["1"]
+    assert dropped.iloc[0]["task_weight_share"] == pytest.approx(1.0)
+    assert kept_share == pytest.approx(20 / 22)
+    assert dropped.iloc[0]["task_weight_share"] > kept_share
+
+
+@pytest.mark.parametrize("scale", ["IM", "FT"])
+def test_suppressing_a_formula_input_drops_the_pair_under_either_rule(tmp_path, scale):
+    """The complement: the narrower rule must not become no rule at all."""
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    import pandas as pd
+    archive = make_archive(
+        tmp_path,
+        rating_rows("11-1011.00", "1", 4.0, DAILY)
+        + rating_rows_suppressing("11-1011.00", "2", 2.0, YEARLY, {scale}))
+    for rule in ("formula_inputs", "any_scale"):
+        out = tmp_path / f"{rule}.parquet"
+        assert B.main(["--archive", str(archive), "--expect-sha", B.sha256(archive),
+                       "--output", str(out), "--suppression-rule", rule]) == 0
+        assert list(pd.read_parquet(out)["task_id"]) == ["1"]
+
+
+def test_the_receipt_names_the_rule_and_the_alternative(tmp_path):
+    pytest.importorskip("pandas"); pytest.importorskip("pyarrow")
+    code, out = run(tmp_path, two_task_archive(tmp_path))
+    rule = json.loads(out.with_suffix(".receipt.json").read_text())["suppression_rule"]
+    assert rule["selected"] == "formula_inputs"
+    assert rule["disqualifying_scales"] == ["FT", "IM"]
+    assert "build_legacy_onet_fallback.py" in rule["alternative_recorded"]
+
+
 def test_incomplete_frequency_bands_are_dropped_not_renormalised(tmp_path):
     """Renormalising over a partial distribution invents a frequency profile."""
     pytest.importorskip("pandas"); pytest.importorskip("pyarrow")

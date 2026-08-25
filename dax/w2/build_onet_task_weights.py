@@ -136,7 +136,7 @@ def read_ratings(archive):
     """
     ratings = defaultdict(
         lambda: {"frequency": {}, "importance": None, "relevance": None,
-                 "suppressed": False, "date": None})
+                 "suppressed_scales": set(), "date": None})
     seen = set()
     stats = Counter()
     dates = Counter()
@@ -156,7 +156,9 @@ def read_ratings(archive):
 
         rec = ratings[key]
         if row.get("Recommend Suppress", "").strip().upper() == "Y":
-            rec["suppressed"] = True
+            # Recorded per SCALE. O*NET publishes Recommend Suppress per rating
+            # row, so it flags that one rating as unreliable -- not the pair.
+            rec["suppressed_scales"].add(scale)
         date = row.get("Date", "").strip()
         if date:
             rec["date"] = date
@@ -180,9 +182,36 @@ def read_ratings(archive):
     return ratings, stats, dates
 
 
-def usable(key, rec, stats, ft_sums):
+# Scales whose suppression disqualifies a pair. Only the two that enter the
+# arithmetic: weight = importance * frequency_score, over IM and the FT bands.
+# RT (Relevance of Task) is carried into the output as a column and is never
+# multiplied by anything, so suppressing it says nothing about the weight.
+#
+# This is not a new rule. An SCC reconciliation against the pinned
+# onet_timeshares.csv found 51 tasks across 26 occupations that the reference
+# weights and an any-scale predicate drops -- exactly the RT-only-suppressed
+# pairs -- and all 351 differing shares sat inside those same 26 occupations,
+# with zero differing outside. Dropping the 51 shifts those occupations'
+# denominators and scales every surviving task upward, by up to 9 percentage
+# points. The arithmetic reproduced exactly everywhere else, so the sole
+# divergence was this predicate.
+SCALES_THAT_DISQUALIFY = frozenset({"IM", "FT"})
+SUPPRESSION_RULES = {
+    "formula_inputs": SCALES_THAT_DISQUALIFY,   # matches the pinned reference
+    "any_scale": frozenset({"IM", "FT", "RT"}),  # the legacy fallback's rule
+}
+
+
+def usable(key, rec, stats, ft_sums, disqualifying=SCALES_THAT_DISQUALIFY):
     """Decide whether a rated pair can carry a weight. Never guesses a value."""
-    if rec["suppressed"]:
+    suppressed = rec["suppressed_scales"]
+    if suppressed:
+        stats["pairs_with_any_suppressed_rating"] += 1
+        if not (suppressed & disqualifying):
+            # Carried, and counted, so the choice is visible in the receipt
+            # rather than implicit in whether a number reconciles.
+            stats["kept_suppressed_on_non_formula_scale_only"] += 1
+    if suppressed & disqualifying:
         stats["dropped_recommend_suppress"] += 1
         return False
     if rec["importance"] is None:
@@ -205,11 +234,12 @@ def usable(key, rec, stats, ft_sums):
     return True
 
 
-def compute(ratings, statements, stats, ft_sums):
+def compute(ratings, statements, stats, ft_sums,
+            disqualifying=SCALES_THAT_DISQUALIFY):
     """Compute the primary weight and both frozen variants, per occupation."""
     by_occupation = defaultdict(list)
     for key, rec in ratings.items():
-        if not usable(key, rec, stats, ft_sums):
+        if not usable(key, rec, stats, ft_sums, disqualifying):
             continue
         occupation, task_id = key
         bands = rec["frequency"]
@@ -415,6 +445,12 @@ def main(argv=None):
     ap.add_argument("--receipt", type=pathlib.Path, default=None)
     ap.add_argument("--reconcile-against", type=pathlib.Path, default=None,
                     help="pinned onet_timeshares.csv; W2-D1 reconciliation")
+    ap.add_argument("--suppression-rule", choices=sorted(SUPPRESSION_RULES),
+                    default="formula_inputs",
+                    help="which suppressed scales disqualify a pair. "
+                         "formula_inputs (default) drops on IM or FT, matching "
+                         "the pinned reference; any_scale also drops on RT, "
+                         "which is the legacy fallback's rule and diverges")
     args = ap.parse_args(argv)
 
     try:
@@ -444,7 +480,8 @@ def main(argv=None):
             ratings, rstats, dates = read_ratings(archive)
             statements = list(_read_table(archive, TASK_STATEMENTS))
         stats.update(rstats)
-        rows = compute(ratings, statements, stats, ft_sums)
+        disqualifying = SUPPRESSION_RULES[args.suppression_rule]
+        rows = compute(ratings, statements, stats, ft_sums, disqualifying)
         if not rows:
             raise BuildError("no task carried a usable weight")
         check_shares_sum_to_one(rows)
@@ -477,6 +514,23 @@ def main(argv=None):
             "source_of_definition": (
                 "[W2-D1] adopted unchanged from "
                 "dax/w2/crosswalk/build_legacy_onet_fallback.py; not re-derived"),
+        },
+        "suppression_rule": {
+            "selected": args.suppression_rule,
+            "disqualifying_scales": sorted(disqualifying),
+            "why": (
+                "Recommend Suppress is published per rating row, so it flags "
+                "one rating as unreliable rather than the pair. Only IM and FT "
+                "enter the weight (importance x frequency_score); RT is "
+                "carried as a column and never multiplied by anything, so "
+                "suppressing it says nothing about the weight's reliability."),
+            "alternative_recorded": (
+                "any_scale also drops on RT. That is what "
+                "build_legacy_onet_fallback.py does, and it diverges from the "
+                "pinned onet_timeshares.csv the results were computed through: "
+                "it removes RT-only-suppressed pairs, which shifts the "
+                "within-occupation denominator and scales every surviving "
+                "task's share upward."),
         },
         "known_defect": {
             "id": "W2-D3",

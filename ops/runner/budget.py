@@ -48,14 +48,34 @@ def _entries():
     return [json.loads(l) for l in LOG.read_text().splitlines() if l.strip()]
 
 
+def _utc_now():
+    """The single clock this module uses. Timezone-aware, never local.
+
+    log() has always stamped entries in UTC while mtd_spend() and
+    today_spend() filtered on the LOCAL date. Wherever the two disagree -- the
+    last hours of a local day in any negative-offset zone, the first hours in
+    a positive one -- today_spend() matched nothing and returned 0.0, so the
+    daily circuit breaker and both per-vendor sub-caps silently did not fire.
+    Found on an SCC seat at 2026-08-24T20:20 EDT, when the log was already
+    stamping 2026-08-25. It passed the other twenty hours a day, which is why
+    it read as flaky rather than as a breaker that does not breake.
+
+    Local time cannot be the basis: seats run in different zones (the owner
+    records decisions in Asia/Shanghai, that seat is on US Eastern) and a cap
+    whose day boundary depends on which machine asks is not a cap. The log is
+    UTC, so the comparisons are UTC.
+    """
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
 def mtd_spend():
-    m = datetime.date.today().strftime("%Y-%m")
+    m = _utc_now().strftime("%Y-%m")
     return sum(e["cost"] for e in _entries() if e["ts"].startswith(m))
 
 
 def today_spend(vendor=None):
-    """Total ¥ logged today, optionally filtered to one billing vendor."""
-    d = datetime.date.today().isoformat()
+    """Total ¥ logged today (UTC), optionally filtered to one billing vendor."""
+    d = _utc_now().date().isoformat()
     total = 0.0
     for e in _entries():
         if not e["ts"].startswith(d):
@@ -85,7 +105,11 @@ def can_dispatch(worker, est_cost):
 def log(worker, est_cost):
     LOG.parent.mkdir(exist_ok=True)
     with open(LOG, "a") as f:
-        f.write(json.dumps({"ts": datetime.datetime.utcnow().isoformat(),
+        # Offset-aware, and still ISO-prefixed by the date so both this format
+        # and the naive UTC stamps already in the log match the same
+        # startswith() filter. utcnow() is deprecated from 3.12 and returns a
+        # naive value that invites exactly the bug above.
+        f.write(json.dumps({"ts": _utc_now().isoformat(),
                             "worker": worker, "cost": est_cost}) + "\n")
 
 
@@ -94,7 +118,7 @@ def report():
     lines = [
         f"- MTD: {mtd_spend():.1f} / {MONTHLY_CAP:.0f} "
         f"(new dispatch stops at {DISPATCH_CEIL:.0%} = {MONTHLY_CAP * DISPATCH_CEIL:.0f})",
-        f"- today: {today_spend():.1f} / {DAILY_CAP:.0f} daily circuit-breaker",
+        f"- today (UTC): {today_spend():.1f} / {DAILY_CAP:.0f} daily circuit-breaker",
     ]
     for vendor, cap in sorted(PER_VENDOR_DAILY.items()):
         lines.append(f"    - {vendor}: {today_spend(vendor):.1f} / {cap:.0f}")

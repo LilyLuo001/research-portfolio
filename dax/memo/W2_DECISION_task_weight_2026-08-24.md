@@ -34,6 +34,45 @@ re-derived, and any file claiming to supersede it must reconcile against
 `mapA_run_receipt.json`'s pinned mass of `56074210.00000092` over 15,274 usable
 tasks.
 
+## CORRECTION 2026-08-24 (later) — the premise above was wrong
+
+The paragraph above says the fallback builder's weights are "already embedded
+in Mapping A's wage-bill coverage of `0.0022461` and ... the DWA-transport
+bound of `0.4169526`." **That is false, and an SCC reconciliation found it.**
+
+`build_legacy_onet_fallback.py` builds **O*NET 25.0 fallbacks on the 2019
+taxonomy**, for occupations with no usable 26.1 ratings. It is a sibling
+artifact, not the producer of the pinned `onet_timeshares.csv` that Mapping A
+actually consumed. The two implement the same *formula* and a **different
+suppression predicate**, and nobody had compared them:
+
+- the fallback drops a pair if **any** rating row is `Recommend Suppress = Y`;
+- the pinned reference drops only if **FT or IM** is suppressed.
+
+Measured against the reference on the real data: 51 tasks across 26
+occupations are RT-only-suppressed. The fallback rule drops them; the
+reference keeps them. All 351 shares that differed sat inside those same 26
+occupations, and **zero differed outside**. The arithmetic reproduces exactly.
+Removing the 51 shrinks those occupations' denominators and scales every
+surviving task upward — up to 9 percentage points at `51-2061.00`.
+
+**Resolution, and why it is execution rather than a new decision.** W2-D1's
+operative instruction is to adopt the definition *already embedded in the
+results*, not to invent one. What is embedded is the reference's rule, so
+`formula_inputs` — drop on IM or FT — is adopted. It is also the principled
+reading independently: `Recommend Suppress` is published per rating row, the
+weight is `importance x frequency_score` over IM and FT, and RT is carried as
+an output column that is never multiplied by anything. A suppressed RT says
+nothing about the weight's reliability.
+
+`--suppression-rule any_scale` reproduces the fallback's behaviour and is
+recorded as the divergent alternative rather than deleted. The receipt names
+the selected rule, the disqualifying scales, and the count of pairs kept
+because only a non-formula scale was suppressed.
+
+**What was misattributed is the source, not the formula.** The arithmetic in
+the block below is unchanged and still governs.
+
 ## What the literature says, and it is not reassuring about the name
 
 Importance-weighted aggregation is the field standard: the weight for task *i*
