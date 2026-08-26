@@ -6,6 +6,7 @@ after each one, in a fresh session and preferably a different model family.
 
 | brief | task | gate it must clear |
 |---|---|---|
+| `Y1a_unblock.md` | **run this first** — push, OCC1990 check, Webb | unblocks `computerization` |
 | `Y0_CONTEXT_PACK.md` | header, not a task | — |
 | `Y1_power_gradient.md` | fine grid, gradient check, bootstrap MDE | `gradient`, `calibration` |
 | `Y1b_computerization.md` | vendor Webb + O*NET 24.3; real diagnostics | `computerization` |
