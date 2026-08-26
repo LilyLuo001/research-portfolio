@@ -32,16 +32,27 @@ paper. **The data file is not.**
 **The blocker, already verified:** the wide extract carries `OCC2010` and **no
 `OCC1990`** — 26 variables, one occupation code, checked against
 `dax/memo/power_calcs/ipums_ai_telework_extract_v1.json`. So Webb cannot be
-merged as things stand. Two routes, and §6.1 says the choice is made before the
-freeze:
+merged as things stand.
 
-- **Amend the IPUMS extract** to add `OCC1990` and re-derive. Cleanest, and
-  outcome-blind today. Requires the owner to submit; it has queue time.
-- **Bridge `OCC2010` → `occ1990dd`** with a documented, cited crosswalk.
-  Report coverage and name the occupations lost.
+**Check this before treating it as a two-way fork.** Two things narrow it:
 
-`NEED_HUMAN` on which route, with the coverage cost of the bridge if you can
-estimate it. Do not pick silently — one of them changes the extract.
+1. **Does IPUMS CPS offer `OCC1990` for 2017–2026 basic monthly samples?** One
+   call to the variables metadata endpoint settles it. It needs the API key,
+   which is being rotated. If `OCC1990` is available, the bridge route costs
+   coverage for nothing and the fork is a formality.
+2. **Is `OCC1990` sufficient for Webb?** `occ1990dd` is understood to be Dorn's
+   time-consistent modification of `OCC1990`, not `OCC1990` itself. If that is
+   right, adding the variable is necessary but not sufficient and Dorn's
+   crosswalk is still required. **Verify against Webb's replication files** —
+   do not take that sentence, or mine, on faith.
+
+The extract **is** built — the SCC run reports 9,262,480 rows validated — so
+amending means resubmitting, days of queue, not editing an unsubmitted spec.
+Outcome-blind today; impossible after the tag.
+
+`NEED_HUMAN` on the route once (1) and (2) are answered, with the coverage cost
+of the bridge if you can estimate it. Do not pick silently — one route changes
+the extract.
 
 Take Webb's **software** measure as the computerization primary. His AI measure
 is *not* the computerization control and must not be used as one.

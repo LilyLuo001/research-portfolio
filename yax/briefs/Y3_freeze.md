@@ -29,6 +29,25 @@ Before pushing, confirm no microdata is staged:
 
 A freeze tag on a commit that exists on one cluster filesystem is not a freeze.
 
+## 1b. Record the environment, not a bare test count
+
+**The suite count is environment-dependent and must not be frozen as a bare
+number.** Three modules skip on optional imports:
+
+| module | tests | needs |
+|---|---:|---|
+| `dax/tests/test_mapA_runner.py` | 4 | `torch` |
+| `dax/tests/test_mapA_v2_prediction.py` | 6 | `sklearn` |
+| `dax/tests/test_w4_harness.py` | 10 | `cryptography` |
+
+Two independent runs at the same commit gave **676 passed / 3 skipped** and
+**692 passed / 1 skipped**. The 16-test gap is exactly `sklearn` + `cryptography`
+being installed in one environment and not the other. Neither run is wrong.
+
+So `DESIGN_FREEZE_v1.md` records: Python version, `pandas` and `pytest`
+versions, the passed/skipped counts **and the skip list with reasons**. A bare
+"692 passed" in a frozen record is a number nobody can reproduce.
+
 ## 2. Write `yax/DESIGN_FREEZE_v1.md`
 
 It must contain:
@@ -43,6 +62,7 @@ It must contain:
 - Empty table shells for Tables 1–6, with column headers and row labels filled
   in and every cell blank.
 - The date, and the commit hash this freeze is made against.
+- The environment and skip list from §1b.
 
 ## 3. Commit, then tag
 
