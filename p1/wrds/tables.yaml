@@ -123,6 +123,14 @@ pulls:
         want: daily market index return series (for market-model residuals)
         candidates: [crsp.dsi]
         resolved: null
+      delisting_daily:
+        want: >
+          DAILY delisting returns. Spec 2-2 applies dlret on the delisting day
+          inside the [0,+120] CAR path and imputes -30% when it is missing
+          (Shumway convention). Omitting this does not raise — it silently
+          truncates paths and biases spine two, the main evidence.
+        candidates: [crsp.dsedelist]
+        resolved: null
     columns:
       security_id: {want: permno, candidates: [permno], resolved: null}
       date:        {want: trading date, candidates: [date], resolved: null}
@@ -157,6 +165,37 @@ pulls:
         This is one of the ten CITE_REQUEST items in p1/t3_spec_preflight.md.
 
   # -------------------------------------------------------------------------
+  # PULL 4b — Compustat + link (earnings, and book equity for control matching)
+  # -------------------------------------------------------------------------
+  compustat:
+    purpose: >
+      Quarterly earnings for the spine-one decomposition, FERC and the SUE
+      time-series branch; ANNUAL book equity for the control-matching set.
+      Plan section 107 matches controls on size x book-to-market x industry x
+      pre-conversion ETF ownership x Amihud, and section 120's randomisation
+      inference reuses those matched funds — so the annual file is required for
+      the CONTROL GROUP, independently of any DGTW benchmark decision.
+    serves: [P1-T3-spec, P1-T5-main]
+    tables:
+      fundq:
+        want: Compustat North America quarterly fundamentals
+        candidates: [comp.fundq]
+        resolved: null
+      funda:
+        want: Compustat North America annual fundamentals (book equity)
+        candidates: [comp.funda]
+        resolved: null
+      ccm_link:
+        want: CRSP-Compustat link — gvkey <-> permno with valid date ranges
+        candidates: [crsp.ccmxpf_lnkhdr, crsp.ccmxpf_linktable]
+        resolved: null
+    columns:
+      book_equity: {want: common/ordinary equity, candidates: [ceq], resolved: null}
+      shares_annual: {want: common shares outstanding, candidates: [csho], resolved: null}
+      price_fiscal: {want: fiscal-year-end price, candidates: [prcc_f], resolved: null}
+      eps_q: {want: quarterly EPS excluding extraordinary items, candidates: [epspxq], resolved: null}
+
+  # -------------------------------------------------------------------------
   # PULL 5b — IBES (SUE, coverage, dispersion)
   # -------------------------------------------------------------------------
   ibes:
@@ -171,7 +210,7 @@ pulls:
         resolved: null
       actuals:
         want: reported actual EPS with announcement date
-        candidates: [ibes.actpsum_epsus, ibes.act_epsus]
+        candidates: [ibes.actu_epsus, ibes.actpsum_epsus, ibes.act_epsus]
         resolved: null
       identifiers:
         want: IBES ticker <-> CUSIP crosswalk, to reach permno
@@ -186,6 +225,11 @@ pulls:
       dispersion:   {want: forecast standard deviation, candidates: [stdev], resolved: null}
       n_analysts:   {want: number of estimates, candidates: [numest], resolved: null}
     asserts:
+      adjusted_vs_unadjusted: >
+        NEED_HUMAN: statsum_epsus is split-ADJUSTED; statsumu_epsus is
+        unadjusted. For SUE the unadjusted file is usually preferred, because
+        retroactive split adjustment introduces rounding in per-share figures
+        that can dominate a small surprise. Confirm which the seller supplies.
       sue_convention: >
         NEED_HUMAN before use: SUE from analyst expectations vs a time-series
         model is the DECISION_NEEDED fork named in docs/Project_1.md §125. This

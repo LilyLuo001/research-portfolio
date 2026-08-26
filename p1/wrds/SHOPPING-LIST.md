@@ -5,8 +5,8 @@ _Seat C, 2026-08-19. Built from `p1/wrds/tables.yaml` + `p1/t3_spec/变量规格
 
 **Tier 1 (must-have): 11 tables = ¥220.** Without any one of these, a named part
 of the design cannot be computed.
-**Tier 2 (recommended): 3 tables = ¥60.** Validation + refraction.
-**Total: ¥280.** Tier 3 lists what NOT to buy, and why.
+**Tier 2 (recommended): 4 tables = ¥80.** Validation + refraction.
+**Total: ¥300.** Tier 3 lists what NOT to buy, and why.
 
 Evidence column: ✓ = the seller has already listed this table, so the name is
 confirmed by someone with the account. ~ = seller listed an abbreviated form;
@@ -22,15 +22,15 @@ confirm the full name. ✗ = not yet listed; must be requested.
 | 2 | `crsp.dsf` | ✓ | Spine two entirely — CAR paths, Amihud, 1−R², variance ratio, Hou-Moskowitz delay. The single biggest table. |
 | 3 | `crsp.dsi` | ✓ | Market-model benchmark (`vwretd`). Without it there are no abnormal returns. |
 | 4 | `crsp.msf` | ✓ | ConvExp denominator (`shrout`), market-cap deciles, monthly reversal strategy. |
-| 5 | **CRSP delisting returns** | ✗ | **Silently biases spine two.** A stock delisting inside a 120-day CAR window truncates the path. Spec §2-2 requires `dlret`, imputing −30% when missing. Without it → survivorship bias in the main evidence. |
+| 5 | **`crsp.dsedelist`** (DAILY) | ✗ | **Silently biases spine two.** A stock delisting inside a 120-day CAR window truncates the path. Spec §2-2 requires `dlret`, imputing −30% when missing. Without it → survivorship bias in the main evidence. |
 | 6 | `comp.fundq` (Compustat NA Quarterly) | ✓ | Spine one: GNZ earnings decomposition, FERC, and the SUE time-series branch. |
 | 7 | `comp.funda` (Compustat NA **Annual**) | ✗ | **Control group construction.** §107 matches controls on 规模 × **账面市值比** × 行业 × ETF ownership × Amihud. Book-to-market needs annual book equity. §120's randomisation inference uses the same matched funds. No controls → no DiD. |
 | 8 | CCM link (`crsp.ccmxpf_lnkhdr`) | ✓ | Merges Compustat (gvkey) to CRSP (permno). Items 6 and 7 are unusable without it. |
 | 9 | `ibes.statsum_epsus` | ~ | SUE-IBES (the decided primary), analyst dispersion, coverage count. |
-| 10 | `ibes.actpsum_epsus` or `ibes.act_epsus` | ~ | Reported actual EPS **and announcement dates** — announcement date is `t=0` for every event in spines one and two. |
+| 10 | **`ibes.actu_epsus`** (actuals) | ~ | Reported actual EPS **and announcement dates** — announcement date is `t=0` for every event in spines one and two. |
 | 11 | `ibes.idsum` | ✓ | IBES ticker ↔ CUSIP, to reach permno. |
 
-## Tier 2 — RECOMMENDED (3 tables, ¥60)
+## Tier 2 — RECOMMENDED (4 tables, ¥80)
 
 These three are a **bundle** — `crsp.holdings` alone is nearly useless without
 the other two, because you cannot map a holdings row to a fund.
@@ -38,6 +38,7 @@ the other two, because you cannot map a holdings row to a fund.
 | # | Table | Evidence | Buys you |
 |---|---|:--:|---|
 | 12 | `crsp.holdings` | ✓ | The CRSP-identifier twin of the free-path ConvExp |
+| 15 | `crsp.msedelist` (MONTHLY) | ✗ | Delisting on the monthly file — only for the Jegadeesh monthly reversal strategy (§7, 2-7). Skip if that variable is dropped |
 | 13 | `crsp.fund_hdr` or `crsp.fund_names` | ✗ | Fund identity / ticker |
 | 14 | `crsp.portnomap` | ✗ | Portfolio no. ↔ fund no. crosswalk |
 
@@ -79,3 +80,36 @@ hallucination. Items 5, 7, 13 and 14 are **not** on the seller's list, and items
 9 and 10 appear only in abbreviated form. For those, ask the seller to supply the
 exact name rather than accepting mine — the requests below describe *what is
 needed* rather than asserting a name.
+
+
+---
+
+## Addenda 2026-08-19 — two corrections from the owner's questions
+
+**1. Delisting: daily vs monthly.** `crsp.dsedelist` (daily) is Tier 1 — the CAR
+path is daily, so `dlret` must land on the delisting day inside [0,+120].
+`crsp.msedelist` (monthly) is Tier 2 and only matters for the monthly Jegadeesh
+reversal strategy (2-7), which runs off `crsp.msf`.
+
+**2. Does `statsum` already carry actuals and identifiers?** No — checked against
+WRDS documentation. IBES on WRDS keeps three separate objects: Summary
+(`statsum_epsus`, the monthly consensus snapshot), Detail (`det_epsus`, per-analyst
+history) and **Actuals (`ibes.actu_epsus`)**. Reported actual EPS comes from the
+actuals file.
+
+This also **corrects this repo's own candidate list**: `tables.yaml` had
+`actpsum_epsus` / `act_epsus`; WRDS documentation names it `actu_epsus`. All three
+are now listed as candidates so `discover` can resolve whichever exists.
+
+`idsum` stays on the list for a different reason: IBES keys on its own ticker plus
+**historical** CUSIP, not permno or gvkey. A point-in-time CUSIP carried on a
+statsum row is not the same as the mapping history, and this panel is 84%
+deciles 1–5 — exactly where ticker/CUSIP changes are most common. At ¥20 the
+asymmetry is decisive: the cost of being wrong is discovering a missing identifier
+file partway through a one-day window.
+
+**3. New flag — adjusted vs unadjusted.** `statsum_epsus` is split-**adjusted**;
+`statsumu_epsus` is unadjusted. For SUE the unadjusted file is usually preferred,
+because retroactive split adjustment introduces per-share rounding that can
+dominate a small earnings surprise. Ask the seller which one they have; recorded
+as a NEED_HUMAN in `tables.yaml`.
