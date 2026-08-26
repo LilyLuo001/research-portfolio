@@ -47,8 +47,8 @@ def test_protocol_is_fail_closed_and_uses_only_pre_outcomes():
     assert coverage["covered_route_mass_fraction"] < coverage["threshold"]
     assert coverage["post_outcomes_read"] is False
     diagnostic = protocol["available_support_power_diagnostic"]
-    assert diagnostic["status"] == "NONCOMPLIANT_SEED_DIAGNOSTIC_ONLY"
-    assert diagnostic["protocol_seed"] != diagnostic["executed_seed"]
+    assert diagnostic["status"] == "PROTOCOL_SEED_CONDITIONAL_PASS"
+    assert diagnostic["protocol_seed"] == diagnostic["executed_seed"] == 20260825
     assert diagnostic["design_freeze_permitted"] is False
     assert diagnostic["post_outcomes_read"] is False
 

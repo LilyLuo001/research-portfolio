@@ -140,10 +140,10 @@
     "consequence": "design freeze and post-period estimation remain prohibited"
   },
   "available_support_power_diagnostic": {
-    "status": "NONCOMPLIANT_SEED_DIAGNOSTIC_ONLY",
-    "aggregate_receipt": "dax/memo/power_calcs/power_available_support_aggregate_v2.json",
+    "status": "PROTOCOL_SEED_CONDITIONAL_PASS",
+    "aggregate_receipt": "dax/memo/power_calcs/power_available_support_aggregate_v3.json",
     "protocol_seed": 20260825,
-    "executed_seed": 20260826,
+    "executed_seed": 20260825,
     "repetitions_per_effect": 999,
     "occupation_clusters": 490,
     "effective_occupation_concentration_q1_q5": 58.42089841846546,
@@ -152,11 +152,11 @@
     "null_excludes_primary_benchmark_probability": 1.0,
     "empirical_mde80_log_effect": -0.035,
     "empirical_mde80_relative_decline": 0.03439458374243354,
-    "null_rejection_probability": 0.06606606606606606,
-    "null_interval_coverage_95": 0.933933933933934,
+    "null_rejection_probability": 0.06806806806806807,
+    "null_interval_coverage_95": 0.9319319319319319,
     "design_freeze_permitted": false,
     "post_outcomes_read": false,
-    "interpretation": "informative on covered support, but not a protocol-compliant pass and not population-wide evidence"
+    "interpretation": "protocol-seed power passes on covered support, but coverage failure prevents design freeze and population-wide interpretation"
   },
   "external_benchmark_locator": {
     "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/",

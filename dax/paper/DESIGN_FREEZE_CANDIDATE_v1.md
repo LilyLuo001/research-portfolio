@@ -270,9 +270,9 @@ validate the primary PPML design or establish novelty.
 | real PPML-equivalent engine | exact conditional grouped-logit; injected -0.20 recovered within 1e-5 | PASS_SYNTHETIC_ONLY | yes |
 | C1 exposure coverage | at least 90% of eligible `WTFINL` route mass | 88.7005%; shortfall 1.2995 pp | **no** |
 | Dallas Chart 1 pipeline | published endpoints within 0.02 pp, or documented unresolved input | — | — |
-| 19% detection power | >= 0.80 | 1.000 on failed-gate available support; seed deviation | diagnostic only |
-| 19% exclusion under null | >= 0.80 | 1.000 on failed-gate available support; seed deviation | diagnostic only |
-| empirical 80% MDE | report in log points and relative decline | -0.035 log point / 3.439% decline; seed deviation | diagnostic only |
+| 19% detection power | >= 0.80 | 1.000 on failed-gate available support, protocol seed | conditional pass only |
+| 19% exclusion under null | >= 0.80 | 1.000 on failed-gate available support, protocol seed | conditional pass only |
+| empirical 80% MDE | report in log points and relative decline | -0.035 log point / 3.439% decline, protocol seed | reported |
 | extension equality | p-value plus >=0.05 log-point materiality | — | — |
 | crosswalk/exposure sensitivity | §7 rules | — | — |
 
@@ -301,12 +301,11 @@ and an effective Q1-versus-Q5 occupation concentration of 58.4209. Across 999
 draws per effect, the 19-percent benchmark had rejection probability 1.000 and,
 under a true null, intervals excluded that benchmark with probability 1.000.
 The empirical 80-percent crossing was -0.035 log point, a 3.439-percent relative
-decline. The null rejection rate was 0.0661 and nominal 95-percent interval
-coverage was 0.9339, indicating mild over-rejection that must accompany any
+decline. The null rejection rate was 0.0681 and nominal 95-percent interval
+coverage was 0.9319, indicating mild over-rejection that must accompany any
 power claim.
 
-These batches used seed `20260826`, not the protocol's frozen seed `20260825`.
-They are therefore a noncompliant diagnostic, not the final power receipt. An
-exact-seed rerun is required. Even if it confirms these values, power cannot
-override the failed exposure-coverage gate and cannot authorize the outcome
-stage.
+These results use the protocol's frozen seed `20260825`, 999 repetitions per
+effect, and no post-period outcomes. They pass both conditional power criteria
+on the available support. That pass cannot override the failed
+exposure-coverage gate and does not authorize the outcome stage.
