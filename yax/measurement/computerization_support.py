@@ -7,12 +7,20 @@ ABILITIES -- comprehension, deductive reasoning, information ordering -- which
 are the same items that load on routine-cognitive and computerization measures.
 The measure was not constructed to separate the two.
 
-Whether a horse-race regression can separate them is not a modelling question,
-it is a question about the joint distribution: **is there employment in
-occupations that are AI-exposed but NOT computer-desk work?** If that cell is
-empty, adding a computerization control produces collinear noise, not
-identification, and the honest thing is to say so rather than report an
-uninformative coefficient.
+Whether a horse race can separate them is a question about the joint
+distribution. **The right statistic is the partial variance of AI exposure
+after projecting out computerization** -- 1 - R^2 -- because a continuous
+conditional model is identified off all of that residual variation.
+
+A discretized "clean cell" (high AI, low computerization) is NOT the right
+statistic and an earlier version of this script led with it. Cutting a
+continuous regressor into a 2x2 discards most of the identifying variation and
+understates what the model can do: Eloundou beta's clean cell holds 3.22% of
+employment while 57.9% of its variance is orthogonal to the computer proxy.
+Those describe different things and only the second bears on identification.
+The cell share is retained below as a descriptive aid and as the source of the
+named divergence occupations, which are genuinely useful for presentation.
+See CORRECTION_2026-08-26_separability_verdict.md.
 
 This script measures that cell before the design freeze, so the answer is known
 in advance rather than discovered in a referee report.
@@ -29,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import pathlib
 import sys
 
@@ -43,7 +52,12 @@ from audit_common_support import (  # noqa: E402
 # percentile; "low computer" is teleworkable == 0, which is the only defensible
 # cut given 62.7% of SOC codes sit at exactly zero (see AUDIT_RESULTS item 7).
 EXPOSURE_QUANTILE = 0.75
-CLEAN_CELL_FLOOR = 0.05   # below this share of employment, the horse race is dead
+# SE inflation from adding a collinear regressor is sqrt(VIF) = sqrt(1/(1-R^2)).
+# Judge identification against the magnitude the literature contests, not
+# against an abstract threshold.
+UNCONDITIONAL_MDE_LOG = 0.035   # measured, 999 reps, 490 clusters, 66 months
+NULL_SIZE_CORRECTION = 1.0742   # engine rejects at 6.8068% against nominal 5%
+CONTESTED_MAGNITUDE = 0.19      # the effect size the literature disputes
 
 
 def analyse(series, dn, emp, title, name, top_k=12):
@@ -67,11 +81,30 @@ def analyse(series, dn, emp, title, name, top_k=12):
 
     r = wcorr([series[k] for k in ks], [dn[k] for k in ks], w)
     clean_share = e_clean / tot if tot else None
+    R2 = (r ** 2) if r is not None else None
+    vif = (1.0 / (1.0 - R2)) if R2 is not None and R2 < 1 else None
+    infl = math.sqrt(vif) if vif else None
+    cond_mde = (1 - math.exp(-UNCONDITIONAL_MDE_LOG * infl * NULL_SIZE_CORRECTION)
+                if infl else None)
     return {
         "n_occupations": len(ks),
         "employment": tot,
         "correlation_with_computer_proxy": r,
-        "r2": (r ** 2) if r is not None else None,
+        "r2": R2,
+        "identification": {
+            "partial_variance_of_ai": (1 - R2) if R2 is not None else None,
+            "vif": vif,
+            "se_inflation": infl,
+            "conditional_mde80_estimate": cond_mde,
+            "contested_magnitude": CONTESTED_MAGNITUDE,
+            "headroom": (CONTESTED_MAGNITUDE / cond_mde) if cond_mde else None,
+            "note": ("This is the statistic that bears on whether a joint "
+                     "AI-plus-computerization model is identified. The "
+                     "conditional MDE is the measured unconditional MDE "
+                     "inflated by sqrt(VIF) and the null-size correction; it is "
+                     "an ESTIMATE and must be replaced by a simulation on the "
+                     "observed joint distribution before the freeze."),
+        },
         "exposure_cut": cut,
         "exposure_cut_rule": f"employment-weighted p{int(EXPOSURE_QUANTILE*100)}",
         "high_exposure": {"n": len(hi), "employment": e_hi,
@@ -88,16 +121,16 @@ def analyse(series, dn, emp, title, name, top_k=12):
             "employment": e_hi - e_clean,
             "largest": named(confounded),
         },
-        "verdict": (
-            "SEPARABLE" if clean_share and clean_share >= CLEAN_CELL_FLOOR
-            else "NOT SEPARABLE"),
         "verdict_note": (
-            f"the clean cell holds {clean_share:.2%} of employment against a "
-            f"{CLEAN_CELL_FLOOR:.0%} floor. Below the floor, a regression "
-            f"entering AI exposure and a computerization measure together is "
-            f"not identified off meaningful variation, and reporting its "
-            f"coefficients as a decomposition would overstate what the data "
-            f"supports." if clean_share is not None else ""),
+            f"{(1-R2):.1%} of this measure's employment-weighted variance is "
+            f"orthogonal to the computer proxy; adding the control inflates the "
+            f"standard error by {infl:.2f}x, putting the conditional MDE near "
+            f"{cond_mde:.2%} against a contested magnitude of "
+            f"{CONTESTED_MAGNITUDE:.0%} -- headroom of "
+            f"{CONTESTED_MAGNITUDE/cond_mde:.1f}x. The discretized clean cell "
+            f"({clean_share:.2%} of employment) is a descriptive aid, not the "
+            f"identification statistic."
+            if (R2 is not None and cond_mde) else ""),
     }
 
 
@@ -122,7 +155,8 @@ def build(dn_path, el_path, aioe_path, oews_path):
             "constructed RTI before the design freeze."),
         "inputs": {"dingel_neiman": str(dn_path), "eloundou": str(el_path),
                    "aioe_felten": str(aioe_path), "employment": str(oews_path)},
-        "clean_cell_floor": CLEAN_CELL_FLOOR,
+        "unconditional_mde80_log": UNCONDITIONAL_MDE_LOG,
+        "contested_magnitude": CONTESTED_MAGNITUDE,
         "measures": {n: analyse(s, dn, emp, title, n) for n, s in measures.items()},
     }
 
@@ -149,16 +183,21 @@ def main(argv=None):
     args.output.write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {args.output}\n")
 
-    hdr = f"{'measure':<30} {'r':>7} {'R2':>7} {'clean cell emp':>15} {'verdict':>15}"
+    hdr = (f"{'measure':<30} {'R2':>7} {'partial var':>12} {'VIF':>6} "
+           f"{'SE infl':>8} {'cond MDE':>9} {'headroom':>9} {'cell':>7}")
     print(hdr); print("-" * len(hdr))
     for n, m in rec["measures"].items():
         if m.get("status") == "insufficient":
             continue
+        i = m["identification"]
         c = m["clean_cell_high_ai_low_computer"]
-        print(f"{n:<30} {m['correlation_with_computer_proxy']:>7.4f} {m['r2']:>7.4f} "
-              f"{c['employment_share_of_all']:>14.2%} {m['verdict']:>15}")
-    print("\nClean cell = exposure above its employment-weighted p75 AND zero "
-          "teleworkable detail codes.\nProxy only — see the module docstring.")
+        print(f"{n:<30} {m['r2']:>7.4f} {i['partial_variance_of_ai']:>11.1%} "
+              f"{i['vif']:>6.2f} {i['se_inflation']:>7.2f}x "
+              f"{i['conditional_mde80_estimate']:>8.2%} {i['headroom']:>8.1f}x "
+              f"{c['employment_share_of_all']:>6.2%}")
+    print("\nPartial variance is the identification statistic. The clean cell is "
+          "descriptive.\nConditional MDE is an ESTIMATE pending a joint-distribution "
+          "simulation.\nComputer proxy = teleworkability — see the module docstring.")
     return 0
 
 

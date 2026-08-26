@@ -31,7 +31,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
-PLAN = "yax/RESEARCH_PLAN_v2.md"
+PLAN = "yax/RESEARCH_PLAN_v3.md"
 SUPPORT = "yax/measurement/computerization_support_receipt.json"
 DEFAULT_TAG = "v1.0-preregistered"
 
@@ -262,12 +262,12 @@ def gate_novelty(tag):
 
 
 def gate_computerization(tag):
-    """§8a. The computerization confound must be addressed before the freeze.
+    """§6. The computerization confound must be addressed before the freeze.
 
     A control added after outcomes are seen is specification search, so this
-    gate blocks the freeze rather than flagging a to-do. It passes only when the
-    support check has been re-run against a real computerization measure --
-    teleworkability is a stand-in and the receipt says so itself.
+    blocks rather than flags. It judges identification on **partial variance**,
+    not on a discretized cell share -- an earlier version keyed on the cell and
+    reached the wrong verdict; see CORRECTION_2026-08-26_separability_verdict.md.
     """
     p = ROOT / SUPPORT
     if not p.is_file():
@@ -281,14 +281,24 @@ def gate_computerization(tag):
     if rec.get("proxy_warning"):
         return Result("computerization", "BLOCKED",
                       "support check still runs on the teleworkability PROXY. "
-                      "Obtain Webb (2020), Frey-Osborne (2017) and a constructed "
-                      "RTI, crosswalk them, and re-run — see "
-                      "briefs/Y1b_computerization.md. The proxy already reports "
-                      "AIOE's clean cell at 1.61% of employment, so this is not "
-                      "a formality.")
-    verdicts = {n: m.get("verdict") for n, m in rec.get("measures", {}).items()}
+                      "Obtain Webb (2020) software exposure, Frey-Osborne, RTI "
+                      "and archived O*NET 'Working with Computers', crosswalk "
+                      "them, and re-run — see briefs/Y1b_computerization.md.")
+    weak = []
+    for name, m in rec.get("measures", {}).items():
+        ident = m.get("identification") or {}
+        head = ident.get("headroom")
+        if head is not None and head < 1.5:
+            weak.append(f"{name} headroom {head:.1f}x")
+    if weak:
+        return Result("computerization", "FAIL",
+                      f"conditional identification is thin: {weak}. Per plan §6 "
+                      f"the chapter's conclusion becomes that public data cannot "
+                      f"separately attribute the pattern — report that rather "
+                      f"than a decomposition.")
     return Result("computerization", "PASS",
-                  f"support check run against real measures: {verdicts}")
+                  "support check run against real computerization measures; "
+                  "conditional headroom adequate for every measure")
 
 
 # ---------------------------------------------------------------- runner

@@ -41,7 +41,7 @@ observe; rescuing DAX; matching proprietary payroll precision.
 | Fine power grid | **done — MDE80 = 3.44%, gradient PASS** |
 | Bootstrap MDE | **outstanding — 6.8% null size makes 3.44% optimistic** |
 | Novelty gate | **partial — broad claim fails; locators + registry search outstanding** |
-| Computerization confound | **open — AIOE clean cell is 1.61% of employment** |
+| Computerization confound | **in the design** — joint model; Webb/FO/RTI outstanding |
 | Design freeze / tag | **not done** |
 
 Run `python yax/gates.py --power-aggregate <path>` at the start and end of
@@ -50,8 +50,8 @@ recollection. **BLOCKED is not PASS.**
 
 ## Read before starting
 
-- `yax/RESEARCH_PLAN_v2.md` — the plan. §5 (power and inference), §10 (seal
-  protocol) and §12 (kill conditions) are binding. You may not alter them; if one is
+- `yax/RESEARCH_PLAN_v3.md` — the plan. §5 (joint-model power), §6 (separability
+  gate), §12 (kill conditions) and §13 (seal protocol) are binding. You may not alter them; if one is
   wrong, stop and say so.
 - `yax/COVERAGE_RULE_PRESPEC_v1.md` — the three coverage rules. Rule B is
   primary and does not change.

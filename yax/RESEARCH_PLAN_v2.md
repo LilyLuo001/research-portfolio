@@ -1,5 +1,13 @@
 # YAX — research plan v2
 
+> **SUPERSEDED by `RESEARCH_PLAN_v3.md` (2026-08-26).** Retained for revision
+> history. v2's §8a concluded that a joint AI-plus-computerization model was
+> not identified and made timing primary on that basis. **That conclusion was
+> wrong** — it rested on a discretized cell share rather than partial variance;
+> see `CORRECTION_2026-08-26_separability_verdict.md`. v2 also carried the
+> unconditional 3.44% MDE forward into a design that adds a collinear
+> regressor, which does not apply. Do not execute from this file.
+
 **Young-worker AI Exposure.** Third dissertation chapter. Independently
 authored. Not the job-market paper.
 

@@ -8,13 +8,23 @@
     "aioe_felten": "/home/user/research-portfolio/yax/measurement/AIOE_DataAppendix.xlsx",
     "employment": "dax/data_built/oews_wages.parquet"
   },
-  "clean_cell_floor": 0.05,
+  "unconditional_mde80_log": 0.035,
+  "contested_magnitude": 0.19,
   "measures": {
     "AIOE_Felten": {
       "n_occupations": 673,
       "employment": 113200940.0,
       "correlation_with_computer_proxy": 0.7610501557593459,
       "r2": 0.5791973395813246,
+      "identification": {
+        "partial_variance_of_ai": 0.4208026604186754,
+        "vif": 2.3764108311602765,
+        "se_inflation": 1.5415611668565983,
+        "conditional_mde80_estimate": 0.056310489389405416,
+        "contested_magnitude": 0.19,
+        "headroom": 3.374149329196697,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 1.013186,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -205,14 +215,22 @@
           }
         ]
       },
-      "verdict": "NOT SEPARABLE",
-      "verdict_note": "the clean cell holds 1.61% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "42.1% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.54x, putting the conditional MDE near 5.63% against a contested magnitude of 19% -- headroom of 3.4x. The discretized clean cell (1.61% of employment) is a descriptive aid, not the identification statistic."
     },
     "Eloundou_dv_rating_alpha": {
       "n_occupations": 669,
       "employment": 112594750.0,
       "correlation_with_computer_proxy": 0.30153858671630607,
       "r2": 0.09092551927886723,
+      "identification": {
+        "partial_variance_of_ai": 0.9090744807211327,
+        "vif": 1.1000198786866613,
+        "se_inflation": 1.0488183249193643,
+        "conditional_mde80_estimate": 0.03866508365370824,
+        "contested_magnitude": 0.19,
+        "headroom": 4.913994282326549,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 0.1875,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -403,14 +421,22 @@
           }
         ]
       },
-      "verdict": "SEPARABLE",
-      "verdict_note": "the clean cell holds 10.48% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "90.9% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.05x, putting the conditional MDE near 3.87% against a contested magnitude of 19% -- headroom of 4.9x. The discretized clean cell (10.48% of employment) is a descriptive aid, not the identification statistic."
     },
     "Eloundou_dv_rating_beta": {
       "n_occupations": 669,
       "employment": 112594750.0,
       "correlation_with_computer_proxy": 0.6486552664181304,
       "r2": 0.4207536546519758,
+      "identification": {
+        "partial_variance_of_ai": 0.5792463453480242,
+        "vif": 1.7263811986576756,
+        "se_inflation": 1.3139182617871157,
+        "conditional_mde80_estimate": 0.048199081125443466,
+        "contested_magnitude": 0.19,
+        "headroom": 3.941983862835557,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 0.5111111111111112,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -601,14 +627,22 @@
           }
         ]
       },
-      "verdict": "NOT SEPARABLE",
-      "verdict_note": "the clean cell holds 3.22% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "57.9% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.31x, putting the conditional MDE near 4.82% against a contested magnitude of 19% -- headroom of 3.9x. The discretized clean cell (3.22% of employment) is a descriptive aid, not the identification statistic."
     },
     "Eloundou_dv_rating_gamma": {
       "n_occupations": 669,
       "employment": 112594750.0,
       "correlation_with_computer_proxy": 0.6736015709534058,
       "r2": 0.45373907639089617,
+      "identification": {
+        "partial_variance_of_ai": 0.5462609236091038,
+        "vif": 1.830627007681745,
+        "se_inflation": 1.3530066547071176,
+        "conditional_mde80_estimate": 0.04959682644113439,
+        "contested_magnitude": 0.19,
+        "headroom": 3.8308902733022183,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 0.8958333333333333,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -799,14 +833,22 @@
           }
         ]
       },
-      "verdict": "NOT SEPARABLE",
-      "verdict_note": "the clean cell holds 1.66% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "54.6% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.35x, putting the conditional MDE near 4.96% against a contested magnitude of 19% -- headroom of 3.8x. The discretized clean cell (1.66% of employment) is a descriptive aid, not the identification statistic."
     },
     "Eloundou_human_rating_alpha": {
       "n_occupations": 669,
       "employment": 112594750.0,
       "correlation_with_computer_proxy": 0.4259074747704149,
       "r2": 0.1813971770653116,
+      "identification": {
+        "partial_variance_of_ai": 0.8186028229346884,
+        "vif": 1.221593637333186,
+        "se_inflation": 1.1052572720109948,
+        "conditional_mde80_estimate": 0.040702811222192326,
+        "contested_magnitude": 0.19,
+        "headroom": 4.667982242376581,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 0.23255813953488372,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -997,14 +1039,22 @@
           }
         ]
       },
-      "verdict": "SEPARABLE",
-      "verdict_note": "the clean cell holds 8.02% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "81.9% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.11x, putting the conditional MDE near 4.07% against a contested magnitude of 19% -- headroom of 4.7x. The discretized clean cell (8.02% of employment) is a descriptive aid, not the identification statistic."
     },
     "Eloundou_human_rating_beta": {
       "n_occupations": 669,
       "employment": 112594750.0,
       "correlation_with_computer_proxy": 0.6396941125372737,
       "r2": 0.4092085576148502,
+      "identification": {
+        "partial_variance_of_ai": 0.5907914423851498,
+        "vif": 1.6926446936380608,
+        "se_inflation": 1.3010167922198626,
+        "conditional_mde80_estimate": 0.047737291866292275,
+        "contested_magnitude": 0.19,
+        "headroom": 3.980116855647622,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 0.47500000000000003,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -1195,14 +1245,22 @@
           }
         ]
       },
-      "verdict": "NOT SEPARABLE",
-      "verdict_note": "the clean cell holds 3.00% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "59.1% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.30x, putting the conditional MDE near 4.77% against a contested magnitude of 19% -- headroom of 4.0x. The discretized clean cell (3.00% of employment) is a descriptive aid, not the identification statistic."
     },
     "Eloundou_human_rating_gamma": {
       "n_occupations": 669,
       "employment": 112594750.0,
       "correlation_with_computer_proxy": 0.6901426259347992,
       "r2": 0.47629684413218026,
+      "identification": {
+        "partial_variance_of_ai": 0.5237031558678198,
+        "vif": 1.9094786594190303,
+        "se_inflation": 1.381838868833494,
+        "conditional_mde80_estimate": 0.05062650980831129,
+        "contested_magnitude": 0.19,
+        "headroom": 3.752974493390969,
+        "note": "This is the statistic that bears on whether a joint AI-plus-computerization model is identified. The conditional MDE is the measured unconditional MDE inflated by sqrt(VIF) and the null-size correction; it is an ESTIMATE and must be replaced by a simulation on the observed joint distribution before the freeze."
+      },
       "exposure_cut": 0.7458827920865994,
       "exposure_cut_rule": "employment-weighted p75",
       "high_exposure": {
@@ -1393,8 +1451,7 @@
           }
         ]
       },
-      "verdict": "NOT SEPARABLE",
-      "verdict_note": "the clean cell holds 1.81% of employment against a 5% floor. Below the floor, a regression entering AI exposure and a computerization measure together is not identified off meaningful variation, and reporting its coefficients as a decomposition would overstate what the data supports."
+      "verdict_note": "52.4% of this measure's employment-weighted variance is orthogonal to the computer proxy; adding the control inflates the standard error by 1.38x, putting the conditional MDE near 5.06% against a contested magnitude of 19% -- headroom of 3.8x. The discretized clean cell (1.81% of employment) is a descriptive aid, not the identification statistic."
     }
   }
 }
