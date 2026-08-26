@@ -1,0 +1,699 @@
+{
+  "status": "NEED_HUMAN_EXTRACT_ROUTE",
+  "generated_at_utc": "2026-08-26T08:10:50Z",
+  "outcome_data_opened": false,
+  "extract_submitted_or_amended": false,
+  "origin_sync": {
+    "target_branch": "claude/dax-research-direction-1ohi97",
+    "scc_surviving_commit": "3704ee7130de3ed07d3d3a1a752cb6b98e2e085e",
+    "remote_merge_commit": "c2b171e34d6a9aae62c61de859296c9e701c1000",
+    "surviving_commit_is_ancestor_of_remote": true,
+    "surviving_checkout_status": "CLEAN_NO_STAGED_FILES",
+    "named_design_power_directory_status": "ABSENT",
+    "reconciliation": "The surviving sparse-checkout line was already merged into the target branch in c2b171e; no second push or cherry-pick was required. The unrelated dirty main checkout was not modified."
+  },
+  "ipums_occ1990": {
+    "requested_variable": "OCC1990",
+    "requested_window": "2017-01 through 2026-07 basic monthly samples",
+    "api_metadata_endpoint_used": null,
+    "api_metadata_endpoint_status": "UNAVAILABLE_FOR_CPS_MICRODATA",
+    "api_documentation_locator": "https://developer.ipums.org/docs/v2/workflows/explore_metadata/microdata/",
+    "api_documentation_finding": "Current IPUMS API v2 documentation states that microdata collections, including CPS, do not yet expose metadata endpoints.",
+    "availability_locator_used": "https://cps.ipums.org/cps-action/variables/OCC1990#availability_section",
+    "availability_method": "Live IPUMS CPS variable availability table, the official workaround named by the API documentation.",
+    "extract_spec_locator": "dax/memo/power_calcs/ipums_ai_telework_extract_v1.json",
+    "requested_sample_count": 115,
+    "available_sample_count": 114,
+    "unavailable_sample_count": 1,
+    "unavailable_samples": [
+      "cps2025_10s"
+    ],
+    "conclusion": "OCC1990 is available for every extant requested basic monthly CPS sample. October 2025 is absent because no CPS was collected, not because OCC1990 lacks coverage.",
+    "samples": [
+      {
+        "sample": "cps2017_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_03s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2017_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_03s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2018_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_03s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2019_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_03s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2020_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_03s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2021_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_03b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2022_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_03b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_04b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2023_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_02b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_03b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_04b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_05b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_10s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2024_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_01b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_02s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_03b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_04b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_07b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_08s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_09s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_10s",
+        "occ1990_available": false,
+        "evidence": "No October 2025 CPS was collected during the federal government shutdown."
+      },
+      {
+        "sample": "cps2025_11s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2025_12s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_01s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_02b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_03b",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_04s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_05s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_06s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      },
+      {
+        "sample": "cps2026_07s",
+        "occ1990_available": true,
+        "evidence": "IPUMS OCC1990 live availability table marks the corresponding basic monthly sample available."
+      }
+    ]
+  },
+  "webb_software": {
+    "paper_url": "https://www.michaelwebb.co/webb_ai.pdf",
+    "author_page_url": "https://www.michaelwebb.co/",
+    "author_data_distribution_url": "https://eepurl.com/gxo4zr",
+    "direct_file_url_status": "NO_STABLE_DIRECT_URL_PUBLISHED; author page routes the Data link through the distribution URL above.",
+    "source_file_name": "exposure_by_occ1990dd_lswt2010.xls",
+    "source_file_bytes": 21263,
+    "source_file_sha256": "c5652fd3f862948cb77d87f38aa8296137c51e028992ab54e57246a066e0a779",
+    "source_container": "UTF-8 CSV despite .xls suffix",
+    "header": [
+      "occ1990dd",
+      "occ1990dd_title",
+      "lswt2010",
+      "pct_software",
+      "pct_robot",
+      "pct_ai"
+    ],
+    "data_row_count": 341,
+    "unique_occ1990dd_count": 341,
+    "native_taxonomy": "occ1990dd",
+    "computerization_measure": "pct_software",
+    "missing_score_codes": [
+      {
+        "occ1990dd": "285",
+        "title": "Auctioneers and sales support occupations, n.e.c."
+      },
+      {
+        "occ1990dd": "349",
+        "title": "Other telecom operators"
+      },
+      {
+        "occ1990dd": "415",
+        "title": "Supervisors of guards"
+      }
+    ],
+    "local_verification_note": "The SCC private public-source cache was read only to verify schema, bytes, hash, and row count; the source file was not committed."
+  },
+  "taxonomy_resolution": {
+    "ipums_occ1990_locator": "https://cps.ipums.org/cps-action/variables/OCC1990",
+    "ipums_occ1990_definition": "IPUMS modified 1990-basis harmonized classification with 389 categories.",
+    "dorn_data_page": "https://www.ddorn.net/data.htm",
+    "dorn_direct_occ2010_crosswalk_url": "https://www.ddorn.net/data/occ2010_occ1990dd.zip",
+    "dorn_crosswalk_zip_sha256": "454cf8d712e2266ff656a50b106194241aedff98c31045c14d33c89f4751084b",
+    "dorn_crosswalk_dta_sha256": "7d6069da24344a294702650ddb8039bb8a845dbbeeb488a1f8b309d840d12a76",
+    "eig_replication_locator": "https://github.com/EIG-Research/AI-unemployment/blob/main/code/02%20Microdata%20Monthly%20Build.R",
+    "occ1990dd_equals_ipums_occ1990": false,
+    "finding": "occ1990dd is Dorn's balanced aggregation, not IPUMS OCC1990. Adding OCC1990 would therefore be necessary but not sufficient for the OCC1990 route; a Dorn OCC1990-to-occ1990dd crosswalk would still be required. A direct public OCC2010-to-occ1990dd crosswalk also exists."
+  },
+  "bridge_coverage_estimate": {
+    "source": "Existing outcome-blind SCC bridge receipt and the verified identical missing-code sets for Webb pct_software, pct_robot, and pct_ai.",
+    "observed_preperiod_cps_occ2010_codes": 445,
+    "unmapped_observed_cps_occ2010_codes": 0,
+    "observed_codes_with_webb_score": 442,
+    "estimated_weight_mass_share_with_webb_software": 0.9995154587,
+    "estimated_weight_mass_cost": 0.0004845413,
+    "occupations_lost_by_crosswalk": [],
+    "caveat": "This is the existing pre-period bridge estimate, not a rerun on the final wide-panel joint-model cells. It establishes that the direct bridge itself loses no observed codes; Webb's source has a small separate missing-score cost."
+  },
+  "decision": {
+    "need_human": true,
+    "option_a": "Amend and resubmit the IPUMS extract with OCC1990, then apply a Dorn OCC1990-to-occ1990dd crosswalk. This adds queue and rebuild time and does not eliminate the crosswalk.",
+    "option_b": "Use Dorn's direct OCC2010-to-occ1990dd bridge already verified on the outcome-blind pre-period support, then rerun and report final wide-panel coverage.",
+    "recommendation": "OPTION_B",
+    "reasoning": "The current extract already contains OCC2010; the direct source-owner crosswalk maps every observed pre-period CPS code, with an estimated 0.0485% weight-mass cost arising from missing Webb scores rather than crosswalk failure. OCC1990 would still require a second crosswalk and a full extract resubmission.",
+    "action_taken": "NONE_PENDING_HUMAN_DECISION"
+  },
+  "environment_verification": {
+    "scc_default_python": "3.6.8",
+    "scc_default_pandas": "UNAVAILABLE",
+    "discovered_existing_venv_pandas_versions": [
+      "1.1.5",
+      "2.2.3",
+      "3.0.3"
+    ],
+    "brief_claim_pandas_1_4_3_verified": false,
+    "consequence": "This task used Python standard-library CSV/JSON only and did not use pandas or to_csv."
+  },
+  "locators": {
+    "ipums_api_docs": "https://developer.ipums.org/docs/v2/workflows/explore_metadata/microdata/",
+    "ipums_occ1990": "https://cps.ipums.org/cps-action/variables/OCC1990",
+    "webb_paper": "https://www.michaelwebb.co/webb_ai.pdf",
+    "webb_author_page": "https://www.michaelwebb.co/",
+    "webb_data_distribution": "https://eepurl.com/gxo4zr",
+    "dorn_data": "https://www.ddorn.net/data.htm",
+    "dorn_occ2010_crosswalk": "https://www.ddorn.net/data/occ2010_occ1990dd.zip",
+    "eig_code": "https://github.com/EIG-Research/AI-unemployment/blob/main/code/02%20Microdata%20Monthly%20Build.R",
+    "origin_merge": "https://github.com/LilyLuo001/research-portfolio/commit/c2b171e34d6a9aae62c61de859296c9e701c1000"
+  }
+}
+
