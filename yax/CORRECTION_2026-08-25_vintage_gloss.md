@@ -4,7 +4,8 @@
 
 ## The error
 
-`RESEARCH_PLAN_v1.md` and `briefs/C1_crosswalk_repair.md` claimed that Software
+`CHAPTER_SCOPE_v1.md` and the then-current crosswalk brief (since
+superseded by `briefs/Y1_power_gradient.md`) claimed that Software
 Developers, Computer Systems Analysts, Computer User Support Specialists and
 Project Management Specialists "have no AIOE value at all", and that AIOE
 "structurally omits the occupations where the finding is claimed to occur".

@@ -1,6 +1,6 @@
-# C0 — CONTEXT PACK
+# Y0 — CONTEXT PACK
 
-**Paste this in full at the top of every C-task prompt.** The agent starts cold
+**Paste this in full at the top of every Y-task prompt.** The agent starts cold
 with zero conversational memory. Everything it needs to refuse bad work is here.
 
 ---
@@ -12,10 +12,14 @@ chapter without methodological expansion.
 
 The chapter makes one bounded contribution:
 
-> Using nationally representative CPS data, determine whether the reported
-> deterioration in young employment in AI-exposed occupations is robust across
-> alternative exposure measures, occupational-code vintages, pre-existing
-> trends, and remote-work exposure.
+> Does young employment deteriorate in AI-exposed occupations after the
+> ChatGPT release, tested on nationally representative CPS data under a
+> specification and coverage rule frozen before any post-period outcome was
+> opened, and reported against a measured minimum detectable effect?
+
+**The contribution is the pre-registration and the measured MDE, not the
+question.** A null result is as publishable as a positive one, by construction.
+Protect the ordering above all else.
 
 **Optimize for:** completion; transparent measurement; correct inference;
 independence of execution; a coherent paper-sized contribution.
@@ -24,13 +28,36 @@ independence of execution; a coherent paper-sized contribution.
 new theory of occupational adjustment; firm-level mechanisms the data cannot
 observe; rescuing DAX; matching proprietary payroll precision.
 
+## Where the project actually stands
+
+| | |
+|---|---|
+| Wide CPS extract | built, 9,262,480 rows |
+| Pre-period file | built **outcome-blind**, 6,188,956 rows |
+| Post-period outcomes | **SEALED — never opened** |
+| Occupation bridge, exposure lookup | built |
+| Power engine (PPML-equivalent) | built, 999 reps, 490 clusters, 66 months |
+| Strict coverage gate | **FAILED at 88.70%** — three rules pre-specified |
+| Fine power grid | **outstanding** |
+| Bootstrap MDE | **outstanding** |
+| Novelty gate | **outstanding** |
+| Design freeze / tag | **not done** |
+
+Run `python yax/gates.py --power-aggregate <path>` at the start and end of
+every task. It is the authority on what is done, not this table and not your
+recollection. **BLOCKED is not PASS.**
+
 ## Read before starting
 
-- `yax/RESEARCH_PLAN_v1.md` — the frozen sample, specification and
-  deliverables. §5 and §6 are binding. You may not alter them; if one is wrong,
-  stop and say so.
+- `yax/RESEARCH_PLAN_v1.md` — the plan. §5 (power honesty), §9 (seal protocol)
+  and §12 (kill conditions) are binding. You may not alter them; if one is
+  wrong, stop and say so.
+- `yax/COVERAGE_RULE_PRESPEC_v1.md` — the three coverage rules. Rule B is
+  primary and does not change.
 - `yax/measurement/AUDIT_RESULTS.md` — what is already known about the
   exposure measures. Do not re-derive it.
+- `yax/CORRECTION_2026-08-25_vintage_gloss.md` — a claim that was wrong, how it
+  was caught, and the standing rule it produced.
 - `../dax/memo/DAX_ARCHIVE_2026-08-25.md` — why the previous work stream stopped.
   Do not restart any of it.
 
@@ -51,6 +78,20 @@ observe; rescuing DAX; matching proprietary payroll precision.
    looking at its output.
 5. **Commit early and often.** Long runs are scripts handed to the scheduler,
    never babysat interactively.
+6. **A sentence describing a computed number must be checkable against the same
+   artifact that produced the number.** "Occupations unmatched by an exact-code
+   merge" is checkable. "Occupations the measure omits" is a different claim
+   needing a different check. This rule exists because that exact slip happened
+   three times in this project and review caught it every time, not self-check.
+
+## The one irreversible mistake
+
+**Never open a post-ChatGPT outcome before `v1.0-preregistered` is tagged.**
+Not to sanity-check a merge, not to look at a row count, not "just the pre-period
+side of the join". The pre-registration is this chapter's entire contribution
+and it cannot be reconstructed afterwards. If you believe you need post-period
+data before the tag, you are wrong or the plan is — either way, stop and emit
+`NEED_HUMAN`.
 
 ## Environment — SCC
 

@@ -1,6 +1,6 @@
-# C3 — Estimation: run the frozen tables once
+# Y4 — Estimation: run the frozen tables once
 
-*Prepend `C0_CONTEXT_PACK.md`. Requires `DESIGN_FREEZE_v1.md` committed.*
+*Prepend `Y0_CONTEXT_PACK.md`. Requires all seven gates PASS.*
 
 ## The rule that governs this task
 

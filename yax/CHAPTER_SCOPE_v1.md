@@ -263,8 +263,8 @@ and placebo.
 
 ## 9. Execution
 
-Task briefs in `yax/briefs/`. `C0_CONTEXT_PACK.md` is the header pasted
-at the top of every task prompt; C1–C4 are one task each, run in order, one per
+Task briefs in `yax/briefs/`. `Y0_CONTEXT_PACK.md` is the header pasted
+at the top of every task prompt; Y1–Y5 are one task each, run in order, one per
 session.
 
 C1 and most of C2 are **done** — extract, bridge, exposure lookup, coverage

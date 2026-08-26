@@ -185,6 +185,19 @@ fact, so the ordering is the one thing in this project that must not slip.
 Opening a post-period file before step 6 is the single irreversible mistake
 available in this project.
 
+**The protocol is machine-checked.** `yax/gates.py` verifies seven conditions —
+including, in git history rather than in prose, that
+`COVERAGE_RULE_PRESPEC_v1.md` is an ancestor of the tag:
+
+    python yax/gates.py --power-aggregate <aggregate>.json
+
+Each gate reports `PASS`, `FAIL` or `BLOCKED`, and the exit status is non-zero
+unless all seven pass, so an unchecked condition cannot be mistaken for a met
+one. `briefs/YV_VERIFY.md` is the independent verification task that runs after
+each milestone, in a fresh session and preferably a different model family,
+because every one of this project's three false claims was caught by external
+review and none by self-check.
+
 ## 10. Deliverables
 
 | item | target |

@@ -1,30 +1,42 @@
-# Chapter execution briefs
+# YAX execution briefs
 
-Read `../CHAPTER_SCOPE_v1.md` first. Then run C1 → C4 in order, one task per
-session, prepending `C0_CONTEXT_PACK.md` to every prompt.
+Read `../RESEARCH_PLAN_v1.md` first. Then run Y1 → Y5 in order, one task per
+session, prepending `Y0_CONTEXT_PACK.md` to every prompt. Run `YV_VERIFY.md`
+after each one, in a fresh session and preferably a different model family.
 
-| brief | task | blocks on |
+| brief | task | gate it must clear |
 |---|---|---|
-| `C0_CONTEXT_PACK.md` | header, not a task | — |
-| `C1_crosswalk_repair.md` | reconcile vs EIG, then crosswalk; audit item 2 | EIG GitHub first; BLS crosswalk + OEWS 2019/recent only if needed |
-| `C2_merge_and_freeze.md` | merge to CPS, MDE, design freeze | C1; **wide IPUMS extract** |
-| `C3_estimation.md` | run the six frozen tables once | C2 |
-| `C4_manuscript.md` | manuscript, appendix, replication | C3 |
+| `Y0_CONTEXT_PACK.md` | header, not a task | — |
+| `Y1_power_gradient.md` | fine grid, gradient check, bootstrap MDE | `gradient`, `calibration` |
+| `Y2_novelty_gate.md` | verify the four §8 claims | `novelty` |
+| `Y3_freeze.md` | push to origin, freeze doc, tag | `prespec_before_tag`, `freeze_doc`, `seal` |
+| `Y4_estimation.md` | run the six frozen tables once | all seven PASS first |
+| `Y5_manuscript.md` | manuscript, appendix, replication | — |
+| `YV_VERIFY.md` | independent verification | run after each |
+
+## The gate runner is the authority
+
+    python yax/gates.py --power-aggregate <aggregate>.json
+
+Seven gates, each `PASS` / `FAIL` / `BLOCKED`. Exit status is non-zero unless
+every gate passes, so **`BLOCKED` cannot be mistaken for fine.** No brief's
+claim of completion overrides it.
+
+Current state, checked in this repository:
+
+| gate | status |
+|---|---|
+| `coverage_rule` | PASS |
+| `seal` | PASS |
+| `gradient` | BLOCKED — no aggregate yet |
+| `calibration` | BLOCKED — no aggregate yet |
+| `novelty` | BLOCKED — §8 unverified |
+| `prespec_before_tag` | BLOCKED — no tag |
+| `freeze_doc` | BLOCKED — not written |
 
 ## Owner actions, not agent actions
 
-1. **Submit the wide IPUMS extract** —
-   `dax/memo/power_calcs/ipums_ai_telework_extract_v1.json`, 2017-01 →,
-   ages 16–75. C2 blocks on it and it has queue time. Do this first.
-2. **Check EIG's GitHub before downloading anything from BLS.** If their
-   crosswalked AIOE resolves the group-15 occupations, C1 collapses to a
-   comparison and you have saved a week. See C1 Step 0.
-3. **Run the power calculation this week.** It is the only genuinely unknown
-   input, it is now cheap (C2), and the §3 framing depends on the answer.
-   Do it before committing to a framing.
-4. **Download the BLS SOC 2010→2018 crosswalk and OEWS 2019 + recent year** —
-   only if step 2 does not resolve it.
-5. **Rotate the exposed credentials.** No longer on the critical path — the
-   chapter needs no vendor API keys — but still owed.
-6. **Create the `v1.0-preregistered` tag** after C2's design freeze, before
-   C3's outcomes may be committed.
+1. **Push the SCC work to `origin`.** It exists on two cluster working copies
+   with no remote. Code and receipts are not licensed data; only the panels are.
+2. **Rotate the IPUMS API key.**
+3. **Create the tag** at Y3, after the gates are green.
