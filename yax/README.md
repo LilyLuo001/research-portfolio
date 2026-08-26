@@ -7,7 +7,7 @@ release — tested on nationally representative CPS data, under a specification
 and coverage rule frozen before any post-period outcome was opened, and
 reported against a measured minimum detectable effect?**
 
-Start with **[`RESEARCH_PLAN_v1.md`](RESEARCH_PLAN_v1.md)**.
+Start with **[`RESEARCH_PLAN_v2.md`](RESEARCH_PLAN_v2.md)**.
 
 ## Status
 
@@ -17,13 +17,15 @@ Start with **[`RESEARCH_PLAN_v1.md`](RESEARCH_PLAN_v1.md)**.
 | Pre-period file | built **outcome-blind**, 6,188,956 rows |
 | Post-period outcomes | **SEALED — never opened** |
 | Power engine | built, 999 reps on the real panel |
-| Design freeze | **not tagged** — see plan §9 |
+| Empirical MDE80 | **3.44%** normal theory; bootstrap outstanding |
+| Design freeze | **not tagged** — see plan §10 |
 
 ## Layout
 
 | path | what |
 |---|---|
-| `RESEARCH_PLAN_v1.md` | the plan. Read first |
+| `RESEARCH_PLAN_v2.md` | the plan. Read first |
+| `RESEARCH_PLAN_v1.md` | superseded; kept for revision history |
 | `COVERAGE_RULE_PRESPEC_v1.md` | the three coverage rules, primary named in advance |
 | `CORRECTION_2026-08-25_vintage_gloss.md` | a corrected claim and the rule it produced |
 | `CHAPTER_SCOPE_v1.md` | superseded by the plan; kept for revision history |

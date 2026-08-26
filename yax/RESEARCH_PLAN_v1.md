@@ -1,5 +1,11 @@
 # YAX — research plan v1
 
+> **SUPERSEDED by `RESEARCH_PLAN_v2.md` (2026-08-26).** Retained for revision
+> history. v1 was written before the MDE was located and before the novelty
+> gate ran. Its §5.2 falsification condition — ceiling power across the grid —
+> **did not trigger**, and its §12.1 kill condition is retired accordingly. Do
+> not execute from this file.
+
 **Young-worker AI Exposure.** Third dissertation chapter. Independently
 authored. Not the job-market paper.
 

@@ -1,6 +1,6 @@
 # YAX execution briefs
 
-Read `../RESEARCH_PLAN_v1.md` first. Then run Y1 → Y5 in order, one task per
+Read `../RESEARCH_PLAN_v2.md` first. Then run Y1 → Y5 in order, one task per
 session, prepending `Y0_CONTEXT_PACK.md` to every prompt. Run `YV_VERIFY.md`
 after each one, in a fresh session and preferably a different model family.
 
@@ -28,9 +28,9 @@ Current state, checked in this repository:
 |---|---|
 | `coverage_rule` | PASS |
 | `seal` | PASS |
-| `gradient` | BLOCKED — no aggregate yet |
-| `calibration` | BLOCKED — no aggregate yet |
-| `novelty` | BLOCKED — §8 unverified |
+| `gradient` | **PASS** — MDE80 = 3.44%, curve internally consistent |
+| `calibration` | **FAIL** — 6.8% null size, no bootstrap field |
+| `novelty` | BLOCKED — partial; locators + registry search outstanding |
 | `prespec_before_tag` | BLOCKED — no tag |
 | `freeze_doc` | BLOCKED — not written |
 

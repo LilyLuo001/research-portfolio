@@ -38,9 +38,9 @@ observe; rescuing DAX; matching proprietary payroll precision.
 | Occupation bridge, exposure lookup | built |
 | Power engine (PPML-equivalent) | built, 999 reps, 490 clusters, 66 months |
 | Strict coverage gate | **FAILED at 88.70%** — three rules pre-specified |
-| Fine power grid | **outstanding** |
-| Bootstrap MDE | **outstanding** |
-| Novelty gate | **outstanding** |
+| Fine power grid | **done — MDE80 = 3.44%, gradient PASS** |
+| Bootstrap MDE | **outstanding — 6.8% null size makes 3.44% optimistic** |
+| Novelty gate | **partial — broad claim fails; locators + registry search outstanding** |
 | Design freeze / tag | **not done** |
 
 Run `python yax/gates.py --power-aggregate <path>` at the start and end of
@@ -49,8 +49,8 @@ recollection. **BLOCKED is not PASS.**
 
 ## Read before starting
 
-- `yax/RESEARCH_PLAN_v1.md` — the plan. §5 (power honesty), §9 (seal protocol)
-  and §12 (kill conditions) are binding. You may not alter them; if one is
+- `yax/RESEARCH_PLAN_v2.md` — the plan. §5 (power and inference), §10 (seal
+  protocol) and §12 (kill conditions) are binding. You may not alter them; if one is
   wrong, stop and say so.
 - `yax/COVERAGE_RULE_PRESPEC_v1.md` — the three coverage rules. Rule B is
   primary and does not change.

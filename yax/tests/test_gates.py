@@ -115,3 +115,14 @@ def test_seal_gate_reports_current_repository_state():
     """No outcomes are committed in this repository and no tag exists."""
     r = gates.gate_seal("v1.0-preregistered")
     assert r.status == "PASS"
+
+
+# ------------------------------------------------------------ novelty
+
+def test_novelty_is_blocked_while_locators_are_outstanding():
+    """Regression: an earlier version passed as soon as the plan stopped
+    saying VERIFY BEFORE THE FREEZE, which rewriting a heading achieves
+    without resolving anything."""
+    r = gates.gate_novelty("v1.0-preregistered")
+    assert r.status == "BLOCKED"
+    assert "locators outstanding" in r.detail or "not yet searched" in r.detail

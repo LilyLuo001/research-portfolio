@@ -31,7 +31,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
-PLAN = "yax/RESEARCH_PLAN_v1.md"
+PLAN = "yax/RESEARCH_PLAN_v2.md"
 DEFAULT_TAG = "v1.0-preregistered"
 
 # §5.2: a design whose power never falls is describing its own smoothness.
@@ -235,17 +235,29 @@ def gate_seal(tag):
 
 
 def gate_novelty(tag):
-    """§8. Four claims about prior work, none verified from this repo."""
+    """§9. Prior-work claims must be resolved with locators, not merely stated.
+
+    An earlier version of this gate passed as soon as the plan stopped saying
+    "VERIFY BEFORE THE FREEZE". That is a false pass: rewriting the heading
+    resolves nothing. It now looks for the markers an UNFINISHED gate leaves
+    behind, so editing the warning away cannot satisfy it.
+    """
     p = ROOT / PLAN
     if not p.is_file():
         return Result("novelty", "BLOCKED", f"{PLAN} missing")
     text = p.read_text(encoding="utf-8")
-    if "VERIFY BEFORE THE FREEZE" in text and "VERIFIED" not in text:
+    unresolved = [m for m in ("VERIFY BEFORE THE FREEZE", "locators outstanding",
+                              "not yet searched", "not yet verified",
+                              "claims to confirm")
+                  if m.lower() in text.lower()]
+    if unresolved:
         return Result("novelty", "BLOCKED",
-                      "§8 still marked VERIFY BEFORE THE FREEZE. Resolve each "
-                      "claim with a locator and record the outcome in the plan "
-                      "before tagging.")
-    return Result("novelty", "PASS", "§8 no longer marked unverified")
+                      f"plan still carries unresolved prior-work markers: "
+                      f"{unresolved}. Every claim needs a URL, author, date and "
+                      f"version, and the decisive question -- has anyone run a "
+                      f"pre-registered, power-stated public-data test? -- needs "
+                      f"an actual registry search with the sources listed.")
+    return Result("novelty", "PASS", "no unresolved prior-work markers in the plan")
 
 
 # ---------------------------------------------------------------- runner
