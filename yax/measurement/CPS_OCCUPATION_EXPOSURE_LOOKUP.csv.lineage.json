@@ -1,0 +1,11 @@
+{
+  "output": "dax/w2/exposure_gate/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+  "output_sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+  "inputs": [
+    {"path": "dax/w2/exposure_gate/CENSUS2018_EXPOSURE_VARIANTS.csv", "sha256": "3c8c1d26b73414cf1c173a264bcc0446e8b8ffca5c412f5f63edc5fe2eb2552a"},
+    {"path": "dax/w2/exposure_gate/CENSUS_OCC2010_TO_2018_BRIDGE.csv", "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"},
+    {"path": "dax/w2/exposure_gate/build_cps_exposure_lookup.py", "sha256": "a8370f2e4a4eb53302e77a90e932b3a0c3cc08a50f65a56a80e5b4d3fdab4655"}
+  ],
+  "code_version": "f27a4675f3cfcfbdc4b34b012191e8555d177743",
+  "timestamp": "2026-08-25T14:45:00Z"
+}

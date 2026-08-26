@@ -1,0 +1,184 @@
+{
+  "status": "BLOCKED_FAILED_PRIMARY_EXPOSURE_COVERAGE",
+  "protocol_version": "cps-young-relative-employment-power-v1",
+  "prepared_date": "2026-08-25",
+  "post_outcomes_permitted": false,
+  "wide_extract": {
+    "extract_number": 9,
+    "supersedes_extract": 8,
+    "submitted_spec": "dax/memo/power_calcs/ipums_ai_telework_extract_v2.json",
+    "submitted_spec_sha256": "bd798b9dfe11d00153856be3e05a7c52865a149dcc7405a5cbfd812eb3ca6c3a",
+    "first_month": "2017-01",
+    "last_month": "2026-07",
+    "requested_sample_count": 114,
+    "usable_basic_month_count": 109,
+    "usable_preperiod_month_count": 66,
+    "missing_months": ["2025-10"],
+    "structural_asec_gaps": [
+      "2017-03",
+      "2018-03",
+      "2019-03",
+      "2020-03",
+      "2021-03"
+    ],
+    "structural_gap_rule": "omit; never substitute ASECWT for WTFINL",
+    "corrective_spec": "dax/memo/power_calcs/ipums_ai_telework_march_patch_v1.json",
+    "corrective_spec_status": "PREPARED_NOT_SUBMITTED",
+    "pre_outcome_last_month": "2022-11",
+    "download_status": "COMPLETED_CHECKSUM_VERIFIED",
+    "structural_validation_status": "PASS",
+    "row_count": 9262480,
+    "output_column_count": 39,
+    "outcomes_inspected_during_validation": false
+  },
+  "outcome_blind_preperiod_split": {
+    "receipt": "dax/memo/power_calcs/ipums_extract9_preperiod_split_receipt_v1.json",
+    "status": "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT",
+    "rows_written_preperiod": 6188956,
+    "rows_rejected_postperiod": 3073524,
+    "protected_fields_decoded_for_rejected_rows": false,
+    "postperiod_rows_written": false,
+    "postperiod_outcomes_printed": false
+  },
+  "recode_contract": {
+    "path": "dax/memo/power_calcs/cps_recode_contract_v1.json",
+    "status": "PASS_METADATA_ONLY",
+    "microdata_read": false,
+    "employment_codes": [10, 12],
+    "occ2010_niu_code": 9999,
+    "weight_rule": "finite WTFINL strictly greater than zero; delivered CSV value used directly",
+    "primary_occupation": "OCC",
+    "primary_lookup_key": ["lookup_role", "occ_code"],
+    "mapping_2017_2019": "probabilistically expand raw Census-2010 OCC to Census-2018 with official conversion rates",
+    "mapping_2020_plus": "use raw OCC directly as Census-2018",
+    "exposure_lookup_role": "raw_occ_main_2020_plus",
+    "occ_code_format": "four-digit zero-padded target Census-2018 occupation",
+    "occ2010_role": "sensitivity_only"
+  },
+  "estimand": {
+    "outcome": "WTFINL-weighted employed headcount",
+    "cell": ["census2018_occupation", "age_group", "month"],
+    "young_ages": [22, 25],
+    "comparison_ages": [26, 65],
+    "primary_exposure": "dv_rating_beta",
+    "primary_contrast": "exposure_quintile_5_vs_1",
+    "quintile_construction": "20/40/60/80 cuts from pre-period WTFINL employment ages 22-65 after target-occupation mapping",
+    "lookup_coverage_rule": "exclude non-full dv_rating_beta routes without renormalizing them and require at least 90 percent WTFINL coverage",
+    "model": "PPML",
+    "fixed_effects": [
+      "occupation_x_age_group",
+      "occupation_x_month",
+      "age_group_x_month"
+    ],
+    "primary_cluster": "occupation",
+    "robustness_inference": [
+      "occupation_x_month_two_way_cluster",
+      "occupation_wild_cluster_bootstrap"
+    ]
+  },
+  "timing": {
+    "event_transition_month": "2022-11",
+    "post_first_month": "2022-12",
+    "event_study_reference_month": "2022-10",
+    "early_post": ["2022-12", "2025-06"],
+    "extension": ["2025-07", "2026-07"]
+  },
+  "benchmarks": [
+    {
+      "relative_decline": 0.13,
+      "log_contrast": -0.139262067,
+      "role": "authenticated_2025_08_26_version_sensitivity"
+    },
+    {
+      "relative_decline": 0.16,
+      "log_contrast": -0.174353387,
+      "role": "authenticated_2025_11_13_version_sensitivity"
+    },
+    {
+      "relative_decline": 0.19,
+      "log_contrast": -0.210721031,
+      "role": "primary_authenticated_2026_08_12_current_page"
+    }
+  ],
+  "simulation": {
+    "minimum_repetitions": 999,
+    "seed": 20260825,
+    "alpha_two_sided": 0.05,
+    "target_power": 0.8,
+    "calendar_block_rotation": true,
+    "wild_cluster_distribution": "Rademacher",
+    "cluster_level": "occupation",
+    "estimator_implementation": "NumPy grouped-binomial conditional equivalent of registered two-age-group PPML",
+    "primary_donor_occupation_vintage": "Census-2018 target occupations in every year",
+    "primary_donor_months_expected": 66,
+    "pre2020_bridge_rule": "official conversion-rate expansion; weights split across target routes and never renormalized around missing exposure",
+    "required_outputs": [
+      "rejection_probability",
+      "benchmark_exclusion_probability_under_null",
+      "bias",
+      "rmse",
+      "coverage_95",
+      "empirical_mde80",
+      "occupation_clusters",
+      "effective_occupation_concentration"
+    ]
+  },
+  "continuation": {
+    "detect_primary_benchmark_power_min": 0.8,
+    "exclude_primary_benchmark_under_null_probability_min": 0.8,
+    "extension_difference_log_points_min": 0.05,
+    "extension_equality_alpha": 0.05,
+    "crosswalk_magnitude_change_fraction": 0.5
+  },
+  "coverage_gate_result": {
+    "status": "FAIL",
+    "threshold": 0.9,
+    "covered_route_mass_fraction": 0.8870045440505062,
+    "shortfall_percentage_points": 1.29954559494938,
+    "occupation_clusters_on_available_support": 490,
+    "post_outcomes_read": false,
+    "consequence": "design freeze and post-period estimation remain prohibited"
+  },
+  "available_support_power_diagnostic": {
+    "status": "PROTOCOL_SEED_CONDITIONAL_PASS",
+    "aggregate_receipt": "dax/memo/power_calcs/power_available_support_aggregate_v3.json",
+    "protocol_seed": 20260825,
+    "executed_seed": 20260825,
+    "repetitions_per_effect": 999,
+    "occupation_clusters": 490,
+    "effective_occupation_concentration_q1_q5": 58.42089841846546,
+    "preperiod_months": 66,
+    "primary_benchmark_rejection_probability": 1.0,
+    "null_excludes_primary_benchmark_probability": 1.0,
+    "empirical_mde80_log_effect": -0.035,
+    "empirical_mde80_relative_decline": 0.03439458374243354,
+    "null_rejection_probability": 0.06806806806806807,
+    "null_interval_coverage_95": 0.9319319319319319,
+    "design_freeze_permitted": false,
+    "post_outcomes_read": false,
+    "interpretation": "protocol-seed power passes on covered support, but coverage failure prevents design freeze and population-wide interpretation"
+  },
+  "external_benchmark_locator": {
+    "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/",
+    "revision_date": "2026-08-12",
+    "retrieved_date": "2026-08-25",
+    "locator": "publication page facts 49-52: ADP through June 2026; ages 22-25 gap 19 percent"
+  },
+  "dallas_pipeline_check": {
+    "article_url": "https://www.dallasfed.org/research/economics/2026/0106",
+    "workbook_url": "https://www.dallasfed.org/-/media/documents/research/economics/2026/0106data.xlsx",
+    "workbook_sha256": "972bcab87986d08b6b05897a57fcaa4f0bc66964e37171fe06534e61dccf4c1a",
+    "sheet": "data1",
+    "series": "Eai3_ma1",
+    "young_ages": [20, 24],
+    "prime_ages": [25, 55],
+    "exposure_groups": "2024_employment_weighted_tertiles",
+    "moving_average_months": 12,
+    "published_endpoints": {
+      "2022-11": 16.36441,
+      "2025-09": 15.53797
+    },
+    "endpoint_tolerance_percentage_points": 0.02,
+    "role": "pipeline_validation_not_primary_estimand"
+  }
+}
