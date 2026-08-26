@@ -32,22 +32,26 @@ confirm the full name. ✗ = not yet listed; must be requested.
 
 ## Tier 2 — RECOMMENDED (4 tables, ¥80)
 
-These three are a **bundle** — `crsp.holdings` alone is nearly useless without
-the other two, because you cannot map a holdings row to a fund.
+**2a — the holdings bundle (3 tables, ¥60).** Buy all three or none:
+`crsp.holdings` alone cannot be mapped to a fund without the other two.
 
 | # | Table | Evidence | Buys you |
 |---|---|:--:|---|
 | 12 | `crsp.holdings` | ✓ | The CRSP-identifier twin of the free-path ConvExp |
-| 15 | `crsp.msedelist` (MONTHLY) | ✗ | Delisting on the monthly file — only for the Jegadeesh monthly reversal strategy (§7, 2-7). Skip if that variable is dropped |
 | 13 | `crsp.fund_hdr` or `crsp.fund_names` | ✗ | Fund identity / ticker |
 | 14 | `crsp.portnomap` | ✗ | Portfolio no. ↔ fund no. crosswalk |
 
-**Why worth ¥60:** (a) it runs the B5 reconciliation harness — validating the
-free EDGAR ConvExp against CRSP is a real credibility item for the paper, and the
-harness is already written; (b) refraction's R2 needs `holdings_weights`.
+**Why:** (a) runs the B5 reconciliation harness — validating the free EDGAR
+ConvExp against CRSP is a real credibility item, and the harness is already
+written; (b) refraction's R2 needs `holdings_weights`.
+**Skip if** refraction stays parked and you accept the free-path ConvExp
+without a CRSP cross-check.
 
-**Skip if** you have decided refraction is parked and will accept the free-path
-ConvExp without a CRSP cross-check.
+**2b — monthly delisting (1 table, ¥20), independent of the bundle.**
+
+| # | Table | Evidence | Buys you |
+|---|---|:--:|---|
+| 15 | `crsp.msedelist` (MONTHLY) | ✗ | Delisting on the monthly file — only for the Jegadeesh monthly reversal strategy (§7, 2-7). Skip if that variable is dropped |
 
 ## Tier 3 — DO NOT BUY
 
