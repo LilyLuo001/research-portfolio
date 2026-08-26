@@ -126,3 +126,11 @@ def test_novelty_is_blocked_while_locators_are_outstanding():
     r = gates.gate_novelty("v1.0-preregistered")
     assert r.status == "BLOCKED"
     assert "locators outstanding" in r.detail or "not yet searched" in r.detail
+
+
+# ------------------------------------------------------------ computerization
+
+def test_computerization_gate_blocks_while_measures_are_missing():
+    r = gates.gate_computerization("v1.0-preregistered")
+    assert r.status in ("BLOCKED", "FAIL")
+    assert "Webb" in r.detail or "proxy" in r.detail

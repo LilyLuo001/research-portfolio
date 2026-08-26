@@ -8,6 +8,7 @@ after each one, in a fresh session and preferably a different model family.
 |---|---|---|
 | `Y0_CONTEXT_PACK.md` | header, not a task | — |
 | `Y1_power_gradient.md` | fine grid, gradient check, bootstrap MDE | `gradient`, `calibration` |
+| `Y1b_computerization.md` | separate AI exposure from computerization | `computerization` |
 | `Y2_novelty_gate.md` | verify the four §8 claims | `novelty` |
 | `Y3_freeze.md` | push to origin, freeze doc, tag | `prespec_before_tag`, `freeze_doc`, `seal` |
 | `Y4_estimation.md` | run the six frozen tables once | all seven PASS first |
@@ -31,6 +32,7 @@ Current state, checked in this repository:
 | `gradient` | **PASS** — MDE80 = 3.44%, curve internally consistent |
 | `calibration` | **FAIL** — 6.8% null size, no bootstrap field |
 | `novelty` | BLOCKED — partial; locators + registry search outstanding |
+| `computerization` | BLOCKED — support check still on the teleworkability proxy |
 | `prespec_before_tag` | BLOCKED — no tag |
 | `freeze_doc` | BLOCKED — not written |
 

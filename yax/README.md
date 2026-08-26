@@ -18,6 +18,7 @@ Start with **[`RESEARCH_PLAN_v2.md`](RESEARCH_PLAN_v2.md)**.
 | Post-period outcomes | **SEALED — never opened** |
 | Power engine | built, 999 reps on the real panel |
 | Empirical MDE80 | **3.44%** normal theory; bootstrap outstanding |
+| Computerization confound | open — see plan §8a |
 | Design freeze | **not tagged** — see plan §10 |
 
 ## Layout

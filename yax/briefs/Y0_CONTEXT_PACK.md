@@ -41,6 +41,7 @@ observe; rescuing DAX; matching proprietary payroll precision.
 | Fine power grid | **done — MDE80 = 3.44%, gradient PASS** |
 | Bootstrap MDE | **outstanding — 6.8% null size makes 3.44% optimistic** |
 | Novelty gate | **partial — broad claim fails; locators + registry search outstanding** |
+| Computerization confound | **open — AIOE clean cell is 1.61% of employment** |
 | Design freeze / tag | **not done** |
 
 Run `python yax/gates.py --power-aggregate <path>` at the start and end of

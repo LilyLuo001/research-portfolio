@@ -32,6 +32,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
 PLAN = "yax/RESEARCH_PLAN_v2.md"
+SUPPORT = "yax/measurement/computerization_support_receipt.json"
 DEFAULT_TAG = "v1.0-preregistered"
 
 # §5.2: a design whose power never falls is describing its own smoothness.
@@ -260,6 +261,36 @@ def gate_novelty(tag):
     return Result("novelty", "PASS", "no unresolved prior-work markers in the plan")
 
 
+def gate_computerization(tag):
+    """§8a. The computerization confound must be addressed before the freeze.
+
+    A control added after outcomes are seen is specification search, so this
+    gate blocks the freeze rather than flagging a to-do. It passes only when the
+    support check has been re-run against a real computerization measure --
+    teleworkability is a stand-in and the receipt says so itself.
+    """
+    p = ROOT / SUPPORT
+    if not p.is_file():
+        return Result("computerization", "BLOCKED",
+                      f"{SUPPORT} missing — run "
+                      f"yax/measurement/computerization_support.py")
+    try:
+        rec = json.loads(p.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return Result("computerization", "BLOCKED", f"unreadable receipt: {exc}")
+    if rec.get("proxy_warning"):
+        return Result("computerization", "BLOCKED",
+                      "support check still runs on the teleworkability PROXY. "
+                      "Obtain Webb (2020), Frey-Osborne (2017) and a constructed "
+                      "RTI, crosswalk them, and re-run — see "
+                      "briefs/Y1b_computerization.md. The proxy already reports "
+                      "AIOE's clean cell at 1.61% of employment, so this is not "
+                      "a formality.")
+    verdicts = {n: m.get("verdict") for n, m in rec.get("measures", {}).items()}
+    return Result("computerization", "PASS",
+                  f"support check run against real measures: {verdicts}")
+
+
 # ---------------------------------------------------------------- runner
 
 def run(power_aggregate=None, tag=DEFAULT_TAG):
@@ -276,6 +307,7 @@ def run(power_aggregate=None, tag=DEFAULT_TAG):
         gate_calibration(agg),
         gate_coverage_rule(agg),
         gate_novelty(tag),
+        gate_computerization(tag),
         gate_prespec_precedes_tag(tag),
         gate_freeze_doc(tag),
         gate_seal(tag),

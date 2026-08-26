@@ -93,7 +93,10 @@ not trigger.**
    one. Pre-analysis registries have not been searched.
 3. **Locators for the four prior-work citations.** Dallas Fed, Anthropic, EHP
    and Tucker are named without URL, author, date or version.
-4. **Any post-period result.** The seal holds.
+4. **Whether the AI gradient survives computerization.** Webb, Frey–Osborne and
+   RTI are not obtained. The support check above uses a proxy and must be
+   re-run against them — see §8a and `briefs/Y1b_computerization.md`.
+5. **Any post-period result.** The seal holds.
 
 ## 5. Power and inference — BINDING
 
@@ -164,9 +167,62 @@ Event-time version relative to 2022-11, 2022-10 omitted.
 4. **Coverage rule** — A / B / C as columns, with excluded occupations named.
 5. **Pre-trends and placebo** — event-time pre-period, reported whatever it
    shows, plus a 2018-11 placebo on 2017–2019.
+6. **Computerization** — the year-by-year pre-period exposure gradient, plus
+   Webb-software / Frey–Osborne / RTI as controls. See §8a; brief
+   `briefs/Y1b_computerization.md`.
 
 Plus the post-2025 extension as a frozen early-versus-extension joint model and
 Wald test.
+
+### 8a. Is AI exposure a computerization gradient? — BINDING, PRE-FREEZE
+
+AIOE maps AI capability benchmarks onto O\*NET **abilities** — comprehension,
+deductive reasoning, information ordering — the same items that load on
+routine-cognitive measures. It was not built to separate AI from computers, and
+the question is not rhetorical: `measurement/computerization_support.py`
+measures the damage, using teleworkability as a stand-in for computer-based
+work.
+
+| measure | r | R² | clean-cell employment | verdict |
+|---|---:|---:|---:|---|
+| AIOE_Felten | 0.7611 | 0.5792 | **1.61%** | NOT SEPARABLE |
+| Eloundou α (GPT-4) | 0.3015 | 0.0909 | 10.48% | SEPARABLE |
+| Eloundou β | 0.6487 | 0.4208 | 3.22% | NOT SEPARABLE |
+| Eloundou γ | 0.6736 | 0.4537 | 1.66% | NOT SEPARABLE |
+| Eloundou α (human) | 0.4259 | 0.1814 | 8.02% | SEPARABLE |
+| Eloundou β (human) | 0.6397 | 0.4092 | 3.00% | NOT SEPARABLE |
+| Eloundou γ (human) | 0.6901 | 0.4763 | 1.81% | NOT SEPARABLE |
+
+Clean cell = exposure above its employment-weighted p75 **and** zero
+teleworkable detail codes; the floor is 5%.
+
+**Two consequences, both binding.**
+
+First, **for AIOE a horse-race regression is not identified.** 1.61% of
+employment cannot support a decomposition, and reporting coefficients from one
+as though it separated AI from computerization would overstate the data. Only
+the α measures clear the floor, and their clean cell is populated by
+occupations sitting barely above a low cut — truck drivers, food-service
+supervisors, receptionists — which raises a face-validity question about what α
+measures at the bottom of its range. That question is reported, not resolved by
+choosing a measure.
+
+Second, **the primary approach is therefore timing, not controls.**
+Computerization is a decades-long trend and generative AI is a dated shock, so
+the exposure gradient is estimated year by year across the 66-month pre-period.
+If AI exposure predicts young-worker decline in 2017–2019, before any LLM
+existed, the measure is loading on computerization. This identifies off time
+variation and so survives the cross-sectional collinearity that kills the horse
+race. The 2018-11 placebo is reframed from a generic design check into **the**
+confound test.
+
+Webb (2020) software-vs-AI, Frey–Osborne (2017) and a constructed RTI enter as
+controls and as re-runs of the support check above — defensive rows, not
+identification. All three are SOC 2010 vintage and go through the chapter's own
+crosswalk repair.
+
+**This is pre-freeze work.** A control added after outcomes are seen is
+specification search, and the pre-registration is the chapter's main asset.
 
 Telework enters as a reported robustness row rather than a dimension of its
 own: Brynjolfsson et al.'s August 2026 version reportedly adds telework
@@ -187,6 +243,8 @@ robustness, which is to be confirmed under §4.3.
 1. `COVERAGE_RULE_PRESPEC_v2.md` committed, reflecting the §6 ruling. *(pending)*
 2. Bootstrap MDE computed and recorded. *(pending)*
 3. §9 locators supplied and the registry search done. *(pending)*
+3b. Computerization measures obtained, crosswalked, merged, and the §8a support
+   check re-run against them. *(pending — `briefs/Y1b_computerization.md`)*
 4. Everything pushed to `origin`. *(pending)*
 5. `DESIGN_FREEZE_v1.md` committed with the panel sha256 and empty shells.
 6. `v1.0-preregistered` tagged.
@@ -212,7 +270,11 @@ ones:
    a note rather than a chapter.
 2. **The seal breaks before step 6.** The chapter can be written but must be
    labelled post-hoc, and its central claim is lost.
-3. **The bootstrap MDE exceeds the contested magnitude.** If size correction
+3. **The AI gradient is present in 2017–2019.** If exposure predicts
+   young-worker decline before any LLM existed, the measure is a
+   computerization index and the chapter reports that instead — which is a
+   result, but a different paper from the one planned.
+4. **The bootstrap MDE exceeds the contested magnitude.** If size correction
    pushes the MDE anywhere near 19%, the premise in §1 fails. Nothing in the
    current numbers suggests this — the gap is a factor of five — but it is
    checked, not assumed.
