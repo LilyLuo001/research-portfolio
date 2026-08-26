@@ -139,6 +139,16 @@ pulls:
       volume:      {want: daily share volume, candidates: [vol], resolved: null}
       open_price:  {want: daily open — refraction R2 needs the overnight/intraday split, candidates: [openprc], resolved: null}
       mkt_ret:     {want: value-weighted market return, candidates: [vwretd], resolved: null}
+      # ---- CHECK THESE AT DISCOVERY: they may make a Databento purchase unnecessary.
+      # CRSP daily is documented to carry closing bid/ask for many securities. If
+      # present, ask - bid gives a DAILY CLOSING QUOTED SPREAD -- directly observed,
+      # no estimator, and free because crsp.dsf is already being bought. That is
+      # rung 1 of the spread ladder; Databento BBO (time-weighted intraday quoted)
+      # and TBBO (effective) are rungs 2 and 3 and cost money.
+      bid:         {want: closing bid price, candidates: [bid], resolved: null}
+      ask:         {want: closing ask price, candidates: [ask], resolved: null}
+      bid_low:     {want: daily low bid (or day low), candidates: [bidlo], resolved: null}
+      ask_high:    {want: daily high ask (or day high), candidates: [askhi], resolved: null}
 
   # -------------------------------------------------------------------------
   # PULL 5a — TAQ intraday indicators (effective spreads; spine four)
@@ -159,6 +169,12 @@ pulls:
       eff_spread:  {want: dollar or proportional effective spread — CONFIRM WHICH, candidates: [ehalfspd, eff_spread], resolved: null}
       price_impact: {want: price impact measure, candidates: [price_impact], resolved: null}
     asserts:
+      spread_ladder: >
+        NEED_HUMAN once discovery has run: if crsp.dsf carries bid/ask, spine
+        four's 4-1 should use the CRSP daily closing quoted spread and no
+        external purchase is needed. Only if those fields are absent does the
+        Databento BBO route (rung 2) become necessary. Note open/close prices
+        CANNOT give a spread -- their difference is a return, not a bid-ask gap.
       spread_definition: >
         NEED_HUMAN: spine four's spec must state which effective-spread convention
         the chosen field implements (dollar vs proportional, quote-matching rule).
