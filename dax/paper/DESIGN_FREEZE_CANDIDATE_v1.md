@@ -2,7 +2,7 @@
 
 **Prepared:** 2026-08-25
 
-**Status:** `BLOCKED_PENDING_C1`
+**Status:** `BLOCKED_FAILED_PRIMARY_EXPOSURE_COVERAGE`
 
 **Outcome seal:** no wide-extract outcome estimate may be run from this document.
 
@@ -268,11 +268,11 @@ validate the primary PPML design or establish novelty.
 | outcome-blind pre-period split | 6,188,956 rows retained; 3,073,524 post rows rejected before protected suffix decoding | PASS | yes |
 | raw-OCC primary contract | official pre-2020 target bridge + direct post-2020 target code; OCC2010 sensitivity only | PASS_CODE_AND_SYNTHETIC | yes |
 | real PPML-equivalent engine | exact conditional grouped-logit; injected -0.20 recovered within 1e-5 | PASS_SYNTHETIC_ONLY | yes |
-| C1 exposure coverage | C1 predeclared gate | — | — |
+| C1 exposure coverage | at least 90% of eligible `WTFINL` route mass | 88.7005%; shortfall 1.2995 pp | **no** |
 | Dallas Chart 1 pipeline | published endpoints within 0.02 pp, or documented unresolved input | — | — |
-| 19% detection power | >= 0.80 | — | — |
-| 19% exclusion under null | >= 0.80 | — | — |
-| empirical 80% MDE | report in log points and relative decline | — | — |
+| 19% detection power | >= 0.80 | 1.000 on failed-gate available support; seed deviation | diagnostic only |
+| 19% exclusion under null | >= 0.80 | 1.000 on failed-gate available support; seed deviation | diagnostic only |
+| empirical 80% MDE | report in log points and relative decline | -0.035 log point / 3.439% decline; seed deviation | diagnostic only |
 | extension equality | p-value plus >=0.05 log-point materiality | — | — |
 | crosswalk/exposure sensitivity | §7 rules | — | — |
 
@@ -285,3 +285,28 @@ and the power scaffold passes synthetic-only tests; neither result authorizes
 opening post-period outcomes or running real power before C1. Because related
 short-panel outcomes and published CPS figures already exist, any eventual tag
 must be called a **design freeze**, not a prospective preregistration.
+
+## 12. Failed coverage gate and conditional power diagnostic
+
+The official-crosswalk lookup passed its construction audit, but the frozen
+primary coverage rule did not pass. Full-component `dv_rating_beta` routes
+retain 88.7004544 percent of eligible pre-period employment weight, below the
+90-percent threshold by 1.2995456 percentage points. The failure is preserved;
+missing routes are not renormalized, the threshold is not revised, and no
+post-period outcome has been opened.
+
+For feasibility only, the registered estimator was run on this available
+support: 490 occupation clusters, 66 pre-period months, 43 planned post months,
+and an effective Q1-versus-Q5 occupation concentration of 58.4209. Across 999
+draws per effect, the 19-percent benchmark had rejection probability 1.000 and,
+under a true null, intervals excluded that benchmark with probability 1.000.
+The empirical 80-percent crossing was -0.035 log point, a 3.439-percent relative
+decline. The null rejection rate was 0.0661 and nominal 95-percent interval
+coverage was 0.9339, indicating mild over-rejection that must accompany any
+power claim.
+
+These batches used seed `20260826`, not the protocol's frozen seed `20260825`.
+They are therefore a noncompliant diagnostic, not the final power receipt. An
+exact-seed rerun is required. Even if it confirms these values, power cannot
+override the failed exposure-coverage gate and cannot authorize the outcome
+stage.

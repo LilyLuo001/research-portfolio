@@ -22,6 +22,7 @@ def batch(effect, reject, exclude):
         "repetitions_per_effect": 999,
         "seed": 20260826,
         "occupation_clusters": 490,
+        "effective_occupation_concentration_q1_q5": 58.42,
         "preperiod_months": 66,
         "planned_post_months": 43,
         "covered_route_mass_fraction": 0.887,

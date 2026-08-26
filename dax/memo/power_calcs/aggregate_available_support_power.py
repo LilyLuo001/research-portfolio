@@ -17,7 +17,7 @@ def aggregate(records: list[dict]) -> dict:
     required_same = [
         "cells_sha256", "lookup_sha256", "repetitions_per_effect", "seed",
         "occupation_clusters", "preperiod_months", "planned_post_months",
-        "covered_route_mass_fraction",
+        "covered_route_mass_fraction", "effective_occupation_concentration_q1_q5",
     ]
     for field in required_same:
         values = {json.dumps(record.get(field), sort_keys=True) for record in records}
@@ -67,6 +67,9 @@ def aggregate(records: list[dict]) -> dict:
         "repetitions_per_effect": first["repetitions_per_effect"],
         "seed": first["seed"],
         "occupation_clusters": first["occupation_clusters"],
+        "effective_occupation_concentration_q1_q5": first[
+            "effective_occupation_concentration_q1_q5"
+        ],
         "preperiod_months": first["preperiod_months"],
         "planned_post_months": first["planned_post_months"],
         "cells_sha256": first["cells_sha256"],

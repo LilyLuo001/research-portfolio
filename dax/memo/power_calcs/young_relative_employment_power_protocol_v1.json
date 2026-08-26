@@ -1,5 +1,5 @@
 {
-  "status": "BLOCKED_PENDING_C1",
+  "status": "BLOCKED_FAILED_PRIMARY_EXPOSURE_COVERAGE",
   "protocol_version": "cps-young-relative-employment-power-v1",
   "prepared_date": "2026-08-25",
   "post_outcomes_permitted": false,
@@ -129,6 +129,34 @@
     "extension_difference_log_points_min": 0.05,
     "extension_equality_alpha": 0.05,
     "crosswalk_magnitude_change_fraction": 0.5
+  },
+  "coverage_gate_result": {
+    "status": "FAIL",
+    "threshold": 0.9,
+    "covered_route_mass_fraction": 0.8870045440505062,
+    "shortfall_percentage_points": 1.29954559494938,
+    "occupation_clusters_on_available_support": 490,
+    "post_outcomes_read": false,
+    "consequence": "design freeze and post-period estimation remain prohibited"
+  },
+  "available_support_power_diagnostic": {
+    "status": "NONCOMPLIANT_SEED_DIAGNOSTIC_ONLY",
+    "aggregate_receipt": "dax/memo/power_calcs/power_available_support_aggregate_v2.json",
+    "protocol_seed": 20260825,
+    "executed_seed": 20260826,
+    "repetitions_per_effect": 999,
+    "occupation_clusters": 490,
+    "effective_occupation_concentration_q1_q5": 58.42089841846546,
+    "preperiod_months": 66,
+    "primary_benchmark_rejection_probability": 1.0,
+    "null_excludes_primary_benchmark_probability": 1.0,
+    "empirical_mde80_log_effect": -0.035,
+    "empirical_mde80_relative_decline": 0.03439458374243354,
+    "null_rejection_probability": 0.06606606606606606,
+    "null_interval_coverage_95": 0.933933933933934,
+    "design_freeze_permitted": false,
+    "post_outcomes_read": false,
+    "interpretation": "informative on covered support, but not a protocol-compliant pass and not population-wide evidence"
   },
   "external_benchmark_locator": {
     "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/",

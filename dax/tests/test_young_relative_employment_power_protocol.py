@@ -15,7 +15,7 @@ DESIGN = ROOT / "paper" / "DESIGN_FREEZE_CANDIDATE_v1.md"
 
 def test_protocol_is_fail_closed_and_uses_only_pre_outcomes():
     protocol = json.loads(PROTOCOL.read_text(encoding="utf-8"))
-    assert protocol["status"] == "BLOCKED_PENDING_C1"
+    assert protocol["status"] == "BLOCKED_FAILED_PRIMARY_EXPOSURE_COVERAGE"
     assert protocol["post_outcomes_permitted"] is False
     assert protocol["wide_extract"]["pre_outcome_last_month"] == "2022-11"
     assert protocol["wide_extract"]["structural_validation_status"] == "PASS"
@@ -42,6 +42,15 @@ def test_protocol_is_fail_closed_and_uses_only_pre_outcomes():
     assert split["status"] == "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT"
     assert split["protected_fields_decoded_for_rejected_rows"] is False
     assert split["postperiod_rows_written"] is False
+    coverage = protocol["coverage_gate_result"]
+    assert coverage["status"] == "FAIL"
+    assert coverage["covered_route_mass_fraction"] < coverage["threshold"]
+    assert coverage["post_outcomes_read"] is False
+    diagnostic = protocol["available_support_power_diagnostic"]
+    assert diagnostic["status"] == "NONCOMPLIANT_SEED_DIAGNOSTIC_ONLY"
+    assert diagnostic["protocol_seed"] != diagnostic["executed_seed"]
+    assert diagnostic["design_freeze_permitted"] is False
+    assert diagnostic["post_outcomes_read"] is False
 
 
 def test_external_declines_are_mapped_to_log_contrasts():
