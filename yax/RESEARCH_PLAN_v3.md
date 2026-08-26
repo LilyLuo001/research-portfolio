@@ -1,5 +1,13 @@
 # YAX — research plan v3
 
+> **SUPERSEDED by `RESEARCH_PLAN_v4.md` (2026-08-26).** Retained for revision
+> history. v3 declared in §3.1 that the joint design was identified and quoted a
+> conditional MDE, while §5–6 said the measures and the simulation were still
+> pending — a self-contradiction. It also called Eloundou β "LLM-specific" when β
+> includes tasks needing complementary software, repeated the timing overclaim in
+> its kill condition, and described interest rates and RTO as controls without
+> specifying either. Do not execute from this file.
+
 **Young-worker AI Exposure.** Third dissertation chapter. Independently
 authored. Not the job-market paper.
 

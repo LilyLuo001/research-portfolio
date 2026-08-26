@@ -134,3 +134,15 @@ def test_computerization_gate_blocks_while_measures_are_missing():
     r = gates.gate_computerization("v1.0-preregistered")
     assert r.status in ("BLOCKED", "FAIL")
     assert "Webb" in r.detail or "proxy" in r.detail
+
+
+# ------------------------------------------------------------ plan consistency
+
+def test_plan_consistency_passes_on_the_current_plan():
+    assert gates.gate_plan_consistency("v1.0-design-freeze").status == "PASS"
+
+
+def test_default_tag_is_design_freeze_not_preregistered():
+    """'Pre-registered' claims a public timestamped third-party record. A git
+    tag is not one, and the plan says so."""
+    assert gates.DEFAULT_TAG == "v1.0-design-freeze"

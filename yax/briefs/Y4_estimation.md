@@ -26,7 +26,7 @@ alternative yourself.
    simulation engine is understating variance and must be diagnosed first.
 3. MDE recomputed under a wild-cluster bootstrap.
 4. Novelty gate (`RESEARCH_PLAN_v1.md` §2.4) answered.
-5. `DESIGN_FREEZE_v1.md` committed and `v1.0-preregistered` tagged.
+5. `DESIGN_FREEZE_v1.md` committed and `v1.0-design-freeze` tagged.
 
 Opening a post-period outcome before all five is the one irreversible mistake
 available in this project. The pre-registration is the chapter's contribution;
@@ -35,7 +35,7 @@ it cannot be reconstructed after the fact.
 ## Run, in this order
 
 Write outputs to `dax/analysis/outcomes/`. **That directory is sealed: do not
-commit anything in it until the owner creates the `v1.0-preregistered` tag.**
+commit anything in it until the owner creates the `v1.0-design-freeze` tag.**
 Commit the code and the receipts; the tables stay local until the tag.
 
 **Every table below carries three coverage-rule columns** (A strict,

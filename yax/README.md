@@ -7,7 +7,7 @@ release — tested on nationally representative CPS data, under a specification
 and coverage rule frozen before any post-period outcome was opened, and
 reported against a measured minimum detectable effect?**
 
-Start with **[`RESEARCH_PLAN_v3.md`](RESEARCH_PLAN_v3.md)**.
+Start with **[`RESEARCH_PLAN_v4.md`](RESEARCH_PLAN_v4.md)**.
 
 ## Status
 
@@ -20,13 +20,15 @@ Start with **[`RESEARCH_PLAN_v3.md`](RESEARCH_PLAN_v3.md)**.
 | Empirical MDE80 | **3.44%** normal theory; bootstrap outstanding |
 | Computerization confound | in the design — joint model, plan §3 |
 | Conditional MDE | **not computed** — 3.44% is unconditional and does not apply |
+| Freeze tag | **`v1.0-design-freeze`** — not "preregistered"; no registry deposit |
 | Design freeze | **not tagged** — see plan §10 |
 
 ## Layout
 
 | path | what |
 |---|---|
-| `RESEARCH_PLAN_v3.md` | the plan. Read first |
+| `RESEARCH_PLAN_v4.md` | the plan. Read first |
+| `RESEARCH_PLAN_v3.md` | superseded; kept for revision history |
 | `RESEARCH_PLAN_v2.md` | superseded; kept for revision history |
 | `RESEARCH_PLAN_v1.md` | superseded; kept for revision history |
 | `COVERAGE_RULE_PRESPEC_v1.md` | the three coverage rules, primary named in advance |
@@ -38,7 +40,7 @@ Start with **[`RESEARCH_PLAN_v3.md`](RESEARCH_PLAN_v3.md)**.
 
 ## The one rule that matters most
 
-**No post-period outcome is opened until `v1.0-preregistered` is tagged.** The
+**No post-period outcome is opened until `v1.0-design-freeze` is tagged.** The
 pre-registration is this chapter's contribution and cannot be reconstructed
 after the fact. Plan §9 lists the six steps that precede the tag.
 

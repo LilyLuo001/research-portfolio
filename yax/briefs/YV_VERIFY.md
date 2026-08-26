@@ -61,11 +61,11 @@ not complete and your verdict is `REJECTED`, whatever the agent's summary said.
 1. `prespec_before_tag` must read `PASS`. Verify independently:
 
        git log --reverse --format='%H %ci' -- yax/COVERAGE_RULE_PRESPEC_v1.md | head -1
-       git log -1 --format='%H %ci' v1.0-preregistered
+       git log -1 --format='%H %ci' v1.0-design-freeze
        git merge-base --is-ancestor <prespec-commit> <tag-commit> && echo ORDER-OK
 
 2. Check the tag was not deleted and recreated:
-   `git reflog show v1.0-preregistered` and look for the commit date preceding
+   `git reflog show v1.0-design-freeze` and look for the commit date preceding
    the tag date in a way that suggests a retag.
 3. `DESIGN_FREEZE_v1.md` must pin a real sha256. Verify it against the actual
    panel if you can reach it.

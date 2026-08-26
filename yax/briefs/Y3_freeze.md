@@ -48,7 +48,7 @@ It must contain:
 
     git add yax/DESIGN_FREEZE_v1.md
     git commit -m "YAX: design freeze"
-    git tag -a v1.0-preregistered -m "YAX pre-registration: specification, coverage rule and MDE fixed before any post-period outcome"
+    git tag -a v1.0-design-freeze -m "YAX pre-registration: specification, coverage rule and MDE fixed before any post-period outcome"
     git push origin --tags
 
 ## 4. Verify the ordering held
@@ -67,7 +67,7 @@ Report it, and the paper reports the coverage rule as a post-hoc choice.
 
 - Everything pushed to `origin`, no microdata staged.
 - `DESIGN_FREEZE_v1.md` committed with a panel sha256 and empty shells.
-- `v1.0-preregistered` tagged and pushed.
+- `v1.0-design-freeze` tagged and pushed.
 - All seven gates `PASS`.
 
 ## Do not

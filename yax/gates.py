@@ -6,7 +6,7 @@ seal protocol) and §12 (kill conditions). A gate that only an agent's judgement
 enforces is not a gate. This script checks the ones that can be checked from
 artifacts and git history, and fails closed on everything it cannot see.
 
-  python yax/gates.py --power-aggregate <path> [--freeze-tag v1.0-preregistered]
+  python yax/gates.py --power-aggregate <path> [--freeze-tag v1.0-design-freeze]
 
 Every gate returns PASS, FAIL or BLOCKED:
 
@@ -25,15 +25,16 @@ import argparse
 import json
 import math
 import pathlib
+import re
 import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
-PLAN = "yax/RESEARCH_PLAN_v3.md"
+PLAN = "yax/RESEARCH_PLAN_v4.md"
 SUPPORT = "yax/measurement/computerization_support_receipt.json"
-DEFAULT_TAG = "v1.0-preregistered"
+DEFAULT_TAG = "v1.0-design-freeze"
 
 # §5.2: a design whose power never falls is describing its own smoothness.
 GRADIENT_CEILING = 0.95   # power at the smallest tested effect must be below this
@@ -219,8 +220,32 @@ def gate_freeze_doc(tag):
     return Result("freeze_doc", "PASS", f"{FREEZE} present and pins a sha256")
 
 
+def gate_plan_consistency(tag):
+    """§14. A plan may not assert as settled what its own later sections list
+    as pending.
+
+    v3 declared in §3.1 that the joint design was identified -- "Yes" -- and
+    quoted a conditional MDE, while §5 and §6 said the computerization measures
+    and the joint simulation were still outstanding and that no MDE could be
+    quoted. This gate catches that class of contradiction mechanically.
+    """
+    p = ROOT / PLAN
+    if not p.is_file():
+        return Result("plan_consistency", "BLOCKED", f"{PLAN} missing")
+    text = p.read_text(encoding="utf-8")
+    forbids_mde = "no MDE may be quoted" in text or "no MDE exists" in text
+    # a quoted conditional MDE looks like a percentage next to the words
+    quotes_mde = bool(re.search(r"conditional MDE[^\n]{0,40}?\d+\.\d+\s*%", text))
+    if forbids_mde and quotes_mde:
+        return Result("plan_consistency", "FAIL",
+                      "the plan forbids quoting an MDE and then quotes a "
+                      "conditional MDE. Remove the figure or the prohibition.")
+    return Result("plan_consistency", "PASS",
+                  "no self-contradiction detected between claims and pending work")
+
+
 def gate_seal(tag):
-    """§9.7 + §12.3. No post-period outcome may be committed before the tag."""
+    """§13.9 + §12.3. No post-period outcome may be committed before the tag."""
     tracked = _git("ls-files", "yax/analysis/outcomes", "dax/analysis/outcomes")
     committed = [l for l in (tracked or "").splitlines() if l.strip()]
     tag_exists = _git("rev-list", "-n", "1", tag) is not None
@@ -318,6 +343,7 @@ def run(power_aggregate=None, tag=DEFAULT_TAG):
         gate_coverage_rule(agg),
         gate_novelty(tag),
         gate_computerization(tag),
+        gate_plan_consistency(tag),
         gate_prespec_precedes_tag(tag),
         gate_freeze_doc(tag),
         gate_seal(tag),

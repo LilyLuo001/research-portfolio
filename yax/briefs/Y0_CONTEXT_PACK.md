@@ -39,9 +39,9 @@ observe; rescuing DAX; matching proprietary payroll precision.
 | Power engine (PPML-equivalent) | built, 999 reps, 490 clusters, 66 months |
 | Strict coverage gate | **FAILED at 88.70%** — three rules pre-specified |
 | Fine power grid | **done — MDE80 = 3.44%, gradient PASS** |
-| Bootstrap MDE | **outstanding — 6.8% null size makes 3.44% optimistic** |
+| Conditional MDE | **does not exist** — 3.44% is unconditional; see Y1c |
 | Novelty gate | **partial — broad claim fails; locators + registry search outstanding** |
-| Computerization confound | **in the design** — joint model; Webb/FO/RTI outstanding |
+| Computerization confound | **in the design** — Webb blocked on missing `OCC1990` |
 | Design freeze / tag | **not done** |
 
 Run `python yax/gates.py --power-aggregate <path>` at the start and end of
@@ -50,8 +50,9 @@ recollection. **BLOCKED is not PASS.**
 
 ## Read before starting
 
-- `yax/RESEARCH_PLAN_v3.md` — the plan. §5 (joint-model power), §6 (separability
-  gate), §12 (kill conditions) and §13 (seal protocol) are binding. You may not alter them; if one is
+- `yax/RESEARCH_PLAN_v4.md` — the plan. §3 (what is unresolved), §5 (joint-model
+  power), §6 (operationalization), §12 (kill conditions) and §13 (order of work)
+  are binding. You may not alter them; if one is
   wrong, stop and say so.
 - `yax/COVERAGE_RULE_PRESPEC_v1.md` — the three coverage rules. Rule B is
   primary and does not change.
@@ -87,7 +88,7 @@ recollection. **BLOCKED is not PASS.**
 
 ## The one irreversible mistake
 
-**Never open a post-ChatGPT outcome before `v1.0-preregistered` is tagged.**
+**Never open a post-ChatGPT outcome before `v1.0-design-freeze` is tagged.**
 Not to sanity-check a merge, not to look at a row count, not "just the pre-period
 side of the join". The pre-registration is this chapter's entire contribution
 and it cannot be reconstructed afterwards. If you believe you need post-period
@@ -109,7 +110,7 @@ data before the tag, you are wrong or the plan is — either way, stop and emit
 - **Never `git add -A`.** Stage named paths only. A stale clone with a
   different `.gitignore` is how licensed data gets committed.
 - Do not commit anything under `dax/analysis/outcomes/`. It is sealed until the
-  `v1.0-preregistered` tag.
+  `v1.0-design-freeze` tag.
 
 ## Definition of done, every task
 
