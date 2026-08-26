@@ -34,7 +34,19 @@ paper. **The data file is not.**
 `dax/memo/power_calcs/ipums_ai_telework_extract_v1.json`. So Webb cannot be
 merged as things stand.
 
-**Check this before treating it as a two-way fork.** Two things narrow it:
+**RESOLVED by Y1a — do not re-litigate.** Use **Dorn's direct
+`OCC2010 → occ1990dd` crosswalk** (`ddorn.net/data/occ2010_occ1990dd.zip`,
+sha256 `454cf8d7…`). `OCC1990` is not needed; `occ1990dd` is Dorn's 341-category
+scheme, not IPUMS `OCC1990`'s 389. Coverage on the outcome-blind pre-period
+support is 445 codes observed, **0 unmapped**, 442 with a Webb score = 99.9515%
+of employment weight. Webb file `exposure_by_occ1990dd_lswt2010.xls`, sha256
+`c5652fd3…`, 341 rows; measure `pct_software`.
+
+**One thing Y1a left open: name the three occupations Webb does not score**, and
+report their combined employment weight. The receipt records the count, not the
+identities. This project names occupations rather than reporting only shares.
+
+*Historical, retained so the reasoning is checkable:*
 
 1. **Does IPUMS CPS offer `OCC1990` for 2017–2026 basic monthly samples?** One
    call to the variables metadata endpoint settles it. It needs the API key,

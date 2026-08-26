@@ -97,11 +97,18 @@ data before the tag, you are wrong or the plan is — either way, stop and emit
 
 ## Environment — SCC
 
-- **Python is old.** pandas is **1.4.3**, not ≥2.1 despite what
-  `dax/requirements.txt` says. Do not use `lineterminator=` in `to_csv`
-  (pandas ≥1.5 only), `pd.NA`-dependent dtypes, or `DataFrame.map`. Write
-  CSVs with `open(..., newline="")` and the `csv` module when in doubt.
-- Verify before assuming: `python -c "import pandas; print(pandas.__version__)"`.
+- **Do not assume an interpreter or a pandas version. Verify first.**
+  Measured 2026-08-26: the SCC **default** Python is **3.6.8 with no pandas at
+  all**. A project venv carries pandas 1.4.3. An earlier version of this brief
+  asserted 1.4.3 as the environment fact and was wrong — it described one venv,
+  not the default shell.
+
+      python -c "import sys; print(sys.version)"
+      python -c "import pandas; print(pandas.__version__)"   # may fail — that is data
+
+  Where pandas is absent or old, prefer the standard library: `csv` and `json`
+  with `open(..., newline="")`. Never use `lineterminator=` in `to_csv`
+  (pandas ≥1.5 only), `pd.NA`-dependent dtypes, or `DataFrame.map`.
 - **Licensed IPUMS microdata must never enter the git work tree.** It lives at
   `/usr3/graduate/qluo/dax-private/ipums/`. Before writing any derived file
   that could contain person-level records, call

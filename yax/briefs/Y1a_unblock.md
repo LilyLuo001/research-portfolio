@@ -50,8 +50,9 @@ touches no outcome data at all.
 
 ## Environment and safety
 
-- **SCC Python is old**: `pandas` is 1.4.3, not ≥2.1 despite `requirements.txt`.
-  Verify with `python -c "import pandas; print(pandas.__version__)"`. No
+- **Do not assume an interpreter or a pandas version. Verify first.** Measured
+  2026-08-26: the SCC **default** Python is 3.6.8 with **no pandas**. A project
+  venv carries 1.4.3. Prefer stdlib `csv`/`json` where pandas is absent. No
   `lineterminator=` in `to_csv` (pandas ≥1.5 only).
 - **Licensed IPUMS microdata never enters the git work tree.** Call
   `dax/w2/microdata_guard.py::assert_not_committable` before writing any file
@@ -97,8 +98,13 @@ distributed on `occ1990dd` and keyed on IPUMS `OCC90`.
 variables metadata for the `cps` collection and establish whether `OCC1990` is
 available for **basic monthly samples, 2017-01 through 2026-07**.
 
-- Consult the current IPUMS API documentation for the correct endpoint rather
-  than assuming one. Record the endpoint you used.
+- **There is no metadata API for CPS.** Established 2026-08-26: IPUMS API v2
+  does not expose metadata endpoints for microdata collections —
+  `developer.ipums.org/docs/v2/workflows/explore_metadata/microdata/`. An
+  earlier version of this brief assumed "one metadata call" would settle it and
+  was wrong. The official workaround is the per-variable availability table,
+  e.g. `cps.ipums.org/cps-action/variables/OCC1990#availability_section`.
+  **This needs no API key.**
 - **Metadata only. Do not submit an extract.** Submitting is the owner's call.
 - Report availability per sample, not just in aggregate — partial coverage
   across the window is the outcome that would actually complicate things.
