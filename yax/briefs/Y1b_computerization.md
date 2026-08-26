@@ -1,127 +1,176 @@
-# Y1b — Vendor the real computerization measures
+# Y1b — Build the real computerization measures
 
-*Prepend `Y0_CONTEXT_PACK.md`. Blocks the freeze. One task, one session.*
+*Self-contained. Does not need `Y0_CONTEXT_PACK.md` prepended. One session.
+Run on the SCC. Requires Y1a (done, `14d741d`).*
 
-Read `../RESEARCH_PLAN_v4.md` §2, §3 and §6 first. §6 fixes the choices; you
-implement them, you do not re-decide them.
+---
 
-## Why this blocks
+## Who you are and what this is
 
-Everything the project currently knows about AI-vs-computerization separability
-comes from `measurement/computerization_support.py`, which uses Dingel–Neiman
-**teleworkability as a stand-in**. Teleworkability is not computerization — an
-occupation can be computer-intensive and not teleworkable, and the reverse. No
-number from that script may be quoted. This task replaces the proxy.
+You are the execution agent for **YAX**, a self-contained third dissertation
+chapter. It is not the student's main paper — two finance papers serve that
+role. The objective is a rigorous, independent, defensible chapter without
+methodological expansion.
 
-A control added after outcomes are seen is specification search, so this must
-land before the tag or it cannot be done cleanly at all.
+The chapter asks: *among occupations with comparable pre-existing
+computerization, did employment of workers aged 22–25 decline relative to 26–65
+after ChatGPT, in occupations with greater LLM exposure?*
 
-## 1. Webb software exposure — expect a blocker
+Read `yax/RESEARCH_PLAN_v4.md` first. §2 (the three concepts), §3 (what is
+unresolved) and §6 (operationalization) are binding. §6 fixes the choices below;
+you implement them, you do not re-decide them.
 
-Webb (2020), `michaelwebb.co/webb_ai.pdf`, constructs **software, robot and AI**
-exposure from a common task–patent framework. That much is verified from the
-paper. **The data file is not.**
+## The five rules that override your defaults
 
-1. Locate the distributed file. Record URL, sha256, and its **native
-   occupation taxonomy**.
-2. It is commonly distributed on **`occ1990dd`**, and existing CPS
-   implementations key it on IPUMS **`OCC90`** rather than treating it as
-   another SOC-2010 measure — see `github.com/EIG-Research/AI-unemployment`.
-   Confirm this against the actual file rather than assuming it.
+1. **You are not a source of facts.** Every number, taxonomy claim or file
+   property comes from code you ran or a document you opened, with a locator. A
+   fact recalled from training is a hallucination. This project has shipped
+   four confidently-worded false claims that way; external review caught every
+   one, self-check caught none.
+2. **Schema contracts.** Tasks hand off through files. Never rename a column
+   another task reads.
+3. **Don't know → stop.** `NEED_HUMAN: <reason>` and halt. Never guess-fill.
+4. **Never specification-search.** The first run of a pre-specified table is the
+   reported run.
+5. **Commit early and often**, named paths only.
 
-**The blocker, already verified:** the wide extract carries `OCC2010` and **no
-`OCC1990`** — 26 variables, one occupation code, checked against
-`dax/memo/power_calcs/ipums_ai_telework_extract_v1.json`. So Webb cannot be
-merged as things stand.
+## The one irreversible mistake
 
-**RESOLVED by Y1a — do not re-litigate.** Use **Dorn's direct
-`OCC2010 → occ1990dd` crosswalk** (`ddorn.net/data/occ2010_occ1990dd.zip`,
-sha256 `454cf8d7…`). `OCC1990` is not needed; `occ1990dd` is Dorn's 341-category
-scheme, not IPUMS `OCC1990`'s 389. Coverage on the outcome-blind pre-period
-support is 445 codes observed, **0 unmapped**, 442 with a Webb score = 99.9515%
-of employment weight. Webb file `exposure_by_occ1990dd_lswt2010.xls`, sha256
-`c5652fd3…`, 341 rows; measure `pct_software`.
+**Never open a post-ChatGPT outcome before `v1.0-design-freeze` is tagged.** A
+control added after outcomes are seen is specification search, and the design
+freeze is this chapter's entire contribution. This task touches no outcome data.
 
-**One thing Y1a left open: name the three occupations Webb does not score**, and
-report their combined employment weight. The receipt records the count, not the
-identities. This project names occupations rather than reporting only shares.
+## Environment
 
-*Historical, retained so the reasoning is checkable:*
+- **Do not assume an interpreter or a pandas version. Verify first.** Measured
+  2026-08-26: the SCC **default** Python is 3.6.8 with **no pandas**. A project
+  venv carries 1.4.3. Prefer stdlib `csv`/`json` where pandas is absent. Never
+  `lineterminator=` in `to_csv` (pandas ≥1.5 only).
+- Licensed microdata never enters the git work tree. Call
+  `dax/w2/microdata_guard.py::assert_not_committable` before any person-level
+  write. Never `git add -A`. Never echo a credential.
+- **No API key is needed for this task.**
 
-1. **Does IPUMS CPS offer `OCC1990` for 2017–2026 basic monthly samples?** One
-   call to the variables metadata endpoint settles it. It needs the API key,
-   which is being rotated. If `OCC1990` is available, the bridge route costs
-   coverage for nothing and the fork is a formality.
-2. **Is `OCC1990` sufficient for Webb?** `occ1990dd` is understood to be Dorn's
-   time-consistent modification of `OCC1990`, not `OCC1990` itself. If that is
-   right, adding the variable is necessary but not sufficient and Dorn's
-   crosswalk is still required. **Verify against Webb's replication files** —
-   do not take that sentence, or mine, on faith.
+---
 
-The extract **is** built — the SCC run reports 9,262,480 rows validated — so
-amending means resubmitting, days of queue, not editing an unsubmitted spec.
-Outcome-blind today; impossible after the tag.
+## Why this task exists
 
-`NEED_HUMAN` on the route once (1) and (2) are answered, with the coverage cost
-of the bridge if you can estimate it. Do not pick silently — one route changes
-the extract.
+Everything the project currently knows about AI-versus-computerization
+separability comes from `yax/measurement/computerization_support.py`, which uses
+Dingel–Neiman **teleworkability as a stand-in**. Teleworkability is not
+computerization — an occupation can be computer-intensive and not teleworkable,
+and the reverse. **No number from that script may be quoted.** This task
+replaces the proxy with real measures.
 
-Take Webb's **software** measure as the computerization primary. His AI measure
-is *not* the computerization control and must not be used as one.
+`yax/gates.py::gate_computerization` blocks the design freeze until it is done.
 
-## 2. O\*NET *Working with Computers* — already frozen, just build it
+## Task 1 — Webb software exposure
+
+**The route is settled by Y1a. Do not re-litigate it.**
+
+- Webb file: `exposure_by_occ1990dd_lswt2010.xls`, sha256
+  `c5652fd3f862948cb77d87f38aa8296137c51e028992ab54e57246a066e0a779`, 341 rows,
+  **UTF-8 CSV despite the `.xls` suffix**. Distribution via
+  `michaelwebb.co` → `eepurl.com/gxo4zr`.
+- Native taxonomy is Dorn's **`occ1990dd`** (341 categories) — *not* IPUMS
+  `OCC1990` (389). `OCC1990` is not needed and the extract is not amended.
+- Bridge with **Dorn's direct crosswalk**:
+  `ddorn.net/data/occ2010_occ1990dd.zip`, zip sha256 `454cf8d7…`, dta sha256
+  `7d6069da…`.
+- Measure: **`pct_software`**.
+- Cross-check the merge against `github.com/EIG-Research/AI-unemployment`,
+  `code/02 Microdata Monthly Build.R`.
+
+Verified coverage on the outcome-blind pre-period support: 445 observed CPS
+`OCC2010` codes, **0 unmapped**, 442 carrying a Webb score = 99.9515% of
+employment weight.
+
+**Open item:** the three occupations Webb does not score are counted but **not
+named**. Name them, with their combined employment weight. This project names
+occupations rather than reporting only shares — it is how the 96.7% group-15
+finding became interpretable.
+
+## Task 2 — O\*NET *Working with Computers*
 
 | choice | value |
 |---|---|
-| release | **O\*NET 24.3, May 2020** — last before the O\*NET-SOC 2019 transition |
-| descriptor | **`4.A.3.b.1`** |
+| release | **O\*NET 24.3, May 2020** |
+| descriptor | **`4.A.3.b.1`** — using computers and software to program, enter data, or process information |
 | scale | **Importance primary**, Level as robustness |
 
-`onetcenter.org/db_releases.html`. Record release and sha256. **Do not use
-current O\*NET** — those ratings post-date LLM diffusion and are not a measure
-of *prior* computerization. 24.3 is on the O\*NET-SOC 2010 taxonomy, so the
-project's existing vintage repair applies.
+`onetcenter.org/db_releases.html`. Record release and sha256.
 
-## 3. RTI and Frey–Osborne
+24.3 is the last release before the O\*NET-SOC 2019 transition (25.1 introduced
+it), so the measure stays on one vintage — and the project's existing SOC-2010
+vintage repair applies unchanged.
 
-Routine-task intensity by the Autor–Levy–Murnane / Acemoglu–Autor recipe.
-Frey–Osborne **secondary only** — it bundles AI and robotics into automation
-risk rather than measuring prior computerization, so it partly contains the
-treatment.
+**Do not use current O\*NET ratings.** They are collected after LLM diffusion
+began and are not a measure of *prior* computerization. This is the whole point
+of the measure.
 
-## 4. Re-run the diagnostics on the real measures
+## Task 3 — RTI and Frey–Osborne
 
-Re-run `measurement/computerization_support.py` against each. The script's
-`proxy_warning` field must be removed **only** when the receipt genuinely
-reflects a real computerization measure — `gates.py::gate_computerization`
-blocks on that field, and clearing it while still on the proxy would be
-falsifying a gate.
+Routine-task intensity by the Autor–Levy–Murnane / Acemoglu–Autor recipe. Note
+that `dax/data_built/onet_task_weights.parquet` carries task-level importance
+and frequency only — the work-context and work-activity items RTI needs are not
+in it, so obtain them.
 
-Report for each AI × computerization pair, per plan §3:
+Frey–Osborne (2017) **secondary only**: it bundles AI and robotics into an
+automation-risk score rather than measuring prior computerization cleanly, so it
+partly contains the treatment. Report it; do not lean on it.
 
-- employment-weighted correlation; partial variance of AI; VIF and SE inflation;
+## Task 4 — Re-run the diagnostics on real measures
+
+Re-run `yax/measurement/computerization_support.py` against Webb `pct_software`,
+O\*NET `4.A.3.b.1`, RTI and Frey–Osborne.
+
+**The statistic that matters is partial variance, not a cell share.** For each
+AI × computerization pair report:
+
+- employment-weighted correlation, **partial variance of AI (1 − R²), VIF and
+  SE inflation** — these decide identification;
 - effective number of occupations identifying β_AI;
-- share of residual variation by major occupational family;
-- named divergence occupations;
+- share of residual variation by SOC major group;
+- **named** divergence occupations;
 - common-support employment coverage.
 
-**Report the result whatever it is.** If conditional support is weak, the
-chapter's conclusion becomes that occupation-level public data cannot separately
-attribute the pattern — smaller, and still a chapter.
+An earlier version of this script led with a discretized "clean cell" share and
+reached the wrong verdict; see
+`yax/CORRECTION_2026-08-26_separability_verdict.md`. The cell is a descriptive
+aid and the source of the named occupations. It is not the identification test.
+
+**Report the result whatever it is.** If conditional support is weak across
+every computerization measure, the chapter's conclusion becomes that
+occupation-level public data cannot separately attribute the young-employment
+pattern to LLM exposure rather than prior computerization. That is smaller, and
+still a chapter.
+
+**The receipt's `proxy_warning` field must be removed only when the receipt
+genuinely reflects a real computerization measure.** `gates.py` blocks on that
+field; clearing it while still on the proxy would falsify a gate rather than
+pass it.
+
+---
 
 ## Definition of done
 
-- Webb vendored with URL, sha256, native taxonomy; merge route decided by the
-  owner and implemented; coverage reported.
+- Webb vendored and merged via Dorn's crosswalk; the three unscored occupations
+  named with their weight; source sha256s recorded.
 - O\*NET 24.3 `4.A.3.b.1` Importance and Level, crosswalked, receipted.
 - RTI and Frey–Osborne built.
-- Diagnostics re-run; `proxy_warning` removed only if genuinely resolved.
-- `python yax/gates.py` shows `computerization` no longer BLOCKED.
-- `pytest -q` green.
+- `computerization_support.py` re-run; receipt + lineage committed.
+- `python yax/gates.py` shows `computerization` **no longer BLOCKED**.
+- `pytest -q` green. Report counts **and the skip list with reasons**, and say
+  which repository and branch you ran in — a count that does not describe the
+  artifact under verification is not verification. Expect ~725 passed, 3
+  skipped on `claude/dax-research-direction-1ohi97`.
 
 ## Do not
 
 - Do not open a post-period file.
-- Do not use Webb's **AI** measure or AIOE as the computerization control.
+- Do not use Webb's **AI** measure, or AIOE, as the computerization control.
+  AIOE is an alternative *AI* measure and is barred from that role.
 - Do not use current O\*NET ratings.
-- Do not drop a measure because it absorbs the AI coefficient. That is the result.
+- Do not clear `proxy_warning` while still on the proxy.
+- Do not drop a computerization measure because it absorbs the AI coefficient.
+  That absorption is the result.
