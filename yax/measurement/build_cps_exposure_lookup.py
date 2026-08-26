@@ -21,7 +21,8 @@ import pandas as pd
 
 
 HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE.parent / "crosswalk"))
+REPO = HERE.parents[1]
+sys.path.insert(0, str(REPO / "dax/w2/crosswalk"))
 from build_occ2010_crosswalk import (  # noqa: E402
     add_ipums_single_source_fallbacks,
     census_routes,

@@ -8,7 +8,10 @@ import pandas as pd
 import pytest
 
 
-MODULE = Path(__file__).resolve().parents[1] / "w2/exposure_gate/build_cps_exposure_lookup.py"
+MODULE = (
+    Path(__file__).resolve().parents[2]
+    / "yax/measurement/build_cps_exposure_lookup.py"
+)
 SPEC = importlib.util.spec_from_file_location("build_cps_exposure_lookup", MODULE)
 GATE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(GATE)

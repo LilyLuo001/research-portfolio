@@ -6,7 +6,10 @@ import pandas as pd
 import pytest
 
 
-MODULE = Path(__file__).resolve().parents[1] / "w2/exposure_gate/reproduce_eig_crosswalk.py"
+MODULE = (
+    Path(__file__).resolve().parents[2]
+    / "yax/measurement/reproduce_eig_crosswalk.py"
+)
 SPEC = importlib.util.spec_from_file_location("reproduce_eig_crosswalk", MODULE)
 GATE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(GATE)

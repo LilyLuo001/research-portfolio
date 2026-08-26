@@ -16,7 +16,8 @@ import numpy as np
 import pandas as pd
 
 
-REPO = Path(__file__).resolve().parents[3]
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[1]
 WORK = Path(os.environ.get("DAX_CROSSWALK_TMP", "/tmp/dax_crosswalk_gate"))
 WORK.mkdir(parents=True, exist_ok=True)
 RAW = Path(os.environ.get(
@@ -24,13 +25,13 @@ RAW = Path(os.environ.get(
 ))
 BLS = RAW / "bls/soc_2010_to_2018_crosswalk.xlsx"
 CENSUS = RAW / "census/2018-occupation-code-list-and-crosswalk.xlsx"
-AIOE = REPO / "dax/w2/exposure_gate/AIOE_DataAppendix.xlsx"
+AIOE = HERE / "AIOE_DataAppendix.xlsx"
 ABILITY_25_0 = RAW / "onet_25_0/db_25_0_excel.zip"
 ABILITY_25_1 = RAW / "onet_25_1/db_25_1_excel.zip"
 OEWS_2018 = RAW / "oews_2018/oesm18nat.zip"
 EIG_CODE = RAW / "eig_ai_unemployment/01 Crosswalks.R"
-ELOUNDOU = REPO / "dax/w2/exposure_gate/eloundou_occ.csv"
-DINGEL_NEIMAN = REPO / "dax/w2/exposure_gate/dingel_neiman_occ.csv"
+ELOUNDOU = HERE / "eloundou_occ.csv"
+DINGEL_NEIMAN = HERE / "dingel_neiman_occ.csv"
 
 
 def sha256(path):
