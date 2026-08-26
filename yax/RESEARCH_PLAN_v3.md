@@ -3,7 +3,9 @@
 **Young-worker AI Exposure.** Third dissertation chapter. Independently
 authored. Not the job-market paper.
 
-*Plan date 2026-08-26. Supersedes v2, which is retained for revision history.
+*Plan date 2026-08-26; **amended the same day** (§8 timing asymmetry, §9.1
+crosswalk decomposition, §2 O\*NET descriptor, §13a amendment rationale) after a
+second review round. Supersedes v2, which is retained for revision history.
 v3 re-centres the chapter on an economic question rather than a measurement
 audit, after external review established that a joint AI-plus-computerization
 model is identified — see `CORRECTION_2026-08-26_separability_verdict.md`.*
@@ -16,9 +18,16 @@ model is identified — see `CORRECTION_2026-08-26_separability_verdict.md`.*
 > employment of workers aged 22–25 decline relative to workers aged 26–65 after
 > ChatGPT, in occupations with greater LLM-specific exposure?
 
-This is the chapter. The crosswalk repair, the coverage rule and the
-pre-registration machinery are **infrastructure for answering it credibly**, not
-the contribution. v2 had that backwards.
+That is the estimand. The contribution claim is one level up:
+
+> Does the post-2022 young-worker employment gradient associated with AI
+> exposure survive correction of occupational crosswalks, adjustment for
+> pre-existing computerization and remote work, and tests for pre-existing
+> differential trends?
+
+The crosswalk repair, the coverage rule and the pre-registration machinery are
+**infrastructure for answering that credibly**, not the contribution. v2 had it
+backwards.
 
 ## 2. Three concepts, held apart
 
@@ -28,9 +37,14 @@ the contribution. v2 had that backwards.
 | **Computerization** | prior exposure to conventional software and routine information processing | **Webb software exposure** |
 | **Remote work** | location independence; correlated, distinct | Dingel–Neiman, robustness only |
 
-Computerization robustness: archived pre-2022 O\*NET *Working with Computers*;
-routine-task intensity (Autor–Levy–Murnane / Acemoglu–Autor); Frey–Osborne
-computerisation probability.
+Computerization robustness, in descending priority:
+
+- **archived pre-2022 O\*NET *Working with Computers*** (work-activity descriptor
+  `4.A.3.b.1`) — a simple, independent measure with no AI content at all;
+- **routine-task intensity** (Autor–Levy–Murnane / Acemoglu–Autor);
+- **Frey–Osborne** computerisation probability — *secondary only*, because it
+  partly overlaps AI and robotics rather than measuring prior computerization
+  cleanly.
 
 **AIOE is an alternative AI measure, never the computerization control.** It is
 built from AI capability benchmarks mapped onto O\*NET abilities, so using it as
@@ -160,11 +174,52 @@ Descriptive, not causal — but far more discriminating than a single post
 interaction. v2 made this primary on a mistaken premise; it is supporting
 evidence, and the 2017–2019 placebo remains a kill condition (§12.1).
 
+**The inference is asymmetric, and the paper must say so in both directions.**
+
+*A pre-2022 gradient* demonstrates non-parallel trends or confounding. It does
+**not** prove the exposure measure "is a computerization index" — v2's §8a
+language claimed more than the test delivers.
+
+*No pre-trend* does **not** establish that the post-2022 effect is AI. A break
+at the end of 2022 is consistent with at least five other stories, and none is
+excluded by a flat pre-period:
+
+- the technology-sector correction and layoff wave;
+- interest-rate changes, which bind hardest on long-horizon hiring;
+- return-to-office mandates;
+- post-pandemic normalization of a distorted 2021–22 labour market;
+- shifts in occupational composition within the CPS sample.
+
+Interest rates and return-to-office enter as controls (Tables 2 and 4). The
+others are stated as limits on interpretation, not modelled away. **The chapter
+claims an association conditional on computerization, not identification of an
+AI causal effect**, and every branch of §11 is written to that standard.
+
 ## 9. Where the effect comes from
 
 **Do not infer mechanism from whether the crosswalk repair moves the aggregate
 coefficient.** v2 did, and it cannot distinguish "AI-specific" from
-"software-developer-specific". Report instead:
+"software-developer-specific".
+
+### 9.1 The crosswalk decomposition — four rows, in this order
+
+Repairing the crosswalk does two things at once: it corrects the exposure value
+and it re-admits occupations the exact-code merge dropped. Those must be
+separated, because the second alone would move the coefficient by restoring the
+most computerized occupations in the economy.
+
+| # | specification | isolates |
+|---|---|---|
+| 1 | original exposure, original matched support | the published baseline |
+| 2 | **repaired** exposure, **same** support as row 1 | the measurement correction, holding the sample fixed |
+| 3 | repaired exposure, **expanded** support | what re-admitting dropped occupations adds |
+| 4 | expanded support, **excluding computer and mathematical occupations** | whether row 3 is just software developers |
+
+Row 1 → 2 is the measurement effect. Row 2 → 3 is the composition effect.
+Row 4 is the direct test of the software-developer explanation. Reporting only
+the aggregate change conflates all three.
+
+### 9.2 Where the effect sits
 
 - estimates for computer/math, office/administrative, business/finance, other;
 - leave-one-major-group-out;
@@ -233,6 +288,26 @@ All five are reportable. The first run of each frozen table is the reported run.
 9. **Only then** may a post-period outcome be opened.
 
 Machine-checked: `python yax/gates.py --power-aggregate <aggregate>.json`.
+
+## 13a. Why the design changed after work began
+
+Recorded so it can be checked rather than asserted.
+
+The computerization dimension was added on 2026-08-26, after the extract, the
+bridge, the exposure lookup and the unconditional power run were complete. Two
+facts make it a legitimate pre-registration amendment rather than specification
+search:
+
+1. **No post-period outcome has been opened.** The pre-period file was built
+   outcome-blind and post rows were rejected before protected fields were
+   decoded. Nothing about the design was chosen in light of a result.
+2. **It arose from a substantive question from the student's advisor**, not from
+   an unfavourable estimate — there is no estimate.
+
+The failed 90% coverage rule and its receipt are preserved permanently, as is
+every superseded plan version. A reader can reconstruct the order of events from
+git history; `yax/gates.py::gate_prespec_precedes_tag` checks the part that
+matters mechanically.
 
 ## 14. Standing rules
 

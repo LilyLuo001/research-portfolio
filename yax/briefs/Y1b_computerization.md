@@ -54,10 +54,24 @@ generic control is not.
 this project has been wrong three times by exactly that route. Record the URL,
 the file, and its sha256.
 
+### 2b. Archived pre-2022 O\*NET "Working with Computers"
+
+Work-activity descriptor **`4.A.3.b.1`**. The cleanest computerization measure
+available: simple, independent, and containing no AI content whatsoever, so it
+cannot smuggle the treatment into the control.
+
+Use a **pre-2022 archived release** — current O\*NET ratings are collected after
+LLM diffusion began and are not a clean measure of *prior* computerization.
+Record the release version and its sha256.
+
 ### 3. Frey–Osborne and RTI — defensive rows
 
-Frey–Osborne (2017) computerisation probability, and a routine-task-intensity
-index built by the Autor–Levy–Murnane / Acemoglu–Autor recipe. RTI needs O\*NET
+A routine-task-intensity index built by the Autor–Levy–Murnane /
+Acemoglu–Autor recipe, and Frey–Osborne (2017) computerisation probability.
+
+**Frey–Osborne is secondary only.** It bundles AI and robotics into an
+"automation risk" score rather than measuring prior computerization cleanly, so
+it partly contains the treatment. Report it, do not lean on it. RTI needs O\*NET
 work-context and work-activity items that `onet_task_weights.parquet` does not
 carry — it holds task-level importance and frequency only — so the required
 O\*NET files must be obtained.
@@ -71,6 +85,23 @@ so loudly. Re-run it against Webb-software, Frey–Osborne and RTI. **Report the
 verdict whatever it is.** If the clean cell stays below the 5% floor for every
 computerization measure, the paper says the horse race is not identified and
 leans on the timing test instead. That is a finding, not a failure.
+
+## The crosswalk decomposition — build this table
+
+Repairing the crosswalk corrects exposure values **and** re-admits dropped
+occupations. Separate them, or a coefficient move cannot be interpreted:
+
+| # | specification | isolates |
+|---|---|---|
+| 1 | original exposure, original matched support | published baseline |
+| 2 | repaired exposure, **same** support as row 1 | measurement correction alone |
+| 3 | repaired exposure, expanded support | what re-admitting occupations adds |
+| 4 | expanded support, **excluding computer/math occupations** | whether row 3 is just software developers |
+
+Row 1 → 2 is measurement; row 2 → 3 is composition; row 4 tests the
+software-developer explanation directly. The support definitions for rows 1–4
+must be fixed and committed **before** the freeze, since they determine the
+estimation samples.
 
 ## Crosswalk note
 
