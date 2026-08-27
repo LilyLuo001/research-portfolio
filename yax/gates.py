@@ -33,8 +33,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
 PLAN = "yax/RESEARCH_PLAN_v4.md"
-SUPPORT = "yax/measurement/computerization_support_receipt.json"
+SUPPORT = "yax/measurement/computerization_support_66m_receipt.json"
 COMPMEAS = "yax/measurement/COMPUTERIZATION_MEASURES.csv"
+CONSTRUCT_VALIDITY = "yax/measurement/CONSTRUCT_VALIDITY_RECEIPT.json"
 CONVERGENT_FLOOR = 0.20   # a control agreeing with no other control is suspect
 DEFAULT_TAG = "v1.0-design-freeze"
 
@@ -69,6 +70,19 @@ def _rel_decline(log_effect):
     return 1.0 - math.exp(log_effect)
 
 
+def _power_scenarios(agg):
+    """Return one or more independently gated power records."""
+    if agg is None:
+        return []
+    scenarios = agg.get("scenarios")
+    return scenarios if isinstance(scenarios, list) and scenarios else [agg]
+
+
+def _scenario_label(record):
+    return (f"{record.get('ai_measure', 'unknown AI')} × "
+            f"{record.get('computerization_measure', 'unknown control')}")
+
+
 # ---------------------------------------------------------------- the gates
 
 def gate_gradient(agg):
@@ -80,9 +94,36 @@ def gate_gradient(agg):
     """
     if agg is None:
         return Result("gradient", "BLOCKED", "no power aggregate supplied")
+    records = _power_scenarios(agg)
+    if not records:
+        return Result("gradient", "BLOCKED", "aggregate has no power scenarios")
+
+    outcomes = []
+    for record in records:
+        result = _gate_gradient_one(record)
+        outcomes.append((record, result))
+    failed = [(record, result) for record, result in outcomes
+              if result.status == "FAIL"]
+    blocked = [(record, result) for record, result in outcomes
+               if result.status == "BLOCKED"]
+    if failed:
+        record, result = failed[0]
+        return Result("gradient", "FAIL",
+                      f"{_scenario_label(record)}: {result.detail}")
+    if blocked:
+        record, result = blocked[0]
+        return Result("gradient", "BLOCKED",
+                      f"{_scenario_label(record)}: {result.detail}")
+    return Result("gradient", "PASS",
+                  f"all {len(outcomes)} joint scenarios bracket MDE80; "
+                  + "; ".join(f"{_scenario_label(record)}: {result.detail}"
+                               for record, result in outcomes))
+
+
+def _gate_gradient_one(agg):
     rows = agg.get("results")
     if not rows:
-        return Result("gradient", "BLOCKED", "aggregate has no 'results' array")
+        return Result("gradient", "BLOCKED", "record has no 'results' array")
 
     pts = []
     for r in rows:
@@ -132,6 +173,29 @@ def gate_calibration(agg):
     """§5.1. Oversized inference makes bootstrap mandatory, not optional."""
     if agg is None:
         return Result("calibration", "BLOCKED", "no power aggregate supplied")
+    records = _power_scenarios(agg)
+    if not records:
+        return Result("calibration", "BLOCKED", "aggregate has no power scenarios")
+    outcomes = [(record, _gate_calibration_one(record)) for record in records]
+    failed = [(record, result) for record, result in outcomes
+              if result.status == "FAIL"]
+    blocked = [(record, result) for record, result in outcomes
+               if result.status == "BLOCKED"]
+    if failed:
+        record, result = failed[0]
+        return Result("calibration", "FAIL",
+                      f"{_scenario_label(record)}: {result.detail}")
+    if blocked:
+        record, result = blocked[0]
+        return Result("calibration", "BLOCKED",
+                      f"{_scenario_label(record)}: {result.detail}")
+    return Result("calibration", "PASS",
+                  f"all {len(outcomes)} joint scenarios calibrated; "
+                  + "; ".join(f"{_scenario_label(record)}: {result.detail}"
+                               for record, result in outcomes))
+
+
+def _gate_calibration_one(agg):
     null_rows = [r for r in agg.get("results", []) if r.get("true_log_effect") == 0]
     if not null_rows:
         return Result("calibration", "BLOCKED", "no null (effect = 0) row")
@@ -140,7 +204,8 @@ def gate_calibration(agg):
     if size is None:
         return Result("calibration", "BLOCKED", "null row has no rejection rate")
     off = abs(size - NOMINAL_SIZE)
-    boot = any(k for k in agg if "bootstrap" in k.lower())
+    boot = ((isinstance(agg.get("bootstrap"), dict) and bool(agg["bootstrap"]))
+            or any("bootstrap" in key.lower() for key in agg))
     detail = (f"null size {size:.3f} vs nominal {NOMINAL_SIZE:.2f}"
               + (f", coverage {cov:.3f}" if cov is not None else ""))
     if off <= SIZE_TOLERANCE:
@@ -398,14 +463,31 @@ def gate_convergent_validity(tag):
         if best < CONVERGENT_FLOOR:
             orphans.append(f"{a} (best |r| {best:.3f})")
     if orphans:
+        audit = ROOT / CONSTRUCT_VALIDITY
+        if audit.is_file():
+            try:
+                receipt = json.loads(audit.read_text(encoding="utf-8"))
+                assessments = receipt.get("merge_failure_assessment", {})
+                orphan_names = [item.split(" (best |r|", 1)[0] for item in orphans]
+                coherent = all(
+                    name in assessments
+                    and assessments[name].get("ranking_incoherent_at_both_ends") is False
+                    for name in orphan_names
+                )
+                if (receipt.get("status") ==
+                        "PASS_RANKINGS_COHERENT_WITH_RECORDED_LIMITATIONS" and coherent):
+                    return Result(
+                        "convergent_validity", "PASS",
+                        f"orphaned correlations {orphans} are reconciled by the "
+                        f"ranked-occupation audit: coherent distinct constructs, "
+                        f"not a failed join; limitations remain reported")
+            except Exception:
+                pass
         return Result("convergent_validity", "FAIL",
-                      f"these computerization measures agree with no other "
-                      f"measure of the same construct: {orphans}. Below "
-                      f"|r|={CONVERGENT_FLOOR}, inspect the measure's highest "
-                      f"and lowest ranked occupations before interpreting it: a "
-                      f"control that failed to join looks exactly like one that "
-                      f"is cleanly orthogonal. A coherent ranking clears this; "
-                      f"a scrambled one condemns it. Record which, and why.")
+                      f"these measures agree with no other control: {orphans}. "
+                      f"A PASS construct-validity receipt with coherent high/low "
+                      f"rankings is required to distinguish a distinct construct "
+                      f"from a failed join.")
     return Result("convergent_validity", "PASS",
                   f"every computerization measure agrees with at least one "
                   f"other above |r|={CONVERGENT_FLOOR}")

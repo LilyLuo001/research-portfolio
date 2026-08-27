@@ -61,6 +61,14 @@ def test_gradient_blocked_on_too_few_points():
     assert gates.gate_gradient(agg([(0.02, 0.8)])).status == "BLOCKED"
 
 
+def test_gradient_checks_every_joint_scenario():
+    good = agg([(0.01, 0.40), (0.02, 0.80), (0.03, 0.95)])
+    bad = agg([(0.01, 0.05), (0.05, 0.12), (0.19, 0.30)])
+    good.update(ai_measure="beta", computerization_measure="ONet")
+    bad.update(ai_measure="alpha", computerization_measure="Webb")
+    assert gates.gate_gradient({"scenarios": [good, bad]}).status == "FAIL"
+
+
 # ------------------------------------------------------------ calibration
 
 def test_oversized_inference_without_bootstrap_fails():
@@ -77,6 +85,14 @@ def test_oversized_inference_with_bootstrap_passes():
 
 def test_well_calibrated_engine_passes_without_bootstrap():
     assert gates.gate_calibration(agg([(0.02, 0.8)], null_size=0.052)).status == "PASS"
+
+
+def test_calibration_checks_every_joint_scenario():
+    good = agg([(0.02, 0.8)], null_size=0.066, bootstrap={"draws": 999})
+    bad = agg([(0.02, 0.8)], null_size=0.066)
+    good.update(ai_measure="beta", computerization_measure="ONet")
+    bad.update(ai_measure="alpha", computerization_measure="Webb")
+    assert gates.gate_calibration({"scenarios": [good, bad]}).status == "FAIL"
 
 
 # ------------------------------------------------------------ coverage rule
