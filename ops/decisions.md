@@ -573,3 +573,52 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 #   portfolio_overlap_min, portfolio_weight_corr_min, portfolio_turnover_max,
 #   intraday_vendor_agreement_tol.
 # NOT READY FOR EMPIRICAL SPRINT. Blockers listed in the session report.
+
+# REFRACTION v2.4 FINAL 2026-08-19 (owner: "one final hardening pass; after this, stop
+# revising the plan"). Plan: docs/MacroEvent_Chapter_Plan_v2_4.md. PLAN REVISION ENDS HERE.
+# THE CHANGE THAT MATTERS MOST: G8 now runs on a post-conversion NON-FOMC calibration
+#   window (conversion+21 to +252 trading days, all FOMC statement/presser/minutes dates
+#   plus +/-1 day excluded). Mechanism validation therefore never touches a headline
+#   outcome, which is what makes the post-conversion carve-out narrow enough to sign.
+# G8 PRIMARY OUTCOME NOW AN EQUATION: CR_{f,t} = dSharesOut/SharesOut (signed, winsorized,
+#   standardized within fund); constituent return residualized on PRE-conversion market and
+#   industry loadings; connectivity phi from r~_{i,t+1} = phi*CR_{f,t} + controls — CR at t,
+#   response at t+1, because contemporaneous CR and returns are jointly determined and a
+#   same-day regression measures simultaneity, not connectivity. First stage
+#   A = a0 + a1*L_tilt_pre + a2'Z, registered claim a1 > 0. EXPLICITLY NOT CAUSAL:
+#   first_stage_claim_is_causal: false. It is a predictive association, which is all that
+#   licensing a predetermined measure requires.
+# USMPD: availability CONFIRMED (owner-supplied) — equity data present, Statement 30m /
+#   Press Conference 70m / Monetary Event / Minutes separately identified, JK inputs
+#   present. R1a's task changes from DISCOVERY to FREEZING the exact rate/path series and
+#   equity series. Note a target surprise and a path factor are DIFFERENT shocks; the
+#   choice is registered, not discovered.
+# FOMC ARCHITECTURE REVISED: statement-only (v2.3) -> TWO distinct information-arrival
+#   episodes, both primary (statement 30m, press conference 70m), because press conferences
+#   have become a major source of policy news. Statement half-life is TRUNCATED AT THE
+#   PRESSER START by construction — the presser is a new shock, so anything measured across
+#   it is news arrival, not slow propagation. Monetary Event = overall-transmission summary.
+# INFERENCE: the "ladder" is replaced by a FROZEN DEPENDENCE MODEL. Three sources named
+#   with the procedure for each: common event shock -> cluster on communication event;
+#   repeated stock -> stock FE + permno clustering; treatment shock -> ADVISER clustering
+#   (treatment varies at wave, waves nest in advisers). Primary = two-way
+#   (communication event x adviser); wild cluster bootstrap RESAMPLES ADVISER clusters
+#   (Rademacher, null imposed, 9999 reps); RI permutes within adviser.
+# ECONOMIC ADVISER COUNT = 35-38, NOT 46. refraction/inference/adviser_map.py. Trust
+#   strings are wrong in BOTH directions: they OVERSTATE independence when one adviser runs
+#   several trusts (3 Fidelity trusts; JPMorgan I/II + Undiscovered Managers; 3 Neuberger
+#   trusts), and UNDERSTATE it when a multi-manager SERIES TRUST (Northern Lights, RBB,
+#   Trust for Professional Managers, Advisor Managed Portfolios...) hosts unrelated
+#   advisers renting registration infrastructure. The second error is the dangerous one —
+#   it pools unrelated sponsors into one cluster and SHRINKS the standard errors that
+#   clustering exists to widen. 22 advisers resolve from the name; 16 funds across 13
+#   series trusts need the adviser read from N-CEN/prospectus. That lookup must complete
+#   before FINAL inference (it does not block panel construction).
+# G9 STRENGTHENED: continuity reported CONTINUOUSLY with threshold sensitivities; failure
+#   response is restrict-to-high-continuity-waves OR relabel the treatment as
+#   wrapper-plus-portfolio change. The thresholds are sensitivity anchors, not economic law.
+# G7: coverage verified SEPARATELY per window (statement / press conference) and on BOTH
+#   sides (ETF and constituents), small caps as the stress test.
+# GOVERNANCE NOW PARALLEL (item 10): reference verification and the carve-out signature are
+#   required before DRAFTING and before G8's results are INTERPRETED — they do NOT block
+#   building the panel, betas, intraday pilot, or adviser mapping.

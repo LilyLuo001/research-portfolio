@@ -78,7 +78,9 @@ def test_the_memo_still_requires_counter_signature():
 
 def test_every_gate0_threshold_is_classified():
     """A new threshold must be classified, so none can appear unnoticed."""
-    unclassified = (set(G0) - set(PLAN_COMMITTED) - set(DELEGATED) - PENDING
+    # g9_reporting / g9_failure_response are POLICY entries, not numeric thresholds.
+    POLICY = {"g9_reporting", "g9_failure_response"}
+    unclassified = (set(G0) - set(PLAN_COMMITTED) - set(DELEGATED) - PENDING - POLICY
                     - {"se_to_sdL_ratio_max"})
     assert not unclassified, f"unclassified Gate-0 threshold(s): {sorted(unclassified)}"
 
@@ -237,14 +239,19 @@ def test_the_jk_decomposition_names_two_series_not_one():
     assert sh["classification"] == "sign_pair"
 
 
-def test_the_fomc_event_definition_is_frozen_with_the_presser_separate():
-    """Otherwise delayed press-conference news reads as slow price adjustment, which
-    is fatal to the half-life spine."""
+def test_the_fomc_event_is_two_distinct_episodes():
+    """v2.4: press conferences carry major policy news, so treating them as a nuisance
+    window would discard much of the shock in the recent sample."""
     sh = CONFIG["shock"]
-    assert sh["primary_event"] == "statement_window"
-    assert sh["press_conference"] == "separate_registered_event"
+    assert sh["primary_episodes"] == ["statement_30m", "press_conference_70m"]
     assert sh["minutes"] == "excluded_from_primary"
-    assert sh["halflife_controls_press_conference"] is True
+    assert sh["combined_event"] == "overall_transmission_summary_robustness"
+
+
+def test_statement_halflife_stops_at_the_press_conference():
+    """The presser is a NEW shock; anything measured across it is news arrival, not
+    slow propagation. Truncation by construction, not by robustness check."""
+    assert CONFIG["shock"]["statement_halflife_truncated_at_presser_start"] is True
 
 
 def test_inference_does_not_take_power_from_intraday_rows():
@@ -263,5 +270,77 @@ def test_the_wedge_is_demoted_and_its_construction_is_unchanged():
 
 
 def test_the_registered_spec_points_at_v22():
-    assert CONFIG["prereg"]["registered_spec"] == "SPEC-MAIN-v2.3"
+    assert CONFIG["prereg"]["registered_spec"] == "SPEC-MAIN-v2.4"
     assert CONFIG["prereg"]["osf_timestamp"] is None      # still a free redesign
+
+
+# --------------------------------------------------------------------------- #
+# v2.4 — the final freeze                                                      #
+# --------------------------------------------------------------------------- #
+
+def test_g8_runs_on_a_non_fomc_calibration_window():
+    """The change that makes the post-conversion carve-out narrow enough to sign:
+    mechanism validation never touches a headline outcome."""
+    cw = CONFIG["network_exposure"]["calibration_window"]
+    assert cw["start_trading_days_after_conversion"] == 21     # seasoning buffer
+    assert cw["end_trading_days_after_conversion"] == 252
+    assert cw["exclude_buffer_trading_days"] >= 1
+    for d in ("fomc_statement_dates", "fomc_press_conference_dates", "fomc_minutes_dates"):
+        assert d in cw["exclude"]
+
+
+def test_the_first_stage_uses_a_lag_and_disclaims_causality():
+    """Contemporaneous creation/redemption and returns are jointly determined — a
+    same-day regression measures simultaneity, not connectivity."""
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_response_lag_days"] == 1
+    assert ne["first_stage_claim_is_causal"] is False
+    assert ne["first_stage_residualization"] == "pre_conversion_market_and_industry_loadings"
+
+
+def test_the_dependence_model_is_frozen_and_names_all_three_sources():
+    """A ladder of procedures is not a specification."""
+    dep = CONFIG["inference"]["dependence_sources"]
+    assert set(dep) == {"common_event_shock", "repeated_stock", "treatment_shock"}
+    assert dep["treatment_shock"] == "cluster_on_adviser"
+
+
+def test_the_bootstrap_resamples_the_treatment_assignment_level():
+    inf = CONFIG["inference"]
+    assert inf["bootstrap_resamples"] == "adviser"
+    assert inf["bootstrap"]["impose_null"] is True
+    assert inf["bootstrap"]["reps"] >= 9999
+    assert inf["randomization_inference_permutes_within"] == "adviser"
+
+
+def test_g9_reports_continuously_rather_than_on_an_arbitrary_cutoff():
+    g0 = CONFIG["gate0_thresholds"]
+    assert g0["g9_reporting"] == "continuous_with_threshold_sensitivity"
+    assert set(g0["g9_failure_response"]) == {"restrict_to_high_continuity_waves",
+                                              "relabel_treatment"}
+
+
+def test_the_usmpd_series_are_a_freeze_task_not_an_availability_unknown():
+    sh = CONFIG["shock"]
+    assert sh["series_availability"] == "CONFIRMED_OWNER_SUPPLIED"
+    assert sh["policy_instrument_series"] is None      # still to be FROZEN by R1a
+    assert sh["equity_series"] is None
+
+
+def test_the_adviser_map_bounds_the_cluster_count(tmp_path):
+    """Trust strings mislead in both directions; the mapping must return a RANGE and
+    flag the series trusts rather than emit a false point estimate."""
+    import sys
+    sys.path.insert(0, str(ROOT / "refraction" / "inference"))
+    import adviser_map as am
+    rows = am.build()
+    summ = am.summarize(rows)
+    assert summ["adviser_count_lower_bound"] <= summ["adviser_count_upper_bound"]
+    assert summ["funds_needing_filing_lookup"] > 0     # series trusts are unresolved
+    assert summ["adviser_count_upper_bound"] < 46      # fewer than trust-level families
+    # a known multi-trust adviser must collapse
+    assert am.classify("Fidelity Salem Street Trust")[0] == "Fidelity"
+    assert am.classify("Fidelity Summer Street Trust")[0] == "Fidelity"
+    # a series trust must NOT be treated as one adviser
+    assert am.classify("Northern Lights Fund Trust IV")[1] is True
+    assert am.classify("The RBB Fund, Inc.")[1] is True

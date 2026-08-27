@@ -1,9 +1,8 @@
 # refraction/ — "One Shock, Many Prices" (macro-event standby chapter)
 
 Manual: `docs/Refraction_执行手册_v1_0.md` (tasks **R0–R14**; C0-R context pack in §0.3).
-Plan: **`docs/MacroEvent_Chapter_Plan_v2_3.md` (v2.3, 2026-08-19)** — mechanism/econometric
-hardening of v2.2. Prior versions kept as superseded records. **Not frozen; the empirical
-sprint is not launched.**
+Plan: **`docs/MacroEvent_Chapter_Plan_v2_4.md` (v2.4 FINAL, 2026-08-19)**. Prior versions
+kept as superseded records. **No further plan revision** — remaining work is empirical.
 Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
 (`REFR-GATE-PREREG`, `REFR-GATE-e2verdict`) enforce §0.5's DAG.
 
