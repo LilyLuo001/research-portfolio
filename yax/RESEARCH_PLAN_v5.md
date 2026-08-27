@@ -199,8 +199,47 @@ interpretable **ex ante**:
   invariant to those differences.
 
 **Do not infer that two coefficients differ merely because one is significant
-and one is not.** Report paired coefficient differences with bootstrap intervals
-and pre-specified equivalence bounds.
+and one is not.** "No statistically significant difference" is **not** an
+equivalence result and may never be written as one.
+
+### 4.1 How Δ is estimated — pre-specified
+
+The object of inference is the **direct difference**
+
+    Δ_{m,m'} = β_m − β_{m'}
+
+not a comparison of significance.
+
+1. **Paired estimation.** For each bootstrap replication, draw **one** set of
+   Rademacher cluster weights and apply the **same draw** to every exposure
+   definition. Δ is then formed **within replication**, so the sampling
+   covariance between β_m and β_{m'} is preserved. Estimating each β on
+   independent draws and differencing afterwards overstates Var(Δ) and is
+   prohibited.
+2. **Same estimation sample.** Δ is computed only on occupations present in
+   **both** measures' support. The differing-support comparison is reported
+   separately and is never labelled Δ.
+3. **Inference.** Percentile-t bootstrap CI for Δ from the paired draws,
+   ≥999 replications, clustered on occupation, same seed discipline as the
+   power runs.
+
+### 4.2 The equivalence bound — structure fixed, magnitude requires owner sign-off
+
+To assert that two exposure definitions yield **economically equivalent**
+conclusions, both conditions must hold:
+
+- **(a)** the CI for Δ lies entirely inside ±SESOI; **and**
+- **(b)** SESOI > the design's MDE **on the same contrast**.
+
+Condition (b) is the guard that makes the test honest: if the smallest
+economically interesting difference is below what the design can detect, the
+test is **inconclusive, not equivalent**, and must be reported that way.
+
+**Proposed SESOI, requiring the owner's sign-off before the amended freeze:**
+one quarter of the contested Q5–Q1 magnitude the literature disputes. It is
+anchored to the benchmark rather than invented, and §7.3 puts the benchmark and
+the MDE on that one contrast so (b) is checkable. **The fraction is a
+pre-specification choice with real consequences and is not an agent's call.**
 
 ## 5. Position relative to the nearest competing papers
 
@@ -232,7 +271,18 @@ plan (3.6×, 57%, 2.4×, 1.9×, 42–93%, 0.85, 0.70, 773 occupations) are **cla
 to confirm, not facts**.
 
 **Every §5 row must be opened at its primary source before it is cited, exactly
-as §9a's were.** Until then the `novelty` gate is BLOCKED again. That is a real
+as §9a's were — and at its LATEST version.**
+
+> **Version rule.** When a working paper has a later published or substantially
+> revised version, the novelty audit must use the **latest** version and record
+> the version and the date checked. Source verification without version
+> verification is not verification.
+
+The Emanuel–Harrington–Pallais case is why this rule exists: the v1.0 audit
+correctly opened NBER 31880 (November 2023) at source, concluded the paper was
+far from this design, and was **wrong** — the published QJE version (141(3),
+August 2026, 1825–1870) contains a national CPS young-worker analysis. Correct
+source, stale version, wrong conclusion. See §8, Table 5. Until then the `novelty` gate is BLOCKED again. That is a real
 cost of this reframe and it is recorded as one.
 
 **The gate now requires a positive assertion, not silence.** It passes only
@@ -348,8 +398,15 @@ compute **both the benchmark and the MDE on that same estimand**.
 Nobody may write that conditioning improved precision from 3.44% to 2.27%: the
 3.44% was a Q5–Q1 contrast and the 2.27% is per-SD.
 
-The **22–25 age specification is retained as a frozen literature-comparable
-benchmark**, since the administrative-data literature uses that range.
+**Ages 22–25 are the frozen primary young definition, not an additional
+benchmark.** `DESIGN_FREEZE_v1.md` §1 sets Young = 22–25 against a 26–65
+comparison, and that is unchanged. It is *simultaneously* the
+literature-comparable band, because the administrative-data literature uses that
+range — so no separate benchmark specification is required and none is added.
+Earlier plans (v1–v3) used 20–29 primary with 16–24 and 22–27 as alternates;
+that scheme was superseded at v4 and is not revived. Any broader band would be
+an addition to the frozen design and is therefore out of scope for this
+amendment.
 
 ### 7.4 Unit of observation — stated explicitly, ambiguity closed
 
@@ -365,14 +422,62 @@ cell**; it is not itself the unit. **A non-employed person is never assigned an
 occupation** and therefore never receives occupational exposure. Exposure is a
 property of the cell's occupation.
 
+**One observation** = one occupation × age-group × month cell. **The outcome**
+is the weighted employment headcount in that cell, `N_oat` — an employment
+*stock*, not an individual employment status.
+
+**Exact interpretation of the headline coefficient.** β_AI is the difference
+between the post-period change in log young-worker employment and the
+post-period change in log older-worker employment, per one unit of AI exposure,
+within occupation and within month, after conditioning on the same contrast for
+computerization. Reported per one employment-weighted SD of exposure and, per
+§7.3, on the Q5–Q1 contrast as well.
+
+**Entrants and the non-employed.** Because the unit is a cell of employed
+workers, a person with no occupation contributes to no cell. Entrants with no
+prior occupation are therefore **not assigned exposure and do not appear in the
+denominator**; they enter the data only once employed, in the cell of the
+occupation they enter. Nothing is imputed.
+
+**The interpretive limit this creates, stated because it is not obvious.** A
+fall in `N_oat` is consistent with fewer young workers entering that occupation
+**or** with more leaving it. **This design cannot separate entry from
+separation**, and no sentence in the paper may imply otherwise. The
+hiring-versus-separation decomposition is a distinct exercise on a distinct
+outcome and is out of scope here.
+
 ### 7.5 Saturated DDD — confirmed compliant, stated
 
-The design already carries occupation × age-group (`γ_oa`), occupation × month
-(`δ_ot`) and age-group × month (`λ_at`) fixed effects, so all relevant
-lower-order interactions are absorbed. Identifying variation is the
-**within-occupation, within-month young-versus-older difference** associated
-with pre-defined occupational exposure. No change; recorded because the brief
-requires it be explicit.
+**The frozen equation, quoted verbatim from `DESIGN_FREEZE_v1.md` §1:**
+
+    E[N_oat] = exp[ γ_oa + δ_ot + λ_at
+                    + β_AI (AI_o × Young_a × Post_t)
+                    + β_C  (Comp_o × Young_a × Post_t) ]
+
+**Every lower-order component is absorbed by a fixed effect. None is estimated
+as a free parameter, and none is omitted.** Exposure is time-invariant — frozen
+at its 2021 vintage — so each interaction is a function of exactly one
+fixed-effect pair:
+
+| lower-order term | is a function of | absorbed by | status |
+|---|---|---|---|
+| Young × Post | (age-group, month) | `λ_at` | **absorbed** |
+| Exposure × Post | (occupation, month) | `δ_ot` | **absorbed** |
+| Exposure × Young | (occupation, age-group) | `γ_oa` | **absorbed** |
+| occupation × age-group | — | `γ_oa` | **included** |
+| age-group × month | — | `λ_at` | **included** |
+| occupation × month | — | `δ_ot` | **included** |
+
+**What identifies β_AI.** Within a given occupation and a given month, take the
+young-versus-older employment gap. `γ_oa` removes each occupation's own
+time-invariant young-versus-older level, `λ_at` removes the economy-wide
+young-versus-older path, and `δ_ot` removes everything that moves an
+occupation's employment over time regardless of age. What survives is the
+**change in the within-occupation young-versus-older gap across occupations that
+differ in pre-defined exposure**, conditional on the same contrast for
+computerization. That, and only that, is β_AI.
+
+No change to the design; enumerated because assertion is not confirmation.
 
 ## 8. Tables and figures — new hierarchy
 
@@ -409,18 +514,32 @@ excluded employment mass.
 ### Table 4 — Same Y, Same Design, Different X — **the central downstream test**
 
 Hold sample, specification and outcome fixed; vary only exposure construction.
-Report coefficients; paired coefficient differences; bootstrap confidence
-intervals; pre-specified equivalence bounds. **Never** infer a difference from
-one coefficient being significant and another not.
+Report coefficients; **paired** coefficient differences Δ per §4.1; percentile-t
+bootstrap CIs from common draws; the §4.2 equivalence bound. **Never** infer a
+difference from one coefficient being significant and another not, and never
+report "no significant difference" as equivalence.
 
 ### Table 5 — AI Exposure vs Remote-Work Exposure
 
 **Remote work is a core competing explanation, not a minor robustness row.**
-*The Power of Proximity to Coworkers* (QJE 2026) documents adverse
-post-pandemic outcomes for young workers in remotable occupations, surviving
-controls for generative-AI exposure. *This 2026 QJE version is relayed and
-unverified; §5.1 governs, and note that v4's novelty gate verified only NBER
-working paper 31880, November 2023, a within-firm engineering study.*
+Emanuel, Harrington & Pallais, **"The Power of Proximity to Coworkers,"
+*Quarterly Journal of Economics* 141(3), August 2026, 1825–1870, DOI
+`10.1093/qje/qjag027`**, reports that the post-pandemic rise in young college
+graduates' unemployment is **concentrated in remotable occupations**, and
+reports robustness to occupational generative-AI exposure with age × post
+interactions.
+
+**Correction to the v1.0 novelty record.** That audit verified only NBER working
+paper 31880 (November 2023), a within-firm study of junior versus senior
+software engineers whose outcome is not employment, and concluded on that basis
+that EHP was "farther from this design than §9a previously implied." **The
+published QJE version contains a national CPS young-worker analysis and is much
+closer.** The NBER version is not the final state of the paper. Locator supplied
+by the owner; still to be opened at source per §5.1, but the doubt cast in v5's
+earlier draft is withdrawn.
+
+**This paper is a principal reason remote work is a core rival explanation
+rather than a robustness row.**
 
 Estimate at least: (1) AI exposure only; (2) remote-work exposure only; (3) AI
 and remote-work jointly; (4) the joint model under alternative AI-exposure
@@ -508,6 +627,10 @@ Machine-checked: `python yax/gates.py --power-aggregate <aggregate>.json`.
   primary source with a locator before it is used. Added at v5, because this
   reframe arrived with a dozen references attached and the novelty gate's whole
   value is that it refused to take relayed claims on trust.
+- **A stale version is not the paper.** Where a later published or substantially
+  revised version exists, the audit uses it and records version and date
+  checked. Added at v5 after the EHP case, where the correct source was opened
+  at the wrong vintage and produced a wrong conclusion — see §5.1.
 
 ## 14. References to add to the YAX literature file
 

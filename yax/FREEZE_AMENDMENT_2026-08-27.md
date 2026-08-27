@@ -15,16 +15,24 @@ the results. **No result exists.** The post-period file has never been opened.
 An amendment made in that state does not damage the claim, provided the original
 is preserved, the change is documented, and the reason is stated. All three hold.
 
-**But this is the second post-hoc design change in one day** — the computerization
-dimension was added on 2026-08-26 (plan §13a), and this is 2026-08-27. Each one
-is individually defensible and the pattern is not.
+**Terminology, corrected.** These are **pre-outcome amendments to the initial
+design freeze**. An earlier draft of this record called them "post-hoc design
+changes." That was wrong and prejudicial: in this literature *post hoc* means
+*after seeing results*, and no result exists. The paper must disclose the full
+revision history **and** distinguish pre-outcome design revision from
+post-outcome specification search — they are not the same act and should not
+share a word.
 
-> **Standing limit, recorded here so it can be held to:** further design changes
-> after this amendment start to erode the pre-registration claim even with the
-> seal intact, because "the specification was fixed in advance" becomes hard to
-> distinguish from "the specification was fixed whenever we last stopped
-> changing it." The next change should be the last, or the paper should describe
-> the design as settled at `v1.1` and stop claiming more than that.
+**This is nonetheless the second pre-outcome amendment in one day** — the
+computerization dimension was added 2026-08-26 (plan §13a), and this is
+2026-08-27. Each is individually defensible; the pattern is what needs watching.
+
+> **Standing limit, recorded here so it can be held to:** further amendments
+> after this one start to erode the claim even with the seal intact, because
+> "the specification was fixed before any outcome" stays literally true while
+> "fixed in advance" becomes hard to distinguish from "fixed whenever we last
+> stopped changing it." The next amendment should be the last, or the paper
+> should describe the design as settled at `v1.1` and claim no more than that.
 
 ## The three substantive changes
 
