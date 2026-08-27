@@ -231,22 +231,39 @@ def test_novelty_fails_when_sentinel_contradicts_an_unresolved_row(tmp_path, mon
 
 # --------------------------------------------------------- paired-delta power
 
+
+
+
+
+def _full_equivalence_artifact():
+    return {"scenarios": [{"empirical_mde80_relative_decline": 0.0227}],
+            "paired_delta_se": 0.004,
+            "equivalence_interval": [-0.012, 0.012],
+            "equivalence_power_at_delta_zero": 0.83,
+            "benchmark_margin_grid": {"0.125": 0.41, "0.25": 0.83, "0.50": 0.99},
+            "mde_delta_80": 0.011}
+
+
+def test_paired_delta_gate_rejects_mde_delta_alone():
+    """The distinction this gate exists to hold: MDE_Delta says the design could
+    DETECT a difference; equivalence power says it could ESTABLISH equivalence.
+    A small MDE is not evidence of the second."""
+    art = _full_equivalence_artifact()
+    del art["equivalence_power_at_delta_zero"]
+    r = gates.gate_paired_delta_power(art)
+    assert r.status == "BLOCKED"
+    assert "BINDING" in r.detail
+
+
 def test_paired_delta_gate_rejects_a_beta_only_aggregate():
-    """The failure this exists to catch: computing MDE_beta, which the frozen
-    aggregate already carries, and treating the equivalence feasibility check as
-    done. Delta has its own precision object because the paired draws preserve
-    Cov(beta_m, beta_m')."""
-    beta_only = {"scenarios": [{"empirical_mde80_relative_decline": 0.0227,
-                                "bootstrap": {"null_size": 0.05}}]}
+    beta_only = {"scenarios": [{"empirical_mde80_relative_decline": 0.0227}]}
     r = gates.gate_paired_delta_power(beta_only)
     assert r.status == "BLOCKED"
-    assert "MDE_beta is not a substitute" in r.detail
+    assert "MDE_beta satisfies" in r.detail
 
 
-def test_paired_delta_gate_accepts_a_delta_field():
-    with_delta = {"scenarios": [{"empirical_mde80_relative_decline": 0.0227}],
-                  "paired_delta_mde80": 0.006}
-    assert gates.gate_paired_delta_power(with_delta).status == "PASS"
+def test_paired_delta_gate_accepts_the_complete_artifact():
+    assert gates.gate_paired_delta_power(_full_equivalence_artifact()).status == "PASS"
 
 
 def test_paired_delta_gate_blocks_without_an_aggregate():

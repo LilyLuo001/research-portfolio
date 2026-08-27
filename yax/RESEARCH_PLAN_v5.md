@@ -223,56 +223,89 @@ not a comparison of significance.
    ≥999 replications, clustered on occupation, same seed discipline as the
    power runs.
 
-### 4.2 The equivalence bound, and the precision object it must be judged against
+### 4.2 Two different objects: difference-test precision and equivalence feasibility
 
-To assert that two exposure definitions yield **economically equivalent**
-conclusions, both conditions must hold:
+**These are not the same quantity and the plan must not conflate them.**
 
-- **(a)** the CI for Δ lies entirely inside ±SESOI; **and**
-- **(b)** SESOI > **MDE_{Δ,80}** — the design's minimum detectable *difference*
-  under the frozen paired-bootstrap design, on the same contrast.
+| object | what it answers | role |
+|---|---|---|
+| **MDE_{Δ,80}** | how large a true difference the design could **detect** | **secondary** precision diagnostic |
+| **Equivalence-test power at Δ = 0 under the primary SESOI** | whether the design could **establish** equivalence if the truth were exact equality | **binding feasibility object** |
 
-**Condition (b) uses MDE_Δ, never MDE_β. An earlier draft of this section used
-the headline MDE_β and that was wrong.** The relevant precision object in Test C
-is `Δ_{m,m'} = β_m − β_{m'}`, and because the exposure-specific estimates are
-computed **on the same sample with common bootstrap draws**, the sampling
-covariance is preserved:
+**A small MDE_{Δ,80} is not by itself evidence that equivalence can be
+established.** The difference test asks whether zero can be excluded; the
+equivalence test asks whether everything economically meaningful can be
+excluded. A design can be precise enough to detect a large difference and still
+be unable to fit its interval inside the SESOI.
+
+**Failure to reject Δ = 0 is not equivalence.** It is failure to reject, and it
+is reported that way.
+
+#### Why Δ needs its own precision object at all
+
+Because the exposure-specific estimates share a sample and common bootstrap
+draws (§4.1), the covariance is preserved:
 
     Var(Δ) = Var(β_m) + Var(β_m') − 2·Cov(β_m, β_m')
 
-With strongly positively correlated estimates that covariance term dominates, so
-**SE(Δ) can be materially smaller — or in principle larger — than the SE of
-either headline coefficient.** Using MDE_β as the feasibility criterion would
-mis-state the design's ability to detect a difference in either direction.
+With strongly positively correlated estimates that term dominates, so **SE(Δ)
+can be materially smaller — or larger — than the SE of either headline
+coefficient.** MDE_β mis-states the design's ability to speak about Δ in either
+direction and is never a substitute. *An earlier draft of this section used
+MDE_β as the feasibility criterion; that was wrong.*
 
-**Compute and record an outcome-blind `MDE_{Δ,80}`** — equivalently, the power
-of the paired equivalence test — under the frozen paired-bootstrap design of
-§4.1. No post-period data is required.
+#### The equivalence claim
 
-Condition (b) remains the guard that keeps the test honest: if the smallest
-economically interesting difference is below what the design can detect **in
-Δ**, the result is **inconclusive, not equivalent**, and is reported that way.
+Assert that two exposure definitions are **economically equivalent** only when:
 
-### 4.3 The SESOI — primary fixed, feasibility grid documented
+- **(a)** the paired CI for Δ lies entirely inside ±SESOI; **and**
+- **(b)** the outcome-blind **equivalence-test power at Δ = 0 under the primary
+  SESOI** is adequate.
 
-**Primary SESOI, retained for owner sign-off: 25% of the contested
-literature-comparable Q5–Q1 benchmark.** Anchored to the benchmark rather than
-invented, and §7.3 puts the benchmark and the MDE on that one contrast so (b) is
-checkable.
+If (b) fails, the design **cannot establish equivalence** and says so. It does
+not say the measures are equivalent, and it does not say they differ.
 
-**Before any outcome is opened**, report paired-Δ power at **12.5%, 25% and 50%**
-of that benchmark, **solely to document design feasibility.**
+#### The required artifact — outcome-blind, before the amended freeze
 
-> **Anti-shopping clause, binding.** The primary SESOI is **25%**. The three-point
-> grid exists to show what the design can and cannot detect, and for no other
-> purpose. **No selection among them may be made on the basis of post-period
-> estimates**, and the paper reports the 25% bound as primary regardless of which
-> of the three turns out to be the most flattering. Reporting the grid after
-> outcomes are visible, or promoting a different point to primary, is
-> specification search.
+One artifact recording, all under **common bootstrap draws** per §4.1:
 
-The 25% fraction is a pre-specification choice with real consequences and
-remains **pending the owner's decision** before the amended freeze.
+1. the **paired distribution / SE of Δ**;
+2. the **pre-specified equivalence interval**;
+3. **equivalence-test power at Δ = 0 under the primary SESOI** — the binding
+   object;
+4. the **12.5% / 25% / 50% benchmark-margin grid**, as design diagnostics only;
+5. **MDE_{Δ,80}**, as a secondary precision statistic.
+
+`gates.py::gate_paired_delta_power` requires all five and names any that are
+missing. Item 5 alone does not satisfy it.
+
+### 4.3 The SESOI — economic meaning first, and never widened for power
+
+**Primary SESOI: 25% of the finalized literature-comparable Q5–Q1 benchmark
+magnitude.**
+
+> **The numerical value is determined mechanically, and only after that benchmark
+> has been put on exactly the same age band, outcome, contrast and scale as
+> Test C.** Until §7.3 has done that, the SESOI has no number — only a rule. A
+> percentage of a benchmark measured on a different age band, outcome or scale
+> is not the same bound and must not be used as one.
+
+**The bound is chosen for economic meaning, not for the power it produces.**
+
+> **Binding, and this is the rule most likely to be quietly broken.** If the
+> paired equivalence test is **underpowered at that bound, report the design as
+> unable to establish equivalence.** Do **not** widen the bound. A SESOI chosen
+> so that the test passes is not a smallest-effect-of-interest; it is the
+> largest effect the design happens to tolerate, and reporting it as the former
+> is specification search.
+
+The 12.5% / 25% / 50% grid documents feasibility and nothing else. **The primary
+is 25% regardless of which point proves most flattering**, no selection among
+them may be made on the basis of post-period estimates, and reporting the grid
+once outcomes are visible is specification search.
+
+The 25% fraction remains **pending the owner's decision** before the amended
+freeze.
 
 ## 5. Position relative to the nearest competing papers
 
@@ -647,9 +680,10 @@ specification search.
 4. Post-period redefined to 2023-01 static, 2022-12 transition; power
    re-simulated on the new window. *(§7.1)*
 5. Q5–Q1 MDE and benchmark computed on one estimand. *(§7.3)*
-5b. **Outcome-blind `MDE_{Δ,80}`** computed under the frozen paired-bootstrap
-   design, with paired-Δ power reported at 12.5%, 25% and 50% of the benchmark.
-   *(§4.2–4.3)*
+5b. **The paired-equivalence precision artifact** — all five components of
+   §4.2, outcome-blind, under common bootstrap draws. The binding object is
+   equivalence-test power at Δ = 0 under the primary SESOI; MDE_{Δ,80} is
+   secondary. *(§4.2–4.3)*
 5c. **Owner decision on the primary SESOI** — proposed 25%. *(§4.3)*
 6. Published-measurement audit built. *(§6)*
 7. `DESIGN_FREEZE_v2.md` committed; tag `v1.1-design-freeze`.

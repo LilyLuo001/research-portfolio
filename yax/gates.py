@@ -537,43 +537,78 @@ def gate_amendment_current(tag):
 
 
 def gate_paired_delta_power(agg):
-    """§4.2. Equivalence feasibility must be judged on MDE_Delta, not MDE_beta.
+    """§4.2. Equivalence feasibility is the power of the paired equivalence test,
+    not MDE_Delta.
 
-    Test C's object of inference is Delta = beta_m - beta_m'. Because the
-    exposure-specific estimates share a sample and common bootstrap draws, the
-    covariance term survives:
+    Two different objects, and conflating them is the failure this catches:
 
-        Var(Delta) = Var(b_m) + Var(b_m') - 2 Cov(b_m, b_m')
+      MDE_Delta,80   -- how large a true difference the design could DETECT.
+                        Secondary diagnostic.
+      Equivalence
+      power at
+      Delta = 0      -- whether the design could ESTABLISH equivalence if the
+                        truth were exact equality. BINDING.
 
-    so SE(Delta) can be far smaller -- or larger -- than the SE of either
-    headline coefficient. An earlier draft of the plan used MDE_beta as the
-    feasibility criterion, which mis-states the design's ability to detect a
-    difference in either direction. This gate exists so that computing MDE_beta
-    and stopping cannot be mistaken for completing the check.
+    A small MDE_Delta is not evidence that equivalence can be established: the
+    difference test asks whether zero can be excluded, the equivalence test asks
+    whether everything economically meaningful can be excluded. Failure to
+    reject Delta = 0 is not equivalence.
+
+    Delta needs its own precision object because the paired draws preserve the
+    covariance -- Var(Delta) = Var(b_m) + Var(b_m') - 2 Cov -- so SE(Delta) can
+    be far smaller or larger than either headline SE. MDE_beta is never a
+    substitute for either object.
+
+    Requires all five components of the §4.2 artifact and names what is missing.
     """
     if agg is None:
         return Result("paired_delta_power", "BLOCKED",
                       "no power aggregate supplied")
-    def _has_delta(obj):
+
+    def _keys(obj, acc):
         if isinstance(obj, dict):
             for k, v in obj.items():
-                kl = k.lower()
-                if "delta" in kl and ("mde" in kl or "power" in kl):
-                    return True
-                if _has_delta(v):
-                    return True
+                acc.add(k.lower())
+                _keys(v, acc)
         elif isinstance(obj, list):
-            return any(_has_delta(v) for v in obj)
+            for v in obj:
+                _keys(v, acc)
+        return acc
+
+    keys = _keys(agg, set())
+
+    def _has(*required_groups):
+        """True when some key contains at least one token from every group."""
+        for k in keys:
+            if all(any(tok in k for tok in group) for group in required_groups):
+                return True
         return False
-    if not _has_delta(agg):
+
+    required = [
+        ("paired distribution or SE of Delta",
+         _has(("delta",), ("se", "sd", "distribution", "variance"))),
+        ("pre-specified equivalence interval",
+         _has(("equivalence",), ("interval", "bound", "margin", "sesoi"))),
+        ("equivalence-test power at Delta = 0 under the primary SESOI  [BINDING]",
+         _has(("equivalence",), ("power",))),
+        ("12.5/25/50 benchmark-margin grid (diagnostics only)",
+         _has(("margin", "grid", "benchmark"), ("grid", "margin"))),
+        ("MDE_Delta,80 (secondary)",
+         _has(("delta",), ("mde",))),
+    ]
+    missing = [name for name, ok in required if not ok]
+    if missing:
         return Result("paired_delta_power", "BLOCKED",
-                      "the aggregate carries no paired-Delta MDE or power "
-                      "field. §4.2 requires an outcome-blind MDE_Delta,80 under "
-                      "the frozen paired-bootstrap design, with paired-Delta "
-                      "power at 12.5%, 25% and 50% of the Q5-Q1 benchmark. "
-                      "MDE_beta is not a substitute and does not satisfy this.")
+                      f"the §4.2 paired-equivalence artifact is incomplete. "
+                      f"Missing: {missing}. The BINDING object is "
+                      f"equivalence-test power at Delta = 0 under the primary "
+                      f"SESOI; MDE_Delta is secondary and MDE_beta satisfies "
+                      f"neither. Failure to reject Delta = 0 is not equivalence, "
+                      f"and a small MDE is not evidence that equivalence can be "
+                      f"established.")
     return Result("paired_delta_power", "PASS",
-                  "aggregate carries a paired-Delta precision object")
+                  "paired-equivalence artifact carries all five §4.2 components "
+                  "including equivalence power at Delta = 0")
 
 
 # ---------------------------------------------------------------- runner
