@@ -65,9 +65,16 @@ answer** (meta-rule: never specification-search; report the first run).
 ```bash
 cd <repo>
 git fetch origin && git checkout claude/p1-continuation-zgdcem && git pull
-python -m pytest -q                      # expect 398 passed
+python -m pytest -q                      # expect all green (456 as of 2026-08-27)
 python ops/runner/selfcheck.py
 ```
+
+**This brief lives only on `claude/p1-continuation-zgdcem`, not on `main`** — so
+the checkout above has to happen before you can read it. If you are reading this,
+you already did. The branch is a small number of commits behind `main`; the only
+files that differ under `ops/runner/` are `queue.yaml` and `state.json`, so the
+gate scripts you run at step 8 are the same ones. Merge `main` in if you like, but
+it is not a prerequisite.
 
 Then confirm you actually have the egress this task needs — do not assume it,
 and do not take a previous session's word for it either way:
@@ -137,6 +144,16 @@ python ops/runner/selfcheck.py
 
 ## 4. Five traps, each of which has already cost someone time
 
+> **Fixed before you got here (2026-08-27).** `main()` in
+> `build_nport_convexp.py` used to raise `UnboundLocalError` on the first
+> aggregated cell — a leftover inline copy of the per-cell loop appended to
+> `rows` / `nh_stocks`, while `rows, nh_stocks = _cell_rows(...)` further down
+> made both names function-local for the whole function. It would have died in
+> Step 2 **after** every EDGAR fetch had been paid for. The dead loop is deleted
+> and `p1/tests/test_no_use_before_assignment.py` now lints the whole of `p1/`
+> for that class of defect. Mentioned because if you are working from an older
+> checkout, this is what you will hit.
+
 ### Trap 1 — `waves.csv` is SUPPOSED to change now
 
 The older brief says step 1 must leave `waves.csv` byte-identical. That was true
@@ -156,20 +173,22 @@ python -m pytest p1/tests/test_recheck_resolution.py -q   # includes the renumbe
 The Dimensional anchor must still be **W002 / 2021-06-11**. If it is not, stop —
 every scenario table and the 92.8% figure key on it.
 
-### Trap 2 — the contract's own comment names the wrong column
+### Trap 2 — declare `val_usd`, in the same commit as the parquet
 
-`ops/contracts/conv_exposure_free.yaml` has a pending declaration for the N-PORT
-value column. The file contains **two contradictory instructions**: an in-block
-comment saying declare `val_usd: {min: 0}`, and a trailing comment saying declare
-`valusd: {min: 0}`.
+`ops/contracts/conv_exposure_free.yaml` has a **pending** declaration for the
+N-PORT value column. The pipeline emits **`val_usd`** (with the underscore), the
+committed parquet carries neither spelling, and `contracts.py` treats every
+declared column as mandatory — so the declaration and the rebuilt parquet must
+land together. Declaring early fails the artifact Gate 2 was signed on.
 
-The pipeline emits **`val_usd`** (with the underscore) — verified at
-`p1/t2_free/build_nport_convexp.py` in `_cell_rows`. Declaring `valusd` would fail
-the validator, because `contracts.py` treats every declared column as mandatory.
+**Add `val_usd: {min: 0}` to the contract in the SAME commit that lands the new
+parquet.**
 
-**Declare `val_usd: {min: 0}` in the SAME commit that lands the rebuilt parquet**,
-and delete the now-stale trailing comment block. Not before — declaring it while
-the old parquet is committed would fail the artifact Gate 2 was signed on.
+(The file used to carry a second, contradictory note saying to declare `valusd`
+without the underscore, which would have failed the validator. That spelling came
+from a dead inline loop — see the note at the top of §4 — and both are now gone.
+`valusd` survives only as an internal aggregation key and as a column of the
+dropped-cells sidecar CSV; neither is this parquet, and neither should be renamed.)
 
 ### Trap 3 — `NEED_HUMAN_stocks.csv` has a frozen four-column schema
 

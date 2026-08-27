@@ -725,49 +725,15 @@ def main():
     # ---- Step 4: ticker -> stock CIK -> shares outstanding ---------------- #
     # cache shares_out per (stock_cik, effective_date) within the run
     so_cache = {}
-    for (cusip, wid), a in sorted(agg.items()):
-        ticker = a["ticker"]
-        eff = a["effective_date"]
-        stock_cik = tcik.get(ticker.upper()) if ticker else None
-        if not stock_cik:
-            log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
-            nh_stocks.append(_dropped(
-                a, cusip, ticker, wid, eff,
-                "no_ticker" if not ticker else "ticker_not_in_sec_map"))
-            continue
-        ck = (stock_cik, eff)
-        if ck not in so_cache:
-            so_cache[ck] = shares_outstanding(stock_cik, eff)
-        shares_out, so_end = so_cache[ck]
-        if not shares_out or shares_out <= 0:
-            log.warning("NO_SHARES_OUT cusip=%s ticker=%s cik=%s wave=%s",
-                        cusip, ticker, stock_cik, wid)
-            nh_stocks.append(_dropped(a, cusip, ticker, wid, eff,
-                                      "no_xbrl_shares_outstanding"))
-            continue
-        conv_exp = a["shares_held"] / shares_out
-        if conv_exp > 1.0:
-            log.info("CONVEXP_GT1 cusip=%s ticker=%s wave=%s exp=%.3f "
-                     "(shares_held=%.0f > shares_out=%.0f as of %s) -> NEED_HUMAN",
-                     cusip, ticker, wid, conv_exp, a["shares_held"], shares_out, so_end)
-            nh_stocks.append(_dropped(
-                a, cusip, ticker, wid, eff,
-                f"conv_exp>1 ({conv_exp:.3f}); shares_out date {so_end}",
-                shares_out_bad=shares_out, shares_out_date=so_end))
-            continue
-        # implied price from the fund's own N-PORT valuation (valUSD/shares) —
-        # a real market price near the report date, no external feed needed.
-        implied_px = (a["valusd"] / a["shares_held"]) if a["shares_held"] else None
-        mcap = implied_px * shares_out if implied_px else None
-        rows.append({"cusip": cusip, "ticker": ticker, "stock_cik": stock_cik,
-                     "permno": "", "wave_id": wid, "effective_date": eff,
-                     "conv_exp": conv_exp, "n_funds": len(a["funds"]),
-                     "mcap_decile": None, "_mcap": mcap,
-                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
-                     "shares_held": a["shares_held"],
-                     "valusd": a["valusd"],
-                     "shares_outstanding": shares_out,
-                     "source_accessions": ";".join(sorted(a["accs"]))})
+    # NOTE: an inline copy of the per-cell loop used to sit here, appending to
+    # `rows` / `nh_stocks`. It was dead in the worst way: the tuple-assignment
+    # `rows, nh_stocks = _cell_rows(...)` below makes both names function-local
+    # for the WHOLE of main(), so those earlier appends raised UnboundLocalError
+    # on the first aggregated cell — after every EDGAR fetch had already been
+    # paid for. No test caught it because no test calls main() (it needs the
+    # network); the tests exercise _cell_rows directly. Removed 2026-08-27, with
+    # an AST scope lint (p1/tests/test_no_use_before_assignment.py) so the class
+    # of bug cannot come back silently.
 
     def so_lookup(stock_cik, eff):
         ck = (stock_cik, eff)

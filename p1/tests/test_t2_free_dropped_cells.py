@@ -116,11 +116,35 @@ def test_sidecar_and_need_human_schemas(mod, tmp_path, monkeypatch):
         assert k in side_rows[0]
 
 
-def test_computed_rows_carry_valusd(mod):
-    """valUSD must reach the parquet or value-weighted coverage stays impossible."""
-    src = PIPELINE.read_text()
-    assert '"valusd": a["valusd"],' in src, \
-        "computed ConvExp rows must retain valUSD (coverage audit caveat 1)"
+def test_computed_rows_carry_the_value_column(mod):
+    """valUSD must reach the parquet or value-weighted coverage stays impossible.
+
+    This used to grep the source for the literal `"valusd": a["valusd"],`. That
+    string lived ONLY in a leftover inline copy of the per-cell loop that could
+    never execute (`rows`/`nh_stocks` were function-local via a later tuple
+    assignment, so it raised UnboundLocalError). The test was therefore green
+    *because of* dead code, and said nothing about the live path — deleting the
+    dead loop on 2026-08-27 is what exposed it.
+
+    Now it calls the live builder and checks the emitted row, under the name the
+    parquet actually carries: `val_usd`, with the underscore. That is also the
+    name to declare in ops/contracts/conv_exposure_free.yaml when the rebuilt
+    parquet lands.
+    """
+    rows, nh = mod._cell_rows(
+        {("037833100", "W002"): _cell()},
+        {"AAPL": "0000320193"},
+        lambda cik, eff: (10_000.0, "2021-06-30"),
+    )
+    assert not nh, nh
+    assert len(rows) == 1
+    row = rows[0]
+    assert "val_usd" in row, (
+        f"the computed row must carry val_usd; got {sorted(row)}")
+    assert row["val_usd"] == 25_000.0
+    # and the underscore-free spelling must NOT be what reaches the parquet —
+    # the contract declares val_usd, and a mismatch fails the validator
+    assert "valusd" not in row
 
 
 # --------------------------------------------------------------------------- #

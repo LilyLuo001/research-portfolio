@@ -41,9 +41,9 @@ columns:
   # rebuilt parquet:
   #   val_usd: {min: 0}
   source_accessions: {}            # ';'-joined N-PORT accession(s)
-# NOT YET DECLARED — `valusd` (Σ fund USD value of the position, from N-PORT).
-# The pipeline emits it as of 2026-08-18, but the committed parquet predates that
-# build and the validator treats every declared column as must-exist. Declare it
-# here (as `valusd: {min: 0}`) in the same commit that lands the next box build,
-# so value-weighted coverage becomes a contract-checked column rather than a
-# best-effort one. strict_columns is false, so the new column validates meanwhile.
+# Removed 2026-08-27: a second, contradictory note here said to declare this
+# column as `valusd` (no underscore). That spelling came from a dead inline loop
+# in build_nport_convexp.py, now deleted. The pipeline emits `val_usd` — see the
+# in-block note above, which is the one to follow. `valusd` survives only as an
+# internal aggregation key and as a column of the dropped-cells sidecar CSV;
+# neither is this parquet, and neither should be renamed.
