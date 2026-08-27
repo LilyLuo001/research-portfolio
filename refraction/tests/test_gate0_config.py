@@ -38,7 +38,9 @@ PLAN_COMMITTED = {
 
 # v2.2 added two lines with no number anywhere to transcribe. Same treatment G4 and
 # G6 got: null, so R3 stops rather than inventing one.
-PENDING = {"first_stage_majority_min", "intraday_vendor_agreement_tol"}
+PENDING = {"first_stage_primary_alpha", "intraday_vendor_agreement_tol",
+           "portfolio_overlap_min", "portfolio_weight_corr_min",
+           "portfolio_turnover_max"}
 
 # Decided 2026-08-19 under delegation. Each must stay traceable to its memo and
 # to ops/decisions.md; a silent edit to one of these is a prereg deviation.
@@ -181,13 +183,76 @@ def test_the_shock_decomposition_is_marked_unverified():
 
 
 def test_the_network_measure_may_not_be_named_before_it_is_licensed():
-    """Plan v2.2 §6.1: mechanism must be measured, not named. Until G8 runs,
-    `licensed` is null and naming is forbidden."""
+    """Plan §6.1: mechanism must be measured, not named."""
     ne = CONFIG["network_exposure"]
     assert ne["licensed"] is None
     assert ne["naming_allowed_before_licensing"] is False
-    assert ne["candidate"] == "L_tilt"
-    assert len(ne["first_stage_outcomes"]) == 5
+    assert ne["candidate"] == "L_tilt_pre"        # v2.3: predetermined, explicitly
+
+
+# --------------------------------------------------------------------------- #
+# v2.3 hardening — each test pins a correction, not a preference               #
+# --------------------------------------------------------------------------- #
+
+def test_the_first_stage_turns_on_one_primary_outcome_not_a_vote():
+    """v2.2 required a 'majority of five proxies'. A vote across heterogeneous
+    proxies has no economic foundation and is not a test."""
+    ne = CONFIG["network_exposure"]
+    assert isinstance(ne["first_stage_primary_outcome"], str)
+    assert "first_stage_majority_min" not in CONFIG["gate0_thresholds"]
+    assert len(ne["first_stage_secondary_outcomes"]) == 4
+
+
+def test_basket_weight_is_not_the_primary_validation_outcome():
+    """It is near-mechanical in holdings — it would pass by construction."""
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_primary_outcome"] != "basket_inclusion_or_weight"
+    assert "basket_inclusion_or_weight" in ne["first_stage_secondary_outcomes"]
+
+
+def test_the_redefine_escape_hatch_is_gone():
+    """v2.2 allowed rebuilding NetExp from whichever proxies worked — post-treatment
+    data mining. Re-entry is now only via an external sample or cross-fitting."""
+    routes = CONFIG["network_exposure"]["redesign_reentry_routes"]
+    assert set(routes) == {"external_etf_training_sample", "prespecified_split_or_crossfit"}
+
+
+def test_the_post_conversion_carveout_is_unsigned_and_whitelisted():
+    """G8 is the one Gate-0 line touching post-conversion data, because the arbitrage
+    observables do not exist while the fund is still a mutual fund. Narrow and signed,
+    or it does not run."""
+    ne = CONFIG["network_exposure"]
+    assert ne["post_conversion_carveout_signed"] is False
+    wl = ne["post_conversion_whitelist"]
+    assert len(wl) == 5
+    for banned in ("r_total", "conv_exp", "beta_i", "L"):
+        assert banned not in wl        # no study outcome may enter the carve-out
+
+
+def test_the_jk_decomposition_names_two_series_not_one():
+    """A one-dimensional surprise does not split. Both legs are NEED_INFO until R1a."""
+    sh = CONFIG["shock"]
+    assert "policy_instrument_series" in sh and "equity_series" in sh
+    assert sh["policy_instrument_series"] is None and sh["equity_series"] is None
+    assert sh["classification"] == "sign_pair"
+
+
+def test_the_fomc_event_definition_is_frozen_with_the_presser_separate():
+    """Otherwise delayed press-conference news reads as slow price adjustment, which
+    is fatal to the half-life spine."""
+    sh = CONFIG["shock"]
+    assert sh["primary_event"] == "statement_window"
+    assert sh["press_conference"] == "separate_registered_event"
+    assert sh["minutes"] == "excluded_from_primary"
+    assert sh["halflife_controls_press_conference"] is True
+
+
+def test_inference_does_not_take_power_from_intraday_rows():
+    inf = CONFIG["inference"]
+    assert inf["small_cluster_primary"] == "wild_cluster_bootstrap"
+    assert inf["sponsor_level"] == "adviser_not_trust"
+    assert inf["effective_clusters_recomputed_after"] == "G7"
+    assert inf["report_effective_clusters_in_every_table"] is True
 
 
 def test_the_wedge_is_demoted_and_its_construction_is_unchanged():
@@ -198,5 +263,5 @@ def test_the_wedge_is_demoted_and_its_construction_is_unchanged():
 
 
 def test_the_registered_spec_points_at_v22():
-    assert CONFIG["prereg"]["registered_spec"] == "SPEC-MAIN-v2.2"
+    assert CONFIG["prereg"]["registered_spec"] == "SPEC-MAIN-v2.3"
     assert CONFIG["prereg"]["osf_timestamp"] is None      # still a free redesign

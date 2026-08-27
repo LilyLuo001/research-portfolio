@@ -528,3 +528,48 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 # QUEUE WORK OWED (not done here — queue.yaml is seat D's and selfcheck gates it):
 #   new nodes for the G8 first-stage validation and the G7 intraday pilot as BLOCKING
 #   gates, and REFR-R9/R10 re-typed from bypaths to critical-path tasks.
+
+# REFRACTION v2.3 HARDENING 2026-08-19 (owner: "one mechanism/econometric hardening
+# pass only; do not broaden the paper; do not freeze or launch"). Plan:
+# docs/MacroEvent_Chapter_Plan_v2_3.md. Ten corrections applied; paper NOT broadened,
+# NOT frozen, sprint NOT launched.
+# THE ERROR THIS PASS CAUGHT (mine, in v2.2): the §6.1 first stage proposed to validate
+#   L_tilt against creation/redemption activity, basket inclusion, premium/discount and
+#   ETF-flow order imbalance "on pre-conversion data". NONE OF THOSE EXIST while the
+#   fund is still a mutual fund. The v2.2 first stage was not executable as written.
+#   Corrected: L_tilt_pre frozen from strictly pre-conversion holdings/betas; the
+#   arbitrage observables are POST-conversion VALIDATION OUTCOMES, not pre-treatment
+#   regressors.
+# CONSEQUENCE REQUIRING OWNER SIGN-OFF: G8 is now the ONE Gate-0 line that touches
+#   post-conversion data. Implemented as a narrow registered carve-out —
+#   network_exposure.post_conversion_whitelist (5 arbitrage-connectivity variables, no
+#   study outcome) with post_conversion_carveout_signed: false. G8 MUST NOT RUN until
+#   that flag is signed true.
+# OTHER CHANGES: "redefine NetExp from whatever worked" DELETED (post-treatment data
+#   mining); re-entry only via external ETF training sample or pre-specified
+#   split/cross-fitting tested out of sample on held-out waves. 3-of-5 vote DELETED,
+#   replaced by ONE registered primary outcome = constituent price sensitivity to
+#   creation/redemption activity (basket weight explicitly REJECTED as primary because
+#   it is near-mechanical in holdings). ETF-basket price discovery (information
+#   share/VECM, legitimate) SEPARATED from ETF-to-constituent propagation (local
+#   projections / distributed lags / half-life) — v2.2 conflated them and a VECM
+#   between an ETF and one stock is misspecified. New BLOCKING G9 portfolio continuity
+#   (manager/objective + holdings overlap, weight correlation, turnover per wave) —
+#   verify "only the wrapper changed" rather than assert it; runs FIRST, it is cheapest.
+#   JK construction fully specified: a one-dimensional surprise does not split, so both
+#   the policy-instrument and equity series plus the window are named and are NEED_INFO
+#   for R1a. FOMC event FROZEN: statement primary, press conference a SEPARATE
+#   simultaneous event, combined = robustness, minutes excluded — otherwise delayed
+#   presser news masquerades as slow adjustment and spine 2's half-life is void.
+#   Spine 5 tightened to a single boundary/placebo contrast. Intraday pilot now audits
+#   BOTH ETF and constituents at the required timestamps.
+# CLUSTER COUNTS COMPUTED TODAY: 53 waves, 83 converting funds, 46 TRUST-level families
+#   — but trust level OVERSTATES independence (Fidelity Summer Street Trust and Fidelity
+#   Commonwealth Trust II are one adviser). Adviser-level sponsor count is NEED_INFO and
+#   is the number that matters for clustering. Largest family = 8.2% of funds.
+#   Independent FOMC events NEED_INFO (R1a calendar). Effective clusters must be
+#   RECOMPUTED AFTER G7, since coverage failures drop waves, not merely rows.
+# FIVE NEW NULLS (all stop R3 rather than being invented): first_stage_primary_alpha,
+#   portfolio_overlap_min, portfolio_weight_corr_min, portfolio_turnover_max,
+#   intraday_vendor_agreement_tol.
+# NOT READY FOR EMPIRICAL SPRINT. Blockers listed in the session report.

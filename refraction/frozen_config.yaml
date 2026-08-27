@@ -18,7 +18,7 @@ version: "0.1"
 prereg:
   osf_timestamp: null       # RFC3339, e.g. "2026-08-01T15:00:00Z"; set at REFR-GATE-OSF
   osf_url: null
-  registered_spec: "SPEC-MAIN-v2.2"   # Plan v2.2 §6; γ always reported decomposed
+  registered_spec: "SPEC-MAIN-v2.3"   # Plan v2.2 §6; γ always reported decomposed
                                  # (mkt/tilt/fac) and separately for S^mp and S^cbi
 
 beta:
@@ -44,6 +44,21 @@ beta:
 # SHOCK CONSTRUCTION (Plan v2.2 §5.1). No announcement-day dummy is used anywhere.
 # ---------------------------------------------------------------------------
 shock:
+  # v2.3: a ONE-DIMENSIONAL surprise does not split. The JK decomposition is identified from
+  # the co-movement of TWO series in the same window; both must be named by R1a.
+  policy_instrument_series: null   # NEED_INFO (R1a): contract, maturity, window, quoted defn
+  equity_series: null              # NEED_INFO (R1a): must be in the SAME window; if USMPD
+                                   # does not carry one, this becomes a data dependency
+  window_definition: null          # NEED_INFO (R1a): verbatim from official documentation
+  classification: sign_pair        # opposite signs -> S_mp ; same signs -> S_cbi
+  projection_variant_is_robustness: true
+  zero_instrument_events: reported_separately_never_pooled
+  # --- FOMC event definition, FROZEN (Plan v2.3 §5.2) ---
+  primary_event: statement_window
+  press_conference: separate_registered_event   # never pooled into the statement shock
+  combined_event: robustness_aggregation_only
+  minutes: excluded_from_primary
+  halflife_controls_press_conference: true      # else presser news reads as slow adjustment
   primary: "S_mp"                  # pure monetary-policy shock — the registered primary
   companion: "S_cbi"               # central-bank information shock, own coefficient
   decomposition: jarocinski_karadi_sign_restriction
@@ -122,11 +137,17 @@ gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops
   intraday_coverage_min: 0.70      # G7: pilot 30+30 x 20 days incl. small caps.
                                    # TRANSCRIBED from Plan §9 (was a non-blocking bypath in
                                    # v2.1; v2.2 makes it blocking). FAIL -> exit F.
-  first_stage_majority_min: null   # G8: NEED_HUMAN. How many of the five §6.1 first-stage
-                                   # outcomes L_tilt must predict with the implied sign to be
-                                   # LICENSED. No number exists in the plan to transcribe, and
-                                   # picking one after seeing the first stage is specification
-                                   # search — so R3 stops here, as it did for G4/G6.
+  # v2.3: the majority-vote threshold is DELETED along with the rule it served.
+  # G8 now turns on ONE registered primary outcome (network_exposure.first_stage_primary
+  # _outcome) being significant with the implied sign.
+  first_stage_primary_alpha: null  # G8: NEED_HUMAN. Significance level for the single primary
+                                   # validation outcome. No number to transcribe; choosing it
+                                   # after seeing the first stage is specification search.
+  portfolio_overlap_min: null      # G9: NEED_HUMAN. Minimum pre/post holdings overlap for a
+                                   # wave to count as portfolio-continuous.
+  portfolio_weight_corr_min: null  # G9: NEED_HUMAN. Minimum pre/post portfolio-weight
+                                   # correlation.
+  portfolio_turnover_max: null     # G9: NEED_HUMAN. Maximum turnover across the switch.
   intraday_vendor_agreement_tol: null  # G7: NEED_HUMAN. Tolerance at which a vendor feed's
                                    # spread and lead-lag statistics must reproduce the
                                    # reference source on a sampled overlap (Plan §4.1 cond. 3).
@@ -173,14 +194,30 @@ panel:
 # network measure until the pre-conversion first stage licenses it.
 # ---------------------------------------------------------------------------
 network_exposure:
-  candidate: "L_tilt"              # beta_b_loo - beta_i, as built by build_basket.py
-  licensed: null                   # set by Gate-0 line G8: licensed | redefined | retired
-  first_stage_outcomes:            # Plan v2.2 §6.1 table
+  candidate: "L_tilt_pre"          # beta_b_loo - beta_i from STRICTLY pre-conversion holdings
+                                   # and pre-conversion regime betas; frozen before any
+                                   # post-conversion data is touched (Plan v2.3 §6.1)
+  licensed: null                   # set by G8: licensed | retired  (NOTE: "redefined" was
+                                   # DELETED in v2.3 — rebuilding the measure from whichever
+                                   # proxies worked is post-treatment data mining)
+  # ONE registered primary. A 3-of-5 vote across heterogeneous proxies is not a test.
+  first_stage_primary_outcome: constituent_price_sensitivity_to_creation_redemption_activity
+  first_stage_secondary_outcomes:  # corroboration only; never aggregated into a score
+    - basket_inclusion_or_weight   # rejected as PRIMARY: near-mechanical in holdings
+    - premium_discount_convergence
+    - etf_constituent_lead_lag_strength
+    - constituent_order_imbalance_around_etf_flows
+  # The validation outcomes are POST-conversion by necessity — none of them exists while the
+  # fund is still a mutual fund. G8 is therefore the one Gate-0 line touching post-conversion
+  # data, under a narrow whitelist that must be signed before it runs.
+  post_conversion_carveout_signed: false
+  post_conversion_whitelist:
     - creation_redemption_activity
     - basket_inclusion_or_weight
-    - premium_discount_convergence
-    - etf_stock_lead_lag_strength
-    - constituent_order_imbalance_around_etf_flows
+    - premium_discount
+    - etf_constituent_lead_lag
+    - constituent_order_imbalance
+  redesign_reentry_routes: [external_etf_training_sample, prespecified_split_or_crossfit]
   naming_allowed_before_licensing: false   # enforced in code, not by discipline
 
 wedge:                             # v2.2: DEMOTED to dynamic diagnostic (Plan §7 spine 4).
@@ -202,6 +239,13 @@ heterogeneity:                     # frozen five-item set, interactions capped a
   romano_wolf_families: [spine1, spine2, spine3, spine4, heterogeneity]
 
 inference:
+  # v2.3 §8.1: power comes from independent events and treatments, never from intraday rows.
+  ladder: [announcement_date_x_wave, sponsor_adviser_level, wild_cluster_bootstrap,
+           randomization_inference]
+  small_cluster_primary: wild_cluster_bootstrap   # not a robustness row
+  report_effective_clusters_in_every_table: true
+  effective_clusters_recomputed_after: G7         # coverage failures drop waves, not just rows
+  sponsor_level: adviser_not_trust                # 46 trust families overstate independence
   cluster_dims: [announcement_date, wave_industry]
   ri_permutations: {conversion_dates: 1000, announcement_labels: 1000, lever_within_treated: 1000}
   effective_cluster_warning_below: 10
