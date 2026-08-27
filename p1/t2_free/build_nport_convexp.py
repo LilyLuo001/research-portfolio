@@ -630,7 +630,17 @@ def _cell_rows(agg, tcik, so_lookup):
                      "permno": "", "wave_id": wid, "effective_date": eff,
                      "conv_exp": conv_exp, "n_funds": len(a["funds"]),
                      "mcap_decile": None, "_mcap": mcap,
-                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
+                     # NULL, never aliased to conv_exp (v2.1, plan §6.1.1).
+                     # This field means TOTAL pre-conversion ETF ownership and
+                     # needs a 13F/ETF-holdings join that has no verified source
+                     # yet. It used to be filled with conv_exp — the converting
+                     # funds' ownership only — under a name that reads like the
+                     # GNZ control variable. Copying one into the other looks
+                     # like data and would silently misspecify any regression
+                     # that used it as an ownership control. holdings_pipeline.py
+                     # (the WRDS twin) already writes None here; this is the free
+                     # path being brought into line with it.
+                     "pre_etf_ownership": None,
                      "shares_held": a["shares_held"],
                      "shares_outstanding": shares_out,
                      "val_usd": a["valusd"],

@@ -55,8 +55,38 @@ def weights(holdings):
     return {k: v / total for k, v in holdings.items() if v and v > 0}
 
 
-def continuity(pre: dict, post: dict) -> dict:
-    """The four measures for one wave. Pure function — unit-testable offline."""
+def share_continuity(pre_sh: dict, post_sh: dict) -> dict:
+    """Continuity in SHARES HELD, independent of price (v2.1, item 4).
+
+    Value weights move when prices move. A fund that traded nothing across a
+    quarter in which its largest position doubled will show a value-weight shift
+    and look like it rebalanced. Share counts do not have that problem: they
+    change only if the manager actually traded.
+
+    So value-weight overlap answers "is the economic exposure the same?" while
+    share overlap answers "did the manager trade?". Both are reported; a wave
+    where share continuity is high but weight overlap is low is a PRICE move,
+    not a portfolio change, and must not be classified as discontinuous.
+    """
+    names = set(pre_sh) | set(post_sh)
+    if not names:
+        return {"share_overlap": None, "share_turnover": None, "n_traded_out": None}
+    kept = sum(min(pre_sh.get(k, 0.0), post_sh.get(k, 0.0)) for k in names)
+    total_pre = sum(v for v in pre_sh.values() if v and v > 0)
+    overlap = kept / total_pre if total_pre > 0 else None
+    turn = (sum(abs(post_sh.get(k, 0.0) - pre_sh.get(k, 0.0)) for k in names)
+            / (2 * total_pre)) if total_pre > 0 else None
+    out = sum(1 for k in pre_sh if pre_sh.get(k, 0) > 0 and post_sh.get(k, 0) == 0)
+    return {"share_overlap": overlap, "share_turnover": turn, "n_traded_out": out}
+
+
+def continuity(pre: dict, post: dict, pre_shares=None, post_shares=None) -> dict:
+    """Continuity measures for one wave. Pure function — unit-testable offline.
+
+    `pre`/`post` are security -> USD value. `pre_shares`/`post_shares` are
+    security -> share count; when supplied, the share-based measures are added
+    so a price move is not mistaken for a rebalancing (item 4).
+    """
     wp, wq = weights(pre), weights(post)
     if not wp or not wq:
         return {"name_jaccard": None, "weight_overlap": None,
@@ -80,13 +110,32 @@ def continuity(pre: dict, post: dict) -> dict:
     syy = sum((b - my) ** 2 for b in ys)
     corr = sxy / ((sxx * syy) ** 0.5) if sxx > 0 and syy > 0 else None
 
-    return {"name_jaccard": jac, "weight_overlap": overlap,
-            "weight_corr": corr, "turnover": turn,
-            "n_pre": len(wp), "n_post": len(wq), "note": ""}
+    out = {"name_jaccard": jac, "weight_overlap": overlap,
+           "weight_corr": corr, "turnover": turn,
+           "n_pre": len(wp), "n_post": len(wq), "note": ""}
+    if pre_shares is not None and post_shares is not None:
+        out.update(share_continuity(pre_shares, post_shares))
+        # A large weight move with almost no share move is a PRICE move.
+        if (out.get("share_overlap") is not None and overlap is not None
+                and out["share_overlap"] - overlap > 0.15):
+            out["note"] = ("weight shift exceeds share shift — likely a PRICE "
+                           "move, not rebalancing; classify on share_overlap")
+    return out
 
 
 def classify(overlap, turnover, floor=MAIN_FLOOR):
-    """Frozen ex-ante rule. Returns one of main / partial / not_a_wrapper_change."""
+    """Frozen ex-ante rule. Returns one of main / partial / not_a_wrapper_change.
+
+    **0.80 is an OPERATIONAL cutoff, not an economically natural discontinuity**
+    (v2.1, item 4). Nothing changes about a conversion at 0.7999 that does not
+    also hold at 0.8001. The bin exists so the sample rule is frozen before the
+    distribution is seen; it is NOT a claim that continuity is bimodal.
+
+    Therefore the deliverable is the CONTINUOUS distribution plus sensitivity at
+    0.70/0.80/0.90 — and, where power allows, the headline coefficient as a
+    smooth function of the continuity measure. `classify` is for sample
+    bookkeeping, never for a "high vs low continuity" economic contrast.
+    """
     if overlap is None:
         return "unknown"
     if overlap >= floor and (turnover is None or turnover <= 0.20):
@@ -94,6 +143,15 @@ def classify(overlap, turnover, floor=MAIN_FLOOR):
     if overlap >= PARTIAL_FLOOR:
         return "partial"
     return "not_a_wrapper_change"
+
+
+def cc_share_case():
+    """One position doubles in price, zero trading. Weights move, shares do not."""
+    pre_v  = {"AAA": 50.0, "BBB": 50.0}
+    post_v = {"AAA": 100.0, "BBB": 50.0}          # AAA doubled in price
+    pre_s  = {"AAA": 10.0, "BBB": 10.0}
+    post_s = {"AAA": 10.0, "BBB": 10.0}           # nothing traded
+    return continuity(pre_v, post_v, pre_s, post_s)
 
 
 def _selftest() -> int:
@@ -126,6 +184,14 @@ def _selftest() -> int:
     check("reweighted jaccard (misleading)", r["name_jaccard"], 1.0)
     check("reweighted weight_overlap", r["weight_overlap"], 0.2)
     check("reweighted turnover", r["turnover"], 0.8)
+
+    # share-based measures: a pure PRICE move must not read as rebalancing
+    r = cc_share_case()
+    check("price-move share_overlap", r["share_overlap"], 1.0)
+    check("price-move share_turnover", r["share_turnover"], 0.0)
+    good = "PRICE" in (r.get("note") or "")
+    print(f"  {'ok  ' if good else 'FAIL'} price-move flagged in note: {r.get('note')!r}")
+    ok = ok and good
 
     # classification boundaries
     for overlap, turn, want in [(0.95, 0.05, "main"), (0.80, 0.20, "main"),
