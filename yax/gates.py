@@ -34,6 +34,8 @@ PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
 PLAN = "yax/RESEARCH_PLAN_v4.md"
 SUPPORT = "yax/measurement/computerization_support_receipt.json"
+COMPMEAS = "yax/measurement/COMPUTERIZATION_MEASURES.csv"
+CONVERGENT_FLOOR = 0.20   # a control agreeing with no other control is suspect
 DEFAULT_TAG = "v1.0-design-freeze"
 
 # §5.2: a design whose power never falls is describing its own smoothness.
@@ -342,6 +344,67 @@ def gate_computerization(tag):
                   "and report partial variance, VIF, concentration and named support")
 
 
+def gate_convergent_validity(tag):
+    """Do the computerization measures agree with each other at all?
+
+    This gate exists because `computerization` was passed by a broken merge.
+    A control that failed to join is uncorrelated with the treatment, which
+    leaves the AI coefficient looking maximally identified -- so a null control
+    produces the *best* headroom the support gate can report. The support gate
+    cannot tell "clean identification" from "the control is noise".
+
+    Convergent validity can. Measures of the same construct must correlate with
+    each other. Webb pct_software, joined via occ1990dd, correlated -0.106 with
+    O*NET computer importance, -0.003 with O*NET level, -0.028 with RTI and
+    +0.104 with Frey-Osborne -- agreeing with nothing, while O*NET importance
+    and level agreed at +0.912 and RTI and Frey-Osborne at +0.448.
+    """
+    p = ROOT / COMPMEAS
+    if not p.is_file():
+        return Result("convergent_validity", "BLOCKED",
+                      f"{COMPMEAS} missing — Y1b has not run")
+    import csv as _csv
+    rows = list(_csv.DictReader(p.open(newline="", encoding="utf-8-sig")))
+    if not rows:
+        return Result("convergent_validity", "BLOCKED", "no rows")
+    names = [c for c in rows[0]
+             if any(w in c.lower() for w in ("webb", "onet_comp", "rti", "frey"))
+             and not c.endswith(("_covered_route_mass", "_partial_sum"))]
+    if len(names) < 2:
+        return Result("convergent_validity", "BLOCKED",
+                      f"fewer than two measures found: {names}")
+
+    def corr(a, b):
+        xs = [(float(r[a]), float(r[b])) for r in rows
+              if r.get(a) not in (None, "", "NA", "nan")
+              and r.get(b) not in (None, "", "NA", "nan")]
+        if len(xs) < 30:
+            return None
+        mx = sum(u for u, _ in xs) / len(xs)
+        my = sum(v for _, v in xs) / len(xs)
+        sxx = sum((u - mx) ** 2 for u, _ in xs)
+        syy = sum((v - my) ** 2 for _, v in xs)
+        sxy = sum((u - mx) * (v - my) for u, v in xs)
+        return sxy / math.sqrt(sxx * syy) if sxx > 0 and syy > 0 else None
+
+    orphans = []
+    for a in names:
+        best = max((abs(corr(a, b) or 0.0) for b in names if b != a), default=0.0)
+        if best < CONVERGENT_FLOOR:
+            orphans.append(f"{a} (best |r| {best:.3f})")
+    if orphans:
+        return Result("convergent_validity", "FAIL",
+                      f"these computerization measures agree with no other "
+                      f"measure of the same construct: {orphans}. Below "
+                      f"|r|={CONVERGENT_FLOOR}, suspect the merge before "
+                      f"reporting it as a finding — a control that failed to "
+                      f"join looks exactly like a control that is cleanly "
+                      f"orthogonal.")
+    return Result("convergent_validity", "PASS",
+                  f"every computerization measure agrees with at least one "
+                  f"other above |r|={CONVERGENT_FLOOR}")
+
+
 # ---------------------------------------------------------------- runner
 
 def run(power_aggregate=None, tag=DEFAULT_TAG):
@@ -359,6 +422,7 @@ def run(power_aggregate=None, tag=DEFAULT_TAG):
         gate_coverage_rule(agg),
         gate_novelty(tag),
         gate_computerization(tag),
+        gate_convergent_validity(tag),
         gate_plan_consistency(tag),
         gate_prespec_precedes_tag(tag),
         gate_freeze_doc(tag),

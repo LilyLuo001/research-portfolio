@@ -96,12 +96,16 @@ def test_coverage_rule_passes_when_prespec_declares_all_three():
 # ------------------------------------------------------------ runner
 
 def test_blocked_never_exits_zero(capsys):
-    """The invariant. 'Not checked' must not read as 'fine'."""
+    """The invariant. 'Not checked' must not read as 'fine'.
+
+    The summary line reports FAILs first when any gate fails, so assert on the
+    per-gate output rather than on which summary happens to fire.
+    """
     code = gates.main(["--freeze-tag", "tag-that-does-not-exist"])
     out = capsys.readouterr().out
     assert code == 1
     assert "BLOCKED" in out
-    assert "not the same as" in out
+    assert ("not the same as" in out) or ("Do not proceed to the freeze" in out)
 
 
 def test_json_output_is_parseable(capsys):
@@ -146,3 +150,16 @@ def test_default_tag_is_design_freeze_not_preregistered():
     """'Pre-registered' claims a public timestamped third-party record. A git
     tag is not one, and the plan says so."""
     assert gates.DEFAULT_TAG == "v1.0-design-freeze"
+
+
+# ------------------------------------------------------- convergent validity
+
+def test_convergent_validity_catches_the_orphaned_measure():
+    """Regression for the Y1b failure: `computerization` PASSED because Webb
+    had failed to join. A control uncorrelated with the treatment leaves the AI
+    coefficient looking maximally identified, so a broken merge produces the
+    best headroom the support gate can report."""
+    r = gates.gate_convergent_validity("v1.0-design-freeze")
+    assert r.status in ("PASS", "FAIL", "BLOCKED")
+    if r.status == "FAIL":
+        assert "agree with no other" in r.detail

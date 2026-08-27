@@ -302,6 +302,45 @@ substantive question from the student's advisor rather than from an unfavourable
 estimate, of which there are none. Every superseded plan version and the failed
 90% coverage receipt are preserved; the ordering is checkable in git history.
 
+## 13b. The Y1b convergent-validity failure — do not repeat it
+
+Y1b built five computerization measures and the `computerization` gate PASSed.
+Verification found that `webb_pct_software` correlates with **nothing**:
+
+| pair | r |
+|---|---:|
+| Webb × O\*NET computers importance | **−0.106** |
+| Webb × O\*NET computers level | **−0.003** |
+| Webb × RTI | **−0.028** |
+| Webb × Frey–Osborne | **+0.104** |
+| *O\*NET importance × O\*NET level* | *+0.912* |
+| *RTI × Frey–Osborne* | *+0.448* |
+
+The other four form a coherent cluster; Webb agrees with none of them. Its
+values are face-invalid too — freight laborers at 85 and mechanics at 91 while
+payroll clerks sit at 2 and writers at 5. **The occ1990dd merge is broken.**
+
+**The gate passed because of it.** A control that failed to join is
+uncorrelated with the treatment, which leaves the AI coefficient looking
+maximally identified — so a broken merge produces the *best* headroom the
+support gate can report. `gate_computerization` cannot distinguish clean
+identification from a control that is noise. `gate_convergent_validity` now
+can, and it FAILs.
+
+The reported conclusion that "computerization is not one interchangeable
+control" rests on this bug and is withdrawn until the merge is fixed.
+
+Two further items from the same run:
+
+- The diagnostics ran on a **13-month support, 2021-11 to 2022-11**, not the
+  66-month pre-period of the frozen design. Occupation counts across artifacts
+  now read 442, 445 and 490. Reconcile and state which support the freeze pins.
+- A discarded run used occupation weights from 2022-12 through 2023-02. No
+  outcome field was accessed, the output was overwritten before commit, and the
+  committed receipt rejects `month >= 2022-12-01` before any weight enters. The
+  seal held, the incident is recorded, and it is the correct way to handle a
+  near-miss.
+
 ## 14. Standing rules
 
 - LLM output is not a source of facts.
@@ -311,6 +350,11 @@ estimate, of which there are none. Every superseded plan version and the failed
 - A sentence describing a computed number must be checkable against the
   artifact that produced it.
 - State which statistic answers the question before computing one.
+- **A measure that agrees with no other measure of the same construct is a
+  suspected merge failure, not a finding.** Check convergent validity before
+  interpreting an orthogonal control — a control that failed to join looks
+  exactly like a control that is cleanly orthogonal, and it flatters every
+  identification statistic. Added after Y1b.
 - **A plan may not assert as settled anything its own later sections list as
   pending.** Added after v3 declared the joint design identified in §3.1 while
   §5–6 said the measures and the simulation were outstanding.
