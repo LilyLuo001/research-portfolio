@@ -57,7 +57,8 @@ Why offline-first
 This module never calls WRDS or any network resource.  It takes DataFrames so
 it can be unit-tested on synthetic data.  The actual pull happens in
 p1/wrds/pull.py; this module consumes whatever daily returns land in
-p1/wrds/raw/dsf.parquet.
+p1/wrds/raw/dsf__dsf.parquet (the pull writes
+<pull>__<part>.parquet, one immutable file per query).
 """
 from __future__ import annotations
 

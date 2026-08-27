@@ -1,103 +1,177 @@
-# P1 — the WRDS sprint runbook
+# P1 — the WRDS runbook for a ONE-DAY window
 
-**Premise** (`ops/briefs/WRDS-access-assessment.md`): WRDS is not a one-shot need,
-it is the spine of P1-T2→T5 and refraction R2/R10. But it collapses to five
-distinct pulls that can all be taken in one sitting and cached. Borrowing an
-account for **one concentrated 3–5 day window** beats a 3–6 week on/off rental —
-*provided every script is written before the account is live.* This is that
-runbook; the scripts are in `p1/wrds/`.
+**Rev 2, 2026-08-27.** Rev 1 assumed a 3–5 day borrowed window. The owner is
+renting **one day**, so this is rewritten as an execution sheet: an order, a
+clock, hard cut lines, and the decisions that must be settled *before* the
+account goes live rather than during it.
 
-## Before you book anything (all of this is already done, offline)
+Everything in `p1/wrds/` is written, tested offline and inert. The account is
+needed only for `discover` and `pull`.
 
-```bash
-python p1/wrds/universe.py        # what will be pulled, derived from committed files
-python p1/wrds/pull.py status     # what names are still unconfirmed
-python -m pytest p1/tests/test_wrds_layer.py -q
-```
+---
 
-`p1/wrds/pull_scope.json` is committed and is the sheet you hand to whoever books
-the account. As of 2026-08-18 it says: **6,747 CUSIPs** to map (2,241 with a
-computed ConvExp + 4,635 dropped for a missing denominator — those are treated
-stocks too, they lost a denominator, not a holding), **78 waves** from 2021-03-26
-to 2026-11-20, daily window **2020-03-04 .. today**, −250/+120 trading days
-around each effective date. Three waves are future-dated and have no post-window
-yet; they are flagged, not silently pulled.
+## The single sentence that governs the day
 
-## The one rule this package exists to enforce
+> A WRDS column name written from memory **does not raise — it returns a
+> different number.**
 
-A WRDS column name written from memory **does not raise — it returns a different
-number.** So nothing here builds SQL from a name until that exact name has been
-read off the live server. `p1/wrds/tables.yaml` states what each field must *mean*;
-its `candidates:` are unverified hints scraped from this repo's own history and
-confer nothing. `resolved:` is filled only by `pull.py resolve`, against the
-inventory `pull.py discover` reads from the server.
+So nothing builds SQL from a name until that name has been read off the live
+server. `tables.yaml` states what each field must *mean*; its `candidates:` are
+unverified hints and confer nothing. `resolved:` is filled only by
+`pull.py resolve` against the server's own inventory. Ships inert, and a test
+enforces that it ships inert.
 
-Ships inert: every `resolved:` is null, and a test enforces that.
+The corollary for a one-day window: **when the resolver refuses, do not guess to
+save time.** Open the WRDS web query tool in another tab, copy the real name,
+paste it. That costs two minutes. A wrong name costs the whole dataset, silently,
+and you find out weeks later.
 
-## The window itself
+---
+
+## Before the account goes live (do this today)
+
+### 1. Confirm the machine is ready
 
 ```bash
-export WRDS_USER=<username>          # case-sensitive
-python p1/wrds/pull.py discover      # server lists its own tables/columns
-python p1/wrds/pull.py resolve       # unique-candidate matches only; rest -> NEED_HUMAN
-python p1/wrds/pull.py status        # read the NEED_HUMAN list
+python p1/wrds/universe.py                    # the scope, derived offline
+python p1/wrds/pull.py status                 # everything BLOCKED is correct here
+python -m pytest p1/tests/test_wrds_layer.py p1/tests/test_wrds_verify.py -q
+pip install wrds pandas pyarrow               # `wrds` is only importable on a connected node
 ```
 
-Settle whatever `resolve` could not — **at the WRDS web query tool, not from
-memory** — by pasting real names into `tables.yaml`'s `resolved:` fields. The
-resolver deliberately refuses to pick when several candidates exist or none do;
-a "best match" heuristic there would reintroduce exactly the guessing this
-package prevents.
+`pull.py status` should report every pull BLOCKED with an empty inventory. That
+is the shipped state, not a problem.
 
-Then, **in this order** (order is load-bearing):
+### 2. Send the seller the four questions
 
-```bash
-python p1/wrds/pull.py pull --pull stock_names   # CUSIP -> PERMNO. small. FIRST.
-python p1/wrds/pull.py pull --pull mf_holdings
-python p1/wrds/pull.py pull --pull msf
-python p1/wrds/pull.py pull --pull dsf           # the big one, scoped by permno
-python p1/wrds/pull.py pull --pull taq_iid
-python p1/wrds/pull.py pull --pull ibes
-```
+They are at the bottom of `p1/wrds/TABLE-REQUEST.md`. Each one costs window time
+if discovered live and takes the seller one sentence:
 
-`stock_names` comes first because the universe is **endogenous** — it is whatever
-the converting funds held — so `msf`/`dsf` cannot be scoped until CUSIP→PERMNO
-has actually landed. Unscoped, the daily pull is the entire CRSP universe over
-six years: the 5–10 GB case instead of ~1–3 GB. The scripts refuse rather than
-run unscoped.
+1. delisting table names (`dsedelist`/`msedelist` or the CIZ-format equivalent)
+2. IBES adjusted (`statsum_epsus`) vs unadjusted (`statsumu_epsus`) — **for SUE
+   the unadjusted file is preferred**
+3. TAQ **WRDS Intraday Indicators** — present? keyed on symbol or permno?
+   covers 2019→2026 including small caps?
+4. `comp.fundq` / `comp.funda` are the **North America** files, not Global
 
-Use `--dry-run` first on each to read the SQL before it executes. Every pull
+### 3. Pre-record the one decision the resolver will refuse to make
+
+`crsp.stocknames` carries **both** `ncusip` and `cusip`, so `resolve` will report
+it ambiguous and stop. The answer is **`ncusip`** — the historical CUSIP valid
+over `[namedt, nameendt]`, which is what a point-in-time N-PORT holding must
+match. Reasoning is recorded as a `decision_hint` in `tables.yaml`. Paste it from
+the web query tool when asked.
+
+---
+
+## The window — an order and a clock
+
+Times are working estimates for planning the day, not measurements. The
+dependencies, however, are enforced in code: every downstream pull **refuses**
+with a `PULL ORDER` message rather than running unscoped.
+
+| # | step | est | why here |
+|---|---|---:|---|
+| 0 | `export WRDS_USER=<username>` (case-sensitive) | 2 m | |
+| 1 | `pull.py discover` | 10–20 m | the server lists its own tables/columns |
+| 2 | `pull.py resolve` then `pull.py status` | 10 m | unique-candidate matches only |
+| 3 | settle every `NEED_HUMAN` at the web query tool | 20–40 m | **the real variable** |
+| 4 | `pull --pull stock_names` | 5 m | CUSIP→PERMNO + ticker. **Everything waits on this.** |
+| 5 | **`python p1/wrds/verify.py`** | 1 m | ← **stop here if coverage FAILs** |
+| 6 | `pull --pull ccm_link` | 5 m | gvkeys, before any Compustat |
+| 7 | `pull --pull msf` | 10 m | small |
+| 8 | `pull --pull compustat` | 15 m | scoped by gvkey |
+| 9 | `pull --pull ibes` | 20 m | three parts, cusip-scoped |
+| 10 | `pull --pull mf_holdings` | 30 m | fund_header → name match → holdings |
+| 11 | **`pull --pull dsf`** | 60–120 m | the big one; ~1–3 GB scoped |
+| 12 | `pull --pull taq_iid` | 30–60 m | skip if CRSP bid/ask came back populated |
+| 13 | **`python p1/wrds/verify.py`** again | 2 m | the release gate |
+| 14 | commit `p1/wrds/raw/` + `tables.yaml` + lineage | 10 m | **before** releasing |
+
+Run `--dry-run` first on each pull to read the SQL before it executes. Every pull
 lands an immutable parquet under `p1/wrds/raw/` with a lineage JSON carrying the
 exact query, and refuses to overwrite (`--force` to replace deliberately).
+
+### Step 5 is not optional
+
+`verify.py` exists because of one asymmetry: a bad pull is cheap to fix while the
+account is live and needs a **second rental** afterwards. The check that matters
+most is `cusip->permno coverage`. If it FAILs, you almost certainly resolved
+`cusip` where you wanted `ncusip` — fix `tables.yaml`, `pull --force`, re-verify.
+Doing this at minute 40 costs five minutes. Doing it tomorrow costs a day.
+
+### If the clock runs out — the cut order
+
+Drop from the bottom up. Everything above a cut line is worth more than
+everything below it.
+
+| cut | what you lose |
+|---|---|
+| **never cut** `stock_names`, `dsf`, `dsi` | without these there is no paper at all — no permno, no returns, no benchmark |
+| `dsedelist` | spine two acquires survivorship bias. Cheap and fast; only cut in genuine emergency |
+| `taq_iid` | spine four's effective spread. **Free to cut if CRSP bid/ask came back populated** — `verify.py` tells you which world you are in |
+| `mf_holdings` (3 parts) | the CRSP cross-check on the free-path ConvExp. The free path already works; this validates it |
+| `msedelist` | only the monthly Jegadeesh reversal variable (§7, 2-7) |
+| `compustat.funda` | the §107 control match. Painful — but the intensity-tercile design (V-3, the *primary* spec) uses within-treated comparisons and does not need matched outside controls |
+
+**Do not cut `ccm_link` while keeping `compustat`** — the fundamentals pull is
+scoped by gvkey and will refuse without it.
+
+---
 
 ## Three questions discovery cannot answer
 
 Listing columns never tells you what a number *means*. These are flagged in
-`tables.yaml` and `pull` will hold on them until you pass
-`--accept-open-questions`:
+`tables.yaml` and `pull` holds on them until you pass `--accept-open-questions`.
+**Landing raw data with these open is fine. Computing a number from it is not.**
 
-1. **`shrout` units.** The existing scaffold multiplies by 1000. A 1000× error
-   here would not raise — it would move every exposure. Confirm against the WRDS
-   variable documentation.
-2. **Effective-spread convention** (dollar vs proportional, quote-matching rule)
-   behind whichever TAQ-IID field is chosen. This is also one of the ten
-   CITE_REQUEST items in `p1/t3_spec_preflight.md`.
+1. **`shrout` units.** The existing scaffold multiplies by 1000 (assumes
+   thousands). A 1000× error would not raise — it would move every exposure.
+2. **Effective-spread convention** behind whichever TAQ-IID field is chosen
+   (dollar vs proportional, quote-matching rule). Also CITE_REQUEST item in
+   `p1/t3_spec_preflight.md`.
 3. **SUE: analyst expectations vs time-series model.** The DECISION_NEEDED fork
-   named in `docs/Project_1.md` §125. The IBES pull supports the analyst branch;
-   the time-series branch needs Compustat quarterly earnings instead. Do not pick
-   one silently.
+   at `docs/Project_1.md` §125. This pull supports both branches — which is
+   exactly why it cannot pick.
 
-Landing raw data with these open is fine. Computing a *number* from it is not.
+Plus two added in rev 2:
 
-## After the window
+4. **CCM link filter.** The standard filter keeps `linktype in ('LU','LC')` and
+   `linkprim in ('P','C')` and applies `[linkdt, linkenddt]`. The pull
+   deliberately does **not** apply it (that would discard the rows needed to
+   audit the choice). Dropping the filter at merge time does not raise — it
+   duplicates firm-quarters through secondary and superseded links.
+5. **The fund-name match.** Converting funds are selected from `crsp.fund_hdr` by
+   normalised name, because `events_merged.csv` carries a real mutual-fund ticker
+   on 8 of 131 rows. The match set is written to
+   `raw/mf_holdings__matched_fundnos.json`. A zero match refuses; a **partial**
+   match cannot be detected automatically. Read the file.
 
-Release the account. Everything downstream (`conv_exposure` on permno,
-`outcomes_panel`, T4 replication, T5) runs off `p1/wrds/raw/`. Then:
+---
+
+## After the window — none of this needs the account
+
+Release it, then:
 
 - merge `p1/t2_free/conv_exposure_free_crosswalk.csv` to the landed
-  `stock_names` pull so the free-path ConvExp gains a permno key, and compare
-  the two ConvExp constructions — that comparison is a free validation of the
-  entire free path, and worth reporting either way it lands;
-- record the outcome in `ops/decisions.md`;
-- T3 still needs its literature package independently (`p1/t3_spec_preflight.md`)
-  — data access does not unblock the spec.
+  `stock_names` pull so the free-path ConvExp gains a permno key, and run
+  `python p1/reconcile/convexp_reconcile.py` — comparing the free EDGAR
+  construction against CRSP is a real credibility item, and worth reporting
+  whichever way it lands;
+- record `shrout` units, the spread convention, the SUE fork, the CCM filter and
+  the fund-match outcome in `ops/decisions.md`, **pre-outcome**;
+- T3 still needs its literature package independently
+  (`p1/t3_spec_preflight.md`) — data access does not unblock a spec.
+
+## What WRDS does *not* fix
+
+`p1/NON_WRDS_BLOCKERS.md` has the full list. The two that matter most for the
+sample, both needing `sec.gov` rather than WRDS:
+
+- **the recheck pool** — 111 event records / 66 funds parked by the owner gate at
+  `recheck`, of which 43 carry a verbatim effective date across 26 potential new
+  waves, 15 already with a complete +120-day post-window. See
+  `p1/EVENT-COUNT-AUDIT.md`. This is a larger lever on the event count than
+  anything in this runbook.
+- **the `asset_class` backlog** — blank on 25 of 131 events, so "36 equity_US" is
+  a floor.
