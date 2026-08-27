@@ -139,13 +139,38 @@ def test_seal_gate_reports_current_repository_state():
 
 # ------------------------------------------------------------ novelty
 
-def test_novelty_is_blocked_while_locators_are_outstanding():
+def _plan_saying(tmp_path, monkeypatch, body):
+    p = tmp_path / gates.PLAN
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(body, encoding="utf-8")
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+
+
+def test_novelty_is_blocked_while_locators_are_outstanding(tmp_path, monkeypatch):
     """Regression: an earlier version passed as soon as the plan stopped
     saying VERIFY BEFORE THE FREEZE, which rewriting a heading achieves
-    without resolving anything."""
+    without resolving anything. The heading here is already rewritten, so only
+    the leftover markers can block it."""
+    _plan_saying(tmp_path, monkeypatch, "## 9a. Position in the literature\n\n"
+                 "| Dallas Fed | reported; **locators outstanding** |\n")
     r = gates.gate_novelty("v1.0-preregistered")
     assert r.status == "BLOCKED"
-    assert "locators outstanding" in r.detail or "not yet searched" in r.detail
+    assert "locators outstanding" in r.detail
+
+
+def test_novelty_is_blocked_on_an_unsearched_registry(tmp_path, monkeypatch):
+    """The decisive question is the registry search, not the prose around it."""
+    _plan_saying(tmp_path, monkeypatch, "## 9a. Position in the literature\n\n"
+                 "| a pre-registered test | **not yet searched** |\n")
+    r = gates.gate_novelty("v1.0-preregistered")
+    assert r.status == "BLOCKED"
+    assert "not yet searched" in r.detail
+
+
+def test_novelty_passes_on_the_current_plan():
+    """§9a now carries locators and a recorded registry search."""
+    r = gates.gate_novelty("v1.0-preregistered")
+    assert r.status == "PASS"
 
 
 # ------------------------------------------------------------ computerization
