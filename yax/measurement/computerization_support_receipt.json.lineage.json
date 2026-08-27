@@ -1,33 +1,28 @@
 {
   "output": "yax/measurement/computerization_support_receipt.json",
-  "output_sha256": "02a379de837c09eff60256a29443efeef78e04f929855318cb7ed43168d340b2",
+  "output_sha256": "d4a254e44630623cb59eb9c8bf07bf103d226ae1259e6513626a07eb7e8f0303",
   "inputs": [
     {
       "path": "yax/measurement/computerization_support.py",
-      "sha256": "dc0ee70270283bc331610ef915f5804e4225654b5b4b7f2886a1d1f1e382cb07",
+      "sha256": "8479d01c5ddd9494150413ddba4b3753853b9f6487285661384ec215075c1c3e",
       "rows": null
     },
     {
-      "path": "yax/measurement/dingel_neiman_occ.csv",
-      "sha256": "42ff3ae084478b554526671710b53a16d39f88c3eebb24f56f46372d7243bd40",
+      "path": "yax/measurement/COMPUTERIZATION_MEASURES.csv",
+      "sha256": "0f003c4ba8d79337b6bd1248d6f1601572fb403f5c4619c19d3653c140b0ad3b",
       "rows": null
     },
     {
-      "path": "yax/measurement/eloundou_occ.csv",
-      "sha256": "40c74f53de40aec91c0017d80690cbba915f83a8bb414bcf2f884692f1749acb",
+      "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+      "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
       "rows": null
     },
     {
-      "path": "yax/measurement/AIOE_DataAppendix.xlsx",
-      "sha256": "c123b4c64840aff3568ae6c97256678719b88a74d45b6362dbefb5af34667b95",
-      "rows": null
-    },
-    {
-      "path": "dax/data_built/oews_wages.parquet",
-      "sha256": "3d6ef51fab6e0aeb20e1295f297acd63ff692ffa4178f7b84a3cd01851e2526a",
+      "path": "yax/measurement/sources/exposure_by_occ1990dd_lswt2010.xls",
+      "sha256": "c5652fd3f862948cb77d87f38aa8296137c51e028992ab54e57246a066e0a779",
       "rows": null
     }
   ],
-  "code_version": "0e0c6d3a63a6fd31ef4eb5de28eb30778e16ae84",
-  "timestamp": "2026-08-26T05:29:13.179246+00:00"
+  "code_version": "e140f898039432094d4a19b5848476d7389745d9",
+  "timestamp": "2026-08-27T00:27:48.880710+00:00"
 }

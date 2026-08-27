@@ -307,23 +307,39 @@ def gate_computerization(tag):
         return Result("computerization", "BLOCKED",
                       "support check still runs on the teleworkability PROXY. "
                       "Obtain Webb (2020) software exposure, Frey-Osborne, RTI "
-                      "and archived O*NET 'Working with Computers', crosswalk "
+                      "and archived O*NET 'Interacting With Computers', crosswalk "
                       "them, and re-run — see briefs/Y1b_computerization.md.")
-    weak = []
-    for name, m in rec.get("measures", {}).items():
-        ident = m.get("identification") or {}
-        head = ident.get("headroom")
-        if head is not None and head < 1.5:
-            weak.append(f"{name} headroom {head:.1f}x")
-    if weak:
-        return Result("computerization", "FAIL",
-                      f"conditional identification is thin: {weak}. Per plan §6 "
-                      f"the chapter's conclusion becomes that public data cannot "
-                      f"separately attribute the pattern — report that rather "
-                      f"than a decomposition.")
+    required_measures = {
+        "webb_pct_software", "onet_computers_importance",
+        "onet_computers_level", "rti_autor_dorn",
+        "frey_osborne_probability",
+    }
+    present = set(rec.get("computerization_measures", []))
+    missing = sorted(required_measures - present)
+    if missing:
+        return Result("computerization", "BLOCKED",
+                      f"real-measure receipt is missing {missing}")
+    pairs = rec.get("pairs") or []
+    expected = len(rec.get("ai_measures", [])) * len(required_measures)
+    if len(pairs) != expected:
+        return Result("computerization", "BLOCKED",
+                      f"receipt has {len(pairs)} AI×computerization pairs; "
+                      f"expected {expected}")
+    required_statistics = {
+        "correlation", "partial_variance_of_ai", "vif", "se_inflation",
+        "effective_number_identifying_ai", "common_support_employment_share",
+        "residual_variation_by_soc_major_group", "named_divergence_occupations",
+    }
+    incomplete = [
+        f"{pair.get('ai_measure')}×{pair.get('computerization_measure')}"
+        for pair in pairs if not required_statistics <= set(pair)
+    ]
+    if incomplete:
+        return Result("computerization", "BLOCKED",
+                      f"pairs missing required diagnostics: {incomplete[:3]}")
     return Result("computerization", "PASS",
-                  "support check run against real computerization measures; "
-                  "conditional headroom adequate for every measure")
+                  f"{len(pairs)} AI×computerization pairs use real measures "
+                  "and report partial variance, VIF, concentration and named support")
 
 
 # ---------------------------------------------------------------- runner

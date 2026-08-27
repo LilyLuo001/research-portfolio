@@ -130,10 +130,10 @@ def test_novelty_is_blocked_while_locators_are_outstanding():
 
 # ------------------------------------------------------------ computerization
 
-def test_computerization_gate_blocks_while_measures_are_missing():
+def test_computerization_gate_passes_only_on_complete_real_measure_receipt():
     r = gates.gate_computerization("v1.0-preregistered")
-    assert r.status in ("BLOCKED", "FAIL")
-    assert "Webb" in r.detail or "proxy" in r.detail
+    assert r.status == "PASS"
+    assert "AI×computerization pairs" in r.detail
 
 
 # ------------------------------------------------------------ plan consistency
