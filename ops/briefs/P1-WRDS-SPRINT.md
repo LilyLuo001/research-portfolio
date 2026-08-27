@@ -86,11 +86,38 @@ with a `PULL ORDER` message rather than running unscoped.
 | 11 | **`pull --pull dsf`** | 60–120 m | the big one; ~1–3 GB scoped |
 | 12 | `pull --pull taq_iid` | 30–60 m | skip if CRSP bid/ask came back populated |
 | 13 | **`python p1/wrds/verify.py`** again | 2 m | the release gate |
-| 14 | commit `p1/wrds/raw/` + `tables.yaml` + lineage | 10 m | **before** releasing |
+| 14 | commit provenance — see below | 10 m | **before** releasing |
 
 Run `--dry-run` first on each pull to read the SQL before it executes. Every pull
 lands an immutable parquet under `p1/wrds/raw/` with a lineage JSON carrying the
 exact query, and refuses to overwrite (`--force` to replace deliberately).
+
+### Step 14 — what is committed, and where the data has to live
+
+**The raw parquets are licensed CRSP/Compustat/IBES rows and must never reach the
+repository.** `p1/wrds/raw/*` is gitignored and a policy test enforces it. What
+*is* committed, and must be, before the account goes back:
+
+```bash
+python p1/wrds/verify.py --json > p1/wrds/verify_report.json
+git add p1/wrds/tables.yaml            # the resolved names — the day's real product
+git add p1/wrds/raw/*.lineage.json     # exact SQL + row count per landed file
+git add p1/wrds/raw/mf_holdings__matched_fundnos.json
+git add p1/wrds/verify_report.json
+```
+
+The `.lineage.json` sidecars are provenance, not data — each carries the exact
+query, the row count and the code version behind one parquet. They are
+deliberately negated out of the ignore rule, because a pull with no committed
+locator fails meta-rule 1.
+
+**This implies where the pull must run.** Since `raw/` cannot travel through git,
+the machine that pulls has to be the machine that later computes the outcomes, or
+share storage with it. Decide that before the day starts — the always-on box has
+been down since 2026-07-10 (`ops/briefs/PORTFOLIO-REVIEW-AND-PLAN-2026-08-19.md`
+deviation D1), so "pull it on the box" is not currently an answer. A local
+machine with ~5 GB free and the repo checked out is fine; an ephemeral container
+is not.
 
 ### Step 5 is not optional
 

@@ -72,6 +72,29 @@ def test_a_raw_pull_would_actually_be_ignored(tmp_path):
         assert r.returncode == 0, "%s would NOT be ignored" % candidate
 
 
+def test_wrds_raw_pulls_are_ignored_but_their_provenance_is_not():
+    """Licensed rows stay box-local; the locator that proves them must not.
+
+    Each landed parquet gets a `.lineage.json` carrying the exact SQL, the row
+    count and the code version. That sidecar is provenance, not data, and
+    meta-rule 1 requires it to exist somewhere durable. The gitignore parent has
+    to be `p1/wrds/raw/*`, not `p1/wrds/raw/` — git does not reconsider files
+    inside an excluded DIRECTORY, so a negation under the latter never fires and
+    the sidecars would vanish silently.
+    """
+    ignored = "p1/wrds/raw/dsf__dsf.parquet"
+    kept = ["p1/wrds/raw/dsf__dsf.parquet.lineage.json",
+            "p1/wrds/raw/mf_holdings__matched_fundnos.json"]
+    r = subprocess.run(["git", "-C", str(ROOT), "check-ignore", "-q", ignored])
+    assert r.returncode == 0, "%s must be ignored — it is licensed CRSP data" % ignored
+    for path in kept:
+        r = subprocess.run(["git", "-C", str(ROOT), "check-ignore", "-q", path])
+        assert r.returncode != 0, (
+            "%s is ignored, so the pull would land with no committed locator. "
+            "Check that .gitignore excludes `p1/wrds/raw/*` (with the star) so "
+            "the negations below it can fire." % path)
+
+
 def test_readme_states_the_policy():
     txt = (ROOT / "p1" / "t2_wrds" / "README.md").read_text()
     for phrase in ("May NOT be committed", "manifest of query locators",
