@@ -77,6 +77,50 @@ def preperiod_mass(path):
     return dict(mass), sorted(months), sorted(excluded_months)
 
 
+def design_preperiod_mass(path, lookup_role):
+    """Employment support for the frozen 66-month target-occupation panel.
+
+    The input contract is already aggregated and pre-period-only.  We still
+    reject rows at or after the event before reading their employment count.
+    The two-age grouped-binomial estimator retains only occupations with
+    positive total support in both age groups; this reproduces its 490-cluster
+    support from the 492 codes present in the raw cell artifact.
+    """
+    by_age = defaultdict(lambda: defaultdict(float))
+    months = set()
+    excluded_months = set()
+    with pathlib.Path(path).open(newline="", encoding="utf-8-sig") as handle:
+        reader = csv.DictReader(handle)
+        required = {"month", "lookup_role", "occ_code", "age_group",
+                    "employment_headcount"}
+        missing = required - set(reader.fieldnames or [])
+        if missing:
+            raise ValueError(f"design support missing fields {sorted(missing)}")
+        for row in reader:
+            month = row["month"] + ("-01" if len(row["month"]) == 7 else "")
+            if month >= POST_START:
+                excluded_months.add(month)
+                continue
+            if row["lookup_role"] != lookup_role:
+                continue
+            age = row["age_group"]
+            if age not in {"young_22_25", "older_26_65"}:
+                raise ValueError(f"unexpected age group {age!r}")
+            by_age[row["occ_code"].zfill(4)][age] += float(row["employment_headcount"])
+            months.add(month)
+    raw_codes = len(by_age)
+    mass = {
+        code: values["young_22_25"] + values["older_26_65"]
+        for code, values in by_age.items()
+        if values["young_22_25"] > 0 and values["older_26_65"] > 0
+    }
+    return mass, sorted(months), sorted(excluded_months), {
+        "raw_occupation_codes": raw_codes,
+        "balanced_two_age_occupation_codes": len(mass),
+        "balance_rule": "positive 66-month employment support in both age groups",
+    }
+
+
 def weighted_projection(x, c, w):
     total = sum(w)
     mean_x = sum(wi * xi for xi, wi in zip(x, w)) / total
@@ -186,37 +230,27 @@ def webb_missing(webb_path, dorn_crosswalk_path, mass, total_mass):
 
 
 def build(args):
-    mass, months, excluded_months = preperiod_mass(args.preperiod_cells)
-    total_mass = sum(mass.values())
-    ai_rows = [row for row in rows(args.ai_lookup)
-               if row["lookup_role"] == LOOKUP_ROLE]
-    ai = {
-        name: {row["occ_code"].zfill(4): number(row[name]) for row in ai_rows
-               if number(row.get(name)) is not None}
-        for name in AI_MEASURES
-    }
-    comp_rows = rows(args.computerization)
-    comp = {}
-    for row in comp_rows:
-        code = row["cps_occ2010"].zfill(4)
-        comp[code] = {**row, **{name: number(row.get(name))
-                               for name in COMPUTERIZATION_MEASURES}}
-    pairs = []
-    for ai_name in AI_MEASURES:
-        for comp_name in COMPUTERIZATION_MEASURES:
-            comp_available = {code: row for code, row in comp.items()
-                              if row[comp_name] is not None}
-            pairs.append(analyse_pair(ai_name, comp_name, ai[ai_name], comp_available,
-                                      mass, total_mass))
-    missing = webb_missing(args.webb, args.dorn_crosswalk_csv, mass, total_mass)
-    receipt = {
-        "record_version": "yax-computerization-support-v2",
-        "status": "PASS_REAL_COMPUTERIZATION_MEASURES",
-        "question": "How much AI-exposure variance remains after conditioning on prior computerization?",
-        "identification_statistic": "employment-weighted partial variance of AI, 1-R_squared",
-        "scope": "outcome-blind preperiod occupation support; no post-period outcome opened",
-        "post_event_outcomes_opened": False,
-        "execution_correction": {
+    if args.support_kind == "design_cells":
+        mass, months, excluded_months, support_extra = design_preperiod_mass(
+            args.preperiod_cells, args.lookup_role)
+        preperiod_outcomes_read = True
+    else:
+        mass, months, excluded_months = preperiod_mass(args.preperiod_cells)
+        support_extra = {}
+        preperiod_outcomes_read = False
+    support_rule = (
+        "month < 2022-12-01; raw target codes retained only with positive "
+        "66-month support in both frozen age groups"
+        if args.support_kind == "design_cells"
+        else "month < 2022-12-01; only cps_occ/month/weight_sum accessed"
+    )
+    correction = (
+        {
+            "supersedes_13_month_diagnostic": True,
+            "reason": "freeze uses the 66-month target-occupation design support",
+        }
+        if args.support_kind == "design_cells"
+        else {
             "discarded_initial_support_run": True,
             "reason": (
                 "the private file labelled preperiod also contained 2022-12 "
@@ -227,7 +261,40 @@ def build(args):
                 "the output was overwritten before commit; this receipt rejects "
                 "month >= 2022-12-01 before any survey weight enters the support"
             ),
-        },
+        }
+    )
+    total_mass = sum(mass.values())
+    ai_rows = [row for row in rows(args.ai_lookup)
+               if row["lookup_role"] == args.lookup_role]
+    ai = {
+        name: {row["occ_code"].zfill(4): number(row[name]) for row in ai_rows
+               if number(row.get(name)) is not None}
+        for name in AI_MEASURES
+    }
+    comp_rows = rows(args.computerization)
+    comp = {}
+    for row in comp_rows:
+        code = row[args.computerization_code_field].zfill(4)
+        comp[code] = {**row, **{name: number(row.get(name))
+                               for name in COMPUTERIZATION_MEASURES}}
+    pairs = []
+    for ai_name in AI_MEASURES:
+        for comp_name in COMPUTERIZATION_MEASURES:
+            comp_available = {code: row for code, row in comp.items()
+                              if row[comp_name] is not None}
+            pairs.append(analyse_pair(ai_name, comp_name, ai[ai_name], comp_available,
+                                      mass, total_mass))
+    missing = (webb_missing(args.webb, args.dorn_crosswalk_csv, mass, total_mass)
+               if args.computerization_code_field == "cps_occ2010" else [])
+    receipt = {
+        "record_version": "yax-computerization-support-v2",
+        "status": "PASS_REAL_COMPUTERIZATION_MEASURES",
+        "question": "How much AI-exposure variance remains after conditioning on prior computerization?",
+        "identification_statistic": "employment-weighted partial variance of AI, 1-R_squared",
+        "scope": "outcome-blind preperiod occupation support; no post-period outcome opened",
+        "post_event_outcomes_opened": False,
+        "preperiod_outcomes_read": preperiod_outcomes_read,
+        "execution_correction": correction,
         "inputs": {
             "ai_lookup": {"path": str(args.ai_lookup), "sha256": sha256(args.ai_lookup)},
             "computerization": {"path": str(args.computerization),
@@ -243,8 +310,11 @@ def build(args):
             "last_month": months[-1] if months else None,
             "post_start": POST_START,
             "excluded_post_months": excluded_months,
-            "support_rule": "month < 2022-12-01; only cps_occ/month/weight_sum accessed",
+            "support_rule": support_rule,
             "occupation_codes": len(mass), "employment_weight": total_mass,
+            "lookup_role": args.lookup_role,
+            "computerization_code_field": args.computerization_code_field,
+            **support_extra,
         },
         "ai_measures": list(AI_MEASURES),
         "computerization_measures": list(COMPUTERIZATION_MEASURES),
@@ -269,6 +339,10 @@ def main(argv=None):
     parser.add_argument("--preperiod-cells", type=pathlib.Path, required=True)
     parser.add_argument("--webb", type=pathlib.Path, required=True)
     parser.add_argument("--dorn-crosswalk-csv", type=pathlib.Path, required=True)
+    parser.add_argument("--support-kind", choices=("legacy_weight_cells", "design_cells"),
+                        default="legacy_weight_cells")
+    parser.add_argument("--lookup-role", default=LOOKUP_ROLE)
+    parser.add_argument("--computerization-code-field", default="cps_occ2010")
     parser.add_argument("--output", type=pathlib.Path,
                         default=here / "computerization_support_receipt.json")
     args = parser.parse_args(argv)

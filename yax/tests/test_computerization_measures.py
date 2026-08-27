@@ -101,3 +101,22 @@ def test_direct_dorn_uses_software_and_documented_rti_formula():
     )
     assert rows["0010"]["webb_pct_software"] == 80
     assert abs(rows["0010"]["rti_autor_dorn"]) < 1e-12
+
+
+def test_direct_target_merge_fails_closed_when_sources_disagree():
+    direct = {
+        "0010": {"webb_pct_software": 10.0, "rti_autor_dorn": 2.0},
+        "0020": {"webb_pct_software": 20.0, "rti_autor_dorn": 2.0},
+    }
+    bridge = [
+        {"census_2010": "0010", "census_2018": "0015",
+         "soc_2018_pattern": "11-1011"},
+        {"census_2010": "0020", "census_2018": "0015",
+         "soc_2018_pattern": "11-1011"},
+    ]
+    row = B.direct_to_census2018(
+        direct, bridge, ("webb_pct_software", "rti_autor_dorn"))["0015"]
+    assert row["webb_pct_software"] is None
+    assert row["webb_pct_software_harmonization"] == "merge_ambiguous_fail_closed"
+    assert row["rti_autor_dorn"] == 2.0
+    assert row["rti_autor_dorn_harmonization"] == "merge_equal_source_scores"

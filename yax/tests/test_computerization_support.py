@@ -48,3 +48,21 @@ def test_preperiod_mass_rejects_post_rows_before_weighting(tmp_path):
     assert mass == {"0010": 10}
     assert months == ["2022-11-01"]
     assert excluded == ["2022-12-01"]
+
+
+def test_design_support_reproduces_balanced_two_age_rule(tmp_path):
+    path = tmp_path / "design.csv"
+    with path.open("w", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["month", "lookup_role", "occ_code", "age_group",
+                         "employment_headcount"])
+        writer.writerow(["2017-01", "role", "10", "young_22_25", "2"])
+        writer.writerow(["2017-01", "role", "10", "older_26_65", "8"])
+        writer.writerow(["2017-01", "role", "20", "older_26_65", "4"])
+        writer.writerow(["2022-12", "role", "10", "young_22_25", "999"])
+    mass, months, excluded, meta = C.design_preperiod_mass(path, "role")
+    assert mass == {"0010": 10}
+    assert months == ["2017-01-01"]
+    assert excluded == ["2022-12-01"]
+    assert meta["raw_occupation_codes"] == 2
+    assert meta["balanced_two_age_occupation_codes"] == 1

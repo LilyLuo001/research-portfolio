@@ -35,6 +35,22 @@
     "cps_bridge": {
       "path": "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
       "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+    },
+    "census_conversion": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/occupation_crosswalks/census_2010_to_2018_occ_conversion_rates.xlsx",
+      "sha256": "73a8db545d5c484fd1f8ecd9745d0a08b51113b8a37e99dea2df55aeb08cb74d"
+    },
+    "census2010_code_list": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census_occ_titles/2010-occ-codes-with-crosswalk-from-2002-2011.xlsx",
+      "sha256": "7abd5b7c3d338247335ea7aa4713a16989393fbefaef5c01c0c41802a9550e65"
+    },
+    "census2010_code_list_source": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census_occ_titles/2010-occ-codes-with-crosswalk-from-2002-2011.xls",
+      "sha256": "ebf7e6f31c0cda16c7c8518a23bfa13ca537105ba41c427f99dff155a68c2cc6"
+    },
+    "census2018_code_list": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census_occ_titles/2018-occupation-code-list-and-crosswalk.xlsx",
+      "sha256": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f"
     }
   },
   "source_locators": {
@@ -46,7 +62,9 @@
     "onet_archive": "https://www.onetcenter.org/db_releases.html",
     "onet24_text": "https://www.onetcenter.org/dl_files/database/db_24_3_text.zip",
     "bls_soc_crosswalk": "https://www.bls.gov/soc/2018/soc_2010_to_2018_crosswalk.xlsx",
-    "frey_osborne": "https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf"
+    "frey_osborne": "https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf",
+    "census2010_code_list": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2010-occ-codes-with-crosswalk-from-2002-2011.xls",
+    "census2018_code_list": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2018-occupation-code-list-and-crosswalk.xlsx"
   },
   "webb": {
     "measure": "pct_software",
@@ -121,7 +139,7 @@
   },
   "output": {
     "path": "yax/measurement/COMPUTERIZATION_MEASURES.csv",
-    "sha256": "0f003c4ba8d79337b6bd1248d6f1601572fb403f5c4619c19d3653c140b0ad3b",
+    "sha256": "ae354accb99aee1185f2f62839ad3fd059dc583187305d7abe4b4dbbebbcda4c",
     "rows": 522,
     "complete_codes": {
       "webb_pct_software": 482,
@@ -129,6 +147,18 @@
       "onet_computers_level": 447,
       "rti_autor_dorn": 467,
       "frey_osborne_probability": 418
+    }
+  },
+  "census2018_output": {
+    "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+    "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "rows": 568,
+    "complete_codes": {
+      "webb_pct_software": 512,
+      "onet_computers_importance": 518,
+      "onet_computers_level": 518,
+      "rti_autor_dorn": 496,
+      "frey_osborne_probability": 478
     }
   }
 }

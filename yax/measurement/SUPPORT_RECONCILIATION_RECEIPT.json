@@ -1,0 +1,925 @@
+{
+  "record_version": "yax-support-reconciliation-v1",
+  "status": "PASS_SUPPORTS_RECONCILED_AND_PRIMARY_PINNED",
+  "post_event_outcomes_opened": false,
+  "inputs": {
+    "thirteen_month_receipt": {
+      "path": "yax/measurement/computerization_support_13m_receipt.json",
+      "sha256": "d4a254e44630623cb59eb9c8bf07bf103d226ae1259e6513626a07eb7e8f0303"
+    },
+    "sixty_six_month_receipt": {
+      "path": "yax/measurement/computerization_support_receipt.json",
+      "sha256": "196de768f28dc4c2f9637a06633de218e8fd0a18c059107a145cfdb58d144c33"
+    },
+    "design_cells_receipt": {
+      "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1_receipt.json",
+      "sha256": "60ef90f11186fd0e6e8159099bcbd2d31c41d72652ecf54484884cd4c24dce70"
+    }
+  },
+  "counts": {
+    "490": {
+      "meaning": "balanced two-age Census-2018 target clusters used by the power design",
+      "derivation": "492 raw target codes minus codes without positive 66-month support in both age groups"
+    },
+    "445": {
+      "meaning": "OCC2010 codes observed in the older 13-month moment artifact",
+      "derivation": "current valid occupation for employed people or most recent prior valid occupation within 15 months for non-employed people"
+    },
+    "442": {
+      "meaning": "the 445 older-support OCC2010 codes carrying a Webb score",
+      "derivation": "445 minus the three Webb-unscored source occupations"
+    }
+  },
+  "comparison_warning": "13m-to-66m changes combine horizon, occupation vintage, balance rule and weight definition; they are not a pure calendar-window experiment",
+  "pinned_primary_support": {
+    "name": "66-month balanced Census-2018 target-occupation design cells",
+    "months": 66,
+    "first_month": "2017-01-01",
+    "last_month": "2022-11-01",
+    "occupation_clusters": 490,
+    "lookup_role": "raw_occ_main_2020_plus",
+    "cells_sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "cells_receipt_status": "FAIL_PRIMARY_EXPOSURE_COVERAGE",
+    "coverage_gate_pass": false,
+    "role": "primary design support; OCC2010 remains a sensitivity support"
+  },
+  "comparisons": [
+    {
+      "ai_measure": "aioe_admin_equal",
+      "computerization_measure": "webb_pct_software",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9675408413126328,
+        "vif": 1.0335481018489419,
+        "se_inflation": 1.0166356780326677,
+        "effective_number_identifying_ai": 62.33498221968499,
+        "common_support_employment_share": 0.9702864158084671
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9490865284365787,
+        "vif": 1.0536447099794901,
+        "se_inflation": 1.0264719723302191,
+        "effective_number_identifying_ai": 72.18791275532098,
+        "common_support_employment_share": 0.9793192317713445
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.018454312876054146,
+        "vif": 0.020096608130548255,
+        "se_inflation": 0.009836294297551396,
+        "effective_number_identifying_ai": 9.852930535635991,
+        "common_support_employment_share": 0.009032815962877416
+      }
+    },
+    {
+      "ai_measure": "aioe_admin_equal",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.2960341211818701,
+        "vif": 3.377988983187667,
+        "se_inflation": 1.8379306252379786,
+        "effective_number_identifying_ai": 54.70983768625399,
+        "common_support_employment_share": 0.8849569489924526
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.27928960867326375,
+        "vif": 3.5805127328238098,
+        "se_inflation": 1.8922242818502806,
+        "effective_number_identifying_ai": 72.99418978475843,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.01674451250860637,
+        "vif": 0.20252374963614272,
+        "se_inflation": 0.05429365661230201,
+        "effective_number_identifying_ai": 18.284352098504442,
+        "common_support_employment_share": 0.06894421557172015
+      }
+    },
+    {
+      "ai_measure": "aioe_admin_equal",
+      "computerization_measure": "onet_computers_level",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.483385652741019,
+        "vif": 2.0687415820671133,
+        "se_inflation": 1.4383120600436865,
+        "effective_number_identifying_ai": 55.58494071658096,
+        "common_support_employment_share": 0.8849569489924526
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.4558756455191171,
+        "vif": 2.193580661369341,
+        "se_inflation": 1.4810741579574402,
+        "effective_number_identifying_ai": 77.296457978571,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.027510007221901944,
+        "vif": 0.1248390793022276,
+        "se_inflation": 0.04276209791375374,
+        "effective_number_identifying_ai": 21.71151726199004,
+        "common_support_employment_share": 0.06894421557172015
+      }
+    },
+    {
+      "ai_measure": "aioe_admin_equal",
+      "computerization_measure": "rti_autor_dorn",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9890513275884155,
+        "vif": 1.0110698728227587,
+        "se_inflation": 1.0055197028515943,
+        "effective_number_identifying_ai": 58.27365320074848,
+        "common_support_employment_share": 0.9601332499616049
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9739661552560085,
+        "vif": 1.0267297221813096,
+        "se_inflation": 1.0132767253723485,
+        "effective_number_identifying_ai": 62.84327539845372,
+        "common_support_employment_share": 0.9646966835962556
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.015085172332407026,
+        "vif": 0.015659849358550915,
+        "se_inflation": 0.007757022520754164,
+        "effective_number_identifying_ai": 4.569622197705243,
+        "common_support_employment_share": 0.0045634336346507265
+      }
+    },
+    {
+      "ai_measure": "aioe_admin_equal",
+      "computerization_measure": "frey_osborne_probability",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.910225046544158,
+        "vif": 1.0986294035707869,
+        "se_inflation": 1.048155238297642,
+        "effective_number_identifying_ai": 47.364292907163325,
+        "common_support_employment_share": 0.7933335846795768
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.8719628273151087,
+        "vif": 1.1468378796366068,
+        "se_inflation": 1.070905168367679,
+        "effective_number_identifying_ai": 63.78187635573814,
+        "common_support_employment_share": 0.8949314402176939
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.03826221922904938,
+        "vif": 0.048208476065819905,
+        "se_inflation": 0.022749930070036894,
+        "effective_number_identifying_ai": 16.417583448574817,
+        "common_support_employment_share": 0.10159785553811707
+      }
+    },
+    {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "webb_pct_software",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9644663986250204,
+        "vif": 1.0368427572237224,
+        "se_inflation": 1.0182547604719177,
+        "effective_number_identifying_ai": 61.227826140190416,
+        "common_support_employment_share": 0.9190538761610882
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9516194536604752,
+        "vif": 1.0508402241604304,
+        "se_inflation": 1.025104982019125,
+        "effective_number_identifying_ai": 74.59316526421532,
+        "common_support_employment_share": 0.9503616878183168
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.012846944964545193,
+        "vif": 0.013997466936708003,
+        "se_inflation": 0.006850221547207269,
+        "effective_number_identifying_ai": 13.3653391240249,
+        "common_support_employment_share": 0.03130781165722851
+      }
+    },
+    {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.30813906306391864,
+        "vif": 3.2452879880165195,
+        "se_inflation": 1.801468286708517,
+        "effective_number_identifying_ai": 35.11542011736457,
+        "common_support_employment_share": 0.8744273493345577
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.28302420610073625,
+        "vif": 3.5332666904260193,
+        "se_inflation": 1.879698563713347,
+        "effective_number_identifying_ai": 77.76207663568225,
+        "common_support_employment_share": 0.9371177307540559
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.025114856963182386,
+        "vif": 0.28797870240949974,
+        "se_inflation": 0.07823027700482998,
+        "effective_number_identifying_ai": 42.64665651831768,
+        "common_support_employment_share": 0.06269038141949823
+      }
+    },
+    {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "onet_computers_level",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.46362203327121176,
+        "vif": 2.156929412832749,
+        "se_inflation": 1.4686488391827195,
+        "effective_number_identifying_ai": 42.04411361698039,
+        "common_support_employment_share": 0.8744273493345577
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.43499072926921606,
+        "vif": 2.2988995689172476,
+        "se_inflation": 1.5162122440203574,
+        "effective_number_identifying_ai": 82.15964231710244,
+        "common_support_employment_share": 0.9371177307540559
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.028631304001995705,
+        "vif": 0.14197015608449837,
+        "se_inflation": 0.04756340483763788,
+        "effective_number_identifying_ai": 40.11552870012205,
+        "common_support_employment_share": 0.06269038141949823
+      }
+    },
+    {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "rti_autor_dorn",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9867360062978638,
+        "vif": 1.0134422921809667,
+        "se_inflation": 1.0066987097344302,
+        "effective_number_identifying_ai": 60.324082233807,
+        "common_support_employment_share": 0.9097617763484367
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.976929919094914,
+        "vif": 1.0236148780523167,
+        "se_inflation": 1.0117385423380472,
+        "effective_number_identifying_ai": 68.24398675572999,
+        "common_support_employment_share": 0.9371131946211029
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.009806087202949842,
+        "vif": 0.010172585871349948,
+        "se_inflation": 0.005039832603616956,
+        "effective_number_identifying_ai": 7.919904521922994,
+        "common_support_employment_share": 0.027351418272666184
+      }
+    },
+    {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "frey_osborne_probability",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.8901472594740337,
+        "vif": 1.1234096261677822,
+        "se_inflation": 1.0599101972185108,
+        "effective_number_identifying_ai": 41.228563122647635,
+        "common_support_employment_share": 0.7867284665866667
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.8608086689587535,
+        "vif": 1.1616983379240526,
+        "se_inflation": 1.077821106642495,
+        "effective_number_identifying_ai": 59.285677070518,
+        "common_support_employment_share": 0.881203550771554
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.029338590515280205,
+        "vif": 0.038288711756270466,
+        "se_inflation": 0.01791090942398421,
+        "effective_number_identifying_ai": 18.057113947870363,
+        "common_support_employment_share": 0.09447508418488726
+      }
+    },
+    {
+      "ai_measure": "aioe_oews2018_source_weighted",
+      "computerization_measure": "webb_pct_software",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9619009763845586,
+        "vif": 1.0396080517130173,
+        "se_inflation": 1.019611716151309,
+        "effective_number_identifying_ai": 62.97147031788953,
+        "common_support_employment_share": 0.9541080499029648
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9422797367427918,
+        "vif": 1.0612559742149732,
+        "se_inflation": 1.0301727885238345,
+        "effective_number_identifying_ai": 72.14205989587853,
+        "common_support_employment_share": 0.9692393146279673
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.019621239641766874,
+        "vif": 0.021647922501955907,
+        "se_inflation": 0.01056107237252557,
+        "effective_number_identifying_ai": 9.170589577988999,
+        "common_support_employment_share": 0.01513126472500248
+      }
+    },
+    {
+      "ai_measure": "aioe_oews2018_source_weighted",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.2742773509361695,
+        "vif": 3.6459445032073483,
+        "se_inflation": 1.909435650449459,
+        "effective_number_identifying_ai": 54.65798581441966,
+        "common_support_employment_share": 0.8691897359210135
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.27131103029156806,
+        "vif": 3.6858066512273258,
+        "se_inflation": 1.9198454758722967,
+        "effective_number_identifying_ai": 65.35560546395183,
+        "common_support_employment_share": 0.944070610451948
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.00296632064460145,
+        "vif": 0.03986214801997745,
+        "se_inflation": 0.010409825422837748,
+        "effective_number_identifying_ai": 10.697619649532172,
+        "common_support_employment_share": 0.0748808745309345
+      }
+    },
+    {
+      "ai_measure": "aioe_oews2018_source_weighted",
+      "computerization_measure": "onet_computers_level",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.46101526703748413,
+        "vif": 2.169125561559097,
+        "se_inflation": 1.4727951526125747,
+        "effective_number_identifying_ai": 56.96206544583618,
+        "common_support_employment_share": 0.8691897359210135
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.4515932075315784,
+        "vif": 2.2143822876921226,
+        "se_inflation": 1.4880800676348442,
+        "effective_number_identifying_ai": 70.2594177459648,
+        "common_support_employment_share": 0.944070610451948
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.009422059505905744,
+        "vif": 0.04525672613302545,
+        "se_inflation": 0.015284915022269585,
+        "effective_number_identifying_ai": 13.297352300128615,
+        "common_support_employment_share": 0.0748808745309345
+      }
+    },
+    {
+      "ai_measure": "aioe_oews2018_source_weighted",
+      "computerization_measure": "rti_autor_dorn",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9889497797627649,
+        "vif": 1.0111736919946388,
+        "se_inflation": 1.0055713261597303,
+        "effective_number_identifying_ai": 59.10743464868031,
+        "common_support_employment_share": 0.9439548840561024
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9779691972667837,
+        "vif": 1.0225270926679366,
+        "se_inflation": 1.011200817181205,
+        "effective_number_identifying_ai": 62.11151679374815,
+        "common_support_employment_share": 0.9546167664528783
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.010980582495981217,
+        "vif": 0.01135340067329782,
+        "se_inflation": 0.005629491021474697,
+        "effective_number_identifying_ai": 3.0040821450678408,
+        "common_support_employment_share": 0.010661882396775901
+      }
+    },
+    {
+      "ai_measure": "aioe_oews2018_source_weighted",
+      "computerization_measure": "frey_osborne_probability",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.8990157533768434,
+        "vif": 1.1123275607172,
+        "se_inflation": 1.0546694082589103,
+        "effective_number_identifying_ai": 46.66391496475606,
+        "common_support_employment_share": 0.7872737594422129
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.8639354916014971,
+        "vif": 1.1574938287883938,
+        "se_inflation": 1.0758688715584226,
+        "effective_number_identifying_ai": 62.783570967323,
+        "common_support_employment_share": 0.8866962122346934
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.03508026177534629,
+        "vif": 0.04516626807119373,
+        "se_inflation": 0.021199463299512278,
+        "effective_number_identifying_ai": 16.11965600256694,
+        "common_support_employment_share": 0.09942245279248052
+      }
+    },
+    {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "webb_pct_software",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9737491923362306,
+        "vif": 1.0269584897942643,
+        "se_inflation": 1.0133896041475186,
+        "effective_number_identifying_ai": 13.968971135037297,
+        "common_support_employment_share": 0.8601117936739415
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9829179226720925,
+        "vif": 1.0173789458243567,
+        "se_inflation": 1.0086520439796653,
+        "effective_number_identifying_ai": 17.355926045233186,
+        "common_support_employment_share": 0.9812440805241339
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": 0.009168730335861963,
+        "vif": -0.009579543969907567,
+        "se_inflation": -0.004737560167853205,
+        "effective_number_identifying_ai": 3.3869549101958896,
+        "common_support_employment_share": 0.1211322868501924
+      }
+    },
+    {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.8453825632202817,
+        "vif": 1.1828964110529325,
+        "se_inflation": 1.0876104132698126,
+        "effective_number_identifying_ai": 33.16756493084412,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9078248963795038,
+        "vif": 1.101534011666897,
+        "se_inflation": 1.0495399047520284,
+        "effective_number_identifying_ai": 31.09438002041932,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": 0.062442333159222096,
+        "vif": -0.08136239938603551,
+        "se_inflation": -0.03807050851778415,
+        "effective_number_identifying_ai": -2.0731849104248035,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "onet_computers_level",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.8820059573035695,
+        "vif": 1.1337791901736773,
+        "se_inflation": 1.0647906790415087,
+        "effective_number_identifying_ai": 32.956404379451996,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9170494139491918,
+        "vif": 1.0904537801224787,
+        "se_inflation": 1.0442479495419077,
+        "effective_number_identifying_ai": 31.693480481880496,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": 0.03504345664562236,
+        "vif": -0.04332541005119861,
+        "se_inflation": -0.02054272949960101,
+        "effective_number_identifying_ai": -1.2629238975715005,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "rti_autor_dorn",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9641182713925442,
+        "vif": 1.0372171440705393,
+        "se_inflation": 1.0184385813933696,
+        "effective_number_identifying_ai": 9.4622158653717,
+        "common_support_employment_share": 0.8500452355253636
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.953005898666424,
+        "vif": 1.0493114485433264,
+        "se_inflation": 1.0243590427888682,
+        "effective_number_identifying_ai": 11.8810585844204,
+        "common_support_employment_share": 0.9671497818138329
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.011112372726120201,
+        "vif": 0.012094304472787032,
+        "se_inflation": 0.005920461395498622,
+        "effective_number_identifying_ai": 2.4188427190486994,
+        "common_support_employment_share": 0.11710454628846934
+      }
+    },
+    {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "frey_osborne_probability",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9690072183173581,
+        "vif": 1.0319840565650888,
+        "se_inflation": 1.0158661607540085,
+        "effective_number_identifying_ai": 27.101410249583516,
+        "common_support_employment_share": 0.7290050994065519
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9340624677338395,
+        "vif": 1.0705922082771764,
+        "se_inflation": 1.034694258357113,
+        "effective_number_identifying_ai": 26.288883788240096,
+        "common_support_employment_share": 0.8949314402176939
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.03494475058351865,
+        "vif": 0.038608151712087535,
+        "se_inflation": 0.018828097603104554,
+        "effective_number_identifying_ai": -0.8125264613434204,
+        "common_support_employment_share": 0.165926340811142
+      }
+    },
+    {
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "webb_pct_software",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9999562159679471,
+        "vif": 1.0000437859491782,
+        "se_inflation": 1.0000218927349431,
+        "effective_number_identifying_ai": 44.406768726604085,
+        "common_support_employment_share": 0.8601117936739415
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9968380606101735,
+        "vif": 1.0031719689634353,
+        "se_inflation": 1.0015847287990345,
+        "effective_number_identifying_ai": 53.262920912846354,
+        "common_support_employment_share": 0.9812440805241339
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.0031181553577736,
+        "vif": 0.003128183014257102,
+        "se_inflation": 0.0015628360640913552,
+        "effective_number_identifying_ai": 8.85615218624227,
+        "common_support_employment_share": 0.1211322868501924
+      }
+    },
+    {
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.3567797493901019,
+        "vif": 2.8028496620378616,
+        "se_inflation": 1.674171335926482,
+        "effective_number_identifying_ai": 50.22571591325309,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.3652191620800791,
+        "vif": 2.7380819623608272,
+        "se_inflation": 1.6547150698415807,
+        "effective_number_identifying_ai": 63.22982766192174,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": 0.008439412689977221,
+        "vif": -0.06476769967703433,
+        "se_inflation": -0.019456266084901364,
+        "effective_number_identifying_ai": 13.004111748668649,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    {
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "onet_computers_level",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.4804275510328272,
+        "vif": 2.081479294537109,
+        "se_inflation": 1.4427332721390704,
+        "effective_number_identifying_ai": 53.75933859862209,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.4677898503785715,
+        "vif": 2.137712049953036,
+        "se_inflation": 1.4620916694766564,
+        "effective_number_identifying_ai": 59.51114921024592,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.012637700654255679,
+        "vif": 0.056232755415927205,
+        "se_inflation": 0.01935839733758593,
+        "effective_number_identifying_ai": 5.7518106116238314,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    {
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "rti_autor_dorn",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9847864211644685,
+        "vif": 1.015448607442761,
+        "se_inflation": 1.0076946995210212,
+        "effective_number_identifying_ai": 41.103662290550425,
+        "common_support_employment_share": 0.8500452355253636
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9713514069314264,
+        "vif": 1.029493541538254,
+        "se_inflation": 1.0146396116544307,
+        "effective_number_identifying_ai": 51.655339980608005,
+        "common_support_employment_share": 0.9671497818138329
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.013435014233042053,
+        "vif": 0.0140449340954929,
+        "se_inflation": 0.006944912133409531,
+        "effective_number_identifying_ai": 10.55167769005758,
+        "common_support_employment_share": 0.11710454628846934
+      }
+    },
+    {
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "frey_osborne_probability",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9806188792791634,
+        "vif": 1.0197641725346787,
+        "se_inflation": 1.009833735094386,
+        "effective_number_identifying_ai": 51.71215644654558,
+        "common_support_employment_share": 0.7290050994065519
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9763040508718274,
+        "vif": 1.0242710752936162,
+        "se_inflation": 1.0120627822885377,
+        "effective_number_identifying_ai": 62.86020044380772,
+        "common_support_employment_share": 0.8949314402176939
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.004314828407335991,
+        "vif": 0.004506902758937503,
+        "se_inflation": 0.0022290471941517342,
+        "effective_number_identifying_ai": 11.148043997262143,
+        "common_support_employment_share": 0.165926340811142
+      }
+    },
+    {
+      "ai_measure": "dv_rating_gamma",
+      "computerization_measure": "webb_pct_software",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9955578407296979,
+        "vif": 1.004461980096552,
+        "se_inflation": 1.0022285069267147,
+        "effective_number_identifying_ai": 61.41261208891955,
+        "common_support_employment_share": 0.8601117936739415
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9817406271054449,
+        "vif": 1.0185989785799034,
+        "se_inflation": 1.0092566465373927,
+        "effective_number_identifying_ai": 84.4672115820549,
+        "common_support_employment_share": 0.9812440805241339
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.013817213624253033,
+        "vif": 0.014136998483351482,
+        "se_inflation": 0.0070281396106779415,
+        "effective_number_identifying_ai": 23.05459949313535,
+        "common_support_employment_share": 0.1211322868501924
+      }
+    },
+    {
+      "ai_measure": "dv_rating_gamma",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.3170494557033141,
+        "vif": 3.1540820588437524,
+        "se_inflation": 1.7759735524054834,
+        "effective_number_identifying_ai": 34.9166130533379,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.30589663558848834,
+        "vif": 3.2690781252830248,
+        "se_inflation": 1.8080592150930856,
+        "effective_number_identifying_ai": 44.380499770319865,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.011152820114825768,
+        "vif": 0.1149960664392724,
+        "se_inflation": 0.03208566268760227,
+        "effective_number_identifying_ai": 9.463886716981968,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    {
+      "ai_measure": "dv_rating_gamma",
+      "computerization_measure": "onet_computers_level",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.4425096687932416,
+        "vif": 2.2598376273383542,
+        "se_inflation": 1.5032756325233088,
+        "effective_number_identifying_ai": 49.488246594960714,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.42458273453344025,
+        "vif": 2.355253567008245,
+        "se_inflation": 1.5346835396941758,
+        "effective_number_identifying_ai": 72.2057217883605,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.017926934259801353,
+        "vif": 0.09541593966989081,
+        "se_inflation": 0.031407907170867055,
+        "effective_number_identifying_ai": 22.717475193399792,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    {
+      "ai_measure": "dv_rating_gamma",
+      "computerization_measure": "rti_autor_dorn",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9951042377705667,
+        "vif": 1.0049198486385726,
+        "se_inflation": 1.0024569061254318,
+        "effective_number_identifying_ai": 58.253789103633295,
+        "common_support_employment_share": 0.8500452355253636
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.988404894431581,
+        "vif": 1.0117311292505156,
+        "se_inflation": 1.0058484623692157,
+        "effective_number_identifying_ai": 77.53635668676434,
+        "common_support_employment_share": 0.9671497818138329
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.006699343338985697,
+        "vif": 0.006811280611942916,
+        "se_inflation": 0.0033915562437838442,
+        "effective_number_identifying_ai": 19.28256758313104,
+        "common_support_employment_share": 0.11710454628846934
+      }
+    },
+    {
+      "ai_measure": "dv_rating_gamma",
+      "computerization_measure": "frey_osborne_probability",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.9431464240976262,
+        "vif": 1.0602807522244169,
+        "se_inflation": 1.0296993504049698,
+        "effective_number_identifying_ai": 48.02067426450753,
+        "common_support_employment_share": 0.7290050994065519
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9129602327531222,
+        "vif": 1.0953379611994716,
+        "se_inflation": 1.0465839484721098,
+        "effective_number_identifying_ai": 74.01299255267014,
+        "common_support_employment_share": 0.8949314402176939
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.030186191344503954,
+        "vif": 0.03505720897505471,
+        "se_inflation": 0.016884598067139933,
+        "effective_number_identifying_ai": 25.992318288162615,
+        "common_support_employment_share": 0.165926340811142
+      }
+    }
+  ],
+  "largest_absolute_changes": {
+    "partial_variance_of_ai": {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.8453825632202817,
+        "vif": 1.1828964110529325,
+        "se_inflation": 1.0876104132698126,
+        "effective_number_identifying_ai": 33.16756493084412,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9078248963795038,
+        "vif": 1.101534011666897,
+        "se_inflation": 1.0495399047520284,
+        "effective_number_identifying_ai": 31.09438002041932,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": 0.062442333159222096,
+        "vif": -0.08136239938603551,
+        "se_inflation": -0.03807050851778415,
+        "effective_number_identifying_ai": -2.0731849104248035,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    },
+    "vif": {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.30813906306391864,
+        "vif": 3.2452879880165195,
+        "se_inflation": 1.801468286708517,
+        "effective_number_identifying_ai": 35.11542011736457,
+        "common_support_employment_share": 0.8744273493345577
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.28302420610073625,
+        "vif": 3.5332666904260193,
+        "se_inflation": 1.879698563713347,
+        "effective_number_identifying_ai": 77.76207663568225,
+        "common_support_employment_share": 0.9371177307540559
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.025114856963182386,
+        "vif": 0.28797870240949974,
+        "se_inflation": 0.07823027700482998,
+        "effective_number_identifying_ai": 42.64665651831768,
+        "common_support_employment_share": 0.06269038141949823
+      }
+    },
+    "se_inflation": {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.30813906306391864,
+        "vif": 3.2452879880165195,
+        "se_inflation": 1.801468286708517,
+        "effective_number_identifying_ai": 35.11542011736457,
+        "common_support_employment_share": 0.8744273493345577
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.28302420610073625,
+        "vif": 3.5332666904260193,
+        "se_inflation": 1.879698563713347,
+        "effective_number_identifying_ai": 77.76207663568225,
+        "common_support_employment_share": 0.9371177307540559
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.025114856963182386,
+        "vif": 0.28797870240949974,
+        "se_inflation": 0.07823027700482998,
+        "effective_number_identifying_ai": 42.64665651831768,
+        "common_support_employment_share": 0.06269038141949823
+      }
+    },
+    "effective_number_identifying_ai": {
+      "ai_measure": "aioe_ability_direct",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.30813906306391864,
+        "vif": 3.2452879880165195,
+        "se_inflation": 1.801468286708517,
+        "effective_number_identifying_ai": 35.11542011736457,
+        "common_support_employment_share": 0.8744273493345577
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.28302420610073625,
+        "vif": 3.5332666904260193,
+        "se_inflation": 1.879698563713347,
+        "effective_number_identifying_ai": 77.76207663568225,
+        "common_support_employment_share": 0.9371177307540559
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": -0.025114856963182386,
+        "vif": 0.28797870240949974,
+        "se_inflation": 0.07823027700482998,
+        "effective_number_identifying_ai": 42.64665651831768,
+        "common_support_employment_share": 0.06269038141949823
+      }
+    },
+    "common_support_employment_share": {
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "onet_computers_importance",
+      "thirteen_month": {
+        "partial_variance_of_ai": 0.8453825632202817,
+        "vif": 1.1828964110529325,
+        "se_inflation": 1.0876104132698126,
+        "effective_number_identifying_ai": 33.16756493084412,
+        "common_support_employment_share": 0.7855306696874567
+      },
+      "sixty_six_month": {
+        "partial_variance_of_ai": 0.9078248963795038,
+        "vif": 1.101534011666897,
+        "se_inflation": 1.0495399047520284,
+        "effective_number_identifying_ai": 31.09438002041932,
+        "common_support_employment_share": 0.9539011645641727
+      },
+      "change_66m_minus_13m": {
+        "partial_variance_of_ai": 0.062442333159222096,
+        "vif": -0.08136239938603551,
+        "se_inflation": -0.03807050851778415,
+        "effective_number_identifying_ai": -2.0731849104248035,
+        "common_support_employment_share": 0.16837049487671607
+      }
+    }
+  }
+}

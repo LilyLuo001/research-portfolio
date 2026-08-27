@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build pre-existing computerization measures on CPS OCC2010 support.
+"""Build pre-existing computerization measures on Census 2010 and 2018 support.
 
 This is measurement-only code.  It never reads person-level CPS records or
 post-ChatGPT outcomes.  The supported routes are fixed in RESEARCH_PLAN_v4:
@@ -144,6 +144,55 @@ def read_bls_soc_crosswalk(path: pathlib.Path):
                            "soc_2018_title": values[3]})
     if not result:
         raise ValueError("BLS SOC crosswalk has no data rows")
+    return result
+
+
+def read_census_conversion(path: pathlib.Path):
+    """Read the official Census 2010-to-2018 occupation conversion table.
+
+    Continuation rows leave the 2010 code and title blank, so those values must
+    be carried forward.  The conversion rate is P(2018 code | 2010 code); it is
+    used to identify routes, not inverted into an unsupported target weight.
+    """
+    rows = xlsx_rows(path, "E1 Total")
+    start = None
+    for i, row in enumerate(rows):
+        if [str(v).strip() for v in (row + [""] * 5)[:5]] == [
+                "2010 Code", "2010 Occupation title", "2018 Code",
+                "2018 Occupation title", "Conversion Rate"]:
+            start = i + 1
+            break
+    if start is None:
+        raise ValueError("Census occupation conversion header not found")
+    result = []
+    old_code = old_title = ""
+    for raw in rows[start:]:
+        values = [str(v).strip() for v in (raw + [""] * 5)[:5]]
+        if values[0]:
+            old_code, old_title = values[0].zfill(4), values[1]
+        if old_code and values[2]:
+            result.append({
+                "census_2010": old_code,
+                "census_2010_title": old_title,
+                "census_2018": values[2].zfill(4),
+                "census_2018_title": values[3],
+                "conversion_rate": float(values[4]),
+            })
+    if not result:
+        raise ValueError("Census occupation conversion has no routes")
+    return result
+
+
+def read_census_code_titles(path, sheet_name):
+    """Read a complete official Census occupation code list."""
+    result = {}
+    for row in xlsx_rows(path, sheet_name):
+        values = [str(v).strip() for v in (row + ["", "", "", ""])[:4]]
+        title, code = values[1], values[2]
+        if re.fullmatch(r"\d{4}", code) and title:
+            result[code] = title
+    if len(result) < 500:
+        raise ValueError(f"{sheet_name!r} yielded only {len(result)} titles")
     return result
 
 
@@ -363,10 +412,57 @@ def direct_dorn_rows(crosswalk_rows, webb_rows, task_rows):
     return result
 
 
+def direct_to_census2018(direct, bridge_rows, fields):
+    """Carry Census-2010 Webb/RTI scores to Census 2018 without guess-filling.
+
+    Splits inherit their single source score.  A target receiving multiple
+    Census-2010 sources is scored only when every source is observed and the
+    source scores agree.  The published conversion rates run in the opposite
+    conditional direction and therefore cannot identify target weights.
+    """
+    routes = defaultdict(set)
+    patterns = {}
+    for route in bridge_rows:
+        old = route["census_2010"].zfill(4)
+        new = route["census_2018"].zfill(4)
+        routes[new].add(old)
+        patterns.setdefault(new, route["soc_2018_pattern"].strip())
+    result = {}
+    for new, sources_raw in sorted(routes.items()):
+        sources = sorted(sources_raw)
+        out = {
+            "census2018": new,
+            "soc_major_group": patterns.get(new, "")[:2],
+            "source_census2010_codes": "|".join(sources),
+        }
+        for field in fields:
+            values = [direct.get(old, {}).get(field) for old in sources]
+            complete = values and all(value is not None for value in values)
+            equal = complete and all(abs(values[0] - value) <= 1e-12
+                                     for value in values[1:])
+            out[field] = values[0] if equal else None
+            if not complete:
+                status = "missing_source_fail_closed"
+            elif len(sources) == 1:
+                status = "single_source_inherited"
+            elif equal:
+                status = "merge_equal_source_scores"
+            else:
+                status = "merge_ambiguous_fail_closed"
+            out[field + "_harmonization"] = status
+        result[new] = out
+    return result
+
+
 def build(args):
     bridge = read_csv(args.cps_bridge, {"census_2010", "census_2018",
                                        "soc_2018_pattern", "bridge_weight"})
     bls = read_bls_soc_crosswalk(args.bls_soc_crosswalk)
+    census_conversion = read_census_conversion(args.census_conversion)
+    title2010 = read_census_code_titles(
+        args.census2010_code_list, "2010OccCodeList")
+    title2018 = read_census_code_titles(
+        args.census2018_code_list, "2018 Census Occ Code List")
     onet10, onet_rules, onet_rows = parse_onet24(args.onet24)
     frey_source_rows = parse_frey_pdf(args.frey_pdf)
     frey10 = {row["soc_2010"]: row for row in frey_source_rows}
@@ -388,15 +484,23 @@ def build(args):
         read_csv(args.dorn_task_csv,
                  {"occ1990dd", "task_abstract", "task_routine", "task_manual"}),
     )
+    for code, row in direct.items():
+        row["occupation"] = title2010.get(code, row.get("occupation", ""))
+        row["occupation_title_vintage"] = "Census 2010 official"
+    direct18 = direct_to_census2018(
+        direct, bridge, ("webb_pct_software", "rti_autor_dorn"))
     output_rows = []
     for code in sorted(set(direct) | set(indirect)):
         row = {"cps_occ2010": code, "soc_major_group": "",
-               "occ1990dd": "", "occupation": ""}
+               "occ1990dd": "", "occupation": title2010.get(code, ""),
+               "occupation_title_vintage": "Census 2010 official"}
         row.update(indirect.get(code, {}))
         row.update(direct.get(code, {}))
+        row["occupation"] = title2010.get(code, row.get("occupation", ""))
         output_rows.append(row)
 
-    fields = ["cps_occ2010", "soc_major_group", "occ1990dd", "occupation", *MEASURES]
+    fields = ["cps_occ2010", "soc_major_group", "occ1990dd", "occupation",
+              "occupation_title_vintage", *MEASURES]
     for field in indirect_fields:
         fields.extend([field + "_covered_route_mass", field + "_partial_sum"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -407,12 +511,43 @@ def build(args):
             writer.writerow({key: "" if row.get(key) is None else row.get(key, "")
                              for key in fields})
 
+    target_rows = []
+    for code in sorted(set(census18) | set(direct18)):
+        row = {
+            "census2018": code,
+            "soc_major_group": "",
+            "occupation": title2018.get(code, ""),
+            "occupation_title_vintage": "Census 2018 official",
+        }
+        row.update(census18.get(code, {}))
+        row.update(direct18.get(code, {}))
+        row["occupation"] = title2018.get(code, row.get("occupation", ""))
+        target_rows.append(row)
+    target_fields = [
+        "census2018", "soc_major_group", "occupation",
+        "occupation_title_vintage", "source_census2010_codes", *MEASURES,
+        "webb_pct_software_harmonization", "rti_autor_dorn_harmonization",
+    ]
+    for field in indirect_fields:
+        target_fields.extend([field + "_covered_weight", field + "_partial_sum"])
+    args.census2018_output.parent.mkdir(parents=True, exist_ok=True)
+    with args.census2018_output.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=target_fields, lineterminator="\n")
+        writer.writeheader()
+        for row in target_rows:
+            writer.writerow({key: "" if row.get(key) is None else row.get(key, "")
+                             for key in target_fields})
+
     source_paths = {
         "webb": args.webb, "dorn_crosswalk_dta": args.dorn_crosswalk_source,
         "dorn_task_dta": args.dorn_task_source, "onet24": args.onet24,
         "bls_soc_crosswalk": args.bls_soc_crosswalk,
         "frey_osborne_pdf": args.frey_pdf, "oews": args.oews,
         "cps_bridge": args.cps_bridge,
+        "census_conversion": args.census_conversion,
+        "census2010_code_list": args.census2010_code_list,
+        "census2010_code_list_source": args.census2010_code_list_source,
+        "census2018_code_list": args.census2018_code_list,
     }
     receipt = {
         "record_version": "yax-computerization-measures-v1",
@@ -431,6 +566,8 @@ def build(args):
             "onet24_text": "https://www.onetcenter.org/dl_files/database/db_24_3_text.zip",
             "bls_soc_crosswalk": "https://www.bls.gov/soc/2018/soc_2010_to_2018_crosswalk.xlsx",
             "frey_osborne": "https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf",
+            "census2010_code_list": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2010-occ-codes-with-crosswalk-from-2002-2011.xls",
+            "census2018_code_list": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2018-occupation-code-list-and-crosswalk.xlsx",
         },
         "webb": {"measure": "pct_software", "native_taxonomy": "occ1990dd"},
         "onet": {
@@ -452,6 +589,14 @@ def build(args):
                    "complete_codes": {field: sum(row.get(field) is not None
                                                   for row in output_rows)
                                       for field in MEASURES}},
+        "census2018_output": {
+            "path": str(args.census2018_output),
+            "sha256": sha256(args.census2018_output),
+            "rows": len(target_rows),
+            "complete_codes": {field: sum(row.get(field) is not None
+                                             for row in target_rows)
+                               for field in MEASURES},
+        },
     }
     args.receipt.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
     return receipt
@@ -469,7 +614,12 @@ def parser():
     ap.add_argument("--frey-pdf", type=pathlib.Path, required=True)
     ap.add_argument("--oews", type=pathlib.Path, required=True)
     ap.add_argument("--cps-bridge", type=pathlib.Path, required=True)
+    ap.add_argument("--census-conversion", type=pathlib.Path, required=True)
+    ap.add_argument("--census2010-code-list", type=pathlib.Path, required=True)
+    ap.add_argument("--census2010-code-list-source", type=pathlib.Path, required=True)
+    ap.add_argument("--census2018-code-list", type=pathlib.Path, required=True)
     ap.add_argument("--output", type=pathlib.Path, required=True)
+    ap.add_argument("--census2018-output", type=pathlib.Path, required=True)
     ap.add_argument("--receipt", type=pathlib.Path, required=True)
     return ap
 
@@ -478,7 +628,9 @@ def main(argv=None):
     args = parser().parse_args(argv)
     for path in (args.webb, args.dorn_crosswalk_csv, args.dorn_crosswalk_source,
                  args.dorn_task_csv, args.dorn_task_source, args.onet24,
-                 args.bls_soc_crosswalk, args.frey_pdf, args.oews, args.cps_bridge):
+                 args.bls_soc_crosswalk, args.frey_pdf, args.oews, args.cps_bridge,
+                 args.census_conversion, args.census2010_code_list,
+                 args.census2010_code_list_source, args.census2018_code_list):
         if not path.is_file():
             print(f"NEED_HUMAN: missing input {path}")
             return 2
