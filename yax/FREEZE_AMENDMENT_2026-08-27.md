@@ -105,6 +105,16 @@ non-employed person is never assigned an occupation** and never receives
 occupational exposure. v4 §7 referred to individual employment and §5 to a stock
 PPML; the ambiguity is closed in favour of the cell.
 
+**And the limitation that follows from it.** A decline in an occupation ×
+age-group employment stock can arise from **(i)** reduced entry into employment
+in that occupation, **(ii)** exit from employment, or **(iii)** occupational
+switching while remaining employed. **The primary stock design cannot
+distinguish these three channels**, and channel (iii) is not an employment
+effect at all. **The headline coefficient must not be interpreted as an
+individual employment-probability effect unless a separate flow analysis
+supports that statement.** Binding on the paper's prose, not merely on its
+tables. See plan v5 §7.4.
+
 **Saturated DDD.** Already compliant — occupation × age-group, occupation ×
 month and age-group × month fixed effects absorb all relevant lower-order
 interactions. Identifying variation is the within-occupation, within-month

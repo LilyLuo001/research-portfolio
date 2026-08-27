@@ -223,23 +223,56 @@ not a comparison of significance.
    ≥999 replications, clustered on occupation, same seed discipline as the
    power runs.
 
-### 4.2 The equivalence bound — structure fixed, magnitude requires owner sign-off
+### 4.2 The equivalence bound, and the precision object it must be judged against
 
 To assert that two exposure definitions yield **economically equivalent**
 conclusions, both conditions must hold:
 
 - **(a)** the CI for Δ lies entirely inside ±SESOI; **and**
-- **(b)** SESOI > the design's MDE **on the same contrast**.
+- **(b)** SESOI > **MDE_{Δ,80}** — the design's minimum detectable *difference*
+  under the frozen paired-bootstrap design, on the same contrast.
 
-Condition (b) is the guard that makes the test honest: if the smallest
-economically interesting difference is below what the design can detect, the
-test is **inconclusive, not equivalent**, and must be reported that way.
+**Condition (b) uses MDE_Δ, never MDE_β. An earlier draft of this section used
+the headline MDE_β and that was wrong.** The relevant precision object in Test C
+is `Δ_{m,m'} = β_m − β_{m'}`, and because the exposure-specific estimates are
+computed **on the same sample with common bootstrap draws**, the sampling
+covariance is preserved:
 
-**Proposed SESOI, requiring the owner's sign-off before the amended freeze:**
-one quarter of the contested Q5–Q1 magnitude the literature disputes. It is
-anchored to the benchmark rather than invented, and §7.3 puts the benchmark and
-the MDE on that one contrast so (b) is checkable. **The fraction is a
-pre-specification choice with real consequences and is not an agent's call.**
+    Var(Δ) = Var(β_m) + Var(β_m') − 2·Cov(β_m, β_m')
+
+With strongly positively correlated estimates that covariance term dominates, so
+**SE(Δ) can be materially smaller — or in principle larger — than the SE of
+either headline coefficient.** Using MDE_β as the feasibility criterion would
+mis-state the design's ability to detect a difference in either direction.
+
+**Compute and record an outcome-blind `MDE_{Δ,80}`** — equivalently, the power
+of the paired equivalence test — under the frozen paired-bootstrap design of
+§4.1. No post-period data is required.
+
+Condition (b) remains the guard that keeps the test honest: if the smallest
+economically interesting difference is below what the design can detect **in
+Δ**, the result is **inconclusive, not equivalent**, and is reported that way.
+
+### 4.3 The SESOI — primary fixed, feasibility grid documented
+
+**Primary SESOI, retained for owner sign-off: 25% of the contested
+literature-comparable Q5–Q1 benchmark.** Anchored to the benchmark rather than
+invented, and §7.3 puts the benchmark and the MDE on that one contrast so (b) is
+checkable.
+
+**Before any outcome is opened**, report paired-Δ power at **12.5%, 25% and 50%**
+of that benchmark, **solely to document design feasibility.**
+
+> **Anti-shopping clause, binding.** The primary SESOI is **25%**. The three-point
+> grid exists to show what the design can and cannot detect, and for no other
+> purpose. **No selection among them may be made on the basis of post-period
+> estimates**, and the paper reports the 25% bound as primary regardless of which
+> of the three turns out to be the most flattering. Reporting the grid after
+> outcomes are visible, or promoting a different point to primary, is
+> specification search.
+
+The 25% fraction is a pre-specification choice with real consequences and
+remains **pending the owner's decision** before the amended freeze.
 
 ## 5. Position relative to the nearest competing papers
 
@@ -439,12 +472,25 @@ prior occupation are therefore **not assigned exposure and do not appear in the
 denominator**; they enter the data only once employed, in the cell of the
 occupation they enter. Nothing is imputed.
 
-**The interpretive limit this creates, stated because it is not obvious.** A
-fall in `N_oat` is consistent with fewer young workers entering that occupation
-**or** with more leaving it. **This design cannot separate entry from
-separation**, and no sentence in the paper may imply otherwise. The
-hiring-versus-separation decomposition is a distinct exercise on a distinct
-outcome and is out of scope here.
+**The interpretive limit this creates — three channels, not two.** A decline in
+an occupation × age-group employment stock can arise from:
+
+1. **reduced entry** into employment in that occupation;
+2. **exit from employment** altogether;
+3. **occupational switching while remaining employed** — a young worker moving
+   out of a high-exposure occupation into a lower-exposure one, with no
+   employment loss at any point.
+
+**The primary stock design cannot distinguish these channels.** Channel 3 is the
+one most easily overlooked and it is not an employment effect at all.
+
+> **Binding on the prose.** The headline coefficient **must not be interpreted
+> as an individual employment-probability effect** unless a separate flow
+> analysis supports that statement. A stock decline is a statement about where
+> employed young workers are, not about whether young workers are employed.
+
+The hiring-versus-separation-versus-switching decomposition is a distinct
+exercise on distinct outcomes and is out of scope for this design.
 
 ### 7.5 Saturated DDD — confirmed compliant, stated
 
@@ -601,6 +647,10 @@ specification search.
 4. Post-period redefined to 2023-01 static, 2022-12 transition; power
    re-simulated on the new window. *(§7.1)*
 5. Q5–Q1 MDE and benchmark computed on one estimand. *(§7.3)*
+5b. **Outcome-blind `MDE_{Δ,80}`** computed under the frozen paired-bootstrap
+   design, with paired-Δ power reported at 12.5%, 25% and 50% of the benchmark.
+   *(§4.2–4.3)*
+5c. **Owner decision on the primary SESOI** — proposed 25%. *(§4.3)*
 6. Published-measurement audit built. *(§6)*
 7. `DESIGN_FREEZE_v2.md` committed; tag `v1.1-design-freeze`.
 8. **Only then** may a post-period outcome be opened.

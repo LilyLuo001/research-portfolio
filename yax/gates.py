@@ -536,6 +536,46 @@ def gate_amendment_current(tag):
                   "amended freeze documented and tagged; v1.0 preserved")
 
 
+def gate_paired_delta_power(agg):
+    """§4.2. Equivalence feasibility must be judged on MDE_Delta, not MDE_beta.
+
+    Test C's object of inference is Delta = beta_m - beta_m'. Because the
+    exposure-specific estimates share a sample and common bootstrap draws, the
+    covariance term survives:
+
+        Var(Delta) = Var(b_m) + Var(b_m') - 2 Cov(b_m, b_m')
+
+    so SE(Delta) can be far smaller -- or larger -- than the SE of either
+    headline coefficient. An earlier draft of the plan used MDE_beta as the
+    feasibility criterion, which mis-states the design's ability to detect a
+    difference in either direction. This gate exists so that computing MDE_beta
+    and stopping cannot be mistaken for completing the check.
+    """
+    if agg is None:
+        return Result("paired_delta_power", "BLOCKED",
+                      "no power aggregate supplied")
+    def _has_delta(obj):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                kl = k.lower()
+                if "delta" in kl and ("mde" in kl or "power" in kl):
+                    return True
+                if _has_delta(v):
+                    return True
+        elif isinstance(obj, list):
+            return any(_has_delta(v) for v in obj)
+        return False
+    if not _has_delta(agg):
+        return Result("paired_delta_power", "BLOCKED",
+                      "the aggregate carries no paired-Delta MDE or power "
+                      "field. §4.2 requires an outcome-blind MDE_Delta,80 under "
+                      "the frozen paired-bootstrap design, with paired-Delta "
+                      "power at 12.5%, 25% and 50% of the Q5-Q1 benchmark. "
+                      "MDE_beta is not a substitute and does not satisfy this.")
+    return Result("paired_delta_power", "PASS",
+                  "aggregate carries a paired-Delta precision object")
+
+
 # ---------------------------------------------------------------- runner
 
 def run(power_aggregate=None, tag=DEFAULT_TAG):
@@ -550,6 +590,7 @@ def run(power_aggregate=None, tag=DEFAULT_TAG):
     return [
         gate_gradient(agg),
         gate_calibration(agg),
+        gate_paired_delta_power(agg),
         gate_coverage_rule(agg),
         gate_novelty(tag),
         gate_computerization(tag),

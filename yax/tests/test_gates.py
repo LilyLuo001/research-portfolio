@@ -227,3 +227,27 @@ def test_novelty_fails_when_sentinel_contradicts_an_unresolved_row(tmp_path, mon
     r = gates.gate_novelty("t")
     assert r.status == "FAIL"
     assert "sentinel" in r.detail
+
+
+# --------------------------------------------------------- paired-delta power
+
+def test_paired_delta_gate_rejects_a_beta_only_aggregate():
+    """The failure this exists to catch: computing MDE_beta, which the frozen
+    aggregate already carries, and treating the equivalence feasibility check as
+    done. Delta has its own precision object because the paired draws preserve
+    Cov(beta_m, beta_m')."""
+    beta_only = {"scenarios": [{"empirical_mde80_relative_decline": 0.0227,
+                                "bootstrap": {"null_size": 0.05}}]}
+    r = gates.gate_paired_delta_power(beta_only)
+    assert r.status == "BLOCKED"
+    assert "MDE_beta is not a substitute" in r.detail
+
+
+def test_paired_delta_gate_accepts_a_delta_field():
+    with_delta = {"scenarios": [{"empirical_mde80_relative_decline": 0.0227}],
+                  "paired_delta_mde80": 0.006}
+    assert gates.gate_paired_delta_power(with_delta).status == "PASS"
+
+
+def test_paired_delta_gate_blocks_without_an_aggregate():
+    assert gates.gate_paired_delta_power(None).status == "BLOCKED"
