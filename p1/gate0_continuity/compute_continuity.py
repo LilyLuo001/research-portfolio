@@ -55,8 +55,50 @@ def weights(holdings):
     return {k: v / total for k, v in holdings.items() if v and v > 0}
 
 
+class UnadjustedShares(ValueError):
+    """Raised when raw share counts are passed without an adjustment factor."""
+
+
+def adjust_shares(shares: dict, factors: dict) -> dict:
+    """Put share counts on a corporate-action-adjusted basis (v2.1b, item 3).
+
+    Raw N-PORT share counts are NOT comparable across a corporate action. A 2:1
+    split doubles the count with zero trading; a merger replaces the security
+    outright; a CUSIP change makes the same position look like one name sold and
+    another bought. Every one of those would read as turnover, and the two that
+    inflate share counts would read as *buying* — the opposite of the truth.
+
+    `factors` maps security id -> cumulative adjustment factor at the observation
+    date (CRSP `cfacshr` is the canonical source; any equivalent works).
+    Adjusted count = raw / factor, so a post-split count divided by 2 comes back
+    onto the pre-split basis.
+
+    A security present in `shares` but absent from `factors` is a refusal, not a
+    default-to-1.0: silently assuming "no corporate action" is exactly the error
+    this function exists to prevent (meta-rule 4).
+    """
+    missing = sorted(k for k in shares if k not in factors)
+    if missing:
+        raise UnadjustedShares(
+            f"{len(missing)} securities have no adjustment factor "
+            f"(first few: {missing[:5]}). Supply one per security — do NOT "
+            "default to 1.0; an unadjusted split reads as turnover.")
+    out = {}
+    for k, v in shares.items():
+        f = factors[k]
+        if not f or f <= 0:
+            raise UnadjustedShares(f"non-positive adjustment factor for {k}: {f!r}")
+        out[k] = v / f
+    return out
+
+
 def share_continuity(pre_sh: dict, post_sh: dict) -> dict:
     """Continuity in SHARES HELD, independent of price (v2.1, item 4).
+
+    **Inputs must already be corporate-action adjusted** — pass them through
+    `adjust_shares` first (v2.1b, item 3). This function cannot detect the
+    problem itself: a doubled share count from a split is numerically
+    indistinguishable from a doubled position.
 
     Value weights move when prices move. A fund that traded nothing across a
     quarter in which its largest position doubled will show a value-weight shift
@@ -184,6 +226,25 @@ def _selftest() -> int:
     check("reweighted jaccard (misleading)", r["name_jaccard"], 1.0)
     check("reweighted weight_overlap", r["weight_overlap"], 0.2)
     check("reweighted turnover", r["turnover"], 0.8)
+
+    # corporate actions: a 2:1 split with zero trading must not read as buying
+    raw_pre  = {"AAA": 100.0}
+    raw_post = {"AAA": 200.0}                 # split, nothing traded
+    fac      = {"AAA": 1.0}, {"AAA": 2.0}     # cfacshr-style, pre and post
+    adj_pre  = adjust_shares(raw_pre,  fac[0])
+    adj_post = adjust_shares(raw_post, fac[1])
+    r_raw = share_continuity(raw_pre, raw_post)
+    r_adj = share_continuity(adj_pre, adj_post)
+    check("split UNadjusted turnover (wrong)", r_raw["share_turnover"], 0.5)
+    check("split adjusted turnover (right)",   r_adj["share_turnover"], 0.0)
+    check("split adjusted overlap",            r_adj["share_overlap"],  1.0)
+    try:
+        adjust_shares({"AAA": 1.0, "ZZZ": 1.0}, {"AAA": 1.0})
+        print("  FAIL missing factor did not refuse"); ok = False
+    except UnadjustedShares as e:
+        good = "no adjustment factor" in str(e)
+        print(f"  {'ok  ' if good else 'FAIL'} missing factor refuses: {str(e)[:60]}...")
+        ok = ok and good
 
     # share-based measures: a pure PRICE move must not read as rebalancing
     r = cc_share_case()

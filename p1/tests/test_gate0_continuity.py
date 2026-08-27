@@ -8,6 +8,8 @@ import pathlib
 import subprocess
 import sys
 
+import pytest
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "p1" / "gate0_continuity" / "compute_continuity.py"
 sys.path.insert(0, str(SCRIPT.parent))
@@ -51,3 +53,29 @@ def test_blocked_path_exits_two_and_says_why():
                        capture_output=True, text=True, cwd=ROOT)
     assert r.returncode == 2
     assert "BLOCKED" in r.stdout and "POST-conversion" in r.stdout
+
+
+# --------------------------------------------------------------------------- #
+# v2.1b — corporate-action adjustment (item 3)                                 #
+# --------------------------------------------------------------------------- #
+def test_unadjusted_split_reads_as_turnover_and_adjustment_fixes_it():
+    """A 2:1 split with zero trading must not look like the manager bought."""
+    raw_pre, raw_post = {"AAA": 100.0}, {"AAA": 200.0}
+    assert cc.share_continuity(raw_pre, raw_post)["share_turnover"] == 0.5
+    adj = cc.share_continuity(cc.adjust_shares(raw_pre, {"AAA": 1.0}),
+                              cc.adjust_shares(raw_post, {"AAA": 2.0}))
+    assert adj["share_turnover"] == 0.0
+    assert adj["share_overlap"] == 1.0
+
+
+def test_missing_adjustment_factor_refuses_rather_than_defaulting_to_one():
+    """Defaulting to 1.0 would silently assume 'no corporate action'."""
+    with pytest.raises(cc.UnadjustedShares) as e:
+        cc.adjust_shares({"AAA": 1.0, "ZZZ": 1.0}, {"AAA": 1.0})
+    assert "ZZZ" in str(e.value)
+
+
+def test_non_positive_factor_refuses():
+    for bad in (0.0, -1.0, None):
+        with pytest.raises(cc.UnadjustedShares):
+            cc.adjust_shares({"AAA": 1.0}, {"AAA": bad})
