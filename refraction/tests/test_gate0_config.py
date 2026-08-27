@@ -33,7 +33,12 @@ PLAN_COMMITTED = {
     "mde_sigma_max": 0.5,              # §9 weeks 2-3
     "convexp_treated_min": 0.005,      # §5 treated line, 0.5%
     "sweep_window_min_gridpoints": 2,  # §R3 G2 "宽度<网格 2 格 → FAIL"
+    "intraday_coverage_min": 0.70,     # v2.2 §9 G7 — blocking as of v2.2
 }
+
+# v2.2 added two lines with no number anywhere to transcribe. Same treatment G4 and
+# G6 got: null, so R3 stops rather than inventing one.
+PENDING = {"first_stage_majority_min", "intraday_vendor_agreement_tol"}
 
 # Decided 2026-08-19 under delegation. Each must stay traceable to its memo and
 # to ops/decisions.md; a silent edit to one of these is a prereg deviation.
@@ -71,8 +76,20 @@ def test_the_memo_still_requires_counter_signature():
 
 def test_every_gate0_threshold_is_classified():
     """A new threshold must be classified, so none can appear unnoticed."""
-    unclassified = set(G0) - set(PLAN_COMMITTED) - set(DELEGATED) - {"se_to_sdL_ratio_max"}
+    unclassified = (set(G0) - set(PLAN_COMMITTED) - set(DELEGATED) - PENDING
+                    - {"se_to_sdL_ratio_max"})
     assert not unclassified, f"unclassified Gate-0 threshold(s): {sorted(unclassified)}"
+
+
+@pytest.mark.parametrize("key", sorted(PENDING))
+def test_v22_pending_thresholds_stay_null_until_decided(key):
+    """G7's vendor tolerance and G8's first-stage majority are undecided. If one
+    acquires a value it must arrive with an owner decision, not from whoever is
+    writing the diagnostic with the first stage already in front of them."""
+    assert key in G0
+    if G0[key] is not None:
+        assert key in (ROOT / "ops" / "decisions.md").read_text(), (
+            f"{key} was given the value {G0[key]} with no owner decision recorded.")
 
 
 def test_the_operationalization_of_much_less_than_is_flagged_as_a_judgement():
@@ -137,3 +154,49 @@ def test_w_shrink_is_still_unfrozen_before_gate_prereg():
     """Filling it early is the one edit that silently unblocks R6+."""
     assert CONFIG["beta"]["w_shrink"] is None
     assert CONFIG["prereg"]["osf_timestamp"] is None
+
+
+# --------------------------------------------------------------------------- #
+# v2.2 structural commitments — guards against drift back to the v2.1 design   #
+# --------------------------------------------------------------------------- #
+
+def test_the_core_design_is_fomc_only_with_cpi_nfp_as_generalization():
+    """An unfocused all-macro panel was one of the crowding problems the collision
+    review identified (Plan v2.2 §5.1 item 5, §7.6)."""
+    panel = CONFIG["panel"]
+    assert panel["announcement_types"] == ["FOMC"]
+    assert set(panel["generalization_types"]) == {"CPI", "NFP"}
+
+
+def test_an_announcement_day_dummy_is_forbidden_as_the_treatment():
+    """Bernanke-Kuttner: the shock is the UNEXPECTED component of policy."""
+    assert CONFIG["shock"]["announcement_day_dummy_allowed"] is False
+    assert CONFIG["shock"]["primary"] == "S_mp"
+    assert CONFIG["shock"]["companion"] == "S_cbi"
+
+
+def test_the_shock_decomposition_is_marked_unverified():
+    """Every v2.2 reference is owner-supplied; REFR-R0 still owes the first-hand sweep."""
+    assert CONFIG["shock"]["decomposition_status"] == "OWNER_SUPPLIED_UNVERIFIED"
+
+
+def test_the_network_measure_may_not_be_named_before_it_is_licensed():
+    """Plan v2.2 §6.1: mechanism must be measured, not named. Until G8 runs,
+    `licensed` is null and naming is forbidden."""
+    ne = CONFIG["network_exposure"]
+    assert ne["licensed"] is None
+    assert ne["naming_allowed_before_licensing"] is False
+    assert ne["candidate"] == "L_tilt"
+    assert len(ne["first_stage_outcomes"]) == 5
+
+
+def test_the_wedge_is_demoted_and_its_construction_is_unchanged():
+    """Demoted to diagnostic, but the horizons the machinery already builds stay put."""
+    w = CONFIG["wedge"]
+    assert w["status"] == "dynamic_diagnostic_not_headline"
+    assert w["horizons_days"] == [1, 5, 20, 60]
+
+
+def test_the_registered_spec_points_at_v22():
+    assert CONFIG["prereg"]["registered_spec"] == "SPEC-MAIN-v2.2"
+    assert CONFIG["prereg"]["osf_timestamp"] is None      # still a free redesign

@@ -1,5 +1,9 @@
 # Refraction — data requirements (WRDS request + free sources)
 
+> **REVISED 2026-08-19 for Plan v2.2.** The TAQ conclusion below has been
+> REVERSED: intraday data are now on the critical path. §4 of this file is
+> superseded — see §4′. Everything about the CRSP window and Tier 2a stands.
+
 Companion to P1's `TABLE-REQUEST.md`. Written 2026-08-19 from
 `docs/MacroEvent_Chapter_Plan_v2_1_FINAL.md` §4/§6/§7 and
 `refraction/frozen_config.yaml`; every date below is computed from the committed
@@ -107,19 +111,37 @@ predicts *next-quarter* SUE.
 | ETF mechanics (shares outstanding, premium/discount) | H4 dose, enhancement layer |
 | Russell constituents | robustness only — the 2021Q2–Q3 meme+Russell exclusion |
 
-## 4. TAQ: the same answer as P1, and with less at stake
+## 4′. TAQ — REVERSED by Plan v2.2: intraday is now load-bearing
 
-Your P1 reasoning holds here a fortiori. In P1, TAQ touched two of six variables
-in one of four spines. In refraction it touches **no core spine at all** — the
-plan already routes it to two enhancement spines that §7.5 pre-declares
-non-load-bearing, behind a pilot gate whose failure is defined as "drop
-enhancements, core unaffected."
+**The v2.1 answer in this file is withdrawn.** It said refraction's TAQ need was weaker than
+P1's because the plan routed intraday to non-load-bearing enhancement spines. Plan v2.2 moved
+the headline question to **propagation architecture** — direction of price discovery,
+adjustment half-life, premium/discount convergence — and none of those can be measured on
+daily data. Intraday ETF **and** constituent quotes/trades are therefore required for spines
+1–3, which are now the paper.
 
-So there is **no loose end here equivalent to P1's T3/WRDS-IID spec edit**.
-Refraction's spec already scopes TAQ correctly; nothing needs rewriting. If the
-Databento BBO substitute you identified for P1 works out, it would upgrade H5′'s
-announcement-window liquidity leg — an enhancement getting better, never a
-dependency being met.
+What this changes for the purchase:
+
+| Item | v2.1 status | v2.2 status |
+|---|---|---|
+| Intraday ETF + constituent data | enhancement, off the critical path | **critical path**; Gate-0 line **G7** is blocking, failure routes to exit F |
+| Creation-basket composition | non-blocking bypath (R9) | **load-bearing** — basket inclusion and weight are first-stage observables for G8 |
+| ETF mechanics (creation/redemption, premium/discount) | "enhancement layer" | **load-bearing** — first-stage observables for G8 |
+| CPI/NFP consensus | non-blocking | **further demoted** — generalization only, after FOMC works |
+
+**The vendor substitute is admissible, with a condition.** Databento intraday BBO/trades (or
+equivalent) may replace TAQ *if* it passes the coverage-and-agreement validation of Plan §4.1
+condition 3: on a sampled overlap it must reproduce the reference source's spread and lead-lag
+statistics within a tolerance registered in `frozen_config`
+(`intraday_vendor_agreement_tol`, currently null and NEED_HUMAN). Cheaper data is fine;
+unvalidated data is not, because spine 1's whole claim is a *timing* claim.
+
+**Coverage, not price, is the binding risk.** G7's pass line is ≥70% usable coverage
+including small caps. v1.1 of the plan rejected putting intraday on the critical path
+precisely because of this risk; v2.2 accepts it deliberately and pre-declares exit F as the
+fallback. When scoping the intraday purchase, scope it against **small-cap constituents on
+FOMC dates**, not against the ETF tickers — the ETFs will be well covered and will tell you
+nothing about whether the design survives.
 
 ## 5. Open items this list cannot close
 
@@ -136,7 +158,7 @@ dependency being met.
 
 ## 6. One-line summary for the purchase decision
 
-Refraction adds **no new tables** to the P1 request. It asks for **three daily
+Refraction adds **no new WRDS tables** to the P1 request — but as of Plan v2.2 it adds an entire **intraday source** (TAQ or a validated vendor) that P1 does not need at all. It asks for **three daily
 tables over a wider window** (2016-01-01 → 2026-10-31), **IBES and Compustat from
 2015 rather than 2018**, an **industry classification source to be named**, and it
 **re-prices Tier 2a from optional to essential**. Widening a range inside the

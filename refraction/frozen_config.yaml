@@ -18,7 +18,8 @@ version: "0.1"
 prereg:
   osf_timestamp: null       # RFC3339, e.g. "2026-08-01T15:00:00Z"; set at REFR-GATE-OSF
   osf_url: null
-  registered_spec: "SPEC-MAIN"   # see C0-R; γ always reported decomposed (mkt/tilt/fac)
+  registered_spec: "SPEC-MAIN-v2.2"   # Plan v2.2 §6; γ always reported decomposed
+                                 # (mkt/tilt/fac) and separately for S^mp and S^cbi
 
 beta:
   w_shrink: null            # FROZEN AT GATE-PREREG from inside the G2 feasibility window
@@ -38,6 +39,17 @@ beta:
                                    # available; only this one is registered.
   prior: characteristics_implied              # prior coefficients pre-period only
   n_pre_min_for_estimation: 10                # provisional [VERIFY-IN-GATE-0]
+
+# ---------------------------------------------------------------------------
+# SHOCK CONSTRUCTION (Plan v2.2 §5.1). No announcement-day dummy is used anywhere.
+# ---------------------------------------------------------------------------
+shock:
+  primary: "S_mp"                  # pure monetary-policy shock — the registered primary
+  companion: "S_cbi"               # central-bank information shock, own coefficient
+  decomposition: jarocinski_karadi_sign_restriction
+  decomposition_status: OWNER_SUPPLIED_UNVERIFIED   # REFR-R0 owes first-hand verification
+  cbi_interpretation_caveat: bauer_swanson          # report as decomposition, not structure
+  announcement_day_dummy_allowed: false             # Bernanke-Kuttner; hard rule
 
 surprise:
   standardize: sample_std          # S_std = S_raw / in-sample std, per type
@@ -106,6 +118,18 @@ gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops
   d_b_min: 0.10                    # G4 basket distinctiveness |β_b^LOO − 1|
   mde_sigma_max: 0.5               # G5, for γ pooled AND γ_tilt AND γ_fac
   sweep_window_min_gridpoints: 2   # G2: window narrower than this = knife-edge = FAIL
+  # --- G7 / G8: new blocking lines in Plan v2.2 §9 --------------------------
+  intraday_coverage_min: 0.70      # G7: pilot 30+30 x 20 days incl. small caps.
+                                   # TRANSCRIBED from Plan §9 (was a non-blocking bypath in
+                                   # v2.1; v2.2 makes it blocking). FAIL -> exit F.
+  first_stage_majority_min: null   # G8: NEED_HUMAN. How many of the five §6.1 first-stage
+                                   # outcomes L_tilt must predict with the implied sign to be
+                                   # LICENSED. No number exists in the plan to transcribe, and
+                                   # picking one after seeing the first stage is specification
+                                   # search — so R3 stops here, as it did for G4/G6.
+  intraday_vendor_agreement_tol: null  # G7: NEED_HUMAN. Tolerance at which a vendor feed's
+                                   # spread and lead-lag statistics must reproduce the
+                                   # reference source on a sampled overlap (Plan §4.1 cond. 3).
   convexp_treated_min: 0.005       # binary-treatment line (P1 convention, 0.5%)
 
 sample:
@@ -125,7 +149,11 @@ sample:
   price_floor_usd: 5               # robustness exclusion, not main-spec filter
 
 panel:
-  announcement_types: [FOMC, CPI, NFP]
+  # v2.2: FOMC ONLY is the core design. CPI/NFP moved to generalization (Plan §7.6) —
+  # an unfocused "all macro announcements" panel was one of the crowding problems the
+  # 2026-08-19 collision review identified. Do not add them before spines 1-3 are done.
+  announcement_types: [FOMC]
+  generalization_types: [CPI, NFP]
   release_times_ET: {FOMC: "14:00", CPI: "08:30", NFP: "08:30"}
   pre_quarters_required: 8         # assert A2: announcement coverage BEFORE the wave.
                                    # Asymmetric with the post side on purpose: beta
@@ -140,7 +168,26 @@ panel:
                                    # 8Q costs 28 waves (67 -> 39) and therefore effective
                                    # clusters, while buying only 1 further treated name.
 
-wedge:
+# ---------------------------------------------------------------------------
+# NETWORK EXPOSURE (Plan v2.2 §6.1). The mechanism variable may not be NAMED a
+# network measure until the pre-conversion first stage licenses it.
+# ---------------------------------------------------------------------------
+network_exposure:
+  candidate: "L_tilt"              # beta_b_loo - beta_i, as built by build_basket.py
+  licensed: null                   # set by Gate-0 line G8: licensed | redefined | retired
+  first_stage_outcomes:            # Plan v2.2 §6.1 table
+    - creation_redemption_activity
+    - basket_inclusion_or_weight
+    - premium_discount_convergence
+    - etf_stock_lead_lag_strength
+    - constituent_order_imbalance_around_etf_flows
+  naming_allowed_before_licensing: false   # enforced in code, not by discipline
+
+wedge:                             # v2.2: DEMOTED to dynamic diagnostic (Plan §7 spine 4).
+  # Two interpretive claims are WITHDRAWN and must not reappear in any output:
+  # "reversal = mispricing", and "factor decomposition separates macro from micro
+  # pricing error". The construction below is unchanged; only its status changed.
+  status: dynamic_diagnostic_not_headline
   horizons_days: [1, 5, 20, 60]
 
 reversal_portfolio:                # R7-S2: ALL construction parameters live here

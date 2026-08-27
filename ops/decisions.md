@@ -479,3 +479,52 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 #        announcements_end, enforced in tests, and assert A2 now reads the post
 #        bound from config instead of mirroring the pre bound.
 # TO REVERSE ANY OF THESE: now is the free moment — nothing downstream has run.
+
+# REFRACTION PLAN REVISED TO v2.2 2026-08-19 (owner memo: "update the research plan
+# itself"). New plan: docs/MacroEvent_Chapter_Plan_v2_2.md; v2_1_FINAL kept as the
+# superseded record. Nothing was pre-registered (osf_timestamp null, w_shrink null,
+# zero Gate-0 lines measured), so this is a free redesign, NOT a deviation. That
+# stops being true at REFR-GATE-OSF.
+# WHAT CHANGED STRUCTURALLY:
+#   - Estimand moves from QUANTITY of macro transmission to ARCHITECTURE of it.
+#     Headline: does the wrapper switch rewire how aggregate information propagates
+#     through the ETF-constituent system, governed by the pre-existing network?
+#   - P1/Refraction boundary sharpened: P1 = firm-specific information; Refraction =
+#     common information. Earnings survive here only as spine-5 contrast tests.
+#   - Shock: identified, DECOMPOSED FOMC surprises (S_mp primary, S_cbi companion).
+#     announcement_day_dummy_allowed: false is now a hard config rule. CPI/NFP demoted
+#     to generalization (panel.announcement_types is now [FOMC]).
+#   - Outcomes: price-discovery direction, adjustment half-life, premium/discount
+#     convergence. Direction is UNSIGNED — published minute-level evidence argues ETFs
+#     do not generally lead their underlyings, so "ETF first" is a null we can reject.
+#   - Wedge fingerprint DEMOTED to dynamic diagnostic; two claims WITHDRAWN:
+#     "reversal = mispricing" and "factor decomposition separates macro from micro
+#     pricing error". Construction unchanged; status changed.
+#   - L_tilt may NOT be called a network/arbitrage measure until a pre-conversion
+#     first stage licenses it (new Gate-0 line G8, the highest-priority kill test).
+#     network_exposure.licensed is null and naming_allowed_before_licensing is false.
+#   - INTRADAY MOVES ONTO THE CRITICAL PATH. This REVERSES a decision v1.1 took
+#     deliberately ("rejected moving intraday data onto the critical path; reinstates
+#     v0's fatal flaw"). Recorded as a reversal in Plan §4.1 with three conditions.
+#     The TAQ pilot becomes BLOCKING Gate-0 line G7; failure routes to new exit F
+#     (daily/portfolio fallback) instead of "drop enhancements, core unaffected".
+#     R9 creation baskets and ETF mechanics become load-bearing (G8 first-stage inputs).
+# PRIOR DECISIONS THAT SURVIVE: D-A (d_b_mass_share 0.50, G4 framing gate), D-B
+#   (pre-trend 0.10 + Holm), D-C (n_pre w-invariance), D-D (4 post-quarters /
+#   waves_end 2025-06-30). D-D may bind EARLIER once intraday coverage dates are known
+#   — the intraday vendor's history, not the announcement window, could become the
+#   front constraint. Re-check when G7's pilot runs.
+# NEW NEED_HUMAN (both null in frozen_config so R3 stops rather than inventing):
+#   1. gate0_thresholds.first_stage_majority_min — how many of the five §6.1
+#      first-stage outcomes L_tilt must predict to be LICENSED. No number exists in
+#      the plan to transcribe, and choosing one with the first stage in hand is
+#      specification search.
+#   2. gate0_thresholds.intraday_vendor_agreement_tol — tolerance at which a vendor
+#      feed must reproduce the reference source's spread and lead-lag statistics.
+# CITATION DEBT: all ten v2.2 references are OWNER-SUPPLIED and UNVERIFIED, flagged
+#   [OWNER-SUPPLIED · UNVERIFIED] in Plan Appendix A2. REFR-R0 owes first-hand
+#   verification of every field AND of each characterisation of findings before any of
+#   it reaches a draft. Three of them supersede existing Appendix A entries.
+# QUEUE WORK OWED (not done here — queue.yaml is seat D's and selfcheck gates it):
+#   new nodes for the G8 first-stage validation and the G7 intraday pilot as BLOCKING
+#   gates, and REFR-R9/R10 re-typed from bypaths to critical-path tasks.
