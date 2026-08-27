@@ -90,12 +90,12 @@ named**. Name them, with their combined employment weight. This project names
 occupations rather than reporting only shares — it is how the 96.7% group-15
 finding became interpretable.
 
-## Task 2 — O\*NET *Working with Computers*
+## Task 2 — O\*NET *Interacting With Computers*
 
 | choice | value |
 |---|---|
 | release | **O\*NET 24.3, May 2020** |
-| descriptor | **`4.A.3.b.1`** — using computers and software to program, enter data, or process information |
+| descriptor | **`4.A.3.b.1`, Interacting With Computers** — using computers and software to program, enter data, or process information |
 | scale | **Importance primary**, Level as robustness |
 
 `onetcenter.org/db_releases.html`. Record release and sha256.

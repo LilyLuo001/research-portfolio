@@ -48,7 +48,8 @@ software, and it is reported as such.
 
 Computerization robustness, in descending priority:
 
-- **O\*NET *Working with Computers***, work-activity descriptor `4.A.3.b.1`.
+- **O\*NET *Interacting With Computers***, work-activity descriptor
+  `4.A.3.b.1` (the official 24.3 element name).
   Contains no AI content, so it cannot smuggle the treatment into the control.
 - **routine-task intensity** (Autor–Levy–Murnane / Acemoglu–Autor).
 - **Frey–Osborne** — *secondary only*: it bundles AI and robotics into
@@ -137,7 +138,7 @@ out, and the choice is fixed **before** the freeze:
 Record file URL, sha256, native taxonomy, and merge coverage either way.
 `IND1990` is already in the extract, which matters for §8.
 
-### 6.2 O\*NET *Working with Computers* — frozen
+### 6.2 O\*NET *Interacting With Computers* — frozen
 
 | choice | value | why |
 |---|---|---|
