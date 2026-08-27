@@ -301,6 +301,96 @@ Per `docs/Project_1.md` §125, this is the canonical DECISION_NEEDED:
 
 See `p1/t4_replication/saglam_tuzun_stub.md` for the A3 treatment (T4 coefficient transcription task).
 
+Full citation supplied by owner 2026-08-27: **Saglam, Mehmet, and Tugkan Tuzun
+(2025), "Implications of Growth in ETFs: Evidence from Mutual Fund to ETF
+Conversions," FEDS Notes, Board of Governors of the Federal Reserve System,
+November 19, 2025. DOI [10.17016/2380-7172.3909](https://doi.org/10.17016/2380-7172.3909).**
+This is the **closest direct collision on the conversion setting**: it uses
+MF-to-ETF conversion variation to study underlying-stock liquidity and volatility.
+Plan v2.0 §7.6 therefore treats it as a **replication baseline, not a contribution**.
+
+---
+
+# v2.0 追加条目(2026-08-27)
+
+_计划改版为 v2.0 后新增的六篇必引文献。**书目信息(作者/年份/期刊/卷页/DOI)
+由 owner 在改版备忘中提供,此处逐字转录**;"核心发现"一栏**仅复述备忘中的
+一句话刻画**,未从模型记忆补充。凡需读原文才能确定者一律 `[NEED_PDF]`,
+且**不得在引言中当作已知事实引用**。本容器无 `doi.org`/`papers.ssrn.com`
+出口(2026-08-27 复验),故只能由 owner 或有网络的 lane 补完。_
+
+_完整七列差异化矩阵见 `p1/lit/differentiation_matrix.md`。_
+
+## 11. Huang–O'Hara–Zhong — 行业 ETF 与知情交易
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Huang, Shiyang; O'Hara, Maureen; Zhong, Zhuo |
+| 年份 / 期刊 | 2021, *Review of Financial Studies* 34(3):1280–1316 |
+| DOI | https://doi.org/10.1093/rfs/hhaa077 |
+| 冲击 | **行业 ETF 的诞生(inception)** |
+| 核心发现(备忘原话) | 行业 ETF 诞生**便利知情交易并减弱 PEAD**,在行业风险暴露高处尤甚 |
+| 与本文边界 | **机制上最接近的一篇**。区别是"新篮子诞生"vs"既有组合换壳":本文标的与委托不变。§7.3 的 PEAD 检验需与其可比 |
+| 待补 | `[NEED_PDF: 样本期、ETF inception 的识别设计、知情交易的具体测度、PEAD 口径]` |
+
+## 12. Sammon — 被动持股与价格信息量(**方向相反的权威结果**)
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Sammon, Marco |
+| 年份 / 期刊 | 2024 online / 2025 issue, *Management Science* 71(6):4582–4598 |
+| DOI | https://doi.org/10.1287/mnsc.2023.00836 |
+| 冲击 | 被动持股上升 |
+| 核心发现(备忘原话) | 被动持股**减少**公告前进入价格的信息量 |
+| 与本文边界 | **与 GNZ 方向相反**。因此计划 §3 的 H1 写成**双向**,不预设 ETF 改善效率。若本文得到减速,是在更干净设定下印证 Sammon(出口 B') |
+| 待补 | `[NEED_PDF: 信息量测度定义、识别策略、样本期]` |
+
+## 13. Antoniou–Li–Liu–Subrahmanyam–Sun — ETF 与实体投资
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Antoniou, Constantinos; Li, Frank Weikai; Liu, Xuewen; Subrahmanyam, Avanidhar; Sun, Chengzhu |
+| 年份 / 期刊 | 2023, *Review of Financial Studies* 36(3):1043–1093 |
+| DOI | https://doi.org/10.1093/rfs/hhac043 |
+| 冲击 | 行业 ETF **纳入** |
+| 核心发现(备忘原话) | 行业 ETF 纳入与**更多未来盈余信息进入价格**相关 |
+| 与本文边界 | 同为"纳入"结果,但本文测**日内时间路径**而非水平 |
+| 待补 | `[NEED_PDF: 未来盈余信息的测度、识别、样本期]` |
+
+## 14. Ahn–Patatoukas — 指数化与调整速度(**方法论先例**)
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Ahn, Byung Hyun; Patatoukas, Panos N. |
+| 年份 / 期刊 | 2022, *Journal of Financial and Quantitative Analysis* 57(5):2022–2062 |
+| DOI | https://doi.org/10.1017/S0022109021000235 |
+| 冲击 | **Russell 重构** |
+| 核心发现(备忘原话) | Russell 重构提供因果证据:**指数化可改变价格对新闻的调整速度**,效应跨股票异质 |
+| 与本文边界 | **他们也测"速度",是 `Speed^h` 最直接的方法论先例**。区别:处理是指数成员身份,本文是产品外壳,且本文有连续暴露度 |
+| 待补 | `[NEED_PDF: speed 测度的确切定义(是否比值形式)、分母近零如何处理、带宽设计]` —— **这一条现在阻塞脊柱零的 D-T3-10/13** |
+
+## 15. Moussawi–Shen–Velthuis — 税收与 ETF 的兴起(**识别约束**)
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Moussawi, Rabih; Shen, Ke; Velthuis, Raisa |
+| 年份 / 期刊 | 2025, *Review of Financial Studies* 38(10):2988–3039 |
+| DOI | https://doi.org/10.1093/rfs/hhaf044 |
+| 核心发现(备忘原话) | **税收效率是 MF→ETF 迁移的重要驱动** |
+| 与本文边界 | **不是竞争性结果,是识别约束**。直接迫使计划 §6.0 删除全部"外生冲击"措辞,并把 estimand 收窄到"被转换持仓内部、暴露度梯度上的效应"。**必引** |
+| 待补 | `[NEED_PDF: 税务动机的具体度量(未实现资本利得?),用于 §6.3 T1 的可观测控制变量]` |
+
+## 16. Ben-David–Franzoni–Moussawi — ETF 是否提高波动
+
+| 字段 | 内容 |
+|---|---|
+| 作者 | Ben-David, Itzhak; Franzoni, Francesco; Moussawi, Rabih |
+| 年份 / 期刊 | 2018, *Journal of Finance* 73(6):2471–2535 |
+| DOI | https://doi.org/10.1111/jofi.12727 |
+| 核心发现(备忘原话) | ETF 套利可**提高**波动 |
+| 与本文边界 | 对"ETF 必然改善标的市场质量"的**反证**。计划 §3 H6 的回吐/反转签名检验直接源于此通路 |
+| 待补 | `[NEED_PDF: 波动测度、识别(Russell 带宽?)、样本期]` |
+
 ---
 
 ## Source log
