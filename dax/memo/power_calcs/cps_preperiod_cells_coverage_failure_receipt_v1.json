@@ -1,0 +1,295 @@
+{
+  "record_version": "cps-young-relative-employment-target-occ-cells-v3",
+  "status": "FAIL_PRIMARY_EXPOSURE_COVERAGE",
+  "post_outcomes_read": false,
+  "primary_occupation_variable": "OCC",
+  "pre2020_mapping": "raw OCC probabilistically expanded to Census-2018 with official conversion rates",
+  "post2020_mapping": "raw OCC directly observed on Census-2018 taxonomy",
+  "primary_lookup_key": [
+    "lookup_role",
+    "occ_code"
+  ],
+  "occ2010_role": "sensitivity_only",
+  "rows_input": 6188956,
+  "rows_structural_asec_omitted": 621589,
+  "structural_asec_months": [
+    "2017-03",
+    "2018-03",
+    "2019-03",
+    "2020-03",
+    "2021-03"
+  ],
+  "rows_primary_age": 4226677,
+  "rows_employed_primary_age": 3092796,
+  "rows_invalid_weight_among_employed_primary_age": 0,
+  "rows_matched_route": 3447800,
+  "missing_bridge_weight": 18753955.5526,
+  "excluded_nonfull_exposure_weight": 995327678.0219165,
+  "excluded_total_weight": 1014081633.5745165,
+  "covered_route_mass_fraction": 0.8870045440505062,
+  "minimum_coverage_threshold": 0.9,
+  "coverage_gate_pass": false,
+  "largest_missing_bridge_source_codes": [
+    {
+      "occ_code": "7630",
+      "weight": 5910611.323
+    },
+    {
+      "occ_code": "4300",
+      "weight": 5823784.3404
+    },
+    {
+      "occ_code": "4060",
+      "weight": 2524300.9859
+    },
+    {
+      "occ_code": "5800",
+      "weight": 2020372.1816
+    },
+    {
+      "occ_code": "6300",
+      "weight": 625635.8617
+    },
+    {
+      "occ_code": "7940",
+      "weight": 559629.8461
+    },
+    {
+      "occ_code": "8200",
+      "weight": 472863.0119
+    },
+    {
+      "occ_code": "8410",
+      "weight": 294834.7598
+    },
+    {
+      "occ_code": "8010",
+      "weight": 246811.9594
+    },
+    {
+      "occ_code": "8400",
+      "weight": 181020.9002
+    },
+    {
+      "occ_code": "8210",
+      "weight": 80948.1055
+    },
+    {
+      "occ_code": "4410",
+      "weight": 13142.277100000001
+    }
+  ],
+  "largest_nonfull_exposure_target_codes": [
+    {
+      "occ_code": "4220",
+      "weight": 124310522.8175
+    },
+    {
+      "occ_code": "4020",
+      "weight": 99904237.7236
+    },
+    {
+      "occ_code": "2205",
+      "weight": 70435671.12620369
+    },
+    {
+      "occ_code": "2545",
+      "weight": 68625411.28139631
+    },
+    {
+      "occ_code": "8990",
+      "weight": 65168444.93884589
+    },
+    {
+      "occ_code": "0230",
+      "weight": 59403866.7975
+    },
+    {
+      "occ_code": "7750",
+      "weight": 58855684.1636
+    },
+    {
+      "occ_code": "3090",
+      "weight": 58631140.46242034
+    },
+    {
+      "occ_code": "6050",
+      "weight": 44835591.8514
+    },
+    {
+      "occ_code": "2014",
+      "weight": 39411335.48921033
+    },
+    {
+      "occ_code": "2360",
+      "weight": 38701647.4635482
+    },
+    {
+      "occ_code": "5940",
+      "weight": 35847508.803
+    },
+    {
+      "occ_code": "8225",
+      "weight": 23371059.5965
+    },
+    {
+      "occ_code": "2640",
+      "weight": 22841910.830876518
+    },
+    {
+      "occ_code": "4965",
+      "weight": 18163028.0271
+    },
+    {
+      "occ_code": "9005",
+      "weight": 16486901.29430786
+    },
+    {
+      "occ_code": "2600",
+      "weight": 15022723.4776
+    },
+    {
+      "occ_code": "2006",
+      "weight": 13893934.0874897
+    },
+    {
+      "occ_code": "2555",
+      "weight": 9354210.0394676
+    },
+    {
+      "occ_code": "3010",
+      "weight": 9265949.4907
+    },
+    {
+      "occ_code": "7855",
+      "weight": 8971585.1614
+    },
+    {
+      "occ_code": "4655",
+      "weight": 7441446.8348514
+    },
+    {
+      "occ_code": "4435",
+      "weight": 6943169.1159
+    },
+    {
+      "occ_code": "5165",
+      "weight": 6751408.6422
+    },
+    {
+      "occ_code": "5420",
+      "weight": 6545582.5886
+    }
+  ],
+  "lookup_route_count": 570,
+  "matched_route_count": 492,
+  "quintile_measure": "dv_rating_beta",
+  "quintile_cutpoints": [
+    0.161764705882,
+    0.333333333333,
+    0.45652173913,
+    0.537037037037
+  ],
+  "quintile_weighting_window": [
+    "2017-01",
+    "2022-11"
+  ],
+  "quintile_weighting_population": "WTFINL-weighted employed ages 22-65 after raw-route join",
+  "general_wage_salary_code20_rows": 0,
+  "private_wage_salary_sensitivity_ready": true,
+  "months_observed": [
+    "2017-01",
+    "2017-02",
+    "2017-04",
+    "2017-05",
+    "2017-06",
+    "2017-07",
+    "2017-08",
+    "2017-09",
+    "2017-10",
+    "2017-11",
+    "2017-12",
+    "2018-01",
+    "2018-02",
+    "2018-04",
+    "2018-05",
+    "2018-06",
+    "2018-07",
+    "2018-08",
+    "2018-09",
+    "2018-10",
+    "2018-11",
+    "2018-12",
+    "2019-01",
+    "2019-02",
+    "2019-04",
+    "2019-05",
+    "2019-06",
+    "2019-07",
+    "2019-08",
+    "2019-09",
+    "2019-10",
+    "2019-11",
+    "2019-12",
+    "2020-01",
+    "2020-02",
+    "2020-04",
+    "2020-05",
+    "2020-06",
+    "2020-07",
+    "2020-08",
+    "2020-09",
+    "2020-10",
+    "2020-11",
+    "2020-12",
+    "2021-01",
+    "2021-02",
+    "2021-04",
+    "2021-05",
+    "2021-06",
+    "2021-07",
+    "2021-08",
+    "2021-09",
+    "2021-10",
+    "2021-11",
+    "2021-12",
+    "2022-01",
+    "2022-02",
+    "2022-03",
+    "2022-04",
+    "2022-05",
+    "2022-06",
+    "2022-07",
+    "2022-08",
+    "2022-09",
+    "2022-10",
+    "2022-11"
+  ],
+  "missing_expected_months": [],
+  "unexpected_months": [],
+  "cell_rows": 55860,
+  "cell_columns": [
+    "month",
+    "lookup_role",
+    "occ_code",
+    "occupation_key",
+    "dv_rating_beta",
+    "exposure_quintile",
+    "age_group",
+    "employment_headcount",
+    "unweighted_n",
+    "weight_sq_sum"
+  ],
+  "source_seal": {
+    "rows": 6188956,
+    "first_month_code": 201701,
+    "last_month_code": 202211,
+    "outcome_columns_read": false,
+    "audited_split_status": "PASS_OUTCOME_BLIND_PREPERIOD_SPLIT",
+    "source_sha256": "58415779d2dee9e5063c5ea9e7b5f71fbd26af5e36683736449a8d50cd318d56"
+  },
+  "lookup_sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+  "bridge_sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+  "c1_receipt_status": "PASS",
+  "cells_sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+}

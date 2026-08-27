@@ -1,0 +1,2079 @@
+{
+  "record_version": "yax-joint-computerization-power-aggregate-v1",
+  "status": "PASS_FOUR_PRIMARY_SCENARIOS_COMPLETE",
+  "post_outcomes_read": false,
+  "primary_ai_measure": "dv_rating_beta",
+  "robustness_ai_measure": "dv_rating_alpha",
+  "primary_beta_c": -0.05129329438755058,
+  "beta_c_interpretation": "pre-specified 5% relative young-employment decline per one weighted-SD of computerization in the synthetic post period",
+  "bootstrap": {
+    "primary_inference": "occupation-cluster Rademacher calibration",
+    "draws_per_scenario": 999,
+    "mde_interval_draws_per_scenario": 999,
+    "scenario_records_carry_critical_values_and_seeds": true
+  },
+  "inputs": [
+    {
+      "path": "yax/power/scenarios/beta_onet_primary.json",
+      "sha256": "468c76f02296a9c3feaf5dad4a05f0b5da3955cc4110fdfac40789e55f3a9c77"
+    },
+    {
+      "path": "yax/power/scenarios/beta_webb_primary.json",
+      "sha256": "ec671811e053a5c3002eee0330d3b3dcf0e1b600277a7cc63c22c55daaa731f2"
+    },
+    {
+      "path": "yax/power/scenarios/alpha_onet_primary.json",
+      "sha256": "c82c6a74e9fdd7b0f038f4285d70269529f817733d8c265271ec0fc663f79a44"
+    },
+    {
+      "path": "yax/power/scenarios/alpha_webb_primary.json",
+      "sha256": "23f46008f34a9fa5e53a436058619f3deb179d59579a8f96a5ea9f6377b87148"
+    }
+  ],
+  "scenarios": [
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "onet_computers_importance",
+      "beta_c": -0.05129329438755058,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 465,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.14433806594664403,
+        "sd": 0.16399823170955227,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 3.509751501680629,
+        "sd": 0.9730163686701171,
+        "reference_occupations": 465
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 585735560,
+        "critical_value_two_sided": 2.029055184340437,
+        "independent_null_evaluation_size": 0.06006006006006006,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.013403356976136349,
+          "upper": 0.013878609681430685
+        }
+      },
+      "empirical_mde80_relative_decline": 0.013625741599260846,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 31.094380020419305,
+        "top_five_influence_share": 0.3282145315537481,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.09982937941639246
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.08277252389895223
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.056480561265694784
+          },
+          {
+            "census2018": "5810",
+            "occupation": "Data entry keyers",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.046951288948791865
+          },
+          {
+            "census2018": "2850",
+            "occupation": "Writers and authors",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.042180778023916704
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.04212607955374298
+          },
+          {
+            "census2018": "5840",
+            "occupation": "Insurance claims and policy processing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02765429694236281
+          },
+          {
+            "census2018": "2861",
+            "occupation": "Interpreters and translators",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.023289662929351813
+          },
+          {
+            "census2018": "1031",
+            "occupation": "Web developers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.0228505724776903
+          },
+          {
+            "census2018": "9130",
+            "occupation": "Driver/sales workers and truck drivers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.020626810135191305
+          },
+          {
+            "census2018": "5860",
+            "occupation": "Office clerks, general",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.020215819499660316
+          },
+          {
+            "census2018": "1050",
+            "occupation": "Computer support specialists",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.01767646528672167
+          },
+          {
+            "census2018": "5260",
+            "occupation": "File clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.01735535806836706
+          },
+          {
+            "census2018": "0440",
+            "occupation": "Managers, all other",
+            "soc_major_group": "11",
+            "residual_variance_share": 0.016957685677419457
+          },
+          {
+            "census2018": "0120",
+            "occupation": "Financial managers",
+            "soc_major_group": "11",
+            "residual_variance_share": 0.0159932535396362
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.9078248963795037
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.06006006006006006,
+          "coverage_95": 0.93993993993994,
+          "mean_estimate": 0.00042850931559238056,
+          "mean_cluster_se": 0.004315384724092714,
+          "bias": 0.00042850931559238056,
+          "rmse": 0.004522647515443314
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.17117117117117117,
+          "coverage_95": 0.9569569569569569,
+          "mean_estimate": -0.004925259555924407,
+          "mean_cluster_se": 0.00430403063868877,
+          "bias": 7.474044407559343e-05,
+          "rmse": 0.004187257293694343
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.8918918918918919,
+          "coverage_95": 0.9409409409409409,
+          "mean_estimate": -0.014584035137887677,
+          "mean_cluster_se": 0.0042730737623841615,
+          "bias": 0.00041596486211232104,
+          "rmse": 0.004514676368599083
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9529529529529529,
+          "mean_estimate": -0.02934212991957569,
+          "mean_cluster_se": 0.004330796099534196,
+          "bias": 0.0006578700804243065,
+          "rmse": 0.004411835968121138
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.94994994994995,
+          "mean_estimate": -0.04895358411869532,
+          "mean_cluster_se": 0.00432369314840353,
+          "bias": 0.0010464158813046898,
+          "rmse": 0.00437076000166437
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9259259259259259,
+          "mean_estimate": -0.07817504288424501,
+          "mean_cluster_se": 0.004363895701464471,
+          "bias": 0.0018249571157549942,
+          "rmse": 0.004914291622980306
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9159159159159159,
+          "mean_estimate": -0.11763713327555442,
+          "mean_cluster_se": 0.004405966452916253,
+          "bias": 0.002362866724445574,
+          "rmse": 0.005226768330072683
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.8738738738738738,
+          "mean_estimate": -0.1765025348525149,
+          "mean_cluster_se": 0.0044986411789213285,
+          "bias": 0.003497465147485084,
+          "rmse": 0.005786559109763549
+        }
+      ]
+    },
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_alpha",
+      "computerization_measure": "webb_pct_software",
+      "beta_c": -0.05129329438755058,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 468,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.14433806594664403,
+        "sd": 0.16399823170955227,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 45.19123534211442,
+        "sd": 26.25702976759079,
+        "reference_occupations": 468
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 1048644596,
+        "critical_value_two_sided": 2.192608303191708,
+        "independent_null_evaluation_size": 0.05805805805805806,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.012133478840829869,
+          "upper": 0.012405537935645333
+        }
+      },
+      "empirical_mde80_relative_decline": 0.012273521350138362,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 17.355926045233197,
+        "top_five_influence_share": 0.415564500614024,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "1021",
+            "occupation": "Software developers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.1964030240986483
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.06955120990702829
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.06445007458190626
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.0459113703813279
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.039248821645113265
+          },
+          {
+            "census2018": "5810",
+            "occupation": "Data entry keyers",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.03449332190584188
+          },
+          {
+            "census2018": "2850",
+            "occupation": "Writers and authors",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.0330056944965726
+          },
+          {
+            "census2018": "1108",
+            "occupation": "Computer occupations, all other",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.023634762677314784
+          },
+          {
+            "census2018": "5840",
+            "occupation": "Insurance claims and policy processing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.021319706625388846
+          },
+          {
+            "census2018": "1031",
+            "occupation": "Web developers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.016875139898603807
+          },
+          {
+            "census2018": "5860",
+            "occupation": "Office clerks, general",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.016546957090701996
+          },
+          {
+            "census2018": "2861",
+            "occupation": "Interpreters and translators",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.0165182702573023
+          },
+          {
+            "census2018": "6260",
+            "occupation": "Construction laborers",
+            "soc_major_group": "47",
+            "residual_variance_share": 0.015449785023299963
+          },
+          {
+            "census2018": "1050",
+            "occupation": "Computer support specialists",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.014935668618329612
+          },
+          {
+            "census2018": "5140",
+            "occupation": "Payroll and timekeeping clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.013187590147588468
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.9829179226720925
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.05805805805805806,
+          "coverage_95": 0.9419419419419419,
+          "mean_estimate": -0.0002361612445590025,
+          "mean_cluster_se": 0.003372309125326928,
+          "bias": -0.0002361612445590025,
+          "rmse": 0.0036829214530918475
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.2872872872872873,
+          "coverage_95": 0.9419419419419419,
+          "mean_estimate": -0.00522262126606677,
+          "mean_cluster_se": 0.0033766885613566344,
+          "bias": -0.00022262126606677025,
+          "rmse": 0.003695310981379888
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.983983983983984,
+          "coverage_95": 0.943943943943944,
+          "mean_estimate": -0.014955126058125313,
+          "mean_cluster_se": 0.003362053939133356,
+          "bias": 4.487394187468614e-05,
+          "rmse": 0.003603911624273734
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9519519519519519,
+          "mean_estimate": -0.029583703809843154,
+          "mean_cluster_se": 0.003394304221403234,
+          "bias": 0.0004162961901568435,
+          "rmse": 0.003527894177060887
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.950950950950951,
+          "mean_estimate": -0.04923192815395739,
+          "mean_cluster_se": 0.0033951120274330177,
+          "bias": 0.0007680718460426086,
+          "rmse": 0.0036287557600251964
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9359359359359359,
+          "mean_estimate": -0.07871088150693319,
+          "mean_cluster_se": 0.003433654227886636,
+          "bias": 0.001289118493066819,
+          "rmse": 0.003920070680142094
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.934934934934935,
+          "mean_estimate": -0.1184004006133681,
+          "mean_cluster_se": 0.003470667033842801,
+          "bias": 0.0015995993866319105,
+          "rmse": 0.003932518870759357
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.8988988988988988,
+          "mean_estimate": -0.17748400663900046,
+          "mean_cluster_se": 0.0035413923777555256,
+          "bias": 0.0025159933609995213,
+          "rmse": 0.004465552969485305
+        }
+      ]
+    },
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "onet_computers_importance",
+      "beta_c": -0.05129329438755058,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 465,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.376383522121704,
+        "sd": 0.20999275961779407,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 3.509751501680629,
+        "sd": 0.9730163686701171,
+        "reference_occupations": 465
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 3573248032,
+        "critical_value_two_sided": 2.0663038749928746,
+        "independent_null_evaluation_size": 0.04104104104104104,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.022172224266227898,
+          "upper": 0.023200343396448657
+        }
+      },
+      "empirical_mde80_relative_decline": 0.022691157987127508,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 63.22982766192177,
+        "top_five_influence_share": 0.20145521581353457,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "4700",
+            "occupation": "First-Line supervisors of retail sales workers",
+            "soc_major_group": "41",
+            "residual_variance_share": 0.0464432360940513
+          },
+          {
+            "census2018": "7200",
+            "occupation": "Automotive service technicians and mechanics",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.043906113004209234
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.04379014521241022
+          },
+          {
+            "census2018": "4850",
+            "occupation": "Sales representatives, wholesale and manufacturing",
+            "soc_major_group": "41",
+            "residual_variance_share": 0.03598321354242858
+          },
+          {
+            "census2018": "9130",
+            "occupation": "Driver/sales workers and truck drivers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.03133250796043525
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.03031437615981475
+          },
+          {
+            "census2018": "7210",
+            "occupation": "Bus and truck mechanics and diesel engine specialists",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.023463741098770273
+          },
+          {
+            "census2018": "2850",
+            "occupation": "Writers and authors",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.021081448391527268
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.021018229787813987
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02000424197687889
+          },
+          {
+            "census2018": "3602",
+            "occupation": "Personal care aides",
+            "soc_major_group": "31",
+            "residual_variance_share": 0.018719652004748982
+          },
+          {
+            "census2018": "9645",
+            "occupation": "Stockers and order fillers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.015196119068555556
+          },
+          {
+            "census2018": "2861",
+            "occupation": "Interpreters and translators",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.014983004629533605
+          },
+          {
+            "census2018": "4510",
+            "occupation": "Hairdressers, hairstylists, and cosmetologists",
+            "soc_major_group": "39",
+            "residual_variance_share": 0.014778782663600758
+          },
+          {
+            "census2018": "7420",
+            "occupation": "Telecommunications line installers and repairers",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.01422343509364903
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.3652191620800791
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.04104104104104104,
+          "coverage_95": 0.958958958958959,
+          "mean_estimate": 0.0001670805487698444,
+          "mean_cluster_se": 0.006288036305418419,
+          "bias": 0.0001670805487698444,
+          "rmse": 0.006408111251026258
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.11011011011011011,
+          "coverage_95": 0.9459459459459459,
+          "mean_estimate": -0.004735362983950061,
+          "mean_cluster_se": 0.006345628629604861,
+          "bias": 0.0002646370160499397,
+          "rmse": 0.006622569804497678
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.5805805805805806,
+          "coverage_95": 0.94994994994995,
+          "mean_estimate": -0.014211610432763536,
+          "mean_cluster_se": 0.006311250508288288,
+          "bias": 0.0007883895672364635,
+          "rmse": 0.006563794140882431
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.992992992992993,
+          "coverage_95": 0.9579579579579579,
+          "mean_estimate": -0.02913326705551747,
+          "mean_cluster_se": 0.006323114220676342,
+          "bias": 0.0008667329444825322,
+          "rmse": 0.006373753998245546
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9409409409409409,
+          "mean_estimate": -0.04849589229725289,
+          "mean_cluster_se": 0.006333195989109843,
+          "bias": 0.0015041077027471187,
+          "rmse": 0.006621480667769042
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9419419419419419,
+          "mean_estimate": -0.07826380375506635,
+          "mean_cluster_se": 0.006371278829445428,
+          "bias": 0.0017361962449336462,
+          "rmse": 0.0068997020534350305
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9229229229229229,
+          "mean_estimate": -0.11697456823433,
+          "mean_cluster_se": 0.0063589456395361284,
+          "bias": 0.0030254317656699926,
+          "rmse": 0.007160825533517437
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.92992992992993,
+          "mean_estimate": -0.1763282829151088,
+          "mean_cluster_se": 0.006453571873416781,
+          "bias": 0.003671717084891226,
+          "rmse": 0.007328908886392343
+        }
+      ]
+    },
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "webb_pct_software",
+      "beta_c": -0.05129329438755058,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 468,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.376383522121704,
+        "sd": 0.20999275961779407,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 45.19123534211442,
+        "sd": 26.25702976759079,
+        "reference_occupations": 468
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 967288895,
+        "critical_value_two_sided": 2.1167319286518738,
+        "independent_null_evaluation_size": 0.036036036036036036,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.012223133937804062,
+          "upper": 0.012486982942359207
+        }
+      },
+      "empirical_mde80_relative_decline": 0.012352624762655147,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 53.26292091284635,
+        "top_five_influence_share": 0.2215455780658679,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "1021",
+            "occupation": "Software developers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.0865416918165765
+          },
+          {
+            "census2018": "6260",
+            "occupation": "Construction laborers",
+            "soc_major_group": "47",
+            "residual_variance_share": 0.03478193706973049
+          },
+          {
+            "census2018": "4230",
+            "occupation": "Maids and housekeeping cleaners",
+            "soc_major_group": "37",
+            "residual_variance_share": 0.03445714802728942
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.03309918992074758
+          },
+          {
+            "census2018": "9620",
+            "occupation": "Laborers and freight, stock, and material movers, hand",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.03266561123152389
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.02933366483801123
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02594193273691663
+          },
+          {
+            "census2018": "4251",
+            "occupation": "Landscaping and groundskeeping workers",
+            "soc_major_group": "37",
+            "residual_variance_share": 0.022935430915437243
+          },
+          {
+            "census2018": "1108",
+            "occupation": "Computer occupations, all other",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.020009272959955585
+          },
+          {
+            "census2018": "3603",
+            "occupation": "Nursing assistants",
+            "soc_major_group": "31",
+            "residual_variance_share": 0.018377482944274274
+          },
+          {
+            "census2018": "4030",
+            "occupation": "Food preparation workers",
+            "soc_major_group": "35",
+            "residual_variance_share": 0.015105697410652848
+          },
+          {
+            "census2018": "5240",
+            "occupation": "Customer service representatives",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.014434090178667543
+          },
+          {
+            "census2018": "7200",
+            "occupation": "Automotive service technicians and mechanics",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.013788836583516163
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.012349887369732793
+          },
+          {
+            "census2018": "4510",
+            "occupation": "Hairdressers, hairstylists, and cosmetologists",
+            "soc_major_group": "39",
+            "residual_variance_share": 0.01223070307144069
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.9968380606101737
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.036036036036036036,
+          "coverage_95": 0.963963963963964,
+          "mean_estimate": -2.7956422306542056e-05,
+          "mean_cluster_se": 0.0034635724063620432,
+          "bias": -2.7956422306542056e-05,
+          "rmse": 0.003504065692279399
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.27427427427427425,
+          "coverage_95": 0.958958958958959,
+          "mean_estimate": -0.005060322641145882,
+          "mean_cluster_se": 0.0034491680400536608,
+          "bias": -6.032264114588127e-05,
+          "rmse": 0.003518161368703762
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.980980980980981,
+          "coverage_95": 0.9569569569569569,
+          "mean_estimate": -0.014733710593656878,
+          "mean_cluster_se": 0.003463595761198967,
+          "bias": 0.0002662894063431236,
+          "rmse": 0.0035143691656184623
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9619619619619619,
+          "mean_estimate": -0.029621264743539967,
+          "mean_cluster_se": 0.003465342893876198,
+          "bias": 0.00037873525646003214,
+          "rmse": 0.0035516911154746325
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.94994994994995,
+          "mean_estimate": -0.0492552749260427,
+          "mean_cluster_se": 0.003467003123847261,
+          "bias": 0.0007447250739572957,
+          "rmse": 0.0036702448927277047
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9419419419419419,
+          "mean_estimate": -0.07871044871341451,
+          "mean_cluster_se": 0.003484459669401222,
+          "bias": 0.0012895512865854996,
+          "rmse": 0.003759443073087461
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9369369369369369,
+          "mean_estimate": -0.11812021582254177,
+          "mean_cluster_se": 0.003469581882102611,
+          "bias": 0.0018797841774582382,
+          "rmse": 0.004024160602726648
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.8678678678678678,
+          "mean_estimate": -0.17693766360491853,
+          "mean_cluster_se": 0.003508278446193705,
+          "bias": 0.003062336395081474,
+          "rmse": 0.004797868642345259
+        }
+      ]
+    }
+  ],
+  "sensitivity_inputs": [
+    {
+      "path": "yax/power/scenarios/beta_onet_betaC0.json",
+      "sha256": "b8dcfd7cba2754a2f1d6d66b03ebad935f9abaf920e8eea49c3b9d33f4bf73ae"
+    },
+    {
+      "path": "yax/power/scenarios/beta_onet_betaC10pct.json",
+      "sha256": "8e0d0d8f8ec71333a0371444b07223015ea32489f16bea058e4306c5accfab15"
+    },
+    {
+      "path": "yax/power/scenarios/beta_webb_betaC0.json",
+      "sha256": "38c2aa51adc577797aa451ae22895d0b9bfa13db48c453951f0b8d608ebe63a6"
+    },
+    {
+      "path": "yax/power/scenarios/beta_webb_betaC10pct.json",
+      "sha256": "40c8b362cf49502982441e986876958810bcb301ad451c705fc419b0c10c92bb"
+    }
+  ],
+  "beta_c_sensitivity_scenarios": [
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "onet_computers_importance",
+      "beta_c": -0.10536051565782628,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 465,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.376383522121704,
+        "sd": 0.20999275961779407,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 3.509751501680629,
+        "sd": 0.9730163686701171,
+        "reference_occupations": 465
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 3570779630,
+        "critical_value_two_sided": 2.0264261478937504,
+        "independent_null_evaluation_size": 0.04904904904904905,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.021489743618102766,
+          "upper": 0.022722975908948454
+        }
+      },
+      "empirical_mde80_relative_decline": 0.022150676443203374,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 63.22982766192177,
+        "top_five_influence_share": 0.20145521581353457,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "4700",
+            "occupation": "First-Line supervisors of retail sales workers",
+            "soc_major_group": "41",
+            "residual_variance_share": 0.0464432360940513
+          },
+          {
+            "census2018": "7200",
+            "occupation": "Automotive service technicians and mechanics",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.043906113004209234
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.04379014521241022
+          },
+          {
+            "census2018": "4850",
+            "occupation": "Sales representatives, wholesale and manufacturing",
+            "soc_major_group": "41",
+            "residual_variance_share": 0.03598321354242858
+          },
+          {
+            "census2018": "9130",
+            "occupation": "Driver/sales workers and truck drivers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.03133250796043525
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.03031437615981475
+          },
+          {
+            "census2018": "7210",
+            "occupation": "Bus and truck mechanics and diesel engine specialists",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.023463741098770273
+          },
+          {
+            "census2018": "2850",
+            "occupation": "Writers and authors",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.021081448391527268
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.021018229787813987
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02000424197687889
+          },
+          {
+            "census2018": "3602",
+            "occupation": "Personal care aides",
+            "soc_major_group": "31",
+            "residual_variance_share": 0.018719652004748982
+          },
+          {
+            "census2018": "9645",
+            "occupation": "Stockers and order fillers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.015196119068555556
+          },
+          {
+            "census2018": "2861",
+            "occupation": "Interpreters and translators",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.014983004629533605
+          },
+          {
+            "census2018": "4510",
+            "occupation": "Hairdressers, hairstylists, and cosmetologists",
+            "soc_major_group": "39",
+            "residual_variance_share": 0.014778782663600758
+          },
+          {
+            "census2018": "7420",
+            "occupation": "Telecommunications line installers and repairers",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.01422343509364903
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.3652191620800791
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.04904904904904905,
+          "coverage_95": 0.950950950950951,
+          "mean_estimate": 0.0004979432444797486,
+          "mean_cluster_se": 0.006341016690047567,
+          "bias": 0.0004979432444797486,
+          "rmse": 0.0064304175096017374
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.1111111111111111,
+          "coverage_95": 0.9529529529529529,
+          "mean_estimate": -0.004420636277734524,
+          "mean_cluster_se": 0.006317776413376883,
+          "bias": 0.0005793637222654761,
+          "rmse": 0.006576916614093086
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.6146146146146146,
+          "coverage_95": 0.9529529529529529,
+          "mean_estimate": -0.014745751281977394,
+          "mean_cluster_se": 0.00631450521979719,
+          "bias": 0.0002542487180226048,
+          "rmse": 0.00635485788260925
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.988988988988989,
+          "coverage_95": 0.938938938938939,
+          "mean_estimate": -0.02901131331070608,
+          "mean_cluster_se": 0.0063647234787429195,
+          "bias": 0.000988686689293916,
+          "rmse": 0.006704603530228708
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.948948948948949,
+          "mean_estimate": -0.04906510341400572,
+          "mean_cluster_se": 0.0063710069189057425,
+          "bias": 0.0009348965859942859,
+          "rmse": 0.006381128462671666
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.934934934934935,
+          "mean_estimate": -0.07823729801170487,
+          "mean_cluster_se": 0.006364723009334522,
+          "bias": 0.0017627019882951293,
+          "rmse": 0.006870064467458068
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.918918918918919,
+          "mean_estimate": -0.11737476137521337,
+          "mean_cluster_se": 0.006438574072183619,
+          "bias": 0.0026252386247866324,
+          "rmse": 0.007302211914044573
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.913913913913914,
+          "mean_estimate": -0.17600038453715436,
+          "mean_cluster_se": 0.006465867254840546,
+          "bias": 0.0039996154628456565,
+          "rmse": 0.0074896650966498075
+        }
+      ]
+    },
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "webb_pct_software",
+      "beta_c": -0.10536051565782628,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 468,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.376383522121704,
+        "sd": 0.20999275961779407,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 45.19123534211442,
+        "sd": 26.25702976759079,
+        "reference_occupations": 468
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 182759118,
+        "critical_value_two_sided": 1.9402362295611102,
+        "independent_null_evaluation_size": 0.06906906906906907,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.011788140376723004,
+          "upper": 0.012090146939538027
+        }
+      },
+      "empirical_mde80_relative_decline": 0.01193976091031244,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 53.26292091284635,
+        "top_five_influence_share": 0.2215455780658679,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "1021",
+            "occupation": "Software developers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.0865416918165765
+          },
+          {
+            "census2018": "6260",
+            "occupation": "Construction laborers",
+            "soc_major_group": "47",
+            "residual_variance_share": 0.03478193706973049
+          },
+          {
+            "census2018": "4230",
+            "occupation": "Maids and housekeeping cleaners",
+            "soc_major_group": "37",
+            "residual_variance_share": 0.03445714802728942
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.03309918992074758
+          },
+          {
+            "census2018": "9620",
+            "occupation": "Laborers and freight, stock, and material movers, hand",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.03266561123152389
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.02933366483801123
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02594193273691663
+          },
+          {
+            "census2018": "4251",
+            "occupation": "Landscaping and groundskeeping workers",
+            "soc_major_group": "37",
+            "residual_variance_share": 0.022935430915437243
+          },
+          {
+            "census2018": "1108",
+            "occupation": "Computer occupations, all other",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.020009272959955585
+          },
+          {
+            "census2018": "3603",
+            "occupation": "Nursing assistants",
+            "soc_major_group": "31",
+            "residual_variance_share": 0.018377482944274274
+          },
+          {
+            "census2018": "4030",
+            "occupation": "Food preparation workers",
+            "soc_major_group": "35",
+            "residual_variance_share": 0.015105697410652848
+          },
+          {
+            "census2018": "5240",
+            "occupation": "Customer service representatives",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.014434090178667543
+          },
+          {
+            "census2018": "7200",
+            "occupation": "Automotive service technicians and mechanics",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.013788836583516163
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.012349887369732793
+          },
+          {
+            "census2018": "4510",
+            "occupation": "Hairdressers, hairstylists, and cosmetologists",
+            "soc_major_group": "39",
+            "residual_variance_share": 0.01223070307144069
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.9968380606101737
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.06906906906906907,
+          "coverage_95": 0.9309309309309309,
+          "mean_estimate": -0.0002891791984982976,
+          "mean_cluster_se": 0.0034941239991002466,
+          "bias": -0.0002891791984982976,
+          "rmse": 0.0037032610180735503
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.35435435435435436,
+          "coverage_95": 0.9369369369369369,
+          "mean_estimate": -0.005292371646902627,
+          "mean_cluster_se": 0.003470099859715153,
+          "bias": -0.00029237164690262737,
+          "rmse": 0.00352778952278108
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.988988988988989,
+          "coverage_95": 0.9469469469469469,
+          "mean_estimate": -0.014904725650653363,
+          "mean_cluster_se": 0.003482283731341395,
+          "bias": 9.527434934663637e-05,
+          "rmse": 0.0034975862590745374
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9479479479479479,
+          "mean_estimate": -0.02965191686439826,
+          "mean_cluster_se": 0.0034741720555001424,
+          "bias": 0.0003480831356017369,
+          "rmse": 0.0034801380269696273
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.934934934934935,
+          "mean_estimate": -0.04932179123859376,
+          "mean_cluster_se": 0.003486948663144542,
+          "bias": 0.000678208761406247,
+          "rmse": 0.0035904471704325696
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9119119119119119,
+          "mean_estimate": -0.07873969177859189,
+          "mean_cluster_se": 0.003503352979532914,
+          "bias": 0.001260308221408118,
+          "rmse": 0.003936689441929871
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9079079079079079,
+          "mean_estimate": -0.11829127582787723,
+          "mean_cluster_se": 0.003512753325888611,
+          "bias": 0.001708724172122782,
+          "rmse": 0.003978948726367913
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.8578578578578578,
+          "mean_estimate": -0.1772547956985182,
+          "mean_cluster_se": 0.0035142266850116143,
+          "bias": 0.0027452043014817708,
+          "rmse": 0.004589903663943834
+        }
+      ]
+    },
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "onet_computers_importance",
+      "beta_c": 0.0,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 465,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.376383522121704,
+        "sd": 0.20999275961779407,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 3.509751501680629,
+        "sd": 0.9730163686701171,
+        "reference_occupations": 465
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 2024118290,
+        "critical_value_two_sided": 2.0238184692286456,
+        "independent_null_evaluation_size": 0.04904904904904905,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.02151815432089145,
+          "upper": 0.022730947038876424
+        }
+      },
+      "empirical_mde80_relative_decline": 0.022191023411730983,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 63.22982766192177,
+        "top_five_influence_share": 0.20145521581353457,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "4700",
+            "occupation": "First-Line supervisors of retail sales workers",
+            "soc_major_group": "41",
+            "residual_variance_share": 0.0464432360940513
+          },
+          {
+            "census2018": "7200",
+            "occupation": "Automotive service technicians and mechanics",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.043906113004209234
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.04379014521241022
+          },
+          {
+            "census2018": "4850",
+            "occupation": "Sales representatives, wholesale and manufacturing",
+            "soc_major_group": "41",
+            "residual_variance_share": 0.03598321354242858
+          },
+          {
+            "census2018": "9130",
+            "occupation": "Driver/sales workers and truck drivers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.03133250796043525
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.03031437615981475
+          },
+          {
+            "census2018": "7210",
+            "occupation": "Bus and truck mechanics and diesel engine specialists",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.023463741098770273
+          },
+          {
+            "census2018": "2850",
+            "occupation": "Writers and authors",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.021081448391527268
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.021018229787813987
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02000424197687889
+          },
+          {
+            "census2018": "3602",
+            "occupation": "Personal care aides",
+            "soc_major_group": "31",
+            "residual_variance_share": 0.018719652004748982
+          },
+          {
+            "census2018": "9645",
+            "occupation": "Stockers and order fillers",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.015196119068555556
+          },
+          {
+            "census2018": "2861",
+            "occupation": "Interpreters and translators",
+            "soc_major_group": "27",
+            "residual_variance_share": 0.014983004629533605
+          },
+          {
+            "census2018": "4510",
+            "occupation": "Hairdressers, hairstylists, and cosmetologists",
+            "soc_major_group": "39",
+            "residual_variance_share": 0.014778782663600758
+          },
+          {
+            "census2018": "7420",
+            "occupation": "Telecommunications line installers and repairers",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.01422343509364903
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.3652191620800791
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.04904904904904905,
+          "coverage_95": 0.950950950950951,
+          "mean_estimate": -0.0002725449208908665,
+          "mean_cluster_se": 0.0062753074849878155,
+          "bias": -0.0002725449208908665,
+          "rmse": 0.006403251781044751
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.11511511511511512,
+          "coverage_95": 0.9529529529529529,
+          "mean_estimate": -0.004937764577810872,
+          "mean_cluster_se": 0.006281767961186313,
+          "bias": 6.223542218912821e-05,
+          "rmse": 0.006319967349791468
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.6066066066066066,
+          "coverage_95": 0.9529529529529529,
+          "mean_estimate": -0.014605911702815721,
+          "mean_cluster_se": 0.00631664862990341,
+          "bias": 0.00039408829718428067,
+          "rmse": 0.006523529239391625
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.994994994994995,
+          "coverage_95": 0.9569569569569569,
+          "mean_estimate": -0.029297928408063348,
+          "mean_cluster_se": 0.006274388140724421,
+          "bias": 0.0007020715919366492,
+          "rmse": 0.006400160661242188
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.955955955955956,
+          "mean_estimate": -0.0488295014438255,
+          "mean_cluster_se": 0.0063434405518229394,
+          "bias": 0.0011704985561745,
+          "rmse": 0.006339294251521354
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9369369369369369,
+          "mean_estimate": -0.0780044801210847,
+          "mean_cluster_se": 0.006295420859614845,
+          "bias": 0.0019955198789153006,
+          "rmse": 0.006677277282220428
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.92992992992993,
+          "mean_estimate": -0.11734773177353397,
+          "mean_cluster_se": 0.006354486913459905,
+          "bias": 0.002652268226466028,
+          "rmse": 0.006856203125262244
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9009009009009009,
+          "mean_estimate": -0.1759555331810432,
+          "mean_cluster_se": 0.006383919342875585,
+          "bias": 0.004044466818956765,
+          "rmse": 0.007672062100630515
+        }
+      ]
+    },
+    {
+      "record_version": "yax-joint-computerization-power-v1",
+      "status": "PASS_SIMULATION_COMPLETE",
+      "post_outcomes_read": false,
+      "synthetic_post_constructed_only_from_preperiod_donors": true,
+      "equation": "grouped-binomial conditional equivalent of plan section 5 PPML",
+      "ai_measure": "dv_rating_beta",
+      "computerization_measure": "webb_pct_software",
+      "beta_c": 0.0,
+      "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
+      "effect_scale": "log effect per one weighted-SD of AI exposure",
+      "seed": 20260827,
+      "repetitions_per_effect": 999,
+      "occupation_clusters": 468,
+      "balanced_primary_clusters_before_measure_overlap": 490,
+      "preperiod_months": 66,
+      "planned_post_months": 43,
+      "ai_scale": {
+        "mean": 0.376383522121704,
+        "sd": 0.20999275961779407,
+        "reference_occupations": 490
+      },
+      "computerization_scale": {
+        "mean": 45.19123534211442,
+        "sd": 26.25702976759079,
+        "reference_occupations": 468
+      },
+      "inputs": {
+        "cells": {
+          "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+          "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+        },
+        "lookup": {
+          "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+          "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+        },
+        "computerization": {
+          "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+          "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+        }
+      },
+      "bootstrap": {
+        "primary_inference": true,
+        "distribution": "Rademacher",
+        "cluster": "occupation",
+        "calibration_draws": 999,
+        "calibration_seed": 523223085,
+        "critical_value_two_sided": 2.034687017457953,
+        "independent_null_evaluation_size": 0.056056056056056056,
+        "mde_monte_carlo_interval": {
+          "draws": 999,
+          "successful_draws": 999,
+          "lower": 0.012060075475609366,
+          "upper": 0.012339722388364675
+        }
+      },
+      "empirical_mde80_relative_decline": 0.012208061609644133,
+      "identifying_support": {
+        "effective_occupations_identifying_beta_ai": 53.26292091284635,
+        "top_five_influence_share": 0.2215455780658679,
+        "largest_residual_variance_contributors": [
+          {
+            "census2018": "1021",
+            "occupation": "Software developers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.0865416918165765
+          },
+          {
+            "census2018": "6260",
+            "occupation": "Construction laborers",
+            "soc_major_group": "47",
+            "residual_variance_share": 0.03478193706973049
+          },
+          {
+            "census2018": "4230",
+            "occupation": "Maids and housekeeping cleaners",
+            "soc_major_group": "37",
+            "residual_variance_share": 0.03445714802728942
+          },
+          {
+            "census2018": "5120",
+            "occupation": "Bookkeeping, accounting, and auditing clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.03309918992074758
+          },
+          {
+            "census2018": "9620",
+            "occupation": "Laborers and freight, stock, and material movers, hand",
+            "soc_major_group": "53",
+            "residual_variance_share": 0.03266561123152389
+          },
+          {
+            "census2018": "1010",
+            "occupation": "Computer programmers",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.02933366483801123
+          },
+          {
+            "census2018": "5740",
+            "occupation": "Secretaries and administrative assistants, except legal, medical, and executive",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.02594193273691663
+          },
+          {
+            "census2018": "4251",
+            "occupation": "Landscaping and groundskeeping workers",
+            "soc_major_group": "37",
+            "residual_variance_share": 0.022935430915437243
+          },
+          {
+            "census2018": "1108",
+            "occupation": "Computer occupations, all other",
+            "soc_major_group": "15",
+            "residual_variance_share": 0.020009272959955585
+          },
+          {
+            "census2018": "3603",
+            "occupation": "Nursing assistants",
+            "soc_major_group": "31",
+            "residual_variance_share": 0.018377482944274274
+          },
+          {
+            "census2018": "4030",
+            "occupation": "Food preparation workers",
+            "soc_major_group": "35",
+            "residual_variance_share": 0.015105697410652848
+          },
+          {
+            "census2018": "5240",
+            "occupation": "Customer service representatives",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.014434090178667543
+          },
+          {
+            "census2018": "7200",
+            "occupation": "Automotive service technicians and mechanics",
+            "soc_major_group": "49",
+            "residual_variance_share": 0.013788836583516163
+          },
+          {
+            "census2018": "5110",
+            "occupation": "Billing and posting clerks",
+            "soc_major_group": "43",
+            "residual_variance_share": 0.012349887369732793
+          },
+          {
+            "census2018": "4510",
+            "occupation": "Hairdressers, hairstylists, and cosmetologists",
+            "soc_major_group": "39",
+            "residual_variance_share": 0.01223070307144069
+          }
+        ],
+        "weighted_partial_variance_ai_given_computerization": 0.9968380606101737
+      },
+      "results": [
+        {
+          "true_log_effect": 0.0,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.056056056056056056,
+          "coverage_95": 0.943943943943944,
+          "mean_estimate": 1.0967397858357056e-05,
+          "mean_cluster_se": 0.003456700751161181,
+          "bias": 1.0967397858357056e-05,
+          "rmse": 0.0035443986149309333
+        },
+        {
+          "true_log_effect": -0.005,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.30430430430430433,
+          "coverage_95": 0.9419419419419419,
+          "mean_estimate": -0.004965594115052182,
+          "mean_cluster_se": 0.0034632390832377118,
+          "bias": 3.440588494781788e-05,
+          "rmse": 0.0036011092638025873
+        },
+        {
+          "true_log_effect": -0.015,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 0.983983983983984,
+          "coverage_95": 0.944944944944945,
+          "mean_estimate": -0.014637428344994508,
+          "mean_cluster_se": 0.003450087122169554,
+          "bias": 0.000362571655005491,
+          "rmse": 0.0035706208672094423
+        },
+        {
+          "true_log_effect": -0.03,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.944944944944945,
+          "mean_estimate": -0.029642737026852925,
+          "mean_cluster_se": 0.003454545224439424,
+          "bias": 0.0003572629731470739,
+          "rmse": 0.0035462373615623532
+        },
+        {
+          "true_log_effect": -0.05,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9379379379379379,
+          "mean_estimate": -0.04934422126982224,
+          "mean_cluster_se": 0.003457986330217199,
+          "bias": 0.0006557787301777613,
+          "rmse": 0.0037007871136054437
+        },
+        {
+          "true_log_effect": -0.08,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9179179179179179,
+          "mean_estimate": -0.07877874746957136,
+          "mean_cluster_se": 0.0034420436674130407,
+          "bias": 0.0012212525304286408,
+          "rmse": 0.0038066135866541423
+        },
+        {
+          "true_log_effect": -0.12,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.9209209209209209,
+          "mean_estimate": -0.11805581427726757,
+          "mean_cluster_se": 0.0034906741157336952,
+          "bias": 0.0019441857227324192,
+          "rmse": 0.0039922935542582505
+        },
+        {
+          "true_log_effect": -0.18,
+          "successful_repetitions": 999,
+          "convergence_failures": 0,
+          "attempts": 999,
+          "rejection_probability_zero": 1.0,
+          "coverage_95": 0.8768768768768769,
+          "mean_estimate": -0.17709879789147964,
+          "mean_cluster_se": 0.003488724196241766,
+          "bias": 0.002901202108520364,
+          "rmse": 0.004601460831825579
+        }
+      ]
+    }
+  ]
+}

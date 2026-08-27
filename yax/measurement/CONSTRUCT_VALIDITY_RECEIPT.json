@@ -1,0 +1,1098 @@
+{
+  "record_version": "yax-construct-validity-v1",
+  "status": "PASS_RANKINGS_COHERENT_WITH_RECORDED_LIMITATIONS",
+  "scope": "measurement rankings only; no CPS outcome data read",
+  "post_event_outcomes_opened": false,
+  "input": {
+    "path": "yax/measurement/COMPUTERIZATION_MEASURES.csv",
+    "sha256": "ae354accb99aee1185f2f62839ad3fd059dc583187305d7abe4b4dbbebbcda4c",
+    "rows": 522
+  },
+  "tie_rule": "value then zero-padded CPS OCC2010 code",
+  "correlation_support": "pairwise complete observations; n reported per cell",
+  "measures": [
+    "webb_pct_software",
+    "onet_computers_importance",
+    "onet_computers_level",
+    "rti_autor_dorn",
+    "frey_osborne_probability"
+  ],
+  "rankings": {
+    "webb_pct_software": {
+      "available_occupations": 482,
+      "highest": [
+        {
+          "cps_occ2010": "2900",
+          "occupation": "Broadcast and sound engineering technicians and radio operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "4240",
+          "occupation": "Pest control workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "6700",
+          "occupation": "Elevator installers and repairers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "8600",
+          "occupation": "Power plant operators, distributors, and dispatchers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "8620",
+          "occupation": "Water and wastewater treatment plant and system operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "9200",
+          "occupation": "Locomotive engineers and operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "9260",
+          "occupation": "Subway, streetcar, and other rail transportation workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "9350",
+          "occupation": "Parking lot attendants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "9640",
+          "occupation": "Packers and packagers, hand",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 100.0
+        },
+        {
+          "cps_occ2010": "1350",
+          "occupation": "Chemical engineers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 99.0
+        },
+        {
+          "cps_occ2010": "6300",
+          "occupation": "Paving, surfacing, and tamping equipment operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 99.0
+        },
+        {
+          "cps_occ2010": "6320",
+          "occupation": "Operating engineers and other construction equipment operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 99.0
+        },
+        {
+          "cps_occ2010": "8540",
+          "occupation": "Woodworking machine setters, operators, and tenders, except sawing",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 99.0
+        },
+        {
+          "cps_occ2010": "8860",
+          "occupation": "Cleaning, washing, and metal pickling equipment operators and tenders",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 99.0
+        },
+        {
+          "cps_occ2010": "9510",
+          "occupation": "Crane and tower operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 99.0
+        }
+      ],
+      "lowest": [
+        {
+          "cps_occ2010": "2200",
+          "occupation": "Postsecondary teachers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.0
+        },
+        {
+          "cps_occ2010": "2760",
+          "occupation": "Entertainers and performers, sports and related workers, all other",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.0
+        },
+        {
+          "cps_occ2010": "2860",
+          "occupation": "Miscellaneous media and communication workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.0
+        },
+        {
+          "cps_occ2010": "3120",
+          "occupation": "Podiatrists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.0
+        },
+        {
+          "cps_occ2010": "4500",
+          "occupation": "Barbers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.0
+        },
+        {
+          "cps_occ2010": "5550",
+          "occupation": "Postal service mail carriers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.0
+        },
+        {
+          "cps_occ2010": "4030",
+          "occupation": "Food preparation workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "4465",
+          "occupation": "Morticians, undertakers, and funeral directors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "4740",
+          "occupation": "Counter and rental clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "4750",
+          "occupation": "Parts salespersons",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "4760",
+          "occupation": "Retail salespersons",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "4840",
+          "occupation": "Sales representatives, services, all other",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "5100",
+          "occupation": "Bill and account collectors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "5140",
+          "occupation": "Payroll and timekeeping clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        },
+        {
+          "cps_occ2010": "5300",
+          "occupation": "Hotel, motel, and resort desk clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 2.0
+        }
+      ]
+    },
+    "onet_computers_importance": {
+      "available_occupations": 447,
+      "highest": [
+        {
+          "cps_occ2010": "1005",
+          "occupation": "Computer and information research scientists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.97
+        },
+        {
+          "cps_occ2010": "1010",
+          "occupation": "Computer programmers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.95
+        },
+        {
+          "cps_occ2010": "1400",
+          "occupation": "Computer hardware engineers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.95
+        },
+        {
+          "cps_occ2010": "5330",
+          "occupation": "Loan interviewers and clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.92
+        },
+        {
+          "cps_occ2010": "5830",
+          "occupation": "Desktop publishers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.92
+        },
+        {
+          "cps_occ2010": "0110",
+          "occupation": "Computer and information systems managers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.9
+        },
+        {
+          "cps_occ2010": "1220",
+          "occupation": "Operations research analysts",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.9
+        },
+        {
+          "cps_occ2010": "1050",
+          "occupation": "Computer support specialists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.894851115579584
+        },
+        {
+          "cps_occ2010": "1320",
+          "occupation": "Aerospace engineers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.88
+        },
+        {
+          "cps_occ2010": "2145",
+          "occupation": "Paralegals and legal assistants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.87
+        },
+        {
+          "cps_occ2010": "1105",
+          "occupation": "Network and computer systems administrators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.86
+        },
+        {
+          "cps_occ2010": "1710",
+          "occupation": "Atmospheric and space scientists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.84
+        },
+        {
+          "cps_occ2010": "5410",
+          "occupation": "Reservation and transportation ticket agents and travel clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.83
+        },
+        {
+          "cps_occ2010": "5340",
+          "occupation": "New accounts clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.82
+        },
+        {
+          "cps_occ2010": "1240",
+          "occupation": "Miscellaneous mathematical science occupations",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.815757632987095
+        }
+      ],
+      "lowest": [
+        {
+          "cps_occ2010": "4250",
+          "occupation": "Grounds maintenance workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.264809421537502
+        },
+        {
+          "cps_occ2010": "9610",
+          "occupation": "Cleaners of vehicles and equipment",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.32
+        },
+        {
+          "cps_occ2010": "6330",
+          "occupation": "Drywall installers, ceiling tile installers, and tapers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.3308240035826242
+        },
+        {
+          "cps_occ2010": "6530",
+          "occupation": "Structural iron and steel workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.39
+        },
+        {
+          "cps_occ2010": "9415",
+          "occupation": "Transportation attendants, except flight attendants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.39
+        },
+        {
+          "cps_occ2010": "4500",
+          "occupation": "Barbers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.43
+        },
+        {
+          "cps_occ2010": "4120",
+          "occupation": "Food servers, nonrestaurant",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.46
+        },
+        {
+          "cps_occ2010": "6240",
+          "occupation": "Carpet, floor, and tile installers and finishers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.4641715516210072
+        },
+        {
+          "cps_occ2010": "8350",
+          "occupation": "Tailors, dressmakers, and sewers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.565027985074627
+        },
+        {
+          "cps_occ2010": "7560",
+          "occupation": "Riggers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.57
+        },
+        {
+          "cps_occ2010": "6400",
+          "occupation": "Insulation workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.589597395922563
+        },
+        {
+          "cps_occ2010": "6750",
+          "occupation": "Septic tank servicers and sewer pipe cleaners",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.59
+        },
+        {
+          "cps_occ2010": "6600",
+          "occupation": "Helpers, construction trades",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.59465144766147
+        },
+        {
+          "cps_occ2010": "6260",
+          "occupation": "Construction laborers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.62
+        },
+        {
+          "cps_occ2010": "9720",
+          "occupation": "Refuse and recyclable material collectors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 1.62
+        }
+      ]
+    },
+    "onet_computers_level": {
+      "available_occupations": 447,
+      "highest": [
+        {
+          "cps_occ2010": "1106",
+          "occupation": "Computer network architects",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 6.32
+        },
+        {
+          "cps_occ2010": "0110",
+          "occupation": "Computer and information systems managers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 6.1
+        },
+        {
+          "cps_occ2010": "1105",
+          "occupation": "Network and computer systems administrators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 6.09
+        },
+        {
+          "cps_occ2010": "1005",
+          "occupation": "Computer and information research scientists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 6.0
+        },
+        {
+          "cps_occ2010": "1010",
+          "occupation": "Computer programmers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.99
+        },
+        {
+          "cps_occ2010": "1210",
+          "occupation": "Mathematicians",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.62
+        },
+        {
+          "cps_occ2010": "1220",
+          "occupation": "Operations research analysts",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.4
+        },
+        {
+          "cps_occ2010": "1320",
+          "occupation": "Aerospace engineers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.32
+        },
+        {
+          "cps_occ2010": "1400",
+          "occupation": "Computer hardware engineers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.32
+        },
+        {
+          "cps_occ2010": "1007",
+          "occupation": "Information security analysts",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.26
+        },
+        {
+          "cps_occ2010": "1240",
+          "occupation": "Miscellaneous mathematical science occupations",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.204606232294618
+        },
+        {
+          "cps_occ2010": "1050",
+          "occupation": "Computer support specialists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.125781628156194
+        },
+        {
+          "cps_occ2010": "3647",
+          "occupation": "Pharmacy aides",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.09
+        },
+        {
+          "cps_occ2010": "5330",
+          "occupation": "Loan interviewers and clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.97
+        },
+        {
+          "cps_occ2010": "1230",
+          "occupation": "Statisticians",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.95
+        }
+      ],
+      "lowest": [
+        {
+          "cps_occ2010": "4250",
+          "occupation": "Grounds maintenance workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.3537070985763051
+        },
+        {
+          "cps_occ2010": "6750",
+          "occupation": "Septic tank servicers and sewer pipe cleaners",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.38
+        },
+        {
+          "cps_occ2010": "9610",
+          "occupation": "Cleaners of vehicles and equipment",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.55
+        },
+        {
+          "cps_occ2010": "4120",
+          "occupation": "Food servers, nonrestaurant",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.56
+        },
+        {
+          "cps_occ2010": "4500",
+          "occupation": "Barbers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.56
+        },
+        {
+          "cps_occ2010": "6530",
+          "occupation": "Structural iron and steel workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.58
+        },
+        {
+          "cps_occ2010": "6330",
+          "occupation": "Drywall installers, ceiling tile installers, and tapers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.5990362740707569
+        },
+        {
+          "cps_occ2010": "9415",
+          "occupation": "Transportation attendants, except flight attendants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.61
+        },
+        {
+          "cps_occ2010": "8350",
+          "occupation": "Tailors, dressmakers, and sewers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.6389552238805971
+        },
+        {
+          "cps_occ2010": "4610",
+          "occupation": "Personal care aides",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.72
+        },
+        {
+          "cps_occ2010": "6240",
+          "occupation": "Carpet, floor, and tile installers and finishers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.7315611915300873
+        },
+        {
+          "cps_occ2010": "6920",
+          "occupation": "Roustabouts, oil and gas",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.85
+        },
+        {
+          "cps_occ2010": "6260",
+          "occupation": "Construction laborers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.87
+        },
+        {
+          "cps_occ2010": "8330",
+          "occupation": "Shoe and leather workers and repairers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.8912026002166847
+        },
+        {
+          "cps_occ2010": "6400",
+          "occupation": "Insulation workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.8923830734966591
+        }
+      ]
+    },
+    "rti_autor_dorn": {
+      "available_occupations": 467,
+      "highest": [
+        {
+          "cps_occ2010": "5160",
+          "occupation": "Tellers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 7.970400582681182
+        },
+        {
+          "cps_occ2010": "5165",
+          "occupation": "Financial clerks, all other",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 7.970400582681182
+        },
+        {
+          "cps_occ2010": "4800",
+          "occupation": "Advertising sales agents",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.857593146324737
+        },
+        {
+          "cps_occ2010": "5700",
+          "occupation": "Secretaries and administrative assistants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.655856271943247
+        },
+        {
+          "cps_occ2010": "4500",
+          "occupation": "Barbers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.436072770973678
+        },
+        {
+          "cps_occ2010": "0510",
+          "occupation": "Buyers and purchasing agents, farm products",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.219188957854288
+        },
+        {
+          "cps_occ2010": "5260",
+          "occupation": "File clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.171381942828969
+        },
+        {
+          "cps_occ2010": "2100",
+          "occupation": "Lawyers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.137493569024654
+        },
+        {
+          "cps_occ2010": "2105",
+          "occupation": "Judicial law clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.137493569024654
+        },
+        {
+          "cps_occ2010": "5100",
+          "occupation": "Bill and account collectors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 5.102402266836223
+        },
+        {
+          "cps_occ2010": "4720",
+          "occupation": "Cashiers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.933259375914533
+        },
+        {
+          "cps_occ2010": "5130",
+          "occupation": "Gaming cage workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.933259375914533
+        },
+        {
+          "cps_occ2010": "5820",
+          "occupation": "Word processors and typists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.871612174864944
+        },
+        {
+          "cps_occ2010": "8410",
+          "occupation": "Textile knitting and weaving machine setters, operators, and tenders",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.8417545021031145
+        },
+        {
+          "cps_occ2010": "5120",
+          "occupation": "Bookkeeping, accounting, and auditing clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 4.748019105013584
+        }
+      ],
+      "lowest": [
+        {
+          "cps_occ2010": "0205",
+          "occupation": "Farmers, ranchers, and other agricultural managers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -2.4110773919508417
+        },
+        {
+          "cps_occ2010": "2720",
+          "occupation": "Athletes, coaches, umpires, and related workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -2.2316750864744845
+        },
+        {
+          "cps_occ2010": "3720",
+          "occupation": "First-line supervisors of fire fighting and prevention workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -2.108682427129306
+        },
+        {
+          "cps_occ2010": "3740",
+          "occupation": "Firefighters",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -2.108682427129306
+        },
+        {
+          "cps_occ2010": "3750",
+          "occupation": "Fire inspectors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -2.108682427129306
+        },
+        {
+          "cps_occ2010": "9240",
+          "occupation": "Railroad conductors and yardmasters",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -2.0950199440410717
+        },
+        {
+          "cps_occ2010": "4620",
+          "occupation": "Recreation and fitness workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.890491627364073
+        },
+        {
+          "cps_occ2010": "1640",
+          "occupation": "Conservation scientists and foresters",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.7573975927674832
+        },
+        {
+          "cps_occ2010": "9050",
+          "occupation": "Flight attendants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.7349222124115142
+        },
+        {
+          "cps_occ2010": "9410",
+          "occupation": "Transportation inspectors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.7349222124115142
+        },
+        {
+          "cps_occ2010": "9415",
+          "occupation": "Transportation attendants, except flight attendants",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.7349222124115142
+        },
+        {
+          "cps_occ2010": "9200",
+          "occupation": "Locomotive engineers and operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.6930139263320054
+        },
+        {
+          "cps_occ2010": "9260",
+          "occupation": "Subway, streetcar, and other rail transportation workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.6930139263320054
+        },
+        {
+          "cps_occ2010": "3000",
+          "occupation": "Chiropractors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.6739764335716714
+        },
+        {
+          "cps_occ2010": "3260",
+          "occupation": "Health diagnosing and treating practitioners, all other",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": -1.6739764335716714
+        }
+      ]
+    },
+    "frey_osborne_probability": {
+      "available_occupations": 418,
+      "highest": [
+        {
+          "cps_occ2010": "0860",
+          "occupation": "Insurance underwriters",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "0940",
+          "occupation": "Tax preparers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "2440",
+          "occupation": "Library technicians",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "4940",
+          "occupation": "Telemarketers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "5340",
+          "occupation": "New accounts clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "5500",
+          "occupation": "Cargo and freight agents",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "5810",
+          "occupation": "Data entry keyers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "8830",
+          "occupation": "Photographic process workers and processing machine operators",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.99
+        },
+        {
+          "cps_occ2010": "0830",
+          "occupation": "Credit analysts",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        },
+        {
+          "cps_occ2010": "4750",
+          "occupation": "Parts salespersons",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        },
+        {
+          "cps_occ2010": "5030",
+          "occupation": "Communications equipment operators, all other",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        },
+        {
+          "cps_occ2010": "5120",
+          "occupation": "Bookkeeping, accounting, and auditing clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        },
+        {
+          "cps_occ2010": "5150",
+          "occupation": "Procurement clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        },
+        {
+          "cps_occ2010": "5160",
+          "occupation": "Tellers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        },
+        {
+          "cps_occ2010": "5200",
+          "occupation": "Brokerage clerks",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.98
+        }
+      ],
+      "lowest": [
+        {
+          "cps_occ2010": "3210",
+          "occupation": "Recreational therapists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0028
+        },
+        {
+          "cps_occ2010": "0425",
+          "occupation": "Emergency management directors",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.003
+        },
+        {
+          "cps_occ2010": "7000",
+          "occupation": "First-line supervisors of mechanics, installers, and repairers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.003
+        },
+        {
+          "cps_occ2010": "3140",
+          "occupation": "Audiologists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0033
+        },
+        {
+          "cps_occ2010": "3150",
+          "occupation": "Occupational therapists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0035
+        },
+        {
+          "cps_occ2010": "3720",
+          "occupation": "First-line supervisors of fire fighting and prevention workers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0036
+        },
+        {
+          "cps_occ2010": "0340",
+          "occupation": "Lodging managers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0039
+        },
+        {
+          "cps_occ2010": "3030",
+          "occupation": "Dietitians and nutritionists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0039
+        },
+        {
+          "cps_occ2010": "4930",
+          "occupation": "Sales engineers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0041
+        },
+        {
+          "cps_occ2010": "3710",
+          "occupation": "First-line supervisors of police and detectives",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0044
+        },
+        {
+          "cps_occ2010": "3120",
+          "occupation": "Podiatrists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0046
+        },
+        {
+          "cps_occ2010": "1820",
+          "occupation": "Psychologists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.004694764604227743
+        },
+        {
+          "cps_occ2010": "3010",
+          "occupation": "Dentists",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.005494830748707688
+        },
+        {
+          "cps_occ2010": "0136",
+          "occupation": "Human resources managers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0055
+        },
+        {
+          "cps_occ2010": "0137",
+          "occupation": "Training and development managers",
+          "occupation_title_vintage": "Census 2010 official",
+          "value": 0.0063
+        }
+      ]
+    }
+  },
+  "correlations": {
+    "webb_pct_software": {
+      "webb_pct_software": {
+        "n": 482,
+        "correlation": 1.0
+      },
+      "onet_computers_importance": {
+        "n": 419,
+        "correlation": -0.10587827161253098
+      },
+      "onet_computers_level": {
+        "n": 419,
+        "correlation": -0.003395056013319033
+      },
+      "rti_autor_dorn": {
+        "n": 463,
+        "correlation": -0.02832500714744587
+      },
+      "frey_osborne_probability": {
+        "n": 395,
+        "correlation": 0.10353203339959695
+      }
+    },
+    "onet_computers_importance": {
+      "webb_pct_software": {
+        "n": 419,
+        "correlation": -0.10587827161253098
+      },
+      "onet_computers_importance": {
+        "n": 447,
+        "correlation": 1.0
+      },
+      "onet_computers_level": {
+        "n": 447,
+        "correlation": 0.9124159667775623
+      },
+      "rti_autor_dorn": {
+        "n": 404,
+        "correlation": 0.025959730529366606
+      },
+      "frey_osborne_probability": {
+        "n": 415,
+        "correlation": -0.3245420727601779
+      }
+    },
+    "onet_computers_level": {
+      "webb_pct_software": {
+        "n": 419,
+        "correlation": -0.003395056013319033
+      },
+      "onet_computers_importance": {
+        "n": 447,
+        "correlation": 0.9124159667775623
+      },
+      "onet_computers_level": {
+        "n": 447,
+        "correlation": 1.0
+      },
+      "rti_autor_dorn": {
+        "n": 404,
+        "correlation": -0.07588336928814966
+      },
+      "frey_osborne_probability": {
+        "n": 415,
+        "correlation": -0.4014254202316856
+      }
+    },
+    "rti_autor_dorn": {
+      "webb_pct_software": {
+        "n": 463,
+        "correlation": -0.02832500714744587
+      },
+      "onet_computers_importance": {
+        "n": 404,
+        "correlation": 0.025959730529366606
+      },
+      "onet_computers_level": {
+        "n": 404,
+        "correlation": -0.07588336928814966
+      },
+      "rti_autor_dorn": {
+        "n": 467,
+        "correlation": 1.0
+      },
+      "frey_osborne_probability": {
+        "n": 381,
+        "correlation": 0.447815903073913
+      }
+    },
+    "frey_osborne_probability": {
+      "webb_pct_software": {
+        "n": 395,
+        "correlation": 0.10353203339959695
+      },
+      "onet_computers_importance": {
+        "n": 415,
+        "correlation": -0.3245420727601779
+      },
+      "onet_computers_level": {
+        "n": 415,
+        "correlation": -0.4014254202316856
+      },
+      "rti_autor_dorn": {
+        "n": 381,
+        "correlation": 0.447815903073913
+      },
+      "frey_osborne_probability": {
+        "n": 418,
+        "correlation": 1.0
+      }
+    }
+  },
+  "construct_interpretations": {
+    "webb_pct_software": "The upper tail is dominated by process, machine-control and equipment occupations, while performers, podiatrists, barbers, mail carriers and counter/service jobs occupy the lower tail. Some manual occupations also tie at the 100-point ceiling, so the score should not be read as computer use or worker skill. The ranking is coherent as task-language overlap with software patents, but its saturation is a face-validity limitation that the paper must show.",
+    "onet_computers_importance": "Computing, engineering, analytical and information-processing jobs rank at the top; grounds, cleaning, construction and other manual jobs rank at the bottom. This is a computer-use-importance construct, not software-patent exposure or routine work.",
+    "onet_computers_level": "The top is again computing, systems, management and engineering work, and the bottom is grounds, cleaning, food-service and construction work. It captures the level or complexity of computer interaction. Its close agreement with Importance is expected from the two rankings, but the scales are retained separately as frozen primary and robustness versions.",
+    "rti_autor_dorn": "Tellers, secretaries, file clerks, cashiers and bookkeeping jobs are prominent in the upper tail; farmers, athletes, firefighters and transport occupations are prominent in the lower tail. The construct is routine cognitive/manual task balance, not computer use. Individual exceptions such as barbers in the upper tail caution against treating it as a generic technology index.",
+    "frey_osborne_probability": "Underwriting, records, data-entry, bookkeeping and processing jobs rank near the top, while therapy, management, emergency-response and professional-care occupations rank near the bottom. This is broad automation susceptibility rather than prior computerization alone; it therefore remains a secondary control."
+  },
+  "merge_failure_assessment": {
+    "webb_pct_software": {
+      "ranking_incoherent_at_both_ends": false,
+      "verdict": "no merge failure indicated by ranked occupations"
+    },
+    "onet_computers_importance": {
+      "ranking_incoherent_at_both_ends": false,
+      "verdict": "no merge failure indicated by ranked occupations"
+    },
+    "onet_computers_level": {
+      "ranking_incoherent_at_both_ends": false,
+      "verdict": "no merge failure indicated by ranked occupations"
+    },
+    "rti_autor_dorn": {
+      "ranking_incoherent_at_both_ends": false,
+      "verdict": "no merge failure indicated by ranked occupations"
+    },
+    "frey_osborne_probability": {
+      "ranking_incoherent_at_both_ends": false,
+      "verdict": "no merge failure indicated by ranked occupations"
+    }
+  }
+}

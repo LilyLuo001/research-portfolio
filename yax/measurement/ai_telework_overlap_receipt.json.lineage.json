@@ -1,0 +1,33 @@
+{
+  "output": "yax/measurement/ai_telework_overlap_receipt.json",
+  "output_sha256": "dd4502258f4cd075face20d837dd037b36cee26eca4a3c4108fa5d4ad3905fc7",
+  "inputs": [
+    {
+      "path": "yax/measurement/ai_vs_telework_overlap.py",
+      "sha256": "b613d19b9b18cd7d001b0aa900baf42fad76852134314724bd268c7fad09ba77",
+      "rows": null
+    },
+    {
+      "path": "yax/measurement/dingel_neiman_occ.csv",
+      "sha256": "42ff3ae084478b554526671710b53a16d39f88c3eebb24f56f46372d7243bd40",
+      "rows": null
+    },
+    {
+      "path": "yax/measurement/eloundou_occ.csv",
+      "sha256": "40c74f53de40aec91c0017d80690cbba915f83a8bb414bcf2f884692f1749acb",
+      "rows": null
+    },
+    {
+      "path": "yax/measurement/AIOE_DataAppendix.xlsx",
+      "sha256": "c123b4c64840aff3568ae6c97256678719b88a74d45b6362dbefb5af34667b95",
+      "rows": null
+    },
+    {
+      "path": "dax/data_built/oews_wages.parquet",
+      "sha256": "3d6ef51fab6e0aeb20e1295f297acd63ff692ffa4178f7b84a3cd01851e2526a",
+      "rows": null
+    }
+  ],
+  "code_version": "0dec3d3a8997d0a063c4d6936657778776463209",
+  "timestamp": "2026-08-25T23:40:31.281813+00:00"
+}

@@ -34,6 +34,13 @@ import pathlib
 import sys
 from collections import Counter
 
+HERE = pathlib.Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0, str(HERE))
+from microdata_guard import (  # noqa: E402
+    MicrodataPathError, assert_not_committable)
+
+
 REQUIRED_SOURCE = {"YEAR", "MONTH", "AGE", "WTFINL", "EMPSTAT", "UHRSWORKT", "CPSIDP"}
 WINDOW_START, WINDOW_END = "2021-11", "2023-02"
 
@@ -190,10 +197,21 @@ def main(argv: list[str] | None = None) -> int:
         ["month", "age", "wtfinl", "employed", "hours_unconditional",
          "hours_observed", "cpsidp"]]
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    # Licensed IPUMS-CPS microdata. Refuse the write if it would land in a git
+    # work tree whose ignore rules do not cover it -- see microdata_guard.
+    # Reported as a refusal with exit 2, matching every other guard in this
+    # builder, rather than as a traceback an operator has to read upward.
+    try:
+        path_guard = assert_not_committable(args.output,
+                                            "the IPUMS-CPS person panel")
+    except MicrodataPathError as exc:
+        print(exc, file=sys.stderr)
+        return 2
     out.to_parquet(args.output, index=False)
 
     receipt = {
         "receipt_version": "dax-w2-cps-preevent-v1",
+        "output_path_guard": path_guard,
         "scope": "PRE-EVENT WINDOW ONLY; not the W5 analysis panel cps_extract.parquet",
         "window": {"start": WINDOW_START, "end": WINDOW_END},
         "provenance": provenance,

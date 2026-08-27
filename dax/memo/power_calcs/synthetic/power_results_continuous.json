@@ -14,13 +14,13 @@
     "n_months": 52,
     "first_event": "2023-03-01"
   },
-  "standard_status": "PLACEHOLDER_REQUIRES_REAL_CPS",
+  "standard_status": "FROZEN",
   "inputs": {
-    "preperiod_cells": "synthetic/preperiod_cells.csv",
+    "preperiod_cells": "dax/memo/power_calcs/synthetic/preperiod_cells.csv",
     "preperiod_cells_sha256": "4b1f0fda046a66e941137fcd2f46b865e3c9ae4a5769aa7d6a49897660ab0aab",
-    "event_doses": "synthetic/event_doses.csv",
+    "event_doses": "dax/memo/power_calcs/synthetic/event_doses.csv",
     "event_doses_sha256": "17b03538a628b861db2dca4252a73aab9d95e5fd13bb28c02389fff9a0c3424d",
-    "power_standard_sha256": "79312623593e6e5005b7cd73a4a8022ba3657a69d3fef31067bb28eec36b83a8"
+    "power_standard_sha256": "59ea788de0e002d303415057791de01d26cc248629ed85e8838d09fcb7a3f09b"
   },
   "n_events_in_dose_path": 4,
   "pretrend_placebo_lead": [
@@ -74,20 +74,14 @@
       "employment": {
         "median_cluster_se_per_0.10_dax": 0.00776446,
         "mde80_per_0.10_dax": 0.02174049,
-        "approved_mde_ceiling": null,
-        "adequately_powered": null,
-        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
-        "break_even_baseline": 0.228847,
-        "break_even_note": "passes iff the frozen pre-event baseline employment level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+        "approved_mde_ceiling": 0.04712318,
+        "adequately_powered": true
       },
       "hours": {
         "median_cluster_se_per_0.10_dax": 0.22224684,
         "mde80_per_0.10_dax": 0.62229114,
-        "approved_mde_ceiling": null,
-        "adequately_powered": null,
-        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
-        "break_even_baseline": 6.550433,
-        "break_even_note": "passes iff the frozen pre-event baseline hours level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+        "approved_mde_ceiling": 1.736202,
+        "adequately_powered": true
       }
     },
     {
@@ -117,20 +111,14 @@
       "employment": {
         "median_cluster_se_per_0.10_dax": 0.0113332,
         "mde80_per_0.10_dax": 0.03173297,
-        "approved_mde_ceiling": null,
-        "adequately_powered": null,
-        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
-        "break_even_baseline": 0.334031,
-        "break_even_note": "passes iff the frozen pre-event baseline employment level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+        "approved_mde_ceiling": 0.04712318,
+        "adequately_powered": true
       },
       "hours": {
         "median_cluster_se_per_0.10_dax": 0.32565407,
         "mde80_per_0.10_dax": 0.91183139,
-        "approved_mde_ceiling": null,
-        "adequately_powered": null,
-        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
-        "break_even_baseline": 9.598225,
-        "break_even_note": "passes iff the frozen pre-event baseline hours level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+        "approved_mde_ceiling": 1.736202,
+        "adequately_powered": true
       }
     },
     {
@@ -160,20 +148,14 @@
       "employment": {
         "median_cluster_se_per_0.10_dax": 0.01210557,
         "mde80_per_0.10_dax": 0.03389559,
-        "approved_mde_ceiling": null,
-        "adequately_powered": null,
-        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
-        "break_even_baseline": 0.356796,
-        "break_even_note": "passes iff the frozen pre-event baseline employment level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+        "approved_mde_ceiling": 0.04712318,
+        "adequately_powered": true
       },
       "hours": {
         "median_cluster_se_per_0.10_dax": 0.34786425,
         "mde80_per_0.10_dax": 0.97401991,
-        "approved_mde_ceiling": null,
-        "adequately_powered": null,
-        "reason": "power standard is not FROZEN \u2014 see PI_DECISION_D3_2026-08-18.md; run freeze_power_standard.py on the real pre-event CPS extract",
-        "break_even_baseline": 10.252841,
-        "break_even_note": "passes iff the frozen pre-event baseline hours level exceeds this value, since ceiling = 0.5 x 0.19 x baseline"
+        "approved_mde_ceiling": 1.736202,
+        "adequately_powered": true
       }
     }
   ]

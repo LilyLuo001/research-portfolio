@@ -1,5 +1,13 @@
 # Dynamic AI Exposure (DAX): pre-registered design memo v1
 
+> **ARCHIVED 2026-08-25 — superseded as the active research object.**
+> This memo is retained in full and is not retracted. The DAX index was paused
+> because §0 condition 1 (W4 snapshot capture before the 2026-10-23 and
+> 2026-12-11 shutdown dates) could not be met: 0 of 22 vintages captured, and
+> the vintages are withdrawn on fixed external dates. That is a feasibility
+> failure, not a scientific refutation — see `DAX_ARCHIVE_2026-08-25.md`.
+> The active research object is `yax/RESEARCH_PLAN_v1.md` (project YAX).
+
 **Status:** v2 draft — PRIMARY DESIGN AMENDED 2026-08-18; not pre-registered
 
 **Draft date:** 2026-08-06; amended 2026-08-18 (D1, D3, D4, F2)
@@ -346,6 +354,70 @@ stratified by occupation family, score decile, and ambiguity flag. Require
 weighted Cohen's kappa of at least 0.70 and at least 90% agreement on the binary
 crossing-relevant label before W5. Failure returns the rubric for redesign
 before index construction.
+
+### 5.1 Non-evaluable task mass and the missing-mass rule
+
+*Added as a pre-tag amendment 2026-08-24 under
+`dax/mapping/W3_DECISION_missing_mass_2026-08-24.md`, in the same manner as
+D1, D3 and D4. This memo previously carried no partial-identification
+treatment at all, while the rule governing most of the task mass lived only in
+a decision packet.*
+
+Not every task can be evaluated against a capability benchmark. The S1
+construct-validity pilot classified 120 probability-drawn tasks and found no
+directly-executable-digital task at all; the largest non-evaluable classes
+were tasks requiring interpersonal interaction and tasks requiring
+physical-world action. *(S1 is single-annotator with
+`formal_s1_gate_result: UNRESOLVED`; these counts are diagnostics and carry no
+claim. The rule below binds regardless of what its replication returns,
+because the non-evaluable mass is large under any plausible re-estimate.)*
+
+**Evaluable boundary.** A task enters the identified set if it is
+directly-executable digital, or executable with supplied files or data.
+Tasks executable only with construct-valid simulated inputs are **excluded
+from the identified set and reported separately**, per the v3 taxonomy which
+admits them only after a construct-validity review. The strict boundary
+(directly-executable only) and the broad boundary (including simulated inputs)
+are prespecified sensitivities.
+
+**Bounds.** For occupation `o`, with `L_om` the identified crossing mass and
+`U_o` the non-evaluable or otherwise unidentified mass:
+
+```text
+lower_om = L_om
+upper_om = L_om + U_o
+```
+
+Both are reported unchanged as the honest bracket.
+
+**The missing-mass rule.** `upper_om` must not be used as a level or as a
+regressor. Writing `B_o` for the identified mass share and `E_om` for the
+crossing rate among identified tasks, `upper_om = B_o·E_om + (1 − B_o)`, which
+is *decreasing* in `B_o`: an occupation measured at 5% coverage scores higher
+than one measured at 80% coverage at the same underlying exposure. Because
+evaluability is worst for interpersonal and physical occupations, that
+artifact correlates with occupation type and so with the outcome.
+
+The dose therefore carries an explicit missing-mass parameter `κ ∈ [0,1]`, the
+fraction of unidentified mass assumed to cross:
+
+```text
+ΔDAX_om(κ) = ΔE_om · [B_o + κ(1 − B_o)]
+```
+
+The multiplier is weakly increasing in `B_o` for every κ, and at κ = 1 recovers
+the worst case above.
+
+**[PI-DECISION 7a] Reporting the missing-mass path.** Results are reported
+across the frozen grid κ ∈ {0, 0.25, 0.50, 0.75, 1}. **No single κ is a
+headline; the κ-path is the result.** `B_o` is reported per occupation
+alongside it — the path cannot be interpreted without knowing what fraction of
+the occupation it rests on. A model-based center may be reported only if a
+separate prospective model and validation rule are signed, and must never be
+called observed DAX.
+
+Reporting a single κ as though it were estimated, or omitting `B_o`, is a
+deviation under §11.
 
 ## 6. Index validation and behavioral first stage
 
