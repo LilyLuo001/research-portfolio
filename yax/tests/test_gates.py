@@ -146,34 +146,8 @@ def _plan_saying(tmp_path, monkeypatch, body):
     monkeypatch.setattr(gates, "ROOT", tmp_path)
 
 
-def test_novelty_is_blocked_while_locators_are_outstanding(tmp_path, monkeypatch):
-    """Regression: an earlier version passed as soon as the plan stopped
-    saying VERIFY BEFORE THE FREEZE, which rewriting a heading achieves
-    without resolving anything. The heading here is already rewritten, so only
-    the leftover markers can block it."""
-    _plan_saying(tmp_path, monkeypatch, "## 9a. Position in the literature\n\n"
-                 "| Dallas Fed | reported; **locators outstanding** |\n")
-    r = gates.gate_novelty("v1.0-preregistered")
-    assert r.status == "BLOCKED"
-    assert "locators outstanding" in r.detail
 
 
-def test_novelty_is_blocked_on_an_unsearched_registry(tmp_path, monkeypatch):
-    """The decisive question is the registry search, not the prose around it."""
-    _plan_saying(tmp_path, monkeypatch, "## 9a. Position in the literature\n\n"
-                 "| a pre-registered test | **not yet searched** |\n")
-    r = gates.gate_novelty("v1.0-preregistered")
-    assert r.status == "BLOCKED"
-    assert "not yet searched" in r.detail
-
-
-def test_novelty_passes_on_the_current_plan():
-    """§9a now carries locators and a recorded registry search."""
-    r = gates.gate_novelty("v1.0-preregistered")
-    assert r.status == "PASS"
-
-
-# ------------------------------------------------------------ computerization
 
 def test_computerization_gate_passes_only_on_complete_real_measure_receipt():
     r = gates.gate_computerization("v1.0-preregistered")
@@ -204,3 +178,52 @@ def test_convergent_validity_catches_the_orphaned_measure():
     assert r.status in ("PASS", "FAIL", "BLOCKED")
     if r.status == "FAIL":
         assert "agree with no other" in r.detail
+
+
+# ------------------------------------------------------------ novelty, inverted
+
+def test_novelty_blocks_on_silence_not_just_on_warnings():
+    """Regression for two fail-open bugs: v3 dropped its prior-work section and
+    passed; v5 rewrote the warnings in different words and passed. The gate now
+    requires a positive assertion, so silence blocks."""
+    r = gates.gate_novelty("v1.1-design-freeze")
+    assert r.status == "BLOCKED"
+    assert "sentinel" in r.detail
+
+
+def test_amendment_gate_blocks_until_the_amended_freeze_is_tagged():
+    r = gates.gate_amendment_current("v1.1-design-freeze")
+    assert r.status == "BLOCKED"
+    assert "DESIGN_FREEZE_v2" in r.detail
+
+
+def test_novelty_sentinel_is_required_verbatim(tmp_path, monkeypatch):
+    """The old contract was 'no warning words present'. Two rewrites walked
+    through it. The new contract is a verbatim sentinel a human must add
+    deliberately, so both failure modes are closed."""
+    plan = tmp_path / "plan.md"
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+    monkeypatch.setattr(gates, "PLAN", "plan.md")
+
+    plan.write_text("a plan that simply says nothing about prior work\n")
+    assert gates.gate_novelty("t").status == "BLOCKED"
+
+    plan.write_text("references are relayed and unverified\n")
+    assert gates.gate_novelty("t").status == "BLOCKED"
+
+    plan.write_text("NOVELTY-GATE: all references opened at primary source\n")
+    assert gates.gate_novelty("t").status == "PASS"
+
+
+def test_novelty_fails_when_sentinel_contradicts_an_unresolved_row(tmp_path, monkeypatch):
+    """Claiming completion while a row is still marked unverified is worse than
+    silence — it is a false assertion, so it FAILs rather than BLOCKs."""
+    plan = tmp_path / "plan.md"
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+    monkeypatch.setattr(gates, "PLAN", "plan.md")
+    plan.write_text(
+        "NOVELTY-GATE: all references opened at primary source\n"
+        "but Rai (2026) is relayed and unverified\n")
+    r = gates.gate_novelty("t")
+    assert r.status == "FAIL"
+    assert "sentinel" in r.detail

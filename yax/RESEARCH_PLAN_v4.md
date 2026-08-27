@@ -1,5 +1,12 @@
 # YAX — research plan v4
 
+> **SUPERSEDED by `RESEARCH_PLAN_v5.md` (2026-08-27).** Retained in full for
+> revision history. v5 reframes the chapter — AI-exposure *measurement* becomes
+> the object of study and the young-worker employment debate becomes the
+> empirical laboratory — and amends three elements frozen at `v1.0-design-freeze`:
+> the post-period start, the primary coverage rule, and the MDE estimand. See
+> `FREEZE_AMENDMENT_2026-08-27.md`. Do not execute from this file.
+
 **Young-worker AI Exposure.** Third dissertation chapter. Independently
 authored. Not the job-market paper.
 

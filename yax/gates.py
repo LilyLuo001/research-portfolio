@@ -32,7 +32,9 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
-PLAN = "yax/RESEARCH_PLAN_v4.md"
+FREEZE_V2 = "yax/DESIGN_FREEZE_v2.md"
+AMENDMENT = "yax/FREEZE_AMENDMENT_2026-08-27.md"
+PLAN = "yax/RESEARCH_PLAN_v5.md"
 SUPPORT = "yax/measurement/computerization_support_66m_receipt.json"
 COMPMEAS = "yax/measurement/COMPUTERIZATION_MEASURES.csv"
 CONSTRUCT_VALIDITY = "yax/measurement/CONSTRUCT_VALIDITY_RECEIPT.json"
@@ -328,29 +330,40 @@ def gate_seal(tag):
 
 
 def gate_novelty(tag):
-    """§9. Prior-work claims must be resolved with locators, not merely stated.
+    """§5. Prior-work claims must be resolved at primary source.
 
-    An earlier version of this gate passed as soon as the plan stopped saying
-    "VERIFY BEFORE THE FREEZE". That is a false pass: rewriting the heading
-    resolves nothing. It now looks for the markers an UNFINISHED gate leaves
-    behind, so editing the warning away cannot satisfy it.
+    This gate has now failed open TWICE by keying on the absence of warning
+    strings. v3 dropped its prior-work section entirely and passed; v5 rewrote
+    the warnings in different words and passed. Absence of a marker is not
+    evidence of verification, and any rewrite can erase a marker.
+
+    So the test is inverted: the plan must POSITIVELY ASSERT that every
+    reference was opened at primary source, by carrying the sentinel below.
+    Silence blocks. A rewrite that drops the sentinel blocks. Only an explicit
+    claim of completion, which a human has to write deliberately, passes.
     """
+    SENTINEL = "NOVELTY-GATE: all references opened at primary source"
     p = ROOT / PLAN
     if not p.is_file():
         return Result("novelty", "BLOCKED", f"{PLAN} missing")
     text = p.read_text(encoding="utf-8")
-    unresolved = [m for m in ("VERIFY BEFORE THE FREEZE", "locators outstanding",
-                              "not yet searched", "not yet verified",
-                              "claims to confirm")
-                  if m.lower() in text.lower()]
-    if unresolved:
+    if SENTINEL not in text:
         return Result("novelty", "BLOCKED",
-                      f"plan still carries unresolved prior-work markers: "
-                      f"{unresolved}. Every claim needs a URL, author, date and "
-                      f"version, and the decisive question -- has anyone run a "
-                      f"pre-registered, power-stated public-data test? -- needs "
-                      f"an actual registry search with the sources listed.")
-    return Result("novelty", "PASS", "no unresolved prior-work markers in the plan")
+                      f"{PLAN} does not carry the sentinel "
+                      f"'{SENTINEL}'. Every reference must be opened at its "
+                      f"primary source with a locator — and, where the source "
+                      f"is a file, a sha256 — before the sentinel is added. "
+                      f"Adding the sentinel without doing the work is "
+                      f"falsifying a gate, not passing one.")
+    stale = [m for m in ("relayed and unverified", "unverified from primary source",
+                         "locators outstanding", "not yet searched", "claims to confirm")
+             if m.lower() in text.lower()]
+    if stale:
+        return Result("novelty", "FAIL",
+                      f"the plan carries the completion sentinel and also "
+                      f"{stale}. Resolve those rows or remove the sentinel.")
+    return Result("novelty", "PASS",
+                  "plan asserts every reference was opened at primary source")
 
 
 def gate_computerization(tag):
@@ -493,6 +506,36 @@ def gate_convergent_validity(tag):
                   f"other above |r|={CONVERGENT_FLOOR}")
 
 
+def gate_amendment_current(tag):
+    """Plan v5 amends three frozen elements, so v1.0 no longer describes the
+    live design.
+
+    The seal is intact and the amendment is legitimate, but an estimation task
+    must not run against a freeze document that has been superseded. This gate
+    holds the line until DESIGN_FREEZE_v2.md exists and v1.1 is tagged.
+    """
+    if not (ROOT / PLAN).is_file():
+        return Result("amendment_current", "BLOCKED", f"{PLAN} missing")
+    if not (ROOT / AMENDMENT).is_file():
+        return Result("amendment_current", "FAIL",
+                      f"{PLAN} amends the frozen design but {AMENDMENT} does "
+                      f"not exist. An undocumented amendment to a freeze is the "
+                      f"thing the freeze exists to prevent.")
+    if not (ROOT / FREEZE_V2).is_file():
+        return Result("amendment_current", "BLOCKED",
+                      f"{AMENDMENT} records three changes to v1.0 — post-period "
+                      f"start, coverage primary, MDE estimand — so "
+                      f"{FREEZE} no longer describes the live design. Write "
+                      f"{FREEZE_V2} and tag v1.1-design-freeze before any "
+                      f"post-period outcome is opened.")
+    v11 = _git("rev-list", "-n", "1", "v1.1-design-freeze")
+    if v11 is None:
+        return Result("amendment_current", "BLOCKED",
+                      f"{FREEZE_V2} exists but v1.1-design-freeze is not tagged")
+    return Result("amendment_current", "PASS",
+                  "amended freeze documented and tagged; v1.0 preserved")
+
+
 # ---------------------------------------------------------------- runner
 
 def run(power_aggregate=None, tag=DEFAULT_TAG):
@@ -514,6 +557,7 @@ def run(power_aggregate=None, tag=DEFAULT_TAG):
         gate_plan_consistency(tag),
         gate_prespec_precedes_tag(tag),
         gate_freeze_doc(tag),
+        gate_amendment_current(tag),
         gate_seal(tag),
     ]
 
