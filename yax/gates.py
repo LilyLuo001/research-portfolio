@@ -347,7 +347,12 @@ def gate_computerization(tag):
 def gate_convergent_validity(tag):
     """Do the computerization measures agree with each other at all?
 
-    This gate exists because `computerization` was passed by a broken merge.
+    This gate flags a measure that agrees with nothing. That is a QUESTION,
+    not a verdict: it is either a merge failure or a distinct construct. Webb
+    pct_software tripped it and turned out to be the second case -- it ranks
+    process-control occupations highest and barbers lowest, which is what
+    software-PATENT exposure looks like, against O*NET which measures computer
+    USE. Inspect the ranking before concluding anything.
     A control that failed to join is uncorrelated with the treatment, which
     leaves the AI coefficient looking maximally identified -- so a null control
     produces the *best* headroom the support gate can report. The support gate
@@ -396,10 +401,11 @@ def gate_convergent_validity(tag):
         return Result("convergent_validity", "FAIL",
                       f"these computerization measures agree with no other "
                       f"measure of the same construct: {orphans}. Below "
-                      f"|r|={CONVERGENT_FLOOR}, suspect the merge before "
-                      f"reporting it as a finding — a control that failed to "
-                      f"join looks exactly like a control that is cleanly "
-                      f"orthogonal.")
+                      f"|r|={CONVERGENT_FLOOR}, inspect the measure's highest "
+                      f"and lowest ranked occupations before interpreting it: a "
+                      f"control that failed to join looks exactly like one that "
+                      f"is cleanly orthogonal. A coherent ranking clears this; "
+                      f"a scrambled one condemns it. Record which, and why.")
     return Result("convergent_validity", "PASS",
                   f"every computerization measure agrees with at least one "
                   f"other above |r|={CONVERGENT_FLOOR}")

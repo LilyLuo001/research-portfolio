@@ -302,44 +302,56 @@ substantive question from the student's advisor rather than from an unfavourable
 estimate, of which there are none. Every superseded plan version and the failed
 90% coverage receipt are preserved; the ordering is checkable in git history.
 
-## 13b. The Y1b convergent-validity failure — do not repeat it
+## 13b. Webb software exposure is a different construct — CORRECTED
 
-Y1b built five computerization measures and the `computerization` gate PASSed.
-Verification found that `webb_pct_software` correlates with **nothing**:
+**An earlier version of this section claimed the Webb `occ1990dd` merge was
+broken. That claim was wrong and is withdrawn.**
+
+The evidence that prompted it stands: `webb_pct_software` correlates with
+essentially nothing else.
 
 | pair | r |
 |---|---:|
-| Webb × O\*NET computers importance | **−0.106** |
-| Webb × O\*NET computers level | **−0.003** |
-| Webb × RTI | **−0.028** |
-| Webb × Frey–Osborne | **+0.104** |
+| Webb × O\*NET computers importance | −0.106 |
+| Webb × O\*NET computers level | −0.003 |
+| Webb × RTI | −0.028 |
+| Webb × Frey–Osborne | +0.104 |
 | *O\*NET importance × O\*NET level* | *+0.912* |
 | *RTI × Frey–Osborne* | *+0.448* |
 
-The other four form a coherent cluster; Webb agrees with none of them. Its
-values are face-invalid too — freight laborers at 85 and mechanics at 91 while
-payroll clerks sit at 2 and writers at 5. **The occ1990dd merge is broken.**
+But the ranking is coherent, not scrambled. Highest: broadcast equipment
+operators, power plant operators, water and sewage treatment operators,
+locomotive operators, elevator installers, chemical engineers. Lowest: barbers,
+podiatrists, performers, mail carriers, hotel clerks. Those are **process- and
+machine-control occupations at the top and no-patentable-task occupations at
+the bottom** — which is what exposure to *software patents* should look like.
+Computer programmers sit at 98, which a misaligned join would not produce.
 
-**The gate passed because of it.** A control that failed to join is
-uncorrelated with the treatment, which leaves the AI coefficient looking
-maximally identified — so a broken merge produces the *best* headroom the
-support gate can report. `gate_computerization` cannot distinguish clean
-identification from a control that is noise. `gate_convergent_validity` now
-can, and it FAILs.
+**Webb measures whether software patents describe your tasks. O\*NET
+`4.A.3.b.1` measures whether you use a computer.** Those are different
+constructs, and near-zero correlation between them is a property of the
+measures, not a defect.
 
-The reported conclusion that "computerization is not one interchangeable
-control" rests on this bug and is withdrawn until the merge is fixed.
+So the Y1b conclusion — *"computerization" is not one interchangeable control;
+all frozen measures should be reported* — was **correct**, and withdrawing it
+was my error. It is reinstated. The chapter reports all five and does not treat
+them as substitutes.
 
-Two further items from the same run:
+`gate_convergent_validity` still earns its place, but as a **flag demanding an
+explanation, not a verdict of breakage**. A measure agreeing with nothing is
+either a merge failure or a distinct construct, and only inspecting the ranking
+distinguishes them. Its FAIL on Webb is now expected and is cleared by the
+construct-validity evidence recorded here.
+
+**Two items from the same run still stand:**
 
 - The diagnostics ran on a **13-month support, 2021-11 to 2022-11**, not the
-  66-month pre-period of the frozen design. Occupation counts across artifacts
-  now read 442, 445 and 490. Reconcile and state which support the freeze pins.
+  66-month pre-period the frozen design uses. Occupation counts read 442, 445
+  and 490 across three artifacts. The freeze must state which support it pins.
 - A discarded run used occupation weights from 2022-12 through 2023-02. No
   outcome field was accessed, the output was overwritten before commit, and the
   committed receipt rejects `month >= 2022-12-01` before any weight enters. The
-  seal held, the incident is recorded, and it is the correct way to handle a
-  near-miss.
+  seal held and the near-miss was handled correctly.
 
 ## 14. Standing rules
 
@@ -350,11 +362,13 @@ Two further items from the same run:
 - A sentence describing a computed number must be checkable against the
   artifact that produced it.
 - State which statistic answers the question before computing one.
-- **A measure that agrees with no other measure of the same construct is a
-  suspected merge failure, not a finding.** Check convergent validity before
-  interpreting an orthogonal control — a control that failed to join looks
-  exactly like a control that is cleanly orthogonal, and it flatters every
-  identification statistic. Added after Y1b.
+- **A measure agreeing with no other is a question, not a verdict.** It is
+  either a merge failure or a distinct construct, and only inspecting the
+  ranking tells you which. Check convergent validity — a control that failed to
+  join looks exactly like one that is cleanly orthogonal, and both flatter every
+  identification statistic — but do not call it broken before looking at what it
+  ranks highest and lowest. Added after Y1b, then corrected: I called Webb
+  broken on the correlations alone and the ranking showed it was not.
 - **A plan may not assert as settled anything its own later sections list as
   pending.** Added after v3 declared the joint design identified in §3.1 while
   §5–6 said the measures and the simulation were outstanding.
