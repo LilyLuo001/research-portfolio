@@ -221,20 +221,63 @@ the exposure measure represents. No pre-trend does **not** establish that the
 post-2022 effect is AI — see §8 for what else a late-2022 break is consistent
 with.
 
-## 9a. Position in the literature — VERIFY BEFORE THE FREEZE
+## 9a. Position in the literature — resolved
 
-| finding | status |
-|---|---|
-| Dallas Fed and Anthropic publish related CPS young-vs-older patterns | reported; **locators outstanding** |
-| EHP and Tucker use adjacent age-interaction designs | reported; **locators outstanding** |
-| Broad novelty ("nobody has looked at young vs older") | **FAILS.** Not claimed here |
-| Webb (2020) separates software, robot and AI exposure | **verified from the paper**; the data file is not — see §6.1 |
-| A pre-registered, power-stated public-data test of this claim | **not yet searched** — AEA RCT Registry, OSF |
-| A joint AI-versus-computerization test on young-worker employment | no prior work identified |
+Every row was opened at the primary source named in it, not taken from a
+secondary summary. Retrieved 2026-08-27.
 
-The chapter does not claim to discover the young-versus-older pattern. What no
-prior work addresses is whether it survives conditioning on prior
-computerization. That claim rests on the last two rows and both are outstanding.
+| prior work | locator | design | outcome and unit |
+|---|---|---|---|
+| Tyler Atkinson and Shane Yamco, "Young workers' employment drops in occupations with high AI exposure", Federal Reserve Bank of Dallas, 2026-01-06 | `https://www.dallasfed.org/research/economics/2026/0106` | CPS, ages 20–24 against 25–55, by AI exposure | employment, occupation × month |
+| Maxim Massenkoff and Peter McCrory, "Labor market impacts of AI: A new measure and early evidence", Anthropic, 2026-03-05 | `https://www.anthropic.com/research/labor-market-impacts` | CPS, ages 22–25, by a new exposure measure | unemployment and job-finding **flow**, not employment stock |
+| Lee C. Tucker, "You're (not) hired: Artificial intelligence and early career hiring in the Quarterly Workforce Indicators", U.S. Census Bureau, CES working paper 26-27, April 2026 | `https://www2.census.gov/library/working-papers/2026/adrm/ces/CES-WP-26-27.pdf`, sha256 `bc4c7e6da652f79fd796aecc008ff1219138eff9c4a1cf44d3411160eec039c6` | ages 22–24 on ages 25–54, interacted with period × most-exposed quintile | **hiring**, QWI industry × state |
+| Natalia Emanuel, Emma Harrington and Amanda Pallais, "The Power of Proximity to Coworkers: Training for Tomorrow or Productivity Today?", NBER working paper 31880, November 2023 | `http://www.nber.org/papers/w31880`, revision `w31880.rev0.pdf`, sha256 `48fdfa1c0c4c54c2c87784249245373c9dbadfec61ff3b0bf697e2749cf2746b` | young and junior against senior engineers at one Fortune 500 firm, standard errors clustered by team | online feedback and programming output, **within-firm** |
+| Michael Webb, "The Impact of Artificial Intelligence on the Labor Market", 2020 | see §6.1 | separates software, robot and AI patent exposure | occupation, `occ1990dd` |
+
+Three corrections this search forced, recorded rather than smoothed over:
+
+- **EHP is farther from this design than §9a previously implied.** It is not an
+  AI paper, does not use the CPS, and its outcome is not employment. Its age
+  contrast is junior-versus-senior software engineers inside a single firm.
+  It belongs here as a precedent for age-interaction *designs*, nothing more.
+- **Anthropic's outcome is a flow, not a stock.** Verbatim: "we find no
+  systematic increase in unemployment for highly exposed workers since late
+  2022, though we find suggestive evidence that hiring of younger workers has
+  slowed in exposed occupations". A slower hiring flow and a lower employment
+  stock are different claims; this chapter measures the stock.
+- **The "roughly 14%" figure carried in the earlier internal audit
+  (`dax/paper/research/NOVELTY_GATE_2026-08-25.md`) could not be confirmed** on
+  the Anthropic page as published. It is not repeated here.
+
+### Has anyone run a pre-registered, power-stated test of this claim on public data?
+
+**No such registration was found.** §12.2 does not trigger. Absence found in a
+bounded search is not proof of absence, so the search itself is recorded:
+
+- **AEA RCT Registry.** Site search requires sign-in; queries were run
+  site-scoped instead. The registry is by construction for *randomized* trials,
+  so an observational CPS difference-in-differences would not be registrable
+  there. The one adjacent entry, trial #18261 "Adapting to AI: How Information
+  on Occupational AI Exposure Affects Educational Decisions", is an
+  information-provision experiment on educational choice, not an employment test.
+- **OSF Registries.** There is no general search endpoint; `filter[title]` is
+  exact-match, so `filter[title][icontains]` was enumerated term by term.
+  Counts returned: "generative AI" 384 (fully paged), "early career" 31,
+  "occupational exposure" 21, "AI exposure" 7 (each description read), "AI
+  labor" 1, and zero for "artificial intelligence employment", "labor market
+  artificial intelligence", "young workers employment", "ChatGPT labor", "AI and
+  jobs", "AI employment" and "automation employment".
+- **Closest candidates, all rejected on inspection:** two Thai Labour Force
+  Survey studies (`osf.io/wrgmj`, `osf.io/jv6wn`), a Russian occupational
+  measurement project (`osf.io/mgjby`), and a postsecondary-enrollment study.
+  None is a United States CPS young-versus-older employment test.
+
+The chapter does not claim to discover the young-versus-older pattern — the
+first two rows above establish that it is already reported. What no prior work
+identified here addresses is whether that pattern survives conditioning on
+pre-existing computerization, which is the question §2 poses. The tag this
+search supports is `design-freeze`; nothing above makes this chapter
+preregistered.
 
 ## 10. Main tables
 
