@@ -1,230 +1,214 @@
-# P1 — is the event count really "200+"?
+# P1 — the event count, resolved
 
-_Seat C, 2026-08-27. Owner asked to double-check the sample size before booking
-WRDS. Every number below was recomputed in-container from committed files today;
-the reproduction command is given for each. Nothing from memory (meta-rule 1)._
+_Seat C. **Rev 2, 2026-08-27** — the owner-gate recheck pool is adjudicated and
+closed; the register is rebuilt. Every number recomputed in-container from
+committed files, with the reproduction command given. Nothing from memory._
 
-## Short answer
+## The answer
 
-**"200+ conversions" is defensible as a count of conversions our EDGAR corpus
-found. It is badly wrong as a description of the sample that identifies the
-paper.** Those are two different numbers separated by a factor of twenty-four:
-
-| | count | what it is |
-|---|---:|---|
-| Conversion groups found in our corpus | **237** | unique conversions across 1,419 screened filings |
-| → carry a verbatim ISO effective date | **131** | `events_merged.csv`, the study key |
-| → distinct effective dates (waves) | **78** | `t2_wrds/waves_members.csv` |
-| → waves that yield any ConvExp cell | **49** | 29 waves map to zero US-listed holdings |
-| → **waves that yield ≥1 treated stock** | **10** | ConvExp ≥ 0.5% |
-| → **distinct treated stocks** | **389** | of which **361 (92.8%) are one wave** |
-
-The plan's own §2 already says the honest version of this — *"美股权益类转换的
-AUM 高度集中于 DFA 2021-06 … 不是均匀交错的教科书 staggered DiD"* — so this is a
-confirmation of a known risk, not a new one. What is new is that the funnel is
-now measured end to end rather than asserted.
-
----
-
-## Where "203" comes from, and why it should not be cited as-is
-
-`docs/基金转换实验_博士研究计划.md` §2 states: *"2025:60 起、31 家公司;累计 203
-起、~2600 亿美元(含固收)"*. Searched the whole doc set: **that figure appears
-once and carries no source locator** — no URL, no accession, no page. Under
-meta-rule 1 it is a narrative number, not a usable one. It also explicitly
-includes fixed income (含固收), which the design excludes.
-
-Our own corpus independently found **237 conversion groups**, which is *above*
-203. So the industry-scale claim is not in doubt. It is the wrong number to put
-in an abstract, because the paper does not run on 237 conversions.
-
----
-
-## The full funnel, with reproduction commands
-
-```
-python p1/t1_arb/assemble.py          # deterministic; reproduces events_merged.csv byte-identically
-```
-Verified today: re-running `assemble.py` reproduces the committed
-`events_merged.csv` and `arb_report.md` with **zero diff**. The pipeline is
-reproducible; the counts below are not estimates.
-
-```
-1,419  filings screened (conversion-candidate corpus, EDGAR N-14/497/N-1A)
-  652  filings judged "event"
-1,197  event records (filing × fund)
-  111  ── EXCLUDED by the owner gate as recheck/defer/not_event   ← see next section
-1,086  event-filings entering assembly
-  237  unique conversion groups (filings collapsed per conversion)
-   ├── 131  fund_name + verbatim ISO effective_date  →  events_merged.csv
-   ├──  92  held back, no ISO effective date (34 carry approximate timing)
-   └──  14  dropped as cross-trust duplicates of a merged row
-```
-
-### Of the 131 in `events_merged.csv`
-
-| asset_class | n |
-|---|---:|
-| equity_US | 36 |
-| fixed_income | 36 | ← excluded by design (§4 剔除固收) |
-| equity_intl | 25 |
-| **blank** | **25** | ← 19.1% unclassified; "36 equity_US" is a floor |
-| other | 9 |
-
-Confidence: 77 H / 53 M / 1 L. 118 of the 131 have a complete +120 trading-day
-post-window as of today; 4 are future-dated.
-
-### Of the 78 waves, only 10 produce treated stocks
-
-```
-python p1/t1_reconcile/sample_scenarios.py
-```
-
-| wave | treated stocks (ConvExp ≥ 0.5%) |
-|---|---:|
-| **W002** (2021-06-11, DFA ×4) | **361** |
-| W019 | 12 |
-| W064 | 8 |
-| W008 | 6 |
-| W075, W020 | 3 each |
-| W007 | 2 |
-| W003, W043, W065 | 1 each |
-
-**361 / 389 = 92.8%.** The nine non-DFA waves contribute 36 stocks between them,
-against a simulated power floor of 33 (`t2a_power_results.json`). Four of those
-nine are international-only sleeves.
-
----
-
-## The finding that actually matters: 111 events are parked, not rejected
-
-`assemble.py` silently drops any event record whose `_spotcheck.disposition` is
-`recheck`, `defer` or `not_event`. The owner gate of 2026-07-18 assigned one of
-those to **111 event records — 66 distinct funds**. Only 4 were judged
-`not_event`. **99 are `recheck`: not rejected, just never re-examined.**
-
-```
-python3 -c "import json;f=json.load(open('p1/t1_events_final.json'));..."   # see below
-```
-
-The exclusion reasons are almost all one class:
-
-| reason | n |
-|---|---:|
-| target / acquired-fund type unproven (7 phrasings) | 66 |
-| acquirer-ETF only; target type unproven | 19 |
-| source filed after the gate date (2026-07-28 > gate 2026-07-18) | 8 |
-| genuinely out of scope (ETF→ETF, no reorg language) | 5 |
-
-Every one of the first three groups says the same thing: *the excerpt window
-proves a reorganization **into** an ETF, but does not prove the **target** was an
-open-end mutual fund rather than a closed-end fund or another ETF.* That is
-answerable by reading the full N-14 — one document per fund. It is not a
-judgment call, and it is not a data purchase.
-
-### What is at stake in that pool
-
-Excluding the 9 funds already represented in `events_merged.csv`:
-
-- **57 new distinct funds**, **43 with a verbatim ISO effective date**
-- across **26 potential new effective dates** (new waves)
-- **15 of those 26 dates already have a complete +120 trading-day post-window**
-- asset class of the 43: 15 fixed_income (irrelevant), **6 equity_US**,
-  **9 equity_intl**, 9 unclassified, 4 other
-
-The 15 equity ones, named:
-
-| fund | family | effective | class |
-|---|---|---|---|
-| Goldman Sachs Enhanced U.S. Equity Fund | Goldman Sachs Trust | 2025-11-13 | equity_US |
-| Goldman Sachs Focused Value Fund | Goldman Sachs Trust | 2025-11-13 | equity_US |
-| Goldman Sachs Strategic Growth Fund | Goldman Sachs Trust | 2025-11-13 | equity_US |
-| Goldman Sachs Technology Opportunities Fund | Goldman Sachs Trust | 2025-12-04 | equity_US |
-| Columbia Integrated Large Cap Value Fund | Columbia Funds Series Trust II | 2026-03-16 | equity_US |
-| Nomura Smid Cap Core Fund | Ivy Funds | 2026-11-06 | equity_US |
-| abrdn China A Share Equity Fund | abrdn Funds | 2025-10-17 | equity_intl |
-| abrdn Focused Emerging Markets ex-China Fund | abrdn Funds | 2025-10-17 | equity_intl |
-| Lazard Emerging Markets Opportunities Portfolio | Lazard Active ETF Trust | 2025-10-24 | equity_intl |
-| Lazard International Dynamic Equity Portfolio | Lazard Funds | 2025-04-30 | equity_intl |
-| Emerging Markets Portfolio | Sanford C. Bernstein Fund, Inc. | 2026-01-23 | equity_intl |
-| Hartford Climate Opportunities Fund | The Hartford Mutual Funds, Inc. | 2026-10-16 | equity_intl |
-| Hartford International Equity Fund | The Hartford Mutual Funds, Inc. | 2026-10-23 | equity_intl |
-| American Beacon Ninety One International Franchise Fund | American Beacon Select Funds | 2026-01-09 | equity_intl |
-| OTG Latin America Fund | ETF Opportunities Trust | 2025-07-11 | equity_intl |
-
-This corrects one line in the current roadmap. `ROADMAP-2026-08-19.md` §L-3 says
-the §5 multi-fund undercount is still OPEN and cites Goldman as "still 1 row where
-the reference channel found 2025 ×4 + 2026 ×2". **The extraction is not the
-problem any more.** All six Goldman conversions are present in
-`t1_events_final.json`, correctly multi-fund, with dates and asset classes — the
-v2 prompt fixed §5 as its addendum claimed. They are missing from
-`events_merged.csv` because the owner gate parked them at `recheck`, and nobody
-came back. That is a different, cheaper, and more tractable defect than the one
-the roadmap records.
-
-### Reproduce the pool
+**172 conversions with a verified effective date, across 96 waves.**
 
 ```bash
-python3 - <<'PY'
-import json, pandas as pd, re
-f = json.load(open('p1/t1_events_final.json'))
-em = pd.read_csv('p1/events_merged.csv', dtype=str)
-ISO = re.compile(r'^\d{4}-\d{2}-\d{2}$'); merged = set(em.fund_name)
-rows = []
-for fid, v in f.items():
-    if fid == '_meta' or v.get('no_event') or v.get('NEED_HUMAN'):
-        continue
-    for e in (v.get('events') or [v]):
-        sc = e.get('_spotcheck')
-        if sc and sc.get('disposition') in ('not_event', 'recheck', 'defer'):
-            rows.append(dict(fund=e.get('fund_name'), fam=e.get('family'),
-                             eff=e.get('effective_date'), ac=e.get('asset_class'),
-                             disp=sc['disposition'], reason=sc.get('reason'), acc=fid))
-d = pd.DataFrame(rows)
-new = d[~d.fund.isin(merged)]
-print(len(d), 'records |', d.fund.nunique(), 'funds |', new.fund.nunique(), 'new')
-print(new[new.eff.astype(str).str.match(ISO)].drop_duplicates('fund')
-        .ac.fillna('NA').value_counts())
-PY
+python p1/t1_arb/resolve_recheck.py   # verify adjudications, emit the overlay
+python p1/t1_arb/assemble.py          # rebuild events_merged.csv
+python p1/t2_wrds/build_waves.py      # rebuild the wave registry
 ```
+
+| | rev 1 (2026-08-19) | **rev 2 (now)** |
+|---|---:|---:|
+| unique conversion groups | 237 | **264** |
+| → dated, in `events_merged.csv` | 131 | **172** |
+| → distinct waves | 78 | **96** |
+| → equity_US | 36 | **46** |
+| → equity_intl | 25 | **31** |
+| → fixed_income (excluded by design) | 36 | 51 |
+| → other | 9 | 10 |
+| → `asset_class` blank | 25 | 34 |
+| held back (no ISO effective date) | 92 | **73** |
+| confidence H / M / L | 77 / 53 / 1 | **106 / 65 / 1** |
+
+Of the 172: **139 already have a complete +120 trading-day post-window**; 11 are
+future-dated. Effective dates run 2021-03-26 → 2026-11-20; announcements
+2020-05-01 → 2026-07-08. Contract check: `PASS [events_merged] 172 rows, 13 cols`.
+
+**"200+" is now the wrong number in both directions.** The corpus found 264
+conversion groups; the *study register* holds 172. The plan's §2 figure of "累计
+203 起" carries no source locator and includes fixed income, so it should not be
+cited — our own count is better evidenced and larger.
 
 ---
 
-## What this means for the WRDS purchase
+## What was wrong, and what fixed it
 
-**Nothing.** None of the above changes the table list or the pull scope, and none
-of it is fixable with WRDS. The recheck pool needs `sec.gov` (EGRESS_BLOCKED in
-this container — verified, not assumed) and the asset_class backlog needs the
-same. Buy the tables as listed in `p1/wrds/TABLE-REQUEST.md`.
+`assemble.py` silently dropped every event record whose `_spotcheck.disposition`
+was `recheck`, `defer` or `not_event`. The 2026-07-18 owner gate had assigned one
+of those to **111 records across 69 fund groups — but only 4 were `not_event`.**
+The rest were parked with reasons that all asked one question:
 
-Two things it *does* change:
+> the excerpt proves a reorganization **into** an ETF, but does it prove the
+> **target** was an open-end mutual fund, rather than a closed-end fund or
+> another ETF?
 
-1. **The pull universe should be built to accommodate the recheck pool later.**
-   `stock_names` is a CUSIP→PERMNO map over our endogenous universe; if 43 new
-   conversions land afterwards, their holdings introduce CUSIPs the map does not
-   cover, and re-pulling means re-renting. Mitigation is cheap and is applied in
-   `p1/wrds/universe.py`: the pull covers the dropped-denominator cells too
-   (6,747 CUSIPs, not 2,241), which already over-covers by ~3×.
+That question turned out to be answerable from evidence this repo already
+carried. `p1/t1_channelA_wip/handoff/cb_*.txt` holds **3.6 MB of condensed filing
+excerpts covering all 1,418 accessions** — every gated record had one. It never
+needed `sec.gov`, which is EGRESS_BLOCKED here (re-verified today by curl → 403
+at the proxy, by the agent-proxy status endpoint, and by WebFetch — not taken on
+a prior session's word).
 
-2. **The abstract's sample sentence should be written from the funnel, not the
-   headline.** Something like: *"237 mutual-fund-to-ETF conversions filed with the
-   SEC between 2020 and 2026, of which 131 carry a verified effective date and 10
-   waves produce stock-level treatment intensity above 0.5%, covering 389 US
-   equities"* — with the DFA concentration stated in the same paragraph, per
-   decision V-1.
+### The adjudication
 
-## Honest limits of this audit
+`p1/t1_arb/recheck_resolution.json` records one verdict per fund group against a
+stated evidentiary standard, each citing a verbatim quote:
 
-- The 92 held-back conversions and the 111 gated records overlap partially; both
-  pools are documented separately and neither is silently dropped, but a single
-  reconciled "master conversion register" does not exist yet. `held_back.json`
-  on disk is a **stale snapshot (109 rows)** predating the date-recovery overlay;
-  the live number from `assemble.py` is 92. It should be regenerated or deleted —
-  a downstream consumer reading it today gets the wrong set.
-- The ~18% correlated-contamination rate in `t1_qc_report.md` §3 was measured on
-  the **v1** extraction. The v2 re-run cleared 46/47 known decoys and reached
-  97.2% agreement with the reference channel. The current 131 should be far
-  cleaner than 18% contaminated, but **no post-v2 contamination rate has been
-  measured**, so no number should be quoted for it.
-- `asset_class` is blank on 25 of 131 (19.1%), so every asset-class split above
-  is a floor, not a count.
+| | promote if the excerpt… |
+|---|---|
+| **S1** | states the target is a mutual fund / open-end management investment company |
+| **S2** | names two or more retail share classes **of the target** (a CEF and an ETF have none) |
+| **S3** | is a supplement to the target's own Summary/statutory Prospectus — Form N-1A disclosure, which only an open-end fund files |
+| **S4** | directs holders to exchange into another mutual fund of the same complex |
+| **D1** | *reject* — the acquirer offers multiple share classes, so the destination is a mutual fund (MF→MF) |
+| **D2** | *reject* — the target is itself described as an ETF (ETF→ETF) |
+
+Anything else stays **unresolved**: not promoted, not deleted, visible in the
+register with its reason. Meta-rule 4.
+
+| verdict | fund groups | records |
+|---|---:|---:|
+| **event** (released) | **50** | **85** |
+| unresolved | 16 | 20 |
+| not_event (confirmed rejection) | 3 | 6 |
+
+### Why this is not just an assertion
+
+`resolve_recheck.py` re-reads **every quote out of the cited accession's
+committed excerpt and refuses to emit anything if one is missing** — character
+for character, folding only typography (curly quotes, non-breaking spaces). A
+verdict resting on text that is not there is exactly the hallucination case
+meta-rule 1 exists for, and a quote nobody re-checks is indistinguishable from a
+quote from memory. The check runs in CI, and a test deliberately doctors a quote
+to prove the guard bites.
+
+### The rejections are as informative as the promotions
+
+The three `not_event` groups were all one 2021 filing (Litman Gregory Funds
+Trust), and reading it confirmed the gate rather than overturning it:
+
+- **iM Dolan McEniry Corporate Bond Fund** — the *acquirer* offers "Institutional
+  Class Shares and Investor Class Shares", so the destination is a mutual fund.
+  MF→MF, not a conversion. The gate had flagged it for the right reason.
+- **iM DBi Managed Futures Strategy ETF / iM DBi Hedge Strategy ETF** — "The
+  Target Managed Futures Strategy ETF and Target Hedge Strategy ETF and their
+  corresponding Acquiring Funds are exchange-traded fund[s]". ETF→ETF.
+
+### The 16 unresolved groups, and the one pattern behind them
+
+Almost all are N-14s **filed by the acquiring ETF trust**, whose excerpt window
+carries the boilerplate "What are the differences between an ETF and a mutual
+fund?" comparison table but never states what the target is. That table appears
+in these filings regardless and is not evidence about any particular target.
+
+Baron (FinTech, Technology, Financials), Lazard (4), Harding Loevner, JPMorgan
+National Municipal Income, William Blair Emerging Markets Debt, Fort Pitt
+Capital, Morgan Stanley Mortgage Securities Trust, OTG Latin America (×2),
+Locorr. Two have a second defect worth naming: **Lazard US High Yield ETF** and
+**Locorr Investment Trust** have an acquiring-ETF name and a *trust* name
+respectively in the `fund_name` field — there is no converting fund to key on, so
+they could not be promoted even if the conversion is real.
+
+**Each needs one full N-14 read.** That is the entire remaining backlog on the
+event count, and it is 16 documents.
+
+---
+
+## Three integrity problems this surfaced
+
+### 1. wave_id was renumbering silently — fixed
+
+`build_waves.py` assigned `W001…` by rank over sorted effective dates. Adding 19
+waves, several of them early, would have moved **36 existing wave_ids** — and
+`conv_exposure_free.parquet` carries `wave_id` per cell, so every one of those
+cells would have been re-pointed at the wrong wave with nothing raised.
+
+Assignment is now **append-only**: any `(effective_date → wave_id)` binding
+already in `waves.csv` is frozen and reused; new dates take ids after the current
+max. Verified: **0 existing bindings moved**, DFA is still W002, 19 new ids
+assigned. A test inserts a synthetic event dated before every existing one and
+asserts nothing renumbers.
+
+### 2. One wave date moved, and 7 ConvExp cells are stale
+
+**Pabrai Wagons Fund**'s closing date moved 2026-02-06 → 2026-02-09, because
+releasing its gated records brought in a later-filed accession stating the new
+date, and the frozen policy is that the latest-filed filing wins. Its old wave
+date is retired. **7 non-treated ConvExp cells now carry a stale wave binding;
+zero treated cells are affected.** A test pins both numbers.
+
+### 3. The classification backlog is no longer harmless
+
+Rev 1 recorded that **zero** treated cells sat in a wave containing an
+unclassified fund, which made the DFA finding independent of the `asset_class`
+backlog. That is no longer literally true. Releasing **Thrivent Mid Cap Value
+Fund** (no `asset_class`) into wave W065 (2025-11-14), which already carried one
+treated cell (BELFB, ConvExp 1.30%), puts **exactly 1 treated cell** at stake.
+
+One cell cannot move a 389-stock scenario or the 92.8% concentration. But the
+claim "the backlog cannot move anything" has to stop being made, and the test now
+pins the number at 1 rather than asserting zero.
+
+---
+
+## What did NOT change, and why
+
+**The treated-stock numbers still describe the 131-event build:**
+
+| ConvExp ≥ 0.5% | stocks | waves |
+|---|---:|---:|
+| ALL (as built) | 389 | 10 |
+| excl DFA (W002) | 36 | 9 |
+| **W002 share** | **361 / 389 = 92.8%** | |
+
+`conv_exposure_free.parquet` is built by `p1/t2_free/build_nport_convexp.py`,
+which fetches N-PORT holdings from SEC endpoints. Blocked here, and the local
+cache is empty and gitignored (box-local). **So the 41 newly released conversions
+have no ConvExp cells yet, and the treated counts above cannot be refreshed in
+this container.** Rebuilding it is a box task, and it is now the single highest-value
+one for P1: 10 of the 41 new conversions are equity_US, and the exclude-DFA arm
+currently stands at 36 stocks against a power floor of 33.
+
+Until that rebuild runs, **quote 172 conversions / 96 waves for the event
+register, and 389 stocks / 10 waves / 92.8% for the treated sample, and say they
+are measured at different vintages.** They are not yet the same build.
+
+---
+
+## Reproduce the whole thing
+
+```bash
+python p1/t1_arb/recheck_dossier.py       # evidence dossier from the excerpts
+python p1/t1_arb/resolve_recheck.py       # verify every quote, emit the overlay
+python p1/t1_arb/assemble.py              # -> events_merged.csv (172)
+python p1/t2_wrds/build_waves.py          # -> waves.csv (96), append-only ids
+python p1/t1_reconcile/sample_scenarios.py
+python p1/wrds/universe.py --write
+python -m pytest p1/tests/test_recheck_resolution.py -q
+```
+
+`p1/t1_arb/arb_report.md` now carries a permanent **Owner-gate pool** section
+listing every still-excluded record with its gate reason and its adjudication, so
+the pool can never go silent again. Released + still-excluded must sum to the
+full pool, and a test enforces it.
+
+## Honest limits
+
+- **16 fund groups remain unresolved**, needing one full N-14 read each. They are
+  named above. Until then the register is a floor.
+- `asset_class` is blank on **34 of 172 (19.8%)**, so "46 equity_US" is a floor too.
+- The adjudication is **one model reading committed text** — a third channel over
+  the two cheap ones, which is what the QC report's mitigation #3 asked for, but
+  not an independent dual-channel pass. Every call is quote-backed and re-verified
+  mechanically; none is a majority vote.
+- No post-v2 contamination rate has been measured. The v2 re-run cleared 46/47
+  known decoys and reached 97.2% agreement with the reference channel, so the
+  register should be far cleaner than the 18% measured on v1 — but that is a
+  reason not to quote a number, not a licence to quote the old one.

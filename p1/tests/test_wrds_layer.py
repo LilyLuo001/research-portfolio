@@ -295,7 +295,12 @@ def test_scope_is_derivable_offline_and_covers_dropped_cells():
     # dropped cells lost a denominator, not a holding — they must be in the pull
     assert u["cusips_dropped_for_missing_denominator"] > 0
     assert u["cusips_total_to_map"] > u["cusips_with_convexp"]
-    assert s["waves"]["n_waves"] == 78
+    # derived, not hard-coded: the register grows when gated events are released
+    # (78 -> 96 on 2026-08-27), and a literal here just breaks on every such change
+    import csv as _csv
+    with open(ROOT / "p1" / "t2_wrds" / "waves_members.csv", newline="") as fh:
+        n_waves = len({r["effective_date"] for r in _csv.DictReader(fh)})
+    assert s["waves"]["n_waves"] == n_waves
     assert s["waves"]["first_effective_date"] == "2021-03-26"
     # the daily window may not run past today
     import datetime as dt

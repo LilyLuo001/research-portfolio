@@ -1,23 +1,38 @@
 {
-  "output": "p1/events_merged.csv",
-  "output_sha256": "506e4702043a647756026689ba96d4a7f10a6a6327b876b4f4b266476f91bc80",
+  "output": "/home/user/research-portfolio/p1/events_merged.csv",
+  "output_sha256": "e5a441368fcadb53064c226d4d90a858f5024fce14a90d913cf8dfb127a67a4e",
   "inputs": [
     {
-      "path": "p1/t1_events_final.json",
-      "sha256": "4bd318550d718a6fa54c8557de85c1b5b7afe9d2e753664bf5227a8ab575c0e9",
+      "path": "/home/user/research-portfolio/p1/t1_events_final.json",
+      "sha256": "587ab7a6de302918b9906cac061117c9df22ca930357af1687040db82a326100",
       "rows": null
     },
     {
-      "path": "p1/t1_arb/assemble.py",
-      "sha256": "de7bb1837bd0785c37559b84c62f594d227c7031e9fd2377a59efc034aac0e5c",
+      "path": "/home/user/research-portfolio/p1/t1_arb/assemble.py",
+      "sha256": "f68cb98f32459ca56e0d4cae5b6ae7c3f02f9e88d33dbb9931487fd2d956c3dc",
       "rows": null
     },
     {
-      "path": "p1/t1_arb/recovered_dates.json",
-      "sha256": "02e799905ec3ce9038220e3a4916cdfaa0ed45080ba9e390198a6a434bb2d4fa",
+      "path": "/home/user/research-portfolio/p1/t1_arb/recovered_dates.json",
+      "sha256": "72873452fb4b668882405fa060c5134081558d507cd92505094bcfbe1317d1d2",
+      "rows": null
+    },
+    {
+      "path": "/home/user/research-portfolio/p1/t1_arb/approx_dates.json",
+      "sha256": "8602ea4d523b1fe1da9174058f99da7ebfd406be8eabb9db89cb418ffb2579c2",
+      "rows": null
+    },
+    {
+      "path": "/home/user/research-portfolio/p1/t1_arb/recheck_overlay.json",
+      "sha256": "d11e1192245ebadeebd42a58175ce07fa9abe8e393f6a0c0d7d03b4efdc8d64f",
+      "rows": null
+    },
+    {
+      "path": "/home/user/research-portfolio/p1/t1_arb/recheck_resolution.json",
+      "sha256": "4de444e5536cd55f316096ac830fed3503c30360952f72b87275437aa032a732",
       "rows": null
     }
   ],
-  "code_version": "655b50206a5519425eebcd86c9b87a191272a5ed",
-  "timestamp": "2026-07-19T06:45:46.761152+00:00"
+  "code_version": "08adad94f0a68d2223e4a53a258a596dd38685a0",
+  "timestamp": "2026-08-27T05:27:55.993138+00:00"
 }

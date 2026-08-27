@@ -68,12 +68,25 @@ def test_T04_cuts_compound_monotonically():
         assert s["A-strict — drop any intl-touching wave"] <= s["Option A — drop pure-intl waves"]
 
 
-def test_T05_classification_backlog_has_no_treated_mass():
-    """The negative result that makes the DFA finding robust to the backlog."""
+def test_T05_classification_backlog_barely_touches_treated_mass():
+    """How much the asset_class backlog could move, pinned to an exact number.
+
+    Until 2026-08-27 this asserted ZERO treated cells at stake, which was the
+    negative result that made the DFA finding independent of the backlog. That
+    is no longer literally true: releasing the owner-gate pool added Thrivent
+    Mid Cap Value Fund to wave W065 (2025-11-14), which already carried one
+    treated cell (BELFB, ConvExp 1.30%), and the newly released fund has no
+    asset_class. So exactly one treated cell now sits in a wave containing an
+    unclassified fund.
+
+    Pinned rather than loosened: one cell cannot move a 389-stock scenario or
+    the 92.8% concentration, but the claim "the backlog cannot move anything"
+    has to stop being made. If this number grows, re-audit — do not edit it.
+    """
     ev, mm, ce, cls = scen.load()
     gap = scen.classification_gap(ev, mm, ce)
     assert gap["unclassified_events"] > 0, "if this hits 0 the backlog is done"
-    assert all(v == 0 for v in gap["treated_cells_at_stake"].values())
+    assert gap["treated_cells_at_stake"] == {">=0.5%": 1, ">=1%": 1}
 
 
 def test_T06_pure_intl_is_a_subset_of_touching_intl():

@@ -49,6 +49,16 @@ ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOP = re.compile(r"\b(the|fund|funds|portfolio|trust|inc|lp|llc|ltd|co|series|"
                   r"class|shares?|etf|of|company|incorporated)\b", re.I)
 CONF_RANK = {"H": 3, "M": 2, "L": 1, "NA": 0, None: 0}
+
+# Filled by load_events(); reported by _write_report so the gate pool can never
+# go quiet again. Before 2026-08-27 these records vanished with no trace in any
+# output — 111 of them, of which only 4 had actually been judged not-an-event.
+GATE_EXCLUDED: list[dict] = []
+GATE_RELEASED: list[dict] = []
+
+
+def eff_raw(e):
+    return str(e.get("effective_date", "NA"))
 PREC_RANK = {"month": 3, "quarter": 2, "pending": 1, "NA": 0, "": 0, None: 0}
 
 
@@ -79,6 +89,14 @@ def load_events():
     meta = json.loads(META.read_text())
     # optional overlay: {source_accession: {"effective_date": "YYYY-MM-DD", ...}}
     # produced by the full-text date-recovery pass (merge_daterecover.py). Absent = no-op.
+    # Owner-gate overlay. The 2026-07-18 gate parked 111 records at
+    # recheck/defer/not_event and this function used to drop every one of them
+    # silently. recheck_overlay.json (built by resolve_recheck.py, every quote
+    # re-checked against the committed filing excerpts) says which of those were
+    # adjudicated back to `event`. Absent = no-op, i.e. the old behaviour.
+    gate_p = HERE / "recheck_overlay.json"
+    gate = json.loads(gate_p.read_text()).get("entries", {}) if gate_p.exists() else {}
+
     overlay_p = HERE / "recovered_dates.json"
     overlay = json.loads(overlay_p.read_text()).get("recovered", {}) if overlay_p.exists() else {}
     # approximate-timing overlay (Pass 1b): {source_accession: {"effective_date_approx":
@@ -94,7 +112,26 @@ def load_events():
         for e in evs:
             sc = e.get("_spotcheck")
             if sc and sc.get("disposition") in ("not_event", "recheck", "defer"):
-                continue                     # owner-gate correction: excluded from the clean set
+                g = gate.get(f'{e.get("fund_name")}||{e.get("family")}')
+                if not (g and g["verdict"] == "event"):
+                    # Still excluded — but no longer silently. `not_event` is a
+                    # rejection on the evidence; `unresolved` is an open question
+                    # (meta-rule 4). Both are counted and reported.
+                    GATE_EXCLUDED.append({
+                        "fund_name": e.get("fund_name"), "family": e.get("family"),
+                        "accession": fid, "effective_date": eff_raw(e),
+                        "asset_class": e.get("asset_class"),
+                        "gate_disposition": sc.get("disposition"),
+                        "gate_reason": sc.get("reason"),
+                        "adjudication": (g or {}).get("verdict", "NOT ADJUDICATED"),
+                        "adjudication_reason": (g or {}).get("reason"),
+                    })
+                    continue
+                GATE_RELEASED.append({
+                    "fund_name": e.get("fund_name"), "family": e.get("family"),
+                    "accession": fid, "standard": g.get("standard"),
+                    "quote": g.get("quote"),
+                })
             m = meta.get(fid, {})
             eff = str(e.get("effective_date", "NA"))
             if not ISO.match(eff) and fid in overlay and ISO.match(str(overlay[fid].get("effective_date", ""))):
@@ -223,6 +260,23 @@ def _write_report(rows, groups, merged, held, audit, pk_dups):
          f"- → held back (needs_fulltext, no stated effective_date or fund_name): **{len(held)}**",
          f"- effective_date conflicts across a group's filings (resolved to latest-filed): **{len(conflicts)}**",
          f"- primary-key (fund_name, effective_date) collisions: **{len(pk_dups)}**\n",
+         "## Owner-gate pool (was silent before 2026-08-27)",
+         "The 2026-07-18 spot-check gate parked event records at "
+         "`recheck`/`defer`/`not_event`, and this script used to drop every one of "
+         "them without trace. They are now adjudicated in "
+         "`recheck_resolution.json` against the committed filing excerpts "
+         "(`p1/t1_channelA_wip/handoff/cb_*.txt`), with every quote re-verified by "
+         "`resolve_recheck.py`.\n",
+         f"- released to the clean set (adjudicated `event`): **{len(GATE_RELEASED)}** records",
+         f"- still excluded: **{len(GATE_EXCLUDED)}** records\n",
+         "Still-excluded records, by why — a rejection on the evidence and an open "
+         "question are different things and are not pooled:\n",
+         "| fund | family | eff | gate reason | adjudication |",
+         "|---|---|---|---|---|"] + [
+         f"| {g['fund_name']} | {g['family']} | {g['effective_date']} | "
+         f"{g['gate_reason']} | **{g['adjudication']}** |"
+         for g in sorted(GATE_EXCLUDED, key=lambda x: (x["adjudication"], str(x["fund_name"])))
+        ] + ["",
          "## Adjudication provenance",
          "Channel-level event/no_event calls were adjudicated upstream: deepseek "
          "v2-A primary, qwen targeted tiebreaker on 140 contested items, owner gate "
