@@ -178,6 +178,38 @@ def test_scope_is_derivable_offline_and_covers_dropped_cells():
     assert s["windows"]["daily_start"] < s["waves"]["first_effective_date"]
 
 
+def test_daily_window_starts_before_the_earliest_ANNOUNCEMENT_not_the_earliest_effective():
+    """The event study anchors t=0 on the announcement date (plan §6 threat T2).
+
+    Anchoring the pull on the earliest EFFECTIVE date instead truncates the
+    market-model estimation window for the earliest events — silently, because a
+    short window does not raise, it just returns a different beta. The earliest
+    announcement leads the earliest effective date by ~11 months here, so the
+    two anchors are far enough apart for this to be a real regression guard.
+    """
+    pytest.importorskip("pandas")
+    import datetime as dt
+    from universe import build_scope, PRE_TRADING_DAYS, TRADING_TO_CALENDAR
+    s = build_scope()
+    first_ann = s["waves"]["first_announce_date"]
+    assert first_ann < s["waves"]["first_effective_date"], \
+        "fixture assumption: the earliest announcement precedes the earliest effective date"
+    need = (dt.date.fromisoformat(first_ann)
+            - dt.timedelta(days=int(PRE_TRADING_DAYS * TRADING_TO_CALENDAR)))
+    assert s["windows"]["daily_start"] <= need.isoformat(), (
+        f"daily_start {s['windows']['daily_start']} does not reach back a full "
+        f"estimation window before the first announcement {first_ann}")
+
+
+def test_fundamentals_window_reaches_further_back_than_prices():
+    """SUE needs an 8-quarter lookback and annual book equity lags by up to ~2y."""
+    pytest.importorskip("pandas")
+    from universe import build_scope
+    w = build_scope()["windows"]
+    assert w["fundamentals_start"] < w["daily_start"]
+    assert w["fundamentals_lookback_years"] >= 2
+
+
 def test_future_dated_waves_are_flagged_not_silently_pulled():
     pytest.importorskip("pandas")
     import datetime as dt

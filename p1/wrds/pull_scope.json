@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-18T12:24:46.609127+00:00",
+  "generated": "2026-08-27T04:47:23.766702+00:00",
   "note": "Derived from committed artifacts only \u2014 no WRDS access needed to compute this. Hand it to whoever books the account.",
   "universe": {
     "cusips_with_convexp": 2241,
@@ -11,6 +11,8 @@
     "n_waves": 78,
     "first_effective_date": "2021-03-26",
     "last_effective_date": "2026-11-20",
+    "first_announce_date": "2020-05-01",
+    "last_announce_date": "2026-06-30",
     "future_dated_waves": [
       "2026-09-18",
       "2026-11-06",
@@ -18,13 +20,17 @@
     ]
   },
   "windows": {
+    "anchor": "announcement date (t=0, plan \u00a76 threat T2) for the lower bound; effective date for the upper bound \u2014 whichever is more extreme",
     "pre_trading_days": 250,
     "post_trading_days": 120,
-    "daily_start": "2020-03-04",
-    "daily_end": "2026-08-18",
+    "daily_start": "2019-04-10",
+    "daily_end": "2026-08-27",
     "daily_end_capped_at_today": true,
-    "monthly_start": "2020-03-04",
-    "monthly_end": "2026-08-18"
+    "monthly_start": "2019-04-10",
+    "monthly_end": "2026-08-27",
+    "fundamentals_start": "2016-04-10",
+    "fundamentals_end": "2026-08-27",
+    "fundamentals_lookback_years": 3
   },
   "convexp_stats": {
     "rows": 6377,
@@ -34,6 +40,7 @@
   "sources": {
     "conv_exposure_free.parquet": "p1/conv_exposure_free.parquet",
     "NEED_HUMAN_stocks.csv": "p1/t2_free/NEED_HUMAN_stocks.csv",
-    "waves_members.csv": "p1/t2_wrds/waves_members.csv"
+    "waves_members.csv": "p1/t2_wrds/waves_members.csv",
+    "events_merged.csv": "p1/events_merged.csv"
   }
 }
