@@ -100,6 +100,9 @@ def markdown(receipt):
         "post months are generated from pre-period donors; no post-period outcome "
         "has been opened. The primary AI measure remains Eloundou β. Eloundou α is "
         "a frozen robustness measure, not a replacement chosen for lower collinearity.", "",
+        "The v5 static synthetic post window starts January 2023, excludes December "
+        "2022 as the transition month, ends July 2026, and omits the known October "
+        "2025 gap.", "",
         "The computerization coefficient is fixed at `log(0.95)` per employment-"
         "weighted standard deviation. It is a design stress parameter, not an "
         "estimate from outcomes. Primary inference uses an independently calibrated "

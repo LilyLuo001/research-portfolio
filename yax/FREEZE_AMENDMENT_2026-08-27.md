@@ -200,3 +200,12 @@ No exact benchmark was located. The owner-signed rule is unchanged, the
 numerical SESOI remains undefined, and the paired-equivalence/freeze gate must
 remain blocked. Full source hash, alignment table and rejected shortcuts:
 `literature/BENCHMARK_ALIGNMENT_2026-08-28.md`.
+
+The outcome-blind SCC execution nevertheless completed the estimable precision
+objects on 2026-08-28. Four corrected January-2023 joint-power scenarios pass
+gradient and calibration gates. The paired beta-versus-alpha run used 999
+common draws with zero failures: `SE(Delta)=0.011672` and
+`MDE_{Delta,80}=0.032722` log points (3.326% relative magnitude). These numbers
+do not resolve equivalence. The interval, equivalence power and margin grid
+remain null, so `paired_delta_power` remains BLOCKED exactly as the signed rule
+requires. See `power/PAIRED_EQUIVALENCE_PRECISION_NOTE.md`.

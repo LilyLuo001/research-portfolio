@@ -6,7 +6,8 @@ seal protocol) and §12 (kill conditions). A gate that only an agent's judgement
 enforces is not a gate. This script checks the ones that can be checked from
 artifacts and git history, and fails closed on everything it cannot see.
 
-  python yax/gates.py --power-aggregate <path> [--freeze-tag v1.0-design-freeze]
+  python yax/gates.py --power-aggregate <path> \
+    --paired-aggregate <path> [--freeze-tag v1.0-design-freeze]
 
 Every gate returns PASS, FAIL or BLOCKED:
 
@@ -677,19 +678,25 @@ def gate_paired_delta_power(agg):
 
 # ---------------------------------------------------------------- runner
 
-def run(power_aggregate=None, tag=DEFAULT_TAG):
-    agg = None
-    if power_aggregate:
-        p = pathlib.Path(power_aggregate)
+def _load_aggregate(path):
+    aggregate = None
+    if path:
+        p = pathlib.Path(path)
         if p.is_file():
             try:
-                agg = json.loads(p.read_text(encoding="utf-8"))
+                aggregate = json.loads(p.read_text(encoding="utf-8"))
             except Exception as exc:
                 print(f"WARNING: could not parse {p}: {exc}", file=sys.stderr)
+    return aggregate
+
+
+def run(power_aggregate=None, tag=DEFAULT_TAG, paired_aggregate=None):
+    agg = _load_aggregate(power_aggregate)
+    paired = _load_aggregate(paired_aggregate) if paired_aggregate else agg
     return [
         gate_gradient(agg),
         gate_calibration(agg),
-        gate_paired_delta_power(agg),
+        gate_paired_delta_power(paired),
         gate_coverage_rule(agg),
         gate_novelty(tag),
         gate_computerization(tag),
@@ -706,11 +713,13 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--power-aggregate", help="power_available_support_aggregate_*.json")
+    ap.add_argument("--paired-aggregate",
+                    help="outcome-blind paired-equivalence precision artifact")
     ap.add_argument("--freeze-tag", default=DEFAULT_TAG)
     ap.add_argument("--json", action="store_true", help="machine-readable output")
     args = ap.parse_args(argv)
 
-    results = run(args.power_aggregate, args.freeze_tag)
+    results = run(args.power_aggregate, args.freeze_tag, args.paired_aggregate)
 
     if args.json:
         print(json.dumps([{"gate": r.gate, "status": r.status, "detail": r.detail}

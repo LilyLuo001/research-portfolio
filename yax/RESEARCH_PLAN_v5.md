@@ -660,7 +660,9 @@ constructions.
 
 **Not established:**
 
-1. The Q5–Q1 MDE and benchmark on a common estimand — §7.3.
+1. The exact published Q5–Q1 benchmark on the YAX estimand — §7.3. The corrected
+   January-2023 joint MDEs and paired `MDE_{Delta,80}` are now computed; the
+   published benchmark remains unavailable.
 2. Any protected post-period YAX coefficient. The seal holds.
 3. Whether future work appearing after the 2026-08-28 audit date duplicates the
    chain; the current search found no full-chain paper, but did find close
@@ -697,12 +699,16 @@ specification search.
 3. Coverage primary switched to Rule A in a `COVERAGE_RULE_PRESPEC_v2.md`,
    preserving v1 and its receipt. *(§7.2)*
 4. Post-period redefined to 2023-01 static, 2022-12 transition; power
-   re-simulated on the new window. *(§7.1)*
-5. Q5–Q1 MDE and benchmark computed on one estimand. *(§7.3)*
+   re-simulated on the new window. **COMPLETE 2026-08-28, 999 draws per
+   scenario; `power/JOINT_POWER_AGGREGATE_v2.json`.** *(§7.1)*
+5. Q5–Q1 MDE and benchmark computed on one estimand. **MDE complete; exact
+   published benchmark BLOCKED after alignment audit.** *(§7.3)*
 5b. **The paired-equivalence precision artifact** — all five components of
    §4.2, outcome-blind, under common bootstrap draws. The binding object is
    equivalence-test power at Δ = 0 under the primary SESOI; MDE_{Δ,80} is
-   secondary. *(§4.2–4.3)*
+   secondary. **Paired distribution, `SE(Delta)` and `MDE_{Delta,80}` complete
+   with 999 draws; equivalence interval, power and grid BLOCKED because item 5
+   supplies no admissible benchmark.** *(§4.2–4.3)*
 5c. **Owner decision on the primary SESOI** — **COMPLETE: 25% rule signed
     2026-08-28; numerical value still awaits the common-scale benchmark.**
     *(§4.3; `SESOI_OWNER_SIGNOFF_2026-08-28.md`)*
