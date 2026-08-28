@@ -58,6 +58,7 @@ import time
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
+import pandas as pd
 import requests
 
 
