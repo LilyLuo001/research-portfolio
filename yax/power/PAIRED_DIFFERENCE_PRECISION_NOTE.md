@@ -16,13 +16,15 @@ authenticated by SHA-256 from the derived receipt.
 |---|---:|
 | `SE(Delta)` | 0.011672 log points |
 | paired β/α covariance | 0.00009467 |
-| 95% bootstrap critical half-width | 0.023430 log points |
+| outcome-blind 95% null critical half-width for power | 0.023430 log points |
 | `MDE_(Delta,80)` | 0.032722 log points |
 | relative magnitude | 3.326% |
 
-The 95% confidence interval is frozen as
-`[delta_hat - 0.023430, delta_hat + 0.023430]`; its numerical endpoints are
-formed only after the protected `delta_hat` is estimated.
+The eventual 95% confidence interval remains the pre-specified percentile-t
+paired occupation-cluster bootstrap interval with at least 999 common draws.
+Its numerical endpoints are formed only after protected estimates are opened.
+The 0.023430 value above is a null critical half-width used for the outcome-blind
+power diagnostic; it is not relabelled as the eventual outcome CI.
 
 ## Interpretation
 

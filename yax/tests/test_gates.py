@@ -275,8 +275,10 @@ def _full_precision_artifact():
         "paired_delta_se": 0.0117,
         "paired_confidence_interval": {
             "confidence_level": 0.95,
-            "critical_halfwidth_log_points": 0.0234,
-            "construction": "[delta_hat - h, delta_hat + h]",
+            "method": "percentile-t paired occupation-cluster bootstrap",
+            "bootstrap_draws_minimum": 999,
+            "same_occupation_cluster_weights_for_both_exposures": True,
+            "construction": "[delta_hat - q975*t_se, delta_hat - q025*t_se]",
             "computed_after_outcomes_open": False,
         },
         "mde_delta_80": {
@@ -316,7 +318,7 @@ def test_paired_precision_gate_requires_ci_construction_not_equivalence_interval
     art["equivalence_interval"] = [-0.01, 0.01]
     result = gates.gate_paired_difference_precision(art)
     assert result.status == "BLOCKED"
-    assert "paired 95% CI construction" in result.detail
+    assert "paired percentile-t 95% CI construction" in result.detail
 
 
 def test_paired_precision_gate_fails_closed_if_outcomes_were_read():

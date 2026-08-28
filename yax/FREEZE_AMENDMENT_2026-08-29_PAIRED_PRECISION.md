@@ -45,8 +45,8 @@ Retained as binding design elements:
    definitions;
 2. the paired bootstrap distribution of `Delta`;
 3. paired `SE(Delta)`;
-4. a 95% paired confidence interval constructed from the common-draw bootstrap
-   critical half-width; and
+4. the originally specified 95% percentile-t paired confidence interval, using
+   common occupation-cluster draws and at least 999 replications; and
 5. outcome-blind `MDE_(Delta,80)` as the formal precision diagnostic.
 
 The frozen precision result is `MDE_(Delta,80) = 0.032722` log points, or 3.326%

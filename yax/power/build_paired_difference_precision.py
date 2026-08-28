@@ -71,25 +71,26 @@ def build(source_path):
         "paired_delta_se": stored_se,
         "paired_confidence_interval": {
             "confidence_level": 0.95,
-            "method": "symmetric common-draw bootstrap critical-value interval",
+            "method": "percentile-t paired occupation-cluster bootstrap",
             "construction": (
-                "[delta_hat - critical_halfwidth_log_points, "
-                "delta_hat + critical_halfwidth_log_points]"
+                "[delta_hat - q_0.975(t_star)*se_hat_delta, "
+                "delta_hat - q_0.025(t_star)*se_hat_delta]"
             ),
-            "critical_halfwidth_log_points": source[
-                "paired_95_critical_halfwidth_log_points"
-            ],
+            "bootstrap_draws_minimum": 999,
+            "same_occupation_cluster_weights_for_both_exposures": True,
             "computed_after_outcomes_open": False,
             "note": (
-                "The construction and critical half-width are frozen now; the "
-                "numerical interval is formed only after the protected delta_hat "
-                "is estimated."
+                "The construction is frozen now; t_star and the numerical "
+                "interval are formed only after protected estimates are opened."
             )
         },
         "mde_delta_80": {
             "power_target": 0.80,
             "log_points": source["mde_delta_80_log_points"],
-            "relative_magnitude": source["mde_delta_80_relative_magnitude"]
+            "relative_magnitude": source["mde_delta_80_relative_magnitude"],
+            "outcome_blind_95_critical_halfwidth_log_points": source[
+                "paired_95_critical_halfwidth_log_points"
+            ]
         },
         "retired_equivalence_requirements": {
             "numerical_sesoi": "RETIRED_NO_VERIFIED_MATCHING_BENCHMARK",

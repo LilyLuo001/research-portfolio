@@ -618,7 +618,10 @@ def gate_paired_difference_precision(agg):
     ci_ok = (
         isinstance(ci, dict)
         and ci.get("confidence_level") == 0.95
-        and _finite(ci.get("critical_halfwidth_log_points"), positive=True)
+        and ci.get("method") == "percentile-t paired occupation-cluster bootstrap"
+        and isinstance(ci.get("bootstrap_draws_minimum"), int)
+        and ci.get("bootstrap_draws_minimum", 0) >= 999
+        and ci.get("same_occupation_cluster_weights_for_both_exposures") is True
         and isinstance(ci.get("construction"), str)
         and "delta_hat" in ci.get("construction", "")
         and ci.get("computed_after_outcomes_open") is False
@@ -648,7 +651,7 @@ def gate_paired_difference_precision(agg):
         ("paired bootstrap distribution or authenticated stored representation",
          distribution_ok),
         ("paired SE(Delta)", se_ok),
-        ("paired 95% CI construction", ci_ok),
+        ("paired percentile-t 95% CI construction", ci_ok),
         ("MDE_Delta,80", mde_ok),
         ("common draws preserving covariance", common_ok),
         ("zero protected post-period outcomes read", seal_ok),
