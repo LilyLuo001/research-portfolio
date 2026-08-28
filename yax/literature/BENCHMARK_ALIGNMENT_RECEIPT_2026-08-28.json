@@ -1,0 +1,50 @@
+{
+  "schema": "yax.test_c_benchmark_alignment.v1",
+  "audit_date": "2026-08-28",
+  "protected_post_outcomes_opened": false,
+  "result": "BLOCKED_NO_COMMON_SCALE_BENCHMARK",
+  "owner_rule": "SESOI = 0.25 * abs(final literature-comparable Q5-Q1 benchmark)",
+  "required_dimensions": [
+    "young age 22-25",
+    "employment stock outcome",
+    "Q5-Q1 exposure contrast",
+    "young relative to pooled ages 26-65",
+    "occupation-age-month estimand",
+    "log/PPML functional scale"
+  ],
+  "closest_source": {
+    "authors": ["Erik Brynjolfsson", "Bharat Chandar", "Ruyu Chen"],
+    "title": "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence",
+    "version_date": "2026-08-12",
+    "status": "Stanford Digital Economy Lab working paper, revised",
+    "url": "https://digitaleconomy.stanford.edu/app/uploads/2026/08/Canaries_August2026.pdf",
+    "sha256": "c8d2e5c4ccc0de7ef977c191c144726d6073e164b33f30397fcb0090165d2bdf"
+  },
+  "candidates": [
+    {
+      "label": "BCC_19_percent",
+      "value": 0.19,
+      "matches": ["young age 22-25", "employment stock outcome"],
+      "mismatches": ["Q4+Q5 versus Q1-Q3, not Q5-Q1", "no pooled ages 26-65 comparator", "descriptive kept-pace scale, not Test C PPML/log estimand"],
+      "admissible": false
+    },
+    {
+      "label": "BCC_table1_panelA_Q5_young",
+      "value": -0.179,
+      "matches": ["young age 22-25", "employment stock outcome", "Q5-Q1 contrast"],
+      "mismatches": ["young-only coefficient; older age groups fitted separately", "occupation percent-change long difference, not saturated young-relative cell-stock estimator", "percent-change rather than Test C PPML/log scale"],
+      "admissible": false
+    }
+  ],
+  "bcc_table1_panelA_q5_by_age": {
+    "22_25": -0.179,
+    "26_30": -0.048,
+    "31_34": -0.014,
+    "35_40": 0.001,
+    "41_49": 0.031,
+    "50_plus": -0.009
+  },
+  "numerical_benchmark": null,
+  "numerical_sesoi": null,
+  "freeze_permitted": false
+}

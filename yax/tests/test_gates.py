@@ -266,5 +266,19 @@ def test_paired_delta_gate_accepts_the_complete_artifact():
     assert gates.gate_paired_delta_power(_full_equivalence_artifact()).status == "PASS"
 
 
+def test_paired_delta_gate_rejects_null_placeholders():
+    art = _full_equivalence_artifact()
+    art["equivalence_interval"] = None
+    art["equivalence_power_at_delta_zero"] = None
+    art["benchmark_margin_grid"] = {
+        "0.125": None, "0.25": None, "0.50": None
+    }
+    result = gates.gate_paired_delta_power(art)
+    assert result.status == "BLOCKED"
+    assert "equivalence interval" in result.detail
+    assert "equivalence-test power" in result.detail
+    assert "12.5/25/50" in result.detail
+
+
 def test_paired_delta_gate_blocks_without_an_aggregate():
     assert gates.gate_paired_delta_power(None).status == "BLOCKED"

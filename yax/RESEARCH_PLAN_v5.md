@@ -311,6 +311,14 @@ rule, economic interpretation and anti-widening commitment are recorded in
 pending the common-scale benchmark required by §7.3; the sign-off does not turn
 an unmatched headline magnitude into that benchmark.
 
+**BENCHMARK-ALIGNMENT STATUS (2026-08-28): BLOCKED.** The latest BCC revision's
+19% headline is Q4+Q5 versus Q1--Q3 with no pooled older comparator. Its Table 1
+coefficient of −0.179 is Q5--Q1 for ages 22--25, but is a young-only
+occupation-level percent-change long difference; older groups are fitted
+separately. Neither is YAX's saturated young-relative-to-pooled-26--65
+cell-stock PPML/log estimand. No exact published benchmark was located, so no
+numerical SESOI is assigned. See `literature/BENCHMARK_ALIGNMENT_2026-08-28.md`.
+
 ## 5. Position relative to the nearest competing papers
 
 The novelty claim must be narrower and more defensible than "AI exposure has
@@ -478,6 +486,12 @@ Earlier plans (v1–v3) used 20–29 primary with 16–24 and 22–27 as alterna
 that scheme was superseded at v4 and is not revived. Any broader band would be
 an addition to the frozen design and is therefore out of scope for this
 amendment.
+
+**Audit result (2026-08-28):** no published source located supplies that exact
+common-scale benchmark. BCC's 19% and −0.179 candidates fail the required
+contrast/pooled-comparator/estimator alignment described above. The numerical
+SESOI and binding equivalence calculation remain blocked; no shortcut is used.
+Full receipt: `literature/BENCHMARK_ALIGNMENT_RECEIPT_2026-08-28.json`.
 
 ### 7.4 Unit of observation — stated explicitly, ambiguity closed
 

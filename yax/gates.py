@@ -565,23 +565,62 @@ def gate_paired_delta_power(agg):
         return Result("paired_delta_power", "BLOCKED",
                       "no power aggregate supplied")
 
-    def _keys(obj, acc):
+    def _items(obj, acc):
         if isinstance(obj, dict):
             for k, v in obj.items():
-                acc.add(k.lower())
-                _keys(v, acc)
+                acc.append((k.lower(), v))
+                _items(v, acc)
         elif isinstance(obj, list):
             for v in obj:
-                _keys(v, acc)
+                _items(v, acc)
         return acc
 
-    keys = _keys(agg, set())
+    items = _items(agg, [])
+
+    def _finite(value):
+        return (not isinstance(value, bool)
+                and isinstance(value, (int, float)) and math.isfinite(value))
+
+    def _informative(value):
+        if _finite(value):
+            return True
+        if isinstance(value, list):
+            return bool(value) and all(_finite(v) for v in value)
+        if isinstance(value, dict):
+            return bool(value) and any(_informative(v) for v in value.values())
+        return False
+
+    def _values(*required_groups):
+        """Values whose key contains at least one token from every group."""
+        values = []
+        for k, value in items:
+            if all(any(tok in k for tok in group) for group in required_groups):
+                values.append(value)
+        return values
 
     def _has(*required_groups):
-        """True when some key contains at least one token from every group."""
-        for k in keys:
-            if all(any(tok in k for tok in group) for group in required_groups):
+        for value in _values(*required_groups):
+            if _informative(value):
                 return True
+        return False
+
+    def _valid_grid():
+        for value in _values(("margin", "grid", "benchmark"), ("grid", "margin")):
+            if isinstance(value, dict):
+                numeric = [v for v in value.values() if _finite(v)]
+                if len(numeric) >= 3:
+                    return True
+            if isinstance(value, list):
+                powers = []
+                for row in value:
+                    if not isinstance(row, dict):
+                        continue
+                    candidate = next((v for k, v in row.items()
+                                      if "power" in k.lower() and _finite(v)), None)
+                    if candidate is not None:
+                        powers.append(candidate)
+                if len(powers) >= 3:
+                    return True
         return False
 
     required = [
@@ -592,7 +631,7 @@ def gate_paired_delta_power(agg):
         ("equivalence-test power at Delta = 0 under the primary SESOI  [BINDING]",
          _has(("equivalence",), ("power",))),
         ("12.5/25/50 benchmark-margin grid (diagnostics only)",
-         _has(("margin", "grid", "benchmark"), ("grid", "margin"))),
+         _valid_grid()),
         ("MDE_Delta,80 (secondary)",
          _has(("delta",), ("mde",))),
     ]

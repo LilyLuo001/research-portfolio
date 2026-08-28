@@ -185,3 +185,18 @@ construct → identifying-occupation → mapping/common-support → paired downs
 chain under one frozen public-data design. Source locators, version dates, file
 hashes, the boundary table and the published-measurement audit are in
 `literature/`. The novelty gate now passes on that narrower record.
+
+## Common-scale benchmark audit completed 2026-08-28 — unresolved
+
+The August 2026 BCC revision is the closest source, but its 19% headline is a
+Q4+Q5 versus Q1--Q3 kept-pace comparison and its −0.179 Table 1 coefficient is
+a Q5--Q1 percent-change long difference for ages 22--25 alone. The paper fits
+older age groups separately; it does not publish YAX's young-relative-to-pooled-
+26--65 saturated cell-stock PPML/log estimand. The separate older coefficients
+cannot be mechanically pooled into that nonlinear estimand from the published
+table.
+
+No exact benchmark was located. The owner-signed rule is unchanged, the
+numerical SESOI remains undefined, and the paired-equivalence/freeze gate must
+remain blocked. Full source hash, alignment table and rejected shortcuts:
+`literature/BENCHMARK_ALIGNMENT_2026-08-28.md`.
