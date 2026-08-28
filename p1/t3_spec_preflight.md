@@ -102,6 +102,17 @@ one entry per row, each with a working link, in the T0 阶段A matrix format:
 9. **1 − R²** idiosyncratic information content.
 10. **TAQ/IID effective spread** — the convention the WRDS IID field implements.
 
+**11. Multiway wild cluster bootstrap** (added 2026-08-28, v2.1d). The headline
+inference procedure is a wild cluster bootstrap over the **two-way (sponsor,
+stock)** structure with the null imposed (plan §15.3.1). Needed: the variant to
+use and its behaviour with few and unbalanced clusters, plus the software package
+that implements it (`fwildclusterboot`/`boottest` class — hand-rolling the loop is
+forbidden). **This one differs from items 1–10**: they are 口径 for outcome
+*variables*, this is the procedure that produces every p-value in the paper.
+Until it is filled, §15.3.1 stands as `NEED_HUMAN`, and **no substitute procedure
+may stand in "for now"** — running a one-way bootstrap meanwhile and swapping
+later is method selection after seeing results.
+
 Alternatively, queue T0 阶段A properly as a dual-channel task (it is a
 high-hallucination task under meta-rule 2 — the collision sweep already showed
 one channel inventing an overlap verdict) and let it produce the matrix.

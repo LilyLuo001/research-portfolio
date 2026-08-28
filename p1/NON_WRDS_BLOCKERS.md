@@ -118,5 +118,56 @@ A1 (literature) and A2/A3 (egress) are independent of WRDS and can be procured i
 parallel with it. **A1 is the one that actually gates T3**, and it is the cheapest
 of the three.
 
-Group B is being worked now, in the order B1 → B2 → B3 → B4. None of it needs the
-owner, WRDS, or network.
+---
+
+## Status 2026-08-28 — Group B is finished; nothing offline remains
+
+Group B was worked B1 → B2 → B3 → B4, and all of it has landed:
+
+| | item | where |
+|---|---|---|
+| B1 | three missing §230 contracts | `ops/contracts/{outcomes_panel,variable_spec,fingerprint}.yaml` |
+| B2 | panel-integrity guard | `p1/pipeline/assert_panel.py` |
+| B3 | spine-two outcomes builder | `p1/pipeline/outcomes_spine2.py` + tests |
+| B4 | Russell non-June fallback check | `p1/design/russell_fallback.json` |
+| B5 | free-vs-CRSP reconciliation | `p1/reconcile/convexp_reconcile.py` |
+
+Landed since, and also needing nothing: Gate 0's continuity measures with the
+as-of factor join and the non-circular direction test
+(`p1/gate0_continuity/`, `p1/tests/test_gate0_continuity.py`); the dependence
+measure (`p1/t5_spec/measure_dependence.py`); the spec-consistency guard
+(`p1/tests/test_spec_consistency.py`); and the sponsor crosswalk proposal
+(`p1/t5_spec/sponsor_crosswalk.py`).
+
+**Every remaining P1 item is in Group A, plus three new owner items.** So the
+next seat-C session should not go looking for offline work — there is none, and
+inventing some is worse than saying so.
+
+### A6. The sponsor crosswalk signoff — blocks headline inference
+`p1/t5_spec/SPONSOR-CROSSWALK-GATE.md`. Name evidence took 84 registrants to 61
+stems; the rest needs a locator per row. The two expensive ones share no tokens
+with their siblings and cannot be found mechanically: `Undiscovered Managers
+Funds` → JPMorgan, and `DFA Investment Dimensions Group` ↔ `Dimensional
+Investment Group` (93.6% of treated mass). Blocks §15.3.1 and §15.3.0's
+dependence measurement; blocks **neither Gate 0 nor B1/B2**.
+
+### A7. The multiway wild-bootstrap citation — blocks every p-value
+`CITE_REQUEST` item 11 in `p1/t3_spec_preflight.md`. Unlike items 1–10 this is
+not a variable 口径, it is the procedure behind the headline result. Until it is
+filled, §15.3.1 is `NEED_HUMAN`; a one-way stand-in "for now" is method selection
+after the fact and is forbidden.
+
+### A8. SEC egress — blocks B1/B2 execution and Gate 0's measured result
+Re-verified in-container 2026-08-28: `www.sec.gov`, `data.sec.gov`,
+`efts.sec.gov` and `api.openfigi.com` all return 403 at the proxy CONNECT
+(`connect_rejected — gateway answered 403`). The code, contracts and tests are
+committed and green offline; they need a lane with SEC egress, not more work
+here. OpenFIGI is a coverage fallback only — step 2 of the builder uses it just
+for holdings whose N-PORT carries no ticker — so it is not load-bearing.
+
+### A9. The WRDS account — blocks T2-on-permno, T4, T5, and two integration tests
+`p1/tests/test_gate0_continuity.py` has two tests that skip today and are the
+only things that can verify the CFACSHR direction against data
+(`test_direction_against_real_crsp_corporate_actions`,
+`test_adjustment_cancels_a_real_action_on_a_real_holding`). The pull layer is
+written, bounded and ordered; the runbook is `ops/briefs/P1-WRDS-SPRINT.md`.
