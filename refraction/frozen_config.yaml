@@ -20,10 +20,54 @@ prereg:
   osf_url: null
   registered_spec: "SPEC-MAIN-v2.4"   # Plan v2.2 §6; γ always reported decomposed
                                  # (mkt/tilt/fac) and separately for S^mp and S^cbi
+  # TWO-STAGE PRE-REGISTRATION (audit item 6, 2026-08-28).
+  # The single-stage design made the whole registration wait on Gate-0 data, which means the
+  # scientific content — hypotheses, estimators, gate algorithms, decision rules — sits
+  # unregistered during the very period when data is being touched. Splitting it registers
+  # everything that is ALREADY determined now, and leaves stage 2 to carry only quantities a
+  # frozen algorithm computes from feasibility inputs. Stage 2 adds NO discretion: if it
+  # ever needs a judgement call, that call belonged in stage 1.
+  two_stage: true
+  stage1:
+    contents: [hypotheses, estimators, gate_algorithms, decision_rules, exposure_and_outcome
+               definitions, cr_definition, g8_outcome_choice_rule, g9_continuity_procedure,
+               w_shrink_selection_algorithm, exit_matrix]
+    timestamp: null                    # set when stage 1 is registered — BEFORE Gate-0 data
+    url: null
+    blocked_on: nothing_data_related   # this is the point: stage 1 needs no data
+  stage2:
+    contents_allowed: [realized_w_shrink, g8_outcome_arm_selected, usable_cluster_counts,
+                       realized_sample_sizes, g7_coverage_shares, gate0_pass_fail_lines]
+    contents_forbidden: [new_hypotheses, changed_estimators, changed_decision_rules,
+                         changed_thresholds, changed_outcome_definitions]
+    every_entry_must_be: mechanically_determined_by_a_stage1_algorithm
+    timestamp: null
+    blocked_on: [REFR-R3-gate0]
 
 beta:
   w_shrink: null            # FROZEN AT GATE-PREREG from inside the G2 feasibility window
   w_shrink_sweep_grid: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  # THE SELECTION ALGORITHM, frozen now (audit item 6). w_shrink itself cannot be set before
+  # the G2 sweep runs, but the MAP from feasibility inputs to w_shrink can be, and freezing
+  # it is what makes the realized value a mechanical stage-2 entry rather than a choice made
+  # with the sweep in hand. Implemented in refraction/pipeline/w_shrink.py::select.
+  w_shrink_selection:
+    algorithm: midpoint_of_longest_feasible_run
+    # A grid point is FEASIBLE iff all four Plan §9 G2 conditions hold at it. The conditions
+    # and their numbers are transcribed from gate0_thresholds; none is introduced here.
+    feasibility_conditions: [sd_L_min, corr_L_convexp_max, n_pre_median_min, se_share_min]
+    # Runs shorter than this are knife-edge and do not qualify — Plan §R3 G2's own words
+    # ("宽度<网格 2 格 → FAIL"), already registered as sweep_window_min_gridpoints.
+    min_run_length: sweep_window_min_gridpoints
+    # Why the midpoint of the LONGEST run: §9 asks for a window that is "non-empty and
+    # non-knife-edge", so the registered point should sit as far from a feasibility boundary
+    # as the grid allows. An endpoint would sit adjacent to failure; the smallest feasible w
+    # would maximise sensitivity to the boundary it abuts.
+    tie_break_run: earliest_start        # equal-length runs -> the one at lower w
+    tie_break_midpoint: lower            # even-length run -> the lower of the two centres
+    on_no_feasible_run: FAIL_G2          # exit matrix, never a relaxed condition
+    on_multiple_runs: use_longest        # reported alongside, never averaged
+    reports: [feasible_mask, runs, chosen_run, w_shrink, distance_to_nearest_infeasible]
   estimation: announcement_regime_pre_only    # lookahead ban applies (assert A4)
   shrink_mode: global              # ADDED 2026-08-19 with R2 module 2. C0-R says the
                                    # shrinkage weight "是全局配置项" — one knob for every
@@ -284,7 +328,8 @@ network_exposure:
     numerator: signed_dollar_imbalance        # signed trades, summed in DOLLARS not shares
     denominator: adv_dollar_pre               # predetermined; see calibration below
     unit: fraction_of_predetermined_average_daily_dollar_volume
-    a1_unit: "per unit |CR/TNA| x |L_tilt^pre| — dimensionless on both sides"
+    a1_unit: "per unit |CR| x |L_tilt^pre|, with CR the standardized share-growth rate of
+              cr_definition — dimensionless on both sides"
     # The denominator MUST be predetermined. A contemporaneous or trailing-window ADV is
     # moved by the very trading being measured: a big AP day raises the denominator and
     # shrinks its own outcome, biasing a1 toward zero, and a post-conversion window is
@@ -295,12 +340,56 @@ network_exposure:
     adv_min_nonzero_days: 60                  # else the stock is dropped, not floored
     winsorize_outcome_pct: [1, 99]            # within date, BOTH arms, fixed here
     log_transform: false                      # imbalance is signed; a log would drop the sign
-  # The exposure's unit, so a1 is not scale-dependent on the fund side either. CR in raw
-  # dollars would make a1 depend on how big the ETF happens to be.
-  first_stage_exposure_normalization:
-    cr_unit: fraction_of_fund_net_assets      # CR_{f,t} / TNA_{f,t-1}, lagged denominator
-    cr_denominator_lagged: true               # same reason as ADV: no same-day feedback
-    l_unit: as_estimated                      # |L_tilt^pre| is already a beta difference
+  #
+  # ===================================================================================
+  # CR — THE ONE DEFINITION (reconciliation audit, 2026-08-28)
+  # ===================================================================================
+  # CORRECTION. Freeze 5 registered `cr_unit: fraction_of_fund_net_assets`, i.e. a DOLLAR
+  # creation over lagged TNA. Plan v2.4 §6.1.2 had already frozen a SHARE-GROWTH RATE. They
+  # are NOT the same variable: creations are struck at NAV, so
+  #     dollar_CR / TNA_{t-1} = (dShares/Shares_{t-1}) x (NAV_t / NAV_{t-1}),
+  # differing by the fund's own daily NAV return — which is precisely the quantity that is
+  # not negligible on the days this design cares about. The TNA form also needs NAV data the
+  # plan's form does not.
+  #
+  # The plan's definition WINS, and the TNA form is DELETED. It also makes the freeze-5
+  # exposure normalization unnecessary: the reason given there ("CR in raw dollars would make
+  # a1 depend on how big the ETF is") does not apply, because §6.1.2's CR is already
+  # unitless AND standardized within fund. Two normalizations were being stacked.
+  #
+  # THE FORMULA, exactly, and no file may use another:
+  #
+  #     CR_{f,t} = (S_{f,t} - S_{f,t-1}) / S_{f,t-1}
+  #
+  #   numerator    : difference of ETF SHARES OUTSTANDING. NO price and NO NAV enters.
+  #   denominator  : S at t-1 — the PRIOR trading day's count, never S_t and never an average.
+  #   sign         : POSITIVE = creation (shares increase) = inflow.
+  #                  NEGATIVE = redemption. The sign is preserved; |CR| is taken later,
+  #                  in the exposure, never here.
+  #   S            : corporate-action ADJUSTED shares outstanding (a split changes S with no
+  #                  creation; see p1/t2_wrds/corpactions.py, the portfolio's one convention).
+  #   t-1          : the previous TRADING day for that fund, not the previous calendar day
+  #                  and not the previous row if a day is missing — a gap makes CR undefined.
+  #   units        : dimensionless growth rate, then standardized within fund (below), so it
+  #                  is already comparable across funds. Do not rescale it again.
+  cr_definition:
+    formula: "CR_{f,t} = (S_{f,t} - S_{f,t-1}) / S_{f,t-1}"
+    source: "Plan v2.4 §6.1.2, frozen"
+    numerator: etf_shares_outstanding_difference
+    numerator_uses_price_or_nav: false
+    denominator: shares_outstanding_prior_trading_day
+    denominator_timing: t_minus_1
+    sign_convention: positive_is_creation_inflow
+    shares_corporate_action_adjusted: true
+    corporate_action_convention: p1/t2_wrds/corpactions.py
+    undefined_on_missing_prior_day: true       # no forward/backward fill; the row is dropped
+    winsorize_pct: [1, 99]                     # §6.1.2 says "the registered percentile";
+                                               # it was never registered — registered here.
+    winsorize_within: fund
+    standardize_within_fund: true              # §6.1.2, after winsorization
+    standardize_sample: non_fomc_calibration_window
+    further_rescaling_forbidden: true          # already unitless AND standardized
+    dollar_or_tna_scaled_forms_forbidden: [cr_over_tna, cr_dollar, delta_shares_times_nav]
   # Size is controlled TWICE and deliberately: normalization removes the units, the CR x
   # size interaction control removes what remains. Neither substitutes for the other.
   first_stage_size_defence: [outcome_normalization, cr_interacted_size_control]
@@ -394,17 +483,41 @@ network_exposure:
   first_stage_outcomes: [licensed, retired_from_headline,
                          INSUFFICIENT_IDENTIFYING_VARIATION]
   first_stage_insufficient_variation_rules:
-    # (a) and (b) are STRUCTURAL — no threshold, identification is absent by construction.
-    min_nonzero_cr_days: 2          # 1 event has no variation ACROSS events to exploit
-    # A NUMERICAL rank test, not an economic threshold: the within-fund-date exposure SD as
-    # a fraction of the raw exposure SD. Perfect collinearity with the fixed effects leaves
-    # floating-point dust (~1e-17), not an exact zero, so the comparison must be relative
-    # and at machine scale. This is not a power line and carries no economic content.
+    # BOTH triggers are NUMERICAL DEGENERACY checks. Neither asserts that passing them makes
+    # the sample adequate — clearing a degeneracy check is not evidence of sufficient power,
+    # and 2 events is not "enough events". Adequacy is read off the reported CI and MDE,
+    # which the G8 report carries in EVERY case (see first_stage_report_always).
+    min_nonzero_cr_days: 2          # with 1 event there is no variation ACROSS events at
+                                    # all; this is arithmetic, not a sufficiency claim
+    # A NUMERICAL rank test: the within-fund-date exposure SD as a fraction of the raw
+    # exposure SD. Perfect collinearity with the fixed effects leaves floating-point dust
+    # (~1e-17), not an exact zero, so the comparison is relative and at machine scale.
     degenerate_exposure_rank_tol: 1.0e-10
-    # (c) is a POWER line, inheriting Plan v2.1 §9's existing MDE convention (mde_sigma_max)
-    # rather than inventing a second one. Reported in SD units of the outcome.
-    mde_sigma_max: 0.5              # same convention as gate0_thresholds.mde_sigma_max
-    power_target: 0.80
+    #
+    # CORRECTION 2026-08-28 (audit item 4). A power line was added here as
+    # `mde_sigma_max: 0.5`, described as inheriting Plan v2.1 §9's existing convention. IT
+    # DOES NOT. §9's line reads "Power simulation on the joint (ConvExp, NetExp, S)
+    # distribution, wave-clustered, separately for gamma pooled, gamma_tilt and gamma_fac —
+    # MDE(gamma) <= 0.5 sigma". That is the HEADLINE gamma: a different outcome (macro
+    # response, not constituent trading), a different sample (the FOMC panel, not the
+    # non-FOMC calibration window), and a different clustering (wave, not fund/adviser).
+    # Transplanting it to an ADV-scaled order-imbalance coefficient would have been a NEW
+    # number wearing an old one's authority. It is withdrawn.
+    mde_sigma_max: null             # NEED_DECISION — a G8-specific floor, or none at all
+    mde_sigma_max_may_not_inherit_from: gate0_thresholds.mde_sigma_max
+    power_target: 0.80              # only parameterizes the REPORTED MDE, not any trigger
+  # While mde_sigma_max is null the power trigger cannot fire: MDE is computed and REPORTED
+  # in every G8 verdict, but it classifies nothing. Reporting a number is not the same act
+  # as adjudicating on it.
+  first_stage_power_trigger_active: false
+  # Item 3: INSUFFICIENT_IDENTIFYING_VARIATION is an EVIDENTIARY CLASSIFICATION, not a
+  # substitute for inference. These are reported for every G8 verdict, all three outcomes.
+  first_stage_report_always: [a1, se_a1, ci_low, ci_high, t_a1, p_one_sided, mde_sigma,
+                              n_obs, n_nonzero_cr_days, share_of_fund_days_nonzero,
+                              concentration_top1_share, concentration_top5_share,
+                              n_effective_fund_clusters, n_effective_adviser_clusters,
+                              n_effective_event_clusters, within_fund_date_exposure_sd]
+  first_stage_ci_level: 0.90        # two-sided reporting interval; the TEST stays one-sided
   insufficient_variation_is_not_mechanism_failure: true
   insufficient_variation_response: >
     Report the census, the effective event count and the MDE. The measure is neither

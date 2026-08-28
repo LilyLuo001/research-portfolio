@@ -16,8 +16,16 @@ Vendor-free: every input arrives as an injected frame or an explicit audit recor
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
+
+_P1 = Path(__file__).resolve().parents[2] / "p1" / "t2_wrds"
+if str(_P1) not in sys.path:
+    sys.path.insert(0, str(_P1))
+import corpactions as ca                                          # noqa: E402
 
 
 class SafeguardViolation(Exception):
@@ -180,19 +188,84 @@ def aligned_outcome(frame: pd.DataFrame, arm: str, config: dict = None) -> np.nd
     return _winsorize_within_date(work, "_y", n["winsorize_outcome_pct"])
 
 
-def normalized_cr(frame: pd.DataFrame, config: dict) -> np.ndarray:
-    """CR as a fraction of LAGGED fund net assets (freeze 5). In raw dollars, a1 would
-    depend on how big the ETF happens to be; the lagged denominator keeps same-day flow out
-    of its own scaling."""
-    ex = config["network_exposure"]["first_stage_exposure_normalization"]
-    if ex["cr_unit"] != "fraction_of_fund_net_assets":
-        raise SafeguardViolation("unregistered CR unit %r" % (ex["cr_unit"],))
-    if "tna_lag" not in frame.columns:
-        raise SafeguardViolation("CR must be scaled by LAGGED fund TNA; 'tna_lag' missing")
-    tna = frame["tna_lag"].astype(float)
-    if (tna <= 0).any():
-        raise SafeguardViolation("non-positive lagged TNA in the CR denominator")
-    return (frame["CR"].astype(float) / tna).to_numpy(float)
+def build_cr(shares: pd.DataFrame, config: dict, convention: dict = None) -> pd.DataFrame:
+    """CR, built from the ONE registered formula (reconciliation audit 2026-08-28).
+
+        CR_{f,t} = (S_{f,t} - S_{f,t-1}) / S_{f,t-1}
+
+    `shares`: fund | date | shares_outstanding [| cfacshr]. S is the ETF's own shares
+    outstanding, corporate-action adjusted; NO price and NO NAV enters the numerator. The
+    denominator is the PRIOR TRADING DAY's count for that fund — a gap leaves CR undefined
+    rather than spanning it, because a two-day difference divided by a one-day base is a
+    different variable that happens to have the same name.
+
+    Positive is a creation (inflow). The sign is preserved here; |CR| is taken later, in the
+    exposure, and never at this step.
+
+    Then winsorized within fund and standardized within fund, per §6.1.2 — which is why the
+    result must not be rescaled again. An earlier draft divided a DOLLAR creation by lagged
+    TNA; that is a different variable (it carries the fund's own NAV return) and is refused
+    by assert_cr_definition().
+    """
+    d = config["network_exposure"]["cr_definition"]
+    need = {"fund", "date", "shares_outstanding"}
+    if not need <= set(shares.columns):
+        raise SafeguardViolation("shares frame missing %s" % sorted(need - set(shares.columns)))
+
+    df = shares.copy()
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values(["fund", "date"])
+
+    if d["shares_corporate_action_adjusted"]:
+        if "cfacshr" not in df.columns:
+            raise SafeguardViolation(
+                "CR needs corporate-action ADJUSTED shares outstanding: a split changes S "
+                "with no creation, and would read as a huge creation. Supply 'cfacshr' and a "
+                "VERIFIED convention (p1/t2_wrds/corpactions.py).")
+        df["_S"] = ca.adjusted_shares(df["shares_outstanding"].astype(float),
+                                      df["cfacshr"].astype(float), convention)
+    else:
+        df["_S"] = df["shares_outstanding"].astype(float)
+
+    g = df.groupby("fund", sort=False)
+    prev_S = g["_S"].shift(1)
+    prev_date = g["date"].shift(1)
+    # "previous TRADING day for that fund": the trading calendar is the fund's own observed
+    # sequence, so a missing row is a gap and the row is dropped, never spanned or filled.
+    df["_gap"] = prev_date.isna() | (g.cumcount() == 0)
+    df["CR"] = (df["_S"] - prev_S) / prev_S
+    df.loc[df["_gap"], "CR"] = np.nan
+    if (prev_S <= 0).any():
+        raise SafeguardViolation("non-positive prior shares outstanding in the CR denominator")
+
+    lo, hi = [q / 100.0 for q in d["winsorize_pct"]]
+    df["CR"] = df.groupby(d["winsorize_within"])["CR"].transform(
+        lambda v: v.clip(v.quantile(lo), v.quantile(hi)))
+    if d["standardize_within_fund"]:
+        # scale only — a within-fund MEAN shift would change what "no creation" means, and
+        # fund x date fixed effects absorb fund-level levels anyway
+        df["CR"] = df.groupby("fund")["CR"].transform(
+            lambda v: v / v.std(ddof=0) if v.std(ddof=0) > 0 else v * 0.0)
+    return df.drop(columns=["_S", "_gap"])
+
+
+def assert_cr_definition(frame: pd.DataFrame, config: dict) -> None:
+    """Refuse a frame carrying a CR built to any other definition.
+
+    The columns named here are the fingerprints of the deleted TNA/dollar forms. Their
+    presence beside a CR column means two definitions are live at once, which is the state
+    this audit exists to end."""
+    d = config["network_exposure"]["cr_definition"]
+    if not d["further_rescaling_forbidden"]:
+        return
+    fingerprints = {"tna_lag", "tna", "cr_dollar", "cr_usd", "dollar_cr", "nav", "nav_lag"}
+    hits = sorted(fingerprints & set(map(str, frame.columns)))
+    if hits and "CR" in frame.columns:
+        raise SafeguardViolation(
+            "columns %s sit beside CR. The registered CR is %s — a share-growth rate that "
+            "carries no price or NAV. A dollar/TNA-scaled CR differs from it by the fund's "
+            "own NAV return and is a different variable. Forbidden forms: %s."
+            % (hits, d["formula"], d["dollar_or_tna_scaled_forms_forbidden"]))
 
 
 # --------------------------------------------------------------------------- freeze 2
@@ -280,6 +353,13 @@ def cr_event_census(panel: pd.DataFrame, config: dict, zero_tol: float = 0.0) ->
 
     n_nz = int(len(nz))
     per_fund = nz.groupby("fund").size().sort_values(ascending=False) if n_nz else pd.Series(dtype=int)
+    # EFFECTIVE clusters: only units that actually carry a nonzero CR contribute to a1, so a
+    # fund sitting in the panel with no creation all year is not an identifying cluster and
+    # must not be counted as one when the inference is written up.
+    eff = {"n_effective_fund_clusters": int(nz["fund"].nunique()) if n_nz else 0,
+           "n_effective_event_clusters": n_nz,
+           "n_effective_adviser_clusters": (int(nz["adviser"].nunique())
+                                            if n_nz and "adviser" in nz.columns else None)}
     return {
         "n_fund_days": int(len(fd)),
         "n_constituent_day_rows": int(len(panel)),
@@ -294,4 +374,5 @@ def cr_event_census(panel: pd.DataFrame, config: dict, zero_tol: float = 0.0) ->
         "by_adviser": _by("adviser"),
         "rows_per_event": (len(panel) / n_nz) if n_nz else np.nan,
         "reporting_only": "no minimum is registered; the census is reported, not passed",
+        **eff,
     }

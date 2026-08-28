@@ -517,11 +517,21 @@ def test_freeze5_the_outcome_unit_is_frozen_and_carries_no_size():
     assert lo < hi < 0, "the ADV window must be entirely pre-conversion"
 
 
-def test_freeze5_the_exposure_unit_is_frozen_too():
-    """Otherwise a1 depends on how big the ETF happens to be."""
-    ex = CONFIG["network_exposure"]["first_stage_exposure_normalization"]
-    assert ex["cr_unit"] == "fraction_of_fund_net_assets"
-    assert ex["cr_denominator_lagged"] is True
+def test_the_cr_definition_is_frozen_once_with_every_element_specified():
+    """Audit item 1. Freeze 5 had registered a TNA-scaled CR while Plan v2.4 §6.1.2 had
+    already frozen a share-growth rate; they differ by the fund's own NAV return. The plan's
+    definition wins and the TNA form is deleted."""
+    ne = CONFIG["network_exposure"]
+    assert "first_stage_exposure_normalization" not in ne, "the deleted TNA block is back"
+    d = ne["cr_definition"]
+    assert d["formula"] == "CR_{f,t} = (S_{f,t} - S_{f,t-1}) / S_{f,t-1}"
+    assert d["numerator"] == "etf_shares_outstanding_difference"
+    assert d["numerator_uses_price_or_nav"] is False        # no NAV, no price
+    assert d["denominator_timing"] == "t_minus_1"
+    assert d["sign_convention"] == "positive_is_creation_inflow"
+    assert d["shares_corporate_action_adjusted"] is True
+    assert d["further_rescaling_forbidden"] is True
+    assert "cr_over_tna" in d["dollar_or_tna_scaled_forms_forbidden"]
 
 
 def test_freeze6_g8_has_three_outcomes_and_low_power_is_not_failure():
@@ -533,11 +543,16 @@ def test_freeze6_g8_has_three_outcomes_and_low_power_is_not_failure():
     assert "never" in resp                      # no re-entry by lowering the bar
 
 
-def test_freeze6_the_power_line_reuses_the_plans_mde_convention_not_a_new_one():
+def test_the_headline_gammas_mde_line_stays_with_the_headline_gamma():
+    """Audit item 4. G0's 0.5-sigma bar is defined in Plan v2.1 §9 for the power simulation
+    on the joint (ConvExp, NetExp, S) distribution, wave-clustered, for gamma pooled /
+    gamma_tilt / gamma_fac. It is not a generic mechanism-test floor and does not travel."""
     rules = CONFIG["network_exposure"]["first_stage_insufficient_variation_rules"]
-    assert rules["mde_sigma_max"] == G0["mde_sigma_max"] == 0.5
-    assert rules["min_nonzero_cr_days"] == 2     # structural: 1 event has no variation
-    # the rank tolerance is numerical, not economic
+    assert G0["mde_sigma_max"] == 0.5                    # unchanged where it belongs
+    assert rules["mde_sigma_max"] is None                # and NOT transplanted
+    assert CONFIG["network_exposure"]["first_stage_power_trigger_active"] is False
+    # both surviving triggers are numerical degeneracy checks, not sufficiency bars
+    assert rules["min_nonzero_cr_days"] == 2
     assert rules["degenerate_exposure_rank_tol"] <= 1e-8
 
 
@@ -552,3 +567,44 @@ def test_the_frozen_spec_carries_a_timestamped_hash_and_is_not_mistaken_for_the_
     # and the real gate is still shut
     assert CONFIG["prereg"]["osf_timestamp"] is None
     assert CONFIG["beta"]["w_shrink"] is None
+
+
+def test_the_g8_report_always_carries_inference_alongside_the_classification():
+    """Audit item 3: INSUFFICIENT_IDENTIFYING_VARIATION is an evidentiary classification,
+    not a replacement for reporting the estimate."""
+    ne = CONFIG["network_exposure"]
+    always = set(ne["first_stage_report_always"])
+    for key in ("a1", "ci_low", "ci_high", "mde_sigma", "n_nonzero_cr_days",
+                "concentration_top1_share", "n_effective_fund_clusters",
+                "n_effective_adviser_clusters", "n_effective_event_clusters"):
+        assert key in always, key
+    assert 0 < ne["first_stage_ci_level"] < 1
+
+
+def test_the_preregistration_is_two_stage_and_stage_one_needs_no_data():
+    """Audit item 6. A single-stage prereg leaves the scientific content unregistered during
+    the exact period when data is being touched."""
+    pr = CONFIG["prereg"]
+    assert pr["two_stage"] is True
+    assert pr["stage1"]["blocked_on"] == "nothing_data_related"
+    for item in ("hypotheses", "estimators", "gate_algorithms", "decision_rules",
+                 "cr_definition", "w_shrink_selection_algorithm"):
+        assert item in pr["stage1"]["contents"], item
+    # stage 2 carries only what an algorithm computes; discretion belongs to stage 1
+    assert pr["stage2"]["every_entry_must_be"] == "mechanically_determined_by_a_stage1_algorithm"
+    for banned in ("new_hypotheses", "changed_estimators", "changed_decision_rules",
+                   "changed_thresholds"):
+        assert banned in pr["stage2"]["contents_forbidden"], banned
+    assert "realized_w_shrink" in pr["stage2"]["contents_allowed"]
+    assert "g8_outcome_arm_selected" in pr["stage2"]["contents_allowed"]
+
+
+def test_the_w_shrink_algorithm_is_frozen_even_though_the_value_is_not():
+    """The minimum item 6 asks for: the MAP from feasibility inputs to w_shrink."""
+    sel = CONFIG["beta"]["w_shrink_selection"]
+    assert CONFIG["beta"]["w_shrink"] is None              # the value still waits for data
+    assert sel["algorithm"] == "midpoint_of_longest_feasible_run"
+    assert sel["on_no_feasible_run"] == "FAIL_G2"          # never a relaxed condition
+    assert sel["tie_break_run"] and sel["tie_break_midpoint"]   # deterministic
+    assert set(sel["feasibility_conditions"]) <= set(G0)       # no new thresholds
+    assert (ROOT / "refraction" / "pipeline" / "w_shrink.py").exists()

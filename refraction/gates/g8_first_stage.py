@@ -255,36 +255,25 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
     # sample cannot be read as evidence of absence — and so the coefficient's own size can
     # never influence which branch is taken.
     ident = identifying_variation(result, census, config)
+    report = _report(result, census, ident, config, outcome_choice, timestamp_audit,
+                     alpha, t, p_one_sided)
+
     if ident["insufficient"]:
-        return {"a1": result["a1"], "t": t, "p_one_sided": None, "alpha": alpha,
-                "licensed": None,
-                "outcome": "INSUFFICIENT_IDENTIFYING_VARIATION",
-                "reasons": ident["reasons"], "diagnostics": ident["diagnostics"],
-                "registered_outcome": outcome_choice["chosen"],
-                "outcome_arm": outcome_choice["arm"],
-                "exposure": result["exposure"],
-                "estimand": result.get("estimand", "baseline"),
-                "n_nonzero_cr_days": census["n_nonzero_cr_days"],
-                "n_funds_with_any_cr": census["n_funds_with_any_cr"],
-                "event_language": timestamp_audit["g8_event_language"],
-                "within_day_ordering_identified":
-                    timestamp_audit["within_day_ordering_identified"],
-                "note": ne["insufficient_variation_response"].strip()}
+        report.update({
+            "licensed": None,
+            "outcome": "INSUFFICIENT_IDENTIFYING_VARIATION",
+            "classification_basis": "numerical degeneracy",
+            "reasons": ident["reasons"], "diagnostics": ident["diagnostics"],
+            "note": ne["insufficient_variation_response"].strip()})
+        return report
 
     licensed = bool(t > 0 and p_one_sided <= float(alpha))
-    return {"a1": result["a1"], "t": t, "p_one_sided": p_one_sided, "alpha": alpha,
-            "licensed": licensed,
-            "outcome": "licensed" if licensed else "retired_from_headline",
-            "mde_sigma": ident["diagnostics"]["mde_sigma"],
-            "registered_outcome": outcome_choice["chosen"],
-            "outcome_arm": outcome_choice["arm"],
-            "exposure": result["exposure"],
-            "estimand": result.get("estimand", "baseline"),
-            "n_nonzero_cr_days": census["n_nonzero_cr_days"],
-            "n_funds_with_any_cr": census["n_funds_with_any_cr"],
-            "event_language": timestamp_audit["g8_event_language"],
-            "within_day_ordering_identified": timestamp_audit["within_day_ordering_identified"],
-            "note": "predictive association, not causal (Plan §6.1.2)"}
+    report.update({
+        "licensed": licensed,
+        "outcome": "licensed" if licensed else "retired_from_headline",
+        "reasons": [], "diagnostics": ident["diagnostics"],
+        "note": "predictive association, not causal (Plan §6.1.2)"})
+    return report
 
 
 def identifying_variation(result: dict, census: dict, config: dict) -> dict:
@@ -328,22 +317,32 @@ def identifying_variation(result: dict, census: dict, config: dict) -> dict:
             "fund x date fixed effects it is collinear with the fixed effects and there is "
             "nothing left for a1 to be identified off" % rank_ratio)
 
-    # one-sided z at the registered alpha, plus the power target
+    # MDE is ALWAYS computed and ALWAYS reported (audit item 3). Whether it CLASSIFIES
+    # anything is a separate question, and today the answer is no: the 0.5-sigma line was
+    # WITHDRAWN in the 2026-08-28 audit, because Plan v2.1 §9 defined it for the HEADLINE
+    # gamma — a different outcome, sample and clustering. Reporting a number is not the same
+    # act as adjudicating on it.
     z_a = _z_one_sided(float(alpha)) if alpha is not None else None
     z_b = _z_one_sided(1.0 - float(rules["power_target"]))
     se, sd_y = result.get("se_a1"), result.get("sd_outcome")
     mde_sigma = None
     if z_a is not None and se and sd_y:
         mde_sigma = float((z_a + z_b) * se / sd_y)      # smallest a1 detectable, in SDs of y
-        if mde_sigma > float(rules["mde_sigma_max"]):
-            reasons.append(
-                "MDE is %.3f SD of the outcome at alpha=%s and power=%s, above the %.2f SD "
-                "line Plan v2.1 §9 already uses — the test could not have detected an effect "
-                "of the size the paper would call economically meaningful"
-                % (mde_sigma, alpha, rules["power_target"], rules["mde_sigma_max"]))
+    floor = rules.get("mde_sigma_max")
+    power_active = bool(config["network_exposure"].get("first_stage_power_trigger_active"))
+    if power_active and floor is not None and mde_sigma is not None and mde_sigma > float(floor):
+        reasons.append(
+            "MDE is %.3f SD of the outcome at alpha=%s and power=%s, above the registered G8 "
+            "floor of %.2f SD" % (mde_sigma, alpha, rules["power_target"], floor))
 
     return {
+        # BOTH triggers are numerical DEGENERACY checks. Clearing them is not a finding that
+        # the sample is adequate, and 2 events is not "enough events" — adequacy is read off
+        # the CI and MDE, which the report carries in every case.
         "insufficient": bool(reasons),
+        "degeneracy_only": True,
+        "power_trigger_active": power_active,
+        "power_floor": floor,
         "reasons": reasons,
         "diagnostics": {"n_nonzero_cr_days": n_events,
                         "within_fund_date_exposure_sd": sd_x,
@@ -351,6 +350,48 @@ def identifying_variation(result: dict, census: dict, config: dict) -> dict:
                         "se_a1": se, "sd_outcome": sd_y, "mde_sigma": mde_sigma,
                         "power_target": rules["power_target"],
                         "rows_per_event": census.get("rows_per_event")},
+    }
+
+
+def _report(result, census, ident, config, outcome_choice, timestamp_audit, alpha,
+            t, p_one_sided):
+    """The G8 report line, IDENTICAL for all three outcomes (audit item 3).
+
+    INSUFFICIENT_IDENTIFYING_VARIATION is an evidentiary CLASSIFICATION, not a replacement
+    for inference: the coefficient, its interval, the MDE, the event counts, the
+    concentration and the effective cluster counts are reported whichever branch is taken.
+    A reader must be able to see how sparse the design was AND what it estimated.
+    """
+    from math import sqrt
+    level = float(config["network_exposure"].get("first_stage_ci_level", 0.90))
+    z = _z_one_sided((1.0 - level) / 2.0)            # two-sided reporting interval
+    se = result.get("se_a1")
+    a1 = result["a1"]
+    return {
+        "a1": a1, "se_a1": se, "t_a1": t, "p_one_sided": p_one_sided,
+        "ci_level": level,
+        "ci_low": (a1 - z * se) if se else None,
+        "ci_high": (a1 + z * se) if se else None,
+        "mde_sigma": ident["diagnostics"]["mde_sigma"],
+        "power_target": ident["diagnostics"]["power_target"],
+        "power_trigger_active": ident["power_trigger_active"],
+        "alpha": alpha,
+        "n_obs": result.get("n"),
+        "n_nonzero_cr_days": census["n_nonzero_cr_days"],
+        "share_of_fund_days_nonzero": census.get("share_of_fund_days_nonzero"),
+        "concentration_top1_share": census.get("concentration_top1_share"),
+        "concentration_top5_share": census.get("concentration_top5_share"),
+        "n_effective_fund_clusters": census.get("n_effective_fund_clusters"),
+        "n_effective_adviser_clusters": census.get("n_effective_adviser_clusters"),
+        "n_effective_event_clusters": census.get("n_effective_event_clusters"),
+        "n_funds_with_any_cr": census["n_funds_with_any_cr"],
+        "within_fund_date_exposure_sd": result.get("within_fund_date_exposure_sd"),
+        "registered_outcome": outcome_choice["chosen"],
+        "outcome_arm": outcome_choice["arm"],
+        "exposure": result["exposure"],
+        "estimand": result.get("estimand", "baseline"),
+        "event_language": timestamp_audit["g8_event_language"],
+        "within_day_ordering_identified": timestamp_audit["within_day_ordering_identified"],
     }
 
 

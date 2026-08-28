@@ -1,6 +1,6 @@
 {
   "output": "refraction/frozen_config.yaml",
-  "output_sha256": "3259cee599058085ff05d474ffc7c2e544cf197978164a56c5e668eab2f26ac2",
+  "output_sha256": "79d5513b1ccd33c081c587d66012d942804591fd24381e367a6f8c675e3310d6",
   "inputs": [
     {
       "path": "docs/MacroEvent_Chapter_Plan_v2_4.md",
@@ -23,11 +23,11 @@
       "rows": null
     }
   ],
-  "code_version": "cbe1e20062cda74fdabdd1d846a6808d5e5e1813",
-  "timestamp": "2026-08-28T08:56:53.741048+00:00",
+  "code_version": "2b91e1346a7c1f7db023dce3b2654784d60e646d",
+  "timestamp": "2026-08-28T09:09:57.676457+00:00",
   "registered_spec": "SPEC-MAIN-v2.4",
-  "freeze_scope": "implementation freezes 1-6 (2026-08-19 clarifications, 2026-08-28 freezes)",
-  "what_this_is": "a repo-local content hash + UTC timestamp of the frozen specification, so the claim that it was frozen BEFORE outcomes were opened is checkable.",
-  "what_this_is_NOT": "the OSF pre-registration. That is REFR-GATE-OSF (human_gate: true), which depends on REFR-R4-prereg -> REFR-GATE-PREREG, both of which require the measured Gate-0 report and beta.w_shrink frozen from inside the G2 feasibility window. Neither exists yet.",
+  "freeze_scope": "implementation freezes 1-6 plus the 2026-08-28 consistency audit",
+  "what_this_is": "repo-local content hash + UTC timestamp of the frozen specification.",
+  "what_this_is_NOT": "the OSF pre-registration. Stage 1 (REFR-GATE-OSF, human_gate: true) is now unblocked in principle \u2014 prereg.two_stage is registered and stage1.blocked_on is nothing_data_related \u2014 but submission is a human act.",
   "prereg_guard_status": "BLOCKED (prereg.osf_timestamp is null) \u2014 correct and expected"
 }

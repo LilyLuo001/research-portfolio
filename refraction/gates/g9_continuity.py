@@ -81,6 +81,8 @@ def check_as_of_dates(pre: pd.DataFrame, post: pd.DataFrame,
         # is about the wrapper and not about months of unrelated drift.
         pre_as_of = a[a < eff].max() if len(a.dropna()) else pd.NaT
         post_as_of = b[b >= eff].min() if len(b.dropna()) else pd.NaT
+        # the strictly-after alternative, for the item-5 sensitivity
+        strict_post = b[b > eff].min() if len(b.dropna()) else pd.NaT
         rows.append({
             "wave": wave, "effective_date": eff,
             "pre_as_of": pre_as_of, "post_as_of": post_as_of,
@@ -91,12 +93,45 @@ def check_as_of_dates(pre: pd.DataFrame, post: pd.DataFrame,
             "pre_side": ca.classify_as_of(pre_as_of, eff),
             "post_side": ca.classify_as_of(post_as_of, eff),
             "as_of_field": ca.HOLDINGS_AS_OF_FIELD,
+            # Audit item 5. A post snapshot dated EXACTLY on the effective date is the
+            # ambiguous case: whether it reflects the converted portfolio depends on the
+            # fund's own reporting convention, which the as-of date does not reveal. It is
+            # counted as post (P1's rule) and FLAGGED, so a strictly-after sensitivity can
+            # be run on the waves it affects.
+            "post_as_of_equals_effective": bool(pd.notna(post_as_of) and post_as_of == eff),
+            "post_as_of_strictly_after": bool(pd.notna(strict_post)),
+            "post_as_of_strict": strict_post,
+            "post_gap_days_strict": ((strict_post - eff).days
+                                     if pd.notna(strict_post) else np.nan),
         })
     out = pd.DataFrame(rows)
     # The confirmation the design rests on: pre holdings are held BEFORE the conversion and
     # first-post holdings AFTER it. A wave that fails this is reported, never silently used.
     out["as_of_ok"] = (out["pre_side"] == "pre") & (out["post_side"] == "post")
     return out
+
+
+def effective_date_sensitivity(as_of: pd.DataFrame) -> dict:
+    """Audit item 5: which waves rest on a post snapshot dated ON the conversion date, and
+    can the analysis be re-run without them?
+
+    Reported whether or not any wave is affected — a sensitivity that is only mentioned when
+    it bites is not a sensitivity, it is an excuse.
+    """
+    flagged = as_of.loc[as_of["post_as_of_equals_effective"]]
+    recoverable = flagged.loc[flagged["post_as_of_strictly_after"]]
+    return {
+        "n_waves": int(len(as_of)),
+        "n_waves_post_as_of_equals_effective": int(len(flagged)),
+        "waves_affected": sorted(flagged["wave"].tolist()),
+        "waves_with_a_strictly_after_alternative": sorted(recoverable["wave"].tolist()),
+        "waves_lost_under_strictly_after": sorted(
+            flagged.loc[~flagged["post_as_of_strictly_after"], "wave"].tolist()),
+        "sensitivity_required": bool(len(flagged)),
+        "how": ("re-run continuity using post_as_of_strict for the affected waves and report "
+                "both columns; waves with no strictly-after snapshot drop out of the "
+                "sensitivity and that loss is reported, not absorbed"),
+    }
 
 
 def share_continuity(pre: pd.DataFrame, post: pd.DataFrame,
@@ -234,6 +269,8 @@ def summarize(cont: pd.DataFrame, config: dict, shares: pd.DataFrame = None,
         "as_of_reported": as_of is not None,
         "max_pre_gap_days": (float(as_of["pre_gap_days"].max())
                              if as_of is not None and len(as_of) else None),
+        "effective_date_sensitivity": (None if as_of is None
+                                       else effective_date_sensitivity(as_of)),
         "waves_failing_as_of_placement": (
             [] if as_of is None else sorted(as_of.loc[~as_of["as_of_ok"], "wave"].tolist())),
         "waves_with_pre_as_of_not_before_effective": (

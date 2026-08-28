@@ -129,6 +129,16 @@ def make_trading_panel(n_stocks=40, n_days=120, a1=0.0, seed=0, arm="fallback"):
     return df
 
 
+def _cfg_no_std():
+    """The registered formula with standardization switched off, so the raw growth rate is
+    visible. Standardization is tested separately."""
+    import copy
+    cfg = copy.deepcopy(CONFIG)
+    cfg["network_exposure"]["cr_definition"]["standardize_within_fund"] = False
+    cfg["network_exposure"]["cr_definition"]["winsorize_pct"] = [0, 100]
+    return cfg
+
+
 GOOD_G7 = {"signed_trade_classification_available_share": 0.97,
            "intraday_coverage_share_of_volume_sample": 0.99,
            "cross_algorithm_daily_oib_sign_agreement": 0.98}
@@ -530,8 +540,10 @@ def test_a_sample_with_no_creation_or_redemption_is_uninformative_not_a_failure(
                    timestamp_audit=audit, census=dead)
     assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
     assert v["licensed"] is None                 # neither licensed NOR retired
-    assert v["p_one_sided"] is None              # no p-value is reported off a dead sample
     assert any("nonzero creation/redemption" in r_ for r_ in v["reasons"])
+    # audit item 3: the classification does NOT replace inference
+    assert v["p_one_sided"] is not None and v["ci_low"] is not None
+    assert v["mde_sigma"] is not None
 
 
 def test_the_licensed_verdict_carries_its_wording_and_its_event_count():
@@ -606,10 +618,15 @@ def test_a_g9_summary_names_which_piece_is_missing():
 # freeze 5 — the outcome's unit                                                #
 # --------------------------------------------------------------------------- #
 
-def liquidity_panel(n=200, seed=0, size_spread=1000.0):
+def liquidity_panel(n=200, seed=0, size_spread=1000.0, noise=0.0, frac=0.02):
     """A panel where |L| is CORRELATED WITH SIZE and there is NO arbitrage channel at all.
-    Raw dollar imbalance is proportional to size, so a raw outcome manufactures a1 > 0 out
-    of the size distribution alone. This is the failure freeze 5 exists to prevent."""
+    Each stock's imbalance is a constant fraction of its OWN liquidity, so the true
+    normalized relation is exactly zero. Raw dollar imbalance is proportional to size, so a
+    raw outcome manufactures a1 > 0 from the size distribution alone.
+
+    `noise=0` gives a DETERMINISTIC fixture, where "the relation was removed" means the
+    recovered coefficient is zero to numerical precision — not merely insignificant.
+    """
     rng = np.random.default_rng(seed)
     rows = []
     for i in range(n):
@@ -617,35 +634,81 @@ def liquidity_panel(n=200, seed=0, size_spread=1000.0):
         absl = 0.1 + 0.8 * (size / (1.0 + size_spread))   # big names sit closer to basket
         for t in range(6):
             cr = float(rng.normal(0, 1))
-            # imbalance is a CONSTANT FRACTION of the stock's own liquidity: no connectivity
-            frac = 0.02 + rng.normal(0, .002)
+            f = frac + (rng.normal(0, noise) if noise else 0.0)
             rows.append({"permno": 1000 + i, "fund": "F1",
                          "date": pd.Timestamp("2023-01-02") + pd.Timedelta(days=t),
                          "CR": cr, "absL": absl, "adv_dollar_pre": size,
-                         "signed_dollar_imbalance": np.sign(cr) * frac * size,
-                         "dollar_volume": size * (1 + frac),
-                         "tna_lag": 1e9})
+                         "signed_dollar_imbalance": np.sign(cr) * f * size,
+                         "dollar_volume": size * (1 + f)})
     return pd.DataFrame(rows)
 
 
-def test_freeze5_a_raw_dollar_outcome_manufactures_the_result_from_size_alone():
-    """Documents WHY the unit is frozen: with no arbitrage channel in the data, the RAW
-    outcome still delivers a large positive a1, purely because |L| tracks size."""
-    df = liquidity_panel(seed=31)
-    df["y_raw"] = np.sign(df["CR"]) * df["signed_dollar_imbalance"]
-    raw = g8.pooled_interaction(df, controls=(), y_col="y_raw", exposure="abs_CR_x_absL",
-                                outcome_class="trading_connectivity")
-    assert raw["t_a1"] > 5, "the size artefact should be glaring"
-
-
-def test_freeze5_the_registered_normalized_outcome_removes_the_size_artefact():
-    """Same data, same exposure, registered unit: scaling by predetermined ADV$ leaves the
-    imbalance as a fraction of the stock's own liquidity, which carries no size."""
-    df = liquidity_panel(seed=31)
-    df["y"] = pre.aligned_outcome(df, "preferred", CONFIG)
-    norm = g8.pooled_interaction(df, controls=(), y_col="y", exposure="abs_CR_x_absL",
+def _fit(df, ycol):
+    return g8.pooled_interaction(df, controls=(), y_col=ycol, exposure="abs_CR_x_absL",
                                  outcome_class="trading_connectivity")
-    assert abs(norm["t_a1"]) < 3, "the normalized outcome still carries the size artefact"
+
+
+def test_freeze5_a_raw_dollar_outcome_manufactures_the_result_from_size_alone():
+    """Documents WHY the unit is frozen. DETERMINISTIC fixture: the true normalized relation
+    is exactly zero, yet the RAW outcome recovers a large POSITIVE coefficient — the size
+    artefact, in the coefficient itself and not merely in a t-statistic."""
+    df = liquidity_panel(seed=31, noise=0.0)
+    df["y_raw"] = np.sign(df["CR"]) * df["signed_dollar_imbalance"]
+    raw = _fit(df, "y_raw")
+    # the artefact is a real effect on the raw scale: a1 is a sizeable positive number
+    assert raw["a1"] > 0.5 * df["adv_dollar_pre"].mean() * 0.02 * 0.1, raw["a1"]
+    assert raw["a1"] / raw["within_fund_date_exposure_sd"] > 1.0
+
+
+def test_freeze5_the_registered_unit_recovers_exactly_zero_on_a_deterministic_fixture():
+    """|t| < 3 would only say "not significant". With no noise in the fixture the planted
+    relation is exactly zero, so the recovered coefficient must be zero to numerical
+    precision — a far stronger statement, and the one actually being claimed."""
+    df = liquidity_panel(seed=31, noise=0.0)
+    df["y"] = pre.aligned_outcome(df, "preferred", CONFIG)
+    norm = _fit(df, "y")
+    # y is identically 0.02 for every row, so the within-fund-date demeaned outcome is 0
+    assert abs(norm["a1"]) < 1e-9, norm["a1"]
+    assert norm["sd_outcome"] < 1e-9
+
+
+def test_freeze5_the_registered_unit_holds_its_nominal_size_under_simulation():
+    """The stochastic counterpart: repeat the null design and check the REJECTION RATE
+    against the nominal level, rather than eyeballing one t-statistic against an arbitrary
+    cutoff. Under a true null a correctly-sized one-sided 5% test rejects ~5% of the time.
+
+    The comparison that matters is against the raw outcome on the SAME draws, which rejects
+    essentially always — the artefact is not subtle, and a size-controlled test is exactly
+    what removing it looks like."""
+    from math import erf, sqrt
+    reps, alpha = 200, 0.05
+    rej_norm = rej_raw = 0
+    for k in range(reps):
+        df = liquidity_panel(n=40, seed=1000 + k, noise=0.004)
+        df["y"] = pre.aligned_outcome(df, "preferred", CONFIG)
+        df["y_raw"] = np.sign(df["CR"]) * df["signed_dollar_imbalance"]
+        for col, hit in (("y", "norm"), ("y_raw", "raw")):
+            t = _fit(df, col)["t_a1"]
+            if 0.5 * (1 - erf(t / sqrt(2))) <= alpha:      # one-sided, H1: a1 > 0
+                if hit == "norm":
+                    rej_norm += 1
+                else:
+                    rej_raw += 1
+    rate = rej_norm / reps
+    # 99% binomial band for 200 draws at p=0.05 is roughly [0.01, 0.11]
+    assert 0.01 <= rate <= 0.11, "normalized outcome size = %.3f (expected ~%.2f)" % (rate, alpha)
+    assert rej_raw / reps > 0.90, "the raw outcome should reject almost always"
+
+
+def test_freeze5_the_registered_unit_still_detects_a_real_relation():
+    """Size control is worthless if it also removes true signal. Plant a genuine
+    connectivity effect in the NORMALIZED outcome and check it is recovered."""
+    df = liquidity_panel(n=60, seed=77, noise=0.004)
+    df["y"] = pre.aligned_outcome(df, "preferred", CONFIG)
+    df["y"] = df["y"] + 0.05 * np.abs(df["CR"]) * df["absL"]
+    fit = _fit(df, "y")
+    assert fit["a1"] == pytest.approx(0.05, abs=0.02)
+    assert fit["t_a1"] > 3
 
 
 def test_freeze5_the_outcome_refuses_to_build_without_the_predetermined_denominator():
@@ -700,15 +763,111 @@ def test_freeze5_a_stock_with_too_few_pre_days_is_marked_unusable():
     assert bool(adv.loc[0, "usable"]) is False
 
 
-def test_freeze5_cr_is_scaled_by_lagged_fund_assets():
-    """In raw dollars a1 would depend on how big the ETF happens to be; a same-day
-    denominator would let the flow scale itself."""
-    df = liquidity_panel(seed=34)
-    x = pre.normalized_cr(df, CONFIG)
-    assert np.allclose(x, df["CR"].to_numpy(float) / 1e9)
+# --------------------------------------------------------------------------- #
+# CR — the one definition (reconciliation audit)                               #
+# --------------------------------------------------------------------------- #
+
+def shares_frame(counts, fund="F1", start="2023-01-02", cfac=None, freq="D"):
+    return pd.DataFrame({"fund": fund,
+                         "date": pd.date_range(start, periods=len(counts), freq=freq),
+                         "shares_outstanding": [float(c) for c in counts],
+                         "cfacshr": cfac or [1.0] * len(counts)})
+
+
+def test_cr_is_the_share_growth_rate_the_plan_froze():
+    """CR_{f,t} = (S_t - S_{t-1}) / S_{t-1}: no price, no NAV, denominator at t-1."""
+    raw = pre.build_cr(shares_frame([100, 110, 99]), _cfg_no_std(), CONV)
+    assert np.isnan(raw.loc[0, "CR"])                       # no prior day
+    assert raw.loc[1, "CR"] == pytest.approx(0.10)          # +10% creation
+    assert raw.loc[2, "CR"] == pytest.approx(-0.10)         # -10% redemption
+
+
+def test_cr_sign_is_positive_for_a_creation():
+    cr = pre.build_cr(shares_frame([100, 120]), _cfg_no_std(), CONV)["CR"]
+    assert cr.iloc[1] > 0
+
+
+def test_cr_denominator_is_the_prior_day_not_the_current_one():
+    """100 -> 200 is +100% on a t-1 base and +50% on a t base. The distinction is the whole
+    content of 'denominator timing'."""
+    cr = pre.build_cr(shares_frame([100, 200]), _cfg_no_std(), CONV)["CR"]
+    assert cr.iloc[1] == pytest.approx(1.0)
+    assert cr.iloc[1] != pytest.approx(0.5)
+
+
+def test_cr_uses_no_price_or_nav_anywhere():
+    """The deleted TNA form differs from this one by the fund's own NAV return. Doubling
+    every price must leave CR untouched."""
+    import inspect
+    src = inspect.getsource(pre.build_cr)
+    for token in ("nav", "price", "tna"):
+        assert token not in src.lower().split("\"\"\"")[2].lower(), token
+    base = pre.build_cr(shares_frame([100, 110]), _cfg_no_std(), CONV)["CR"].iloc[1]
+    assert base == pytest.approx(0.10)
+
+
+def test_cr_is_undefined_across_a_missing_trading_day():
+    """A two-day share difference over a one-day base is a different variable with the same
+    name, so a gap leaves CR undefined rather than spanning it."""
+    f = shares_frame([100, 110, 120])
+    f = f.drop(index=1).reset_index(drop=True)     # the middle day is missing
+    cr = pre.build_cr(f, _cfg_no_std(), CONV)["CR"]
+    assert np.isnan(cr.iloc[0])
+    # the surviving row still differences against its own previous OBSERVED day, and the
+    # config records that convention explicitly
+    assert CONFIG["network_exposure"]["cr_definition"]["undefined_on_missing_prior_day"] is True
+
+
+def test_cr_requires_corporate_action_adjusted_shares():
+    """A 2-for-1 split doubles S with no creation; unadjusted it reads as a 100% creation."""
     with pytest.raises(pre.SafeguardViolation) as e:
-        pre.normalized_cr(df.drop(columns=["tna_lag"]), CONFIG)
-    assert "LAGGED fund TNA" in str(e.value)
+        pre.build_cr(shares_frame([100, 200]).drop(columns=["cfacshr"]), _cfg_no_std(), CONV)
+    assert "no creation" in str(e.value)
+    split = pre.build_cr(shares_frame([100, 200], cfac=[1.0, 2.0]), _cfg_no_std(), CONV)
+    assert split["CR"].iloc[1] == pytest.approx(0.0)
+
+
+def test_cr_is_standardized_within_fund_and_not_rescaled_again():
+    d = CONFIG["network_exposure"]["cr_definition"]
+    assert d["standardize_within_fund"] is True
+    assert d["further_rescaling_forbidden"] is True
+    out = pre.build_cr(shares_frame([100, 110, 99, 105, 100]), CONFIG, CONV)
+    assert out["CR"].dropna().std(ddof=0) == pytest.approx(1.0)
+
+
+def test_a_tna_or_dollar_scaled_cr_is_refused():
+    """The deleted form must not be able to re-enter through a side door."""
+    df = pd.DataFrame({"CR": [0.1, -0.1], "tna_lag": [1e9, 1e9]})
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.assert_cr_definition(df, CONFIG)
+    assert "different variable" in str(e.value)
+    pre.assert_cr_definition(pd.DataFrame({"CR": [0.1], "absL": [0.5]}), CONFIG)
+
+
+def test_no_file_carries_a_second_cr_definition():
+    """The audit's actual claim: one formula, everywhere. Scans config, code, memo and
+    tests for the deleted TNA/dollar-scaled forms."""
+    import re
+    banned = re.compile(r"CR\s*/\s*TNA|cr_over_tna|fraction_of_fund_net_assets"
+                        r"|dollar_CR\s*/|delta_shares_times_nav")
+    roots = [ROOT / "refraction", ROOT / "docs" / "MacroEvent_Chapter_Plan_v2_4.md"]
+    offenders = []
+    for root in roots:
+        files = sorted(root.rglob("*")) if root.is_dir() else [root]
+        for f in files:
+            if f.suffix not in (".py", ".yaml", ".md") or not f.is_file():
+                continue
+            if f.name == Path(__file__).name:      # the scanner names them to ban them
+                continue
+            for i, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
+                stripped = line.strip()
+                # prose ABOUT the deleted form is the audit trail; only live settings count
+                if stripped.startswith("#") or stripped.startswith("*"):
+                    continue
+                if banned.search(line) and "forbidden" not in line.lower() \
+                        and "may_not" not in line and "deleted" not in line.lower():
+                    offenders.append("%s:%d: %s" % (f.relative_to(ROOT), i, stripped))
+    assert not offenders, "a second CR definition is live:\n" + "\n".join(offenders)
 
 
 def test_freeze5_size_is_defended_twice_and_neither_substitutes():
@@ -752,15 +911,23 @@ def test_freeze6_a_degenerate_exposure_is_uninformative():
     assert any("within-fund-date variation" in x for x in v["reasons"])
 
 
-def test_freeze6_the_power_line_inherits_the_plans_existing_mde_convention():
-    rules = CONFIG["network_exposure"]["first_stage_insufficient_variation_rules"]
-    assert rules["mde_sigma_max"] == CONFIG["gate0_thresholds"]["mde_sigma_max"]
-    assert rules["power_target"] == 0.80
-    assert CONFIG["network_exposure"]["insufficient_variation_is_not_mechanism_failure"] is True
+def test_freeze6_the_withdrawn_mde_line_is_not_inherited_from_the_headline_gamma():
+    """Audit item 4. Plan v2.1 §9's 0.5-sigma line is the HEADLINE gamma power bar — a
+    different outcome, sample and clustering. It may not be transplanted to a
+    constituent-trading coefficient, and the code must not fire on it."""
+    ne = CONFIG["network_exposure"]
+    rules = ne["first_stage_insufficient_variation_rules"]
+    assert rules["mde_sigma_max"] is None
+    assert rules["mde_sigma_max"] != CONFIG["gate0_thresholds"]["mde_sigma_max"]
+    assert rules["mde_sigma_max_may_not_inherit_from"] == "gate0_thresholds.mde_sigma_max"
+    assert ne["first_stage_power_trigger_active"] is False
+    assert ne["insufficient_variation_is_not_mechanism_failure"] is True
 
 
-def test_freeze6_a_noisy_sample_is_uninformative_rather_than_a_rejection():
-    """A tiny, noisy design cannot reject the mechanism; it can only fail to see it."""
+def test_freeze6_a_noisy_sample_reports_a_large_mde_without_being_reclassified():
+    """Audit items 3 and 4. A tiny, noisy design has a huge MDE — and that is REPORTED, not
+    used to reclassify: no G8-specific power floor is registered, so the power trigger is
+    inert. The reader is given the MDE and the CI and draws the conclusion."""
     cfg = audited_config()
     panel = make_trading_panel(n_stocks=6, n_days=4, a1=0.0, seed=42)
     panel["y"] = panel["y"] + np.random.default_rng(1).normal(0, 5, len(panel))
@@ -769,8 +936,55 @@ def test_freeze6_a_noisy_sample_is_uninformative_rather_than_a_rejection():
     choice, audit, census = preflight(cfg, panel)
     v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
                    timestamp_audit=audit, census=census)
-    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
-    assert any("MDE" in x for x in v["reasons"])
+    assert v["power_trigger_active"] is False
+    assert v["mde_sigma"] is not None and v["mde_sigma"] > 0.5
+    assert not any("MDE" in x for x in v["reasons"])
+    assert v["outcome"] in ("licensed", "retired_from_headline")
+
+
+def test_freeze6_the_classification_never_replaces_inference():
+    """Audit item 3: every G8 verdict carries the coefficient, its interval, the MDE, the
+    event counts, the concentration and the effective cluster counts — INSUFFICIENT included."""
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=45)
+    panel["adviser"] = "ADV-A"
+    one_day = sorted(panel["date"].unique())[0]
+    panel["CR"] = np.where(panel["date"] == one_day, panel["CR"], 0.0)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    choice, audit, census = preflight(cfg, panel)
+    insufficient = g8.verdict(r, cfg, outcome_class="trading_connectivity",
+                              outcome_choice=choice, timestamp_audit=audit, census=census)
+    assert insufficient["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert insufficient["classification_basis"] == "numerical degeneracy"
+    licensed = _adjudicate(0.30, 46)
+    for key in CONFIG["network_exposure"]["first_stage_report_always"]:
+        for v in (insufficient, licensed):
+            assert key in v, "%s missing from a %s verdict" % (key, v["outcome"])
+    assert insufficient["ci_low"] < insufficient["a1"] < insufficient["ci_high"]
+    assert insufficient["n_effective_fund_clusters"] == 1
+    assert insufficient["n_effective_adviser_clusters"] == 1
+    assert insufficient["n_effective_event_clusters"] == 1
+
+
+def test_two_events_is_not_a_sufficiency_claim():
+    """The degeneracy check is arithmetic, not a bar that certifies adequacy. A sample that
+    merely CLEARS it is still reported with its CI and MDE, and is not declared adequate."""
+    rules = CONFIG["network_exposure"]["first_stage_insufficient_variation_rules"]
+    assert rules["min_nonzero_cr_days"] == 2
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=47)
+    live = set(sorted(panel["date"].unique())[:2])       # exactly 2 events: clears the check
+    panel["CR"] = np.where(panel["date"].isin(live), panel["CR"], 0.0)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    choice, audit, census = preflight(cfg, panel)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert v["outcome"] != "INSUFFICIENT_IDENTIFYING_VARIATION"   # cleared the arithmetic
+    assert v["n_effective_event_clusters"] == 2                   # and the report says so
+    assert v["mde_sigma"] is not None and v["ci_low"] is not None
+    assert "adequate" not in str(v).lower()
 
 
 def test_freeze6_a_well_powered_null_still_retires_the_measure():
@@ -857,3 +1071,48 @@ def test_g9_flags_a_wave_whose_snapshots_sit_on_the_wrong_side():
     w = pd.DataFrame([{"wave": "W1", "permno": 1, "weight": 1.0}])
     s = g9.summarize(g9.wave_continuity(w, w.copy()), CONFIG, as_of=a, convention=CONV)
     assert s["waves_failing_as_of_placement"] == ["W1"]
+
+
+def test_a_post_snapshot_dated_on_the_conversion_day_is_flagged(): 
+    """Audit item 5: whether a snapshot dated exactly on the effective date reflects the
+    converted portfolio depends on the fund's reporting convention, which the as-of date
+    does not reveal. It counts as post (P1's rule) and is flagged."""
+    a = g9.check_as_of_dates(shares("W1", [(1, 10)], as_of="2023-01-31"),
+                             shares("W1", [(1, 10)], as_of="2023-02-15"),
+                             {"W1": "2023-02-15"})
+    assert bool(a.loc[0, "post_as_of_equals_effective"]) is True
+    assert a.loc[0, "post_side"] == "post"          # still post, per the P1 rule
+    assert bool(a.loc[0, "as_of_ok"]) is True       # not an error — an ambiguity
+
+
+def test_the_strictly_after_sensitivity_is_available_where_a_later_snapshot_exists():
+    post = pd.concat([shares("W1", [(1, 10)], as_of="2023-02-15"),
+                      shares("W1", [(1, 10)], as_of="2023-03-31")])
+    a = g9.check_as_of_dates(shares("W1", [(1, 10)], as_of="2023-01-31"), post,
+                             {"W1": "2023-02-15"})
+    assert a.loc[0, "post_as_of"] == pd.Timestamp("2023-02-15")        # the headline choice
+    assert a.loc[0, "post_as_of_strict"] == pd.Timestamp("2023-03-31")  # the sensitivity
+    s = g9.effective_date_sensitivity(a)
+    assert s["waves_affected"] == ["W1"]
+    assert s["waves_with_a_strictly_after_alternative"] == ["W1"]
+    assert s["waves_lost_under_strictly_after"] == []
+
+
+def test_a_wave_with_no_later_snapshot_is_reported_as_lost_not_absorbed():
+    a = g9.check_as_of_dates(shares("W1", [(1, 10)], as_of="2023-01-31"),
+                             shares("W1", [(1, 10)], as_of="2023-02-15"),
+                             {"W1": "2023-02-15"})
+    s = g9.effective_date_sensitivity(a)
+    assert s["waves_lost_under_strictly_after"] == ["W1"]
+    assert s["sensitivity_required"] is True
+
+
+def test_the_sensitivity_is_reported_even_when_nothing_is_flagged():
+    """A sensitivity mentioned only when it bites is not a sensitivity."""
+    a = g9.check_as_of_dates(shares("W1", [(1, 10)], as_of="2023-01-31"),
+                             shares("W1", [(1, 10)], as_of="2023-03-31"),
+                             {"W1": "2023-02-15"})
+    w = pd.DataFrame([{"wave": "W1", "permno": 1, "weight": 1.0}])
+    s = g9.summarize(g9.wave_continuity(w, w.copy()), CONFIG, as_of=a, convention=CONV)
+    assert s["effective_date_sensitivity"]["sensitivity_required"] is False
+    assert s["effective_date_sensitivity"]["n_waves"] == 1
