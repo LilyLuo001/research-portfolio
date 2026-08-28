@@ -167,7 +167,10 @@ def main() -> None:
         print("script replaces (plan §15.3.0).\n")
         print("Also blocked on the trust -> economic-sponsor crosswalk: clustering")
         print("on the raw `family` field splits one JPMorgan into three and would")
-        print("UNDERSTATE cross-sponsor reuse.\n")
+        print("UNDERSTATE cross-sponsor reuse. The proposal and the owner gate are")
+        print("p1/t5_spec/sponsor_crosswalk.py --propose ->")
+        print("p1/t5_spec/SPONSOR-CROSSWALK-GATE.md; sponsor_crosswalk.load_signed()")
+        print("refuses until the owner has completed and signed it.\n")
         print("Run --selftest to verify the measure offline meanwhile.")
         sys.exit(2)
 
