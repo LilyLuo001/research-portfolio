@@ -7,31 +7,37 @@ maker into several and OVERSTATES the number of independent clusters — which
 inflates precision in exactly the dimension the headline inference rests on
 (plan §15.3, §15.3.0).
 
-This script does the part that is derivable from committed data, and REFUSES to
-do the part that is not.
+This script GENERATES CANDIDATES from committed data. It does not establish the
+crosswalk, and it refuses to be used as if it had.
 
-  Derivable  : two registrants whose names normalise to the same stem are the
-               same sponsor ("JPMorgan Trust I" / "JPMorgan Trust II"; "Bridgeway
-               Funds" / "Bridgeway Funds, Inc."; the case-only duplicate
-               "NORTHERN LIGHTS FUND TRUST II"). This is string evidence, and
-               the evidence is printed next to every grouping.
+**Name matching is a candidate generator, not evidence** (owner, 2026-08-28).
+Every final mapping must carry a filing/adviser locator — an ADV, a
+prospectus/SAI adviser section, an N-CEN, a registrant series list — before
+sign-off. Names fail in both directions:
 
-  NOT derivable: that "Undiscovered Managers Funds" is JPMorgan, or that "DFA
-               Investment Dimensions Group Inc." and "Dimensional Investment
-               Group Inc." are one Dimensional, or that the Sanford C. Bernstein
-               funds sit under the same manager as the AB funds. Those share no
-               tokens. No amount of string processing finds them, and asserting
-               them from model knowledge is exactly the hallucination meta-rule 1
+  false negatives : "Undiscovered Managers Funds" is JPMorgan; "DFA Investment
+               Dimensions Group Inc." and "Dimensional Investment Group Inc."
+               are one Dimensional (93.6% of treated mass); the Sanford C.
+               Bernstein funds sit under the same manager as the AB funds. None
+               of these share a token. No string processing finds them, and
+               filling them from model knowledge is the hallucination meta-rule 1
                forbids.
 
-So the deliverable is a PROPOSAL plus a gate. The proposal groups what names
-prove and lists every remaining singleton as **not proven independent** — the
-asymmetry matters, because an unreviewed singleton is the failure mode: it reads
-as "one more independent cluster" when it may be the fourth trust of a manager
-already in the sample.
+  false positives : a shared name is not a shared adviser. Shared SERIES TRUSTS
+               exist to host unrelated managers — Advisors Series Trust, The RBB
+               Fund, Northern Lights, Two Roads Shared Trust, FundVantage,
+               Professionally Managed Portfolios. There the registrant is a shell
+               and the economic sponsor is the sub-adviser of the converting
+               SERIES, so the mapping can differ row by row inside one
+               registrant.
 
-`load_signed()` refuses to return anything until an owner-signed file exists,
-so no estimation can quietly run on the proposal.
+So the deliverable is a CANDIDATE list plus a gate. Every singleton is marked
+"not proven independent" — the asymmetry matters, because an unreviewed singleton
+reads as one more independent cluster when it may be the fourth trust of a
+manager already in the sample.
+
+`load_signed()` returns nothing until an owner-signed file exists in which every
+row has a sponsor, an evidence locator and a signoff.
 
   python p1/t5_spec/sponsor_crosswalk.py --selftest
   python p1/t5_spec/sponsor_crosswalk.py --propose
@@ -157,7 +163,7 @@ def propose(families) -> list[dict]:
             flagged = [s for s in cands.get(head, []) if s not in stems]
             if others:
                 basis = "name_stem_shared_with: " + "; ".join(others)
-                status = "proposed_group"
+                status = "CANDIDATE_GROUP_NEEDS_FILING_EVIDENCE"
             elif flagged:
                 basis = ("no registrant shares this name stem, but these stems "
                          "share its leading token and MAY be the same manager: "
@@ -172,6 +178,16 @@ def propose(families) -> list[dict]:
                 "proposed_sponsor": "",        # owner fills: the economic manager
                 "basis": basis,
                 "status": status,
+                # Owner fills: the FILING/ADVISER locator that establishes the
+                # mapping — an ADV, a prospectus/SAI adviser section, an N-CEN,
+                # a registrant's series list. Name evidence is a candidate
+                # generator, NOT evidence (owner, 2026-08-28), so this column is
+                # required on every row, including the ones the stem matcher
+                # grouped: two trusts sharing a brand name can sit under
+                # different advisers, and shared-series-trust structures
+                # (Advisors Series Trust, The RBB Fund, Northern Lights, Two
+                # Roads) exist precisely to host unrelated managers.
+                "evidence_locator": "",
                 "owner_signoff": "",           # owner fills: initials + date
             })
     return rows
@@ -212,6 +228,18 @@ def load_signed(path=SIGNED) -> dict:
             f"{len(bad)} rows lack a sponsor or an owner signoff (first few: "
             f"{bad[:5]}). A partially signed crosswalk is not usable: the "
             "unsigned rows would each count as their own cluster.")
+    # Name evidence is a candidate generator, not evidence (owner, 2026-08-28).
+    # Every mapping needs a filing/adviser locator — including the ones the stem
+    # matcher grouped, since a shared brand name does not establish a shared
+    # adviser and a shared series trust positively implies unrelated ones.
+    noev = [r.get("family") for r in rows
+            if not (r.get("evidence_locator") or "").strip()]
+    if noev:
+        raise CrosswalkNotSigned(
+            f"{len(noev)} rows carry no filing/adviser evidence locator (first "
+            f"few: {noev[:5]}). Stem matching may PROPOSE a grouping; it cannot "
+            "establish one. Cite an ADV, a prospectus/SAI adviser section, an "
+            "N-CEN, or a registrant series list per row.")
     mapping = {r["family"]: r["proposed_sponsor"].strip() for r in rows}
     missing = sorted(set(_read_families()) - set(mapping))
     if missing:
@@ -258,8 +286,10 @@ def _write_gate(rows, s) -> None:
         "the number of independent clusters — precision inflated in exactly the",
         "dimension the headline result rests on.",
         "",
-        "Name matching finds some of it. It cannot find the rest, and the plan",
-        "names two cases that prove it:",
+        "**Name matching generates candidates. It is not evidence** (owner,",
+        "2026-08-28). It fails in both directions:",
+        "",
+        "*False negatives* — the same manager under unrelated names:",
         "",
         "* `Undiscovered Managers Funds` → JPMorgan — shares no token with",
         "  `JPMorgan Trust I/II/IV`.",
@@ -267,13 +297,30 @@ def _write_gate(rows, s) -> None:
         "  Group Inc.` — 'DFA' and 'Dimensional' share no token, and this pair",
         "  carries 93.6% of treated mass.",
         "",
-        "Filling those from model knowledge is the hallucination meta-rule 1",
-        "forbids. They need a locator (an ADV, a prospectus, an SEC filing).",
+        "*False positives* — a shared name that is not a shared adviser. Series",
+        "trusts exist to host UNRELATED managers: `Advisors Series Trust`,",
+        "`The RBB Fund`, `Northern Lights Fund Trust II/IV`, `Two Roads Shared",
+        "Trust`, `Trust for Advised Portfolios`, `Manager Directed Portfolios`,",
+        "`Investment Managers Series Trust II`, `FundVantage Trust`,",
+        "`Professionally Managed Portfolios`. For these, the registrant is a",
+        "shell and the economic sponsor is the **sub-adviser of the specific",
+        "series that converted** — so the mapping may differ row by row within",
+        "one registrant, and grouping them by trust name would be wrong.",
         "",
-        f"## What the names DO prove — {s['collapse']}",
+        "So every row needs a locator: an ADV, a prospectus/SAI adviser section,",
+        "an N-CEN, or a registrant series list. Filling any of it from model",
+        "knowledge is the hallucination meta-rule 1 forbids.",
+        "",
+        "**Review these four first** — they are where the cluster count actually",
+        "moves: **Dimensional** (93.6% of treated mass), **JPMorgan**,",
+        "**Fidelity**, and the shared-series-trust rows above.",
+        "",
+        f"## Candidate groupings from names — {s['collapse']}",
         "",
         f"{s['n_merged_by_name']} registrants fall into "
-        f"{len(s['groups_found'])} multi-registrant groups on name evidence:",
+        f"{len(s['groups_found'])} multi-registrant candidate groups. **Each",
+        "still needs filing evidence before sign-off** — `load_signed()` refuses",
+        "a row with no `evidence_locator`, grouped or not:",
         "",
     ]
     for stem, members in s["groups_found"].items():
@@ -310,12 +357,17 @@ def _write_gate(rows, s) -> None:
         "",
         f"1. Open `{PROPOSAL.name}`.",
         "2. Fill `proposed_sponsor` for **every** row with the economic asset",
-        "   manager, and record the locator you used.",
-        "3. Initial + date each row in `owner_signoff`.",
-        f"4. Save as `{SIGNED.name}`.",
+        "   manager. For a shared series trust, that is the sub-adviser of the",
+        "   converting series, not the trust.",
+        "3. Fill `evidence_locator` on **every** row — including rows the stem",
+        "   matcher grouped. A candidate group with no filing behind it is still",
+        "   a guess.",
+        "4. Initial + date each row in `owner_signoff`.",
+        f"5. Save as `{SIGNED.name}`.",
         "",
-        "`load_signed()` refuses a missing file, an unfilled sponsor, an unsigned",
-        "row, or any registrant it omits — so nothing can run on a partial answer.",
+        "`load_signed()` refuses a missing file, an unfilled sponsor, a missing",
+        "evidence locator, an unsigned row, or any registrant it omits — so",
+        "nothing can run on a partial answer.",
         "",
     ]
     GATE.write_text("\n".join(lines) + "\n")
@@ -353,7 +405,8 @@ def _selftest() -> int:
 
     rows = propose(["JPMorgan Trust I", "JPMorgan Trust II", "VanEck Funds"])
     stat = {r["family"]: r["status"] for r in rows}
-    check("grouped rows marked", stat["JPMorgan Trust I"], "proposed_group")
+    check("grouped rows marked", stat["JPMorgan Trust I"],
+          "CANDIDATE_GROUP_NEEDS_FILING_EVIDENCE")
     check("singleton flagged", stat["VanEck Funds"],
           "SINGLETON_NOT_PROVEN_INDEPENDENT")
 
@@ -362,8 +415,8 @@ def _selftest() -> int:
                     "Morgan Stanley Pathway Funds"])
     check("prefix containment merges pathway",
           len({r["name_stem"] for r in rows}), 1)
-    check("all three grouped",
-          {r["status"] for r in rows}, {"proposed_group"})
+    check("all three grouped", {r["status"] for r in rows},
+          {"CANDIDATE_GROUP_NEEDS_FILING_EVIDENCE"})
 
     # leading-token near-miss: surfaced, never silently merged
     rows = propose(["Fidelity Salem Street Trust", "Fidelity Summer Street Trust"])
@@ -410,12 +463,14 @@ def main() -> None:
     _write_gate(rows, s)
     print(f"wrote {PROPOSAL}  ({s['collapse']})")
     print(f"wrote {GATE}")
-    print(f"\n{s['n_merged_by_name']} registrants merged into "
-          f"{len(s['groups_found'])} groups on name evidence.")
+    print(f"\n{s['n_merged_by_name']} registrants fall into "
+          f"{len(s['groups_found'])} CANDIDATE groups on name evidence — "
+          "candidates, not conclusions.")
     print(f"{len(s['singletons'])} singletons remain — NOT proven independent, "
           "owner review required.")
-    print("\nNEED_HUMAN: fill proposed_sponsor + owner_signoff and save as "
-          f"{SIGNED.name}. Estimation refuses until then.")
+    print("\nNEED_HUMAN: fill proposed_sponsor + evidence_locator + "
+          f"owner_signoff on EVERY row and save as {SIGNED.name}. Name evidence "
+          "does not satisfy evidence_locator; estimation refuses until then.")
 
 
 if __name__ == "__main__":

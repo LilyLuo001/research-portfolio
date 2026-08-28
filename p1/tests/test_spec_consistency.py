@@ -108,3 +108,81 @@ def test_no_document_permits_specification_search():
                 assert "禁止" in _near(_lines(path), i), (
                     f"{path.name}:{i + 1} reads as a conditional-on-significance "
                     f"rule: {line.strip()}")
+
+
+# --------------------------------------------------------------------------- #
+# 4. v2.1e — the inference procedure is named, the one open parameter is held   #
+# --------------------------------------------------------------------------- #
+BOOTCLUSTER = ROOT / "p1" / "t5_spec" / "BOOTCLUSTER-DECISION.md"
+
+
+def test_the_bootstrap_implementation_family_is_named_everywhere_it_matters():
+    """An unnamed 'established package' is how a one-way stand-in ships. Both
+    the plan and the blueprint have to name boottest and both references."""
+    for path in (PLAN, BLUEPRINT):
+        t = path.read_text()
+        assert "boottest" in t, path.name
+        assert "Roodman" in t and "Cameron" in t, path.name
+        assert "wildboottest" in t, (
+            f"{path.name} must record WHY the Python package is not primary — "
+            "otherwise someone reaches for it as the obvious choice")
+
+
+def test_bootcluster_is_deferred_not_quietly_chosen():
+    """The likely candidate must not be written into the spec as the decision.
+    A pre-specification made before the facts exist is a guess with a date."""
+    assert BOOTCLUSTER.exists()
+    t = BOOTCLUSTER.read_text()
+    assert "DEFERRED" in t
+    # the record itself must still be blank
+    for field in ("n_economic_sponsors", "n_treated_sponsors",
+                  "bootcluster() choice", "headline run commit"):
+        assert field in t, field
+    filled = [l for l in t.splitlines()
+              if l.startswith(("date  ", "bootcluster() choice"))
+              and l.split(":", 1)[-1].strip()]
+    assert not filled, (
+        "the decision record has been filled in: " + "; ".join(filled) +
+        " — if that is real, the headline-run commit must be later than this "
+        "file's commit, and this guard should be replaced by that check")
+
+
+def test_the_ordering_constraint_is_stated_not_just_the_choice():
+    """The protection is the timestamp, not the reasoning. If the docs only say
+    'justify the choice' without 'before observing the coefficients', the rule
+    has no teeth."""
+    for path in (PLAN, BLUEPRINT, BOOTCLUSTER):
+        t = path.read_text().lower()
+        assert ("before any headline" in t or "在看到 β_h 之前" in t), path.name
+
+
+# --------------------------------------------------------------------------- #
+# 5. CAR^h inherits the construction, and only the construction                 #
+# --------------------------------------------------------------------------- #
+def test_car_h_inherits_the_prespecified_benchmark_and_event_time():
+    """CAR^h IS Speed^h's numerator, so it must not acquire a second set of
+    choices. Each inherited element is named so a builder cannot re-decide it."""
+    t = VARSPEC.read_text()
+    block = t.split("### 0-0.")[1].split("### 0-1.")[0]
+    for element, needle in [
+        ("market-model estimation window", "[−250, −21]"),
+        ("announcement timestamp", "anntims"),
+        ("pre/intra/post session split", "D-T3-12"),
+        ("midquote sampling", "D-T3-13"),
+        ("calendar event clock", "D-T3-14"),
+        ("+1d endpoint", "D-T3-10"),
+        ("benchmark both-versions rule", "D-T3-11"),
+    ]:
+        assert needle in block, f"0-0 does not pin the {element} ({needle})"
+
+
+def test_car_h_does_not_inherit_the_denominator_based_sample_filter():
+    """Speed^h drops events whose DENOMINATOR is near zero. Applying that to
+    CAR^h would import a treatment-correlated selection rule into the headline
+    sample: after conversion the response is faster, so R_final's composition
+    changes, so which events get dropped depends on treatment."""
+    block = VARSPEC.read_text().split("### 0-0.")[1].split("### 0-1.")[0]
+    assert "没有分母" in block
+    assert "与处理状态相关" in block
+    assert "全样本" in block
+    assert "D-T3-16" in VARSPEC.read_text()

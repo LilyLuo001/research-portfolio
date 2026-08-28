@@ -75,6 +75,60 @@ def _profile_side(rows):
     }
 
 
+def _imbalance(sizes) -> dict:
+    """Cluster-size imbalance. A nominal cluster count means little when one
+    cluster carries most of the mass — Dimensional is 93.6% of treated mass in
+    the register, and the wild bootstrap's few-cluster properties degrade with
+    exactly this."""
+    sizes = sorted((int(s) for s in sizes), reverse=True)
+    tot = sum(sizes)
+    if not tot:
+        return {"n": 0, "max_share": None, "top1_share": None,
+                "effective_n": None, "sizes": []}
+    shares = [s / tot for s in sizes]
+    # Inverse Herfindahl: the number of EQUAL-sized clusters carrying the same
+    # concentration. This is the count that matters for a bootstrap, not len().
+    hhi = sum(x * x for x in shares)
+    return {"n": len(sizes), "max_share": shares[0], "top1_share": shares[0],
+            "effective_n": 1.0 / hhi, "sizes": sizes[:20]}
+
+
+def bootcluster_inputs(rows) -> dict:
+    """The four facts the bootcluster() choice must be justified on (owner,
+    2026-08-28), measured on the sample rather than assumed.
+
+    The choice is DEFERRED until these exist. The likely candidate is multiway
+    (sponsor, stock) error clustering with bootstrap weights along the small
+    sponsor dimension — but "likely" is not "frozen", and the justification must
+    be written down BEFORE any headline treatment coefficient is observed. That
+    ordering is the whole protection: after seeing β_h, any cluster choice is a
+    choice about the p-value.
+    """
+    rows = list(rows)
+    sponsors = collections.Counter(r["sponsor"] for r in rows)
+    treated_sponsors = collections.Counter(
+        r["sponsor"] for r in rows if r.get("treated"))
+    by_stock = collections.defaultdict(set)
+    for r in rows:
+        by_stock[r["stock"]].add(r["sponsor"])
+    reuse = collections.Counter(len(v) for v in by_stock.values())
+    return {
+        # 1. true economic-sponsor count (post-crosswalk, NOT raw `family`)
+        "n_economic_sponsors": len(sponsors),
+        # 2. treated-sponsor count — the dimension the bootstrap weights run on
+        "n_treated_sponsors": len(treated_sponsors),
+        # 3. stock reuse across sponsors
+        "stock_reuse_across_sponsors": {str(k): v for k, v in sorted(reuse.items())},
+        "n_stocks_multi_sponsor": sum(v for k, v in reuse.items() if k > 1),
+        # 4. cluster imbalance, both dimensions
+        "sponsor_imbalance": _imbalance(sponsors.values()),
+        "treated_sponsor_imbalance": _imbalance(treated_sponsors.values()),
+        "stock_imbalance": _imbalance(
+            collections.Counter(r["stock"] for r in rows).values()),
+        "bootcluster_choice": "DEFERRED — see p1/t5_spec/BOOTCLUSTER-DECISION.md",
+    }
+
+
 def dependence_profile(rows) -> dict:
     """Cross-sponsor stock reuse on the estimation sample.
 
@@ -103,6 +157,7 @@ def dependence_profile(rows) -> dict:
         "empty sample")
     # A one-way sponsor bootstrap is defensible only if stocks nest in sponsors.
     prof["stocks_nest_in_sponsors"] = prof["all"]["cross_sponsor_stocks"] == 0
+    prof["bootcluster_inputs"] = bootcluster_inputs(rows)
     return prof
 
 
@@ -140,6 +195,24 @@ def _selftest() -> int:
 
     check("empty sample is not a 0%",
           dependence_profile([])["all"]["cross_sponsor_row_share"], None)
+
+    # bootcluster inputs: the four facts, measured. One dominant sponsor must
+    # show up as an EFFECTIVE cluster count far below the nominal one.
+    dom = ([{"stock": f"S{i}", "sponsor": "BIG", "wave": "W1", "treated": True}
+            for i in range(90)]
+           + [{"stock": "T1", "sponsor": "SMALL1", "wave": "W2", "treated": True},
+              {"stock": "T2", "sponsor": "SMALL2", "wave": "W3", "treated": True}])
+    bi = bootcluster_inputs(dom)
+    check("nominal sponsor count", bi["n_economic_sponsors"], 3)
+    check("treated sponsor count", bi["n_treated_sponsors"], 3)
+    check("dominant sponsor share", round(bi["sponsor_imbalance"]["max_share"], 4),
+          round(90 / 92, 4))
+    good = bi["sponsor_imbalance"]["effective_n"] < 1.2
+    print(f"  {'ok  ' if good else 'FAIL'} effective clusters collapse to "
+          f"{bi['sponsor_imbalance']['effective_n']:.3f} of a nominal 3")
+    ok = ok and good
+    check("choice stays deferred", bi["bootcluster_choice"].startswith("DEFERRED"),
+          True)
 
     print("\nSELFTEST", "PASSED" if ok else "FAILED")
     return 0 if ok else 1

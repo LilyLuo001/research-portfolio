@@ -11,8 +11,10 @@ Clustering on it splits one decision maker into several and overstates
 the number of independent clusters — precision inflated in exactly the
 dimension the headline result rests on.
 
-Name matching finds some of it. It cannot find the rest, and the plan
-names two cases that prove it:
+**Name matching generates candidates. It is not evidence** (owner,
+2026-08-28). It fails in both directions:
+
+*False negatives* — the same manager under unrelated names:
 
 * `Undiscovered Managers Funds` → JPMorgan — shares no token with
   `JPMorgan Trust I/II/IV`.
@@ -20,12 +22,29 @@ names two cases that prove it:
   Group Inc.` — 'DFA' and 'Dimensional' share no token, and this pair
   carries 93.6% of treated mass.
 
-Filling those from model knowledge is the hallucination meta-rule 1
-forbids. They need a locator (an ADV, a prospectus, an SEC filing).
+*False positives* — a shared name that is not a shared adviser. Series
+trusts exist to host UNRELATED managers: `Advisors Series Trust`,
+`The RBB Fund`, `Northern Lights Fund Trust II/IV`, `Two Roads Shared
+Trust`, `Trust for Advised Portfolios`, `Manager Directed Portfolios`,
+`Investment Managers Series Trust II`, `FundVantage Trust`,
+`Professionally Managed Portfolios`. For these, the registrant is a
+shell and the economic sponsor is the **sub-adviser of the specific
+series that converted** — so the mapping may differ row by row within
+one registrant, and grouping them by trust name would be wrong.
 
-## What the names DO prove — 84 registrants -> 61 name stems
+So every row needs a locator: an ADV, a prospectus/SAI adviser section,
+an N-CEN, or a registrant series list. Filling any of it from model
+knowledge is the hallucination meta-rule 1 forbids.
 
-37 registrants fall into 14 multi-registrant groups on name evidence:
+**Review these four first** — they are where the cluster count actually
+moves: **Dimensional** (93.6% of treated mass), **JPMorgan**,
+**Fidelity**, and the shared-series-trust rows above.
+
+## Candidate groupings from names — 84 registrants -> 61 name stems
+
+37 registrants fall into 14 multi-registrant candidate groups. **Each
+still needs filing evidence before sign-off** — `load_signed()` refuses
+a row with no `evidence_locator`, grouped or not:
 
 * **ab** — `AB Bond Fund, Inc.`; `AB Cap Fund, Inc.`; `AB Equity Income Fund`
 * **advisors** — `Advisors Series Trust`; `The Advisors' Inner Circle Fund`; `The Advisors' Inner Circle Fund II`
@@ -113,10 +132,15 @@ safe default.
 
 1. Open `sponsor_crosswalk_PROPOSED.csv`.
 2. Fill `proposed_sponsor` for **every** row with the economic asset
-   manager, and record the locator you used.
-3. Initial + date each row in `owner_signoff`.
-4. Save as `sponsor_crosswalk_SIGNED.csv`.
+   manager. For a shared series trust, that is the sub-adviser of the
+   converting series, not the trust.
+3. Fill `evidence_locator` on **every** row — including rows the stem
+   matcher grouped. A candidate group with no filing behind it is still
+   a guess.
+4. Initial + date each row in `owner_signoff`.
+5. Save as `sponsor_crosswalk_SIGNED.csv`.
 
-`load_signed()` refuses a missing file, an unfilled sponsor, an unsigned
-row, or any registrant it omits — so nothing can run on a partial answer.
+`load_signed()` refuses a missing file, an unfilled sponsor, a missing
+evidence locator, an unsigned row, or any registrant it omits — so
+nothing can run on a partial answer.
 

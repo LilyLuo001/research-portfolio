@@ -144,18 +144,31 @@ next seat-C session should not go looking for offline work — there is none, an
 inventing some is worse than saying so.
 
 ### A6. The sponsor crosswalk signoff — blocks headline inference
-`p1/t5_spec/SPONSOR-CROSSWALK-GATE.md`. Name evidence took 84 registrants to 61
-stems; the rest needs a locator per row. The two expensive ones share no tokens
-with their siblings and cannot be found mechanically: `Undiscovered Managers
-Funds` → JPMorgan, and `DFA Investment Dimensions Group` ↔ `Dimensional
-Investment Group` (93.6% of treated mass). Blocks §15.3.1 and §15.3.0's
-dependence measurement; blocks **neither Gate 0 nor B1/B2**.
+`p1/t5_spec/SPONSOR-CROSSWALK-GATE.md`. Stem matching took 84 registrants to 61
+stems, but **that is a candidate generator, not evidence** (owner, 2026-08-28):
+every row needs a filing/adviser locator, and `load_signed()` refuses a row
+without one. Names fail both ways — the same manager under unrelated names
+(`Undiscovered Managers Funds` → JPMorgan; `DFA Investment Dimensions Group` ↔
+`Dimensional Investment Group`, 93.6% of treated mass), and unrelated managers
+under one shared series trust, where the economic sponsor is the sub-adviser of
+the converting series and can differ row by row inside one registrant. Review
+priority: Dimensional, JPMorgan, Fidelity, the series trusts. Blocks §15.3.1 and
+§15.3.0's dependence measurement; blocks **neither Gate 0 nor B1/B2**.
 
-### A7. The multiway wild-bootstrap citation — blocks every p-value
-`CITE_REQUEST` item 11 in `p1/t3_spec_preflight.md`. Unlike items 1–10 this is
-not a variable 口径, it is the procedure behind the headline result. Until it is
-filled, §15.3.1 is `NEED_HUMAN`; a one-way stand-in "for now" is method selection
-after the fact and is forbidden.
+### A7. ~~The multiway wild-bootstrap citation~~ — CLOSED 2026-08-28
+Owner-supplied: Roodman, MacKinnon, Nielsen & Webb (2019), *Stata Journal*
+19(1):4–60, with Cameron, Gelbach & Miller (2008), *ReStat* 90(3):414–427.
+Implementation family **Stata `boottest`** (multiway error clustering plus a
+separately specified bootstrap clustering); Python `wildboottest` is not primary
+because its documentation states multiway is unsupported.
+
+What remains is **not** a blocker but a deliberate hold: the `bootcluster()`
+argument is deferred until the final sample supplies the economic-sponsor count,
+the treated-sponsor count, cross-sponsor stock reuse and cluster imbalance —
+`measure_dependence.bootcluster_inputs` emits all four — and it must be justified
+in writing **before any headline coefficient is observed**
+(`p1/t5_spec/BOOTCLUSTER-DECISION.md`). Nothing is waiting on anyone for it; it
+is waiting on the sample, which is A8/A9.
 
 ### A8. SEC egress — blocks B1/B2 execution and Gate 0's measured result
 Re-verified in-container 2026-08-28: `www.sec.gov`, `data.sec.gov`,

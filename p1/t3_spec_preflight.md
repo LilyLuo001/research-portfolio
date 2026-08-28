@@ -102,16 +102,26 @@ one entry per row, each with a working link, in the T0 阶段A matrix format:
 9. **1 − R²** idiosyncratic information content.
 10. **TAQ/IID effective spread** — the convention the WRDS IID field implements.
 
-**11. Multiway wild cluster bootstrap** (added 2026-08-28, v2.1d). The headline
-inference procedure is a wild cluster bootstrap over the **two-way (sponsor,
-stock)** structure with the null imposed (plan §15.3.1). Needed: the variant to
-use and its behaviour with few and unbalanced clusters, plus the software package
-that implements it (`fwildclusterboot`/`boottest` class — hand-rolling the loop is
-forbidden). **This one differs from items 1–10**: they are 口径 for outcome
-*variables*, this is the procedure that produces every p-value in the paper.
-Until it is filled, §15.3.1 stands as `NEED_HUMAN`, and **no substitute procedure
-may stand in "for now"** — running a one-way bootstrap meanwhile and swapping
-later is method selection after seeing results.
+**11. Multiway wild cluster bootstrap** — ✅ **CLOSED 2026-08-28, owner-supplied.**
+Unlike items 1–10 this is not a 口径 for an outcome variable; it is the procedure
+behind every p-value in the paper.
+
+* Roodman, MacKinnon, Nielsen & Webb (2019), "Fast and wild: Bootstrap inference
+  in Stata using boottest", *Stata Journal* 19(1):4–60.
+* Cameron, Gelbach & Miller (2008), *Review of Economics and Statistics*
+  90(3):414–427 — the foundational clustered-bootstrap reference.
+
+Implementation family: **Stata `boottest`**, which supports multiway error
+clustering and a separately specified bootstrap clustering. Python
+`wildboottest` is **not** the primary implementation — its documentation states
+multiway clustering is unsupported. Hand-rolling the loop stays forbidden.
+
+Still open, deliberately: the `bootcluster()` argument. It is deferred until the
+final analysis sample supplies the economic-sponsor count, the treated-sponsor
+count, cross-sponsor stock reuse and cluster imbalance, and it must be justified
+**before any headline coefficient is observed** —
+`p1/t5_spec/BOOTCLUSTER-DECISION.md`. That is a hold on one parameter, not an
+open literature question, so it does not belong on this list.
 
 Alternatively, queue T0 阶段A properly as a dual-channel task (it is a
 high-hallucination task under meta-rule 2 — the collision sweep already showed

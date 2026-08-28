@@ -2,11 +2,12 @@
 
 Clustering on `events_merged.csv`'s `family` splits one asset manager into
 several registrants and overstates the number of independent clusters — in the
-exact dimension the headline inference rests on. Name matching recovers part of
-that; the rest is external knowledge and must come from the owner with a locator.
+exact dimension the headline inference rests on. Name matching GENERATES
+CANDIDATES; it is not evidence, and it fails in both directions -- the same
+manager under unrelated names, and unrelated managers under one series trust.
 
-These tests pin both halves: the string evidence behaves, and the parts that are
-NOT string evidence are refused rather than guessed.
+These tests pin both halves: the candidate generator behaves, and nothing reaches
+a final mapping without a filing locator behind it.
 """
 import csv
 import pathlib
@@ -33,7 +34,7 @@ def test_selftest_passes():
 
 
 # --------------------------------------------------------------------------- #
-# what the names DO prove                                                      #
+# what the names PROPOSE (candidates -- still gated on filing evidence)        #
 # --------------------------------------------------------------------------- #
 @pytest.mark.parametrize("a,b", [
     ("JPMorgan Trust I", "JPMorgan Trust II"),           # trailing enumerator
@@ -55,7 +56,7 @@ def test_prefix_containment_keeps_a_family_together():
                        "Morgan Stanley Institutional Fund Trust",
                        "Morgan Stanley Pathway Funds"])
     assert len({r["name_stem"] for r in rows}) == 1
-    assert {r["status"] for r in rows} == {"proposed_group"}
+    assert {r["status"] for r in rows} == {"CANDIDATE_GROUP_NEEDS_FILING_EVIDENCE"}
 
 
 def test_a_short_stem_does_not_swallow_a_lookalike():
@@ -108,31 +109,59 @@ def test_unsigned_crosswalk_refuses(tmp_path):
     assert "PROPOSAL" in str(e.value) or "PROPOSED" in str(e.value)
 
 
-def test_partially_filled_crosswalk_refuses(tmp_path):
-    p = tmp_path / "signed.csv"
-    with open(p, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=["family", "proposed_sponsor",
-                                           "owner_signoff"])
+FIELDS = ["family", "proposed_sponsor", "evidence_locator", "owner_signoff"]
+
+
+def _write(path, rows):
+    with open(path, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=FIELDS)
         w.writeheader()
-        w.writerow({"family": "JPMorgan Trust I", "proposed_sponsor": "JPMorgan",
-                    "owner_signoff": "QL 2026-08-28"})
-        w.writerow({"family": "JPMorgan Trust II", "proposed_sponsor": "",
-                    "owner_signoff": ""})
+        for r in rows:
+            w.writerow({k: r.get(k, "") for k in FIELDS})
+    return path
+
+
+def test_partially_filled_crosswalk_refuses(tmp_path):
+    p = _write(tmp_path / "signed.csv", [
+        {"family": "JPMorgan Trust I", "proposed_sponsor": "JPMorgan",
+         "evidence_locator": "ADV 801-xxxxx", "owner_signoff": "QL 2026-08-28"},
+        {"family": "JPMorgan Trust II"},
+    ])
     with pytest.raises(sc.CrosswalkNotSigned) as e:
         sc.load_signed(p)
     assert "signoff" in str(e.value)
+
+
+def test_a_row_with_no_filing_evidence_refuses(tmp_path):
+    """Name evidence does not satisfy the evidence column. A candidate group with
+    no filing behind it is still a guess -- and a shared series trust is a
+    positive reason to expect the name to be WRONG."""
+    p = _write(tmp_path / "signed.csv", [
+        {"family": "JPMorgan Trust I", "proposed_sponsor": "JPMorgan",
+         "evidence_locator": "", "owner_signoff": "QL 2026-08-28"},
+    ])
+    with pytest.raises(sc.CrosswalkNotSigned) as e:
+        sc.load_signed(p)
+    msg = str(e.value)
+    assert "evidence locator" in msg and "Stem matching" in msg
+
+
+def test_proposal_carries_an_evidence_column_for_every_row():
+    with open(PROPOSAL, newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert rows and "evidence_locator" in rows[0]
+    assert all(r["evidence_locator"] == "" for r in rows), (
+        "the proposal must ship the evidence column EMPTY -- prefilling it from "
+        "name matching is exactly the substitution the gate forbids")
 
 
 def test_a_crosswalk_missing_registrants_refuses(tmp_path):
     """An omitted registrant does not error at estimation time — it silently
     becomes its own cluster."""
     p = tmp_path / "signed.csv"
-    with open(p, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=["family", "proposed_sponsor",
-                                           "owner_signoff"])
-        w.writeheader()
-        w.writerow({"family": "JPMorgan Trust I", "proposed_sponsor": "JPMorgan",
-                    "owner_signoff": "QL 2026-08-28"})
+    _write(p, [{"family": "JPMorgan Trust I", "proposed_sponsor": "JPMorgan",
+                "evidence_locator": "ADV 801-xxxxx",
+                "owner_signoff": "QL 2026-08-28"}])
     with pytest.raises(sc.CrosswalkNotSigned) as e:
         sc.load_signed(p)
     assert "absent from" in str(e.value)
@@ -172,3 +201,17 @@ def test_gate_names_the_two_cases_string_matching_cannot_find():
     assert "Undiscovered Managers Funds" in text
     assert "DFA Investment Dimensions Group Inc." in text
     assert "93.6%" in text            # why the DFA pair is the expensive one
+
+
+def test_gate_warns_about_shared_series_trusts_and_names_the_review_priorities():
+    """Names fail in BOTH directions. A series trust hosts unrelated managers, so
+    grouping by trust name is positively wrong there -- the economic sponsor is
+    the sub-adviser of the converting series."""
+    text = GATE.read_text()
+    for trust in ("Advisors Series Trust", "The RBB Fund", "Two Roads Shared",
+                  "Northern Lights"):
+        assert trust in text, trust
+    assert "sub-adviser" in text
+    for name in ("Dimensional", "JPMorgan", "Fidelity"):
+        assert name in text, name
+    assert "not evidence" in text
