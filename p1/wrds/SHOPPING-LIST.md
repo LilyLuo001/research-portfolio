@@ -20,7 +20,7 @@ confirm the full name. ✗ = not yet listed; must be requested.
 |---|---|:--:|---|
 | 1 | `crsp.stocknames` | ✓ | **The whole project.** CUSIP↔PERMNO is what fills `permno`, blank on all 6,377 rows today. Nothing joins without it. |
 | 2 | `crsp.dsf` | ✓ | Spine two entirely — CAR paths, Amihud, 1−R², variance ratio, Hou-Moskowitz delay. The single biggest table. |
-| 3 | `crsp.dsi` | ✓ | Market-model benchmark (`vwretd`). Without it there are no abnormal returns. |
+| 3 | `crsp.dsi` | ✓ | Daily market series for the daily spines. **Not** the spine-zero proxy — the `β_h` curve's β̂ is estimated against SPY, the same traded instrument as its intraday leg (v2.1h, `TABLE-REQUEST.md`). |
 | 4 | `crsp.msf` | ✓ | ConvExp denominator (`shrout`), market-cap deciles, monthly reversal strategy. |
 | 5 | **`crsp.dsedelist`** (DAILY) | ✗ | **Silently biases spine two.** A stock delisting inside a 120-day CAR window truncates the path. Spec §2-2 requires `dlret`, imputing −30% when missing. Without it → survivorship bias in the main evidence. |
 | 6 | `comp.fundq` (Compustat NA Quarterly) | ✓ | Spine one: GNZ earnings decomposition, FERC, and the SUE time-series branch. |
@@ -57,10 +57,10 @@ without a CRSP cross-check.
 
 | Item | Why not |
 |---|---|
-| **Fama-French factors** | **Free** from Ken French's data library. Do not pay ¥20. Not required by the spec — the market model uses `vwretd` from `crsp.dsi`. |
+| **Fama-French factors** | **Free** from Ken French's data library. Do not pay ¥20. Not required: spine zero uses a single traded proxy (SPY), the daily spines use `vwretd`. |
 | TAQ / WRDS IID | Seller does not have it. Being replaced by Databento BBO. |
 | `ibes.det_epsus` (detail) | `statsum` carries `numest` and `stdev`, which covers the 4-6 coverage/dispersion variables. Buy only if the exact "distinct analysts in a 90-day window" rule turns out to matter. |
-| `crsp.ermport` | **Ask before deciding** (v2.1g). Only relevant to DGTW benchmark portfolios, and the headline uses the market model at every horizon — but whether it supports DGTW *robustness* is unverified here. See the note below for the three questions to put to the seller. |
+| `crsp.ermport` | **Ask before deciding; default is DROP** (v2.1g/h). Only relevant to DGTW benchmark portfolios, and the headline is beta-adjusted market at every horizon — nothing headline depends on it. Whether it supports DGTW *robustness* is unverified here. **Do not buy it merely to keep a robustness label alive** (owner, 2026-08-28): if no daily series covering 2021–2026 exists, DGTW robustness is simply dropped, not manufactured. Three questions in the note below. |
 | US Patents, DealScan, global ownership, word indices | Not in any P1 spine. |
 
 ---
@@ -72,8 +72,10 @@ characteristic adjustment**, while `p1/pipeline/outcomes_spine2.py` implements
 **market-model adjustment**.
 
 **Resolved, and not by convenience.** The primary benchmark for the headline
-`β_h` curve is the **intraday market model with no intercept**
-(`AR^h = R^h − β̂_i R^h_m`), at every horizon. The reason is structural: spec 2-3
+`β_h` curve is the **beta-adjusted market abnormal return, with no intercept**
+(`AR^h = R^h − β̂_i R^h_m`), at every horizon — the proxy is a single traded
+instrument (SPY) on both legs, and it is deliberately *not* called a "market
+model", since no intercept is subtracted. The reason is structural: spec 2-3
 builds DGTW from monthly characteristic portfolios with monthly value-weighted
 returns, so **no DGTW value exists at a finer timestamp**. Subtracting a monthly
 benchmark from a five-minute return removes a near-constant — `AR` comes out ≈
@@ -101,9 +103,12 @@ contains. Meta-rule 1: no locator, not a fact.
    running through 2012; our sample is 2021–2026)?
 
 If the answer to (1) is no, or (3) does not cover the sample, DGTW robustness is
-confined to monthly-resolution horizons and `crsp.ermport` can be dropped. Until
-then the daily `[0,+120]` path is **market-model adjusted** — which is what
-`p1/pipeline/outcomes_spine2.py` has always implemented — and must not be
+confined to monthly-resolution horizons and `crsp.ermport` is **dropped**.
+**Do not build or buy a daily DGTW series merely to preserve the robustness
+label** (owner, 2026-08-28) — a robustness check that exists to be listed is not
+a robustness check. Until then the daily `[0,+120]` path is **market-model
+adjusted** (α̂ and β̂, dimensionally correct at daily — which is what
+`p1/pipeline/outcomes_spine2.py` has always implemented) and must not be
 described as characteristic-adjusted. `comp.funda` stays required regardless — it
 is needed for **control matching**, not for DGTW.
 

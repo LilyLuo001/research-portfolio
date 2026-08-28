@@ -167,7 +167,7 @@ def test_car_h_inherits_the_prespecified_benchmark_and_event_time():
     t = VARSPEC.read_text()
     block = t.split("### 0-0.")[1].split("### 0-1.")[0]
     for element, needle in [
-        ("market-model estimation window", "[−250, −21]"),
+        ("beta estimation window", "−250"),
         ("announcement timestamp", "anntims"),
         ("pre/intra/post session split", "D-T3-12"),
         ("midquote sampling", "D-T3-13"),
@@ -230,7 +230,7 @@ def test_dgtw_is_refused_at_intraday_horizons_in_code_not_only_in_prose():
     assert len({bp.primary_benchmark(h) for h in bp.HORIZONS}) == 1
     with pytest.raises(bp.BenchmarkPolicyError):
         bp.assert_curve_uses_one_benchmark(
-            {"5m": bp.PRIMARY, "close": "intraday_market_beta_one"})
+            {"5m": bp.PRIMARY, "close": "beta_one_market_adjusted"})
     # robustness may not be reported as the headline
     for b in bp.ROBUSTNESS:
         with pytest.raises(bp.BenchmarkPolicyError):
@@ -254,9 +254,9 @@ def test_the_primary_formula_has_no_intercept_and_does_not_vary_with_h():
         "benchmark_policy", ROOT / "p1" / "pipeline" / "benchmark_policy.py")
     bp = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(bp)
-    assert "intraday_market_model_scaled_alpha" in bp.ROBUSTNESS
+    assert "beta_adjusted_market_scaled_alpha" in bp.ROBUSTNESS
     with pytest.raises(bp.BenchmarkPolicyError):
-        bp.assert_is_headline("intraday_market_model_scaled_alpha")
+        bp.assert_is_headline("beta_adjusted_market_scaled_alpha")
 
 
 def test_the_plus1d_assert_compares_against_a_zero_alpha_spine_two():
@@ -280,3 +280,73 @@ def test_car_h_does_not_inherit_the_denominator_based_sample_filter():
     assert "与处理状态相关" in block
     assert "全样本" in block
     assert "D-T3-16" in VARSPEC.read_text()
+
+
+
+# --------------------------------------------------------------------------- #
+# 7. v2.1h — one market proxy across both legs, frozen as a bundle              #
+# --------------------------------------------------------------------------- #
+def _bp():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "benchmark_policy", ROOT / "p1" / "pipeline" / "benchmark_policy.py")
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def test_beta_and_market_leg_must_be_the_same_instrument():
+    """The named failure: a CRSP value-weighted beta multiplied into an SPY
+    intraday return is two different market portfolios in one formula. It
+    produces a plausible number, not an error."""
+    bp = _bp()
+    bp.assert_proxy_coherent("SPY", "SPY")                    # coherent
+    for beta, leg in (("crsp_vwretd", "SPY"), ("SPY", "crsp_vwretd"),
+                      ("crsp_ewretd", "SPY")):
+        with pytest.raises(bp.ProxyIncoherent) as e:
+            bp.assert_proxy_coherent(beta, leg)
+        assert "SAME economic proxy" in str(e.value)
+    # coherent with itself but not the frozen instrument is still refused --
+    # swapping the proxy is a spec change, not a runtime option
+    with pytest.raises(bp.ProxyIncoherent):
+        bp.assert_proxy_coherent("IVV", "IVV")
+
+
+def test_the_proxy_bundle_is_frozen_together_not_piecemeal():
+    """Instrument, quote convention, session clock and beta source are one
+    decision. Freezing them separately is what lets an incoherent pair through."""
+    bp = _bp()
+    for key in ("instrument", "quote_convention", "session",
+                "beta_estimation_instrument", "beta_estimation_window",
+                "beta_estimation_return"):
+        assert key in bp.MARKET_PROXY, key
+    assert bp.MARKET_PROXY["instrument"] == \
+        bp.MARKET_PROXY["beta_estimation_instrument"]
+    assert bp.MARKET_PROXY["quote_convention"] == "midquote"   # matches D-T3-13
+    assert bp.MARKET_PROXY["session"] == "RTH"
+    with pytest.raises(bp.ProxyIncoherent):
+        bp.assert_proxy_coherent("SPY", "SPY", quote_convention="last_trade")
+    with pytest.raises(bp.ProxyIncoherent):
+        bp.assert_proxy_coherent("SPY", "SPY", session="ETH")
+
+
+def test_the_overnight_gap_is_excluded_from_both_legs_identically():
+    """Including it in one leg only puts an unhedged overnight move into AR^h,
+    and nothing raises."""
+    bp = _bp()
+    rule = bp.PROXY_OPEN_GAP_RULE
+    assert "SAME timestamp" in rule and "neither" in rule
+    assert "13:00" in rule                       # early-close sessions
+    varspec = VARSPEC.read_text()
+    assert "D-T3-27" in varspec and "半日市" in varspec
+
+
+def test_the_paper_calls_it_beta_adjusted_not_a_market_model():
+    """No intercept is subtracted, so 'market model' would imply to a reader
+    that a daily alpha was removed intraday."""
+    bp = _bp()
+    assert bp.PRIMARY == "beta_adjusted_market"
+    assert "market_model" not in bp.PRIMARY
+    block = VARSPEC.read_text().split("### 0-0.")[1].split("### 0-1.")[0]
+    assert "beta-adjusted market abnormal return" in block
+    assert "不要写成" in block
