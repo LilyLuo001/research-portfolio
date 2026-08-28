@@ -76,21 +76,32 @@ def _profile_side(rows):
 
 
 def _imbalance(sizes) -> dict:
-    """Cluster-size imbalance. A nominal cluster count means little when one
-    cluster carries most of the mass — Dimensional is 93.6% of treated mass in
-    the register, and the wild bootstrap's few-cluster properties degrade with
-    exactly this."""
+    """Cluster-size concentration — a DIAGNOSTIC, not a verdict.
+
+    A nominal cluster count means little when one cluster carries most of the
+    mass: Dimensional is 93.6% of treated mass in the register. The inverse
+    Herfindahl below reports how many EQUAL-sized clusters would carry the same
+    concentration, which makes that visible in one number.
+
+    **It does not determine whether the bootstrap is valid.** Validity also
+    depends on how many clusters are TREATED, how treatment is distributed
+    across them, the leverage of individual clusters on β_h, and the properties
+    of the specific bootstrap variant and weighting dimension. Inverse HHI is
+    blind to all of that — a sample can be balanced on size and still rest on
+    one treated cluster. Read it alongside the other three inputs and the
+    leave-one-sponsor-out diagnostics (plan §15.3.2); never as a threshold, and
+    never as the sole justification for a bootcluster() choice.
+    """
     sizes = sorted((int(s) for s in sizes), reverse=True)
     tot = sum(sizes)
     if not tot:
         return {"n": 0, "max_share": None, "top1_share": None,
                 "effective_n": None, "sizes": []}
     shares = [s / tot for s in sizes]
-    # Inverse Herfindahl: the number of EQUAL-sized clusters carrying the same
-    # concentration. This is the count that matters for a bootstrap, not len().
     hhi = sum(x * x for x in shares)
     return {"n": len(sizes), "max_share": shares[0], "top1_share": shares[0],
-            "effective_n": 1.0 / hhi, "sizes": sizes[:20]}
+            "effective_n": 1.0 / hhi, "sizes": sizes[:20],
+            "note": "concentration diagnostic only — not a validity criterion"}
 
 
 def bootcluster_inputs(rows) -> dict:

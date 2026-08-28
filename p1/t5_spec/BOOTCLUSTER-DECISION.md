@@ -41,9 +41,18 @@ because they are properties of the final analysis sample:
    one cluster carries most of the mass.
 
 `p1/t5_spec/measure_dependence.py` emits all four into
-`dependence_profile.json` under `bootcluster_inputs` (including an inverse-HHI
-effective cluster count, which is the number that actually governs a bootstrap's
-behaviour).
+`dependence_profile.json` under `bootcluster_inputs`, including an inverse-HHI
+effective cluster count.
+
+**On inverse HHI**: it is a **concentration diagnostic, not a validity
+criterion**. It answers "how many equal-sized clusters would carry this much
+concentration", and nothing else. Bootstrap validity also turns on how many
+clusters are TREATED, how treatment is distributed across them, the leverage of
+individual clusters on β_h, and the properties of the chosen variant and
+weighting dimension — a sample can look balanced on size and still rest on one
+treated cluster. Read it with the other three inputs and the
+leave-one-sponsor-out diagnostics (plan §15.3.2). **No threshold on it, and it
+may not be the sole justification for the choice below.**
 
 ## The ordering constraint — this is the part that protects the result
 
@@ -79,12 +88,14 @@ dependence_profile.json  : <commit hash of the committed profile>
 n_economic_sponsors      :
 n_treated_sponsors       :
 n_stocks_multi_sponsor   :
-sponsor effective_n      :   (inverse HHI; compare to the nominal count)
+sponsor effective_n      :   (inverse HHI — diagnostic; compare to nominal)
 stock   effective_n      :
+treated-cluster leverage :   leave-one-sponsor-out movement in β_h (§15.3.2)
 
 bootcluster() choice     :
-justification            :   why this dimension, from the four facts above —
-                             not from any coefficient
+justification            :   why this dimension, from the four facts above
+                             TOGETHER — not from inverse HHI alone, and not
+                             from any coefficient
 alternatives considered  :   and why rejected, on the same evidence
 headline run commit      :   MUST be later than this record's commit
 ```

@@ -23,14 +23,41 @@ dimension the headline result rests on.
   carries 93.6% of treated mass.
 
 *False positives* — a shared name that is not a shared adviser. Series
-trusts exist to host UNRELATED managers: `Advisors Series Trust`,
-`The RBB Fund`, `Northern Lights Fund Trust II/IV`, `Two Roads Shared
-Trust`, `Trust for Advised Portfolios`, `Manager Directed Portfolios`,
+trusts host UNRELATED managers: `Advisors Series Trust`, `The RBB
+Fund`, `Northern Lights Fund Trust II/IV`, `Two Roads Shared Trust`,
+`Trust for Advised Portfolios`, `Manager Directed Portfolios`,
 `Investment Managers Series Trust II`, `FundVantage Trust`,
-`Professionally Managed Portfolios`. For these, the registrant is a
-shell and the economic sponsor is the **sub-adviser of the specific
-series that converted** — so the mapping may differ row by row within
-one registrant, and grouping them by trust name would be wrong.
+`Professionally Managed Portfolios`. For these the registrant may be a
+shell, so the mapping can differ row by row within one registrant and
+grouping by trust name would be wrong.
+
+## What you are mapping TO
+
+**The economic entity that plausibly generated the conversion decision**
+— the one that would transmit a common organizational shock. Not the
+legal trust. **And not automatically the sub-adviser label either.**
+
+Sometimes the decision sits with the sub-adviser. Sometimes it sits with
+the trust's own adviser, or with a distribution platform that converted
+several sub-advised series at once — in which case those series DO share
+a shock and splitting them by sub-adviser would overstate independence.
+Reading either label off mechanically is the same error in a different
+costume. The question is always: who decided, and whose shock is shared?
+
+### `AMBIGUOUS` is a permitted answer
+
+Where governance genuinely does not resolve, write `AMBIGUOUS` in
+`proposed_sponsor` and record in `evidence_locator` what you checked and
+why it did not settle. **Do not force the row into a heuristic group.**
+A forced row is an unknown that looks settled: the cluster count comes
+out confident and wrong, and nothing downstream can tell.
+
+`ambiguous_families()` returns these, and estimation must handle them
+explicitly — reporting the headline both with each ambiguous registrant
+as its own cluster and merged into its best-guess group. If the
+conclusion moves between the two, that is a finding about how much the
+crosswalk carries, and it gets stated rather than resolved by picking
+the nicer one.
 
 So every row needs a locator: an ADV, a prospectus/SAI adviser section,
 an N-CEN, or a registrant series list. Filling any of it from model
@@ -131,9 +158,11 @@ safe default.
 ## What to do
 
 1. Open `sponsor_crosswalk_PROPOSED.csv`.
-2. Fill `proposed_sponsor` for **every** row with the economic asset
-   manager. For a shared series trust, that is the sub-adviser of the
-   converting series, not the trust.
+2. Fill `proposed_sponsor` for **every** row with the entity that
+   plausibly made the conversion decision — or `AMBIGUOUS` if the
+   governance does not resolve. For a shared series trust the answer
+   may be the sub-adviser, the trust's adviser, or a platform; decide
+   it, do not read a label.
 3. Fill `evidence_locator` on **every** row — including rows the stem
    matcher grouped. A candidate group with no filing behind it is still
    a guess.

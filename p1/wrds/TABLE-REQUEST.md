@@ -74,7 +74,7 @@ tiny — this costs nothing but a wider `datadate` filter.
 | Fama-French factors | **Free** from Ken French's data library. The market model uses `vwretd` from `crsp.dsi`. |
 | **Raw TAQ** (trades/quotes) | Terabytes. IID (item 12) is the daily pre-computed aggregation and is what the spec needs. |
 | `ibes.det_epsus` | `statsum` carries `numest` and `stdev`, covering the 4-6 variables. |
-| `crsp.ermport` | DGTW benchmark only; we use market-model adjustment. |
+| `crsp.ermport` | **Optional, robustness only** (v2.1f). The headline `β_h` curve uses the intraday market model at every horizon — DGTW has no intraday value (monthly portfolios, monthly returns), so it cannot define 5m/15m/30m CAR. DGTW stays the pre-specified robustness benchmark at daily-or-longer horizons and for spine two's `[0,+120]` path. Take it if it is free with the window; the headline does not depend on it. |
 | US Patents, DealScan, global ownership, word indices | Not in any P1 spine. |
 
 ---

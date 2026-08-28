@@ -19,6 +19,8 @@ rule.
 import pathlib
 import re
 
+import pytest
+
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PLAN = ROOT / "docs" / "基金转换实验_博士研究计划.md"
 BLUEPRINT = ROOT / "p1" / "t5_spec" / "估计蓝图.md"
@@ -171,9 +173,53 @@ def test_car_h_inherits_the_prespecified_benchmark_and_event_time():
         ("midquote sampling", "D-T3-13"),
         ("calendar event clock", "D-T3-14"),
         ("+1d endpoint", "D-T3-10"),
-        ("benchmark both-versions rule", "D-T3-11"),
+        ("single primary benchmark rule", "D-T3-11"),
+        ("intraday-DGTW prohibition", "D-T3-17"),
     ]:
         assert needle in block, f"0-0 does not pin the {element} ({needle})"
+
+
+# --------------------------------------------------------------------------- #
+# 6. v2.1f — exactly ONE primary benchmark, and DGTW is not it intraday         #
+# --------------------------------------------------------------------------- #
+def test_exactly_one_primary_car_benchmark_is_named():
+    """'Both reported' does not settle which curve is the headline. If two
+    benchmarks can each be called primary, the choice is still open when the
+    results arrive — which is the thing being prevented."""
+    block = VARSPEC.read_text().split("### 0-0.")[1].split("### 0-1.")[0]
+    assert "主基准" in block
+    assert "日内市场模型" in block
+    # DGTW must be named as robustness, and confined to daily-or-longer
+    assert "稳健性" in block and "日内期限禁止" in block
+    _every_hit_is_marked_superseded(
+        VARSPEC, r"两版并报.*(基准|市场模型)|市场模型.*两版并报",
+        "the old 'report both benchmarks' answer")
+
+
+def test_dgtw_is_refused_at_intraday_horizons_in_code_not_only_in_prose():
+    """A daily benchmark subtracted from a 5-minute return does not raise; it
+    returns a number, and AR comes out ~= the raw return while the table says
+    'characteristic-adjusted'. The rule has to be executable."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "benchmark_policy", ROOT / "p1" / "pipeline" / "benchmark_policy.py")
+    bp = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bp)
+
+    for h in bp.INTRADAY_HORIZONS:
+        with pytest.raises(bp.BenchmarkPolicyError):
+            bp.assert_benchmark_allowed("dgtw", h)
+    for h in ("close", "+1d", "+120d"):
+        bp.assert_benchmark_allowed("dgtw", h)          # allowed daily+
+
+    # one benchmark across the whole curve
+    assert len({bp.primary_benchmark(h) for h in bp.HORIZONS}) == 1
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.assert_curve_uses_one_benchmark({"5m": bp.PRIMARY, "close": "dgtw"})
+    # robustness may not be reported as the headline
+    for b in bp.ROBUSTNESS:
+        with pytest.raises(bp.BenchmarkPolicyError):
+            bp.assert_is_headline(b)
 
 
 def test_car_h_does_not_inherit_the_denominator_based_sample_filter():

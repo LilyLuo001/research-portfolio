@@ -215,3 +215,42 @@ def test_gate_warns_about_shared_series_trusts_and_names_the_review_priorities()
     for name in ("Dimensional", "JPMorgan", "Fidelity"):
         assert name in text, name
     assert "not evidence" in text
+
+
+def test_gate_maps_to_the_decision_maker_not_to_a_label():
+    """Correcting an over-correction. The target is the entity that plausibly
+    made the conversion decision and transmits the common organizational shock
+    -- NOT the legal trust, and not automatically the sub-adviser either. A
+    platform that converted several sub-advised series at once IS a shared
+    shock, and splitting those by sub-adviser would overstate independence."""
+    text = GATE.read_text()
+    assert "generated the conversion decision" in text
+    assert "not automatically the sub-adviser" in text.lower()
+    assert "platform" in text
+
+
+def test_ambiguous_is_a_permitted_answer_not_a_failure(tmp_path):
+    """Forcing an unresolved registrant into a heuristic group produces an
+    unknown that LOOKS settled -- a confident, wrong cluster count that nothing
+    downstream can detect."""
+    assert "AMBIGUOUS" in GATE.read_text()
+    p = _write(tmp_path / "signed.csv", [
+        {"family": f, "proposed_sponsor": ("AMBIGUOUS" if i == 0 else "X"),
+         "evidence_locator": "checked ADV + SAI; adviser vs platform unresolved",
+         "owner_signoff": "QL 2026-08-28"}
+        for i, f in enumerate(sorted(set(sc._read_families())))
+    ])
+    mapping = sc.load_signed(p)                 # accepted, not refused
+    amb = sc.ambiguous_families(p)
+    assert len(amb) == 1 and mapping[amb[0]] == "AMBIGUOUS"
+
+
+def test_ambiguous_still_requires_evidence_of_what_was_checked(tmp_path):
+    """'Ambiguous' is a conclusion, not a blank. It has to say what failed to
+    resolve, or it is indistinguishable from an unreviewed row."""
+    p = _write(tmp_path / "signed.csv", [
+        {"family": "JPMorgan Trust I", "proposed_sponsor": "AMBIGUOUS",
+         "evidence_locator": "", "owner_signoff": "QL 2026-08-28"},
+    ])
+    with pytest.raises(sc.CrosswalkNotSigned):
+        sc.load_signed(p)

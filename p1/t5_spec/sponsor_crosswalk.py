@@ -24,12 +24,22 @@ sign-off. Names fail in both directions:
                forbids.
 
   false positives : a shared name is not a shared adviser. Shared SERIES TRUSTS
-               exist to host unrelated managers — Advisors Series Trust, The RBB
-               Fund, Northern Lights, Two Roads Shared Trust, FundVantage,
-               Professionally Managed Portfolios. There the registrant is a shell
-               and the economic sponsor is the sub-adviser of the converting
-               SERIES, so the mapping can differ row by row inside one
-               registrant.
+               host unrelated managers — Advisors Series Trust, The RBB Fund,
+               Northern Lights, Two Roads Shared Trust, FundVantage,
+               Professionally Managed Portfolios. There the registrant may be a
+               shell, so the mapping can differ row by row inside one registrant.
+
+WHAT THE TARGET ACTUALLY IS. Not the legal trust, and **not automatically the
+sub-adviser label either**: the object is the economic entity that plausibly
+GENERATED THE CONVERSION DECISION and would transmit a common organizational
+shock. Sometimes that is the sub-adviser; sometimes it is the trust's own
+adviser or a distribution platform that drove the conversion across several
+sub-advised series. Reading either label off mechanically is the same error in a
+different costume.
+
+Where governance genuinely does not resolve, the answer is `AMBIGUOUS`, not a
+forced group. An honest ambiguous row is a known unknown that downstream code
+must handle; a forced one is an unknown that looks settled.
 
 So the deliverable is a CANDIDATE list plus a gate. Every singleton is marked
 "not proven independent" — the asymmetry matters, because an unreviewed singleton
@@ -186,7 +196,8 @@ def propose(families) -> list[dict]:
                 # grouped: two trusts sharing a brand name can sit under
                 # different advisers, and shared-series-trust structures
                 # (Advisors Series Trust, The RBB Fund, Northern Lights, Two
-                # Roads) exist precisely to host unrelated managers.
+                # Roads) host unrelated managers. On an AMBIGUOUS row this
+                # column records what WAS checked and why it did not resolve.
                 "evidence_locator": "",
                 "owner_signoff": "",           # owner fills: initials + date
             })
@@ -250,6 +261,29 @@ def load_signed(path=SIGNED) -> dict:
     return mapping
 
 
+AMBIGUOUS = "AMBIGUOUS"
+
+
+def ambiguous_families(path=SIGNED) -> list[str]:
+    """Registrants the owner marked `AMBIGUOUS` — governance did not resolve.
+
+    A permitted answer, not a failure. Forcing an unresolved registrant into a
+    heuristic group produces an unknown that LOOKS settled, which is worse than
+    a known unknown: the cluster count comes out confident and wrong, in either
+    direction.
+
+    Estimation must handle these EXPLICITLY rather than letting them default.
+    Both treatments are defensible and neither is free, so the plan requires
+    both to be reported: (a) each ambiguous registrant as its own cluster —
+    which over-counts independence if it in fact belongs to a sponsor already in
+    the sample; (b) merged into its best-guess candidate group — which
+    under-counts if it does not. If the headline conclusion moves between them,
+    that is a finding about how much the crosswalk carries, and it is stated
+    rather than resolved by picking the nicer one.
+    """
+    return [f for f, s in load_signed(path).items() if s.upper() == AMBIGUOUS]
+
+
 def summarise(rows) -> dict:
     groups = collections.defaultdict(list)
     for r in rows:
@@ -298,14 +332,41 @@ def _write_gate(rows, s) -> None:
         "  carries 93.6% of treated mass.",
         "",
         "*False positives* — a shared name that is not a shared adviser. Series",
-        "trusts exist to host UNRELATED managers: `Advisors Series Trust`,",
-        "`The RBB Fund`, `Northern Lights Fund Trust II/IV`, `Two Roads Shared",
-        "Trust`, `Trust for Advised Portfolios`, `Manager Directed Portfolios`,",
+        "trusts host UNRELATED managers: `Advisors Series Trust`, `The RBB",
+        "Fund`, `Northern Lights Fund Trust II/IV`, `Two Roads Shared Trust`,",
+        "`Trust for Advised Portfolios`, `Manager Directed Portfolios`,",
         "`Investment Managers Series Trust II`, `FundVantage Trust`,",
-        "`Professionally Managed Portfolios`. For these, the registrant is a",
-        "shell and the economic sponsor is the **sub-adviser of the specific",
-        "series that converted** — so the mapping may differ row by row within",
-        "one registrant, and grouping them by trust name would be wrong.",
+        "`Professionally Managed Portfolios`. For these the registrant may be a",
+        "shell, so the mapping can differ row by row within one registrant and",
+        "grouping by trust name would be wrong.",
+        "",
+        "## What you are mapping TO",
+        "",
+        "**The economic entity that plausibly generated the conversion decision**",
+        "— the one that would transmit a common organizational shock. Not the",
+        "legal trust. **And not automatically the sub-adviser label either.**",
+        "",
+        "Sometimes the decision sits with the sub-adviser. Sometimes it sits with",
+        "the trust's own adviser, or with a distribution platform that converted",
+        "several sub-advised series at once — in which case those series DO share",
+        "a shock and splitting them by sub-adviser would overstate independence.",
+        "Reading either label off mechanically is the same error in a different",
+        "costume. The question is always: who decided, and whose shock is shared?",
+        "",
+        "### `AMBIGUOUS` is a permitted answer",
+        "",
+        "Where governance genuinely does not resolve, write `AMBIGUOUS` in",
+        "`proposed_sponsor` and record in `evidence_locator` what you checked and",
+        "why it did not settle. **Do not force the row into a heuristic group.**",
+        "A forced row is an unknown that looks settled: the cluster count comes",
+        "out confident and wrong, and nothing downstream can tell.",
+        "",
+        "`ambiguous_families()` returns these, and estimation must handle them",
+        "explicitly — reporting the headline both with each ambiguous registrant",
+        "as its own cluster and merged into its best-guess group. If the",
+        "conclusion moves between the two, that is a finding about how much the",
+        "crosswalk carries, and it gets stated rather than resolved by picking",
+        "the nicer one.",
         "",
         "So every row needs a locator: an ADV, a prospectus/SAI adviser section,",
         "an N-CEN, or a registrant series list. Filling any of it from model",
@@ -356,9 +417,11 @@ def _write_gate(rows, s) -> None:
         "## What to do",
         "",
         f"1. Open `{PROPOSAL.name}`.",
-        "2. Fill `proposed_sponsor` for **every** row with the economic asset",
-        "   manager. For a shared series trust, that is the sub-adviser of the",
-        "   converting series, not the trust.",
+        "2. Fill `proposed_sponsor` for **every** row with the entity that",
+        "   plausibly made the conversion decision — or `AMBIGUOUS` if the",
+        "   governance does not resolve. For a shared series trust the answer",
+        "   may be the sub-adviser, the trust's adviser, or a platform; decide",
+        "   it, do not read a label.",
         "3. Fill `evidence_locator` on **every** row — including rows the stem",
         "   matcher grouped. A candidate group with no filing behind it is still",
         "   a guess.",

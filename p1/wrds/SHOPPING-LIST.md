@@ -65,15 +65,29 @@ without a CRSP cross-check.
 
 ---
 
-## Note: a spec change this list implies
+## Note: the CAR benchmark — RESOLVED 2026-08-28 (v2.1f)
 
-The T3 spec §2-2/2-3 specifies **DGTW characteristic adjustment** for the CAR
-benchmark, but `p1/pipeline/outcomes_spine2.py` implements **market-model
-adjustment**. They disagree.
+This list previously flagged a disagreement: T3 spec §2-2/2-3 specified **DGTW
+characteristic adjustment**, while `p1/pipeline/outcomes_spine2.py` implements
+**market-model adjustment**.
 
-Resolving it toward the market model (which the code already does) removes
-`crsp.ermport` from the ask and eliminates the inconsistency. `comp.funda` stays
-required regardless — it is needed for **control matching**, not for DGTW.
+**Resolved, and not by convenience.** The primary benchmark for the headline
+`β_h` curve is the **intraday market model**, at every horizon. DGTW is
+robustness and is confined to **daily-or-longer** horizons. The reason is
+structural, not a preference: spec 2-3 builds DGTW from monthly characteristic
+portfolios with monthly value-weighted returns, so **no DGTW value exists at an
+intraday timestamp**. Subtracting a monthly benchmark from a five-minute return
+removes a near-constant — `AR` comes out ≈ the raw return while the table still
+reads "characteristic-adjusted". Enforced in code by
+`p1/pipeline/benchmark_policy.py`.
+
+Consequence for this list: **`crsp.ermport` is still not required for the
+headline**, but it is no longer "dead weight" — DGTW remains the pre-specified
+robustness benchmark for spine two's `[0,+120]` path and the daily horizons, and
+that is what §2-2/2-3 and D8 describe. Treat it as **optional-for-robustness**
+rather than droppable: if it is free with the window, take it; if it costs, the
+headline does not depend on it. `comp.funda` stays required regardless — it is
+needed for **control matching**, not for DGTW.
 
 ---
 
