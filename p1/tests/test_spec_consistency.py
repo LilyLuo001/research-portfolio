@@ -417,3 +417,64 @@ def test_no_document_claims_a_direction_for_the_intraday_beta_bias():
     varspec = VARSPEC.read_text()
     assert "口径外推" in varspec
     assert "不得把 `β ≡ 1` 说成" in varspec
+
+
+# --------------------------------------------------------------------------- #
+# 9. v2.1j — one beta source, the gap's ex-div hole, and the FE argument        #
+# --------------------------------------------------------------------------- #
+def test_the_daily_beta_source_is_fixed_with_no_code_level_fallback():
+    """Two sources are two estimates. Alternating between CRSP daily SPY and an
+    intraday-aggregated close-to-close changes every AR^h while the written
+    specification stays identical."""
+    bp = _bp()
+    assert bp.MARKET_PROXY["beta_estimation_source"] == "crsp_daily"
+    bp.assert_beta_source("crsp_daily")
+    with pytest.raises(bp.ProxyIncoherent) as e:
+        bp.assert_beta_source("intraday_aggregate")
+    assert "NEED_HUMAN spec change" in str(e.value)
+    with pytest.raises(bp.ProxyIncoherent):
+        bp.assert_beta_source("whatever")
+    # and the spec no longer leaves it open
+    varspec = VARSPEC.read_text()
+    assert "来源已定" in varspec and "D-T3-31" in varspec
+
+
+def test_open_gap_excludes_ex_dividend_dates_and_counts_them():
+    """A previous-close-to-next-open PRICE return contains the mechanical
+    ex-dividend drop. Left in, the gap decomposition reads it as earnings
+    response -- and a few-percent drop looks like an ordinary gap."""
+    bp = _bp()
+    assert bp.is_ex_distribution(0.01, 0.004) is True
+    assert bp.is_ex_distribution(0.01, 0.01) is False
+    # a missing field is UNKNOWN, never "no distribution"
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.is_ex_distribution(None, 0.01)
+
+    out = bp.screen_gap_sample([
+        {"ret": 0.01, "retx": 0.01},          # kept
+        {"ret": 0.01, "retx": 0.004},         # ex-distribution -> excluded
+        {"ret": None, "retx": 0.01},          # undecidable -> excluded, counted
+    ])
+    assert len(out["kept"]) == 1
+    assert out["n_excluded_ex_distribution"] == 1
+    assert out["n_undecidable"] == 1
+    assert out["excluded_share"] == pytest.approx(1 / 3)
+    assert "REPORT THE EXCLUDED COUNT" in out["report"]
+
+
+def test_the_omitted_intercept_rests_on_the_stock_fe_not_on_a_magnitude_claim():
+    """'Drift is orders of magnitude smaller than the announcement return' was an
+    untested claim about this sample. The design argument is the one that holds:
+    beta_h is estimated separately per horizon with a stock FE, so stable
+    stock-specific drift at that horizon is absorbed."""
+    varspec = VARSPEC.read_text()
+    block = varspec.split("| **D-T3-22**")[1].split("| **D-T3-23**")[0]
+    assert "股票固定效应" in block and "吸收" in block
+    assert "v2.1j 删除" in block
+    # and the residual risk is stated rather than glossed
+    assert "稳定" in block
+    for path in (VARSPEC, ROOT / "docs" / "P1_实现更正_v2_1d.md"):
+        for i, line in enumerate(_lines(path)):
+            if "数量级" in line and "漂移" in line:
+                assert "删除" in _near(_lines(path), i), (
+                    f"{path.name}:{i+1} still leans on the magnitude claim")

@@ -148,6 +148,13 @@ MARKET_PROXY = {
     # estimated on TOTAL returns would carry a dividend-inclusive sensitivity
     # and then be multiplied into a dividend-free quantity.
     "return_concept": "price_return",
+    # RESOLVED v2.1j: ONE source, no alternation. Both daily β̂ legs come from
+    # the CRSP daily file — stock RETX against SPY RETX. The alternative
+    # (aggregating SPY close-to-close off the intraday feed) is not a fallback
+    # that code may take on its own: if SPY has no resolvable permno on CRSP
+    # that is a NEED_HUMAN spec change, because two runs on two sources are not
+    # the same estimate.
+    "beta_estimation_source": "crsp_daily",
     "crsp_field_old": "retx",        # legacy CRSP daily file
     "crsp_field_ciz": "DlyRetx",     # CIZ-format daily file
     "crsp_field_forbidden": ("ret", "DlyRet"),   # TOTAL return — not this
@@ -156,6 +163,16 @@ MARKET_PROXY = {
 # Both sides of the β̂ regression must use the same return concept as the
 # event window. The stock leg is checked too: a price-return market leg against
 # a total-return stock leg is the same error mirrored.
+BETA_SOURCES = {
+    "crsp_daily": "CRSP daily file, stock RETX vs SPY RETX over [−250,−21].",
+    # Named so it can be REFUSED explicitly rather than drifted into.
+    "intraday_aggregate": (
+        "close-to-close returns aggregated off the intraday feed. NOT the "
+        "frozen source (v2.1j). Alternating between this and crsp_daily across "
+        "runs produces two different β̂ and therefore two different AR^h from "
+        "one 'specification'."),
+}
+
 RETURN_CONCEPTS = {
     "price_return": {"retx", "dlyretx", "price_return"},
     "total_return": {"ret", "dlyret", "total_return"},
@@ -198,6 +215,25 @@ PROXY_OPEN_GAP_RULE = (
     "not raise.")
 
 
+def assert_beta_source(source: str) -> None:
+    """One fixed source for the daily β̂ legs (v2.1j). No run-to-run alternation.
+
+    Reproducibility is the whole point: β̂ from CRSP daily SPY and β̂ from an
+    intraday-aggregated SPY are different numbers, so switching between them
+    silently changes every AR^h while the specification text stays identical.
+    """
+    if source not in BETA_SOURCES:
+        raise ProxyIncoherent(
+            f"unknown β̂ source {source!r}; known: {sorted(BETA_SOURCES)}.")
+    want = MARKET_PROXY["beta_estimation_source"]
+    if source != want:
+        raise ProxyIncoherent(
+            f"β̂ source {source!r} is not the frozen {want!r}. "
+            f"{BETA_SOURCES[source]} If SPY has no resolvable permno on CRSP, "
+            "that is a NEED_HUMAN spec change — not a fallback for code to take "
+            "on its own.")
+
+
 def assert_return_concept_coherent(stock_field: str, proxy_field: str) -> None:
     """The β̂ regression's two legs, and the event window, are one concept.
 
@@ -233,6 +269,66 @@ def assert_gap_excluded_from_car(outcome_name: str, horizon_components) -> None:
         raise BenchmarkPolicyError(
             f"outcome {outcome_name!r} folds the opening gap into CAR^h. "
             + GAP_RULE)
+
+
+# --------------------------------------------------------------------------- #
+# The OpenGap outcome — and the ex-dividend hole in it (D-T3-31, v2.1j)         #
+# --------------------------------------------------------------------------- #
+# The gap is a previous-close → next-open PRICE return, so on an ex-distribution
+# date it mechanically contains the ex-dividend price drop. Left in, the
+# secondary gap decomposition would read that drop as part of the earnings
+# response — a contamination that is largest exactly where it is least visible,
+# since a few-percent drop is an ordinary-looking gap.
+GAP_EXDIV_RULE = (
+    "Exclude opening-gap observations on a stock's ex-distribution date from "
+    "the OpenGap outcome, and REPORT THE EXCLUDED COUNT. Excluding without "
+    "counting hides how much of the gap sample went; the count belongs in the "
+    "same table as the outcome. This affects the secondary gap outcome only — "
+    "CAR^h never contained the gap (D-T3-30).")
+
+# Identification uses only fields already in the pull: TOTAL return includes a
+# distribution, PRICE return does not, so they differ exactly on an
+# ex-distribution date. No distributions table, no assumed field name.
+EXDIV_TOLERANCE = 1e-8
+
+
+def is_ex_distribution(ret, retx, tol: float = EXDIV_TOLERANCE) -> bool:
+    """Did a distribution go ex on this date? RET ≠ RETX iff it did.
+
+    Derived from the two return fields the pull already asks for, rather than
+    from a distributions table whose name nobody here has confirmed
+    (meta-rule 1). A missing value on either side is NOT "no distribution" — it
+    is unknown, and the caller must treat it as such.
+    """
+    if ret is None or retx is None:
+        raise BenchmarkPolicyError(
+            "cannot decide ex-distribution status with a missing RET or RETX; "
+            "an unknown is not a 'no'. Drop the observation and count it.")
+    return abs(float(ret) - float(retx)) > tol
+
+
+def screen_gap_sample(rows) -> dict:
+    """Split the OpenGap sample into kept / ex-div-excluded / undecidable.
+
+    `rows` are dicts with at least `ret` and `retx` for the gap's opening date.
+    Returns the three groups plus the counts the paper has to report.
+    """
+    kept, exdiv, unknown = [], [], []
+    for r in rows:
+        try:
+            (exdiv if is_ex_distribution(r.get("ret"), r.get("retx"))
+             else kept).append(r)
+        except BenchmarkPolicyError:
+            unknown.append(r)
+    n = len(kept) + len(exdiv) + len(unknown)
+    return {
+        "kept": kept, "ex_distribution": exdiv, "undecidable": unknown,
+        "n_total": n,
+        "n_excluded_ex_distribution": len(exdiv),
+        "n_undecidable": len(unknown),
+        "excluded_share": (len(exdiv) / n) if n else None,
+        "report": GAP_EXDIV_RULE,
+    }
 
 
 def car_label(announcement_session: str) -> str:

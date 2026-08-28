@@ -29,7 +29,7 @@ commit `971208f`; the ranges here match it, with buffer.
 | 1 | `crsp.stocknames` | reference | **full history** (no date filter) | `permno`, `ncusip`, `cusip`, **`ticker`**, `namedt`, `nameendt` | CUSIP↔PERMNO. Fills `permno`, blank on all 6,377 rows today. Nothing joins without it. **`ticker` is also required** — TAQ-IID is symbol-keyed, so the spread pull cannot be scoped without it. |
 | 2 | `crsp.dsf` | **daily** | **2019-01-01 → 2026-08-31** | `permno`, `date`, `ret`, **`retx`** (CIZ: `DlyRetx`), `prc`, `vol`, `openprc`, **`bid`, `ask`, `bidlo`, `askhi`** | CAR paths, Amihud, 1−R², variance ratio, price delay. The big one. **Ask for bid/ask explicitly** — if they are populated, spine four's quoted spread needs no external vendor at all. |
 | 3 | `crsp.dsi` | **daily** | **2019-01-01 → 2026-08-31** | `date`, `vwretd`, `ewretd` | Daily market series for spines one/two/four. **NOT the spine-zero market proxy** — see the note below: the β_h curve's β̂ must be estimated against the SAME traded instrument used for the intraday leg (SPY), not against `vwretd`. Still wanted: cheap, and the daily spines use it. |
-| 3b | **SPY daily PRICE returns** — `crsp.dsf` filtered to SPY's `permno` | **daily** | **2019-01-01 → 2026-08-31** | `permno`, `date`, **`retx`** (CIZ: `DlyRetx`) — **not `ret`** | **The spine-zero β̂ estimation series** (D-T3-28/29). The event-window leg is a midquote PRICE return, so β̂ must be fitted on price returns on BOTH legs. No extra table: it is rows of item 2. **Confirm SPY is on CRSP with a resolvable permno** — if not, β̂ must be estimated from daily close-to-close returns aggregated from the same intraday feed as the event-window leg, and that choice must be recorded once, not varied. |
+| 3b | **SPY daily PRICE returns** — `crsp.dsf` filtered to SPY's `permno` | **daily** | **2019-01-01 → 2026-08-31** | `permno`, `date`, **`retx`** (CIZ: `DlyRetx`) — **not `ret`** | **The spine-zero β̂ estimation series** (D-T3-28/29). The event-window leg is a midquote PRICE return, so β̂ must be fitted on price returns on BOTH legs. No extra table: it is rows of item 2. **Confirm SPY is on CRSP with a resolvable permno.** The source is frozen to the CRSP daily file (v2.1j) — there is no code-level fallback. If SPY does not resolve, stop and raise it as a spec change: alternating between CRSP daily SPY and an intraday-aggregated close-to-close gives two different β̂, hence two different `AR^h`, from identical-looking specification text. |
 | 4 | `crsp.dsedelist` | daily events | **2019-01-01 → 2026-08-31** | `permno`, `dlstdt`, `dlret`, `dlstcd` | Delisting return inside the 120-day CAR window. Omitting it silently biases spine two — the main evidence. |
 | 5 | `crsp.msf` | **monthly** | **2018-01-01 → 2026-08-31** | `permno`, `date`, `prc`, `ret`, `shrout` | ConvExp denominator, market-cap deciles, monthly reversal strategy. |
 | 6 | `comp.fundq` | **quarterly** | **2016-01-01 → 2026-08-31** | `gvkey`, `datadate`, `rdq`, `epspxq`, `niq`, `atq`, `cshoq`, `prccq` | Earnings decomposition, FERC, SUE time-series branch, and the Compustat side of the §4 dual-source announcement-date check. |
@@ -142,7 +142,17 @@ this account's daily file spells it `retx` (legacy) or `DlyRetx` (CIZ).
 
 So the ask is not a new table — it is **SPY's rows of `crsp.dsf`** (item 3b),
 plus intraday SPY quotes from the same feed as the stock leg (Databento TBBO,
-already scoped in plan §4.1). Confirm at the window that SPY resolves to a
-permno on CRSP; if it does not, β̂ comes from close-to-close returns aggregated
-off the intraday feed instead. Either source is acceptable — **using both, in
-different runs, is not.**
+already scoped in plan §4.1).
+
+**The daily source is frozen: CRSP** (v2.1j). Confirm at the window that SPY
+resolves to a permno; if it does not, that is a spec change to raise, not a
+fallback to take. The point is reproducibility — an intraday-aggregated β̂ and a
+CRSP β̂ are different numbers, so alternating between them changes every `AR^h`
+while the written specification stays the same.
+
+**One more field for the secondary OpenGap outcome**: the gap is a
+previous-close→next-open **price** return, so on an ex-distribution date it
+mechanically contains the ex-dividend drop. Those observations are excluded and
+the count reported (D-T3-31). Identifying them needs no distributions table —
+`RET` includes a distribution and `RETX` does not, so they differ exactly on an
+ex-date, and **both are already in the item-2 ask**.
