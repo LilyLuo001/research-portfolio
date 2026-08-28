@@ -245,6 +245,18 @@ def test_ambiguous_is_a_permitted_answer_not_a_failure(tmp_path):
     assert len(amb) == 1 and mapping[amb[0]] == "AMBIGUOUS"
 
 
+def test_ambiguous_alternatives_are_described_as_alternative_maps(tmp_path):
+    """Not 'alternative treatments'. The treatment variable, sample and
+    specification are identical across the two runs; only the partition defining
+    the sponsor dimension differs. Calling them alternative treatments invites
+    the reader to think two different estimands are being compared."""
+    for text in (GATE.read_text(), sc.ambiguous_families.__doc__):
+        assert "sponsor/clustering maps" in text or "sponsor map" in text, text[:80]
+    doc = sc.ambiguous_families.__doc__
+    assert "not alternative treatments" in doc
+    assert "same sample" in GATE.read_text() or "same specification" in doc
+
+
 def test_ambiguous_still_requires_evidence_of_what_was_checked(tmp_path):
     """'Ambiguous' is a conclusion, not a blank. It has to say what failed to
     resolve, or it is indistinguishable from an unreviewed row."""

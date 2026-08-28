@@ -52,12 +52,14 @@ why it did not settle. **Do not force the row into a heuristic group.**
 A forced row is an unknown that looks settled: the cluster count comes
 out confident and wrong, and nothing downstream can tell.
 
-`ambiguous_families()` returns these, and estimation must handle them
-explicitly — reporting the headline both with each ambiguous registrant
-as its own cluster and merged into its best-guess group. If the
-conclusion moves between the two, that is a finding about how much the
-crosswalk carries, and it gets stated rather than resolved by picking
-the nicer one.
+`ambiguous_families()` returns these. An ambiguous row means the sponsor
+map is not unique, so the headline is reported under **alternative
+sponsor/clustering maps** — same treatment variable, same sample, same
+specification, only a different partition of the sponsor dimension. Both
+maps: each ambiguous registrant as its own sponsor, and merged into its
+best-guess group. If the conclusion moves between the two maps, that is
+a finding about how much the crosswalk carries, and it gets stated
+rather than resolved by picking the nicer map.
 
 So every row needs a locator: an ADV, a prospectus/SAI adviser section,
 an N-CEN, or a registrant series list. Filling any of it from model

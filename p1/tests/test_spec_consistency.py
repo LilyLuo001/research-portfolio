@@ -189,8 +189,12 @@ def test_exactly_one_primary_car_benchmark_is_named():
     block = VARSPEC.read_text().split("### 0-0.")[1].split("### 0-1.")[0]
     assert "主基准" in block
     assert "日内市场模型" in block
-    # DGTW must be named as robustness, and confined to daily-or-longer
-    assert "稳健性" in block and "日内期限禁止" in block
+    # DGTW must be named as robustness, and confined to the frequency it is
+    # actually built at — which excludes DAILY, not only intraday (D-T3-24)
+    assert "稳健性" in block
+    assert "日内禁用,日频同样禁用" in block, (
+        "0-0 must say DGTW is unusable at DAILY resolution too — a monthly "
+        "benchmark does not make a daily path characteristic-adjusted")
     _every_hit_is_marked_superseded(
         VARSPEC, r"两版并报.*(基准|市场模型)|市场模型.*两版并报",
         "the old 'report both benchmarks' answer")
@@ -206,20 +210,64 @@ def test_dgtw_is_refused_at_intraday_horizons_in_code_not_only_in_prose():
     bp = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(bp)
 
-    for h in bp.INTRADAY_HORIZONS:
+    # DGTW is monthly-constructed: refused at every horizon finer than monthly,
+    # DAILY INCLUDED -- a daily path is not characteristic-adjusted by a monthly
+    # benchmark.
+    for h in bp.INTRADAY_HORIZONS + ("close", "+1d", "+120d"):
         with pytest.raises(bp.BenchmarkPolicyError):
-            bp.assert_benchmark_allowed("dgtw", h)
+            bp.assert_benchmark_allowed("dgtw_monthly", h)
+    bp.assert_benchmark_allowed("dgtw_monthly", "+3m")        # its own frequency
+
+    # a DAILY DGTW series is unverified, so its horizon set is empty and every
+    # use raises with the verification requirement rather than a preference
     for h in ("close", "+1d", "+120d"):
-        bp.assert_benchmark_allowed("dgtw", h)          # allowed daily+
+        with pytest.raises(bp.BenchmarkPolicyError) as e:
+            bp.assert_benchmark_allowed("dgtw_daily", h)
+        assert "NEED_HUMAN" in str(e.value) and "ermport" in str(e.value)
+    assert bp.BENCHMARK_HORIZONS["dgtw_daily"] == ()
 
     # one benchmark across the whole curve
     assert len({bp.primary_benchmark(h) for h in bp.HORIZONS}) == 1
     with pytest.raises(bp.BenchmarkPolicyError):
-        bp.assert_curve_uses_one_benchmark({"5m": bp.PRIMARY, "close": "dgtw"})
+        bp.assert_curve_uses_one_benchmark(
+            {"5m": bp.PRIMARY, "close": "intraday_market_beta_one"})
     # robustness may not be reported as the headline
     for b in bp.ROBUSTNESS:
         with pytest.raises(bp.BenchmarkPolicyError):
             bp.assert_is_headline(b)
+
+
+def test_the_primary_formula_has_no_intercept_and_does_not_vary_with_h():
+    """A daily α̂ cannot be subtracted from a 5-minute return -- it is a
+    per-trading-day drift, so it removes ~78x too much. Scaling it needs an
+    intraday drift-allocation convention this project never pre-specified, and
+    inventing one after the freeze is a new degree of freedom. Dropping it is
+    the only choice that keeps ONE formula at every h."""
+    block = VARSPEC.read_text().split("### 0-0.")[1].split("### 0-1.")[0]
+    assert "不减 α" in block or "不含截距" in block
+    assert "D-T3-22" in block
+    varspec = VARSPEC.read_text()
+    assert "D-T3-22" in varspec and "D-T3-23" in varspec
+    # the scaled-alpha variant exists, as robustness applied uniformly
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "benchmark_policy", ROOT / "p1" / "pipeline" / "benchmark_policy.py")
+    bp = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bp)
+    assert "intraday_market_model_scaled_alpha" in bp.ROBUSTNESS
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.assert_is_headline("intraday_market_model_scaled_alpha")
+
+
+def test_the_plus1d_assert_compares_against_a_zero_alpha_spine_two():
+    """Spine two keeps alpha (dimensionally right at daily), spine zero drops it,
+    so CAR^{+1d} and spine two's CAR[0,+1] differ by ~alpha x one day. If the
+    spec still claimed they must be equal, the cheapest way to 'fix' the failing
+    assert would be to add alpha to spine zero -- putting the dimensional error
+    back."""
+    varspec = VARSPEC.read_text()
+    assert "α 强制为 0" in varspec
+    assert "D-T3-23" in varspec
 
 
 def test_car_h_does_not_inherit_the_denominator_based_sample_filter():

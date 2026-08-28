@@ -74,7 +74,7 @@ tiny — this costs nothing but a wider `datadate` filter.
 | Fama-French factors | **Free** from Ken French's data library. The market model uses `vwretd` from `crsp.dsi`. |
 | **Raw TAQ** (trades/quotes) | Terabytes. IID (item 12) is the daily pre-computed aggregation and is what the spec needs. |
 | `ibes.det_epsus` | `statsum` carries `numest` and `stdev`, covering the 4-6 variables. |
-| `crsp.ermport` | **Optional, robustness only** (v2.1f). The headline `β_h` curve uses the intraday market model at every horizon — DGTW has no intraday value (monthly portfolios, monthly returns), so it cannot define 5m/15m/30m CAR. DGTW stays the pre-specified robustness benchmark at daily-or-longer horizons and for spine two's `[0,+120]` path. Take it if it is free with the window; the headline does not depend on it. |
+| `crsp.ermport` | **Optional, and UNVERIFIED — ask before buying** (v2.1g). The headline `β_h` curve uses the intraday market model at every horizon, so nothing headline depends on this. Whether it supports DGTW *robustness* is an open question: spec 2-3 builds DGTW from **monthly** portfolios with **monthly** returns, and a daily `[0,+120]` path would need a **daily** benchmark-portfolio series. This container cannot check what `crsp.ermport` contains. **At the window ask: (a) does a daily DGTW benchmark-return series exist, (b) is this the table and at what frequency, (c) what coverage period** (2-3 documents the Wermers distribution as running through 2012; our sample is 2021–2026). If no daily series covers the sample, drop this table and confine DGTW robustness to monthly horizons. |
 | US Patents, DealScan, global ownership, word indices | Not in any P1 spine. |
 
 ---
