@@ -173,15 +173,26 @@ def render(cfg: dict) -> str:
     a("### 3.4 CR event timing (binding on the sample)")
     a("")
     t = ne["cr_event_timing"]
-    a("A CR change is **dated** only when the vendor demonstrably refreshed shares that day: "
-      "%s. Otherwise it is an **interval** event of width %s, because the accumulated flow "
-      "could have occurred on any day of the run."
-      % (_fmt(t["dated_requires"]), t["interval_width_days"]))
+    a("A CR change is **dated** only on per-observation evidence that the share count was "
+      "freshly measured or published — %s — at BOTH endpoints of the change (%s). Otherwise "
+      "it is an **interval** event of width %s."
+      % (_fmt(t["freshness_evidence_kinds"]), _fmt(t["dated_requires"]),
+         t["interval_width_days"]))
+    a("")
+    a("A run of equal shares outstanding is **not** evidence of carry-forward. A genuinely "
+      "daily series is constant on every day without a creation or redemption, which for "
+      "most funds is most days; \"same value\" and \"stale observation\" are different "
+      "claims and the share series alone cannot separate them. Equal-value runs are carried "
+      "as a staleness **diagnostic** only. Under verified daily freshness a constant stretch "
+      "is a run of genuine zero-CR days, and the change that ends it is still dated.")
     a("")
     a("| rule | registered value |")
     a("|---|---|")
     for k in ("primary_sample", "interval_events_in_primary",
-              "interval_events_may_be_matched_same_day", "on_unaudited_refresh"):
+              "interval_events_may_be_matched_same_day", "absent_freshness_evidence",
+              "equal_value_runs_are_diagnostic_only",
+              "equal_value_run_is_sufficient_proof_of_carryforward",
+              "verified_freshness_zero_days_stay_zero_days", "on_unaudited_refresh"):
         a("| %s | %s |" % (k, _fmt(t.get(k))))
     a("")
     a("Interval events may **not** be paired with same-day constituent order imbalance: the "
@@ -193,9 +204,17 @@ def render(cfg: dict) -> str:
     a("")
     a("| element | registered value |")
     a("|---|---|")
-    for k in ("outcome", "normalization", "exposure", "sign_source", "role",
+    for k in ("outcome", "normalization", "exposure", "sign_source", "interpretation",
+              "recovers_gross_ap_activity", "recovers_event_timing_within_interval",
+              "offsetting_flows_within_interval_are_unobserved", "role",
               "may_replace_primary"):
         a("| %s | %s |" % (k, _fmt(t["interval_robustness"].get(k))))
+    a("")
+    a("This is reported as a **net interval association**. Net change in shares outstanding "
+      "is a net quantity: a creation and a redemption inside the same interval cancel, so a "
+      "quiet net figure can sit on top of heavy two-way AP activity. It therefore recovers "
+      "neither gross AP activity nor event timing within the interval, and may not be "
+      "described as either.")
     a("")
     a("Reported in every case: %s." % _fmt(t["report"]))
     a("")

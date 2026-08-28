@@ -580,11 +580,29 @@ network_exposure:
   # interval guaranteed to carry a printed share change.
   cr_event_timing:
     classes: [dated, interval]
-    # DATED: the vendor refreshed shares on that day, so the change is localized to it.
-    # Requires an audited daily refresh with no carry-forward fingerprint; a change preceded
-    # by a run of unchanged values is INTERVAL, of width (run length + 1) days.
-    dated_requires: [audited_daily_refresh, no_preceding_unchanged_run]
-    interval_width_days: run_length_before_plus_one
+    # CORRECTION 2026-08-28. An earlier rule made "preceded by a run of unchanged shares"
+    # sufficient evidence of carry-forward. It is not. A genuinely daily series stays
+    # CONSTANT whenever no creation or redemption occurs, which for most funds is most days.
+    # "Same value" and "stale observation" are different claims, and the series alone cannot
+    # tell them apart — that is exactly why freshness has to come from the vendor.
+    #
+    # DATED requires PER-OBSERVATION evidence that the observation was freshly measured or
+    # published: a vendor as-of/update timestamp, a refresh flag, or another documented
+    # freshness indicator. A change between t-1 and t is localized to t only when BOTH
+    # endpoints are fresh observations; if t-1 was carried forward, the change could have
+    # happened earlier, and the interval runs back to the last fresh observation.
+    dated_requires: [per_observation_freshness_evidence_at_t,
+                     per_observation_freshness_evidence_at_t_minus_1]
+    freshness_evidence_kinds: [vendor_as_of_timestamp, vendor_refresh_flag,
+                               documented_freshness_indicator]
+    # Runs of equal values stay a DIAGNOSTIC — reported, never proof of anything.
+    equal_value_runs_are_diagnostic_only: true
+    equal_value_run_is_sufficient_proof_of_carryforward: false
+    # Under verified daily freshness a constant stretch is simply a run of genuine zero-CR
+    # days, and the change that ends it is still DATED.
+    verified_freshness_zero_days_stay_zero_days: true
+    absent_freshness_evidence: interval          # conservative, by construction
+    interval_width_days: days_back_to_last_fresh_observation
     # The primary is same-day aligned OIB, so it takes DATED events only.
     primary_sample: dated_only
     interval_events_in_primary: excluded
@@ -593,6 +611,15 @@ network_exposure:
     # scale at which their timing is actually known.
     interval_robustness:
       outcome: cumulative_aligned_signed_dollar_imbalance_over_the_interval
+      # WHAT IT IS AND IS NOT. Net Delta(SharesOut) over an interval is a NET quantity: a
+      # creation and a redemption inside the same interval cancel, so a quiet net figure can
+      # sit on top of heavy two-way AP activity. The interval result is therefore a NET
+      # INTERVAL ASSOCIATION — it does not recover gross AP activity, and it does not recover
+      # event timing within the interval. It may not be described as either.
+      interpretation: net_interval_association
+      recovers_gross_ap_activity: false
+      recovers_event_timing_within_interval: false
+      offsetting_flows_within_interval_are_unobserved: true
       # summed across the interval's days, over ADV$ x interval length, so it is on the same
       # per-day scale as the primary and the two are comparable
       normalization: sum_over_interval_days / (adv_dollar_pre * interval_days)

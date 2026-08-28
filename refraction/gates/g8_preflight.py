@@ -576,78 +576,125 @@ def shares_update_audit(shares: pd.DataFrame, record: dict, config: dict) -> dic
     tab = pd.DataFrame(per_fund)
     longest = int(max(runs_all)) if runs_all else 1
     median_unchanged = float(tab["share_of_days_unchanged"].median()) if len(tab) else np.nan
-    # A daily-refresh series can legitimately show unchanged days — funds do go a day without
-    # creations. What staleness looks like is LONG identical runs ending in a jump, and it is
-    # the pattern, not the count, that the human reads.
-    looks_stale = bool(longest >= 3 and median_unchanged > 0.5)
+    # A DIAGNOSTIC, and only that (corrected 2026-08-28). A genuinely daily series is
+    # CONSTANT on every day without a creation or redemption, which for most funds is most
+    # days — so long identical runs are equally consistent with a quiet fund and with a
+    # stale feed, and this function cannot tell them apart. It flags a pattern worth a
+    # human's attention; it never establishes carry-forward, and the timing classification
+    # does not consult it. Freshness comes from per-observation vendor evidence
+    # (observation_freshness), which is a different kind of fact.
+    run_flag = bool(longest >= 3 and median_unchanged > 0.5)
     return {
         "stated_update_frequency": stated,
         "by_fund": tab,
         "median_share_of_days_unchanged": median_unchanged,
         "longest_unchanged_run_days": longest,
-        "looks_like_carryforward": looks_stale,
-        "consistent_with_daily_refresh": bool(stated == "daily" and not looks_stale),
+        "run_diagnostic_suggests_review": run_flag,
+        "is_proof_of_carryforward": False,          # never, by construction
+        "diagnostic_only": True,
+        "freshness_must_come_from": "per-observation vendor as-of / refresh evidence",
         "implication": (
-            "a jump after a run of identical values dates the WHOLE accumulated flow on the "
-            "refresh day; treat those as interval events, not dated ones, and report how "
-            "many CR events are affected" if looks_stale else
-            "no carry-forward fingerprint; CR event dates are as precise as the refresh"),
-        "needs_human_review": looks_stale or stated != "daily",
+            "long identical runs — consistent with a quiet fund OR a stale feed. This does "
+            "not classify anything; check the vendor's as-of/refresh field per observation"
+            if run_flag else
+            "no long identical runs; still no evidence either way about per-observation "
+            "freshness, which is what the timing rule reads"),
+        "needs_human_review": run_flag or stated != "daily",
     }
 
 
 # --------------------------------------------------------------------------- timing rule
+def observation_freshness(shares: pd.DataFrame, config: dict) -> np.ndarray:
+    """Per-observation evidence that a share count was freshly measured or published.
+
+    Accepted, in order of preference, and all supplied BY THE VENDOR:
+      * `is_fresh`             — an explicit boolean the vendor publishes
+      * `refresh_flag`         — a vendor refresh indicator, coerced to boolean
+      * `shares_as_of`         — a vendor as-of/update timestamp; the observation is fresh
+                                 when its as-of date equals its own observation date, i.e.
+                                 the value was restated for that day rather than carried
+                                 forward from an earlier one
+
+    Returns all-False when none is present. That is deliberate: absent evidence is not
+    evidence of freshness, and the timing rule classifies conservatively as interval.
+    """
+    n = len(shares)
+    if "is_fresh" in shares.columns:
+        return shares["is_fresh"].fillna(False).astype(bool).to_numpy()
+    if "refresh_flag" in shares.columns:
+        return shares["refresh_flag"].fillna(False).astype(bool).to_numpy()
+    if "shares_as_of" in shares.columns:
+        as_of = pd.to_datetime(shares["shares_as_of"], errors="coerce")
+        obs = pd.to_datetime(shares["date"], errors="coerce")
+        return (as_of.notna() & (as_of.dt.normalize() == obs.dt.normalize())).to_numpy()
+    return np.zeros(n, dtype=bool)
+
+
 def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict) -> pd.DataFrame:
-    """Label every CR change DATED or INTERVAL (binding rule, 2026-08-28).
+    """Label every CR change DATED or INTERVAL (corrected rule, 2026-08-28).
 
-    A change is DATED only when the vendor demonstrably refreshed shares on that day: the
-    audit must establish a daily cadence with no carry-forward fingerprint, AND the change
-    must not be preceded by a run of unchanged values. Otherwise the accumulated flow could
-    have occurred on any day of the run, and the event is INTERVAL of width
-    (run length + 1) days.
+    THE CORRECTION. An earlier version treated "preceded by a run of unchanged shares" as
+    proof of carry-forward. It is not: a genuinely daily series stays CONSTANT on every day
+    without a creation or redemption, which for most funds is most days. "Same value" and
+    "stale observation" are different claims, and the share series alone cannot separate
+    them — which is precisely why freshness must come from the vendor.
 
-    Why this is a SAMPLE rule and not a caveat: the update day is the one day in the interval
-    guaranteed to carry a printed share change, so pairing interval events with same-day
-    constituent order imbalance attributes trading to a date the data cannot support — and it
-    does so in exactly the direction that manufactures a same-day association.
+    So DATED requires PER-OBSERVATION freshness evidence at BOTH endpoints of the change:
+    the value at t was published for t, and the value at t-1 was published for t-1. Only then
+    is the change localized to day t. If t-1 was carried forward, the change could have
+    occurred any time since the last fresh observation, and the interval runs back to it.
 
-    `shares`: fund | date | shares_outstanding. Returns fund | date | cr_timing |
-    cr_interval_days | cr_interval_start.
+    Under verified daily freshness a constant stretch is simply a run of genuine zero-CR
+    days, and the change that ends it is still DATED.
+
+    Runs of equal values are carried through as a DIAGNOSTIC (`equal_value_run_before`),
+    reported but never used to classify.
+
+    `shares`: fund | date | shares_outstanding, plus one freshness column (see
+    observation_freshness). Returns fund | date | cr_timing | cr_interval_days |
+    cr_interval_start | freshness_evidence | equal_value_run_before.
     """
     t = config["network_exposure"]["cr_event_timing"]
+    if t.get("equal_value_run_is_sufficient_proof_of_carryforward"):
+        raise SafeguardViolation(
+            "a run of equal shares outstanding is a staleness DIAGNOSTIC, not proof of "
+            "carry-forward: a daily series is constant whenever no creation or redemption "
+            "occurs.")
     df = shares.copy()
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values(["fund", "date"]).reset_index(drop=True)
-
-    daily_ok = bool(audit and audit.get("consistent_with_daily_refresh"))
-    if not (audit and audit.get("stated_update_frequency")):
-        daily_ok = False                     # on_unaudited_refresh: all_events_interval
+    fresh_all = observation_freshness(df, config)
+    kind = ("is_fresh" if "is_fresh" in df.columns else
+            "refresh_flag" if "refresh_flag" in df.columns else
+            "shares_as_of" if "shares_as_of" in df.columns else None)
 
     rows = []
     for fund, g in df.groupby("fund", sort=False):
+        idx = g.index.to_numpy()
         v = g["shares_outstanding"].astype(float).to_numpy()
         dates = g["date"].to_numpy()
-        run = 0                              # consecutive prior days with S unchanged
+        fresh = fresh_all[idx]
+        last_fresh = None                   # position of the most recent fresh observation
+        run = 0                             # equal-value run length: DIAGNOSTIC only
         for i in range(len(v)):
-            if i == 0:
-                rows.append({"fund": fund, "date": dates[i], "cr_timing": "none",
-                             "cr_interval_days": np.nan, "cr_interval_start": pd.NaT})
-                continue
-            changed = v[i] != v[i - 1]
-            if not changed:
-                run += 1
-                rows.append({"fund": fund, "date": dates[i], "cr_timing": "none",
-                             "cr_interval_days": np.nan, "cr_interval_start": pd.NaT})
-                continue
-            if daily_ok and run == 0:
-                rows.append({"fund": fund, "date": dates[i], "cr_timing": "dated",
-                             "cr_interval_days": 1.0, "cr_interval_start": dates[i]})
-            else:
-                width = run + 1
-                rows.append({"fund": fund, "date": dates[i], "cr_timing": "interval",
-                             "cr_interval_days": float(width),
-                             "cr_interval_start": dates[max(0, i - run)]})
-            run = 0
+            changed = i > 0 and v[i] != v[i - 1]
+            run = run + 1 if (i > 0 and not changed) else 0
+            timing, width, start = "none", np.nan, pd.NaT
+            if changed:
+                if fresh[i] and last_fresh == i - 1:
+                    timing, width, start = "dated", 1.0, dates[i]
+                else:
+                    timing = "interval"
+                    back = last_fresh if last_fresh is not None else 0
+                    width = float(i - back) if last_fresh is not None else float(i + 1)
+                    start = dates[back]
+            if fresh[i]:
+                last_fresh = i
+            rows.append({"fund": fund, "date": dates[i], "cr_timing": timing,
+                         "cr_interval_days": width, "cr_interval_start": start,
+                         "freshness_evidence": kind or "none",
+                         "observation_is_fresh": bool(fresh[i]),
+                         "equal_value_run_before": int(run)})
     return pd.DataFrame(rows)
 
 

@@ -672,9 +672,18 @@ def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
     assert t["interval_events_in_primary"] == "excluded"
     assert t["interval_events_may_be_matched_same_day"] is False
     assert t["on_unaudited_refresh"] == "all_events_interval"
-    assert set(t["dated_requires"]) == {"audited_daily_refresh", "no_preceding_unchanged_run"}
+    assert t["absent_freshness_evidence"] == "interval"
+    # CORRECTED: dated turns on per-observation freshness evidence, not on the value pattern
+    assert set(t["dated_requires"]) == {"per_observation_freshness_evidence_at_t",
+                                        "per_observation_freshness_evidence_at_t_minus_1"}
+    assert t["equal_value_runs_are_diagnostic_only"] is True
+    assert t["equal_value_run_is_sufficient_proof_of_carryforward"] is False
+    assert t["verified_freshness_zero_days_stay_zero_days"] is True
     r = t["interval_robustness"]
     assert r["role"] == "robustness_only" and r["may_replace_primary"] is False
+    assert r["interpretation"] == "net_interval_association"
+    assert r["recovers_gross_ap_activity"] is False
+    assert r["recovers_event_timing_within_interval"] is False
     for k in ("n_dated_events", "n_interval_events", "median_interval_width_days",
               "share_of_events_dated"):
         assert k in t["report"], k

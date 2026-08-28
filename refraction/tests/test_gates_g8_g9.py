@@ -1305,31 +1305,33 @@ def test_any_centering_or_scaling_in_the_primary_is_refused():
 # audit item 4 — shares-outstanding refresh frequency                          #
 # --------------------------------------------------------------------------- #
 
-def test_a_carryforward_series_is_detected_not_read_as_dated_events():
-    """A stale value held for three days then catching up looks like three quiet days and
-    one large creation. The run-then-jump fingerprint is what gives it away."""
+def test_long_identical_runs_raise_a_diagnostic_not_a_classification():
+    """CORRECTED: a run of equal values is consistent with a QUIET FUND and with a STALE
+    FEED alike. The audit flags a pattern for a human; it never establishes carry-forward,
+    and the timing rule does not consult it."""
     v, s = 100.0, []
     for _ in range(20):
-        s += [v, v, v]                 # held constant for three days
-        v *= 1.06                      # then catches up
-    f = shares_frame(s)
-    a = pre.shares_update_audit(f, {"update_frequency": "daily"}, CONFIG)
-    assert a["looks_like_carryforward"] is True
-    assert a["consistent_with_daily_refresh"] is False
+        s += [v, v, v]
+        v *= 1.06
+    a = pre.shares_update_audit(shares_frame(s), {"update_frequency": "daily"}, CONFIG)
+    assert a["run_diagnostic_suggests_review"] is True
+    assert a["is_proof_of_carryforward"] is False
+    assert a["diagnostic_only"] is True
     assert a["longest_unchanged_run_days"] >= 3
-    assert "interval events, not dated ones" in a["implication"]
+    assert "quiet fund OR a stale feed" in a["implication"]
     assert a["needs_human_review"] is True
 
 
-def test_a_genuinely_daily_series_passes():
+def test_a_series_without_long_runs_still_proves_nothing_about_freshness():
     rng = np.random.default_rng(3)
     v, s = 100.0, []
     for _ in range(120):
         v *= 1 + rng.normal(0, 0.01)
         s.append(v)
     a = pre.shares_update_audit(shares_frame(s), {"update_frequency": "daily"}, CONFIG)
-    assert a["looks_like_carryforward"] is False
-    assert a["consistent_with_daily_refresh"] is True
+    assert a["run_diagnostic_suggests_review"] is False
+    assert a["is_proof_of_carryforward"] is False
+    assert "no evidence either way about per-observation" in a["implication"]
     assert a["needs_human_review"] is False
 
 
@@ -1569,58 +1571,123 @@ def test_the_exposure_uses_the_registered_magnitude_and_sign_columns():
 # CR event timing — binding on the same-day primary (frozen 2026-08-28)        #
 # --------------------------------------------------------------------------- #
 
-def carryforward_shares(blocks=8, hold=3, step=1.06, fund="F1"):
-    """A vendor that refreshes every `hold` days: S held constant, then catching up."""
-    v, s = 100.0, []
-    for _ in range(blocks):
-        s += [v] * hold
-        v *= step
-    return shares_frame(s, fund=fund)
+def quiet_fund_shares(fund="F1"):
+    """A genuinely daily series for a fund that simply does not create most days: two real
+    creations separated by quiet stretches of identical values."""
+    counts = [100, 100, 100, 100, 105, 105, 105, 110.0]
+    f = shares_frame(counts, fund=fund)
+    f["shares_as_of"] = f["date"]              # the vendor restates every observation
+    return f
+
+
+def stale_fund_shares(fund="F1"):
+    """The same share path, but the vendor carries values forward: as_of lags the
+    observation date on the stale days."""
+    f = quiet_fund_shares(fund)
+    d = list(f["date"])
+    f["shares_as_of"] = [d[0], d[0], d[0], d[3], d[4], d[4], d[4], d[7]]
+    return f
+
+
+def test_a_quiet_stretch_under_verified_freshness_is_zero_days_not_an_interval():
+    """THE CORRECTION. Equal values are not staleness: with per-observation freshness the
+    constant stretch is a run of genuine zero-CR days, and the change ending it is DATED."""
+    tm = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG)
+    assert (tm["cr_timing"] == "none").sum() == 6      # the quiet days stay non-events
+    ev = tm[tm["cr_timing"] != "none"]
+    assert len(ev) == 2 and (ev["cr_timing"] == "dated").all()
+    assert (ev["cr_interval_days"] == 1).all()
+    # the equal-value runs are still reported, as a diagnostic
+    assert tm["equal_value_run_before"].max() >= 3
+
+
+def test_a_stale_feed_is_interval_even_though_the_share_path_is_identical():
+    """Same share path, same equal-value runs — only the vendor's as-of dates differ. The
+    classification must follow the freshness evidence, not the value pattern."""
+    quiet = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG)
+    stale = pre.classify_cr_event_timing(stale_fund_shares(), None, CONFIG)
+    assert list(quiet["equal_value_run_before"]) == list(stale["equal_value_run_before"])
+    assert set(quiet[quiet["cr_timing"] != "none"]["cr_timing"]) == {"dated"}
+    assert "interval" in set(stale[stale["cr_timing"] != "none"]["cr_timing"])
+    iv = stale[stale["cr_timing"] == "interval"]
+    assert (iv["cr_interval_days"] > 1).all()
+    assert (iv["cr_interval_start"] < iv["date"]).all()
+
+
+def test_the_classifier_never_reads_the_run_length_audit():
+    """The run diagnostic must not be able to reclassify anything."""
+    import inspect
+    src = inspect.getsource(pre.classify_cr_event_timing)
+    for token in ("run_diagnostic", "looks_like_carryforward", "longest_unchanged",
+                  "consistent_with_daily_refresh"):
+        assert token not in src, token
+    # and the same series classifies identically whatever audit is handed in
+    f = quiet_fund_shares()
+    a = pre.shares_update_audit(f, {"update_frequency": "weekly"}, CONFIG)
+    assert list(pre.classify_cr_event_timing(f, a, CONFIG)["cr_timing"]) == \
+        list(pre.classify_cr_event_timing(f, None, CONFIG)["cr_timing"])
+
+
+def test_freshness_can_come_from_a_flag_or_a_boolean_as_well_as_a_timestamp():
+    kinds = CONFIG["network_exposure"]["cr_event_timing"]["freshness_evidence_kinds"]
+    assert set(kinds) == {"vendor_as_of_timestamp", "vendor_refresh_flag",
+                          "documented_freshness_indicator"}
+    f = shares_frame([100, 100, 105.0])
+    for col in ("is_fresh", "refresh_flag"):
+        g = f.assign(**{col: [True, True, True]})
+        tm = pre.classify_cr_event_timing(g, None, CONFIG)
+        assert tm.loc[2, "cr_timing"] == "dated"
+        assert tm.loc[2, "freshness_evidence"] == col
+
+
+def test_an_equal_value_run_may_never_be_promoted_to_proof():
+    import copy
+    cfg = copy.deepcopy(CONFIG)
+    cfg["network_exposure"]["cr_event_timing"][
+        "equal_value_run_is_sufficient_proof_of_carryforward"] = True
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.classify_cr_event_timing(quiet_fund_shares(), None, cfg)
+    assert "staleness DIAGNOSTIC, not proof" in str(e.value)
 
 
 def daily_shares(n=60, seed=3, fund="F1"):
+    """A daily series WITH vendor freshness evidence on every observation."""
     rng = np.random.default_rng(seed)
     v, s = 100.0, []
     for _ in range(n):
         v *= 1 + rng.normal(0, 0.01)
         s.append(v)
-    return shares_frame(s, fund=fund)
+    f = shares_frame(s, fund=fund)
+    f["shares_as_of"] = f["date"]
+    return f
 
 
-def test_a_carryforward_jump_is_an_interval_event_not_a_dated_one():
-    f = carryforward_shares()
-    audit = pre.shares_update_audit(f, {"update_frequency": "daily"}, CONFIG)
-    tm = pre.classify_cr_event_timing(f, audit, CONFIG)
-    ev = tm[tm["cr_timing"] != "none"]
-    assert (ev["cr_timing"] == "interval").all()
-    assert (ev["cr_interval_days"] == 3).all()          # hold + the update day
-    assert (ev["cr_interval_start"] < ev["date"]).all()
-
-
-def test_a_genuinely_daily_series_yields_dated_events():
-    f = daily_shares()
-    audit = pre.shares_update_audit(f, {"update_frequency": "daily"}, CONFIG)
-    tm = pre.classify_cr_event_timing(f, audit, CONFIG)
+def test_verified_daily_freshness_yields_dated_events():
+    tm = pre.classify_cr_event_timing(daily_shares(), None, CONFIG)
     ev = tm[tm["cr_timing"] != "none"]
     assert len(ev) and (ev["cr_timing"] == "dated").all()
     assert (ev["cr_interval_days"] == 1).all()
 
 
-def test_an_unaudited_refresh_makes_every_event_interval():
-    """If the cadence was never established, nothing can be localized to a day."""
-    assert CONFIG["network_exposure"]["cr_event_timing"]["on_unaudited_refresh"] == \
-        "all_events_interval"
-    f = daily_shares()
+def test_no_freshness_evidence_makes_every_event_interval():
+    """Absent evidence is not evidence of freshness. Conservative by construction."""
+    assert CONFIG["network_exposure"]["cr_event_timing"]["absent_freshness_evidence"] == \
+        "interval"
+    f = daily_shares().drop(columns=["shares_as_of"])
     tm = pre.classify_cr_event_timing(f, None, CONFIG)
     ev = tm[tm["cr_timing"] != "none"]
-    assert (ev["cr_timing"] == "interval").all()
+    assert len(ev) and (ev["cr_timing"] == "interval").all()
+    assert (ev["freshness_evidence"] == "none").all()
 
 
-def test_a_non_daily_stated_cadence_also_yields_interval_events():
-    f = daily_shares()
-    audit = pre.shares_update_audit(f, {"update_frequency": "weekly"}, CONFIG)
-    tm = pre.classify_cr_event_timing(f, audit, CONFIG)
-    assert (tm[tm["cr_timing"] != "none"]["cr_timing"] == "interval").all()
+def test_the_interval_result_is_a_net_association_and_says_so():
+    """Net Delta(SharesOut) hides offsetting creations and redemptions inside the interval,
+    so it recovers neither gross AP activity nor timing within the interval."""
+    r = CONFIG["network_exposure"]["cr_event_timing"]["interval_robustness"]
+    assert r["interpretation"] == "net_interval_association"
+    assert r["recovers_gross_ap_activity"] is False
+    assert r["recovers_event_timing_within_interval"] is False
+    assert r["offsetting_flows_within_interval_are_unobserved"] is True
 
 
 def test_interval_events_are_removed_from_the_same_day_primary():

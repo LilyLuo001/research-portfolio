@@ -109,13 +109,19 @@ All must hold; otherwise the fallback arm. Decided before any treatment coeffici
 
 ### 3.4 CR event timing (binding on the sample)
 
-A CR change is **dated** only when the vendor demonstrably refreshed shares that day: audited_daily_refresh, no_preceding_unchanged_run. Otherwise it is an **interval** event of width run_length_before_plus_one, because the accumulated flow could have occurred on any day of the run.
+A CR change is **dated** only on per-observation evidence that the share count was freshly measured or published — vendor_as_of_timestamp, vendor_refresh_flag, documented_freshness_indicator — at BOTH endpoints of the change (per_observation_freshness_evidence_at_t, per_observation_freshness_evidence_at_t_minus_1). Otherwise it is an **interval** event of width days_back_to_last_fresh_observation.
+
+A run of equal shares outstanding is **not** evidence of carry-forward. A genuinely daily series is constant on every day without a creation or redemption, which for most funds is most days; "same value" and "stale observation" are different claims and the share series alone cannot separate them. Equal-value runs are carried as a staleness **diagnostic** only. Under verified daily freshness a constant stretch is a run of genuine zero-CR days, and the change that ends it is still dated.
 
 | rule | registered value |
 |---|---|
 | primary_sample | dated_only |
 | interval_events_in_primary | excluded |
 | interval_events_may_be_matched_same_day | no |
+| absent_freshness_evidence | interval |
+| equal_value_runs_are_diagnostic_only | yes |
+| equal_value_run_is_sufficient_proof_of_carryforward | no |
+| verified_freshness_zero_days_stay_zero_days | yes |
 | on_unaudited_refresh | all_events_interval |
 
 Interval events may **not** be paired with same-day constituent order imbalance: the vendor's update day is the one day in the interval guaranteed to carry a printed share change, so a same-day pairing dates constituent trading to a day the data cannot support, in the direction that manufactures a same-day association.
@@ -128,8 +134,14 @@ They are not discarded. Interval-level robustness outcome:
 | normalization | sum_over_interval_days / (adv_dollar_pre * interval_days) |
 | exposure | abs_CR_x_absL |
 | sign_source | CR_raw |
+| interpretation | net_interval_association |
+| recovers_gross_ap_activity | no |
+| recovers_event_timing_within_interval | no |
+| offsetting_flows_within_interval_are_unobserved | yes |
 | role | robustness_only |
 | may_replace_primary | no |
+
+This is reported as a **net interval association**. Net change in shares outstanding is a net quantity: a creation and a redemption inside the same interval cancel, so a quiet net figure can sit on top of heavy two-way AP activity. It therefore recovers neither gross AP activity nor event timing within the interval, and may not be described as either.
 
 Reported in every case: n_dated_events, n_interval_events, median_interval_width_days, share_of_events_dated.
 
