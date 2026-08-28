@@ -198,13 +198,15 @@ def test_convergent_validity_catches_the_orphaned_measure():
 
 # ------------------------------------------------------------ novelty, inverted
 
-def test_novelty_blocks_on_silence_not_just_on_warnings():
-    """Regression for two fail-open bugs: v3 dropped its prior-work section and
-    passed; v5 rewrote the warnings in different words and passed. The gate now
-    requires a positive assertion, so silence blocks."""
+def test_current_latest_version_novelty_audit_passes():
+    """Action 2 supplied the positive sentinel and source-backed audit.
+
+    The tmp-path test below remains the regression proving that silence and
+    inherited warning prose block.
+    """
     r = gates.gate_novelty("v1.1-design-freeze")
-    assert r.status == "BLOCKED"
-    assert "sentinel" in r.detail
+    assert r.status == "PASS"
+    assert "primary source" in r.detail
 
 
 def test_amendment_gate_blocks_until_the_amended_freeze_is_tagged():
