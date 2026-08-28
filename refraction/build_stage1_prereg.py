@@ -173,11 +173,36 @@ def render(cfg: dict) -> str:
     a("### 3.4 CR event timing (binding on the sample)")
     a("")
     t = ne["cr_event_timing"]
-    a("A CR change is **dated** only on per-observation evidence that the share count was "
-      "freshly measured or published — %s — at BOTH endpoints of the change (%s). Otherwise "
-      "it is an **interval** event of width %s."
-      % (_fmt(t["freshness_evidence_kinds"]), _fmt(t["dated_requires"]),
-         t["interval_width_days"]))
+    fe = t["freshness_evidence"]
+    a("A CR change is **dated** only on per-observation evidence that the ECONOMIC "
+      "observation is as of that day, at BOTH endpoints of the change (%s). Otherwise it is "
+      "an **interval** event of width %s." % (_fmt(t["dated_requires"]),
+                                              t["interval_width_days"]))
+    a("")
+    a("Freshness means the economic as-of date, **not** that the vendor file or API response "
+      "was refreshed that day. A feed can restamp, republish or re-serve a row daily while "
+      "the shares-outstanding figure still refers to an earlier economic as-of date; a "
+      "publication timestamp certifies that the pipeline ran, not when the shares were "
+      "counted. So a per-observation as-of date is necessary but not sufficient — it must "
+      "sit against a **%s** establishing what \"as of day t\" means for this field."
+      % fe["also_required"])
+    a("")
+    a("| freshness evidence | status |")
+    a("|---|---|")
+    for k in fe["sufficient"]:
+        a("| %s | sufficient, WITH %s |" % (k, fe["also_required"]))
+    for k in fe["insufficient_alone"]:
+        a("| %s | never sufficient alone |" % k)
+    a("")
+    a("**Dated is day-localized only.** It does not establish within-day ordering between AP "
+      "activity and constituent order imbalance: both are measured over the same day and "
+      "either could precede the other. Same-day G8 is therefore **%s**, not a causal "
+      "sequence; within-day ordering would require %s."
+      % (t["same_day_g8_status"], t["within_day_ordering_requires"]))
+    a("")
+    a("**The rule does not bend for data availability.** If the vendor lacks the freshness "
+      "metadata, G8 returns `%s` on the same-day primary rather than a relaxed standard."
+      % t["insufficient_freshness_metadata_response"])
     a("")
     a("A run of equal shares outstanding is **not** evidence of carry-forward. A genuinely "
       "daily series is constant on every day without a creation or redemption, which for "

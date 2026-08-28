@@ -260,26 +260,6 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
             "NEED_HUMAN: the CR event census is required before estimation (freeze 4). "
             "Mechanism variation comes from nonzero-CR fund-days, not constituent-day rows.")
 
-    # timing rule (2026-08-28) — the same-day primary takes DATED events only
-    tcfg = ne["cr_event_timing"]
-    if timestamp_audit.get("resolution") is not None:
-        tc = census.get("timing")
-        if tc is None:
-            raise SafeguardViolation(
-                "NEED_HUMAN: the CR event timing census is missing. The same-day aligned-OIB "
-                "primary is registered %s, so interval events must be classified and excluded "
-                "before it is estimated — pairing them with the vendor's update day dates "
-                "constituent trading to the one day guaranteed to carry a printed share "
-                "change." % tcfg["primary_sample"])
-        if tc.get("n_interval_events") and tcfg["interval_events_in_primary"] == "excluded":
-            # the sample must already have been filtered; verdict refuses to bless one that
-            # still carries them
-            raise SafeguardViolation(
-                "%d interval event(s) are still in the primary sample. Apply "
-                "g8_preflight.primary_timing_sample() first; interval events belong to the "
-                "interval-level robustness outcome (%s), not to the same-day primary."
-                % (tc["n_interval_events"], tcfg["interval_robustness"]["outcome"]))
-
     alpha = config.get("gate0_thresholds", {}).get("first_stage_primary_alpha")
     if alpha is None:
         raise SafeguardViolation(
@@ -303,6 +283,44 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
     # sample cannot be read as evidence of absence — and so the coefficient's own size can
     # never influence which branch is taken.
     ident = identifying_variation(result, census, config)
+
+    # timing rule (2026-08-28) — the same-day primary takes DATED events only
+    tcfg = ne["cr_event_timing"]
+    if timestamp_audit.get("resolution") is not None:
+        tc = census.get("timing")
+        if tc is None:
+            raise SafeguardViolation(
+                "NEED_HUMAN: the CR event timing census is missing. The same-day aligned-OIB "
+                "primary is registered %s, so interval events must be classified and excluded "
+                "before it is estimated — pairing them with the vendor's update day dates "
+                "constituent trading to the one day guaranteed to carry a printed share "
+                "change." % tcfg["primary_sample"])
+        # Non-relaxation: if the vendor lacks the freshness metadata, the standard does not
+        # bend to keep a sample. The same-day primary is simply not identified.
+        if tc.get("n_dated_events") == 0 and tc.get("n_interval_events"):
+            return _report(result, census, ident, config, outcome_choice,
+                           timestamp_audit, alpha, t, p_one_sided) | {
+                "licensed": None,
+                "outcome": "INSUFFICIENT_IDENTIFYING_VARIATION",
+                "classification_basis": "no dated CR events",
+                "reasons": [
+                    "every CR event is interval-localized (%d of them): no observation "
+                    "carries economic as-of freshness against a documented daily cutoff, so "
+                    "the same-day aligned-OIB primary has no events it may use. The "
+                    "freshness standard is not relaxed to manufacture one."
+                    % tc["n_interval_events"]],
+                "diagnostics": {"timing": tc},
+                "note": ne["insufficient_variation_response"].strip()}
+        if tc.get("n_interval_events") and tcfg["interval_events_in_primary"] == "excluded":
+            # the sample must already have been filtered; verdict refuses to bless one that
+            # still carries them
+            raise SafeguardViolation(
+                "%d interval event(s) are still in the primary sample. Apply "
+                "g8_preflight.primary_timing_sample() first; interval events belong to the "
+                "interval-level robustness outcome (%s), not to the same-day primary."
+                % (tc["n_interval_events"], tcfg["interval_robustness"]["outcome"]))
+
+
     report = _report(result, census, ident, config, outcome_choice, timestamp_audit,
                      alpha, t, p_one_sided)
 
@@ -472,6 +490,14 @@ def _report(result, census, ident, config, outcome_choice, timestamp_audit, alph
         "estimand": result.get("estimand", "baseline"),
         "event_language": timestamp_audit["g8_event_language"],
         "within_day_ordering_identified": timestamp_audit["within_day_ordering_identified"],
+        # A DATED event is day-localized only. Both the share change and the constituent
+        # order imbalance are measured over the same day and either could precede the other,
+        # so the same-day result is mechanism association and calibration — not a causal
+        # sequence — unless true AP transaction timestamps exist.
+        "dated_means": config["network_exposure"]["cr_event_timing"]["dated_means"],
+        "same_day_status": config["network_exposure"]["cr_event_timing"]["same_day_g8_status"],
+        "within_day_ordering_requires": config["network_exposure"]["cr_event_timing"][
+            "within_day_ordering_requires"],
     }
 
 

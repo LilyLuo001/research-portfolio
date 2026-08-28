@@ -604,33 +604,64 @@ def shares_update_audit(shares: pd.DataFrame, record: dict, config: dict) -> dic
 
 
 # --------------------------------------------------------------------------- timing rule
-def observation_freshness(shares: pd.DataFrame, config: dict) -> np.ndarray:
-    """Per-observation evidence that a share count was freshly measured or published.
+PUBLICATION_ONLY_COLUMNS = ("refresh_flag", "file_updated_at", "file_last_modified",
+                            "api_response_timestamp", "published_at", "row_republished",
+                            "ingested_at", "is_fresh")
 
-    Accepted, in order of preference, and all supplied BY THE VENDOR:
-      * `is_fresh`             — an explicit boolean the vendor publishes
-      * `refresh_flag`         — a vendor refresh indicator, coerced to boolean
-      * `shares_as_of`         — a vendor as-of/update timestamp; the observation is fresh
-                                 when its as-of date equals its own observation date, i.e.
-                                 the value was restated for that day rather than carried
-                                 forward from an earlier one
 
-    Returns all-False when none is present. That is deliberate: absent evidence is not
-    evidence of freshness, and the timing rule classifies conservatively as interval.
+def observation_freshness(shares: pd.DataFrame, config: dict,
+                          freshness_record: dict = None) -> dict:
+    """Is each observation's ECONOMIC as-of date the day it sits on?
+
+    THE DISTINCTION (correction 2026-08-28). A feed can restamp, republish or re-serve a row
+    every day while the SharesOut figure it carries still refers to an earlier economic as-of
+    date. A publication or refresh timestamp certifies that the PIPELINE ran; it says nothing
+    about when the shares were counted. Columns in PUBLICATION_ONLY_COLUMNS are therefore
+    never sufficient, and their presence alone yields no fresh observations.
+
+    Freshness requires BOTH:
+      * a per-observation ECONOMIC as-of date (`shares_as_of`) equal to the observation
+        date, and
+      * `freshness_record` attesting a DOCUMENTED DAILY ECONOMIC CUTOFF for this field —
+        what "as of day t" means for it. Without that, an as-of date equal to the row's date
+        cannot be read as a same-day economic measurement.
+
+    Returns {"fresh": bool array, "evidence": str, "reason": str}. Absent either
+    requirement the array is all-False: conservative by construction, because absent
+    evidence is not evidence of freshness.
     """
+    fe = config["network_exposure"]["cr_event_timing"]["freshness_evidence"]
     n = len(shares)
-    if "is_fresh" in shares.columns:
-        return shares["is_fresh"].fillna(False).astype(bool).to_numpy()
-    if "refresh_flag" in shares.columns:
-        return shares["refresh_flag"].fillna(False).astype(bool).to_numpy()
-    if "shares_as_of" in shares.columns:
-        as_of = pd.to_datetime(shares["shares_as_of"], errors="coerce")
-        obs = pd.to_datetime(shares["date"], errors="coerce")
-        return (as_of.notna() & (as_of.dt.normalize() == obs.dt.normalize())).to_numpy()
-    return np.zeros(n, dtype=bool)
+    none = np.zeros(n, dtype=bool)
+    pub_only = [c for c in PUBLICATION_ONLY_COLUMNS if c in shares.columns]
+
+    if "shares_as_of" not in shares.columns:
+        return {"fresh": none, "evidence": "none",
+                "reason": ("no per-observation economic as-of date"
+                           + (" — %s record(s) the pipeline, not the measurement" % pub_only
+                              if pub_only else ""))}
+    if fe.get("economic_cutoff_must_be_documented"):
+        rec = freshness_record or {}
+        if not rec.get("economic_cutoff_documented"):
+            return {"fresh": none, "evidence": "as_of_without_documented_cutoff",
+                    "reason": ("NEED_HUMAN: a documented daily economic cutoff for this field "
+                               "is required (%s). An as-of date equal to the row's date "
+                               "cannot be read as a same-day economic measurement without "
+                               "one." % fe["also_required"])}
+        if rec.get("economic_cutoff_cadence") not in (None, "daily"):
+            return {"fresh": none, "evidence": "non_daily_economic_cutoff",
+                    "reason": "the documented economic cutoff is %r, not daily"
+                              % rec.get("economic_cutoff_cadence")}
+
+    as_of = pd.to_datetime(shares["shares_as_of"], errors="coerce")
+    obs = pd.to_datetime(shares["date"], errors="coerce")
+    fresh = (as_of.notna() & (as_of.dt.normalize() == obs.dt.normalize())).to_numpy()
+    return {"fresh": fresh, "evidence": "economic_as_of_with_documented_daily_cutoff",
+            "reason": "", "publication_only_columns_ignored": pub_only}
 
 
-def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict) -> pd.DataFrame:
+def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
+                             freshness_record: dict = None) -> pd.DataFrame:
     """Label every CR change DATED or INTERVAL (corrected rule, 2026-08-28).
 
     THE CORRECTION. An earlier version treated "preceded by a run of unchanged shares" as
@@ -663,10 +694,8 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict) ->
     df = shares.copy()
     df["date"] = pd.to_datetime(df["date"])
     df = df.sort_values(["fund", "date"]).reset_index(drop=True)
-    fresh_all = observation_freshness(df, config)
-    kind = ("is_fresh" if "is_fresh" in df.columns else
-            "refresh_flag" if "refresh_flag" in df.columns else
-            "shares_as_of" if "shares_as_of" in df.columns else None)
+    fr = observation_freshness(df, config, freshness_record)
+    fresh_all, kind, reason = fr["fresh"], fr["evidence"], fr["reason"]
 
     rows = []
     for fund, g in df.groupby("fund", sort=False):
@@ -692,7 +721,8 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict) ->
                 last_fresh = i
             rows.append({"fund": fund, "date": dates[i], "cr_timing": timing,
                          "cr_interval_days": width, "cr_interval_start": start,
-                         "freshness_evidence": kind or "none",
+                         "freshness_evidence": kind,
+                         "freshness_reason": reason,
                          "observation_is_fresh": bool(fresh[i]),
                          "equal_value_run_before": int(run)})
     return pd.DataFrame(rows)
@@ -734,14 +764,17 @@ def timing_census(panel: pd.DataFrame, config: dict) -> dict:
     n_dated = int((ev["cr_timing"] == "dated").sum())
     n_int = int((ev["cr_timing"] == "interval").sum())
     total = n_dated + n_int
+    t = config["network_exposure"]["cr_event_timing"]
     return {
         "n_dated_events": n_dated,
+        "dated_means": t["dated_means"],
+        "same_day_status": t["same_day_g8_status"],
+        "within_day_ordering_requires": t["within_day_ordering_requires"],
         "n_interval_events": n_int,
         "share_of_events_dated": (n_dated / total) if total else np.nan,
         "median_interval_width_days": (
             float(ev.loc[ev["cr_timing"] == "interval", "cr_interval_days"].median())
             if n_int else np.nan),
-        "primary_sample": config["network_exposure"]["cr_event_timing"]["primary_sample"],
-        "interval_outcome": config["network_exposure"]["cr_event_timing"][
-            "interval_robustness"]["outcome"],
+        "primary_sample": t["primary_sample"],
+        "interval_outcome": t["interval_robustness"]["outcome"],
     }

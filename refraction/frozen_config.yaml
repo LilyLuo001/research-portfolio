@@ -591,10 +591,30 @@ network_exposure:
     # freshness indicator. A change between t-1 and t is localized to t only when BOTH
     # endpoints are fresh observations; if t-1 was carried forward, the change could have
     # happened earlier, and the interval runs back to the last fresh observation.
-    dated_requires: [per_observation_freshness_evidence_at_t,
-                     per_observation_freshness_evidence_at_t_minus_1]
-    freshness_evidence_kinds: [vendor_as_of_timestamp, vendor_refresh_flag,
-                               documented_freshness_indicator]
+    dated_requires: [economic_as_of_freshness_at_t, economic_as_of_freshness_at_t_minus_1]
+    #
+    # CORRECTION 2026-08-28. "Freshness" means the ECONOMIC OBSERVATION is as of that day —
+    # not that the vendor's file or API response was refreshed that day. A feed can restamp,
+    # republish or re-serve a row daily while the SharesOut figure it carries still refers to
+    # an earlier economic as-of date. A publication timestamp then certifies only that the
+    # PIPELINE ran, which is not a fact about when the shares were counted.
+    #
+    # So a per-observation as-of date is necessary but NOT sufficient on its own: it must sit
+    # against a DOCUMENTED DAILY ECONOMIC CUTOFF (or a documented equivalent) establishing
+    # what "as of day t" means for this field. Without that, the as-of date cannot be read as
+    # a same-day economic measurement and the observation is not fresh.
+    freshness_evidence:
+      sufficient:
+        - per_observation_economic_as_of_date  # AND the cutoff below, both required
+      also_required: documented_daily_economic_cutoff
+      insufficient_alone:                      # records the pipeline, not the measurement
+        - vendor_file_publication_timestamp
+        - api_response_timestamp
+        - vendor_refresh_flag
+        - row_republished_indicator
+        - file_last_modified
+      publication_timestamp_is_not_freshness: true
+      economic_cutoff_must_be_documented: true
     # Runs of equal values stay a DIAGNOSTIC — reported, never proof of anything.
     equal_value_runs_are_diagnostic_only: true
     equal_value_run_is_sufficient_proof_of_carryforward: false
@@ -603,6 +623,24 @@ network_exposure:
     verified_freshness_zero_days_stay_zero_days: true
     absent_freshness_evidence: interval          # conservative, by construction
     interval_width_days: days_back_to_last_fresh_observation
+    #
+    # WHAT "DATED" DOES AND DOES NOT BUY. A dated event is DAY-LOCALIZED: the share change
+    # happened on that calendar day. It does NOT establish within-day ordering between the
+    # AP's activity and constituent order imbalance — both are measured over the same day,
+    # and either could precede the other. Same-day G8 is therefore MECHANISM ASSOCIATION AND
+    # CALIBRATION, not a causal sequence, unless true AP transaction timestamps exist.
+    dated_means: day_localized_only
+    dated_establishes_within_day_ordering: false
+    same_day_g8_status: mechanism_association_and_calibration
+    within_day_ordering_requires: true_ap_transaction_timestamps
+    same_day_g8_causal_language_forbidden: true
+    #
+    # NON-RELAXATION. If the vendor turns out to lack the metadata, the rule does not bend:
+    # G8 reports INSUFFICIENT_IDENTIFYING_VARIATION on the same-day primary and the interval
+    # robustness carries what it can. Weakening the freshness standard to keep a sample is
+    # the move this whole audit exists to prevent.
+    insufficient_freshness_metadata_response: INSUFFICIENT_IDENTIFYING_VARIATION
+    rule_may_not_be_relaxed_for_data_availability: true
     # The primary is same-day aligned OIB, so it takes DATED events only.
     primary_sample: dated_only
     interval_events_in_primary: excluded

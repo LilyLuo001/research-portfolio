@@ -674,8 +674,20 @@ def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
     assert t["on_unaudited_refresh"] == "all_events_interval"
     assert t["absent_freshness_evidence"] == "interval"
     # CORRECTED: dated turns on per-observation freshness evidence, not on the value pattern
-    assert set(t["dated_requires"]) == {"per_observation_freshness_evidence_at_t",
-                                        "per_observation_freshness_evidence_at_t_minus_1"}
+    assert set(t["dated_requires"]) == {"economic_as_of_freshness_at_t",
+                                        "economic_as_of_freshness_at_t_minus_1"}
+    fe = t["freshness_evidence"]
+    assert fe["sufficient"] == ["per_observation_economic_as_of_date"]
+    assert fe["also_required"] == "documented_daily_economic_cutoff"
+    assert fe["publication_timestamp_is_not_freshness"] is True
+    for pub in ("vendor_file_publication_timestamp", "api_response_timestamp",
+                "vendor_refresh_flag"):
+        assert pub in fe["insufficient_alone"], pub
+    assert t["dated_means"] == "day_localized_only"
+    assert t["dated_establishes_within_day_ordering"] is False
+    assert t["same_day_g8_status"] == "mechanism_association_and_calibration"
+    assert t["insufficient_freshness_metadata_response"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert t["rule_may_not_be_relaxed_for_data_availability"] is True
     assert t["equal_value_runs_are_diagnostic_only"] is True
     assert t["equal_value_run_is_sufficient_proof_of_carryforward"] is False
     assert t["verified_freshness_zero_days_stay_zero_days"] is True

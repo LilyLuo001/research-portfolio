@@ -109,7 +109,22 @@ All must hold; otherwise the fallback arm. Decided before any treatment coeffici
 
 ### 3.4 CR event timing (binding on the sample)
 
-A CR change is **dated** only on per-observation evidence that the share count was freshly measured or published — vendor_as_of_timestamp, vendor_refresh_flag, documented_freshness_indicator — at BOTH endpoints of the change (per_observation_freshness_evidence_at_t, per_observation_freshness_evidence_at_t_minus_1). Otherwise it is an **interval** event of width days_back_to_last_fresh_observation.
+A CR change is **dated** only on per-observation evidence that the ECONOMIC observation is as of that day, at BOTH endpoints of the change (economic_as_of_freshness_at_t, economic_as_of_freshness_at_t_minus_1). Otherwise it is an **interval** event of width days_back_to_last_fresh_observation.
+
+Freshness means the economic as-of date, **not** that the vendor file or API response was refreshed that day. A feed can restamp, republish or re-serve a row daily while the shares-outstanding figure still refers to an earlier economic as-of date; a publication timestamp certifies that the pipeline ran, not when the shares were counted. So a per-observation as-of date is necessary but not sufficient — it must sit against a **documented_daily_economic_cutoff** establishing what "as of day t" means for this field.
+
+| freshness evidence | status |
+|---|---|
+| per_observation_economic_as_of_date | sufficient, WITH documented_daily_economic_cutoff |
+| vendor_file_publication_timestamp | never sufficient alone |
+| api_response_timestamp | never sufficient alone |
+| vendor_refresh_flag | never sufficient alone |
+| row_republished_indicator | never sufficient alone |
+| file_last_modified | never sufficient alone |
+
+**Dated is day-localized only.** It does not establish within-day ordering between AP activity and constituent order imbalance: both are measured over the same day and either could precede the other. Same-day G8 is therefore **mechanism_association_and_calibration**, not a causal sequence; within-day ordering would require true_ap_transaction_timestamps.
+
+**The rule does not bend for data availability.** If the vendor lacks the freshness metadata, G8 returns `INSUFFICIENT_IDENTIFYING_VARIATION` on the same-day primary rather than a relaxed standard.
 
 A run of equal shares outstanding is **not** evidence of carry-forward. A genuinely daily series is constant on every day without a creation or redemption, which for most funds is most days; "same value" and "stale observation" are different claims and the share series alone cannot separate them. Equal-value runs are carried as a staleness **diagnostic** only. Under verified daily freshness a constant stretch is a run of genuine zero-CR days, and the change that ends it is still dated.
 

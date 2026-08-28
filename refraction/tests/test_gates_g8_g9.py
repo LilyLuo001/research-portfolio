@@ -1571,6 +1571,14 @@ def test_the_exposure_uses_the_registered_magnitude_and_sign_columns():
 # CR event timing — binding on the same-day primary (frozen 2026-08-28)        #
 # --------------------------------------------------------------------------- #
 
+FRESHNESS_RECORD = {
+    "economic_cutoff_documented": True,
+    "economic_cutoff_cadence": "daily",
+    "economic_cutoff": "shares outstanding as of the 4pm ET close of day t",
+    "source": "vendor data dictionary",
+}
+
+
 def quiet_fund_shares(fund="F1"):
     """A genuinely daily series for a fund that simply does not create most days: two real
     creations separated by quiet stretches of identical values."""
@@ -1592,7 +1600,7 @@ def stale_fund_shares(fund="F1"):
 def test_a_quiet_stretch_under_verified_freshness_is_zero_days_not_an_interval():
     """THE CORRECTION. Equal values are not staleness: with per-observation freshness the
     constant stretch is a run of genuine zero-CR days, and the change ending it is DATED."""
-    tm = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG)
+    tm = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG, FRESHNESS_RECORD)
     assert (tm["cr_timing"] == "none").sum() == 6      # the quiet days stay non-events
     ev = tm[tm["cr_timing"] != "none"]
     assert len(ev) == 2 and (ev["cr_timing"] == "dated").all()
@@ -1604,8 +1612,8 @@ def test_a_quiet_stretch_under_verified_freshness_is_zero_days_not_an_interval()
 def test_a_stale_feed_is_interval_even_though_the_share_path_is_identical():
     """Same share path, same equal-value runs — only the vendor's as-of dates differ. The
     classification must follow the freshness evidence, not the value pattern."""
-    quiet = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG)
-    stale = pre.classify_cr_event_timing(stale_fund_shares(), None, CONFIG)
+    quiet = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG, FRESHNESS_RECORD)
+    stale = pre.classify_cr_event_timing(stale_fund_shares(), None, CONFIG, FRESHNESS_RECORD)
     assert list(quiet["equal_value_run_before"]) == list(stale["equal_value_run_before"])
     assert set(quiet[quiet["cr_timing"] != "none"]["cr_timing"]) == {"dated"}
     assert "interval" in set(stale[stale["cr_timing"] != "none"]["cr_timing"])
@@ -1624,20 +1632,72 @@ def test_the_classifier_never_reads_the_run_length_audit():
     # and the same series classifies identically whatever audit is handed in
     f = quiet_fund_shares()
     a = pre.shares_update_audit(f, {"update_frequency": "weekly"}, CONFIG)
-    assert list(pre.classify_cr_event_timing(f, a, CONFIG)["cr_timing"]) == \
-        list(pre.classify_cr_event_timing(f, None, CONFIG)["cr_timing"])
+    assert list(pre.classify_cr_event_timing(f, a, CONFIG, FRESHNESS_RECORD)["cr_timing"]) == \
+        list(pre.classify_cr_event_timing(f, None, CONFIG, FRESHNESS_RECORD)["cr_timing"])
 
 
-def test_freshness_can_come_from_a_flag_or_a_boolean_as_well_as_a_timestamp():
-    kinds = CONFIG["network_exposure"]["cr_event_timing"]["freshness_evidence_kinds"]
-    assert set(kinds) == {"vendor_as_of_timestamp", "vendor_refresh_flag",
-                          "documented_freshness_indicator"}
-    f = shares_frame([100, 100, 105.0])
-    for col in ("is_fresh", "refresh_flag"):
-        g = f.assign(**{col: [True, True, True]})
-        tm = pre.classify_cr_event_timing(g, None, CONFIG)
-        assert tm.loc[2, "cr_timing"] == "dated"
-        assert tm.loc[2, "freshness_evidence"] == col
+def test_a_publication_or_refresh_timestamp_is_not_economic_freshness():
+    """CORRECTION: a feed can restamp, republish or re-serve a row every day while the
+    SharesOut figure still refers to an earlier economic as-of date. A publication timestamp
+    certifies that the pipeline ran, not when the shares were counted."""
+    fe = CONFIG["network_exposure"]["cr_event_timing"]["freshness_evidence"]
+    assert fe["publication_timestamp_is_not_freshness"] is True
+    for col in ("refresh_flag", "file_updated_at", "api_response_timestamp",
+                "published_at", "is_fresh"):
+        g = shares_frame([100, 100, 105.0]).assign(**{col: True})
+        tm = pre.classify_cr_event_timing(g, None, CONFIG, FRESHNESS_RECORD)
+        ev = tm[tm["cr_timing"] != "none"]
+        assert (ev["cr_timing"] == "interval").all(), col
+        assert "pipeline, not the measurement" in tm.loc[2, "freshness_reason"], col
+
+
+def test_an_as_of_date_without_a_documented_economic_cutoff_is_not_freshness():
+    """The as-of date is necessary but not sufficient: without a documented daily economic
+    cutoff there is no established meaning for 'as of day t' for this field."""
+    fe = CONFIG["network_exposure"]["cr_event_timing"]["freshness_evidence"]
+    assert fe["economic_cutoff_must_be_documented"] is True
+    assert fe["also_required"] == "documented_daily_economic_cutoff"
+    tm = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG, None)
+    ev = tm[tm["cr_timing"] != "none"]
+    assert (ev["cr_timing"] == "interval").all()
+    assert "NEED_HUMAN" in tm.loc[0, "freshness_reason"]
+    # a documented but NON-daily cutoff is equally insufficient
+    weekly = dict(FRESHNESS_RECORD, economic_cutoff_cadence="weekly")
+    tm2 = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG, weekly)
+    assert (tm2[tm2["cr_timing"] != "none"]["cr_timing"] == "interval").all()
+
+
+def test_a_dated_event_is_day_localized_and_claims_no_within_day_ordering():
+    """Both the share change and the constituent imbalance are measured over the same day
+    and either could precede the other."""
+    t = CONFIG["network_exposure"]["cr_event_timing"]
+    assert t["dated_means"] == "day_localized_only"
+    assert t["dated_establishes_within_day_ordering"] is False
+    assert t["same_day_g8_status"] == "mechanism_association_and_calibration"
+    assert t["within_day_ordering_requires"] == "true_ap_transaction_timestamps"
+    assert t["same_day_g8_causal_language_forbidden"] is True
+    v = _adjudicate(0.30, 81)
+    assert v["dated_means"] == "day_localized_only"
+    assert v["same_day_status"] == "mechanism_association_and_calibration"
+    assert v["within_day_ordering_identified"] is False
+
+
+def test_missing_freshness_metadata_yields_insufficient_variation_not_a_relaxed_rule():
+    """The standard does not bend to keep a sample."""
+    t = CONFIG["network_exposure"]["cr_event_timing"]
+    assert t["insufficient_freshness_metadata_response"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert t["rule_may_not_be_relaxed_for_data_availability"] is True
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=82)
+    panel["cr_timing"] = np.where(panel["CR_raw"] != 0, "interval", "none")
+    choice, audit, census = preflight(cfg, panel)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert v["classification_basis"] == "no dated CR events"
+    assert any("not relaxed to manufacture one" in x for x in v["reasons"])
 
 
 def test_an_equal_value_run_may_never_be_promoted_to_proof():
@@ -1646,7 +1706,7 @@ def test_an_equal_value_run_may_never_be_promoted_to_proof():
     cfg["network_exposure"]["cr_event_timing"][
         "equal_value_run_is_sufficient_proof_of_carryforward"] = True
     with pytest.raises(pre.SafeguardViolation) as e:
-        pre.classify_cr_event_timing(quiet_fund_shares(), None, cfg)
+        pre.classify_cr_event_timing(quiet_fund_shares(), None, cfg, FRESHNESS_RECORD)
     assert "staleness DIAGNOSTIC, not proof" in str(e.value)
 
 
@@ -1663,7 +1723,7 @@ def daily_shares(n=60, seed=3, fund="F1"):
 
 
 def test_verified_daily_freshness_yields_dated_events():
-    tm = pre.classify_cr_event_timing(daily_shares(), None, CONFIG)
+    tm = pre.classify_cr_event_timing(daily_shares(), None, CONFIG, FRESHNESS_RECORD)
     ev = tm[tm["cr_timing"] != "none"]
     assert len(ev) and (ev["cr_timing"] == "dated").all()
     assert (ev["cr_interval_days"] == 1).all()
@@ -1674,7 +1734,7 @@ def test_no_freshness_evidence_makes_every_event_interval():
     assert CONFIG["network_exposure"]["cr_event_timing"]["absent_freshness_evidence"] == \
         "interval"
     f = daily_shares().drop(columns=["shares_as_of"])
-    tm = pre.classify_cr_event_timing(f, None, CONFIG)
+    tm = pre.classify_cr_event_timing(f, None, CONFIG, FRESHNESS_RECORD)
     ev = tm[tm["cr_timing"] != "none"]
     assert len(ev) and (ev["cr_timing"] == "interval").all()
     assert (ev["freshness_evidence"] == "none").all()
