@@ -52,27 +52,64 @@ def build_calibration_sample(panel: pd.DataFrame, fomc_dates, config: dict) -> p
     return out
 
 
-def pooled_interaction(sample: pd.DataFrame, controls=("r_resid_lag", "mkt")):
-    """The preferred design. Returns a1, its SE, t, n, and the nuisance flow term."""
-    cols = [c for c in controls if c in sample.columns]
-    X = np.column_stack([
-        np.ones(len(sample)),
-        sample["CR"].to_numpy(float),
-        (sample["CR"].to_numpy(float) * sample["absL"].to_numpy(float)),   # a1 sits here
-        *[sample[c].to_numpy(float) for c in cols],
-    ])
-    y = sample["r_resid_fwd"].to_numpy(float)
+def _demean_within(frame: pd.DataFrame, cols, by=("fund", "date")):
+    """Absorb fund x date fixed effects by within-group demeaning."""
+    g = frame.groupby(list(by))
+    return {c: (frame[c].astype(float) - g[c].transform("mean")).to_numpy(float)
+            for c in cols}
+
+
+def pooled_interaction(sample: pd.DataFrame, controls=("r_resid_lag", "mkt"),
+                       fund_date_fe: bool = True, z_controls=()):
+    """The preferred design (clarification 2026-08-19).
+
+    With **fund x date fixed effects** the identification is cross-sectional *within one
+    ETF-day*: the CR main effect is absorbed by construction — CR does not vary within a
+    fund-date — so what remains is differential exposure across constituents of the same
+    ETF on the same day, which is the claim. Common ETF-level flow shocks cannot drive it.
+
+    `z_controls` are the pre-specified characteristics whose CR interactions enter as
+    controls, so a1 is not picking up CR x size or CR x illiquidity.
+    """
+    y_col, inter = "r_resid_fwd", "_CRxabsL"
+    df = sample.copy()
+    df[inter] = df["CR"].astype(float) * df["absL"].astype(float)
+    zcols = [c for c in z_controls if c in df.columns]
+    for c in zcols:
+        df[f"_CRx{c}"] = df["CR"].astype(float) * df[c].astype(float)
+    ctrl = [c for c in controls if c in df.columns] + [f"_CRx{c}" for c in zcols]
+
+    if fund_date_fe:
+        if not {"fund", "date"} <= set(df.columns):
+            raise SafeguardViolation("fund x date FE requested but 'fund'/'date' missing")
+        dm = _demean_within(df, [y_col, inter] + ctrl)
+        y = dm[y_col]
+        X = np.column_stack([dm[inter]] + [dm[c] for c in ctrl])
+        n_groups = int(df.groupby(["fund", "date"]).ngroups)
+        k = X.shape[1] + n_groups          # FE consume degrees of freedom
+        a1_idx, flow = 0, None             # CR main effect absorbed, by design
+    else:
+        y = df[y_col].to_numpy(float)
+        X = np.column_stack([np.ones(len(df)), df["CR"].to_numpy(float), df[inter].to_numpy(float),
+                             *[df[c].to_numpy(float) for c in ctrl]])
+        k, a1_idx = X.shape[1], 2
+        flow = None
+
     coef, *_ = np.linalg.lstsq(X, y, rcond=None)
     resid = y - X @ coef
-    dof = len(y) - X.shape[1]
+    dof = len(y) - k
     if dof <= 0:
         raise SafeguardViolation("fewer observations than parameters")
     s2 = float(resid @ resid) / dof
-    xtx_inv = np.linalg.inv(X.T @ X)
-    se = np.sqrt(s2 * np.diag(xtx_inv))
-    return {"a1": float(coef[2]), "se_a1": float(se[2]),
-            "t_a1": float(coef[2] / se[2]) if se[2] > 0 else np.nan,
-            "flow_main_effect": float(coef[1]), "n": int(len(y)), "design": "pooled_interaction"}
+    se = np.sqrt(s2 * np.diag(np.linalg.inv(X.T @ X)))
+    if not fund_date_fe:
+        flow = float(coef[1])
+    return {"a1": float(coef[a1_idx]), "se_a1": float(se[a1_idx]),
+            "t_a1": float(coef[a1_idx] / se[a1_idx]) if se[a1_idx] > 0 else np.nan,
+            "flow_main_effect": flow, "n": int(len(y)),
+            "design": "pooled_interaction",
+            "fixed_effects": "fund_x_date" if fund_date_fe else "none",
+            "cr_interacted_controls": zcols}
 
 
 def two_step(sample: pd.DataFrame, propagate_uncertainty: bool):
@@ -95,7 +132,7 @@ def two_step(sample: pd.DataFrame, propagate_uncertainty: bool):
     return pd.DataFrame(phis)
 
 
-def verdict(result: dict, config: dict) -> dict:
+def verdict(result: dict, config: dict, outcome_class: str = None) -> dict:
     """Registered decision rule: one-sided, on the LINEAR coefficient, at the registered
     level. Refuses to decide while that level is unset."""
     ne = config["network_exposure"]
@@ -106,6 +143,14 @@ def verdict(result: dict, config: dict) -> dict:
             "until it is decided. Choosing it now, with a1 in hand, is specification search.")
     if ne["first_stage_functional_form"] != "abs_L_tilt_pre":
         raise SafeguardViolation("registered functional form is |L_tilt^pre| (safeguard 2)")
+    # Clarification 2026-08-19: a signed price-persistence response cannot license the
+    # measure on its own — it can be zero or negative while connectivity is strong.
+    cls = outcome_class or ne.get("first_stage_primary_outcome_class")
+    if cls != "trading_connectivity":
+        raise SafeguardViolation(
+            f"G8 licensing requires the TRADING connectivity outcome (got {cls!r}). The "
+            "CR x |L| -> r_{t+1} result is corroboration: it is a signed price-persistence "
+            "response, and price impact absorbed intraday leaves no next-day return.")
     from math import erf, sqrt
     t = result["t_a1"]
     p_one_sided = 0.5 * (1 - erf(t / sqrt(2)))          # H1: a1 > 0

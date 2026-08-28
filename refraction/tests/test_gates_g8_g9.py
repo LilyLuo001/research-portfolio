@@ -82,17 +82,25 @@ def test_summarize_reports_the_registered_responses_not_a_bare_verdict():
 # --------------------------------------------------------------------------- #
 
 def make_panel(n_stocks=40, n_days=120, a1=0.0, seed=0):
-    """r_resid_fwd = 0.1*CR + a1*(CR*absL) + noise."""
+    """r_resid_fwd = 0.1*CR + a1*(CR*absL) + noise.
+
+    CR is a FUND-level variable: every constituent of the ETF shares the same
+    creation/redemption on a given day. That structure is the whole point of the
+    fund x date fixed effects — it absorbs the common flow shock and leaves
+    identification to cross-sectional differences in |L| within one ETF-day.
+    """
     rng = np.random.default_rng(seed)
+    absL = {1000 + i: float(rng.uniform(0, 1)) for i in range(n_stocks)}
+    cr_by_day = {t: float(rng.normal(0, 1)) for t in range(n_days)}
     rows = []
-    for i in range(n_stocks):
-        absL = float(rng.uniform(0, 1))
-        for t in range(n_days):
-            cr = float(rng.normal(0, 1))
-            rows.append({"permno": 1000 + i, "fund": "F1",
+    for t in range(n_days):
+        cr = cr_by_day[t]                       # one flow per fund-day, shared
+        for i in range(n_stocks):
+            p = 1000 + i
+            rows.append({"permno": p, "fund": "F1",
                          "date": pd.Timestamp("2023-01-02") + pd.Timedelta(days=t),
-                         "days_since_conversion": 21 + t, "CR": cr, "absL": absL,
-                         "r_resid_fwd": 0.1 * cr + a1 * cr * absL + rng.normal(0, .05),
+                         "days_since_conversion": 21 + t, "CR": cr, "absL": absL[p],
+                         "r_resid_fwd": 0.1 * cr + a1 * cr * absL[p] + rng.normal(0, .05),
                          "r_resid_lag": rng.normal(0, .05), "mkt": rng.normal(0, .01)})
     return pd.DataFrame(rows)
 
@@ -111,6 +119,37 @@ def test_the_pooled_interaction_recovers_a_planted_connectivity_slope():
     r = g8.pooled_interaction(make_panel(a1=0.30, seed=1))
     assert r["a1"] == pytest.approx(0.30, abs=0.05)
     assert r["t_a1"] > 3 and r["design"] == "pooled_interaction"
+
+
+def test_fund_date_fixed_effects_absorb_the_common_flow_shock():
+    """Identification must come from differential exposure WITHIN one ETF-day, not from
+    common ETF-level flow. With CR constant within a fund-date, its main effect is
+    absorbed by construction — so it is reported as None rather than as an estimate."""
+    r = g8.pooled_interaction(make_panel(a1=0.30, seed=7))
+    assert r["fixed_effects"] == "fund_x_date"
+    assert r["flow_main_effect"] is None
+    # and the interaction still identifies
+    assert r["t_a1"] > 3
+
+
+def test_cr_interacted_controls_are_carried_when_supplied():
+    panel = make_panel(a1=0.30, seed=8)
+    panel["size"] = np.tile(np.linspace(1, 2, 40), 120)
+    r = g8.pooled_interaction(panel, z_controls=("size",))
+    assert r["cr_interacted_controls"] == ["size"]
+    assert r["a1"] == pytest.approx(0.30, abs=0.06)
+
+
+def test_licensing_refuses_on_the_corroborating_return_outcome():
+    """Clarification 2026-08-19: a signed price-persistence response cannot license the
+    measure — it can be zero or negative while connectivity is strong."""
+    import copy
+    cfg = copy.deepcopy(CONFIG)
+    cfg["gate0_thresholds"]["first_stage_primary_alpha"] = 0.05
+    r = g8.pooled_interaction(make_panel(a1=0.30, seed=9))
+    with pytest.raises(g8.SafeguardViolation) as e:
+        g8.verdict(r, cfg, outcome_class="signed_price_response_not_magnitude")
+    assert "TRADING connectivity" in str(e.value)
 
 
 def test_the_pooled_interaction_finds_nothing_when_there_is_nothing():
@@ -136,7 +175,7 @@ def test_the_verdict_refuses_while_the_significance_level_is_undecided():
     r = g8.pooled_interaction(make_panel(a1=0.3, seed=4))
     assert CONFIG["gate0_thresholds"]["first_stage_primary_alpha"] is None
     with pytest.raises(g8.SafeguardViolation) as e:
-        g8.verdict(r, CONFIG)
+        g8.verdict(r, CONFIG, outcome_class="trading_connectivity")
     assert "specification search" in str(e.value)
 
 
@@ -144,10 +183,61 @@ def test_the_verdict_is_one_sided_on_the_linear_coefficient():
     import copy
     cfg = copy.deepcopy(CONFIG)
     cfg["gate0_thresholds"]["first_stage_primary_alpha"] = 0.05
-    licensed = g8.verdict(g8.pooled_interaction(make_panel(a1=0.30, seed=5)), cfg)
+    licensed = g8.verdict(g8.pooled_interaction(make_panel(a1=0.30, seed=5)), cfg,
+                          outcome_class="trading_connectivity")
     assert licensed["licensed"] is True and licensed["outcome"] == "licensed"
     # a strongly NEGATIVE slope must not license: the prediction is one-sided
-    retired = g8.verdict(g8.pooled_interaction(make_panel(a1=-0.30, seed=6)), cfg)
+    retired = g8.verdict(g8.pooled_interaction(make_panel(a1=-0.30, seed=6)), cfg,
+                         outcome_class="trading_connectivity")
     assert retired["licensed"] is False
     assert retired["outcome"] == "retired_from_headline"
     assert "not causal" in retired["note"]
+
+
+# --------------------------------------------------------------------------- #
+# G9 share continuity (clarification 4)                                        #
+# --------------------------------------------------------------------------- #
+
+def shares(wave, pairs, adj=1.0):
+    return pd.DataFrame([{"wave": wave, "permno": p, "shares": n, "adj_factor": adj}
+                         for p, n in pairs])
+
+
+def test_price_drift_alone_does_not_look_like_portfolio_change():
+    """The reason share continuity is required: a manager who did nothing still shows
+    weight drift when constituent prices move."""
+    pre_w = pd.DataFrame([{"wave": "W1", "permno": 1, "weight": .5},
+                          {"wave": "W1", "permno": 2, "weight": .5}])
+    post_w = pd.DataFrame([{"wave": "W1", "permno": 1, "weight": .7},   # stock 1 rallied
+                           {"wave": "W1", "permno": 2, "weight": .3}])
+    w = g9.wave_continuity(pre_w, post_w)
+    assert w.loc[0, "turnover"] == pytest.approx(0.2)        # weights say 20% turnover
+    sh = g9.share_continuity(shares("W1", [(1, 100), (2, 100)]),
+                             shares("W1", [(1, 100), (2, 100)]))
+    assert sh.loc[0, "share_turnover"] == pytest.approx(0.0)  # shares say none was traded
+    assert sh.loc[0, "share_overlap"] == pytest.approx(1.0)
+
+
+def test_a_split_is_not_turnover_once_adjusted():
+    """A 2-for-1 split doubles the share count with no trade."""
+    sh = g9.share_continuity(shares("W1", [(1, 100)], adj=1.0),
+                             shares("W1", [(1, 200)], adj=2.0))
+    assert sh.loc[0, "share_turnover"] == pytest.approx(0.0)
+
+
+def test_real_selling_does_show_as_share_turnover():
+    sh = g9.share_continuity(shares("W1", [(1, 100), (2, 100)]),
+                             shares("W1", [(1, 100)]))
+    assert sh.loc[0, "share_overlap"] == pytest.approx(0.5)
+    assert sh.loc[0, "share_turnover"] > 0
+
+
+def test_a_g9_summary_without_share_continuity_declares_itself_incomplete():
+    pre = pd.DataFrame([{"wave": "W1", "permno": 1, "weight": 1.0}])
+    s_no = g9.summarize(g9.wave_continuity(pre, pre.copy()), CONFIG)
+    assert s_no["share_continuity_reported"] is False
+    assert "INCOMPLETE" in s_no["incomplete"]
+    s_yes = g9.summarize(g9.wave_continuity(pre, pre.copy()), CONFIG,
+                         shares=g9.share_continuity(shares("W1", [(1, 10)]),
+                                                    shares("W1", [(1, 10)])))
+    assert s_yes["share_continuity_reported"] is True and s_yes["incomplete"] is None

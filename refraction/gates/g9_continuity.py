@@ -22,8 +22,51 @@ import numpy as np
 import pandas as pd
 
 
+def share_continuity(pre: pd.DataFrame, post: pd.DataFrame) -> pd.DataFrame:
+    """Corporate-action-adjusted SHARE continuity (clarification 2026-08-19).
+
+    Weight overlap alone cannot separate trading from price movement: a portfolio whose
+    manager did nothing at all will show weight drift purely because constituent prices
+    moved. Shares held do not drift with price — they change only when someone trades —
+    so share continuity is the measure that isolates actual portfolio change.
+
+    Shares must be CORPORATE-ACTION ADJUSTED first: a 2-for-1 split doubles the share
+    count with no trade, and would otherwise read as 100% turnover in that name.
+
+    Frames: wave | permno | shares | adj_factor  (adjusted shares = shares / adj_factor,
+    with the factor on a common basis across the pre/post boundary).
+    """
+    rows = []
+    for wave in sorted(set(pre["wave"]) | set(post["wave"])):
+        a = pre[pre["wave"] == wave]
+        b = post[post["wave"] == wave]
+        if a.empty or b.empty:
+            rows.append({"wave": wave, "share_overlap": np.nan, "share_turnover": np.nan,
+                         "names_retained": np.nan, "reason": "missing pre or post holdings"})
+            continue
+        sa = (a["shares"].astype(float) / a.get("adj_factor", 1.0)).groupby(a["permno"]).sum()
+        sb = (b["shares"].astype(float) / b.get("adj_factor", 1.0)).groupby(b["permno"]).sum()
+        idx = sa.index.union(sb.index)
+        sa, sb = sa.reindex(idx).fillna(0.0), sb.reindex(idx).fillna(0.0)
+        retained = float(np.minimum(sa, sb).sum())
+        base = float(sa.sum())
+        rows.append({
+            "wave": wave,
+            # share of the pre-conversion share base still held after the switch
+            "share_overlap": retained / base if base > 0 else np.nan,
+            # one-way share turnover: what fraction of the position base was traded
+            "share_turnover": float((sb - sa).abs().sum() / (2 * base)) if base > 0 else np.nan,
+            "names_retained": float((np.minimum(sa, sb) > 0).sum() / max(len(idx), 1)),
+            "reason": "",
+        })
+    return pd.DataFrame(rows)
+
+
 def wave_continuity(pre: pd.DataFrame, post: pd.DataFrame) -> pd.DataFrame:
-    """Per-wave continuity measures. Frames: wave | permno | weight."""
+    """Per-wave WEIGHT continuity. Frames: wave | permno | weight.
+
+    Reported alongside share continuity, never instead of it — see share_continuity().
+    """
     rows = []
     for wave in sorted(set(pre["wave"]) | set(post["wave"])):
         a = pre[pre["wave"] == wave].set_index("permno")["weight"].astype(float)
@@ -65,8 +108,13 @@ def threshold_sensitivity(cont: pd.DataFrame, grid=None) -> pd.DataFrame:
     } for t in grid])
 
 
-def summarize(cont: pd.DataFrame, config: dict) -> dict:
-    """Facts, and the registered responses — never a bare verdict."""
+def summarize(cont: pd.DataFrame, config: dict, shares: pd.DataFrame = None) -> dict:
+    """Facts, and the registered responses — never a bare verdict.
+
+    `shares` is the corporate-action-adjusted share-continuity frame. It is optional only
+    so the weight measures can be inspected early; a G9 report WITHOUT it is incomplete,
+    and the returned dict says so.
+    """
     g0 = config.get("gate0_thresholds", {})
     ok = cont.dropna(subset=["overlap_weight"])
     anchor = g0.get("portfolio_overlap_min")
@@ -82,4 +130,14 @@ def summarize(cont: pd.DataFrame, config: dict) -> dict:
         "confirmatory_response": g0.get("g9_confirmatory_response"),
         "secondary_interpretation": g0.get("g9_secondary_interpretation"),
         "reporting": g0.get("g9_reporting"),
+        "share_continuity_reported": shares is not None,
+        "median_share_overlap": (float(shares["share_overlap"].median())
+                                 if shares is not None and len(shares.dropna(
+                                     subset=["share_overlap"])) else None),
+        "median_share_turnover": (float(shares["share_turnover"].median())
+                                  if shares is not None and len(shares.dropna(
+                                      subset=["share_turnover"])) else None),
+        "incomplete": None if shares is not None else
+        "G9 INCOMPLETE: weight measures only. Weight drift reflects price movement even "
+        "with zero trading; corporate-action-adjusted share continuity is required.",
     }

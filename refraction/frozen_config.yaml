@@ -236,7 +236,17 @@ network_exposure:
   # v2.4: stated as an equation in Plan §6.1.2. CR at t, residualized constituent return at
   # t+1 — contemporaneous CR and returns are jointly determined, so a same-day regression
   # measures simultaneity, not connectivity. Predictive association, NOT causal.
-  first_stage_primary_outcome: constituent_next_day_residual_return_on_etf_creation_redemption
+  # CLARIFICATION 2026-08-19 (supersedes the earlier choice): the CR x |L| -> r_{t+1}
+  # coefficient is a SIGNED PRICE-PERSISTENCE response, not a connectivity magnitude. It can
+  # be zero or negative while arbitrage connectivity is strong — price impact that is fully
+  # absorbed intraday leaves no next-day return. So the PRIMARY connectivity outcome must be
+  # a TRADING measure, where a magnitude prediction is well-founded; the return result is
+  # corroboration only, unless a timing model establishes its sign.
+  first_stage_primary_outcome: constituent_abnormal_volume_or_order_imbalance_around_creation_redemption
+  first_stage_primary_outcome_class: trading_connectivity
+  first_stage_corroborating_outcome: constituent_next_day_residual_return_on_etf_creation_redemption
+  first_stage_corroborating_outcome_class: signed_price_response_not_magnitude
+  return_result_signs_meaning_requires_timing_model: true
   # Safeguard 2 (2026-08-19): the registered functional form, fixed before any outcome is
   # opened. Reasoning: refraction/G8_SIGN_PREDICTION.md. Connectivity is a MAGNITUDE concept
   # (how much flow lands on the stock, times price impact); the signed lever carries the
@@ -248,6 +258,12 @@ network_exposure:
                                                     # after a disappointing linear one
   # Safeguard 1: PREFERRED design is the pooled interaction, not a two-step with noisy phi.
   first_stage_design: pooled_interaction
+  # Identification must come from cross-sectional differential exposure WITHIN one ETF-day,
+  # not from common ETF-level flow shocks. fund x date FE absorb the CR main effect by
+  # construction — that is the point, not a side effect.
+  first_stage_fixed_effects: fund_x_date
+  first_stage_cr_interacted_controls: [size, illiquidity, index_membership,
+                                       pre_period_etf_ownership, basket_weight]
   two_step_requires_uncertainty_propagation: true   # if the two-step is ever used
   shares_outstanding_audit_required: true           # timestamp convention + corporate actions
   first_stage_response_lag_days: 1
@@ -317,8 +333,13 @@ inference:
   leave_one_adviser_out_diagnostics: true
   identifying_advisers_recomputed_after: [G7, G9]
   reported_alongside: [communication_event, permno]
-  bootstrap_resamples: adviser                    # the binding, coarsest dimension
-  bootstrap: {type: wild_cluster, weights: rademacher, impose_null: true, reps: 9999}
+  # CLARIFICATION 2026-08-19: LEFT UNRESOLVED ON PURPOSE. Adviser-only resampling does not
+  # address common event dependence, and the right multiway procedure depends on the ACTUAL
+  # identifying FOMC-event and adviser counts, which G7 and G9 determine. Do not default to
+  # adviser-only in the meantime.
+  bootstrap_resamples: null                       # NEED_INFO — resolve after G7/G9
+  bootstrap_resamples_default_forbidden: adviser_only
+  bootstrap: {type: null, weights: null, impose_null: true, reps: null}
   randomization_inference_permutes_within: adviser
   small_cluster_primary: wild_cluster_bootstrap   # not a robustness row
   report_effective_clusters_in_every_table: true

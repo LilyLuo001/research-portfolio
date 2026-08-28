@@ -308,12 +308,16 @@ def test_the_dependence_model_is_frozen_and_names_all_three_sources():
     assert dep["treatment_shock"] == "cluster_on_adviser"
 
 
-def test_the_bootstrap_resamples_the_treatment_assignment_level():
+def test_the_small_cluster_procedure_is_left_unresolved_on_purpose():
+    """Clarification 2026-08-19: adviser-only resampling does not address common event
+    dependence, and the right multiway procedure depends on the actual identifying
+    FOMC-event and adviser counts, which G7 and G9 determine. Defaulting to adviser-only
+    in the meantime is explicitly forbidden."""
     inf = CONFIG["inference"]
-    assert inf["bootstrap_resamples"] == "adviser"
-    assert inf["bootstrap"]["impose_null"] is True
-    assert inf["bootstrap"]["reps"] >= 9999
-    assert inf["randomization_inference_permutes_within"] == "adviser"
+    assert inf["bootstrap_resamples"] is None
+    assert inf["bootstrap_resamples_default_forbidden"] == "adviser_only"
+    assert inf["bootstrap"]["impose_null"] is True          # the one part already fixed
+    assert set(inf["identifying_advisers_recomputed_after"]) == {"G7", "G9"}
 
 
 def test_g9_reports_continuously_rather_than_on_an_arbitrary_cutoff():
