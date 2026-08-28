@@ -350,3 +350,70 @@ def test_the_paper_calls_it_beta_adjusted_not_a_market_model():
     block = VARSPEC.read_text().split("### 0-0.")[1].split("### 0-1.")[0]
     assert "beta-adjusted market abnormal return" in block
     assert "不要写成" in block
+
+
+# --------------------------------------------------------------------------- #
+# 8. v2.1i — one return concept, and the opening gap is its own outcome         #
+# --------------------------------------------------------------------------- #
+def test_beta_is_estimated_on_price_returns_on_both_legs():
+    """The event window is a midquote PRICE return -- a quote midpoint holds no
+    dividend. A beta fitted on TOTAL returns carries a dividend-inclusive
+    sensitivity into a dividend-free quantity, and `ret`/`retx` are equally
+    plausible-looking daily returns, so nothing raises."""
+    bp = _bp()
+    assert bp.MARKET_PROXY["return_concept"] == "price_return"
+    bp.assert_return_concept_coherent("retx", "retx")
+    bp.assert_return_concept_coherent("DlyRetx", "DlyRetx")
+    for stock, proxy in (("ret", "retx"), ("retx", "ret"), ("DlyRet", "DlyRetx")):
+        with pytest.raises(bp.ProxyIncoherent) as e:
+            bp.assert_return_concept_coherent(stock, proxy)
+        assert "TOTAL return" in str(e.value)
+    with pytest.raises(bp.ProxyIncoherent):                # unnamed field
+        bp.assert_return_concept_coherent("daily_return", "retx")
+
+
+def test_the_pull_asks_for_both_return_fields_and_says_they_differ():
+    """`ret` is still needed by the daily spines. Pulling only one, or treating
+    them as interchangeable, is the failure."""
+    import yaml
+    spec = yaml.safe_load((ROOT / "p1" / "wrds" / "tables.yaml").read_text())
+    cols = spec["pulls"]["dsf"]["columns"]
+    assert "ret" in cols and "price_return" in cols
+    assert "retx" in cols["price_return"]["candidates"]
+    assert "price_vs_total_return" in spec["pulls"]["dsf"]["asserts"]
+
+
+def test_preopen_and_afterclose_car_is_labelled_post_open():
+    """Excluding the gap does not make it disappear: for a pre-open
+    announcement a real part of the response happened inside it."""
+    bp = _bp()
+    assert bp.car_label("pre_open") == bp.POST_OPEN_LABEL
+    assert bp.car_label("after_close") == bp.POST_OPEN_LABEL
+    assert bp.car_label("intraday") == "full_announcement_response"
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.car_label("premarket")
+
+
+def test_the_gap_is_a_separate_outcome_never_folded_into_car():
+    bp = _bp()
+    bp.assert_gap_excluded_from_car("CAR_5m", ["rth_5m"])
+    with pytest.raises(bp.BenchmarkPolicyError) as e:
+        bp.assert_gap_excluded_from_car("CAR_close",
+                                        [bp.GAP_OUTCOME, "rth_to_close"])
+    assert "SEPARATE outcome" in str(e.value)
+    assert "D-T3-30" in VARSPEC.read_text()
+
+
+def test_no_document_claims_a_direction_for_the_intraday_beta_bias():
+    """'Epps biases intraday beta down' is a directional claim about this sample
+    that nothing here has tested. The honest statement is narrower: a
+    close-to-close daily beta is imposed on shorter RTH horizons, and beta=1 is
+    a robustness check against that extrapolation -- not a correction toward a
+    known sign."""
+    for path in (PLAN, BLUEPRINT, VARSPEC,
+                 ROOT / "docs" / "P1_实现更正_v2_1d.md",
+                 ROOT / "p1" / "pipeline" / "benchmark_policy.py"):
+        assert "Epps" not in path.read_text(), f"{path.name} still claims a bias direction"
+    varspec = VARSPEC.read_text()
+    assert "口径外推" in varspec
+    assert "不得把 `β ≡ 1` 说成" in varspec

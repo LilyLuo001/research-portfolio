@@ -8,7 +8,7 @@ returns a number that is ≈ the raw return, while the table says
 "characteristic-adjusted"; a daily α̂ subtracted from a 5-minute return does not
 raise either.
 
-Four rules, from `p1/t3_spec/变量规格书.md` D-T3-11/17/18/19/22/25-28:
+Five rules, from `p1/t3_spec/变量规格书.md` D-T3-11/17/18/19/22/25-30:
 
   1. **One benchmark across the whole curve.** The deliverable is the SHAPE of
      β_h over h. If the benchmark changes at some h, a kink there cannot be told
@@ -45,6 +45,15 @@ Four rules, from `p1/t3_spec/变量规格书.md` D-T3-11/17/18/19/22/25-28:
      different market portfolios in one formula — and it yields a plausible
      number, not an error. Frozen as one bundle in MARKET_PROXY; the overnight
      gap is excluded from BOTH legs identically (PROXY_OPEN_GAP_RULE).
+
+  5. **One return concept, and the gap is its own outcome** (D-T3-29/30). The
+     event-window leg is a midquote PRICE return, so β̂ is estimated on price
+     returns (`retx` / `DlyRetx`) on BOTH legs — a β̂ fitted on total returns
+     carries a dividend-inclusive sensitivity into a dividend-free quantity, and
+     `ret` and `retx` are equally plausible-looking daily returns. Excluding the
+     opening gap does not make it disappear: for pre-open and after-close
+     announcements CAR^h is labelled `post_open_response`, and the gap is a
+     separate outcome that is never folded in (GAP_RULE).
 
 `beta_adjusted_market` is primary at every horizon — named for what it IS, a
 beta-adjusted market abnormal return, not a "market model", because no intercept
@@ -134,6 +143,22 @@ MARKET_PROXY = {
     "beta_estimation_instrument": "SPY",
     "beta_estimation_window": (-250, -21),
     "beta_estimation_return": "close_to_close",
+    # PRICE return, both legs (D-T3-29). The event-window leg is a midquote
+    # price return — there are no dividends in a quote midpoint — so a β̂
+    # estimated on TOTAL returns would carry a dividend-inclusive sensitivity
+    # and then be multiplied into a dividend-free quantity.
+    "return_concept": "price_return",
+    "crsp_field_old": "retx",        # legacy CRSP daily file
+    "crsp_field_ciz": "DlyRetx",     # CIZ-format daily file
+    "crsp_field_forbidden": ("ret", "DlyRet"),   # TOTAL return — not this
+}
+
+# Both sides of the β̂ regression must use the same return concept as the
+# event window. The stock leg is checked too: a price-return market leg against
+# a total-return stock leg is the same error mirrored.
+RETURN_CONCEPTS = {
+    "price_return": {"retx", "dlyretx", "price_return"},
+    "total_return": {"ret", "dlyret", "total_return"},
 }
 
 # Named so a reviewer can see what was NOT chosen and why.
@@ -145,6 +170,23 @@ REJECTED_PROXIES = {
     "crsp_ewretd": "as crsp_vwretd, and equal-weighted on top of it.",
 }
 
+# Excluding the gap is not the same as the gap not existing (D-T3-30). For a
+# pre-open or after-close announcement a real part of the response happens IN the
+# opening gap, where there is no contemporaneous market leg to subtract. So the
+# gap becomes its own outcome and CAR^h is labelled for what it measures.
+POST_OPEN_LABEL = "post_open_response"
+GAP_OUTCOME = "overnight_open_gap"
+GAP_RULE = (
+    "The overnight/opening gap is a SEPARATE outcome (previous close midquote → "
+    "first RTH midquote) and is never added into CAR^h. For pre-open and "
+    "after-close announcements CAR^h must be labelled "
+    f"{POST_OPEN_LABEL!r}: it is the response AFTER the open, not the whole "
+    "announcement response, and it must not be interpreted alongside an "
+    "intraday announcement's CAR^h as if they were the same quantity. Folding "
+    "the gap in would contaminate two things at once — an interval with no "
+    "contemporaneous market leg, and a selection correlated with announcement "
+    "timing.")
+
 PROXY_OPEN_GAP_RULE = (
     "Both legs start at the SAME timestamp, and the overnight gap is in "
     "neither. Pre-open announcement: h runs from that day's first RTH midquote. "
@@ -154,6 +196,58 @@ PROXY_OPEN_GAP_RULE = (
     "day, not 16:00. Including the gap in the stock leg but not the market leg "
     "(or the reverse) puts an unhedged overnight move into AR^h, and it does "
     "not raise.")
+
+
+def assert_return_concept_coherent(stock_field: str, proxy_field: str) -> None:
+    """The β̂ regression's two legs, and the event window, are one concept.
+
+    Frozen: PRICE returns (D-T3-29). The event-window leg is a midquote price
+    return; estimating β̂ on total returns and applying it there mixes a
+    dividend-inclusive sensitivity into a dividend-free quantity. Nothing raises
+    if you get it wrong — `ret` and `retx` are both plausible daily returns.
+    """
+    want = MARKET_PROXY["return_concept"]
+    ok = RETURN_CONCEPTS[want]
+    bad = {f.lower() for f in MARKET_PROXY["crsp_field_forbidden"]}
+    for label, field in (("stock", stock_field), ("market proxy", proxy_field)):
+        f = (field or "").lower()
+        if f in bad:
+            raise ProxyIncoherent(
+                f"the {label} β̂ leg uses {field!r}, which is a TOTAL return. "
+                f"The event window is a midquote PRICE return, so β̂ must be "
+                f"estimated on price returns on BOTH legs (D-T3-29): "
+                f"{MARKET_PROXY['crsp_field_old']!r} on the legacy CRSP daily "
+                f"file, {MARKET_PROXY['crsp_field_ciz']!r} on the CIZ format.")
+        if f not in ok:
+            raise ProxyIncoherent(
+                f"the {label} β̂ leg uses {field!r}, which is not a recognised "
+                f"{want} field. Known: {sorted(ok)}. Name the exact field — an "
+                "unnamed 'daily return' is how a total return ends up in a "
+                "price-return regression.")
+
+
+def assert_gap_excluded_from_car(outcome_name: str, horizon_components) -> None:
+    """CAR^h must not contain the overnight/opening gap (D-T3-30)."""
+    comps = {str(c).lower() for c in horizon_components}
+    if GAP_OUTCOME in comps or "overnight" in comps or "gap" in comps:
+        raise BenchmarkPolicyError(
+            f"outcome {outcome_name!r} folds the opening gap into CAR^h. "
+            + GAP_RULE)
+
+
+def car_label(announcement_session: str) -> str:
+    """What this event's CAR^h actually measures (D-T3-30).
+
+    `pre_open` and `after_close` events get the post-open label because their
+    CAR^h starts at the open and therefore misses whatever the gap absorbed.
+    """
+    if announcement_session in ("pre_open", "after_close"):
+        return POST_OPEN_LABEL
+    if announcement_session == "intraday":
+        return "full_announcement_response"
+    raise BenchmarkPolicyError(
+        f"unknown announcement session {announcement_session!r}; expected one of "
+        "'pre_open', 'intraday', 'after_close' (D-T3-12's three-way split).")
 
 
 def assert_proxy_coherent(beta_instrument: str, market_leg_instrument: str,
@@ -342,6 +436,38 @@ def _selftest() -> int:
             == MARKET_PROXY["beta_estimation_instrument"])
     print(f"  {'ok  ' if good else 'FAIL'} the frozen bundle is self-coherent")
     ok = ok and good
+
+    # --- return concept (D-T3-29) ---
+    expect_ok("price return on both legs",
+              lambda: assert_return_concept_coherent("retx", "retx"))
+    expect_ok("CIZ spelling",
+              lambda: assert_return_concept_coherent("DlyRetx", "DlyRetx"))
+    for a, b in (("ret", "retx"), ("retx", "ret"), ("DlyRet", "DlyRetx")):
+        expect_raises(f"total return on a leg ({a}/{b})",
+                      lambda a=a, b=b: assert_return_concept_coherent(a, b),
+                      "TOTAL return")
+    expect_raises("unnamed daily return",
+                  lambda: assert_return_concept_coherent("daily_return", "retx"),
+                  "Name the exact field")
+
+    # --- the opening gap is its own outcome (D-T3-30) ---
+    for label, got, want in [
+            ("pre-open is a post-open response", car_label("pre_open"),
+             POST_OPEN_LABEL),
+            ("after-close likewise", car_label("after_close"), POST_OPEN_LABEL),
+            ("intraday is the full response", car_label("intraday"),
+             "full_announcement_response")]:
+        good = got == want
+        print(f"  {'ok  ' if good else 'FAIL'} {label}: {got!r}")
+        ok = ok and good
+    expect_raises("unknown session", lambda: car_label("premarket"),
+                  "three-way split")
+    expect_ok("RTH-only components pass",
+              lambda: assert_gap_excluded_from_car("CAR_5m", ["rth_5m"]))
+    expect_raises("gap folded into CAR",
+                  lambda: assert_gap_excluded_from_car(
+                      "CAR_close", ["overnight_open_gap", "rth_to_close"]),
+                  "SEPARATE outcome")
 
     print("\nSELFTEST", "PASSED" if ok else "FAILED")
     return 0 if ok else 1

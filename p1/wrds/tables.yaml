@@ -245,9 +245,24 @@ pulls:
         - date
         resolved: null
       ret:
-        want: daily return including distributions
+        want: daily return including distributions (TOTAL return). Used by the
+          daily spines. NOT the beta-estimation series for spine zero — see
+          price_return below.
         candidates:
         - ret
+        resolved: null
+      price_return:
+        want: 'daily PRICE return, excluding distributions (RETX; CIZ-format
+          DlyRetx). This is the spine-zero beta-estimation series for BOTH legs
+          — the stock and SPY (D-T3-29). The event-window market leg is a
+          midquote price return and a quote midpoint contains no dividend, so a
+          beta fitted on TOTAL returns would carry a dividend-inclusive
+          sensitivity into a dividend-free quantity. Nothing raises if the wrong
+          one is used: `ret` and `retx` are equally plausible daily returns.
+          Both are pulled; they are not interchangeable.'
+        candidates:
+        - retx
+        - dlyretx
         resolved: null
       price:
         want: daily closing price
@@ -328,6 +343,14 @@ pulls:
         - dlstcd
         resolved: null
     asserts:
+      price_vs_total_return: 'NEED_HUMAN at the window: confirm whether this
+        account''s daily file is the legacy format (`retx`) or CIZ (`DlyRetx`),
+        and paste the exact name. Spine zero''s beta MUST be estimated on the
+        price-return field for the stock AND for SPY; the total-return field
+        stays for the daily spines. Using one where the other belongs does not
+        raise — it shifts every beta and therefore every AR^h.
+
+        '
       monthly_cfacshr_sufficiency: 'NEED_HUMAN once dsf lands: run compute_continuity.monthly_factor_sufficiency(asof_dates,
         daily_panel) over the ACTUAL N-PORT repPdDate values and record the verdict
         in GATE0-RESULT.md. Until it returns "sufficient", Gate 0 must join the DAILY

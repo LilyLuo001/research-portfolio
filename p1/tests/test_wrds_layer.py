@@ -46,7 +46,10 @@ def _inventory():
                              # joins CFACSHR on the N-PORT repPdDate, and the
                              # monthly file is not known to be precise enough
                              # for every one of those dates (v2.1d).
-                             "cfacshr", "cfacpr", "shrout"],
+                             "cfacshr", "cfacpr", "shrout",
+                             # PRICE return: the spine-zero beta series, both
+                             # legs (D-T3-29). `ret` stays for the daily spines.
+                             "retx"],
         "crsp.dsi":         ["date", "vwretd"],
         "crsp.dsedelist":   ["permno", "dlstdt", "dlret", "dlstcd"],
         "crsp.ccmxpf_lnkhdr": ["gvkey", "lpermno", "linkdt", "linkenddt",
