@@ -44,7 +44,9 @@ Stage 1 registers what is already determined and requires no data. Stage 2 appen
 | winsorization | none |
 | standardize_within_fund | no |
 
-No centring, no within-fund scaling, no winsorization. Creation/redemption is rare, and any fund-specific statistic computed on a mostly-zero series is dominated by the zeros: a fund with 2 nonzero days in 250 has a within-fund 99th percentile of zero, which would clip both of its genuine events to zero exposure. Comparability across funds is handled by the fund x date fixed effects, which absorb any fund-level scale.
+No centring, no within-fund scaling, no winsorization. Creation/redemption is rare, and any fund-specific statistic computed on a mostly-zero series is dominated by the zeros: a fund with 2 nonzero days in 250 has a within-fund 99th percentile of zero, which would clip both of its genuine events to zero exposure.
+
+CR is cross-fund comparable **because it is a unitless proportional change** — a 2% creation is a 2% creation at any fund size — so no further scaling is required. The fund x date fixed effects are a separate mechanism and do not normalize the interaction: they absorb fund-day common components (the CR level among them), and `CR_ft x |L_i|` is then identified from constituent-level `|L_i|` variation within the fund-day.
 
 ### Robustness exposure magnitude (never the primary)
 
@@ -105,13 +107,39 @@ All must hold; otherwise the fallback arm. Decided before any treatment coeffici
 | winsorize_outcome_pct | 1, 99 |
 | log_transform | no |
 
-### 3.4 Design
+### 3.4 CR event timing (binding on the sample)
+
+A CR change is **dated** only when the vendor demonstrably refreshed shares that day: audited_daily_refresh, no_preceding_unchanged_run. Otherwise it is an **interval** event of width run_length_before_plus_one, because the accumulated flow could have occurred on any day of the run.
+
+| rule | registered value |
+|---|---|
+| primary_sample | dated_only |
+| interval_events_in_primary | excluded |
+| interval_events_may_be_matched_same_day | no |
+| on_unaudited_refresh | all_events_interval |
+
+Interval events may **not** be paired with same-day constituent order imbalance: the vendor's update day is the one day in the interval guaranteed to carry a printed share change, so a same-day pairing dates constituent trading to a day the data cannot support, in the direction that manufactures a same-day association.
+
+They are not discarded. Interval-level robustness outcome:
+
+| element | registered value |
+|---|---|
+| outcome | cumulative_aligned_signed_dollar_imbalance_over_the_interval |
+| normalization | sum_over_interval_days / (adv_dollar_pre * interval_days) |
+| exposure | abs_CR_x_absL |
+| sign_source | CR_raw |
+| role | robustness_only |
+| may_replace_primary | no |
+
+Reported in every case: n_dated_events, n_interval_events, median_interval_width_days, share_of_events_dated.
+
+### 3.5 Design
 
 Pooled interaction, fixed effects `fund_x_date`; CR-interacted controls: size, illiquidity, index_membership, pre_period_etf_ownership, pre_conversion_holding_weight (all predetermined). Post-treatment controls forbidden in the baseline: realized_creation_basket_weight, post_conversion_holding_weight, post_conversion_etf_ownership. Response lag: primary 0 day(s), corroborating 1 day(s).
 
 Calibration window: start_trading_days_after_conversion = 21; end_trading_days_after_conversion = 252; exclude = fomc_statement_dates, fomc_press_conference_dates, fomc_minutes_dates; exclude_buffer_trading_days = 1.
 
-### 3.5 Decision rule
+### 3.6 Decision rule
 
 Outcomes: licensed, not_licensed_inconclusive, retired_from_headline, INSUFFICIENT_IDENTIFYING_VARIATION.
 

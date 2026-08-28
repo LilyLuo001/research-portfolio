@@ -662,3 +662,32 @@ def test_the_shares_refresh_frequency_audit_is_registered_and_open():
     assert ne["shares_update_frequency"] is None
     assert ne["shares_stale_carryforward_detected"] is None
     assert ne["shares_repeated_value_runs_are_events"] is False
+
+
+def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
+    """A CR change localizable only to a multi-day interval may not be paired with same-day
+    constituent order imbalance."""
+    t = CONFIG["network_exposure"]["cr_event_timing"]
+    assert t["primary_sample"] == "dated_only"
+    assert t["interval_events_in_primary"] == "excluded"
+    assert t["interval_events_may_be_matched_same_day"] is False
+    assert t["on_unaudited_refresh"] == "all_events_interval"
+    assert set(t["dated_requires"]) == {"audited_daily_refresh", "no_preceding_unchanged_run"}
+    r = t["interval_robustness"]
+    assert r["role"] == "robustness_only" and r["may_replace_primary"] is False
+    for k in ("n_dated_events", "n_interval_events", "median_interval_width_days",
+              "share_of_events_dated"):
+        assert k in t["report"], k
+
+
+def test_cross_fund_comparability_is_attributed_to_the_ratio_not_the_fixed_effects():
+    """Correction: CR is comparable across funds because it is a unitless proportional
+    change. The fixed effects absorb fund-day common components; the interaction is
+    identified from constituent-level |L_i| variation within the fund-day."""
+    text = (ROOT / "refraction" / "frozen_config.yaml").read_text()
+    assert "UNITLESS PROPORTIONAL" in text
+    assert "fund-day COMMON COMPONENTS" in text
+    doc = (ROOT / "refraction" / "STAGE1_PREREG.md").read_text()
+    assert "unitless proportional change" in doc
+    assert "do not normalize the interaction" in doc
+    assert "constituent-level" in doc

@@ -421,9 +421,17 @@ network_exposure:
     #
     # No centring, no within-fund SD scaling, no winsorization. Every property the audit
     # asked for then holds BY CONSTRUCTION rather than by guard: zero iff zero, non-negative,
-    # +x and -x identical, order preserved exactly. §6.1.2's "standardized within fund so the
-    # sensitivity is comparable across funds" is served instead by the fund x date fixed
-    # effects, which absorb any fund-level scale, and by reporting a1 in units of |CR| x |L|.
+    # +x and -x identical, order preserved exactly.
+    #
+    # WHY THAT IS ALREADY COMPARABLE ACROSS FUNDS, stated correctly (a previous comment here
+    # got this wrong and credited the fixed effects with it). CR is a UNITLESS PROPORTIONAL
+    # CHANGE: a 2% creation is a 2% creation whether the fund holds $50m or $5bn, so §6.1.2's
+    # comparability requirement is met by the ratio itself and needs no further scaling.
+    # The fund x date fixed effects do something DIFFERENT and must not be described as
+    # normalizing the interaction: they absorb fund-day COMMON COMPONENTS (the CR level, and
+    # anything else shared by every constituent of that ETF on that date). What identifies
+    # a1 is then constituent-level variation in |L_i| WITHIN the fund-day, scaled by that
+    # day's CR. Neither mechanism substitutes for the other.
     magnitude_first: true
     winsorize_signed_series_forbidden: true
     primary_exposure_transform:
@@ -510,8 +518,11 @@ network_exposure:
   # Safeguard 1: PREFERRED design is the pooled interaction, not a two-step with noisy phi.
   first_stage_design: pooled_interaction
   # Identification must come from cross-sectional differential exposure WITHIN one ETF-day,
-  # not from common ETF-level flow shocks. fund x date FE absorb the CR main effect by
-  # construction — that is the point, not a side effect.
+  # not from common ETF-level flow shocks. fund x date FE absorb fund-day COMMON COMPONENTS,
+  # the CR level among them, by construction — that is the point, not a side effect. What is
+  # left to identify a1 is constituent-level |L_i| variation within the fund-day, scaled by
+  # that day's CR. The FE do not normalize or rescale the interaction; CR is already
+  # cross-fund comparable because it is a unitless proportional change.
   first_stage_fixed_effects: fund_x_date
   #
   # FREEZE 3 (2026-08-28). The BASELINE control vector is PREDETERMINED only. Realized
@@ -554,6 +565,47 @@ network_exposure:
   shares_stale_carryforward_detected: null          # measured by shares_update_audit()
   shares_repeated_value_runs_are_events: false      # a repeat is NO NEWS, not a zero event,
                                                     # unless the vendor refreshes daily
+  #
+  # ===================================================================================
+  # CR EVENT TIMING — BINDING ON G8 (frozen 2026-08-28)
+  # ===================================================================================
+  # shares_update_audit() already tells dated updates from carry-forward run-then-jump
+  # intervals. That distinction is now a SAMPLE RULE, not a caveat in the write-up.
+  #
+  # A CR change that can only be localized to a multi-day interval must NOT be paired with
+  # constituent order imbalance on the vendor's eventual update day. The AP's trade may have
+  # happened on any day of the interval, so the same-day pairing attributes constituent
+  # trading to a date the data cannot support — and it does so in the direction that
+  # manufactures a same-day association, because the update day is the one day in the
+  # interval guaranteed to carry a printed share change.
+  cr_event_timing:
+    classes: [dated, interval]
+    # DATED: the vendor refreshed shares on that day, so the change is localized to it.
+    # Requires an audited daily refresh with no carry-forward fingerprint; a change preceded
+    # by a run of unchanged values is INTERVAL, of width (run length + 1) days.
+    dated_requires: [audited_daily_refresh, no_preceding_unchanged_run]
+    interval_width_days: run_length_before_plus_one
+    # The primary is same-day aligned OIB, so it takes DATED events only.
+    primary_sample: dated_only
+    interval_events_in_primary: excluded
+    interval_events_may_be_matched_same_day: false
+    # Interval events are not discarded from the paper — they get an outcome measured on the
+    # scale at which their timing is actually known.
+    interval_robustness:
+      outcome: cumulative_aligned_signed_dollar_imbalance_over_the_interval
+      # summed across the interval's days, over ADV$ x interval length, so it is on the same
+      # per-day scale as the primary and the two are comparable
+      normalization: sum_over_interval_days / (adv_dollar_pre * interval_days)
+      exposure: abs_CR_x_absL          # the same registered exposure
+      sign_source: CR_raw
+      role: robustness_only
+      may_replace_primary: false
+      reported_with: [n_interval_events, median_interval_width_days]
+    # If the audit cannot establish the refresh cadence at all, EVERY event is interval:
+    on_unaudited_refresh: all_events_interval
+    # Reported in the G8 output regardless of which way the counts fall.
+    report: [n_dated_events, n_interval_events, median_interval_width_days,
+             share_of_events_dated]
   cr_timestamp_audit_complete: false                # set true only by the recorded audit
   cr_timestamp_resolution: null                     # NEED_INFO: daily | intraday
   cr_timestamp_vendor_field: null                   # exact vendor + field name, or NEED_INFO

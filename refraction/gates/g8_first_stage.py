@@ -259,6 +259,27 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
         raise SafeguardViolation(
             "NEED_HUMAN: the CR event census is required before estimation (freeze 4). "
             "Mechanism variation comes from nonzero-CR fund-days, not constituent-day rows.")
+
+    # timing rule (2026-08-28) — the same-day primary takes DATED events only
+    tcfg = ne["cr_event_timing"]
+    if timestamp_audit.get("resolution") is not None:
+        tc = census.get("timing")
+        if tc is None:
+            raise SafeguardViolation(
+                "NEED_HUMAN: the CR event timing census is missing. The same-day aligned-OIB "
+                "primary is registered %s, so interval events must be classified and excluded "
+                "before it is estimated — pairing them with the vendor's update day dates "
+                "constituent trading to the one day guaranteed to carry a printed share "
+                "change." % tcfg["primary_sample"])
+        if tc.get("n_interval_events") and tcfg["interval_events_in_primary"] == "excluded":
+            # the sample must already have been filtered; verdict refuses to bless one that
+            # still carries them
+            raise SafeguardViolation(
+                "%d interval event(s) are still in the primary sample. Apply "
+                "g8_preflight.primary_timing_sample() first; interval events belong to the "
+                "interval-level robustness outcome (%s), not to the same-day primary."
+                % (tc["n_interval_events"], tcfg["interval_robustness"]["outcome"]))
+
     alpha = config.get("gate0_thresholds", {}).get("first_stage_primary_alpha")
     if alpha is None:
         raise SafeguardViolation(
@@ -442,6 +463,7 @@ def _report(result, census, ident, config, outcome_choice, timestamp_audit, alph
         "n_effective_fund_clusters": census.get("n_effective_fund_clusters"),
         "n_effective_adviser_clusters": census.get("n_effective_adviser_clusters"),
         "n_effective_event_clusters": census.get("n_effective_event_clusters"),
+        "timing": census.get("timing"),
         "n_funds_with_any_cr": census["n_funds_with_any_cr"],
         "within_fund_date_exposure_sd": result.get("within_fund_date_exposure_sd"),
         "registered_outcome": outcome_choice["chosen"],

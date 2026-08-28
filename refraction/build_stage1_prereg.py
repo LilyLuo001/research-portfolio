@@ -106,8 +106,14 @@ def render(cfg: dict) -> str:
     a("No centring, no within-fund scaling, no winsorization. Creation/redemption is rare, "
       "and any fund-specific statistic computed on a mostly-zero series is dominated by the "
       "zeros: a fund with 2 nonzero days in 250 has a within-fund 99th percentile of zero, "
-      "which would clip both of its genuine events to zero exposure. Comparability across "
-      "funds is handled by the fund x date fixed effects, which absorb any fund-level scale.")
+      "which would clip both of its genuine events to zero exposure.")
+    a("")
+    a("CR is cross-fund comparable **because it is a unitless proportional change** — a 2% "
+      "creation is a 2% creation at any fund size — so no further scaling is required. The "
+      "fund x date fixed effects are a separate mechanism and do not normalize the "
+      "interaction: they absorb fund-day common components (the CR level among them), and "
+      "`CR_ft x |L_i|` is then identified from constituent-level `|L_i|` variation within "
+      "the fund-day.")
     a("")
     a("### Robustness exposure magnitude (never the primary)")
     a("")
@@ -164,7 +170,36 @@ def render(cfg: dict) -> str:
               "adv_min_nonzero_days", "winsorize_outcome_pct", "log_transform"):
         a("| %s | %s |" % (k, _fmt(norm.get(k))))
     a("")
-    a("### 3.4 Design")
+    a("### 3.4 CR event timing (binding on the sample)")
+    a("")
+    t = ne["cr_event_timing"]
+    a("A CR change is **dated** only when the vendor demonstrably refreshed shares that day: "
+      "%s. Otherwise it is an **interval** event of width %s, because the accumulated flow "
+      "could have occurred on any day of the run."
+      % (_fmt(t["dated_requires"]), t["interval_width_days"]))
+    a("")
+    a("| rule | registered value |")
+    a("|---|---|")
+    for k in ("primary_sample", "interval_events_in_primary",
+              "interval_events_may_be_matched_same_day", "on_unaudited_refresh"):
+        a("| %s | %s |" % (k, _fmt(t.get(k))))
+    a("")
+    a("Interval events may **not** be paired with same-day constituent order imbalance: the "
+      "vendor's update day is the one day in the interval guaranteed to carry a printed "
+      "share change, so a same-day pairing dates constituent trading to a day the data "
+      "cannot support, in the direction that manufactures a same-day association.")
+    a("")
+    a("They are not discarded. Interval-level robustness outcome:")
+    a("")
+    a("| element | registered value |")
+    a("|---|---|")
+    for k in ("outcome", "normalization", "exposure", "sign_source", "role",
+              "may_replace_primary"):
+        a("| %s | %s |" % (k, _fmt(t["interval_robustness"].get(k))))
+    a("")
+    a("Reported in every case: %s." % _fmt(t["report"]))
+    a("")
+    a("### 3.5 Design")
     a("")
     a("Pooled interaction, fixed effects `%s`; CR-interacted controls: %s (all predetermined). "
       "Post-treatment controls forbidden in the baseline: %s. Response lag: primary %s day(s), "
@@ -176,7 +211,7 @@ def render(cfg: dict) -> str:
     a("")
     a("Calibration window: %s." % _fmt(ne["calibration_window"]))
     a("")
-    a("### 3.5 Decision rule")
+    a("### 3.6 Decision rule")
     a("")
     a("Outcomes: %s." % _fmt(ne["first_stage_outcomes"]))
     a("")

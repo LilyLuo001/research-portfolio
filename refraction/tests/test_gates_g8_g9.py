@@ -82,6 +82,12 @@ def test_summarize_reports_the_registered_responses_not_a_bare_verdict():
 # G8                                                                           #
 # --------------------------------------------------------------------------- #
 
+def _timing_from(cr_raw):
+    """Fixtures stand in for an audited daily-refresh series, so every genuine change is a
+    DATED event. Interval events are constructed explicitly where they are being tested."""
+    return np.where(np.asarray(cr_raw, dtype=float) != 0.0, "dated", "none")
+
+
 def make_panel(n_stocks=40, n_days=120, a1=0.0, seed=0):
     """r_resid_fwd = 0.1*CR + a1*(CR*absL) + noise.
 
@@ -106,6 +112,7 @@ def make_panel(n_stocks=40, n_days=120, a1=0.0, seed=0):
     df = pd.DataFrame(rows)
     df["CR_raw"] = df["CR"]
     df["CR_mag"] = df["CR_raw"].abs()
+    df["cr_timing"] = _timing_from(df["CR_raw"])
     return df
 
 
@@ -132,6 +139,7 @@ def make_trading_panel(n_stocks=40, n_days=120, a1=0.0, seed=0, arm="fallback"):
     # They are still kept as separate columns, because that is how the pipeline hands them on.
     df["CR_raw"] = df["CR"]
     df["CR_mag"] = df["CR_raw"].abs()      # fixtures are untreated, so |raw| is the magnitude
+    df["cr_timing"] = _timing_from(df["CR_raw"])
     df["y"] = pre.aligned_outcome(df, arm)
     return df
 
@@ -491,6 +499,7 @@ def test_freeze4_the_census_counts_events_not_constituent_day_rows():
     live = set(sorted(panel["date"].unique())[:3])
     for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"].isin(live), panel[col], 0.0)
+    panel["cr_timing"] = _timing_from(panel["CR_raw"])
     c = pre.cr_event_census(panel, CONFIG)
     assert c["n_constituent_day_rows"] == 4800
     assert c["n_fund_days"] == 120
@@ -542,7 +551,7 @@ def test_a_sample_with_no_creation_or_redemption_is_uninformative_not_a_failure(
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
-    dead = pre.cr_event_census(panel.assign(CR=0.0, CR_raw=0.0, CR_mag=0.0), CONFIG)
+    dead = pre.cr_event_census(panel.assign(CR=0.0, CR_raw=0.0, CR_mag=0.0, cr_timing="none"), CONFIG)
     v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
                    timestamp_audit=audit, census=dead)
     assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
@@ -650,6 +659,7 @@ def liquidity_panel(n=200, seed=0, size_spread=1000.0, noise=0.0, frac=0.02):
     df = pd.DataFrame(rows)
     df["CR_raw"] = df["CR"]
     df["CR_mag"] = df["CR_raw"].abs()
+    df["cr_timing"] = _timing_from(df["CR_raw"])
     return df
 
 
@@ -904,6 +914,7 @@ def test_freeze6_a_single_event_is_uninformative_not_a_rejection():
     one_day = sorted(panel["date"].unique())[0]
     for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"] == one_day, panel[col], 0.0)
+    panel["cr_timing"] = _timing_from(panel["CR_raw"])
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
@@ -969,6 +980,7 @@ def test_freeze6_the_classification_never_replaces_inference():
     one_day = sorted(panel["date"].unique())[0]
     for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"] == one_day, panel[col], 0.0)
+    panel["cr_timing"] = _timing_from(panel["CR_raw"])
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, census = preflight(cfg, panel)
@@ -996,6 +1008,7 @@ def test_two_events_is_not_a_sufficiency_claim():
     live = set(sorted(panel["date"].unique())[:2])       # exactly 2 events: clears the check
     for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"].isin(live), panel[col], 0.0)
+    panel["cr_timing"] = _timing_from(panel["CR_raw"])
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, census = preflight(cfg, panel)
@@ -1265,6 +1278,7 @@ def test_a_single_event_fund_still_contributes_identifying_variation():
     for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"] == one, 0.05, 0.0)
     panel["CR_mag"] = np.abs(panel["CR_raw"])
+    panel["cr_timing"] = _timing_from(panel["CR_raw"])
     # noise well below the planted signal (0.30 x 0.05 x absL), so the test measures
     # identification rather than sampling error
     panel["y"] = 0.30 * panel["CR_mag"] * panel["absL"] + \
@@ -1549,3 +1563,119 @@ def test_the_exposure_uses_the_registered_magnitude_and_sign_columns():
     mag, sign = g8._cr_columns(df, CONFIG)
     assert list(g8.EXPOSURES["abs_CR_x_absL"](mag, sign, df["absL"].to_numpy())) == [1.0, 1.0]
     assert list(g8.EXPOSURES["signed_CR_x_absL"](mag, sign, df["absL"].to_numpy())) == [1.0, -1.0]
+
+
+# --------------------------------------------------------------------------- #
+# CR event timing — binding on the same-day primary (frozen 2026-08-28)        #
+# --------------------------------------------------------------------------- #
+
+def carryforward_shares(blocks=8, hold=3, step=1.06, fund="F1"):
+    """A vendor that refreshes every `hold` days: S held constant, then catching up."""
+    v, s = 100.0, []
+    for _ in range(blocks):
+        s += [v] * hold
+        v *= step
+    return shares_frame(s, fund=fund)
+
+
+def daily_shares(n=60, seed=3, fund="F1"):
+    rng = np.random.default_rng(seed)
+    v, s = 100.0, []
+    for _ in range(n):
+        v *= 1 + rng.normal(0, 0.01)
+        s.append(v)
+    return shares_frame(s, fund=fund)
+
+
+def test_a_carryforward_jump_is_an_interval_event_not_a_dated_one():
+    f = carryforward_shares()
+    audit = pre.shares_update_audit(f, {"update_frequency": "daily"}, CONFIG)
+    tm = pre.classify_cr_event_timing(f, audit, CONFIG)
+    ev = tm[tm["cr_timing"] != "none"]
+    assert (ev["cr_timing"] == "interval").all()
+    assert (ev["cr_interval_days"] == 3).all()          # hold + the update day
+    assert (ev["cr_interval_start"] < ev["date"]).all()
+
+
+def test_a_genuinely_daily_series_yields_dated_events():
+    f = daily_shares()
+    audit = pre.shares_update_audit(f, {"update_frequency": "daily"}, CONFIG)
+    tm = pre.classify_cr_event_timing(f, audit, CONFIG)
+    ev = tm[tm["cr_timing"] != "none"]
+    assert len(ev) and (ev["cr_timing"] == "dated").all()
+    assert (ev["cr_interval_days"] == 1).all()
+
+
+def test_an_unaudited_refresh_makes_every_event_interval():
+    """If the cadence was never established, nothing can be localized to a day."""
+    assert CONFIG["network_exposure"]["cr_event_timing"]["on_unaudited_refresh"] == \
+        "all_events_interval"
+    f = daily_shares()
+    tm = pre.classify_cr_event_timing(f, None, CONFIG)
+    ev = tm[tm["cr_timing"] != "none"]
+    assert (ev["cr_timing"] == "interval").all()
+
+
+def test_a_non_daily_stated_cadence_also_yields_interval_events():
+    f = daily_shares()
+    audit = pre.shares_update_audit(f, {"update_frequency": "weekly"}, CONFIG)
+    tm = pre.classify_cr_event_timing(f, audit, CONFIG)
+    assert (tm[tm["cr_timing"] != "none"]["cr_timing"] == "interval").all()
+
+
+def test_interval_events_are_removed_from_the_same_day_primary():
+    panel = make_trading_panel(n_stocks=5, n_days=10, seed=71)
+    interval_day = sorted(panel["date"].unique())[4]
+    panel.loc[panel["date"] == interval_day, "cr_timing"] = "interval"
+    kept = pre.primary_timing_sample(panel, CONFIG)
+    assert interval_day not in set(kept["date"])
+    assert kept.attrs["n_interval_events_excluded"] == 1
+    assert "interval" not in set(kept["cr_timing"])
+
+
+def test_the_same_day_primary_refuses_an_unclassified_panel():
+    panel = make_trading_panel(n_stocks=4, n_days=6, seed=72).drop(columns=["cr_timing"])
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.primary_timing_sample(panel, CONFIG)
+    assert "guaranteed to carry a printed share change" in str(e.value)
+
+
+def test_the_verdict_refuses_a_primary_that_still_contains_interval_events():
+    """The rule is binding, not advisory."""
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=73)
+    panel.loc[panel["date"] == sorted(panel["date"].unique())[3], "cr_timing"] = "interval"
+    choice, audit, census = preflight(cfg, panel)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    with pytest.raises(g8.SafeguardViolation) as e:
+        g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert "interval event(s) are still in the primary sample" in str(e.value)
+    # ...and passes once they are excluded
+    clean = pre.primary_timing_sample(panel, CONFIG)
+    choice2, audit2, census2 = preflight(cfg, clean)
+    r2 = g8.pooled_interaction(clean, y_col="y", exposure="abs_CR_x_absL",
+                               outcome_class="trading_connectivity", config=cfg)
+    v = g8.verdict(r2, cfg, outcome_class="trading_connectivity", outcome_choice=choice2,
+                   timestamp_audit=audit2, census=census2)
+    assert v["timing"]["n_interval_events"] == 0
+
+
+def test_the_timing_census_is_reported_whichever_way_the_counts_fall():
+    """A rule that only surfaces when it bites is not a rule."""
+    panel = make_trading_panel(n_stocks=4, n_days=10, seed=74)
+    c = pre.cr_event_census(panel, CONFIG)
+    assert c["timing"]["n_interval_events"] == 0
+    assert c["timing"]["share_of_events_dated"] == pytest.approx(1.0)
+    assert c["timing"]["primary_sample"] == "dated_only"
+    assert "interval" in c["timing"]["interval_outcome"]
+
+
+def test_the_interval_robustness_outcome_is_defined_and_cannot_replace_the_primary():
+    r = CONFIG["network_exposure"]["cr_event_timing"]["interval_robustness"]
+    assert r["outcome"] == "cumulative_aligned_signed_dollar_imbalance_over_the_interval"
+    assert "interval_days" in r["normalization"]        # per-day scale, comparable to primary
+    assert r["exposure"] == "abs_CR_x_absL"
+    assert r["sign_source"] == "CR_raw"
+    assert r["role"] == "robustness_only" and r["may_replace_primary"] is False

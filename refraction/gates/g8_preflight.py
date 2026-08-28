@@ -523,6 +523,7 @@ def cr_event_census(panel: pd.DataFrame, config: dict, zero_tol: float = 0.0) ->
         "rows_per_event": (len(panel) / n_nz) if n_nz else np.nan,
         "reporting_only": "no minimum is registered; the census is reported, not passed",
         "computed_on": col,
+        "timing": (timing_census(panel, config) if "cr_timing" in panel.columns else None),
         **eff,
     }
 
@@ -592,4 +593,108 @@ def shares_update_audit(shares: pd.DataFrame, record: dict, config: dict) -> dic
             "many CR events are affected" if looks_stale else
             "no carry-forward fingerprint; CR event dates are as precise as the refresh"),
         "needs_human_review": looks_stale or stated != "daily",
+    }
+
+
+# --------------------------------------------------------------------------- timing rule
+def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict) -> pd.DataFrame:
+    """Label every CR change DATED or INTERVAL (binding rule, 2026-08-28).
+
+    A change is DATED only when the vendor demonstrably refreshed shares on that day: the
+    audit must establish a daily cadence with no carry-forward fingerprint, AND the change
+    must not be preceded by a run of unchanged values. Otherwise the accumulated flow could
+    have occurred on any day of the run, and the event is INTERVAL of width
+    (run length + 1) days.
+
+    Why this is a SAMPLE rule and not a caveat: the update day is the one day in the interval
+    guaranteed to carry a printed share change, so pairing interval events with same-day
+    constituent order imbalance attributes trading to a date the data cannot support — and it
+    does so in exactly the direction that manufactures a same-day association.
+
+    `shares`: fund | date | shares_outstanding. Returns fund | date | cr_timing |
+    cr_interval_days | cr_interval_start.
+    """
+    t = config["network_exposure"]["cr_event_timing"]
+    df = shares.copy()
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values(["fund", "date"]).reset_index(drop=True)
+
+    daily_ok = bool(audit and audit.get("consistent_with_daily_refresh"))
+    if not (audit and audit.get("stated_update_frequency")):
+        daily_ok = False                     # on_unaudited_refresh: all_events_interval
+
+    rows = []
+    for fund, g in df.groupby("fund", sort=False):
+        v = g["shares_outstanding"].astype(float).to_numpy()
+        dates = g["date"].to_numpy()
+        run = 0                              # consecutive prior days with S unchanged
+        for i in range(len(v)):
+            if i == 0:
+                rows.append({"fund": fund, "date": dates[i], "cr_timing": "none",
+                             "cr_interval_days": np.nan, "cr_interval_start": pd.NaT})
+                continue
+            changed = v[i] != v[i - 1]
+            if not changed:
+                run += 1
+                rows.append({"fund": fund, "date": dates[i], "cr_timing": "none",
+                             "cr_interval_days": np.nan, "cr_interval_start": pd.NaT})
+                continue
+            if daily_ok and run == 0:
+                rows.append({"fund": fund, "date": dates[i], "cr_timing": "dated",
+                             "cr_interval_days": 1.0, "cr_interval_start": dates[i]})
+            else:
+                width = run + 1
+                rows.append({"fund": fund, "date": dates[i], "cr_timing": "interval",
+                             "cr_interval_days": float(width),
+                             "cr_interval_start": dates[max(0, i - run)]})
+            run = 0
+    return pd.DataFrame(rows)
+
+
+def primary_timing_sample(panel: pd.DataFrame, config: dict) -> pd.DataFrame:
+    """Restrict the same-day aligned-OIB primary to DATED events (and non-event days).
+
+    Interval events are removed from the primary rather than silently paired with the
+    vendor's update day. They are not discarded from the paper: they carry their own
+    interval-level outcome, registered under cr_event_timing.interval_robustness.
+    """
+    t = config["network_exposure"]["cr_event_timing"]
+    if t["primary_sample"] != "dated_only":
+        raise SafeguardViolation("primary_sample is registered dated_only, got %r"
+                                 % t["primary_sample"])
+    if "cr_timing" not in panel.columns:
+        raise SafeguardViolation(
+            "the same-day primary requires cr_timing (classify_cr_event_timing). An interval "
+            "event paired with same-day order imbalance dates constituent trading to the "
+            "vendor's update day, which is the one day in the interval guaranteed to carry a "
+            "printed share change.")
+    drop = panel["cr_timing"].eq("interval")
+    out = panel[~drop].copy()
+    out.attrs["n_interval_events_excluded"] = int(
+        panel.loc[drop, ["fund", "date"]].drop_duplicates().shape[0])
+    return out
+
+
+def timing_census(panel: pd.DataFrame, config: dict) -> dict:
+    """Reported whichever way the counts fall — a rule that only surfaces when it bites is
+    not a rule."""
+    work = panel.copy()
+    if "cr_interval_days" not in work.columns:
+        work["cr_interval_days"] = np.nan     # a dated-only panel carries no widths
+    ev = work[work["cr_timing"].isin(("dated", "interval"))][
+        ["fund", "date", "cr_timing", "cr_interval_days"]].drop_duplicates(
+            subset=["fund", "date"])
+    n_dated = int((ev["cr_timing"] == "dated").sum())
+    n_int = int((ev["cr_timing"] == "interval").sum())
+    total = n_dated + n_int
+    return {
+        "n_dated_events": n_dated,
+        "n_interval_events": n_int,
+        "share_of_events_dated": (n_dated / total) if total else np.nan,
+        "median_interval_width_days": (
+            float(ev.loc[ev["cr_timing"] == "interval", "cr_interval_days"].median())
+            if n_int else np.nan),
+        "primary_sample": config["network_exposure"]["cr_event_timing"]["primary_sample"],
+        "interval_outcome": config["network_exposure"]["cr_event_timing"][
+            "interval_robustness"]["outcome"],
     }
