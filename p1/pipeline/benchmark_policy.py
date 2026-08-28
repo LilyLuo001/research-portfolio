@@ -36,7 +36,8 @@ Five rules, from `p1/t3_spec/变量规格书.md` D-T3-11/17/18/19/22/25-30:
      drift-allocation convention this project never pre-specified. Dropping α is
      the only option that keeps one formula at every h, which rule 1 requires.
      The scaled-alpha variant is a named robustness, applied uniformly or not at
-     all.
+     all — and a LIMITED one: it probes an average expected-return component
+     scaled by horizon, not drift that varies by announcement time or date.
 
   4. **One market proxy across both legs** (D-T3-25..28). β̂ and the
      event-window market leg must be the SAME traded instrument, on the same
@@ -104,8 +105,12 @@ FE_ABSORPTION_NOTE = (
     "so do not write 'exactly absorbed' even there. `close` and `+1d` carry a "
     "FURTHER exposure: duration itself varies event to event, so even a stable "
     "per-unit-time drift enters in different amounts. The duration-scaled-alpha "
-    "variant (D-T3-20/22) is ROBUSTNESS ONLY and is the registered response to "
-    "that second exposure — it scales with the same duration that varies.")
+    "variant (D-T3-20/22) is ROBUSTNESS ONLY, and its reach is narrow: α̂ is one "
+    "AVERAGE per stock, so scaling it by h probes sensitivity to including an "
+    "average expected-return component scaled by horizon — nothing more. It does "
+    "NOT resolve drift that varies by announcement time or event date, because "
+    "an average cannot represent a quantity that varies within it. Both residuals "
+    "stay in the paper as limitations; neither is 'handled'.")
 
 
 def fe_absorption(horizon: str) -> dict:
@@ -151,6 +156,10 @@ BENCHMARK_HORIZONS = {
     # (D-T3-19), β̂ from the daily [−250,−21] model (D-T3-20).
     "beta_adjusted_market": HORIZONS + ("+2d", "+5d", "+120d"),
     # Same formula plus a horizon-scaled intercept α̂·(h/D), applied uniformly.
+    # LIMITED robustness: α̂ is one average per stock, so this probes sensitivity
+    # to including an average expected-return component scaled by horizon. It
+    # does not address announcement-time or event-date variation in expected
+    # drift — an average cannot stand in for something that varies within it.
     "beta_adjusted_market_scaled_alpha": HORIZONS + ("+2d", "+5d", "+120d"),
     "beta_one_market_adjusted": HORIZONS + ("+2d", "+5d", "+120d"),
     "beta_adjusted_market_industry": HORIZONS + ("+2d", "+5d", "+120d"),

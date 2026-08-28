@@ -554,3 +554,24 @@ def test_the_blueprint_carries_the_same_frozen_facts_as_the_variable_spec():
         ("D-T3-32", "the FE-scope decision is cited"),
     ]:
         assert needle in bp_text, f"blueprint is behind the spec: {why}"
+
+
+def test_scaled_alpha_is_not_claimed_to_resolve_time_varying_drift():
+    """It is one AVERAGE per stock scaled by h. That probes sensitivity to
+    including an average expected-return component scaled by horizon -- it
+    cannot stand in for drift that varies by announcement time or event date,
+    because an average does not represent what varies inside it."""
+    bp = _bp()
+    note = bp.FE_ABSORPTION_NOTE
+    assert "ROBUSTNESS ONLY" in note
+    assert "AVERAGE per stock" in note
+    assert "does NOT resolve" in note or "NOT resolve" in note
+    assert "announcement time or event date" in note
+    assert "neither is 'handled'" in note
+    for path in (VARSPEC, BLUEPRINT, PLAN):
+        t = path.read_text()
+        assert "平均" in t, path.name
+        assert ("不解决随公告时刻" in t or "并不解决随公告时刻" in t), path.name
+    # and it stays a robustness benchmark, never the headline
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.assert_is_headline("beta_adjusted_market_scaled_alpha")
