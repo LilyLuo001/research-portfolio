@@ -499,3 +499,56 @@ def test_the_g8_outcome_choice_record_exists_and_is_still_unresolved():
         assert key.replace("_min", "") in text, key   # the record names the FACT
         if isinstance(floor, float):
             assert ("%.2f" % floor) in text, key
+
+
+# --------------------------------------------------------------------------- #
+# freezes 5 and 6 (2026-08-28)                                                 #
+# --------------------------------------------------------------------------- #
+
+def test_freeze5_the_outcome_unit_is_frozen_and_carries_no_size():
+    """A raw dollar imbalance scales with the stock's size, and |L_tilt^pre| is not
+    independent of size — so the unit is part of the registration, not an afterthought."""
+    n = CONFIG["network_exposure"]["first_stage_outcome_normalization"]
+    assert n["numerator"] == "signed_dollar_imbalance"
+    assert n["denominator"] == "adv_dollar_pre"
+    assert n["log_transform"] is False          # a log would drop the imbalance's sign
+    assert list(n["winsorize_outcome_pct"]) == [1, 99]
+    lo, hi = n["adv_window_trading_days"]
+    assert lo < hi < 0, "the ADV window must be entirely pre-conversion"
+
+
+def test_freeze5_the_exposure_unit_is_frozen_too():
+    """Otherwise a1 depends on how big the ETF happens to be."""
+    ex = CONFIG["network_exposure"]["first_stage_exposure_normalization"]
+    assert ex["cr_unit"] == "fraction_of_fund_net_assets"
+    assert ex["cr_denominator_lagged"] is True
+
+
+def test_freeze6_g8_has_three_outcomes_and_low_power_is_not_failure():
+    ne = CONFIG["network_exposure"]
+    assert "INSUFFICIENT_IDENTIFYING_VARIATION" in ne["first_stage_outcomes"]
+    assert ne["insufficient_variation_is_not_mechanism_failure"] is True
+    resp = ne["insufficient_variation_response"]
+    assert "neither" in resp and "UNTESTED" in resp
+    assert "never" in resp                      # no re-entry by lowering the bar
+
+
+def test_freeze6_the_power_line_reuses_the_plans_mde_convention_not_a_new_one():
+    rules = CONFIG["network_exposure"]["first_stage_insufficient_variation_rules"]
+    assert rules["mde_sigma_max"] == G0["mde_sigma_max"] == 0.5
+    assert rules["min_nonzero_cr_days"] == 2     # structural: 1 event has no variation
+    # the rank tolerance is numerical, not economic
+    assert rules["degenerate_exposure_rank_tol"] <= 1e-8
+
+
+def test_the_frozen_spec_carries_a_timestamped_hash_and_is_not_mistaken_for_the_osf_prereg():
+    """The repo-local freeze record. It makes "frozen before outcomes" checkable now; it is
+    NOT the pre-registration, which is a human gate downstream of the Gate-0 report."""
+    import json
+    rec = json.loads((ROOT / "refraction" / "frozen_config.yaml.lineage.json").read_text())
+    assert rec["registered_spec"] == CONFIG["prereg"]["registered_spec"]
+    assert rec["output_sha256"] and rec["timestamp"] and rec["code_version"] != "unknown"
+    assert "REFR-GATE-OSF" in rec["what_this_is_NOT"]
+    # and the real gate is still shut
+    assert CONFIG["prereg"]["osf_timestamp"] is None
+    assert CONFIG["beta"]["w_shrink"] is None

@@ -146,7 +146,13 @@ def pooled_interaction(sample: pd.DataFrame, controls=("r_resid_lag", "mkt"),
             "fixed_effects": "fund_x_date" if fund_date_fe else "none",
             "cr_interacted_controls": zcols,
             "outcome_column": y_col, "exposure": exposure,
-            "outcome_class": outcome_class, "estimand": estimand}
+            "outcome_class": outcome_class, "estimand": estimand,
+            # freeze 6: the variation that actually identifies a1. Under fund x date FE the
+            # exposure is demeaned within the ETF-day, so this is the dispersion the
+            # coefficient is estimated off — not the raw column's SD, and not the row count.
+            "within_fund_date_exposure_sd": float(np.std(X[:, a1_idx])),
+            "exposure_sd_raw": float(np.std(df[inter].to_numpy(float))),
+            "sd_outcome": float(np.std(y))}
 
 
 def _check_baseline_controls(zcols, estimand: str, config: dict) -> None:
@@ -226,10 +232,6 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
         raise SafeguardViolation(
             "NEED_HUMAN: the CR event census is required before estimation (freeze 4). "
             "Mechanism variation comes from nonzero-CR fund-days, not constituent-day rows.")
-    if not census.get("n_nonzero_cr_days"):
-        raise SafeguardViolation(
-            "the calibration sample contains no nonzero creation/redemption days — there is "
-            "no mechanism variation to test, whatever the row count says.")
     alpha = config.get("gate0_thresholds", {}).get("first_stage_primary_alpha")
     if alpha is None:
         raise SafeguardViolation(
@@ -248,10 +250,32 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
     from math import erf, sqrt
     t = result["t_a1"]
     p_one_sided = 0.5 * (1 - erf(t / sqrt(2)))          # H1: a1 > 0
+
+    # Freeze 6: LOW POWER IS NOT MECHANISM FAILURE. Checked BEFORE the p-value, so a sparse
+    # sample cannot be read as evidence of absence — and so the coefficient's own size can
+    # never influence which branch is taken.
+    ident = identifying_variation(result, census, config)
+    if ident["insufficient"]:
+        return {"a1": result["a1"], "t": t, "p_one_sided": None, "alpha": alpha,
+                "licensed": None,
+                "outcome": "INSUFFICIENT_IDENTIFYING_VARIATION",
+                "reasons": ident["reasons"], "diagnostics": ident["diagnostics"],
+                "registered_outcome": outcome_choice["chosen"],
+                "outcome_arm": outcome_choice["arm"],
+                "exposure": result["exposure"],
+                "estimand": result.get("estimand", "baseline"),
+                "n_nonzero_cr_days": census["n_nonzero_cr_days"],
+                "n_funds_with_any_cr": census["n_funds_with_any_cr"],
+                "event_language": timestamp_audit["g8_event_language"],
+                "within_day_ordering_identified":
+                    timestamp_audit["within_day_ordering_identified"],
+                "note": ne["insufficient_variation_response"].strip()}
+
     licensed = bool(t > 0 and p_one_sided <= float(alpha))
     return {"a1": result["a1"], "t": t, "p_one_sided": p_one_sided, "alpha": alpha,
             "licensed": licensed,
             "outcome": "licensed" if licensed else "retired_from_headline",
+            "mde_sigma": ident["diagnostics"]["mde_sigma"],
             "registered_outcome": outcome_choice["chosen"],
             "outcome_arm": outcome_choice["arm"],
             "exposure": result["exposure"],
@@ -261,3 +285,84 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
             "event_language": timestamp_audit["g8_event_language"],
             "within_day_ordering_identified": timestamp_audit["within_day_ordering_identified"],
             "note": "predictive association, not causal (Plan §6.1.2)"}
+
+
+def identifying_variation(result: dict, census: dict, config: dict) -> dict:
+    """Is there enough creation/redemption activity for the mechanism test to say anything?
+
+    Freeze 6 (2026-08-28). Three ways the answer is no, and none of them is a finding about
+    the mechanism:
+
+      (a) fewer than 2 nonzero-CR fund-days. Structural, not a threshold: with one event
+          there is no variation ACROSS events for anything to be estimated off.
+      (b) degenerate exposure within fund-date. Under fund x date FE the CR level is
+          absorbed, so if |L| does not vary across constituents of the same ETF-day the
+          interaction is collinear with the fixed effects and a1 is not identified at all.
+      (c) the minimum detectable effect is too large to be informative. This one is a power
+          line, and it deliberately inherits Plan v2.1 §9's existing MDE convention
+          (mde_sigma_max, in SD units) rather than inventing a second standard.
+
+    MDE is computed from the ESTIMATED standard error, which is a property of the design and
+    the sample — not of a1. The branch therefore cannot be steered by the coefficient's size.
+    """
+    from math import sqrt
+    rules = config["network_exposure"]["first_stage_insufficient_variation_rules"]
+    alpha = config.get("gate0_thresholds", {}).get("first_stage_primary_alpha")
+    reasons = []
+
+    n_events = int(census.get("n_nonzero_cr_days") or 0)
+    if n_events < int(rules["min_nonzero_cr_days"]):
+        reasons.append(
+            "only %d nonzero creation/redemption fund-day(s); at least %d are needed for any "
+            "variation across events to exist (%d constituent-day rows do not substitute)"
+            % (n_events, rules["min_nonzero_cr_days"], census.get("n_constituent_day_rows", 0)))
+
+    sd_x = float(result.get("within_fund_date_exposure_sd") or 0.0)
+    sd_raw = float(result.get("exposure_sd_raw") or 0.0)
+    # Relative, at machine scale: perfect collinearity with the fixed effects leaves
+    # floating-point dust rather than an exact zero.
+    rank_ratio = (sd_x / sd_raw) if sd_raw > 0 else 0.0
+    if rank_ratio <= float(rules["degenerate_exposure_rank_tol"]):
+        reasons.append(
+            "the exposure has no within-fund-date variation (within/raw SD = %.3g): under "
+            "fund x date fixed effects it is collinear with the fixed effects and there is "
+            "nothing left for a1 to be identified off" % rank_ratio)
+
+    # one-sided z at the registered alpha, plus the power target
+    z_a = _z_one_sided(float(alpha)) if alpha is not None else None
+    z_b = _z_one_sided(1.0 - float(rules["power_target"]))
+    se, sd_y = result.get("se_a1"), result.get("sd_outcome")
+    mde_sigma = None
+    if z_a is not None and se and sd_y:
+        mde_sigma = float((z_a + z_b) * se / sd_y)      # smallest a1 detectable, in SDs of y
+        if mde_sigma > float(rules["mde_sigma_max"]):
+            reasons.append(
+                "MDE is %.3f SD of the outcome at alpha=%s and power=%s, above the %.2f SD "
+                "line Plan v2.1 §9 already uses — the test could not have detected an effect "
+                "of the size the paper would call economically meaningful"
+                % (mde_sigma, alpha, rules["power_target"], rules["mde_sigma_max"]))
+
+    return {
+        "insufficient": bool(reasons),
+        "reasons": reasons,
+        "diagnostics": {"n_nonzero_cr_days": n_events,
+                        "within_fund_date_exposure_sd": sd_x,
+                        "exposure_sd_raw": sd_raw, "exposure_rank_ratio": rank_ratio,
+                        "se_a1": se, "sd_outcome": sd_y, "mde_sigma": mde_sigma,
+                        "power_target": rules["power_target"],
+                        "rows_per_event": census.get("rows_per_event")},
+    }
+
+
+def _z_one_sided(p: float) -> float:
+    """Upper-tail normal quantile. Bisection rather than a SciPy dependency — this runs on
+    the box's stdlib-only venv, same constraint as scan.py."""
+    from math import erf, sqrt
+    lo, hi = -10.0, 10.0
+    for _ in range(200):
+        mid = (lo + hi) / 2.0
+        if 0.5 * (1 - erf(mid / sqrt(2))) > p:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2.0

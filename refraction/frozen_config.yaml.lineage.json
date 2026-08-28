@@ -1,0 +1,33 @@
+{
+  "output": "refraction/frozen_config.yaml",
+  "output_sha256": "3259cee599058085ff05d474ffc7c2e544cf197978164a56c5e668eab2f26ac2",
+  "inputs": [
+    {
+      "path": "docs/MacroEvent_Chapter_Plan_v2_4.md",
+      "sha256": "ddb2334d4132cca8cc11f124dbb474fac2c5cd3a413a0f26c80e287b92d9591c",
+      "rows": null
+    },
+    {
+      "path": "refraction/G8_SIGN_PREDICTION.md",
+      "sha256": "657bd25b1fd2cf950cdfabf671453f1cbac145c1ee4ba3ea5af58765782b5e84",
+      "rows": null
+    },
+    {
+      "path": "refraction/G8_OUTCOME_CHOICE.md",
+      "sha256": "e1c21ff8090b73ac1449b8f8a3d676c042285b7bd359d81c9af190ca366f511b",
+      "rows": null
+    },
+    {
+      "path": "refraction/DECISIONS-2026-08-19.md",
+      "sha256": "078428b99defe0026a5b325885d775f972d3fc88664251ad5c3e8b0e79e8acb6",
+      "rows": null
+    }
+  ],
+  "code_version": "cbe1e20062cda74fdabdd1d846a6808d5e5e1813",
+  "timestamp": "2026-08-28T08:56:53.741048+00:00",
+  "registered_spec": "SPEC-MAIN-v2.4",
+  "freeze_scope": "implementation freezes 1-6 (2026-08-19 clarifications, 2026-08-28 freezes)",
+  "what_this_is": "a repo-local content hash + UTC timestamp of the frozen specification, so the claim that it was frozen BEFORE outcomes were opened is checkable.",
+  "what_this_is_NOT": "the OSF pre-registration. That is REFR-GATE-OSF (human_gate: true), which depends on REFR-R4-prereg -> REFR-GATE-PREREG, both of which require the measured Gate-0 report and beta.w_shrink frozen from inside the G2 feasibility window. Neither exists yet.",
+  "prereg_guard_status": "BLOCKED (prereg.osf_timestamp is null) \u2014 correct and expected"
+}

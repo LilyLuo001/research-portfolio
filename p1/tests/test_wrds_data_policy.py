@@ -19,6 +19,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 ALLOWED = {
     "p1/t2_wrds/README.md",
     "p1/t2_wrds/build_waves.py",
+    # Code only: CRSP field SEMANTICS and the adjustment arithmetic. No rows, no query
+    # results — the factors it operates on arrive as arguments from the caller's frame.
+    "p1/t2_wrds/corpactions.py",
     "p1/t2_wrds/build_waves.log",
     "p1/t2_wrds/holdings_pipeline.py",
     "p1/t2_wrds/coverage_census.py",

@@ -517,17 +517,21 @@ def test_the_verdict_refuses_without_each_preflight_artefact():
         assert needle in str(e.value)
 
 
-def test_the_verdict_refuses_a_sample_with_no_creation_or_redemption_at_all():
+def test_a_sample_with_no_creation_or_redemption_is_uninformative_not_a_failure():
+    """Freeze 6: low power is not mechanism failure. A dead sample returns
+    INSUFFICIENT_IDENTIFYING_VARIATION — the measure is untested, not retired."""
     cfg = audited_config()
     panel = make_trading_panel(a1=0.30, seed=20)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
     dead = pre.cr_event_census(panel.assign(CR=0.0), CONFIG)
-    with pytest.raises(g8.SafeguardViolation) as e:
-        g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
                    timestamp_audit=audit, census=dead)
-    assert "no mechanism variation" in str(e.value)
+    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert v["licensed"] is None                 # neither licensed NOR retired
+    assert v["p_one_sided"] is None              # no p-value is reported off a dead sample
+    assert any("nonzero creation/redemption" in r_ for r_ in v["reasons"])
 
 
 def test_the_licensed_verdict_carries_its_wording_and_its_event_count():
@@ -596,3 +600,260 @@ def test_a_g9_summary_names_which_piece_is_missing():
         shares("W1", [(1, 10)]), shares("W1", [(1, 10)]), CONV), convention=CONV)
     assert "as-of dates are not reported" in s["incomplete"]
     assert s["adjustment_convention"] == "VERIFIED"
+
+
+# --------------------------------------------------------------------------- #
+# freeze 5 — the outcome's unit                                                #
+# --------------------------------------------------------------------------- #
+
+def liquidity_panel(n=200, seed=0, size_spread=1000.0):
+    """A panel where |L| is CORRELATED WITH SIZE and there is NO arbitrage channel at all.
+    Raw dollar imbalance is proportional to size, so a raw outcome manufactures a1 > 0 out
+    of the size distribution alone. This is the failure freeze 5 exists to prevent."""
+    rng = np.random.default_rng(seed)
+    rows = []
+    for i in range(n):
+        size = 1.0 + size_spread * rng.random()      # dollar ADV
+        absl = 0.1 + 0.8 * (size / (1.0 + size_spread))   # big names sit closer to basket
+        for t in range(6):
+            cr = float(rng.normal(0, 1))
+            # imbalance is a CONSTANT FRACTION of the stock's own liquidity: no connectivity
+            frac = 0.02 + rng.normal(0, .002)
+            rows.append({"permno": 1000 + i, "fund": "F1",
+                         "date": pd.Timestamp("2023-01-02") + pd.Timedelta(days=t),
+                         "CR": cr, "absL": absl, "adv_dollar_pre": size,
+                         "signed_dollar_imbalance": np.sign(cr) * frac * size,
+                         "dollar_volume": size * (1 + frac),
+                         "tna_lag": 1e9})
+    return pd.DataFrame(rows)
+
+
+def test_freeze5_a_raw_dollar_outcome_manufactures_the_result_from_size_alone():
+    """Documents WHY the unit is frozen: with no arbitrage channel in the data, the RAW
+    outcome still delivers a large positive a1, purely because |L| tracks size."""
+    df = liquidity_panel(seed=31)
+    df["y_raw"] = np.sign(df["CR"]) * df["signed_dollar_imbalance"]
+    raw = g8.pooled_interaction(df, controls=(), y_col="y_raw", exposure="abs_CR_x_absL",
+                                outcome_class="trading_connectivity")
+    assert raw["t_a1"] > 5, "the size artefact should be glaring"
+
+
+def test_freeze5_the_registered_normalized_outcome_removes_the_size_artefact():
+    """Same data, same exposure, registered unit: scaling by predetermined ADV$ leaves the
+    imbalance as a fraction of the stock's own liquidity, which carries no size."""
+    df = liquidity_panel(seed=31)
+    df["y"] = pre.aligned_outcome(df, "preferred", CONFIG)
+    norm = g8.pooled_interaction(df, controls=(), y_col="y", exposure="abs_CR_x_absL",
+                                 outcome_class="trading_connectivity")
+    assert abs(norm["t_a1"]) < 3, "the normalized outcome still carries the size artefact"
+
+
+def test_freeze5_the_outcome_refuses_to_build_without_the_predetermined_denominator():
+    df = liquidity_panel(seed=32).drop(columns=["adv_dollar_pre"])
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.aligned_outcome(df, "preferred", CONFIG)
+    assert "predetermined ADV$" in str(e.value)
+
+
+def test_freeze5_a_zero_or_missing_denominator_drops_rather_than_floors():
+    df = liquidity_panel(seed=33)
+    df.loc[df.index[:5], "adv_dollar_pre"] = 0.0
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.aligned_outcome(df, "preferred", CONFIG)
+    assert "never floor them" in str(e.value)
+
+
+def test_freeze5_both_arms_share_the_same_denominator():
+    """If the arms used different denominators, a switch between them would change the
+    unit as well as the outcome."""
+    n = CONFIG["network_exposure"]["first_stage_outcome_normalization"]
+    assert n["denominator"] == "adv_dollar_pre"
+    for arm in ("preferred", "fallback"):
+        expr = CONFIG["network_exposure"]["first_stage_primary_candidates"][arm][
+            "outcome_expression"]
+        assert "ADV_pre_i" in expr, arm
+
+
+def test_freeze5_the_adv_window_is_entirely_pre_conversion():
+    """A contemporaneous denominator is moved by the very trading being measured; a
+    post-conversion one is post-treatment besides."""
+    n = CONFIG["network_exposure"]["first_stage_outcome_normalization"]
+    lo, hi = n["adv_window_trading_days"]
+    assert lo < hi < 0, "the ADV window must close strictly before the conversion"
+    assert n["adv_statistic"] == "median"
+    assert n["adv_min_nonzero_days"] > 0
+
+
+def test_freeze5_predetermined_adv_uses_only_pre_conversion_days():
+    daily = pd.DataFrame([{"permno": 1, "date": pd.Timestamp("2023-01-01") + pd.Timedelta(days=d),
+                           "dollar_volume": 100.0 if d < 300 else 9e9} for d in range(400)])
+    adv = pre.predetermined_adv(daily, {1: pd.Timestamp("2023-01-01") + pd.Timedelta(days=300)},
+                                CONFIG)
+    assert adv.loc[0, "adv_dollar_pre"] == pytest.approx(100.0)   # the 9e9 spike is post
+    assert bool(adv.loc[0, "usable"]) is True
+
+
+def test_freeze5_a_stock_with_too_few_pre_days_is_marked_unusable():
+    daily = pd.DataFrame([{"permno": 1, "date": pd.Timestamp("2023-01-01") + pd.Timedelta(days=d),
+                           "dollar_volume": 100.0} for d in range(30)])
+    adv = pre.predetermined_adv(daily, {1: pd.Timestamp("2023-06-01")}, CONFIG)
+    assert bool(adv.loc[0, "usable"]) is False
+
+
+def test_freeze5_cr_is_scaled_by_lagged_fund_assets():
+    """In raw dollars a1 would depend on how big the ETF happens to be; a same-day
+    denominator would let the flow scale itself."""
+    df = liquidity_panel(seed=34)
+    x = pre.normalized_cr(df, CONFIG)
+    assert np.allclose(x, df["CR"].to_numpy(float) / 1e9)
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.normalized_cr(df.drop(columns=["tna_lag"]), CONFIG)
+    assert "LAGGED fund TNA" in str(e.value)
+
+
+def test_freeze5_size_is_defended_twice_and_neither_substitutes():
+    ne = CONFIG["network_exposure"]
+    assert set(ne["first_stage_size_defence"]) == {"outcome_normalization",
+                                                   "cr_interacted_size_control"}
+    assert "size" in ne["first_stage_cr_interacted_controls"]
+
+
+# --------------------------------------------------------------------------- #
+# freeze 6 — INSUFFICIENT_IDENTIFYING_VARIATION                                #
+# --------------------------------------------------------------------------- #
+
+def test_freeze6_a_single_event_is_uninformative_not_a_rejection():
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=40)
+    one_day = sorted(panel["date"].unique())[0]
+    panel["CR"] = np.where(panel["date"] == one_day, panel["CR"], 0.0)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    choice, audit, _ = preflight(cfg, panel)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=pre.cr_event_census(panel, CONFIG))
+    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert v["licensed"] is None
+    assert "UNTESTED" in v["note"]
+
+
+def test_freeze6_a_degenerate_exposure_is_uninformative():
+    """If |L| does not vary across constituents of the same ETF-day, the interaction is
+    collinear with the fixed effects and a1 is not identified at all."""
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=41)
+    panel["absL"] = 0.5                          # every constituent identical
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    choice, audit, census = preflight(cfg, panel)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert any("within-fund-date variation" in x for x in v["reasons"])
+
+
+def test_freeze6_the_power_line_inherits_the_plans_existing_mde_convention():
+    rules = CONFIG["network_exposure"]["first_stage_insufficient_variation_rules"]
+    assert rules["mde_sigma_max"] == CONFIG["gate0_thresholds"]["mde_sigma_max"]
+    assert rules["power_target"] == 0.80
+    assert CONFIG["network_exposure"]["insufficient_variation_is_not_mechanism_failure"] is True
+
+
+def test_freeze6_a_noisy_sample_is_uninformative_rather_than_a_rejection():
+    """A tiny, noisy design cannot reject the mechanism; it can only fail to see it."""
+    cfg = audited_config()
+    panel = make_trading_panel(n_stocks=6, n_days=4, a1=0.0, seed=42)
+    panel["y"] = panel["y"] + np.random.default_rng(1).normal(0, 5, len(panel))
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    choice, audit, census = preflight(cfg, panel)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert any("MDE" in x for x in v["reasons"])
+
+
+def test_freeze6_a_well_powered_null_still_retires_the_measure():
+    """The escape hatch must not swallow genuine rejections: with real power, a null is a
+    finding and the measure is retired."""
+    v = _adjudicate(-0.30, 43)
+    assert v["outcome"] == "retired_from_headline"
+    assert v["mde_sigma"] is not None and v["mde_sigma"] <= 0.5
+
+
+def test_freeze6_the_power_branch_is_taken_before_the_p_value_is_read():
+    """MDE is built from the SE and the outcome SD — properties of the design, not of a1 —
+    so the coefficient's size can never steer which branch is taken."""
+    import inspect
+    src = inspect.getsource(g8.verdict)
+    assert src.index("identifying_variation(") < src.index("licensed = bool(")
+    ident = inspect.getsource(g8.identifying_variation)
+    assert '"a1"' not in ident and "result['a1']" not in ident
+
+
+def test_freeze6_a_licensed_verdict_reports_its_mde():
+    v = _adjudicate(0.30, 44)
+    assert v["outcome"] == "licensed" and v["mde_sigma"] is not None
+
+
+def test_freeze6_all_three_outcomes_are_registered():
+    assert set(CONFIG["network_exposure"]["first_stage_outcomes"]) == {
+        "licensed", "retired_from_headline", "INSUFFICIENT_IDENTIFYING_VARIATION"}
+
+
+# --------------------------------------------------------------------------- #
+# G9 — one convention shared with P1, and as-of placement                      #
+# --------------------------------------------------------------------------- #
+
+def test_g9_and_p1_run_the_same_adjustment_code_not_two_copies():
+    """Integration: documentation fixes the semantics, this fixes the implementation."""
+    import sys as _sys
+    _sys.path.insert(0, str(ROOT / "p1" / "t2_wrds"))
+    import corpactions as ca
+    assert g9.verify_adjustment_convention.__module__ == g9.__name__
+    assert g9.ca is ca                                    # the same module object
+    assert g9.CORPORATE_ACTION_CONVENTION["owned_by"] == "p1/t2_wrds/corpactions.py"
+    assert g9.CORPORATE_ACTION_CONVENTION["field"] == ca.CORPACTION_SCHEMA["share_factor"]
+    # and the same numbers, not merely the same names
+    p = pd.DataFrame([{"shares_pre": 100, "cfacshr_pre": 1.0,
+                       "shares_post": 200, "cfacshr_post": 2.0}])
+    assert g9.verify_adjustment_convention(p) == ca.verify_direction(p)
+
+
+def test_g9_refuses_filing_dates_where_as_of_dates_belong():
+    a = shares("W1", [(1, 10)], as_of="2023-01-31").assign(filing_date="2023-04-30")
+    b = shares("W1", [(1, 10)], as_of="2023-03-31")
+    with pytest.raises(Exception) as e:
+        g9.check_as_of_dates(a, b, {"W1": "2023-02-15"})
+    assert "FILING date" in str(e.value)
+
+
+def test_g9_confirms_pre_holdings_precede_and_post_holdings_follow_the_conversion():
+    a = g9.check_as_of_dates(shares("W1", [(1, 10)], as_of="2023-01-31"),
+                             shares("W1", [(1, 10)], as_of="2023-03-31"),
+                             {"W1": "2023-02-15"})
+    assert a.loc[0, "pre_side"] == "pre" and a.loc[0, "post_side"] == "post"
+    assert bool(a.loc[0, "as_of_ok"]) is True
+    assert a.loc[0, "as_of_field"] == "report_dt"
+
+
+def test_g9_picks_the_tightest_snapshot_pair_around_the_conversion():
+    """The latest pre snapshot and the earliest post one — so the comparison is about the
+    wrapper rather than months of unrelated drift."""
+    pre_h = pd.concat([shares("W1", [(1, 10)], as_of="2022-06-30"),
+                       shares("W1", [(1, 10)], as_of="2023-01-31")])
+    post_h = pd.concat([shares("W1", [(1, 10)], as_of="2023-03-31"),
+                        shares("W1", [(1, 10)], as_of="2023-12-31")])
+    a = g9.check_as_of_dates(pre_h, post_h, {"W1": "2023-02-15"})
+    assert a.loc[0, "pre_as_of"] == pd.Timestamp("2023-01-31")
+    assert a.loc[0, "post_as_of"] == pd.Timestamp("2023-03-31")
+
+
+def test_g9_flags_a_wave_whose_snapshots_sit_on_the_wrong_side():
+    a = g9.check_as_of_dates(shares("W1", [(1, 10)], as_of="2023-03-01"),   # after the switch
+                             shares("W1", [(1, 10)], as_of="2023-03-31"),
+                             {"W1": "2023-02-15"})
+    assert bool(a.loc[0, "as_of_ok"]) is False
+    w = pd.DataFrame([{"wave": "W1", "permno": 1, "weight": 1.0}])
+    s = g9.summarize(g9.wave_continuity(w, w.copy()), CONFIG, as_of=a, convention=CONV)
+    assert s["waves_failing_as_of_placement"] == ["W1"]

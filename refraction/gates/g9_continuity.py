@@ -18,73 +18,49 @@ Vendor-free: pre and post holdings arrive as injected frames
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
 
 # --------------------------------------------------------------------------------------- #
-# Corporate-action adjustment — REUSED, not reinvented (2026-08-28).                        #
+# Corporate-action adjustment — IMPORTED, not reimplemented (2026-08-28).                   #
 #                                                                                           #
-# P1's holdings pipeline (p1/t2_wrds/holdings_pipeline.py) sets the house pattern: the CRSP #
-# schema lives in ONE place, is marked UNVERIFIED until a live account confirms it, and is  #
-# corrected there and nowhere else. The adjustment convention follows the same rule. Its    #
-# DIRECTION is not asserted from memory — it is determined empirically by                   #
-# verify_adjustment_convention() against names with a known corporate action and no trading #
-# between the two as-of dates, which is the only evidence that settles it.                  #
+# The convention lives in p1/t2_wrds/corpactions.py, which owns the CRSP field semantics    #
+# for the whole portfolio. G9 does not infer the meaning of cfacshr a second time: two       #
+# independent readings of one field is how two halves of one portfolio end up disagreeing   #
+# about what a split means. Documentation fixes the semantics; the integration test in      #
+# refraction/tests/test_gates_g8_g9.py verifies that this module and P1 run the SAME code.  #
 # --------------------------------------------------------------------------------------- #
+_P1 = Path(__file__).resolve().parents[2] / "p1" / "t2_wrds"
+if str(_P1) not in sys.path:
+    sys.path.insert(0, str(_P1))
+import corpactions as ca                                          # noqa: E402
+
 CORPORATE_ACTION_CONVENTION = {
     "vendor": "CRSP",
-    "source": "crsp.msf / crsp.dsf",
-    "field": "cfacshr",                 # cumulative factor to adjust shares outstanding
-    "formula": "shares_adj = shares * cfacshr",   # common basis; direction VERIFIED below
-    "status": "UNVERIFIED",
-    "verify_with": "verify_adjustment_convention()",
-    "holdings_as_of_field": "report_dt",          # same field P1 uses (SCHEMA['holdings'])
+    "source": ca.CORPACTION_SCHEMA["table"],
+    "field": ca.CORPACTION_SCHEMA["share_factor"],
+    "formula": "shares_adj = <direction>(shares, cfacshr); direction from verify_direction()",
+    "status": ca.CORPACTION_SCHEMA["status"],
+    "owned_by": "p1/t2_wrds/corpactions.py",
+    "verify_with": "corpactions.verify_direction()",
+    "holdings_as_of_field": ca.HOLDINGS_AS_OF_FIELD,
     "as_of_rule": "pre as-of STRICTLY before the wave effective date (P1 convention)",
 }
 
-_DIRECTIONS = {"multiply": lambda sh, f: sh * f, "divide": lambda sh, f: sh / f}
 
-
-def verify_adjustment_convention(probe: pd.DataFrame, tol: float = 0.02) -> dict:
-    """Settle the adjustment direction on evidence, not recollection.
-
-    `probe` holds names with a KNOWN corporate action between two as-of dates and no trading
-    in between, so correctly adjusted share counts must be EQUAL:
-
-        permno | shares_pre | cfacshr_pre | shares_post | cfacshr_post
-
-    Both directions are scored by median |log ratio| of adjusted counts. The winner must be
-    inside `tol` and the loser clearly outside; anything else means the probe does not
-    identify the convention and the caller must stop rather than pick one.
-    """
-    need = {"shares_pre", "cfacshr_pre", "shares_post", "cfacshr_post"}
-    if not need <= set(probe.columns):
-        raise ValueError("probe is missing %s" % sorted(need - set(probe.columns)))
-    scores = {}
-    for name, fn in _DIRECTIONS.items():
-        a = fn(probe["shares_pre"].astype(float), probe["cfacshr_pre"].astype(float))
-        b = fn(probe["shares_post"].astype(float), probe["cfacshr_post"].astype(float))
-        ok = (a > 0) & (b > 0)
-        scores[name] = (float(np.median(np.abs(np.log(b[ok] / a[ok]))))
-                        if ok.any() else np.inf)
-    best = min(scores, key=scores.get)
-    other = [k for k in scores if k != best][0]
-    verified = scores[best] <= tol < scores[other]
-    return {
-        "direction": best if verified else None,
-        "scores": scores, "tol": tol, "n_probe": int(len(probe)),
-        "status": "VERIFIED" if verified else "UNVERIFIED",
-        "reason": "" if verified else (
-            "NEED_HUMAN: the probe does not separate the two adjustment directions "
-            "(scores %r). Do not guess — a wrong direction reads a split as 100%% turnover "
-            "in that name, or hides real trading." % (scores,)),
-    }
+def verify_adjustment_convention(probe, tol: float = 0.02) -> dict:
+    """Thin delegation to P1's canonical verifier — kept so G9's callers have one name for
+    it, and so a future divergence has to be deliberate rather than accidental."""
+    return ca.verify_direction(probe, tol=tol)
 
 
 def _adjusted_shares(frame: pd.DataFrame, convention: dict) -> pd.Series:
-    fn = _DIRECTIONS[convention["direction"]]
-    return fn(frame["shares"].astype(float), frame["cfacshr"].astype(float))
+    return ca.adjusted_shares(frame["shares"].astype(float),
+                              frame["cfacshr"].astype(float), convention)
 
 
 def check_as_of_dates(pre: pd.DataFrame, post: pd.DataFrame,
@@ -93,13 +69,18 @@ def check_as_of_dates(pre: pd.DataFrame, post: pd.DataFrame,
     report date is STRICTLY before the wave's effective date — is reused verbatim; the gap
     between as-of and effective date is reported because a six-month-stale pre snapshot makes
     "only the wrapper changed" a much weaker statement than a one-month-stale one."""
+    ca.assert_as_of_not_filing_date(pre.columns, "pre-conversion holdings")
+    ca.assert_as_of_not_filing_date(post.columns, "post-conversion holdings")
     rows = []
     for wave, eff in sorted(wave_effective.items()):
         eff = pd.Timestamp(eff)
         a = pd.to_datetime(pre.loc[pre["wave"] == wave, "as_of"], errors="coerce")
         b = pd.to_datetime(post.loc[post["wave"] == wave, "as_of"], errors="coerce")
-        pre_as_of = a.max() if len(a.dropna()) else pd.NaT
-        post_as_of = b.min() if len(b.dropna()) else pd.NaT
+        # PRE takes the LATEST snapshot still strictly before the conversion, POST the
+        # EARLIEST on or after it: the tightest pair around the switch, so the comparison
+        # is about the wrapper and not about months of unrelated drift.
+        pre_as_of = a[a < eff].max() if len(a.dropna()) else pd.NaT
+        post_as_of = b[b >= eff].min() if len(b.dropna()) else pd.NaT
         rows.append({
             "wave": wave, "effective_date": eff,
             "pre_as_of": pre_as_of, "post_as_of": post_as_of,
@@ -107,8 +88,15 @@ def check_as_of_dates(pre: pd.DataFrame, post: pd.DataFrame,
             "post_gap_days": (post_as_of - eff).days if pd.notna(post_as_of) else np.nan,
             "pre_strictly_before_effective": bool(pd.notna(pre_as_of) and pre_as_of < eff),
             "post_on_or_after_effective": bool(pd.notna(post_as_of) and post_as_of >= eff),
+            "pre_side": ca.classify_as_of(pre_as_of, eff),
+            "post_side": ca.classify_as_of(post_as_of, eff),
+            "as_of_field": ca.HOLDINGS_AS_OF_FIELD,
         })
-    return pd.DataFrame(rows)
+    out = pd.DataFrame(rows)
+    # The confirmation the design rests on: pre holdings are held BEFORE the conversion and
+    # first-post holdings AFTER it. A wave that fails this is reported, never silently used.
+    out["as_of_ok"] = (out["pre_side"] == "pre") & (out["post_side"] == "post")
+    return out
 
 
 def share_continuity(pre: pd.DataFrame, post: pd.DataFrame,
@@ -246,6 +234,8 @@ def summarize(cont: pd.DataFrame, config: dict, shares: pd.DataFrame = None,
         "as_of_reported": as_of is not None,
         "max_pre_gap_days": (float(as_of["pre_gap_days"].max())
                              if as_of is not None and len(as_of) else None),
+        "waves_failing_as_of_placement": (
+            [] if as_of is None else sorted(as_of.loc[~as_of["as_of_ok"], "wave"].tolist())),
         "waves_with_pre_as_of_not_before_effective": (
             [] if as_of is None else
             sorted(as_of.loc[~as_of["pre_strictly_before_effective"], "wave"].tolist())),

@@ -89,23 +89,110 @@ def choose_primary_outcome(g7_quality: dict, config: dict) -> dict:
     }
 
 
-def aligned_outcome(frame: pd.DataFrame, arm: str) -> np.ndarray:
-    """Build the registered primary outcome.
+def predetermined_adv(daily: pd.DataFrame, effective_dates: dict, config: dict) -> pd.DataFrame:
+    """The frozen liquidity denominator (freeze 5): median PRE-conversion dollar volume.
 
-    preferred: sign(CR) * OIB — the flow's sign enters through the OUTCOME, so a positive
-               value means constituent order flow moved WITH the creation/redemption.
-    fallback:  abnormal volume, unsigned.
+    `daily`: permno | date | dollar_volume, with FOMC dates already flagged or absent.
+    `effective_dates`: permno-or-fund -> conversion effective date. The window is taken
+    relative to the conversion, in TRADING days, and it stops 22 trading days before it, so
+    the run-up into the switch cannot enter the denominator.
 
-    Either way the exposure is |CR| x |L|: signed CR x |L| is registered as forbidden for the
-    primary, because a signed flow against an unsigned outcome tests nothing and against an
-    aligned outcome counts the sign twice.
+    Predetermined is the whole point. A contemporaneous or trailing-window ADV is moved by
+    the very trading being measured — a large AP day inflates its own denominator and shrinks
+    its own outcome, biasing a1 toward zero — and any post-conversion window is post-treatment
+    besides. Stocks with too few nonzero pre-conversion days are DROPPED, not floored: a
+    floored denominator invents an outcome for a stock whose liquidity was never observed.
     """
+    n = config["network_exposure"]["first_stage_outcome_normalization"]
+    lo, hi = n["adv_window_trading_days"]
+    stat, min_days = n["adv_statistic"], int(n["adv_min_nonzero_days"])
+    rows = []
+    for permno, g in daily.groupby("permno"):
+        eff = effective_dates.get(permno)
+        if eff is None:
+            continue
+        g = g.sort_values("date")
+        g = g[pd.to_datetime(g["date"]) < pd.Timestamp(eff)]
+        if "is_fomc" in g.columns:
+            g = g[~g["is_fomc"].astype(bool)]
+        # trading-day offsets counted back from the conversion
+        g = g.iloc[max(0, len(g) + lo):len(g) + hi] if len(g) + hi > 0 else g.iloc[0:0]
+        vol = g["dollar_volume"].astype(float)
+        nz = vol[vol > 0]
+        rows.append({
+            "permno": permno,
+            "adv_dollar_pre": float(getattr(nz, stat)()) if len(nz) else np.nan,
+            "n_nonzero_pre_days": int(len(nz)),
+            "usable": bool(len(nz) >= min_days),
+        })
+    return pd.DataFrame(rows)
+
+
+def _winsorize_within_date(frame: pd.DataFrame, col: str, pct) -> np.ndarray:
+    lo, hi = float(pct[0]) / 100.0, float(pct[1]) / 100.0
+    out = frame[col].astype(float).copy()
+    for _, idx in frame.groupby("date").groups.items():
+        v = out.loc[idx]
+        out.loc[idx] = v.clip(v.quantile(lo), v.quantile(hi))
+    return out.to_numpy(float)
+
+
+def aligned_outcome(frame: pd.DataFrame, arm: str, config: dict = None) -> np.ndarray:
+    """Build the registered primary outcome, in its registered UNIT (freeze 5).
+
+    preferred: sign(CR) * (signed DOLLAR imbalance / predetermined ADV$) — the flow's sign
+               enters through the OUTCOME, so a positive value means constituent order flow
+               moved WITH the creation/redemption.
+    fallback:  (dollar volume - ADV$) / ADV$, unsigned.
+
+    Both are scaled by the same predetermined denominator, so neither carries size units. A
+    RAW dollar imbalance would scale with the stock's size, and |L_tilt^pre| is not
+    independent of size — large index-heavy names sit closer to their basket's beta — so a
+    raw outcome could deliver a1 > 0 out of the size distribution with no arbitrage channel
+    in it at all.
+
+    `config=None` returns the UNNORMALIZED construction, and is for unit-testing the sign
+    algebra only; verdict() will not license a result built that way.
+    """
+    if arm not in ("preferred", "fallback"):
+        raise SafeguardViolation("unknown outcome arm %r" % (arm,))
+    if config is None:
+        return (np.sign(frame["CR"].to_numpy(float)) * frame["OIB"].to_numpy(float)
+                if arm == "preferred" else frame["abn_vol"].to_numpy(float))
+
+    n = config["network_exposure"]["first_stage_outcome_normalization"]
+    if "adv_dollar_pre" not in frame.columns:
+        raise SafeguardViolation(
+            "the registered outcome is scaled by predetermined ADV$ (freeze 5); the frame "
+            "carries no 'adv_dollar_pre'. Raw dollar flow scales with stock size, and size "
+            "is not independent of |L_tilt^pre|.")
+    adv = frame["adv_dollar_pre"].astype(float)
+    if (adv <= 0).any() or adv.isna().any():
+        raise SafeguardViolation(
+            "non-positive or missing ADV$ denominators present — drop those stocks "
+            "(adv_min_nonzero_days), never floor them.")
     if arm == "preferred":
-        cr = frame["CR"].to_numpy(float)
-        return np.sign(cr) * frame["OIB"].to_numpy(float)
-    if arm == "fallback":
-        return frame["abn_vol"].to_numpy(float)
-    raise SafeguardViolation("unknown outcome arm %r" % (arm,))
+        raw = np.sign(frame["CR"].to_numpy(float)) * (
+            frame["signed_dollar_imbalance"].astype(float) / adv)
+    else:
+        raw = (frame["dollar_volume"].astype(float) - adv) / adv
+    work = frame.assign(_y=raw.to_numpy(float))
+    return _winsorize_within_date(work, "_y", n["winsorize_outcome_pct"])
+
+
+def normalized_cr(frame: pd.DataFrame, config: dict) -> np.ndarray:
+    """CR as a fraction of LAGGED fund net assets (freeze 5). In raw dollars, a1 would
+    depend on how big the ETF happens to be; the lagged denominator keeps same-day flow out
+    of its own scaling."""
+    ex = config["network_exposure"]["first_stage_exposure_normalization"]
+    if ex["cr_unit"] != "fraction_of_fund_net_assets":
+        raise SafeguardViolation("unregistered CR unit %r" % (ex["cr_unit"],))
+    if "tna_lag" not in frame.columns:
+        raise SafeguardViolation("CR must be scaled by LAGGED fund TNA; 'tna_lag' missing")
+    tna = frame["tna_lag"].astype(float)
+    if (tna <= 0).any():
+        raise SafeguardViolation("non-positive lagged TNA in the CR denominator")
+    return (frame["CR"].astype(float) / tna).to_numpy(float)
 
 
 # --------------------------------------------------------------------------- freeze 2
