@@ -62,6 +62,11 @@ shock:
   # become a major source of policy news, so treating them as a nuisance window would discard
   # much of the shock in the recent sample.
   primary_episodes: [statement_30m, press_conference_70m]
+  # Safeguard 3: two co-primary episodes require a multiplicity rule fixed before results.
+  episode_multiplicity_rule: null       # NEED_HUMAN: joint/omnibus test or family-wise
+                                        # adjustment across the two episodes
+  statement_adjustment_is_censored_at_presser: true   # report as CENSORED, never as an
+                                        # unconstrained half-life crossing a new arrival
   combined_event: overall_transmission_summary_robustness
   minutes: excluded_from_primary
   # Statement-episode adjustment is estimated ONLY up to the press-conference start: the
@@ -143,6 +148,13 @@ gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops
   mde_sigma_max: 0.5               # G5, for γ pooled AND γ_tilt AND γ_fac
   sweep_window_min_gridpoints: 2   # G2: window narrower than this = knife-edge = FAIL
   # --- G7 / G8: new blocking lines in Plan v2.2 §9 --------------------------
+  # Safeguard 4: G7 tests ESTIMABILITY, not just coverage — enough effective intraday
+  # observations for short-window VECM. If event-specific VECM is unstable, arbitrage-gap
+  # convergence and lead-lag become PRIMARY and information share becomes secondary; the
+  # economic question is preserved either way.
+  g7_tests_vecm_estimability: true
+  vecm_min_effective_obs_per_event: null   # NEED_HUMAN
+  estimator_fallback_if_vecm_unstable: [arbitrage_gap_convergence, lead_lag]
   intraday_coverage_min: 0.70      # G7: pilot 30+30 x 20 days incl. small caps. v2.4:
                                    # verified SEPARATELY per window (statement 30m and
                                    # press conference 70m) and on BOTH sides (ETF and
@@ -163,6 +175,10 @@ gate0_thresholds:                  # Plan v2.1 §9 lines; owner confirms via ops
   portfolio_weight_corr_min: null  # NEED_HUMAN — anchor
   portfolio_turnover_max: null     # NEED_HUMAN — anchor
   g9_reporting: continuous_with_threshold_sensitivity
+  # Safeguard 6: restriction is the CONFIRMATORY response; relabelling is a SECONDARY
+  # interpretation and may not silently replace the clean-wrapper headline treatment.
+  g9_confirmatory_response: restrict_to_high_continuity_waves
+  g9_secondary_interpretation: wrapper_plus_portfolio_change_reported_separately
   g9_failure_response: [restrict_to_high_continuity_waves, relabel_treatment]
   intraday_vendor_agreement_tol: null  # G7: NEED_HUMAN. Tolerance at which a vendor feed's
                                    # spread and lead-lag statistics must reproduce the
@@ -221,6 +237,19 @@ network_exposure:
   # t+1 — contemporaneous CR and returns are jointly determined, so a same-day regression
   # measures simultaneity, not connectivity. Predictive association, NOT causal.
   first_stage_primary_outcome: constituent_next_day_residual_return_on_etf_creation_redemption
+  # Safeguard 2 (2026-08-19): the registered functional form, fixed before any outcome is
+  # opened. Reasoning: refraction/G8_SIGN_PREDICTION.md. Connectivity is a MAGNITUDE concept
+  # (how much flow lands on the stock, times price impact); the signed lever carries the
+  # DIRECTION of macro-response pull, which is a headline-gamma concept, not a flow concept.
+  first_stage_functional_form: abs_L_tilt_pre     # |L_tilt^pre|, linear
+  first_stage_sided: one_sided                    # predicted a1 > 0
+  first_stage_secondary_forms: [signed_L_tilt_pre, basket_weight_benchmark, quintiles]
+  first_stage_decision_keys_on: linear_coefficient  # so a nonlinear form cannot be adopted
+                                                    # after a disappointing linear one
+  # Safeguard 1: PREFERRED design is the pooled interaction, not a two-step with noisy phi.
+  first_stage_design: pooled_interaction
+  two_step_requires_uncertainty_propagation: true   # if the two-step is ever used
+  shares_outstanding_audit_required: true           # timestamp convention + corporate actions
   first_stage_response_lag_days: 1
   first_stage_residualization: pre_conversion_market_and_industry_loadings
   first_stage_claim_is_causal: false
@@ -277,6 +306,16 @@ inference:
     treatment_shock: cluster_on_adviser                  # treatment varies at wave; waves
                                                          # nest in advisers
   primary_clustering: [communication_event, adviser]
+  # Safeguard 5: adviser-only resampling does NOT address common event dependence. The
+  # bootstrap must be multiway-compatible or the second dimension must be documented as
+  # entering primary inference some other way.
+  bootstrap_multiway_compatible: true
+  bootstrap_multiway_procedure: null    # NEED_HUMAN: name the multiway-compatible small-
+                                        # cluster procedure (e.g. a multiway wild bootstrap)
+                                        # or document how event dependence enters primary
+                                        # inference alongside adviser resampling
+  leave_one_adviser_out_diagnostics: true
+  identifying_advisers_recomputed_after: [G7, G9]
   reported_alongside: [communication_event, permno]
   bootstrap_resamples: adviser                    # the binding, coarsest dimension
   bootstrap: {type: wild_cluster, weights: rademacher, impose_null: true, reps: 9999}

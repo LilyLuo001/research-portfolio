@@ -622,3 +622,41 @@ quarantined pending full-text target-type proof). NEXT: recheck full-text pass
 # GOVERNANCE NOW PARALLEL (item 10): reference verification and the carve-out signature are
 #   required before DRAFTING and before G8's results are INTERPRETED — they do NOT block
 #   building the panel, betas, intraday pilot, or adviser mapping.
+
+# REFRACTION IMPLEMENTATION SAFEGUARDS 2026-08-19 (owner approved v2.4 as FINAL; six
+# safeguards added before headline estimation; NO v2.5, no plan revision).
+# SAFEGUARD 2 CHANGED THE REGISTERED G8 FORM — reasoning in
+# refraction/G8_SIGN_PREDICTION.md, DECIDED UNDER DELEGATION, awaiting counter-signature:
+#   Asked to justify a1 > 0 in SIGNED L_tilt_pre, I concluded it does not hold. G8's
+#   outcome is flow-to-price sensitivity = a CONNECTIVITY MAGNITUDE (how much flow lands
+#   on the stock x price impact). The signed lever carries the DIRECTION of macro-response
+#   pull, which is a headline-gamma concept, not a flow concept. Two constituents with
+#   equal and opposite mismatch absorb flow pressure alike; a signed prediction asserts an
+#   asymmetry the mechanism does not generate, and would be decided largely by the
+#   beta-liquidity nuisance correlation. REGISTERED: a1 > 0 in |L_tilt_pre|, LINEAR,
+#   ONE-SIDED. Secondary and never decisive: signed form, basket-weight benchmark,
+#   quintiles. Decision keys on the LINEAR coefficient so a nonlinear form cannot be
+#   adopted after a disappointing linear one. SPEC-MAIN keeps the SIGNED lever — this
+#   governs G8 validation only. Nothing was observed: no phi has ever been computed.
+# OTHER SAFEGUARDS: (1) pooled interaction is the PREFERRED G8 design; the two-step is
+#   REFUSED in code without uncertainty propagation, and a shares-outstanding timestamp/
+#   corporate-action audit is required before interpreting CR_t -> r_t+1. (3) episode
+#   multiplicity rule registered as NEED_HUMAN; statement adjustment across the presser is
+#   CENSORED, never an unconstrained half-life. (4) G7 now tests VECM ESTIMABILITY, not
+#   only coverage, with arbitrage-gap convergence and lead-lag as primary fallbacks.
+#   (5) bootstrap must be MULTIWAY-COMPATIBLE — adviser-only resampling does not address
+#   common event dependence; procedure NEED_HUMAN; leave-one-adviser-out diagnostics
+#   added; identifying advisers recomputed after G7 and G9. (6) restriction to
+#   high-continuity waves is the CONFIRMATORY response; relabelling is secondary and may
+#   not silently replace the clean-wrapper headline.
+# GATE EXECUTION ATTEMPTED — THREE OF FOUR CANNOT BE MEASURED IN THIS ENVIRONMENT:
+#   G9 needs POST-conversion holdings; the repo has pre-conversion N-PORT only.
+#   G8 needs an ETF shares-outstanding time series; none exists in the repo.
+#   G7 needs intraday data; none exists.
+#   Adviser completion needs N-CEN/prospectus; events_merged carries no adviser field.
+#   All four are behind the egress wall. Runners are built and tested so each executes on
+#   arrival: refraction/gates/g9_continuity.py, refraction/gates/g8_first_stage.py.
+# ADVISER GATE ADVANCED (the one that moved): 22 advisers resolved from trust names, 4
+#   PROVISIONAL from the fund's own brand name (series-trust funds are branded by their
+#   adviser), 11 funds still needing a filing. Bound unchanged at 35-38 because the
+#   provisional names are not confirmed. refraction/inference/adviser_map.csv.

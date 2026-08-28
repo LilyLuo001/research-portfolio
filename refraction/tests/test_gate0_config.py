@@ -40,7 +40,8 @@ PLAN_COMMITTED = {
 # G6 got: null, so R3 stops rather than inventing one.
 PENDING = {"first_stage_primary_alpha", "intraday_vendor_agreement_tol",
            "portfolio_overlap_min", "portfolio_weight_corr_min",
-           "portfolio_turnover_max"}
+           "portfolio_turnover_max",
+           "vecm_min_effective_obs_per_event"}          # safeguard 4
 
 # Decided 2026-08-19 under delegation. Each must stay traceable to its memo and
 # to ops/decisions.md; a silent edit to one of these is a prereg deviation.
@@ -79,7 +80,9 @@ def test_the_memo_still_requires_counter_signature():
 def test_every_gate0_threshold_is_classified():
     """A new threshold must be classified, so none can appear unnoticed."""
     # g9_reporting / g9_failure_response are POLICY entries, not numeric thresholds.
-    POLICY = {"g9_reporting", "g9_failure_response"}
+    POLICY = {"g9_reporting", "g9_failure_response", "g9_confirmatory_response",
+              "g9_secondary_interpretation", "g7_tests_vecm_estimability",
+              "estimator_fallback_if_vecm_unstable"}
     unclassified = (set(G0) - set(PLAN_COMMITTED) - set(DELEGATED) - PENDING - POLICY
                     - {"se_to_sdL_ratio_max"})
     assert not unclassified, f"unclassified Gate-0 threshold(s): {sorted(unclassified)}"
@@ -344,3 +347,61 @@ def test_the_adviser_map_bounds_the_cluster_count(tmp_path):
     # a series trust must NOT be treated as one adviser
     assert am.classify("Northern Lights Fund Trust IV")[1] is True
     assert am.classify("The RBB Fund, Inc.")[1] is True
+
+
+# --------------------------------------------------------------------------- #
+# implementation safeguards (2026-08-19), pinned before headline estimation     #
+# --------------------------------------------------------------------------- #
+
+def test_g8_prefers_the_pooled_interaction_over_a_noisy_two_step():
+    """Safeguard 1: phi-hat estimates are noisy and must not enter a second stage as
+    error-free outcomes."""
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_design"] == "pooled_interaction"
+    assert ne["two_step_requires_uncertainty_propagation"] is True
+    assert ne["shares_outstanding_audit_required"] is True
+
+
+def test_the_g8_functional_form_is_registered_as_a_magnitude():
+    """Safeguard 2: connectivity is a magnitude concept; the signed lever carries the
+    direction of macro-response pull, which belongs to the headline gamma, not to a
+    flow-sensitivity outcome. Reasoning: refraction/G8_SIGN_PREDICTION.md."""
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_functional_form"] == "abs_L_tilt_pre"
+    assert ne["first_stage_sided"] == "one_sided"
+    assert ne["first_stage_decision_keys_on"] == "linear_coefficient"
+    assert "signed_L_tilt_pre" in ne["first_stage_secondary_forms"]
+    assert (ROOT / "refraction" / "G8_SIGN_PREDICTION.md").exists()
+
+
+def test_the_episode_multiplicity_rule_is_registered_before_results():
+    """Safeguard 3: two co-primary episodes need a multiplicity rule fixed in advance,
+    and statement adjustment across a new arrival is CENSORED, not a half-life."""
+    sh = CONFIG["shock"]
+    assert "episode_multiplicity_rule" in sh          # null until decided; must exist
+    assert sh["statement_adjustment_is_censored_at_presser"] is True
+
+
+def test_g7_tests_estimability_not_only_coverage():
+    """Safeguard 4: coverage is not the same as enough effective observations for a
+    short-window VECM."""
+    g0 = CONFIG["gate0_thresholds"]
+    assert g0["g7_tests_vecm_estimability"] is True
+    assert set(g0["estimator_fallback_if_vecm_unstable"]) == {
+        "arbitrage_gap_convergence", "lead_lag"}
+
+
+def test_the_bootstrap_must_be_multiway_compatible():
+    """Safeguard 5: adviser-only resampling does not address common event dependence."""
+    inf = CONFIG["inference"]
+    assert inf["bootstrap_multiway_compatible"] is True
+    assert "bootstrap_multiway_procedure" in inf      # null until named
+    assert inf["leave_one_adviser_out_diagnostics"] is True
+    assert set(inf["identifying_advisers_recomputed_after"]) == {"G7", "G9"}
+
+
+def test_relabelling_cannot_silently_replace_the_clean_wrapper_headline():
+    """Safeguard 6: restriction is the confirmatory response; relabelling is secondary."""
+    g0 = CONFIG["gate0_thresholds"]
+    assert g0["g9_confirmatory_response"] == "restrict_to_high_continuity_waves"
+    assert "separately" in g0["g9_secondary_interpretation"]
