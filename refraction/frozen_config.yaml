@@ -396,10 +396,31 @@ network_exposure:
     shares_corporate_action_adjusted: true
     corporate_action_convention: p1/t2_wrds/corpactions.py
     undefined_on_missing_prior_day: true       # no forward/backward fill; the row is dropped
-    winsorize_pct: [1, 99]                     # §6.1.2 says "the registered percentile";
-                                               # it was never registered — registered here.
-    winsorize_within: fund
-    standardize_within_fund: true              # §6.1.2, after winsorization
+    # ---------------------------------------------------------------------------------
+    # THE TRANSFORMATION ORDER (audit 2026-08-28, final). MAGNITUDE FIRST.
+    # ---------------------------------------------------------------------------------
+    # The previous order winsorized the SIGNED series and took |.| for the exposure
+    # afterwards. Taking the sign from CR_raw did not fix that: the lower-tail clip survived
+    # in MAGNITUDE form. Measured on a fund creating on ~99% of days, a true zero-event day
+    # carried exposure magnitude 0.677 — a non-event weighted like a real creation. Two-sided
+    # clipping of a skewed signed series is asymmetric besides, so +x and -x need not map to
+    # the same magnitude.
+    #
+    #   1.  CR_raw     = (S_t - S_{t-1}) / S_{t-1}      signed, untouched
+    #   2.  CR_mag_raw = |CR_raw|                        magnitude taken FIRST
+    #   3.  outlier treatment ON THE MAGNITUDE, upper tail only
+    #   4.  SD-only scaling, no centring
+    #
+    # Upper-tail-only because the objective is protection against extreme data errors, and
+    # those sit in the upper tail of a magnitude. On a non-negative series a lower clip can
+    # do only one thing: lift genuine zeros off zero.
+    magnitude_first: true
+    magnitude_clip: upper_tail_only
+    magnitude_clip_pct: 99                     # §6.1.2's "registered percentile"
+    magnitude_clip_within: fund
+    magnitude_lower_clip_forbidden: true
+    winsorize_signed_series_forbidden: true    # the bug this replaces
+    standardize_within_fund: true              # §6.1.2, applied to the MAGNITUDE
     standardize_mode: sd_only                  # divide by within-fund SD; NO mean shift.
                                                # Mean-centring would make a positive creation
                                                # below the fund's average rate read NEGATIVE.
@@ -418,8 +439,17 @@ network_exposure:
     # zero-event day became +0.68 — a non-event recorded as a large creation.
     #
     # So the ECONOMIC object and the SCALED regressor are separated:
-    raw_column: CR_raw          # (S_t - S_{t-1}) / S_{t-1}, unwinsorized, unscaled
-    analysis_column: CR         # winsorized then SD-scaled; MAGNITUDE use only
+    raw_column: CR_raw                 # (S_t - S_{t-1}) / S_{t-1}, unwinsorized, unscaled
+    magnitude_raw_column: CR_mag_raw   # |CR_raw|, untreated
+    analysis_column: CR_mag            # treated magnitude: clipped above, SD-scaled,
+                                       # zeros intact by construction
+    exposure_magnitude_column: CR_mag
+    exposure_sign_column: CR_raw       # every sign-carrying exposure reads the RAW column
+    invariants:
+      zero_iff_zero: "CR_raw == 0  <=>  CR_mag == 0"
+      non_negative: "CR_mag >= 0"
+      symmetric: "equal-and-opposite raw values map to equal CR_mag"
+      monotone: "|CR_raw| ordering is preserved below the clip"
     raw_defines: [sign, creation_vs_redemption, zero_event_status, event_census,
                   concentration_statistics, aligned_outcome_sign]
     analysis_column_sign_is_not_economic: true   # never take sign() of the scaled column

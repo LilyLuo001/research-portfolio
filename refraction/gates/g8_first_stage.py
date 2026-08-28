@@ -59,13 +59,40 @@ def _demean_within(frame: pd.DataFrame, cols, by=("fund", "date")):
             for c in cols}
 
 
+# Freeze 1 (2026-08-28): the exposure is part of the registration, and it is tied to the
+# outcome. |CR| x |L| is the PRIMARY form for both trading-outcome arms; signed CR x |L|
+# belongs to the signed return corroboration and nowhere else.
+#
+# Final audit: BOTH forms are built from the two registered columns rather than from a
+# single column plus abs()/sign(). The magnitude comes from CR_mag (|CR_raw| taken first,
+# then clipped above and SD-scaled, so zeros survive); the sign comes from CR_raw. Calling
+# np.abs() on a winsorized signed column was the bug — it left the lower-tail clip alive in
+# magnitude form, giving a zero-event day a positive exposure.
 EXPOSURES = {
-    # freeze 1 (2026-08-28): the exposure is part of the registration, and it is tied to the
-    # outcome. |CR| x |L| is the PRIMARY form for both trading-outcome arms; signed CR x |L|
-    # belongs to the signed return corroboration and nowhere else.
-    "abs_CR_x_absL": lambda cr, absl: np.abs(cr) * absl,
-    "signed_CR_x_absL": lambda cr, absl: cr * absl,
+    "abs_CR_x_absL": lambda mag, sign, absl: mag * absl,
+    "signed_CR_x_absL": lambda mag, sign, absl: sign * mag * absl,
 }
+
+
+def _cr_columns(df: pd.DataFrame, config: dict = None):
+    """The registered magnitude and sign columns, never derived from one another.
+
+    Falls back to CR_mag/CR_raw by name when no config is passed, so callers that already
+    hold a built frame do not need one; it refuses rather than reconstructing a magnitude
+    from a signed column, because that reconstruction is precisely the bug.
+    """
+    d = (config or {}).get("network_exposure", {}).get("cr_definition", {})
+    mag_col = d.get("exposure_magnitude_column", "CR_mag")
+    sign_col = d.get("exposure_sign_column", "CR_raw")
+    missing = [c for c in (mag_col, sign_col) if c not in df.columns]
+    if missing:
+        raise SafeguardViolation(
+            "exposure needs the registered CR columns %s; missing %s. Do not substitute "
+            "abs() of a winsorized signed column — a lower-tail clip survives that and gives "
+            "zero-event days a positive exposure magnitude."
+            % ([mag_col, sign_col], missing))
+    return (df[mag_col].astype(float).to_numpy(),
+            np.sign(df[sign_col].astype(float).to_numpy()))
 
 
 def _check_exposure(exposure: str, outcome_class: str) -> None:
@@ -106,8 +133,8 @@ def pooled_interaction(sample: pd.DataFrame, controls=("r_resid_lag", "mkt"),
     _check_exposure(exposure, outcome_class)
     inter = "_exposure"
     df = sample.copy()
-    df[inter] = EXPOSURES[exposure](df["CR"].astype(float).to_numpy(),
-                                    df["absL"].astype(float).to_numpy())
+    mag, sign = _cr_columns(df, config)
+    df[inter] = EXPOSURES[exposure](mag, sign, df["absL"].astype(float).to_numpy())
     zcols = [c for c in z_controls if c in df.columns]
     _check_baseline_controls(zcols, estimand, config)
     for c in zcols:

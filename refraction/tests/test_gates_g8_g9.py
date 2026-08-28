@@ -105,6 +105,7 @@ def make_panel(n_stocks=40, n_days=120, a1=0.0, seed=0):
                          "r_resid_lag": rng.normal(0, .05), "mkt": rng.normal(0, .01)})
     df = pd.DataFrame(rows)
     df["CR_raw"] = df["CR"]
+    df["CR_mag"] = df["CR_raw"].abs()
     return df
 
 
@@ -130,17 +131,19 @@ def make_trading_panel(n_stocks=40, n_days=120, a1=0.0, seed=0, arm="fallback"):
     # fixtures are already raw: no winsorization has been applied, so the two coincide.
     # They are still kept as separate columns, because that is how the pipeline hands them on.
     df["CR_raw"] = df["CR"]
+    df["CR_mag"] = df["CR_raw"].abs()      # fixtures are untreated, so |raw| is the magnitude
     df["y"] = pre.aligned_outcome(df, arm)
     return df
 
 
 def _cfg_no_std():
-    """The registered formula with standardization switched off, so the raw growth rate is
-    visible. Standardization is tested separately."""
+    """The registered formula with the magnitude transformations switched off, so the raw
+    growth rate is visible. CR_raw is unaffected either way; this only quiets CR_mag."""
     import copy
     cfg = copy.deepcopy(CONFIG)
-    cfg["network_exposure"]["cr_definition"]["standardize_within_fund"] = False
-    cfg["network_exposure"]["cr_definition"]["winsorize_pct"] = [0, 100]
+    d = cfg["network_exposure"]["cr_definition"]
+    d["standardize_within_fund"] = False
+    d["magnitude_clip_pct"] = 100
     return cfg
 
 
@@ -490,7 +493,7 @@ def test_freeze4_the_census_counts_events_not_constituent_day_rows():
     nonzero creation/redemption, the mechanism has 3 events in it, not 4800."""
     panel = make_trading_panel(n_stocks=40, n_days=120, a1=0.3, seed=16)
     live = set(sorted(panel["date"].unique())[:3])
-    for col in ("CR", "CR_raw"):
+    for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"].isin(live), panel[col], 0.0)
     c = pre.cr_event_census(panel, CONFIG)
     assert c["n_constituent_day_rows"] == 4800
@@ -543,7 +546,7 @@ def test_a_sample_with_no_creation_or_redemption_is_uninformative_not_a_failure(
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
-    dead = pre.cr_event_census(panel.assign(CR=0.0, CR_raw=0.0), CONFIG)
+    dead = pre.cr_event_census(panel.assign(CR=0.0, CR_raw=0.0, CR_mag=0.0), CONFIG)
     v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
                    timestamp_audit=audit, census=dead)
     assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
@@ -650,6 +653,7 @@ def liquidity_panel(n=200, seed=0, size_spread=1000.0, noise=0.0, frac=0.02):
                          "dollar_volume": size * (1 + f)})
     df = pd.DataFrame(rows)
     df["CR_raw"] = df["CR"]
+    df["CR_mag"] = df["CR_raw"].abs()
     return df
 
 
@@ -787,20 +791,20 @@ def shares_frame(counts, fund="F1", start="2023-01-02", cfac=None, freq="D"):
 def test_cr_is_the_share_growth_rate_the_plan_froze():
     """CR_{f,t} = (S_t - S_{t-1}) / S_{t-1}: no price, no NAV, denominator at t-1."""
     raw = pre.build_cr(shares_frame([100, 110, 99]), _cfg_no_std(), CONV)
-    assert np.isnan(raw.loc[0, "CR"])                       # no prior day
-    assert raw.loc[1, "CR"] == pytest.approx(0.10)          # +10% creation
-    assert raw.loc[2, "CR"] == pytest.approx(-0.10)         # -10% redemption
+    assert np.isnan(raw.loc[0, "CR_raw"])                   # no prior day
+    assert raw.loc[1, "CR_raw"] == pytest.approx(0.10)      # +10% creation
+    assert raw.loc[2, "CR_raw"] == pytest.approx(-0.10)     # -10% redemption
 
 
 def test_cr_sign_is_positive_for_a_creation():
-    cr = pre.build_cr(shares_frame([100, 120]), _cfg_no_std(), CONV)["CR"]
+    cr = pre.build_cr(shares_frame([100, 120]), _cfg_no_std(), CONV)["CR_raw"]
     assert cr.iloc[1] > 0
 
 
 def test_cr_denominator_is_the_prior_day_not_the_current_one():
     """100 -> 200 is +100% on a t-1 base and +50% on a t base. The distinction is the whole
     content of 'denominator timing'."""
-    cr = pre.build_cr(shares_frame([100, 200]), _cfg_no_std(), CONV)["CR"]
+    cr = pre.build_cr(shares_frame([100, 200]), _cfg_no_std(), CONV)["CR_raw"]
     assert cr.iloc[1] == pytest.approx(1.0)
     assert cr.iloc[1] != pytest.approx(0.5)
 
@@ -812,7 +816,7 @@ def test_cr_uses_no_price_or_nav_anywhere():
     src = inspect.getsource(pre.build_cr)
     for token in ("nav", "price", "tna"):
         assert token not in src.lower().split("\"\"\"")[2].lower(), token
-    base = pre.build_cr(shares_frame([100, 110]), _cfg_no_std(), CONV)["CR"].iloc[1]
+    base = pre.build_cr(shares_frame([100, 110]), _cfg_no_std(), CONV)["CR_raw"].iloc[1]
     assert base == pytest.approx(0.10)
 
 
@@ -821,7 +825,7 @@ def test_cr_is_undefined_across_a_missing_trading_day():
     name, so a gap leaves CR undefined rather than spanning it."""
     f = shares_frame([100, 110, 120])
     f = f.drop(index=1).reset_index(drop=True)     # the middle day is missing
-    cr = pre.build_cr(f, _cfg_no_std(), CONV)["CR"]
+    cr = pre.build_cr(f, _cfg_no_std(), CONV)["CR_raw"]
     assert np.isnan(cr.iloc[0])
     # the surviving row still differences against its own previous OBSERVED day, and the
     # config records that convention explicitly
@@ -834,15 +838,17 @@ def test_cr_requires_corporate_action_adjusted_shares():
         pre.build_cr(shares_frame([100, 200]).drop(columns=["cfacshr"]), _cfg_no_std(), CONV)
     assert "no creation" in str(e.value)
     split = pre.build_cr(shares_frame([100, 200], cfac=[1.0, 2.0]), _cfg_no_std(), CONV)
-    assert split["CR"].iloc[1] == pytest.approx(0.0)
+    assert split["CR_raw"].iloc[1] == pytest.approx(0.0)
+    assert split["CR_mag"].iloc[1] == pytest.approx(0.0)   # and no exposure either
 
 
-def test_cr_is_standardized_within_fund_and_not_rescaled_again():
+def test_the_exposure_magnitude_is_standardized_within_fund_and_not_rescaled_again():
     d = CONFIG["network_exposure"]["cr_definition"]
     assert d["standardize_within_fund"] is True
     assert d["further_rescaling_forbidden"] is True
     out = pre.build_cr(shares_frame([100, 110, 99, 105, 100]), CONFIG, CONV)
-    assert out["CR"].dropna().std(ddof=0) == pytest.approx(1.0)
+    assert out["CR_mag"].dropna().std(ddof=0) == pytest.approx(1.0)
+    assert (out["CR_mag"].dropna() >= 0).all()
 
 
 def test_a_tna_or_dollar_scaled_cr_is_refused():
@@ -895,7 +901,7 @@ def test_freeze6_a_single_event_is_uninformative_not_a_rejection():
     cfg = audited_config()
     panel = make_trading_panel(a1=0.30, seed=40)
     one_day = sorted(panel["date"].unique())[0]
-    for col in ("CR", "CR_raw"):
+    for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"] == one_day, panel[col], 0.0)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
@@ -960,7 +966,7 @@ def test_freeze6_the_classification_never_replaces_inference():
     panel = make_trading_panel(a1=0.30, seed=45)
     panel["adviser"] = "ADV-A"
     one_day = sorted(panel["date"].unique())[0]
-    for col in ("CR", "CR_raw"):
+    for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"] == one_day, panel[col], 0.0)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
@@ -987,7 +993,7 @@ def test_two_events_is_not_a_sufficiency_claim():
     cfg = audited_config()
     panel = make_trading_panel(a1=0.30, seed=47)
     live = set(sorted(panel["date"].unique())[:2])       # exactly 2 events: clears the check
-    for col in ("CR", "CR_raw"):
+    for col in ("CR", "CR_raw", "CR_mag"):
         panel[col] = np.where(panel["date"].isin(live), panel[col], 0.0)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
@@ -1178,16 +1184,18 @@ def mostly_creating_fund(n_creations=300, seed=0):
     return shares_frame(s), len(s) - 2, len(s) - 1
 
 
-def test_winsorization_would_flip_a_redemption_in_a_mostly_creating_fund():
-    """The reason CR_raw exists. Standardization is SD-only and is safe; WINSORIZATION is
-    not: the 1st percentile of a mostly-creating fund is POSITIVE, so clipping sends a real
-    redemption and a real zero-event day to a positive number."""
+def test_a_zero_event_day_carries_no_exposure_in_a_mostly_creating_fund():
+    """The regression this whole CR audit converges on. Winsorizing the SIGNED series and
+    taking |.| afterwards left a mostly-creating fund's zero-event day with exposure
+    magnitude 0.677 — a non-event weighted like a real creation, with a correct sign on top.
+    Magnitude-first with an upper-tail-only clip cannot do that: a non-negative series has
+    nothing below zero to be clipped up to."""
     f, i_red, i_zero = mostly_creating_fund()
     out = pre.build_cr(f, CONFIG, CONV)
-    assert out["CR_raw"].iloc[i_red] < 0                     # the truth
-    assert out["CR"].iloc[i_red] > 0                         # the clipped column disagrees
-    assert out["CR_raw"].iloc[i_zero] == pytest.approx(0.0)  # a non-event
-    assert out["CR"].iloc[i_zero] != 0                       # ...clipped into an event
+    assert out["CR_raw"].iloc[i_zero] == pytest.approx(0.0)
+    assert out["CR_mag"].iloc[i_zero] == pytest.approx(0.0)   # the fix
+    assert out["CR_raw"].iloc[i_red] < 0                      # a real redemption
+    assert out["CR_mag"].iloc[i_red] > 0                      # ...carries real exposure
 
 
 def test_the_aligned_outcome_takes_its_sign_from_raw_cr():
@@ -1217,8 +1225,12 @@ def test_the_event_census_is_computed_on_raw_pre_winsorized_cr():
     assert c["computed_on"] == "CR_raw"
     # 303 fund-days: 1 undefined (no prior day) + 1 true zero-event day => 301 events
     assert c["n_nonzero_cr_days"] == 301
-    on_scaled = pre.cr_event_census(out.assign(CR_raw=out["CR"]), CONFIG)
-    assert on_scaled["n_nonzero_cr_days"] > c["n_nonzero_cr_days"]   # the inflation
+    # the inflation the old order produced, reconstructed explicitly: clip the SIGNED
+    # series two-sided and the zero-event day becomes an event
+    v = out["CR_raw"]
+    clipped = v.clip(v.quantile(0.01), v.quantile(0.99))
+    on_clipped_signed = pre.cr_event_census(out.assign(CR_raw=clipped), CONFIG)
+    assert on_clipped_signed["n_nonzero_cr_days"] > c["n_nonzero_cr_days"]
 
 
 def test_the_census_refuses_to_run_on_the_scaled_column():
@@ -1233,13 +1245,14 @@ def test_standardization_is_sd_only_and_preserves_zero_and_sign():
     assert d["standardize_mode"] == "sd_only"
     assert d["standardize_preserves_zero_and_sign"] is True
     f = shares_frame([100, 110, 110, 99, 120])
-    out = pre.build_cr(f, _cfg_no_std(), CONV)        # winsorization off, so scaling alone
-    import copy
     cfg = _cfg_no_std(); cfg["network_exposure"]["cr_definition"]["standardize_within_fund"] = True
     scaled = pre.build_cr(f, cfg, CONV)
-    ok = out["CR_raw"].notna()
-    assert np.array_equal(np.sign(out.loc[ok, "CR_raw"]), np.sign(scaled.loc[ok, "CR"]))
-    assert scaled["CR"].iloc[2] == pytest.approx(0.0)   # a zero stays a zero
+    ok = scaled["CR_raw"].notna()
+    # SD-only scaling is a positive rescale: zeros survive and magnitude order is preserved
+    assert scaled["CR_mag"].iloc[2] == pytest.approx(0.0)
+    order_raw = scaled.loc[ok, "CR_raw"].abs().rank()
+    order_mag = scaled.loc[ok, "CR_mag"].rank()
+    assert np.array_equal(order_raw.to_numpy(), order_mag.to_numpy())
 
 
 def test_mean_centred_standardization_is_refused():
@@ -1302,3 +1315,151 @@ def test_the_update_frequency_audit_is_registered_and_unanswered():
     assert ne["shares_update_frequency_audit_required"] is True
     assert ne["shares_update_frequency"] is None            # NEED_INFO
     assert ne["shares_repeated_value_runs_are_events"] is False
+
+
+# --------------------------------------------------------------------------- #
+# CR transformation invariants (final audit)                                   #
+#                                                                              #
+# Each is asserted on every build_cr() call by assert_cr_invariants(). These    #
+# tests exist because the zero-preservation property failed SILENTLY under the  #
+# winsorize-then-abs order while every sign-level test still passed.            #
+# --------------------------------------------------------------------------- #
+
+def _built(counts, cfg=None, fund="F1"):
+    return pre.build_cr(shares_frame(counts, fund=fund), cfg or CONFIG, CONV)
+
+
+def test_invariant_zero_raw_iff_zero_magnitude():
+    """CR_raw == 0 <=> CR_mag == 0, in both directions."""
+    out = _built([100, 110, 110, 110, 95, 130, 130])
+    live = out["CR_raw"].notna()
+    raw, mag = out.loc[live, "CR_raw"], out.loc[live, "CR_mag"]
+    assert ((raw == 0) == (mag == 0)).all()
+    assert (mag[raw == 0] == 0).all()          # no non-event acquires exposure
+    assert (mag[raw != 0] > 0).all()           # no real event is zeroed out
+
+
+def test_invariant_zero_survives_even_when_every_other_day_is_a_creation():
+    """The adversarial case: the clip's neighbourhood is entirely positive."""
+    f, _, i_zero = mostly_creating_fund()
+    out = pre.build_cr(f, CONFIG, CONV)
+    assert out["CR_mag"].iloc[i_zero] == 0.0
+    live = out["CR_raw"].notna()
+    assert ((out.loc[live, "CR_raw"] == 0) == (out.loc[live, "CR_mag"] == 0)).all()
+
+
+def test_invariant_magnitude_is_non_negative():
+    for counts in ([100, 90, 80, 70], [100, 110, 121], [100, 110, 99, 130, 70]):
+        out = _built(counts)
+        assert (out["CR_mag"].dropna() >= 0).all()
+
+
+def test_invariant_equal_and_opposite_raws_get_equal_magnitudes():
+    """+x and -x must map to the same transformed magnitude. Two-sided clipping of a skewed
+    SIGNED series does not guarantee this; magnitude-first does, by construction."""
+    # Matched +x / -x pairs at several sizes, plus a tail of creations to skew the
+    # distribution — the configuration where a two-sided clip on the SIGNED series would
+    # give the two halves of a pair different magnitudes.
+    counts, v = [100.0], 100.0
+    for pct in (0.10, 0.05, 0.20):
+        v = v * (1 + pct); counts.append(v)    # exactly +pct
+        v = v * (1 - pct); counts.append(v)    # exactly -pct
+    for _ in range(20):
+        v *= 1.03
+        counts.append(v)
+    out = _built(counts)
+    raw = out["CR_raw"].to_numpy(float)
+    mag = out["CR_mag"].to_numpy(float)
+    for target in (0.10, 0.05, 0.20):
+        up = mag[np.isclose(raw, target, equal_nan=False)]
+        down = mag[np.isclose(raw, -target, equal_nan=False)]
+        assert len(up) == 1 and len(down) == 1, target
+        assert float(up[0]) == pytest.approx(float(down[0])), target
+
+
+def test_invariant_sign_is_preserved_and_comes_only_from_the_raw_column():
+    out = _built([100, 110, 99, 130, 70])
+    live = out["CR_raw"].notna()
+    creations = out.loc[live & (out["CR_raw"] > 0)]
+    redemptions = out.loc[live & (out["CR_raw"] < 0)]
+    assert len(creations) and len(redemptions)
+    # the magnitude column is sign-free, so it cannot contradict the raw sign
+    assert (creations["CR_mag"] >= 0).all() and (redemptions["CR_mag"] >= 0).all()
+    assert CONFIG["network_exposure"]["cr_definition"]["exposure_sign_column"] == "CR_raw"
+
+
+def test_invariant_magnitude_ordering_is_preserved_below_the_clip():
+    out = _built([100, 101, 103, 107, 115])         # strictly growing steps
+    live = out["CR_raw"].notna()
+    mags = out.loc[live, "CR_mag"].to_numpy()
+    raws = out.loc[live, "CR_raw"].abs().to_numpy()
+    assert np.array_equal(np.argsort(raws), np.argsort(mags))
+
+
+def test_only_the_upper_tail_is_clipped():
+    """A lower clip on a non-negative series can only lift zeros off zero."""
+    d = CONFIG["network_exposure"]["cr_definition"]
+    assert d["magnitude_clip"] == "upper_tail_only"
+    assert d["magnitude_lower_clip_forbidden"] is True
+    assert d["winsorize_signed_series_forbidden"] is True
+    assert d["magnitude_first"] is True
+    import copy
+    cfg = copy.deepcopy(CONFIG)
+    cfg["network_exposure"]["cr_definition"]["magnitude_clip"] = "two_sided"
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.build_cr(shares_frame([100, 110, 120]), cfg, CONV)
+    assert "lift genuine zeros off zero" in str(e.value)
+
+
+def test_the_clip_does_bite_on_an_extreme_data_error():
+    """Upper-tail clipping still has to do its job: a corrupt 50x share count is pulled in.
+    Compared pre-scaling, since SD scaling changes the units."""
+    counts, v = [100.0], 100.0
+    for _ in range(400):                         # enough obs that the 99th pct is not itself
+        v *= 1.01                                # dominated by the single error
+        counts.append(v)
+    counts.append(v * 50)                        # a data error
+    cfg = _cfg_no_std()                          # clip on, scaling off
+    cfg["network_exposure"]["cr_definition"]["magnitude_clip_pct"] = 99
+    out = pre.build_cr(shares_frame(counts), cfg, CONV)
+    assert out["CR_mag_raw"].iloc[-1] > 40       # untreated magnitude is enormous
+    ceiling = out["CR_mag_raw"].quantile(0.99)
+    assert out["CR_mag"].iloc[-1] == pytest.approx(ceiling)
+    assert out["CR_mag"].iloc[-1] < 1.0          # pulled back among the ordinary days
+    # and an ordinary day is untouched by the clip
+    assert out["CR_mag"].iloc[5] == pytest.approx(out["CR_mag_raw"].iloc[5])
+
+
+def test_a_fund_with_identical_creation_sizes_is_left_unscaled_not_zeroed():
+    """Caught by the invariants themselves: zero within-fund SD makes scaling undefined, and
+    multiplying by zero would have deleted the fund's whole mechanism variation silently."""
+    out = _built([100, 110, 121, 133.1])          # every raw CR is exactly +10%
+    live = out["CR_raw"].notna()
+    assert out.loc[live, "CR_mag_raw"].std(ddof=0) == pytest.approx(0.0)
+    assert (out.loc[live, "CR_mag"] > 0).all()    # NOT driven to zero
+    assert out.loc[live, "CR_mag"].iloc[0] == pytest.approx(0.10)
+
+
+def test_the_invariants_are_checked_on_every_build_not_only_in_tests():
+    import inspect
+    assert "assert_cr_invariants" in inspect.getsource(pre.build_cr)
+    bad = pd.DataFrame({"CR_raw": [0.0, 0.1], "CR_mag": [0.7, 0.1]})
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.assert_cr_invariants(bad, CONFIG)
+    assert "zero-event day(s) acquired a non-zero exposure magnitude" in str(e.value)
+
+
+def test_the_exposure_refuses_to_rebuild_a_magnitude_from_a_signed_column():
+    """The bug, blocked at the point of use as well as at the point of construction."""
+    panel = make_trading_panel(n_stocks=4, n_days=6, seed=8).drop(columns=["CR_mag"])
+    with pytest.raises(g8.SafeguardViolation) as e:
+        g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity")
+    assert "winsorized signed column" in str(e.value)
+
+
+def test_the_exposure_uses_the_registered_magnitude_and_sign_columns():
+    df = pd.DataFrame({"CR_raw": [1.0, -1.0], "CR_mag": [2.0, 2.0], "absL": [0.5, 0.5]})
+    mag, sign = g8._cr_columns(df, CONFIG)
+    assert list(g8.EXPOSURES["abs_CR_x_absL"](mag, sign, df["absL"].to_numpy())) == [1.0, 1.0]
+    assert list(g8.EXPOSURES["signed_CR_x_absL"](mag, sign, df["absL"].to_numpy())) == [1.0, -1.0]

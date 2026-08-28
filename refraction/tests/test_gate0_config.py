@@ -627,8 +627,18 @@ def test_the_g8_classification_separates_absence_of_evidence_from_evidence_of_ab
 def test_raw_cr_owns_the_sign_and_the_scaled_column_does_not():
     """Audit item 1."""
     d = CONFIG["network_exposure"]["cr_definition"]
-    assert d["raw_column"] == "CR_raw" and d["analysis_column"] == "CR"
+    assert d["raw_column"] == "CR_raw"
+    assert d["magnitude_raw_column"] == "CR_mag_raw"
+    assert d["analysis_column"] == "CR_mag"
+    assert d["exposure_magnitude_column"] == "CR_mag"
+    assert d["exposure_sign_column"] == "CR_raw"
     assert d["analysis_column_sign_is_not_economic"] is True
+    # the transformation ORDER, which is what the final audit fixed
+    assert d["magnitude_first"] is True
+    assert d["magnitude_clip"] == "upper_tail_only"
+    assert d["magnitude_lower_clip_forbidden"] is True
+    assert d["winsorize_signed_series_forbidden"] is True
+    assert set(d["invariants"]) == {"zero_iff_zero", "non_negative", "symmetric", "monotone"}
     assert d["census_uses_raw_pre_winsorized"] is True
     for job in ("sign", "creation_vs_redemption", "zero_event_status", "event_census",
                 "concentration_statistics", "aligned_outcome_sign"):

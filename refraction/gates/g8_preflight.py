@@ -28,6 +28,11 @@ if str(_P1) not in sys.path:
 import corpactions as ca                                          # noqa: E402
 
 
+# Machine-scale tolerance for "this series has no dispersion". Not an economic threshold:
+# identical values leave floating-point dust rather than an exact zero SD.
+SD_DEGENERATE_TOL = 1e-12
+
+
 class SafeguardViolation(Exception):
     """Raised when a design the safeguards forbid is attempted."""
 
@@ -239,20 +244,80 @@ def build_cr(shares: pd.DataFrame, config: dict, convention: dict = None) -> pd.
     if (prev_S <= 0).any():
         raise SafeguardViolation("non-positive prior shares outstanding in the CR denominator")
 
-    # ---- the scaled regressor, for MAGNITUDE use only -------------------------------
-    lo, hi = [q / 100.0 for q in d["winsorize_pct"]]
-    df["CR"] = df.groupby(d["winsorize_within"])["CR_raw"].transform(
-        lambda v: v.clip(v.quantile(lo), v.quantile(hi)))
+    # ---- the exposure magnitude: MAGNITUDE FIRST, then treatment --------------------
+    # Order matters, and getting it wrong is what the final audit caught. Winsorizing the
+    # SIGNED series and taking |.| afterwards leaves the lower-tail clip alive in magnitude
+    # form: in a mostly-creating fund the 1st percentile is positive, so a genuine
+    # zero-event day acquires a positive exposure magnitude. Taking |.| FIRST and clipping
+    # only from above cannot do that — a non-negative series has nothing below zero to clip
+    # up to, so zeros stay zeros by construction rather than by luck.
+    if not d.get("magnitude_first", True):
+        raise SafeguardViolation("magnitude_first is registered true; the signed series may "
+                                 "not be winsorized (winsorize_signed_series_forbidden)")
+    if d.get("magnitude_clip") != "upper_tail_only":
+        raise SafeguardViolation(
+            "magnitude clipping must be UPPER TAIL ONLY (%r registered). On a non-negative "
+            "series a lower clip can only lift genuine zeros off zero." % d.get("magnitude_clip"))
+
+    df["CR_mag_raw"] = df["CR_raw"].abs()
+    hi = float(d["magnitude_clip_pct"]) / 100.0
+    df["CR_mag"] = df.groupby(d["magnitude_clip_within"])["CR_mag_raw"].transform(
+        lambda v: v.clip(upper=v.quantile(hi)))
+
     if d["standardize_within_fund"]:
         if d["standardize_mode"] != "sd_only":
             raise SafeguardViolation(
                 "standardization must be SD-ONLY (%r registered). Mean-centring would make a "
                 "positive creation BELOW the fund's average creation rate read as negative."
                 % d["standardize_mode"])
-        # scale only, no mean shift: 0 stays 0 and the sign is untouched
-        df["CR"] = df.groupby("fund")["CR"].transform(
-            lambda v: v / v.std(ddof=0) if v.std(ddof=0) > 0 else v * 0.0)
-    return df.drop(columns=["_S", "_gap"])
+        # Scale only, no mean shift: 0 stays 0, and a positive scale factor preserves order.
+        # A fund whose creation magnitudes are all IDENTICAL has zero within-fund SD. Scaling
+        # is then undefined, and the previous fallback multiplied by 0 — which drove real
+        # creations to zero magnitude and would have deleted the fund's entire mechanism
+        # variation silently. Leave such a fund UNSCALED instead: the invariants hold, and
+        # fund x date fixed effects absorb the level difference anyway.
+        def _sd_scale(v):
+            # RELATIVE degeneracy test, at machine scale. A fund whose magnitudes are all
+            # identical has an SD of floating-point dust (~1e-17), not an exact zero, so an
+            # `sd > 0` test passes and the division explodes the column to ~1e15. Compare the
+            # SD to the series' own scale instead.
+            sd, scale = v.std(ddof=0), v.abs().mean()
+            if not (sd > SD_DEGENERATE_TOL * scale):
+                return v
+            return v / sd
+        df["CR_mag"] = df.groupby("fund")["CR_mag"].transform(_sd_scale)
+
+    out = df.drop(columns=["_S", "_gap"])
+    assert_cr_invariants(out, config)
+    return out
+
+
+def assert_cr_invariants(frame: pd.DataFrame, config: dict, tol: float = 1e-12) -> None:
+    """The four properties the transformation must have, checked on every build.
+
+    They are asserted rather than assumed because each one failed at least once during
+    development: the zero-preservation invariant is exactly what the winsorize-then-abs
+    order broke, silently, while every sign-level test still passed.
+    """
+    d = config["network_exposure"]["cr_definition"]
+    raw = frame[d["raw_column"]].to_numpy(float)
+    mag = frame[d["analysis_column"]].to_numpy(float)
+    live = ~np.isnan(raw)
+    r, m = raw[live], mag[live]
+
+    if (m < -tol).any():
+        raise SafeguardViolation("CR_mag must be non-negative")
+    bad_zero = (np.abs(r) <= tol) & (np.abs(m) > tol)
+    if bad_zero.any():
+        raise SafeguardViolation(
+            "%d zero-event day(s) acquired a non-zero exposure magnitude — CR_raw == 0 must "
+            "imply CR_mag == 0, or a non-event is weighted like a real creation."
+            % int(bad_zero.sum()))
+    bad_nonzero = (np.abs(r) > tol) & (np.abs(m) <= tol)
+    if bad_nonzero.any():
+        raise SafeguardViolation(
+            "%d real creation/redemption(s) were driven to zero magnitude"
+            % int(bad_nonzero.sum()))
 
 
 def cr_raw(frame: pd.DataFrame, config: dict) -> np.ndarray:
