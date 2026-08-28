@@ -167,6 +167,7 @@ def aligned_outcome(frame: pd.DataFrame, arm: str, config: dict = None) -> np.nd
     if config is None:
         return (np.sign(frame["CR"].to_numpy(float)) * frame["OIB"].to_numpy(float)
                 if arm == "preferred" else frame["abn_vol"].to_numpy(float))
+    sign_cr = np.sign(cr_raw(frame, config)) if arm == "preferred" else None
 
     n = config["network_exposure"]["first_stage_outcome_normalization"]
     if "adv_dollar_pre" not in frame.columns:
@@ -180,8 +181,8 @@ def aligned_outcome(frame: pd.DataFrame, arm: str, config: dict = None) -> np.nd
             "non-positive or missing ADV$ denominators present — drop those stocks "
             "(adv_min_nonzero_days), never floor them.")
     if arm == "preferred":
-        raw = np.sign(frame["CR"].to_numpy(float)) * (
-            frame["signed_dollar_imbalance"].astype(float) / adv)
+        # sign from CR_raw (audit item 1): the scaled column's sign is not economic
+        raw = sign_cr * (frame["signed_dollar_imbalance"].astype(float) / adv)
     else:
         raw = (frame["dollar_volume"].astype(float) - adv) / adv
     work = frame.assign(_y=raw.to_numpy(float))
@@ -233,20 +234,43 @@ def build_cr(shares: pd.DataFrame, config: dict, convention: dict = None) -> pd.
     # "previous TRADING day for that fund": the trading calendar is the fund's own observed
     # sequence, so a missing row is a gap and the row is dropped, never spanned or filled.
     df["_gap"] = prev_date.isna() | (g.cumcount() == 0)
-    df["CR"] = (df["_S"] - prev_S) / prev_S
-    df.loc[df["_gap"], "CR"] = np.nan
+    df["CR_raw"] = (df["_S"] - prev_S) / prev_S
+    df.loc[df["_gap"], "CR_raw"] = np.nan
     if (prev_S <= 0).any():
         raise SafeguardViolation("non-positive prior shares outstanding in the CR denominator")
 
+    # ---- the scaled regressor, for MAGNITUDE use only -------------------------------
     lo, hi = [q / 100.0 for q in d["winsorize_pct"]]
-    df["CR"] = df.groupby(d["winsorize_within"])["CR"].transform(
+    df["CR"] = df.groupby(d["winsorize_within"])["CR_raw"].transform(
         lambda v: v.clip(v.quantile(lo), v.quantile(hi)))
     if d["standardize_within_fund"]:
-        # scale only — a within-fund MEAN shift would change what "no creation" means, and
-        # fund x date fixed effects absorb fund-level levels anyway
+        if d["standardize_mode"] != "sd_only":
+            raise SafeguardViolation(
+                "standardization must be SD-ONLY (%r registered). Mean-centring would make a "
+                "positive creation BELOW the fund's average creation rate read as negative."
+                % d["standardize_mode"])
+        # scale only, no mean shift: 0 stays 0 and the sign is untouched
         df["CR"] = df.groupby("fund")["CR"].transform(
             lambda v: v / v.std(ddof=0) if v.std(ddof=0) > 0 else v * 0.0)
     return df.drop(columns=["_S", "_gap"])
+
+
+def cr_raw(frame: pd.DataFrame, config: dict) -> np.ndarray:
+    """The economic CR: unwinsorized, unscaled. Everything about SIGN and EVENT STATUS reads
+    this column, never the analysis column.
+
+    SD-only standardization preserves zero and sign; WINSORIZATION DOES NOT. In a fund that
+    creates on almost every day the 1st percentile is positive, so clipping pushes a genuine
+    redemption and a genuine zero-event day to a positive number — a non-event recorded as a
+    large creation, and a redemption recorded as a creation.
+    """
+    col = config["network_exposure"]["cr_definition"]["raw_column"]
+    if col not in frame.columns:
+        raise SafeguardViolation(
+            "%r is required for anything sign- or event-valued (audit item 1). The scaled "
+            "column is winsorized, and winsorizing a mostly-creating fund flips the sign of "
+            "its redemptions and destroys its zero-event days." % col)
+    return frame[col].to_numpy(float)
 
 
 def assert_cr_definition(frame: pd.DataFrame, config: dict) -> None:
@@ -333,7 +357,16 @@ def cr_event_census(panel: pd.DataFrame, config: dict, zero_tol: float = 0.0) ->
 
     panel: fund | date | CR [| wave | adviser | permno]
     """
-    fd = (panel[[c for c in ("fund", "date", "wave", "adviser", "CR") if c in panel.columns]]
+    d = config["network_exposure"]["cr_definition"]
+    col = d["raw_column"] if d.get("census_uses_raw_pre_winsorized", True) else "CR"
+    if col not in panel.columns:
+        raise SafeguardViolation(
+            "the CR event census must be computed on %r (audit item 1). Winsorized CR turns "
+            "zero-event days in a mostly-creating fund into nonzero values, so the count of "
+            "creation/redemption EVENTS — and every concentration statistic built on it — "
+            "would be wrong in the direction that flatters the design." % col)
+    fd = (panel[[c for c in ("fund", "date", "wave", "adviser", col) if c in panel.columns]]
+          .rename(columns={col: "CR"})
           .drop_duplicates(subset=["fund", "date"]).copy())
     fd["nonzero"] = fd["CR"].astype(float).abs() > zero_tol
     nz = fd[fd["nonzero"]]
@@ -374,5 +407,74 @@ def cr_event_census(panel: pd.DataFrame, config: dict, zero_tol: float = 0.0) ->
         "by_adviser": _by("adviser"),
         "rows_per_event": (len(panel) / n_nz) if n_nz else np.nan,
         "reporting_only": "no minimum is registered; the census is reported, not passed",
+        "computed_on": col,
         **eff,
+    }
+
+
+def shares_update_audit(shares: pd.DataFrame, record: dict, config: dict) -> dict:
+    """How often does the vendor actually REFRESH shares outstanding? (audit item 4)
+
+    Distinct from the timestamp question. If a stale value is carried forward for three days
+    and then catches up, differencing reads three zero-event days followed by one large
+    creation — a precisely dated event that did not happen on that date, and the false
+    precision lands exactly where the design is most sensitive.
+
+    Staleness leaves a fingerprint in the series: runs of identical S followed by a jump. So
+    it is MEASURED here rather than taken on trust, and the vendor's stated frequency is
+    checked against what the data does.
+
+    `record` must state the vendor's documented refresh frequency; `shares` is
+    fund | date | shares_outstanding.
+    """
+    stated = record.get("update_frequency")
+    if stated is None:
+        raise SafeguardViolation(
+            "NEED_HUMAN: the vendor's documented shares-outstanding refresh frequency is "
+            "missing. It is a fact about the data dictionary, and a delayed update read as a "
+            "dated creation is not recoverable after the fact.")
+    df = shares.copy()
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.sort_values(["fund", "date"])
+    per_fund, runs_all = [], []
+    for fund, g in df.groupby("fund"):
+        v = g["shares_outstanding"].astype(float).to_numpy()
+        if len(v) < 2:
+            continue
+        same = v[1:] == v[:-1]
+        # lengths of consecutive-identical runs, in days held constant
+        runs, cur = [], 0
+        for flag in list(same) + [False]:
+            if flag:
+                cur += 1
+            elif cur:
+                runs.append(cur + 1)
+                cur = 0
+        changed = int((~same).sum())
+        per_fund.append({"fund": fund, "n_days": int(len(v)),
+                         "share_of_days_unchanged": float(same.mean()),
+                         "longest_unchanged_run": int(max(runs)) if runs else 1,
+                         "n_changes": changed})
+        runs_all.extend(runs)
+
+    tab = pd.DataFrame(per_fund)
+    longest = int(max(runs_all)) if runs_all else 1
+    median_unchanged = float(tab["share_of_days_unchanged"].median()) if len(tab) else np.nan
+    # A daily-refresh series can legitimately show unchanged days — funds do go a day without
+    # creations. What staleness looks like is LONG identical runs ending in a jump, and it is
+    # the pattern, not the count, that the human reads.
+    looks_stale = bool(longest >= 3 and median_unchanged > 0.5)
+    return {
+        "stated_update_frequency": stated,
+        "by_fund": tab,
+        "median_share_of_days_unchanged": median_unchanged,
+        "longest_unchanged_run_days": longest,
+        "looks_like_carryforward": looks_stale,
+        "consistent_with_daily_refresh": bool(stated == "daily" and not looks_stale),
+        "implication": (
+            "a jump after a run of identical values dates the WHOLE accumulated flow on the "
+            "refresh day; treat those as interval events, not dated ones, and report how "
+            "many CR events are affected" if looks_stale else
+            "no carry-forward fingerprint; CR event dates are as precise as the refresh"),
+        "needs_human_review": looks_stale or stated != "daily",
     }

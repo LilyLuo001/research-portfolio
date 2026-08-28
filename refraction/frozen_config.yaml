@@ -46,7 +46,20 @@ prereg:
 
 beta:
   w_shrink: null            # FROZEN AT GATE-PREREG from inside the G2 feasibility window
+  # AUDIT 2026-08-28 item 3. Stage 1 freezes the CANDIDATE SET, not only the rule applied
+  # to it: a "midpoint of the longest feasible run" computed over a grid chosen later is a
+  # different registration, because the grid decides which runs can exist and how wide the
+  # midpoint's neighbourhood is. Range, spacing and count are all fixed here.
   w_shrink_sweep_grid: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  w_shrink_grid_spec:
+    min: 0.0                    # no shrinkage — the raw per-stock beta
+    max: 1.0                    # full shrinkage — the characteristics-implied prior
+    step: 0.1
+    n_points: 11
+    endpoints_included: true
+    grid_frozen_at: stage1      # may not be widened, narrowed or refined after the sweep;
+                                # a finer grid chosen post hoc moves the midpoint
+    refinement_after_sweep_forbidden: true
   # THE SELECTION ALGORITHM, frozen now (audit item 6). w_shrink itself cannot be set before
   # the G2 sweep runs, but the MAP from feasibility inputs to w_shrink can be, and freezing
   # it is what makes the realized value a mechanical stage-2 entry rather than a choice made
@@ -305,7 +318,7 @@ network_exposure:
       # sign(CR_{f,t}) x OIB_{i,t}: positive when constituent order flow moves WITH the
       # creation/redemption direction. Sharper than volume — it separates directional
       # AP-driven trading from generic attention-driven turnover.
-      outcome_expression: "sign(CR_{f,t}) * (SignedDollarImbalance_{i,t} / ADV_pre_i)"
+      outcome_expression: "sign(CR^raw_{f,t}) * (SignedDollarImbalance_{i,t} / ADV_pre_i)"
       exposure: abs_CR_x_absL
       sided: one_sided                        # a1 > 0
       requires: signed_trade_classification
@@ -387,9 +400,30 @@ network_exposure:
                                                # it was never registered — registered here.
     winsorize_within: fund
     standardize_within_fund: true              # §6.1.2, after winsorization
+    standardize_mode: sd_only                  # divide by within-fund SD; NO mean shift.
+                                               # Mean-centring would make a positive creation
+                                               # below the fund's average rate read NEGATIVE.
+    standardize_preserves_zero_and_sign: true
     standardize_sample: non_fomc_calibration_window
     further_rescaling_forbidden: true          # already unitless AND standardized
     dollar_or_tna_scaled_forms_forbidden: [cr_over_tna, cr_dollar, delta_shares_times_nav]
+    #
+    # ---------------------------------------------------------------------------------
+    # RAW vs TRANSFORMED (audit 2026-08-28, item 1). TWO COLUMNS, different jobs.
+    # ---------------------------------------------------------------------------------
+    # Standardization is SD-only and so preserves zero and sign. WINSORIZATION DOES NOT.
+    # For a fund that mostly creates, the 1st percentile is POSITIVE, so clipping sends a
+    # genuine redemption AND a genuine zero-event day to a positive number. Measured on a
+    # fund creating on ~99% of days: a true -2.0% redemption became +0.68 and a true
+    # zero-event day became +0.68 — a non-event recorded as a large creation.
+    #
+    # So the ECONOMIC object and the SCALED regressor are separated:
+    raw_column: CR_raw          # (S_t - S_{t-1}) / S_{t-1}, unwinsorized, unscaled
+    analysis_column: CR         # winsorized then SD-scaled; MAGNITUDE use only
+    raw_defines: [sign, creation_vs_redemption, zero_event_status, event_census,
+                  concentration_statistics, aligned_outcome_sign]
+    analysis_column_sign_is_not_economic: true   # never take sign() of the scaled column
+    census_uses_raw_pre_winsorized: true
   # Size is controlled TWICE and deliberately: normalization removes the units, the CR x
   # size interaction control removes what remains. Neither substitutes for the other.
   first_stage_size_defence: [outcome_normalization, cr_interacted_size_control]
@@ -454,6 +488,17 @@ network_exposure:
   # constituent trading ON creation/redemption DAYS, not "around" a timed AP event, and the
   # within-day ordering of AP action and constituent trading is NOT identified.
   shares_outstanding_audit_required: true           # timestamp convention + corporate actions
+  # AUDIT 2026-08-28 item 4. Separate from the TIMESTAMP question: how often does the vendor
+  # actually REFRESH shares outstanding? If a stale value is carried forward for three days
+  # and then catches up, the differencing reads three zero-event days followed by one large
+  # creation — a precisely dated event that never happened on that date. Staleness is
+  # detectable in the series itself (runs of identical S followed by a jump), so it is
+  # measured, not assumed.
+  shares_update_frequency_audit_required: true
+  shares_update_frequency: null                     # NEED_INFO: daily | weekly | irregular
+  shares_stale_carryforward_detected: null          # measured by shares_update_audit()
+  shares_repeated_value_runs_are_events: false      # a repeat is NO NEWS, not a zero event,
+                                                    # unless the vendor refreshes daily
   cr_timestamp_audit_complete: false                # set true only by the recorded audit
   cr_timestamp_resolution: null                     # NEED_INFO: daily | intraday
   cr_timestamp_vendor_field: null                   # exact vendor + field name, or NEED_INFO
@@ -480,8 +525,24 @@ network_exposure:
   # activity means the mechanism test is UNINFORMATIVE, which is not the same finding as
   # the mechanism being absent. Reporting low power as "retired" would retire a measure the
   # data never tested — and would quietly license the opposite headline.
-  first_stage_outcomes: [licensed, retired_from_headline,
-                         INSUFFICIENT_IDENTIFYING_VARIATION]
+  # AUDIT 2026-08-28 item 2. Withdrawing the 0.5-sigma line removed the only quantity that
+  # could have distinguished "evidence of no effect" from "not enough evidence" — so a
+  # non-significant a1 must NOT be auto-labelled retired. Four states, and only one of them
+  # is a positive claim in either direction:
+  first_stage_outcomes: [licensed,                            # positive evidence FOR
+                         not_licensed_inconclusive,           # absence of evidence
+                         retired_from_headline,               # evidence OF absence
+                         INSUFFICIENT_IDENTIFYING_VARIATION]  # numerical degeneracy
+  # "Retired" is a claim that the effect is smaller than something. Making it requires an
+  # equivalence margin on the ADV-scaled outcome's own scale. None is registered, so the
+  # state is unreachable and every non-significant result is INCONCLUSIVE.
+  first_stage_equivalence_margin: null        # NEED_DECISION, in SD units of the outcome
+  first_stage_retirement_requires_equivalence_margin: true
+  # The GOVERNANCE consequence is identical for the two non-licensed states — the measure
+  # does not enter the headline either way, which is Plan §9's G8 line. What differs is what
+  # the paper is entitled to SAY. The software classifies; it does not infer.
+  first_stage_headline_use_blocked_unless: licensed
+  first_stage_classification_is_governance_not_inference: true
   first_stage_insufficient_variation_rules:
     # BOTH triggers are NUMERICAL DEGENERACY checks. Neither asserts that passing them makes
     # the sample adequate — clearing a degeneracy check is not evidence of sufficient power,

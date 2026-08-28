@@ -270,10 +270,40 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
     licensed = bool(t > 0 and p_one_sided <= float(alpha))
     report.update({
         "licensed": licensed,
-        "outcome": "licensed" if licensed else "retired_from_headline",
+        "outcome": ("licensed" if licensed
+                    else _non_licensed_state(report, config)),
         "reasons": [], "diagnostics": ident["diagnostics"],
+        "headline_use": "permitted" if licensed else "blocked",
         "note": "predictive association, not causal (Plan §6.1.2)"})
     return report
+
+
+def _non_licensed_state(report: dict, config: dict) -> str:
+    """Absence of evidence, or evidence of absence? (audit item 2)
+
+    "Retired" asserts the effect is smaller than something worth caring about. That is a
+    claim, and making it needs an equivalence margin on the outcome's own scale — the
+    quantity that vanished when the 0.5-sigma line was withdrawn as belonging to the headline
+    gamma. Without one, a non-significant a1 is INCONCLUSIVE, whether it is a precise zero or
+    a hopelessly wide interval, and the CI and MDE in the report are what tell them apart.
+
+    The GOVERNANCE consequence is the same either way: the measure does not enter the
+    headline. Only what the paper may SAY differs.
+    """
+    ne = config["network_exposure"]
+    margin = ne.get("first_stage_equivalence_margin")
+    if margin is None:
+        if ne.get("first_stage_retirement_requires_equivalence_margin", True):
+            return "not_licensed_inconclusive"
+        return "retired_from_headline"
+    # equivalence: the whole reporting interval must sit inside +/- margin, in SD units
+    sd_y = report.get("mde_sigma") and report["se_a1"] and report["a1"] is not None
+    lo, hi = report.get("ci_low"), report.get("ci_high")
+    scale = report.get("sd_outcome") or 1.0
+    if lo is None or hi is None or not sd_y:
+        return "not_licensed_inconclusive"
+    m = float(margin) * float(scale)
+    return "retired_from_headline" if (-m <= lo and hi <= m) else "not_licensed_inconclusive"
 
 
 def identifying_variation(result: dict, census: dict, config: dict) -> dict:
@@ -377,6 +407,7 @@ def _report(result, census, ident, config, outcome_choice, timestamp_audit, alph
         "power_trigger_active": ident["power_trigger_active"],
         "alpha": alpha,
         "n_obs": result.get("n"),
+        "sd_outcome": result.get("sd_outcome"),
         "n_nonzero_cr_days": census["n_nonzero_cr_days"],
         "share_of_fund_days_nonzero": census.get("share_of_fund_days_nonzero"),
         "concentration_top1_share": census.get("concentration_top1_share"),

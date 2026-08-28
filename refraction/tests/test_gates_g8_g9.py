@@ -103,7 +103,9 @@ def make_panel(n_stocks=40, n_days=120, a1=0.0, seed=0):
                          "days_since_conversion": 21 + t, "CR": cr, "absL": absL[p],
                          "r_resid_fwd": 0.1 * cr + a1 * cr * absL[p] + rng.normal(0, .05),
                          "r_resid_lag": rng.normal(0, .05), "mkt": rng.normal(0, .01)})
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    df["CR_raw"] = df["CR"]
+    return df
 
 
 def make_trading_panel(n_stocks=40, n_days=120, a1=0.0, seed=0, arm="fallback"):
@@ -125,6 +127,9 @@ def make_trading_panel(n_stocks=40, n_days=120, a1=0.0, seed=0, arm="fallback"):
                          "abn_vol": y, "OIB": np.sign(cr) * y,
                          "r_resid_lag": rng.normal(0, .05), "mkt": rng.normal(0, .01)})
     df = pd.DataFrame(rows)
+    # fixtures are already raw: no winsorization has been applied, so the two coincide.
+    # They are still kept as separate columns, because that is how the pipeline hands them on.
+    df["CR_raw"] = df["CR"]
     df["y"] = pre.aligned_outcome(df, arm)
     return df
 
@@ -259,10 +264,12 @@ def test_the_verdict_is_one_sided_on_the_linear_coefficient():
     licensed = _adjudicate(0.30, 5)
     assert licensed["licensed"] is True and licensed["outcome"] == "licensed"
     # a strongly NEGATIVE slope must not license: the prediction is one-sided
-    retired = _adjudicate(-0.30, 6)
-    assert retired["licensed"] is False
-    assert retired["outcome"] == "retired_from_headline"
-    assert "not causal" in retired["note"]
+    not_licensed = _adjudicate(-0.30, 6)
+    assert not_licensed["licensed"] is False
+    assert not_licensed["headline_use"] == "blocked"
+    # ...but "not licensed" is not the same claim as "retired" — see audit item 2
+    assert not_licensed["outcome"] == "not_licensed_inconclusive"
+    assert "not causal" in not_licensed["note"]
 
 
 # --------------------------------------------------------------------------- #
@@ -483,7 +490,8 @@ def test_freeze4_the_census_counts_events_not_constituent_day_rows():
     nonzero creation/redemption, the mechanism has 3 events in it, not 4800."""
     panel = make_trading_panel(n_stocks=40, n_days=120, a1=0.3, seed=16)
     live = set(sorted(panel["date"].unique())[:3])
-    panel["CR"] = np.where(panel["date"].isin(live), panel["CR"], 0.0)
+    for col in ("CR", "CR_raw"):
+        panel[col] = np.where(panel["date"].isin(live), panel[col], 0.0)
     c = pre.cr_event_census(panel, CONFIG)
     assert c["n_constituent_day_rows"] == 4800
     assert c["n_fund_days"] == 120
@@ -535,7 +543,7 @@ def test_a_sample_with_no_creation_or_redemption_is_uninformative_not_a_failure(
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
-    dead = pre.cr_event_census(panel.assign(CR=0.0), CONFIG)
+    dead = pre.cr_event_census(panel.assign(CR=0.0, CR_raw=0.0), CONFIG)
     v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
                    timestamp_audit=audit, census=dead)
     assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
@@ -640,7 +648,9 @@ def liquidity_panel(n=200, seed=0, size_spread=1000.0, noise=0.0, frac=0.02):
                          "CR": cr, "absL": absl, "adv_dollar_pre": size,
                          "signed_dollar_imbalance": np.sign(cr) * f * size,
                          "dollar_volume": size * (1 + f)})
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    df["CR_raw"] = df["CR"]
+    return df
 
 
 def _fit(df, ycol):
@@ -885,7 +895,8 @@ def test_freeze6_a_single_event_is_uninformative_not_a_rejection():
     cfg = audited_config()
     panel = make_trading_panel(a1=0.30, seed=40)
     one_day = sorted(panel["date"].unique())[0]
-    panel["CR"] = np.where(panel["date"] == one_day, panel["CR"], 0.0)
+    for col in ("CR", "CR_raw"):
+        panel[col] = np.where(panel["date"] == one_day, panel[col], 0.0)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
@@ -939,7 +950,7 @@ def test_freeze6_a_noisy_sample_reports_a_large_mde_without_being_reclassified()
     assert v["power_trigger_active"] is False
     assert v["mde_sigma"] is not None and v["mde_sigma"] > 0.5
     assert not any("MDE" in x for x in v["reasons"])
-    assert v["outcome"] in ("licensed", "retired_from_headline")
+    assert v["outcome"] in ("licensed", "not_licensed_inconclusive")
 
 
 def test_freeze6_the_classification_never_replaces_inference():
@@ -949,7 +960,8 @@ def test_freeze6_the_classification_never_replaces_inference():
     panel = make_trading_panel(a1=0.30, seed=45)
     panel["adviser"] = "ADV-A"
     one_day = sorted(panel["date"].unique())[0]
-    panel["CR"] = np.where(panel["date"] == one_day, panel["CR"], 0.0)
+    for col in ("CR", "CR_raw"):
+        panel[col] = np.where(panel["date"] == one_day, panel[col], 0.0)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, census = preflight(cfg, panel)
@@ -975,7 +987,8 @@ def test_two_events_is_not_a_sufficiency_claim():
     cfg = audited_config()
     panel = make_trading_panel(a1=0.30, seed=47)
     live = set(sorted(panel["date"].unique())[:2])       # exactly 2 events: clears the check
-    panel["CR"] = np.where(panel["date"].isin(live), panel["CR"], 0.0)
+    for col in ("CR", "CR_raw"):
+        panel[col] = np.where(panel["date"].isin(live), panel[col], 0.0)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, census = preflight(cfg, panel)
@@ -987,12 +1000,42 @@ def test_two_events_is_not_a_sufficiency_claim():
     assert "adequate" not in str(v).lower()
 
 
-def test_freeze6_a_well_powered_null_still_retires_the_measure():
-    """The escape hatch must not swallow genuine rejections: with real power, a null is a
-    finding and the measure is retired."""
+def test_a_well_powered_null_is_inconclusive_not_retired_without_an_equivalence_margin():
+    """Audit item 2. Withdrawing the 0.5-sigma line removed the only quantity that could
+    separate "evidence of no effect" from "not enough evidence". Until an outcome-specific
+    equivalence margin exists, even a precise null is INCONCLUSIVE — and the governance
+    consequence is unchanged, so nothing is lost by saying so accurately."""
     v = _adjudicate(-0.30, 43)
+    assert v["outcome"] == "not_licensed_inconclusive"
+    assert v["licensed"] is False
+    assert v["headline_use"] == "blocked"          # same consequence as retirement
+    assert v["mde_sigma"] is not None and v["ci_low"] is not None
+
+
+def test_retirement_becomes_reachable_only_with_a_registered_equivalence_margin():
+    """And then only when the whole interval sits inside it — the actual equivalence test."""
+    import copy
+    cfg = audited_config()
+    cfg["network_exposure"]["first_stage_equivalence_margin"] = 5.0   # generous, in SD units
+    panel = make_trading_panel(a1=0.0, seed=61)
+    choice, audit, census = preflight(cfg, panel)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
     assert v["outcome"] == "retired_from_headline"
-    assert v["mde_sigma"] is not None and v["mde_sigma"] <= 0.5
+    # a margin too tight for the interval leaves it inconclusive
+    cfg["network_exposure"]["first_stage_equivalence_margin"] = 1e-6
+    v2 = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                    timestamp_audit=audit, census=census)
+    assert v2["outcome"] == "not_licensed_inconclusive"
+
+
+def test_no_equivalence_margin_is_registered_today():
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_equivalence_margin"] is None
+    assert ne["first_stage_retirement_requires_equivalence_margin"] is True
+    assert ne["first_stage_classification_is_governance_not_inference"] is True
 
 
 def test_freeze6_the_power_branch_is_taken_before_the_p_value_is_read():
@@ -1010,9 +1053,10 @@ def test_freeze6_a_licensed_verdict_reports_its_mde():
     assert v["outcome"] == "licensed" and v["mde_sigma"] is not None
 
 
-def test_freeze6_all_three_outcomes_are_registered():
+def test_all_four_evidentiary_states_are_registered():
     assert set(CONFIG["network_exposure"]["first_stage_outcomes"]) == {
-        "licensed", "retired_from_headline", "INSUFFICIENT_IDENTIFYING_VARIATION"}
+        "licensed", "not_licensed_inconclusive", "retired_from_headline",
+        "INSUFFICIENT_IDENTIFYING_VARIATION"}
 
 
 # --------------------------------------------------------------------------- #
@@ -1116,3 +1160,145 @@ def test_the_sensitivity_is_reported_even_when_nothing_is_flagged():
     s = g9.summarize(g9.wave_continuity(w, w.copy()), CONFIG, as_of=a, convention=CONV)
     assert s["effective_date_sensitivity"]["sensitivity_required"] is False
     assert s["effective_date_sensitivity"]["n_waves"] == 1
+
+
+# --------------------------------------------------------------------------- #
+# audit item 1 — raw CR sign vs the scaled analysis column                     #
+# --------------------------------------------------------------------------- #
+
+def mostly_creating_fund(n_creations=300, seed=0):
+    """A fund that creates on almost every day, then one genuine redemption and one genuine
+    zero-event day. This is the configuration where winsorization does damage."""
+    rng = np.random.default_rng(seed)
+    s = [100.0]
+    for _ in range(n_creations):
+        s.append(s[-1] * (1 + rng.uniform(0.005, 0.03)))
+    s.append(s[-1] * 0.98)          # a real redemption
+    s.append(s[-1])                 # a real zero-event day
+    return shares_frame(s), len(s) - 2, len(s) - 1
+
+
+def test_winsorization_would_flip_a_redemption_in_a_mostly_creating_fund():
+    """The reason CR_raw exists. Standardization is SD-only and is safe; WINSORIZATION is
+    not: the 1st percentile of a mostly-creating fund is POSITIVE, so clipping sends a real
+    redemption and a real zero-event day to a positive number."""
+    f, i_red, i_zero = mostly_creating_fund()
+    out = pre.build_cr(f, CONFIG, CONV)
+    assert out["CR_raw"].iloc[i_red] < 0                     # the truth
+    assert out["CR"].iloc[i_red] > 0                         # the clipped column disagrees
+    assert out["CR_raw"].iloc[i_zero] == pytest.approx(0.0)  # a non-event
+    assert out["CR"].iloc[i_zero] != 0                       # ...clipped into an event
+
+
+def test_the_aligned_outcome_takes_its_sign_from_raw_cr():
+    """sign(CR) must mean 'was this a creation', not 'was this above the clip floor'."""
+    df = pd.DataFrame({"CR": [0.9, 0.9], "CR_raw": [1.0, -1.0],
+                       "signed_dollar_imbalance": [10.0, 10.0],
+                       "adv_dollar_pre": [100.0, 100.0],
+                       "date": [pd.Timestamp("2023-01-02")] * 2})
+    y = pre.aligned_outcome(df, "preferred", CONFIG)
+    assert y[0] > 0 and y[1] < 0, "the second row is a redemption and must align negative"
+
+
+def test_the_outcome_refuses_to_build_without_the_raw_column():
+    df = pd.DataFrame({"CR": [0.5], "signed_dollar_imbalance": [1.0],
+                       "adv_dollar_pre": [10.0], "date": [pd.Timestamp("2023-01-02")]})
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.aligned_outcome(df, "preferred", CONFIG)
+    assert "CR_raw" in str(e.value)
+
+
+def test_the_event_census_is_computed_on_raw_pre_winsorized_cr():
+    """A zero-event day clipped into a nonzero value would inflate the event count — in the
+    direction that flatters the design."""
+    f, _, i_zero = mostly_creating_fund()
+    out = pre.build_cr(f, CONFIG, CONV).assign(fund="F1")
+    c = pre.cr_event_census(out, CONFIG)
+    assert c["computed_on"] == "CR_raw"
+    # 303 fund-days: 1 undefined (no prior day) + 1 true zero-event day => 301 events
+    assert c["n_nonzero_cr_days"] == 301
+    on_scaled = pre.cr_event_census(out.assign(CR_raw=out["CR"]), CONFIG)
+    assert on_scaled["n_nonzero_cr_days"] > c["n_nonzero_cr_days"]   # the inflation
+
+
+def test_the_census_refuses_to_run_on_the_scaled_column():
+    panel = make_trading_panel(n_stocks=3, n_days=6, seed=5).drop(columns=["CR_raw"])
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.cr_event_census(panel, CONFIG)
+    assert "flatters the design" in str(e.value)
+
+
+def test_standardization_is_sd_only_and_preserves_zero_and_sign():
+    d = CONFIG["network_exposure"]["cr_definition"]
+    assert d["standardize_mode"] == "sd_only"
+    assert d["standardize_preserves_zero_and_sign"] is True
+    f = shares_frame([100, 110, 110, 99, 120])
+    out = pre.build_cr(f, _cfg_no_std(), CONV)        # winsorization off, so scaling alone
+    import copy
+    cfg = _cfg_no_std(); cfg["network_exposure"]["cr_definition"]["standardize_within_fund"] = True
+    scaled = pre.build_cr(f, cfg, CONV)
+    ok = out["CR_raw"].notna()
+    assert np.array_equal(np.sign(out.loc[ok, "CR_raw"]), np.sign(scaled.loc[ok, "CR"]))
+    assert scaled["CR"].iloc[2] == pytest.approx(0.0)   # a zero stays a zero
+
+
+def test_mean_centred_standardization_is_refused():
+    """The audit's hypothesis: z-scoring would make a positive creation below the fund's
+    average creation rate read as negative."""
+    import copy
+    cfg = copy.deepcopy(CONFIG)
+    cfg["network_exposure"]["cr_definition"]["standardize_mode"] = "z_score"
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.build_cr(shares_frame([100, 110, 120]), cfg, CONV)
+    assert "BELOW the fund's average creation rate" in str(e.value)
+
+
+# --------------------------------------------------------------------------- #
+# audit item 4 — shares-outstanding refresh frequency                          #
+# --------------------------------------------------------------------------- #
+
+def test_a_carryforward_series_is_detected_not_read_as_dated_events():
+    """A stale value held for three days then catching up looks like three quiet days and
+    one large creation. The run-then-jump fingerprint is what gives it away."""
+    v, s = 100.0, []
+    for _ in range(20):
+        s += [v, v, v]                 # held constant for three days
+        v *= 1.06                      # then catches up
+    f = shares_frame(s)
+    a = pre.shares_update_audit(f, {"update_frequency": "daily"}, CONFIG)
+    assert a["looks_like_carryforward"] is True
+    assert a["consistent_with_daily_refresh"] is False
+    assert a["longest_unchanged_run_days"] >= 3
+    assert "interval events, not dated ones" in a["implication"]
+    assert a["needs_human_review"] is True
+
+
+def test_a_genuinely_daily_series_passes():
+    rng = np.random.default_rng(3)
+    v, s = 100.0, []
+    for _ in range(120):
+        v *= 1 + rng.normal(0, 0.01)
+        s.append(v)
+    a = pre.shares_update_audit(shares_frame(s), {"update_frequency": "daily"}, CONFIG)
+    assert a["looks_like_carryforward"] is False
+    assert a["consistent_with_daily_refresh"] is True
+    assert a["needs_human_review"] is False
+
+
+def test_a_non_daily_stated_frequency_always_needs_review():
+    a = pre.shares_update_audit(shares_frame([100, 101, 102]),
+                                {"update_frequency": "weekly"}, CONFIG)
+    assert a["needs_human_review"] is True
+
+
+def test_the_refresh_frequency_must_be_stated_not_assumed():
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.shares_update_audit(shares_frame([100, 101]), {}, CONFIG)
+    assert "NEED_HUMAN" in str(e.value)
+
+
+def test_the_update_frequency_audit_is_registered_and_unanswered():
+    ne = CONFIG["network_exposure"]
+    assert ne["shares_update_frequency_audit_required"] is True
+    assert ne["shares_update_frequency"] is None            # NEED_INFO
+    assert ne["shares_repeated_value_runs_are_events"] is False

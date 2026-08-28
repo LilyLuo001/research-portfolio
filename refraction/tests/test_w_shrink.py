@@ -128,3 +128,53 @@ def test_w_shrink_itself_is_still_unset():
     be inventing it."""
     assert CONFIG["beta"]["w_shrink"] is None
     assert CONFIG["beta"]["w_shrink_selection"]["algorithm"] == "midpoint_of_longest_feasible_run"
+
+
+# --------------------------------------------------------------------------- #
+# audit item 3 — the candidate GRID is frozen in stage 1, not just the rule    #
+# --------------------------------------------------------------------------- #
+
+def test_the_grid_itself_is_frozen_with_exact_values_range_and_spacing():
+    """A "midpoint of the longest feasible run" computed over a grid chosen later is a
+    different registration: the grid decides which runs can exist and how wide the
+    midpoint's neighbourhood is."""
+    spec = CONFIG["beta"]["w_shrink_grid_spec"]
+    assert spec["min"] == 0.0 and spec["max"] == 1.0
+    assert spec["step"] == 0.1 and spec["n_points"] == 11
+    assert spec["endpoints_included"] is True
+    assert spec["grid_frozen_at"] == "stage1"
+    assert spec["refinement_after_sweep_forbidden"] is True
+    # and the literal grid matches the spec, so the two cannot drift apart
+    assert GRID == pytest.approx([spec["min"] + i * spec["step"]
+                                  for i in range(spec["n_points"])])
+    assert len(GRID) == spec["n_points"]
+
+
+def test_refining_the_grid_after_the_sweep_would_move_the_answer():
+    """Why the grid must be frozen: the SAME feasibility region gives a different w_shrink
+    on a finer grid, so choosing the grid after seeing the sweep is choosing the answer."""
+    import copy
+    coarse = ws.select(feasible_between(3, 6), CONFIG)      # 0.3..0.6 on the 0.1 grid
+    fine_cfg = copy.deepcopy(CONFIG)
+    fine_grid = [round(i * 0.05, 2) for i in range(21)]
+    fine_cfg["beta"]["w_shrink_sweep_grid"] = fine_grid
+    sd = [0.30 if 0.3 <= w <= 0.6 else 0.10 for w in fine_grid]
+    fine_sweep = pd.DataFrame({"w": fine_grid, "sd_L": sd,
+                               "abs_corr_L_convexp": [0.20] * len(fine_grid),
+                               "n_pre_median": [40] * len(fine_grid),
+                               "se_share": [0.8] * len(fine_grid)})
+    fine = ws.select(fine_sweep, fine_cfg)
+    assert coarse["w_shrink"] != fine["w_shrink"]
+
+
+def test_the_four_conditions_and_the_run_length_are_all_registered_in_stage_one():
+    sel = CONFIG["beta"]["w_shrink_selection"]
+    assert set(sel["feasibility_conditions"]) == {
+        "sd_L_min", "corr_L_convexp_max", "n_pre_median_min", "se_share_min"}
+    assert set(ws.CONDITIONS) == set(sel["feasibility_conditions"])
+    assert sel["min_run_length"] == "sweep_window_min_gridpoints"
+    assert CONFIG["gate0_thresholds"]["sweep_window_min_gridpoints"] == 2
+    assert sel["tie_break_run"] == "earliest_start"
+    assert sel["tie_break_midpoint"] == "lower"
+    stage1 = CONFIG["prereg"]["stage1"]["contents"]
+    assert "w_shrink_selection_algorithm" in stage1

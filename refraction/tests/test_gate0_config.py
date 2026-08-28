@@ -608,3 +608,38 @@ def test_the_w_shrink_algorithm_is_frozen_even_though_the_value_is_not():
     assert sel["tie_break_run"] and sel["tie_break_midpoint"]   # deterministic
     assert set(sel["feasibility_conditions"]) <= set(G0)       # no new thresholds
     assert (ROOT / "refraction" / "pipeline" / "w_shrink.py").exists()
+
+
+def test_the_g8_classification_separates_absence_of_evidence_from_evidence_of_absence():
+    """Audit item 2. Without an outcome-specific equivalence margin, a non-significant
+    estimate cannot be called retirement — and the software says so."""
+    ne = CONFIG["network_exposure"]
+    assert set(ne["first_stage_outcomes"]) == {
+        "licensed", "not_licensed_inconclusive", "retired_from_headline",
+        "INSUFFICIENT_IDENTIFYING_VARIATION"}
+    assert ne["first_stage_equivalence_margin"] is None
+    assert ne["first_stage_retirement_requires_equivalence_margin"] is True
+    assert ne["first_stage_classification_is_governance_not_inference"] is True
+    # the governance consequence is unchanged: only "licensed" reaches the headline
+    assert ne["first_stage_headline_use_blocked_unless"] == "licensed"
+
+
+def test_raw_cr_owns_the_sign_and_the_scaled_column_does_not():
+    """Audit item 1."""
+    d = CONFIG["network_exposure"]["cr_definition"]
+    assert d["raw_column"] == "CR_raw" and d["analysis_column"] == "CR"
+    assert d["analysis_column_sign_is_not_economic"] is True
+    assert d["census_uses_raw_pre_winsorized"] is True
+    for job in ("sign", "creation_vs_redemption", "zero_event_status", "event_census",
+                "concentration_statistics", "aligned_outcome_sign"):
+        assert job in d["raw_defines"], job
+    assert d["standardize_mode"] == "sd_only"
+
+
+def test_the_shares_refresh_frequency_audit_is_registered_and_open():
+    """Audit item 4: a delayed vendor update must not be labelled a precisely dated event."""
+    ne = CONFIG["network_exposure"]
+    assert ne["shares_update_frequency_audit_required"] is True
+    assert ne["shares_update_frequency"] is None
+    assert ne["shares_stale_carryforward_detected"] is None
+    assert ne["shares_repeated_value_runs_are_events"] is False

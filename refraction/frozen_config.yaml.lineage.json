@@ -1,6 +1,6 @@
 {
   "output": "refraction/frozen_config.yaml",
-  "output_sha256": "79d5513b1ccd33c081c587d66012d942804591fd24381e367a6f8c675e3310d6",
+  "output_sha256": "a022e489d7093081a584bf3f0fc25c1e716e4d2b34cf79c13f81cbe1df730587",
   "inputs": [
     {
       "path": "docs/MacroEvent_Chapter_Plan_v2_4.md",
@@ -23,11 +23,11 @@
       "rows": null
     }
   ],
-  "code_version": "2b91e1346a7c1f7db023dce3b2654784d60e646d",
-  "timestamp": "2026-08-28T09:09:57.676457+00:00",
+  "code_version": "2a9e13e1b7801817f99e09af56a282f301ca9764",
+  "timestamp": "2026-08-28T09:22:00.466490+00:00",
   "registered_spec": "SPEC-MAIN-v2.4",
-  "freeze_scope": "implementation freezes 1-6 plus the 2026-08-28 consistency audit",
+  "freeze_scope": "implementation freezes 1-6, the 2026-08-28 consistency audit, and the three final checks",
   "what_this_is": "repo-local content hash + UTC timestamp of the frozen specification.",
-  "what_this_is_NOT": "the OSF pre-registration. Stage 1 (REFR-GATE-OSF, human_gate: true) is now unblocked in principle \u2014 prereg.two_stage is registered and stage1.blocked_on is nothing_data_related \u2014 but submission is a human act.",
+  "what_this_is_NOT": "the OSF pre-registration. Stage 1 contents are registered and stage1.blocked_on is nothing_data_related; submission is a human act at REFR-GATE-OSF.",
   "prereg_guard_status": "BLOCKED (prereg.osf_timestamp is null) \u2014 correct and expected"
 }
