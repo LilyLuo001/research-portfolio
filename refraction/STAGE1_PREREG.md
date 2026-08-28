@@ -130,7 +130,18 @@ Freshness means the economic as-of date, **not** that the vendor file or API res
 | cutoff_time_known_and_documented | aligned_cutoff_to_cutoff | cutoff_t_minus_1_to_cutoff_t | yes |
 | nothing_further_is_knowable | unaligned_unknown_cutoff | **NOT SET** (stage 2) | no |
 
+For `aligned_cutoff_to_cutoff`, a known cutoff is **not sufficient on its own**: the constituent OIB must cover the WHOLE cutoff-to-cutoff interval (`yes`). If the trading feed covers only part of it, the measured imbalance is a partial-session quantity paired with a full-interval CR — a different variable, and one whose gap is systematic, since feeds stop at the close. Such observations are **downgrade_to_interval_robustness**.
+
 Alignment is a **separate condition from datedness**: an event can be day-localized and still interval-misaligned, and such an event may not enter the same-day primary (it goes to interval_robustness). Where the cutoff is a known non-close time, OIB must be constructed over the matching cutoff-to-cutoff window rather than taken from the trading session. Where the cutoff time is unknown, the claim `exact_same_day_interval_alignment` is forbidden.
+
+**Timing eligibility applies to zero-CR observations too.** An observed `CR_raw = 0` is a claim — that no creation or redemption happened — and it needs the same endpoint evidence as a nonzero event. Unchanged shares outstanding under carry-forward are an absence of measurement, not a no-creation day, and would otherwise enter the regression as a zero-exposure control drawn from days nobody looked at.
+
+| zero class | meaning | may enter the primary |
+|---|---|---|
+| zero_verified | an observed and measured no-creation day | yes |
+| zero_unverified | unchanged shares whose endpoints were not both freshly measured | no |
+
+`zero_verified` requires economic_as_of_freshness_at_t, economic_as_of_freshness_at_t_minus_1, cr_oib_interval_alignment — the same conditions a dated event requires. Unverified zeros in the primary: **excluded**; treating them as no-creation days: **no**.
 
 **Dated is day-localized only.** It does not establish within-day ordering between AP activity and constituent order imbalance: both are measured over the same day and either could precede the other. Same-day G8 is therefore **mechanism_association_and_calibration**, not a causal sequence; within-day ordering would require true_ap_transaction_timestamps.
 

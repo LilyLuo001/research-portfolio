@@ -331,6 +331,22 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
                 "trading session; those coincide only when the cutoff is the market close. "
                 "Knowing the as-of DATE does not license a same-day interval-alignment claim."
                 % (tc["n_misaligned_dated_events"], tc.get("alignment_class")))
+        # Zero-CR observations carry the same endpoint requirement as events: an unchanged
+        # SharesOut whose endpoints were not both freshly measured is an absence of
+        # measurement, not an observed no-creation day.
+        if (tc.get("n_zero_unverified")
+                and tcfg["zero_cr_observations"]["unverified_zeros_in_primary"] == "excluded"):
+            raise SafeguardViolation(
+                "%d unverified zero-CR observation(s) are still in the primary sample. An "
+                "unchanged SharesOut under carry-forward is not a no-creation day — it is a "
+                "day nobody measured, and it would enter as a zero-exposure control. Apply "
+                "g8_preflight.primary_timing_sample()." % tc["n_zero_unverified"])
+        if tc.get("n_partial_oib_coverage_events"):
+            raise SafeguardViolation(
+                "%d observation(s) have a known cutoff but only PARTIAL OIB coverage of the "
+                "cutoff-to-cutoff interval. A full-interval CR paired with a partial-session "
+                "imbalance is a different variable, and the gap is systematic. Downgrade "
+                "them to the interval robustness." % tc["n_partial_oib_coverage_events"])
         if tc.get("n_interval_events") and tcfg["interval_events_in_primary"] == "excluded":
             # the sample must already have been filtered; verdict refuses to bless one that
             # still carries them

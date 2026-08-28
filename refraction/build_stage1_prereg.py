@@ -207,6 +207,15 @@ def render(cfg: dict) -> str:
         a("| %s | %s | %s | %s |"
           % (cls["requires"], name, _fmt(cls["oib_window"]), _fmt(cls["primary_eligible"])))
     a("")
+    a("For `aligned_cutoff_to_cutoff`, a known cutoff is **not sufficient on its own**: the "
+      "constituent OIB must cover the WHOLE cutoff-to-cutoff interval (`%s`). If the trading "
+      "feed covers only part of it, the measured imbalance is a partial-session quantity "
+      "paired with a full-interval CR — a different variable, and one whose gap is "
+      "systematic, since feeds stop at the close. Such observations are **%s**."
+      % (_fmt(al["classes"]["aligned_cutoff_to_cutoff"][
+              "requires_complete_oib_coverage_over_interval"]),
+         al["classes"]["aligned_cutoff_to_cutoff"]["partial_coverage_response"]))
+    a("")
     a("Alignment is a **separate condition from datedness**: an event can be day-localized "
       "and still interval-misaligned, and such an event may not enter the same-day primary "
       "(it goes to %s). Where the cutoff is a known non-close time, OIB must be constructed "
@@ -214,6 +223,23 @@ def render(cfg: dict) -> str:
       "Where the cutoff time is unknown, the claim `%s` is forbidden."
       % (al["misaligned_events_go_to"],
          al["classes"]["unaligned_unknown_cutoff"]["claim_forbidden"]))
+    a("")
+    z = t["zero_cr_observations"]
+    a("**Timing eligibility applies to zero-CR observations too.** An observed `CR_raw = 0` "
+      "is a claim — that no creation or redemption happened — and it needs the same endpoint "
+      "evidence as a nonzero event. Unchanged shares outstanding under carry-forward are an "
+      "absence of measurement, not a no-creation day, and would otherwise enter the "
+      "regression as a zero-exposure control drawn from days nobody looked at.")
+    a("")
+    a("| zero class | meaning | may enter the primary |")
+    a("|---|---|---|")
+    for name in ("zero_verified", "zero_unverified"):
+        a("| %s | %s | %s |" % (name, z[name]["meaning"], _fmt(z[name]["primary_eligible"])))
+    a("")
+    a("`zero_verified` requires %s — the same conditions a dated event requires. "
+      "Unverified zeros in the primary: **%s**; treating them as no-creation days: **%s**."
+      % (_fmt(z["zero_verified"]["requires"]), z["unverified_zeros_in_primary"],
+         _fmt(z["unverified_zeros_may_be_treated_as_no_creation"])))
     a("")
     a("**Dated is day-localized only.** It does not establish within-day ordering between AP "
       "activity and constituent order imbalance: both are measured over the same day and "

@@ -684,12 +684,22 @@ def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
                 "vendor_refresh_flag"):
         assert pub in fe["insufficient_alone"], pub
     assert t["primary_additionally_requires"] == "cr_oib_interval_alignment"
+    assert set(t["classes"]) == {"dated", "interval", "zero_verified", "zero_unverified"}
+    z = t["zero_cr_observations"]
+    assert z["zero_verified"]["primary_eligible"] is True
+    assert z["zero_unverified"]["primary_eligible"] is False
+    assert z["unverified_zeros_in_primary"] == "excluded"
+    assert z["unverified_zeros_may_be_treated_as_no_creation"] is False
     al = t["cr_oib_interval_alignment"]
     assert al["calendar_date_equality_is_not_alignment"] is True
     assert al["oib_measurement_interval_must_match"] is True
     assert al["classes"]["aligned_trading_day"]["oib_window"] == "trading_day_t"
     assert al["classes"]["aligned_cutoff_to_cutoff"]["oib_window"] == \
         "cutoff_t_minus_1_to_cutoff_t"
+    assert al["classes"]["aligned_cutoff_to_cutoff"][
+        "requires_complete_oib_coverage_over_interval"] is True
+    assert al["classes"]["aligned_cutoff_to_cutoff"]["partial_coverage_response"] == \
+        "downgrade_to_interval_robustness"
     assert al["classes"]["unaligned_unknown_cutoff"]["primary_eligible"] is False
     assert al["classes"]["unaligned_unknown_cutoff"]["claim_forbidden"] == \
         "exact_same_day_interval_alignment"

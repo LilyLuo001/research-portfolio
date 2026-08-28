@@ -755,15 +755,23 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
         for i in range(len(v)):
             changed = i > 0 and v[i] != v[i - 1]
             run = run + 1 if (i > 0 and not changed) else 0
-            timing, width, start = "none", np.nan, pd.NaT
-            if changed:
-                if fresh[i] and last_fresh == i - 1:
+            # Endpoint evidence is the SAME requirement for a zero day as for an event:
+            # "no creation happened" is a claim, and an unchanged value under carry-forward
+            # is an absence of measurement rather than an observed no-creation day.
+            endpoints_measured = bool(fresh[i]) and last_fresh == i - 1
+            timing, width, start = "zero_unverified", np.nan, pd.NaT
+            if i == 0:
+                timing = "zero_unverified"      # no prior endpoint exists
+            elif changed:
+                if endpoints_measured:
                     timing, width, start = "dated", 1.0, dates[i]
                 else:
                     timing = "interval"
                     back = last_fresh if last_fresh is not None else 0
                     width = float(i - back) if last_fresh is not None else float(i + 1)
                     start = dates[back]
+            else:
+                timing = "zero_verified" if endpoints_measured else "zero_unverified"
             if fresh[i]:
                 last_fresh = i
             rows.append({"fund": fund, "date": dates[i], "cr_timing": timing,
@@ -795,7 +803,41 @@ def primary_timing_sample(panel: pd.DataFrame, config: dict) -> pd.DataFrame:
             "event paired with same-day order imbalance dates constituent trading to the "
             "vendor's update day, which is the one day in the interval guaranteed to carry a "
             "printed share change.")
+    z = t["zero_cr_observations"]
+    al = t["cr_oib_interval_alignment"]
     drop = panel["cr_timing"].eq("interval")
+
+    # Unverified zeros: an unchanged SharesOut whose endpoints were not both freshly
+    # measured is an absence of measurement, not an observed no-creation day. Letting it in
+    # as a zero-exposure control dilutes the estimate with days nobody looked at.
+    n_unverified_zeros = 0
+    if z["unverified_zeros_in_primary"] == "excluded":
+        unver = panel["cr_timing"].eq("zero_unverified")
+        n_unverified_zeros = int(
+            panel.loc[unver, ["fund", "date"]].drop_duplicates().shape[0])
+        drop = drop | unver
+
+    # Partial OIB coverage over a cutoff-to-cutoff window: a known cutoff does not make the
+    # outcome aligned if the trading feed covers only part of the required interval. The
+    # gap is systematic — feeds stop at the close — so the partial quantity is a different
+    # variable, not a noisier version of the registered one.
+    cov_col = al.get("oib_coverage_column", "oib_interval_coverage_complete")
+    n_partial = 0
+    needs_cov = (panel.get("alignment_class") is not None
+                 and al["classes"]["aligned_cutoff_to_cutoff"].get(
+                     "requires_complete_oib_coverage_over_interval"))
+    if needs_cov:
+        cutoff_rows = panel["alignment_class"].eq("aligned_cutoff_to_cutoff")
+        if cutoff_rows.any():
+            if cov_col not in panel.columns:
+                raise SafeguardViolation(
+                    "alignment class 'aligned_cutoff_to_cutoff' requires %r: OIB must cover "
+                    "the WHOLE cutoff-to-cutoff interval. A known cutoff does not make a "
+                    "partial-session imbalance aligned with a full-interval CR." % cov_col)
+            partial = cutoff_rows & ~panel[cov_col].astype(bool)
+            n_partial = int(panel.loc[partial, ["fund", "date"]].drop_duplicates().shape[0])
+            drop = drop | partial
+
     n_misaligned = 0
     if "primary_eligible" in panel.columns:
         # Alignment is a SEPARATE condition from datedness: a day-localized event whose
@@ -809,6 +851,8 @@ def primary_timing_sample(panel: pd.DataFrame, config: dict) -> pd.DataFrame:
         panel.loc[panel["cr_timing"].eq("interval"), ["fund", "date"]]
         .drop_duplicates().shape[0])
     out.attrs["n_misaligned_events_excluded"] = n_misaligned
+    out.attrs["n_unverified_zeros_excluded"] = n_unverified_zeros
+    out.attrs["n_partial_oib_coverage_excluded"] = n_partial
     return out
 
 
@@ -836,6 +880,14 @@ def timing_census(panel: pd.DataFrame, config: dict) -> dict:
         "oib_window": (panel["oib_window"].iloc[0]
                        if "oib_window" in panel.columns and len(panel) else None),
         # counted on EVENTS (fund-days), never on constituent-day rows
+        "n_zero_verified": int((work["cr_timing"] == "zero_verified").sum()),
+        "n_zero_unverified": int((work["cr_timing"] == "zero_unverified").sum()),
+        "n_partial_oib_coverage_events": int(
+            (work["alignment_class"].eq("aligned_cutoff_to_cutoff")
+             & ~work.get(t["cr_oib_interval_alignment"].get(
+                 "oib_coverage_column", "oib_interval_coverage_complete"),
+                 pd.Series(True, index=work.index)).astype(bool)).sum()
+            if "alignment_class" in work.columns else 0),
         "n_aligned_dated_events": int((ev["cr_timing"].eq("dated") & ev["_eligible"]).sum()),
         "n_misaligned_dated_events": int(
             (ev["cr_timing"].eq("dated") & ~ev["_eligible"]).sum()),

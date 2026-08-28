@@ -579,7 +579,26 @@ network_exposure:
   # manufactures a same-day association, because the update day is the one day in the
   # interval guaranteed to carry a printed share change.
   cr_event_timing:
-    classes: [dated, interval]
+    classes: [dated, interval, zero_verified, zero_unverified]
+    #
+    # ZERO-CR OBSERVATIONS ARE ALSO TIMING-ELIGIBLE OR NOT (final guard, 2026-08-28).
+    # An observed CR_raw = 0 is a claim — "no creation or redemption happened" — and it needs
+    # the same endpoint evidence as a nonzero event. An unchanged SharesOut under
+    # carry-forward is not a no-creation day; it is an ABSENCE OF MEASUREMENT wearing the
+    # appearance of one, and it enters the regression as a zero-exposure control observation
+    # that dilutes the estimate with days nobody looked at.
+    zero_cr_observations:
+      zero_verified:
+        requires: [economic_as_of_freshness_at_t, economic_as_of_freshness_at_t_minus_1,
+                   cr_oib_interval_alignment]        # the SAME conditions a dated event needs
+        meaning: an observed and measured no-creation day
+        primary_eligible: true
+      zero_unverified:
+        meaning: unchanged shares whose endpoints were not both freshly measured
+        primary_eligible: false
+        why: "absence of measurement, not evidence of no creation"
+      unverified_zeros_in_primary: excluded
+      unverified_zeros_may_be_treated_as_no_creation: false
     # CORRECTION 2026-08-28. An earlier rule made "preceded by a run of unchanged shares"
     # sufficient evidence of carry-forward. It is not. A genuinely daily series stays
     # CONSTANT whenever no creation or redemption occurs, which for most funds is most days.
@@ -658,6 +677,13 @@ network_exposure:
           requires: cutoff_time_known_and_documented
           oib_window: cutoff_t_minus_1_to_cutoff_t
           oib_must_be_constructed_over_that_window: true
+          # A known cutoff does not make the outcome aligned on its own. If the trading feed
+          # covers only part of the cutoff-to-cutoff window, the OIB actually measured is a
+          # PARTIAL-SESSION quantity paired with a full-interval CR — a different variable
+          # from the registered one, and one whose incompleteness is systematic (feeds stop
+          # at the close, so the missing part is always the same part of the day).
+          requires_complete_oib_coverage_over_interval: true
+          partial_coverage_response: downgrade_to_interval_robustness
           primary_eligible: true
         unaligned_unknown_cutoff:  # only the as-of DATE is documented
           requires: nothing_further_is_knowable
@@ -667,7 +693,9 @@ network_exposure:
           claim_forbidden: exact_same_day_interval_alignment
       primary_requires_alignment_in: [aligned_trading_day, aligned_cutoff_to_cutoff]
       misaligned_events_go_to: interval_robustness
-      report: [alignment_class, cutoff_time, oib_window, n_aligned_events, n_misaligned_events]
+      oib_coverage_column: oib_interval_coverage_complete
+      report: [alignment_class, cutoff_time, oib_window, n_aligned_events, n_misaligned_events,
+               n_partial_oib_coverage_events, n_zero_verified, n_zero_unverified]
     dated_means: day_localized_only
     dated_establishes_within_day_ordering: false
     same_day_g8_status: mechanism_association_and_calibration
