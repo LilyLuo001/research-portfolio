@@ -201,11 +201,85 @@ def test_the_network_measure_may_not_be_named_before_it_is_licensed():
 
 def test_the_first_stage_turns_on_one_primary_outcome_not_a_vote():
     """v2.2 required a 'majority of five proxies'. A vote across heterogeneous
-    proxies has no economic foundation and is not a test."""
+    proxies has no economic foundation and is not a test.
+
+    Freeze 1 (2026-08-28): the primary is now null pending the recorded choice, and there
+    are exactly TWO named candidates with a rule between them — still one primary, chosen
+    on data quality before any coefficient, never a vote over outcomes."""
     ne = CONFIG["network_exposure"]
-    assert isinstance(ne["first_stage_primary_outcome"], str)
+    assert ne["first_stage_primary_outcome"] is None       # resolved by the decision record
+    assert set(ne["first_stage_primary_candidates"]) == {"preferred", "fallback"}
     assert "first_stage_majority_min" not in CONFIG["gate0_thresholds"]
     assert len(ne["first_stage_secondary_outcomes"]) == 4
+
+
+# --------------------------------------------------------------------------- #
+# 2026-08-28 freezes                                                           #
+# --------------------------------------------------------------------------- #
+
+def test_freeze1_both_candidate_outcomes_take_the_absolute_cr_exposure():
+    """A signed flow against an unsigned volume outcome tests nothing; against the
+    sign(CR)-aligned imbalance it counts the sign twice. The sign lives in the OUTCOME."""
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_primary_exposure"] == "abs_CR_x_absL"
+    assert ne["first_stage_signed_cr_exposure_forbidden_for_primary"] is True
+    for arm in ("preferred", "fallback"):
+        assert ne["first_stage_primary_candidates"][arm]["exposure"] == "abs_CR_x_absL"
+    # the signed form survives only where it belongs: the signed return corroboration
+    assert ne["first_stage_corroborating_exposure"] == "signed_CR_x_absL"
+
+
+def test_freeze1_the_fallback_rule_keys_only_on_data_quality():
+    """Every criterion must be a fact about coverage or agreement. A criterion mentioning
+    an outcome, a coefficient or significance would make the choice specification search."""
+    rule = CONFIG["network_exposure"]["first_stage_outcome_choice_rule"]
+    assert rule["decided_before_any_treatment_coefficient"] is True
+    assert rule["otherwise"] == "fallback"
+    banned = ("a1", "coeff", "t_stat", "significan", "p_value", "alpha")
+    for k in rule["use_preferred_iff_all"]:
+        assert not any(b in k.lower() for b in banned), k
+
+
+def test_freeze1_the_primary_trading_outcome_is_measured_on_the_cr_day():
+    """The AP's own footprint is same-day; the t+1 lag belongs to the return corroboration."""
+    ne = CONFIG["network_exposure"]
+    assert ne["first_stage_primary_outcome_lag_days"] == 0
+    assert ne["first_stage_response_lag_days"] == 1
+
+
+def test_freeze2_the_cr_timestamp_is_unaudited_and_defaults_to_the_weaker_claim():
+    ne = CONFIG["network_exposure"]
+    assert ne["cr_timestamp_audit_complete"] is False
+    assert ne["cr_timestamp_resolution"] is None          # NEED_INFO, not assumed
+    assert ne["cr_intraday_timestamp_supplied_by_vendor"] is None
+    assert ne["g8_event_language"]["default_when_unaudited"] == "daily"
+    assert "days" in ne["g8_event_language"]["daily"]
+    assert "around" in ne["g8_event_language"]["intraday"]
+
+
+def test_freeze3_the_baseline_control_vector_is_predetermined_only():
+    """Realized creation-basket weight is chosen by the AP after conversion. Conditioning
+    on it silently changes the estimand, so it lives in the horse race, not the baseline."""
+    ne = CONFIG["network_exposure"]
+    z = ne["first_stage_cr_interacted_controls"]
+    assert "pre_conversion_holding_weight" in z
+    assert "basket_weight" not in z
+    for banned in ne["first_stage_post_treatment_controls_forbidden_in_baseline"]:
+        assert banned not in z
+    hr = ne["first_stage_mechanism_horse_race"]
+    assert hr["added_control"] == "realized_creation_basket_weight"
+    assert hr["may_replace_baseline"] is False
+    assert "incremental" in hr["estimand"]
+
+
+def test_freeze4_the_cr_event_census_is_required_and_carries_no_threshold():
+    """Mechanism variation is CR events, not constituent-day rows. A minimum chosen now,
+    with the data in hand, would be the specification search the plan forbids."""
+    ne = CONFIG["network_exposure"]
+    assert ne["cr_event_census_required_before_estimation"] is True
+    assert set(ne["cr_event_census_by"]) == {"fund", "wave", "adviser"}
+    assert "n_nonzero_cr_days" in ne["cr_event_census_reports"]
+    assert not any("min" in k for k in ne if k.startswith("cr_event_census"))
 
 
 def test_basket_weight_is_not_the_primary_validation_outcome():
@@ -409,3 +483,19 @@ def test_relabelling_cannot_silently_replace_the_clean_wrapper_headline():
     g0 = CONFIG["gate0_thresholds"]
     assert g0["g9_confirmatory_response"] == "restrict_to_high_continuity_waves"
     assert "separately" in g0["g9_secondary_interpretation"]
+
+
+def test_the_g8_outcome_choice_record_exists_and_is_still_unresolved():
+    """The decision record is the artefact `verdict()` keys on. While it says unresolved,
+    G8 has not been adjudicated — and that must be visible, not inferred."""
+    rec = ROOT / CONFIG["network_exposure"]["first_stage_outcome_choice_rule"]["decision_record"]
+    assert rec.exists(), "the G8 outcome decision record is missing"
+    text = rec.read_text()
+    assert "NOT YET RESOLVED" in text
+    assert CONFIG["network_exposure"]["first_stage_primary_outcome"] is None
+    # every floor in the config must appear in the record, so the two cannot drift apart
+    for key, floor in CONFIG["network_exposure"][
+            "first_stage_outcome_choice_rule"]["use_preferred_iff_all"].items():
+        assert key.replace("_min", "") in text, key   # the record names the FACT
+        if isinstance(floor, float):
+            assert ("%.2f" % floor) in text, key

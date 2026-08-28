@@ -242,10 +242,51 @@ network_exposure:
   # absorbed intraday leaves no next-day return. So the PRIMARY connectivity outcome must be
   # a TRADING measure, where a magnitude prediction is well-founded; the return result is
   # corroboration only, unless a timing model establishes its sign.
-  first_stage_primary_outcome: constituent_abnormal_volume_or_order_imbalance_around_creation_redemption
+  #
+  # FREEZE 1 (2026-08-28). "abnormal volume / order imbalance" was two outcomes wearing one
+  # name, and they do not take the same exposure. ONE primary is registered, chosen by a rule
+  # that keys ONLY on G7 data quality and is resolved BEFORE any G8 treatment coefficient is
+  # computed. Both candidate outcomes take the SAME exposure, |CR| x |L_tilt^pre|:
+  #   * signed CR x |L| is FORBIDDEN for the primary. It was the form for the SIGNED return
+  #     outcome; pairing a signed flow with an unsigned trading outcome tests nothing, and
+  #     pairing it with a signed one double-counts the sign.
+  #   * the sign of the flow enters through the OUTCOME (alignment), not the exposure.
+  first_stage_primary_outcome: null            # NEED_INFO -> resolved by g8_outcome_choice
   first_stage_primary_outcome_class: trading_connectivity
+  first_stage_primary_exposure: abs_CR_x_absL  # |CR_{f,t}| x |L_tilt^pre_i|, both candidates
+  first_stage_signed_cr_exposure_forbidden_for_primary: true
+  first_stage_primary_candidates:
+    preferred:
+      name: aligned_signed_order_imbalance_on_cr_days
+      # sign(CR_{f,t}) x OIB_{i,t}: positive when constituent order flow moves WITH the
+      # creation/redemption direction. Sharper than volume — it separates directional
+      # AP-driven trading from generic attention-driven turnover.
+      outcome_expression: "sign(CR_{f,t}) * OIB_{i,t}"
+      exposure: abs_CR_x_absL
+      sided: one_sided                        # a1 > 0
+      requires: signed_trade_classification
+    fallback:
+      name: constituent_abnormal_volume_on_cr_days
+      # unsigned; the magnitude prediction is well founded and it needs no trade signing.
+      outcome_expression: "AbnVol_{i,t}"
+      exposure: abs_CR_x_absL
+      sided: one_sided                        # a1 > 0
+      requires: intraday_or_daily_volume
+  # The fallback rule. Evaluated on G7's DATA-QUALITY report only; it may not be evaluated,
+  # revisited or overridden after any G8 treatment coefficient exists. All four must hold for
+  # the preferred outcome; ANY failure selects the fallback.
+  first_stage_outcome_choice_rule:
+    use_preferred_iff_all:
+      signed_trade_classification_available_share_min: 0.90   # of calibration constituent-days
+      intraday_coverage_share_of_volume_sample_min: 0.95      # so the choice cannot move the SAMPLE
+      cross_algorithm_daily_oib_sign_agreement_min: 0.95      # meta-rule 2, dual channel
+      cr_timestamp_audit_complete: true                       # freeze 2
+    otherwise: fallback
+    decided_before_any_treatment_coefficient: true
+    decision_record: refraction/G8_OUTCOME_CHOICE.md            # written and committed first
   first_stage_corroborating_outcome: constituent_next_day_residual_return_on_etf_creation_redemption
   first_stage_corroborating_outcome_class: signed_price_response_not_magnitude
+  first_stage_corroborating_exposure: signed_CR_x_absL          # the signed-return form only
   return_result_signs_meaning_requires_timing_model: true
   # Safeguard 2 (2026-08-19): the registered functional form, fixed before any outcome is
   # opened. Reasoning: refraction/G8_SIGN_PREDICTION.md. Connectivity is a MAGNITUDE concept
@@ -262,11 +303,63 @@ network_exposure:
   # not from common ETF-level flow shocks. fund x date FE absorb the CR main effect by
   # construction — that is the point, not a side effect.
   first_stage_fixed_effects: fund_x_date
+  #
+  # FREEZE 3 (2026-08-28). The BASELINE control vector is PREDETERMINED only. Realized
+  # post-conversion creation-basket weight was in this list; it is post-treatment — the AP
+  # chooses the basket, and conditioning on it changes the estimand from "does predetermined
+  # mismatch predict connectivity" to "does it predict connectivity INCREMENTAL to the basket
+  # the sponsor actually published". That second question is worth asking, but it is a
+  # separate horse race, not the baseline.
   first_stage_cr_interacted_controls: [size, illiquidity, index_membership,
-                                       pre_period_etf_ownership, basket_weight]
+                                       pre_period_etf_ownership,
+                                       pre_conversion_holding_weight]
+  first_stage_baseline_controls_must_be_predetermined: true
+  first_stage_post_treatment_controls_forbidden_in_baseline: [realized_creation_basket_weight,
+                                                              post_conversion_holding_weight,
+                                                              post_conversion_etf_ownership]
+  # The horse race, run and reported SEPARATELY, never as the baseline row:
+  first_stage_mechanism_horse_race:
+    added_control: realized_creation_basket_weight
+    estimand: "a1 incremental to the realized creation basket — the part of connectivity that
+               predetermined mismatch explains BEYOND what the published basket already
+               encodes. Not the total effect of L_tilt^pre."
+    conditions_on_post_treatment_variable: true
+    may_replace_baseline: false
+    reported_as: mechanism_benchmark
   two_step_requires_uncertainty_propagation: true   # if the two-step is ever used
+  #
+  # FREEZE 2 (2026-08-28). Daily Delta(SharesOut) does NOT identify an intraday
+  # creation/redemption timestamp. Unless the vendor SUPPLIES one, G8 is a statement about
+  # constituent trading ON creation/redemption DAYS, not "around" a timed AP event, and the
+  # within-day ordering of AP action and constituent trading is NOT identified.
   shares_outstanding_audit_required: true           # timestamp convention + corporate actions
-  first_stage_response_lag_days: 1
+  cr_timestamp_audit_complete: false                # set true only by the recorded audit
+  cr_timestamp_resolution: null                     # NEED_INFO: daily | intraday
+  cr_timestamp_vendor_field: null                   # exact vendor + field name, or NEED_INFO
+  cr_intraday_timestamp_supplied_by_vendor: null    # never INFERRED from daily differences
+  g8_event_language:
+    daily: "constituent trading on fund creation/redemption days"
+    intraday: "constituent trading around timed creation/redemption events"
+    default_when_unaudited: daily                   # the weaker claim is the safe one
+  cr_daily_timing_implication: "within-day ordering of AP action and constituent trading is
+                                not identified; G8 stays a same-day association"
+  #
+  # FREEZE 4 (2026-08-28). Mechanism variation comes from CR EVENTS, not constituent-day row
+  # counts: a million constituent-days off a handful of nonzero-CR fund-days is a handful of
+  # events. The census is computed and reported BEFORE estimation; verdict() refuses without
+  # it. No threshold is set here — the census is a REPORTING requirement, and any minimum
+  # would be a threshold chosen with the data in hand.
+  cr_event_census_required_before_estimation: true
+  cr_event_census_by: [fund, wave, adviser]
+  cr_event_census_reports: [n_nonzero_cr_days, share_of_fund_days_nonzero,
+                            n_funds_with_any_cr, concentration_top1_share,
+                            concentration_top5_share, median_abs_cr_on_nonzero_days]
+  # Lag applies to the CORROBORATING return outcome (r at t+1 against CR at t). The PRIMARY
+  # trading outcome is measured on the CR day itself: it is the AP's own footprint, and
+  # lagging it a day would measure something else. Same-day means association, not causal
+  # ordering — see cr_daily_timing_implication.
+  first_stage_response_lag_days: 1                  # corroborating return outcome
+  first_stage_primary_outcome_lag_days: 0           # trading outcome, on the CR day
   first_stage_residualization: pre_conversion_market_and_industry_loadings
   first_stage_claim_is_causal: false
   # Calibration sample: post-conversion but NON-FOMC, so validation never touches a headline

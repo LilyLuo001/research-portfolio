@@ -59,25 +59,60 @@ def _demean_within(frame: pd.DataFrame, cols, by=("fund", "date")):
             for c in cols}
 
 
+EXPOSURES = {
+    # freeze 1 (2026-08-28): the exposure is part of the registration, and it is tied to the
+    # outcome. |CR| x |L| is the PRIMARY form for both trading-outcome arms; signed CR x |L|
+    # belongs to the signed return corroboration and nowhere else.
+    "abs_CR_x_absL": lambda cr, absl: np.abs(cr) * absl,
+    "signed_CR_x_absL": lambda cr, absl: cr * absl,
+}
+
+
+def _check_exposure(exposure: str, outcome_class: str) -> None:
+    if exposure not in EXPOSURES:
+        raise SafeguardViolation("unregistered exposure %r" % (exposure,))
+    if outcome_class == "trading_connectivity" and exposure != "abs_CR_x_absL":
+        raise SafeguardViolation(
+            "the primary trading outcome takes |CR| x |L| (freeze 1). Signed CR x |L| is "
+            "forbidden for the primary: against unsigned abnormal volume it tests nothing, "
+            "and against the sign(CR)-aligned imbalance it counts the flow's sign twice — "
+            "the sign enters through the OUTCOME.")
+
+
 def pooled_interaction(sample: pd.DataFrame, controls=("r_resid_lag", "mkt"),
-                       fund_date_fe: bool = True, z_controls=()):
-    """The preferred design (clarification 2026-08-19).
+                       fund_date_fe: bool = True, z_controls=(),
+                       y_col: str = "r_resid_fwd",
+                       exposure: str = "signed_CR_x_absL",
+                       outcome_class: str = "signed_price_response_not_magnitude",
+                       config: dict = None,
+                       estimand: str = "baseline"):
+    """The preferred design (clarification 2026-08-19; freezes 1 and 3 of 2026-08-28).
 
     With **fund x date fixed effects** the identification is cross-sectional *within one
     ETF-day*: the CR main effect is absorbed by construction — CR does not vary within a
     fund-date — so what remains is differential exposure across constituents of the same
     ETF on the same day, which is the claim. Common ETF-level flow shocks cannot drive it.
 
+    `exposure` must match the outcome (freeze 1): the trading-connectivity primary takes
+    |CR| x |L|; only the signed return corroboration takes signed CR x |L|.
+
     `z_controls` are the pre-specified characteristics whose CR interactions enter as
-    controls, so a1 is not picking up CR x size or CR x illiquidity.
+    controls, so a1 is not picking up CR x size or CR x illiquidity. In the BASELINE they
+    must all be PREDETERMINED (freeze 3). Realized post-conversion basket weight is
+    post-treatment: adding it changes the estimand to "incremental to the realized basket",
+    so it is admitted only under `estimand="incremental_given_realized_basket"`, which is
+    reported as a mechanism benchmark and can never replace the baseline row.
     """
-    y_col, inter = "r_resid_fwd", "_CRxabsL"
+    _check_exposure(exposure, outcome_class)
+    inter = "_exposure"
     df = sample.copy()
-    df[inter] = df["CR"].astype(float) * df["absL"].astype(float)
+    df[inter] = EXPOSURES[exposure](df["CR"].astype(float).to_numpy(),
+                                    df["absL"].astype(float).to_numpy())
     zcols = [c for c in z_controls if c in df.columns]
+    _check_baseline_controls(zcols, estimand, config)
     for c in zcols:
-        df[f"_CRx{c}"] = df["CR"].astype(float) * df[c].astype(float)
-    ctrl = [c for c in controls if c in df.columns] + [f"_CRx{c}" for c in zcols]
+        df["_CRx" + c] = df["CR"].astype(float) * df[c].astype(float)
+    ctrl = [c for c in controls if c in df.columns] + ["_CRx" + c for c in zcols]
 
     if fund_date_fe:
         if not {"fund", "date"} <= set(df.columns):
@@ -109,7 +144,30 @@ def pooled_interaction(sample: pd.DataFrame, controls=("r_resid_lag", "mkt"),
             "flow_main_effect": flow, "n": int(len(y)),
             "design": "pooled_interaction",
             "fixed_effects": "fund_x_date" if fund_date_fe else "none",
-            "cr_interacted_controls": zcols}
+            "cr_interacted_controls": zcols,
+            "outcome_column": y_col, "exposure": exposure,
+            "outcome_class": outcome_class, "estimand": estimand}
+
+
+def _check_baseline_controls(zcols, estimand: str, config: dict) -> None:
+    """Freeze 3: the baseline control vector is predetermined only."""
+    if config is None:
+        return
+    ne = config["network_exposure"]
+    banned = set(ne.get("first_stage_post_treatment_controls_forbidden_in_baseline") or [])
+    hit = [c for c in zcols if c in banned]
+    if not hit:
+        return
+    if estimand != "incremental_given_realized_basket":
+        raise SafeguardViolation(
+            "post-treatment control(s) %s in the BASELINE control vector (freeze 3). The AP "
+            "chooses the realized creation basket, so conditioning on it silently changes the "
+            "estimand. Run it as the mechanism horse race with "
+            "estimand='incremental_given_realized_basket', and report it alongside — never "
+            "instead of — the predetermined baseline." % (hit,))
+    hr = ne.get("first_stage_mechanism_horse_race") or {}
+    if hr.get("may_replace_baseline"):
+        raise SafeguardViolation("the horse race may not be registered as the baseline")
 
 
 def two_step(sample: pd.DataFrame, propagate_uncertainty: bool):
@@ -132,10 +190,46 @@ def two_step(sample: pd.DataFrame, propagate_uncertainty: bool):
     return pd.DataFrame(phis)
 
 
-def verdict(result: dict, config: dict, outcome_class: str = None) -> dict:
+def verdict(result: dict, config: dict, outcome_class: str = None,
+            outcome_choice: dict = None, timestamp_audit: dict = None,
+            census: dict = None) -> dict:
     """Registered decision rule: one-sided, on the LINEAR coefficient, at the registered
-    level. Refuses to decide while that level is unset."""
+    level. Refuses to decide while that level is unset.
+
+    The three preflight artefacts (freezes 1, 2, 4 of 2026-08-28) are required arguments in
+    all but name. They are all things that must be settled BEFORE a treatment coefficient
+    exists, so requiring them here is what makes the ordering enforceable rather than
+    aspirational — see refraction/gates/g8_preflight.py.
+    """
     ne = config["network_exposure"]
+    # freeze 1 — one exact outcome, chosen on G7 data quality, before any coefficient
+    if outcome_choice is None:
+        raise SafeguardViolation(
+            "NEED_HUMAN: no registered primary outcome. g8_preflight.choose_primary_outcome() "
+            "must resolve the signed-imbalance vs abnormal-volume arm from G7's data-quality "
+            "report and be committed to %s before G8 is adjudicated."
+            % ne["first_stage_outcome_choice_rule"]["decision_record"])
+    if result.get("exposure") != ne["first_stage_primary_exposure"]:
+        raise SafeguardViolation(
+            "G8 licensing requires the registered primary exposure %r, got %r (freeze 1)."
+            % (ne["first_stage_primary_exposure"], result.get("exposure")))
+    if outcome_choice.get("exposure") != result.get("exposure"):
+        raise SafeguardViolation("estimated exposure does not match the registered choice")
+    # freeze 2 — the claim G8 is allowed to make about timing
+    if timestamp_audit is None or not timestamp_audit.get("audit_complete"):
+        raise SafeguardViolation(
+            "NEED_HUMAN: the ETF shares-outstanding timestamp audit is not complete "
+            "(freeze 2). Daily Delta(SharesOut) does not identify a creation/redemption "
+            "time, and G8's wording depends on what the vendor actually supplies.")
+    # freeze 4 — how many CR EVENTS carry the mechanism
+    if census is None:
+        raise SafeguardViolation(
+            "NEED_HUMAN: the CR event census is required before estimation (freeze 4). "
+            "Mechanism variation comes from nonzero-CR fund-days, not constituent-day rows.")
+    if not census.get("n_nonzero_cr_days"):
+        raise SafeguardViolation(
+            "the calibration sample contains no nonzero creation/redemption days — there is "
+            "no mechanism variation to test, whatever the row count says.")
     alpha = config.get("gate0_thresholds", {}).get("first_stage_primary_alpha")
     if alpha is None:
         raise SafeguardViolation(
@@ -158,4 +252,12 @@ def verdict(result: dict, config: dict, outcome_class: str = None) -> dict:
     return {"a1": result["a1"], "t": t, "p_one_sided": p_one_sided, "alpha": alpha,
             "licensed": licensed,
             "outcome": "licensed" if licensed else "retired_from_headline",
+            "registered_outcome": outcome_choice["chosen"],
+            "outcome_arm": outcome_choice["arm"],
+            "exposure": result["exposure"],
+            "estimand": result.get("estimand", "baseline"),
+            "n_nonzero_cr_days": census["n_nonzero_cr_days"],
+            "n_funds_with_any_cr": census["n_funds_with_any_cr"],
+            "event_language": timestamp_audit["g8_event_language"],
+            "within_day_ordering_identified": timestamp_audit["within_day_ordering_identified"],
             "note": "predictive association, not causal (Plan §6.1.2)"}

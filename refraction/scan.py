@@ -99,15 +99,80 @@ UA = "portfolio-refr-r13-scan/1.0 (research literature monitor)"
 ATOM = "{http://www.w3.org/2005/Atom}"
 
 
-def http_get(url, tries=4, base_sleep=5, headers=None):
-    """GET with backoff. Patched out wholesale in tests — no network in pytest."""
+# Bounded-time networking (2026-08-28). This script runs unattended on a 24x7 box, so a
+# network outage must make it EXIT, not hang. Three independent bounds, because each one
+# fails differently:
+#   * REQUEST_TIMEOUT  — a single socket that stalls mid-read
+#   * MAX_BACKOFF      — retry sleeps that would otherwise grow without limit
+#   * DEADLINE         — the whole run, so N dead legs cannot sum to an unbounded wait
+# The deadline is the one that matters: with every leg failing, the old code slept its way
+# through roughly 8 minutes of backoff before reporting a dead monitor.
+REQUEST_TIMEOUT = 20        # seconds, per HTTP request
+MAX_BACKOFF = 30            # seconds, cap on any single retry sleep
+DEFAULT_DEADLINE = 600      # seconds, whole run
+
+
+class DeadlineExceeded(Exception):
+    """The run's wall-clock budget is spent. Not an error in any one leg."""
+
+
+class Deadline(object):
+    """Wall-clock budget for a whole run. `None` means unbounded, used only by tests.
+
+    The clock and the sleeper are injected rather than taken from `time` at the call site.
+    A budget that depends on sleeps actually blocking cannot be tested without spending the
+    budget in real seconds, and a test that stubs `time.sleep` would silently make the
+    deadline unenforceable — which is exactly the failure mode this class exists to prevent.
+    """
+
+    def __init__(self, seconds=None, clock=None, sleeper=None):
+        self.seconds = seconds
+        self._now = clock or time.monotonic
+        self._sleep = sleeper or time.sleep
+        self.start = self._now()
+
+    def elapsed(self):
+        return self._now() - self.start
+
+    def remaining(self):
+        if self.seconds is None:
+            return float("inf")
+        return self.seconds - self.elapsed()
+
+    def check(self, what=""):
+        if self.remaining() <= 0:
+            raise DeadlineExceeded(
+                "run deadline of %ss exceeded%s" % (self.seconds, (" at " + what) if what else ""))
+
+    def sleep(self, seconds):
+        """Never sleep past the deadline — a bounded worker must not spend its budget
+        waiting to discover it has none left. Returns what it actually slept."""
+        self.check()
+        actual = max(0.0, min(seconds, MAX_BACKOFF, self.remaining()))
+        self._sleep(actual)
+        self.check()
+        return actual
+
+
+_DEADLINE = Deadline(None)          # replaced per run in main(); unbounded for tests
+
+
+def http_get(url, tries=4, base_sleep=5, headers=None, deadline=None):
+    """GET with bounded backoff. Patched out wholesale in tests — no network in pytest.
+
+    Raises DeadlineExceeded (not the last HTTP error) when the run's budget runs out, so a
+    caller can tell "the network is down" from "we ran out of time trying".
+    """
+    dl = deadline or _DEADLINE
     last = None
     for i in range(tries):
+        dl.check(url)
         try:
             h = {"User-Agent": UA}
             h.update(headers or {})
             req = Request(url, headers=h)
-            r = urlopen(req, timeout=60)
+            timeout = min(REQUEST_TIMEOUT, max(1.0, dl.remaining()))
+            r = urlopen(req, timeout=timeout)
             try:
                 return r.read().decode("utf-8", "replace")
             finally:
@@ -115,15 +180,16 @@ def http_get(url, tries=4, base_sleep=5, headers=None):
         except HTTPError as e:
             last = e
             if e.code == 429:  # unauthenticated S2 pool is tight; back off hard
-                time.sleep(base_sleep * (2 ** i) * 3)
+                dl.sleep(base_sleep * (2 ** i) * 3)
                 continue
             if 500 <= e.code < 600:
-                time.sleep(base_sleep * (2 ** i))
+                dl.sleep(base_sleep * (2 ** i))
                 continue
             raise
         except URLError as e:
             last = e
-            time.sleep(base_sleep * (2 ** i))
+            if i < tries - 1:       # no point sleeping after the final attempt
+                dl.sleep(base_sleep * (2 ** i))
     raise last
 
 
@@ -331,7 +397,13 @@ def main(argv=None):
     ap.add_argument("--window-days", type=int, default=WINDOW_DAYS,
                     help="lookback window in days (default %d)" % WINDOW_DAYS)
     ap.add_argument("--out-dir", default=str(OUTDIR))
+    ap.add_argument("--deadline", type=int, default=DEFAULT_DEADLINE,
+                    help="wall-clock budget for the whole run in seconds "
+                         "(default %d; 0 = unbounded, NOT for cron)" % DEFAULT_DEADLINE)
     a = ap.parse_args(argv)
+
+    global _DEADLINE
+    _DEADLINE = Deadline(a.deadline or None)
 
     today = datetime.datetime.utcnow().date()
     cutoff = today - datetime.timedelta(days=a.window_days)
@@ -339,22 +411,43 @@ def main(argv=None):
     outdir.mkdir(parents=True, exist_ok=True)
     seen = {} if a.full else load_seen(outdir)
 
-    legs, errors, n_legs = [], [], len(KEYWORDS) + 1
+    legs, errors, n_legs, timed_out = [], [], len(KEYWORDS) + 1, False
     for kw in KEYWORDS:
         try:
             legs.append(arxiv_search(kw, cutoff))
+        except DeadlineExceeded as e:
+            errors.append("arxiv %r: %s" % (kw, e))
+            timed_out = True
+            break                       # the budget is gone; further legs cannot help
         except Exception as e:
             errors.append("arxiv %r: %s" % (kw, e))
-        time.sleep(3)  # arXiv asks for >=3s between calls
-    try:
-        legs.append(s2_search_bulk(cutoff))
-    except Exception as e:
-        errors.append("s2-bulk: %s" % e)
+        try:
+            _DEADLINE.sleep(3)          # arXiv asks for >=3s between calls
+        except DeadlineExceeded:
+            timed_out = True
+            break
+    if not timed_out:
+        try:
+            legs.append(s2_search_bulk(cutoff))
+        except DeadlineExceeded as e:
+            errors.append("s2-bulk: %s" % e)
+            timed_out = True
+        except Exception as e:
+            errors.append("s2-bulk: %s" % e)
 
-    if len(errors) == n_legs:
+    # A timed-out run is a DEAD MONITOR, exactly like an all-legs-failed run: cron must see
+    # red rather than a silent green built on a partial sweep.
+    if timed_out and not legs:
+        sys.stderr.write("FATAL: run deadline exceeded with no successful leg:\n  "
+                         + "\n  ".join(errors) + "\n")
+        return 1
+    if len(errors) >= n_legs or (not legs and errors):
         sys.stderr.write("FATAL: every API call failed:\n  "
                          + "\n  ".join(errors) + "\n")
         return 1
+    if timed_out:
+        sys.stderr.write("WARNING: run deadline exceeded after %d/%d legs — partial sweep\n"
+                         % (len(legs), n_legs))
 
     hits = collect(legs, seen)
     hits.sort(key=lambda h: (h["date"], h["title"]), reverse=True)

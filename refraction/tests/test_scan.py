@@ -269,3 +269,110 @@ def test_ssrn_leg_generates_urls_only_never_parses(monkeypatch):
     urls = scan.ssrn_manual_urls()
     assert all(u.startswith("https://www.ssrn.com/") for u in urls)
     assert len(urls) == len(scan.KEYWORDS)
+
+
+# --------------------------------------------------------------------------- #
+# bounded-time networking (2026-08-28) — this runs unattended on a 24x7 box, so #
+# a network outage must make it EXIT rather than hang.                          #
+# --------------------------------------------------------------------------- #
+
+class FakeClock(object):
+    """A clock the test drives. Real seconds are not a test fixture, and stubbing
+    `time.sleep` alone would freeze the budget and make the deadline look infinite."""
+
+    def __init__(self):
+        self.t = 0.0
+        self.slept = []
+
+    def now(self):
+        return self.t
+
+    def sleep(self, seconds):
+        self.slept.append(seconds)
+        self.t += seconds
+
+
+def test_a_dead_network_cannot_outlast_the_run_deadline(monkeypatch):
+    """The bug: with every leg failing, the old backoff slept its way through roughly eight
+    minutes before reporting a dead monitor, and each socket could stall for 60s on top."""
+    def dead(*_a, **_kw):
+        raise scan.URLError("network is down")
+    monkeypatch.setattr(scan, "urlopen", dead)
+
+    clock = FakeClock()
+    dl = scan.Deadline(30, clock=clock.now, sleeper=clock.sleep)
+    with pytest.raises((scan.URLError, scan.DeadlineExceeded)):
+        scan.http_get("https://example.invalid/x", tries=99, base_sleep=5, deadline=dl)
+    assert sum(clock.slept) <= 30, "backoff slept past the deadline"
+    assert all(s <= scan.MAX_BACKOFF for s in clock.slept), "a single sleep exceeded the cap"
+    assert dl.remaining() <= 0, "the run stopped for some reason other than the deadline"
+
+
+def test_a_single_backoff_is_capped_however_long_the_run_may_last(monkeypatch):
+    """Unbounded runs still cap each sleep: exponential backoff over many tries would
+    otherwise reach hours between attempts."""
+    monkeypatch.setattr(scan, "urlopen",
+                        lambda *_a, **_kw: (_ for _ in ()).throw(scan.URLError("down")))
+    clock = FakeClock()
+    dl = scan.Deadline(None, clock=clock.now, sleeper=clock.sleep)
+    with pytest.raises(scan.URLError):
+        scan.http_get("https://x.invalid", tries=10, base_sleep=5, deadline=dl)
+    assert max(clock.slept) == scan.MAX_BACKOFF
+
+
+def test_no_sleep_after_the_final_attempt(monkeypatch):
+    """The last retry's sleep buys nothing — it is dead time before an exception that was
+    going to be raised anyway."""
+    slept = []
+    monkeypatch.setattr(scan.time, "sleep", lambda s: slept.append(s))
+    monkeypatch.setattr(scan, "urlopen",
+                        lambda *_a, **_kw: (_ for _ in ()).throw(scan.URLError("down")))
+    clock = FakeClock()
+    with pytest.raises(scan.URLError):
+        scan.http_get("https://example.invalid/x", tries=3, base_sleep=1,
+                      deadline=scan.Deadline(None, clock=clock.now, sleeper=clock.sleep))
+    assert len(clock.slept) == 2, "expected tries-1 sleeps, got %r" % (clock.slept,)
+    assert not slept, "http_get slept through time.sleep instead of the deadline"
+
+
+def test_an_expired_deadline_raises_before_opening_a_socket(monkeypatch):
+    def poisoned(*_a, **_kw):
+        raise AssertionError("a socket was opened after the deadline expired")
+    monkeypatch.setattr(scan, "urlopen", poisoned)
+    dl = scan.Deadline(0)
+    with pytest.raises(scan.DeadlineExceeded):
+        scan.http_get("https://example.invalid/x", deadline=dl)
+
+
+def test_the_request_timeout_is_bounded_and_shrinks_toward_the_deadline(monkeypatch):
+    seen = {}
+
+    def capture(_req, timeout=None):
+        seen["timeout"] = timeout
+        raise scan.URLError("down")
+    monkeypatch.setattr(scan, "urlopen", capture)
+    monkeypatch.setattr(scan.time, "sleep", lambda *_: None)
+
+    with pytest.raises(scan.URLError):
+        scan.http_get("https://x.invalid", tries=1, deadline=scan.Deadline(None))
+    assert seen["timeout"] == scan.REQUEST_TIMEOUT
+
+    with pytest.raises((scan.URLError, scan.DeadlineExceeded)):
+        scan.http_get("https://x.invalid", tries=1, deadline=scan.Deadline(5))
+    assert seen["timeout"] <= 5
+
+
+def test_a_run_that_times_out_with_nothing_fetched_reports_a_dead_monitor(monkeypatch, tmp_path):
+    """Cron must see red. A timed-out sweep that wrote a green empty file would be the
+    silent failure this monitor exists to prevent."""
+    monkeypatch.setattr(scan.time, "sleep", lambda *_: None)
+
+    def timed_out(*_a, **_kw):
+        raise scan.DeadlineExceeded("run deadline of 1s exceeded")
+    monkeypatch.setattr(scan, "http_get", timed_out)
+    assert scan.main(["--out-dir", str(tmp_path), "--deadline", "1"]) == 1
+
+
+def test_the_deadline_is_on_by_default_so_cron_cannot_forget_it():
+    assert scan.DEFAULT_DEADLINE > 0
+    assert scan.REQUEST_TIMEOUT > 0 and scan.MAX_BACKOFF > 0

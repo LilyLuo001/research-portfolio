@@ -118,3 +118,23 @@ prediction is tested only by the headline γ itself. If G8 licenses the measure 
 signed γ comes back with the opposite sign, that is evidence the channel transmits something
 other than basket exposure — a finding, not a validation failure — and the paper must say so
 rather than reinterpreting the lever after the fact.
+
+---
+
+## Freeze note, 2026-08-28 — the exposure, and where the sign lives
+
+The addendum above moved the primary to a trading outcome but left "abnormal volume / order
+imbalance" as one phrase. It is two outcomes, and they do not take the same exposure. Freeze 1
+registers exactly one, chosen by a data-quality rule resolved before any coefficient exists:
+**refraction/G8_OUTCOME_CHOICE.md**.
+
+The part that belongs in this memo: **the primary exposure is |CR| × |L_tilt^pre|, and signed
+CR × |L| is forbidden for it.** The reasoning that put the lever in absolute value applies to
+the flow as well. Connectivity is a magnitude — how much flow lands on the stock, times price
+impact — so the exposure that ranks it must be a magnitude on both factors. Where the outcome
+carries a direction, the flow's sign belongs in the **outcome**, as sign(CR) × OIB, not
+doubled into the exposure.
+
+`signed CR × |L|` keeps exactly one home: the signed return corroboration, whose sign is
+interpretable only under a timing model. Nothing above changes: G8 still licenses on |L|, and
+licensing in absolute value still does not validate the signed headline.
