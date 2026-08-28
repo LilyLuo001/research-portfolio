@@ -159,9 +159,16 @@ of capital.
 
 Two identification paths, in order of preference:
 1. **Preferred — a per-date distribution indicator.** "Did a distribution go ex"
-   is a flag question, and a flag answers it directly. **Ask the seller whether
-   one is available** (on the daily file or on the distributions/events file)
-   and paste the exact table + field. Optional, not blocking.
+   is a flag question, and a flag answers it directly. **Ask the seller two
+   things, not one**: (a) is such a field available (on the daily file or on the
+   distributions/events file) — paste the exact table + field; and (b) **which
+   date is it keyed to?** We need the **ex-date** — the trading date on which the
+   price becomes ex-distribution. **Declaration, record and payment dates are not
+   substitutes**: they sit on the same distributions record, all look plausible,
+   and keying on one of them drops a clean day while leaving the contaminated
+   ex-day in the sample — worse than not screening, because the reported count
+   then says a screen ran. If only a non-ex date is available, we do not use the
+   field. Optional, not blocking.
 2. **Fallback — compare `RET` with `RETX`**, both already in the item-2 ask.
    Usable, but it infers a flag from two rounded numbers, so it runs with a
    tolerance and an explicit undecidable band rather than a float equality test.

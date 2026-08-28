@@ -79,33 +79,70 @@ FIXED_DURATION_HORIZONS = ("5m", "15m", "30m", "60m")
 # multi-day endpoints, which inherit that first partial session.
 VARIABLE_DURATION_HORIZONS = ("close", "+1d", "+2d", "+5d", "+120d")
 
+# What the stock FE does and does not do for the omitted intercept. The claim is
+# deliberately not "the FE absorbs it" — at any horizon:
+#
+#   absorbed : the STABLE stock-specific component of expected drift. Fixed
+#              duration makes that component a constant within the horizon, and
+#              a stock-level constant is exactly what a stock FE spans.
+#   NOT absorbed, at EVERY horizon : any part of expected drift that varies
+#              across announcement TIMES or across event DATES. Fixed duration
+#              does not make that constant, so "exact absorption" is a stronger
+#              claim than the design supports even at 5m.
+#   NOT absorbed, ADDITIONALLY at close/+1d : variable-duration exposure. The
+#              elapsed time itself differs event to event, so even a perfectly
+#              stable per-unit-time drift enters in different amounts.
+FE_ABSORBED_COMPONENT = "stable_stock_specific_drift"
+FE_RESIDUAL_ALL_HORIZONS = "drift varying across announcement times or event dates"
+FE_RESIDUAL_VARIABLE_DURATION = "variable-duration exposure (announcement→close)"
+
 FE_ABSORPTION_NOTE = (
-    "The omitted intercept is (per-unit-time drift) × (duration). At a "
-    "FIXED-duration horizon that product is a stock-level constant, so the "
-    "stock FE absorbs it exactly. At a VARIABLE-duration horizon it is not "
-    "constant within stock — an announcement at 09:45 and one at 15:45 carry "
-    "different amounts of it into the same CAR^close — so the FE absorbs only "
-    "its mean and the residual remains. Do NOT claim exact absorption there. "
-    "The duration-scaled-alpha robustness (D-T3-20/22) is the registered "
-    "response, and it is the right shape for this: it scales with the same "
-    "duration that breaks the constancy.")
+    "The stock FE absorbs the STABLE STOCK-SPECIFIC component of the omitted "
+    "drift — no more than that. Fixed duration (5m/15m/30m/60m) makes that "
+    "component constant within the horizon, which is what the FE spans; it does "
+    "NOT make expected drift constant across announcement times or event dates, "
+    "so do not write 'exactly absorbed' even there. `close` and `+1d` carry a "
+    "FURTHER exposure: duration itself varies event to event, so even a stable "
+    "per-unit-time drift enters in different amounts. The duration-scaled-alpha "
+    "variant (D-T3-20/22) is ROBUSTNESS ONLY and is the registered response to "
+    "that second exposure — it scales with the same duration that varies.")
 
 
-def fe_absorbs_omitted_intercept(horizon: str) -> bool:
-    """Is the omitted intercept a stock-level constant at this horizon?
+def fe_absorption(horizon: str) -> dict:
+    """What the stock FE absorbs at this horizon, and what is left over.
 
-    True only where elapsed time is fixed by construction. This is narrower than
-    "the FE handles it", and the narrowing is the point: at `close` the answer
-    is no, and the paper must not say otherwise.
+    Returns a structure rather than a boolean on purpose: a bare True at 5m
+    reads as "handled", and it is not — it is "the stable stock-specific part is
+    handled". The residuals are named so they can be written into the paper
+    rather than discovered by a referee.
     """
-    if horizon in FIXED_DURATION_HORIZONS:
-        return True
-    if horizon in VARIABLE_DURATION_HORIZONS:
-        return False
-    raise BenchmarkPolicyError(
-        f"unknown horizon {horizon!r}; classify it as fixed- or "
-        "variable-duration before relying on the FE argument. "
-        + FE_ABSORPTION_NOTE)
+    if horizon not in FIXED_DURATION_HORIZONS + VARIABLE_DURATION_HORIZONS:
+        raise BenchmarkPolicyError(
+            f"unknown horizon {horizon!r}; classify it as fixed- or "
+            "variable-duration before relying on the FE argument. "
+            + FE_ABSORPTION_NOTE)
+    variable = horizon in VARIABLE_DURATION_HORIZONS
+    residuals = [FE_RESIDUAL_ALL_HORIZONS]
+    if variable:
+        residuals.append(FE_RESIDUAL_VARIABLE_DURATION)
+    return {
+        "horizon": horizon,
+        "absorbs": FE_ABSORBED_COMPONENT,
+        "exact": False,                     # never claim exact — see the note
+        "variable_duration_exposure": variable,
+        "residuals": residuals,
+        "note": FE_ABSORPTION_NOTE,
+    }
+
+
+def has_variable_duration_exposure(horizon: str) -> bool:
+    """Does elapsed time itself vary event to event at this horizon?
+
+    This boolean is narrow on purpose: it is true of the duration fact only, and
+    says nothing about whether the FE "handles" the intercept. Use
+    fe_absorption() for that.
+    """
+    return fe_absorption(horizon)["variable_duration_exposure"]
 
 # benchmark -> the horizons at which it is defined AT ALL.
 BENCHMARK_HORIZONS = {
@@ -343,6 +380,46 @@ GAP_EXDIV_RULE = (
 #      carries a tolerance and an explicit ambiguous band.
 EXDIV_PREFERRED_METHOD = "crsp_distribution_indicator"
 EXDIV_FALLBACK_METHOD = "ret_minus_retx"
+
+# Resolving the preferred field is not "find something distribution-shaped". A
+# distributions record carries SEVERAL dates and only one of them is the right
+# one: the screen needs the TRADING DATE ON WHICH THE PRICE GOES EX. Declaration,
+# record and payment dates all sit on the same row and all look plausible — and
+# keying on the wrong one excludes an uncontaminated day while LEAVING the
+# actually-contaminated ex-day in the sample. That is worse than not screening,
+# because the count in the table then says the screen ran.
+EXDATE_SEMANTICS_OK = ("ex_date", "ex_distribution_date", "exdt")
+EXDATE_SEMANTICS_WRONG = {
+    "declaration_date": "when the board announced it — the price is not ex yet.",
+    "record_date": "who is on the register — typically after the ex-date.",
+    "payment_date": "when cash arrives — weeks later, and no price effect.",
+}
+EXDATE_SEMANTICS_REQUIREMENT = (
+    "NEED_HUMAN at the window: confirm the resolved distribution field is keyed "
+    "to the EX-DATE — the trading date on which the price becomes "
+    "ex-distribution — and not to the declaration, record or payment date. "
+    "Verify the semantics, not merely that the field is distribution-related. "
+    "If only a non-ex date is available, do NOT use it: fall back to RET/RETX, "
+    "which is dated by construction on the day the return reflects the "
+    "distribution.")
+
+
+def assert_exdate_semantics(semantics: str) -> None:
+    """The preferred field must be dated ON THE EX-DATE, not merely related to
+    a distribution."""
+    key = (semantics or "").strip().lower()
+    if key in EXDATE_SEMANTICS_OK:
+        return
+    if key in EXDATE_SEMANTICS_WRONG:
+        raise BenchmarkPolicyError(
+            f"distribution field is keyed to the {key} — "
+            f"{EXDATE_SEMANTICS_WRONG[key]} Keying the OpenGap screen on it "
+            "drops a clean day and keeps the contaminated one, while the "
+            "reported count claims a screen ran. " + EXDATE_SEMANTICS_REQUIREMENT)
+    raise BenchmarkPolicyError(
+        f"unrecognised date semantics {semantics!r}; state which date the field "
+        f"is keyed to. Acceptable: {list(EXDATE_SEMANTICS_OK)}. "
+        + EXDATE_SEMANTICS_REQUIREMENT)
 
 # NOT an exact-equality test. CRSP returns are rounded, so `ret == retx` on a
 # float is the wrong question. Anything above this is a distribution; anything
@@ -629,17 +706,35 @@ def _selftest() -> int:
         ok = ok and good
     expect_raises("unknown session", lambda: car_label("premarket"),
                   "three-way split")
-    # --- FE absorption reaches fixed-duration horizons only (D-T3-32) ---
+    # --- what the FE absorbs, and what it leaves (D-T3-32) ---
+    for h in FIXED_DURATION_HORIZONS + ("close", "+1d"):
+        a = fe_absorption(h)
+        good = (a["exact"] is False
+                and a["absorbs"] == FE_ABSORBED_COMPONENT
+                and FE_RESIDUAL_ALL_HORIZONS in a["residuals"])
+        print(f"  {'ok  ' if good else 'FAIL'} {h}: absorbs the stable component, "
+              f"never 'exact'")
+        ok = ok and good
     for h in FIXED_DURATION_HORIZONS:
-        good = fe_absorbs_omitted_intercept(h) is True
-        print(f"  {'ok  ' if good else 'FAIL'} FE absorbs exactly at {h}")
+        good = has_variable_duration_exposure(h) is False
+        print(f"  {'ok  ' if good else 'FAIL'} {h} has no variable-duration exposure")
         ok = ok and good
     for h in ("close", "+1d"):
-        good = fe_absorbs_omitted_intercept(h) is False
-        print(f"  {'ok  ' if good else 'FAIL'} FE does NOT absorb exactly at {h}")
+        good = (has_variable_duration_exposure(h) is True
+                and FE_RESIDUAL_VARIABLE_DURATION in fe_absorption(h)["residuals"])
+        print(f"  {'ok  ' if good else 'FAIL'} {h} carries the FURTHER "
+              "variable-duration exposure")
         ok = ok and good
-    expect_raises("unclassified horizon", lambda: fe_absorbs_omitted_intercept("2h"),
-                  "fixed- or")
+    expect_raises("unclassified horizon", lambda: fe_absorption("2h"), "fixed- or")
+
+    # --- the preferred field must be EX-DATED, not merely distribution-shaped ---
+    expect_ok("ex_date semantics", lambda: assert_exdate_semantics("ex_date"))
+    for bad in EXDATE_SEMANTICS_WRONG:
+        expect_raises(f"{bad} is not a substitute",
+                      lambda bad=bad: assert_exdate_semantics(bad),
+                      "OpenGap screen")
+    expect_raises("unstated semantics", lambda: assert_exdate_semantics("distcd"),
+                  "state which date")
 
     # --- ex-DISTRIBUTION screen: flag preferred, comparison as fallback ---
     for label, kwargs, want_v, want_m in [

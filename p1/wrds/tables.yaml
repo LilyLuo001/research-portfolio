@@ -271,8 +271,15 @@ pulls:
           distribution go ex"), whereas comparing RET with RETX infers it from
           two rounded numbers. NAME NOT ASSERTED: the candidates below are
           guesses to be resolved against the server, and the daily stock file
-          may not carry this at all — the distributions/events file may. If
-          nothing resolves, the RET-vs-RETX fallback is used WITH a tolerance
+          may not carry this at all — the distributions/events file may.
+          VERIFY THE DATE SEMANTICS, not merely that the field is
+          distribution-related: this screen needs the TRADING DATE ON WHICH THE
+          PRICE GOES EX. Declaration, record and payment dates sit on the same
+          distributions record and all look plausible, and keying on one of them
+          drops a clean day while LEAVING the contaminated ex-day in the sample
+          — worse than not screening, because the reported count then claims a
+          screen ran. If only a non-ex date is available, do not use the field.
+          If nothing resolves, the RET-vs-RETX fallback is used WITH a tolerance
           and an explicit undecidable band, and the paper reports how many
           observations rested on each method.'
         candidates:
@@ -360,13 +367,19 @@ pulls:
         - dlstcd
         resolved: null
     asserts:
-      distribution_indicator: 'NEED_HUMAN at the window: ask whether a per-date
-        distribution indicator is available for the stock (on this file or on the
-        distributions/events file), and paste the exact table+field. It is the
-        PREFERRED identification for the OpenGap ex-distribution screen; the
-        RET-vs-RETX comparison is the fallback. Not blocking — the fallback
-        works — but the fallback infers a flag from two rounded numbers, so the
-        share of observations decided each way must be reported.
+      distribution_indicator: 'NEED_HUMAN at the window, TWO questions not one:
+        (a) is a per-date distribution indicator available for the stock (on this
+        file or on the distributions/events file) — paste the exact table+field;
+        (b) WHICH DATE IS IT KEYED TO? The OpenGap screen needs the EX-DATE, the
+        trading date on which the price becomes ex-distribution. Declaration,
+        record and payment dates are NOT substitutes: keying on one of them
+        drops a clean day and keeps the contaminated one, while the reported
+        exclusion count claims a screen ran. Answering (a) without (b) does not
+        resolve this entry. Preferred identification for the screen; the
+        RET-vs-RETX comparison is the fallback and is dated correctly by
+        construction. Not blocking — but the fallback infers a flag from two
+        rounded numbers, so the share of observations decided each way must be
+        reported. Guard: benchmark_policy.assert_exdate_semantics.
 
         '
       price_vs_total_return: 'NEED_HUMAN at the window: confirm whether this

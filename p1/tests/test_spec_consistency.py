@@ -473,21 +473,50 @@ def test_open_gap_screens_ex_distribution_dates_and_counts_them():
     assert "EX-DISTRIBUTION" in out["report"]
 
 
-def test_fe_absorption_is_claimed_only_at_fixed_duration_horizons():
-    """The omitted intercept is drift x DURATION. At `close` the duration
-    depends on where in the session the announcement landed, so it is not a
-    stock-level constant and the FE does not absorb it exactly."""
+def test_fe_absorption_is_never_claimed_exact_at_any_horizon():
+    """Fixed duration makes the STABLE stock-specific component constant within
+    the horizon -- that is what the FE spans. It does not make expected drift
+    constant across announcement times or event dates, so 'exactly absorbed' is
+    a stronger claim than the design supports even at 5m."""
+    bp = _bp()
+    for h in bp.FIXED_DURATION_HORIZONS + ("close", "+1d"):
+        a = bp.fe_absorption(h)
+        assert a["exact"] is False, h
+        assert a["absorbs"] == bp.FE_ABSORBED_COMPONENT
+        assert bp.FE_RESIDUAL_ALL_HORIZONS in a["residuals"], h
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.fe_absorption("2h")
+    assert not hasattr(bp, "fe_absorbs_omitted_intercept"), (
+        "the boolean is gone on purpose: a bare True at 5m reads as 'handled'")
+
+
+def test_close_and_plus1d_carry_a_further_variable_duration_exposure():
+    """A second, separate problem -- not the same one restated."""
     bp = _bp()
     for h in bp.FIXED_DURATION_HORIZONS:
-        assert bp.fe_absorbs_omitted_intercept(h) is True
+        assert bp.has_variable_duration_exposure(h) is False
     for h in ("close", "+1d"):
-        assert bp.fe_absorbs_omitted_intercept(h) is False
-    with pytest.raises(bp.BenchmarkPolicyError):
-        bp.fe_absorbs_omitted_intercept("2h")
-    assert "Do NOT claim exact absorption" in bp.FE_ABSORPTION_NOTE
+        assert bp.has_variable_duration_exposure(h) is True
+        assert bp.FE_RESIDUAL_VARIABLE_DURATION in bp.fe_absorption(h)["residuals"]
     varspec = VARSPEC.read_text()
     assert "D-T3-32" in varspec
-    assert "不得在此声称精确吸收" in varspec
+    assert "不得写成" in varspec and "另有一层暴露" in varspec
+
+
+def test_the_preferred_distribution_field_must_be_ex_dated():
+    """A distributions record carries several dates and only one is right. Keying
+    on declaration/record/payment drops a clean day and keeps the contaminated
+    one -- worse than not screening, because the reported count says it ran."""
+    bp = _bp()
+    bp.assert_exdate_semantics("ex_date")
+    for wrong in ("declaration_date", "record_date", "payment_date"):
+        with pytest.raises(bp.BenchmarkPolicyError) as e:
+            bp.assert_exdate_semantics(wrong)
+        assert "OpenGap screen" in str(e.value)
+    with pytest.raises(bp.BenchmarkPolicyError):          # semantics unstated
+        bp.assert_exdate_semantics("distcd")
+    varspec = VARSPEC.read_text()
+    assert "日期语义" in varspec and "ex-date" in varspec
 
 
 def test_the_omitted_intercept_rests_on_the_stock_fe_not_on_a_magnitude_claim():
@@ -506,3 +535,22 @@ def test_the_omitted_intercept_rests_on_the_stock_fe_not_on_a_magnitude_claim():
             if "数量级" in line and "漂移" in line:
                 assert "删除" in _near(_lines(path), i), (
                     f"{path.name}:{i+1} still leans on the magnitude claim")
+
+
+def test_the_blueprint_carries_the_same_frozen_facts_as_the_variable_spec():
+    """The blueprint silently missed a round of edits once (a script aborted on
+    an earlier assert), so it sat a version behind while every test passed. These
+    are the load-bearing strings; if the spec moves and the blueprint does not,
+    this fails instead of the drift being discovered by whoever implements it."""
+    bp_text = BLUEPRINT.read_text()
+    for needle, why in [
+        ("除分派", "the gap screen is ex-DISTRIBUTION, not ex-dividend"),
+        ("ex-date", "the preferred distribution field must be ex-dated"),
+        ("禁止浮点相等分类", "no float-equality classification in the fallback"),
+        ("无法判定", "the fallback has an undecidable state"),
+        ("稳定的股票特质漂移成分", "the FE absorbs the stable component only"),
+        ("不得写", "no horizon may be called exactly absorbed"),
+        ("仅稳健性", "duration-scaled alpha is robustness only"),
+        ("D-T3-32", "the FE-scope decision is cited"),
+    ]:
+        assert needle in bp_text, f"blueprint is behind the spec: {why}"
