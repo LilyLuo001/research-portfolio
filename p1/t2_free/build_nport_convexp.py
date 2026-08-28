@@ -345,11 +345,21 @@ def parse_nport(cik, filing):
     gen = _find(root, "genInfo")
     series_name = ""
     series_id = ""
+    rep_pd_date = ""
+    rep_pd_end = ""
     if gen is not None:
         sn = _find(gen, "seriesName")
         si = _find(gen, "seriesId")
         series_name = (sn.text or "").strip() if sn is not None else ""
         series_id = (si.text or "").strip() if si is not None else ""
+        # Item A.2. repPdEnd is the END of the reporting period; repPdDate is the
+        # date AS OF WHICH the information is reported, and the holdings below are
+        # that date's positions. Both are kept because they differ for the first
+        # two months of a quarter, and only repPdDate dates the share counts.
+        rd = _find(gen, "repPdDate")
+        re_ = _find(gen, "repPdEnd")
+        rep_pd_date = (rd.text or "").strip() if rd is not None else ""
+        rep_pd_end = (re_.text or "").strip() if re_ is not None else ""
     holdings = []
     for sec in _findall_local(root, "invstOrSec"):
         def g(name):
@@ -387,7 +397,37 @@ def parse_nport(cik, filing):
                          "name": g("name") or g("title"), "shares": shares,
                          "valUSD": val, "asset_cat": asset_cat})
     return {"accession": acc, "filed": filing["filed"], "series_name": series_name,
-            "series_id": series_id, "holdings": holdings}
+            "series_id": series_id, "report_date": rep_pd_date,
+            "rep_pd_end": rep_pd_end, "holdings": holdings}
+
+
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+class MissingAsOfDate(ValueError):
+    """Raised when an N-PORT carries no usable holdings as-of date."""
+
+
+def holdings_asof(parsed):
+    """The date the share counts in `parsed` are AS OF.
+
+    This is genInfo/repPdDate, NOT `filed`. An N-PORT is filed up to 60 days
+    after the period it describes, so `filed` dates the paperwork and repPdDate
+    dates the positions. Every join that touches the share counts — the CRSP
+    CFACSHR corporate-action factor above all — must use this value: joining a
+    March 31 share count to a May 30 split factor does not remove a corporate
+    action, it inserts one, and neither number looks wrong afterwards.
+
+    Refuses rather than falling back to `filed` (meta-rule 4). A filing with no
+    repPdDate is a NEED_HUMAN for that fund, not a fund silently dated wrong.
+    """
+    d = (parsed.get("report_date") or "").strip()
+    if _ISO_DATE.match(d):
+        return d
+    raise MissingAsOfDate(
+        f"accession {parsed.get('accession')} has no usable genInfo/repPdDate "
+        f"(got {d!r}). Do NOT substitute filed={parsed.get('filed')!r}: it dates "
+        "the filing, not the holdings.")
 
 
 def _best_nport_in_cik(cik, fund_name, eff_date):
@@ -604,6 +644,13 @@ def _cell_rows(agg, tcik, so_lookup):
                 "n_funds": len(a["funds"]),
                 "source_accessions": ";".join(sorted(a["accs"]))})
 
+        asof = {d for d in (a.get("asof") or set()) if d}
+        if not asof:
+            # Undated share counts cannot be corporate-action adjusted, and the
+            # filing date is not a substitute (see holdings_asof).
+            drop("no_holdings_asof")
+            continue
+
         stock_cik = tcik.get(ticker.upper()) if ticker else None
         if not stock_cik:
             log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
@@ -630,7 +677,25 @@ def _cell_rows(agg, tcik, so_lookup):
                      "permno": "", "wave_id": wid, "effective_date": eff,
                      "conv_exp": conv_exp, "n_funds": len(a["funds"]),
                      "mcap_decile": None, "_mcap": mcap,
-                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
+                     # NULL, never aliased to conv_exp (v2.1, plan §6.1.1).
+                     # This field means TOTAL pre-conversion ETF ownership and
+                     # needs a 13F/ETF-holdings join that has no verified source
+                     # yet. It used to be filled with conv_exp — the converting
+                     # funds' ownership only — under a name that reads like the
+                     # GNZ control variable. Copying one into the other looks
+                     # like data and would silently misspecify any regression
+                     # that used it as an ownership control. holdings_pipeline.py
+                     # (the WRDS twin) already writes None here; this is the free
+                     # path being brought into line with it.
+                     "pre_etf_ownership": None,
+                     # The date the share counts are AS OF — the only correct
+                     # join key for a CFACSHR-style factor (v2.1d). min/max are
+                     # both emitted because a cell can pool two funds whose last
+                     # pre-conversion N-PORTs are different months; when they
+                     # differ, a single-date factor join is WRONG for one of the
+                     # funds and the shares must be adjusted before aggregation.
+                     "holdings_asof_min": min(asof),
+                     "holdings_asof_max": max(asof),
                      "shares_held": a["shares_held"],
                      "shares_outstanding": shares_out,
                      "val_usd": a["valusd"],
@@ -672,11 +737,19 @@ def main():
             log.warning("NO_HOLDINGS fund=%r url_cik=%s why=%s", fund, url_cik, why)
             nh_funds.append({**m, "reason": why or "no_holdings"})
             continue
-        log.info("FUND_OK %r cik=%s acc=%s holdings=%d (%s)", fund, cik,
-                 parsed["accession"], len(parsed["holdings"]), why)
+        try:
+            asof = holdings_asof(parsed)
+        except MissingAsOfDate as e:
+            # Refuse the fund rather than date its shares by the filing date.
+            log.warning("NO_ASOF fund=%r acc=%s: %s", fund, parsed["accession"], e)
+            nh_funds.append({**m, "reason": "no_repPdDate"})
+            continue
+        log.info("FUND_OK %r cik=%s acc=%s asof=%s holdings=%d (%s)", fund, cik,
+                 parsed["accession"], asof, len(parsed["holdings"]), why)
         fund_holdings.append({"wave_id": m["wave_id"], "effective_date": eff,
                               "fund_name": fund, "accession": parsed["accession"],
-                              "why": why, "holdings": parsed["holdings"]})
+                              "holdings_asof": asof, "why": why,
+                              "holdings": parsed["holdings"]})
 
     # ---- Step 2: resolve CUSIP -> ticker for holdings missing one --------- #
     need_figi = sorted({h["cusip"] for fh in fund_holdings for h in fh["holdings"]
@@ -712,7 +785,9 @@ def main():
                                      "effective_date": fh["effective_date"],
                                      "ticker": ticker, "name": h["name"],
                                      "shares_held": 0.0, "valusd": 0.0,
-                                     "funds": set(), "accs": set()})
+                                     "funds": set(), "accs": set(),
+                                     "asof": set()})
+            a["asof"].add(fh["holdings_asof"])
             a["shares_held"] += h["shares"]
             a["valusd"] += h.get("valUSD", 0.0)
             a["funds"].add(fh["fund_name"])
@@ -725,49 +800,15 @@ def main():
     # ---- Step 4: ticker -> stock CIK -> shares outstanding ---------------- #
     # cache shares_out per (stock_cik, effective_date) within the run
     so_cache = {}
-    for (cusip, wid), a in sorted(agg.items()):
-        ticker = a["ticker"]
-        eff = a["effective_date"]
-        stock_cik = tcik.get(ticker.upper()) if ticker else None
-        if not stock_cik:
-            log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
-            nh_stocks.append(_dropped(
-                a, cusip, ticker, wid, eff,
-                "no_ticker" if not ticker else "ticker_not_in_sec_map"))
-            continue
-        ck = (stock_cik, eff)
-        if ck not in so_cache:
-            so_cache[ck] = shares_outstanding(stock_cik, eff)
-        shares_out, so_end = so_cache[ck]
-        if not shares_out or shares_out <= 0:
-            log.warning("NO_SHARES_OUT cusip=%s ticker=%s cik=%s wave=%s",
-                        cusip, ticker, stock_cik, wid)
-            nh_stocks.append(_dropped(a, cusip, ticker, wid, eff,
-                                      "no_xbrl_shares_outstanding"))
-            continue
-        conv_exp = a["shares_held"] / shares_out
-        if conv_exp > 1.0:
-            log.info("CONVEXP_GT1 cusip=%s ticker=%s wave=%s exp=%.3f "
-                     "(shares_held=%.0f > shares_out=%.0f as of %s) -> NEED_HUMAN",
-                     cusip, ticker, wid, conv_exp, a["shares_held"], shares_out, so_end)
-            nh_stocks.append(_dropped(
-                a, cusip, ticker, wid, eff,
-                f"conv_exp>1 ({conv_exp:.3f}); shares_out date {so_end}",
-                shares_out_bad=shares_out, shares_out_date=so_end))
-            continue
-        # implied price from the fund's own N-PORT valuation (valUSD/shares) —
-        # a real market price near the report date, no external feed needed.
-        implied_px = (a["valusd"] / a["shares_held"]) if a["shares_held"] else None
-        mcap = implied_px * shares_out if implied_px else None
-        rows.append({"cusip": cusip, "ticker": ticker, "stock_cik": stock_cik,
-                     "permno": "", "wave_id": wid, "effective_date": eff,
-                     "conv_exp": conv_exp, "n_funds": len(a["funds"]),
-                     "mcap_decile": None, "_mcap": mcap,
-                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
-                     "shares_held": a["shares_held"],
-                     "valusd": a["valusd"],
-                     "shares_outstanding": shares_out,
-                     "source_accessions": ";".join(sorted(a["accs"]))})
+    # NOTE: an inline copy of the per-cell loop used to sit here, appending to
+    # `rows` / `nh_stocks`. It was dead in the worst way: the tuple-assignment
+    # `rows, nh_stocks = _cell_rows(...)` below makes both names function-local
+    # for the WHOLE of main(), so those earlier appends raised UnboundLocalError
+    # on the first aggregated cell — after every EDGAR fetch had already been
+    # paid for. No test caught it because no test calls main() (it needs the
+    # network); the tests exercise _cell_rows directly. Removed 2026-08-27, with
+    # an AST scope lint (p1/tests/test_no_use_before_assignment.py) so the class
+    # of bug cannot come back silently.
 
     def so_lookup(stock_cik, eff):
         ck = (stock_cik, eff)

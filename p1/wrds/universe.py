@@ -20,6 +20,7 @@ import csv
 import datetime as dt
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -39,6 +40,12 @@ POST_TRADING_DAYS = 120
 # 252 trading days ~ 365 calendar days; pad generously, daily data is cheap to
 # over-request and expensive to re-request after the account is released.
 TRADING_TO_CALENDAR = 1.55
+# Fundamentals need a longer runway than prices: the SUE time-series branch takes
+# an 8-quarter lookback, and annual book equity for the control match (§107) is
+# stamped at a fiscal year end that can sit almost two years before an event in
+# the worst alignment. Three years back from the earliest anchor covers both
+# without a per-event calculation, and quarterly/annual files are tiny.
+FUNDAMENTAL_LOOKBACK_YEARS = 3
 
 
 def _read_convexp_cusips() -> tuple[set[str], dict]:
@@ -69,13 +76,37 @@ def _wave_dates() -> list[str]:
                        if r.get("effective_date")})
 
 
+_ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _announce_dates() -> list[str]:
+    """Announcement dates from events_merged.csv.
+
+    Load-bearing, and the reason this function exists: the event study anchors
+    t=0 on the ANNOUNCEMENT date, not the effective date (plan §6 threat T2 —
+    announcement-to-effective is 2-6 months and arbitrageurs can position in
+    between; T5 blueprint §5 fixes t=0 = announcement). Scoping the daily pull
+    from the earliest EFFECTIVE date silently truncates the market-model
+    estimation window for the earliest events: no error is raised, the window is
+    just shorter and beta quietly differs.
+    """
+    with open(EVENTS, newline="") as f:
+        return sorted({r["announce_date"] for r in csv.DictReader(f)
+                       if _ISO.match(str(r.get("announce_date", "")))})
+
+
 def build_scope() -> dict:
     computed, stats = _read_convexp_cusips()
     dropped = _read_dropped_cusips()
     dates = _wave_dates()
+    announces = _announce_dates()
 
-    lo = dt.date.fromisoformat(dates[0])
-    hi = dt.date.fromisoformat(dates[-1])
+    # The pull must span BOTH anchors: the estimation window runs back from the
+    # earliest announcement (t=0), the post window runs forward from the latest
+    # effective date (the conversion itself). Taking the min/max across the two
+    # is the only choice that cannot truncate either end.
+    lo = min(dt.date.fromisoformat(dates[0]), dt.date.fromisoformat(announces[0]))
+    hi = max(dt.date.fromisoformat(dates[-1]), dt.date.fromisoformat(announces[-1]))
     pre = dt.timedelta(days=int(PRE_TRADING_DAYS * TRADING_TO_CALENDAR))
     post = dt.timedelta(days=int(POST_TRADING_DAYS * TRADING_TO_CALENDAR))
     today = dt.date.today()
@@ -99,9 +130,13 @@ def build_scope() -> dict:
             "n_waves": len(dates),
             "first_effective_date": dates[0],
             "last_effective_date": dates[-1],
+            "first_announce_date": announces[0],
+            "last_announce_date": announces[-1],
             "future_dated_waves": [d for d in dates if dt.date.fromisoformat(d) > today],
         },
         "windows": {
+            "anchor": ("announcement date (t=0, plan §6 threat T2) for the lower bound; "
+                       "effective date for the upper bound — whichever is more extreme"),
             "pre_trading_days": PRE_TRADING_DAYS,
             "post_trading_days": POST_TRADING_DAYS,
             "daily_start": (lo - pre).isoformat(),
@@ -109,12 +144,17 @@ def build_scope() -> dict:
             "daily_end_capped_at_today": daily_end == today and (hi + post) > today,
             "monthly_start": (lo - pre).isoformat(),
             "monthly_end": daily_end.isoformat(),
+            "fundamentals_start": (lo - pre).replace(
+                year=(lo - pre).year - FUNDAMENTAL_LOOKBACK_YEARS).isoformat(),
+            "fundamentals_end": daily_end.isoformat(),
+            "fundamentals_lookback_years": FUNDAMENTAL_LOOKBACK_YEARS,
         },
         "convexp_stats": stats,
         "sources": {
             "conv_exposure_free.parquet": str(CONVEXP.relative_to(ROOT)),
             "NEED_HUMAN_stocks.csv": str(DROPPED.relative_to(ROOT)),
             "waves_members.csv": str(MEMBERS.relative_to(ROOT)),
+            "events_merged.csv": str(EVENTS.relative_to(ROOT)),
         },
     }
 
@@ -127,7 +167,9 @@ def format_scope(s: dict) -> str:
          f"  of which dropped (no denom) : {u['cusips_dropped_for_missing_denominator']:,}",
          "",
          f"waves                         : {w['n_waves']} "
-         f"({w['first_effective_date']} .. {w['last_effective_date']})"]
+         f"({w['first_effective_date']} .. {w['last_effective_date']})",
+         f"announcements (t=0)           : {w['first_announce_date']} .. "
+         f"{w['last_announce_date']}"]
     if w["future_dated_waves"]:
         L.append(f"  future-dated (no post data yet): {len(w['future_dated_waves'])} "
                  f"-> {', '.join(w['future_dated_waves'])}")
@@ -135,8 +177,12 @@ def format_scope(s: dict) -> str:
           f"daily  (dsf) date range       : {win['daily_start']} .. {win['daily_end']}"
           + ("  [capped at today]" if win["daily_end_capped_at_today"] else ""),
           f"monthly (msf) date range      : {win['monthly_start']} .. {win['monthly_end']}",
+          f"fundamentals (comp) range     : {win['fundamentals_start']} .. "
+          f"{win['fundamentals_end']}  "
+          f"[{win['fundamentals_lookback_years']}y extra lookback]",
           f"windows                       : -{win['pre_trading_days']} / "
-          f"+{win['post_trading_days']} trading days around each effective date",
+          f"+{win['post_trading_days']} trading days, anchored on the ANNOUNCEMENT "
+          f"date at the lower bound",
           "",
           "The daily pull is the big one. Everything else is small. Pull all five in",
           "one sitting, land raw immutable, release the account — see",
@@ -155,7 +201,7 @@ def main() -> None:
         SCOPE.write_text(json.dumps(scope, indent=2) + "\n")
         sys.path.insert(0, str(ROOT / "ops" / "runner"))
         from lineage import write_lineage
-        write_lineage(SCOPE, [CONVEXP, DROPPED, MEMBERS])
+        write_lineage(SCOPE, [CONVEXP, DROPPED, MEMBERS, EVENTS])
         print(f"\nwrote {SCOPE.relative_to(ROOT)} + lineage")
 
 

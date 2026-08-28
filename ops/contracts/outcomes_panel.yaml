@@ -28,3 +28,9 @@ columns:
   treated_post: {min: 0, max: 1}    # 1 if this quarter is after effective_date
   # ---- controls the plan names as forced (P1_修订补丁 §修订3) ----
   russell_change: {min: 0, max: 1}  # stock changed Russell status this quarter
+  # ---- spine-two outcome variables (p1/pipeline/outcomes_spine2.py) ----------
+  # builder: outcomes_spine2.build_spine2; §7 口径 — no literature package needed
+  permanent: {}        # CAR(+120) — persistent component of announcement return
+  reversal: {}         # same-direction-decaying part of CAR(+5) − CAR(+120); §7
+  var_ratio_5_1: {}    # Var(5-day) / (5 × Var(1-day)) — Jegadeesh reversal test
+  event_type: {}       # 'own' or 'peer' announcement; both run separately (§7)

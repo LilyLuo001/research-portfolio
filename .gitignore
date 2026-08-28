@@ -75,7 +75,7 @@ dax/capability_panel/*private_panel*.parquet
 # one connected session's machine-read inventory — both are box artifacts, not
 # source. p1/wrds/pull_scope.json IS tracked: it is derived offline from
 # committed files and is what you hand to whoever books the account.
-p1/wrds/raw/
+p1/wrds/raw/*
 p1/wrds/discovered_schema.json
 
 # IPUMS-CPS person-level panels stay box-local under the same rule as the

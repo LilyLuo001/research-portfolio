@@ -29,6 +29,20 @@ EVENTS = ROOT / "p1" / "events_merged.csv"
 WAVES = HERE / "waves.csv"
 MEMBERS = HERE / "waves_members.csv"
 ANCHOR = "2021-06-11"  # DFA six-fund conversion — anchor wave
+
+
+def _frozen_wave_ids():
+    """(effective_date -> wave_id) already committed, so ids never renumber.
+
+    Reads the existing waves.csv. Absent (a from-scratch build) returns {} and
+    numbering falls back to plain date order.
+    """
+    if not WAVES.exists():
+        return {}
+    with open(WAVES, newline="") as f:
+        rows = list(csv.DictReader(f))
+    return {r["effective_date"]: r["wave_id"]
+            for r in rows if r.get("effective_date") and r.get("wave_id")}
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 LOGFILE = HERE / "build_waves.log"
@@ -84,9 +98,40 @@ def main():
         waves.setdefault(r["effective_date"], []).append(r)
     log.info("%d distinct waves", len(waves))
 
-    # deterministic wave_id: W<seq> ordered by date; keep date in the row too
+    # wave_id assignment is APPEND-ONLY, and that is load-bearing.
+    #
+    # It used to be a plain rank over sorted dates. That is fine exactly once:
+    # the moment a new event with an earlier date is added, every wave after it
+    # shifts by one, and every artifact already keyed on wave_id — above all
+    # p1/conv_exposure_free.parquet, which carries wave_id per cell — is
+    # silently re-pointed at the wrong wave. Nothing raises. On 2026-08-27,
+    # releasing the owner-gate pool added 18 waves and would have moved 36
+    # existing ids.
+    #
+    # So: any (effective_date -> wave_id) binding already committed in waves.csv
+    # is FROZEN and reused. Genuinely new dates get ids after the current max,
+    # in date order. Rebuilding from scratch (no waves.csv) reproduces the
+    # original numbering, so this is not a one-way door.
     ordered = sorted(waves)
-    wid = {d: "W{:03d}".format(i + 1) for i, d in enumerate(ordered)}
+    frozen = _frozen_wave_ids()
+    wid = {d: frozen[d] for d in ordered if d in frozen}
+    used = {int(v[1:]) for v in wid.values()}
+    nxt = max(used) + 1 if used else 1
+    for d in ordered:
+        if d not in wid:
+            while nxt in used:
+                nxt += 1
+            wid[d] = "W{:03d}".format(nxt)
+            used.add(nxt)
+    new_ids = [d for d in ordered if d not in frozen]
+    if frozen:
+        log.info("wave ids: %d reused from waves.csv, %d newly assigned",
+                 len(ordered) - len(new_ids), len(new_ids))
+        dropped = sorted(set(frozen) - set(ordered))
+        if dropped:
+            log.warning("%d previously-committed wave date(s) are no longer in "
+                        "events_merged.csv: %s — their ids are retired, not reused",
+                        len(dropped), ", ".join(dropped))
     if ANCHOR not in waves:
         log.warning("ANCHOR date %s not present as a wave — check T1 coverage",
                     ANCHOR)

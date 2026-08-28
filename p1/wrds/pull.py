@@ -39,7 +39,15 @@ sys.path.insert(0, str(ROOT / "ops" / "runner"))
 from schema import DISCOVERED, Inventory, Resolver, SchemaRefusal, format_status  # noqa: E402
 
 CUSIP_OK = re.compile(r"^[A-Z0-9]{6,9}$")
-PULL_ORDER = ["mf_holdings", "stock_names", "msf", "dsf", "taq_iid", "ibes"]
+TICKER_OK = re.compile(r"^[A-Z0-9.\-]{1,10}$")
+# Order is load-bearing, and every dependency below is enforced by a refusal in
+# the query builder rather than by convention:
+#   stock_names  -> permnos + tickers for msf/dsf/taq_iid, and fundno matching
+#   ccm_link     -> gvkeys for compustat
+# Anything unscoped here is not "a bit bigger", it is the whole CRSP/Compustat
+# universe: comp.funda alone is every North American company since 1950.
+PULL_ORDER = ["stock_names", "mf_holdings", "msf", "dsf", "taq_iid", "ccm_link",
+              "compustat", "ibes"]
 
 
 # --------------------------------------------------------------------------- #
@@ -167,6 +175,116 @@ def _cusip_list(cusips) -> str:
     return ",".join(f"'{c}'" for c in clean)
 
 
+def _landed(part_file: str, need: str) -> "object":
+    """Read an already-landed raw parquet, or refuse with the command to run.
+
+    Pull order is not a convention here, it is a scoping dependency: the universe
+    is endogenous (whatever the converting funds held), so nothing downstream can
+    be bounded until the identifier pulls have actually come back.
+    """
+    import pandas as pd
+    src = RAW / part_file
+    if not src.exists():
+        try:
+            shown = src.relative_to(ROOT)
+        except ValueError:          # RAW redirected (tests) — show the full path
+            shown = src
+        raise SchemaRefusal(
+            f"PULL ORDER: {need}\n"
+            f"  missing: {shown}\n"
+            f"  run the pull that produces it first, then re-run this one.\n"
+            f"  (Unscoped, this query would fetch the whole server-side table.)")
+    return pd.read_parquet(src)
+
+
+def _landed_tickers(resolver: Resolver) -> list[str]:
+    """Trading symbols for our universe, from the landed stock_names pull.
+
+    TAQ-IID is keyed on the trading SYMBOL, not permno, so this is the only way
+    to bound the spread pull. Symbols are reused across time and across issuers,
+    so this over-covers; the date filter and a post-hoc permno join do the rest.
+    """
+    df = _landed("stock_names__stocknames.parquet",
+                 "taq_iid is symbol-keyed and needs stock_names' ticker column.")
+    tcol = resolver.spec["pulls"]["stock_names"]["columns"]["ticker"]["resolved"]
+    if not tcol or tcol not in df.columns:
+        raise SchemaRefusal(
+            "stock_names landed without a resolved `ticker` column, so taq_iid "
+            "cannot be scoped. Resolve stock_names.ticker and re-pull stock_names "
+            "(--force), or skip taq_iid — do NOT pull it unscoped.")
+    out = sorted({str(v).strip().upper() for v in df[tcol].dropna().unique()
+                  if TICKER_OK.match(str(v).strip().upper())})
+    if not out:
+        raise SchemaRefusal("stock_names landed but yielded ZERO usable tickers.")
+    return out
+
+
+def _landed_gvkeys(resolver: Resolver) -> list[str]:
+    """Compustat gvkeys for our permnos, from the landed ccm_link pull.
+
+    Deliberately does NOT apply the linktype/linkprim filter: that filter belongs
+    to the merge, where a wrong code silently duplicates firm-quarters, and it is
+    flagged NEED_HUMAN on the ccm_link pull. Here we only want a superset to
+    bound the fundamentals pull, so a loose match is the safe direction.
+    """
+    df = _landed("ccm_link__ccm_link.parquet",
+                 "compustat must be scoped to our gvkeys, which come from ccm_link.")
+    gcol = resolver.spec["pulls"]["ccm_link"]["columns"]["gvkey"]["resolved"]
+    pcol = resolver.spec["pulls"]["ccm_link"]["columns"]["link_permno"]["resolved"]
+    ours = set(_landed_permnos(resolver))
+    hit = df[df[pcol].astype("Int64").isin(ours)]
+    keys = sorted({str(v).strip() for v in hit[gcol].dropna().unique() if str(v).strip()})
+    if not keys:
+        raise SchemaRefusal(
+            "ccm_link landed but matched ZERO of our permnos. Check the permno "
+            "column (CCM carries lpermno and upermno) before pulling Compustat.")
+    return keys
+
+
+def _landed_fundnos(resolver: Resolver) -> list[int]:
+    """CRSP fund numbers for the CONVERTING funds, matched by name offline.
+
+    crsp.holdings is every fund's every position every quarter. Scoping it by our
+    STOCK universe would still return every fund that happens to hold those
+    stocks, which is most of the industry — the scope that matters is the ~237
+    converting funds. Matching is on normalised fund name because
+    events_merged.csv carries a real mutual-fund ticker on almost none of its
+    rows (8 distinct tickers across 131 events).
+
+    Deliberately loose: a false positive costs a few extra rows, a false negative
+    silently loses a treated fund. The match set is written alongside the pull so
+    it can be audited rather than trusted.
+    """
+    import csv as _csv
+    import re as _re
+    df = _landed("mf_holdings__fund_header.parquet",
+                 "crsp.holdings must be scoped to the converting funds, whose "
+                 "fundnos come from the fund_header pull.")
+    cfg = resolver.spec["pulls"]["mf_holdings"]["columns"]
+    idcol, namecol = cfg["fund_id"]["resolved"], cfg["fund_name"]["resolved"]
+
+    def norm(s):
+        s = _re.sub(r"[^a-z0-9 ]", " ", str(s).lower())
+        s = _re.sub(r"\b(the|fund|funds|portfolio|inc|lp|llc|ltd|co|trust|series|"
+                    r"class|shares?|etf|of|company)\b", " ", s)
+        return _re.sub(r"\s+", " ", s).strip()
+
+    with open(ROOT / "p1" / "events_merged.csv", newline="") as f:
+        wanted = {norm(r["fund_name"]) for r in _csv.DictReader(f) if r.get("fund_name")}
+    wanted.discard("")
+    hit = df[df[namecol].map(lambda v: norm(v) in wanted)]
+    nos = sorted({int(v) for v in hit[idcol].dropna().unique()})
+    if not nos:
+        raise SchemaRefusal(
+            f"fund_header landed ({len(df):,} rows) but NONE of the {len(wanted)} "
+            "converting fund names matched. Do not fall back to an unscoped "
+            "holdings pull — inspect the name column first.")
+    (RAW / "mf_holdings__matched_fundnos.json").write_text(
+        json.dumps({"n_wanted_names": len(wanted), "n_matched_fundnos": len(nos),
+                    "fundnos": nos}, indent=2) + "\n")
+    return nos
+
+
 def _landed_permnos(resolver: Resolver) -> list[int]:
     """Our permno universe, from the ALREADY-LANDED stock_names pull.
 
@@ -220,6 +338,7 @@ def build_queries(pull: str, resolver: Resolver, scope: dict) -> dict[str, str]:
         # match on the first 8 of the 9-char CUSIPs the N-PORT path carries
         return {"stocknames": (
             f"select {R.column(pull,'security_id',of_table=t)}, {c}, "
+            f"{R.column(pull,'ticker',of_table=t)}, "
             f"{R.column(pull,'name_start',of_table=t)}, "
             f"{R.column(pull,'name_end',of_table=t)} from {t} "
             f"where substr({c}, 1, 8) in ({_cusip_list(_universe_cusips())})")}
@@ -231,6 +350,7 @@ def build_queries(pull: str, resolver: Resolver, scope: dict) -> dict[str, str]:
         return {"msf": (
             f"select {sid}, {d}, "
             f"{R.column(pull,'price',of_table=t)}, "
+            f"{R.column(pull,'ret',of_table=t)}, "
             f"{R.column(pull,'shares_out',of_table=t)} from {t} "
             f"where {d} between date '{win['monthly_start']}' "
             f"and date '{win['monthly_end']}' "
@@ -241,55 +361,151 @@ def build_queries(pull: str, resolver: Resolver, scope: dict) -> dict[str, str]:
         d = R.column(pull, "date", of_table=t)
         sid = R.column(pull, "security_id", of_table=t)
         idx = R.table(pull, "daily_index")
+        dl = R.table(pull, "delisting_daily")
+        permnos = _int_list(_landed_permnos(R))
+        dld = R.column(pull, "delist_date", of_table=dl)
         return {
+            # bid/ask ride along at zero marginal cost and decide the spread
+            # ladder: if they are populated, spine four's quoted spread needs no
+            # external vendor at all (tables.yaml taq_iid.spread_ladder).
             "dsf": (f"select {sid}, {d}, "
                     f"{R.column(pull,'ret',of_table=t)}, "
                     f"{R.column(pull,'price',of_table=t)}, "
                     f"{R.column(pull,'volume',of_table=t)}, "
-                    f"{R.column(pull,'open_price',of_table=t)} from {t} "
+                    f"{R.column(pull,'open_price',of_table=t)}, "
+                    f"{R.column(pull,'bid',of_table=t)}, "
+                    f"{R.column(pull,'ask',of_table=t)}, "
+                    f"{R.column(pull,'bid_low',of_table=t)}, "
+                    f"{R.column(pull,'ask_high',of_table=t)} from {t} "
                     f"where {d} between date '{win['daily_start']}' "
                     f"and date '{win['daily_end']}' "
-                    f"and {sid} in ({_int_list(_landed_permnos(R))})"),
+                    f"and {sid} in ({permnos})"),
             "dsi": (f"select {R.column(pull,'date',of_table=idx)}, "
                     f"{R.column(pull,'mkt_ret',of_table=idx)} from {idx} "
                     f"where {R.column(pull,'date',of_table=idx)} between "
                     f"date '{win['daily_start']}' and date '{win['daily_end']}'"),
+            # a delisting inside [0,+120] truncates the CAR path. Omitting this
+            # does not raise, it just biases spine two — the main evidence.
+            "dsedelist": (
+                f"select {R.column(pull,'security_id',of_table=dl)}, {dld}, "
+                f"{R.column(pull,'delist_ret',of_table=dl)}, "
+                f"{R.column(pull,'delist_code',of_table=dl)} from {dl} "
+                f"where {dld} between date '{win['daily_start']}' "
+                f"and date '{win['daily_end']}' "
+                f"and {R.column(pull,'security_id',of_table=dl)} in ({permnos})"),
         }
 
     if pull == "mf_holdings":
         t = R.table(pull, "holdings")
         h = R.table(pull, "fund_header")
+        pm = R.table(pull, "portno_map")
+        rd = R.column(pull, "report_date", of_table=t)
+        # holdings are used for PRE-conversion exposure only (plan §5: 强度用转换前
+        # 最后一期持仓, fixed, never revised) — so the window ends at the last
+        # effective date and starts a year before the first announcement.
+        hold_lo = win["daily_start"]
+        hold_hi = scope["waves"]["last_effective_date"]
         return {
             "fund_header": (f"select {R.column(pull,'fund_id',of_table=h)}, "
+                            f"{R.column(pull,'fund_name',of_table=h)}, "
                             f"{R.column(pull,'fund_ticker',of_table=h)} from {h}"),
-            "holdings": (f"select {R.column(pull,'fund_id',of_table=t)}, "
-                         f"{R.column(pull,'report_date',of_table=t)}, "
+            # small reference crosswalk; `select *` is deliberate — we want every
+            # column, and the TABLE name still goes through the resolver gate
+            "portno_map": f"select * from {pm}",
+            "holdings": (f"select {R.column(pull,'fund_id',of_table=t)}, {rd}, "
                          f"{R.column(pull,'security_id',of_table=t)}, "
                          f"{R.column(pull,'shares_held',of_table=t)} from {t} "
-                         f"where {R.column(pull,'report_date',of_table=t)} <= "
-                         f"date '{scope['waves']['last_effective_date']}'"),
+                         f"where {rd} between date '{hold_lo}' and date '{hold_hi}' "
+                         f"and {R.column(pull,'fund_id',of_table=t)} in "
+                         f"({_int_list(_landed_fundnos(R))})"),
         }
 
     if pull == "taq_iid":
         t = R.table(pull, "intraday_indicators")
         d = R.column(pull, "date", of_table=t)
+        sid = R.column(pull, "security_id", of_table=t)
+        # This product is symbol-keyed on some vintages and permno-keyed on
+        # others; scope by whichever one discovery actually resolved. Unscoped it
+        # is every listed US name every day — the pull that eats the window.
+        if sid.lower() in ("permno", "lpermno"):
+            where_id = f"{sid} in ({_int_list(_landed_permnos(R))})"
+        else:
+            syms = ",".join(f"'{s}'" for s in _landed_tickers(R))
+            where_id = f"upper({sid}) in ({syms})"
         return {"taq_iid": (
-            f"select {R.column(pull,'security_id',of_table=t)}, {d}, "
+            f"select {sid}, {d}, "
             f"{R.column(pull,'eff_spread',of_table=t)}, "
             f"{R.column(pull,'price_impact',of_table=t)} from {t} "
             f"where {d} between date '{win['daily_start']}' "
-            f"and date '{win['daily_end']}'")}
+            f"and date '{win['daily_end']}' and {where_id}")}
+
+    if pull == "ccm_link":
+        t = R.table(pull, "ccm_link")
+        lp = R.column(pull, "link_permno", of_table=t)
+        # No linktype/linkprim filter here on purpose: that filter belongs to the
+        # merge (tables.yaml ccm_link.link_filter is NEED_HUMAN), and applying it
+        # at pull time would discard the rows needed to audit the choice.
+        return {"ccm_link": (
+            f"select {R.column(pull,'gvkey',of_table=t)}, {lp}, "
+            f"{R.column(pull,'link_start',of_table=t)}, "
+            f"{R.column(pull,'link_end',of_table=t)}, "
+            f"{R.column(pull,'link_type',of_table=t)}, "
+            f"{R.column(pull,'link_prim',of_table=t)} from {t} "
+            f"where {lp} in ({_int_list(_landed_permnos(R))})")}
+
+    if pull == "compustat":
+        q, a = R.table(pull, "fundq"), R.table(pull, "funda")
+        gv = ",".join(f"'{g}'" for g in _landed_gvkeys(R))
+        dq = R.column(pull, "datadate", of_table=q)
+        da = R.column(pull, "datadate", of_table=a)
+        lo, hi = win["fundamentals_start"], win["fundamentals_end"]
+        return {
+            "fundq": (f"select {R.column(pull,'gvkey',of_table=q)}, {dq}, "
+                      f"{R.column(pull,'rdq',of_table=q)}, "
+                      f"{R.column(pull,'eps_q',of_table=q)} from {q} "
+                      f"where {dq} between date '{lo}' and date '{hi}' "
+                      f"and {R.column(pull,'gvkey',of_table=q)} in ({gv})"),
+            # annual is for the CONTROL MATCH (§107 book-to-market), not for DGTW
+            "funda": (f"select {R.column(pull,'gvkey',of_table=a)}, {da}, "
+                      f"{R.column(pull,'book_equity',of_table=a)}, "
+                      f"{R.column(pull,'shares_annual',of_table=a)}, "
+                      f"{R.column(pull,'price_fiscal',of_table=a)} from {a} "
+                      f"where {da} between date '{lo}' and date '{hi}' "
+                      f"and {R.column(pull,'gvkey',of_table=a)} in ({gv})"),
+        }
 
     if pull == "ibes":
         s, a = R.table(pull, "summary"), R.table(pull, "actuals")
+        i = R.table(pull, "identifiers")
+        cus = _cusip_list({c[:8] for c in _universe_cusips()})
+        lo, hi = win["fundamentals_start"], win["fundamentals_end"]
+        sp = R.column(pull, "stat_period", of_table=s)
+        ad = R.column(pull, "anndate", of_table=a)
+        # Both IBES files carry cusip, so neither needs idsum to be landed first —
+        # idsum is pulled for the MAPPING HISTORY, which a point-in-time cusip on
+        # a statsum row is not.
         return {
+            # `select *` is deliberate: idsum is the mapping HISTORY and every
+            # column of it is wanted. The table name still goes through the gate.
+            "identifiers": (f"select * from {i} where substr("
+                            f"{R.column(pull,'cusip',of_table=i)}, 1, 8) in ({cus})"),
             "summary": (f"select {R.column(pull,'security_id',of_table=s)}, "
+                        f"{R.column(pull,'cusip',of_table=s)}, {sp}, "
+                        f"{R.column(pull,'fp_end',of_table=s)}, "
+                        f"{R.column(pull,'fp_index',of_table=s)}, "
                         f"{R.column(pull,'consensus',of_table=s)}, "
                         f"{R.column(pull,'dispersion',of_table=s)}, "
-                        f"{R.column(pull,'n_analysts',of_table=s)} from {s}"),
+                        f"{R.column(pull,'n_analysts',of_table=s)} from {s} "
+                        f"where {sp} between date '{lo}' and date '{hi}' "
+                        f"and substr({R.column(pull,'cusip',of_table=s)}, 1, 8) "
+                        f"in ({cus})"),
             "actuals": (f"select {R.column(pull,'security_id',of_table=a)}, "
-                        f"{R.column(pull,'anndate',of_table=a)}, "
-                        f"{R.column(pull,'actual',of_table=a)} from {a}"),
+                        f"{R.column(pull,'cusip',of_table=a)}, {ad}, "
+                        f"{R.column(pull,'period_end',of_table=a)}, "
+                        f"{R.column(pull,'actual',of_table=a)} from {a} "
+                        f"where {ad} between date '{lo}' and date '{hi}' "
+                        f"and substr({R.column(pull,'cusip',of_table=a)}, 1, 8) "
+                        f"in ({cus})"),
         }
 
     raise SchemaRefusal(f"unknown pull '{pull}' (known: {', '.join(PULL_ORDER)})")

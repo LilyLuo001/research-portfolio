@@ -9,8 +9,18 @@ from refraction.pipeline import assert_panel as ap  # noqa: E402
 
 
 def _run(panel, betas, weights, basket, convexp, calendar, wave_effective, config, **kw):
+    """Dev-mode runner: these fixtures exercise one assert at a time and do not
+    supply the A11/A14 inputs, so they run strict=False. Strict mode — what
+    production uses — is covered by the tests at the bottom of this file."""
+    kw.setdefault("strict", False)
     return ap.run_all(panel, betas, weights, basket, convexp, calendar,
                       wave_effective, config, **kw)
+
+
+def _full_inputs(panel, betas):
+    """The two inputs strict mode requires."""
+    return {"expected_pairs": panel[["permno", "announcement_id"]].drop_duplicates(),
+            "upstream_for_a14": {"betas": (betas, ["permno", "wave"], ["beta_i"])}}
 
 
 def test_clean_world_passes(panel, betas, weights, basket, convexp, calendar,
@@ -112,3 +122,57 @@ def test_a14_traceback_detects_mutation(panel, betas, weights, basket, convexp,
     rep = _run(bad, betas, weights, basket, convexp, calendar, wave_effective,
                config, upstream_for_a14=upstream)
     assert not rep["A14"]["pass"]
+
+
+# ---------------------------------------------------------------------------
+# strict mode (default): A11 and A14 are hard asserts, so they must FAIL when
+# their inputs are absent rather than passing vacuously. Before this was
+# enforced, expected_pairs defaulted to the panel itself and A14 returned pass
+# on no upstream frames, while main() supplied neither — so a CLI manifest could
+# report both as passing when neither had run.
+# ---------------------------------------------------------------------------
+
+def test_strict_is_the_default(panel, betas, weights, basket, convexp, calendar,
+                               wave_effective, config):
+    rep = ap.run_all(panel, betas, weights, basket, convexp, calendar,
+                     wave_effective, config)
+    assert not rep["A11"]["pass"] and "NOT EXECUTED" in rep["A11"]["detail"]
+    assert not rep["A14"]["pass"] and "NOT EXECUTED" in rep["A14"]["detail"]
+    assert not rep["overall_pass"], "a battery that did not run must not certify"
+
+
+def test_strict_passes_when_both_inputs_are_supplied(panel, betas, weights, basket,
+                                                     convexp, calendar,
+                                                     wave_effective, config):
+    rep = ap.run_all(panel, betas, weights, basket, convexp, calendar,
+                     wave_effective, config, **_full_inputs(panel, betas))
+    failing = [k for k in ap.HARD if not rep[k]["pass"]]
+    assert rep["overall_pass"], f"failing: {failing}: " + str(
+        {k: rep[k]["detail"] for k in failing})
+
+
+def test_strict_still_catches_a_silent_drop(panel, betas, weights, basket, convexp,
+                                            calendar, wave_effective, config):
+    """The check A11 exists for, exercised through the strict path."""
+    full = _full_inputs(panel, betas)
+    rep = ap.run_all(panel.iloc[1:], betas, weights, basket, convexp, calendar,
+                     wave_effective, config, **full)
+    assert not rep["A11"]["pass"] and not rep["overall_pass"]
+
+
+def test_strict_a11_alone_is_not_enough(panel, betas, weights, basket, convexp,
+                                        calendar, wave_effective, config):
+    """Supplying one input must not excuse the other."""
+    rep = ap.run_all(panel, betas, weights, basket, convexp, calendar,
+                     wave_effective, config,
+                     expected_pairs=panel[["permno", "announcement_id"]].drop_duplicates())
+    assert rep["A11"]["pass"]
+    assert not rep["A14"]["pass"] and not rep["overall_pass"]
+
+
+def test_nonstrict_still_allows_the_dev_path(panel, betas, weights, basket, convexp,
+                                             calendar, wave_effective, config):
+    rep = ap.run_all(panel, betas, weights, basket, convexp, calendar,
+                     wave_effective, config, strict=False)
+    assert rep["overall_pass"]
+    assert "strict=False" in rep["A14"]["detail"]

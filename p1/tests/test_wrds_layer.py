@@ -35,17 +35,75 @@ def _inventory():
     deliberately confirmed through the same code path a real one would be."""
     return sch.Inventory(tables={
         "crsp.holdings":    ["crsp_fundno", "report_dt", "permno", "nbr_shares"],
-        "crsp.fund_hdr":    ["crsp_fundno", "ticker"],
+        "crsp.fund_hdr":    ["crsp_fundno", "ticker", "fund_name"],
         "crsp.portnomap":   ["crsp_fundno", "crsp_portno"],
-        "crsp.stocknames":  ["permno", "ncusip", "namedt", "nameendt"],
-        "crsp.msf":         ["permno", "date", "prc", "shrout"],
-        "crsp.dsf":         ["permno", "date", "ret", "prc", "vol", "openprc"],
+        "crsp.stocknames":  ["permno", "ncusip", "ticker", "namedt", "nameendt"],
+        "crsp.msf":         ["permno", "date", "prc", "ret", "shrout",
+                     "cfacshr", "cfacpr"],
+        "crsp.dsf":         ["permno", "date", "ret", "prc", "vol", "openprc",
+                             "bid", "ask", "bidlo", "askhi",
+                             # daily share/price factors + raw shares: Gate 0
+                             # joins CFACSHR on the N-PORT repPdDate, and the
+                             # monthly file is not known to be precise enough
+                             # for every one of those dates (v2.1d).
+                             "cfacshr", "cfacpr", "shrout"],
         "crsp.dsi":         ["date", "vwretd"],
+        "crsp.dsedelist":   ["permno", "dlstdt", "dlret", "dlstcd"],
+        "crsp.ccmxpf_lnkhdr": ["gvkey", "lpermno", "linkdt", "linkenddt",
+                               "linktype", "linkprim"],
+        "comp.fundq":       ["gvkey", "datadate", "rdq", "epspxq"],
+        "comp.funda":       ["gvkey", "datadate", "ceq", "csho", "prcc_f"],
         "wrdsapps.taq_iid": ["sym_root", "date", "ehalfspd", "price_impact"],
-        "ibes.statsum_epsus": ["ticker", "meanest", "stdev", "numest"],
-        "ibes.act_epsus":     ["ticker", "anndats", "value"],
+        "ibes.statsum_epsus": ["ticker", "cusip", "statpers", "fpedats", "fpi",
+                               "meanest", "stdev", "numest"],
+        "ibes.act_epsus":     ["ticker", "cusip", "anndats", "pends", "value"],
         "ibes.idsum":         ["ticker", "cusip"],
     })
+
+
+# Which already-landed raw parquet each pull needs before its SQL can be scoped.
+# Mirrors PULL_ORDER's dependency edges; used to fake the landed files offline.
+LANDED_DEPS = {
+    "msf":        ["stock_names__stocknames.parquet"],
+    "dsf":        ["stock_names__stocknames.parquet"],
+    "taq_iid":    ["stock_names__stocknames.parquet"],
+    "ccm_link":   ["stock_names__stocknames.parquet"],
+    "mf_holdings": ["mf_holdings__fund_header.parquet"],
+    "compustat":  ["stock_names__stocknames.parquet", "ccm_link__ccm_link.parquet"],
+}
+
+
+def _fake_landings(spec, raw_dir):
+    """Write the minimal upstream parquets a downstream pull needs to be scoped.
+
+    Values are fabricated on purpose — the point is to prove the SQL BUILDS and
+    is bounded, not to check any number. Real scoping happens on the box.
+    """
+    import pandas as pd
+    import csv as _csv
+    sn = spec["pulls"]["stock_names"]["columns"]
+    pd.DataFrame({
+        sn["security_id"]["resolved"]: [10001, 10002, 10003],
+        sn["cusip"]["resolved"]: ["03783310", "88160R10", "45920010"],
+        sn["ticker"]["resolved"]: ["AAPL", "TSLA", "IBM"],
+    }).to_parquet(raw_dir / "stock_names__stocknames.parquet", index=False)
+
+    cl = spec["pulls"]["ccm_link"]["columns"]
+    pd.DataFrame({
+        cl["gvkey"]["resolved"]: ["001690", "184996", "006066"],
+        cl["link_permno"]["resolved"]: [10001, 10002, 10003],
+    }).to_parquet(raw_dir / "ccm_link__ccm_link.parquet", index=False)
+
+    # fund_header must contain names that actually match events_merged.csv, or
+    # _landed_fundnos refuses — which is the behaviour a separate test asserts
+    with open(ROOT / "p1" / "events_merged.csv", newline="") as f:
+        names = [r["fund_name"] for r in _csv.DictReader(f)][:5]
+    mh = spec["pulls"]["mf_holdings"]["columns"]
+    pd.DataFrame({
+        mh["fund_id"]["resolved"]: list(range(1, len(names) + 1)),
+        mh["fund_name"]["resolved"]: names,
+        mh["fund_ticker"]["resolved"]: ["AAA"] * len(names),
+    }).to_parquet(raw_dir / "mf_holdings__fund_header.parquet", index=False)
 
 
 def _resolve_against(spec, inv):
@@ -124,19 +182,92 @@ def test_resolve_one_semantics():
 # --------------------------------------------------------------------------- #
 # 3. happy path — queries build, and only from confirmed names                 #
 # --------------------------------------------------------------------------- #
-@pytest.mark.parametrize("pull", ["stock_names", "mf_holdings", "taq_iid", "ibes"])
-def test_queries_build_against_a_confirmed_inventory(spec, pull):
+@pytest.mark.parametrize("pull", ["stock_names", "mf_holdings", "msf", "dsf",
+                                  "taq_iid", "ccm_link", "compustat", "ibes"])
+def test_queries_build_against_a_confirmed_inventory(spec, pull, monkeypatch, tmp_path):
+    """Every pull, no skips.
+
+    This used to skip a pull whose names the synthetic inventory did not cover,
+    which meant tables added to tables.yaml (delisting, Compustat, the CCM link)
+    were silently never exercised — a green suite that proved nothing about them.
+    The rental window is the wrong place to discover a query does not build.
+    """
     import pull as pl
     pytest.importorskip("pandas")
     r = _resolve_against(spec, _inventory())
-    if not r.ready(pull):
-        pytest.skip(f"{pull} not fully resolvable from the synthetic inventory")
+    assert r.ready(pull), (
+        f"{pull} is not resolvable from the synthetic inventory: "
+        f"{r.status()[pull]['unresolved'] + r.status()[pull]['stale']}")
+    monkeypatch.setattr(pl, "RAW", tmp_path)
+    _fake_landings(spec, tmp_path)
     from universe import build_scope
     qs = pl.build_queries(pull, r, build_scope())
     assert qs
-    for sql in qs.values():
-        assert sql.lower().startswith("select ")
-        assert "None" not in sql, "an unresolved name leaked into SQL"
+    for name, sql in qs.items():
+        assert sql.lower().startswith("select "), name
+        assert "None" not in sql, f"an unresolved name leaked into {pull}.{name}"
+
+
+@pytest.mark.parametrize("pull", ["mf_holdings", "msf", "dsf", "taq_iid",
+                                  "ccm_link", "compustat", "ibes"])
+def test_every_large_pull_is_bounded(spec, pull, monkeypatch, tmp_path):
+    """No pull may be an unbounded table scan.
+
+    comp.funda unscoped is every North American company since 1950; crsp.holdings
+    unscoped is every fund's every position every quarter; taq_iid unscoped is
+    every listed US name every day. Each of those alone would consume a one-day
+    rental. `ibes.idsum` and `crsp.portnomap` are the two deliberate exceptions:
+    small reference crosswalks wanted whole (idsum is still cusip-filtered).
+    """
+    import pull as pl
+    pytest.importorskip("pandas")
+    r = _resolve_against(spec, _inventory())
+    monkeypatch.setattr(pl, "RAW", tmp_path)
+    _fake_landings(spec, tmp_path)
+    from universe import build_scope
+    for name, sql in pl.build_queries(pull, r, build_scope()).items():
+        if name in ("portno_map", "fund_header"):
+            continue
+        assert " where " in sql.lower(), f"{pull}.{name} has no WHERE clause at all"
+        bounded = (" in (" in sql.lower()) or (" between " in sql.lower())
+        assert bounded, f"{pull}.{name} is not bounded by an id list or a date range"
+
+
+def test_holdings_refuses_when_no_converting_fund_name_matches(spec, monkeypatch,
+                                                               tmp_path):
+    """A zero-match fund_header must refuse, never silently pull every fund."""
+    import pandas as pd
+    import pull as pl
+    pytest.importorskip("pandas")
+    r = _resolve_against(spec, _inventory())
+    monkeypatch.setattr(pl, "RAW", tmp_path)
+    mh = spec["pulls"]["mf_holdings"]["columns"]
+    pd.DataFrame({
+        mh["fund_id"]["resolved"]: [1, 2],
+        mh["fund_name"]["resolved"]: ["Not A Real Converting Fund", "Neither Is This"],
+        mh["fund_ticker"]["resolved"]: ["AAA", "BBB"],
+    }).to_parquet(tmp_path / "mf_holdings__fund_header.parquet", index=False)
+    from universe import build_scope
+    with pytest.raises(sch.SchemaRefusal) as e:
+        pl.build_queries("mf_holdings", r, build_scope())
+    assert "NONE" in str(e.value)
+
+
+@pytest.mark.parametrize("pull,missing", [
+    ("compustat", "ccm_link__ccm_link.parquet"),
+    ("taq_iid", "stock_names__stocknames.parquet"),
+    ("mf_holdings", "mf_holdings__fund_header.parquet"),
+])
+def test_pull_order_is_enforced_by_refusal_not_by_convention(spec, pull, missing,
+                                                             monkeypatch, tmp_path):
+    import pull as pl
+    pytest.importorskip("pandas")
+    r = _resolve_against(spec, _inventory())
+    monkeypatch.setattr(pl, "RAW", tmp_path)     # nothing landed
+    from universe import build_scope
+    with pytest.raises(sch.SchemaRefusal) as e:
+        pl.build_queries(pull, r, build_scope())
+    assert "PULL ORDER" in str(e.value)
 
 
 def test_daily_pull_refuses_before_stock_names_has_landed(spec, monkeypatch, tmp_path):
@@ -170,12 +301,49 @@ def test_scope_is_derivable_offline_and_covers_dropped_cells():
     # dropped cells lost a denominator, not a holding — they must be in the pull
     assert u["cusips_dropped_for_missing_denominator"] > 0
     assert u["cusips_total_to_map"] > u["cusips_with_convexp"]
-    assert s["waves"]["n_waves"] == 78
+    # derived, not hard-coded: the register grows when gated events are released
+    # (78 -> 96 on 2026-08-27), and a literal here just breaks on every such change
+    import csv as _csv
+    with open(ROOT / "p1" / "t2_wrds" / "waves_members.csv", newline="") as fh:
+        n_waves = len({r["effective_date"] for r in _csv.DictReader(fh)})
+    assert s["waves"]["n_waves"] == n_waves
     assert s["waves"]["first_effective_date"] == "2021-03-26"
     # the daily window may not run past today
     import datetime as dt
     assert s["windows"]["daily_end"] <= dt.date.today().isoformat()
     assert s["windows"]["daily_start"] < s["waves"]["first_effective_date"]
+
+
+def test_daily_window_starts_before_the_earliest_ANNOUNCEMENT_not_the_earliest_effective():
+    """The event study anchors t=0 on the announcement date (plan §6 threat T2).
+
+    Anchoring the pull on the earliest EFFECTIVE date instead truncates the
+    market-model estimation window for the earliest events — silently, because a
+    short window does not raise, it just returns a different beta. The earliest
+    announcement leads the earliest effective date by ~11 months here, so the
+    two anchors are far enough apart for this to be a real regression guard.
+    """
+    pytest.importorskip("pandas")
+    import datetime as dt
+    from universe import build_scope, PRE_TRADING_DAYS, TRADING_TO_CALENDAR
+    s = build_scope()
+    first_ann = s["waves"]["first_announce_date"]
+    assert first_ann < s["waves"]["first_effective_date"], \
+        "fixture assumption: the earliest announcement precedes the earliest effective date"
+    need = (dt.date.fromisoformat(first_ann)
+            - dt.timedelta(days=int(PRE_TRADING_DAYS * TRADING_TO_CALENDAR)))
+    assert s["windows"]["daily_start"] <= need.isoformat(), (
+        f"daily_start {s['windows']['daily_start']} does not reach back a full "
+        f"estimation window before the first announcement {first_ann}")
+
+
+def test_fundamentals_window_reaches_further_back_than_prices():
+    """SUE needs an 8-quarter lookback and annual book equity lags by up to ~2y."""
+    pytest.importorskip("pandas")
+    from universe import build_scope
+    w = build_scope()["windows"]
+    assert w["fundamentals_start"] < w["daily_start"]
+    assert w["fundamentals_lookback_years"] >= 2
 
 
 def test_future_dated_waves_are_flagged_not_silently_pulled():

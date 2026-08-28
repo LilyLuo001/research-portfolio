@@ -1,0 +1,1197 @@
+{
+  "_meta": {
+    "purpose": "Owner-gate recheck pool, adjudicated. Consumed by assemble.py.",
+    "produced_by": "p1/t1_arb/resolve_recheck.py",
+    "every_quote_verified_against": "p1/t1_channelA_wip/handoff/cb_*.txt",
+    "fund_groups": {
+      "event": 50,
+      "unresolved": 16,
+      "not_event": 3
+    },
+    "gated_records": {
+      "event": 85,
+      "unresolved": 20,
+      "not_event": 6
+    }
+  },
+  "entries": {
+    "Putnam Focused Equity Fund||Putnam Funds Trust": {
+      "fund_name": "Putnam Focused Equity Fund",
+      "family": "Putnam Funds Trust",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001655589-26-000781",
+      "quote": "SUPPLEMENT DATED MAY 22, 2026 TO THE SUMMARY PROSPECTUS AND PROSPECTUS DATED JANUARY 1, 2026 OF PUTNAM FOCUSED EQUITY FUND",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "target type not confirmed"
+      ],
+      "effective_dates": [
+        "2026-09-25"
+      ]
+    },
+    "Cohen & Steers Future of Energy Fund, Inc.||Cohen & Steers Future of Energy Fund, Inc.": {
+      "fund_name": "Cohen & Steers Future of Energy Fund, Inc.",
+      "family": "Cohen & Steers Future of Energy Fund, Inc.",
+      "verdict": "event",
+      "standard": "S2",
+      "accession": "0001193125-26-129258",
+      "quote": "CLASS A (MLOAX), CLASS C (MLOCX), CLASS F (MLOFX), CLASS I (MLOIX), CLASS R (MLORX) AND CLASS Z (MLOZX) SHARES",
+      "reason": null,
+      "note": "Named 'Inc.' with a Board of Directors, which is why the gate hesitated — but six retail share classes with sales charges and CDSC are open-end features. A closed-end fund has neither.",
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "target type not stated"
+      ],
+      "effective_dates": [
+        "2026-06-12"
+      ]
+    },
+    "Zevenbergen Growth Fund||Advisor Managed Portfolios": {
+      "fund_name": "Zevenbergen Growth Fund",
+      "family": "Advisor Managed Portfolios",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000894189-26-014605",
+      "quote": "the Board of Trustees has approved a proposal to reorganize the Fund from a mutual fund into an exchange-traded fund series of Virtus ETF Trust II",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 4,
+      "gate_reasons": [
+        "source filed 2026-07-28 (>gate 2026-07-18); cannot verify as of gate date"
+      ],
+      "effective_dates": [
+        "2026-08-14",
+        "NA"
+      ]
+    },
+    "Zevenbergen Genea Fund||Advisor Managed Portfolios": {
+      "fund_name": "Zevenbergen Genea Fund",
+      "family": "Advisor Managed Portfolios",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000894189-26-014604",
+      "quote": "the Board of Trustees has approved a proposal to reorganize the Fund from a mutual fund into an exchange-traded fund series of Virtus ETF Trust II",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 4,
+      "gate_reasons": [
+        "source filed 2026-07-28 (>gate 2026-07-18); cannot verify as of gate date"
+      ],
+      "effective_dates": [
+        "2026-08-14",
+        "NA"
+      ]
+    },
+    "BNY Mellon Income Stock Fund||BNY Mellon Funds Trust": {
+      "fund_name": "BNY Mellon Income Stock Fund",
+      "family": "BNY Mellon Funds Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001741773-25-002495",
+      "quote": "the conversion of BNY Mellon Income Stock Fund (the “Fund”), which currently operates as a mutual fund, into an exchange-traded fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "JPMorgan California Tax Free Bond Fund||JPMorgan Trust I": {
+      "fund_name": "JPMorgan California Tax Free Bond Fund",
+      "family": "JPMorgan Trust I",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001193125-26-053236",
+      "quote": "Summary Prospectuses, Prospectuses and Statement of Additional Information dated July 1, 2025, as supplemented",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type not explicit"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "JPMorgan New York Tax Free Bond Fund||JPMorgan Trust I": {
+      "fund_name": "JPMorgan New York Tax Free Bond Fund",
+      "family": "JPMorgan Trust I",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001193125-26-053236",
+      "quote": "Summary Prospectuses, Prospectuses and Statement of Additional Information dated July 1, 2025, as supplemented",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type not explicit"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "JPMorgan U.S. GARP Equity Fund||JPMorgan Trust I": {
+      "fund_name": "JPMorgan U.S. GARP Equity Fund",
+      "family": "JPMorgan Trust I",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001193125-26-053236",
+      "quote": "JPMorgan U.S. GARP Equity Fund Summary Prospectuses, Prospectuses and Statement of Additional Information dated November 1, 2025, as supplemented",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type not explicit"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "JPMorgan Preferred and Income Securities Fund||JPMorgan Trust IV": {
+      "fund_name": "JPMorgan Preferred and Income Securities Fund",
+      "family": "JPMorgan Trust IV",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001193125-26-053236",
+      "quote": "JPMorgan Preferred and Income Securities Fund Summary Prospectuses, Prospectuses and Statement of Additional Information dated November 1, 2025, as supplemented (All Share Classes)",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type not explicit"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Pabrai Wagons Fund||Professionally Managed Portfolios": {
+      "fund_name": "Pabrai Wagons Fund",
+      "family": "Professionally Managed Portfolios",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000894189-25-016171",
+      "quote": "the Reorganization (as defined below) of the Pabrai Wagons Fund a series of Professionally Managed Portfolios (the “Mutual Fund”) into an exchange-traded fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 4,
+      "gate_reasons": [
+        "original fund type not stated"
+      ],
+      "effective_dates": [
+        "2026-02-09"
+      ]
+    },
+    "Morgan Stanley Income Opportunities Fund||Morgan Stanley": {
+      "fund_name": "Morgan Stanley Income Opportunities Fund",
+      "family": "Morgan Stanley",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001104659-25-054406",
+      "quote": "SUPPLEMENT DATED MAY 30, 2025 TO THE SUMMARY PROSPECTUSES, PROSPECTUSES, AND STATEMENT OF ADDITIONAL INFORMATION OF Morgan Stanley Income Opportunities Fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-07"
+      ]
+    },
+    "Morgan Stanley Global Fixed Income Opportunities Fund||Morgan Stanley": {
+      "fund_name": "Morgan Stanley Global Fixed Income Opportunities Fund",
+      "family": "Morgan Stanley",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001104659-25-039506",
+      "quote": "SUPPLEMENT DATED APRIL 25, 2025 TO THE SUMMARY PROSPECTUSES, PROSPECTUSES, AND STATEMENT OF ADDITIONAL INFORMATION OF Morgan Stanley Global Fixed Income Opportunities Fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-07"
+      ]
+    },
+    "Morgan Stanley Income Opportunities Fund||Morgan Stanley ETF Trust": {
+      "fund_name": "Morgan Stanley Income Opportunities Fund",
+      "family": "Morgan Stanley ETF Trust",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001104659-25-054406",
+      "quote": "SUPPLEMENT DATED MAY 30, 2025 TO THE SUMMARY PROSPECTUSES, PROSPECTUSES, AND STATEMENT OF ADDITIONAL INFORMATION OF Morgan Stanley Income Opportunities Fund",
+      "reason": null,
+      "note": "Same conversion as the row above; this record carries the ACQUIRING trust in `family`. Both collapse to one conversion on (fund_name, effective_date).",
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-07"
+      ]
+    },
+    "BlackRock U.S. Mortgage Portfolio||Managed Account Series II": {
+      "fund_name": "BlackRock U.S. Mortgage Portfolio",
+      "family": "Managed Account Series II",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-25-136881",
+      "quote": "The Fund will be reorganized into an ETF through the reorganization of the Fund into a newly-created ETF, iShares Securitized Income Active ETF (the “Acquiring Fund”), which is a series of BlackRock ETF Trust II.",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-01-23"
+      ]
+    },
+    "Columbia Integrated Large Cap Value Fund||Columbia Funds Series Trust II": {
+      "fund_name": "Columbia Integrated Large Cap Value Fund",
+      "family": "Columbia Funds Series Trust II",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-25-250212",
+      "quote": "It is proposed that the Target Fund, which is currently operated as a mutual fund, will be converted into an exchange-traded fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-03-16"
+      ]
+    },
+    "New York Municipal Portfolio||Sanford C. Bernstein Fund, Inc.": {
+      "fund_name": "New York Municipal Portfolio",
+      "family": "Sanford C. Bernstein Fund, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000919574-25-004356",
+      "quote": "Each Acquired Portfolio, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquired-portfolio type unproven",
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-07"
+      ]
+    },
+    "Bernstein Intermediate Duration Institutional Portfolio||Sanford C. Bernstein Fund II, Inc.": {
+      "fund_name": "Bernstein Intermediate Duration Institutional Portfolio",
+      "family": "Sanford C. Bernstein Fund II, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000919574-25-004356",
+      "quote": "Each Acquired Portfolio, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquired-portfolio type unproven",
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-07"
+      ]
+    },
+    "Emerging Markets Portfolio||Sanford C. Bernstein Fund, Inc.": {
+      "fund_name": "Emerging Markets Portfolio",
+      "family": "Sanford C. Bernstein Fund, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000919574-25-005978",
+      "quote": "the Acquired Portfolio will be reorganized into an ETF through the acquisition of the fund by AB Emerging Markets Opportunities ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring-portfolio ETF only"
+      ],
+      "effective_dates": [
+        "2026-01-23"
+      ]
+    },
+    "abrdn International Small Cap Fund||abrdn Funds": {
+      "fund_name": "abrdn International Small Cap Fund",
+      "family": "abrdn Funds",
+      "verdict": "event",
+      "standard": "S2",
+      "accession": "0001104659-25-074708",
+      "quote": "all share classes of each Acquired Fund were consolidated into the Institutional Class in advance of each Reorganization",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring-ETF name only; MF conversion unproven"
+      ],
+      "effective_dates": [
+        "2025-10-17"
+      ]
+    },
+    "abrdn Intermediate Municipal Income Fund||abrdn Funds": {
+      "fund_name": "abrdn Intermediate Municipal Income Fund",
+      "family": "abrdn Funds",
+      "verdict": "event",
+      "standard": "S2",
+      "accession": "0001104659-25-074708",
+      "quote": "all share classes of each Acquired Fund were consolidated into the Institutional Class in advance of each Reorganization",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring-ETF name only; MF conversion unproven"
+      ],
+      "effective_dates": [
+        "2025-10-17"
+      ]
+    },
+    "abrdn China A Share Equity Fund||abrdn Funds": {
+      "fund_name": "abrdn China A Share Equity Fund",
+      "family": "abrdn Funds",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001104659-25-069947",
+      "quote": "Supplement dated July 23, 2025 to each Acquired Fund’s Summary Prospectus, Statutory Prospectus and Statement of",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "target type not explicitly a mutual fund"
+      ],
+      "effective_dates": [
+        "2025-10-17"
+      ]
+    },
+    "abrdn Focused Emerging Markets ex-China Fund||abrdn Funds": {
+      "fund_name": "abrdn Focused Emerging Markets ex-China Fund",
+      "family": "abrdn Funds",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0001104659-25-069947",
+      "quote": "Supplement dated July 23, 2025 to each Acquired Fund’s Summary Prospectus, Statutory Prospectus and Statement of",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "target type not explicitly a mutual fund"
+      ],
+      "effective_dates": [
+        "2025-10-17"
+      ]
+    },
+    "Baron FinTech Fund||Baron Select Funds": {
+      "fund_name": "Baron FinTech Fund",
+      "family": "Baron Select Funds",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-25-223429",
+      "quote": null,
+      "reason": "The excerpt establishes the ACQUIRER is a new ETF series of Baron ETF Trust ('Each Fund will be reorganized into a newly created ETF') but never states the target's type, names no share class of it, and is filed by the acquiring trust. Boilerplate 'differences between an ETF and a mutual fund' tables appear in these N-14s regardless and are not evidence about this target.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2025-12-12"
+      ]
+    },
+    "Baron Technology Fund||Baron Select Funds": {
+      "fund_name": "Baron Technology Fund",
+      "family": "Baron Select Funds",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-25-223429",
+      "quote": null,
+      "reason": "Same filing and same gap as Baron FinTech Fund.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2025-12-12"
+      ]
+    },
+    "Baron Financials Fund||Baron ETF Trust": {
+      "fund_name": "Baron Financials Fund",
+      "family": "Baron ETF Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-25-192223",
+      "quote": null,
+      "reason": "Filed by the acquiring ETF trust; the excerpt carries only the generic ETF-vs-mutual-fund comparison table, which is boilerplate and says nothing about this target.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type not explicit"
+      ],
+      "effective_dates": [
+        "2025-12-12"
+      ]
+    },
+    "Baron Technology Fund||Baron ETF Trust": {
+      "fund_name": "Baron Technology Fund",
+      "family": "Baron ETF Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-25-192223",
+      "quote": null,
+      "reason": "Same filing and same gap as Baron Financials Fund.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type not explicit"
+      ],
+      "effective_dates": [
+        "2025-12-12"
+      ]
+    },
+    "Harding Loevner International Developed Markets Equity Portfolio||Harding, Loevner Funds, Inc.": {
+      "fund_name": "Harding Loevner International Developed Markets Equity Portfolio",
+      "family": "Harding, Loevner Funds, Inc.",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-26-225954",
+      "quote": null,
+      "reason": "Only the generic ETF-vs-mutual-fund comparison table survives in the excerpt window. No statement of the target's type and no share class of it is named.",
+      "note": null,
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "portfolio type unproven"
+      ],
+      "effective_dates": [
+        "2026-07-17"
+      ]
+    },
+    "Chestnut Street Exchange Fund||Chestnut Street Exchange Fund": {
+      "fund_name": "Chestnut Street Exchange Fund",
+      "family": "Chestnut Street Exchange Fund",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001398344-25-004999",
+      "quote": "The Target Fund currently operates as a registered open-end management investment company",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "owner flipped to event; fields need full-text extraction"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Lazard Emerging Markets Opportunities Portfolio||Lazard Active ETF Trust": {
+      "fund_name": "Lazard Emerging Markets Opportunities Portfolio",
+      "family": "Lazard Active ETF Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0000930413-25-002048",
+      "quote": null,
+      "reason": "Only the generic ETF-vs-mutual-fund comparison table. Filed by the acquiring ETF trust; the target's type is not stated in the excerpt window.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "neither side's type confirmed in evidence"
+      ],
+      "effective_dates": [
+        "2025-10-24"
+      ]
+    },
+    "Lazard US Systematic Small Cap Equity Portfolio||Lazard Active ETF Trust": {
+      "fund_name": "Lazard US Systematic Small Cap Equity Portfolio",
+      "family": "Lazard Active ETF Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0000930413-25-001860",
+      "quote": null,
+      "reason": "Same gap as the Lazard row above.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "2025-09-12"
+      ]
+    },
+    "Lazard International Dynamic Equity Portfolio||Lazard Funds": {
+      "fund_name": "Lazard International Dynamic Equity Portfolio",
+      "family": "Lazard Funds",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0000930413-25-000094",
+      "quote": null,
+      "reason": "Same gap as the Lazard rows above.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "2025-04-30"
+      ]
+    },
+    "Lazard US High Yield ETF||Lazard Active ETF Trust": {
+      "fund_name": "Lazard US High Yield ETF",
+      "family": "Lazard Active ETF Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0000930413-26-001999",
+      "quote": null,
+      "reason": "The `fund_name` on this record is the ACQUIRING ETF, not the target. A row whose identity field names the acquirer cannot be promoted as a conversion even if the conversion is real — the study key is the converting fund.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring series of an ETF trust; target unclear"
+      ],
+      "effective_dates": [
+        "2026-11-06"
+      ]
+    },
+    "DoubleLine Securitized Credit Fund||DoubleLine Funds Trust": {
+      "fund_name": "DoubleLine Securitized Credit Fund",
+      "family": "DoubleLine Funds Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-25-283237",
+      "quote": "the Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Goldman Sachs Bond Fund||Goldman Sachs Trust": {
+      "fund_name": "Goldman Sachs Bond Fund",
+      "family": "Goldman Sachs Trust",
+      "verdict": "event",
+      "standard": "S4",
+      "accession": "0001193125-25-143723",
+      "quote": "Final Date to Redeem Acquired Fund Shares or Exchange for Shares of Another Goldman Sachs Mutual Fund",
+      "reason": null,
+      "note": "The 2026 Goldman filings share the same Acquired-Fund framing; this quote is from the 2025 N-14 of the same programme, which is the one that states the complex.",
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-08-07"
+      ]
+    },
+    "Goldman Sachs Income Fund||Goldman Sachs Trust": {
+      "fund_name": "Goldman Sachs Income Fund",
+      "family": "Goldman Sachs Trust",
+      "verdict": "event",
+      "standard": "S4",
+      "accession": "0001193125-25-143723",
+      "quote": "Final Date to Redeem Acquired Fund Shares or Exchange for Shares of Another Goldman Sachs Mutual Fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 3,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-08-07"
+      ]
+    },
+    "Goldman Sachs Enhanced U.S. Equity Fund||Goldman Sachs Trust": {
+      "fund_name": "Goldman Sachs Enhanced U.S. Equity Fund",
+      "family": "Goldman Sachs Trust",
+      "verdict": "event",
+      "standard": "S4",
+      "accession": "0001193125-25-143723",
+      "quote": "Goldman Sachs Enhanced U.S. Equity Fund, Goldman Sachs Focused Value Fund and Goldman Sachs Strategic Growth Fund Closed to new investors July 18, 2025",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-13"
+      ]
+    },
+    "Goldman Sachs Focused Value Fund||Goldman Sachs Trust": {
+      "fund_name": "Goldman Sachs Focused Value Fund",
+      "family": "Goldman Sachs Trust",
+      "verdict": "event",
+      "standard": "S4",
+      "accession": "0001193125-25-143723",
+      "quote": "Goldman Sachs Enhanced U.S. Equity Fund, Goldman Sachs Focused Value Fund and Goldman Sachs Strategic Growth Fund Closed to new investors July 18, 2025",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-13"
+      ]
+    },
+    "Goldman Sachs Strategic Growth Fund||Goldman Sachs Trust": {
+      "fund_name": "Goldman Sachs Strategic Growth Fund",
+      "family": "Goldman Sachs Trust",
+      "verdict": "event",
+      "standard": "S4",
+      "accession": "0001193125-25-143723",
+      "quote": "Goldman Sachs Enhanced U.S. Equity Fund, Goldman Sachs Focused Value Fund and Goldman Sachs Strategic Growth Fund Closed to new investors July 18, 2025",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2025-11-13"
+      ]
+    },
+    "Goldman Sachs Technology Opportunities Fund||Goldman Sachs Trust": {
+      "fund_name": "Goldman Sachs Technology Opportunities Fund",
+      "family": "Goldman Sachs Trust",
+      "verdict": "event",
+      "standard": "S4",
+      "accession": "0001193125-25-143723",
+      "quote": "Final Date to Redeem Acquired Fund Shares or Exchange for Shares of Another Goldman Sachs Mutual Fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2025-12-04"
+      ]
+    },
+    "Matrix Advisors Value Fund, Inc.||Matrix Advisors Value Fund, Inc.": {
+      "fund_name": "Matrix Advisors Value Fund, Inc.",
+      "family": "Matrix Advisors Value Fund, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000894189-24-006727",
+      "quote": "the Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring ETF only; conversion unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Matrix Advisors Value Fund||Matrix Advisors Funds Trust": {
+      "fund_name": "Matrix Advisors Value Fund",
+      "family": "Matrix Advisors Funds Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0000894189-24-006727",
+      "quote": "the Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": "Same conversion as the row above, filed from the other side. They collapse on (fund_name, effective_date) in assemble.py.",
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring ETF only; target/event unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Fidelity® U.S. Low Volatility Equity Fund||Fidelity Summer Street Trust": {
+      "fund_name": "Fidelity® U.S. Low Volatility Equity Fund",
+      "family": "Fidelity Summer Street Trust",
+      "verdict": "event",
+      "standard": "S3",
+      "accession": "0000225322-25-000298",
+      "quote": "Supplement to the Fidelity® U.S. Low Volatility Equity Fund June 28, 2025 Prospectus",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Polen Bank Loan Fund||FundVantage Trust": {
+      "fund_name": "Polen Bank Loan Fund",
+      "family": "FundVantage Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001829126-25-001161",
+      "quote": "The Polen Bank Loan Fund is a mutual fund, and the Polen Floating Rate Income ETF is an exchange-traded fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "no conversion/reorg language in evidence"
+      ],
+      "effective_dates": [
+        "2025-03-21"
+      ]
+    },
+    "Nomura Strategic Income Fund||Delaware Group Government Fund": {
+      "fund_name": "Nomura Strategic Income Fund",
+      "family": "Delaware Group Government Fund",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0002071844-26-000760",
+      "quote": "The Acquired Funds, both of which currently operate as a mutual fund, will each be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2026-11-06"
+      ]
+    },
+    "Nomura Smid Cap Core Fund||Ivy Funds": {
+      "fund_name": "Nomura Smid Cap Core Fund",
+      "family": "Ivy Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0002071844-26-000760",
+      "quote": "The Acquired Funds, both of which currently operate as a mutual fund, will each be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2026-11-06"
+      ]
+    },
+    "Thrivent Mid Cap Value Fund||Thrivent Mutual Funds": {
+      "fund_name": "Thrivent Mid Cap Value Fund",
+      "family": "Thrivent Mutual Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-25-200612",
+      "quote": "It is proposed that the Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquirer-ETF only"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "Sequoia Fund, Inc.||Northern Lights Fund Trust II": {
+      "fund_name": "Sequoia Fund, Inc.",
+      "family": "Northern Lights Fund Trust II",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001580642-26-003186",
+      "quote": "The Target Fund currently operates as a mutual fund.",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2026-10-16"
+      ]
+    },
+    "OTG Latin America Fund||ETF Opportunities Trust": {
+      "fund_name": "OTG Latin America Fund",
+      "family": "ETF Opportunities Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001999371-25-008252",
+      "quote": null,
+      "reason": "The excerpt contains only generic statements about the ETF format being preferable to 'traditional mutual funds' as a rationale. That is the adviser's reasoning, not a statement of what the target is. Searched the full excerpt for open-end / share-class / N-1A markers: none.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "ETF-format mention; MF conversion not explicit"
+      ],
+      "effective_dates": [
+        "2025-07-11"
+      ]
+    },
+    "OTG Latin America Fund||World Funds Trust": {
+      "fund_name": "OTG Latin America Fund",
+      "family": "World Funds Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001999371-25-008209",
+      "quote": null,
+      "reason": "Same conversion and same gap as the row above.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "ETF-format mention; MF conversion not explicit"
+      ],
+      "effective_dates": [
+        "2025-07-11"
+      ]
+    },
+    "TCW MetWest Sustainable Securitized Fund||TCW Metropolitan West Funds": {
+      "fund_name": "TCW MetWest Sustainable Securitized Fund",
+      "family": "TCW Metropolitan West Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001829126-26-003038",
+      "quote": "It is proposed that the Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "TCW MetWest Intermediate Bond Fund||TCW Metropolitan West Funds": {
+      "fund_name": "TCW MetWest Intermediate Bond Fund",
+      "family": "TCW Metropolitan West Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001829126-25-002325",
+      "quote": "It is proposed that the Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "JPMorgan National Municipal Income Fund||JPMorgan Trust I": {
+      "fund_name": "JPMorgan National Municipal Income Fund",
+      "family": "JPMorgan Trust I",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-25-136974",
+      "quote": null,
+      "reason": "Filed by the acquiring ETF trust. The excerpt is the proxy cover letter: it establishes a shareholder-approved reorganisation into JPMorgan Municipal ETF but never states the Target Fund's type. Searched the full excerpt for open-end / share-class / N-1A markers: zero hits.",
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "William Blair Emerging Markets Debt Fund||William Blair Funds": {
+      "fund_name": "William Blair Emerging Markets Debt Fund",
+      "family": "William Blair Funds",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001193125-26-283076",
+      "quote": null,
+      "reason": "Filed by William Blair ETF Trust. The excerpt names the Acquired Fund as 'a series of William Blair Funds' but never states that registrant's type, and no share class is named. Zero type markers in the full excerpt.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only"
+      ],
+      "effective_dates": [
+        "2026-10-16"
+      ]
+    },
+    "Hartford Climate Opportunities Fund||The Hartford Mutual Funds, Inc.": {
+      "fund_name": "Hartford Climate Opportunities Fund",
+      "family": "The Hartford Mutual Funds, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-26-298481",
+      "quote": "Each Acquired Fund is currently operated as an open-end mutual fund and will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-10-16"
+      ]
+    },
+    "Hartford International Equity Fund||The Hartford Mutual Funds, Inc.": {
+      "fund_name": "Hartford International Equity Fund",
+      "family": "The Hartford Mutual Funds, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-26-298481",
+      "quote": "Each Acquired Fund is currently operated as an open-end mutual fund and will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-10-23"
+      ]
+    },
+    "The Hartford High Yield Fund||The Hartford Mutual Funds, Inc.": {
+      "fund_name": "The Hartford High Yield Fund",
+      "family": "The Hartford Mutual Funds, Inc.",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-26-298481",
+      "quote": "Each Acquired Fund is currently operated as an open-end mutual fund and will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquired-fund type unproven"
+      ],
+      "effective_dates": [
+        "2026-10-16"
+      ]
+    },
+    "Morgan Stanley Mortgage Securities Trust||Morgan Stanley Mortgage Securities Trust": {
+      "fund_name": "Morgan Stanley Mortgage Securities Trust",
+      "family": "Morgan Stanley Mortgage Securities Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001104659-25-034754",
+      "quote": null,
+      "reason": "The excerpt is the proxy proposal text naming the Acquiring Fund (Eaton Vance Mortgage Opportunities ETF, a series of Morgan Stanley ETF Trust). The target's type is not stated and no share class of it appears in the window.",
+      "note": null,
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven",
+        "shares-on-NYSE only; MF->ETF unproven"
+      ],
+      "effective_dates": [
+        "2025-08-01"
+      ]
+    },
+    "Tortoise Energy Infrastructure and Income Fund||Managed Portfolio Series": {
+      "fund_name": "Tortoise Energy Infrastructure and Income Fund",
+      "family": "Managed Portfolio Series",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001013762-25-002918",
+      "quote": "the reorganization of the Target Fund (the “Reorganization”), a mutual fund, into Tortoise Energy Fund",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "only 'structured as an actively managed ETF'; MF->ETF not proven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    },
+    "SIMT Liquid Alternative Fund||SEI Institutional Managed Trust": {
+      "fund_name": "SIMT Liquid Alternative Fund",
+      "family": "SEI Institutional Managed Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001104659-25-062589",
+      "quote": "It is proposed that the Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "2025-08-25"
+      ]
+    },
+    "SIMT High Yield Bond Fund||SEI Institutional Managed Trust": {
+      "fund_name": "SIMT High Yield Bond Fund",
+      "family": "SEI Institutional Managed Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001104659-26-025332",
+      "quote": "It is proposed that the Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only"
+      ],
+      "effective_dates": [
+        "2026-05-18"
+      ]
+    },
+    "Large Cap Equity Fund||Morgan Stanley Pathway Funds": {
+      "fund_name": "Large Cap Equity Fund",
+      "family": "Morgan Stanley Pathway Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-24-203605",
+      "quote": "It is proposed that each Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "2024-11-15"
+      ]
+    },
+    "Small-Mid Cap Equity Fund||Morgan Stanley Pathway Funds": {
+      "fund_name": "Small-Mid Cap Equity Fund",
+      "family": "Morgan Stanley Pathway Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001193125-24-203605",
+      "quote": "It is proposed that each Target Fund, which is currently operated as a mutual fund, will be converted into an ETF",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only; target type unproven"
+      ],
+      "effective_dates": [
+        "2024-11-15"
+      ]
+    },
+    "iM Dolan McEniry Corporate Bond Fund||Manager Directed Portfolios": {
+      "fund_name": "iM Dolan McEniry Corporate Bond Fund",
+      "family": "Manager Directed Portfolios",
+      "verdict": "not_event",
+      "standard": "D1",
+      "accession": "0001193125-21-217182",
+      "quote": "Title of Securities Being Offered: Institutional Class Shares and Investor Class Shares of iM Dolan McEniry Corporate Bond Fund",
+      "reason": null,
+      "note": "The ACQUIRING fund offers Institutional Class and Investor Class shares, so the destination is a mutual fund, not an ETF. This is a MF->MF trust adoption into Litman Gregory Funds Trust. The gate flagged it for the right reason and the answer is a rejection, not a promotion.",
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "evidence describes the DBi ETFs, not this fund; confirm target was a mutual fund"
+      ],
+      "effective_dates": [
+        "2021-09-17"
+      ]
+    },
+    "iM DBi Managed Futures Strategy ETF||Manager Directed Portfolios": {
+      "fund_name": "iM DBi Managed Futures Strategy ETF",
+      "family": "Manager Directed Portfolios",
+      "verdict": "not_event",
+      "standard": "D2",
+      "accession": "0001193125-21-217182",
+      "quote": "The Target Managed Futures Strategy ETF and Target Hedge Strategy ETF and their corresponding Acquiring Funds are exchange-traded fund",
+      "reason": null,
+      "note": "Both sides are ETFs. The gate's not_event call is confirmed.",
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "ETF_TO_ETF: target is an ETF"
+      ],
+      "effective_dates": [
+        "2021-09-17"
+      ]
+    },
+    "iM DBi Hedge Strategy ETF||Manager Directed Portfolios": {
+      "fund_name": "iM DBi Hedge Strategy ETF",
+      "family": "Manager Directed Portfolios",
+      "verdict": "not_event",
+      "standard": "D2",
+      "accession": "0001193125-21-217182",
+      "quote": "The Target Managed Futures Strategy ETF and Target Hedge Strategy ETF and their corresponding Acquiring Funds are exchange-traded fund",
+      "reason": null,
+      "note": "Both sides are ETFs. The gate's not_event call is confirmed.",
+      "n_gated_records": 2,
+      "gate_reasons": [
+        "ETF_TO_ETF: target is an ETF"
+      ],
+      "effective_dates": [
+        "2021-09-17"
+      ]
+    },
+    "Touchstone Large Company Growth Fund||Touchstone Strategic Trust": {
+      "fund_name": "Touchstone Large Company Growth Fund",
+      "family": "Touchstone Strategic Trust",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001104659-25-123704",
+      "quote": "the Touchstone Large Company Growth Fund (the “Target Fund”), a mutual fund series of Touchstone Strategic Trust",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 4,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "2026-03-13"
+      ]
+    },
+    "Fort Pitt Capital Fund||Valued Advisers Trust": {
+      "fund_name": "Fort Pitt Capital Fund",
+      "family": "Valued Advisers Trust",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0001580642-26-001786",
+      "quote": null,
+      "reason": "The excerpt establishes the acquirer is an ETF series of Valued Advisers Trust but carries no statement of the target's type and names no share class of it. Zero type markers in the full excerpt.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquirer-ETF only"
+      ],
+      "effective_dates": [
+        "2026-05-15"
+      ]
+    },
+    "American Beacon Ninety One International Franchise Fund||American Beacon Select Funds": {
+      "fund_name": "American Beacon Ninety One International Franchise Fund",
+      "family": "American Beacon Select Funds",
+      "verdict": "event",
+      "standard": "S1",
+      "accession": "0001133228-25-009844",
+      "quote": "By approving the Reorganization Agreement, you will also be approving changing your investment from a mutual fund to an ETF.",
+      "reason": null,
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "acquiring-ETF only"
+      ],
+      "effective_dates": [
+        "2026-01-09"
+      ]
+    },
+    "Locorr Investment Trust||LOCORR INVESTMENT TRUST": {
+      "fund_name": "Locorr Investment Trust",
+      "family": "LOCORR INVESTMENT TRUST",
+      "verdict": "unresolved",
+      "standard": null,
+      "accession": "0000894189-25-010747",
+      "quote": null,
+      "reason": "The `fund_name` on this record is the TRUST, not a fund — the extraction failed to name a converting fund at all, and the excerpt window does not name the Target Fund either. Cannot be promoted: the study key is a fund, and there is no fund here to key on.",
+      "note": null,
+      "n_gated_records": 1,
+      "gate_reasons": [
+        "target type unproven"
+      ],
+      "effective_dates": [
+        "NA"
+      ]
+    }
+  }
+}

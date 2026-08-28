@@ -127,3 +127,18 @@ Also still needed, separately, for the "数据表与字段" column:
 `NEED_HUMAN: P1-T3-spec cannot start — no 文献包 (T0 阶段A never ran, no queue id
 covers it) and every T3 outcome variable needs WRDS data that lapsed. Itemised
 CITE_REQUEST above; T3-spec and T4-replication both blocked on owner input.`
+
+---
+
+## Status update 2026-08-18 — 文献包 now available (partially)
+
+`p1/lit/literature_matrix.md` was produced with WebSearch-sourced entries for all
+10 CITE_REQUEST items. 12 cells are marked `[NEED_PDF]` for formula details that
+require the actual paper. The URLs are confirmed; a browser session can fill them.
+
+**T3-spec is now startable** for spines one, two, and four. The [NEED_PDF] cells
+are treated as DECISION_NEEDED equivalents — the spec writer flags them for the
+human reviewer to fill from the cited paper. This is the same as the SUE fork
+handling already planned in §125.
+
+Residual block: data column still needs WRDS table/var list (unchanged).
