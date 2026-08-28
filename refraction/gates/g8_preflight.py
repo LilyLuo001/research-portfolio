@@ -668,6 +668,13 @@ def interval_alignment(freshness_record: dict, config: dict) -> dict:
     snapshots, so it spans (cutoff at t-1, cutoff at t]; OIB spans a trading session. Those
     are the same window only when the cutoff IS the market close.
 
+    A market-close cutoff does NOT buy exact alignment either. CR then spans
+    (close_{t-1}, close_t], which contains the overnight and pre-market session, while an RTH
+    outcome spans only part of it. That class therefore DECLARES its estimand — RTH
+    constituent trading associated with day-localized close-to-close net CR — instead of
+    claiming exact alignment, and it is still subject to the coverage requirement: market-close
+    timing removes neither the completeness check nor the need to say what was measured.
+
     `freshness_record` should carry `cutoff_time` — either the literal "market_close" or a
     documented clock time — and optionally `cutoff_is_market_close`.
 
@@ -684,7 +691,7 @@ def interval_alignment(freshness_record: dict, config: dict) -> dict:
         is_close = (str(cutoff).strip().lower() in ("market_close", "market close", "close"))
 
     if cutoff and is_close:
-        cls = "aligned_trading_day"
+        cls = "close_to_close_rth_declared"
     elif cutoff:
         cls = "aligned_cutoff_to_cutoff"
     else:
@@ -698,6 +705,12 @@ def interval_alignment(freshness_record: dict, config: dict) -> dict:
         "primary_eligible": bool(spec["primary_eligible"]),
         "oib_must_be_constructed_over_that_window": bool(
             spec.get("oib_must_be_constructed_over_that_window")),
+        # A close-to-close CR interval CONTAINS the overnight and pre-market session, so an
+        # RTH outcome does not literally cover it. The estimand is declared rather than an
+        # exact-alignment claim, and the uncovered stretch is named.
+        "exact_interval_alignment_claimed": spec.get("exact_interval_alignment_claimed"),
+        "estimand": spec.get("estimand"),
+        "uncovered_portion_of_cr_interval": spec.get("uncovered_portion_of_cr_interval"),
         "reason": ("" if spec["primary_eligible"] else
                    "NEED_HUMAN: the economic cutoff TIME is not documented. The as-of date "
                    "gives day localization; it does not license a claim of exact same-day "
@@ -759,9 +772,9 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
             # "no creation happened" is a claim, and an unchanged value under carry-forward
             # is an absence of measurement rather than an observed no-creation day.
             endpoints_measured = bool(fresh[i]) and last_fresh == i - 1
-            timing, width, start = "zero_unverified", np.nan, pd.NaT
+            timing, width, start = "zero_net_unverified", np.nan, pd.NaT
             if i == 0:
-                timing = "zero_unverified"      # no prior endpoint exists
+                timing = "zero_net_unverified"   # no prior endpoint exists
             elif changed:
                 if endpoints_measured:
                     timing, width, start = "dated", 1.0, dates[i]
@@ -771,7 +784,11 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
                     width = float(i - back) if last_fresh is not None else float(i + 1)
                     start = dates[back]
             else:
-                timing = "zero_verified" if endpoints_measured else "zero_unverified"
+                # NET zero: fresh equal endpoints establish that the NET change was zero.
+                # Offsetting creations and redemptions inside the interval also leave
+                # Delta(SharesOut) = 0, so this is not a no-AP-activity observation.
+                timing = ("zero_net_verified" if endpoints_measured
+                          else "zero_net_unverified")
             if fresh[i]:
                 last_fresh = i
             rows.append({"fund": fund, "date": dates[i], "cr_timing": timing,
@@ -812,7 +829,7 @@ def primary_timing_sample(panel: pd.DataFrame, config: dict) -> pd.DataFrame:
     # as a zero-exposure control dilutes the estimate with days nobody looked at.
     n_unverified_zeros = 0
     if z["unverified_zeros_in_primary"] == "excluded":
-        unver = panel["cr_timing"].eq("zero_unverified")
+        unver = panel["cr_timing"].eq("zero_net_unverified")
         n_unverified_zeros = int(
             panel.loc[unver, ["fund", "date"]].drop_duplicates().shape[0])
         drop = drop | unver
@@ -821,20 +838,24 @@ def primary_timing_sample(panel: pd.DataFrame, config: dict) -> pd.DataFrame:
     # outcome aligned if the trading feed covers only part of the required interval. The
     # gap is systematic — feeds stop at the close — so the partial quantity is a different
     # variable, not a noisier version of the registered one.
+    # COVERAGE APPLIES TO EVERY CLASS, on whatever window that class registers. Market-close
+    # timing does not remove the data-completeness requirement: it fixes WHICH window the
+    # outcome must cover, not whether the outcome has to cover it.
     cov_col = al.get("oib_coverage_column", "oib_interval_coverage_complete")
     n_partial = 0
-    needs_cov = (panel.get("alignment_class") is not None
-                 and al["classes"]["aligned_cutoff_to_cutoff"].get(
-                     "requires_complete_oib_coverage_over_interval"))
-    if needs_cov:
-        cutoff_rows = panel["alignment_class"].eq("aligned_cutoff_to_cutoff")
-        if cutoff_rows.any():
+    if al.get("coverage_required_for_every_class") and "alignment_class" in panel.columns:
+        needs = panel["alignment_class"].isin([
+            k for k, v in al["classes"].items()
+            if v.get("requires_complete_oib_coverage_over_registered_window")])
+        if needs.any():
             if cov_col not in panel.columns:
                 raise SafeguardViolation(
-                    "alignment class 'aligned_cutoff_to_cutoff' requires %r: OIB must cover "
-                    "the WHOLE cutoff-to-cutoff interval. A known cutoff does not make a "
-                    "partial-session imbalance aligned with a full-interval CR." % cov_col)
-            partial = cutoff_rows & ~panel[cov_col].astype(bool)
+                    "every alignment class requires %r: the OIB must completely cover the "
+                    "window that class registers. A market-close cutoff is not exempt — a "
+                    "close-to-close CR interval contains the overnight and pre-market "
+                    "session, so RTH coverage is a claim about the RTH window, and it still "
+                    "has to hold." % cov_col)
+            partial = needs & ~panel[cov_col].astype(bool)
             n_partial = int(panel.loc[partial, ["fund", "date"]].drop_duplicates().shape[0])
             drop = drop | partial
 
@@ -880,13 +901,12 @@ def timing_census(panel: pd.DataFrame, config: dict) -> dict:
         "oib_window": (panel["oib_window"].iloc[0]
                        if "oib_window" in panel.columns and len(panel) else None),
         # counted on EVENTS (fund-days), never on constituent-day rows
-        "n_zero_verified": int((work["cr_timing"] == "zero_verified").sum()),
-        "n_zero_unverified": int((work["cr_timing"] == "zero_unverified").sum()),
+        "n_zero_net_verified": int((work["cr_timing"] == "zero_net_verified").sum()),
+        "n_zero_net_unverified": int((work["cr_timing"] == "zero_net_unverified").sum()),
         "n_partial_oib_coverage_events": int(
-            (work["alignment_class"].eq("aligned_cutoff_to_cutoff")
-             & ~work.get(t["cr_oib_interval_alignment"].get(
-                 "oib_coverage_column", "oib_interval_coverage_complete"),
-                 pd.Series(True, index=work.index)).astype(bool)).sum()
+            (~work.get(t["cr_oib_interval_alignment"].get(
+                "oib_coverage_column", "oib_interval_coverage_complete"),
+                pd.Series(True, index=work.index)).astype(bool)).sum()
             if "alignment_class" in work.columns else 0),
         "n_aligned_dated_events": int((ev["cr_timing"].eq("dated") & ev["_eligible"]).sum()),
         "n_misaligned_dated_events": int(

@@ -1,6 +1,6 @@
 {
   "output": "refraction/frozen_config.yaml",
-  "output_sha256": "3596db052112d3b8b724589bc662596102f4fa98e12bf5f9034512e02b017aaf",
+  "output_sha256": "42a02fd2d5a20d4ecf5098415a97d329b1fd5ac93c7beb1a1af36dd4b0b5fbac",
   "inputs": [
     {
       "path": "docs/MacroEvent_Chapter_Plan_v2_4.md",
@@ -23,10 +23,10 @@
       "rows": null
     }
   ],
-  "code_version": "c6fbb122d37a56f32ac7a2775f99dba146eba965",
-  "timestamp": "2026-08-28T14:39:39.907525+00:00",
+  "code_version": "ffe0a2cb4b2fdbe988d5f766f324ba84476e9d1f",
+  "timestamp": "2026-08-28T14:47:50.998225+00:00",
   "registered_spec": "SPEC-MAIN-v2.4",
-  "freeze_scope": "freezes 1-6, audits, CR primary = |CR_raw|, timing eligibility for events AND zero days, CR/OIB interval alignment with coverage",
+  "freeze_scope": "freezes 1-6, audits, CR primary = |CR_raw|, zero-NET semantics, universal OIB window coverage",
   "what_this_is": "repo-local content hash + UTC timestamp of the frozen specification.",
   "what_this_is_NOT": "the OSF pre-registration. The Stage-1 DOCUMENT is at refraction/STAGE1_PREREG.md and hashed; SUBMITTING it is REFR-GATE-OSF, a human gate.",
   "prereg_guard_status": "BLOCKED (prereg.osf_timestamp is null) \u2014 correct and expected"

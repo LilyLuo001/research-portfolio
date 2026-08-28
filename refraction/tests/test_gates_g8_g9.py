@@ -86,7 +86,7 @@ def _timing_from(cr_raw):
     """Fixtures stand in for a series with verified economic freshness at every observation,
     so genuine changes are DATED events and unchanged days are VERIFIED zeros. Interval,
     misaligned and unverified cases are constructed explicitly where they are tested."""
-    return np.where(np.asarray(cr_raw, dtype=float) != 0.0, "dated", "zero_verified")
+    return np.where(np.asarray(cr_raw, dtype=float) != 0.0, "dated", "zero_net_verified")
 
 
 def make_panel(n_stocks=40, n_days=120, a1=0.0, seed=0):
@@ -553,7 +553,7 @@ def test_a_sample_with_no_creation_or_redemption_is_uninformative_not_a_failure(
                               outcome_class="trading_connectivity", config=cfg)
     choice, audit, _ = preflight(cfg, panel)
     dead = pre.cr_event_census(panel.assign(CR=0.0, CR_raw=0.0, CR_mag=0.0,
-                                     cr_timing="zero_verified"), CONFIG)
+                                     cr_timing="zero_net_verified"), CONFIG)
     v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
                    timestamp_audit=audit, census=dead)
     assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
@@ -1604,8 +1604,8 @@ def test_a_quiet_stretch_under_verified_freshness_is_zero_days_not_an_interval()
     constant stretch is a run of genuine zero-CR days, and the change ending it is DATED."""
     tm = pre.classify_cr_event_timing(quiet_fund_shares(), None, CONFIG, FRESHNESS_RECORD)
     # 6 quiet days: 5 verified, plus the very first observation, which has no t-1 endpoint
-    assert (tm["cr_timing"] == "zero_verified").sum() == 5
-    assert tm["cr_timing"].iloc[0] == "zero_unverified"
+    assert (tm["cr_timing"] == "zero_net_verified").sum() == 5
+    assert tm["cr_timing"].iloc[0] == "zero_net_unverified"
     ev = tm[tm["cr_timing"].isin(("dated", "interval"))]
     assert len(ev) == 2 and (ev["cr_timing"] == "dated").all()
     assert (ev["cr_interval_days"] == 1).all()
@@ -1693,7 +1693,7 @@ def test_missing_freshness_metadata_yields_insufficient_variation_not_a_relaxed_
     assert t["rule_may_not_be_relaxed_for_data_availability"] is True
     cfg = audited_config()
     panel = make_trading_panel(a1=0.30, seed=82)
-    panel["cr_timing"] = np.where(panel["CR_raw"] != 0, "interval", "zero_verified")
+    panel["cr_timing"] = np.where(panel["CR_raw"] != 0, "interval", "zero_net_verified")
     choice, audit, census = preflight(cfg, panel)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
@@ -1819,10 +1819,11 @@ def test_the_interval_robustness_outcome_is_defined_and_cannot_replace_the_prima
 CUTOFF_BASE = {"economic_cutoff_documented": True, "economic_cutoff_cadence": "daily"}
 
 
-def test_a_market_close_cutoff_aligns_cr_with_the_trading_day():
+def test_a_market_close_cutoff_registers_the_rth_window_and_declares_its_estimand():
     a = pre.interval_alignment(dict(CUTOFF_BASE, cutoff_time="market_close"), CONFIG)
-    assert a["alignment_class"] == "aligned_trading_day"
-    assert a["oib_window"] == "trading_day_t"
+    assert a["alignment_class"] == "close_to_close_rth_declared"
+    assert a["oib_window"] == "rth_session_day_t"
+    assert a["exact_interval_alignment_claimed"] is False    # not literal full coverage
     assert a["primary_eligible"] is True
 
 
@@ -1927,20 +1928,25 @@ def test_an_unchanged_day_under_carryforward_is_not_a_no_creation_day():
     freshly measured are an absence of measurement, not evidence of no creation."""
     tm = pre.classify_cr_event_timing(partially_stale_fund(), None, CONFIG, CLOSE_RECORD)
     by_date = dict(zip(tm["date"].dt.strftime("%m-%d"), tm["cr_timing"]))
-    assert by_date["01-03"] == "zero_unverified"     # its own observation is stale
-    assert by_date["01-04"] == "zero_unverified"
-    assert by_date["01-05"] == "zero_unverified"     # fresh at t, but t-1 was carried forward
-    assert by_date["01-07"] == "zero_verified"       # both endpoints measured
+    assert by_date["01-03"] == "zero_net_unverified"     # its own observation is stale
+    assert by_date["01-04"] == "zero_net_unverified"
+    assert by_date["01-05"] == "zero_net_unverified"     # fresh at t, but t-1 was carried forward
+    assert by_date["01-07"] == "zero_net_verified"       # both endpoints measured
     z = CONFIG["network_exposure"]["cr_event_timing"]["zero_cr_observations"]
-    assert z["zero_unverified"]["primary_eligible"] is False
+    assert z["zero_net_unverified"]["primary_eligible"] is False
     assert z["unverified_zeros_may_be_treated_as_no_creation"] is False
+    # and a VERIFIED zero is a zero NET observation, not a no-AP-activity control
+    assert z["zero_net_verified"]["establishes"] == "zero_net_cr_over_the_interval"
+    assert z["zero_net_verified"]["does_not_establish"] == "zero_gross_ap_activity"
+    assert z["zero_net_verified"]["may_be_interpreted_as_no_ap_activity_control"] is False
 
 
 def test_unverified_zeros_are_excluded_from_the_primary():
     tm = pre.classify_cr_event_timing(partially_stale_fund(), None, CONFIG, CLOSE_RECORD)
+    tm["oib_interval_coverage_complete"] = True     # RTH window fully covered
     kept = pre.primary_timing_sample(tm, CONFIG)
     assert kept.attrs["n_unverified_zeros_excluded"] == 4
-    assert set(kept["cr_timing"]) <= {"dated", "zero_verified"}
+    assert set(kept["cr_timing"]) <= {"dated", "zero_net_verified"}
 
 
 def test_a_verified_zero_day_requires_the_same_endpoints_as_a_dated_event():
@@ -1948,12 +1954,12 @@ def test_a_verified_zero_day_requires_the_same_endpoints_as_a_dated_event():
     and 'no creation happened on day t'."""
     z = CONFIG["network_exposure"]["cr_event_timing"]["zero_cr_observations"]
     t = CONFIG["network_exposure"]["cr_event_timing"]
-    assert set(z["zero_verified"]["requires"]) == set(t["dated_requires"]) | {
+    assert set(z["zero_net_verified"]["requires"]) == set(t["dated_requires"]) | {
         "cr_oib_interval_alignment"}
     # no freshness evidence at all -> every zero is unverified too
     plain = partially_stale_fund().drop(columns=["shares_as_of"])
     tm = pre.classify_cr_event_timing(plain, None, CONFIG, CLOSE_RECORD)
-    assert (tm["cr_timing"] != "zero_verified").all()
+    assert (tm["cr_timing"] != "zero_net_verified").all()
 
 
 def test_the_verdict_refuses_a_primary_carrying_unverified_zeros():
@@ -1963,7 +1969,9 @@ def test_the_verdict_refuses_a_primary_carrying_unverified_zeros():
     on_quiet = panel["date"] == quiet_day
     for col in ("CR", "CR_raw", "CR_mag"):
         panel.loc[on_quiet, col] = 0.0          # a genuine zero day...
-    panel.loc[on_quiet, "cr_timing"] = "zero_unverified"   # ...that nobody measured
+    panel.loc[on_quiet, "cr_timing"] = "zero_net_unverified"   # ...that nobody measured
+    panel["alignment_class"] = "close_to_close_rth_declared"
+    panel["oib_interval_coverage_complete"] = True
     choice, audit, census = preflight(cfg, panel)
     r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
                               outcome_class="trading_connectivity", config=cfg)
@@ -1976,12 +1984,14 @@ def test_the_verdict_refuses_a_primary_carrying_unverified_zeros():
 
 def test_the_census_reports_verified_and_unverified_zero_counts():
     tm = pre.classify_cr_event_timing(partially_stale_fund(), None, CONFIG, CLOSE_RECORD)
-    c = pre.cr_event_census(tm.assign(CR_raw=0.0), CONFIG)
-    assert c["timing"]["n_zero_verified"] == 1
-    assert c["timing"]["n_zero_unverified"] == 4
+    c = pre.cr_event_census(tm.assign(CR_raw=0.0, alignment_class="close_to_close_rth_declared",
+                                      oib_interval_coverage_complete=True), CONFIG)
+    assert c["timing"]["n_zero_net_verified"] == 1
+    assert c["timing"]["n_zero_net_unverified"] == 4
     rep = CONFIG["network_exposure"]["cr_event_timing"][
         "cr_oib_interval_alignment"]["report"]
-    for k in ("n_zero_verified", "n_zero_unverified", "n_partial_oib_coverage_events"):
+    for k in ("n_zero_net_verified", "n_zero_net_unverified",
+              "n_partial_oib_coverage_events"):
         assert k in rep, k
 
 
@@ -1989,9 +1999,9 @@ def test_the_census_reports_verified_and_unverified_zero_counts():
 # cutoff-to-cutoff alignment needs COMPLETE OIB coverage of that interval      #
 # --------------------------------------------------------------------------- #
 
-def cutoff_panel(coverage=True, seed=110):
+def cutoff_panel(coverage=True, seed=110, cls="aligned_cutoff_to_cutoff"):
     panel = make_trading_panel(n_stocks=5, n_days=8, a1=0.30, seed=seed)
-    panel["alignment_class"] = "aligned_cutoff_to_cutoff"
+    panel["alignment_class"] = cls
     panel["oib_interval_coverage_complete"] = coverage
     return panel
 
@@ -2020,7 +2030,7 @@ def test_a_cutoff_to_cutoff_panel_without_a_coverage_column_is_refused():
     panel = cutoff_panel().drop(columns=["oib_interval_coverage_complete"])
     with pytest.raises(pre.SafeguardViolation) as e:
         pre.primary_timing_sample(panel, CONFIG)
-    assert "WHOLE cutoff-to-cutoff interval" in str(e.value)
+    assert "completely cover the window that class registers" in str(e.value)
 
 
 def test_the_verdict_refuses_a_primary_with_partial_interval_coverage():
@@ -2040,10 +2050,39 @@ def test_the_verdict_refuses_a_primary_with_partial_interval_coverage():
     assert "the gap is systematic" in str(e.value)
 
 
-def test_a_market_close_panel_needs_no_coverage_column():
-    """Coverage of the session is the session, so the requirement attaches only to the
-    cutoff-to-cutoff class."""
+def test_a_market_close_cutoff_is_not_exempt_from_the_coverage_requirement():
+    """CORRECTION: a close-to-close CR interval is (close_{t-1}, close_t], which CONTAINS the
+    overnight and pre-market session. RTH-only OIB is not literal full coverage, so the class
+    declares its estimand instead of claiming exact alignment — and it still has to cover the
+    RTH window it registers."""
+    al = CONFIG["network_exposure"]["cr_event_timing"]["cr_oib_interval_alignment"]
+    assert al["coverage_required_for_every_class"] is True
+    spec = al["classes"]["close_to_close_rth_declared"]
+    assert spec["exact_interval_alignment_claimed"] is False
+    assert spec["uncovered_portion_of_cr_interval"] == "overnight_and_pre_market"
+    assert "RTH constituent trading" in spec["estimand"]
+    assert spec["requires_complete_oib_coverage_over_registered_window"] is True
+
     panel = make_trading_panel(n_stocks=4, n_days=6, seed=112)
-    panel["alignment_class"] = "aligned_trading_day"
+    panel["alignment_class"] = "close_to_close_rth_declared"
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.primary_timing_sample(panel, CONFIG)          # no coverage column at all
+    assert "market-close cutoff is not exempt" in str(e.value)
+
+    panel["oib_interval_coverage_complete"] = True
+    bad = sorted(panel["date"].unique())[2]
+    panel.loc[panel["date"] == bad, "oib_interval_coverage_complete"] = False
     kept = pre.primary_timing_sample(panel, CONFIG)
-    assert kept.attrs["n_partial_oib_coverage_excluded"] == 0
+    assert kept.attrs["n_partial_oib_coverage_excluded"] == 1
+    assert bad not in set(kept["date"])
+
+
+def test_an_exact_alignment_claim_needs_full_window_coverage():
+    al = CONFIG["network_exposure"]["cr_event_timing"]["cr_oib_interval_alignment"]
+    assert al["exact_alignment_requires_full_window_oib"] is True
+    assert al["classes"]["aligned_cutoff_to_cutoff"]["exact_interval_alignment_claimed"] == \
+        "conditional_on_full_window_coverage"
+    a = pre.interval_alignment(dict(CUTOFF_BASE, cutoff_time="market_close"), CONFIG)
+    assert a["exact_interval_alignment_claimed"] is False
+    assert a["uncovered_portion_of_cr_interval"] == "overnight_and_pre_market"
+    assert "day-localized close-to-close NET CR" in a["estimand"]

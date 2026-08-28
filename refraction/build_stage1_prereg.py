@@ -207,13 +207,19 @@ def render(cfg: dict) -> str:
         a("| %s | %s | %s | %s |"
           % (cls["requires"], name, _fmt(cls["oib_window"]), _fmt(cls["primary_eligible"])))
     a("")
-    a("For `aligned_cutoff_to_cutoff`, a known cutoff is **not sufficient on its own**: the "
-      "constituent OIB must cover the WHOLE cutoff-to-cutoff interval (`%s`). If the trading "
-      "feed covers only part of it, the measured imbalance is a partial-session quantity "
-      "paired with a full-interval CR — a different variable, and one whose gap is "
-      "systematic, since feeds stop at the close. Such observations are **%s**."
-      % (_fmt(al["classes"]["aligned_cutoff_to_cutoff"][
-              "requires_complete_oib_coverage_over_interval"]),
+    a("**Coverage is required for every class, on whatever window that class registers "
+      "(`%s`), and a market-close cutoff is not exempt.** A close-to-close CR interval is "
+      "`(close_{t-1}, close_t]`, which contains the overnight and pre-market session, so an "
+      "RTH-only outcome does not literally cover it. That class therefore DECLARES its "
+      "estimand — %s — rather than claiming exact alignment, and names the uncovered stretch "
+      "(%s). An exact-alignment claim requires full-window OIB coverage (`%s`). Partially "
+      "covered observations are **%s**; where the feed covers only part of the registered "
+      "window the measured imbalance is a partial-window quantity paired with a "
+      "full-interval CR — a different variable, whose gap is systematic rather than random."
+      % (_fmt(al["coverage_required_for_every_class"]),
+         al["classes"]["close_to_close_rth_declared"]["estimand"].strip(),
+         al["classes"]["close_to_close_rth_declared"]["uncovered_portion_of_cr_interval"],
+         _fmt(al["exact_alignment_requires_full_window_oib"]),
          al["classes"]["aligned_cutoff_to_cutoff"]["partial_coverage_response"]))
     a("")
     a("Alignment is a **separate condition from datedness**: an event can be day-localized "
@@ -226,19 +232,23 @@ def render(cfg: dict) -> str:
     a("")
     z = t["zero_cr_observations"]
     a("**Timing eligibility applies to zero-CR observations too.** An observed `CR_raw = 0` "
-      "is a claim — that no creation or redemption happened — and it needs the same endpoint "
-      "evidence as a nonzero event. Unchanged shares outstanding under carry-forward are an "
-      "absence of measurement, not a no-creation day, and would otherwise enter the "
-      "regression as a zero-exposure control drawn from days nobody looked at.")
+      "is a claim and needs the same endpoint evidence as a nonzero event. Unchanged shares "
+      "outstanding under carry-forward are an absence of measurement, and would otherwise "
+      "enter the regression as a zero-exposure control drawn from days nobody looked at.")
+    a("")
+    a("What a verified zero establishes is **zero NET CR over the interval**, not zero gross "
+      "AP activity: a creation and a redemption of equal size inside the interval also leave "
+      "the share count unchanged. These are valid zero observations for the registered "
+      "net-CR estimand, and they may **not** be interpreted as no-AP-activity controls.")
     a("")
     a("| zero class | meaning | may enter the primary |")
     a("|---|---|---|")
-    for name in ("zero_verified", "zero_unverified"):
+    for name in ("zero_net_verified", "zero_net_unverified"):
         a("| %s | %s | %s |" % (name, z[name]["meaning"], _fmt(z[name]["primary_eligible"])))
     a("")
-    a("`zero_verified` requires %s — the same conditions a dated event requires. "
+    a("`zero_net_verified` requires %s — the same conditions a dated event requires. "
       "Unverified zeros in the primary: **%s**; treating them as no-creation days: **%s**."
-      % (_fmt(z["zero_verified"]["requires"]), z["unverified_zeros_in_primary"],
+      % (_fmt(z["zero_net_verified"]["requires"]), z["unverified_zeros_in_primary"],
          _fmt(z["unverified_zeros_may_be_treated_as_no_creation"])))
     a("")
     a("**Dated is day-localized only.** It does not establish within-day ordering between AP "

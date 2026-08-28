@@ -579,7 +579,7 @@ network_exposure:
   # manufactures a same-day association, because the update day is the one day in the
   # interval guaranteed to carry a printed share change.
   cr_event_timing:
-    classes: [dated, interval, zero_verified, zero_unverified]
+    classes: [dated, interval, zero_net_verified, zero_net_unverified]
     #
     # ZERO-CR OBSERVATIONS ARE ALSO TIMING-ELIGIBLE OR NOT (final guard, 2026-08-28).
     # An observed CR_raw = 0 is a claim — "no creation or redemption happened" — and it needs
@@ -587,18 +587,30 @@ network_exposure:
     # carry-forward is not a no-creation day; it is an ABSENCE OF MEASUREMENT wearing the
     # appearance of one, and it enters the regression as a zero-exposure control observation
     # that dilutes the estimate with days nobody looked at.
+    # NAMING CORRECTION 2026-08-28. The class was called zero_verified and glossed as "a
+    # measured no-creation day". It is not that. Fresh equal endpoints establish that the NET
+    # change was zero — and a creation and a redemption of equal size inside the interval
+    # leave Delta(SharesOut) = 0. So a verified zero is a VERIFIED ZERO NET CR observation,
+    # which is a valid zero for the registered net-CR estimand and says nothing about GROSS
+    # AP activity. The paper may not read these days as no-AP-activity controls.
     zero_cr_observations:
-      zero_verified:
+      zero_net_verified:
         requires: [economic_as_of_freshness_at_t, economic_as_of_freshness_at_t_minus_1,
                    cr_oib_interval_alignment]        # the SAME conditions a dated event needs
-        meaning: an observed and measured no-creation day
+        meaning: an observed and measured ZERO NET creation/redemption day
+        establishes: zero_net_cr_over_the_interval
+        does_not_establish: zero_gross_ap_activity
+        valid_zero_for: the_registered_net_cr_estimand
+        may_be_interpreted_as_no_ap_activity_control: false
         primary_eligible: true
-      zero_unverified:
+      zero_net_unverified:
         meaning: unchanged shares whose endpoints were not both freshly measured
         primary_eligible: false
-        why: "absence of measurement, not evidence of no creation"
+        why: "absence of measurement, not evidence of zero net CR"
       unverified_zeros_in_primary: excluded
       unverified_zeros_may_be_treated_as_no_creation: false
+      # The same caveat the interval robustness carries, for the same reason:
+      offsetting_flows_within_the_interval_are_unobserved: true
     # CORRECTION 2026-08-28. An earlier rule made "preceded by a run of unchanged shares"
     # sufficient evidence of carry-forward. It is not. A genuinely daily series stays
     # CONSTANT whenever no creation or redemption occurs, which for most funds is most days.
@@ -668,10 +680,25 @@ network_exposure:
       cr_measurement_interval: "(economic cutoff at t-1, economic cutoff at t]"
       oib_measurement_interval_must_match: true
       calendar_date_equality_is_not_alignment: true
+      # COVERAGE IS UNIVERSAL 2026-08-28. A market-close cutoff was exempted from the
+      # outcome-window coverage requirement. It should not have been. A close-to-close CR
+      # interval is (close_{t-1}, close_t], which CONTAINS the overnight and pre-market
+      # session; an RTH-only OIB does not literally cover it. Market-close timing removes
+      # neither the coverage requirement nor the need to say what is actually being measured.
+      exact_alignment_requires_full_window_oib: true
+      coverage_required_for_every_class: true
       classes:
-        aligned_trading_day:      # cutoff is the market close
+        close_to_close_rth_declared:   # cutoff is the market close; OIB is the RTH session
           requires: cutoff_time_is_market_close
-          oib_window: trading_day_t
+          oib_window: rth_session_day_t
+          # The estimand is DECLARED, not claimed to be exactly aligned. CR spans
+          # (close_{t-1}, close_t] and the outcome spans RTH day t, so the overnight and
+          # pre-market portion of the CR interval is not covered by the outcome.
+          exact_interval_alignment_claimed: false
+          estimand: >
+            RTH constituent trading associated with day-localized close-to-close NET CR
+          requires_complete_oib_coverage_over_registered_window: true
+          uncovered_portion_of_cr_interval: overnight_and_pre_market
           primary_eligible: true
         aligned_cutoff_to_cutoff:  # cutoff is another documented, KNOWN time
           requires: cutoff_time_known_and_documented
@@ -683,6 +710,11 @@ network_exposure:
           # from the registered one, and one whose incompleteness is systematic (feeds stop
           # at the close, so the missing part is always the same part of the day).
           requires_complete_oib_coverage_over_interval: true
+          requires_complete_oib_coverage_over_registered_window: true
+          # An EXACT alignment claim is available here only when the OIB covers the whole
+          # cutoff-to-cutoff window, non-RTH time included. Otherwise this class behaves like
+          # the declared-estimand one: say what window was measured, claim nothing more.
+          exact_interval_alignment_claimed: conditional_on_full_window_coverage
           partial_coverage_response: downgrade_to_interval_robustness
           primary_eligible: true
         unaligned_unknown_cutoff:  # only the as-of DATE is documented
@@ -691,11 +723,12 @@ network_exposure:
           primary_eligible: false
           interpretation: day_localized_but_interval_misaligned
           claim_forbidden: exact_same_day_interval_alignment
-      primary_requires_alignment_in: [aligned_trading_day, aligned_cutoff_to_cutoff]
+      primary_requires_alignment_in: [close_to_close_rth_declared, aligned_cutoff_to_cutoff]
       misaligned_events_go_to: interval_robustness
       oib_coverage_column: oib_interval_coverage_complete
       report: [alignment_class, cutoff_time, oib_window, n_aligned_events, n_misaligned_events,
-               n_partial_oib_coverage_events, n_zero_verified, n_zero_unverified]
+               n_partial_oib_coverage_events, n_zero_net_verified,
+               n_zero_net_unverified]
     dated_means: day_localized_only
     dated_establishes_within_day_ordering: false
     same_day_g8_status: mechanism_association_and_calibration

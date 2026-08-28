@@ -684,16 +684,27 @@ def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
                 "vendor_refresh_flag"):
         assert pub in fe["insufficient_alone"], pub
     assert t["primary_additionally_requires"] == "cr_oib_interval_alignment"
-    assert set(t["classes"]) == {"dated", "interval", "zero_verified", "zero_unverified"}
+    assert set(t["classes"]) == {"dated", "interval",
+                                 "zero_net_verified", "zero_net_unverified"}
     z = t["zero_cr_observations"]
-    assert z["zero_verified"]["primary_eligible"] is True
-    assert z["zero_unverified"]["primary_eligible"] is False
+    assert z["zero_net_verified"]["primary_eligible"] is True
+    assert z["zero_net_unverified"]["primary_eligible"] is False
+    # a verified zero is a zero NET observation; offsetting flows are unobserved
+    assert z["zero_net_verified"]["does_not_establish"] == "zero_gross_ap_activity"
+    assert z["zero_net_verified"]["may_be_interpreted_as_no_ap_activity_control"] is False
+    assert z["offsetting_flows_within_the_interval_are_unobserved"] is True
     assert z["unverified_zeros_in_primary"] == "excluded"
     assert z["unverified_zeros_may_be_treated_as_no_creation"] is False
     al = t["cr_oib_interval_alignment"]
     assert al["calendar_date_equality_is_not_alignment"] is True
     assert al["oib_measurement_interval_must_match"] is True
-    assert al["classes"]["aligned_trading_day"]["oib_window"] == "trading_day_t"
+    assert al["coverage_required_for_every_class"] is True
+    assert al["exact_alignment_requires_full_window_oib"] is True
+    ctc = al["classes"]["close_to_close_rth_declared"]
+    assert ctc["oib_window"] == "rth_session_day_t"
+    assert ctc["exact_interval_alignment_claimed"] is False
+    assert ctc["uncovered_portion_of_cr_interval"] == "overnight_and_pre_market"
+    assert ctc["requires_complete_oib_coverage_over_registered_window"] is True
     assert al["classes"]["aligned_cutoff_to_cutoff"]["oib_window"] == \
         "cutoff_t_minus_1_to_cutoff_t"
     assert al["classes"]["aligned_cutoff_to_cutoff"][
@@ -703,7 +714,7 @@ def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
     assert al["classes"]["unaligned_unknown_cutoff"]["primary_eligible"] is False
     assert al["classes"]["unaligned_unknown_cutoff"]["claim_forbidden"] == \
         "exact_same_day_interval_alignment"
-    assert set(al["primary_requires_alignment_in"]) == {"aligned_trading_day",
+    assert set(al["primary_requires_alignment_in"]) == {"close_to_close_rth_declared",
                                                         "aligned_cutoff_to_cutoff"}
     assert al["misaligned_events_go_to"] == "interval_robustness"
     assert t["dated_means"] == "day_localized_only"
