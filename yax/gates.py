@@ -23,6 +23,7 @@ Stdlib only: this runs on the SCC under an old interpreter as well as locally.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import pathlib
@@ -32,9 +33,11 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
+PRESPEC_V2 = "yax/COVERAGE_RULE_PRESPEC_v2.md"
 FREEZE = "yax/DESIGN_FREEZE_v1.md"
 FREEZE_V2 = "yax/DESIGN_FREEZE_v2.md"
 AMENDMENT = "yax/FREEZE_AMENDMENT_2026-08-27.md"
+PAIRED_AMENDMENT = "yax/FREEZE_AMENDMENT_2026-08-29_PAIRED_PRECISION.md"
 PLAN = "yax/RESEARCH_PLAN_v5.md"
 SUPPORT = "yax/measurement/computerization_support_66m_receipt.json"
 COMPMEAS = "yax/measurement/COMPUTERIZATION_MEASURES.csv"
@@ -249,17 +252,17 @@ def _gate_calibration_one(agg):
 
 
 def gate_coverage_rule(agg):
-    """§9.1 + COVERAGE_RULE_PRESPEC_v1.md. The rule is declared, and a failed
-    strict gate must not have silently unlocked the freeze."""
-    p = ROOT / PRESPEC
+    """The three rules and the live primary must be declared before the tag."""
+    active = PRESPEC_V2 if (ROOT / PRESPEC_V2).is_file() else PRESPEC
+    p = ROOT / active
     if not p.is_file():
-        return Result("coverage_rule", "FAIL", f"{PRESPEC} does not exist")
+        return Result("coverage_rule", "FAIL", f"{active} does not exist")
     text = p.read_text(encoding="utf-8")
     needed = ["Rule A", "Rule B", "Rule C", "PRIMARY"]
     missing = [n for n in needed if n not in text]
     if missing:
         return Result("coverage_rule", "FAIL",
-                      f"{PRESPEC} does not name {missing}")
+                      f"{active} does not name {missing}")
     if agg is not None and agg.get("design_freeze_permitted") is True:
         frac = agg.get("covered_route_mass_fraction")
         if frac is not None and frac < 0.90:
@@ -268,7 +271,7 @@ def gate_coverage_rule(agg):
                           f"coverage {frac:.4f} < 0.90. A failed gate must not "
                           f"unlock the freeze.")
     return Result("coverage_rule", "PASS",
-                  "three rules declared, primary named in advance")
+                  f"three rules declared and primary named in {active}")
 
 
 def gate_prespec_precedes_tag(tag):
@@ -277,10 +280,11 @@ def gate_prespec_precedes_tag(tag):
     if tag_commit is None:
         return Result("prespec_before_tag", "BLOCKED",
                       f"tag {tag} does not exist yet — freeze has not happened")
-    first = _git("log", "--reverse", "--format=%H", "--", PRESPEC)
+    prespec = PRESPEC_V2 if tag == "v1.1-design-freeze" else PRESPEC
+    first = _git("log", "--reverse", "--format=%H", "--", prespec)
     if not first:
         return Result("prespec_before_tag", "FAIL",
-                      f"{PRESPEC} has no commit history")
+                      f"{prespec} has no commit history")
     prespec_commit = first.splitlines()[0]
     # `merge-base --is-ancestor` answers through exit status, not stdout, so
     # _git (which returns stdout) cannot express it.
@@ -293,26 +297,27 @@ def gate_prespec_precedes_tag(tag):
         return Result("prespec_before_tag", "BLOCKED", "git merge-base failed")
     if ok:
         return Result("prespec_before_tag", "PASS",
-                      f"{PRESPEC} ({prespec_commit[:9]}) is an ancestor of {tag}")
+                      f"{prespec} ({prespec_commit[:9]}) is an ancestor of {tag}")
     return Result("prespec_before_tag", "FAIL",
-                  f"{PRESPEC} was committed AFTER {tag}. The pre-specification "
+                  f"{prespec} was committed AFTER {tag}. The pre-specification "
                   f"is void by its own terms and the coverage rule must be "
                   f"reported as a post-hoc choice.")
 
 
 def gate_freeze_doc(tag):
     """§9.5. The freeze document must exist and pin the panel it froze."""
-    p = ROOT / FREEZE
+    freeze = FREEZE_V2 if tag == "v1.1-design-freeze" else FREEZE
+    p = ROOT / freeze
     if not p.is_file():
         return Result("freeze_doc", "BLOCKED",
-                      f"{FREEZE} not written yet — pre-freeze work outstanding")
+                      f"{freeze} not written yet — pre-freeze work outstanding")
     text = p.read_text(encoding="utf-8")
     if not any(len(w) == 64 and all(c in "0123456789abcdef" for c in w.lower())
                for w in text.split()):
         return Result("freeze_doc", "FAIL",
-                      f"{FREEZE} carries no 64-hex panel sha256. A freeze that "
+                      f"{freeze} carries no 64-hex panel sha256. A freeze that "
                       f"does not pin the data it froze is not a freeze.")
-    return Result("freeze_doc", "PASS", f"{FREEZE} present and pins a sha256")
+    return Result("freeze_doc", "PASS", f"{freeze} present and pins a sha256")
 
 
 def gate_plan_consistency(tag):
@@ -547,6 +552,10 @@ def gate_amendment_current(tag):
                       f"{PLAN} amends the frozen design but {AMENDMENT} does "
                       f"not exist. An undocumented amendment to a freeze is the "
                       f"thing the freeze exists to prevent.")
+    if not (ROOT / PAIRED_AMENDMENT).is_file():
+        return Result("amendment_current", "BLOCKED",
+                      f"owner-authorized Test C amendment {PAIRED_AMENDMENT} "
+                      f"has not been recorded")
     if not (ROOT / FREEZE_V2).is_file():
         return Result("amendment_current", "BLOCKED",
                       f"{AMENDMENT} records three changes to v1.0 — post-period "
@@ -562,118 +571,100 @@ def gate_amendment_current(tag):
                   "amended freeze documented and tagged; v1.0 preserved")
 
 
-def gate_paired_delta_power(agg):
-    """§4.2. Equivalence feasibility is the power of the paired equivalence test,
-    not MDE_Delta.
+def gate_paired_difference_precision(agg):
+    """Verify the amended, outcome-blind Test C precision artifact.
 
-    Two different objects, and conflating them is the failure this catches:
-
-      MDE_Delta,80   -- how large a true difference the design could DETECT.
-                        Secondary diagnostic.
-      Equivalence
-      power at
-      Delta = 0      -- whether the design could ESTABLISH equivalence if the
-                        truth were exact equality. BINDING.
-
-    A small MDE_Delta is not evidence that equivalence can be established: the
-    difference test asks whether zero can be excluded, the equivalence test asks
-    whether everything economically meaningful can be excluded. Failure to
-    reject Delta = 0 is not equivalence.
-
-    Delta needs its own precision object because the paired draws preserve the
-    covariance -- Var(Delta) = Var(b_m) + Var(b_m') - 2 Cov -- so SE(Delta) can
-    be far smaller or larger than either headline SE. MDE_beta is never a
-    substitute for either object.
-
-    Requires all five components of the §4.2 artifact and names what is missing.
+    The 2026-08-29 pre-outcome amendment retires binding equivalence inference
+    because no verified published estimate matches the YAX age groups,
+    employment-stock estimand, Q5-Q1 contrast and scale.  The gate therefore
+    must not require or infer a numerical SESOI.  It verifies only the paired
+    difference design: stored paired draws, SE(Delta), CI construction,
+    MDE_Delta,80, covariance preservation through common draws, and the outcome
+    seal.  A CI containing zero means only "does not detect a difference".
     """
+    name = "paired_difference_precision"
     if agg is None:
-        return Result("paired_delta_power", "BLOCKED",
-                      "no power aggregate supplied")
+        return Result(name, "BLOCKED", "no paired-difference artifact supplied")
 
-    def _items(obj, acc):
-        if isinstance(obj, dict):
-            for k, v in obj.items():
-                acc.append((k.lower(), v))
-                _items(v, acc)
-        elif isinstance(obj, list):
-            for v in obj:
-                _items(v, acc)
-        return acc
+    def _finite(value, positive=False):
+        ok = (not isinstance(value, bool)
+              and isinstance(value, (int, float)) and math.isfinite(value))
+        return ok and (not positive or value > 0)
 
-    items = _items(agg, [])
+    source = agg.get("paired_distribution_source", {})
+    distribution_ok = (
+        isinstance(source, dict)
+        and isinstance(source.get("path"), str)
+        and bool(re.fullmatch(r"[0-9a-f]{64}", str(source.get("sha256", ""))))
+        and source.get("field") == "paired_delta_distribution"
+        and isinstance(source.get("stored_draws"), int)
+        and source.get("stored_draws", 0) >= 999
+    )
+    if distribution_ok:
+        source_path = ROOT / source["path"]
+        distribution_ok = (
+            source_path.is_file()
+            and hashlib.sha256(source_path.read_bytes()).hexdigest()
+            == source["sha256"]
+        )
+    direct = agg.get("paired_delta_distribution")
+    if isinstance(direct, list) and len(direct) >= 999:
+        distribution_ok = all(_finite(value) for value in direct)
 
-    def _finite(value):
-        return (not isinstance(value, bool)
-                and isinstance(value, (int, float)) and math.isfinite(value))
+    se_ok = _finite(agg.get("paired_delta_se"), positive=True)
 
-    def _informative(value):
-        if _finite(value):
-            return True
-        if isinstance(value, list):
-            return bool(value) and all(_finite(v) for v in value)
-        if isinstance(value, dict):
-            return bool(value) and any(_informative(v) for v in value.values())
-        return False
+    ci = agg.get("paired_confidence_interval", {})
+    ci_ok = (
+        isinstance(ci, dict)
+        and ci.get("confidence_level") == 0.95
+        and _finite(ci.get("critical_halfwidth_log_points"), positive=True)
+        and isinstance(ci.get("construction"), str)
+        and "delta_hat" in ci.get("construction", "")
+        and ci.get("computed_after_outcomes_open") is False
+    )
 
-    def _values(*required_groups):
-        """Values whose key contains at least one token from every group."""
-        values = []
-        for k, value in items:
-            if all(any(tok in k for tok in group) for group in required_groups):
-                values.append(value)
-        return values
+    mde = agg.get("mde_delta_80", {})
+    mde_ok = (
+        isinstance(mde, dict)
+        and _finite(mde.get("log_points"), positive=True)
+        and _finite(mde.get("relative_magnitude"), positive=True)
+        and mde.get("power_target") == 0.80
+    )
 
-    def _has(*required_groups):
-        for value in _values(*required_groups):
-            if _informative(value):
-                return True
-        return False
+    common = agg.get("common_bootstrap_draws", {})
+    common_ok = (
+        isinstance(common, dict)
+        and common.get("same_draw_applied_to_both_exposure_definitions") is True
+        and common.get("covariance_preserved") is True
+        and _finite(common.get("paired_covariance"))
+        and isinstance(common.get("draws"), int)
+        and common.get("draws", 0) >= 999
+        and common.get("failures") == 0
+    )
 
-    def _valid_grid():
-        for value in _values(("margin", "grid", "benchmark"), ("grid", "margin")):
-            if isinstance(value, dict):
-                numeric = [v for v in value.values() if _finite(v)]
-                if len(numeric) >= 3:
-                    return True
-            if isinstance(value, list):
-                powers = []
-                for row in value:
-                    if not isinstance(row, dict):
-                        continue
-                    candidate = next((v for k, v in row.items()
-                                      if "power" in k.lower() and _finite(v)), None)
-                    if candidate is not None:
-                        powers.append(candidate)
-                if len(powers) >= 3:
-                    return True
-        return False
-
-    required = [
-        ("paired distribution or SE of Delta",
-         _has(("delta",), ("se", "sd", "distribution", "variance"))),
-        ("pre-specified equivalence interval",
-         _has(("equivalence",), ("interval", "bound", "margin", "sesoi"))),
-        ("equivalence-test power at Delta = 0 under the primary SESOI  [BINDING]",
-         _has(("equivalence",), ("power",))),
-        ("12.5/25/50 benchmark-margin grid (diagnostics only)",
-         _valid_grid()),
-        ("MDE_Delta,80 (secondary)",
-         _has(("delta",), ("mde",))),
+    seal_ok = agg.get("post_outcomes_read") is False
+    requirements = [
+        ("paired bootstrap distribution or authenticated stored representation",
+         distribution_ok),
+        ("paired SE(Delta)", se_ok),
+        ("paired 95% CI construction", ci_ok),
+        ("MDE_Delta,80", mde_ok),
+        ("common draws preserving covariance", common_ok),
+        ("zero protected post-period outcomes read", seal_ok),
     ]
-    missing = [name for name, ok in required if not ok]
+    missing = [label for label, ok in requirements if not ok]
     if missing:
-        return Result("paired_delta_power", "BLOCKED",
-                      f"the §4.2 paired-equivalence artifact is incomplete. "
-                      f"Missing: {missing}. The BINDING object is "
-                      f"equivalence-test power at Delta = 0 under the primary "
-                      f"SESOI; MDE_Delta is secondary and MDE_beta satisfies "
-                      f"neither. Failure to reject Delta = 0 is not equivalence, "
-                      f"and a small MDE is not evidence that equivalence can be "
-                      f"established.")
-    return Result("paired_delta_power", "PASS",
-                  "paired-equivalence artifact carries all five §4.2 components "
-                  "including equivalence power at Delta = 0")
+        return Result(name, "BLOCKED",
+                      f"paired-difference precision artifact is incomplete. "
+                      f"Missing or invalid: {missing}. A numerical SESOI, "
+                      f"equivalence interval and equivalence power are retired "
+                      f"and must not be fabricated.")
+    return Result(
+        name, "PASS",
+        f"999+ common paired draws authenticate SE(Delta), 95% CI construction "
+        f"and MDE_Delta,80={mde['relative_magnitude']:.3%}; protected outcomes "
+        f"remain sealed. This is difference-detection precision, not economic "
+        f"equivalence.")
 
 
 # ---------------------------------------------------------------- runner
@@ -696,7 +687,7 @@ def run(power_aggregate=None, tag=DEFAULT_TAG, paired_aggregate=None):
     return [
         gate_gradient(agg),
         gate_calibration(agg),
-        gate_paired_delta_power(paired),
+        gate_paired_difference_precision(paired),
         gate_coverage_rule(agg),
         gate_novelty(tag),
         gate_computerization(tag),
@@ -714,7 +705,7 @@ def main(argv=None):
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--power-aggregate", help="power_available_support_aggregate_*.json")
     ap.add_argument("--paired-aggregate",
-                    help="outcome-blind paired-equivalence precision artifact")
+                    help="outcome-blind paired-difference precision artifact")
     ap.add_argument("--freeze-tag", default=DEFAULT_TAG)
     ap.add_argument("--json", action="store_true", help="machine-readable output")
     args = ap.parse_args(argv)

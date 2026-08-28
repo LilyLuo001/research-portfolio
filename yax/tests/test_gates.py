@@ -209,10 +209,17 @@ def test_current_latest_version_novelty_audit_passes():
     assert "primary source" in r.detail
 
 
-def test_amendment_gate_blocks_until_the_amended_freeze_is_tagged():
+def test_amendment_gate_blocks_until_the_amended_freeze_is_tagged(tmp_path, monkeypatch):
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+    for rel in (gates.PLAN, gates.AMENDMENT, gates.PAIRED_AMENDMENT,
+                gates.FREEZE_V2):
+        path = tmp_path / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("recorded\n", encoding="utf-8")
+    monkeypatch.setattr(gates, "_git", lambda *args: None)
     r = gates.gate_amendment_current("v1.1-design-freeze")
     assert r.status == "BLOCKED"
-    assert "DESIGN_FREEZE_v2" in r.detail
+    assert "not tagged" in r.detail
 
 
 def test_novelty_sentinel_is_required_verbatim(tmp_path, monkeypatch):
@@ -253,50 +260,64 @@ def test_novelty_fails_when_sentinel_contradicts_an_unresolved_row(tmp_path, mon
 
 
 
-def _full_equivalence_artifact():
-    return {"scenarios": [{"empirical_mde80_relative_decline": 0.0227}],
-            "paired_delta_se": 0.004,
-            "equivalence_interval": [-0.012, 0.012],
-            "equivalence_power_at_delta_zero": 0.83,
-            "benchmark_margin_grid": {"0.125": 0.41, "0.25": 0.83, "0.50": 0.99},
-            "mde_delta_80": 0.011}
-
-
-def test_paired_delta_gate_rejects_mde_delta_alone():
-    """The distinction this gate exists to hold: MDE_Delta says the design could
-    DETECT a difference; equivalence power says it could ESTABLISH equivalence.
-    A small MDE is not evidence of the second."""
-    art = _full_equivalence_artifact()
-    del art["equivalence_power_at_delta_zero"]
-    r = gates.gate_paired_delta_power(art)
-    assert r.status == "BLOCKED"
-    assert "BINDING" in r.detail
-
-
-def test_paired_delta_gate_rejects_a_beta_only_aggregate():
-    beta_only = {"scenarios": [{"empirical_mde80_relative_decline": 0.0227}]}
-    r = gates.gate_paired_delta_power(beta_only)
-    assert r.status == "BLOCKED"
-    assert "MDE_beta satisfies" in r.detail
-
-
-def test_paired_delta_gate_accepts_the_complete_artifact():
-    assert gates.gate_paired_delta_power(_full_equivalence_artifact()).status == "PASS"
-
-
-def test_paired_delta_gate_rejects_null_placeholders():
-    art = _full_equivalence_artifact()
-    art["equivalence_interval"] = None
-    art["equivalence_power_at_delta_zero"] = None
-    art["benchmark_margin_grid"] = {
-        "0.125": None, "0.25": None, "0.50": None
+def _full_precision_artifact():
+    return {
+        "post_outcomes_read": False,
+        "paired_delta_distribution": [0.0] * 999,
+        "paired_delta_se": 0.0117,
+        "paired_confidence_interval": {
+            "confidence_level": 0.95,
+            "critical_halfwidth_log_points": 0.0234,
+            "construction": "[delta_hat - h, delta_hat + h]",
+            "computed_after_outcomes_open": False,
+        },
+        "mde_delta_80": {
+            "power_target": 0.80,
+            "log_points": 0.0327,
+            "relative_magnitude": 0.0333,
+        },
+        "common_bootstrap_draws": {
+            "same_draw_applied_to_both_exposure_definitions": True,
+            "covariance_preserved": True,
+            "paired_covariance": 0.000095,
+            "draws": 999,
+            "failures": 0,
+        },
     }
-    result = gates.gate_paired_delta_power(art)
+
+
+def test_paired_precision_gate_accepts_complete_artifact_without_sesoi():
+    art = _full_precision_artifact()
+    assert "sesoi" not in art
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "PASS"
+    assert "not economic equivalence" in result.detail
+
+
+def test_paired_precision_gate_rejects_unpaired_or_missing_covariance():
+    art = _full_precision_artifact()
+    art["common_bootstrap_draws"]["same_draw_applied_to_both_exposure_definitions"] = False
+    result = gates.gate_paired_difference_precision(art)
     assert result.status == "BLOCKED"
-    assert "equivalence interval" in result.detail
-    assert "equivalence-test power" in result.detail
-    assert "12.5/25/50" in result.detail
+    assert "preserving covariance" in result.detail
 
 
-def test_paired_delta_gate_blocks_without_an_aggregate():
-    assert gates.gate_paired_delta_power(None).status == "BLOCKED"
+def test_paired_precision_gate_requires_ci_construction_not_equivalence_interval():
+    art = _full_precision_artifact()
+    del art["paired_confidence_interval"]
+    art["equivalence_interval"] = [-0.01, 0.01]
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "BLOCKED"
+    assert "paired 95% CI construction" in result.detail
+
+
+def test_paired_precision_gate_fails_closed_if_outcomes_were_read():
+    art = _full_precision_artifact()
+    art["post_outcomes_read"] = True
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "BLOCKED"
+    assert "zero protected" in result.detail
+
+
+def test_paired_precision_gate_blocks_without_an_aggregate():
+    assert gates.gate_paired_difference_precision(None).status == "BLOCKED"
