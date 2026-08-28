@@ -19,6 +19,7 @@ def record(ai, comp, beta_c=A.PRIMARY_BETA_C):
         "ai_measure": ai,
         "computerization_measure": comp,
         "beta_c": beta_c,
+        "effect_scale_code": "q5_q1",
         "design": {
             "post_start": "2023-01",
             "transition_excluded": "2022-12",

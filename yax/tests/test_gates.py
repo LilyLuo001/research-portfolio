@@ -36,6 +36,7 @@ def agg(points, null_size=0.05, coverage=0.95, **extra):
             "post_end": "2026-07",
             "post_gaps": ["2025-10"],
         },
+        effect_scale_code="q5_q1",
         **extra,
     )
 
@@ -43,6 +44,13 @@ def agg(points, null_size=0.05, coverage=0.95, **extra):
 def test_superseded_december_power_window_is_blocked():
     record = agg([(0.01, 0.4), (0.03, 0.9)])
     record["design"]["post_start"] = "2022-12"
+    assert gates.gate_gradient(record).status == "BLOCKED"
+    assert gates.gate_calibration(record).status == "BLOCKED"
+
+
+def test_superseded_per_sd_power_scale_is_blocked():
+    record = agg([(0.01, 0.4), (0.03, 0.9)])
+    record["effect_scale_code"] = "per_sd"
     assert gates.gate_gradient(record).status == "BLOCKED"
     assert gates.gate_calibration(record).status == "BLOCKED"
 

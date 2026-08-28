@@ -25,6 +25,8 @@ def _load(paths):
             raise ValueError(f"incomplete scenario: {path}")
         if record.get("post_outcomes_read") is not False:
             raise ValueError(f"outcome seal not preserved: {path}")
+        if record.get("effect_scale_code") != "q5_q1":
+            raise ValueError(f"scenario is not on the frozen Q5-Q1 scale: {path}")
         design = record.get("design", {})
         if not (
             design.get("post_start") == "2023-01"
@@ -66,12 +68,13 @@ def build(paths, sensitivity_paths=()):
         if observed_sensitivity != expected_sensitivity:
             raise ValueError("sensitivity set must be beta × two controls at 0% and 10%")
     return {
-        "record_version": "yax-joint-computerization-power-aggregate-v2",
+        "record_version": "yax-joint-computerization-power-aggregate-v3",
         "status": "PASS_FOUR_PRIMARY_SCENARIOS_COMPLETE",
         "post_outcomes_read": False,
         "primary_ai_measure": "dv_rating_beta",
         "robustness_ai_measure": "dv_rating_alpha",
         "primary_beta_c": PRIMARY_BETA_C,
+        "effect_scale": "Q5-Q1 log coefficient with Q2-Q4 separately absorbed",
         "beta_c_interpretation": (
             "pre-specified 5% relative young-employment decline per one "
             "weighted-SD of computerization in the synthetic post period"
@@ -103,6 +106,8 @@ def markdown(receipt):
         "The v5 static synthetic post window starts January 2023, excludes December "
         "2022 as the transition month, ends July 2026, and omits the known October "
         "2025 gap.", "",
+        "The AI effect is the employment-weighted Q5-Q1 log coefficient, with "
+        "Q2-Q4 separately absorbed. These are not the superseded per-SD MDEs.", "",
         "The computerization coefficient is fixed at `log(0.95)` per employment-"
         "weighted standard deviation. It is a design stress parameter, not an "
         "estimate from outcomes. Primary inference uses an independently calibrated "
@@ -147,7 +152,7 @@ def markdown(receipt):
               "composition, measurement error in either exposure, or misspecification "
               "of the conditional mean. Its MDE is a design diagnostic under the fitted "
               "DGP, not evidence that the eventual association is causal.", "",
-              "The table reports conditional MDEs for this joint model only. It "
+        "The table reports Q5-Q1 conditional MDEs for this joint model only. It "
               "does not repeat the obsolete unconditional 3.44% figure, and no "
               "scenario is described as having ‘100% power.’", ""]
     return "\n".join(lines)

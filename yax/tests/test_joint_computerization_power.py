@@ -30,6 +30,14 @@ def test_weighted_scale_centers_and_standardizes():
     assert abs(np.sum(weights * z * z) / weights.sum() - 1) < 1e-12
 
 
+def test_weighted_quintiles_preserve_ties_and_all_five_bins():
+    values = np.repeat(np.arange(1.0, 6.0), 2)
+    quintiles = P.weighted_quintiles(values, np.ones(10))
+    assert set(quintiles) == {1, 2, 3, 4, 5}
+    for value in np.unique(values):
+        assert len(set(quintiles[values == value])) == 1
+
+
 def test_mde_interpolation_crosses_inside_grid():
     rows = [
         {"true_log_effect": -0.01, "rejection_probability_zero": 0.2},

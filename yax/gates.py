@@ -98,6 +98,7 @@ def _frozen_power_window(record):
         and design.get("transition_excluded") == "2022-12"
         and design.get("post_end") == "2026-07"
         and "2025-10" in design.get("post_gaps", [])
+        and record.get("effect_scale_code") == "q5_q1"
     )
 
 
@@ -123,8 +124,8 @@ def gate_gradient(agg):
                 "gradient", "BLOCKED",
                 f"{_scenario_label(record)} does not authenticate the frozen "
                 f"power window (post_start 2023-01, transition 2022-12 excluded, "
-                f"post_end 2026-07, gap 2025-10). The v1 aggregate used the "
-                f"superseded December-2022 treatment window and cannot clear v5.")
+                f"post_end 2026-07, gap 2025-10) and Q5-Q1 effect scale. "
+                f"A superseded window or per-SD artifact cannot clear v5.")
         result = _gate_gradient_one(record)
         outcomes.append((record, result))
     failed = [(record, result) for record, result in outcomes
