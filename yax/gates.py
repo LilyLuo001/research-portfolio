@@ -85,6 +85,18 @@ def _scenario_label(record):
             f"{record.get('computerization_measure', 'unknown control')}")
 
 
+def _frozen_power_window(record):
+    design = record.get("design")
+    if not isinstance(design, dict):
+        return False
+    return (
+        design.get("post_start") == "2023-01"
+        and design.get("transition_excluded") == "2022-12"
+        and design.get("post_end") == "2026-07"
+        and "2025-10" in design.get("post_gaps", [])
+    )
+
+
 # ---------------------------------------------------------------- the gates
 
 def gate_gradient(agg):
@@ -102,6 +114,13 @@ def gate_gradient(agg):
 
     outcomes = []
     for record in records:
+        if not _frozen_power_window(record):
+            return Result(
+                "gradient", "BLOCKED",
+                f"{_scenario_label(record)} does not authenticate the frozen "
+                f"power window (post_start 2023-01, transition 2022-12 excluded, "
+                f"post_end 2026-07, gap 2025-10). The v1 aggregate used the "
+                f"superseded December-2022 treatment window and cannot clear v5.")
         result = _gate_gradient_one(record)
         outcomes.append((record, result))
     failed = [(record, result) for record, result in outcomes
@@ -178,6 +197,12 @@ def gate_calibration(agg):
     records = _power_scenarios(agg)
     if not records:
         return Result("calibration", "BLOCKED", "aggregate has no power scenarios")
+    for record in records:
+        if not _frozen_power_window(record):
+            return Result(
+                "calibration", "BLOCKED",
+                f"{_scenario_label(record)} does not authenticate the frozen "
+                f"January-2023 power window; superseded window results cannot calibrate v5")
     outcomes = [(record, _gate_calibration_one(record)) for record in records]
     failed = [(record, result) for record, result in outcomes
               if result.status == "FAIL"]

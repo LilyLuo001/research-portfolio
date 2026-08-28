@@ -28,7 +28,23 @@ def agg(points, null_size=0.05, coverage=0.95, **extra):
     for d, p in points:
         rows.append({"true_log_effect": math.log(1 - d),
                      "rejection_probability_zero": p, "coverage_95": coverage})
-    return dict(results=rows, **extra)
+    return dict(
+        results=rows,
+        design={
+            "post_start": "2023-01",
+            "transition_excluded": "2022-12",
+            "post_end": "2026-07",
+            "post_gaps": ["2025-10"],
+        },
+        **extra,
+    )
+
+
+def test_superseded_december_power_window_is_blocked():
+    record = agg([(0.01, 0.4), (0.03, 0.9)])
+    record["design"]["post_start"] = "2022-12"
+    assert gates.gate_gradient(record).status == "BLOCKED"
+    assert gates.gate_calibration(record).status == "BLOCKED"
 
 
 # ------------------------------------------------------------ gradient

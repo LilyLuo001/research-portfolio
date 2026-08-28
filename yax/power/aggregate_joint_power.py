@@ -25,6 +25,14 @@ def _load(paths):
             raise ValueError(f"incomplete scenario: {path}")
         if record.get("post_outcomes_read") is not False:
             raise ValueError(f"outcome seal not preserved: {path}")
+        design = record.get("design", {})
+        if not (
+            design.get("post_start") == "2023-01"
+            and design.get("transition_excluded") == "2022-12"
+            and design.get("post_end") == "2026-07"
+            and "2025-10" in design.get("post_gaps", [])
+        ):
+            raise ValueError(f"scenario does not use the frozen v5 post window: {path}")
         scenarios.append(record)
         inputs.append({"path": str(path), "sha256": sha256(path)})
     return scenarios, inputs
@@ -58,7 +66,7 @@ def build(paths, sensitivity_paths=()):
         if observed_sensitivity != expected_sensitivity:
             raise ValueError("sensitivity set must be beta × two controls at 0% and 10%")
     return {
-        "record_version": "yax-joint-computerization-power-aggregate-v1",
+        "record_version": "yax-joint-computerization-power-aggregate-v2",
         "status": "PASS_FOUR_PRIMARY_SCENARIOS_COMPLETE",
         "post_outcomes_read": False,
         "primary_ai_measure": "dv_rating_beta",

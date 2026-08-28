@@ -30,10 +30,17 @@ sys.modules[SPEC.name] = ENGINE
 SPEC.loader.exec_module(ENGINE)
 
 LOOKUP_ROLE = "raw_occ_main_2020_plus"
-POST_START = "2022-12"
+POST_START = "2023-01"
+TRANSITION_EXCLUDED = "2022-12"
 DEFAULT_EFFECTS = (0.0, -0.005, -0.015, -0.03, -0.05, -0.08, -0.12, -0.18)
 DEFAULT_BETA_C = math.log(0.95)
 TARGET_POWER = 0.80
+
+
+def planned_post_months():
+    """Frozen v5 static window; the engine's v1 helper still starts 2022-12."""
+    return [month for month in ENGINE.planned_post_months()
+            if month >= POST_START and month != TRANSITION_EXCLUDED]
 
 
 def sha256(path):
@@ -200,7 +207,7 @@ def build_dgp(prepared):
         raise RuntimeError("pre-period fixed-effect fit did not converge")
     fitted = (fit.fitted_probability * total_pre.reshape(-1)).reshape(n_occ, n_pre)
     residual = fit.residual.reshape(n_occ, n_pre)
-    months = prepared["months"] + ENGINE.planned_post_months()
+    months = prepared["months"] + planned_post_months()
     post = np.array([month >= POST_START for month in months], dtype=bool)
     regressors = np.column_stack([
         (prepared["ai_z"][:, None] * post[None, :]).reshape(-1),
@@ -318,7 +325,7 @@ def run(args):
                             args.seed + scenario_offset + 9000001)
     null = next(row for row in results if abs(row["true_log_effect"]) < 1e-12)
     return {
-        "record_version": "yax-joint-computerization-power-v1",
+        "record_version": "yax-joint-computerization-power-v2",
         "status": "PASS_SIMULATION_COMPLETE",
         "post_outcomes_read": False,
         "synthetic_post_constructed_only_from_preperiod_donors": True,
@@ -333,7 +340,13 @@ def run(args):
         "occupation_clusters": len(prepared["occupations"]),
         "balanced_primary_clusters_before_measure_overlap": prepared["balanced_primary_clusters"],
         "preperiod_months": len(prepared["months"]),
-        "planned_post_months": len(ENGINE.planned_post_months()),
+        "planned_post_months": len(planned_post_months()),
+        "design": {
+            "post_start": POST_START,
+            "transition_excluded": TRANSITION_EXCLUDED,
+            "post_end": "2026-07",
+            "post_gaps": sorted(ENGINE.POST_GAPS),
+        },
         "ai_scale": prepared["ai_scale"],
         "computerization_scale": prepared["comp_scale"],
         "inputs": {

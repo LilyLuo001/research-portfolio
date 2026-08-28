@@ -13,6 +13,14 @@ sys.modules[SPEC.name] = P
 SPEC.loader.exec_module(P)
 
 
+def test_v5_static_post_window_excludes_transition_and_known_gap():
+    months = P.planned_post_months()
+    assert months[0] == "2023-01"
+    assert months[-1] == "2026-07"
+    assert "2022-12" not in months
+    assert "2025-10" not in months
+
+
 def test_weighted_scale_centers_and_standardizes():
     values = np.array([1.0, 2.0, 4.0])
     weights = np.array([1.0, 2.0, 1.0])
