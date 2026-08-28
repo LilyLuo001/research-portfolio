@@ -264,6 +264,23 @@ pulls:
         - retx
         - dlyretx
         resolved: null
+      distribution_code:
+        want: 'a per-date DISTRIBUTION INDICATOR for the stock — the preferred
+          way to identify an ex-distribution date for the OpenGap screen
+          (D-T3-31). A flag is exactly the question being asked ("did a
+          distribution go ex"), whereas comparing RET with RETX infers it from
+          two rounded numbers. NAME NOT ASSERTED: the candidates below are
+          guesses to be resolved against the server, and the daily stock file
+          may not carry this at all — the distributions/events file may. If
+          nothing resolves, the RET-vs-RETX fallback is used WITH a tolerance
+          and an explicit undecidable band, and the paper reports how many
+          observations rested on each method.'
+        candidates:
+        - distcd
+        - divamt
+        - dlyfacprc
+        resolved: null
+        optional: true
       price:
         want: daily closing price
         candidates:
@@ -343,6 +360,15 @@ pulls:
         - dlstcd
         resolved: null
     asserts:
+      distribution_indicator: 'NEED_HUMAN at the window: ask whether a per-date
+        distribution indicator is available for the stock (on this file or on the
+        distributions/events file), and paste the exact table+field. It is the
+        PREFERRED identification for the OpenGap ex-distribution screen; the
+        RET-vs-RETX comparison is the fallback. Not blocking — the fallback
+        works — but the fallback infers a flag from two rounded numbers, so the
+        share of observations decided each way must be reported.
+
+        '
       price_vs_total_return: 'NEED_HUMAN at the window: confirm whether this
         account''s daily file is the legacy format (`retx`) or CIZ (`DlyRetx`),
         and paste the exact name. Spine zero''s beta MUST be estimated on the

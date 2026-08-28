@@ -150,9 +150,20 @@ fallback to take. The point is reproducibility — an intraday-aggregated β̂ a
 CRSP β̂ are different numbers, so alternating between them changes every `AR^h`
 while the written specification stays the same.
 
-**One more field for the secondary OpenGap outcome**: the gap is a
-previous-close→next-open **price** return, so on an ex-distribution date it
-mechanically contains the ex-dividend drop. Those observations are excluded and
-the count reported (D-T3-31). Identifying them needs no distributions table —
-`RET` includes a distribution and `RETX` does not, so they differ exactly on an
-ex-date, and **both are already in the item-2 ask**.
+**One more ask for the secondary OpenGap outcome**: the gap is a
+previous-close→next-open **price** return, so on an **ex-distribution** date it
+mechanically contains the distribution drop. Those observations are excluded and
+the counts reported (D-T3-31). Note the wording — *ex-distribution*, not
+*ex-dividend*: `RET − RETX` also picks up capital-gain distributions and returns
+of capital.
+
+Two identification paths, in order of preference:
+1. **Preferred — a per-date distribution indicator.** "Did a distribution go ex"
+   is a flag question, and a flag answers it directly. **Ask the seller whether
+   one is available** (on the daily file or on the distributions/events file)
+   and paste the exact table + field. Optional, not blocking.
+2. **Fallback — compare `RET` with `RETX`**, both already in the item-2 ask.
+   Usable, but it infers a flag from two rounded numbers, so it runs with a
+   tolerance and an explicit undecidable band rather than a float equality test.
+
+The paper reports how many observations were decided each way.

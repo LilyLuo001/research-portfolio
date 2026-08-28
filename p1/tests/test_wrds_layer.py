@@ -49,7 +49,10 @@ def _inventory():
                              "cfacshr", "cfacpr", "shrout",
                              # PRICE return: the spine-zero beta series, both
                              # legs (D-T3-29). `ret` stays for the daily spines.
-                             "retx"],
+                             "retx",
+                             # preferred ex-distribution flag for the OpenGap
+                             # screen (D-T3-31); optional in the spec
+                             "distcd"],
         "crsp.dsi":         ["date", "vwretd"],
         "crsp.dsedelist":   ["permno", "dlstdt", "dlret", "dlstcd"],
         "crsp.ccmxpf_lnkhdr": ["gvkey", "lpermno", "linkdt", "linkenddt",

@@ -70,6 +70,43 @@ DAILY_OR_LONGER = ("close", "+1d", "+2d", "+5d", "+120d")
 
 PRIMARY = "beta_adjusted_market"
 
+# Elapsed clock time is identical across events by construction at these
+# horizons, and only at these (D-T3-32, v2.1k). That distinction decides how far
+# the stock FE argument for the omitted intercept actually reaches.
+FIXED_DURATION_HORIZONS = ("5m", "15m", "30m", "60m")
+# Duration varies event to event: announcement→close depends on WHERE in the
+# session the announcement landed, and a half day is shorter again. Same for the
+# multi-day endpoints, which inherit that first partial session.
+VARIABLE_DURATION_HORIZONS = ("close", "+1d", "+2d", "+5d", "+120d")
+
+FE_ABSORPTION_NOTE = (
+    "The omitted intercept is (per-unit-time drift) × (duration). At a "
+    "FIXED-duration horizon that product is a stock-level constant, so the "
+    "stock FE absorbs it exactly. At a VARIABLE-duration horizon it is not "
+    "constant within stock — an announcement at 09:45 and one at 15:45 carry "
+    "different amounts of it into the same CAR^close — so the FE absorbs only "
+    "its mean and the residual remains. Do NOT claim exact absorption there. "
+    "The duration-scaled-alpha robustness (D-T3-20/22) is the registered "
+    "response, and it is the right shape for this: it scales with the same "
+    "duration that breaks the constancy.")
+
+
+def fe_absorbs_omitted_intercept(horizon: str) -> bool:
+    """Is the omitted intercept a stock-level constant at this horizon?
+
+    True only where elapsed time is fixed by construction. This is narrower than
+    "the FE handles it", and the narrowing is the point: at `close` the answer
+    is no, and the paper must not say otherwise.
+    """
+    if horizon in FIXED_DURATION_HORIZONS:
+        return True
+    if horizon in VARIABLE_DURATION_HORIZONS:
+        return False
+    raise BenchmarkPolicyError(
+        f"unknown horizon {horizon!r}; classify it as fixed- or "
+        "variable-duration before relying on the FE argument. "
+        + FE_ABSORPTION_NOTE)
+
 # benchmark -> the horizons at which it is defined AT ALL.
 BENCHMARK_HORIZONS = {
     # AR^h = R^h − β̂_i · R^h_m. NO INTERCEPT (D-T3-22): α̂ is a per-trading-day
@@ -280,53 +317,87 @@ def assert_gap_excluded_from_car(outcome_name: str, horizon_components) -> None:
 # response — a contamination that is largest exactly where it is least visible,
 # since a few-percent drop is an ordinary-looking gap.
 GAP_EXDIV_RULE = (
-    "Exclude opening-gap observations on a stock's ex-distribution date from "
-    "the OpenGap outcome, and REPORT THE EXCLUDED COUNT. Excluding without "
+    "Exclude opening-gap observations on a stock's EX-DISTRIBUTION date from "
+    "the OpenGap outcome, and REPORT THE EXCLUDED COUNT — plus the undecidable "
+    "count and the split between identification methods. Excluding without "
     "counting hides how much of the gap sample went; the count belongs in the "
-    "same table as the outcome. This affects the secondary gap outcome only — "
-    "CAR^h never contained the gap (D-T3-30).")
+    "same table as the outcome. 'Ex-distribution', not 'ex-dividend': RET−RETX "
+    "also picks up capital-gain distributions and returns of capital, and "
+    "naming it after dividends alone would understate what is removed. This "
+    "affects the secondary gap outcome only — CAR^h never contained the gap "
+    "(D-T3-30).")
 
-# Identification uses only fields already in the pull: TOTAL return includes a
-# distribution, PRICE return does not, so they differ exactly on an
-# ex-distribution date. No distributions table, no assumed field name.
-EXDIV_TOLERANCE = 1e-8
+# The screen is for EX-DISTRIBUTION dates, not only ex-dividend: RET minus RETX
+# picks up ordinary dividends AND capital-gain distributions, returns of capital,
+# and any other distribution CRSP puts in the total return. Naming it
+# "ex-dividend" would understate what is being removed.
+#
+# TWO identification paths, in order of preference (D-T3-31):
+#
+#   1. PREFERRED — a CRSP distribution indicator on the date. A flag is exactly
+#      what this question is: "did a distribution go ex". Its table/field name is
+#      NOT asserted here (meta-rule 1); candidates and a NEED_HUMAN sit in
+#      p1/wrds/tables.yaml under dsf.distribution_code.
+#   2. FALLBACK — compare the two return fields already in the pull. Usable, but
+#      it is an inference from two rounded numbers rather than a flag, so it
+#      carries a tolerance and an explicit ambiguous band.
+EXDIV_PREFERRED_METHOD = "crsp_distribution_indicator"
+EXDIV_FALLBACK_METHOD = "ret_minus_retx"
+
+# NOT an exact-equality test. CRSP returns are rounded, so `ret == retx` on a
+# float is the wrong question. Anything above this is a distribution; anything
+# strictly between zero and this is rounding-scale and therefore UNDECIDABLE,
+# not "no distribution". A real distribution clears this by orders of magnitude
+# (a 0.05% quarterly yield is 5e-4).
+EXDIV_FALLBACK_TOL = 1e-6
 
 
-def is_ex_distribution(ret, retx, tol: float = EXDIV_TOLERANCE) -> bool:
-    """Did a distribution go ex on this date? RET ≠ RETX iff it did.
+def is_ex_distribution(ret=None, retx=None, *, distribution_code=None,
+                       tol: float = EXDIV_FALLBACK_TOL):
+    """Did a distribution go ex on this date? Returns (verdict, method).
 
-    Derived from the two return fields the pull already asks for, rather than
-    from a distributions table whose name nobody here has confirmed
-    (meta-rule 1). A missing value on either side is NOT "no distribution" — it
-    is unknown, and the caller must treat it as such.
+    `verdict` is True / False / None, where None means UNDECIDABLE — a missing
+    input, or a RET−RETX difference down at rounding scale. None is never
+    silently treated as False: an unknown is not a "no".
     """
+    if distribution_code is not None:
+        code = str(distribution_code).strip()
+        has = bool(code) and code not in ("0", "0000", "nan", "None")
+        return has, EXDIV_PREFERRED_METHOD
     if ret is None or retx is None:
-        raise BenchmarkPolicyError(
-            "cannot decide ex-distribution status with a missing RET or RETX; "
-            "an unknown is not a 'no'. Drop the observation and count it.")
-    return abs(float(ret) - float(retx)) > tol
+        return None, EXDIV_FALLBACK_METHOD
+    diff = abs(float(ret) - float(retx))
+    if diff > tol:
+        return True, EXDIV_FALLBACK_METHOD
+    if diff == 0.0:
+        return False, EXDIV_FALLBACK_METHOD
+    return None, EXDIV_FALLBACK_METHOD          # rounding-scale, not a "no"
 
 
 def screen_gap_sample(rows) -> dict:
-    """Split the OpenGap sample into kept / ex-div-excluded / undecidable.
+    """Split the OpenGap sample into kept / ex-distribution / undecidable.
 
-    `rows` are dicts with at least `ret` and `retx` for the gap's opening date.
-    Returns the three groups plus the counts the paper has to report.
+    `rows` are dicts for the gap's opening date, carrying either a
+    `distribution_code` (preferred) or `ret` and `retx` (fallback). Returns the
+    three groups plus the counts the paper has to report, and the per-method
+    tally so a reader can see how much rested on the weaker identification.
     """
-    kept, exdiv, unknown = [], [], []
+    kept, exdist, unknown = [], [], []
+    by_method = {EXDIV_PREFERRED_METHOD: 0, EXDIV_FALLBACK_METHOD: 0}
     for r in rows:
-        try:
-            (exdiv if is_ex_distribution(r.get("ret"), r.get("retx"))
-             else kept).append(r)
-        except BenchmarkPolicyError:
-            unknown.append(r)
-    n = len(kept) + len(exdiv) + len(unknown)
+        verdict, method = is_ex_distribution(
+            r.get("ret"), r.get("retx"),
+            distribution_code=r.get("distribution_code"))
+        by_method[method] += 1
+        (unknown if verdict is None else exdist if verdict else kept).append(r)
+    n = len(kept) + len(exdist) + len(unknown)
     return {
-        "kept": kept, "ex_distribution": exdiv, "undecidable": unknown,
+        "kept": kept, "ex_distribution": exdist, "undecidable": unknown,
         "n_total": n,
-        "n_excluded_ex_distribution": len(exdiv),
+        "n_excluded_ex_distribution": len(exdist),
         "n_undecidable": len(unknown),
-        "excluded_share": (len(exdiv) / n) if n else None,
+        "excluded_share": ((len(exdist) + len(unknown)) / n) if n else None,
+        "by_method": by_method,
         "report": GAP_EXDIV_RULE,
     }
 
@@ -558,6 +629,51 @@ def _selftest() -> int:
         ok = ok and good
     expect_raises("unknown session", lambda: car_label("premarket"),
                   "three-way split")
+    # --- FE absorption reaches fixed-duration horizons only (D-T3-32) ---
+    for h in FIXED_DURATION_HORIZONS:
+        good = fe_absorbs_omitted_intercept(h) is True
+        print(f"  {'ok  ' if good else 'FAIL'} FE absorbs exactly at {h}")
+        ok = ok and good
+    for h in ("close", "+1d"):
+        good = fe_absorbs_omitted_intercept(h) is False
+        print(f"  {'ok  ' if good else 'FAIL'} FE does NOT absorb exactly at {h}")
+        ok = ok and good
+    expect_raises("unclassified horizon", lambda: fe_absorbs_omitted_intercept("2h"),
+                  "fixed- or")
+
+    # --- ex-DISTRIBUTION screen: flag preferred, comparison as fallback ---
+    for label, kwargs, want_v, want_m in [
+        ("distribution code set", {"distribution_code": "1232"}, True,
+         EXDIV_PREFERRED_METHOD),
+        ("distribution code zero", {"distribution_code": "0"}, False,
+         EXDIV_PREFERRED_METHOD),
+        ("clear RET-RETX gap", {"ret": 0.01, "retx": 0.004}, True,
+         EXDIV_FALLBACK_METHOD),
+        ("identical returns", {"ret": 0.01, "retx": 0.01}, False,
+         EXDIV_FALLBACK_METHOD),
+        ("rounding-scale difference", {"ret": 0.010000001, "retx": 0.01}, None,
+         EXDIV_FALLBACK_METHOD),
+        ("missing field", {"ret": None, "retx": 0.01}, None,
+         EXDIV_FALLBACK_METHOD),
+    ]:
+        v, m = is_ex_distribution(kwargs.pop("ret", None),
+                                  kwargs.pop("retx", None), **kwargs)
+        good = (v is want_v) and m == want_m
+        print(f"  {'ok  ' if good else 'FAIL'} {label}: {v!r} via {m}")
+        ok = ok and good
+
+    scr = screen_gap_sample([
+        {"ret": 0.01, "retx": 0.01},
+        {"ret": 0.01, "retx": 0.004},
+        {"distribution_code": "1232"},
+        {"ret": None, "retx": 0.01},
+    ])
+    good = (scr["n_excluded_ex_distribution"] == 2 and scr["n_undecidable"] == 1
+            and scr["by_method"][EXDIV_PREFERRED_METHOD] == 1)
+    print(f"  {'ok  ' if good else 'FAIL'} gap screen counts by method: "
+          f"{scr['by_method']}")
+    ok = ok and good
+
     expect_ok("RTH-only components pass",
               lambda: assert_gap_excluded_from_car("CAR_5m", ["rth_5m"]))
     expect_raises("gap folded into CAR",

@@ -439,27 +439,55 @@ def test_the_daily_beta_source_is_fixed_with_no_code_level_fallback():
     assert "来源已定" in varspec and "D-T3-31" in varspec
 
 
-def test_open_gap_excludes_ex_dividend_dates_and_counts_them():
+def test_open_gap_screens_ex_distribution_dates_and_counts_them():
     """A previous-close-to-next-open PRICE return contains the mechanical
-    ex-dividend drop. Left in, the gap decomposition reads it as earnings
-    response -- and a few-percent drop looks like an ordinary gap."""
+    ex-distribution drop. Left in, the gap decomposition reads it as earnings
+    response -- and a few-percent drop looks like an ordinary gap.
+
+    'Ex-distribution', not 'ex-dividend': RET-RETX also picks up capital-gain
+    distributions and returns of capital."""
     bp = _bp()
-    assert bp.is_ex_distribution(0.01, 0.004) is True
-    assert bp.is_ex_distribution(0.01, 0.01) is False
-    # a missing field is UNKNOWN, never "no distribution"
-    with pytest.raises(bp.BenchmarkPolicyError):
-        bp.is_ex_distribution(None, 0.01)
+    # preferred path: a flag answers a flag question
+    assert bp.is_ex_distribution(distribution_code="1232") == \
+        (True, bp.EXDIV_PREFERRED_METHOD)
+    assert bp.is_ex_distribution(distribution_code="0") == \
+        (False, bp.EXDIV_PREFERRED_METHOD)
+    # fallback path: a tolerance, never float equality
+    assert bp.is_ex_distribution(0.01, 0.004)[0] is True
+    assert bp.is_ex_distribution(0.01, 0.01)[0] is False
+    assert bp.is_ex_distribution(0.010000001, 0.01)[0] is None   # rounding scale
+    assert bp.is_ex_distribution(None, 0.01)[0] is None          # missing field
+    assert bp.EXDIV_FALLBACK_TOL >= 1e-7, "tolerance is at float-noise scale"
 
     out = bp.screen_gap_sample([
         {"ret": 0.01, "retx": 0.01},          # kept
         {"ret": 0.01, "retx": 0.004},         # ex-distribution -> excluded
+        {"distribution_code": "1232"},        # ex-distribution, preferred path
         {"ret": None, "retx": 0.01},          # undecidable -> excluded, counted
     ])
     assert len(out["kept"]) == 1
-    assert out["n_excluded_ex_distribution"] == 1
+    assert out["n_excluded_ex_distribution"] == 2
     assert out["n_undecidable"] == 1
-    assert out["excluded_share"] == pytest.approx(1 / 3)
+    assert out["by_method"][bp.EXDIV_PREFERRED_METHOD] == 1
     assert "REPORT THE EXCLUDED COUNT" in out["report"]
+    assert "EX-DISTRIBUTION" in out["report"]
+
+
+def test_fe_absorption_is_claimed_only_at_fixed_duration_horizons():
+    """The omitted intercept is drift x DURATION. At `close` the duration
+    depends on where in the session the announcement landed, so it is not a
+    stock-level constant and the FE does not absorb it exactly."""
+    bp = _bp()
+    for h in bp.FIXED_DURATION_HORIZONS:
+        assert bp.fe_absorbs_omitted_intercept(h) is True
+    for h in ("close", "+1d"):
+        assert bp.fe_absorbs_omitted_intercept(h) is False
+    with pytest.raises(bp.BenchmarkPolicyError):
+        bp.fe_absorbs_omitted_intercept("2h")
+    assert "Do NOT claim exact absorption" in bp.FE_ABSORPTION_NOTE
+    varspec = VARSPEC.read_text()
+    assert "D-T3-32" in varspec
+    assert "不得在此声称精确吸收" in varspec
 
 
 def test_the_omitted_intercept_rests_on_the_stock_fe_not_on_a_magnitude_claim():
