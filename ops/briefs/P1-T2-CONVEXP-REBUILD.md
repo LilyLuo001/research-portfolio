@@ -96,11 +96,27 @@ export SEC_UA="Boston University research <your-real-email>"   # SEC 403s withou
 export OPENFIGI_KEY=...                                        # optional but strongly wanted
 ```
 
-`SEC_UA` is not optional — SEC rejects anonymous automated traffic.
-`OPENFIGI_KEY` is free to obtain and raises the CUSIP→ticker batch from 10 to 100
-per request with a much shorter pause; without it the builder deliberately skips
-the bulk FIGI resolution rather than grinding through rate-limit errors, and you
-will silently get worse coverage. **Get the key.**
+`SEC_UA` is **not optional** — SEC rejects anonymous automated traffic, and it is
+genuinely load-bearing: no SEC access, no pipeline.
+
+**`OPENFIGI_KEY` is a mapping FALLBACK, not load-bearing** (settled 2026-08-27 by
+reading the code, not by assumption). Step 2 calls OpenFIGI *only* for holdings
+where the N-PORT row itself carried no ticker (`valid_cusip(...) and not
+h["ticker"]`). With no key the step is **skipped cleanly** and those holdings go
+to `NEED_HUMAN_stocks.csv` — dropped, never imputed. So the pipeline **completes
+and is correct without it**; what you lose is coverage, not validity. The code's
+own note adds that these are mostly foreign/odd holdings that lack SEC XBRL
+shares-outstanding anyway, i.e. many would drop at the denominator step
+regardless.
+
+**Still get the key** — it is free and widens coverage — but if you cannot, run
+anyway rather than blocking.
+
+**Report this number** (it answers a question we could not settle offline):
+how many holdings lacked an N-PORT ticker, how many OpenFIGI resolved, and how
+many of the unresolved would have dropped at the shares-outstanding step anyway.
+Grep the run log for `Step2:` and `NO_SHARES_OUT`. That converts "fallback vs
+load-bearing" from an architectural claim into a measured one.
 
 ---
 
@@ -153,6 +169,26 @@ python ops/runner/selfcheck.py
 > and `p1/tests/test_no_use_before_assignment.py` now lints the whole of `p1/`
 > for that class of defect. Mentioned because if you are working from an older
 > checkout, this is what you will hit.
+
+### Trap 0 — Gate 0 needs data this brief did not previously fetch
+
+Gate 0 (`p1/gate0_continuity/compute_continuity.py`) compares the **last
+pre-conversion** N-PORT against the **first POST-conversion** N-PORT. The ConvExp
+builder only ever fetches the pre side (`filed < eff_date`), so **the post side
+does not exist anywhere in this repo** and cannot be derived from it.
+
+While you have SEC egress, **also fetch the first NPORT-P filed AFTER each
+conversion's effective date** for the surviving ETF, and land it alongside. Then
+run Gate 0 and report the measured distribution — it decides whether the
+"same portfolio, different wrapper" framing survives, and it gates the headline
+regressions.
+
+Gate 0 also needs **CRSP `CFACSHR`** to put share counts on a corporate-action
+basis (a 2:1 split doubles raw share counts with zero trading and would read as
+the manager buying). It is now in the `msf` pull. Until
+`test_direction_against_a_real_crsp_split` runs green on landed data, the
+multiply-vs-divide direction is **owner-asserted, not verified** — that test is
+what makes it safe, and it currently skips.
 
 ### Trap 1 — `waves.csv` is SUPPOSED to change now
 

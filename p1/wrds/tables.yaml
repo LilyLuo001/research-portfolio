@@ -169,11 +169,33 @@ pulls:
         candidates:
         - ret
         resolved: null
+      share_adj_factor:
+        want: 'cumulative factor to adjust SHARES (CFACSHR). Gate 0''s share-based
+          continuity is meaningless without it: a 2:1 split doubles raw N-PORT share
+          counts with zero trading and reads as the manager buying. NOTE the direction
+          — CRSP adjusted shares = raw * CFACSHR, while adjusted price = raw / CFACPR;
+          the two go opposite ways.'
+        candidates:
+        - cfacshr
+        resolved: null
+      price_adj_factor:
+        want: cumulative factor to adjust PRICE (CFACPR). Pulled alongside so the
+          opposite-direction convention can be checked against the data rather than
+          assumed.
+        candidates:
+        - cfacpr
+        resolved: null
     asserts:
       shares_out_units: 'NEED_HUMAN unless confirmed on the server: the repo''s existing
         scaffold multiplies this by 1000 (i.e. assumes thousands). Confirm against
         the WRDS variable documentation before any ConvExp is computed from it — a
         1000x error here would not raise, it would just move every exposure.
+
+        '
+      cfacshr_direction: 'NEED_HUMAN until p1/tests/test_gate0_continuity.py::test_direction_against_a_real_crsp_split
+        runs green on landed data. The multiply-vs-divide direction is OWNER-ASSERTED
+        (2026-08-27), not verified in-container. An inverted direction does not raise
+        — it turns every split into fake turnover and silently fails Gate 0.
 
         '
   dsf:

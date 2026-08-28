@@ -56,27 +56,54 @@ def weights(holdings):
 
 
 class UnadjustedShares(ValueError):
-    """Raised when raw share counts are passed without an adjustment factor."""
+    """Raised when raw share counts are passed without a usable adjustment."""
 
 
-def adjust_shares(shares: dict, factors: dict) -> dict:
-    """Put share counts on a corporate-action-adjusted basis (v2.1b, item 3).
+# The exact source field and its direction, frozen. No "…-style" wording:
+# an ambiguous name is how an inverted convention survives review.
+#
+#   crsp_cfacshr : CRSP daily/monthly stock file, column CFACSHR ("cumulative
+#                  factor to adjust shares"). Owner-supplied convention
+#                  (2026-08-27): CRSP defines ADJUSTED SHARES = RAW × CFACSHR,
+#                  while adjusted PRICE = raw price / CFACPR. The two go in
+#                  OPPOSITE directions, which is precisely the trap.
+#
+# Recorded as owner-supplied, NOT independently verified here: this container
+# has no egress to CRSP/WRDS documentation (re-verified 2026-08-27). The
+# integration test in p1/tests/test_gate0_continuity.py checks the direction
+# against a REAL split once CRSP data lands, and that test — not this comment —
+# is what makes the convention safe.
+ADJUSTMENT_CONVENTIONS = {
+    "crsp_cfacshr": "multiply",     # adjusted = raw * factor
+    "divide_factor": "divide",      # adjusted = raw / factor (some vendors)
+}
+
+
+def adjust_shares(shares: dict, factors: dict, *, convention: str) -> dict:
+    """Put share counts on a corporate-action-adjusted basis.
 
     Raw N-PORT share counts are NOT comparable across a corporate action. A 2:1
     split doubles the count with zero trading; a merger replaces the security
     outright; a CUSIP change makes the same position look like one name sold and
-    another bought. Every one of those would read as turnover, and the two that
-    inflate share counts would read as *buying* — the opposite of the truth.
+    another bought. Each would read as turnover, and the ones that inflate share
+    counts would read as *buying* — the opposite of the truth.
 
-    `factors` maps security id -> cumulative adjustment factor at the observation
-    date (CRSP `cfacshr` is the canonical source; any equivalent works).
-    Adjusted count = raw / factor, so a post-split count divided by 2 comes back
-    onto the pre-split basis.
+    `convention` is REQUIRED and has no default. That is deliberate: the
+    direction is the whole risk. A synthetic 2:1 test passes under either
+    direction if the test's own factors are written to match the code's
+    assumption, so a default here would let an inverted convention ship green.
+    The caller must name the field it is passing.
 
     A security present in `shares` but absent from `factors` is a refusal, not a
     default-to-1.0: silently assuming "no corporate action" is exactly the error
     this function exists to prevent (meta-rule 4).
     """
+    if convention not in ADJUSTMENT_CONVENTIONS:
+        raise UnadjustedShares(
+            f"unknown adjustment convention {convention!r}. "
+            f"Known: {sorted(ADJUSTMENT_CONVENTIONS)}. Name the exact source "
+            "field; do not pass a guess.")
+    op = ADJUSTMENT_CONVENTIONS[convention]
     missing = sorted(k for k in shares if k not in factors)
     if missing:
         raise UnadjustedShares(
@@ -88,7 +115,7 @@ def adjust_shares(shares: dict, factors: dict) -> dict:
         f = factors[k]
         if not f or f <= 0:
             raise UnadjustedShares(f"non-positive adjustment factor for {k}: {f!r}")
-        out[k] = v / f
+        out[k] = v * f if op == "multiply" else v / f
     return out
 
 
@@ -227,24 +254,31 @@ def _selftest() -> int:
     check("reweighted weight_overlap", r["weight_overlap"], 0.2)
     check("reweighted turnover", r["turnover"], 0.8)
 
-    # corporate actions: a 2:1 split with zero trading must not read as buying
-    raw_pre  = {"AAA": 100.0}
-    raw_post = {"AAA": 200.0}                 # split, nothing traded
-    fac      = {"AAA": 1.0}, {"AAA": 2.0}     # cfacshr-style, pre and post
-    adj_pre  = adjust_shares(raw_pre,  fac[0])
-    adj_post = adjust_shares(raw_post, fac[1])
-    r_raw = share_continuity(raw_pre, raw_post)
+    # Corporate actions. NOTE: this synthetic case CANNOT validate the direction
+    # of the convention -- it only shows the mechanism cancels when the factors
+    # are written to match. Direction is validated against a REAL split in
+    # p1/tests/test_gate0_continuity.py, which needs landed CRSP data.
+    # Under crsp_cfacshr (adjusted = raw * cfacshr), a 2:1 split HALVES cfacshr
+    # for the post period, so post 200 shares * 0.5 == pre 100 shares * 1.0.
+    raw_pre, raw_post = {"AAA": 100.0}, {"AAA": 200.0}     # split, nothing traded
+    adj_pre  = adjust_shares(raw_pre,  {"AAA": 1.0}, convention="crsp_cfacshr")
+    adj_post = adjust_shares(raw_post, {"AAA": 0.5}, convention="crsp_cfacshr")
+    check("split UNadjusted turnover (wrong)",
+          share_continuity(raw_pre, raw_post)["share_turnover"], 0.5)
     r_adj = share_continuity(adj_pre, adj_post)
-    check("split UNadjusted turnover (wrong)", r_raw["share_turnover"], 0.5)
-    check("split adjusted turnover (right)",   r_adj["share_turnover"], 0.0)
-    check("split adjusted overlap",            r_adj["share_overlap"],  1.0)
-    try:
-        adjust_shares({"AAA": 1.0, "ZZZ": 1.0}, {"AAA": 1.0})
-        print("  FAIL missing factor did not refuse"); ok = False
-    except UnadjustedShares as e:
-        good = "no adjustment factor" in str(e)
-        print(f"  {'ok  ' if good else 'FAIL'} missing factor refuses: {str(e)[:60]}...")
-        ok = ok and good
+    check("split adjusted turnover (right)", r_adj["share_turnover"], 0.0)
+    check("split adjusted overlap",          r_adj["share_overlap"],  1.0)
+    for label, call in [
+        ("missing factor", lambda: adjust_shares({"A": 1.0, "Z": 1.0}, {"A": 1.0},
+                                                 convention="crsp_cfacshr")),
+        ("unknown convention", lambda: adjust_shares({"A": 1.0}, {"A": 1.0},
+                                                     convention="guessed")),
+    ]:
+        try:
+            call()
+            print(f"  FAIL {label} did not refuse"); ok = False
+        except UnadjustedShares as e:
+            print(f"  ok   {label} refuses: {str(e)[:52]}...")
 
     # share-based measures: a pure PRICE move must not read as rebalancing
     r = cc_share_case()
