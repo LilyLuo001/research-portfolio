@@ -14,7 +14,7 @@ problems (all printed, not just the first).
 
   python ops/runner/selfcheck.py
 """
-import sys, pathlib, yaml
+import json, sys, pathlib, yaml
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -53,6 +53,14 @@ def main():
             problems.append(f"duplicate task id: {tid}")
         seen.add(tid)
     tasks = index_tasks(q)
+    state = json.loads((ROOT / "ops" / "runner" / "state.json").read_text())
+    for tid, detail in state.get("task_status", {}).items():
+        if tid not in tasks:
+            problems.append(f"task_status references unknown task '{tid}'")
+        if not isinstance(detail, dict) or not detail.get("status"):
+            problems.append(f"task_status for {tid} needs a non-empty status")
+        if not isinstance(detail, dict) or not detail.get("next_gate"):
+            problems.append(f"task_status for {tid} needs a non-empty next_gate")
 
     for t in q["tasks"]:
         tid = t["id"]

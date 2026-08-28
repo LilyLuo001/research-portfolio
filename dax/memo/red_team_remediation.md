@@ -4,6 +4,11 @@ This log records design findings from independent DeepSeek V4-Pro reviews. It
 does not claim that the separate registry, empirical-power, or PI PDF-review
 evidence items are complete.
 
+> **Supersession notice, 2026-08-18:** the Round 3 `CONDITIONAL_GO` below
+> reviewed the superseded design. Three fresh reruns over the current packet all
+> returned `REVISE/BLOCK`. The controlling record is
+> `red_team_rerun_adjudication_20260818.md`; nothing below clears Gate 1.
+
 ## Round 1
 
 - Window midpoint ambiguity: resolved in Section 3.2 with integer CPS-month

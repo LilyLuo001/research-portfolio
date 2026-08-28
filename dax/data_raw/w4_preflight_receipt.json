@@ -1,0 +1,72 @@
+{
+  "availability": {
+    "account_probe_performed": false,
+    "receipt_sha256": "d6ef48eb643615eb52b1c5a66913be8fc2569884182f21a204508545fb37ed23",
+    "status_counts": {
+      "blocked_missing_approved_snapshot_rule": 5,
+      "excluded_binding": 1,
+      "standin_provider_unconfigured": 2,
+      "unprobed_missing_key": 14
+    },
+    "target_rows": 22
+  },
+  "blocked_rows": 220,
+  "budget": {
+    "fallback_smoke_ceiling_usd": 5.0,
+    "full_paid_capture_started": false,
+    "realized_cost_usd": 0.0,
+    "signed_repository_ceiling": null,
+    "smoke_probe_cost_usd": 0.0
+  },
+  "captured_rows": 0,
+  "cost_projection": {
+    "basis": "conservative_token_caps_x_latest_verified_w2_rates",
+    "direct_model_rows": 14,
+    "input_token_cap_per_call": 4096,
+    "missing_price_model_rows": [],
+    "output_token_cap_per_call": 2048,
+    "perturbations": 4,
+    "price_panel_sha256": "1785d899b642837c087f84f53ef7d91826bd2b9ecd229706387b0c7a99e86a13",
+    "scope": "direct_openai_rows_only; excludes open-weight hosting and blocked aliases",
+    "task_count_upper_bound": 220,
+    "usd_upper_bound_per_repetition": 640.8765440000002
+  },
+  "dependencies": {
+    "evidence_applied": "bc2d9d3d063041a7981f466b5e9e81b7abb5ab4e",
+    "evidence_source": "093aba628454d9bf740931654b5a51bc82bfe510",
+    "evidence_stable_patch_id": "a59896b6804c00882d62cb768c9232abe8530101",
+    "integration": "dd1f97b51137ce88ad044f86b5453d29a9eed696",
+    "w3_commit": null,
+    "w3_status": "not_pushed",
+    "w5_base": "4255f76d08a6afebc51c0d8751eb0f808a5e4069"
+  },
+  "duration": {
+    "coverage_rate": 0.0,
+    "covered_task_ids": 0,
+    "duration_fields": [],
+    "missing_task_ids": 220,
+    "rows_blocked_missing_duration": 220,
+    "source_receipt_sha256": "8d434b944e84a5c8969c22c8d0734ba5e461bd121053b85e2f1245d7b0525025",
+    "source_status": "NOT_RELEASED_IN_PUBLIC_PARQUET",
+    "task_ids": 220
+  },
+  "full_capture_allowed": false,
+  "gates": {
+    "account_availability_probed": false,
+    "at_least_one_account_model_available": false,
+    "signed_repository_usd_ceiling": false,
+    "task_duration_complete": false,
+    "w3_exact_commit": false
+  },
+  "generated_at_utc": "2026-08-20T07:50:17.948231Z",
+  "outcomes_opened": false,
+  "private_panel_committed": false,
+  "receipt_version": "dax-w4-preflight-v1",
+  "run_plan": {
+    "maximum_rows_per_repetition_at_task_universe": 18480,
+    "nonexcluded_event_model_rows": 21,
+    "perturbations": 4,
+    "rows_formula": "84 * eligible_task_ids * signed_repetitions",
+    "task_universe_upper_bound": 220
+  }
+}

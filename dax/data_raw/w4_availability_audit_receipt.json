@@ -1,0 +1,257 @@
+{
+  "account_probe_performed": false,
+  "matrix": [
+    {
+      "approved_rule_id": "W05-STANDIN-GPT4-LLAMA31-405B",
+      "availability_status": "standin_provider_unconfigured",
+      "event_date": "2023-03-14",
+      "event_id": "GPT4_LAUNCH",
+      "measurement_model_id": "meta-llama/Llama-3.1-405B-Instruct",
+      "measurement_route": "approved_open_weight_standin",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4-0314"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2023-11-06",
+      "event_id": "GPT4_TURBO_PREVIEW",
+      "measurement_model_id": "gpt-4-1106-preview",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4-1106-preview"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2024-04-09",
+      "event_id": "GPT4_TURBO_GA",
+      "measurement_model_id": "gpt-4-turbo-2024-04-09",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4-turbo-2024-04-09"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2024-05-13",
+      "event_id": "GPT4O_LAUNCH",
+      "measurement_model_id": "gpt-4o-2024-05-13",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4o-2024-05-13"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2024-07-18",
+      "event_id": "GPT4O_MINI_LAUNCH",
+      "measurement_model_id": "gpt-4o-mini-2024-07-18",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4o-mini-2024-07-18"
+    },
+    {
+      "approved_rule_id": "W05-STANDIN-O1-DEEPSEEK-R1",
+      "availability_status": "standin_provider_unconfigured",
+      "event_date": "2024-09-12",
+      "event_id": "O1_PREVIEW_LAUNCH",
+      "measurement_model_id": "deepseek-ai/DeepSeek-R1",
+      "measurement_route": "approved_open_weight_standin",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "o1-preview"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2024-12-17",
+      "event_id": "O1_FULL_LAUNCH",
+      "measurement_model_id": "o1-2024-12-17",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "o1-2024-12-17"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-01-31",
+      "event_id": "O3_MINI_LAUNCH",
+      "measurement_model_id": "o3-mini-2025-01-31",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "o3-mini-2025-01-31"
+    },
+    {
+      "approved_rule_id": "W05-EXCLUDE-GPT45-NO-STANDIN",
+      "availability_status": "excluded_binding",
+      "event_date": "2025-02-27",
+      "event_id": "GPT45_PREVIEW_LAUNCH",
+      "measurement_model_id": null,
+      "measurement_route": "excluded",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4.5-preview"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-04-14",
+      "event_id": "GPT41_LAUNCH",
+      "measurement_model_id": "gpt-4.1-2025-04-14",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-4.1-2025-04-14"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-04-16",
+      "event_id": "O3_O4MINI_LAUNCH",
+      "measurement_model_id": "o3-2025-04-16",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "o3-2025-04-16"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-04-16",
+      "event_id": "O3_O4MINI_LAUNCH",
+      "measurement_model_id": "o4-mini-2025-04-16",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "o4-mini-2025-04-16"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-08-07",
+      "event_id": "GPT5_LAUNCH",
+      "measurement_model_id": "gpt-5-2025-08-07",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5-2025-08-07"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-11-13",
+      "event_id": "GPT51_LAUNCH",
+      "measurement_model_id": "gpt-5.1-2025-11-13",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.1-2025-11-13"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2025-12-11",
+      "event_id": "GPT52_LAUNCH",
+      "measurement_model_id": "gpt-5.2-2025-12-11",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.2-2025-12-11"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2026-03-05",
+      "event_id": "GPT54_LAUNCH",
+      "measurement_model_id": "gpt-5.4-2026-03-05",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.4-2026-03-05"
+    },
+    {
+      "approved_rule_id": null,
+      "availability_status": "blocked_missing_approved_snapshot_rule",
+      "event_date": "2026-03-17",
+      "event_id": "GPT54_MINI_NANO_LAUNCH",
+      "measurement_model_id": null,
+      "measurement_route": "blocked_alias",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.4-mini"
+    },
+    {
+      "approved_rule_id": null,
+      "availability_status": "blocked_missing_approved_snapshot_rule",
+      "event_date": "2026-03-17",
+      "event_id": "GPT54_MINI_NANO_LAUNCH",
+      "measurement_model_id": null,
+      "measurement_route": "blocked_alias",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.4-nano"
+    },
+    {
+      "approved_rule_id": "W05-DIRECT-DATED-SNAPSHOT",
+      "availability_status": "unprobed_missing_key",
+      "event_date": "2026-04-24",
+      "event_id": "GPT55_LAUNCH",
+      "measurement_model_id": "gpt-5.5-2026-04-23",
+      "measurement_route": "direct",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.5-2026-04-23"
+    },
+    {
+      "approved_rule_id": null,
+      "availability_status": "blocked_missing_approved_snapshot_rule",
+      "event_date": "2026-07-09",
+      "event_id": "GPT56_FAMILY_LAUNCH",
+      "measurement_model_id": null,
+      "measurement_route": "blocked_alias",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.6-sol"
+    },
+    {
+      "approved_rule_id": null,
+      "availability_status": "blocked_missing_approved_snapshot_rule",
+      "event_date": "2026-07-09",
+      "event_id": "GPT56_FAMILY_LAUNCH",
+      "measurement_model_id": null,
+      "measurement_route": "blocked_alias",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.6-terra"
+    },
+    {
+      "approved_rule_id": null,
+      "availability_status": "blocked_missing_approved_snapshot_rule",
+      "event_date": "2026-07-09",
+      "event_id": "GPT56_FAMILY_LAUNCH",
+      "measurement_model_id": null,
+      "measurement_route": "blocked_alias",
+      "probe_method": "none",
+      "shutdown_date": null,
+      "source_model_id": "gpt-5.6-luna"
+    }
+  ],
+  "probed_at_utc": null,
+  "receipt_version": "dax-w4-availability-v1",
+  "registry_version": "dax-w4-vintage-registry-v1",
+  "status_counts": {
+    "blocked_missing_approved_snapshot_rule": 5,
+    "excluded_binding": 1,
+    "standin_provider_unconfigured": 2,
+    "unprobed_missing_key": 14
+  },
+  "target_rows": 22
+}

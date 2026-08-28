@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import csv
 import pathlib
+import re
 import sys
 import time
 
@@ -39,6 +40,7 @@ OUTPUT = REPO / "dax" / "data_built" / "price_histories.csv"
 COVERAGE = REPO / "dax" / "data_built" / "price_coverage_report.md"
 MIRROR = REPO / "dax" / "data_raw" / "_litellm_mirror"
 WAYBACK_CACHE = REPO / "dax" / "data_raw" / "_wayback_cache"
+OFFICIAL_EVIDENCE = REPO / "dax" / "data_raw" / "official_dated_price_evidence.csv"
 
 FIELDS = [
     "model_id", "price_kind", "usd_per_1m",
@@ -46,12 +48,13 @@ FIELDS = [
     "price_status",
     "channel_git_observed", "channel_git_locator",
     "channel_web_status", "channel_web_snapshot", "channel_web_locator",
-    "notes",
+    "date_coherence", "notes",
 ]
 
 VERIFIED = "verified"
 SINGLE_CHANNEL = "single_channel"
 CONFLICT = "conflict"
+DATED_MODEL_RE = re.compile(r"-(20\d{2}-\d{2}-\d{2})$")
 
 
 def registry_models() -> tuple[set[str], list[dict[str, str]]]:
@@ -91,9 +94,59 @@ def to_intervals(observations: list[channel_git.GitPriceObservation]) -> list[di
                 "channel_web_status": "not_attempted",
                 "channel_web_snapshot": "",
                 "channel_web_locator": "",
+                "date_coherence": "",
                 "notes": "" if index else "first observation; no lower bound on effective date",
             })
     return rows
+
+
+COHERENCE_OK = "ok"
+COHERENCE_EARLY = "precedes_registry_launch"
+COHERENCE_UNKNOWN = "no_registry_date"
+
+
+def apply_date_coherence(rows: list[dict[str, object]],
+                         events: list[dict[str, str]]) -> dict[str, int]:
+    """Flag prices dated before the model's own earliest registry event.
+
+    Found 2026-08-19: after Channel A ran, 15 rows across 5 models carried a
+    price whose upper-bound date PRECEDED the launch date the registry gives for
+    that model — and 9 of them were marked `verified`, meaning an archived page
+    apparently corroborated a price for a model that had not launched.
+
+    At least one of the two sources must be wrong: the registry date, or the
+    price observation (a third-party table seeded pre-launch, or a Channel A
+    match against a page that predates the model). The panel cannot say which,
+    so it says neither — it records the incoherence and refuses to leave the row
+    reading as clean corroboration.
+    """
+    earliest: dict[str, str] = {}
+    for event in events:
+        for model_id in event["model_ids"].split("|"):
+            model_id = model_id.strip()
+            if not model_id:
+                continue
+            date = event["api_effective_date"]
+            earliest[model_id] = min(earliest.get(model_id, "9999-99-99"), date)
+
+    counts = {COHERENCE_OK: 0, COHERENCE_EARLY: 0, COHERENCE_UNKNOWN: 0}
+    for row in rows:
+        launch = earliest.get(str(row["model_id"]))
+        observed = str(row["effective_date_latest"])
+        if launch is None:
+            row["date_coherence"] = COHERENCE_UNKNOWN
+        elif observed and observed < launch:
+            row["date_coherence"] = COHERENCE_EARLY
+            row["notes"] = (str(row["notes"]) +
+                            f"; priced on or before {observed} but the registry "
+                            f"dates this model to {launch}").lstrip("; ")
+            # A corroboration that is chronologically impossible is not evidence.
+            if row["price_status"] == VERIFIED:
+                row["price_status"] = CONFLICT
+        else:
+            row["date_coherence"] = COHERENCE_OK
+        counts[str(row["date_coherence"])] += 1
+    return counts
 
 
 def load_prior_corroboration(path: pathlib.Path) -> dict[tuple[str, str, str], dict[str, str]]:
@@ -107,9 +160,48 @@ def load_prior_corroboration(path: pathlib.Path) -> dict[tuple[str, str, str], d
         return {}
     prior: dict[tuple[str, str, str], dict[str, str]] = {}
     for row in csv.DictReader(path.open(encoding="utf-8")):
-        if row.get("channel_web_status") not in ("", "not_attempted", channel_wayback.UNREACHABLE):
+        if row.get("channel_web_status") == channel_wayback.CORROBORATED:
             prior[(row["model_id"], row["price_kind"], row["effective_date_latest"])] = row
     return prior
+
+
+def load_official_evidence(path: pathlib.Path = OFFICIAL_EVIDENCE) -> list[dict[str, str]]:
+    """Load human-audited, dated official release-page evidence."""
+    if not path.is_file():
+        return []
+    return list(csv.DictReader(path.open(encoding="utf-8")))
+
+
+def apply_official_evidence(rows: list[dict[str, object]],
+                            evidence: list[dict[str, str]]) -> int:
+    """Apply exact dated official matches as Channel A, fail closed on conflict."""
+    by_key: dict[tuple[str, str], list[dict[str, str]]] = {}
+    for item in evidence:
+        by_key.setdefault((item["model_id"], item["price_kind"]), []).append(item)
+    applied = 0
+    for row in rows:
+        candidates = by_key.get((str(row["model_id"]), str(row["price_kind"])), [])
+        if not candidates:
+            continue
+        matches = [item for item in candidates
+                   if abs(float(item["usd_per_1m"]) - float(row["usd_per_1m"])) < 1e-9]
+        if not matches:
+            row["price_status"] = CONFLICT
+            row["channel_web_status"] = channel_wayback.CONTRADICTED
+            row["notes"] = (str(row["notes"]) +
+                            "; dated official evidence reports a different price").lstrip("; ")
+            continue
+        item = sorted(matches, key=lambda x: x["source_date"])[0]
+        row["price_status"] = VERIFIED
+        row["channel_web_status"] = channel_wayback.CORROBORATED
+        row["channel_web_snapshot"] = item["source_date"]
+        row["channel_web_locator"] = item["archived_url"] or item["source_url"]
+        if item["source_date"] < str(row["effective_date_latest"]):
+            row["effective_date_latest"] = item["source_date"]
+        row["notes"] = (str(row["notes"]) +
+                        "; matched dated official release evidence").lstrip("; ")
+        applied += 1
+    return applied
 
 
 def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool,
@@ -165,6 +257,29 @@ def apply_corroboration(rows: list[dict[str, object]], limit: int, verbose: bool
             row["notes"] = (str(row["notes"]) + f"; {result.detail}").lstrip("; ")
 
 
+def apply_temporal_sanity(rows: list[dict[str, object]]) -> int:
+    """Fail closed when a source claims to observe a dated model before its date.
+
+    Channel B uses git author dates as upper bounds. Those dates are not
+    trustworthy for a row whose dated model id is later than the commit date;
+    a later official snapshot can corroborate the price, but it cannot repair
+    the impossible Channel-B bound. Such rows remain visible as conflicts.
+    """
+    conflicts = 0
+    for row in rows:
+        match = DATED_MODEL_RE.search(str(row["model_id"]))
+        observed = str(row["channel_git_observed"])
+        if match and observed and observed < match.group(1):
+            row["price_status"] = CONFLICT
+            detail = (
+                f"Channel B observed {observed} before dated model snapshot "
+                f"{match.group(1)}; git date cannot serve as an upper bound"
+            )
+            row["notes"] = (str(row["notes"]) + f"; {detail}").lstrip("; ")
+            conflicts += 1
+    return conflicts
+
+
 def write_coverage(rows: list[dict[str, object]], events: list[dict[str, str]], offline: bool) -> None:
     by_model: dict[str, list[dict[str, object]]] = {}
     for row in rows:
@@ -175,7 +290,8 @@ def write_coverage(rows: list[dict[str, object]], events: list[dict[str, str]], 
         "",
         f"Channel B (git price table): **{len(rows)}** interval rows across "
         f"**{len(by_model)}** model snapshots.",
-        f"Channel A (archived pricing pages): **{'not run (offline)' if offline else 'run'}**.",
+        f"Channel A (dated official releases and archived pricing pages): "
+        f"**{'not run (offline)' if offline else 'run'}**.",
         "",
         "A row reaches `verified` only when both channels agree. Everything else",
         "stays `single_channel` or `conflict` and, per meta-rule 4, the event it",
@@ -246,19 +362,40 @@ def main() -> int:
         deadline = time.monotonic() + args.time_budget if args.time_budget else None
         apply_corroboration(rows, args.corroborate_limit, args.verbose,
                             deadline=deadline, prior=load_prior_corroboration(OUTPUT))
+        official_matches = apply_official_evidence(rows, load_official_evidence())
+        if official_matches:
+            print(f"dated official evidence: {official_matches} rows corroborated",
+                  file=sys.stderr)
+    temporal_conflicts = apply_temporal_sanity(rows)
+    if temporal_conflicts:
+        print(f"temporal sanity: {temporal_conflicts} impossible git bounds marked conflict",
+              file=sys.stderr)
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
+    coherence = apply_date_coherence(rows, events)
+    if coherence[COHERENCE_EARLY]:
+        print(f"date-coherence: {coherence[COHERENCE_EARLY]} rows priced before "
+              f"their model's registry launch — demoted from verified",
+              file=sys.stderr)
+
     write_coverage(rows, events, args.offline)
-    write_lineage(str(OUTPUT), [str(REGISTRY)], extra={
+    lineage_inputs = [str(REGISTRY)]
+    if OFFICIAL_EVIDENCE.is_file():
+        lineage_inputs.append(str(OFFICIAL_EVIDENCE))
+    write_lineage(str(OUTPUT), lineage_inputs, extra={
         "channels": {
             "git": {"repo": channel_git.DEFAULT_REPO, "path": channel_git.DEFAULT_PATH,
                     "observations": len(observations)},
             "wayback": {"run": not args.offline, "urls": list(channel_wayback.PRICING_URLS)},
+            "dated_official_release": {
+                "run": not args.offline,
+                "evidence_rows": len(load_official_evidence()),
+            },
         },
         "note": "no language model is involved in producing any value in this file",
     })

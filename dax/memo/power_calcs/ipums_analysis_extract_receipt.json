@@ -1,0 +1,30 @@
+{
+  "status": "IPUMS_ANALYSIS_EXTRACT_REQUEST",
+  "collection": "cps",
+  "api_version": 2,
+  "extract_number": 7,
+  "extract_status": "completed",
+  "checked_at_utc": "2026-08-24T12:38:49.009138+00:00",
+  "spec_path": "dax/memo/power_calcs/ipums_analysis_extract_v1.json",
+  "spec_sha256": "83c931bdc5da54c5e73b5ac36bd4417e84f018acc85539b142214aa31c2d6b96",
+  "extract_definition_sha256": "05d738c0027acef3f210e50b2169d95313dff06a50f47270d86945c00e1bae21",
+  "errors": {},
+  "files": {
+    "basicCodebook": {
+      "bytes": 63667,
+      "sha256": "1ec0d3f1c0fc8b2cc6fedff049586e2fe04d1019f415053c156bb358a2ffaa15"
+    },
+    "data": {
+      "bytes": 6401770,
+      "sha256": "f638f306146aa294933448aca2ffcea6703e4a7394c61c899007e1cd7a3769a2"
+    },
+    "stsCommandFile": {
+      "bytes": 39448,
+      "sha256": "680ca980d329ee14659b93536674ed22956f6eb52b2d1a23aa70a63bfae7afbe"
+    },
+    "ddiCodebook": {
+      "bytes": 146310,
+      "sha256": "0ddf4b1ab6446848008715d925a2566cfc466dd46dee0f44949eb7f887fb5412"
+    }
+  }
+}

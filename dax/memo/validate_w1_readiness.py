@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import csv
 import importlib.util
+import json
 import pathlib
 import re
 
@@ -19,6 +20,10 @@ MEMO = HERE / "design_memo_v1.md"
 CHECKLIST = HERE / "PI_DECISIONS_OPEN.md"
 EVENT_VALIDATOR = HERE / "validate_event_registry.py"
 EVENT_TABLE_SHELL = HERE / "event_table_shell_v1.csv"
+POWER_STANDARD = HERE / "power_calcs" / "power_standard.json"
+ENTRANT_AUDIT = HERE.parent / "data_raw" / "entrant_companion_audit_receipt.json"
+IDENTIFICATION_GATE = HERE.parent / "data_raw" / "identification_gate_receipt.json"
+PERSON_POWER = HERE.parent / "data_raw" / "person_level_power_receipt.json"
 DECISION_RE = re.compile(r"\[PI-DECISION (\d+)\]")
 CHECKLIST_ROW_RE = re.compile(
     r"^\|\s*(\d+)\s*\|.*\|\s*(OPEN|APPROVED|REJECTED)\s*\|\s*$",
@@ -46,6 +51,12 @@ def audit() -> dict[str, object]:
         structural_errors.append(
             f"memo PI decisions must appear once in order 1..17; found {memo_numbers}"
         )
+    if "Entrant-margin companion (registered secondary" in memo:
+        structural_errors.append(
+            "memo still describes the failed entrant companion as registered secondary"
+        )
+    if "demoted to exploratory" not in memo:
+        structural_errors.append("memo does not record the entrant-companion demotion")
 
     checklist_rows = {
         int(number): status for number, status in CHECKLIST_ROW_RE.findall(checklist)
@@ -59,13 +70,27 @@ def audit() -> dict[str, object]:
     event_rows, event_errors = event_validator.validate()
     structural_errors.extend(f"event registry: {error}" for error in event_errors)
 
+    # Restructured 2026-08-19 for the D1 continuous primary, per the red team's
+    # required change ("remove or mark as superseded the discrete-design columns
+    # and add continuous-dose columns"). Under the continuous design every event
+    # contributes to the dose path, so the shell describes CONTRIBUTION rather
+    # than selection. The stack's window columns survive under a `secondary_`
+    # prefix because the stacked corroboration still uses them.
     shell_fields = {
         "event_id", "api_effective_date", "registry_status",
-        "source_verification", "primary_inclusion_rule", "window_rule",
-        "window_start", "window_end", "pre_months", "post_months",
+        "source_verification",
         "n_occupations", "n_treated_ge_0_01", "wage_bill_crossing_mass",
         "dose_p25", "dose_p50", "dose_p75", "dose_p90",
-        "max_effective_weight_share", "w5_fill_status",
+        # continuous primary
+        "dax_level_after_event_p50", "delta_dax_share_of_total_path",
+        "residualized_variance_share", "narrated_under_decision_1",
+        "leave_one_event_out_beta_shift",
+        # secondary stacked corroboration only
+        "secondary_inclusion_rule", "secondary_window_rule",
+        "secondary_window_start", "secondary_window_end",
+        "secondary_pre_months", "secondary_post_months",
+        "secondary_max_effective_weight_share",
+        "w5_fill_status",
     }
     try:
         with EVENT_TABLE_SHELL.open(newline="", encoding="utf-8") as handle:
@@ -129,6 +154,33 @@ def audit() -> dict[str, object]:
         blockers.append(f"{unchecked_items} confirmation/evidence checklist items are unchecked")
     if draft_status:
         blockers.append("memo is still marked DRAFT FOR PI DECISION")
+
+    power_standard = json.loads(POWER_STANDARD.read_text(encoding="utf-8"))
+    benchmark = power_standard["benchmark"]
+    if (power_standard["status"] != "FROZEN"
+            or benchmark.get("locator_status") != "VERIFIED"):
+        blockers.append("power benchmark is not frozen from a verified dated locator")
+
+    if not ENTRANT_AUDIT.is_file():
+        blockers.append("entrant-companion audit receipt is missing")
+    else:
+        entrant = json.loads(ENTRANT_AUDIT.read_text(encoding="utf-8"))
+        if entrant.get("status") != "ENTRANT_COMPANION_GATE_READY":
+            blockers.append("entrant companion is demoted to exploratory")
+
+    if not IDENTIFICATION_GATE.is_file():
+        blockers.append("real-dose residualized identification gate has not run")
+    else:
+        identification = json.loads(IDENTIFICATION_GATE.read_text(encoding="utf-8"))
+        if identification.get("status") != "PASS_DYNAMIC_IDENTIFICATION":
+            blockers.append("real-dose residualized identification gate failed")
+
+    if not PERSON_POWER.is_file():
+        blockers.append("person-level empirical power receipt is missing")
+    else:
+        person_power = json.loads(PERSON_POWER.read_text(encoding="utf-8"))
+        if person_power.get("status") != "PASS_PERSON_LEVEL_POWER":
+            blockers.append("person-level empirical power gate did not pass")
 
     return {
         "structural_errors": structural_errors,

@@ -1,0 +1,196 @@
+{
+  "schema_version": "dax-onet-benchmark-v3-design-v1",
+  "as_of_date": "2026-08-23",
+  "status": "DESIGN_PREFLIGHT_COMPLETE_NEED_PROSPECTIVE_PI_SIGNATURE",
+  "base_sha": "3159b62f7f4d32c8e3bca5df22ce30d367145b1d",
+  "primary_direction": "onet_aligned_bridge_benchmark",
+  "robustness_direction": "strict_direct_task_substitution",
+  "not_selected": [
+    "mapping_a_v2_as_central_production_mapping",
+    "capability_family_transport_as_central_treatment",
+    "atomic_decomposition_as_primary_design"
+  ],
+  "estimand": {
+    "name": "occupation_level_task_mass_crossing_cost_effective_full_task_ai_displacement_frontier",
+    "unit": "occupation_by_model_vintage",
+    "full_task_success_required": true,
+    "partial_completion_is_not_full_task_success": true,
+    "human_review_retry_is_costed": true,
+    "generic_ai_exposure_substitution_for_estimand_forbidden": true
+  },
+  "authorized_universe": {
+    "onet_task_records": 19259,
+    "task_mass_usable_records": 15274,
+    "sampling_frame_status": "PRIVATE_AUTHORIZED_INPUT_REQUIRED_AT_IMPLEMENTATION",
+    "existing_crosswalk_mapped_component_mass_gate": 0.9,
+    "existing_crosswalk_gate_is_not_benchmark_sample_coverage_approval": true,
+    "existing_v2_task_mass_floor_not_inherited_into_v3": true,
+    "v3_coverage_requirement_status": "NEED_PROSPECTIVE_PI_DECISION"
+  },
+  "evaluable_taxonomy": [
+    "directly_executable_digital",
+    "executable_with_provided_files_data",
+    "executable_with_simulated_construct_valid_inputs",
+    "requires_unavailable_proprietary_system",
+    "requires_physical_world_action",
+    "requires_interpersonal_interaction",
+    "otherwise_non_evaluable"
+  ],
+  "non_evaluable_rule": {
+    "score_zero_forbidden": true,
+    "identification_status": "MISSING_NOT_IDENTIFIED",
+    "lower_bound_contribution": "zero_crossing_mass",
+    "upper_bound_contribution": "all_non_evaluable_mass_crosses",
+    "center": null,
+    "center_status": "UNIDENTIFIED_UNLESS_SEPARATE_SIGNED_MODEL_APPROVED"
+  },
+  "sampling_options": [
+    {
+      "id": "S1_BALANCED_CONSTRUCT_VALIDITY_PILOT",
+      "proposed_sample_size_unsigned": 120,
+      "selection_probability": "known_probability_within_major_family_by_modality_task_type_strata",
+      "sample_size_rule": "planning_pilot_not_production_precision",
+      "strength": "early_task_boundary_evaluability_and_scoring_construct_audit",
+      "risk": "not_a_production_estimator_and_balanced_selection_requires_weights"
+    },
+    {
+      "id": "S2_STRATIFIED_PPS_PRODUCTION_SAMPLE",
+      "proposed_sample_size_unsigned": 384,
+      "selection_probability": "task_mass_or_signed_wage_bill_relevance_within_predeclared_strata",
+      "sample_size_rule": "worst_case_srs_binary_95pct_half_width_5pp_before_design_effect",
+      "strength": "design_weighted_population_inference",
+      "risk": "small_strata_design_effects_and_digital_frame_exclusions"
+    },
+    {
+      "id": "S3_TWO_PHASE_PROBABILITY_SAMPLE",
+      "proposed_phase_1_sample_size_unsigned": 1067,
+      "proposed_phase_2_sample_size_unsigned": 384,
+      "selection_probability": "phase_1_representative_construct_screen_then_phase_2_subsample_by_predeclared_cost_and_stratum_not_observed_model_success",
+      "sample_size_rule": "phase_1_3pp_and_phase_2_5pp_worst_case_srs_planning_scales_before_design_effect",
+      "strength": "separates_representativeness_from_expensive_instance_construction",
+      "risk": "requires_two_phase_weights_and_variance_outcome_adaptive_enrichment_forbidden"
+    },
+    {
+      "id": "S4_CENSUS_OF_ELIGIBLE_FRAME",
+      "proposed_upper_bound_unsigned": 15274,
+      "selection_probability": "one_for_every_authorized_task_after_evaluability_classification",
+      "sample_size_rule": "all_eligible_records",
+      "strength": "no_benchmark_sampling_error_within_classified_frame",
+      "risk": "highest_construction_and_review_burden_non_evaluable_external_validity_remains"
+    }
+  ],
+  "task_definition_model_evaluation_separation": {
+    "definition_freeze_precedes_model_calls": true,
+    "model_specific_customization_forbidden": true,
+    "private_source_onet_task_id_required": true,
+    "release_path_private_id_forbidden": true,
+    "multiple_instances_allowed_only_under_frozen_equivalence_and_difficulty_rules": true
+  },
+  "scoring": {
+    "model_self_grading_as_sole_criterion_forbidden": true,
+    "minimum_success_threshold": null,
+    "minimum_success_threshold_status": "NEED_PROSPECTIVE_PI_DECISION",
+    "human_rater_count": null,
+    "inter_rater_rule": null,
+    "human_review_status": "PROTOCOL_PREPARED_NO_RECRUITMENT",
+    "objective_checks_preferred": true,
+    "contamination_checks_required": true
+  },
+  "gdpval_role": {
+    "central_transport_layer": false,
+    "allowed_uses": [
+      "convergent_validity",
+      "model_vintage_sanity_checks",
+      "capability_family_descriptive_comparisons",
+      "rubric_and_task_construction_precedent"
+    ],
+    "whole_task_quantitative_transfer_to_onet_without_new_validation_forbidden": true
+  },
+  "historical_capture": {
+    "registry": "dax/capability_panel/vintage_registry.json",
+    "registry_rows": 22,
+    "benchmark_freeze_can_precede_task_duration_completion": true,
+    "paid_calls_in_this_batch": 0,
+    "model_availability_calls_in_this_batch": 0,
+    "planning_assumptions_unsigned": {
+      "instances_per_task": 2,
+      "repetitions_per_instance": 3,
+      "perturbations": 0,
+      "initially_conditional_model_rows": 16,
+      "calls_per_model_by_design": {
+        "S1": 720,
+        "S2": 2304,
+        "S3_phase_2": 2304,
+        "S4": 91644
+      },
+      "calls_across_16_rows_by_design": {
+        "S1": 11520,
+        "S2": 36864,
+        "S3_phase_2": 36864,
+        "S4": 1466304
+      },
+      "illustrative_direct_api_cost_sensitivity_usd": {
+        "S1": [16, 2419],
+        "S2": [50, 7741],
+        "S3_phase_2": [50, 7741],
+        "S4": [1980, 307924]
+      },
+      "authorization": false
+    },
+    "call_count_formula": "N_items * N_instances * N_model_rows_technically_available * N_repetitions * (1 + N_perturbations)",
+    "cost_formula": "sum_over_calls(non_cached_input_tokens*input_rate + cached_input_tokens*cached_rate + output_tokens*output_rate)/1000000",
+    "exact_budget_status": "NOT_IDENTIFIED_UNTIL_SAMPLE_INSTANCES_REPETITIONS_TOKEN_CAPS_AND_PRICE_LINES_ARE_SIGNED"
+  },
+  "strict_d": {
+    "role": "separate_conservative_identified_subset_lower_bound_and_sanity_check",
+    "one_diagnostic_pair_generalized": false,
+    "coverage_required_to_equal_primary_benchmark": false,
+    "unmatched_mass": "UNIDENTIFIED_NOT_RENORMALIZED"
+  },
+  "recommended_next_step": {
+    "action": "NO_MODEL_OUTCOME_BLIND_CONSTRUCT_VALIDITY_PILOT_ON_S1_THEN_PROSPECTIVE_PI_GATE",
+    "production_planning_preference_if_construct_gate_passes": "S3_TWO_PHASE_PROBABILITY_SAMPLE",
+    "basis": "construct_validity_missing_mass_transparency_and_historical_capture_urgency_not_expected_model_success",
+    "recruitment_or_spend_authorized": false,
+    "pi_signature_required": true
+  },
+  "diagnostic_evidence_preserved": {
+    "v1": {
+      "accepted": 0,
+      "task_coverage": 0.00192118
+    },
+    "v2_preliminary": {
+      "D": 0,
+      "F": 24,
+      "N": 36,
+      "U": 0
+    },
+    "v3_source_side_qualitative": {
+      "plausible_D": 1,
+      "candidate_pairs": 108,
+      "source_tasks": 6
+    }
+  },
+  "v2_preservation": {
+    "historical_only": true,
+    "formal_labeling_budget_spent_usd": 0,
+    "locked_test_opened": false,
+    "classifier_fitted": false,
+    "frozen_artifact_sha256": {
+      "MAPPING_A_V2_VALIDATION_PROTOCOL_2026-08-21.md": "d444ddb51a8f628bb44d9e80b805a46a83e81398db357d444628a8eb9179ac60",
+      "mapA_v2_binding_thresholds_20260821.json": "4b5c69c0aa5b1a729aab09c9bb3fc6758772a6894b118936f00fff9a290c6226",
+      "mapA_v2_codex_diagnostic_result_receipt_20260821.json": "00c0db7a09937b0707f231530a0b4b0a140dba3408d506dacc8569aff8eb4a40",
+      "mapA_v2_prediction_spec_20260821.json": "af949bb98e9cb7c072e8da0fa32795baa4fadc714c11caffa307e7ad2e44a1de"
+    }
+  },
+  "downstream": {
+    "w4_paid_inference_run": false,
+    "w5_run": false,
+    "identification_run": false,
+    "power_run": false,
+    "outcomes_opened": false,
+    "v1_0_preregistered_created": false
+  },
+  "realized_spend_usd": 0,
+  "signature_state": "NEED_HUMAN"
+}

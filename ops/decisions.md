@@ -496,255 +496,58 @@ nothing more.
 # before T5 main estimation so the sample definition is fixed independently of any
 # outcome (no specification search).
 
-## COMPLETED 2026-08-18 (Group B batch, spine-two)
-Task B3: `p1/pipeline/outcomes_spine2.py` — spine-two outcome builder, written
-before the data.
-- `compute_car_path`: market-model beta over (-252,-21) window; 121-element CAR
-  list, day 0 through day +120.
-- `decompose_permanent_reversal`: permanent = CAR(+120); reversal = sign(CAR₅) ×
-  max(0, sign(CAR₅) × (CAR₅ − CAR₁₂₀)); zero when move persists, non-zero when
-  partially given back.  §7 口径, no 文献包 required.
-- `build_spine2`: assembles event_cars (per-event), wedge (DiD path), var_ratios
-  (Jegadeesh variance ratio).  Own and peer events handled separately per §7.
-- 18 offline tests, all green.  213 repo-wide tests green.
-- `ops/contracts/outcomes_panel.yaml` updated with spine-two column declarations
-  (rule 3: declare in same commit as the builder).
-
-Group B status (all done):
-  B1 (3 contracts) ✅  B2 (panel guard) ✅  B3 (spine-two builder) ✅
-  B4 (Russell fallback) ✅  B5 (ConvExp reconcile) ✅
-
-## STOP 2026-08-18 — all P1 work in reach is blocked
-Everything forward is gated on one of:
-  A1: 文献包 — blocks P1-T3-spec → T3-decision → T3-impl → T3-tests → T5
-  WRDS: procurement in progress — blocks T2-impl, T4, T5
-  A3: Saglam–Tuzun PDF — blocks T4 transcription side
-None are resolvable in this container.
-
-## A1 PARTIALLY RESOLVED 2026-08-18 — 文献包 produced (web-search sourced)
-User enabled internet; WebSearch works; direct PDF fetch still blocked (federalreserve.gov,
-doi.org, ssrn.com, semanticscholar.org, ideas.repec.org all return EGRESS_BLOCKED via WebFetch).
-
-文献包 written at `p1/lit/literature_matrix.md` with 10 entries + SUE decision:
-  1. GNZ (2021) Management Science 67(1):22-47
-  2. FERC — Collins, Kothari, Shanken, Sloan (1994) JAE 18(3):289-324
-  3. IPT — Beekes, Brown (2007) SSRN 938982
-  4. Hou-Moskowitz (2005) RFS 18(3):981-1020
-  5a. SUE-IBES — Livnat, Mendenhall (2006) JAR 44(1):177-205
-  5b. SUE-TS — Foster, Olsen, Shevlin (1984) AR
-  6. DGTW (1997) JF 52(3):1035-1058
-  7. Jegadeesh (1990) JF 45(3):881-898
-  8. Amihud (2002) JFM 5(1):31-56
-  9. Roll (1988) JF 43(2):541-566; Durnev et al. (2003) JAR companion
-  10. Holden-Jacobsen (2014) JF 69(4):1747-1785
-
-12 cells marked [NEED_PDF] where exact formula details require the actual paper.
-URLs for all papers confirmed via WebSearch. T3-spec can start with this 文献包;
-[NEED_PDF] cells are handled like DECISION_NEEDED (flagged for reviewer fill).
-
-SUE fork recommendation: SUE-IBES primary, SUE-TS robustness — documented in matrix.
-
-## A3 PARTIALLY RESOLVED 2026-08-18 — Saglam-Tuzun stub produced
-PDF not accessible (federalreserve.gov egress blocked). URL confirmed:
-https://www.federalreserve.gov/econres/notes/feds-notes/implications-of-growth-in-etfs-evidence-from-mutual-fund-to-etf-conversions-20251119.html
-DOI: 10.17016/2380-7172.3909
-
-Known findings (from WebSearch, source-locatable):
-  - 125 converted funds, ~$80B total, ~$1.6B/month, June 2021 DFA event $30B+
-  - Conversions improve market quality: ↑ liquidity, ↓ volatility
-  - Identification and exact coefficients: [NEED_PDF]
-
-T4 transcription checklist at `p1/t4_replication/saglam_tuzun_stub.md`.
-Owner must open the PDF and fill the coefficient table for T4 to complete.
-
-## T3-SPEC CHANNEL A COMPLETE 2026-08-18
-
-`p1/t3_spec/变量规格书.md` produced; contract `variable_spec` PASS (5 required sections present).
-
-Spines covered: 一, 二, 四. Spine 三 excluded per §7 ("主结论不许依赖它").
-Sources: `p1/lit/literature_matrix.md` (WebSearch-sourced 文献包) + §7 of the research plan.
-All citations carry URL locators; no model-memory fill.
-
-Open items requiring human resolution:
-  DECISION_NEEDED D1 (SUE fork): IBES primary recommended — can be closed with owner sign-off.
-  DECISION_NEEDED D2–D4, D8–D9: require PDF access to resolve (GNZ exact formulas).
-  D5 (reversal formula): recommend §7 design choice; owner may override.
-  D6 (analyst dispersion minimum): recommend ≥ 2 analysts.
-  D7 (shared FERC): recommend shared spec; owner may override.
-  [NEED_PDF] cells: 17 items (GNZ formula details, DGTW compounding convention).
-  [WRDS_NEEDED] cells: 17 items (exact table/field names for CRSP/Compustat/IBES/TAQ-IID).
-
-Channel B (Deepseek) dispatch is now possible — P1-T3-spec-B is the next step.
-After B-channel output: diff the two specs; any splits go to T3-decision owner gate.
-
-## P0-1 STATE RECONCILIATION 2026-08-19 (seat C)
-
-Executed the first item of `ops/briefs/PORTFOLIO-REVIEW-AND-PLAN-2026-08-19.md`.
-Seat note: `ops/` is seat D's owned path, but seat D has been dormant since
-2026-07-10 (no competing writer) and CLAUDE.md's working protocol requires every
-seat to write state.json + decisions.md as the final step of "done". Proceeded on
-that basis; only `shared/` carries the hard read-only bar.
-
-### Completed
-- **P1-T3-spec** — `p1/t3_spec/变量规格书.md`, `contracts.py variable_spec` PASS
-  (5 required sections). Registered via `runner.py --complete`. Its queue note was
-  also stale ("BLOCKED on the 文献包") and has been corrected — the 文献包 exists at
-  `p1/lit/literature_matrix.md`.
-
-### Examined and deliberately NOT completed
-- **P1-T13-ant / P1-T13-ant-B** — both outputs exist in `ops/l1/out/` and passed
-  their sentinel fence, but the meta-rule-2 diff had never been run. Ran it:
-  414 accessions covered by both channels, **287 agree / 127 substantive splits
-  (30.7%)** after normalising A's JSON-string-vs-object and enum-casing artifacts
-  (a naive diff reports a misleading 323). Two failure modes: 43 `no_event` vs
-  classified (existence disagreement), 84 `proxy_basket_type` differences.
-  `disclosure_regime` never differs where both see an event.
-  Split table + reading: `p1/t13_ant/`. Marking either complete would ratify an
-  un-arbitrated extraction. NEED_HUMAN recorded there.
-- **DAX-W0.5-legwork** — output exists and is well-formed, but the task is
-  "which OpenAI vintages are API-accessible today + price", i.e. freshness-bound
-  factual content now ~40 days stale, with `output_contract: null` (no mechanical
-  gate) and owned by seat A. Completing it would freeze stale facts on someone
-  else's project. Left for seat A to re-run or accept.
-- **REFR-R13-scan / E2-T11-scan** — resident-by-design, deliberately never
-  completed. Unchanged.
-- **E2-T6a** — still synthetic-input scaffolding. Unchanged.
-
-### Owner questions raised by the T13 diff (both settleable without the L1 lane)
-1. Does any P1 spine or robustness cut key on `proxy_basket_type`, or only on
-   `disclosure_regime`? If only the regime, 84 of 127 splits (66%) stop being
-   blockers and arbitration shrinks to the 43 existence disagreements.
-2. On a bare `no_event` (channel A) vs a `"na"`-basket classification (channel B),
-   which wins? This is a sample definition and must be fixed before it is read
-   against any outcome.
-
-`make plan` no longer offers P1-T3-spec as ready work. The remaining staleness in
-the plan output is upstream of this task: 14 L1 batches are still listed as
-dispatchable against a lane that has been dead 40 days (P0-3, owner decision).
-
-## P1 CONCENTRATION FINDING 2026-08-19 (seat C) — OWNER DECISION REQUIRED
-
-Computed from committed data during the P1 roadmap review:
-
-  ConvExp >=0.5%: 389 treated stocks; 361 (92.8%) are wave W002 alone.
-                  Excluding W002 leaves 36 stocks / 9 waves. Power floor is 33.
-  ConvExp >=1%  : 24 treated stocks; excluding W002 leaves 16 — BELOW the floor.
-
-W002 = 2021-06-11, four DFA (Dimensional) funds.
-
-Plan §8 item 1 named single-family dominance as "本设计最大软肋" and §10 outcome B
-pre-committed the fallback repositioning. This is no longer a contingency — it is
-the current state of the data. The exclude-DFA robustness cut is underpowered at
->=1% and marginal at >=0.5%.
-
-OWNER, before T5: which paper is being written?
-  (a) single-event paper on the June 2021 DFA conversion (§10 outcome B);
-  (b) pooled, with the DFA-dominance caveat reported openly in the main text;
-  (c) widen the event set first (131 events vs a published industry 203) and
-      re-check concentration before choosing.
-Recording this AFTER seeing any outcome would be specification search.
-
-Two further pre-T5 items surfaced by the same review:
-  - Continuous-dose DiD: Callaway/Goodman-Bacon/Sant'Anna (NBER w32117) show
-    cross-dose comparisons under standard parallel trends carry selection bias;
-    dose-response identification needs STRONG parallel trends. The T5 blueprint
-    must state a stance. Plan §T5 asks for the "适配方案" but not this assumption.
-  - shared/econlib has NO continuous-dose estimator — callaway_santanna,
-    stacked_did and twfe_did are all binary/staggered on first_treat. T5 as
-    specified is not implementable until seat D adds one, or continuous is
-    demoted to robustness.
-
-Full analysis: p1/ROADMAP-2026-08-19.md
-
-## P1-B1 EVENT-SET RECONCILIATION 2026-08-19 (seat C) — two decisions now coupled
-
-`p1/t1_reconcile/` — offline, no WRDS. Regenerate with `sample_scenarios.py`.
-
-NEW FINDING 1 — V-1 (DFA) and V-6 (international sleeve) COMPOUND:
-  >=0.5%  excl DFA                 36 stocks  (floor 33) — powered by 3
-          excl DFA + Option A      28 stocks  — BELOW FLOOR
-          excl DFA + A-strict      20 stocks  — BELOW FLOOR
-  Four of the ten treated waves (W003/W020/W043/W075) are international-only and
-  sit almost entirely in the non-DFA remainder — the exact arm the exclude-DFA
-  robustness check depends on. These were being decided separately; they cannot be.
-  RECOMMENDATION for V-6: Option A, not A-strict. A-strict costs 8 more stocks in
-  the arm least able to afford them; the DFA anchor wave is no_intl either way.
-
-NEW FINDING 2 — the >=1% dose tier is underpowered AS BUILT: 24 stocks < 33.
-  §8 item 4 makes dose tiers a robustness axis, so the >=1% tier cannot carry a
-  robustness claim on its own. Report it as descriptive, or move the tier line.
-
-NEW FINDING 3 — asset_class is BLANK on 25/131 events (19.1%), 15 accessions.
-  This is the field defining the equity_US universe, so "36 equity_US" is a floor.
-  BUT: zero treated cells at either dose tier sit in a wave containing an
-  unclassified fund, so finishing the classification CANNOT change any scenario
-  above. V-1 must be decided on the numbers as they stand — the backlog is not an
-  escape hatch. Classification is prepared as a box task (sec.gov is EGRESS_BLOCKED
-  here — verified by curl and WebFetch): asset_class_TODO.csv carries a locator for
-  all 25 rows; apply_asset_class.py refuses a class without an evidence quote,
-  refuses to overwrite an existing class, and refuses a non-frozen value.
-
-V-4 COMPLETENESS, now reconciled: 131 events vs a published industry 203. P1's own
-T1 QC report already diagnosed both causes and both are still OPEN — §5 structural
-undercount (one JSON object per filing collapsed multi-fund filings; partially
-repaired, but Goldman is 1 row where the reference channel found 4+2) and §3
-correlated contamination (~18% of A-and-B-agreed events are CEF->ETF, CEF->MF or
-share-class aging; dual-channel agreement cannot screen it). The QC's reference
-channel covered families A-G only: 72 events audited, 59 in the unaudited H-Z region.
-131 is an undercount and an overcount at the same time, on different rows.
-
-## DECISIONS 2026-08-19 (owner delegated to seat C: "make the decision for me")
-
-Owner delegated V-1, V-2, V-3, V-6 and refraction item 7 in-session, WRDS work
-excluded. All five are recorded BEFORE any outcome variable exists — no outcome
-has been computed, so none of these can have been informed by a result.
-
-### V-1 — which paper, given 92.8% DFA concentration: OPTION (b), POOLED-WITH-CAVEAT
-Primary specification stays the pooled staggered design over all treated waves.
-The DFA dominance is reported in the MAIN TEXT, not a footnote, and the
-exclude-DFA arm is reported ALWAYS, in the same table as the pooled result,
-whatever either shows.
-  Rejected (a) single-event DFA paper: discards nine waves of genuine
-    corroboration and the staggered design itself; §10 calls it 降半档.
-  Rejected (c) widen first: both widening routes (the §5 multi-fund re-pass and
-    the §3 contamination audit) need the L1 lane, which has been dead since
-    2026-07-10. Choosing (c) parks P1 behind an unavailable dependency.
-  PRE-COMMITMENT, binding: both arms appear together in the main results table.
-    If the effect is present pooled and absent excluding DFA, that is REPORTED as
-    the finding, not resolved by dropping the weaker arm. The exclude-DFA arm at
-    36 stocks (>=0.5%) is above the power floor of 33 and is therefore a real, if
-    weak, robustness check — it is not permitted to be quietly dropped later for
-    being underpowered, because it is being registered as underpowered now.
-
-### V-6 — international sleeve: OPTION A (drop pure-international waves)
-Not A-strict. A-strict costs 8 further stocks in the exclude-DFA arm — the arm
-least able to afford them (28 -> 20, both below the floor) — in exchange for a
-purity the DFA anchor wave does not need, being no_intl under every option.
-Recorded consequence: excl DFA + Option A = 28 stocks, BELOW the power floor.
-That combination is reported as underpowered, not suppressed.
-
-### V-3 — continuous vs binary dose: DOSE TERCILES PRIMARY
-Primary spec reports ATT by dose tercile. Continuous dose-response is demoted to
-robustness, pending the econlib estimator (ops/briefs/SH-econlib-continuous-dose.md).
-Forced by two independent facts, neither of which is a preference:
-  1. shared/econlib has no continuous-dose estimator at all, so a continuous
-     primary spec is not implementable today regardless of WRDS.
-  2. The >=1% tier holds 24 treated stocks against a floor of 33 — the fine dose
-     grid is underpowered whichever estimator exists.
-Terciles are implementable with the existing binary/staggered estimators.
-
-### V-2 — parallel trends stance: STANDARD for the primary, STRONG named for ACRT
-The tercile primary spec identifies ATT within tier and needs only standard
-parallel trends. Any dose-response/ACRT claim requires STRONG parallel trends
-(Callaway/Goodman-Bacon/Sant'Anna, NBER w32117) and is confined to the robustness
-section, where the assumption is stated in the table caption, not buried in an
-appendix. Cross-tier comparisons under standard parallel trends are reported as
-descriptive only — they carry selection bias by construction.
-
-### refraction item 7 — APPROVED, fail-closed
-run_all() gains strict=True. A11 and A14 now FAIL when their inputs are absent
-instead of passing vacuously; the CLI runs strict. Rationale: a hard assert that
-cannot fail is not a gate; the manual makes A14 an R2 acceptance criterion (§167);
-the change can only make the battery stricter; and R2 is not yet implemented, so
-nothing is broken by tightening now. strict=False remains for dev fixtures and
-must never produce a production manifest. refraction: 56 tests pass.
+# ============================================================================
+# REFRACTION DECISIONS — 2026-08-19 (delegated; PI may override any of these)
+# ============================================================================
+#
+# R-DEC-1  Treated-side concentration becomes a Gate-0 line.
+#   Manual §R3's G1-G6 contain no cluster or wave count, so Gate-0 could pass a
+#   design whose treated mass sits in one wave. Worse, R5's mandatory
+#   "few-cluster failure assessment" runs AFTER Gate-0 — the risk was scheduled
+#   to be assessed after the gate that should catch it.
+#   Added to frozen_config.gate0_thresholds:
+#     treated_waves_min: 10                  (NOT a new number — this is
+#       inference.effective_cluster_warning_below, already registered in this
+#       file, promoted from warning to gate. Promoting an existing threshold is
+#       what keeps it from being a post-hoc choice.)
+#     largest_treated_wave_share_max: 0.5    (the natural no-majority point)
+#   Pre-registered consequence: NOT_VIABLE_AS_PANEL means the chapter does not
+#   proceed as a multi-wave panel. It may proceed as a single-event study with
+#   claims scoped to that event, or wait for more conversions. The thresholds
+#   may not be relaxed to clear the gate.
+#   Current mechanical verdict: NOT_VIABLE_AS_PANEL
+#   (largest_wave_share_of_treated = 0.907 > 0.5; treated_distinct_waves = 10
+#   sits exactly at the minimum and passes, so it is concentration, not count,
+#   that fails).
+#
+# R-DEC-2  wave_id added to inference.cluster_dims.
+#   The concentration lives in the WAVE dimension and neither announcement_date
+#   nor wave_industry spans it, so G5's MDE could not price the risk that
+#   nearly all treated variation comes from one conversion wave.
+#
+# R-DEC-3  The consensus channel gets a gate and a code check.
+#   surprise.consensus_source was null, referenced by no code and no queue node,
+#   in a chapter whose treatment IS the announcement surprise. Added queue node
+#   REFR-GATE-consensus (blocks REFR-R1b-parse) and
+#   guards/prereg_guard.py::assert_consensus_source, which refuses while null.
+#
+# R-DEC-4  sample_scale_audit now emits a mechanical verdict.
+#   It previously reported five flags and no conclusion, so "flags present"
+#   read the same as "flags acceptable".
+#
+# R-DEC-5  REFR-GATE-e2verdict cleared as DEFERRED-priority.
+#   The node's own notes say the verdict "only sets priority — either way
+#   unblocks R5+". Twenty-five tasks were parked behind a scheduling signal.
+#   Cleared with the conservative default: E2 keeps its slot, refraction runs
+#   at 4th-paper cadence. This reallocates nothing and is trivially reversed if
+#   E2 later fails. I am NOT recording a research verdict on E2 — that judgment
+#   was never mine and is not implied by this line.
+#
+# R-DEC-6  REFR-GATE-etfglobal failed, parking the R9 bypath.
+#   Nobody has confirmed BU access to ETF Global / issuer daily basket files in
+#   the weeks it has been open. R9 is explicitly a non-blocking bypath, so the
+#   honest state is parked, not "waiting". Re-open by passing the gate if
+#   access is obtained.
+#
+# applied: gate REFR-GATE-e2verdict pass
+# applied: gate REFR-GATE-etfglobal fail

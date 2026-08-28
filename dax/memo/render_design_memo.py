@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import functools
 import html
+import os
 import pathlib
 import re
 
@@ -40,7 +41,14 @@ DEFAULT_OUTPUT = HERE / "design_memo_v1.pdf"
 # for the artefact the PI actually reads: when the memo changes anywhere else,
 # the PDF silently goes stale. Font families are now tried in order and the
 # first complete set present on the host wins.
-FONT_CANDIDATES = (
+_configured_font_dir = os.getenv("DAX_FONT_DIR")
+_configured_fonts = ({
+    "DAXArial": str(pathlib.Path(_configured_font_dir) / "Arial.ttf"),
+    "DAXArialBold": str(pathlib.Path(_configured_font_dir) / "Arial Bold.ttf"),
+    "DAXArialItalic": str(pathlib.Path(_configured_font_dir) / "Arial Italic.ttf"),
+    "DAXCourier": str(pathlib.Path(_configured_font_dir) / "Courier New.ttf"),
+},) if _configured_font_dir else ()
+FONT_CANDIDATES = _configured_fonts + (
     {   # macOS (the original set, kept first so existing output is unchanged)
         "DAXArial": "/System/Library/Fonts/Supplemental/Arial.ttf",
         "DAXArialBold": "/System/Library/Fonts/Supplemental/Arial Bold.ttf",

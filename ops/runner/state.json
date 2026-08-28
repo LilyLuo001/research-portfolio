@@ -18,18 +18,56 @@
     "P1-T2-wrds",
     "P1-T1-spotcheck",
     "P1-T2-killswitch",
-    "P1-T3-spec"
+    "REFR-GATE-e2verdict",
+    "DAX-W2-data"
   ],
   "gates_cleared": [
     "P1-GATE-t2a",
     "DAX-GATE-feasibility",
     "P1-T1-spotcheck",
-    "P1-T2-killswitch"
+    "P1-T2-killswitch",
+    "REFR-GATE-e2verdict"
   ],
-  "gates_failed": [],
+  "gates_failed": [
+    "REFR-GATE-etfglobal"
+  ],
   "attempts": {
     "DAX-W0.5-legwork": 1,
     "E2-T2-dune": 1
   },
-  "_note": "2026-08-19 seat C: P1-T3-spec (channel A) complete + registered. Decisions V-1/V-2/V-3/V-6 and refraction item 7 delegated by owner and recorded in ops/decisions.md, all pre-outcome. Delivered without WRDS: P1-B1 event-set reconciliation (p1/t1_reconcile/), P1-T5 blueprint channel A (p1/t5_spec/), refraction quality fixes 1-7 (56 tests), econlib continuous-dose brief for seat D. P1-T5-main is NOT complete — this is the spec half only; channel B + the owner gate + WRDS all remain. Open: T13 arbitration (127 splits), asset_class backlog (25 events), T3-spec-B, T5-spec-B — all need the L1 lane, dead since 2026-07-10."
+  "task_status": {
+    "DAX-W0.5-legwork": {
+      "status": "superseded",
+      "next_gate": "None; owner-run feasibility legwork and signed feasibility gate supersede this batch."
+    },
+    "DAX-W1-memo": {
+      "status": "memo_reconciled_scientific_gates_open",
+      "next_gate": "Resolve Mapping A v2 labels/calibration, duration, real power, and fresh red-team gates before completion; benchmark 0.13 with 0.16/0.19 sensitivities is signed."
+    },
+    "DAX-W1-power": {
+      "status": "engine_complete_real_run_blocked",
+      "next_gate": "Requires a real W5 dose panel; benchmark 0.13 with 0.16/0.19 sensitivities is signed, and the 999-replication run has not occurred."
+    },
+    "DAX-W3-mapA": {
+      "status": "v2_predecision_code_and_recall_sample_frozen",
+      "next_gate": "Signed v2 thresholds are resolved; authorize the capped USD 60 independent-label budget, then label development/calibration and apply the frozen calibration gate. Locked test remains unopened."
+    },
+    "DAX-W3-bulk": {
+      "status": "paid_labeling_budget_authorization_pending",
+      "next_gate": "Taxonomy and thresholds are signed. Do not spend until the capped USD 60 independent-label budget is explicitly authorized."
+    },
+    "DAX-W3-audit": {
+      "status": "independent_labels_not_yet_generated",
+      "next_gate": "Runs after budget authorization and independent labels under the frozen three-family escalation protocol."
+    },
+    "DAX-W4-panel": {
+      "status": "infrastructure_complete_execution_blocked",
+      "next_gate": "0/220 durations and 0 captured capability rows; author email bounced and the wait is superseded. The human-duration pilot sample is frozen; obtain capped USD 7,000 pilot budget, governance clearance, and a verified real-human roster, plus Mapping A validation and later W4 budget."
+    },
+    "DAX-W5-index": {
+      "status": "schema_complete_real_panel_blocked",
+      "next_gate": "Requires qualified W3 mapping and populated W4 measurements; no real dose panel or identification gate exists."
+    }
+  },
+  "_note": "DAX statuses were reconciled 2026-08-21 from committed receipts and the signed PI decisions. Missing-input and budget states are held rather than falsely marked complete or attributed to missing PI decisions. SH-runner and SH-econlib are merged; E2-T6a remains incomplete because its real upstream producers are open."
 }

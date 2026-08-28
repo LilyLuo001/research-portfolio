@@ -1,0 +1,265 @@
+{
+  "status": "INDEPENDENT_CROSS_VENDOR_RED_TEAM",
+  "generated_at_utc": "2026-08-18T13:08:19.990130+00:00",
+  "reviewer_vendor": "DeepSeek",
+  "model": "deepseek-v4-pro",
+  "prompt_sha256": "a42b79bd8b73a700a3c3e7661ab959f7d59cb5ac31d1550df1d23d453ad05c33",
+  "inputs": {
+    "dax/memo/design_memo_v1.md": "432ab6a99edb3fc6a30096ea9c49b53e884e9357bb1973c071ed4dc9312449ed",
+    "dax/memo/PI_DECISIONS_OPEN.md": "35bf9782ae5aca96597ea722f145003a564aaa059a7a24d2fd49d2ef34136d3c",
+    "dax/memo/event_registry_v1.csv": "de537402422a7984a2b0c7c77e9f225ff99f69d0e512ba16e46b23b69dc4660e",
+    "dax/memo/event_table_shell_v1.csv": "2321fa7996604cd9484ebfa6eb63d2f36f62340e3cd265c776bf7f67ff15d77c",
+    "dax/memo/red_team_remediation.md": "f79d138f2599416ce8f238ecf96bbef4617e97f98268ac3c525c04c45ca1e3d6",
+    "dax/memo/PI_DECISION_D1_2026-08-18.md": "395be2473bc02c11642acd54276da64a2f42d53362a005e92ce424163a883723",
+    "dax/memo/PI_DECISION_D3_2026-08-18.md": "402812368c87f2620920ff5f3958cc64025c0059035594fe778297fae18c94fe",
+    "dax/memo/PI_DECISION_D4_2026-08-18.md": "53f44da1925c560c08b1d0007c97045a8229961343db624b6587c422874746c8",
+    "dax/memo/design_audit_2026-08-14.md": "e5eb2a7c807603273502834e24b6765755f36e5f453df77b171df14a6df78d1a",
+    "dax/memo/power_calcs/README.md": "c750f46040e54f9535ed4dc4d05f3f92f700bc441bac0362eee0c180479317a8",
+    "dax/memo/power_calcs/power_standard.json": "79312623593e6e5005b7cd73a4a8022ba3657a69d3fef31067bb28eec36b83a8",
+    "dax/memo/power_calcs/ipums_preperiod_extract_receipt.json": "1adc4cd39063a6f092b67c15aa6ec246968f3e5576d56d1a1fc1286ba241206e",
+    "dax/memo/power_calcs/synthetic/power_results_continuous.json": "9e7e62d39af2488cb0638af77fd9bd0cb181d649f1e5b6966bb55f39b5a64d5c",
+    "dax/memo/power_calcs/synthetic/power_results.json": "ee74effcb3c72f67f287186582a7860ecea8b7801741432672d14e880539c6ae"
+  },
+  "usage": {
+    "prompt_tokens": 32919,
+    "completion_tokens": 4770,
+    "total_tokens": 37689,
+    "prompt_tokens_details": {
+      "cached_tokens": 32896
+    },
+    "prompt_cache_hit_tokens": 32896,
+    "prompt_cache_miss_tokens": 23
+  },
+  "finish_reason": "stop",
+  "review": {
+    "verdict": "REVISE",
+    "gate_recommendation": "BLOCK",
+    "major_issues": [
+      {
+        "id": "M1",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a79.1 and \u00a73.1",
+        "claim": "The primary estimating equation absorbs occupation fixed effects (alpha_o) and calendar-month fixed effects (tau_t) while the regressor DAX_ot is a deterministic function of occupation and month: DAX_ot = DAX_o,0 + sum_{e: month(e)<=t} DeltaDAX_oe. With occupation and month effects absorbed, the only identifying variation is the interaction of occupation-specific dose magnitude and timing. However, the memo does not establish that this interaction has sufficient independent variation once industry-by-month (gamma_jt) and static-exposure-decile-by-month (delta_{d(o),t}) effects are also absorbed. The static-exposure decile is itself a function of occupation, so delta_{d(o),t} absorbs a large share of the occupation-by-month dose variation by construction. The memo's own degeneracy diagnostic (section 9.2) reports a leading singular-component share of 0.909 on the synthetic fixture, which is close to the 0.95 degenerate threshold, but this is synthetic and not evidence about the real dose matrix. The design may be identified only through residual timing variation that is plausibly second-order relative to the absorbed decile-by-month effects.",
+        "why_it_matters": "If the dose path is nearly proportional to a static exposure ranking, the continuous design collapses to a cross-sectional exposure contrast with panel controls, and the claimed dynamic identification (IC-1) is not achieved. The memo acknowledges this possibility in section 9.2 but does not require the diagnostic to be computed on the real dose matrix before Gate 1, nor does it pre-register a binding consequence for the primary specification if the real leading share is high.",
+        "required_change": "Require the dose-profile diagnostic (effective rank and leading singular-component share) to be computed on the real occupation-by-month dose matrix before Gate 1, and pre-register a mechanical rule: if the leading share exceeds 0.95 with effective rank 1, the primary specification is re-labeled as a cross-sectional exposure contrast and the dynamic claims are struck, as section 9.2 already contemplates. Additionally, report the residual variation in DAX_ot after projecting out occupation, month, industry-by-month, and decile-by-month effects, and require a minimum effective rank on the residualized dose matrix before the continuous design is declared identified."
+      },
+      {
+        "id": "M2",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a77.2 and PI_DECISIONS_OPEN.md M3/M4",
+        "claim": "The entrant-margin companion estimates the frozen entry mix pi_go from 16 months of CPS entrants (2021-11 to 2023-02) at the demographic-education cell by occupation granularity. The memo itself flags (M3) that pi_go may not be estimable at occupation granularity, and (M4) that the entrant sample conflates true labour-market entrants with CPSIDP linkage failures and long non-employment spells. Neither issue is resolved in the packet: no pooling rule is pre-registered, no month-in-sample separation is specified, and no precision bound on pi_go is established. The companion's central identifying assumption (IC-4) requires pi_go to be a valid instrument, but a noisy description of realized entry estimated from a contaminated sample cannot serve that role.",
+        "why_it_matters": "If pi_go is measured with severe error or contaminated by linkage failures, the entrant-margin regressor EDAX_gt is a noisy proxy rather than an instrument, and the companion's estimates are attenuated or biased in an unknown direction. The companion is registered as a secondary design that cannot support headline claims, but it is still presented as a substantive partition of the 22-25 population, and its failure to meet the frozen power standard is pre-registered as informative. A design that cannot estimate its own instrument with usable precision should not be registered as a companion at all without a mechanical remedy.",
+        "required_change": "Before Gate 1, compute realized per-cell entrant counts from the frozen pre-event CPS extract, report the distribution of cell sizes, and pre-register a pooling rule (e.g., collapse to major occupation groups or use a shrinkage estimator) that guarantees a minimum effective sample size per cell. Separately, use month-in-sample to distinguish true entrants from CPSIDP linkage failures and long non-employment spells, and report the share of the entrant sample that is attributable to linkage failure. If the share exceeds a pre-registered threshold, the companion is demoted to a descriptive diagnostic rather than a registered secondary design."
+      },
+      {
+        "id": "M3",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a77.4 and power_standard.json",
+        "claim": "The power standard is frozen at relative_decline = 0.19, but the packet's own provenance states that this figure is PI-directed and NOT sourced to a locator: 'locator_status: PENDING_EXCERPT' and 'every host carrying the paper is egress-blocked, so no version was read and the figure rests on web-search summaries.' The memo's D3 decision document explicitly says the 0.16 and 0.19 figures 'must not be frozen on this evidence' under meta-rule 1, yet power_standard.json records version_status: RESOLVED and relative_decline: 0.19. This is an internal contradiction: the decision document says the figure cannot be frozen without a locator, but the frozen standard file does exactly that.",
+        "why_it_matters": "The pass bar is the single most consequential number in the power analysis. A 0.19 relative decline loosens the bar by approximately 46% relative to the 0.13 figure the registered proposal cites. If the 0.19 figure is not actually sourced, the entire power standard is built on an unverified claim, and the design's adequacy determination is meaningless. The packet's own meta-rules forbid freezing a figure on web-search summaries.",
+        "required_change": "Either supply the exact excerpt from Canaries_August2026.pdf naming the 0.19 figure with a page/section locator and set locator_status to VERIFIED, or revert relative_decline to 0.13, which is sourced to docs/DAX_ERE_Proposal_v3.md:12 and :100. Until one of these is done, power_standard.json must remain status: PLACEHOLDER_REQUIRES_REAL_CPS with version_status: UNRESOLVED, and both power engines must return adequately_powered: null."
+      },
+      {
+        "id": "M4",
+        "severity": "major",
+        "location": "design_memo_v1.md \u00a77.1 and \u00a73.1",
+        "claim": "The memo states the analysis unit is person-month in IPUMS-CPS, but the power simulation operates on occupation-month cell moments, and the memo's own M5 resolution acknowledges these are 'not the same object.' The memo claims the approximation is conservative because omitting X_i raises residual variance, but this argument is incomplete: the simulation also omits the within-cell person-level variation in the outcome, which is the dominant source of variance in a person-month regression with occupation-clustered standard errors. The claim that the simulated MDE is an upper bound on the person-level MDE is asserted but not demonstrated, and the direction of the approximation depends on the relative magnitude of within-cell versus between-cell variance, which is not established from the synthetic fixture.",
+        "why_it_matters": "If the simulation understates the person-level standard error, the design may be underpowered despite passing in simulation. The memo's own asymmetry statement ('a design that fails in simulation is not thereby condemned') is not a substitute for a correct power calculation. The power standard is the gate for the entire design, and an incorrect unit-of-analysis approximation invalidates the adequacy determination.",
+        "required_change": "Before Gate 1, run the person-level estimator on the frozen pre-event CPS extract (which is available as IPUMS extract 6) and report the actual person-level standard errors. Replace the simulated MDEs with the person-level MDEs for the adequacy determination. If the person-level extract cannot be used for this purpose, the memo must state explicitly that the power analysis is not yet empirical and cannot support a Gate 1 adequacy determination."
+      }
+    ],
+    "minor_issues": [
+      {
+        "id": "m1",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a79.3 and \u00a714",
+        "claim": "The pre-trend test uses D_o = DAX_o,2024-12 as a frozen horizon, but the memo does not state whether D_o is computed from the same dose path that enters the primary regression. If the dose path is revised after the horizon is frozen (e.g., by W2 price verification or W5 crossing recomputation), D_o may no longer correspond to the actual cumulative dose at 2024-12, and the pre-trend test would be testing a different object than the primary regressor.",
+        "why_it_matters": "The pre-trend test is the primary diagnostic for IC-1. If D_o is not mechanically tied to the primary dose path, the test can pass or fail for reasons unrelated to the identifying assumption.",
+        "required_change": "Specify that D_o is recomputed from the same frozen dose path used in the primary regression, and that any revision to the dose path triggers a recomputation of D_o with the revision logged as a deviation."
+      },
+      {
+        "id": "m2",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a77.2 and PI_DECISIONS_OPEN.md",
+        "claim": "The entrant companion's specification clusters on the entry-mix cell, but the memo does not state whether the cell is the demographic-education cell g or the occupation cell o. The dose EDAX_gt varies at the g-by-month level, so clustering on g is natural, but the memo's section 7.2 says 'clustered on the entry-mix cell' without defining which cell.",
+        "why_it_matters": "Incorrect clustering can produce severely understated or overstated standard errors, which affects the companion's power table and any reported confidence intervals.",
+        "required_change": "Specify the clustering unit precisely (e.g., demographic-education cell g) and justify it relative to the level of treatment variation."
+      },
+      {
+        "id": "m3",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a710.2 and \u00a716",
+        "claim": "The cross-mapping IV instruments GDPval DeltaDAX with Tolan and Eloundou doses, but the memo's IC-3 explicitly states that shared structural errors across mappings violate the exclusion restriction. The memo does not pre-register a test for this violation beyond the overidentification diagnostics, which have low power against common structural errors.",
+        "why_it_matters": "If all three mappings share a common error (e.g., equating benchmark performance with production success), the IV is invalid and the IV/OLS ratio is not a reliability diagnostic but a biased estimate. The memo acknowledges this in IC-3 but does not provide a mechanical remedy.",
+        "required_change": "Pre-register a falsification test for shared structural errors, such as a placebo mapping constructed from an unrelated task characteristic, and require the IV to be interpreted only if the placebo mapping shows no first-stage relationship with the outcome."
+      },
+      {
+        "id": "m4",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a71.2 and event_registry_v1.csv",
+        "claim": "The registry contains 21 rows, but only four are currently eligible, and the memo states that 'candidate status is resolved before Gate 1.' However, the packet does not contain the W2 price-history panel or the resolved candidate statuses, so the actual dose path that will enter the primary regression is not yet determined. The continuous design's identifying variation depends on the number and timing of verified events, and the memo's claim that 'each newly verified event adds dose variation' is conditional on W2 completing successfully.",
+        "why_it_matters": "The primary design's identification is contingent on registry completion that has not occurred. If W2 fails to verify the candidate events, the dose path may have insufficient timing variation, and the design may be degenerate or underpowered.",
+        "required_change": "Require the completed registry and W2 price panel to be frozen before Gate 1, and re-run the dose-profile diagnostic and power simulation on the actual verified dose path."
+      },
+      {
+        "id": "m5",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a77.4 and power_standard.json",
+        "claim": "The power standard's baseline employment rate and hours are to be computed 'once over 2021-11 to 2023-02 and never recomputed,' but the power_standard.json file shows baseline_employment_rate_22_25: null and baseline_hours_unconditional_22_25: null. The freeze_power_standard.py script has not been run on the real extract, so the standard is not actually frozen.",
+        "why_it_matters": "Until the baseline is computed and frozen, the power standard is a placeholder, and the design's adequacy cannot be determined. The packet's own checklist acknowledges this, but it is worth flagging as a mechanical gap that blocks Gate 1.",
+        "required_change": "Run freeze_power_standard.py on the real pre-event CPS extract and record the baseline values with provenance before Gate 1."
+      },
+      {
+        "id": "m6",
+        "severity": "minor",
+        "location": "design_memo_v1.md \u00a76.2 and \u00a713",
+        "claim": "The usage-share first stage uses a complete-case rule requiring observation in all required pre and post months, but the memo does not specify how many pre and post months are required for each event, nor how the complete-case rule interacts with the continuous design's lack of clean windows. The first stage is still event-based, but the primary design is continuous, creating a potential mismatch between the first-stage and primary specifications.",
+        "why_it_matters": "If the first stage is estimated on a different event structure than the primary dose path, the delta calibration and behavioral first stage may not correspond to the primary design's treatment.",
+        "required_change": "Specify the event-time structure for the first stage under the continuous design, and clarify whether the first stage uses the same dose path as the primary regression or a separate event-based structure."
+      }
+    ],
+    "decision_checks": [
+      {
+        "decision": 1,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 2,
+        "implementable": true,
+        "problem": "Retired from primary but retained for secondary stack; the secondary stack's own power statement is not yet computed.",
+        "required_change": "Compute the secondary stack's power statement before Gate 1."
+      },
+      {
+        "decision": 3,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 4,
+        "implementable": true,
+        "problem": "Reversed under D1; the memo states the reversal but the PI_DECISIONS_OPEN.md table still shows the original APPROVED text without noting the reversal.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the D1 reversal."
+      },
+      {
+        "decision": 5,
+        "implementable": true,
+        "problem": "Retired under D1; the monotonicity convention survives but is not a decision in the amended role.",
+        "required_change": "Update PI_DECISIONS_OPEN.md to reflect the retirement."
+      },
+      {
+        "decision": 6,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 7,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 8,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 9,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 10,
+        "implementable": true,
+        "problem": "The entrant companion forms its own family, but the memo does not specify whether the companion's secondary outcomes (if any) are also corrected within the companion family.",
+        "required_change": "Specify the companion's outcome family and correction procedure."
+      },
+      {
+        "decision": 11,
+        "implementable": false,
+        "problem": "The numeric part is superseded by D3, but the power standard is not frozen (baseline values are null), so the decision cannot be mechanically implemented until freeze_power_standard.py is run on the real extract.",
+        "required_change": "Run freeze_power_standard.py and record the frozen baseline values."
+      },
+      {
+        "decision": 12,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 13,
+        "implementable": true,
+        "problem": "Clause (c) is re-scoped to the first stage only, but the memo does not specify how the first stage's event count is determined under the continuous design.",
+        "required_change": "Specify the first stage's event structure and how clause (c) is applied."
+      },
+      {
+        "decision": 14,
+        "implementable": true,
+        "problem": "The re-specified placebo-lead test is estimable, but the memo does not state whether D_o is recomputed from the primary dose path.",
+        "required_change": "Specify the mechanical link between D_o and the primary dose path."
+      },
+      {
+        "decision": 15,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 16,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 17,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      }
+    ],
+    "evidence_gap_checks": [
+      {
+        "item": "registry",
+        "satisfied": false,
+        "reason": "The registry contains 21 rows but only four are eligible; the W2 price-history panel is not present, and candidate statuses are unresolved. The memo states candidate status is resolved before Gate 1, but the packet does not contain the resolved registry."
+      },
+      {
+        "item": "empirical_power",
+        "satisfied": false,
+        "reason": "The power standard is PLACEHOLDER_REQUIRES_REAL_CPS with null baseline values; the power results are from a synthetic fixture stamped NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST. No empirical power analysis on the real CPS extract is present."
+      },
+      {
+        "item": "red_team",
+        "satisfied": false,
+        "reason": "The prior red team reviewed the superseded discrete design and reached CONDITIONAL_GO; the packet explicitly states this verdict does not transfer and the red-team item is returned to unchecked. No fresh adversarial review of the continuous design is present."
+      },
+      {
+        "item": "pi_pdf_review",
+        "satisfied": false,
+        "reason": "The PI_DECISIONS_OPEN.md checklist shows the rendered PDF review item unchecked, and the packet does not contain a rendered PDF or a PI line-by-line review record."
+      }
+    ],
+    "outcome_seal_assessment": "The outcome seal appears intact: no post-event outcome data is present in the packet, the power results are explicitly stamped NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST, and the deviation log states the seal was closed throughout. However, the seal's integrity cannot be fully verified from the packet alone because the repository's fail-closed guard is described but not demonstrated, and the packet does not contain a cryptographic seal record or an access log.",
+    "required_changes_before_gate": [
+      "Resolve the power standard contradiction: either supply the Canaries_August2026.pdf excerpt with a page locator for the 0.19 figure or revert to the sourced 0.13 figure; until then, keep power_standard.json as PLACEHOLDER_REQUIRES_REAL_CPS with version_status UNRESOLVED.",
+      "Run freeze_power_standard.py on the real pre-event CPS extract and record the frozen baseline employment rate and hours with provenance.",
+      "Compute the dose-profile diagnostic (effective rank and leading singular-component share) on the real occupation-by-month dose matrix, and pre-register the mechanical consequence for a degenerate design.",
+      "Resolve the entrant-margin instrument issues: compute realized per-cell entrant counts, pre-register a pooling rule, and use month-in-sample to separate true entrants from CPSIDP linkage failures.",
+      "Run the person-level estimator on the frozen pre-event CPS extract and replace the simulated MDEs with person-level MDEs for the adequacy determination.",
+      "Complete the registry and W2 price panel, and re-run the dose-profile diagnostic and power simulation on the actual verified dose path.",
+      "Update PI_DECISIONS_OPEN.md to reflect the D1 reversals and retirements of Decisions 2, 4, and 5, and the re-scoping of Decisions 1, 13, and 14."
+    ],
+    "nonblocking_followups": [
+      "Specify the clustering unit for the entrant companion precisely and justify it relative to the level of treatment variation.",
+      "Pre-register a falsification test for shared structural errors in the cross-mapping IV, such as a placebo mapping.",
+      "Specify the event-time structure for the usage-share first stage under the continuous design and clarify its relationship to the primary dose path.",
+      "Provide a cryptographic seal record or access log for the outcome-data seal.",
+      "Compute the secondary stacked design's own power statement and report it alongside the primary power analysis."
+    ]
+  }
+}

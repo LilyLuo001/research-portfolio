@@ -88,3 +88,75 @@ def test_red_team_packet_covers_the_v2_design():
         assert required in source, f"v2 packet is missing {required}"
     assert "does not transfer" in source, \
         "the prompt must tell the reviewer not to defer to the superseded verdict"
+
+
+def test_fresh_reruns_remain_blocking_and_adjudication_does_not_self_clear():
+    import json
+
+    memo_dir = pathlib.Path(__file__).resolve().parents[1] / "memo"
+    reruns = sorted(memo_dir.glob("red_team_deepseek_v4_pro_rerun_20260818_round*.json"))
+    assert len(reruns) == 3
+    for path in reruns:
+        review = json.loads(path.read_text(encoding="utf-8"))["review"]
+        assert review["verdict"] == "REVISE"
+        assert review["gate_recommendation"] == "BLOCK"
+    adjudication = (memo_dir / "red_team_rerun_adjudication_20260818.md").read_text()
+    assert "**BLOCK.**" in adjudication
+    assert "does not self-certify" in adjudication
+
+
+def test_red_team_packet_covers_the_v3_design():
+    """A reviewer who cannot see what changed after 2026-08-18 reviews a ghost.
+
+    Four things moved the primary specification or its evidence base after the
+    v2 packet was assembled. Omitting any of them repeats the exact failure
+    that retired the previous CONDITIONAL_GO -- a careful review of a design
+    that no longer exists.
+    """
+    import pathlib
+
+    source = (pathlib.Path(__file__).resolve().parents[1]
+              / "memo" / "run_deepseek_red_team.py").read_text(encoding="utf-8")
+    for required in ("W3_RECONCILIATION_2026-08-23.md",
+                     "W2_DECISION_task_weight_2026-08-24.md",
+                     "PI_AUTHORIZATION_2026-08-24.md",
+                     "dwa_coverage_bound_receipt.json",
+                     "gate_dependency_status.json"):
+        assert required in source, f"v3 packet is missing {required}"
+
+
+def test_the_prompt_forbids_reading_the_synthetic_pass_as_power():
+    """The freeze made this trap sharper, not softer.
+
+    Before 2026-08-24 the synthetic smoke test reported adequately_powered:
+    null, which invited no misreading. It now reports true, and a reviewer
+    skimming the packet could take that as evidence the design is powered. The
+    prompt must say plainly that it is not.
+    """
+    import pathlib
+
+    source = (pathlib.Path(__file__).resolve().parents[1]
+              / "memo" / "run_deepseek_red_team.py").read_text(encoding="utf-8")
+    assert "NOT EVIDENCE THAT THE DESIGN IS POWERED" in source
+    assert "NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST" in source
+
+
+def test_the_prompt_names_the_unbuilt_primary_mapping():
+    """The reviewer must be told the primary mapping does not exist yet."""
+    import pathlib
+
+    source = (pathlib.Path(__file__).resolve().parents[1]
+              / "memo" / "run_deepseek_red_team.py").read_text(encoding="utf-8")
+    assert "DOES NOT EXIST YET" in source
+    assert "13 PASS of 120" in source
+
+
+def test_every_packet_input_exists_and_is_readable():
+    """build_prompt() reads all of them; a missing file fails only at run time.
+
+    That run time is a paid cross-vendor call, so the failure must surface
+    here instead.
+    """
+    for path in RED_TEAM.INPUTS:
+        assert path.is_file(), f"packet input missing: {path}"
+        assert path.read_text(encoding="utf-8").strip(), f"packet input empty: {path}"

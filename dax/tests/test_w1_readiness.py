@@ -26,6 +26,16 @@ def test_w1_draft_remains_fail_closed_after_pi_defaults_are_approved():
     assert report["unchecked_items"] > 0
 
 
+def test_fresh_red_team_blockers_are_machine_enforced():
+    blockers = READINESS.audit()["blockers"]
+    # Cleared 2026-08-24 by the D3 freeze. Asserting its ABSENCE keeps the test
+    # meaningful: if the standard is ever un-frozen or reverted, this fails.
+    assert "power benchmark is not frozen from a verified dated locator" not in blockers
+    assert "entrant companion is demoted to exploratory" in blockers
+    assert "real-dose residualized identification gate has not run" in blockers
+    assert "person-level empirical power gate did not pass" in blockers
+
+
 def test_red_team_item_is_unchecked_after_the_d1_design_change():
     """The 2026-08-06 CONDITIONAL_GO reviewed the superseded discrete design.
 
@@ -41,6 +51,13 @@ def test_red_team_item_is_unchecked_after_the_d1_design_change():
 def test_memo_records_that_the_prior_review_does_not_transfer():
     memo = (ROOT / "memo" / "design_memo_v1.md").read_text(encoding="utf-8")
     assert "does **not** transfer" in memo
+
+
+def test_failed_entrant_companion_is_exploratory_not_registered_secondary():
+    memo = (ROOT / "memo" / "design_memo_v1.md").read_text(encoding="utf-8")
+    assert "Entrant-margin companion (registered secondary" not in memo
+    assert "demoted to exploratory" in memo
+    assert "No entrant power table enters Gate 1" in memo
 
 
 def test_pdf_matches_the_memo():
@@ -90,8 +107,14 @@ def test_freeze_refuses_while_the_benchmark_version_is_unresolved():
     benchmark = standard["benchmark"]
 
     source = (ROOT / "memo" / "power_calcs" / "freeze_power_standard.py").read_text()
-    assert 'version_status") != "RESOLVED"' in source, \
+    assert 'benchmark.get("version_status") == "RESOLVED"' in source, \
         "the freezer must gate on the version being resolved"
+    assert 'benchmark.get("locator_status") == "VERIFIED"' in source, \
+        "a resolved label cannot substitute for a verified dated locator"
+
+    if benchmark["locator_status"] != "VERIFIED":
+        assert benchmark["relative_decline"] is None, \
+            "an unsourced value must not remain executable in the standard"
 
     if benchmark["version_status"] == "RESOLVED":
         # A resolved version must say who chose it and what it supersedes, and

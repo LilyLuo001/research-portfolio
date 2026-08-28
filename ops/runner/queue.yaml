@@ -799,7 +799,7 @@ tasks:
     project: refraction
     owner_account: null
     worker: deepseek
-    depends_on: [REFR-R1a-verify]
+    depends_on: [REFR-R1a-verify, REFR-GATE-consensus]
     inputs: [refraction/frozen_config.yaml]
     output_contract: surprises
     human_gate: false
@@ -950,6 +950,16 @@ tasks:
     human_gate: true
     max_attempts: 1
     notes: "HUMAN: confirm BU access to ETF Global / issuer daily basket files. Gates the R9 bypath only."
+  - id: REFR-GATE-consensus
+    project: refraction
+    owner_account: C
+    worker: script
+    depends_on: []
+    inputs: []
+    output_contract: null
+    human_gate: true
+    max_attempts: 1
+    notes: "HUMAN: name and license the CPI/NFP consensus channel (Bloomberg ECO at BU vs WRDS alternative) and write it into refraction/frozen_config.yaml surprise.consensus_source. R-DEC-3 2026-08-19: this was an open NEED_HUMAN with NO gate node and NO code check, in a chapter whose treatment IS the surprise. guards/prereg_guard.py::assert_consensus_source now refuses while it is null; R1b/R2 must call it."
 
   - id: REFR-R9a-basket-read
     project: refraction

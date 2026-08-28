@@ -1,5 +1,13 @@
 # Dynamic AI Exposure (DAX): pre-registered design memo v1
 
+> **ARCHIVED 2026-08-25 — superseded as the active research object.**
+> This memo is retained in full and is not retracted. The DAX index was paused
+> because §0 condition 1 (W4 snapshot capture before the 2026-10-23 and
+> 2026-12-11 shutdown dates) could not be met: 0 of 22 vintages captured, and
+> the vintages are withdrawn on fixed external dates. That is a feasibility
+> failure, not a scientific refutation — see `DAX_ARCHIVE_2026-08-25.md`.
+> The active research object is `yax/RESEARCH_PLAN_v1.md` (project YAX).
+
 **Status:** v2 draft — PRIMARY DESIGN AMENDED 2026-08-18; not pre-registered
 
 **Draft date:** 2026-08-06; amended 2026-08-18 (D1, D3, D4, F2)
@@ -23,7 +31,8 @@ is now a continuous cumulative-dose design on the monthly index of section 2,
 with no event selection; the stack survives as secondary corroboration. The
 power pass bar, previously derived from the sample it judged, is now a frozen
 external constant. The primary estimand is stated explicitly as an incumbent
-margin, and an entrant-margin companion is registered alongside it. Five
+margin. The previously registered entrant-margin companion is now exploratory
+after its pre-event feasibility audit failed. Five
 registry rows were demoted to `pending_second_date_locator` under a rule now
 enforced by the validator rather than applied by hand.
 
@@ -74,6 +83,12 @@ fails if IDs or dates are malformed, either locator is absent, sources repeat,
 or an event marked `eligible` lacks verified status. The validator does not
 pretend to read source content; rows marked `pending_second_date_locator`
 remain ineligible until a second source independently dates API availability.
+
+`event_table_shell_v1.csv` is the downstream continuous-dose reporting shell.
+Its continuous-dose distribution, residualized-variance, and leave-one-event-
+out fields are intentionally blank with an explicit W5 fill status until a
+real W5 panel exists. Blank values are deferrals, not zeroes or completed
+measurements, and the shell cannot be used as empirical evidence before W5.
 
 | Event ID | API-effective date | Classification | Evidence 1 | Evidence 2 | Status |
 |---|---|---|---|---|---|
@@ -283,7 +298,7 @@ mapping error and of untreated outcome innovations. Shared structural errors,
 such as all three mappings equating benchmark performance with production
 success, violate this condition and are not removed by instrumenting.
 
-**IC-4 — Frozen entry mix (entrant companion only).** The entry-occupation
+**IC-4 — Frozen entry mix (exploratory entrant analysis only).** The entry-occupation
 distribution `pi_go`, estimated once over 2021-11 to 2023-02, is independent of
 post-2023 innovations in entrant employment conditional on cell and month
 effects. If entrants systematically divert away from exposed occupations after
@@ -291,7 +306,9 @@ the pre-period, that diversion is an outcome and must not enter the regressor;
 freezing `pi_go` in the pre-period is what enforces this, and the assumption
 that the frozen mix remains a valid *instrument* for exposure, rather than a
 description of realised entry, is the companion's central identifying
-requirement.
+requirement. The pre-event audit failed the registered occupation-level
+estimability condition, so this assumption is not used for confirmatory
+inference and the companion remains outside Gate 1.
 
 ### Estimands
 
@@ -301,15 +318,15 @@ level, among young workers with a prior occupational attachment, over the
 observed common-support population. Reported pooled, by 12-month calendar
 block, and as a binned nonparametric dose response.
 
-**Companion (entrant margin).** The change in the employment rate of an
-entrant cohort associated with a 0.10 increase in the frozen entry-mix-weighted
-DAX of the occupations that cohort typically enters.
+**Exploratory entrant margin.** A descriptive analysis may relate employment
+among clean, adjacent-month linked nonemployment-to-employment transitions to
+coarse pre-event entry-mix exposure. It is not a registered causal estimand and
+cannot support a headline, confirmatory, or Gate-1 claim.
 
-The two estimands partition the 22-25 population and answer different
-questions. They are reported side by side. Neither is presented as a robustness
-check on the other, and a disagreement between them is a finding about which
-margin adjusts, not a specification problem to be resolved in favour of the
-stronger result.
+The primary incumbent estimand does not cover labour-market entry. The clean
+linked-transition subset used in the exploratory analysis is not the exact
+complement of the primary sample and must not be described as partitioning the
+22--25 population.
 
 **Why not a single pooled estimand.** Merging the two would require imputing an
 occupation for people who never held one. That is fabrication, and it would
@@ -337,6 +354,70 @@ stratified by occupation family, score decile, and ambiguity flag. Require
 weighted Cohen's kappa of at least 0.70 and at least 90% agreement on the binary
 crossing-relevant label before W5. Failure returns the rubric for redesign
 before index construction.
+
+### 5.1 Non-evaluable task mass and the missing-mass rule
+
+*Added as a pre-tag amendment 2026-08-24 under
+`dax/mapping/W3_DECISION_missing_mass_2026-08-24.md`, in the same manner as
+D1, D3 and D4. This memo previously carried no partial-identification
+treatment at all, while the rule governing most of the task mass lived only in
+a decision packet.*
+
+Not every task can be evaluated against a capability benchmark. The S1
+construct-validity pilot classified 120 probability-drawn tasks and found no
+directly-executable-digital task at all; the largest non-evaluable classes
+were tasks requiring interpersonal interaction and tasks requiring
+physical-world action. *(S1 is single-annotator with
+`formal_s1_gate_result: UNRESOLVED`; these counts are diagnostics and carry no
+claim. The rule below binds regardless of what its replication returns,
+because the non-evaluable mass is large under any plausible re-estimate.)*
+
+**Evaluable boundary.** A task enters the identified set if it is
+directly-executable digital, or executable with supplied files or data.
+Tasks executable only with construct-valid simulated inputs are **excluded
+from the identified set and reported separately**, per the v3 taxonomy which
+admits them only after a construct-validity review. The strict boundary
+(directly-executable only) and the broad boundary (including simulated inputs)
+are prespecified sensitivities.
+
+**Bounds.** For occupation `o`, with `L_om` the identified crossing mass and
+`U_o` the non-evaluable or otherwise unidentified mass:
+
+```text
+lower_om = L_om
+upper_om = L_om + U_o
+```
+
+Both are reported unchanged as the honest bracket.
+
+**The missing-mass rule.** `upper_om` must not be used as a level or as a
+regressor. Writing `B_o` for the identified mass share and `E_om` for the
+crossing rate among identified tasks, `upper_om = B_o·E_om + (1 − B_o)`, which
+is *decreasing* in `B_o`: an occupation measured at 5% coverage scores higher
+than one measured at 80% coverage at the same underlying exposure. Because
+evaluability is worst for interpersonal and physical occupations, that
+artifact correlates with occupation type and so with the outcome.
+
+The dose therefore carries an explicit missing-mass parameter `κ ∈ [0,1]`, the
+fraction of unidentified mass assumed to cross:
+
+```text
+ΔDAX_om(κ) = ΔE_om · [B_o + κ(1 − B_o)]
+```
+
+The multiplier is weakly increasing in `B_o` for every κ, and at κ = 1 recovers
+the worst case above.
+
+**[PI-DECISION 7a] Reporting the missing-mass path.** Results are reported
+across the frozen grid κ ∈ {0, 0.25, 0.50, 0.75, 1}. **No single κ is a
+headline; the κ-path is the result.** `B_o` is reported per occupation
+alongside it — the path cannot be interpreted without knowing what fraction of
+the occupation it rests on. A model-based center may be reported only if a
+separate prospective model and validation rule are signed, and must never be
+called observed DAX.
+
+Reporting a single κ as though it were estimated, or omitting `B_o`, is a
+deviation under §11.
 
 ## 6. Index validation and behavioral first stage
 
@@ -419,50 +500,42 @@ primary estimand are therefore not the same object. A null on the incumbent
 margin is not evidence against an entrant-margin finding, and the memo does not
 present it as such.
 
-### 7.2 Entrant-margin companion (registered secondary, PI-approved 2026-08-18)
+### 7.2 Entrant-margin analysis (demoted to exploratory 2026-08-18)
 
-Because the mechanism the paper is benchmarked against operates at entry, the
-entrant margin is studied directly rather than disclaimed.
+The PI approved a registered secondary companion on 2026-08-18. The required
+pre-event audit then showed that the design is not estimable at the registered
+occupation-by-cell level. The controlling red-team adjudication therefore
+demoted it to exploratory; this is an evidence-triggered deviation from D4
+Part 2, not a new affirmative PI choice.
 
-This is not an inference from the abstract. The source paper reports that the
-divergence "operates primarily through reduced hiring of young workers rather
-than increased separations" — so the incumbent margin the primary design
-measures is, by the benchmark literature's own account, the margin on which the
-effect is *weaker*. A design that measured only incumbents would be benchmarked
-against an effect it is structurally unable to see. That is the case for the
-companion, and it is why D4 Part 2 was approved rather than disclaimed.
+The benchmark literature's reduced-hiring mechanism still makes entry an
+important descriptive margin, but motivation does not overcome failed
+measurement and support gates. The registered complement rule is invalid
+because it mixes true entrants, CPSIDP linkage failures, rotation entry, and
+long nonemployment.
 
-Sample: persons ages 22-25 with no valid occupation observation in the
-lookback window — exactly the complement of the primary sample, so the two
-partition the age range without overlap.
+The private audit instead examined adjacent-month CPSIDP-linked
+nonemployment-to-employment transitions in eligible rotation months. It found
+1,623 linked entries across 16 demographic-education cells and 822
+cell-occupation pairs; the pair-count median was 1, the maximum 18, and 100%
+of entries were in pairs below the diagnostic minimum of 20.
+Expected-prior-interview link failure was 16.3% unweighted (16.5% weighted).
+Therefore occupation-level `pi_go` is not estimable as registered.
 
-Dose: entrants have no occupation, so occupation dose cannot be assigned to
-them. Instead each monthly entrant cohort is assigned the
-**entry-mix-weighted DAX**
+An exploratory analysis may construct a coarse pre-event entry-mix-weighted
+DAX,
 
-`EDAX_gt = sum_o pi_go * DAX_ot`
+`EDAX_gt = sum_o pi_go * DAX_ot`,
 
-where `pi_go` is the frozen probability that an entrant in demographic-education
-cell `g` first appears in occupation `o`, estimated **once** from the
-pre-event window 2021-11 to 2023-02 and never re-estimated. Freezing `pi_go`
-in the pre-period is what keeps the weights exogenous to the treatment: if
-entrants divert away from exposed occupations after 2023, that diversion is
-the outcome, and it must not be allowed to move the regressor.
-
-Specification: cell-by-month panel, outcome the employment rate of the entrant
-cohort, regressed on `EDAX_gt` with cell effects, calendar-month effects, and
-the registered controls, clustered on the entry-mix cell.
-
-Estimand: the effect of exposure of an entrant cohort's typical entry
-occupations on that cohort's employment rate.
-
-Registered limitations, stated in advance: `pi_go` is measured with error and
-the resulting attenuation is bounded by the same EIV machinery as the primary
-(section 10.1); the entry-mix regressor has less independent variation than
-occupation-level dose, so this companion is expected to be less powered and
-carries its own power table; and it cannot support headline claims unless it
-meets the same frozen standard in section 7.4. A companion that fails its
-power standard is reported as informative and explicitly non-confirmatory.
+where `pi_go` is estimated only from the pre-event window and never updated
+with post-treatment entry choices. Any pooling, shrinkage, cell definition,
+and sampling-error propagation is exploratory unless separately approved
+prospectively. Results must be labeled descriptive/exploratory, show the sparse
+cell distribution, and may not be used to repair, confirm, reject, or headline
+the primary incumbent result. No entrant power table enters Gate 1. Restoring
+a registered companion requires a PI-approved entrant definition, pooling
+threshold, and sampling-error propagation rule followed by fresh red-team
+review.
 
 ### 7.3 Outcomes
 
@@ -475,9 +548,9 @@ power table, and cannot support headline claims.
 **[PI-DECISION 10] Multiplicity default.** Unchanged: Holm across the two
 primary outcomes at two-sided 5%, unadjusted intervals reported alongside
 adjusted p-values, Benjamini-Hochberg at 10% applied separately to the
-secondary and auxiliary families. The entrant companion forms its own family
-and is corrected within itself; it is not pooled with the primary family,
-because pooling would let a companion result borrow the primary's error budget.
+secondary and auxiliary families. Exploratory entrant analysis is outside the
+registered outcome families and is labeled non-confirmatory; it cannot borrow
+the primary family's error budget or enter headline multiplicity claims.
 
 ### 7.4 Power standard
 
@@ -487,12 +560,16 @@ was estimated from the analysis sample, so it moved with the event set:
 dropping a single event loosened the bar by 185% while the estimator got 19%
 worse. A standard that moves with the specification it judges cannot fail.
 
-The standard is now a frozen absolute constant:
+The standard will be a frozen absolute constant once its real pre-event CPS
+baseline is frozen:
 
 `ceiling = max_mde_fraction x relative_decline x baseline_level`
 
-where **`relative_decline = 0.13` is a relative decline in EMPLOYMENT
-(headcount), not in payroll.** "Payroll" names the data source, not the
+where the prospectively PI-selected primary `relative_decline` is **0.13**.
+This is an external empirical calibration scale from the authenticated
+2025-08-26 authored version, not an estimate of the DAX treatment coefficient.
+It is a relative decline in EMPLOYMENT
+(headcount), not in payroll. "Payroll" names the data source, not the
 outcome: the estimate comes from ADP administrative payroll records. The
 project's own proposal states it unambiguously — "U.S. payroll data, by
 contrast, show a 13 percent relative employment decline among workers ages
@@ -500,15 +577,18 @@ contrast, show a 13 percent relative employment decline among workers ages
 citing Brynjolfsson, Chandar and Chen 2025, "Canaries in the Coal Mine? Six
 Facts about the Recent Employment Effects of Artificial Intelligence",
 `docs/DAX_ERE_Proposal_v3.md:100`). Because it is a *relative* decline, the
-absolute percentage-point benchmark is `0.13 x baseline employment rate`, which
-is what the formula above computes.
+absolute percentage-point benchmark is
+`0.13 x baseline employment rate`.
 
-**Unresolved: which version's figure.** The same paper has been revised and the
-headline figure has moved — 0.13 in the version the proposal cites, and later
-revisions reportedly at 0.16 and 0.19. Freezing is one-way and a larger figure
-loosens the pass bar, so the choice is a PI decision and
-`freeze_power_standard.py` refuses to run until it is recorded. See
-`PI_DECISION_D3_2026-08-18.md`.
+**Prespecified interpretation and sensitivities.** PI decision commit
+`4577fecab7b4e142cb28d78d4aec0800637c7b05`, made before real power results,
+sets 0.16 from the authenticated 2025-11-13 revision as a version-update
+empirical sensitivity. The historical 0.19 value is retained only as a
+normative PI design-target sensitivity; its external empirical provenance
+remains unresolved and it is not a literature estimate. The external paper
+and DAX differ in exposure definition, sample, period, treatment unit, and
+estimand, so none of these values is represented as a directly comparable DAX
+causal coefficient. The value may not be changed after power results are seen.
 
 With `max_mde_fraction = 0.5`, and
 `baseline_level` the pooled person-weighted pre-event level of the outcome
@@ -536,18 +616,16 @@ by the occupation cluster structure rather than by within-cell person
 variation. These are not the same object and the memo does not pretend they
 are.
 
-The approximation is **conservative in a stated direction**: the simulation
-omits `X_i`, so it does not credit the design with the residual variance those
-covariates would explain. Omitted explanatory covariates raise residual
-variance, raise the standard error, and raise the minimum detectable effect.
-The simulated MDE is therefore an upper bound on the person-level MDE, and a
-design that passes in simulation passes a fortiori at person level. A design
-that *fails* in simulation is not thereby condemned, and that asymmetry is
-registered here so it cannot be invoked selectively later.
+No ordering between the cell and person-level MDE is asserted. Omitting `X_i`
+can raise residual variance, but aggregation also removes within-cell outcome
+variation and changes weights and leverage; without additional assumptions
+those forces do not sign the difference. The cell result is therefore only a
+smoke-test/planning calculation and can neither pass nor fail Gate 1.
 
-Once the frozen extract exists, the person-level estimator is run directly and
-its standard errors replace the simulated ones; the cell approximation is
-retained only for pre-data planning.
+The Gate-1 calculation runs the person-month estimator directly on the frozen
+pre-event extract, with post-event outcomes simulated against W5's real dose
+panel. Its occupation-clustered rejection rates and MDEs are the only power
+result used for the gate.
 
 The power simulation must model the continuous design on pre-event moments
 only, preserving occupation cluster sizes, person weights, crosswalk dose
@@ -782,7 +860,7 @@ reported. The `analysis/outcomes/` guard remains fail-closed.
 
 ### 11.2 Deviation log
 
-All four entries below are pre-tag amendments to a draft. None was made with
+All entries below are pre-tag amendments to a draft. None was made with
 access to outcome data: the seal was closed throughout, `dax/data_raw/` held no
 extract, and every quantity consulted was either date arithmetic on the frozen
 registry or a power statistic on a synthetic fixture stamped
@@ -795,6 +873,7 @@ was examined.
 | 2026-08-18 | D3 | Power pass bar changed from `min(6.5pp, 0.5 x baseline_gap)` to a frozen absolute constant computed once over the pre-event window. | 2026-08-18 |
 | 2026-08-18 | D4 | Primary estimand named as an incumbent margin; entrant-margin companion registered as a secondary design with a frozen pre-period entry mix. | 2026-08-18 |
 | 2026-08-18 | F2 | Five event rows demoted to `pending_second_date_locator`; `date_conflict` column added; the release-dating rule is now enforced by `validate_event_registry.py` rather than applied by hand. | 2026-08-18 |
+| 2026-08-18/21 | A5 | Entrant companion demoted from registered secondary to exploratory after the pre-event audit found `pi_go` non-estimable at the registered level; removed from Gate-1 power and confirmatory claims. | Evidence-triggered red-team adjudication; restoration NEED_HUMAN |
 
 Decision numbering is never reused for a different purpose without saying so.
 Where D1 changed a decision's role, the original number is retained and the

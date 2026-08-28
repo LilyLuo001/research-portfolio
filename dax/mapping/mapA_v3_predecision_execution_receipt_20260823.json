@@ -1,0 +1,61 @@
+{
+  "base_sha": "76f61dfc126fe62ad3f2838a52a2c98057775370",
+  "status": "V3_ALTERNATIVES_PREPARED_PRODUCTION_CHOICE_NOT_MADE",
+  "v2_preservation": {
+    "labels_changed": false,
+    "thresholds_changed": false,
+    "candidate_generation_changed": false,
+    "prediction_spec_changed": false,
+    "transport_changed": false,
+    "receipts_changed": false,
+    "classifier_fitted": false,
+    "formal_independent_validation_run": false,
+    "locked_test_opened": false,
+    "formal_labeling_budget_spent_usd": 0
+  },
+  "conceptual_diagnosis": {
+    "pairs": 60,
+    "relation_counts_unchanged": {
+      "D": 0,
+      "F": 24,
+      "N": 36,
+      "U": 0
+    },
+    "dominant_finding": "cross_level_granularity_and_measurement_unit_mismatch",
+    "taxonomy_too_strict_pairs": 0
+  },
+  "source_side_audit": {
+    "scope": "development_only_excluding_prior_diagnostic_sources",
+    "source_tasks": 6,
+    "candidate_pairs_inspected": 108,
+    "plausible_direct_pairs": 1,
+    "sources_with_plausible_direct_pair": 1,
+    "formal_performance_claimed": false
+  },
+  "v3_alternatives_prepared": [
+    "direct_task_substitution",
+    "capability_family_transport_new_estimand",
+    "atomic_task_decomposition",
+    "onet_aligned_bridge_benchmark"
+  ],
+  "production_mapping_selected": false,
+  "downstream": {
+    "w4_paid_calls": false,
+    "w5_run": false,
+    "identification_run": false,
+    "power_run": false,
+    "outcomes_opened": false
+  },
+  "realized_spend_usd": 0,
+  "verification": {
+    "focused_mapping_and_outcome_seal_tests": "15_PASS",
+    "new_diagnostic_tests": "5_PASS",
+    "full_repository_tests": "485_PASS_1_SKIP_1_KNOWN_UNRELATED_P1_FAILURE",
+    "python_compileall": "PASS",
+    "diff_check": "PASS",
+    "secret_scan": "PASS_ZERO_MATCHES",
+    "row_level_private_data_committed": false,
+    "restricted_data_file_types_added": false,
+    "outcome_seal": "PASS"
+  }
+}

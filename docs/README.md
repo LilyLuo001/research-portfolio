@@ -50,6 +50,26 @@ modifications (T8a/T12/T13) and the Arch §4 model assignment.
 3. `DAX_Amendment_v1_1.md` — amendment: EIV workstream, δ calibration, W10a/b
    split, W0.5 feasibility gate, model remap. Overrides the plan where stated.
 
+## Refraction — macro-event standby chapter
+
+1. `MacroEvent_Chapter_Plan_v2_1_FINAL.md` — the plan (v2.1 final). Single
+   source of truth for research substance, same standing as P1's 研究计划 and
+   the DAX proposal; a prompt that conflicts with it is wrong.
+2. `Refraction_执行手册_v1_0.md` — execution manual: §0.3 C0-R context pack
+   (paste at the top of every REFR prompt), R0–R14 task prompts, §0.5 DAG,
+   §2 Meta continuity audit.
+3. `Refraction_Chapter_Plan_Amendment_v2_2.md` — amendment: sample scale
+   recomputed from the built P1 inputs, wave-concentration finding, input
+   contract corrections (`conv_exposure_free.parquet`, missing `permno`),
+   post-2025 wave filter. **Overrides the plan where stated**; every item
+   bearing on a pre-committed §9/§10 line is flagged `[PI-DECISION]` and
+   changes nothing until the owner rules.
+
+So: to brief a REFR task, take C0-R from the manual §0.3, the task prompt from
+the manual's R-block, then apply any v2.2 amendment item and the Arch §4 model
+assignment. Gate-0 thresholds always come from `refraction/frozen_config.yaml`,
+never from a document and never from the model.
+
 ## Portfolio runtime
 
 - `Agent_Architecture_24x7.md` — the four-layer runtime all three projects run

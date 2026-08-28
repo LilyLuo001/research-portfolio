@@ -1,0 +1,210 @@
+{
+  "annotator": "single_current_codex_session_included_usage",
+  "by_candidate_category": {
+    "agree_high": {
+      "direct_or_family_rate": 0.4,
+      "direct_or_family_rate_wilson_95": [
+        0.1682,
+        0.6873
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 4,
+        "N": 6,
+        "U": 0
+      },
+      "pairs": 10
+    },
+    "apparent_negative": {
+      "direct_or_family_rate": 0.0,
+      "direct_or_family_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 0,
+        "N": 10,
+        "U": 0
+      },
+      "pairs": 10
+    },
+    "dense_only_high": {
+      "direct_or_family_rate": 0.7,
+      "direct_or_family_rate_wilson_95": [
+        0.3968,
+        0.8922
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 7,
+        "N": 3,
+        "U": 0
+      },
+      "pairs": 10
+    },
+    "lexical_only_high": {
+      "direct_or_family_rate": 0.3,
+      "direct_or_family_rate_wilson_95": [
+        0.1078,
+        0.6032
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 3,
+        "N": 7,
+        "U": 0
+      },
+      "pairs": 10
+    },
+    "medium_uncertain": {
+      "direct_or_family_rate": 0.3,
+      "direct_or_family_rate_wilson_95": [
+        0.1078,
+        0.6032
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 3,
+        "N": 7,
+        "U": 0
+      },
+      "pairs": 10
+    },
+    "rrf_best": {
+      "direct_or_family_rate": 0.7,
+      "direct_or_family_rate_wilson_95": [
+        0.3968,
+        0.8922
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 7,
+        "N": 3,
+        "U": 0
+      },
+      "pairs": 10
+    }
+  },
+  "completed_at_utc": "2026-08-21T15:01:53.532574+00:00",
+  "formal_metrics_not_claimed": [
+    "binding_PPV",
+    "binding_false_positive_rate",
+    "candidate_recall",
+    "inter_vendor_agreement",
+    "adjudication_rate",
+    "production_coverage",
+    "transport_sensitivity",
+    "locked_test_pass_fail"
+  ],
+  "frozen_thresholds_or_methods_changed": false,
+  "incremental_api_spend_usd": 0,
+  "independent_multi_vendor_validation": false,
+  "input_hashes": {
+    "private_labels_sha256": "b43a9118cc7ec64367a04bf06670251283c451cec2307b9987e6f6a208c53102",
+    "private_sample_sha256": "160d2a44654530b2096ebfe6a208113aba21ba04467530875c0c38a68cbd07ad"
+  },
+  "locked_test_labels_opened": false,
+  "locked_test_rows_read_for_annotation": 0,
+  "overall": {
+    "direct_or_family_rate": 0.4,
+    "direct_or_family_rate_wilson_95": [
+      0.2857,
+      0.5263
+    ],
+    "direct_rate": 0.0,
+    "direct_rate_wilson_95": [
+      0.0,
+      0.0602
+    ],
+    "label_counts": {
+      "D": 0,
+      "F": 24,
+      "N": 36,
+      "U": 0
+    },
+    "pairs": 60
+  },
+  "retrieval_contrast": {
+    "agree_high_plus_rrf_best": {
+      "direct_or_family_rate": 0.55,
+      "direct_or_family_rate_wilson_95": [
+        0.3421,
+        0.7418
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.1611
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 11,
+        "N": 9,
+        "U": 0
+      },
+      "pairs": 20
+    },
+    "apparent_negative": {
+      "direct_or_family_rate": 0.0,
+      "direct_or_family_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "direct_rate": 0.0,
+      "direct_rate_wilson_95": [
+        0.0,
+        0.2775
+      ],
+      "label_counts": {
+        "D": 0,
+        "F": 0,
+        "N": 10,
+        "U": 0
+      },
+      "pairs": 10
+    },
+    "direct_or_family_rate_difference": 0.55
+  },
+  "row_level_data_committed": false,
+  "sample": {
+    "major_soc_families": 22,
+    "pairs": 60,
+    "splits": {
+      "calibration": 24,
+      "development": 36
+    }
+  },
+  "scope": "development_calibration_only",
+  "status": "PRELIMINARY_SINGLE_CODEX_DIAGNOSTIC_COMPLETE_NOT_FORMAL_VALIDATION"
+}

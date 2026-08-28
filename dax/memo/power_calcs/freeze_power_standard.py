@@ -42,6 +42,10 @@ def compute(extract: pathlib.Path, start_month: str, end_month: str,
 
     frame = pd.read_parquet(extract) if extract.suffix == ".parquet" else pd.read_csv(extract)
     required = {"month", "age", weight_column, "employed", "hours_unconditional"}
+    # hours_observed is optional for backward compatibility, but when the panel
+    # distinguishes employed-with-unknown-hours from zero hours we must honour
+    # it: zero-filling those people depresses the baseline and permanently
+    # tightens hours_mde_ceiling, which is derived from it.
     missing = required - set(frame.columns)
     if missing:
         raise SystemExit(
@@ -64,12 +68,52 @@ def compute(extract: pathlib.Path, start_month: str, end_month: str,
     if total <= 0:
         raise SystemExit("NEED_HUMAN: person weights sum to zero in the frozen window")
 
+    # Employment rate is over every person in the window.
+    employment_rate = float((window["employed"].astype(float) * weights).sum() / total)
+
+    # Hours are averaged only over persons whose hours are observed: the
+    # non-employed at a defined zero, plus the employed with a numeric value.
+    # An employed person whose hours "vary" has genuinely unobserved hours;
+    # counting them as zero would be a guess-fill.
+    if "hours_observed" in window.columns:
+        observed = window["hours_observed"].astype(int) == 1
+    else:
+        observed = window["hours_unconditional"].notna()
+    obs_weights = weights[observed]
+    obs_total = float(obs_weights.sum())
+    if obs_total <= 0:
+        raise SystemExit("NEED_HUMAN: no person records with observed hours")
+    unobserved_share = 1.0 - obs_total / total
+    if window.loc[observed, "hours_unconditional"].isna().any():
+        raise SystemExit(
+            "NEED_HUMAN: a record marked hours_observed carries a null value. "
+            "The panel's observed flag and its hours column disagree.")
+
+    # Complete-case is the decided estimator, but its implicit assumption is
+    # worth recording: it assigns the unobserved the mean of ALL observed
+    # persons, which includes the non-employed at zero. Every unobserved record
+    # here is employed, so the assumption understates the baseline and the
+    # resulting ceiling is tighter than the truth -- conservative, but not
+    # neutral. The stratum mean is recorded as a sensitivity, never used.
+    emp_obs = observed & (window["employed"].astype(int) == 1)
+    emp_obs_weight = float(weights[emp_obs].sum())
+    employed_observed_mean = (
+        float((window.loc[emp_obs, "hours_unconditional"].astype(float)
+               * weights[emp_obs]).sum() / emp_obs_weight)
+        if emp_obs_weight > 0 else None)
+    unobserved_all_employed = bool(
+        ((~observed) & (window["employed"].astype(int) == 0)).sum() == 0)
+
     return {
         "n_person_records": int(len(window)),
-        "baseline_employment_rate_22_25": float(
-            (window["employed"].astype(float) * weights).sum() / total),
+        "baseline_employment_rate_22_25": employment_rate,
+        "employed_observed_hours_mean": employed_observed_mean,
+        "unobserved_are_all_employed": unobserved_all_employed,
         "baseline_hours_unconditional_22_25": float(
-            (window["hours_unconditional"].astype(float) * weights).sum() / total),
+            (window.loc[observed, "hours_unconditional"].astype(float)
+             * obs_weights).sum() / obs_total),
+        "n_hours_unobserved": int((~observed).sum()),
+        "hours_unobserved_weight_share": unobserved_share,
     }
 
 
@@ -90,14 +134,22 @@ def main() -> int:
               "memo first and pass --force.", file=sys.stderr)
         return 1
 
-    if standard["benchmark"].get("version_status") != "RESOLVED":
-        print("REFUSING TO FREEZE — the benchmark version is unresolved.",
+    benchmark = standard["benchmark"]
+    benchmark_ready = (
+        benchmark.get("version_status") == "RESOLVED"
+        and benchmark.get("locator_status") == "VERIFIED"
+        and isinstance(benchmark.get("relative_decline"), (int, float))
+        and benchmark["relative_decline"] > 0
+    )
+    if not benchmark_ready:
+        print("REFUSING TO FREEZE — the benchmark value or locator is unresolved.",
               file=sys.stderr)
-        print(standard["benchmark"].get("version_note", ""), file=sys.stderr)
+        print(benchmark.get("version_note", ""), file=sys.stderr)
         print("\nM2 resolved the quantity (employment, not payroll). It did NOT "
-              "resolve WHICH version's figure to freeze. Set benchmark."
-              "version_status to RESOLVED, with the chosen value and a locator "
-              "to the text it came from, only on PI instruction.", file=sys.stderr)
+              "resolve WHICH version's figure to freeze. Set version_status to "
+              "RESOLVED and locator_status to VERIFIED, with a positive numeric "
+              "value and exact page/section locator, only through a signed "
+              "amendment.", file=sys.stderr)
         return 1
 
     if not args.extract.is_file():
@@ -107,7 +159,6 @@ def main() -> int:
     measured = compute(args.extract, window["start_month"], window["end_month"],
                        args.weight_column)
 
-    benchmark = standard["benchmark"]
     benchmark["baseline_employment_rate_22_25"] = round(
         measured["baseline_employment_rate_22_25"], 6)
     benchmark["baseline_hours_unconditional_22_25"] = round(
@@ -125,6 +176,22 @@ def main() -> int:
         "cps_extract_sha256": sha256(args.extract),
         "n_person_records": measured["n_person_records"],
         "weight_variable": args.weight_column,
+        "n_hours_unobserved": measured["n_hours_unobserved"],
+        "hours_unobserved_weight_share": round(
+            measured["hours_unobserved_weight_share"], 6),
+        "hours_missingness_rule": (
+            "employed persons whose hours are unobserved are excluded from the "
+            "hours baseline, never counted as zero; the employment rate is over "
+            "every person in the window"),
+        "hours_missingness_direction": (
+            "complete-case assigns the unobserved the mean of all observed "
+            "persons, which includes the non-employed at zero; every unobserved "
+            "record is employed, so the frozen baseline understates and the "
+            "ceiling is conservative rather than neutral"),
+        "unobserved_are_all_employed": measured["unobserved_are_all_employed"],
+        "employed_observed_hours_mean_sensitivity": (
+            None if measured["employed_observed_hours_mean"] is None
+            else round(measured["employed_observed_hours_mean"], 4)),
     }
     standard["status"] = "FROZEN"
     standard["frozen_at_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()

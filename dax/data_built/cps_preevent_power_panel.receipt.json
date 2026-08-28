@@ -1,0 +1,75 @@
+{
+  "empstat_named_employed_but_absent": [],
+  "empstat_treated_not_employed": [
+    1,
+    21,
+    22,
+    32,
+    34,
+    36
+  ],
+  "hours_missingness": {
+    "baseline_hours_if_zero_filled": 25.612936,
+    "baseline_hours_over_observed": 26.710804,
+    "n_employed_hours_unobserved": 3127,
+    "note": "zero-filling employed-with-hours-vary would depress the baseline and permanently tighten hours_mde_ceiling, which is 0.5 * 0.13 * baseline_hours",
+    "zero_fill_bias": -1.097868
+  },
+  "months": [
+    "2021-11",
+    "2021-12",
+    "2022-01",
+    "2022-02",
+    "2022-03",
+    "2022-04",
+    "2022-05",
+    "2022-06",
+    "2022-07",
+    "2022-08",
+    "2022-09",
+    "2022-10",
+    "2022-11",
+    "2022-12",
+    "2023-01",
+    "2023-02"
+  ],
+  "observed_codes": {
+    "empstat": {
+      "1": 823,
+      "10": 50314,
+      "12": 1560,
+      "21": 2838,
+      "22": 290,
+      "32": 1596,
+      "34": 13550,
+      "36": 351
+    }
+  },
+  "output_sha256": "eb92b1c6f2eb173f42de61aa63b591ffa74e27a94c059896d0eecae4d205aa76",
+  "provenance": {
+    "extract_path": "/usr3/graduate/qluo/dax-private/ipums/w1_preperiod_extract_6/cps_00006.csv.gz",
+    "extract_sha256": "a17dd64b638c2fca3c685c2adb035c2bbde50925942cb7daaac3cf8a49c4edb6",
+    "pinned_sha256": "a17dd64b638c2fca3c685c2adb035c2bbde50925942cb7daaac3cf8a49c4edb6"
+  },
+  "receipt_version": "dax-w2-cps-preevent-v1",
+  "recodes": {
+    "employed_empstat_codes": [
+      10,
+      12
+    ],
+    "hours_missing_uhrsworkt_codes": [
+      999
+    ],
+    "hours_rule": "unconditional weekly hours, zero for the non-employed; employed-with-hours-vary recorded UNOBSERVED, never zero",
+    "hours_vary_uhrsworkt_codes": [
+      997
+    ]
+  },
+  "rows": 71322,
+  "scope": "PRE-EVENT WINDOW ONLY; not the W5 analysis panel cps_extract.parquet",
+  "weight_sum": 268943953.97459996,
+  "window": {
+    "end": "2023-02",
+    "start": "2021-11"
+  }
+}

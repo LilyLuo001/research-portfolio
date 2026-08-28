@@ -8,9 +8,11 @@ linearmodels>=5.3
 pyfixest>=0.24
 ipumspy>=0.4
 sentence-transformers>=2.2
+scikit-learn==1.5.1
 pyyaml
 pyarrow
 requests
+cryptography>=42
 pytest
 # R 4.x side (installed separately, not via pip): did, HonestDiD, fixest,
 # didimputation — lock with renv::snapshot() when the first R stage lands.

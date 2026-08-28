@@ -1,0 +1,164 @@
+{
+  "record_version": "yax-computerization-measures-v1",
+  "status": "PASS",
+  "scope": "measurement only; no CPS person records or outcomes read",
+  "post_event_outcomes_opened": false,
+  "inputs": {
+    "webb": {
+      "path": "yax/measurement/sources/exposure_by_occ1990dd_lswt2010.xls",
+      "sha256": "c5652fd3f862948cb77d87f38aa8296137c51e028992ab54e57246a066e0a779"
+    },
+    "dorn_crosswalk_dta": {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/dorn/occ2010_occ1990dd.dta",
+      "sha256": "7d6069da24344a294702650ddb8039bb8a845dbbeeb488a1f8b309d840d12a76"
+    },
+    "dorn_task_dta": {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/dorn/occ1990dd_task_alm.dta",
+      "sha256": "dd03d1c717c5436f8e52f86a6b7d6e6a519b511b71d6d577adfd474e60edf340"
+    },
+    "onet24": {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/onet_24_3/db_24_3_text.zip",
+      "sha256": "8882970cbe4fc7c8dc7dc2cbd1b23ca65b5b18393bcb9ae6aafbf972d44f1ac2"
+    },
+    "bls_soc_crosswalk": {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/bls/soc_2010_to_2018_crosswalk.xlsx",
+      "sha256": "f3a847561562d3e5a30eb848f2902a5f7b02e9c48b3d7f2cc8879899fbc242a7"
+    },
+    "frey_osborne_pdf": {
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/frey_osborne/The_Future_of_Employment.pdf",
+      "sha256": "1d0ef561ebef9ececda63403a40860aa172be953fe2b050d27de8987c9e852fc"
+    },
+    "oews": {
+      "path": "/usr3/graduate/qluo/dax-private/w2_build_outputs/oews_wages.csv",
+      "sha256": "12dfb4488335839ac9db3ce743e1ce600ed78e1e4ebdbb546749223723afb1c2"
+    },
+    "cps_bridge": {
+      "path": "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
+      "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+    },
+    "census_conversion": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/occupation_crosswalks/census_2010_to_2018_occ_conversion_rates.xlsx",
+      "sha256": "73a8db545d5c484fd1f8ecd9745d0a08b51113b8a37e99dea2df55aeb08cb74d"
+    },
+    "census2010_code_list": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census_occ_titles/2010-occ-codes-with-crosswalk-from-2002-2011.xlsx",
+      "sha256": "7abd5b7c3d338247335ea7aa4713a16989393fbefaef5c01c0c41802a9550e65"
+    },
+    "census2010_code_list_source": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census_occ_titles/2010-occ-codes-with-crosswalk-from-2002-2011.xls",
+      "sha256": "ebf7e6f31c0cda16c7c8518a23bfa13ca537105ba41c427f99dff155a68c2cc6"
+    },
+    "census2018_code_list": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census_occ_titles/2018-occupation-code-list-and-crosswalk.xlsx",
+      "sha256": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f"
+    }
+  },
+  "source_locators": {
+    "webb_author_page": "https://www.michaelwebb.co/",
+    "webb_distribution": "https://eepurl.com/gxo4zr",
+    "dorn_data_page": "https://www.ddorn.net/data.htm",
+    "dorn_crosswalk": "https://www.ddorn.net/data/occ2010_occ1990dd.zip",
+    "dorn_task": "https://www.ddorn.net/data/occ1990dd_task_alm.zip",
+    "onet_archive": "https://www.onetcenter.org/db_releases.html",
+    "onet24_text": "https://www.onetcenter.org/dl_files/database/db_24_3_text.zip",
+    "bls_soc_crosswalk": "https://www.bls.gov/soc/2018/soc_2010_to_2018_crosswalk.xlsx",
+    "frey_osborne": "https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf",
+    "census2010_code_list": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2010-occ-codes-with-crosswalk-from-2002-2011.xls",
+    "census2018_code_list": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2018-occupation-code-list-and-crosswalk.xlsx"
+  },
+  "webb": {
+    "measure": "pct_software",
+    "native_taxonomy": "occ1990dd"
+  },
+  "onet": {
+    "release": "24.3",
+    "release_date": "May 2020",
+    "element_id": "4.A.3.b.1",
+    "official_element_name": "Interacting With Computers",
+    "naming_note": "official 24.3 label verified from Work Activities.txt",
+    "primary_scale": "IM",
+    "robustness_scale": "LV",
+    "source_rows_for_element": 1936,
+    "soc2010_aggregation_rules": {
+      "IM:equal_mean_detail_children": 71,
+      "IM:published_base_00": 703,
+      "LV:equal_mean_detail_children": 71,
+      "LV:published_base_00": 703
+    },
+    "harmonization": {
+      "n_source_codes": 774,
+      "n_source_codes_mapped": 773,
+      "unmapped_source_codes": [
+        "19-1020"
+      ],
+      "n_soc2018_rows": 800,
+      "status_counts": {
+        "direct_or_recoded_single_source": 715,
+        "merge_ambiguous_fail_closed": 24,
+        "split_inherited_from_2010_parent": 61
+      }
+    }
+  },
+  "rti": {
+    "formula": "ln(task_routine)-ln(task_manual)-ln(task_abstract)",
+    "source": "Autor-Dorn occ1990dd_task_alm"
+  },
+  "frey_osborne": {
+    "role": "secondary",
+    "appendix_rows": 702,
+    "harmonization": {
+      "n_source_codes": 702,
+      "n_source_codes_mapped": 685,
+      "unmapped_source_codes": [
+        "13-1078",
+        "15-1150",
+        "15-1179",
+        "15-1799",
+        "25-1000",
+        "25-3999",
+        "29-1060",
+        "29-1111",
+        "29-2037",
+        "29-2799",
+        "29-9799",
+        "31-9799",
+        "39-4831",
+        "45-2090",
+        "47-4799",
+        "49-9799",
+        "51-9399"
+      ],
+      "n_soc2018_rows": 699,
+      "status_counts": {
+        "direct_or_recoded_single_source": 643,
+        "merge_ambiguous_fail_closed": 15,
+        "merge_equal_source_scores": 1,
+        "split_inherited_from_2010_parent": 40
+      }
+    }
+  },
+  "output": {
+    "path": "yax/measurement/COMPUTERIZATION_MEASURES.csv",
+    "sha256": "ae354accb99aee1185f2f62839ad3fd059dc583187305d7abe4b4dbbebbcda4c",
+    "rows": 522,
+    "complete_codes": {
+      "webb_pct_software": 482,
+      "onet_computers_importance": 447,
+      "onet_computers_level": 447,
+      "rti_autor_dorn": 467,
+      "frey_osborne_probability": 418
+    }
+  },
+  "census2018_output": {
+    "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+    "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "rows": 568,
+    "complete_codes": {
+      "webb_pct_software": 512,
+      "onet_computers_importance": 518,
+      "onet_computers_level": 518,
+      "rti_autor_dorn": 496,
+      "frey_osborne_probability": 478
+    }
+  }
+}

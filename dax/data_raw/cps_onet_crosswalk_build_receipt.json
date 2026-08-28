@@ -1,0 +1,60 @@
+{
+  "status": "CPS_OCC2010_TO_ONET_SOC2019_CROSSWALK_PRIVATE",
+  "weight_rule": "Census total 2010-to-2018 conversion rate; May 2021 OEWS employment share across matched 2018 SOCs; unambiguous IPUMS collapsed-code bridges receive unit route weight; equal O*NET subdivision is provisional",
+  "fail_closed_rule": "Only cps_code_status=resolved_employment_weighted is downstream eligible",
+  "inputs": {
+    "census_2010_to_2018_occ_conversion_rates.xlsx": "73a8db545d5c484fd1f8ecd9745d0a08b51113b8a37e99dea2df55aeb08cb74d",
+    "census_2018_occ_to_soc.xlsx": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f",
+    "onet_soc_2019_to_2018_soc.xlsx": "bfc6722a92c2d607e5a99dee88b7826cf5aa91f7c0453182e0c8268e32a20a19",
+    "onet_timeshares.csv": "62c6360c030d73948858c4930de17bb8f11aa6966bbd339d3397464fb8d8a40e",
+    "oews_wages.csv": "12dfb4488335839ac9db3ce743e1ce600ed78e1e4ebdbb546749223723afb1c2",
+    "ipums_cps_2020_on_occ2010_crosswalk.xlsx": "98c36a41af47e8f1eb419a760efb58b1423acec50d730fd30dc7274e0ae586c5",
+    "onet_25_0_to_2019_fallback_timeshares.csv": "ee7d339465bea8c9e31982f3932c931080251ce144219d98f586a8adb803ca66"
+  },
+  "output_name": "cps_onet_crosswalk.csv",
+  "output_sha256": "eb68890bcfb31855d6a8f0704aab022c13c842d09e01eb57acd94e28dac4ddeb",
+  "n_mapping_rows": 1287,
+  "n_cps_codes": 503,
+  "n_ipums_single_source_fallback_codes": 15,
+  "n_resolved_employment_weighted_codes": 361,
+  "n_provisional_equal_within_soc_codes": 75,
+  "n_provisional_bounded_codes": 75,
+  "n_unresolved_codes": 17,
+  "n_partial_unresolved_codes": 50,
+  "bad_weight_sums": 0,
+  "n_observed_preperiod_cps_codes": 445,
+  "n_observed_preperiod_resolved_codes": 318,
+  "n_observed_preperiod_provisional_codes": 71,
+  "n_observed_preperiod_unresolved_codes": 10,
+  "n_observed_preperiod_partial_unresolved_codes": 45,
+  "observed_preperiod_weight_mass_shares": {
+    "absent_from_crosswalk": 0.0017047339,
+    "partial_unresolved": 0.1432718426,
+    "provisional_equal_within_soc": 0.1835262411,
+    "resolved_employment_weighted": 0.6536133662,
+    "unresolved": 0.0178838162
+  },
+  "observed_preperiod_component_weight_mass_shares": {
+    "absent_from_crosswalk": 0.0017047339,
+    "provisional_equal_soc_missing_oews": 0.0323427812,
+    "provisional_equal_within_soc": 0.1153701021,
+    "provisional_legacy_task_ratings": 0.04448586,
+    "resolved": 0.7716899944,
+    "unresolved_no_usable_onet": 0.0344065283
+  },
+  "mapped_component_weight_mass_share": 0.9638887378,
+  "coverage_gate_threshold": 0.9,
+  "max_unresolved_occupation_weight_share_threshold": 0.01,
+  "max_unresolved_occupation_weight_share": 0.0044745164,
+  "max_unresolved_occupation_code": "5940",
+  "coverage_gate_pass": true,
+  "provisional_bound_rule": "For every provisional component, carry the minimum and maximum dose across its officially linked SOC/O*NET children or legacy sources; equal weights are a diagnostic center only.",
+  "observed_unresolved_reason_code_counts": {
+    "unresolved_no_usable_onet": 55
+  },
+  "observed_codes_absent_from_official_crosswalk": [
+    "7630"
+  ],
+  "raw_workbooks_committed": false,
+  "detailed_crosswalk_committed": false
+}

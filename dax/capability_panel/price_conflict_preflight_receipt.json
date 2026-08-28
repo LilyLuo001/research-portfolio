@@ -1,0 +1,79 @@
+{
+  "record_version": "dax-w4-price-conflict-preflight-v1",
+  "conflict": "CONFLICT-B",
+  "conflict_open": true,
+  "conflict_description": "vendor pricing page carries two tables at exactly 2x for the gpt-5.4/5.5/5.6 families; neither filed as the price; planning uses the higher value of each pair",
+  "conflicted_family_prefixes": [
+    "gpt-5.4",
+    "gpt-5.5",
+    "gpt-5.6"
+  ],
+  "sources": {
+    "feasibility_note": "dax/memo/feasibility_note.md",
+    "preservation_receipt": "dax/capability_panel/minimal_preservation_receipt.json"
+  },
+  "scenarios": {
+    "gdpval_220_all_perturbations": {
+      "usd": 389.1,
+      "model_ids": [
+        "gpt-4-1106-preview",
+        "gpt-4-turbo-2024-04-09",
+        "gpt-4o-2024-05-13",
+        "gpt-4o-mini-2024-07-18",
+        "o1-2024-12-17"
+      ],
+      "exposed_model_ids": [],
+      "conflict_affects_this_figure": false
+    },
+    "gdpval_220_baseline_only": {
+      "usd": 97.28,
+      "model_ids": [
+        "gpt-4-1106-preview",
+        "gpt-4-turbo-2024-04-09",
+        "gpt-4o-2024-05-13",
+        "gpt-4o-mini-2024-07-18",
+        "o1-2024-12-17"
+      ],
+      "exposed_model_ids": [],
+      "conflict_affects_this_figure": false
+    },
+    "s1_24_baseline_only": {
+      "usd": 10.61,
+      "model_ids": [
+        "gpt-4-1106-preview",
+        "gpt-4-turbo-2024-04-09",
+        "gpt-4o-2024-05-13",
+        "gpt-4o-mini-2024-07-18",
+        "o1-2024-12-17"
+      ],
+      "exposed_model_ids": [],
+      "conflict_affects_this_figure": false
+    },
+    "full_plan_for_contrast": {
+      "usd": 1922.63,
+      "model_ids": [
+        "gpt-4-1106-preview",
+        "gpt-4-turbo-2024-04-09",
+        "gpt-4o-2024-05-13",
+        "gpt-4o-mini-2024-07-18",
+        "o1-2024-12-17",
+        "gpt-4.1-2025-04-14",
+        "gpt-5-2025-08-07",
+        "gpt-5.1-2025-11-13",
+        "gpt-5.2-2025-12-11",
+        "gpt-5.4-2026-03-05",
+        "gpt-5.5-2026-04-23",
+        "o3-2025-04-16",
+        "o3-mini-2025-01-31",
+        "o4-mini-2025-04-16"
+      ],
+      "exposed_model_ids": [
+        "gpt-5.4-2026-03-05",
+        "gpt-5.5-2026-04-23"
+      ],
+      "conflict_affects_this_figure": true
+    }
+  },
+  "resolves_the_conflict": false,
+  "what_this_establishes": "which capture scenarios the open pricing conflict can reach. It does not resolve the conflict, and a scenario reported as unaffected still depends on its own rates being correct."
+}

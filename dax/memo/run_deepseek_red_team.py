@@ -31,6 +31,16 @@ INPUTS = [
     HERE / "power_calcs" / "ipums_preperiod_extract_receipt.json",
     HERE / "power_calcs" / "synthetic" / "power_results_continuous.json",
     HERE / "power_calcs" / "synthetic" / "power_results.json",
+    # Added 2026-08-24. The packet above describes the design as it stood on
+    # 2026-08-18. Four things changed the primary specification or its
+    # evidence base after that date, and a reviewer who cannot see them will
+    # attack a design that no longer exists -- the same failure that retired
+    # the previous CONDITIONAL_GO.
+    HERE / "W3_RECONCILIATION_2026-08-23.md",
+    HERE / "W2_DECISION_task_weight_2026-08-24.md",
+    HERE / "PI_AUTHORIZATION_2026-08-24.md",
+    HERE.parent / "mapping" / "dwa_coverage_bound_receipt.json",
+    HERE.parent / "data_raw" / "gate_dependency_status.json",
 ]
 
 
@@ -55,11 +65,55 @@ pre-registration packet. You did not author any included file. Use only the
 packet below: do not browse, add outside facts, invent results, or treat the
 synthetic power output as empirical evidence.
 
-This packet is version 2. The primary specification CHANGED on 2026-08-18
+This packet is version 3. The primary specification CHANGED on 2026-08-18
 from a stacked event study to a continuous cumulative-dose design, and an
 entrant-margin companion was added. A prior review of the SUPERSEDED design
 returned CONDITIONAL_GO; that verdict does not transfer and you must not defer
 to it. Review what is in front of you.
+
+FOUR THINGS CHANGED AFTER 2026-08-18 and are included below. Read them before
+attacking anything, because each moved what the paper claims:
+
+(a) W3_RECONCILIATION_2026-08-23.md retires DWA transport as the PRIMARY
+    task-capability mapping in favour of a v3 bridge benchmark, on the ground
+    that measured DWA coverage (0.4169526 of wage-bill mass) is coverage and
+    not transfer validity. The bridge benchmark DOES NOT EXIST YET. The S1
+    construct-validity pilot returned 13 PASS of 120 items with 96
+    NON_EVALUABLE, is single-annotator, and its formal gate result is
+    UNRESOLVED. Attack whether a primary mapping that is currently unbuilt,
+    and whose only pilot found roughly 80 percent of task mass non-evaluable,
+    can support the estimand the memo claims.
+
+(b) W2_DECISION_task_weight_2026-08-24.md redefines the occupation task
+    weight. O*NET 26.1 publishes NO occupation time-share, so the intended
+    quantity does not exist in the source. The adopted substitute is
+    importance multiplied by a mean frequency score, normalised within
+    occupation. Attack this directly: the frequency score treats an ordinal
+    survey scale as cardinal, the underlying ratings carry vintages from 2004
+    to 2021 while the wage bill is frozen at 2021, and the whole DAX_om
+    quantity is a weighted share whose weights this decision defines. If the
+    weight is wrong, every occupation-level exposure number is wrong.
+
+(c) The D3 power standard was FROZEN on 2026-08-24 from real pre-event CPS.
+    The synthetic continuous smoke test now reports adequately_powered: true.
+    THIS IS NOT EVIDENCE THAT THE DESIGN IS POWERED. The dose path in that
+    file is synthetic, its status field says
+    NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST, and no real W5 dose panel exists. Treat
+    a true verdict there as a statement about engine mechanics only. If you
+    find the packet inviting the opposite reading, say so as an issue.
+
+(d) gate_dependency_status.json records that of the two dependencies the
+    person-level power gate named, only the benchmark locator is satisfied.
+    Both that gate and the identification gate remain unrun.
+
+Attack these additionally: whether the partial-identification bound on
+non-evaluable task mass is correctly SIGNED -- an upper bound of the form
+B*E + (1-B) is DECREASING in evaluable coverage B, which would award the
+least-measurable occupations the highest exposure; whether a bridge benchmark
+validated at one task boundary transports to O*NET tasks at a different
+boundary; and whether ANY rubric-based exposure score is stable enough to
+carry the estimand, given published evidence that measured exposure varies by
+roughly an order of magnitude with the judging model.
 
 Attack, at minimum: whether the continuous design is identified once occupation
 and calendar-month effects are absorbed; whether any pre-trend test is even

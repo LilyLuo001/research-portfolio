@@ -133,6 +133,75 @@ def placebo_lead_design(doses: list[Dose], pre_months: list[dt.date],
     }
 
 
+# Red-team M1 (2026-08-18, DeepSeek v4-pro, gate BLOCK): the raw dose matrix is
+# the wrong object to test for degeneracy. Occupation and calendar-month effects
+# are absorbed by the design, so what identifies beta is only what SURVIVES that
+# absorption. A dose matrix can look full-rank and still leave near-nothing after
+# residualization. The gate below therefore tests the residualized matrix.
+DEGENERACY_LEADING_SHARE = 0.95
+DEGENERACY_MIN_RETAINED = 0.01   # residual/raw weighted variance ratio
+
+
+def residualized_dose_profile(panel: dict[str, object]) -> dict[str, object]:
+    """Rank and concentration of the dose matrix AFTER the nuisance design.
+
+    Uses the same weighted projection as the estimator, so this reports the
+    variation beta is actually identified from — not the variation that exists
+    before occupation, month, industry-by-month and decile-by-month effects
+    take their share.
+    """
+    x = np.asarray(panel["x"], dtype=float)
+    nuisance = np.asarray(panel["nuisance"], dtype=float)
+    weights = np.asarray(panel["weights"], dtype=float)
+
+    ztwz = nuisance.T @ (weights[:, None] * nuisance)
+    projection = np.linalg.pinv(ztwz, rcond=1e-10) @ (nuisance.T * weights)
+    residual = x - nuisance @ (projection @ x)
+
+    raw_variance = float(np.average((x - np.average(x, weights=weights)) ** 2, weights=weights))
+    residual_variance = float(np.average(residual ** 2, weights=weights))
+    retained = residual_variance / raw_variance if raw_variance > 0 else 0.0
+
+    # Reshape the residual back to occupation x month to inspect its structure.
+    records = panel["records"]
+    occupations = {o: i for i, o in enumerate(panel["occupations"])}
+    months = {m: i for i, m in enumerate(panel["months"])}
+    matrix = np.zeros((len(occupations), len(months)))
+    counts = np.zeros_like(matrix)
+    for value, record in zip(residual, records):
+        row, column = occupations[record[0]], months[record[2]]
+        matrix[row, column] += value
+        counts[row, column] += 1
+    matrix = np.divide(matrix, np.maximum(counts, 1))
+
+    if not np.any(matrix):
+        return {"effective_rank": 0, "leading_share": None,
+                "residual_variance_retained": round(retained, 8),
+                "degenerate": True,
+                "reason": "no identifying variation survives the nuisance design"}
+
+    singular = np.linalg.svd(matrix, compute_uv=False)
+    total = float((singular ** 2).sum())
+    leading = float(singular[0] ** 2 / total) if total > 0 else None
+    rank = int((singular > singular.max() * 1e-6).sum())
+
+    degenerate = bool(
+        retained < DEGENERACY_MIN_RETAINED
+        or rank <= 1
+        or (leading is not None and leading > DEGENERACY_LEADING_SHARE)
+    )
+    return {
+        "effective_rank": rank,
+        "leading_share": None if leading is None else round(leading, 6),
+        "residual_variance_retained": round(retained, 8),
+        "degenerate": degenerate,
+        "reason": ("identification collapses to one contrast after absorption"
+                   if degenerate else "multi-dimensional identifying variation survives"),
+        "thresholds": {"leading_share_max": DEGENERACY_LEADING_SHARE,
+                       "min_variance_retained": DEGENERACY_MIN_RETAINED},
+    }
+
+
 def assert_seal(cells: list[Cell], first_event: dt.date) -> None:
     """Refuse to proceed if the moment file reaches into the post-event period."""
     intruding = sorted({c.month for c in cells if c.month >= first_event})
@@ -264,6 +333,7 @@ def run_sample(cells: list[Cell], doses: list[Dose], education: str | None,
         "serial_rho_hours": round(rho_hours, 6),
         "employment_hours_noise_correlation": round(correlation, 6),
         "dose_profile": dose_profile_rank(panel["paths"]),
+        "dose_profile_residualized": residualized_dose_profile(panel),
         "employment": {
             "median_cluster_se_per_0.10_dax": round(float(np.median(se_employment)), 8),
             "mde80_per_0.10_dax": round(mde(se_employment), 8),
@@ -296,14 +366,17 @@ def judge(sample: dict[str, object], standard: dict[str, object]) -> None:
             # inventing the baseline, which no model may supply from memory.
             fraction = standard["standard"]["max_mde_fraction_of_benchmark"]
             decline = standard["benchmark"]["relative_decline"]
-            divisor = fraction * decline
+            divisor = (fraction * decline
+                       if isinstance(decline, (int, float)) and decline > 0 else None)
             block["break_even_baseline"] = (
                 round(float(block["mde80_per_0.10_dax"]) / divisor, 6)
-                if divisor > 0 else None
+                if divisor is not None and divisor > 0 else None
             )
             block["break_even_note"] = (
                 f"passes iff the frozen pre-event baseline {outcome} level "
                 f"exceeds this value, since ceiling = {fraction} x {decline} x baseline"
+                if divisor is not None else
+                "not computable because the benchmark value lacks verified dated evidence"
             )
 
 

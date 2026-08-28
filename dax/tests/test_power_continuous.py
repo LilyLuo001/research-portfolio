@@ -93,6 +93,19 @@ def test_break_even_inverts_the_ceiling_formula():
     assert sample["employment"]["break_even_baseline"] == pytest.approx(0.5, abs=1e-6)
 
 
+def test_unverified_benchmark_cannot_emit_even_a_break_even_number():
+    sample = {"employment": {"mde80_per_0.10_dax": 0.0325},
+              "hours": {"mde80_per_0.10_dax": 1.0}}
+    spc.judge(sample, {"status": "PLACEHOLDER_REQUIRES_REAL_CPS",
+                       "standard": {"employment_mde_ceiling": None,
+                                    "hours_mde_ceiling": None,
+                                    "max_mde_fraction_of_benchmark": 0.5},
+                       "benchmark": {"relative_decline": None}})
+    assert sample["employment"]["adequately_powered"] is None
+    assert sample["employment"]["break_even_baseline"] is None
+    assert "lacks verified dated evidence" in sample["employment"]["break_even_note"]
+
+
 def test_frozen_standard_produces_a_real_verdict():
     sample = {"employment": {"mde80_per_0.10_dax": 0.02},
               "hours": {"mde80_per_0.10_dax": 0.5}}
@@ -105,14 +118,46 @@ def test_frozen_standard_produces_a_real_verdict():
     assert sample["hours"]["adequately_powered"] is False
 
 
-def test_shipped_standard_is_unfrozen_and_carries_no_numbers():
-    """The repository must not ship a guessed constant."""
+def test_shipped_standard_is_frozen_with_its_selection_intact():
+    """Superseded 2026-08-24: this pinned the pre-freeze transitional state.
+
+    It asserted PLACEHOLDER_REQUIRES_REAL_CPS and null baselines, documenting
+    that the PI's sourced benchmark could precede the CPS freeze. The freeze has
+    since happened. Every selection guarantee it carried is retained below; only
+    the transitional assertions are replaced by the post-freeze invariants.
+    """
     standard = json.loads((POWER / "power_standard.json").read_text())
-    assert standard["status"] == "PLACEHOLDER_REQUIRES_REAL_CPS"
-    assert standard["benchmark"]["baseline_employment_rate_22_25"] is None
-    assert standard["standard"]["employment_mde_ceiling"] is None
+    benchmark, spec = standard["benchmark"], standard["standard"]
+
+    # selection — unchanged by the freeze, and must stay so
+    assert benchmark["relative_decline"] == 0.13
+    assert benchmark["version_status"] == "RESOLVED"
+    assert benchmark["locator_status"] == "VERIFIED"
+    assert [row["relative_decline"] for row in
+            benchmark["prespecified_sensitivities"]] == [0.16, 0.19]
+    assert benchmark["prespecified_sensitivities"][1][
+        "must_not_be_described_as_literature_estimate"] is True
     assert standard["frozen_window"]["end_month"] < "2023-03", \
         "the frozen window must end before the first eligible event"
+
+    # post-freeze invariants
+    assert standard["status"] == "FROZEN"
+    assert standard["frozen_at_utc"]
+    assert spec["employment_mde_ceiling"] is not None
+    assert spec["hours_mde_ceiling"] is not None
+    fraction = spec["max_mde_fraction_of_benchmark"]
+    assert spec["employment_mde_ceiling"] == pytest.approx(
+        fraction * benchmark["relative_decline"]
+        * benchmark["baseline_employment_rate_22_25"], abs=1e-9)
+    assert spec["hours_mde_ceiling"] == pytest.approx(
+        fraction * benchmark["relative_decline"]
+        * benchmark["baseline_hours_unconditional_22_25"], abs=1e-6)
+
+    # hours missingness must be recorded, not silently absorbed
+    prov = standard["provenance"]
+    assert prov["n_hours_unobserved"] > 0
+    assert prov["unobserved_are_all_employed"] is True
+    assert "conservative" in prov["hours_missingness_direction"]
 
 
 def test_stacked_engine_no_longer_sets_its_own_bar():
@@ -170,3 +215,33 @@ def test_pretrend_horizons_are_frozen_not_chosen():
     horizons = [b["horizon"] for b in report["pretrend_placebo_lead"]]
     assert horizons == ["2023-12-01", "2024-12-01", "2025-12-01"]
     assert all(b["estimable"] for b in report["pretrend_placebo_lead"])
+
+
+# --- red-team M1: identification gate on the RESIDUALIZED dose matrix --------
+
+def test_residualized_gate_reports_variance_surviving_absorption():
+    """The raw dose matrix overstates identification; the residual is what counts."""
+    import datetime as dt
+
+    cells = [_cell(f"OCC{i}", dt.date(2022, m, 1)) for i in range(4) for m in (1, 2, 3)]
+    doses = [_dose(f"OCC{i}", dt.date(2023, 3, 1), 0.02 * (i + 1)) for i in range(4)]
+    months = spc.month_sequence(dt.date(2021, 11, 1), dt.date(2023, 9, 1))
+    panel = spc.build_panel(cells, doses, "college", months)
+    profile = spc.residualized_dose_profile(panel)
+
+    assert 0.0 <= profile["residual_variance_retained"] <= 1.0
+    assert "degenerate" in profile and isinstance(profile["degenerate"], bool)
+    assert profile["thresholds"]["leading_share_max"] == spc.DEGENERACY_LEADING_SHARE
+
+
+def test_proportional_doses_are_flagged_degenerate_after_absorption():
+    """One common path scaled per occupation leaves a single contrast."""
+    import datetime as dt
+
+    cells = [_cell(f"OCC{i}", dt.date(2022, m, 1)) for i in range(3) for m in (1, 2, 3)]
+    doses = [_dose(f"OCC{i}", dt.date(2023, 3, 1), 0.03 * (i + 1)) for i in range(3)]
+    months = spc.month_sequence(dt.date(2021, 11, 1), dt.date(2023, 9, 1))
+    panel = spc.build_panel(cells, doses, "college", months)
+    profile = spc.residualized_dose_profile(panel)
+    assert profile["degenerate"] is True, \
+        "a single common dose path must trip the degeneracy gate"

@@ -1,30 +1,18 @@
 {
-  "output": "/home/user/research-portfolio/dax/data_built/price_histories.csv",
-  "output_sha256": "9f4fe5159bcdef71c3961985ffc9199cf3d3ee61c39307ab11d54872622d6ea7",
+  "output": "dax/data_built/price_histories.csv",
+  "output_sha256": "bc772b0ca3b8f0e4ab7d9a6badb1971b55a08190a95000cbee7015b67e4ca83d",
   "inputs": [
     {
-      "path": "/home/user/research-portfolio/dax/memo/event_registry_v1.csv",
-      "sha256": "de537402422a7984a2b0c7c77e9f225ff99f69d0e512ba16e46b23b69dc4660e",
+      "path": "dax/memo/event_registry_v1.csv",
+      "sha256": "79b1a095144f8576b84b638a112664577927586dbdf2b30a225fbcb7ebdae475",
+      "rows": null
+    },
+    {
+      "path": "dax/data_raw/official_dated_price_evidence.csv",
+      "sha256": "2b5bf0e711b1470fce14d6ae209452a7c2b8daf0776fe25b474e59c7f276e510",
       "rows": null
     }
   ],
-  "code_version": "ec1d1778a591d6e5e18822559dd1278a8f3b18de",
-  "timestamp": "2026-08-18T11:37:29.615555+00:00",
-  "channels": {
-    "git": {
-      "repo": "https://github.com/BerriAI/litellm",
-      "path": "model_prices_and_context_window.json",
-      "observations": 71
-    },
-    "wayback": {
-      "run": false,
-      "urls": [
-        "openai.com/pricing",
-        "openai.com/api/pricing",
-        "platform.openai.com/docs/pricing",
-        "developers.openai.com/api/docs/pricing"
-      ]
-    }
-  },
-  "note": "no language model is involved in producing any value in this file"
+  "code_version": "ca21dcb6c87db63564d6c7660a99f9680dde4ed4",
+  "timestamp": "2026-08-19T00:26:56.877773+00:00"
 }

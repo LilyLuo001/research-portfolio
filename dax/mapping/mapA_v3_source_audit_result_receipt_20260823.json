@@ -1,0 +1,101 @@
+{
+  "aggregate_relation_counts": {
+    "D": 1,
+    "F": 55,
+    "N": 52,
+    "U": 0
+  },
+  "candidate_pairs_inspected": 108,
+  "incremental_api_spend_usd": 0,
+  "interpretation_limits": {
+    "candidate_recall_claimed": false,
+    "formal_validation_performance_claimed": false,
+    "locked_test_read": false,
+    "population_prevalence_claimed": false,
+    "v2_changed": false
+  },
+  "private_input_hashes": {
+    "candidates_sha256": "a481f39de0d44b130d98bc0a561afe538beede7b5f5a14403b9c0ee10cae4655",
+    "labels_sha256": "19d023d64491d241c741564737602b1d496ee3c70595e2d39d3354e2509c7ced",
+    "sources_sha256": "f807a17dbd9d488e34bccf996ee69f69f4c47e3b9f45bfdd6e56a64355bccc37"
+  },
+  "row_level_data_committed": false,
+  "scope": "development_sources_only_excluding_prior_diagnostic_sources",
+  "source_level_sanitized_results": [
+    {
+      "any_direct_substitute": false,
+      "candidates_inspected": 18,
+      "modality": "physical_manual",
+      "relation_counts": {
+        "D": 0,
+        "F": 14,
+        "N": 4,
+        "U": 0
+      },
+      "source_index_release": 1
+    },
+    {
+      "any_direct_substitute": false,
+      "candidates_inspected": 16,
+      "modality": "technical_analytic",
+      "relation_counts": {
+        "D": 0,
+        "F": 11,
+        "N": 5,
+        "U": 0
+      },
+      "source_index_release": 2
+    },
+    {
+      "any_direct_substitute": false,
+      "candidates_inspected": 20,
+      "modality": "interpersonal_service",
+      "relation_counts": {
+        "D": 0,
+        "F": 6,
+        "N": 14,
+        "U": 0
+      },
+      "source_index_release": 3
+    },
+    {
+      "any_direct_substitute": false,
+      "candidates_inspected": 17,
+      "modality": "interpersonal_service",
+      "relation_counts": {
+        "D": 0,
+        "F": 12,
+        "N": 5,
+        "U": 0
+      },
+      "source_index_release": 4
+    },
+    {
+      "any_direct_substitute": true,
+      "candidates_inspected": 14,
+      "modality": "physical_manual",
+      "relation_counts": {
+        "D": 1,
+        "F": 5,
+        "N": 8,
+        "U": 0
+      },
+      "source_index_release": 5
+    },
+    {
+      "any_direct_substitute": false,
+      "candidates_inspected": 23,
+      "modality": "technical_analytic",
+      "relation_counts": {
+        "D": 0,
+        "F": 7,
+        "N": 16,
+        "U": 0
+      },
+      "source_index_release": 6
+    }
+  ],
+  "source_tasks": 6,
+  "sources_with_any_plausible_direct_substitute": 1,
+  "status": "V3_SOURCE_SIDE_QUALITATIVE_AUDIT_COMPLETE_NOT_FORMAL_VALIDATION"
+}
