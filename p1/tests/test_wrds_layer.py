@@ -41,7 +41,12 @@ def _inventory():
         "crsp.msf":         ["permno", "date", "prc", "ret", "shrout",
                      "cfacshr", "cfacpr"],
         "crsp.dsf":         ["permno", "date", "ret", "prc", "vol", "openprc",
-                             "bid", "ask", "bidlo", "askhi"],
+                             "bid", "ask", "bidlo", "askhi",
+                             # daily share/price factors + raw shares: Gate 0
+                             # joins CFACSHR on the N-PORT repPdDate, and the
+                             # monthly file is not known to be precise enough
+                             # for every one of those dates (v2.1d).
+                             "cfacshr", "cfacpr", "shrout"],
         "crsp.dsi":         ["date", "vwretd"],
         "crsp.dsedelist":   ["permno", "dlstdt", "dlret", "dlstcd"],
         "crsp.ccmxpf_lnkhdr": ["gvkey", "lpermno", "linkdt", "linkenddt",

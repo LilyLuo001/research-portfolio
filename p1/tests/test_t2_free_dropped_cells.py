@@ -48,10 +48,14 @@ def mod(tmp_path_factory):
     return m
 
 
-def _cell(shares=1_000.0, valusd=25_000.0, funds=("Fund A", "Fund B")):
+def _cell(shares=1_000.0, valusd=25_000.0, funds=("Fund A", "Fund B"),
+          asof=("2021-03-31",)):
     return {"cusip": "037833100", "wave_id": "W002", "effective_date": "2021-06-11",
             "ticker": "AAPL", "name": "APPLE INC", "shares_held": shares,
-            "valusd": valusd, "funds": set(funds), "accs": {"0001-21-000001"}}
+            "valusd": valusd, "funds": set(funds), "accs": {"0001-21-000001"},
+            # the date the share counts are AS OF (N-PORT repPdDate) — the join
+            # key for CFACSHR, and not the same thing as effective_date
+            "asof": set(asof)}
 
 
 # --------------------------------------------------------------------------- #

@@ -20,11 +20,12 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 
 def cell(cusip="000000001", wid="W001", ticker="AAA", shares=1000.0,
          valusd=50000.0, funds=("Fund One",), accs=("0001-24-000001",),
-         eff="2021-06-11"):
+         eff="2021-06-11", asof=("2021-03-31",)):
     return {(cusip, wid): {"cusip": cusip, "wave_id": wid, "effective_date": eff,
                            "ticker": ticker, "name": "A Corp",
                            "shares_held": shares, "valusd": valusd,
-                           "funds": set(funds), "accs": set(accs)}}
+                           "funds": set(funds), "accs": set(accs),
+                           "asof": set(asof)}}
 
 
 def so(value, as_of="2021-06-30"):
@@ -48,10 +49,10 @@ def test_computed_row_carries_val_usd_and_conv_exp():
     assert r["source_accessions"] == "0001-24-000001"
 
 
-# The only column the pipeline emits that the contract does not yet declare.
-# contracts.py treats a declared column as mandatory, so `val_usd` may only be
-# declared in the same commit that lands a rebuilt parquet carrying it.
-PENDING_COLUMNS = {"val_usd"}
+# Columns the pipeline emits that the contract does not yet declare.
+# contracts.py treats a declared column as mandatory, so these may only be
+# declared in the same commit that lands a rebuilt parquet carrying them.
+PENDING_COLUMNS = {"val_usd", "holdings_asof_min", "holdings_asof_max"}
 
 
 def test_contract_and_pipeline_columns_agree_except_the_pending_one():
@@ -190,3 +191,69 @@ def test_source_file_is_one_program_not_two():
         if isinstance(n, (ast.FunctionDef, ast.ClassDef)):
             defs.setdefault(n.name, []).append(n.lineno)
     assert not {k: v for k, v in defs.items() if len(v) > 1}
+
+
+# --------------------------------------------------------------------------- #
+# v2.1d item 1 — holdings are dated by repPdDate, never by the filing date     #
+# --------------------------------------------------------------------------- #
+NPORT_XML = """<?xml version="1.0" encoding="UTF-8"?>
+<edgarSubmission xmlns="http://www.sec.gov/edgar/nport">
+  <formData>
+    <genInfo>
+      <seriesName>Example Equity Fund</seriesName>
+      <seriesId>S000012345</seriesId>
+      <repPdEnd>2021-06-30</repPdEnd>
+      <repPdDate>2021-03-31</repPdDate>
+    </genInfo>
+    <invstOrSecs>
+      <invstOrSec>
+        <name>A Corp</name>
+        <cusip>037833100</cusip>
+        <identifiers><ticker value="AAA"/></identifiers>
+        <balance>1000</balance>
+        <units>NS</units>
+        <valUSD>50000</valUSD>
+        <assetCat>EC</assetCat>
+      </invstOrSec>
+    </invstOrSecs>
+  </formData>
+</edgarSubmission>
+"""
+
+
+def _parse(xml, monkeypatch, filed="2021-05-28"):
+    monkeypatch.setattr(b, "http_get", lambda *a, **k: xml)
+    return b.parse_nport("0000320193", {"accession": "0001-21-000001",
+                                        "filed": filed, "primary": "primary_doc.xml"})
+
+
+def test_parse_nport_carries_the_holdings_asof_date(monkeypatch):
+    p = _parse(NPORT_XML, monkeypatch)
+    assert p["report_date"] == "2021-03-31"      # repPdDate — dates the shares
+    assert p["rep_pd_end"] == "2021-06-30"       # repPdEnd  — dates the period
+    assert p["filed"] == "2021-05-28"
+    assert b.holdings_asof(p) == "2021-03-31"
+
+
+def test_holdings_asof_refuses_rather_than_falling_back_to_filed(monkeypatch):
+    p = _parse(NPORT_XML.replace("<repPdDate>2021-03-31</repPdDate>", ""),
+               monkeypatch)
+    with pytest.raises(b.MissingAsOfDate) as e:
+        b.holdings_asof(p)
+    assert "2021-05-28" in str(e.value)          # names the date it REFUSED to use
+
+
+def test_cells_carry_the_asof_date_and_undated_cells_are_dropped():
+    rows, _ = b._cell_rows(cell(asof=("2021-03-31",)), {"AAA": "0000320193"},
+                           so(100000.0))
+    assert rows[0]["holdings_asof_min"] == rows[0]["holdings_asof_max"] == "2021-03-31"
+
+    # two funds whose last pre-conversion N-PORTs are different months: the
+    # spread must be visible, because one factor date cannot serve both
+    rows, _ = b._cell_rows(cell(asof=("2021-03-31", "2021-02-28")),
+                           {"AAA": "0000320193"}, so(100000.0))
+    assert rows[0]["holdings_asof_min"] == "2021-02-28"
+    assert rows[0]["holdings_asof_max"] == "2021-03-31"
+
+    _, drops = b._cell_rows(cell(asof=()), {"AAA": "0000320193"}, so(100000.0))
+    assert [d["reason"] for d in drops] == ["no_holdings_asof"]

@@ -40,6 +40,16 @@ columns:
   # validates fine meanwhile. Declare it in the SAME commit that lands the
   # rebuilt parquet:
   #   val_usd: {min: 0}
+  #
+  # Also PENDING, and landing with the same rebuild (v2.1d): the holdings as-of
+  # dates. N-PORT share counts are as of genInfo/repPdDate, not the filing date,
+  # and the CRSP CFACSHR join must use them — joining on `filed` adjusts a March
+  # share count by a May factor and INSERTS the corporate action it is meant to
+  # remove. min and max differ only when one cell pools funds whose last
+  # pre-conversion filings are different months; when they differ, shares must be
+  # adjusted per fund BEFORE aggregation.
+  #   holdings_asof_min: {}
+  #   holdings_asof_max: {}
   source_accessions: {}            # ';'-joined N-PORT accession(s)
 # Removed 2026-08-27: a second, contradictory note here said to declare this
 # column as `valusd` (no underscore). That spelling came from a dead inline loop

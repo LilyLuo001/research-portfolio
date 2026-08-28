@@ -220,6 +220,25 @@ land together. Declaring early fails the artifact Gate 2 was signed on.
 **Add `val_usd: {min: 0}` to the contract in the SAME commit that lands the new
 parquet.**
 
+**Two more columns are now pending on exactly the same terms** (v2.1d):
+`holdings_asof_min` and `holdings_asof_max`. They carry the N-PORT
+`genInfo/repPdDate` — the date the share counts are AS OF — because the CRSP
+CFACSHR corporate-action factor must be joined on that date, not on the filing
+date. A March 31 share count adjusted by a May 30 factor does not remove an April
+split; it inserts one, and both numbers still look plausible afterwards. Declare
+all three in the same commit as the parquet:
+
+```yaml
+  val_usd: {min: 0}
+  holdings_asof_min: {}
+  holdings_asof_max: {}
+```
+
+A fund whose N-PORT has no `repPdDate` is now refused into
+`NEED_HUMAN_funds.csv` with `reason=no_repPdDate` rather than dated by `filed`.
+If that count is not ~0, say so in the run report — it is a coverage loss, not a
+nuisance, and it must not be "fixed" by falling back to the filing date.
+
 (The file used to carry a second, contradictory note saying to declare `valusd`
 without the underscore, which would have failed the validator. That spelling came
 from a dead inline loop — see the note at the top of §4 — and both are now gone.

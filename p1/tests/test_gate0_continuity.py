@@ -107,46 +107,185 @@ def test_non_positive_factor_refuses():
 CRSP_MSF = ROOT / "p1" / "wrds" / "raw" / "msf__msf.parquet"
 
 
-def test_direction_against_a_real_crsp_split():
-    """Validate the convention on a REAL historical split, not a synthetic one.
+def _msf_actions(min_events=20):
+    """Real corporate actions from landed CRSP msf: (prev_shrout, prev_cfacshr,
+    shrout, cfacshr) at every permno-month where CFACSHR moves."""
+    import pandas as pd
+    df = pd.read_parquet(CRSP_MSF)
+    cols = {c.lower(): c for c in df.columns}
+    for need in ("permno", "date", "shrout", "cfacshr"):
+        assert need in cols, (
+            f"msf landed without {need.upper()} (got {sorted(df.columns)}). Add it "
+            "to the msf pull in p1/wrds/tables.yaml — the direction of the share "
+            "adjustment cannot be verified without BOTH raw shares and the factor.")
+    d = df[[cols["permno"], cols["date"], cols["shrout"], cols["cfacshr"]]].copy()
+    d.columns = ["permno", "date", "shrout", "cfacshr"]
+    d = d.dropna().sort_values(["permno", "date"])
+    d["prev_shrout"] = d.groupby("permno")["shrout"].shift()
+    d["prev_cfacshr"] = d.groupby("permno")["cfacshr"].shift()
+    ch = d[d["prev_cfacshr"].notna() & (d["cfacshr"] != d["prev_cfacshr"])
+           & (d["shrout"] > 0) & (d["prev_shrout"] > 0)
+           & (d["cfacshr"] > 0) & (d["prev_cfacshr"] > 0)].copy()
+    if len(ch) < min_events:
+        pytest.skip(
+            f"BLOCKED: only {len(ch)} real CFACSHR changes in the landed msf; "
+            f"need >= {min_events} for the median to mean anything. SHROUT also "
+            "moves for issuance and buybacks, so a single event cannot decide "
+            "the direction — a population can.")
+    return ch
 
-    Method, using only the landed data (no assumed split ratios):
-      1. find permno-months where CFACSHR changes -> candidate corporate actions
-      2. take the largest such change (a clean split dominates)
-      3. hold shares constant across it and adjust both sides
-      4. under the CORRECT direction the adjusted counts are equal; under the
-         inverted one they differ by the square of the factor ratio
 
-    Step 4 is what a synthetic test cannot do: here the factor values come from
-    CRSP, so only one direction reconciles.
+def test_direction_against_real_crsp_corporate_actions():
+    """Validate the convention on REAL splits, using CRSP's own raw share counts.
+
+    The earlier version of this test was circular. It took a real CFACSHR change,
+    then MANUFACTURED the pre/post raw share counts as `raw_post = raw_pre/ratio`
+    — i.e. it assumed shares move inversely to the factor, which is the same
+    statement as "adjusted = raw x factor". Any convention would have passed a
+    test whose raw side was derived from the convention under test.
+
+    The non-circular version uses SHROUT, which CRSP reports independently of
+    CFACSHR. In a true split with no issuance, raw shares outstanding mechanically
+    change; the ADJUSTED series (raw x cfacshr under the frozen convention) must
+    be continuous across the action, and the inverted convention must not be.
+
+    SHROUT does move for real reasons (issuance, buybacks, repurchase programs) in
+    the same month, so no single event is decisive. The test therefore compares
+    the two conventions across the whole population of factor changes and requires
+    the frozen one to win by an order of magnitude.
     """
     if not CRSP_MSF.exists():
         pytest.skip(
-            "BLOCKED: needs landed CRSP msf with CFACSHR. Until this runs, the "
-            "crsp_cfacshr direction is OWNER-ASSERTED, not verified. Pull it "
-            "with the WRDS sprint (ops/briefs/P1-WRDS-SPRINT.md) and re-run.")
-    import pandas as pd
-    df = pd.read_parquet(CRSP_MSF)
-    col = next((c for c in df.columns if c.lower() == "cfacshr"), None)
-    assert col, (
-        f"msf landed without CFACSHR (got {sorted(df.columns)}). Add it to the "
-        "msf pull in p1/wrds/tables.yaml — Gate 0 cannot adjust shares without it.")
+            "BLOCKED: needs landed CRSP msf with CFACSHR and SHROUT. Until this "
+            "runs, the crsp_cfacshr direction is OWNER-ASSERTED, not verified. "
+            "Pull it with the WRDS sprint (ops/briefs/P1-WRDS-SPRINT.md).")
+    ch = _msf_actions()
 
-    d = df.sort_values(["permno", "date"])
-    d["prev"] = d.groupby("permno")[col].shift()
-    ch = d[(d["prev"].notna()) & (d[col] != d["prev"])].copy()
-    assert len(ch), "no CFACSHR changes found — cannot validate the direction"
-    ch["ratio"] = ch[col] / ch["prev"]
-    row = ch.reindex(ch["ratio"].sub(1).abs().sort_values(ascending=False).index).iloc[0]
+    def rel_break(op):
+        """Median |relative jump| in the adjusted share series across the action."""
+        if op == "multiply":
+            pre = ch["prev_shrout"] * ch["prev_cfacshr"]
+            post = ch["shrout"] * ch["cfacshr"]
+        else:
+            pre = ch["prev_shrout"] / ch["prev_cfacshr"]
+            post = ch["shrout"] / ch["cfacshr"]
+        return float(((post - pre).abs() / pre).median())
 
-    # A holder who did not trade: raw shares scale by 1/ratio across the action.
-    raw_pre, raw_post = 100.0, 100.0 / float(row["ratio"])
-    adj_pre = cc.adjust_shares({"X": raw_pre}, {"X": float(row["prev"])},
-                               convention="crsp_cfacshr")["X"]
-    adj_post = cc.adjust_shares({"X": raw_post}, {"X": float(row[col])},
-                                convention="crsp_cfacshr")["X"]
-    assert adj_pre == pytest.approx(adj_post, rel=1e-9), (
-        f"CFACSHR direction is INVERTED. permno {row['permno']} on {row['date']}: "
-        f"factor {row['prev']} -> {row[col]} (ratio {row['ratio']:.4f}); "
-        f"adjusted {adj_pre:.4f} vs {adj_post:.4f}. Flip "
+    mult, div = rel_break("multiply"), rel_break("divide")
+    raw = float(((ch["shrout"] - ch["prev_shrout"]).abs()
+                 / ch["prev_shrout"]).median())
+
+    assert mult < div, (
+        f"CFACSHR direction is INVERTED. Across {len(ch)} real CRSP corporate "
+        f"actions the median adjusted-share discontinuity is {mult:.4f} under "
+        f"multiply (the frozen convention) but {div:.4f} under divide — the "
+        "wrong one is smoother, which means the frozen one is wrong. Flip "
         "ADJUSTMENT_CONVENTIONS['crsp_cfacshr'] and re-run Gate 0 from scratch.")
+    assert mult < 0.05, (
+        f"multiply is the better of the two but still leaves a median "
+        f"{mult:.4f} break across {len(ch)} actions. Adjusted shares should be "
+        "nearly continuous; this says neither direction reconciles and the "
+        "field or its units are not what the pull assumes.")
+    assert raw > 5 * mult, (
+        f"the RAW series barely moves across these 'corporate actions' (median "
+        f"{raw:.4f} vs adjusted {mult:.4f}), so this sample cannot discriminate "
+        "the direction — the events found are not real splits.")
+
+
+def test_adjustment_cancels_a_real_action_on_a_real_holding():
+    """End-to-end on one real event: a holder who did not trade reads as flat.
+
+    Unlike the population test above this uses ONE action, but it takes both
+    sides from CRSP: the position is scaled by CRSP's own observed SHROUT change,
+    not by a ratio derived from the factor. A fund holding a constant FRACTION of
+    a company across a split holds prev_shrout -> shrout in raw terms.
+    """
+    if not CRSP_MSF.exists():
+        pytest.skip("BLOCKED: needs landed CRSP msf (see the sprint brief).")
+    ch = _msf_actions()
+    # the cleanest event: factor moved most, raw shares tracked it most exactly
+    ch = ch.assign(implied=(ch["prev_cfacshr"] / ch["cfacshr"]),
+                   actual=(ch["shrout"] / ch["prev_shrout"]))
+    ch = ch[(ch["implied"] - 1).abs() > 0.10]          # a real split, not a stub
+    if ch.empty:
+        pytest.skip("BLOCKED: no factor change above 10% in the landed msf.")
+    row = ch.reindex((ch["actual"] / ch["implied"] - 1).abs()
+                     .sort_values().index).iloc[0]
+
+    pre = cc.adjust_shares({"X": float(row["prev_shrout"])},
+                           {"X": float(row["prev_cfacshr"])},
+                           convention="crsp_cfacshr")
+    post = cc.adjust_shares({"X": float(row["shrout"])},
+                            {"X": float(row["cfacshr"])},
+                            convention="crsp_cfacshr")
+    r = cc.share_continuity(pre, post)
+    assert r["share_turnover"] < 0.01, (
+        f"permno {row['permno']} on {row['date']}: factor "
+        f"{row['prev_cfacshr']} -> {row['cfacshr']}, raw shares "
+        f"{row['prev_shrout']} -> {row['shrout']}; adjusted turnover "
+        f"{r['share_turnover']:.4f} instead of ~0.")
+
+
+# --------------------------------------------------------------------------- #
+# v2.1d item 1 — join the factor on the HOLDINGS AS-OF DATE, not `filed`        #
+# --------------------------------------------------------------------------- #
+def test_factor_joins_on_the_asof_date_not_the_filing_date():
+    """A split between repPdDate and the filing date is the failure mode.
+
+    Holdings are as of 2023-03-31; the N-PORT is filed 2023-05-30; a 2:1 split
+    happens in April. Joining on `filed` picks the post-split factor and so
+    INTRODUCES the very discontinuity the adjustment exists to remove.
+    """
+    panel = {"AAA": {"2023-03-31": 2.0, "2023-04-28": 1.0, "2023-05-30": 1.0}}
+    asof = cc.factors_asof(panel, ["AAA"], "2023-03-31", freq="daily")
+    filed = cc.factors_asof(panel, ["AAA"], "2023-05-30", freq="daily")
+    assert asof["AAA"] == 2.0 and filed["AAA"] == 1.0
+
+    raw_pre, raw_post = {"AAA": 100.0}, {"AAA": 100.0}   # manager traded nothing
+    right = cc.share_continuity(
+        cc.adjust_shares(raw_pre, asof, convention="crsp_cfacshr"),
+        cc.adjust_shares(raw_post, asof, convention="crsp_cfacshr"))
+    wrong = cc.share_continuity(
+        cc.adjust_shares(raw_pre, filed, convention="crsp_cfacshr"),
+        cc.adjust_shares(raw_post, asof, convention="crsp_cfacshr"))
+    assert right["share_turnover"] == 0.0
+    assert wrong["share_turnover"] > 0.0, (
+        "joining on the filing date must be detectably wrong; if this passes "
+        "silently the join key does not matter and the test is vacuous")
+
+
+def test_factor_join_never_looks_ahead_and_never_defaults():
+    panel = {"AAA": {"2023-04-28": 1.0}}
+    with pytest.raises(cc.FactorJoinError):                # only a LATER obs
+        cc.factors_asof(panel, ["AAA"], "2023-03-31", freq="daily")
+    with pytest.raises(cc.FactorJoinError):                # security absent
+        cc.factors_asof(panel, ["ZZZ"], "2023-04-28", freq="daily")
+    with pytest.raises(cc.FactorJoinError):                # stale by months
+        cc.factors_asof(panel, ["AAA"], "2023-09-29", freq="daily")
+    with pytest.raises(cc.FactorJoinError):                # unnamed frequency
+        cc.factors_asof(panel, ["AAA"], "2023-04-28", freq="whatever")
+    # a month-end on a weekend still joins to the last trading day
+    got = cc.factors_asof({"AAA": {"2023-04-28": 1.0}}, ["AAA"],
+                          "2023-04-30", freq="daily")
+    assert got["AAA"] == 1.0
+
+
+def test_monthly_factor_sufficiency_is_measured_not_assumed():
+    """Whether MONTHLY cfacshr is precise enough is a question about the dates."""
+    # non-month-end as-of dates: monthly has no observation for them at all
+    r = cc.monthly_factor_sufficiency(["2023-03-31", "2023-04-14"])
+    assert r["verdict"] == "insufficient" and "2023-04-14" in r["non_month_end"]
+
+    # all month-ends but no daily panel -> UNKNOWN, never "sufficient"
+    r = cc.monthly_factor_sufficiency(["2023-03-31", "2023-06-30"])
+    assert r["verdict"] == "unknown" and "crsp.dsf" in r["why"]
+
+    # month-ends with a daily panel that is flat inside the month -> sufficient
+    daily = {"AAA": {"2023-03-15": 1.0, "2023-03-31": 1.0}}
+    assert cc.monthly_factor_sufficiency(["2023-03-31"], daily)["verdict"] == \
+        "sufficient"
+
+    # a split INSIDE the month: the month-end value is not the as-of value
+    daily = {"AAA": {"2023-03-15": 2.0, "2023-03-31": 1.0}}
+    r = cc.monthly_factor_sufficiency(["2023-03-15"], daily)
+    assert r["verdict"] == "insufficient" and r["intramonth_changes"]

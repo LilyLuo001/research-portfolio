@@ -59,6 +59,10 @@ class UnadjustedShares(ValueError):
     """Raised when raw share counts are passed without a usable adjustment."""
 
 
+class FactorJoinError(ValueError):
+    """Raised when the adjustment factor cannot be joined on the right date."""
+
+
 # The exact source field and its direction, frozen. No "…-style" wording:
 # an ambiguous name is how an inverted convention survives review.
 #
@@ -117,6 +121,135 @@ def adjust_shares(shares: dict, factors: dict, *, convention: str) -> dict:
             raise UnadjustedShares(f"non-positive adjustment factor for {k}: {f!r}")
         out[k] = v * f if op == "multiply" else v / f
     return out
+
+
+# --------------------------------------------------------------------------- #
+# Joining the factor on the right date (v2.1d, item 1)                          #
+# --------------------------------------------------------------------------- #
+# The share counts in an N-PORT are AS OF genInfo/repPdDate — Item A.2, "date as
+# of which information is reported". They are NOT as of the filing date, which
+# lands 30-60 days later and after any corporate action in between. Joining
+# CFACSHR on `filed` would adjust a March 31 share count by a May 20 factor: a
+# split in April would then be *introduced* by the adjustment rather than removed
+# by it, and the error is silent because both numbers are plausible.
+MAX_FACTOR_STALENESS_DAYS = 7          # month-end can fall on a weekend/holiday
+
+
+def _d(x):
+    from datetime import date
+    return x if isinstance(x, date) else date.fromisoformat(str(x)[:10])
+
+
+def factors_asof(panel: dict, securities, asof_date, *, freq: str) -> dict:
+    """Adjustment factors for `securities` AS OF the holdings report date.
+
+    `panel` maps security -> {iso_date: factor}; `asof_date` is the N-PORT
+    repPdDate. `freq` names what the panel actually is ("daily" -> crsp.dsf,
+    "monthly" -> crsp.msf) and is required for the same reason `convention` is:
+    the caller must state what it is passing, because the two have different
+    validity conditions and only one of them is exact.
+
+    Rules, all refusals rather than fills:
+      * the factor used is the last observation ON OR BEFORE `asof_date` —
+        never after it (that is look-ahead) and never a default of 1.0;
+      * a gap of more than MAX_FACTOR_STALENESS_DAYS refuses: a month-end
+        landing on a weekend is fine, a security with no factor for a month
+        is not;
+      * a monthly panel is accepted only when `asof_date` is the calendar
+        month-end its observation represents — see monthly_factor_sufficiency,
+        which measures that on the real dates instead of assuming it.
+    """
+    if freq not in ("daily", "monthly"):
+        raise FactorJoinError(
+            f"unknown factor frequency {freq!r}; pass 'daily' (crsp.dsf) or "
+            "'monthly' (crsp.msf). Do not guess — the validity conditions differ.")
+    target = _d(asof_date)
+    out, missing, stale = {}, [], []
+    for s in securities:
+        obs = panel.get(s) or {}
+        prior = [d for d in (_d(k) for k in obs) if d <= target]
+        if not prior:
+            missing.append(s)
+            continue
+        best = max(prior)
+        if (target - best).days > MAX_FACTOR_STALENESS_DAYS:
+            stale.append((s, best.isoformat()))
+            continue
+        out[s] = obs[best.isoformat()] if best.isoformat() in obs else obs[best]
+    if missing:
+        raise FactorJoinError(
+            f"{len(missing)} securities have no adjustment factor on or before "
+            f"the holdings as-of date {target} (first few: {sorted(missing)[:5]}). "
+            "Do NOT fall back to the filing date or to 1.0.")
+    if stale:
+        raise FactorJoinError(
+            f"{len(stale)} securities' newest factor is more than "
+            f"{MAX_FACTOR_STALENESS_DAYS} days before the as-of date {target} "
+            f"(first few: {stale[:5]}). A month-end on a weekend is fine; this "
+            "is a coverage hole.")
+    return out
+
+
+def _calendar_month_end(d):
+    from datetime import date, timedelta
+    nxt = date(d.year + (d.month == 12), (d.month % 12) + 1, 1)
+    return nxt - timedelta(days=1)
+
+
+def monthly_factor_sufficiency(asof_dates, daily_panel=None) -> dict:
+    """Is a MONTHLY CFACSHR precise enough for every holdings as-of date?
+
+    Answered from the dates themselves, never asserted. Two ways monthly fails:
+
+      1. an as-of date that is not a calendar month-end — the monthly file has
+         no observation for it, so any use is an interpolation;
+      2. an as-of date that IS a month-end but sits after a factor change that
+         happened earlier in the same month; the monthly observation is then
+         the post-change value while some of the month is pre-change. This one
+         is only detectable with a daily panel, so with `daily_panel=None` the
+         verdict is UNKNOWN — not "sufficient".
+
+    Returns {"verdict": "sufficient"|"insufficient"|"unknown", ...}. `unknown`
+    is a NEED_HUMAN, i.e. pull daily cfacshr from crsp.dsf and re-run.
+    """
+    dates = [_d(x) for x in asof_dates]
+    non_month_end = sorted({d.isoformat() for d in dates
+                            if d != _calendar_month_end(d)})
+    if non_month_end and daily_panel is None:
+        return {"verdict": "insufficient", "non_month_end": non_month_end,
+                "intramonth_changes": [],
+                "why": (f"{len(non_month_end)} holdings as-of dates are not "
+                        "calendar month-ends; a monthly factor file has no "
+                        "observation for them.")}
+    if daily_panel is None:
+        return {"verdict": "unknown", "non_month_end": [],
+                "intramonth_changes": [],
+                "why": ("every as-of date is a calendar month-end, but whether a "
+                        "factor changed INSIDE those months cannot be seen in a "
+                        "monthly file. NEED_HUMAN: pull cfacshr from crsp.dsf and "
+                        "re-run this check with daily_panel=.")}
+    offenders = []
+    for sec, obs in daily_panel.items():
+        by_date = {_d(k): v for k, v in obs.items()}
+        for target in dates:
+            me = _calendar_month_end(target)
+            within = [d for d in by_date if d.year == target.year
+                      and d.month == target.month and d <= me]
+            at = [d for d in within if d <= target]
+            if not at or not within:
+                continue
+            if by_date[max(at)] != by_date[max(within)]:
+                offenders.append({"security": sec, "asof": target.isoformat(),
+                                  "factor_asof": by_date[max(at)],
+                                  "factor_month_end": by_date[max(within)]})
+    verdict = "insufficient" if (offenders or non_month_end) else "sufficient"
+    return {"verdict": verdict, "non_month_end": non_month_end,
+            "intramonth_changes": offenders,
+            "why": ("a monthly factor differs from the as-of-date factor for "
+                    f"{len(offenders)} (security, date) pairs — use daily cfacshr"
+                    ) if offenders else
+                   ("every as-of date is a month-end and no factor changes inside "
+                    "those months for the securities checked")}
 
 
 def share_continuity(pre_sh: dict, post_sh: dict) -> dict:

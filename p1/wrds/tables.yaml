@@ -192,10 +192,14 @@ pulls:
         1000x error here would not raise, it would just move every exposure.
 
         '
-      cfacshr_direction: 'NEED_HUMAN until p1/tests/test_gate0_continuity.py::test_direction_against_a_real_crsp_split
-        runs green on landed data. The multiply-vs-divide direction is OWNER-ASSERTED
-        (2026-08-27), not verified in-container. An inverted direction does not raise
-        — it turns every split into fake turnover and silently fails Gate 0.
+      cfacshr_direction: 'NEED_HUMAN until p1/tests/test_gate0_continuity.py::test_direction_against_real_crsp_corporate_actions
+        runs green on landed data. The multiply-vs-divide direction is externally
+        verified by the owner (2026-08-28: shares/volume use the cumulative share
+        factor MULTIPLICATIVELY) but still unverified against data in-container.
+        That test decides it from CRSP alone, by requiring SHROUT x CFACSHR to be
+        continuous across real corporate actions — which is why SHROUT must land in
+        the SAME pull as CFACSHR. An inverted direction does not raise; it turns
+        every split into fake turnover and silently fails Gate 0.
 
         '
   dsf:
@@ -255,6 +259,29 @@ pulls:
         candidates:
         - vol
         resolved: null
+      share_adj_factor:
+        want: 'DAILY cumulative factor to adjust SHARES (CFACSHR). The monthly msf
+          copy is not known to be sufficient: N-PORT share counts are as of
+          genInfo/repPdDate, and a monthly file only carries month-ends. Gate 0''s
+          monthly_factor_sufficiency() answers that from the real dates, but it
+          returns UNKNOWN (a NEED_HUMAN) unless a daily panel is supplied — this
+          column is that panel. Same direction as msf: adjusted = raw * cfacshr.'
+        candidates:
+        - cfacshr
+        resolved: null
+      price_adj_factor:
+        want: daily cumulative factor to adjust PRICE (CFACPR) — the opposite-direction
+          twin, pulled so the convention is checked against data rather than assumed.
+        candidates:
+        - cfacpr
+        resolved: null
+      shares_out:
+        want: 'daily shares outstanding (SHROUT). Needed alongside cfacshr for the
+          same reason as in msf: the direction test requires raw x factor to be
+          continuous, and it cannot be run on a factor with no raw series beside it.'
+        candidates:
+        - shrout
+        resolved: null
       open_price:
         want: daily open — refraction R2 needs the overnight/intraday split
         candidates:
@@ -300,6 +327,14 @@ pulls:
         candidates:
         - dlstcd
         resolved: null
+    asserts:
+      monthly_cfacshr_sufficiency: 'NEED_HUMAN once dsf lands: run compute_continuity.monthly_factor_sufficiency(asof_dates,
+        daily_panel) over the ACTUAL N-PORT repPdDate values and record the verdict
+        in GATE0-RESULT.md. Until it returns "sufficient", Gate 0 must join the DAILY
+        factor. Do not assume month-end repPdDates make the monthly file exact —
+        that is the assumption the function exists to test.
+
+        '
   taq_iid:
     purpose: Effective spread and price impact — spine four, and the Saglam-Tuzun
       replication.
