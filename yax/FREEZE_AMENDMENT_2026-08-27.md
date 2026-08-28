@@ -155,3 +155,15 @@ Plan v5 §12. In short: this record, then the novelty re-verification, then
 window, then the Q5–Q1 estimand, then the published-measurement audit, then
 `DESIGN_FREEZE_v2.md` and the `v1.1-design-freeze` tag. **Only then** may a
 post-period outcome be opened.
+
+## Owner sign-off added 2026-08-28 — Test C SESOI rule
+
+Before any protected post-period outcome was opened, the owner approved:
+
+    SESOI = 25% × |final literature-comparable Q5–Q1 benchmark|
+
+This is a rule rather than a numerical value. The number is generated only
+after the benchmark and Test C share the same age band, outcome, Q5–Q1 contrast,
+unit/estimand and functional scale. It will not be widened if paired-equivalence
+power is weak. In that event the paper reports that it cannot establish
+equivalence. Full record: `SESOI_OWNER_SIGNOFF_2026-08-28.md`.

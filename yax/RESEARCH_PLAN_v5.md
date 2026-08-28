@@ -304,8 +304,12 @@ is 25% regardless of which point proves most flattering**, no selection among
 them may be made on the basis of post-period estimates, and reporting the grid
 once outcomes are visible is specification search.
 
-The 25% fraction remains **pending the owner's decision** before the amended
-freeze.
+**OWNER-SIGNED-SESOI-RULE (2026-08-28):** the owner approved the 25% rule before
+the amended freeze and before any protected post-period outcome was opened. The
+rule, economic interpretation and anti-widening commitment are recorded in
+`SESOI_OWNER_SIGNOFF_2026-08-28.md`. The numerical SESOI remains mechanically
+pending the common-scale benchmark required by §7.3; the sign-off does not turn
+an unmatched headline magnitude into that benchmark.
 
 ## 5. Position relative to the nearest competing papers
 
@@ -684,7 +688,9 @@ specification search.
    §4.2, outcome-blind, under common bootstrap draws. The binding object is
    equivalence-test power at Δ = 0 under the primary SESOI; MDE_{Δ,80} is
    secondary. *(§4.2–4.3)*
-5c. **Owner decision on the primary SESOI** — proposed 25%. *(§4.3)*
+5c. **Owner decision on the primary SESOI** — **COMPLETE: 25% rule signed
+    2026-08-28; numerical value still awaits the common-scale benchmark.**
+    *(§4.3; `SESOI_OWNER_SIGNOFF_2026-08-28.md`)*
 6. Published-measurement audit built. *(§6)*
 7. `DESIGN_FREEZE_v2.md` committed; tag `v1.1-design-freeze`.
 8. **Only then** may a post-period outcome be opened.
