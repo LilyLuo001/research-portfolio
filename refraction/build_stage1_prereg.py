@@ -93,19 +93,36 @@ def render(cfg: dict) -> str:
               "corporate_action_convention", "undefined_on_missing_prior_day"):
         a("| %s | %s |" % (k, _fmt(d.get(k))))
     a("")
-    a("Transformation order — magnitude first, so zeros survive by construction:")
+    a("### Primary exposure magnitude")
     a("")
-    a("| step | registered value |")
+    a("    CR_mag = |CR_raw|")
+    a("")
+    a("| element | registered value |")
     a("|---|---|")
-    for k in ("magnitude_first", "magnitude_clip", "magnitude_clip_pct",
-              "magnitude_clip_within", "magnitude_lower_clip_forbidden",
-              "winsorize_signed_series_forbidden", "standardize_within_fund",
-              "standardize_mode", "standardize_sample"):
-        a("| %s | %s |" % (k, _fmt(d.get(k))))
+    for k in ("transform", "centering", "scaling", "winsorization"):
+        a("| %s | %s |" % (k, _fmt(d["primary_exposure_transform"].get(k))))
+    a("| standardize_within_fund | %s |" % _fmt(d.get("standardize_within_fund")))
+    a("")
+    a("No centring, no within-fund scaling, no winsorization. Creation/redemption is rare, "
+      "and any fund-specific statistic computed on a mostly-zero series is dominated by the "
+      "zeros: a fund with 2 nonzero days in 250 has a within-fund 99th percentile of zero, "
+      "which would clip both of its genuine events to zero exposure. Comparability across "
+      "funds is handled by the fund x date fixed effects, which absorb any fund-level scale.")
+    a("")
+    a("### Robustness exposure magnitude (never the primary)")
+    a("")
+    a("| element | registered value |")
+    a("|---|---|")
+    for k in ("column", "clip", "clip_pct", "clip_estimated_on",
+              "min_nonzero_events_for_fund_specific_cap", "pooled_cap_fallback",
+              "preserve_zero_exactly", "never_zero_a_genuine_event", "scaling",
+              "may_replace_primary"):
+        a("| %s | %s |" % (k, _fmt(d["robustness_exposure_transform"].get(k))))
     a("")
     a("Columns: raw `%s` (sign, zero-event status, event census, concentration); untreated "
-      "magnitude `%s`; treated exposure magnitude `%s`."
-      % (d["raw_column"], d["magnitude_raw_column"], d["analysis_column"]))
+      "magnitude `%s`; primary exposure magnitude `%s`; robustness column `%s`."
+      % (d["raw_column"], d["magnitude_raw_column"], d["analysis_column"],
+         d["robustness_exposure_transform"]["column"]))
     a("")
     a("Invariants, enforced on every build:")
     a("")

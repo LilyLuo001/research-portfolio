@@ -137,14 +137,10 @@ def make_trading_panel(n_stocks=40, n_days=120, a1=0.0, seed=0, arm="fallback"):
 
 
 def _cfg_no_std():
-    """The registered formula with the magnitude transformations switched off, so the raw
-    growth rate is visible. CR_raw is unaffected either way; this only quiets CR_mag."""
+    """Kept as a name for the tests that predate the final decision. The registered primary
+    now carries no transformations at all, so this is the registered config unchanged."""
     import copy
-    cfg = copy.deepcopy(CONFIG)
-    d = cfg["network_exposure"]["cr_definition"]
-    d["standardize_within_fund"] = False
-    d["magnitude_clip_pct"] = 100
-    return cfg
+    return copy.deepcopy(CONFIG)
 
 
 GOOD_G7 = {"signed_trade_classification_available_share": 0.97,
@@ -842,12 +838,17 @@ def test_cr_requires_corporate_action_adjusted_shares():
     assert split["CR_mag"].iloc[1] == pytest.approx(0.0)   # and no exposure either
 
 
-def test_the_exposure_magnitude_is_standardized_within_fund_and_not_rescaled_again():
+def test_the_primary_exposure_is_the_bare_magnitude_with_no_fund_specific_tuning():
+    """Final decision: |CR_raw| and nothing else. Every invariant then holds by construction
+    rather than by guard, and no fund-specific statistic can distort a sparse series."""
     d = CONFIG["network_exposure"]["cr_definition"]
-    assert d["standardize_within_fund"] is True
-    assert d["further_rescaling_forbidden"] is True
+    prim = d["primary_exposure_transform"]
+    assert prim["transform"] == "identity"
+    assert prim["centering"] == prim["scaling"] == prim["winsorization"] == "none"
+    assert d["standardize_within_fund"] is False
     out = pre.build_cr(shares_frame([100, 110, 99, 105, 100]), CONFIG, CONV)
-    assert out["CR_mag"].dropna().std(ddof=0) == pytest.approx(1.0)
+    live = out["CR_raw"].notna()
+    assert np.allclose(out.loc[live, "CR_mag"], out.loc[live, "CR_raw"].abs())
     assert (out["CR_mag"].dropna() >= 0).all()
 
 
@@ -1240,30 +1241,50 @@ def test_the_census_refuses_to_run_on_the_scaled_column():
     assert "flatters the design" in str(e.value)
 
 
-def test_standardization_is_sd_only_and_preserves_zero_and_sign():
+def test_within_fund_sd_scaling_is_withdrawn_from_both_specifications():
+    """Zero within-fund CR dispersion is not an absence of identification: under fund x date
+    fixed effects a1 comes from CR x |L| varying ACROSS CONSTITUENTS in an event fund-day,
+    which a fund-level scale factor neither creates nor destroys."""
     d = CONFIG["network_exposure"]["cr_definition"]
-    assert d["standardize_mode"] == "sd_only"
-    assert d["standardize_preserves_zero_and_sign"] is True
-    f = shares_frame([100, 110, 110, 99, 120])
-    cfg = _cfg_no_std(); cfg["network_exposure"]["cr_definition"]["standardize_within_fund"] = True
-    scaled = pre.build_cr(f, cfg, CONV)
-    ok = scaled["CR_raw"].notna()
-    # SD-only scaling is a positive rescale: zeros survive and magnitude order is preserved
-    assert scaled["CR_mag"].iloc[2] == pytest.approx(0.0)
-    order_raw = scaled.loc[ok, "CR_raw"].abs().rank()
-    order_mag = scaled.loc[ok, "CR_mag"].rank()
-    assert np.array_equal(order_raw.to_numpy(), order_mag.to_numpy())
-
-
-def test_mean_centred_standardization_is_refused():
-    """The audit's hypothesis: z-scoring would make a positive creation below the fund's
-    average creation rate read as negative."""
+    assert d["standardize_within_fund"] is False
+    assert d["standardize_mode"] == "none"
+    assert d["robustness_exposure_transform"]["scaling"] == "none"
     import copy
     cfg = copy.deepcopy(CONFIG)
-    cfg["network_exposure"]["cr_definition"]["standardize_mode"] = "z_score"
+    cfg["network_exposure"]["cr_definition"]["standardize_within_fund"] = True
     with pytest.raises(pre.SafeguardViolation) as e:
         pre.build_cr(shares_frame([100, 110, 120]), cfg, CONV)
-    assert "BELOW the fund's average creation rate" in str(e.value)
+    assert "ACROSS CONSTITUENTS" in str(e.value)
+
+
+def test_a_single_event_fund_still_contributes_identifying_variation():
+    """The concrete version of the same point: one distinct event magnitude, zero within-fund
+    dispersion, and a1 is still identified across that fund-day's constituents."""
+    panel = make_trading_panel(n_stocks=30, n_days=8, a1=0.30, seed=91)
+    one = sorted(panel["date"].unique())[0]
+    for col in ("CR", "CR_raw", "CR_mag"):
+        panel[col] = np.where(panel["date"] == one, 0.05, 0.0)
+    panel["CR_mag"] = np.abs(panel["CR_raw"])
+    # noise well below the planted signal (0.30 x 0.05 x absL), so the test measures
+    # identification rather than sampling error
+    panel["y"] = 0.30 * panel["CR_mag"] * panel["absL"] + \
+        np.random.default_rng(2).normal(0, .0002, len(panel))
+    r = g8.pooled_interaction(panel, controls=(), y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity")
+    assert r["within_fund_date_exposure_sd"] > 0      # cross-constituent variation survives
+    assert r["a1"] == pytest.approx(0.30, abs=0.05)
+
+
+def test_any_centering_or_scaling_in_the_primary_is_refused():
+    """Centring would make a positive creation below the fund's average rate read negative;
+    scaling breaks on sparse funds. Neither may enter the primary."""
+    import copy
+    for key, val in (("centering", "mean"), ("scaling", "sd"), ("winsorization", "p99")):
+        cfg = copy.deepcopy(CONFIG)
+        cfg["network_exposure"]["cr_definition"]["primary_exposure_transform"][key] = val
+        with pytest.raises(pre.SafeguardViolation) as e:
+            pre.build_cr(shares_frame([100, 110, 120]), cfg, CONV)
+        assert "PRIMARY exposure carries no %s" % key in str(e.value)
 
 
 # --------------------------------------------------------------------------- #
@@ -1396,48 +1417,113 @@ def test_invariant_magnitude_ordering_is_preserved_below_the_clip():
     assert np.array_equal(np.argsort(raws), np.argsort(mags))
 
 
-def test_only_the_upper_tail_is_clipped():
+def test_only_the_upper_tail_is_clipped_in_the_robustness_column():
     """A lower clip on a non-negative series can only lift zeros off zero."""
     d = CONFIG["network_exposure"]["cr_definition"]
-    assert d["magnitude_clip"] == "upper_tail_only"
-    assert d["magnitude_lower_clip_forbidden"] is True
+    r = d["robustness_exposure_transform"]
+    assert r["clip"] == "upper_tail_only"
+    assert r["role"] == "robustness_only" and r["may_replace_primary"] is False
     assert d["winsorize_signed_series_forbidden"] is True
     assert d["magnitude_first"] is True
     import copy
     cfg = copy.deepcopy(CONFIG)
-    cfg["network_exposure"]["cr_definition"]["magnitude_clip"] = "two_sided"
+    cfg["network_exposure"]["cr_definition"]["robustness_exposure_transform"]["clip"] = "two_sided"
     with pytest.raises(pre.SafeguardViolation) as e:
         pre.build_cr(shares_frame([100, 110, 120]), cfg, CONV)
     assert "lift genuine zeros off zero" in str(e.value)
+
+
+# --------------------------------------------------------------------------- #
+# sparse creation/redemption series — the failure that made the raw magnitude  #
+# the primary                                                                  #
+# --------------------------------------------------------------------------- #
+
+def sparse_fund(n_days=250, event_days=(120, 200), pct=0.05, fund="F1"):
+    """The realistic case: creation/redemption is RARE. 2 events in 250 days leaves a
+    magnitude series that is 99.2% zeros."""
+    s = [100.0]
+    for i in range(1, n_days):
+        s.append(s[-1] * (1 + pct) if i in event_days else s[-1])
+    return shares_frame(s, fund=fund)
+
+
+def test_a_sparse_fund_keeps_its_events_in_the_primary():
+    out = pre.build_cr(sparse_fund(), CONFIG, CONV)
+    ev = out[out["CR_raw"].abs() > 0]
+    assert len(ev) == 2
+    assert np.allclose(ev["CR_mag"], 0.05)                  # untouched
+    assert (out.loc[out["CR_raw"] == 0, "CR_mag"] == 0).all()
+
+
+def test_a_naive_within_fund_percentile_would_have_deleted_both_events():
+    """Documents the failure. The 99th percentile of a 99.2%-zero series IS zero, so
+    clipping to it annihilates every event the fund has."""
+    out = pre.build_cr(sparse_fund(), CONFIG, CONV)
+    naive_cap = out["CR_mag_raw"].quantile(0.99)            # full, zero-padded series
+    assert naive_cap == pytest.approx(0.0)
+    naive = out["CR_mag_raw"].clip(upper=naive_cap)
+    assert (naive[out["CR_raw"].abs() > 0] == 0).all()      # both events gone
+    assert (out.loc[out["CR_raw"].abs() > 0, "CR_mag"] > 0).all()   # the primary is fine
+
+
+def test_the_robustness_cap_is_estimated_on_nonzero_events_only():
+    out = pre.build_cr(sparse_fund(), CONFIG, CONV)
+    ev = out["CR_raw"].abs() > 0
+    assert (out.loc[ev, "CR_mag_capped"] > 0).all()
+    assert (out.loc[~ev & out["CR_raw"].notna(), "CR_mag_capped"] == 0).all()
+    r = CONFIG["network_exposure"]["cr_definition"]["robustness_exposure_transform"]
+    assert r["clip_estimated_on"] == "nonzero_event_magnitudes_only"
+
+
+def test_a_fund_below_the_event_minimum_borrows_the_pooled_cap():
+    """A percentile of three numbers is noise wearing a threshold's clothes."""
+    r = CONFIG["network_exposure"]["cr_definition"]["robustness_exposure_transform"]
+    assert r["min_nonzero_events_for_fund_specific_cap"] == 20
+    assert r["pooled_cap_fallback"] is True
+    # a busy fund sets the pooled cap; a sparse fund with one huge event borrows it
+    busy = shares_frame([100.0 * (1.01 ** i) for i in range(60)], fund="BUSY")
+    sparse = shares_frame([100.0, 100.0, 500.0], fund="SPARSE")
+    out = pre.build_cr(pd.concat([busy, sparse], ignore_index=True), CONFIG, CONV)
+    row = out[(out["fund"] == "SPARSE") & (out["CR_raw"].abs() > 0)]
+    assert float(row["CR_mag"].iloc[0]) == pytest.approx(4.0)        # primary untouched
+    assert float(row["CR_mag_capped"].iloc[0]) < 4.0                 # robustness pulls it in
+    assert float(row["CR_mag_capped"].iloc[0]) > 0                   # but never to zero
+
+
+def test_the_robustness_cap_can_never_zero_a_genuine_event():
+    """Enforced, not hoped for: the invariant check runs on the robustness column too."""
+    out = pre.build_cr(sparse_fund(), CONFIG, CONV)
+    live = out["CR_raw"].notna()
+    ev = live & (out["CR_raw"].abs() > 0)
+    assert (out.loc[ev, "CR_mag_capped"] > 0).all()
+    bad = out.copy()
+    bad.loc[ev, "CR_mag_capped"] = 0.0
+    with pytest.raises(pre.SafeguardViolation) as e:
+        pre.assert_cr_invariants(bad, CONFIG)
+    assert "must never do that" in str(e.value)
 
 
 def test_the_clip_does_bite_on_an_extreme_data_error():
     """Upper-tail clipping still has to do its job: a corrupt 50x share count is pulled in.
     Compared pre-scaling, since SD scaling changes the units."""
     counts, v = [100.0], 100.0
-    for _ in range(400):                         # enough obs that the 99th pct is not itself
-        v *= 1.01                                # dominated by the single error
+    for _ in range(400):
+        v *= 1.01
         counts.append(v)
     counts.append(v * 50)                        # a data error
-    cfg = _cfg_no_std()                          # clip on, scaling off
-    cfg["network_exposure"]["cr_definition"]["magnitude_clip_pct"] = 99
-    out = pre.build_cr(shares_frame(counts), cfg, CONV)
-    assert out["CR_mag_raw"].iloc[-1] > 40       # untreated magnitude is enormous
-    ceiling = out["CR_mag_raw"].quantile(0.99)
-    assert out["CR_mag"].iloc[-1] == pytest.approx(ceiling)
-    assert out["CR_mag"].iloc[-1] < 1.0          # pulled back among the ordinary days
-    # and an ordinary day is untouched by the clip
-    assert out["CR_mag"].iloc[5] == pytest.approx(out["CR_mag_raw"].iloc[5])
+    out = pre.build_cr(shares_frame(counts), CONFIG, CONV)
+    assert out["CR_mag"].iloc[-1] > 40           # the PRIMARY does not clip: it is |CR_raw|
+    assert out["CR_mag_capped"].iloc[-1] < 1.0   # the robustness column pulls it in
+    # and an ordinary day is untouched in both
+    assert out["CR_mag_capped"].iloc[5] == pytest.approx(out["CR_mag"].iloc[5])
 
 
-def test_a_fund_with_identical_creation_sizes_is_left_unscaled_not_zeroed():
-    """Caught by the invariants themselves: zero within-fund SD makes scaling undefined, and
-    multiplying by zero would have deleted the fund's whole mechanism variation silently."""
+def test_a_fund_with_identical_creation_sizes_is_untouched():
+    """Zero within-fund dispersion is simply not a problem once nothing is scaled by it."""
     out = _built([100, 110, 121, 133.1])          # every raw CR is exactly +10%
     live = out["CR_raw"].notna()
     assert out.loc[live, "CR_mag_raw"].std(ddof=0) == pytest.approx(0.0)
-    assert (out.loc[live, "CR_mag"] > 0).all()    # NOT driven to zero
-    assert out.loc[live, "CR_mag"].iloc[0] == pytest.approx(0.10)
+    assert np.allclose(out.loc[live, "CR_mag"], 0.10)
 
 
 def test_the_invariants_are_checked_on_every_build_not_only_in_tests():

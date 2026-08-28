@@ -633,17 +633,26 @@ def test_raw_cr_owns_the_sign_and_the_scaled_column_does_not():
     assert d["exposure_magnitude_column"] == "CR_mag"
     assert d["exposure_sign_column"] == "CR_raw"
     assert d["analysis_column_sign_is_not_economic"] is True
-    # the transformation ORDER, which is what the final audit fixed
+    # the transformation, which the final decision reduced to the identity
     assert d["magnitude_first"] is True
-    assert d["magnitude_clip"] == "upper_tail_only"
-    assert d["magnitude_lower_clip_forbidden"] is True
     assert d["winsorize_signed_series_forbidden"] is True
+    prim = d["primary_exposure_transform"]
+    assert prim["transform"] == "identity"
+    assert prim["centering"] == prim["scaling"] == prim["winsorization"] == "none"
+    assert d["standardize_within_fund"] is False
+    rob = d["robustness_exposure_transform"]
+    assert rob["role"] == "robustness_only" and rob["may_replace_primary"] is False
+    assert rob["clip_estimated_on"] == "nonzero_event_magnitudes_only"
+    assert rob["min_nonzero_events_for_fund_specific_cap"] > 0
+    assert rob["pooled_cap_fallback"] is True
+    assert rob["preserve_zero_exactly"] is True
+    assert rob["never_zero_a_genuine_event"] is True
     assert set(d["invariants"]) == {"zero_iff_zero", "non_negative", "symmetric", "monotone"}
     assert d["census_uses_raw_pre_winsorized"] is True
     for job in ("sign", "creation_vs_redemption", "zero_event_status", "event_census",
                 "concentration_statistics", "aligned_outcome_sign"):
         assert job in d["raw_defines"], job
-    assert d["standardize_mode"] == "sd_only"
+    assert d["standardize_mode"] == "none"      # withdrawn from both specifications
 
 
 def test_the_shares_refresh_frequency_audit_is_registered_and_open():

@@ -1,6 +1,6 @@
 {
   "output": "refraction/frozen_config.yaml",
-  "output_sha256": "1bc33497d742777e99389a3ca0427533a07e01fc83b17f71af9ab13269b969b8",
+  "output_sha256": "14bb577722a54972e98ac219bc4330978fa1ed389ef5876e96d9c8d1d191c8a2",
   "inputs": [
     {
       "path": "docs/MacroEvent_Chapter_Plan_v2_4.md",
@@ -23,11 +23,11 @@
       "rows": null
     }
   ],
-  "code_version": "81830e34b2ea09a0bf9f43091ec4129d9dd1e468",
-  "timestamp": "2026-08-28T09:35:08.560183+00:00",
+  "code_version": "a9fcf656818f5318c315e166a933eed9eb27787b",
+  "timestamp": "2026-08-28T13:37:35.096448+00:00",
   "registered_spec": "SPEC-MAIN-v2.4",
-  "freeze_scope": "implementation freezes 1-6, consistency audit, three final checks, CR magnitude-first fix",
+  "freeze_scope": "freezes 1-6, consistency audit, three final checks, CR primary = |CR_raw| (identity)",
   "what_this_is": "repo-local content hash + UTC timestamp of the frozen specification.",
-  "what_this_is_NOT": "the OSF pre-registration. The Stage-1 DOCUMENT is rendered at refraction/STAGE1_PREREG.md and hashed; SUBMITTING it is REFR-GATE-OSF, a human gate.",
+  "what_this_is_NOT": "the OSF pre-registration. The Stage-1 DOCUMENT is at refraction/STAGE1_PREREG.md and hashed; SUBMITTING it is REFR-GATE-OSF, a human gate.",
   "prereg_guard_status": "BLOCKED (prereg.osf_timestamp is null) \u2014 correct and expected"
 }

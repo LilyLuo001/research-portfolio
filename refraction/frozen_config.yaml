@@ -397,35 +397,60 @@ network_exposure:
     corporate_action_convention: p1/t2_wrds/corpactions.py
     undefined_on_missing_prior_day: true       # no forward/backward fill; the row is dropped
     # ---------------------------------------------------------------------------------
-    # THE TRANSFORMATION ORDER (audit 2026-08-28, final). MAGNITUDE FIRST.
+    # THE PRIMARY EXPOSURE IS THE RAW MAGNITUDE (final decision, 2026-08-28).
     # ---------------------------------------------------------------------------------
-    # The previous order winsorized the SIGNED series and took |.| for the exposure
-    # afterwards. Taking the sign from CR_raw did not fix that: the lower-tail clip survived
-    # in MAGNITUDE form. Measured on a fund creating on ~99% of days, a true zero-event day
-    # carried exposure magnitude 0.677 — a non-event weighted like a real creation. Two-sided
-    # clipping of a skewed signed series is asymmetric besides, so +x and -x need not map to
-    # the same magnitude.
+    # History, because it explains why the primary is now the plainest possible object.
+    # (a) Winsorizing the SIGNED series and taking |.| afterwards left the lower-tail clip
+    #     alive in magnitude form: on a fund creating ~99% of days a true zero-event day
+    #     carried exposure magnitude 0.677.
+    # (b) Magnitude-first with a within-fund upper clip fixed that but broke SPARSE funds.
+    #     Creation/redemption is rare: a fund with 2 nonzero days in 250 has a magnitude
+    #     series that is 99.2% zeros, so its within-fund 99th percentile IS ZERO and BOTH
+    #     genuine events are clipped to zero exposure. The design's own sparse funds are
+    #     exactly the ones the treatment would have annihilated.
+    # (c) SD scaling has the same character. A fund with one distinct event magnitude has no
+    #     within-fund dispersion, and dividing by it is undefined. That is NOT an absence of
+    #     identification: under fund x date fixed effects a1 is identified by CR x |L| varying
+    #     ACROSS CONSTITUENTS within an event fund-day, which a fund-level scale factor
+    #     neither creates nor destroys.
     #
-    #   1.  CR_raw     = (S_t - S_{t-1}) / S_{t-1}      signed, untouched
-    #   2.  CR_mag_raw = |CR_raw|                        magnitude taken FIRST
-    #   3.  outlier treatment ON THE MAGNITUDE, upper tail only
-    #   4.  SD-only scaling, no centring
+    # So the PRIMARY carries no fund-specific tuning at all:
     #
-    # Upper-tail-only because the objective is protection against extreme data errors, and
-    # those sit in the upper tail of a magnitude. On a non-negative series a lower clip can
-    # do only one thing: lift genuine zeros off zero.
+    #     CR_raw = (S_t - S_{t-1}) / S_{t-1}      signed
+    #     CR_mag = |CR_raw|                        and nothing else
+    #
+    # No centring, no within-fund SD scaling, no winsorization. Every property the audit
+    # asked for then holds BY CONSTRUCTION rather than by guard: zero iff zero, non-negative,
+    # +x and -x identical, order preserved exactly. §6.1.2's "standardized within fund so the
+    # sensitivity is comparable across funds" is served instead by the fund x date fixed
+    # effects, which absorb any fund-level scale, and by reporting a1 in units of |CR| x |L|.
     magnitude_first: true
-    magnitude_clip: upper_tail_only
-    magnitude_clip_pct: 99                     # §6.1.2's "registered percentile"
-    magnitude_clip_within: fund
-    magnitude_lower_clip_forbidden: true
-    winsorize_signed_series_forbidden: true    # the bug this replaces
-    standardize_within_fund: true              # §6.1.2, applied to the MAGNITUDE
-    standardize_mode: sd_only                  # divide by within-fund SD; NO mean shift.
-                                               # Mean-centring would make a positive creation
-                                               # below the fund's average rate read NEGATIVE.
+    winsorize_signed_series_forbidden: true
+    primary_exposure_transform:
+      column: CR_mag
+      transform: identity                 # |CR_raw|, full stop
+      centering: none
+      scaling: none
+      winsorization: none
+      rationale: >
+        no fund-specific tuning can distort a sparse event series it never touches
+    # The capped variant is ROBUSTNESS, reported beside the primary and never as it. Its
+    # guardrails exist because an unguarded percentile destroyed sparse funds:
+    robustness_exposure_transform:
+      column: CR_mag_capped
+      clip: upper_tail_only               # a lower clip could only lift zeros off zero
+      clip_pct: 99
+      clip_estimated_on: nonzero_event_magnitudes_only   # NOT the zero-padded full series
+      min_nonzero_events_for_fund_specific_cap: 20       # below this a fund cap is noise
+      pooled_cap_fallback: true           # too few events -> the pooled cross-fund cap
+      preserve_zero_exactly: true
+      never_zero_a_genuine_event: true    # enforced, not hoped for
+      scaling: none                       # scaling stays out of both specifications
+      role: robustness_only
+      may_replace_primary: false
+    standardize_within_fund: false        # withdrawn from BOTH specifications
+    standardize_mode: none
     standardize_preserves_zero_and_sign: true
-    standardize_sample: non_fomc_calibration_window
     further_rescaling_forbidden: true          # already unitless AND standardized
     dollar_or_tna_scaled_forms_forbidden: [cr_over_tna, cr_dollar, delta_shares_times_nav]
     #
@@ -449,7 +474,7 @@ network_exposure:
       zero_iff_zero: "CR_raw == 0  <=>  CR_mag == 0"
       non_negative: "CR_mag >= 0"
       symmetric: "equal-and-opposite raw values map to equal CR_mag"
-      monotone: "|CR_raw| ordering is preserved below the clip"
+      monotone: "|CR_raw| ordering is preserved exactly (the primary is the identity)"
     raw_defines: [sign, creation_vs_redemption, zero_event_status, event_census,
                   concentration_statistics, aligned_outcome_sign]
     analysis_column_sign_is_not_economic: true   # never take sign() of the scaled column

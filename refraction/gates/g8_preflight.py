@@ -244,51 +244,85 @@ def build_cr(shares: pd.DataFrame, config: dict, convention: dict = None) -> pd.
     if (prev_S <= 0).any():
         raise SafeguardViolation("non-positive prior shares outstanding in the CR denominator")
 
-    # ---- the exposure magnitude: MAGNITUDE FIRST, then treatment --------------------
-    # Order matters, and getting it wrong is what the final audit caught. Winsorizing the
-    # SIGNED series and taking |.| afterwards leaves the lower-tail clip alive in magnitude
-    # form: in a mostly-creating fund the 1st percentile is positive, so a genuine
-    # zero-event day acquires a positive exposure magnitude. Taking |.| FIRST and clipping
-    # only from above cannot do that — a non-negative series has nothing below zero to clip
-    # up to, so zeros stay zeros by construction rather than by luck.
+    # ---- the exposure magnitude ----------------------------------------------------
+    # PRIMARY: |CR_raw|, and nothing else. No centring, no within-fund SD scaling, no
+    # winsorization. Every invariant then holds by construction rather than by guard, and —
+    # the reason this is the primary — no fund-specific tuning can distort a sparse event
+    # series it never touches. A within-fund 99th percentile on a series that is 99% zeros
+    # IS ZERO, which clipped both genuine events of a 2-event fund to zero exposure.
     if not d.get("magnitude_first", True):
         raise SafeguardViolation("magnitude_first is registered true; the signed series may "
                                  "not be winsorized (winsorize_signed_series_forbidden)")
-    if d.get("magnitude_clip") != "upper_tail_only":
+    prim = d["primary_exposure_transform"]
+    for key in ("centering", "scaling", "winsorization"):
+        if prim.get(key) != "none":
+            raise SafeguardViolation(
+                "the PRIMARY exposure carries no %s (%r registered). Fund-specific tuning is "
+                "robustness, never the primary — it is what destroyed sparse funds."
+                % (key, prim.get(key)))
+    if prim.get("transform") != "identity":
+        raise SafeguardViolation("primary exposure transform must be identity, got %r"
+                                 % prim.get("transform"))
+    if d.get("standardize_within_fund"):
         raise SafeguardViolation(
-            "magnitude clipping must be UPPER TAIL ONLY (%r registered). On a non-negative "
-            "series a lower clip can only lift genuine zeros off zero." % d.get("magnitude_clip"))
+            "within-fund SD scaling is withdrawn from both specifications. Zero within-fund "
+            "CR dispersion does not mean a1 is unidentified: under fund x date fixed effects "
+            "it is identified by CR x |L| varying ACROSS CONSTITUENTS in an event fund-day.")
 
     df["CR_mag_raw"] = df["CR_raw"].abs()
-    hi = float(d["magnitude_clip_pct"]) / 100.0
-    df["CR_mag"] = df.groupby(d["magnitude_clip_within"])["CR_mag_raw"].transform(
-        lambda v: v.clip(upper=v.quantile(hi)))
+    df["CR_mag"] = df["CR_mag_raw"]                 # the primary IS the raw magnitude
 
-    if d["standardize_within_fund"]:
-        if d["standardize_mode"] != "sd_only":
-            raise SafeguardViolation(
-                "standardization must be SD-ONLY (%r registered). Mean-centring would make a "
-                "positive creation BELOW the fund's average creation rate read as negative."
-                % d["standardize_mode"])
-        # Scale only, no mean shift: 0 stays 0, and a positive scale factor preserves order.
-        # A fund whose creation magnitudes are all IDENTICAL has zero within-fund SD. Scaling
-        # is then undefined, and the previous fallback multiplied by 0 — which drove real
-        # creations to zero magnitude and would have deleted the fund's entire mechanism
-        # variation silently. Leave such a fund UNSCALED instead: the invariants hold, and
-        # fund x date fixed effects absorb the level difference anyway.
-        def _sd_scale(v):
-            # RELATIVE degeneracy test, at machine scale. A fund whose magnitudes are all
-            # identical has an SD of floating-point dust (~1e-17), not an exact zero, so an
-            # `sd > 0` test passes and the division explodes the column to ~1e15. Compare the
-            # SD to the series' own scale instead.
-            sd, scale = v.std(ddof=0), v.abs().mean()
-            if not (sd > SD_DEGENERATE_TOL * scale):
-                return v
-            return v / sd
-        df["CR_mag"] = df.groupby("fund")["CR_mag"].transform(_sd_scale)
+    # ROBUSTNESS column, built alongside and never substituted for the primary.
+    df["CR_mag_capped"] = capped_magnitude(df, config)
 
     out = df.drop(columns=["_S", "_gap"])
     assert_cr_invariants(out, config)
+    return out
+
+
+def capped_magnitude(df: pd.DataFrame, config: dict) -> pd.Series:
+    """The robustness variant: an upper-tail cap that cannot annihilate a sparse fund.
+
+    Three guardrails, each answering a way the naive version failed:
+
+      * the cap is estimated on NONZERO EVENT MAGNITUDES ONLY. A percentile of the
+        zero-padded full series is dominated by the zeros — for a fund with 2 events in 250
+        days the 99th percentile is 0, and clipping to it deletes both events.
+      * a fund needs `min_nonzero_events_for_fund_specific_cap` events before it gets its
+        OWN cap; below that the pooled cross-fund cap is used, because a percentile of three
+        numbers is noise wearing a threshold's clothes.
+      * the cap is floored at the smallest nonzero magnitude, so clipping can never drive a
+        genuine event to zero. Asserted afterwards rather than assumed.
+    """
+    r = config["network_exposure"]["cr_definition"]["robustness_exposure_transform"]
+    if r["clip"] != "upper_tail_only":
+        raise SafeguardViolation(
+            "robustness clipping must be UPPER TAIL ONLY (%r registered): on a non-negative "
+            "series a lower clip can only lift genuine zeros off zero." % r["clip"])
+    q = float(r["clip_pct"]) / 100.0
+    min_events = int(r["min_nonzero_events_for_fund_specific_cap"])
+
+    mag = df["CR_mag_raw"].astype(float)
+    nonzero_all = mag[mag > 0]
+    pooled_cap = float(nonzero_all.quantile(q)) if len(nonzero_all) else np.inf
+
+    out = mag.copy()
+    for fund, idx in df.groupby("fund").groups.items():
+        v = mag.loc[idx]
+        nz = v[v > 0]
+        if len(nz) >= min_events:
+            cap = float(nz.quantile(q))
+        elif r["pooled_cap_fallback"]:
+            cap = pooled_cap
+        else:
+            cap = np.inf                    # too few events and no fallback: do not clip
+        # Never let a cap zero a genuine event. Upper clipping can only do that if the cap
+        # itself is zero (or negative), so the guard fires THERE and nowhere else — an
+        # unconditional floor at the fund's smallest event would lift the cap above a
+        # single-event fund's only observation and stop the clip biting at all.
+        if len(nz) and not (cap > 0):
+            cap = float(nz.min())
+        out.loc[idx] = v.clip(upper=cap)
     return out
 
 
@@ -318,6 +352,22 @@ def assert_cr_invariants(frame: pd.DataFrame, config: dict, tol: float = 1e-12) 
         raise SafeguardViolation(
             "%d real creation/redemption(s) were driven to zero magnitude"
             % int(bad_nonzero.sum()))
+    # the primary is the identity, so it also has to BE the identity
+    if not np.allclose(m, np.abs(r), equal_nan=True):
+        raise SafeguardViolation("the primary exposure must equal |CR_raw| exactly")
+    # and the robustness column must obey the same two invariants
+    rob = config["network_exposure"]["cr_definition"]["robustness_exposure_transform"]
+    col = rob["column"]
+    if col in frame.columns:
+        c = frame[col].to_numpy(float)[live]
+        if (c < -tol).any():
+            raise SafeguardViolation("%s must be non-negative" % col)
+        if rob["preserve_zero_exactly"] and ((np.abs(r) <= tol) & (np.abs(c) > tol)).any():
+            raise SafeguardViolation("%s gave a zero-event day non-zero exposure" % col)
+        if rob["never_zero_a_genuine_event"] and ((np.abs(r) > tol) & (np.abs(c) <= tol)).any():
+            raise SafeguardViolation(
+                "%s clipped %d genuine creation/redemption event(s) to zero — a sparse-event "
+                "percentile must never do that" % (col, int(((np.abs(r) > tol) & (np.abs(c) <= tol)).sum())))
 
 
 def cr_raw(frame: pd.DataFrame, config: dict) -> np.ndarray:

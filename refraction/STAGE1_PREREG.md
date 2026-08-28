@@ -32,28 +32,43 @@ Stage 1 registers what is already determined and requires no data. Stage 2 appen
 | corporate_action_convention | p1/t2_wrds/corpactions.py |
 | undefined_on_missing_prior_day | yes |
 
-Transformation order — magnitude first, so zeros survive by construction:
+### Primary exposure magnitude
 
-| step | registered value |
+    CR_mag = |CR_raw|
+
+| element | registered value |
 |---|---|
-| magnitude_first | yes |
-| magnitude_clip | upper_tail_only |
-| magnitude_clip_pct | 99 |
-| magnitude_clip_within | fund |
-| magnitude_lower_clip_forbidden | yes |
-| winsorize_signed_series_forbidden | yes |
-| standardize_within_fund | yes |
-| standardize_mode | sd_only |
-| standardize_sample | non_fomc_calibration_window |
+| transform | identity |
+| centering | none |
+| scaling | none |
+| winsorization | none |
+| standardize_within_fund | no |
 
-Columns: raw `CR_raw` (sign, zero-event status, event census, concentration); untreated magnitude `CR_mag_raw`; treated exposure magnitude `CR_mag`.
+No centring, no within-fund scaling, no winsorization. Creation/redemption is rare, and any fund-specific statistic computed on a mostly-zero series is dominated by the zeros: a fund with 2 nonzero days in 250 has a within-fund 99th percentile of zero, which would clip both of its genuine events to zero exposure. Comparability across funds is handled by the fund x date fixed effects, which absorb any fund-level scale.
+
+### Robustness exposure magnitude (never the primary)
+
+| element | registered value |
+|---|---|
+| column | CR_mag_capped |
+| clip | upper_tail_only |
+| clip_pct | 99 |
+| clip_estimated_on | nonzero_event_magnitudes_only |
+| min_nonzero_events_for_fund_specific_cap | 20 |
+| pooled_cap_fallback | yes |
+| preserve_zero_exactly | yes |
+| never_zero_a_genuine_event | yes |
+| scaling | none |
+| may_replace_primary | no |
+
+Columns: raw `CR_raw` (sign, zero-event status, event census, concentration); untreated magnitude `CR_mag_raw`; primary exposure magnitude `CR_mag`; robustness column `CR_mag_capped`.
 
 Invariants, enforced on every build:
 
 - **zero_iff_zero** — `CR_raw == 0  <=>  CR_mag == 0`
 - **non_negative** — `CR_mag >= 0`
 - **symmetric** — `equal-and-opposite raw values map to equal CR_mag`
-- **monotone** — `|CR_raw| ordering is preserved below the clip`
+- **monotone** — `|CR_raw| ordering is preserved exactly (the primary is the identity)`
 
 ## 3. G8 — first-stage mechanism validation
 
