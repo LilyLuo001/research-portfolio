@@ -683,6 +683,19 @@ def test_the_cr_event_timing_rule_is_binding_on_the_same_day_primary():
     for pub in ("vendor_file_publication_timestamp", "api_response_timestamp",
                 "vendor_refresh_flag"):
         assert pub in fe["insufficient_alone"], pub
+    assert t["primary_additionally_requires"] == "cr_oib_interval_alignment"
+    al = t["cr_oib_interval_alignment"]
+    assert al["calendar_date_equality_is_not_alignment"] is True
+    assert al["oib_measurement_interval_must_match"] is True
+    assert al["classes"]["aligned_trading_day"]["oib_window"] == "trading_day_t"
+    assert al["classes"]["aligned_cutoff_to_cutoff"]["oib_window"] == \
+        "cutoff_t_minus_1_to_cutoff_t"
+    assert al["classes"]["unaligned_unknown_cutoff"]["primary_eligible"] is False
+    assert al["classes"]["unaligned_unknown_cutoff"]["claim_forbidden"] == \
+        "exact_same_day_interval_alignment"
+    assert set(al["primary_requires_alignment_in"]) == {"aligned_trading_day",
+                                                        "aligned_cutoff_to_cutoff"}
+    assert al["misaligned_events_go_to"] == "interval_robustness"
     assert t["dated_means"] == "day_localized_only"
     assert t["dated_establishes_within_day_ordering"] is False
     assert t["same_day_g8_status"] == "mechanism_association_and_calibration"

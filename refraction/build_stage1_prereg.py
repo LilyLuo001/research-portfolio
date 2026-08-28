@@ -194,6 +194,27 @@ def render(cfg: dict) -> str:
     for k in fe["insufficient_alone"]:
         a("| %s | never sufficient alone |" % k)
     a("")
+    al = t["cr_oib_interval_alignment"]
+    a("**A documented cutoff fixes the as-of DATE; it does not by itself align the two "
+      "measurement intervals, and calendar-date equality is not alignment.** CR differences "
+      "two cutoff snapshots, so it spans `%s`, while OIB spans a trading session. Those "
+      "coincide only when the cutoff is the market close."
+      % al["cr_measurement_interval"])
+    a("")
+    a("| cutoff | alignment class | OIB window | may enter the primary |")
+    a("|---|---|---|---|")
+    for name, cls in al["classes"].items():
+        a("| %s | %s | %s | %s |"
+          % (cls["requires"], name, _fmt(cls["oib_window"]), _fmt(cls["primary_eligible"])))
+    a("")
+    a("Alignment is a **separate condition from datedness**: an event can be day-localized "
+      "and still interval-misaligned, and such an event may not enter the same-day primary "
+      "(it goes to %s). Where the cutoff is a known non-close time, OIB must be constructed "
+      "over the matching cutoff-to-cutoff window rather than taken from the trading session. "
+      "Where the cutoff time is unknown, the claim `%s` is forbidden."
+      % (al["misaligned_events_go_to"],
+         al["classes"]["unaligned_unknown_cutoff"]["claim_forbidden"]))
+    a("")
     a("**Dated is day-localized only.** It does not establish within-day ordering between AP "
       "activity and constituent order imbalance: both are measured over the same day and "
       "either could precede the other. Same-day G8 is therefore **%s**, not a causal "

@@ -592,6 +592,7 @@ network_exposure:
     # endpoints are fresh observations; if t-1 was carried forward, the change could have
     # happened earlier, and the interval runs back to the last fresh observation.
     dated_requires: [economic_as_of_freshness_at_t, economic_as_of_freshness_at_t_minus_1]
+    primary_additionally_requires: cr_oib_interval_alignment
     #
     # CORRECTION 2026-08-28. "Freshness" means the ECONOMIC OBSERVATION is as of that day —
     # not that the vendor's file or API response was refreshed that day. A feed can restamp,
@@ -629,6 +630,44 @@ network_exposure:
     # AP's activity and constituent order imbalance — both are measured over the same day,
     # and either could precede the other. Same-day G8 is therefore MECHANISM ASSOCIATION AND
     # CALIBRATION, not a causal sequence, unless true AP transaction timestamps exist.
+    #
+    # INTERVAL ALIGNMENT (final check, 2026-08-28). A documented daily economic cutoff fixes
+    # the as-of DATE. It does not by itself align the two measurement intervals, and calendar
+    # equality is not alignment. CR_ft differences two cutoff snapshots, so it is measured
+    # over (cutoff at t-1, cutoff at t]. OIB is measured over a trading session. Those
+    # coincide ONLY when the cutoff is the market close.
+    #
+    #   cutoff = market close        -> CR interval IS trading day t; same-day OIB aligns
+    #   cutoff = another KNOWN time  -> build OIB cutoff-to-cutoff over the same window, or
+    #                                   downgrade the interpretation explicitly
+    #   cutoff time UNKNOWN          -> knowing the as-of DATE does not license a claim of
+    #                                   exact same-day interval alignment. Do not make it.
+    #
+    # Alignment is a SEPARATE condition from datedness: an event can be day-localized and
+    # still be interval-misaligned, and such an event may not enter the same-day primary.
+    cr_oib_interval_alignment:
+      cr_measurement_interval: "(economic cutoff at t-1, economic cutoff at t]"
+      oib_measurement_interval_must_match: true
+      calendar_date_equality_is_not_alignment: true
+      classes:
+        aligned_trading_day:      # cutoff is the market close
+          requires: cutoff_time_is_market_close
+          oib_window: trading_day_t
+          primary_eligible: true
+        aligned_cutoff_to_cutoff:  # cutoff is another documented, KNOWN time
+          requires: cutoff_time_known_and_documented
+          oib_window: cutoff_t_minus_1_to_cutoff_t
+          oib_must_be_constructed_over_that_window: true
+          primary_eligible: true
+        unaligned_unknown_cutoff:  # only the as-of DATE is documented
+          requires: nothing_further_is_knowable
+          oib_window: null
+          primary_eligible: false
+          interpretation: day_localized_but_interval_misaligned
+          claim_forbidden: exact_same_day_interval_alignment
+      primary_requires_alignment_in: [aligned_trading_day, aligned_cutoff_to_cutoff]
+      misaligned_events_go_to: interval_robustness
+      report: [alignment_class, cutoff_time, oib_window, n_aligned_events, n_misaligned_events]
     dated_means: day_localized_only
     dated_establishes_within_day_ordering: false
     same_day_g8_status: mechanism_association_and_calibration

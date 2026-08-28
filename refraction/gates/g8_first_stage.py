@@ -297,20 +297,40 @@ def verdict(result: dict, config: dict, outcome_class: str = None,
                 "change." % tcfg["primary_sample"])
         # Non-relaxation: if the vendor lacks the freshness metadata, the standard does not
         # bend to keep a sample. The same-day primary is simply not identified.
-        if tc.get("n_dated_events") == 0 and tc.get("n_interval_events"):
+        # One non-relaxation branch, two ways in: no day-localized events at all, or
+        # day-localized events none of which is interval-aligned with the OIB window.
+        n_dated = tc.get("n_dated_events") or 0
+        n_aligned = tc.get("n_aligned_dated_events", n_dated) or 0
+        if n_aligned == 0 and (tc.get("n_interval_events") or n_dated):
+            basis = ("no dated CR events" if n_dated == 0
+                     else "no aligned dated CR events")
+            why = ("no observation carries economic as-of freshness against a documented "
+                   "daily cutoff" if n_dated == 0 else
+                   "no dated event is interval-aligned with the OIB window (alignment class "
+                   "%r): CR spans (cutoff at t-1, cutoff at t] and OIB spans a trading "
+                   "session, which coincide only when the cutoff is the market close"
+                   % tc.get("alignment_class"))
             return _report(result, census, ident, config, outcome_choice,
                            timestamp_audit, alpha, t, p_one_sided) | {
                 "licensed": None,
                 "outcome": "INSUFFICIENT_IDENTIFYING_VARIATION",
-                "classification_basis": "no dated CR events",
+                "classification_basis": basis,
                 "reasons": [
-                    "every CR event is interval-localized (%d of them): no observation "
-                    "carries economic as-of freshness against a documented daily cutoff, so "
-                    "the same-day aligned-OIB primary has no events it may use. The "
-                    "freshness standard is not relaxed to manufacture one."
-                    % tc["n_interval_events"]],
+                    "%s, so the same-day aligned-OIB primary has no events it may use. "
+                    "Neither the freshness nor the alignment standard is relaxed to "
+                    "manufacture one." % why],
                 "diagnostics": {"timing": tc},
                 "note": ne["insufficient_variation_response"].strip()}
+        # Alignment is a separate condition from datedness: a day-localized event whose
+        # cutoff TIME is unknown is interval-misaligned and may not enter the same-day
+        # primary. Same non-relaxation rule.
+        if tc.get("n_misaligned_dated_events"):
+            raise SafeguardViolation(
+                "%d dated but INTERVAL-MISALIGNED event(s) are still in the primary sample "
+                "(alignment class %r). CR spans (cutoff at t-1, cutoff at t] and OIB spans a "
+                "trading session; those coincide only when the cutoff is the market close. "
+                "Knowing the as-of DATE does not license a same-day interval-alignment claim."
+                % (tc["n_misaligned_dated_events"], tc.get("alignment_class")))
         if tc.get("n_interval_events") and tcfg["interval_events_in_primary"] == "excluded":
             # the sample must already have been filtered; verdict refuses to bless one that
             # still carries them
@@ -495,6 +515,8 @@ def _report(result, census, ident, config, outcome_choice, timestamp_audit, alph
         # so the same-day result is mechanism association and calibration — not a causal
         # sequence — unless true AP transaction timestamps exist.
         "dated_means": config["network_exposure"]["cr_event_timing"]["dated_means"],
+        "alignment_class": (census.get("timing") or {}).get("alignment_class"),
+        "oib_window": (census.get("timing") or {}).get("oib_window"),
         "same_day_status": config["network_exposure"]["cr_event_timing"]["same_day_g8_status"],
         "within_day_ordering_requires": config["network_exposure"]["cr_event_timing"][
             "within_day_ordering_requires"],

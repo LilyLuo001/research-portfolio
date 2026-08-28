@@ -660,6 +660,52 @@ def observation_freshness(shares: pd.DataFrame, config: dict,
             "reason": "", "publication_only_columns_ignored": pub_only}
 
 
+def interval_alignment(freshness_record: dict, config: dict) -> dict:
+    """Do the CR and OIB measurement intervals actually coincide? (final check, 2026-08-28)
+
+    A documented daily economic cutoff fixes the as-of DATE. It does not align the two
+    measurement windows, and calendar equality is not alignment. CR differences two cutoff
+    snapshots, so it spans (cutoff at t-1, cutoff at t]; OIB spans a trading session. Those
+    are the same window only when the cutoff IS the market close.
+
+    `freshness_record` should carry `cutoff_time` — either the literal "market_close" or a
+    documented clock time — and optionally `cutoff_is_market_close`.
+
+    Returns the alignment class, the OIB window the primary must be built over, and whether
+    the primary may use these events at all. An unknown cutoff time yields
+    `unaligned_unknown_cutoff`: knowing the as-of DATE licenses day localization, not a claim
+    of exact same-day interval alignment.
+    """
+    al = config["network_exposure"]["cr_event_timing"]["cr_oib_interval_alignment"]
+    rec = freshness_record or {}
+    cutoff = rec.get("cutoff_time")
+    is_close = rec.get("cutoff_is_market_close")
+    if is_close is None:
+        is_close = (str(cutoff).strip().lower() in ("market_close", "market close", "close"))
+
+    if cutoff and is_close:
+        cls = "aligned_trading_day"
+    elif cutoff:
+        cls = "aligned_cutoff_to_cutoff"
+    else:
+        cls = "unaligned_unknown_cutoff"
+
+    spec = al["classes"][cls]
+    return {
+        "alignment_class": cls,
+        "cutoff_time": cutoff,
+        "oib_window": spec["oib_window"],
+        "primary_eligible": bool(spec["primary_eligible"]),
+        "oib_must_be_constructed_over_that_window": bool(
+            spec.get("oib_must_be_constructed_over_that_window")),
+        "reason": ("" if spec["primary_eligible"] else
+                   "NEED_HUMAN: the economic cutoff TIME is not documented. The as-of date "
+                   "gives day localization; it does not license a claim of exact same-day "
+                   "interval alignment between CR and OIB, so these events may not enter "
+                   "the same-day primary (%s)." % spec["interpretation"]),
+    }
+
+
 def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
                              freshness_record: dict = None) -> pd.DataFrame:
     """Label every CR change DATED or INTERVAL (corrected rule, 2026-08-28).
@@ -696,6 +742,7 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
     df = df.sort_values(["fund", "date"]).reset_index(drop=True)
     fr = observation_freshness(df, config, freshness_record)
     fresh_all, kind, reason = fr["fresh"], fr["evidence"], fr["reason"]
+    al = interval_alignment(freshness_record, config)
 
     rows = []
     for fund, g in df.groupby("fund", sort=False):
@@ -723,6 +770,9 @@ def classify_cr_event_timing(shares: pd.DataFrame, audit: dict, config: dict,
                          "cr_interval_days": width, "cr_interval_start": start,
                          "freshness_evidence": kind,
                          "freshness_reason": reason,
+                         "alignment_class": al["alignment_class"],
+                         "oib_window": al["oib_window"],
+                         "primary_eligible": al["primary_eligible"],
                          "observation_is_fresh": bool(fresh[i]),
                          "equal_value_run_before": int(run)})
     return pd.DataFrame(rows)
@@ -746,9 +796,19 @@ def primary_timing_sample(panel: pd.DataFrame, config: dict) -> pd.DataFrame:
             "vendor's update day, which is the one day in the interval guaranteed to carry a "
             "printed share change.")
     drop = panel["cr_timing"].eq("interval")
+    n_misaligned = 0
+    if "primary_eligible" in panel.columns:
+        # Alignment is a SEPARATE condition from datedness: a day-localized event whose
+        # cutoff time is unknown is still interval-misaligned, and the same-day primary may
+        # not use it.
+        misaligned = panel["cr_timing"].eq("dated") & ~panel["primary_eligible"].astype(bool)
+        n_misaligned = int(panel.loc[misaligned, ["fund", "date"]].drop_duplicates().shape[0])
+        drop = drop | misaligned
     out = panel[~drop].copy()
     out.attrs["n_interval_events_excluded"] = int(
-        panel.loc[drop, ["fund", "date"]].drop_duplicates().shape[0])
+        panel.loc[panel["cr_timing"].eq("interval"), ["fund", "date"]]
+        .drop_duplicates().shape[0])
+    out.attrs["n_misaligned_events_excluded"] = n_misaligned
     return out
 
 
@@ -758,8 +818,11 @@ def timing_census(panel: pd.DataFrame, config: dict) -> dict:
     work = panel.copy()
     if "cr_interval_days" not in work.columns:
         work["cr_interval_days"] = np.nan     # a dated-only panel carries no widths
+    if "primary_eligible" not in work.columns:
+        work["primary_eligible"] = True       # no alignment column -> nothing to exclude
+    work["_eligible"] = work["primary_eligible"].astype(bool)
     ev = work[work["cr_timing"].isin(("dated", "interval"))][
-        ["fund", "date", "cr_timing", "cr_interval_days"]].drop_duplicates(
+        ["fund", "date", "cr_timing", "cr_interval_days", "_eligible"]].drop_duplicates(
             subset=["fund", "date"])
     n_dated = int((ev["cr_timing"] == "dated").sum())
     n_int = int((ev["cr_timing"] == "interval").sum())
@@ -768,6 +831,14 @@ def timing_census(panel: pd.DataFrame, config: dict) -> dict:
     return {
         "n_dated_events": n_dated,
         "dated_means": t["dated_means"],
+        "alignment_class": (panel["alignment_class"].iloc[0]
+                            if "alignment_class" in panel.columns and len(panel) else None),
+        "oib_window": (panel["oib_window"].iloc[0]
+                       if "oib_window" in panel.columns and len(panel) else None),
+        # counted on EVENTS (fund-days), never on constituent-day rows
+        "n_aligned_dated_events": int((ev["cr_timing"].eq("dated") & ev["_eligible"]).sum()),
+        "n_misaligned_dated_events": int(
+            (ev["cr_timing"].eq("dated") & ~ev["_eligible"]).sum()),
         "same_day_status": t["same_day_g8_status"],
         "within_day_ordering_requires": t["within_day_ordering_requires"],
         "n_interval_events": n_int,

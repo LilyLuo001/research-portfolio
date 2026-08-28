@@ -1697,7 +1697,7 @@ def test_missing_freshness_metadata_yields_insufficient_variation_not_a_relaxed_
                    timestamp_audit=audit, census=census)
     assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
     assert v["classification_basis"] == "no dated CR events"
-    assert any("not relaxed to manufacture one" in x for x in v["reasons"])
+    assert any("relaxed to" in x and "manufacture one" in x for x in v["reasons"])
 
 
 def test_an_equal_value_run_may_never_be_promoted_to_proof():
@@ -1806,3 +1806,96 @@ def test_the_interval_robustness_outcome_is_defined_and_cannot_replace_the_prima
     assert r["exposure"] == "abs_CR_x_absL"
     assert r["sign_source"] == "CR_raw"
     assert r["role"] == "robustness_only" and r["may_replace_primary"] is False
+
+
+# --------------------------------------------------------------------------- #
+# CR / OIB interval alignment (final check)                                    #
+# --------------------------------------------------------------------------- #
+
+CUTOFF_BASE = {"economic_cutoff_documented": True, "economic_cutoff_cadence": "daily"}
+
+
+def test_a_market_close_cutoff_aligns_cr_with_the_trading_day():
+    a = pre.interval_alignment(dict(CUTOFF_BASE, cutoff_time="market_close"), CONFIG)
+    assert a["alignment_class"] == "aligned_trading_day"
+    assert a["oib_window"] == "trading_day_t"
+    assert a["primary_eligible"] is True
+
+
+def test_another_known_cutoff_requires_a_cutoff_to_cutoff_oib_window():
+    """CR spans (cutoff at t-1, cutoff at t]. If that is not the session, OIB must be
+    rebuilt over the same window rather than taken from the trading day."""
+    a = pre.interval_alignment(dict(CUTOFF_BASE, cutoff_time="18:00 ET"), CONFIG)
+    assert a["alignment_class"] == "aligned_cutoff_to_cutoff"
+    assert a["oib_window"] == "cutoff_t_minus_1_to_cutoff_t"
+    assert a["oib_must_be_constructed_over_that_window"] is True
+    assert a["primary_eligible"] is True
+
+
+def test_an_unknown_cutoff_time_cannot_claim_same_day_interval_alignment():
+    """Knowing the as-of DATE gives day localization. It does not give interval alignment."""
+    a = pre.interval_alignment(dict(CUTOFF_BASE), CONFIG)
+    assert a["alignment_class"] == "unaligned_unknown_cutoff"
+    assert a["oib_window"] is None
+    assert a["primary_eligible"] is False
+    assert "NEED_HUMAN" in a["reason"]
+    al = CONFIG["network_exposure"]["cr_event_timing"]["cr_oib_interval_alignment"]
+    assert al["classes"]["unaligned_unknown_cutoff"]["claim_forbidden"] == \
+        "exact_same_day_interval_alignment"
+    assert al["calendar_date_equality_is_not_alignment"] is True
+
+
+def test_calendar_date_equality_alone_does_not_make_an_event_primary_eligible():
+    """The distinction the whole rule turns on: identical as-of dates, identical dated
+    classification, different alignment — and only one may enter the primary."""
+    closed = pre.classify_cr_event_timing(
+        quiet_fund_shares(), None, CONFIG, dict(CUTOFF_BASE, cutoff_time="market_close"))
+    unknown = pre.classify_cr_event_timing(
+        quiet_fund_shares(), None, CONFIG, dict(CUTOFF_BASE))
+    assert list(closed["cr_timing"]) == list(unknown["cr_timing"])      # both dated
+    assert closed["primary_eligible"].all()
+    assert not unknown["primary_eligible"].any()
+
+
+def test_misaligned_dated_events_are_dropped_from_the_primary():
+    panel = make_trading_panel(n_stocks=5, n_days=8, seed=95)
+    panel["primary_eligible"] = True
+    bad = sorted(panel["date"].unique())[3]
+    panel.loc[panel["date"] == bad, "primary_eligible"] = False
+    kept = pre.primary_timing_sample(panel, CONFIG)
+    assert bad not in set(kept["date"])
+    assert kept.attrs["n_misaligned_events_excluded"] == 1
+
+
+def test_the_verdict_refuses_a_primary_carrying_misaligned_dated_events():
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=96)
+    panel["primary_eligible"] = True
+    panel.loc[panel["date"] == sorted(panel["date"].unique())[2], "primary_eligible"] = False
+    choice, audit, census = preflight(cfg, panel)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    with pytest.raises(g8.SafeguardViolation) as e:
+        g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert "INTERVAL-MISALIGNED" in str(e.value)
+    assert "only when the cutoff is the market close" in str(e.value)
+
+
+def test_no_aligned_dated_events_is_insufficient_variation_not_a_relaxed_claim():
+    cfg = audited_config()
+    panel = make_trading_panel(a1=0.30, seed=97)
+    panel["primary_eligible"] = False           # cutoff time unknown for every observation
+    choice, audit, census = preflight(cfg, panel)
+    r = g8.pooled_interaction(panel, y_col="y", exposure="abs_CR_x_absL",
+                              outcome_class="trading_connectivity", config=cfg)
+    v = g8.verdict(r, cfg, outcome_class="trading_connectivity", outcome_choice=choice,
+                   timestamp_audit=audit, census=census)
+    assert v["outcome"] == "INSUFFICIENT_IDENTIFYING_VARIATION"
+    assert v["classification_basis"] == "no aligned dated CR events"
+    assert any("coincide only when the cutoff is the market close" in x for x in v["reasons"])
+
+
+def test_the_alignment_class_and_oib_window_travel_with_every_verdict():
+    v = _adjudicate(0.30, 98)
+    assert "alignment_class" in v and "oib_window" in v

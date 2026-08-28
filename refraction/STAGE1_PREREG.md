@@ -122,6 +122,16 @@ Freshness means the economic as-of date, **not** that the vendor file or API res
 | row_republished_indicator | never sufficient alone |
 | file_last_modified | never sufficient alone |
 
+**A documented cutoff fixes the as-of DATE; it does not by itself align the two measurement intervals, and calendar-date equality is not alignment.** CR differences two cutoff snapshots, so it spans `(economic cutoff at t-1, economic cutoff at t]`, while OIB spans a trading session. Those coincide only when the cutoff is the market close.
+
+| cutoff | alignment class | OIB window | may enter the primary |
+|---|---|---|---|
+| cutoff_time_is_market_close | aligned_trading_day | trading_day_t | yes |
+| cutoff_time_known_and_documented | aligned_cutoff_to_cutoff | cutoff_t_minus_1_to_cutoff_t | yes |
+| nothing_further_is_knowable | unaligned_unknown_cutoff | **NOT SET** (stage 2) | no |
+
+Alignment is a **separate condition from datedness**: an event can be day-localized and still interval-misaligned, and such an event may not enter the same-day primary (it goes to interval_robustness). Where the cutoff is a known non-close time, OIB must be constructed over the matching cutoff-to-cutoff window rather than taken from the trading session. Where the cutoff time is unknown, the claim `exact_same_day_interval_alignment` is forbidden.
+
 **Dated is day-localized only.** It does not establish within-day ordering between AP activity and constituent order imbalance: both are measured over the same day and either could precede the other. Same-day G8 is therefore **mechanism_association_and_calibration**, not a causal sequence; within-day ordering would require true_ap_transaction_timestamps.
 
 **The rule does not bend for data availability.** If the vendor lacks the freshness metadata, G8 returns `INSUFFICIENT_IDENTIFYING_VARIATION` on the same-day primary rather than a relaxed standard.
