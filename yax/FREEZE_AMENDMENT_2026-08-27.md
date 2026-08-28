@@ -167,3 +167,21 @@ after the benchmark and Test C share the same age band, outcome, Q5–Q1 contras
 unit/estimand and functional scale. It will not be widened if paired-equivalence
 power is weak. In that event the paper reports that it cannot establish
 equivalence. Full record: `SESOI_OWNER_SIGNOFF_2026-08-28.md`.
+
+## Novelty and published-measurement audits completed 2026-08-28
+
+The blocked state recorded above is preserved as the state at amendment time.
+It was resolved before any protected post-period YAX outcome was opened. The
+latest-version audit found no paper completing the full YAX chain, but found a
+materially closer predecessor absent from the inherited plan: Pulito,
+Pytlikova, Schroeder and Lodefalk (2026) hold a firm-adoption outcome and design
+fixed while comparing five occupational exposure measures. The August 2026 BCC
+revision also compares measures in the exact young-worker debate and documents
+an improved crosswalk and remote-work controls.
+
+Accordingly, YAX no longer claims novelty for comparing measures, harmonising
+them, or obtaining different coefficients. Its remaining claim is the joint
+construct → identifying-occupation → mapping/common-support → paired downstream
+chain under one frozen public-data design. Source locators, version dates, file
+hashes, the boundary table and the published-measurement audit are in
+`literature/`. The novelty gate now passes on that narrower record.

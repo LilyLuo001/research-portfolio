@@ -70,7 +70,7 @@ The logical sequence the paper must establish:
 | retired headline | why it is closed |
 |---|---|
 | "Crosswalk decisions matter" | one transformation in the pipeline, and not yet shown to be a mistake any published paper made |
-| "Different exposure measures give different coefficients" | Frank et al. (2025) already documents that measures disagree and predict poorly alone |
+| "Different exposure measures give different coefficients" | Frank et al. (2025), Eckhardt--Goldschlag (2025), Pulito et al. (2026), and Brynjolfsson--Chandar--Chen (rev. 2026) already compare coefficient or outcome patterns across measures |
 | "AI exposure indices contain measurement error" | Yin–Vu–Persico and Yin–Ogut both formalise non-classical measurement error in exposure scores |
 
 ## 3. Layer 1 — Construction: what is X?
@@ -150,11 +150,11 @@ whether `X_m = X* + ε_m` holds or whether the measures encode different
 constructs.
 
 **Rai (2026) is a nearest-neighbour paper, not a peripheral citation.** It
-argues that AIOE and Eloundou's GPT-4 scores largely relabel cognitive
-occupational content — reportedly correlations of about 0.85 and 0.70
-respectively with a cognitive-ability index across 773 occupations, with Webb's
-patent-based measure behaving very differently. *Those figures are relayed and
-**unverified from primary source**; §5.1 governs.* YAX must go **beyond** Rai by
+shows that AIOE and Eloundou's GPT-4 scores load heavily on a cognitive-ability
+index (correlations 0.85 and 0.70 across 773 occupations), while Webb's
+patent-based measure behaves very differently. These values were checked in the
+latest MPRA version on 2026-08-28; see
+`literature/NOVELTY_AUDIT_2026-08-28.md`. YAX must go **beyond** Rai by
 connecting construct divergence to identifying variation and to downstream
 labour-market estimates.
 
@@ -325,6 +325,11 @@ never been scrutinised."
 | **Lund, Euyang, Munyikwa & Fadaee (2026)**, arXiv:2606.23633 | static GPT-style scores have temporal, geographic and ontological limits; surveys dynamic, ensemble, task-extension, worker-centred and usage-based successors | positions YAX as an **empirical test of the consequences** of those ontological differences, not another conceptual critique |
 | **Merola, Ernst, Samaan, del Rio-Chanona & Teutloff (ILO, 2026)** | exposure indicators differ conceptually by construction method and measure technological susceptibility, not realised employment effects | institutional validation of the conceptual distinction |
 | **OECD (2026)**, AI Papers No. 59 | maps OECD AI Capability Indicators to occupations | another capability-to-occupation architecture for the Table 1 taxonomy |
+| **Eckhardt & Goldschlag (2025)**, EIG report and public code | runs several CPS outcomes with five exposure measures and documents alternative SOC-to-Census mapping rules | its measure-specific analyses use separately available support and do not estimate paired coefficient differences or audit the identifying occupations |
+| **Budget Lab (2026)** | harmonises seven exposure measures to SOC 2018, builds a PCA summary, and reports public-data labour-market nulls | it documents harmonisation and downstream results but does not run the full cross-family Test A--B--C chain with paired, common-support coefficient contrasts |
+| **Pulito, Pytlikova, Schroeder & Lodefalk (2026)** | holds a Danish firm-adoption outcome and specification fixed while comparing five occupation-based exposure indices; predictive associations differ by measure | this is the closest same-outcome/same-specification predecessor. It validates indices against observed adoption, but does not audit construct content, mapping/common support, identifying influence, or paired coefficient differences, and does not study the contested young-worker labour-market conclusion |
+| **Brynjolfsson, Chandar & Chen (revised August 2026)** | studies 22--25 employment stocks through June 2026, reports robustness across five alternative exposure measures, improves its SOC crosswalk, controls for remote work, and benchmarks against CPS/ACS | it establishes that alternative measures are already part of the live employment debate. It does not report a cross-family construct and influence audit, a fixed common-support comparison, or direct paired inference for coefficient differences |
+| **Emanuel, Harrington & Pallais (QJE 2026)** | national CPS DDD shows the young-college-graduate unemployment increase concentrated in remotable jobs and robust to an occupational generative-AI control | remote work is therefore a core rival mechanism; the paper does not compare AI-exposure measurement architectures |
 
 **Tracked but not central:** Mouchel–Bouquet–Sheffi (2026) on evidence-grounded
 rather than model-prior measurement; Tomei–Klein Teeselink (2026) on
@@ -332,16 +337,15 @@ RL-feasibility exposure and its sharp divergence from existing indices; the
 startup-based measure in *PNAS Nexus* (2026) moving from theoretical capability
 toward realised commercial targeting.
 
-### 5.1 Verification status — BINDING, and this re-opens the novelty gate
+### 5.1 Verification status — completed 2026-08-28
 
-`v1.0-design-freeze` passed its novelty gate because **every §9a row was opened
-at its primary source** with a locator and, where applicable, a sha256. The
-papers in §5 arrive **relayed and unverified**, and the figures quoted in this
-plan (3.6×, 57%, 2.4×, 1.9×, 42–93%, 0.85, 0.70, 773 occupations) are **claims
-to confirm, not facts**.
+Every §5 and §14 source was opened at its primary source in a genuine
+latest-version search on 2026-08-28. The source-by-source record, version dates,
+locators, file hashes, search queries and boundary table are preserved in:
 
-**Every §5 row must be opened at its primary source before it is cited, exactly
-as §9a's were — and at its LATEST version.**
+- `literature/NOVELTY_AUDIT_2026-08-28.md`;
+- `literature/NOVELTY_AUDIT_RECEIPT_2026-08-28.json`;
+- `literature/PUBLISHED_MEASUREMENT_AUDIT_2026-08-28.md`.
 
 > **Version rule.** When a working paper has a later published or substantially
 > revised version, the novelty audit must use the **latest** version and record
@@ -349,19 +353,15 @@ as §9a's were — and at its LATEST version.**
 > verification is not verification.
 
 The Emanuel–Harrington–Pallais case is why this rule exists: the v1.0 audit
-correctly opened NBER 31880 (November 2023) at source, concluded the paper was
-far from this design, and was **wrong** — the published QJE version (141(3),
-August 2026, 1825–1870) contains a national CPS young-worker analysis. Correct
-source, stale version, wrong conclusion. See §8, Table 5. Until then the `novelty` gate is BLOCKED again. That is a real
-cost of this reframe and it is recorded as one.
+opened NBER 31880 (November 2023), concluded the paper was far from this design,
+and was wrong about the latest paper. The published QJE version (141(3), August
+2026, 1825--1870) contains a national CPS young-worker analysis and was therefore
+used in the completed audit.
 
-**The gate now requires a positive assertion, not silence.** It passes only
-when this plan carries the line `NOVELTY-GATE: all references opened at primary
-source`, and that line may be added only after every §14 reference has been
-opened with a locator and, where the source is a file, a sha256. The gate failed
-open twice by keying on the absence of warning words — v3 dropped its prior-work
-section and passed; an earlier draft of v5 rewrote the warnings and passed. Adding
-the sentinel without doing the work falsifies a gate rather than passing one.
+**NOVELTY-GATE: all references opened at primary source.** This assertion is
+backed by the receipts above; file sources carry sha256 values. The gate failed
+open twice in earlier versions by keying on the absence of warning words, so the
+positive assertion and receipts are retained together.
 
 **The novelty gate must search working papers, not only published economics
 journals.** The literature is moving fast enough that a published-only search
@@ -369,12 +369,13 @@ is not a search.
 
 ### 5.2 The revised novelty standard
 
-> **Existing work has shown that particular AI-exposure instruments may be
-> unstable, confounded, or selected. What remains unresolved is whether major
-> exposure families represent a common economic treatment at all, where their
-> identifying variation comes from after harmonisation, and whether these
-> differences materially change a contested labour-market conclusion when data,
-> sample, mapping, estimator and specification are held fixed.**
+> **Existing work has shown that exposure instruments disagree, may be unstable
+> or selected, and can produce different predictive or labour-market patterns.
+> What remains unresolved is the integrated chain: whether major exposure
+> families represent a common economic treatment, which occupations identify
+> their coefficients after transparent harmonisation, how mapping and common
+> support alter that variation, and whether paired changes in X alone move the
+> contested young-worker conclusion under one frozen public-data design.**
 
 Search aggressively for any paper already doing the full
 construct → identifying variation → downstream consequence exercise. **If one
@@ -386,7 +387,7 @@ exists, update or kill the claim before opening post outcomes.**
 |---|---|
 | "Nobody has looked at young vs older in CPS" | **retired** at v4 — Dallas Fed and Anthropic publish related patterns |
 | "The crosswalk decision is the contribution" | **retired** here — demoted to one pipeline layer, §6 |
-| "Different exposure measures give different coefficients" | **retired** here — Frank et al. (2025) |
+| "Different exposure measures give different coefficients" | **retired** here — Frank et al. (2025), EIG, Pulito et al. (2026), and BCC (rev. 2026) |
 | "AI exposure indices contain measurement error" | **retired** here — Yin–Vu–Persico, Yin–Ogut |
 | "Computerization is not one interchangeable control" | **narrowed** — retained as a finding about controls, not the headline |
 | "A pre-registered, power-stated public-data test does not exist" | **narrowed** — verified true for the employment question at v4; must be re-verified for the *measurement* question this plan now asks |
@@ -617,9 +618,9 @@ paper 31880 (November 2023), a within-firm study of junior versus senior
 software engineers whose outcome is not employment, and concluded on that basis
 that EHP was "farther from this design than §9a previously implied." **The
 published QJE version contains a national CPS young-worker analysis and is much
-closer.** The NBER version is not the final state of the paper. Locator supplied
-by the owner; still to be opened at source per §5.1, but the doubt cast in v5's
-earlier draft is withdrawn.
+closer.** The NBER version is not the final state of the paper. The QJE article
+and its published specifications were opened on 2026-08-28 and are recorded in
+the novelty receipt.
 
 **This paper is a principal reason remote work is a core rival explanation
 rather than a robustness row.**
@@ -645,11 +646,11 @@ constructions.
 
 **Not established:**
 
-1. Every §5 citation and every figure quoted from it — see §5.1.
-2. The Q5–Q1 MDE and benchmark on a common estimand — §7.3.
-3. Any coefficient. The seal holds.
-4. Whether any paper already runs the full construct → identifying variation →
-   consequence exercise — §5.2.
+1. The Q5–Q1 MDE and benchmark on a common estimand — §7.3.
+2. Any protected post-period YAX coefficient. The seal holds.
+3. Whether future work appearing after the 2026-08-28 audit date duplicates the
+   chain; the current search found no full-chain paper, but did find close
+   component predecessors, especially Pulito et al. and BCC.
 
 ## 10. Credibility devices — preserved, and explicitly not the contribution
 
@@ -678,7 +679,7 @@ specification search.
 ## 12. Seal protocol — amended
 
 1. `FREEZE_AMENDMENT_2026-08-27.md` committed. *(this change)*
-2. Novelty gate re-run against every §5 primary source. *(re-opened, §5.1)*
+2. Novelty gate re-run against every §5 primary source. *(complete 2026-08-28, §5.1)*
 3. Coverage primary switched to Rule A in a `COVERAGE_RULE_PRESPEC_v2.md`,
    preserving v1 and its receipt. *(§7.2)*
 4. Post-period redefined to 2023-01 static, 2022-12 transition; power
@@ -722,10 +723,10 @@ Machine-checked: `python yax/gates.py --power-aggregate <aggregate>.json`.
   checked. Added at v5 after the EHP case, where the correct source was opened
   at the wrong vintage and produced a wrong conclusion — see §5.1.
 
-## 14. References to add to the YAX literature file
+## 14. Verified references in the YAX literature file
 
-**All entries below are to be opened at primary source and recorded with a
-locator before use — §5.1.**
+**All entries below were opened at their latest primary source on 2026-08-28;
+locators and file hashes are in the novelty receipt — §5.1.**
 
 Felten, Edward W., Manav Raj, and Robert Seamans. 2018. "A Method to Link
 Advances in Artificial Intelligence to Occupational Abilities." *AEA Papers and
@@ -773,3 +774,33 @@ Be Measured from Evidence, Not Model Priors." arXiv:2605.15474.
 
 Tomei, Philip Moreira, and Bouke Klein Teeselink. 2026. "What Jobs Can AI Learn?
 Measuring Exposure by Reinforcement Learning." arXiv:2605.02598.
+
+Eckhardt, Sarah, and Nathan Goldschlag. 2025. *AI and Jobs: The Final Word
+(Until the Next One).* Economic Innovation Group, August 10. Public code
+repository checked at commit `a65ce97d9fa6ed931af12fb37321fec363a9c15f`.
+
+Budget Lab at Yale. 2026. "Labor Market AI Exposure: What Do We Know?"
+February 19; and "What We Do and Don't Know About How AI is Affecting the Labor
+Market," May 7.
+
+Emanuel, Natalia, Emma Harrington, and Amanda Pallais. 2026. "The Power of
+Proximity to Coworkers." *Quarterly Journal of Economics* 141(3): 1825--1870.
+doi:10.1093/qje/qjag027.
+
+Pulito, Giuseppe, Mariola Pytlikova, Sarah Schroeder, and Magnus Lodefalk.
+2026. "Who Adopts AI? Evidence on Firms, Technologies and Workers." Örebro
+University School of Business Working Paper 3/2026, March 27.
+
+Brynjolfsson, Erik, Bharat Chandar, and Ruyu Chen. 2026. "Canaries in the Coal
+Mine? Six Facts about the Recent Employment Effects of Artificial
+Intelligence." Stanford Digital Economy Lab, revised August 12.
+
+Fenoaltea, Enrico Maria, et al. 2026. "Follow the Money: A Startup-Based
+Measure of AI Exposure Across Occupations, Industries, and Regions."
+*PNAS Nexus* 5(6): pgag185.
+
+del Rio-Chanona, R. Maria, et al. 2025. "AI and Jobs: A Review of Theory,
+Estimates, and Evidence." arXiv:2509.15265.
+
+Steele, Jennifer L., and Isabella Cruz. 2026. "Helping People Choose Careers in
+the Age of AI." arXiv:2607.15506.
