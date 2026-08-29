@@ -1,0 +1,6 @@
+| AI measure | computerization control | partial variance | effective occupations | top-five share | five largest contributors |
+|---|---|---|---|---|---|
+| Eloundou alpha | onet_computers_importance | 0.908 | 31.1 | 0.328 | Computer programmers (10.0%); Bookkeeping, accounting, and auditing clerks (8.3%); Billing and posting clerks (5.6%); Data entry keyers (4.7%); Writers and authors (4.2%) |
+| Eloundou alpha | webb_pct_software | 0.983 | 17.4 | 0.416 | Software developers (19.6%); Computer programmers (7.0%); Bookkeeping, accounting, and auditing clerks (6.4%); Billing and posting clerks (4.6%); Secretaries and administrative assistants, except legal, medical, and executive (3.9%) |
+| Eloundou beta | onet_computers_importance | 0.365 | 63.2 | 0.201 | First-Line supervisors of retail sales workers (4.6%); Automotive service technicians and mechanics (4.4%); Bookkeeping, accounting, and auditing clerks (4.4%); Sales representatives, wholesale and manufacturing (3.6%); Driver/sales workers and truck drivers (3.1%) |
+| Eloundou beta | webb_pct_software | 0.997 | 53.3 | 0.222 | Software developers (8.7%); Construction laborers (3.5%); Maids and housekeeping cleaners (3.4%); Bookkeeping, accounting, and auditing clerks (3.3%); Laborers and freight, stock, and material movers, hand (3.3%) |
