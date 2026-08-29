@@ -29,6 +29,7 @@ MICRODATA_SHA256 = "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db
 PRE_CELLS_SHA256 = "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
 LOOKUP_SHA256 = "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
 COMP_SHA256 = "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+BRIDGE_SHA256 = "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
 AI_MEASURES = (
     "aioe_admin_equal", "aioe_ability_direct", "aioe_oews2018_source_weighted",
     "dv_rating_alpha", "dv_rating_beta", "dv_rating_gamma",
@@ -100,10 +101,11 @@ def validate_inputs(args: argparse.Namespace) -> dict:
     hashes = {
         "microdata": sha256(args.microdata), "preperiod_cells": sha256(args.preperiod_cells),
         "lookup": sha256(args.lookup), "computerization": sha256(args.computerization),
-        "rule_b": sha256(args.rule_b_values),
+        "rule_b": sha256(args.rule_b_values), "bridge": sha256(args.bridge),
     }
     expected = {"microdata": MICRODATA_SHA256, "preperiod_cells": PRE_CELLS_SHA256,
-                "lookup": LOOKUP_SHA256, "computerization": COMP_SHA256}
+                "lookup": LOOKUP_SHA256, "computerization": COMP_SHA256,
+                "bridge": BRIDGE_SHA256}
     bad = {key: (hashes[key], value) for key, value in expected.items()
            if hashes[key] != value}
     if bad:
@@ -177,6 +179,78 @@ def read_post_cells(path: pathlib.Path, occupations: list[str]) -> tuple[pd.Data
         if age not in pivot:
             pivot[age] = 0.0
     return pivot, {**counters, "months": months, "cell_rows": int(len(pivot) * 2)}
+
+
+def read_full_cells(path: pathlib.Path, bridge_path: pathlib.Path,
+                    frozen_pre: pd.DataFrame, frozen_support: list[str],
+                    pre_months: list[str]) -> tuple[pd.DataFrame, list[str], list[str], dict]:
+    """Build the complete Rule-A/B/C-eligible cell universe from raw OCC."""
+    bridge = pd.read_csv(bridge_path, dtype={"census_2010": str, "census_2018": str})
+    bridge["census_2010"] = bridge.census_2010.str.zfill(4)
+    bridge["census_2018"] = bridge.census_2018.str.zfill(4)
+    pieces = []
+    gaps = {f"{year}-03" for year in range(2017, 2022)}
+    counters = {"rows_read": 0, "rows_employed_age_22_65": 0,
+                "probabilistically_expanded_rows": 0}
+    usecols = ["YEAR", "MONTH", "AGE", "EMPSTAT", "OCC", "WTFINL"]
+    for chunk in pd.read_csv(path, usecols=usecols, chunksize=500_000):
+        counters["rows_read"] += len(chunk)
+        chunk["month"] = (chunk.YEAR.astype(int).astype(str) + "-"
+                          + chunk.MONTH.astype(int).astype(str).str.zfill(2))
+        chunk = chunk.loc[~chunk.month.isin(gaps)].copy()
+        age = pd.to_numeric(chunk.AGE, errors="coerce")
+        emp = pd.to_numeric(chunk.EMPSTAT, errors="coerce").isin([10, 12])
+        weight = pd.to_numeric(chunk.WTFINL, errors="coerce")
+        keep = age.between(22, 65) & emp & np.isfinite(weight) & weight.gt(0)
+        chunk = chunk.loc[keep].copy()
+        counters["rows_employed_age_22_65"] += len(chunk)
+        occ = pd.to_numeric(chunk.OCC, errors="coerce")
+        chunk = chunk.loc[occ.notna() & occ.between(0, 9999) & occ.mod(1).eq(0)].copy()
+        chunk["source_occ"] = occ.loc[chunk.index].astype(int).map(lambda x: f"{x:04d}")
+        chunk["age_group"] = np.where(chunk.AGE.between(22, 25),
+                                      "young_22_25", "older_26_65")
+        early = chunk.loc[chunk.YEAR.le(2019)].merge(
+            bridge, left_on="source_occ", right_on="census_2010", how="inner",
+            validate="many_to_many"
+        )
+        early["occ_code"] = early.census_2018
+        early["cell_weight"] = early.WTFINL * early.bridge_weight
+        counters["probabilistically_expanded_rows"] += len(early)
+        current = chunk.loc[chunk.YEAR.ge(2020)].copy()
+        current["occ_code"] = current.source_occ
+        current["cell_weight"] = current.WTFINL
+        routed = pd.concat([early[["occ_code", "month", "age_group", "cell_weight"]],
+                            current[["occ_code", "month", "age_group", "cell_weight"]]])
+        pieces.append(routed.groupby(["occ_code", "month", "age_group"], as_index=False)
+                      .cell_weight.sum())
+    grouped = pd.concat(pieces).groupby(["occ_code", "month", "age_group"], as_index=False)
+    grouped = grouped.cell_weight.sum().rename(columns={"cell_weight": "employment_headcount"})
+    months = sorted(grouped.month.unique())
+    expected = [*pre_months, TRANSITION, *EXPECTED_POST]
+    if months != expected:
+        raise RuntimeError("complete cell universe has unexpected month support")
+    occupations = sorted(grouped.occ_code.unique())
+    index = pd.MultiIndex.from_product([occupations, months], names=["occ_code", "month"])
+    pivot = grouped.pivot_table(index=["occ_code", "month"], columns="age_group",
+                                values="employment_headcount", aggfunc="sum", fill_value=0.0)
+    pivot = pivot.reindex(index, fill_value=0.0)
+    for age_name in ("young_22_25", "older_26_65"):
+        if age_name not in pivot:
+            pivot[age_name] = 0.0
+    pre_slice = pivot.loc[(frozen_support, pre_months),
+                          ["young_22_25", "older_26_65"]]
+    aligned_frozen = frozen_pre.loc[(frozen_support, pre_months),
+                                    ["young_22_25", "older_26_65"]]
+    maximum_gap = float(np.max(np.abs(pre_slice.to_numpy() - aligned_frozen.to_numpy())))
+    if maximum_gap > 1e-5:
+        raise RuntimeError(f"rebuilt Rule-A cells do not reproduce frozen cells: {maximum_gap}")
+    pre_totals = pivot.loc[(slice(None), pre_months),
+                           ["young_22_25", "older_26_65"]].groupby(level="occ_code").sum()
+    candidates = pre_totals.index[(pre_totals > 0).all(axis=1)].tolist()
+    return pivot, candidates, months, {**counters, "months": months,
+                                      "candidate_occupations": len(candidates),
+                                      "maximum_rule_a_frozen_cell_gap": maximum_gap,
+                                      "cell_rows": int(len(pivot) * 2)}
 
 
 def exposure_maps(lookup_path: pathlib.Path, rule_b_path: pathlib.Path) -> dict:
@@ -481,8 +555,18 @@ def result_ledger(results, inputs):
         add("Table 2", spec, spec.split("__")[0], "employment_stock",
             f"{model['occupations']} occupations", model["coefficients"][model["target_label"]])
     for spec, model in results["remote"].items():
-        add("Table 6", spec, spec, "employment_stock",
-            f"{model['occupations']} occupations", model["coefficients"][model["target_label"]])
+        for label, item in model["coefficients"].items():
+            add("Table 6", f"{spec}__{label}", spec, "employment_stock",
+                f"{model['occupations']} occupations", item)
+    for spec, model in results["alternative_exposures_and_controls"].items():
+        for label, item in model["coefficients"].items():
+            add("Table 4", f"{spec}__{label}", spec, "employment_stock",
+                f"{model['occupations']} occupations", item)
+    for row_id, model in results["crosswalk_decomposition"].items():
+        item = model["coefficients"][model["target_label"]]
+        add("Table 5", f"crosswalk_row_{row_id}", "AIOE", "employment_stock",
+            f"{model['occupations']} occupations", item,
+            {"mapping_label": model["label"]})
     pair = results["paired_test_c"]
     rows.append({"table_figure": "Table 4", "specification_id": pair["pair"],
                  "exposure_measure": "beta-minus-alpha", "outcome": "employment_stock",
@@ -492,6 +576,24 @@ def result_ledger(results, inputs):
                  "paired_delta": pair["delta"], "mde_comparison": 0.032722,
                  "bootstrap_draws": pair["common_bootstrap_draws"],
                  "input_hashes": inputs, "frozen_commit": FROZEN_COMMIT})
+    placebo = results["placebo_2017_2019"]["ai"]
+    add("Table 3", "placebo_2018_11", "dv_rating_beta", "employment_stock",
+        f"{results['placebo_2017_2019']['occupations']} occupations", placebo)
+    for row in results["event_study"]["rows"]:
+        if row.get("reference"):
+            continue
+        add("Figure 3", f"event_{row['event_month']}", "dv_rating_beta",
+            "employment_stock", f"{results['event_study']['occupations']} occupations",
+            {"coefficient": row["coefficient"], "ci_lower": row["ci_lower"],
+             "ci_upper": row["ci_upper"]})
+    extension = results["post_2025_extension"]
+    rows.append({"table_figure": "Table 6", "specification_id": "post_2025_wald",
+                 "exposure_measure": "dv_rating_beta", "outcome": "employment_stock",
+                 "sample_support": f"{extension['occupations']} occupations",
+                 "coefficient": extension["extension_minus_early"],
+                 "p_value": extension["wald_bootstrap_p"],
+                 "bootstrap_draws": BOOTSTRAP_DRAWS, "input_hashes": inputs,
+                 "frozen_commit": FROZEN_COMMIT})
     return rows
 
 
@@ -523,10 +625,10 @@ def write_outputs(output_dir: pathlib.Path, results: dict, ledger: list[dict]):
 
 def run(args: argparse.Namespace) -> dict:
     authenticated = validate_inputs(args)
-    pre, occupations, pre_months = read_preperiod(args.preperiod_cells)
-    post, post_receipt = read_post_cells(args.microdata, occupations)
-    panel = pd.concat([pre, post]).sort_index()
-    all_months = pre_months + [TRANSITION, *EXPECTED_POST]
+    pre, frozen_occupations, pre_months = read_preperiod(args.preperiod_cells)
+    panel, occupations, all_months, post_receipt = read_full_cells(
+        args.microdata, args.bridge, pre, frozen_occupations, pre_months
+    )
     static_months = [month for month in all_months if month != TRANSITION]
     exposures = exposure_maps(args.lookup, args.rule_b_values)
     computers, names, major_groups = comp_maps(args.computerization)
@@ -560,6 +662,11 @@ def run(args: argparse.Namespace) -> dict:
                                     exposures[measure]["A"], remote=remote_map, scale="per_sd")
         remote[f"{measure}__ai_only"] = ai_only
         remote[f"{measure}__ai_remote_joint"] = joint
+        full_joint, *_ = estimate_static(
+            panel, occupations, static_months, exposures[measure]["A"],
+            comp=computers["webb_pct_software"], remote=remote_map, scale="per_sd"
+        )
+        remote[f"{measure}__ai_comp_remote_joint"] = full_joint
     remote_only, *_ = estimate_static(panel, occupations, static_months,
                                       remote_map, scale="per_sd")
     remote["remote_only"] = remote_only
@@ -636,6 +743,7 @@ def main(argv=None) -> int:
     parser.add_argument("--lookup", type=pathlib.Path, required=True)
     parser.add_argument("--computerization", type=pathlib.Path, required=True)
     parser.add_argument("--rule-b-values", type=pathlib.Path, required=True)
+    parser.add_argument("--bridge", type=pathlib.Path, required=True)
     parser.add_argument("--first-access-receipt", type=pathlib.Path, required=True)
     parser.add_argument("--output-dir", type=pathlib.Path, required=True)
     args = parser.parse_args(argv)

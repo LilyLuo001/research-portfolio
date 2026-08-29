@@ -57,3 +57,37 @@ opening is recorded here before a confirmatory rerun.
   coefficient and created no output directory.
 - **Exact patch:** before fitting the placebo only, drop occupations with zero
   window-total stock in either age group and record the code list.
+
+## Fix 4 — coverage sensitivities were constrained to Rule-A support
+
+- **Discovery time:** after preserving the first successful output directory.
+- **What failed:** Rule B and Rule C returned the exact Rule-A estimates and
+  cluster counts because the runner used the authenticated pre-period cell file
+  as the universe. That file was deliberately built fail-closed for Rule A and
+  therefore contains no occupation that Rules B/C are meant to re-admit.
+- **Why implementation, not specification:** the frozen documents require all
+  three support rules as separate columns. Starting every column from Rule-A
+  support made those frozen sensitivities impossible by construction.
+- **Results seen:** the entire first successful output exists permanently at
+  `yax/analysis/outcomes/frozen_v11_first_run`; it is never overwritten.
+- **Exact patch:** rebuild the complete vintage-aware occupation×age×month cell
+  universe from the authenticated raw microdata and frozen Census 2010→2018
+  bridge. Before estimation, require the rebuilt Rule-A slice to reproduce the
+  frozen pre-period cells to numerical tolerance. Apply each frozen coverage
+  rule only after that validation. No outcome, weight, date, mapping, exposure,
+  or estimator changes.
+- **Corrected output:** write to a new directory,
+  `yax/analysis/outcomes/frozen_v11_corrected_run`.
+
+## Fix 5 — result ledger completeness
+
+- **Discovery time:** audit of the preserved first successful output.
+- **What failed:** the first ledger contained headline targets, remote targets,
+  and paired Delta, but omitted alternative-X control coefficients, event-study
+  months, the placebo, crosswalk rows, and the extension Wald object.
+- **Why implementation, not specification:** the owner instruction requires a
+  ledger of every frozen primary coefficient and diagnostic. Adding already
+  frozen results to the ledger changes no estimate.
+- **Exact patch:** emit one ledger row for every coefficient/diagnostic above,
+  and include the frozen Webb-conditioned AI+computerization+remote model in
+  Table 6 so its computerization column is populated.
