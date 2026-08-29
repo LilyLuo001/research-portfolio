@@ -37,3 +37,23 @@ opening is recorded here before a confirmatory rerun.
   tolerance, algorithm, likelihood, data and specification remain unchanged.
 - **Stopping rule:** if 5,000 iterations do not converge, do not relax the
   tolerance or alter the placebo; report an implementation blocker.
+
+## Fix 3 — separated occupation fixed effects in the placebo window
+
+- **Failure time:** 2026-08-29 UTC, complete rerun after Fix 2.
+- **Diagnosis:** the authenticated pre-period cells show that Census-2018
+  occupations `3256` and `8335` have positive older employment but exactly zero
+  young employment throughout 2017–2019. Two additional frozen clusters have
+  no employment observations in that subwindow. Their placebo-window
+  occupation fixed effects have no finite maximum-likelihood estimate. Raising
+  the iteration ceiling cannot resolve separation.
+- **Why implementation, not specification:** a conditional PPML/logit can be
+  estimated only on fixed-effect groups with an existing finite likelihood
+  solution. The patch applies that mechanical existence rule within the frozen
+  placebo window: positive employment stock in both age groups. It does not
+  change the dates, variables, equation, controls, or inference. Every excluded
+  code is stored in the result.
+- **Results seen before the fix:** none. The third attempt again printed no
+  coefficient and created no output directory.
+- **Exact patch:** before fitting the placebo only, drop occupations with zero
+  window-total stock in either age group and record the code list.

@@ -414,6 +414,10 @@ def estimate_placebo(panel, base_occupations, exposure, comp):
     support = [code for code in base_occupations
                if np.isfinite(exposure.get(code, np.nan)) and np.isfinite(comp.get(code, np.nan))]
     young, older = panel_arrays(panel, support, months)
+    exists = (young.sum(axis=1) > 0) & (older.sum(axis=1) > 0)
+    dropped_nonexistent_mle = [code for code, keep in zip(support, exists) if not keep]
+    support = [code for code, keep in zip(support, exists) if keep]
+    young, older = young[exists], older[exists]
     weights = (young + older).sum(axis=1)
     ai = np.array([exposure[c] for c in support], float)
     cv = np.array([comp[c] for c in support], float)
@@ -426,7 +430,9 @@ def estimate_placebo(panel, base_occupations, exposure, comp):
     summary, _, _ = bootstrap_summary(fit, influence, 0, BOOTSTRAP_SEED + 8000)
     return {"window": [months[0], months[-1]], "placebo_post": "2018-11",
             "occupations": len(support), "ai": summary,
-            "computerization_coefficient": float(fit.beta[1])}
+            "computerization_coefficient": float(fit.beta[1]),
+            "dropped_for_nonexistent_fixed_effect_mle": dropped_nonexistent_mle,
+            "existence_rule": "positive placebo-window employment stock in both age groups"}
 
 
 def estimate_extension(panel, base_occupations, months, exposure, comp):
