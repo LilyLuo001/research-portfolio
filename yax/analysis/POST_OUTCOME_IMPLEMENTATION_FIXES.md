@@ -24,3 +24,16 @@ opening is recorded here before a confirmatory rerun.
 - **Rerun rule:** every headline, alternative-X, paired, remote, event-study,
   placebo, extension, and crosswalk model is rerun from the beginning.
 
+## Fix 2 — first ceiling increase remained insufficient
+
+- **Failure time:** 2026-08-29 UTC, complete rerun after Fix 1.
+- **What failed:** the same frozen 2017–2019 placebo model reached the amended
+  1,000-iteration ceiling without satisfying the unchanged `1e-8` convergence
+  tolerance.
+- **Results seen before the fix:** none. As in Fix 1, the process printed no
+  estimate and wrote no output directory; all intermediate objects vanished on
+  exit.
+- **Exact patch:** increase only `max_iterations` from 1,000 to 5,000. The
+  tolerance, algorithm, likelihood, data and specification remain unchanged.
+- **Stopping rule:** if 5,000 iterations do not converge, do not relax the
+  tolerance or alter the placebo; report an implementation blocker.

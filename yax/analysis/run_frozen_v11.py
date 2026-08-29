@@ -230,7 +230,7 @@ def fit_with_influence(young, older, regressors):
     occ = np.repeat(np.arange(n_occ), n_month)
     month = np.tile(np.arange(n_month), n_occ)
     fit = ENGINE.fit_grouped_logit_fe(
-        young.reshape(-1), total, occ, month, regressors, max_iterations=1000
+        young.reshape(-1), total, occ, month, regressors, max_iterations=5000
     )
     if not fit.converged:
         raise RuntimeError("frozen conditional PPML did not converge")
