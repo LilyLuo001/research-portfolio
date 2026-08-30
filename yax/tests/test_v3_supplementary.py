@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -70,3 +71,50 @@ def test_survey_feasibility_conclusion_does_not_erase_available_household_ids():
     source = SCRIPT.read_text()
     assert "the extract contains CPSID, SERIAL, CPSIDP, and MISH" in source
     assert '"stratum/PSU variables or replicate weights.' in source
+
+
+def test_completed_headline_support_outputs_are_complete_and_schur_valid():
+    out = ROOT / "yax/analysis/postoutcome_v3_supplementary"
+    summary = pd.read_csv(out / "HEADLINE_INFORMATION_SUPPORT_SUMMARY.csv")
+    bridge = pd.read_csv(out / "CONTINUOUS_VS_HEADLINE_SUPPORT.csv")
+    assert len(summary) == 12
+    assert len(bridge) == 4
+    assert set(summary["analysis_status"]) == {V3.LABEL}
+    assert set(bridge["analysis_status"]) == {V3.LABEL}
+    assert summary["relative_schur_gap"].max() < 1e-8
+    assert bridge["stored_test_b_effective_gap"].max() < 1e-6
+    assert bridge["stored_test_b_top_five_gap"].max() < 1e-8
+
+
+def test_completed_validator_split_and_survey_gate_are_complete():
+    out = ROOT / "yax/analysis/postoutcome_v3_supplementary"
+    split = pd.read_csv(out / "TEST_A_VALIDATOR_SPLIT_SUMMARY.csv")
+    survey = json.loads((out / "CPS_SURVEY_UNCERTAINTY_FEASIBILITY.json").read_text())
+    assert len(split) == 12
+    assert set(split["occupations"]) == {348}
+    assert set(split["analysis_status"]) == {V3.LABEL}
+    assert survey["design_consistent_resampling_feasible"] is False
+    assert survey["resampling_executed"] is False
+    assert survey["available_identifier_categories"]["household_identifiers"] == ["CPSID", "SERIAL"]
+    assert survey["available_identifier_categories"]["psu_identifiers"] == []
+    assert survey["available_identifier_categories"]["stratum_identifiers"] == []
+
+
+def test_remote_and_joint_pretrend_are_single_predeclared_executions():
+    out = ROOT / "yax/analysis/postoutcome_v3_supplementary"
+    remote = json.loads((out / "REMOTE_INTERACTION_RESULT.json").read_text())
+    joint = json.loads((out / "JOINT_PRETREND_RESULT.json").read_text())
+    assert remote["analysis_status"] == V3.LABEL
+    assert remote["analysis_id"] == "S4"
+    assert remote["occupations"] == 408
+    assert set(remote["coefficients"]) == {
+        "AI_z_x_post",
+        "Webb_z_x_post",
+        "Remote_z_x_post",
+        "AI_z_x_Remote_z_x_post",
+    }
+    assert joint["analysis_status"] == V3.LABEL
+    assert joint["analysis_id"] == "S5"
+    assert joint["tested_coefficients"] == 65
+    assert joint["maximum_confirmatory_coefficient_reproduction_gap"] == 0
+    assert 0 <= joint["bootstrap_p_value"] <= 1
