@@ -478,7 +478,12 @@ def run_survey_feasibility(args: argparse.Namespace) -> None:
         and categories["replicate_weights"]
     )
     conclusion = (
-        "No design-consistent first-stage CPS survey resampling is implemented: the extract contains CPSIDP and MISH but no household identifier, public stratum/PSU variables, or replicate weights. CPSIDP/MISH can describe person rotation overlap but cannot reconstruct the CPS multistage sample design or calibration-weight uncertainty."
+        "No design-consistent first-stage CPS survey resampling is implemented: "
+        "the extract contains CPSID, SERIAL, CPSIDP, and MISH, but no public "
+        "stratum/PSU variables or replicate weights. The available household, "
+        "person-panel, and rotation identifiers can represent repeated-sample "
+        "dependence, but cannot reconstruct the CPS multistage sample design or "
+        "calibration-weight uncertainty."
         if not design_fields_available
         else "Required survey-design fields appear present; a separate method audit is required before resampling."
     )

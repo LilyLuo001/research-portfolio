@@ -64,3 +64,9 @@ def test_supplementary_plan_declares_exactly_one_remote_form_and_pretrend_test()
     assert "all 65 non-reference" in plan
     assert "max_k |beta_hat_k / analytic_SE_k|" in plan
     assert V3.LABEL in plan
+
+
+def test_survey_feasibility_conclusion_does_not_erase_available_household_ids():
+    source = SCRIPT.read_text()
+    assert "the extract contains CPSID, SERIAL, CPSIDP, and MISH" in source
+    assert '"stratum/PSU variables or replicate weights.' in source
