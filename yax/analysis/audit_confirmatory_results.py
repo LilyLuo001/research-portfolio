@@ -222,7 +222,12 @@ def main() -> None:
     test_b_rows = []
     for row in pairs:
         contributors = row["named_divergence_occupations"]["largest_residual_variance_contributors"]
-        top_five_share = sum(float(x["residual_variance_share"]) for x in contributors[:5])
+        # Round the derived sum so Python/libc float-repr differences cannot
+        # change the byte-level archive across the local and SCC runtimes.
+        top_five_share = round(
+            sum(float(x["residual_variance_share"]) for x in contributors[:5]),
+            12,
+        )
         families = row["residual_variation_by_soc_major_group"]
         test_b_rows.append(
             {
