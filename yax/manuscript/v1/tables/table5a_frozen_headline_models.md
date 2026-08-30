@@ -13,4 +13,4 @@
 | Eloundou alpha / RuleC / Webb software-patent exposure | -0.10866 | 0.03970 | [-0.18556, -0.03175] | 0.007 | 480 |
 | Eloundou alpha / RuleC / O*NET computer-use importance | -0.10024 | 0.04263 | [-0.18273, -0.01775] | 0.020 | 476 |
 
-Note: The 12 frozen alpha/beta headline Q5-Q1 models are reported without selection. All confidence intervals use 999-draw occupation-cluster wild bootstrap inference. Source: canonical frozen reporting table4a_headline_q5_q1.csv.
+Note: The 12 pre-specified alpha/beta headline Q5-Q1 models are reported without selection. All confidence intervals use 999-draw occupation-cluster wild bootstrap inference. Source: canonical confirmatory reporting table4a_headline_q5_q1.csv.

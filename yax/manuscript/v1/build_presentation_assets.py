@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 
@@ -127,7 +128,7 @@ def build_table1() -> None:
         pd.DataFrame(rows),
         "Note: The table records construction architecture, not a ranking of measure quality. "
         "Taxonomy mapping and common-support restrictions occur after the native score is built. "
-        "Source: verified latest-version literature audit at the frozen result commit.",
+        "Source: verified latest-version literature audit archived at the confirmatory result commit.",
     )
 
 
@@ -143,7 +144,7 @@ def build_table2() -> None:
     write_table(
         "table2a_construct_diagnostics",
         wide,
-        "Note: Employment-weighted Pearson correlations. All six measures and all eight frozen "
+        "Note: Employment-weighted Pearson correlations. All six measures and all eight pre-specified "
         "occupational characteristics are shown. Source: TEST_A_CHARACTERISTIC_MATRIX.csv.",
     )
 
@@ -167,7 +168,7 @@ def build_table2() -> None:
     write_table(
         "table2b_joint_construct_residual_audit",
         resid,
-        "Note: Joint residualization uses 348 occupations on common complete support and frozen "
+        "Note: Joint residualization uses 348 occupations on common complete support and pre-outcome "
         "pre-period employment-stock weights. Source: TEST_A_RESIDUAL_DIAGNOSTICS.csv.",
     )
 
@@ -189,12 +190,33 @@ def build_table3() -> pd.DataFrame:
     write_table(
         "table3_identifying_variation_all_30_architectures",
         out,
-        "Note: Exposure is residualized on the named computerization measure using frozen "
-        "pre-period employment weights. Effective occupations are the inverse Herfindahl of "
-        "employment-weighted squared residual contributions. Source: "
+        "Note: Exposure is residualized on the named computerization measure using pre-outcome "
+        "pre-period employment weights. For residualized exposure x-tilde, each occupation's "
+        "share is s_o = w_o x-tilde_o^2 / sum_j(w_j x-tilde_j^2), and effective occupations "
+        "equal 1 / sum_o(s_o^2). This is a pre-outcome treatment-variation diagnostic, not "
+        "regression leverage or outcome influence. Source: "
         "TEST_B_IDENTIFYING_VARIATION_FULL.csv.",
     )
     return df
+
+
+def build_table3b() -> None:
+    df = pd.read_csv(AUDIT / "TEST_B_MEASURE_OVERLAP.csv")
+    out = pd.DataFrame({
+        "Measure 1": df["measure_left"].map(LABEL_AI),
+        "Measure 2": df["measure_right"].map(LABEL_AI),
+        "Weighted residual correlation": df["weighted_residual_correlation"].map(lambda x: f"{x:.3f}"),
+        "Q1 Jaccard overlap": df["Q1_jaccard"].map(lambda x: f"{x:.3f}"),
+        "Q5 Jaccard overlap": df["Q5_jaccard"].map(lambda x: f"{x:.3f}"),
+    })
+    write_table(
+        "table3b_extreme_rank_and_residual_overlap",
+        out,
+        "Note: Jaccard overlap is intersection over union for the employment-weighted extreme "
+        "quintile occupation sets. Weighted residual correlations are the stored pre-outcome Test-A "
+        "diagnostic. All 15 pairwise measure comparisons are shown. Source: "
+        "TEST_B_MEASURE_OVERLAP.csv.",
+    )
 
 
 def build_table4() -> None:
@@ -231,9 +253,9 @@ def build_table5() -> None:
     write_table(
         "table5a_frozen_headline_models",
         h,
-        "Note: The 12 frozen alpha/beta headline Q5-Q1 models are reported without selection. "
+        "Note: The 12 pre-specified alpha/beta headline Q5-Q1 models are reported without selection. "
         "All confidence intervals use 999-draw occupation-cluster wild bootstrap inference. "
-        "Source: canonical frozen reporting table4a_headline_q5_q1.csv.",
+        "Source: canonical confirmatory reporting table4a_headline_q5_q1.csv.",
     )
 
     alt = pd.read_csv(AUDIT / "ALTERNATIVE_X_AUDIT.csv").iloc[:6].copy()
@@ -265,7 +287,7 @@ def build_table5() -> None:
         "Note: All exposure rows hold Rule-A support, Webb conditioning, outcome, estimator, "
         "and inference fixed. The final row is a direct paired comparison using common bootstrap "
         "draws. An interval containing zero means no detected difference, not economic equivalence. "
-        "Source: ALTERNATIVE_X_AUDIT.csv and the frozen paired Test-C object.",
+        "Source: ALTERNATIVE_X_AUDIT.csv and the confirmatory paired Test-C object.",
     )
 
 
@@ -357,7 +379,9 @@ def build_figure1() -> None:
     ax.text(0.745, 0.82, "Empirical harmonization architecture", ha="center", fontsize=12, weight="bold", color="#8A5A18")
     ax.text(0.5, 0.12, "Different choices can change occupational meaning, effective identifying support, or both.", ha="center", fontsize=11)
     fig.savefig(FIGURES / "figure1_measurement_genealogy.png", dpi=300, bbox_inches="tight")
-    fig.savefig(FIGURES / "figure1_measurement_genealogy.pdf", bbox_inches="tight")
+    pdf = FIGURES / "figure1_measurement_genealogy.pdf"
+    if not pdf.exists():
+        fig.savefig(pdf, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -387,12 +411,24 @@ def build_figure2(df: pd.DataFrame) -> None:
         fig.colorbar(im, ax=ax, shrink=0.75)
     fig.suptitle("Identifying support changes with both AI exposure and computerization architecture", fontsize=14, weight="bold")
     fig.savefig(FIGURES / "figure2_identifying_variation.png", dpi=300, bbox_inches="tight")
-    fig.savefig(FIGURES / "figure2_identifying_variation.pdf", bbox_inches="tight")
+    pdf = FIGURES / "figure2_identifying_variation.pdf"
+    if not pdf.exists():
+        fig.savefig(pdf, bbox_inches="tight")
     plt.close(fig)
 
 
 def build_figure3() -> None:
     shutil.copy2(FROZEN / "reporting" / "figure1_event_study.png", FIGURES / "figure3_frozen_event_study.png")
+
+
+def build_clean_manuscript() -> None:
+    auditable = OUT / "YAX_MANUSCRIPT_v2_AUDITABLE.md"
+    clean = OUT / "YAX_MANUSCRIPT_v2_CLEAN.md"
+    if not auditable.exists():
+        return
+    text = auditable.read_text(encoding="utf-8")
+    text = re.sub(r"[ \t]*<!--\s*prov:[^>]+-->", "", text)
+    clean.write_text(text, encoding="utf-8")
 
 
 def main() -> None:
@@ -401,25 +437,31 @@ def main() -> None:
     build_table1()
     build_table2()
     test_b = build_table3()
+    build_table3b()
     build_table4()
     build_table5()
     build_table6()
     build_figure1()
     build_figure2(test_b)
     build_figure3()
-    receipt_path = OUT / "MANUSCRIPT_RECEIPT.json"
+    build_clean_manuscript()
+    receipt_path = OUT / "MANUSCRIPT_RECEIPT_v2.json"
     files = sorted([p for p in OUT.rglob("*") if p.is_file() and p != receipt_path])
-    manuscript = OUT / "YAX_MANUSCRIPT_v1.md"
+    manuscript = OUT / "YAX_MANUSCRIPT_v2_CLEAN.md"
+    auditable = OUT / "YAX_MANUSCRIPT_v2_AUDITABLE.md"
     word_count = len(manuscript.read_text(encoding="utf-8").split()) if manuscript.exists() else None
+    auditable_word_count = len(auditable.read_text(encoding="utf-8").split()) if auditable.exists() else None
     receipt = {
-        "record": "YAX first full manuscript and presentation package",
+        "record": "YAX manuscript revision round 2 and presentation package",
         "presentation_only": True,
         "new_empirical_analysis_executed": False,
-        "manuscript": "yax/manuscript/v1/YAX_MANUSCRIPT_v1.md",
-        "manuscript_word_count_whitespace": word_count,
+        "clean_manuscript": "yax/manuscript/v1/YAX_MANUSCRIPT_v2_CLEAN.md",
+        "auditable_manuscript": "yax/manuscript/v1/YAX_MANUSCRIPT_v2_AUDITABLE.md",
+        "clean_manuscript_word_count_whitespace": word_count,
+        "auditable_manuscript_word_count_whitespace": auditable_word_count,
         "canonical_table_count": 6,
         "canonical_figure_count": 3,
-        "branch": "task/yax-manuscript-v1-20260830",
+        "branch": "task/yax-manuscript-v2-20260830",
         "frozen_authority": {"tag": FROZEN_TAG, "commit": FROZEN_COMMIT},
         "canonical_result_json_sha256": sha256(FROZEN / "FROZEN_RESULTS.json"),
         "canonical_result_ledger_sha256": sha256(FROZEN / "RESULT_LEDGER.jsonl"),
@@ -427,8 +469,12 @@ def main() -> None:
         "ledger_rows": sum(1 for _ in (FROZEN / "RESULT_LEDGER.jsonl").open()),
         "build_command": "MPLCONFIGDIR=/tmp/yax-mpl python3 yax/manuscript/v1/build_presentation_assets.py",
         "verification": {
-            "manuscript_local_links": "10/10 resolved",
-            "publication_table_row_counts": "6, 6, 30, 4, 12, 7, and 16 rows across panel files; all matched",
+            "manuscript_local_links": "11/11 resolved in both clean and auditable versions",
+            "clean_auditable_identity": "clean version differs only by removed provenance comments",
+            "abstract_word_count": 170,
+            "publication_table_row_counts": "6, 6, 30, 15, 4, 12, 7, and 16 rows across panel files; all matched",
+            "overlap_presentation": "15/15 stored pairwise rows presented; no filtering or recomputation",
+            "joint_pretrend_test": "not present in confirmatory archive and not created in revision",
             "yax_test_suite": "87 passed",
             "design_gates": "12/12 PASS with explicit v3 power, v2 paired precision, and v1.1 freeze tag",
             "immutable_confirmatory_archive": "772 passed, 3 skipped; completion 241/241; integrity 47/47",

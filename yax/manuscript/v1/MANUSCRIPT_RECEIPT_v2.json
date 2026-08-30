@@ -1,0 +1,187 @@
+{
+  "record": "YAX manuscript revision round 2 and presentation package",
+  "presentation_only": true,
+  "new_empirical_analysis_executed": false,
+  "clean_manuscript": "yax/manuscript/v1/YAX_MANUSCRIPT_v2_CLEAN.md",
+  "auditable_manuscript": "yax/manuscript/v1/YAX_MANUSCRIPT_v2_AUDITABLE.md",
+  "clean_manuscript_word_count_whitespace": 6727,
+  "auditable_manuscript_word_count_whitespace": 6784,
+  "canonical_table_count": 6,
+  "canonical_figure_count": 3,
+  "branch": "task/yax-manuscript-v2-20260830",
+  "frozen_authority": {
+    "tag": "v1.1-confirmatory-results",
+    "commit": "b16109482c3bf5ca176f6f08976e120b04769945"
+  },
+  "canonical_result_json_sha256": "4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831",
+  "canonical_result_ledger_sha256": "e900adb75510729be635eb7aea381bfe6e523b376b6f2723350cf47bdf09266b",
+  "canonical_result_markdown_sha256": "2a152018d0198bb106a01ae08e5eda7c2d4a0e2fe617d74cc7f4ad731c18666e",
+  "ledger_rows": 195,
+  "build_command": "MPLCONFIGDIR=/tmp/yax-mpl python3 yax/manuscript/v1/build_presentation_assets.py",
+  "verification": {
+    "manuscript_local_links": "11/11 resolved in both clean and auditable versions",
+    "clean_auditable_identity": "clean version differs only by removed provenance comments",
+    "abstract_word_count": 170,
+    "publication_table_row_counts": "6, 6, 30, 15, 4, 12, 7, and 16 rows across panel files; all matched",
+    "overlap_presentation": "15/15 stored pairwise rows presented; no filtering or recomputation",
+    "joint_pretrend_test": "not present in confirmatory archive and not created in revision",
+    "yax_test_suite": "87 passed",
+    "design_gates": "12/12 PASS with explicit v3 power, v2 paired precision, and v1.1 freeze tag",
+    "immutable_confirmatory_archive": "772 passed, 3 skipped; completion 241/241; integrity 47/47",
+    "root_suite_note": "Local root collection is blocked by absent untracked ops/l1/gemini_helper.py; no replacement was fabricated"
+  },
+  "files": [
+    {
+      "path": "yax/manuscript/v1/MANUSCRIPT_NUMBER_PROVENANCE.md",
+      "sha256": "6d0397f487632a516246414788c0a6e100e852fd57a05093065db8bc5b5a3053"
+    },
+    {
+      "path": "yax/manuscript/v1/MANUSCRIPT_NUMBER_PROVENANCE_v2.md",
+      "sha256": "8a3d1cafcf5afd32fe1d4b53fdf20288bf22ae2dc75f930120f52cc3a44f3181"
+    },
+    {
+      "path": "yax/manuscript/v1/MANUSCRIPT_RECEIPT.json",
+      "sha256": "152458f72f4fe1d8f5ea6cb12f788aca89f38d80e4a747d5c72c1ff53c802d18"
+    },
+    {
+      "path": "yax/manuscript/v1/NEAREST_NEIGHBOR_CONTRIBUTION_MATRIX.md",
+      "sha256": "6d1c3661fe38e68957c2894e5a423cfcb6d3cecf0c301fea6ec37a80c70cf1d1"
+    },
+    {
+      "path": "yax/manuscript/v1/POST_OUTCOME_EXPLORATORY_IDEAS.md",
+      "sha256": "6ec8bc73e0177abcb97cc250fd47596918191cc3b0a507bf748b0a5e143095c9"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_MANUSCRIPT_v1.md",
+      "sha256": "b2520f50068cfdfc52c6141174f5d461b40ba1e59ce12a9097b9082cb3e6981d"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_MANUSCRIPT_v2_AUDITABLE.md",
+      "sha256": "3abd3114ac8044def1cceee481ad8411d7b9f5ca8a93546e3f526c57685b54dc"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_MANUSCRIPT_v2_CLEAN.md",
+      "sha256": "c30a03b5ce99a941dc95bcab677502639c115ffc7d06519339b0110c357ae3ab"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_REFEREE_REDTEAM_v1.md",
+      "sha256": "2d0750c88fe0716ce3441ff8c480233d364770288ef8302a02b40e7abc37b3c2"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_REFEREE_REDTEAM_v2.md",
+      "sha256": "85bdce318af1814855bf716fd21401b3f18c4f05c48c58bedf75a3ec6e3a667f"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_REVISION_MEMO_v2.md",
+      "sha256": "2bec3cf70cb91e95abd5350688b619963809ae499e85453c11533008e6540aa3"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_SUBMISSION_STRATEGY_v1.md",
+      "sha256": "81775089313d2502ee295a3d685efb84d9a31b86f35afe842d9593500b9f3635"
+    },
+    {
+      "path": "yax/manuscript/v1/YAX_SUBMISSION_STRATEGY_v2.md",
+      "sha256": "9628bb4182ed63aa56545a1827bef275eac5d6182ad7655a82b041d4df41c475"
+    },
+    {
+      "path": "yax/manuscript/v1/__pycache__/build_presentation_assets.cpython-310.pyc",
+      "sha256": "e8563776334acf53f9855663e3ea6088394c3b4a0d39dd44053f2feecd43b472"
+    },
+    {
+      "path": "yax/manuscript/v1/build_presentation_assets.py",
+      "sha256": "4594b475427d4ac79879217c1da70f0795bc242ed592efaac533fe78dd0f326c"
+    },
+    {
+      "path": "yax/manuscript/v1/figures/figure1_measurement_genealogy.pdf",
+      "sha256": "73f96810417da5e3ff2e598be2afbb6650ad41bd7a7528d3014ef8034b5497d8"
+    },
+    {
+      "path": "yax/manuscript/v1/figures/figure1_measurement_genealogy.png",
+      "sha256": "97b36e1d63e421b7b8a293ca4b11c4653f714f39cffe591b632310098efe9bf8"
+    },
+    {
+      "path": "yax/manuscript/v1/figures/figure2_identifying_variation.pdf",
+      "sha256": "ac37a8a250a13e34711dd14d3dfffe0da163f112b1da0ed2b9270c499d94bab9"
+    },
+    {
+      "path": "yax/manuscript/v1/figures/figure2_identifying_variation.png",
+      "sha256": "0cf007547d57892e277875330ff6a6fdd430b3bd4aa75ccec78c2b8cc35bf951"
+    },
+    {
+      "path": "yax/manuscript/v1/figures/figure3_frozen_event_study.png",
+      "sha256": "975fc441808bb520ff2caac0226cdc97767450a25f8c33bbc30ce2a3b4bdd2a3"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table1_anatomy_of_ai_exposure_measures.csv",
+      "sha256": "64d3a2e361ab389ed2c6835dcc3a4822b233ec92b82d89da5848d4ac9e1c8d8d"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table1_anatomy_of_ai_exposure_measures.md",
+      "sha256": "0652d3ea5c77a9c3086226348e0d26f67cff372f6e1469156e03adcd926a5158"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table2a_construct_diagnostics.csv",
+      "sha256": "6e29c1b260256a77ac9e4f024a5193f6298042662bc9d2107868d0b4f219853e"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table2a_construct_diagnostics.md",
+      "sha256": "54ccda56bb058777ff201d0ca264dec2875b65d52f3b47045433802849e92966"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table2b_joint_construct_residual_audit.csv",
+      "sha256": "832cde3624cd0381568e8ca9c961c85f57a6de8e0669b87be03153c95144ffc9"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table2b_joint_construct_residual_audit.md",
+      "sha256": "c8a496731552e5525709e5f20430d3cf580a46ce43a01dd46ddd9562d2b4b7d7"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table3_identifying_variation_all_30_architectures.csv",
+      "sha256": "e53d6ec1c184d825889e5dd244dfdecd953415d456fd6b67f991962cf148f263"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table3_identifying_variation_all_30_architectures.md",
+      "sha256": "2467f3152655859e3b7d5e43d53d48f906ab278ff3e6f05e7b1877fb0765e926"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table3b_extreme_rank_and_residual_overlap.csv",
+      "sha256": "242d3abf65aa6800ea68b7d3952b4564ee1675b319fa181fade7f6e89630f16b"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table3b_extreme_rank_and_residual_overlap.md",
+      "sha256": "1c2a07d59cadc1138a61d7ededf7b999cd25320629724da9767a34461d0e8860"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table4_mapping_and_common_support.csv",
+      "sha256": "c34bf3dde86e28e5f3fe3f636f5718fe216f5e3239cc560c3da371082ef862e2"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table4_mapping_and_common_support.md",
+      "sha256": "2d7a23c934008953df1af583091abca95cda7e99a022d7dce7b8fe095526229c"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table5a_frozen_headline_models.csv",
+      "sha256": "c8e86dcdea9d806455ff8d6748333de588187545c53624b3a2694f26365a47b4"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table5a_frozen_headline_models.md",
+      "sha256": "3d441b00e3f1e1c6b71fafec3f2cf2dc3ef3d1dc1f7cb9bad03ae50d933a162a"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table5b_same_design_different_x.csv",
+      "sha256": "829488d5cdc5d3eecefd11d00839316f69d4fa79fa7e935d5b7c8edf09bc46b0"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table5b_same_design_different_x.md",
+      "sha256": "2b10d221d391bc8bcacd2b6db92965da7af456635c4bf7f304a0192ea507f933"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table6_computerization_and_remotability.csv",
+      "sha256": "9484b589c34165f9b969b563b0aebe05755fce40a608437f5dd57f38c0d412a2"
+    },
+    {
+      "path": "yax/manuscript/v1/tables/table6_computerization_and_remotability.md",
+      "sha256": "a3c4af15ca306510688979e06e559570b1c9bd1aaf15bd08fd01a8bc38882b90"
+    }
+  ]
+}

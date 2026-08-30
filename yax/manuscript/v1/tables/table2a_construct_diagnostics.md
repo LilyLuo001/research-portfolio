@@ -7,4 +7,4 @@
 | Eloundou beta (E1 + 0.5 E2) | 0.478 | -0.758 | 0.169 | 0.425 | 0.478 | 0.589 | 0.371 | 0.797 |
 | Eloundou broad (E1 + E2) | 0.598 | -0.810 | 0.108 | 0.530 | 0.600 | 0.618 | 0.253 | 0.833 |
 
-Note: Employment-weighted Pearson correlations. All six measures and all eight frozen occupational characteristics are shown. Source: TEST_A_CHARACTERISTIC_MATRIX.csv.
+Note: Employment-weighted Pearson correlations. All six measures and all eight pre-specified occupational characteristics are shown. Source: TEST_A_CHARACTERISTIC_MATRIX.csv.

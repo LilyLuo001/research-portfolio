@@ -7,4 +7,4 @@
 | Eloundou beta (E1 + 0.5 E2) | 0.743 | 0.507 | 36.9 | 28.0% | Driver/sales workers and truck drivers; First-Line supervisors of retail sales workers; Bookkeeping, accounting, and auditing clerks; Interpreters and translators; Hairdressers, hairstylists, and cosmetologists |
 | Eloundou broad (E1 + E2) | 0.811 | 0.435 | 31.5 | 29.7% | First-Line supervisors of retail sales workers; Driver/sales workers and truck drivers; Hairdressers, hairstylists, and cosmetologists; Sales representatives, wholesale and manufacturing; Bus and truck mechanics and diesel engine specialists |
 
-Note: Joint residualization uses 348 occupations on common complete support and frozen pre-period employment-stock weights. Source: TEST_A_RESIDUAL_DIAGNOSTICS.csv.
+Note: Joint residualization uses 348 occupations on common complete support and pre-outcome pre-period employment-stock weights. Source: TEST_A_RESIDUAL_DIAGNOSTICS.csv.

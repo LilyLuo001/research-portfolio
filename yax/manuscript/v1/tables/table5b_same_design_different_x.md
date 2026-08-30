@@ -8,4 +8,4 @@
 | Eloundou broad / Webb | 468 | -0.15697 | 0.04077 | [-0.23663, -0.07731] | 0.002 |
 | Paired beta minus alpha (common Rule-A/Webb support) | 468 | -0.03240 | 0.03697 | [-0.10235, 0.03755] | 0.403 |
 
-Note: All exposure rows hold Rule-A support, Webb conditioning, outcome, estimator, and inference fixed. The final row is a direct paired comparison using common bootstrap draws. An interval containing zero means no detected difference, not economic equivalence. Source: ALTERNATIVE_X_AUDIT.csv and the frozen paired Test-C object.
+Note: All exposure rows hold Rule-A support, Webb conditioning, outcome, estimator, and inference fixed. The final row is a direct paired comparison using common bootstrap draws. An interval containing zero means no detected difference, not economic equivalence. Source: ALTERNATIVE_X_AUDIT.csv and the confirmatory paired Test-C object.
