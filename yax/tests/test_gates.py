@@ -156,9 +156,10 @@ def test_json_output_is_parseable(capsys):
 
 
 def test_seal_gate_reports_current_repository_state():
-    """No outcomes are committed in this repository and no tag exists."""
-    r = gates.gate_seal("v1.0-preregistered")
+    """The immutable v1.1 freeze predates any committed outcome archive."""
+    r = gates.gate_seal("v1.1-design-freeze")
     assert r.status == "PASS"
+    assert "v1.1-design-freeze exists" in r.detail
 
 
 # ------------------------------------------------------------ novelty

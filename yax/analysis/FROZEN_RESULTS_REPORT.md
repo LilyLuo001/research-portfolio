@@ -60,7 +60,7 @@ Corrected core-output hashes are:
 | artifact | SHA-256 |
 |---|---|
 | `FROZEN_RESULTS.json` | `4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831` |
-| `RESULT_LEDGER.jsonl` | `e900adb75510729be635eb7aea381bfe6e523b376b6f2723350cf47bdf09266e` |
+| `RESULT_LEDGER.jsonl` | `e900adb75510729be635eb7aea381bfe6e523b376b6f2723350cf47bdf09266b` |
 | `FROZEN_RESULTS.md` | `2a152018d0198bb106a01ae08e5eda7c2d4a0e2fe617d74cc7f4ad731c18666e` |
 
 The ledger contains 195 rows. Table, figure and reporting hashes are in
