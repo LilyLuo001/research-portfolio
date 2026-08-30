@@ -17,8 +17,8 @@ listed outcome-bearing analysis is executed.
 
 ## Execution metadata
 
-- Declaration timestamp (UTC): to be filled by the declaration commit.
-- Declaration commit: to be filled before execution.
+- Declaration timestamp (UTC): `2026-08-30T11:11:18Z`.
+- Declaration commit: `e863122f93a4a2007d85ed8c6a3cfc1abde27d00`.
 - SCC execution worktree: to be filled before execution.
 - Data inputs and hashes: to be copied from authenticated receipts and new
   supplementary receipts after execution.
