@@ -1,0 +1,22 @@
+**Analysis status: CONFIRMATORY — FROZEN YAX v1.1.**
+
+| Panel | Specification / coefficient | Occupations | Estimate | 95% CI | p-value |
+|---|---|---|---|---|---|
+| A. Computerization architecture | Beta + Webb software patents | 468 | -0.13107 | [-0.21704, -0.04511] | 0.003 |
+| A. Computerization architecture | Beta + O*NET computer-use importance | 465 | -0.20848 | [-0.31899, -0.09797] | 0.001 |
+| A. Computerization architecture | Beta + O*NET computer-use level | 465 | -0.1512 | [-0.25082, -0.05158] | 0.004 |
+| A. Computerization architecture | Beta + Autor-Dorn RTI | 452 | -0.12771 | [-0.21601, -0.03942] | 0.004 |
+| A. Computerization architecture | Beta + Frey-Osborne automation | 440 | -0.10011 | [-0.18242, -0.01780] | 0.019 |
+| B. Occupation-level remotability | Beta, AI only: AI | 490 | -0.03814 | [-0.06425, -0.01202] | 0.006 |
+| B. Occupation-level remotability | Beta, AI + remote: AI | 418 | -0.03795 | [-0.06437, -0.01153] | 0.007 |
+| B. Occupation-level remotability | Beta, AI + remote: remote | 418 | 0.00469 | [-0.02288, 0.03226] | 0.754 |
+| B. Occupation-level remotability | Beta, AI + Webb + remote: AI | 408 | -0.03718 | [-0.06334, -0.01102] | 0.005 |
+| B. Occupation-level remotability | Beta, AI + Webb + remote: remote | 408 | 0.00606 | [-0.02123, 0.03335] | 0.694 |
+| B. Occupation-level remotability | Alpha, AI only: AI | 490 | -0.02795 | [-0.05779, 0.00190] | 0.064 |
+| B. Occupation-level remotability | Alpha, AI + remote: AI | 418 | -0.02376 | [-0.05210, 0.00459] | 0.108 |
+| B. Occupation-level remotability | Alpha, AI + remote: remote | 418 | -0.01247 | [-0.03732, 0.01237] | 0.311 |
+| B. Occupation-level remotability | Alpha, AI + Webb + remote: AI | 408 | -0.0241 | [-0.05180, 0.00360] | 0.096 |
+| B. Occupation-level remotability | Alpha, AI + Webb + remote: remote | 408 | -0.00991 | [-0.03455, 0.01473] | 0.458 |
+| B. Occupation-level remotability | Remote only: remote | 420 | -0.01884 | [-0.04508, 0.00739] | 0.154 |
+
+**Note.** Frozen v1.1 values. Reported confidence intervals and p-values use the one-step occupation-cluster wild-score procedure. Where applicable, inference conditions on realized CPS weighted employment-stock cells and does not separately propagate first-stage survey-sampling or calibration-weight uncertainty.
