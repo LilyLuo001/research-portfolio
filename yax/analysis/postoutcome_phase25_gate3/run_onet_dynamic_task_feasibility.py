@@ -136,7 +136,11 @@ def transition_metrics(left_tasks: pd.DataFrame, right_tasks: pd.DataFrame,
     rt = right_tasks.set_index(["occ", "task_id"])
     lk, rk = set(lt.index), set(rt.index)
     common = lk & rk
-    exact = sum(lt.loc[key, "task_text"] == rt.loc[key, "task_text"] for key in common)
+    common_index = pd.MultiIndex.from_tuples(sorted(common), names=["occ", "task_id"])
+    exact = int((
+        lt.reindex(common_index).task_text.to_numpy()
+        == rt.reindex(common_index).task_text.to_numpy()
+    ).sum())
     revised = len(common) - exact
 
     left_text = {(row.occ, normalize_text(row.task_text)): str(row.task_id)
