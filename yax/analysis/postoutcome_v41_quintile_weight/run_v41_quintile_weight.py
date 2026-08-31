@@ -198,7 +198,7 @@ def classification_outputs(output: pathlib.Path, support: list[str], classified:
                 "analysis_status": LABEL,
                 "scheme": scheme,
                 "quintile": quintile,
-                "lower_cut_inclusive": "-inf" if quintile == 1 else float(cuts[quintile - 2]),
+                "lower_bound_exclusive": "-inf" if quintile == 1 else float(cuts[quintile - 2]),
                 "upper_cut_inclusive": "inf" if quintile == 5 else float(cuts[quintile - 1]),
                 "occupation_count": int(np.sum(q_values == quintile)),
                 "within_window_employment_share": float(weights[q_values == quintile].sum() / weights.sum()),
