@@ -130,3 +130,23 @@ def test_onet_task_matching_distinguishes_revision_and_renumbering():
     assert result["apparent_task_id_renumbering_same_occ_text"] == 1
     assert result["task_additions"] == result["task_deletions"] == 1
     assert result["mean_absolute_im_rt_change"] == 0.5
+
+
+def test_factor_family_balancing_assigns_equal_total_family_weight():
+    path = PHASE25 / "run_shared_component_feasibility.py"
+    spec = importlib.util.spec_from_file_location("phase25_factor_test", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    frame = pd.DataFrame({
+        "a1": [0.0, 1.0, 2.0, 4.0], "a2": [0.0, 1.0, 2.0, 4.0],
+        "a3": [0.0, 1.0, 2.0, 4.0], "e1": [4.0, 2.0, 1.0, 0.0],
+    })
+    weights = np.array([1.0, 2.0, 3.0, 4.0])
+    aioe, eloundou, shared = module.family_balanced_shared(
+        frame, weights, ["a1", "a2", "a3"], ["e1"]
+    )
+    expected = module.weighted_standardize((aioe + eloundou) / 2, weights)
+    assert np.allclose(shared, expected)
+    assert np.isclose(np.average(shared, weights=weights), 0.0)
+    assert np.isclose(np.average(shared ** 2, weights=weights), 1.0)
