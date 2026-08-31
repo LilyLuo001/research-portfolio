@@ -253,12 +253,12 @@ def fit_multinomial(
     designs: list[sparse.csr_matrix],
     metadata: list[dict],
     n_occ: int,
-    maxiter: int = 1000,
+    maxiter: int = 10000,
 ) -> dict:
     """Fit joint multinomial QMLE and return clustered slope influence."""
     n = y.sum(axis=1)
-    if np.any(n <= 0):
-        raise RuntimeError("occupation-month totals must be positive")
+    if np.any(n < 0) or not np.any(n > 0):
+        raise RuntimeError("occupation-month totals are invalid")
     sizes = [x.shape[1] for x in designs]
     offsets = np.cumsum([0, *sizes])
     scale = float(n.sum())
@@ -288,10 +288,14 @@ def fit_multinomial(
         start,
         method="L-BFGS-B",
         jac=True,
-        options={"maxiter": maxiter, "ftol": 1e-12, "gtol": 1e-8, "maxls": 50},
+        options={"maxiter": maxiter, "ftol": 1e-15, "gtol": 1e-9, "maxls": 50},
     )
     if not result.success:
-        raise RuntimeError(f"multinomial optimization failed: {result.message}")
+        raise RuntimeError(
+            "multinomial optimization failed: "
+            f"{result.message}; iterations={result.nit}; objective={result.fun:.12g}; "
+            f"max_scaled_gradient={np.max(np.abs(result.jac)):.12g}"
+        )
     blocks = unpack(result.x)
     eta = np.zeros((len(n), len(AGE_GROUPS)), dtype=float)
     for k, (x, b, meta) in enumerate(zip(designs, blocks, metadata)):
@@ -350,6 +354,8 @@ def fit_multinomial(
     influence = influence_all[:, target_positions]
     analytic_se = analytic_se_all[target_positions]
     max_scaled_gradient = float(np.max(np.abs(result.jac)))
+    max_scaled_slope_gradient = float(np.max(np.abs(result.jac[slope_indices])))
+    max_scaled_target_gradient = float(np.max(np.abs(result.jac[target_indices])))
     return {
         "beta": beta,
         "analytic_se": analytic_se,
@@ -358,9 +364,12 @@ def fit_multinomial(
         "iterations": int(result.nit),
         "objective": float(result.fun),
         "max_scaled_gradient": max_scaled_gradient,
+        "max_scaled_slope_gradient": max_scaled_slope_gradient,
+        "max_scaled_target_gradient": max_scaled_target_gradient,
         "probability_min": float(probability.min()),
         "probability_max": float(probability.max()),
         "information_condition_number_slopes": float(np.linalg.cond(schur)),
+        "zero_total_occupation_month_cells": int(np.sum(n == 0)),
     }
 
 
@@ -412,17 +421,58 @@ def inference_rows(fit: dict) -> tuple[list[dict], dict]:
 
 
 def write_figure(rows: list[dict], confirmatory: dict, path: pathlib.Path) -> None:
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
     estimated = rows[:-1]
     labels = [row["Age group"] for row in estimated]
     values = np.array([row["coefficient"] for row in estimated], dtype=float)
     low = np.array([row["CI low"] for row in estimated], dtype=float)
     high = np.array([row["CI high"] for row in estimated], dtype=float)
     positions = np.arange(len(labels))
+    try:
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ModuleNotFoundError:
+        # SCC's lean analysis environment has gnuplot but not matplotlib.
+        data_path = path.with_suffix(".plot.tsv")
+        script_path = path.with_suffix(".plot.gnuplot")
+        data_path.write_text(
+            "\n".join(
+                f"{index}\t{value:.12g}\t{lo:.12g}\t{hi:.12g}\t{label}"
+                for index, (value, lo, hi, label) in enumerate(zip(values, low, high, labels))
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        safe_output = str(path).replace("'", "''")
+        safe_data = str(data_path).replace("'", "''")
+        script_path.write_text(
+            "\n".join(
+                [
+                    "set terminal pngcairo size 1892,1188 enhanced font 'Arial,18'",
+                    f"set output '{safe_output}'",
+                    "set title 'Age profile of the beta Q5-versus-Q1 post-2022 employment-stock gradient'",
+                    "set xlabel 'Age group (reference: 51-65)'",
+                    "set ylabel 'Log-point coefficient'",
+                    "set grid ytics lc rgb '#dddddd'",
+                    "set xzeroaxis lc rgb '#555555' lw 1",
+                    "set xrange [-0.5:4.5]",
+                    "set xtics ('18-21' 0, '22-25' 1, '26-30' 2, '31-40' 3, '41-50' 4)",
+                    "set key outside bottom center horizontal",
+                    "set label 1 'POST-OUTCOME EXPLORATORY - NOT PART OF CONFIRMATORY YAX v1.1' at graph 0.01,0.02 front font ',10' textcolor rgb '#666666'",
+                    f"confirm={float(confirmatory['coefficient']):.12g}",
+                    f"plot '{safe_data}' using 1:2:3:4 with yerrorbars pt 7 ps 1.2 lw 2 lc rgb '#1f4e79' title 'Exploratory age-specific Q5-Q1 post gradient', \\",
+                    "     '+' using (1):(confirm) with points pt 13 ps 1.5 lc rgb '#b34700' title 'Confirmatory pooled-older benchmark - different comparison group'",
+                ]
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        subprocess.run(["gnuplot", str(script_path)], check=True)
+        data_path.unlink()
+        script_path.unlink()
+        return
+
     fig, ax = plt.subplots(figsize=(8.6, 5.4), constrained_layout=True)
     ax.axhline(0, color="#555555", linewidth=1)
     ax.errorbar(
@@ -556,7 +606,9 @@ def run(args: argparse.Namespace) -> dict:
         ],
         "optimizer": {key: fit[key] for key in (
             "converged", "iterations", "objective", "max_scaled_gradient",
-            "probability_min", "probability_max", "information_condition_number_slopes"
+            "max_scaled_slope_gradient", "max_scaled_target_gradient",
+            "probability_min", "probability_max", "information_condition_number_slopes",
+            "zero_total_occupation_month_cells"
         )},
         "bootstrap": bootstrap,
         "input_hashes": authenticated["hashes"],

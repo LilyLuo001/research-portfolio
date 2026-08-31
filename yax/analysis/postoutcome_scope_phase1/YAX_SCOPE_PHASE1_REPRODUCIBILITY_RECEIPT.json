@@ -1,0 +1,117 @@
+{
+  "record": "YAX Scope Expansion Phase 1 reproducibility receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-08-31T09:56:54.985016+00:00",
+  "branch": "task/yax-scope-phase1-20260831",
+  "base_commit_before_phase1": "ca5a02478b68f1a0e47eadd4e8816bbc96c9dcc3",
+  "preanalysis_plan_commit": "d4818ee7af834b51d73a6b59849775f75eee2fb9",
+  "current_head_before_final_artifact_commit": "775923d8bd16ac0ca4e638d2339cbafba756485a",
+  "immutable_tags": {
+    "v1.1-design-freeze": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+    "v1.1-confirmatory-results": "b16109482c3bf5ca176f6f08976e120b04769945"
+  },
+  "protected_artifact_hashes": {
+    "yax/analysis/outcomes/frozen_v11_corrected_run/FROZEN_RESULTS.json": "4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831",
+    "yax/analysis/outcomes/frozen_v11_corrected_run/RESULT_LEDGER.jsonl": "e900adb75510729be635eb7aea381bfe6e523b376b6f2723350cf47bdf09266b",
+    "yax/manuscript/v4_1/YAX_MANUSCRIPT_v4_1_CLEAN.md": "1591a4a545095d3d7b0c65062849fb1101a49bd803e6e0e3e732e84c715e700c"
+  },
+  "phase1_artifact_hashes": {
+    "YAX_SCOPE_PHASE1_ANALYSIS_PLAN.md": "b353367cf5591fdef9970f2b729c62897951235a2c4fd0644837a1808fcd4587",
+    "YAX_AGE_PROFILE_RESULTS.csv": "0be8ec5100393867e42e3f4b9bc8b043af00ddd3bc91d90b1b585e3dce068024",
+    "figure_age_experience_profile.png": "469e9ee24a86a0a58bc9e6d73983c0211938fd0bae7a1250a1e3f224e0a976e0",
+    "CPS_LONGITUDINAL_VARIABLE_INVENTORY.csv": "c442c5cca7afa43d46ec28fa4e8ccf5b101f80fd9768c4498cf5cdcd0f02d0a1",
+    "CPS_LONGITUDINAL_MATCH_RATES.csv": "7494a6b06c7a05658a647e50ed2648ab13b8a4176aa8ff72dcca748ec92d1955",
+    "CPS_FLOW_SAMPLE_FEASIBILITY.csv": "23638e05d90e70453c3e395c1352aa921f00fcbc56dc84906081fea0e3456b88",
+    "CPS_OCCUPATION_SWITCHING_NOISE_AUDIT.md": "a8a5f22c5e022a4bd852ae62a6079c04a3a8242e95c7ac9dd7b5aa6f6a58a1e6",
+    "CPS_LONGITUDINAL_WEIGHT_AUDIT.md": "c2c05abf0a09171158c532dc17f426f3ab8aab95465b4bf2f685330576d978a1",
+    "YAX_FUTURE_FLOW_ANALYSIS_PLAN.md": "f30fe41abe8ceba85c88a7e146363c7a4edfc7ba89f88619e870f0366057798d",
+    "YAX_SCOPE_PHASE1_DECISION_MEMO.md": "be7b2601276802728036a3517d5eac159150424b9bb76fe858a706b19954127a",
+    "YAX_AGE_PROFILE_RECEIPT.json": "60e5db135092828e98e2236a53e13695d6055f4c4a958457caa490b4eb8ac107",
+    "CPS_LONGITUDINAL_FEASIBILITY_RECEIPT.json": "03e9b8ca312e658f4766cb7497e152ccb5ec7cffd5e94e8f447bf1aea69d1a91",
+    "run_phase1_age_profile.py": "9f6a8ab16cf155187c6b97e00866fddcd81db400c0ebe1fc4027769ac70e9af8",
+    "run_phase1_flow_audit.py": "05900de43ac3e076696d58bb1618ddcd446d013248e097b90e9222af402cccb7",
+    "finalize_phase1.py": "9fd3c39473d1920b33df5c6fae58888fe9e2bffd5d92a5011608c71df8dd9051"
+  },
+  "phase1_test_file": {
+    "path": "yax/tests/test_scope_phase1.py",
+    "sha256": "bf15210e1ae1a37ed5a3d6c760f71cb1bdb8c238d976d1ab133518a27042bd07"
+  },
+  "authenticated_private_input_hashes": {
+    "age_profile": {
+      "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+      "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+      "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+      "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+      "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+      "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+    },
+    "flow_feasibility": {
+      "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+      "codebook": "1bf294152576efad9601491860f8238ee72d8291f939fb4ed467edff42815d45",
+      "xml_metadata": "5933bc48ed736a00fa70547ef503f571c6f1f9c03aef7d24ce511af3550fb319",
+      "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+      "v41_membership": "ee477954c46d565ee41e5bdfece267cdee228aeb6a611d44d5ff8f3fde3032a6",
+      "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+    }
+  },
+  "age_profile": {
+    "classification": "AGE-A with precision caveat",
+    "q5_membership_identical_to_historical": true,
+    "optimizer": {
+      "converged": true,
+      "iterations": 4643,
+      "objective": 1.5851108146660162,
+      "max_scaled_gradient": 1.7686337843052278e-08,
+      "max_scaled_slope_gradient": 1.7686337843052278e-08,
+      "max_scaled_target_gradient": 4.789067312360869e-10,
+      "probability_min": 0.0,
+      "probability_max": 0.6143936934823508,
+      "information_condition_number_slopes": 172.38469024473645,
+      "zero_total_occupation_month_cells": 925
+    },
+    "bootstrap": {
+      "draws": 999,
+      "seed": 20260901,
+      "common_cluster_multipliers": true,
+      "centered_target_draws_sha256": "87bd871cd718ef4ef1538b4e9cdfa3a938953236c7a75062fdb4374fccfb6872"
+    }
+  },
+  "flow_feasibility": {
+    "classification": "FLOW-B (strong; adjacent-month only)",
+    "preferred_id": "CPSIDV",
+    "switching": {
+      "employed_to_employed_matched": 3090795,
+      "raw_valid_pairs": 3090795,
+      "raw_adjacent_occupation_change_rate": 0.06886027704846163,
+      "occ2010_valid_pairs": 3090795,
+      "occ2010_change_rate": 0.06573066152882996,
+      "modal_harmonized_valid_pairs": 3085560,
+      "modal_harmonized_change_rate": 0.06661351586097823,
+      "harmonized_switches": 205540,
+      "switches_with_same_SOC_major_group_share": 0.26263987545003403,
+      "three_month_first_switches_observable": 112736,
+      "immediate_A_B_A_reversals": 11121,
+      "immediate_reversal_share_of_observable_first_switches": 0.09864639511779733,
+      "same_employer_identifier_available": false,
+      "boundary_2019_12_to_2020_01_pairs": 33144,
+      "raw_change_rate_at_taxonomy_boundary": 0.30853246439777937,
+      "occ2010_change_rate_at_taxonomy_boundary": 0.07901882693700217,
+      "modal_harmonized_change_rate_at_taxonomy_boundary": 0.11485892656908203,
+      "modal_harmonized_change_rate_other_months": 0.06609200203239049
+    }
+  },
+  "joint_decision": "PATH 1 \u2014 promote only after a separately predeclared flow freeze",
+  "new_outcome_regressions_executed": [
+    "one pre-declared grouped-multinomial conditional-PPML flexible age-profile model"
+  ],
+  "flow_treatment_effect_regressions_executed": [],
+  "prohibited_analyses_executed": [],
+  "main_manuscript_modified": false,
+  "protected_confirmatory_artifacts_modified": false,
+  "uncommitted_paths_at_seal_limited_to_phase1_namespace_and_phase1_test": true,
+  "tests": {
+    "dax_and_yax": "556 passed, 3 skipped",
+    "repository_wide_collection": "blocked outside YAX by absent ops/l1/gemini_helper.py; after ignoring that collector, 607 passed, 3 skipped and 3 ops/runner inbox tests failed because ops/box/run_inbox.sh is absent",
+    "phase1_test_failures": 0
+  }
+}

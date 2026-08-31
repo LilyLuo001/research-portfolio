@@ -1,0 +1,179 @@
+{
+  "record": "YAX Phase 1 age-profile implementation receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-08-31T09:46:18.559710+00:00",
+  "preanalysis_plan_commit": "d4818ee",
+  "execution_head": "d4818ee7af834b51d73a6b59849775f75eee2fb9",
+  "new_outcome_regressions_executed": [
+    "one pre-declared grouped-multinomial conditional-PPML flexible age-profile model"
+  ],
+  "design": {
+    "age_groups": [
+      "18-21",
+      "22-25",
+      "26-30",
+      "31-40",
+      "41-50",
+      "51-65"
+    ],
+    "reference": "51-65",
+    "sample": [
+      "2017-01",
+      "2026-07"
+    ],
+    "static_months": 108,
+    "transition_excluded": "2022-12",
+    "post_start": "2023-01",
+    "occupation_support": 468,
+    "support_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+    "exposure": "dv_rating_beta Rule A strict",
+    "control": "webb_pct_software",
+    "quintile_weight_window": [
+      "2017-01",
+      "2022-11"
+    ],
+    "quintile_weight_population": "ages 22-65",
+    "webb_weight_window": "108 static months, ages 22-65, historical primary scaling",
+    "estimator": "joint grouped-multinomial conditional equivalent of saturated PPML",
+    "fixed_effects": [
+      "occupation x age bin",
+      "occupation x month",
+      "age bin x month"
+    ],
+    "inference": "occupation-cluster analytic CRSE and 999-draw one-step Rademacher wild score"
+  },
+  "q5_membership_identical_to_historical": true,
+  "q5_jaccard": 1.0,
+  "age_cell_build": {
+    "rows_read": 9262480,
+    "rows_employed_age_18_65": 5069185,
+    "probabilistically_expanded_rows": 2592331,
+    "occupations": 468,
+    "months": 109,
+    "age_groups": 6,
+    "cell_rows": 306072
+  },
+  "separation_handling": [
+    {
+      "age_group": "18-21",
+      "active_occupation_count": 460,
+      "separated_zero_stock_occupations": [
+        "0425",
+        "1710",
+        "3000",
+        "3040",
+        "3140",
+        "3261",
+        "3710",
+        "7030"
+      ],
+      "nuisance_columns": 567,
+      "slope_columns": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post",
+        "Webb_z_x_post"
+      ],
+      "slope_start": 567,
+      "columns": 572
+    },
+    {
+      "age_group": "22-25",
+      "active_occupation_count": 468,
+      "separated_zero_stock_occupations": [],
+      "nuisance_columns": 575,
+      "slope_columns": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post",
+        "Webb_z_x_post"
+      ],
+      "slope_start": 575,
+      "columns": 580
+    },
+    {
+      "age_group": "26-30",
+      "active_occupation_count": 467,
+      "separated_zero_stock_occupations": [
+        "5200"
+      ],
+      "nuisance_columns": 574,
+      "slope_columns": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post",
+        "Webb_z_x_post"
+      ],
+      "slope_start": 574,
+      "columns": 579
+    },
+    {
+      "age_group": "31-40",
+      "active_occupation_count": 468,
+      "separated_zero_stock_occupations": [],
+      "nuisance_columns": 575,
+      "slope_columns": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post",
+        "Webb_z_x_post"
+      ],
+      "slope_start": 575,
+      "columns": 580
+    },
+    {
+      "age_group": "41-50",
+      "active_occupation_count": 468,
+      "separated_zero_stock_occupations": [],
+      "nuisance_columns": 575,
+      "slope_columns": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post",
+        "Webb_z_x_post"
+      ],
+      "slope_start": 575,
+      "columns": 580
+    }
+  ],
+  "optimizer": {
+    "converged": true,
+    "iterations": 4643,
+    "objective": 1.5851108146660162,
+    "max_scaled_gradient": 1.7686337843052278e-08,
+    "max_scaled_slope_gradient": 1.7686337843052278e-08,
+    "max_scaled_target_gradient": 4.789067312360869e-10,
+    "probability_min": 0.0,
+    "probability_max": 0.6143936934823508,
+    "information_condition_number_slopes": 172.38469024473645,
+    "zero_total_occupation_month_cells": 925
+  },
+  "bootstrap": {
+    "draws": 999,
+    "seed": 20260901,
+    "common_cluster_multipliers": true,
+    "centered_target_draws_sha256": "87bd871cd718ef4ef1538b4e9cdfa3a938953236c7a75062fdb4374fccfb6872"
+  },
+  "input_hashes": {
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+  },
+  "output_hashes": {
+    "YAX_AGE_PROFILE_RESULTS.csv": "0be8ec5100393867e42e3f4b9bc8b043af00ddd3bc91d90b1b585e3dce068024",
+    "figure_age_experience_profile.png": "469e9ee24a86a0a58bc9e6d73983c0211938fd0bae7a1250a1e3f224e0a976e0"
+  },
+  "confirmatory_benchmark": {
+    "comparison": "22-25 versus pooled 26-65; different estimand",
+    "coefficient": -0.13107397642233506
+  },
+  "protected_confirmatory_artifacts_modified": false
+}
