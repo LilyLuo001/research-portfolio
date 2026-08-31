@@ -16,7 +16,6 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -486,22 +485,26 @@ these coefficients and switching-data quality is assessed separately.
         encoding="utf-8",
     )
 
-    fig_rows = [primary[name] for name in ["employment_exit", "occupational_outflow", "entry_destination"]]
-    y = np.arange(3)
-    estimates = np.array([row["coefficient_log_points"] for row in fig_rows])
-    lower = np.array([row["wild_score_ci_lower"] for row in fig_rows])
-    upper = np.array([row["wild_score_ci_upper"] for row in fig_rows])
-    fig, ax = plt.subplots(figsize=(7.2, 3.7))
-    ax.errorbar(estimates, y, xerr=np.vstack([estimates - lower, upper - estimates]), fmt="o", color="#1f4e79", capsize=4)
-    ax.axvline(0, color="black", linewidth=0.8)
-    ax.set_yticks(y, ["Employment exit", "Occupational outflow", "Entry destination"])
-    ax.invert_yaxis()
-    ax.set_xlabel("Beta Q5 vs Q1 young-relative post coefficient (log points)")
-    ax.set_title("Phase 2A: primary beta flow margins")
-    fig.tight_layout()
     figure_path = args.output_dir / "figure_phase2A_beta_flow_margins.png"
-    fig.savefig(figure_path, dpi=180)
-    plt.close(fig)
+    try:
+        import matplotlib.pyplot as plt
+        fig_rows = [primary[name] for name in ["employment_exit", "occupational_outflow", "entry_destination"]]
+        y = np.arange(3)
+        estimates = np.array([row["coefficient_log_points"] for row in fig_rows])
+        lower = np.array([row["wild_score_ci_lower"] for row in fig_rows])
+        upper = np.array([row["wild_score_ci_upper"] for row in fig_rows])
+        fig, ax = plt.subplots(figsize=(7.2, 3.7))
+        ax.errorbar(estimates, y, xerr=np.vstack([estimates - lower, upper - estimates]), fmt="o", color="#1f4e79", capsize=4)
+        ax.axvline(0, color="black", linewidth=0.8)
+        ax.set_yticks(y, ["Employment exit", "Occupational outflow", "Entry destination"])
+        ax.invert_yaxis()
+        ax.set_xlabel("Beta Q5 vs Q1 young-relative post coefficient (log points)")
+        ax.set_title("Phase 2A: primary beta flow margins")
+        fig.tight_layout()
+        fig.savefig(figure_path, dpi=180)
+        plt.close(fig)
+    except ModuleNotFoundError:
+        figure_path = None
 
     receipt = {
         "record": "YAX Phase 2A primary beta flow execution receipt", "analysis_status": LABEL,
@@ -521,7 +524,9 @@ these coefficients and switching-data quality is assessed separately.
             for weighting in ["official", "unweighted", "origin_WTFINL"]
         ],
         "excluded_analyses_executed": [], "long_gap_links_used": False,
-        "outputs": {path.name: sha256(path) for path in [counts_path, results_path, decision_path, figure_path]},
+        "figure_A_generated_in_execution_environment": figure_path is not None,
+        "outputs": {path.name: sha256(path) for path in [counts_path, results_path, decision_path]
+                    + ([] if figure_path is None else [figure_path])},
     }
     receipt_path = args.output_dir / "YAX_PHASE2_STAGE2A_RECEIPT.json"
     receipt_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
