@@ -1,0 +1,107 @@
+{
+  "record": "YAX Phase 1.5 official longitudinal-weight compatibility audit",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-08-31T14:42:28.802421+00:00",
+  "status": "PASS_DEFENSIBLE_CPSIDV_WITH_OFFICIAL_WEIGHT",
+  "official_variable": {
+    "name": "LNKFW1MWT",
+    "label": "Longitudinal weight for two adjacent months (BMS only)",
+    "IPUMS_variable_page": "https://cps.ipums.org/cps-action/variables/LNKFW1MWT",
+    "IPUMS_CPSIDV_page": "https://cps.ipums.org/cps-action/variables/CPSIDV",
+    "construction_note": "IPUMS documents availability for samples linkable to the next month using CPSIDP; CPSIDV is a stricter validated identifier derived from CPSIDP."
+  },
+  "input_hashes": {
+    "wide_microdata_private": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "weight_patch_private": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+    "weight_patch_codebook_private": "5eb504f219d15d9f6e65e9487815da2557ce6256bac7acd81e9a1d95bf6346e9",
+    "weight_patch_DDI_private": "636f1564650d267824e4feef7cc58756e972b66f8546585b052163ddc633753e",
+    "extract_request_receipt": "1c4ace7510ea80f6d6b5275c16557e6e502de6329ab12dcbb84ab9131b50a9b6",
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "preperiod_beta_membership": "ee477954c46d565ee41e5bdfece267cdee228aeb6a611d44d5ff8f3fde3032a6"
+  },
+  "extract": {
+    "IPUMS_extract_number": 10,
+    "variables_added": [
+      "YEAR",
+      "MONTH",
+      "SERIAL",
+      "PERNUM",
+      "CPSID",
+      "CPSIDP",
+      "CPSIDV",
+      "MISH",
+      "AGE",
+      "LNKFW1MWT"
+    ],
+    "merge": {
+      "wide_rows": 9262480,
+      "patch_rows": 9262480,
+      "basic_positive_WTFINL_rows": 8601832,
+      "merge_key": [
+        "YEAR",
+        "MONTH",
+        "SERIAL",
+        "PERNUM"
+      ],
+      "merge_success_rate": 1.0,
+      "merge_key_mismatches": 0,
+      "identifier_mismatches": {
+        "CPSID": 0,
+        "CPSIDP": 0,
+        "CPSIDV": 0
+      },
+      "mish_mismatches": 0,
+      "age_mismatches": 0,
+      "duplicate_basic_merge_keys": 0
+    },
+    "fresh_extract_includes_2024_forward_samples": true,
+    "statement_on_revisions": "A fresh IPUMS extract generated on 2026-08-31 is used; the audit does not independently reconstruct IPUMS revision history."
+  },
+  "link_rule": {
+    "eligible_origin_MISH": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7
+    ],
+    "calendar_rule": "destination month ordinal equals origin month ordinal plus exactly one",
+    "destination_rotation_rule": "destination MISH equals origin MISH plus one",
+    "long_gap_links_used": false,
+    "September_2025_to_November_2025_allowed": false,
+    "age_at_origin": "22-25 young; 26-65 older"
+  },
+  "overall": {
+    "eligible_origins": 4500962,
+    "CPSIDP_matches": 4124467,
+    "CPSIDP_match_rate": 0.9163523264582105,
+    "CPSIDV_matches": 4085493,
+    "CPSIDV_match_rate": 0.9076932886791756,
+    "positive_weight_rate_among_CPSIDP_matches": 1.0,
+    "weighted_CPSIDV_retention_rate": 0.9897624725304471,
+    "missing_LNKFW1MWT_rate": 0.0,
+    "zero_LNKFW1MWT_rate": 0.0831991027695857,
+    "false_September_to_November_2025_links": 0,
+    "December_2019_to_January_2020_origins_retained_for_status_only": 49212
+  },
+  "beta_membership": {
+    "membership_occupation_count": 468,
+    "beta_Q5_codes_sha256": "82549d91f47b526448b7ae7c2b35feec056dc01981ab60a88dae501d731a9e4d",
+    "beta_Q5_occupation_count": 91
+  },
+  "compatibility_conditions": {
+    "exact_row_merge": true,
+    "identifiers_identical": true,
+    "official_weight_present_for_CPSIDP_links": true,
+    "CPSIDV_is_strict_subset": true,
+    "weighted_CPSIDV_retention_at_least_90pct": true,
+    "no_false_gap_links": true
+  },
+  "flow_outcome_variables_read": [],
+  "AI_flow_coefficients_estimated": [],
+  "outputs": {
+    "YAX_PHASE2_LINK_SAMPLE_AUDIT.csv": "c585923effa0c28e046f3bb653f898fc55efed28485fa886279f998081b3d78c",
+    "YAX_PHASE2_LONGITUDINAL_WEIGHT_AUDIT.md": "462863ace302c2483ef304326fe163e08c2733699e9400827f449b690a9aa1c1"
+  }
+}
