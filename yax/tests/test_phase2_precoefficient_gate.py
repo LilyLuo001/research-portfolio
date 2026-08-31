@@ -1,7 +1,10 @@
 import hashlib
+import importlib.util
 import json
 import pathlib
+import sys
 
+import numpy as np
 import pandas as pd
 
 
@@ -73,3 +76,31 @@ def test_plan_freezes_gated_estimands_and_exclusions():
     assert "MISH 4→5 eight-month returns are excluded" in plan
     assert "September→November 2025 is not" in plan
     assert "At the time this plan is committed" in plan
+
+
+def test_offset_flow_engine_converges_on_synthetic_panel():
+    path = PHASE / "run_phase2_primary_beta_flows.py"
+    spec = importlib.util.spec_from_file_location("phase2_primary_test", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    n_occ, n_month = 15, 10
+    occ = np.repeat(np.arange(n_occ), n_month)
+    month = np.tile(np.arange(n_month), n_occ)
+    post = month >= 5
+    q = np.repeat((np.arange(n_occ) % 5) + 1, n_month)
+    webb = np.repeat(np.linspace(-1, 1, n_occ), n_month)
+    x = np.column_stack([((q == value) & post).astype(float) for value in (2, 3, 4, 5)]
+                        + [(webb * post).astype(float)])
+    offset = np.repeat(np.linspace(-0.25, 0.25, n_occ), n_month)
+    eta = offset + np.repeat(np.linspace(-0.3, 0.3, n_occ), n_month) + 0.2 * post + x @ np.array([0.03, -0.02, 0.04, 0.08, -0.01])
+    total = np.full(n_occ * n_month, 400.0)
+    young = np.round(total / (1 + np.exp(-eta)))
+    beta, se, influence, iterations, used = module.fit_offset(
+        young, total, occ, month, x, offset
+    )
+    assert beta.shape == (5,)
+    assert np.all(np.isfinite(beta)) and np.all(np.isfinite(se))
+    assert influence.shape == (n_occ, 5)
+    assert iterations < 5000
+    assert len(used) == n_occ
