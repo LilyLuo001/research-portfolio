@@ -104,3 +104,35 @@ def test_offset_flow_engine_converges_on_synthetic_panel():
     assert influence.shape == (n_occ, 5)
     assert iterations < 5000
     assert len(used) == n_occ
+
+
+def test_realized_transition_rank_helper_is_tie_stable():
+    path = PHASE / "run_phase2_realized_transition_architecture.py"
+    spec = importlib.util.spec_from_file_location("phase2_transition_test", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    values = {"a": 0.0, "b": 1.0, "c": 1.0, "d": 2.0}
+    weights = {"a": 1.0, "b": 2.0, "c": 3.0, "d": 4.0}
+    ranks = module.weighted_midrank(values, weights, ["a", "b", "c", "d"])
+    assert ranks["a"] < ranks["b"] == ranks["c"] < ranks["d"]
+    assert all(0 < value < 1 for value in ranks.values())
+
+
+def test_stage2a_flow_m5_stops_architecture_effect_grid():
+    receipt = json.loads((PHASE / "YAX_PHASE2_STAGE2A_RECEIPT.json").read_text())
+    assert receipt["classification"] == "FLOW-M5"
+    assert receipt["stage2B_authorized"] is False
+    assert receipt["excluded_analyses_executed"] == []
+    assert receipt["long_gap_links_used"] is False
+    assert len(receipt["new_outcome_regressions_executed"]) == 12
+    for name, expected in receipt["outputs"].items():
+        assert sha256(PHASE / name) == expected
+    results = pd.read_csv(PHASE / "YAX_PHASE2_PRIMARY_BETA_FLOW_RESULTS.csv")
+    primary = results.loc[results.weighting.eq("official")]
+    assert set(primary.margin) == {
+        "employment_exit", "occupational_outflow", "persistent_outflow", "entry_destination"
+    }
+    gate = primary.loc[primary.margin.ne("persistent_outflow")]
+    assert (gate.wild_score_ci_lower < 0).all()
+    assert (gate.wild_score_ci_upper > 0).all()
