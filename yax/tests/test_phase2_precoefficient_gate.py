@@ -163,3 +163,19 @@ def test_phase2_decision_is_path2b_with_support_caveat_and_fixed_figures():
     for name in ("figure_phase2A_beta_flow_margins.png", "figure_phase2B_pairwise_sign_agreement.png"):
         path = PHASE / name
         assert path.exists() and path.stat().st_size > 20_000
+
+
+def test_phase2_reproducibility_receipt_seals_all_actions_and_artifacts():
+    receipt = json.loads((PHASE / "YAX_PHASE2_REPRODUCIBILITY_RECEIPT.json").read_text())
+    assert receipt["final_decision"] == "PATH-2B"
+    assert receipt["phase2A_classification"] == "FLOW-M5"
+    assert receipt["phase2B_executed"] is False
+    assert receipt["phase2C_executed_under_independent_predeclaration"] is True
+    assert receipt["all_excluded_analyses_executed"] == []
+    assert receipt["long_gap_links_used"] is False
+    assert len(receipt["all_new_outcome_regressions_executed"]) == 13
+    assert receipt["protected_paths_changed_since_phase1"] == []
+    for name, metadata in receipt["artifacts"].items():
+        path = PHASE / name
+        assert path.stat().st_size == metadata["bytes"]
+        assert sha256(path) == metadata["sha256"]

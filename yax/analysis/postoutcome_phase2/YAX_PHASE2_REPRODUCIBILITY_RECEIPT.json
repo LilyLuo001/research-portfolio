@@ -1,0 +1,150 @@
+{
+  "record": "YAX Phase 2 full reproducibility receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-08-31T20:14:07.589187+00:00",
+  "result_package_commit": "8ebef7c4f443b5f9300ccfa7d1761f822215d790",
+  "remote_branch": "origin/task/yax-phase2-20260831",
+  "phase1_parent_commit": "0aefec9cf8837f33a09f4307c472ebc2ad75403a",
+  "immutable_refs": {
+    "v1.1-design-freeze": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+    "v1.1-confirmatory-results": "b16109482c3bf5ca176f6f08976e120b04769945"
+  },
+  "protected_paths_changed_since_phase1": [],
+  "phase15_status": "PASS_DEFENSIBLE_CPSIDV_WITH_OFFICIAL_WEIGHT",
+  "phase2A_classification": "FLOW-M5",
+  "phase2B_executed": false,
+  "phase2C_executed_under_independent_predeclaration": true,
+  "final_decision": "PATH-2B",
+  "all_new_outcome_regressions_executed": [
+    "employment_exit__official__beta_RuleA_Webb",
+    "employment_exit__unweighted__beta_RuleA_Webb",
+    "employment_exit__origin_WTFINL__beta_RuleA_Webb",
+    "occupational_outflow__official__beta_RuleA_Webb",
+    "occupational_outflow__unweighted__beta_RuleA_Webb",
+    "occupational_outflow__origin_WTFINL__beta_RuleA_Webb",
+    "persistent_outflow__official__beta_RuleA_Webb",
+    "persistent_outflow__unweighted__beta_RuleA_Webb",
+    "persistent_outflow__origin_WTFINL__beta_RuleA_Webb",
+    "entry_destination__official__beta_RuleA_Webb",
+    "entry_destination__unweighted__beta_RuleA_Webb",
+    "entry_destination__origin_WTFINL__beta_RuleA_Webb",
+    "realized_conflict__young_x_post__official_weight_WLS"
+  ],
+  "all_excluded_analyses_executed": [],
+  "long_gap_links_used": false,
+  "tests": {
+    "phase2_targeted": "10 passed",
+    "core_DAX_YAX": "566 passed, 3 skipped in 4.20s",
+    "bare_repository_pytest": "pre-existing collection failure: missing ops/l1/gemini_helper.py"
+  },
+  "artifacts": {
+    "YAX_PHASE2_DECISION_MEMO.md": {
+      "bytes": 5686,
+      "sha256": "0d72753f80a107696e237fd7d1dd8129bd1ce68b705600a100ee5d453092e18b"
+    },
+    "YAX_PHASE2_FLOW_ANALYSIS_PLAN.md": {
+      "bytes": 11730,
+      "sha256": "75b047e1e9fb4cf4760c9d76285593a6b3d0d9d438ca0371f4955b94554fccbf"
+    },
+    "YAX_PHASE2_FLOW_MARGIN_DECISION.md": {
+      "bytes": 914,
+      "sha256": "4e8cfabf213ee6c5721d1353c74bf608a5df5f02d953e35a1075b346eef4920f"
+    },
+    "YAX_PHASE2_FLOW_SAMPLE_COUNTS.csv": {
+      "bytes": 1892,
+      "sha256": "d52ae44af6dd1a01515e8f5d7893880ec7e9750695cc1585e684df91235c9931"
+    },
+    "YAX_PHASE2_IMPLEMENTATION_FIXES.md": {
+      "bytes": 1191,
+      "sha256": "677c5e2f07d12c20dc8e062247281652994743a29fc2f9931a659e8cbcce8015"
+    },
+    "YAX_PHASE2_LINK_SAMPLE_AUDIT.csv": {
+      "bytes": 6993,
+      "sha256": "c585923effa0c28e046f3bb653f898fc55efed28485fa886279f998081b3d78c"
+    },
+    "YAX_PHASE2_LNKFW1MWT_EXTRACT_REQUEST.json": {
+      "bytes": 1186,
+      "sha256": "1c4ace7510ea80f6d6b5275c16557e6e502de6329ab12dcbb84ab9131b50a9b6"
+    },
+    "YAX_PHASE2_LNKFW1MWT_EXTRACT_SPEC.json": {
+      "bytes": 4144,
+      "sha256": "258826167f508dc150c39718701e933d13ddc8e9f31c63831d75e97ac8260037"
+    },
+    "YAX_PHASE2_LONGITUDINAL_WEIGHT_AUDIT.md": {
+      "bytes": 2646,
+      "sha256": "462863ace302c2483ef304326fe163e08c2733699e9400827f449b690a9aa1c1"
+    },
+    "YAX_PHASE2_LONGITUDINAL_WEIGHT_RECEIPT.json": {
+      "bytes": 4129,
+      "sha256": "3d78f2bf1bc0971266a6c70c496ec07f49e5ce752304cabe7df97196e92da9cb"
+    },
+    "YAX_PHASE2_PAIRWISE_RANK_CORRELATION.csv": {
+      "bytes": 8450,
+      "sha256": "d7e8a9ef6c3cfebf2529aeb25b6d42a0aaf473c8aa646d9e00613e06788678f8"
+    },
+    "YAX_PHASE2_PAIRWISE_SIGN_AGREEMENT.csv": {
+      "bytes": 9609,
+      "sha256": "0c37581257979933996c2da2abacd1da5836f94ec01f324d67dd42a941e0e551"
+    },
+    "YAX_PHASE2_PRIMARY_BETA_FLOW_RESULTS.csv": {
+      "bytes": 4128,
+      "sha256": "99445bfe4c695cfb57aaa944da38666db1bafc45ea1b985b3176eeca71d73ab4"
+    },
+    "YAX_PHASE2_REALIZED_TRANSITION_AGREEMENT.csv": {
+      "bytes": 4355,
+      "sha256": "920a4faee6d7d979bd1d38b79cffe369ee8f2949cfcc4562c78fb6cd5611d1b8"
+    },
+    "YAX_PHASE2_REALIZED_VS_CROSS_SECTIONAL_DISAGREEMENT.json": {
+      "bytes": 263,
+      "sha256": "476847bfbc6a2c94366580d8abd745b8413fb79149f737057c0cffe746e7af12"
+    },
+    "YAX_PHASE2_STAGE2A_RECEIPT.json": {
+      "bytes": 2828,
+      "sha256": "ac600aa8a3baca722e3b43547592556fd0bc8210d9dcccff6af37f3761c1dba7"
+    },
+    "YAX_PHASE2_STAGE2C_RECEIPT.json": {
+      "bytes": 4011,
+      "sha256": "39d1416889a2fb3e909cc64d89a1a119afba60ee2b4248f0f7e483415dd4e60e"
+    },
+    "YAX_PHASE2_SWITCH_PERSISTENCE_SENSITIVITY.csv": {
+      "bytes": 1024,
+      "sha256": "e63719b9d2f4264dafc0b7a581b8cda7f2be8616005c664b92eb8521bbdb402b"
+    },
+    "YAX_PHASE2_YOUNG_POST_ARCHITECTURE_SENSITIVITY.json": {
+      "bytes": 618,
+      "sha256": "e0a8857271a26e7584d019ac04cddef5fead32c0e0ff5df9ad61906fe8c8c9af"
+    },
+    "figure_phase2A_beta_flow_margins.png": {
+      "bytes": 45341,
+      "sha256": "94d8894fd98546c94b48ac07e4273437887cf453eefe216d98247634c2cbcb8f"
+    },
+    "figure_phase2B_pairwise_sign_agreement.png": {
+      "bytes": 129443,
+      "sha256": "643758bcda9b8fdfc15aecb5991821f415ad63a51115426b87fa273f4d6a0289"
+    },
+    "finalize_phase2.py": {
+      "bytes": 3911,
+      "sha256": "ac86067e2b53b37af814e0cbf2109c345203cdfa7e56166a78a41a5766d5dfb6"
+    },
+    "prepare_phase2_weight_extract.py": {
+      "bytes": 7613,
+      "sha256": "de48fc30b472aec9ae0071635ea5f91e76c902b021fb469fbb44b2e76867c9d9"
+    },
+    "render_phase2_figures.py": {
+      "bytes": 3166,
+      "sha256": "8a0986ac26da72a178ffc049f4483c9a8baf1371b9655d656a09670fb31e6dff"
+    },
+    "run_phase15_longitudinal_weight_audit.py": {
+      "bytes": 22077,
+      "sha256": "5dbf45c426dffa2435aac680b4d8a82c7f15eaa87918e471fa3aa54919926d70"
+    },
+    "run_phase2_primary_beta_flows.py": {
+      "bytes": 31524,
+      "sha256": "a67fe9793ec945901c45a4b7ef8b045429d360a820b5ff344895432dade6445a"
+    },
+    "run_phase2_realized_transition_architecture.py": {
+      "bytes": 20074,
+      "sha256": "877a3dcbe687e707c40b50a7370c5ebd6070870dd7e55eb4a7580505c7770bd8"
+    }
+  }
+}
