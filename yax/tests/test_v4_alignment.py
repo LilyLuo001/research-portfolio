@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import json
 import pathlib
 
 import numpy as np
+import pandas as pd
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -38,3 +40,28 @@ def test_categorical_event_includes_q2_through_q5_and_dynamic_webb() -> None:
     assert "for quintile in (2, 3, 4, 5):" in text
     assert 'labels.append(f"Webb_z_x_{month}")' in text
     assert "q5_indices" in text
+
+
+def test_stored_support_audit_and_common_result() -> None:
+    out = PATH.parent
+    receipt = json.loads((out / "TABLE5B_SUPPORT_RECEIPT.json").read_text())
+    assert receipt["native_support_identical"] is False
+    assert receipt["common_support_n"] == 444
+    assert np.isclose(receipt["common_support_employment_coverage"], 0.831420875609175)
+    assert receipt["all_six_common_result_signs_negative"] is True
+    assert receipt["all_six_common_intervals_exclude_zero_negative"] is False
+    results = pd.read_csv(out / "TABLE5B_COMMON_SUPPORT_RESULTS.csv")
+    assert results["n_occupations"].nunique() == 1
+    assert results["support_hash_sha256"].nunique() == 1
+    assert (results["coefficient_log_points"] < 0).all()
+    assert (results["wild_score_ci_upper"] < 0).sum() == 5
+
+
+def test_stored_categorical_event_pretrend_result() -> None:
+    result = json.loads((PATH.parent / "CATEGORICAL_Q5_Q1_EVENT_STUDY_RESULT.json").read_text())
+    assert result["pre_coefficients_tested"] == 65
+    assert result["simultaneous_pre_intervals_excluding_zero"] == 0
+    assert np.isclose(result["joint_pretrend_wild_score_p_value"], 0.929)
+    assert result["q2_q4_monthly_interactions_included"] is True
+    assert result["post_pointwise_negative_intervals_excluding_zero"] == 8
+    assert result["post_pointwise_positive_intervals_excluding_zero"] == 0
