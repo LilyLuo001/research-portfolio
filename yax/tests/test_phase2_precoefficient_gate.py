@@ -136,3 +136,30 @@ def test_stage2a_flow_m5_stops_architecture_effect_grid():
     gate = primary.loc[primary.margin.ne("persistent_outflow")]
     assert (gate.wild_score_ci_lower < 0).all()
     assert (gate.wild_score_ci_upper > 0).all()
+
+
+def test_stage2c_realized_disagreement_is_independent_and_audited():
+    receipt = json.loads((PHASE / "YAX_PHASE2_STAGE2C_RECEIPT.json").read_text())
+    assert receipt["stage2B_executed"] is False
+    assert receipt["treatment_effect_architecture_regressions_executed"] == []
+    assert receipt["long_gap_links_used"] is False
+    assert receipt["support"]["harmonized_switches_before_six_measure_support"] == 186_370
+    assert receipt["support"]["harmonized_switches_on_six_measure_support"] == 108_500
+    assert 0.58 < receipt["support"]["six_measure_support_share"] < 0.59
+    assert receipt["cross_sectional_comparison"]["realized_official_weight_conflict_rate"] > 0.53
+    did = receipt["young_post_comparison"]
+    assert did["wild_score_ci_lower"] < 0 < did["wild_score_ci_upper"]
+    for name, expected in receipt["outputs"].items():
+        assert sha256(PHASE / name) == expected
+
+
+def test_phase2_decision_is_path2b_with_support_caveat_and_fixed_figures():
+    memo = (PHASE / "YAX_PHASE2_DECISION_MEMO.md").read_text()
+    assert "PATH-2B" in memo
+    assert "FLOW-M5" in memo
+    assert "58.2%" in memo
+    assert "ARCH-MU" in memo
+    assert "No six-architecture treatment-effect grid was executed" in memo
+    for name in ("figure_phase2A_beta_flow_margins.png", "figure_phase2B_pairwise_sign_agreement.png"):
+        path = PHASE / name
+        assert path.exists() and path.stat().st_size > 20_000

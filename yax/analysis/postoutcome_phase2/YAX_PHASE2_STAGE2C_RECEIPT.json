@@ -1,0 +1,78 @@
+{
+  "record": "YAX Phase 2C realized-transition architecture receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-08-31T15:04:58.059829+00:00",
+  "plan_commit": "aed4ba518800d10b74284a7f3312e90a15b7b0d3",
+  "execution_head": "3e20d2cb15f58430ccc51f24fdf54028d44850be",
+  "execution_script_sha256": "877a3dcbe687e707c40b50a7370c5ebd6070870dd7e55eb4a7580505c7770bd8",
+  "input_hashes": {
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "weight_patch": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "weight_receipt": "3d78f2bf1bc0971266a6c70c496ec07f49e5ce752304cabe7df97196e92da9cb",
+    "stage2a_receipt": "ac600aa8a3baca722e3b43547592556fd0bc8210d9dcccff6af37f3761c1dba7"
+  },
+  "link_sample": {
+    "wide_rows_read": 9262480,
+    "validated_adjacent_pairs": 4085493,
+    "young_validated_pairs": 313171,
+    "pre_validated_pairs": 2635559,
+    "post_validated_pairs": 1413351,
+    "long_gap_pairs": 0,
+    "false_September_to_November_2025_links": 0
+  },
+  "support": {
+    "common_OCC2010_support": 392,
+    "common_support_codes_sha256": "713c44230190e64c7f9a0cd11e6bc990de49b7f7732f41b18c09922af626da56",
+    "harmonized_switches_before_six_measure_support": 186370,
+    "harmonized_switches_on_six_measure_support": 108500,
+    "six_measure_support_share": 0.5821752427965874
+  },
+  "switch_definition": "adjacent CPSIDV, employed-to-employed, different valid OCC2010, excluding 2019-12 origin",
+  "persistence_definition": "next legitimate adjacent observation remains employed in destination OCC2010",
+  "primary_weight": "origin LNKFW1MWT",
+  "unweighted_sensitivity": true,
+  "rank_window": "2017-01 through 2022-11 ages 22-65 employed, WTFINL employment-weighted mid-CDF",
+  "neutral_threshold": "exact zero only; no band",
+  "cross_sectional_comparison": {
+    "unordered_occupation_pairs": 76636,
+    "conflicting_pairs": 31637,
+    "cross_sectional_conflict_rate": 0.41282165039929014,
+    "realized_official_weight_conflict_rate": 0.5328278289030031,
+    "realized_minus_cross_sectional_conflict_rate": 0.12000617850371292
+  },
+  "young_post_comparison": {
+    "estimand": "young-post DiD in realized six-architecture conflict rate",
+    "coefficient": -3.174923752213843e-05,
+    "analytic_origin_occupation_cluster_se": 0.013345130297899658,
+    "wild_score_ci_lower": -0.0266705278110524,
+    "wild_score_ci_upper": 0.02660702933600812,
+    "wild_score_p_value": 0.999,
+    "wild_score_critical": 1.9961422615501057,
+    "bootstrap_draws": 999,
+    "bootstrap_seed": 2026083121,
+    "origin_occupation_clusters": 391,
+    "cell_rates": {
+      "young_pre": 0.4958738707580809,
+      "young_post": 0.5079360082867118,
+      "older_pre": 0.5322842336248711,
+      "older_post": 0.544378120391014
+    }
+  },
+  "figure_generated_in_execution_environment": false,
+  "new_outcome_regressions_executed": [
+    "realized_conflict__young_x_post__official_weight_WLS"
+  ],
+  "treatment_effect_architecture_regressions_executed": [],
+  "stage2B_executed": false,
+  "long_gap_links_used": false,
+  "excluded_analyses_executed": [],
+  "outputs": {
+    "YAX_PHASE2_REALIZED_TRANSITION_AGREEMENT.csv": "920a4faee6d7d979bd1d38b79cffe369ee8f2949cfcc4562c78fb6cd5611d1b8",
+    "YAX_PHASE2_PAIRWISE_SIGN_AGREEMENT.csv": "0c37581257979933996c2da2abacd1da5836f94ec01f324d67dd42a941e0e551",
+    "YAX_PHASE2_PAIRWISE_RANK_CORRELATION.csv": "d7e8a9ef6c3cfebf2529aeb25b6d42a0aaf473c8aa646d9e00613e06788678f8",
+    "YAX_PHASE2_SWITCH_PERSISTENCE_SENSITIVITY.csv": "e63719b9d2f4264dafc0b7a581b8cda7f2be8616005c664b92eb8521bbdb402b",
+    "YAX_PHASE2_REALIZED_VS_CROSS_SECTIONAL_DISAGREEMENT.json": "476847bfbc6a2c94366580d8abd745b8413fb79149f737057c0cffe746e7af12",
+    "YAX_PHASE2_YOUNG_POST_ARCHITECTURE_SENSITIVITY.json": "e0a8857271a26e7584d019ac04cddef5fead32c0e0ff5df9ad61906fe8c8c9af"
+  }
+}
