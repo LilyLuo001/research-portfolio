@@ -1,5 +1,11 @@
 # Joint AI-exposure and computerization power
 
+> **Superseded for the v1.1 freeze.** The figures below were simulated with
+> December 2022 treated. Plan v5 excludes December as a transition month and
+> starts the static post window in January 2023. `JOINT_POWER_AGGREGATE_v1.json`
+> is preserved as history but cannot clear the amended gates; a v2 SCC rerun is
+> required before any freeze.
+
 This power exercise uses only the sealed 2017-01–2022-11 cells. Synthetic post months are generated from pre-period donors; no post-period outcome has been opened. The primary AI measure remains Eloundou β. Eloundou α is a frozen robustness measure, not a replacement chosen for lower collinearity.
 
 The computerization coefficient is fixed at `log(0.95)` per employment-weighted standard deviation. It is a design stress parameter, not an estimate from outcomes. Primary inference uses an independently calibrated occupation-cluster Rademacher critical value with 999 draws.

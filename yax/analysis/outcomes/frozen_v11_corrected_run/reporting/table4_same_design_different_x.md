@@ -1,0 +1,14 @@
+| specification | coefficient_log_points | bootstrap_se | ci_95 | p_value | occupations | notes |
+|---|---|---|---|---|---|---|
+| AIOE administrative equal / Webb | -0.10321 | 0.04394 | [-0.19047, -0.01595] | 0.015 | 495 |  |
+| AIOE ability-direct / Webb | -0.11759 | 0.04562 | [-0.20864, -0.02654] | 0.012 | 484 |  |
+| AIOE OEWS source-weighted / Webb | -0.09774 | 0.03829 | [-0.17171, -0.02377] | 0.013 | 485 |  |
+| Eloundou alpha / Webb | -0.09868 | 0.03759 | [-0.17259, -0.02477] | 0.007 | 468 |  |
+| Eloundou beta / Webb | -0.13107 | 0.04443 | [-0.21704, -0.04511] | 0.003 | 468 |  |
+| Eloundou gamma / Webb | -0.15697 | 0.04077 | [-0.23663, -0.07731] | 0.002 | 468 |  |
+| Eloundou beta / Webb | -0.13107 | 0.04443 | [-0.21704, -0.04511] | 0.003 | 468 |  |
+| Eloundou beta / O*NET importance | -0.20848 | 0.05599 | [-0.31899, -0.09797] | 0.001 | 465 |  |
+| Eloundou beta / O*NET level | -0.15120 | 0.05152 | [-0.25082, -0.05158] | 0.004 | 465 |  |
+| Eloundou beta / Autor-Dorn RTI | -0.12771 | 0.04506 | [-0.21601, -0.03942] | 0.004 | 452 |  |
+| Eloundou beta / Frey-Osborne | -0.10011 | 0.04276 | [-0.18242, -0.01780] | 0.019 | 440 |  |
+| Paired Test C: beta minus alpha (common Rule-A/Webb support) | -0.03240 | 0.03697 | [-0.10235, 0.03755] | 0.403 | 468 | common draws preserve covariance; no detected difference is not equivalence |

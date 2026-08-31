@@ -30,10 +30,17 @@ sys.modules[SPEC.name] = ENGINE
 SPEC.loader.exec_module(ENGINE)
 
 LOOKUP_ROLE = "raw_occ_main_2020_plus"
-POST_START = "2022-12"
+POST_START = "2023-01"
+TRANSITION_EXCLUDED = "2022-12"
 DEFAULT_EFFECTS = (0.0, -0.005, -0.015, -0.03, -0.05, -0.08, -0.12, -0.18)
 DEFAULT_BETA_C = math.log(0.95)
 TARGET_POWER = 0.80
+
+
+def planned_post_months():
+    """Frozen v5 static window; the engine's v1 helper still starts 2022-12."""
+    return [month for month in ENGINE.planned_post_months()
+            if month >= POST_START and month != TRANSITION_EXCLUDED]
 
 
 def sha256(path):
@@ -46,6 +53,27 @@ def weighted_scale(values, weights):
     if variance <= 0:
         raise ValueError("exposure has zero weighted variance")
     return mean, math.sqrt(variance)
+
+
+def weighted_quintiles(values, weights):
+    """Employment-weighted quintiles without splitting tied exposure scores."""
+    values = np.asarray(values, dtype=float)
+    weights = np.asarray(weights, dtype=float)
+    if (len(values) == 0 or np.any(weights <= 0)
+            or np.any(~np.isfinite(values + weights))):
+        raise ValueError("invalid weighted quintile inputs")
+    order = np.argsort(values, kind="mergesort")
+    sorted_values, sorted_weights = values[order], weights[order]
+    cumulative = np.cumsum(sorted_weights)
+    total = float(cumulative[-1])
+    cuts = np.asarray([
+        sorted_values[min(np.searchsorted(cumulative, share * total, side="left"),
+                          len(values) - 1)]
+        for share in (0.2, 0.4, 0.6, 0.8)
+    ])
+    if np.any(cuts[:-1] >= cuts[1:]):
+        raise ValueError("employment-weighted exposure quintile cuts are not distinct")
+    return np.searchsorted(cuts, values, side="left") + 1
 
 
 def read_lookup(path, measure):
@@ -143,6 +171,10 @@ def prepare(cells_path, lookup_path, computerization_path, ai_measure, comp_meas
     comp_weights_all = np.array([balanced_weights[code] for code in comp_codes], dtype=float)
     comp_mean, comp_sd = weighted_scale(comp_values_all, comp_weights_all)
     ai_z = np.array([(ai[code] - ai_mean) / ai_sd for code in support])
+    ai_values_support = np.array([ai[code] for code in support], dtype=float)
+    ai_quintile = weighted_quintiles(ai_values_support, weights)
+    if set(ai_quintile) != {1, 2, 3, 4, 5}:
+        raise ValueError("all five AI-exposure quintiles must survive")
     comp_z = np.array([(comp[code]["value"] - comp_mean) / comp_sd for code in support])
     return {
         "occupations": support,
@@ -153,6 +185,7 @@ def prepare(cells_path, lookup_path, computerization_path, ai_measure, comp_meas
         "older": older,
         "weights": weights,
         "ai_z": ai_z,
+        "ai_quintile": ai_quintile,
         "comp_z": comp_z,
         "ai_scale": {"mean": ai_mean, "sd": ai_sd,
                      "reference_occupations": len(ai_codes)},
@@ -187,7 +220,7 @@ def identifying_support(prepared):
     }
 
 
-def build_dgp(prepared):
+def build_dgp(prepared, effect_scale):
     young_pre = prepared["young"]
     total_pre = young_pre + prepared["older"]
     n_occ, n_pre = young_pre.shape
@@ -200,11 +233,24 @@ def build_dgp(prepared):
         raise RuntimeError("pre-period fixed-effect fit did not converge")
     fitted = (fit.fitted_probability * total_pre.reshape(-1)).reshape(n_occ, n_pre)
     residual = fit.residual.reshape(n_occ, n_pre)
-    months = prepared["months"] + ENGINE.planned_post_months()
+    months = prepared["months"] + planned_post_months()
     post = np.array([month >= POST_START for month in months], dtype=bool)
-    regressors = np.column_stack([
-        (prepared["ai_z"][:, None] * post[None, :]).reshape(-1),
-        (prepared["comp_z"][:, None] * post[None, :]).reshape(-1),
+    if effect_scale == "q5_q1":
+        ai_columns = [
+            ((prepared["ai_quintile"][:, None] == value) & post[None, :])
+            .reshape(-1).astype(float)
+            for value in (2, 3, 4, 5)
+        ]
+        target_index = 3
+    elif effect_scale == "per_sd":
+        ai_columns = [
+            (prepared["ai_z"][:, None] * post[None, :]).reshape(-1)
+        ]
+        target_index = 0
+    else:
+        raise ValueError(f"unknown effect scale: {effect_scale}")
+    regressors = np.column_stack(ai_columns + [
+        (prepared["comp_z"][:, None] * post[None, :]).reshape(-1)
     ])
     return {
         "total_pre": total_pre, "fitted_pre": fitted, "residual_pre": residual,
@@ -212,6 +258,8 @@ def build_dgp(prepared):
         "occupation": np.repeat(np.arange(n_occ), len(months)),
         "month": np.tile(np.arange(len(months)), n_occ),
         "target_month_count": len(months),
+        "effect_scale": effect_scale,
+        "target_index": target_index,
     }
 
 
@@ -230,7 +278,9 @@ def simulate(prepared, dgp, effect, beta_c, repetitions, seed):
         probability = np.divide(young_null, total,
                                 out=np.full_like(young_null, 0.5), where=total > 0)
         probability = np.clip(probability, 1e-9, 1 - 1e-9)
-        shift = ((effect * prepared["ai_z"][:, None]
+        ai_treatment = (prepared["ai_z"] if dgp["effect_scale"] == "per_sd"
+                        else (prepared["ai_quintile"] == 5).astype(float))
+        shift = ((effect * ai_treatment[:, None]
                   + beta_c * prepared["comp_z"][:, None])
                  * dgp["post"][None, :])
         injected = total * ENGINE._sigmoid(np.log(probability / (1 - probability)) + shift)
@@ -238,11 +288,12 @@ def simulate(prepared, dgp, effect, beta_c, repetitions, seed):
             injected.reshape(-1), total.reshape(-1), dgp["occupation"], dgp["month"],
             dgp["regressors"],
         )
-        if (not fit.converged or not np.isfinite(fit.standard_error[0])
-                or fit.standard_error[0] <= 0):
+        target = dgp["target_index"]
+        if (not fit.converged or not np.isfinite(fit.standard_error[target])
+                or fit.standard_error[target] <= 0):
             failures += 1
             continue
-        estimate, se = float(fit.beta[0]), float(fit.standard_error[0])
+        estimate, se = float(fit.beta[target]), float(fit.standard_error[target])
         estimates.append(estimate)
         standard_errors.append(se)
         t_stats.append(estimate / se)
@@ -286,8 +337,9 @@ def run(args):
                       args.computerization, args.computerization_receipt)
     prepared = prepare(args.cells, args.lookup, args.computerization,
                        args.ai_measure, args.computerization_measure)
-    dgp = build_dgp(prepared)
-    scenario = f"{args.ai_measure}__{args.computerization_measure}__{args.beta_c:.9f}"
+    dgp = build_dgp(prepared, args.effect_scale)
+    scenario = (f"{args.ai_measure}__{args.computerization_measure}__"
+                f"{args.beta_c:.9f}__{args.effect_scale}")
     scenario_offset = int(hashlib.sha256(scenario.encode()).hexdigest()[:8], 16)
     calibration_seed = args.seed + scenario_offset
     calibration = simulate(prepared, dgp, 0.0, args.beta_c,
@@ -318,7 +370,9 @@ def run(args):
                             args.seed + scenario_offset + 9000001)
     null = next(row for row in results if abs(row["true_log_effect"]) < 1e-12)
     return {
-        "record_version": "yax-joint-computerization-power-v1",
+        "record_version": ("yax-joint-computerization-power-v3"
+                           if args.effect_scale == "q5_q1"
+                           else "yax-joint-computerization-power-v2"),
         "status": "PASS_SIMULATION_COMPLETE",
         "post_outcomes_read": False,
         "synthetic_post_constructed_only_from_preperiod_donors": True,
@@ -327,13 +381,29 @@ def run(args):
         "computerization_measure": args.computerization_measure,
         "beta_c": args.beta_c,
         "beta_c_interpretation": "fixed log effect per one weighted-SD of computerization",
-        "effect_scale": "log effect per one weighted-SD of AI exposure",
+        "effect_scale": (
+            "Q5-Q1 log coefficient with Q2-Q4 separately absorbed"
+            if args.effect_scale == "q5_q1"
+            else "log effect per one weighted-SD of AI exposure"
+        ),
+        "effect_scale_code": args.effect_scale,
+        "quintile_definition": (
+            "employment-weighted quintiles on scenario estimation support; "
+            "equal scores are never split"
+            if args.effect_scale == "q5_q1" else None
+        ),
         "seed": args.seed,
         "repetitions_per_effect": args.repetitions,
         "occupation_clusters": len(prepared["occupations"]),
         "balanced_primary_clusters_before_measure_overlap": prepared["balanced_primary_clusters"],
         "preperiod_months": len(prepared["months"]),
-        "planned_post_months": len(ENGINE.planned_post_months()),
+        "planned_post_months": len(planned_post_months()),
+        "design": {
+            "post_start": POST_START,
+            "transition_excluded": TRANSITION_EXCLUDED,
+            "post_end": "2026-07",
+            "post_gaps": sorted(ENGINE.POST_GAPS),
+        },
         "ai_scale": prepared["ai_scale"],
         "computerization_scale": prepared["comp_scale"],
         "inputs": {
@@ -371,6 +441,8 @@ def main(argv=None):
                         choices=("onet_computers_importance", "webb_pct_software"),
                         required=True)
     parser.add_argument("--beta-c", type=float, default=DEFAULT_BETA_C)
+    parser.add_argument("--effect-scale", choices=("per_sd", "q5_q1"),
+                        default="per_sd")
     parser.add_argument("--effects", type=lambda text: tuple(float(v) for v in text.split(",")),
                         default=DEFAULT_EFFECTS)
     parser.add_argument("--repetitions", type=int, default=999)

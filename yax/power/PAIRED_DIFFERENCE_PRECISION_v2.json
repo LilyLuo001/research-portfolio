@@ -1,0 +1,114 @@
+{
+  "record_version": "yax-paired-difference-precision-v2",
+  "status": "PASS_PAIRED_DIFFERENCE_PRECISION",
+  "amendment": "yax/FREEZE_AMENDMENT_2026-08-29_PAIRED_PRECISION.md",
+  "post_outcomes_read": false,
+  "synthetic_post_constructed_only_from_preperiod_donors": true,
+  "delta_definition": "Q5minusQ1_beta_primary - Q5minusQ1_beta_contrast",
+  "comparison_scope": {
+    "status": "EXPLICITLY_FROZEN_PAIR_ONLY",
+    "primary": "dv_rating_beta",
+    "contrast": "dv_rating_alpha",
+    "delta_definition": "Q5minusQ1_beta_primary - Q5minusQ1_beta_contrast",
+    "note": "v5 does not enumerate any additional direct pairs; none are invented here"
+  },
+  "design": {
+    "age_groups": [
+      "young_22_25",
+      "older_26_65"
+    ],
+    "outcome": "occupation-age-group-month employment stock",
+    "post_start": "2023-01",
+    "transition_excluded": "2022-12",
+    "post_end": "2026-07",
+    "computerization_control": "webb_pct_software",
+    "beta_c": -0.05129329438755058,
+    "q5_q1_definition": "employment-weighted quintiles on pairwise common occupation support; Q5 coefficient relative to Q1 with Q2-Q4 separately absorbed"
+  },
+  "inputs": {
+    "cells": {
+      "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+      "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+    },
+    "cells_receipt": {
+      "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1_receipt.json",
+      "sha256": "60ef90f11186fd0e6e8159099bcbd2d31c41d72652ecf54484884cd4c24dce70"
+    },
+    "lookup": {
+      "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+      "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+    },
+    "lookup_receipt": {
+      "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP_RECEIPT.json",
+      "sha256": "a06f5618cf1e9a6872913818faad911145a76b1fcb143b1ca4a5d939ebd73e8a"
+    },
+    "computerization": {
+      "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+      "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+    },
+    "computerization_receipt": {
+      "path": "yax/measurement/COMPUTERIZATION_MEASURES_RECEIPT.json",
+      "sha256": "f7b34814bc78e3626218c0db213871c303667421d8764f1d49aff817f15615da"
+    }
+  },
+  "paired_distribution_source": {
+    "path": "yax/power/PAIRED_EQUIVALENCE_PRECISION_v1.json",
+    "sha256": "4898f452f1368796d141f142ecbc88e6963b2ec273ed47446adaa0934908df5e",
+    "field": "paired_delta_distribution",
+    "stored_draws": 999,
+    "note": "Original blocked SESOI artifact is preserved unchanged."
+  },
+  "common_bootstrap_draws": {
+    "same_draw_applied_to_both_exposure_definitions": true,
+    "covariance_preserved": true,
+    "paired_covariance": 9.466627681661671e-05,
+    "draws": 999,
+    "failures": 0,
+    "attempts": 999
+  },
+  "paired_delta_se": 0.011671514266297802,
+  "paired_confidence_interval": {
+    "confidence_level": 0.95,
+    "method": "percentile-t paired occupation-cluster bootstrap",
+    "construction": "[delta_hat - q_0.975(t_star)*se_hat_delta, delta_hat - q_0.025(t_star)*se_hat_delta]",
+    "bootstrap_draws_minimum": 999,
+    "same_occupation_cluster_weights_for_both_exposures": true,
+    "computed_after_outcomes_open": false,
+    "note": "The construction is frozen now; t_star and the numerical interval are formed only after protected estimates are opened."
+  },
+  "mde_delta_80": {
+    "power_target": 0.8,
+    "log_points": 0.0327215699248238,
+    "relative_magnitude": 0.033262807745376044,
+    "outcome_blind_95_critical_halfwidth_log_points": 0.023430063844374627
+  },
+  "retired_equivalence_requirements": {
+    "numerical_sesoi": "RETIRED_NO_VERIFIED_MATCHING_BENCHMARK",
+    "equivalence_interval": "RETIRED",
+    "equivalence_power": "RETIRED",
+    "arbitrary_replacement_threshold_prohibited": true
+  },
+  "failed_sesoi_instantiation_preserved": {
+    "benchmark_status": "BLOCKED_NO_COMMON_SCALE_BENCHMARK",
+    "required_match_dimensions": [
+      "age 22-25",
+      "employment stock",
+      "Q5-Q1",
+      "young relative to pooled age 26-65",
+      "occupation-age-month estimand",
+      "log/PPML functional scale"
+    ],
+    "rejected_shortcuts": {
+      "BCC_19_percent": "top-two versus bottom-three descriptive kept-pace shortfall",
+      "BCC_minus_0_179": "Q5-Q1 long difference for age 22-25 only; no pooled 26-65 relative estimand"
+    },
+    "alignment_audit": "yax/literature/BENCHMARK_ALIGNMENT_2026-08-28.md",
+    "alignment_receipt": "yax/literature/BENCHMARK_ALIGNMENT_RECEIPT_2026-08-28.json"
+  },
+  "binding_interpretation": {
+    "ci_excludes_zero": "Estimates are statistically distinguishable across the frozen exposure definitions; report the magnitude directly.",
+    "ci_includes_zero": "The design does not detect a difference.",
+    "economic_equivalence_claim_permitted": false,
+    "ex_ante_precision_statement": "The frozen paired design had 80% power to detect coefficient differences of approximately 3.27 percentage points."
+  }
+}

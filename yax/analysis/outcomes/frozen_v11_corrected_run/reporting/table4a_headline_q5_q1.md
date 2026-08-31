@@ -1,0 +1,14 @@
+| specification | coefficient_log_points | bootstrap_se | ci_95 | p_value | occupations | notes |
+|---|---|---|---|---|---|---|
+| Eloundou beta / RuleA / Webb software-patent exposure | -0.13107 | 0.04443 | [-0.21704, -0.04511] | 0.003 | 468 |  |
+| Eloundou beta / RuleA / O*NET computer-use importance | -0.20848 | 0.05599 | [-0.31899, -0.09797] | 0.001 | 465 |  |
+| Eloundou beta / RuleB / Webb software-patent exposure | -0.11861 | 0.04393 | [-0.20440, -0.03283] | 0.010 | 477 |  |
+| Eloundou beta / RuleB / O*NET computer-use importance | -0.17441 | 0.05543 | [-0.28309, -0.06573] | 0.004 | 474 |  |
+| Eloundou beta / RuleC / Webb software-patent exposure | -0.11864 | 0.04224 | [-0.20447, -0.03280] | 0.003 | 480 |  |
+| Eloundou beta / RuleC / O*NET computer-use importance | -0.17460 | 0.05811 | [-0.28545, -0.06376] | 0.002 | 476 |  |
+| Eloundou alpha / RuleA / Webb software-patent exposure | -0.09868 | 0.03759 | [-0.17259, -0.02477] | 0.007 | 468 |  |
+| Eloundou alpha / RuleA / O*NET computer-use importance | -0.09710 | 0.04329 | [-0.18417, -0.01002] | 0.029 | 465 |  |
+| Eloundou alpha / RuleB / Webb software-patent exposure | -0.10875 | 0.03914 | [-0.18731, -0.03018] | 0.001 | 477 |  |
+| Eloundou alpha / RuleB / O*NET computer-use importance | -0.10021 | 0.04346 | [-0.18688, -0.01353] | 0.028 | 474 |  |
+| Eloundou alpha / RuleC / Webb software-patent exposure | -0.10866 | 0.03970 | [-0.18556, -0.03175] | 0.007 | 480 |  |
+| Eloundou alpha / RuleC / O*NET computer-use importance | -0.10024 | 0.04263 | [-0.18273, -0.01775] | 0.020 | 476 |  |

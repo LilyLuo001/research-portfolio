@@ -28,7 +28,31 @@ def agg(points, null_size=0.05, coverage=0.95, **extra):
     for d, p in points:
         rows.append({"true_log_effect": math.log(1 - d),
                      "rejection_probability_zero": p, "coverage_95": coverage})
-    return dict(results=rows, **extra)
+    return dict(
+        results=rows,
+        design={
+            "post_start": "2023-01",
+            "transition_excluded": "2022-12",
+            "post_end": "2026-07",
+            "post_gaps": ["2025-10"],
+        },
+        effect_scale_code="q5_q1",
+        **extra,
+    )
+
+
+def test_superseded_december_power_window_is_blocked():
+    record = agg([(0.01, 0.4), (0.03, 0.9)])
+    record["design"]["post_start"] = "2022-12"
+    assert gates.gate_gradient(record).status == "BLOCKED"
+    assert gates.gate_calibration(record).status == "BLOCKED"
+
+
+def test_superseded_per_sd_power_scale_is_blocked():
+    record = agg([(0.01, 0.4), (0.03, 0.9)])
+    record["effect_scale_code"] = "per_sd"
+    assert gates.gate_gradient(record).status == "BLOCKED"
+    assert gates.gate_calibration(record).status == "BLOCKED"
 
 
 # ------------------------------------------------------------ gradient
@@ -132,9 +156,10 @@ def test_json_output_is_parseable(capsys):
 
 
 def test_seal_gate_reports_current_repository_state():
-    """No outcomes are committed in this repository and no tag exists."""
-    r = gates.gate_seal("v1.0-preregistered")
+    """The immutable v1.1 freeze predates any committed outcome archive."""
+    r = gates.gate_seal("v1.1-design-freeze")
     assert r.status == "PASS"
+    assert "v1.1-design-freeze exists" in r.detail
 
 
 # ------------------------------------------------------------ novelty
@@ -146,34 +171,8 @@ def _plan_saying(tmp_path, monkeypatch, body):
     monkeypatch.setattr(gates, "ROOT", tmp_path)
 
 
-def test_novelty_is_blocked_while_locators_are_outstanding(tmp_path, monkeypatch):
-    """Regression: an earlier version passed as soon as the plan stopped
-    saying VERIFY BEFORE THE FREEZE, which rewriting a heading achieves
-    without resolving anything. The heading here is already rewritten, so only
-    the leftover markers can block it."""
-    _plan_saying(tmp_path, monkeypatch, "## 9a. Position in the literature\n\n"
-                 "| Dallas Fed | reported; **locators outstanding** |\n")
-    r = gates.gate_novelty("v1.0-preregistered")
-    assert r.status == "BLOCKED"
-    assert "locators outstanding" in r.detail
 
 
-def test_novelty_is_blocked_on_an_unsearched_registry(tmp_path, monkeypatch):
-    """The decisive question is the registry search, not the prose around it."""
-    _plan_saying(tmp_path, monkeypatch, "## 9a. Position in the literature\n\n"
-                 "| a pre-registered test | **not yet searched** |\n")
-    r = gates.gate_novelty("v1.0-preregistered")
-    assert r.status == "BLOCKED"
-    assert "not yet searched" in r.detail
-
-
-def test_novelty_passes_on_the_current_plan():
-    """§9a now carries locators and a recorded registry search."""
-    r = gates.gate_novelty("v1.0-preregistered")
-    assert r.status == "PASS"
-
-
-# ------------------------------------------------------------ computerization
 
 def test_computerization_gate_passes_only_on_complete_real_measure_receipt():
     r = gates.gate_computerization("v1.0-preregistered")
@@ -204,3 +203,132 @@ def test_convergent_validity_catches_the_orphaned_measure():
     assert r.status in ("PASS", "FAIL", "BLOCKED")
     if r.status == "FAIL":
         assert "agree with no other" in r.detail
+
+
+# ------------------------------------------------------------ novelty, inverted
+
+def test_current_latest_version_novelty_audit_passes():
+    """Action 2 supplied the positive sentinel and source-backed audit.
+
+    The tmp-path test below remains the regression proving that silence and
+    inherited warning prose block.
+    """
+    r = gates.gate_novelty("v1.1-design-freeze")
+    assert r.status == "PASS"
+    assert "primary source" in r.detail
+
+
+def test_amendment_gate_blocks_until_the_amended_freeze_is_tagged(tmp_path, monkeypatch):
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+    for rel in (gates.PLAN, gates.AMENDMENT, gates.PAIRED_AMENDMENT,
+                gates.FREEZE_V2):
+        path = tmp_path / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("recorded\n", encoding="utf-8")
+    monkeypatch.setattr(gates, "_git", lambda *args: None)
+    r = gates.gate_amendment_current("v1.1-design-freeze")
+    assert r.status == "BLOCKED"
+    assert "not tagged" in r.detail
+
+
+def test_novelty_sentinel_is_required_verbatim(tmp_path, monkeypatch):
+    """The old contract was 'no warning words present'. Two rewrites walked
+    through it. The new contract is a verbatim sentinel a human must add
+    deliberately, so both failure modes are closed."""
+    plan = tmp_path / "plan.md"
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+    monkeypatch.setattr(gates, "PLAN", "plan.md")
+
+    plan.write_text("a plan that simply says nothing about prior work\n")
+    assert gates.gate_novelty("t").status == "BLOCKED"
+
+    plan.write_text("references are relayed and unverified\n")
+    assert gates.gate_novelty("t").status == "BLOCKED"
+
+    plan.write_text("NOVELTY-GATE: all references opened at primary source\n")
+    assert gates.gate_novelty("t").status == "PASS"
+
+
+def test_novelty_fails_when_sentinel_contradicts_an_unresolved_row(tmp_path, monkeypatch):
+    """Claiming completion while a row is still marked unverified is worse than
+    silence — it is a false assertion, so it FAILs rather than BLOCKs."""
+    plan = tmp_path / "plan.md"
+    monkeypatch.setattr(gates, "ROOT", tmp_path)
+    monkeypatch.setattr(gates, "PLAN", "plan.md")
+    plan.write_text(
+        "NOVELTY-GATE: all references opened at primary source\n"
+        "but Rai (2026) is relayed and unverified\n")
+    r = gates.gate_novelty("t")
+    assert r.status == "FAIL"
+    assert "sentinel" in r.detail
+
+
+# --------------------------------------------------------- paired-delta power
+
+
+
+
+
+def _full_precision_artifact():
+    return {
+        "post_outcomes_read": False,
+        "paired_delta_distribution": [0.0] * 999,
+        "paired_delta_se": 0.0117,
+        "paired_confidence_interval": {
+            "confidence_level": 0.95,
+            "method": "percentile-t paired occupation-cluster bootstrap",
+            "bootstrap_draws_minimum": 999,
+            "same_occupation_cluster_weights_for_both_exposures": True,
+            "construction": "[delta_hat - q975*t_se, delta_hat - q025*t_se]",
+            "computed_after_outcomes_open": False,
+        },
+        "mde_delta_80": {
+            "power_target": 0.80,
+            "log_points": 0.0327,
+            "relative_magnitude": 0.0333,
+        },
+        "common_bootstrap_draws": {
+            "same_draw_applied_to_both_exposure_definitions": True,
+            "covariance_preserved": True,
+            "paired_covariance": 0.000095,
+            "draws": 999,
+            "failures": 0,
+        },
+    }
+
+
+def test_paired_precision_gate_accepts_complete_artifact_without_sesoi():
+    art = _full_precision_artifact()
+    assert "sesoi" not in art
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "PASS"
+    assert "not economic equivalence" in result.detail
+
+
+def test_paired_precision_gate_rejects_unpaired_or_missing_covariance():
+    art = _full_precision_artifact()
+    art["common_bootstrap_draws"]["same_draw_applied_to_both_exposure_definitions"] = False
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "BLOCKED"
+    assert "preserving covariance" in result.detail
+
+
+def test_paired_precision_gate_requires_ci_construction_not_equivalence_interval():
+    art = _full_precision_artifact()
+    del art["paired_confidence_interval"]
+    art["equivalence_interval"] = [-0.01, 0.01]
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "BLOCKED"
+    assert "paired percentile-t 95% CI construction" in result.detail
+
+
+def test_paired_precision_gate_fails_closed_if_outcomes_were_read():
+    art = _full_precision_artifact()
+    art["post_outcomes_read"] = True
+    result = gates.gate_paired_difference_precision(art)
+    assert result.status == "BLOCKED"
+    assert "zero protected" in result.detail
+
+
+def test_paired_precision_gate_blocks_without_an_aggregate():
+    assert gates.gate_paired_difference_precision(None).status == "BLOCKED"

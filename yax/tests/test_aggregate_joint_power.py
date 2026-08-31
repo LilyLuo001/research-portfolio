@@ -19,6 +19,13 @@ def record(ai, comp, beta_c=A.PRIMARY_BETA_C):
         "ai_measure": ai,
         "computerization_measure": comp,
         "beta_c": beta_c,
+        "effect_scale_code": "q5_q1",
+        "design": {
+            "post_start": "2023-01",
+            "transition_excluded": "2022-12",
+            "post_end": "2026-07",
+            "post_gaps": ["2025-10"],
+        },
         "occupation_clusters": 400,
         "empirical_mde80_relative_decline": 0.05,
         "identifying_support": {
@@ -60,3 +67,21 @@ def test_markdown_states_fitted_dgp_limits(tmp_path):
     text = A.markdown(A.build(primary))
     assert "Limits of the fitted-DGP" in text
     assert "not evidence" in text
+
+
+def test_build_rejects_superseded_december_window(tmp_path):
+    payloads = [
+        record("dv_rating_beta", "onet_computers_importance"),
+        record("dv_rating_beta", "webb_pct_software"),
+        record("dv_rating_alpha", "onet_computers_importance"),
+        record("dv_rating_alpha", "webb_pct_software"),
+    ]
+    payloads[0]["design"]["post_start"] = "2022-12"
+    paths = [write(tmp_path, f"{index}.json", payload)
+             for index, payload in enumerate(payloads)]
+    try:
+        A.build(paths)
+    except ValueError as error:
+        assert "frozen v5 post window" in str(error)
+    else:
+        raise AssertionError("superseded window was accepted")

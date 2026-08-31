@@ -7,7 +7,7 @@ release — tested on nationally representative CPS data, under a specification
 and coverage rule frozen before any post-period outcome was opened, and
 reported against a measured minimum detectable effect?**
 
-Start with **[`RESEARCH_PLAN_v4.md`](RESEARCH_PLAN_v4.md)**.
+Start with **[`RESEARCH_PLAN_v5.md`](RESEARCH_PLAN_v5.md)**.
 
 ## Status
 
@@ -27,7 +27,9 @@ Start with **[`RESEARCH_PLAN_v4.md`](RESEARCH_PLAN_v4.md)**.
 
 | path | what |
 |---|---|
-| `RESEARCH_PLAN_v4.md` | the plan. Read first |
+| `RESEARCH_PLAN_v5.md` | the plan. Read first |
+| `FREEZE_AMENDMENT_2026-08-27.md` | what v5 changes in the tagged freeze, and why |
+| `RESEARCH_PLAN_v4.md` | superseded; kept for revision history |
 | `RESEARCH_PLAN_v3.md` | superseded; kept for revision history |
 | `RESEARCH_PLAN_v2.md` | superseded; kept for revision history |
 | `RESEARCH_PLAN_v1.md` | superseded; kept for revision history |

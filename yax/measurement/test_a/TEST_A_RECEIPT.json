@@ -1,0 +1,807 @@
+{
+  "record_version": "yax-frozen-test-a-completion-v1",
+  "status": "PASS_COMPLETE_FROZEN_TEST_A",
+  "scope": "pre-specified measurement diagnostics only; no protected post-period outcome read",
+  "post_period_outcomes_read": false,
+  "design_authority": [
+    "yax/DESIGN_FREEZE_v2.md:5-7",
+    "yax/RESEARCH_PLAN_v5.md:131-183",
+    "yax/RESEARCH_PLAN_v5.md:580-605"
+  ],
+  "ai_measures": [
+    "aioe_admin_equal",
+    "aioe_ability_direct",
+    "aioe_oews2018_source_weighted",
+    "dv_rating_alpha",
+    "dv_rating_beta",
+    "dv_rating_gamma"
+  ],
+  "characteristics": [
+    "cognitive_ability_importance",
+    "manual_physical_ability_importance",
+    "rti_autor_dorn",
+    "required_education_category_index",
+    "log_mean_annual_wage",
+    "dingel_neiman_telework",
+    "stem_major_group_share",
+    "onet_computers_importance"
+  ],
+  "definitions": {
+    "cognitive_ability_importance": "mean O*NET IM across official 1.A.1 Cognitive Abilities",
+    "manual_physical_ability_importance": "mean O*NET IM across official 1.A.2 Psychomotor and 1.A.3 Physical Abilities",
+    "required_education_category_index": "percentage-weighted mean O*NET 2.D.1 RL category; ordered category, not years",
+    "stem_major_group_share": "OEWS-employment share in SOC major groups 15, 17, 19",
+    "residualization": "weighted OLS of each standardized AI measure on all eight standardized characteristics plus intercept, common complete support",
+    "rank_overlap": "Jaccard overlap of frozen employment-weighted Q1 and Q5 sets on common complete support; ties not split"
+  },
+  "sources": {
+    "onet_26_1": {
+      "path": "/projectnb/econdept/qluo/db_26_1_text.zip",
+      "sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a",
+      "url": "https://www.onetcenter.org/dl_files/database/db_26_1_text.zip",
+      "release": "November 2021"
+    },
+    "preperiod_cells": {
+      "path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+      "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+    },
+    "lookup": {
+      "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+      "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+    },
+    "computerization": {
+      "path": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+      "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd"
+    },
+    "bridge": {
+      "path": "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
+      "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+    },
+    "oews": {
+      "path": "dax/data_built/oews_wages.parquet",
+      "sha256": "3d6ef51fab6e0aeb20e1295f297acd63ff692ffa4178f7b84a3cd01851e2526a"
+    }
+  },
+  "preperiod": {
+    "preperiod_first_month": "2017-01",
+    "preperiod_last_month": "2022-11",
+    "preperiod_cell_rows": 55860,
+    "weighted_occupation_rows": 492
+  },
+  "common_complete_support_occupations": 348,
+  "residual_diagnostics": [
+    {
+      "ai_measure": "aioe_admin_equal",
+      "occupations": 348,
+      "weighted_r_squared_on_all_characteristics": 0.9641720732024562,
+      "residual_sd": 0.18928266375329716,
+      "effective_identifying_occupations": 35.45825104411062,
+      "top_five_residual_variance_share": 0.3043028790340677,
+      "top_ten_contributors": [
+        {
+          "census2018": "3930",
+          "occupation": "Security guards and gambling surveillance officers",
+          "residual_variance_share": 0.08829412968173969
+        },
+        {
+          "census2018": "9130",
+          "occupation": "Driver/sales workers and truck drivers",
+          "residual_variance_share": 0.06635912443315659
+        },
+        {
+          "census2018": "3255",
+          "occupation": "Registered nurses",
+          "residual_variance_share": 0.06061699580372914
+        },
+        {
+          "census2018": "4850",
+          "occupation": "Sales representatives, wholesale and manufacturing",
+          "residual_variance_share": 0.05168641880326973
+        },
+        {
+          "census2018": "4510",
+          "occupation": "Hairdressers, hairstylists, and cosmetologists",
+          "residual_variance_share": 0.03734621031217258
+        },
+        {
+          "census2018": "0010",
+          "occupation": "Chief executives",
+          "residual_variance_share": 0.036170789919899006
+        },
+        {
+          "census2018": "9640",
+          "occupation": "Packers and packagers, hand",
+          "residual_variance_share": 0.03306509040312997
+        },
+        {
+          "census2018": "8740",
+          "occupation": "Inspectors, testers, sorters, samplers, and weighers",
+          "residual_variance_share": 0.0261129203035951
+        },
+        {
+          "census2018": "9620",
+          "occupation": "Laborers and freight, stock, and material movers, hand",
+          "residual_variance_share": 0.022068751176080943
+        },
+        {
+          "census2018": "4130",
+          "occupation": "Dining room and cafeteria attendants and bartender helpers",
+          "residual_variance_share": 0.02197886815756597
+        }
+      ]
+    },
+    {
+      "ai_measure": "aioe_ability_direct",
+      "occupations": 348,
+      "weighted_r_squared_on_all_characteristics": 0.9542634369273414,
+      "residual_sd": 0.21386108358618827,
+      "effective_identifying_occupations": 37.77320043018495,
+      "top_five_residual_variance_share": 0.2899699976853729,
+      "top_ten_contributors": [
+        {
+          "census2018": "5240",
+          "occupation": "Customer service representatives",
+          "residual_variance_share": 0.0972739563040054
+        },
+        {
+          "census2018": "9130",
+          "occupation": "Driver/sales workers and truck drivers",
+          "residual_variance_share": 0.056180272367571525
+        },
+        {
+          "census2018": "4230",
+          "occupation": "Maids and housekeeping cleaners",
+          "residual_variance_share": 0.05146130274259435
+        },
+        {
+          "census2018": "3255",
+          "occupation": "Registered nurses",
+          "residual_variance_share": 0.04838810917945725
+        },
+        {
+          "census2018": "3930",
+          "occupation": "Security guards and gambling surveillance officers",
+          "residual_variance_share": 0.03666635709174435
+        },
+        {
+          "census2018": "9640",
+          "occupation": "Packers and packagers, hand",
+          "residual_variance_share": 0.032834752894639524
+        },
+        {
+          "census2018": "0710",
+          "occupation": "Management analysts",
+          "residual_variance_share": 0.026769775195363
+        },
+        {
+          "census2018": "0410",
+          "occupation": "Property, real estate, and community association managers",
+          "residual_variance_share": 0.02345591473561615
+        },
+        {
+          "census2018": "0020",
+          "occupation": "General and operations managers",
+          "residual_variance_share": 0.023363996780778305
+        },
+        {
+          "census2018": "2320",
+          "occupation": "Secondary school teachers",
+          "residual_variance_share": 0.019537376482345634
+        }
+      ]
+    },
+    {
+      "ai_measure": "aioe_oews2018_source_weighted",
+      "occupations": 348,
+      "weighted_r_squared_on_all_characteristics": 0.9705948513135307,
+      "residual_sd": 0.1714792952121897,
+      "effective_identifying_occupations": 44.168816556868826,
+      "top_five_residual_variance_share": 0.2493900039485421,
+      "top_ten_contributors": [
+        {
+          "census2018": "3255",
+          "occupation": "Registered nurses",
+          "residual_variance_share": 0.07013538244606882
+        },
+        {
+          "census2018": "4850",
+          "occupation": "Sales representatives, wholesale and manufacturing",
+          "residual_variance_share": 0.05267279617356376
+        },
+        {
+          "census2018": "0010",
+          "occupation": "Chief executives",
+          "residual_variance_share": 0.04864112966897451
+        },
+        {
+          "census2018": "9130",
+          "occupation": "Driver/sales workers and truck drivers",
+          "residual_variance_share": 0.04071161327438908
+        },
+        {
+          "census2018": "4510",
+          "occupation": "Hairdressers, hairstylists, and cosmetologists",
+          "residual_variance_share": 0.03722908238554591
+        },
+        {
+          "census2018": "8740",
+          "occupation": "Inspectors, testers, sorters, samplers, and weighers",
+          "residual_variance_share": 0.03713141716384469
+        },
+        {
+          "census2018": "9640",
+          "occupation": "Packers and packagers, hand",
+          "residual_variance_share": 0.03453917042459444
+        },
+        {
+          "census2018": "0630",
+          "occupation": "Human resources workers",
+          "residual_variance_share": 0.02868184976936238
+        },
+        {
+          "census2018": "4130",
+          "occupation": "Dining room and cafeteria attendants and bartender helpers",
+          "residual_variance_share": 0.026746280224944064
+        },
+        {
+          "census2018": "4621",
+          "occupation": "Exercise trainers and group fitness instructors",
+          "residual_variance_share": 0.02516457104692656
+        }
+      ]
+    },
+    {
+      "ai_measure": "dv_rating_alpha",
+      "occupations": 348,
+      "weighted_r_squared_on_all_characteristics": 0.36822158936187244,
+      "residual_sd": 0.7948448972209154,
+      "effective_identifying_occupations": 31.464464693396113,
+      "top_five_residual_variance_share": 0.3367980971280305,
+      "top_ten_contributors": [
+        {
+          "census2018": "5120",
+          "occupation": "Bookkeeping, accounting, and auditing clerks",
+          "residual_variance_share": 0.09589456905050629
+        },
+        {
+          "census2018": "2861",
+          "occupation": "Interpreters and translators",
+          "residual_variance_share": 0.07940403280096466
+        },
+        {
+          "census2018": "5810",
+          "occupation": "Data entry keyers",
+          "residual_variance_share": 0.07212684747516226
+        },
+        {
+          "census2018": "9130",
+          "occupation": "Driver/sales workers and truck drivers",
+          "residual_variance_share": 0.06096683980110352
+        },
+        {
+          "census2018": "5000",
+          "occupation": "First-Line supervisors of office and administrative support workers",
+          "residual_variance_share": 0.02840580800029374
+        },
+        {
+          "census2018": "4920",
+          "occupation": "Real estate brokers and sales agents",
+          "residual_variance_share": 0.02799241092498045
+        },
+        {
+          "census2018": "0630",
+          "occupation": "Human resources workers",
+          "residual_variance_share": 0.026420015960087747
+        },
+        {
+          "census2018": "5260",
+          "occupation": "File clerks",
+          "residual_variance_share": 0.020958931643978523
+        },
+        {
+          "census2018": "0010",
+          "occupation": "Chief executives",
+          "residual_variance_share": 0.019701665981520226
+        },
+        {
+          "census2018": "0020",
+          "occupation": "General and operations managers",
+          "residual_variance_share": 0.01785083846941172
+        }
+      ]
+    },
+    {
+      "ai_measure": "dv_rating_beta",
+      "occupations": 348,
+      "weighted_r_squared_on_all_characteristics": 0.743024528352801,
+      "residual_sd": 0.5069274816452537,
+      "effective_identifying_occupations": 36.897383640149116,
+      "top_five_residual_variance_share": 0.2803121440346729,
+      "top_ten_contributors": [
+        {
+          "census2018": "9130",
+          "occupation": "Driver/sales workers and truck drivers",
+          "residual_variance_share": 0.09725545351207264
+        },
+        {
+          "census2018": "4700",
+          "occupation": "First-Line supervisors of retail sales workers",
+          "residual_variance_share": 0.07251154028832706
+        },
+        {
+          "census2018": "5120",
+          "occupation": "Bookkeeping, accounting, and auditing clerks",
+          "residual_variance_share": 0.04343736726558393
+        },
+        {
+          "census2018": "2861",
+          "occupation": "Interpreters and translators",
+          "residual_variance_share": 0.03524403749259518
+        },
+        {
+          "census2018": "4510",
+          "occupation": "Hairdressers, hairstylists, and cosmetologists",
+          "residual_variance_share": 0.03186374547609412
+        },
+        {
+          "census2018": "5610",
+          "occupation": "Shipping, receiving, and inventory clerks",
+          "residual_variance_share": 0.031102411828326227
+        },
+        {
+          "census2018": "5810",
+          "occupation": "Data entry keyers",
+          "residual_variance_share": 0.03109530467574392
+        },
+        {
+          "census2018": "7210",
+          "occupation": "Bus and truck mechanics and diesel engine specialists",
+          "residual_variance_share": 0.029111294440361944
+        },
+        {
+          "census2018": "4850",
+          "occupation": "Sales representatives, wholesale and manufacturing",
+          "residual_variance_share": 0.02903874997858945
+        },
+        {
+          "census2018": "4720",
+          "occupation": "Cashiers",
+          "residual_variance_share": 0.027387446507770807
+        }
+      ]
+    },
+    {
+      "ai_measure": "dv_rating_gamma",
+      "occupations": 348,
+      "weighted_r_squared_on_all_characteristics": 0.8110045802948738,
+      "residual_sd": 0.43473603451419374,
+      "effective_identifying_occupations": 31.53798993128514,
+      "top_five_residual_variance_share": 0.2974270084141514,
+      "top_ten_contributors": [
+        {
+          "census2018": "4700",
+          "occupation": "First-Line supervisors of retail sales workers",
+          "residual_variance_share": 0.12924424225232656
+        },
+        {
+          "census2018": "9130",
+          "occupation": "Driver/sales workers and truck drivers",
+          "residual_variance_share": 0.06673583279653672
+        },
+        {
+          "census2018": "4510",
+          "occupation": "Hairdressers, hairstylists, and cosmetologists",
+          "residual_variance_share": 0.03585795656684848
+        },
+        {
+          "census2018": "4850",
+          "occupation": "Sales representatives, wholesale and manufacturing",
+          "residual_variance_share": 0.034933353515554905
+        },
+        {
+          "census2018": "7210",
+          "occupation": "Bus and truck mechanics and diesel engine specialists",
+          "residual_variance_share": 0.03065562328288476
+        },
+        {
+          "census2018": "5610",
+          "occupation": "Shipping, receiving, and inventory clerks",
+          "residual_variance_share": 0.02876497998217397
+        },
+        {
+          "census2018": "4720",
+          "occupation": "Cashiers",
+          "residual_variance_share": 0.023824058815542688
+        },
+        {
+          "census2018": "6200",
+          "occupation": "First-line supervisors of construction trades and extraction workers",
+          "residual_variance_share": 0.02363405207420437
+        },
+        {
+          "census2018": "7420",
+          "occupation": "Telecommunications line installers and repairers",
+          "residual_variance_share": 0.021368090451442466
+        },
+        {
+          "census2018": "0010",
+          "occupation": "Chief executives",
+          "residual_variance_share": 0.01896003248088757
+        }
+      ]
+    }
+  ],
+  "residual_correlations": [
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "aioe_ability_direct",
+      "weighted_residual_correlation": 0.6946977396495462,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "aioe_oews2018_source_weighted",
+      "weighted_residual_correlation": 0.8866227641862794,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_alpha",
+      "weighted_residual_correlation": 0.24234018402833954,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_beta",
+      "weighted_residual_correlation": 0.3441083545178008,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_gamma",
+      "weighted_residual_correlation": 0.30556311866960667,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "aioe_oews2018_source_weighted",
+      "weighted_residual_correlation": 0.5993796231424096,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_alpha",
+      "weighted_residual_correlation": 0.15364416378107068,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_beta",
+      "weighted_residual_correlation": 0.24911191640920627,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_gamma",
+      "weighted_residual_correlation": 0.2360577030494974,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_alpha",
+      "weighted_residual_correlation": 0.28246610714760584,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_beta",
+      "weighted_residual_correlation": 0.3879783099136048,
+      "occupations": 348
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_gamma",
+      "weighted_residual_correlation": 0.3382297366854834,
+      "occupations": 348
+    },
+    {
+      "measure_left": "dv_rating_alpha",
+      "measure_right": "dv_rating_beta",
+      "weighted_residual_correlation": 0.7163370265720914,
+      "occupations": 348
+    },
+    {
+      "measure_left": "dv_rating_alpha",
+      "measure_right": "dv_rating_gamma",
+      "weighted_residual_correlation": 0.2984657843035526,
+      "occupations": 348
+    },
+    {
+      "measure_left": "dv_rating_beta",
+      "measure_right": "dv_rating_gamma",
+      "weighted_residual_correlation": 0.8797531227203776,
+      "occupations": 348
+    }
+  ],
+  "rank_overlap": [
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "aioe_ability_direct",
+      "tail": "Q1",
+      "left_occupations": 86,
+      "right_occupations": 77,
+      "intersection": 74,
+      "jaccard": 0.8314606741573034
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "aioe_ability_direct",
+      "tail": "Q5",
+      "left_occupations": 77,
+      "right_occupations": 75,
+      "intersection": 70,
+      "jaccard": 0.8536585365853658
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "aioe_oews2018_source_weighted",
+      "tail": "Q1",
+      "left_occupations": 86,
+      "right_occupations": 84,
+      "intersection": 84,
+      "jaccard": 0.9767441860465116
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "aioe_oews2018_source_weighted",
+      "tail": "Q5",
+      "left_occupations": 77,
+      "right_occupations": 72,
+      "intersection": 70,
+      "jaccard": 0.8860759493670886
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_alpha",
+      "tail": "Q1",
+      "left_occupations": 86,
+      "right_occupations": 88,
+      "intersection": 51,
+      "jaccard": 0.4146341463414634
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_alpha",
+      "tail": "Q5",
+      "left_occupations": 77,
+      "right_occupations": 69,
+      "intersection": 28,
+      "jaccard": 0.23728813559322035
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q1",
+      "left_occupations": 86,
+      "right_occupations": 120,
+      "intersection": 77,
+      "jaccard": 0.5968992248062015
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q5",
+      "left_occupations": 77,
+      "right_occupations": 68,
+      "intersection": 46,
+      "jaccard": 0.46464646464646464
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q1",
+      "left_occupations": 86,
+      "right_occupations": 116,
+      "intersection": 77,
+      "jaccard": 0.616
+    },
+    {
+      "measure_left": "aioe_admin_equal",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q5",
+      "left_occupations": 77,
+      "right_occupations": 62,
+      "intersection": 45,
+      "jaccard": 0.4787234042553192
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "aioe_oews2018_source_weighted",
+      "tail": "Q1",
+      "left_occupations": 77,
+      "right_occupations": 84,
+      "intersection": 72,
+      "jaccard": 0.8089887640449438
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "aioe_oews2018_source_weighted",
+      "tail": "Q5",
+      "left_occupations": 75,
+      "right_occupations": 72,
+      "intersection": 65,
+      "jaccard": 0.7926829268292683
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_alpha",
+      "tail": "Q1",
+      "left_occupations": 77,
+      "right_occupations": 88,
+      "intersection": 44,
+      "jaccard": 0.36363636363636365
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_alpha",
+      "tail": "Q5",
+      "left_occupations": 75,
+      "right_occupations": 69,
+      "intersection": 26,
+      "jaccard": 0.22033898305084745
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q1",
+      "left_occupations": 77,
+      "right_occupations": 120,
+      "intersection": 69,
+      "jaccard": 0.5390625
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q5",
+      "left_occupations": 75,
+      "right_occupations": 68,
+      "intersection": 45,
+      "jaccard": 0.45918367346938777
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q1",
+      "left_occupations": 77,
+      "right_occupations": 116,
+      "intersection": 69,
+      "jaccard": 0.5564516129032258
+    },
+    {
+      "measure_left": "aioe_ability_direct",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q5",
+      "left_occupations": 75,
+      "right_occupations": 62,
+      "intersection": 46,
+      "jaccard": 0.5054945054945055
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_alpha",
+      "tail": "Q1",
+      "left_occupations": 84,
+      "right_occupations": 88,
+      "intersection": 50,
+      "jaccard": 0.4098360655737705
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_alpha",
+      "tail": "Q5",
+      "left_occupations": 72,
+      "right_occupations": 69,
+      "intersection": 25,
+      "jaccard": 0.21551724137931033
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q1",
+      "left_occupations": 84,
+      "right_occupations": 120,
+      "intersection": 75,
+      "jaccard": 0.5813953488372093
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q5",
+      "left_occupations": 72,
+      "right_occupations": 68,
+      "intersection": 41,
+      "jaccard": 0.41414141414141414
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q1",
+      "left_occupations": 84,
+      "right_occupations": 116,
+      "intersection": 75,
+      "jaccard": 0.6
+    },
+    {
+      "measure_left": "aioe_oews2018_source_weighted",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q5",
+      "left_occupations": 72,
+      "right_occupations": 62,
+      "intersection": 41,
+      "jaccard": 0.44086021505376344
+    },
+    {
+      "measure_left": "dv_rating_alpha",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q1",
+      "left_occupations": 88,
+      "right_occupations": 120,
+      "intersection": 61,
+      "jaccard": 0.41496598639455784
+    },
+    {
+      "measure_left": "dv_rating_alpha",
+      "measure_right": "dv_rating_beta",
+      "tail": "Q5",
+      "left_occupations": 69,
+      "right_occupations": 68,
+      "intersection": 48,
+      "jaccard": 0.5393258426966292
+    },
+    {
+      "measure_left": "dv_rating_alpha",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q1",
+      "left_occupations": 88,
+      "right_occupations": 116,
+      "intersection": 56,
+      "jaccard": 0.3783783783783784
+    },
+    {
+      "measure_left": "dv_rating_alpha",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q5",
+      "left_occupations": 69,
+      "right_occupations": 62,
+      "intersection": 32,
+      "jaccard": 0.32323232323232326
+    },
+    {
+      "measure_left": "dv_rating_beta",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q1",
+      "left_occupations": 120,
+      "right_occupations": 116,
+      "intersection": 113,
+      "jaccard": 0.9186991869918699
+    },
+    {
+      "measure_left": "dv_rating_beta",
+      "measure_right": "dv_rating_gamma",
+      "tail": "Q5",
+      "left_occupations": 68,
+      "right_occupations": 62,
+      "intersection": 48,
+      "jaccard": 0.5853658536585366
+    }
+  ],
+  "outputs": {
+    "yax/measurement/test_a/TEST_A_OCCUPATION_CHARACTERISTICS.csv": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "yax/measurement/test_a/TEST_A_CHARACTERISTIC_MATRIX.csv": "2da6108bf902bff61bce5af967d613b5f3e5869d4fa71c26cc821f074369d550",
+    "yax/measurement/test_a/TEST_A_RESIDUAL_DIAGNOSTICS.csv": "405a9034a113b370dbfa8e9eeb20860abeacc524fdc34b5d8949358a91e47e23",
+    "yax/measurement/test_a/TEST_A_RESIDUAL_CORRELATIONS.csv": "7d8b9e7b4aed51790b0f3772d77a9e6d55886bab8d7aef3acf04ba2ffe5415ef",
+    "yax/measurement/test_a/TEST_A_RANK_OVERLAP.csv": "95f39fcba30a1687adc0db2456a550e3981d567a3410e5805ceb97e8096183de",
+    "yax/measurement/test_a/TEST_A_RANKINGS.csv": "e340961ccc7d1c65f94a3f0463d348b5b9ff0ba27e1593b15ae316575b658e01",
+    "yax/measurement/test_a/TEST_A_RESULTS.md": "43449abbc4cae84436ae31c9112c77cff1d7de4a09ac09a45810909a20773046"
+  }
+}
