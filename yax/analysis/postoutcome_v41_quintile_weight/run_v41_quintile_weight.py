@@ -290,6 +290,7 @@ def run_primary(args: argparse.Namespace, data: dict) -> None:
         "analysis_status": LABEL,
         "design_verdict": "Verdict 3 — Freeze ambiguity",
         "declaration_commit": DECLARATION_COMMIT,
+        "implementation_commit": args.implementation_commit,
         "execution_head": git_head(),
         "historical_production_function": "yax.analysis.run_frozen_v11.prepare_model",
         "historical_quintile_function": "yax.analysis.run_frozen_v11.weighted_quintiles",
@@ -399,6 +400,7 @@ def main() -> int:
     parser.add_argument("stage", choices=("primary", "common_support"))
     parser.add_argument("--microdata", required=True, type=pathlib.Path)
     parser.add_argument("--preperiod-cells", required=True, type=pathlib.Path)
+    parser.add_argument("--implementation-commit", required=True)
     parser.add_argument("--lookup", type=pathlib.Path, default=ROOT / "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv")
     parser.add_argument("--computerization", type=pathlib.Path, default=ROOT / "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv")
     parser.add_argument("--rule-b-values", type=pathlib.Path, default=ROOT / "yax/measurement/RULE_B_VALUES_CENSUS2018.csv")
@@ -417,4 +419,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
