@@ -7,7 +7,7 @@ Declared before executing any V4 outcome-bearing analysis. The immutable design 
 ## Declaration boundary
 
 - Parent manuscript commit: `679f4a2d482a8475697feb0776b87643412148b1`.
-- Declaration commit: filled after this file is committed and before execution.
+- Declaration commit: `b775621bb6aa8c459f1de54c981a861bf6979148`.
 - No V4 result may be appended to the 195-row confirmatory ledger.
 - Every machine-readable V4 output must carry the status string shown above.
 - No alternative support intersection, reference month, event window, treatment date, post window, mechanism, control, or inference method may be searched.
