@@ -1,0 +1,90 @@
+import importlib.util
+import pathlib
+import sys
+
+import numpy as np
+import pandas as pd
+
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+PHASE25 = ROOT / "yax/analysis/postoutcome_phase25_gate3"
+
+
+def load_module():
+    path = PHASE25 / "run_phase25_reallocation_validity.py"
+    spec = importlib.util.spec_from_file_location("phase25_reallocation_test", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_pair_specific_support_uses_only_the_named_pair():
+    module = load_module()
+    frame = pd.DataFrame({"LNKFW1MWT": [1.0, 2.0, 3.0, 4.0]})
+    for measure in module.MEASURES:
+        frame[f"available__{measure}"] = True
+        frame[f"sign__{measure}"] = 1.0
+    # Row 1 lacks an irrelevant third architecture and must remain in the
+    # first named pair's support. Row 2 lacks one member of that named pair.
+    frame.loc[1, "available__dv_rating_gamma"] = False
+    frame.loc[2, "available__aioe_admin_equal"] = False
+    frame["sixway_included"] = frame[
+        [f"available__{measure}" for measure in module.MEASURES]
+    ].all(axis=1)
+
+    support, _ = module.pair_rows(frame)
+    row = next(
+        item for item in support
+        if item["measure_1"] == "aioe_admin_equal"
+        and item["measure_2"] == "aioe_ability_direct"
+    )
+    assert row["pair_support_raw"] == 3
+    assert row["pair_support_weight"] == 7.0
+    assert row["sixway_support_raw"] == 2
+
+
+def test_self_match_repair_is_reproducible_and_removes_all_false_switches():
+    module = load_module()
+    origin = np.array(["a", "a", "b", "b", "c", "c"])
+    destination = origin.copy()
+    first, first_repairs = module.repair_self_matches(
+        origin, destination, np.random.default_rng(17)
+    )
+    second, second_repairs = module.repair_self_matches(
+        origin, destination, np.random.default_rng(17)
+    )
+    assert np.array_equal(first, second)
+    assert first_repairs == second_repairs
+    assert not np.any(origin == first)
+
+
+def test_weighted_marginal_benchmark_is_seed_reproducible(monkeypatch):
+    module = load_module()
+    monkeypatch.setattr(module, "BENCHMARK_DRAWS", 19)
+    monkeypatch.setattr(module, "BENCHMARK_PSEUDO_UNITS", 600)
+    frame = pd.DataFrame({
+        "origin_code": ["a", "b", "c"],
+        "destination_code": ["b", "c", "a"],
+        "LNKFW1MWT": [1.0, 1.0, 1.0],
+        "opposite_direction_conflict": [True, False, True],
+    })
+    maps = {}
+    for index, measure in enumerate(module.MEASURES):
+        if index % 2:
+            maps[measure] = {"a": 0.0, "b": 2.0, "c": 1.0}
+        else:
+            maps[measure] = {"a": 0.0, "b": 1.0, "c": 2.0}
+
+    first = module.benchmark_one(frame, maps, "primary")
+    second = module.benchmark_one(frame, maps, "primary")
+    assert first["benchmark_draws"] == second["benchmark_draws"]
+    assert first["false_self_switches_after_repair"] == 0
+    assert first["draws"] == 19
+
+
+def test_phase2_commit_reconciliation_names_result_and_seal_commits():
+    text = (PHASE25 / "YAX_PHASE25_PHASE2_COMMIT_RECONCILIATION.md").read_text()
+    assert "8ebef7c4f443b5f9300ccfa7d1761f822215d790" in text
+    assert "9772a494afc2c1af5630979631c4b67640f4ff3f" in text
+    assert "true final Phase-2 commit" in text
