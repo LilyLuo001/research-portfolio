@@ -1,0 +1,168 @@
+{
+  "record": "YAX manuscript revision round 3",
+  "presentation_only_builder": true,
+  "confirmatory_result_set_altered": false,
+  "supplementary_analyses_in_confirmatory_ledger": false,
+  "frozen_authority": {
+    "design_tag": "v1.1-design-freeze",
+    "result_tag": "v1.1-confirmatory-results",
+    "result_commit": "b16109482c3bf5ca176f6f08976e120b04769945"
+  },
+  "canonical_result_json_sha256": "4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831",
+  "canonical_result_ledger_sha256": "e900adb75510729be635eb7aea381bfe6e523b376b6f2723350cf47bdf09266b",
+  "clean_word_count": 7981,
+  "files": [
+    {
+      "path": "yax/manuscript/v3/YAX_MANUSCRIPT_v3_AUDITABLE.md",
+      "sha256": "60e19e6d0e1d9fc7bed9b4ca25d05fc5b005f24e6d6f72f8d26025a57ef8f79a"
+    },
+    {
+      "path": "yax/manuscript/v3/YAX_MANUSCRIPT_v3_CLEAN.md",
+      "sha256": "135e12c45f7abe3abb2ea6278d3e6d4c10702ea56dcc367d5acf00d4e7e2d9c2"
+    },
+    {
+      "path": "yax/manuscript/v3/YAX_REFEREE_REDTEAM_v3.md",
+      "sha256": "75afc183c898f0fc39309f2ab67dfe42c34e9a83e66e2749a661cf8e818a8716"
+    },
+    {
+      "path": "yax/manuscript/v3/YAX_V3_REFEREE_RESPONSE_MATRIX.md",
+      "sha256": "a0125ffac5b807f39a088642b213b7691bf7b70b0d8349e7cd419a791dd14743"
+    },
+    {
+      "path": "yax/manuscript/v3/YAX_V3_SUPPLEMENTARY_APPENDIX.md",
+      "sha256": "2f31954886fb6f0811e3aadeba8a784ce368d721a763c00cbc135e8fd9393d4a"
+    },
+    {
+      "path": "yax/manuscript/v3/build_v3_package.py",
+      "sha256": "63ab50fed4fc9a02c7078d5292f880327079e507933c7417b850d26fcda3ca0d"
+    },
+    {
+      "path": "yax/manuscript/v3/figures/figure1_measurement_genealogy.pdf",
+      "sha256": "73f96810417da5e3ff2e598be2afbb6650ad41bd7a7528d3014ef8034b5497d8"
+    },
+    {
+      "path": "yax/manuscript/v3/figures/figure1_measurement_genealogy.png",
+      "sha256": "97b36e1d63e421b7b8a293ca4b11c4653f714f39cffe591b632310098efe9bf8"
+    },
+    {
+      "path": "yax/manuscript/v3/figures/figure2_support_bridge.pdf",
+      "sha256": "b260fe070eb91cdb1d9f3cf5eec8cc2d60b6c40978fe11a311581658fc3d2876"
+    },
+    {
+      "path": "yax/manuscript/v3/figures/figure2_support_bridge.png",
+      "sha256": "a9c5784d8cfa9d9bde71c88169661e23e87cfc0baef8f239a7701bea3f50f64d"
+    },
+    {
+      "path": "yax/manuscript/v3/figures/figure3_dynamics_and_pretrends.pdf",
+      "sha256": "74fbb8dbe1593056f004ec684f08aca7722aca998bf87aeae1f3e7d42215b5ff"
+    },
+    {
+      "path": "yax/manuscript/v3/figures/figure3_dynamics_and_pretrends.png",
+      "sha256": "d527e6672a03903a980b94e65a9a37db2966d819de6571037712e7dd3a12faa1"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table1_anatomy_of_ai_exposure_measures.csv",
+      "sha256": "e6bed5010b2e982ad41d1ca3d711c482aeae2480266e23d86a9f93d66919be96"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table1_anatomy_of_ai_exposure_measures.md",
+      "sha256": "259af80a376ceb0ace91e21d8f99d63a1b6232f1571698cff02101ac750cdce8"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table2a_construct_diagnostics.csv",
+      "sha256": "d2138e107ab7448573060a22bcdfde41809bd6f4914939177cbb8264253b9884"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table2a_construct_diagnostics.md",
+      "sha256": "ccb023af18776c5f238be9fa92d40c6fc24cc8c7d61c954abba4ef613f81bdbe"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table2b_joint_construct_residual_audit.csv",
+      "sha256": "040ab13919a01b95b02aca201a1de366f4f76aef0a1abd99b07b97bdf7011d64"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table2b_joint_construct_residual_audit.md",
+      "sha256": "867ce5e793a015175cf254f3e5b48ebd1ab1cc7bc48f1fed4908fa1366e1974e"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table2c_validator_source_split.csv",
+      "sha256": "b439e5402ba34c955f92db5448d413742434251621f42b056435daf09f837301"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table2c_validator_source_split.md",
+      "sha256": "a3408fbfa0b471ea029eb3b805722270f7e673f339f5f032c45b1abc257c2b94"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table3_identifying_variation_all_30_architectures.csv",
+      "sha256": "876c94e011e304cf2ff6b125367a11dd238d41dcba075044993dbf058856715c"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table3_identifying_variation_all_30_architectures.md",
+      "sha256": "de74a32b3e8c73fe10040fdd392d07da09251411aee06eccd60a09ae8cea2d95"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table3b_extreme_rank_and_residual_overlap.csv",
+      "sha256": "44c42c5fea02377530bfa4bee5c7d36f8ebd3a58d1685de8c5fde0a329b00729"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table3b_extreme_rank_and_residual_overlap.md",
+      "sha256": "cd5b35262987c90e9dc68de0bc071db66a69ef4e74fed95e4cfb89ff46d760ba"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table3c_continuous_vs_headline_support.csv",
+      "sha256": "a3314628c949104e0317d540255b853be08606cf5c6f50b325bdb4111977ae43"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table3c_continuous_vs_headline_support.md",
+      "sha256": "68f397ead19b7f864826e326fc5d9a9cdac4de5c2bb8c59610d3a637c7f57c6f"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table4_mapping_and_common_support.csv",
+      "sha256": "0e79a4e7816d993878c8006cfdcb713216ecb48d5640ee6f2b0b9971ead5f633"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table4_mapping_and_common_support.md",
+      "sha256": "baeebcb3c8b5266e508fd230a37241a6e2f964656daf23f808796bae2d418a0b"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table5a_frozen_headline_models.csv",
+      "sha256": "8752b0ba3b9a60db972ba69e842d7c424d96b2b29c28a9f76818e0ec0b792ea7"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table5a_frozen_headline_models.md",
+      "sha256": "f2012dc24b2b416d4a6ec805a26168708885ebfb7fc0cf5ca26daf1e0315d9df"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table5b_same_design_different_x.csv",
+      "sha256": "607e1881090a02bac485d3ddf14e209d47f1e34a5ee4aba403b682ed1fc2a498"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table5b_same_design_different_x.md",
+      "sha256": "5201dd7d8f3f8247d4ddb8976a5c982c6649b988772223abbacb6ae5e9a54730"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table6_computerization_and_remotability.csv",
+      "sha256": "285b52f0cac71477a644e6138257d0035081c301324fea1101f076453a4707e8"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table6_computerization_and_remotability.md",
+      "sha256": "870b51eb109b1a883cca4c3005c77d0fd810e181ff1318ef9ce0f4d03099f944"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table6b_remote_interaction.csv",
+      "sha256": "9e310957a08d8ef577cbe4eb4886cae1305714e84a1dea80c47706609747a60d"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table6b_remote_interaction.md",
+      "sha256": "61cb1f3cd0b629fba5d7a01b274ada4d3c0f7ee66f4e619c9aaa6bf6b12eceda"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table7_joint_pretrend.csv",
+      "sha256": "10ff814b276771a192646d6b650fce8d170b8e0f6dfb051e580d8071e0723a17"
+    },
+    {
+      "path": "yax/manuscript/v3/tables/table7_joint_pretrend.md",
+      "sha256": "2d236e311c208f8511fefb60a6729c7d3d4fde3c7f1061a70b03f4e096b9bbc6"
+    }
+  ]
+}

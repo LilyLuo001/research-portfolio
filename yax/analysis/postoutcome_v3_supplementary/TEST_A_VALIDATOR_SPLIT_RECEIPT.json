@@ -1,0 +1,30 @@
+{
+  "analysis_id": "S2",
+  "analysis_status": "POST-OUTCOME SUPPLEMENTARY ANALYSIS \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "common_support_occupations": 348,
+  "declaration_commit": "e863122f93a4a2007d85ed8c6a3cfc1abde27d00",
+  "generated_at_utc": "2026-08-30T11:19:31.255975+00:00",
+  "outputs": {
+    "TEST_A_VALIDATOR_SPLIT_BY_OCCUPATION.csv": "915d1999e413c0e2d62549ec479523ac3b3f91e9085f2e8da5120fb7009089c3",
+    "TEST_A_VALIDATOR_SPLIT_SUMMARY.csv": "e062150a15351398cc1aab9c94fca4a5ac83c6abbc55ada49ca1b0d06664ea7d"
+  },
+  "source": {
+    "path": "yax/measurement/test_a/TEST_A_OCCUPATION_CHARACTERISTICS.csv",
+    "sha256": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c"
+  },
+  "validator_taxonomy": {
+    "classification_note": "Education and computer use are not AIOE inputs, but are conservatively grouped with same-source O*NET variables.",
+    "construction_linked_onet": [
+      "cognitive_ability_importance",
+      "manual_physical_ability_importance",
+      "required_education_category_index",
+      "onet_computers_importance"
+    ],
+    "more_external": [
+      "rti_autor_dorn",
+      "log_mean_annual_wage",
+      "dingel_neiman_telework",
+      "stem_major_group_share"
+    ]
+  }
+}
