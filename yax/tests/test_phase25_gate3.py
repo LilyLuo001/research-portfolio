@@ -96,6 +96,12 @@ def test_onet_task_matching_distinguishes_revision_and_renumbering():
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
+    class ArchiveNames:
+        @staticmethod
+        def namelist():
+            return ["db/Task Statements.txt", "db/Green Task Statements.txt"]
+
+    assert module.find_member(ArchiveNames(), "Task Statements.txt") == "db/Task Statements.txt"
     left_tasks = pd.DataFrame({
         "occ": ["11-0000.00", "11-0000.00"],
         "task_id": ["1", "2"],

@@ -63,7 +63,7 @@ def modal(values: pd.Series) -> str:
 
 
 def find_member(archive: zipfile.ZipFile, suffix: str) -> str:
-    names = [name for name in archive.namelist() if name.endswith(suffix)]
+    names = [name for name in archive.namelist() if pathlib.PurePosixPath(name).name == suffix]
     if len(names) != 1:
         raise RuntimeError(f"expected one {suffix!r}, found {names}")
     return names[0]
