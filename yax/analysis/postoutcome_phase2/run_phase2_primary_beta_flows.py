@@ -299,8 +299,15 @@ def fit_offset(young: np.ndarray, total: np.ndarray, occ: np.ndarray, month: np.
     o = np.array([remap[value] for value in o], int)
     n_occ, n_month = len(used_occ), int(t.max()) + 1
     overall = np.clip(y.sum() / n.sum(), 1e-6, 1 - 1e-6)
-    occ_effect = np.zeros(n_occ)
-    month_effect = np.full(n_month, math.log(overall / (1 - overall)))
+    occ_y = np.bincount(o, weights=y, minlength=n_occ)
+    occ_n = np.bincount(o, weights=n, minlength=n_occ)
+    occ_share = np.clip((occ_y + 0.5) / (occ_n + 1.0), 1e-6, 1 - 1e-6)
+    occ_mean_offset = np.divide(
+        np.bincount(o, weights=n * off, minlength=n_occ), occ_n,
+        out=np.zeros(n_occ), where=occ_n > 0,
+    )
+    occ_effect = np.log(occ_share / (1 - occ_share)) - occ_mean_offset
+    month_effect = np.zeros(n_month)
     beta = np.zeros(x.shape[1])
     converged = False
     for iteration in range(1, max_iterations + 1):
@@ -333,8 +340,24 @@ def fit_offset(young: np.ndarray, total: np.ndarray, occ: np.ndarray, month: np.
         score = rx.T @ residual
         step = np.clip(np.linalg.solve(information, score), -1, 1)
         beta += step
-        largest = max(largest, float(np.max(np.abs(step))))
-        if largest < 1e-8:
+        beta_step = float(np.max(np.abs(step)))
+        largest = max(largest, beta_step)
+        # Sparse flow panels can leave a nearly unidentified FE normalization
+        # drifting after the treatment parameters and likelihood scores have
+        # converged. Use normalized first-order conditions plus the treatment
+        # step, rather than requiring every nuisance-FE update below 1e-8.
+        eta_check = off + occ_effect[o] + month_effect[t] + x @ beta
+        p_check = np.clip(_sigmoid(eta_check), 1e-10, 1 - 1e-10)
+        residual_check = y - n * p_check
+        weight_check = np.maximum(n * p_check * (1 - p_check), 1e-12)
+        rx_check = ENGINE._weighted_absorb(x, weight_check, o, t, n_occ, n_month)
+        scale = max(1.0, float(n.sum()))
+        fe_score = max(
+            float(np.max(np.abs(np.bincount(o, weights=residual_check, minlength=n_occ)))),
+            float(np.max(np.abs(np.bincount(t, weights=residual_check, minlength=n_month)))),
+        ) / scale
+        beta_score = float(np.max(np.abs(rx_check.T @ residual_check))) / scale
+        if beta_step < 1e-8 and max(fe_score, beta_score) < 1e-9:
             converged = True
             break
     if not converged:
@@ -452,7 +475,13 @@ def run(args: argparse.Namespace) -> dict:
     rows = []
     for margin in ["employment_exit", "occupational_outflow", "persistent_outflow", "entry_destination"]:
         for weighting in ["official", "unweighted", "origin_WTFINL"]:
-            rows.append(model_cells(cells[margin][weighting], margin, weighting, webb_reference))
+            print(f"FITTING {margin} {weighting}", flush=True)
+            row = model_cells(cells[margin][weighting], margin, weighting, webb_reference)
+            rows.append(row)
+            print(
+                f"DONE {margin} {weighting} beta={row['coefficient_log_points']:.8f} "
+                f"iterations={row['iterations']}", flush=True,
+            )
     results_path = args.output_dir / "YAX_PHASE2_PRIMARY_BETA_FLOW_RESULTS.csv"
     write_csv(results_path, rows)
     primary = {row["margin"]: row for row in rows if row["weighting"] == "official"}
