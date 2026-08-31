@@ -88,3 +88,39 @@ def test_phase2_commit_reconciliation_names_result_and_seal_commits():
     assert "8ebef7c4f443b5f9300ccfa7d1761f822215d790" in text
     assert "9772a494afc2c1af5630979631c4b67640f4ff3f" in text
     assert "true final Phase-2 commit" in text
+
+
+def test_onet_task_matching_distinguishes_revision_and_renumbering():
+    path = PHASE25 / "run_onet_dynamic_task_feasibility.py"
+    spec = importlib.util.spec_from_file_location("phase25_onet_test", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    left_tasks = pd.DataFrame({
+        "occ": ["11-0000.00", "11-0000.00"],
+        "task_id": ["1", "2"],
+        "task_text": ["Do reports.", "Meet clients."],
+        "task_type": ["Core", "Core"],
+    })
+    right_tasks = pd.DataFrame({
+        "occ": ["11-0000.00", "11-0000.00"],
+        "task_id": ["1", "3"],
+        "task_text": ["Prepare reports.", "Meet clients."],
+        "task_type": ["Core", "Core"],
+    })
+    left_ratings = pd.DataFrame({
+        "occ": ["11-0000.00"], "task_id": ["1"], "scale_id": ["IM"],
+        "data_value": [3.0],
+    })
+    right_ratings = pd.DataFrame({
+        "occ": ["11-0000.00"], "task_id": ["1"], "scale_id": ["IM"],
+        "data_value": [3.5],
+    })
+    result = module.transition_metrics(
+        left_tasks, right_tasks, left_ratings, right_ratings,
+        "x", "y", "2020-01", "2021-01",
+    )
+    assert result["task_id_wording_revisions"] == 1
+    assert result["apparent_task_id_renumbering_same_occ_text"] == 1
+    assert result["task_additions"] == result["task_deletions"] == 1
+    assert result["mean_absolute_im_rt_change"] == 0.5
