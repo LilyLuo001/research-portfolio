@@ -217,3 +217,29 @@ def test_gate3_selects_exactly_one_path_and_prohibits_new_outcome_models():
     assert sum(path in memo for path in paths) == 1
     assert "PATH-G3-B" in memo
     assert "No new labor-outcome regressions were executed." in memo
+
+
+def test_final_reproducibility_receipt_seals_scope_refs_and_artifacts():
+    receipt = json.loads(
+        (PHASE25 / "YAX_PHASE25_GATE3_REPRODUCIBILITY_RECEIPT.json").read_text()
+    )
+    assert receipt["analysis_status"] == (
+        "POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1"
+    )
+    assert receipt["parent_phase2_commit"] == (
+        "9772a494afc2c1af5630979631c4b67640f4ff3f"
+    )
+    assert receipt["protected_references"]["v1.1-design-freeze"] == (
+        "74d97a9b07e0cbedda2c646c5eed5938b8506f81"
+    )
+    assert receipt["protected_references"]["v1.1-confirmatory-results"] == (
+        "31f9d02352f70fe81f5a01cd6690cc5e5400512c"
+    )
+    assert receipt["scope_integrity"]["new_labor_outcome_regressions"] == []
+    assert receipt["scope_integrity"]["protected_paths_modified"] is False
+    assert receipt["scope_integrity"]["new_manuscript_created"] is False
+    assert receipt["scope_integrity"]["gate3_paths_selected"] == 1
+    assert receipt["classifications"]["gate3_selected_path"].startswith("PATH-G3-B")
+    assert len(receipt["onet_archives"]["versions"]) == 37
+    for name, expected in receipt["artifact_sha256"].items():
+        assert sha256(PHASE25 / name) == expected
