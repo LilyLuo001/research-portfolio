@@ -97,14 +97,21 @@ def write_csv(path: pathlib.Path, rows: list[dict]) -> None:
 
 def authenticate(args: argparse.Namespace) -> dict:
     head = git("rev-parse", "HEAD")
-    if head != args.pre_result_commit:
-        raise RuntimeError(
-            f"first Phase 3 execution must run at the pushed pre-result commit: {head} != {args.pre_result_commit}"
-        )
     if subprocess.run(
-        ["git", "merge-base", "--is-ancestor", PARENT, head], cwd=ROOT, check=False
+        ["git", "merge-base", "--is-ancestor", args.pre_result_commit, head],
+        cwd=ROOT,
+        check=False,
     ).returncode:
-        raise RuntimeError("Phase 3 parent is not an ancestor of execution HEAD")
+        raise RuntimeError("recorded pre-result commit is not an ancestor of execution HEAD")
+    if head != args.pre_result_commit:
+        changed = set(git("diff", "--name-only", f"{args.pre_result_commit}..{head}").splitlines())
+        allowed = {
+            "yax/analysis/postoutcome_phase3_final/run_phase3.py",
+            "yax/analysis/postoutcome_phase3_final/YAX_PHASE3_IMPLEMENTATION_FIXES.md",
+            "yax/tests/test_phase3_final.py",
+        }
+        if not changed or not changed.issubset(allowed):
+            raise RuntimeError(f"post-plan execution changes exceed the documented bug fix: {changed}")
     protected = {
         "v1.1-design-freeze": git("rev-parse", "v1.1-design-freeze^{}"),
         "v1.1-confirmatory-results": git("rev-parse", "v1.1-confirmatory-results^{}"),
@@ -423,8 +430,8 @@ def summarize_switch_components(
     f_rows = result.loc[
         result.section.eq("F_distance_bin") & result.pair.eq("all_six")
     ]
-    primary = f_rows.loc[f_rows.sample.eq("primary")].set_index("bin_or_group")
-    persistent = f_rows.loc[f_rows.sample.eq("persistent")].set_index("bin_or_group")
+    primary = f_rows.loc[f_rows["sample"].eq("primary")].set_index("bin_or_group")
+    persistent = f_rows.loc[f_rows["sample"].eq("persistent")].set_index("bin_or_group")
     direction = result.loc[
         result.section.eq("direction_group") & result.sample.eq("primary")
     ].set_index("bin_or_group")

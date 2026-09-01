@@ -137,3 +137,12 @@ def test_plan_authorizes_exactly_one_new_stock_model_and_no_rescue_search():
     definition = (PHASE3 / "YAX_PHASE3_SHARED_COMPONENT_DEFINITION.md").read_text()
     assert "true, latent causal, or uniquely correct AI exposure" in definition
 
+
+def test_runner_uses_bracket_access_for_the_sample_column_after_documented_fix():
+    source = (PHASE3 / "run_phase3.py").read_text()
+    assert 'f_rows["sample"].eq("primary")' in source
+    assert 'f_rows["sample"].eq("persistent")' in source
+    assert "f_rows.sample.eq" not in source
+    ledger = (PHASE3 / "YAX_PHASE3_IMPLEMENTATION_FIXES.md").read_text()
+    assert "Pandas `sample` attribute collision" in ledger
+    assert "No specification, estimand, support rule, seed, draw count" in ledger
