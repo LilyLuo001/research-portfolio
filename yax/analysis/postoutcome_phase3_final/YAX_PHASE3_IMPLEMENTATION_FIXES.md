@@ -12,9 +12,10 @@ The first launch used the legacy `.venv-old/bin/python`, which is Python 3.6.8 a
 
 The first computational run completed the two frozen hard-benchmark loops and wrote their JSON, then stopped before component classification, stock estimation, or joint inference. In `summarize_switch_components`, `f_rows.sample` resolved to the DataFrame method rather than the column named `sample`, raising `AttributeError: 'function' object has no attribute 'eq'`.
 
-The repair changes only:
+The first repair changed:
 
 `f_rows.sample.eq(...)` → `f_rows["sample"].eq(...)`.
 
 The underlying table, row selection, and all calculations are identical. A source regression test protects bracket access. The entire program is rerun from the beginning; the earlier partial hard-benchmark file is not reused.
 
+The next full rerun exposed a second access to the same column in the immediately following direction-group selection: `result.sample.eq(...)`. It failed at the same stage, again before the stock or joint-inference exercises. That access is likewise replaced by `result["sample"].eq(...)`. The regression test now forbids any `.sample.eq` occurrence in the runner. The program is again rerun from the beginning without reusing either partial benchmark file.

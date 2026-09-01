@@ -433,7 +433,7 @@ def summarize_switch_components(
     primary = f_rows.loc[f_rows["sample"].eq("primary")].set_index("bin_or_group")
     persistent = f_rows.loc[f_rows["sample"].eq("persistent")].set_index("bin_or_group")
     direction = result.loc[
-        result.section.eq("direction_group") & result.sample.eq("primary")
+        result.section.eq("direction_group") & result["sample"].eq("primary")
     ].set_index("bin_or_group")
     low_high = float(primary.loc["1", "conflict_rate"] - primary.loc["5", "conflict_rate"])
     persistent_low_high = float(

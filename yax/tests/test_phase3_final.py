@@ -142,7 +142,8 @@ def test_runner_uses_bracket_access_for_the_sample_column_after_documented_fix()
     source = (PHASE3 / "run_phase3.py").read_text()
     assert 'f_rows["sample"].eq("primary")' in source
     assert 'f_rows["sample"].eq("persistent")' in source
-    assert "f_rows.sample.eq" not in source
+    assert 'result["sample"].eq("primary")' in source
+    assert ".sample.eq" not in source
     ledger = (PHASE3 / "YAX_PHASE3_IMPLEMENTATION_FIXES.md").read_text()
     assert "Pandas `sample` attribute collision" in ledger
     assert "No specification, estimand, support rule, seed, draw count" in ledger
