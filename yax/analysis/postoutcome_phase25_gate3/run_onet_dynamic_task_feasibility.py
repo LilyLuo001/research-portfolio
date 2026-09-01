@@ -160,8 +160,12 @@ def transition_metrics(left_tasks: pd.DataFrame, right_tasks: pd.DataFrame,
     lr = left_ratings.set_index(["occ", "task_id", "scale_id"]).data_value
     rr = right_ratings.set_index(["occ", "task_id", "scale_id"]).data_value
     rating_common = lr.index.intersection(rr.index)
-    rating_delta = (rr.loc[rating_common].to_numpy(float) - lr.loc[rating_common].to_numpy(float))
-    rating_delta = rating_delta[np.isfinite(rating_delta)]
+    rating_delta = pd.Series(
+        rr.loc[rating_common].to_numpy(float) - lr.loc[rating_common].to_numpy(float),
+        index=rating_common,
+    ).replace([np.inf, -np.inf], np.nan).dropna()
+    importance = rating_delta.loc[rating_delta.index.get_level_values("scale_id") == "IM"]
+    relevance = rating_delta.loc[rating_delta.index.get_level_values("scale_id") == "RT"]
     return {
         "analysis_status": LABEL, "row_type": "adjacent_release_summary",
         "left_release": left_version, "right_release": right_version,
@@ -174,8 +178,10 @@ def transition_metrics(left_tasks: pd.DataFrame, right_tasks: pd.DataFrame,
         "task_id_wording_revisions": revised, "apparent_task_id_renumbering_same_occ_text": renumbered,
         "task_additions": len(rk - lk), "task_deletions": len(lk - rk),
         "lineage_task_matches_across_deleted_added_occ_codes": len(old_lineage & new_lineage),
-        "comparable_im_rt_ratings": int(len(rating_delta)),
-        "mean_absolute_im_rt_change": float(np.mean(np.abs(rating_delta))) if len(rating_delta) else "",
+        "comparable_importance_ratings": int(len(importance)),
+        "mean_absolute_importance_change": float(np.mean(np.abs(importance))) if len(importance) else "",
+        "comparable_relevance_ratings": int(len(relevance)),
+        "mean_absolute_relevance_change": float(np.mean(np.abs(relevance))) if len(relevance) else "",
     }
 
 

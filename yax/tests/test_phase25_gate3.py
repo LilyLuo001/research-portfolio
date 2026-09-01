@@ -129,7 +129,9 @@ def test_onet_task_matching_distinguishes_revision_and_renumbering():
     assert result["task_id_wording_revisions"] == 1
     assert result["apparent_task_id_renumbering_same_occ_text"] == 1
     assert result["task_additions"] == result["task_deletions"] == 1
-    assert result["mean_absolute_im_rt_change"] == 0.5
+    assert result["mean_absolute_importance_change"] == 0.5
+    assert result["comparable_importance_ratings"] == 1
+    assert result["comparable_relevance_ratings"] == 0
 
 
 def test_factor_family_balancing_assigns_equal_total_family_weight():
