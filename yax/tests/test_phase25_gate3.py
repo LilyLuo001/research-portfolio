@@ -1,4 +1,6 @@
+import hashlib
 import importlib.util
+import json
 import pathlib
 import sys
 
@@ -8,6 +10,14 @@ import pandas as pd
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PHASE25 = ROOT / "yax/analysis/postoutcome_phase25_gate3"
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def load_module():
@@ -152,3 +162,58 @@ def test_factor_family_balancing_assigns_equal_total_family_weight():
     assert np.allclose(shared, expected)
     assert np.isclose(np.average(shared, weights=weights), 0.0)
     assert np.isclose(np.average(shared ** 2, weights=weights), 1.0)
+
+
+def test_phase25_aggregate_outputs_preserve_support_and_benchmark_rules():
+    support = pd.read_csv(PHASE25 / "YAX_PHASE25_PAIR_SPECIFIC_SUPPORT.csv")
+    agreement = pd.read_csv(PHASE25 / "YAX_PHASE25_PAIR_SPECIFIC_AGREEMENT.csv")
+    receipt = json.loads((PHASE25 / "YAX_PHASE25_REALLOCATION_EXECUTION_RECEIPT.json").read_text())
+    benchmark = json.loads((PHASE25 / "YAX_PHASE25_REALIZED_VS_MATCHED_BENCHMARK.json").read_text())
+    assert len(support) == len(agreement) == 15
+    assert receipt["switches"] == 186_370
+    assert receipt["sixway_switches"] == 108_500
+    assert support.pair_support_raw.ge(support.sixway_support_raw).all()
+    assert benchmark["primary"]["draws"] == 999
+    assert benchmark["primary"]["seed"] == 2026090101
+    assert benchmark["primary"]["false_self_switches_after_repair"] == 0
+    assert benchmark["persistence_sensitivity"]["false_self_switches_after_repair"] == 0
+    assert benchmark["primary"]["classification"] == "BENCH-B1"
+
+
+def test_onet_outputs_are_archive_only_and_hash_sealed():
+    receipt = json.loads((PHASE25 / "YAX_ONET_DYNAMIC_TASK_EXECUTION_RECEIPT.json").read_text())
+    assert receipt["archives"] == 37
+    assert receipt["archive_versions"][0] == "22.0"
+    assert receipt["archive_versions"][-1] == "31.0"
+    assert receipt["labor_outcome_files_read"] == []
+    assert receipt["labor_outcome_regressions"] == []
+    for name, expected in receipt["outputs"].items():
+        assert sha256(PHASE25 / name) == expected
+    coverage = pd.read_csv(PHASE25 / "YAX_ONET_TASK_VINTAGE_COVERAGE.csv")
+    current = coverage.loc[coverage.last_archive_release.astype(str).eq("31.0")]
+    assert len(current) == 923
+    assert int(current.has_multiple_pre_and_post_2022.sum()) == 267
+
+
+def test_factor_outputs_balance_families_and_use_no_labor_outcomes():
+    receipt = json.loads((PHASE25 / "YAX_SHARED_COMPONENT_EXECUTION_RECEIPT.json").read_text())
+    assert receipt["weighting_rule"].endswith("each family gets total weight 1/2")
+    assert receipt["labor_outcomes_read"] == []
+    assert receipt["labor_outcome_regressions"] == []
+    assert receipt["occupations"] == 463
+    for name, expected in receipt["outputs"].items():
+        assert sha256(PHASE25 / name) == expected
+    stability = pd.read_csv(PHASE25 / "YAX_EXPOSURE_FACTOR_STABILITY.csv")
+    lomo = stability.loc[stability.diagnostic.eq("leave_one_measure_out")]
+    assert len(lomo) == 6
+    assert lomo.correlation_with_full_family_balanced_component.min() > 0.98
+    leave_family = stability.loc[stability.diagnostic.eq("leave_one_family_out_limitation")]
+    assert not leave_family.identifies_cross_family_shared_dimension.any()
+
+
+def test_gate3_selects_exactly_one_path_and_prohibits_new_outcome_models():
+    memo = (PHASE25 / "YAX_GATE3_DECISION_MEMO.md").read_text()
+    paths = ["PATH-G3-A", "PATH-G3-B", "PATH-G3-C", "PATH-G3-D"]
+    assert sum(path in memo for path in paths) == 1
+    assert "PATH-G3-B" in memo
+    assert "No new labor-outcome regressions were executed." in memo

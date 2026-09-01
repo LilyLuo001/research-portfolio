@@ -1,0 +1,34 @@
+{
+  "record": "YAX shared-component feasibility execution receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "input": "/Users/lilyluo/Documents/Codex/2026-08-25/her/work/yax-manuscript-v1-20260830/yax/measurement/test_a/TEST_A_OCCUPATION_CHARACTERISTICS.csv",
+  "input_sha256": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+  "occupations": 463,
+  "support_definition": "finite values on all six frozen exposures and positive pre-period weight",
+  "weighting_rule": "preperiod_employment_weight; each family gets total weight 1/2",
+  "measures": [
+    "aioe_admin_equal",
+    "aioe_ability_direct",
+    "aioe_oews2018_source_weighted",
+    "dv_rating_alpha",
+    "dv_rating_beta",
+    "dv_rating_gamma"
+  ],
+  "existing_characteristics_only": [
+    "cognitive_ability_importance",
+    "manual_physical_ability_importance",
+    "rti_autor_dorn",
+    "required_education_category_index",
+    "log_mean_annual_wage",
+    "dingel_neiman_telework",
+    "stem_major_group_share",
+    "onet_computers_importance"
+  ],
+  "labor_outcomes_read": [],
+  "labor_outcome_regressions": [],
+  "outputs": {
+    "YAX_EXPOSURE_FACTOR_DIAGNOSTICS.csv": "32a35d95d1e1fa1a238e9aefd6bd7386bdcb2641d8fa4e2702a8710011f2029d",
+    "YAX_EXPOSURE_FACTOR_LOADINGS.csv": "7c9a5cfc888189811d36fef36e39ce43f51d329ffcfb80f1d8c23a1a59a58cfc",
+    "YAX_EXPOSURE_FACTOR_STABILITY.csv": "e42b50712d1086a0599fe97ec5fcb33b221bccb69506e001a28e59542889c2cb"
+  }
+}
