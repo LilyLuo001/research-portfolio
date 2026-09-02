@@ -44,6 +44,8 @@ LINEAGE = {
                                     " + escalation_resolved.csv"
                                     " + recovered_verified_dates.csv"),
     "recovered_verified_dates.csv": "events_master_v2_stage3.csv + raw completion docs",
+    "events_master_v2_stage3.prefold.csv": ("events_master_v2_stage3.csv as it stood"
+                                            " before recovered days were folded in"),
     "events_derived_v2.csv": "events_master_v2_stage3.csv",
     "fed_residual_cases.csv": "events_master_v2_stage3.csv + classification_ledger.csv",
     "pair_delta_audit.csv": ("events_master_v2_stage3.csv + snapshot stage3"
