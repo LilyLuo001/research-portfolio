@@ -168,7 +168,7 @@ def load_completions():
 def main():
     ev = pd.read_csv(HERE / "ncen_cease_signal.csv")
     ev["proposed_close"] = pd.to_datetime(ev.proposed_close, errors="coerce")
-    ev["term_month"] = pd.to_datetime(ev.verified_effective_date, errors="coerce")
+    ev["term_month"] = pd.to_datetime(ev.ncen_termination_month, errors="coerce")
     ev["cease_lo"] = pd.to_datetime(ev.cease_window_lo, errors="coerce")
     ev["cease_hi"] = pd.to_datetime(ev.cease_window_hi, errors="coerce")
     # The corpus-wide sweep needs the submissions index to map a document to its
@@ -213,6 +213,24 @@ def main():
             ev["a_context"] = ev.a_context.mask(hit.notna(),
                                                 ev.pre_series_id.map(e.context))
             ev["a_how"] = ev.a_how.mask(hit.notna(), "per_event_escalation")
+            ev["a_close_date"] = hit.fillna(ev.a_close_date)
+
+    # Days recovered by the bracketed per-event search. These carry the tightest
+    # attribution of any channel: the sentence must name this pair's own funds,
+    # and the day must fall inside a bracket drawn from independent evidence --
+    # the registrant's own termination month, or the window between two N-CEN
+    # periods -- so two channels have to agree before a day is accepted.
+    rec = HERE / "recovered_verified_dates.csv"
+    if rec.exists():
+        v = pd.read_csv(rec)
+        if len(v):
+            v["verified_day"] = pd.to_datetime(v.verified_day, errors="coerce")
+            v = v.drop_duplicates("pre_series_id").set_index("pre_series_id")
+            hit = ev.pre_series_id.map(v.verified_day)
+            for col, s in (("a_accession", v.acc), ("a_pattern", v.pattern),
+                           ("a_context", v.context)):
+                ev[col] = ev[col].mask(hit.notna(), ev.pre_series_id.map(s))
+            ev["a_how"] = ev.a_how.mask(hit.notna(), "bracketed_recovery")
             ev["a_close_date"] = hit.fillna(ev.a_close_date)
 
     tier, why, eff, prec, src, yr = [], [], [], [], [], []
@@ -300,6 +318,26 @@ def main():
         ev.final_precision == "verified_exact_day")
     ev["final_proposed_day"] = pd.to_datetime(
         ev.proposed_close, errors="coerce").dt.strftime("%Y-%m-%d")
+
+    # The date columns a downstream consumer needs in order to accept or refuse a
+    # date without re-deriving anything. verified_effective_date is populated only
+    # where a filing states the day: a proposed day, a meeting day and an N-CEN
+    # termination month all leave it empty, by construction rather than by
+    # convention, so nothing can silently promote one of them into a wave.
+    isv = ev.final_precision == "verified_exact_day"
+    subs = HERE / "submissions_flat.parquet"
+    form = (pd.read_parquet(subs, columns=["acc", "form"])
+            .drop_duplicates("acc").set_index("acc").form
+            if subs.exists() else None)
+    ev["verified_effective_date"] = ev.final_verified_day
+    ev["verified_date_source_accession"] = ev.a_accession.where(isv)
+    ev["verified_date_source_form"] = (
+        ev.a_accession.map(form).where(isv) if form is not None else None)
+    ev["verified_date_evidence"] = (
+        ev.a_pattern.fillna("") + " / " + ev.a_how.fillna("")).where(isv)
+    ev["date_precision"] = ev.final_precision
+    assert not (ev.verified_effective_date.notna() & ~isv).any()
+
     ev.to_csv(HERE / "events_master_v2_stage3.csv", index=False)
 
     print(f"completion statements parsed : {len(comp):,d}")

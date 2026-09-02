@@ -218,7 +218,7 @@ def main():
     # ------------------------------------------------------- date provenance
     ev["term_month"] = ev.pre_series_id.map(term.term_month)
     ev["term_accession"] = ev.pre_series_id.map(term.ACCESSION_NUMBER)
-    ev["verified_effective_date"] = ev.term_month.dt.strftime("%Y-%m")
+    ev["ncen_termination_month"] = ev.term_month.dt.strftime("%Y-%m")
     ev["effective_date_source"] = ev.term_month.notna().map(
         {True: "ncen_terminated_organization", False: None})
     ev["effective_date_precision"] = ev.term_month.notna().map(
@@ -260,7 +260,7 @@ def main():
     ev["A_explicit_completion_checked"] = False
 
     ev = ev.drop(columns=["term_month", "term_accession"])
-    ev = ev.sort_values(["verified_effective_date", "pre_series_name"])
+    ev = ev.sort_values(["ncen_termination_month", "pre_series_name"])
     ev.to_csv(HERE / "events_master_v2_stage1.csv", index=False)
 
     print()
@@ -278,14 +278,14 @@ def main():
     print(f"verified predecessor mutual funds  : {b.pre_series_id.nunique():,d}")
     print(f"successor ETFs                     : {b.post_series_id.nunique():,d}")
     print(f"economic conversion events         : {len(b):,d}")
-    print(f"distinct effective months          : {b.verified_effective_date.nunique():,d}")
+    print(f"distinct effective months          : {b.ncen_termination_month.nunique():,d}")
     print(f"waves                              : NOT COMPUTED (dates are month_only)")
 
     print()
     print("effective_date_precision census:")
     print(ev.effective_date_precision.value_counts().to_string())
 
-    thru = b[b.verified_effective_date <= FED_CUT.strftime("%Y-%m")]
+    thru = b[b.ncen_termination_month <= FED_CUT.strftime("%Y-%m")]
     print()
     print("=" * 72)
     print("FED-125 COMPARISON (predecessor mutual funds only)")
@@ -296,7 +296,7 @@ def main():
     print(f"difference                                      : "
           f"{125 - thru.pre_series_id.nunique():,d}")
 
-    yr = b.verified_effective_date.str[:4].value_counts().sort_index()
+    yr = b.ncen_termination_month.str[:4].value_counts().sort_index()
     print("\nverified predecessor MFs by completion year:")
     print(yr.to_string())
     print("cumulative:")

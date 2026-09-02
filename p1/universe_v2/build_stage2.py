@@ -50,7 +50,7 @@ def main():
     # The fallback is ordered by how close each field sits to the actual closing.
     # a termination month that predates the proxy proposing it belongs to some
     # earlier event of the same series, so it cannot anchor this one
-    term = pd.to_datetime(ev.verified_effective_date, errors="coerce")
+    term = pd.to_datetime(ev.ncen_termination_month, errors="coerce")
     first = pd.to_datetime(ev.n14_first_filed, errors="coerce")
     ev["term_coherent"] = term.where(term >= first - pd.Timedelta(days=90))
 

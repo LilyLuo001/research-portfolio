@@ -36,7 +36,7 @@ def main():
     # ---------------------------------------------------------------- baseline
     # the strict rule as it stood: registrant-reported termination of the
     # predecessor, coherent with its own proxy, successor reporting in N-CEN
-    s1["term"] = pd.to_datetime(s1.verified_effective_date, errors="coerce")
+    s1["term"] = pd.to_datetime(s1.ncen_termination_month, errors="coerce")
     s1["n14_first"] = pd.to_datetime(s1.n14_first_filed, errors="coerce")
     base = s1[(s1.completion_tier == "B_structurally_confirmed_completion")
               & s1.term.notna()

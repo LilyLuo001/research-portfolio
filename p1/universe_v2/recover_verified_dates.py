@@ -1,9 +1,13 @@
 """Find a filing-stated closing day for every completion that does not have one.
 
-115 of the 154 completed pairs are known to have closed but carry no day that a
+116 of the 156 completed pairs are known to have closed but carry no day that a
 filing actually asserts: 87 have only the registrant's N-CEN termination month,
-20 have only the day their proxy proposed, 8 have only a bracket. Wave
+17 have only the day their proxy proposed, 12 have only a bracket. Wave
 construction needs asserted days, so each of these is searched for one.
+
+The queue is derived from the current stage3 rather than fixed, because it has to
+reconcile with the completed census exactly: every completed event is either
+already verified_exact_day or in this queue, and none is in neither.
 
 What makes this search well-posed, and different from the earlier hunt for
 unresolved completions, is that the answer is already bracketed. A month_only
@@ -72,10 +76,19 @@ def main():
     sub["filed"] = pd.to_datetime(sub.filed, errors="coerce")
     sub = sub[sub.form.isin(FORMS)].drop_duplicates(["cik", "acc"])
 
-    rows = []
+    rows, skipped = [], []
     for n, r in enumerate(open_.itertuples(index=False), 1):
         lo, hi, expected = window(r)
         if pd.isna(lo) or pd.isna(hi):
+            # an event with no usable bracket is still one of the N owed a day;
+            # dropping it silently would leave the queue short of the census
+            skipped.append({"pre_series_id": r.pre_series_id,
+                            "pre_series_name": r.pre_series_name,
+                            "prior_precision": r.final_precision,
+                            "reason": "no bracket to search within"})
+            print(f"  [{n}/{len(open_)}] {r.pre_series_name[:42]:<42} "
+                  f"{r.final_precision[:12]:<12} -> SKIPPED (no bracket)",
+                  flush=True)
             continue
         ciks = {int(c) for c in (r.pre_cik, r.post_cik) if pd.notna(c)}
         # read from just before the window to well after it: the statement is
@@ -120,6 +133,9 @@ def main():
     fetchlib.record(out, kind="derived", parser="recover_verified_dates.py")
 
     print(f"\nrecovered: {len(d)}/{len(open_)}")
+    print(f"searched : {len(open_) - len(skipped)}   skipped (no bracket): "
+          f"{len(skipped)}")
+    assert len(d) + len(skipped) <= len(open_)
     if len(d):
         # a recovered day that lands inside the registrant's own reported month
         # is two channels agreeing, which is the strongest corroboration available
