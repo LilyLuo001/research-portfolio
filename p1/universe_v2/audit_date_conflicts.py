@@ -65,11 +65,17 @@ def main():
                     continue
                 if not names_match(ctx, r.pre_series_name, r.post_series_name):
                     continue
-                found.setdefault(d.strftime("%Y-%m-%d"),
-                                 {"acc": x.acc, "form": x.form, "pattern": nm,
-                                  "context": ctx[:300]})
+                # every accession asserting the day is kept, not just the first:
+                # independent filings agreeing is the corroboration signal, and
+                # collapsing them to one would discard exactly that
+                e = found.setdefault(d.strftime("%Y-%m-%d"), {"accs": [], "ev": []})
+                if x.acc not in e["accs"]:
+                    e["accs"].append(x.acc)
+                    e["ev"].append(f"[{x.form} {x.acc}] {nm}: {ctx[:200]}")
 
         days = sorted(found)
+        n_src = {d: len(found[d]["accs"]) for d in days}
+        agree = max(n_src.values()) if days else 0
         span = ((pd.to_datetime(days[-1]) - pd.to_datetime(days[0])).days
                 if len(days) > 1 else 0)
         rows.append({
@@ -81,24 +87,35 @@ def main():
             "distinct_days_found": len(days),
             "all_days": ";".join(days),
             "day_span_days": span,
-            "competing_accessions": ";".join(found[d]["acc"] for d in days),
+            "sources_per_day": ";".join(f"{d}={n_src[d]}" for d in days),
+            "sources_for_accepted_day": n_src.get(str(r.verified_day), 0),
+            "corroborated": n_src.get(str(r.verified_day), 0) > 1,
+            "competing_accessions": ";".join(
+                a for d in days for a in found[d]["accs"]),
             "competing_evidence": " || ".join(
-                f"{d} [{found[d]['form']} {found[d]['acc']}] {found[d]['context']}"
-                for d in days),
+                f"{d} {e}" for d in days for e in found[d]["ev"]),
             "conflict": len(days) > 1,
         })
         mark = "CONFLICT" if len(days) > 1 else "ok      "
         print(f"  [{n}/{len(q)}] {mark} {r.pre_series_name[:40]:<40} "
-              f"{len(days)} day(s): {';'.join(days)}", flush=True)
+              f"{len(days)} day(s), max {agree} source(s): "
+              f"{';'.join(f'{d}x{n_src[d]}' for d in days)}", flush=True)
 
     d = pd.DataFrame(rows)
     out = CACHE / "date_conflict_audit.csv"
     d.to_csv(out, index=False)
 
     c = d[d.conflict]
+    clean = d[~d.conflict]
     print("\n" + "=" * 74)
-    print(f"  {len(d) - len(c)}/{len(d)} recovered days uncontradicted; "
-          f"{len(c)} conflicting")
+    print(f"  {len(clean):>4d}   unique unambiguous exact date")
+    print(f"  {int(clean.corroborated.sum()):>4d}     of which two or more filings "
+          f"assert the same day")
+    print(f"  {int((~clean.corroborated).sum()):>4d}     of which a single filing "
+          f"asserts it")
+    print(f"  {len(c):>4d}   conflicting exact dates")
+    print(f"  {len(c):>4d}   unresolved (adjudication is not automated)")
+    print(f"  {'-' * 46}\n  {len(d):>4d}   recovered days audited")
     for r in c.itertuples(index=False):
         print(f"\n  {r.pre_series_name} ({r.pre_series_id})")
         print(f"    accepted {r.accepted_day}; filings assert {r.all_days} "

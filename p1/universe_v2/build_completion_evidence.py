@@ -223,6 +223,18 @@ def main():
     rec = HERE / "recovered_verified_dates.csv"
     if rec.exists():
         v = pd.read_csv(rec)
+        # A day a second filing contradicts is withheld rather than taken. The
+        # recovery pass stops at its first hit, so being first is an artifact of
+        # read order and not evidence; promoting it would be choosing between two
+        # filings on no grounds. These stay at their prior precision until a human
+        # adjudicates, which is what makes the conflict audit a gate on the freeze.
+        ca = HERE / "date_conflict_audit.csv"
+        if ca.exists() and len(v):
+            c = pd.read_csv(ca)
+            bad = set(c[c.conflict].pre_series_id) if len(c) else set()
+            if bad:
+                print(f"  withholding {len(bad)} contradicted day(s): {sorted(bad)}")
+                v = v[~v.pre_series_id.isin(bad)]
         if len(v):
             v["verified_day"] = pd.to_datetime(v.verified_day, errors="coerce")
             v = v.drop_duplicates("pre_series_id").set_index("pre_series_id")
