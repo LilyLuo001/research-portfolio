@@ -28,12 +28,14 @@ Design points, each of which is an audit finding rather than a preference:
 5. Dates carry their own provenance and precision. N-CEN terminations are
    MM/YYYY, so they stay month_only and are never given a manufactured day.
 """
+import json
 import pickle
 import re
 
 import pandas as pd
 
 from paths import CACHE as HERE  # data lives outside the repo; see paths.py
+from paths import HEADERS, MANIFEST
 CUTOFF = pd.Timestamp("2026-08-29")
 FED_CUT = pd.Timestamp("2024-12-31")
 
@@ -130,7 +132,29 @@ def is_predecessor_mf(sid, name, tickers, facts):
     return True, "name_not_etf_no_ncen"
 
 
+def manifest_field(name, field, default):
+    """The last value recorded for one artifact in the provenance manifest."""
+    got = default
+    if MANIFEST.exists():
+        with open(MANIFEST) as fh:
+            for line in fh:
+                r = json.loads(line)
+                if r.get("path", "").endswith(name) and field in r:
+                    got = r[field]
+    return got
+
+
 def main():
+    # the funnel is counted off the artifacts, not asserted: a rebuilt cache that
+    # fetches a different number of headers has to say so rather than reprint 2,060
+    idx = pd.read_csv(HERE / "n14_index.csv")
+    n_idx_acc = idx.accession.nunique()
+    # the index is written deduplicated, so the pre-dedup row count survives only
+    # in the manifest line fetch_n14.py wrote for it
+    n_idx_rows = manifest_field("n14_index.csv", "index_rows", n_idx_acc)
+    n_ok = len(list(HEADERS.glob("*.hdr.sgml")))
+    n_fail = len(list(HEADERS.glob("*.err")))
+
     m = pd.read_csv(HERE / "n14_mergers.csv")
     m["filed"] = pd.to_datetime(m.filed, errors="coerce")
     n_raw, n_hdr = len(m), m.accession.nunique()
@@ -160,11 +184,11 @@ def main():
     print("=" * 72)
     print("N-14 STRUCTURAL FUNNEL")
     print("=" * 72)
-    print(f"indexed N-14-family rows                 : 2,070")
-    print(f"unique accessions                        : 2,060")
-    print(f"headers fetched / failed                 : 2,060 / 0")
+    print(f"indexed N-14-family rows                 : {n_idx_rows:,d}")
+    print(f"unique accessions                        : {n_idx_acc:,d}")
+    print(f"headers fetched / failed                 : {n_ok:,d} / {n_fail:,d}")
     print(f"headers WITH a structured MERGER block   : {n_hdr:,d}")
-    print(f"headers WITHOUT a MERGER block           : {2060 - n_hdr:,d}")
+    print(f"headers WITHOUT a MERGER block           : {n_ok - n_hdr:,d}")
     print(f"merger rows                              : {n_raw:,d}")
     print(f"  filed <= {CUTOFF.date()}                     : {n_cut:,d}")
     print(f"  with both target and acquirer series id: {n_ids:,d}")

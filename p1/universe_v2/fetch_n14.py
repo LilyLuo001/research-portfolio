@@ -70,11 +70,18 @@ def index_rows(paths):
 
 
 def parse_header(path, acc, form, filed):
-    """MERGER blocks from one SGML header, one row per acquiring/target pair.
+    """MERGER blocks from one SGML header, one row per acquiring/target series.
 
     A single N-14 can carry several MERGER blocks -- one proxy often reorganizes
     a whole slate -- so the parser walks the tag stream and closes a pair each
     time a new MERGER opens, rather than assuming one block per document.
+
+    Within a block, one TARGET-DATA can hold several <SERIES>: two mutual funds
+    folding into a single ETF is a normal structure, not an anomaly. Each side is
+    therefore collected as a list of series and the pair is expanded across them.
+    Flattening a side to one series would drop a real predecessor fund and would
+    also hand the survivor the other fund's share classes, since the class ids
+    nest inside the series they belong to.
     """
     txt = open(path, errors="replace").read()
     out, cur, side = [], None, None
@@ -86,7 +93,8 @@ def parse_header(path, acc, form, filed):
         if tag == "MERGER":
             if cur:
                 out.append(cur)
-            cur, side = collections.defaultdict(list), None
+            cur, side = {"acq": [], "tgt": [], "acq_cik": None,
+                         "tgt_cik": None}, None
         elif tag == "ACQUIRING-DATA":
             side = "acq"
         elif tag == "TARGET-DATA":
@@ -94,40 +102,50 @@ def parse_header(path, acc, form, filed):
         elif cur is not None and side:
             if tag == "CIK":
                 cur[f"{side}_cik"] = val
-            elif tag == "SERIES-ID":
-                cur[f"{side}_series_id"] = val
-            elif tag == "SERIES-NAME":
-                cur[f"{side}_series_name"] = val
-            elif tag == "CLASS-CONTRACT-ID":
-                cur[f"{side}_class_ids"].append(val)
-            elif tag == "CLASS-CONTRACT-TICKER-SYMBOL":
-                cur[f"{side}_tickers"].append(val)
+            elif tag == "SERIES":
+                cur[side].append({"class_ids": [], "tickers": []})
+            elif tag == "SERIES-ID" and cur[side]:
+                cur[side][-1]["series_id"] = val
+            elif tag == "SERIES-NAME" and cur[side]:
+                cur[side][-1]["series_name"] = val
+            elif tag == "CLASS-CONTRACT-ID" and cur[side]:
+                cur[side][-1]["class_ids"].append(val)
+            elif tag == "CLASS-CONTRACT-TICKER-SYMBOL" and cur[side]:
+                cur[side][-1]["tickers"].append(val)
     if cur:
         out.append(cur)
 
+    blank = {"class_ids": [], "tickers": []}
     rows = []
     for c in out:
-        r = {"accession": acc, "form": form, "filed": filed}
-        for side in ("acq", "tgt"):
-            for f in ("cik", "series_id", "series_name"):
-                v = c.get(f"{side}_{f}")
-                v = v[0] if isinstance(v, list) else v
-                # headers zero-pad the CIK; downstream joins it against N-CEN,
-                # which does not, so it is normalised at the point of parsing
-                r[f"{side}_{f}"] = int(v) if f == "cik" and v else v
-            for f in ("class_ids", "tickers"):
-                v = c.get(f"{side}_{f}") or []
-                r[f"{side}_{f}"] = ";".join(v) if isinstance(v, list) else v
-        rows.append(r)
+        for a in (c["acq"] or [blank]):
+            for t in (c["tgt"] or [blank]):
+                r = {"accession": acc, "form": form, "filed": filed}
+                for side, s in (("acq", a), ("tgt", t)):
+                    # headers zero-pad the CIK; downstream joins it against
+                    # N-CEN, which does not, so it is normalised here
+                    v = c[f"{side}_cik"]
+                    r[f"{side}_cik"] = int(v) if v else None
+                    r[f"{side}_series_id"] = s.get("series_id")
+                    r[f"{side}_series_name"] = s.get("series_name")
+                    r[f"{side}_class_ids"] = ";".join(s["class_ids"])
+                    r[f"{side}_tickers"] = ";".join(s["tickers"])
+                rows.append(r)
     return rows
 
 
 def main():
     qs = quarters()
-    idx = index_rows(qs).drop_duplicates("accession")
+    raw = index_rows(qs)
+    idx = raw.drop_duplicates("accession")
     idx.to_csv(CACHE / "n14_index.csv", index=False)
+    fetchlib.record(CACHE / "n14_index.csv", kind="derived", parser="fetch_n14.py",
+                    extra={"lineage": "raw/index/form_*.idx",
+                           "index_rows": len(raw),
+                           "index_accessions": len(idx)})
     print(f"quarterly indexes : {len(qs)}")
-    print(f"N-14-family rows  : {len(idx):,d} unique accessions", flush=True)
+    print(f"N-14-family rows  : {len(raw):,d} "
+          f"({len(idx):,d} unique accessions)", flush=True)
 
     ok = fail = 0
     for n, r in enumerate(idx.itertuples(index=False), 1):
