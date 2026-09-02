@@ -126,7 +126,22 @@ def main():
     # unexplained bucket carries that possibility instead of hiding it.
     print(f"  {resid - named:>4d}   unexplained (may contain discovery misses; "
           f"see DISCOVERY_COMPLETENESS below)")
-    assert named + (resid - named) == resid
+    # The unexplained bucket is a plug, and is stated as one: it is whatever the
+    # named channels do not account for. What is worth checking is the identity
+    # the plug closes -- our count plus every named channel plus the plug must
+    # land on the benchmark exactly, or a channel is being double-counted.
+    parts = [("verified through 2024", len(final)),
+             ("unresolved completion", len(unres24)),
+             ("completed, year unresolved", len(ambig24)),
+             ("frozen-definition exclusion", defn),
+             ("unexplained residual", resid - named)]
+    print(f"  {'-' * 68}")
+    for k, v in parts:
+        print(f"  {v:>4d}   {k}")
+    tot = sum(v for _, v in parts)
+    print(f"  {tot:>4d}   = Fed benchmark {FED}   "
+          f"{'ok' if tot == FED else 'FAIL'}")
+    assert tot == FED, f"reconciliation sums to {tot}, benchmark is {FED}"
 
     rule("COUNTING UNIT")
     print("  the benchmark and this register may not be counting the same object")
@@ -148,8 +163,14 @@ def main():
 
     rule("EXACT-DAY COMPLETION COVERAGE")
     p = done.final_precision.value_counts()
-    for k in ["verified_exact_day", "proposed_exact_day_only", "month_only", "window_only"]:
+    # the classes are exhaustive and are asserted to be: a precision label that
+    # goes unlisted here would silently drop completions out of this census
+    PREC = ["verified_exact_day", "proposed_exact_day_only", "month_only",
+            "bounded_window", "year_only"]
+    for k in PREC:
         print(f"  {int(p.get(k, 0)):>4d}   {k}")
+    assert sum(int(p.get(k, 0)) for k in PREC) == len(done), \
+        f"unlisted precision: {set(p.index) - set(PREC)}"
     exact = int(p.get("verified_exact_day", 0))
     print(f"  {exact / len(done):>6.0%}   of completions carry a filing-stated closing day")
 
