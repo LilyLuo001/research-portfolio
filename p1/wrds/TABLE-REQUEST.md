@@ -1,5 +1,14 @@
 # P1 — WRDS table request list
 
+> ⚠️ **SUPERSEDED for requirements purposes, 2026-09-02.** This file was written
+> for the ¥20/table seller model under the pre-v2.1 outcome set. The owner now has
+> a WRDS account, and plan v2.1 + refraction amendment v2.2 add requirements this
+> list does not carry (IBES `anntims`, the 2017-start daily window, fund flows,
+> index membership, share/exchange/industry codes, post-conversion holdings).
+> **Requirement of record: `p1/wrds/DATA-REQUIREMENTS-v2.1.md`.** This file is kept
+> as the price and cut-order record.
+
+
 _Seat C. Send this to the seller. ¥20/table. **Rev 2, 2026-08-27** — date ranges
 corrected after the announcement-anchor fix; two fields added._
 

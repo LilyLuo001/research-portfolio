@@ -75,6 +75,19 @@ Queue: nodes `REFR-*` in `ops/runner/queue.yaml`; two human gates
    CRSP-licensed crosswalk — not constructible from public files, so it rides
    with the standing WRDS access item. Also gates R10.
 
+## WRDS requirements for R2/R10
+
+R2's task prompt (执行手册 §R2) requires the owner to paste "你可用的数据表名与
+变量名清单". That list — for both chapters, with date ranges and derivations — is
+`p1/wrds/DATA-REQUIREMENTS-v2.1.md`; the agent prompt that produces it from a live
+account is `p1/wrds/EXECUTION-PROMPT.md`. Three refraction-specific items in it are
+not in P1's older request list: the daily CRSP window must start **2014-01-01**
+(this chapter's announcements start 2017-01 and its placebo-in-time runs on
+2017–2020 fake conversion dates with ±8 quarters, assert A2), `crsp.holdings`
+supplies the missing `holdings_weights.parquet` for β_b^LOO, and `pre_etf_ownership`
+must be rebuilt rather than reused — in the P1 parquet it currently *equals*
+`conv_exp` (P1 plan §6.1.1 NEED_HUMAN).
+
 Frozen P1 inputs (read-only, hash-registered when they exist): events_merged.csv,
 **conv_exposure_free.parquet** (the built free-path file; the plan's
 `conv_exposure.parquet` name does not exist — amendment v2.2 §3),

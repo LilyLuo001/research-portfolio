@@ -1,5 +1,14 @@
 # WRDS table shopping list — ¥20/table
 
+> ⚠️ **SUPERSEDED for requirements purposes, 2026-09-02.** This file was written
+> for the ¥20/table seller model under the pre-v2.1 outcome set. The owner now has
+> a WRDS account, and plan v2.1 + refraction amendment v2.2 add requirements this
+> list does not carry (IBES `anntims`, the 2017-start daily window, fund flows,
+> index membership, share/exchange/industry codes, post-conversion holdings).
+> **Requirement of record: `p1/wrds/DATA-REQUIREMENTS-v2.1.md`.** This file is kept
+> as the price and cut-order record.
+
+
 _Seat C, 2026-08-19. Built from `p1/wrds/tables.yaml` + `p1/t3_spec/变量规格书.md`
 + plan §107 (control matching) and §120 (randomisation inference)._
 
