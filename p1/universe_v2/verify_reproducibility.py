@@ -46,6 +46,8 @@ LINEAGE = {
     "recovered_verified_dates.csv": "events_master_v2_stage3.csv + raw completion docs",
     "events_derived_v2.csv": "events_master_v2_stage3.csv",
     "fed_residual_cases.csv": "events_master_v2_stage3.csv + classification_ledger.csv",
+    "pair_delta_audit.csv": ("events_master_v2_stage3.csv + snapshot stage3"
+                             " + raw/n14_headers/*.hdr.sgml + ncen_tables.pkl"),
     "attributed_completions.csv": "sup497/escalation completions + submissions_flat.parquet",
     "sup497_completions.csv": "raw/sup497/*.html",
     "escalation_completions.csv": "raw/escalation/*.html",
