@@ -16,6 +16,7 @@ adviser or one day carries most of the sample, a wave-level shock and the
 treatment are not separable, and that has to be visible before estimation.
 """
 import hashlib
+import pathlib
 import pickle
 import sys
 
@@ -24,7 +25,9 @@ import pandas as pd
 import fetchlib
 from paths import CACHE
 
+ROOT = pathlib.Path(__file__).resolve().parents[2]
 PAIRS, COMPLETED = 247, 156
+ANCHOR = "2021-06-11"  # DFA six-fund conversion, the design's anchor wave
 
 
 def rule(s):
@@ -180,6 +183,46 @@ def main():
     assert inelig.verified_effective_date.isna().all(), \
         "a timing-ineligible event carries a verified date"
     print("  ok    none carries a verified date")
+
+    # ---------------------------------------------------- T2 wave contract
+    # The downstream N-PORT job reads p1/t2_wrds/waves*.csv, which build_waves.py
+    # generated from the legacy 131-row events_merged.csv. Those files are emitted
+    # here instead so the treatment universe is the frozen v2 register and there
+    # is one source of truth. Column names are the ones T2 already consumes.
+    # source_url carries the predecessor CIK because the N-PORT resolver reads the
+    # CIK back out of it to target the pre-conversion series.
+    t2 = ROOT / "p1" / "t2_wrds"
+    wv = w.rename(columns={"wave_date": "effective_date", "funds": "n_funds"})[
+        ["wave_id", "effective_date", "n_funds"]].copy()
+    wv["effective_date"] = wv.effective_date.dt.strftime("%Y-%m-%d")
+    wv["is_anchor"] = (wv.effective_date == ANCHOR).astype(int)
+    wv.to_csv(t2 / "waves.csv", index=False)
+
+    mem = pd.DataFrame({
+        "wave_id": elig.wave_id,
+        "effective_date": elig.wave_date.dt.strftime("%Y-%m-%d"),
+        "fund_name": elig.pre_series_name,
+        "family": elig.adviser.fillna(""),
+        "mutual_fund_ticker": elig.pre_tickers.fillna("").astype(str).str.split(";").str[0],
+        "etf_ticker": "",
+        "source_accession": elig.verified_date_source_accession.fillna(""),
+        "source_url": elig.pre_cik.apply(
+            lambda c: f"https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany"
+                      f"&CIK={int(c):010d}" if pd.notna(c) else ""),
+    })
+    # the resolver reads the CIK out of /data/<cik>/, so emit that shape
+    mem["source_url"] = elig.pre_cik.apply(
+        lambda c: f"https://www.sec.gov/Archives/edgar/data/{int(c)}/"
+        if pd.notna(c) else "")
+    mem.to_csv(t2 / "waves_members.csv", index=False)
+
+    rule("T2 WAVE CONTRACT  (replaces the legacy events_merged.csv path)")
+    print(f"  {len(wv):>5d}   waves written to {t2.name}/waves.csv")
+    print(f"  {len(mem):>5d}   members written to {t2.name}/waves_members.csv")
+    print(f"  {'ok  ' if (wv.is_anchor.sum() == 1) else 'WARN'}  anchor wave "
+          f"{ANCHOR} present: {int(wv.is_anchor.sum())}")
+    assert mem.fund_name.notna().all() and (mem.source_url != "").all()
+    assert len(mem) == len(elig)
 
     rule("FROZEN ARTIFACTS")
     for p in (frozen, wm, el):
