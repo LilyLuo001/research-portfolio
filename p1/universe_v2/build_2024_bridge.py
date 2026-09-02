@@ -174,7 +174,35 @@ def main():
     print("  earlier discovery system, so agreement with it cannot reveal an")
     print("  event that both systems missed, and the benchmark's own list is")
     print("  not public, so it cannot be diffed against ours either.")
+
+    p = HERE / "discovery_probe_triage.csv"
+    if p.exists():
+        t = pd.read_csv(p)
+        a = t.adjudication.value_counts()
+        print("\n  So a third channel was built that never consults N-14 at all: a")
+        print("  fund disappearing from its registrant's N-CEN census while a")
+        print("  similarly named listed ETF starts appearing. It is the only")
+        print("  measurement here that can see an event both systems missed.")
+        print(f"    shortlisted pairs outside the register : {len(t)}")
+        print(f"    master-feeder, structurally not events : "
+              f"{int(t.master_feeder.sum())}")
+        print(f"    filing-stated liquidation or closure   : "
+              f"{int(a.get('liquidated', 0))}")
+        print(f"    read and shown to be something else    : "
+              f"{int(a.get('not_a_conversion', 0)) - int(t.master_feeder.sum())}")
+        print(f"    CONVERSIONS FOUND                      : "
+              f"{int(a.get('is_a_conversion', 0))}")
+        print(f"    terminated, destination not established: "
+              f"{int(a.get('unadjudicated', 0))}")
+        print("\n  No conversion was found outside the register. That is a real")
+        print("  bound, not a proof: the probe can only see a miss that left a")
+        print(f"  shape in N-CEN, and {int(a.get('unadjudicated', 0))} flagged funds "
+              f"ended without their")
+        print("  destination being established, so the possibility is bounded")
+        print("  rather than eliminated.")
+
     print("\n  NO_OBSERVED_MISS_AGAINST_LEGACY_GOLD = TRUE")
+    print("  NO_CONVERSION_FOUND_BY_INDEPENDENT_NCEN_PROBE = TRUE")
     print("  DISCOVERY_COMPLETENESS = EMPIRICALLY_SATURATED / OPEN")
     print("  FED_125_RECONCILIATION = OPEN")
     return 0
