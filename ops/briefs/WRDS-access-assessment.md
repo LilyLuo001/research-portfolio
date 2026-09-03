@@ -1,5 +1,9 @@
 # WRDS access assessment — P1-T2
 
+> **ARCHIVED 2026-09-03 — historical access assessment.** BU SCC and the
+> verified WRDS mirror are now available; current status is
+> `p1/STATUS-2026-09-03.md`.
+
 **Status: BU WRDS access is gone.** CRSP (`crsp.holdings`, `crsp.portnomap`,
 `crsp.stocknames`, `crsp.msf` shrout) and TAQ are not reachable from this seat.
 The original T2 brief (Project_1.md §101-113) assumed WRDS credentials injected

@@ -1,5 +1,9 @@
 # ConvExp coverage audit — methods, caveats, file index
 
+> **LEGACY BASELINE (2026-09-03).** This directory audits the old free-path
+> ConvExp and is retained for the required 389→rebuilt discrepancy. It is not a
+> current readiness gate or estimation input. See `p1/exposure/`.
+
 Read-side audit of the P1-T2 free-path ConvExp build
 (`p1/t2_free/build_nport_convexp.py`, run on the BU SCC box). It recomputes
 coverage/missingness from the **committed** pipeline outputs, scopes a conservative

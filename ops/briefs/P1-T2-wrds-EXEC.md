@@ -1,5 +1,9 @@
 # EXEC BRIEF — P1-T2-wrds (holdings pipeline → conv_exposure) [WRDS/box]
 
+> **ARCHIVED 2026-09-03 — DO NOT EXECUTE.** This CRSP mutual-fund-holdings path
+> is validation history, not the frozen N-PORT treatment build. See
+> `ops/briefs/P1-T2-CONVEXP-REBUILD.md`.
+
 _Paste below the line into a Claude Code seat ON THE WRDS-provisioned node
 (code_pro lane). This task needs licensed CRSP/WRDS data — it cannot run in the
 seat-C sandbox. Wave construction is already done (deterministic); this step is

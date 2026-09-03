@@ -1,5 +1,11 @@
 # P1 — the WRDS runbook for a ONE-DAY window
 
+> **CURRENT DATA NOTE (2026-09-03).** The BU SCC mirror is landed and path/size
+> verified (12,100 files; 9.913 GiB). Exposure^pre has been built from strict-PRE
+> N-PORT plus CRSP through 2025. This runbook remains authority only for the
+> downstream SPY/RETX, corporate-action validation, ex-date, IBES timing, and
+> DGTW questions. Current counts and blockers are in `p1/STATUS-2026-09-03.md`.
+
 **Rev 2, 2026-08-27.** Rev 1 assumed a 3–5 day borrowed window. The owner is
 renting **one day**, so this is rewritten as an execution sheet: an order, a
 clock, hard cut lines, and the decisions that must be settled *before* the
@@ -168,23 +174,17 @@ Plus two added in rev 2:
    deliberately does **not** apply it (that would discard the rows needed to
    audit the choice). Dropping the filter at merge time does not raise — it
    duplicates firm-quarters through secondary and superseded links.
-5. **The fund-name match.** Converting funds are selected from `crsp.fund_hdr` by
-   normalised name, because `events_merged.csv` carries a real mutual-fund ticker
-   on 8 of 131 rows. The match set is written to
-   `raw/mf_holdings__matched_fundnos.json`. A zero match refuses; a **partial**
-   match cannot be detected automatically. Read the file.
+5. **The legacy fund-name match.** The old CRSP mutual-fund validation path used
+   normalized names from `events_merged.csv`. It is not the current treatment
+   construction: strict-PRE exact-series N-PORT is load-bearing, and CRSP fund
+   holdings remain validation only.
 
 ---
 
 ## After the window — none of this needs the account
 
-Release it, then:
+For remaining downstream questions:
 
-- merge `p1/t2_free/conv_exposure_free_crosswalk.csv` to the landed
-  `stock_names` pull so the free-path ConvExp gains a permno key, and run
-  `python p1/reconcile/convexp_reconcile.py` — comparing the free EDGAR
-  construction against CRSP is a real credibility item, and worth reporting
-  whichever way it lands;
 - record `shrout` units, the spread convention, the SUE fork, the CCM filter and
   the fund-match outcome in `ops/decisions.md`, **pre-outcome**;
 - T3 still needs its literature package independently
@@ -192,13 +192,8 @@ Release it, then:
 
 ## What WRDS does *not* fix
 
-`p1/NON_WRDS_BLOCKERS.md` has the full list. The two that matter most for the
-sample, both needing `sec.gov` rather than WRDS:
-
-- **the recheck pool** — 111 event records / 66 funds parked by the owner gate at
-  `recheck`, of which 43 carry a verbatim effective date across 26 potential new
-  waves, 15 already with a complete +120-day post-window. See
-  `p1/EVENT-COUNT-AUDIT.md`. This is a larger lever on the event count than
-  anything in this runbook.
-- **the `asset_class` backlog** — blank on 25 of 131 events, so "36 equity_US" is
-  a floor.
+`p1/NON_WRDS_BLOCKERS.md` has the current list. The event recheck and Gate0
+stages have a provisional completed run. The binding items are now the
+unpublished Fed-125 universe reconciliation, the suspended K2 decision, signed
+economic-sponsor crosswalk, three recent missing first-POST filings, 2026 CRSP
+extension, and load-bearing earnings/intraday inputs.

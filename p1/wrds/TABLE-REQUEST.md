@@ -1,10 +1,16 @@
-# P1 — WRDS table request list
+# P1 — WRDS registered table questions (acquisition history)
+
+> **STATUS 2026-09-03:** the SCC WRDS mirror is landed. This file preserves the
+> pre-acquisition questions and requested field semantics; it is no longer a
+> seller order or the authority for universe counts. Use `p1/wrds/SCC-MIRROR.md`
+> and `p1/STATUS-2026-09-03.md`. CRSP mutual-fund holdings are validation only;
+> strict-PRE SEC N-PORT is the frozen treatment source.
 
 _Seat C. Send this to the seller. ¥20/table. **Rev 2, 2026-08-27** — date ranges
 corrected after the announcement-anchor fix; two fields added._
 
-**Sample anchors** (from `p1/events_merged.csv` and `p1/wrds/pull_scope.json`,
-computed not assumed — regenerate with `python p1/wrds/universe.py`):
+**Legacy acquisition-scope anchors** (from `p1/events_merged.csv` and
+`p1/wrds/pull_scope.json`; do not substitute for the current v2 event master):
 
 | | |
 |---|---|
@@ -26,7 +32,7 @@ commit `971208f`; the ranges here match it, with buffer.
 
 | # | Library.Table | Freq | Date range needed | Key fields | Purpose |
 |---|---|---|---|---|---|
-| 1 | `crsp.stocknames` | reference | **full history** (no date filter) | `permno`, `ncusip`, `cusip`, **`ticker`**, `namedt`, `nameendt` | CUSIP↔PERMNO. Fills `permno`, blank on all 6,377 rows today. Nothing joins without it. **`ticker` is also required** — TAQ-IID is symbol-keyed, so the spread pull cannot be scoped without it. |
+| 1 | `crsp.stocknames` | reference | **full history** (no date filter) | `permno`, `ncusip`, `cusip`, **`ticker`**, `namedt`, `nameendt` | CUSIP↔PERMNO. The current build uses the date-valid CIZ stocknames mirror; 6,377 refers only to the legacy ConvExp artifact. **`ticker` is also required** for any symbol-keyed intraday pull. |
 | 2 | `crsp.dsf` | **daily** | **2019-01-01 → 2026-08-31** | `permno`, `date`, `ret`, **`retx`** (CIZ: `DlyRetx`), `prc`, `vol`, `openprc`, **`bid`, `ask`, `bidlo`, `askhi`** | CAR paths, Amihud, 1−R², variance ratio, price delay. The big one. **Ask for bid/ask explicitly** — if they are populated, spine four's quoted spread needs no external vendor at all. |
 | 3 | `crsp.dsi` | **daily** | **2019-01-01 → 2026-08-31** | `date`, `vwretd`, `ewretd` | Daily market series for spines one/two/four. **NOT the spine-zero market proxy** — see the note below: the β_h curve's β̂ must be estimated against the SAME traded instrument used for the intraday leg (SPY), not against `vwretd`. Still wanted: cheap, and the daily spines use it. |
 | 3b | **SPY daily PRICE returns** — `crsp.dsf` filtered to SPY's `permno` | **daily** | **2019-01-01 → 2026-08-31** | `permno`, `date`, **`retx`** (CIZ: `DlyRetx`) — **not `ret`** | **The spine-zero β̂ estimation series** (D-T3-28/29). The event-window leg is a midquote PRICE return, so β̂ must be fitted on price returns on BOTH legs. No extra table: it is rows of item 2. **Confirm SPY is on CRSP with a resolvable permno.** The source is frozen to the CRSP daily file (v2.1j) — there is no code-level fallback. If SPY does not resolve, stop and raise it as a spec change: alternating between CRSP daily SPY and an intraday-aggregated close-to-close gives two different β̂, hence two different `AR^h`, from identical-looking specification text. |
@@ -45,7 +51,7 @@ commit `971208f`; the ranges here match it, with buffer.
 | # | Library.Table | Freq | Date range needed | Key fields | Purpose |
 |---|---|---|---|---|---|
 | 13 | `crsp.holdings` | quarterly reports | **2019-04-01 → 2026-11-30** | `crsp_fundno`, `report_dt`, `permno`, `nbr_shares` | CRSP-identifier twin of the free-path ConvExp |
-| 14 | `crsp.fund_hdr` *or* `crsp.fund_names` | reference | **full history** | `crsp_fundno`, **`fund_name`**, `ticker` | Fund identity. **`fund_name` is load-bearing**: `events_merged.csv` carries a real mutual-fund ticker on 8 of 131 rows, so the converting funds can only be selected by name. |
+| 14 | `crsp.fund_hdr` *or* `crsp.fund_names` | reference | **full history** | `crsp_fundno`, **`fund_name`**, `ticker` | Fund identity for the legacy CRSP-holdings validation path. It is **not load-bearing** for treatment; current treatment uses exact SEC series IDs and N-PORT. |
 | 15 | `crsp.portnomap` | reference | **full history** | `crsp_portno`, `crsp_fundno` | Portfolio no. ↔ fund no. crosswalk |
 
 ## Tier 2b — monthly delisting · 1 table · ¥20 · independent

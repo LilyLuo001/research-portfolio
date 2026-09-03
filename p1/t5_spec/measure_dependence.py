@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Measure the (sponsor, stock) dependence structure on the FINAL regression sample.
 
-Plan §15.3.0 used to justify a sponsor-only resampling scheme with "only 20 of
-389 treated stocks appear under more than one sponsor, so 94.9% of the relevant
-dependence is covered". That argument is deleted, for two reasons that have
+Plan §15.3.0 used to justify a sponsor-only resampling scheme with a legacy
+"20 of 389" treated-stock statistic. That argument is deleted, for two reasons that have
 nothing to do with any result:
 
   * the numerator counted TREATED stocks only, while the stacked design's rows
@@ -79,7 +78,8 @@ def _imbalance(sizes) -> dict:
     """Cluster-size concentration — a DIAGNOSTIC, not a verdict.
 
     A nominal cluster count means little when one cluster carries most of the
-    mass: Dimensional is 93.6% of treated mass in the register. The inverse
+    mass: the current PRE-position-value share for Dimensional is 64.15%, and
+    it covers 559/573 strong-exposure stocks. The inverse
     Herfindahl below reports how many EQUAL-sized clusters would carry the same
     concentration, which makes that visible in one number.
 

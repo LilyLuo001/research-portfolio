@@ -1,5 +1,8 @@
 # P1-T2 — denominator recovery on the BOX (paste-and-run)
 
+> **ARCHIVED 2026-09-03 — DO NOT EXECUTE.** The live treatment now uses the
+> strict-PRE N-PORT/CRSP SCC build. Retained for legacy discrepancy provenance.
+
 **Who runs this:** whoever has the box (outbound HTTPS to SEC / Yahoo / Stooq).
 This sandbox is network-restricted — `curl https://www.sec.gov/...` returns 000 —
 so the recovery pass cannot run here, only the code that makes it possible.

@@ -1,0 +1,23 @@
+metric,value,unit,status,note
+fed_reported_industry_conversions_through_2024,125,predecessor funds (aggregate),reported_not_row_level,Narrative aggregate; do not treat as the empirical regression sample.
+fed_publicly_identified_industry_rows,4,fund conversions,verified,The four Table 1 events are identifiable within the 125.
+fed_unidentified_aggregate_slots,121,aggregate slots,unresolved,No public row-level list or replication file was found.
+fed_empirical_sample_completed_conversions,4,fund conversions,verified,Complete Table 1 empirical event list.
+fed_empirical_sample_distinct_conversion_dates,1,dates,verified,All four converted on 2021-06-11.
+fed_source_rows_with_public_exact_realized_date,4,fund conversions,verified,Remaining 121 aggregate slots have unknown public date availability.
+fed_empirical_rows_exact_matched_to_p1,4,fund conversions,verified,All four match by predecessor/successor/date.
+fed_empirical_rows_missing_from_p1_156,0,fund conversions,verified,Zero among the four publicly enumerated empirical events.
+fed_aggregate_rows_confirmed_in_p1_156,4,fund conversions,lower_bound,The other 121 cannot be row-matched without the source list.
+fed_aggregate_rows_missing_from_p1_156,UNKNOWN,fund conversions,not_identifiable,The aggregate-only source does not disclose identities.
+p1_structural_members,247,P1 event rows,verified,
+p1_completed_conversions_all_years,156,predecessor funds,verified,Includes 2025-2026 and 9 ambiguous-year rows.
+p1_completed_conversions_through_2024,95,predecessor funds,verified,"Comparable cutoff, but definitions may differ."
+arithmetic_gap_fed_125_minus_p1_through_2024,30,predecessor funds,open,Cannot be named without the Fed/Morningstar rows.
+p1_verified_exact_day_timing_eligible,74,fund conversions,verified,
+p1_completed_excluded_nonexact,82,fund conversions,verified,"14 proposed, 57 month, 9 bounded, 2 year."
+source_public_exact_dates_not_verified_in_p1,0,fund conversions,verified,All four published dates already verified.
+excluded_82_upgradable_from_public_fed_evidence,0,fund conversions,verified,None is enumerated in the published empirical list.
+fed_empirical_events_in_gate0_pass,4,fund conversions,verified,All four are in wave W002.
+p1_gate0_pass_events,71,fund conversions,verified,"Conditional analysis subset, not the Fed aggregate."
+p1_gate0_pass_waves,47,waves,verified,
+scc_wrds_mutualfund_schema_present,0,schema inventories,absent_from_mirror,Read-only FINAL_SCC_MANIFEST/meta audit found CRSP mutual-fund schemas but no wrds_mutualfund schema or extract.

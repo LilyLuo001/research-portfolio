@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-09-03T05:17:26.270161+00:00",
+  "inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_execution_20260903/input/nport_pre_holdings_long.parquet",
+      "sha256": "aa0015971f5e017ed682da2a156636dcb08cf6fb575b52f6af0a030cc5d1a6ba"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_execution_20260903/input/exposure_universe_gate0_pass.csv",
+      "sha256": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_execution_20260903/input/exposure_pending_missing_post.csv",
+      "sha256": "be821cfe7c05bff4196fed37e7b58f1708b711e312accf89b4e619bbaa29af48"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_execution_20260903/input/event_master_final_reconciled.csv",
+      "sha256": "b3fd7514c410d4f793e77fd1c77149bf6e529c7ce3bd1bce7bd114658ad884a1"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/newcrsp_crsp_stocknames_v2_full.parquet",
+      "sha256": "299bb5ba031d1cea2ca3ae6a2876536209e3949fb94234feb7c9b1837cf0f515"
+    }
+  ],
+  "crsp_sources": [
+    {
+      "source_file": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2020.parquet",
+      "sha256": "38c7a54f6542d03496b78fc490927cabb4d541a52a6183911d0f97070aec6fa2",
+      "rows_selected": 754211,
+      "year": 2020
+    },
+    {
+      "source_file": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2021.parquet",
+      "sha256": "1dc96d11cc1f3dd8874768f0e4cc078371d86b1ac49f15d3be4aab812c0296a1",
+      "rows_selected": 804235,
+      "year": 2021
+    },
+    {
+      "source_file": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2022.parquet",
+      "sha256": "921ecea098b8dc1ea4ab630933bc60f04aa89854e7f0977d03096da8c3408008",
+      "rows_selected": 804539,
+      "year": 2022
+    },
+    {
+      "source_file": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2023.parquet",
+      "sha256": "d8baeffadd5e187cf76bd68c0a5b4ba2ebb0b89c65cac2a4eaa04a869d297e24",
+      "rows_selected": 781268,
+      "year": 2023
+    },
+    {
+      "source_file": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2024.parquet",
+      "sha256": "3e45d0d07a87f6c5687fc751151804d0263d808d6234f4d6185f5c405c965952",
+      "rows_selected": 765173,
+      "year": 2024
+    },
+    {
+      "source_file": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/newcrsp_crsp_dsf_v2_2025.parquet",
+      "sha256": "295e57a48051c51032bfb8d0afc53313d8203e8fe749cc4550e48fca36399a0b",
+      "rows_selected": 725519,
+      "year": 2025
+    }
+  ],
+  "formula": "adjusted_shares = raw_reported_shares * share_factor",
+  "primary_measure": "exposure_ownership",
+  "outcomes_inspected": false
+}

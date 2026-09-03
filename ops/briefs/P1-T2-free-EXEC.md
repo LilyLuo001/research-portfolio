@@ -1,5 +1,9 @@
 # P1-T2 (free path) — box execution brief
 
+> **ARCHIVED 2026-09-03 — DO NOT EXECUTE.** Retained only to reproduce the
+> legacy 131-event/389-stock baseline. Current instructions are in
+> `ops/briefs/P1-T2-CONVEXP-REBUILD.md`.
+
 You are seat **P1** executing **P1-T2 free path**. WRDS is gone; ConvExp is
 rebuilt from EDGAR N-PORT + OpenFIGI + XBRL. Read `CLAUDE.md`, `p1/CLAUDE.md`,
 `docs/Project_1.md` §T2, `ops/briefs/WRDS-access-assessment.md`, and

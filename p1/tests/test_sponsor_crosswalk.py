@@ -200,7 +200,7 @@ def test_gate_names_the_two_cases_string_matching_cannot_find():
     text = GATE.read_text()
     assert "Undiscovered Managers Funds" in text
     assert "DFA Investment Dimensions Group Inc." in text
-    assert "93.6%" in text            # why the DFA pair is the expensive one
+    assert "559/573" in text           # current reason the DFA pair is material
 
 
 def test_gate_warns_about_shared_series_trusts_and_names_the_review_priorities():

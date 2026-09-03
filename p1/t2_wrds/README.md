@@ -1,5 +1,10 @@
 # p1/t2_wrds — the WRDS/CRSP path for P1-T2
 
+> **LEGACY VALIDATION PATH (2026-09-03).** Retained and tested for
+> reproducibility, but it is not the frozen treatment source. Current
+> Exposure^pre uses exact-series strict-PRE N-PORT plus CRSP security data; see
+> `p1/exposure/`.
+
 Referenced from `holdings_pipeline.py` ("WRDS creds via ~/.pgpass or
 WRDS_USER/WRDS_PASS; see README"). Written 2026-08-18, before access was
 delivered, so the rules exist before the first pull rather than after.

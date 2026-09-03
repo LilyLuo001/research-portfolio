@@ -1,0 +1,7 @@
+comparison,old,new,cause
+legacy_event_register_to_completed_v2,172,156,reconciled structural completion and removed provisional/duplicate representations
+completed_v2_to_verified_exact_day,156,74,changed/insufficient effective-date precision
+verified_exact_day_to_gate0,74,71,missing first-post filing
+legacy_treated_ge_0_5pct_to_rebuilt,389,573,"exact-series PRE holdings, date-aware identifier remapping, corporate actions, and denominator coverage"
+common_equity_positions_to_exact_crsp,15425,14747,identifier remapping / non-U.S. / non-common-equity / ambiguity
+mapped_positions_to_factor_available,14747,14747,corporate-action factor coverage (CRSP archive ends 2025)

@@ -1,5 +1,10 @@
 # OWNER GATE — trust → economic sponsor crosswalk
 
+> **LEGACY CANDIDATE SET — DO NOT SIGN AS THE FINAL SAMPLE MAP.** This proposal
+> was generated from `events_merged.csv`. Before headline inference it must be
+> regenerated/validated against the provisional 71-event Gate0 subset and exact event-level
+> adviser/registrant evidence in `p1/exposure/exposure_universe_gate0_pass.csv`.
+
 **Blocks**: §15.3.1 headline inference and §15.3.0's dependence
 measurement. **Does NOT block** Gate 0, B1 or B2 — neither uses sponsor
 clustering.
@@ -19,8 +24,8 @@ dimension the headline result rests on.
 * `Undiscovered Managers Funds` → JPMorgan — shares no token with
   `JPMorgan Trust I/II/IV`.
 * `DFA Investment Dimensions Group Inc.` ↔ `Dimensional Investment
-  Group Inc.` — 'DFA' and 'Dimensional' share no token, and this pair
-  carries 93.6% of treated mass.
+  Group Inc.` — 'DFA' and 'Dimensional' share no token. The current exposure
+  shows why this remains material: Dimensional covers 559/573 strong-exposure stocks.
 
 *False positives* — a shared name that is not a shared adviser. Series
 trusts host UNRELATED managers: `Advisors Series Trust`, `The RBB
@@ -66,7 +71,7 @@ an N-CEN, or a registrant series list. Filling any of it from model
 knowledge is the hallucination meta-rule 1 forbids.
 
 **Review these four first** — they are where the cluster count actually
-moves: **Dimensional** (93.6% of treated mass), **JPMorgan**,
+moves: **Dimensional** (559/573 current strong-exposure stocks), **JPMorgan**,
 **Fidelity**, and the shared-series-trust rows above.
 
 ## Candidate groupings from names — 84 registrants -> 61 name stems
@@ -174,4 +179,3 @@ safe default.
 `load_signed()` refuses a missing file, an unfilled sponsor, a missing
 evidence locator, an unsigned row, or any registrant it omits — so
 nothing can run on a partial answer.
-

@@ -1,5 +1,8 @@
 # EXEC BRIEF — P1-T2 ConvExp denominator recovery (box, online) [optional pre-final pass]
 
+> **ARCHIVED 2026-09-03 — DO NOT EXECUTE.** This recovers denominators for the
+> legacy ConvExp artifact, not the current Exposure^pre matrix.
+
 _Paste below the line into a Claude Code seat on the BU SCC (has internet). This is the
 online half of the coverage audit in `p1/output/convexp_coverage_audit/`. It is NOT a
 gate blocker — the kill-switch can be read now — but it lifts free coverage ~51.8% → ≤67%,

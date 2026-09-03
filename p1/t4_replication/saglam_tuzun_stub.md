@@ -1,10 +1,8 @@
 # A3 — Saglam–Tuzun (2025) FEDS Note
 
-_P1 / seat C / 2026-08-18. Prepared for T4 coefficient-transcription task._
-_Source: web-search extractions with URL locators. PDF is behind federalreserve.gov,_
-_which is blocked by the container's egress proxy. Everything below is from WebSearch_
-_results (confirmed URLs, no model-memory fill). Cells marked [NEED_PDF] require_
-_the owner to open the paper and paste the value here._
+_P1 / seat C / updated 2026-09-03. Prepared for T4 replication._
+_Source: official Federal Reserve HTML and accessible-data page, plus the SEC_
+_filing cited by the note. No model-memory fill._
 
 ---
 
@@ -15,19 +13,20 @@ Mutual Fund to ETF Conversions." *FEDS Notes*, Federal Reserve Board, November 1
 
 DOI: [10.17016/2380-7172.3909](https://doi.org/10.17016/2380-7172.3909)
 
-Full text URL (requires browser with unrestricted egress):
+Full text URL:
 https://www.federalreserve.gov/econres/notes/feds-notes/implications-of-growth-in-etfs-evidence-from-mutual-fund-to-etf-conversions-20251119.html
 
 Author page (Tuzun): https://www.federalreserve.gov/econres/tugkan-tuzun.htm
 
-**Note on A3 status**: the FEDS Note PDF is not behind a paywall — it is a
-free Fed Note — but the container's egress proxy blocks federalreserve.gov
-(confirmed: HTTP 000 via curl, WebFetch EGRESS_BLOCKED). The owner can access it
-in any browser, download the PDF, and paste the coefficient tables here.
+**A3 status:** the official note is available and has been transcribed. It is an
+HTML FEDS Note, not a 125-event replication package. The note reports a
+descriptive aggregate of 125 mutual funds converted by end-2024 but publishes
+only the four June 11, 2021 Dimensional conversions used in its empirical
+analysis. See `p1/universe_v2/output/event_universe_reconciliation_report.md`.
 
 ---
 
-## What is known from WebSearch (source-locatable)
+## What is known from the official note (source-locatable)
 
 Source: WebSearch result from federalreserve.gov FEDS Notes index, accessed
 2026-08-18. URL: https://www.federalreserve.gov/econres/notes/feds-notes/implications-of-growth-in-etfs-evidence-from-mutual-fund-to-etf-conversions-20251119.html
@@ -40,36 +39,49 @@ Source: WebSearch result from federalreserve.gov FEDS Notes index, accessed
 | Key event | June 2021: one large asset manager converted several equity mutual funds, $30B+ of U.S. equities in a single day (DFA) |
 | Outcomes studied | Equity market volatility; market liquidity |
 | Direction of effects | Conversions improve market quality: ↑ liquidity, ↓ volatility |
-| Identification | `[NEED_PDF: DiD specification — did they use a staggered DiD? Event-study? What is the treatment variable? Is it binary (converted/not) or continuous (AUM converted)?]` |
-| Controls | `[NEED_PDF: which control variables for the liquidity and volatility regressions?]` |
+| Empirical conversion events | Four predecessor funds, one date (2021-06-11), all Dimensional; Table 1 |
+| Impacted stocks | 2,449 in Table 2 (2,448 with volatility available) |
+| Identification | Cross-sectional change regression around the one conversion wave; treatment is continuous change in ETF ownership |
+| Windows | March 2021 to September 2021 for ownership and outcome changes |
+| Controls | Percentage changes in market capitalization and trading volume; alternative cross-controls noted |
+| Volatility result | ETF-ownership coefficient -10.39 baseline; -7.96 with both controls |
+| Effective-spread result | ETF-ownership coefficient -0.06 baseline; -0.07 with controls |
 
 ---
 
-## T4 transcription checklist (what we need from the PDF)
+## T4 transcription status
 
 T4's task is a side-by-side comparison: their coefficient estimates vs. ours.
 The owner must open the PDF and paste the following for each table they report:
 
 ### Table 1 (expected: summary statistics or event sample)
-- [ ] N stocks in treated group
-- [ ] N stocks in control group
-- [ ] Pre-conversion mean liquidity measure and volatility measure
-- [ ] Post-conversion mean liquidity measure and volatility measure
-- [ ] Exact date range of the June 2021 DFA event (which date was the effective date?)
-- [ ] Whether the authors use the same 2021-06 event we identify in events_merged.csv
+- [x] N impacted stocks: 2,449 (2,448 with volatility)
+- [x] Exact event date: 2021-06-11
+- [x] The note uses the same four-fund Dimensional wave identified in P1
+- [x] Table 1 predecessor/successor names and fund assets transcribed in the
+  source-universe reconciliation
+- [ ] No separate treated/control stock counts are reported; treatment is a
+  continuous ownership change among impacted stocks
 
 ### Main results table (expected: DiD regression or similar)
-- [ ] Coefficient on the treatment indicator for **liquidity outcome** (value, SE, t-stat, significance stars)
-- [ ] Coefficient on the treatment indicator for **volatility outcome** (value, SE, t-stat, significance stars)
-- [ ] Fixed effects specification (stock FE? time FE? industry-time?)
-- [ ] Clustering (stock? stock × time? some other cluster?)
-- [ ] Page number of the main results table (for transcription locator)
+- [x] Effective-spread coefficients: -0.06, -0.07, -0.07; reported robust SEs
+  0.02, 0.02, 0.02
+- [x] Volatility coefficients: -10.39, -8.66, -7.96; reported robust SEs 2.89,
+  2.89, 2.77
+- [x] No fixed effects are reported; these are cross-sectional change
+  regressions
+- [x] Heteroskedasticity-adjusted standard errors; no clustering reported
+- [x] HTML locators: Tables 3 and 4
 
 ### Variable definitions (from the paper's data section)
-- [ ] Exact liquidity measure: effective spread? Amihud? Bid-ask? Which frequency (daily/monthly)?
-- [ ] Exact volatility measure: realized volatility? Implied? Intraday? Daily variance?
-- [ ] Treatment variable construction: which conversion events are included beyond DFA 2021?
-- [ ] Control group: are non-converted mutual funds the control? Same asset class only?
+- [x] Liquidity: change in TAQ daily trade-weighted effective spread, March to
+  September 2021
+- [x] Volatility: percentage change in monthly standard deviation of daily
+  returns, March to September 2021
+- [x] Treatment: continuous change in ETF ownership caused by the four-fund DFA
+  conversion wave; no other conversion events enter the empirical design
+- [x] Sample: stocks held by the converting mutual funds; no non-converted-fund
+  control group is described
 
 ### Robustness tables
 - [ ] Do they report placebo tests? If so, what is the placebo coefficient and p-value?
@@ -106,10 +118,7 @@ about mutual fund → ETF *conversions*, not general ETF ownership effects.
 
 ## What unblocks the rest of T4
 
-1. Owner downloads the PDF from the URL above
-2. Fills in all `[NEED_PDF]` cells in this file
-3. Commits the updated file
-4. T4 implementer runs our pipeline on CRSP data and compares column by column
-
-The T4 pipeline half (our regressions) is still blocked on WRDS data. This
-document unblocks the T4 *transcription* half when the PDF is in hand.
+The source transcription is complete. T4 may resume only after the current
+event-universe pause is released; at that point the implementer should reproduce
+the four-fund 2021-06-11 benchmark on CRSP/TAQ and compare columns without
+specification searching.

@@ -1,5 +1,8 @@
 # The WRDS-independent register — everything WRDS will NOT fix
 
+> **ARCHIVED 2026-09-03 — historical waiting-period plan.** WRDS is now landed
+> on SCC. Use `p1/NON_WRDS_BLOCKERS.md` for current gates.
+
 Companion to `ops/briefs/WRDS-access-assessment.md`. WRDS has been purchased and
 is not yet delivered. This is the full list of problems that survive its
 arrival, triaged by who can move them, so the waiting period is not idle and so

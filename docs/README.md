@@ -29,11 +29,14 @@ the proposal is wrong — report the conflict, per each manual's C0/CONTEXT PACK
    research substance — outcome variables, hypotheses, what T3/T5 estimate —
    it is stale and the plan overrides it.
 
-Implementation detail lives in the repo, not in docs/:
-`p1/t3_spec/变量规格书.md` (the D-T3-xx decision table is the per-variable
-authority), `p1/t5_spec/估计蓝图.md`, `p1/NON_WRDS_BLOCKERS.md` (what is
-blocked and on whom), and the executable guards in `p1/pipeline/` +
-`p1/tests/test_spec_consistency.py`.
+Measured progress and current empirical inputs live in
+`p1/STATUS-2026-09-03.md`, `p1/universe_v2/output/`, and `p1/exposure/`.
+Implementation detail lives in `p1/t3_spec/变量规格书.md` (the D-T3-xx decision
+table is the per-variable authority), `p1/t5_spec/估计蓝图.md`,
+`p1/NON_WRDS_BLOCKERS.md`, and the executable guards in `p1/pipeline/` +
+`p1/tests/test_spec_consistency.py`. The root `events_merged.csv` and
+`conv_exposure_free.parquet` are legacy reconciliation baselines, not current
+estimation inputs.
 
 ## E2 — RWA looping
 

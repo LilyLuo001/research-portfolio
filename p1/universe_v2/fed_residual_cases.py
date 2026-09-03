@@ -214,14 +214,15 @@ def main():
     assert int(out.n_units.sum()) == FED - have, (int(out.n_units.sum()), FED - have)
 
     rule("DEFINITIONAL EXCLUSIONS: WOULD THE BENCHMARK COUNT THIS ARCHITECTURE?")
-    print("  The five above are targets that merged into a mutual fund carrying an")
+    print("  The cases above are targets that merged into a mutual fund carrying an")
     print("  ETF share class. Shareholders can end up holding an exchange-listed")
     print("  interest, so a register keyed on 'did the money end up in an ETF'")
     print("  would count them; a register keyed on 'did a fund become an ETF',")
     print("  which is the frozen P1 definition, does not -- the surviving")
     print("  registered vehicle is still an open-end mutual fund.")
-    print("\n  We do not hold the benchmark's published wording or its construction")
-    print("  code, so this is NOT RESOLVED. The five stay outside the P1 universe")
+    print("\n  We hold the published aggregate wording, but not its row-level list,")
+    print("  operational definition, or construction code. This is NOT RESOLVED.")
+    print("  The cases stay outside the P1 universe")
     print("  and are carried in fed_residual_cases.csv so that including them")
     print("  later is a one-line decision rather than a rebuild.")
 

@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """Registrant/trust name -> economic sponsor, for the clustering dimension.
 
+This is legacy candidate-generation tooling built from `events_merged.csv`.
+Its output must not be signed as the final map until it is retargeted or
+validated against the provisional 71-event Gate0 subset after the source-
+universe gate is released.
+
 `events_merged.csv`'s `family` column is the SEC REGISTRANT (a trust or an
 "Inc."), not the asset manager. Clustering on it directly splits one decision
 maker into several and OVERSTATES the number of independent clusters — which
@@ -17,7 +22,7 @@ sign-off. Names fail in both directions:
 
   false negatives : "Undiscovered Managers Funds" is JPMorgan; "DFA Investment
                Dimensions Group Inc." and "Dimensional Investment Group Inc."
-               are one Dimensional (93.6% of treated mass); the Sanford C.
+               are one Dimensional (current rebuild: 559/573 strong-exposure stocks); the Sanford C.
                Bernstein funds sit under the same manager as the AB funds. None
                of these share a token. No string processing finds them, and
                filling them from model knowledge is the hallucination meta-rule 1
@@ -312,6 +317,10 @@ def _write_gate(rows, s) -> None:
     lines = [
         "# OWNER GATE — trust → economic sponsor crosswalk",
         "",
+        "> **LEGACY CANDIDATE SET — DO NOT SIGN AS THE FINAL SAMPLE MAP.** This",
+        "> proposal comes from `events_merged.csv`; regenerate/validate it against",
+        "> `p1/exposure/exposure_universe_gate0_pass.csv` before headline inference.",
+        "",
         "**Blocks**: §15.3.1 headline inference and §15.3.0's dependence",
         "measurement. **Does NOT block** Gate 0, B1 or B2 — neither uses sponsor",
         "clustering.",
@@ -331,8 +340,8 @@ def _write_gate(rows, s) -> None:
         "* `Undiscovered Managers Funds` → JPMorgan — shares no token with",
         "  `JPMorgan Trust I/II/IV`.",
         "* `DFA Investment Dimensions Group Inc.` ↔ `Dimensional Investment",
-        "  Group Inc.` — 'DFA' and 'Dimensional' share no token, and this pair",
-        "  carries 93.6% of treated mass.",
+        "  Group Inc.` — 'DFA' and 'Dimensional' share no token. Current exposure",
+        "  confirms materiality: Dimensional covers 559/573 strong-exposure stocks.",
         "",
         "*False positives* — a shared name that is not a shared adviser. Series",
         "trusts host UNRELATED managers: `Advisors Series Trust`, `The RBB",
@@ -378,7 +387,7 @@ def _write_gate(rows, s) -> None:
         "knowledge is the hallucination meta-rule 1 forbids.",
         "",
         "**Review these four first** — they are where the cluster count actually",
-        "moves: **Dimensional** (93.6% of treated mass), **JPMorgan**,",
+        "moves: **Dimensional** (559/573 current strong-exposure stocks), **JPMorgan**,",
         "**Fidelity**, and the shared-series-trust rows above.",
         "",
         f"## Candidate groupings from names — {s['collapse']}",
