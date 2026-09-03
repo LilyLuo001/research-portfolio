@@ -1,0 +1,66 @@
+section,sample,metric,value,unit,note
+raw_counts,all,raw_earnings_event_observations,NOT_YET_OBSERVABLE,rows,No earnings/CAR panel was loaded or built for this audit
+raw_counts,all,gate0_pass_conversion_events,71,events,
+raw_counts,all,gate0_pass_waves,47,waves,
+raw_counts,all,ownership_ready_waves,30,waves,
+raw_counts,all,gate0_adviser_proxies,34,sponsors,"Unsigned adviser proxies, not PI-signed economic sponsor groups"
+raw_counts,exclude_dimensional,gate0_non_dimensional_adviser_proxies,33,sponsors,
+treatment_cells,all,positive_stock_wave_cells,8801,stock-wave cells,
+treatment_cells,all,unique_positive_stocks,3440,stocks,
+treatment_cells,all,positive_waves,30,waves,
+treatment_cells,all,contributing_adviser_proxies,24,sponsors,
+thresholds,all,unique_stocks_ge_0p1pct,1776,stocks,
+thresholds,all,stock_wave_cells_ge_0p1pct,2584,stock-wave cells,
+thresholds,all,unique_stocks_ge_0p25pct,1165,stocks,
+thresholds,all,stock_wave_cells_ge_0p25pct,1350,stock-wave cells,
+thresholds,all,unique_stocks_ge_0p5pct,573,stocks,
+thresholds,all,stock_wave_cells_ge_0p5pct,583,stock-wave cells,
+thresholds,all,unique_stocks_ge_1pct,27,stocks,
+thresholds,all,stock_wave_cells_ge_1pct,28,stock-wave cells,
+effective_n,all,kish_equal_wave_cell_ess,204.661588,effective stock-wave cells,Kish ESS of weights 1/(W*n_w)
+effective_n,all,wave_information_ess,2.899487,effective waves,Kish ESS of each wave's weighted x^2 contribution; x=Exposure/0.5%
+effective_n,all,sponsor_information_ess,2.732599,effective sponsors,Kish ESS of each adviser proxy's weighted x^2 contribution
+effective_n,all,stock_information_ess,337.149758,effective stocks,Kish ESS of each stock's weighted x^2 contribution
+treatment_cells,dimensional_only,positive_stock_wave_cells,3503,stock-wave cells,
+treatment_cells,dimensional_only,unique_positive_stocks,2548,stocks,
+treatment_cells,dimensional_only,positive_waves,2,waves,
+treatment_cells,dimensional_only,contributing_adviser_proxies,1,sponsors,
+thresholds,dimensional_only,unique_stocks_ge_0p1pct,1513,stocks,
+thresholds,dimensional_only,stock_wave_cells_ge_0p1pct,1704,stock-wave cells,
+thresholds,dimensional_only,unique_stocks_ge_0p25pct,1041,stocks,
+thresholds,dimensional_only,stock_wave_cells_ge_0p25pct,1048,stock-wave cells,
+thresholds,dimensional_only,unique_stocks_ge_0p5pct,559,stocks,
+thresholds,dimensional_only,stock_wave_cells_ge_0p5pct,561,stock-wave cells,
+thresholds,dimensional_only,unique_stocks_ge_1pct,24,stocks,
+thresholds,dimensional_only,stock_wave_cells_ge_1pct,24,stock-wave cells,
+effective_n,dimensional_only,kish_equal_wave_cell_ess,2800.242078,effective stock-wave cells,Kish ESS of weights 1/(W*n_w)
+effective_n,dimensional_only,wave_information_ess,1.094423,effective waves,Kish ESS of each wave's weighted x^2 contribution; x=Exposure/0.5%
+effective_n,dimensional_only,sponsor_information_ess,1.0,effective sponsors,Kish ESS of each adviser proxy's weighted x^2 contribution
+effective_n,dimensional_only,stock_information_ess,296.490491,effective stocks,Kish ESS of each stock's weighted x^2 contribution
+treatment_cells,exclude_dimensional,positive_stock_wave_cells,5638,stock-wave cells,
+treatment_cells,exclude_dimensional,unique_positive_stocks,2979,stocks,
+treatment_cells,exclude_dimensional,positive_waves,29,waves,
+treatment_cells,exclude_dimensional,contributing_adviser_proxies,23,sponsors,
+thresholds,exclude_dimensional,unique_stocks_ge_0p1pct,747,stocks,
+thresholds,exclude_dimensional,stock_wave_cells_ge_0p1pct,810,stock-wave cells,
+thresholds,exclude_dimensional,unique_stocks_ge_0p25pct,285,stocks,
+thresholds,exclude_dimensional,stock_wave_cells_ge_0p25pct,291,stock-wave cells,
+thresholds,exclude_dimensional,unique_stocks_ge_0p5pct,21,stocks,
+thresholds,exclude_dimensional,stock_wave_cells_ge_0p5pct,21,stock-wave cells,
+thresholds,exclude_dimensional,unique_stocks_ge_1pct,4,stocks,
+thresholds,exclude_dimensional,stock_wave_cells_ge_1pct,4,stock-wave cells,
+effective_n,exclude_dimensional,kish_equal_wave_cell_ess,191.22668,effective stock-wave cells,Kish ESS of weights 1/(W*n_w)
+effective_n,exclude_dimensional,wave_information_ess,2.883423,effective waves,Kish ESS of each wave's weighted x^2 contribution; x=Exposure/0.5%
+effective_n,exclude_dimensional,sponsor_information_ess,2.862549,effective sponsors,Kish ESS of each adviser proxy's weighted x^2 contribution
+effective_n,exclude_dimensional,stock_information_ess,129.54767,effective stocks,Kish ESS of each stock's weighted x^2 contribution
+distribution,all,waves_with_1_events,31,waves,
+distribution,all,waves_with_2_events,12,waves,
+distribution,all,waves_with_3_events,1,waves,
+distribution,all,waves_with_4_events,2,waves,
+distribution,all,waves_with_5_events,1,waves,
+distribution,all,positive_stocks_per_ready_wave_min,1.0,stocks per wave,
+distribution,all,positive_stocks_per_ready_wave_p25,11.0,stocks per wave,
+distribution,all,positive_stocks_per_ready_wave_median,40.5,stocks per wave,
+distribution,all,positive_stocks_per_ready_wave_p75,94.5,stocks per wave,
+distribution,all,positive_stocks_per_ready_wave_max,2575.0,stocks per wave,
+distribution,all,positive_stocks_per_ready_wave_mean,293.367,stocks per wave,

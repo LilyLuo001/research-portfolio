@@ -8,9 +8,11 @@ The root files `events_merged.csv` and `conv_exposure_free.parquet`, plus the
 older T1/T2 coverage/scenario outputs, are legacy reconciliation baselines. Do
 not use their 172/96/389 counts as the current universe.
 
-No headline outcome estimation is authorized from this state. The Fed/source
-event-universe reconciliation found no missed published exact date, but the
-note's 125-event aggregate has no public row list and remains open against P1's
-95 through-2024 completions. The 71-event Gate0 set is a provisional verified
-subset; exposure work and K2 are suspended. The economic-sponsor crosswalk also
-remains unsigned.
+No headline outcome estimation is authorized from this state. The formal
+ex-ante audit in `p1/viability/` classifies the frozen design as
+`C. NOT PRACTICALLY VIABLE UNDER THE CURRENT DESIGN`: observed continuous-dose
+information has only 2.90 all-sponsor and 2.88 exclude-Dimensional effective
+waves, and the clustered MDE is above the frozen 0.5-SD benchmark. Exposure
+construction and outcome/regression work remain paused. The Fed/source
+row-list gap and unsigned economic-sponsor crosswalk remain documented data
+issues, but closing them cannot by itself satisfy the measured power deficit.

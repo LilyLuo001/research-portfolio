@@ -1,0 +1,26 @@
+{
+  "generated_by": "p1/viability/audit_viability.py",
+  "seed": 20260903,
+  "simulation_repetitions": 20,
+  "outcome_files_read": [],
+  "input_sha256": {
+    "p1/universe_v2/output/event_master_final_reconciled.csv": "b3fd7514c410d4f793e77fd1c77149bf6e529c7ce3bd1bce7bd114658ad884a1",
+    "p1/universe_v2/output/wave_membership_v2.csv": "7dfd4181490cea92e3c300ffca69b5ca77bc03c7d277edfeabe24cfe4bf2e5e6",
+    "p1/universe_v2/output/excluded_82_source_date_audit.csv": "ffdac6a46df9499de394a25a71d88f6316d6fb6edc679b889780da60f9f026f4",
+    "p1/t2_free/nport_gate0_event_level.csv": "e9c602cc4ac44e35826a89dd47ef588e445541546861c2ad2fa32824ccb8e083",
+    "p1/exposure/exposure_universe_gate0_pass.csv": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda",
+    "p1/exposure/exposure_stock_wave_all.csv": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "p1/exposure/exposure_stock_wave_dimensional_only.csv": "c4acb697f4d8e2a13168deca58187ebfc9bcfcc73b086c77ed6cd6b925044967",
+    "p1/exposure/exposure_stock_wave_ex_dimensional.csv": "383ea34668d74efcaf1da771dfa2e994960a7e56c2d28f99d829639ad259a9ba",
+    "p1/exposure/nport_crsp_security_crosswalk.csv": "ff5b4813caad614fc2e05d02e4bad3e1169533825f9c3f7581b3f0346f2049e1",
+    "p1/exposure/nport_pre_post_coverage_by_wave.csv": "8eb37068b2e52675f50d10b4f5337c1058113024e04e297328979adb6c4aa5c4"
+  },
+  "output_rows": {
+    "p1_effective_sample_size_audit.csv": 65,
+    "p1_wave_coverage_audit.csv": 47,
+    "p1_mde_current_design.csv": 54,
+    "p1_power_expansion_scenarios.csv": 45,
+    "p1_rescue_target.csv": 9,
+    "p1_nonexact_82_priority.csv": 82
+  }
+}
