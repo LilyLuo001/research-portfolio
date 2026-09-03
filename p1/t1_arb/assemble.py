@@ -49,6 +49,7 @@ ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 STOP = re.compile(r"\b(the|fund|funds|portfolio|trust|inc|lp|llc|ltd|co|series|"
                   r"class|shares?|etf|of|company|incorporated)\b", re.I)
 CONF_RANK = {"H": 3, "M": 2, "L": 1, "NA": 0, None: 0}
+PREC_RANK = {"month": 3, "quarter": 2, "pending": 1, "NA": 0, "": 0, None: 0}
 
 # Filled by load_events(); reported by _write_report so the gate pool can never
 # go quiet again. Before 2026-08-27 these records vanished with no trace in any
