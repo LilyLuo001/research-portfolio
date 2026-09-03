@@ -100,7 +100,7 @@ literature package. Spines one and four genuinely do (GNZ, FERC, IPT,
 Hou-Moskowitz, Amihud, the spread convention) and stay out until A1 clears.
 
 ### B4. The Russell-reconstitution fallback design is checkable today
-`P1_修订补丁_v1_1.md` §修订3 makes Russell handling a forced T5 sub-spec, and the
+The plan (§6, threat T3) makes Russell handling a forced T5 sub-spec, and the
 plan §133 gives three responses. Response (iii) — *replicate on 2022–2025 non-June
 waves, and if the effect exists only in 2021-06 the conclusion is downgraded* — is
 computable **right now** from `events_merged.csv`. Knowing whether that fallback

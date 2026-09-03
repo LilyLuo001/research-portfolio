@@ -106,19 +106,18 @@ def test_end_to_end_on_a_csv(tmp_path):
 # the claim must stay deleted                                                  #
 # --------------------------------------------------------------------------- #
 def test_plan_carries_no_unmeasured_coverage_percentage():
-    """94.9% (and its complement 5.1% as a coverage bound) may not be asserted
-    until measure_dependence.py has run on the final sample. The strings may
-    appear inside the v2.1d note that explains the deletion; they may not appear
-    as a live claim."""
-    lines = PLAN.read_text().splitlines()
-    for i, line in enumerate(lines):
-        if "94.9" not in line:
-            continue
-        near = "\n".join(lines[max(0, i - 8):i + 8])
-        assert "v2.1d 删除" in near, (
-            "94.9% appears in the plan outside the deletion note: " + line)
-    # the deletion note itself must be present, so the history is not lost
-    assert any("v2.1d 删除" in l for l in lines)
+    """94.9% (and its complement 5.1% as a coverage bound) may not appear in the
+    plan at all until measure_dependence.py has run on the final sample.
+
+    This used to allow the numbers to stand inside a note explaining that they
+    had been withdrawn. That is no longer permitted: the owner reported
+    (2026-09-03) that agents read such notes as live text and act on the number
+    they find. A withdrawn number belongs in git history, not on the page.
+    """
+    for i, line in enumerate(PLAN.read_text().splitlines(), 1):
+        assert "94.9" not in line, (
+            f"plan:{i} states an unmeasured coverage percentage. Delete it — do "
+            f"not annotate it as withdrawn:\n  {line.strip()}")
 
 
 def test_plan_does_not_present_first_sponsor_only_as_the_inference_fix():

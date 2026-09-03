@@ -11,10 +11,13 @@ outcome-dependent method selection.
 None of that raises at runtime. It just gets implemented. So the agreements are
 pinned here.
 
-Each test allows the stale text to survive inside an explicitly marked
-supersession note, because the repo's convention is to show the correction rather
-than silently overwrite it. What it forbids is the stale text standing as a live
-rule.
+The convention these tests enforce was INVERTED on 2026-09-03. It used to let
+stale text survive inside an explicitly marked supersession note, on the theory
+that showing the correction beats silently overwriting it. The owner reported
+that this is exactly how agents come to execute the old plan: a marker is not a
+barrier to a model skimming a long document for instructions, and the old rule
+reads as an instruction wherever it sits. Superseded text is now simply deleted
+-- git history is the changelog -- and these specs state only what to do.
 """
 import pathlib
 import re
@@ -35,19 +38,23 @@ def _near(lines, i, radius=6):
     return "\n".join(lines[max(0, i - radius):i + radius])
 
 
-SUPERSEDED = ("已删除", "已被取代", "已失效", "取代", "保留以显差异", "原文",
-              "v2.1", "~~")
+def _absent(path, pattern, label):
+    """Superseded text must be GONE, not parked inside a "this is superseded"
+    note.
 
-
-def _every_hit_is_marked_superseded(path, pattern, label):
+    This assertion used to be the opposite: it allowed the old rule to stay as
+    long as a marker sat near it. That convention failed in practice — the owner
+    reported (2026-09-03) that agents were reading the old rule and executing it,
+    because a marker is not a barrier when a model is skimming for instructions.
+    Superseded text now lives in git history, which is where a changelog belongs,
+    and these specs state only what to do.
+    """
     lines = _lines(path)
     for i, line in enumerate(lines):
-        if not re.search(pattern, line):
-            continue
-        near = _near(lines, i)
-        assert any(m in near for m in SUPERSEDED), (
-            f"{path.name}: {label} appears as a live rule at line {i + 1}, not "
-            f"inside a supersession note:\n  {line.strip()}")
+        if re.search(pattern, line):
+            raise AssertionError(
+                f"{path.name}:{i + 1} still carries {label}. Delete it — do not "
+                f"annotate it as superseded:\n  {line.strip()}")
 
 
 # --------------------------------------------------------------------------- #
@@ -56,7 +63,7 @@ def _every_hit_is_marked_superseded(path, pattern, label):
 def test_blueprint_main_equation_uses_signed_car_and_sue():
     text = BLUEPRINT.read_text()
     assert "CAR^h_{i,e} = β_h · (SUE_{i,e} × Post_{e,w} × Exposure^pre_{i,w})" in text
-    _every_hit_is_marked_superseded(
+    _absent(
         BLUEPRINT, r"\|Surprise", "the absolute-value regressor |Surprise|")
 
 
@@ -66,18 +73,17 @@ def test_variable_spec_defines_the_primary_outcome_it_is_estimated_on():
     text = VARSPEC.read_text()
     assert "### 0-0. `CAR^h`" in text, "CAR^h has no spec entry"
     assert "D-T3-15" in text and "D-T3-16" in text
-    # and Speed must be labelled secondary wherever it is called the main result
-    for i, line in enumerate(_lines(VARSPEC)):
-        if "Speed^h`(v2.0 主结果)" in line:
-            assert "v2.1" in _near(_lines(VARSPEC), i), (
-                "Speed^h is still labelled the main result: " + line.strip())
+    # Speed^h is the secondary outcome; no label anywhere may still call it the
+    # main result, and no version tag may hint that it once was
+    _absent(VARSPEC, r"`Speed\^h`[（(][^)）]*主结果",
+            "a label calling Speed^h the main result")
 
 
 # --------------------------------------------------------------------------- #
 # 2. the dependence structure is (sponsor, stock)                               #
 # --------------------------------------------------------------------------- #
 def test_blueprint_does_not_still_cluster_on_industry():
-    _every_hit_is_marked_superseded(
+    _absent(
         BLUEPRINT, r"wave\s*[x×]\s*industry|`wave × industry`",
         "wave x industry clustering")
 
@@ -85,7 +91,7 @@ def test_blueprint_does_not_still_cluster_on_industry():
 def test_blueprint_bootstrap_resamples_the_frozen_structure():
     text = BLUEPRINT.read_text()
     assert "(发起人, 股票) multiway" in text
-    _every_hit_is_marked_superseded(
+    _absent(
         BLUEPRINT, r"at the \*\*wave\*\* level", "wave-level bootstrap resampling")
 
 
@@ -98,7 +104,7 @@ def test_no_document_tells_the_reader_to_take_the_most_conservative():
     the results — the same error as 'take the most stars', pointed the other way.
     """
     for path in (PLAN, BLUEPRINT, VARSPEC):
-        _every_hit_is_marked_superseded(
+        _absent(
             path, r"最保守", "the 'take the most conservative' rule")
 
 
@@ -195,7 +201,7 @@ def test_exactly_one_primary_car_benchmark_is_named():
     assert "日内禁用,日频同样禁用" in block, (
         "0-0 must say DGTW is unusable at DAILY resolution too — a monthly "
         "benchmark does not make a daily path characteristic-adjusted")
-    _every_hit_is_marked_superseded(
+    _absent(
         VARSPEC, r"两版并报.*(基准|市场模型)|市场模型.*两版并报",
         "the old 'report both benchmarks' answer")
 
@@ -411,7 +417,6 @@ def test_no_document_claims_a_direction_for_the_intraday_beta_bias():
     a robustness check against that extrapolation -- not a correction toward a
     known sign."""
     for path in (PLAN, BLUEPRINT, VARSPEC,
-                 ROOT / "docs" / "P1_实现更正_v2_1d.md",
                  ROOT / "p1" / "pipeline" / "benchmark_policy.py"):
         assert "Epps" not in path.read_text(), f"{path.name} still claims a bias direction"
     varspec = VARSPEC.read_text()
@@ -527,14 +532,11 @@ def test_the_omitted_intercept_rests_on_the_stock_fe_not_on_a_magnitude_claim():
     varspec = VARSPEC.read_text()
     block = varspec.split("| **D-T3-22**")[1].split("| **D-T3-23**")[0]
     assert "股票固定效应" in block and "吸收" in block
-    assert "v2.1j 删除" in block
-    # and the residual risk is stated rather than glossed
+    # the residual risk is stated rather than glossed
     assert "稳定" in block
-    for path in (VARSPEC, ROOT / "docs" / "P1_实现更正_v2_1d.md"):
-        for i, line in enumerate(_lines(path)):
-            if "数量级" in line and "漂移" in line:
-                assert "删除" in _near(_lines(path), i), (
-                    f"{path.name}:{i+1} still leans on the magnitude claim")
+    # the magnitude claim is gone, not parked inside a note saying it was removed
+    _absent(VARSPEC, r"漂移[^|]{0,40}数量级|数量级[^|]{0,40}漂移",
+            "the untested drift-magnitude claim")
 
 
 def test_the_blueprint_carries_the_same_frozen_facts_as_the_variable_spec():
