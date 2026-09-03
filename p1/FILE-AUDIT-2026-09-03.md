@@ -21,15 +21,18 @@ authority.
 
 ## Authority hierarchy
 
-1. `docs/基金转换实验_博士研究计划.md` — research question, hypotheses,
-   identification, outcomes, inference, and stopping rules.
-2. `p1/STATUS-2026-09-03.md` and `p1/EVENT-COUNT-AUDIT.md` — measured progress
+1. `p1/strategic_pivot/strategic_recommendation.md` — current project choice,
+   design hierarchy, kill gates, and execution authority.
+2. `docs/基金转换实验_博士研究计划.md` — the boxed 2026-09-03 strategic freeze;
+   lower sections are retained architecture for the superseded stock design.
+3. `p1/STATUS-2026-09-03.md` and `p1/EVENT-COUNT-AUDIT.md` — measured progress
    and current counts.
-3. `p1/universe_v2/output/` — current event/date master.
-4. `p1/exposure/` — current Gate0 universe, strictly-PRE holdings, treatment
+4. `p1/universe_v2/output/` — current event/date master.
+5. `p1/exposure/` — current Gate0 universe, strictly-PRE holdings, treatment
    matrices, audits, and lineage.
-5. `p1/t3_spec/变量规格书.md` and `p1/t5_spec/估计蓝图.md` — downstream
-   variable/inference implementation, only where consistent with item 1.
+6. `p1/t3_spec/变量规格书.md` and `p1/t5_spec/估计蓝图.md` — historical
+   downstream implementation for the superseded stock design; not authorized
+   for execution unless a future plan explicitly reactivates it.
 
 ## File-class dispositions
 
@@ -37,8 +40,9 @@ authority.
 |---|---|---|
 | `p1/universe_v2/` | Active; current output copied into Git | Current 247/156/74 event and timing build |
 | `p1/exposure/` | Active; added | Current strict-PRE Exposure^pre build |
+| `p1/strategic_pivot/` | Active; added | Outcome-blind dose/power audit, two share-class censuses, design comparison, and current recommendation |
 | `p1/tests/`, `p1/pipeline/`, compatible `p1/design/` | Retained | Tested engineering infrastructure; no headline results |
-| `p1/t3_spec/`, `p1/t5_spec/` | Retained; stale measured counts corrected | Frozen downstream architecture remains compatible |
+| `p1/t3_spec/`, `p1/t5_spec/` | Retained as superseded design documentation | Useful reproducibility architecture, but no longer execution authority |
 | `p1/lit/`, `p1/t4_replication/` | Retained | Supports revised novelty boundary; market quality is validation only |
 | `p1/edgar_filings/`, `p1/t1_channelA_wip/`, `p1/t1_arb/`, `p1/t1_normalized/` | Retained as source evidence | Raw/provenance material, not current counts |
 | `p1/events_merged.csv`, `p1/t2_wrds/`, `p1/t2_free/` legacy outputs | Retained as historical baseline | Needed to reproduce 172/96 discrepancy; not current universe |
@@ -54,8 +58,9 @@ comparison baseline would make the required discrepancy report unauditable.
 
 ## Consistency checks
 
-- The headline question remains wrapper change → dynamic incorporation of
-  firm-specific earnings information; liquidity/volatility remain validation.
+- The current headline candidate is wrapper change → fund demand/flows and
+  portfolio implementation. Historical/modern ETF share classes validate the
+  same-portfolio mechanism; stock information outcomes are secondary only.
 - Exposure is predetermined, wave-specific, and based only on strictly-PRE
   exact-series N-PORT reports.
 - Corporate-action factors use the report/as-of date, not filing date.
@@ -64,8 +69,14 @@ comparison baseline would make the required discrepancy report unauditable.
   outcome merge, or headline regression was introduced.
 - Many-to-one event rows, long-handoff flags, Dimensional and adviser fields,
   and unresolved mappings are preserved.
-- The conditional 21-stock K2 diagnostic is recorded without threshold tuning;
-  K2 is suspended pending the Fed/source universe gate.
+- The frozen 0.5% high-dose diagnostic is recorded without threshold tuning:
+  583 stock-wave cells across four waves, only 21 cells/two waves outside
+  Dimensional. It cannot be promoted to headline by adding stock rows.
+- The modern census separates 10 launched ETF-class activations, one
+  reverse-direction event, and ten pending events; proposed dates are never
+  treated as realized dates.
+- No TAQ outcome file exists in the current archive. Conditional MDEs are
+  explicitly non-final and no Refraction/FOMC first-stage result is claimed.
 
 Repository tests and artifact-level validations are reported in the final Git
 commit and `p1/STATUS-2026-09-03.md`.
