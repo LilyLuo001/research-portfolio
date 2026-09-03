@@ -245,10 +245,49 @@ pulls:
         - date
         resolved: null
       ret:
-        want: daily return including distributions
+        want: daily return including distributions (TOTAL return). Used by the
+          daily spines. NOT the beta-estimation series for spine zero — see
+          price_return below.
         candidates:
         - ret
         resolved: null
+      price_return:
+        want: 'daily PRICE return, excluding distributions (RETX; CIZ-format
+          DlyRetx). This is the spine-zero beta-estimation series for BOTH legs
+          — the stock and SPY (D-T3-29). The event-window market leg is a
+          midquote price return and a quote midpoint contains no dividend, so a
+          beta fitted on TOTAL returns would carry a dividend-inclusive
+          sensitivity into a dividend-free quantity. Nothing raises if the wrong
+          one is used: `ret` and `retx` are equally plausible daily returns.
+          Both are pulled; they are not interchangeable.'
+        candidates:
+        - retx
+        - dlyretx
+        resolved: null
+      distribution_code:
+        want: 'a per-date DISTRIBUTION INDICATOR for the stock — the preferred
+          way to identify an ex-distribution date for the OpenGap screen
+          (D-T3-31). A flag is exactly the question being asked ("did a
+          distribution go ex"), whereas comparing RET with RETX infers it from
+          two rounded numbers. NAME NOT ASSERTED: the candidates below are
+          guesses to be resolved against the server, and the daily stock file
+          may not carry this at all — the distributions/events file may.
+          VERIFY THE DATE SEMANTICS, not merely that the field is
+          distribution-related: this screen needs the TRADING DATE ON WHICH THE
+          PRICE GOES EX. Declaration, record and payment dates sit on the same
+          distributions record and all look plausible, and keying on one of them
+          drops a clean day while LEAVING the contaminated ex-day in the sample
+          — worse than not screening, because the reported count then claims a
+          screen ran. If only a non-ex date is available, do not use the field.
+          If nothing resolves, the RET-vs-RETX fallback is used WITH a tolerance
+          and an explicit undecidable band, and the paper reports how many
+          observations rested on each method.'
+        candidates:
+        - distcd
+        - divamt
+        - dlyfacprc
+        resolved: null
+        optional: true
       price:
         want: daily closing price
         candidates:
@@ -328,6 +367,29 @@ pulls:
         - dlstcd
         resolved: null
     asserts:
+      distribution_indicator: 'NEED_HUMAN at the window, TWO questions not one:
+        (a) is a per-date distribution indicator available for the stock (on this
+        file or on the distributions/events file) — paste the exact table+field;
+        (b) WHICH DATE IS IT KEYED TO? The OpenGap screen needs the EX-DATE, the
+        trading date on which the price becomes ex-distribution. Declaration,
+        record and payment dates are NOT substitutes: keying on one of them
+        drops a clean day and keeps the contaminated one, while the reported
+        exclusion count claims a screen ran. Answering (a) without (b) does not
+        resolve this entry. Preferred identification for the screen; the
+        RET-vs-RETX comparison is the fallback and is dated correctly by
+        construction. Not blocking — but the fallback infers a flag from two
+        rounded numbers, so the share of observations decided each way must be
+        reported. Guard: benchmark_policy.assert_exdate_semantics.
+
+        '
+      price_vs_total_return: 'NEED_HUMAN at the window: confirm whether this
+        account''s daily file is the legacy format (`retx`) or CIZ (`DlyRetx`),
+        and paste the exact name. Spine zero''s beta MUST be estimated on the
+        price-return field for the stock AND for SPY; the total-return field
+        stays for the daily spines. Using one where the other belongs does not
+        raise — it shifts every beta and therefore every AR^h.
+
+        '
       monthly_cfacshr_sufficiency: 'NEED_HUMAN once dsf lands: run compute_continuity.monthly_factor_sufficiency(asof_dates,
         daily_panel) over the ACTUAL N-PORT repPdDate values and record the verdict
         in GATE0-RESULT.md. Until it returns "sufficient", Gate 0 must join the DAILY

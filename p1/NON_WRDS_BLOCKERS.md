@@ -100,7 +100,7 @@ literature package. Spines one and four genuinely do (GNZ, FERC, IPT,
 Hou-Moskowitz, Amihud, the spread convention) and stay out until A1 clears.
 
 ### B4. The Russell-reconstitution fallback design is checkable today
-`P1_修订补丁_v1_1.md` §修订3 makes Russell handling a forced T5 sub-spec, and the
+The plan (§6, threat T3) makes Russell handling a forced T5 sub-spec, and the
 plan §133 gives three responses. Response (iii) — *replicate on 2022–2025 non-June
 waves, and if the effect exists only in 2021-06 the conclusion is downgraded* — is
 computable **right now** from `events_merged.csv`. Knowing whether that fallback
@@ -118,5 +118,69 @@ A1 (literature) and A2/A3 (egress) are independent of WRDS and can be procured i
 parallel with it. **A1 is the one that actually gates T3**, and it is the cheapest
 of the three.
 
-Group B is being worked now, in the order B1 → B2 → B3 → B4. None of it needs the
-owner, WRDS, or network.
+---
+
+## Status 2026-08-28 — Group B is finished; nothing offline remains
+
+Group B was worked B1 → B2 → B3 → B4, and all of it has landed:
+
+| | item | where |
+|---|---|---|
+| B1 | three missing §230 contracts | `ops/contracts/{outcomes_panel,variable_spec,fingerprint}.yaml` |
+| B2 | panel-integrity guard | `p1/pipeline/assert_panel.py` |
+| B3 | spine-two outcomes builder | `p1/pipeline/outcomes_spine2.py` + tests |
+| B4 | Russell non-June fallback check | `p1/design/russell_fallback.json` |
+| B5 | free-vs-CRSP reconciliation | `p1/reconcile/convexp_reconcile.py` |
+
+Landed since, and also needing nothing: Gate 0's continuity measures with the
+as-of factor join and the non-circular direction test
+(`p1/gate0_continuity/`, `p1/tests/test_gate0_continuity.py`); the dependence
+measure (`p1/t5_spec/measure_dependence.py`); the spec-consistency guard
+(`p1/tests/test_spec_consistency.py`); and the sponsor crosswalk proposal
+(`p1/t5_spec/sponsor_crosswalk.py`).
+
+**Every remaining P1 item is in Group A, plus three new owner items.** So the
+next seat-C session should not go looking for offline work — there is none, and
+inventing some is worse than saying so.
+
+### A6. The sponsor crosswalk signoff — blocks headline inference
+`p1/t5_spec/SPONSOR-CROSSWALK-GATE.md`. Stem matching took 84 registrants to 61
+stems, but **that is a candidate generator, not evidence** (owner, 2026-08-28):
+every row needs a filing/adviser locator, and `load_signed()` refuses a row
+without one. Names fail both ways — the same manager under unrelated names
+(`Undiscovered Managers Funds` → JPMorgan; `DFA Investment Dimensions Group` ↔
+`Dimensional Investment Group`, 93.6% of treated mass), and unrelated managers
+under one shared series trust, where the economic sponsor is the sub-adviser of
+the converting series and can differ row by row inside one registrant. Review
+priority: Dimensional, JPMorgan, Fidelity, the series trusts. Blocks §15.3.1 and
+§15.3.0's dependence measurement; blocks **neither Gate 0 nor B1/B2**.
+
+### A7. ~~The multiway wild-bootstrap citation~~ — CLOSED 2026-08-28
+Owner-supplied: Roodman, MacKinnon, Nielsen & Webb (2019), *Stata Journal*
+19(1):4–60, with Cameron, Gelbach & Miller (2008), *ReStat* 90(3):414–427.
+Implementation family **Stata `boottest`** (multiway error clustering plus a
+separately specified bootstrap clustering); Python `wildboottest` is not primary
+because its documentation states multiway is unsupported.
+
+What remains is **not** a blocker but a deliberate hold: the `bootcluster()`
+argument is deferred until the final sample supplies the economic-sponsor count,
+the treated-sponsor count, cross-sponsor stock reuse and cluster imbalance —
+`measure_dependence.bootcluster_inputs` emits all four — and it must be justified
+in writing **before any headline coefficient is observed**
+(`p1/t5_spec/BOOTCLUSTER-DECISION.md`). Nothing is waiting on anyone for it; it
+is waiting on the sample, which is A8/A9.
+
+### A8. SEC egress — blocks B1/B2 execution and Gate 0's measured result
+Re-verified in-container 2026-08-28: `www.sec.gov`, `data.sec.gov`,
+`efts.sec.gov` and `api.openfigi.com` all return 403 at the proxy CONNECT
+(`connect_rejected — gateway answered 403`). The code, contracts and tests are
+committed and green offline; they need a lane with SEC egress, not more work
+here. OpenFIGI is a coverage fallback only — step 2 of the builder uses it just
+for holdings whose N-PORT carries no ticker — so it is not load-bearing.
+
+### A9. The WRDS account — blocks T2-on-permno, T4, T5, and two integration tests
+`p1/tests/test_gate0_continuity.py` has two tests that skip today and are the
+only things that can verify the CFACSHR direction against data
+(`test_direction_against_real_crsp_corporate_actions`,
+`test_adjustment_cancels_a_real_action_on_a_real_holding`). The pull layer is
+written, bounded and ordered; the runbook is `ops/briefs/P1-WRDS-SPRINT.md`.

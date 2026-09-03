@@ -331,7 +331,7 @@ variable, and nothing here is allowed to be tuned against one.
 | file | what it gives you |
 |---|---|
 | `p1/EVENT-COUNT-AUDIT.md` | why the register moved 131 → 172, and what is still unresolved |
-| `p1/ROADMAP-2026-08-19.md` | where P1 stands overall; the DFA-concentration headline |
+| `p1/NON_WRDS_BLOCKERS.md` | where P1 stands overall, and what each remaining item is blocked on |
 | `p1/t2_free/build_nport_convexp.py` | the builder's own docstring is the best spec of the data flow |
 | `ops/contracts/conv_exposure_free.yaml` | the frozen output schema |
 | `p1/output/convexp_coverage_audit/coverage_audit_memo.md` | the drop-rate argument this rebuild is meant to test |

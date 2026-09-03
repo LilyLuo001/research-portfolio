@@ -423,7 +423,7 @@ execution (~3-5 days instead of 3-6 weeks). Say the word and that runs next.
 DESIGN FINDING 2026-08-18 (seat C, non-WRDS work): the Russell fallback design is
 available, and the amendment that mandates it undercounts the problem.
 
-P1_修订补丁 §修订3 makes Russell-reconstitution handling a forced T5 sub-spec,
+The plan (§6 threat T3) makes Russell-reconstitution handling a forced T5 sub-spec,
 naming the 2021-06-11 DFA anchor as the exposed wave. Plan §133 gives three
 responses; response (iii) — replicate on 2022-2025 non-June waves and downgrade
 the conclusion if the effect is 2021-06 only — is computable today from

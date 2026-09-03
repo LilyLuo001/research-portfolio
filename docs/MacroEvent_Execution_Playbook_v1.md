@@ -10,7 +10,8 @@
 > conflict, the 执行手册 wins. Repo scaffolding for R0–R14 lives in `refraction/` and
 > `ops/` (queue nodes REFR-*).
 
-> Model assignments follow the **v1.1 budget regime** (see P1_修订补丁_v1_1.md §5 and
+> Model assignments follow the **v1.1 budget regime** (the P1 v1.1 patch is deleted;
+> see git history `351d327` §5, and
 > Agent_Architecture_24x7.md §4): Anthropic only via Pro subscription (Claude Code + claude.ai
 > Projects/Research), no non-Anthropic flagship APIs; cross-vendor independence (R2) carried by
 > cheap tiers (DeepSeek / Kimi / GLM / Qwen + Gemini free). Escalation ladder tops out at a

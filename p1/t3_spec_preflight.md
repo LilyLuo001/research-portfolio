@@ -102,6 +102,27 @@ one entry per row, each with a working link, in the T0 阶段A matrix format:
 9. **1 − R²** idiosyncratic information content.
 10. **TAQ/IID effective spread** — the convention the WRDS IID field implements.
 
+**11. Multiway wild cluster bootstrap** — ✅ **CLOSED 2026-08-28, owner-supplied.**
+Unlike items 1–10 this is not a 口径 for an outcome variable; it is the procedure
+behind every p-value in the paper.
+
+* Roodman, MacKinnon, Nielsen & Webb (2019), "Fast and wild: Bootstrap inference
+  in Stata using boottest", *Stata Journal* 19(1):4–60.
+* Cameron, Gelbach & Miller (2008), *Review of Economics and Statistics*
+  90(3):414–427 — the foundational clustered-bootstrap reference.
+
+Implementation family: **Stata `boottest`**, which supports multiway error
+clustering and a separately specified bootstrap clustering. Python
+`wildboottest` is **not** the primary implementation — its documentation states
+multiway clustering is unsupported. Hand-rolling the loop stays forbidden.
+
+Still open, deliberately: the `bootcluster()` argument. It is deferred until the
+final analysis sample supplies the economic-sponsor count, the treated-sponsor
+count, cross-sponsor stock reuse and cluster imbalance, and it must be justified
+**before any headline coefficient is observed** —
+`p1/t5_spec/BOOTCLUSTER-DECISION.md`. That is a hold on one parameter, not an
+open literature question, so it does not belong on this list.
+
 Alternatively, queue T0 阶段A properly as a dual-channel task (it is a
 high-hallucination task under meta-rule 2 — the collision sweep already showed
 one channel inventing an overlap verdict) and let it produce the matrix.

@@ -26,7 +26,7 @@ columns:
   wave_id: {}                       # which conversion wave treats this stock
   effective_date: {}                # that wave's effective date
   treated_post: {min: 0, max: 1}    # 1 if this quarter is after effective_date
-  # ---- controls the plan names as forced (P1_修订补丁 §修订3) ----
+  # ---- controls the plan names as forced (plan §6, threat T3) ----
   russell_change: {min: 0, max: 1}  # stock changed Russell status this quarter
   # ---- spine-two outcome variables (p1/pipeline/outcomes_spine2.py) ----------
   # builder: outcomes_spine2.build_spine2; §7 口径 — no literature package needed

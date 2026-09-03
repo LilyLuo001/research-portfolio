@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Is the Russell fallback design actually available? Answered from our own data.
 
-The problem (P1_修订补丁_v1_1.md §修订3): the DFA anchor wave is effective
+The problem (plan §6, threat T3): the DFA anchor wave is effective
 2021-06-11, two weeks before the June 2021 Russell annual reconstitution, which
 mechanically moves volume, spreads and index-fund holdings on exactly the
 small/value names DFA is heavy in — i.e. directly on top of our outcome

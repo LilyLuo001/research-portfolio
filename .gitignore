@@ -77,6 +77,20 @@ dax/capability_panel/*private_panel*.parquet
 # committed files and is what you hand to whoever books the account.
 p1/wrds/raw/*
 p1/wrds/discovered_schema.json
+# ...but the PROVENANCE sidecars are not licensed data and must reach the repo:
+# each carries the exact SQL, the row count and the code version behind one
+# landed parquet. Without them a pull has no locator, which is meta-rule 1's
+# whole requirement. Same pattern as ops/l1/out/*.void.json above. Note the
+# parent must be `raw/*`, not `raw/`: git does not reconsider files inside an
+# excluded DIRECTORY, so a negation under `raw/` would never fire.
+# (Restored 2026-08-28: these three lines were dropped by the main merge in
+# 23d61ed. p1/tests/test_wrds_data_policy.py is what caught it.)
+!p1/wrds/raw/*.lineage.json
+!p1/wrds/raw/mf_holdings__matched_fundnos.json
+# P1-T2 free path: sidecar produced at pipeline runtime — contains shares_held for
+# dropped cells. Created by build_nport_convexp.py, consumed by recover_denominators.py.
+# Not committed: it contains N-PORT data (which is licensed) and changes with each run.
+p1/t2_free/dropped_cells_shares_held.csv
 
 # IPUMS-CPS person-level panels stay box-local under the same rule as the
 # W5 analysis panel: redistribution terms forbid committing microdata.
