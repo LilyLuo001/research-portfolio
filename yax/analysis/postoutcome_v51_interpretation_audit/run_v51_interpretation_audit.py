@@ -225,6 +225,11 @@ def exact_reparameterization(args: argparse.Namespace, reference: pd.DataFrame) 
             "coefficient": difference,
             "common_draw_covariance_se": math.sqrt(difference_variance),
             "normal_95_ci": list(map(float, CORE.normal_interval(difference, difference_variance))),
+            "exact_transformed_existing_G_wild_score_95_ci": [
+                float(terms[1]["wild_score_ci_lower"] / moments["G"]["weighted_sd"]),
+                float(terms[1]["wild_score_ci_upper"] / moments["G"]["weighted_sd"]),
+            ],
+            "exact_transformed_existing_G_wild_score_p_value": terms[1]["wild_score_p_value"],
             "identity": "b_A_raw - b_E_raw = b_G / s_G",
         },
         "centering": {
@@ -265,7 +270,7 @@ def render_reparameterization(path: pathlib.Path, result: dict) -> None:
         f"| AIOE A | {a['coefficient_per_original_centroid_unit']:.6f} | {a['common_draw_covariance_se_per_original_centroid_unit']:.6f} | [{a['normal_95_ci_per_original_centroid_unit'][0]:.6f}, {a['normal_95_ci_per_original_centroid_unit'][1]:.6f}] | {a['coefficient_per_weighted_sd']:.6f} | [{a['normal_95_ci_per_weighted_sd'][0]:.6f}, {a['normal_95_ci_per_weighted_sd'][1]:.6f}] |",
         f"| Eloundou E | {e['coefficient_per_original_centroid_unit']:.6f} | {e['common_draw_covariance_se_per_original_centroid_unit']:.6f} | [{e['normal_95_ci_per_original_centroid_unit'][0]:.6f}, {e['normal_95_ci_per_original_centroid_unit'][1]:.6f}] | {e['coefficient_per_weighted_sd']:.6f} | [{e['normal_95_ci_per_weighted_sd'][0]:.6f}, {e['normal_95_ci_per_weighted_sd'][1]:.6f}] |",
         "",
-        f"On the common original-centroid scale, A minus E is `{d['coefficient']:.6f}` (SE `{d['common_draw_covariance_se']:.6f}`; normal 95% CI [{d['normal_95_ci'][0]:.6f}, {d['normal_95_ci'][1]:.6f}]). The transformed A/E coefficient correlation is `{result['transformed_correlation_raw_ae']:.6f}`.",
+        f"On the common original-centroid scale, A minus E is `{d['coefficient']:.6f}` (SE `{d['common_draw_covariance_se']:.6f}`; normal 95% CI [{d['normal_95_ci'][0]:.6f}, {d['normal_95_ci'][1]:.6f}]). Because this contrast is exactly `b_G/s_G`, its transformed existing G wild-score interval is [{d['exact_transformed_existing_G_wild_score_95_ci'][0]:.6f}, {d['exact_transformed_existing_G_wild_score_95_ci'][1]:.6f}] with unchanged `p={d['exact_transformed_existing_G_wild_score_p_value']:.3f}`. The transformed A/E coefficient correlation is `{result['transformed_correlation_raw_ae']:.6f}`.",
         "",
         "The negative conditional stock association loads substantially more heavily on the Eloundou-family centroid. The implied AIOE-family coefficient is positive and imprecise, while the Eloundou-family coefficient is negative and its covariance-transformed interval excludes zero. This does not mean that only Eloundou matters, that AIOE has no effect, or that LLM exposure caused the employment pattern.",
         "",
@@ -283,7 +288,7 @@ def render_reparameterization(path: pathlib.Path, result: dict) -> None:
 def render_stability(path: pathlib.Path, rows: list[dict], decomposition: dict) -> None:
     lines = [
         "# YAX V5.1 treatment-only G-construction stability", "",
-        "**Decision: G-STABLE.** All diagnostics use only frozen exposure scores and frozen pre-period employment weights on the same 463-occupation support. No labor outcome is used.", "",
+        "**Decision: G-PARTIAL.** All diagnostics use only frozen exposure scores and frozen pre-period employment weights on the same 463-occupation support. No labor outcome is used.", "",
         "| Alternative | Pearson | Rank corr. | SD ratio | Q1 retained | Q5 retained | Zero-sign agree | Median-side agree | Occ. direction change |",
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
@@ -296,7 +301,7 @@ def render_stability(path: pathlib.Path, rows: list[dict], decomposition: dict) 
             f"{row['weighted_zero_sign_agreement']:.1%} | {row['weighted_median_side_agreement']:.1%} | "
             f"{row['unweighted_zero_direction_change_fraction']:.1%} |"
         )
-    lines += ["", "The between-family dimension is not primarily an alpha artifact: removing any one Eloundou component leaves very high weighted level and rank correlations and largely preserves both tails. No employment regression using an alternative G was run.", "", "## Mechanical and covariance contributions", ""]
+    lines += ["", "G is highly stable to removing beta or broad but changes materially when alpha is removed. The minus-alpha level/rank correlations fall to about 0.865/0.855, only 69–73% of frozen tail weight is retained, and about 18% of employment changes zero-direction. The exploratory family-disagreement result therefore partly reflects alpha's distinctive position. No employment regression using an alternative G was run.", "", "## Mechanical and covariance contributions", ""]
     lines.append("Each Eloundou component has arithmetic weight `1/3` in E and `-1/6` in G; the AIOE centroid has weight `+1/2` in G.")
     lines += ["", "| Component | Share of weighted variance of E | Share of weighted variance of G |", "|---|---:|---:|"]
     e_share = decomposition["covariance_contribution_share_to_variance_E"]
@@ -323,13 +328,13 @@ def run(args: argparse.Namespace) -> None:
         "weighting": "frozen preperiod_employment_weight",
         "rows": rows,
         "decomposition": decomposition,
-        "classification": "G-STABLE",
+        "classification": "G-PARTIAL",
         "labor_outcomes_used": False,
     })
     print(json.dumps({
         "status": "PASS_V51_INTERPRETATION_ALGEBRA_AND_TREATMENT_AUDIT",
         "ae_classification": reparameterization["classification"],
-        "g_classification": "G-STABLE",
+        "g_classification": "G-PARTIAL",
         "new_labor_outcome_model_estimated": False,
     }, indent=2))
 

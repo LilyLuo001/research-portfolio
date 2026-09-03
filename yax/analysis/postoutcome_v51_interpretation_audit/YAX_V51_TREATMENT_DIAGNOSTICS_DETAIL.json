@@ -1,0 +1,101 @@
+{
+  "analysis_status": "POST-OUTCOME INTERPRETATION AUDIT \u2014 NO NEW LABOR-OUTCOME MODEL",
+  "classification": "G-PARTIAL",
+  "decomposition": {
+    "arithmetic_weights_in_E": {
+      "alpha": 0.3333333333333333,
+      "beta": 0.3333333333333333,
+      "broad": 0.3333333333333333
+    },
+    "arithmetic_weights_in_G": {
+      "A_centroid": 0.5,
+      "alpha": -0.16666666666666666,
+      "beta": -0.16666666666666666,
+      "broad": -0.16666666666666666
+    },
+    "covariance_contribution_share_to_variance_E": {
+      "alpha": 0.28990870288645276,
+      "beta": 0.3766501238526392,
+      "broad": 0.333441173260908
+    },
+    "covariance_contribution_share_to_variance_G": {
+      "A_centroid": 0.7745325520606712,
+      "alpha": 0.29931891837125996,
+      "beta": 0.02609670093112407,
+      "broad": -0.09994817136305527
+    },
+    "weighted_component_correlation_matrix": {
+      "alpha": {
+        "alpha": 1.0000000000000002,
+        "beta": 0.6426339468028021,
+        "broad": 0.3462100663129577
+      },
+      "beta": {
+        "alpha": 0.6426339468028021,
+        "beta": 1.0000000000000002,
+        "broad": 0.9412772514651133
+      },
+      "broad": {
+        "alpha": 0.3462100663129577,
+        "beta": 0.9412772514651133,
+        "broad": 1.0000000000000002
+      }
+    }
+  },
+  "labor_outcomes_used": false,
+  "rows": [
+    {
+      "analysis_status": "POST-OUTCOME INTERPRETATION AUDIT \u2014 NO NEW LABOR-OUTCOME MODEL",
+      "construction": "G_minus_alpha",
+      "employment_weighted_average_rank_spearman": 0.8546999986043908,
+      "employment_weighted_pearson": 0.8649608471642871,
+      "occupations_fixed_full_G_support": 463,
+      "occupations_maximal_support": 463,
+      "omitted_eloundou_measure": "dv_rating_alpha",
+      "q1_weight_retained_from_frozen_G": 0.7252567530837862,
+      "q5_weight_retained_from_frozen_G": 0.6945653596397476,
+      "unweighted_zero_direction_change_fraction": 0.17062634989200864,
+      "weighted_median_side_agreement": 0.814766973013633,
+      "weighted_sd_ratio_alternative_to_frozen": 0.7673819555981631,
+      "weighted_slope_alternative_on_frozen": 0.6637553464127744,
+      "weighted_zero_direction_change_fraction": 0.17889058818358172,
+      "weighted_zero_sign_agreement": 0.8211094118164182
+    },
+    {
+      "analysis_status": "POST-OUTCOME INTERPRETATION AUDIT \u2014 NO NEW LABOR-OUTCOME MODEL",
+      "construction": "G_minus_beta",
+      "employment_weighted_average_rank_spearman": 0.9896617467836336,
+      "employment_weighted_pearson": 0.99214235721545,
+      "occupations_fixed_full_G_support": 463,
+      "occupations_maximal_support": 463,
+      "omitted_eloundou_measure": "dv_rating_beta",
+      "q1_weight_retained_from_frozen_G": 0.8303657121607823,
+      "q5_weight_retained_from_frozen_G": 0.9667995717396183,
+      "unweighted_zero_direction_change_fraction": 0.08423326133909287,
+      "weighted_median_side_agreement": 0.9627969898814696,
+      "weighted_sd_ratio_alternative_to_frozen": 1.082091359939632,
+      "weighted_slope_alternative_on_frozen": 1.0735886725729782,
+      "weighted_zero_direction_change_fraction": 0.03626969036652591,
+      "weighted_zero_sign_agreement": 0.963730309633474
+    },
+    {
+      "analysis_status": "POST-OUTCOME INTERPRETATION AUDIT \u2014 NO NEW LABOR-OUTCOME MODEL",
+      "construction": "G_minus_broad",
+      "employment_weighted_average_rank_spearman": 0.9728616610311425,
+      "employment_weighted_pearson": 0.977827213200928,
+      "occupations_fixed_full_G_support": 463,
+      "occupations_maximal_support": 463,
+      "omitted_eloundou_measure": "dv_rating_gamma",
+      "q1_weight_retained_from_frozen_G": 0.7906210938630797,
+      "q5_weight_retained_from_frozen_G": 0.9371637457114578,
+      "unweighted_zero_direction_change_fraction": 0.1101511879049676,
+      "weighted_median_side_agreement": 0.9350854721825275,
+      "weighted_sd_ratio_alternative_to_frozen": 1.2912874217121952,
+      "weighted_slope_alternative_on_frozen": 1.2626559810142473,
+      "weighted_zero_direction_change_fraction": 0.07157265869933307,
+      "weighted_zero_sign_agreement": 0.9284273413006668
+    }
+  ],
+  "support": "463 frozen complete-case occupations",
+  "weighting": "frozen preperiod_employment_weight"
+}
