@@ -1,0 +1,86 @@
+{
+  "record": "YAX V5.1 final closed referee-repair reproducibility receipt",
+  "status": "PASS_V51_COMPLETE_STOP_EMPIRICAL_WORK",
+  "branch": "task/yax-v51-referee-repair-20260903",
+  "lineage": {
+    "sealed_phase3_v5_parent": "ed4055eab8d303c2ff48e18562a99dd43b3c7874",
+    "v51_pre_result_commit": "6fed6f52ca9f4e0fcec80d13b9d3f3c6a9fddc25",
+    "v51_result_and_manuscript_commit": "32fd9b52c9387de73dc4ebc651bd7d2a4ddc2123"
+  },
+  "protected_refs": {
+    "v1.1-design-freeze": {
+      "annotated_tag_object": "74d97a9b07e0cbedda2c646c5eed5938b8506f81",
+      "peeled_commit": "22fbf7924809b7a535e31ae0ab68f5b113ce8078"
+    },
+    "v1.1-confirmatory-results": {
+      "annotated_tag_object": "31f9d02352f70fe81f5a01cd6690cc5e5400512c",
+      "peeled_commit": "b16109482c3bf5ca176f6f08976e120b04769945"
+    }
+  },
+  "authorization": {
+    "statement": "Exactly one new labor-outcome specification was authorized: the predeclared joint F+G stock model.",
+    "executed_successfully": true,
+    "new_labor_outcome_specification_count": 1,
+    "other_labor_outcome_regressions_executed": 0,
+    "prohibited_analysis_executed": false
+  },
+  "new_analyses": [
+    "all 15 pairwise Cohen kappa statistics and one standard Fleiss-type diagnostic on frozen switches",
+    "weighted Pearson and weighted average-rank matrices for the six frozen exposure measures",
+    "one joint continuous consensus-F plus between-family-G plus Webb stock model",
+    "two-way occupation-by-calendar-month model-based covariance sensitivity for the primary and six existing common-support stock models"
+  ],
+  "randomization": {
+    "fg_wild_score_seed": 2026090501,
+    "fg_wild_score_draws": 999,
+    "common_occupation_multipliers_preserve_covariance": true
+  },
+  "private_and_frozen_input_hashes_sha256": {
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "longitudinal_weight_patch": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "exposure_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "census_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "rule_b_values": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+    "characteristics": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "sealed_common_support_results": "6b51a2a5c0a5f30ea73b1889828b89df460ffc740d069a567c129f6d135e9ca1",
+    "sealed_confirmatory_results": "4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831",
+    "first_outcome_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3"
+  },
+  "new_result_hashes_sha256": {
+    "YAX_V51_EXPOSURE_CORRELATIONS.csv": "43034f1feaa33d6e2bd977894fd9d9289b1ee97854b452198c1bc8434358e1b4",
+    "YAX_V51_FG_JOINT_MODEL_RESULTS.csv": "066528bbaee680897f442f91defa8565e3d3129e61d43d3a795e3415a0f8b4c9",
+    "YAX_V51_FG_JOINT_MODEL_RESULTS.json": "e336df9df5cf1843fdff7e8c345b0dced7cf28a84678255806c572bed8f769da",
+    "YAX_V51_FG_JOINT_MODEL_RESULTS.md": "f33ee327c2f71326d1b4f445ae767f933a88e5e10c2da04c8a0ae64d370b8fdc",
+    "YAX_V51_KAPPA_AGREEMENT.csv": "7c3f00081a1b9feef0cb382fcc68c05240b865b7f77fcd9858c380670803428f",
+    "YAX_V51_KAPPA_SUMMARY.json": "e3ba96255dd2509be7c4353a129d92522551dd69218a57fe71268f02510267dc",
+    "YAX_V51_TWOWAY_CLUSTER_SENSITIVITY.csv": "b7ce19479dec76493cde265d1bfcd954eb6e2eaead757251b9b1647acfba0b29"
+  },
+  "code_and_plan_hashes_sha256": {
+    "v51_core.py": "c6086aa4f2f507d7db5ddee81ed855f8d1eccc369a391c0107054e2ea7a61af1",
+    "run_v51_repairs.py": "d649cc034b9ad26c1ea3398f9143e774c6a19c1bc3158c28fdb2db909b8f5625",
+    "YAX_V51_EXECUTION_PLAN.md": "860654b2960c1575384bbd70c6f4af7e61a629533bbd149152bc76bff056d469",
+    "YAX_V51_FG_JOINT_MODEL_PLAN.md": "6c534d24c823f4ba7521ad150f064841323c343f5fd5cee30d85c4a1dc9f3b21"
+  },
+  "manuscript_hashes_sha256": {
+    "YAX_MANUSCRIPT_v5_1_CLEAN.md": "c79e0008511b96c999b49dacebde91aaa677418c8336ae721c15489351807212",
+    "YAX_V51_SUPPLEMENTARY_APPENDIX.md": "966f734a1a46ca7c2748093e8cc3296e8c4c419f10697d9ea6721096c43ac92a",
+    "YAX_V51_REFEREE_REPAIR_MEMO.md": "98530589761a8fe66a3e1177ccdcdcd962ab85f0f8cc45a1c40776011cfe33d6",
+    "YAX_REFEREE_REDTEAM_v5_1.md": "b2147b8eae66ff08b19b5c8e2331864fe6724bd75dc6d6e5cfe4f793f4899c35",
+    "YAX_V51_PAIRED_MDE_RECONCILIATION.md": "e9d49e77cd21efc6c727542c692c1647d2cc8ac2f1cb96f1997413abdb87eeb0"
+  },
+  "tests": {
+    "targeted_local": "14 passed",
+    "all_yax_local": "178 passed",
+    "full_clean_scc": "863 passed, 3 skipped, 13 warnings in 17.95s",
+    "scc_checkout": "/projectnb/econdept/qluo/yax-v51-final-ci-20260903",
+    "tested_commit": "32fd9b52c9387de73dc4ebc651bd7d2a4ddc2123"
+  },
+  "remote_verification": {
+    "remote": "origin",
+    "branch": "task/yax-v51-referee-repair-20260903",
+    "observed_commit_before_receipt_seal": "32fd9b52c9387de73dc4ebc651bd7d2a4ddc2123"
+  },
+  "stop_rule": "Empirical work is complete. No Phase 4 or additional exposure, outcome, mechanism, flow, benchmark, age, adoption, or factor analysis is authorized."
+}
