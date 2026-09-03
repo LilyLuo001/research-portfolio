@@ -1,0 +1,107 @@
+{
+  "record": "YAX V5.1 closed interpretation audit reproducibility receipt",
+  "status": "PASS_CONTENT_COMPLETE_AWAITING_CLEAN_SCC_SEAL",
+  "generated_at_utc": "2026-09-03T10:50:05Z",
+  "branch": "task/yax-v51-interpretation-audit-20260903",
+  "lineage": {
+    "authoritative_v51_parent": "557a927c96b9062c233787f1d346c68b99074206",
+    "audit_code_commit": "72e821c",
+    "audit_content_commit": "7e2ed805b4fa83bed4835852a0b22b1e2c9bfd6a"
+  },
+  "protected_peeled_commits": {
+    "v1.1-design-freeze": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+    "v1.1-confirmatory-results": "b16109482c3bf5ca176f6f08976e120b04769945"
+  },
+  "authorization": {
+    "new_labor_outcome_model_estimated": false,
+    "ae_coefficients_are_exact_algebraic_transformations_of_frozen_fg": true,
+    "new_bootstrap_multipliers_generated": false,
+    "leave_one_eloundou_measure_labor_outcome_regressions_executed": false,
+    "leave_one_occupation_out_outcome_analysis_executed": false
+  },
+  "classifications": {
+    "ae": "AE-R1",
+    "g_stability": "G-PARTIAL",
+    "headline_power": "HEADLINE-P2",
+    "paired_power": "PAIRED-P2",
+    "loco": "LOCO-WORTH-OWNER-DECISION",
+    "paper_frame": "FRAME-G2"
+  },
+  "scaling_constants": {
+    "A": {"weighted_mean": 0.007601578653176965, "weighted_sd": 0.9986541239732856},
+    "E": {"weighted_mean": -0.0005230106559222314, "weighted_sd": 0.866645911729445},
+    "F": {"weighted_mean": 0.003539283998627367, "weighted_sd": 0.8777358553105283},
+    "G": {"weighted_mean": 0.004062294654549618, "weighted_sd": 0.32213718525715235}
+  },
+  "transformations": {
+    "A_raw": "0.5 * (b_F / s_F + b_G / s_G)",
+    "E_raw": "0.5 * (b_F / s_F - b_G / s_G)",
+    "A_per_weighted_sd": "s_A * A_raw",
+    "E_per_weighted_sd": "s_E * E_raw",
+    "centering_identity": "mu_A=mu_F+mu_G; mu_E=mu_F-mu_G",
+    "maximum_absolute_linear_predictor_difference": 2.7755575615628914e-17
+  },
+  "inference_source": {
+    "path": "yax/analysis/postoutcome_v51_referee_repair/YAX_V51_FG_JOINT_MODEL_RESULTS.json",
+    "sha256": "e336df9df5cf1843fdff7e8c345b0dced7cf28a84678255806c572bed8f769da",
+    "stored_objects": [
+      "F and G coefficients",
+      "marginal analytic cluster standard errors",
+      "marginal common-draw bootstrap standard deviations",
+      "centered common-draw F/G covariance",
+      "marginal wild-score intervals and p-values"
+    ],
+    "draw_level_shifts_stored": false,
+    "analytic_cluster_covariance_off_diagonal_stored": false,
+    "consequence": "A/E covariance uses the full serialized common-draw covariance. Exact transformed marginal A/E wild-score intervals are unavailable and were not fabricated. The A-minus-E contrast is exactly b_G/s_G, so its existing G wild-score interval is exactly transformable."
+  },
+  "authenticated_private_input_hashes_sha256": {
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "exposure_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "rule_b_values": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+    "census_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "first_outcome_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3"
+  },
+  "preprocessing_and_power_hashes_sha256": {
+    "TEST_A_OCCUPATION_CHARACTERISTICS.csv": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "run_v51_repairs.py": "d649cc034b9ad26c1ea3398f9143e774c6a19c1bc3158c28fdb2db909b8f5625",
+    "phase3_core.py": "1fcc7eb6cf45daaee0eb71f578d9a8c891cdfe35ea959b28933b8d2546d54859",
+    "run_phase3.py": "79006406bada62a7e767f4d4a7f8cceed68994f4118010638ce0b24a80bd8fbe",
+    "beta_webb_primary.json": "0444277942d1b4db1d54a11d4df1a3317797eab663307a1870e890066db596de",
+    "JOINT_POWER_AGGREGATE_v3.json": "198ba9203019dfe69e9fd117e295ff4b9ab2be663ed90e63e641ba53e0c1eb28",
+    "PAIRED_EQUIVALENCE_PRECISION_v1.json": "4898f452f1368796d141f142ecbc88e6963b2ec273ed47446adaa0934908df5e",
+    "PAIRED_DIFFERENCE_PRECISION_v2.json": "2a756a8ea8e09fc515f64aee7a3ab57f020eb0cb1a0451ce38242b73c5aae7aa",
+    "YAX_V51_PAIRED_MDE_RECONCILIATION.md": "e9d49e77cd21efc6c727542c692c1647d2cc8ac2f1cb96f1997413abdb87eeb0",
+    "HEADLINE_INFORMATION_SUPPORT_SUMMARY.csv": "0afb651d5652877ba51201dcae94b12834eee323361dcfe3815d04c5e3c76f3c"
+  },
+  "deliverable_hashes_sha256": {
+    "YAX_V51_FG_TO_AE_REPARAMETERIZATION.md": "87b92b68547fd5dd2da575a7efd68608355302fe834168ec983878fa23ecedc0",
+    "YAX_V51_FG_TO_AE_REPARAMETERIZATION.json": "b4aaa4427fcca33785677ed7e68220f48190f56d18ea6ec54aa43ed87206db12",
+    "YAX_V51_G_CONSTRUCTION_STABILITY.csv": "3948ae375891754128cc628ce1c389bc0a15ad625b0729c3e5d9ebbcebf8df0c",
+    "YAX_V51_G_CONSTRUCTION_STABILITY.md": "c4df1904df4ee6e2c69fc71f03b6dab515501b43249fd355484cad570fcc7c84",
+    "YAX_V51_POWER_CALIBRATION_RECONCILIATION.md": "6acfdb0a17137ad9ff798ae9f639abe8eaa8304eba9d9d365725df8bbf3f1793",
+    "YAX_V51_LOCO_FEASIBILITY_NOTE.md": "71a996f23975b0addb2f95c03255792c65771e7efb6397230136edc29b90b6d4",
+    "YAX_V51_G_STORY_DECISION.md": "38a982faf457c4c20e44192c7dfdd7cfbba940f6197dd2aee01ac0f5a2eb953d",
+    "YAX_MANUSCRIPT_v5_1_INTERPRETATION_AUDIT.md": "d9d34367f74f22e5ae3ce2bd8a14cb95f1d9673dd92ed5962cbca901825497ce"
+  },
+  "code_hashes_sha256": {
+    "run_v51_interpretation_audit.py": "39a67997706a824e1bd5947e51967e23ffbcf7d9e99d6b547630e2c5b99a42ee",
+    "v51_interpretation_core.py": "ee0cc559934f8239eae92847715d86be2f361262aca6d4bf4020c1a990b569b1",
+    "test_v51_interpretation_audit.py": "b7337acefb6de3f3cd7b801364bc9dd5a30717091b21b3a6214d0a0270329faa",
+    "YAX_V51_TREATMENT_DIAGNOSTICS_DETAIL.json": "ef76ae5b0fdd7857c2c13b13a6bba5171a59fbfe3949b65618d81e4a1f25103f"
+  },
+  "tests_before_receipt_seal": {
+    "targeted_v51_local": "23 passed",
+    "all_yax_local": "187 passed",
+    "full_local": "674 passed, 3 skipped, 2 environment-only failures because GNU timeout is absent on macOS",
+    "clean_scc": "PENDING_SCC_RECONNECTION"
+  },
+  "remote": {
+    "name": "origin",
+    "branch": "task/yax-v51-interpretation-audit-20260903",
+    "verified_content_commit": "7e2ed805b4fa83bed4835852a0b22b1e2c9bfd6a"
+  },
+  "stop_rule": "Interpretation audit complete. Do not use it to justify another empirical round. The empirical YAX program remains closed."
+}
