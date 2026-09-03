@@ -1,0 +1,29 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 V5.1 CLOSED REFEREE REPAIR",
+  "architectures": [
+    "aioe_admin_equal",
+    "aioe_ability_direct",
+    "aioe_oews2018_source_weighted",
+    "dv_rating_alpha",
+    "dv_rating_beta",
+    "dv_rating_gamma"
+  ],
+  "categories": [
+    -1,
+    0,
+    1
+  ],
+  "fleiss": {
+    "official_LNKFW1MWT_descriptive_weighted_analogue": {
+      "expected_pair_agreement": 0.49358968025488054,
+      "fleiss_kappa": 0.5024864358661807,
+      "observed_pair_agreement": 0.7480539969094586
+    },
+    "unweighted_standard_Fleiss": {
+      "expected_pair_agreement": 0.49366204373752076,
+      "fleiss_kappa": 0.500739640551384,
+      "observed_pair_agreement": 0.747205529953917
+    }
+  },
+  "switches": 108500
+}
