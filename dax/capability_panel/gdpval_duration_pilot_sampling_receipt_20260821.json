@@ -1,0 +1,50 @@
+{
+  "annotator_PII_committed": false,
+  "complexity_proxy": "sum of within-universe rank percentiles for prompt words, rubric items, reference-file count, and deliverable-file count; terciles assigned before annotation",
+  "counts_by_anticipated_duration_band": {
+    "anticipated_long_proxy": 14,
+    "anticipated_medium_proxy": 13,
+    "anticipated_short_proxy": 13
+  },
+  "counts_by_family": {
+    "Finance and Insurance": 4,
+    "Government": 5,
+    "Health Care and Social Assistance": 4,
+    "Information": 5,
+    "Manufacturing": 4,
+    "Professional, Scientific, and Technical Services": 5,
+    "Real Estate and Rental and Leasing": 4,
+    "Retail Trade": 4,
+    "Wholesale Trade": 5
+  },
+  "counts_by_task_format": {
+    "code_data": 1,
+    "document": 8,
+    "media_design": 1,
+    "mixed": 6,
+    "other_file": 2,
+    "presentation": 7,
+    "spreadsheet_tabular": 8,
+    "text_or_no_file": 7
+  },
+  "human_responses_collected": 0,
+  "outcomes_opened": false,
+  "pilot_metrics": "NOT_EVALUABLE_NO_HUMAN_RESPONSES",
+  "pilot_tasks": 40,
+  "private_artifact_hashes": {
+    "gdpval_duration_pilot_40.csv": "05c2f8a01fc8a0254c1e014a6edb950617bcd28123c39622f76526ec29a0aaed",
+    "gdpval_duration_pilot_packets.jsonl": "d3b2d14411a6e0b72fd04fd425af07e1f88b3dfa6e87e7735f298e50a258629c",
+    "gdpval_duration_production_reserve_180.csv": "d75fac421156cf8739316a4a57bf4fc2127f44ec3bed593872947834499f8e6e",
+    "qualified_human_roster_template.csv": "785951462abce2e6ab88c0e723f5b05927263b816903c43c81dc9e517e9990f3"
+  },
+  "private_manifest_sha256": "14b6ee9d818c085dc40d7fb841561468a2f074132ea8eff58e72bb43675b2813",
+  "production_reserve_tasks": 180,
+  "seed": "DAX-TD-PILOT40-20260821-BOUNCE-AMENDMENT",
+  "selection_algorithm": "greedy_balance_new_occupation_then_least_family_duration_proxy_format_joint_stratum_then_SHA256",
+  "status": "PILOT_40_FROZEN_NO_HUMAN_RESPONSES",
+  "task_family_definition": "public GDPval sector",
+  "task_ids_committed": false,
+  "task_text_committed": false,
+  "unique_occupations": 40,
+  "universe_tasks": 220
+}

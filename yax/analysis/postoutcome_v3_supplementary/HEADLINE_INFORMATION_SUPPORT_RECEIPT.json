@@ -1,0 +1,28 @@
+{
+  "analysis_id": "S1",
+  "analysis_status": "POST-OUTCOME SUPPLEMENTARY ANALYSIS \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "bridges": 4,
+  "declaration_commit": "e863122f93a4a2007d85ed8c6a3cfc1abde27d00",
+  "formula": {
+    "cell_weight": "N_i * p_hat_i * (1-p_hat_i)",
+    "effective_support": "1/sum_o(h_o^2)",
+    "occupation_information": "sum_i_in_o W_i*z_i^2",
+    "target_partialling": "absorbed Q5xPost residualized on all other absorbed slope columns under fitted information weights"
+  },
+  "generated_at_utc": "2026-08-30T11:17:15.890516+00:00",
+  "inputs": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "interpretation": "conditional expected-information support for Q5 relative to Q1; not leverage, influence, or coefficient decomposition",
+  "models": 12,
+  "outputs": {
+    "CONTINUOUS_VS_HEADLINE_SUPPORT.csv": "8b34764c528a3bf0b600d7ec0113fd3884de8566e2ab2a2fe108a4c4997cf43d",
+    "HEADLINE_INFORMATION_SUPPORT_BY_OCCUPATION.csv": "3812fe1d7f0061b60ccc6eee074a20af3c7eea03e1dc9e4c08154012524197b1",
+    "HEADLINE_INFORMATION_SUPPORT_SUMMARY.csv": "0afb651d5652877ba51201dcae94b12834eee323361dcfe3815d04c5e3c76f3c"
+  }
+}

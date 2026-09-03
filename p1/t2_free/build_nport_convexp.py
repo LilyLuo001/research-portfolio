@@ -37,6 +37,15 @@ Run:
   python p1/t2_free/build_nport_convexp.py
 Then:
   python ops/runner/contracts.py conv_exposure_free p1/conv_exposure_free.parquet
+
+Keyed on the public CUSIP (there is no free CRSP permno); output conforms to
+ops/contracts/conv_exposure_free.yaml, and the cusip<->ticker<->cik crosswalk
+shipped alongside lets a later CRSP merge recover permno without renaming a
+column.
+
+Inputs already in repo: p1/events_merged.csv, p1/t2_wrds/waves.csv,
+p1/t1_arb/id_meta.json (trust CIK per accession). Runs on the BOX — it needs
+outbound HTTPS to SEC/OpenFIGI.
 """
 import csv
 import json
@@ -51,13 +60,6 @@ from datetime import datetime
 
 import requests
 
-from sec_http import http_get   # shared transport: SEC needs urllib+certifi here
-
-try:
-    import pandas as pd
-except ImportError:
-    print("NEED pandas+pyarrow: pip install pandas pyarrow requests")
-    raise
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = ROOT / "p1" / "t2_free"
@@ -68,8 +70,17 @@ OUT = ROOT / "p1" / "conv_exposure_free.parquet"
 DIAG = HERE / "diagnostics.md"
 NH_FUNDS = HERE / "NEED_HUMAN_funds.csv"
 NH_STOCKS = HERE / "NEED_HUMAN_stocks.csv"
+# Sidecar: every DROPPED (cusip, wave) cell with the quantities the drop path
+# used to throw away. A dropped cell is a missing DENOMINATOR, never a missing
+# holding — shares_held/valUSD are known at drop time. Retaining them is what
+# lets recover_denominators.py --online recompute ConvExp on a recovered
+# denominator (and lets the audit value-weight its coverage).
+DROPPED_CELLS = HERE / "dropped_cells_shares_held.csv"
+DROPPED_SIDECAR = HERE / "dropped_cells_shares_held.csv"
 
+SEC_UA = os.environ.get("SEC_UA", "").strip()
 OPENFIGI_KEY = os.environ.get("OPENFIGI_KEY", "").strip()
+SEC_SLEEP = 0.15          # be polite; SEC ceiling is 10 req/s
 FIGI_SLEEP = 0.30
 MAX_NPORT_PROBE = 8       # candidates to open when hunting the right series
 # A giant multi-series trust (DFA CIK 355437) files ~106 per-series NPORT-P in
@@ -82,17 +93,68 @@ SERIES_MATCH_MIN = 0.34   # token-overlap threshold for fuzzy series match
 SERIES_EXACT = 0.999      # normalized-equal series name -> stop hunting
 NPORT = "NPORT-P"
 
-for d in (HERE, CACHE, CACHE / "sub", CACHE / "nport", CACHE / "xbrl",
-          CACHE / "figi", CACHE / "price", CACHE / "fts"):
-    d.mkdir(parents=True, exist_ok=True)
+LOGFILE = HERE / "build_nport_convexp.log"
+CACHE_DIRS = (HERE, CACHE, CACHE / "sub", CACHE / "nport", CACHE / "xbrl",
+              CACHE / "figi", CACHE / "price", CACHE / "fts")
 
 log = logging.getLogger("t2free")
+# The run log is an audit input (the coverage audit parses CONVEXP_GT1 lines out
+# of it), and FileHandler(mode="w") truncates on import — so tests and any other
+# importer redirect it with T2FREE_LOG instead of destroying the committed run.
+LOGFILE = pathlib.Path(os.environ.get("T2FREE_LOG")
+                       or (HERE / "build_nport_convexp.log"))
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
     handlers=[logging.StreamHandler(sys.stdout),
-              logging.FileHandler(HERE / "build_nport_convexp.log", mode="w")])
+              logging.FileHandler(LOGFILE, mode="w")])
 
-SESS = requests.Session()          # OpenFIGI only; SEC goes through sec_http
+
+def _setup_run():
+    """Create cache dirs and attach the run log. Called from main(), NOT at
+    import: the FileHandler opens build_nport_convexp.log in mode="w", and that
+    log is a committed provenance artifact (recover_denominators.py parses the
+    CONVEXP_GT1 lines out of it for real shares_held). Importing this module —
+    from a test, a REPL, or another script — must never truncate it."""
+    for d in CACHE_DIRS:
+        d.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout),
+                  logging.FileHandler(LOGFILE, mode="w")])
+
+SESS = requests.Session()
+
+
+# --------------------------------------------------------------------------- #
+# cached HTTP                                                                  #
+# --------------------------------------------------------------------------- #
+def _headers(host):
+    # SEC hosts demand a descriptive User-Agent or they 403.
+    ua = SEC_UA or "research-portfolio P1-T2-free (set SEC_UA env)"
+    return {"User-Agent": ua, "Accept-Encoding": "gzip, deflate"}
+
+
+def http_get(url, cache_file, is_json=True, host="sec"):
+    """GET with immutable on-disk cache. Returns text (or None on failure)."""
+    if cache_file.exists():
+        txt = cache_file.read_text(encoding="utf-8", errors="ignore")
+        return txt if txt and not txt.startswith("__ERR__") else None
+    for attempt in range(3):
+        try:
+            r = SESS.get(url, headers=_headers(host), timeout=45)
+            time.sleep(SEC_SLEEP)
+            if r.status_code == 200:
+                cache_file.write_text(r.text, encoding="utf-8")
+                return r.text
+            log.warning("HTTP %s on %s (attempt %d)", r.status_code, url, attempt + 1)
+            if r.status_code in (403, 404):
+                break
+            time.sleep(1.0 + attempt)
+        except requests.RequestException as e:
+            log.warning("GET error %s on %s (attempt %d)", e, url, attempt + 1)
+            time.sleep(1.0 + attempt)
+    cache_file.write_text("__ERR__", encoding="utf-8")
+    return None
 
 
 def _lname(tag):
@@ -283,11 +345,21 @@ def parse_nport(cik, filing):
     gen = _find(root, "genInfo")
     series_name = ""
     series_id = ""
+    rep_pd_date = ""
+    rep_pd_end = ""
     if gen is not None:
         sn = _find(gen, "seriesName")
         si = _find(gen, "seriesId")
         series_name = (sn.text or "").strip() if sn is not None else ""
         series_id = (si.text or "").strip() if si is not None else ""
+        # Item A.2. repPdEnd is the END of the reporting period; repPdDate is the
+        # date AS OF WHICH the information is reported, and the holdings below are
+        # that date's positions. Both are kept because they differ for the first
+        # two months of a quarter, and only repPdDate dates the share counts.
+        rd = _find(gen, "repPdDate")
+        re_ = _find(gen, "repPdEnd")
+        rep_pd_date = (rd.text or "").strip() if rd is not None else ""
+        rep_pd_end = (re_.text or "").strip() if re_ is not None else ""
     holdings = []
     for sec in _findall_local(root, "invstOrSec"):
         def g(name):
@@ -325,7 +397,37 @@ def parse_nport(cik, filing):
                          "name": g("name") or g("title"), "shares": shares,
                          "valUSD": val, "asset_cat": asset_cat})
     return {"accession": acc, "filed": filing["filed"], "series_name": series_name,
-            "series_id": series_id, "holdings": holdings}
+            "series_id": series_id, "report_date": rep_pd_date,
+            "rep_pd_end": rep_pd_end, "holdings": holdings}
+
+
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+class MissingAsOfDate(ValueError):
+    """Raised when an N-PORT carries no usable holdings as-of date."""
+
+
+def holdings_asof(parsed):
+    """The date the share counts in `parsed` are AS OF.
+
+    This is genInfo/repPdDate, NOT `filed`. An N-PORT is filed up to 60 days
+    after the period it describes, so `filed` dates the paperwork and repPdDate
+    dates the positions. Every join that touches the share counts — the CRSP
+    CFACSHR corporate-action factor above all — must use this value: joining a
+    March 31 share count to a May 30 split factor does not remove a corporate
+    action, it inserts one, and neither number looks wrong afterwards.
+
+    Refuses rather than falling back to `filed` (meta-rule 4). A filing with no
+    repPdDate is a NEED_HUMAN for that fund, not a fund silently dated wrong.
+    """
+    d = (parsed.get("report_date") or "").strip()
+    if _ISO_DATE.match(d):
+        return d
+    raise MissingAsOfDate(
+        f"accession {parsed.get('accession')} has no usable genInfo/repPdDate "
+        f"(got {d!r}). Do NOT substitute filed={parsed.get('filed')!r}: it dates "
+        "the filing, not the holdings.")
 
 
 def _best_nport_in_cik(cik, fund_name, eff_date):
@@ -498,7 +600,111 @@ def shares_outstanding(stock_cik, on_date):
 # --------------------------------------------------------------------------- #
 # main                                                                         #
 # --------------------------------------------------------------------------- #
+def _dropped(agg_cell, cusip, ticker, wave_id, eff, reason,
+             shares_out_bad=None, shares_out_date=""):
+    """One dropped (cusip, wave) cell, with the quantities the pipeline knows.
+
+    The 4 keys NEED_HUMAN_stocks.csv has always carried come first; the rest ride
+    along for the sidecar (_write_need_human drops them with extrasaction=ignore,
+    so that file's frozen schema is unchanged).
+    """
+    return {"cusip": cusip, "ticker": ticker, "wave_id": wave_id, "reason": reason,
+            "effective_date": eff,
+            "shares_held": agg_cell["shares_held"],
+            "valusd": agg_cell["valusd"],
+            "n_funds": len(agg_cell["funds"]),
+            # only set on the conv_exp>1 path: the denominator we refused to use
+            "shares_out_bad": "" if shares_out_bad is None else shares_out_bad,
+            "shares_out_date": shares_out_date,
+            "source_accessions": ";".join(sorted(agg_cell["accs"]))}
+def _cell_rows(agg, tcik, so_lookup):
+    """Turn aggregated (cusip, wave) cells into ConvExp rows + drop records.
+
+    Pure given `so_lookup(stock_cik, effective_date) -> (shares_out, as_of)`, so
+    the whole drop taxonomy is testable without EDGAR (see p1/tests/).
+
+    Every drop record carries the cell's shares_held and val_usd. Those are the
+    numbers the pipeline used to throw away: the coverage audit could not produce
+    a value-weighted coverage figure, and recover_denominators.py could not
+    recompute ConvExp for a recovered denominator, precisely because a dropped
+    cell kept only (cusip, ticker, wave_id, reason). Keeping them costs nothing
+    — the holding was already parsed — and it is NOT an imputation: a dropped
+    cell still emits no ConvExp, it just records the numerator it had.
+    """
+    rows, nh_stocks = [], []
+    for (cusip, wid), a in sorted(agg.items()):
+        ticker = a["ticker"]
+        eff = a["effective_date"]
+
+        def drop(reason):
+            nh_stocks.append({
+                "cusip": cusip, "ticker": ticker, "wave_id": wid,
+                "reason": reason, "effective_date": eff,
+                "shares_held": a["shares_held"], "val_usd": a["valusd"],
+                "n_funds": len(a["funds"]),
+                "source_accessions": ";".join(sorted(a["accs"]))})
+
+        asof = {d for d in (a.get("asof") or set()) if d}
+        if not asof:
+            # Undated share counts cannot be corporate-action adjusted, and the
+            # filing date is not a substitute (see holdings_asof).
+            drop("no_holdings_asof")
+            continue
+
+        stock_cik = tcik.get(ticker.upper()) if ticker else None
+        if not stock_cik:
+            log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
+            drop("no_ticker" if not ticker else "ticker_not_in_sec_map")
+            continue
+        shares_out, so_end = so_lookup(stock_cik, eff)
+        if not shares_out or shares_out <= 0:
+            log.warning("NO_SHARES_OUT cusip=%s ticker=%s cik=%s wave=%s",
+                        cusip, ticker, stock_cik, wid)
+            drop("no_xbrl_shares_outstanding")
+            continue
+        conv_exp = a["shares_held"] / shares_out
+        if conv_exp > 1.0:
+            log.info("CONVEXP_GT1 cusip=%s ticker=%s wave=%s exp=%.3f "
+                     "(shares_held=%.0f > shares_out=%.0f as of %s) -> NEED_HUMAN",
+                     cusip, ticker, wid, conv_exp, a["shares_held"], shares_out, so_end)
+            drop(f"conv_exp>1 ({conv_exp:.3f}); shares_out date {so_end}")
+            continue
+        # implied price from the fund's own N-PORT valuation (valUSD/shares) —
+        # a real market price near the report date, no external feed needed.
+        implied_px = (a["valusd"] / a["shares_held"]) if a["shares_held"] else None
+        mcap = implied_px * shares_out if implied_px else None
+        rows.append({"cusip": cusip, "ticker": ticker, "stock_cik": stock_cik,
+                     "permno": "", "wave_id": wid, "effective_date": eff,
+                     "conv_exp": conv_exp, "n_funds": len(a["funds"]),
+                     "mcap_decile": None, "_mcap": mcap,
+                     # NULL, never aliased to conv_exp (v2.1, plan §6.1.1).
+                     # This field means TOTAL pre-conversion ETF ownership and
+                     # needs a 13F/ETF-holdings join that has no verified source
+                     # yet. It used to be filled with conv_exp — the converting
+                     # funds' ownership only — under a name that reads like the
+                     # GNZ control variable. Copying one into the other looks
+                     # like data and would silently misspecify any regression
+                     # that used it as an ownership control. holdings_pipeline.py
+                     # (the WRDS twin) already writes None here; this is the free
+                     # path being brought into line with it.
+                     "pre_etf_ownership": None,
+                     # The date the share counts are AS OF — the only correct
+                     # join key for a CFACSHR-style factor (v2.1d). min/max are
+                     # both emitted because a cell can pool two funds whose last
+                     # pre-conversion N-PORTs are different months; when they
+                     # differ, a single-date factor join is WRONG for one of the
+                     # funds and the shares must be adjusted before aggregation.
+                     "holdings_asof_min": min(asof),
+                     "holdings_asof_max": max(asof),
+                     "shares_held": a["shares_held"],
+                     "shares_outstanding": shares_out,
+                     "val_usd": a["valusd"],
+                     "source_accessions": ";".join(sorted(a["accs"]))})
+    return rows, nh_stocks
+
+
 def main():
+    _setup_run()
     if not SEC_UA:
         log.warning("SEC_UA is empty — SEC endpoints may 403. "
                     'export SEC_UA="Your Name <email>"')
@@ -531,11 +737,19 @@ def main():
             log.warning("NO_HOLDINGS fund=%r url_cik=%s why=%s", fund, url_cik, why)
             nh_funds.append({**m, "reason": why or "no_holdings"})
             continue
-        log.info("FUND_OK %r cik=%s acc=%s holdings=%d (%s)", fund, cik,
-                 parsed["accession"], len(parsed["holdings"]), why)
+        try:
+            asof = holdings_asof(parsed)
+        except MissingAsOfDate as e:
+            # Refuse the fund rather than date its shares by the filing date.
+            log.warning("NO_ASOF fund=%r acc=%s: %s", fund, parsed["accession"], e)
+            nh_funds.append({**m, "reason": "no_repPdDate"})
+            continue
+        log.info("FUND_OK %r cik=%s acc=%s asof=%s holdings=%d (%s)", fund, cik,
+                 parsed["accession"], asof, len(parsed["holdings"]), why)
         fund_holdings.append({"wave_id": m["wave_id"], "effective_date": eff,
                               "fund_name": fund, "accession": parsed["accession"],
-                              "why": why, "holdings": parsed["holdings"]})
+                              "holdings_asof": asof, "why": why,
+                              "holdings": parsed["holdings"]})
 
     # ---- Step 2: resolve CUSIP -> ticker for holdings missing one --------- #
     need_figi = sorted({h["cusip"] for fh in fund_holdings for h in fh["holdings"]
@@ -571,7 +785,9 @@ def main():
                                      "effective_date": fh["effective_date"],
                                      "ticker": ticker, "name": h["name"],
                                      "shares_held": 0.0, "valusd": 0.0,
-                                     "funds": set(), "accs": set()})
+                                     "funds": set(), "accs": set(),
+                                     "asof": set()})
+            a["asof"].add(fh["holdings_asof"])
             a["shares_held"] += h["shares"]
             a["valusd"] += h.get("valUSD", 0.0)
             a["funds"].add(fh["fund_name"])
@@ -582,49 +798,25 @@ def main():
              len(agg), len(fund_holdings))
 
     # ---- Step 4: ticker -> stock CIK -> shares outstanding ---------------- #
-    nh_stocks = []
-    rows = []
     # cache shares_out per (stock_cik, effective_date) within the run
     so_cache = {}
-    for (cusip, wid), a in sorted(agg.items()):
-        ticker = a["ticker"]
-        eff = a["effective_date"]
-        stock_cik = tcik.get(ticker.upper()) if ticker else None
-        if not stock_cik:
-            log.warning("NO_STOCK_CIK cusip=%s ticker=%r wave=%s", cusip, ticker, wid)
-            nh_stocks.append({"cusip": cusip, "ticker": ticker, "wave_id": wid,
-                              "reason": "no_ticker" if not ticker else "ticker_not_in_sec_map"})
-            continue
+    # NOTE: an inline copy of the per-cell loop used to sit here, appending to
+    # `rows` / `nh_stocks`. It was dead in the worst way: the tuple-assignment
+    # `rows, nh_stocks = _cell_rows(...)` below makes both names function-local
+    # for the WHOLE of main(), so those earlier appends raised UnboundLocalError
+    # on the first aggregated cell — after every EDGAR fetch had already been
+    # paid for. No test caught it because no test calls main() (it needs the
+    # network); the tests exercise _cell_rows directly. Removed 2026-08-27, with
+    # an AST scope lint (p1/tests/test_no_use_before_assignment.py) so the class
+    # of bug cannot come back silently.
+
+    def so_lookup(stock_cik, eff):
         ck = (stock_cik, eff)
         if ck not in so_cache:
             so_cache[ck] = shares_outstanding(stock_cik, eff)
-        shares_out, so_end = so_cache[ck]
-        if not shares_out or shares_out <= 0:
-            log.warning("NO_SHARES_OUT cusip=%s ticker=%s cik=%s wave=%s",
-                        cusip, ticker, stock_cik, wid)
-            nh_stocks.append({"cusip": cusip, "ticker": ticker, "wave_id": wid,
-                              "reason": "no_xbrl_shares_outstanding"})
-            continue
-        conv_exp = a["shares_held"] / shares_out
-        if conv_exp > 1.0:
-            log.info("CONVEXP_GT1 cusip=%s ticker=%s wave=%s exp=%.3f "
-                     "(shares_held=%.0f > shares_out=%.0f as of %s) -> NEED_HUMAN",
-                     cusip, ticker, wid, conv_exp, a["shares_held"], shares_out, so_end)
-            nh_stocks.append({"cusip": cusip, "ticker": ticker, "wave_id": wid,
-                              "reason": f"conv_exp>1 ({conv_exp:.3f}); shares_out date {so_end}"})
-            continue
-        # implied price from the fund's own N-PORT valuation (valUSD/shares) —
-        # a real market price near the report date, no external feed needed.
-        implied_px = (a["valusd"] / a["shares_held"]) if a["shares_held"] else None
-        mcap = implied_px * shares_out if implied_px else None
-        rows.append({"cusip": cusip, "ticker": ticker, "stock_cik": stock_cik,
-                     "permno": "", "wave_id": wid, "effective_date": eff,
-                     "conv_exp": conv_exp, "n_funds": len(a["funds"]),
-                     "mcap_decile": None, "_mcap": mcap,
-                     "pre_etf_ownership": conv_exp,  # converting-fund ownership
-                     "shares_held": a["shares_held"],
-                     "shares_outstanding": shares_out,
-                     "source_accessions": ";".join(sorted(a["accs"]))})
+        return so_cache[ck]
+
+    rows, nh_stocks = _cell_rows(agg, tcik, so_lookup)
 
     if not rows:
         log.error("no ConvExp rows produced — see NEED_HUMAN files and log")
@@ -671,11 +863,53 @@ def _write_need_human(nh_funds, nh_stocks):
             w.writerows(nh_funds)
         log.info("NEED_HUMAN funds -> %s (%d)", NH_FUNDS, len(nh_funds))
     if nh_stocks:
+        # frozen 4-col schema — the coverage audit and recover_denominators.py
+        # both read this file; extrasaction keeps the new sidecar fields out.
         with open(NH_STOCKS, "w", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=["cusip", "ticker", "wave_id", "reason"])
+            w = csv.DictWriter(f, fieldnames=["cusip", "ticker", "wave_id", "reason"],
+                               extrasaction="ignore", lineterminator="\n")
             w.writeheader()
             w.writerows(nh_stocks)
         log.info("NEED_HUMAN stocks -> %s (%d)", NH_STOCKS, len(nh_stocks))
+        _write_dropped_cells(nh_stocks)
+        _write_dropped_sidecar(nh_stocks)
+
+
+def _write_dropped_cells(nh_stocks):
+    """The shares_held/valUSD sidecar for dropped cells (memo items 2 + 4)."""
+    cols = ["cusip", "ticker", "wave_id", "effective_date", "reason",
+            "shares_held", "valusd", "n_funds", "shares_out_bad",
+            "shares_out_date", "source_accessions"]
+    with open(DROPPED_CELLS, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore",
+                           lineterminator="\n")
+        w.writeheader()
+        w.writerows(nh_stocks)
+    n_sh = sum(1 for r in nh_stocks if float(r.get("shares_held") or 0) > 0)
+    log.info("dropped-cell sidecar -> %s (%d cells, %d with shares_held>0)",
+             DROPPED_CELLS, len(nh_stocks), n_sh)
+
+
+def _write_dropped_sidecar(nh_stocks):
+    """Emit dropped_cells_shares_held.csv — the numerator every dropped cell had.
+
+    Two consumers, both blocked without it (coverage audit memo items 2 and 4):
+      * recover_denominators.py --shares-held: recompute ConvExp once a
+        denominator is recovered, and so PROVE the >=0.5% treated set is
+        unchanged rather than merely expecting it;
+      * value-weighted coverage, which needs val_usd on the dropped side.
+    Leading columns are cusip,wave_id,shares_held in that order because that is
+    the shape recover_denominators.py documents.
+    """
+    cols = ["cusip", "wave_id", "shares_held", "val_usd", "ticker", "reason",
+            "effective_date", "n_funds", "source_accessions"]
+    with open(DROPPED_SIDECAR, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
+        w.writeheader()
+        for r in nh_stocks:
+            w.writerow({c: r.get(c, "") for c in cols})
+    log.info("dropped-cell shares_held sidecar -> %s (%d)",
+             DROPPED_SIDECAR, len(nh_stocks))
 
 
 def _diagnostics(df, fund_holdings, nh_funds, nh_stocks):
@@ -715,7 +949,6 @@ def _diagnostics(df, fund_holdings, nh_funds, nh_stocks):
               "", "These feed P1-T2-killswitch (Gate 2). Not a go/no-go until signed."]
     DIAG.write_text("\n".join(lines) + "\n")
     log.info("wrote diagnostics -> %s", DIAG)
-
 
 if __name__ == "__main__":
     main()

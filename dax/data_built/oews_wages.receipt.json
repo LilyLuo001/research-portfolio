@@ -1,0 +1,29 @@
+{
+  "annual_only_occupations": 59,
+  "crosswalk": "NOT PERFORMED. OEWS is SOC coded, O*NET is 8-digit O*NET-SOC; that mapping is a separate signed artifact and is not invented here.",
+  "hourly_only_occupations": 5,
+  "o_group_filter": "detailed",
+  "output_sha256": "3d6ef51fab6e0aeb20e1295f297acd63ff692ffa4178f7b84a3cd01851e2526a",
+  "receipt_version": "dax-w2-oews-wages-v1",
+  "rows_by_o_group": {
+    "broad": 455,
+    "detailed": 831,
+    "major": 22,
+    "minor": 94,
+    "total": 1
+  },
+  "rows_kept": 831,
+  "scope": "OEWS national cross-industry file only; no industry or state detail",
+  "source": {
+    "archive": "/usr3/graduate/qluo/dax-private/public_raw/oews_2021/oesm21nat.zip",
+    "archive_sha256": "83ad09f19e62104a39024d36ed67cae5c3f7d5b42ff165ca656e0e35241bcf31",
+    "pinned_sha256": "83ad09f19e62104a39024d36ed67cae5c3f7d5b42ff165ca656e0e35241bcf31",
+    "sheet": "national_M2021_dl",
+    "url": "https://www.bls.gov/oes/special.requests/oesm21nat.zip"
+  },
+  "suppression_counts": {
+    "not_released": 66
+  },
+  "suppression_rule": "'*' is not released and '#' is at or above the top code; both are preserved as null with a flag, never coerced to zero",
+  "vintage": 2021
+}

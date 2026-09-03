@@ -1,0 +1,102 @@
+{
+  "analysis_id": "S3",
+  "analysis_status": "POST-OUTCOME SUPPLEMENTARY ANALYSIS \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "available_identifier_categories": {
+    "final_weight": [
+      "WTFINL"
+    ],
+    "household_identifiers": [
+      "CPSID",
+      "SERIAL"
+    ],
+    "person_panel_identifiers": [
+      "CPSIDP"
+    ],
+    "psu_identifiers": [],
+    "replicate_weights": [],
+    "rotation_identifiers": [
+      "MISH"
+    ],
+    "stratum_identifiers": []
+  },
+  "conclusion": "No design-consistent first-stage CPS survey resampling is implemented: the extract contains CPSID, SERIAL, CPSIDP, and MISH, but no public stratum/PSU variables or replicate weights. The available household, person-panel, and rotation identifiers can represent repeated-sample dependence, but cannot reconstruct the CPS multistage sample design or calibration-weight uncertainty.",
+  "confirmatory_inference_scope": "Occupation-cluster intervals condition on realized CPS weighted employment-stock cells; they do not separately propagate first-stage survey sampling, household rotation dependence, or calibration-weight uncertainty.",
+  "declaration_commit": "e863122f93a4a2007d85ed8c6a3cfc1abde27d00",
+  "design_consistent_resampling_feasible": false,
+  "extract_spec": {
+    "path": "dax/memo/power_calcs/ipums_ai_telework_extract_v1.json",
+    "sha256": "d8807c54c7f1fae875803d07522742c696185e935fb4e8f77d2b1775255bdbbb"
+  },
+  "generated_at_utc": "2026-08-30T11:23:31.762879+00:00",
+  "microdata_columns": [
+    "YEAR",
+    "SERIAL",
+    "MONTH",
+    "HWTFINL",
+    "CPSID",
+    "ASECFLAG",
+    "ASECWTH",
+    "MISH",
+    "STATEFIP",
+    "PERNUM",
+    "WTFINL",
+    "CPSIDP",
+    "CPSIDV",
+    "ASECWT",
+    "AGE",
+    "SEX",
+    "RACE",
+    "HISPAN",
+    "EMPSTAT",
+    "LABFORCE",
+    "OCC",
+    "OCC2010",
+    "OCC1990",
+    "IND1990",
+    "CLASSWKR",
+    "UHRSWORKT",
+    "AHRSWORKT",
+    "DURUNEMP",
+    "WHYUNEMP",
+    "WKSTAT",
+    "EDUC",
+    "SCHLCOLL",
+    "EARNWT",
+    "HOURWAGE",
+    "PAIDHOUR",
+    "UNION",
+    "EARNWEEK",
+    "TELWRKPAY",
+    "TELWRKHR"
+  ],
+  "microdata_header_sha256": "2efc117536f0abc616faba3acbb2be72dfb8ec42f7360e8be00e30d280a6299b",
+  "resampling_executed": false,
+  "spec_variables": [
+    "CPSIDP",
+    "MISH",
+    "YEAR",
+    "MONTH",
+    "AGE",
+    "SEX",
+    "RACE",
+    "HISPAN",
+    "EDUC",
+    "EMPSTAT",
+    "LABFORCE",
+    "CLASSWKR",
+    "OCC2010",
+    "IND1990",
+    "UHRSWORKT",
+    "AHRSWORKT",
+    "DURUNEMP",
+    "WHYUNEMP",
+    "EARNWEEK",
+    "HOURWAGE",
+    "PAIDHOUR",
+    "UNION",
+    "TELWRKHR",
+    "TELWRKPAY",
+    "WTFINL",
+    "EARNWT"
+  ]
+}

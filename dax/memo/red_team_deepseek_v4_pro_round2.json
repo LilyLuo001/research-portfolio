@@ -1,0 +1,236 @@
+{
+  "status": "INDEPENDENT_CROSS_VENDOR_RED_TEAM",
+  "generated_at_utc": "2026-08-06T07:37:10.128811+00:00",
+  "reviewer_vendor": "DeepSeek",
+  "model": "deepseek-v4-pro",
+  "prompt_sha256": "ebe73a48b1fb41e3ebb2b89b6cf2b62c0dd7d6e21447829f8d7194a2c040ebde",
+  "inputs": {
+    "dax/memo/design_memo_v1.md": "26cd38a7e5af362f2165f6db0339e8c266bc6176232a158c917a847ecd503140",
+    "dax/memo/PI_DECISIONS_OPEN.md": "7a07d1f76941cb1ee91d35641da1901592abee0102f604e487c4186f94561112",
+    "dax/memo/event_registry_v1.csv": "1b02038991d988ca65b74ad0af27d4c58844d1e588ff916b5ca3fd75f4e92a7e",
+    "dax/memo/event_table_shell_v1.csv": "03be8e7fd7a41f2c6d5ea06ac602fa1775d1f128594eb41aabc4a81f64293c13",
+    "dax/memo/power_calcs/README.md": "3a9fc2ed7d53cf3a6a8678682d1c239cfbc2a0d502e3ae1646172983a9f24d4c",
+    "dax/memo/power_calcs/ipums_preperiod_extract_receipt.json": "1adc4cd39063a6f092b67c15aa6ec246968f3e5576d56d1a1fc1286ba241206e",
+    "dax/memo/power_calcs/synthetic/power_results.json": "46445daffd17195dcb2fa3b757814b27b6a1d18ecd989b16305c26ee6878769f"
+  },
+  "usage": {
+    "prompt_tokens": 13710,
+    "completion_tokens": 3041,
+    "total_tokens": 16751,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 13710
+  },
+  "finish_reason": "stop",
+  "review": {
+    "verdict": "REVISE",
+    "gate_recommendation": "BLOCK",
+    "major_issues": [
+      {
+        "id": "M1",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 3.2, PI-DECISION 2",
+        "claim": "The window trimming rule is mechanically underspecified for the compound-event case and creates an ambiguous adjacency set.",
+        "why_it_matters": "The rule states: 'If multiple eligible rows fall in the same calendar month, combine them into one compound labor-market event whose dose is the sum of their nonoverlapping task crossings.' It does not specify which event's date is used for distance calculations to adjacent events, nor how the 'previous eligible event' and 'next eligible event' are defined when the compound event itself contains multiple original dates. This ambiguity makes the window construction non-reproducible and could lead to ad-hoc trimming decisions after outcomes are seen.",
+        "required_change": "Define a deterministic rule for the effective date of a compound event (e.g., the earliest API-effective date among its components, or the calendar month itself) and clarify whether the component events are removed from the adjacency set for other events' window calculations. Provide a worked example with at least two compound events."
+      },
+      {
+        "id": "M2",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 7, PI-DECISION 11",
+        "claim": "The power standard is defined only for the employment outcome, but the primary family includes both employment and unconditional hours, and the hours MDE is not benchmarked.",
+        "why_it_matters": "PI-DECISION 10 designates two primary outcomes with family-wise error control. PI-DECISION 11 sets an adequacy threshold only for the employment MDE. The synthetic power results show an hours MDE of 0.238 (pooled), which is large relative to plausible effects, but the design contains no pre-registered criterion for declaring the hours analysis adequately powered. Without a benchmark, a null hours result could be dismissed as low power post hoc, undermining the pre-registration.",
+        "required_change": "Register a minimum detectable effect benchmark for unconditional weekly hours (e.g., a fraction of the baseline standard deviation or a policy-relevant hours decline) and apply the same adequacy logic as for employment. If the hours analysis is underpowered, pre-specify that it will be reported as informative only, with no confirmatory interpretation."
+      },
+      {
+        "id": "M3",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 10.1, PI-DECISION 15",
+        "claim": "The EIV acceptable bounds are defined on crossing-date shifts and dose-bin changes, but the primary estimand uses a continuous dose, and the attenuation bound of 0.80 is not linked to a specific regression specification.",
+        "why_it_matters": "The EIV simulation perturbs task success probabilities and rederives crossings. The bounds on date shifts and bin changes are diagnostics for the crossing indicator, not for the continuous DeltaDAX regressor used in the stacked event-study. Attenuation in a linear continuous-dose model depends on the variance and covariance structure of the measurement error in DeltaDAX, which is not directly constrained by the proposed bounds. A design could pass all four bounds while still suffering severe attenuation bias in the primary coefficient, making the 0.80 threshold uninformative.",
+        "required_change": "Specify exactly how the attenuation bound is computed from the EIV simulation: define the regression model, the coefficient of interest, and the formula for attenuation. Alternatively, replace the attenuation bound with a bound on the reliability ratio of DeltaDAX (e.g., Var(true dose)/Var(observed dose) >= 0.80) computed directly from the simulated measurement-error distribution."
+      },
+      {
+        "id": "M4",
+        "severity": "major",
+        "location": "dax/memo/design_memo_v1.md, Section 3.2, PI-DECISION 1 and Decision 3",
+        "claim": "The interaction between the event eligibility threshold (Decision 1) and the treated-bin threshold (Decision 3) creates a logical gap for events that pass Decision 1 but have zero occupations with DeltaDAX >= 0.01.",
+        "why_it_matters": "Decision 1 requires the median occupation to have a wage-bill dose of at least 0.01 for the event to be included in the primary stacked analysis. Decision 3 defines a treated occupation-event cell as DeltaDAX >= 0.01. It is possible for the median occupation to have a dose >= 0.01 (passing Decision 1) while no single occupation reaches the 0.01 threshold for the treated-bin summary (if the dose distribution is concentrated just above 0.01 at the median but no occupation crosses the discrete threshold). The memo does not specify how such an event is handled in the treated-bin summaries or whether it contributes to the continuous-dose estimation.",
+        "required_change": "Add a rule for events that pass Decision 1 but have zero treated cells under Decision 3: either exclude them from treated-bin summaries with a note, or lower the Decision-3 threshold to the minimum positive dose in the event. Clarify whether such events still enter the continuous-dose stacked regression."
+      }
+    ],
+    "minor_issues": [
+      {
+        "id": "m1",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 1.2",
+        "claim": "The event registry lists GPT4O_LAUNCH as 'relative_price_verified' but the price status field in the CSV is 'pending_w2' for all other events, creating an inconsistency in the verification taxonomy.",
+        "why_it_matters": "The registry validation script checks for 'verified' status; 'relative_price_verified' is not a documented category in the inclusion rules and may cause the validator to misclassify the event's price status.",
+        "required_change": "Either add 'relative_price_verified' as a recognized price-status category with defined implications for dose construction, or reclassify GPT4O_LAUNCH price status to a standard category and document how the 50% cost reduction is translated into an absolute price for the dose calculation."
+      },
+      {
+        "id": "m2",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 7",
+        "claim": "The reference occupation rule uses 'the most recent valid CPS occupation observed for the same CPSIDP strictly before the event month' but does not specify a maximum lookback window.",
+        "why_it_matters": "For individuals with long gaps in CPS participation, the reference occupation could be years old, increasing measurement error in dose assignment. Without a maximum lookback, the sample composition varies across events in ways that are not controlled.",
+        "required_change": "Specify a maximum lookback window (e.g., 12 or 24 months) and report the distribution of lookback durations. Consider a robustness check restricting to individuals observed within the maximum window."
+      },
+      {
+        "id": "m3",
+        "severity": "minor",
+        "location": "dax/memo/design_memo_v1.md, Section 8, PI-DECISION 13",
+        "claim": "The minimum estimability condition (d) requires 'no single event contributes more than 50% of the effective estimation weight,' but 'effective estimation weight' is not defined.",
+        "why_it_matters": "Without a definition, the condition is not mechanically checkable. Different weight definitions (e.g., sum of person weights, inverse-variance weights, leverage) could yield different pass/fail determinations.",
+        "required_change": "Define 'effective estimation weight' precisely, e.g., the sum of normalized person weights or the diagonal of the hat matrix, and provide the formula in the analysis code."
+      }
+    ],
+    "decision_checks": [
+      {
+        "decision": 1,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 2,
+        "implementable": false,
+        "problem": "The compound-event rule does not specify the effective date for distance calculations, making the window trimming algorithm ambiguous when multiple events share a calendar month.",
+        "required_change": "Specify the effective date for compound events and clarify adjacency-set construction."
+      },
+      {
+        "decision": 3,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 4,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 5,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 6,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 7,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 8,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 9,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 10,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 11,
+        "implementable": false,
+        "problem": "The power standard benchmarks only the employment MDE; no benchmark is registered for the co-primary hours outcome, leaving its adequacy unassessed.",
+        "required_change": "Register an MDE benchmark for unconditional weekly hours."
+      },
+      {
+        "decision": 12,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 13,
+        "implementable": false,
+        "problem": "Condition (d) uses 'effective estimation weight' without definition, making the check non-mechanical.",
+        "required_change": "Define effective estimation weight precisely."
+      },
+      {
+        "decision": 14,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 15,
+        "implementable": false,
+        "problem": "The attenuation bound is not linked to a specific regression model or coefficient, so it cannot be computed mechanically from the EIV simulation.",
+        "required_change": "Specify the regression model and coefficient for the attenuation calculation."
+      },
+      {
+        "decision": 16,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      },
+      {
+        "decision": 17,
+        "implementable": true,
+        "problem": "",
+        "required_change": ""
+      }
+    ],
+    "evidence_gap_checks": [
+      {
+        "item": "registry",
+        "satisfied": false,
+        "reason": "The event registry contains 4 eligible events, 16 candidates, and 4 candidates explicitly pending a second independent date locator. The memo states that candidate status must be resolved before Gate 1, but the registry is not yet frozen with all required two-source verifications. The price-history panel from W2 is also pending for most events."
+      },
+      {
+        "item": "empirical_power",
+        "satisfied": false,
+        "reason": "The power results file is explicitly labeled 'NOT_EVIDENCE_SYNTHETIC_SMOKE_TEST' and uses synthetic inputs. The memo requires W1 power simulation on pre-event CPS moments, but the actual IPUMS extract has been downloaded and not yet processed into the required preperiod_cells.csv. No empirical power results exist."
+      },
+      {
+        "item": "red_team",
+        "satisfied": false,
+        "reason": "The PI_DECISIONS_OPEN.md evidence checklist marks 'Independent cross-vendor red-team of the completed memo' as unchecked. No red-team report is included in the packet."
+      },
+      {
+        "item": "pi_pdf_review",
+        "satisfied": false,
+        "reason": "The evidence checklist marks 'Rendered PDF reviewed line by line by PI' as unchecked. The PI has approved the 17 decisions and 6 confirmations but has not reviewed the final rendered memo PDF."
+      }
+    ],
+    "outcome_seal_assessment": "The outcome data is declared SEALED until the signed tag v1.0-preregistered. The memo states that the analysis/outcomes/ guard remains fail-closed, and no outcome analysis runs before the signed tag. The seal appears procedurally intact, but the tag cannot be signed until the evidence gaps (registry completion, empirical power, red-team, PI PDF review) are closed. The seal integrity depends on these gates being enforced.",
+    "required_changes_before_gate": [
+      "Resolve the compound-event effective-date ambiguity in Decision 2 with a deterministic rule and worked example.",
+      "Register an MDE benchmark for unconditional weekly hours under Decision 11.",
+      "Define 'effective estimation weight' for Decision 13(d) with a mechanical formula.",
+      "Specify the regression model and coefficient for the EIV attenuation bound in Decision 15.",
+      "Add a rule for events that pass Decision 1 but have zero treated cells under Decision 3.",
+      "Complete the event registry with two-source verification for all candidates and the W2 price-history panel.",
+      "Run the empirical power simulation on the actual pre-event CPS extract and replace the synthetic smoke test.",
+      "Complete the independent cross-vendor red-team review and incorporate required changes.",
+      "Have the PI review the final rendered memo PDF line by line."
+    ],
+    "nonblocking_followups": [
+      "Standardize the price-verification taxonomy in the event registry (relative_price_verified vs. pending_w2).",
+      "Specify a maximum lookback window for the reference occupation assignment and report its distribution.",
+      "Provide a sensitivity analysis for the EIV bounds using alternative perturbation correlation structures.",
+      "Pre-register the exact formula for the minimum-distance delta calibration weights (inverse estimated variances) and the bootstrap resampling procedure.",
+      "Clarify whether the survive-all-three rule applies to the continuous-dose coefficient or also to the binned nonparametric estimates."
+    ]
+  }
+}

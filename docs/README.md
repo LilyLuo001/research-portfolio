@@ -14,12 +14,26 @@ the proposal is wrong — report the conflict, per each manual's C0/CONTEXT PACK
 
 ## P1 — fund conversions
 
-1. `基金转换实验_博士研究计划.md` — the proposal (single source of truth; the
-   CONTEXT PACK in the manual §3 declares it so).
-2. `Project_1.md` — execution manual v1.0: five meta-rules, CONTEXT PACK,
-   T0–T12 prompts, §5 contracts, §6 rhythm.
-3. `P1_修订补丁_v1_1.md` — patch: T0 moved to week 0, new T2a and T13, T5
-   Russell confound, §2 model remap. Overrides v1.0 where stated.
+> **P1 does NOT follow the "later overrides earlier" rule above.** Its patch
+> memos were **deleted** on 2026-09-03 (git history at `351d327` and earlier)
+> because agents were reading them and executing superseded rules. There is no
+> delta to reconstruct and nothing to diff. Read these two files and stop.
+
+1. `基金转换实验_博士研究计划.md` — **the plan. Single source of truth for all
+   research substance**, and already current: every amendment through 2026-09-03
+   is merged into the body, with no version history left in it. If something you read anywhere else contradicts it,
+   the plan wins and the conflict is a bug to report.
+2. `Project_1.md` — execution manual: the five meta-rules, the CONTEXT PACK,
+   the T0–T12 task prompts, §5 contracts, §6 rhythm. **Process only.** It was
+   written 2026-07-10 against the v1.0 research design, so where it touches
+   research substance — outcome variables, hypotheses, what T3/T5 estimate —
+   it is stale and the plan overrides it.
+
+Implementation detail lives in the repo, not in docs/:
+`p1/t3_spec/变量规格书.md` (the D-T3-xx decision table is the per-variable
+authority), `p1/t5_spec/估计蓝图.md`, `p1/NON_WRDS_BLOCKERS.md` (what is
+blocked and on whom), and the executable guards in `p1/pipeline/` +
+`p1/tests/test_spec_consistency.py`.
 
 ## E2 — RWA looping
 
@@ -49,6 +63,26 @@ modifications (T8a/T12/T13) and the Arch §4 model assignment.
    prompts, agent roster, schedule, risk controls.
 3. `DAX_Amendment_v1_1.md` — amendment: EIV workstream, δ calibration, W10a/b
    split, W0.5 feasibility gate, model remap. Overrides the plan where stated.
+
+## Refraction — macro-event standby chapter
+
+1. `MacroEvent_Chapter_Plan_v2_1_FINAL.md` — the plan (v2.1 final). Single
+   source of truth for research substance, same standing as P1's 研究计划 and
+   the DAX proposal; a prompt that conflicts with it is wrong.
+2. `Refraction_执行手册_v1_0.md` — execution manual: §0.3 C0-R context pack
+   (paste at the top of every REFR prompt), R0–R14 task prompts, §0.5 DAG,
+   §2 Meta continuity audit.
+3. `Refraction_Chapter_Plan_Amendment_v2_2.md` — amendment: sample scale
+   recomputed from the built P1 inputs, wave-concentration finding, input
+   contract corrections (`conv_exposure_free.parquet`, missing `permno`),
+   post-2025 wave filter. **Overrides the plan where stated**; every item
+   bearing on a pre-committed §9/§10 line is flagged `[PI-DECISION]` and
+   changes nothing until the owner rules.
+
+So: to brief a REFR task, take C0-R from the manual §0.3, the task prompt from
+the manual's R-block, then apply any v2.2 amendment item and the Arch §4 model
+assignment. Gate-0 thresholds always come from `refraction/frozen_config.yaml`,
+never from a document and never from the model.
 
 ## Portfolio runtime
 

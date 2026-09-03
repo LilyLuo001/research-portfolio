@@ -25,7 +25,75 @@ ops/l1/out/*
 # rule as L1 raw outputs) — git carries only the manifest of locators.
 p1/edgar_filings/*
 !p1/edgar_filings/manifest.csv
+# P1-T2 WRDS path: LICENSED DATA. Raw CRSP/Compustat/IBES pulls stay box-local —
+# a stricter version of the raw-filings rule above, because this is paid data
+# under a subscription agreement, not public filings. Git carries the derived
+# contract output (conv_exposure.parquet: ratios and counts) plus a manifest of
+# query locators (library.table, columns, filters, pull date), never rows.
+# Policy + what may be committed: p1/t2_wrds/README.md. Guarded by
+# p1/tests/test_wrds_data_policy.py, which fails CI if a raw pull is tracked.
+p1/t2_wrds/raw/
+p1/t2_wrds/cache/
+p1/t2_wrds/*.raw.csv
+p1/t2_wrds/*.raw.parquet
+
 # P1-T2 free path: immutable raw-HTTP cache (N-PORT XML, XBRL, FIGI, prices)
 # stays box-local, same rule as raw filings. The parquet + diagnostics + code
 # are tracked; the cache is not.
 p1/t2_free/cache/
+# transient stdout dumps from detached runs (the FileHandler log is tracked)
+p1/t2_free/*.out
+
+# W2 price harvester: local blobless mirror of the third-party price table
+dax/data_raw/_litellm_mirror/
+
+# W2 price harvester: cached archive snapshots (re-fetchable, not source of truth)
+dax/data_raw/_wayback_cache/
+
+# W2 crosswalk: cached agency source files (re-fetchable, checksummed in the receipt)
+dax/data_raw/_crosswalk_raw/
+
+# Mapping A: GDPval/O*NET ID-level outputs stay private until redistribution
+# rights are affirmatively documented. Git carries sanitized receipts only.
+dax/mapping/mapping_a_gdpval.csv
+dax/mapping/mapA_adjudication_queue.csv
+dax/mapping/mapA_occupation_coverage.csv
+
+# DAX W4 private capture state. Production paths belong outside the checkout;
+# these guards prevent an accidental in-repo runtime configuration from being
+# staged. The signed budget ceiling and sanitized aggregate receipts remain
+# trackable by design.
+dax/capability_panel/.env
+dax/capability_panel/private/
+dax/capability_panel/runtime/
+dax/capability_panel/*.fernet
+dax/capability_panel/*.sqlite*
+dax/capability_panel/*checkpoint*.jsonl
+dax/capability_panel/*private_panel*.csv
+dax/capability_panel/*private_panel*.parquet
+# P1 WRDS sprint: raw pulls are large and licensed, and discovered_schema.json is
+# one connected session's machine-read inventory — both are box artifacts, not
+# source. p1/wrds/pull_scope.json IS tracked: it is derived offline from
+# committed files and is what you hand to whoever books the account.
+p1/wrds/raw/*
+p1/wrds/discovered_schema.json
+# ...but the PROVENANCE sidecars are not licensed data and must reach the repo:
+# each carries the exact SQL, the row count and the code version behind one
+# landed parquet. Without them a pull has no locator, which is meta-rule 1's
+# whole requirement. Same pattern as ops/l1/out/*.void.json above. Note the
+# parent must be `raw/*`, not `raw/`: git does not reconsider files inside an
+# excluded DIRECTORY, so a negation under `raw/` would never fire.
+# (Restored 2026-08-28: these three lines were dropped by the main merge in
+# 23d61ed. p1/tests/test_wrds_data_policy.py is what caught it.)
+!p1/wrds/raw/*.lineage.json
+!p1/wrds/raw/mf_holdings__matched_fundnos.json
+# P1-T2 free path: sidecar produced at pipeline runtime — contains shares_held for
+# dropped cells. Created by build_nport_convexp.py, consumed by recover_denominators.py.
+# Not committed: it contains N-PORT data (which is licensed) and changes with each run.
+p1/t2_free/dropped_cells_shares_held.csv
+
+# IPUMS-CPS person-level panels stay box-local under the same rule as the
+# W5 analysis panel: redistribution terms forbid committing microdata.
+# Their receipts (counts, hashes, code mappings) are committed instead.
+dax/data_built/cps_preevent_power_panel.parquet
+dax/data_built/cps_extract.parquet

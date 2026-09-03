@@ -1,0 +1,173 @@
+{
+  "aggregate_maximum_100": {
+    "annotation_calls": {
+      "expected": 54090,
+      "lower": 49172,
+      "upper": 73758
+    },
+    "estimated_cost_usd": {
+      "expected": 14.89,
+      "lower_if_grants_cover_all_usage": 0.0,
+      "upper_no_cache_all_third_adjudication": 36.02
+    },
+    "pair_tasks": 24586
+  },
+  "aggregate_through_initial_60": {
+    "annotation_calls": {
+      "expected": 34730,
+      "lower": 31572,
+      "upper": 47358
+    },
+    "estimated_cost_usd": {
+      "expected": 9.55,
+      "lower_if_grants_cover_all_usage": 0.0,
+      "upper_no_cache_all_third_adjudication": 23.11
+    },
+    "pair_tasks": 15786
+  },
+  "budget_cap_includes": "maximum_100_source_scope upper token estimate plus approximately 60% headroom for provider tokenizer variance and retryable transport failures",
+  "generated_at_utc": "2026-08-21T13:39:02.239453+00:00",
+  "inference_calls_made": 0,
+  "locked_labels_opened": false,
+  "outcomes_opened": false,
+  "pricing_basis": {
+    "deepseek_v4_pro_USD_per_1M": {
+      "input_cache_miss": 0.435,
+      "output": 0.87
+    },
+    "gemini_2_5_flash_USD_per_1M": {
+      "input": 0.3,
+      "output_including_thinking": 2.5
+    },
+    "official_sources": {
+      "deepseek": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "gemini": "https://ai.google.dev/gemini-api/docs/pricing",
+      "qwen": "https://help.aliyun.com/en/model-studio/model-pricing"
+    },
+    "planning_conversion_CNY_per_USD": 7.0,
+    "qwen_plus_CNY_per_1M_under_128K": {
+      "input": 0.8,
+      "output_nonthinking": 2.0
+    },
+    "retrieved_at_utc_date": "2026-08-21"
+  },
+  "providers": {
+    "credential_values_exposed": false,
+    "incremental_cost_certified_zero": false,
+    "round_1": [
+      "deepseek/deepseek-v4-pro",
+      "alibaba/qwen-plus"
+    ],
+    "third_only": "google/gemini-2.5-flash",
+    "true_vendor_family_independence": true
+  },
+  "realized_spend_usd": 0.0,
+  "requested_budget_cap_usd": 60.0,
+  "scopes": {
+    "development_calibration": {
+      "annotation_calls": {
+        "expected": 4517,
+        "lower": 4106,
+        "round_1": 4106,
+        "third_expected": 411,
+        "third_upper": 2053,
+        "upper": 6159
+      },
+      "estimated_cost_usd": {
+        "expected": 1.22,
+        "lower_if_grants_cover_all_usage": 0.0,
+        "upper_no_cache_all_third_adjudication": 2.97
+      },
+      "input_token_planning_bounds_per_full_vendor_round": {
+        "expected": 1563969,
+        "lower": 1251176,
+        "upper": 2085292
+      },
+      "output_token_assumption_per_call": {
+        "expected": 80,
+        "lower": 20,
+        "upper": 160
+      },
+      "pair_tasks": 2053
+    },
+    "locked_test_sealed": {
+      "annotation_calls": {
+        "expected": 1173,
+        "lower": 1066,
+        "round_1": 1066,
+        "third_expected": 107,
+        "third_upper": 533,
+        "upper": 1599
+      },
+      "estimated_cost_usd": {
+        "expected": 0.31,
+        "lower_if_grants_cover_all_usage": 0.0,
+        "upper_no_cache_all_third_adjudication": 0.77
+      },
+      "input_token_planning_bounds_per_full_vendor_round": {
+        "expected": 400852,
+        "lower": 320681,
+        "upper": 534469
+      },
+      "output_token_assumption_per_call": {
+        "expected": 80,
+        "lower": 20,
+        "upper": 160
+      },
+      "pair_tasks": 533
+    },
+    "recall_initial_60": {
+      "annotation_calls": {
+        "expected": 29040,
+        "lower": 26400,
+        "round_1": 26400,
+        "third_expected": 2640,
+        "third_upper": 13200,
+        "upper": 39600
+      },
+      "estimated_cost_usd": {
+        "expected": 8.02,
+        "lower_if_grants_cover_all_usage": 0.0,
+        "upper_no_cache_all_third_adjudication": 19.37
+      },
+      "input_token_planning_bounds_per_full_vendor_round": {
+        "expected": 10290905,
+        "lower": 8232724,
+        "upper": 13721207
+      },
+      "output_token_assumption_per_call": {
+        "expected": 80,
+        "lower": 20,
+        "upper": 160
+      },
+      "pair_tasks": 13200
+    },
+    "recall_reserves_40": {
+      "annotation_calls": {
+        "expected": 19360,
+        "lower": 17600,
+        "round_1": 17600,
+        "third_expected": 1760,
+        "third_upper": 8800,
+        "upper": 26400
+      },
+      "estimated_cost_usd": {
+        "expected": 5.34,
+        "lower_if_grants_cover_all_usage": 0.0,
+        "upper_no_cache_all_third_adjudication": 12.91
+      },
+      "input_token_planning_bounds_per_full_vendor_round": {
+        "expected": 6854040,
+        "lower": 5483232,
+        "upper": 9138720
+      },
+      "output_token_assumption_per_call": {
+        "expected": 80,
+        "lower": 20,
+        "upper": 160
+      },
+      "pair_tasks": 8800
+    }
+  },
+  "status": "NEED_PI_BUDGET_AUTHORIZATION"
+}

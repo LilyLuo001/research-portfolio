@@ -1,0 +1,49 @@
+{
+  "generated": "2026-08-27T05:26:28.423006+00:00",
+  "note": "Derived from committed artifacts only \u2014 no WRDS access needed to compute this. Hand it to whoever books the account.",
+  "universe": {
+    "cusips_with_convexp": 2241,
+    "cusips_dropped_for_missing_denominator": 4635,
+    "cusips_total_to_map": 6747,
+    "comment": "dropped cells must be pulled too \u2014 they are missing a denominator, not a holding, and CRSP supplies shrout for the US names among them"
+  },
+  "waves": {
+    "n_waves": 96,
+    "first_effective_date": "2021-03-26",
+    "last_effective_date": "2026-11-20",
+    "first_announce_date": "2020-05-01",
+    "last_announce_date": "2026-07-08",
+    "future_dated_waves": [
+      "2026-09-18",
+      "2026-09-25",
+      "2026-10-16",
+      "2026-10-23",
+      "2026-11-06",
+      "2026-11-20"
+    ]
+  },
+  "windows": {
+    "anchor": "announcement date (t=0, plan \u00a76 threat T2) for the lower bound; effective date for the upper bound \u2014 whichever is more extreme",
+    "pre_trading_days": 250,
+    "post_trading_days": 120,
+    "daily_start": "2019-04-10",
+    "daily_end": "2026-08-27",
+    "daily_end_capped_at_today": true,
+    "monthly_start": "2019-04-10",
+    "monthly_end": "2026-08-27",
+    "fundamentals_start": "2016-04-10",
+    "fundamentals_end": "2026-08-27",
+    "fundamentals_lookback_years": 3
+  },
+  "convexp_stats": {
+    "rows": 6377,
+    "distinct_cusips": 2241,
+    "distinct_waves": 49
+  },
+  "sources": {
+    "conv_exposure_free.parquet": "p1/conv_exposure_free.parquet",
+    "NEED_HUMAN_stocks.csv": "p1/t2_free/NEED_HUMAN_stocks.csv",
+    "waves_members.csv": "p1/t2_wrds/waves_members.csv",
+    "events_merged.csv": "p1/events_merged.csv"
+  }
+}

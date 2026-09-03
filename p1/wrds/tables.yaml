@@ -1,0 +1,667 @@
+meta:
+  written_by: seat C, 2026-08-18
+  authority: 'Nothing in `candidates` is authoritative. `resolved` is authoritative
+    only after `pull.py discover` has run against a live connection and written p1/wrds/discovered_schema.json.
+    Editing `resolved` by hand is allowed ONLY for entries the resolver flagged NEED_HUMAN,
+    and only with the name copied from the WRDS web query tool.
+
+    '
+libraries:
+- crsp
+- crspq
+- comp
+- compa
+- ibes
+- taqmsec
+- wrdsapps
+pulls:
+  stock_names:
+    purpose: 'CUSIP <-> PERMNO history, so p1/t2_free/conv_exposure_free_crosswalk.csv
+      merges to CRSP and the free-path ConvExp gains a permno key.
+
+      '
+    serves:
+    - P1-T2-wrds
+    - P1-T5-main
+    tables:
+      stocknames:
+        want: security identifier history — permno, cusip, ticker, name, date range
+        candidates:
+        - crsp.stocknames
+        - crsp.dsenames
+        resolved: null
+    columns:
+      security_id:
+        want: CRSP permanent security number
+        candidates:
+        - permno
+        resolved: null
+      cusip:
+        want: CUSIP as carried by CRSP
+        candidates:
+        - ncusip
+        - cusip
+        resolved: null
+        decision_hint: 'crsp.stocknames carries BOTH ncusip and cusip, so the resolver
+          will report this ambiguous and refuse to pick. Pick `ncusip`: it is the
+          HISTORICAL cusip valid over [namedt, nameendt], which is what a point-in-time
+          N-PORT holding must match. `cusip` is the current-as-of-today value and
+          mismatches any security that changed identifiers — 84% of this panel is
+          deciles 1-5, exactly where identifier changes cluster. Not resolved here:
+          paste it from the WRDS web query tool, per meta-rule 1.
+
+          '
+      name_start:
+        want: first date this identifier record is valid
+        candidates:
+        - namedt
+        resolved: null
+      name_end:
+        want: last date this identifier record is valid
+        candidates:
+        - nameendt
+        resolved: null
+      ticker:
+        want: trading symbol on this identifier record — TAQ-IID is symbol-keyed,
+          so the spread pull cannot be scoped without it
+        candidates:
+        - ticker
+        resolved: null
+  mf_holdings:
+    purpose: 'Pre-conversion share holdings of each converting fund, to rebuild ConvExp
+      on CRSP identifiers (the permno-keyed twin of the free-path parquet).
+
+      '
+    serves:
+    - P1-T2-wrds
+    - refraction-R2
+    tables:
+      holdings:
+        want: fund-level security holdings, one row per (fund, report date, security)
+        candidates:
+        - crsp.holdings
+        resolved: null
+      fund_header:
+        want: mutual-fund identity — fund number, fund name, ticker
+        candidates:
+        - crsp.fund_hdr
+        - crsp.fund_names
+        resolved: null
+      portno_map:
+        want: crosswalk between CRSP MF portfolio number and fund number
+        candidates:
+        - crsp.portnomap
+        resolved: null
+    columns:
+      fund_id:
+        want: CRSP mutual-fund number
+        candidates:
+        - crsp_fundno
+        resolved: null
+      report_date:
+        want: holdings report date
+        candidates:
+        - report_dt
+        resolved: null
+      security_id:
+        want: stock identifier on the holdings row
+        candidates:
+        - permno
+        resolved: null
+      shares_held:
+        want: number of shares held
+        candidates:
+        - nbr_shares
+        resolved: null
+      fund_ticker:
+        want: mutual-fund ticker
+        candidates:
+        - ticker
+        resolved: null
+      fund_name:
+        want: mutual-fund name — the only usable join key back to events_merged.csv,
+          which carries a real ticker on almost none of its rows (8 distinct across
+          131 events)
+        candidates:
+        - fund_name
+        resolved: null
+    asserts:
+      fund_name_match: 'NEED_HUMAN after the fund_header pull lands: the converting
+        funds are selected by NORMALISED NAME match, and the match set is written
+        to raw/mf_holdings__matched_fundnos.json. Read it. A silent under-match drops
+        a treated fund from ConvExp entirely; the pull refuses on a zero match but
+        cannot detect a partial one.
+
+        '
+  msf:
+    purpose: ConvExp denominator on CRSP identifiers + market-cap deciles.
+    serves:
+    - P1-T2-wrds
+    tables:
+      monthly_stock:
+        want: monthly stock file — price, shares outstanding, return, by permno-month
+        candidates:
+        - crsp.msf
+        resolved: null
+    columns:
+      security_id:
+        want: permno
+        candidates:
+        - permno
+        resolved: null
+      date:
+        want: month-end date
+        candidates:
+        - date
+        resolved: null
+      price:
+        want: month-end price (may be negative when a bid/ask average)
+        candidates:
+        - prc
+        resolved: null
+      shares_out:
+        want: shares outstanding — CONFIRM THE UNITS
+        candidates:
+        - shrout
+        resolved: null
+      ret:
+        want: monthly return including distributions
+        candidates:
+        - ret
+        resolved: null
+      share_adj_factor:
+        want: 'cumulative factor to adjust SHARES (CFACSHR). Gate 0''s share-based
+          continuity is meaningless without it: a 2:1 split doubles raw N-PORT share
+          counts with zero trading and reads as the manager buying. NOTE the direction
+          — CRSP adjusted shares = raw * CFACSHR, while adjusted price = raw / CFACPR;
+          the two go opposite ways.'
+        candidates:
+        - cfacshr
+        resolved: null
+      price_adj_factor:
+        want: cumulative factor to adjust PRICE (CFACPR). Pulled alongside so the
+          opposite-direction convention can be checked against the data rather than
+          assumed.
+        candidates:
+        - cfacpr
+        resolved: null
+    asserts:
+      shares_out_units: 'NEED_HUMAN unless confirmed on the server: the repo''s existing
+        scaffold multiplies this by 1000 (i.e. assumes thousands). Confirm against
+        the WRDS variable documentation before any ConvExp is computed from it — a
+        1000x error here would not raise, it would just move every exposure.
+
+        '
+      cfacshr_direction: 'NEED_HUMAN until p1/tests/test_gate0_continuity.py::test_direction_against_real_crsp_corporate_actions
+        runs green on landed data. The multiply-vs-divide direction is externally
+        verified by the owner (2026-08-28: shares/volume use the cumulative share
+        factor MULTIPLICATIVELY) but still unverified against data in-container.
+        That test decides it from CRSP alone, by requiring SHROUT x CFACSHR to be
+        continuous across real corporate actions — which is why SHROUT must land in
+        the SAME pull as CFACSHR. An inverted direction does not raise; it turns
+        every split into fake turnover and silently fails Gate 0.
+
+        '
+  dsf:
+    purpose: 'Daily returns for every T3/T5 outcome: CAR paths [0,+120], Hou-Moskowitz
+      delay, Amihud, 1-R2, variance ratios, reversal strategies.
+
+      '
+    serves:
+    - P1-T3-spec
+    - P1-T4-replication
+    - P1-T5-main
+    - refraction-R2
+    tables:
+      daily_stock:
+        want: daily stock file — return, price, volume, by permno-day
+        candidates:
+        - crsp.dsf
+        resolved: null
+      daily_index:
+        want: daily market index return series (for market-model residuals)
+        candidates:
+        - crsp.dsi
+        resolved: null
+      delisting_daily:
+        want: 'DAILY delisting returns. Spec 2-2 applies dlret on the delisting day
+          inside the [0,+120] CAR path and imputes -30% when it is missing (Shumway
+          convention). Omitting this does not raise — it silently truncates paths
+          and biases spine two, the main evidence.
+
+          '
+        candidates:
+        - crsp.dsedelist
+        resolved: null
+    columns:
+      security_id:
+        want: permno
+        candidates:
+        - permno
+        resolved: null
+      date:
+        want: trading date
+        candidates:
+        - date
+        resolved: null
+      ret:
+        want: daily return including distributions (TOTAL return). Used by the
+          daily spines. NOT the beta-estimation series for spine zero — see
+          price_return below.
+        candidates:
+        - ret
+        resolved: null
+      price_return:
+        want: 'daily PRICE return, excluding distributions (RETX; CIZ-format
+          DlyRetx). This is the spine-zero beta-estimation series for BOTH legs
+          — the stock and SPY (D-T3-29). The event-window market leg is a
+          midquote price return and a quote midpoint contains no dividend, so a
+          beta fitted on TOTAL returns would carry a dividend-inclusive
+          sensitivity into a dividend-free quantity. Nothing raises if the wrong
+          one is used: `ret` and `retx` are equally plausible daily returns.
+          Both are pulled; they are not interchangeable.'
+        candidates:
+        - retx
+        - dlyretx
+        resolved: null
+      distribution_code:
+        want: 'a per-date DISTRIBUTION INDICATOR for the stock — the preferred
+          way to identify an ex-distribution date for the OpenGap screen
+          (D-T3-31). A flag is exactly the question being asked ("did a
+          distribution go ex"), whereas comparing RET with RETX infers it from
+          two rounded numbers. NAME NOT ASSERTED: the candidates below are
+          guesses to be resolved against the server, and the daily stock file
+          may not carry this at all — the distributions/events file may.
+          VERIFY THE DATE SEMANTICS, not merely that the field is
+          distribution-related: this screen needs the TRADING DATE ON WHICH THE
+          PRICE GOES EX. Declaration, record and payment dates sit on the same
+          distributions record and all look plausible, and keying on one of them
+          drops a clean day while LEAVING the contaminated ex-day in the sample
+          — worse than not screening, because the reported count then claims a
+          screen ran. If only a non-ex date is available, do not use the field.
+          If nothing resolves, the RET-vs-RETX fallback is used WITH a tolerance
+          and an explicit undecidable band, and the paper reports how many
+          observations rested on each method.'
+        candidates:
+        - distcd
+        - divamt
+        - dlyfacprc
+        resolved: null
+        optional: true
+      price:
+        want: daily closing price
+        candidates:
+        - prc
+        resolved: null
+      volume:
+        want: daily share volume
+        candidates:
+        - vol
+        resolved: null
+      share_adj_factor:
+        want: 'DAILY cumulative factor to adjust SHARES (CFACSHR). The monthly msf
+          copy is not known to be sufficient: N-PORT share counts are as of
+          genInfo/repPdDate, and a monthly file only carries month-ends. Gate 0''s
+          monthly_factor_sufficiency() answers that from the real dates, but it
+          returns UNKNOWN (a NEED_HUMAN) unless a daily panel is supplied — this
+          column is that panel. Same direction as msf: adjusted = raw * cfacshr.'
+        candidates:
+        - cfacshr
+        resolved: null
+      price_adj_factor:
+        want: daily cumulative factor to adjust PRICE (CFACPR) — the opposite-direction
+          twin, pulled so the convention is checked against data rather than assumed.
+        candidates:
+        - cfacpr
+        resolved: null
+      shares_out:
+        want: 'daily shares outstanding (SHROUT). Needed alongside cfacshr for the
+          same reason as in msf: the direction test requires raw x factor to be
+          continuous, and it cannot be run on a factor with no raw series beside it.'
+        candidates:
+        - shrout
+        resolved: null
+      open_price:
+        want: daily open — refraction R2 needs the overnight/intraday split
+        candidates:
+        - openprc
+        resolved: null
+      mkt_ret:
+        want: value-weighted market return
+        candidates:
+        - vwretd
+        resolved: null
+      bid:
+        want: closing bid price
+        candidates:
+        - bid
+        resolved: null
+      ask:
+        want: closing ask price
+        candidates:
+        - ask
+        resolved: null
+      bid_low:
+        want: daily low bid (or day low)
+        candidates:
+        - bidlo
+        resolved: null
+      ask_high:
+        want: daily high ask (or day high)
+        candidates:
+        - askhi
+        resolved: null
+      delist_date:
+        want: delisting date
+        candidates:
+        - dlstdt
+        resolved: null
+      delist_ret:
+        want: delisting return — spec 2-2 imputes -30% when missing (Shumway)
+        candidates:
+        - dlret
+        resolved: null
+      delist_code:
+        want: delisting code
+        candidates:
+        - dlstcd
+        resolved: null
+    asserts:
+      distribution_indicator: 'NEED_HUMAN at the window, TWO questions not one:
+        (a) is a per-date distribution indicator available for the stock (on this
+        file or on the distributions/events file) — paste the exact table+field;
+        (b) WHICH DATE IS IT KEYED TO? The OpenGap screen needs the EX-DATE, the
+        trading date on which the price becomes ex-distribution. Declaration,
+        record and payment dates are NOT substitutes: keying on one of them
+        drops a clean day and keeps the contaminated one, while the reported
+        exclusion count claims a screen ran. Answering (a) without (b) does not
+        resolve this entry. Preferred identification for the screen; the
+        RET-vs-RETX comparison is the fallback and is dated correctly by
+        construction. Not blocking — but the fallback infers a flag from two
+        rounded numbers, so the share of observations decided each way must be
+        reported. Guard: benchmark_policy.assert_exdate_semantics.
+
+        '
+      price_vs_total_return: 'NEED_HUMAN at the window: confirm whether this
+        account''s daily file is the legacy format (`retx`) or CIZ (`DlyRetx`),
+        and paste the exact name. Spine zero''s beta MUST be estimated on the
+        price-return field for the stock AND for SPY; the total-return field
+        stays for the daily spines. Using one where the other belongs does not
+        raise — it shifts every beta and therefore every AR^h.
+
+        '
+      monthly_cfacshr_sufficiency: 'NEED_HUMAN once dsf lands: run compute_continuity.monthly_factor_sufficiency(asof_dates,
+        daily_panel) over the ACTUAL N-PORT repPdDate values and record the verdict
+        in GATE0-RESULT.md. Until it returns "sufficient", Gate 0 must join the DAILY
+        factor. Do not assume month-end repPdDates make the monthly file exact —
+        that is the assumption the function exists to test.
+
+        '
+  taq_iid:
+    purpose: Effective spread and price impact — spine four, and the Saglam-Tuzun
+      replication.
+    serves:
+    - P1-T3-spec
+    - P1-T4-replication
+    - P1-T5-main
+    tables:
+      intraday_indicators:
+        want: 'WRDS-computed daily intraday liquidity indicators (this is a WRDS value-add
+          product, not raw TAQ — raw TAQ is terabytes and is NOT wanted)
+
+          '
+        candidates:
+        - wrdsapps.taq_iid
+        - taqmsec.wrds_iid
+        resolved: null
+    columns:
+      security_id:
+        want: the identifier this product keys on — symbol or permno
+        CONFIRM: null
+        candidates:
+        - sym_root
+        - permno
+        resolved: null
+      date:
+        want: trading date
+        candidates:
+        - date
+        resolved: null
+      eff_spread:
+        want: dollar or proportional effective spread — CONFIRM WHICH
+        candidates:
+        - ehalfspd
+        - eff_spread
+        resolved: null
+      price_impact:
+        want: price impact measure
+        candidates:
+        - price_impact
+        resolved: null
+    asserts:
+      spread_ladder: 'NEED_HUMAN once discovery has run: if crsp.dsf carries bid/ask,
+        spine four''s 4-1 should use the CRSP daily closing quoted spread and no external
+        purchase is needed. Only if those fields are absent does the Databento BBO
+        route (rung 2) become necessary. Note open/close prices CANNOT give a spread
+        -- their difference is a return, not a bid-ask gap.
+
+        '
+      spread_definition: 'NEED_HUMAN: spine four''s spec must state which effective-spread
+        convention the chosen field implements (dollar vs proportional, quote-matching
+        rule). This is one of the ten CITE_REQUEST items in p1/t3_spec_preflight.md.
+
+        '
+  ccm_link:
+    purpose: 'CRSP<->Compustat link, pulled BEFORE the fundamentals so fundq/funda
+      can be scoped to our gvkeys. Unscoped, comp.funda is every North American company
+      since 1950 — the pull that eats a one-day window.
+
+      '
+    serves:
+    - P1-T3-spec
+    - P1-T5-main
+    tables:
+      ccm_link:
+        want: CRSP-Compustat link — gvkey <-> permno with valid date ranges
+        candidates:
+        - crsp.ccmxpf_lnkhdr
+        - crsp.ccmxpf_linktable
+        resolved: null
+    columns:
+      gvkey:
+        want: Compustat company key
+        candidates:
+        - gvkey
+        resolved: null
+      link_permno:
+        want: CRSP permno on the link record
+        candidates:
+        - lpermno
+        - upermno
+        resolved: null
+      link_start:
+        want: first date the link is valid
+        candidates:
+        - linkdt
+        resolved: null
+      link_end:
+        want: last date the link is valid (open links are null/high date)
+        candidates:
+        - linkenddt
+        resolved: null
+      link_type:
+        want: link type — LU/LC are the usable ones
+        candidates:
+        - linktype
+        resolved: null
+      link_prim:
+        want: primary-link marker — P/C mark the primary security
+        candidates:
+        - linkprim
+        resolved: null
+    asserts:
+      link_filter: 'NEED_HUMAN before any merge: the standard CCM filter keeps linktype
+        in (''LU'',''LC'') and linkprim in (''P'',''C''), and applies the [linkdt,
+        linkenddt] range to the observation date. Dropping the filter does not raise
+        — it duplicates firm-quarters through secondary and superseded links. Confirm
+        the exact codes present on this account''s table before computing anything.
+
+        '
+  compustat:
+    purpose: 'Quarterly earnings for the spine-one decomposition, FERC and the SUE
+      time-series branch; ANNUAL book equity for the control-matching set. Plan section
+      107 matches controls on size x book-to-market x industry x pre-conversion ETF
+      ownership x Amihud, and section 120''s randomisation inference reuses those
+      matched funds — so the annual file is required for the CONTROL GROUP, independently
+      of any DGTW benchmark decision.
+
+      '
+    serves:
+    - P1-T3-spec
+    - P1-T5-main
+    tables:
+      fundq:
+        want: Compustat North America quarterly fundamentals
+        candidates:
+        - comp.fundq
+        resolved: null
+      funda:
+        want: Compustat North America annual fundamentals (book equity)
+        candidates:
+        - comp.funda
+        resolved: null
+    columns:
+      book_equity:
+        want: common/ordinary equity
+        candidates:
+        - ceq
+        resolved: null
+      shares_annual:
+        want: common shares outstanding
+        candidates:
+        - csho
+        resolved: null
+      price_fiscal:
+        want: fiscal-year-end price
+        candidates:
+        - prcc_f
+        resolved: null
+      eps_q:
+        want: quarterly EPS excluding extraordinary items
+        candidates:
+        - epspxq
+        resolved: null
+      gvkey:
+        want: Compustat company key
+        candidates:
+        - gvkey
+        resolved: null
+      datadate:
+        want: fiscal period end date
+        candidates:
+        - datadate
+        resolved: null
+      rdq:
+        want: Compustat's quarterly earnings ANNOUNCEMENT date — the cross-check against
+          IBES anndats that plan section 4 requires ('公告日以 IBES+Compustat 双源核对')
+        candidates:
+        - rdq
+        resolved: null
+  ibes:
+    purpose: 'Earnings surprise and analyst environment — the peer-announcement event
+      definition, and spine four''s coverage/dispersion cross-section.
+
+      '
+    serves:
+    - P1-T3-spec
+    - P1-T5-main
+    tables:
+      summary:
+        want: analyst consensus summary statistics per (security, forecast period)
+        candidates:
+        - ibes.statsum_epsus
+        - ibes.statsumu_epsus
+        resolved: null
+      actuals:
+        want: reported actual EPS with announcement date
+        candidates:
+        - ibes.actu_epsus
+        - ibes.actpsum_epsus
+        - ibes.act_epsus
+        resolved: null
+      identifiers:
+        want: IBES ticker <-> CUSIP crosswalk, to reach permno
+        candidates:
+        - ibes.idsum
+        resolved: null
+    columns:
+      security_id:
+        want: IBES ticker
+        candidates:
+        - ticker
+        resolved: null
+      cusip:
+        want: CUSIP for the CRSP merge
+        candidates:
+        - cusip
+        resolved: null
+      anndate:
+        want: earnings announcement date
+        candidates:
+        - anndats
+        resolved: null
+      actual:
+        want: reported actual EPS
+        candidates:
+        - value
+        - actual
+        resolved: null
+      consensus:
+        want: consensus forecast (mean or median — the SUE fork)
+        candidates:
+        - meanest
+        - medest
+        resolved: null
+      dispersion:
+        want: forecast standard deviation
+        candidates:
+        - stdev
+        resolved: null
+      n_analysts:
+        want: number of estimates
+        candidates:
+        - numest
+        resolved: null
+      stat_period:
+        want: consensus snapshot date (monthly statistical period)
+        candidates:
+        - statpers
+        resolved: null
+      fp_end:
+        want: forecast period end date
+        candidates:
+        - fpedats
+        resolved: null
+      fp_index:
+        want: forecast period indicator (1 = current fiscal year, 6 = current quarter)
+        candidates:
+        - fpi
+        resolved: null
+      period_end:
+        want: fiscal period end on the actuals row
+        candidates:
+        - pends
+        resolved: null
+    asserts:
+      adjusted_vs_unadjusted: 'NEED_HUMAN: statsum_epsus is split-ADJUSTED; statsumu_epsus
+        is unadjusted. For SUE the unadjusted file is usually preferred, because retroactive
+        split adjustment introduces rounding in per-share figures that can dominate
+        a small surprise. Confirm which the seller supplies.
+
+        '
+      sue_convention: 'NEED_HUMAN before use: SUE from analyst expectations vs a time-series
+        model is the DECISION_NEEDED fork named in docs/Project_1.md §125. This pull
+        supports the analyst branch; the time-series branch needs Compustat quarterly
+        earnings instead. Do not pick one silently.
+
+        '

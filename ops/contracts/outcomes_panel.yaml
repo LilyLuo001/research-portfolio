@@ -1,0 +1,36 @@
+# P1-T3 implementation output — the quarterly outcome panel.
+# docs/Project_1.md §230 freezes this as: permno | yyyyq | 脊柱变量,
+# produced by T3's implementation phase (§126) and consumed by T5, T6, T7.
+#
+# WHY THIS IS DELIBERATELY THIN
+# The validator treats every DECLARED column as must-exist, so a column named
+# here that the build cannot yet produce turns the contract into a false
+# failure. Spines one and four (GNZ decomposition, FERC, IPT, Hou-Moskowitz,
+# Amihud, 1-R2, effective spread) are blocked on the literature package — their
+# 口径 has no admissible source yet (p1/t3_spec_preflight.md), so freezing their
+# column names now would be freezing a guess.
+#
+# What IS frozen is the part every downstream consumer actually keys on: the
+# panel grain, the merge keys, and the treatment variable. strict_columns is
+# false, so spine columns validate as they are added. Declare each one here in
+# the same commit that lands its builder — that is the rule-3 handshake.
+producer: P1-T3-impl
+primary_key: [permno, yyyyq]
+strict_columns: false
+columns:
+  # ---- grain + merge keys ----
+  permno: {required: true}          # CRSP permanent security number
+  yyyyq: {required: true}           # calendar quarter, e.g. 20212 — the panel grain
+  # ---- treatment, carried through from T2 so T5 needs one join, not two ----
+  conv_exp: {min: 0}                # treatment intensity at this stock's wave
+  wave_id: {}                       # which conversion wave treats this stock
+  effective_date: {}                # that wave's effective date
+  treated_post: {min: 0, max: 1}    # 1 if this quarter is after effective_date
+  # ---- controls the plan names as forced (plan §6, threat T3) ----
+  russell_change: {min: 0, max: 1}  # stock changed Russell status this quarter
+  # ---- spine-two outcome variables (p1/pipeline/outcomes_spine2.py) ----------
+  # builder: outcomes_spine2.build_spine2; §7 口径 — no literature package needed
+  permanent: {}        # CAR(+120) — persistent component of announcement return
+  reversal: {}         # same-direction-decaying part of CAR(+5) − CAR(+120); §7
+  var_ratio_5_1: {}    # Var(5-day) / (5 × Var(1-day)) — Jegadeesh reversal test
+  event_type: {}       # 'own' or 'peer' announcement; both run separately (§7)

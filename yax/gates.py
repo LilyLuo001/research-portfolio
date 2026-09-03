@@ -1,0 +1,742 @@
+#!/usr/bin/env python3
+"""Mechanically verify YAX's pre-registration gates.
+
+RESEARCH_PLAN_v1.md states gates in §5 (power honesty), §8 (novelty), §9 (the
+seal protocol) and §12 (kill conditions). A gate that only an agent's judgement
+enforces is not a gate. This script checks the ones that can be checked from
+artifacts and git history, and fails closed on everything it cannot see.
+
+  python yax/gates.py --power-aggregate <path> \
+    --paired-aggregate <path> [--freeze-tag v1.0-design-freeze]
+
+Every gate returns PASS, FAIL or BLOCKED:
+
+  PASS     the condition was checked and holds
+  FAIL     the condition was checked and does NOT hold
+  BLOCKED  the condition could not be checked (missing artifact, no git, ...)
+
+BLOCKED is never treated as PASS. The exit status is non-zero if any gate is
+FAIL or BLOCKED, so a caller cannot mistake "not checked" for "fine".
+
+Stdlib only: this runs on the SCC under an old interpreter as well as locally.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import math
+import pathlib
+import re
+import subprocess
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+PRESPEC = "yax/COVERAGE_RULE_PRESPEC_v1.md"
+PRESPEC_V2 = "yax/COVERAGE_RULE_PRESPEC_v2.md"
+FREEZE = "yax/DESIGN_FREEZE_v1.md"
+FREEZE_V2 = "yax/DESIGN_FREEZE_v2.md"
+AMENDMENT = "yax/FREEZE_AMENDMENT_2026-08-27.md"
+PAIRED_AMENDMENT = "yax/FREEZE_AMENDMENT_2026-08-29_PAIRED_PRECISION.md"
+PLAN = "yax/RESEARCH_PLAN_v5.md"
+SUPPORT = "yax/measurement/computerization_support_66m_receipt.json"
+COMPMEAS = "yax/measurement/COMPUTERIZATION_MEASURES.csv"
+CONSTRUCT_VALIDITY = "yax/measurement/CONSTRUCT_VALIDITY_RECEIPT.json"
+CONVERGENT_FLOOR = 0.20   # a control agreeing with no other control is suspect
+DEFAULT_TAG = "v1.0-design-freeze"
+
+# §5.2: a design whose power never falls is describing its own smoothness.
+GRADIENT_CEILING = 0.95   # power at the smallest tested effect must be below this
+POWER_TARGET = 0.80       # the MDE definition
+NOMINAL_SIZE = 0.05
+SIZE_TOLERANCE = 0.01     # beyond this, bootstrap inference is mandatory
+
+
+class Result:
+    __slots__ = ("gate", "status", "detail")
+
+    def __init__(self, gate, status, detail):
+        self.gate, self.status, self.detail = gate, status, detail
+
+    def __repr__(self):
+        return f"{self.status:<8} {self.gate:<28} {self.detail}"
+
+
+def _git(*args):
+    try:
+        r = subprocess.run(["git", "-C", str(ROOT), *args],
+                           capture_output=True, text=True, timeout=30)
+        return r.stdout.strip() if r.returncode == 0 else None
+    except Exception:
+        return None
+
+
+def _rel_decline(log_effect):
+    """log(1-d) -> d. The plan speaks in relative declines, the grid in logs."""
+    return 1.0 - math.exp(log_effect)
+
+
+def _power_scenarios(agg):
+    """Return one or more independently gated power records."""
+    if agg is None:
+        return []
+    scenarios = agg.get("scenarios")
+    return scenarios if isinstance(scenarios, list) and scenarios else [agg]
+
+
+def _scenario_label(record):
+    return (f"{record.get('ai_measure', 'unknown AI')} × "
+            f"{record.get('computerization_measure', 'unknown control')}")
+
+
+def _frozen_power_window(record):
+    design = record.get("design")
+    if not isinstance(design, dict):
+        return False
+    return (
+        design.get("post_start") == "2023-01"
+        and design.get("transition_excluded") == "2022-12"
+        and design.get("post_end") == "2026-07"
+        and "2025-10" in design.get("post_gaps", [])
+        and record.get("effect_scale_code") == "q5_q1"
+    )
+
+
+# ---------------------------------------------------------------- the gates
+
+def gate_gradient(agg):
+    """§5.2. Power must fall through 80% inside the tested grid.
+
+    Two distinct failures, and they mean opposite things:
+      * power at the smallest effect is at ceiling -> the ENGINE is suspect
+      * power never reaches 80% anywhere -> the DESIGN is underpowered
+    """
+    if agg is None:
+        return Result("gradient", "BLOCKED", "no power aggregate supplied")
+    records = _power_scenarios(agg)
+    if not records:
+        return Result("gradient", "BLOCKED", "aggregate has no power scenarios")
+
+    outcomes = []
+    for record in records:
+        if not _frozen_power_window(record):
+            return Result(
+                "gradient", "BLOCKED",
+                f"{_scenario_label(record)} does not authenticate the frozen "
+                f"power window (post_start 2023-01, transition 2022-12 excluded, "
+                f"post_end 2026-07, gap 2025-10) and Q5-Q1 effect scale. "
+                f"A superseded window or per-SD artifact cannot clear v5.")
+        result = _gate_gradient_one(record)
+        outcomes.append((record, result))
+    failed = [(record, result) for record, result in outcomes
+              if result.status == "FAIL"]
+    blocked = [(record, result) for record, result in outcomes
+               if result.status == "BLOCKED"]
+    if failed:
+        record, result = failed[0]
+        return Result("gradient", "FAIL",
+                      f"{_scenario_label(record)}: {result.detail}")
+    if blocked:
+        record, result = blocked[0]
+        return Result("gradient", "BLOCKED",
+                      f"{_scenario_label(record)}: {result.detail}")
+    return Result("gradient", "PASS",
+                  f"all {len(outcomes)} joint scenarios bracket MDE80; "
+                  + "; ".join(f"{_scenario_label(record)}: {result.detail}"
+                               for record, result in outcomes))
+
+
+def _gate_gradient_one(agg):
+    rows = agg.get("results")
+    if not rows:
+        return Result("gradient", "BLOCKED", "record has no 'results' array")
+
+    pts = []
+    for r in rows:
+        le, pw = r.get("true_log_effect"), r.get("rejection_probability_zero")
+        if le is None or pw is None or le == 0:
+            continue
+        pts.append((abs(_rel_decline(le)), pw))
+    if len(pts) < 2:
+        return Result("gradient", "BLOCKED",
+                      f"only {len(pts)} non-null effect points; need >= 2")
+    pts.sort()
+
+    smallest_d, smallest_p = pts[0]
+    largest_d, largest_p = pts[-1]
+
+    if smallest_p >= GRADIENT_CEILING:
+        return Result(
+            "gradient", "FAIL",
+            f"power is {smallest_p:.3f} at the SMALLEST tested effect "
+            f"({smallest_d:.2%}), at or above the {GRADIENT_CEILING:.2f} "
+            f"ceiling. Per plan §5.2 this is an engine bug to diagnose, not a "
+            f"strong design: extend the grid downward and re-run. Do NOT freeze.")
+
+    if largest_p < POWER_TARGET:
+        return Result("gradient", "FAIL",
+                      f"power never reaches {POWER_TARGET:.0%} — max is "
+                      f"{largest_p:.3f} at a {largest_d:.2%} decline. The "
+                      f"design is underpowered on this support.")
+
+    # linear interpolation between the bracketing points
+    mde = None
+    for (d0, p0), (d1, p1) in zip(pts, pts[1:]):
+        if p0 < POWER_TARGET <= p1:
+            mde = d0 + (POWER_TARGET - p0) * (d1 - d0) / (p1 - p0) if p1 != p0 else d1
+            break
+    if mde is None:
+        return Result("gradient", "BLOCKED",
+                      "grid brackets 80% but no adjacent crossing pair found; "
+                      "inspect the grid by hand")
+    return Result("gradient", "PASS",
+                  f"MDE80 ~= {mde:.2%} relative decline "
+                  f"(power {smallest_p:.3f} at {smallest_d:.2%} rising to "
+                  f"{largest_p:.3f} at {largest_d:.2%})")
+
+
+def gate_calibration(agg):
+    """§5.1. Oversized inference makes bootstrap mandatory, not optional."""
+    if agg is None:
+        return Result("calibration", "BLOCKED", "no power aggregate supplied")
+    records = _power_scenarios(agg)
+    if not records:
+        return Result("calibration", "BLOCKED", "aggregate has no power scenarios")
+    for record in records:
+        if not _frozen_power_window(record):
+            return Result(
+                "calibration", "BLOCKED",
+                f"{_scenario_label(record)} does not authenticate the frozen "
+                f"January-2023 power window; superseded window results cannot calibrate v5")
+    outcomes = [(record, _gate_calibration_one(record)) for record in records]
+    failed = [(record, result) for record, result in outcomes
+              if result.status == "FAIL"]
+    blocked = [(record, result) for record, result in outcomes
+               if result.status == "BLOCKED"]
+    if failed:
+        record, result = failed[0]
+        return Result("calibration", "FAIL",
+                      f"{_scenario_label(record)}: {result.detail}")
+    if blocked:
+        record, result = blocked[0]
+        return Result("calibration", "BLOCKED",
+                      f"{_scenario_label(record)}: {result.detail}")
+    return Result("calibration", "PASS",
+                  f"all {len(outcomes)} joint scenarios calibrated; "
+                  + "; ".join(f"{_scenario_label(record)}: {result.detail}"
+                               for record, result in outcomes))
+
+
+def _gate_calibration_one(agg):
+    null_rows = [r for r in agg.get("results", []) if r.get("true_log_effect") == 0]
+    if not null_rows:
+        return Result("calibration", "BLOCKED", "no null (effect = 0) row")
+    size = null_rows[0].get("rejection_probability_zero")
+    cov = null_rows[0].get("coverage_95")
+    if size is None:
+        return Result("calibration", "BLOCKED", "null row has no rejection rate")
+    off = abs(size - NOMINAL_SIZE)
+    boot = ((isinstance(agg.get("bootstrap"), dict) and bool(agg["bootstrap"]))
+            or any("bootstrap" in key.lower() for key in agg))
+    detail = (f"null size {size:.3f} vs nominal {NOMINAL_SIZE:.2f}"
+              + (f", coverage {cov:.3f}" if cov is not None else ""))
+    if off <= SIZE_TOLERANCE:
+        return Result("calibration", "PASS", detail + " — within tolerance")
+    if boot:
+        return Result("calibration", "PASS",
+                      detail + f" — off by {off:.3f}, and bootstrap fields are "
+                      f"present as §5.1 requires")
+    return Result("calibration", "FAIL",
+                  detail + f" — off by {off:.3f} and the aggregate carries no "
+                  f"bootstrap field. §5.1 makes wild-cluster bootstrap the "
+                  f"PRIMARY inference before the MDE enters the manuscript.")
+
+
+def gate_coverage_rule(agg):
+    """The three rules and the live primary must be declared before the tag."""
+    active = PRESPEC_V2 if (ROOT / PRESPEC_V2).is_file() else PRESPEC
+    p = ROOT / active
+    if not p.is_file():
+        return Result("coverage_rule", "FAIL", f"{active} does not exist")
+    text = p.read_text(encoding="utf-8")
+    needed = ["Rule A", "Rule B", "Rule C", "PRIMARY"]
+    missing = [n for n in needed if n not in text]
+    if missing:
+        return Result("coverage_rule", "FAIL",
+                      f"{active} does not name {missing}")
+    if agg is not None and agg.get("design_freeze_permitted") is True:
+        frac = agg.get("covered_route_mass_fraction")
+        if frac is not None and frac < 0.90:
+            return Result("coverage_rule", "FAIL",
+                          f"aggregate claims design_freeze_permitted with "
+                          f"coverage {frac:.4f} < 0.90. A failed gate must not "
+                          f"unlock the freeze.")
+    return Result("coverage_rule", "PASS",
+                  f"three rules declared and primary named in {active}")
+
+
+def gate_prespec_precedes_tag(tag):
+    """§9. The whole claim is the ORDERING. Check it in git, not in prose."""
+    tag_commit = _git("rev-list", "-n", "1", tag)
+    if tag_commit is None:
+        return Result("prespec_before_tag", "BLOCKED",
+                      f"tag {tag} does not exist yet — freeze has not happened")
+    prespec = PRESPEC_V2 if tag == "v1.1-design-freeze" else PRESPEC
+    first = _git("log", "--reverse", "--format=%H", "--", prespec)
+    if not first:
+        return Result("prespec_before_tag", "FAIL",
+                      f"{prespec} has no commit history")
+    prespec_commit = first.splitlines()[0]
+    # `merge-base --is-ancestor` answers through exit status, not stdout, so
+    # _git (which returns stdout) cannot express it.
+    try:
+        r = subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor",
+                            prespec_commit, tag_commit],
+                           capture_output=True, timeout=30)
+        ok = (r.returncode == 0)
+    except Exception:
+        return Result("prespec_before_tag", "BLOCKED", "git merge-base failed")
+    if ok:
+        return Result("prespec_before_tag", "PASS",
+                      f"{prespec} ({prespec_commit[:9]}) is an ancestor of {tag}")
+    return Result("prespec_before_tag", "FAIL",
+                  f"{prespec} was committed AFTER {tag}. The pre-specification "
+                  f"is void by its own terms and the coverage rule must be "
+                  f"reported as a post-hoc choice.")
+
+
+def gate_freeze_doc(tag):
+    """§9.5. The freeze document must exist and pin the panel it froze."""
+    freeze = FREEZE_V2 if tag == "v1.1-design-freeze" else FREEZE
+    p = ROOT / freeze
+    if not p.is_file():
+        return Result("freeze_doc", "BLOCKED",
+                      f"{freeze} not written yet — pre-freeze work outstanding")
+    text = p.read_text(encoding="utf-8")
+    if not any(len(w) == 64 and all(c in "0123456789abcdef" for c in w.lower())
+               for w in text.split()):
+        return Result("freeze_doc", "FAIL",
+                      f"{freeze} carries no 64-hex panel sha256. A freeze that "
+                      f"does not pin the data it froze is not a freeze.")
+    return Result("freeze_doc", "PASS", f"{freeze} present and pins a sha256")
+
+
+def gate_plan_consistency(tag):
+    """§14. A plan may not assert as settled what its own later sections list
+    as pending.
+
+    v3 declared in §3.1 that the joint design was identified -- "Yes" -- and
+    quoted a conditional MDE, while §5 and §6 said the computerization measures
+    and the joint simulation were still outstanding and that no MDE could be
+    quoted. This gate catches that class of contradiction mechanically.
+    """
+    p = ROOT / PLAN
+    if not p.is_file():
+        return Result("plan_consistency", "BLOCKED", f"{PLAN} missing")
+    text = p.read_text(encoding="utf-8")
+    forbids_mde = "no MDE may be quoted" in text or "no MDE exists" in text
+    # a quoted conditional MDE looks like a percentage next to the words
+    quotes_mde = bool(re.search(r"conditional MDE[^\n]{0,40}?\d+\.\d+\s*%", text))
+    if forbids_mde and quotes_mde:
+        return Result("plan_consistency", "FAIL",
+                      "the plan forbids quoting an MDE and then quotes a "
+                      "conditional MDE. Remove the figure or the prohibition.")
+    return Result("plan_consistency", "PASS",
+                  "no self-contradiction detected between claims and pending work")
+
+
+def gate_seal(tag):
+    """§13.9 + §12.3. No post-period outcome may be committed before the tag."""
+    tracked = _git("ls-files", "yax/analysis/outcomes", "dax/analysis/outcomes")
+    committed = [l for l in (tracked or "").splitlines() if l.strip()]
+    tag_exists = _git("rev-list", "-n", "1", tag) is not None
+    if committed and not tag_exists:
+        return Result("seal", "FAIL",
+                      f"{len(committed)} outcome file(s) committed with no {tag} "
+                      f"tag: {committed[:3]}. This is kill condition §12.3 — the "
+                      f"chapter's central claim is lost and the paper must be "
+                      f"labelled post-hoc.")
+    if not tag_exists:
+        return Result("seal", "PASS", "no tag yet, and no outcomes committed")
+    return Result("seal", "PASS", f"{tag} exists; {len(committed)} outcome files")
+
+
+def gate_novelty(tag):
+    """§5. Prior-work claims must be resolved at primary source.
+
+    This gate has now failed open TWICE by keying on the absence of warning
+    strings. v3 dropped its prior-work section entirely and passed; v5 rewrote
+    the warnings in different words and passed. Absence of a marker is not
+    evidence of verification, and any rewrite can erase a marker.
+
+    So the test is inverted: the plan must POSITIVELY ASSERT that every
+    reference was opened at primary source, by carrying the sentinel below.
+    Silence blocks. A rewrite that drops the sentinel blocks. Only an explicit
+    claim of completion, which a human has to write deliberately, passes.
+    """
+    SENTINEL = "NOVELTY-GATE: all references opened at primary source"
+    p = ROOT / PLAN
+    if not p.is_file():
+        return Result("novelty", "BLOCKED", f"{PLAN} missing")
+    text = p.read_text(encoding="utf-8")
+    if SENTINEL not in text:
+        return Result("novelty", "BLOCKED",
+                      f"{PLAN} does not carry the sentinel "
+                      f"'{SENTINEL}'. Every reference must be opened at its "
+                      f"primary source with a locator — and, where the source "
+                      f"is a file, a sha256 — before the sentinel is added. "
+                      f"Adding the sentinel without doing the work is "
+                      f"falsifying a gate, not passing one.")
+    stale = [m for m in ("relayed and unverified", "unverified from primary source",
+                         "locators outstanding", "not yet searched", "claims to confirm")
+             if m.lower() in text.lower()]
+    if stale:
+        return Result("novelty", "FAIL",
+                      f"the plan carries the completion sentinel and also "
+                      f"{stale}. Resolve those rows or remove the sentinel.")
+    return Result("novelty", "PASS",
+                  "plan asserts every reference was opened at primary source")
+
+
+def gate_computerization(tag):
+    """§6. The computerization confound must be addressed before the freeze.
+
+    A control added after outcomes are seen is specification search, so this
+    blocks rather than flags. It judges identification on **partial variance**,
+    not on a discretized cell share -- an earlier version keyed on the cell and
+    reached the wrong verdict; see CORRECTION_2026-08-26_separability_verdict.md.
+    """
+    p = ROOT / SUPPORT
+    if not p.is_file():
+        return Result("computerization", "BLOCKED",
+                      f"{SUPPORT} missing — run "
+                      f"yax/measurement/computerization_support.py")
+    try:
+        rec = json.loads(p.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return Result("computerization", "BLOCKED", f"unreadable receipt: {exc}")
+    if rec.get("proxy_warning"):
+        return Result("computerization", "BLOCKED",
+                      "support check still runs on the teleworkability PROXY. "
+                      "Obtain Webb (2020) software exposure, Frey-Osborne, RTI "
+                      "and archived O*NET 'Interacting With Computers', crosswalk "
+                      "them, and re-run — see briefs/Y1b_computerization.md.")
+    required_measures = {
+        "webb_pct_software", "onet_computers_importance",
+        "onet_computers_level", "rti_autor_dorn",
+        "frey_osborne_probability",
+    }
+    present = set(rec.get("computerization_measures", []))
+    missing = sorted(required_measures - present)
+    if missing:
+        return Result("computerization", "BLOCKED",
+                      f"real-measure receipt is missing {missing}")
+    pairs = rec.get("pairs") or []
+    expected = len(rec.get("ai_measures", [])) * len(required_measures)
+    if len(pairs) != expected:
+        return Result("computerization", "BLOCKED",
+                      f"receipt has {len(pairs)} AI×computerization pairs; "
+                      f"expected {expected}")
+    required_statistics = {
+        "correlation", "partial_variance_of_ai", "vif", "se_inflation",
+        "effective_number_identifying_ai", "common_support_employment_share",
+        "residual_variation_by_soc_major_group", "named_divergence_occupations",
+    }
+    incomplete = [
+        f"{pair.get('ai_measure')}×{pair.get('computerization_measure')}"
+        for pair in pairs if not required_statistics <= set(pair)
+    ]
+    if incomplete:
+        return Result("computerization", "BLOCKED",
+                      f"pairs missing required diagnostics: {incomplete[:3]}")
+    return Result("computerization", "PASS",
+                  f"{len(pairs)} AI×computerization pairs use real measures "
+                  "and report partial variance, VIF, concentration and named support")
+
+
+def gate_convergent_validity(tag):
+    """Do the computerization measures agree with each other at all?
+
+    This gate flags a measure that agrees with nothing. That is a QUESTION,
+    not a verdict: it is either a merge failure or a distinct construct. Webb
+    pct_software tripped it and turned out to be the second case -- it ranks
+    process-control occupations highest and barbers lowest, which is what
+    software-PATENT exposure looks like, against O*NET which measures computer
+    USE. Inspect the ranking before concluding anything.
+    A control that failed to join is uncorrelated with the treatment, which
+    leaves the AI coefficient looking maximally identified -- so a null control
+    produces the *best* headroom the support gate can report. The support gate
+    cannot tell "clean identification" from "the control is noise".
+
+    Convergent validity can. Measures of the same construct must correlate with
+    each other. Webb pct_software, joined via occ1990dd, correlated -0.106 with
+    O*NET computer importance, -0.003 with O*NET level, -0.028 with RTI and
+    +0.104 with Frey-Osborne -- agreeing with nothing, while O*NET importance
+    and level agreed at +0.912 and RTI and Frey-Osborne at +0.448.
+    """
+    p = ROOT / COMPMEAS
+    if not p.is_file():
+        return Result("convergent_validity", "BLOCKED",
+                      f"{COMPMEAS} missing — Y1b has not run")
+    import csv as _csv
+    rows = list(_csv.DictReader(p.open(newline="", encoding="utf-8-sig")))
+    if not rows:
+        return Result("convergent_validity", "BLOCKED", "no rows")
+    names = [c for c in rows[0]
+             if any(w in c.lower() for w in ("webb", "onet_comp", "rti", "frey"))
+             and not c.endswith(("_covered_route_mass", "_partial_sum"))]
+    if len(names) < 2:
+        return Result("convergent_validity", "BLOCKED",
+                      f"fewer than two measures found: {names}")
+
+    def corr(a, b):
+        xs = [(float(r[a]), float(r[b])) for r in rows
+              if r.get(a) not in (None, "", "NA", "nan")
+              and r.get(b) not in (None, "", "NA", "nan")]
+        if len(xs) < 30:
+            return None
+        mx = sum(u for u, _ in xs) / len(xs)
+        my = sum(v for _, v in xs) / len(xs)
+        sxx = sum((u - mx) ** 2 for u, _ in xs)
+        syy = sum((v - my) ** 2 for _, v in xs)
+        sxy = sum((u - mx) * (v - my) for u, v in xs)
+        return sxy / math.sqrt(sxx * syy) if sxx > 0 and syy > 0 else None
+
+    orphans = []
+    for a in names:
+        best = max((abs(corr(a, b) or 0.0) for b in names if b != a), default=0.0)
+        if best < CONVERGENT_FLOOR:
+            orphans.append(f"{a} (best |r| {best:.3f})")
+    if orphans:
+        audit = ROOT / CONSTRUCT_VALIDITY
+        if audit.is_file():
+            try:
+                receipt = json.loads(audit.read_text(encoding="utf-8"))
+                assessments = receipt.get("merge_failure_assessment", {})
+                orphan_names = [item.split(" (best |r|", 1)[0] for item in orphans]
+                coherent = all(
+                    name in assessments
+                    and assessments[name].get("ranking_incoherent_at_both_ends") is False
+                    for name in orphan_names
+                )
+                if (receipt.get("status") ==
+                        "PASS_RANKINGS_COHERENT_WITH_RECORDED_LIMITATIONS" and coherent):
+                    return Result(
+                        "convergent_validity", "PASS",
+                        f"orphaned correlations {orphans} are reconciled by the "
+                        f"ranked-occupation audit: coherent distinct constructs, "
+                        f"not a failed join; limitations remain reported")
+            except Exception:
+                pass
+        return Result("convergent_validity", "FAIL",
+                      f"these measures agree with no other control: {orphans}. "
+                      f"A PASS construct-validity receipt with coherent high/low "
+                      f"rankings is required to distinguish a distinct construct "
+                      f"from a failed join.")
+    return Result("convergent_validity", "PASS",
+                  f"every computerization measure agrees with at least one "
+                  f"other above |r|={CONVERGENT_FLOOR}")
+
+
+def gate_amendment_current(tag):
+    """Plan v5 amends three frozen elements, so v1.0 no longer describes the
+    live design.
+
+    The seal is intact and the amendment is legitimate, but an estimation task
+    must not run against a freeze document that has been superseded. This gate
+    holds the line until DESIGN_FREEZE_v2.md exists and v1.1 is tagged.
+    """
+    if not (ROOT / PLAN).is_file():
+        return Result("amendment_current", "BLOCKED", f"{PLAN} missing")
+    if not (ROOT / AMENDMENT).is_file():
+        return Result("amendment_current", "FAIL",
+                      f"{PLAN} amends the frozen design but {AMENDMENT} does "
+                      f"not exist. An undocumented amendment to a freeze is the "
+                      f"thing the freeze exists to prevent.")
+    if not (ROOT / PAIRED_AMENDMENT).is_file():
+        return Result("amendment_current", "BLOCKED",
+                      f"owner-authorized Test C amendment {PAIRED_AMENDMENT} "
+                      f"has not been recorded")
+    if not (ROOT / FREEZE_V2).is_file():
+        return Result("amendment_current", "BLOCKED",
+                      f"{AMENDMENT} records three changes to v1.0 — post-period "
+                      f"start, coverage primary, MDE estimand — so "
+                      f"{FREEZE} no longer describes the live design. Write "
+                      f"{FREEZE_V2} and tag v1.1-design-freeze before any "
+                      f"post-period outcome is opened.")
+    v11 = _git("rev-list", "-n", "1", "v1.1-design-freeze")
+    if v11 is None:
+        return Result("amendment_current", "BLOCKED",
+                      f"{FREEZE_V2} exists but v1.1-design-freeze is not tagged")
+    return Result("amendment_current", "PASS",
+                  "amended freeze documented and tagged; v1.0 preserved")
+
+
+def gate_paired_difference_precision(agg):
+    """Verify the amended, outcome-blind Test C precision artifact.
+
+    The 2026-08-29 pre-outcome amendment retires binding equivalence inference
+    because no verified published estimate matches the YAX age groups,
+    employment-stock estimand, Q5-Q1 contrast and scale.  The gate therefore
+    must not require or infer a numerical SESOI.  It verifies only the paired
+    difference design: stored paired draws, SE(Delta), CI construction,
+    MDE_Delta,80, covariance preservation through common draws, and the outcome
+    seal.  A CI containing zero means only "does not detect a difference".
+    """
+    name = "paired_difference_precision"
+    if agg is None:
+        return Result(name, "BLOCKED", "no paired-difference artifact supplied")
+
+    def _finite(value, positive=False):
+        ok = (not isinstance(value, bool)
+              and isinstance(value, (int, float)) and math.isfinite(value))
+        return ok and (not positive or value > 0)
+
+    source = agg.get("paired_distribution_source", {})
+    distribution_ok = (
+        isinstance(source, dict)
+        and isinstance(source.get("path"), str)
+        and bool(re.fullmatch(r"[0-9a-f]{64}", str(source.get("sha256", ""))))
+        and source.get("field") == "paired_delta_distribution"
+        and isinstance(source.get("stored_draws"), int)
+        and source.get("stored_draws", 0) >= 999
+    )
+    if distribution_ok:
+        source_path = ROOT / source["path"]
+        distribution_ok = (
+            source_path.is_file()
+            and hashlib.sha256(source_path.read_bytes()).hexdigest()
+            == source["sha256"]
+        )
+    direct = agg.get("paired_delta_distribution")
+    if isinstance(direct, list) and len(direct) >= 999:
+        distribution_ok = all(_finite(value) for value in direct)
+
+    se_ok = _finite(agg.get("paired_delta_se"), positive=True)
+
+    ci = agg.get("paired_confidence_interval", {})
+    ci_ok = (
+        isinstance(ci, dict)
+        and ci.get("confidence_level") == 0.95
+        and ci.get("method") == "percentile-t paired occupation-cluster bootstrap"
+        and isinstance(ci.get("bootstrap_draws_minimum"), int)
+        and ci.get("bootstrap_draws_minimum", 0) >= 999
+        and ci.get("same_occupation_cluster_weights_for_both_exposures") is True
+        and isinstance(ci.get("construction"), str)
+        and "delta_hat" in ci.get("construction", "")
+        and ci.get("computed_after_outcomes_open") is False
+    )
+
+    mde = agg.get("mde_delta_80", {})
+    mde_ok = (
+        isinstance(mde, dict)
+        and _finite(mde.get("log_points"), positive=True)
+        and _finite(mde.get("relative_magnitude"), positive=True)
+        and mde.get("power_target") == 0.80
+    )
+
+    common = agg.get("common_bootstrap_draws", {})
+    common_ok = (
+        isinstance(common, dict)
+        and common.get("same_draw_applied_to_both_exposure_definitions") is True
+        and common.get("covariance_preserved") is True
+        and _finite(common.get("paired_covariance"))
+        and isinstance(common.get("draws"), int)
+        and common.get("draws", 0) >= 999
+        and common.get("failures") == 0
+    )
+
+    seal_ok = agg.get("post_outcomes_read") is False
+    requirements = [
+        ("paired bootstrap distribution or authenticated stored representation",
+         distribution_ok),
+        ("paired SE(Delta)", se_ok),
+        ("paired percentile-t 95% CI construction", ci_ok),
+        ("MDE_Delta,80", mde_ok),
+        ("common draws preserving covariance", common_ok),
+        ("zero protected post-period outcomes read", seal_ok),
+    ]
+    missing = [label for label, ok in requirements if not ok]
+    if missing:
+        return Result(name, "BLOCKED",
+                      f"paired-difference precision artifact is incomplete. "
+                      f"Missing or invalid: {missing}. A numerical SESOI, "
+                      f"equivalence interval and equivalence power are retired "
+                      f"and must not be fabricated.")
+    return Result(
+        name, "PASS",
+        f"999+ common paired draws authenticate SE(Delta), 95% CI construction "
+        f"and MDE_Delta,80={mde['relative_magnitude']:.3%}; protected outcomes "
+        f"remain sealed. This is difference-detection precision, not economic "
+        f"equivalence.")
+
+
+# ---------------------------------------------------------------- runner
+
+def _load_aggregate(path):
+    aggregate = None
+    if path:
+        p = pathlib.Path(path)
+        if p.is_file():
+            try:
+                aggregate = json.loads(p.read_text(encoding="utf-8"))
+            except Exception as exc:
+                print(f"WARNING: could not parse {p}: {exc}", file=sys.stderr)
+    return aggregate
+
+
+def run(power_aggregate=None, tag=DEFAULT_TAG, paired_aggregate=None):
+    agg = _load_aggregate(power_aggregate)
+    paired = _load_aggregate(paired_aggregate) if paired_aggregate else agg
+    return [
+        gate_gradient(agg),
+        gate_calibration(agg),
+        gate_paired_difference_precision(paired),
+        gate_coverage_rule(agg),
+        gate_novelty(tag),
+        gate_computerization(tag),
+        gate_convergent_validity(tag),
+        gate_plan_consistency(tag),
+        gate_prespec_precedes_tag(tag),
+        gate_freeze_doc(tag),
+        gate_amendment_current(tag),
+        gate_seal(tag),
+    ]
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--power-aggregate", help="power_available_support_aggregate_*.json")
+    ap.add_argument("--paired-aggregate",
+                    help="outcome-blind paired-difference precision artifact")
+    ap.add_argument("--freeze-tag", default=DEFAULT_TAG)
+    ap.add_argument("--json", action="store_true", help="machine-readable output")
+    args = ap.parse_args(argv)
+
+    results = run(args.power_aggregate, args.freeze_tag, args.paired_aggregate)
+
+    if args.json:
+        print(json.dumps([{"gate": r.gate, "status": r.status, "detail": r.detail}
+                          for r in results], indent=2))
+    else:
+        print("YAX pre-registration gates\n" + "=" * 74)
+        for r in results:
+            print(r)
+            print()
+        n_fail = sum(1 for r in results if r.status == "FAIL")
+        n_block = sum(1 for r in results if r.status == "BLOCKED")
+        print("=" * 74)
+        if n_fail:
+            print(f"{n_fail} FAILED. Do not proceed to the freeze.")
+        elif n_block:
+            print(f"{n_block} BLOCKED — not checked, which is not the same as "
+                  f"passing. Resolve before the freeze.")
+        else:
+            print("All gates pass. The seal protocol may proceed.")
+
+    return 1 if any(r.status in ("FAIL", "BLOCKED") for r in results) else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

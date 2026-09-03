@@ -101,7 +101,8 @@ semi_transparent), proxy_basket_type。逐字段定位符; NA 不推断; 不含�
 SENTINELS = """# Known-answer fence. S1/S2 are document-grounded (synthetic excerpt,
 # answer known by construction): both no-web workers failed the old trivia fence
 # 2026-07-17 (S2 asked about a 2025-11 publication past model cutoffs).
-# S3 keeps one repo-verified domain fact (docs/P1_修订补丁_v1_1.md 修订3).
+# S3 keeps one repo-verified domain fact (the Russell-reconstitution
+# confound; now plan §6 threat T3).
 sentinels:
   - id: S1
     prompt: "Filing excerpt: 'The Board of Trustees of Ridgeline Funds Trust approved the conversion of the Ridgeline Mid-Cap Growth Fund, a mutual fund (ticker: RMCGX), into an actively managed exchange-traded fund (ticker: RMCG), expected to become effective on or about April 22, 2022.' What is the MUTUAL FUND ticker in this excerpt? Reply with the ticker only."

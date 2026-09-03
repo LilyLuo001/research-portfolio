@@ -1,0 +1,43 @@
+# DAX W5 Gate 1 output: retained event x OCC2010 bounded dose components.
+#
+# Only events with a written, dated release locator and an explicit retained
+# verdict may appear. Price evidence is a separate lineage field and cannot
+# satisfy the event-date gate. Excluded events and unresolved occupations are
+# written to a separate sanitized exclusion manifest; they are never emitted
+# here with zero-filled doses.
+producer: DAX-W5-index
+primary_key: [panel_row_id]
+strict_columns: true
+columns:
+  panel_row_id: {required: true}
+  panel_version: {required: true}
+  event_id: {required: true}
+  event_date: {required: true}
+  event_date_status: {required: true}
+  event_evidence_version: {required: true}
+  event_evidence_sha256: {required: true}
+  event_evidence_row_count: {required: true, min: 1}
+  price_evidence_status: {required: true}
+  price_input_version: {required: true}
+  price_input_sha256: {required: true}
+  price_input_row_count: {required: true, min: 1}
+  cps_occ2010: {required: true}
+  component_id: {required: true}
+  crosswalk_status: {required: true}
+  route_status: {required: true}
+  component_weight: {required: true, min: 0, max: 1}
+  dose_lower: {required: true, min: 0}
+  dose_center: {required: true, min: 0}
+  dose_upper: {required: true, min: 0}
+  occupation_total_lower: {required: true, min: 0}
+  occupation_total_center: {required: true, min: 0}
+  occupation_total_upper: {required: true, min: 0}
+  mapping_input_version: {required: true}
+  mapping_input_sha256: {required: true}
+  mapping_input_row_count: {required: true, min: 1}
+  dose_input_version: {required: true}
+  dose_input_sha256: {required: true}
+  dose_input_row_count: {required: true, min: 1}
+  build_code_version: {required: true}
+  build_code_sha256: {required: true}
+  exclusion_reason: {}

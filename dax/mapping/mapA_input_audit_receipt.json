@@ -1,0 +1,37 @@
+{
+  "status": "MAPA_INPUTS_PRESENT_USABLE_PRIVATE",
+  "audited_at_utc": "2026-08-18T17:32:17Z",
+  "controlled_base_sha": "4255f76d08a6afebc51c0d8751eb0f808a5e4069",
+  "integration_sha": "dd1f97b51137ce88ad044f86b5453d29a9eed696",
+  "source_evidence_sha": "093aba628454d9bf740931654b5a51bc82bfe510",
+  "applied_evidence_sha": "bc2d9d3d063041a7981f466b5e9e81b7abb5ab4e",
+  "stable_evidence_patch_id": "a59896b6804c00882d62cb768c9232abe8530101",
+  "onet": {
+    "source_vintage": "O*NET 26.1",
+    "source_zip_sha256": "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a",
+    "derived_input_sha256": "62c6360c030d73948858c4930de17bb8f11aa6966bbd339d3397464fb8d8a40e",
+    "n_rows": 19259,
+    "n_unique_task_ids": 19259,
+    "n_unique_onet_socs": 923,
+    "n_unique_task_occupation_links": 19259,
+    "n_missing_task_ids": 0,
+    "n_missing_task_statements": 0,
+    "n_missing_occupation_links": 0,
+    "all_derived_ids_and_links_in_official_source": true,
+    "task_text_committed": false
+  },
+  "gdpval": {
+    "official_repository": "https://huggingface.co/datasets/openai/gdpval",
+    "pinned_revision": "11e7900cdcac61bc4daf59e65feb238acda98fbf",
+    "parquet_sha256": "f8422fab9b21d90c0ee5f0659842ab666d418cb8940842918f9f4b0df7ae0202",
+    "parquet_bytes": 1913489,
+    "n_rows": 220,
+    "n_unique_task_ids": 220,
+    "n_unique_occupations": 44,
+    "n_missing_task_ids": 0,
+    "n_missing_prompts": 0,
+    "task_text_committed": false
+  },
+  "required_fetch_or_rebuild": false,
+  "similarity_distribution_inspected": false
+}

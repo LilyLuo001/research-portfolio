@@ -1,0 +1,12 @@
+**Analysis status: CONFIRMATORY — FROZEN YAX v1.1.**
+
+| AI measure | Cognitive | Manual/physical | Routine (RTI) | Education | Log wage | Teleworkability | STEM | Computer use |
+|---|---|---|---|---|---|---|---|---|
+| AIOE, administrative equal | 0.653 | -0.936 | 0.161 | 0.688 | 0.611 | 0.741 | 0.249 | 0.849 |
+| AIOE, ability direct | 0.689 | -0.913 | 0.152 | 0.708 | 0.64 | 0.746 | 0.242 | 0.847 |
+| AIOE, OEWS source weighted | 0.66 | -0.939 | 0.148 | 0.7 | 0.617 | 0.754 | 0.249 | 0.854 |
+| Eloundou alpha (E1) | -0.032 | -0.266 | 0.217 | -0.034 | 0.011 | 0.2 | 0.436 | 0.304 |
+| Eloundou beta (E1 + 0.5 E2) | 0.478 | -0.758 | 0.169 | 0.425 | 0.478 | 0.589 | 0.371 | 0.797 |
+| Eloundou broad (E1 + E2) | 0.598 | -0.81 | 0.108 | 0.53 | 0.6 | 0.618 | 0.253 | 0.833 |
+
+**Note.** Frozen v1.1 values. Reported confidence intervals and p-values use the one-step occupation-cluster wild-score procedure. Where applicable, inference conditions on realized CPS weighted employment-stock cells and does not separately propagate first-stage survey-sampling or calibration-weight uncertainty.

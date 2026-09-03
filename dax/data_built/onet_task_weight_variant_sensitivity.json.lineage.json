@@ -1,0 +1,18 @@
+{
+  "output": "dax/data_built/onet_task_weight_variant_sensitivity.json",
+  "output_sha256": "8e16c30ff7b29d8270ef25fd3e3fcb23642a60a2e913ad5263138216976bfe42",
+  "inputs": [
+    {
+      "path": "dax/w2/task_weight_variant_sensitivity.py",
+      "sha256": "ae2bef9e1979afb5cdfe2d3382c9e2e7ea391f74dda222cf5c445cfc08fe4e43",
+      "rows": null
+    },
+    {
+      "path": "dax/data_built/onet_task_weights.parquet",
+      "sha256": "e889c47c33cc4bed9e35feba68c03e3917efa67a2782f63e4044ea39288d9f3c",
+      "rows": null
+    }
+  ],
+  "code_version": "23f4c9b39d66791761200e9198b668dd06c4057e",
+  "timestamp": "2026-08-25T06:39:00.621867+00:00"
+}

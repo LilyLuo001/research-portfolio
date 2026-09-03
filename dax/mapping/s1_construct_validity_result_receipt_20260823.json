@@ -1,0 +1,125 @@
+{
+  "audit_limit": "PRELIMINARY_SINGLE_CODEX_NOT_INDEPENDENT_DOMAIN_EXPERT_VALIDATION",
+  "construct_status_counts": {
+    "NON_EVALUABLE": 96,
+    "PASS": 13,
+    "REVISE": 11
+  },
+  "equal_family_weighted_construct_status_shares": {
+    "NON_EVALUABLE": 0.8045454545454547,
+    "PASS": 0.10757575757575757,
+    "REVISE": 0.08787878787878788
+  },
+  "evaluable_class_counts": {
+    "directly_executable_digital": 0,
+    "executable_with_construct_valid_simulated_inputs": 14,
+    "executable_with_supplied_files_data": 10,
+    "otherwise_not_currently_evaluable": 2,
+    "requires_interpersonal_interaction": 57,
+    "requires_physical_world_action": 35,
+    "requires_unavailable_proprietary_system": 2
+  },
+  "expert_review_family_counts": {
+    "climate_financial_risk": 1,
+    "clinical_documentation": 1,
+    "commercial_contracts": 1,
+    "emergency_documentation": 1,
+    "enterprise_system_domain": 2,
+    "grant_partnership_proposals": 1,
+    "legal": 2,
+    "municipal_compliance": 1,
+    "none_mechanical": 7,
+    "occupation_specific_domain": 2,
+    "occupation_specific_interpersonal_domain": 57,
+    "occupation_specific_physical_domain": 35,
+    "operations_budgeting": 1,
+    "quality_validation": 1,
+    "security_governance": 2,
+    "set_design_cad": 2,
+    "sustainability_program_evaluation": 1,
+    "technical_communication": 1,
+    "technical_writing": 1
+  },
+  "families_with_at_least_one_pass": 12,
+  "formal_s1_gate_result": "UNRESOLVED",
+  "historical_capture_readiness": {
+    "illustrative_direct_api_cost_sensitivity_usd": [
+      1.68,
+      262.08
+    ],
+    "paid_calls_made": 0,
+    "passing_items": 13,
+    "planning_calls_across_16_conditional_registry_rows": 1248,
+    "planning_calls_per_model_vintage": 78,
+    "required_environment_counts": {
+      "binary_file_read_write": 1,
+      "text_json_document": 2,
+      "text_json_form": 6,
+      "text_json_spreadsheet": 2,
+      "text_json_spreadsheet_code_optional": 2
+    },
+    "snapshot_compatibility_counts": {
+      "requires_binary_attachment_or_base64": 1,
+      "text_json_native": 10,
+      "text_json_native_code_tools_vary": 2
+    }
+  },
+  "main_failure_mode_counts": {
+    "assist_role_and_security_context_unfixed": 1,
+    "authentic_call_and_quality_anchors_missing": 1,
+    "cad_fixture_and_approval_boundary_unvalidated": 1,
+    "cad_fixture_and_drawing_rubric_missing": 1,
+    "compound_affidavit_filing_boundary_needs_domain_freeze": 1,
+    "construct_valid_candidate_dossiers_missing": 1,
+    "disjunctive_boundary_and_simulation_validity_unresolved": 1,
+    "domain_packet_and_expert_rubric_not_frozen": 1,
+    "live_interpersonal_or_supervisory_interaction": 57,
+    "no_observable_bounded_work_product": 2,
+    "none_construct_pass": 13,
+    "physical_world_action": 35,
+    "product_fixture_and_walkthrough_missing": 1,
+    "reference_packet_and_quality_anchors_missing": 1,
+    "scenario_external_validity_unestablished": 1,
+    "unavailable_proprietary_system": 2
+  },
+  "major_families": 22,
+  "model_or_api_calls": 0,
+  "non_evaluable_total": 96,
+  "outcomes_opened": false,
+  "pass_task_mass_share_without_human_judging_conditional_on_pass_mass": 0.3732156652034903,
+  "pilot_task_mass_share_pass_and_without_human_judging": 0.0477197823610361,
+  "private_lineage": {
+    "annotations_sha256": "d79510b9463ae262ddc8b01e14b74a672fa361dc0592246c80720d584796284f",
+    "constructed_audit_sha256": "2bc8f4ce65f4f54d77dce5815fbc7ebb651129c086f5e20d18aed3ed3a509e90",
+    "sample_sha256": "693cea853e8c22359a50650fea854233897a4b34b8e0c9de461a5f2d4583bc72"
+  },
+  "realized_spend_usd": 0,
+  "recommendation": "PARTIAL_IDENTIFICATION_ONLY",
+  "recommendation_is_not_threshold_signature": true,
+  "row_level_data_committed": false,
+  "sample_tasks": 120,
+  "scoring_class_counts": {
+    "fully_objective_mechanical": 7,
+    "not_currently_scoreable": 96,
+    "partially_objective_limited_rubric": 13,
+    "primarily_expert_rubric": 4
+  },
+  "status": "S1_CONSTRUCT_VALIDITY_PILOT_COMPLETE_THRESHOLD_UNSIGNED",
+  "task_mass_weighted_construct_status_shares_within_pilot": {
+    "NON_EVALUABLE": 0.7428123089597806,
+    "PASS": 0.12786114520412104,
+    "REVISE": 0.1293265458360984
+  },
+  "task_mass_weighted_evaluable_class_shares_within_pilot": {
+    "directly_executable_digital": 0.0,
+    "executable_with_construct_valid_simulated_inputs": 0.1485748872353137,
+    "executable_with_supplied_files_data": 0.10861280380490569,
+    "otherwise_not_currently_evaluable": 0.020400107999257882,
+    "requires_interpersonal_interaction": 0.4755271481751182,
+    "requires_physical_world_action": 0.2284296817003695,
+    "requires_unavailable_proprietary_system": 0.018455371085034963
+  },
+  "threshold": null,
+  "threshold_status": "NEED_PROSPECTIVE_PI_THRESHOLD_SIGNATURE",
+  "weight_limit": "PILOT_DESCRIPTIVE_NOT_DESIGN_WEIGHTED_POPULATION_ESTIMATE"
+}

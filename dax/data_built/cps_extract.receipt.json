@@ -1,0 +1,52 @@
+{
+  "asec_rows": 0,
+  "calendar_months_spanned": 57,
+  "missing_month_rule": "these calendar months have no CPS sample. calendar_month_index is absolute and prev_month_present flags rows whose preceding month is absent, so a lag or difference must filter on it. Treating consecutive ROWS as consecutive months produces a multi-month step labelled as one.",
+  "missing_months": [
+    "2025-10"
+  ],
+  "month_first": "2021-11",
+  "month_last": "2026-07",
+  "months_present": 56,
+  "n_employed_hours_unobserved": 10023,
+  "observed_empstat": {
+    "1": 2513,
+    "10": 171308,
+    "12": 5060,
+    "21": 10082,
+    "22": 1195,
+    "32": 6019,
+    "34": 45114,
+    "36": 1183
+  },
+  "output_sha256": "65c0da47f1041d2809f2eeeb0210d91e4a51ff97286f1712ac8d7551907d2f00",
+  "provenance": {
+    "extract_path": "/usr3/graduate/qluo/dax-private/ipums/w5_analysis_extract_7/cps_00007.csv.gz",
+    "extract_sha256": "f638f306146aa294933448aca2ffcea6703e4a7394c61c899007e1cd7a3769a2",
+    "pinned_sha256": "f638f306146aa294933448aca2ffcea6703e4a7394c61c899007e1cd7a3769a2"
+  },
+  "receipt_version": "dax-w2-cps-analysis-panel-v1",
+  "recodes": {
+    "employed_empstat_codes": [
+      10,
+      12
+    ],
+    "empstat_treated_not_employed": [
+      1,
+      21,
+      22,
+      32,
+      34,
+      36
+    ],
+    "hours_missing_uhrsworkt_codes": [
+      999
+    ],
+    "hours_rule": "unconditional weekly hours, zero for the non-employed; employed-with-hours-vary UNOBSERVED, never zero; a genuine 0 is a real value and is retained",
+    "hours_vary_uhrsworkt_codes": [
+      997
+    ]
+  },
+  "rows": 242474,
+  "scope": "W5 ANALYSIS PANEL. Not the pre-event power panel, which is frozen at 2021-11..2023-02 and feeds power_standard.json."
+}

@@ -1,0 +1,8 @@
+| Step | Exposure mapping and support | Occupations | Coefficient | Bootstrap SE | 95% CI | p-value |
+|---|---|---|---|---|---|---|
+| 1 | original exposure, original support | 410 | -0.01885 | 0.01177 | [-0.04133, 0.00364] | 0.106 |
+| 2 | repaired exposure, original support | 410 | -0.01920 | 0.01216 | [-0.04213, 0.00373] | 0.119 |
+| 3 | repaired exposure, expanded support | 495 | -0.03156 | 0.01277 | [-0.05616, -0.00697] | 0.008 |
+| 4 | repaired exposure, expanded support, group 15 excluded | 480 | -0.02940 | 0.01267 | [-0.05396, -0.00485] | 0.017 |
+
+Note: Coefficients are per fixed SD of AIOE and condition on Webb software-patent exposure. Row 1 to row 2 changes mapped values on fixed support; row 2 to row 3 expands support; row 4 excludes computer and mathematical occupations. Source: MAPPING_DECOMPOSITION_AUDIT.csv.

@@ -1,0 +1,68 @@
+{
+  "schema_version": "dax-v3-s1-construct-validity-v1",
+  "status": "FROZEN_BEFORE_S1_TASK_TEXT_INSPECTION",
+  "base_sha": "5d33c61c5a2adf8f432ae092ec8e76b580a30670",
+  "sample_provenance": {
+    "prior_persisted_draw_found": false,
+    "interpretation": "ONE_DETERMINISTIC_FIRST_REALIZATION_NO_REDRAW_OR_REPLACEMENT",
+    "seed": "DAX-V3-S1-FIRST-DRAW|5d33c61c5a2adf8f432ae092ec8e76b580a30670",
+    "frame_expected_unique_tasks": 15274,
+    "major_family_expected_count": 22,
+    "base_tasks_per_family": 5,
+    "extra_task_family_count": 10,
+    "sample_size": 120,
+    "selected_task_text_inspected_before_freeze": false
+  },
+  "mechanical_prestrata": {
+    "physical_tokens": ["adjust", "assemble", "clean", "connect", "cut", "drive", "fill", "install", "lift", "load", "maintain", "move", "operate", "pack", "remove", "repair", "wash"],
+    "interpersonal_tokens": ["advise", "arbitrate", "assist", "care", "communicate", "counsel", "encourage", "explain", "instruct", "interview", "negotiate", "respond", "serve", "supervise", "teach"],
+    "document_data_tokens": ["analyze", "calculate", "compile", "design", "document", "estimate", "evaluate", "prepare", "record", "report", "research", "review", "write"],
+    "priority": ["physical_manual", "interpersonal_service", "document_data", "other"]
+  },
+  "evaluable_classes": [
+    "directly_executable_digital",
+    "executable_with_supplied_files_data",
+    "executable_with_construct_valid_simulated_inputs",
+    "requires_unavailable_proprietary_system",
+    "requires_physical_world_action",
+    "requires_interpersonal_interaction",
+    "otherwise_not_currently_evaluable"
+  ],
+  "construct_statuses": ["PASS", "REVISE", "NON_EVALUABLE"],
+  "scoring_classes": [
+    "fully_objective_mechanical",
+    "partially_objective_limited_rubric",
+    "primarily_expert_rubric",
+    "not_currently_scoreable"
+  ],
+  "audit_axes": [
+    "task_boundary_fidelity",
+    "work_product_fidelity",
+    "domain_context_fidelity",
+    "tool_input_fidelity",
+    "difficulty_distortion",
+    "added_task_content_risk",
+    "omitted_essential_content_risk"
+  ],
+  "pass_rule": "FIRST_FOUR_AXES_PASS_AND_LAST_THREE_RISKS_LOW_AND_INPUT_SCORING_PACKAGE_COMPLETE",
+  "revise_rule": "SAME_BOUNDARY_CONSTRUCTION_FEASIBLE_BUT_AT_LEAST_ONE_PROSPECTIVELY_REPAIRABLE_DEFECT",
+  "non_evaluable_rule": "COMPLETE_FAITHFUL_EXECUTION_NOT_OBSERVABLE_WITHOUT_CHANGING_SUBSTANTIVE_TASK",
+  "threshold": null,
+  "threshold_status": "NEED_PROSPECTIVE_PI_THRESHOLD_SIGNATURE",
+  "weights": {
+    "task_mass": "2021_task_annual_wage_bill_allocation_normalized_within_pilot_descriptive_only",
+    "family": "equal_weight_across_22_major_families_then_equal_within_family",
+    "population_design_weighted_claim": false
+  },
+  "hard_stops": {
+    "model_evaluation": false,
+    "api_calls": false,
+    "w4_capture": false,
+    "w5": false,
+    "identification": false,
+    "power": false,
+    "outcomes": false,
+    "recruitment": false,
+    "paid_work": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "status": "IPUMS_WIDE_EXTRACT_SUPERSEDING_SUBMITTED",
+  "supersedes_extract": 8,
+  "do_not_analyze_extract": 8,
+  "collection": "cps",
+  "api_version": 2,
+  "extract_number": 9,
+  "extract_status": "queued",
+  "submitted_at_utc": "2026-08-25T13:38:31.382050+00:00",
+  "submitted_spec_path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/ipums_ai_telework_extract_superseding_submitted.json",
+  "submitted_spec_sha256": "bd798b9dfe11d00153856be3e05a7c52865a149dcc7405a5cbfd812eb3ca6c3a",
+  "source_git_commit": "ad7e662a84faed7eea8950ca075be1891b47f6c8",
+  "sample_id_replacements": {
+    "cps2017_01s": "cps2017_01b",
+    "cps2017_04s": "cps2017_04b",
+    "cps2018_04s": "cps2018_04b",
+    "cps2019_04s": "cps2019_04b",
+    "cps2020_04s": "cps2020_04b",
+    "cps2020_05s": "cps2020_05b",
+    "cps2020_07s": "cps2020_07b",
+    "cps2020_09s": "cps2020_09b",
+    "cps2021_01s": "cps2021_01b",
+    "cps2021_04s": "cps2021_04b",
+    "cps2021_05s": "cps2021_05b"
+  },
+  "removed_unavailable_samples": [
+    "cps2025_10s"
+  ],
+  "added_variables": [
+    "STATEFIP",
+    "OCC",
+    "OCC1990",
+    "SCHLCOLL",
+    "CPSIDV",
+    "WKSTAT"
+  ],
+  "sample_count": 114,
+  "variable_count": 32,
+  "errors": {}
+}

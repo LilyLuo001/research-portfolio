@@ -1,0 +1,295 @@
+{
+  "common_support_correlations": {
+    "AIOE_admin": {
+      "AIOE_admin": 1.0,
+      "AIOE_oews2018_source_weighted": 0.9959792628754414,
+      "AIOE_sim": 0.5065654399531262,
+      "AIOE_wgt": 0.9825917008670274
+    },
+    "AIOE_oews2018_source_weighted": {
+      "AIOE_admin": 0.9959792628754414,
+      "AIOE_oews2018_source_weighted": 1.0,
+      "AIOE_sim": 0.5038332133459748,
+      "AIOE_wgt": 0.9787035878218395
+    },
+    "AIOE_sim": {
+      "AIOE_admin": 0.5065654399531262,
+      "AIOE_oews2018_source_weighted": 0.5038332133459748,
+      "AIOE_sim": 1.0,
+      "AIOE_wgt": 0.5004424970974309
+    },
+    "AIOE_wgt": {
+      "AIOE_admin": 0.9825917008670274,
+      "AIOE_oews2018_source_weighted": 0.9787035878218395,
+      "AIOE_sim": 0.5004424970974309,
+      "AIOE_wgt": 1.0
+    }
+  },
+  "common_support_count": 519,
+  "common_support_spearman_correlations": {
+    "AIOE_admin": {
+      "AIOE_admin": 1.0,
+      "AIOE_oews2018_source_weighted": 0.9954849081983552,
+      "AIOE_sim": 0.939727326670757,
+      "AIOE_wgt": 0.9868965134373243
+    },
+    "AIOE_oews2018_source_weighted": {
+      "AIOE_admin": 0.9954849081983552,
+      "AIOE_oews2018_source_weighted": 1.0,
+      "AIOE_sim": 0.94035514757021,
+      "AIOE_wgt": 0.9831625499254011
+    },
+    "AIOE_sim": {
+      "AIOE_admin": 0.939727326670757,
+      "AIOE_oews2018_source_weighted": 0.94035514757021,
+      "AIOE_sim": 1.0,
+      "AIOE_wgt": 0.9306900879155214
+    },
+    "AIOE_wgt": {
+      "AIOE_admin": 0.9868965134373243,
+      "AIOE_oews2018_source_weighted": 0.9831625499254011,
+      "AIOE_sim": 0.9306900879155214,
+      "AIOE_wgt": 1.0
+    }
+  },
+  "counts": {
+    "bls_rows": 900,
+    "bls_source_socs": 840,
+    "bls_target_socs": 867,
+    "census_detailed_codes": 568,
+    "felten_source_socs": 774,
+    "onet25_0_source_socs": 774,
+    "onet25_1_target_census": 530,
+    "soc2018_census_links": 1046
+  },
+  "eig_repository_commit": "a65ce97d9fa6ed931af12fb37321fec363a9c15f",
+  "eig_variant_note": "AIOE_admin is equal-mean administrative mapping; AIOE_sim is EIG O*NET bridge; AIOE_wgt is EIG direct ability-level reconstruction and is the Felten variable used in EIG main analysis. These are not interchangeable.",
+  "eloundou_notation_note": "The official source dataset names the upper-bound column dv_rating_gamma. The published paper denotes the same E1+E2 construct by Greek zeta. The exported field preserves the source column name and does not create a second numerical alias.",
+  "flagship_mappings": [
+    {
+      "admin_equal": 1.2421155,
+      "soc_2018": "15-1252",
+      "source_weighted": 1.226443341806204,
+      "sources": [
+        {
+          "AIOE": 1.200923,
+          "soc_2010": "15-1132",
+          "soc_title_2010": "Software Developers, Applications (#)",
+          "tot_emp_2018": 903160.0
+        },
+        {
+          "AIOE": 1.283308,
+          "soc_2010": "15-1133",
+          "soc_title_2010": "Software Developers, Systems Software (#)",
+          "tot_emp_2018": 405330.0
+        }
+      ]
+    },
+    {
+      "admin_equal": 1.19815,
+      "soc_2018": "15-1211",
+      "source_weighted": 1.19815,
+      "sources": [
+        {
+          "AIOE": 1.19815,
+          "soc_2010": "15-1121",
+          "soc_title_2010": "Computer Systems Analysts",
+          "tot_emp_2018": 587970.0
+        }
+      ]
+    },
+    {
+      "admin_equal": 0.299343,
+      "soc_2018": "15-1232",
+      "source_weighted": 0.299343,
+      "sources": [
+        {
+          "AIOE": 0.299343,
+          "soc_2010": "15-1151",
+          "soc_title_2010": "Computer User Support Specialists",
+          "tot_emp_2018": 630700.0
+        }
+      ]
+    },
+    {
+      "admin_equal": 1.0816930666666666,
+      "soc_2018": "13-1082",
+      "source_weighted": 1.0645635946073078,
+      "sources": [
+        {
+          "AIOE": 0.9646872,
+          "soc_2010": "11-9199",
+          "soc_title_2010": "Managers, All Other (#)",
+          "tot_emp_2018": 462840.0
+        },
+        {
+          "AIOE": 1.047687,
+          "soc_2010": "13-1199",
+          "soc_title_2010": "Business Operations Specialists, All Other (#)",
+          "tot_emp_2018": 1060580.0
+        },
+        {
+          "AIOE": 1.232705,
+          "soc_2010": "15-1199",
+          "soc_title_2010": "Computer Occupations, All Other (#)",
+          "tot_emp_2018": 381380.0
+        }
+      ]
+    }
+  ],
+  "onet_to_census2018_aggregation": {
+    "across_soc_components": "May 2021 OEWS target-SOC employment weights; equal fallback is explicit when a component has no OEWS employment",
+    "dingel_neiman_weight_basis_counts": {
+      "equal_missing_oews_employment": 22,
+      "oews_2021_employment": 546
+    },
+    "eloundou_weight_basis_counts": {
+      "equal_missing_oews_employment": 22,
+      "oews_2021_employment": 546
+    },
+    "missing_exposure_rule": "fail closed with covered weight and unnormalized partial sum; never renormalize around a missing component",
+    "within_six_digit_soc": "equal mean across published O*NET detail occupations; no official employment weights exist below six-digit SOC"
+  },
+  "pairwise_correlations": {
+    "AIOE_admin": {
+      "AIOE_admin": 1.0,
+      "AIOE_oews2018_source_weighted": 0.9960652024221257,
+      "AIOE_sim": 0.5082151957122193,
+      "AIOE_wgt": 0.9827579044858774
+    },
+    "AIOE_oews2018_source_weighted": {
+      "AIOE_admin": 0.9960652024221257,
+      "AIOE_oews2018_source_weighted": 1.0,
+      "AIOE_sim": 0.5038332133459748,
+      "AIOE_wgt": 0.9787035878218395
+    },
+    "AIOE_sim": {
+      "AIOE_admin": 0.5082151957122193,
+      "AIOE_oews2018_source_weighted": 0.5038332133459748,
+      "AIOE_sim": 1.0,
+      "AIOE_wgt": 0.5022421019996166
+    },
+    "AIOE_wgt": {
+      "AIOE_admin": 0.9827579044858774,
+      "AIOE_oews2018_source_weighted": 0.9787035878218395,
+      "AIOE_sim": 0.5022421019996166,
+      "AIOE_wgt": 1.0
+    }
+  },
+  "record_version": "dax-crosswalk-input-gate-v1",
+  "soc_major_group_15_coverage": {
+    "admin_repaired_codes": 20,
+    "admin_repaired_employment_coverage": 0.9772318599280305,
+    "exact_code_baseline_codes": 4,
+    "exact_code_baseline_employment_coverage": 0.033273537783984106,
+    "oews2021_detailed_codes": 21,
+    "oews2021_employment": 4654750.0,
+    "source_weighted_repaired_codes": 19,
+    "source_weighted_repaired_employment_coverage": 0.9763789677211451
+  },
+  "source_weight_note": "May 2018 OEWS source-code employment. BLS 2018 technical notes identify the release as 2010 SOC; target-vintage OEWS cannot distinguish source codes after a many-to-one collapse.",
+  "sources": {
+    "aioe": {
+      "path": "/tmp/qluo_dax_crosswalk_gate_20260825/dax/w2/exposure_gate/AIOE_DataAppendix.xlsx",
+      "sha256": "c123b4c64840aff3568ae6c97256678719b88a74d45b6362dbefb5af34667b95",
+      "url": "https://github.com/AIOE-Data/AIOE"
+    },
+    "bls_soc_2010_to_2018": {
+      "file_date": "November 2017 (workbook header)",
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/bls/soc_2010_to_2018_crosswalk.xlsx",
+      "sha256": "f3a847561562d3e5a30eb848f2902a5f7b02e9c48b3d7f2cc8879899fbc242a7",
+      "url": "https://www.bls.gov/soc/2018/soc_2010_to_2018_crosswalk.xlsx"
+    },
+    "census_2018_occupation_crosswalk": {
+      "file_date": "2019-09-26 (workbook overview)",
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/census/2018-occupation-code-list-and-crosswalk.xlsx",
+      "sha256": "fca2818d691c32777a4cd733a9ab77c8c5bd47adcacd7ac3aa149bebd45b5f7f",
+      "url": "https://www2.census.gov/programs-surveys/demo/guidance/industry-occupation/2018-occupation-code-list-and-crosswalk.xlsx"
+    },
+    "dingel_neiman_telework": {
+      "path": "/tmp/qluo_dax_crosswalk_gate_20260825/dax/w2/exposure_gate/dingel_neiman_occ.csv",
+      "sha256": "42ff3ae084478b554526671710b53a16d39f88c3eebb24f56f46372d7243bd40",
+      "url": "https://github.com/jdingel/DingelNeiman-workathome"
+    },
+    "eig_crosswalk_code": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/eig_ai_unemployment/01 Crosswalks.R",
+      "sha256": "06bfa21b5a3c5019b76c3d1e25dd2aeee4551a82b2da4072bde5173ae5653b4e",
+      "url": "https://github.com/EIG-Research/AI-unemployment/blob/a65ce97d9fa6ed931af12fb37321fec363a9c15f/code/01%20Crosswalks.R"
+    },
+    "eloundou_gpt4_occupation_exposure": {
+      "paper_notation_locator": "https://arxiv.org/abs/2303.10130",
+      "path": "/tmp/qluo_dax_crosswalk_gate_20260825/dax/w2/exposure_gate/eloundou_occ.csv",
+      "sha256": "40c74f53de40aec91c0017d80690cbba915f83a8bb414bcf2f884692f1749acb",
+      "url": "https://github.com/openai/GPTs-are-GPTs/blob/main/data/occ_level.csv"
+    },
+    "oews_2018": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/oews_2018/oesm18nat.zip",
+      "sha256": "7ad399c96360c6abd3977574af958d49582f8dd33372b6d433b31669ddeb156c",
+      "taxonomy_locator": "https://www.bls.gov/oes/2018/may/oes_tec.htm",
+      "taxonomy_statement": "BLS technical notes identify 810 detailed occupations based on the 2010 SOC system.",
+      "url": "https://www.bls.gov/oes/special-requests/oesm18nat.zip"
+    },
+    "oews_2019": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/oews_2019/oesm19nat.zip",
+      "sha256": "850891ca753bc0c252756175c72483a126fdf64bc66643bd199c844e3f7de9ff",
+      "url": "https://www.bls.gov/oes/special-requests/oesm19nat.zip"
+    },
+    "oews_2021": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/oews_2021/oesm21nat.zip",
+      "sha256": "83ad09f19e62104a39024d36ed67cae5c3f7d5b42ff165ca656e0e35241bcf31",
+      "url": "https://www.bls.gov/oes/special-requests/oesm21nat.zip"
+    },
+    "oews_2025": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/oews_2025/oesm25nat.zip",
+      "sha256": "b5855a37f3e03e779f6fbf173d3bbc94aeeff33426aef32fa95ce6d025bab1af",
+      "url": "https://www.bls.gov/oes/special-requests/oesm25nat.zip"
+    },
+    "onet_25_0_excel": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/onet_25_0/db_25_0_excel.zip",
+      "sha256": "a6380206c65e9c25e5fabee8b94c84a04f0c310491edb7665295a961df0d6afb",
+      "url": "https://www.onetcenter.org/dl_files/database/db_25_0_excel.zip"
+    },
+    "onet_25_1_excel": {
+      "path": "/projectnb/econdept/qluo/dax-private/public_raw/onet_25_1/db_25_1_excel.zip",
+      "sha256": "7979b3b963337746cbbf9090943de93c34c71a0075817785cd3c2edefd029f79",
+      "url": "https://www.onetcenter.org/dl_files/database/db_25_1_excel.zip"
+    }
+  },
+  "target_oews_coverage": {
+    "2021": {
+      "admin_employment_coverage": 0.9289823649079179,
+      "admin_resolved_codes": 772,
+      "detailed_codes": 831,
+      "employment_total": 140885570.0,
+      "source_weighted_employment_coverage": 0.9239438787095087,
+      "source_weighted_resolved_codes": 767
+    },
+    "2025": {
+      "admin_employment_coverage": 0.9250384482200622,
+      "admin_resolved_codes": 772,
+      "detailed_codes": 830,
+      "employment_total": 155481840.0,
+      "source_weighted_employment_coverage": 0.9196142777831804,
+      "source_weighted_resolved_codes": 767
+    }
+  },
+  "target_soc2018_common_support_diagnostics": {
+    "employment": 130170360.0,
+    "employment_weighted_mean_absolute_native_difference": 0.0025604518547574103,
+    "employment_weighted_p90_absolute_native_difference": 1.1102230246251565e-16,
+    "maximum_absolute_native_difference": 0.5150888370408203,
+    "occupations": 767,
+    "oews2021_employment_weighted_pearson_admin_vs_source_weighted": 0.9997537970990769
+  },
+  "target_soc2018_counts": {
+    "admin_equal": 800,
+    "common": 777,
+    "source_weighted": 777
+  },
+  "variant_nonmissing_counts": {
+    "AIOE_admin": 545,
+    "AIOE_oews2018_source_weighted": 535,
+    "AIOE_sim": 529,
+    "AIOE_wgt": 530
+  }
+}

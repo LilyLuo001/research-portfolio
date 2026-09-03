@@ -2,7 +2,7 @@
 
 **Scope:** runs P1 (fund conversions), E2 (RWA looping), and DAX (AI exposure) as one portfolio.
 **Resources:** Claude Pro subscription (fixed cost) + ¥300–500/month external API budget + one human reviewer (~30 min/day).
-**Companion patches:** `P1_修订补丁_v1.1.md`, `E2_修订补丁_v1.2.md`, `DAX_Amendment_v1.1.md` — task-level model reassignments live there; this document defines the runtime they plug into.
+**Companion patches:** `E2_修订补丁_v1.2.md`, `DAX_Amendment_v1.1.md` — task-level model reassignments live there; this document defines the runtime they plug into. (P1's patch memos were deleted as superseded — P1 model assignment now comes from this document plus `docs/Project_1.md` §2; the research substance is `基金转换实验_博士研究计划.md` alone.)
 
 ---
 

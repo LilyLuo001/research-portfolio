@@ -1,0 +1,14 @@
+{
+  "record_version": "yax-clean-result-checkout-reproduction-v1",
+  "status": "PASS",
+  "source_commit": "5596d18df329ed3266163ba979256ee52b04d37a",
+  "source_checkout_clean_before_and_after": true,
+  "procedure": "python3 yax/analysis/render_frozen_outputs.py --output /private/tmp/yax-repro-render-5596d18",
+  "licensed_microdata_read": false,
+  "canonical_result_json_read": true,
+  "rendered_artifacts_compared": 16,
+  "byte_identical_artifacts": 16,
+  "hash_match": true,
+  "untracked_files_required": false,
+  "notes": "All six CSV/Markdown table pairs, the additional headline table pair, and both PNG figures reproduced byte-for-byte from a detached clean checkout. The generated manifest itself is path-dependent and was validated separately against the canonical checkout."
+}

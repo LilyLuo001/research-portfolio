@@ -1,0 +1,102 @@
+{
+  "status": "BLOCKED_UNQUALIFIED_W3_AND_MISSING_W4_MEASUREMENTS",
+  "generated_at_utc": "2026-08-20T08:53:28Z",
+  "input_commits": {
+    "seat_c_standard_freeze": "cf4a240d8d59ea3b476af78fc8d249b7c5a977e2",
+    "price_redteam": "c84a6e5f2b9b13caa93bb79b8d946dd66197d5e6",
+    "gate1_integration": "dd1f97b51137ce88ad044f86b5453d29a9eed696",
+    "event_evidence": "093aba628454d9bf740931654b5a51bc82bfe510",
+    "phase_a_contract": "45280d787db23af7065ee0a0c97b0ebea15d2300",
+    "phase_a_portability_fix": "0238e4623265c5b9baec1e6e9e4c53ca98250a38",
+    "w3_mapping_a": "48cfdcacbf24e07a3185e8253785bd31cc65d1f2",
+    "w4_capability_panel": "2c634087447af61bbd2cdf3031ebe41a9aa4909e"
+  },
+  "qualified_input_summary": {
+    "event_registry_rows": 21,
+    "event_date_verified_rows": 20,
+    "event_date_pending_rows": 1,
+    "analysis_eligible_rows": 4,
+    "price_verified_rows": 20,
+    "crosswalk_mapping_rows": 1287,
+    "crosswalk_cps_codes": 503,
+    "fully_resolved_component_mass_share": 0.7716899944,
+    "bounded_provisional_component_mass_share": 0.1921987433,
+    "mapped_component_mass_share": 0.9638887378,
+    "unresolved_component_mass_share": 0.0344065283,
+    "absent_component_mass_share": 0.0017047339,
+    "crosswalk_reconciliation_errors": 0
+  },
+  "blocking_inputs": {
+    "mapping_a_gdpval": {
+      "status": "EXECUTED_AUDIT_PENDING_NOT_ACCEPTED",
+      "source_commit": "48cfdcacbf24e07a3185e8253785bd31cc65d1f2",
+      "required_artifact": "mapping_a_gdpval.csv",
+      "private_artifact_sha256": "d1ebd110134a69807a94211691a1e1ef49ea8b478173dfc76e6be37b87468868",
+      "total_rows": 19259,
+      "accepted_rows": 0,
+      "unaudited_grade_c_queue_rows": 37,
+      "unmatched_rows": 19222,
+      "occupations_below_coverage_floor": 923,
+      "evidence": "The deterministic Mapping A run is frozen, but all 37 queued grade-C judgments remain pending independent cross-vendor annotation and T1 audit. They are not accepted mappings."
+    },
+    "w4_capability_cost_panel": {
+      "status": "PREFLIGHT_BLOCKED_NO_REAL_MEASUREMENTS",
+      "source_commit": "2c634087447af61bbd2cdf3031ebe41a9aa4909e",
+      "task_universe_rows": 220,
+      "duration_covered_rows": 0,
+      "duration_missing_rows": 220,
+      "duration_coverage_rate": 0.0,
+      "captured_rows": 0,
+      "blocked_rows": 220,
+      "realized_cost_usd": 0.0,
+      "full_capture_allowed": false,
+      "account_probe_performed": false,
+      "availability_status_counts": {
+        "unprobed_missing_key": 14,
+        "standin_provider_unconfigured": 2,
+        "blocked_missing_approved_snapshot_rule": 5,
+        "excluded_binding": 1
+      },
+      "required_fields": [
+        "event_id",
+        "model_id",
+        "onet_task_id",
+        "capability_lower",
+        "capability_center",
+        "capability_upper",
+        "cost_lower",
+        "cost_center",
+        "cost_upper",
+        "task_duration",
+        "input_version",
+        "input_sha256",
+        "input_row_count"
+      ],
+      "evidence": "W4 supplies a fail-closed contract and zero-spend preflight only. No real capability, pi, cost, or task-duration row was captured; duration is absent for all 220 authorized tasks."
+    },
+    "private_task_backbone": {
+      "status": "BLOCKED_MISSING_CAPABILITY_SCORES_AND_TASK_DURATION",
+      "dose_construction_status": "BLOCKED_MISSING_CAPABILITY_SCORES_AND_TASK_DURATION",
+      "cost_per_completed_task_status": "BLOCKED_MISSING_TASK_DURATION",
+      "rows": 31892,
+      "cps_codes": 503,
+      "backbone_usable_rows_before_w3_w4": 17241
+    }
+  },
+  "fail_closed_result": {
+    "real_panel_constructed": false,
+    "private_panel_committed": false,
+    "identification_gate_run": false,
+    "identification_result": null,
+    "outcome_data_opened": false,
+    "post_event_outcomes_opened": false,
+    "synthetic_or_static_scores_substituted": false,
+    "exclusion_reason": "The adoption inequality cannot be evaluated: Mapping A has zero accepted rows, and W4 has zero captured capability/cost rows and zero task-duration coverage. Queued grade-C mappings, static occupation scores, verified prices, and invented duration or pi values are not substitutes."
+  },
+  "required_unblock": [
+    "Complete independent cross-vendor annotation and the T1 audit for the 37-row Mapping A queue; only audited accepted mappings may enter W5.",
+    "Provide authorized frozen task duration for the 220-task universe; missing duration must remain null and blocking.",
+    "Run the budget- and availability-gated W4 capture and freeze real event-by-task capability, pi, and cost intervals with complete lineage.",
+    "Rerun W5 from this exact branch state; do not reuse a synthetic or static exposure panel."
+  ]
+}

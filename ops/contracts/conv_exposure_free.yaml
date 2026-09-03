@@ -1,0 +1,59 @@
+# P1-T2 FREE-PATH output — parallel to conv_exposure.yaml (no WRDS/CRSP).
+# Same holdings-based ConvExp, but sourced from EDGAR N-PORT + OpenFIGI + XBRL,
+# so every number carries a public locator (meta-rule 1) with zero paid data.
+#
+# Keyed on the public CUSIP (there is no permno without CRSP). This is a NEW
+# contract for the free path — it does NOT modify the frozen conv_exposure.yaml
+# (which stays [permno, wave_id]); nothing downstream consumes a 'stock_cusip'
+# column, so 'cusip' is the canonical key here. A cusip<->ticker<->cik crosswalk
+# ships alongside so a later CRSP merge recovers permno without renaming a column.
+#
+# NOTE: an earlier revision of this file was merge-corrupted into two concatenated
+# YAML documents (a 'cusip' block + a leftover 'stock_cusip' scaffold block). Under
+# yaml.safe_load that silently resolved to the stray 'stock_cusip' key and made the
+# validator demand a column the parquet never had. This is the repaired single-doc
+# version, aligned 1:1 with the columns the pipeline actually emits.
+producer: P1-T2-free
+primary_key: [cusip, wave_id]
+strict_columns: false
+columns:
+  # ---- crosswalk keys (public) ----
+  cusip: {required: true}          # 9-char CUSIP from the N-PORT holding
+  ticker: {}                       # resolved symbol (N-PORT field or OpenFIGI)
+  stock_cik: {}                    # SEC issuer CIK (company_tickers.json)
+  permno: {}                       # empty until a CRSP merge; kept for parallelism
+  # ---- ConvExp core ----
+  wave_id: {required: true}
+  effective_date: {required: true}
+  conv_exp: {required: true, min: 0}
+  n_funds: {min: 0}
+  mcap_decile: {min: 1, max: 10}
+  pre_etf_ownership: {min: 0}
+  # ---- additive provenance / audit ----
+  shares_held: {min: 0}            # Σ fund shares held pre-conversion
+  shares_outstanding: {min: 0}     # issuer shares outstanding (XBRL dei)
+  # PENDING — do NOT declare until the box re-runs the pipeline. contracts.py
+  # treats every declared column as mandatory, so declaring a column the
+  # committed parquet does not yet carry would fail the artifact Gate 2 was
+  # signed on. The pipeline now emits `val_usd` (Σ N-PORT valUSD per cell, for
+  # value-weighted coverage); strict_columns is false, so the extra column
+  # validates fine meanwhile. Declare it in the SAME commit that lands the
+  # rebuilt parquet:
+  #   val_usd: {min: 0}
+  #
+  # Also PENDING, and landing with the same rebuild (v2.1d): the holdings as-of
+  # dates. N-PORT share counts are as of genInfo/repPdDate, not the filing date,
+  # and the CRSP CFACSHR join must use them — joining on `filed` adjusts a March
+  # share count by a May factor and INSERTS the corporate action it is meant to
+  # remove. min and max differ only when one cell pools funds whose last
+  # pre-conversion filings are different months; when they differ, shares must be
+  # adjusted per fund BEFORE aggregation.
+  #   holdings_asof_min: {}
+  #   holdings_asof_max: {}
+  source_accessions: {}            # ';'-joined N-PORT accession(s)
+# Removed 2026-08-27: a second, contradictory note here said to declare this
+# column as `valusd` (no underscore). That spelling came from a dead inline loop
+# in build_nport_convexp.py, now deleted. The pipeline emits `val_usd` — see the
+# in-block note above, which is the one to follow. `valusd` survives only as an
+# internal aggregation key and as a column of the dropped-cells sidecar CSV;
+# neither is this parquet, and neither should be renamed.

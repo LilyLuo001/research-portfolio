@@ -1,0 +1,48 @@
+check,status,detail
+frozen_tag,PASS,v1.1-design-freeze
+frozen_commit,PASS,22fbf7924809b7a535e31ae0ab68f5b113ce8078
+core_result_hash,PASS,4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831
+core_ledger_hash,PASS,e900adb75510729be635eb7aea381bfe6e523b376b6f2723350cf47bdf09266b
+core_markdown_hash,PASS,2a152018d0198bb106a01ae08e5eda7c2d4a0e2fe617d74cc7f4ad731c18666e
+reporting_hash_manifest,PASS,17 artifacts; failures=[]
+ledger_rows,PASS,rows=195
+ledger_unique_ids,PASS,unique=195
+ledger_section_counts,PASS,"{""Figure 3"": 108, ""Table 2"": 12, ""Table 3"": 1, ""Table 4"": 56, ""Table 5"": 4, ""Table 6"": 14}"
+ledger_design_commit,PASS,all ledger rows
+ledger_input_hashes,PASS,identical authenticated input hashes
+test_a_status,PASS,PASS_COMPLETE_FROZEN_TEST_A
+test_a_no_post_outcomes,PASS,receipt false
+test_a_matrix,PASS,rows=48
+test_a_residual,PASS,rows=6
+test_a_rankings,PASS,rows=120
+test_a_rank_overlap,PASS,rows=30
+test_a_residual_correlations,PASS,rows=15
+test_a_hashes,PASS,failures=[]
+test_b_complete_pairs,PASS,pairs=30
+test_b_no_post_outcomes,PASS,receipt false
+test_b_measure_overlap,PASS,pairs=15
+headline::dv_rating_beta__RuleA__webb_pct_software__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_beta__RuleA__onet_computers_importance__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_beta__RuleB__webb_pct_software__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_beta__RuleB__onet_computers_importance__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_beta__RuleC__webb_pct_software__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_beta__RuleC__onet_computers_importance__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_alpha__RuleA__webb_pct_software__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_alpha__RuleA__onet_computers_importance__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_alpha__RuleB__webb_pct_software__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_alpha__RuleB__onet_computers_importance__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_alpha__RuleC__webb_pct_software__q5_q1,PASS,coefficients=5; ledger=True
+headline::dv_rating_alpha__RuleC__onet_computers_importance__q5_q1,PASS,coefficients=5; ledger=True
+headline_count,PASS,models=12
+headline_range,PASS,"range=[-0.20848085792431273, -0.09709514570766216]"
+primary_estimate,PASS,"{""analytic_cluster_se"": 0.04440978614525461, ""bootstrap_critical"": 1.9357010520926305, ""bootstrap_draws"": 999, ""bootstrap_p_value"": 0.003, ""bootstrap_se"": 0.044429859079050955, ""bootstrap_seed"": 20260832, ""ci_lower"": -0.21703804618691314, ""ci_upper"": -0.04510990665775699, ""coefficient"": -0.13107397642233506, ""converged"": true, ""iterations"": 5}"
+alternative_model_count,PASS,models=11
+paired_test_c,PASS,delta=-0.03239625727533453; se=0.03696833705120754; draws=999
+remote_model_count,PASS,models=7; coefficients=13
+placebo,PASS,"{""analytic_cluster_se"": 0.01106525960933077, ""bootstrap_critical"": 1.9715403709795465, ""bootstrap_draws"": 999, ""bootstrap_p_value"": 0.894, ""bootstrap_se"": 0.01114018945927883, ""bootstrap_seed"": 20268829, ""ci_lower"": -0.020395079229284012, ""ci_upper"": 0.023236132841045948, ""coefficient"": 0.0014205268058809682, ""converged"": true, ""iterations"": 4}"
+event_counts,PASS,all=109; pre=65; post=43
+event_significance,PASS,"pre=[]; post=['2023-11', '2023-12', '2026-04', '2026-05', '2026-06', '2026-07']"
+post_2025_extension,PASS,"{""ai_early"": -0.03032286494370521, ""ai_extension"": -0.04754742090695521, ""early_window"": [""2023-01"", ""2024-12""], ""extension_minus_early"": -0.017224555963250003, ""extension_window"": [""2025-01"", ""2026-07""], ""occupations"": 468, ""wald_bootstrap_p"": 0.127}"
+rule_a_reconstruction_gap,PASS,9.313225746154785e-10
+no_equivalence_claim,PASS,[]
+no_causal_remote_win,PASS,no causal horse-race claim

@@ -1,0 +1,62 @@
+{
+  "status": "DAX_NETWORK_RERUN_EXECUTED_WITH_BLOCKERS",
+  "generated_at_utc": "2026-08-18T13:14:01Z",
+  "branch": "task/DAX-network-rerun-20260818",
+  "cps_extract": {
+    "status": "PASS",
+    "ipums_extract_number": 6,
+    "rows": 71322,
+    "columns": 20,
+    "months": 16,
+    "age_min": 22,
+    "age_max": 25,
+    "output_sha256": "bb0aae2e4a7286b141cb52155288a56de4961e4e8a2add46c8f2315569511878",
+    "storage": "private SCC backbone; raw and respondent-level data not committed",
+    "validation": "raw Extract 6 checksum matches the frozen receipt; rebuilt parquet round-trip and content match are exact"
+  },
+  "cps_onet_crosswalk": {
+    "status": "PASS_PRIVATE_COVERAGE_GATE_WITH_BOUNDS",
+    "rows": 1287,
+    "cps_occ2010_codes": 503,
+    "output_sha256": "eb68890bcfb31855d6a8f0704aab022c13c842d09e01eb57acd94e28dac4ddeb",
+    "resolved_component_weight_mass_share": 0.7716899944,
+    "provisional_bounded_component_weight_mass_share": 0.1921987433,
+    "mapped_component_weight_mass_share": 0.9638887378,
+    "unresolved_component_weight_mass_share": 0.0344065283,
+    "absent_preperiod_weight_mass_share": 0.0017047339,
+    "max_unresolved_occupation_weight_share": 0.0044745164,
+    "coverage_gate_threshold": 0.9,
+    "max_unresolved_occupation_threshold": 0.01,
+    "coverage_gate_pass": true,
+    "bound_rule": "Every provisional component carries min/max dose bounds; equal shares are a diagnostic center only.",
+    "storage": "detailed CSV private; sanitized build receipt committed"
+  },
+  "price_histories": {
+    "status": "PASS_CONTRACT_WITH_UNRESOLVED_ROWS",
+    "rows": 71,
+    "verified": 60,
+    "single_channel": 2,
+    "conflict": 9,
+    "temporal_sanity_conflicts": 6,
+    "contract": "PASS"
+  },
+  "cross_vendor_red_team": {
+    "status": "COMPLETE",
+    "reviewer_vendor": "DeepSeek",
+    "model": "deepseek-v4-pro",
+    "runs": 3,
+    "verdicts": ["REVISE", "REVISE", "REVISE"],
+    "gate_recommendations": ["BLOCK", "BLOCK", "BLOCK"],
+    "major_issue_counts": [5, 4, 4]
+  },
+  "validation": {
+    "focused_tests": "35 passed",
+    "price_contract": "PASS",
+    "secret_and_restricted_data_scan": "PASS"
+  },
+  "remaining_blockers": [
+    "The crosswalk coverage gate now passes, but 19.21987433% of component mass is provisionally mapped and requires min/max bounds; only resolved components may enter an unbounded point estimate.",
+    "Two price rows remain single-channel and nine remain conflicts; they are ineligible for primary dose construction until resolved.",
+    "All three independent red-team runs recommend BLOCK; their major design findings require adjudication before Gate 1."
+  ]
+}

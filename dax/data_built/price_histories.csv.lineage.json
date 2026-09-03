@@ -1,0 +1,18 @@
+{
+  "output": "dax/data_built/price_histories.csv",
+  "output_sha256": "bc772b0ca3b8f0e4ab7d9a6badb1971b55a08190a95000cbee7015b67e4ca83d",
+  "inputs": [
+    {
+      "path": "dax/memo/event_registry_v1.csv",
+      "sha256": "79b1a095144f8576b84b638a112664577927586dbdf2b30a225fbcb7ebdae475",
+      "rows": null
+    },
+    {
+      "path": "dax/data_raw/official_dated_price_evidence.csv",
+      "sha256": "2b5bf0e711b1470fce14d6ae209452a7c2b8daf0776fe25b474e59c7f276e510",
+      "rows": null
+    }
+  ],
+  "code_version": "ca21dcb6c87db63564d6c7660a99f9680dde4ed4",
+  "timestamp": "2026-08-19T00:26:56.877773+00:00"
+}

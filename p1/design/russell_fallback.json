@@ -1,0 +1,169 @@
+{
+  "generated": "2026-08-18T12:45:54.185033+00:00",
+  "question": "Does the plan's \u00a7133(iii) Russell fallback \u2014 replicate on 2022-2025 non-June waves \u2014 have a sample to run on?",
+  "source": "p1/t2_wrds/waves_members.csv (derived from events_merged.csv)",
+  "caveat": "Counts CONVERSION EVENTS, not treated stocks. How many stocks each wave treats depends on ConvExp, which for the anchor is known (361 stocks >=0.5%) and for later waves is thin in the free-path build. Fund counts bound the design from above.",
+  "all_waves": {
+    "label": "all effective waves to date",
+    "n_waves": 75,
+    "n_funds": 127,
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "n_families": 67,
+    "largest_wave": 6
+  },
+  "anchor": {
+    "label": "DFA anchor 2021-06-11",
+    "n_waves": 1,
+    "n_funds": 4,
+    "years": [
+      2021
+    ],
+    "n_families": 1,
+    "largest_wave": 4
+  },
+  "june_waves": {
+    "label": "June waves (Russell reconstitution window)",
+    "n_waves": 11,
+    "n_funds": 22,
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "n_families": 10,
+    "largest_wave": 5
+  },
+  "fallback_133iii": {
+    "label": "2022-2025, non-June (plan \u00a7133 iii)",
+    "n_waves": 54,
+    "n_funds": 86,
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "n_families": 53,
+    "largest_wave": 6
+  },
+  "fallback_extended": {
+    "label": "2022+, non-June (incl. 2026)",
+    "n_waves": 60,
+    "n_funds": 98,
+    "years": [
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "n_families": 59,
+    "largest_wave": 6
+  },
+  "june_wave_detail": [
+    {
+      "wave_id": "W002",
+      "effective_date": "2021-06-11",
+      "n_funds": 4,
+      "families": [
+        "DFA Investment Dimensions Group Inc."
+      ]
+    },
+    {
+      "wave_id": "W009",
+      "effective_date": "2022-06-09",
+      "n_funds": 1,
+      "families": [
+        "JPMorgan Trust II"
+      ]
+    },
+    {
+      "wave_id": "W022",
+      "effective_date": "2023-06-09",
+      "n_funds": 5,
+      "families": [
+        "Fidelity Summer Street Trust"
+      ]
+    },
+    {
+      "wave_id": "W023",
+      "effective_date": "2023-06-16",
+      "n_funds": 2,
+      "families": [
+        "Fidelity Summer Street Trust"
+      ]
+    },
+    {
+      "wave_id": "W036",
+      "effective_date": "2024-06-07",
+      "n_funds": 2,
+      "families": [
+        "AB Bond Fund, Inc."
+      ]
+    },
+    {
+      "wave_id": "W037",
+      "effective_date": "2024-06-14",
+      "n_funds": 1,
+      "families": [
+        "Morgan Stanley Institutional Fund Trust"
+      ]
+    },
+    {
+      "wave_id": "W038",
+      "effective_date": "2024-06-21",
+      "n_funds": 1,
+      "families": [
+        "Neuberger Berman Income Funds"
+      ]
+    },
+    {
+      "wave_id": "W039",
+      "effective_date": "2024-06-24",
+      "n_funds": 1,
+      "families": [
+        "Metropolitan West Funds"
+      ]
+    },
+    {
+      "wave_id": "W053",
+      "effective_date": "2025-06-20",
+      "n_funds": 1,
+      "families": [
+        "OTG Asset Management (\u2192 ETF Opportunities Trust)"
+      ]
+    },
+    {
+      "wave_id": "W073",
+      "effective_date": "2026-06-01",
+      "n_funds": 3,
+      "families": [
+        "BG Funds"
+      ]
+    },
+    {
+      "wave_id": "W074",
+      "effective_date": "2026-06-08",
+      "n_funds": 1,
+      "families": [
+        "TCW Metropolitan West Funds"
+      ]
+    }
+  ],
+  "verdict": [
+    "FALLBACK AVAILABLE \u2014 54 waves / 86 funds across 2022-2025, 53 families. \u00a7133(iii) is runnable as written.",
+    "For scale: the anchor is 4 funds in 1 wave, and the anchor alone carries 361 stocks at ConvExp>=0.5% (coverage audit). The fallback's 86 funds are spread over 54 waves, so per-wave treated counts will be far thinner \u2014 the binding constraint is treated STOCKS, not funds, and that cannot be settled until ConvExp is rebuilt on CRSP.",
+    "The plan's 2025 cutoff now costs 6 waves / 12 funds that have since become available. Extending to 2026 is a free power gain and should be a spec decision, not an oversight.",
+    "11 waves fall in June across all years, not just the anchor \u2014 the reconstitution control must be applied to all of them, not only 2021-06."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "status": "ENGINE_SMOKE_PASS_NOT_GATE_EVIDENCE",
+  "gate_1_pass": false,
+  "host": "BU SCC1",
+  "validated_at_utc": "2026-08-18T17:18:00+00:00",
+  "unit": "person-month",
+  "private_pre_event_extract": {
+    "start_month": "2021-11",
+    "end_month": "2023-02",
+    "age_range": [22, 25],
+    "post_event_rows": 0
+  },
+  "dose_input": "synthetic balanced W5-contract fixture generated in private temporary storage",
+  "dose_input_is_real_w5": false,
+  "replications": 19,
+  "seeds": {
+    "employment": 20260819,
+    "hours_unconditional": 20260820
+  },
+  "person_months_by_outcome": {
+    "employment": 50503,
+    "hours_unconditional": 47869
+  },
+  "occupation_clusters_by_outcome": {
+    "employment": 439,
+    "hours_unconditional": 439
+  },
+  "post_event_outcomes": "simulated; no real post-event outcomes read",
+  "adequately_powered": {
+    "employment": null,
+    "hours_unconditional": null
+  },
+  "engine_exit_code": 2,
+  "reason_for_nonzero_exit": "benchmark is null/unresolved; synthetic dose is not accepted as Gate-1 evidence",
+  "not_a_substitute_for": "real frozen W5 occupation-month dose panel"
+}

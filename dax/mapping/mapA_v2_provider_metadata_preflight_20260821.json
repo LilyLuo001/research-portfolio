@@ -1,0 +1,54 @@
+{
+  "approved_private_w4_env_configured": false,
+  "credential_files": {
+    "credential_values_exposed": false,
+    "protected_mode_0600_env_present": true,
+    "route_scope": "existing_ops_box_API_routes_not_subscription_CLIs"
+  },
+  "free_metadata_probe": {
+    "inference_calls": 0,
+    "performed_at_utc": "2026-08-21T13:33:00Z",
+    "routes": {
+      "alibaba": {
+        "configured_model": "qwen-plus",
+        "models_endpoint_accessible": true,
+        "selected_model_available": true
+      },
+      "deepseek": {
+        "configured_legacy_reasoner_alias_available": false,
+        "models_endpoint_accessible": true,
+        "replacement_model_available": "deepseek-v4-pro"
+      },
+      "google": {
+        "configured_model": "gemini-2.5-flash",
+        "models_endpoint_accessible": true,
+        "selected_model_available": true
+      },
+      "moonshot": {
+        "configured_model": "kimi-k2.6",
+        "models_endpoint_accessible": true,
+        "selected_model_available": true
+      },
+      "zhipu": {
+        "configured_legacy_model_available": false,
+        "models_endpoint_accessible": true,
+        "replacement_models_available": true
+      }
+    }
+  },
+  "independence_assessment": {
+    "achievable": true,
+    "proposed_initial_families": [
+      "deepseek",
+      "alibaba"
+    ],
+    "proposed_third_family": "google"
+  },
+  "incremental_cost_certified_zero": false,
+  "provider_subscription_clis_on_scc": {
+    "anthropic_claude": false,
+    "google_gemini": false,
+    "openai_codex": false
+  },
+  "status": "PROVIDERS_AVAILABLE_BUT_PAID_INFERENCE_NOT_AUTHORIZED"
+}

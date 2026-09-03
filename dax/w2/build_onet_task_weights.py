@@ -1,0 +1,638 @@
+#!/usr/bin/env python3
+"""Build onet_task_weights.parquet from the pinned O*NET 26.1 text database.
+
+Implements W2_DECISION_task_weight_2026-08-24.md. That decision matters more
+than the code, so its terms are restated where they bind:
+
+**[W2-D1] The definition is not re-derived.** The weight is the one already in
+`crosswalk/build_legacy_onet_fallback.py` and already embedded in Mapping A's
+coverage and the DWA-transport bound:
+
+    frequency_score = sum(category_index * percent) / sum(percent)
+    weight          = importance * frequency_score
+    share           = weight / sum(weights within the occupation)
+
+A second definition written now would silently diverge from results already
+computed through these weights. `--reconcile-against` exists so a seat can
+prove this builder reproduces the pinned `onet_timeshares.csv` rather than
+asserting it.
+
+**[W2-D2] This is not a time share.** O*NET 26.1 publishes no measured share of
+work time by task: the one "% Time" scale (TI) occurs in zero data tables, and
+its nine survey items carry CX/CXP and measure body position. The quantity here
+is a share of importance-times-frequency **rating mass**. The column is
+`task_weight_share`, never `task_time_share`, and no release-path prose may
+describe it as time.
+
+**[W2-D3] A known defect, recorded not fixed.** `frequency_score` treats FT's
+seven category indices as cardinal. They are ordinal bands -- "Yearly or less"
+through "Hourly or more" -- and such bands are typically spaced closer to
+logarithmically than linearly, so equal spacing is an assumption and probably a
+wrong one. Correcting it would change every weight and break the reconciliation
+in W2-D1, and the correct spacing needs published band definitions this repo
+does not hold. The receipt carries the defect and its fix path.
+
+**[W2-D4] Two variants, frozen before anyone looks.** Importance-only
+(`IM / sum IM`, the field standard) and equal-weight (`1 / n_tasks`) are built
+alongside the primary and are never replacements. If a headline moves
+materially across the three, the aggregation function is doing work the data
+cannot support -- and that is a finding to report, not a number to choose from.
+
+**[W2-D5] The vintage caveat travels.** O*NET 26.1 is cumulative and Task
+Ratings rows are dated 2004 through 2021. "2021 vintage" names the release, not
+each row's survey year. The receipt records the observed date distribution so
+the caveat can be stated from data rather than from memory.
+
+This builder never downloads. It takes a local archive path and refuses unless
+the archive's SHA-256 matches the pin recorded by the input inventory.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import io
+import json
+import pathlib
+import sys
+import zipfile
+from collections import Counter, defaultdict
+
+# The archive the 2026-08-24 input inventory read and verified against its pin.
+PINNED_ARCHIVE_SHA256 = (
+    "543d65fab85e7d8f0361783e89ac68c7cbd34b4018182394214a60354ab8017a")
+RELEASE = "O*NET 26.1 (text database)"
+
+TASK_RATINGS = "Task Ratings.txt"
+TASK_STATEMENTS = "Task Statements.txt"
+
+# FT publishes one row per category per (occupation, task): seven bands whose
+# Data Values are percentages of incumbents and sum to 100. Anything other
+# than a complete set of seven is a layout we have not verified and must not
+# silently renormalise over.
+FT_CATEGORIES = (1, 2, 3, 4, 5, 6, 7)
+FT_CATEGORY_LABELS = {
+    1: "Yearly or less", 2: "More than yearly", 3: "More than monthly",
+    4: "More than weekly", 5: "Daily", 6: "Several times daily",
+    7: "Hourly or more",
+}
+# The inventory measured FT sums across all 17,879 pairs at 99.98--100.02.
+# A wider tolerance here would admit a genuinely malformed distribution; a
+# tighter one would fail on the published rounding.
+FT_SUM_TOLERANCE = 0.5
+
+OUTPUT_FIELDS = [
+    "onet_soc", "task_id", "task_weight_share",
+    "importance_only_share", "equal_weight_share",
+    "importance", "frequency_score", "relevance",
+    "n_tasks_in_occupation", "rating_date", "source_vintage",
+]
+
+
+class BuildError(RuntimeError):
+    """Raised when the archive does not support building the weights."""
+
+
+def sha256(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for block in iter(lambda: f.read(1 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def _read_table(archive, suffix):
+    """Yield rows of the single member whose name ends with `suffix`.
+
+    Exactly one member must match. O*NET ships 38 members and several share
+    name fragments, so a substring match that hits two files would read
+    whichever the zip listed first -- the class of fault that put a constant
+    column into the DWA coverage bound.
+    """
+    matches = [n for n in archive.namelist() if n.endswith(suffix)]
+    if len(matches) != 1:
+        raise BuildError(
+            f"expected exactly one archive member ending in {suffix!r}, "
+            f"found {len(matches)}: {sorted(matches)}")
+    with archive.open(matches[0]) as raw:
+        text = io.TextIOWrapper(raw, encoding="utf-8-sig", newline="")
+        reader = csv.DictReader(text, delimiter="\t")
+        required = {"O*NET-SOC Code", "Task ID"}
+        if not required <= set(reader.fieldnames or []):
+            raise BuildError(
+                f"{suffix} is missing {sorted(required - set(reader.fieldnames or []))}; "
+                f"found {reader.fieldnames}")
+        for row in reader:
+            yield row
+
+
+def read_ratings(archive):
+    """Collect IM, RT and the seven FT bands per (occupation, task).
+
+    Returns (ratings, stats). A pair recommended for suppression is dropped
+    whole rather than partially: suppression is published per rating row, and
+    keeping the unsuppressed half of a pair would build a weight out of a
+    record O*NET says not to publish.
+    """
+    ratings = defaultdict(
+        lambda: {"frequency": {}, "importance": None, "relevance": None,
+                 "suppressed_scales": set(), "date": None})
+    seen = set()
+    stats = Counter()
+    dates = Counter()
+
+    for row in _read_table(archive, TASK_RATINGS):
+        key = (row["O*NET-SOC Code"].strip(), row["Task ID"].strip())
+        scale = row["Scale ID"].strip()
+        category = row.get("Category", "").strip()
+        dedupe = (key, scale, category)
+        if dedupe in seen:
+            raise BuildError(
+                f"duplicate rating row for {key} scale {scale} "
+                f"category {category!r}; the archive grain is not what the "
+                f"inventory recorded and every weight would double-count")
+        seen.add(dedupe)
+        stats[f"rating_rows_{scale}"] += 1
+
+        rec = ratings[key]
+        if row.get("Recommend Suppress", "").strip().upper() == "Y":
+            # Recorded per SCALE. O*NET publishes Recommend Suppress per rating
+            # row, so it flags that one rating as unreliable -- not the pair.
+            rec["suppressed_scales"].add(scale)
+        date = row.get("Date", "").strip()
+        if date:
+            rec["date"] = date
+            year = date.split("/")[-1]
+            if year:
+                dates[year] += 1
+
+        value = row.get("Data Value", "").strip()
+        if value == "":
+            raise BuildError(f"empty Data Value for {key} scale {scale}")
+        if scale == "FT":
+            rec["frequency"][int(category)] = float(value)
+        elif scale == "IM":
+            rec["importance"] = float(value)
+        elif scale == "RT":
+            rec["relevance"] = float(value)
+        else:
+            stats["rating_rows_unknown_scale"] += 1
+
+    stats["rated_pairs"] = len(ratings)
+    return ratings, stats, dates
+
+
+# Scales whose suppression disqualifies a pair. Only the two that enter the
+# arithmetic: weight = importance * frequency_score, over IM and the FT bands.
+# RT (Relevance of Task) is carried into the output as a column and is never
+# multiplied by anything, so suppressing it says nothing about the weight.
+#
+# This is not a new rule. An SCC reconciliation against the pinned
+# onet_timeshares.csv found 51 tasks across 26 occupations that the reference
+# weights and an any-scale predicate drops -- exactly the RT-only-suppressed
+# pairs -- and all 351 differing shares sat inside those same 26 occupations,
+# with zero differing outside. Dropping the 51 shifts those occupations'
+# denominators and scales every surviving task upward, by up to 9 percentage
+# points. The arithmetic reproduced exactly everywhere else, so the sole
+# divergence was this predicate.
+SCALES_THAT_DISQUALIFY = frozenset({"IM", "FT"})
+SUPPRESSION_RULES = {
+    "formula_inputs": SCALES_THAT_DISQUALIFY,   # matches the pinned reference
+    "any_scale": frozenset({"IM", "FT", "RT"}),  # the legacy fallback's rule
+}
+
+
+def suppression_breakdown(ratings, disqualifying):
+    """Which scale combinations Recommend Suppress actually flags in 26.1.
+
+    Whether a clause of the rule ever fires is a property of the release, not
+    of the rule. On 26.1 no pair carries a suppressed IM without a suppressed
+    FT, so the IM clause selects nothing FT has not already selected and the
+    rule would behave identically without it. That bounds how much of the
+    reconciliation rests on the IM clause -- none of it -- and it is a fact
+    about this release that a later one could break, at which point the clause
+    would start doing work silently.
+    """
+    combos = Counter("+".join(sorted(rec["suppressed_scales"]))
+                     for rec in ratings.values() if rec["suppressed_scales"])
+    per_scale = Counter()
+    for rec in ratings.values():
+        for scale in rec["suppressed_scales"]:
+            per_scale[scale] += 1
+    # Pairs a clause drops that no other disqualifying clause would have
+    # dropped anyway. Zero means removing the clause changes no output here.
+    sole_effect = {
+        scale: sum(count for combo, count in combos.items()
+                   if scale in combo.split("+")
+                   and not (set(combo.split("+")) & (set(disqualifying) - {scale})))
+        for scale in sorted(disqualifying)}
+    return {
+        "pairs_by_suppressed_scale_combination": dict(sorted(combos.items())),
+        "pairs_by_suppressed_scale": dict(sorted(per_scale.items())),
+        "pairs_dropped_only_by_this_clause": sole_effect,
+        "clauses_inert_on_this_release": sorted(
+            s for s, n in sole_effect.items() if n == 0),
+        "why_this_is_recorded": (
+            "A clause that drops no pair on its own is inert on this release: "
+            "the rule produces the same weights without it. That is a property "
+            "of O*NET 26.1, not of the rule, and it is recorded so a reader "
+            "sees it rather than rediscovering it from the raw ratings."),
+    }
+
+
+def usable(key, rec, stats, ft_sums, disqualifying=SCALES_THAT_DISQUALIFY):
+    """Decide whether a rated pair can carry a weight. Never guesses a value."""
+    suppressed = rec["suppressed_scales"]
+    if suppressed:
+        stats["pairs_with_any_suppressed_rating"] += 1
+        if not (suppressed & disqualifying):
+            # Carried, and counted, so the choice is visible in the receipt
+            # rather than implicit in whether a number reconciles.
+            stats["kept_suppressed_on_non_formula_scale_only"] += 1
+    if suppressed & disqualifying:
+        stats["dropped_recommend_suppress"] += 1
+        return False
+    if rec["importance"] is None:
+        stats["dropped_no_importance"] += 1
+        return False
+    bands = rec["frequency"]
+    if set(bands) != set(FT_CATEGORIES):
+        # Renormalising over a partial distribution would invent a frequency
+        # profile. The seven bands are the published shape; anything else is
+        # a layout change that must be looked at, not averaged over.
+        stats["dropped_incomplete_frequency_bands"] += 1
+        return False
+    total = sum(bands.values())
+    ft_sums.append(total)
+    if abs(total - 100.0) > FT_SUM_TOLERANCE:
+        raise BuildError(
+            f"FT bands for {key} sum to {total}, outside 100 +/- "
+            f"{FT_SUM_TOLERANCE}. The inventory measured every pair within "
+            f"0.05 of 100, so this archive does not match it.")
+    return True
+
+
+def compute(ratings, statements, stats, ft_sums,
+            disqualifying=SCALES_THAT_DISQUALIFY):
+    """Compute the primary weight and both frozen variants, per occupation."""
+    by_occupation = defaultdict(list)
+    for key, rec in ratings.items():
+        if not usable(key, rec, stats, ft_sums, disqualifying):
+            continue
+        occupation, task_id = key
+        bands = rec["frequency"]
+        band_mass = sum(bands.values())
+        # [W2-D3] the cardinal-index treatment, isolated on one line so the
+        # defect has one place to be fixed if the band spacing is ever obtained.
+        frequency_score = sum(k * v for k, v in bands.items()) / band_mass
+        by_occupation[occupation].append({
+            "task_id": task_id,
+            "importance": rec["importance"],
+            "relevance": rec["relevance"],
+            "frequency_score": frequency_score,
+            "weight": rec["importance"] * frequency_score,
+            "rating_date": rec["date"],
+        })
+
+    rows = []
+    for occupation, items in sorted(by_occupation.items()):
+        weight_total = sum(i["weight"] for i in items)
+        importance_total = sum(i["importance"] for i in items)
+        if weight_total <= 0 or importance_total <= 0:
+            stats["dropped_occupation_zero_denominator"] += 1
+            continue
+        n = len(items)
+        for item in sorted(items, key=lambda i: i["task_id"]):
+            rows.append({
+                "onet_soc": occupation,
+                "task_id": item["task_id"],
+                "task_weight_share": item["weight"] / weight_total,
+                "importance_only_share": item["importance"] / importance_total,
+                "equal_weight_share": 1.0 / n,
+                "importance": item["importance"],
+                "frequency_score": item["frequency_score"],
+                "relevance": item["relevance"],
+                "n_tasks_in_occupation": n,
+                "rating_date": item["rating_date"],
+                "source_vintage": RELEASE,
+            })
+    stats["occupations_with_weights"] = len(
+        {r["onet_soc"] for r in rows})
+    stats["tasks_with_weights"] = len(rows)
+    stats["statements_without_ratings"] = len(
+        {(s["O*NET-SOC Code"].strip(), s["Task ID"].strip())
+         for s in statements}
+        - set(ratings))
+    return rows
+
+
+def check_shares_sum_to_one(rows, tolerance=1e-9):
+    """Every share column must sum to 1 within each occupation.
+
+    This is the arithmetic identity the whole wage-bill weighting rests on. If
+    it fails, an occupation's tasks either over- or under-claim its wage mass
+    and every exposure number built on it is wrong by that factor.
+    """
+    for column in ("task_weight_share", "importance_only_share",
+                   "equal_weight_share"):
+        totals = defaultdict(float)
+        for row in rows:
+            totals[row["onet_soc"]] += row[column]
+        worst = max(((abs(t - 1.0), occ) for occ, t in totals.items()),
+                    default=(0.0, None))
+        if worst[0] > tolerance:
+            raise BuildError(
+                f"{column} sums to {1.0 + worst[0]:.12f} for occupation "
+                f"{worst[1]}, outside 1 +/- {tolerance}")
+    return True
+
+
+def reconcile(rows, path, tolerance=1e-6):
+    """Prove this builder reproduces the pinned predecessor, per W2-D1.
+
+    An SCC run of the first version of this function returned NEED_HUMAN with
+    the right diagnosis: three artifacts encode three different task scopes.
+    They are three different QUANTITIES, not three candidate answers to one
+    question, and the first version wrongly treated the difference between
+    them as a divergence in the weight definition:
+
+      19,259  task statements -- the scope of onet_timeshares.csv
+      17,879  rated (occupation, task) pairs in Task Ratings.txt
+      15,274  tasks with a usable 2021 wage allocation, which is
+              `allocation_usable` in task_wage_allocations.csv and is a
+              wage-join concept downstream of the weights entirely
+
+    W2-D1's "15,274 usable tasks" names the third. It is not the weight file's
+    scope and never was. So a reference row this builder has no row for is
+    expected wherever the reference carries unrated or suppressed tasks at
+    zero or null share, and refusing on that asked the operator to invent a
+    suppression rule to explain a difference that needs no explaining.
+
+    What W2-D1 actually protects is the DEFINITION, so that is what is
+    checked: for every task present in both, the share must agree. Four things
+    still refuse, because each would be a real divergence:
+
+      * a shared task whose share differs beyond tolerance -- the definition moved;
+      * a reference task with a POSITIVE share that this builder has no row
+        for -- it dropped a task the predecessor weighted;
+      * a task this builder weighted that the reference does not carry at all
+        -- it invented one;
+    Reaching RECONCILED therefore means every positive-share task in the
+    reference was compared and agreed, which is what makes the verdict
+    evidence rather than a statement about whichever rows happened to overlap.
+
+    Reference rows at zero or null share with no row here are reported as a
+    count and a scope fact, not as a failure.
+    """
+    with open(path, newline="", encoding="utf-8-sig") as handle:
+        reader = csv.DictReader(handle)
+        fields = reader.fieldnames or []
+        share_column = next(
+            (c for c in ("task_time_share", "task_weight_share",
+                         "legacy_task_time_share") if c in fields), None)
+        if share_column is None:
+            raise BuildError(
+                f"{path} carries no recognised share column; found {fields}")
+        soc_column = next((c for c in ("onet_soc", "O*NET-SOC Code") if c in fields), None)
+        id_column = next((c for c in ("task_id", "Task ID") if c in fields), None)
+        if soc_column is None or id_column is None:
+            raise BuildError(
+                f"{path} lacks an occupation or task id column; found {fields}")
+
+        expected, blank = {}, {}
+        for r in reader:
+            key = (r[soc_column].strip(), r[id_column].strip())
+            raw = (r[share_column] or "").strip()
+            if raw == "":
+                blank[key] = None
+                continue
+            value = float(raw)
+            (expected if value > 0 else blank)[key] = value
+
+    built = {(r["onet_soc"], r["task_id"]): r["task_weight_share"] for r in rows}
+    shared = set(built) & set(expected)
+    positive_missing = sorted(set(expected) - set(built))
+    invented = sorted(set(built) - set(expected) - set(blank))
+    blank_absent = len(set(blank) - set(built))
+    diffs = [(k, built[k], expected[k]) for k in shared
+             if abs(built[k] - expected[k]) > tolerance]
+
+    result = {
+        "reconciled_against": str(path),
+        "share_column_read": share_column,
+        "reference_rows_total": len(expected) + len(blank),
+        "reference_rows_with_positive_share": len(expected),
+        "reference_rows_blank_or_zero": len(blank),
+        "rows_built": len(built),
+        "shared_tasks_compared": len(shared),
+        "shares_differing_beyond_tolerance": len(diffs),
+        "reference_positive_tasks_missing_here": len(positive_missing),
+        "tasks_built_that_reference_lacks": len(invented),
+        "reference_blank_tasks_absent_here": blank_absent,
+        "tolerance": tolerance,
+        "scope_note": (
+            "A reference row absent here is expected where the reference "
+            "carries unrated or suppressed tasks at zero or null share. That "
+            "is a scope difference between artifacts, not a divergence in the "
+            "weight definition."),
+    }
+
+    if diffs:
+        worst = max(abs(b - e) for _, b, e in diffs)
+        example = sorted(diffs, key=lambda d: -abs(d[1] - d[2]))[:3]
+        raise BuildError(
+            f"reconciliation FAILED against {path}: {len(diffs)} of "
+            f"{len(shared)} shared tasks differ in share (worst "
+            f"{worst:.3e}). W2-D1 requires this builder to reproduce the "
+            f"pinned DEFINITION; a divergence here is invisible in every "
+            f"downstream number. Examples (key, built, reference): {example}")
+    if positive_missing:
+        raise BuildError(
+            f"reconciliation FAILED against {path}: "
+            f"{len(positive_missing)} tasks carry a POSITIVE share there and "
+            f"no row here, e.g. {positive_missing[:5]}. This builder dropped "
+            f"tasks the predecessor weighted, which is a scope change in the "
+            f"identified set rather than a difference between artifacts.")
+    if invented:
+        raise BuildError(
+            f"reconciliation FAILED against {path}: {len(invented)} tasks "
+            f"weighted here appear nowhere in the reference, e.g. "
+            f"{invented[:5]}. This builder invented rows.")
+    if not shared:
+        raise BuildError(
+            f"reconciliation is vacuous against {path}: no task appears in "
+            f"both. Nothing was compared, so nothing is reconciled.")
+
+    # No overlap floor: `positive_missing` above already refuses whenever the
+    # reference carries a positive-share task this builder lacks, so reaching
+    # here means every one of them was compared. A separate floor would be
+    # unreachable code pretending to be a guard.
+    result["overlap_fraction_of_reference_positive"] = 1.0
+    result["status"] = "RECONCILED"
+    return result
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--archive", type=pathlib.Path, required=True,
+                    help="local path to db_26_1_text.zip; never downloaded")
+    ap.add_argument("--expect-sha", default=PINNED_ARCHIVE_SHA256,
+                    help="required archive SHA-256; refuses on mismatch")
+    ap.add_argument("--output", type=pathlib.Path,
+                    default=pathlib.Path("dax/data_built/onet_task_weights.parquet"))
+    ap.add_argument("--receipt", type=pathlib.Path, default=None)
+    ap.add_argument("--reconcile-against", type=pathlib.Path, default=None,
+                    help="pinned onet_timeshares.csv; W2-D1 reconciliation")
+    ap.add_argument("--suppression-rule", choices=sorted(SUPPRESSION_RULES),
+                    default="formula_inputs",
+                    help="which suppressed scales disqualify a pair. "
+                         "formula_inputs (default) drops on IM or FT, matching "
+                         "the pinned reference; any_scale also drops on RT, "
+                         "which is the legacy fallback's rule and diverges")
+    args = ap.parse_args(argv)
+
+    try:
+        import pandas as pd  # noqa: F401
+    except ImportError:
+        print("pandas is required to write the parquet", file=sys.stderr)
+        return 2
+
+    if not args.archive.is_file():
+        print(f"archive not found: {args.archive}", file=sys.stderr)
+        return 2
+
+    actual = sha256(args.archive)
+    if actual != args.expect_sha:
+        print(f"REFUSING: archive SHA-256 {actual} does not match the pin "
+              f"{args.expect_sha}. This builder never downloads; supply the "
+              f"archive the input inventory verified.", file=sys.stderr)
+        return 2
+
+    stats = Counter()
+    ft_sums = []
+    try:
+        with zipfile.ZipFile(args.archive) as archive:
+            bad = archive.testzip()
+            if bad is not None:
+                raise BuildError(f"corrupt archive member: {bad}")
+            ratings, rstats, dates = read_ratings(archive)
+            statements = list(_read_table(archive, TASK_STATEMENTS))
+        stats.update(rstats)
+        disqualifying = SUPPRESSION_RULES[args.suppression_rule]
+        rows = compute(ratings, statements, stats, ft_sums, disqualifying)
+        if not rows:
+            raise BuildError("no task carried a usable weight")
+        check_shares_sum_to_one(rows)
+        reconciliation = (reconcile(rows, args.reconcile_against)
+                          if args.reconcile_against else None)
+    except BuildError as exc:
+        print(f"NEED_HUMAN: {exc}", file=sys.stderr)
+        return 2
+
+    import pandas as pd
+    frame = pd.DataFrame(rows)[OUTPUT_FIELDS]
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_parquet(args.output, index=False)
+
+    receipt = {
+        "receipt_version": "dax-w2-onet-task-weights-v1",
+        "decision": "dax/memo/W2_DECISION_task_weight_2026-08-24.md",
+        "not_a_time_share": (
+            "[W2-D2] This is a share of importance-times-frequency RATING "
+            "MASS. O*NET 26.1 publishes no measured share of work time by "
+            "task. No release-path prose, table or column may describe "
+            "task_weight_share as time."),
+        "definition": {
+            "primary": "share = (importance * frequency_score) normalised within occupation",
+            "frequency_score": "sum(category_index * percent) / sum(percent) over FT bands 1..7",
+            "variants_frozen_before_inspection": {
+                "importance_only_share": "IM / sum(IM) within occupation",
+                "equal_weight_share": "1 / n_tasks within occupation",
+            },
+            "source_of_definition": (
+                "[W2-D1] adopted unchanged from "
+                "dax/w2/crosswalk/build_legacy_onet_fallback.py; not re-derived"),
+        },
+        "suppression_rule": {
+            "selected": args.suppression_rule,
+            "disqualifying_scales": sorted(disqualifying),
+            "observed_in_this_release": suppression_breakdown(
+                ratings, disqualifying),
+            "why": (
+                "Recommend Suppress is published per rating row, so it flags "
+                "one rating as unreliable rather than the pair. Only IM and FT "
+                "enter the weight (importance x frequency_score); RT is "
+                "carried as a column and never multiplied by anything, so "
+                "suppressing it says nothing about the weight's reliability."),
+            "alternative_recorded": (
+                "any_scale also drops on RT. That is what "
+                "build_legacy_onet_fallback.py does, and it diverges from the "
+                "pinned onet_timeshares.csv the results were computed through: "
+                "it removes RT-only-suppressed pairs, which shifts the "
+                "within-occupation denominator and scales every surviving "
+                "task's share upward."),
+        },
+        "known_defect": {
+            "id": "W2-D3",
+            "what": ("frequency_score treats FT's seven category indices as "
+                     "cardinal values. They are ordinal frequency bands."),
+            "bands": FT_CATEGORY_LABELS,
+            "why_not_fixed_here": (
+                "correcting the spacing changes every weight and breaks the "
+                "W2-D1 reconciliation with Mapping A's coverage and the DWA "
+                "bound, which were computed through these weights"),
+            "fix_path": (
+                "obtain the published FT band definitions; if spacing is not "
+                "near-linear, re-derive the weight and re-run Mapping A "
+                "coverage and the DWA bound in the same change so all three "
+                "move together"),
+        },
+        "vintage_caveat": {
+            "id": "W2-D5",
+            "release": RELEASE,
+            "what": ("O*NET 26.1 is cumulative. Task Ratings rows carry dates "
+                     "spanning many years; '2021 vintage' names the release, "
+                     "not each row's survey year. Any claim that the index "
+                     "rests on 2021 task structure must say this."),
+            "rating_row_year_counts": dict(sorted(dates.items())),
+        },
+        "source_archive": {
+            "path": str(args.archive),
+            "sha256": actual,
+            "verified_against_pin": True,
+            "release": RELEASE,
+            "members_read": [TASK_RATINGS, TASK_STATEMENTS],
+        },
+        "counts": dict(sorted(stats.items())),
+        "ft_band_sums": {
+            "min": min(ft_sums) if ft_sums else None,
+            "max": max(ft_sums) if ft_sums else None,
+            "tolerance": FT_SUM_TOLERANCE,
+        },
+        "shares_sum_to_one_within_occupation": True,
+        "reconciliation": reconciliation,
+        "output": {
+            "path": str(args.output),
+            "rows": len(rows),
+            "columns": OUTPUT_FIELDS,
+            "share_column": "task_weight_share",
+        },
+    }
+    receipt_path = args.receipt or args.output.with_suffix(".receipt.json")
+    receipt_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+
+    print(f"wrote {args.output} ({len(rows)} rows)")
+    print(f"wrote {receipt_path}")
+    print(f"occupations: {stats['occupations_with_weights']}  "
+          f"rated pairs: {stats['rated_pairs']}  "
+          f"suppressed: {stats['dropped_recommend_suppress']}")
+    if reconciliation:
+        print(f"reconciliation: {reconciliation['status']} — "
+              f"{reconciliation['shared_tasks_compared']} shared tasks compared, "
+              f"{reconciliation['reference_rows_blank_or_zero']} reference rows "
+              f"blank or zero (scope difference, not divergence)")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

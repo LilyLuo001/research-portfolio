@@ -1,0 +1,187 @@
+{
+  "cost_usd": 0,
+  "date": "2026-08-24",
+  "item_a_onet_inventory": {
+    "artifact": "dax/w2/onet_gdpval_input_inventory_receipt_20260824.json",
+    "commit": "47b4378",
+    "headline_finding": "O*NET 26.1 carries no occupation time-share. Scale TI ('% Time') is defined in Scales Reference.txt but occurs in zero data tables. Any time-share must be constructed from Task Ratings FT/IM/RT by an explicit definitional choice.",
+    "note": "The brief's stated head 73702ec predates this commit; origin/claude/dax-research-direction-1ohi97 is at 47b4378. Resetting to origin preserved the work rather than discarding it, so the inventory was not re-run.",
+    "status": "ALREADY_COMPLETE_NOT_REDONE"
+  },
+  "item_b_gpt56_locator": {
+    "block_nature": "Bot-management interstitial served by the origin (HTML with <meta http-equiv=refresh content=360> and no article body). Not a network or egress failure: from the same SCC host, https://www2.census.gov/ returned 200, https://www.onetcenter.org/ returned 200, and cdn.openai.com served an 11.8 MB PDF successfully in the prior task.",
+    "candidate_url": "https://openai.com/api-fast-mode/",
+    "conclusion": "The page could not be read, so it cannot be confirmed to carry a dated statement that long-context fast mode became API-available on 2026-08-05. Under meta-rule 1 an unread page is not an extraction with a locator.",
+    "disposition": "LEFT_PENDING",
+    "evasion_attempted": false,
+    "evasion_note": "No attempt was made to defeat the bot challenge. A page obtained by circumventing an access control is not a citable locator, and the memo's own standard requires the page be read as served.",
+    "quoted_dated_line": null,
+    "read_attempts": [
+      {
+        "bytes": 9701,
+        "http_code": 403,
+        "origin": "local workstation",
+        "result": "challenge page, no content"
+      },
+      {
+        "bytes": 9913,
+        "http_code": 403,
+        "origin": "scc1.bu.edu",
+        "result": "challenge page, no content"
+      },
+      {
+        "bytes": 9913,
+        "http_code": 403,
+        "origin": "scc1.bu.edu",
+        "result": "challenge page, no content",
+        "url": "https://openai.com/index/gpt-5-6/"
+      }
+    ],
+    "row": {
+      "changed": false,
+      "event_id": "GPT56_FAST_LONG_CONTEXT",
+      "verification_status_after": "pending_second_date_locator",
+      "verification_status_before": "pending_second_date_locator"
+    },
+    "third_party_locator_filed": false,
+    "third_party_note": "Third-party write-ups reporting an August 5 2026 update were NOT filed, per the brief and the candidates memo. The registry standard requires two independent first-party dated locators.",
+    "validator": {
+      "command": "python dax/memo/validate_event_registry.py",
+      "exit_code": 0,
+      "note": "Run read-only to confirm the registry is consistent with the row left unchanged. No edit was made.",
+      "output": "event registry PASSED - 21 rows; eligible=4, candidate=16, excluded=1, pending_second_date_locator=1"
+    }
+  },
+  "item_c_red_team": {
+    "disposition": "NEED_HUMAN",
+    "exposed_keys_note": "The keys exposed in conversation on 2026-08-23 were not read, retrieved, or used. No search was made for them; absence of a rotated key is a stop condition, not a prompt to find an old one.",
+    "exposed_keys_used": false,
+    "key_present": false,
+    "ran": false,
+    "reason": "DEEPSEEK_API_KEY is not set in this environment and ops/box/.env is not present in this worktree. No rotation receipt exists anywhere under dax/ or ops/.",
+    "rotation_evidence_found": false,
+    "script_present": "dax/memo/run_deepseek_red_team.py",
+    "unblocks_when": "A NEW DeepSeek key is provisioned in the environment and the exposure of 2026-08-23 is confirmed rotated."
+  },
+  "model_calls": 0,
+  "network_reachability_from_scc": {
+    "bls_gov": {
+      "conditional_on": "a User-Agent that identifies the requester, per BLS bot policy",
+      "consequence": "oews_wages.parquet is buildable on the SCC.",
+      "evidence": [
+        {
+          "body": "BLS 'Access Denied' bot-policy page, 1323 bytes",
+          "http_code": 403,
+          "url": "https://www.bls.gov/oes/special.requests/oesm21nat.zip",
+          "user_agent": "curl default"
+        },
+        {
+          "body": "same BLS bot-policy page",
+          "http_code": 403,
+          "url": "same",
+          "user_agent": "spoofed Chrome browser UA"
+        },
+        {
+          "bytes": 278152,
+          "content_type": "application/x-zip-compressed",
+          "http_code": 200,
+          "url": "same",
+          "user_agent": "DAX-research/1.0 (academic research; <contact email>)"
+        },
+        {
+          "http_code": 200,
+          "url": "https://www.bls.gov/",
+          "user_agent": "same contact UA"
+        },
+        {
+          "http_code": 200,
+          "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/...",
+          "user_agent": "same contact UA"
+        }
+      ],
+      "finding": "Spoofing a browser does NOT work; identifying yourself DOES. Any oews_wages builder must send a contact-bearing User-Agent or it will silently receive a 1,323-byte HTML block page instead of the archive.",
+      "reachable": true
+    },
+    "controls": {
+      "https://www.onetcenter.org/": 200,
+      "https://www2.census.gov/": 200
+    },
+    "host": "scc1.bu.edu",
+    "openai_com": {
+      "http_code": 403,
+      "note": "bot-management interstitial; cdn.openai.com asset paths do work",
+      "reachable": false
+    }
+  },
+  "oews_2021_staged": {
+    "archive": {
+      "bytes": 278152,
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/oews_2021/oesm21nat.zip",
+      "retrieved_utc": "2026-08-24",
+      "sha256": "83ad09f19e62104a39024d36ed67cae5c3f7d5b42ff165ca656e0e35241bcf31",
+      "url": "https://www.bls.gov/oes/special.requests/oesm21nat.zip"
+    },
+    "inventory": {
+      "caveats_for_the_builder": [
+        "This is the NATIONAL cross-industry file only. Per-occupation wage levels are here; if the design needs industry or state detail, a different OEWS archive is required.",
+        "ANNUAL and HOURLY are flag columns marking which occupations report annual-only or hourly-only wages; the GDPval wage-bill method depends on that distinction.",
+        "O_GROUP distinguishes major/minor/broad/detailed rows. Summing without filtering to detailed rows would double count.",
+        "OEWS is SOC-4/SOC-6 coded; O*NET is O*NET-SOC (8-digit). A crosswalk is required and is not part of this inventory."
+      ],
+      "columns": [
+        "AREA",
+        "AREA_TITLE",
+        "AREA_TYPE",
+        "PRIM_STATE",
+        "NAICS",
+        "NAICS_TITLE",
+        "I_GROUP",
+        "OWN_CODE",
+        "OCC_CODE",
+        "OCC_TITLE",
+        "O_GROUP",
+        "TOT_EMP",
+        "EMP_PRSE",
+        "JOBS_1000",
+        "LOC_QUOTIENT",
+        "PCT_TOTAL",
+        "PCT_RPT",
+        "H_MEAN",
+        "A_MEAN",
+        "MEAN_PRSE",
+        "H_PCT10",
+        "H_PCT25",
+        "H_MEDIAN",
+        "H_PCT75",
+        "H_PCT90",
+        "A_PCT10",
+        "A_PCT25",
+        "A_MEDIAN",
+        "A_PCT75",
+        "A_PCT90",
+        "ANNUAL",
+        "HOURLY"
+      ],
+      "data_rows": 1403,
+      "data_sheet": "national_M2021_dl",
+      "n_columns": 32,
+      "read_method": "stdlib zip+XML parse; openpyxl is NOT installed in the project venv and the shared venv was not modified",
+      "scope": "May 2021 OEWS national estimates (AREA_TYPE national, cross-industry)",
+      "sheet_names": [
+        "national_M2021_dl",
+        "Field Descriptions",
+        "UpdateTime",
+        "Filler"
+      ]
+    },
+    "member": {
+      "archive_mtime": "2022-03-08",
+      "bytes": 289346,
+      "path": "/usr3/graduate/qluo/dax-private/public_raw/oews_2021/oesm21nat/national_M2021_dl.xlsx",
+      "sha256": "8cb0b63b69a2405206d1bcee55c09f96768e68dca7b77f0abcf1f5a44b951e02"
+    },
+    "note": "Downloaded and staged so the builder has a pinned input. Not committed to git; licensed/raw data stays in the private tree."
+  },
+  "receipt_version": "dax-free-batch-sweep-v1",
+  "scope_note": "dax/ and ops/ only. Nothing under dax/analysis/outcomes/ was opened. No task text recorded."
+}

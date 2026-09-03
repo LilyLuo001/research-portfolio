@@ -1,0 +1,58 @@
+{
+  "output": "dax/mapping/w3_provenance_recompute_receipt_20260824.json",
+  "output_sha256": "ec2292faf6adb84a28add96152b7001f6fe759fb22b246ca16d29cf1edcfdd02",
+  "inputs": [
+    {
+      "path": "dax/mapping/mapA_v2_codex_diagnostic_result_receipt_20260821.json",
+      "sha256": "00c0db7a09937b0707f231530a0b4b0a140dba3408d506dacc8569aff8eb4a40",
+      "rows": null
+    },
+    {
+      "path": "dax/mapping/mapA_v3_source_audit_result_receipt_20260823.json",
+      "sha256": "dec6d4353ff007b9e30deeebe74f6f3dc2be018253390db2f073dd26038278c4",
+      "rows": null
+    },
+    {
+      "path": "dax/mapping/s1_construct_validity_result_receipt_20260823.json",
+      "sha256": "43b3dfc2ed626f3d7dd0325b113bbfd62b4fe6a923dc02646349afe2b37e946d",
+      "rows": null
+    }
+  ],
+  "code_version": "c973eb5bf721097437c529d60bc236cdbe114762",
+  "timestamp": "2026-08-24T00:45:20.787873+00:00",
+  "task": "DAX-W3-provenance-recovery",
+  "method": "read-only re-aggregation; no resampling, no redraw, no API calls",
+  "private_inputs_not_committed": [
+    {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v2_codex_diagnostic/run_20260821/mapA_v2_codex_diagnostic_labels.csv",
+      "sha256": "b43a9118cc7ec64367a04bf06670251283c451cec2307b9987e6f6a208c53102",
+      "rows": 60
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v2_codex_diagnostic/run_20260821/mapA_v2_codex_diagnostic_sample.csv",
+      "sha256": "160d2a44654530b2096ebfe6a208113aba21ba04467530875c0c38a68cbd07ad",
+      "rows": 60
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_decision/.mapA_v3_source_audit_labels_private.csv",
+      "sha256": "19d023d64491d241c741564737602b1d496ee3c70595e2d39d3354e2509c7ced",
+      "rows": 108
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_decision/source_audit_20260823/mapA_v3_source_audit_candidates.csv",
+      "sha256": "a481f39de0d44b130d98bc0a561afe538beede7b5f5a14403b9c0ee10cae4655",
+      "rows": 108
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_s1/run_20260823/s1_construct_annotations.csv",
+      "sha256": "d79510b9463ae262ddc8b01e14b74a672fa361dc0592246c80720d584796284f",
+      "rows": 120
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-private/w3_mapA_v3_s1/run_20260823/s1_sample_120.csv",
+      "sha256": "693cea853e8c22359a50650fea854233897a4b34b8e0c9de461a5f2d4583bc72",
+      "rows": 120
+    }
+  ],
+  "contains_task_text": false
+}

@@ -1,0 +1,33 @@
+{
+  "output": "dax/memo/power_calcs/cps_preperiod_cells_coverage_failure_receipt_v1.json",
+  "output_sha256": "60ef90f11186fd0e6e8159099bcbd2d31c41d72652ecf54484884cd4c24dce70",
+  "inputs": [
+    {
+      "path": "dax/w2/build_young_relative_employment_cells.py",
+      "sha256": "1c4aaee2ff572cabe78916b7f2e519f246f093fbaab156a2a17dac9fe70060f1",
+      "rows": null
+    },
+    {
+      "path": "dax/memo/power_calcs/ipums_extract9_preperiod_split_receipt_v1.json",
+      "sha256": "e43b5434ac105095a61ab8d3ab3884c0a1d33e388739d420a91ab7083f4714f9",
+      "rows": null
+    },
+    {
+      "path": "dax/memo/power_calcs/cps_recode_contract_v1.json",
+      "sha256": "ba7558d52d3e3f54ded0529a321f91df67faedd7e01887e813085aea47846a45",
+      "rows": null
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-cps-sparse-20260825/dax/w2/exposure_gate/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+      "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+      "rows": null
+    },
+    {
+      "path": "/usr3/graduate/qluo/dax-cps-sparse-20260825/dax/w2/exposure_gate/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
+      "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+      "rows": null
+    }
+  ],
+  "code_version": "unknown",
+  "timestamp": "2026-08-25T22:36:29.829412+00:00"
+}

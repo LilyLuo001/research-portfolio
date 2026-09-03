@@ -1,0 +1,99 @@
+{
+  "status": "PASS",
+  "standard": "DAX_OCC2010_ONET_STANDARD_FREEZE_V1",
+  "generated_at_utc": "2026-08-18T15:35:04.292207+00:00",
+  "handoff_commit": "9182218eca95f97e0470eff60a0bd3d69fa402a8",
+  "rules": {
+    "point_estimate_eligibility": "Only whole CPS codes with cps_code_status=resolved_employment_weighted may expose an unbounded point estimate.",
+    "provisional_components": "Carry min/max across officially linked SOC/O*NET children or legacy sources; equal weights are a diagnostic center only.",
+    "unresolved_and_absent": "Fail closed, including OCC2010 7630.",
+    "mapped_interpretation": "Mapped equals resolved plus bounded provisional; mapped must never be described as fully resolved."
+  },
+  "artifacts": {
+    "crosswalk": {
+      "name": "cps_onet_crosswalk.csv",
+      "sha256": "eb68890bcfb31855d6a8f0704aab022c13c842d09e01eb57acd94e28dac4ddeb",
+      "mode": "0600",
+      "restricted": true
+    },
+    "legacy_fallback": {
+      "name": "onet_25_0_to_2019_fallback_timeshares.csv",
+      "sha256": "ee7d339465bea8c9e31982f3932c931080251ce144219d98f586a8adb803ca66",
+      "mode": "0600",
+      "restricted": true
+    },
+    "occupation_gap_audit": {
+      "name": "cps_onet_gap_audit_20260818.csv",
+      "sha256": "cbce29635b163def2f990aee36153304a34f1bf810cd806a49a3365fc48a8236",
+      "mode": "0600",
+      "restricted": true
+    },
+    "preperiod_cells": {
+      "name": "preperiod_cells_core.csv",
+      "sha256": "742ba1f94be7ee7a3ab5db63f1f929c35b97e297c8ec6b1084e2511202821b2a",
+      "mode": "0600",
+      "restricted": true
+    }
+  },
+  "crosswalk_audit": {
+    "n_mapping_rows": 1287,
+    "n_cps_codes": 503,
+    "cps_code_status_counts": {
+      "partial_unresolved": 50,
+      "provisional_equal_within_soc": 75,
+      "resolved_employment_weighted": 361,
+      "unresolved": 17
+    },
+    "bad_weight_sums": 0,
+    "inconsistent_status_codes": 0,
+    "derived_status_violations": 0,
+    "eligibility_violations": 0,
+    "n_point_eligible_codes": 361,
+    "n_observed_preperiod_codes": 445,
+    "whole_code_mass_shares": {
+      "absent_from_crosswalk": 0.0017047339,
+      "partial_unresolved": 0.1432718426,
+      "provisional_equal_within_soc": 0.1835262411,
+      "resolved_employment_weighted": 0.6536133662,
+      "unresolved": 0.0178838162
+    },
+    "component_mass_shares": {
+      "absent_from_crosswalk": 0.0017047339,
+      "provisional_equal_soc_missing_oews": 0.0323427812,
+      "provisional_equal_within_soc": 0.1153701021,
+      "provisional_legacy_task_ratings": 0.04448586,
+      "resolved": 0.7716899944,
+      "unresolved_no_usable_onet": 0.0344065283
+    },
+    "fully_resolved_component_mass_share": 0.7716899944,
+    "bounded_provisional_component_mass_share": 0.1921987433,
+    "mapped_component_mass_share": 0.9638887378,
+    "unresolved_component_mass_share": 0.0344065283,
+    "absent_component_mass_share": 0.0017047339,
+    "max_unresolved_occupation_contribution": 0.0044745164,
+    "max_unresolved_occupation_code": "5940",
+    "mapped_is_not_fully_resolved": true
+  },
+  "legacy_fallback_audit": {
+    "n_rows": 908,
+    "n_fallback_onet_soc2019_codes": 41,
+    "n_equal_source_mix_codes": 4,
+    "bad_fallback_share_sums": 0,
+    "bad_legacy_profile_share_sums": 0,
+    "bad_legacy_source_weight_sums": 0,
+    "bounds_required_violations": 0,
+    "fallback_status_violations": 0
+  },
+  "gates": {
+    "coverage_threshold": 0.9,
+    "max_unresolved_occupation_share_threshold": 0.01,
+    "coverage_gate_pass": true,
+    "whole_code_eligibility_pass": true,
+    "occ2010_7630_fail_closed": true,
+    "private_permissions_pass": true,
+    "restricted_data_git_hygiene_pass": true
+  },
+  "tracked_restricted_artifact_count": 0,
+  "error_count": 0,
+  "errors": []
+}

@@ -1,0 +1,83 @@
+{
+  "base_sha": "6d792ff1bce3934efcdb30de0b8aa0fc46031ed3",
+  "benchmark": {
+    "primary": 0.13,
+    "sensitivities": [
+      0.16,
+      0.19
+    ],
+    "status": "UNCHANGED_SIGNED"
+  },
+  "downstream": {
+    "identification_run": false,
+    "outcome_analysis_opened": false,
+    "power_standard_changed": false,
+    "production_mapping_run": false,
+    "real_power_run": false,
+    "tag_created": false,
+    "w4_paid_calls": false,
+    "w5_run": false
+  },
+  "gdpval_duration": {
+    "covered_tasks": 0,
+    "expected_tasks": 220,
+    "fallback_eligibility_utc": "2026-09-04T13:04:55Z",
+    "fallback_launched": false,
+    "reply_or_bounce_visible_to_project": false
+  },
+  "labeling": {
+    "budget_cap_requested_usd": 60.0,
+    "calibration_labels": 0,
+    "development_labels": 0,
+    "inference_calls": 0,
+    "locked_test_labels": 0,
+    "realized_spend_usd": 0.0,
+    "status": "NEED_PI_BUDGET_AUTHORIZATION",
+    "true_vendor_family_independence_available": true
+  },
+  "locked_test": {
+    "class_counts_exposed": false,
+    "labels_opened": false,
+    "metrics_computed": false,
+    "one_time_opening_consumed": false,
+    "pairs": 533
+  },
+  "mapping_gates": {
+    "adjudication_rate": "NOT_EVALUABLE_LABELS_ABSENT",
+    "family_coverage": "NOT_EVALUABLE_LABELS_ABSENT",
+    "false_positive_rate": "NOT_EVALUABLE_MODEL_AND_LABELS_ABSENT",
+    "ppv": "NOT_EVALUABLE_MODEL_AND_LABELS_ABSENT",
+    "recall_at_40": "NOT_EVALUABLE_EXHAUSTIVE_LABELS_ABSENT",
+    "task_mass_coverage": "NOT_EVALUABLE_LABELS_ABSENT",
+    "transport_sensitivity": "NOT_EVALUABLE_W4_AND_FINAL_RELATIONS_ABSENT"
+  },
+  "prediction_rule": {
+    "algorithm_code_frozen": true,
+    "calibrator_parameters": "NOT_AVAILABLE_LABELS_ABSENT",
+    "classifier_parameters": "NOT_AVAILABLE_LABELS_ABSENT",
+    "cutoff": "NOT_AVAILABLE_LABELS_ABSENT",
+    "feature_count": 10,
+    "model": "L2_LOGISTIC_REGRESSION",
+    "specification_frozen": true
+  },
+  "recall_audit": {
+    "all_classifier_source_tasks_excluded": true,
+    "initial_pair_universe": 13200,
+    "initial_source_tasks": 60,
+    "labels_present": false,
+    "maximum_pair_universe": 22000,
+    "reserve_source_tasks": 40,
+    "sample_and_reserves_frozen": true
+  },
+  "status": "PREDECISION_PREREQUISITES_FROZEN_STOPPED_BEFORE_PAID_LABELING",
+  "verification": {
+    "compileall": "PASS",
+    "focused_tests": "26_PASS",
+    "full_tests": "468_PASS_1_SKIP_1_KNOWN_UNRELATED_P1_FAILURE",
+    "outcome_seal": "PASS_NO_PATH_CHANGE",
+    "runner_plan": "PASS_RECONCILED_NO_MISSING_PI_MISSTATEMENT",
+    "selfcheck": "PASS_87_TASKS_24_CONTRACTS",
+    "scc_python": "3.12.4",
+    "scc_scikit_learn": "1.5.1"
+  }
+}

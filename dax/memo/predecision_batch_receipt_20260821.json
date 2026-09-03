@@ -1,0 +1,41 @@
+{
+  "receipt_version": "dax-predecision-batch-v1",
+  "status": "PREDECISION_PACKETS_COMPLETE_UNSIGNED",
+  "prepared_date": "2026-08-21",
+  "mapping_a": {
+    "locked_test_labels_sealed": true,
+    "labels_accessed": false,
+    "validation_results_inspected": false,
+    "thresholds_selected": false,
+    "production_approved": false
+  },
+  "duration": {
+    "author_outreach_sent": false,
+    "fallback_launched": false,
+    "annotators_recruited": false,
+    "task_level_duration_values_accessed": false
+  },
+  "benchmark": {
+    "pi_choice_recorded": false,
+    "power_standard_modified": false,
+    "power_standard_sha256": "9951b172d0a4b9b02dd313772586f2972dc56bc4d4cecb2ebfccf4ea0ca27b3e"
+  },
+  "execution": {
+    "w4_metadata_calls": 0,
+    "w4_inference_calls": 0,
+    "w5_run": false,
+    "identification_run": false,
+    "power_run": false,
+    "outcomes_opened": false,
+    "paid_api_calls": 0,
+    "realized_cost_usd": 0.0
+  },
+  "artifacts": {
+    "dax/mapping/PI_DECISION_MAPPING_A_V2_THRESHOLDS_2026-08-21.md": "e03aef7f87981e3e4f41408d2cb53ad86c7fddff50761a77e2bbd7359e8a6bb1",
+    "dax/capability_panel/GDPVAL_AUTHOR_OUTREACH_PACKET_2026-08-21.md": "7aedb89c5919df377a41936b6a354803af21096b6195caff84503d00954e4bcc",
+    "dax/capability_panel/GDPVAL_DURATION_FALLBACK_PACKET_2026-08-21.md": "fbc9e2b971503e7b395042a4626b5b4feeee5ffa993a11da0c6575d298a74948",
+    "dax/memo/PI_DECISION_BENCHMARK_INTERPRETATION_2026-08-21.md": "8f0f395d5601f3fb646b115fefd5fd31c3adb60527af4797ba5e900400f0688b"
+  },
+  "private_or_row_level_artifacts_committed": false,
+  "signature_state": "NEED_HUMAN"
+}
