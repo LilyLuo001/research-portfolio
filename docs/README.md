@@ -20,8 +20,8 @@ the proposal is wrong — report the conflict, per each manual's C0/CONTEXT PACK
 > delta to reconstruct and nothing to diff. Read these two files and stop.
 
 1. `基金转换实验_博士研究计划.md` — **the plan. Single source of truth for all
-   research substance**, and already current: every amendment through 2026-08-28
-   is merged into the body. If something you read anywhere else contradicts it,
+   research substance**, and already current: every amendment through 2026-09-03
+   is merged into the body, with no version history left in it. If something you read anywhere else contradicts it,
    the plan wins and the conflict is a bug to report.
 2. `Project_1.md` — execution manual: the five meta-rules, the CONTEXT PACK,
    the T0–T12 task prompts, §5 contracts, §6 rhythm. **Process only.** It was
