@@ -19,3 +19,9 @@ The first repair changed:
 The underlying table, row selection, and all calculations are identical. A source regression test protects bracket access. The entire program is rerun from the beginning; the earlier partial hard-benchmark file is not reused.
 
 The next full rerun exposed a second access to the same column in the immediately following direction-group selection: `result.sample.eq(...)`. It failed at the same stage, again before the stock or joint-inference exercises. That access is likewise replaced by `result["sample"].eq(...)`. The regression test now forbids any `.sample.eq` occurrence in the runner. The program is again rerun from the beginning without reusing either partial benchmark file.
+
+## Fix 3 — headless figure backend
+
+After the sealed numerical artifacts had been copied from SCC and hash-verified, the presentation-only renderer selected Matplotlib's macOS GUI backend and aborted while opening its first figure in the headless local session. The renderer now forces the non-interactive `Agg` backend before importing `pyplot`. This repair affects only PNG rendering; it does not read protected microdata, estimate a model, or alter any numerical artifact or classification.
+
+Visual inspection then found that the shared-stock figure's original long x-axis label was clipped. The label was shortened without changing the plotted coefficient, interval, dimensions, or styling logic.

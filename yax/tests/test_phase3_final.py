@@ -147,3 +147,96 @@ def test_runner_uses_bracket_access_for_the_sample_column_after_documented_fix()
     ledger = (PHASE3 / "YAX_PHASE3_IMPLEMENTATION_FIXES.md").read_text()
     assert "Pandas `sample` attribute collision" in ledger
     assert "No specification, estimand, support rule, seed, draw count" in ledger
+
+
+def test_sealed_phase3_classifications_and_single_stock_model_are_exact():
+    receipt = json.loads((PHASE3 / "YAX_PHASE3_EXECUTION_RECEIPT.json").read_text())
+    assert receipt["result_classifications"] == {
+        "hard_benchmark": "HB-C",
+        "phase3_path": "PATH-P3-C",
+        "reallocation_component": "SC-R1",
+        "shared_stock": "SC-A",
+    }
+    assert receipt["new_labor_outcome_model_count"] == 1
+    assert receipt["new_labor_outcome_models"] == [
+        "shared_F_Q2_Q5_with_Q1_omitted_and_Webb"
+    ]
+    assert receipt["pre_result_commit"] == (
+        "2683af26768c343af6060988689728d88878d568"
+    )
+
+
+def test_hard_benchmark_hbc_is_not_overruled_by_descriptive_tail_area():
+    result = json.loads((PHASE3 / "YAX_PHASE3_HARD_BENCHMARK_RESULTS.json").read_text())
+    primary = result["primary_hard_benchmark"]
+    persistent = result["persistent_hard_benchmark"]
+    assert primary["classification"] == "HB-C"
+    assert persistent["classification"] == "HB-C"
+    assert primary["draws"] == persistent["draws"] == 999
+    assert primary["realized_minus_hard_mean"] < 0.01
+    assert persistent["realized_minus_hard_mean"] < 0.01
+    assert primary["false_self_switches_after_repair"] == 0
+    assert persistent["false_self_switches_after_repair"] == 0
+    decision = (PHASE3 / "YAX_PHASE3_HARD_BENCHMARK_DECISION.md").read_text()
+    assert "neither a conventional sampling p-value nor causal evidence" in decision
+
+
+def test_shared_component_results_pass_declared_gates_without_extra_model():
+    reallocation = json.loads(
+        (PHASE3 / "YAX_PHASE3_REALLOCATION_COMPONENT_RESULTS.json").read_text()
+    )
+    stock = json.loads((PHASE3 / "YAX_PHASE3_SHARED_STOCK_RESULT.json").read_text())
+    assert reallocation["classification"] == "SC-R1"
+    assert reallocation["primary_lowest_minus_highest_F_bin_conflict"] > 0.75
+    assert reallocation["persistent_lowest_minus_highest_F_bin_conflict"] > 0.75
+    assert stock["classification"] == "SC-A"
+    assert stock["coefficient_log_points"] < 0
+    assert stock["wild_score_ci_upper"] < 0
+    assert stock["occupations"] == 444
+    assert stock["wild_score_draws"] == 999
+
+
+def test_joint_all_six_negative_statement_is_explicitly_not_supported():
+    joint = json.loads((PHASE3 / "YAX_PHASE3_JOINT_SIGN_INFERENCE.json").read_text())
+    rows = pd.read_csv(PHASE3 / "YAX_PHASE3_JOINT_SIGN_INFERENCE.csv")
+    assert joint["common_cluster_multipliers"] is True
+    assert joint["common_parameter_assumption"] is False
+    assert joint["all_simultaneous_upper_bounds_negative"] is False
+    assert joint["joint_all_negative_statement_supported"] is False
+    assert rows["upper_bound_below_zero"].sum() == 5
+
+
+def test_execution_artifact_hashes_match_scc_receipt():
+    import hashlib
+
+    receipt = json.loads((PHASE3 / "YAX_PHASE3_EXECUTION_RECEIPT.json").read_text())
+    for name, expected in receipt["artifact_hashes"].items():
+        actual = hashlib.sha256((PHASE3 / name).read_bytes()).hexdigest()
+        assert actual == expected, name
+
+
+def test_v5_obeys_path_p3c_and_labels_phase3_as_exploratory():
+    manuscript = (ROOT / "yax/manuscript/v5/YAX_MANUSCRIPT_v5_CLEAN.md").read_text()
+    appendix = (ROOT / "yax/manuscript/v5/YAX_V5_SUPPLEMENTARY_APPENDIX.md").read_text()
+    for text in [manuscript, appendix]:
+        assert "POST-OUTCOME EXPLORATORY" in text
+        assert "No Phase 4" in text
+    assert "Robustness does not transfer automatically across economic statements" in manuscript
+    assert "does not claim that actual occupational pairing is meaningfully unusually conflict-heavy" in manuscript
+    assert "joint all-six-negative statement is not supported" in appendix
+    forbidden = [
+        "workers are causally fleeing AI",
+        "AI causes workers to move toward",
+        "the shared component is true AI exposure",
+        "all six architectures estimate the same causal parameter",
+    ]
+    for phrase in forbidden:
+        assert phrase not in manuscript
+
+
+def test_headless_renderer_is_fixed_and_gate_eligible_figures_exist():
+    renderer = (PHASE3 / "render_phase3_figures.py").read_text()
+    assert 'matplotlib.use("Agg", force=True)' in renderer
+    assert (PHASE3 / "YAX_PHASE3_REALLOCATION_COMPONENT_FIGURE.png").stat().st_size > 10000
+    assert (PHASE3 / "YAX_PHASE3_SHARED_STOCK_FIGURE.png").stat().st_size > 10000
+    assert not (PHASE3 / "YAX_PHASE3_HARD_BENCHMARK_FIGURE.png").exists()

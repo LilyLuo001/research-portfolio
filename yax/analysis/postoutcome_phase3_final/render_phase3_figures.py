@@ -18,6 +18,9 @@ HERE = pathlib.Path(__file__).resolve().parent
 
 
 def run(directory: pathlib.Path = HERE) -> list[pathlib.Path]:
+    import matplotlib
+
+    matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
 
     made: list[pathlib.Path] = []
@@ -63,7 +66,7 @@ def run(directory: pathlib.Path = HERE) -> list[pathlib.Path]:
         ax.errorbar([coefficient], [0], xerr=[[coefficient - low], [high - coefficient]], fmt="o", color="#2171b5", capsize=4)
         ax.axvline(0, color="black", lw=1, ls="--")
         ax.set_yticks([0], ["Shared F: Q5 vs Q1"])
-        ax.set_xlabel("Young-relative employment-stock log coefficient (95% wild-score interval)")
+        ax.set_xlabel("Coefficient (log points; 95% wild-score CI)")
         fig.tight_layout(); fig.savefig(path, dpi=200); plt.close(fig)
         made.append(path)
     return made
@@ -72,4 +75,3 @@ def run(directory: pathlib.Path = HERE) -> list[pathlib.Path]:
 if __name__ == "__main__":
     for result in run():
         print(result)
-
