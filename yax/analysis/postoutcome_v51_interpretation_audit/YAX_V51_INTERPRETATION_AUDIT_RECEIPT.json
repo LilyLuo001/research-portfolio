@@ -1,6 +1,6 @@
 {
   "record": "YAX V5.1 closed interpretation audit reproducibility receipt",
-  "status": "PASS_CONTENT_COMPLETE_AWAITING_CLEAN_SCC_SEAL",
+  "status": "PASS_V51_INTERPRETATION_AUDIT_COMPLETE_STOP",
   "generated_at_utc": "2026-09-03T10:50:05Z",
   "branch": "task/yax-v51-interpretation-audit-20260903",
   "lineage": {
@@ -96,7 +96,9 @@
     "targeted_v51_local": "23 passed",
     "all_yax_local": "187 passed",
     "full_local": "674 passed, 3 skipped, 2 environment-only failures because GNU timeout is absent on macOS",
-    "clean_scc": "PENDING_SCC_RECONNECTION"
+    "clean_scc": "872 passed, 3 skipped, 13 warnings in 14.30s",
+    "clean_scc_checkout": "/projectnb/econdept/qluo/yax-v51-interpretation-seal-337ceae-tags",
+    "clean_scc_tested_commit": "337ceae86dcc36baf0bd8bfa51b80c0c41fdb015"
   },
   "remote": {
     "name": "origin",
