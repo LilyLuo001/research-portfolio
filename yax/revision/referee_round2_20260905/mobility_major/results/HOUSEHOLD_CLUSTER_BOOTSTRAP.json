@@ -1,0 +1,48 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "benchmark": {
+    "bootstrap_plugin_mean": 0.5243911403508772,
+    "bootstrap_plugin_raw_sd": 0.0017964599864079085,
+    "sealed_200k_999_draw_mean": 0.5232266666666666,
+    "sealed_mc_se_of_mean": 1.7220411861184844e-05,
+    "sealed_sd_across_rematches": 0.0005442848905528857
+  },
+  "bootstrap_pseudo_represented_cells": {
+    "median": 67949.0,
+    "p10": 67793.6,
+    "p90": 68112.2
+  },
+  "failed_draws": 0,
+  "household_clusters": 74671,
+  "not_covered": "not CPS replicate-weight/full complex-survey inference; exposure construction, crosswalk allocation, and latent occupation-code error are not resampled",
+  "pseudo_units_per_bootstrap": 200000,
+  "realized_conflict": {
+    "cluster_bootstrap_se": 0.0019794450894242296,
+    "percentile_95_interval": [
+      0.5289467405145241,
+      0.5365908406247382
+    ],
+    "point_on_sealed_represented_support": 0.532818541233548
+  },
+  "realized_minus_benchmark": {
+    "mean_within_replicate_mc_variance_of_rematch_mean": 1.3189655388471088e-07,
+    "normal_95_interval_using_variance_subtracted_se": [
+      0.008070283537719346,
+      0.011113465596043405
+    ],
+    "point_on_sealed_represented_support": 0.009591874566881375,
+    "raw_cluster_bootstrap_plus_mc_se": 0.0008570848725990509,
+    "raw_percentile_95_interval": [
+      0.006821902660662532,
+      0.010267635348668553
+    ],
+    "variance_subtracted_cluster_sampling_se": 0.0007763362190143007
+  },
+  "rematches_per_bootstrap": 2,
+  "requested_draws": 399,
+  "sampling_model": "mean-one exponential multiplier bootstrap at longitudinal household CPSID cluster; official LNKFW1MWT retained",
+  "seed": 2026090511,
+  "separation_rule": "sampling variance is raw variance of bootstrap replicate gap means minus average within-replicate rematch variance divided by the recorded number of rematches, truncated at zero",
+  "successful_draws": 399,
+  "zero_CPSID_rows_treated_as_separate_clusters": 0
+}

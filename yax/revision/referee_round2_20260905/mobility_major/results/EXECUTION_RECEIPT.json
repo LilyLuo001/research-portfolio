@@ -1,0 +1,49 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "fixed_seeds": {
+    "alternative_rematch_rule": 2026090512,
+    "household_cluster_bootstrap": 2026090511
+  },
+  "generated_at_utc": "2026-09-05T09:39:13.075723+00:00",
+  "git_head_at_execution": "47559f411ec6543a1df12e9364ab00155e99ab89",
+  "input_hashes": {
+    "analysis_spec": "dccc03202f88a51ddc05624afe7ed3e97325544a31d4c667dea046388866b5ea",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "exposure_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "longitudinal_weight_patch_private": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+    "microdata_private": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "occupation_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "occupation_characteristics": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "phase1_flow_feasibility_receipt": "60509f966b62b59325372274d62aed8ae8c758953816112b6da732809e4ab92c",
+    "phase2_flow_counts": "d52ae44af6dd1a01515e8f5d7893880ec7e9750695cc1585e684df91235c9931",
+    "phase2_flow_results": "99445bfe4c695cfb57aaa944da38666db1bafc45ea1b985b3176eeca71d73ab4",
+    "sealed_phase3_hard_results": "83ce57e14b1f768797eb85958bde39200f70d1b7e6c6027ea6c5b18dc787a5ca",
+    "technical_correction": "c21b6a6f463505baff8a6353083e7bea1e77a9a2bcbc4ca74c2bc7de3b0c3e85"
+  },
+  "linked_sample_audit": {
+    "false_September_to_November_2025_links": 0,
+    "long_gap_pairs": 0,
+    "post_validated_pairs": 1413351,
+    "pre_validated_pairs": 2635559,
+    "validated_adjacent_pairs": 4085493,
+    "wide_rows_read": 9262480,
+    "young_validated_pairs": 313171
+  },
+  "official_switch_weight": 405762591.7132,
+  "output_hashes": {
+    "CODING_INSTABILITY_DECISION.json": "43c9ca3ecd0997b73b65611f5a8927b99b9959231ca05714dde43fbda74274b5",
+    "ENTRY_DESTINATION_EVIDENCE.json": "6b0fd866e3aa07f05f064c7c0eef4ab02c18d78bdb995ca827297d9b9b2bb168",
+    "FAMILY_BALANCED_DEFINITION.json": "00c458b2a78a2fbe3de74cc1caaa3e1c5f54b2d268a9e52f2a831ca4dff14bd8",
+    "FAMILY_BALANCED_PAIRWISE_DISAGREEMENT.csv": "0a2d9413121e6f464bb26249f21e6fb12af5d21927024bffca895c7c26fe3513",
+    "HARD_SUPPORT_CELL_SUMMARY.csv": "31bfc2e7796aafc7546e326b0c2d62ee1cf774e2942bd9dc28c3874ea1643865",
+    "HARD_SUPPORT_RECONCILIATION.json": "631eb2267da1ed5331217886aaf5c54e98a5ced5a99f746fedada247b00f9892",
+    "HOUSEHOLD_CLUSTER_BOOTSTRAP.json": "c39d84171fb6acdbf56abd42680a35b69ff17d02649ece73f5c1699b1f5a875f",
+    "HOUSEHOLD_CLUSTER_BOOTSTRAP_DRAWS.csv": "601aa37df5cb5c64519a509e9aacd493fa27b782753cc907fb227f6b4ec00e29",
+    "REMATCH_RULE_DRAWS.csv": "a23577dd1b807711a9586f119e6ebeb5ebad76e7eb3cf3117f972229eea442cf",
+    "REMATCH_RULE_SENSITIVITY.json": "10a514ba6c3fa6b6a1aafd00082966404956f35c361169a5064e57926f00df81",
+    "TASK_ENDPOINT_IDENTITY.json": "66cfce039a18c6c9a532b8973d1b5bc339c24c277bc07e01288a98daf5234a41"
+  },
+  "private_identifiers_written": false,
+  "record": "YAX RR1-M11 / RR2-M8 major mobility revision",
+  "switches": 108500
+}

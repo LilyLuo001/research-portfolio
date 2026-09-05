@@ -1,0 +1,21 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "decision": "principled non-adoption",
+  "earlier_phase1_universe": {
+    "ages": "18-65",
+    "exposure_support_restriction": "none; flow-feasibility universe",
+    "immediate_reversals": 11121,
+    "observable_first_switches": 112736,
+    "raw_conditional_share": 0.09864639511779733,
+    "source_sha256": "60509f966b62b59325372274d62aed8ae8c758953816112b6da732809e4ab92c"
+  },
+  "evidence_needed_for_adoption": "validated repeated occupation codes or an external reinterview/audit sample estimating the latent-code misclassification matrix by occupation and period",
+  "immediate_reversal_share_all_switches_official_weight": 0.0594801218774226,
+  "immediate_reversal_share_conditional_t2_observable_official_weight": 0.10662583024740756,
+  "immediate_reversal_share_conditional_t2_observable_raw": 0.10336128838250526,
+  "immediate_reversal_switches": 6187,
+  "measured_occupation_coding_error_rate": null,
+  "reason": "A-B-A sequences mix genuine temporary moves, within-job assignment changes, proxy reporting, and occupation coding/reporting error.  The switch sample does not reveal a latent true occupation or a five-category transition-error matrix for the stock panel.  Under unknown differential errors, Q5-Q1 misclassification can attenuate, amplify, or reassign the contrast.  Treating the reversal share as a symmetric error probability would manufacture a correction.",
+  "stock_misclassification_curve_adopted": false,
+  "t2_observable_switches": 59858
+}
