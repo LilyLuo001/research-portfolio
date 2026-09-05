@@ -1,0 +1,26 @@
+\section{Inference and Finite-Sample Audit}\label{app:inference}
+
+\subsection{Stochastic targets}
+
+The principal wild-score interval treats occupation as the shock cluster and conditions on the constructed stocks, exposure labels, occupational bridge, and retained support.  It accommodates arbitrary serial dependence within an occupation but not unrestricted dependence across occupations.  A 22-family Webb-weight exercise instead allows common shocks within broad SOC families.  A separate household/sample-unit multiplier rebuilds cell stocks from microdata, preserves all observed records of the sampled unit across months, and assigns the same multiplier to every fractional descendant of a routed source record.  That exercise describes repeated-sample sensitivity conditional on released CPS final weights; the public Basic Monthly extracts do not supply the design variables needed to call it complete CPS design-based inference.
+
+These variances are not mechanically added.  Occupation-shock and household-resampling procedures can contain overlapping components, so summing them without a derived orthogonal decomposition could double count uncertainty.  They are reported as separate sensitivity targets.
+
+\subsection{Score and bootstrap implementation}
+
+The conditional likelihood retains one-sided zero cells and drops only occupation--month cells with zero total stock.  Scores use the fitted grouped-binomial objective, and nuisance-adjusted target scores use the Schur-complement projection implied by the fitted information matrix.  The same 9,999 Rademacher occupation multipliers are reused for paired comparisons.  Each draw first forms the two refitted or score-updated targets and then their difference; intervals for movement therefore retain covariance.  The finite-cluster correction, random seed, multiplier matrix hash, convergence checks, and score-conservation checks are written to the execution receipts.
+
+For the reconstructed pooled comparison, the analytic standard error is 0.04517 and the 9,999-draw 95-percent interval is $[-0.2206,-0.0437]$.  After SOC2-by-calendar-month conditioning, the coefficient is $-0.0217$, with standard error 0.07132 and interval $[-0.1607,0.1173]$.  The paired movement is 0.11043, with standard error 0.05189 and interval $[0.0107,0.2102]$.  The corresponding two-sided normal-theory paired $\mathrm{MDE}_{80}$ is 0.14539.  The detected movement remains smaller than this planning quantity; that is not a contradiction because an MDE is a power summary, not an acceptance threshold for an observed draw.
+
+\subsection{Broad-family and household sensitivity}
+
+The few-family exercise uses 22 broad-family weights and reports baseline, conditioned, and paired targets from common draws.  Its role is sensitivity to cross-occupation dependence, not a declaration that SOC2 is the uniquely correct cluster.  The household/sample-unit exercise performs 199 positive-weight full refits.  Under reconstructed exposure labels, its percentile interval is $[-0.1794,-0.0800]$ for the pooled coefficient, $[-0.1119,0.0560]$ for the family-conditioned coefficient, and $[0.0370,0.1722]$ for their movement.  Labels and support remain fixed because the target is repeated-sample uncertainty conditional on the preperiod construction; regenerating the generated treatment would define a broader and much more expensive target.
+
+The source does not expose official Basic Monthly replicate weights or all confidential design identifiers.  Household identifiers are therefore a dependence-preserving public-data approximation, not an ASEC replication-weight procedure.  Link-specific flow analyses additionally report person- and household-cluster sensitivities using their own risk sets.
+
+\subsection{Calendar-time HAC and stress validation}
+
+The time-HAC audit operates on nuisance-adjusted score sums and implements occupation clustering plus an aggregate elapsed-calendar HAC term minus within-occupation elapsed-calendar HAC terms.  Calendar lags are measured in months, so the missing October 2025 observation does not make September and November adjacent.  Baseline target standard errors remain close to the occupation-cluster value through lag 16.  Some positive-lag conditioned joint covariance matrices are indefinite.  The archive preserves those matrices and withholds unsupported joint Wald tests; it does not silently project them to be positive semidefinite.
+
+A sparse-cell stress simulation introduces concentrated occupational influence and broad-family shocks under a zero target.  In that deliberately adverse design, the nominal occupation-cluster normal interval rejects in 26.7 percent of simulations for the pooled model and 11.3 percent for the family-conditioned model.  These rates are not estimates of actual CPS coverage.  They show that 9,999 draws control Monte Carlo noise without validating the asymptotic reference distribution, and they motivate reporting the alternative stochastic targets together.
+

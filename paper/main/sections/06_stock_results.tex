@@ -1,36 +1,19 @@
-\section{What Exposure Construction Changes---and What the Data Resolve}\label{sec:family}
+\section{Characteristics and Inferential Resolution}\label{sec:characteristics}
 
-\subsection{Paired architecture precision}
+On the focused 408-occupation support, beta's preperiod-weighted correlation is 0.794 with O*NET computer use and 0.589 with remotability.  A static horse race is therefore descriptive: residual variation may be narrow, and a control may also be an AI channel.
 
-Alternative exposure constructions change occupation ranks, tail membership, and point estimates. The key inferential question is whether the downstream coefficient differences are resolved once both estimates use common support and common occupation multipliers. Table~\ref{tab:stock} answers no for the original Q5--Q1 comparison. Every beta-minus-alternative paired interval contains zero. The closest case is beta minus the OECD capability gap, $-0.1115$ with interval $[-0.2257,0.0027]$; its paired MDE$_{80}$ is 0.1689. Beta minus Webb AI is $-0.0646$ with interval $[-0.1682,0.0389]$ and MDE$_{80}$ 0.1499.
+The leading computerization measure is the May 2020 O*NET rating ``Interacting With Computers.''  On common support the beta-plus-Webb coefficient is $-0.107$.  Adding computer use makes it $-0.212$; the paired movement is $-0.105$ ($[-0.183,-0.027]$).  Computer use acts as a suppressor, rejecting the simple claim that this control necessarily attenuates the CPS contrast but not isolating AI.  Remotability alone gives $-0.116$ and an undetected $-0.009$ movement.  Wages, education requirements, routine/manual content, and pandemic shortfalls likewise do not yield individually detected movements on their declared supports.  These are nondetections, not equivalence results.
 
-\input{tables/table3_stock_results.tex}
+\input{tables/r3_table3_characteristics.tex}
 
-The correct conclusion is not that all architectures yield the same economic relationship, nor that a smaller alternative estimate shows the pattern ``does not extend.'' The design does not detect these paired differences and is too imprecise to rule out economically important movements in either direction. This is itself a result: the employment application reveals much more about how treatments are constructed than about which construction has a different population coefficient.
+Broad-family paths and a computer-use control need not move the coefficient alike: the former remove all family-common evolution, while the latter partials one correlated dimension.  Neither is a causal technology decomposition.
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.90\textwidth]{figure4_architecture_precision.pdf}
-\caption{Paired differences and the resolution of the CPS design}\label{fig:architectureprecision}
-\tabnote{Points are beta-minus-alternative Q5--Q1 coefficient differences on pair-specific common support. Thin lines are 95-percent common-draw paired intervals. Gray bars span plus or minus the normal-theory MDE at 80-percent power. An interval containing zero is a failure to detect a difference, not evidence of equivalence.}
-\end{figure}
+Industry conditioning is built from occupation--industry--age--month cells rather than dominant-industry labels.  Allowing 13 broad industries their own young-relative post shifts moves the stratified coefficient from $-0.138$ to $-0.099$; the paired 0.039 interval $[0.008,0.070]$ excludes zero.  It does not measure firm AI adoption.  BA and non-BA estimates are $-0.138$ and $-0.123$; their paired difference is $-0.015$ ($[-0.156,0.125]$), with $\mathrm{MDE}_{80}=0.201$.  Exact-age estimates vary but simultaneous paired intervals do not isolate a particular age mechanism.
 
-The original six-score intersection--union calculation is correspondingly demoted. All six marginal point estimates are negative on their literal intersection, and the maximum one-sided marginal tail area is .045, while the predeclared simultaneous-band criterion fails. With two principal components explaining 96.11 percent of score variance, this is a dependent-set sign statement, not six independent validations. Nothing in it overturns the paired-precision finding.
+The industry row changes the cell objective as well as the nuisance set, so it is reported separately from occupation-level characteristic controls.  Education and exact-age estimates use literal common supports and common draws; no subgroup is selected by its point estimate.  The age coefficients are jointly unequal, but each simultaneous age-minus-pooled interval contains zero.
 
-\subsection{A direct bridge to the motivating result}
+Table~\ref{tab:inference} separates uncertainty targets.  Occupation wild scores allow serial dependence within occupation.  A 22-family sensitivity permits common broad-family shocks.  Household full-refit multipliers preserve repeated observations and co-residence under released weights but are not full CPS design inference.  None covers exposure labels or route allocation.
 
-The published component of \citet{brynjolfsson2026canaries} that can be reproduced is a different representation: GPT-4 beta exposure divided into employment-weighted quintiles, with Q4--Q5 compared against Q1--Q3. Implementing that classification in the CPS model gives $-0.0728$ with interval $[-0.1240,-0.0216]$, roughly half the corrected Q5--Q1 log-point magnitude. The unconditioned result is $-0.0728$ as well. Young CPS stock rises 5.78 percent in the bottom-three group and falls 5.03 percent in the top-two group between November 2022 and June 2026, while older stocks rise by about 0.6 percent in each. These aggregate growth calculations do not inherit a hiring interpretation.
+\input{tables/r3_table4_inference.tex}
 
-Reapplying the BCC grouping rule to eight exposure constructions produces native-support coefficients from $-0.0817$ for Eloundou broad to $-0.0096$ for the OECD capability gap. On literal 426-occupation common support, beta is $-0.0810$ and OECD is $-0.0076$; their paired difference is $-0.0733$ with interval $[-0.1390,-0.0076]$. The other six paired differences are not detected. This does not contradict Table~\ref{tab:stock}: grouping changes the estimand and its precision. It illustrates that the economic contrast is part of the constructed empirical object.
-
-\input{tables/table4_reallocation.tex}
-
-\subsection{Taxonomy repair and construction layers}
-
-Taxonomy repair is the clearest measurement finding because it separates an invalid workflow from defensible alternatives. Literal matching of SOC-2010 AIOE codes into a post-2018 occupation universe covers only 3.33 percent of computer-and-mathematical employment. The documented route reaches 97.7 percent. In a continuous comparison, the original score on original support gives $-0.01885$; the repaired score on the same 410 occupations gives $-0.01920$; expanding to 495 repaired-score occupations gives $-0.03156$; excluding computer/math from the expanded support gives $-0.02940$. Most movement comes from changing who enters, not correcting scores among already matched occupations.
-
-This sequence is not a multiverse of equally defensible estimates. The exact-code merge is an implementation failure. The fixed-support row measures score correction. The expansion changes the target population. The computer/math exclusion asks whether one family drives the expanded-support coefficient. Reporting these layers separately is the portable contribution.
-
-\subsection{Primitive models rather than rotated labels}
-
-The prior draft emphasized ``consensus'' and ``disagreement'' coordinates $F=(A+E)/2$ and $G=(A-E)/2$. Those coordinates are retained in the online appendix only as a complete record. A representative two-score model is more transparent: administrative AIOE enters at $+0.0449$ and beta at $-0.0788$ when included jointly. In direct task units, $D$ and $S$ enter at $-0.0323$ and $-0.0303$. These are conditional associations among correlated constructed regressors, not causal technology channels. Transforming $F/G$ back to $A/E$ reproduces the same fitted predictor exactly and supplies no additional evidence.
+With 22 family clusters, the paired movement remains detected under Rademacher and Webb weights; the Webb interval is $[0.0059,0.2150]$.  A calibrated adverse simulation nevertheless rejects a zero pooled effect in 26.7 percent of null replications and the family-conditioned effect in 11.3 percent.  This is a stress design, not the CPS sampling law.  Elapsed-calendar HAC leaves scalar baseline uncertainty similar, but some conditioned joint matrices are indefinite; no positive-semidefinite projection or unsupported joint Wald test is used.

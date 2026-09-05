@@ -1,41 +1,30 @@
-\section{Where the Employment Association Comes From}\label{sec:results}
+\section{Which Occupational Comparisons Support the Pattern?}\label{sec:results}
 
-\subsection{Baseline and broad occupation families}
+Table~\ref{tab:occupation} begins with the rebuilt pooled result.  The Q5--Q1 coefficient is $-0.1321$, its occupation-clustered standard error is 0.0452, and the 9,999-draw interval is $[-0.2206,-0.0437]$.  Giving every SOC two-digit family its own young-relative calendar-month path yields $-0.0217$ ($[-0.1607,0.1173]$).  On common draws, the conditioned-minus-pooled movement is 0.1104 ($[0.0107,0.2102]$), with paired $\mathrm{MDE}_{80}=0.1454$.  Thus the conditional estimands are distinguishable while the residual gradient is imprecise.
 
-The substantive baseline uses the repaired 113-month calendar and frozen beta treatment definition. The Q5--Q1 coefficient is $-0.1346$ with occupation-clustered SE 0.0450 and canonical 95-percent interval $[-0.2223,-0.0468]$. The frozen design record remains $-0.1311$ with the canonical interval $[-0.2171,-0.0451]$. Calendar repair therefore does not explain the association.
+\input{tables/r3_table2_occupation.tex}
 
-The direct regression analogue of the earlier within-SOC2 permutation does. Adding broad-family-specific young-relative post terms reduces the coefficient to $-0.0315$; allowing each family its own young-relative monthly path gives $-0.0317$. Both intervals include zero. On common draws, the SOC2-by-post estimate minus baseline is $+0.1031$, with paired interval $[0.0035,0.2026]$; the monthly version gives $+0.1028$, with interval $[0.0035,0.2021]$. Thus the movement is detected even though the residual coefficient is not.
+The ratio $0.1104/0.1321$ is not a causal ``share explained.''  Broad families differ in AI-relevant tasks, computerization, education, work location, and pandemic recovery; family paths absorb all such common evolution.  The result says that the pooled estimate relies mainly on comparisons across families, not what would have happened without AI.
 
-This is strong evidence about the comparison and weak evidence about a structural mechanism. In point-estimate terms, conditioning absorbs about 76 percent of the baseline magnitude. But the target changes from a cross-economy Q5--Q1 contrast to a coefficient assembled from comparisons remaining within broad families after their differential evolution is removed. Only four of 22 SOC2 families contain both Q1 and Q5, and conditional target information falls from 26.4 million to 8.0 million, about 30 percent of baseline. The conditional coefficient is connected through intermediate quintiles in most families. It should not be described as ``the remaining AI effect,'' and the difference should not be described as the causal contribution of broad composition.
+The full Q2--Q5 profile reaches the same conclusion.  Pooled coefficients are jointly different from zero but do not establish a monotone dose response.  After family-month conditioning, the four coefficients are jointly indistinguishable from zero.  Simultaneous intervals and paired movements appear in Appendix~\ref{app:families}.
 
-\input{tables/table2_support.tex}
+\subsection{Direct support and restrictions}
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.92\textwidth]{figure2_composition_major_revision.pdf}
-\caption{Broad occupational composition and alternative comparisons}\label{fig:composition}
-\tabnote{All rows are post-outcome exploratory and use 9,999 occupation wild-score draws. SOC2 rows change the conditioning estimand. Food and influence rows retain frozen groups but change support. The BCC row changes the exposure-group contrast. Intervals are therefore informative within rows but the coefficients are not estimates of one invariant parameter.}
-\end{figure}
+Only SOC27, 29, 31, and 41 contain Q1 and Q5 occupations.  Elsewhere the regression links partial segments---for example Q1--Q3 in one family and Q4--Q5 in another---through common quintile coefficients.  That is valid regression variation but not repeated side-by-side tail comparisons.
 
-The prior within-SOC2 permutation is consistent with this result but is no longer asked to carry it. Randomly reassigning detailed beta scores within broad families produces a mean coefficient of $-0.1097$ against the frozen $-0.1311$. Its exchangeability assumption is not established, so the permutation percentile is descriptive. The conditioned regressions state the relevant comparison directly and show the support and information cost.
+A direct-tail benchmark uses only Q1 and Q5 occupations in the four spanning families.  Its 29 occupations account for 5.03 percent of preperiod stock.  The family-month estimate is 0.1494 ($[-0.1694,0.4682]$), so the CPS cannot precisely resolve a direct tail contrast within broad families.  This row changes population and support and cannot replace the primary estimand.
 
-\subsection{Profile, reference tail, and stable classifications}
+A continuous companion instead subtracts each family's preperiod-weighted beta mean and imposes a common within-family slope.  Its family-month coefficient is $-0.0025$ per 0.1084 raw beta units ($[-0.0240,0.0191]$).  It uses more residual variation but trades the tail contrast for linearity and a common slope.  Together, the specifications expose the support--functional-form tradeoff.
 
-The fitted post coefficients relative to Q1 are $0$, $-0.0855$, $-0.0478$, $-0.0970$, and $-0.1311$. A three-restriction test does not reject a common coefficient for Q2--Q5 ($p=.119$), but cannot establish their equality. The visible Q3--Q2 increase also does not yield a rejection of monotone decline under a least-favorable max-$t$ test ($p=.393$). The data therefore neither establish nor reject monotonicity.
+\subsection{Influence and observed paths}
 
-Changing the requested contrast clarifies Q1's role. Q5--Q2 is $-0.0456$ with interval $[-0.1248,0.0335]$; Q5--Q4 is $-0.0340$ with interval $[-0.1110,0.0429]$; Q5--Q3 is $-0.0833$ with interval $[-0.1581,-0.0084]$. These are different economic contrasts, not alternative omitted-category parameterizations. Figure~\ref{fig:paths} shows why: both the low-exposure trajectory and the older-worker denominator matter. The fitted contrast is not simply a collapse of young employment in Q5.
+Appendix~\ref{app:families} reports nuisance-adjusted information, effective information counts, and family and occupation deletions.  Fast-food and counter workers have substantial signed influence because low-exposure service employment recovered differently after the pandemic, but other occupations push oppositely.  Outcome-selected deletion is not a design correction; symmetric trimming and economically defined service exclusions remain diagnostics.
+
+Figure~\ref{fig:paths} separates young and older stocks for both tails.  Because numerator and denominator move, the coefficient is not an individual young worker's loss.  The low-exposure reference trajectory is part of the result.
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth]{figure3_q1_q5_paths.pdf}
-\caption{Q1 and Q5 employment stocks and ratios}\label{fig:paths}
-\tabnote{Monthly CPS-weighted stocks under frozen beta membership. The upper row indexes to observed 2019 means and the lower row to observed 2022 means. The dashed line marks January 2023. October 2025 is absent because no CPS was collected. The paths are descriptive and do not additively decompose the nonlinear coefficient.}
+\includegraphics[width=0.94\textwidth]{r3_figure1_q1_q5_paths.pdf}
+\caption{Young and older employment stocks in the exposure tails}\label{fig:paths}
+\tabnote{Monthly CPS-weighted stocks use rebuilt beta labels and are indexed to each series' 2019 mean.  The ratio panel divides young by older stock before indexing.  The vertical line marks January 2023; December 2022 is the transition month, and October 2025 is absent rather than interpolated.  Paths are descriptive.}
 \end{figure}
-
-Only 46 occupations are always Q1 and 18 always Q5 across the six original implementations. These stable tails account for 9.74 percent of common-support employment. Their contrast is $-0.2120$ with interval $[-0.4131,-0.0109]$, but has only 15.0 effective information occupations and a 46.7-percent top-five information share. The negative estimate survives in this narrow population; it does not show that unstable classification is innocuous in the broader one.
-
-\subsection{Influence and the food-service hypothesis}
-
-Influence is economically consequential but not one-directional. Jointly deleting the five occupations with the largest absolute prior leave-one-out movements reduces the estimate to $-0.1011$. Deleting the top ten or twenty instead makes it more negative, $-0.1522$ and $-0.1555$, because later occupations have opposing signed influence. A symmetric 2.5-percent trim of each signed-influence tail gives $-0.1281$, and Huber-style continuous down-weighting gives $-0.1314$. These are outcome-adaptive diagnostics rather than preferred specifications.
-
-Cleaner occupation-side exclusions do not support the strong claim that food-service recovery explains the headline. Dropping the five Q1 food-service occupations yields $-0.1196$, an 8.8-percent reduction in absolute magnitude. Dropping all food-service occupations gives $-0.1201$. Dropping all food, building-and-grounds, personal-care, and protective-service occupations yields $-0.1370$; dropping only their Q1 members gives $-0.1387$. These exercises cannot isolate reopening, immigration, minimum wages, or labor supply, but they reject the simpler assertion that removing in-person service occupations makes the pattern disappear.

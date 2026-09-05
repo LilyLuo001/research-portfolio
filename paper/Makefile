@@ -6,7 +6,7 @@ export SOURCE_DATE_EPOCH := 1788577652
 export FORCE_SOURCE_DATE := 1
 export TZ := UTC
 
-.PHONY: restat working appendix cover revised major-revision response diagnosis all clean check
+.PHONY: restat working appendix cover revised major-revision substantive-revision response diagnosis all clean check
 
 restat:
 	$(LATEXMK) $(FLAGS) -jobname=YAX_RESTAT_SUBMISSION main/restat.tex
@@ -43,6 +43,19 @@ major-revision:
 	@./scripts/check_latex_log.sh build/YAX_REFEREE_RESPONSE_MAJOR_REVISION.log
 	$(LATEXMK) $(FLAGS) -jobname=YAX_REVISION_DIAGNOSIS_MAJOR_REVISION revision/revision_diagnosis.tex
 	@./scripts/check_latex_log.sh build/YAX_REVISION_DIAGNOSIS_MAJOR_REVISION.log
+
+substantive-revision:
+	@git diff --no-ext-diff --no-color 6b8d85e -- main appendix tables revision > revision/source_diff.txt
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REVISED_MANUSCRIPT main/working.tex
+	@./scripts/check_latex_log.sh build/YAX_REVISED_MANUSCRIPT.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_FOCUSED_ONLINE_APPENDIX appendix/appendix.tex
+	@./scripts/check_latex_log.sh build/YAX_FOCUSED_ONLINE_APPENDIX.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REFEREE_RESPONSE revision/referee_response.tex
+	@./scripts/check_latex_log.sh build/YAX_REFEREE_RESPONSE.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REVISION_DIAGNOSIS revision/revision_diagnosis.tex
+	@./scripts/check_latex_log.sh build/YAX_REVISION_DIAGNOSIS.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_SOURCE_DIFF revision/source_diff.tex
+	@./scripts/check_latex_log.sh build/YAX_SOURCE_DIFF.log
 
 all: restat working appendix cover
 

@@ -1,0 +1,23 @@
+\section{Payroll Bridge and Exposure-Construction Diagnostics}\label{app:bcc_architecture}
+
+\subsection{BCC version and grouping bridge}
+
+The comparison uses the August 12, 2026 version of Brynjolfsson--Chandar--Chen and records the accessed paper, dashboard, and workbook in the evidence ledger.  Their reported 19-percent young-worker ``kept pace'' shortfall is a stock-growth counterfactual in ADP data, not a regression coefficient, employment probability, or hiring rate.  Their public dashboard forms equal-occupation exposure groups; later regressions employ other weights and employer controls.  Exact dashboard memberships and the treatment of ties are not released.
+
+The CPS bridge therefore applies an equal-occupation, tie-preserving top-two-versus-bottom-three approximation on the present support and labels it as such.  The pooled estimate is $-0.0720$, with interval $[-0.1218,-0.0222]$.  The SOC2-by-calendar-month estimate is $-0.0168$, with interval $[-0.0810,0.0474]$.  Their paired movement is 0.0553, with interval $[-0.0024,0.1129]$.  The archive provides group summaries and a membership file; it cannot provide concordance with undisclosed assignments.  Differences in occupation universe, age comparison, denominator, endpoint, firm controls, and employer-matched flows remain.
+
+\subsection{Task-capability weighting}
+
+Write the two Eloundou primitives as $D=E1$ and $S=E2$.  The score family $D+\lambda S$ is evaluated on a fixed grid from zero to one under common preperiod weights and common bootstrap draws.  The implementation verifies numerically that $\lambda=0.5$ reproduces raw beta before grouping.  Any earlier mismatch between that row and the headline arose from a different support or treatment contract and is preserved only as implementation history.
+
+Two versions are kept separate.  The native-rank analysis recomputes the score normalization and tie-preserving groups at each $\lambda$, so both scale and membership can change.  The fixed-membership analysis changes only the continuous score representation while holding the beta groups fixed.  For every grid point the result files report coefficient, paired difference from beta, interval, occupation coverage, tail turnover, and correlations with computer use and remotability.  A focused 408-occupation run adds both computer use and remotability on common support.  None of these paths measures realized deployment.
+
+\subsection{Primitive and architecture comparisons}
+
+The joint primitive model reports $D$ and $S$ in raw share units, in preperiod-standard-deviation units, their covariance, and an illustrative common change.  This is a two-regressor parameterization, not a causal decomposition into technologies.  Architecture comparisons likewise report both component coefficients and their paired difference on each declared support.  Webb-AI comparisons are shown first on identical support and then on broader native support so that score changes are not confused with population changes.  Principal-component rotations and earlier F/G coordinates remain in the replication archive because they are affine re-expressions; they are omitted from the scientific appendix.
+
+\subsection{What validation would require}
+
+None of the sampling intervals above treats a score as a noisy observation of a validated true exposure.  A useful validation sample would begin at the versioned occupation--task level and oversample both broad families and tasks on which architectures disagree.  It would record separate outcomes for technical capability, realized time savings without complementary software, realized time savings with software, observed workplace adoption, and task importance.  Conflating these labels would reproduce the construct problem the validation is meant to solve.
+
+Labels should come from repeated, blinded, independent expert assessments and, where feasible, audited product-use or task-performance records.  Calibration and evaluation occupations should be separated so that crosswalk and occupation aggregation choices are tested out of sample.  The task description, model snapshot, prompt, complementary tools, rater instructions, occupational bridge, and employment weights all require version records.  Sample size cannot be stated as one universal number: it depends on within-occupation task correlation, rater reliability, unequal task weights, the latent quantity being corrected, and whether the downstream target is a continuous slope or tail assignment.  In the absence of these inputs, the revision specifies the validation design but does not apply a generated-regressor correction.

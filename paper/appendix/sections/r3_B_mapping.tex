@@ -1,0 +1,54 @@
+\section{Occupational Mapping and Analysis Support}\label{app:mapping}
+
+\subsection{Bridge construction}
+
+The early panel reports Census-2010 occupations and the later panel Census-2018 occupations.  Exposure inputs additionally span SOC vintages.  The versioned bridge first routes 503 early source codes into 568 target codes.  Fifty-six sources have more than one target, with maximum multiplicity seven.  Official shares partition each source record's final weight; separate young and older routing would require validation data that the public adjacent-vintage files do not provide.  The routed early and current stocks reconcile to their sources with relative error below $2\times10^{-16}$.
+
+The primary joint beta/Webb universe contains 468 occupations and 87.19 percent of stock in the audited candidate universe.  Table~\ref{tab:app_exclusions} gives mutually exclusive exclusion counts.  A machine-readable file lists each included and excluded occupation, its preperiod stocks, scores, and reason.  This file, rather than a hard-coded count in the paper, defines support.
+
+\begin{table}[!htbp]
+\centering
+\caption{Primary-support exclusions}\label{tab:app_exclusions}
+\begin{tabular}{lr}
+\toprule
+Reason & Occupations \\
+\midrule
+Missing Rule-A beta only & 41 \\
+Missing Webb software only & 22 \\
+Missing both exposure inputs & 8 \\
+Nonpositive young preperiod stock & 2 \\
+\midrule
+Total excluded & 73 \\
+Primary retained & 468 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Separating score correction from population expansion}
+
+A literal exact-code merge between SOC-2010 AIOE and post-2018 employment data leaves only 3.33 percent of computer-and-mathematical employment.  The version-aware route reaches 97.7 percent.  The four-row continuous comparison separates the two operations that an aggregate ``crosswalk effect'' would conflate:
+
+\begin{table}[!htbp]
+\centering
+\caption{AIOE taxonomy repair and support expansion}\label{tab:app_crosswalk}
+\begin{tabular}{llrr}
+\toprule
+Score & Support & Occupations & Continuous coefficient \\
+\midrule
+Literal original & original & 410 & $-0.01885$ \\
+Repaired & same original & 410 & $-0.01920$ \\
+Repaired & expanded & 495 & $-0.03156$ \\
+Repaired & expanded, excluding SOC15 & --- & $-0.02940$ \\
+\bottomrule
+\end{tabular}
+\tabnote{The first row is an invalid vintage merge retained as an implementation audit, not a defensible specification.  Row 1 to 2 isolates score repair on fixed support; row 2 to 3 changes the population; the last row tests whether readmitted computer-and-mathematical occupations alone account for that expansion movement.  The continuous-score scale is held fixed within the audit.}
+\end{table}
+
+The invalid merge is documented as a failure encountered in this project.  I do not claim that a published paper made the same error without direct verification of its code and occupational universe.
+
+\subsection{Split-route and age-allocation sensitivity}
+
+Within the primary support, split sources contribute 14.93 percent of young and 17.75 percent of older early stock.  Ninety-nine target occupations can receive a split route.  A one-to-one-target restriction and an aggregation to stable Census-2010 categories both retain negative historical-contract estimates, but each changes the target population.  They are mapping sensitivities, not repairs of the primary bridge.
+
+Using the same route proportions by age is transparent but unvalidated.  Accounting ranges that allocate every ambiguous source in all feasible ways place the 2017--2019 young-to-older stock ratio between 0.1031 and 0.1480 in Q1 and between 0.0790 and 0.1175 in Q5.  These are stock-accounting bounds, not bounds on the nonlinear regression coefficient.  A limited odds-tilt sensitivity changes the historical-contract coefficient only modestly because 6.88 percent of early stock is eligible, but it cannot validate age-specific routing.  No adjacent coding vintage is treated as a same-person validation sample.
+

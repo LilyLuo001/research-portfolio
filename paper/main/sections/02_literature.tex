@@ -1,38 +1,15 @@
-\section{Constructed Treatments and Related Evidence}\label{sec:literature}
+\section{Related Evidence and the Empirical Object}\label{sec:literature}
 
-\subsection{A layered empirical object}
+The closest motivating study is the August 2026 revision of \citet{brynjolfsson2026canaries}.  Using ADP payroll records through June 2026, it reports weaker employment growth among ages 22--25 in occupations with high GPT-4 beta exposure and studies employer-match hiring and separation.  The CPS cannot reproduce its employer panel, standardized-title mapping, firm controls, or worker--firm flows.  Because that study also reports public CPS and ACS evidence, novelty here lies in auditing a fixed national-CPS estimand, not discovering the age pattern.
 
-Write a constructed-treatment analysis as a sequence from an economic construct $C$, through a measurement rule $M$, a harmonization rule $H$, a retained support $\Omega$, and a representation $R$, to an estimand $Q$:
+Administrative and workplace studies observe adoption or tool access in particular settings \citep{humlum2025still,brynjolfsson2025generative}; occupation scores instead describe tasks a technology might affect.  Remote-work evidence supplies another competing interpretation \citep{emanuel2026proximity}.  None turns a capability score into observed deployment.
+
+The primary score is Eloundou et al.'s GPT-4 beta: tasks are labeled by whether an LLM, alone or with complementary software, could reduce completion time at constant quality \citep{eloundou2024gpts}.  AIOE maps AI applications to abilities \citep{felten2018method,felten2021occupational}; Webb measures patent--task overlap \citep{webb2020impact}; Dingel--Neiman classifies teleworkability \citep{dingel2020home}.  Computer use, routine content, education, and remotability are therefore overlapping occupational characteristics, not clean alternative treatments.  The task literature likewise allows technology to substitute for some tasks, complement others, and reallocate work within occupations \citep{autor2003skill,autor2013growth,acemoglu2019automation}.
+
+This distinction changes the burden of interpretation.  Agreement across correlated scores can show that a direction is not unique to one coding rule, but cannot validate a latent exposure construct.  Conversely, coefficient differences can arise from task definitions, occupational support, or treatment-group membership.  The empirical work below therefore matches supports where possible and names population changes where it is not.
+
+I distinguish six layers:
 \[
-C\xrightarrow{M}x^{N}\xrightarrow{H}x\xrightarrow{\Omega,w}x|_{\Omega}
-\xrightarrow{R}Z\xrightarrow{Q,P}\theta.
+C\longrightarrow M\longrightarrow H\longrightarrow \Omega\longrightarrow R\longrightarrow Q,
 \]
-Calling every perturbation a different ``measure'' conceals economically important distinctions. An invalid taxonomy merge is an implementation error. Reweighting the same application--ability links is a same-construct measurement change. Moving from LLM task acceleration to patent overlap or a broad capability gap changes the construct. Expanding mapped occupations changes the target population. Converting a level to quintiles changes the treatment representation. Replacing Q5--Q1 by Q5--Q2 changes the comparison. Rotating a fixed two-regressor column space changes only coordinates.
-
-Table~\ref{tab:architectures} gives the reporting taxonomy used throughout. A row can carry more than one label: repairing a mapping both corrects an implementation and may readmit occupations. The analysis separates the fixed-support score change from the support expansion rather than calling their sum a ``crosswalk effect.''
-
-\input{tables/table1_architectures.tex}
-
-Two simple invariance results discipline the exercise. First, for fixed positive weights and a fixed tie rule, a positive affine transformation preserves ranks and weighted-quantile membership. Second, if two regressor matrices are related by a nonsingular coordinate transformation and sample, objective, nuisance terms, and constraints remain fixed, fitted values and transformed contrasts are identical. The $F/G$ to $A/E$ exercise in the prior draft is therefore a basis change, not additional empirical corroboration; it is retained only in the online appendix.
-
-The task-family construction has an equally useful structure. If $D_o$ is the share of tasks directly accelerated by an LLM and $S_o$ the share accelerated only with complementary software, then
-\begin{equation}
-X_{\alpha o}=D_o,\qquad X_{\beta o}=D_o+\tfrac12S_o,\qquad X_{\gamma o}=D_o+S_o.\label{eq:ds}
-\end{equation}
-For any pair of occupations, rankings along $D+\lambda S$ can change only where their affine score paths cross. Weighted-bin assignments are consequently piecewise constant in $\lambda$ on fixed support. There is no reason, however, for estimated categorical coefficients to be monotone in $\lambda$.
-
-\subsection{Exposure architectures}
-
-The core audit contains three AIOE implementations and three Eloundou implementations. AIOE links progress in ten AI applications to 52 O*NET abilities and then to occupational ability requirements \citep{felten2018method,felten2021occupational}. Administrative, direct-ability, and source-employment-weighted versions vary reconstruction or aggregation within that system. The Eloundou family changes the technology boundary through equation~\eqref{eq:ds} \citep{eloundou2024gpts}. These are six implementations from two families, not six independent measurements of a known latent exposure.
-
-The treatment-side dependence is strong. On the exact 444-occupation common support, the first weighted principal component explains 80.04 percent of standardized-score variance and the first two explain 96.11 percent; three explain 99.58 percent. The intersection--union sign calculation for the six coefficients is therefore retained only as a predeclared statement about a dependent set. It is not presented as six independent confirmations, and the failed simultaneous-band criterion remains in the design record.
-
-Two externally admitted constructions use different primitives. Webb maps patent text to occupational tasks, while the OECD measure compares nine capability domains with occupational requirements \citep{webb2020impact,oecd2026exposure}. They are different economic constructs, not reliability draws for the same LLM variable. Frey--Osborne remains an automation comparator rather than being relabeled as AI. A repository-bounded census records six core implementations from two families, two admitted external implementations from two additional families, one scope failure, and several published candidates whose score artifacts or mappings are not yet locally verified. This is not claimed to be a timeless census of the literature.
-
-\subsection{Relation to labor-market evidence}
-
-\citet{brynjolfsson2026canaries} use proprietary ADP payroll records and emphasize employment declines among ages 22--25 in highly exposed jobs, operating largely through hiring. Their public rule places GPT-4 beta occupations in employment-weighted quintiles and contrasts the top two with the bottom three. Section~\ref{sec:results} implements that public classification in CPS. It cannot recover their employer panel, title-to-occupation mapping, firm-time controls, hiring, or separations.
-
-Other studies answer different questions. \citet{humlum2025still} link reported adoption to Danish administrative outcomes; workplace deployments observe actual tool access rather than occupational potential \citep{brynjolfsson2025generative}. These designs distinguish exposure from use but do not validate one universal occupation score. The broader task literature likewise emphasizes substitution, complementarity, and occupational adjustment rather than a one-dimensional technology dose \citep{autor2003skill,autor2013growth,acemoglu2019automation}.
-
-This paper is closest in spirit to sensitivity analysis that asks which moments or trends support an empirical result \citep{andrews2017sensitivity,rambachan2023credible} and to work on generated covariates \citep{battaglia2024inference,christensen2026valid,duan2026inference,ludwig2026large}. Conventional occupation-clustered inference here conditions on labels, mapping, and support. The online appendix specifies what a validation sample would need to contain before generated-covariate corrections could address occupational AI exposure itself.
+the intended construct, measurement rule, occupational harmonization, retained support, representation, and regression estimand.  A vintage mismatch is an implementation error; score repair on fixed support changes measurement; occupation readmission changes population; and a different exposure contrast changes the estimand.  Common-draw paired inference tests coefficient movement, while each component interval measures its own resolution.  Neither a detected movement nor a nondetection assigns a causal share or establishes equivalence.  This focus connects the exercise to specification-sensitivity and generated-covariate inference \citep{andrews2017sensitivity,rambachan2023credible,battaglia2024inference,christensen2026valid,duan2026inference,ludwig2026large}.

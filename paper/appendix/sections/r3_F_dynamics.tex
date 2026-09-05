@@ -1,0 +1,21 @@
+\section{Dynamics, Endpoints, and Trend Sensitivity}\label{app:dynamics}
+
+\subsection{Quarterly system}
+
+The corrected dynamic model interacts every nonreference exposure quintile with calendar quarter.  The omitted period is 2022Q4, which contains October and November because December 2022 is the transition month and is excluded.  The resulting Q5--Q1 path has 23 preperiod and 15 postperiod coefficients.  The pooled and SOC2-by-calendar-month versions are estimated on identical reconstructed support, and the archive stores the complete Q2--Q5 coefficient vector, full covariance matrix, influence matrix, and simultaneous critical values.
+
+The joint null that all 23 Q5 preperiod coefficients equal zero is rejected in both the pooled model ($p=.0149$) and the family-conditioned model ($p=.0053$).  An anchored linear-slope summary does not reject, illustrating why one trend coefficient is not a substitute for the unrestricted joint test.  Simultaneous bands exclude zero only in late pooled quarters and never in the family-conditioned path.  These results do not establish which preperiod force produces the differences; they make a parallel-evolution interpretation of the January 2023 split untenable.
+
+The postperiod dynamic functional averages the 15 post-quarter coefficients with predeclared calendar weights.  It equals $-0.1199$ in the pooled model, with interval $[-0.2618,0.0221]$, and $-0.2074$ in the family-conditioned model, with interval $[-0.4216,0.0067]$.  This linear functional is not the nonlinear static grouped-binomial coefficient.  The mapping file reports their paired relationship rather than silently treating them as identical.
+
+\subsection{Official HonestDiD implementation}
+
+The trend-sensitivity program passes the joint event-time vector and covariance matrix to the official \texttt{HonestDiD} implementation.  The environment receipt fixes HonestDiD 0.2.8 and its source commit, and records the compatible official CVXR and solver versions.  The program does not feed a single static coefficient and standard error into an event-study procedure.  The conventional event-functional interval already includes zero for both the pooled and family-conditioned vectors.  The correct zero-exclusion breakdown is therefore zero: there is no positive robustness threshold to lose.  Earlier installation and API failures remain in the execution log; the successful official run is not replaced with a home-built approximation.
+
+\input{tables/r3_appendix_honestdid.tex}
+
+\subsection{Onset, endpoint, seasonality, and survey dates}
+
+Onset sensitivity reports every monthly split from November 2022 through June 2023.  January 2023 is retained because December 2022 was designated as the transition month after the November 30, 2022 public release of ChatGPT; robustness across nearby dates does not identify that event as the cause.  The full endpoint grid includes September 2025, December 2025, and July 2026 wherever the calendar permits.  October 2025 is never imputed.  Extending from the 2025 endpoints to July 2026 makes the pooled coefficient about 0.02 log point more negative, and its paired interval excludes zero; the analogous conditioned movements remain near zero.
+
+Exposure-group-by-month-of-year interactions supply the lower-dimensional seasonality check and move the target little.  More saturated occupation-specific seasonality and a shortened post-2020 fit fail to converge under the declared algorithm; both attempts and diagnostics are retained.  Excluding September and November 2025 around the collection gap does not detectably change the full-window estimate.  These rows address sensitivity to calendar construction and survey production, not counterfactual reweighting for the January 2025 or January 2026 population controls.

@@ -1,0 +1,33 @@
+{
+  "contracts": [
+    "historical_production_full_static_weight",
+    "rebuilt_corrected_preperiod_weight"
+  ],
+  "dynamic_profile_rows": 608,
+  "endpoint_rows": 24,
+  "honestdid": {
+    "cvxr_official_source_commit": "2fe1dac4d0c903c4a29515bef19c5d3824d09656",
+    "models": 4,
+    "official_source_commit": "6813f02ed38f0b63bdca6915604b2eac90491303",
+    "receipt_sha256": "3ae9f61e9e41a048a8304b35ac65036a4bbf4d1145b92ab3fcbab02239b47086",
+    "result_files": [
+      "HONESTDID_ORIGINAL_historical_production_full_static_weight_SOC2_x_calendar_month.csv",
+      "HONESTDID_ORIGINAL_historical_production_full_static_weight_unconditioned.csv",
+      "HONESTDID_ORIGINAL_rebuilt_corrected_preperiod_weight_SOC2_x_calendar_month.csv",
+      "HONESTDID_ORIGINAL_rebuilt_corrected_preperiod_weight_unconditioned.csv",
+      "HONESTDID_RELATIVE_MAGNITUDE_historical_production_full_static_weight_SOC2_x_calendar_month.csv",
+      "HONESTDID_RELATIVE_MAGNITUDE_historical_production_full_static_weight_unconditioned.csv",
+      "HONESTDID_RELATIVE_MAGNITUDE_rebuilt_corrected_preperiod_weight_SOC2_x_calendar_month.csv",
+      "HONESTDID_RELATIVE_MAGNITUDE_rebuilt_corrected_preperiod_weight_unconditioned.csv",
+      "HONESTDID_SMOOTHNESS_historical_production_full_static_weight_SOC2_x_calendar_month.csv",
+      "HONESTDID_SMOOTHNESS_historical_production_full_static_weight_unconditioned.csv",
+      "HONESTDID_SMOOTHNESS_rebuilt_corrected_preperiod_weight_SOC2_x_calendar_month.csv",
+      "HONESTDID_SMOOTHNESS_rebuilt_corrected_preperiod_weight_unconditioned.csv"
+    ],
+    "status": "PASS_OFFICIAL_HONESTDID_SELFCHECK"
+  },
+  "onset_rows": 32,
+  "q5_profile_rows": 152,
+  "receipt_sha256": "98b2b0aecf64f35499a0c92eaff35cee26a3f7b97256a46cb3454360eb094e07",
+  "status": "PASS_R3_DYNAMICS_SELFCHECK"
+}

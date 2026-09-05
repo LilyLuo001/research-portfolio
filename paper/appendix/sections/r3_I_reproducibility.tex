@@ -1,0 +1,17 @@
+\section{Reproducibility, Numerical Consistency, and Unresolved Items}\label{app:reproducibility}
+
+\subsection{Execution contract}
+
+The revision archive separates restricted inputs from distributable code and derived nonconfidential outputs.  A master command invokes module self-checks, the analysis scripts, exhibit generation, numerical-consistency tests, and the LaTeX builds.  Environment records fix Python and R package versions, seeds, scheduler resources, source hashes, and git state.  Every module declares its treatment contract, calendar, support, objective, inference target, and output paths before interpreting the result.  Restricted CPS records, longitudinal identifiers, credentials, and private absolute paths are not included in the public package.
+
+The canonical results ledger is the numerical source of truth.  Manuscript tables are generated from or checked against it, and repeated estimates use one declared draw set.  If an interval comes from a different stochastic target---occupation shocks, broad-family shocks, or household resampling---the table labels that procedure rather than presenting multiple intervals as interchangeable versions of one result.  The test suite verifies calendar membership, one-sided zeros, route conservation, fixed-support pairing, covariance symmetry and rank, draw hashes, and table/prose consistency.
+
+\subsection{Implemented failures}
+
+The failure registry is part of the evidence.  It includes the literal vintage merge, the original March sample selection, nonconvergence of saturated seasonality variants, indefinite positive-lag joint HAC matrices, and unsuccessful software installation attempts.  A failure is never converted into a different estimator without an explicit amendment.  Successful reruns preserve the earlier log and record the replacement's package and solver versions.
+
+\subsection{Unresolved limitations}
+
+The analysis cannot observe firm adoption, employer identifiers, worker--firm hiring, confidential CPS design variables, exact BCC dashboard memberships, age-specific occupational route probabilities, or a validated latent ``true'' AI exposure.  The public data therefore do not identify an AI causal effect or a complete stock--flow mechanism.  The direct within-family tail population is small, unrestricted preperiod differences are present, several linked-flow intervals are wide, and January 2025--2026 survey-production changes cannot be undone with published aggregate factors.  These are limits on interpretation, not missing robustness rows that a specification search can solve.
+
+Author affiliation, email, acknowledgments, funding, conflicts, data-access wording, and journal-required disclosures remain marked \texttt{[AUTHOR TO COMPLETE]} wherever author-supplied information is unavailable.  No identifying or disclosure information is inferred from directory names, credentials, or institutional access.

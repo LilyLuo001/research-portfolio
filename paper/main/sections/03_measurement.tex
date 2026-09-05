@@ -1,33 +1,29 @@
-\section{Data, Calendar, and Occupational Harmonization}\label{sec:data}
+\section{Data and Exposure Construction}\label{sec:data}
 
-\subsection{CPS stocks and the corrected calendar}
+\subsection{CPS stocks and calendar}
 
-The public-data application uses IPUMS Basic Monthly CPS records from January 2017 through July 2026. Employed respondents with positive final weights are aggregated into occupation-by-age-group-by-month stocks. Ages 22--25 form the young group and ages 26--65 the comparison group. Age is not labor-market experience, and the outcome can change through employment entry, exit, occupational switching, or the older denominator.
+I use IPUMS Basic Monthly CPS data from January 2017 through July 2026.  Employed respondents ages 18--65 with positive final weights are aggregated to occupation--month stocks; the regression compares ages 22--25 with ages 26--65.  Age is not experience, and older workers need not be untreated.
 
-The original wide extract accidentally selected the March ASEC sample (`03s') rather than the Basic Monthly sample (`03b') in 2017--2021. ASEC records carry zero Basic Monthly final weights for this purpose. A separately authenticated extract restores those five March samples. October 2025 remains absent because no CPS was collected during the federal shutdown. The combined files contain 9,843,021 records and 114 observed survey months. Omitting December 2022 as a transition leaves 113 months in the substantive static model.
+The corrected source calendar contains 114 of 115 possible months.  Five March files in the wide extract were ASEC samples and are replaced by authenticated Basic Monthly files for 2017--2021.  October 2025 is absent because no CPS was collected during the funding lapse; it is not interpolated.  December 2022 is observed but excluded as the transition month, leaving 113 static months.
 
-The corrected calendar is now the substantive baseline. Restoring March changes the coefficient from $-0.1311$ to $-0.1346$, with a 9,999-draw interval $[-0.2223,-0.0468]$. The frozen result remains visible as the confirmatory chronology record but no longer defines the default exposition.
+The reconstruction scans 9,843,021 source rows and retains 5,322,047 eligible records before routing.  Fractional pre-2020 crosswalk descendants are not distinct respondents.  The 468-occupation grid contains 52,884 cells; 51,891 enter the likelihood, including 12,965 valid one-sided zeros, while 993 both-age-zero cells contribute nothing.  Young cells are sparse: 26.25 percent have zero respondent-equivalent records and 69.83 percent have fewer than five.
 
-\subsection{Taxonomy bridge and universe reconciliation}
+\input{tables/r3_table1_data.tex}
 
-CPS occupations use Census-2010 codes through 2019 and Census-2018 codes thereafter, while source exposures use SOC vintages. Pre-2020 records are expanded along official Census-2010-to-2018 routes and aggregated to the common target taxonomy. In a one-to-many route, official conversion proportions are applied equally to young and older source records. This preserves the source occupation's age ratio across target components by construction; official files do not supply age-specific probabilities.
+\subsection{Harmonization and support}
 
-The full route-expanded preperiod universe contains 539 target occupations with positive young and older stock. Two counts that appeared to be a five-occupation discrepancy are instead nonnested, architecture-specific supports. The stored 490-occupation universe requires full beta coverage. The 495-occupation continuous-mapping universe requires repaired AIOE and Webb coverage. They overlap in 466 occupations: 24 appear only in beta support and 29 only in AIOE-plus-Webb support. Adding Webb to beta leaves the 468-occupation primary model. The online appendix names every member and reason.
+Pre-2020 Census-2010 occupations are routed to Census-2018 using versioned official shares.  Applying the same shares to young and older records preserves source stock and age ratios by construction, but does not validate age-specific routing.  The route reaches 99.546 percent of eligible early stock and conserves routed weight to machine precision.
 
-Within primary support, split sources contribute 14.93 percent of young and 17.75 percent of older weighted stock during 2017--2019. Ninety-nine target occupations can receive a split route and carry 23.38 percent of fitted target information; proportional allocation of information by split-stock share assigns 4.44 percent to split stock. The former is a conservative touched-target diagnostic and the latter is not an identified decomposition.
+Primary support requires finite GPT-4 beta and Webb software scores and positive preperiod young and older stock.  It contains 468 occupations and 87.19 percent of candidate-universe stock; a named file records all 73 exclusions.  A literal SOC-2010 AIOE merge into post-2018 employment data covers only 3.33 percent of computer-and-mathematical employment, versus 97.7 percent after version-aware routing.  Fixed-support score repair changes little; occupation readmission changes the population.  I treat the literal merge as invalid and do not attribute it to another paper without implementation evidence.
 
-The negative association does not depend on split routes. Restricting the corrected model to 369 targets with no structurally possible split inbound route gives $-0.1674$ under fixed labels and $-0.1471$ after recomputing the comparison on that support. Aggregating to a stable Census-2010 taxonomy gives $-0.1522$. Each changes the population and should not be called a correction of the primary estimate.
+The support file separates missing exposure, missing Webb, and absent young preperiod stock.  This matters because a common-support regression estimates a population defined by all required scores, whereas native-support rows can change both the exposure definition and who remains.  The appendix's four-step crosswalk table holds support fixed before adding newly reachable occupations, so measurement correction is not conflated with sample composition.
 
-Age-specific route allocation remains uncertain. Under unrestricted official-route accounting, the 2017--2019 young/older stock ratio can range from .1031 to .1480 in Q1 and from .0790 to .1175 in Q5. These are sharp accounting ranges for stocks, not bounds on the nonlinear regression coefficient. A predeclared tilt that changes young-versus-older allocation odds toward the highest-beta eligible target by factors from .5 to 2 moves the coefficient from $-0.1292$ to $-0.1391$. Only 6.88 percent of early stock is eligible for that scenario, so it is not a global robustness claim.
+\subsection{Exposure groups and production breaks}
 
-\subsection{A detectable workflow failure}
+The primary exposure is Eloundou et al.'s GPT-4 beta share.  CPS stock from January 2017 through November 2022 sets normalization and employment-weighted quintile cuts, with ties retained.  The quintiles contain 129, 99, 82, 67, and 91 occupations and about one fifth of preperiod stock each.  No postperiod stock enters the rebuilt labels.
 
-Literal exact-code matching of SOC-2010 AIOE into a post-2018 outcome taxonomy covers just 3.33 percent of computer-and-mathematical employment. The documented bridge reaches 97.7 percent. A machine-readable compatibility gate now rejects a merge when declared source and target vintages are not identical and no versioned route is supplied.
+Employment weighting balances stock rather than occupation counts.  Ties are assigned to the lower group at a cut and never split to force exact fifths.  Consequently, group membership is a versioned treatment object rather than a percentile transformation that can be recreated from rounded published values.
 
-The corresponding continuous sequence separates layers: original score/original 410-occupation support gives $-0.01885$; repaired score/same support gives $-0.01920$; repaired score/expanded 495-occupation support gives $-0.03156$; excluding computer/math gives $-0.02940$. The invalid exact-code result is not an economically defensible alternative. The small first movement concerns score correction; the larger second movement is population re-admission.
+A historical production treatment instead used the full static panel for weights.  On the corrected calendar its coefficient is $-0.1346$.  Rebuilding from the 71-month preperiod changes nine assignments and moves the coefficient by 0.0024 log points ($[-0.0013,0.0062]$).  The revised analysis uses only the rebuilt treatment; the historical row is a checkpoint.
 
-\subsection{Treatment formation}
-
-The primary Eloundou beta score and Webb software control are standardized using preperiod employment weights. Beta is divided into employment-weighted quintiles with ties retained. On the 468-occupation primary support, Q1 contains 133 occupations and 20.02 percent of employment; Q5 contains 91 and 19.53 percent. All support and sensitivity rows state whether cutoffs and scales are frozen or recomputed. Respondent-equivalent counts after route expansion are constructed records, not unique people.
-
-\input{tables/table_sample_flow_revised.tex}
+Official documentation also identifies population-control changes in January 2025 and January 2026, modified November 2025 collection and weighting, and later longitudinal-identifier corrections.  These establish survey-production breaks, not their causal effect on the coefficient.  I report endpoint and shutdown-month sensitivities, preserve elapsed calendar time in lags, and do not apply aggregate population adjustments to age-by-occupation cells without the required counterfactual controls.

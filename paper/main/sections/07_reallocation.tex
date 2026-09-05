@@ -1,23 +1,38 @@
-\section{Timing, Weights, and Remaining Interpretations}\label{sec:reallocation}
+\section{Dynamics, Flows, and External Comparison}\label{sec:dynamics}
 
-\subsection{Pre-AI pseudo-breaks and post-period dynamics}
+\subsection{Dynamics}
 
-The authenticated extract begins in January 2017, so the literal request for monthly pseudo-breaks beginning in 2015 is infeasible. I estimate every feasible break in the fully pre-AI January 2017--December 2019 window and emphasize 12 dates with at least 12 retained months on each side. Under both pre-AI classifications and the frozen classification, the balanced pseudo-break distributions are centered near zero; none approaches $-0.1311$. Because the 12 estimates overlap and were designed after the headline was known, the plus-one empirical tail of $1/13$ is a resolution floor, not a randomization $p$-value. Unbalanced early-window extremes are artifacts of having as little as one pre-break month.
+The binary post coefficient is not an event-study design.  I estimate quarterly coefficients for all four nonreference quintiles, omitting 2022Q4 (October--November; December is the transition month).  The Q5 path has 23 preperiod and 15 postperiod coefficients in pooled and family-month specifications.
 
-The actual post path remains descriptive rather than a causal event study. A model with separate periods gives $-0.1356$ in 2023, $-0.0783$ in 2024, and $-0.1629$ in 2025--26. The last is distinguishable from 2024 but not from 2023. No detected pretrend and an end-2022 break do not isolate AI from the technology-sector correction, interest rates, return-to-office changes, post-pandemic normalization, or occupational composition.
+Figure~\ref{fig:dynamics} shows the rebuilt Q5 path.  Joint tests reject that all 23 preperiod coefficients equal zero in both the pooled ($p=.0149$) and family-conditioned ($p=.0053$) models.  An insignificant anchored linear slope cannot override those unrestricted tests.  January 2023 therefore fails the parallel-evolution diagnostic for causal timing.
 
-I do not add a national adoption series merely to replace the post indicator. Interacting one national series with fixed occupation exposure would largely reparameterize an already displayed exposure-by-time path. Industry-level BTOS adoption would require an occupation--industry ecological bridge and would still not generate exogenous occupational adoption. Such data could support a separately designed adoption paper, but forcing it into this measurement-centered revision would change both treatment and estimand without resolving the main confound.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{r3_figure2_dynamics.pdf}
+\caption{Quarterly Q5--Q1 young-relative employment coefficients}\label{fig:dynamics}
+\tabnote{Coefficients are relative to Q1 and omitted 2022Q4 under rebuilt labels; lines are pointwise 95-percent occupation wild-score intervals.  Appendix~\ref{app:dynamics} reports simultaneous bands and the Q2--Q5 system.  The conditioned model gives each SOC2 family its own young-relative monthly path.}
+\end{figure}
 
-\subsection{Population controls and response composition}
+The calendar-weighted post functional is distinct from the nonlinear static coefficient.  It is $-0.120$ ($[-0.262,0.022]$) when pooled and $-0.207$ ($[-0.422,0.007]$) after family conditioning.  Official \texttt{HonestDiD} 0.2.8 applies smoothness and relative-magnitude restrictions to the full event vector and covariance.  Both conventional intervals already include zero, so no positive zero-exclusion threshold exists.  The exercise cannot repair rejected preperiod equality or identify adoption.
 
-January 2025 introduced unusually large CPS population-control revisions. A literal age-by-occupation counterfactual series ``without'' those controls cannot be constructed: BLS provides aggregate experimental adjustments, not subgroup weights, and official earlier microdata are not revised. I therefore report what the available data identify rather than rescale cells ad hoc.
+Onset estimates from November 2022 through June 2023 are similar within each structure, but common timing does not distinguish AI from coincident shocks.  Ending in late 2025 gives a pooled coefficient near $-0.112$, versus $-0.132$ through July 2026; the paired extension is about $-0.02$ and detected.  Family-conditioned endpoint changes remain near zero.  Shutdown-month exclusions are small.  Declared post-2020 and saturated seasonal models that did not converge remain recorded failures.
 
-On the repaired calendar, official weights give $-0.1346$ and respondent-equivalent cells give $-0.1348$. Ending in December 2024 gives $-0.1135$ and $-0.1056$, respectively. In a joint official-weight model, 2023--24 is $-0.1108$ and 2025--26 is $-0.1664$; their paired difference is $-0.0556$ with interval $[-0.1228,0.0116]$. Under respondent equivalents the era difference is more negative and detected. The raw official-weight Q5--Q1 log-ratio contrast becomes slightly less negative from December 2024 to January 2025. These checks do not provide a counterfactual weight vintage, but they are inconsistent with revised population weights mechanically creating the full association.
+\subsection{Linked CPS margins}
 
-``Respondent equivalent'' means that cells are reconstructed from observed employed records after route expansion without their CPS final weights. It changes the empirical cell outcome; dividing all weighted stocks by a common constant would not change the maximizer and is not what is done here.
+Table~\ref{tab:flows} estimates distinct adjacent- and twelve-month margins using validated links and official longitudinal weights.  Every primary interval includes zero.
 
-\subsection{Age, entry, and mobility}
+\input{tables/r3_table5_flows.tex}
 
-The pooled older comparison is not the sole source of the pattern. Ages 22--25 versus 26--35 give $-0.1307$, nearly identical to the frozen pooled result. Comparisons with ages 26--45 and 36--55 are $-0.1475$ and $-0.1464$. The contrast against ages 51--65 is smaller, $-0.0978$, and its paired difference from the pooled comparison is detected. Age 22--25 is an age group, not observed experience; the paper therefore uses ``young'' rather than treating every respondent as a labor-market entrant.
+Employment exit starts from employed origins; reported occupation change requires employment at both endpoints; entry destination conditions on nonemployment-to-employment links and measures allocation across exposure groups.  The last is neither a finding probability nor employer hiring.  Twelve-month links are endpoints, not sums of monthly transitions, and retain 50.98 percent of eligible young origins versus 70.55 percent of older origins.  Hours ($-0.119$, $[-0.295,0.057]$) and conditional weekly earnings ($-0.0245$, $[-0.1024,0.0534]$) are also imprecise and condition on employment.
 
-The main outcome cannot determine whether hiring, separation, or occupation switching generated the stock association. CPS longitudinal links do allow distinct flow estimands, but their intervals are wide. Entry destination is an allocation conditional on moving from nonemployment to employment, not an employment-finding probability. The employed-to-employed switch frame says still less about hiring. For that reason, the mobility analysis, family-balanced disagreement statistics, rematching benchmark, and flow regressions appear in the online appendix rather than as a main contribution. No immediate-reversal rate is treated as a validated occupation-coding-error rate.
+All flow exposure is defined at the origin where an origin occupation exists.  No current occupation is imputed to a nonemployed respondent.  Annual endpoints miss intervening jobs and transitions, and positive longitudinal-weight eligibility changes the population; neither horizon is a mechanical decomposition of the stock coefficient.
+
+\subsection{Payroll bridge and exposure architecture}
+
+BCC's August 2026 19-percent ``kept pace'' shortfall is a stock-growth comparison, not this regression coefficient or a hiring rate.  Complete public membership and tie rules are unavailable, so I use an equal-occupation, tie-preserving approximation and label it a bridge.  Its top-two-versus-bottom-three CPS coefficient is $-0.0720$ ($[-0.1218,-0.0222]$); family-month conditioning gives $-0.0168$ ($[-0.0810,0.0474]$), with an undetected paired movement.  Differences in universe, ages, outcome, endpoints, employer controls, and worker--firm flows remain.
+
+The bridge therefore asks whether a closer public grouping changes the CPS stock pattern; it does not calibrate CPS transitions to proprietary employer flows.  The required entry, exit, job-to-job, occupation-switching, aging, and denominator quantities are not jointly observed.
+
+Finally, $D+\lambda S$ varies the weight on tasks requiring complementary software.  Each row uses rebuilt weights and common draws, and $\lambda=.5$ exactly reproduces beta.  Native-tail coefficients range from $-0.103$ at $\lambda=0$ to $-0.156$ at $\lambda=1$; every comparison with beta includes zero, even though 61.6 percent of stock changes quintile at $\lambda=0$.  This is large classification movement with limited coefficient resolution, not evidence about deployed technology.
+
+\input{tables/r3_table6_lambda.tex}

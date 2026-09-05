@@ -1,0 +1,39 @@
+/usr3/graduate/qluo/portfolio/.venv/bin/python: can't open file '/project/econdept/qluo/yax-substantive-revision-20260905/repo_git2/yax/revision/substantive_r3_20260905/inference_rebuilt/run_inference_rebuilt.py': [Errno 2] No such file or directory
+{
+  "conditioned": -0.02167495201824627,
+  "indefinite_HAC_matrices": 0,
+  "paired_movement": 0.11043449877394412,
+  "pooled": -0.13210945079219039,
+  "status": "PASS_REBUILT_INFERENCE_ADDENDUM"
+}
+{
+  "checks": {
+    "calendar": true,
+    "coefficient_checkpoints": true,
+    "covariance_eigenvalues": true,
+    "covariance_matrix_rows": true,
+    "family_scores": true,
+    "hac_rows": true,
+    "model_rows": true,
+    "no_PSD_projection": true,
+    "no_failures": true,
+    "no_private_absolute_paths": true,
+    "occupation_influence": true,
+    "occupation_se_conservation": true,
+    "output_hashes": true,
+    "support": true,
+    "wild_sensitivity": true
+  },
+  "result_hashes": {
+    "CORRECTED_TIME_HAC_RESULTS.csv": "33fd56abdc97af1876b4493f49243c7cb649db5c344d8f2ae3254e747274d2d6",
+    "EXECUTION_RECEIPT.json": "9bf3b596994eb39a240ec1f0f3b51d3a4342db046b52a39211fc0644c652fa24",
+    "FINDINGS.md": "96ccca81c96b943f5c1e55a070de83918031ca31b29646164c7ec63bd5b25b35",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MODEL_SUMMARIES.csv": "6d5b103ea4f5f4a9b2f32cc5f632a3a222dac00caaeb5df950cc9edebd005aff",
+    "OCCUPATION_INFLUENCE.csv": "c52105ac24a26a6f3b902d69b533b14cc7c7ead16eb039f7d88185a075fbca1d",
+    "SOC2_FAMILY_SCORE_CONTRIBUTIONS.csv": "1e41891359beb2bfad70bb6c04e323fa780a78de4bbcaed4366e27bddaf00ef5",
+    "SOC2_WILD_SENSITIVITY.csv": "06b0538c631668893670d7fb2102dab829e51707acfdf921578610474674bd8f",
+    "TIME_HAC_COVARIANCE_MATRICES.csv": "53fdfda4b3b62fdf015906a7231f290587a21b82942df5cb2efecb1667f5a740"
+  },
+  "status": "PASS_REBUILT_INFERENCE_SELFCHECK"
+}

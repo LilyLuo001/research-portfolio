@@ -1,0 +1,26 @@
+YAX substantive R3 execution environment
+Captured: 2026-09-06
+
+SCC operating system: Linux 4.18.0-553.158.1.el8_10 x86_64, glibc 2.28
+Python: 3.13.8 (GCC 12.2.0)
+numpy: 2.5.1
+pandas: 3.0.3
+pytest: 9.1.1
+
+Official trend-sensitivity job:
+R module: 4.5.2
+HonestDiD: 0.2.8, source commit 6813f02ed38f0b63bdca6915604b2eac90491303
+CVXR: 1.8.2, source commit 2fe1dac4d0c903c4a29515bef19c5d3824d09656
+osqp: 1.0.0
+highs: 1.12.0-3
+GLPK module: 5.0
+Rust module used to build highs: 1.84.0
+
+PDF production:
+pdfTeX: 3.14159265-2.6-1.40.19 (TeX Live 2018)
+BibTeX: 0.99d (TeX Live 2018)
+
+The official package commits and generated result hashes are independently
+recorded in dynamics/results/HONESTDID_EXECUTION_RECEIPT.csv.  Module-level
+execution receipts record the code commit, input hashes, seeds, draw counts,
+and output hashes for each analysis.

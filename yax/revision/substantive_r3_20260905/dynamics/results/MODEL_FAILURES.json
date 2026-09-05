@@ -1,0 +1,102 @@
+[
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "first_month": "2020-01",
+    "grid": "endpoint",
+    "last_month": "2026-07",
+    "message": "grouped-binomial model did not converge",
+    "months": 77,
+    "onset": "2023-01",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "unconditioned",
+    "treatment_contract": "historical_production_full_static_weight",
+    "variant": "post_2020_coding_stable_through_2026_07"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "first_month": "2020-01",
+    "grid": "endpoint",
+    "last_month": "2026-07",
+    "message": "grouped-binomial model did not converge",
+    "months": 77,
+    "onset": "2023-01",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "SOC2_x_calendar_month",
+    "treatment_contract": "historical_production_full_static_weight",
+    "variant": "post_2020_coding_stable_through_2026_07"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "message": "seasonal grouped-binomial model did not converge",
+    "planned_additional_FE_upper_bound": 5148,
+    "planned_additional_slopes": 0,
+    "specification": "occupation_by_month_of_year_plus_declared_calendar_FE",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "unconditioned",
+    "treatment_contract": "historical_production_full_static_weight"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "message": "seasonal grouped-binomial model did not converge",
+    "planned_additional_FE_upper_bound": 5148,
+    "planned_additional_slopes": 0,
+    "specification": "occupation_by_month_of_year_plus_declared_calendar_FE",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "SOC2_x_calendar_month",
+    "treatment_contract": "historical_production_full_static_weight"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "first_month": "2020-01",
+    "grid": "endpoint",
+    "last_month": "2026-07",
+    "message": "grouped-binomial model did not converge",
+    "months": 77,
+    "onset": "2023-01",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "unconditioned",
+    "treatment_contract": "rebuilt_corrected_preperiod_weight",
+    "variant": "post_2020_coding_stable_through_2026_07"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "first_month": "2020-01",
+    "grid": "endpoint",
+    "last_month": "2026-07",
+    "message": "grouped-binomial model did not converge",
+    "months": 77,
+    "onset": "2023-01",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "SOC2_x_calendar_month",
+    "treatment_contract": "rebuilt_corrected_preperiod_weight",
+    "variant": "post_2020_coding_stable_through_2026_07"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "message": "seasonal grouped-binomial model did not converge",
+    "planned_additional_FE_upper_bound": 5148,
+    "planned_additional_slopes": 0,
+    "specification": "occupation_by_month_of_year_plus_declared_calendar_FE",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "unconditioned",
+    "treatment_contract": "rebuilt_corrected_preperiod_weight"
+  },
+  {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "error_type": "RuntimeError",
+    "message": "seasonal grouped-binomial model did not converge",
+    "planned_additional_FE_upper_bound": 5148,
+    "planned_additional_slopes": 0,
+    "specification": "occupation_by_month_of_year_plus_declared_calendar_FE",
+    "status": "FAILED_REPORTED_NOT_SUBSTITUTED",
+    "structure": "SOC2_x_calendar_month",
+    "treatment_contract": "rebuilt_corrected_preperiod_weight"
+  }
+]

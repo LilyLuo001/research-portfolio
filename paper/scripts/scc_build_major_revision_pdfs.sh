@@ -1,14 +1,16 @@
 #!/bin/bash -l
-#$ -N yax_rr2_pdf
+#$ -N yax_r3_pdf
 #$ -pe omp 1
 #$ -l h_rt=01:00:00
 #$ -l mem_per_core=4G
 #$ -j y
-#$ -o /projectnb/econdept/qluo/yax-major-revision-20260905/pdf_build.log
+#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/pdf_build.log
 
 set -euo pipefail
-cd /projectnb/econdept/qluo/yax-major-revision-20260905/paper
+repo_root="${YAX_REPO_ROOT:-/project/econdept/qluo/yax-substantive-revision-20260905/repo}"
+cd "${repo_root}/paper"
 mkdir -p build
+git diff --no-ext-diff --no-color 6b8d85e -- main appendix tables revision > revision/source_diff.txt
 
 build_with_bib() {
   local source="$1"
@@ -28,13 +30,15 @@ build_without_bib() {
   ./scripts/check_latex_log.sh "build/$job.log"
 }
 
-build_with_bib main/working.tex YAX_WORKING_PAPER_MAJOR_REVISION
-build_without_bib appendix/appendix.tex YAX_ONLINE_APPENDIX_MAJOR_REVISION
-build_without_bib revision/referee_response.tex YAX_REFEREE_RESPONSE_MAJOR_REVISION
-build_without_bib revision/revision_diagnosis.tex YAX_REVISION_DIAGNOSIS_MAJOR_REVISION
+build_with_bib main/working.tex YAX_REVISED_MANUSCRIPT
+build_with_bib appendix/appendix.tex YAX_FOCUSED_ONLINE_APPENDIX
+build_without_bib revision/referee_response.tex YAX_REFEREE_RESPONSE
+build_without_bib revision/revision_diagnosis.tex YAX_REVISION_DIAGNOSIS
+build_without_bib revision/source_diff.tex YAX_SOURCE_DIFF
 sha256sum \
-  build/YAX_WORKING_PAPER_MAJOR_REVISION.pdf \
-  build/YAX_ONLINE_APPENDIX_MAJOR_REVISION.pdf \
-  build/YAX_REFEREE_RESPONSE_MAJOR_REVISION.pdf \
-  build/YAX_REVISION_DIAGNOSIS_MAJOR_REVISION.pdf \
-  > build/MAJOR_REVISION_PDF_SHA256.txt
+  build/YAX_REVISED_MANUSCRIPT.pdf \
+  build/YAX_FOCUSED_ONLINE_APPENDIX.pdf \
+  build/YAX_REFEREE_RESPONSE.pdf \
+  build/YAX_REVISION_DIAGNOSIS.pdf \
+  build/YAX_SOURCE_DIFF.pdf \
+  > build/SUBSTANTIVE_REVISION_PDF_SHA256.txt
