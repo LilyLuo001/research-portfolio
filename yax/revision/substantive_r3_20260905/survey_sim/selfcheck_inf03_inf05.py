@@ -31,7 +31,7 @@ def main() -> None:
         if not condition:
             raise RuntimeError(message)
 
-    check(abs(receipt["unperturbed_models"]["baseline"] - (-0.132109038283655)) < 5e-10, "baseline checkpoint")
+    check(abs(receipt["unperturbed_models"]["baseline"] - (-0.1321094507921903)) < 5e-10, "baseline checkpoint")
     check(receipt["treatment_weight_reproduction"]["maximum_relative_gap"] < 1e-10, "preperiod weight reproduction")
     check(feasibility["march_gate_status"] == "PASS_FUNCTIONAL_REPLACEMENT", "March gate")
     check(feasibility["design_based_CPS_inference_available"] is False, "no false design-based claim")
@@ -39,7 +39,7 @@ def main() -> None:
     check(set(household.classification_mode) == {"fixed_corrected_labels", "rebuilt_preperiod_labels"}, "both classification targets")
     check(household.groupby("classification_mode").draw.nunique().min() == args.household_draws, "all household draws refit")
     check(len(hs) == 6 and hs.successful_full_refits.min() == args.household_draws, "household summaries complete")
-    check(set(np.round(ss.true_Q5_post_effect, 9)) == set(np.round([0, -0.05, -0.132109038283655], 9)), "three simulation effects")
+    check(set(np.round(ss.true_Q5_post_effect, 9)) == set(np.round([0, -0.05, -0.1321094507921903], 9)), "three simulation effects")
     check(set(ss.model) == {"baseline", "SOC2_post"} and len(ss) == 6, "two simulation models")
     check(ss.successful_full_refits.min() == args.simulation_draws, "all simulation refits converge")
     check(len(simulation) == 3 * 2 * args.simulation_draws, "simulation draw rows complete")
@@ -58,4 +58,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

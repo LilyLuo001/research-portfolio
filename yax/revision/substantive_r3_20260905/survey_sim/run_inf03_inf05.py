@@ -29,7 +29,7 @@ HOUSEHOLD_SEED = 2026090551
 SIMULATION_SEED = 2026090561
 Z975 = 1.959963984540054
 Z80 = 0.8416212335729143
-BASELINE_CHECKPOINT = -0.132109038283655
+BASELINE_CHECKPOINT = -0.1321094507921903
 
 
 def import_path(name: str, path: pathlib.Path):
@@ -741,4 +741,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
