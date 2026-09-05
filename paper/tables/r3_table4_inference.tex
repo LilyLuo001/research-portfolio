@@ -1,6 +1,7 @@
 \begin{table}[!htbp]
 \centering
 \caption{Inference sensitivities for the core occupational comparison}\label{tab:inference}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lrrr}
 \toprule
 Procedure and target & Pooled 95\% CI & Conditioned 95\% CI & Paired-movement 95\% CI \\
@@ -8,6 +9,6 @@ Procedure and target & Pooled 95\% CI & Conditioned 95\% CI & Paired-movement 95
 Occupation wild score, SOC2-by-month & $[-0.221,-0.044]$ & $[-0.161,0.117]$ & $[0.011,0.210]$ \\
 Household full refit, SOC2-by-post & $[-0.179,-0.080]$ & $[-0.112,0.056]$ & $[0.037,0.172]$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \tabnote{The first row is the main reconstructed treatment and conditioning specification.  The second is a 199-draw sampling-oriented sensitivity conditional on released CPS final weights; it uses the less saturated family-by-post companion and therefore does not estimate exactly the same conditioned parameter.  The procedures target different perturbations and are not mechanically combined.}
 \end{table}
