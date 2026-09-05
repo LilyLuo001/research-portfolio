@@ -30,6 +30,7 @@ SIMULATION_SEED = 2026090561
 Z975 = 1.959963984540054
 Z80 = 0.8416212335729143
 BASELINE_CHECKPOINT = -0.1321094507921903
+MAX_REFIT_ITERATIONS = 100
 
 
 def import_path(name: str, path: pathlib.Path):
@@ -336,7 +337,8 @@ def fit_one(young: np.ndarray, older: np.ndarray, regressors: np.ndarray):
     occupation = np.repeat(np.arange(n_occ), n_month)
     month = np.tile(np.arange(n_month), n_occ)
     fit = ENGINE.fit_grouped_logit_fe(
-        young.reshape(-1), total, occupation, month, regressors, max_iterations=5000
+        young.reshape(-1), total, occupation, month, regressors,
+        max_iterations=MAX_REFIT_ITERATIONS,
     )
     if not fit.converged:
         raise RuntimeError("grouped-binomial refit did not converge")
@@ -742,6 +744,7 @@ def main() -> None:
             "draws_per_effect": args.simulation_draws,
             "effects": dgp_receipt["effects"],
             "DGP_role": dgp_receipt["role"],
+            "maximum_refit_iterations": MAX_REFIT_ITERATIONS,
         },
         "failure_count": len(failures),
         "nonrelease_assertion": "No raw or hashed household/person identifier, microdata row, or cell-level private stock is written.",

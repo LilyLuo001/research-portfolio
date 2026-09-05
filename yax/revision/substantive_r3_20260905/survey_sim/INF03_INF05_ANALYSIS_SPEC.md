@@ -56,6 +56,10 @@ never mechanically added to occupation-cluster uncertainty.
 
 Seed: `2026090551`.  Draw count: 199.
 
+Every full refit has a fixed 100-iteration ceiling.  Nonconvergence is retained
+and reported rather than hidden or allowed to consume an unbounded compute
+budget.
+
 ## INF-05: sparse-cell, broad-family full-refit simulation
 
 This is a calibrated stress test of the grouped-binomial estimator and its
@@ -102,6 +106,10 @@ influence and sparse cells.
 
 Seed family: `2026090561 + replicate`; draws per effect: 199.
 
+The same 100-iteration ceiling applies to the simulation.  Coverage and
+rejection summaries state their successful-refit denominator; a nontrivial
+failure rate is itself an adverse finite-sample finding.
+
 ## Fail-closed rules
 
 The runner stops before either exercise unless:
@@ -116,4 +124,3 @@ The runner stops before either exercise unless:
 - the unperturbed refit reproduces the fully rebuilt corrected coefficient to
   numerical tolerance; and
 - no individual identifier is serialized.
-
