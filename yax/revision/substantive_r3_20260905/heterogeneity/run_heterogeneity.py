@@ -21,7 +21,6 @@ from datetime import datetime, timezone
 
 import numpy as np
 import pandas as pd
-from scipy.stats import chi2
 
 
 LABEL = "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1"
@@ -86,6 +85,30 @@ def quantile(values: np.ndarray, q: float) -> float:
         return float(np.quantile(values, q, method="higher"))
     except TypeError:
         return float(np.quantile(values, q, interpolation="higher"))
+
+
+def chi_square_survival(value: float, degrees_of_freedom: int) -> float:
+    """Chi-square upper-tail probability without an optional SciPy dependency.
+
+    The age-equality test has at most three degrees of freedom.  The formulas
+    below evaluate the regularized upper incomplete gamma function by its
+    exact half-integer/integer recurrence, avoiding a silent change to the
+    registered test on SCC installations whose minimal SciPy build omits
+    ``scipy.stats``.
+    """
+    if value < 0 or degrees_of_freedom < 1:
+        raise ValueError("chi-square arguments must be nonnegative with positive df")
+    x = value / 2.0
+    if degrees_of_freedom % 2 == 0:
+        terms = degrees_of_freedom // 2
+        return float(math.exp(-x) * sum(x ** j / math.factorial(j) for j in range(terms)))
+    steps = (degrees_of_freedom - 1) // 2
+    result = math.erfc(math.sqrt(x))
+    shape = 0.5
+    for _ in range(steps):
+        result += math.exp(-x) * x ** shape / math.gamma(shape + 1.0)
+        shape += 1.0
+    return float(min(max(result, 0.0), 1.0))
 
 
 def month_string(frame: pd.DataFrame) -> pd.Series:
@@ -750,7 +773,7 @@ def run_analysis(args):
         "null": "Q5 coefficients equal at ages 22 23 24 and 25",
         "wald_chi_square": wald,
         "df": int(np.linalg.matrix_rank(variance)),
-        "asymptotic_p_value": float(chi2.sf(wald, np.linalg.matrix_rank(variance))),
+        "asymptotic_p_value": chi_square_survival(wald, int(np.linalg.matrix_rank(variance))),
         "common_support_occupations": len(age_support),
         "common_occupation_score_covariance": True,
     }])

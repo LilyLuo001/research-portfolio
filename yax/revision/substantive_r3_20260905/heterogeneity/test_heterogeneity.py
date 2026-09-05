@@ -62,3 +62,11 @@ def test_paired_summary_uses_joint_influence():
     assert np.isclose(row["coefficient_difference"], 0.5)
     assert np.isclose(row["paired_analytic_se"], np.sqrt(0.1 ** 2 + 0.2 ** 2))
     assert row["common_occupation_multipliers"] is True
+
+
+def test_chi_square_survival_closed_forms():
+    assert np.isclose(MODULE.chi_square_survival(0.0, 1), 1.0)
+    assert np.isclose(MODULE.chi_square_survival(0.0, 3), 1.0)
+    assert np.isclose(MODULE.chi_square_survival(2.0, 2), np.exp(-1.0))
+    # Published 95th percentile of chi-square(3) is approximately 7.8147.
+    assert np.isclose(MODULE.chi_square_survival(7.8147279, 3), 0.05, atol=1e-7)
