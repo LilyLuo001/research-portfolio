@@ -555,8 +555,63 @@ def run_family_models(args: argparse.Namespace, data: dict, chars: pd.DataFrame)
     write_csv(args.output_dir / "LAMBDA_GRID_RESULTS.csv", grid_rows)
     write_csv(args.output_dir / "LAMBDA_GRID_MEMBERSHIP.csv", member_rows)
     write_json(args.output_dir / "FG_PRIMITIVE_MOMENTS.json", primitive_moments)
+    alpha_raw = np.array([data["exposures"]["dv_rating_alpha"]["A"][c] for c in common], float)
+    beta_raw = np.array([data["exposures"]["dv_rating_beta"]["A"][c] for c in common], float)
+    broad_raw = np.array([data["exposures"]["dv_rating_gamma"]["A"][c] for c in common], float)
+    alpha_z, _, _ = standardize(alpha_raw, pre_weights)
+    beta_z, _, _ = standardize(beta_raw, pre_weights)
+    broad_z, _, _ = standardize(broad_raw, pre_weights)
+    write_json(args.output_dir / "CONSTRUCTION_IDENTITY_AUDIT.json", {
+        "analysis_status": LABEL,
+        "support_occupations": len(common),
+        "raw_identity": "beta = (alpha + broad) / 2",
+        "maximum_absolute_raw_gap": float(np.max(np.abs(beta_raw - (alpha_raw + broad_raw) / 2))),
+        "maximum_absolute_separately_standardized_gap": float(
+            np.max(np.abs(beta_z - (alpha_z + broad_z) / 2))
+        ),
+        "interpretation": (
+            "The primitive identity survives common aggregation and mapping on strict common support. "
+            "Separate standardization generally breaks the numerical midpoint identity and does not create a new primitive dimension."
+        ),
+    })
     return {"leave_one_out": rows, "auxiliary": auxiliary,
             "change_basis": change_basis, "lambda": grid_rows}
+
+
+def run_categorical_remote(args: argparse.Namespace, data: dict) -> list[dict]:
+    """Estimate the requested Q5--Q1 AI and continuous-remote coefficients jointly."""
+    rows = []
+    webb = data["computers"]["webb_pct_software"]
+    remote = data["exposures"]["dingel_neiman_telework"]["A"]
+    for offset, measure in enumerate(("dv_rating_beta", "dv_rating_alpha")):
+        result, prepared, _, _ = FROZEN.estimate_static(
+            data["panel"], data["occupations"], data["static_months"],
+            data["exposures"][measure]["A"], comp=webb, remote=remote,
+            scale="q5_q1", seed=SEED + 80 + 10 * offset,
+        )
+        ai = result["coefficients"]["AI_Q5_x_post"]
+        remote_result = result["coefficients"]["remote_z_x_post"]
+        rows.append({
+            "analysis_status": LABEL,
+            "exposure_measure": measure,
+            "support_occupations": result["occupations"],
+            "support_hash_sha256": support_hash(prepared["occupations"]),
+            "months": result["months"],
+            "ai_estimand": "Q5 minus Q1 young-relative post contrast",
+            "ai_coefficient": ai["coefficient"],
+            "ai_ci_lower": ai["ci_lower"],
+            "ai_ci_upper": ai["ci_upper"],
+            "ai_p_value": ai["bootstrap_p_value"],
+            "remote_estimand": "per weighted SD Dingel-Neiman feasibility",
+            "remote_coefficient": remote_result["coefficient"],
+            "remote_ci_lower": remote_result["ci_lower"],
+            "remote_ci_upper": remote_result["ci_upper"],
+            "remote_p_value": remote_result["bootstrap_p_value"],
+            "bootstrap_draws": remote_result["bootstrap_draws"],
+            "quintiles_recomputed_on_joint_support": True,
+        })
+    write_csv(args.output_dir / "CATEGORICAL_REMOTE_RESULTS.csv", rows)
+    return rows
 
 
 def run_tail_stability(args: argparse.Namespace, data: dict) -> dict:
@@ -665,6 +720,7 @@ def run(args: argparse.Namespace) -> dict:
         outputs["reference"] = run_reference_and_exclusions(args, data)
         outputs["family"] = run_family_models(args, data, chars)
         outputs["tails"] = run_tail_stability(args, data)
+        outputs["categorical_remote"] = run_categorical_remote(args, data)
     if args.stage in ("permutation", "all"):
         outputs["permutation"] = run_permutations(args, data)
     receipt = {

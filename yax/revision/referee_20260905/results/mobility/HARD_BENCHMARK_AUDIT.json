@@ -1,0 +1,39 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "exact_unconstrained": {
+    "restriction": "does not apply to the constrained no-self benchmark",
+    "strata": 32075,
+    "unconstrained_exact_product_marginal_conflict": 0.502892706267877,
+    "unconstrained_exact_self_transition_probability": 0.03659139226841396
+  },
+  "linked_sample": {
+    "false_September_to_November_2025_links": 0,
+    "long_gap_pairs": 0,
+    "post_validated_pairs": 1413351,
+    "pre_validated_pairs": 2635559,
+    "validated_adjacent_pairs": 4085493,
+    "wide_rows_read": 9262480,
+    "young_validated_pairs": 313171
+  },
+  "near_threshold_interpretation": "the 0.96 percentage-point excess is a sample comparison, not equivalence or proof of negligibility",
+  "no_self_transition_rule": {
+    "false_self_switches_after_repair": 0,
+    "implemented": true,
+    "maximum_repairs": 6652,
+    "preserved_margins": "detailed origin and destination margins within age x month x broad-origin x broad-destination strata"
+  },
+  "support_exclusion": {
+    "excluded_share": 0.0,
+    "interpretation": "excluded switches lack finite F/G component endpoints; the hard result is conditional on retained support",
+    "retained_share": 1.0
+  },
+  "verified_reported_counts": {
+    "draws": 999,
+    "gap": 0.009601162236336447,
+    "hard_mean": 0.5232266666666666,
+    "pseudo_units": 200000,
+    "realized_conflict": 0.5328278289030031,
+    "represented_weight_share": 0.9830516359256677,
+    "strata": 30170
+  }
+}

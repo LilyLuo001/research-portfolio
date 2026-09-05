@@ -1,0 +1,41 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "baseline_coefficient_reproduced": -0.13107397642233506,
+  "generated_at_utc": "2026-09-05T06:18:44.927798+00:00",
+  "git_head": "47559f411ec6543a1df12e9364ab00155e99ab89",
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "output_hashes": {
+    "WITHIN_SOC2_PERMUTATION_DRAWS.csv": "1d24a89e4cfacb7f1a6e6aa8ac95ef39c0c98b5d2d34e1307476c5d4e5cdab9c",
+    "WITHIN_SOC2_PERMUTATION_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "WITHIN_SOC2_PERMUTATION_SUMMARY.json": "8ddbc720d787bb3460511e25a3b6be918b09463536f9beb756e814e702ad98d7"
+  },
+  "protected_refs": {
+    "v1.1-confirmatory-results": "b16109482c3bf5ca176f6f08976e120b04769945",
+    "v1.1-design-freeze": "22fbf7924809b7a535e31ae0ab68f5b113ce8078"
+  },
+  "record": "YAX referee revision core execution",
+  "sections": {
+    "permutation": {
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "exchangeability_not_established": true,
+      "failed_draws": 0,
+      "interpretation": "assumption-dependent within-SOC2 permutation diagnostic",
+      "lower_tail_probability": 0.219,
+      "observed_coefficient": -0.13107397642233506,
+      "permutation_mean": -0.10972581712325118,
+      "permutation_sd": 0.026761506171189168,
+      "requested_draws": 999,
+      "seed": 2026090502,
+      "successful_draws": 999,
+      "two_sided_centered_probability": 0.434
+    }
+  },
+  "stage": "permutation"
+}

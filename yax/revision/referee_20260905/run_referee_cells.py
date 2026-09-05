@@ -95,7 +95,12 @@ def build_exact_age_cells(args: argparse.Namespace) -> tuple[pd.DataFrame, pd.Da
         "current_records": 0, "leisure_hospitality_records": 0,
     }
     usecols = ["YEAR", "MONTH", "AGE", "EMPSTAT", "OCC", "OCC2010", "IND1990", "WTFINL"]
-    for chunk in pd.read_csv(args.microdata, usecols=usecols, chunksize=500_000):
+    microdata_paths = [args.microdata]
+    if args.repair_microdata is not None:
+        microdata_paths.append(args.repair_microdata)
+    counters["microdata_files"] = [str(path) for path in microdata_paths]
+    for microdata_path in microdata_paths:
+      for chunk in pd.read_csv(microdata_path, usecols=usecols, chunksize=500_000):
         counters["rows_read"] += len(chunk)
         age = pd.to_numeric(chunk.AGE, errors="coerce")
         weight = pd.to_numeric(chunk.WTFINL, errors="coerce")
@@ -541,6 +546,8 @@ def run_audits(args: argparse.Namespace, cells: pd.DataFrame, stable: pd.DataFra
 def run(args: argparse.Namespace):
     args.output_dir.mkdir(parents=True, exist_ok=True)
     authenticated = FROZEN.validate_inputs(args)
+    if args.repair_microdata is not None:
+        authenticated["hashes"]["repair_microdata"] = sha256(args.repair_microdata)
     cells, stable, build = build_exact_age_cells(args)
     setup = primary_setup(args, cells)
     age_time = run_age_and_time(args, cells, setup)
@@ -567,6 +574,7 @@ def run(args: argparse.Namespace):
 def parser():
     value = argparse.ArgumentParser(description=__doc__)
     value.add_argument("--microdata", type=pathlib.Path, required=True)
+    value.add_argument("--repair-microdata", type=pathlib.Path)
     value.add_argument("--preperiod-cells", type=pathlib.Path, required=True)
     value.add_argument("--lookup", type=pathlib.Path, default=ROOT / "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv")
     value.add_argument("--computerization", type=pathlib.Path, default=ROOT / "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv")
