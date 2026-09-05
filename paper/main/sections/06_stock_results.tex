@@ -1,18 +1,36 @@
-\section{Continuous and Family Reparameterizations}\label{sec:family}
+\section{What Exposure Construction Changes---and What the Data Resolve}\label{sec:family}
 
-The categorical results consume changing tail memberships. A continuous exercise asks a different question: conditional on Webb software exposure, how do the two selected families divide residual occupational variation? Let $A$ be the equal-weight centroid of three standardized AIOE implementations and $E$ the analogous Eloundou centroid. Define raw coordinates $F=(A+E)/2$ and $G=(A-E)/2$, then standardize $F$ and $G$ separately in the implemented model. $F$ is family-balanced consensus and $G$ family disagreement; neither is a latent true exposure.
+\subsection{Paired architecture precision}
 
-The original exploratory model estimates $b_F=-0.0404$ with interval $[-0.0674,-0.0133]$ and $b_G=+0.0309$ with interval $[0.0029,0.0589]$. The reported original exploratory $G$ tail area was .040; the identical refit under a new seed gives .032, reconciling rather than replacing the earlier number.
+Alternative exposure constructions change occupation ranks, tail membership, and point estimates. The key inferential question is whether the downstream coefficient differences are resolved once both estimates use common support and common occupation multipliers. Table~\ref{tab:stock} answers no for the original Q5--Q1 comparison. Every beta-minus-alternative paired interval contains zero. The closest case is beta minus the OECD capability gap, $-0.1115$ with interval $[-0.2257,0.0027]$; its paired MDE$_{80}$ is 0.1689. Beta minus Webb AI is $-0.0646$ with interval $[-0.1682,0.0389]$ and MDE$_{80}$ 0.1499.
 
-The requested leave-one-measure outcome refits change the interpretation. Removing alpha leaves $F=-0.0330$ and $G=+0.0342$, with both intervals excluding zero. Thus the original asymmetry is not alpha-only. Removing any AIOE implementation also leaves the $G$ interval above zero. But removing beta yields $G=+0.0287$ with interval $[-0.0009,0.0584]$, and removing broad yields $+0.0215$ with interval $[-0.0080,0.0511]$. The disagreement result is therefore materially sensitive to which task-family implementations receive equal family weight.
+\input{tables/table3_stock_results.tex}
 
-A representative one-AIOE model is more transparent: entered jointly, administrative AIOE is $+0.0449$ (interval $[0.0012,0.0885]$) and beta is $-0.0788$ (interval $[-0.1292,-0.0284]$). A direct primitive model estimates $D=-0.0323$ and $S=-0.0303$, with both intervals below zero. These are alternative parameterizations and conditioning exercises, not independent corroborations.
+The correct conclusion is not that all architectures yield the same economic relationship, nor that a smaller alternative estimate shows the pattern ``does not extend.'' The design does not detect these paired differences and is too imprecise to rule out economically important movements in either direction. This is itself a result: the employment application reveals much more about how treatments are constructed than about which construction has a different population coefficient.
 
-Because the fitted regressors are $F/s_F$ and $G/s_G$, the exact original-unit family transformation is
-\begin{equation}
-\gamma_A=\tfrac12\left(b_F/s_F+b_G/s_G\right),\qquad
-\gamma_E=\tfrac12\left(b_F/s_F-b_G/s_G\right).\label{eq:ae}
-\end{equation}
-Transforming every common draw consistently gives $\gamma_A=+0.0248$ (paired SE 0.0199) and $\gamma_E=-0.0707$ (paired SE 0.0272). This is an exact change of basis of the same fitted predictor, not a second outcome model. The raw $F$ and $G$ weighted correlation is 0.218 in the original construction and varies under deletion; standardization does not imply orthogonality.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{figure4_architecture_precision.pdf}
+\caption{Paired differences and the resolution of the CPS design}\label{fig:architectureprecision}
+\tabnote{Points are beta-minus-alternative Q5--Q1 coefficient differences on pair-specific common support. Thin lines are 95-percent common-draw paired intervals. Gray bars span plus or minus the normal-theory MDE at 80-percent power. An interval containing zero is a failure to detect a difference, not evidence of equivalence.}
+\end{figure}
 
-The $D+\lambda S$ grid reaches the same caution from within the task family. All five categorical Q5--Q1 estimates are negative, from $-0.1013$ at $\lambda=0$ to $-0.1482$ at $\lambda=1$, while fixed-normalization and restandardized continuous coefficients differ. The family evidence is best summarized as a negative consensus association plus construction-sensitive conditional asymmetry. It does not rank exposure families universally.
+The original six-score intersection--union calculation is correspondingly demoted. All six marginal point estimates are negative on their literal intersection, and the maximum one-sided marginal tail area is .045, while the predeclared simultaneous-band criterion fails. With two principal components explaining 96.11 percent of score variance, this is a dependent-set sign statement, not six independent validations. Nothing in it overturns the paired-precision finding.
+
+\subsection{A direct bridge to the motivating result}
+
+The published component of \citet{brynjolfsson2026canaries} that can be reproduced is a different representation: GPT-4 beta exposure divided into employment-weighted quintiles, with Q4--Q5 compared against Q1--Q3. Implementing that classification in the CPS model gives $-0.0728$ with interval $[-0.1240,-0.0216]$, roughly half the corrected Q5--Q1 log-point magnitude. The unconditioned result is $-0.0728$ as well. Young CPS stock rises 5.78 percent in the bottom-three group and falls 5.03 percent in the top-two group between November 2022 and June 2026, while older stocks rise by about 0.6 percent in each. These aggregate growth calculations do not inherit a hiring interpretation.
+
+Reapplying the BCC grouping rule to eight exposure constructions produces native-support coefficients from $-0.0817$ for Eloundou broad to $-0.0096$ for the OECD capability gap. On literal 426-occupation common support, beta is $-0.0810$ and OECD is $-0.0076$; their paired difference is $-0.0733$ with interval $[-0.1390,-0.0076]$. The other six paired differences are not detected. This does not contradict Table~\ref{tab:stock}: grouping changes the estimand and its precision. It illustrates that the economic contrast is part of the constructed empirical object.
+
+\input{tables/table4_reallocation.tex}
+
+\subsection{Taxonomy repair and construction layers}
+
+Taxonomy repair is the clearest measurement finding because it separates an invalid workflow from defensible alternatives. Literal matching of SOC-2010 AIOE codes into a post-2018 occupation universe covers only 3.33 percent of computer-and-mathematical employment. The documented route reaches 97.7 percent. In a continuous comparison, the original score on original support gives $-0.01885$; the repaired score on the same 410 occupations gives $-0.01920$; expanding to 495 repaired-score occupations gives $-0.03156$; excluding computer/math from the expanded support gives $-0.02940$. Most movement comes from changing who enters, not correcting scores among already matched occupations.
+
+This sequence is not a multiverse of equally defensible estimates. The exact-code merge is an implementation failure. The fixed-support row measures score correction. The expansion changes the target population. The computer/math exclusion asks whether one family drives the expanded-support coefficient. Reporting these layers separately is the portable contribution.
+
+\subsection{Primitive models rather than rotated labels}
+
+The prior draft emphasized ``consensus'' and ``disagreement'' coordinates $F=(A+E)/2$ and $G=(A-E)/2$. Those coordinates are retained in the online appendix only as a complete record. A representative two-score model is more transparent: administrative AIOE enters at $+0.0449$ and beta at $-0.0788$ when included jointly. In direct task units, $D$ and $S$ enter at $-0.0323$ and $-0.0303$. These are conditional associations among correlated constructed regressors, not causal technology channels. Transforming $F/G$ back to $A/E$ reproduces the same fitted predictor exactly and supplies no additional evidence.

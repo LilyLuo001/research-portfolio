@@ -1,0 +1,43 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY; TREATMENT-SIDE ONLY",
+  "computerization_input": "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+  "computerization_input_sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+  "frozen_common_support_input": "yax/revision/referee_20260905/results/core/TAIL_STABILITY_OCCUPATIONS.csv",
+  "frozen_common_support_input_sha256": "bed71fb8b9b97345ae4098016bed3acc86dad220f4388e90ff86c900684a945c",
+  "input": "yax/measurement/test_a/TEST_A_OCCUPATION_CHARACTERISTICS.csv",
+  "input_sha256": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+  "interpretation": "The spectrum describes dependence among six implementations on literal complete support. It does not validate a latent-factor model or turn PCs into admissible exposure constructs.",
+  "measures": [
+    "aioe_admin_equal",
+    "aioe_ability_direct",
+    "aioe_oews2018_source_weighted",
+    "dv_rating_alpha",
+    "dv_rating_beta",
+    "dv_rating_gamma"
+  ],
+  "status": "PASS",
+  "support_panels": {
+    "frozen_six_score_plus_webb_common_support": {
+      "components_for_90_percent": 2,
+      "components_for_95_percent": 2,
+      "first_three_variance_share": 0.995844415623001,
+      "first_two_variance_share": 0.9611080958400992,
+      "support_occupations": 444
+    },
+    "six_score_complete": {
+      "components_for_90_percent": 2,
+      "components_for_95_percent": 2,
+      "first_three_variance_share": 0.9957483920423441,
+      "first_two_variance_share": 0.9611151295861348,
+      "support_occupations": 465
+    },
+    "six_score_plus_webb_model_support": {
+      "components_for_90_percent": 2,
+      "components_for_95_percent": 2,
+      "first_three_variance_share": 0.9958443775977547,
+      "first_two_variance_share": 0.961082856164295,
+      "support_occupations": 446
+    }
+  },
+  "weight": "frozen preperiod_employment_weight, normalized across complete support"
+}

@@ -1,32 +1,81 @@
-\section{Estimator and inference audits}\label{app:inference}
+\section{Estimator, precision, and time-dependence audits}\label{app:inference}
 
-For two age groups, conditioning Poisson means $(\mu_y,\mu_o)$ on their weighted total yields the grouped-binomial pseudo-log-likelihood $N_y\log p+N_o\log(1-p)$ with $\operatorname{logit}(p)=\log(\mu_y/\mu_o)$. Occupation-month effects cancel. CPS final weights build $N_y$ and $N_o$ and are not applied again to the objective. These continuous weighted totals define an estimating equation; they are not literal independent binomial trials. A multinomial age-profile extension requires its own derivation.
+\subsection{Estimating equation and maintained randomness}
+
+For two age groups, conditioning Poisson means $(\mu_y,\mu_o)$ on their weighted total yields the grouped-binomial pseudo-log-likelihood $N_y\log p+N_o\log(1-p)$ with $\operatorname{logit}(p)=\log(\mu_y/\mu_o)$. Occupation-month effects cancel. CPS final weights construct $N_y$ and $N_o$ and are not applied again. These continuous stocks define an estimating equation rather than literal independent binomial trials.
+
+The primary sandwich and wild-score interval treat occupation score contributions as independent clusters and allow arbitrary serial dependence within each occupation. They condition on the observed cells, treatment labels, mapping, support, weights, and model. They do not propagate the CPS complex-survey design, exposure-label generation, or taxonomy-allocation uncertainty. In the nuisance-adjusted implementation, regressors are absorbed against occupation and calendar-month effects under fitted binomial information weights. Scores are summed within occupation and premultiplied by the inverse information matrix. A $\sqrt{G/(G-1)}$ finite-cluster correction is applied. Each bootstrap draw multiplies the whole occupation influence vector by one Rademacher sign; the analytic cluster SE is the studentizer. Paired analyses reuse the same occupation signs.
+
+\subsection{Canonical interval and detectable effects}
 
 \begin{table}[htbp]
 \centering
-\caption{Common-support sign inference and percent transformation}\label{tab:appiut}
-\scriptsize
-\begin{threeparttable}
+\caption{Canonical primary interval and precision}\label{tab:appcanonical}
+\small
 \begin{tabular}{lrrrrr}
 \toprule
-Measure & $\widehat\beta$ & One-sided $p$ & Simult. upper & $100(e^\beta-1)$ & Upper, percent\\
+Calendar & Estimate & Cluster SE & 95\% wild-score interval & $p$ & MDE$_{80}$ \\
 \midrule
-AIOE administrative&-.0739&.045& .0186&-7.12& 1.88\\
-AIOE ability-direct&-.1029&.005&-.0167&-9.77&-1.66\\
-AIOE source-weighted&-.1021&.006&-.0066&-9.71&-.66\\
-Alpha&-.1013&.008&-.0070&-9.64&-.70\\
-Beta&-.1290&.001&-.0269&-12.10&-2.65\\
-Broad&-.1465&.001&-.0443&-13.63&-4.33\\
+Frozen 108 months & -.131074 & .044410 & [-.217075, -.045073] & .0030 & .124418 \\
+Repaired 113 months & -.134554 & .044957 & [-.222307, -.046801] & .0016 & .125950 \\
 \bottomrule
 \end{tabular}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Identical 444-occupation support. The IUT $p$-value for all coefficients negative is the maximum marginal one-sided tail area, .045. The predeclared simultaneous critical value is 2.26036; the administrative upper bound is positive, so that separate criterion fails. Percent columns are monotone transformations of log relative-stock-ratio coefficients and limits.
-\end{tablenotes}
-\end{threeparttable}
+\tabnote{Intervals use 9,999 draws. MDE$_{80}$ is normal-theory, two-sided, at the 5-percent level. The repaired row is the post-outcome substantive baseline; the frozen row remains the confirmatory design record.}
 \end{table}
 
-The paired beta-minus-alpha contrast is $-0.0324$ (paired SE .0370, interval $[-.1023,.0376]$, $p=.403$). Common occupation multipliers preserve covariance. The interval permits only “the design does not detect a difference,” not economic equivalence.
+Earlier drafts attached four slightly different intervals to the frozen coefficient because separate paired exercises generated different sets of 999 multipliers. Those finite-draw intervals ranged from $[-.2190,-.0431]$ to $[-.2166,-.0455]$. A minimum-count row also used a different 463-occupation sample. The table above supplies the sole canonical primary interval; pair-specific member intervals are labeled and are not substituted elsewhere.
 
-Nominal primary clusters number 468. Webb-residualized beta has effective residual-variance count 53.26 and top-five share 22.15 percent; fitted conditional information has effective count 43.30 and top-five share 24.57 percent. Maximum fixed-treatment LOCO movement is .0205, with zero sign changes. These are distinct objects.
+All seven beta-minus-alternative Q5--Q1 intervals include zero. Paired MDE$_{80}$ values are .1272, .1250, .1273, .1053, .0609, .1499, and .1689 for the three AIOE implementations, alpha, broad, Webb AI, and OECD, respectively. The inference permits ``does not detect a difference,'' never economic equivalence.
 
-Two-way occupation/month inclusion--exclusion gives SE .0449 versus one-way .0444 and normal interval $[-.2191,-.0430]$. This is model-based, not a CPS survey-design correction. A literal 199-draw residual-wild full refit was attempted for the primary and no-alpha F/G models. Zero pseudo-outcomes were admissible because grouped-binomial successes left $[0,N]$; no clipping or alternative resampling was substituted.
+\subsection{Sparse cells and frequency}
+
+\begin{table}[htbp]
+\centering
+\caption{Respondent equivalents per occupation-month-age cell}\label{tab:appcells}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Age group & p10 & Median & p90 & Zero & Below five \\
+\midrule
+Ages 22--25 & 0 & 2 & 16 & 26.32\% & 69.93\% \\
+Ages 26--65 & 4 & 25 & 199 & 2.05\% & 11.07\% \\
+\bottomrule
+\end{tabular}
+\tabnote{There are 101,088 age-specific cells on the frozen support. One-sided boundary cells remain valid grouped-binomial contributions. Only the 965 occupation-months with both age stocks zero are omitted.}
+\end{table}
+
+Selecting cells with at least five observed young respondent equivalents retains 46.6 percent of occupation-months and gives $-0.1090$ (interval $[-0.2050,-0.0131]$). Requiring five in both groups gives $-0.1097$. These are outcome-count-selected diagnostics, not cleaner primary estimates. Quarterly aggregation gives $-0.13103$ on the frozen calendar and $-0.13454$ on the repaired calendar, with SEs .04441 and .04495. Monthly sparsity therefore does not mechanically generate the point estimate.
+
+\subsection{Rotation and cross-occupation time covariance}
+
+\begin{table}[htbp]
+\centering
+\caption{Cross-occupation time-score covariance sensitivity}\label{tab:apphac}
+\small
+\begin{tabular}{rrrr}
+\toprule
+Time-HAC lag & SE & Normal 95\% interval & MDE$_{80}$ \\
+\midrule
+0 & .04493 & [-.21914, -.04300] & .12589 \\
+1 & .04655 & [-.22232, -.03983] & .13042 \\
+4 & .04830 & [-.22575, -.03640] & .13533 \\
+12 & .04909 & [-.22729, -.03485] & .13754 \\
+16 & .04897 & [-.22705, -.03510] & .13719 \\
+\bottomrule
+\end{tabular}
+\tabnote{The sensitivity adds a Newey--West covariance of aggregate monthly scores and subtracts the occupation-month intersection. It is model-based, not a CPS replicate-weight estimator. Occupation clustering already permits arbitrary within-occupation serial dependence.}
+\end{table}
+
+The planning simulation omitted several dependencies and predicted SE .01217. Replacing independent occupation signs with one global sign per path preserves the donor month's full contemporaneous cross-occupation residual vector. Across all 132 enumerated offset/sign paths, the mean model SE remains .01217 and the empirical SD is .00659. This sharp sensitivity closes none of the gap to .04441. It rejects one candidate mechanism, not all forms of cross-occupation dependence.
+
+\subsection{Pre-AI pseudo-breaks}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.90\textwidth]{appendix_pseudo_breaks.pdf}
+\caption{Balanced pre-AI pseudo-break distribution}\label{fig:apppseudobreak}
+\tabnote{The 12 dates retain at least 12 months on each side and construct exposure groups using only 2017--2019 weights. The dashed line is the frozen January-2023 estimate. Overlapping break estimates are dependent; the post-outcome exercise is descriptive rather than a randomization test.}
+\end{figure}
+
+The extract begins in 2017, so 2015--16 pseudo-breaks cannot be run. In the 12 balanced 2017--19 dates, the median is approximately $-.0015$, the 5th percentile $-.0064$, and the 95th percentile .0128. None is as negative as $-.1311$. The plus-one empirical tail is therefore $1/13=.0769$, the smallest attainable value in this dependent set, not a conventional $p$-value. The more extreme estimates among all 34 feasible dates occur at the beginning of the window with as little as one pre-break month.
+\FloatBarrier

@@ -1,0 +1,19 @@
+{
+  "record": "YAX referee-round-2 bridge-uncertainty delivery manifest",
+  "analysis_spec_sha256": "3ec5754ed2665d948e648231f2169a5e60f3118560f1fa0d4ad284610da59733",
+  "execution_code_sha256": "a6da8a57875cff2038771ea61beff4451536d41bdc3496b4d0d50f3d6c1f6b9f",
+  "selfcheck_code_sha256": "d5ca36f6fb68fc13965b7f50986a49a83a487b4b8c53095d1f2a9a8a1196b655",
+  "interpretation_memo_sha256": "f6b894b660e7f4f5aa7d80412dc477ea3f075e49a3d91b004a06e0ae9bd902b9",
+  "results": {
+    "AGE_ALLOCATION_ACCOUNTING_BOUNDS.csv": "1b5cc6bd1572173ec3d2e5dcef49a2d594fac27b2542051d7ef5b6dc0cf70960",
+    "AGE_ALLOCATION_TILT_SCENARIOS.csv": "845c56529b9df5835025bd291b0a39cd3f4dce203c10eb2354b2f13290ee98b1",
+    "CROSSWALK_COMPATIBILITY_GATE.json": "6c7af7cd860434ee1d2671ca6ac4dc8bbb4f3c4acaca8ea174fcb770141ad1e6",
+    "EXECUTION_RECEIPT.json": "c35f3982dd001bd31759646431478d98f1bcd3f16e21f08efcaa8d72d396485d",
+    "MODEL_SENSITIVITIES.csv": "dc1f5debbcd904e4914a00aee0d575c140cd61f5ea6b116093030c8d5e7fbb1c",
+    "ROUTE_SHARE_SUMMARY.csv": "e993df0e9f1acc8b77a21f46ef18cf7bd39e275089b6777334af43e8b75c85f4",
+    "SELF_CHECK.json": "13aa47861e6af5e77a3022ee3a387f9f7bd77fedb4ff105022e7ff2b557ab4d3",
+    "TARGET_ROUTE_INFORMATION.csv": "085f5d7ba426e05a5b4bc8edf209d0b365c9b343eff9e8fc31914e4b32ad3925",
+    "UNIVERSE_RECONCILIATION.csv": "bd5113b98da65941b79194ca7fe3f1f1d9984e661b46c241c0381fad9f76b5d4"
+  },
+  "note": "The execution receipt contains authenticated public and private input hashes. The SCC self-check rehashed all three licensed inputs; no raw person records are included."
+}

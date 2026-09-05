@@ -6,7 +6,7 @@ export SOURCE_DATE_EPOCH := 1788577652
 export FORCE_SOURCE_DATE := 1
 export TZ := UTC
 
-.PHONY: restat working appendix cover revised response diagnosis all clean check
+.PHONY: restat working appendix cover revised major-revision response diagnosis all clean check
 
 restat:
 	$(LATEXMK) $(FLAGS) -jobname=YAX_RESTAT_SUBMISSION main/restat.tex
@@ -33,6 +33,16 @@ revised:
 	@./scripts/check_latex_log.sh build/YAX_REFEREE_RESPONSE.log
 	$(LATEXMK) $(FLAGS) -jobname=YAX_REVISION_DIAGNOSIS revision/revision_diagnosis.tex
 	@./scripts/check_latex_log.sh build/YAX_REVISION_DIAGNOSIS.log
+
+major-revision:
+	$(LATEXMK) $(FLAGS) -jobname=YAX_WORKING_PAPER_MAJOR_REVISION main/working.tex
+	@./scripts/check_latex_log.sh build/YAX_WORKING_PAPER_MAJOR_REVISION.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_ONLINE_APPENDIX_MAJOR_REVISION appendix/appendix.tex
+	@./scripts/check_latex_log.sh build/YAX_ONLINE_APPENDIX_MAJOR_REVISION.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REFEREE_RESPONSE_MAJOR_REVISION revision/referee_response.tex
+	@./scripts/check_latex_log.sh build/YAX_REFEREE_RESPONSE_MAJOR_REVISION.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REVISION_DIAGNOSIS_MAJOR_REVISION revision/revision_diagnosis.tex
+	@./scripts/check_latex_log.sh build/YAX_REVISION_DIAGNOSIS_MAJOR_REVISION.log
 
 all: restat working appendix cover
 

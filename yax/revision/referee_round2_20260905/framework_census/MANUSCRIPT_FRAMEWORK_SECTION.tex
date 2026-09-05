@@ -1,0 +1,122 @@
+% Manuscript-ready draft for the major-revision branch.
+% Treatment-side analytical content only; no outcome result is introduced here.
+% Principal evidence:
+%   yax/manuscript/v5_1/YAX_V51_ARCHITECTURE_MATRIX.md
+%   yax/revision/referee_20260905/EXTERNAL_ARCHITECTURE_ADMISSION_RULE.md
+%   yax/revision/referee_round2_20260905/architecture/ARCHITECTURE_STRUCTURE_FINDINGS.md
+%   yax/literature/NOVELTY_AUDIT_2026-08-28.md
+
+\subsection{Which operation changed? A taxonomy for constructed treatments}
+\label{sec:operation-taxonomy}
+
+Comparisons among constructed treatments can change different economic
+objects.  I represent the pipeline as
+\[
+C\xrightarrow{M}x^N\xrightarrow{H}x
+ \xrightarrow{\Omega,w}x|_{\Omega}\xrightarrow{R}Z
+ \xrightarrow{Q,P}\theta\xrightarrow{B}b .
+\]
+Here, $C$ is the technology construct; $M$ maps labels and occupational
+primitives into a native score; $H$ harmonizes occupational taxonomies;
+$\Omega$ and $w$ define support and its weighting; $R$ supplies a continuous,
+ranked, or categorical representation to the outcome model; $Q$ and the target
+population $P$ define the economic comparison $\theta$; and $B$ denotes the
+coordinates used to report an otherwise fixed model.
+
+This notation separates seven operations that should not share one robustness
+interpretation.  An \emph{implementation error} is a discrepancy between the
+declared and executed pipeline, such as exact-code matching across incompatible
+taxonomies.  It should be corrected, not promoted to a defensible alternative.
+A \emph{same-construct measurement change} keeps $C$ fixed while changing
+labels, inputs, reconstruction, or aggregation in $M$.  A \emph{construct
+change} instead changes the technology boundary, primitive, label meaning, or
+horizon.  A \emph{support change} changes the occupations or population over
+which the statistic is defined.  An \emph{estimand change} changes the outcome
+or economic comparison, such as Q5--Q1 versus Q5--Q2.  A \emph{representation
+change} replaces levels with ranks, quintiles, or another non-invertible feature
+map.  Finally, a \emph{pure reparameterization} applies an invertible change of
+coordinates to the same fitted model.
+
+These labels are a change vector, not necessarily mutually exclusive.  A
+taxonomy repair may both correct an implementation error and re-admit
+occupations, thereby changing the target support.  I isolate those consequences
+by first changing mapped scores on the original support and only then expanding
+support.  Likewise, changing the omitted quintile is a coordinate change, but
+asking for Q5--Q2 instead of Q5--Q1 changes the comparison itself.
+
+In this application, the three AIOE implementations are maintained as
+alternative measurements within one ten-application/ability construct.  The
+Eloundou scores share task labels but change technology scope:
+\[
+X_o(\lambda)=D_o+\lambda S_o,
+\]
+where $D_o$ is direct LLM task acceleration and $S_o$ requires complementary
+software.  Patent--task overlap and the OECD capability gap change the
+primitive and technology horizon more fundamentally.  They are therefore
+different constructs evaluated in a matched design, not interchangeable noisy
+measurements of one observed true exposure.
+
+\paragraph{Positive-affine invariance.}
+Fix a finite occupational support, positive weights, and a deterministic
+tie-preserving weighted-rank rule.  If $x'_o=a+b x_o$ with $b>0$, every pairwise
+weak ordering and tie is preserved.  Weighted ranks and weighted-quintile
+assignments are therefore identical.  This proposition does not cover a change
+in support, weights, missing-value handling, or tie rules.  In particular,
+standardization alone cannot explain changed tail membership on fixed support.
+
+\paragraph{Piecewise-constant categorical treatment.}
+For $X_o(\lambda)=D_o+\lambda S_o$ on fixed support, pairwise order can change
+only at
+\[
+\lambda_{oj}={D_j-D_o\over S_o-S_j},\qquad S_o\ne S_j.
+\]
+There are finitely many such crossings.  Between adjacent crossing values the
+complete ordering, weighted ranks, and rank-defined bins are constant.
+Consequently, a categorical outcome specification that otherwise remains
+fixed has the same objective and estimate between relevant membership
+breakpoints.  This does not imply that the coefficient is monotone in
+$\lambda$, and it does not apply to continuous-score regressions.
+
+\paragraph{Coordinate invariance.}
+If $\widetilde Z=ZR$ for nonsingular $R$, and sample, weights, nuisance
+regressors, objective, and constraints are fixed, then $Z\beta=\widetilde
+Z\widetilde\beta$ for $\widetilde\beta=R^{-1}\beta$.  The attainable indices,
+fitted values, and maximized objective are identical; covariance matrices and
+contrasts must be transformed with the coordinates.  Thus the family rotation
+$F=(A+E)/2$, $G=(A-E)/2$ is not new outcome evidence.  When the implemented
+regressors are $F/s_F$ and $G/s_G$, its exact family coordinates are
+\[
+\gamma_A={1\over2}\left({b_F\over s_F}+{b_G\over s_G}\right),\qquad
+\gamma_E={1\over2}\left({b_F\over s_F}-{b_G\over s_G}\right).
+\]
+
+This taxonomy changes the interpretation of the audit.  Same-construct
+comparisons assess operational measurement sensitivity.  Cross-construct
+comparisons show how results differ when the technology question changes.
+Support and representation checks show how that question is transported into
+the empirical population and coefficient.  Coordinate rotations provide no
+independent corroboration.  Every empirical table below identifies which of
+these layers changes and which remain fixed.
+
+\subsection{A bounded architecture census}
+\label{sec:architecture-census}
+
+The implemented set contains six selected scores from two dependent families,
+not six independent validations.  On their exact 444-occupation support, two
+weighted principal components account for 96.11 percent of score variance.
+Two external constructs---Webb AI patent--task overlap and the reversed OECD
+capability gap---passed the previously declared source, mapping, completeness,
+coverage, representation, and matched-design screen.  Frey--Osborne fails that
+screen's technology-scope condition because it is a broad automation-risk
+measure, and remains a comparator rather than an AI architecture.
+
+This is not a census of the global literature.  The repository's dated source
+audit also identifies evidence-grounded retrieval, reinforcement-learning
+feasibility, startup-targeted, platform-usage, query-based, and other
+constructions for which YAX has not completed a hashed source-file, mapping,
+support, and admission audit.  Those candidates are pending rather than failed.
+The revision reports the candidate ledger and separates source integrity,
+construct classification, mapping/support feasibility, and representation
+feasibility.  Passing those operational checks establishes comparability to the
+declared YAX workflow; it does not establish that the candidate measures the
+same latent technology or is closer to a true exposure.

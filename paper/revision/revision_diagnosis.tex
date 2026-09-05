@@ -3,55 +3,50 @@
 \usepackage{styles/working-paper}
 \usepackage{styles/yax-common}
 \geometry{margin=1in}
+\hypersetup{pdftitle={YAX Major-Revision Diagnosis},pdfauthor={Lily Luo}}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.6em}
 \begin{document}
 \begin{center}
-{\Large\bfseries YAX Referee-Revision Diagnosis}\par
+{\Large\bfseries YAX Major-Revision Diagnosis}\par
 \vspace{0.3em}
-Evidence-led framing decision, completion status, and unresolved claims\par
+Evidence-led framing decision and remaining work\par
 September 2026
 \end{center}
 
 \section*{Decision}
 
-YAX is a viable measurement-centered chapter. It is not a causal paper on AI displacement and should not be sold as general robustness of the early-career employment decline. The recommended title is the adopted title: \emph{Constructed Exposure Measures and Statement-Specific Robustness: Evidence from Early-Career Employment}.
+The paper should be a \textbf{composition-centered measurement paper}, titled \emph{AI Exposure or Occupational Composition? Constructed Measures and Early-Career Employment}. The strongest defensible substantive result is that the public-CPS young-relative association is largely a comparison across broad occupation families. The strongest methodological result is that implementation repair, same-construct measurement, construct choice, support, estimand, representation, and coordinate changes have to be audited separately.
 
-The revised contribution is stronger because it states exactly where conclusions change. Taxonomy repair mainly readmits occupations. Tail estimates are stable within two selected families but attenuate under two external concepts. Q1 is a consequential reference. Age and era definitions matter in specific directions. Continuous family asymmetry survives alpha deletion but becomes imprecise under other task-family deletions. Mobility ranking disagreement is common for small movements yet has little effect on aggregate upward/downward shares.
+The earlier thesis---that robustness is generally statement-specific---was true but too generic. The stronger revised thesis is empirical and falsifiable: after correcting the data, a $-.1346$ Q5--Q1 association falls to about $-.032$ when broad-family evolution is absorbed, while the design is too imprecise to resolve most paired architecture differences. The chapter is not a causal AI-displacement paper.
 
-\section*{Evidence that forced the reframing}
+\section*{Evidence that forced the decision}
 
 \begin{enumerate}[leftmargin=1.6em]
-\item \textbf{Architecture scope.} The common-support six-measure result covers two dependent families. Webb AI estimates $-0.0649$ and OECD capability exposure $-0.0110$, both imprecise. The original all-negative statement cannot be generalized.
-\item \textbf{Reference dependence.} Q5--Q1 is $-0.1311$, but Q5--Q2 is $-0.0456$ and Q5--Q4 $-0.0340$, with both intervals spanning zero. Favorable Q1 evolution is part of the economic contrast.
-\item \textbf{Specificity.} Beta is more negative than education, cognitive content, and telework on one common sample, but a within-SOC2 permutation gives lower-tail probability .219. AI specificity is not established.
-\item \textbf{Comparison ages and time.} Ages 22--25 versus 26--35 reproduce the pooled result; comparison with 51--65 is smaller. The 2025--26 coefficient is more negative than 2024, but not than 2023. The era-average pattern is nonmonotone.
-\item \textbf{Family outcome sensitivity.} No-alpha F/G remains signed and precise, but G intervals cross zero after omitting beta or broad. The conclusion is construction-sensitive asymmetry, not a universal family ranking.
-\item \textbf{Mobility scale.} Conflict is 53.28 percent at zero, 40.10 percent under movement-mass weighting, and substantial opposition is 14.00 percent at .5 SD. Aggregate moving-higher shares stay around one half.
+\item \textbf{Broad-family conditioning.} SOC2-by-post and SOC2-by-month specifications yield $-.0315$ and $-.0317$, versus $-.1346$ at baseline. Paired movements of approximately .103 have intervals excluding zero.
+\item \textbf{Support cost.} Only four of 22 SOC2 families contain both Q1 and Q5, and conditioned target information is 30 percent of baseline. The residual detailed-exposure coefficient is weakly measured and is not a causal remainder.
+\item \textbf{Food-service mechanism rejected.} Removing Q1 food-service occupations attenuates the coefficient only 8.8 percent. Broader in-person-service exclusions make it slightly more negative.
+\item \textbf{Architecture heterogeneity unresolved.} The primary MDE$_{80}$ is .1244. All seven paired beta-minus-alternative Q5--Q1 intervals include zero; paired MDEs reach .1689. Point-estimate differences cannot carry claims of detected heterogeneity or equivalence.
+\item \textbf{Direct public BCC bridge.} Their top-two-versus-bottom-three beta grouping produces a smaller $-.0728$ CPS coefficient. This anchors the audit to the motivating classification while preserving the boundary around proprietary hiring evidence.
+\item \textbf{Construction dependence.} Two components explain 96.11 percent of the six core score implementations. The prior six-measure sign exercise is a dependent-set statement, not six independent validations.
+\item \textbf{Data corrections do not explain the negative association.} March repair moves $-.1311$ to $-.1346$. One-to-one-target and stable-taxonomy estimates remain negative. Population-control and respondent-equivalent diagnostics do not reveal a mechanical January-2025 explanation.
+\item \textbf{Mobility is diagnostic rather than mechanistic.} A family-balanced pairwise statistic is 20.13 percent, while 53.28 percent is a six-way ``any conflict'' event.  The aligned-support realized-minus-rematching gap is 0.959 point with a declared household-cluster sampling SE of 0.0776 point, but the algorithm-defined benchmark and switch-only sample do not identify hiring or coding error.
 \end{enumerate}
 
-\section*{Evidence that remains useful}
+\section*{What the revised paper may say}
 
-The mapping contribution is concrete: exact-code AIOE coverage of computer/math employment is 3.33 percent and the documented repair reaches 97.7 percent. The four-row coefficient decomposition shows that score correction on fixed support is small, while re-admission changes the estimand. The calendar repair restores March basic samples and leaves the coefficient similar. Minimum-size, broad-occupation, approximate leisure/hospitality, stable-taxonomy, and post-2020 sensitivities preserve a negative beta tail estimate under their stated scopes.
+It may say that public CPS data reproduce a negative young-relative association under beta exposure and the public BCC grouping; that broad-family conditioning absorbs most of the point-estimate magnitude; that the movement is detectable but changes the estimand; that food-service exclusions do not explain the result; that mapping errors can remove nearly all computer/math coverage; and that available precision does not resolve most architecture differences.
 
-The design discipline remains an asset. The predeclared simultaneous all-six band fails even though an IUT gives $p=.045$. The paired beta--alpha interval is not reinterpreted as equivalence. Realized standard errors are 3.65 and 3.17 times planning values. Failed seasonality and full-refit bootstrap attempts remain visible. These facts make the paper more credible when framed as an audit rather than a protected headline.
+It may not say that AI caused employment loss, that 76 percent is a causal share, that the remaining $-.032$ is an AI effect, that food-service recovery is the mechanism, that intervals containing zero establish equivalence, that six measures independently validate the finding, or that CPS reproduces ADP hiring and separation evidence.
 
-\section*{What the chapter may say}
+\section*{Major-comment completion}
 
-It may say that occupational exposure constructions differ in coverage, tail membership, residual information, and mobility rankings; that the selected six implementations share negative common-support point estimates; that the primary beta tail contrast survives named data and sample checks; that outside architectures attenuate the CPS contrast; and that ranking disagreement depends strongly on movement scale.
+Both reports' numbered major comments have been translated into an exact response matrix. The major empirical program now covers composition, profile and monotonicity, stable tails, joint influence, service exclusions, canonical intervals, realized MDEs, quarterly aggregation, time-score covariance, pre-AI pseudo-breaks, population controls, the BCC grouping, architecture dependence, corrected mapping, age-allocation uncertainty, and mobility/rematching uncertainty. The manuscript and appendix have been reorganized around the economic question rather than revision chronology.
 
-It may not say that AI caused employment loss, that the result is robust to AI-exposure definition generally, that Q5 alone deteriorated, that a failed detection establishes equivalence, that rematching proves excess conflict negligible, or that CPS exposure variation explains the difference between U.S. payroll and Danish adoption-linked evidence.
+Two requests receive principled non-adoptions. No counterfactual January-2025 age-by-occupation weights are created because official subgroup bridge factors do not exist. No national adoption or industry BTOS series is appended merely to reparameterize event time or introduce an unvalidated occupation--industry bridge. Both limits are explicit.
 
-\section*{Completion status}
+\section*{Remaining work before submission}
 
-The baseline was reproduced; protected tags were verified; calendar data were repaired; all four decisive checks were run; inference, information, precision, mobility, taxonomy, and external-architecture audits were executed; result receipts and hashes were saved; figures and tables were regenerated; and the manuscript, appendix, response, and diagnosis were rendered as separate PDFs.
-
-Two empirical diagnostics failed honestly. The occupation-specific age-season model did not converge with 5,148 added nuisance parameters. Literal residual-wild full refits had zero admissible grouped-binomial pseudo-outcomes in 199 attempts. Neither failure was replaced with an outcome-favorable procedure.
-
-The complete original referee-report files remain unavailable. The response matrix covers every comment in the master prompt but cannot certify word-for-word reconciliation of unseen minor text.
-
-\section*{Author actions before journal submission}
-
-Complete affiliation, email, acknowledgments, funding, disclosure, and any data-use language required by the target journal. Supply the two original reports for a final wording reconciliation. Decide whether to retain the ReStat target after reading the revised measurement-centered paper; no journal-specific novelty claim has been invented. Do not edit the empirical claims without regenerating the final consistency audit.
+This is the \textbf{major-advice revision}, not the final copyedit. The next pass should reconcile all secondary comments line by line, finalize citations and table formatting, and ask the author to complete affiliation, email, acknowledgments, funding, conflicts, and data-use disclosures. The paper should also receive an independent econometric review of the maintained occupation-shock inference before being sent to a top journal. These open items do not alter the framing decision.
 
 \end{document}

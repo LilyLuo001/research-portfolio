@@ -1,6 +1,6 @@
 \section{Fixed-treatment occupation influence}\label{app:loco}
 
-The leave-one-occupation-out audit deletes each occupation while retaining frozen treatment assignments and refits the same model. It is an influence diagnostic, not a redefinition of treatment. The primary full-sample estimate is $-0.131074$; deletion estimates range from $-0.14238$ to $-0.11055$, with no sign reversal. The largest absolute movement is 0.02052.
+The leave-one-occupation-out audit deletes each occupation while retaining frozen treatment assignments and refits the same model. It is an influence diagnostic, not a redefinition of treatment. The primary full-sample estimate is $-0.131074$; deletion estimates range from $-0.14238$ to $-0.11055$. The largest absolute movement is 0.02052, so ``no sign reversal'' is not an adequate summary: one occupation moves the headline by 15.7 percent of its magnitude.
 
 Fast food and counter workers are in frozen Q1; deleting them moves the estimate to $-0.110553$ (movement $+0.020521$). Customer service representatives are in Q5; deleting them moves the estimate to $-0.113112$ (movement $+0.017962$). Software developers are in Q5 and rank tenth by absolute influence; deleting them moves the estimate to $-0.138787$ (movement $-0.007713$). Thus, the result is not a software-developer artifact, while influential contributions arise at both exposure tails.
 
@@ -34,6 +34,24 @@ Rank & Deleted occupation & Delete estimate & Movement\\
 \end{threeparttable}
 \end{table}
 
+\begin{table}[htbp]
+\centering
+\caption{Joint deletion and robust-influence diagnostics}\label{tab:appjointloco}
+\small
+\begin{tabularx}{\textwidth}{Yrrr}
+\toprule
+Diagnostic & Coefficient & 95\% interval & Stock deleted \\
+\midrule
+Delete top five by absolute LOCO movement & -.1011 & [-.1755,-.0267] & 4.11\% \\
+Delete top ten & -.1522 & [-.2377,-.0667] & 10.00\% \\
+Delete top twenty & -.1555 & [-.2296,-.0814] & 14.33\% \\
+Trim 2.5\% from each signed-influence tail & -.1281 & [-.1993,-.0568] & 15.67\% \\
+Huber down-weight above p95 absolute deviation & -.1314 & [-.1996,-.0632] & 0 \\
+\bottomrule
+\end{tabularx}
+\tabnote{The occupation ranking and trimming rules use previously observed outcome influence, so all rows are post-outcome, data-adaptive diagnostics. The reversal between deleting five and deleting ten shows that influential occupations contribute with opposing signs; sequential deletions are not additive.}
+\end{table}
+
 \enlargethispage{2\baselineskip}
-For the family-disagreement coefficient, all 444 deletion estimates remain positive between 0.025128 and 0.035993. The ten largest absolute movements follow deletion of driver/sales workers and truck drivers ($-0.005766$), bookkeeping/accounting/auditing clerks ($+0.005100$), computer programmers ($+0.004516$), couriers and messengers ($-0.004237$), fast food and counter workers ($-0.003463$), insurance claims and policy-processing clerks ($-0.003221$), payroll and timekeeping clerks ($+0.002869$), home health aides ($+0.002618$), sales managers ($+0.002605$), and other computer occupations ($-0.002509$). Employment-stock-weighted signed-movement percentiles (1st, 5th, median, 95th, and 99th) are $-0.005766$, $-0.001693$, $-0.000024$, $0.002155$, and $0.004516$.
+For the supplementary family-disagreement coefficient, all 444 deletion estimates remain positive between 0.025128 and 0.035993. This fixed-treatment stability does not confer independent economic meaning on the $G$ coordinate and is not promoted in the main text.
 \FloatBarrier

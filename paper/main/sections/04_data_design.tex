@@ -1,34 +1,41 @@
-\section{Estimands, Design, and Inference}\label{sec:design}
+\section{Estimand and Inference}\label{sec:design}
 
-\subsection{Headline objective}
+\subsection{Employment-stock contrast}
 
-Let $N_{oat}$ denote the CPS-weighted employment stock in occupation $o$, age group $a$, and month $t$. Let $Y_a$ identify ages 22--25, $P_t$ identify January 2023 onward, $Q_{oq}$ denote exposure quintile $q$, and $W_o$ denote standardized Webb software exposure. The conditional mean is
+Let $N_{oat}$ be the CPS-weighted employment stock in occupation $o$, age group $a$, and month $t$. Let $Y_a$ identify ages 22--25, $P_t$ identify January 2023 onward, $Q_{oq}$ denote exposure quintile $q$, and $W_o$ denote standardized Webb software exposure. The maintained mean is
 \begin{equation}
-E[N_{oat}|X]=\exp\left[\gamma_{oa}+\delta_{ot}+\lambda_{at}+\sum_{q=2}^{5}\beta_q Q_{oq}Y_aP_t+\theta W_oY_aP_t\right].\label{eq:headline}
+E[N_{oat}|X]=\exp\!\left[\gamma_{oa}+\delta_{ot}+\lambda_{at}
++\sum_{q=2}^{5}\beta_q Q_{oq}Y_aP_t+\theta W_oY_aP_t\right].\label{eq:headline}
 \end{equation}
-The fixed effects are occupation-by-age, occupation-by-month, and age-by-month. The target $\beta_5$ is the post-period change in the young-to-older employment-stock ratio for Q5 relative to Q1, conditional on Q2--Q4 and Webb. It is neither a continuous exposure slope nor an individual probability effect.
+Occupation-by-age, occupation-by-month, and age-by-month fixed effects absorb time-invariant age composition within occupation, common occupation shocks, and aggregate age-specific shocks. The target $\beta_5$ is the change in the young-to-older employment-stock ratio for Q5 relative to Q1 after January 2023, conditional on Q2--Q4 and Webb software exposure. It is not an individual employment probability, a hiring rate, or a continuous exposure slope.
 
-With two age groups, conditioning independent Poisson pseudo-likelihood contributions for $N_{oyt}$ and $N_{oot}$ on $T_{ot}=N_{oyt}+N_{oot}$ yields a grouped-binomial contribution
+With two age groups, conditioning independent Poisson pseudo-likelihood contributions on $T_{ot}=N_{oyt}+N_{oot}$ gives
 \begin{equation}
- \ell_{ot}=N_{oyt}\log p_{ot}+N_{oot}\log(1-p_{ot}),\qquad
- \operatorname{logit}(p_{ot})=\log\frac{\mu_{oyt}}{\mu_{oot}}.\label{eq:conditional}
+\ell_{ot}=N_{oyt}\log p_{ot}+N_{oot}\log(1-p_{ot}),\qquad
+\operatorname{logit}(p_{ot})=\log(\mu_{oyt}/\mu_{oot}).\label{eq:conditional}
 \end{equation}
-Occupation-month terms cancel from the ratio; the remaining fixed effects and interactions reproduce the implemented objective. CPS person weights construct the two cell totals. Those totals are estimating-equation inputs, not literal counts of independent survey-weighted binomial trials, and they receive no second likelihood weight. The six-bin age profile is multinomial and is not justified by this binary derivation.
+The occupation-month effect cancels. CPS final weights construct the two continuous cell stocks and are not applied a second time to the objective. The grouped-binomial expression is an estimating equation for weighted stocks, not a literal model of independent survey-weighted trials.
 
-The primary sample has 50,544 potential occupation-month cells, of which 13,305 have zero young stock, 1,036 zero older stock, and 965 both zero. Estimation retains 49,579 nonempty cells. Minimum full-panel respondent-equivalent thresholds of 100, 250, and 500 produce coefficients between $-0.1311$ and $-0.1326$. A separately constructed unweighted respondent-equivalent outcome gives $-0.1308$; it changes the cell estimand and does not double-weight CPS stocks.
+The central conditioning exercise augments equation~\eqref{eq:headline} with SOC2-family-specific $Y_aP_t$ terms. A saturated version instead absorbs SOC2-family-specific young-relative effects in every month. These models ask whether detailed exposure groups predict outcomes after broad-family evolution is conditioned out. They do not decompose the baseline coefficient into causal AI and non-AI components, because the conditioning set and therefore the estimand change.
 
-\subsection{Inference and information}
+\subsection{Maintained source of randomness}
 
-The frozen inference clusters by occupation and uses 999 common occupation-level Rademacher wild-score multipliers. Shared multipliers preserve covariance for paired architecture and reference-group contrasts. A two-way occupation/calendar-month model-based sensitivity changes the primary SE only from 0.0444 to 0.0449; neither is a complete CPS survey-design correction.
+The principal confidence interval treats occupation-level economic score contributions as independent across 468 occupation clusters and permits arbitrary serial dependence within occupation. It conditions on the observed CPS-weighted cells, constructed exposure labels, taxonomy mapping, support, quintile cuts, and fitted specification. Thus it is model-based uncertainty for a stochastic occupational-shock parameter. It is not a complete design-based CPS variance estimator and does not cover exposure-label generation, taxonomy-allocation uncertainty, or every dependence induced by respondents moving across occupations.
 
-Four information objects must remain separate. The primary model has 468 nominal occupation clusters. Webb-residualized beta variation has inverse-Herfindahl effective support 53.26 and a top-five share of 22.15 percent. Fitted conditional information has effective count 43.30 and top-five share 24.57 percent. Actual leave-one-occupation-out movement is at most 0.0205 and never flips the coefficient sign. Effective counts are concentration summaries, not numbers of independent clusters.
-
-The all-six sign statement illustrates compound inference. For
+For transparency, let $x_{ot}$ be the target and nuisance regressors after the grouped-binomial fit, $p_{ot}$ the fitted young share, and $h_{ot}=T_{ot}p_{ot}(1-p_{ot})$. The implementation absorbs the fixed effects from $x_{ot}$ under weights $h_{ot}$, producing $\widetilde x_{ot}$. It forms the information matrix
 \[
-H_0:\text{at least one }\beta_m\geq0,\qquad H_1:\beta_m<0\text{ for every }m,
+H=\sum_{o,t}h_{ot}\widetilde x_{ot}\widetilde x_{ot}',
 \]
-the marginal one-sided tail areas are .045, .005, .006, .008, .001, and .001, so the intersection--union $p$-value is their maximum, .045. The predeclared simultaneous one-sided band is a different deliverable: its critical value is 2.26036 and the limiting administrative-AIOE upper bound is +0.01858. That criterion fails and remains visible.
+the occupation score $s_o=\sum_t\widetilde x_{ot}(N_{oyt}-T_{ot}p_{ot})$, and the one-step influence $H^{-1}s_o$, with the finite-cluster factor $\sqrt{G/(G-1)}$. Each wild-score draw multiplies the entire occupation influence vector by one Rademacher sign. The analytic occupation-cluster standard error studentizes the centered draw; the 95-percent critical value is the empirical .95 quantile of the absolute studentized shifts. Paired comparisons reuse the same signs for both fits, thereby preserving estimated covariance. The procedure does not create pseudo-outcomes or refit each draw.
 
-Realized uncertainty also exceeded planning calculations. Primary and paired realized/prospective SE ratios are 3.649 and 3.167 on matched estimands, support, and units. The planning simulations omitted contemporaneous cross-occupation covariance, survey noise, new post shocks, structural change, measurement error, and misspecification. Existing artifacts cannot identify a unique allocation of the gap. A literal residual-wild full refit was attempted for the primary and no-alpha F/G models, but all 199 pseudo-outcomes violated grouped-binomial bounds; no clipping or different bootstrap was substituted.
+All central revised intervals use 9,999 multipliers. The sole canonical interval for the frozen $-0.1311$ estimate is $[-0.2171,-0.0451]$; previously displayed variants came from different finite sets of 999 multipliers, except a minimum-count row that changed the sample. Pair-specific member intervals remain labeled as such and never replace the canonical interval.
 
-Confirmatory choices were frozen before protected outcomes were opened. Common-support, age, calendar repair, placebo, external-architecture, family-refit, and mobility audits are post-outcome exploratory. This chronology limits claims but does not conceal important failures.
+\subsection{Precision, sparse cells, and rotation sensitivity}
+
+The realized primary SE is 0.0444, versus 0.0122 in the planning simulation. Its normal-theory 80-percent minimum detectable effect is therefore 0.1244 log points, or 13.25 percent on the relative-stock-ratio scale. The paper uses MDEs to characterize what the design can resolve; it does not substitute an arbitrary smallest effect of interest or interpret a confidence interval containing zero as equivalence.
+
+Young cells are sparse: the 10th, 50th, and 90th percentiles of respondent-equivalent counts are 0, 2, and 16; 26.3 percent are zero and 69.9 percent are below five. Older-cell percentiles are 4, 25, and 199. One-sided cells contribute valid finite terms to equation~\eqref{eq:conditional}; only 965 occupation-months with both stocks zero are omitted. Conditioning on at least five observed young respondents attenuates the coefficient to about $-0.109$, but this selects on realized outcomes, retains fewer than half of occupation-months, and changes the estimand.
+
+Quarterly aggregation gives $-0.1310$ under the frozen chronology and $-0.1345$ under the repaired chronology, essentially matching monthly estimates and SEs. To probe CPS rotation and common monthly shocks, a post-outcome score-covariance sensitivity adds contemporaneous and lagged covariance in aggregate month scores while subtracting the occupation-month intersection. At a 12-month Newey--West lag the SE rises to 0.0491 and the normal interval is $[-0.2273,-0.0349]$. Occupation clustering already permits arbitrary within-occupation serial dependence; this extra calculation addresses declared cross-occupation time covariance but remains model-based rather than a CPS replicate-weight variance.
+
+Finally, a historical simulation that preserves each donor month's entire contemporaneous cross-occupation residual vector under a sharp global-sign design closes none of the prospective-to-realized precision gap. It rules out that specific implementation as the explanation; it does not validate the planning calculation or identify which unmodeled dependence generated the gap.

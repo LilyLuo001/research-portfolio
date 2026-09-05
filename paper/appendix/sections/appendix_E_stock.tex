@@ -1,107 +1,89 @@
-\section{Employment-stock stress tests}\label{app:stock}
+\section{Employment-stock composition and comparison audits}\label{app:stock}
 
-All analyses in this section are post-outcome exploratory unless a row is explicitly called the frozen primary estimate. They retain the grouped employment-stock outcome and the primary age/timing/fixed-effect design as far as the stated contrast permits.
+All exercises in this section are post-outcome exploratory. They preserve the frozen artifacts as a benchmark and use 9,999 occupation-level wild-score draws unless stated otherwise.
 
 \begin{table}[htbp]
 \centering
-\caption{Occupational-characteristic placebo benchmarks}\label{tab:appplacebo}
+\caption{Broad-family conditioning}\label{tab:appcomposition}
 \small
-\begin{threeparttable}
-\begin{tabular}{lrrrr}
+\begin{tabularx}{\textwidth}{Yrrrrrr}
 \toprule
-Architecture & Top group & Coefficient & 95\% interval & AI minus benchmark\\
+Calendar/model & Coef. & SE & 95\% interval & Information & Effective occ. & Top-five share \\
 \midrule
-Eloundou beta &73&-.1142&[-.1981,-.0302]&---\\
-Mean wage &50&-.0185&[-.0987,.0617]&-.0957\\
-Education requirement &77& .0093&[-.0660,.0846]&-.1234\\
-Cognitive content &56& .0270&[-.0416,.0955]&-.1411\\
-Telework (zero/partial/full) &109&-.0240&[-.0837,.0357]&-.0901\\
-STEM (binary) &29&-.0161&[-.1736,.1413]&-.0980\\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Identical 363-occupation support and common draws. AI-minus intervals exclude zero for education, cognition, and telework; intervals include zero for wage and STEM. Telework and STEM use natural groups because tie-preserving quintile cuts collapse.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-Within-SOC2 permutation holds each broad family's beta score multiset fixed and reassigns scores across detailed occupations. Among 999 successful fits, the coefficient mean is $-0.1097$ (SD .0268); the observed $-0.1311$ has lower-tail probability .219 and centered two-sided probability .434. Exchangeability is not established, so this is an assumption-dependent diagnostic.
-
-\begin{table}[htbp]
-\centering
-\caption{Reference-tail contrasts}\label{tab:appreference}
-\small
-\begin{threeparttable}
-\begin{tabular}{lrrr}
-\toprule
-Contrast & Coefficient & SE & 95\% interval\\
-\midrule
-Q5--Q1&-.1311&.0442&[-.2179,-.0443]\\
-Q5--Q2&-.0456&.0397&[-.1240,.0328]\\
-Q5--Q3&-.0833&.0387&[-.1582,-.0083]\\
-Q5--Q4&-.0340&.0393&[-.1141,.0460]\\
-Q4--Q2&-.0116&.0310&[-.0725,.0494]\\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Re-referencing uses the fitted primary model and common draws; it does not change the sample or treatment. The Q3-relative coefficients are Q1 .0478, Q2 $-.0377$, Q3 0, Q4 $-.0492$, and Q5 $-.0833$.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Age-comparison estimates}\label{tab:appagecomparisons}
-\small
-\begin{threeparttable}
-\begin{tabular}{lrrr}
-\toprule
-Comparison & Coefficient & Paired SE & 95\% interval\\
-\midrule
-22--25 vs 26--65&-.1311&.0443&[-.2190,-.0431]\\
-22--25 vs 26--35&-.1307&.0334&[-.1945,-.0669]\\
-22--25 vs 26--45&-.1475&.0389&[-.2240,-.0709]\\
-22--25 vs 36--55&-.1464&.0499&[-.2438,-.0489]\\
-22--25 vs 51--65&-.0978&.0527&[-.2000,.0045]\\
-18--21 vs 51--65&-.1050&.0618&[-.2251,.0151]\\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Relative to 22--25 versus 26--65, paired differences are .0003, $-.0164$, $-.0153$, and .0333 for the next four 22--25 comparisons. Only the final interval excludes zero.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-In a separate six-bin multinomial age profile relative to 51--65, coefficients are $-.0744$ (18--21), $-.0996$ (22--25), .0150 (26--30), .0645 (31--40), and .0344 (41--50). Only the 31--40 interval excludes zero. This profile is not an additive decomposition of the binary pooled comparison.
-
-\begin{table}[htbp]
-\centering
-\caption{Exclusions, cell-size, and remote-work sensitivities}\label{tab:appsensitivities}
-\scriptsize
-\begin{threeparttable}
-\begin{tabularx}{\textwidth}{YrrY}
-\toprule
-Specification & Occ. & Coefficient & 95\% interval\\
-\midrule
-Exclude food-preparation/serving SOC35&458&-.1237&[-.2039,-.0434]\\
-Exclude computer/math SOC15&453&-.1158&[-.2065,-.0251]\\
-Exclude office/admin SOC43&421&-.1163&[-.1951,-.0375]\\
-Exclude approximate IND1990 leisure/hospitality, fixed membership&467&-.1325&[-.2191,-.0460]\\
-Same, recomputed quintiles&467&-.1388&[-.2286,-.0491]\\
-Minimum respondent-equivalent 100&463&-.1311&[-.2198,-.0423]\\
-Minimum respondent-equivalent 250&461&-.1311&[-.2180,-.0441]\\
-Minimum respondent-equivalent 500&438&-.1326&[-.2181,-.0470]\\
-Beta + remote, AI coefficient&408&-.1077&[-.1934,-.0220]\\
-Beta + remote, remote coefficient&408& .0065&[-.0214,.0343]\\
-Alpha + remote, AI coefficient&408&-.0808&[-.1614,-.0003]\\
-Alpha + remote, remote coefficient&408&-.0132&[-.0371,.0108]\\
+Frozen baseline & -.1311 & .0444 & [-.2171,-.0451] & 25.68m & 43.30 & .246 \\
+Frozen, SOC2 $\times$ post & -.0278 & .0712 & [-.1650,.1095] & 7.73m & 55.60 & .211 \\
+Frozen, SOC2 $\times$ month & -.0281 & .0709 & [-.1646,.1085] & 7.70m & 55.83 & .211 \\
+Repaired baseline & -.1346 & .0450 & [-.2223,-.0468] & 26.44m & 43.36 & .245 \\
+Repaired, SOC2 $\times$ post & -.0315 & .0706 & [-.1676,.1046] & 7.95m & 55.69 & .211 \\
+Repaired, SOC2 $\times$ month & -.0317 & .0703 & [-.1674,.1040] & 7.93m & 55.92 & .211 \\
 \bottomrule
 \end{tabularx}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: The IND1990 approximation includes code 800, which bundles theaters and motion pictures. Remote coefficients are per weighted SD of Dingel--Neiman feasibility; quintiles are recomputed on joint support. These models do not identify an AI-versus-remote causal decomposition.
-\end{tablenotes}
-\end{threeparttable}
+\tabnote{All six fits are full rank. The two baseline rows use their canonical 9,999-draw intervals; conditioned rows use the composition audit's common-draw intervals. SOC2 conditioning changes the estimand and leaves approximately 30 percent of baseline target information. All 22 broad groups contain at least two quintiles, but only four contain both Q1 and Q5.}
 \end{table}
 
-External architectures estimate $-0.0649$ for Webb AI (448 occupations, interval $[-.1439,.0141]$) and $-0.0110$ for the reversed OECD capability gap (448, interval $[-.0864,.0645]$). On common support, their differences from beta are .0646 (interval $[-.0411,.1704]$) and .1115 (interval $[-.0015,.2244]$). The six selected-family sign result is therefore architecture-set dependent.
+On the repaired calendar, the paired difference of SOC2-by-post minus baseline is .1031 (paired SE .0511, interval [.0035,.2026], $p=.042$). SOC2-by-month minus baseline is .1028 (paired SE .0509, interval [.0035,.2021], $p=.042$). These direct differences establish detectable coefficient movement; they are not a causal share decomposition.
+
+\begin{table}[htbp]
+\centering
+\caption{Quintile profile and reference contrasts}\label{tab:appreference}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Contrast & Estimate & SE & 95\% interval & MDE$_{80}$ \\
+\midrule
+Q5--Q1 & -.1311 & .0444 & [-.2171,-.0451] & .1244 \\
+Q5--Q2 & -.0456 & .0406 & [-.1248,.0335] & .1137 \\
+Q5--Q3 & -.0833 & .0387 & [-.1581,-.0084] & .1081 \\
+Q5--Q4 & -.0340 & .0393 & [-.1110,.0429] & .1099 \\
+Q4--Q2 & -.0116 & .0316 & [-.0728,.0496] & .0884 \\
+\bottomrule
+\end{tabular}
+\tabnote{The fitted profile relative to Q1 is $[0,-.0855,-.0478,-.0970,-.1311]$. The joint Q2--Q5 equality test has $p=.119$; the one-sided max-$t$ monotonicity assessment has $p=.393$. Neither equality nor monotonicity is established.}
+\end{table}
+
+The always-Q1/always-Q5 population contains 64 occupations and 9.74 percent of common-support employment. Its coefficient is $-.2120$ (interval $[-.4131,-.0109]$), with effective information 15.02 and top-five share 46.7 percent.
+
+\begin{table}[htbp]
+\centering
+\caption{Influence and occupation-side service exclusions}\label{tab:appinfluence}
+\scriptsize
+\begin{tabularx}{\textwidth}{YrrrY}
+\toprule
+Diagnostic & Occ. removed & Stock removed & Coef. & 95\% interval \\
+\midrule
+Jointly delete five largest absolute LOCO movements & 5 & 4.11\% & -.1011 & [-.1755,-.0267] \\
+Jointly delete ten & 10 & 10.00\% & -.1522 & [-.2377,-.0667] \\
+Jointly delete twenty & 20 & 14.33\% & -.1555 & [-.2296,-.0814] \\
+Symmetric 2.5\% signed-influence trim & 24 & 15.67\% & -.1281 & [-.1993,-.0568] \\
+Huber down-weight above p95 absolute movement & 0 & --- & -.1314 & [-.1996,-.0632] \\
+\midrule
+Drop all food preparation/service (SOC35) & 10 & 3.27\% & -.1201 & [-.1993,-.0409] \\
+Drop Q1 food preparation/service & 5 & 1.17\% & -.1196 & [-.1988,-.0404] \\
+Drop all SOC35/37/39 services & 33 & 8.20\% & -.1370 & [-.2217,-.0523] \\
+Drop Q1 SOC35/37/39 services & 17 & 4.89\% & -.1387 & [-.2236,-.0538] \\
+\bottomrule
+\end{tabularx}
+\tabnote{The LOCO ranking is selected using prior outcome influence, so joint deletion, trimming, and down-weighting are diagnostic rather than preferred estimators. Service definitions use Census-2018 occupation major groups and frozen treatment assignments. They do not isolate reopening or labor-supply mechanisms.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Public CPS bridge to the BCC exposure grouping}\label{tab:appbcc}
+\scriptsize
+\begin{tabularx}{\textwidth}{Yrrrr}
+\toprule
+Architecture, native support & Occ. & Coef. & 95\% interval & MDE$_{80}$ \\
+\midrule
+AIOE administrative & 495 & -.0532 & [-.1104,.0039] & .0828 \\
+AIOE ability/direct & 484 & -.0679 & [-.1268,-.0090] & .0853 \\
+AIOE OEWS-weighted & 485 & -.0610 & [-.1184,-.0035] & .0827 \\
+Eloundou alpha & 468 & -.0741 & [-.1250,-.0232] & .0722 \\
+Eloundou beta & 468 & -.0728 & [-.1240,-.0216] & .0728 \\
+Eloundou broad & 468 & -.0817 & [-.1342,-.0292] & .0748 \\
+Webb AI & 448 & -.0168 & [-.0710,.0374] & .0784 \\
+OECD capability gap & 448 & -.0096 & [-.0600,.0407] & .0728 \\
+\bottomrule
+\end{tabularx}
+\tabnote{Each architecture forms its own employment-weighted top-two and bottom-three groups. Native support mixes construction and support. On literal 426-occupation common support, only beta minus OECD is detected: $-.0733$, paired interval $[-.1390,-.0076]$. This is a different contrast from Q5--Q1.}
+\end{table}
 \FloatBarrier

@@ -1,61 +1,41 @@
-\section{Employment Application: Stress Tests}\label{sec:stock}
+\section{Where the Employment Association Comes From}\label{sec:results}
 
-\subsection{Baseline, architecture scope, and specificity}
+\subsection{Baseline and broad occupation families}
 
-The frozen primary beta-by-Webb Q5--Q1 estimate is $-0.1311$ log points (occupation-cluster SE 0.0444; wild-score interval $[-0.2170,-0.0451]$). The monotone transformation $100[\exp(\widehat\beta)-1]$ is $-12.28$ percent; transformed endpoints are $-19.50$ and $-4.41$ percent. These are relative-stock-ratio changes, not employment-probability changes, job counts, or percentage points.
+The substantive baseline uses the repaired 113-month calendar and frozen beta treatment definition. The Q5--Q1 coefficient is $-0.1346$ with occupation-clustered SE 0.0450 and canonical 95-percent interval $[-0.2223,-0.0468]$. The frozen design record remains $-0.1311$ with the canonical interval $[-0.2171,-0.0451]$. Calendar repair therefore does not explain the association.
 
-On the identical 444-occupation intersection, the three AIOE point estimates are $-0.0739$, $-0.1029$, and $-0.1021$; the task-family estimates are $-0.1013$, $-0.1290$, and $-0.1465$. All are negative, but the predeclared simultaneous-band criterion fails as described in Section~\ref{sec:design}. This sign pattern is within two selected, internally dependent families.
+The direct regression analogue of the earlier within-SOC2 permutation does. Adding broad-family-specific young-relative post terms reduces the coefficient to $-0.0315$; allowing each family its own young-relative monthly path gives $-0.0317$. Both intervals include zero. On common draws, the SOC2-by-post estimate minus baseline is $+0.1031$, with paired interval $[0.0035,0.2026]$; the monthly version gives $+0.1028$, with interval $[0.0035,0.2021]$. Thus the movement is detected even though the residual coefficient is not.
 
-The external-architecture audit is less supportive. Webb AI gives $-0.0649$ with interval $[-0.1439,0.0141]$ on 448 occupations. The reversed OECD capability gap gives $-0.0110$ with interval $[-0.0864,0.0645]$. On common supports, beta is more negative by 0.0646 and 0.1115, respectively; both paired intervals include zero, the OECD comparison narrowly so. The six-measure sign statement therefore does not generalize to every admissible exposure concept.
+This is strong evidence about the comparison and weak evidence about a structural mechanism. In point-estimate terms, conditioning absorbs about 76 percent of the baseline magnitude. But the target changes from a cross-economy Q5--Q1 contrast to a coefficient assembled from comparisons remaining within broad families after their differential evolution is removed. Only four of 22 SOC2 families contain both Q1 and Q5, and conditional target information falls from 26.4 million to 8.0 million, about 30 percent of baseline. The conditional coefficient is connected through intermediate quintiles in most families. It should not be described as ``the remaining AI effect,'' and the difference should not be described as the causal contribution of broad composition.
 
-Figure~\ref{fig:benchmarks} adds generic occupational-characteristic benchmarks. On identical 363-occupation support, beta is $-0.1142$. Wage, education, cognitive content, natural telework groups, and STEM status give $-0.0185$, $+0.0093$, $+0.0270$, $-0.0240$, and $-0.0161$. Common-draw beta-minus-benchmark intervals exclude zero for education, cognition, and telework, but not wage or STEM. Telework and STEM cannot form five tie-preserving groups, so the declared natural groups replace quintiles rather than arbitrary tie-breaking.
+\input{tables/table2_support.tex}
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{figure2_employment_benchmarks.pdf}
-\caption{Same-design benchmarks and external architectures}\label{fig:benchmarks}
-\tabnote{Red and gray rows use identical 363-occupation support. Telework and STEM use natural groups because tie-preserving quintiles collapse. Blue rows use each external architecture's admitted native support and should not be read as a single common-sample panel. Lines are 95-percent one-step occupation-cluster wild-score intervals. All rows are post-outcome exploratory.}
+\includegraphics[width=0.92\textwidth]{figure2_composition_major_revision.pdf}
+\caption{Broad occupational composition and alternative comparisons}\label{fig:composition}
+\tabnote{All rows are post-outcome exploratory and use 9,999 occupation wild-score draws. SOC2 rows change the conditioning estimand. Food and influence rows retain frozen groups but change support. The BCC row changes the exposure-group contrast. Intervals are therefore informative within rows but the coefficients are not estimates of one invariant parameter.}
 \end{figure}
 
-A separate diagnostic permutes beta scores within two-digit SOC families 999 times, preserving each family's score multiset and the outcome design while reassigning detailed occupations. All fits converge. The observed coefficient is $-0.1311$ versus a permutation mean of $-0.1097$ and SD 0.0268; its lower-tail probability is .219 and centered two-sided probability .434. Because occupational score exchangeability within families is not justified, this is not randomization inference. Together, the placebos and permutation support a bounded statement: the beta contrast is more negative than several selected characteristics, but AI specificity is not established.
+The prior within-SOC2 permutation is consistent with this result but is no longer asked to carry it. Randomly reassigning detailed beta scores within broad families produces a mean coefficient of $-0.1097$ against the frozen $-0.1311$. Its exchangeability assumption is not established, so the permutation percentile is descriptive. The conditioned regressions state the relevant comparison directly and show the support and information cost.
 
-\subsection{Which tail supplies the contrast?}
+\subsection{Profile, reference tail, and stable classifications}
 
-The full beta profile relative to Q1 is $-0.0855$, $-0.0478$, $-0.0970$, and $-0.1311$ for Q2 through Q5. The Q5--Q2 estimate is $-0.0456$ with interval $[-0.1240,0.0328]$; Q5--Q4 is $-0.0340$ with interval $[-0.1141,0.0460]$; Q4--Q2 is $-0.0116$ with interval $[-0.0725,0.0494]$. Q5 differs detectably from Q3 ($-0.0833$, interval $[-0.1582,-0.0083]$), but not from Q2 or Q4. The headline therefore depends partly on Q1 rather than revealing a monotone dose response.
+The fitted post coefficients relative to Q1 are $0$, $-0.0855$, $-0.0478$, $-0.0970$, and $-0.1311$. A three-restriction test does not reject a common coefficient for Q2--Q5 ($p=.119$), but cannot establish their equality. The visible Q3--Q2 increase also does not yield a rejection of monotone decline under a least-favorable max-$t$ test ($p=.393$). The data therefore neither establish nor reject monotonicity.
 
-Figure~\ref{fig:paths} plots young stocks, older stocks, and their ratios separately for Q1 and Q5, normalized to observed 2019 and 2022 means. It confirms that the fitted contrast cannot be narrated as only a collapse in high-exposure young employment. The low-exposure reference follows its own post-pandemic path, and older stocks contribute to both ratios. These paths are descriptive and do not additively decompose a nonlinear fitted coefficient.
+Changing the requested contrast clarifies Q1's role. Q5--Q2 is $-0.0456$ with interval $[-0.1248,0.0335]$; Q5--Q4 is $-0.0340$ with interval $[-0.1110,0.0429]$; Q5--Q3 is $-0.0833$ with interval $[-0.1581,-0.0084]$. These are different economic contrasts, not alternative omitted-category parameterizations. Figure~\ref{fig:paths} shows why: both the low-exposure trajectory and the older-worker denominator matter. The fitted contrast is not simply a collapse of young employment in Q5.
 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{figure3_q1_q5_paths.pdf}
 \caption{Q1 and Q5 employment stocks and ratios}\label{fig:paths}
-\tabnote{Monthly CPS-weighted stocks under frozen beta membership. The top row indexes each series to its mean over observed 2019 months; the bottom row uses observed 2022 months. The dashed line marks January 2023. October 2025 is absent because no CPS was collected.}
+\tabnote{Monthly CPS-weighted stocks under frozen beta membership. The upper row indexes to observed 2019 means and the lower row to observed 2022 means. The dashed line marks January 2023. October 2025 is absent because no CPS was collected. The paths are descriptive and do not additively decompose the nonlinear coefficient.}
 \end{figure}
 
-Occupation exclusions reinforce that reading without identifying mechanisms. Excluding food-preparation and serving occupations gives $-0.1237$; computer/math gives $-0.1158$; office/administrative support gives $-0.1163$. Excluding an approximate IND1990 leisure-and-hospitality set yields $-0.1325$ with frozen membership and $-0.1388$ after recomputing quintiles; code 800 also contains theaters and motion pictures. Deleting fast-food workers alone attenuates the original estimate to $-0.1106$. These are sensitivities, not estimates of a causal contribution.
+Only 46 occupations are always Q1 and 18 always Q5 across the six original implementations. These stable tails account for 9.74 percent of common-support employment. Their contrast is $-0.2120$ with interval $[-0.4131,-0.0109]$, but has only 15.0 effective information occupations and a 46.7-percent top-five information share. The negative estimate survives in this narrow population; it does not show that unstable classification is innocuous in the broader one.
 
-Across the six selected measures, only 46 occupations are always Q1 and 18 always Q5. They represent 7.34 and 2.41 percent of employment. The 271 occupations reclassified between tails and middle represent 59.19 percent of employment and 82.30 percent of mean fitted influence. Common support thus fixes composition but not the treatment groups supplying the estimate.
+\subsection{Influence and the food-service hypothesis}
 
-\subsection{Age and time}
+Influence is economically consequential but not one-directional. Jointly deleting the five occupations with the largest absolute prior leave-one-out movements reduces the estimate to $-0.1011$. Deleting the top ten or twenty instead makes it more negative, $-0.1522$ and $-0.1555$, because later occupations have opposing signed influence. A symmetric 2.5-percent trim of each signed-influence tail gives $-0.1281$, and Huber-style continuous down-weighting gives $-0.1314$. These are outcome-adaptive diagnostics rather than preferred specifications.
 
-Figure~\ref{fig:agetime} makes comparison-age and era dependence explicit. The 22--25 versus 26--35 estimate, $-0.1307$, is virtually identical to the pooled 26--65 estimate; their paired difference is +0.0003. Estimates versus ages 26--45 and 36--55 are $-0.1475$ and $-0.1464$. Against ages 51--65 the estimate is smaller, $-0.0978$, and differs from the pooled contrast by +0.0333 with interval $[0.0024,0.0642]$. In the separate six-bin profile, ages 31--40 have a positive $+0.0645$ coefficient relative to 51--65. Prime-age evolution matters relative to the oldest comparison group, but the nearest 26--35 group does not explain away the pooled result.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.92\textwidth]{figure4_age_time_heterogeneity.pdf}
-\caption{Comparison-age and post-period heterogeneity}\label{fig:agetime}
-\tabnote{Points are beta Q5--Q1 coefficients; lines are 95-percent common-multiplier wild-score intervals. Age models change the comparison stock and are not additive decompositions. Era estimates come from one joint model. All are post-outcome exploratory.}
-\end{figure}
-
-The 18--21 versus 51--65 estimate is $-0.1050$ with interval $[-0.2251,0.0151]$. Ages 22--25 are retained for comparability and because school-to-work selection is less severe than at 18--21, not because entry occurs at one universal age.
-
-Time heterogeneity is nonmonotone: estimates are $-0.1356$ in 2023, $-0.0783$ in 2024, and $-0.1629$ in 2025--26. The last differs from 2024 by $-0.0846$ (interval $[-0.1577,-0.0115]$), but not from 2023. The post-2025 extension therefore renews the contrast relative to 2024 rather than creating an unprecedented break. The original event study remains central: it detects no differential pretrend under its common-multiplier max statistic, but absence of a detected pretrend does not identify AI against contemporaneous occupational shocks.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.88\textwidth]{appendix_event_study.pdf}
-\caption{Categorical beta Q5--Q1 event study}\label{fig:eventstudy}
-\tabnote{Month-specific young-relative Q5--Q1 coefficients under the frozen design. December 2022 is the omitted transition month; October 2025 is absent. The figure is descriptive and does not turn January 2023 into an instrument.}
-\end{figure}
-
-Finally, adding Dingel--Neiman telework feasibility in a categorical joint-support model leaves beta at $-0.1077$ (interval $[-0.1934,-0.0220]$) while the remote coefficient is $+0.0065$ (interval $[-0.0214,0.0343]$). For alpha, the exposure coefficient is $-0.0808$ (interval $[-0.1614,-0.0003]$) and the remote coefficient is $-0.0132$ (interval $[-0.0371,0.0108]$). The remote sign changes with architecture; neither coefficient identifies a causal channel.
+Cleaner occupation-side exclusions do not support the strong claim that food-service recovery explains the headline. Dropping the five Q1 food-service occupations yields $-0.1196$, an 8.8-percent reduction in absolute magnitude. Dropping all food-service occupations gives $-0.1201$. Dropping all food, building-and-grounds, personal-care, and protective-service occupations yields $-0.1370$; dropping only their Q1 members gives $-0.1387$. These exercises cannot isolate reopening, immigration, minimum wages, or labor supply, but they reject the simpler assertion that removing in-person service occupations makes the pattern disappear.

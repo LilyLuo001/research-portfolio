@@ -1,26 +1,22 @@
 \begin{table}[!htbp]
 \centering
-\caption{Early-career employment-stock contrasts}\label{tab:stock}
+\caption{Paired architecture differences are mostly unresolved}\label{tab:stock}
 \begin{threeparttable}
-\small
-\setlength{\tabcolsep}{3.5pt}
-\begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}p{0.15\textwidth}Yrrrl@{}}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabularx}{\textwidth}{@{}Yrrrrr@{}}
 \toprule
-Status & Exposure architecture & Occupations & Coefficient & 95\% interval & $p$ \\
+Alternative to Eloundou beta & Common occ. & $\widehat\beta_{\rm beta}-\widehat\beta_{m}$ & Paired SE & 95\% paired interval & MDE$_{80}$ \\
 \midrule
-Confirmatory & Beta / Webb, primary support & 468 & -0.1311 & [-0.2170, -0.0451] & .003 \\
-\midrule
-Exploratory & AIOE administrative, common support & 444 & -0.0739 & [-0.1492, 0.0014] & .057 \\
-Exploratory & AIOE ability, common support & 444 & -0.1029 & [-0.1772, -0.0285] & .005 \\
-Exploratory & AIOE source-weighted, common support & 444 & -0.1021 & [-0.1804, -0.0238] & .014 \\
-Exploratory & Eloundou alpha, common support & 444 & -0.1013 & [-0.1855, -0.0172] & .018 \\
-Exploratory & Eloundou beta, common support & 444 & -0.1290 & [-0.2161, -0.0418] & .004 \\
-Exploratory & Eloundou broad, common support & 444 & -0.1465 & [-0.2329, -0.0602] & .003 \\
-\midrule
-Exploratory & Consensus $F$, continuous per SD & 444 & -0.0404 & [-0.0693, -0.0115] & .007 \\
-Exploratory & Disagreement $G$, continuous per SD & 444 & +0.0309 & [0.0018, 0.0600] & .040 \\
+AIOE administrative & 466 & -.0717 & .0454 & [-.1614, .0181] & .1272 \\
+AIOE ability/direct & 455 & -.0273 & .0446 & [-.1134, .0589] & .1250 \\
+AIOE OEWS-weighted & 456 & -.0665 & .0455 & [-.1557, .0227] & .1273 \\
+Eloundou alpha & 468 & -.0324 & .0376 & [-.1054, .0406] & .1053 \\
+Eloundou broad & 468 & .0259 & .0217 & [-.0156, .0674] & .0609 \\
+Webb AI patent--task & 448 & -.0646 & .0535 & [-.1682, .0389] & .1499 \\
+OECD capability gap & 448 & -.1115 & .0603 & [-.2257, .0027] & .1689 \\
 \bottomrule
 \end{tabularx}
-\tabnote{The outcome in the first seven rows is the occupation-by-age employment stock. The coefficient is the post-January-2023 change in the young-to-older stock ratio in architecture-specific Q5 relative to Q1, conditional on Q2--Q4, occupation-by-age, occupation-by-month, and age-by-month fixed effects, and standardized Webb software exposure. Common support is the same literal 444-occupation intersection, but each architecture defines its own quintiles. The final two rows are continuous coefficients from one predeclared exploratory model containing standardized $F$, $G$, and Webb jointly; they are a different estimand. Intervals and $p$-values use the existing 999-draw occupation-cluster wild-score procedure.}
+\tabnote{Each row compares architecture-specific Q5--Q1 coefficients on the row's common support, using the same 9,999 occupation multipliers for both estimates. MDE$_{80}$ is the normal-theory minimum detectable paired difference at 80-percent power and a two-sided 5-percent level. Every interval includes zero. The data therefore do not detect these differences and do not establish economic equivalence or invariance. The six initial standardized scores are highly dependent: two weighted principal components explain 96.11 percent of their variance on the 444-occupation intersection.}
 \end{threeparttable}
 \end{table}

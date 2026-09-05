@@ -1,6 +1,16 @@
 \section{Continuous family models and exact reparameterization}\label{app:fgae}
 
+This section is supplementary. The main text gives priority to the directly interpretable $D,S$ and AIOE-plus-beta specifications. Crossing a significance threshold after deleting one component is not treated as a statistically significant coefficient change unless the direct paired change is tested.
+
 Let $A$ and $E$ be equal-weight centroids of the three standardized ability- and task-family implementations. Raw $F=(A+E)/2$ and $G=(A-E)/2$ are separately standardized in the fitted model with Webb. The original construction has weighted SDs .8777 and .3221 and weighted correlation .2177; neither raw construction nor standardization makes the fitted coordinates orthogonal.
+
+Equal weighting of standardized task measures is not neutral in primitive units. With weighted raw-score standard deviations $\sigma_\alpha=.14616$, $\sigma_\beta=.20455$, and $\sigma_\gamma=.33481$, the task centroid is, up to a centering constant,
+\[
+E=\frac13\left(\sigma_\alpha^{-1}+\sigma_\beta^{-1}+\sigma_\gamma^{-1}\right)D
++\frac13\left(\tfrac12\sigma_\beta^{-1}+\sigma_\gamma^{-1}\right)S
+=4.9057D+1.8104S.
+\]
+The embedded $S$-to-$D$ weight is therefore .3690 in raw task-share units. This is an arithmetic consequence of component scales, not an economically optimal complementarity weight. Deleting a task-family component changes these effective weights rather than withdrawing an independent signal.
 
 \begin{table}[htbp]
 \centering
@@ -35,5 +45,5 @@ For separately scaled regressors, the exact basis transformation is
 \]
 Consistently transforming every draw gives $\gamma_A=.0248$ (paired SE .0199) and $\gamma_E=-.0707$ (paired SE .0272). This is the same fitted predictor, not corroboration. A smaller variance alone does not mechanically create a larger standardized coefficient; covariance with the residualized outcome and with other regressors also matters.
 
-For $D+\lambda S$, the categorical Q5--Q1 estimate is $-.1013$ at $\lambda=0$, $-.1256$ at $.25$, $-.1297$ at $.5$, $-.1432$ at $.75$, and $-.1482$ at $1$. Continuous slopes differ under fixed beta scaling and restandardization, so both conventions are stored. The combined evidence supports construction-sensitive asymmetry, not a universal family ordering.
+For $D+\lambda S$, the categorical Q5--Q1 estimate is $-.1013$ at $\lambda=0$, $-.1256$ at $.25$, $-.1297$ at $.5$, $-.1432$ at $.75$, and $-.1482$ at $1$. Continuous slopes differ under fixed beta scaling and restandardization, so both conventions are stored. These are descriptions of conditional coefficients and coordinate choices, not a universal family ordering. In particular, the $F/G$ significance pattern cannot establish that one family is correct or turn the implied $A/E$ coefficients into independent outcome evidence.
 \FloatBarrier

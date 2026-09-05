@@ -1,52 +1,33 @@
-\section{Calendar, mapping, and sample flow}\label{app:mapping}
+\section{Calendar, mapping, and age-allocation uncertainty}\label{app:mapping}
 
-The original extract selected March ASEC (`03s`) rather than March basic (`03b`) for 2017--2021. ASEC records carry zero basic monthly final weights and cannot fill the intended cells. A revision extract restores the five basic samples. October 2025 remains absent because no CPS was collected during the federal government shutdown. Combined raw files contain 9,843,021 rows and 114 observed survey months; the corrected static model contains 113 after omitting December 2022.
-
-\begin{table}[htbp]
-\centering
-\caption{Unified sample flow}\label{tab:appsampleflow}
-\scriptsize
-\setlength{\tabcolsep}{2.7pt}
-\begin{threeparttable}
-\begin{tabularx}{\textwidth}{Yrrrrrrrr}
-\toprule
-Universe & Occ. & Potential & Nonempty & Zero young & Zero older & Empty & Pre Y/O cov. & Post Y/O cov.\\
-\midrule
-Characteristics &463&50,004&48,742&13,765&1,338&1,262&95.47/94.84&94.80/94.04\\
-Beta + Webb &468&50,544&49,579&13,305&1,036&965&98.54/98.08&98.53/97.96\\
-Beta + O*NET &465&50,220&48,909&13,698&1,385&1,311&95.39/95.39&94.02/94.52\\
-Six + Webb &444&47,952&47,073&12,782&950&879&94.46/93.78&93.89/93.08\\
-\bottomrule
-\end{tabularx}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Frozen 108-month calendar. Coverage is percent of the 490-occupation candidate employment stock, separately for young (Y) and older (O) groups. Potential and nonempty columns are occupation-month cells. The four occupation counts reconcile earlier 463/468/465/444 universes.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-Pre-2020 records use an official Census-2010-to-2018 route bridge. Conversion proportions are common to young and older observations within source occupation and month, mechanically preserving each source ratio across its components before aggregation. Fifty-six source occupations are one-to-many, maximum multiplicity is seven, and these sources represent 20.03 percent of early weighted employment.
+The original extract selected March ASEC (`03s') rather than Basic Monthly (`03b') samples in 2017--2021. ASEC records carry zero Basic Monthly final weights for this design. A separately authenticated repair restores the five months. October 2025 is genuinely absent because the CPS was not collected. Combined files contain 9,843,021 rows and 114 observed survey months; the corrected static model retains 113 after omitting December 2022.
 
 \begin{table}[htbp]
 \centering
 \caption{Calendar and taxonomy sensitivities}\label{tab:appcalendar}
 \small
-\begin{threeparttable}
-\begin{tabularx}{\textwidth}{YrrrY}
+\begin{tabularx}{\textwidth}{Yrrrr}
 \toprule
-Specification & Months & Occ. & Coefficient & 95\% interval\\
+Specification & Months & Occ. & Coefficient & 95\% interval \\
 \midrule
-Frozen calendar &108&468&-.1311&[-.2166, -.0455]\\
-Restored March 2017--21 &113&468&-.1346&[-.2230, -.0461]\\
-Census-2018 period (2020+) &77&457&-.1211&[-.1986, -.0435]\\
-Stable Census-2010 aggregate &113&408&-.1522&[-.2438, -.0606]\\
-Respondent-equivalent cells &108&468&-.1308&[-.2149, -.0466]\\
+Frozen chronology benchmark & 108 & 468 & -.1311 & [-.2171,-.0451] \\
+Restored March 2017--21 & 113 & 468 & -.1346 & [-.2223,-.0468] \\
+No possible split inbound route, fixed labels & 113 & 369 & -.1674 & [-.2684,-.0663] \\
+No possible split inbound route, recomputed labels & 113 & 369 & -.1471 & [-.2428,-.0513] \\
+Stable Census-2010 aggregate & 113 & 408 & -.1522 & [-.2438,-.0606] \\
+Respondent-equivalent cells & 113 & 468 & -.1348 & [-.2216,-.0481] \\
 \bottomrule
 \end{tabularx}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Post-outcome exploratory. The post-2020 and stable-taxonomy rows change the temporal or occupational estimand. The respondent-equivalent row changes the cell outcome; it does not reweight weighted stocks.
-\end{tablenotes}
-\end{threeparttable}
+\tabnote{The first row is confirmatory; the others are post-outcome exploratory. The two one-to-one-target rows and stable-taxonomy row change the occupational population. Respondent equivalents reconstruct cells without CPS final weights; they are not weighted stocks divided by a constant.}
 \end{table}
 
-The AIOE repair raises computer/mathematical employment coverage from 3.33 to 97.7 percent. A separate continuous decomposition is: original score/original support $-0.01885$; repaired score/same 410 occupations $-0.01920$; repaired score/expanded 495 occupations $-0.03156$; expanded support excluding computer/math $-0.02940$. Thus re-admission, not within-support score correction, supplies most of the difference.
+\input{tables/table_sample_flow_revised.tex}
+
+Pre-2020 records use official Census-2010-to-2018 routes. Common conversion proportions are applied to young and older source records, mechanically preserving a source age ratio across its allowed targets before other sources enter. Split sources account for 14.93 percent of young and 17.75 percent of older 2017--19 stock on primary support. In Q1 the shares are 17.48 and 17.13 percent; in Q5 they are 21.57 and 26.32 percent.
+
+Ninety-nine primary targets can receive a split source and carry 23.38 percent of fitted Q5 target information. Allocating information in proportion to split-source stock assigns 4.44 percent to that stock, but the allocation is descriptive rather than identified. From 2020 onward CPS occupations are directly coded in the target Census-2018 taxonomy, so this bridge uncertainty affects the preperiod rather than postperiod observations.
+
+Official routes contain no age-specific allocation probabilities. Unrestricted allocation within allowed routes produces sharp 2017--19 stock-accounting ranges of [.1031,.1480] for the Q1 young/older ratio and [.0790,.1175] for Q5. These are not coefficient bounds. A predeclared exposure-directed tilt changes young-versus-older odds toward the highest-beta eligible target by $K\in\{.5,.75,1,1.5,2\}$ and keeps labels fixed. The coefficient ranges from $-.1292$ to $-.1391$. Only 20 split sources and 6.88 percent of matched early stock are eligible, so the exercise cannot establish global bridge robustness.
+
+The AIOE compatibility gate fails closed when a SOC-2010 source is matched literally to Census-2018 outcome codes without a versioned route. Naive support with Webb is 410 occupations, 85 fewer than the repaired 495. Computer/mathematical coverage rises from 3.33 to 97.7 percent after repair. On fixed 410-occupation support, changing the score moves a continuous coefficient only from $-.01885$ to $-.01920$; expanding to 495 moves it to $-.03156$. This isolates implementation correction from population re-admission.
 \FloatBarrier
