@@ -1,0 +1,41 @@
+{
+  "builder_positive_weight_filter_precedes_concatenation_pass": true,
+  "candidate_public_design_fields": [],
+  "created_utc": "2026-09-05T12:46:12.152529+00:00",
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "cell_builder": "22a984d8fc78bb0c9a29c4350e76871f0a16750501a2832c59a26ced526d60ce",
+    "repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "repair_ddi": "e29c6c30a397357b927692af371b3fa77176f3d020f513343237d651bf3d3b03",
+    "repair_request": "2ceeabc416f875c07bbfe9ae327310b9f4b5c3bc474473f459f26a503e7a7d26",
+    "wide": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "wide_ddi": "5933bc48ed736a00fa70547ef503f571c6f1f9c03aef7d24ce511af3550fb319",
+    "wide_request": "bd798b9dfe11d00153856be3e05a7c52865a149dcc7405a5cbfd812eb3ca6c3a"
+  },
+  "nonrelease_assertion": "Outputs contain aggregate counts only; no SERIAL, CPSID, CPSIDP, or CPSIDV value is serialized.",
+  "per_month_functional_replacement_pass": true,
+  "raw_record_overlap_is_not_active_stock_overlap": true,
+  "repair_sample_selection": [
+    "cps2017_03b",
+    "cps2018_03b",
+    "cps2019_03b",
+    "cps2020_03b",
+    "cps2021_03b"
+  ],
+  "repaired_months": [
+    "2017-03",
+    "2018-03",
+    "2019-03",
+    "2020-03",
+    "2021-03"
+  ],
+  "request_gate_pass": true,
+  "status": "PASS_FUNCTIONAL_REPLACEMENT",
+  "wide_repaired_sample_selection": [
+    "cps2017_03s",
+    "cps2018_03s",
+    "cps2019_03s",
+    "cps2020_03s",
+    "cps2021_03s"
+  ]
+}
