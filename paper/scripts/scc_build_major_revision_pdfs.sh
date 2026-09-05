@@ -31,7 +31,7 @@ build_without_bib() {
 }
 
 build_with_bib main/working.tex YAX_REVISED_MANUSCRIPT
-build_with_bib appendix/appendix.tex YAX_FOCUSED_ONLINE_APPENDIX
+build_without_bib appendix/appendix.tex YAX_FOCUSED_ONLINE_APPENDIX
 build_without_bib revision/referee_response.tex YAX_REFEREE_RESPONSE
 build_without_bib revision/revision_diagnosis.tex YAX_REVISION_DIAGNOSIS
 build_without_bib revision/source_diff.tex YAX_SOURCE_DIFF
