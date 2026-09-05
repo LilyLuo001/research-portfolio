@@ -26,6 +26,8 @@ def main() -> None:
     models = pd.read_csv(results / "CHARACTERISTIC_MODEL_RESULTS.csv")
     assert models.specification.is_unique
     assert {"native_corrected_baseline", "common_support_baseline"}.issubset(set(models.specification))
+    assert "support_specific_computer_use_augmented" in set(models.specification)
+    assert "support_specific_SOC2_post_augmented" in set(models.specification)
     native = models.loc[models.specification.eq("native_corrected_baseline")].iloc[0]
     assert np.isclose(native.coefficient, -0.1345539535732939, atol=1e-10, rtol=0)
     assert (models.information_matrix_rank == models.information_matrix_columns).all()
@@ -37,10 +39,15 @@ def main() -> None:
     assert np.isfinite(paired.paired_se).all()
     support = pd.read_csv(results / "CHARACTERISTIC_SUPPORT_BY_QUINTILE.csv")
     assert set(support.quintile) == {1, 2, 3, 4, 5}
+    coefficients = pd.read_csv(results / "ALL_MODEL_COEFFICIENTS.csv")
+    assert set(coefficients.specification) == set(models.specification)
+    assert coefficients.groupby("specification").is_Q5_target.sum().eq(1).all()
+    support_map = pd.read_csv(results / "SUPPORT_SPECIFIC_MODEL_MAP.csv")
+    assert len(support_map) == 9
+    assert (support_map.support_occupations <= 468).all()
     assert json.loads((results / "MODEL_FAILURES.json").read_text()) == receipt["model_failures"]
     print("PASS_R3_CHARACTERISTIC_CONDITIONING_SELFCHECK")
 
 
 if __name__ == "__main__":
     main()
-

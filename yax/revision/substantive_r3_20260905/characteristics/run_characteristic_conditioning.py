@@ -247,14 +247,15 @@ def summarize_model(
 
 
 def paired_row(
-    name: str, estimate: float, vector: np.ndarray, signs: np.ndarray, support: list[str]
+    name: str, estimate: float, vector: np.ndarray, signs: np.ndarray, support: list[str],
+    reference: str = "common_support_baseline",
 ) -> dict:
     centered = signs @ vector
     se = float(np.sqrt(np.sum(np.square(vector))))
     critical = float(np.quantile(np.abs(centered / se), .95, method="higher"))
     return {
         "analysis_status": LABEL,
-        "contrast": f"{name}_minus_common_support_baseline",
+        "contrast": f"{name}_minus_{reference}",
         "support_occupations": len(support),
         "support_hash_sha256": CORE.support_hash(support),
         "coefficient_difference": estimate,
@@ -311,11 +312,14 @@ def run(args: argparse.Namespace) -> None:
         raise RuntimeError(f"characteristic common support implausibly small: {len(common_support)}")
 
     pre_cells = cells.loc[
-        cells.occ_code.isin(common_support)
+        cells.occ_code.isin(primary_support)
         & cells.month.between("2017-01", "2019-12")
         & cells.age.between(18, 65)
     ]
     pre_weights_series = pre_cells.groupby("occ_code").stock.sum()
+    pre_weight_map = {
+        code: float(pre_weights_series.get(code, 0.0)) for code in primary_support
+    }
     pre_weights = np.array([float(pre_weights_series.get(code, 0.0)) for code in common_support])
     if np.any(pre_weights <= 0):
         raise RuntimeError("common support contains occupation with zero 2017-2019 employment")
@@ -327,6 +331,8 @@ def run(args: argparse.Namespace) -> None:
         z_maps[name] = {code: float((values[code] - mean) / sd) for code in common_support}
         scale_rows.append({
             "characteristic": name,
+            "support_rule": "literal_all_characteristics_common_support",
+            "support_hash_sha256": CORE.support_hash(common_support),
             "source_column": STATIC_CHARACTERISTICS.get(name, "generated_from_corrected_CPS_cells"),
             "weighted_mean": mean,
             "weighted_sd": sd,
@@ -352,17 +358,19 @@ def run(args: argparse.Namespace) -> None:
     model_rows: list[dict] = []
     paired_rows: list[dict] = []
     information_rows: list[dict] = []
+    coefficient_rows: list[dict] = []
 
     def fit_registered(
         name: str, panel: str, support: list[str], control_names: list[str], add_soc2: bool,
-        signs: np.ndarray,
+        signs: np.ndarray, control_z_maps: dict[str, dict[str, float]] | None = None,
     ):
         young, older = CELLS.panel_for_ages(cells, support, months, (22, 25), (26, 65))
         x, labels = build_base_design(support, months, q_map, webb_z_map)
         post = np.array([month >= "2023-01" for month in months])
         columns = [x]
+        selected_z_maps = z_maps if control_z_maps is None else control_z_maps
         for control in control_names:
-            values = np.array([z_maps[control][code] for code in support], float)
+            values = np.array([selected_z_maps[control][code] for code in support], float)
             columns.append((values[:, None] * post[None, :]).reshape(-1, 1))
             labels.append(f"{control}_z_x_post")
         reference = ""
@@ -381,6 +389,23 @@ def run(args: argparse.Namespace) -> None:
             name, panel, fit, influence, details, 3, signs, support, primary_weights, labels, reference
         )
         model_rows.append(row)
+        for coefficient_index, coefficient_label in enumerate(labels):
+            coefficient_summary, _ = COMP.scalar_summary(
+                fit, influence, coefficient_index, signs
+            )
+            coefficient_rows.append({
+                "analysis_status": LABEL,
+                "specification": name,
+                "panel": panel,
+                "coefficient_label": coefficient_label,
+                "is_Q5_target": coefficient_index == 3,
+                "support_occupations": len(support),
+                "support_hash_sha256": CORE.support_hash(support),
+                "normal_theory_mde80": (
+                    (Z975 + Z80) * coefficient_summary["analytic_cluster_se"]
+                ),
+                **coefficient_summary,
+            })
         contributions = info["occupation_information"]
         for code, contribution in zip(support, contributions):
             information_rows.append({
@@ -462,6 +487,104 @@ def run(args: argparse.Namespace) -> None:
                 "error": str(error),
             })
 
+    support_specific_specs = [
+        ("computer_use", False),
+        ("remotability", False),
+        ("wage", False),
+        ("education_requirement", False),
+        ("routine_task_intensity", False),
+        ("manual_physical", False),
+        ("pandemic_total_shortfall", False),
+        ("pandemic_young_relative_shortfall", False),
+        ("SOC2_post", True),
+    ]
+    support_specific_meta = []
+    for control_index, (control, add_soc2) in enumerate(support_specific_specs):
+        try:
+            if add_soc2:
+                control_support = list(primary_support)
+                local_z_maps: dict[str, dict[str, float]] = {}
+                local_mean = local_sd = np.nan
+            else:
+                control_support = sorted(
+                    code for code in primary_support
+                    if pre_weight_map[code] > 0
+                    and np.isfinite(raw_maps[control].get(code, np.nan))
+                )
+                values = np.array([raw_maps[control][code] for code in control_support], float)
+                weights = np.array([pre_weight_map[code] for code in control_support], float)
+                local_mean, local_sd = weighted_scale(values, weights)
+                local_z_maps = {
+                    control: {
+                        code: float((raw_maps[control][code] - local_mean) / local_sd)
+                        for code in control_support
+                    }
+                }
+                scale_rows.append({
+                    "characteristic": control,
+                    "support_rule": f"maximal_finite_{control}_support",
+                    "support_hash_sha256": CORE.support_hash(control_support),
+                    "source_column": STATIC_CHARACTERISTICS.get(
+                        control, "generated_from_corrected_CPS_cells"
+                    ),
+                    "weighted_mean": local_mean,
+                    "weighted_sd": local_sd,
+                    "scaling_weights": "2017-2019 total employment ages 18-65",
+                    "support_occupations": len(control_support),
+                })
+            local_signs = np.random.default_rng(SEED + 100 + control_index).choice(
+                np.array([-1.0, 1.0]), size=(DRAWS, len(control_support))
+            )
+            baseline_name = f"support_specific_{control}_baseline"
+            augmented_name = f"support_specific_{control}_augmented"
+            local_baseline, _, local_baseline_vector = fit_registered(
+                baseline_name,
+                "support_specific_one_at_a_time",
+                control_support,
+                [],
+                False,
+                local_signs,
+                local_z_maps,
+            )
+            augmented_controls = [] if add_soc2 else [control]
+            local_augmented, _, local_augmented_vector = fit_registered(
+                augmented_name,
+                "support_specific_one_at_a_time",
+                control_support,
+                augmented_controls,
+                add_soc2,
+                local_signs,
+                local_z_maps,
+            )
+            paired_rows.append(paired_row(
+                augmented_name,
+                local_augmented["coefficient"] - local_baseline["coefficient"],
+                local_augmented_vector - local_baseline_vector,
+                local_signs,
+                control_support,
+                baseline_name,
+            ))
+            support_specific_meta.append({
+                "control": control,
+                "support_occupations": len(control_support),
+                "support_hash_sha256": CORE.support_hash(control_support),
+                "primary_support_employment_coverage": float(
+                    sum(primary_weights[code] for code in control_support)
+                    / sum(primary_weights.values())
+                ),
+                "baseline_specification": baseline_name,
+                "augmented_specification": augmented_name,
+                "characteristic_weighted_mean": local_mean,
+                "characteristic_weighted_sd": local_sd,
+            })
+        except Exception as error:
+            failures.append({
+                "specification": f"support_specific_{control}",
+                "panel": "support_specific_one_at_a_time",
+                "error_type": type(error).__name__,
+                "error": str(error),
+            })
+
     quintile_rows = []
     total_primary_weight = sum(primary_weights.values())
     for label, support in (("primary_native", primary_support), ("characteristic_common", common_support)):
@@ -476,11 +599,13 @@ def run(args: argparse.Namespace) -> None:
             })
 
     write_csv(args.output_dir / "CHARACTERISTIC_MODEL_RESULTS.csv", model_rows)
+    write_csv(args.output_dir / "ALL_MODEL_COEFFICIENTS.csv", coefficient_rows)
     write_csv(args.output_dir / "CHARACTERISTIC_PAIRED_DIFFERENCES.csv", paired_rows)
     write_csv(args.output_dir / "CHARACTERISTIC_INFORMATION_BY_OCCUPATION.csv", information_rows)
     write_csv(args.output_dir / "CHARACTERISTIC_CORRELATIONS.csv", corr_rows)
     write_csv(args.output_dir / "CHARACTERISTIC_SCALING.csv", scale_rows)
     write_csv(args.output_dir / "CHARACTERISTIC_SUPPORT_BY_QUINTILE.csv", quintile_rows)
+    write_csv(args.output_dir / "SUPPORT_SPECIFIC_MODEL_MAP.csv", support_specific_meta)
     write_csv(args.output_dir / "PANDEMIC_SHORTFALL_DIAGNOSTICS.csv", shortfall_rows)
     write_json(args.output_dir / "MODEL_FAILURES.json", failures)
 
@@ -499,6 +624,8 @@ def run(args: argparse.Namespace) -> None:
         "git_head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "registered_specification": str((HERE / "ANALYSIS_SPEC.md").relative_to(ROOT)),
         "registered_specification_sha256": sha256(HERE / "ANALYSIS_SPEC.md"),
+        "support_amendment_sha256": sha256(HERE / "ANALYSIS_SPEC_AMENDMENT_1.md"),
+        "initial_common_support_results_commit": "8e3b876266e09679467b5a0c640c3c16b0c51974",
         "script_sha256": sha256(pathlib.Path(__file__)),
         "input_hashes": data["authenticated"]["hashes"],
         "repair_microdata_sha256": sha256(args.repair_microdata),
