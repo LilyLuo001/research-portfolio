@@ -1,0 +1,266 @@
+{
+  "checks": [
+    {
+      "check": "required output exists: FAMILY_QUINTILE_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: PROFILE_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: PROFILE_JOINT_TESTS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: PAIRED_PROFILE_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: DIRECT_TAIL_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: DIRECT_TAIL_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: CONTINUOUS_WITHIN_FAMILY_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: LEAVE_ONE_FAMILY_OUT.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: MODEL_FAILURES.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: INFORMATION_DIAGNOSTICS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: OCCUPATION_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FAMILY_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FAMILY_TAIL_TRAJECTORIES.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FAMILY_TRAJECTORY_SELECTION.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: CENTERED_BOOTSTRAP_DRAWS.npz",
+      "pass": true
+    },
+    {
+      "check": "required output exists: EXECUTION_RECEIPT.json",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FINDINGS.md",
+      "pass": true
+    },
+    {
+      "check": "corrected baseline reproduced",
+      "pass": true
+    },
+    {
+      "check": "historical support has 468 occupations",
+      "pass": true
+    },
+    {
+      "check": "canonical workstream uses 9999 draws",
+      "pass": true
+    },
+    {
+      "check": "common occupation signs declared",
+      "pass": true
+    },
+    {
+      "check": "no raw microdata written",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: CENTERED_BOOTSTRAP_DRAWS.npz",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: CONTINUOUS_WITHIN_FAMILY_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: DIRECT_TAIL_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: DIRECT_TAIL_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: FAMILY_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: FAMILY_QUINTILE_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: FAMILY_TAIL_TRAJECTORIES.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: FAMILY_TRAJECTORY_SELECTION.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: FINDINGS.md",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: INFORMATION_DIAGNOSTICS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: LEAVE_ONE_FAMILY_OUT.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: MODEL_FAILURES.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: OCCUPATION_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: PAIRED_PROFILE_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: PROFILE_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash matches: PROFILE_JOINT_TESTS.csv",
+      "pass": true
+    },
+    {
+      "check": "three profile models present",
+      "pass": true
+    },
+    {
+      "check": "each profile has Q2-Q5",
+      "pass": true
+    },
+    {
+      "check": "profile estimates and simultaneous intervals finite",
+      "pass": true
+    },
+    {
+      "check": "each profile has joint zero/equality/monotonicity tests",
+      "pass": true
+    },
+    {
+      "check": "joint-zero tests have four restrictions",
+      "pass": true
+    },
+    {
+      "check": "22 SOC2 families in support exhibit",
+      "pass": true
+    },
+    {
+      "check": "direct-tail family set is 27/29/31/41",
+      "pass": true
+    },
+    {
+      "check": "three direct-tail models share one changed population",
+      "pass": true
+    },
+    {
+      "check": "direct-tail stock share explicitly lies inside full population",
+      "pass": true
+    },
+    {
+      "check": "three continuous common-slope models present",
+      "pass": true
+    },
+    {
+      "check": "continuous scale is positive and disclosed",
+      "pass": true
+    },
+    {
+      "check": "four primary models receive LOFO",
+      "pass": true
+    },
+    {
+      "check": "all 22 families omitted in LOFO",
+      "pass": true
+    },
+    {
+      "check": "profile LOFO retains all four targets",
+      "pass": true
+    },
+    {
+      "check": "all fitted-information values positive",
+      "pass": true
+    },
+    {
+      "check": "all effective occupation counts positive",
+      "pass": true
+    },
+    {
+      "check": "top-five shares valid",
+      "pass": true
+    },
+    {
+      "check": "conditional MDEs positive",
+      "pass": true
+    },
+    {
+      "check": "trajectory families equal information-ranked direct-tail families",
+      "pass": true
+    },
+    {
+      "check": "trajectory selection is not coefficient-sign based",
+      "pass": true
+    },
+    {
+      "check": "trajectory calendar has 113 months",
+      "pass": true
+    },
+    {
+      "check": "young/older paths cover both tails",
+      "pass": true
+    },
+    {
+      "check": "each selected family-tail has a full path",
+      "pass": true
+    },
+    {
+      "check": "stored common sign shape has expected dimensions",
+      "pass": true
+    },
+    {
+      "check": "bit-packed common sign matrix reconstructs exactly",
+      "pass": true
+    },
+    {
+      "check": "stored common signs are binary Rademacher representation",
+      "pass": true
+    },
+    {
+      "check": "main-model centered shifts are stored",
+      "pass": true
+    }
+  ],
+  "checks_passed": 65,
+  "status": "PASS_R3_WITHIN_FAMILY_SELF_CHECK"
+}
