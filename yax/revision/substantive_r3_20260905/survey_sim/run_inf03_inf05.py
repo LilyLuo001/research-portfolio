@@ -567,9 +567,20 @@ def finite_sample_simulation(args, routes: dict, contract: dict, observed: dict,
             count = np.zeros_like(dgp["n_integer"])
             count[active] = rng.binomial(dgp["n_integer"][active], probability[active])
             simulated_young = np.zeros_like(total)
+            simulated_older = np.zeros_like(total)
             simulated_young[active] = total[active] * count[active] / dgp["n_integer"][active]
+            # Construct the complementary stock from the complementary integer
+            # count.  Subtracting the floating young stock from a very large
+            # survey-weighted total can create a tiny negative roundoff error
+            # when count==n; no pseudo-outcome is clipped here.
+            simulated_older[active] = (
+                total[active] * (dgp["n_integer"][active] - count[active])
+                / dgp["n_integer"][active]
+            )
+            if np.any(simulated_young < 0) or np.any(simulated_older < 0):
+                raise RuntimeError("integer-complement construction produced a negative stock")
             young = simulated_young.reshape(routes["young"].shape)
-            older = (total - simulated_young).reshape(routes["older"].shape)
+            older = simulated_older.reshape(routes["older"].shape)
             for model, x in (("baseline", observed["base_x"]), ("SOC2_post", observed["conditional_x"])):
                 try:
                     fit = fit_one(young, older, x)
