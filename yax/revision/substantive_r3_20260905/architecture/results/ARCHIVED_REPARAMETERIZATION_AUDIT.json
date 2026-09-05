@@ -1,0 +1,33 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "definitions": {
+    "historical_family_basis": "F=(A+E)/2 and G=(A-E)/2",
+    "inverse_change_of_basis": "A=F+G and E=F-G before any separately applied scale transformation"
+  },
+  "files": [
+    {
+      "path": "yax/revision/referee_20260905/results/core/CONSTRUCTION_IDENTITY_AUDIT.json",
+      "sha256": "342996ccaab3a6da2ea615a5cbd0ea6fd50889866797126b0f03d1c49ddaf2cd"
+    },
+    {
+      "path": "yax/revision/referee_20260905/results/core/FG_AE_CHANGE_OF_BASIS.json",
+      "sha256": "920d6466c62645d39185bd12e87397768204402cb4fdef981d72079d6c1c02db"
+    },
+    {
+      "path": "yax/analysis/postoutcome_v51_referee_repair/YAX_V51_FG_JOINT_MODEL_RESULTS.json",
+      "sha256": "e336df9df5cf1843fdff7e8c345b0dced7cf28a84678255806c572bed8f769da"
+    },
+    {
+      "path": "yax/analysis/postoutcome_v51_interpretation_audit/YAX_V51_FG_TO_AE_REPARAMETERIZATION.json",
+      "sha256": "b4aaa4427fcca33785677ed7e68220f48190f56d18ea6ec54aa43ed87206db12"
+    },
+    {
+      "path": "yax/analysis/postoutcome_v51_final_audit/YAX_V51_AE_PRESENTATION_NOTE.md",
+      "sha256": "587e216e1fb0e89485c0b3645444142ef295632c034af8cd4675a75668a1143f"
+    }
+  ],
+  "interpretation": "F/G and A/E are archived coordinate changes. They are not independent exposure dimensions, validation data, or evidence of technology-induced mobility.",
+  "mobility_or_rematching_reopened": false,
+  "new_outcome_models_fit_here": 0,
+  "status": "ARCHIVED_PROVENANCE_ONLY_NOT_SCIENTIFIC_EVIDENCE"
+}

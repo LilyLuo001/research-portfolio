@@ -1,0 +1,697 @@
+{
+  "checks": [
+    {
+      "detail": "",
+      "name": "required output: CONSTRUCTION_IDENTITY_AUDIT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_GRID_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_GRID_MEMBERSHIP.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_GRID_CENTERED_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_PAIRED_DIFFERENCES.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_QUINTILE_TRANSITIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_TAIL_OVERLAP.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: LAMBDA_NAMED_TAIL_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: CHARACTERISTIC_CORRELATIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: CHARACTERISTIC_SCALING.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: CHARACTERISTIC_CONDITIONING_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: CHARACTERISTIC_CONDITIONING_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: CHARACTERISTIC_CONDITIONING_PAIRED.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: CHARACTERISTIC_CONDITIONING_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: PRIMITIVE_JOINT_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: PRIMITIVE_JOINT_COVARIANCE.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: PRIMITIVE_JOINT_CENTERED_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: PRIMITIVE_ILLUSTRATIVE_CONTRASTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: WEBB_AVAILABILITY_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: WEBB_SAME_SUPPORT_PAIRED_DIFFERENCE.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: WEBB_SUPPORT_ADDITIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: WEBB_SUPPORT_CHANGE.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: ARCHIVED_REPARAMETERIZATION_AUDIT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: ARCHIVED_REPARAMETERIZATION_AUDIT.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: AGE_SPECIFIC_CROSSWALK_BLOCKER.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: AGE_SPECIFIC_CROSSWALK_BLOCKER.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: MODEL_FAILURES.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: RESULTS_SUMMARY.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "required output: EXECUTION_RECEIPT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "execution receipt passes",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "primary support hash",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "primary support count",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "corrected calendar count",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "corrected preperiod count",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "route conservation",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "bootstrap draw count",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "common multipliers recorded",
+      "pass": true
+    },
+    {
+      "detail": "[]",
+      "name": "zero model failures",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "identity audit passes",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "raw beta identity",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "lambda half membership",
+      "pass": true
+    },
+    {
+      "detail": "4.999889391399392e-13",
+      "name": "identity tolerance: lambda_half_cut_maximum_absolute_gap",
+      "pass": true
+    },
+    {
+      "detail": "0.0",
+      "name": "identity tolerance: lambda_half_categorical_coefficient_gap",
+      "pass": true
+    },
+    {
+      "detail": "0.0",
+      "name": "identity tolerance: lambda_half_categorical_influence_maximum_absolute_gap",
+      "pass": true
+    },
+    {
+      "detail": "-2.558370182370595e-14",
+      "name": "identity tolerance: lambda_half_fixed_continuous_coefficient_gap",
+      "pass": true
+    },
+    {
+      "detail": "7.58648786153282e-15",
+      "name": "identity tolerance: lambda_half_fixed_continuous_influence_maximum_absolute_gap",
+      "pass": true
+    },
+    {
+      "detail": "4.0678571622265736e-13",
+      "name": "identity tolerance: lambda_half_fixed_vs_restandardized_score_maximum_absolute_gap",
+      "pass": true
+    },
+    {
+      "detail": "-5.551115123125783e-17",
+      "name": "identity tolerance: base03_coefficient_gap",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "five lambda rows",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "complete lambda membership",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "468 occupations at every lambda",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "lambda draw representation complete",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "all ten pairwise contrasts in three model families",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "paired lambda common draws",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "complete pairwise quintile transition matrices",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "complete pairwise tail overlap",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "five-by-two characteristic correlations",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "correlation support count",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "correlation support hash",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "four focused conditioning models",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "conditioning support count",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "conditioning support hash",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "three augmented-minus-base paired contrasts",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "conditioning uses common draws",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "raw and standardized three-term primitive results",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "primitive unit presentations",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "two complete three-by-three covariance matrices",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "primitive common draws complete",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "three illustrative primitive contrasts",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "raw-standardized illustrative estimates agree",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "raw-standardized illustrative draws agree",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "three Webb availability rows",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "two fixed-support Webb rows",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "Webb same-support hash",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "no paired inference on support change",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "F/G-A/E archived only",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "no archived-basis outcome refit",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "mobility not reopened",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "age-specific bridge precisely blocked",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "no age-specific share fabricated",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: AGE_SPECIFIC_CROSSWALK_BLOCKER.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: AGE_SPECIFIC_CROSSWALK_BLOCKER.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: AGE_SPECIFIC_CROSSWALK_BLOCKER.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: AGE_SPECIFIC_CROSSWALK_BLOCKER.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: ARCHIVED_REPARAMETERIZATION_AUDIT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: ARCHIVED_REPARAMETERIZATION_AUDIT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: ARCHIVED_REPARAMETERIZATION_AUDIT.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: ARCHIVED_REPARAMETERIZATION_AUDIT.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CHARACTERISTIC_CONDITIONING_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CHARACTERISTIC_CONDITIONING_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CHARACTERISTIC_CONDITIONING_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CHARACTERISTIC_CONDITIONING_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CHARACTERISTIC_CONDITIONING_PAIRED.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CHARACTERISTIC_CONDITIONING_PAIRED.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CHARACTERISTIC_CONDITIONING_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CHARACTERISTIC_CONDITIONING_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CHARACTERISTIC_CORRELATIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CHARACTERISTIC_CORRELATIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CHARACTERISTIC_SCALING.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CHARACTERISTIC_SCALING.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: CONSTRUCTION_IDENTITY_AUDIT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: CONSTRUCTION_IDENTITY_AUDIT.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_GRID_CENTERED_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_GRID_CENTERED_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_GRID_MEMBERSHIP.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_GRID_MEMBERSHIP.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_GRID_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_GRID_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_NAMED_TAIL_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_NAMED_TAIL_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_PAIRED_DIFFERENCES.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_PAIRED_DIFFERENCES.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_QUINTILE_TRANSITIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_QUINTILE_TRANSITIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: LAMBDA_TAIL_OVERLAP.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: LAMBDA_TAIL_OVERLAP.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: MODEL_FAILURES.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: MODEL_FAILURES.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: PRIMITIVE_ILLUSTRATIVE_CONTRASTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: PRIMITIVE_ILLUSTRATIVE_CONTRASTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: PRIMITIVE_JOINT_CENTERED_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: PRIMITIVE_JOINT_CENTERED_DRAWS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: PRIMITIVE_JOINT_COVARIANCE.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: PRIMITIVE_JOINT_COVARIANCE.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: PRIMITIVE_JOINT_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: PRIMITIVE_JOINT_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: RESULTS_SUMMARY.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: RESULTS_SUMMARY.md",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: WEBB_AVAILABILITY_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: WEBB_AVAILABILITY_RESULTS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: WEBB_SAME_SUPPORT_PAIRED_DIFFERENCE.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: WEBB_SAME_SUPPORT_PAIRED_DIFFERENCE.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: WEBB_SUPPORT_ADDITIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: WEBB_SUPPORT_ADDITIONS.csv",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output exists: WEBB_SUPPORT_CHANGE.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "hashed output authenticates: WEBB_SUPPORT_CHANGE.json",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "self-check excluded from receipt hash set",
+      "pass": true
+    },
+    {
+      "detail": "",
+      "name": "receipt excluded from own hash set",
+      "pass": true
+    }
+  ],
+  "checks_passed": 138,
+  "checks_total": 138,
+  "status": "PASS"
+}
