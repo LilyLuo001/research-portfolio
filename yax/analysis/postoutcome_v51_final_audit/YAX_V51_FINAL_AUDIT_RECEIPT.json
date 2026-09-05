@@ -1,0 +1,118 @@
+{
+  "record": "YAX V5.1 final influence and interpretation audit receipt",
+  "date": "2026-09-05",
+  "analysis_status": "POST-OUTCOME FIXED-TREATMENT INFLUENCE AND INTERPRETATION AUDIT",
+  "parent_commit": "e9ba86a6e51e4045940ee244bd394b0111b71a02",
+  "pre_execution_commit": "e371c465b95d8e496c0bc3ee439451c1dfa06c31",
+  "final_content_commit": "e39cbb5eab26fa9362aa8ffd659ac3cd16a8576a",
+  "final_content_tree": "2212961557f395497d9586a2ac2500f43f36774c",
+  "frozen_refs": {
+    "v1.1-design-freeze": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+    "v1.1-confirmatory-results": "b16109482c3bf5ca176f6f08976e120b04769945"
+  },
+  "remote_branch": "origin/task/yax-v51-final-influence-audit-20260905",
+  "remote_content_commit_verified": false,
+  "remote_verification_note": "Pending retry after a transient local GitHub connectivity failure; SCC verification and all content tests are complete.",
+  "execution_boundary": {
+    "new_labor_outcome_specification_estimated": false,
+    "loco_only_deleted_one_occupation_from_previously_defined_models": true,
+    "treatment_recomputed_after_deletion": false,
+    "leave_one_measure_out_labor_outcome_model_executed": false,
+    "direct_A_E_labor_outcome_model_executed": false,
+    "new_bootstrap_multipliers_generated": false,
+    "additional_loco_target_executed": false,
+    "protected_scope_statement": "No new labor-outcome specification was estimated. LOCO refits only delete one occupation while preserving the exact previously defined treatment and model. No leave-one-measure-out labor-outcome model was executed. No new bootstrap multipliers were generated."
+  },
+  "frozen_model_definitions": {
+    "primary": "Confirmatory beta-by-Webb Q5-versus-Q1 grouped-binomial/absorbed-PPML-equivalent stock model on the authoritative 468-occupation support",
+    "G": "Exploratory continuous standardized F plus standardized G plus standardized Webb stock model on the fixed literal-common 444-occupation support",
+    "deletion_order": "lexicographically sorted Census-2018 occupation codes",
+    "objects_held_fixed": [
+      "exposure scores",
+      "quintile cutoffs",
+      "quintile membership",
+      "Webb standardization",
+      "F values and scaling",
+      "G values and scaling",
+      "A/E scaling",
+      "age definitions",
+      "post window",
+      "fixed-effect specification"
+    ]
+  },
+  "frozen_treatment_and_input_hashes": {
+    "literal_common_support": "1e184b27678b7978d4b15e618db5b44f44b5e9ec1b50b69b53093ec62e0ce462",
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "coefficient_outputs": {
+    "primary": {
+      "classification": "LOCO-B2",
+      "full": -0.13107397642233506,
+      "deletions": 468,
+      "minimum": -0.1423840941720702,
+      "maximum": -0.11055284331327743,
+      "maximum_absolute_movement": 0.020521133109057635,
+      "maximum_relative_movement": 0.15656145994179838,
+      "sign_changes": 0,
+      "top_influential_census2018": "4055",
+      "top_influential_occupation": "Fast food and counter workers"
+    },
+    "G": {
+      "classification": "LOCO-G1",
+      "full": 0.030893508600474132,
+      "deletions": 444,
+      "minimum": 0.025127659608323315,
+      "maximum": 0.03599317622412187,
+      "maximum_absolute_movement": 0.005765848992150817,
+      "maximum_relative_movement": 0.18663626287052182,
+      "crossed_or_reached_zero": 0,
+      "crossed_or_reached_zero_fraction": 0.0,
+      "top_influential_census2018": "9130",
+      "top_influential_occupation": "Driver/sales workers and truck drivers"
+    }
+  },
+  "interpretation_decisions": {
+    "A_E": "AE-R1 retained as exact reparameterization of the same exploratory F/G model, not independent evidence",
+    "G_construction": "G-PARTIAL retained",
+    "power_code": "POWER-C3",
+    "final_framing": "SUBMIT-S1"
+  },
+  "power_code_artifact_hashes": {
+    "joint_computerization_power.py": "c6977ac8fcd05fc8a9279897f2368d7e9ef074903a98198ea8902e663eeb7472",
+    "paired_equivalence_power.py": "bf295a4092991335bc5dca7161c717373c3f79fabe9a82ccf494041dd183fa92",
+    "beta_webb_primary.json": "0444277942d1b4db1d54a11d4df1a3317797eab663307a1870e890066db596de",
+    "PAIRED_EQUIVALENCE_PRECISION_v1.json": "4898f452f1368796d141f142ecbc88e6963b2ec273ed47446adaa0934908df5e"
+  },
+  "deliverable_hashes": {
+    "YAX_V51_AE_PRESENTATION_NOTE.md": "587e216e1fb0e89485c0b3645444142ef295632c034af8cd4675a75668a1143f",
+    "YAX_V51_LOCO_PRIMARY.csv": "9d40b5349d5eca87731d4383f788ef46557295aa9c14a88441bb2203698b1359",
+    "YAX_V51_LOCO_G.csv": "d601d0f64bb8e16f46c2b4dd9c9fea092b9fa78c02006151ef878aaa3a812671",
+    "YAX_V51_LOCO_DECISION.md": "78e48bb715caec97bf8bc8dc3834c18e0bb65748fe8d849d0bef77bef3bacb4d",
+    "YAX_V51_POWER_CODE_AUDIT.md": "dcd34fcc03aec27fc4821d2a6920a79253b66a8cbff948b6b402ea8b91ce29ed",
+    "YAX_V51_FINAL_INTERPRETATION_DECISION.md": "59b364a553fc9e01b7af790d6ecdbd4f196d6cefc146ae519b8865ee6c79b5ea",
+    "YAX_MANUSCRIPT_v5_1_FINAL_SUBMISSION_DRAFT.md": "e8117f8e90695242abd79f3718f4c28ef7581c2bbf2c1724083f72d9a13e9a42",
+    "YAX_V51_LOCO_RESULTS.json": "69ca3a940f60d0a76dc3cb3679a565661a047013266721487248e38cd2631b56",
+    "run_v51_loco.py": "589922ca2a6774395c5c0a3432d18c33d2c29a438a9ba4bbf7d9d290d7954d29",
+    "YAX_V51_LOCO_EXECUTION_PLAN.md": "b91a12211e85991d31363dfedf9a723f64bcb112dc8c4cab2e1798f5e2ea85d7"
+  },
+  "manuscript_changes": [
+    "Added compact primary LOCO-B2 disclosure without changing the headline",
+    "Led Section 6.2 with the exact A/E reparameterization and separated normal-covariance A/E level intervals from inherited G wild-score inference",
+    "Disclosed G-PARTIAL and LOCO-G1 together and retained bounded exploratory wording",
+    "Added headline and paired prospective-versus-realized precision ratios and POWER-C3 code-audit conclusion",
+    "Expanded the online appendix roadmap to include both authorized LOCO diagnostics and the power code-history audit",
+    "Kept the title unchanged and retained at most one bounded A/E clause in the abstract"
+  ],
+  "tests": {
+    "environment": "SCC /usr3/graduate/qluo/portfolio/.venv/bin/python",
+    "targeted": "8 passed in 1.05s",
+    "full_suite": "880 passed, 3 skipped, 13 warnings in 16.92s",
+    "skips": 3,
+    "warnings": 13
+  }
+}
