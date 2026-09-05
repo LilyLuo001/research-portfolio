@@ -1,5 +1,11 @@
 # P1 repository file audit — 2026-09-03
 
+> **HISTORICAL SNAPSHOT ONLY.** Its authority hierarchy was superseded by
+> `STATUS-2026-09-05.md` and
+> `strategic_pivot/POST_V3_RESEARCH_DECISION-2026-09-06.md`. Retained paths and
+> provenance remain useful, but no execution authorization or pre-V3 Gate label
+> in this file is current.
+
 ## Scope and conclusion
 
 The audit began from the current remote branch after quarantining 17 stale or
@@ -19,10 +25,13 @@ old sample counts: they are required to reproduce the register and the explicit
 legacy-to-current discrepancy. They are classified below and are not execution
 authority.
 
-## Authority hierarchy
+## Authority hierarchy recorded at that checkpoint
 
-1. `p1/strategic_pivot/strategic_recommendation.md` — current project choice,
-   design hierarchy, kill gates, and execution authority.
+The following list is historical. Current authority is the 2026-09-06 memo
+named in the banner above.
+
+1. `p1/strategic_pivot/strategic_recommendation.md` — then-current project
+   choice, design hierarchy, kill gates, and execution authority.
 2. `docs/基金转换实验_博士研究计划.md` — the boxed 2026-09-03 strategic freeze;
    lower sections are retained architecture for the superseded stock design.
 3. `p1/STATUS-2026-09-03.md` and `p1/EVENT-COUNT-AUDIT.md` — measured progress
@@ -56,11 +65,12 @@ No raw SEC evidence, signed decision record, test fixture, or reproducibility
 artifact was deleted. This is deliberate: deleting a stale result that is the
 comparison baseline would make the required discrepancy report unauditable.
 
-## Consistency checks
+## Consistency checks recorded at that checkpoint
 
-- The current headline candidate is wrapper change → fund demand/flows and
-  portfolio implementation. Historical/modern ETF share classes validate the
-  same-portfolio mechanism; stock information outcomes are secondary only.
+- The then-current headline candidate was wrapper change → fund demand/flows
+  and portfolio implementation. The 2026-09-06 memo now classifies construction
+  as `NOT YET`; historical/modern share-class records are candidate validation
+  observations pending institutional verification.
 - Exposure is predetermined, wave-specific, and based only on strictly-PRE
   exact-series N-PORT reports.
 - Corporate-action factors use the report/as-of date, not filing date.

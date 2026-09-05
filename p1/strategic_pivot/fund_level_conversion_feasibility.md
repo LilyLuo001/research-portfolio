@@ -2,17 +2,31 @@
 
 ## Verdict
 
-**HEADLINE CANDIDATE, conditional on design gates.** This is the strongest currently executable route because treatment dose is complete at the fund level: 156 completed conversions are known, 74 have verified exact dates, and 71 exact-day events across 47 waves pass the frozen N-PORT PRE/POST filing gate. That is fundamentally different from treating thousands of portfolio stocks as independent shocks with tiny ownership doses.
+**SUPERSEDED AS AN EXECUTION AUTHORITY by the 2026-09-06 post-V3 decision.** The
+fund-level route remains a research candidate, not a currently executable
+headline. There are 156 known completed conversions and 74 verified exact dates.
+A legacy artifact records 71 events/47 waves with PRE/POST N-PORT filing
+coverage. That descriptive count is unaudited under V3; its old Gate0/PASS
+label is invalid and does not establish eligibility or continuity. See
+`POST_V3_RESEARCH_DECISION-2026-09-06.md`.
 
 ## Proposed question and estimand
 
-Question: how does replacing the mutual-fund wrapper with an ETF wrapper change the fund's investor base, flows, portfolio implementation, liquidity provision demand, tax distributions, and tracking behavior?
+Question: how does replacing the mutual-fund wrapper with an ETF wrapper change
+observable strategy-boundary demand, portfolio implementation, tax
+distributions, and tracking behavior? Public fund data alone do not identify
+investor origin or the full investor base.
 
-Primary estimand: the event-time change for converted funds relative to not-yet-converted or never-converted mutual funds that were observationally comparable before the public announcement. The unit is the underlying strategy/fund, not a share class and not a held stock.
+Candidate primary estimand: the event-time change in strategy-boundary net
+capital, after separately labelling documented inherited/transferred assets and
+documented class transfers, relative to not-yet-announced or never-converting funds
+that were comparable before the public announcement. Unresolved sources remain
+an unidentified residual. The unit is the underlying strategy/fund, not a share
+class or held stock.
 
 ## Sample construction
 
-1. Start from the frozen 156 completed-event register. Use the 74 verified exact dates for daily outcomes and all completed events with defensible month timing for monthly outcomes; never impute an exact day from a month.
+1. Start from the frozen 156 completed-event register. Monthly eligibility requires a verified announcement/assignment month and a first complete post-ETF month; exact-day verification gates only daily outcomes. Never impute an exact day from a month.
 2. Link predecessor and successor at the SEC series and CRSP portfolio levels. Aggregate share classes before matching.
 3. Define risk sets by calendar month and match/coarsen on Lipper objective, active/index flag, asset class, adviser size, fund AUM, age, expense ratio, turnover, prior returns, prior flows, holdings count, concentration, and tax-distribution history.
 4. Exclude target-date, money-market, fund-of-funds, non-U.S. domiciled, and noncomparable fixed-income/equity observations only through ex-ante rules. Report equity and fixed-income families separately.
@@ -24,8 +38,8 @@ Primary estimand: the event-time change for converted funds relative to not-yet-
 |---|---|---|---|
 | Net assets, returns, expense ratio, turnover, distributions | monthly/annual | CRSP Mutual Funds | Available in SCC; schema and coverage audit still required |
 | Net flows | monthly | Construct from CRSP TNA and return; compare WRDS flow fields | Available; treat mergers and missing TNA explicitly |
-| Portfolio composition, concentration, cash, turnover proxy | monthly/quarterly filing cadence | SEC N-PORT holdings | 71 exact events already Gate0 PASS |
-| ETF shares outstanding and exchange trading | daily/monthly | CRSP stock/ETF plus SEC filings | Available through mirror coverage; 2026 extension incomplete |
+| Portfolio composition, concentration, cash, turnover proxy | monthly/quarterly filing cadence | SEC N-PORT holdings | Legacy 71-event coverage count is unaudited under V3 and does not establish eligibility/continuity |
+| ETF shares outstanding and exchange trading | daily/monthly | Candidate CRSP stock/ETF plus SEC sources | Not validated for the full sample; source, schema, split/NAV reconciliation, and coverage audits required |
 | Creation/redemption and basket composition | daily | ETF Global or sponsor basket source | **Not acquired**; mechanism remains untested |
 | Bid-ask and intraday efficiency | intraday | TAQ | **Unavailable in current archive** |
 
@@ -35,11 +49,20 @@ The primary feasible outcome should be monthly net flow and investor-demand pers
 
 - Use stacked event-time comparisons with risk-set matched controls and calendar-time fixed effects. Avoid conventional two-way fixed-effect staggered DiD with heterogeneous treatment effects.
 - Cluster at adviser and event wave where supported; report randomization inference by treated fund/wave and leave-one-sponsor-out estimates. A fund-month row is not an independent treatment.
-- Estimate announcement-to-effective anticipation separately. Main post treatment begins at the realized effective/first-trade date, not at a proposal date.
+- Estimate announcement-to-effective anticipation separately. Assignment begins at the first public filing/announcement; monthly post outcomes begin in the first complete post-ETF month, while daily market outcomes use the verified first-trade date.
 - Report overlap, standardized differences, control reuse, pretrend joint tests, and effective number of treated waves before any outcome table is promoted.
 
-## Failure and promotion gates
+## Historical proposed gates — not operative
 
-The design is killed as a causal headline if any of these occur: fewer than 40 exact-day treated funds retain matched overlap; fewer than 20 independent waves remain; more than 25% of treated funds lack any control inside the frozen common-support caliper; the joint pretrend rejection survives multiplicity correction in both primary control constructions; or portfolio continuity reveals strategy redefinition rather than wrapper transformation for a majority of usable events.
+Any future causal design must define eligibility only from information available
+by assignment: legal identity, mandate, benchmark, manager, asset class, and
+announced concurrent changes. Realized post-event holdings continuity is a
+reported diagnostic, not a retrospective sample filter. Historical proposals
+for minimum treated events, waves, overlap, and pretrend performance are not
+current machine gates and may not authorize construction. Any future thresholds
+or daily extension require a separately frozen specification and pilot.
 
-It is promoted if those gates pass, results survive leave-one-sponsor-out inference, and at least one pre-specified first-stage architecture outcome (ETF shares outstanding/flow channel or portfolio implementation) moves economically after the event. No downstream stock-price claim is needed for the paper to exist.
+Promotion is `NOT YET`: the bounded current-literature comparison must first
+confirm that the audited capital-flow bridge remains distinct, then the separate
+`F0_FUND_FLOW_BRIDGE` pilot in the post-V3 memo must establish outcome and donor
+support without estimating a post-treatment coefficient.

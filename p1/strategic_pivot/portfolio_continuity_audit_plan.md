@@ -1,12 +1,22 @@
 # Portfolio continuity audit plan
 
-The continuity audit determines whether an event is a wrapper transformation, a strategy transformation, or an inseparable bundle. It must be completed before causal outcome estimation.
+The continuity audit describes whether realized holdings look like a wrapper
+transformation, a strategy transformation, or an inseparable bundle. Under the
+2026-09-06 decision it is a post-treatment diagnostic, not a headline-sample
+eligibility gate. Eligibility must be frozen using only information available by
+the assignment date: legal identity, mandate, benchmark, manager, asset class,
+and publicly announced concurrent changes.
 
 ## Event-level inputs
 
 Use the last two valid predecessor holdings reports and first two valid successor/shared-portfolio reports. Align securities through audited CUSIP/CIK/PERMNO mappings and corporate actions. Preserve cash, derivatives, short positions, and unmatched value as explicit categories rather than deleting them.
 
-For ETF share-class activations, portfolio identity is mechanically supported by the same SEC series/CRSP portfolio number, but actual holdings stability is still quantified. For full conversions, predecessor and successor series differ and require empirical continuity evidence.
+For ETF share-class activations, the same SEC series/CRSP portfolio number supplies
+only a candidate relationship. Historical pro-rata status still requires
+prospectus/class-structure evidence and verified effective and first-trade clocks;
+realized holdings stability is then quantified as a diagnostic. For full
+conversions, predecessor and successor series differ, so realized continuity is
+also a diagnostic rather than a retrospective eligibility gate.
 
 ## Frozen diagnostics
 
@@ -21,16 +31,21 @@ For ETF share-class activations, portfolio identity is mechanically supported by
 | Asset-class continuity | Equity/fixed-income/style allocation | within 10 percentage points | 10–20 pp | > 20 pp |
 | Unmatched value | Unmapped value share in either report | ≤ 5% | 5–10% | > 10% |
 
-Thresholds are outcome-blind. They classify events; they are not tuned to strengthen estimates.
+These are pre-specified descriptive diagnostic cutoffs, not eligibility
+thresholds. They may not be tuned after viewing treatment-effect estimates.
 
-## Classification
+## Realized post-treatment diagnostic classification
 
-- `A_WRAPPER_CONTINUITY`: all core diagnostics clean and no mandate/team fail.
-- `B_PROBABLE_CONTINUITY`: no fail flag and at most two review-band measures.
-- `C_BUNDLED_TRANSFORMATION`: any mandate/team/asset-class fail or two quantitative fail flags.
-- `D_UNRESOLVED_DATA`: missing/unmatched coverage prevents classification.
+- `A_REALIZED_WRAPPER_CONTINUITY`: all core diagnostics clean and no mandate/team fail.
+- `B_REALIZED_PROBABLE_CONTINUITY`: no fail flag and at most two review-band measures.
+- `C_REALIZED_BUNDLED_TRANSFORMATION`: any mandate/team/asset-class fail or two quantitative fail flags.
+- `D_REALIZED_UNRESOLVED_DATA`: missing/unmatched coverage prevents classification.
 
-Headline analyses use A and B with A-only as the primary robustness. C estimates a different bundled intervention and is reported separately; D never enters a headline sample.
+Headline eligibility may not use these realized categories. Report them for all
+pre-treatment-eligible events. Any split by realized category is descriptive
+post-treatment heterogeneity and must not be presented as causal sample
+selection. Only material changes documented by the assignment date can define
+an ex-ante bundled-transformation exclusion.
 
 ## Timing controls and report
 
