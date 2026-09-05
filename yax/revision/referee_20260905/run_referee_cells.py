@@ -223,20 +223,25 @@ def fit_q_model(young: np.ndarray, older: np.ndarray, quintiles: np.ndarray,
     season = np.tile(np.array([int(value[5:7]) - 1 for value in months]), n_occ)
     occ_season = original_occ * 12 + season
     # Drop unused occ-season group identifiers and remap contiguously.
-    _, occ_season = np.unique(occ_season, return_inverse=True)
+    keep = total > 0
+    y_fit = young.reshape(-1)[keep]
+    n_fit = total[keep]
+    original_occ_fit = original_occ[keep]
+    _, occ_season_fit = np.unique(occ_season[keep], return_inverse=True)
+    _, month_fit = np.unique(month[keep], return_inverse=True)
+    x_fit = regressors[keep]
     fit = FROZEN.ENGINE.fit_grouped_logit_fe(
-        young.reshape(-1), total, occ_season, month, regressors, max_iterations=5000
+        y_fit, n_fit, occ_season_fit, month_fit, x_fit, max_iterations=5000
     )
     if not fit.converged:
         raise RuntimeError("occupation-specific seasonal model did not converge")
-    keep = total > 0
-    y, n = young.reshape(-1)[keep], total[keep]
-    os, t, o, x = occ_season[keep], month[keep], original_occ[keep], regressors[keep]
-    p = fit.fitted_probability[keep]
+    y, n = y_fit, n_fit
+    os, t, o, x = occ_season_fit, month_fit, original_occ_fit, x_fit
+    p = fit.fitted_probability
     residual = y - n * p
     weight = np.maximum(n * p * (1 - p), 1e-12)
     rx = FROZEN.ENGINE._weighted_absorb(
-        x, weight, os, t, int(os.max()) + 1, n_month
+        x, weight, os, t, int(os.max()) + 1, int(t.max()) + 1
     )
     bread = np.linalg.inv(rx.T @ (weight[:, None] * rx))
     scores = np.zeros((n_occ, x.shape[1]))
@@ -401,13 +406,26 @@ def run_sample_sensitivities(args: argparse.Namespace, cells: pd.DataFrame,
     frozen_static = setup["frozen_static"]
     restored_static = [m for m in observed if m != "2022-12"]
     post2020 = [m for m in observed if m >= "2020-01" and m != "2022-12"]
-    rows = [
-        fit_sensitivity(cells, setup, frozen_static, "frozen_calendar_reproduction"),
-        fit_sensitivity(cells, setup, restored_static, "restored_March_2017_2021"),
+    rows = [fit_sensitivity(cells, setup, frozen_static, "frozen_calendar_reproduction")]
+    restored_present = sorted(set(observed) & MARCH_GAPS)
+    if restored_present == sorted(MARCH_GAPS):
+        rows.append(fit_sensitivity(cells, setup, restored_static, "restored_March_2017_2021"))
+    else:
+        rows.append({
+            "analysis_status": LABEL, "specification": "restored_March_2017_2021",
+            "status": "BLOCKED_MISSING_FROM_DOWNLOADED_WIDE_EXTRACT",
+            "months": len(restored_static), "support_occupations": "",
+            "missing_months": "|".join(sorted(MARCH_GAPS - set(observed))),
+            "coefficient": "", "reason": (
+                "The downloaded IPUMS file contains no records for March 2017-2021; "
+                "a balanced-calendar estimate cannot be manufactured from absent samples."
+            ),
+        })
+    rows.extend([
         fit_sensitivity(cells, setup, post2020, "Census2018_2020_plus_shorter_temporal_estimand"),
         fit_sensitivity(cells, setup, frozen_static, "unweighted_respondent_equivalent_cells",
                         value="respondent_equivalent"),
-    ]
+    ])
     # Stable Census-2010 taxonomy has its own defensible mapping, support, and
     # normalization; it is deliberately not represented as the same estimand.
     lookup = pd.read_csv(args.lookup, dtype={"occ_code": str})
@@ -439,7 +457,7 @@ def run_sample_sensitivities(args: argparse.Namespace, cells: pd.DataFrame,
     signs = np.random.default_rng(SEED + 21).choice(np.array([-1., 1.]), size=(DRAWS, len(stable_support)))
     item = summarize_target(fit, influence, labels.index("Q5_x_post_2023_2026"), signs)
     item.pop("centered_draws")
-    rows.append({"analysis_status": LABEL, "specification": "stable_Census2010_full_calendar",
+    rows.append({"analysis_status": LABEL, "specification": "stable_Census2010_observed_calendar",
                  "months": len(stable_months), "support_occupations": len(stable_support),
                  "outcome_cell_value": "stock", "quintiles_recomputed": True,
                  "temporal_and_taxonomy_estimand_changed": True, **item})
