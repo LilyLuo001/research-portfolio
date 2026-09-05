@@ -1,6 +1,11 @@
 LATEXMK := latexmk
 FLAGS := -pdf -interaction=nonstopmode -halt-on-error -file-line-error -outdir=build
 
+# Pin PDF metadata so clean builds are byte-for-byte reproducible.
+export SOURCE_DATE_EPOCH := 1788577652
+export FORCE_SOURCE_DATE := 1
+export TZ := UTC
+
 .PHONY: restat working appendix cover all clean check
 
 restat:
