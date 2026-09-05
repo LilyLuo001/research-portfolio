@@ -37,6 +37,8 @@ def run(results: pathlib.Path) -> int:
         "MODEL_OCCUPATION_INFLUENCE.csv", "AGE_EQUALITY_TEST.csv",
         "AGE_EDUCATION_COMPOSITION_BY_YEAR_QUINTILE.csv",
         "AGE_EDUCATION_COMPOSITION_BY_PERIOD_QUINTILE.csv", "MODEL_FAILURES.json",
+        "INDUSTRY_RISK_SET_MEMBERSHIP.csv", "EDUCATION_COMMON_SUPPORT_MEMBERSHIP.csv",
+        "AGE_COMMON_SUPPORT_MEMBERSHIP.csv", "SAMPLE_AND_STOCK_COVERAGE.csv",
         "INFERENCE_CONTRACT.json",
     ]
     for name in required:
@@ -80,6 +82,7 @@ def run(results: pathlib.Path) -> int:
     check("simultaneous_ci_order", (simultaneous.simultaneous_ci_lower <= simultaneous.coefficient).all() and (simultaneous.coefficient <= simultaneous.simultaneous_ci_upper).all())
     check("education_family_two", (simultaneous.family == "BA_plus_and_non_BA").sum() == 2)
     check("age_family_four", (simultaneous.family == "single_ages_22_23_24_25").sum() == 4)
+    check("age_paired_simultaneous_family_four", (simultaneous.family == "single_ages_minus_pooled_22_25").sum() == 4)
     check("education_pair_present", paired.contrast.eq("BA_plus_minus_non_BA").sum() == 1)
     check("four_age_pairs_present", paired.contrast.str.match(r"age_(22|23|24|25)_minus_pooled_22_25").sum() == 4)
     if failures:
@@ -96,6 +99,17 @@ def run(results: pathlib.Path) -> int:
     check("covariance_symmetric_rows", len(covariance) == 20, len(covariance))
     check("composition_two_periods_five_quintiles", len(composition_period) == 10, len(composition_period))
     check("composition_shares_bounded", composition_period.filter(regex="share").apply(lambda x: x.between(0, 1)).all().all())
+    industry_membership = pd.read_csv(results / "INDUSTRY_RISK_SET_MEMBERSHIP.csv", dtype={"occupation_code": str})
+    education_membership = pd.read_csv(results / "EDUCATION_COMMON_SUPPORT_MEMBERSHIP.csv", dtype={"occupation_code": str})
+    age_membership = pd.read_csv(results / "AGE_COMMON_SUPPORT_MEMBERSHIP.csv", dtype={"occupation_code": str})
+    coverage = pd.read_csv(results / "SAMPLE_AND_STOCK_COVERAGE.csv")
+    check("industry_membership_matches_strata", int(industry_membership.eligible_preconnected_risk_set.sum()) == support["industry_preconnected_strata"])
+    check("education_membership_468", len(education_membership) == 468)
+    check("education_membership_matches_support", int(education_membership.eligible_common_support.sum()) == support["education_common_support_occupations"])
+    check("age_membership_468", len(age_membership) == 468)
+    check("age_membership_matches_support", int(age_membership.eligible_common_support.sum()) == support["age_common_support_occupations"])
+    check("coverage_six_samples_two_periods_three_age_rows", len(coverage) == 36, len(coverage))
+    check("coverage_shares_bounded", coverage.weighted_stock_share_of_full_baseline.between(0, 1 + 1e-12).all())
     scan = receipt["scan"]
     check("route_early_conserved", abs(scan["early_route_conservation_absolute_gap"]) < max(1.0, scan["early_matched_source_weight"]) * 1e-10)
     check("route_current_conserved", abs(scan["current_route_conservation_absolute_gap"]) < max(1.0, scan["current_source_weight"]) * 1e-10)

@@ -510,6 +510,60 @@ def simultaneous_rows(models: list[dict], signs: np.ndarray, family: str) -> tup
     return rows, influences
 
 
+def simultaneous_difference_rows(models: list[dict], reference: dict, signs: np.ndarray, family: str) -> list[dict]:
+    estimates = np.array([model["coefficient"] - reference["coefficient"] for model in models])
+    influences = np.column_stack([model["influence"] - reference["influence"] for model in models])
+    ses = np.sqrt(np.sum(np.square(influences), axis=0))
+    centered = signs @ influences
+    critical = quantile(np.max(np.abs(centered / ses[None, :]), axis=1), .95)
+    rows = []
+    for index, model in enumerate(models):
+        rows.append({
+            "family": family,
+            "model": f"{model['name']}_minus_{reference['name']}",
+            "coefficient": estimates[index],
+            "analytic_occupation_cluster_se": ses[index],
+            "simultaneous_critical": critical,
+            "simultaneous_ci_lower": estimates[index] - critical * ses[index],
+            "simultaneous_ci_upper": estimates[index] + critical * ses[index],
+            "models_in_family": len(models),
+            "draws": len(signs),
+            "common_occupation_multipliers": True,
+        })
+    return rows
+
+
+def stock_coverage_rows(named_frames: list[tuple[str, pd.DataFrame]], months: list[str], baseline_name: str) -> list[dict]:
+    summaries = {}
+    for name, frame in named_frames:
+        selected = frame.loc[frame.month.isin(months)].copy()
+        selected["period"] = np.where(selected.month.le("2022-11"), "pre_2017_2022m11", "post_2023_2026m07")
+        grouped = selected.groupby(["period", "age_group"], observed=True)[["stock", "respondent_equivalent"]].sum()
+        summaries[name] = grouped
+    baseline = summaries[baseline_name]
+    rows = []
+    for name, grouped in summaries.items():
+        for period in ["pre_2017_2022m11", "post_2023_2026m07"]:
+            for age_group in ["young", "older", "total"]:
+                if age_group == "total":
+                    stock = float(grouped.loc[period, "stock"].sum())
+                    respondent = float(grouped.loc[period, "respondent_equivalent"].sum())
+                    denominator = float(baseline.loc[period, "stock"].sum())
+                else:
+                    stock = float(grouped.loc[(period, age_group), "stock"]) if (period, age_group) in grouped.index else 0.0
+                    respondent = float(grouped.loc[(period, age_group), "respondent_equivalent"]) if (period, age_group) in grouped.index else 0.0
+                    denominator = float(baseline.loc[(period, age_group), "stock"])
+                rows.append({
+                    "sample": name,
+                    "period": period,
+                    "age_group": age_group,
+                    "weighted_stock": stock,
+                    "respondent_equivalent": respondent,
+                    "weighted_stock_share_of_full_baseline": stock / denominator,
+                })
+    return rows
+
+
 def fit_occ_model(engine, frame, support, months, q_map, webb_map, signs, name, panel, influence_rows):
     rows, young, older = build_panel(frame, ["occ_code"], months)
     if rows.occ_code.tolist() != list(support):
@@ -605,6 +659,26 @@ def run_analysis(args):
             "positive_cells_below_five_respondent_equivalents": thin,
         })
     write_csv(args.output_dir / "INDUSTRY_SUPPORT.csv", industry_support_rows)
+    oi_membership_rows = []
+    eligible_oi_keys = set(zip(eligible_oi.occ_code, eligible_oi.industry_group))
+    for (code, group), values in pre_pivot.iterrows():
+        young_stock = float(values.get("young", 0.0))
+        older_stock = float(values.get("older", 0.0))
+        eligible = (code, group) in eligible_oi_keys
+        reasons = []
+        if young_stock <= 0: reasons.append("nonpositive_preperiod_young_stock")
+        if older_stock <= 0: reasons.append("nonpositive_preperiod_older_stock")
+        oi_membership_rows.append({
+            "occupation_code": code,
+            "occupation_name": membership.set_index("occupation_code").at[code, "occupation_name"],
+            "industry_group": group,
+            "beta_quintile": q_map[code],
+            "preperiod_young_stock": young_stock,
+            "preperiod_older_stock": older_stock,
+            "eligible_preconnected_risk_set": eligible,
+            "exclusion_reasons": ";".join(reasons),
+        })
+    write_csv(args.output_dir / "INDUSTRY_RISK_SET_MEMBERSHIP.csv", oi_membership_rows)
 
     try:
         ind_aggregate = ind_risk.groupby(["occ_code", "month", "age_group"], as_index=False, observed=True)[["stock", "respondent_equivalent"]].sum()
@@ -689,6 +763,24 @@ def run_analysis(args):
                 "postperiod_older_stock": float(part.loc[part.month.isin(postmonths) & part.age_group.eq("older"), "stock"].sum()),
             })
     write_csv(args.output_dir / "EDUCATION_SUPPORT.csv", education_support_rows)
+    education_common_set = set(education_support)
+    education_membership_rows = []
+    for code in support:
+        row = {
+            "occupation_code": code,
+            "occupation_name": membership.set_index("occupation_code").at[code, "occupation_name"],
+            "beta_quintile": q_map[code],
+        }
+        reasons = []
+        for education_group_name, age_group_name in required_edu:
+            value = float(edu_pivot.at[code, (education_group_name, age_group_name)]) if code in edu_pivot.index else 0.0
+            row[f"preperiod_{education_group_name}_{age_group_name}_stock"] = value
+            if value <= 0:
+                reasons.append(f"nonpositive_{education_group_name}_{age_group_name}_preperiod_stock")
+        row["eligible_common_support"] = code in education_common_set
+        row["exclusion_reasons"] = ";".join(reasons)
+        education_membership_rows.append(row)
+    write_csv(args.output_dir / "EDUCATION_COMMON_SUPPORT_MEMBERSHIP.csv", education_membership_rows)
 
     edu_models = []
     pooled_edu = edu_risk.groupby(["occ_code", "month", "age_group"], as_index=False, observed=True)[["stock", "respondent_equivalent"]].sum()
@@ -736,6 +828,24 @@ def run_analysis(args):
                 "postperiod_weighted_stock": float(part.loc[part.month.isin(postmonths), "stock"].sum()),
             })
     write_csv(args.output_dir / "AGE_SUPPORT.csv", age_support_rows)
+    age_common_set = set(age_support)
+    age_membership_rows = []
+    for code in support:
+        row = {
+            "occupation_code": code,
+            "occupation_name": membership.set_index("occupation_code").at[code, "occupation_name"],
+            "beta_quintile": q_map[code],
+        }
+        reasons = []
+        for age_cell in required_age:
+            value = float(age_pivot.at[code, age_cell]) if code in age_pivot.index else 0.0
+            row[f"preperiod_{age_cell}_stock"] = value
+            if value <= 0:
+                reasons.append(f"nonpositive_{age_cell}_preperiod_stock")
+        row["eligible_common_support"] = code in age_common_set
+        row["exclusion_reasons"] = ";".join(reasons)
+        age_membership_rows.append(row)
+    write_csv(args.output_dir / "AGE_COMMON_SUPPORT_MEMBERSHIP.csv", age_membership_rows)
 
     older = age_risk.loc[age_risk.age_cell.eq("older_26_65")].copy()
     pooled_young = age_risk.loc[age_risk.age_cell.isin(["22", "23", "24", "25"])].copy()
@@ -760,6 +870,9 @@ def run_analysis(args):
         paired_rows.append(paired_summary(f"age_{exact_age}_minus_pooled_22_25", model, pooled_age_model, age_signs))
     sim_rows, age_inf = simultaneous_rows(exact_age_models, age_signs, "single_ages_22_23_24_25")
     simultaneous.extend(sim_rows)
+    simultaneous.extend(simultaneous_difference_rows(
+        exact_age_models, pooled_age_model, age_signs, "single_ages_minus_pooled_22_25"
+    ))
     age_cov = age_inf.T @ age_inf
     for i, left in enumerate(exact_age_models):
         for j, right in enumerate(exact_age_models):
@@ -814,6 +927,19 @@ def run_analysis(args):
 
     write_csv(args.output_dir / "AGE_EDUCATION_COMPOSITION_BY_YEAR_QUINTILE.csv", composition_table(["YEAR", "beta_quintile"]))
     write_csv(args.output_dir / "AGE_EDUCATION_COMPOSITION_BY_PERIOD_QUINTILE.csv", composition_table(["period", "beta_quintile"]))
+
+    age_common_frame = all_occ.loc[all_occ.occ_code.isin(age_support)].copy()
+    education_common_frame = edu_risk.groupby(
+        ["occ_code", "month", "age_group"], as_index=False, observed=True
+    )[["stock", "respondent_equivalent"]].sum()
+    write_csv(args.output_dir / "SAMPLE_AND_STOCK_COVERAGE.csv", stock_coverage_rows([
+        ("full_BASE03_support", all_occ),
+        ("all_valid_industry_records", ind_valid),
+        ("preconnected_industry_risk_set", ind_risk),
+        ("all_valid_education_records", edu_valid),
+        ("education_common_support", education_common_frame),
+        ("age_common_support", age_common_frame),
+    ], months, "full_BASE03_support"))
 
     # Relative information is assigned after all models are known.
     baseline_info = baseline["row"]["conditional_target_information"]

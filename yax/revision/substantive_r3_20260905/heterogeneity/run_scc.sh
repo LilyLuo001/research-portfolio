@@ -5,7 +5,7 @@
 #$ -l h_rt=08:00:00
 #$ -l mem_per_core=8G
 #$ -pe omp 4
-#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/logs/heterogeneity.log
+#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/logs/heterogeneity_final.log
 
 set -euo pipefail
 
@@ -14,7 +14,7 @@ AGENT_ROOT="$COMPUTE_ROOT/agents/heterogeneity"
 REPO_ROOT="$COMPUTE_ROOT/repo_git2"
 PRIVATE_ROOT=/projectnb/econdept/qluo/dax-private/ipums
 PYTHON_BIN=/usr3/graduate/qluo/portfolio/.venv/bin/python
-OUTPUT_ROOT="$COMPUTE_ROOT/results/heterogeneity"
+OUTPUT_ROOT="$COMPUTE_ROOT/results/heterogeneity_final"
 
 mkdir -p "$OUTPUT_ROOT" "$COMPUTE_ROOT/logs"
 cd "$REPO_ROOT"
