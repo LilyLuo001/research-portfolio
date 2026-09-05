@@ -6,6 +6,7 @@ import pathlib
 import sys
 
 import numpy as np
+import pandas as pd
 import pytest
 
 
@@ -56,3 +57,21 @@ def test_calendar_and_industry_rules_are_explicit():
     assert 641 in CELLS.LEISURE_HOSPITALITY_IND1990
     assert 762 in CELLS.LEISURE_HOSPITALITY_IND1990
     assert 810 in CELLS.LEISURE_HOSPITALITY_IND1990
+    assert CELLS.MARCH_REPAIR_POLICY.startswith("explicitly_replace_wide_03s_rows")
+
+
+def test_march_repair_explicitly_replaces_only_primary_gap_rows():
+    frame = pd.DataFrame({
+        "YEAR": [2017, 2017, 2021, 2022],
+        "MONTH": [3, 4, 3, 3],
+    })
+    replaced = CELLS.replaced_base_march_mask(
+        frame, is_primary_file=True, repair_provided=True,
+    )
+    assert replaced.tolist() == [True, False, True, False]
+    assert not CELLS.replaced_base_march_mask(
+        frame, is_primary_file=False, repair_provided=True,
+    ).any()
+    assert not CELLS.replaced_base_march_mask(
+        frame, is_primary_file=True, repair_provided=False,
+    ).any()

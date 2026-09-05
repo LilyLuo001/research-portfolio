@@ -30,6 +30,10 @@ SEED = 2026090501
 PRIMARY_EXPECTED = -0.13107397642233506
 PRIMARY_SUPPORT_HASH = "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
 MARCH_GAPS = {f"{year}-03" for year in range(2017, 2022)}
+MARCH_REPAIR_POLICY = (
+    "explicitly_replace_wide_03s_rows_with_separately_hashed_03b_repair_"
+    "for_2017_2021_before_eligibility_filtering"
+)
 # IND1990 categories mapped to the BLS leisure-and-hospitality concept as
 # closely as this historical coding permits: eating/drinking; lodging;
 # theaters/motion pictures; bowling; other entertainment/recreation; museums.
@@ -80,6 +84,21 @@ def month_string(frame: pd.DataFrame) -> pd.Series:
             frame.MONTH.astype(int).astype(str).str.zfill(2))
 
 
+def replaced_base_march_mask(frame: pd.DataFrame, *, is_primary_file: bool,
+                             repair_provided: bool) -> pd.Series:
+    """Identify base-file rows superseded by the March Basic repair.
+
+    The current wide extract requested ASEC ``03s`` samples for 2017--2021.
+    Their basic-month ``WTFINL`` is zero, so the positive-weight eligibility
+    rule already makes the repair a functional replacement.  Applying the
+    source rule explicitly before eligibility protects future rebuilds from
+    double counting if an upstream extract changes its weight encoding.
+    """
+    if not (is_primary_file and repair_provided):
+        return pd.Series(False, index=frame.index, dtype=bool)
+    return month_string(frame).isin(MARCH_GAPS)
+
+
 def build_exact_age_cells(args: argparse.Namespace) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     bridge = pd.read_csv(args.bridge, dtype={"census_2010": str, "census_2018": str})
     bridge["census_2010"] = bridge.census_2010.str.zfill(4)
@@ -93,6 +112,10 @@ def build_exact_age_cells(args: argparse.Namespace) -> tuple[pd.DataFrame, pd.Da
         "invalid_raw_occ_records": 0, "routed_rows": 0,
         "early_records_before_route": 0, "early_records_unmatched": 0,
         "current_records": 0, "leisure_hospitality_records": 0,
+        "march_repair_policy": MARCH_REPAIR_POLICY,
+        "wide_march_rows_explicitly_replaced": 0,
+        "wide_march_positive_weight_rows_explicitly_replaced": 0,
+        "repair_march_eligible_records": 0,
     }
     usecols = ["YEAR", "MONTH", "AGE", "EMPSTAT", "OCC", "OCC2010", "IND1990", "WTFINL"]
     microdata_paths = [args.microdata]
@@ -100,13 +123,28 @@ def build_exact_age_cells(args: argparse.Namespace) -> tuple[pd.DataFrame, pd.Da
         microdata_paths.append(args.repair_microdata)
     counters["microdata_files"] = [str(path) for path in microdata_paths]
     for microdata_path in microdata_paths:
+      is_primary_file = pathlib.Path(microdata_path) == pathlib.Path(args.microdata)
+      is_repair_file = (args.repair_microdata is not None and
+                        pathlib.Path(microdata_path) == pathlib.Path(args.repair_microdata))
       for chunk in pd.read_csv(microdata_path, usecols=usecols, chunksize=500_000):
         counters["rows_read"] += len(chunk)
         age = pd.to_numeric(chunk.AGE, errors="coerce")
         weight = pd.to_numeric(chunk.WTFINL, errors="coerce")
         employed = pd.to_numeric(chunk.EMPSTAT, errors="coerce").isin([10, 12])
-        keep = age.between(18, 65) & employed & np.isfinite(weight) & weight.gt(0)
+        replaced = replaced_base_march_mask(
+            chunk, is_primary_file=is_primary_file,
+            repair_provided=args.repair_microdata is not None,
+        )
+        counters["wide_march_rows_explicitly_replaced"] += int(replaced.sum())
+        counters["wide_march_positive_weight_rows_explicitly_replaced"] += int(
+            (replaced & np.isfinite(weight) & weight.gt(0)).sum()
+        )
+        keep = (age.between(18, 65) & employed & np.isfinite(weight) &
+                weight.gt(0) & ~replaced)
         chunk = chunk.loc[keep].copy()
+        if is_repair_file:
+            repair_month = month_string(chunk).isin(MARCH_GAPS)
+            counters["repair_march_eligible_records"] += int(repair_month.sum())
         counters["employed_age_18_65_records"] += len(chunk)
         chunk["month"] = month_string(chunk)
         chunk["age"] = pd.to_numeric(chunk.AGE, errors="raise").astype(int)
