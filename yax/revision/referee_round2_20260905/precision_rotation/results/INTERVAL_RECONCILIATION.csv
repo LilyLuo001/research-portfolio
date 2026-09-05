@@ -1,0 +1,7 @@
+source,coefficient,se,ci_lower,ci_upper,draws,seed_or_draw_set,support_occupations,same_point_estimator_and_sample,explanation
+frozen_confirmatory_result,-0.13107397642233506,0.04440978614525461,-0.21703804618691314,-0.04510990665775699,999,20260832,468,True,Original confirmatory 999-draw interval
+first_round_calendar_reproduction,-0.1310739764223351,0.0444097861452545,-0.2166385023990426,-0.0455094504456276,999.0,referee_cells_SEED+20,468.0,True,Same coefficient; different finite multiplier draw set
+first_round_reference_contrast,-0.131073976422335,0.0444097861452546,-0.2178894627805103,-0.0442584900641598,999.0,referee_core_SEED+20,468,True,Same coefficient; different finite common contrast draw set
+first_round_age_comparison,-0.1310739764223351,0.0444097861452545,-0.2190195399752723,-0.0431284128693978,999,referee_cells_SEED+10,468,True,Same ages and sample; different finite common age-comparison draw set
+first_round_minimum_100_sensitivity,-0.1310742287851581,0.044410265914835,-0.2198428496151498,-0.0423056079551665,999,referee_cells_SEED+20,463,False,Different 463-occupation threshold sample; never a primary interval
+round2_canonical_primary,-0.1310739764223351,0.0444097861452546,-0.2170750263755257,-0.0450729264691445,9999,2026090511,468,True,Sole canonical primary interval for revised reporting
