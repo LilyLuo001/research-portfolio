@@ -15,6 +15,7 @@
     "employed_age_18_65_records": 5322047,
     "invalid_raw_occ_records": 0,
     "leisure_hospitality_records": 444784,
+    "march_repair_policy": "explicitly_replace_wide_03s_rows_with_separately_hashed_03b_repair_for_2017_2021_before_eligibility_filtering",
     "maximum_source_multiplicity": 7,
     "microdata_files": [
       "cps_00009.csv.gz",
@@ -139,6 +140,7 @@
     ],
     "october_2025_present": false,
     "one_to_many_source_codes": 56,
+    "repair_march_eligible_records": 252862,
     "restored_march_months": [
       "2017-03",
       "2018-03",
@@ -149,14 +151,16 @@
     "routed_aggregate_rows": 1612937,
     "routed_rows": 6188956,
     "rows_read": 9843021,
-    "stable_aggregate_rows": 1314738
+    "stable_aggregate_rows": 1314738,
+    "wide_march_positive_weight_rows_explicitly_replaced": 0,
+    "wide_march_rows_explicitly_replaced": 621589
   },
   "characteristic_normalization": "2017-2019 total employment weights on literal common support",
   "common_support_hash_sha256": "fc09fa90e049425def089510cc9e73b9e753e4734e8db0248e08c6087fec451b",
   "common_support_occupations": 341,
   "common_support_primary_employment_coverage": 0.7633639857835198,
-  "generated_at_utc": "2026-09-05T12:19:48.401690+00:00",
-  "git_head": "453567d9133dc18c9a8504b53f243f08dd71c71c",
+  "generated_at_utc": "2026-09-05T12:54:28.458334+00:00",
+  "git_head": "09968071462ac88de5cc649f38a1af7425329c60",
   "initial_common_support_results_commit": "8e3b876266e09679467b5a0c640c3c16b0c51974",
   "input_hashes": {
     "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
