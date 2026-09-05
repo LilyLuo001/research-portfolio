@@ -22,6 +22,7 @@ INBOX=ops/box/inbox.sh
 MARK=ops/box/.inbox_done
 LOG=ops/box/inbox_log.md
 TIMEOUT_S=1500   # < the 30-min cron cadence, so runs never pile up
+TIMEOUT_BIN="$(command -v timeout || command -v gtimeout || true)"
 
 [ -f "$INBOX" ] || exit 0
 hash="$(sha256sum "$INBOX" | cut -d' ' -f1)"
@@ -34,7 +35,13 @@ echo "$hash" > "$MARK"
   echo "## $(date -u +%FT%TZ) — inbox ${hash:0:12} @ git $(git rev-parse --short HEAD 2>/dev/null || echo none)"
   echo '```'
   set -a; . ops/box/.env 2>/dev/null || true; set +a
-  PATH="$ROOT/.venv/bin:$PATH" timeout "$TIMEOUT_S" bash "$INBOX" 2>&1
+  if [ -n "$TIMEOUT_BIN" ]; then
+    PATH="$ROOT/.venv/bin:$PATH" "$TIMEOUT_BIN" "$TIMEOUT_S" bash "$INBOX" 2>&1
+  else
+    # BSD/macOS does not ship GNU timeout.  The production Linux box still
+    # uses the bounded path above; this fallback keeps local dry runs usable.
+    PATH="$ROOT/.venv/bin:$PATH" bash "$INBOX" 2>&1
+  fi
   echo "[exit: $?]"
   echo '```'
 } >> "$LOG"
