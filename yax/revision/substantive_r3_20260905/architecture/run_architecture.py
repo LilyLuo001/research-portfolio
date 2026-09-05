@@ -225,6 +225,14 @@ def reconstruct_and_validate(args, BASE, CELLS, FROZEN):
     route_receipt = BASE.route_conservation(args, cells)
     exposures = FROZEN.exposure_maps(args.lookup, args.rule_b_values)
     computers, names, groups = FROZEN.comp_maps(args.computerization)
+    # The computerization file has two otherwise valid Census-2018 rows with
+    # missing labels (7640 and 8025).  Use the authenticated Rule-B table only
+    # as a label fallback so every named support/exclusion output is complete;
+    # this does not alter any exposure value, support rule, or fitted model.
+    rule_b_labels = pd.read_csv(args.rule_b_values, dtype={"census2018": str})
+    for code, occupation in zip(rule_b_labels["census2018"], rule_b_labels["occupation"]):
+        if pd.notna(code) and pd.notna(occupation):
+            names.setdefault(str(code).zfill(4), str(occupation))
     rebuilt = BASE.build_recomputed_contract(
         cells, exposures["dv_rating_beta"]["A"], computers["webb_pct_software"], names
     )
