@@ -155,8 +155,9 @@
   "common_support_hash_sha256": "fc09fa90e049425def089510cc9e73b9e753e4734e8db0248e08c6087fec451b",
   "common_support_occupations": 341,
   "common_support_primary_employment_coverage": 0.7633639857835198,
-  "generated_at_utc": "2026-09-05T11:58:46.246983+00:00",
-  "git_head": "c629e1e03d59cc3e1ee3700a2ac29dad6203fcb9",
+  "generated_at_utc": "2026-09-05T12:19:48.401690+00:00",
+  "git_head": "453567d9133dc18c9a8504b53f243f08dd71c71c",
+  "initial_common_support_results_commit": "8e3b876266e09679467b5a0c640c3c16b0c51974",
   "input_hashes": {
     "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
     "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
@@ -167,14 +168,16 @@
   },
   "model_failures": [],
   "output_hashes": {
+    "ALL_MODEL_COEFFICIENTS.csv": "6ac270cffe6c284c2515cf7af5d1edc45580e18266baa9d6a8567b610271385e",
     "CHARACTERISTIC_CORRELATIONS.csv": "5e28005ceb3a2e7200b22c6763a48f01e9ab2db0163561b00cc75c3130fc744a",
-    "CHARACTERISTIC_INFORMATION_BY_OCCUPATION.csv": "c11f21448671ff35713ec184f15750310e989be8cb8e3e73a9305ea0ca0917cd",
-    "CHARACTERISTIC_MODEL_RESULTS.csv": "9a826681731897cdc0fa5c854cf858d2939fde585b388ad95160c4e3998f8992",
-    "CHARACTERISTIC_PAIRED_DIFFERENCES.csv": "31b773f00a681fa80941ce8ef06667b1d88b9ed55ee7fd72672f06f215312a05",
-    "CHARACTERISTIC_SCALING.csv": "8b5fb0ca572fe1cb1bc539536ca90a699f668deb36a4bf2dc4e0209d2ebe9b35",
+    "CHARACTERISTIC_INFORMATION_BY_OCCUPATION.csv": "a73b441d4acf96b4603dd3fec9630be442a5251246fcf4f6d7624df95e5df370",
+    "CHARACTERISTIC_MODEL_RESULTS.csv": "b95b499f915d374771c0cf9134716f21b5be01532b3b39e59a561bd855d570b4",
+    "CHARACTERISTIC_PAIRED_DIFFERENCES.csv": "27ac556cc27b77cd7a4eb0f6d15771570342e27b513b4c6c8bd1e421231d152b",
+    "CHARACTERISTIC_SCALING.csv": "689a177036f1d50b0e1f80eb506d0b0e7e0c6f927e1ec7543d0b97e3403f1624",
     "CHARACTERISTIC_SUPPORT_BY_QUINTILE.csv": "8d0ce4285b844217bcf047f5ef1eedd59d4b2473f2a48096f85dc0dedf6dd4a7",
     "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
-    "PANDEMIC_SHORTFALL_DIAGNOSTICS.csv": "4820cf6f8b952f5b7f0d9b6235025298bdcbe79ac092df75c866a8acf17ff4a3"
+    "PANDEMIC_SHORTFALL_DIAGNOSTICS.csv": "4820cf6f8b952f5b7f0d9b6235025298bdcbe79ac092df75c866a8acf17ff4a3",
+    "SUPPORT_SPECIFIC_MODEL_MAP.csv": "0223f1b4f7ce4a60acb60859fe0e2053c3ee3f370a62caadb5011dde5ea7bda1"
   },
   "pandemic_shortfall_generated_regressor_uncertainty": "not captured by conditional wild-score intervals",
   "primary_support_occupations": 468,
@@ -183,6 +186,7 @@
   "registered_specification": "yax/revision/substantive_r3_20260905/characteristics/ANALYSIS_SPEC.md",
   "registered_specification_sha256": "e6f31af817cdd98d12463ab78a6976c598bf51ea2601b52229921d26aa7d9573",
   "repair_microdata_sha256": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
-  "script_sha256": "2383160267a4716163c3d0cfd46c040ced6d3c9f65d5a00a47f42966bf11641f",
+  "script_sha256": "2c27e2197b659a8fc54748e12449108a134138ecb11f10f71e1c17b128a552e2",
+  "support_amendment_sha256": "18ac34d70ef5d481941090aae88cb7c8d292aac1bcba1fb1d3d052fbc2335d52",
   "webb_normalization": "historical frozen primary normalization retained"
 }
