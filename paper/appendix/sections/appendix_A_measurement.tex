@@ -1,0 +1,69 @@
+\section{Exposure architectures and measurement lineage}\label{app:measurement}
+
+The six architectures differ before any labor outcome enters. Three versions of the ability-based index alter the weighting used to aggregate occupation--ability links. Three task-based measures use the direct-exposure share (alpha), the direct plus complement-software share (beta), and the broad direct-or-complement share. The source files, transformations, and occupation-level checks are recorded in the replication ledger. Figure~\ref{fig:app-lineage} summarizes the construction paths.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.98\textwidth]{figure1_architecture_genealogy.pdf}
+\caption{Measurement lineage across six AI-exposure architectures. Each path ends in an occupation-level score before merger to the employment data. Ability-based and task-based inputs therefore represent distinct treatment-construction choices, not alternative labels for an observed adoption variable.}
+\label{fig:app-lineage}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Employment-weighted correlations among exposure architectures}
+\label{tab:app-corr}
+\small
+\begin{threeparttable}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & AIOE-A & AIOE-D & AIOE-S & Alpha & Beta & Broad\\
+\midrule
+\multicolumn{7}{l}{\emph{Panel A. Pearson correlations}}\\
+AIOE administrative &1.000&0.984&0.996&0.295&0.833&0.890\\
+AIOE ability-direct &0.984&1.000&0.981&0.276&0.821&0.883\\
+AIOE source-weighted &0.996&0.981&1.000&0.293&0.832&0.890\\
+Alpha &0.295&0.276&0.293&1.000&0.643&0.346\\
+Beta &0.833&0.821&0.832&0.643&1.000&0.941\\
+Broad &0.890&0.883&0.890&0.346&0.941&1.000\\
+\addlinespace
+\multicolumn{7}{l}{\emph{Panel B. Average-rank correlations}}\\
+AIOE administrative &1.000&0.987&0.993&0.274&0.844&0.874\\
+AIOE ability-direct &0.987&1.000&0.982&0.258&0.845&0.880\\
+AIOE source-weighted &0.993&0.982&1.000&0.269&0.843&0.874\\
+Alpha &0.274&0.258&0.269&1.000&0.567&0.369\\
+Beta &0.844&0.845&0.843&0.567&1.000&0.961\\
+Broad &0.874&0.880&0.874&0.369&0.961&1.000\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Frozen treatment-side reference sample of 463 occupations, weighted by pre-period employment. Panel B is the weighted Pearson correlation of deterministic average ranks. These are descriptive treatment-side comparisons.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Employment-weighted correlations with occupational characteristics}
+\label{tab:app-content}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{threeparttable}
+\begin{tabularx}{\textwidth}{Yrrrrrrrr}
+\toprule
+Architecture & Cognitive & Manual & RTI & Educ. & Wage & Remote & STEM & Computer\\
+\midrule
+AIOE administrative & .653 & -.936 & .161 & .688 & .611 & .741 & .249 & .849\\
+AIOE ability-direct & .689 & -.913 & .152 & .708 & .640 & .746 & .242 & .847\\
+AIOE source-weighted & .660 & -.939 & .148 & .700 & .617 & .754 & .249 & .854\\
+Alpha & -.032 & -.266 & .217 & -.034 & .011 & .200 & .436 & .304\\
+Beta & .478 & -.758 & .169 & .425 & .478 & .589 & .371 & .797\\
+Broad & .598 & -.810 & .108 & .530 & .600 & .618 & .253 & .833\\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Descriptive Pearson correlations using frozen pre-period employment weights. RTI is routine-task intensity. These characteristics are not validation labels for true AI exposure.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\FloatBarrier

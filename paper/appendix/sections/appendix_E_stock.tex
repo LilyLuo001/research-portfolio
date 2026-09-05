@@ -1,0 +1,83 @@
+\section{Employment-stock estimates}\label{app:stock}
+
+The stock outcome is occupation--age-group--month employment, estimated in a conditional Poisson model with saturated occupation--age, occupation--month, and age--month fixed effects. The target is the post-period change in the young-versus-older employment ratio in exposure Q5 relative to Q1, conditional on the frozen comparison-technology interaction. It is neither an individual unemployment probability nor a monotone dose-response parameter.
+
+\begin{table}[htbp]
+\centering
+\caption{Literal common-support stock estimates}
+\label{tab:app-common}
+\begin{threeparttable}
+\begin{tabular}{lrrrr}
+\toprule
+Architecture & Coefficient & Analytic SE & Wild CI & $p$\\
+\midrule
+AIOE administrative & $-0.07386$ & 0.04090 & $[-0.14915,0.00143]$ & .057\\
+AIOE ability-direct & $-0.10285$ & 0.03811 & $[-0.17722,-0.02849]$ & .005\\
+AIOE source-weighted & $-0.10210$ & 0.04223 & $[-0.18040,-0.02380]$ & .014\\
+Alpha & $-0.10132$ & 0.04171 & $[-0.18547,-0.01716]$ & .018\\
+Beta & $-0.12896$ & 0.04517 & $[-0.21614,-0.04178]$ & .004\\
+Broad & $-0.14652$ & 0.04522 & $[-0.23285,-0.06018]$ & .003\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Exploratory literal common support of 444 occupations, covering 83.14 percent of employment; 108 static-model months. The outcome is grouped employment stock. Each coefficient is the young$\times$post Q5-versus-Q1 contrast for the named architecture, conditional on the frozen comparison-technology interaction. Inference uses 999 occupation-cluster wild-score draws.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+The primary beta/Webb quintile profile relative to Q1 is Q2 $-0.08547$, Q3 $-0.04779$, Q4 $-0.09703$, and Q5 $-0.13107$. The non-monotone middle quintiles are why the paper describes an extreme-tail contrast rather than a dose response.
+
+\begin{table}[htbp]
+\centering
+\caption{Complete frozen alpha/beta headline grid}
+\label{tab:app-headlinegrid}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{threeparttable}
+\begin{tabularx}{\textwidth}{llYrrr}
+\toprule
+Exposure & Coverage & Comparison technology & Occ. & Coef. & Wild CI\\
+\midrule
+Beta & strict & Webb & 468 & -.1311 & $[-.2170,-.0451]$\\
+Beta & strict & O*NET importance & 465 & -.2085 & $[-.3190,-.0980]$\\
+Beta & sibling-imputed & Webb & 477 & -.1186 & $[-.2044,-.0328]$\\
+Beta & sibling-imputed & O*NET importance & 474 & -.1744 & $[-.2831,-.0657]$\\
+Beta & renormalized & Webb & 480 & -.1186 & $[-.2045,-.0328]$\\
+Beta & renormalized & O*NET importance & 476 & -.1746 & $[-.2854,-.0638]$\\
+Alpha & strict & Webb & 468 & -.0987 & $[-.1726,-.0248]$\\
+Alpha & strict & O*NET importance & 465 & -.0971 & $[-.1842,-.0100]$\\
+Alpha & sibling-imputed & Webb & 477 & -.1087 & $[-.1873,-.0302]$\\
+Alpha & sibling-imputed & O*NET importance & 474 & -.1002 & $[-.1869,-.0135]$\\
+Alpha & renormalized & Webb & 480 & -.1087 & $[-.1856,-.0318]$\\
+Alpha & renormalized & O*NET importance & 476 & -.1002 & $[-.1827,-.0178]$\\
+\bottomrule
+\end{tabularx}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Confirmatory frozen grid. Outcome and estimand are the occupation-by-age employment-stock Q5-versus-Q1 young$\times$post contrast. Coverage labels are natural-language descriptions of the three frozen support rules. Intervals use 999 occupation-cluster wild-score draws.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Exploratory age profile of the beta tail contrast}
+\label{tab:app-age}
+\begin{threeparttable}
+\begin{tabular}{lrrr}
+\toprule
+Age group & Coefficient & SE & 95\% interval\\
+\midrule
+18--21 & $-0.07445$ & 0.06406 & $[-0.19236,0.04347]$\\
+22--25 & $-0.09957$ & 0.05295 & $[-0.20103,0.00190]$\\
+26--30 & $0.01502$ & 0.03440 & $[-0.05040,0.08044]$\\
+31--40 & $0.06449$ & 0.02739 & $[0.01419,0.11479]$\\
+41--50 & $0.03441$ & 0.02334 & $[-0.00911,0.07793]$\\
+51--65 & 0 & --- & reference\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Post-outcome exploratory exercise using the frozen beta treatment. Coefficients compare the named age group with ages 51--65. Intervals for the two youngest groups include zero.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\FloatBarrier

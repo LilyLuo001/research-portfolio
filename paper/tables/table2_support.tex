@@ -1,0 +1,26 @@
+\begin{table}[!htbp]
+\centering
+\caption{Treatment content and effective support}\label{tab:support}
+\begin{threeparttable}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}
+\toprule
+Exposure architecture & $R^2$ on eight & Residual & Continuous & Top-five \\
+ & characteristics & SD & effective occupations & share \\
+\midrule
+AIOE administrative & 0.964 & 0.189 & 35.5 & 30.4\% \\
+AIOE ability & 0.954 & 0.214 & 37.8 & 29.0\% \\
+AIOE source-weighted & 0.971 & 0.171 & 44.2 & 24.9\% \\
+Eloundou alpha & 0.368 & 0.795 & 31.5 & 33.7\% \\
+Eloundou beta & 0.743 & 0.507 & 36.9 & 28.0\% \\
+Eloundou broad & 0.811 & 0.435 & 31.5 & 29.7\% \\
+\midrule
+\multicolumn{5}{l}{\textit{Estimator-specific bridge (selected architectures)}}\\
+Beta / Webb & & & 53.3 / 43.3 & 22.2\% / 24.6\% \\
+Alpha / Webb & & & 17.4 / 56.1 & 41.6\% / 21.3\% \\
+\bottomrule
+\end{tabularx}
+\tabnote{The upper panel residualizes each standardized exposure on eight preselected occupational characteristics using frozen pre-period employment weights; the effective count is the inverse Herfindahl index of employment-weighted residual-variance shares. The lower panel reports continuous residual-treatment support followed by estimator-specific conditional-information support for the categorical stock estimator. These are descriptive support diagnostics, not causal influence measures. The stock estimator uses 468 occupations, ages 22--65, and 108 static months; the conditional-information calculation is exploratory and uses fitted information weights.}
+\end{threeparttable}
+\end{table}

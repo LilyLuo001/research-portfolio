@@ -1,0 +1,30 @@
+\section{Architecture Divergence and Empirical Support}\label{sec:support}
+
+\subsection{Occupational content and rankings}
+
+The three AIOE variants correlate between 0.981 and 0.996 in employment-weighted levels and between 0.982 and 0.993 in ranks. Beta and broad Eloundou exposure are also closely related. Cross-family similarity is less uniform: the weighted level correlation between ability-direct AIOE and alpha is 0.276, and their weighted rank correlation is 0.258. Pairwise Q5 overlap between AIOE and alpha is only 0.216--0.237; overlap between AIOE and beta is 0.414--0.465.
+
+Observable content differs in parallel. The AIOE variants load strongly on cognitive content, education, wages, teleworkability, and computer use. Alpha has weaker relationships with those characteristics; beta and broad are intermediate. These are descriptive projections, not validity tests against a true exposure label.
+
+\subsection{Residual treatment and estimator information}
+
+Nominal occupation count is not effective support. For each exposure-by-computerization architecture, I residualize the standardized exposure on the selected computerization measure and form employment-weighted residual-variance shares $s_o$. The effective count is
+\begin{equation}
+N_{\mathrm{eff}}=\frac{1}{\sum_o s_o^2}.
+\label{eq:neff}
+\end{equation}
+Across 30 constructions, $N_{\mathrm{eff}}$ ranges from 11.9 to 84.5. Alpha conditional on Webb has 17.4 effective occupations and a top-five share of 41.6 percent; beta conditional on Webb has 53.3 and 22.2 percent.
+
+The categorical estimator consumes a different object. Absorbing the exact Q5/Q1 design under fitted information weights produces 42.9--71.1 effective occupations across 12 headline models. For beta/Webb, continuous and estimator-specific effective counts are 53.3 and 43.3; for alpha/Webb they are 17.4 and 56.1. Continuous residual support and fitted conditional information are related but not interchangeable, and neither is a realized deletion diagnostic.
+
+\input{tables/table2_support.tex}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figure2_support_bridge.pdf}
+\caption{Continuous residual-treatment support and estimator-specific information}\label{fig:support}
+\tabnote{Panel A reports the inverse-Herfindahl effective count of employment-weighted residual-treatment variance across six exposure measures and five prior-computerization controls. Panel B compares that continuous diagnostic with fitted conditional-information support for four categorical headline estimators. The diagnostics describe different objects and are not leave-one-occupation influence measures.}
+\end{figure}
+
+The support audit changes how coefficient robustness should be read. Similar coefficients can arise from treatments with different ranks and residual comparisons. Conversely, a concentrated continuous residual may not imply a concentrated categorical estimator. Reporting architecture, support, and fitted information alongside coefficients makes these distinctions visible without treating any diagnostic as a causal leverage decomposition.
+

@@ -1,0 +1,31 @@
+\section{Occupational Reallocation and Ranking Interchangeability}\label{sec:reallocation}
+
+\subsection{Adjacent-month construction}
+
+The CPS rotation design permits exact adjacent-month links for origins in months-in-sample 1, 2, 3, 5, 6, and 7. The eight-month gap from month-in-sample 4 to 5 is excluded. Origin longitudinal weights are used, and December 2019 to January 2020 is excluded when destination occupation matters because the coding taxonomy changes. Dependent interviewing improves consistency for eligible continuing interviews without eliminating response or coding error \citep{uscb2006cps,uscb2025manual,mellow1983accuracy,kambourov2008rising}. A persistence check requires a legitimate third observation and an A-to-B-to-B path.
+
+\subsection{Directional disagreement}
+
+For each observed occupational switch, an architecture assigns a positive, negative, or zero direction from the destination-minus-origin exposure score. On the 108,500 switches with finite scores under all six architectures, 53.28 percent receive at least one positive and one negative label; 45.56 percent receive the same nonzero direction under all six. Pairwise official-weight Cohen $\kappa$ ranges from 0.125 to 0.932. Moving from six-way to pair-specific support changes weighted agreement by at most 1.95 percentage points. The result is not created by restricting attention to the literal six-way intersection.
+
+\input{tables/table4_reallocation.tex}
+
+The classification statistic is intentionally permissive: any sign reversal counts, however small the movement. It therefore measures non-interchangeability of directional rankings, not economically large displacement. The young-by-post difference in conflict is essentially zero, with a 95 percent interval of $[-2.67,2.66]$ percentage points. Architecture disagreement is a general feature of the ranking, not one detected specifically among young movers after 2022.
+
+\subsection{A harder benchmark}
+
+Independent age-by-month rematching implies 45.27 percent conflict, 8.02 points below the realized rate. That benchmark ignores occupational assortativity. A harder procedure preserves age-by-month, broad origin family, broad destination family, and the detailed origin and destination marginals within each stratum while destroying only the observed detailed pairing. It covers 98.31 percent of switch weight. Under this benchmark, expected conflict is 52.32 percent, leaving a realized excess of 0.96 points---below the predeclared one-point meaningful-gap threshold.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{figure4_mobility_conflict.pdf}
+\caption{Realized directional conflict and rematching benchmarks}\label{fig:mobility}
+\tabnote{Conflict is the official-weight share of realized adjacent-month switches for which at least one of six exposure architectures rises and another falls. The independent benchmark rematches occupations within age-by-month cells. The broad-assortative benchmark additionally preserves broad origin-destination occupational-family structure and detailed marginals. The 0.96-point realized excess is descriptive, not a conventional sampling estimate.}
+\end{figure}
+
+The combined conclusion is deliberately two-sided. Architecture disagreement is frequent: researchers can label the same occupational movement in opposite directions. But actual worker pairings are not meaningfully unusually conflict-heavy once broad assortativity is preserved. A secondary pattern in which conflict falls from 94.59 to 19.06 percent across bins of absolute consensus movement is reported only in the appendix because its connection to the same component used to define disagreement is partly mechanical.
+
+\subsection{Flow margins}
+
+An exploratory longitudinal exercise separately estimates employment exit, occupational outflow among linked employed workers, and the destination composition of entries from nonemployment. The coefficients are 0.1195, 0.0107, and $-0.0888$, respectively, and all intervals include zero. The risk sets and parameters differ and do not add to the stock coefficient. The CPS evidence therefore does not precisely distinguish exit, outflow, or entry destination as the mechanism behind the stock pattern; detailed estimands, weighting, coding checks, and persistence results appear in the online appendix.
+

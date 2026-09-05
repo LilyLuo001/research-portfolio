@@ -1,0 +1,27 @@
+\section{Exposure Architectures and Harmonization}\label{sec:measurement}
+
+\subsection{Six constructions}
+
+Table~\ref{tab:architectures} describes the six exposure architectures. The three AIOE variants share application-to-ability links but differ in how scores are carried from source occupations to the target occupational taxonomy. Administrative equal aggregation gives source occupations equal weight; the ability-direct construction rebuilds the index from target O*NET ability requirements; the source-weighted construction uses May 2018 OEWS employment weights. The three Eloundou variants share GPT-4 task labels but change capability scope. Alpha contains direct LLM acceleration (E1), beta adds half weight to software-complemented tasks (E2), and broad exposure includes E1 and E2 fully.
+
+\input{tables/table1_architectures.tex}
+
+These are not six noisy measurements of a known common scalar. The ability-based family measures broad applicability of AI capabilities; the task-based family measures a particular time-saving rubric for LLMs and complementary software. A common latent component may exist, but identifying it requires assumptions not supplied by the six scores. The analysis therefore compares observable architectures and avoids designating a preferred measure based on outcomes.
+
+\subsection{Taxonomy mapping and support}
+
+Raw CPS occupations use Census 2010 codes through 2019 and Census 2018 codes thereafter. Pre-2020 records are route-expanded using official Census conversion rates. SOC-based exposure measures are collapsed at six digits and carried through documented SOC-to-Census bridges using source- or target-vintage weights as appropriate. The lineage fixes tie handling, missing components, and normalization.
+
+This mapping is economically consequential. A literal exact-code merge between AIOE's SOC-2010 publication taxonomy and post-2018 outcome taxonomies misses split and renumbered occupations. In the computer and mathematical group, exact matching covers 3.33 percent of 2021 OEWS employment; the documented repair covers 97.7 percent. A four-row decomposition separates score correction from sample composition. Repairing scores on the original support changes the continuous coefficient only from $-0.01885$ to $-0.01920$. Expanding support changes it to $-0.03156$; removing computer and mathematical occupations gives $-0.02940$. The principal mapping effect is admission to the estimand, not a large revision among occupations already matched.
+
+The primary support rule is strict no-renormalization. Every mapped source component must have a finite score; partially scored occupations are excluded rather than reconstructed by rescaling observed components. Two alternative rules are retained in the appendix. Literal common support is the 444-occupation intersection across all six strict-support measures and represents 83.14 percent of model-period employment. Fixing occupation support does not fix scores, ranks, or quintile membership.
+
+\subsection{Consensus and disagreement coordinates}
+
+To organize the six measures without selecting among them, each is standardized using frozen employment weights. Let $A_o$ denote the equal-weight centroid of the three AIOE measures and $E_o$ the equal-weight centroid of the three Eloundou measures. Define
+\begin{equation}
+F_o=\frac{A_o+E_o}{2}, \qquad G_o=\frac{A_o-E_o}{2}.
+\label{eq:fg}
+\end{equation}
+$F$ is a family-balanced consensus coordinate; $G$ is the AIOE-versus-Eloundou disagreement coordinate. Neither is a recovered true exposure index. Their use was limited to one predeclared exploratory outcome model after treatment-side construction and stopping rules were recorded.
+

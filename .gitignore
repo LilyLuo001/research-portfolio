@@ -83,3 +83,18 @@ p1/wrds/discovered_schema.json
 # Their receipts (counts, hashes, code mappings) are committed instead.
 dax/data_built/cps_preevent_power_panel.parquet
 dax/data_built/cps_extract.parquet
+
+# LaTeX build intermediates (final submission PDFs remain trackable)
+paper/build/*.aux
+paper/build/*.bbl
+paper/build/*.bcf
+paper/build/*.blg
+paper/build/*.fdb_latexmk
+paper/build/*.fls
+paper/build/*.lof
+paper/build/*.log
+paper/build/*.lot
+paper/build/*.out
+paper/build/*.run.xml
+paper/build/*.synctex.gz
+paper/build/*.toc

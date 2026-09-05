@@ -1,0 +1,29 @@
+\section{CPS Data and Empirical Design}\label{sec:data}
+
+\subsection{Employment stocks}
+
+The analysis uses 9,262,480 IPUMS CPS records and aggregates employed respondents ages 22--65 with the basic monthly final weight into occupation-by-age-group-by-month stocks. Young workers are ages 22--25; the comparison group is ages 26--65. The extract spans January 2017 through July 2026. March is absent in 2017--2021 and October 2025 is absent, leaving 109 observed months. December 2022 is a transition month excluded from static models. January 2023 through July 2026 contains 42 observed post months.
+
+The outcome is a stock, not an individual employment probability. It can move through entry, employment exit, occupational switching, or changes in the older comparison stock. The design consequently estimates a young-relative occupational employment gradient; it does not by itself identify displacement, hiring, or separation.
+
+\subsection{Headline estimator}
+
+Let $N_{oat}$ be the CPS-weighted employment stock in occupation $o$, age group $a$, and observed month $t$. Let $Young_a$ equal one for ages 22--25, $Post_t$ equal one from January 2023 forward, and $Q_{oq}$ denote architecture-specific exposure quintile $q$, with Q1 omitted. With standardized Webb software exposure $W_o$, the implemented conditional mean is
+\begin{equation}
+\begin{split}
+E[N_{oat}\mid X]=\exp\bigg[&\gamma_{oa}+\delta_{ot}+\lambda_{at}
++\sum_{q=2}^{5}\beta_q Q_{oq}Young_aPost_t\\
+&+\theta W_oYoung_aPost_t\bigg].
+\end{split}
+\label{eq:headline}
+\end{equation}
+The fixed effects are occupation-by-age group, occupation-by-month, and age-group-by-month. CPS person weights construct $N_{oat}$; no second survey weight is applied to the cell likelihood. The code estimates the algebraically equivalent grouped-binomial conditional likelihood for the young share within occupation-month. Inference clusters by occupation and uses the frozen 999-draw one-step Rademacher wild-score procedure.
+
+The target $\beta_5$ is the post-period change in the young-to-older stock ratio for Q5 relative to Q1, conditional on Q2--Q4 and Webb. It is not a continuous exposure slope. Every architecture defines its own employment-weighted quintiles, so the same coefficient label can refer to different occupation sets. The paired beta-minus-alpha comparison holds the support, outcome, estimator, computerization control, and bootstrap draws fixed but still compares architecture-specific Q5/Q1 treatments.
+
+\subsection{Design status and interpretation}
+
+The primary alpha/beta architecture grid, support rules, estimator, and inference were fixed before protected post-period outcomes were opened. Common-support six-measure models, estimator-information diagnostics, the age profile, longitudinal flows, reallocation comparisons, and the F/G model are explicitly exploratory. This status distinction governs claims rather than determining which estimates are displayed.
+
+All estimates are observational. Exposure is not adoption, the January 2023 indicator is not an instrument, and occupation-level treatment is correlated with other shocks. The identifying comparison is descriptive conditional evolution across occupational exposure groups. The design is useful for testing stability across constructed treatments without licensing causal attribution to AI.
+

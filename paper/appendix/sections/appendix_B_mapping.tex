@@ -1,0 +1,14 @@
+\section{Occupation mapping and coverage}\label{app:mapping}
+
+The employment files and published indices use different occupational taxonomies. The frozen bridge first maps source occupations to Census 2018 codes, preserves one-to-many route mass, and applies the signed coverage rule before any outcome is read. The literal six-measure common support contains 444 occupations and 83.14 percent of employment in the stock comparison. The corresponding native strict-support beta specification contains 468 occupations.
+
+The mapping audit separates four comparisons: original exposure on original support; repaired exposure on the same support; repaired exposure on expanded support; and expanded support excluding computer and mathematical occupations. This decomposition distinguishes score correction from the composition effect of re-admitting occupations. In particular, repairing the vintage mismatch raises computer-and-mathematical employment coverage from 3.33 to 97.7 percent. That repair is necessary for external validity, but it does not by itself identify a causal AI effect.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{figure2_support_bridge.pdf}
+\caption{Support created by occupation mapping. The figure distinguishes nominal occupational coverage from the residual and estimator-weighted information that supports a particular downstream coefficient.}
+\label{fig:app-supportbridge}
+\end{figure}
+
+All crosswalk files are distributed by their public providers or referenced by checksum where redistribution is not appropriate. Route expansion and collapse rules are deterministic. No unmatched occupation is assigned an exposure by occupational title similarity.
