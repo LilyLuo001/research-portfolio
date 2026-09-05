@@ -85,60 +85,45 @@ Available at \url{#2}}}%
 
 % ---- Format title page ----
 
-% Customize title, author, and date
-\usepackage{titling}
-
-% Format title
-\pretitle{\begin{center}\bfseries\Huge} 
-
-% Eliminate thanks mark
-\renewcommand{\tamark}{}
-\setlength{\thanksmarkwidth}{0em}
-\setlength{\thanksmargin}{0em}
+% Customize title metadata when the optional package is available. The paper
+% itself uses an explicit titlepage and therefore has a clean fallback.
+\IfFileExists{titling.sty}{%
+  \usepackage{titling}%
+  \pretitle{\begin{center}\bfseries\Huge}%
+  \renewcommand{\tamark}{}%
+  \setlength{\thanksmarkwidth}{0em}%
+  \setlength{\thanksmargin}{0em}%
+}{}
 
 % Eliminate indentation in abstract
 \AtBeginEnvironment{titlepage}{\setlength{\parindent}{0pt}}
 
 % ---- Format table of contents ----
 
-% Customize table of contents
-\usepackage{tocloft}
-
-% Eliminate "Table of Contents"
-\renewcommand{\contentsname}{}
-
-% Set font size for content
-\renewcommand{\cftsecfont}{\normalfont}
-
-% Set font size for page numbers
-\renewcommand{\cftsecpagefont}{\normalfont}
-
-% Set separator after labels
-\renewcommand{\cftsecaftersnum}{.}
-\renewcommand{\cftsubsecaftersnum}{.}
-
-% Set spacing between dots
-\renewcommand{\cftdotsep}{10}
-
-% Set spacing between sections
-\setlength{\cftbeforesecskip}{0em}
+% Customize the contents when tocloft is installed; otherwise use the
+% standard, fully functional table of contents.
+\IfFileExists{tocloft.sty}{%
+  \usepackage{tocloft}%
+  \renewcommand{\contentsname}{}%
+  \renewcommand{\cftsecfont}{\normalfont}%
+  \renewcommand{\cftsecpagefont}{\normalfont}%
+  \renewcommand{\cftsecaftersnum}{.}%
+  \renewcommand{\cftsubsecaftersnum}{.}%
+  \renewcommand{\cftdotsep}{10}%
+  \setlength{\cftbeforesecskip}{0em}%
+}{}
 
 % ---- Format section headings ----
 
-% Customize section headings
-\usepackage{titlesec}
-
-% Format section headings
-\titleformat*{\section}{\centering\large\bfseries}
-
-% Format subsection headings
-\titleformat*{\subsection}{\bfseries}
-
-% Format paragraph headings
-\titleformat{\paragraph}[runin]{\itshape}{}{}{}[\@addpunct{.}\hspace{1em}]
-
-% Add period after heading numbers
-\titlelabel{\thetitle.\hspace{1em}}
+% Customize section headings when titlesec is installed.
+\newif\ifyaxtitlesec
+\IfFileExists{titlesec.sty}{\yaxtitlesectrue\usepackage{titlesec}}{\yaxtitlesecfalse}
+\ifyaxtitlesec
+  \titleformat*{\section}{\centering\large\bfseries}
+  \titleformat*{\subsection}{\bfseries}
+  \titleformat{\paragraph}[runin]{\itshape}{}{}{}[\@addpunct{.}\hspace{1em}]
+  \titlelabel{\thetitle.\hspace{1em}}
+\fi
 
 % ---- Format theorems and proofs ----
 
@@ -174,8 +159,8 @@ Available at \url{#2}}}%
 % Enable rotation of tables and figures
 \usepackage{rotating}
 
-% Enable multiple rows in table
-\usepackage{multirow}
+% Enable multiple rows in tables when the optional package is installed.
+\IfFileExists{multirow.sty}{\usepackage{multirow}}{}
 
 % Allow small figures and tables to be on their own page
 \renewcommand{\floatpagefraction}{0}
@@ -279,8 +264,8 @@ Available at \url{#2}}}%
 \renewcommand{\thefigure}{A\arabic{figure}}
 \renewcommand{\theequation}{A\arabic{equation}}
 %
-% Add "Appendix" in front of section label
-\titleformat{\section}{\centering\large\bfseries}{Appendix~\thesection.}{1em}{}}
+% Add "Appendix" in front of section label when titlesec is installed.
+\ifyaxtitlesec\titleformat{\section}{\centering\large\bfseries}{Appendix~\thesection.}{1em}{}\fi}
 
 % ---- Enable hyperlinks ----
 
