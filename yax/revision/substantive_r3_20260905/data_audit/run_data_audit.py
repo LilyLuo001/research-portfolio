@@ -16,8 +16,6 @@ import numpy as np
 import pandas as pd
 
 
-HERE = pathlib.Path(__file__).resolve().parent
-ROOT = pathlib.Path(__file__).resolve().parents[3]
 LABEL = "POST-OUTCOME DESCRIPTIVE AUDIT -- NOT PART OF CONFIRMATORY YAX v1.1"
 
 
@@ -27,9 +25,6 @@ def import_path(name: str, path: pathlib.Path):
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module
-
-
-CELLS = import_path("yax_r3_data_cells", ROOT / "yax/revision/referee_20260905/run_referee_cells.py")
 
 
 def sha256(path: pathlib.Path) -> str:
@@ -77,7 +72,11 @@ def distribution(values: np.ndarray, label: str) -> dict:
 
 def run(args: argparse.Namespace) -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    cells, _, build = CELLS.build_exact_age_cells(args)
+    cells_module = import_path(
+        "yax_r3_data_cells",
+        args.repo_root / "yax/revision/referee_20260905/run_referee_cells.py",
+    )
+    cells, _, build = cells_module.build_exact_age_cells(args)
     contracts = pd.read_csv(args.contracts, dtype={"occupation_code": str})
     contracts["occupation_code"] = contracts.occupation_code.str.zfill(4)
     support = sorted(contracts.loc[
@@ -107,10 +106,10 @@ def run(args: argparse.Namespace) -> None:
         })
     write_csv(args.output_dir / "CALENDAR_AUDIT.csv", calendar_rows)
 
-    young_stock, older_stock = CELLS.panel_for_ages(
+    young_stock, older_stock = cells_module.panel_for_ages(
         cells, support, static, (22, 25), (26, 65), "stock"
     )
-    young_re, older_re = CELLS.panel_for_ages(
+    young_re, older_re = cells_module.panel_for_ages(
         cells, support, static, (22, 25), (26, 65), "respondent_equivalent"
     )
     distributions = [
@@ -189,7 +188,9 @@ def run(args: argparse.Namespace) -> None:
     receipt = {
         "analysis_status": LABEL,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "git_head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "git_head": subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=args.repo_root, text=True
+        ).strip(),
         "script_sha256": sha256(pathlib.Path(__file__)),
         "input_hashes": {
             "wide_microdata": sha256(args.microdata),
@@ -213,6 +214,7 @@ def run(args: argparse.Namespace) -> None:
 
 def parser() -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description=__doc__)
+    value.add_argument("--repo-root", type=pathlib.Path, required=True)
     value.add_argument("--microdata", type=pathlib.Path, required=True)
     value.add_argument("--repair-microdata", type=pathlib.Path, required=True)
     value.add_argument("--bridge", type=pathlib.Path, required=True)

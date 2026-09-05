@@ -18,6 +18,7 @@ cd "$REPO_ROOT"
 export PYTHONPATH=/usr3/graduate/qluo/.local/lib/python3.6/site-packages
 
 "$PYTHON_BIN" "$AGENT_ROOT/run_data_audit.py" \
+  --repo-root "$REPO_ROOT" \
   --microdata "$PRIVATE_ROOT/ai_telework_2017_2026/cps_00009.csv.gz" \
   --repair-microdata "$PRIVATE_ROOT/yax_referee_march_repair/cps_00011.csv.gz" \
   --bridge "$REPO_ROOT/yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv" \
