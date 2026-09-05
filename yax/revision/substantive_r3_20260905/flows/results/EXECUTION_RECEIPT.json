@@ -1,0 +1,106 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "corrected_reconstruction": {
+    "base": {
+      "raw_rows": 9262480,
+      "retained_analysis_scope_rows": 6748518,
+      "source": "base_wide",
+      "superseded_march_positive_weight_rows": 0,
+      "superseded_march_rows": 621589
+    },
+    "corrected_analysis_scope_rows": 7087861,
+    "duplicate_corrected_keys": 0,
+    "march_positive_LNKFW1MWT_rows": 236417,
+    "march_positive_LNKFW1YWT_rows": 121835,
+    "march_rows_after_replacement": 339343,
+    "merge_key": [
+      "YEAR",
+      "MONTH",
+      "SERIAL",
+      "PERNUM"
+    ],
+    "merge_unmatched": 0,
+    "repair": {
+      "raw_rows": 580541,
+      "retained_analysis_scope_rows": 339343,
+      "source": "march_basic_repair",
+      "superseded_march_positive_weight_rows": 0,
+      "superseded_march_rows": 0
+    },
+    "weight_patch_analysis_scope_rows": 7127033,
+    "weight_patch_raw_rows": 9069883
+  },
+  "draw_contract": {
+    "canonical_occupation_order_sha256": "96a4a0aaf8f1e5b58a9d644b537e356eb31f563e4f3a751bd71428aef0adde10",
+    "common_lineage_signs_sha256": "b0c29b7bf438e54684bf3b4ea338ef5c04c30aaace454c27366237212c209ce4",
+    "common_occupation_signs_sha256": "0eafa9d9cb030280b95b63bcbcf44e05194733e4a4b1d71e352da8cd6f58d87b",
+    "draws": 9999,
+    "seed": 2026090524
+  },
+  "execution_head": "3f760f6e537f124636c8b881c952d4cb507db120",
+  "execution_script_sha256": "32c92a71c537ded03c7f5e96f4d4cda3eee3ef756278b350d20782339264d103",
+  "generated_at_utc": "2026-09-05T15:07:00.438062+00:00",
+  "input_hashes": {
+    "analysis_spec": "d236b30cc2e0814553b565fa4190c1aa85e5f1409d4ab276816cca69dea5bdd3",
+    "base_wide": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "corrected_weight_patch": "bc97f807eace1bf3f0ca04b09e6a9d099bf1c86433c56bb1edd08b4156ac9fd6",
+    "march_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+  },
+  "link_repeat_and_aging": {
+    "adjacent_month": {
+      "CPSIDV_with_multiple_links": 1056803,
+      "CPSID_households_with_multiple_links": 648551,
+      "age_26_crossing_rate": 0.0017012711504994869,
+      "age_26_crossings": 7722,
+      "maximum_links_per_CPSIDV": 6,
+      "unique_CPSIDV": 1236553,
+      "unique_CPSID_households": 689781,
+      "validated_positive_weight_links": 4538959
+    },
+    "twelve_month": {
+      "CPSIDV_with_multiple_links": 588835,
+      "CPSID_households_with_multiple_links": 373837,
+      "age_26_crossing_rate": 0.01594814941285115,
+      "age_26_crossings": 33814,
+      "maximum_links_per_CPSIDV": 4,
+      "unique_CPSIDV": 671620,
+      "unique_CPSID_households": 396359,
+      "validated_positive_weight_links": 2120246
+    }
+  },
+  "mapping": {
+    "bridge_max_route_sum_error": 8.999467837611519e-13,
+    "bridge_source_codes": 503,
+    "lineage_components": 415,
+    "q5_sha256": "82549d91f47b526448b7ae7c2b35feec056dc01981ab60a88dae501d731a9e4d",
+    "support_occupations": 468,
+    "support_sha256": "96a4a0aaf8f1e5b58a9d644b537e356eb31f563e4f3a751bd71428aef0adde10"
+  },
+  "models_completed": 35,
+  "models_failed": 0,
+  "no_person_or_household_identifiers_written": true,
+  "official_weights": {
+    "adjacent_month": "origin LNKFW1MWT",
+    "twelve_month": "origin LNKFW1YWT",
+    "weekly_earnings": "EARNWT"
+  },
+  "output_hashes": {
+    "FLOW_AND_WORKER_OUTCOME_RESULTS.csv": "759d815ad6047098b4336cb6be2c99cc27c2f89c422085cff05a1770e5bef250",
+    "FLOW_DESCRIPTIVE_RATES.csv": "02400492912469ddba684663d9ed8a4a7f6207d5287806fbba194dc3366de5ff",
+    "FLOW_RISK_EVENT_COUNTS.csv": "5bdd9cca20680d03e24ef5d8bae79a12517b5d42566b29ab03c1eda20c18e3d7",
+    "HOURS_CHANGE_DESCRIPTIVES.csv": "ffa0fcba49e6142ffa217d25a66479e0bfbfb0039b9a502d23d61f84e87655c9",
+    "LINK_ATTRITION_AUDIT.csv": "e14ed708268138a4f119c05ef814e85d963429fb4f51d84b2d4076ff4bafdcde",
+    "LINK_TRANSITION_DIAGNOSTICS.csv": "ecc0b3686e1a4ac6b7e9e9905a6babf3d8ee53ec53afcee7986c84c02ad13edb",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "OUTCOME_FEASIBILITY_AND_LIMITS.md": "e2cbdeea155af838dd67cd0db97aad66ac5fc20488dd65610a5b02d3c63ad49f",
+    "ROUTE_AND_SUPPORT_AUDIT.csv": "cf8bb7f3608fd843295a90b36acc5bc9f9c20b50e71f2ef7f583410e823c0abd",
+    "STOCK_FLOW_BCC_COMPARABILITY.csv": "571f4e23daacce893aed723bbb921818775dbf0e954af4f31f6c5e5010fb376a",
+    "TARGET_OCCUPATION_INFLUENCE.csv": "150b218f1cf7e276c3b27a90d16e8d12be125b6e72e4d4dbc34466aaa07a5319",
+    "UNEMPLOYMENT_DURATION_DESCRIPTIVES.csv": "9f1150b5c7508c1f877f951e2458dc600577b701d0f9a916176a0b52360627ed"
+  },
+  "prespec_commit": "96801eebad9015e03aae22a599fdf66750b0b0e9",
+  "record": "YAX R3 corrected CPS flows and worker outcomes",
+  "stock_flow_calibration_identified": false
+}

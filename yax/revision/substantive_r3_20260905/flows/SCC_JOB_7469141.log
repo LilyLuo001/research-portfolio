@@ -1,0 +1,84 @@
+FITTING adjacent_month__employment_exit__official
+DONE adjacent_month__employment_exit__official beta=0.13247544
+FITTING adjacent_month__employment_exit__unweighted
+DONE adjacent_month__employment_exit__unweighted beta=0.19952632
+FITTING adjacent_month__employment_exit__origin_WTFINL
+DONE adjacent_month__employment_exit__origin_WTFINL beta=0.13321580
+FITTING adjacent_month__unemployment_entry__official
+DONE adjacent_month__unemployment_entry__official beta=0.05464400
+FITTING adjacent_month__unemployment_entry__unweighted
+DONE adjacent_month__unemployment_entry__unweighted beta=0.17943744
+FITTING adjacent_month__unemployment_entry__origin_WTFINL
+DONE adjacent_month__unemployment_entry__origin_WTFINL beta=0.06141428
+FITTING adjacent_month__labor_force_exit__official
+DONE adjacent_month__labor_force_exit__official beta=0.13454859
+FITTING adjacent_month__labor_force_exit__unweighted
+DONE adjacent_month__labor_force_exit__unweighted beta=0.19718019
+FITTING adjacent_month__labor_force_exit__origin_WTFINL
+DONE adjacent_month__labor_force_exit__origin_WTFINL beta=0.13279839
+FITTING adjacent_month__occupational_outflow__official
+DONE adjacent_month__occupational_outflow__official beta=0.00254590
+FITTING adjacent_month__occupational_outflow__unweighted
+DONE adjacent_month__occupational_outflow__unweighted beta=-0.05146171
+FITTING adjacent_month__occupational_outflow__origin_WTFINL
+DONE adjacent_month__occupational_outflow__origin_WTFINL beta=-0.00019810
+FITTING adjacent_month__entry_destination__official
+DONE adjacent_month__entry_destination__official beta=-0.07039919
+FITTING adjacent_month__entry_destination__unweighted
+DONE adjacent_month__entry_destination__unweighted beta=-0.07787205
+FITTING adjacent_month__entry_destination__origin_WTFINL
+DONE adjacent_month__entry_destination__origin_WTFINL beta=-0.06530659
+FITTING twelve_month__employment_exit__official
+DONE twelve_month__employment_exit__official beta=0.12272235
+FITTING twelve_month__employment_exit__unweighted
+DONE twelve_month__employment_exit__unweighted beta=0.18432129
+FITTING twelve_month__employment_exit__origin_WTFINL
+DONE twelve_month__employment_exit__origin_WTFINL beta=0.11758587
+FITTING twelve_month__unemployment_entry__official
+DONE twelve_month__unemployment_entry__official beta=0.24592565
+FITTING twelve_month__unemployment_entry__unweighted
+DONE twelve_month__unemployment_entry__unweighted beta=0.15297543
+FITTING twelve_month__unemployment_entry__origin_WTFINL
+DONE twelve_month__unemployment_entry__origin_WTFINL beta=0.26252005
+FITTING twelve_month__labor_force_exit__official
+DONE twelve_month__labor_force_exit__official beta=0.07801604
+FITTING twelve_month__labor_force_exit__unweighted
+DONE twelve_month__labor_force_exit__unweighted beta=0.17818407
+FITTING twelve_month__labor_force_exit__origin_WTFINL
+DONE twelve_month__labor_force_exit__origin_WTFINL beta=0.05452192
+FITTING twelve_month__occupational_outflow__official
+DONE twelve_month__occupational_outflow__official beta=-0.01784143
+FITTING twelve_month__occupational_outflow__unweighted
+DONE twelve_month__occupational_outflow__unweighted beta=-0.03519084
+FITTING twelve_month__occupational_outflow__origin_WTFINL
+DONE twelve_month__occupational_outflow__origin_WTFINL beta=-0.02411952
+FITTING twelve_month__entry_destination__official
+DONE twelve_month__entry_destination__official beta=-0.05194514
+FITTING twelve_month__entry_destination__unweighted
+DONE twelve_month__entry_destination__unweighted beta=-0.10652119
+FITTING twelve_month__entry_destination__origin_WTFINL
+DONE twelve_month__entry_destination__origin_WTFINL beta=-0.06885515
+FITTING adjacent_month__usual_hours_change_continuing_workers__official
+DONE adjacent_month__usual_hours_change_continuing_workers__official beta=-0.11914204
+FITTING adjacent_month__usual_hours_change_continuing_workers__unweighted
+DONE adjacent_month__usual_hours_change_continuing_workers__unweighted beta=-0.10768419
+FITTING adjacent_month__usual_hours_change_continuing_workers__origin_WTFINL
+DONE adjacent_month__usual_hours_change_continuing_workers__origin_WTFINL beta=-0.11836568
+FITTING cross_sectional_month__weekly_earnings_conditional_workers__EARNWT
+DONE cross_sectional_month__weekly_earnings_conditional_workers__EARNWT beta=-0.02450772
+{
+  "models_completed": 35,
+  "models_failed": 0
+}
+Traceback (most recent call last):
+  File "/project/econdept/qluo/yax-substantive-revision-20260905/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 132, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/project/econdept/qluo/yax-substantive-revision-20260905/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 118, in main
+    require("employer hire" in (root / "OUTCOME_FEASIBILITY_AND_LIMITS.md").read_text(encoding="utf-8"),
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "limitations memo distinguishes CPS flows from employer hiring")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/econdept/qluo/yax-substantive-revision-20260905/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 37, in require
+    raise AssertionError(description)
+AssertionError: limitations memo distinguishes CPS flows from employer hiring

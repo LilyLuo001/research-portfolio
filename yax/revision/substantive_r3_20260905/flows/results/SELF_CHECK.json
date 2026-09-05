@@ -1,0 +1,546 @@
+{
+  "status": "PASS",
+  "checks": 135,
+  "details": [
+    {
+      "description": "pre-results flow specification commit is authenticated",
+      "passed": true
+    },
+    {
+      "description": "corrected weight patch merges without unmatched rows",
+      "passed": true
+    },
+    {
+      "description": "corrected person-month merge keys are unique",
+      "passed": true
+    },
+    {
+      "description": "five restored March Basic samples contribute records",
+      "passed": true
+    },
+    {
+      "description": "restored March samples carry adjacent-month weights",
+      "passed": true
+    },
+    {
+      "description": "restored March samples carry adjacent-year weights",
+      "passed": true
+    },
+    {
+      "description": "rebuilt treatment retains authenticated 468-occupation beta/Webb support",
+      "passed": true
+    },
+    {
+      "description": "bridge route probabilities conserve source mass",
+      "passed": true
+    },
+    {
+      "description": "all fixed flow/outcome models completed without substituted specifications",
+      "passed": true
+    },
+    {
+      "description": "receipt does not manufacture a stock-flow calibration",
+      "passed": true
+    },
+    {
+      "description": "receipt attests aggregate-only outputs",
+      "passed": true
+    },
+    {
+      "description": "machine-readable model failure registry is empty",
+      "passed": true
+    },
+    {
+      "description": "each executed model has one canonical numerical row",
+      "passed": true
+    },
+    {
+      "description": "fixed model menu is complete and contains no outcome-selected additions",
+      "passed": true
+    },
+    {
+      "description": "every MDE uses the declared two-sided normal-theory multiplier",
+      "passed": true
+    },
+    {
+      "description": "every wild-score interval contains its point estimate",
+      "passed": true
+    },
+    {
+      "description": "all core intervals use the common 9,999-draw seed contract",
+      "passed": true
+    },
+    {
+      "description": "every fitted target has more than one contributing occupation",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__unemployment_entry__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__unemployment_entry__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__unemployment_entry__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__unemployment_entry__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__unemployment_entry__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__unemployment_entry__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__labor_force_exit__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__labor_force_exit__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__labor_force_exit__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__labor_force_exit__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__labor_force_exit__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__labor_force_exit__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__occupational_outflow__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__occupational_outflow__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__occupational_outflow__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__occupational_outflow__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__occupational_outflow__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__occupational_outflow__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__entry_destination__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__entry_destination__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__entry_destination__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__entry_destination__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__entry_destination__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__entry_destination__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__employment_exit__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__employment_exit__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__employment_exit__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__employment_exit__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__employment_exit__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__employment_exit__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__unemployment_entry__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__unemployment_entry__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__unemployment_entry__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__unemployment_entry__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__unemployment_entry__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__unemployment_entry__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__labor_force_exit__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__labor_force_exit__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__labor_force_exit__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__labor_force_exit__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__labor_force_exit__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__labor_force_exit__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__occupational_outflow__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__occupational_outflow__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__occupational_outflow__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__occupational_outflow__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__occupational_outflow__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__occupational_outflow__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__entry_destination__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__entry_destination__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__entry_destination__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__entry_destination__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__entry_destination__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "twelve_month__entry_destination__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__usual_hours_change_continuing_workers__official: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__usual_hours_change_continuing_workers__official: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__usual_hours_change_continuing_workers__unweighted: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__usual_hours_change_continuing_workers__unweighted: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__usual_hours_change_continuing_workers__origin_WTFINL: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__usual_hours_change_continuing_workers__origin_WTFINL: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "cross_sectional_month__weekly_earnings_conditional_workers__EARNWT: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "cross_sectional_month__weekly_earnings_conditional_workers__EARNWT: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__official__older_26_30: influence rows match contributing occupations",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month__employment_exit__official__older_26_30: stored target influences reproduce the occupation-cluster SE",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month/official: unemployment and NILF events exhaust employment exits",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month/unweighted: unemployment and NILF events exhaust employment exits",
+      "passed": true
+    },
+    {
+      "description": "adjacent_month/origin_WTFINL: unemployment and NILF events exhaust employment exits",
+      "passed": true
+    },
+    {
+      "description": "twelve_month/official: unemployment and NILF events exhaust employment exits",
+      "passed": true
+    },
+    {
+      "description": "twelve_month/unweighted: unemployment and NILF events exhaust employment exits",
+      "passed": true
+    },
+    {
+      "description": "twelve_month/origin_WTFINL: unemployment and NILF events exhaust employment exits",
+      "passed": true
+    },
+    {
+      "description": "all fractional route quantities conserve routeable source mass",
+      "passed": true
+    },
+    {
+      "description": "support-retention rates are admissible",
+      "passed": true
+    },
+    {
+      "description": "link audit covers both declared horizons",
+      "passed": true
+    },
+    {
+      "description": "link rates lie in [0,1]",
+      "passed": true
+    },
+    {
+      "description": "positive-weight retention rates lie in [0,1]",
+      "passed": true
+    },
+    {
+      "description": "aging and occupation diagnostics cover both horizons",
+      "passed": true
+    },
+    {
+      "description": "STOCK_FLOW_BCC_COMPARABILITY.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "FLOW_RISK_EVENT_COUNTS.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "FLOW_DESCRIPTIVE_RATES.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "LINK_ATTRITION_AUDIT.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "UNEMPLOYMENT_DURATION_DESCRIPTIVES.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "LINK_TRANSITION_DIAGNOSTICS.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "ROUTE_AND_SUPPORT_AUDIT.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "HOURS_CHANGE_DESCRIPTIVES.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "FLOW_AND_WORKER_OUTCOME_RESULTS.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "TARGET_OCCUPATION_INFLUENCE.csv: no restricted identifier column is written",
+      "passed": true
+    },
+    {
+      "description": "limitations memo distinguishes CPS flows from employer hiring",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "FLOW_AND_WORKER_OUTCOME_RESULTS.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "FLOW_DESCRIPTIVE_RATES.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "FLOW_RISK_EVENT_COUNTS.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "HOURS_CHANGE_DESCRIPTIVES.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "LINK_ATTRITION_AUDIT.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "LINK_TRANSITION_DIAGNOSTICS.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "MODEL_FAILURES.json: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "OUTCOME_FEASIBILITY_AND_LIMITS.md: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "ROUTE_AND_SUPPORT_AUDIT.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "STOCK_FLOW_BCC_COMPARABILITY.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "TARGET_OCCUPATION_INFLUENCE.csv: hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "receipt avoids circular self-hashes",
+      "passed": true
+    },
+    {
+      "description": "UNEMPLOYMENT_DURATION_DESCRIPTIVES.csv: hash matches execution receipt",
+      "passed": true
+    }
+  ]
+}

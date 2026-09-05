@@ -1,0 +1,6 @@
+quantity,population,denominator,observed_changes,match_to_flow_package
+YAX employment stock,monthly CPS ages 22-25 versus 26-65,survey-weighted employment stock,"net entry, exit, switching, aging, population/composition",not an accounting identity; repeated cross-sections and linked samples differ
+adjacent CPS employment exit,positive-LNKFW1MWT validated employed origins,linked employed origins,employment to unemployment or NILF at t+1,valid origin-exposure rate; misses job-to-job employer changes
+adjacent CPS entry destination,validated N-to-E links only,observed supported entries by age-month,allocation across destination occupations,not an employment-finding probability or employer hire rate
+annual CPS endpoint,positive-LNKFW1YWT validated origin-endpoint links,linked origins or observed N-to-E endpoints,status/code difference at t+12,misses intervening spells and jobs; young origins age during horizon
+BCC payroll hiring,full-time positive-earnings worker-firm matches in balanced ADP firms,prior worker stock under BCC definition,new employer matches over prior year,CPS has no employer identifier; no numerical calibration is identified
