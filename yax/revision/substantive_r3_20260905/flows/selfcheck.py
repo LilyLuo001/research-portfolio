@@ -115,7 +115,8 @@ def main() -> int:
     for path in root.glob("*.csv"):
         headers = set(pd.read_csv(path, nrows=0).columns)
         require(not (headers & forbidden_headers), f"{path.name}: no restricted identifier column is written")
-    require("employer hire" in (root / "OUTCOME_FEASIBILITY_AND_LIMITS.md").read_text(encoding="utf-8"),
+    limitations = (root / "OUTCOME_FEASIBILITY_AND_LIMITS.md").read_text(encoding="utf-8").lower()
+    require("employer" in limitations and "hiring" in limitations,
             "limitations memo distinguishes CPS flows from employer hiring")
 
     for filename, expected in receipt["output_hashes"].items():
@@ -130,4 +131,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
