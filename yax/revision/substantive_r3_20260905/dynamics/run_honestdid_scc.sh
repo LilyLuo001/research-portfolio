@@ -5,13 +5,12 @@
 #$ -pe omp 1
 #$ -j y
 #$ -N yax_r3_honestdid
-#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/agents/dynamics/honestdid_execution.log
 set -euo pipefail
 
-COMPUTE_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
+COMPUTE_ROOT="${YAX_SCC_PROJECT_ROOT:?Set YAX_SCC_PROJECT_ROOT to a writable compute root}"
 AGENT="$COMPUTE_ROOT/agents/dynamics"
 OUT="$AGENT/results"
-PYTHON=/usr3/graduate/qluo/portfolio/.venv/bin/python
+PYTHON="${YAX_PYTHON_BIN:-python3}"
 export R_LIBS_USER="$AGENT/r-library/4.5-glpk-cvxr182-rust184-highs112"
 export CARGO_HOME="$AGENT/r-library/cargo-home-rust184-highs112"
 mkdir -p "$R_LIBS_USER"

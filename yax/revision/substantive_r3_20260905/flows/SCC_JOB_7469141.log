@@ -71,14 +71,14 @@ DONE cross_sectional_month__weekly_earnings_conditional_workers__EARNWT beta=-0.
   "models_failed": 0
 }
 Traceback (most recent call last):
-  File "/project/econdept/qluo/yax-substantive-revision-20260905/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 132, in <module>
+  File "<YAX_SCC_PROJECT_ROOT>/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 132, in <module>
     raise SystemExit(main())
                      ~~~~^^
-  File "/project/econdept/qluo/yax-substantive-revision-20260905/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 118, in main
+  File "<YAX_SCC_PROJECT_ROOT>/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 118, in main
     require("employer hire" in (root / "OUTCOME_FEASIBILITY_AND_LIMITS.md").read_text(encoding="utf-8"),
     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             "limitations memo distinguishes CPS flows from employer hiring")
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/project/econdept/qluo/yax-substantive-revision-20260905/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 37, in require
+  File "<YAX_SCC_PROJECT_ROOT>/agents/flows/repo/yax/revision/substantive_r3_20260905/flows/selfcheck.py", line 37, in require
     raise AssertionError(description)
 AssertionError: limitations memo distinguishes CPS flows from employer hiring

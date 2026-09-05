@@ -139,9 +139,14 @@ def finalize_response_matrix() -> None:
     }
     for row in rows:
         key = f"{row['report']}:{row['comment_id']}"
-        row["manuscript_location"] = locations[key]
-        row["status"] = status_updates.get(key, "completed")
-        if key in evidence_updates:
+        # The response matrix is manually audited against the finished paper.
+        # Production finalization may fill genuinely empty cells, but it must
+        # not replace those more precise locators with an older template.
+        if not row["manuscript_location"].strip():
+            row["manuscript_location"] = locations[key]
+        if not row["status"].strip() or row["status"] in {"pending", "planned"}:
+            row["status"] = status_updates.get(key, "completed")
+        if key in evidence_updates and not row["evidence_location"].strip():
             row["evidence_location"] = evidence_updates[key]
     write_rows(path, fields, rows)
 
@@ -171,7 +176,7 @@ def append_results() -> None:
     path = R3 / "RESULTS_LEDGER.csv"
     fields, rows = read_rows(path)
     additions = [
-        ["FAM-01-REBUILT", "complete", "2026-09-05", "7a07ab2", "dynamics/rebuilt_family_harmonization/results/EXECUTION_RECEIPT.json", "dynamics/rebuilt_family_harmonization/results/PROFILE_COEFFICIENTS.csv", "-0.021675", "0.071323", "-0.159538", "0.116188", "0.199816", "468 occupations; 22 SOC2 families; rebuilt treatment; 113 months", "Family-month conditioning moves the pooled Q5 coefficient by 0.110434 on common draws", "Profile-conditioned vector is jointly consistent with zero; paired Q5 interval [0.008463,0.212406]"],
+        ["FAM-01-REBUILT", "complete", "2026-09-05", "7a07ab2", "dynamics/results/STATIC_STRUCTURE_PAIRING_RECEIPT.json", "dynamics/results/STATIC_STRUCTURE_PAIRING.csv", "-0.021675", "0.071323", "-0.160651", "0.117301", "0.199816", "468 occupations; 22 SOC2 families; rebuilt treatment; 113 months", "Family-month conditioning moves the pooled Q5 coefficient by 0.110434 on common draws", "Canonical single-target paired Q5 interval [0.010698,0.210171]; four-target profile simultaneous intervals are separately labeled"],
         ["FAM-02-REBUILT", "complete_nondetection_changed_population", "2026-09-05", "7a07ab2", "dynamics/rebuilt_family_harmonization/results/EXECUTION_RECEIPT.json", "dynamics/rebuilt_family_harmonization/results/DIRECT_TAIL_MODELS.csv", "0.149364", "0.163331", "-0.169434", "0.468161", "0.457586", "29 occupations in four families; 5.03% of full-support preperiod stock", "Direct within-family tail comparison is highly imprecise", "Changed population; rebuilt treatment contract"],
         ["FAM-03-REBUILT", "complete_nondetection", "2026-09-05", "7a07ab2", "dynamics/rebuilt_family_harmonization/results/EXECUTION_RECEIPT.json", "dynamics/rebuilt_family_harmonization/results/CONTINUOUS_WITHIN_FAMILY_MODELS.csv", "-0.002465", "0.011184", "-0.023989", "0.019059", "0.031332", "468 occupations; one within-family SD is 0.108385 raw beta units", "Common within-family slope is not detected", "SOC2-by-calendar-month; rebuilt treatment contract"],
         ["INF-02-REBUILT-PAIR", "complete", "2026-09-05", "08b4edc", "inference_rebuilt/results/EXECUTION_RECEIPT.json", "inference_rebuilt/results/SOC2_WILD_SENSITIVITY.csv", "0.110434", "0.054828", "0.005876", "0.214993", "0.153604", "22 SOC2 clusters; 99,999 Webb six-point draws", "Paired conditioning movement remains detected under broad-family shocks", "Distinct shock interpretation from occupation clustering"],
@@ -179,6 +184,7 @@ def append_results() -> None:
         ["DYN-01-SOC2", "complete_with_pretrend_warning", "2026-09-05", "7a07ab2", "dynamics/results/EXECUTION_RECEIPT.json", "dynamics/results/STATIC_DYNAMIC_MAPPING.csv", "-0.207434", "0.111088", "-0.421567", "0.006700", "0.290967", "38 Q5 event coefficients; SOC2-specific monthly paths", "Family-conditioned dynamic functional is not detected and unrestricted pretrend test rejects", "Companion linear functional"],
         ["DYN-02-HONEST-POOL", "complete_nondetection", "2026-09-05", "7a07ab2", "dynamics/results/HONESTDID_EXECUTION_RECEIPT.csv", "dynamics/results/HONESTDID_ORIGINAL_rebuilt_corrected_preperiod_weight_unconditioned.csv", "-0.119889", "", "-0.263649", "0.023871", "", "Official HonestDiD 0.2.8; rebuilt pooled event vector", "Conventional companion interval already includes zero", "No positive zero-exclusion breakdown is defined"],
         ["DYN-02-HONEST-SOC2", "complete_nondetection", "2026-09-05", "7a07ab2", "dynamics/results/HONESTDID_EXECUTION_RECEIPT.csv", "dynamics/results/HONESTDID_ORIGINAL_rebuilt_corrected_preperiod_weight_SOC2_x_calendar_month.csv", "-0.207434", "", "-0.425163", "0.010295", "", "Official HonestDiD 0.2.8; rebuilt family-conditioned event vector", "Conventional companion interval already includes zero", "No positive zero-exclusion breakdown is defined"],
+        ["DYN-04-PRE2025", "complete_exploratory", "2026-09-06", "SCC-7471585", "dynamics/results/EXECUTION_RECEIPT.json", "dynamics/results/ENDPOINT_SENSITIVITY.csv", "-0.111039", "0.045268", "-0.200766", "-0.021312", "0.126823", "468 occupations; rebuilt treatment; 95 months through December 2024", "The requested pre-2025 endpoint remains negative; its +0.021071 paired movement versus July 2026 is not detected", "Common-draw paired interval [-0.007313,0.049454]; post-outcome exploratory endpoint audit"],
         ["ARCH-01-LAMBDA", "complete_exploratory", "2026-09-05", "fc3d34c", "architecture/results/EXECUTION_RECEIPT.json", "architecture/results/LAMBDA_GRID_RESULTS.csv", "-0.132109", "0.045174", "-0.219789", "-0.044429", "0.126559", "468 occupations; lambda=.5 exact beta construction", "Point estimates vary with architecture but every lambda-versus-beta paired interval includes zero", "Tail membership changes are reported separately"],
         ["ARCH-02-D", "complete_exploratory", "2026-09-05", "fc3d34c", "architecture/results/EXECUTION_RECEIPT.json", "architecture/results/PRIMITIVE_ILLUSTRATIVE_CONTRASTS.csv", "-0.030923", "0.013896", "-0.057982", "-0.003865", "0.038930", "468 occupations; one weighted SD of D holding S fixed", "Illustrative primitive association; not adoption decomposition", "Joint D/S model"],
         ["ARCH-02-S", "complete_exploratory", "2026-09-05", "fc3d34c", "architecture/results/EXECUTION_RECEIPT.json", "architecture/results/PRIMITIVE_ILLUSTRATIVE_CONTRASTS.csv", "-0.027927", "0.013604", "-0.054185", "-0.001669", "0.038113", "468 occupations; one weighted SD of S holding D fixed", "Illustrative primitive association; not adoption decomposition", "Joint D/S model"],

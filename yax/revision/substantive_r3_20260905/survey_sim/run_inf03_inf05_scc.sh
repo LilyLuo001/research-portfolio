@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-COMPUTE_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
+COMPUTE_ROOT="${YAX_SCC_PROJECT_ROOT:?Set YAX_SCC_PROJECT_ROOT to a writable compute root}"
 REPO_ROOT="$COMPUTE_ROOT/repo_git2"
-PRIVATE_ROOT=/projectnb/econdept/qluo/dax-private/ipums
-PYTHON_BIN=/usr3/graduate/qluo/portfolio/.venv/bin/python
+PRIVATE_ROOT="${YAX_PRIVATE_ROOT:?Set YAX_PRIVATE_ROOT to the restricted input root}"
+PYTHON_BIN="${YAX_PYTHON_BIN:-python3}"
 OUTPUT_DIR="${OUTPUT_DIR:-$COMPUTE_ROOT/results/inf03_inf05}"
 HOUSEHOLD_DRAWS="${HOUSEHOLD_DRAWS:-199}"
 SIMULATION_DRAWS="${SIMULATION_DRAWS:-199}"

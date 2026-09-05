@@ -264,7 +264,7 @@ def run(output: pathlib.Path, require_honestdid: bool = False,
                 raise RuntimeError("January-2023 onset reference failed")
     endpoint = pd.read_csv(output / "ENDPOINT_SENSITIVITY.csv")
     expected_endpoints = {
-        "through_2025_09", "through_2025_12_actual_gap",
+        "through_2024_12", "through_2025_09", "through_2025_12_actual_gap",
         "full_excluding_September_and_November_2025",
         "full_through_2026_07_excluding_late_2025", "full_through_2026_07",
         "post_2020_coding_stable_through_2026_07",

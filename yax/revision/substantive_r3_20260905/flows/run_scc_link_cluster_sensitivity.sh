@@ -8,11 +8,11 @@
 
 set -euo pipefail
 
-PROJECT_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
+PROJECT_ROOT="${YAX_SCC_PROJECT_ROOT:?Set YAX_SCC_PROJECT_ROOT to a writable compute root}"
 REPO_ROOT=${REPO_ROOT:-$PROJECT_ROOT/repo_git2}
 FLOW_ROOT=$PROJECT_ROOT/agents/flows
-PRIVATE_SOURCE=/projectnb/econdept/qluo/dax-private/ipums
-PYTHON=/usr3/graduate/qluo/portfolio/.venv/bin/python
+PRIVATE_SOURCE="${YAX_PRIVATE_ROOT:?Set YAX_PRIVATE_ROOT to the restricted input root}"
+PYTHON="${YAX_PYTHON_BIN:-python3}"
 : "${WEIGHT_PATCH:?Pass the private corrected IPUMS weight-patch CSV.GZ as WEIGHT_PATCH}"
 
 mkdir -p "$FLOW_ROOT/results_household"

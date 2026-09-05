@@ -1,6 +1,6 @@
 # SCC execution receipt
 
-All compute ran under `/project/econdept/qluo/yax-substantive-revision-20260905`; existing private inputs under `/projectnb/econdept` were read-only. No existing job or shell session was terminated.
+All compute ran under `<YAX_SCC_PROJECT_ROOT>`; existing private inputs under `<YAX_PRIVATE_STORAGE_TIER>` were read-only. No existing job or shell session was terminated.
 
 | Job | Purpose | Exit | Wall time | Max memory | Result |
 |---|---|---:|---:|---:|---|

@@ -4,10 +4,10 @@
 #$ -l h_rt=01:00:00
 #$ -l mem_per_core=4G
 #$ -j y
-#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/pdf_build.log
+#$ -o yax_r3_pdf.log
 
 set -euo pipefail
-repo_root="${YAX_REPO_ROOT:-/project/econdept/qluo/yax-substantive-revision-20260905/repo}"
+repo_root="${YAX_REPO_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
 cd "${repo_root}/paper"
 mkdir -p build
 git diff --no-ext-diff --no-color 6b8d85e -- main appendix tables revision > revision/source_diff.txt
@@ -19,12 +19,14 @@ build_with_bib() {
   bibtex "build/$job"
   pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=build -jobname="$job" "$source"
   pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=build -jobname="$job" "$source"
+  pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=build -jobname="$job" "$source"
   ./scripts/check_latex_log.sh "build/$job.log"
 }
 
 build_without_bib() {
   local source="$1"
   local job="$2"
+  pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=build -jobname="$job" "$source"
   pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=build -jobname="$job" "$source"
   pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=build -jobname="$job" "$source"
   ./scripts/check_latex_log.sh "build/$job.log"

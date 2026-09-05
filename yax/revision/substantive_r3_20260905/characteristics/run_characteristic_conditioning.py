@@ -27,6 +27,10 @@ DRAWS = 9999
 SEED = 2026090531
 Z975 = 1.959963984540054
 Z80 = 0.8416212335729143
+EXPECTED_REBUILT_SUPPORT_HASH = "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
+EXPECTED_REBUILT_MEMBERSHIP_HASH = "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+EXPECTED_REBUILT_NORMALIZATION_HASH = "e756d597c12fc2b61ddf62e536b50d3edab32375980e7cea70e5de42fca57557"
+EXPECTED_REBUILT_BASELINE = -0.13210945079219033
 
 STATIC_CHARACTERISTICS = {
     "computer_use": "onet_computers_importance",
@@ -96,6 +100,97 @@ def weighted_corr(left: np.ndarray, right: np.ndarray, weights: np.ndarray) -> f
         * float(np.sum(weights * np.square(right - rm)))
     )
     return numerator / denominator
+
+
+def load_rebuilt_contract(args: argparse.Namespace, data: dict) -> dict:
+    """Authenticate and load the canonical corrected-preperiod treatment."""
+    observed_hashes = {
+        "membership": sha256(args.rebuilt_membership),
+        "normalization": sha256(args.rebuilt_normalization),
+    }
+    expected_hashes = {
+        "membership": EXPECTED_REBUILT_MEMBERSHIP_HASH,
+        "normalization": EXPECTED_REBUILT_NORMALIZATION_HASH,
+    }
+    mismatches = {
+        name: {"observed": observed_hashes[name], "expected": expected}
+        for name, expected in expected_hashes.items()
+        if observed_hashes[name] != expected
+    }
+    if mismatches:
+        raise RuntimeError(f"rebuilt treatment authentication failed: {mismatches}")
+
+    membership = pd.read_csv(args.rebuilt_membership, dtype={"occupation_code": str})
+    required = {
+        "occupation_code", "preperiod_weight", "rule_A_beta", "beta_quintile",
+        "webb_pct_software", "webb_z",
+    }
+    if not required.issubset(membership.columns):
+        raise RuntimeError(
+            f"rebuilt membership lacks columns: {sorted(required - set(membership.columns))}"
+        )
+    membership["occupation_code"] = membership.occupation_code.str.zfill(4)
+    if membership.occupation_code.duplicated().any():
+        raise RuntimeError("rebuilt membership contains duplicate occupations")
+    support = membership.occupation_code.tolist()
+    if support != sorted(support):
+        raise RuntimeError("rebuilt membership must be sorted by occupation code")
+    if len(support) != 468 or CORE.support_hash(support) != EXPECTED_REBUILT_SUPPORT_HASH:
+        raise RuntimeError("canonical rebuilt support changed")
+
+    weights = pd.to_numeric(membership.preperiod_weight, errors="raise").to_numpy(float)
+    quintiles = pd.to_numeric(membership.beta_quintile, errors="raise").to_numpy(int)
+    webb_z = pd.to_numeric(membership.webb_z, errors="raise").to_numpy(float)
+    beta = pd.to_numeric(membership.rule_A_beta, errors="raise").to_numpy(float)
+    webb = pd.to_numeric(membership.webb_pct_software, errors="raise").to_numpy(float)
+    if np.any(~np.isfinite(weights)) or np.any(weights <= 0):
+        raise RuntimeError("rebuilt preperiod weights must be finite and positive")
+    if np.any(~np.isfinite(beta)) or np.any(~np.isfinite(webb)) or np.any(~np.isfinite(webb_z)):
+        raise RuntimeError("rebuilt exposure contract contains nonfinite values")
+    if set(np.unique(quintiles).tolist()) != {1, 2, 3, 4, 5}:
+        raise RuntimeError("rebuilt quintile membership is invalid")
+
+    exposure_map = data["exposures"]["dv_rating_beta"]["A"]
+    webb_map = data["computers"]["webb_pct_software"]
+    public_beta = np.array([exposure_map.get(code, np.nan) for code in support], float)
+    public_webb = np.array([webb_map.get(code, np.nan) for code in support], float)
+    if not np.allclose(beta, public_beta, atol=1e-12, rtol=0):
+        raise RuntimeError("rebuilt beta values disagree with authenticated public lookup")
+    if not np.allclose(webb, public_webb, atol=1e-12, rtol=0):
+        raise RuntimeError("rebuilt Webb values disagree with authenticated public lookup")
+
+    normalization = json.loads(args.rebuilt_normalization.read_text(encoding="utf-8"))
+    required_normalization = {
+        "construction_start": "2017-01",
+        "construction_end": "2022-11",
+        "construction_months": 71,
+        "no_postperiod_stock_used": True,
+        "postperiod_stock_used": 0.0,
+        "support_occupations": 468,
+        "support_hash_sha256": EXPECTED_REBUILT_SUPPORT_HASH,
+    }
+    failures = {
+        key: {"observed": normalization.get(key), "expected": expected}
+        for key, expected in required_normalization.items()
+        if normalization.get(key) != expected
+    }
+    if failures:
+        raise RuntimeError(f"rebuilt normalization contract changed: {failures}")
+    if not np.isclose(weights.sum(), normalization["total_preperiod_stock"], atol=1e-5, rtol=1e-12):
+        raise RuntimeError("rebuilt membership weights do not sum to normalization total")
+    webb_mean = float(np.average(webb, weights=weights))
+    webb_sd = float(np.sqrt(np.average(np.square(webb - webb_mean), weights=weights)))
+    expected_webb_z = (webb - webb_mean) / webb_sd
+    if not np.allclose(webb_z, expected_webb_z, atol=1e-12, rtol=0):
+        raise RuntimeError("rebuilt Webb z-scores fail weighted-normalization reconstruction")
+    return {
+        "support": support,
+        "weights": weights,
+        "quintiles": quintiles,
+        "webb_z": webb_z,
+        "hashes": observed_hashes,
+        "normalization": normalization,
+    }
 
 
 def pandemic_shortfalls(cells: pd.DataFrame, support: list[str]) -> tuple[dict, list[dict]]:
@@ -274,21 +369,18 @@ def paired_row(
 def run(args: argparse.Namespace) -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     data = CORE.load_data(args)
+    contract = load_rebuilt_contract(args, data)
     exposure = data["exposures"]["dv_rating_beta"]["A"]
-    webb = data["computers"]["webb_pct_software"]
-    prepared = FROZEN.prepare_model(
-        data["panel"], data["occupations"], data["static_months"], exposure, webb, scale="q5_q1"
-    )
-    primary_support = list(prepared["occupations"])
+    primary_support = contract["support"]
     if len(primary_support) != 468:
         raise RuntimeError(f"expected 468 primary occupations, found {len(primary_support)}")
-    primary_weights = {code: float(weight) for code, weight in zip(primary_support, prepared["weights"])}
-    q_values = np.array([exposure[code] for code in primary_support], float)
-    q_full = FROZEN.weighted_quintiles(q_values, prepared["weights"])
-    q_map = {code: int(q) for code, q in zip(primary_support, q_full)}
-    webb_values = np.array([webb[code] for code in primary_support], float)
-    webb_mean, webb_sd = FROZEN.weighted_scale(webb_values, prepared["weights"])
-    webb_z_map = {code: float((webb[code] - webb_mean) / webb_sd) for code in primary_support}
+    primary_weights = {
+        code: float(weight) for code, weight in zip(primary_support, contract["weights"])
+    }
+    q_map = {code: int(q) for code, q in zip(primary_support, contract["quintiles"])}
+    webb_z_map = {
+        code: float(value) for code, value in zip(primary_support, contract["webb_z"])
+    }
 
     cells, _, cell_receipt = CELLS.build_exact_age_cells(args)
     months = [month for month in sorted(cells.month.unique()) if month != "2022-12"]
@@ -413,7 +505,7 @@ def run(args: argparse.Namespace) -> None:
                 "occupation_code": code,
                 "occupation_name": data["names"].get(code, ""),
                 "SOC2": major_map.get(code, "MISSING"),
-                "frozen_beta_quintile": q_map[code],
+                "rebuilt_beta_quintile": q_map[code],
                 "conditional_target_information": float(contribution),
                 "conditional_target_information_share": float(contribution / contributions.sum()),
                 "primary_employment_weight": primary_weights[code],
@@ -424,7 +516,16 @@ def run(args: argparse.Namespace) -> None:
         np.array([-1.0, 1.0]), size=(DRAWS, len(primary_support))
     )
     try:
-        fit_registered("native_corrected_baseline", "native_468", primary_support, [], False, native_signs)
+        native_baseline, _, _ = fit_registered(
+            "native_corrected_baseline", "native_468", primary_support, [], False, native_signs
+        )
+        if not np.isclose(
+            native_baseline["coefficient"], EXPECTED_REBUILT_BASELINE, atol=1e-10, rtol=0
+        ):
+            raise RuntimeError(
+                "rebuilt-treatment baseline checkpoint changed: "
+                f"{native_baseline['coefficient']} != {EXPECTED_REBUILT_BASELINE}"
+            )
     except Exception as error:
         failures.append({"specification": "native_corrected_baseline", "error": repr(error)})
         raise
@@ -625,6 +726,9 @@ def run(args: argparse.Namespace) -> None:
         "registered_specification": str((HERE / "ANALYSIS_SPEC.md").relative_to(ROOT)),
         "registered_specification_sha256": sha256(HERE / "ANALYSIS_SPEC.md"),
         "support_amendment_sha256": sha256(HERE / "ANALYSIS_SPEC_AMENDMENT_1.md"),
+        "treatment_contract_amendment_sha256": sha256(
+            HERE / "ANALYSIS_SPEC_AMENDMENT_2_REBUILT_TREATMENT.md"
+        ),
         "initial_common_support_results_commit": "8e3b876266e09679467b5a0c640c3c16b0c51974",
         "script_sha256": sha256(pathlib.Path(__file__)),
         "input_hashes": data["authenticated"]["hashes"],
@@ -636,8 +740,13 @@ def run(args: argparse.Namespace) -> None:
         "common_support_primary_employment_coverage": float(
             sum(primary_weights[code] for code in common_support) / sum(primary_weights.values())
         ),
-        "quintile_assignments": "historical frozen primary assignments retained",
-        "webb_normalization": "historical frozen primary normalization retained",
+        "treatment_contract": "rebuilt_corrected_preperiod_weight",
+        "rebuilt_treatment_input_hashes": contract["hashes"],
+        "rebuilt_treatment_support_hash_sha256": EXPECTED_REBUILT_SUPPORT_HASH,
+        "rebuilt_treatment_construction_window": "2017-01 through 2022-11 corrected 71-month preperiod",
+        "no_postperiod_stock_used_for_treatment": True,
+        "quintile_assignments": "canonical rebuilt corrected-preperiod assignments",
+        "webb_normalization": "canonical rebuilt corrected-preperiod normalization",
         "characteristic_normalization": "2017-2019 total employment weights on literal common support",
         "pandemic_shortfall_generated_regressor_uncertainty": "not captured by conditional wild-score intervals",
         "bootstrap": {
@@ -670,6 +779,14 @@ def parser() -> argparse.ArgumentParser:
     value.add_argument("--bridge", type=pathlib.Path, default=ROOT / "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv")
     value.add_argument("--first-access-receipt", type=pathlib.Path, default=ROOT / "yax/analysis/FIRST_OUTCOME_ACCESS_RECEIPT.json")
     value.add_argument("--characteristics", type=pathlib.Path, default=ROOT / "yax/measurement/test_a/TEST_A_OCCUPATION_CHARACTERISTICS.csv")
+    value.add_argument(
+        "--rebuilt-membership", type=pathlib.Path,
+        default=ROOT / "yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv",
+    )
+    value.add_argument(
+        "--rebuilt-normalization", type=pathlib.Path,
+        default=ROOT / "yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_NORMALIZATION_AND_CUTS.json",
+    )
     value.add_argument("--output-dir", type=pathlib.Path, required=True)
     return value
 

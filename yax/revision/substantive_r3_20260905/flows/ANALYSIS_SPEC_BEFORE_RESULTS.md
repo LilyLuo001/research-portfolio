@@ -44,7 +44,7 @@ calendar. It replaces `cps2017_03s` through `cps2021_03s` with the corresponding
 `03b` samples and includes `LNKFW1MWT` and `LNKFW1YWT`. The patch is merged by
 `YEAR`, `MONTH`, `SERIAL`, and `PERNUM`; all available longitudinal identifiers,
 MISH, and age must agree. Restricted microdata and identifiers remain outside
-git under `/project/econdept/qluo/yax-substantive-revision-20260905/private`.
+git under `<YAX_SCC_PROJECT_ROOT>/private`.
 
 October 2025 was not collected and is never interpolated. December 2022 is the
 transition origin and is excluded from static adjacent-month models.

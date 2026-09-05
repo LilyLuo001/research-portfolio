@@ -44,7 +44,7 @@ Occupation clustering permits arbitrary serial dependence within occupation but 
 
 \emph{Response.} This request now determines the paper.  SOC2-by-young-by-calendar-month conditioning moves the reconstructed coefficient from $-0.1321$ to $-0.0217$; the paired 0.1104 movement has interval $[0.0107,0.2102]$.  A less saturated SOC2-by-young-by-post model is also reported.  We do not call the movement a percentage ``explained,'' because family controls can absorb AI-related and non-AI-related evolution.
 
-We report the entire Q2--Q5 profile, a common-draw joint test, and simultaneous intervals rather than infer monotonicity from four point estimates.  We also replace the outcome-selected ``always-tail'' row as the central support check with a transparent direct-tail benchmark: only families containing both reconstructed Q1 and Q5 occupations enter, and the changed population is named.  The resulting interval is too wide to resolve a direct within-family tail gradient.  A continuous demeaned within-family companion states its scale and common-slope restriction.
+We report the entire Q2--Q5 profile, a common-draw joint test, and simultaneous intervals rather than infer monotonicity from four point estimates.  We also replace the outcome-selected ``always-tail'' row as the central support check with a transparent direct-tail benchmark: only families containing both reconstructed Q1 and Q5 occupations enter, and the changed population is named.  That benchmark has 29 occupations, an inverse-Herfindahl effective count of 6.2 occupations, a 77.8-percent top-five information share, and a normal-theory MDE$_{80}$ of 0.4576 log point.  The resulting interval is too wide to resolve a direct within-family tail gradient.  A continuous demeaned within-family companion states its scale and common-slope restriction and has MDE$_{80}=0.0313$ per one within-family standard deviation.
 
 \subsection*{M4. Influence and the low-exposure reference}
 
@@ -54,7 +54,7 @@ We no longer claim that a coarse leisure/hospitality code identifies a food-serv
 
 \subsection*{M5. CPS population controls and late-2025 production}
 
-\emph{Response.} We verified the January 2025 and January 2026 control changes, the revised January 2026 file, October 2025 noncollection, and delayed/reweighted November 2025 collection against official documentation.  The extract and weight vintages are recorded by hash.  The endpoint grid includes pre-2025, pre-2026, and full-window estimates, plus an exclusion of September and November 2025 around the gap.
+\emph{Response.} We verified the January 2025 and January 2026 control changes, the revised January 2026 file, October 2025 noncollection, and delayed/reweighted November 2025 collection against official documentation.  The extract and weight vintages are recorded by hash.  The endpoint grid includes the exact requested pre-2025 endpoint through December 2024, late-2025 and pre-2026 endpoints, the full window, and an exclusion of September and November 2025 around the gap.  In this post-outcome exploratory grid, the December-2024 pooled coefficient is $-0.1110$ ($[-0.2008,-0.0213]$); its endpoint-minus-full-window difference is 0.0211 ($[-0.0073,0.0495]$).  The family-conditioned coefficient is $-0.0120$ ($[-0.1657,0.1417]$), with paired difference 0.0097 ($[-0.0526,0.0719]$).  The separately estimated 2023--24 versus 2025--26 postperiod split supplies a different era comparison with paired uncertainty; we do not relabel it as an endpoint regression.
 
 BLS does not publish counterfactual age-by-occupation weights on the prior control basis.  We therefore do not manufacture a subgroup adjustment from aggregate factors.  Respondent-equivalent cells are retained as a separately defined unweighted outcome, not described as recovered counterfactual weights or a common scalar rescaling.
 
@@ -64,7 +64,7 @@ BLS does not publish counterfactual age-by-occupation weights on the prior contr
 
 \subsection*{M7. Conflicting intervals}
 
-\emph{Response.} Corrected.  The canonical reconstructed pooled interval is $[-0.2206,-0.0437]$ from the declared 9,999-draw occupation wild-score procedure.  Different stochastic targets---22-family dependence, household resampling, and elapsed-time HAC---are labeled rather than printed as interchangeable intervals for one result.  A numerical-consistency script checks all displayed estimates and refuses a build when repeated canonical values differ.
+\emph{Response.} Corrected.  The canonical reconstructed pooled interval is $[-0.2206,-0.0437]$ from the declared 9,999-draw occupation wild-score procedure.  Different stochastic targets---22-family dependence, household resampling, and elapsed-time HAC---are labeled rather than printed as interchangeable intervals for one result.  A numerical-consistency script checks the load-bearing displayed estimates and refuses a build when declared canonical values differ.
 
 \subsection*{M8. BCC comparability}
 
@@ -72,7 +72,7 @@ BLS does not publish counterfactual age-by-occupation weights on the prior contr
 
 \subsection*{M9. January 2023 and adoption timing}
 
-\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present either as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
+\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  The post-outcome exploratory December-2024 endpoint gives $-0.1110$ pooled and $-0.0120$ after family-by-month conditioning; neither endpoint-minus-full-window paired interval excludes zero.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present either as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
 
 \subsection*{M10. F/G parameterization}
 
@@ -80,7 +80,7 @@ BLS does not publish counterfactual age-by-occupation weights on the prior contr
 
 \subsection*{M11. Entry and longitudinal evidence}
 
-\emph{Response.} Corrected CPS links now distinguish employment exit, reported occupation change among endpoint-employed workers, and Q5-versus-Q1 destination allocation conditional on entry.  Adjacent and twelve-month endpoint results use their own risk sets and official longitudinal weights; every primary interval includes zero.  Twelve-month young links retain only 50.98 percent of eligible origins, so the longer horizon does not automatically double information.  We never call destination allocation an employment-finding probability or employer hiring rate.  The earlier rematching benchmark is removed from the scientific appendix.
+\emph{Response.} Corrected CPS links now distinguish employment exit, reported occupation change among endpoint-employed workers, and Q5-versus-Q1 destination allocation conditional on entry.  Adjacent and twelve-month endpoint results use their own risk sets and official longitudinal weights; every primary interval includes zero.  Their normal-theory MDE$_{80}$ values range from 0.115 to 0.336 log point and are reported as precision diagnostics, not rejection thresholds.  Twelve-month young links retain only 50.98 percent of eligible origins, so the longer horizon does not automatically double information.  We never call destination allocation an employment-finding probability or employer hiring rate.  The earlier rematching benchmark is removed from the scientific appendix.
 
 \subsection*{M12. Generated-covariate validation}
 
@@ -99,7 +99,7 @@ BLS does not publish counterfactual age-by-occupation weights on the prior contr
 \item The main text uses one uncluttered young/older/ratio figure; additional level paths remain in the appendix.
 \item Prose and displayed tables use design-appropriate rounding; machine files retain full precision.
 \item ``Respondent-equivalent'' is defined on first use as fractional routed-record mass before 2020 and exact record count thereafter, never unique persons.
-\item The paper uses Eloundou et al.'s published notation $\alpha$, $\beta$, and $\zeta$; legacy code-column names are documented only in the archive.
+\item The paper calls the retained exposure $\beta$ and writes its task primitives as $D=E1$ and $S=E2$.  It does not report $\alpha$ or the upper-bound score as principal outcome architectures.  The archive records that the legacy source field \texttt{dv\_rating\_gamma} corresponds to the published $\zeta$ construct; ``gamma'' and ``broad'' are not used as competing scientific labels.
 \item Source and generated text pass a UTF-8/mojibake scan.
 \item Affiliation, email, acknowledgments, funding, conflicts, and journal disclosures remain visibly marked \texttt{[AUTHOR TO COMPLETE]}; none is invented.
 \item The repository chronology is described as internally git-versioned and explicitly not externally registered.
@@ -121,7 +121,7 @@ BLS does not publish counterfactual age-by-occupation weights on the prior contr
 
 \subsection*{M4. Reference group and broad occupational variation}
 
-\emph{Response.} The main empirical section now shows Q1 and Q5 young and older stock paths, the full exposure profile, family-by-quintile support, the families spanning both tails, direct-tail and continuous within-family companions, and family/occupation influence.  The regression with family-specific monthly paths replaces the assumption-dependent permutation as the central diagnostic.  The conclusion is comparison based: the pooled coefficient relies primarily on broad occupational structure, while direct within-family evidence is sparse and imprecise.
+\emph{Response.} The main empirical section now shows Q1 and Q5 young and older stock paths, the full exposure profile, family-by-quintile support, the families spanning both tails, direct-tail and continuous within-family companions, and family/occupation influence.  The regression with family-specific monthly paths replaces the assumption-dependent permutation as the central diagnostic.  In the post-outcome exploratory December-2024 endpoint check, pooled and family-conditioned coefficients are $-0.1110$ and $-0.0120$; their respective endpoint-minus-full-window paired intervals are $[-0.0073,0.0495]$ and $[-0.0526,0.0719]$.  The conclusion is comparison based: the pooled coefficient relies primarily on broad occupational structure, while direct within-family evidence is sparse and imprecise.
 
 \subsection*{M5. Corrected pipeline and bridge uncertainty}
 
@@ -150,7 +150,7 @@ BLS does not publish counterfactual age-by-occupation weights on the prior contr
 \item Under identical reconstructed support and estimation, $\lambda=.5$ reproduces beta exactly.  Earlier different coefficients mixed support or treatment contracts and remain only in implementation history.
 \item Respondent-equivalent cells remove released final-weight magnitudes record by record; they are not a common scalar rescaling of weighted stocks.
 \item The paper consistently says ``ages 22--25'' or ``young workers,'' not observed experience.  BA/non-BA and exact-age comparisons are reported with simultaneous/paired uncertainty and do not identify a cohort mechanism.
-\item Four compact main tables consolidate the data, occupational comparison, characteristic/inference, and flow evidence.  Native, matched-support, and paired quantities are labeled.
+\item Six compact main tables separate data construction, occupational comparison, characteristic conditioning, inference, flows, and the lambda diagnostic.  Native, matched-support, and paired quantities are labeled.
 \item Longitudinal estimates remain explicitly nondetections on distinct risk sets; no flow coefficient is interpreted as evidence that a mechanism is absent.
 \end{enumerate}
 

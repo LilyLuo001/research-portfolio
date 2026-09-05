@@ -5,13 +5,13 @@
 #$ -pe omp 1
 #$ -j y
 #$ -N yax_r3_fam_rebuilt
-#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/agents/dynamics/rebuilt_family_harmonization/scc_execution.log
 set -euo pipefail
 
 REPO="${YAX_REPO_ROOT:-${SGE_O_WORKDIR:-}}"
-OUT=/project/econdept/qluo/yax-substantive-revision-20260905/agents/dynamics/rebuilt_family_harmonization/results
-PYTHON=/usr3/graduate/qluo/portfolio/.venv/bin/python
-PRIVATE=/projectnb/econdept/qluo/dax-private/ipums
+PROJECT_ROOT="${YAX_SCC_PROJECT_ROOT:?Set YAX_SCC_PROJECT_ROOT to a writable compute root}"
+OUT="${OUTPUT_ROOT:-$PROJECT_ROOT/agents/dynamics/rebuilt_family_harmonization/results}"
+PYTHON="${YAX_PYTHON_BIN:-python3}"
+PRIVATE="${YAX_PRIVATE_ROOT:?Set YAX_PRIVATE_ROOT to the restricted input root}"
 
 if [[ -z "$REPO" || ! -f "$REPO/yax/revision/substantive_r3_20260905/dynamics/rebuilt_family_harmonization/run_rebuilt_family.py" ]]; then
   echo "ERROR: YAX_REPO_ROOT/SGE_O_WORKDIR does not identify the clean worktree" >&2
@@ -20,7 +20,9 @@ fi
 
 mkdir -p "$OUT"
 cd "$REPO"
-export PYTHONPATH=/usr3/graduate/qluo/.local/lib/python3.6/site-packages
+if [[ -n "${YAX_LEGACY_PYTHONPATH:-}" ]]; then
+  export PYTHONPATH="$YAX_LEGACY_PYTHONPATH${PYTHONPATH:+:$PYTHONPATH}"
+fi
 export OMP_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
@@ -35,4 +37,3 @@ export MKL_NUM_THREADS=1
 
 "$PYTHON" yax/revision/substantive_r3_20260905/dynamics/rebuilt_family_harmonization/selfcheck.py \
   --output-dir "$OUT"
-

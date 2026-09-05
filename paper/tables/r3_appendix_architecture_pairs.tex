@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering
+\caption{Post-outcome exploratory task-weight architectures on common support}\label{tab:appendix_architecture_pairs}
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Architecture pair & Alternative coefficient & Beta coefficient & Alternative $-$ beta [95\% CI] & Paired $\mathrm{MDE}_{80}$ \\
+\midrule
+$D$ versus $D+0.5S$ & $-0.103$ & $-0.132$ & $0.029\;[-0.044,0.103]$ & 0.106 \\
+$D+0.25S$ versus $D+0.5S$ & $-0.101$ & $-0.132$ & $0.031\;[-0.005,0.068]$ & 0.055 \\
+$D+0.75S$ versus $D+0.5S$ & $-0.143$ & $-0.132$ & $-0.011\;[-0.039,0.017]$ & 0.041 \\
+$D+S$ versus $D+0.5S$ & $-0.156$ & $-0.132$ & $-0.024\;[-0.064,0.017]$ & 0.058 \\
+\bottomrule
+\end{tabular}}
+\tabnote{All entries are post-outcome exploratory Q5--Q1 coefficients estimated on the identical 468-occupation support.  Beta is $D+0.5S$.  At each alternative weight, normalization, cutoffs, and tie-preserving quintile memberships are recomputed, so a paired movement combines score and membership changes rather than holding the treatment groups fixed.  The intervals use 9,999 common occupation multiplier draws, preserving covariance within each pair.  Every paired interval contains zero; this means that the design does not detect a difference, not that the architectures are economically equivalent.}
+\end{table}

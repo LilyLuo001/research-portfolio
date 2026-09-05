@@ -1,0 +1,37 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "comparison_baseline_commit": "ba8a9382ca3d37b717c0febadfd02c83d9421755",
+  "correction": "historical full-static-panel beta groups and Webb normalization replaced by the authenticated rebuilt corrected-preperiod treatment contract",
+  "current_execution_receipt_sha256": "05510b654a2e474c85cc0d960fe7179d254072df4f20d18d4850941ee6d3d687",
+  "current_membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+  "current_normalization_sha256": "e756d597c12fc2b61ddf62e536b50d3edab32375980e7cea70e5de42fca57557",
+  "current_support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+  "historical_to_rebuilt_quintile_memberships_changed": 9,
+  "model_failures_unchanged_and_empty": true,
+  "no_postperiod_stock_used_for_current_treatment": true,
+  "registered_model_count_before": 35,
+  "registered_model_count_after": 35,
+  "registered_model_identifiers_unchanged": true,
+  "registered_pair_count_before": 24,
+  "registered_pair_count_after": 24,
+  "registered_pair_identifiers_unchanged": true,
+  "support_counts_unchanged_for_every_model": true,
+  "support_hashes_unchanged_for_every_model": true,
+  "bootstrap_rule_unchanged": {
+    "common_occupation_Rademacher_multipliers": true,
+    "draws": 9999,
+    "seed_common": 2026090532,
+    "seed_native": 2026090531
+  },
+  "unchanged_artifacts": {
+    "CHARACTERISTIC_CORRELATIONS.csv": "5e28005ceb3a2e7200b22c6763a48f01e9ab2db0163561b00cc75c3130fc744a",
+    "CHARACTERISTIC_SCALING.csv": "689a177036f1d50b0e1f80eb506d0b0e7e0c6f927e1ec7543d0b97e3403f1624",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "PANDEMIC_SHORTFALL_DIAGNOSTICS.csv": "4820cf6f8b952f5b7f0d9b6235025298bdcbe79ac092df75c866a8acf17ff4a3"
+  },
+  "baseline_coefficient_before": -0.1345539535732939,
+  "baseline_coefficient_after": -0.1321094507921903,
+  "maximum_absolute_model_coefficient_change": 0.011137527444823991,
+  "maximum_change_model": "cumulative_plus_pandemic_SOC2",
+  "status": "PASS_REBUILT_TREATMENT_CHARACTERISTIC_AUDIT"
+}

@@ -1,0 +1,23 @@
+\begin{table}[!htbp]
+\centering
+\caption{Post-outcome exploratory BCC-style grouping bridge}\label{tab:appendix_bcc_bridge}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+Grouping rule & Conditioning structure & Coefficient [95\% CI] & Change from baseline [95\% CI] & Paired $\mathrm{MDE}_{80}$ \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel A. Public-dashboard equal-occupation approximation}} \\
+Equal occupation & Occupation and calendar-month FE & $-0.072\;[-0.122,-0.022]$ & --- & --- \\
+Equal occupation & SOC2 by young by post & $-0.015\;[-0.080,0.050]$ & $0.057\;[-0.001,0.115]$ & 0.083 \\
+Equal occupation & SOC2 by young by calendar month & $-0.017\;[-0.081,0.047]$ & $0.055\;[-0.002,0.113]$ & 0.082 \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Panel B. Historical employment-weighted approximation}} \\
+Employment weighted & Occupation and calendar-month FE & $-0.075\;[-0.125,-0.025]$ & --- & --- \\
+Employment weighted & SOC2 by young by post & $-0.027\;[-0.095,0.041]$ & $0.048\;[-0.011,0.108]$ & 0.086 \\
+Employment weighted & SOC2 by young by calendar month & $-0.027\;[-0.093,0.040]$ & $0.048\;[-0.011,0.107]$ & 0.086 \\
+\bottomrule
+\end{tabular}}
+\tabnote{All rows are post-outcome exploratory CPS bridges, not replications of BCC's proprietary ADP analysis.  Each row compares GPT-4-beta Q4--Q5 with Q1--Q3 on the same 468 occupations, includes the standardized historical Webb-software control, and uses 9,999 common occupation-level Rademacher multipliers.  Paired changes compare each SOC2-conditioned row with its own unconditioned baseline.  Panel A follows the public dashboard's equal-occupation description as closely as public information permits.  Panel B uses earlier employment-weighted cuts formed from 108 months of young-plus-older CPS stock, including postperiod months, and is only a grouping-rule diagnostic.  Exact BCC occupation membership, universe, cutoff and tie algorithm are not public, so concordance is unverified.  The BCC and CPS objects also differ in ages, denominator, endpoint, employer controls, and observed worker--firm flows.  Null-containing paired intervals are nondetections, not equivalence.}
+\end{table}

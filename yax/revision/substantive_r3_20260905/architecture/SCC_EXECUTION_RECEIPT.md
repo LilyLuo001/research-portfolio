@@ -6,7 +6,7 @@
 - Exit status: `0`
 - Wall time: `69` seconds
 - Maximum virtual memory: `1.973G`
-- Output root: `/project/econdept/qluo/yax-substantive-revision-20260905/agents/architecture/results`
+- Output root: `<YAX_SCC_PROJECT_ROOT>/agents/architecture/results`
 - SCC self-check: `PASS`, 138 of 138 checks
 - Local independent self-check after transfer: `PASS`, 138 of 138 checks
 

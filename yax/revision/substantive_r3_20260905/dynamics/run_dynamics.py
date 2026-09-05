@@ -654,6 +654,7 @@ def run_grid(contract, cells, structures, signs, kind):
     elif kind == "endpoint":
         full = contract["months"]
         variants = [
+            ("through_2024_12", [m for m in full if m <= "2024-12"], "2023-01"),
             ("through_2025_09", [m for m in full if m <= "2025-09"], "2023-01"),
             ("through_2025_12_actual_gap", [m for m in full if m <= "2025-12"], "2023-01"),
             ("full_excluding_September_and_November_2025", [m for m in full if m not in {"2025-09", "2025-11"}], "2023-01"),

@@ -43,6 +43,7 @@
     "reported_target": "Q5 versus Q1 in each nonreference quarter"
   },
   "endpoint_variants": [
+    "through_2024_12",
     "through_2025_09",
     "through_2025_12_actual_gap",
     "full_excluding_September_and_November_2025",
@@ -50,6 +51,7 @@
     "full_through_2026_07",
     "post_2020_coding_stable_through_2026_07"
   ],
+  "endpoint_extension_note": "Implementation correction required by the governing prompt: the through_2024_12 endpoint supplies the explicitly requested pre-2025 diagnostic. Its code path and label were fixed before its numerical estimate was inspected. The exercise remains post-outcome exploratory because the underlying outcome pattern was already known.",
   "onset_dates": [
     "2022-11",
     "2022-12",

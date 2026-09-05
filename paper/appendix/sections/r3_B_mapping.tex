@@ -4,6 +4,8 @@
 
 The early panel reports Census-2010 occupations and the later panel Census-2018 occupations.  Exposure inputs additionally span SOC vintages.  The versioned bridge first routes 503 early source codes into 568 target codes.  Fifty-six sources have more than one target, with maximum multiplicity seven.  Official shares partition each source record's final weight; separate young and older routing would require validation data that the public adjacent-vintage files do not provide.  The routed early and current stocks reconcile to their sources with relative error below $2\times10^{-16}$.
 
+In the frozen mapping-only lookup, the equal-administrative AIOE variant has full-route coverage for 480 of the 503 pre-2020 source codes.  This 480-code mapping count is not the regression sample: intersecting the rebuilt beta and Webb inputs with positive young preperiod stock yields the 468-occupation primary analysis support below.
+
 The primary joint beta/Webb universe contains 468 occupations and 87.19 percent of stock in the audited candidate universe.  Table~\ref{tab:app_exclusions} gives mutually exclusive exclusion counts.  A machine-readable file lists each included and excluded occupation, its preperiod stocks, scores, and reason.  This file, rather than a hard-coded count in the paper, defines support.
 
 \begin{table}[!htbp]
@@ -51,4 +53,3 @@ The invalid merge is documented as a failure encountered in this project.  I do 
 Within the primary support, split sources contribute 14.93 percent of young and 17.75 percent of older early stock.  Ninety-nine target occupations can receive a split route.  A one-to-one-target restriction and an aggregation to stable Census-2010 categories both retain negative historical-contract estimates, but each changes the target population.  They are mapping sensitivities, not repairs of the primary bridge.
 
 Using the same route proportions by age is transparent but unvalidated.  Accounting ranges that allocate every ambiguous source in all feasible ways place the 2017--2019 young-to-older stock ratio between 0.1031 and 0.1480 in Q1 and between 0.0790 and 0.1175 in Q5.  These are stock-accounting bounds, not bounds on the nonlinear regression coefficient.  A limited odds-tilt sensitivity changes the historical-contract coefficient only modestly because 6.88 percent of early stock is eligible, but it cannot validate age-specific routing.  No adjacent coding vintage is treated as a same-person validation sample.
-

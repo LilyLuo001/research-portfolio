@@ -116,7 +116,13 @@ def run(results: pathlib.Path) -> int:
     for name, expected in receipt["output_hashes"].items():
         check(f"hash_{name}", sha256(results / name) == expected)
     combined_text = "\n".join(path.read_text(errors="ignore") for path in results.iterdir() if path.is_file())
-    check("no_private_absolute_path", "/projectnb/" not in combined_text and "/project/econdept/" not in combined_text)
+    forbidden_roots = (
+        "/" + "projectnb/",
+        "/" + "project/econdept/",
+        "/" + "usr3/",
+        "/" + "Users/",
+    )
+    check("no_private_absolute_path", all(root not in combined_text for root in forbidden_roots))
 
     passed = sum(item["passed"] for item in checks)
     payload = {"status": "PASS" if passed == len(checks) else "FAIL", "passed": passed, "total": len(checks), "checks": checks}

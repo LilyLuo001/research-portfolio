@@ -5,14 +5,13 @@
 #$ -l h_rt=18:00:00
 #$ -l mem_per_core=8G
 #$ -pe omp 4
-#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/logs/architecture.log
 
 set -euo pipefail
 
-COMPUTE_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
+COMPUTE_ROOT="${YAX_SCC_PROJECT_ROOT:?Set YAX_SCC_PROJECT_ROOT to a writable compute root}"
 REPO_ROOT="${REPO_ROOT:-$COMPUTE_ROOT/repo_git2}"
-PYTHON_BIN=/usr3/graduate/qluo/portfolio/.venv/bin/python
-PRIVATE_ROOT=/projectnb/econdept/qluo/dax-private/ipums
+PYTHON_BIN="${YAX_PYTHON_BIN:-python3}"
+PRIVATE_ROOT="${YAX_PRIVATE_ROOT:?Set YAX_PRIVATE_ROOT to the restricted input root}"
 OUTPUT_ROOT="${OUTPUT_ROOT:-$COMPUTE_ROOT/results/architecture}"
 
 mkdir -p "$COMPUTE_ROOT/results" "$COMPUTE_ROOT/logs"
@@ -22,7 +21,9 @@ if [ -e "$OUTPUT_ROOT" ]; then
 fi
 cd "$REPO_ROOT"
 
-export PYTHONPATH=/usr3/graduate/qluo/.local/lib/python3.6/site-packages
+if [[ -n "${YAX_LEGACY_PYTHONPATH:-}" ]]; then
+  export PYTHONPATH="$YAX_LEGACY_PYTHONPATH${PYTHONPATH:+:$PYTHONPATH}"
+fi
 export OMP_NUM_THREADS="${NSLOTS:-1}"
 export OPENBLAS_NUM_THREADS="${NSLOTS:-1}"
 export MKL_NUM_THREADS="${NSLOTS:-1}"

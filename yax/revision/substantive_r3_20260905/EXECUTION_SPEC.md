@@ -22,9 +22,9 @@ The R3 prompt refers to another R2 whose headings are numbered 3.1--3.9, 4.1--4.
 
 ## Compute and storage decision
 
-The requested `/projectnb/econdept/...` tier is currently unwritable: SCC `pquota econdept` reports 30,100 GB used against a 30,000 GB quota, and a named 128 MB write probe failed with `Disk quota exceeded`. No existing files will be deleted to manufacture capacity. The verified compute root is:
+The requested `<YAX_PRIVATE_STORAGE_TIER>/...` tier is currently unwritable: SCC `pquota econdept` reports 30,100 GB used against a 30,000 GB quota, and a named 128 MB write probe failed with `Disk quota exceeded`. No existing files will be deleted to manufacture capacity. The verified compute root is:
 
-`/project/econdept/qluo/yax-substantive-revision-20260905`
+`<YAX_SCC_PROJECT_ROOT>`
 
 SCC reports 74.71 GB used against a 200 GB quota on this tier; a real 128 MB write-and-fsync probe succeeded and was removed. Private inputs may be read from their authenticated existing locations, but all new code copies, logs, temporary artifacts, draws, and results must be written beneath the verified compute root. No secrets may be stored in code, logs, receipts, or Git.
 

@@ -225,8 +225,8 @@
     "march_repair_policy": "explicitly_replace_wide_03s_rows_with_separately_hashed_03b_repair_for_2017_2021_before_eligibility_filtering",
     "maximum_source_multiplicity": 7,
     "microdata_files": [
-      "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/cps_00009.csv.gz",
-      "/projectnb/econdept/qluo/dax-private/ipums/yax_referee_march_repair/cps_00011.csv.gz"
+      "<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz",
+      "<YAX_PRIVATE_ROOT>/yax_referee_march_repair/cps_00011.csv.gz"
     ],
     "observed_month_count": 114,
     "observed_months": [
@@ -382,12 +382,12 @@
       "analysis_code_sha256": "5f39cd8619fed34e6d97c5a4f90501eced41cf2425d09d7068a100a8397a386d",
       "computerization_measures_sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
       "data_source": "IPUMS CPS extract 9, licensed private SCC input",
-      "exact_analysis_command": "cd /projectnb/econdept/qluo/yax-postoutcome-run-20260829 && PYTHONPATH=/usr3/graduate/qluo/.local/lib/python3.6/site-packages /usr3/graduate/qluo/portfolio/.venv/bin/python yax/analysis/run_frozen_v11.py --microdata /projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/cps_00009.csv.gz --preperiod-cells /projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv --lookup yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv --computerization yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv --rule-b-values yax/measurement/RULE_B_VALUES_CENSUS2018.csv --first-access-receipt yax/analysis/FIRST_OUTCOME_ACCESS_RECEIPT.json --output-dir yax/analysis/outcomes/frozen_v11_first_run",
+      "exact_analysis_command": "cd <YAX_LEGACY_PROJECT_ROOT> && PYTHONPATH=<YAX_LEGACY_PYTHONPATH> <YAX_PYTHON_BIN> yax/analysis/run_frozen_v11.py --microdata <YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz --preperiod-cells <YAX_PRIVATE_ROOT>/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv --lookup yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv --computerization yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv --rule-b-values yax/measurement/RULE_B_VALUES_CENSUS2018.csv --first-access-receipt yax/analysis/FIRST_OUTCOME_ACCESS_RECEIPT.json --output-dir yax/analysis/outcomes/frozen_v11_first_run",
       "exposure_lookup_sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
       "frozen_commit": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
       "frozen_tag": "v1.1-design-freeze",
       "implementation_commit": "557abbd0732d7fd73f9d61e7f8b36a884bd1db36",
-      "microdata_path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/cps_00009.csv.gz",
+      "microdata_path": "<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz",
       "microdata_sha256": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
       "pre_access_verification": {
         "all_12_gates_pass": true,
@@ -396,7 +396,7 @@
         "tag_peels_to_frozen_commit": true,
         "tagged_state_tests": "769 passed, 3 skipped"
       },
-      "preperiod_cells_path": "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+      "preperiod_cells_path": "<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
       "preperiod_cells_sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
       "record_version": "yax-first-authorized-post-freeze-outcome-access-v1",
       "recorded_at_utc_before_access": "2026-08-29T04:46:06Z",

@@ -1,0 +1,16 @@
+\begin{table}[!htbp]
+\centering
+\caption{Employment-exit components in linked CPS records}\label{tab:app_exit_components}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+Endpoint & Component & Raw events & Coefficient & 95\% interval \\
+\midrule
+Adjacent month & Unemployment entry & 32,488 & $0.055$ & $[-0.272,0.381]$ \\
+Adjacent month & Labor-force exit & 74,480 & $0.135$ & $[-0.064,0.333]$ \\
+Twelve month & Unemployment at endpoint & 27,330 & $0.246$ & $[-0.295,0.787]$ \\
+Twelve month & Out of labor force at endpoint & 78,773 & $0.078$ & $[-0.181,0.337]$ \\
+\bottomrule
+\end{tabular}}
+\tabnote{Rows use official longitudinal weights and the same young-relative Q5--Q1 log-rate-ratio contrast as the core flow table.  Counts are repeated link events rather than unique persons.  Unemployment and out-of-labor-force events exhaust observed employment exits, but their nonlinear coefficients do not add.  Every interval includes zero.}
+\end{table}

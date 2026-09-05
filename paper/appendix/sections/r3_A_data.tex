@@ -4,6 +4,8 @@
 
 The stock analysis uses two restricted IPUMS CPS extracts.  The wide file supplies January 2017--July 2026 records; a second file supplies the five March Basic Monthly samples that replace incorrectly selected March ASEC samples in 2017--2021.  The replication manifest records extract identifiers, creation metadata where available, byte sizes, and SHA-256 hashes without redistributing microdata.  The March replacement occurs before eligibility filters or occupation routing.  The superseded rows contribute no positive-final-weight analysis records; the replacement adds 252,862 eligible records.
 
+The wide file is IPUMS extract 9: its request was submitted on August 25, 2026, and the completed-file receipt was recorded four minutes later.  Separate hashes authenticate its submitted specification, data, DDI, and basic codebook.  The March repair is extract 11; its actual request, returned API response, data, DDI, and basic-codebook hashes are verified, but its surviving API response contains no submission or completion timestamp, so none is inferred from filesystem metadata.  Flow models additionally use extract 10 for \texttt{LNKFW1MWT}; it was recorded complete when checked on August 31, 2026, but the check time is not called an API completion time.  Exact timestamps and hashes appear in the input manifest and provenance receipt.  Restricted files, account metadata, download links, and direct identifiers are not redistributed.
+
 \begin{table}[!htbp]
 \centering
 \caption{Calendar and cell reconstruction audit}\label{tab:app_calendar}
@@ -49,4 +51,3 @@ The reconstructed contract contains 129, 99, 82, 67, and 91 occupations in Q1--Q
 \subsection{Survey-production dates}
 
 Official BLS documentation establishes population-control discontinuities in January 2025 and January 2026.  BLS did not revise the preceding official months onto the new bases and does not publish counterfactual age-by-occupation weights.  October 2025 was not collected; November collection began late, used reduced overlap and a modified weighting procedure, and had a lower response rate.  IPUMS later processed the reissued January 2026 file and corrections to longitudinal identifiers.  The stock and flow manifests preserve their respective extract dates and hashes.  Endpoint and exclusion checks diagnose reliance on these dates, but no aggregate adjustment factor is imposed on detailed cells.
-

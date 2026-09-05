@@ -5,20 +5,21 @@
 #$ -pe omp 1
 #$ -j y
 #$ -N yax_r3_dynamics
-#$ -o /project/econdept/qluo/yax-substantive-revision-20260905/agents/dynamics/scc_execution.log
 set -euo pipefail
 
-COMPUTE_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
+COMPUTE_ROOT="${YAX_SCC_PROJECT_ROOT:?Set YAX_SCC_PROJECT_ROOT to a writable compute root}"
 REPO="$COMPUTE_ROOT/repo_git2"
 AGENT="$COMPUTE_ROOT/agents/dynamics"
 OUT="$AGENT/results"
-PRIVATE=/projectnb/econdept/qluo/dax-private/ipums
-PYTHON=/usr3/graduate/qluo/portfolio/.venv/bin/python
+PRIVATE="${YAX_PRIVATE_ROOT:?Set YAX_PRIVATE_ROOT to the restricted input root}"
+PYTHON="${YAX_PYTHON_BIN:-python3}"
 REBUILT="$COMPUTE_ROOT/agents/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv"
 
 mkdir -p "$OUT"
 cd "$REPO"
-export PYTHONPATH=/usr3/graduate/qluo/.local/lib/python3.6/site-packages
+if [[ -n "${YAX_LEGACY_PYTHONPATH:-}" ]]; then
+  export PYTHONPATH="$YAX_LEGACY_PYTHONPATH${PYTHONPATH:+:$PYTHONPATH}"
+fi
 export YAX_REPO_ROOT="$REPO"
 export OMP_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1

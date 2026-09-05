@@ -49,9 +49,9 @@ The following supplied inputs were located:
 
 | Input | Located file | SHA-256 | Finding |
 |---|---|---|---|
-| Integrated execution prompt | `/Users/lilyluo/.codex/attachments/00f593a9-a6e8-4714-a63f-a21f849a326e/pasted-text.txt` | `8e4dc7e60a5ac9fc70799b669fb140b2dfa44c2a67589bdd87f31afdead8851c` | Authoritative new execution specification. |
-| Referee report, 12 major and 14 secondary comments | `/Users/lilyluo/.codex/attachments/7095d315-8833-46de-9cba-b43689a9dad7/pasted-text.txt` | `f5af3adc0774002fe3f0f76f7959ba336b47ff6a03b55aab6c49bf7141b73c67` | Matches the report called RR1 in the existing September 5 revision package. |
-| Referee report, 9 major comments plus six specific corrections | `/Users/lilyluo/.codex/attachments/f4872e22-51f2-460b-b781-1f16351f3aa4/pasted-text.txt` | `78dd89b842934e10842e202b6578b655a4afb4bd1efb2a20a47cf2c05bda5146` | Matches the report called RR2 in the existing package. |
+| Integrated execution prompt | `<SUPPLIED_INPUT:R3_EXECUTION>` | `8e4dc7e60a5ac9fc70799b669fb140b2dfa44c2a67589bdd87f31afdead8851c` | Authoritative new execution specification. |
+| Referee report, 12 major and 14 secondary comments | `<SUPPLIED_INPUT:R1>` | `f5af3adc0774002fe3f0f76f7959ba336b47ff6a03b55aab6c49bf7141b73c67` | Matches the report called RR1 in the existing September 5 revision package. |
+| Referee report, 9 major comments plus six specific corrections | `<SUPPLIED_INPUT:R2>` | `78dd89b842934e10842e202b6578b655a4afb4bd1efb2a20a47cf2c05bda5146` | Matches the report called RR2 in the existing package. |
 
 There is a version conflict that the new revision must not hide.  The integrated
 prompt identifies R2 as a report with sections `3.1--3.9`, `4.1--4.9`, and

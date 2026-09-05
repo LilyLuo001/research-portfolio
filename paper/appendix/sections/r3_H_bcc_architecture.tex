@@ -6,6 +6,8 @@ The comparison uses the August 12, 2026 version of Brynjolfsson--Chandar--Chen a
 
 The CPS bridge therefore applies an equal-occupation, tie-preserving top-two-versus-bottom-three approximation on the present support and labels it as such.  The pooled estimate is $-0.0720$, with interval $[-0.1218,-0.0222]$.  The SOC2-by-calendar-month estimate is $-0.0168$, with interval $[-0.0810,0.0474]$.  Their paired movement is 0.0553, with interval $[-0.0024,0.1129]$.  The archive provides group summaries and a membership file; it cannot provide concordance with undisclosed assignments.  Differences in occupation universe, age comparison, denominator, endpoint, firm controls, and employer-matched flows remain.
 
+\input{tables/r3_appendix_bcc_bridge.tex}
+
 \subsection{Task-capability weighting}
 
 Write the two Eloundou primitives as $D=E1$ and $S=E2$.  The score family $D+\lambda S$ is evaluated on a fixed grid from zero to one under common preperiod weights and common bootstrap draws.  The implementation verifies numerically that $\lambda=0.5$ reproduces raw beta before grouping.  Any earlier mismatch between that row and the headline arose from a different support or treatment contract and is preserved only as implementation history.
@@ -15,6 +17,12 @@ Two versions are kept separate.  The native-rank analysis recomputes the score n
 \subsection{Primitive and architecture comparisons}
 
 The joint primitive model reports $D$ and $S$ in raw share units, in preperiod-standard-deviation units, their covariance, and an illustrative common change.  This is a two-regressor parameterization, not a causal decomposition into technologies.  Architecture comparisons likewise report both component coefficients and their paired difference on each declared support.  Webb-AI comparisons are shown first on identical support and then on broader native support so that score changes are not confused with population changes.  Principal-component rotations and earlier F/G coordinates remain in the replication archive because they are affine re-expressions; they are omitted from the scientific appendix.
+
+\input{tables/r3_appendix_primitive_ds.tex}
+
+\input{tables/r3_appendix_architecture_pairs.tex}
+
+\input{tables/r3_appendix_webb_support.tex}
 
 \subsection{What validation would require}
 

@@ -26,8 +26,8 @@
     "march_repair_policy": "explicitly_replace_wide_03s_rows_with_separately_hashed_03b_repair_for_2017_2021_before_eligibility_filtering",
     "maximum_source_multiplicity": 7,
     "microdata_files": [
-      "/projectnb/econdept/qluo/dax-private/ipums/ai_telework_2017_2026/cps_00009.csv.gz",
-      "/projectnb/econdept/qluo/dax-private/ipums/yax_referee_march_repair/cps_00011.csv.gz"
+      "<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz",
+      "<YAX_PRIVATE_ROOT>/yax_referee_march_repair/cps_00011.csv.gz"
     ],
     "observed_month_count": 114,
     "observed_months": [
@@ -187,8 +187,8 @@
       "SOC2_x_calendar_month"
     ]
   },
-  "generated_at_utc": "2026-09-05T14:52:09.392889+00:00",
-  "git_head": "09968071462ac88de5cc649f38a1af7425329c60",
+  "generated_at_utc": "2026-09-05T21:57:47.859928+00:00",
+  "git_head": "ba8a9382ca3d37b717c0febadfd02c83d9421755",
   "march_repair_policy_receipt": {
     "analysis_eligibility": "age 18-65, employed EMPSTAT 10/12, valid OCC 0000-9999, finite WTFINL > 0",
     "eligible_CPSIDP_overlap_by_month": {
@@ -413,7 +413,7 @@
   "output_hashes": {
     "DYNAMIC_Q5_Q1_PROFILE.csv": "0ba25723f381cf963fb54404650bb627e2f5bf14cd742edb5b6b82f3e5feea68",
     "DYNAMIC_TARGET_PROFILE.csv": "878632cfca73ac47926d2eae6a2abea71e55cd98ccabf24a176568551964a056",
-    "ENDPOINT_SENSITIVITY.csv": "f5ae74119ceaa479149c20493d55300bfc0dd1fe116114bee9afe0aa64a13f83",
+    "ENDPOINT_SENSITIVITY.csv": "e5ff765511480d910739933f7753ff941376da79a770b861d5b8c98098a5781e",
     "HONESTDID_COVARIANCE_historical_production_full_static_weight_SOC2_x_calendar_month.csv": "3b0d12af25ec8ef426e7a2e71f4b2a40336b67a70ac79e8afec5238d5eb8afce",
     "HONESTDID_COVARIANCE_historical_production_full_static_weight_unconditioned.csv": "fca333b3bf9a1bf80740ae1b397164cd87d6f861e363894a3cb5028427925ca4",
     "HONESTDID_COVARIANCE_rebuilt_corrected_preperiod_weight_SOC2_x_calendar_month.csv": "778eade3f265df53a12f66a7bbdd2af5761bc15c81a55d2fa271f047a847f557",
@@ -521,7 +521,7 @@
     }
   ],
   "record": "YAX R3 DYN-01--DYN-04 corrected dynamics",
-  "script_sha256": "e8360f7d8c2f734cd963eda5176e7306dc5fdc943407de6d6586a54bc0725289",
+  "script_sha256": "df2f54712dd763d2fd747c73ef68f164038e3db0a3a4771846d4bc2b325e8bd2",
   "treatment_contracts": [
     {
       "membership_sha256": "historical_contract_rebuilt_in_memory",

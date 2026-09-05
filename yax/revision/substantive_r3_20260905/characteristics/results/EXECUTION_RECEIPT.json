@@ -158,9 +158,9 @@
   "characteristic_normalization": "2017-2019 total employment weights on literal common support",
   "common_support_hash_sha256": "fc09fa90e049425def089510cc9e73b9e753e4734e8db0248e08c6087fec451b",
   "common_support_occupations": 341,
-  "common_support_primary_employment_coverage": 0.7633639857835198,
-  "generated_at_utc": "2026-09-05T12:54:28.458334+00:00",
-  "git_head": "09968071462ac88de5cc649f38a1af7425329c60",
+  "common_support_primary_employment_coverage": 0.7676621853304325,
+  "generated_at_utc": "2026-09-05T22:07:02.941310+00:00",
+  "git_head": "ba8a9382ca3d37b717c0febadfd02c83d9421755",
   "initial_common_support_results_commit": "8e3b876266e09679467b5a0c640c3c16b0c51974",
   "input_hashes": {
     "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
@@ -171,26 +171,35 @@
     "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
   },
   "model_failures": [],
+  "no_postperiod_stock_used_for_treatment": true,
   "output_hashes": {
-    "ALL_MODEL_COEFFICIENTS.csv": "6ac270cffe6c284c2515cf7af5d1edc45580e18266baa9d6a8567b610271385e",
+    "ALL_MODEL_COEFFICIENTS.csv": "7b89bbfe3cdb63dc84026100e2dfd9622ffcd08a8e619d38133bdeb4eeab38a0",
     "CHARACTERISTIC_CORRELATIONS.csv": "5e28005ceb3a2e7200b22c6763a48f01e9ab2db0163561b00cc75c3130fc744a",
-    "CHARACTERISTIC_INFORMATION_BY_OCCUPATION.csv": "a73b441d4acf96b4603dd3fec9630be442a5251246fcf4f6d7624df95e5df370",
-    "CHARACTERISTIC_MODEL_RESULTS.csv": "b95b499f915d374771c0cf9134716f21b5be01532b3b39e59a561bd855d570b4",
-    "CHARACTERISTIC_PAIRED_DIFFERENCES.csv": "27ac556cc27b77cd7a4eb0f6d15771570342e27b513b4c6c8bd1e421231d152b",
+    "CHARACTERISTIC_INFORMATION_BY_OCCUPATION.csv": "636df1f10aa819e8584b82f2509d2b3b1f90124df55181301b37d70b1e0c8400",
+    "CHARACTERISTIC_MODEL_RESULTS.csv": "59c34811ae1ffd8b5fe6f0e3e65f5f657deafda42488bc6a81b2f04333ce37a8",
+    "CHARACTERISTIC_PAIRED_DIFFERENCES.csv": "e4d912f5ee494d6212bec6fcb7101849b6f462d69df86814594d85ba150b8909",
     "CHARACTERISTIC_SCALING.csv": "689a177036f1d50b0e1f80eb506d0b0e7e0c6f927e1ec7543d0b97e3403f1624",
-    "CHARACTERISTIC_SUPPORT_BY_QUINTILE.csv": "8d0ce4285b844217bcf047f5ef1eedd59d4b2473f2a48096f85dc0dedf6dd4a7",
+    "CHARACTERISTIC_SUPPORT_BY_QUINTILE.csv": "5eaee921e43c9b24fb8e7ccbc2c264dda30e3d2cd7121ef478ff6c83ad527dee",
     "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
     "PANDEMIC_SHORTFALL_DIAGNOSTICS.csv": "4820cf6f8b952f5b7f0d9b6235025298bdcbe79ac092df75c866a8acf17ff4a3",
-    "SUPPORT_SPECIFIC_MODEL_MAP.csv": "0223f1b4f7ce4a60acb60859fe0e2053c3ee3f370a62caadb5011dde5ea7bda1"
+    "SUPPORT_SPECIFIC_MODEL_MAP.csv": "d5dd1ad054e2355dd51152ada04630b587343d722d1a8abd81e53c2feb784e46"
   },
   "pandemic_shortfall_generated_regressor_uncertainty": "not captured by conditional wild-score intervals",
   "primary_support_occupations": 468,
-  "quintile_assignments": "historical frozen primary assignments retained",
+  "quintile_assignments": "canonical rebuilt corrected-preperiod assignments",
+  "rebuilt_treatment_construction_window": "2017-01 through 2022-11 corrected 71-month preperiod",
+  "rebuilt_treatment_input_hashes": {
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "normalization": "e756d597c12fc2b61ddf62e536b50d3edab32375980e7cea70e5de42fca57557"
+  },
+  "rebuilt_treatment_support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
   "record": "YAX R3 occupational-characteristic conditioning",
   "registered_specification": "yax/revision/substantive_r3_20260905/characteristics/ANALYSIS_SPEC.md",
   "registered_specification_sha256": "e6f31af817cdd98d12463ab78a6976c598bf51ea2601b52229921d26aa7d9573",
   "repair_microdata_sha256": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
-  "script_sha256": "2c27e2197b659a8fc54748e12449108a134138ecb11f10f71e1c17b128a552e2",
+  "script_sha256": "7135eff4b63873386a31f4e2e388a30da896f792e2949591e4e64a61f58c254b",
   "support_amendment_sha256": "18ac34d70ef5d481941090aae88cb7c8d292aac1bcba1fb1d3d052fbc2335d52",
-  "webb_normalization": "historical frozen primary normalization retained"
+  "treatment_contract": "rebuilt_corrected_preperiod_weight",
+  "treatment_contract_amendment_sha256": "1ba8b6b7e0624e323a234cdd03c5c89d7c5190aac185b709abce6b394d913dc1",
+  "webb_normalization": "canonical rebuilt corrected-preperiod normalization"
 }

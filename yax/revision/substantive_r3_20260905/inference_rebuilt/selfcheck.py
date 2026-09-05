@@ -46,9 +46,13 @@ def main() -> None:
         receipt["zero_placeholder_months"] == ["2022-12", "2025-10"]
     )
     receipt_text = (results / "EXECUTION_RECEIPT.json").read_text(encoding="utf-8")
-    checks["no_private_absolute_paths"] = (
-        "/projectnb/" not in receipt_text and "/project/econdept/" not in receipt_text
+    forbidden_roots = (
+        "/" + "projectnb/",
+        "/" + "project/econdept/",
+        "/" + "usr3/",
+        "/" + "Users/",
     )
+    checks["no_private_absolute_paths"] = all(root not in receipt_text for root in forbidden_roots)
     checks["no_failures"] = json.loads(
         (results / "MODEL_FAILURES.json").read_text(encoding="utf-8")
     ) == []

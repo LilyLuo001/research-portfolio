@@ -235,3 +235,47 @@ seconds and used at most 1.915 GB.  Its 49 checks passed under status
 `PASS_REBUILT_FAMILY_SELFCHECK`.  The authoritative direct-tail population is 29
 occupations and 5.03 percent of full-support preperiod stock; all family results
 use the rebuilt corrected-preperiod treatment contract.
+
+## SCC job 7471585 (successful endpoint-grid extension)
+
+- Exit status: 0 (scheduler `failed=0`).
+- Wall time: 2,138 seconds.
+- Maximum virtual memory: 2.713 GB.
+- Final runner status: `PASS_R3_DYN_01_THROUGH_04`.
+- Output dimensions: 608 fully interacted dynamic-profile rows, 152 Q5-versus-Q1
+  rows, 32 onset rows, 28 endpoint-grid rows, and 8 seasonality rows.
+
+This run added the predeclared through-December-2024 endpoint to the historical
+and rebuilt treatment contracts under both pooled and SOC2-by-calendar-month
+structures.  All required endpoint rows converged.  The two post-2020
+coding-stable endpoint models and the saturated occupation-season models again
+failed and remain explicitly recorded as
+`FAILED_REPORTED_NOT_SUBSTITUTED`.  The four main event vectors and covariance
+matrices have the same hashes as the inputs to successful official HonestDiD
+job 7469301, so the endpoint extension does not redefine the trend-sensitivity
+estimand.
+
+The rebuilt pooled coefficient through December 2024 is `-0.111039`, with
+interval `[-0.200766,-0.021312]`.  Its common-draw movement relative to the
+July-2026 endpoint is `0.021071`, with paired interval
+`[-0.007313,0.049454]`.  The corresponding family-month coefficient is
+`-0.011996`, with interval `[-0.165665,0.141673]`, and its paired movement is
+`0.009679`, with interval `[-0.052552,0.071910]`.
+
+## SCC jobs 7472012, 7472021, and 7472017 (dependency-receipt audit)
+
+Job 7472012 stopped before statistical execution because its submission did
+not export the required compute-root variable.  No result from that job is
+used.  Job 7472021 ran the metadata-only
+`augment_honestdid_receipt.R`, verified official CRAN `osqp` 1.0.0 in the
+same pinned project library used by the successful package stack, and added
+the two accidentally omitted dependency fields to a copy of the completed
+job-7469301 receipt.  The full dynamics self-check then passed with 28 endpoint
+rows, all four official HonestDiD models, and both structure-pair rows; no
+statistical artifact was modified.
+
+Job 7472017 is a redundant full official-package rerun in a separate result
+directory.  It was submitted as an additional provenance check and is not a
+substitute for the documented metadata correction.  Its output is not used by
+the revision unless it completes and independently passes the same artifact
+checks.

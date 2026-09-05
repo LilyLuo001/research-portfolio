@@ -5,6 +5,7 @@ repo_root="${YAX_REPO_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}"
 cd "$repo_root"
 
 python3 paper/scripts/build_r3_exhibits.py
+python3 paper/scripts/build_pretrend_drift_precision.py
 python3 yax/revision/substantive_r3_20260905/dynamics/rebuilt_family_harmonization/selfcheck.py \
   --output-dir yax/revision/substantive_r3_20260905/dynamics/rebuilt_family_harmonization/results
 python3 paper/scripts/audit_substantive_revision.py
