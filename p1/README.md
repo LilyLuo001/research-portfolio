@@ -1,7 +1,13 @@
 # P1 current entry point
 
 Start with `docs/基金转换实验_博士研究计划.md`, then
-`p1/STATUS-2026-09-03.md`.
+`p1/STATUS-2026-09-05.md` and `p1/etf_weight_shape_gates/README.md`.
+
+The 2026-09-05 V3 data-contract checkpoint is the current execution authority.
+All earlier ETF weight-shape Gate 0/1 outputs are invalidated, Gate 2 did not
+run, and no full rerun is authorized. The targeted contract pilot passed, but
+that is not a Gate result; the old full implementation remains fail-closed
+before archive access pending a contract-conformant rewrite and a new pilot.
 
 Current empirical inputs live in `p1/universe_v2/output/` and `p1/exposure/`.
 The root files `events_merged.csv` and `conv_exposure_free.parquet`, plus the

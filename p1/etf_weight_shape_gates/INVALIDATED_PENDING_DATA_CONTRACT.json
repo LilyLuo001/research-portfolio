@@ -1,0 +1,54 @@
+{
+  "status": "INVALIDATED_PENDING_DATA_CONTRACT",
+  "effective_date": "2026-09-05",
+  "invalidated_scope": [
+    "all prior Gate 0 outputs",
+    "all prior Gate 1 outputs",
+    "all interpretations or summaries derived from those outputs"
+  ],
+  "scc_jobs": [
+    {
+      "job_id": "7468470",
+      "name": "p1_gate01",
+      "disposition": "terminated at checkpoint; exit_status_137; invalid research output"
+    },
+    {
+      "job_id": "7468487",
+      "name": "p1_gate2",
+      "disposition": "deleted before execution; never ran"
+    }
+  ],
+  "post_checkpoint_gate_runs": {
+    "full_gate_0_1_rerun": false,
+    "gate_2_run": false
+  },
+  "data_contract_checkpoint": {
+    "canonical_version": "V3",
+    "pilot_run_id": "P1_GOLDEN_DATA_CONTRACT_2026-09-05_V3",
+    "created_at_utc": "2026-09-05T15:29:57+00:00",
+    "status": "PASS_DATA_CONTRACT_ONLY",
+    "superseded_pilots": [
+      "V1_DATA_CONTRACT_PILOT",
+      "V2_DATA_CONTRACT_PILOT"
+    ],
+    "registered_invariants": {
+      "passed": 18,
+      "required": 18
+    },
+    "required_golden_categories": {
+      "populated": 7,
+      "required": 7
+    },
+    "testable_golden_cases": 7,
+    "distinct_testable_portfolio_dates": 6,
+    "raw_trace_inspection": {
+      "reconciled": 25,
+      "total": 25
+    },
+    "public_receipt": "p1/etf_weight_shape_gates/pilot/PILOT_PUBLIC_RECEIPT.json",
+    "canonical_scc_evidence_directory": "/project/econdept/qluo/P1_Refraction_WRDS/GATE_RUN_20260905_CONTRACT_V3/pilot/",
+    "exposure_scope": "RETROSPECTIVE_ACCOUNTING_VALIDATION_ONLY"
+  },
+  "authorization_boundary": "No full Gate 0/1 run and no Gate 2 run. V3 authorizes only the frozen data contract, seven-category golden sample, small interactive pilot, and 25-row trace audit. Point-in-time dollar exposure remains unauthorized until monthly-TNA availability or a validated lag rule is added and a new pilot passes.",
+  "canonical_result_status": "NO_GATE_RESULT_MAY_BE_REPORTED"
+}

@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "contract_id": "P1_CRSP_HOLDINGS_TNA_CONTRACT_2026-09-05_V3",
+  "status": "FROZEN_FOR_GOLDEN_SAMPLE_AND_PILOT",
+  "prior_gate_outputs": "INVALIDATED_PENDING_DATA_CONTRACT",
+  "indices": {
+    "pooled_portfolio": {
+      "canonical_key": "crsp_portno",
+      "entity": "a CRSP holdings portfolio shared by one or more fund share classes",
+      "never_substitute": [
+        "crsp_fundno",
+        "etf_permno"
+      ]
+    },
+    "share_class": {
+      "canonical_key": "crsp_fundno",
+      "entity": "a CRSP fund/share-class contract with its own TNA history",
+      "never_substitute": [
+        "crsp_portno",
+        "crsp_cl_grp"
+      ]
+    },
+    "etf_security": {
+      "canonical_key": "etf_permno",
+      "entity": "the exchange-traded security representing a verified ETF share class",
+      "source_status": "requires a separately validated fund-to-security link",
+      "never_substitute": [
+        "holding_permno",
+        "crsp_portno",
+        "crsp_fundno"
+      ]
+    },
+    "underlying_security": {
+      "canonical_key": "holding_permno",
+      "entity": "the security held in a pooled portfolio position",
+      "fallback_key": "cusip plus effective date only under a separately registered mapping rule",
+      "never_substitute": [
+        "etf_permno"
+      ]
+    },
+    "underlying_position": {
+      "canonical_key": "underlying_position_id",
+      "entity": "one source holdings row, including positions without a Stock permno",
+      "construction": "holding source-file SHA-256 plus zero-based raw row number",
+      "never_substitute": [
+        "holding_permno",
+        "security_rank"
+      ]
+    },
+    "economic_date": {
+      "canonical_key": "report_dt",
+      "entity": "the as-of date of the holdings snapshot",
+      "tna_key": "monthly_tna.caldt under the frozen same-economic-month-end alignment rule"
+    },
+    "availability_timestamp": {
+      "canonical_key": "availability_timestamp",
+      "value": "UNKNOWN_NULL",
+      "availability_date_field": "eff_dt",
+      "usable_date_key": "holdings_available_from",
+      "usable_date_construction": "first calendar date strictly after the maximum eff_dt across all rows in a portfolio/report snapshot",
+      "precision": "eff_dt has date precision only; an intraday timestamp is not present",
+      "tna_availability": "UNKNOWN_NOT_DOCUMENTED"
+    }
+  },
+  "raw_objects": {
+    "holdings": {
+      "row_unit": "one pooled-portfolio source position identified canonically by source-file SHA-256 and zero-based raw row number; crsp_portno, report_dt, and security_rank are retained descriptors",
+      "market_val": {
+        "unit": "USD dollars",
+        "economic_date": "report_dt",
+        "level": "pooled portfolio position",
+        "raw_reconciliation": "nbr_shares times the latest CRSP absolute price on or before report_dt, with a maximum three-calendar-day gap"
+      },
+      "percent_tna": {
+        "unit": "percentage points",
+        "weight_conversion": "divide by 100",
+        "denominator": "total net assets of the pooled crsp_portno portfolio",
+        "economic_date": "report_dt"
+      },
+      "availability": {
+        "raw_field": "eff_dt",
+        "definition": "date CRSP received the holdings information from its vendor",
+        "snapshot_rule": "use the maximum eff_dt across rows because the full snapshot cannot be considered available before its last received component"
+      }
+    },
+    "monthly_tna": {
+      "row_unit": "one crsp_fundno share class at month end",
+      "field": "mtna",
+      "unit": "millions of USD",
+      "definition": "assets minus liabilities at month end",
+      "economic_date": "caldt",
+      "availability_timestamp": "UNKNOWN_NOT_DOCUMENTED",
+      "portfolio_aggregation": "sum exact-date mtna over the complete unique set of validly mapped, economically active classes; exclude a map-only class only when effective historical records affirmatively show it was inactive, and reject the denominator if any active class TNA is missing"
+    },
+    "portfolio_map": {
+      "row_unit": "one effective-dated crsp_fundno to crsp_portno relationship",
+      "fields": [
+        "crsp_fundno",
+        "crsp_portno",
+        "begdt",
+        "enddt"
+      ],
+      "endpoint_rule": "inclusive at both ends as a frozen specification choice"
+    },
+    "fund_header_history": {
+      "row_unit": "one effective-dated share-class header record",
+      "fields": [
+        "crsp_fundno",
+        "chgdt",
+        "chgenddt",
+        "crsp_portno",
+        "et_flag",
+        "ticker",
+        "fund_name"
+      ],
+      "current_header_backfill": "PROHIBITED",
+      "et_flag_caveat": "F can be carried over historical records and is not sufficient by itself to date an MF-to-ETF transition"
+    }
+  },
+  "relationship_contract": {
+    "holdings_to_share_classes": "effective-dated many-to-one mapping from crsp_fundno share classes to crsp_portno pooled portfolio",
+    "pooled_portfolio_tna": "sum of correctly dated active share-class TNA, never one arbitrary class and never a stale quarterly summary",
+    "etf_class_exposure": "portfolio position weight multiplied by correctly dated ETF share-class TNA",
+    "pro_rata_gate": "no ETF-class dollar exposure unless the class is a verified pro-rata claim on the pooled portfolio",
+    "multi_class_evidence": "date-scoped POOLED_MULTICLASS_PRO_RATA evidence: effective mapping and security crosswalk, contemporaneous SEC same-Fund class evidence, relative-net-assets or respective-NAV allocations, no separate sleeve, exact-date complete class TNA, and accounting identity",
+    "single_class_evidence": "date-scoped SINGLE_CLASS_UIT_PRO_RATA evidence: SEC proportionate undivided interests in one trust portfolio, sole economically active mapped class, exact-date class TNA equal to pooled TNA within tolerance, effective ETF-security crosswalk, and accounting identity"
+  },
+  "date_contract": {
+    "same_economic_date": "monthly_tna.caldt must equal report_dt exactly; nearest-date and business-month-end substitutions are prohibited",
+    "holdings_no_lookahead": "snapshot is ineligible until the first calendar date strictly after max(eff_dt)",
+    "market_value_price_alignment": "latest trading date on or before report_dt, with a maximum three-calendar-day gap",
+    "maximum_report_age_days": 120,
+    "publication_delay_days": "max(eff_dt) minus report_dt, recorded separately from report age",
+    "tna_point_in_time_restriction": "monthly TNA may validate accounting identities retrospectively but may not support an availability-sensitive claim until its publication timestamp or a validated registered lag is supplied"
+  },
+  "primary_evidence": [
+    {
+      "source": "CRSP Survivor-Bias-Free US Mutual Fund Database Guide",
+      "url": "https://www.crsp.org/wp-content/uploads/2023/10/CRSP_US_Mutual_Funds_Guide_SAS_ASCII_R.pdf",
+      "supports": "portfolio and fund identifiers; holdings row/date fields; percent_tna denominator; market_val definition; monthly TNA units; effective portfolio mapping"
+    },
+    {
+      "source": "WRDS Return Gap research macro",
+      "url": "https://wrds-www.wharton.upenn.edu/pages/wrds-research/macros/wrds-macros-return-gap/",
+      "supports": "fundno TNA is share-class TNA and must be summed to portfolio TNA"
+    },
+    {
+      "source": "SEC 2024 Vanguard 500 Index Fund filings and contemporaneous Vanguard Multiple Class Plan",
+      "url": "https://www.sec.gov/Archives/edgar/data/36405/000168386324002986/f38455d0.htm",
+      "additional_url": "https://www.sec.gov/Archives/edgar/data/106830/000168386324009332/f40270d4.htm",
+      "accounting_url": "https://www.sec.gov/Archives/edgar/data/36405/000110465925020270/tm253223d8_ncsr.htm",
+      "supports": "same-Fund 2024 VOO/conventional classes, relative-net-assets allocation, equal rights to Fund assets and earnings, and exact-date one-portfolio accounting; used only for VOO on registered pilot dates"
+    },
+    {
+      "source": "SEC 2024 SPDR S&P 500 ETF Trust prospectus",
+      "url": "https://www.sec.gov/Archives/edgar/data/884394/000119312524016958/d109104d497.htm",
+      "supports": "SPY Units are proportionate undivided interests in one unit-investment-trust portfolio; used only for the registered SPY date"
+    }
+  ],
+  "unresolved_fields": [
+    "intraday holdings availability timestamp",
+    "monthly TNA publication/availability timestamp",
+    "general historical fund-to-ETF-security mapping outside individually verified golden cases"
+  ],
+  "amendment_rule": "Any new formula, date cutoff, mapping rule, counterfactual, tolerance, source-field interpretation, or pro-rata criterion changes this contract/configuration and requires a new golden sample and pilot."
+}

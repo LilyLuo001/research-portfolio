@@ -1,5 +1,22 @@
 # P1 strategic recommendation — frozen 2026-09-03
 
+## 2026-09-05 data-contract checkpoint (current execution authority)
+
+All prior ETF weight-shape Gate 0/1 outputs are invalid. Gate 2 never ran and
+remains prohibited. The V3 targeted, read-only data-contract pilot passed all
+18 registered invariants, covered all seven required golden-sample categories,
+and reconciled 25/25 final observations to source-file hashes and raw-row IDs.
+This is a data-contract validation only, not a Gate result. Its exposure values
+are retrospective accounting checks, not point-in-time measures, until the TNA
+availability timestamp or an empirically validated lag rule is established.
+
+The old full implementation remains disabled before archive access. The next
+authorized task is a contract-conformant rewrite. Because that changes the
+scientific-code hash, a new golden sample and pilot are required before any
+full Gate 0/1 run. See `p1/etf_weight_shape_gates/` and
+`p1/STATUS-2026-09-05.md`. This checkpoint supersedes any conflicting
+immediate-execution instruction below.
+
 ## Decision
 
 **Recommended primary project: “What changes when an existing investment strategy acquires ETF architecture?”**

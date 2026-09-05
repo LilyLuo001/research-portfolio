@@ -1,0 +1,151 @@
+{
+  "artifacts": {
+    "etf_flag_history_audits.json": {
+      "bytes": 897,
+      "sha256": "c47dd36bc58d00f2ef5d377ce8ccfc0e8c419ec2370b46ebd7bb5f5d59cff71d"
+    },
+    "golden_case_results.json": {
+      "bytes": 39216,
+      "sha256": "8977d1bd30822f034f0d4b4ada45a7aa7e12715c4020540d2e323ab2356dce91"
+    },
+    "pilot_exposure_observations.csv": {
+      "bytes": 109689,
+      "sha256": "1cd2773d3e4f2d8feee855cda7d658f79c8a002e65d89bcaf79058bcc22fa926"
+    },
+    "pilot_input_files.json": {
+      "bytes": 4374,
+      "sha256": "9ba94db007aa1ded55eb4c7626ff795c381847083c69c5e1e8afd5a00ec5a804"
+    },
+    "pilot_invariants.json": {
+      "bytes": 5162,
+      "sha256": "2c8f76adf7465dcfa02a47c41cc7bf8ee1ee6ad28c530417137b340009dee163"
+    },
+    "pilot_raw_trace_inspection.csv": {
+      "bytes": 109689,
+      "sha256": "1cd2773d3e4f2d8feee855cda7d658f79c8a002e65d89bcaf79058bcc22fa926"
+    }
+  },
+  "created_at_utc": "2026-09-05T15:29:57+00:00",
+  "golden_sample": {
+    "case_count": 10,
+    "categories": {
+      "CORPORATE_ACTION": 1,
+      "DERIVATIVE_OR_NON_EQUITY_POSITION": 1,
+      "ETF_STATUS_TRANSITION_OR_FLAG_HISTORY_ANOMALY": 1,
+      "POOLED_ETF_MUTUAL_FUND_PORTFOLIO": 1,
+      "PURE_ETF": 1,
+      "RAPID_AUM_CHANGE": 3,
+      "STALE_REPORT": 2
+    },
+    "content_sha256": "4f71bcfed6b664551a686a199a1c9f2f5b0f531d490366ac0413b852708a1a47"
+  },
+  "hashes": {
+    "code": {
+      "algorithm": "sha256-fileset-path-length-bytes-v1",
+      "digest": "55644ef750a6a37b28054b58af731ab9130dbbd6683f96e35e2d126288a717a7",
+      "files": [
+        "gate_core.py",
+        "golden_sample_spec.json",
+        "pilot_contract.py",
+        "run_data_contract_pilot.py",
+        "run_data_contract_pilot_scc.sh",
+        "run_gate0_gate1.py",
+        "run_gate0_gate1_scc.sh"
+      ]
+    },
+    "config": {
+      "algorithm": "sha256-canonical-json-v1",
+      "digest": "0ff07c1cca22e867f5beca27d0ceaecc5e42e25a8a1976392c0d60be9b73095b"
+    },
+    "data_contract": {
+      "algorithm": "sha256-canonical-json-v1",
+      "digest": "d1058591e1aaa984610f3ba44e9fdd33c57b770c2019a931a41fb9a989993696"
+    },
+    "manifest": {
+      "algorithm": "sha256-raw-bytes-v1",
+      "digest": "ce2f23683d69d89fae705363f4dadc0e551f639684c2980210c960753ff3e3bb"
+    }
+  },
+  "invariants": [
+    {
+      "id": "CANDIDATE_IMPLEMENTATION_CONFORMANCE",
+      "passed": true
+    },
+    {
+      "id": "CORPORATE_ACTION_HANDLED",
+      "passed": true
+    },
+    {
+      "id": "DATE_SCOPED_PORTFOLIO_ETF_CLASS_RELATIONSHIP_VERIFIED",
+      "passed": true
+    },
+    {
+      "id": "DERIVATIVE_NON_EQUITY_HANDLED",
+      "passed": true
+    },
+    {
+      "id": "ECONOMIC_DATE_AND_AVAILABILITY_VERIFIED",
+      "passed": true
+    },
+    {
+      "id": "END_TO_END_PILOT_COMPLETED",
+      "passed": true
+    },
+    {
+      "id": "ETF_CLASS_EXPOSURE_PRO_RATA_ONLY",
+      "passed": true
+    },
+    {
+      "id": "ETF_STATUS_TRANSITION_OR_FLAG_HISTORY_HANDLED",
+      "passed": true
+    },
+    {
+      "id": "GOLDEN_SAMPLE_COVERAGE",
+      "passed": true
+    },
+    {
+      "id": "INDEX_DOMAINS_DISTINCT",
+      "passed": true
+    },
+    {
+      "id": "MARKET_VAL_ROW_UNIT_VERIFIED",
+      "passed": true
+    },
+    {
+      "id": "NO_LOOKAHEAD",
+      "passed": true
+    },
+    {
+      "id": "PERCENT_TNA_IDENTITY_WITH_SAME_DATE_PORTFOLIO_TNA",
+      "passed": true
+    },
+    {
+      "id": "PERCENT_TNA_SEMANTICS_VERIFIED",
+      "passed": true
+    },
+    {
+      "id": "PORTFOLIO_AND_SHARE_CLASS_TNA_VERIFIED",
+      "passed": true
+    },
+    {
+      "id": "RAPID_AUM_CHANGE_HANDLED",
+      "passed": true
+    },
+    {
+      "id": "RAW_TRACE_RECONCILIATION",
+      "passed": true
+    },
+    {
+      "id": "STALE_REPORT_REJECTED",
+      "passed": true
+    }
+  ],
+  "pilot_run_id": "P1_GOLDEN_DATA_CONTRACT_2026-09-05_V3",
+  "raw_trace_inspection": {
+    "all_reconciled": true,
+    "artifact_sha256": "1cd2773d3e4f2d8feee855cda7d658f79c8a002e65d89bcaf79058bcc22fa926",
+    "observation_count": 25
+  },
+  "schema_version": 1,
+  "status": "PASS"
+}

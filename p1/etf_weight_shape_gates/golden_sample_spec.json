@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "golden_sample_id": "P1_GOLDEN_DATA_CONTRACT_2026-09-05_V3",
+  "categories": {
+    "PURE_ETF": [
+      "SPY_PURE_2024_12_31"
+    ],
+    "POOLED_ETF_MUTUAL_FUND_PORTFOLIO": [
+      "VOO_POOLED_2024_12_31"
+    ],
+    "RAPID_AUM_CHANGE": [
+      "OAKM_RAPID_AUM_2025_05_31",
+      "LRGG_RAPID_AUM_2025_05_31",
+      "CLRG_AUM_DROP_2023_11_30"
+    ],
+    "STALE_REPORT": [
+      "LVHD_STALE_AT_2020_12_31",
+      "BBH_482_DAY_PUBLICATION_DELAY_2023_10_31"
+    ],
+    "ETF_STATUS_TRANSITION_OR_FLAG_HISTORY_ANOMALY": [
+      "HARTFORD_HVOFX_TO_QUVU_ET_FLAG_BACKFILL"
+    ],
+    "CORPORATE_ACTION": [
+      "VOO_NVIDIA_SPLIT_2024_06_30"
+    ],
+    "DERIVATIVE_OR_NON_EQUITY_POSITION": [
+      "NUSI_OPTIONS_AND_CASH_2021_02_28"
+    ]
+  },
+  "shared_inputs": {
+    "portfolio_map": "raw/rescue_remaining/crsp_crsp_portno_map_full_max/part_00001.parquet",
+    "historical_headers": [
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00004.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00003.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00005.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00006.parquet"
+    ],
+    "monthly_tna": {
+      "2020": "raw/crsp_monthly_tna_ret_nav_2020.parquet",
+      "2021": "raw/crsp_monthly_tna_ret_nav_2021.parquet",
+      "2023": "raw/crsp_monthly_tna_ret_nav_2023.parquet",
+      "2024": "raw/crsp_monthly_tna_ret_nav_2024.parquet",
+      "2025": "raw/crsp_monthly_tna_ret_nav_2025.parquet"
+    },
+    "daily_stock_2024": "raw/rescue/crsp_dsf_allcols_2024.parquet",
+    "stock_name_history": "raw/rescue/newcrsp_crsp_stocknames_v2_full.parquet"
+  },
+  "cases": [
+    {
+      "case_id": "SPY_PURE_2024_12_31",
+      "crsp_portno": 1021980,
+      "etf_crsp_fundno": 27635,
+      "report_dt": "2024-12-31",
+      "as_of_date": "2025-03-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2024_b0007/part_00002.parquet",
+      "external_pro_rata_evidence": "SEC_SPY_UNIT_INVESTMENT_TRUST_2024",
+      "expected_reasons": [],
+      "expected_final_eligible": true,
+      "trace_positions": 5
+    },
+    {
+      "case_id": "LVHD_STALE_AT_2020_12_31",
+      "crsp_portno": 1048665,
+      "etf_crsp_fundno": 86430,
+      "report_dt": "2020-08-31",
+      "as_of_date": "2020-12-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2020_b0043/part_00002.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "HOLDINGS_REPORT_AGE_EXCEEDS_120_DAYS"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "NUSI_OPTIONS_AND_CASH_2021_02_28",
+      "crsp_portno": 1051517,
+      "etf_crsp_fundno": 96339,
+      "report_dt": "2021-02-28",
+      "as_of_date": "2021-05-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2021_b0062/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "DERIVATIVE_OR_NON_EQUITY_PORTFOLIO"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "CLRG_AUM_DROP_2023_11_30",
+      "crsp_portno": 1050260,
+      "etf_crsp_fundno": 92756,
+      "report_dt": "2023-11-30",
+      "as_of_date": "2023-12-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2023_b0052/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "HISTORICAL_ETF_STATUS_UNVERIFIED"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "CLRG_MISSING_HISTORICAL_FLAG_2023_11_30",
+      "crsp_portno": 1050260,
+      "etf_crsp_fundno": 92756,
+      "report_dt": "2023-11-30",
+      "as_of_date": "2023-12-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2023_b0052/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "HISTORICAL_ETF_STATUS_UNVERIFIED"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "BBH_482_DAY_PUBLICATION_DELAY_2023_10_31",
+      "crsp_portno": 1052430,
+      "etf_crsp_fundno": 98454,
+      "report_dt": "2023-10-31",
+      "as_of_date": "2024-03-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2023_b0070/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "HOLDINGS_NOT_YET_AVAILABLE",
+        "HOLDINGS_REPORT_AGE_EXCEEDS_120_DAYS",
+        "PUBLICATION_DELAY_EXCEEDS_120_DAYS"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "VOO_NVIDIA_SPLIT_2024_06_30",
+      "crsp_portno": 1022248,
+      "etf_crsp_fundno": 50485,
+      "report_dt": "2024-06-30",
+      "as_of_date": "2024-09-30",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2024_b0007/part_00002.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "EXTERNAL_ETF_FORMAT_EVIDENCE_MISSING",
+        "NO_EXACT_DATE_COMPLETE_CLASS_TNA",
+        "PRO_RATA_CLAIM_UNVERIFIED"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "VOO_POOLED_2024_12_31",
+      "crsp_portno": 1022248,
+      "etf_crsp_fundno": 50485,
+      "report_dt": "2024-12-31",
+      "as_of_date": "2025-03-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2024_b0007/part_00002.parquet",
+      "external_pro_rata_evidence": "SEC_VANGUARD_500_MULTIPLE_CLASS_PLAN",
+      "expected_reasons": [],
+      "expected_final_eligible": true,
+      "trace_positions": 20
+    },
+    {
+      "case_id": "OAKM_RAPID_AUM_2025_05_31",
+      "crsp_portno": 1055326,
+      "etf_crsp_fundno": 103200,
+      "report_dt": "2025-05-31",
+      "as_of_date": "2025-08-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2025_b0107/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "NO_EXACT_DATE_COMPLETE_CLASS_TNA"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "LRGG_RAPID_AUM_2025_05_31",
+      "crsp_portno": 1054828,
+      "etf_crsp_fundno": 102471,
+      "report_dt": "2025-05-31",
+      "as_of_date": "2025-08-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2025_b0099/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "NO_EXACT_DATE_COMPLETE_CLASS_TNA"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "SGLC_INCOMPLETE_REPORT_2023_12_31",
+      "crsp_portno": 1054024,
+      "etf_crsp_fundno": 101175,
+      "report_dt": "2023-12-31",
+      "as_of_date": "2024-03-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2023_b0086/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "HOLDINGS_SNAPSHOT_INCOMPLETE",
+        "NO_EXACT_DATE_COMPLETE_CLASS_TNA"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    },
+    {
+      "case_id": "AFLG_NOT_AVAILABLE_2025_03_31",
+      "crsp_portno": 1051496,
+      "etf_crsp_fundno": 96361,
+      "report_dt": "2025-02-28",
+      "as_of_date": "2025-03-31",
+      "holdings_file": "raw/rescue_remaining/crsp_holdings_etf_2025_b0062/part_00001.parquet",
+      "external_pro_rata_evidence": null,
+      "expected_reasons": [
+        "HOLDINGS_NOT_YET_AVAILABLE"
+      ],
+      "expected_final_eligible": false,
+      "trace_positions": 0
+    }
+  ],
+  "history_audits": [
+    {
+      "case_id": "HARTFORD_HVOFX_TO_QUVU_ET_FLAG_BACKFILL",
+      "crsp_fundno": 90678,
+      "crsp_portno": 1026493,
+      "pre_event_ticker": "HVOFX",
+      "post_event_ticker": "QUVU",
+      "sec_effective_date": "2023-10-13",
+      "crsp_header_change_date": "2023-10-17",
+      "expected_pre_event_et_flag": "F",
+      "expected_post_event_et_flag": "F",
+      "sec_evidence": "SEC_HARTFORD_HVOFX_QUVU_CONVERSION_2023"
+    },
+    {
+      "case_id": "BBH_BBMIX_TO_BBHM_ET_FLAG_BACKFILL",
+      "crsp_fundno": 98454,
+      "crsp_portno": 1052430,
+      "pre_event_ticker": "BBMIX",
+      "post_event_ticker": "BBHM",
+      "crsp_header_change_date": "2025-11-17",
+      "expected_pre_event_et_flag": "F",
+      "expected_post_event_et_flag": "F",
+      "sec_evidence": null
+    }
+  ],
+  "external_evidence": {
+    "SEC_SPY_UNIT_INVESTMENT_TRUST_2024": {
+      "etf_ticker": "SPY",
+      "verification_rule": "SINGLE_CLASS_UIT_PRO_RATA",
+      "review_status": "VERIFIED",
+      "covered_pilot_dates": [
+        "2024-12-31"
+      ],
+      "prospectus_url": "https://www.sec.gov/Archives/edgar/data/884394/000119312524016958/d109104d497.htm",
+      "scope": "SPY 2024-12-31 only; the filing defines each Unit as a fractional, proportionate undivided interest in the Trust's one securities portfolio and derives per-Unit NAV from total Trust net assets"
+    },
+    "SEC_VANGUARD_500_MULTIPLE_CLASS_PLAN": {
+      "series_id": "S000002839",
+      "etf_contract_id": "C000092055",
+      "etf_ticker": "VOO",
+      "verification_rule": "POOLED_MULTICLASS_PRO_RATA",
+      "review_status": "VERIFIED",
+      "covered_pilot_dates": [
+        "2024-12-31"
+      ],
+      "statutory_filing_url": "https://www.sec.gov/Archives/edgar/data/36405/000168386324002986/f38455d0.htm",
+      "multiple_class_plan_index_url": "https://www.sec.gov/Archives/edgar/data/106830/000168386324009332/0001683863-24-009332-index.htm",
+      "multiple_class_plan_url": "https://www.sec.gov/Archives/edgar/data/106830/000168386324009332/f40270d4.htm",
+      "exact_date_ncsr_index_url": "https://www.sec.gov/Archives/edgar/data/36405/000110465925020270/0001104659-25-020270-index.htm",
+      "exact_date_ncsr_url": "https://www.sec.gov/Archives/edgar/data/36405/000110465925020270/tm253223d8_ncsr.htm",
+      "event_time_filing_url": "https://www.sec.gov/Archives/edgar/data/36405/000093247110002917/indexfunds485a.htm",
+      "scope": "VOO 2024-12-31 golden case only; contemporaneous filings establish one Fund with conventional and ETF classes, allocations by relative net assets or respective NAVs, and equal rights to Fund assets and earnings; not a general historical inference rule"
+    },
+    "SEC_HARTFORD_HVOFX_QUVU_CONVERSION_2023": {
+      "predecessor_ticker": "HVOFX",
+      "successor_ticker": "QUVU",
+      "effective_date": "2023-10-13",
+      "information_statement_url": "https://www.sec.gov/Archives/edgar/data/1501825/000119312523212089/d526971d497.htm",
+      "confirmation_filing_url": "https://www.sec.gov/Archives/edgar/data/1501825/000119312524022514/d743223d485bpos.htm",
+      "scope": "negative control proving raw et_flag F cannot date ETF status"
+    }
+  }
+}

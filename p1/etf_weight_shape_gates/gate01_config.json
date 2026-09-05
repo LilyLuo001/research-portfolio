@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "specification_id": "P1_DATA_CONTRACT_PILOT_2026-09-05_V3",
+  "full_run_enabled": false,
+  "full_run_disabled_reason": "INVALIDATED_PENDING_CONTRACT_CONFORMANT_FULL_IMPLEMENTATION",
+  "candidate_implementation": {
+    "status": "LEGACY_DISABLED_PENDING_CONTRACT_REWRITE",
+    "contract_conformant": false,
+    "activation_permitted": false,
+    "contract_controls": {
+      "availability_gate": false,
+      "effective_dated_portfolio_mapping": false,
+      "exact_date_tna": false,
+      "no_current_header_backfill": false,
+      "pro_rata_gate": false,
+      "shared_pilot_transform": false
+    }
+  },
+  "golden_sample_file": "golden_sample_spec.json",
+  "required_pilot_artifacts": [
+    "etf_flag_history_audits.json",
+    "golden_case_results.json",
+    "pilot_exposure_observations.csv",
+    "pilot_input_files.json",
+    "pilot_invariants.json",
+    "pilot_raw_trace_inspection.csv"
+  ],
+  "scientific_fileset": [
+    "gate_core.py",
+    "golden_sample_spec.json",
+    "pilot_contract.py",
+    "run_data_contract_pilot.py",
+    "run_data_contract_pilot_scc.sh",
+    "run_gate0_gate1.py",
+    "run_gate0_gate1_scc.sh"
+  ],
+  "required_invariant_ids": [
+    "CANDIDATE_IMPLEMENTATION_CONFORMANCE",
+    "CORPORATE_ACTION_HANDLED",
+    "DATE_SCOPED_PORTFOLIO_ETF_CLASS_RELATIONSHIP_VERIFIED",
+    "DERIVATIVE_NON_EQUITY_HANDLED",
+    "ECONOMIC_DATE_AND_AVAILABILITY_VERIFIED",
+    "END_TO_END_PILOT_COMPLETED",
+    "ETF_CLASS_EXPOSURE_PRO_RATA_ONLY",
+    "ETF_STATUS_TRANSITION_OR_FLAG_HISTORY_HANDLED",
+    "GOLDEN_SAMPLE_COVERAGE",
+    "INDEX_DOMAINS_DISTINCT",
+    "MARKET_VAL_ROW_UNIT_VERIFIED",
+    "NO_LOOKAHEAD",
+    "PERCENT_TNA_IDENTITY_WITH_SAME_DATE_PORTFOLIO_TNA",
+    "PERCENT_TNA_SEMANTICS_VERIFIED",
+    "PORTFOLIO_AND_SHARE_CLASS_TNA_VERIFIED",
+    "RAPID_AUM_CHANGE_HANDLED",
+    "RAW_TRACE_RECONCILIATION",
+    "STALE_REPORT_REJECTED"
+  ],
+  "formulae": {
+    "reported_portfolio_weight": "percent_tna / 100",
+    "independent_portfolio_weight": "market_val_usd / (sum_of_active_share_class_mtna_millions * 1000000)",
+    "etf_class_dollar_exposure": "reported_portfolio_weight * etf_share_class_mtna_millions * 1000000",
+    "market_value_reconciliation": "nbr_shares * abs(last_crsp_price_on_or_before_report_date_within_3_calendar_days)",
+    "portfolio_tna_implied_by_holdings": "median(market_val_usd / (percent_tna / 100)) over rows with abs(percent_tna / 100) >= 0.001"
+  },
+  "tolerances": {
+    "position_weight_absolute": 0.0002,
+    "median_implied_portfolio_tna_relative": 0.005,
+    "market_value_relative": 0.000001,
+    "market_value_absolute_usd": 1.0,
+    "corporate_action_adjusted_price_relative": 0.02
+  },
+  "date_rules": {
+    "holdings_economic_date": "report_dt",
+    "holdings_availability_date": "max_eff_dt_across_snapshot_rows",
+    "holdings_usable_from": "first_calendar_date_strictly_after_max_eff_dt_when_intraday_timestamp_is_unknown",
+    "tna_economic_date": "monthly_tna.caldt",
+    "tna_alignment": "exact_report_date_only",
+    "tna_max_calendar_gap_days": 0,
+    "market_value_price_max_calendar_gap_days": 3,
+    "mapping_interval": "begdt <= economic_date <= enddt",
+    "mapping_endpoint_inclusivity_status": "FROZEN_SPECIFICATION_CHOICE_NOT_EXPLICITLY_DOCUMENTED",
+    "maximum_report_age_at_as_of_days": 120,
+    "publication_delay_measure": "max_eff_dt_minus_report_dt"
+  },
+  "mapping_rules": {
+    "portfolio_share_class_source": "crsp_portno_map_effective_interval",
+    "etf_status_source": "fund_hdr_hist_effective_interval_only",
+    "et_flag_sufficient_to_date_etf_format": false,
+    "converted_fund_status_rule": "requires_external_event_date_evidence; et_flag may be carried backward",
+    "current_header_backfill_permitted": false,
+    "missing_historical_etf_status_action": "REJECT",
+    "single_active_share_class_pro_rata_rule": "SINGLE_CLASS_UIT_PRO_RATA requires a date-covering SEC filing proving equal proportionate undivided interests in one trust portfolio, one economically active mapped class, exact-date class TNA equal to pooled TNA within tolerance, a dated ETF-security crosswalk, and a passing portfolio identity",
+    "multiple_active_share_class_pro_rata_rule": "POOLED_MULTICLASS_PRO_RATA requires dated CRSP mapping and ETF-security crosswalk, contemporaneous SEC evidence of the ETF and conventional classes in one Fund, relative-net-assets or respective-NAV allocation with no separate sleeve, complete exact-date class TNA, and a passing portfolio identity",
+    "class_group_substitution_permitted": false,
+    "economically_active_class_rule": "exact-date TNA or effective historical-header coverage; a map-only class is excluded only when its historical header affirmatively ended before the date"
+  },
+  "eligibility_rules": {
+    "minimum_us_common_equity_share": 0.8,
+    "minimum_etf_class_tna_millions": 100.0,
+    "require_historical_etf_status": true,
+    "require_external_etf_format_evidence_for_dated_exposure": true,
+    "require_verified_pro_rata_claim": true,
+    "require_holdings_available_by_as_of_date": true,
+    "require_tna_identity": true,
+    "derivative_or_structured_portfolio_action": "EXCLUDE_FROM_PRIMARY_EQUITY_EXPOSURE_AND_RETAIN_AS_AUDIT_CASE",
+    "derivative_gross_percent_tna_threshold": 1.0,
+    "derivative_name_pattern": "(?:\\bCALL\\b|\\bPUT\\b|\\bNDX\\b|OPTION|SWAP)",
+    "minimum_absolute_reported_percent_tna": 95.0
+  },
+  "tna_availability_policy": {
+    "documented_timestamp_available": false,
+    "impute_from_caldt": false,
+    "permitted_use": "RETROSPECTIVE_ACCOUNTING_VALIDATION_ONLY",
+    "point_in_time_dollar_exposure_status": "UNRESOLVED_UNTIL_AN_EXTERNAL_AVAILABILITY_SOURCE_OR_REGISTERED_LAG_RULE_IS_VALIDATED"
+  },
+  "counterfactuals": {
+    "enabled_in_pilot": false,
+    "registered_values": []
+  }
+}
