@@ -1,0 +1,412 @@
+{
+  "checks": [
+    {
+      "check": "required_EXECUTION_RECEIPT.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_MICRODATA_SCAN_RECEIPT.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_SUPPORT_SUMMARY.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_HETEROGENEITY_MODEL_RESULTS.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_HETEROGENEITY_PAIRED_DIFFERENCES.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_INDUSTRY_SUPPORT.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_EDUCATION_SUPPORT.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_AGE_SUPPORT.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_SIMULTANEOUS_INTERVALS.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_TARGET_COVARIANCE_MATRICES.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_MODEL_OCCUPATION_INFLUENCE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_AGE_EQUALITY_TEST.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_AGE_EDUCATION_COMPOSITION_BY_YEAR_QUINTILE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_AGE_EDUCATION_COMPOSITION_BY_PERIOD_QUINTILE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_MODEL_FAILURES.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_INDUSTRY_RISK_SET_MEMBERSHIP.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_EDUCATION_COMMON_SUPPORT_MEMBERSHIP.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_AGE_COMMON_SUPPORT_MEMBERSHIP.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_SAMPLE_AND_STOCK_COVERAGE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "required_INFERENCE_CONTRACT.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "one_rebuilt_baseline",
+      "detail": "1",
+      "passed": true
+    },
+    {
+      "check": "rebuilt_baseline_exact",
+      "detail": "-0.1321094507921903",
+      "passed": true
+    },
+    {
+      "check": "calendar_113",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "preperiod_71",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "october_2025_absent",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "base_support_468",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "industry_support_nonempty",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "education_support_nonempty",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "age_support_nonempty",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "thirteen_industries_declared",
+      "detail": "['agriculture', 'business_repair_services', 'construction', 'entertainment_recreation', 'finance_insurance_real_estate', 'manufacturing', 'mining', 'personal_lodging_services', 'professional_related_services', 'public_administration', 'retail_trade', 'transport_communications_utilities', 'wholesale_trade']",
+      "passed": true
+    },
+    {
+      "check": "draws_9999",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "common_multipliers",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "paired_common_draw_flag",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "paired_ci_order",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "paired_mde_positive",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "model_ci_order",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "model_information_positive",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "model_rank_full",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "simultaneous_ci_order",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "education_family_two",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "age_family_four",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "age_paired_simultaneous_family_four",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "education_pair_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "four_age_pairs_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "industry_models_complete",
+      "detail": "{'valid_industry_aggregate_baseline', 'industry_cell_baseline', 'exact_age_22_vs_26_65', 'education_common_support_pooled', 'age_common_support_22_25_pooled', 'exact_age_25_vs_26_65', 'education_BA_plus', 'industry_conditioned', 'education_non_BA', 'exact_age_24_vs_26_65', 'full_microdata_rebuilt_baseline', 'exact_age_23_vs_26_65'}",
+      "passed": true
+    },
+    {
+      "check": "industry_pairs_complete",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "education_models_complete",
+      "detail": "{'valid_industry_aggregate_baseline', 'industry_cell_baseline', 'exact_age_22_vs_26_65', 'education_common_support_pooled', 'age_common_support_22_25_pooled', 'exact_age_25_vs_26_65', 'education_BA_plus', 'industry_conditioned', 'education_non_BA', 'exact_age_24_vs_26_65', 'full_microdata_rebuilt_baseline', 'exact_age_23_vs_26_65'}",
+      "passed": true
+    },
+    {
+      "check": "age_models_complete",
+      "detail": "{'valid_industry_aggregate_baseline', 'industry_cell_baseline', 'exact_age_22_vs_26_65', 'education_common_support_pooled', 'age_common_support_22_25_pooled', 'exact_age_25_vs_26_65', 'education_BA_plus', 'industry_conditioned', 'education_non_BA', 'exact_age_24_vs_26_65', 'full_microdata_rebuilt_baseline', 'exact_age_23_vs_26_65'}",
+      "passed": true
+    },
+    {
+      "check": "influence_models_match",
+      "detail": "(set(), set())",
+      "passed": true
+    },
+    {
+      "check": "covariance_symmetric_rows",
+      "detail": "20",
+      "passed": true
+    },
+    {
+      "check": "composition_two_periods_five_quintiles",
+      "detail": "10",
+      "passed": true
+    },
+    {
+      "check": "composition_shares_bounded",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "industry_membership_matches_strata",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "education_membership_468",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "education_membership_matches_support",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "age_membership_468",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "age_membership_matches_support",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "coverage_six_samples_two_periods_three_age_rows",
+      "detail": "36",
+      "passed": true
+    },
+    {
+      "check": "coverage_shares_bounded",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "route_early_conserved",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "route_current_conserved",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_AGE_COMMON_SUPPORT_MEMBERSHIP.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_AGE_EDUCATION_COMPOSITION_BY_PERIOD_QUINTILE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_AGE_EDUCATION_COMPOSITION_BY_YEAR_QUINTILE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_AGE_EQUALITY_TEST.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_AGE_SUPPORT.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_EDUCATION_COMMON_SUPPORT_MEMBERSHIP.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_EDUCATION_SUPPORT.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_HETEROGENEITY_MODEL_RESULTS.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_HETEROGENEITY_PAIRED_DIFFERENCES.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_INDUSTRY_RISK_SET_MEMBERSHIP.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_INDUSTRY_SUPPORT.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_INFERENCE_CONTRACT.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_MICRODATA_SCAN_RECEIPT.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_MODEL_FAILURES.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_MODEL_OCCUPATION_INFLUENCE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_SAMPLE_AND_STOCK_COVERAGE.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_SIMULTANEOUS_INTERVALS.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_SUPPORT_SUMMARY.json",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "hash_TARGET_COVARIANCE_MATRICES.csv",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "no_private_absolute_path",
+      "detail": "",
+      "passed": true
+    }
+  ],
+  "passed": 81,
+  "status": "PASS",
+  "total": 81
+}
