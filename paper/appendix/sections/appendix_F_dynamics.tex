@@ -1,45 +1,31 @@
-\section{Dynamics, pretrends, and comparison technologies}\label{app:dynamics}
-
-The categorical pretrend joint test does not detect a differential Q5-versus-Q1 pretrend in the pre-period. The post path is non-immediate and non-monotone. These diagnostics guard against a simple linear differential trend, but absence of a detected pretrend does not identify generative AI as the cause of a post-2022 break. Plausible contemporaneous changes include the technology-sector correction, interest rates, return-to-office policy, post-pandemic normalization, and occupational-composition shifts.
+\section{Dynamics and time heterogeneity}\label{app:dynamics}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.9\textwidth]{appendix_event_study.pdf}
-\caption{Event-time profile for the frozen beta tail contrast. Points and intervals reproduce the sealed exploratory event-study artifact. The figure is a timing diagnostic, not an adoption design.}
+\includegraphics[width=0.90\textwidth]{appendix_event_study.pdf}
+\caption{Categorical beta Q5--Q1 event-time profile. The plotted object is the fitted tail contrast, not mapping coverage or continuous residual information. December 2022 is the omitted transition month; October 2025 is absent because the survey was not collected.}
 \label{fig:app-event}
 \end{figure}
 
-Remote-work analyses are reported as competing-interpretation sensitivities. They do not absorb the beta gradient, but neither occupation-level feasibility nor realized telework among employed respondents can rule out remote-work mechanisms. In particular, own telework hours are observed conditional on employment and are not used as an individual-level explanation of employment status.
+The preperiod max-statistic is 1.502 with common-multiplier $p=.929$, so the implemented event study does not detect a differential pretrend. This does not establish parallel trends or attribute a later break to AI. Forty of 42 observed post coefficients are negative, but the path is neither immediate nor monotone.
 
 \begin{table}[htbp]
 \centering
-\caption{Comparison-technology and remote-work sensitivities}
-\label{tab:app-computerremote}
+\caption{Joint post-period coefficients}\label{tab:apptime}
 \small
-\begin{threeparttable}
-\begin{tabularx}{\textwidth}{Yrr}
+\begin{tabular}{lrrr}
 \toprule
-Specification & AI coefficient & Other coefficient / interval\\
+Period or contrast & Coefficient & Paired SE & 95\% interval\\
 \midrule
-Beta with Webb & -.13107 & ---\\
-Beta with O*NET computer-use importance & -.20848 & ---\\
-Beta with O*NET computer-use level & -.15120 & ---\\
-Beta with routine-task intensity & -.12771 & ---\\
-Beta with Frey--Osborne automation risk & -.10011 & ---\\
-Continuous beta only & -.03814 & ---\\
-Continuous beta + remote & -.03795 & .00469 $[-.02288,.03226]$\\
-Continuous beta + Webb + remote & -.03718 & .00606 $[-.02123,.03335]$\\
-Remote only & --- & -.01884 $[-.04508,.00739]$\\
+2023&-.1356&.0452&[-.2245,-.0467]\\
+2024&-.0783&.0548&[-.1821,.0254]\\
+2025--26&-.1629&.0507&[-.2623,-.0635]\\
+2024 minus 2023& .0573&.0447&[-.0302,.1447]\\
+2025--26 minus 2023&-.0273&.0440&[-.1154,.0608]\\
+2025--26 minus 2024&-.0846&.0374&[-.1577,-.0115]\\
 \bottomrule
-\end{tabularx}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Existing confirmatory sensitivities. The first five rows are architecture-specific tail estimands; the continuous rows are not numerically commensurate. Remote coefficients are conditional associations, not causal tests of AI against remote work.
-\end{tablenotes}
-\end{threeparttable}
+\end{tabular}
 \end{table}
-\FloatBarrier
 
-The mapping decomposition is $-0.018845\rightarrow-0.019200\rightarrow-0.031565$, with $-0.029404$ after excluding computer and mathematical occupations. The value correction on unchanged support is small; re-admission and composition account for the larger movement. The frozen placebo is 0.001421 with interval $[-0.020395,0.023236]$ and $p=0.894$. None of 65 non-reference pre-event intervals excludes zero; six post intervals do. The post-2025 extension-change test has $p=0.127$.
-
-For the primary model, the occupation-only analytic SE is 0.04441 and the occupation-by-month inclusion--exclusion SE is 0.04494, with normal interval $[-0.21914,-0.04300]$. On common support the corresponding two-way SEs are 0.04106, 0.03810, 0.04213, 0.04127, 0.04578, and 0.04504 for administrative AIOE, ability-direct AIOE, source-weighted AIOE, alpha, beta, and broad exposure.
+The post-2025 extension is different from 2024 but not from 2023. Interest rates, technology-sector adjustment, return-to-office changes, post-pandemic normalization, and CPS composition remain concurrent explanations. The failed 5,148-parameter occupation-age seasonality model is recorded rather than replaced.
 \FloatBarrier

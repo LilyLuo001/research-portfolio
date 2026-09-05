@@ -1,9 +1,32 @@
-\section{Inference and dependence}\label{app:inference}
+\section{Estimator and inference audits}\label{app:inference}
 
-The stock models use occupation-clustered analytic standard errors and one-step wild-score confidence intervals with stored, common occupation multipliers where paired or joint statements require covariance preservation. The common-support comparison uses 999 common multipliers. Separate point-estimate signs, the predeclared simultaneous one-sided band, and the intersection--union test are distinct statements.
+For two age groups, conditioning Poisson means $(\mu_y,\mu_o)$ on their weighted total yields the grouped-binomial pseudo-log-likelihood $N_y\log p+N_o\log(1-p)$ with $\operatorname{logit}(p)=\log(\mu_y/\mu_o)$. Occupation-month effects cancel. CPS final weights build $N_y$ and $N_o$ and are not applied again to the objective. These continuous weighted totals define an estimating equation; they are not literal independent binomial trials. A multinomial age-profile extension requires its own derivation.
 
-All six common-support point estimates are negative. The simultaneous one-sided critical value is 2.26036; the administrative-AIOE upper bound is 0.01858, so the predeclared all-six simultaneous-band criterion is not met. The separately auditable intersection--union marginal $p$-value is 0.045 and does not supersede the declared criterion.
+\begin{table}[htbp]
+\centering
+\caption{Common-support sign inference and percent transformation}\label{tab:appiut}
+\scriptsize
+\begin{threeparttable}
+\begin{tabular}{lrrrrr}
+\toprule
+Measure & $\widehat\beta$ & One-sided $p$ & Simult. upper & $100(e^\beta-1)$ & Upper, percent\\
+\midrule
+AIOE administrative&-.0739&.045& .0186&-7.12& 1.88\\
+AIOE ability-direct&-.1029&.005&-.0167&-9.77&-1.66\\
+AIOE source-weighted&-.1021&.006&-.0066&-9.71&-.66\\
+Alpha&-.1013&.008&-.0070&-9.64&-.70\\
+Beta&-.1290&.001&-.0269&-12.10&-2.65\\
+Broad&-.1465&.001&-.0443&-13.63&-4.33\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Identical 444-occupation support. The IUT $p$-value for all coefficients negative is the maximum marginal one-sided tail area, .045. The predeclared simultaneous critical value is 2.26036; the administrative upper bound is positive, so that separate criterion fails. Percent columns are monotone transformations of log relative-stock-ratio coefficients and limits.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
 
-The paired beta-minus-alpha contrast is $-0.03240$, with paired standard error 0.03697, 95 percent interval $[-0.10235,0.03755]$, and $p=0.403$. The interval supports only the statement that the design does not detect a difference; it does not establish economic equivalence.
+The paired beta-minus-alpha contrast is $-0.0324$ (paired SE .0370, interval $[-.1023,.0376]$, $p=.403$). Common occupation multipliers preserve covariance. The interval permits only “the design does not detect a difference,” not economic equivalence.
 
-An exploratory occupation-by-calendar-month inclusion--exclusion covariance leaves the main inferential pattern unchanged. It is a model-based dependence sensitivity, not a reconstruction of the CPS survey design, because the public analysis extract lacks the strata, PSU, and replicate-weight structure required for that exercise.
+Nominal primary clusters number 468. Webb-residualized beta has effective residual-variance count 53.26 and top-five share 22.15 percent; fitted conditional information has effective count 43.30 and top-five share 24.57 percent. Maximum fixed-treatment LOCO movement is .0205, with zero sign changes. These are distinct objects.
+
+Two-way occupation/month inclusion--exclusion gives SE .0449 versus one-way .0444 and normal interval $[-.2191,-.0430]$. This is model-based, not a CPS survey-design correction. A literal 199-draw residual-wild full refit was attempted for the primary and no-alpha F/G models. Zero pseudo-outcomes were admissible because grouped-binomial successes left $[0,N]$; no clipping or alternative resampling was substituted.

@@ -6,7 +6,7 @@ export SOURCE_DATE_EPOCH := 1788577652
 export FORCE_SOURCE_DATE := 1
 export TZ := UTC
 
-.PHONY: restat working appendix cover all clean check
+.PHONY: restat working appendix cover revised response diagnosis all clean check
 
 restat:
 	$(LATEXMK) $(FLAGS) -jobname=YAX_RESTAT_SUBMISSION main/restat.tex
@@ -23,6 +23,16 @@ appendix:
 cover:
 	$(LATEXMK) $(FLAGS) -jobname=YAX_RESTAT_COVER_LETTER submission/cover_letter_restat.tex
 	@./scripts/check_latex_log.sh build/YAX_RESTAT_COVER_LETTER.log
+
+revised:
+	$(LATEXMK) $(FLAGS) -jobname=YAX_WORKING_PAPER_REVISED main/working.tex
+	@./scripts/check_latex_log.sh build/YAX_WORKING_PAPER_REVISED.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_ONLINE_APPENDIX_REVISED appendix/appendix.tex
+	@./scripts/check_latex_log.sh build/YAX_ONLINE_APPENDIX_REVISED.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REFEREE_RESPONSE revision/referee_response.tex
+	@./scripts/check_latex_log.sh build/YAX_REFEREE_RESPONSE.log
+	$(LATEXMK) $(FLAGS) -jobname=YAX_REVISION_DIAGNOSIS revision/revision_diagnosis.tex
+	@./scripts/check_latex_log.sh build/YAX_REVISION_DIAGNOSIS.log
 
 all: restat working appendix cover
 

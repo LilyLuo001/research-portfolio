@@ -1,31 +1,28 @@
-\section{Occupational Reallocation and Ranking Interchangeability}\label{sec:reallocation}
+\section{Occupational Mobility and Ranking Statements}\label{sec:reallocation}
 
-\subsection{Adjacent-month construction}
+\subsection{Linked switches and two threshold concepts}
 
-The CPS rotation design permits exact adjacent-month links for origins in months-in-sample 1, 2, 3, 5, 6, and 7. The eight-month gap from month-in-sample 4 to 5 is excluded. Origin longitudinal weights are used, and December 2019 to January 2020 is excluded when destination occupation matters because the coding taxonomy changes. Dependent interviewing improves consistency for eligible continuing interviews without eliminating response or coding error \citep{uscb2006cps,uscb2025manual,mellow1983accuracy,kambourov2008rising}. A persistence check requires a legitimate third observation and an A-to-B-to-B path.
+The CPS rotation design supplies exact adjacent-month links for valid months-in-sample; the eight-month gap from month four to five is excluded. December 2019--January 2020 is excluded symmetrically where a destination code crosses taxonomies. Origins use longitudinal weights. The all-six frame contains 108,500 employed-to-employed occupational switches; it does not contain entrants from nonemployment.
 
-\subsection{Directional disagreement}
+At threshold zero, an architecture assigns a switch a positive, negative, or tied direction. Six-way directional conflict---at least one positive and one negative label---is 53.28 percent by official weight. Movement-mass weighting, with mass equal to the sum of absolute standardized score movements across architectures, lowers conflict to 40.10 percent. The no-alpha set has 35.02 percent zero-threshold conflict and 15.35 percent mass-weighted conflict; within AIOE the corresponding shares are 11.35 and 2.10 percent. Changing the number and composition of possible pairs is part of those comparisons.
 
-For each observed occupational switch, an architecture assigns a positive, negative, or zero direction from the destination-minus-origin exposure score. On the 108,500 switches with finite scores under all six architectures, 53.28 percent receive at least one positive and one negative label; 45.56 percent receive the same nonzero direction under all six. Pairwise official-weight Cohen $\kappa$ ranges from 0.125 to 0.932. Moving from six-way to pair-specific support changes weighted agreement by at most 1.95 percentage points. The result is not created by restricting attention to the literal six-way intersection.
-
-\input{tables/table4_reallocation.tex}
-
-The classification statistic is intentionally permissive: any sign reversal counts, however small the movement. It therefore measures non-interchangeability of directional rankings, not economically large displacement. The young-by-post difference in conflict is essentially zero, with a 95 percent interval of $[-2.67,2.66]$ percentage points. Architecture disagreement is a general feature of the ranking, not one detected specifically among young movers after 2022.
-
-\subsection{A harder benchmark}
-
-Independent age-by-month rematching implies 45.27 percent conflict, 8.02 points below the realized rate. That benchmark ignores occupational assortativity. A harder procedure preserves age-by-month, broad origin family, broad destination family, and the detailed origin and destination marginals within each stratum while destroying only the observed detailed pairing. It covers 98.31 percent of switch weight. Under this benchmark, expected conflict is 52.32 percent, leaving a realized excess of 0.96 points---below the predeclared one-point meaningful-gap threshold.
+Figure~\ref{fig:mobilitythreshold} distinguishes two referee-requested threshold definitions. A material-move restriction first requires at least one architecture to exceed the threshold and then computes any directional conflict. Substantial opposition requires both a positive and a negative movement to exceed it. On all switches, substantial opposition falls from 53.28 percent at zero to 43.35, 29.79, and 14.00 percent at 0.1, 0.25, and 0.5 standard deviations. At 0.25 SD, 97.42 percent of switch weight is eligible and conditional substantial opposition is 30.58 percent. Percentile-rank thresholds deliver the same qualitative decline.
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{figure4_mobility_conflict.pdf}
-\caption{Realized directional conflict and rematching benchmarks}\label{fig:mobility}
-\tabnote{Conflict is the official-weight share of realized adjacent-month switches for which at least one of six exposure architectures rises and another falls. The independent benchmark rematches occupations within age-by-month cells. The broad-assortative benchmark additionally preserves broad origin-destination occupational-family structure and detailed marginals. The 0.96-point realized excess is descriptive, not a conventional sampling estimate.}
+\includegraphics[width=0.82\textwidth]{figure5_mobility_thresholds.pdf}
+\caption{Directional conflict depends on movement scale}\label{fig:mobilitythreshold}
+\tabnote{Blue conditions any conflict on the R2-style material-move eligible set. Red reports R1-style substantial opposition as a share of all switches. The dashed line is conflict weighted by total absolute standardized movement. All use official longitudinal weights.}
 \end{figure}
 
-The combined conclusion is deliberately two-sided. Architecture disagreement is frequent: researchers can label the same occupational movement in opposite directions. But actual worker pairings are not meaningfully unusually conflict-heavy once broad assortativity is preserved. A secondary pattern in which conflict falls from 94.59 to 19.06 percent across bins of absolute consensus movement is reported only in the appendix because its connection to the same component used to define disagreement is partly mechanical.
+Immediate A--B--A reversals have 55.15 percent zero-threshold conflict; persistent A--B--B changes have 54.46 percent. At 0.5 SD, substantial-opposition shares are 13.57 and 14.39 percent. Persistence therefore does not make conflict disappear, and an immediate reversal is not classified as a coding error. Named nontrivial disagreements include accountants to bookkeeping clerks, for which AIOE falls while alpha and beta rise; registered nurses to medical and health-services managers, for which AIOE rises and alpha falls; and retail salespersons to cashiers, where AIOE falls, alpha rises, and beta/broad fall.
 
-\subsection{Flow margins}
+\subsection{Aggregate direction and the hard benchmark}
 
-An exploratory longitudinal exercise separately estimates employment exit, occupational outflow among linked employed workers, and the destination composition of entries from nonemployment. The coefficients are 0.1195, 0.0107, and $-0.0888$, respectively, and all intervals include zero. The risk sets and parameters differ and do not add to the stock coefficient. The CPS evidence therefore does not precisely distinguish exit, outflow, or entry destination as the mechanism behind the stock pattern; detailed estimands, weighting, coding checks, and persistence results appear in the online appendix.
+The disagreement has limited aggregate consequences in this frame. Across the six architectures, 49.21--50.49 percent of switch weight moves toward higher measured exposure, and 20.0--23.4 percent lands in the destination top weighted-rank quintile. Architecture choice changes individual labels more than the aggregate upward/downward balance. Entrant destination classifications cannot be computed from the switch-only frame.
 
+The hard rematching benchmark preserves age-by-month, broad origin and destination families, and detailed origin/destination marginals while destroying the detailed pairing. On 30,170 strata, 200,000 pseudo-units, and 999 draws, it represents 98.31 percent of switch weight and gives expected conflict 52.32 percent (across-rematch SD .00054; Monte Carlo SE of the mean .000017). The realized 53.28 percent is 0.96 percentage points higher. This is a near-threshold sample difference, not equivalence or proof of negligibility.
+
+The benchmark now prohibits identical detailed origin and destination codes and repairs assignments while preserving stratum margins; no false self-switches remain. The exact product-marginal expectation, 50.29 percent, permits self-transitions with probability 3.66 percent and therefore does not apply to the constrained null. Pseudo-size checks at 50,000 and 100,000 units represent 73.86 and 95.30 percent of weight and leave gaps of 0.92 and 0.91 points. The conclusion is that broad assortativity explains most excess conflict, while the exact magnitude remains benchmark-dependent.
+
+Earlier flow regressions for employment exit, occupational outflow, and entry destination were imprecise and use different risk sets. They do not add to the stock coefficient and are retained in the appendix rather than promoted into a stock-flow decomposition.

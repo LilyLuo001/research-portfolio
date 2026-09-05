@@ -1,13 +1,39 @@
-\section{Consensus, family disagreement, and exact change of basis}\label{app:fgae}
+\section{Continuous family models and exact reparameterization}\label{app:fgae}
 
-Let $A_o$ be the equally weighted centroid of the three standardized ability-based architectures and $E_o$ the corresponding task-based centroid. Define
-\begin{equation}
-F_o=\frac{A_o+E_o}{2},\qquad G_o=\frac{A_o-E_o}{2}.
-\end{equation}
-$F$ is a family-balanced consensus coordinate and $G$ is a family-disagreement coordinate. Both are statistical constructions, not latent causal factors.
+Let $A$ and $E$ be equal-weight centroids of the three standardized ability- and task-family implementations. Raw $F=(A+E)/2$ and $G=(A-E)/2$ are separately standardized in the fitted model with Webb. The original construction has weighted SDs .8777 and .3221 and weighted correlation .2177; neither raw construction nor standardization makes the fitted coordinates orthogonal.
 
-The frozen joint model enters standardized $F$, standardized $G$, and Webb jointly as continuous young-by-post slopes on 444 occupations and 108 months. With 999 common occupation multipliers, $\widehat b_F=-0.04036$ with interval $[-0.06925,-0.01147]$, and $\widehat b_G=0.03089$ with interval $[0.00180,0.05999]$. Their centered covariance is $-0.00009825$; the joint max-$|t|$ $p$-value is 0.008.
+\begin{table}[htbp]
+\centering
+\caption{Leave-one-measure F/G outcome refits}\label{tab:appfgloo}
+\scriptsize
+\begin{threeparttable}
+\begin{tabular}{lrrrr}
+\toprule
+Omitted measure & $b_F$ & 95\% interval & $b_G$ & 95\% interval\\
+\midrule
+None (original)&-.0404&[-.0674,-.0133]& .0309&[ .0029,.0589]\\
+Alpha&-.0330&[-.0571,-.0088]& .0342&[ .0089,.0596]\\
+AIOE administrative&-.0404&[-.0676,-.0133]& .0294&[ .0009,.0580]\\
+AIOE ability-direct&-.0401&[-.0672,-.0129]& .0338&[ .0059,.0618]\\
+AIOE source-weighted&-.0404&[-.0676,-.0133]& .0293&[ .0015,.0572]\\
+Beta&-.0421&[-.0702,-.0141]& .0287&[-.0009,.0584]\\
+Broad&-.0383&[-.0652,-.0114]& .0215&[-.0080,.0511]\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Identical 444-occupation support and family rebalancing after each omission. Each row refits the labor outcome with 999 common occupation multipliers. Results are post-outcome exploratory.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
 
-The A/E presentation is an exact algebraic change of basis of this same regression. Per weighted standard deviation, the AIOE centroid coefficient is 0.02493 and the Eloundou centroid coefficient is $-0.06148$. It is not a second model. The A-minus-E contrast inherits the stored wild-score inference for $G$ exactly; individual A and E intervals use the serialized covariance matrix and the normal critical value because draw-level F/G shifts were not retained.
+A representative two-score model estimates administrative AIOE .0449 (interval [.0012,.0885]) and beta $-.0788$ (interval $[-.1292,-.0284]$). The direct primitive model estimates $D=-.0323$ (interval $[-.0617,-.0030]$) and $S=\gamma-\alpha=-.0303$ (interval $[-.0562,-.0044]$), conditional on Webb.
 
-Treatment-side reconstruction shows that the family-disagreement coordinate is materially affected by alpha. Occupation deletion leaves the fitted $G$ coefficient's sign stable, so the conditional result is not a single-occupation artifact; however, the meaning of the family coordinate remains sensitive to how the task-based family is constructed.
+For separately scaled regressors, the exact basis transformation is
+\[
+\gamma_A=\tfrac12(b_F/s_F+b_G/s_G),\qquad
+\gamma_E=\tfrac12(b_F/s_F-b_G/s_G).
+\]
+Consistently transforming every draw gives $\gamma_A=.0248$ (paired SE .0199) and $\gamma_E=-.0707$ (paired SE .0272). This is the same fitted predictor, not corroboration. A smaller variance alone does not mechanically create a larger standardized coefficient; covariance with the residualized outcome and with other regressors also matters.
+
+For $D+\lambda S$, categorical Q5--Q1 estimates at $\lambda=0,.25,.5,.75,1$ are $-.1013,-.1256,-.1297,-.1432,-.1482$. Continuous slopes differ under fixed beta scaling and restandardization, so both conventions are stored. The combined evidence supports construction-sensitive asymmetry, not a universal family ordering.
+\FloatBarrier

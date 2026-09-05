@@ -1,0 +1,145 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{styles/michaillat-paper}
+\usepackage{styles/working-paper}
+\usepackage{styles/yax-common}
+\geometry{margin=1in}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\begin{document}
+\begin{center}
+{\Large\bfseries Response to Referees R1 and R2}\par
+\vspace{0.4em}
+{\large Constructed Exposure Measures and Statement-Specific Robustness:\\Evidence from Early-Career Employment}\par
+\vspace{0.4em}
+Lily Luo \quad September 2026
+\end{center}
+
+\textbf{Scope note.} The original report files were not available in the supplied repository or attachment. This letter answers every major, additional, minor, and typography request represented in the owner's master prompt, preserving the R1/R2 identifiers used there. Exact unseen wording should be reconciled if the full reports are later supplied.
+
+\textbf{Revision principle.} We did not defend the original headline by adding caveats. We treated the reports' diagnoses as empirical hypotheses, executed every feasible check, reported two failed diagnostics, and rewrote the paper around the resulting measurement evidence. Frozen v1.1 artifacts are unchanged; all new outcome analyses are labeled post-outcome exploratory.
+
+\section*{Executive response}
+
+The title is now ``Constructed Exposure Measures and Statement-Specific Robustness: Evidence from Early-Career Employment.'' The abstract no longer organizes the paper around a causal or generally robust employment effect. Four findings drive the revision: outside architectures attenuate the employment contrast; Q1 is a consequential reference; the age and post-period comparisons are heterogeneous; and mobility disagreement falls materially with movement size while aggregate direction remains stable.
+
+\section*{Point-by-point responses}
+
+\textbf{1. R1-M1; R2-3.4 and 3.10: architecture space and primitives.}
+
+\emph{Concern.} Six scores were presented too readily as six independent measurements of one object, and task-family algebra was underexplained.
+
+\emph{Action and finding.} The paper now defines two selected families with six dependent implementations and distinguishes broad AI capability, direct LLM acceleration, and software-complemented exposure. On 444 occupations, raw beta equals $(\alpha+\gamma)/2$ to $7.0\times10^{-13}$. Separate standardization breaks the midpoint identity but adds no primitive. A fixed-support $D+\lambda S$ grid is reported under fixed and restandardized scales. We never jointly enter alpha, beta, and broad as primitive regressors.
+
+\emph{Interpretation/location.} The contribution is construction sensitivity, not latent-truth recovery. Main Section 2; Online Appendix A and I.
+
+\textbf{2. R1-M1 and concluding assessment: omitted architectures, Webb, OECD, and literature scope.}
+
+\emph{Concern.} The six-measure set could be selected and Webb software might be confused with Webb AI.
+
+\emph{Action and finding.} An outcome-independent admission rule accepted Webb AI and the reversed OECD capability gap. Webb AI estimates $-0.0649$ with interval $[-0.1439,0.0141]$; OECD estimates $-0.0110$ with interval $[-0.0864,0.0645]$. Webb software remains a computerization control and correlates .7021 with Webb AI. Frey--Osborne is retained as automation risk, not relabeled AI. A declared top-ten-journal search and primary-source ledger were completed.
+
+\emph{Interpretation/location.} The all-negative conclusion is bounded to two selected families. Main Sections 1, 2, and 5; Appendix A/E; literature ledger.
+
+\textbf{3. R2-3.1: generic occupational placebos and synthetic architectures.}
+
+\emph{Concern.} A generic digital, educated, or cognitive occupation gradient could mimic the AI pattern.
+
+\emph{Action and finding.} On identical 363-occupation support, beta is $-0.1142$; wage, education, cognition, telework, and STEM are $-0.0185,+0.0093,+0.0270,-0.0240,-0.0161$. Paired beta-minus intervals exclude zero for education, cognition, and telework, not wage or STEM. Telework/STEM use natural groups because quintiles collapse. In 999 within-SOC2 permutations, the observed lower-tail probability is .219 (centered two-sided .434).
+
+\emph{Interpretation/location.} Beta is more negative than several selected benchmarks, but the permutation does not establish AI specificity or observational-CI validity. Main Section 5 and Figure 2; Appendix E.
+
+\textbf{4. R1-M2; R2-3.2: Q1 dominance, paths, and exclusions.}
+
+\emph{Concern.} The original Q5--Q1 result could be driven by favorable Q1 evolution rather than uniquely adverse Q5 outcomes.
+
+\emph{Action and finding.} Q5--Q2 is $-0.0456$ and Q5--Q4 $-0.0340$, with both intervals spanning zero; Q5--Q3 is $-0.0833$ with an interval excluding zero. Separate young stock, older stock, and ratio paths are shown with 2019 and 2022 normalization. SOC35, SOC15, SOC43, and approximate IND1990 leisure/hospitality exclusions remain negative. Fast-food deletion attenuates the coefficient to $-0.1106$. Stable/reclassified tails and estimator information are reported.
+
+\emph{Interpretation/location.} The paper now says the low-exposure reference contributes materially and does not infer a monotone dose response or causal occupation contribution. Main Section 5 and Figure 3; Appendix E/J.
+
+\textbf{5. R1-M2/event study; R2-3.3 and 3.9: age composition and time heterogeneity.}
+
+\emph{Concern.} Pooling ages 26--65 and averaging the post period might manufacture the headline.
+
+\emph{Action and finding.} Estimates for 22--25 versus 26--35, 26--45, 36--55, and 51--65 are $-0.1307,-0.1475,-0.1464,-0.0978$. The nearest-group result is virtually identical to the pooled $-0.1311$; only the 51--65 paired difference is detected. The six-bin model gives +.0645 for ages 31--40 relative to 51--65. Ages 18--21 versus 51--65 give $-0.1050$ with an interval spanning zero. Era estimates are $-0.1356,-0.0783,-0.1629$ for 2023, 2024, and 2025--26; the last differs from 2024, not 2023.
+
+\emph{Interpretation/location.} Comparison age matters, but a prime-age pooling story does not explain the result relative to ages 26--35. The post period is nonmonotone. Main Section 5, Figures 4--5; Appendix E/F.
+
+\textbf{6. R1-M3; R2-3.9: calendar, reconstruction, samples, and weights.}
+
+\emph{Concern.} Missing March and October samples were conflated; sample counts and bridge mechanics were unclear.
+
+\emph{Action and finding.} The original extract requested March ASEC `03s`; five basic `03b` samples were restored. October 2025 was not collected during the shutdown. The 108-month coefficient $-0.1311$ becomes $-0.1346$ over 113 months. The bridge uses 56 one-to-many source codes representing 20.03 percent of early stock and mechanically preserves source age ratios across components. Post-2020 and stable Census-2010 sensitivities are reported. A unified table reconciles 463/468/465/444 occupations, cells, respondent equivalents, stocks, and age-period coverage.
+
+\emph{Interpretation/location.} Calendar omission does not explain the estimate; bridge-based reconstruction is transparent and bounded by alternative estimands. Main Section 3; Appendix B; calendar memo.
+
+\textbf{7. R1-M3/4: estimator, sparse cells, and seasonality.}
+
+\emph{Concern.} Weighted grouped-binomial estimation and cell support needed a derivation and diagnostics.
+
+\emph{Action and finding.} The binary conditional-Poisson equivalence is derived for the actual two-age implementation. Weighted stocks are pseudo-likelihood inputs, not survey-weighted independent trials. Primary support has 13,305 zero-young, 1,036 zero-older, and 965 empty occupation-month cells. Minimum 100/250/500 respondent-equivalent thresholds leave coefficients between $-0.1311$ and $-0.1326$; the unweighted respondent-equivalent construction gives $-0.1308$.
+
+The declared occupation-age seasonality model did not converge with 5,148 extra nuisance parameters. We report that failure rather than substitute a more favorable model.
+
+\emph{Interpretation/location.} Main Sections 3--4; Appendix B/D/E; unresolved-items register.
+
+\textbf{8. R1-M4/5; R2-3.5: joint inference, percentages, information, and precision.}
+
+\emph{Concern.} The IUT and simultaneous band were conflated, effective counts overinterpreted, and planning precision unexplained.
+
+\emph{Action and finding.} One-sided marginal tail areas are .045/.005/.006/.008/.001/.001; the IUT maximum is .045. The predeclared simultaneous critical value is 2.26036 and limiting upper bound +.01858, so that criterion still fails. Percentage intervals use the monotone $100(e^\beta-1)$ transformation and are relative-stock ratios. We distinguish 468 nominal clusters, 53.26 effective residual support, 43.30 effective fitted information, and .0205 maximum LOCO movement. Two-way occupation/month SE is .0449 versus .0444 one-way.
+
+The primary and paired realized/prospective ratios are 3.649 and 3.167 on identical targets. Existing simulations do not uniquely allocate the miss. A literal 199-draw residual-wild full refit produced zero admissible grouped-binomial pseudo-outcomes; no clipping was used.
+
+\emph{Interpretation/location.} Main Section 4; Appendix D/K.
+
+\textbf{9. R1-M7; R2-3.6: family outcome refits and A/E algebra.}
+
+\emph{Concern.} Treatment-side correlations could not establish outcome-coefficient robustness, especially without alpha.
+
+\emph{Action and finding.} The outcome model was refit excluding each measure. No-alpha estimates are $F=-0.0330$ and $G=+0.0342$, both intervals excluding zero. G intervals cross zero when beta or broad is omitted, but not when an AIOE measure is omitted. A representative AIOE/beta model and direct D/S model are reported. Draw-consistent A/E transformation gives $\gamma_A=.0248$ and $\gamma_E=-.0707$ in original family units.
+
+\emph{Interpretation/location.} Alpha alone does not generate the asymmetry, but task-family construction affects its precision. The A/E display is the same model, not corroboration. Main Section 6; Appendix I.
+
+\textbf{10. R1-M6; R2-3.7: mobility thresholds, persistence, and aggregate conclusions.}
+
+\emph{Concern.} Zero-threshold sign conflict could exaggerate economically tiny movements.
+
+\emph{Action and finding.} Both material-move and substantial-opposition definitions were implemented at 0/.1/.25/.5 SD and percentile-rank thresholds. Zero-threshold conflict is 53.28 percent; movement-mass weighting gives 40.10 percent; substantial opposition at .5 SD is 14.00 percent. Reversal and persistent samples are similar. No-alpha and within-family results, denominators, named pairs, and support are reported. Aggregate moving-higher shares remain 49.2--50.5 percent.
+
+\emph{Interpretation/location.} The revised paper emphasizes scale-sensitive ranking fragility with stable aggregate direction. Main Section 7; Appendix H.
+
+\textbf{11. R1-M6; R2-3.7: hard-rematching benchmark.}
+
+\emph{Concern.} The prior 0.96-point excess was near a threshold; support and generated self-transitions needed auditing.
+
+\emph{Action and finding.} The 30,170 strata, 200,000 pseudo-units, 999 draws, and 98.31-percent coverage were verified. The revised benchmark enforces no self-transition and preserves margins. Realized .5328 versus benchmark .5232 leaves .0096. Monte Carlo SE of the mean is .000017. Pseudo-size checks give .0092 and .0091 gaps. The exact unconstrained expectation .5029 permits 3.66-percent self-transitions and is not applied to the constrained null.
+
+\emph{Interpretation/location.} The result is near-threshold and benchmark-dependent, not equivalence. Main Section 7; Appendix H.
+
+\textbf{12. R1 contribution; R2-3.8: taxonomy contribution.}
+
+\emph{Concern.} Exact-code failure should not be a straw-man rival, and score correction should be separated from re-admission.
+
+\emph{Action and finding.} Computer/math coverage rises 3.33 to 97.7 percent. The four-row sequence is $-.01885\to-.01920\to-.03156\to-.02940$. Stable coarser taxonomy and post-2020 results are added.
+
+\emph{Interpretation/location.} Repair is a required measurement operation; its substantive effect is mainly estimand composition. Main Section 3; Appendix B.
+
+\textbf{13. R1-M8; R2-3.10: framing and competing studies.}
+
+\emph{Concern.} The manuscript over-centered a descriptive tail result and implied it could explain conflicting labor-market evidence.
+
+\emph{Action and finding.} The title, abstract, introduction, synthesis, and conclusion are rewritten around statement-specific measurement. BCC and Humlum--Vestergaard are compared on population, outcome, adoption, period, and design. We state that YAX cannot decompose their disagreement.
+
+\emph{Interpretation/location.} Throughout, especially Main Sections 1, 2, and 8.
+
+\textbf{14. R2 additional and minor production comments.}
+
+Categorical remote-adjusted rows now report both coefficients, intervals, and 408-occupation support; the remote coefficient is +.0065 with beta and -.0132 with alpha. Figures identify residual versus fitted information and movement weights. Merged headers and overflowing tables were replaced; the genealogy figure was redrawn. Coefficients use four decimals in displays, counts and percentages use consistent precision, weights are labeled, the pair-support sensitivity is identified, transition boundaries and commit hashes are checked, and authorship grammar is standardized. Affiliation, email, acknowledgments, funding, and disclosures remain flagged for the author rather than fabricated. Exact locations are Main Section 5, Appendix B/D/E/G/H/L, and the revised front matter.
+
+\section*{Principled non-adoptions and remaining blockers}
+
+We do not call the within-SOC2 exercise randomization inference because exchangeability is unsupported. We do not apply the unconstrained product-marginal expectation to a no-self benchmark. We do not claim equivalence from intervals containing zero. We do not infer coding error from immediate reversals. We do not invent a survey-design correction, a numerical SESOI, a latent true exposure, or a decomposition of the ADP--Denmark disagreement.
+
+The only document-input blocker is the absence of the full referee files. Empirically, the seasonality and literal full-refit wild diagnostics failed for stated computational/statistical reasons. These items and the exact provisional wording are preserved in the unresolved-items register.
+
+\end{document}

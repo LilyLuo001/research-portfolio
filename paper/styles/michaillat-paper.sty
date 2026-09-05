@@ -3,37 +3,38 @@
 % Make PDF searchable and copyable
 \input{glyphtounicode}
 \pdfgentounicode=1
+\RequirePackage{xparse}
 
 % Select font encoding 
 \usepackage[T1]{fontenc}
 
-% Select text font
-\usepackage{sourceserifpro}
+% Select text font when available; fall back to the TeX installation's serif.
+\IfFileExists{sourceserifpro.sty}{\usepackage{sourceserifpro}}{}
 
-% Select monospaced font
-\usepackage{sourcecodepro}
+% Select monospaced font when available.
+\IfFileExists{sourcecodepro.sty}{\usepackage{sourcecodepro}}{}
 
 % ---- Select math fonts ----
 
-% Select symbol font
-\usepackage{MnSymbol}
+% Select symbol font when available.
+\IfFileExists{MnSymbol.sty}{\usepackage{MnSymbol}}{}
 
-% Select calligraphic and blackboard-bold fonts
-\usepackage[cal=euler, bb=fourier]{mathalpha}
+% Select calligraphic and blackboard-bold fonts when available.
+\IfFileExists{mathalpha.sty}{\usepackage[cal=euler, bb=fourier]{mathalpha}}{}
 
 % Enable bold math characters
 \newcommand{\hmmax}{0} % Avoid "Too many math alphabets" error
 \newcommand{\bmmax}{0} % Avoid "Too many math alphabets" error
 \usepackage{bm}
 
-% Select font for Roman letters, Greek letters, digits, and punctuation
-\usepackage[italic, eulergreek, nolessnomore, noparenthesis, noplusnominus, noequal, nohbar]{mathastext}
-
-% Correct spacing around certain Roman letters
-\MTsetmathskips{f}{3mu}{0mu}
-\MTsetmathskips{y}{2mu}{0mu}
-\MTsetmathskips{p}{2mu}{0mu}
-\MTsetmathskips{j}{2mu}{0mu}
+% Select matching math letters when the optional package is installed.
+\IfFileExists{mathastext.sty}{%
+  \usepackage[italic, eulergreek, nolessnomore, noparenthesis, noplusnominus, noequal, nohbar]{mathastext}%
+  \MTsetmathskips{f}{3mu}{0mu}%
+  \MTsetmathskips{y}{2mu}{0mu}%
+  \MTsetmathskips{p}{2mu}{0mu}%
+  \MTsetmathskips{j}{2mu}{0mu}%
+}{}
 
 % ---- Adjust page layout ----
 

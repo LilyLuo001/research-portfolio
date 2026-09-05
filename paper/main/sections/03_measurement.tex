@@ -1,27 +1,25 @@
-\section{Exposure Architectures and Harmonization}\label{sec:measurement}
+\section{Data, Calendar, Taxonomy, and Samples}\label{sec:data}
 
-\subsection{Six constructions}
+\subsection{CPS employment stocks and calendar repair}
 
-Table~\ref{tab:architectures} describes the six exposure architectures. The three AIOE variants share application-to-ability links but differ in how scores are carried from source occupations to the target occupational taxonomy. Administrative equal aggregation gives source occupations equal weight; the ability-direct construction rebuilds the index from target O*NET ability requirements; the source-weighted construction uses May 2018 OEWS employment weights. The three Eloundou variants share GPT-4 task labels but change capability scope. Alpha contains direct LLM acceleration (E1), beta adds half weight to software-complemented tasks (E2), and broad exposure includes E1 and E2 fully.
+The public-data application uses IPUMS basic monthly CPS records from January 2017 through July 2026. Employed respondents ages 18--65 with positive final weights are aggregated into occupation-by-age-group-by-month stocks. The headline sample defines young workers as ages 22--25 for comparability to \citet{brynjolfsson2026canaries}; ages 18--21 enter a sensitivity. The outcome is an employment stock, not an individual employment probability. It can change through entry, exit, occupational switching, or the older comparison stock.
 
-\input{tables/table1_architectures.tex}
+The original wide extract accidentally requested the March ASEC sample (`03s`) rather than the basic sample (`03b`) in 2017--2021. The ASEC observations have zero basic monthly final weights and are unusable for this design. A separately hashed repair restores the five basic March samples while preserving the frozen extract. October 2025 is categorically different: no CPS was collected during the federal government shutdown. The corrected raw files contain 9,843,021 records and 114 observed survey months. The frozen static model has 108 months because it also excludes transition month December 2022; the corrected-calendar sensitivity has 113.
 
-These are not six noisy measurements of a known common scalar. The ability-based family measures broad applicability of AI capabilities; the task-based family measures a particular time-saving rubric for LLMs and complementary software. A common latent component may exist, but identifying it requires assumptions not supplied by the six scores. The analysis therefore compares observable architectures and avoids designating a preferred measure based on outcomes.
+Restoring the March samples changes the primary coefficient from $-0.1311$ to $-0.1346$ (95-percent interval $[-0.2230,-0.0461]$). The calendar omission does not explain the result. An attempted occupation-by-age-by-month-of-year sensitivity, adding 5,148 nuisance parameters, did not converge and is reported as a failed diagnostic.
 
-\subsection{Taxonomy mapping and support}
+\subsection{Taxonomy repair}
 
-Raw CPS occupations use Census 2010 codes through 2019 and Census 2018 codes thereafter. Pre-2020 records are route-expanded using official Census conversion rates. SOC-based exposure measures are collapsed at six digits and carried through documented SOC-to-Census bridges using source- or target-vintage weights as appropriate. The lineage fixes tie handling, missing components, and normalization.
+The CPS uses Census 2010 occupation codes through 2019 and Census 2018 codes thereafter, while source exposures use SOC vintages. Pre-2020 records are route-expanded using official conversion proportions, then mapped to the common target taxonomy. In one-to-many cases, the same source conversion weights apply to young and older workers. This mechanically preserves a source occupation's young/older ratio across its target components before those targets receive other sources. Fifty-six source codes are one-to-many, maximum multiplicity is seven, and they represent 20.03 percent of early-period weighted employment.
 
-This mapping is economically consequential. A literal exact-code merge between AIOE's SOC-2010 publication taxonomy and post-2018 outcome taxonomies misses split and renumbered occupations. In the computer and mathematical group, exact matching covers 3.33 percent of 2021 OEWS employment; the documented repair covers 97.7 percent. A four-row decomposition separates score correction from sample composition. Repairing scores on the original support changes the continuous coefficient only from $-0.01885$ to $-0.01920$. Expanding support changes it to $-0.03156$; removing computer and mathematical occupations gives $-0.02940$. The principal mapping effect is admission to the estimand, not a large revision among occupations already matched.
+This bridge matters most through support. A literal AIOE SOC-2010 to post-2018 exact-code merge covers only 3.33 percent of computer-and-mathematical employment; the documented repair covers 97.7 percent. In a separate continuous decomposition, repairing scores on the original 410-occupation support changes the coefficient from $-0.01885$ to $-0.01920$. Expanding to 495 occupations changes it to $-0.03156$; excluding computer/math yields $-0.02940$. The main effect is re-admission, not score correction among already matched occupations. Exact-code matching across incompatible vintages is therefore documented as a failure mode, not treated as a defensible preferred estimate.
 
-The primary support rule is strict no-renormalization. Every mapped source component must have a finite score; partially scored occupations are excluded rather than reconstructed by rescaling observed components. Two alternative rules are retained in the appendix. Literal common support is the 444-occupation intersection across all six strict-support measures and represents 83.14 percent of model-period employment. Fixing occupation support does not fix scores, ranks, or quintile membership.
+Two alternative harmonizations bound the bridge. Restricting to the Census-2018 period produces $-0.1211$ on 457 occupations and 77 months; aggregating to a stable Census-2010 taxonomy gives $-0.1522$ on 408 occupations and 113 months. The former changes the temporal estimand and the latter sacrifices detail.
 
-\subsection{Consensus and disagreement coordinates}
+\subsection{Sample accounting and weighting}
 
-To organize the six measures without selecting among them, each is standardized using frozen employment weights. Let $A_o$ denote the equal-weight centroid of the three AIOE measures and $E_o$ the equal-weight centroid of the three Eloundou measures. Define
-\begin{equation}
-F_o=\frac{A_o+E_o}{2}, \qquad G_o=\frac{A_o-E_o}{2}.
-\label{eq:fg}
-\end{equation}
-$F$ is a family-balanced consensus coordinate; $G$ is the AIOE-versus-Eloundou disagreement coordinate. Neither is a recovered true exposure index. Their use was limited to one predeclared exploratory outcome model after treatment-side construction and stopping rules were recorded.
+Table~\ref{tab:sampleflow} reconciles four universes that appeared separately in earlier versions. The 490 candidate occupations are narrowed by treatment-side characteristic availability (463), primary beta plus Webb support (468), beta plus O*NET computer-use support (465), or literal six-measure plus Webb support (444). The common-support employment percentages are relative to the 490-occupation candidate stock, not claims of unrestricted national coverage.
 
+\input{tables/table_sample_flow_revised.tex}
+
+On primary support, Q1 contains 133 occupations and 20.02 percent of employment; Q5 contains 91 and 19.53 percent. Ties are retained. Primary quintile cutoffs and score normalizations use preperiod employment weights. Every support sensitivity states whether cutoffs and scales are frozen or recomputed. Respondent-equivalent counts after route expansion are not unique respondents.

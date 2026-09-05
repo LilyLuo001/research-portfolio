@@ -1,41 +1,18 @@
-\section{Employment-Stock Results}\label{sec:stock}
+\section{Continuous and Family Reparameterizations}\label{sec:family}
 
-\subsection{Confirmatory tail contrasts}
+The categorical results consume changing tail memberships. A continuous exercise asks a different question: conditional on Webb software exposure, how do the two selected families divide residual occupational variation? Let $A$ be the equal-weight centroid of three standardized AIOE implementations and $E$ the analogous Eloundou centroid. Define raw coordinates $F=(A+E)/2$ and $G=(A-E)/2$, then standardize $F$ and $G$ separately in the implemented model. $F$ is family-balanced consensus and $G$ family disagreement; neither is a latent true exposure.
 
-Across the 12 prespecified alpha/beta architectures, Q5-versus-Q1 estimates range from $-0.0971$ to $-0.2085$ log points. The primary strict-support beta-by-Webb estimate is $-0.1311$ (occupation-cluster SE 0.0444; wild-score 95 percent interval $[-0.2170,-0.0451]$; $p=.003$) across 468 occupations. The transformation $100[\exp(\widehat\beta_5)-1]$ is $-12.3$ percent. This is less favorable evolution of the young-to-older employment-stock ratio in the high-exposure tail, not an individual job-loss probability.
+The original exploratory model estimates $b_F=-0.0404$ with interval $[-0.0674,-0.0133]$ and $b_G=+0.0309$ with interval $[0.0029,0.0589]$. The reported original exploratory $G$ tail area was .040; the identical refit under a new seed gives .032, reconciling rather than replacing the earlier number.
 
-The intermediate quintiles are not monotone. Relative to Q1, the primary Q2--Q5 coefficients are $-0.0855$, $-0.0478$, $-0.0970$, and $-0.1311$. The paper therefore reports a tail contrast, not an exposure dose-response. An existing exploratory age-profile model places negative point estimates in the 18--21 and 22--25 groups, with both intervals including zero, while ages 26--30 have a small positive estimate with an interval spanning zero; this pattern supports ``early-career'' only descriptively.
+The requested leave-one-measure outcome refits change the interpretation. Removing alpha leaves $F=-0.0330$ and $G=+0.0342$, with both intervals excluding zero. Thus the original asymmetry is not alpha-only. Removing any AIOE implementation also leaves the $G$ interval above zero. But removing beta yields $G=+0.0287$ with interval $[-0.0009,0.0584]$, and removing broad yields $+0.0215$ with interval $[-0.0080,0.0511]$. The disagreement result is therefore materially sensitive to which task-family implementations receive equal family weight.
 
-A fixed-treatment deletion audit clarifies occupation influence. Deleting one occupation at a time while preserving full-sample scores, quintiles, Webb scaling, calendar, and specification yields estimates from $-0.14238$ to $-0.11055$. No deletion changes the sign. Most movements are small: the employment-weighted median is $-0.00001$, and the 5th and 95th percentiles are $-0.00817$ and $+0.00377$.
+A representative one-AIOE model is more transparent: entered jointly, administrative AIOE is $+0.0449$ (interval $[0.0012,0.0885]$) and beta is $-0.0788$ (interval $[-0.1292,-0.0284]$). A direct primitive model estimates $D=-0.0323$ and $S=-0.0303$, with both intervals below zero. These are alternative parameterizations and conditioning exercises, not independent corroborations.
 
-Influence appears at both tails. Fast food and counter workers are in the frozen beta Q1 reference tail; deleting them moves the coefficient from $-0.13107$ to $-0.11055$. Thus, part of the magnitude reflects favorable young-relative evolution at the low-exposure tail, not only deterioration at the high-exposure tail. Customer service representatives are in Q5; their deletion moves the estimate to $-0.11311$. Software developers are also in Q5 but rank tenth in absolute deletion influence. Deleting them makes the coefficient slightly more negative, $-0.13879$, a movement of $-0.00771$. The result is therefore not a software-developer artifact. These deletions describe coefficient influence; they do not identify the economic shocks behind any occupation's evolution.
+Because the fitted regressors are $F/s_F$ and $G/s_G$, the exact original-unit family transformation is
+\begin{equation}
+\gamma_A=\tfrac12\left(b_F/s_F+b_G/s_G\right),\qquad
+\gamma_E=\tfrac12\left(b_F/s_F-b_G/s_G\right).\label{eq:ae}
+\end{equation}
+Transforming every common draw consistently gives $\gamma_A=+0.0248$ (paired SE 0.0199) and $\gamma_E=-0.0707$ (paired SE 0.0272). This is an exact change of basis of the same fitted predictor, not a second outcome model. The raw $F$ and $G$ weighted correlation is 0.218 in the original construction and varies under deletion; standardization does not imply orthogonality.
 
-\input{tables/table3_stock_results.tex}
-
-\subsection{Literal common support and the compound sign statement}
-
-Figure~\ref{fig:commoncoefs} holds occupational support fixed at 444 occupations. The three AIOE coefficients are $-0.0739$, $-0.1029$, and $-0.1021$; the alpha, beta, and broad Eloundou coefficients are $-0.1013$, $-0.1290$, and $-0.1465$. All point estimates are negative. The administrative-AIOE interval narrowly includes zero.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.92\textwidth]{figure3_common_support_coefficients.pdf}
-\caption{Common-support employment-stock coefficients across six architectures}\label{fig:commoncoefs}
-\tabnote{Points are architecture-specific Q5-versus-Q1 young-relative employment-stock coefficients estimated on the identical 444-occupation intersection. Lines are existing 95 percent one-step occupation-cluster wild-score intervals. The sample, outcome, fixed effects, Webb control, and inference procedure are held fixed; exposure scores, ranks, and quintile membership vary by architecture. All models are exploratory common-support comparisons.}
-\end{figure}
-
-Point-estimate sign robustness and simultaneous inference answer different questions. Under the predeclared common-multiplier max-statistic procedure, the one-sided upper bound for administrative AIOE remains positive. The specific familywise 95 percent simultaneous-band criterion therefore does not establish that all six coefficients are negative at once. This statement does not undo the descriptive fact that all six estimates are negative, nor does it assert that the six models estimate one common parameter.
-
-The paired beta-minus-alpha contrast on the 468-occupation support is $-0.0324$ log points (paired SE 0.0370; 95 percent interval $[-0.1023,0.0376]$; $p=.403$). The design does not detect a difference; an interval containing zero does not establish economic equivalence.
-
-Prospective simulations materially overstated realized precision. The realized-to-prospective SE ratio is 3.65 for the primary coefficient (0.04441 versus 0.01217) and 3.17 for the paired contrast (0.03697 versus 0.01167). The simulations preserved the observed exposure distribution, weights, design matrix, and ordered historical residual paths, but could not reproduce the realized post-period process. Code-history audits do not isolate a unique cause. The old power and MDE calculations are design-history provenance, not evidence about realized power, and they do not change realized intervals or p-values.
-
-\subsection{Consensus and between-family evidence}
-
-The single exploratory joint continuous model estimates Equation~\ref{eq:headline}'s young-by-post slope structure with standardized $F$, standardized $G$, and standardized Webb entered together. The family-balanced consensus coefficient is $b_F=-0.04036$ per SD (wild-score interval $[-0.06925,-0.01147]$; $p=.007$). Conditional on $F$ and Webb, the family-disagreement coefficient is $b_G=+0.03089$ (interval $[0.00180,0.05999]$; $p=.040$). A max-$|t|$ test of both coefficients equal to zero gives $p=.008$. Separately, an exploratory $F$-quintile model reproduces the negative aggregate tail direction at $-0.1285$.
-
-The same fitted two-dimensional model can be expressed in the original family-centroid basis. Because $F$ and $G$ were standardized separately, scale-correct algebra---not simple addition and subtraction---is required. Per weighted SD, the implied AIOE-centroid coefficient is $+0.02493$, while the implied Eloundou-centroid coefficient is $-0.06148$. The transformed predictor reproduces the original F/G predictor to machine precision. This is an exact change of basis of the same model, not a second regression or corroborating evidence.
-
-Inference differs across transformed objects. The original-unit AIOE-minus-Eloundou contrast is exactly a positive rescaling of $G$ and therefore inherits $G$'s existing wild-score interval $[0.00559,0.18621]$ and $p=.040$. The individual AIOE and Eloundou coefficients combine $F$ and $G$. Their intervals, $[-0.01492,0.06477]$ and $[-0.10836,-0.01460]$, use the serialized common-draw covariance and a normal 1.96 critical value because draw-level F/G shifts were not retained. They are not wild-score intervals.
-
-Two audits bound the interpretation. First, deleting any one of the 444 occupations leaves $G$ positive, between 0.02513 and 0.03599; the largest movement is 0.00577 after deleting driver/sales workers and truck drivers. The coefficient is not a single-occupation artifact. Second, changing the treatment-side construction is more consequential: removing alpha lowers the level and rank correlations with the frozen $G$ to 0.865 and 0.855 and changes the zero-direction classification for 17.9 percent of employment. No leave-one-measure labor-outcome models were run. The defensible conclusion is narrow: in this exploratory continuous joint specification, the negative conditional association loads more heavily on the Eloundou-family centroid, but that family coordinate is materially influenced by alpha. The result neither identifies a causal mechanism nor determines which exposure family is correct.
-
+The $D+\lambda S$ grid reaches the same caution from within the task family. All five categorical Q5--Q1 estimates are negative, from $-0.1013$ at $\lambda=0$ to $-0.1482$ at $\lambda=1$, while fixed-normalization and restandardized continuous coefficients differ. The family evidence is best summarized as a negative consensus association plus construction-sensitive conditional asymmetry. It does not rank exposure families universally.

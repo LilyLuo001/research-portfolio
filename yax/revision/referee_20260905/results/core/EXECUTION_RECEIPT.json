@@ -1,8 +1,8 @@
 {
   "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
   "baseline_coefficient_reproduced": -0.13107397642233506,
-  "generated_at_utc": "2026-09-05T06:04:31.354529+00:00",
-  "git_head": "8903aa309a30c1c30b93613f8809f264a977aca0",
+  "generated_at_utc": "2026-09-05T06:50:19.643176+00:00",
+  "git_head": "47559f411ec6543a1df12e9364ab00155e99ab89",
   "input_hashes": {
     "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
     "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
@@ -13,6 +13,8 @@
   },
   "output_hashes": {
     "BROAD_GROUP_EXCLUSIONS.csv": "1a1150daf42c79784172454f5b1fe7dfb5c738e55541e6c5aae0390ab8a05a30",
+    "CATEGORICAL_REMOTE_RESULTS.csv": "fe34f493ce078e1d6707e77d18ca8826d15e2b6130c3b3fb4ca5515c6d31ba20",
+    "CONSTRUCTION_IDENTITY_AUDIT.json": "342996ccaab3a6da2ea615a5cbd0ea6fd50889866797126b0f03d1c49ddaf2cd",
     "FG_ADDITIONAL_MODELS.json": "32f3f917de67ce4ed2c72ac446b4cd36b5b79907a973bd64560b7ad38bc7b9aa",
     "FG_AE_CHANGE_OF_BASIS.json": "920d6466c62645d39185bd12e87397768204402cb4fdef981d72079d6c1c02db",
     "FG_LEAVE_ONE_OUT_RESULTS.csv": "7ebd624e4f9af3f23b0fc232ea30fb033ec00768554a3d7d2afed1817eaeca30",
@@ -34,6 +36,46 @@
   },
   "record": "YAX referee revision core execution",
   "sections": {
+    "categorical_remote": [
+      {
+        "ai_ci_lower": -0.1933608340550963,
+        "ai_ci_upper": -0.02196676897873552,
+        "ai_coefficient": -0.10766380151691592,
+        "ai_estimand": "Q5 minus Q1 young-relative post contrast",
+        "ai_p_value": 0.011,
+        "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+        "bootstrap_draws": 999,
+        "exposure_measure": "dv_rating_beta",
+        "months": 108,
+        "quintiles_recomputed_on_joint_support": true,
+        "remote_ci_lower": -0.02137050418952504,
+        "remote_ci_upper": 0.034329555517041074,
+        "remote_coefficient": 0.006479525663758016,
+        "remote_estimand": "per weighted SD Dingel-Neiman feasibility",
+        "remote_p_value": 0.659,
+        "support_hash_sha256": "12e4bdcdc7958ec8a52b06762585d4887743963ddcbca7de1223b2eea44a5aca",
+        "support_occupations": 408
+      },
+      {
+        "ai_ci_lower": -0.16137529511724796,
+        "ai_ci_upper": -0.0003104271444756973,
+        "ai_coefficient": -0.08084286113086184,
+        "ai_estimand": "Q5 minus Q1 young-relative post contrast",
+        "ai_p_value": 0.05,
+        "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+        "bootstrap_draws": 999,
+        "exposure_measure": "dv_rating_alpha",
+        "months": 108,
+        "quintiles_recomputed_on_joint_support": true,
+        "remote_ci_lower": -0.03712796537933541,
+        "remote_ci_upper": 0.010755447221315353,
+        "remote_coefficient": -0.01318625907901003,
+        "remote_estimand": "per weighted SD Dingel-Neiman feasibility",
+        "remote_p_value": 0.287,
+        "support_hash_sha256": "12e4bdcdc7958ec8a52b06762585d4887743963ddcbca7de1223b2eea44a5aca",
+        "support_occupations": 408
+      }
+    ],
     "family": {
       "auxiliary": {
         "direct_D_S": {

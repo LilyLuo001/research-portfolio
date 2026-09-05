@@ -24,13 +24,13 @@ Inventory date: 2026-09-05
 | Exposure inputs | yes | six architectures, Webb software, O*NET computer use, RTI, Frey--Osborne, Dingel--Neiman, and occupation characteristics | public-source derivatives with receipts |
 | Crosswalks | yes | Census 2010-to-2018 bridge, lookup, Rule B values, and mapping receipts | versioned |
 | Placebo characteristics | yes | wage, education, cognitive, telework, STEM, physical, RTI, and computer-use columns | 492 occupations before joint support restrictions |
-| Webb AI | source-level material only | feasibility receipt and Webb source workbook lineage | not yet a verified Census-2018 outcome-ready column |
-| OECD capability measure | citation/documentation only | literature record | not yet an outcome-ready occupation crosswalk |
-| March 2017--2021 samples | yes in wide raw extract | explicitly listed in the submitted IPUMS extract; the frozen reconstruction dropped them to reproduce the earlier pre-period panel | feasible balanced-calendar sensitivity |
-| October 2025 sample | no | omitted from both submitted extract specifications | genuine extract-specification omission; cannot be restored without a new IPUMS extract |
+| Webb AI | yes | public source mapped to Census 2018 under the external-architecture rule | outcome model complete; 448 occupations |
+| OECD capability measure | yes | official OECD detail scores mapped to Census 2018 | outcome model complete; 448 occupations |
+| March 2017--2021 samples | yes in repair extract | original extract selected ASEC `03s`; repair explicitly requested basic `03b` samples | balanced-calendar sensitivity complete |
+| October 2025 sample | no | authoritative IPUMS calendar and repository receipt | no CPS was collected during the federal shutdown; not an extract omission |
 | Industry | partial | `IND1990` in the wide extract | permits a documented industry exclusion after code-definition verification |
 | Education and enrollment | yes | `EDUC`, `SCHLCOLL` | permits entry-age/education diagnostics if kept within declared scope |
-| Software | yes | SCC Python environment with NumPy/Pandas/SciPy and TeX Live 2023; local Python and Poppler for QA | usable |
+| Software | yes | SCC Python environment with NumPy/Pandas/SciPy and TeX Live; local Python and PDF rendering tools | usable |
 
 ## Evidence classes
 

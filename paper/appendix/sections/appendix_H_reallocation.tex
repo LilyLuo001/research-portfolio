@@ -1,64 +1,50 @@
-\section{Reallocation agreement and the hard benchmark}\label{app:reallocation}
-
-Among 108,500 realized occupational switches on six-way support, at least one architecture pair assigns opposite exposure directions to 53.28 percent. Pairwise official-weight Cohen kappa ranges from 0.125 to 0.932; standard unweighted Fleiss kappa is 0.501. Pair-specific support is retained rather than silently projecting every pair onto a smaller universal support.
-
-The hard benchmark stratifies by age group, month, origin broad occupational family, and destination broad occupational family. Within 30,170 strata it preserves official-weight detailed origin and destination marginals while destroying observed detailed pairing. Hamilton expansion uses 200,000 pseudo-units and 999 fixed-seed rematches; 84,192 detailed joint cells and 98.31 percent of switch weight are represented. The benchmark mean is 52.32 percent, leaving only a 0.96 percentage-point realized excess. The persistent-switch gap is 0.88 points. Architecture disagreement is frequent, but actual pairings are not meaningfully unusually conflict-heavy under this benchmark.
+\section{Mobility thresholds and rematching}\label{app:reallocation}
 
 \begin{table}[htbp]
 \centering
-\caption{Selected pairwise directional agreement}
-\label{tab:app-kappa}
+\caption{Six-way mobility conflict by standardized threshold}\label{tab:appmobilitythresholds}
+\small
 \begin{threeparttable}
-\begin{tabular}{llrr}
+\begin{tabular}{rrrrr}
 \toprule
-Architecture 1 & Architecture 2 & Conflict (\%) & Cohen $\kappa$\\
+Threshold & Eligible weight & Any conflict $|$ eligible & Opposition/all & Opposition $|$ eligible\\
 \midrule
-AIOE administrative & AIOE source-weighted & 3.42 & 0.932\\
-AIOE administrative & Alpha & 39.88 & 0.178\\
-AIOE ability-direct & Alpha & 42.59 & 0.125\\
-Alpha & Beta & 23.46 & 0.501\\
-Beta & Broad & 11.26 & 0.746\\
+0&100.00&53.28&53.28&53.28\\
+.10&99.78&53.18&43.35&43.45\\
+.25&97.42&52.78&29.79&30.58\\
+.50&85.29&50.99&14.00&16.41\\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Descriptive official-longitudinal-weight statistics among realized switches. Conflict is an opposite-sign change for the pair; ties are reported separately in the archived complete 15-pair table. Kappa categories are decrease, tie, and increase.
+\item Notes: Percent, official longitudinal weights, 108,500 switches. “Any conflict” requires one positive and one negative sign after restricting to switches where at least one architecture exceeds the threshold. “Opposition” requires both directions to exceed it. Movement-mass-weighted conflict is 40.10 percent at all thresholds because its weights, rather than its eligible set, use total absolute movement.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
+
+Zero-threshold conflict is 35.02 percent for the five-measure no-alpha set and 11.35 percent within AIOE; movement-mass-weighted shares are 15.35 and 2.10 percent. At .25 SD, substantial opposition is 12.77 percent without alpha and .33 percent within AIOE. These comparisons change the number of potential pairs and are not marginal effects of deleting a measure.
+
+Immediate reversals (6,187 switches) and persistent A--B--B changes (39,893) have zero-threshold conflicts of 55.15 and 54.46 percent. At .5 SD, substantial-opposition shares are 13.57 and 14.39 percent. Transition-boundary exclusions are applied symmetrically; no September-to-November 2025 false adjacent links and no MISH4-to-5 long-gap pairs remain.
+
+Across architectures, weighted shares moving higher range from 49.21 to 50.49 percent; destination top-rank-quintile shares range from 19.96 to 23.39 percent. The switch-only frame cannot classify entrants from nonemployment.
 
 \begin{table}[htbp]
 \centering
-\caption{Complete official-weight pairwise agreement table}
-\label{tab:app-kappafull}
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\begin{threeparttable}
-\begin{tabularx}{\textwidth}{YYrrr}
+\caption{Hard-rematching benchmark audit}\label{tab:apphard}
+\small
+\begin{tabularx}{\textwidth}{Yrrr}
 \toprule
-Architecture 1 & Architecture 2 & Raw agree & Conflict & $\kappa$\\
+Object & 50,000 pseudo & 100,000 pseudo & 200,000 pseudo\\
 \midrule
-AIOE admin & AIOE ability & .9136 & .0864 & .8271\\
-AIOE admin & AIOE source & .9658 & .0342 & .9316\\
-AIOE admin & Alpha & .5808 & .3988 & .1783\\
-AIOE admin & Beta & .7324 & .2656 & .4658\\
-AIOE admin & Broad & .7659 & .2176 & .5394\\
-AIOE ability & AIOE source & .8937 & .1063 & .7874\\
-AIOE ability & Alpha & .5537 & .4259 & .1252\\
-AIOE ability & Beta & .7208 & .2772 & .4426\\
-AIOE ability & Broad & .7681 & .2154 & .5436\\
-AIOE source & Alpha & .5773 & .4022 & .1715\\
-AIOE source & Beta & .7450 & .2530 & .4910\\
-AIOE source & Broad & .7713 & .2122 & .5500\\
-Alpha & Beta & .7449 & .2346 & .5009\\
-Alpha & Broad & .6168 & .3482 & .2602\\
-Beta & Broad & .8709 & .1126 & .7464\\
+Draws&199&199&999\\
+Represented weight&73.86\%&95.30\%&98.31\%\\
+Benchmark conflict&52.3588\%&52.3718\%&52.3227\%\\
+Realized minus benchmark&0.9240 pp&0.9110 pp&0.9601 pp\\
+Monte Carlo SE of mean&0.0078 pp&0.0054 pp&0.0017 pp\\
 \bottomrule
 \end{tabularx}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Descriptive results for 108,500 realized switches on six-way support. Raw agreement includes ties; conflict is an opposite-sign pair. Categories for Cohen kappa are decrease, tie, and increase.
-\end{tablenotes}
-\end{threeparttable}
 \end{table}
 
-Conflict declines from 94.59 to 19.06 percent across quintiles of absolute consensus movement. Because the consensus coordinate is constructed from the same families whose directional signs define conflict, this geometry is an organizing decomposition rather than independent behavioral evidence.
+The main benchmark uses 30,170 strata and preserves detailed origin/destination margins within age-by-month and broad origin/destination cells. A no-self repair eliminates all generated identical detailed origins and destinations while preserving margins. The exact unconstrained product-marginal conflict is 50.2893 percent across 32,075 strata but permits self-transitions with probability 3.6591 percent; it is not the exact expectation for the constrained null. The 0.96-point excess is a sample finding close to the predeclared one-point threshold, not an equivalence conclusion.
+
+Named threshold-surviving examples include accountants to bookkeeping clerks; physician assistants to diagnostic technologists; registered nurses to medical and health-services managers; and retail salespersons to cashiers. Complete score movements and weights are stored in the machine-readable results.
 \FloatBarrier

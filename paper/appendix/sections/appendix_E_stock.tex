@@ -1,83 +1,105 @@
-\section{Employment-stock estimates}\label{app:stock}
+\section{Employment-stock stress tests}\label{app:stock}
 
-The stock outcome is occupation--age-group--month employment, estimated in a conditional Poisson model with saturated occupation--age, occupation--month, and age--month fixed effects. The target is the post-period change in the young-versus-older employment ratio in exposure Q5 relative to Q1, conditional on the frozen comparison-technology interaction. It is neither an individual unemployment probability nor a monotone dose-response parameter.
+All analyses in this section are post-outcome exploratory unless a row is explicitly called the frozen primary estimate. They retain the grouped employment-stock outcome and the primary age/timing/fixed-effect design as far as the stated contrast permits.
 
 \begin{table}[htbp]
 \centering
-\caption{Literal common-support stock estimates}
-\label{tab:app-common}
+\caption{Occupational-characteristic placebo benchmarks}\label{tab:appplacebo}
+\small
 \begin{threeparttable}
 \begin{tabular}{lrrrr}
 \toprule
-Architecture & Coefficient & Analytic SE & Wild CI & $p$\\
+Architecture & Top group & Coefficient & 95\% interval & AI minus benchmark\\
 \midrule
-AIOE administrative & $-0.07386$ & 0.04090 & $[-0.14915,0.00143]$ & .057\\
-AIOE ability-direct & $-0.10285$ & 0.03811 & $[-0.17722,-0.02849]$ & .005\\
-AIOE source-weighted & $-0.10210$ & 0.04223 & $[-0.18040,-0.02380]$ & .014\\
-Alpha & $-0.10132$ & 0.04171 & $[-0.18547,-0.01716]$ & .018\\
-Beta & $-0.12896$ & 0.04517 & $[-0.21614,-0.04178]$ & .004\\
-Broad & $-0.14652$ & 0.04522 & $[-0.23285,-0.06018]$ & .003\\
+Eloundou beta &73&-.1142&[-.1981,-.0302]&---\\
+Mean wage &50&-.0185&[-.0987,.0617]&-.0957\\
+Education requirement &77& .0093&[-.0660,.0846]&-.1234\\
+Cognitive content &56& .0270&[-.0416,.0955]&-.1411\\
+Telework (zero/partial/full) &109&-.0240&[-.0837,.0357]&-.0901\\
+STEM (binary) &29&-.0161&[-.1736,.1413]&-.0980\\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Exploratory literal common support of 444 occupations, covering 83.14 percent of employment; 108 static-model months. The outcome is grouped employment stock. Each coefficient is the young$\times$post Q5-versus-Q1 contrast for the named architecture, conditional on the frozen comparison-technology interaction. Inference uses 999 occupation-cluster wild-score draws.
+\item Notes: Identical 363-occupation support and common draws. AI-minus intervals exclude zero for education, cognition, and telework; intervals include zero for wage and STEM. Telework and STEM use natural groups because tie-preserving quintile cuts collapse.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-The primary beta/Webb quintile profile relative to Q1 is Q2 $-0.08547$, Q3 $-0.04779$, Q4 $-0.09703$, and Q5 $-0.13107$. The non-monotone middle quintiles are why the paper describes an extreme-tail contrast rather than a dose response.
+Within-SOC2 permutation holds each broad family's beta score multiset fixed and reassigns scores across detailed occupations. Among 999 successful fits, the coefficient mean is $-0.1097$ (SD .0268); the observed $-0.1311$ has lower-tail probability .219 and centered two-sided probability .434. Exchangeability is not established, so this is an assumption-dependent diagnostic.
 
 \begin{table}[htbp]
 \centering
-\caption{Complete frozen alpha/beta headline grid}
-\label{tab:app-headlinegrid}
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\begin{threeparttable}
-\begin{tabularx}{\textwidth}{llYrrr}
+\caption{Reference-tail contrasts}\label{tab:appreference}
+\small
+\begin{tabular}{lrrr}
 \toprule
-Exposure & Coverage & Comparison technology & Occ. & Coef. & Wild CI\\
+Contrast & Coefficient & SE & 95\% interval\\
 \midrule
-Beta & strict & Webb & 468 & -.1311 & $[-.2170,-.0451]$\\
-Beta & strict & O*NET importance & 465 & -.2085 & $[-.3190,-.0980]$\\
-Beta & sibling-imputed & Webb & 477 & -.1186 & $[-.2044,-.0328]$\\
-Beta & sibling-imputed & O*NET importance & 474 & -.1744 & $[-.2831,-.0657]$\\
-Beta & renormalized & Webb & 480 & -.1186 & $[-.2045,-.0328]$\\
-Beta & renormalized & O*NET importance & 476 & -.1746 & $[-.2854,-.0638]$\\
-Alpha & strict & Webb & 468 & -.0987 & $[-.1726,-.0248]$\\
-Alpha & strict & O*NET importance & 465 & -.0971 & $[-.1842,-.0100]$\\
-Alpha & sibling-imputed & Webb & 477 & -.1087 & $[-.1873,-.0302]$\\
-Alpha & sibling-imputed & O*NET importance & 474 & -.1002 & $[-.1869,-.0135]$\\
-Alpha & renormalized & Webb & 480 & -.1087 & $[-.1856,-.0318]$\\
-Alpha & renormalized & O*NET importance & 476 & -.1002 & $[-.1827,-.0178]$\\
+Q5--Q1&-.1311&.0442&[-.2179,-.0443]\\
+Q5--Q2&-.0456&.0397&[-.1240,.0328]\\
+Q5--Q3&-.0833&.0387&[-.1582,-.0083]\\
+Q5--Q4&-.0340&.0393&[-.1141,.0460]\\
+Q4--Q2&-.0116&.0310&[-.0725,.0494]\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Re-referencing uses the fitted primary model and common draws; it does not change the sample or treatment. The Q3-relative coefficients are Q1 .0478, Q2 $-.0377$, Q3 0, Q4 $-.0492$, and Q5 $-.0833$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Age-comparison estimates}\label{tab:appagecomparisons}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Comparison & Coefficient & Paired SE & 95\% interval\\
+\midrule
+22--25 vs 26--65&-.1311&.0443&[-.2190,-.0431]\\
+22--25 vs 26--35&-.1307&.0334&[-.1945,-.0669]\\
+22--25 vs 26--45&-.1475&.0389&[-.2240,-.0709]\\
+22--25 vs 36--55&-.1464&.0499&[-.2438,-.0489]\\
+22--25 vs 51--65&-.0978&.0527&[-.2000,.0045]\\
+18--21 vs 51--65&-.1050&.0618&[-.2251,.0151]\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Relative to 22--25 versus 26--65, paired differences are .0003, $-.0164$, $-.0153$, and .0333 for the next four 22--25 comparisons. Only the final interval excludes zero.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+In a separate six-bin multinomial age profile relative to 51--65, coefficients are $-.0744$ (18--21), $-.0996$ (22--25), .0150 (26--30), .0645 (31--40), and .0344 (41--50). Only the 31--40 interval excludes zero. This profile is not an additive decomposition of the binary pooled comparison.
+
+\begin{table}[htbp]
+\centering
+\caption{Exclusions, cell-size, and remote-work sensitivities}\label{tab:appsensitivities}
+\scriptsize
+\begin{threeparttable}
+\begin{tabularx}{\textwidth}{YrrY}
+\toprule
+Specification & Occ. & Coefficient & 95\% interval\\
+\midrule
+Exclude food-preparation/serving SOC35&458&-.1237&[-.2039,-.0434]\\
+Exclude computer/math SOC15&453&-.1158&[-.2065,-.0251]\\
+Exclude office/admin SOC43&421&-.1163&[-.1951,-.0375]\\
+Exclude approximate IND1990 leisure/hospitality, fixed membership&467&-.1325&[-.2191,-.0460]\\
+Same, recomputed quintiles&467&-.1388&[-.2286,-.0491]\\
+Minimum respondent-equivalent 100&463&-.1311&[-.2198,-.0423]\\
+Minimum respondent-equivalent 250&461&-.1311&[-.2180,-.0441]\\
+Minimum respondent-equivalent 500&438&-.1326&[-.2181,-.0470]\\
+Beta + remote, AI coefficient&408&-.1077&[-.1934,-.0220]\\
+Beta + remote, remote coefficient&408& .0065&[-.0214,.0343]\\
+Alpha + remote, AI coefficient&408&-.0808&[-.1614,-.0003]\\
+Alpha + remote, remote coefficient&408&-.0132&[-.0371,.0108]\\
 \bottomrule
 \end{tabularx}
 \begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Confirmatory frozen grid. Outcome and estimand are the occupation-by-age employment-stock Q5-versus-Q1 young$\times$post contrast. Coverage labels are natural-language descriptions of the three frozen support rules. Intervals use 999 occupation-cluster wild-score draws.
+\item Notes: The IND1990 approximation includes code 800, which bundles theaters and motion pictures. Remote coefficients are per weighted SD of Dingel--Neiman feasibility; quintiles are recomputed on joint support. These models do not identify an AI-versus-remote causal decomposition.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-\begin{table}[htbp]
-\centering
-\caption{Exploratory age profile of the beta tail contrast}
-\label{tab:app-age}
-\begin{threeparttable}
-\begin{tabular}{lrrr}
-\toprule
-Age group & Coefficient & SE & 95\% interval\\
-\midrule
-18--21 & $-0.07445$ & 0.06406 & $[-0.19236,0.04347]$\\
-22--25 & $-0.09957$ & 0.05295 & $[-0.20103,0.00190]$\\
-26--30 & $0.01502$ & 0.03440 & $[-0.05040,0.08044]$\\
-31--40 & $0.06449$ & 0.02739 & $[0.01419,0.11479]$\\
-41--50 & $0.03441$ & 0.02334 & $[-0.00911,0.07793]$\\
-51--65 & 0 & --- & reference\\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}[flushleft]\footnotesize
-\item Notes: Post-outcome exploratory exercise using the frozen beta treatment. Coefficients compare the named age group with ages 51--65. Intervals for the two youngest groups include zero.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
+External architectures estimate $-0.0649$ for Webb AI (448 occupations, interval $[-.1439,.0141]$) and $-0.0110$ for the reversed OECD capability gap (448, interval $[-.0864,.0645]$). On common support, their differences from beta are .0646 (interval $[-.0411,.1704]$) and .1115 (interval $[-.0015,.2244]$). The six selected-family sign result is therefore architecture-set dependent.
 \FloatBarrier
