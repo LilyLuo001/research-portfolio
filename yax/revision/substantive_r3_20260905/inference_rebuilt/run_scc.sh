@@ -11,11 +11,15 @@ set -euo pipefail
 
 COMPUTE_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
 AGENT_ROOT="$COMPUTE_ROOT/agents/inference_rebuilt"
-REPO_ROOT="$COMPUTE_ROOT/repo_git2"
+# Prefer an explicitly supplied clean worktree, then the directory from which
+# qsub was invoked.  The shared repo_git2 fallback is retained only for the
+# original compute layout.  No checkout or mutation is performed here.
+REPO_ROOT="${YAX_REPO_ROOT:-${SGE_O_WORKDIR:-$COMPUTE_ROOT/repo_git2}}"
 PRIVATE_ROOT=/projectnb/econdept/qluo/dax-private/ipums
 PYTHON_BIN=/usr3/graduate/qluo/portfolio/.venv/bin/python
 
 mkdir -p "$AGENT_ROOT/results"
+test -f "$REPO_ROOT/yax/revision/substantive_r3_20260905/inference_rebuilt/run_inference_rebuilt.py"
 cd "$REPO_ROOT"
 
 export PYTHONPATH=/usr3/graduate/qluo/.local/lib/python3.6/site-packages
