@@ -16,6 +16,12 @@ MODULE = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = MODULE
 SPEC.loader.exec_module(MODULE)
 
+CELL_PATH = ROOT / "yax/revision/referee_20260905/run_referee_cells.py"
+CELL_SPEC = importlib.util.spec_from_file_location("yax_test_referee_cells", CELL_PATH)
+CELLS = importlib.util.module_from_spec(CELL_SPEC)
+sys.modules[CELL_SPEC.name] = CELLS
+CELL_SPEC.loader.exec_module(CELLS)
+
 
 def test_support_hash_is_order_invariant():
     assert MODULE.support_hash(["0010", "0020"]) == MODULE.support_hash(["0020", "0010"])
@@ -43,3 +49,10 @@ def test_common_support_hash_is_the_sealed_literal_support_hash():
     assert len(MODULE.COMMON_SUPPORT_HASH) == 64
     assert MODULE.DRAWS == 999
     assert MODULE.PERMUTATION_SEED == 2026090502
+
+
+def test_calendar_and_industry_rules_are_explicit():
+    assert CELLS.MARCH_GAPS == {"2017-03", "2018-03", "2019-03", "2020-03", "2021-03"}
+    assert 641 in CELLS.LEISURE_HOSPITALITY_IND1990
+    assert 762 in CELLS.LEISURE_HOSPITALITY_IND1990
+    assert 810 in CELLS.LEISURE_HOSPITALITY_IND1990

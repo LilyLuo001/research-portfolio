@@ -54,6 +54,9 @@ FROZEN = import_path("yax_revision_frozen", ROOT / "yax/analysis/run_frozen_v11.
 V4 = import_path(
     "yax_revision_v4", ROOT / "yax/analysis/postoutcome_v4_supplementary/run_v4_alignment.py"
 )
+P3 = import_path(
+    "yax_revision_phase3", ROOT / "yax/analysis/postoutcome_phase3_final/run_phase3.py"
+)
 
 
 def sha256(path: pathlib.Path) -> str:
@@ -371,12 +374,13 @@ def standardize(values: np.ndarray, weights: np.ndarray):
 
 
 def continuous_fit(data: dict, support: list[str], raw_columns: dict[str, np.ndarray],
-                   weights: np.ndarray, signs: np.ndarray):
+                   weights: np.ndarray, signs: np.ndarray, standardize_columns: bool = True):
     young, older = FROZEN.panel_arrays(data["panel"], support, data["static_months"])
     post = np.array([month >= "2023-01" for month in data["static_months"]])
     z, moments = {}, {}
     for name, values in raw_columns.items():
-        z[name], mean, sd = standardize(values, weights)
+        standardized, mean, sd = standardize(values, weights)
+        z[name] = standardized if standardize_columns else values
         moments[name] = {"mean": mean, "sd": sd}
     x = np.column_stack([(z[name][:, None] * post[None, :]).reshape(-1) for name in raw_columns])
     fit, influence = FROZEN.fit_with_influence(young, older, x)
@@ -410,6 +414,40 @@ def run_family_models(args: argparse.Namespace, data: dict, chars: pd.DataFrame)
     deletion_order = ["dv_rating_alpha", *[m for m in MEASURES if m != "dv_rating_alpha"], None]
     rows, model_records = [], {}
     full_fit = full_draws = full_moments = None
+
+    # First reproduce the previously reported Phase-3/V5.1 F/G construction
+    # exactly: primitive z moments are formed on its 463-occupation reference
+    # universe, then F/G/Webb are standardized with static outcome stocks on
+    # the literal 444-occupation outcome support.
+    original_reference, _ = P3.load_reference_components(args.characteristics)
+    original_reference = original_reference.set_index("census2018")
+    original_F = original_reference.loc[common, "F"].to_numpy(float)
+    original_G = original_reference.loc[common, "G"].to_numpy(float)
+    original_young, original_older = FROZEN.panel_arrays(
+        data["panel"], common, data["static_months"]
+    )
+    original_outcome_weights = (original_young + original_older).sum(axis=1)
+    original_fit, _, original_terms, original_draws, original_moments = continuous_fit(
+        data, common, {"F": original_F, "G": original_G, "Webb": webb},
+        original_outcome_weights, signs,
+    )
+    expected_original = (-0.040358886215281616, 0.030893508600474132)
+    if not np.allclose(original_fit.beta[:2], expected_original, atol=1e-10, rtol=0):
+        raise RuntimeError(
+            f"original F/G model did not reproduce: {original_fit.beta[:2]} != {expected_original}"
+        )
+    for term in original_terms[:2]:
+        rows.append({
+            "analysis_status": LABEL, "specification": "original_phase3_exact",
+            "omitted": "", "term": term["term"], "family_A_count": 3,
+            "family_E_count": 3, "support_occupations": len(common),
+            "support_hash_sha256": support_hash(common),
+            "F_raw_sd": original_moments["F"]["sd"],
+            "G_raw_sd": original_moments["G"]["sd"],
+            "F_G_weighted_correlation": weighted_corr(original_F, original_G, original_outcome_weights),
+            "normalization_universe": "463 primitive reference; 444 outcome-stock F/G scaling",
+            **{key: value for key, value in term.items() if key != "term"},
+        })
     for omitted in deletion_order:
         aioe = [m for m in AIOE if m != omitted]
         eloundou = [m for m in ELOUNDOU if m != omitted]
@@ -472,6 +510,7 @@ def run_family_models(args: argparse.Namespace, data: dict, chars: pd.DataFrame)
         "paired_se_E": float(np.std(draw_E, ddof=1)),
         "formula": "0.5*(bF/sF +/- bG/sG)",
         "draws_transformed_consistently": True,
+        "basis": "recomputed-on-444 construction sensitivity; the original Phase-3 basis is separately reproduced",
     }
 
     # Lambda construction grid.  Categorical ranks do not depend on positive
@@ -492,7 +531,10 @@ def run_family_models(args: argparse.Namespace, data: dict, chars: pd.DataFrame)
         restd, mean, sd = standardize(raw, pre_weights)
         for normalization, value in (("fixed_beta_scale", fixed), ("restandardized", restd)):
             fit_c, inf_c, terms, _, _ = continuous_fit(
-                data, common, {"X_lambda": value, "Webb": webb}, pre_weights, signs
+                data, common,
+                {"X_lambda": value, "Webb": (webb - weighted_mean(webb, pre_weights)) /
+                                             weighted_sd(webb, pre_weights)},
+                pre_weights, signs, standardize_columns=False,
             )
             grid_rows.append({
                 "analysis_status": LABEL, "lambda": lam, "normalization": normalization,
