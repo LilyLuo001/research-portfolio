@@ -10,10 +10,10 @@
 set -euo pipefail
 
 COMPUTE_ROOT=/project/econdept/qluo/yax-substantive-revision-20260905
-REPO_ROOT="$COMPUTE_ROOT/repo_git2"
+REPO_ROOT="${REPO_ROOT:-$COMPUTE_ROOT/repo_git2}"
 PYTHON_BIN=/usr3/graduate/qluo/portfolio/.venv/bin/python
 PRIVATE_ROOT=/projectnb/econdept/qluo/dax-private/ipums
-OUTPUT_ROOT="$COMPUTE_ROOT/results/architecture"
+OUTPUT_ROOT="${OUTPUT_ROOT:-$COMPUTE_ROOT/results/architecture}"
 
 mkdir -p "$COMPUTE_ROOT/results" "$COMPUTE_ROOT/logs"
 if [ -e "$OUTPUT_ROOT" ]; then
