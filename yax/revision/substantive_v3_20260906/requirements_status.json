@@ -605,6 +605,11 @@
           "role": "validation_report",
           "path": "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json",
           "sha256": "fecca89ff0e239947b69585ddeecdc57324534818e0e60a03727b63845ec2576"
+        },
+        {
+          "role": "validation_report",
+          "path": "reviews/GATE1_BASELINE_RESULT_REVIEW.md",
+          "sha256": "dde5f5decd733af35cc46db9e363dd65477543bbbcc0bf935cd11633c27c2c84"
         }
       ],
       "response_locations": [
@@ -613,9 +618,14 @@
         "runs/gate1_baseline/results/COMMON_SUPPORT_RECLASSIFICATION.csv",
         "runs/gate1_baseline/results/TREATMENT_CONTRACT_SUMMARY.csv",
         "runs/gate1_baseline/results/CALENDAR_RECEIPT.json",
-        "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json"
+        "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json",
+        "reviews/GATE1_BASELINE_RESULT_REVIEW.md"
       ],
-      "review": null,
+      "review": {
+        "reviewer": "separate-agent artifact-only challenge, independent of implementation but within the same execution team",
+        "report_path": "reviews/GATE1_BASELINE_RESULT_REVIEW.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
