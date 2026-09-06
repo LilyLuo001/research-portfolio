@@ -1,0 +1,33 @@
+check,status,detail
+crsp dsf ret is decimal,PASS,|ret| p99=0.1175 max=9.593 mean=0.000579
+ret vs retx genuinely differ,PASS,1.064% of rows differ -> ret carries distributions
+crsp_dsi has vwretd,PASS,"cols=['vwretd', 'vwretx']"
+crsp_dsi covers window + warm-up,PASS,"2014-01-02 .. 2024-12-31  n=2,768"
+vwretd is decimal,PASS,p99=0.0344 max=0.1182 sd=0.01078
+vwretd 2019-2023 plausible,PASS,geometric mean 13.95%/yr
+dsf legacy vs allcols row counts,PASS,"legacy=2,187,548 allcols=2,187,548"
+dsf copies share the same keys,PASS,0 rows in only one copy
+dsf copies agree on ret,PASS,max |ret_legacy - ret_allcols| = 0.00e+00
+PRIMARY DAILY SOURCE,PASS,raw/crsp_dsf_YYYY.parquet (legacy). allcols is a column superset of identical rows; CIZ v2 files start 2024 and fall outside 2019-2023.
+SPY resolves to a PERMNO,WARN,"permno=[33910, 60716, 84398] shrcd=[10, 73] spans 1962-07-02..2024-12-31"
+XLK resolves to a PERMNO,PASS,permno=[86457] shrcd=[73] spans 1998-12-22..2024-12-31
+XLF resolves to a PERMNO,PASS,permno=[86455] shrcd=[73] spans 1998-12-22..2024-12-31
+SPY permno matches manual (84398),PASS,"found [33910, 60716, 84398]"
+common-stock filter would drop SPY,PASS,"shrcd=[10, 73] -> extract ETFs separately"
+link row count matches manual,PASS,"37,662 rows, score 1..6"
+link intervals well formed,PASS,0 inverted
+ticker alone is ambiguous,PASS,"702/25,074 I/B/E/S tickers map to >1 permno -> sdate/edate + score are load-bearing"
+interval filter resolves most ties,PASS,"on 2021-06-30: 5,093 live links, 0 tickers still ambiguous"
+holdings batches readable,PASS,"12 parts -> 931,524 rows"
+report_dt vs eff_dt are distinct dates,PASS,"equal on 0.0% of rows; both are DATES, neither is an availability timestamp"
+holdings key candidate,WARN,"524,966 dups on ['crsp_portno', 'report_dt', 'security_rank']"
+percent_tna is a percent (~100 per snapshot),PASS,median snapshot sum = 100.0 -> weight = percent_tna/100
+holdings permno coverage,WARN,33.1% of 2021 sampled rows carry a permno
+actuals readable,PASS,"29,269 rows 2021 file"
+measure / periodicity present,PASS,"measure=['EPS'] pdicity=['ANN', 'QTR', 'SAN']"
+currency field populated,PASS,"curr_act top: {'USD': 26562, 'EUR': 708, 'CAD': 633}"
+duplicate actual versions exist,PASS,"33 rows share ['ticker', 'pends', 'measure', 'pdicity'] -> version selection is required, not optional"
+anntims coverage,PASS,"100.0% non-null, e.g. ['16:19:00', '16:26:00', '16:01:00']"
+anntims TIMEZONE UNVERIFIED,WARN,"5.4% of stamps fall in 09:00-15:59 under a naive read; the manual states the timezone was never verified, so this is NOT a session classification"
+nested-row alignment matters,PASS,"restricted alone keeps 80 rows, aligned keeps 76 -> both models must use the aligned 76"
+D1 formula on a known DGP,PASS,R2_contemp=0.7435 R2_4lag=0.7903 D1=0.0592 (lagged truth -> D1>0)
