@@ -186,3 +186,87 @@ zero if BLK, LH, and FRT are added to the quote request using their CUSIP or
 exchange ticker. Category B (balance-sheet entries, derivatives) is the only
 portion for which no equity return can be computed regardless of quote data;
 it ranges from 0 to 0.23% depending on event and ETF.
+
+---
+
+## PERMNO crosswalk resolution — post-primary analysis
+
+The three Category A securities were searched against CRSP DSF and CRSP MSF
+(`crsp_msf_full.parquet`, SCC archive) by CUSIP. Results:
+
+| security | CUSIP | exchange ticker | resolved PERMNO | source | note |
+|---|---|---|---|---|---|
+| BlackRock Inc | 09290D10 | BLK (NYSE) | **87267** | crsp_msf_full.parquet | Confirmed present in CRSP |
+| LabCorp Holdings | 50492210 | LH (NYSE) | **12062** | crsp_msf_full.parquet | Confirmed present in CRSP |
+| Federal Realty Investment Trust | 31374720 | FRT (NYSE) | **not found** | searched crsp_dsf + crsp_msf_full | REIT; possible CUSIP format mismatch or CRSP universe gap |
+
+**FRT status.** Federal Realty Investment Trust (0.02% weight, two snapshots:
+EMR 2023-02-08 and ESS 2022-10-26) was not found in either crsp_dsf or
+crsp_msf_full by CUSIP 31374720. This may reflect a CUSIP variant in the MFDB
+filing or a CRSP universe exclusion for REITs at this path. Weight is negligible
+(0.02%) but the security must be listed as an unresolved exclusion rather than
+silently dropped.
+
+---
+
+## Equity coverage before and after PERMNO repair
+
+Applying BLK (PERMNO 87267) and LH (PERMNO 12062) to the governing snapshots.
+"Before" = automated pipeline result; "After" = with these two PERMNOs added.
+FRT remains unresolved; its weight appears in the remaining-unmapped column.
+
+| ETF | snapshot | before | after | gain | remaining unmapped | remaining unmapped detail |
+|---|---|---|---|---|---|---|
+| SPY | 2021-08-31 | 99.42% | 99.85% | +0.43% | 0.10% | OTHER ASSETS LESS LIABILITIES (0.10%) |
+| XLK | 2021-08-31 | 99.72% | 99.72% | +0.00% | 0.09% | ES&P TE SIF SP21 (0.23%); OTHER ASSETS (−0.14%) |
+| XLF | 2021-08-31 | 96.68% | 99.80% | +3.12% | 0.09% | OTHER ASSETS (0.09%) |
+| SPY | 2021-12-31 | 99.72% | 100.12% | +0.40% | 0.00% | none |
+| XLK | 2021-12-31 | 99.82% | 99.82% | +0.00% | 0.16% | ES&P TE SIF MR22 (0.16%) |
+| XLF | 2021-12-31 | 96.76% | 99.79% | +3.03% | 0.00% | none |
+| XLF | 2022-03-31 | 97.22% | 99.78% | +2.56% | 0.00% | none |
+| SPY | 2022-09-30 | 99.56% | 99.90% | +0.34% | 0.02% | FEDERAL REALTY INVESTMENT TRUST (0.02%) |
+| SPY | 2023-01-31 | 99.46% | 99.86% | +0.40% | 0.02% | FEDERAL REALTY INVESTMENT TRUST (0.02%) |
+| XLF | 2021-06-30 | 96.78% | 99.80% | +3.02% | 0.06% | OTHER ASSETS (0.06%) |
+
+Snapshot-to-event mapping: FOMC 2021-09-22 uses SPY/XLK/XLF 2021-08-31; FOMC
+2022-01-26 uses SPY/XLK/XLF 2021-12-31; NDAQ 2022-04-20 uses XLF 2022-03-31;
+EMR 2023-02-08 uses SPY 2023-01-31; ESS 2022-10-26 uses SPY 2022-09-30; GL
+2021-07-21 uses XLF 2021-06-30.
+
+After repair, XLF equity coverage reaches 99.78–99.80% in all snapshots (down
+from 96.68–97.22%). SPY reaches 99.85–100.12%. XLK is unchanged because its
+unmapped lines are all Category B (futures and balance-sheet entries, no PERMNO
+resolution possible). Remaining unmapped equity weight after repair is zero for
+most snapshots; the residuals are Category B instruments.
+
+The SPY 2021-12-31 "after" figure of 100.12% reflects rounding in the MFDB
+filing; the 0.12% excess is within the typical MFDB rounding band and does not
+indicate a data error.
+
+---
+
+## XLK futures contract identification
+
+The XLK snapshot lines labelled "ES&P TE SIF SP21" (snapshot 2021-08-31) and
+"ES&P TE SIF MR22" (snapshot 2021-12-31) are identified as CME E-mini
+Technology Select Sector futures, CME root symbol **XAK**:
+
+| CRSP label | Bloomberg / CME ticker | contract | expiry | direction | CRSP-recorded units | economic exposure (est.) |
+|---|---|---|---|---|---|---|
+| ES&P TE SIF SP21 | XAKU1 | E-mini Technology Select Sector Sep 2021 | September 2021 | **LONG** (cash-equitization) | ~67,100 contracts | ~$107M (~0.23% TNA) |
+| ES&P TE SIF MR22 | XAKH2 | E-mini Technology Select Sector Mar 2022 | March 2022 | **LONG** (cash-equitization) | ~47,400 contracts | ~$83M (~0.16% TNA) |
+
+CME XAK multiplier: $100 × index level. Cash-equitization overlays of this type
+hold long futures to deploy uninvested cash while awaiting equity settlement.
+
+**Exclusion rule.** These positions must **not** be excluded from the economic
+exposure of the fund merely because they lack a stock PERMNO or because the
+carrying value is small. They carry genuine beta exposure to the XLK basket.
+There is no equity quote to request for futures; the 0.16–0.23% weight is
+Category B and must be reported as an explicit exclusion in any basket return
+calculation, not silently dropped. Claiming a "complete" XLK basket return
+without this disclosure would overstate precision by up to 0.23%.
+
+The "OTHER ASSETS LESS LIABILITIES" (negative) lines in the same XLK snapshots
+(−0.14% in 2021-08-31) are balance-sheet netting entries unrelated to the
+futures position; they are a separate Category B item.
