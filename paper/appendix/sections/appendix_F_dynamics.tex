@@ -1,0 +1,57 @@
+\section{Dynamics and population-control diagnostics}\label{app:dynamics}
+
+\subsection{Event-time specification}
+
+The event-study model replaces the single Q5-by-young-by-post coefficient with month-specific Q5-by-young interactions, retaining occupation-by-age, occupation-by-month, age-by-month effects, Q2--Q4 post terms, and the Webb software interaction. October 2022 is the coefficient reference month. December 2022 remains in the event-study data as the declared product-launch transition month but is not assigned to the static post indicator; the static model omits it. October 2025 is absent because no CPS was collected. The distinction between a reference coefficient and a transition-period rule resolves the earlier caption ambiguity.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{appendix_event_study.pdf}
+\caption{Categorical beta Q5--Q1 event-time profile}\label{fig:app-event}
+\tabnote{October 2022 is the omitted coefficient reference. December 2022 is the transition month for the static before/after specification. The model is the frozen categorical event study and the figure is descriptive; it does not measure adoption.}
+\end{figure}
+
+The preperiod max statistic is 1.502 with common-multiplier $p=.929$, so the implemented model does not detect a differential pretrend. That test does not establish parallel trends or AI specificity. Forty of 42 post coefficients are negative, but the path is neither immediate nor monotone. The balanced pre-AI pseudo-break analysis appears in Appendix~\ref{app:inference}.
+
+\begin{table}[htbp]
+\centering
+\caption{Joint post-period coefficients}\label{tab:apptime}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Period or contrast & Coefficient & Paired SE & 95\% interval \\
+\midrule
+2023 & -.1356 & .0452 & [-.2245,-.0467] \\
+2024 & -.0783 & .0548 & [-.1821,.0254] \\
+2025--26 & -.1629 & .0507 & [-.2623,-.0635] \\
+2024 minus 2023 & .0573 & .0447 & [-.0302,.1447] \\
+2025--26 minus 2023 & -.0273 & .0440 & [-.1154,.0608] \\
+2025--26 minus 2024 & -.0846 & .0374 & [-.1577,-.0115] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The post-2025 extension differs from 2024 but not from 2023. Interest rates, technology-sector adjustment, return-to-office changes, post-pandemic normalization, and composition remain concurrent explanations.
+
+\subsection{January 2025 population controls}
+
+BLS introduced Vintage-2024 population controls in January 2025, raising the estimated civilian noninstitutional population by approximately 2.9 million and employment by approximately 2 million. Official prior months were not revised. BLS's experimental bridge is aggregate and supplies no age-by-occupation adjustment, so a literal subgroup counterfactual weight series is unavailable.
+
+\begin{table}[htbp]
+\centering
+\caption{Weight and endpoint sensitivities}\label{tab:appweights}
+\small
+\begin{tabularx}{\textwidth}{Yrrrr}
+\toprule
+Cell construction/window & Coefficient & SE & 95\% interval & Months \\
+\midrule
+Official weights, repaired full window & -.1346 & .0450 & [-.2226,-.0465] & 113 \\
+Official weights, ending December 2024 & -.1135 & .0451 & [-.2009,-.0261] & 95 \\
+Respondent equivalents, repaired full window & -.1348 & .0441 & [-.2216,-.0481] & 113 \\
+Respondent equivalents, ending December 2024 & -.1056 & .0465 & [-.1968,-.0143] & 95 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+In a joint official-weight model, 2023--24 is $-.1108$ and 2025--26 $-.1664$; the paired difference is $-.0556$ with interval $[-.1228,.0116]$. Under respondent equivalents the difference is $-.0800$ with interval $[-.1390,-.0211]$. The raw official-weight Q5-minus-Q1 log ratio becomes .0139 less negative from December 2024 to January 2025, whereas the respondent series becomes .0302 more negative. These diagnostics do not recover a missing weight vintage, but the official revision does not mechanically account for the full postperiod pattern.
+\FloatBarrier

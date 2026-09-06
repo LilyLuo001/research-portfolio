@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering
+\caption{Corrected CPS flow margins}\label{tab:flows}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Endpoint and margin & Raw link records at risk / entries & Coefficient & 95\% interval & Normal MDE$_{80}$ \\
+\midrule
+Adjacent employment exit & 3,346,227 & $0.132$ & $[-0.042,0.307]$ & 0.254 \\
+Adjacent reported-occupation change & 3,207,598 & $0.003$ & $[-0.118,0.123]$ & 0.174 \\
+Adjacent entry-destination allocation & 96,981 & $-0.070$ & $[-0.250,0.110]$ & 0.260 \\
+Twelve-month employment exit & 1,399,376 & $0.123$ & $[-0.111,0.357]$ & 0.336 \\
+Twelve-month reported-occupation endpoint change & 1,110,024 & $-0.018$ & $[-0.097,0.061]$ & 0.115 \\
+Twelve-month entry-destination allocation & 82,573 & $-0.052$ & $[-0.251,0.147]$ & 0.282 \\
+\bottomrule
+\end{tabular}}
+\tabnote{Counts are repeated endpoint-link records, not unique persons; an individual may contribute more than one eligible link.  Coefficients are post-January-2023 changes in the ages-22--25 versus ages-26--65, beta-Q5 versus beta-Q1 log rate ratio.  Entry destination is a log allocation ratio conditional on an observed entry, not an employment-finding or employer-hiring rate.  Primary intervals use 9,999 occupation wild-score draws and official longitudinal weights.  MDE$_{80}=2.80\widehat{SE}$ uses the analytic occupation-cluster standard error and is a normal-theory precision diagnostic, not the wild-score rejection threshold and not evidence that a smaller effect is absent.}
+\end{table}

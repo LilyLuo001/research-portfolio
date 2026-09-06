@@ -1,0 +1,53 @@
+\section{Data Reconstruction and Treatment Contract}\label{app:data}
+
+\subsection{Source files and sample flow}
+
+The stock analysis uses two restricted IPUMS CPS extracts.  The wide file supplies January 2017--July 2026 records; a second file supplies the five March Basic Monthly samples that replace incorrectly selected March ASEC samples in 2017--2021.  The replication manifest records extract identifiers, creation metadata where available, byte sizes, and SHA-256 hashes without redistributing microdata.  The March replacement occurs before eligibility filters or occupation routing.  The superseded rows contribute no positive-final-weight analysis records; the replacement adds 252,862 eligible records.
+
+The wide file is IPUMS extract 9: its request was submitted on August 25, 2026, and the completed-file receipt was recorded four minutes later.  Separate hashes authenticate its submitted specification, data, DDI, and basic codebook.  The March repair is extract 11; its actual request, returned API response, data, DDI, and basic-codebook hashes are verified, but its surviving API response contains no submission or completion timestamp, so none is inferred from filesystem metadata.  Flow models additionally use extract 10 for \texttt{LNKFW1MWT}; it was recorded complete when checked on August 31, 2026, but the check time is not called an API completion time.  Exact timestamps and hashes appear in the input manifest and provenance receipt.  Restricted files, account metadata, download links, and direct identifiers are not redistributed.
+
+\begin{table}[!htbp]
+\centering
+\caption{Calendar and cell reconstruction audit}\label{tab:app_calendar}
+\begin{tabular}{lrr}
+\toprule
+Object & Count & Audit rule \\
+\midrule
+Expected calendar months & 115 & January 2017--July 2026 \\
+Observed months & 114 & October 2025 not collected \\
+Static months & 113 & December 2022 transition excluded \\
+Primary occupations & 468 & named fixed support \\
+Complete occupation--month grid & 52,884 & $468\times113$ \\
+Positive-total fitted cells & 51,891 & includes one-sided zeros \\
+Both-age-zero cells & 993 & no likelihood term \\
+One-sided zero cells retained & 12,965 & finite boundary contributions \\
+\bottomrule
+\end{tabular}
+\tabnote{October 2025 is absent, not coded zero or interpolated.  December 2022 is observed but excluded from the static pre/post fit.}
+\end{table}
+
+Eligibility requires age 18--65, employment, a valid occupation, and positive \texttt{WTFINL}.  The analysis scans 9,843,021 source rows, retains 5,322,047 eligible source records, and creates 6,188,956 route-expanded descendants.  The last count is fractional before 2020 and is not a count of distinct respondents.  The principal age groups are formed after routing.  Of the complete grid, 13,883 young cells and 1,068 older cells have zero respondent-equivalent records.  These sparse-cell facts motivate the finite-sample audit; they do not justify selecting cells on realized young counts.
+
+\subsection{Reconstructed preperiod treatment}
+
+The substantive treatment is rebuilt using only January 2017--November 2022 stock.  On the fixed 468-occupation support, the employment-weighted beta mean is 0.37520 and standard deviation is 0.21041.  The tie-preserving cut values are 0.153846, 0.324615, 0.456522, and 0.537037.  Webb software exposure is standardized over the same 71-month construction window.  Table~\ref{tab:app_treatment} compares the rebuilt contract with the historical production contract.
+
+\begin{table}[!htbp]
+\centering
+\caption{Historical and reconstructed treatment contracts}\label{tab:app_treatment}
+\begin{tabular}{lrrr}
+\toprule
+Contract & Construction window & Post stock used & Q5--Q1 coefficient \\
+\midrule
+Historical production & full static panel & Yes & $-0.134554$ \\
+Reconstructed & Jan. 2017--Nov. 2022 & No & $-0.132109$ \\
+\bottomrule
+\end{tabular}
+\tabnote{Both coefficients use the corrected 113-month outcome calendar and identical occupation support.  Nine occupations change quintile.  The reconstructed-minus-historical paired difference is 0.002445 with 95-percent interval $[-0.001269,0.006158]$.}
+\end{table}
+
+The reconstructed contract contains 129, 99, 82, 67, and 91 occupations in Q1--Q5.  Corresponding preperiod stock shares are 20.06, 19.96, 20.16, 20.31, and 19.51 percent.  The complete membership file identifies all nine occupations whose historical and rebuilt labels differ.  All revised substantive models use the reconstructed labels unless explicitly described as a historical audit.
+
+\subsection{Survey-production dates}
+
+Official BLS documentation establishes population-control discontinuities in January 2025 and January 2026.  BLS did not revise the preceding official months onto the new bases and does not publish counterfactual age-by-occupation weights.  October 2025 was not collected; November collection began late, used reduced overlap and a modified weighting procedure, and had a lower response rate.  IPUMS later processed the reissued January 2026 file and corrections to longitudinal identifiers.  The stock and flow manifests preserve their respective extract dates and hashes.  Endpoint and exclusion checks diagnose reliance on these dates, but no aggregate adjustment factor is imposed on detailed cells.

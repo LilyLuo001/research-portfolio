@@ -1,0 +1,40 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "Implemented and regression-tested dependency fingerprints, cycle/missing-dependency checks, transitive stale-input detection, retained failure logs, and sibling-branch continuation. The first real V3 run is now recorded and dependency_guard confirms it as successful. End-to-end invalidation of a downstream empirical artifact has not yet been exercised, so this remains RUN_UNVALIDATED.",
+  "evidence": [
+    {
+      "role": "code",
+      "path": "scripts/dependency_guard.py",
+      "sha256": "86d6f715950561678a47bec02dda458abf1fcc3e1aac184072c452cb9c891150"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/foundation/EXECUTION_RECEIPT.json",
+      "sha256": "5711452a4254464693f9c989768db3952abaf26c973a6fbcc81a3d7743a0b0ba"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/FOUNDATION_VALIDATION.json",
+      "sha256": "dce4bce5cc049865fad7fb661d29bb85547439374e6a7d03038cd688521a8d0b"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_baseline/EXECUTION_RECEIPT.json",
+      "sha256": "788348d1bbd982394c2dcb1bb3e8553a9a92c32ba89a4d8ef465802403477a96"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json",
+      "sha256": "fecca89ff0e239947b69585ddeecdc57324534818e0e60a03727b63845ec2576"
+    }
+  ],
+  "response_locations": [
+    "contracts/run_manifest.json",
+    "scripts/dependency_guard.py",
+    "runs/gate1_baseline/EXECUTION_RECEIPT.json",
+    "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

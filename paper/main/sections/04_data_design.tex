@@ -1,0 +1,35 @@
+\section{Estimand and Inference}\label{sec:design}
+
+Let $N_{oat}$ be CPS-weighted employment stock in occupation $o$, age group $a$, and month $t$; $Y_a$ indicate ages 22--25; $P_t$ indicate January 2023 onward; $Q_{oq}$ indicate rebuilt exposure quintile $q$; and $W_o$ be standardized Webb software exposure.  The pooled mean is
+\begin{equation}
+E[N_{oat}\mid X]=\exp\!\left[\gamma_{oa}+\delta_{ot}+\lambda_{at}
++\sum_{q=2}^{5}\beta_q Q_{oq}Y_aP_t+\theta W_oY_aP_t\right].
+\label{eq:headline}
+\end{equation}
+The target $\beta_5$ is the postperiod change in the young-to-older stock ratio for Q5 relative to Q1, conditional on Q2--Q4 and Webb.  It is not an individual probability, continuous slope, or hiring rate.
+
+With two age groups, conditioning on $T_{ot}=N_{oyt}+N_{oot}$ removes the occupation--month effect and gives
+\begin{equation}
+\ell_{ot}=N_{oyt}\log p_{ot}+N_{oot}\log(1-p_{ot}),\qquad
+\operatorname{logit}(p_{ot})=\log(\mu_{oyt}/\mu_{oot}).
+\label{eq:conditional}
+\end{equation}
+Final weights construct continuous cell stocks once; equation~\eqref{eq:conditional} is an estimating criterion, not a literal independent-binomial sampling model.
+
+The central alternative gives each SOC two-digit family its own young-relative calendar-month path; a less saturated companion uses family-specific post shifts.  Both change the conditional estimand.  Neither the residual coefficient nor its movement from equation~\eqref{eq:headline} is an AI remainder or composition share.
+
+The occupational-conditioning, influence, dynamic, and flow analyses added in this revision were designed after the initial outcome pattern was known.  They are post-outcome exploratory analyses, not preregistered confirmatory tests; simultaneous inference does not undo that selection.
+
+For shared observations I reuse bootstrap multipliers and form each draw of $\Delta=\widehat\beta^{(2)}-\widehat\beta^{(1)}$.  A paired interval excluding zero shows statistical distinguishability under that procedure; it does not identify the reason.  An interval including zero means nondetection, not economic equivalence.  I report $\mathrm{MDE}_{80}\simeq(1.96+0.84)SE$ only as a precision diagnostic.
+
+To describe where a target is learned, let $h_{ot}=T_{ot}p_{ot}(1-p_{ot})$ and let $r_{ot}$ be the target regressor after projection on every nuisance regressor in the fitted-information metric.  I report
+\[
+I=\sum_{o,t}h_{ot}r_{ot}^{2},\qquad
+s_o=\frac{\sum_t h_{ot}r_{ot}^{2}}{I},\qquad
+G_{\mathrm{eff}}=\left(\sum_o s_o^2\right)^{-1}.
+\]
+These are fitted target information and concentration diagnostics, not an effective number of CPS sampling clusters.  Family and occupation shares, leave-one-out estimates, and the top-five information share are reported without using influence to select a preferred sample.
+
+The principal 9,999-draw wild-score interval treats occupations as shock clusters and allows arbitrary serial dependence within occupation.  It conditions on weighted cells, exposure labels, mapping, support, and specification.  Separate sensitivities use 22 broad-family shocks, household/sample-unit full refits under released weights, and elapsed-calendar time-HAC scores.  A sparse-cell and family-shock simulation audits finite-sample behavior.  These procedures have different stochastic targets; they are not mechanically combined, and none supplies complete CPS design inference or exposure-label uncertainty.
+
+The household exercise keeps every month and fractional route descendant of a positive CPS household identifier together.  It still omits unavailable multistage-selection and calibration uncertainty.  The time-HAC construction uses elapsed calendar lags, so the missing October 2025 is not treated as adjacency between September and November.

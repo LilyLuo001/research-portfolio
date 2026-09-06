@@ -1,0 +1,34 @@
+\section{Longitudinal flow estimands and results}\label{app:flows}
+
+All flow models use valid exact adjacent-month CPSIDV links, origin age, official origin LNKFW1MWT, January 2017--November 2022 as pre, January 2023 onward as post, and December 2022 as transition. Links across the MISH 4-to-5 rotation gap are excluded. December 2019 origins are excluded from occupation-dependent transitions.
+
+For exit, the risk set is employed origins and the event is nonemployment at $t+1$. For occupational outflow, the risk set is employed origins linked to an employed destination and the event is a different harmonized occupation. For entry destination, the risk set is nonemployed origins linked to employment; the outcome is allocation toward destination Q5 rather than Q1. Consequently, the three coefficients are not additive decompositions of the stock coefficient.
+
+\begin{table}[htbp]
+\centering
+\caption{Longitudinal flow estimates}
+\label{tab:app-flows}
+\begin{threeparttable}
+\begin{tabular}{lrrrr}
+\toprule
+Margin & Coefficient & Analytic SE & Wild CI & $p$\\
+\midrule
+Employment exit & 0.1195 & 0.0944 & $[-0.0668,0.3059]$ & .229\\
+Occupational outflow & 0.0107 & 0.0631 & $[-0.1063,0.1277]$ & .857\\
+Persistent outflow & $-0.0246$ & 0.1195 & $[-0.2580,0.2088]$ & .850\\
+Entry destination & $-0.0888$ & 0.0976 & $[-0.2787,0.1011]$ & .383\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Post-outcome exploratory conditional-Poisson rate or allocation models using the frozen beta Q5-versus-Q1 contrast and official longitudinal weights. Inference uses 999 occupation-cluster wild-score draws. Each interval includes zero. Entry destination is an allocation estimand, not an employment-finding probability.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Dependent interviewing does not eliminate occupation coding error. The earlier
+9.865-percent immediate-reversal statistic comes from a broader ages-18--65
+feasibility universe.  On the six-architecture ages-22--65 support used in
+Appendix H, 6,187 A$\rightarrow$B$\rightarrow$A observations are 10.336 percent
+of switches with an observable third interview.  Either denominator conditions
+on a third adjacent interview, and neither statistic is a measured coding-error
+rate or a basis for correcting the stock coefficient.

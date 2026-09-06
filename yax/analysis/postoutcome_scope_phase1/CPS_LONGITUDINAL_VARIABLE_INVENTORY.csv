@@ -1,0 +1,24 @@
+analysis_status,Variable,Available?,Meaning,Missing rate,Relevant for
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,YEAR,yes,Calendar year of interview,0.0,transition timing
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,MONTH,yes,Calendar month of interview,0.0,transition timing
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,SERIAL,yes,Household serial unique only within year-month sample,0.0,household checks
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,CPSID,yes,IPUMS longitudinal household identifier for the 4-8-4 rotation,0.0,household links
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,PERNUM,yes,Person number within household/sample,0.0,within-sample person key
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,CPSIDP,yes,IPUMS person longitudinal identifier based on roster line,0.0,alternative person links
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,CPSIDV,yes,IPUMS validated person longitudinal identifier; preferred link key,0.0,preferred person links
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,MISH,yes,"Month in sample, 1 through 8",0.0,rotation eligibility
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,AGE,yes,Age at last birthday at interview,0.0,origin-age rule
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,EMPSTAT,yes,"Employment status; 10/12 employed, 20s unemployed, 30s NILF",0.0,E/N states
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,OCC,yes,Sample-specific Census occupation code; current occupation only when employed,0.0,primary occupation transition
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,OCC2010,yes,IPUMS harmonized Census-2010 occupation code,0.0,coding-noise sensitivity
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,IND1990,yes,IPUMS harmonized 1990 industry code,0.0,inventory/selection
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,CLASSWKR,yes,Class of worker; not an employer identity,0.0,worker-class diagnostic
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,WTFINL,yes,Final basic monthly cross-sectional person weight,0.06710826905969028,origin/destination count sensitivity
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,EARNWT,yes,Outgoing-rotation earnings weight; not a longitudinal link weight,0.0,weight audit
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,EDUC,yes,Educational attainment,0.0,attrition selection
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,SEX,yes,Reported sex; used only for link-selection diagnostics,0.0,attrition selection
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,RACE,yes,Reported race; used only for ID validation/selection diagnostics,0.0,attrition selection
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,HISPAN,yes,Hispanic-origin coding,0.0,attrition selection
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,ASECFLAG,yes,Marks ASEC supplement records; positive-WTFINL basic records are audited,0.8950581269811109,basic-versus-supplement record separation
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,official longitudinal linking weight,no,No such variable appears in the actual extract header,1.0,longitudinal attrition adjustment
+POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1,same-employer identifier,no,No employer identity or same-employer field appears in the extract,1.0,occupation-switch coding-noise audit

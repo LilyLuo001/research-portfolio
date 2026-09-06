@@ -1,0 +1,32 @@
+{
+  "record": "YAX Phase 3 protected-reference audit",
+  "analysis_status": "POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1",
+  "audited_before_phase3_results": true,
+  "phase3_parent": "3feda26c698b19823d3370eecb3abf2a57ad9cfd",
+  "branch": "task/yax-phase3-final-20260901",
+  "protected_tags": {
+    "v1.1-design-freeze": {
+      "rev_parse": "74d97a9b07e0cbedda2c646c5eed5938b8506f81",
+      "peeled_commit": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+      "object_type": "tag",
+      "previously_frozen_peeled_commit": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+      "underlying_commit_unchanged": true
+    },
+    "v1.1-confirmatory-results": {
+      "rev_parse": "31f9d02352f70fe81f5a01cd6690cc5e5400512c",
+      "peeled_commit": "b16109482c3bf5ca176f6f08976e120b04769945",
+      "object_type": "tag",
+      "previously_frozen_peeled_commit": "b16109482c3bf5ca176f6f08976e120b04769945",
+      "underlying_commit_unchanged": true
+    }
+  },
+  "other_immutable_baselines": {
+    "v4.1_completed_commit": "ca5a02478b68f1a0e47eadd4e8816bbc96c9dcc3",
+    "phase2_final_commit": "9772a494afc2c1af5630979631c4b67640f4ff3f",
+    "phase25_gate3_final_commit": "3feda26c698b19823d3370eecb3abf2a57ad9cfd"
+  },
+  "discrepancy_classification": "annotated-tag object SHA versus peeled commit SHA",
+  "actual_ref_movement": false,
+  "integrity_gate": "PASS"
+}
+

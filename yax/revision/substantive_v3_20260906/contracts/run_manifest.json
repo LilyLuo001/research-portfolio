@@ -1,0 +1,34 @@
+{
+  "runs": [
+    {
+      "code_sha256": "80190d2f1bab7d3c1527524e773cbd3ab97e07a0711795b47937d60e2883d00d",
+      "command": "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_baseline/run_gate1_baseline.py --repo-root <YAX_REPO_ROOT> --python-bin <YAX_PYTHON_BIN> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --historical-preperiod-cells <INPUT:historical_preperiod_cells> --output-dir <YAX_V3_RUN_ROOT>/gate1_baseline/results --audit-dir <YAX_V3_RUN_ROOT>/gate1_baseline/audit",
+      "dependencies": [],
+      "environment_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+      "outputs": [
+        {
+          "path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+          "result_id": "yaxresult_v1_693ef5a75df3b8ea794fd235e1b3b6026c3aed00b472e3a9b2ade0d59ad55d29",
+          "sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2"
+        },
+        {
+          "path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+          "result_id": "yaxresult_v1_b5dc80f0d6f3bc9d03b294f1a7a24fb4e9a1b540c144cdade5cee171d80891c6",
+          "sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2"
+        },
+        {
+          "path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+          "result_id": "yaxresult_v1_7c3d3858f506ae25fcc00c8b67c4d837e841ea2b98991d79d8d331030d84c6be",
+          "sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2"
+        }
+      ],
+      "receipt_path": "runs/gate1_baseline/EXECUTION_RECEIPT.json",
+      "receipt_sha256": "788348d1bbd982394c2dcb1bb3e8553a9a92c32ba89a4d8ef465802403477a96",
+      "run_fingerprint": "be5b9844b42afe4a1a12093788bad081238b4092a752bacb1d725d2279e1aab7",
+      "run_id": "gate1_baseline_reconstruction_v2",
+      "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+      "status": "SUCCESS"
+    }
+  ],
+  "schema_version": "yax-run-dag-v1"
+}

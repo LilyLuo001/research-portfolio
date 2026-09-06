@@ -1,0 +1,27 @@
+{
+  "status": "VERIFIED",
+  "summary": "Audited prior visible failure mechanisms using code and stored artifacts, distinguishing observed failures, hypotheses, verified causes, preventive controls, and unadjudicated matters without claiming access to prior agents' private reasoning.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "RETROSPECTIVE.md",
+      "sha256": "f505dbdf4e056e44186a919869c86c20e39a731c2a166086411a9120b6170391"
+    },
+    {
+      "role": "verification_report",
+      "path": "reviews/RETROSPECTIVE_SELF_REVIEW.md",
+      "sha256": "3a409a42ac33861112d87decc3362477a7ea24e1dc29d01e39427f1fe326e766"
+    }
+  ],
+  "response_locations": [
+    "RETROSPECTIVE.md",
+    "reviews/RETROSPECTIVE_SELF_REVIEW.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent self-review",
+    "report_path": "reviews/RETROSPECTIVE_SELF_REVIEW.md",
+    "independent": false
+  },
+  "blocker": null,
+  "approval": null
+}

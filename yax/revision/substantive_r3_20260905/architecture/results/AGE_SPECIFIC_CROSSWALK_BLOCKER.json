@@ -1,0 +1,38 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "authenticated_dual_coded_validation_dataset_present": false,
+  "available_object": "official total-population conversion proportions",
+  "evidence_files": [
+    {
+      "path": "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
+      "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+    },
+    {
+      "path": "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv.lineage.json",
+      "sha256": "e13998bb471dbb997ab5086db3edddda2c9d5821575963e183655c81bf18121c"
+    },
+    {
+      "path": "yax/revision/referee_round2_20260905/bridge_uncertainty/ANALYSIS_SPEC.md",
+      "sha256": "3ec5754ed2665d948e648231f2169a5e60f3118560f1fa0d4ad284610da59733"
+    },
+    {
+      "path": "yax/revision/referee_round2_20260905/bridge_uncertainty/INTERPRETATION_MEMO.md",
+      "sha256": "f6b894b660e7f4f5aa7d80412dc477ea3f075e49a3d91b004a06e0ae9bd902b9"
+    },
+    {
+      "path": "yax/revision/referee_round2_20260905/bridge_uncertainty/results/AGE_ALLOCATION_ACCOUNTING_BOUNDS.csv",
+      "sha256": "1b5cc6bd1572173ec3d2e5dcef49a2d594fac27b2542051d7ef5b6dc0cf70960"
+    },
+    {
+      "path": "yax/revision/referee_round2_20260905/bridge_uncertainty/results/AGE_ALLOCATION_TILT_SCENARIOS.csv",
+      "sha256": "845c56529b9df5835025bd291b0a39cd3f4dce203c10eb2354b2f13290ee98b1"
+    }
+  ],
+  "existing_accounting_bounds_preserved": true,
+  "existing_declared_tilt_sensitivities_preserved": true,
+  "new_age_specific_shares_estimated": false,
+  "reason": "Adjacent CPS vintages and total conversion rates do not observe the same worker under both source and target occupation codes. They cannot identify age-specific routing.",
+  "requested_object": "age-specific Census-2010-to-Census-2018 occupation route probabilities",
+  "status": "BLOCKED_NO_GENUINE_AGE_SPECIFIC_VALIDATION_DATA",
+  "unblock_requirement": "a versioned validation dataset containing age and both Census-2010 and Census-2018 occupation codes under a documented sampling design"
+}

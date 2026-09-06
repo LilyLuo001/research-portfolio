@@ -1,0 +1,30 @@
+\section{Which Occupational Comparisons Support the Pattern?}\label{sec:results}
+
+Table~\ref{tab:occupation} begins with the rebuilt pooled result.  The Q5--Q1 coefficient is $-0.1321$, its occupation-clustered standard error is 0.0452, and the 9,999-draw interval is $[-0.2206,-0.0437]$.  Giving every SOC two-digit family its own young-relative calendar-month path yields $-0.0217$ ($[-0.1607,0.1173]$).  On common draws, the conditioned-minus-pooled movement is 0.1104 ($[0.0107,0.2102]$), with paired $\mathrm{MDE}_{80}=0.1454$.  Thus the conditional estimands are distinguishable while the residual gradient is imprecise.
+
+\input{tables/r3_table2_occupation.tex}
+
+The ratio $0.1104/0.1321$ is not a causal ``share explained.''  Broad families differ in AI-relevant tasks, computerization, education, work location, and pandemic recovery; family paths absorb all such common evolution.  The result says that the pooled estimate relies mainly on comparisons across families, not what would have happened without AI.
+
+The full Q2--Q5 profile reaches the same conclusion.  Pooled coefficients are jointly different from zero but do not establish a monotone dose response.  After family-month conditioning, the four coefficients are jointly indistinguishable from zero.  Simultaneous intervals and paired movements appear in the online appendix.
+
+\subsection{Direct support and restrictions}
+
+Only SOC27, 29, 31, and 41 contain Q1 and Q5 occupations.  Elsewhere the regression links partial segments---for example Q1--Q3 in one family and Q4--Q5 in another---through common quintile coefficients.  That is valid regression variation but not repeated side-by-side tail comparisons.
+
+A direct-tail benchmark uses only Q1 and Q5 occupations in the four spanning families.  Its 29 occupations account for 5.03 percent of preperiod stock.  The family-month estimate is 0.1494 ($[-0.1694,0.4682]$), so the CPS cannot precisely resolve a direct tail contrast within broad families.  This row changes population and support and cannot replace the primary estimand.
+
+A continuous companion instead subtracts each family's preperiod-weighted beta mean and imposes a common within-family slope.  Its family-month coefficient is $-0.0025$ per 0.1084 raw beta units ($[-0.0240,0.0191]$).  It uses more residual variation but trades the tail contrast for linearity and a common slope.  Together, the specifications expose the support--functional-form tradeoff.
+
+\subsection{Influence and observed paths}
+
+The online appendix reports nuisance-adjusted information, effective information counts, and family and occupation deletions.  Fast-food and counter workers have substantial signed influence because low-exposure service employment recovered differently after the pandemic, but other occupations push oppositely.  Outcome-selected deletion is not a design correction; symmetric trimming and economically defined service exclusions remain diagnostics.
+
+Figure~\ref{fig:paths} separates young and older stocks for both tails.  Because numerator and denominator move, the coefficient is not an individual young worker's loss.  The low-exposure reference trajectory is part of the result.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.94\textwidth]{r3_figure1_q1_q5_paths.pdf}
+\caption{Young and older employment stocks in the exposure tails}\label{fig:paths}
+\tabnote{Monthly CPS-weighted stocks use rebuilt beta labels and are indexed to each series' 2019 mean.  The ratio panel divides young by older stock before indexing.  The vertical line marks January 2023; December 2022 is the transition month, and October 2025 is absent rather than interpolated.  Paths are descriptive.}
+\end{figure}

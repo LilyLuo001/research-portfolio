@@ -1,0 +1,24 @@
+{
+  "checks": [
+    "all receipt output hashes",
+    "all repository input hashes",
+    "optional private input hashes: microdata,repair_microdata,preperiod_cells",
+    "calendar identities",
+    "frozen and corrected coefficients",
+    "490/539/495 reconciliation",
+    "model table identities",
+    "route-share adding-up",
+    "allocation accounting bounds",
+    "allocation scenarios",
+    "crosswalk compatibility gate",
+    "no person identifiers, raw weights, or credential columns"
+  ],
+  "execution_receipt_sha256": "c35f3982dd001bd31759646431478d98f1bcd3f16e21f08efcaa8d72d396485d",
+  "private_inputs_rehashed": [
+    "microdata",
+    "repair_microdata",
+    "preperiod_cells"
+  ],
+  "selfcheck_code_sha256": "d5ca36f6fb68fc13965b7f50986a49a83a487b4b8c53095d1f2a9a8a1196b655",
+  "status": "PASS_BRIDGE_UNCERTAINTY_SELFCHECK"
+}

@@ -1,0 +1,61 @@
+{
+  "analysis_eligibility": "age 18-65, employed EMPSTAT 10/12, valid OCC 0000-9999, finite WTFINL > 0",
+  "eligible_CPSIDP_overlap_by_month": {
+    "201703": 0,
+    "201803": 0,
+    "201903": 0,
+    "202003": 0,
+    "202103": 0
+  },
+  "input_hashes": {
+    "march_basic_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "wide_microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9"
+  },
+  "no_interpolation_or_duplicate_reweighting": true,
+  "policy": "append Basic Monthly repair only because wide ASEC contributes zero positive-WTFINL analysis-eligible stock",
+  "source_audits": {
+    "repair_Basic_Monthly": {
+      "analysis_eligible_positive_weight_rows": 252862,
+      "analysis_eligible_positive_weight_stock": 719618393.8506999,
+      "eligible_CPSIDP_duplicate_rows_within_month": 0,
+      "eligible_rows_by_month": {
+        "201703": 55960,
+        "201803": 54009,
+        "201903": 52264,
+        "202003": 45539,
+        "202103": 45090
+      },
+      "eligible_stock_by_month": {
+        "201703": 143182527.15350002,
+        "201803": 145178500.4824,
+        "201903": 146269257.7741,
+        "202003": 144781047.3922,
+        "202103": 140207061.0485
+      },
+      "rows_read": 580541,
+      "target_March_rows": 580541
+    },
+    "wide_ASEC": {
+      "analysis_eligible_positive_weight_rows": 0,
+      "analysis_eligible_positive_weight_stock": 0.0,
+      "eligible_CPSIDP_duplicate_rows_within_month": 0,
+      "eligible_rows_by_month": {
+        "201703": 0,
+        "201803": 0,
+        "201903": 0,
+        "202003": 0,
+        "202103": 0
+      },
+      "eligible_stock_by_month": {
+        "201703": 0.0,
+        "201803": 0.0,
+        "201903": 0.0,
+        "202003": 0.0,
+        "202103": 0.0
+      },
+      "rows_read": 9262480,
+      "target_March_rows": 621589
+    }
+  },
+  "status": "PASS_APPEND_EQUIVALENT_TO_REPLACE_ON_ANALYSIS_ELIGIBLE_STOCK"
+}

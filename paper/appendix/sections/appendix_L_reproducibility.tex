@@ -1,0 +1,33 @@
+\section{Reproducibility and design chronology}\label{app:reproducibility}
+
+The design-freeze tag resolves to commit \nolinkurl{22fbf7924809b7a535e31ae0ab68f5b113ce8078}; the confirmatory-results tag resolves to \nolinkurl{b16109482c3bf5ca176f6f08976e120b04769945}. These hashes establish ordering inside the versioned repository. They are not represented as an externally registered pre-analysis plan. Frozen artifacts remain unchanged; second-round referee analyses are post-outcome exploratory.
+
+The replication record contains the dated design protocol, definition of protected outcomes, information available at the freeze, hypothesis-to-test mapping, code, seeds, supports, and receipts. A second-round manifest connects every headline object to its machine-readable source:
+
+\begin{table}[htbp]
+\centering
+\caption{Headline-result lineage}\label{tab:applineage}
+\scriptsize
+\begin{tabularx}{\textwidth}{Yp{.39\textwidth}}
+\toprule
+Object & Repository result \\
+\midrule
+Corrected baseline and SOC2 conditioning & \nolinkurl{composition_influence/results/COMPOSITION_MODELS.csv} \\
+Paired SOC2 movements & \nolinkurl{composition_influence/results/COMPOSITION_PAIRED_DIFFERENCES.csv} \\
+Influence and service exclusions & \nolinkurl{composition_influence/results/JOINT_DELETION_AND_ROBUST_INFLUENCE.csv}; \nolinkurl{OCCUPATION_SERVICE_EXCLUSIONS.csv} \\
+Canonical interval and architecture MDEs & \nolinkurl{precision_rotation/results/CANONICAL_PRIMARY_INTERVAL.csv}; \nolinkurl{PAIRED_ARCHITECTURE_PRECISION.csv} \\
+Quarterly, HAC, and pseudo-break results & \nolinkurl{precision_rotation/results/QUARTERLY_ESTIMATES.csv}; \nolinkurl{ROTATION_TIME_HAC_SENSITIVITY.csv}; \nolinkurl{PSEUDO_BREAK_SUMMARY.json} \\
+BCC grouping bridge & \nolinkurl{bcc_bridge/results/BCC_GROUPING_ARCHITECTURE_RESULTS.csv}; \nolinkurl{BCC_GROUPING_PAIRED_DIFFERENCES.csv} \\
+Bridge allocation and universe reconciliation & \nolinkurl{bridge_uncertainty/results/MODEL_SENSITIVITIES.csv}; \nolinkurl{UNIVERSE_RECONCILIATION.csv} \\
+Population-control audit & \nolinkurl{population_controls/results/POPULATION_CONTROL_STATIC_SENSITIVITIES.csv} \\
+Architecture spectrum and census & \nolinkurl{architecture/results/ARCHITECTURE_EIGEN_SPECTRUM.csv}; \nolinkurl{framework_census/CANDIDATE_ARCHITECTURE_CENSUS.md} \\
+\bottomrule
+\end{tabularx}
+\tabnote{All displayed paths are relative to \nolinkurl{yax/revision/referee_round2_20260905/}; manifests in each directory record hashes. The mobility package is separately indexed in Appendix H.}
+\end{table}
+
+Public-use CPS microdata are obtained from IPUMS and are not redistributed. Principal private-file hashes, not paths or credentials, appear in execution receipts. Scripts write aggregate results only. Every major workstream has a self-check or machine audit covering result identities, support counts, input/output hashes, and the absence of raw person identifiers.
+
+The scientific article no longer uses ``referee-requested,'' ``R1-style,'' or ``R2-style'' to motivate an exercise. Revision chronology belongs here and in the response letter. The reason for each main-text analysis is stated in economic terms.
+
+Author affiliation, email, acknowledgments, funding, conflicts, and final journal data-use language remain for author completion; none has been fabricated.

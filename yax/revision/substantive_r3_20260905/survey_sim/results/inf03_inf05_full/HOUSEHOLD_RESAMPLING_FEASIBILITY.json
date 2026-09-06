@@ -1,0 +1,49 @@
+{
+  "MISH_role": "rotation position; not treated as one of eight independent PSUs",
+  "SERIAL_role": "within-year-month household identifier only; not used to preserve rotation dependence",
+  "available_longitudinal_unit": "CPSID",
+  "bootstrap_diagnostics": {
+    "design_based_inference": false,
+    "failures": 0,
+    "multiplier": "independent mean-one Exponential(1), common across months and route descendants",
+    "reclassified_occupations_maximum": 7,
+    "reclassified_occupations_median": 2.0,
+    "reclassified_occupations_p95": 4.0,
+    "requested_draws": 199,
+    "sampling_unit": "positive CPSID linked household record across all observed months",
+    "successful_fixed_label_draws": 199,
+    "successful_rebuilt_label_draws": 199
+  },
+  "captured": "co-resident and repeated-month dependence within linked CPSID among analysis-contributing households",
+  "classification_modes": [
+    "fixed_corrected_labels",
+    "rebuilt_preperiod_labels"
+  ],
+  "design_based_CPS_inference_available": false,
+  "march_gate_status": "PASS_FUNCTIONAL_REPLACEMENT",
+  "omitted": "unavailable strata/PSU dependence, multistage selection, calibration/nonresponse-weight uncertainty, CPSID linkage error",
+  "route_and_unit_counts": {
+    "CPSID_analysis_month_visits_maximum": 8,
+    "CPSID_analysis_month_visits_median": 4.0,
+    "CPSID_analysis_month_visits_p95": 8.0,
+    "CPSID_units_observed_more_than_one_analysis_month": 567373,
+    "active_employed_age_22_65_source_records": 5001069,
+    "active_source_records_with_nonpositive_CPSID": 0,
+    "analysis_contributing_CPSID_units": 640401,
+    "bridge_mass_maximum_on_support": 1.0000000000001,
+    "bridge_mass_minimum_on_support": 0.0036,
+    "bridge_sources_on_support": 421,
+    "explicitly_excluded_wide_ASEC_March_rows": 621589,
+    "fractional_descendant_rows": 916747,
+    "raw_rows": 9843021,
+    "repair_active_source_records": 240019,
+    "respondent_equivalent_total": 4345316.767017238,
+    "route_stock_total": 13594448593.026394,
+    "routed_descendant_rows_on_support": 4984188,
+    "static_months": 113,
+    "support_occupations": 468
+  },
+  "status": "FEASIBLE_AS_NONDSEIGN_CPSID_SENSITIVITY",
+  "variance_combination": "not mechanically combined with occupation-cluster variance",
+  "weight_treatment": "released WTFINL fixed; calibration and replicate-weight uncertainty not regenerated"
+}

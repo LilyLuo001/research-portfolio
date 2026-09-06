@@ -1,0 +1,102 @@
+{
+  "analysis_ids": [
+    "DYN-01",
+    "DYN-02",
+    "DYN-03",
+    "DYN-04"
+  ],
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "bootstrap": {
+    "cluster": "occupation",
+    "common_multipliers_within_treatment_contract": true,
+    "draws": 9999,
+    "seed_historical": 2026090529,
+    "seed_rebuilt": 2026090530
+  },
+  "calendar": {
+    "expected_corrected_static_months": 113,
+    "missing_month_not_interpolated": "2025-10",
+    "quarter_reference": "2022Q4 (October-November 2022 observed months)",
+    "transition_excluded": "2022-12"
+  },
+  "cross_structure_pairing": {
+    "comparison": "SOC2-by-calendar-month conditioned static coefficient minus unconditioned static coefficient",
+    "interpretation": "movement between conditioning estimands, not an additive causal decomposition",
+    "inference": "joint occupation influence and common Rademacher multiplier draws on identical support",
+    "status": "post-result synthesis statistic requested after the core dynamic run; underlying models unchanged"
+  },
+  "declared_before_corrected_dynamic_estimates": true,
+  "dynamic": {
+    "aggregation": "calendar quarter",
+    "computerization_nuisance": "Webb software z by every nonreference quarter",
+    "fixed_effect_structures": [
+      "occupation and calendar month",
+      "occupation and SOC2 by calendar month"
+    ],
+    "interacted_quintiles": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "omitted_quintile": 1,
+    "reported_target": "Q5 versus Q1 in each nonreference quarter"
+  },
+  "endpoint_variants": [
+    "through_2024_12",
+    "through_2025_09",
+    "through_2025_12_actual_gap",
+    "full_excluding_September_and_November_2025",
+    "full_through_2026_07_excluding_late_2025",
+    "full_through_2026_07",
+    "post_2020_coding_stable_through_2026_07"
+  ],
+  "endpoint_extension_note": "Implementation correction required by the governing prompt: the through_2024_12 endpoint supplies the explicitly requested pre-2025 diagnostic. Its code path and label were fixed before its numerical estimate was inspected. The exercise remains post-outcome exploratory because the underlying outcome pattern was already known.",
+  "onset_dates": [
+    "2022-11",
+    "2022-12",
+    "2023-01",
+    "2023-02",
+    "2023-03",
+    "2023-04",
+    "2023-05",
+    "2023-06"
+  ],
+  "post_functional": {
+    "definition": "observed-calendar-month-weighted average of post-2022 quarterly Q5-versus-Q1 coefficients",
+    "relationship_to_static": "companion estimand; paired difference reported; equality never assumed",
+    "weight_basis": "number of observed calendar months in each post quarter"
+  },
+  "rambachan_roth": {
+    "compatible_cvxr_source_commit": "2fe1dac4d0c903c4a29515bef19c5d3824d09656",
+    "compatible_cvxr_version": "1.8.2",
+    "compatible_highs_cran_version": "1.12.0-3",
+    "compatible_osqp_cran_version": "1.0.0",
+    "official_implementation_only": true,
+    "relative_magnitude_grid": [
+      0,
+      0.5,
+      1,
+      1.5,
+      2
+    ],
+    "smoothness_grid_log_points_per_quarter": [
+      0,
+      0.005,
+      0.01,
+      0.02,
+      0.03,
+      0.04,
+      0.05
+    ],
+    "source_commit": "6813f02ed38f0b63bdca6915604b2eac90491303"
+  },
+  "seasonality": [
+    "Q2-Q5 by month-of-year (44 lower-dimensional nuisance slopes)",
+    "occupation by month-of-year saturated sensitivity"
+  ],
+  "treatment_order": [
+    "historical production classification",
+    "separately labeled rebuilt corrected-preperiod classification if supplied"
+  ]
+}

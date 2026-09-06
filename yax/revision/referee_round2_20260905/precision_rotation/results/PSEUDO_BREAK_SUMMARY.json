@@ -1,0 +1,61 @@
+{
+  "actual_post_2022_outcomes_used_in_pseudo_break_models": false,
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "balanced_rule": "At least 12 retained months before and 12 months after the pseudo-break",
+  "candidate_breaks_per_classification": 34,
+  "candidate_rule": "All breaks with at least one retained month before and after, after omitting the immediately preceding transition month",
+  "classification_sensitivities": {
+    "frozen_primary_model_period_weights": {
+      "all_breaks_coefficient_quantiles": {
+        "median": -0.0044927117402149205,
+        "p05": -0.11394939737889728,
+        "p95": 0.019480741941442573
+      },
+      "balanced_breaks": 12,
+      "balanced_breaks_coefficient_quantiles": {
+        "median": -0.0010444599460702835,
+        "p05": -0.005514818944120695,
+        "p95": 0.012786171755159687
+      },
+      "candidate_breaks": 34,
+      "classification_note": "Holds the realized frozen-primary classification and Webb scaling fixed for exact classification comparability",
+      "one_sided_empirical_tail_all": 0.05714285714285714,
+      "one_sided_empirical_tail_balanced": 0.07692307692307693
+    },
+    "pre_AI_2017_2019_weights": {
+      "all_breaks_coefficient_quantiles": {
+        "median": -0.005597168011745842,
+        "p05": -0.11564044443986303,
+        "p95": 0.019888204769394627
+      },
+      "balanced_breaks": 12,
+      "balanced_breaks_coefficient_quantiles": {
+        "median": -0.0015451178746109175,
+        "p05": -0.006375913569840127,
+        "p95": 0.012753566511327485
+      },
+      "candidate_breaks": 34,
+      "classification_note": "Both quintiles and Webb scaling use only the fully pre-2020 placebo window",
+      "one_sided_empirical_tail_all": 0.05714285714285714,
+      "one_sided_empirical_tail_balanced": 0.07692307692307693
+    }
+  },
+  "observed_primary_benchmark": -0.13107397642233506,
+  "pre_AI_window": [
+    "2017-01",
+    "2019-12"
+  ],
+  "requested_years": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "unavailable_reason": "Authenticated YAX CPS extract begins in January 2017",
+  "unavailable_years": [
+    2015,
+    2016
+  ],
+  "warning": "Overlapping pseudo-break estimates are dependent; the empirical tail is a descriptive time-placebo diagnostic, not an exact randomization p-value"
+}

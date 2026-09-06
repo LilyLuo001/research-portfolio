@@ -1,0 +1,29 @@
+\section{Data and Exposure Construction}\label{sec:data}
+
+\subsection{CPS stocks and calendar}
+
+I use IPUMS Basic Monthly CPS data from January 2017 through July 2026.  Employed respondents ages 18--65 with positive final weights are aggregated to occupation--month stocks; the regression compares ages 22--25 with ages 26--65.  Age is not experience, and older workers need not be untreated.
+
+The corrected source calendar contains 114 of 115 possible months.  Five March files in the wide extract were ASEC samples and are replaced by authenticated Basic Monthly files for 2017--2021.  October 2025 is absent because no CPS was collected during the funding lapse; it is not interpolated.  December 2022 is observed but excluded as the transition month, leaving 113 static months.
+
+The reconstruction scans 9,843,021 source rows and retains 5,322,047 eligible records before routing.  Fractional pre-2020 crosswalk descendants are not distinct respondents.  The 468-occupation grid contains 52,884 cells; 51,891 enter the likelihood, including 12,965 valid one-sided zeros, while 993 both-age-zero cells contribute nothing.  Young cells are sparse: 26.25 percent have zero respondent-equivalent records and 69.83 percent have fewer than five.
+
+\input{tables/r3_table1_data.tex}
+
+\subsection{Harmonization and support}
+
+Pre-2020 Census-2010 occupations are routed to Census-2018 using versioned official shares.  Applying the same shares to young and older records preserves source stock and age ratios by construction, but does not validate age-specific routing.  The route reaches 99.546 percent of eligible early stock and conserves routed weight to machine precision.
+
+Primary support requires finite GPT-4 beta and Webb software scores and positive preperiod young and older stock.  It contains 468 occupations and 87.19 percent of candidate-universe stock; a named file records all 73 exclusions.  A literal SOC-2010 AIOE merge into post-2018 employment data covers only 3.33 percent of computer-and-mathematical employment, versus 97.7 percent after version-aware routing.  Fixed-support score repair changes little; occupation readmission changes the population.  I treat the literal merge as invalid and do not attribute it to another paper without implementation evidence.
+
+The support file separates missing exposure, missing Webb, and absent young preperiod stock.  This matters because a common-support regression estimates a population defined by all required scores, whereas native-support rows can change both the exposure definition and who remains.  The appendix's four-step crosswalk table holds support fixed before adding newly reachable occupations, so measurement correction is not conflated with sample composition.
+
+\subsection{Exposure groups and production breaks}
+
+The primary exposure is Eloundou et al.'s GPT-4 beta share.  CPS stock from January 2017 through November 2022 sets normalization and employment-weighted quintile cuts, with ties retained.  The quintiles contain 129, 99, 82, 67, and 91 occupations and about one fifth of preperiod stock each.  No postperiod stock enters the rebuilt labels.
+
+Employment weighting balances stock rather than occupation counts.  Ties are assigned to the lower group at a cut and never split to force exact fifths.  Consequently, group membership is a versioned treatment object rather than a percentile transformation that can be recreated from rounded published values.
+
+A historical production treatment instead used the full static panel for weights.  On the corrected calendar its coefficient is $-0.1346$.  Rebuilding from the 71-month preperiod changes nine assignments and moves the coefficient by 0.0024 log points ($[-0.0013,0.0062]$).  The revised analysis uses only the rebuilt treatment; the historical row is a checkpoint.
+
+Official documentation also identifies population-control changes in January 2025 and January 2026, modified November 2025 collection and weighting, and later longitudinal-identifier corrections.  These establish survey-production breaks, not their causal effect on the coefficient.  I report endpoint and shutdown-month sensitivities, preserve elapsed calendar time in lags, and do not apply aggregate population adjustments to age-by-occupation cells without the required counterfactual controls.

@@ -1,0 +1,552 @@
+{
+  "dynamic_path_rows": 152,
+  "failures": [],
+  "membership_concordance": {
+    "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+    "bcc_version": "2026-08-12",
+    "external_BCC_membership_concordance": "UNVERIFIED",
+    "reason": "complete published occupation membership and tie algorithm unavailable",
+    "same_binary_group_occupations": 439,
+    "same_binary_group_share": 0.938034188034188,
+    "same_quintile_occupations": 356,
+    "same_quintile_share": 0.7606837606837606,
+    "support_occupations": 468,
+    "switched_binary_group_corrected_stock_share": 0.06206242235539707,
+    "switched_binary_group_occupations": 29
+  },
+  "static_models": [
+    {
+      "SOC2_post_reference": "",
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "bcc_version": "2026-08-12",
+      "bootstrap_critical": 1.9270675381462858,
+      "bootstrap_draws": 9999,
+      "bootstrap_se": 0.02588225132771611,
+      "bridge_status": "approximate_public_grouping_bridge_not_replication",
+      "ci_lower": -0.12541240591855582,
+      "ci_upper": -0.024606616997105923,
+      "coefficient": -0.07500951145783087,
+      "comparison_age_band": "26-65",
+      "conditional_target_information": 55130240.20761236,
+      "conditional_target_residual_weighted_sd": 0.22777766204878233,
+      "conditioning_structure": "occupation_plus_calendar_month_FE",
+      "contrast": "Q4-Q5_vs_Q1-Q3_high_x_post_in_young_relative_CPS_stock",
+      "cut_rule": "historical_108_month_young_plus_older_CPS_stock_weighted_quintiles_including_postperiod",
+      "cut_values_json": "[0.162561583951, 0.328947368421, 0.461538461538, 0.537037037037]",
+      "effective_occupation_information_count": 70.66959283305916,
+      "exposure_measure": "Eloundou_et_al_GPT4_beta_Rule_A_Census2018",
+      "first_month": "2017-01",
+      "grouping_description": "historical YAX employment-weighted tie-preserving beta quintiles; Q4-Q5 versus Q1-Q3",
+      "grouping_name": "historical_YAX_employment_weighted_approximation",
+      "high_corrected_calendar_stock_share": 0.3970069061997744,
+      "high_occupation_count": 155,
+      "inference": "occupation_cluster_sandwich_and_9999_common_Rademacher_wild_score_draws",
+      "information_matrix_columns": 2,
+      "information_matrix_condition_number_positive_spectrum": 5.089757559261661,
+      "information_matrix_rank": 2,
+      "last_month": "2026-07",
+      "low_occupation_count": 313,
+      "membership_concordance_status": "UNVERIFIED_no_complete_public_BCC_membership_or_tie_algorithm",
+      "model_id": "historical_YAX_employment_weighted_approximation_occupation_plus_calendar_month_FE",
+      "months": 113,
+      "normal_theory_MDE80": 0.07327610541720192,
+      "occupation_cluster_se": 0.02615522988322935,
+      "outcome_unit": "CPS weighted person employment stock aggregated to occupation-month-age group",
+      "positive_total_rows": 51891,
+      "regression_weight": "CPS_WTFINL_stock_in_grouped_binomial_cell_totals",
+      "slope_labels_json": "[\"top_two_vs_bottom_three_x_post\", \"Webb_software_historical_z_x_post\"]",
+      "source_population": "national CPS employed persons with positive final person weights",
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "support_occupations": 468,
+      "tie_rule": "ties_preserved; score_equal_to_cut_assigned_to_lower_quintile",
+      "top_five_information_share": 0.19471511233474348,
+      "wild_score_p_value": 0.0033,
+      "young_age_band": "22-25",
+      "zero_total_rows": 993
+    },
+    {
+      "SOC2_post_reference": "11",
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "bcc_version": "2026-08-12",
+      "bootstrap_critical": 1.961082433816752,
+      "bootstrap_draws": 9999,
+      "bootstrap_se": 0.034592296507902215,
+      "bridge_status": "approximate_public_grouping_bridge_not_replication",
+      "ci_lower": -0.09450182222858036,
+      "ci_upper": 0.04129438542137715,
+      "coefficient": -0.026603718403601602,
+      "comparison_age_band": "26-65",
+      "conditional_target_information": 20345197.451323256,
+      "conditional_target_residual_weighted_sd": 0.13837794841237572,
+      "conditioning_structure": "SOC2_x_post",
+      "contrast": "Q4-Q5_vs_Q1-Q3_high_x_post_in_young_relative_CPS_stock",
+      "cut_rule": "historical_108_month_young_plus_older_CPS_stock_weighted_quintiles_including_postperiod",
+      "cut_values_json": "[0.162561583951, 0.328947368421, 0.461538461538, 0.537037037037]",
+      "effective_occupation_information_count": 26.797923354643927,
+      "exposure_measure": "Eloundou_et_al_GPT4_beta_Rule_A_Census2018",
+      "first_month": "2017-01",
+      "grouping_description": "historical YAX employment-weighted tie-preserving beta quintiles; Q4-Q5 versus Q1-Q3",
+      "grouping_name": "historical_YAX_employment_weighted_approximation",
+      "high_corrected_calendar_stock_share": 0.3970069061997744,
+      "high_occupation_count": 155,
+      "inference": "occupation_cluster_sandwich_and_9999_common_Rademacher_wild_score_draws",
+      "information_matrix_columns": 23,
+      "information_matrix_condition_number_positive_spectrum": 879.2061392711581,
+      "information_matrix_rank": 23,
+      "last_month": "2026-07",
+      "low_occupation_count": 313,
+      "membership_concordance_status": "UNVERIFIED_no_complete_public_BCC_membership_or_tie_algorithm",
+      "model_id": "historical_YAX_employment_weighted_approximation_SOC2_x_post",
+      "months": 113,
+      "normal_theory_MDE80": 0.0969986374533682,
+      "occupation_cluster_se": 0.03462276886180263,
+      "outcome_unit": "CPS weighted person employment stock aggregated to occupation-month-age group",
+      "positive_total_rows": 51891,
+      "regression_weight": "CPS_WTFINL_stock_in_grouped_binomial_cell_totals",
+      "slope_labels_json": "[\"top_two_vs_bottom_three_x_post\", \"Webb_software_historical_z_x_post\", \"SOC2_13_x_post\", \"SOC2_15_x_post\", \"SOC2_17_x_post\", \"SOC2_19_x_post\", \"SOC2_21_x_post\", \"SOC2_23_x_post\", \"SOC2_25_x_post\", \"SOC2_27_x_post\", \"SOC2_29_x_post\", \"SOC2_31_x_post\", \"SOC2_33_x_post\", \"SOC2_35_x_post\", \"SOC2_37_x_post\", \"SOC2_39_x_post\", \"SOC2_41_x_post\", \"SOC2_43_x_post\", \"SOC2_45_x_post\", \"SOC2_47_x_post\", \"SOC2_49_x_post\", \"SOC2_51_x_post\", \"SOC2_53_x_post\"]",
+      "source_population": "national CPS employed persons with positive final person weights",
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "support_occupations": 468,
+      "tie_rule": "ties_preserved; score_equal_to_cut_assigned_to_lower_quintile",
+      "top_five_information_share": 0.35581766174935403,
+      "wild_score_p_value": 0.4533,
+      "young_age_band": "22-25",
+      "zero_total_rows": 993
+    },
+    {
+      "SOC2_post_reference": "",
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "bcc_version": "2026-08-12",
+      "bootstrap_critical": 1.9536949883260162,
+      "bootstrap_draws": 9999,
+      "bootstrap_se": 0.03411231113000427,
+      "bridge_status": "approximate_public_grouping_bridge_not_replication",
+      "ci_lower": -0.09338087582639618,
+      "ci_upper": 0.04001431079859688,
+      "coefficient": -0.026683282513899644,
+      "comparison_age_band": "26-65",
+      "conditional_target_information": 20288715.286690734,
+      "conditional_target_residual_weighted_sd": 0.13825881516368901,
+      "conditioning_structure": "SOC2_x_calendar_month",
+      "contrast": "Q4-Q5_vs_Q1-Q3_high_x_post_in_young_relative_CPS_stock",
+      "cut_rule": "historical_108_month_young_plus_older_CPS_stock_weighted_quintiles_including_postperiod",
+      "cut_values_json": "[0.162561583951, 0.328947368421, 0.461538461538, 0.537037037037]",
+      "effective_occupation_information_count": 26.846229650618348,
+      "exposure_measure": "Eloundou_et_al_GPT4_beta_Rule_A_Census2018",
+      "first_month": "2017-01",
+      "grouping_description": "historical YAX employment-weighted tie-preserving beta quintiles; Q4-Q5 versus Q1-Q3",
+      "grouping_name": "historical_YAX_employment_weighted_approximation",
+      "high_corrected_calendar_stock_share": 0.3970069061997744,
+      "high_occupation_count": 155,
+      "inference": "occupation_cluster_sandwich_and_9999_common_Rademacher_wild_score_draws",
+      "information_matrix_columns": 2,
+      "information_matrix_condition_number_positive_spectrum": 8.008052384627042,
+      "information_matrix_rank": 2,
+      "last_month": "2026-07",
+      "low_occupation_count": 313,
+      "membership_concordance_status": "UNVERIFIED_no_complete_public_BCC_membership_or_tie_algorithm",
+      "model_id": "historical_YAX_employment_weighted_approximation_SOC2_x_calendar_month",
+      "months": 113,
+      "normal_theory_MDE80": 0.09564389151046908,
+      "occupation_cluster_se": 0.03413920479452374,
+      "outcome_unit": "CPS weighted person employment stock aggregated to occupation-month-age group",
+      "positive_total_rows": 51891,
+      "regression_weight": "CPS_WTFINL_stock_in_grouped_binomial_cell_totals",
+      "slope_labels_json": "[\"top_two_vs_bottom_three_x_post\", \"Webb_software_historical_z_x_post\"]",
+      "source_population": "national CPS employed persons with positive final person weights",
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "support_occupations": 468,
+      "tie_rule": "ties_preserved; score_equal_to_cut_assigned_to_lower_quintile",
+      "top_five_information_share": 0.35538248456100846,
+      "wild_score_p_value": 0.4427,
+      "young_age_band": "22-25",
+      "zero_total_rows": 993
+    },
+    {
+      "SOC2_post_reference": "",
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "bcc_version": "2026-08-12",
+      "bootstrap_critical": 1.9430739603010707,
+      "bootstrap_draws": 9999,
+      "bootstrap_se": 0.025457915369728724,
+      "bridge_status": "approximate_public_grouping_bridge_not_replication",
+      "ci_lower": -0.12184902576971102,
+      "ci_upper": -0.02222488398729102,
+      "coefficient": -0.07203695487850102,
+      "comparison_age_band": "26-65",
+      "conditional_target_information": 58040712.71850924,
+      "conditional_target_residual_weighted_sd": 0.23371279776903464,
+      "conditioning_structure": "occupation_plus_calendar_month_FE",
+      "contrast": "Q4-Q5_vs_Q1-Q3_high_x_post_in_young_relative_CPS_stock",
+      "cut_rule": "one_equal_cut_weight_per_YAX_support_occupation",
+      "cut_values_json": "[0.10291641051, 0.261904761905, 0.416666666667, 0.533333333333]",
+      "effective_occupation_information_count": 86.08681049085757,
+      "exposure_measure": "Eloundou_et_al_GPT4_beta_Rule_A_Census2018",
+      "first_month": "2017-01",
+      "grouping_description": "equal-occupation tie-preserving beta quintiles on fixed YAX common support; Q4-Q5 versus Q1-Q3",
+      "grouping_name": "public_dashboard_equal_occupation_approximation",
+      "high_corrected_calendar_stock_share": 0.4590693285551715,
+      "high_occupation_count": 184,
+      "inference": "occupation_cluster_sandwich_and_9999_common_Rademacher_wild_score_draws",
+      "information_matrix_columns": 2,
+      "information_matrix_condition_number_positive_spectrum": 4.838140601093243,
+      "information_matrix_rank": 2,
+      "last_month": "2026-07",
+      "low_occupation_count": 284,
+      "membership_concordance_status": "UNVERIFIED_no_complete_public_BCC_membership_or_tie_algorithm",
+      "model_id": "public_dashboard_equal_occupation_approximation_occupation_plus_calendar_month_FE",
+      "months": 113,
+      "normal_theory_MDE80": 0.07182061225851956,
+      "occupation_cluster_se": 0.02563570502663308,
+      "outcome_unit": "CPS weighted person employment stock aggregated to occupation-month-age group",
+      "positive_total_rows": 51891,
+      "regression_weight": "CPS_WTFINL_stock_in_grouped_binomial_cell_totals",
+      "slope_labels_json": "[\"top_two_vs_bottom_three_x_post\", \"Webb_software_historical_z_x_post\"]",
+      "source_population": "national CPS employed persons with positive final person weights",
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "support_occupations": 468,
+      "tie_rule": "ties_preserved; score_equal_to_cut_assigned_to_lower_quintile",
+      "top_five_information_share": 0.16102426936823763,
+      "wild_score_p_value": 0.0045,
+      "young_age_band": "22-25",
+      "zero_total_rows": 993
+    },
+    {
+      "SOC2_post_reference": "11",
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "bcc_version": "2026-08-12",
+      "bootstrap_critical": 1.9456582228166863,
+      "bootstrap_draws": 9999,
+      "bootstrap_se": 0.03343776327790986,
+      "bridge_status": "approximate_public_grouping_bridge_not_replication",
+      "ci_lower": -0.0796273050254381,
+      "ci_upper": 0.05011291372468096,
+      "coefficient": -0.014757195650378575,
+      "comparison_age_band": "26-65",
+      "conditional_target_information": 19937618.100979738,
+      "conditional_target_residual_weighted_sd": 0.13698483078660587,
+      "conditioning_structure": "SOC2_x_post",
+      "contrast": "Q4-Q5_vs_Q1-Q3_high_x_post_in_young_relative_CPS_stock",
+      "cut_rule": "one_equal_cut_weight_per_YAX_support_occupation",
+      "cut_values_json": "[0.10291641051, 0.261904761905, 0.416666666667, 0.533333333333]",
+      "effective_occupation_information_count": 23.26505811325112,
+      "exposure_measure": "Eloundou_et_al_GPT4_beta_Rule_A_Census2018",
+      "first_month": "2017-01",
+      "grouping_description": "equal-occupation tie-preserving beta quintiles on fixed YAX common support; Q4-Q5 versus Q1-Q3",
+      "grouping_name": "public_dashboard_equal_occupation_approximation",
+      "high_corrected_calendar_stock_share": 0.4590693285551715,
+      "high_occupation_count": 184,
+      "inference": "occupation_cluster_sandwich_and_9999_common_Rademacher_wild_score_draws",
+      "information_matrix_columns": 23,
+      "information_matrix_condition_number_positive_spectrum": 888.4045446271874,
+      "information_matrix_rank": 23,
+      "last_month": "2026-07",
+      "low_occupation_count": 284,
+      "membership_concordance_status": "UNVERIFIED_no_complete_public_BCC_membership_or_tie_algorithm",
+      "model_id": "public_dashboard_equal_occupation_approximation_SOC2_x_post",
+      "months": 113,
+      "normal_theory_MDE80": 0.09340753550201564,
+      "occupation_cluster_se": 0.033340958146877674,
+      "outcome_unit": "CPS weighted person employment stock aggregated to occupation-month-age group",
+      "positive_total_rows": 51891,
+      "regression_weight": "CPS_WTFINL_stock_in_grouped_binomial_cell_totals",
+      "slope_labels_json": "[\"top_two_vs_bottom_three_x_post\", \"Webb_software_historical_z_x_post\", \"SOC2_13_x_post\", \"SOC2_15_x_post\", \"SOC2_17_x_post\", \"SOC2_19_x_post\", \"SOC2_21_x_post\", \"SOC2_23_x_post\", \"SOC2_25_x_post\", \"SOC2_27_x_post\", \"SOC2_29_x_post\", \"SOC2_31_x_post\", \"SOC2_33_x_post\", \"SOC2_35_x_post\", \"SOC2_37_x_post\", \"SOC2_39_x_post\", \"SOC2_41_x_post\", \"SOC2_43_x_post\", \"SOC2_45_x_post\", \"SOC2_47_x_post\", \"SOC2_49_x_post\", \"SOC2_51_x_post\", \"SOC2_53_x_post\"]",
+      "source_population": "national CPS employed persons with positive final person weights",
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "support_occupations": 468,
+      "tie_rule": "ties_preserved; score_equal_to_cut_assigned_to_lower_quintile",
+      "top_five_information_share": 0.385652195550801,
+      "wild_score_p_value": 0.6622,
+      "young_age_band": "22-25",
+      "zero_total_rows": 993
+    },
+    {
+      "SOC2_post_reference": "",
+      "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+      "bcc_version": "2026-08-12",
+      "bootstrap_critical": 1.9459202647945109,
+      "bootstrap_draws": 9999,
+      "bootstrap_se": 0.033102346599274864,
+      "bridge_status": "approximate_public_grouping_bridge_not_replication",
+      "ci_lower": -0.08098551895346244,
+      "ci_upper": 0.04743961041188462,
+      "coefficient": -0.016772954270788912,
+      "comparison_age_band": "26-65",
+      "conditional_target_information": 19880052.933414705,
+      "conditional_target_residual_weighted_sd": 0.13685928337679681,
+      "conditioning_structure": "SOC2_x_calendar_month",
+      "contrast": "Q4-Q5_vs_Q1-Q3_high_x_post_in_young_relative_CPS_stock",
+      "cut_rule": "one_equal_cut_weight_per_YAX_support_occupation",
+      "cut_values_json": "[0.10291641051, 0.261904761905, 0.416666666667, 0.533333333333]",
+      "effective_occupation_information_count": 23.30741943447461,
+      "exposure_measure": "Eloundou_et_al_GPT4_beta_Rule_A_Census2018",
+      "first_month": "2017-01",
+      "grouping_description": "equal-occupation tie-preserving beta quintiles on fixed YAX common support; Q4-Q5 versus Q1-Q3",
+      "grouping_name": "public_dashboard_equal_occupation_approximation",
+      "high_corrected_calendar_stock_share": 0.4590693285551715,
+      "high_occupation_count": 184,
+      "inference": "occupation_cluster_sandwich_and_9999_common_Rademacher_wild_score_draws",
+      "information_matrix_columns": 2,
+      "information_matrix_condition_number_positive_spectrum": 8.17146737638767,
+      "information_matrix_rank": 2,
+      "last_month": "2026-07",
+      "low_occupation_count": 284,
+      "membership_concordance_status": "UNVERIFIED_no_complete_public_BCC_membership_or_tie_algorithm",
+      "model_id": "public_dashboard_equal_occupation_approximation_SOC2_x_calendar_month",
+      "months": 113,
+      "normal_theory_MDE80": 0.09244827513582532,
+      "occupation_cluster_se": 0.03299855900799428,
+      "outcome_unit": "CPS weighted person employment stock aggregated to occupation-month-age group",
+      "positive_total_rows": 51891,
+      "regression_weight": "CPS_WTFINL_stock_in_grouped_binomial_cell_totals",
+      "slope_labels_json": "[\"top_two_vs_bottom_three_x_post\", \"Webb_software_historical_z_x_post\"]",
+      "source_population": "national CPS employed persons with positive final person weights",
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "support_occupations": 468,
+      "tie_rule": "ties_preserved; score_equal_to_cut_assigned_to_lower_quintile",
+      "top_five_information_share": 0.3851073194795875,
+      "wild_score_p_value": 0.6167,
+      "young_age_band": "22-25",
+      "zero_total_rows": 993
+    }
+  ],
+  "status": "PASS_R3_BCC_BRIDGE"
+}
+{
+  "checks": 58,
+  "details": [
+    {
+      "check": "all required output files exist",
+      "passed": true
+    },
+    {
+      "check": "membership has one row for each of 468 common occupations",
+      "passed": true
+    },
+    {
+      "check": "historical quintiles valid",
+      "passed": true
+    },
+    {
+      "check": "equal-occupation quintiles valid",
+      "passed": true
+    },
+    {
+      "check": "both grouping rules populate all five quintiles",
+      "passed": true
+    },
+    {
+      "check": "two explicitly labeled grouping constructions",
+      "passed": true
+    },
+    {
+      "check": "grouping constructions use common support",
+      "passed": true
+    },
+    {
+      "check": "both binary grouping cells are populated",
+      "passed": true
+    },
+    {
+      "check": "groupings share identical ordered support",
+      "passed": true
+    },
+    {
+      "check": "external BCC membership is not claimed verified",
+      "passed": true
+    },
+    {
+      "check": "binary membership-switch count reconciles",
+      "passed": true
+    },
+    {
+      "check": "six static models completed",
+      "passed": true
+    },
+    {
+      "check": "static grouping-by-conditioning grid complete",
+      "passed": true
+    },
+    {
+      "check": "static models use one common support",
+      "passed": true
+    },
+    {
+      "check": "static coefficients and intervals finite",
+      "passed": true
+    },
+    {
+      "check": "static estimates lie inside intervals",
+      "passed": true
+    },
+    {
+      "check": "static results use 9999 draws",
+      "passed": true
+    },
+    {
+      "check": "three grouping-rule and four conditioning pairs completed",
+      "passed": true
+    },
+    {
+      "check": "static paired contrast types complete",
+      "passed": true
+    },
+    {
+      "check": "static paired inference preserves common multipliers",
+      "passed": true
+    },
+    {
+      "check": "occupation information has one row per static model and occupation",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('historical_YAX_employment_weighted_approximation', 'SOC2_x_calendar_month')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('historical_YAX_employment_weighted_approximation', 'SOC2_x_post')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('historical_YAX_employment_weighted_approximation', 'occupation_plus_calendar_month_FE')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('public_dashboard_equal_occupation_approximation', 'SOC2_x_calendar_month')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('public_dashboard_equal_occupation_approximation', 'SOC2_x_post')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('public_dashboard_equal_occupation_approximation', 'occupation_plus_calendar_month_FE')",
+      "passed": true
+    },
+    {
+      "check": "November-2022 to June-2026 endpoint table complete",
+      "passed": true
+    },
+    {
+      "check": "no retained static or dynamic model failures",
+      "passed": true
+    },
+    {
+      "check": "four dynamic models completed",
+      "passed": true
+    },
+    {
+      "check": "dynamic models have a common complete quarterly path",
+      "passed": true
+    },
+    {
+      "check": "2022Q4 is the omitted dynamic reference",
+      "passed": true
+    },
+    {
+      "check": "dynamic estimates lie inside simultaneous intervals",
+      "passed": true
+    },
+    {
+      "check": "preperiod and postperiod joint tests complete",
+      "passed": true
+    },
+    {
+      "check": "paired grouping-rule dynamics complete",
+      "passed": true
+    },
+    {
+      "check": "dynamic paired inference preserves common support and multipliers",
+      "passed": true
+    },
+    {
+      "check": "complete target covariance stored for every dynamic model",
+      "passed": true
+    },
+    {
+      "check": "occupation influence rows stored for every dynamic model",
+      "passed": true
+    },
+    {
+      "check": "August 12 2026 BCC version recorded",
+      "passed": true
+    },
+    {
+      "check": "corrected calendar contract recorded",
+      "passed": true
+    },
+    {
+      "check": "receipt model counts complete",
+      "passed": true
+    },
+    {
+      "check": "receipt retains no hidden failures",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches BRIDGE_GROUP_SUMMARY.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches BRIDGE_MEMBERSHIP.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches BRIDGE_MEMBERSHIP_CONCORDANCE.json",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_JOINT_TESTS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_PAIRED_GROUPING_DIFFERENCES.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_PATHS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_TARGET_COVARIANCE.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_TARGET_INFLUENCE.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches FINDINGS.md",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches MODEL_FAILURES.json",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_GROWTH_ENDPOINTS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_INFORMATION_BY_OCCUPATION.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_MODEL_RESULTS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_PAIRED_DIFFERENCES.csv",
+      "passed": true
+    },
+    {
+      "check": "outputs do not claim exact BCC membership",
+      "passed": true
+    },
+    {
+      "check": "bridge limitation is machine-readable",
+      "passed": true
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,23 @@
+\begin{table}[!htbp]
+\centering
+\caption{Changing the economic comparison}\label{tab:reallocation}
+\begin{threeparttable}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{@{}Yrrrr@{}}
+\toprule
+Comparison & Coef. & SE & 95\% interval & MDE$_{80}$ \\
+\midrule
+Frozen beta Q5--Q1 & -.1311 & .0444 & [-.2171, -.0451] & .1244 \\
+Beta Q5--Q2 & -.0456 & .0406 & [-.1248, .0335] & .1137 \\
+Beta Q5--Q3 & -.0833 & .0387 & [-.1581, -.0084] & .1081 \\
+Beta Q5--Q4 & -.0340 & .0393 & [-.1110, .0429] & .1099 \\
+\midrule
+BCC beta top-two versus bottom-three & -.0728 & .0260 & [-.1240, -.0216] & .0728 \\
+Corrected beta Q5--Q1, quarterly cells & -.1345 & .0450 & [-.2222, -.0468] & .1260 \\
+Corrected beta Q5--Q1, respondent equivalents & -.1348 & .0441 & [-.2216, -.0481] & .1237 \\
+\bottomrule
+\end{tabularx}
+\tabnote{The first four rows are different contrasts from the same fitted quintile model, not changes of omitted-category notation. The BCC row reproduces only the public GPT-4 beta/top-two-versus-bottom-three component inside the CPS design; it does not reproduce proprietary ADP outcomes, job-title mapping, hiring margins, or firm-time controls. Quarterly aggregation and respondent-equivalent cells are post-outcome exploratory diagnostics. A confidence interval containing zero means the design does not detect a difference; it does not establish equivalence.}
+\end{threeparttable}
+\end{table}

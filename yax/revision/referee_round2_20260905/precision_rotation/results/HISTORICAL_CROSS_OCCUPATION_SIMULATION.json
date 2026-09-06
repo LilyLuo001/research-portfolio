@@ -1,0 +1,106 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "critical_value_two_sided": 0.8506714041590641,
+  "design_held_fixed": "Original beta/Webb Q5-Q1 grouped-binomial DGP, 66 preperiod donors, 42 synthetic post months, fixed computerization shift",
+  "draws_per_effect": 132,
+  "empirical_mde80_relative_decline": 0.019089787536890803,
+  "enumeration": "All 66 cyclic donor offsets times both global signs",
+  "input_hashes": {
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800"
+  },
+  "limitations": [
+    "Global-sign preservation is a sharp full-covariance sensitivity, not a uniquely identified residual DGP.",
+    "The finite donor process has only 132 unique offset-sign paths.",
+    "Occupation-cluster SEs still condition on realized aggregate cells and are not CPS replicate-weight variances.",
+    "A fraction below zero or above one is reported as computed and is not truncated.",
+    "This exercise cannot uniquely attribute the prospective-realized precision gap."
+  ],
+  "only_changed_rule": "One global residual sign per draw replaces independent occupation signs, preserving each donor month's complete cross-occupation residual vector",
+  "post_2022_outcomes_read_by_simulation": false,
+  "precision_gap": {
+    "covariance_preserving_empirical_SD": 0.006590531030732023,
+    "covariance_preserving_mean_SE": 0.012167507527039684,
+    "fraction_of_analytic_SE_gap_closed": -6.640742051817492e-05,
+    "fraction_of_empirical_SD_gap_closed": -0.1849602408437245,
+    "published_independent_sign_mean_SE": 0.012169648511417098,
+    "published_independent_sign_null_RMSE": 0.012493732077825115,
+    "realized_primary_occupation_cluster_SE": 0.04440978614525461
+  },
+  "results": [
+    {
+      "empirical_sd_estimate": 0.006590531030732023,
+      "enumerated_draws": 132,
+      "mean_estimate": -9.492582732879761e-05,
+      "mean_occupation_cluster_se": 0.012167507527039684,
+      "rejection_probability_zero": 0.045454545454545456,
+      "rmse": 0.006566205631672655,
+      "true_log_effect": 0.0
+    },
+    {
+      "empirical_sd_estimate": 0.006588717303286909,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.005019521431427868,
+      "mean_occupation_cluster_se": 0.012167988696629125,
+      "rejection_probability_zero": 0.26515151515151514,
+      "rmse": 0.0065637416230531495,
+      "true_log_effect": -0.005
+    },
+    {
+      "empirical_sd_estimate": 0.006585134271322439,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.014869476074831101,
+      "mean_occupation_cluster_se": 0.01216900853817306,
+      "rejection_probability_zero": 0.7196969696969697,
+      "rmse": 0.006561441515786659,
+      "true_log_effect": -0.015
+    },
+    {
+      "empirical_sd_estimate": 0.0065798701021555946,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.029646305712410243,
+      "mean_occupation_cluster_se": 0.012170679703585584,
+      "rejection_probability_zero": 1.0,
+      "rmse": 0.006564434486709826,
+      "true_log_effect": -0.03
+    },
+    {
+      "empirical_sd_estimate": 0.006573055318291867,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.04935225710632469,
+      "mean_occupation_cluster_se": 0.012173165377039791,
+      "rejection_probability_zero": 1.0,
+      "rmse": 0.006580069607662401,
+      "true_log_effect": -0.05
+    },
+    {
+      "empirical_sd_estimate": 0.006563264395495239,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.0789186159769845,
+      "mean_occupation_cluster_se": 0.012177425859998394,
+      "rejection_probability_zero": 1.0,
+      "rmse": 0.006627178454466063,
+      "true_log_effect": -0.08
+    },
+    {
+      "empirical_sd_estimate": 0.006550998537741156,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.1183540604499943,
+      "mean_occupation_cluster_se": 0.012184050015418281,
+      "rejection_probability_zero": 1.0,
+      "rmse": 0.006730496326386787,
+      "true_log_effect": -0.12
+    },
+    {
+      "empirical_sd_estimate": 0.006534237509421369,
+      "enumerated_draws": 132,
+      "mean_estimate": -0.1775357066852088,
+      "mean_occupation_cluster_se": 0.01219586105792394,
+      "rejection_probability_zero": 1.0,
+      "rmse": 0.006960283389129611,
+      "true_log_effect": -0.18
+    }
+  ],
+  "simulation_role": "historical precision sensitivity; not a new outcome model"
+}

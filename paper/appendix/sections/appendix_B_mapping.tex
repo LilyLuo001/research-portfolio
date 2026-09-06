@@ -1,0 +1,33 @@
+\section{Calendar, mapping, and age-allocation uncertainty}\label{app:mapping}
+
+The original extract selected March ASEC (`03s') rather than Basic Monthly (`03b') samples in 2017--2021. ASEC records carry zero Basic Monthly final weights for this design. A separately authenticated repair restores the five months. October 2025 is genuinely absent because the CPS was not collected. Combined files contain 9,843,021 rows and 114 observed survey months; the corrected static model retains 113 after omitting December 2022.
+
+\begin{table}[htbp]
+\centering
+\caption{Calendar and taxonomy sensitivities}\label{tab:appcalendar}
+\small
+\begin{tabularx}{\textwidth}{Yrrrr}
+\toprule
+Specification & Months & Occ. & Coefficient & 95\% interval \\
+\midrule
+Frozen chronology benchmark & 108 & 468 & -.1311 & [-.2171,-.0451] \\
+Restored March 2017--21 & 113 & 468 & -.1346 & [-.2223,-.0468] \\
+No possible split inbound route, fixed labels & 113 & 369 & -.1674 & [-.2684,-.0663] \\
+No possible split inbound route, recomputed labels & 113 & 369 & -.1471 & [-.2428,-.0513] \\
+Stable Census-2010 aggregate & 113 & 408 & -.1522 & [-.2438,-.0606] \\
+Respondent-equivalent cells & 113 & 468 & -.1348 & [-.2216,-.0481] \\
+\bottomrule
+\end{tabularx}
+\tabnote{The first row is confirmatory; the others are post-outcome exploratory. The two one-to-one-target rows and stable-taxonomy row change the occupational population. Respondent equivalents reconstruct cells without CPS final weights; they are not weighted stocks divided by a constant.}
+\end{table}
+
+\input{tables/table_sample_flow_revised.tex}
+
+Pre-2020 records use official Census-2010-to-2018 routes. Common conversion proportions are applied to young and older source records, mechanically preserving a source age ratio across its allowed targets before other sources enter. Split sources account for 14.93 percent of young and 17.75 percent of older 2017--19 stock on primary support. In Q1 the shares are 17.48 and 17.13 percent; in Q5 they are 21.57 and 26.32 percent.
+
+Ninety-nine primary targets can receive a split source and carry 23.38 percent of fitted Q5 target information. Allocating information in proportion to split-source stock assigns 4.44 percent to that stock, but the allocation is descriptive rather than identified. From 2020 onward CPS occupations are directly coded in the target Census-2018 taxonomy, so this bridge uncertainty affects the preperiod rather than postperiod observations.
+
+Official routes contain no age-specific allocation probabilities. Unrestricted allocation within allowed routes produces sharp 2017--19 stock-accounting ranges of [.1031,.1480] for the Q1 young/older ratio and [.0790,.1175] for Q5. These are not coefficient bounds. A predeclared exposure-directed tilt changes young-versus-older odds toward the highest-beta eligible target by $K\in\{.5,.75,1,1.5,2\}$ and keeps labels fixed. The coefficient ranges from $-.1292$ to $-.1391$. Only 20 split sources and 6.88 percent of matched early stock are eligible, so the exercise cannot establish global bridge robustness.
+
+The AIOE compatibility gate fails closed when a SOC-2010 source is matched literally to Census-2018 outcome codes without a versioned route. Naive support with Webb is 410 occupations, 85 fewer than the repaired 495. Computer/mathematical coverage rises from 3.33 to 97.7 percent after repair. On fixed 410-occupation support, changing the score moves a continuous coefficient only from $-.01885$ to $-.01920$; expanding to 495 moves it to $-.03156$. This isolates implementation correction from population re-admission.
+\FloatBarrier

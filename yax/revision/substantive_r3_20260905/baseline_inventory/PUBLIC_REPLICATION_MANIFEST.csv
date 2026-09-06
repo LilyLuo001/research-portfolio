@@ -1,0 +1,48 @@
+entry_id,path_rule,rule_type,allowed_suffixes,content_class,restricted_dependency,release_condition
+PUB-001,paper/Makefile,exact,,build entry point,none,tracked file only
+PUB-002,paper/main/,prefix,.tex,article source,none,tracked files with allowed suffix only
+PUB-003,paper/appendix/,prefix,.tex,appendix source,none,tracked files with allowed suffix only
+PUB-004,paper/revision/,prefix,.tex;.md,response and diagnosis source,none,tracked files with allowed suffix only
+PUB-005,paper/submission/,prefix,.tex;.md,submission documentation,none,tracked files with allowed suffix only
+PUB-006,paper/bibliography/,prefix,.bib,bibliography,none,tracked files with allowed suffix only
+PUB-007,paper/styles/,prefix,.sty;.bst;.md,licensed style sources and notices,none,tracked files with allowed suffix only
+PUB-008,paper/scripts/,prefix,.py;.sh,aggregate exhibit audit and build code,committed aggregate results,tracked files with allowed suffix only
+PUB-009,paper/tables/,prefix,.tex,generated and checked tables,committed aggregate results,tracked files with allowed suffix only
+PUB-010,paper/figures/,prefix,.pdf;.png,generated figures,committed aggregate results,tracked files with allowed suffix only
+PUB-011,yax/revision/substantive_r3_20260905/REPRODUCIBILITY.md,exact,,replication entry point,none,tracked file only
+PUB-012,yax/revision/substantive_r3_20260905/EXECUTION_SPEC.md,exact,,execution contract,none,tracked file only
+PUB-013,yax/revision/substantive_r3_20260905/SPECIFICATION_REGISTRY.csv,exact,,specification registry,none,tracked file only
+PUB-014,yax/revision/substantive_r3_20260905/RESULTS_LEDGER.csv,exact,,results ledger,none,tracked file only
+PUB-015,yax/revision/substantive_r3_20260905/FAILURE_REGISTRY.csv,exact,,failure ledger,none,tracked file only
+PUB-016,yax/revision/substantive_r3_20260905/NUMERICAL_CONSISTENCY_AUDIT.csv,exact,,numeric crosswalk,none,tracked file only
+PUB-017,yax/revision/substantive_r3_20260905/SUBSTANTIVE_REVISION_AUDIT.json,exact,,aggregate audit receipt,none,tracked file only
+PUB-018,yax/revision/substantive_r3_20260905/PATH_REDACTION_RECEIPT.md,exact,,path-redaction receipt,none,tracked file only
+PUB-019,yax/revision/substantive_r3_20260905/baseline_inventory/,prefix,.md;.csv,provenance manifests and commands,licensed inputs named only by placeholders and hashes,tracked files with allowed suffix only
+PUB-020,yax/revision/substantive_r3_20260905/run_restricted_full_rerun.sh,exact,,restricted rerun orchestrator,licensed inputs supplied externally,tracked file only
+PUB-021,yax/revision/substantive_r3_20260905/rebuilt_baseline/,prefix,.py;.sh;.md;.csv;.json,BASE-03 code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-022,yax/revision/substantive_r3_20260905/data_audit/,prefix,.py;.sh;.md;.csv;.json,data and route audit code and aggregate results,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-023,yax/revision/substantive_r3_20260905/within_family/,prefix,.py;.sh;.md;.csv;.json,family code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-024,yax/revision/substantive_r3_20260905/characteristics/,prefix,.py;.sh;.md;.csv;.json,characteristic code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-025,yax/revision/substantive_r3_20260905/inference_rebuilt/,prefix,.py;.sh;.md;.csv;.json,inference code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-026,yax/revision/substantive_r3_20260905/heterogeneity/,prefix,.py;.sh;.md;.csv;.json,heterogeneity code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-027,yax/revision/substantive_r3_20260905/bcc_bridge/,prefix,.py;.sh;.md;.csv;.json,BCC bridge code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-028,yax/revision/substantive_r3_20260905/dynamics/,prefix,.py;.sh;.R;.md;.csv;.json,dynamic code specifications aggregate results tests and official-method receipt,licensed inputs and pinned R library supplied externally,tracked files with allowed suffix only
+PUB-029,yax/revision/substantive_r3_20260905/survey_sim/,prefix,.py;.sh;.md;.csv;.json,survey sensitivity code specifications aggregate results and tests,licensed inputs and DDI supplied externally,tracked files with allowed suffix only
+PUB-030,yax/revision/substantive_r3_20260905/flows/,prefix,.py;.sh;.md;.csv;.json,flow code specifications aggregate results and tests,licensed inputs including extract 10 supplied externally,tracked files with allowed suffix only
+PUB-031,yax/revision/substantive_r3_20260905/architecture/,prefix,.py;.sh;.md;.csv;.json,architecture code specifications aggregate results and tests,licensed inputs supplied externally,tracked files with allowed suffix only
+PUB-032,yax/revision/substantive_r3_20260905/literature_evidence/,prefix,.md;.csv;.json,source audit and evidence ledger,none,tracked files with allowed suffix only
+PUB-033,yax/revision/substantive_r3_20260905/data_validity/,prefix,.md,scientific data-validity notes,none,tracked files with allowed suffix only
+PUB-034,yax/revision/substantive_r3_20260905/responses/COMMENT_RESPONSE_MATRIX.csv,exact,,comment-to-change crosswalk,none,tracked file only
+PUB-035,yax/analysis/run_frozen_v11.py,exact,,historical analysis engine,first-access receipt supplied externally,tracked file only
+PUB-036,yax/revision/referee_20260905/run_referee_cells.py,exact,,shared corrected-cell builder,licensed inputs supplied externally,tracked file only
+PUB-037,yax/revision/referee_20260905/run_referee_core.py,exact,,shared estimation engine,licensed inputs supplied externally,tracked file only
+PUB-038,yax/revision/referee_round2_20260905/composition_influence/run_composition_influence.py,exact,,shared composition engine,licensed inputs supplied externally,tracked file only
+PUB-039,yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv,exact,,public exposure lookup,none,tracked file only
+PUB-040,yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv,exact,,public characteristic lookup,none,tracked file only
+PUB-041,yax/measurement/RULE_B_VALUES_CENSUS2018.csv,exact,,public sensitivity lookup,none,tracked file only
+PUB-042,yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv,exact,,public occupation bridge,none,tracked file only
+PUB-043,yax/measurement/test_a/TEST_A_OCCUPATION_CHARACTERISTICS.csv,exact,,public characteristic lookup,none,tracked file only
+PUB-044,dax/memo/power_calcs/ipums_ai_telework_extract_v2.json,exact,,IPUMS extract-9 request specification,requires licensed IPUMS access,tracked file only
+PUB-045,dax/memo/power_calcs/ipums_ai_telework_march_patch_v1.json,exact,,March-repair request template,requires licensed IPUMS access,tracked file only
+PUB-046,yax/analysis/postoutcome_phase2/YAX_PHASE2_LNKFW1MWT_EXTRACT_SPEC.json,exact,,IPUMS extract-10 request specification,requires licensed IPUMS access,tracked file only
+PUB-047,yax/revision/substantive_r3_20260905/inference/,prefix,.py;.sh;.md;.csv;.json,superseded historical-treatment inference audit and retained failures,licensed inputs supplied externally,tracked files with allowed suffix only

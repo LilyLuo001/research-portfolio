@@ -1,0 +1,57 @@
+{
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 V5.1 CLOSED REFEREE REPAIR",
+  "centered_bootstrap_correlation_F_G": -0.4637885513972016,
+  "centered_bootstrap_covariance_F_G": -9.82463543307159e-05,
+  "component_scaling": {
+    "F": {
+      "weighted_mean": 0.003539283998627367,
+      "weighted_sd": 0.8777358553105283
+    },
+    "G": {
+      "weighted_mean": 0.004062294654549618,
+      "weighted_sd": 0.32213718525715235
+    },
+    "Webb": {
+      "weighted_mean": 44.55127571505303,
+      "weighted_sd": 25.500736602216136
+    }
+  },
+  "interpretation_guardrail": "G is only the AIOE-versus-Eloundou family-centroid dimension and is not all architecture-specific disagreement",
+  "joint_max_abs_t": 2.8680985943510993,
+  "joint_max_abs_t_p_value": 0.008,
+  "joint_null": "beta_F = beta_G = 0",
+  "model": "joint continuous consensus F plus between-family disagreement G plus Webb",
+  "months": 108,
+  "new_labor_outcome_specification_count": 1,
+  "record": "exactly one authorized V5.1 labor-outcome specification",
+  "source_gap": "2025-10",
+  "support_hash_sha256": "1e184b27678b7978d4b15e618db5b44f44b5e9ec1b50b69b53093ec62e0ce462",
+  "support_occupations": 444,
+  "terms": [
+    {
+      "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 V5.1 CLOSED REFEREE REPAIR",
+      "analytic_cluster_se": 0.014071652311664245,
+      "bootstrap_se": 0.014408564322380355,
+      "coefficient": -0.040358886215281616,
+      "term": "consensus_F_z_x_young_x_post",
+      "wild_score_ci_lower": -0.06924839146364063,
+      "wild_score_ci_upper": -0.011469380966922602,
+      "wild_score_critical": 2.0530286428703177,
+      "wild_score_p_value": 0.007
+    },
+    {
+      "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 V5.1 CLOSED REFEREE REPAIR",
+      "analytic_cluster_se": 0.014863450105159303,
+      "bootstrap_se": 0.014701976028073625,
+      "coefficient": 0.030893508600474132,
+      "term": "between_family_G_z_x_young_x_post",
+      "wild_score_ci_lower": 0.0018010777727861839,
+      "wild_score_ci_upper": 0.05998593942816208,
+      "wild_score_critical": 1.957313451578081,
+      "wild_score_p_value": 0.04
+    }
+  ],
+  "transition_excluded": "2022-12",
+  "wild_score_draws": 999,
+  "wild_score_seed": 2026090501
+}

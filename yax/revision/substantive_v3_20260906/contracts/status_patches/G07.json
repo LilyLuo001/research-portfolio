@@ -1,0 +1,40 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "Implemented and regression-tested content-addressed result and claim ledgers, unique canonical-target enforcement, source-value reconciliation, and manuscript-only patch rejection. Three authenticated Gate 1 coefficients are now populated, including one declared canonical result, and the ledger validator passes. No manuscript claims or repeated-interval reconciliation are populated yet, so this remains RUN_UNVALIDATED.",
+  "evidence": [
+    {
+      "role": "code",
+      "path": "scripts/validate_claim_ledger.py",
+      "sha256": "430480379f1e84909bc6f697b8480bb8a1e99a9bffadd918c56a77ff4cd066ed"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/foundation/EXECUTION_RECEIPT.json",
+      "sha256": "5711452a4254464693f9c989768db3952abaf26c973a6fbcc81a3d7743a0b0ba"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/FOUNDATION_VALIDATION.json",
+      "sha256": "dce4bce5cc049865fad7fb661d29bb85547439374e6a7d03038cd688521a8d0b"
+    },
+    {
+      "role": "result",
+      "path": "contracts/result_ledger.json",
+      "sha256": "1026ca4d2c99cfaf7d2def5ff93a6d3e7b912c2c6a76f2a92a7662b0d404ce5f"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_baseline/EXECUTION_RECEIPT.json",
+      "sha256": "788348d1bbd982394c2dcb1bb3e8553a9a92c32ba89a4d8ef465802403477a96"
+    }
+  ],
+  "response_locations": [
+    "contracts/result_ledger.json",
+    "contracts/claim_ledger.json",
+    "scripts/validate_claim_ledger.py",
+    "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

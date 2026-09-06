@@ -1,0 +1,60 @@
+{
+  "all_new_analyses_executed": [
+    "pairwise Cohen kappa and one Fleiss-type diagnostic on frozen switches",
+    "six-measure weighted Pearson and weighted average-rank correlation matrices",
+    "one joint continuous F+G stock specification",
+    "two-way occupation-by-month model-based covariance sensitivity for seven existing stock specifications"
+  ],
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 V5.1 CLOSED REFEREE REPAIR",
+  "artifact_hashes": {
+    "YAX_V51_EXPOSURE_CORRELATIONS.csv": "43034f1feaa33d6e2bd977894fd9d9289b1ee97854b452198c1bc8434358e1b4",
+    "YAX_V51_FG_JOINT_MODEL_RESULTS.csv": "066528bbaee680897f442f91defa8565e3d3129e61d43d3a795e3415a0f8b4c9",
+    "YAX_V51_FG_JOINT_MODEL_RESULTS.json": "e336df9df5cf1843fdff7e8c345b0dced7cf28a84678255806c572bed8f769da",
+    "YAX_V51_FG_JOINT_MODEL_RESULTS.md": "f33ee327c2f71326d1b4f445ae767f933a88e5e10c2da04c8a0ae64d370b8fdc",
+    "YAX_V51_KAPPA_AGREEMENT.csv": "7c3f00081a1b9feef0cb382fcc68c05240b865b7f77fcd9858c380670803428f",
+    "YAX_V51_KAPPA_SUMMARY.json": "e3ba96255dd2509be7c4353a129d92522551dd69218a57fe71268f02510267dc",
+    "YAX_V51_TWOWAY_CLUSTER_SENSITIVITY.csv": "b7ce19479dec76493cde265d1bfcd954eb6e2eaead757251b9b1647acfba0b29"
+  },
+  "common_stock_support_hash_sha256": "1e184b27678b7978d4b15e618db5b44f44b5e9ec1b50b69b53093ec62e0ce462",
+  "common_stock_support_occupations": 444,
+  "execution_head": "6fed6f52ca9f4e0fcec80d13b9d3f3c6a9fddc25",
+  "fg_seed": 2026090501,
+  "fg_wild_score_draws": 999,
+  "generated_at_utc": "2026-09-03T07:47:43.791456+00:00",
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "characteristics": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "first_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+    "sealed_common_support": "6b51a2a5c0a5f30ea73b1889828b89df460ffc740d069a567c129f6d135e9ca1",
+    "sealed_confirmatory_results": "4f7df33a530e499c5562dead9464b2a19b87a3e3c6454d52944bc5e00879a831",
+    "weight_patch": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8"
+  },
+  "link_sample": {
+    "false_September_to_November_2025_links": 0,
+    "long_gap_pairs": 0,
+    "post_validated_pairs": 1413351,
+    "pre_validated_pairs": 2635559,
+    "validated_adjacent_pairs": 4085493,
+    "wide_rows_read": 9262480,
+    "young_validated_pairs": 313171
+  },
+  "new_labor_outcome_specification_count": 1,
+  "new_labor_outcome_specification_executed_successfully": true,
+  "new_labor_outcome_specifications": [
+    "joint_continuous_consensus_F_plus_between_family_G_plus_Webb"
+  ],
+  "parent_commit": "ed4055eab8d303c2ff48e18562a99dd43b3c7874",
+  "pre_result_commit": "6fed6f52ca9f4e0fcec80d13b9d3f3c6a9fddc25",
+  "prohibited_analysis_executed": false,
+  "protected_peeled_commits": {
+    "v1.1-confirmatory-results": "b16109482c3bf5ca176f6f08976e120b04769945",
+    "v1.1-design-freeze": "22fbf7924809b7a535e31ae0ab68f5b113ce8078"
+  },
+  "record": "YAX V5.1 closed referee-repair execution",
+  "switches": 108500
+}

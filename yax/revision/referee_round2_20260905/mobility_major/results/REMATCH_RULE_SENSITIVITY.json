@@ -1,0 +1,37 @@
+{
+  "alternative_minus_existing_mean": -1.569569569559448e-05,
+  "alternative_rule": {
+    "central_95_percent_rematch_interval": [
+      0.52220925,
+      0.5242855
+    ],
+    "initial_distribution": "uniform random permutation of destination pseudo-units within each hard stratum",
+    "maximum_attempts": 1,
+    "maximum_repairs": 6725,
+    "mc_se_of_mean": 1.7035439423001924e-05,
+    "mean": 0.523210970970971,
+    "repair_path": "choose a self-match uniformly, choose a feasible swap partner uniformly, restart after impasse",
+    "sd_across_rematches": 0.0005384384738653372,
+    "uniform_over_feasible_derangements": false
+  },
+  "alternative_seed": 2026090512,
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "draws_per_rule": 999,
+  "existing_rule": {
+    "central_95_percent_rematch_interval": [
+      0.5221395000000001,
+      0.5242752500000001
+    ],
+    "initial_distribution": "uniform random permutation of destination pseudo-units within each hard stratum",
+    "mc_se_of_mean": 1.7220411861184844e-05,
+    "mean": 0.5232266666666666,
+    "reason": "feasible assignments have unequal numbers of initial permutations and repair paths leading to them",
+    "repair_path": "scan first self-match, choose feasible swap partner uniformly, restart after impasse",
+    "sd_across_rematches": 0.0005442848905528857,
+    "uniform_over_feasible_derangements": false
+  },
+  "interpretation": "both are algorithm-defined benchmark distributions; agreement is a repair-rule sensitivity, not proof of a unique random-matching null",
+  "margins_and_no_self_verified_first_five_draws": true,
+  "pseudo_units": 200000,
+  "same_pseudo_population": true
+}

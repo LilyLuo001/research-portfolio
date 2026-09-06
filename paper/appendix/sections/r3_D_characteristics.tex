@@ -1,0 +1,31 @@
+\section{Occupational Characteristics and Heterogeneity}\label{app:characteristics}
+
+\subsection{Inputs, timing, and common-support comparisons}
+
+The characteristic exercise uses one variable at a time before considering a parsimonious joint model.  Every row first re-estimates the unaugmented exposure model on exactly the support available for that characteristic.  It then adds the characteristic interacted with young status and the post indicator, reuses the same occupation multipliers, and forms the augmented-minus-baseline difference within each draw.  Sample loss and coefficient movement are therefore distinct objects.  The corresponding paired minimum detectable effect is the two-sided, five-percent normal-theory quantity $(1.96+0.84)SE(\Delta)$; it describes resolution and is never used as a second rejection rule.
+
+The leading computer-use variable is O*NET item 4.A.3.b.1, ``Interacting With Computers,'' from release 24.3 (May 2020).  Remotability is the Dingel--Neiman occupation classification.  Wage and observed education composition are calculated from the CPS preperiod, while externally coded education requirements are kept conceptually separate.  Routine and manual indices use preperiod O*NET inputs.  All scales, source files, checksums, weighted correlations, and support counts are stored in the characteristic result directory.
+
+The focused rebuilt-treatment comparison uses the 408 occupations with both computer use and remotability, so every row has identical support.  The baseline coefficient is $-0.1070$ and the computer-use-conditioned coefficient is $-0.2124$.  Their paired difference is $-0.1054$, with 95-percent interval $[-0.1835,-0.0273]$ and paired $\mathrm{MDE}_{80}=0.1131$.  Thus computer use is a suppressor in this particular regression rather than an attenuating control.  This result neither validates the residual as AI nor makes computer use exogenous.
+
+Adding remotability on the same support gives $-0.1155$; its paired difference from $-0.1070$ is $-0.0085$, with interval $[-0.0437,0.0267]$ and paired $\mathrm{MDE}_{80}=0.0510$.  Adding both computer use and remotability gives $-0.2120$ and a paired movement of $-0.1049$, with interval $[-0.1814,-0.0284]$.  The other one-at-a-time characteristics likewise do not produce individually detected movements.  The expanded module's joint characteristic support falls to 341 occupations and 76.77 percent of rebuilt treatment-construction stock; its wider interval precludes a claim that the combined residual is a purified AI contrast.
+
+\subsection{Expanded support-specific and cumulative audit}
+
+The separate characteristic module in Tables~\ref{tab:appendix_characteristic_estimates} and \ref{tab:appendix_characteristic_information} reports the support-specific comparisons and cumulative sequence.  Its one-at-a-time rows use each characteristic's maximal finite support, whereas its cumulative rows use the literal 341-occupation common support.  An audit found that an earlier version of this module had retained historical full-static-panel exposure groups.  The reported module now authenticates and uses the canonical corrected-preperiod membership and Webb normalization throughout; its 468-occupation baseline exactly reproduces $-0.1321$.  The support-specific computer comparison retains 455 occupations and holds those rebuilt primary-universe groups fixed, while the focused exercise requires both computer-use and remotability data and rebuilds groups on its 408-occupation support.  Their coefficients therefore differ by design, not by transcription.  Every addition and this corrective rerun are labeled post-outcome exploratory.
+
+\input{tables/r3_appendix_characteristic_estimates.tex}
+
+\input{tables/r3_appendix_characteristic_information.tex}
+
+\subsection{Pandemic shortfall}
+
+The pandemic-shortfall characteristic is constructed without log pseudocounts.  For each occupation, a linear level trend is fit to total employment in 2017--2019; the characteristic is the average 2020--November-2022 level residual relative to that trend.  December 2022 remains the transition month and is not used.  The measure describes total occupational employment rather than the young-to-older ratio.  It is generated from CPS outcomes and may share sampling error and regression-to-the-mean with the dependent stocks.  The main multiplier interval holds it fixed; the sampling audit therefore treats this row as diagnostic and does not call it an exogenous control.
+
+\subsection{Industry, education, and exact age}
+
+The industry analysis is rebuilt at the occupation-by-broad-industry-by-age-by-month level rather than assigning each occupation a dominant industry.  The risk set covers all 468 occupations and 3,127 preperiod-connected occupation--industry cells.  Relative to the stratified baseline coefficient of $-0.1376$, adding 13 broad-industry-specific young-by-post shifts gives $-0.0987$.  The paired movement is $0.0389$, with interval $[0.0082,0.0697]$ and paired $\mathrm{MDE}_{80}=0.0444$.  The conditioned coefficient remains below zero.  These are statements about the microcell objective, not firm-level adoption.
+
+Education-specific models are estimated on a common occupational support.  The BA-or-higher estimate is $-0.1380$ and the non-BA estimate is $-0.1226$; their paired difference is $-0.0154$, with interval $[-0.1557,0.1250]$ and paired $\mathrm{MDE}_{80}=0.2014$.  The comparison is too imprecise to distinguish moderate education differences.  Exact-age estimates for ages 22, 23, 24, and 25 are reported as one jointly estimated exploratory collection with simultaneous intervals.  No single age is selected after inspection.
+
+\input{tables/r3_appendix_heterogeneity.tex}

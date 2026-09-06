@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "command": [
+        "<YAX_PYTHON_BIN>",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/scripts/spec_contract.py",
+        "validate",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "{\"status\": \"PASS\", \"spec_id\": \"yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3\"}\n"
+    },
+    {
+      "command": [
+        "<YAX_PYTHON_BIN>",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/scripts/dependency_guard.py",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/contracts/run_manifest.json",
+        "--root",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"runs\": 1,\n  \"status_counts\": {\n    \"SUCCESS\": 1\n  }\n}\n"
+    },
+    {
+      "command": [
+        "<YAX_PYTHON_BIN>",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/scripts/validate_claim_ledger.py",
+        "--results",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/contracts/result_ledger.json",
+        "--claims",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/contracts/claim_ledger.json",
+        "--root",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"results\": 3,\n  \"claims\": 0\n}\n"
+    },
+    {
+      "command": [
+        "<YAX_PYTHON_BIN>",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "<YAX_REPO_ROOT>/yax-v3-execution-20260906/yax/revision/substantive_v3_20260906/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stderr": "test_duplicate_canonical_target_fails (test_claim_ledger.ClaimLedgerTests) ... ok\ntest_manuscript_only_patch_fails (test_claim_ledger.ClaimLedgerTests) ... ok\ntest_source_tampering_fails (test_claim_ledger.ClaimLedgerTests) ... ok\ntest_valid_ledgers (test_claim_ledger.ClaimLedgerTests) ... ok\ntest_cached_build_is_not_empirical_run (test_delivery_validator.DeliveryTests) ... ok\ntest_changed_requirement (test_delivery_validator.DeliveryTests) ... ok\ntest_incomplete_is_not_success (test_delivery_validator.DeliveryTests) ... ok\ntest_missing_evidence (test_delivery_validator.DeliveryTests) ... ok\ntest_omission (test_delivery_validator.DeliveryTests) ... ok\ntest_tampered_artifact (test_delivery_validator.DeliveryTests) ... ok\ntest_valid_fixture (test_delivery_validator.DeliveryTests) ... ok\ntest_cycle_fails (test_dependency_guard.DependencyGuardTests) ... ok\ntest_failed_upstream_blocks_only_descendant (test_dependency_guard.DependencyGuardTests) ... ok\ntest_fingerprint_detects_command_change (test_dependency_guard.DependencyGuardTests) ... ok\ntest_upstream_hash_change_invalidates_downstream (test_dependency_guard.DependencyGuardTests) ... ok\ntest_valid_dependency_chain (test_dependency_guard.DependencyGuardTests) ... ok\ntest_age_objective_and_membership_changes_change_id (test_spec_contract.SpecContractTests) ... ok\ntest_duplicate_json_key_fails (test_spec_contract.SpecContractTests) ... ok\ntest_endpoint_change_changes_id (test_spec_contract.SpecContractTests) ... ok\ntest_incompatible_module_inputs_fail (test_spec_contract.SpecContractTests) ... ok\ntest_key_order_does_not_change_id (test_spec_contract.SpecContractTests) ... ok\ntest_missing_field_fails (test_spec_contract.SpecContractTests) ... ok\ntest_null_and_nonfinite_fail (test_spec_contract.SpecContractTests) ... ok\ntest_refuse_contract_overwrite (test_spec_contract.SpecContractTests) ... ok\ntest_result_id_binds_artifact_selector_and_spec (test_spec_contract.SpecContractTests) ... ok\ntest_stamp_and_validate (test_spec_contract.SpecContractTests) ... ok\ntest_tampered_stamped_spec_fails (test_spec_contract.SpecContractTests) ... ok\n\n----------------------------------------------------------------------\nRan 27 tests in 0.263s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "code_hash": "2f76d388642dcbf56e260e75c90c7345e107fc4d768cf991416b7fe1471ab8d6",
+  "schema_version": "yax-v3-foundation-validation-v1",
+  "scientific_validity": "not determined; these are contract-integrity tests",
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "status": "PASS"
+}

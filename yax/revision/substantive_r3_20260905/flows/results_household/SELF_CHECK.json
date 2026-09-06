@@ -1,0 +1,73 @@
+{
+  "checks": [
+    {
+      "description": "all ten official core-flow models are present",
+      "passed": true
+    },
+    {
+      "description": "core-flow model identifiers are unique",
+      "passed": true
+    },
+    {
+      "description": "both declared horizons are present",
+      "passed": true
+    },
+    {
+      "description": "coefficients and cluster precision statistics are finite",
+      "passed": true
+    },
+    {
+      "description": "every model has multiple person and household score clusters",
+      "passed": true
+    },
+    {
+      "description": "all ten models have conservation diagnostics",
+      "passed": true
+    },
+    {
+      "description": "all coefficients reproduce stored official results",
+      "passed": true
+    },
+    {
+      "description": "modeled event weights reproduce cell event totals",
+      "passed": true
+    },
+    {
+      "description": "event influences reproduce raw occupation influences",
+      "passed": true
+    },
+    {
+      "description": "event influences reproduce saved finite-corrected occupation influences",
+      "passed": true
+    },
+    {
+      "description": "PERSON_HOUSEHOLD_CLUSTER_SENSITIVITY.csv contains no restricted identifier column",
+      "passed": true
+    },
+    {
+      "description": "EVENT_SCORE_CONSERVATION.csv contains no restricted identifier column",
+      "passed": true
+    },
+    {
+      "description": "receipt records aggregate-only outputs",
+      "passed": true
+    },
+    {
+      "description": "receipt rejects a full design-based interpretation",
+      "passed": true
+    },
+    {
+      "description": "receipt keeps sampling and occupation-shock sensitivities separate",
+      "passed": true
+    },
+    {
+      "description": "EVENT_SCORE_CONSERVATION.csv hash matches execution receipt",
+      "passed": true
+    },
+    {
+      "description": "PERSON_HOUSEHOLD_CLUSTER_SENSITIVITY.csv hash matches execution receipt",
+      "passed": true
+    }
+  ],
+  "status": "PASS"
+}

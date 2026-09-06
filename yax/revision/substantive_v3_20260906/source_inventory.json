@@ -1,0 +1,229 @@
+{
+  "schema_version": "1.0",
+  "recorded_at": "2026-09-06T05:52:40Z",
+  "external_availability_updated_at": "2026-09-06T06:26:24Z",
+  "chronology": "post-outcome V3 inventory; no new substantive V3 model was run before this record",
+  "instruction_root": "<YAX_V3_INSTRUCTION_ROOT>",
+  "repository": {
+    "state": "found",
+    "locator": "<YAX_LOCAL_REPO>",
+    "branch": "task/yax-v3-execution-20260906",
+    "parent_commit": "73ce268f18cc406ff751950703ddb46f54d2b0d3",
+    "remote": "origin",
+    "notes": "A new sparse-checkout worktree was created from the commit whose compiled current main and appendix match the supplied PDFs. The worktree sparse set was expanded to include paper, docs, and shared. Existing worktrees and SCC jobs were not modified or terminated."
+  },
+  "sources": [
+    {
+      "id": "v3_execution_prompt",
+      "state": "found",
+      "locator": "revision_inputs/EXECUTION_PROMPT_V3.md",
+      "sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b",
+      "verification": "opened and read in full"
+    },
+    {
+      "id": "requirements_seed",
+      "state": "found",
+      "locator": "revision_inputs/requirements_seed.json",
+      "sha256": "38de2d5b80e72c85f3dd06086a862cea63c521d511a5baacb7f6390f66eeeb59",
+      "verification": "99-row seed copied byte-for-byte; original and repository copy remain unchanged"
+    },
+    {
+      "id": "assistant_audit",
+      "state": "found",
+      "locator": "revision_inputs/ASSISTANT_AUDIT_AND_FAILURE_MODES.md",
+      "sha256": "63d5dc21171c4940ae3abaca38f4716914974895c1633185c3be119eeb659f36",
+      "verification": "opened and read in full"
+    },
+    {
+      "id": "source_verification_brief",
+      "state": "found",
+      "locator": "revision_inputs/SOURCE_VERIFICATION.md",
+      "sha256": "daaf7dc23636c533a01a994af468ab72475197350794de736a1e76b20a7b13d3",
+      "verification": "opened and read in full; cited facts remain separate verification tasks"
+    },
+    {
+      "id": "referee_A",
+      "state": "found",
+      "locator": "revision_inputs/referee_A_major_revision.md",
+      "sha256": "0a85a496591e67a661289de00a122cdea3201ef8c1181b6cbba0195def2012ac",
+      "verification": "opened and read in full"
+    },
+    {
+      "id": "referee_B",
+      "state": "found",
+      "locator": "revision_inputs/referee_B_rejection.md",
+      "sha256": "3efb3800c32acbf13346565545439923385049eb37b3dc10ce287cc51cdf16ee",
+      "verification": "opened and read in full"
+    },
+    {
+      "id": "previous_prompt",
+      "state": "found",
+      "locator": "revision_inputs/previous_execution_prompt.md",
+      "sha256": "bc9daa996ee9778f59d0a6550ceac814e36dd9b0b5b82a45d16fdf7bfdfcfb17",
+      "verification": "opened and read in full"
+    },
+    {
+      "id": "earlier_referee",
+      "state": "found",
+      "locator": "revision_inputs/earlier_uploaded_referee.md",
+      "sha256": "8c36069bb6ff03dcd008e8a39aae4471518b76f889b91c0a6f6d8c83ea182dc3",
+      "verification": "opened and read in full"
+    },
+    {
+      "id": "current_main_pdf",
+      "state": "found",
+      "locator": "paper/build/YAX_REVISED_MANUSCRIPT.pdf",
+      "sha256": "dfd19a366777d5dfcd7bd867210e1f76d427113f88c01aa1b8d383a5dd5aa31d",
+      "pages": 21,
+      "verification": "title/page count inspected; extracted package copy and repository build hashes are identical"
+    },
+    {
+      "id": "current_appendix_pdf",
+      "state": "found",
+      "locator": "paper/build/YAX_FOCUSED_ONLINE_APPENDIX.pdf",
+      "sha256": "017858f43a1acffc0371a32be3958a33c1ae7f1988b83b32dbc05139d39506e8",
+      "pages": 29,
+      "verification": "title/page count inspected; extracted package copy and repository build hashes are identical"
+    },
+    {
+      "id": "earlier_main_pdf",
+      "state": "found",
+      "locator": "instruction package inputs/earlier_main.pdf",
+      "sha256": "39315398c0bea4f87e055af537080627a976faa5cddc53963f4c5a4df26ba067",
+      "pages": 25,
+      "verification": "title/page count inspected and full text read"
+    },
+    {
+      "id": "earlier_appendix_pdf",
+      "state": "found",
+      "locator": "instruction package inputs/earlier_appendix.pdf",
+      "sha256": "f5aed632c4f09b35c745371e1e4a8cc04a5a69e458927b97717b753172ff970a",
+      "pages": 29,
+      "verification": "title/page count inspected and full text read"
+    },
+    {
+      "id": "editable_main_source",
+      "state": "found",
+      "locator": "paper/main/working.tex",
+      "sha256": "dc9cb1a17f8f35c24bca91576fb24a4112bfdce60a94fbd3d836c98151934ebf"
+    },
+    {
+      "id": "editable_appendix_source",
+      "state": "found",
+      "locator": "paper/appendix/appendix.tex",
+      "sha256": "cc21a159a877a759b22f92e023f742d857c1f6d469552dbb7f4a9dbdfd1bcd91"
+    },
+    {
+      "id": "editable_response_sources",
+      "state": "found",
+      "locators": [
+        "paper/revision/referee_response.tex",
+        "paper/revision/revision_diagnosis.tex",
+        "paper/revision/source_diff.tex"
+      ],
+      "sha256": [
+        "a2cfc2b874144bd9626c9924508d15cb8c0992790a4cd692a4d2d385894c00fc",
+        "4e90558b571accce978df5af2697c36003c10538a46913a63e071cccb1629453",
+        "e02ce86334bd1a04208142445b01122306edbe01731dda67109754751fda1260"
+      ]
+    },
+    {
+      "id": "wide_cps_extract_9",
+      "state": "found",
+      "access": "authorized restricted SCC file",
+      "locator": "<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz",
+      "bytes": 267021345,
+      "sha256": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+      "ddi_sha256": "5933bc48ed736a00fa70547ef503f571c6f1f9c03aef7d24ce511af3550fb319",
+      "verification": "read-only SCC hash check passed"
+    },
+    {
+      "id": "march_basic_repair_11",
+      "state": "found",
+      "access": "authorized restricted SCC file",
+      "locator": "<YAX_PRIVATE_ROOT>/yax_referee_march_repair/cps_00011.csv.gz",
+      "bytes": 15210805,
+      "sha256": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+      "ddi_sha256": "e29c6c30a397357b927692af371b3fa77176f3d020f513343237d651bf3d3b03",
+      "verification": "read-only SCC hash check passed"
+    },
+    {
+      "id": "flow_weight_extract_10",
+      "state": "found",
+      "access": "authorized restricted SCC file",
+      "locator": "<YAX_PRIVATE_ROOT>/yax_phase2_weight_patch/cps_00010.csv.gz",
+      "bytes": 179455840,
+      "sha256": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+      "ddi_sha256": "636f1564650d267824e4feef7cc58756e972b66f8546585b052163ddc633753e",
+      "verification": "read-only SCC hash check passed"
+    },
+    {
+      "id": "corrected_flow_weight_extract_12",
+      "state": "found",
+      "access": "authorized restricted SCC project file",
+      "locator": "<YAX_SCC_PROJECT_ROOT>/private/ipums/yax_r3_flow_weight_patch/cps_00012.csv.gz",
+      "bytes": 192149421,
+      "sha256": "bc97f807eace1bf3f0ca04b09e6a9d099bf1c86433c56bb1edd08b4156ac9fd6",
+      "ddi_sha256": "e4bd1e248e1426d61e1f2c98c6f336b54e36a184d1dcb3f6e33ecba4d2a65e4a",
+      "verification": "read-only SCC hash check passed"
+    },
+    {
+      "id": "preperiod_cells",
+      "state": "found",
+      "access": "authorized restricted SCC derived data",
+      "locator": "<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv",
+      "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+      "verification": "read-only SCC hash check passed"
+    },
+    {
+      "id": "exposure_and_crosswalk_inputs",
+      "state": "found",
+      "access": "versioned repository",
+      "locators_and_sha256": {
+        "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+        "yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+        "yax/measurement/RULE_B_VALUES_CENSUS2018.csv": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+        "yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+      }
+    },
+    {
+      "id": "earnweek2_current_extract",
+      "state": "officially_available_but_absent_from_authorized_extracts",
+      "reason": "The official IPUMS CPS EARNWEEK2 page confirms availability through current monthly samples and requires EARNWT. The DDIs for authorized extracts 9, 10, 11, and 12 do not contain EARNWEEK2; extracts 9 and 11 contain EARNWEEK and EARNWT.",
+      "official_locator": "https://cps.ipums.org/cps-action/variables/EARNWEEK2",
+      "next_step": "Submit and authenticate a minimal authorized extract containing EARNWEEK2, EARNWT, MISH, and the existing sample/identification fields before extending weekly earnings."
+    },
+    {
+      "id": "exact_bcc_occupation_membership",
+      "state": "public_information_gap_verified",
+      "reason": "The official paper lists only the top 50 occupation names per quintile and the inspected official dashboard ZIPs contain aggregate series, not an exhaustive SOC-code membership. Exact code is request-only and author contact was not authorized.",
+      "next_step": "Use only a clearly labeled independent reconstruction from public rules, or obtain an exact primary membership artifact if contact is later authorized. Do not label a reconstruction as exact BCC membership."
+    },
+    {
+      "id": "acs_microdata_for_v3",
+      "state": "public_2024_release_available_but_not_present_locally",
+      "reason": "No authorized ACS analysis extract is present locally or on SCC. Official 2024 one-year PUMS is available; no verified 2025 one-year release is available in this audit, and standard 2020 one-year products were not released.",
+      "next_step": "Design and acquire a 2017-2019 and 2021-2024 one-year PUMS extract with person and 80 replicate weights; do not splice 2020 experimental or overlapping five-year data."
+    },
+    {
+      "id": "adoption_analysis_input",
+      "state": "official_public_sources_verified_but_not_captured_as_analysis_inputs",
+      "reason": "No versioned adoption file is present locally. BTOS publishes aggregate business cells without worker age or occupation and has a November-2025 wording break. The RPS authors publish pooled detailed-occupation adoption workbooks for four 2025-2026 waves, but not a detailed occupation-by-quarter panel with verified sampling intervals.",
+      "next_step": "Capture and hash the RPS workbook for a descriptive exposure-validation design, or specify an ecological BTOS design with its jackknife uncertainty and wording break; neither is an exogenous worker-level treatment."
+    },
+    {
+      "id": "author_disclosures",
+      "state": "absent",
+      "reason": "Affiliation, email, acknowledgments, funding, conflicts, and journal-specific disclosure language are still marked AUTHOR TO COMPLETE.",
+      "next_step": "Obtain author-supplied text; do not infer it from SCC credentials or paths."
+    }
+  ],
+  "access_checks": {
+    "scc_batch_ssh": "found",
+    "scc_host": "scc1",
+    "scc_user": "verified but omitted from sanitized locator fields",
+    "scc_project_root": "found",
+    "existing_scheduler_jobs": "observed and left untouched",
+    "private_data_policy": "read-only inputs; no restricted row data, direct identifiers, credentials, or private absolute paths enter a public release"
+  }
+}

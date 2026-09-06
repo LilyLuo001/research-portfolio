@@ -1,0 +1,107 @@
+{
+  "amendment_commit": "0501a789196c9a91d69e6a4c24484180764567c8",
+  "amendment_sha256": "7af1612a4bf01ae80eb37cc7ab4f9947caf08f87d0967d063d4960e8c7f1e48c",
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "corrected_reconstruction": {
+    "base": {
+      "raw_rows": 9262480,
+      "retained_analysis_scope_rows": 6748518,
+      "source": "base_wide",
+      "superseded_march_positive_weight_rows": 0,
+      "superseded_march_rows": 621589
+    },
+    "corrected_analysis_scope_rows": 7087861,
+    "duplicate_corrected_keys": 0,
+    "march_positive_LNKFW1MWT_rows": 236417,
+    "march_positive_LNKFW1YWT_rows": 121835,
+    "march_rows_after_replacement": 339343,
+    "merge_key": [
+      "YEAR",
+      "MONTH",
+      "SERIAL",
+      "PERNUM"
+    ],
+    "merge_unmatched": 0,
+    "repair": {
+      "raw_rows": 580541,
+      "retained_analysis_scope_rows": 339343,
+      "source": "march_basic_repair",
+      "superseded_march_positive_weight_rows": 0,
+      "superseded_march_rows": 0
+    },
+    "weight_patch_analysis_scope_rows": 7127033,
+    "weight_patch_raw_rows": 9069883
+  },
+  "execution_head": "4953edc4908508c2f88adc403ca8adf893263f1a",
+  "fixed_occupation_influence_sha256": "150b218f1cf7e276c3b27a90d16e8d12be125b6e72e4d4dbc34466aaa07a5319",
+  "fixed_point_results_sha256": "759d815ad6047098b4336cb6be2c99cc27c2f89c422085cff05a1770e5bef250",
+  "generated_at_utc": "2026-09-05T15:43:28.469627+00:00",
+  "historical_occupation_draw_contract": {
+    "draws": 9999,
+    "note": "reported for lineage only; this analytic cluster sensitivity defines no paired draw comparison",
+    "seed": 2026090524
+  },
+  "link_repeat_and_aging": {
+    "adjacent_month": {
+      "CPSIDV_with_multiple_links": 1056803,
+      "CPSID_households_with_multiple_links": 648551,
+      "age_26_crossing_rate": 0.0017012711504994869,
+      "age_26_crossings": 7722,
+      "maximum_links_per_CPSIDV": 6,
+      "unique_CPSIDV": 1236553,
+      "unique_CPSID_households": 689781,
+      "validated_positive_weight_links": 4538959
+    },
+    "twelve_month": {
+      "CPSIDV_with_multiple_links": 588835,
+      "CPSID_households_with_multiple_links": 373837,
+      "age_26_crossing_rate": 0.01594814941285115,
+      "age_26_crossings": 33814,
+      "maximum_links_per_CPSIDV": 4,
+      "unique_CPSIDV": 671620,
+      "unique_CPSID_households": 396359,
+      "validated_positive_weight_links": 2120246
+    }
+  },
+  "mapping": {
+    "bridge_max_route_sum_error": 8.999467837611519e-13,
+    "bridge_source_codes": 503,
+    "lineage_components": 415,
+    "q5_sha256": "82549d91f47b526448b7ae7c2b35feec056dc01981ab60a88dae501d731a9e4d",
+    "support_occupations": 468,
+    "support_sha256": "96a4a0aaf8f1e5b58a9d644b537e356eb31f563e4f3a751bd71428aef0adde10"
+  },
+  "method": "one-way origin-person and origin-household clustering of event-level conditional-score influence; normal intervals; cell risks and event totals conditioned upon",
+  "no_restricted_identifier_or_event_record_written": true,
+  "not_combined_with_occupation_cluster_variance": true,
+  "not_full_CPS_design_inference": true,
+  "output_hashes": {
+    "EVENT_SCORE_CONSERVATION.csv": "821ba394a07e6840151b039e5fcb153c246b7d8b92be2d62a67e2792f17291b1",
+    "PERSON_HOUSEHOLD_CLUSTER_SENSITIVITY.csv": "7dcbd1cc80c4fabb5560e7b647d7e5764688f1a16cfe2e1f3036ab66e4113b05"
+  },
+  "public_input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+  },
+  "record": "YAX R3 flow person/household conditional-score cluster sensitivity",
+  "restricted_input_hashes": {
+    "base_wide": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "corrected_weight_patch": "bc97f807eace1bf3f0ca04b09e6a9d099bf1c86433c56bb1edd08b4156ac9fd6",
+    "march_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911"
+  },
+  "scope": {
+    "horizons": [
+      "adjacent_month",
+      "twelve_month"
+    ],
+    "margins": [
+      "employment_exit",
+      "unemployment_entry",
+      "labor_force_exit",
+      "occupational_outflow",
+      "entry_destination"
+    ],
+    "models": 10
+  },
+  "script_sha256": "7daea2399bcc6fded6f392ade5dc39983af6cae5a3d2eeceef6bde0ab69babf8"
+}

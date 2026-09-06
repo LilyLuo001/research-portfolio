@@ -1,0 +1,224 @@
+{
+  "continuous_SOC2_month": -0.0024649048226005952,
+  "corrected_baseline": -0.13210945079219036,
+  "direct_SOC2_month": 0.14936365516679875,
+  "direct_groups": [
+    "27",
+    "29",
+    "31",
+    "41"
+  ],
+  "failures": [],
+  "lofo_rows": 220,
+  "profile_SOC2_month_Q5": -0.02167495201824596,
+  "profile_SOC2_post_Q5": -0.02159898463152274,
+  "status": "PASS_R3_WITHIN_FAMILY"
+}
+{
+  "membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+  "output_dir": "<YAX_SCC_PROJECT_ROOT>/agents/dynamics/rebuilt_family_harmonization/results",
+  "status": "PASS_REBUILT_FAMILY_CONTRACT_HARMONIZATION",
+  "treatment_contract": "rebuilt_corrected_preperiod_weight"
+}
+{
+  "checks": [
+    {
+      "check": "required output exists: FAMILY_QUINTILE_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: PROFILE_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: PROFILE_JOINT_TESTS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: PAIRED_PROFILE_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: DIRECT_TAIL_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: DIRECT_TAIL_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: CONTINUOUS_WITHIN_FAMILY_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: LEAVE_ONE_FAMILY_OUT.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: INFORMATION_DIAGNOSTICS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: OCCUPATION_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FAMILY_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FAMILY_TAIL_TRAJECTORIES.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FAMILY_TRAJECTORY_SELECTION.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: REBUILT_Q1_Q5_AGGREGATE_PATHS.csv",
+      "pass": true
+    },
+    {
+      "check": "required output exists: CENTERED_BOOTSTRAP_DRAWS.npz",
+      "pass": true
+    },
+    {
+      "check": "required output exists: EXECUTION_RECEIPT.json",
+      "pass": true
+    },
+    {
+      "check": "required output exists: FINDINGS.md",
+      "pass": true
+    },
+    {
+      "check": "rebuilt contract label",
+      "pass": true
+    },
+    {
+      "check": "rebuilt baseline reproduced",
+      "pass": true
+    },
+    {
+      "check": "468 occupations",
+      "pass": true
+    },
+    {
+      "check": "9999 common draws",
+      "pass": true
+    },
+    {
+      "check": "no raw microdata output",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: CENTERED_BOOTSTRAP_DRAWS.npz",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: CONTINUOUS_WITHIN_FAMILY_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: DIRECT_TAIL_MODELS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: DIRECT_TAIL_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: FAMILY_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: FAMILY_QUINTILE_SUPPORT.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: FAMILY_TAIL_TRAJECTORIES.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: FAMILY_TRAJECTORY_SELECTION.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: FINDINGS.md",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: INFORMATION_DIAGNOSTICS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: LEAVE_ONE_FAMILY_OUT.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: MODEL_FAILURES.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: OCCUPATION_INFORMATION.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: PAIRED_PROFILE_CHANGES.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: PROFILE_COEFFICIENTS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: PROFILE_JOINT_TESTS.csv",
+      "pass": true
+    },
+    {
+      "check": "receipt hash: REBUILT_Q1_Q5_AGGREGATE_PATHS.csv",
+      "pass": true
+    },
+    {
+      "check": "profile contract",
+      "pass": true
+    },
+    {
+      "check": "profile baseline target",
+      "pass": true
+    },
+    {
+      "check": "22 broad families",
+      "pass": true
+    },
+    {
+      "check": "at least one direct-tail family",
+      "pass": true
+    },
+    {
+      "check": "226 aggregate tail rows",
+      "pass": true
+    },
+    {
+      "check": "both aggregate tails",
+      "pass": true
+    },
+    {
+      "check": "aggregate path contract",
+      "pass": true
+    },
+    {
+      "check": "October 2025 absent",
+      "pass": true
+    },
+    {
+      "check": "December 2022 excluded",
+      "pass": true
+    },
+    {
+      "check": "common draw dimensions",
+      "pass": true
+    }
+  ],
+  "checks_passed": 49,
+  "status": "PASS_REBUILT_FAMILY_SELFCHECK"
+}

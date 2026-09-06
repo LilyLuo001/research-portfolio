@@ -1,0 +1,604 @@
+{
+  "BCC_style_descriptive_CPS_growth": {
+    "end_month": "2026-06",
+    "older_high_growth": 0.006010490316233241,
+    "older_low_growth": 0.0067611131599176755,
+    "start_month": "2022-11",
+    "young_high_growth": -0.05031163840697195,
+    "young_high_kept_pace_shortfall": -0.10222608215035245,
+    "young_low_growth": 0.057825742886055576
+  },
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "architecture_comparison": {
+    "common_results": [
+      {
+        "analytic_or_paired_se": 0.029782493823158,
+        "architecture": "aioe_admin_equal",
+        "bootstrap_critical": 1.9717239147838599,
+        "bootstrap_p_value": 0.0721,
+        "ci_lower": -0.11286048064495886,
+        "ci_upper": 0.0045852299810875685,
+        "coefficient": -0.05413762533193565,
+        "draws": 9999,
+        "high_employment_share": 0.3948697068925127,
+        "high_occupation_count": 134,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.08343818795755212,
+        "paired_bootstrap_se": 0.030094571654890767,
+        "quintile_cuts": [
+          -0.9481003,
+          -0.0845282,
+          0.8568333,
+          1.099056
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.029526944828285717,
+        "architecture": "aioe_ability_direct",
+        "bootstrap_critical": 1.9857107204913522,
+        "bootstrap_p_value": 0.061,
+        "ci_lower": -0.11470714094997636,
+        "ci_upper": 0.002556800827790924,
+        "coefficient": -0.056075170061092715,
+        "draws": 9999,
+        "high_employment_share": 0.3997079263738181,
+        "high_occupation_count": 141,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.08272224572675285,
+        "paired_bootstrap_se": 0.029849442666471434,
+        "quintile_cuts": [
+          -0.0638228797838,
+          0.168313109228,
+          0.427474945512,
+          0.565475617617
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.029955235945574053,
+        "architecture": "aioe_oews2018_source_weighted",
+        "bootstrap_critical": 1.9807794260367109,
+        "bootstrap_p_value": 0.0525,
+        "ci_lower": -0.1181038601020997,
+        "ci_upper": 0.0005655700240371417,
+        "coefficient": -0.05876914503903128,
+        "draws": 9999,
+        "high_employment_share": 0.3981948829486221,
+        "high_occupation_count": 132,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.08392213969658109,
+        "paired_bootstrap_se": 0.03016228768336373,
+        "quintile_cuts": [
+          -0.9481003,
+          -0.107411401867,
+          0.923197877715,
+          1.13521262144
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.026264142365151413,
+        "architecture": "dv_rating_alpha",
+        "bootstrap_critical": 1.964533826413618,
+        "bootstrap_p_value": 0.0077,
+        "ci_lower": -0.12136649844398814,
+        "ci_upper": -0.018172906247822307,
+        "coefficient": -0.06976970234590522,
+        "draws": 9999,
+        "high_employment_share": 0.39947526462845434,
+        "high_occupation_count": 184,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07358122728807273,
+        "paired_bootstrap_se": 0.026263456250248722,
+        "quintile_cuts": [
+          0.0408929835329,
+          0.0712777805905,
+          0.110872235872,
+          0.200158029209
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.02721625953333016,
+        "architecture": "dv_rating_beta",
+        "bootstrap_critical": 1.9603401101500548,
+        "bootstrap_p_value": 0.0021,
+        "ci_lower": -0.13431779867966936,
+        "ci_upper": -0.027611548256787515,
+        "coefficient": -0.08096467346822844,
+        "draws": 9999,
+        "high_employment_share": 0.3985500216017806,
+        "high_occupation_count": 150,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07624866446468478,
+        "paired_bootstrap_se": 0.027266638339975495,
+        "quintile_cuts": [
+          0.144444444444,
+          0.322218482511,
+          0.450998306444,
+          0.531293509652
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.028067892918947655,
+        "architecture": "dv_rating_gamma",
+        "bootstrap_critical": 1.9567725652622336,
+        "bootstrap_p_value": 0.0012,
+        "ci_lower": -0.1429965783509444,
+        "ci_upper": -0.033151612693914624,
+        "coefficient": -0.08807409552242951,
+        "draws": 9999,
+        "high_employment_share": 0.39669125618762624,
+        "high_occupation_count": 134,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07863458778332998,
+        "paired_bootstrap_se": 0.028185816993777636,
+        "quintile_cuts": [
+          0.19512195122,
+          0.5625,
+          0.844444444444,
+          0.918918918919
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.029778239981520092,
+        "architecture": "webb_ai_patent_task",
+        "bootstrap_critical": 1.936975860797965,
+        "bootstrap_p_value": 0.4225,
+        "ci_lower": -0.08177003730245533,
+        "ci_upper": 0.03358942674005119,
+        "coefficient": -0.02409030528120207,
+        "draws": 9999,
+        "high_employment_share": 0.3795483955393642,
+        "high_occupation_count": 173,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.08342627045862698,
+        "paired_bootstrap_se": 0.029551058756364105,
+        "quintile_cuts": [
+          25.0,
+          42.0,
+          61.0,
+          78.0
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "analytic_or_paired_se": 0.026280600848478622,
+        "architecture": "oecd_ai_capability_gap_reversed",
+        "bootstrap_critical": 1.9230792893836302,
+        "bootstrap_p_value": 0.7708,
+        "ci_lower": -0.058172162693637924,
+        "ci_upper": 0.04290719571489626,
+        "coefficient": -0.007632483489370831,
+        "draws": 9999,
+        "high_employment_share": 0.3986806644916675,
+        "high_occupation_count": 220,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07362733712808499,
+        "paired_bootstrap_se": 0.02591850373608188,
+        "quintile_cuts": [
+          0.7575883012390173,
+          0.8123759520771704,
+          0.8587316797936668,
+          0.9270633097065524
+        ],
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      }
+    ],
+    "common_support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+    "common_support_occupations": 426,
+    "native_results": [
+      {
+        "analytic_or_paired_se": 0.029550984878496958,
+        "architecture": "aioe_admin_equal",
+        "bootstrap_critical": 1.934350573733972,
+        "bootstrap_p_value": 0.0693,
+        "ci_lower": -0.11038291570804909,
+        "ci_upper": 0.003941013400199957,
+        "coefficient": -0.05322095115392456,
+        "draws": 9999,
+        "high_employment_share": 0.3995492741632387,
+        "high_occupation_count": 154,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.0827895959708239,
+        "paired_bootstrap_se": 0.029438911651439068,
+        "quintile_cuts": [
+          -0.9481003,
+          -0.1213112,
+          0.8370105,
+          1.119216
+        ],
+        "support_hash_sha256": "6ca1d945343ab435a27425685c0e5a425e1ece6db96e73bc2501eb8c77ed0cba",
+        "support_occupations": 495,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.03044627237672423,
+        "architecture": "aioe_ability_direct",
+        "bootstrap_critical": 1.9347247136453858,
+        "bootstrap_p_value": 0.0231,
+        "ci_lower": -0.12678797778724443,
+        "ci_upper": -0.008977666575990008,
+        "coefficient": -0.06788282218161722,
+        "draws": 9999,
+        "high_employment_share": 0.39934936129004367,
+        "high_occupation_count": 158,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.08529781999654497,
+        "paired_bootstrap_se": 0.029982286498627688,
+        "quintile_cuts": [
+          -0.0638228797838,
+          0.15541163761,
+          0.405229461078,
+          0.547581348421
+        ],
+        "support_hash_sha256": "dcff8a60e88b4ea0ba5c53af0f8248c18986b83ab9c9cc4e38bbc8b95fb37656",
+        "support_occupations": 484,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.02952915602143119,
+        "architecture": "aioe_oews2018_source_weighted",
+        "bootstrap_critical": 1.9454578346660902,
+        "bootstrap_p_value": 0.0376,
+        "ci_lower": -0.11843940484968703,
+        "ci_upper": -0.003543948983745701,
+        "coefficient": -0.060991676916716364,
+        "draws": 9999,
+        "high_employment_share": 0.39968446683924375,
+        "high_occupation_count": 153,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.0827284405723013,
+        "paired_bootstrap_se": 0.02969911262357792,
+        "quintile_cuts": [
+          -0.9547055,
+          -0.1443684,
+          0.835402057402,
+          1.13521262144
+        ],
+        "support_hash_sha256": "91b3c292d49750d26fb64bd563c4992270ba9da934ad78d087b347adb0e8f478",
+        "support_occupations": 485,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.02577695281062445,
+        "architecture": "dv_rating_alpha",
+        "bootstrap_critical": 1.974979393349686,
+        "bootstrap_p_value": 0.0038,
+        "ci_lower": -0.12499233164979394,
+        "ci_upper": -0.02317443040113283,
+        "coefficient": -0.07408338102546339,
+        "draws": 9999,
+        "high_employment_share": 0.38669487259401236,
+        "high_occupation_count": 193,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.0722163243399533,
+        "paired_bootstrap_se": 0.02576578586199069,
+        "quintile_cuts": [
+          0.0417391304348,
+          0.0712777805905,
+          0.12,
+          0.200158029209
+        ],
+        "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+        "support_occupations": 468,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.025977369185347775,
+        "architecture": "dv_rating_beta",
+        "bootstrap_critical": 1.9713032433805195,
+        "bootstrap_p_value": 0.0055,
+        "ci_lower": -0.12397544755469173,
+        "ci_upper": -0.021556903295553258,
+        "coefficient": -0.0727661754251225,
+        "draws": 9999,
+        "high_employment_share": 0.3971661373162438,
+        "high_occupation_count": 155,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07277780784913256,
+        "paired_bootstrap_se": 0.026252209189916956,
+        "quintile_cuts": [
+          0.162561583951,
+          0.328947368421,
+          0.461538461538,
+          0.537037037037
+        ],
+        "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+        "support_occupations": 468,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.026685783387592983,
+        "architecture": "dv_rating_gamma",
+        "bootstrap_critical": 1.9672387166971774,
+        "bootstrap_p_value": 0.0019,
+        "ci_lower": -0.13421712952917375,
+        "ci_upper": -0.02922251699823921,
+        "coefficient": -0.08171982326370648,
+        "draws": 9999,
+        "high_employment_share": 0.39871174978526386,
+        "high_occupation_count": 144,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07476249045192969,
+        "paired_bootstrap_se": 0.026609430258559292,
+        "quintile_cuts": [
+          0.235294117647,
+          0.571428571429,
+          0.847846481004,
+          0.928571428571
+        ],
+        "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+        "support_occupations": 468,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.027972052922736548,
+        "architecture": "webb_ai_patent_task",
+        "bootstrap_critical": 1.9375176486370391,
+        "bootstrap_p_value": 0.5533,
+        "ci_lower": -0.07100046935532016,
+        "ci_upper": 0.037392223057502505,
+        "coefficient": -0.01680412314890883,
+        "draws": 9999,
+        "high_employment_share": 0.38792980250435655,
+        "high_occupation_count": 182,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07836608388754487,
+        "paired_bootstrap_se": 0.027859970013350974,
+        "quintile_cuts": [
+          26.0,
+          42.0,
+          61.0,
+          79.0
+        ],
+        "support_hash_sha256": "42d1b194c53fbd4bb3b07ba2b8a7e3818fc751f77252b47786902bdc7a35b3b3",
+        "support_occupations": 448,
+        "support_rule": "native"
+      },
+      {
+        "analytic_or_paired_se": 0.025984110260569484,
+        "architecture": "oecd_ai_capability_gap_reversed",
+        "bootstrap_critical": 1.9364430922068896,
+        "bootstrap_p_value": 0.7057,
+        "ci_lower": -0.05995336086541068,
+        "ci_upper": 0.0406801407770332,
+        "coefficient": -0.009636610044188738,
+        "draws": 9999,
+        "high_employment_share": 0.3975029423312767,
+        "high_occupation_count": 226,
+        "labels": [
+          "group_2_vs_1_x_post",
+          "Webb_software_z_x_post"
+        ],
+        "mde80_normal": 0.07279669354435757,
+        "paired_bootstrap_se": 0.025625028219435398,
+        "quintile_cuts": [
+          0.7575883012390173,
+          0.8123759520771704,
+          0.8587316797936668,
+          0.9270633097065524
+        ],
+        "support_hash_sha256": "37cdc8bced04cbf5b1c03ee82539ae8004e7573f1fdd056217eb912c3102a1a7",
+        "support_occupations": 448,
+        "support_rule": "native"
+      }
+    ],
+    "paired_differences": [
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": -0.026827048136292796,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_aioe_admin_equal",
+        "normal_theory_mde80": 0.05209257816467803,
+        "paired_ci_lower": -0.06299683004991027,
+        "paired_ci_upper": 0.009342733777324683,
+        "paired_occupation_cluster_se": 0.01859396668838462,
+        "paired_p_value": 0.1548,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": -0.024889503407135728,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_aioe_ability_direct",
+        "normal_theory_mde80": 0.050754444006730556,
+        "paired_ci_lower": -0.05998237690673408,
+        "paired_ci_upper": 0.010203370092462624,
+        "paired_occupation_cluster_se": 0.018116332007321052,
+        "paired_p_value": 0.1776,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": -0.022195528429197163,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_aioe_oews2018_source_weighted",
+        "normal_theory_mde80": 0.049555204206335954,
+        "paired_ci_lower": -0.05654526308199908,
+        "paired_ci_upper": 0.012154206223604754,
+        "paired_occupation_cluster_se": 0.01768827438979576,
+        "paired_p_value": 0.2106,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": -0.011194971122323219,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_dv_rating_alpha",
+        "normal_theory_mde80": 0.07367789650933755,
+        "paired_ci_lower": -0.061824942152641324,
+        "paired_ci_upper": 0.039434999907994886,
+        "paired_occupation_cluster_se": 0.026298647554629805,
+        "paired_p_value": 0.6757,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": 0.0071094220542010644,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_dv_rating_gamma",
+        "normal_theory_mde80": 0.02973662082771302,
+        "paired_ci_lower": -0.013125487620260608,
+        "paired_ci_upper": 0.027344331728662737,
+        "paired_occupation_cluster_se": 0.010614213321285279,
+        "paired_p_value": 0.5283,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": -0.056874368187026375,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_webb_ai_patent_task",
+        "normal_theory_mde80": 0.09569850975401602,
+        "paired_ci_lower": -0.1227060941356228,
+        "paired_ci_upper": 0.008957357761570056,
+        "paired_occupation_cluster_se": 0.03415870293209594,
+        "paired_p_value": 0.0946,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      },
+      {
+        "bootstrap_draws": 9999,
+        "coefficient_difference": -0.07333218997885761,
+        "common_occupation_multipliers": true,
+        "contrast": "dv_rating_beta_minus_oecd_ai_capability_gap_reversed",
+        "normal_theory_mde80": 0.09555954574292734,
+        "paired_ci_lower": -0.13902133700991198,
+        "paired_ci_upper": -0.007643042947803255,
+        "paired_occupation_cluster_se": 0.03410910100636866,
+        "paired_p_value": 0.0305,
+        "support_hash_sha256": "b2ba6f965422e9e689d5804d7bc21530e99b8bbfbfeea66c5c33ae6da99a49e1",
+        "support_occupations": 426,
+        "support_rule": "literal_common"
+      }
+    ]
+  },
+  "controlled_model": {
+    "analytic_or_paired_se": 0.025977369185347775,
+    "bootstrap_critical": 1.9520620248207279,
+    "bootstrap_p_value": 0.0029,
+    "ci_lower": -0.12347561131658805,
+    "ci_upper": -0.022056739533656937,
+    "coefficient": -0.0727661754251225,
+    "draws": 9999,
+    "labels": [
+      "group_2_vs_1_x_post",
+      "Webb_software_z_x_post"
+    ],
+    "mde80_normal": 0.07277780784913256,
+    "paired_bootstrap_se": 0.02574587620708697,
+    "specification": "YAX fixed design; BCC top-two vs bottom-three; Webb conditioned"
+  },
+  "high_employment_share": 0.3971661373162438,
+  "high_occupation_count": 155,
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "not_replicated": [
+    "ADP outcome and balanced-firm panel",
+    "ADP proprietary title-to-SOC mapping",
+    "firm-time controls and hiring/separation outcomes"
+  ],
+  "published_BCC_rule": "GPT-4 beta; Q4-Q5 more exposed versus Q1-Q3 less exposed",
+  "quintile_cuts": [
+    0.162561583951,
+    0.328947368421,
+    0.461538461538,
+    0.537037037037
+  ],
+  "status": "PASS",
+  "support_occupations": 468,
+  "unconditioned_model": {
+    "analytic_or_paired_se": 0.026096509483327722,
+    "bootstrap_critical": 1.946202728405561,
+    "bootstrap_p_value": 0.0032,
+    "ci_lower": -0.12363622554091908,
+    "ci_upper": -0.02205802962429105,
+    "coefficient": -0.07284712758260506,
+    "draws": 9999,
+    "mde80_normal": 0.0731115895208487,
+    "paired_bootstrap_se": 0.02588605416780147,
+    "specification": "YAX fixed design; BCC top-two vs bottom-three; no computerization control"
+  }
+}

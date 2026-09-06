@@ -1,0 +1,59 @@
+{
+  "analysis_spec_sha256": "b839c4d33fa9f18cd953c2b8f7075257298d2f33bdd1f54943a0ae302bba3bfb",
+  "analysis_status": "POST-OUTCOME EXPLORATORY -- NOT PART OF CONFIRMATORY YAX v1.1",
+  "created_utc": "2026-09-05T15:15:29.147525+00:00",
+  "failure_count": 20,
+  "git_head": "09968071462ac88de5cc649f38a1af7425329c60",
+  "household_bootstrap": {
+    "design_based_inference": false,
+    "failures": 0,
+    "multiplier": "independent mean-one Exponential(1), common across months and route descendants",
+    "reclassified_occupations_maximum": 7,
+    "reclassified_occupations_median": 2.0,
+    "reclassified_occupations_p95": 4.0,
+    "requested_draws": 199,
+    "sampling_unit": "positive CPSID linked household record across all observed months",
+    "successful_fixed_label_draws": 199,
+    "successful_rebuilt_label_draws": 199
+  },
+  "inputs": {
+    "bridge_sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization_sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "march_audit_receipt_sha256": "b2e1810c1f154f8efd290ccc65a155a6553642fb03d76fd818d7348e98bb3b8a",
+    "microdata_sha256": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "repair_microdata_sha256": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "treatment_contract_sha256": "95db83635da57b58db98217c96bf85c40aa0249146031db23cfa1221d11804b6"
+  },
+  "nonrelease_assertion": "No raw or hashed household/person identifier, microdata row, or cell-level private stock is written.",
+  "output_hashes": {
+    "FINITE_SAMPLE_DGP.json": "5903e66769f7f26651211cebe317fbdc342b2507333e25c75cad9a8ccee612ad",
+    "FINITE_SAMPLE_SIMULATION_DRAWS.csv": "ffc6a0d70a0821b00d83b8b600662bd2442e8e34607ef9cc2d75e1b8a4f4bef4",
+    "FINITE_SAMPLE_SIMULATION_SUMMARY.csv": "8c0ca240be0c2d5140235e85c2316aad1d5ffbfac97a69a04916e85e74a1e39a",
+    "HOUSEHOLD_BOOTSTRAP_DRAWS.csv": "4409325af8607df18086636f0e9a77ba40832bec4043bf9515374307b819254f",
+    "HOUSEHOLD_BOOTSTRAP_SUMMARY.csv": "762aa63cccb19b6d88d657b4945602b38776047b6ded0247557892c8b37f3316",
+    "HOUSEHOLD_RESAMPLING_FEASIBILITY.json": "7f0927b9ee61bdfba9c0dd4c19e18d26352777196777eb111ea256d2c7087c91",
+    "MODEL_FAILURES.json": "560b77cb5e02555dee15cadb0b03021372e28ed1e71ec0ede5204492210a6c25"
+  },
+  "simulation": {
+    "DGP_role": "calibrated finite-sample stress test; not full CPS design inference or an independently identified structural DGP",
+    "draws_per_effect": 199,
+    "effects": [
+      0.0,
+      -0.05,
+      -0.1321094507921903
+    ],
+    "maximum_refit_iterations": 100
+  },
+  "treatment_weight_reproduction": {
+    "maximum_absolute_gap": 5.960464477539063e-08,
+    "maximum_relative_gap": 8.715005636401562e-16
+  },
+  "unperturbed_models": {
+    "SOC2_minus_baseline": 0.11051046616066834,
+    "SOC2_post": -0.02159898463152197,
+    "SOC2_post_occupation_cluster_SE": 0.07159928850039342,
+    "SOC2_reference_family": "11",
+    "baseline": -0.1321094507921903,
+    "baseline_occupation_cluster_SE": 0.045173895228400755
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "record": "YAX Phase 2A primary beta flow execution receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY \u2014 NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-08-31T14:58:45.693991+00:00",
+  "plan_commit": "aed4ba518800d10b74284a7f3312e90a15b7b0d3",
+  "execution_head": "4ae4f4324ab6639172a4fd1c8837b8627fffdb48",
+  "authenticated_inputs": {
+    "wide_microdata_private": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "weight_patch_private": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "preperiod_beta_membership": "ee477954c46d565ee41e5bdfece267cdee228aeb6a611d44d5ff8f3fde3032a6"
+  },
+  "execution_script_sha256": "a67fe9793ec945901c45a4b7ef8b045429d360a820b5ff344895432dade6445a",
+  "link_sample": {
+    "wide_rows_read": 9262480,
+    "validated_adjacent_pairs": 4085493,
+    "young_validated_pairs": 313171,
+    "pre_validated_pairs": 2635559,
+    "post_validated_pairs": 1413351,
+    "long_gap_pairs": 0,
+    "false_September_to_November_2025_links": 0
+  },
+  "primary_weight": "origin LNKFW1MWT on successful CPSIDV adjacent links",
+  "sensitivities": [
+    "unweighted",
+    "origin WTFINL (non-longitudinal)"
+  ],
+  "webb_preperiod_mean": 45.23268051650675,
+  "webb_preperiod_sd": 26.247549484716522,
+  "beta_Q5_codes_sha256": "82549d91f47b526448b7ae7c2b35feec056dc01981ab60a88dae501d731a9e4d",
+  "classification": "FLOW-M5",
+  "classification_reason": "no primary target wild-score CI excludes zero",
+  "stage2B_authorized": false,
+  "stage2C_predeclared_independently": true,
+  "new_outcome_regressions_executed": [
+    "employment_exit__official__beta_RuleA_Webb",
+    "employment_exit__unweighted__beta_RuleA_Webb",
+    "employment_exit__origin_WTFINL__beta_RuleA_Webb",
+    "occupational_outflow__official__beta_RuleA_Webb",
+    "occupational_outflow__unweighted__beta_RuleA_Webb",
+    "occupational_outflow__origin_WTFINL__beta_RuleA_Webb",
+    "persistent_outflow__official__beta_RuleA_Webb",
+    "persistent_outflow__unweighted__beta_RuleA_Webb",
+    "persistent_outflow__origin_WTFINL__beta_RuleA_Webb",
+    "entry_destination__official__beta_RuleA_Webb",
+    "entry_destination__unweighted__beta_RuleA_Webb",
+    "entry_destination__origin_WTFINL__beta_RuleA_Webb"
+  ],
+  "excluded_analyses_executed": [],
+  "long_gap_links_used": false,
+  "figure_A_generated_in_execution_environment": false,
+  "outputs": {
+    "YAX_PHASE2_FLOW_SAMPLE_COUNTS.csv": "d52ae44af6dd1a01515e8f5d7893880ec7e9750695cc1585e684df91235c9931",
+    "YAX_PHASE2_PRIMARY_BETA_FLOW_RESULTS.csv": "99445bfe4c695cfb57aaa944da38666db1bafc45ea1b985b3176eeca71d73ab4",
+    "YAX_PHASE2_FLOW_MARGIN_DECISION.md": "4e8cfabf213ee6c5721d1353c74bf608a5df5f02d953e35a1075b346eef4920f"
+  }
+}

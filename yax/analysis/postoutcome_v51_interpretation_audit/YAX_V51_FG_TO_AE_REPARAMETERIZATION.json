@@ -1,0 +1,139 @@
+{
+  "a_minus_e_original_unit_contrast": {
+    "coefficient": 0.0959017152143202,
+    "common_draw_covariance_se": 0.045638866610004936,
+    "exact_transformed_existing_G_wild_score_95_ci": [
+      0.005591027224467856,
+      0.18621240320417254
+    ],
+    "exact_transformed_existing_G_wild_score_p_value": 0.04,
+    "identity": "b_A_raw - b_E_raw = b_G / s_G",
+    "normal_95_ci": [
+      0.006451180363482897,
+      0.1853522500651575
+    ]
+  },
+  "analysis_status": "POST-OUTCOME INTERPRETATION AUDIT \u2014 NO NEW LABOR-OUTCOME MODEL",
+  "centering": {
+    "centered_A_E_representation_requires_no_additional_shift": true,
+    "intercept_equivalent_shift_if_raw_uncentered_A_E_are_used": -0.00022684236136661246
+  },
+  "classification": "AE-R1",
+  "component_moments": {
+    "A": {
+      "weighted_mean": 0.007601578653176965,
+      "weighted_sd": 0.9986541239732856
+    },
+    "E": {
+      "weighted_mean": -0.0005230106559222314,
+      "weighted_sd": 0.866645911729445
+    },
+    "F": {
+      "weighted_mean": 0.003539283998627367,
+      "weighted_sd": 0.8777358553105283
+    },
+    "G": {
+      "weighted_mean": 0.004062294654549618,
+      "weighted_sd": 0.32213718525715235
+    }
+  },
+  "frozen_common_draw_covariance_fg": [
+    [
+      0.00020760672583217208,
+      -9.82463543307159e-05
+    ],
+    [
+      -9.82463543307159e-05,
+      0.00021614809913005154
+    ]
+  ],
+  "frozen_fg_coefficients": [
+    -0.040358886215281616,
+    0.030893508600474132
+  ],
+  "inference_note": "The serialized V5.1 result retains the marginal common-draw bootstrap SDs and their centered covariance, which form the transformed covariance used here. It does not retain draw-level shifts or the analytic cluster covariance off-diagonal. Therefore no transformed wild-score interval or exact wild-score p-value is reported, and no multipliers were regenerated.",
+  "maximum_absolute_linear_predictor_difference": 2.7755575615628914e-17,
+  "model_period_months": 108,
+  "new_labor_outcome_model_estimated": false,
+  "parent_commit": "557a927c96b9062c233787f1d346c68b99074206",
+  "record": "exact algebraic reparameterization of sealed V5.1 F+G model",
+  "support_hash_sha256": "1e184b27678b7978d4b15e618db5b44f44b5e9ec1b50b69b53093ec62e0ce462",
+  "support_occupations": 444,
+  "terms": [
+    {
+      "coefficient_per_original_centroid_unit": 0.024960520610499918,
+      "coefficient_per_weighted_sd": 0.02492692684419593,
+      "common_draw_covariance_se_per_original_centroid_unit": 0.02035587824376059,
+      "common_draw_covariance_se_per_weighted_sd": 0.020328481755229593,
+      "normal_95_ci_per_original_centroid_unit": [
+        -0.014936267620953281,
+        0.06485730884195312
+      ],
+      "normal_95_ci_per_weighted_sd": [
+        -0.014916165256433654,
+        0.06477001894482551
+      ],
+      "term": "AIOE_family_centroid_A",
+      "wild_score_interval": null,
+      "wild_score_p_value": null
+    },
+    {
+      "coefficient_per_original_centroid_unit": -0.07094119460382028,
+      "coefficient_per_weighted_sd": -0.061480896276603816,
+      "common_draw_covariance_se_per_original_centroid_unit": 0.02760121959179111,
+      "common_draw_covariance_se_per_weighted_sd": 0.023920484117972426,
+      "normal_95_ci_per_original_centroid_unit": [
+        -0.1250385909331122,
+        -0.01684379827452838
+      ],
+      "normal_95_ci_per_weighted_sd": [
+        -0.10836418364059214,
+        -0.014597608912615502
+      ],
+      "term": "Eloundou_family_centroid_E",
+      "wild_score_interval": null,
+      "wild_score_p_value": null
+    }
+  ],
+  "transformation_matrix_raw_ae_from_standardized_fg": [
+    [
+      0.5696474593978029,
+      1.552133758171585
+    ],
+    [
+      0.5696474593978029,
+      -1.552133758171585
+    ]
+  ],
+  "transformation_matrix_sd_ae_from_standardized_fg": [
+    [
+      0.5688807845385206,
+      1.5500447785562077
+    ],
+    [
+      0.49368264181417093,
+      -1.3451503759766632
+    ]
+  ],
+  "transformed_correlation_raw_ae": -0.8069073412243252,
+  "transformed_covariance_raw_ae": [
+    [
+      0.00041436177907480567,
+      -0.00045335852170837236
+    ],
+    [
+      -0.00045335852170837236,
+      0.0007618273229542734
+    ]
+  ],
+  "transformed_covariance_sd_ae": [
+    [
+      0.00041324717047270246,
+      -0.00039237251293309806
+    ],
+    [
+      -0.000392372512933098,
+      0.000572189560438171
+    ]
+  ]
+}

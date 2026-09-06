@@ -1,0 +1,116 @@
+{
+  "record": "YAX Phase 2.5 and Gate 3 reproducibility receipt",
+  "analysis_status": "POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1",
+  "generated_at_utc": "2026-09-01T01:36:41Z",
+  "branch": "task/yax-phase25-gate3-20260901",
+  "parent_phase2_commit": "9772a494afc2c1af5630979631c4b67640f4ff3f",
+  "result_package_commit": "280791a0589de4f42c9feaadaf6c507e57e275cf",
+  "phase2_commit_reconciliation": {
+    "substantive_result_package": "8ebef7c4f443b5f9300ccfa7d1761f822215d790",
+    "final_seal_and_receipt": "9772a494afc2c1af5630979631c4b67640f4ff3f",
+    "phase25_parent_is_true_final_phase2_head": true
+  },
+  "protected_references": {
+    "v1.1-design-freeze": "74d97a9b07e0cbedda2c646c5eed5938b8506f81",
+    "v1.1-confirmatory-results": "31f9d02352f70fe81f5a01cd6690cc5e5400512c",
+    "v4.1_quintile_weight_audit_commit": "ca5a02478b68f1a0e47eadd4e8816bbc96c9dcc3"
+  },
+  "pre_result_code_commits": [
+    "7623617",
+    "936cd78",
+    "dd9ca38",
+    "c3004a3",
+    "6904f5c",
+    "f9ba4e8"
+  ],
+  "input_hashes": {
+    "phase2_microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "phase2_weight_patch": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8",
+    "occupation_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "occupation_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization_measure": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "six_measure_occupation_characteristics": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c"
+  },
+  "onet_archives": {
+    "versions": [
+      "22.0", "22.1", "22.2", "22.3",
+      "23.0", "23.1", "23.2", "23.3",
+      "24.0", "24.1", "24.2", "24.3",
+      "25.0", "25.1", "25.2", "25.3",
+      "26.0", "26.1", "26.2", "26.3",
+      "27.0", "27.1", "27.2", "27.3",
+      "28.0", "28.1", "28.2", "28.3",
+      "29.0", "29.1", "29.2", "29.3",
+      "30.0", "30.1", "30.2", "30.3", "31.0"
+    ],
+    "archive_count": 37,
+    "archive_hash_manifest": "YAX_ONET_DYNAMIC_TASK_EXECUTION_RECEIPT.json",
+    "archive_hash_manifest_sha256": "19556e53679f9b9e36b633cec3252dbaade39c92f9b85c7e973894ec0e2ec04d"
+  },
+  "frozen_execution_rules": {
+    "switch_weight": "LNKFW1MWT",
+    "sixway_support": "finite exposure values for all six architectures at both switch endpoints",
+    "pair_support": "finite exposure values only for the named pair at both switch endpoints",
+    "matched_benchmark": "draw origins and destinations independently from weighted observed marginals within the same age-by-time cells, repair self-matches reproducibly, and use 999 common-seed draws",
+    "benchmark_seed": 2026090101,
+    "benchmark_draws": 999,
+    "benchmark_pseudo_units": 200000,
+    "shared_component_support": "finite values on all six frozen exposures and positive pre-period employment weight",
+    "shared_component_weighting": "pre-period employment weights; AIOE family and Eloundou family each receive total weight one-half",
+    "onet_rule": "official archived Task Statements and Task Ratings only; exact O*NET-SOC codes; importance and relevance changes reported separately"
+  },
+  "classifications": {
+    "sixway_support_selection": "SUPPORT-S2",
+    "pair_specific_support": "PAIR-P1",
+    "matched_benchmark": "BENCH-B1",
+    "reallocation_validity": "REALLOC-R1 — STRONG",
+    "onet_dynamic_task_feasibility": "ONET-B",
+    "shared_component_feasibility": "FACTOR-F1",
+    "gate3_selected_path": "PATH-G3-B — CURRENT PAPER + SHARED-COMPONENT EXPLANATION"
+  },
+  "scope_integrity": {
+    "new_labor_outcome_regressions": [],
+    "labor_outcome_files_read_by_onet_audit": [],
+    "labor_outcomes_read_by_factor_audit": [],
+    "protected_paths_modified": false,
+    "new_manuscript_created": false,
+    "gate3_paths_selected": 1
+  },
+  "validation_at_result_package_commit": {
+    "targeted_phase25_tests": "10 passed",
+    "yax_tests": "146 passed",
+    "full_repository_tests_clean_scc_worktree": "831 passed, 3 skipped, 13 warnings",
+    "full_repository_log": "/projectnb/econdept/qluo/dax-private/ipums/yax_phase25_gate3/full_pytest.log",
+    "warnings": "pre-existing deprecation warnings only"
+  },
+  "artifact_sha256": {
+    "YAX_ARCHITECTURE_ROBUST_INFERENCE_FEASIBILITY.md": "bb8e76a9c13f7b078234776b368556eb0a2eb13d9069862fbe932509576172af",
+    "YAX_EXPOSURE_FACTOR_DIAGNOSTICS.csv": "32a35d95d1e1fa1a238e9aefd6bd7386bdcb2641d8fa4e2702a8710011f2029d",
+    "YAX_EXPOSURE_FACTOR_LOADINGS.csv": "7c9a5cfc888189811d36fef36e39ce43f51d329ffcfb80f1d8c23a1a59a58cfc",
+    "YAX_EXPOSURE_FACTOR_STABILITY.csv": "e42b50712d1086a0599fe97ec5fcb33b221bccb69506e001a28e59542889c2cb",
+    "YAX_GATE3_DECISION_MEMO.md": "c3c4df534ce74b869a96ae4f3fcc9005d951d62097f55c096729a7098b675869",
+    "YAX_ONET_DYNAMIC_TASK_EXECUTION_RECEIPT.json": "19556e53679f9b9e36b633cec3252dbaade39c92f9b85c7e973894ec0e2ec04d",
+    "YAX_ONET_DYNAMIC_TASK_FEASIBILITY.md": "ab1d6b4722a658e83a297548633a7b2ef9c5129995276a4eef58caac14668e4c",
+    "YAX_ONET_METHODOLOGY_CHANGELOG.md": "4a5f995e447a12a5f860175b94ff02441aee1c1f9ec07e6201a664bd4da703b6",
+    "YAX_ONET_TASK_ID_STABILITY.csv": "b360836fd65bcc339068d67ab5de0595ae343f1bc158a12f4f7a8c245188cc5d",
+    "YAX_ONET_TASK_VINTAGE_COVERAGE.csv": "9be79ff7c9594401d8a2cbc7ba1df8942719d14c134a65d3b8d16e79101761b1",
+    "YAX_ONET_UPDATE_TIMING.csv": "2b037768d1537ef9ee42304634d1bd1d1d574038e4bd4f5b16edfb4b30a2494b",
+    "YAX_PHASE25_BENCHMARK_MEMO.md": "44dd264f96c4634ed8f93c040c785cdc33f7439d1afc7e3626028fe5e3175d3a",
+    "YAX_PHASE25_PAIR_SPECIFIC_AGREEMENT.csv": "cf453d89460d016ceb6336aeffdef16d98d502432ec0e8aceceaee73de64f14f",
+    "YAX_PHASE25_PAIR_SPECIFIC_SUPPORT.csv": "f5fea5cd77170361f59925244b5e693e82d567e71e24a0b41d491e1ee1578a5c",
+    "YAX_PHASE25_PAIR_SUPPORT_FIGURE.png": "3892950d32a2019cea1b0bdc51b40472c04ad4a2aee37601116cff17b6c23e3c",
+    "YAX_PHASE25_PHASE2_COMMIT_RECONCILIATION.md": "8d3e9313da91bef39633a49ba20d4c20042fa651490a3401d811179e031828a2",
+    "YAX_PHASE25_REALIZED_VS_MATCHED_BENCHMARK.json": "6efb546839545b7d0216a909bebd6d5744d603712f96804173198056fc4a119f",
+    "YAX_PHASE25_REALIZED_VS_MATCHED_BENCHMARK_FIGURE.png": "e7beabcb7231429774ccb5744bff674313d958da823c2cfb9b0db1b51bd37387",
+    "YAX_PHASE25_REALLOCATION_EXECUTION_RECEIPT.json": "c80948a4b90ea0298711e4aa6ba4b5728869c67bbd964b07f83b33227a6f352e",
+    "YAX_PHASE25_REALLOCATION_VALIDITY_DECISION.md": "ab04fd5be8683a68d384ddba1fa5a54f3d32a2492832572f6efb62ddcb8341d1",
+    "YAX_PHASE25_SIXWAY_SUPPORT_SELECTION_AUDIT.csv": "13d538d3a9aac1b6cf2657be6e3c669b9ede76fbb84c9c8f8dcd85ce20ff852a",
+    "YAX_PHASE25_SIXWAY_SUPPORT_SELECTION_MEMO.md": "5cb6b03a2ea74f577cea2148d9743f79c2d101d668620fddf76bcda550c0167a",
+    "YAX_SHARED_COMPONENT_EXECUTION_RECEIPT.json": "9ff2a0a0583795a0278abf9e622634d990ae53fb111a9cef48c5a7a3d828ea5f",
+    "YAX_SHARED_COMPONENT_FEASIBILITY.md": "66ed7364a2ae206a52bf7631ed8e122d6a0ce62b1c8d325e5d48639c1b7702a3",
+    "render_phase25_figures.py": "6da8230bf03c854fc7df9ad53f41dfa4cf478053ed69fd9c793f236d8313c7e6",
+    "run_onet_dynamic_task_feasibility.py": "568e029c6232a3dbf73f5a432c3f56de4e962e516ed3c272237d61958fe153de",
+    "run_phase25_reallocation_validity.py": "1524b42133a02a01c91c1c949f4f629fe3b95840d26fc149e0c78baf49247615",
+    "run_shared_component_feasibility.py": "f035a2c9ed1d6c721f2c43bce4b92ee6a6984494b6ccb1bd59bfbfd909a18b57"
+  }
+}

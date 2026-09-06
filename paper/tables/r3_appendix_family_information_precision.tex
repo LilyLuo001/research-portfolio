@@ -1,0 +1,16 @@
+\begin{table}[!htbp]
+\centering
+\caption{Family-support information and precision diagnostics}\label{tab:app_family_information}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+Target and structure & Occ. & $I$ (millions) & $I/I_{\mathrm{raw}}$ & $I/I_{\mathrm{parent}}$ & Effective occ. & Top-five share & Normal MDE$_{80}$ \\
+\midrule
+Q5--Q1, pooled & 468 & 26.289 & 0.378 & 1.000 & 43.2 & 0.245 & 0.1266 \\
+Q5--Q1, SOC2 $\times$ month & 468 & 7.803 & 0.112 & 0.297 & 53.3 & 0.218 & 0.1998 \\
+Direct-tail Q5--Q1, SOC2 $\times$ month & 29 & 0.669 & 0.080 & 0.308 & 6.2 & 0.778 & 0.4576 \\
+Continuous within-SOC2 slope, SOC2 $\times$ month & 468 & 261.278 & 0.583 & 0.965 & 48.0 & 0.249 & 0.0313 \\
+\bottomrule
+\end{tabular}}
+\tabnote{$I$ is nuisance-adjusted Fisher information after projecting the target score on the model's nuisance score; $I_{\mathrm{raw}}$ is the raw weighted treatment sum of squares.  ``Parent'' is the corresponding pooled model on the same target and population, so the direct-tail and continuous rows each use their own pooled parent.  Because target scales and populations differ, absolute $I$ is not comparable across all rows.  Effective occupations are the inverse Herfindahl count of occupation-level information contributions; the top-five share is the sum of the five largest contributions.  Fitted information and its effective count are design-concentration diagnostics: neither replaces the nominal occupation-cluster count nor measures first-stage CPS sampling precision.  MDE$_{80}=2.80\widehat{SE}$ uses the occupation-cluster standard error and is a normal-theory precision diagnostic, not a rejection result.  The direct-tail MDE is 0.4576 log point; the continuous MDE is 0.0313 per one within-family standard deviation (0.1084 raw beta units).}
+\end{table}

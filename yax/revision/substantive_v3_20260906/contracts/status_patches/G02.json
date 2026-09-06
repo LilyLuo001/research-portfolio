@@ -1,0 +1,23 @@
+{
+  "status": "SPECIFIED",
+  "summary": "The supplied 99-row seed has been expanded to 297 atomic acceptance-check rows without altering the seed. Exact source-text locator and text-hash resolution is still in progress; the acceptance-check map alone is not treated as full request coverage.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "ACCEPTANCE_CHECK_CROSSWALK.csv",
+      "sha256": "3598080b42a5063d04b196ba32485af00107fe064befbf1e468d0b1218752ac0"
+    },
+    {
+      "role": "verification_report",
+      "path": "reviews/REQUEST_CROSSWALK_SELF_REVIEW.md",
+      "sha256": "7155f4cd80c7335efa96558236b527f0b80bccbd903568a30a9e45ce0a88107e"
+    }
+  ],
+  "response_locations": [
+    "ACCEPTANCE_CHECK_CROSSWALK.csv",
+    "source_verification/"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

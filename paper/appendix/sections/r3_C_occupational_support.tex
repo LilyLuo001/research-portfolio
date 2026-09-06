@@ -1,0 +1,40 @@
+\section{Broad-Family Support, Profiles, and Influence}\label{app:families}
+
+\subsection{Family-by-quintile support}
+
+Table~\ref{tab:app_family_support} reports, for every SOC two-digit family, the number of retained occupations, preperiod stock share, exposure range, quintiles present, direct-tail overlap, and nuisance-adjusted Q5 information share.  Only arts/media (SOC27), health practitioners (SOC29), health support (SOC31), and sales (SOC41) span Q1 and Q5 under the reconstructed comparison.  Other families connect the Q5--Q1 regression coefficient through intermediate quintiles and the imposed common Q2--Q5 slopes.
+
+\input{tables/r3_appendix_family_support.tex}
+
+Table~\ref{tab:app_family_information} makes the loss and concentration of identifying information explicit.  Family-by-month conditioning retains 29.7 percent of the pooled Q5 target's nuisance-adjusted information, while the direct-tail comparison has only 6.2 effective occupations and its five largest occupation contributions supply 77.8 percent of information.  Its normal-theory MDE$_{80}$ is 0.4576 log point.  The continuous within-family companion is more diffuse and has MDE$_{80}=0.0313$ per one within-family standard deviation, but it imposes a common slope across families.
+
+\input{tables/r3_appendix_family_information_precision.tex}
+
+The direct-tail population retains only occupations in the four spanning families that belong to Q1 or Q5.  It contains 29 occupations and 5.03 percent of primary preperiod stock.  In the SOC2-by-calendar-month model its coefficient is 0.1494, with interval $[-0.1694,0.4682]$.  This benchmark is valuable because it exposes direct overlap; it is not a preferred estimate for the original population, and the interval includes large effects of either sign.
+
+\subsection{Full exposure profile}
+
+The pooled Q2--Q5 coefficients are jointly different from zero, but pairwise movements do not establish a monotone dose response.  After SOC2-by-calendar-month conditioning, the four coefficients are jointly indistinguishable from zero.  Table~\ref{tab:app_profile} reports pointwise and simultaneous intervals and the common-draw movement for every group.
+
+\input{tables/r3_appendix_profile.tex}
+
+The continuous within-family companion subtracts each family's preperiod employment-weighted beta mean and imposes a common linear slope.  Under SOC2-by-calendar-month conditioning, the rebuilt coefficient is $-0.0025$ per 0.1084 raw beta units, with interval $[-0.0240,0.0191]$ in that standardized within-family unit.  The unconditioned continuous coefficient is essentially zero as well.  This is a different functional form from the tail contrast.
+
+\subsection{Leave-one-family and occupation influence}
+
+Leave-one-family-out estimates are computed from the same family-conditioning program and reported with the omitted family's stock and target-information contribution.  These rows answer whether a broad comparison is concentrated; they are not used to choose which families belong in the main estimate.  Table~\ref{tab:app_lofo} displays the eight largest absolute movements.  Omitting office/administrative support or food preparation moves the coefficient in opposite directions by about 0.04 log point, and every paired deletion interval includes zero.
+
+\input{tables/r3_appendix_lofo.tex}
+
+Figure~\ref{fig:family_paths} shows the four direct-tail families, selected by descending nuisance-adjusted Q5 information rather than coefficient sign.  Within each exposure tail, the young and older employment stocks are shown separately and indexed to their own 2019 means.  The figure therefore exposes which age series drives a tail's relative path without treating either age group as untreated.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{r3_figure3_family_paths.pdf}
+\caption{Young and older employment stocks in direct-tail families}\label{fig:family_paths}
+\tabnote{Families are selected by direct-tail, SOC2-by-calendar-month Q5 nuisance-adjusted information, with ties broken by SOC2 code; selection does not use coefficient sign.  Gray and blue distinguish Q1 and Q5; solid and dashed series distinguish ages 22--25 and 26--65.  Each series equals 100 at its own 2019 mean, and the red dashed line marks January 2023.  These are descriptive weighted-stock paths without design-based bands.}
+\end{figure}
+
+Occupation leave-one-out calculations are interpreted in the same way.  Fast-food and counter workers have high signed influence because low-exposure service employment recovered differently after the pandemic.  Other occupations push in the opposite direction.  Historical-contract diagnostics show that deleting the five largest absolute prior influences moves the coefficient toward zero, whereas deleting ten or twenty can make it more negative.  Symmetric influence trimming stays near the pooled estimate.  Because every such deletion is outcome adaptive, none replaces the broad-family regression.
+
+Economically defined service exclusions are cleaner diagnostics but still change the population.  Removing Q1 food-service occupations attenuates the historical-contract absolute coefficient by less than one tenth; removing a broader set of food, building-and-grounds, personal-care, and protective-service occupations does not attenuate it.  These results reject a one-occupation explanation, not hypotheses about reopening, immigration, wages, or labor supply that the CPS design does not separately identify.

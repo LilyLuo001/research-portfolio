@@ -1,0 +1,43 @@
+{
+  "checks": {
+    "all_five_quintiles": true,
+    "all_march_basic_restored": true,
+    "both_age_stocks_positive": true,
+    "calendar_71": true,
+    "calendar_corrected_reproduced": true,
+    "calendar_ends_2022_11": true,
+    "calendar_starts_2017_01": true,
+    "december_transition_excluded": true,
+    "finite_member_values": true,
+    "historical_contract_discloses_post_stock": true,
+    "historical_reproduced": true,
+    "no_post_stock": true,
+    "october_2025_missing_not_interpolated": true,
+    "paired_rows_exact_support": true,
+    "prefit_before_historical_read": true,
+    "rebuilt_contract_excludes_post_stock": true,
+    "rebuilt_row_present": true,
+    "route_conservation": true,
+    "rule_A_and_webb": true,
+    "static_113": true,
+    "support_change_not_mislabeled_paired": true
+  },
+  "status": "PASS_BASE_03_SELF_CHECK",
+  "verified_output_hashes": {
+    "BASELINE_DECOMPOSITION.csv": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2",
+    "CALENDAR_RECEIPT.json": "378d1668fc6289ae73a9e86174f83dcd4b790b844ca5ca5c8faf02337a56b3f3",
+    "COMMON_SUPPORT_RECLASSIFICATION.csv": "11452f704e200b2df1cf616d4a2783443422ec4bca904974c5190c1886b98e96",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "NATIVE_TREATMENT_CONTRACTS.csv": "95db83635da57b58db98217c96bf85c40aa0249146031db23cfa1221d11804b6",
+    "PAIRED_CENTERED_DRAWS.csv": "49fc0f1f2a776f07e1d61bb8aecfa4610bde69b39f5003c4ebfabb643bd6c477",
+    "PAIRED_COMPARISONS.csv": "fda0bfde9ef7ea4db04ed9bae523c4bedf1294f14ee1839c777257af3e78d2f9",
+    "PREFIT_GATE.json": "92fc18a380ee960abecce6ee5c6317f882a0beefcb9dae958f9446d41c3ff8b5",
+    "REBUILT_ELIGIBLE_UNIVERSE.csv": "b47fff762a90b15ba1876e09151f25e204462959ac779dab267eb11a9194a748",
+    "REBUILT_NORMALIZATION_AND_CUTS.json": "e756d597c12fc2b61ddf62e536b50d3edab32375980e7cea70e5de42fca57557",
+    "REBUILT_QUINTILE_SUPPORT.csv": "4f18cc4ca8734279bcfa3000dcf6c254b2a64275afad433759a16cbc9f54d2c8",
+    "REBUILT_TREATMENT_MEMBERSHIP.csv": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "ROUTE_CONSERVATION_RECEIPT.json": "6590c506703874a29c7345c9199eb76d98778740af253c2e106552950ec0c5ff",
+    "SUPPORT_CHANGING_COMPARISONS.csv": "361af1f959cd372787fd99d5aa72621cbe53ffcf5e4d0f075d25f5b057674858",
+    "TREATMENT_CONTRACT_SUMMARY.csv": "c4b4ca152576011241d7e02364568b73a6939b541cea821b036bc7f45c3e5938"
+  }
+}

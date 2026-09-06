@@ -1,0 +1,42 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "Executed the authenticated Gate 1 reconstruction from the provenance-complete canonical v2 contract in a clean SCC worktree. The historical 108-month diagnostic, corrected 113-month historical-treatment diagnostic, and corrected 113-month recomputed-preperiod canonical estimate all completed, passed checkpoint validation, and were transferred with manifest verification. Substantive integration remains incomplete: the nine assignment changes and construction-age implications have not yet been presented and reviewed in the manuscript or appendix, so T02 is not VERIFIED.",
+  "evidence": [
+    {
+      "role": "specification",
+      "path": "contracts/specs/canonical_baseline_reproduction_v2.json",
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    {
+      "role": "code",
+      "path": "gate1_baseline/run_gate1_baseline.py",
+      "sha256": "80190d2f1bab7d3c1527524e773cbd3ab97e07a0711795b47937d60e2883d00d"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_baseline/EXECUTION_RECEIPT.json",
+      "sha256": "788348d1bbd982394c2dcb1bb3e8553a9a92c32ba89a4d8ef465802403477a96"
+    },
+    {
+      "role": "result",
+      "path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+      "sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json",
+      "sha256": "fecca89ff0e239947b69585ddeecdc57324534818e0e60a03727b63845ec2576"
+    }
+  ],
+  "response_locations": [
+    "runs/gate1_baseline/README.md",
+    "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+    "runs/gate1_baseline/results/COMMON_SUPPORT_RECLASSIFICATION.csv",
+    "runs/gate1_baseline/results/TREATMENT_CONTRACT_SUMMARY.csv",
+    "runs/gate1_baseline/results/CALENDAR_RECEIPT.json",
+    "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

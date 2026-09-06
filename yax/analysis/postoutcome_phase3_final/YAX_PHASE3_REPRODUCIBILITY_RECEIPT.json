@@ -1,0 +1,164 @@
+{
+  "record": "YAX final Phase 3 reproducibility seal and V5 assembly",
+  "analysis_status": "POST-OUTCOME EXPLORATORY — NOT PART OF CONFIRMATORY YAX v1.1",
+  "sealed_at_utc": "2026-09-03T04:24:19Z",
+  "branch": "task/yax-phase3-final-20260901",
+  "commit_lineage": {
+    "phase25_parent": "3feda26c698b19823d3370eecb3abf2a57ad9cfd",
+    "phase3_pre_result": "2683af26768c343af6060988689728d88878d568",
+    "phase3_execution_head_after_documented_estimand_preserving_fixes": "64623bd0710e84759532fc81fcd6adac2da81073",
+    "phase3_result_package_and_v5": "9bf8f8546a949be1740703167fb89f0301e7279e",
+    "v4_1_immutable_baseline": "ca5a02478b68f1a0e47eadd4e8816bbc96c9dcc3"
+  },
+  "protected_refs": {
+    "v1.1-design-freeze": {
+      "annotated_tag_object": "74d97a9b07e0cbedda2c646c5eed5938b8506f81",
+      "peeled_commit": "22fbf7924809b7a535e31ae0ab68f5b113ce8078",
+      "underlying_commit_unchanged": true
+    },
+    "v1.1-confirmatory-results": {
+      "annotated_tag_object": "31f9d02352f70fe81f5a01cd6690cc5e5400512c",
+      "peeled_commit": "b16109482c3bf5ca176f6f08976e120b04769945",
+      "underlying_commit_unchanged": true
+    },
+    "discrepancy": "annotated-tag object SHA versus peeled commit SHA; no ref movement"
+  },
+  "input_hashes_sha256": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "characteristics": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "first_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+    "lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "rule_b": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+    "sealed_phase25_benchmark": "6efb546839545b7d0216a909bebd6d5744d603712f96804173198056fc4a119f",
+    "sealed_table5b_results": "6b51a2a5c0a5f30ea73b1889828b89df460ffc740d069a567c129f6d135e9ca1",
+    "weight_patch": "841e13798c34f74a8cd8e0ac1d913742aad5f24fce2c6876793ecf1dd8bd55a8"
+  },
+  "frozen_choices": {
+    "shared_component": "F=(AIOE-family centroid + Eloundou-family centroid)/2 after frozen employment-weighted standardization",
+    "family_disagreement_component": "G=(AIOE-family centroid - Eloundou-family centroid)/2",
+    "hard_benchmark_strata": "age group x calendar month x origin broad family x destination broad family",
+    "hard_benchmark_pseudo_units": 200000,
+    "hard_benchmark_draws": 999,
+    "shared_distance_bins": "tie-preserving weighted quintiles of absolute delta F with frozen cuts",
+    "stock_support": "literal six-architecture common occupation support",
+    "stock_treatment": "employment-weighted F quintiles; Q1 omitted; Q2-Q5 separate",
+    "stock_estimator": "existing PPML headline architecture with Webb interaction, frozen fixed effects, occupation clustering, and one-step wild-score inference",
+    "joint_inference": "common occupation-cluster multipliers and simultaneous one-sided upper bounds; no common-parameter assumption"
+  },
+  "seeds": {
+    "hard_primary": 2026090301,
+    "hard_persistent": 2026090302,
+    "shared_stock": 2026090303,
+    "joint_sign": 2026090304
+  },
+  "support_and_counts": {
+    "realized_sixway_switches": 108500,
+    "persistent_sixway_switches": 39893,
+    "hard_primary_official_weight_share": 0.9830516359256677,
+    "hard_persistent_official_weight_share": 0.9991982960833817,
+    "stock_common_support_occupations": 444,
+    "stock_common_support_employment_share": 0.831420875609175,
+    "wide_microdata_rows_read": 9262480,
+    "validated_adjacent_pairs": 4085493,
+    "long_gap_pairs_used": 0
+  },
+  "new_labor_outcome_models": {
+    "count": 1,
+    "models": [
+      "shared_F_Q2_Q5_with_Q1_omitted_and_Webb"
+    ]
+  },
+  "results": {
+    "hard_benchmark": {
+      "classification": "HB-C",
+      "realized_conflict": 0.5328278289030031,
+      "hard_mean": 0.5232266666666666,
+      "realized_minus_hard_mean": 0.009601162236336447,
+      "descriptive_upper_tail": 0.001
+    },
+    "reallocation_component": {
+      "classification": "SC-R1",
+      "primary_lowest_minus_highest_F_bin_conflict": 0.7553302281841736,
+      "persistent_lowest_minus_highest_F_bin_conflict": 0.7592741643488038
+    },
+    "shared_stock": {
+      "classification": "SC-A",
+      "coefficient_log_points": -0.12853606797297715,
+      "analytic_cluster_se": 0.04697509135902905,
+      "wild_score_p": 0.005,
+      "wild_score_ci": [-0.21848721170247137, -0.03858492424348291]
+    },
+    "joint_sign": {
+      "all_six_point_estimates_negative": true,
+      "all_simultaneous_upper_bounds_negative": false,
+      "joint_all_six_negative_statement_supported": false,
+      "simultaneous_one_sided_critical": 2.26035887801162
+    },
+    "selected_path": "PATH-P3-C"
+  },
+  "artifact_hashes_sha256": {
+    "YAX_PHASE3_EXECUTION_PLAN.md": "c727856332897e6836d34dce75786b6d2ae93ac74af3abfd914bfd7ba1388124",
+    "YAX_PHASE3_PROTECTED_REF_AUDIT.md": "c10b1b4b566c254fe2286cbc83c045b04f6e2cf2e5fa8d5d4a51dd715d3f465c",
+    "YAX_PHASE3_PROTECTED_REF_RECEIPT.json": "5f5c0ff913e33bd9b13e05e8a891ea8eff424e0a68f6b96818cbb5c4f50ab372",
+    "YAX_PHASE3_IMPLEMENTATION_FIXES.md": "29ef0ef432055be6315fd75dce7ca334ba93020031c9d8228b2d3524c08e2146",
+    "YAX_PHASE3_EXECUTION_RECEIPT.json": "3b55960752b4d6ede0fe2b2d500d74ae536405af311efc84f267006b0194cd59",
+    "YAX_PHASE3_HARD_BENCHMARK_RESULTS.json": "83ce57e14b1f768797eb85958bde39200f70d1b7e6c6027ea6c5b18dc787a5ca",
+    "YAX_PHASE3_HARD_BENCHMARK_DECISION.md": "3f7204af44bd7d14f3ac03170c028ed60a8eb039f16c5ac0bd3eda11ded2f7eb",
+    "YAX_PHASE3_SHARED_COMPONENT_DEFINITION.md": "60d087f03bb14a9c0541b3b8fc03580b0a3f3ea00cdd3493152567e3a5faf132",
+    "YAX_PHASE3_SHARED_COMPONENT_STABILITY.csv": "fca57f66d1894d72011a5829b09b0a94be5c2b50d834d73d289b2fcd3d3d4f01",
+    "YAX_PHASE3_SHARED_COMPONENT_VALUES.csv": "416c0c0af9420cc860d418f84bf4bb2677ca3c5cd77246b794a30bced2a686c1",
+    "YAX_PHASE3_REALLOCATION_COMPONENT_RESULTS.csv": "94d2b844ff3b63ed4bc21e06b2e4c54b7e7c028cc8a0ec774b5bee434f030a38",
+    "YAX_PHASE3_REALLOCATION_COMPONENT_RESULTS.json": "42163995217542938ff2210a0487ad37fc45b6b9194224d166c03a9a2f26f8bb",
+    "YAX_PHASE3_REALLOCATION_COMPONENT_FIGURE.png": "08050ac340e900faa8960d870d6aeccb9617cd90b028a2a92268c781c79c31ff",
+    "YAX_PHASE3_SHARED_STOCK_RESULT.json": "39b305a36ee4425533b75b76d4490abb6f2b46ded695abaa9ece96146e3075bc",
+    "YAX_PHASE3_SHARED_STOCK_MEMBERSHIP.csv": "98aa93a412f87daa17f798a1f56b48bf7c2376ee756e77c853a3ac87f786d894",
+    "YAX_PHASE3_SHARED_STOCK_OVERLAP.csv": "39b2124622688f9ba171bcfd28fbd54a51d6d4355521cf0072252f3f8bd94cca",
+    "YAX_PHASE3_SHARED_STOCK_FIGURE.png": "a1233e5b931011cfda303b18941c30e14029d08d7f4e8e93d974bb7b1174aa35",
+    "YAX_PHASE3_JOINT_SIGN_INFERENCE.csv": "37c64486f6425179c5387ad4abad2a5ae5996ea74ce3b8ea107e9247b6a352c9",
+    "YAX_PHASE3_JOINT_SIGN_INFERENCE.json": "303abbd6adb3c5f2ef87c5437b06d29024c822ab5e75a42f3756017919fa3f8b",
+    "YAX_PHASE3_JOINT_SIGN_COVARIANCE.csv": "8ce35d80f0723f420e8077f1192e8aa10991016d0504f5e446a8cb11dd41d55d",
+    "YAX_PHASE3_DECISION_MEMO.md": "057df07fd2265395a926472a2be35d1453e41a2c1d54b552fcc991d44d9d2c5d",
+    "YAX_PHASE3_MANUSCRIPT_TABLES.md": "43bec136c0625a6ac9b3d86bcd38f5cfa3c7cea5a7106a140729952910c53e04",
+    "phase3_core.py": "1fcc7eb6cf45daaee0eb71f578d9a8c891cdfe35ea959b28933b8d2546d54859",
+    "run_phase3.py": "79006406bada62a7e767f4d4a7f8cceed68994f4118010638ce0b24a80bd8fbe",
+    "render_phase3_figures.py": "d2e9ae64e9120f2fded901aa98833390a21c97ffaa7673b04a7bb8218f01ee9b",
+    "YAX_MANUSCRIPT_v5_CLEAN.md": "e43a60de3f740a8cd039994f030d051a9ad17bea8eeddc3a787e83b59970676b",
+    "YAX_V5_SUPPLEMENTARY_APPENDIX.md": "7132596f88a402def5a33e52a0399f3eebbaf58a14039b7c0a8d2d481b2069f3",
+    "test_phase3_final.py": "52b59f5e22bf22645e4050d0dfa8ff8ac25fc28a395c4731b0d9adff5c62bc5e"
+  },
+  "tests": {
+    "targeted_local": {
+      "command": "python3 -m pytest -q yax/tests/test_phase3_final.py",
+      "result": "17 passed",
+      "status": "PASS"
+    },
+    "full_clean_scc": {
+      "checkout": "/projectnb/econdept/qluo/yax-phase3-seal-20260903",
+      "commit": "9bf8f8546a949be1740703167fb89f0301e7279e",
+      "command": "/projectnb/econdept/qluo/yax-phase25-gate3-final-ci-20260901/.venv-old/bin/pytest -q",
+      "result": "849 passed, 3 skipped, 13 warnings in 23.34s",
+      "status": "PASS"
+    }
+  },
+  "remote_verification": {
+    "method": "fresh single-branch clone from origin on SCC project storage",
+    "remote_commit_observed": "9bf8f8546a949be1740703167fb89f0301e7279e",
+    "status": "PASS"
+  },
+  "implementation_fixes": [
+    "SCC interpreter path corrected before result production",
+    "two pandas sample-column attribute collisions replaced by bracket access before final full rerun",
+    "presentation-only renderer forced to Agg and one clipped axis label shortened after numerical artifacts were sealed"
+  ],
+  "integrity": {
+    "protected_confirmatory_outputs_modified": false,
+    "v4_1_baseline_modified": false,
+    "estimand_changed_after_results": false,
+    "prohibited_phase3_analyses_run": false,
+    "phase4_authorized": false,
+    "stop_rule": "Phase 3 -> V5 -> STOP"
+  }
+}

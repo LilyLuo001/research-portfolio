@@ -1,0 +1,762 @@
+{
+  "schema_version": "1.0",
+  "created_date": "2026-09-06",
+  "accessed_date": "2026-09-06",
+  "requirements_in_scope": [
+    "B01",
+    "B02",
+    "B05",
+    "B07",
+    "B09",
+    "F07"
+  ],
+  "purpose": "Primary-source and official-source verification for selected AI_revision_V3 requirements. Claim text is a precise paraphrase unless a locator explicitly identifies a table or coefficient.",
+  "full_ten_journal_search_complete": false,
+  "ten_journal_search_status": "INCOMPLETE: targeted publisher checks corrected named premises, but the full ten-journal query protocol and reproducible search ledger have not been completed.",
+  "sources": [
+    {
+      "source_id": "bcc_official_landing_2026",
+      "requirement_ids": ["B01", "B02"],
+      "title": "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence",
+      "publisher": "Stanford Digital Economy Lab",
+      "source_type": "official_publication_landing_page",
+      "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-08-12",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The official page identifies Erik Brynjolfsson, Bharat Chandar, and Ruyu Chen as authors and labels the item a working paper revised on August 12, 2026.",
+        "The revision uses ADP payroll records through June 2026.",
+        "The public headline says employment for workers ages 22 to 25 in the most AI-exposed occupations was 19 percent below the counterfactual in which their employment had kept pace with less-exposed occupations."
+      ],
+      "version_endpoint_distinctions": [
+        "This page describes the August 2026 paper revision; the live dashboard's latest downloads extend one month farther and are not identical paper inputs."
+      ],
+      "limitations": [
+        "The landing-page 19 percent statement is not, by itself, a regression estimand or an exact benchmark for YAX."
+      ]
+    },
+    {
+      "source_id": "bcc_paper_pdf_aug2026",
+      "requirement_ids": ["B01", "B02"],
+      "title": "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence (August 2026 PDF)",
+      "publisher": "Stanford Digital Economy Lab",
+      "source_type": "working_paper_pdf",
+      "url": "https://digitaleconomy.stanford.edu/app/uploads/2026/08/Canaries_August2026.pdf",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-08",
+      "verification_status": "VERIFIED_PRIMARY",
+      "exact_supported_claims": [
+        "The descriptive 19 percent headline compares ages 22 to 25 in the top two exposure quintiles with the bottom three: approximately an 11 percent decline versus 10 percent growth from November 2022 to June 2026, a 21 percentage-point divergence or about 19 percent relative shortfall.",
+        "The exposure ranking is Eloundou et al.'s GPT-4 beta measure, constructed at detailed 2018 SOC, aggregated to six-digit SOC, and linked through a BLS 2010-to-2018 SOC crosswalk; the quintiles are occupation-equal, not employment-equal.",
+        "The principal ADP stock series use a balanced firm panel and normalize levels to November 2022.",
+        "Table 1 reports a distinct occupation-level long-difference regression for ages 22 to 25: Q5 relative to Q1, November 2022 to June 2026, coefficient -0.179 with heteroskedasticity-robust standard error 0.036, using employment-weighted occupations and firms continuously observed since January 2018.",
+        "Table 2 reports -0.193 with standard error 0.033 using firms balanced since 2021.",
+        "Appendix H extends the monthly CPS validation through June 2026 and presents indexed age-by-exposure plots, but does not report a directly analogous CPS coefficient to the ADP Table 1 long difference.",
+        "Appendix Table H.1 reports ACS Q5-minus-Q1 employment growth from 2022 to 2024 for ages 22 to 25: -0.022 with 95 percent interval [-0.055, 0.011] for all employed; -0.019 [-0.059, 0.020] for full-time civilian wage-and-salary workers; and -0.132 for the corresponding ADP balanced-panel comparison.",
+        "The ACS intervals use the 80 Census successive-difference replicate weights.",
+        "The paper reports that dropping ACS person weights makes the all-employed gap more negative, from -0.022 to -0.047, and the full-time gap from -0.019 to -0.042.",
+        "The data-availability statement says the underlying ADP microdata are proprietary and unavailable; selected derived occupation-level results are downloadable from the dashboard, while code is available from the authors on request."
+      ],
+      "version_endpoint_distinctions": [
+        "The paper's endpoint is June 2026; the dashboard ZIPs inspected on the access date identify a July 2026 endpoint and vintage 2026-08-12.",
+        "The 19 percent descriptive shortfall, the -0.179 ADP regression, and the -0.022 ACS comparison are different quantities and must not be treated as interchangeable benchmarks."
+      ],
+      "limitations": [
+        "Appendix occupation lists show only the top 50 names per quintile, not an exhaustive SOC-coded quintile membership file.",
+        "No contact with the authors was authorized for this audit."
+      ],
+      "evidence_locators": [
+        "Tables 1 and 2",
+        "Appendix H and Tables H.1-H.2",
+        "Appendix A.2-A.6",
+        "Data Availability Statement"
+      ]
+    },
+    {
+      "source_id": "bcc_canaries_dashboard",
+      "requirement_ids": ["B01", "B02"],
+      "title": "Canaries Dashboard",
+      "publisher": "Stanford Digital Economy Lab",
+      "source_type": "official_interactive_dashboard",
+      "url": "https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "live",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The dashboard methodology says it covers more than 730 occupations, uses the BLS 2018 SOC crosswalk, forms exposure quintiles with occupations equally weighted, and uses a rolling five-year balanced firm sample.",
+        "The dashboard exposes aggregate public download links for several displayed series."
+      ],
+      "version_endpoint_distinctions": [
+        "The dashboard is a live product. Its latest download endpoint must be versioned separately from the fixed August 2026 paper PDF."
+      ],
+      "limitations": [
+        "The visible dashboard and its aggregate downloads do not establish that an exhaustive SOC-code-to-quintile membership artifact is public."
+      ]
+    },
+    {
+      "source_id": "bcc_download_exposure_latest",
+      "requirement_ids": ["B02"],
+      "title": "Canaries by Exposure Results ZIP",
+      "publisher": "Stanford Digital Economy Lab",
+      "source_type": "public_aggregate_download",
+      "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_by_exposure_results.zip",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "vintage 2026-08-12",
+      "verification_status": "VERIFIED_PUBLIC_ARTIFACT",
+      "exact_supported_claims": [
+        "The inspected archive contains aggregate date-by-exposure-quintile series and documentation, not an exhaustive occupation-code membership table.",
+        "The inspected archive identifies a 2026-08-12 vintage and data through July 2026.",
+        "The downloaded bytes had SHA-256 64c48834a8a978e3db80a0416fa417bc49a970f3f2c2afa99bf10206697317ac."
+      ],
+      "version_endpoint_distinctions": [
+        "The URL contains a mutable latest endpoint; the recorded hash and vintage are therefore essential, and this artifact postdates the paper's June 2026 endpoint."
+      ],
+      "limitations": [
+        "It cannot verify exact occupation membership in BCC's quintiles."
+      ]
+    },
+    {
+      "source_id": "bcc_download_age_exposure_latest",
+      "requirement_ids": ["B02"],
+      "title": "Canaries Age by Exposure Results ZIP",
+      "publisher": "Stanford Digital Economy Lab",
+      "source_type": "public_aggregate_download",
+      "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_age_by_exposure_results.zip",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "vintage 2026-08-12",
+      "verification_status": "VERIFIED_PUBLIC_ARTIFACT",
+      "exact_supported_claims": [
+        "The inspected archive contains aggregate date-by-age-by-exposure-quintile series and documentation, not exhaustive SOC-code membership.",
+        "The downloaded bytes had SHA-256 7726e1948f76dc867c272e2d61d204e37d00856586763b16ab8030a6dd7fb969."
+      ],
+      "version_endpoint_distinctions": [
+        "This is a mutable latest endpoint; it must be tied to the recorded hash and 2026-08-12 vintage rather than described as the fixed paper input."
+      ],
+      "limitations": [
+        "The aggregate cells cannot recover the full occupation membership underlying each quintile."
+      ]
+    },
+    {
+      "source_id": "bcc_download_composition_latest",
+      "requirement_ids": ["B02"],
+      "title": "Canaries Composition Results ZIP",
+      "publisher": "Stanford Digital Economy Lab",
+      "source_type": "public_aggregate_download",
+      "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_composition_results.zip",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "vintage 2026-08-12",
+      "verification_status": "VERIFIED_PUBLIC_ARTIFACT",
+      "exact_supported_claims": [
+        "The inspected composition archive supplies aggregate dashboard data rather than a complete SOC-code-to-exposure-quintile key.",
+        "The downloaded bytes had SHA-256 555ded8ab0d226c726dcb3dcd61606c690b2b60fe1d40269379f301aad5ae4f4."
+      ],
+      "version_endpoint_distinctions": [
+        "The mutable latest endpoint was inspected at the stated access date and is pinned here by hash."
+      ],
+      "limitations": [
+        "It does not close the exact-membership requirement."
+      ]
+    },
+    {
+      "source_id": "acs_2026_updates",
+      "requirement_ids": ["B05"],
+      "title": "American Community Survey 2026 Updates",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_release_status_page",
+      "url": "https://www.census.gov/programs-surveys/acs/news/updates/2026.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-08-06 entry",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The August 6, 2026 update says the release date for 2025 ACS one-year estimates is still being determined and that Census is seeking a later release date."
+      ],
+      "version_endpoint_distinctions": [
+        "This status applies to 2025 one-year products as of the audit date; it does not alter the availability of 2024 one-year PUMS."
+      ],
+      "limitations": [
+        "A verified 2025 one-year PUMS release was not available for the proposed extension on the access date."
+      ]
+    },
+    {
+      "source_id": "acs_2024_release_page",
+      "requirement_ids": ["B05"],
+      "title": "2024 ACS Data Releases",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_release_page",
+      "url": "https://www.census.gov/programs-surveys/acs/news/data-releases/2024/release.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2025-12-04 PUMS release",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The 2024 ACS one-year Public Use Microdata Sample was released on December 4, 2025 and is available through the Census website and FTP facilities."
+      ],
+      "version_endpoint_distinctions": [
+        "The calendar year of the microdata is 2024; its public release occurred in 2025."
+      ],
+      "limitations": [
+        "This page does not authorize treating unavailable 2025 microdata as observed."
+      ]
+    },
+    {
+      "source_id": "acs_2024_pums_api",
+      "requirement_ids": ["B05"],
+      "title": "2024 ACS One-Year PUMS API Dataset",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_api_documentation",
+      "url": "https://api.census.gov/data/2024/acs/acs1/pums.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2024 dataset",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The 2024 ACS one-year PUMS API endpoint is live.",
+        "The documentation describes PUMS as a sample of approximately one percent of the U.S. population, with nation, state, and Public Use Microdata Area geography, and states that the person file includes group-quarters persons."
+      ],
+      "version_endpoint_distinctions": [
+        "This is the PUMS API metadata endpoint for 2024 one-year data, not an ACS summary-table endpoint and not 2025 data."
+      ],
+      "limitations": [
+        "Analysis still must implement the paper's sample, outcome, weights, replicate weights, and occupational mapping rather than treating the API's existence as completed replication."
+      ]
+    },
+    {
+      "source_id": "acs_2024_microdata_access",
+      "requirement_ids": ["B05"],
+      "title": "Accessing 2024 ACS PUMS Data",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_microdata_access_page",
+      "url": "https://www.census.gov/programs-surveys/acs/microdata/access/2024.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2024 dataset",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "Census provides official access paths for the 2024 ACS PUMS files."
+      ],
+      "version_endpoint_distinctions": [
+        "This access page is specific to the 2024 vintage and should be recorded separately from general ACS guidance."
+      ],
+      "limitations": [
+        "Availability alone does not establish estimand alignment with BCC or YAX."
+      ]
+    },
+    {
+      "source_id": "acs_2020_comparison_guidance",
+      "requirement_ids": ["B05"],
+      "title": "Guidance for Comparing the 2020 ACS 1-Year Experimental Data",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_methodological_guidance",
+      "url": "https://www.census.gov/programs-surveys/acs/guidance/comparing-acs-data/2020.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2020 experimental data guidance",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "Standard 2020 ACS one-year estimates were not released; only a limited experimental product was released.",
+        "Census instructs users not to compare the 2020 ACS one-year experimental estimates with other ACS data."
+      ],
+      "version_endpoint_distinctions": [
+        "The exceptional 2020 product is not a standard one-year ACS vintage and cannot fill an annual-series gap as though it were one."
+      ],
+      "limitations": [
+        "A yearly extension should omit 2020 rather than splice the experimental estimates into the standard series."
+      ]
+    },
+    {
+      "source_id": "acs_general_comparison_guidance",
+      "requirement_ids": ["B05"],
+      "title": "Comparing ACS Data",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_methodological_guidance",
+      "url": "https://www.census.gov/programs-surveys/acs/guidance/comparing-acs-data.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "current guidance",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "Census says one-year estimates should be compared with one-year estimates, not with five-year estimates.",
+        "For five-year estimates, Census recommends comparing non-overlapping periods.",
+        "The guidance reiterates that 2020 one-year experimental estimates should not be compared with standard ACS data."
+      ],
+      "version_endpoint_distinctions": [
+        "General comparison rules apply across ACS vintages; they do not override the specific 2020 warning."
+      ],
+      "limitations": [
+        "Overlapping five-year PUMS should not be substituted for missing annual one-year observations in a claimed yearly series."
+      ]
+    },
+    {
+      "source_id": "acs_2024_population_controls_note",
+      "requirement_ids": ["B05"],
+      "title": "Impact of Updated Population Estimates on 2024 ACS Estimates",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_user_note",
+      "url": "https://www.census.gov/programs-surveys/acs/technical-documentation/user-notes/2025-03.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2025-03",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The 2024 ACS population controls incorporate improved net international migration estimates, adding cumulatively about five million people over 2022 through 2024 relative to prior controls.",
+        "Census cautions users about comparisons of population totals and says rates, percentages, means, and medians may be preferable when possible.",
+        "ACS person weights account for sampling, nonresponse, coverage, and population controls."
+      ],
+      "version_endpoint_distinctions": [
+        "This note concerns the 2024 control update, not a change in the substantive employment definition."
+      ],
+      "limitations": [
+        "Weighted level changes across 2022 to 2024 may partly reflect updated controls; weighted and unweighted or rate-based sensitivity is therefore informative."
+      ]
+    },
+    {
+      "source_id": "btos_main",
+      "requirement_ids": ["B07"],
+      "title": "Business Trends and Outlook Survey",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_program_page",
+      "url": "https://www.census.gov/programs-surveys/btos.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "current program description",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "BTOS is a U.S. Census Bureau experimental survey, not a Bureau of Labor Statistics survey.",
+        "Its sampling universe is employer businesses other than farms, with approximately 1.2 million businesses divided into six panels; a sampled business reports every 12 weeks and results are released biweekly.",
+        "Published dimensions include 2022 NAICS sector, state, selected metropolitan areas, three-digit NAICS subsector, employment size, state-by-sector, and sector-by-size."
+      ],
+      "version_endpoint_distinctions": [
+        "The program page describes survey architecture; specific AI question wording and its later break are documented separately."
+      ],
+      "limitations": [
+        "The public dimensions do not contain worker age or occupation and do not create a worker-level exogenous AI treatment."
+      ]
+    },
+    {
+      "source_id": "btos_downloads",
+      "requirement_ids": ["B07"],
+      "title": "BTOS Data Downloads",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_aggregate_download_page",
+      "url": "https://www.census.gov/hfp/btos/data_downloads",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "live downloads",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The public download page provides aggregate workbooks for national, sector, subsector, size, sector-by-size, state, state-by-sector, metropolitan-area, and AI-supplement results."
+      ],
+      "version_endpoint_distinctions": [
+        "These are public aggregate products, not an identified firm-level microdata release."
+      ],
+      "limitations": [
+        "Linking these cells to CPS occupation-age outcomes would be ecological and would require compatible cell definitions and uncertainty propagation."
+      ]
+    },
+    {
+      "source_id": "btos_ai_wording_update",
+      "requirement_ids": ["B07"],
+      "title": "AI Question Wording Updates",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_methodology_memo",
+      "url": "https://www.census.gov/hfp/btos/downloads/AI%20Question%20Wording%20Updates.pdf",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2025-12-03",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "Beginning November 17, 2025, the core current and future AI questions broadened from AI used in producing goods or services to AI used in any business function.",
+        "Census observed a level shift and treats results under the revised wording as a new time series beginning with the December 4, 2025 release while retaining the original historical table."
+      ],
+      "version_endpoint_distinctions": [
+        "Pre-change and post-change AI series are not definitionally continuous and must not be spliced without an explicit break treatment."
+      ],
+      "limitations": [
+        "An apparent late-2025 adoption jump can reflect wording rather than behavior."
+      ]
+    },
+    {
+      "source_id": "btos_methodology_v4",
+      "requirement_ids": ["B07"],
+      "title": "BTOS Methodology Final v4",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_methodology_document",
+      "url": "https://www.census.gov/hfp/btos/downloads/BTOS%20Methodology%20Final%20v4.pdf",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "version 4",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "BTOS sampling standard errors are estimated with a ten-group delete-a-group jackknife.",
+        "The standard errors quantify sampling variability and do not capture systematic nonsampling bias."
+      ],
+      "version_endpoint_distinctions": [
+        "This methodology governs sampling uncertainty; it is distinct from the AI wording memo that defines the time-series break."
+      ],
+      "limitations": [
+        "A downstream cell-level analysis must retain or reconstruct the published sampling uncertainty rather than treating estimated adoption shares as fixed."
+      ]
+    },
+    {
+      "source_id": "btos_ai_supplement_questionnaire",
+      "requirement_ids": ["B07"],
+      "title": "BTOS Artificial Intelligence Supplement Questionnaire",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_questionnaire",
+      "url": "https://www2.census.gov/data/experimental-data-products/business-trends-and-outlook-survey/questionnaire-ai-supplement.pdf",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "revised 2025-07-23",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The supplement separately asks about AI use across 15 business functions, whether AI substitutes for, enhances, or creates tasks, prior software or equipment, self-reported employment effects, employee use of broad AI and generative AI, task categories, and planned future adoption."
+      ],
+      "version_endpoint_distinctions": [
+        "The supplement contains richer mechanism questions than the core recurring AI item and should not be conflated with the core historical series."
+      ],
+      "limitations": [
+        "The measures are business self-reports and the public aggregates still lack worker age and occupation."
+      ]
+    },
+    {
+      "source_id": "btos_microstructure_working_paper",
+      "requirement_ids": ["B07"],
+      "title": "The Microstructure of AI Diffusion: Evidence from Firms, Business Functions, and Worker Tasks",
+      "publisher": "U.S. Census Bureau Center for Economic Studies",
+      "source_type": "official_working_paper_landing_page",
+      "url": "https://www.census.gov/library/working-papers/2026/adrm/CES-WP-26-25.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "Census has a 2026 working paper using BTOS supplement evidence to study AI diffusion across firms, business functions, and worker tasks."
+      ],
+      "version_endpoint_distinctions": [
+        "This research paper interprets the supplement; it is not itself the public microdata or questionnaire."
+      ],
+      "limitations": [
+        "Its existence does not turn public BTOS aggregates into a worker-age-by-occupation panel."
+      ]
+    },
+    {
+      "source_id": "btos_ai_release_story",
+      "requirement_ids": ["B07"],
+      "title": "New Survey Data Show How Businesses Use Artificial Intelligence",
+      "publisher": "U.S. Census Bureau",
+      "source_type": "official_release_story",
+      "url": "https://www.census.gov/newsroom/press-releases/2026/btos-apr-23.html",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-04-23",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The AI supplement was collected from November 17, 2025 through February 8, 2026 and reports public differences by industry, state, and firm size."
+      ],
+      "version_endpoint_distinctions": [
+        "The supplement field period and release are separate from the recurring core BTOS time series."
+      ],
+      "limitations": [
+        "The release story does not provide an occupation-age causal design."
+      ]
+    },
+    {
+      "source_id": "rps_public_data_page",
+      "requirement_ids": ["B07", "B09"],
+      "title": "Real-Time Population Survey Data",
+      "publisher": "Real-Time Population Survey research team",
+      "source_type": "author_data_page",
+      "url": "https://sites.google.com/view/covid-rps/data",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "current",
+      "verification_status": "VERIFIED_PRIMARY",
+      "exact_supported_claims": [
+        "The author-maintained RPS data page links public replication materials for The Rapid Adoption of Generative AI and public occupation- and task-level generative-AI-use workbooks."
+      ],
+      "version_endpoint_distinctions": [
+        "The occupation and task workbooks are later public products and should be distinguished from the earlier aggregate Rapid Adoption replication files."
+      ],
+      "limitations": [
+        "The page alone does not establish sampling variances or a longitudinal occupation-by-quarter panel."
+      ]
+    },
+    {
+      "source_id": "rps_occupation_workbook",
+      "requirement_ids": ["B07", "B09"],
+      "title": "Generative AI Adoption Rates by Occupation",
+      "publisher": "Real-Time Population Survey research team",
+      "source_type": "public_google_sheets_workbook",
+      "url": "https://docs.google.com/spreadsheets/d/1_JfNtZVoBi5W_jHEJ1UOs2rhHYRtLXGM/edit?ouid=107605825426010680643&rtpof=true&sd=true&usp=sharing",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "generated 2026-08-06",
+      "verification_status": "VERIFIED_PUBLIC_ARTIFACT",
+      "exact_supported_claims": [
+        "The README says the workbook pools the August 2025, November 2025, February 2026, and May 2026 RPS waves and assigns employed respondents directly to detailed 2018 SOC occupations.",
+        "Adoption is the survey-weighted share of respondents answering yes to using generative AI for their job; number_observations is the unweighted pooled count and cells with fewer than 20 observations are blank.",
+        "The workbook exposes tabs for 23 SOC major groups, 98 minor groups, 459 broad occupations, and 565 2018 Census occupation codes.",
+        "The README still contains a placeholder requesting the full citation to the measurement paper before public release."
+      ],
+      "version_endpoint_distinctions": [
+        "The workbook provides pooled occupation detail across four post-period waves, not occupation-by-wave estimates and not a pre-2022 exposure series."
+      ],
+      "limitations": [
+        "The workbook exposes point estimates and pooled counts but no standard errors or confidence intervals in the inspected interface.",
+        "The binary workbook export was not successfully downloaded in this environment, so only the accessible sheet contents were verified."
+      ]
+    },
+    {
+      "source_id": "rps_task_workbook",
+      "requirement_ids": ["B07", "B09"],
+      "title": "Generative AI Adoption Rates by O*NET Task",
+      "publisher": "Real-Time Population Survey research team",
+      "source_type": "public_google_sheets_workbook",
+      "url": "https://docs.google.com/spreadsheets/d/17OI5xRALkN4lDZ1fHw2R9xPJUdDgWyFU/edit?ouid=107605825426010680643&rtpof=true&sd=true&usp=sharing",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "generated 2026-08-06",
+      "verification_status": "VERIFIED_PUBLIC_ARTIFACT",
+      "exact_supported_claims": [
+        "The task workbook pools the same four RPS waves and reports survey-weighted generative-AI use for detailed, intermediate, and broad O*NET work activities.",
+        "Cells with fewer than 20 observations are blank, and a respondent may contribute to multiple task observations.",
+        "The README retains placeholders for the measurement-paper citation and the exact O*NET database release."
+      ],
+      "version_endpoint_distinctions": [
+        "Task-level pooled adoption is a different object from the occupation-level workbook and from time-varying aggregate FRED adoption series."
+      ],
+      "limitations": [
+        "The unresolved O*NET-release placeholder prevents a fully versioned task mapping.",
+        "The displayed workbook does not supply uncertainty estimates."
+      ]
+    },
+    {
+      "source_id": "stl_fed_work_does_genai_do_summary",
+      "requirement_ids": ["B07", "B09"],
+      "title": "What Work Does Generative AI Do?",
+      "publisher": "Federal Reserve Bank of St. Louis",
+      "source_type": "official_research_summary",
+      "url": "https://www.stlouisfed.org/on-the-economy/2026/sep/what-work-does-generative-ai-do",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-09-01",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The summary describes nearly 14,000 workers pooled across four quarterly RPS waves from August 2025 through May 2026 and links downloadable occupation- and task-level adoption data.",
+        "It states that the research measures generative-AI use by occupation and task."
+      ],
+      "version_endpoint_distinctions": [
+        "The article summarizes the August 2026 working paper and pooled workbook release; it is not a separate survey wave."
+      ],
+      "limitations": [
+        "The pooled post-period evidence can validate mechanism or exposure ranking descriptively, but does not by itself identify an AI employment effect."
+      ]
+    },
+    {
+      "source_id": "bick_blandin_deming_schumacher_nber35677",
+      "requirement_ids": ["B07", "B09"],
+      "title": "What Work Does Generative AI Do?",
+      "publisher": "National Bureau of Economic Research",
+      "source_type": "working_paper_landing_page",
+      "url": "https://www.nber.org/papers/w35677",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-08",
+      "verification_status": "VERIFIED_PUBLISHER_METADATA",
+      "exact_supported_claims": [
+        "The NBER page identifies Alexander Bick, Adam Blandin, David J. Deming, and Tyler Schumacher as authors, working paper 35677, issued August 2026, DOI 10.3386/w35677.",
+        "The abstract says conventional exposure measures explain some but far from all observed adoption and characterizes adoption as widespread but shallow."
+      ],
+      "version_endpoint_distinctions": [
+        "This August 2026 paper is distinct from the earlier Rapid Adoption paper and from the public pooled workbooks."
+      ],
+      "limitations": [
+        "Its abstract does not turn the pooled adoption measures into exogenous treatment variation."
+      ]
+    },
+    {
+      "source_id": "fred_genai_release",
+      "requirement_ids": ["B07"],
+      "title": "FRED Adds Data about the Adoption of Generative Artificial Intelligence",
+      "publisher": "Federal Reserve Bank of St. Louis",
+      "source_type": "official_data_release_notice",
+      "url": "https://news.research.stlouisfed.org/2026/07/fred-adds-data-about-the-adoption-of-generative-artificial-intelligence/",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "2026-07-24",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "FRED added 137 RPS generative-AI adoption series, including some broken out by occupation and industry."
+      ],
+      "version_endpoint_distinctions": [
+        "FRED series are curated time-series products and need not match the granularity of the pooled detailed occupation workbook."
+      ],
+      "limitations": [
+        "The release notice does not claim detailed occupation-by-quarter estimates for all 2018 SOC occupations."
+      ]
+    },
+    {
+      "source_id": "fred_occ3_series",
+      "requirement_ids": ["B07"],
+      "title": "Share of Employed People Who Used Generative AI for Work, by Major Occupation Group",
+      "publisher": "Federal Reserve Bank of St. Louis FRED",
+      "source_type": "official_data_series",
+      "url": "https://fred.stlouisfed.org/series/RPSGENAIUSAGESHAREOCC3",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "through 2026-Q2 on access date",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "The page exposes a quarterly RPS generative-AI-use series at a major occupation grouping with eight observations from 2024-Q3 through 2026-Q2."
+      ],
+      "version_endpoint_distinctions": [
+        "This time-varying major-group series is coarser than the pooled detailed occupation workbook."
+      ],
+      "limitations": [
+        "The inspected FRED page did not expose standard errors or confidence intervals and does not provide pre-2022 observations."
+      ]
+    },
+    {
+      "source_id": "rapid_adoption_management_science",
+      "requirement_ids": ["B07", "B09"],
+      "title": "The Rapid Adoption of Generative AI",
+      "publisher": "Management Science",
+      "source_type": "published_article_landing_page",
+      "url": "https://pubsonline.informs.org/doi/10.1287/mnsc.2025.02523",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "published online 2026-01-20",
+      "verification_status": "VERIFIED_PUBLISHER_METADATA",
+      "exact_supported_claims": [
+        "The publisher page identifies Alexander Bick, Adam Blandin, and David J. Deming as authors and records online publication on January 20, 2026 with DOI 10.1287/mnsc.2025.02523.",
+        "The publisher page exposes supplemental and data-file links."
+      ],
+      "version_endpoint_distinctions": [
+        "This is now a published Management Science article and should not be described only as a 2025 NBER working paper."
+      ],
+      "limitations": [
+        "Its publication status does not resolve the uncertainty or temporal limitations of the later detailed pooled occupation workbook."
+      ]
+    },
+    {
+      "source_id": "autor_thompson_expertise",
+      "requirement_ids": ["B09"],
+      "title": "Expertise",
+      "publisher": "Journal of the European Economic Association",
+      "source_type": "published_article_landing_page",
+      "url": "https://academic.oup.com/jeea/article-abstract/23/4/1203/8175003",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "published 2025-06-26; issue 2025-08",
+      "verification_status": "VERIFIED_PUBLISHER_METADATA",
+      "exact_supported_claims": [
+        "David Autor and Neil Thompson's Expertise appears in JEEA volume 23, issue 4, pages 1203 to 1271, DOI 10.1093/jeea/jvaf023.",
+        "The article's framework allows automation to raise or lower expertise requirements for the remaining tasks; removing inexpert tasks raises wages and reduces employment, while removing expert tasks lowers wages and increases employment."
+      ],
+      "version_endpoint_distinctions": [
+        "This 2025 JEEA article directly corrects any prior audit row stating that no close JEEA article was found."
+      ],
+      "limitations": [
+        "The model supplies an interpretation mechanism; it does not establish that the YAX empirical coefficient is caused by the modeled channel."
+      ]
+    },
+    {
+      "source_id": "deming_noray_stem_careers",
+      "requirement_ids": ["B09"],
+      "title": "Earnings Dynamics, Changing Job Skills, and STEM Careers",
+      "publisher": "Quarterly Journal of Economics",
+      "source_type": "published_article_landing_page",
+      "url": "https://academic.oup.com/qje/article-abstract/135/4/1965/5858010",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "published 2020-06-16; issue 2020-11",
+      "verification_status": "VERIFIED_PUBLISHER_METADATA",
+      "exact_supported_claims": [
+        "David Deming and Kadeem Noray's article appears in QJE volume 135, issue 4, pages 1965 to 2005, DOI 10.1093/qje/qjaa021.",
+        "The article links rapid skill change and obsolescence in technology-intensive work to flatter life-cycle earnings profiles and movement out of faster-changing occupations."
+      ],
+      "version_endpoint_distinctions": [
+        "This is pre-generative-AI evidence about changing skills and careers, useful for life-cycle motivation rather than post-2022 causal attribution."
+      ],
+      "limitations": [
+        "It does not test YAX's exposure construction or identify a generative-AI employment effect."
+      ]
+    },
+    {
+      "source_id": "hampole_papanikolaou_schmidt_seegmiller_nber33509",
+      "requirement_ids": ["B09"],
+      "title": "Artificial Intelligence and the Labor Market",
+      "publisher": "National Bureau of Economic Research",
+      "source_type": "working_paper_landing_page",
+      "url": "https://www.nber.org/papers/w33509",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "issued 2025-02; revised 2025-09",
+      "verification_status": "VERIFIED_PUBLISHER_METADATA",
+      "exact_supported_claims": [
+        "The NBER page identifies working paper 33509, issued February 2025 and revised September 2025, DOI 10.3386/w33509.",
+        "The paper constructs task-level AI exposure varying across firms, occupations, and time over 2010 to 2023; its abstract reports that mean exposure depresses labor demand, concentrated exposure permits reallocation, and productivity effects at adopting firms can offset employment losses in the aggregate.",
+        "The abstract describes an instrument based on historical university hiring networks."
+      ],
+      "version_endpoint_distinctions": [
+        "This is a firm-occupation-time research measure and design, not yet verified here as an off-the-shelf public occupation-only score artifact."
+      ],
+      "limitations": [
+        "No verified public occupational score file from this project was located in the targeted search; it should not be claimed as available until an artifact is opened and versioned."
+      ]
+    },
+    {
+      "source_id": "ipums_cps_earnweek2",
+      "requirement_ids": ["F07"],
+      "title": "EARNWEEK2: Weekly earnings (rounded)",
+      "publisher": "IPUMS CPS",
+      "source_type": "official_variable_documentation",
+      "url": "https://cps.ipums.org/cps-action/variables/EARNWEEK2",
+      "accessed_date": "2026-09-06",
+      "published_or_updated": "availability table current through July 2026",
+      "verification_status": "VERIFIED_OFFICIAL",
+      "exact_supported_claims": [
+        "EARNWEEK2 reports usual weekly earnings at the current job before deductions, rounded for privacy, and is available in monthly CPS samples from 1982 forward, including the current July 2026 sample shown on the access date.",
+        "To improve comparability across the April 2023 privacy transition, IPUMS applies the new rounding criteria to pre-April-2023 data and applies the new rules to MISH 8 records from April 2023 through March 2024, when Census rounded and dynamically topcoded only MISH 4 records.",
+        "Beginning in April 2024, all outgoing-rotation respondents are subject to a monthly dynamic topcode based on the weighted average earnings of the top three percent.",
+        "IPUMS instructs researchers to use EARNWT with EARNWEEK2.",
+        "For 1989-forward Basic Monthly CPS, the universe is employed civilian wage-and-salary workers age 15 or older in outgoing rotation groups 4 or 8, excluding the self-employed."
+      ],
+      "version_endpoint_distinctions": [
+        "EARNWEEK2 is the rounded, harmonized series for the privacy-change period; EARNWEEK is unrounded and is available only before April 2023.",
+        "The 2023-to-2024 transition still contains changing rounding and topcode regimes, so extending the horizon requires an explicit compatibility rule rather than a silent field splice."
+      ],
+      "limitations": [
+        "Official availability does not mean EARNWEEK2 is already present in YAX's authorized extracts.",
+        "The verified YAX source inventory records that the DDIs for extracts 9, 10, 11, and 12 omit EARNWEEK2; extracts 9 and 11 contain EARNWEEK and EARNWT. This is an extract-content blocker, not survey unavailability.",
+        "F07 therefore requires a new minimal authorized IPUMS extract containing EARNWEEK2, EARNWT, MISH, and the already specified analysis fields before the earnings extension can be run."
+      ],
+      "evidence_locators": [
+        "IPUMS description, comparability, universe, and availability sections",
+        "yax/revision/substantive_v3_20260906/source_inventory.json lines 187-192",
+        "yax/revision/substantive_v3_20260906/RETROSPECTIVE.md earnings-horizon row"
+      ]
+    }
+  ],
+  "unresolved_items": [
+    {
+      "requirement_ids": ["B02"],
+      "status": "UNRESOLVED_UNDER_CURRENT_AUTHORIZATION",
+      "issue": "Exact exhaustive BCC SOC-code-to-quintile membership was not found in the paper, dashboard, or inspected aggregate ZIPs.",
+      "consequence": "A public reconstruction using Eloundou exposure and the stated crosswalk/quintile rules must be labeled reconstructed or partial, not exact BCC membership.",
+      "next_authorized_step": "If contact is later authorized, request the exact membership or replication artifact from the authors; otherwise preserve this limitation."
+    },
+    {
+      "requirement_ids": ["B05"],
+      "status": "UNRESOLVED_RELEASE_DEPENDENCY",
+      "issue": "A 2025 ACS one-year PUMS release was not verified; the official 2026 update says the release date is still being determined.",
+      "consequence": "The currently valid one-year ACS extension ends in 2024.",
+      "next_authorized_step": "Recheck the official ACS 2025 release page only when Census announces a release; do not impute or substitute overlapping five-year PUMS."
+    },
+    {
+      "requirement_ids": ["B07"],
+      "status": "PARTIALLY_VERIFIED",
+      "issue": "The RPS occupation and task sheets were readable, but a binary export was not captured locally and the displayed sheets supply no standard errors or confidence intervals.",
+      "consequence": "The pooled adoption shares support descriptive ranking or mechanism checks but not unqualified inference or a claimed occupation-by-quarter treatment panel.",
+      "next_authorized_step": "Acquire and hash the official workbook or replication files and verify the microdata/variance procedure before uncertainty claims."
+    },
+    {
+      "requirement_ids": ["F07"],
+      "status": "BLOCKED_MISSING_EXTRACT_FIELD",
+      "issue": "EARNWEEK2 is officially available, but it is absent from the verified DDIs for all four currently authorized YAX CPS extracts.",
+      "consequence": "The post-March-2023 weekly-earnings extension cannot be run from existing inputs; this is not evidence that CPS or IPUMS lacks later earnings data.",
+      "next_authorized_step": "Submit and authorize a minimal replacement IPUMS CPS extract containing EARNWEEK2, EARNWT, MISH, and the existing identification/sample fields, then hash its DDI and data before analysis."
+    },
+    {
+      "requirement_ids": ["B09"],
+      "status": "UNRESOLVED_ARTIFACT",
+      "issue": "A public occupation-only score file for Hampole, Papanikolaou, Schmidt, and Seegmiller was not located in the targeted publisher search.",
+      "consequence": "Do not list that measure as an available plug-in exposure without an opened, versioned artifact.",
+      "next_authorized_step": "Search the paper's official replication repository or publisher supplement and record an exact artifact URL and checksum if found."
+    },
+    {
+      "requirement_ids": ["B09"],
+      "status": "INCOMPLETE_SEARCH",
+      "issue": "The full ten-journal search protocol and reproducible publisher-query ledger have not been completed.",
+      "consequence": "The targeted checks can correct named citations and false premises but cannot support a field-wide novelty or no-prior-paper claim.",
+      "next_authorized_step": "Run the prespecified journal-by-journal protocol, capture query strings, dates, candidate disposition, and stable publisher URLs, then update the matrix without overwriting this record."
+    }
+  ]
+}

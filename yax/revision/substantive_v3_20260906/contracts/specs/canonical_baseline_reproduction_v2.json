@@ -1,0 +1,241 @@
+{
+  "analysis": {
+    "name": "V3 Gate-1 reconstruction of corrected-calendar rebuilt-treatment pooled baseline",
+    "status": "post-outcome referee-led diagnostic; checkpoint reproduction, not a confirmatory result"
+  },
+  "calendar": {
+    "estimation_window": {
+      "included_month_count": 113,
+      "range": [
+        "2017-01",
+        "2026-07"
+      ]
+    },
+    "missing_handling": {
+      "missing_months": [
+        "2025-10"
+      ],
+      "rule": "retain as genuinely absent; do not interpolate or compress elapsed calendar time"
+    },
+    "observed_window": {
+      "observed_month_count": 114,
+      "range": [
+        "2017-01",
+        "2026-07"
+      ]
+    },
+    "transition_handling": {
+      "dynamic_models": "retain 2022-12 under separately identified dynamic specifications",
+      "static_models": "exclude 2022-12",
+      "treatment_start": "2023-01"
+    }
+  },
+  "data": {
+    "microdata_eligibility": {
+      "age": "22 through 65 inclusive",
+      "employment_status": "IPUMS EMPSTAT in {10, 12}",
+      "occupation": "valid observed OCC routed to Census 2018; strict exposure and Webb support applied at occupation-contract stage",
+      "weight": "finite WTFINL strictly greater than zero"
+    },
+    "sources": [
+      {
+        "access_class": "licensed restricted CPS microdata; read-only SCC input",
+        "sha256": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+        "source_id": "ipums_cps_extract_9_wide",
+        "vintage": "IPUMS CPS extract 9, January 2017 through July 2026"
+      },
+      {
+        "access_class": "licensed restricted CPS microdata; read-only SCC input",
+        "sha256": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+        "source_id": "ipums_cps_extract_11_march_basic_repair",
+        "vintage": "March Basic Monthly 2017 through 2021 repair"
+      },
+      {
+        "access_class": "restricted derived CPS aggregate; read-only SCC input",
+        "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+        "source_id": "historical_preperiod_cells",
+        "vintage": "authenticated January 2017 through November 2022 preperiod occupation-month cells used by the historical-treatment diagnostic checkpoints"
+      },
+      {
+        "access_class": "versioned repository input",
+        "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+        "source_id": "cps_occupation_exposure_lookup",
+        "vintage": "frozen YAX Census-2018 lookup"
+      },
+      {
+        "access_class": "versioned repository input",
+        "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+        "source_id": "computerization_measures_census2018",
+        "vintage": "frozen YAX Census-2018 occupation characteristics"
+      },
+      {
+        "access_class": "versioned repository input",
+        "sha256": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+        "source_id": "rule_b_values_census2018",
+        "vintage": "frozen YAX coverage-sensitivity values; authenticated but not used in Rule-A baseline"
+      },
+      {
+        "access_class": "versioned repository input",
+        "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+        "source_id": "census_occ2010_to_2018_bridge",
+        "vintage": "frozen official-route bridge"
+      },
+      {
+        "access_class": "restricted provenance; excluded from sanitized public package",
+        "sha256": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+        "source_id": "first_post_outcome_access_receipt",
+        "vintage": "YAX v1.1 first-access authorization"
+      }
+    ],
+    "variable_universe": {
+      "cell_builder_reads": [
+        "YEAR",
+        "MONTH",
+        "AGE",
+        "EMPSTAT",
+        "OCC",
+        "WTFINL"
+      ],
+      "other_extract_variables": "not used by this specification"
+    }
+  },
+  "dependencies": [
+    {
+      "artifact_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+      "role": "reference rebuilt fixed-membership vector for checkpoint comparison"
+    },
+    {
+      "artifact_sha256": "92fc18a380ee960abecce6ee5c6317f882a0beefcb9dae958f9446d41c3ff8b5",
+      "role": "R3 prefit gate reference"
+    }
+  ],
+  "estimator": {
+    "boundary_handling": {
+      "eta": "sigmoid implementation protects overflow; fitted probability clipped to [1e-10, 1-1e-10]",
+      "information": "group information weights floored at 1e-12",
+      "initialization": "occupation shares initialized with (young+0.5)/(total+1.0), then clipped to [1e-6,1-1e-6]",
+      "step": "each Newton coordinate step clipped to [-1,1]",
+      "zero_total_cells": "excluded from objective and score; returned placeholders are not estimates"
+    },
+    "identifying_normalizations": "month fixed effect for first observed month anchored at zero after every nuisance update; absorbed treatment target is invariant to the compensating occupation shift",
+    "nuisance_column_space": [
+      "Census-2018 detailed-occupation fixed effects",
+      "observed calendar-month fixed effects",
+      "Webb software-exposure z-score interacted with post"
+    ],
+    "objective": "frequency-weighted grouped-binomial log likelihood for young stock conditional on young-plus-older employed stock; conditional equivalent of the two-age PPML for the age-share contrast",
+    "separation_treatment": "no penalty, pseudocount in the fitted objective, selective deletion, or explicit separation correction; inherited numerical clipping is fully declared and audited in N01-N03",
+    "solver": {
+      "absorption_tolerance": 1e-10,
+      "algorithm": "alternating nuisance Newton updates plus weighted-absorbed Newton update for target coefficients",
+      "convergence_tolerance": 1e-08,
+      "maximum_iterations": 5000,
+      "same_objective_benchmark_required": true
+    }
+  },
+  "execution": {
+    "code_sha256": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+    "command": "<YAX_PYTHON_BIN> yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py --repo-root <YAX_REPO_ROOT> --microdata <YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz --repair-microdata <YAX_PRIVATE_ROOT>/yax_referee_march_repair/cps_00011.csv.gz --historical-preperiod-cells <YAX_PRIVATE_ROOT>/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv --lookup <YAX_REPO_ROOT>/yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv --computerization <YAX_REPO_ROOT>/yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv --rule-b-values <YAX_REPO_ROOT>/yax/measurement/RULE_B_VALUES_CENSUS2018.csv --bridge <YAX_REPO_ROOT>/yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv --first-access-receipt <YAX_REPO_ROOT>/yax/analysis/FIRST_OUTCOME_ACCESS_RECEIPT.json --output-dir <YAX_V3_RUN_ROOT>/gate1_baseline/results",
+    "environment_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b"
+  },
+  "exposure": {
+    "construction_age_universe": "ages 22 through 65, young plus older employed stock",
+    "construction_weights": {
+      "definition": "sum of rebuilt young and older employment stock over the 71-month preperiod",
+      "window": [
+        "2017-01",
+        "2022-11"
+      ]
+    },
+    "cutoffs": [
+      0.153846153846,
+      0.324615384615,
+      0.45652173913,
+      0.537037037037
+    ],
+    "fixed_membership": {
+      "occupation_count": 468,
+      "path": "yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv",
+      "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+    },
+    "raw_scale": "Eloundou dv_rating_beta share on [0,1], defined by the source as E1 plus one-half E2",
+    "tie_rule": "left: values equal to a cut remain in the lower quintile",
+    "training_dates": {
+      "status": "not present in the vendored occupation CSV as a separate analysis parameter",
+      "treatment_provenance": "source field dv_rating_beta is labeled GPT-4-model-rated in the frozen lookup documentation; no training cutoff is imputed"
+    },
+    "version": {
+      "coverage_rule": "Rule A: full target-route exposure coverage required; surviving partial routes are never renormalized",
+      "field": "dv_rating_beta",
+      "lookup_sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8"
+    },
+    "webb_normalization": {
+      "field": "webb_pct_software",
+      "mean": 45.17590301148972,
+      "sd": 26.258625996515853,
+      "weights": "same fixed 71-month preperiod young-plus-older occupation weights"
+    }
+  },
+  "occupation": {
+    "analysis_subset": {
+      "occupation_count": 468,
+      "rule": "canonical universe; no outcome-ranked or family-specific deletion"
+    },
+    "crosswalk": {
+      "allocation_rule": "2017-2019 raw Census-2010 OCC is fractionally routed to Census 2018 with fixed bridge_weight; 2020 onward raw Census-2018 OCC is direct; route mass is checked and not renormalized after exposure missingness",
+      "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+      "version": "Census occupation 2010-to-2018 official conversion-rate bridge frozen by YAX"
+    },
+    "family_assignment": {
+      "field": "soc_major_group",
+      "mapping_sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+      "used_in_this_model": false
+    },
+    "subgroup_eligibility": {
+      "rule": "none in the pooled baseline; family and other subgroup models require distinct specifications"
+    },
+    "taxonomy": "IPUMS/Census 2018 four-digit detailed occupation codes",
+    "universe": {
+      "content_support_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+      "rule": "positive rebuilt preperiod employment stock in both age groups, finite strict Rule-A beta, and finite Webb software exposure"
+    }
+  },
+  "outcome": {
+    "age_groups": {
+      "comparison": "ages 26 through 65",
+      "young": "ages 22 through 25"
+    },
+    "cell_construction": "sum WTFINL into occupation-by-calendar-month-by-age-group employment-stock cells after declared routing; absent eligible cells enter as zero stock",
+    "units": "weighted CPS employed-person stock; likelihood outcome is young stock with grouped total young plus older stock"
+  },
+  "outputs": {
+    "locations": [
+      "<YAX_V3_RUN_ROOT>/gate1_baseline/results",
+      "yax/revision/substantive_v3_20260906/runs/gate1_baseline/EXECUTION_RECEIPT.json"
+    ]
+  },
+  "schema_version": "yax-canonical-spec-v1",
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "target": {
+    "contrast": "coefficient on Q5-by-post relative to omitted Q1-by-post in the joint Q2-Q5 profile, conditional on occupation FE, month FE, and Webb-software-z-by-post",
+    "temporal_weights": "grouped-binomial likelihood implied over the 113 included observed months; no equal-month post averaging is substituted"
+  },
+  "uncertainty": {
+    "generated_objects": {
+      "bridge": "fixed",
+      "cutoffs": "fixed within inference",
+      "membership": "fixed within inference",
+      "normalization": "fixed within inference",
+      "shortfall_or_generated_regressors": "not present"
+    },
+    "multiplier_matrix": {
+      "distribution": "Rademacher {-1,+1}",
+      "draws": 9999,
+      "seed": 2026090521,
+      "shared_across_paired_models": true
+    },
+    "resampling_unit": "Census-2018 detailed occupation",
+    "source": "occupation-cluster sandwich plus occupation-level wild-score multiplier bootstrap; finite-cluster correction G/(G-1)"
+  }
+}

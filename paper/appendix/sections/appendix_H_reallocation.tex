@@ -1,0 +1,127 @@
+\section{Mobility disagreement and an algorithm-defined benchmark}\label{app:reallocation}
+
+The mobility exercises are post-outcome exploratory diagnostics of constructed
+classifications.  They use 108,500 employed-to-employed switches on six-way
+common support and official longitudinal weights.  They neither estimate a
+hiring margin nor validate a latent occupation code.
+
+\subsection{Pairwise disagreement and task-family redundancy}
+
+\begin{table}[htbp]
+\centering
+\caption{Pairwise zero-threshold directional disagreement}\label{tab:apppairwise}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+ & AIOE-A & AIOE-D & AIOE-S & Alpha & Beta & Broad \\
+\midrule
+AIOE-A & --- & 8.64 & 3.42 & 39.88 & 26.56 & 21.76 \\
+AIOE-D & 8.64 & --- & 10.63 & 42.59 & 27.72 & 21.54 \\
+AIOE-S & 3.42 & 10.63 & --- & 40.22 & 25.30 & 21.22 \\
+Alpha  & 39.88 & 42.59 & 40.22 & --- & 23.46 & 34.82 \\
+Beta   & 26.56 & 27.72 & 25.30 & 23.46 & --- & 11.26 \\
+Broad  & 21.76 & 21.54 & 21.22 & 34.82 & 11.26 & --- \\
+\bottomrule
+\end{tabular}
+\tabnote{Percent of official switch weight.  A pair disagrees when its two
+strictly nonzero score movements have opposite signs; exact zeros are ties.
+Block means are 7.56 percent within AIOE, 23.18 percent within task shares, and
+29.64 percent between families.  Giving each block one-third weight produces a
+20.13-percent family-balanced summary.  This normalization is descriptive, not
+a welfare metric.}
+\end{table}
+
+The six-way probability that at least one of the six dependent implementations
+opposes another is 53.28 percent.  It is not a typical pairwise disagreement
+rate.  The task measures also satisfy the exact raw-score identity
+$\mathrm{beta}=(\mathrm{alpha}+\mathrm{broad})/2$, with maximum numerical error
+$7.0\times10^{-13}$.  Thus beta cannot introduce a new zero-threshold sign
+conflict when alpha and broad agree; positive standardization preserves this
+result.  Across 66,582 same-endpoint-sign switches there are zero violations.
+
+\begin{table}[htbp]
+\centering
+\caption{Six-way mobility conflict by standardized threshold}\label{tab:appmobilitythresholds}
+\small
+\begin{threeparttable}
+\begin{tabular}{rrrrr}
+\toprule
+Threshold & Eligible weight & Any conflict $\mid$ eligible & Opposition/all & Opposition $\mid$ eligible\\
+\midrule
+0&100.00&53.28&53.28&53.28\\
+.10&99.78&53.18&43.35&43.45\\
+.25&97.42&52.78&29.79&30.58\\
+.50&85.29&50.99&14.00&16.41\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item Notes: Percent.  ``Any conflict'' requires one positive and one negative
+movement after restricting to switches where at least one architecture exceeds
+the threshold.  ``Opposition'' requires both directions to exceed it.  Standard-
+deviation thresholds are statistical decision rules, not economic-loss or
+welfare scales.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{Identical support, omitted-support bounds, and uncertainty}
+
+Hamilton allocation at 200,000 pseudo-units represents 84,192 of 94,893
+detailed transition cells, 97,759 of 108,500 switch rows, and 98.305 percent of
+official weight.  Recomputing both sides on that identical represented support
+gives the following audit.
+
+\begin{table}[htbp]
+\centering
+\caption{No-self rematching benchmark on identical support}\label{tab:apphard}
+\small
+\begin{tabularx}{\textwidth}{Yrr}
+\toprule
+Object & Estimate & Uncertainty measure \\
+\midrule
+Represented-support realized conflict & 53.2819\% & household-cluster SE 0.1979 pp \\
+Sealed no-self benchmark & 52.3227\% & Monte Carlo SE 0.00172 pp \\
+Realized minus benchmark & 0.9592 pp & sampling SE 0.0776 pp \\
+\bottomrule
+\end{tabularx}
+\tabnote{The realized-rate percentile interval is [52.8947,53.6591] percent.
+The gap's interval, centered on the sealed support-aligned point and using the
+Monte Carlo-variance-subtracted sampling SE, is [0.8070,1.1113] percentage
+points.  Its raw cluster-plus-simulation SE is 0.0857 pp.  The empirical
+diagnostic uses 399 mean-one exponential multipliers over 74,671 longitudinal
+households; each replicate rebuilds a 200,000-unit plug-in benchmark with two
+rematches.  It is not CPS replicate-weight or full complex-survey inference.}
+\end{table}
+
+If conflict on the omitted 1.695 percent of benchmark support is unrestricted
+in $[0,1]$, the all-support benchmark lies in [51.4359,53.1307] percent and the
+all-support realized-minus-benchmark gap lies in [0.1521,1.8469] percentage
+points.  The sign survives this accounting bound, but the economic magnitude is
+not pinned near one point.
+
+The sealed rule begins with a uniform destination permutation within each
+age-by-month-by-broad-origin-by-broad-destination stratum, repairs the first
+self-match using a feasible random swap, and restarts after an impasse.  It
+preserves detailed margins and removes self-transitions, but it is not uniform
+over feasible derangements.  An alternative that chooses the bad self-match
+uniformly before choosing a feasible partner gives 52.3211 percent, versus
+52.3227 percent under the sealed rule; the difference is $-0.00157$ percentage
+points.  This is one repair-rule sensitivity, not proof of a unique random-
+matching distribution.  The defensible comparison is therefore ``relative to
+the specified broad-assortative no-self benchmark,'' not a causal explanation
+by broad assortativity.
+
+\subsection{Reversals do not identify a coding-error matrix}
+
+The earlier 9.865-percent reversal statistic used 11,121 A--B--A sequences
+among 112,736 observable first switches in a broader ages-18--65 feasibility
+universe.  In the present ages-22--65 six-way support, 6,187 reversals are 10.336
+percent of 59,858 switches with an observable third interview (10.663 percent
+under official weights), or 5.948 percent of official weight over all 108,500
+switches.  An A--B--A sequence may reflect a real temporary move, an assignment
+change, proxy reporting, or coding error.  It does not reveal latent true
+occupation or a five-category error matrix.  No attenuation curve is therefore
+constructed: under unknown differential error, Q5--Q1 misclassification may
+attenuate, amplify, or reassign the contrast.
+\FloatBarrier

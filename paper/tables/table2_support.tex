@@ -1,0 +1,23 @@
+\begin{table}[!htbp]
+\centering
+\caption{Broad occupational composition and the corrected employment contrast}\label{tab:support}
+\begin{threeparttable}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{@{}Yrrrrr@{}}
+\toprule
+Specification & Coef. & SE & 95\% interval & Info. share & Occ. \\
+\midrule
+Corrected 113-month Q5--Q1 baseline & -.1346 & .0450 & [-.2223, -.0468] & 1.000 & 468 \\
+Add SOC2 $\times$ young $\times$ post & -.0315 & .0706 & [-.1676, .1046] & .301 & 468 \\
+Add SOC2 $\times$ young $\times$ month & -.0317 & .0703 & [-.1674, .1040] & .300 & 468 \\
+\midrule
+Exclude Q1 food-service occupations & -.1196 & .0406 & [-.1988, -.0404] & --- & 463 \\
+Exclude all SOC35/37/39 in-person services & -.1370 & .0435 & [-.2217, -.0523] & --- & 435 \\
+Delete five most influential occupations & -.1011 & .0385 & [-.1755, -.0267] & --- & 463 \\
+Stable tails under all six implementations & -.2120 & .1030 & [-.4131, -.0109] & --- & 64 \\
+\bottomrule
+\end{tabularx}
+\tabnote{All rows are post-outcome exploratory and use 9,999 occupation-level wild-score draws. The baseline row uses its canonical draw set; conditioned and diagnostic rows use their declared common-draw sets. The first three retain the same 468 occupations and treatment groups. ``Info. share'' is conditional target information relative to the corrected baseline. Adding SOC2 interactions changes the conditioning estimand; the coefficient reduction is not an additive or causal decomposition. Only four of 22 broad families contain both Q1 and Q5. Exclusions retain frozen groups. The stable-tail row compares 46 always-Q1 and 18 always-Q5 occupations and has an effective information count of 15.0.}
+\end{threeparttable}
+\end{table}

@@ -1,0 +1,238 @@
+{
+  "checks": 58,
+  "details": [
+    {
+      "check": "all required output files exist",
+      "passed": true
+    },
+    {
+      "check": "membership has one row for each of 468 common occupations",
+      "passed": true
+    },
+    {
+      "check": "historical quintiles valid",
+      "passed": true
+    },
+    {
+      "check": "equal-occupation quintiles valid",
+      "passed": true
+    },
+    {
+      "check": "both grouping rules populate all five quintiles",
+      "passed": true
+    },
+    {
+      "check": "two explicitly labeled grouping constructions",
+      "passed": true
+    },
+    {
+      "check": "grouping constructions use common support",
+      "passed": true
+    },
+    {
+      "check": "both binary grouping cells are populated",
+      "passed": true
+    },
+    {
+      "check": "groupings share identical ordered support",
+      "passed": true
+    },
+    {
+      "check": "external BCC membership is not claimed verified",
+      "passed": true
+    },
+    {
+      "check": "binary membership-switch count reconciles",
+      "passed": true
+    },
+    {
+      "check": "six static models completed",
+      "passed": true
+    },
+    {
+      "check": "static grouping-by-conditioning grid complete",
+      "passed": true
+    },
+    {
+      "check": "static models use one common support",
+      "passed": true
+    },
+    {
+      "check": "static coefficients and intervals finite",
+      "passed": true
+    },
+    {
+      "check": "static estimates lie inside intervals",
+      "passed": true
+    },
+    {
+      "check": "static results use 9999 draws",
+      "passed": true
+    },
+    {
+      "check": "three grouping-rule and four conditioning pairs completed",
+      "passed": true
+    },
+    {
+      "check": "static paired contrast types complete",
+      "passed": true
+    },
+    {
+      "check": "static paired inference preserves common multipliers",
+      "passed": true
+    },
+    {
+      "check": "occupation information has one row per static model and occupation",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('historical_YAX_employment_weighted_approximation', 'SOC2_x_calendar_month')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('historical_YAX_employment_weighted_approximation', 'SOC2_x_post')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('historical_YAX_employment_weighted_approximation', 'occupation_plus_calendar_month_FE')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('public_dashboard_equal_occupation_approximation', 'SOC2_x_calendar_month')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('public_dashboard_equal_occupation_approximation', 'SOC2_x_post')",
+      "passed": true
+    },
+    {
+      "check": "information shares sum to one for ('public_dashboard_equal_occupation_approximation', 'occupation_plus_calendar_month_FE')",
+      "passed": true
+    },
+    {
+      "check": "November-2022 to June-2026 endpoint table complete",
+      "passed": true
+    },
+    {
+      "check": "no retained static or dynamic model failures",
+      "passed": true
+    },
+    {
+      "check": "four dynamic models completed",
+      "passed": true
+    },
+    {
+      "check": "dynamic models have a common complete quarterly path",
+      "passed": true
+    },
+    {
+      "check": "2022Q4 is the omitted dynamic reference",
+      "passed": true
+    },
+    {
+      "check": "dynamic estimates lie inside simultaneous intervals",
+      "passed": true
+    },
+    {
+      "check": "preperiod and postperiod joint tests complete",
+      "passed": true
+    },
+    {
+      "check": "paired grouping-rule dynamics complete",
+      "passed": true
+    },
+    {
+      "check": "dynamic paired inference preserves common support and multipliers",
+      "passed": true
+    },
+    {
+      "check": "complete target covariance stored for every dynamic model",
+      "passed": true
+    },
+    {
+      "check": "occupation influence rows stored for every dynamic model",
+      "passed": true
+    },
+    {
+      "check": "August 12 2026 BCC version recorded",
+      "passed": true
+    },
+    {
+      "check": "corrected calendar contract recorded",
+      "passed": true
+    },
+    {
+      "check": "receipt model counts complete",
+      "passed": true
+    },
+    {
+      "check": "receipt retains no hidden failures",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches BRIDGE_GROUP_SUMMARY.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches BRIDGE_MEMBERSHIP.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches BRIDGE_MEMBERSHIP_CONCORDANCE.json",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_JOINT_TESTS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_PAIRED_GROUPING_DIFFERENCES.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_PATHS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_TARGET_COVARIANCE.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches DYNAMIC_TARGET_INFLUENCE.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches FINDINGS.md",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches MODEL_FAILURES.json",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_GROWTH_ENDPOINTS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_INFORMATION_BY_OCCUPATION.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_MODEL_RESULTS.csv",
+      "passed": true
+    },
+    {
+      "check": "receipt hash matches STATIC_PAIRED_DIFFERENCES.csv",
+      "passed": true
+    },
+    {
+      "check": "outputs do not claim exact BCC membership",
+      "passed": true
+    },
+    {
+      "check": "bridge limitation is machine-readable",
+      "passed": true
+    }
+  ],
+  "status": "PASS"
+}

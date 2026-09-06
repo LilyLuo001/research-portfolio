@@ -1,0 +1,28 @@
+........................................................................ [  8%]
+........................................................................ [ 16%]
+........................................................................ [ 24%]
+........................................................................ [ 32%]
+........................................................................ [ 40%]
+........................................................................ [ 48%]
+........................................................................ [ 56%]
+........................................................................ [ 64%]
+........................................................................ [ 72%]
+........................................................................ [ 80%]
+........................................................................ [ 88%]
+........................................................................ [ 97%]
+..........................                                               [100%]
+=============================== warnings summary ===============================
+refraction/tests/test_scan.py:19
+  /projectnb/econdept/qluo/yax-referee-revision-20260905/refraction/tests/test_scan.py:19: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    TODAY = datetime.datetime.utcnow().date()
+
+ops/runner/tests/test_lease.py::test_failed_push_restores_exact_preclaim_head_without_hard_reset
+  /projectnb/econdept/qluo/yax-referee-revision-20260905/ops/runner/lease.py:43: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.datetime.utcnow()
+
+refraction/tests/test_scan.py: 11 warnings
+  /projectnb/econdept/qluo/yax-referee-revision-20260905/refraction/scan.py:336: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    today = datetime.datetime.utcnow().date()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+890 passed, 3 skipped, 13 warnings in 240.38s (0:04:00)

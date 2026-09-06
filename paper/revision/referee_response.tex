@@ -1,0 +1,163 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{styles/michaillat-paper}
+\usepackage{styles/working-paper}
+\usepackage{styles/yax-common}
+\geometry{margin=1in}
+\hypersetup{pdftitle={Response to Two Referee Reports},pdfauthor={Lily Luo}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\begin{document}
+\begin{center}
+{\Large\bfseries Response to Two Referee Reports}\par
+\vspace{0.35em}
+{\large ``AI Exposure or Occupational Composition?\
+Young-Worker Employment Comparisons in the CPS''}\par
+\vspace{0.35em}
+Lily Luo \quad September 2026
+\end{center}
+
+\section*{Response to the editor}
+
+We thank both referees for identifying that the earlier manuscript's measurement framing ran ahead of what its comparative evidence could establish.  We accepted the central recommendation and rebuilt the article around a narrower question: which occupational comparisons support the public-CPS association between GPT-4 task exposure and the relative employment stock of ages 22--25?
+
+The revision is not an incremental robustness expansion.  We repaired the calendar and reconstructed every preperiod treatment object without postperiod outcomes; re-estimated the entire exposure profile; replaced the permutation argument with explicit broad-family regressions; named the direct within-family support; added occupational-characteristic, industry, education, survey-sampling, timing, and flow analyses; and replaced inconsistent intervals with one machine-readable source of truth.  The reconstructed pooled Q5--Q1 estimate is $-0.1321$ with occupation wild-score interval $[-0.2206,-0.0437]$.  Allowing each two-digit occupation family its own young-relative calendar-month path gives $-0.0217$ with interval $[-0.1607,0.1173]$.  On common draws, the movement is 0.1104 with interval $[0.0107,0.2102]$.  This is a detected change between conditional estimands, not a causal decomposition.
+
+The revised interpretation is deliberately bounded.  Direct Q1/Q5 overlap within broad families is sparse and imprecise; unrestricted quarterly coefficients reject joint preperiod equality; and corrected CPS links do not resolve employment exit, reported occupation change, or entry-destination allocation.  Computer use does not supply a simple omitted-variable explanation: conditioning on a pre-2022 O*NET computer-use measure makes the coefficient more negative on common support.  The article therefore describes the headline as a broad occupational comparison, not an identified AI effect, a computerization effect, or a public replication of proprietary employer hiring results.
+
+The main paper has been shortened and reorganized around the economic question.  Technical derivations, secondary analyses, failures, hashes, and chronology move to a focused online appendix and replication archive.  The response below covers every numbered item in the two supplied reports.  All new substantive analyses are transparently described as post-outcome exploratory revisions.  The repository chronology is internally versioned, not externally preregistered.
+
+\section*{Response to Referee 1: major comments}
+
+\subsection*{M1. Precision and comparative language}
+
+\emph{Response.} Accepted.  Every direct comparison now reports a paired interval built from common draws and a two-sided normal-theory $\mathrm{MDE}_{80}=(1.96+0.84)SE$.  For the reconstructed pooled model, the realized normal-theory MDE is 0.1266 log point.  The family-conditioned coefficient has an MDE of approximately 0.200, and the paired pooled-to-conditioned movement has an MDE of 0.1454.  We explicitly explain why an observed movement can be significant even when it is smaller than this planning quantity: an MDE is an 80-percent-power summary, not a second rejection threshold.  Nondetection is never called equivalence.
+
+The planning-versus-realized gap is no longer used to diagnose a single cause.  Instead, the revision reports an adverse sparse-cell/family-shock coverage simulation, a 22-family dependence sensitivity, elapsed-calendar HAC results, and 199 household/sample-unit full refits as separate inferential targets.  These exercises demonstrate that no single standard-error row exhausts the uncertainty, without pretending to decompose the gap from one simulation.
+
+\subsection*{M2. Effective clustering and CPS rotation}
+
+\emph{Response.} Addressed within the limits of public Basic Monthly files.  Young occupation-month cells have p10/median/p90 respondent-equivalent counts of 0/2/16; 26.25 percent are zero and 69.83 percent have fewer than five.  One-sided zeros remain valid likelihood observations; both-age-zero cells contribute no likelihood term.  The dynamic analysis is estimated at quarterly frequency, while the static monthly target is retained so its economic object does not change.
+
+Occupation clustering permits arbitrary serial dependence within occupation but is not complete CPS design-based inference.  We therefore add elapsed-calendar score HAC and a household/sample-unit multiplier that keeps all observed records of a sampled unit together across months and gives every split-route descendant the same multiplier.  Public files lack the confidential design variables or Basic Monthly replicate weights required for a complete survey-design claim.  The two uncertainty targets are shown separately rather than mechanically added.  The requested 2015--2019 pseudo-break range is infeasible because the extract begins in 2017; feasible historical diagnostics remain descriptive, while the revised paper foregrounds the unrestricted 23-quarter preperiod joint test.
+
+\subsection*{M3. Regression analogue, profile, and direct support}
+
+\emph{Response.} This request now determines the paper.  SOC2-by-young-by-calendar-month conditioning moves the reconstructed coefficient from $-0.1321$ to $-0.0217$; the paired 0.1104 movement has interval $[0.0107,0.2102]$.  A less saturated SOC2-by-young-by-post model is also reported.  We do not call the movement a percentage ``explained,'' because family controls can absorb AI-related and non-AI-related evolution.
+
+We report the entire Q2--Q5 profile, a common-draw joint test, and simultaneous intervals rather than infer monotonicity from four point estimates.  We also replace the outcome-selected ``always-tail'' row as the central support check with a transparent direct-tail benchmark: only families containing both reconstructed Q1 and Q5 occupations enter, and the changed population is named.  That benchmark has 29 occupations, an inverse-Herfindahl effective count of 6.2 occupations, a 77.8-percent top-five information share, and a normal-theory MDE$_{80}$ of 0.4576 log point.  The resulting interval is too wide to resolve a direct within-family tail gradient.  A continuous demeaned within-family companion states its scale and common-slope restriction and has MDE$_{80}=0.0313$ per one within-family standard deviation.
+
+\subsection*{M4. Influence and the low-exposure reference}
+
+\emph{Response.} Influence is promoted as an interpretation diagnostic.  The appendix reports leave-one-family-out results, named occupation leave-one-out movements, joint leave-$k$ and symmetric-trimming diagnostics from the historical audit, and young/older stock paths.  Fast-food and counter workers are influential, but other occupations have offsetting signed influence.  Because selecting deletions by observed influence changes the population after seeing outcomes, none is promoted as a preferred estimate.
+
+We no longer claim that a coarse leisure/hospitality code identifies a food-service mechanism.  Economically named service exclusions are reported as changed-population diagnostics.  The article states that post-pandemic recovery, immigration, wages, and labor supply are possible interpretations requiring separate evidence; it does not treat their plausibility as a regression result.
+
+\subsection*{M5. CPS population controls and late-2025 production}
+
+\emph{Response.} We verified the January 2025 and January 2026 control changes, the revised January 2026 file, October 2025 noncollection, and delayed/reweighted November 2025 collection against official documentation.  The extract and weight vintages are recorded by hash.  The endpoint grid includes the exact requested pre-2025 endpoint through December 2024, late-2025 and pre-2026 endpoints, the full window, and an exclusion of September and November 2025 around the gap.  In this post-outcome exploratory grid, the December-2024 pooled coefficient is $-0.1110$ ($[-0.2008,-0.0213]$); its endpoint-minus-full-window difference is 0.0211 ($[-0.0073,0.0495]$).  The family-conditioned coefficient is $-0.0120$ ($[-0.1657,0.1417]$), with paired difference 0.0097 ($[-0.0526,0.0719]$).  The separately estimated 2023--24 versus 2025--26 postperiod split supplies a different era comparison with paired uncertainty; we do not relabel it as an endpoint regression.
+
+BLS does not publish counterfactual age-by-occupation weights on the prior control basis.  We therefore do not manufacture a subgroup adjustment from aggregate factors.  Respondent-equivalent cells are retained as a separately defined unweighted outcome, not described as recovered counterfactual weights or a common scalar rescaling.
+
+\subsection*{M6. Selected architecture space}
+
+\emph{Response.} Accepted.  The technical archive retains the repository-bounded candidate census and pass/fail reasons, while the main article no longer presents six correlated implementations as six independent validations or headlines an intersection--union test.  The focused architecture revision reports native and common support separately, coefficient differences rather than significance differences, tail turnover, and characteristic correlations.  Firm- and demand-side measures are not forced into an occupation-CPS regression without a defensible unit bridge.  The scientific article uses the architecture family as a compact measurement diagnostic rather than its organizing contribution.
+
+\subsection*{M7. Conflicting intervals}
+
+\emph{Response.} Corrected.  The canonical reconstructed pooled interval is $[-0.2206,-0.0437]$ from the declared 9,999-draw occupation wild-score procedure.  Different stochastic targets---22-family dependence, household resampling, and elapsed-time HAC---are labeled rather than printed as interchangeable intervals for one result.  A numerical-consistency script checks the load-bearing displayed estimates and refuses a build when declared canonical values differ.
+
+\subsection*{M8. BCC comparability}
+
+\emph{Response.} We verified the August 12, 2026 paper, public dashboard, grouping description, outcomes, and endpoints.  Exact dashboard memberships and tie handling are unavailable, so the CPS exercise is explicitly an equal-occupation, tie-preserving approximation rather than a replication.  Its top-two-versus-bottom-three estimate is $-0.0720$; family-by-month conditioning gives $-0.0168$, and the paired movement interval includes zero.  The article compares employment stocks with employment stocks first and keeps the 19-percent ADP ``kept pace'' statistic separate from regression coefficients and employer-match hiring/separation outcomes.
+
+\subsection*{M9. January 2023 and adoption timing}
+
+\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  The post-outcome exploratory December-2024 endpoint gives $-0.1110$ pooled and $-0.0120$ after family-by-month conditioning; neither endpoint-minus-full-window paired interval excludes zero.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present either as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
+
+\subsection*{M10. F/G parameterization}
+
+\emph{Response.} Accepted.  F/G and the associated rotations are removed from the scientific paper and online appendix.  Historical code remains in the replication archive.  The concise remaining diagnostic uses the raw task primitives $D$ and $S$, standardized versions where useful, and the transparent $D+\lambda S$ grid.  Changes in coordinates are not reported as economic findings.
+
+\subsection*{M11. Entry and longitudinal evidence}
+
+\emph{Response.} Corrected CPS links now distinguish employment exit, reported occupation change among endpoint-employed workers, and Q5-versus-Q1 destination allocation conditional on entry.  Adjacent and twelve-month endpoint results use their own risk sets and official longitudinal weights; every primary interval includes zero.  Their normal-theory MDE$_{80}$ values range from 0.115 to 0.336 log point and are reported as precision diagnostics, not rejection thresholds.  Twelve-month young links retain only 50.98 percent of eligible origins, so the longer horizon does not automatically double information.  We never call destination allocation an employment-finding probability or employer hiring rate.  The earlier rematching benchmark is removed from the scientific appendix.
+
+\subsection*{M12. Generated-covariate validation}
+
+\emph{Response.} The appendix now makes the missing validation object explicit.  A useful sample would preserve versioned occupation--task units, stratify by occupational family and cross-architecture disagreement, and separately label technical capability, realized time saving with and without complementary software, actual adoption, and task importance.  It would require repeated blinded expert ratings and, where possible, audited usage or performance data, with occupations held out from calibration.  Sample-size requirements depend on clustered task/rater noise and the target correction; in the absence of such labels we do not invent a universal number or claim that bootstrap inference covers exposure error.
+
+\section*{Response to Referee 1: secondary comments}
+
+\begin{enumerate}[leftmargin=1.8em]
+\item The ten-journal search paragraph is removed from the article; the declared scope and date remain only in the evidence ledger.
+\item The grouped-binomial/conditional-logit representation and log young-to-older stock-ratio estimand are stated explicitly.
+\item Boundary handling is verified: one-sided zeros remain; both-age-zero cells contribute no likelihood.  Minimum-count samples remain outcome-selected sensitivities, not the baseline.
+\item The common route-share limitation, one-to-many stock, conservation, stable-taxonomy restriction, and changed time/population estimand are stated.  A post-2020 fit that fails convergence remains a recorded failure rather than being promoted.
+\item The OECD capability-gap construction is treated as a different technology boundary and horizon, not a sign-reversed substitute for contemporary LLM exposure.
+\item Frey--Osborne is not announced as a principal outcome architecture; any retained appearance is labeled an automation characteristic.
+\item Common-support and native-support architecture rows are separated, as are conditioning and contrast changes.
+\item The main text uses one uncluttered young/older/ratio figure; additional level paths remain in the appendix.
+\item Prose and displayed tables use design-appropriate rounding; machine files retain full precision.
+\item ``Respondent-equivalent'' is defined on first use as fractional routed-record mass before 2020 and exact record count thereafter, never unique persons.
+\item The paper calls the retained exposure $\beta$ and writes its task primitives as $D=E1$ and $S=E2$.  It does not report $\alpha$ or the upper-bound score as principal outcome architectures.  The archive records that the legacy source field \texttt{dv\_rating\_gamma} corresponds to the published $\zeta$ construct; ``gamma'' and ``broad'' are not used as competing scientific labels.
+\item Source and generated text pass a UTF-8/mojibake scan.
+\item Affiliation, email, acknowledgments, funding, conflicts, and journal disclosures remain visibly marked \texttt{[AUTHOR TO COMPLETE]}; none is invented.
+\item The repository chronology is described as internally git-versioned and explicitly not externally registered.
+\end{enumerate}
+
+\section*{Response to Referee 2: major comments}
+
+\subsection*{M1. Separate measurement from changes in the question}
+
+\emph{Response.} Accepted.  The empirical framework distinguishes intended construct, measurement rule, occupational harmonization, retained population, representation, and regression estimand.  The crosswalk table separately identifies score correction on fixed support and occupation readmission.  A literal vintage mismatch is an implementation error, not a robustness choice.  Affine rank invariance and full-rank coordinate invariance are stated briefly; they no longer substitute for the substantive application.
+
+\subsection*{M2. Architecture heterogeneity and direct comparisons}
+
+\emph{Response.} Accepted.  We separate point-estimate signs, evidence about individual coefficients, and paired evidence that two coefficients differ.  Every architecture row identifies native or matched support and reports the paired interval and precision.  An interval containing zero is described only as failure to detect a difference; it is never evidence of economic equivalence.  The broad architecture menu is demoted because the stronger and better-resolved result concerns occupational comparisons.
+
+\subsection*{M3. Construct validity}
+
+\emph{Response.} Each retained score is described by its primitive, technology boundary, vintage, horizon, mapping, and support.  Webb software is a preperiod computerization control; Webb AI, AIOE, and OECD do not become interchangeable measures merely because each contains ``AI'' in its label.  The focused $D+\lambda S$ exercise changes a capability definition and group membership; it does not reveal which technology firms deployed.
+
+\subsection*{M4. Reference group and broad occupational variation}
+
+\emph{Response.} The main empirical section now shows Q1 and Q5 young and older stock paths, the full exposure profile, family-by-quintile support, the families spanning both tails, direct-tail and continuous within-family companions, and family/occupation influence.  The regression with family-specific monthly paths replaces the assumption-dependent permutation as the central diagnostic.  In the post-outcome exploratory December-2024 endpoint check, pooled and family-conditioned coefficients are $-0.1110$ and $-0.0120$; their respective endpoint-minus-full-window paired intervals are $[-0.0073,0.0495]$ and $[-0.0526,0.0719]$.  The conclusion is comparison based: the pooled coefficient relies primarily on broad occupational structure, while direct within-family evidence is sparse and imprecise.
+
+\subsection*{M5. Corrected pipeline and bridge uncertainty}
+
+\emph{Response.} The fully reconstructed 113-month pipeline is now the sole substantive baseline; historical labels are a labeled checkpoint.  All preperiod weights, support, normalizations, cuts, ties, and memberships are regenerated.  The March replacement, missing October 2025, transition month, route mass, one-sided zeros, exclusions, and split probabilities are machine audited.  The crosswalk expansion conserves weighted stock to machine precision.  Age-specific route probabilities remain unavailable, so common shares and bounded allocation sensitivities are disclosed rather than validated by adjacent vintages.
+
+\subsection*{M6. Source of randomness}
+
+\emph{Response.} The article and Appendix~E state the stochastic target of each interval and the uncertainty it omits.  We verify nuisance residualization, score aggregation, fitted information, common-draw pairing, seeds, and covariance rank.  Occupation-shock, broad-family, household-sampling, HAC, and stress-simulation results remain distinct.  No procedure is said to cover exposure-label or route-allocation uncertainty, and no inadmissible pseudo-outcome clipping is used.
+
+\subsection*{M7. Primitive units and F/G}
+
+\emph{Response.} Accepted.  The scientific appendix reports $D$, $S$, raw and standardized units, covariance, and the $D+\lambda S$ grid.  It reconciles $\lambda=.5$ exactly with beta under identical mapping, support, weights, and model.  F/G is archived but removed from the article and online appendix.  Crossing an individual significance threshold is never described as a significant coefficient difference.
+
+\subsection*{M8. Mobility scale and benchmark}
+
+\emph{Response.} We followed the integrated revision priority and removed the rematching/mobility-classification exercise rather than expanding an algorithm-defined benchmark with no welfare scale.  The economically defined linked-CPS margins remain: exit, occupation change, and destination allocation conditional on entry.  Their risk sets, effect units, link attrition, uncertainty, and comparability limits are explicit.  This is a scoped non-adoption, not a claim that mobility is unimportant.
+
+\subsection*{M9. Auditable chronology without chronology prose}
+
+\emph{Response.} Accepted.  Revision-round and ``frozen'' language is removed from the scientific narrative.  The technical archive retains dated specifications, commit/tag chronology, protected-outcome rules, amendments, seeds, hashes, failures, and result manifests.  The article describes new analyses as exploratory and does not imply external registration.
+
+\section*{Response to Referee 2: specific corrections}
+
+\begin{enumerate}[leftmargin=1.8em]
+\item The dynamic reference is unambiguous: omitted 2022Q4 contains observed October--November; December is observed but excluded as the transition month.  All Q2--Q5 interactions and Webb treatment are documented.
+\item Under identical reconstructed support and estimation, $\lambda=.5$ reproduces beta exactly.  Earlier different coefficients mixed support or treatment contracts and remain only in implementation history.
+\item Respondent-equivalent cells remove released final-weight magnitudes record by record; they are not a common scalar rescaling of weighted stocks.
+\item The paper consistently says ``ages 22--25'' or ``young workers,'' not observed experience.  BA/non-BA and exact-age comparisons are reported with simultaneous/paired uncertainty and do not identify a cohort mechanism.
+\item Six compact main tables separate data construction, occupational comparison, characteristic conditioning, inference, flows, and the lambda diagnostic.  Native, matched-support, and paired quantities are labeled.
+\item Longitudinal estimates remain explicitly nondetections on distinct risk sets; no flow coefficient is interpreted as evidence that a mechanism is absent.
+\end{enumerate}
+
+\section*{Claims retired and remaining author actions}
+
+The paper no longer claims a causal AI effect, a causal composition share, economic equivalence, a monotone dose response, a food-service mechanism, independent validation by correlated scores, complete survey-design inference, or replication of proprietary ADP hiring/separation results.  It does not treat an invalid taxonomy merge as a defensible alternative.
+
+The only submission items blocked on information outside the empirical record are the author's affiliation, email, acknowledgments, funding, conflicts, and journal-specific disclosures.  They remain explicitly marked for author completion.  All empirical limitations that cannot be repaired with the authorized data are listed in the revision diagnosis and reproducibility appendix rather than promised as future completed work.
+
+\end{document}

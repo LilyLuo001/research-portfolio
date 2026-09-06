@@ -1,0 +1,15 @@
+{
+  "base_seed": 2026090551,
+  "common_within_each_paired_family": true,
+  "draws": 9999,
+  "interval": "95 percent wild-score critical value applied to occupation-cluster analytic SE",
+  "mde": "(z_0.975 + z_0.80) times analytic occupation-cluster SE",
+  "multiplier": "occupation-level Rademacher",
+  "seeds": {
+    "age": 2026090554,
+    "baseline": 2026090551,
+    "education": 2026090553,
+    "industry": 2026090552
+  },
+  "stored_representation": "MODEL_OCCUPATION_INFLUENCE.csv plus seeds and deterministic NumPy default_rng generation"
+}

@@ -1,0 +1,44 @@
+{
+  "status": "VERIFIED",
+  "summary": "Implemented canonical JSON contracts with full SHA-256 specification and result identifiers. Before any V3 empirical run, a provenance audit found that the historical preperiod cell input named in the command was not separately enumerated in data.sources; the original stamp was preserved and a provenance-only v2 contract was issued. Mutation and incompatibility tests cover support, membership, scale-relevant construction fields, age, endpoint, objective, calendar, contrast, uncertainty, command, code, environment, and source content.",
+  "evidence": [
+    {
+      "role": "code",
+      "path": "scripts/spec_contract.py",
+      "sha256": "de2b607202e4b93b3d712e0f930f13d2da00cee7c4696ccf2fec9dc1e46cdcc8"
+    },
+    {
+      "role": "specification",
+      "path": "contracts/specs/canonical_baseline_reproduction_v2.json",
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    {
+      "role": "source_evidence",
+      "path": "contracts/CONTRACT_AMENDMENT_01.md",
+      "sha256": "72610122dd86db11152cf06fbb79e0dca9106ec76ef02d3b90dd0f29ce059d44"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/foundation/EXECUTION_RECEIPT.json",
+      "sha256": "5711452a4254464693f9c989768db3952abaf26c973a6fbcc81a3d7743a0b0ba"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/FOUNDATION_VALIDATION.json",
+      "sha256": "dce4bce5cc049865fad7fb661d29bb85547439374e6a7d03038cd688521a8d0b"
+    }
+  ],
+  "response_locations": [
+    "contracts/README.md",
+    "contracts/specs/canonical_baseline_reproduction_v2.json",
+    "contracts/CONTRACT_AMENDMENT_01.md",
+    "gates/FOUNDATION_VALIDATION.json"
+  ],
+  "review": {
+    "reviewer": "execution-agent self-review informed by a separate-agent contract-design challenge",
+    "report_path": "reviews/FOUNDATION_ENGINEERING_SELF_REVIEW.md",
+    "independent": false
+  },
+  "blocker": null,
+  "approval": null
+}

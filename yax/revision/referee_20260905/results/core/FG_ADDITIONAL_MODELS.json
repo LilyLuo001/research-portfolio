@@ -1,0 +1,104 @@
+{
+  "direct_D_S": {
+    "moments": {
+      "D_alpha": {
+        "mean": 0.13382725825488975,
+        "sd": 0.1461630810392647
+      },
+      "S_gamma_minus_alpha": {
+        "mean": 0.46608623214524514,
+        "sd": 0.31552446258180833
+      },
+      "Webb": {
+        "mean": 44.43024595535552,
+        "sd": 25.60382043905033
+      }
+    },
+    "terms": [
+      {
+        "analytic_or_paired_se": 0.015376613518868204,
+        "bootstrap_critical": 1.9097945349474998,
+        "bootstrap_p_value": 0.029,
+        "ci_lower": -0.061694450883492374,
+        "ci_upper": -0.0029621059548236954,
+        "coefficient": -0.03232827841915804,
+        "draws": 999,
+        "paired_bootstrap_se": 0.015166240506432477,
+        "term": "D_alpha"
+      },
+      {
+        "analytic_or_paired_se": 0.01365496007587337,
+        "bootstrap_critical": 1.8962273057726609,
+        "bootstrap_p_value": 0.02,
+        "ci_lower": -0.056170197951883785,
+        "ci_upper": -0.004384381641670567,
+        "coefficient": -0.030277289796777178,
+        "draws": 999,
+        "paired_bootstrap_se": 0.013319923719833277,
+        "term": "S_gamma_minus_alpha"
+      },
+      {
+        "analytic_or_paired_se": 0.012602355037487634,
+        "bootstrap_critical": 1.8700489340243096,
+        "bootstrap_p_value": 0.615,
+        "ci_lower": -0.01719373753721497,
+        "ci_upper": 0.029940303670884304,
+        "coefficient": 0.006373283066834667,
+        "draws": 999,
+        "paired_bootstrap_se": 0.012290645100009604,
+        "term": "Webb"
+      }
+    ]
+  },
+  "representative_AIOE_beta": {
+    "moments": {
+      "AIOE_admin": {
+        "mean": -3.1925454182745803e-17,
+        "sd": 0.9999999999999999
+      },
+      "Eloundou_beta": {
+        "mean": -2.8732908764471224e-16,
+        "sd": 1.0
+      },
+      "Webb": {
+        "mean": 44.43024595535552,
+        "sd": 25.60382043905033
+      }
+    },
+    "terms": [
+      {
+        "analytic_or_paired_se": 0.023200803521097726,
+        "bootstrap_critical": 1.8814054207835225,
+        "bootstrap_p_value": 0.045,
+        "ci_lower": 0.001224116579748906,
+        "ci_upper": 0.08852435160200231,
+        "coefficient": 0.044874234090875605,
+        "draws": 999,
+        "paired_bootstrap_se": 0.02252518615272766,
+        "term": "AIOE_admin"
+      },
+      {
+        "analytic_or_paired_se": 0.026997062668124697,
+        "bootstrap_critical": 1.8676525529630987,
+        "bootstrap_p_value": 0.003,
+        "ci_lower": -0.12924612588395115,
+        "ci_upper": -0.028403859854695436,
+        "coefficient": -0.07882499286932329,
+        "draws": 999,
+        "paired_bootstrap_se": 0.026653525704085187,
+        "term": "Eloundou_beta"
+      },
+      {
+        "analytic_or_paired_se": 0.01194039841578946,
+        "bootstrap_critical": 1.9028101353321276,
+        "bootstrap_p_value": 0.333,
+        "ci_lower": -0.011799813540607268,
+        "ci_upper": 0.033640808710328464,
+        "coefficient": 0.010920497584860597,
+        "draws": 999,
+        "paired_bootstrap_se": 0.011553498779590877,
+        "term": "Webb"
+      }
+    ]
+  }
+}

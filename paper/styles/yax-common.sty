@@ -1,0 +1,21 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{yax-common}[2026/09/05 Shared YAX paper tools]
+\RequirePackage{amsmath}
+\RequirePackage{array,tabularx,longtable}
+\IfFileExists{threeparttable.sty}{\RequirePackage{threeparttable}}{%
+  \newenvironment{threeparttable}{}{}%
+  \newenvironment{tablenotes}[1][]{\begin{list}{}{\setlength{\leftmargin}{1em}\setlength{\itemsep}{0.2em}}}{\end{list}}%
+}
+\IfFileExists{siunitx.sty}{\RequirePackage{siunitx}\sisetup{detect-all,table-number-alignment=center}}{}
+\IfFileExists{placeins.sty}{\RequirePackage{placeins}}{\newcommand{\FloatBarrier}{\clearpage}}
+\RequirePackage{enumitem}
+\IfFileExists{xurl.sty}{\RequirePackage{xurl}}{}
+\RequirePackage{ragged2e}
+\RequirePackage{ifthen}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\newcommand{\tabnote}[1]{\par\vspace{0.4em}\begin{minipage}{0.98\linewidth}\footnotesize\textit{Notes:} #1\end{minipage}}
+\newcommand{\source}[1]{\par\vspace{0.25em}\begin{minipage}{0.98\linewidth}\footnotesize\textit{Source:} #1\end{minipage}}
+\newcommand{\pp}{percentage points}
+\newcommand{\AI}{AI}
+\newcommand{\CPS}{CPS}

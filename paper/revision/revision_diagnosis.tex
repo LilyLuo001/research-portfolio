@@ -1,0 +1,68 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{styles/michaillat-paper}
+\usepackage{styles/working-paper}
+\usepackage{styles/yax-common}
+\geometry{margin=1in}
+\hypersetup{pdftitle={Revision Diagnosis},pdfauthor={Lily Luo}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\begin{document}
+\begin{center}
+{\Large\bfseries Revision Diagnosis}\par
+\vspace{0.3em}
+Evidence-led framing decision, completed work, and unresolved limits\par
+September 2026
+\end{center}
+
+\section*{Framing decision}
+
+The defensible chapter is a \textbf{comparison-centered empirical audit}, not an AI-displacement design and not a generic ``measurement choices matter'' essay.  Its question is: what occupational comparisons support the negative association between GPT-4 task exposure and young-relative employment stock in the public CPS?
+
+The answer is specific.  The reconstructed pooled Q5--Q1 comparison is $-0.1321$ log point, with 95-percent occupation wild-score interval $[-0.2206,-0.0437]$.  Giving every broad occupation family its own young-relative calendar-month path yields $-0.0217$, with interval $[-0.1607,0.1173]$.  Their paired difference is 0.1104, with interval $[0.0107,0.2102]$.  The movement is detected under the declared occupation-shock procedure, but it compares different conditional estimands and is not a causal share.
+
+Direct support is the binding economic qualification.  Few broad families contain both exposure tails; a direct-tail sample covers only a small share of employment and cannot precisely resolve the residual gradient.  Other families connect the coefficient through intermediate quintiles and common-slope restrictions.  The article should therefore say that the pooled pattern is principally a comparison across broad occupational structure, not that ``composition explains'' a known fraction of an AI effect.
+
+\section*{Evidence that determines the interpretation}
+
+\begin{enumerate}[leftmargin=1.8em]
+\item \textbf{Corrected baseline.}  Five wrongly selected March ASEC samples are replaced by Basic Monthly files; October 2025 is absent; December 2022 is the transition month.  All 71-month preperiod weights, normalizations, cuts, ties, and memberships are rebuilt.  Nine occupations change quintile, but reconstructed-minus-historical treatment moves the coefficient only 0.00245, with interval spanning zero.
+\item \textbf{Broad-family sensitivity.}  The pooled-to-SOC2-month movement is 0.1104 and statistically distinguishable from zero on common draws.  The family-conditioned coefficient itself remains imprecise.  A direct-tail and continuous within-family analysis expose the support and functional-form cost.
+\item \textbf{Computerization is not a one-control explanation.}  A May 2020 O*NET computer-use measure is highly correlated with beta exposure.  On common support it acts as a suppressor, making the coefficient more negative.  Remotability and other characteristics do not yield detected movements.  These are correlated diagnostics, not causal horse races.
+\item \textbf{Industry and education.}  Conditioning occupation--industry microcells on 13 broad-industry post shifts moves $-0.1376$ to $-0.0987$; the paired 0.0389 interval excludes zero while the residual remains negative.  BA and non-BA coefficients differ by only $-0.0154$, but their paired interval $[-0.1557,0.1250]$ is too wide for equivalence.  Exact-age evidence is nonmonotone and does not isolate experience or cohort mechanisms.
+\item \textbf{Preperiod dynamics.}  The fully interacted quarterly Q5 path rejects joint equality over 23 preperiod coefficients in both pooled and family-conditioned models.  A linear-slope nondetection cannot override that result.  January 2023 consequently remains descriptive chronology, not causal timing.
+\item \textbf{Later observations matter.}  Extending from 2025 endpoints through July 2026 makes the pooled coefficient roughly 0.02 log point more negative on paired draws.  Family-conditioned endpoint movements remain near zero.  This is an informative data-extension result, not proof that AI adoption intensified.
+\item \textbf{Flows do not resolve the mechanism.}  Corrected adjacent and twelve-month CPS links give intervals containing zero for employment exit, reported occupation change, and exposure allocation conditional on entry.  Annual links have substantially lower young-worker retention.  Hours and conditional earnings are also imprecise.  None is an employer hiring rate.
+\item \textbf{External comparability is bounded.}  An equal-occupation approximation to BCC's top-two-versus-bottom-three grouping gives $-0.0720$ in CPS and $-0.0168$ after family-month conditioning; their paired movement is not detected at five percent.  Exact dashboard membership, employer controls, and proprietary payroll flows cannot be reproduced.
+\item \textbf{Mapping matters for population, not just score values.}  A literal SOC-vintage mismatch retains 3.33 percent of computer-and-mathematical employment; documented routing restores 97.7 percent.  Fixed-support score repair changes little, while readmission changes the population.  The invalid merge is an implementation failure, not a robustness specification attributed to another paper.
+\item \textbf{Inference remains conditional.}  Occupation wild scores, 22-family dependence weights, household/sample-unit full refits, elapsed-calendar HAC, and an adverse coverage simulation answer different stochastic questions.  Public Basic Monthly files do not permit complete CPS design-based inference, and these variances cannot be added without a valid decomposition.
+\end{enumerate}
+
+\section*{What the paper may and may not claim}
+
+The paper may say that public CPS data contain a sizeable negative young-relative employment-stock association under GPT-4 beta exposure; that broad-family conditioning produces a detected movement to an imprecise near-zero coefficient; that direct within-family tail support is thin; that a simple computer-use control does not attenuate the result; that unrestricted preperiod differences undermine causal timing; and that available flows do not identify a mechanism.
+
+It may not say that AI caused an individual employment decline, that occupational composition causally explains a percentage of an AI effect, that the residual coefficient is an AI effect, that computerization or reopening is the cause, that nondetection means economic equivalence, or that CPS reproduces ADP employer hiring and separation results.
+
+\section*{Completed revision package}
+
+The editable package contains a rewritten main manuscript, a focused online appendix, a point-by-point response, this diagnosis, a source diff, a machine-readable comment-response matrix, the specification and results registries, module-level code and tests, source and environment manifests, covariance/influence outputs, figure/table generators, failure logs, and a numerical-consistency audit.  A deterministic source-token audit records a 39.2-percent contraction of the included abstract and Sections 1--8 relative to commit \texttt{6b8d85e}.  Restricted microdata, credentials, and direct identifiers are excluded.
+
+The scientific appendix no longer contains the mobility-rematching benchmark or F/G coordinate machinery.  Historical artifacts remain available in the replication archive.  Revision chronology is likewise moved out of the article; it is described honestly as internal git ordering rather than external prospective registration.
+
+\section*{Unresolved items}
+
+The following limits remain after feasible execution:
+
+\begin{itemize}[leftmargin=1.8em]
+\item observed firm adoption, employer identities, and employer-match hiring/separation are unavailable in the CPS;
+\item public files do not supply all confidential survey-design variables or counterfactual age-by-occupation weights for population-control revisions;
+\item exact BCC dashboard occupation memberships and tie rules are unavailable;
+\item adjacent occupational coding vintages do not validate age-specific route shares;
+\item no external gold-standard label identifies a latent true occupational AI exposure;
+\item several direct-tail, flow, subgroup, and conditional estimates remain imprecise;
+\item affiliation, email, acknowledgments, funding, conflicts, and required journal disclosures require author input and remain \texttt{[AUTHOR TO COMPLETE]}.
+\end{itemize}
+
+These are not reasons to add unrestricted specification searches.  They define the boundary of the chapter's contribution.  Before submission, the author should complete the metadata/disclosure fields and obtain independent econometric review of the maintained shock-cluster interpretation.
+
+\end{document}

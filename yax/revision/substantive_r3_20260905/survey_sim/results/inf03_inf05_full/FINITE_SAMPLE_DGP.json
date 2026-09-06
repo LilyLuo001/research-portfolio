@@ -1,0 +1,45 @@
+{
+  "broad_family_shock": "SOC2-family x month fitted score/information disturbance, family/month residualized, one sign per family over complete path",
+  "diagnostics": {
+    "Kish_n_eff_median": 23.8545072062333,
+    "Kish_n_eff_minimum": 1.0,
+    "Kish_n_eff_p01": 1.0,
+    "Kish_n_eff_p05": 2.7925794064474676,
+    "Kish_n_eff_p95": 296.3705842244635,
+    "SOC2_families": 22,
+    "SOC2_post_influence": {
+      "coefficient": -0.02159898463152197,
+      "effective_occupation_influence_count": 11.600147568119949,
+      "occupation_cluster_SE": 0.07159928850039342,
+      "top_five_squared_influence_share": 0.5400765455172063,
+      "top_ten_squared_influence_share": 0.6545392190372502
+    },
+    "baseline_influence": {
+      "coefficient": -0.1321094507921903,
+      "effective_occupation_influence_count": 14.542563854841267,
+      "occupation_cluster_SE": 0.045173895228400755,
+      "top_five_squared_influence_share": 0.47057887579225716,
+      "top_ten_squared_influence_share": 0.6293966050634544
+    },
+    "cells_Kish_n_eff_below_10": 14585,
+    "cells_Kish_n_eff_below_20": 23671,
+    "cells_Kish_n_eff_below_5": 6748,
+    "family_month_logit_shock_max_abs": 1.6999840066777894,
+    "family_month_logit_shock_weighted_RMS": 0.10986659462742475,
+    "one_sided_older_zero_cells": 75,
+    "one_sided_young_zero_cells": 12890,
+    "positive_total_cells": 51891,
+    "zero_total_cells": 993
+  },
+  "draws_per_effect": 199,
+  "effects": [
+    0.0,
+    -0.05,
+    -0.1321094507921903
+  ],
+  "inference_evaluated": "occupation-cluster sandwich normal 95% interval from each full grouped-binomial refit",
+  "role": "calibrated finite-sample stress test; not full CPS design inference or an independently identified structural DGP",
+  "seed_rule": "2026090561 + replicate, common across effects",
+  "sparse_sampling": "cell-level Binomial at rounded Kish effective record count; mapped back to observed weighted total",
+  "support_and_labels": "fixed fully rebuilt corrected 468-occupation treatment contract"
+}

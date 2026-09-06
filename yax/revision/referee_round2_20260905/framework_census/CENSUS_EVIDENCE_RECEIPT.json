@@ -1,0 +1,77 @@
+{
+  "record_version": "yax-referee-round2-framework-census-v1",
+  "date": "2026-09-05",
+  "scope": "treatment-side analytical taxonomy and repository-bounded candidate census",
+  "raw_labor_outcome_accessed": false,
+  "outcome_model_run": false,
+  "outcome_estimates_used_for_candidate_status": false,
+  "status_definitions": {
+    "INCLUDED--CORE": "selected before the external admission rule; no retroactive pass claim",
+    "PASS--EXTERNAL": "passed the six-condition historical external admission rule",
+    "FAIL--SCOPE": "known failure of the historical AI-construct scope condition",
+    "PENDING--INSTANTIATION": "primary source characterized in a dated repository audit, but no candidate-specific local score/mapping/support/admission audit",
+    "UNVERIFIED--LOCAL": "insufficient verified primary-source-and-data record in the repository",
+    "CONTROL/COMPARATOR": "instantiated but not an AI-exposure candidate"
+  },
+  "defensible_counts": {
+    "core_score_implementations": 6,
+    "core_conceptual_families": 2,
+    "external_rule_passes": 2,
+    "additional_external_conceptual_families": 2,
+    "explicit_scope_failures": 1,
+    "claim_of_global_published_measure_count": null
+  },
+  "six_score_dependence": {
+    "support_occupations": 444,
+    "first_two_weighted_pc_variance_share": 0.9611080958400992,
+    "interpretation": "dependence diagnostic only; not latent-variable validation"
+  },
+  "evidence": {
+    "core_architecture_matrix": {
+      "path": "yax/manuscript/v5_1/YAX_V51_ARCHITECTURE_MATRIX.md",
+      "sha256": "b8eac14bc9114a61f24d0fa41e7faa27f6baad5463bdfe8dfa360392ce5d792c"
+    },
+    "core_source_lineage": {
+      "path": "yax/measurement/CENSUS2018_EXPOSURE_VARIANTS.csv.lineage.json",
+      "sha256": "8fb808a25b4b71dc9f14d394c154253e831ba937cc7c382f5371101c575d1c69"
+    },
+    "external_admission_rule": {
+      "path": "yax/revision/referee_20260905/EXTERNAL_ARCHITECTURE_ADMISSION_RULE.md",
+      "sha256": "ac468cdfe1fb480130d3e82a8ae1925a8a3c0b8c1cffc5556cfc3aeeb8bb00de"
+    },
+    "external_admission_rows": {
+      "path": "yax/revision/referee_20260905/results/external/EXTERNAL_ARCHITECTURE_ADMISSION.csv",
+      "sha256": "85f01389fcb569c36e0dff32a329af0126f773bfea5f5873cbf7de26d83f27b8"
+    },
+    "external_receipt": {
+      "path": "yax/revision/referee_20260905/results/external/EXTERNAL_ARCHITECTURE_RECEIPT.json",
+      "sha256": "82f1f8f373006c90347e27414695fc907d3fe4635d8a0c519a21787b8a5abbfc"
+    },
+    "computerization_receipt": {
+      "path": "yax/measurement/COMPUTERIZATION_MEASURES_RECEIPT.json",
+      "sha256": "f7b34814bc78e3626218c0db213871c303667421d8764f1d49aff817f15615da"
+    },
+    "vintage_aware_lookup_receipt": {
+      "path": "yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP_RECEIPT.json",
+      "sha256": "a06f5618cf1e9a6872913818faad911145a76b1fcb143b1ca4a5d939ebd73e8a"
+    },
+    "novelty_audit": {
+      "path": "yax/literature/NOVELTY_AUDIT_2026-08-28.md",
+      "sha256": "40394475d72af95f288da04d3c17244d41bf7cc0f99cd34a0d461e742f3c0b8c"
+    },
+    "published_measurement_audit": {
+      "path": "yax/literature/PUBLISHED_MEASUREMENT_AUDIT_2026-08-28.md",
+      "sha256": "93d7eac6b3a2a53f6dc69a9ebab1720bdcdbd9bea4d265864dcc7deaea849c6a"
+    },
+    "architecture_structure_receipt": {
+      "path": "yax/revision/referee_round2_20260905/architecture/results/ARCHITECTURE_STRUCTURE_RECEIPT.json",
+      "sha256": "8843c69186239f5236ff5be0bc4916b6f204951acd65371ea31cdb96ccc7a990"
+    }
+  },
+  "limitations": [
+    "The census is bounded by the dated, already verified repository record.",
+    "No global count of published occupation-level AI-exposure measures is claimed.",
+    "PASS denotes historical operational admissibility, not construct validity or truth.",
+    "Candidates without a local score, mapping, support, and admission audit remain pending or unverified rather than failed."
+  ]
+}
