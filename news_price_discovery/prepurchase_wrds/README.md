@@ -10,18 +10,38 @@ quantities below are feasibility and precision inputs for deciding whether a
 small intraday validation batch is worth buying — not evidence about the
 ordering of price discovery within a day.
 
+**The decision and all results are in [REPORT.md](REPORT.md).** Verdict:
+`HOLD_PURCHASE_FOR_NAMED_INPUT`, on two named inputs — a written product
+specification confirmation covering the extended session, and a decision on
+basket-weight staleness.
+
 ## Running
+
+Stages are ordered; each reads the previous stage's checkpoints from
+`$PPW_WORK/out`. Run one at a time — one concurrent research job maximum.
 
 ```sh
 source config/env.sh          # module load + PPW_ARCHIVE / PPW_WORK
-python3 src/s7_00_write_test.py
-python3 src/s7_01_manifest_search.py
-python3 src/s7_02_round_trips.py
-python3 src/s7_03_selected_event.py
+
+python3 src/s7_00_write_test.py       # filesystem write test, before any compute
+python3 src/s7_01_manifest_search.py  # the single manifest search
+python3 src/s7_02_round_trips.py      # 8 raw-record round trips
+python3 src/s7_03_selected_event.py   # holdings extract + one worked event
+
+python3 src/s1_01_census.py           # event registry + ETF/security crosswalk
+python3 src/s1_02_clock_and_macro.py  # clock validation, sessions, USMPD registry
+python3 src/s2_01_portfolio.py        # basket tracking, report age, contributions
+python3 src/s3_01_delay.py            # Hou-Moskowitz D1
+python3 src/s3_02_response.py         # earnings-response curves
+python3 src/s4_01_macro.py            # rate response + Rigobon relevance check
+python3 src/s5_01_precision.py        # planning grid + acquisition manifest
+MPLCONFIGDIR=$PPW_WORK/.mplcache python3 src/s6_00_figures.py
 ```
 
+`MPLCONFIGDIR` must be redirected off `$HOME`, whose quota is exhausted.
+
 Licensed rows stay under `$PPW_WORK/out` on SCC and are never committed. The
-repository holds code, configuration, and aggregate results only.
+repository holds code, configuration, figures, and aggregate results only.
 
 ## Stage 7 findings that constrain everything after
 
