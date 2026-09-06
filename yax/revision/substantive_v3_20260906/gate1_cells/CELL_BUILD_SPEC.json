@@ -28,10 +28,10 @@
   },
   "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
   "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
-  "cell_build_spec_id": "yaxcellspec_v1_d921ee5ba28774910f84d90e155190cc5e24d8ba33869d96cebb2ea2261ac671",
+  "cell_build_spec_id": "yaxcellspec_v1_cc2ef1a97ff01b7bc57f9598b139c6c70315866121c85eaef2158827cace0aa7",
   "consumer_contract": {
-    "analysis_spec_id": "yaxnumspec_v1_98d113b751b4395300668cefc36305cdd797f4dc8ff8257f8dcc25bff5696db2",
-    "analysis_spec_sha256": "9b27c3b987a9f70bca3004dfe36141bb91e57890e9a481ecf23ee40271cceb82"
+    "analysis_spec_id": "yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec",
+    "analysis_spec_sha256": "86b1704dd774e89b395035dd8fdf5b0be6e18332c678d5943a44d4637e297f7a"
   },
   "created_at_utc": "2026-09-06T07:25:00Z",
   "freshness_contract": {
@@ -138,10 +138,10 @@
     "weight_application_count": 1
   },
   "runtime_code_hashes": {
-    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "38c528dd45b8f932100a78d751bc7b513e4e6596e1d635401dd4b73660bccfc3"
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc"
   },
   "runtime_contract": {
-    "command_template": "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-leaf <YAX_V3_RUN_ROOT>/gate1_cells_<UNIQUE_RUN_ID>",
+    "command_template": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-parent <YAX_V3_RUN_ROOT>",
     "environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
     "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
     "expected_runtime": {

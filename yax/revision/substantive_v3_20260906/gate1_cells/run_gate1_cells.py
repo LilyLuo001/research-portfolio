@@ -11,12 +11,14 @@ No row-level CPS record is ever written by this program.
 from __future__ import annotations
 
 import argparse
+import ctypes
 import csv
 from datetime import datetime, timezone
 import hashlib
 import importlib.metadata
 import json
 import math
+import errno
 import os
 from pathlib import Path
 import platform
@@ -36,6 +38,12 @@ HERE_REL = V3_REL / "gate1_cells"
 CELL_SPEC_REL = HERE_REL / "CELL_BUILD_SPEC.json"
 CANONICAL_SPEC_REL = V3_REL / "contracts/specs/canonical_baseline_reproduction_v2.json"
 NUMERICAL_SPEC_REL = V3_REL / "numerical_existence/ANALYSIS_SPEC.json"
+TARGET_SPEC_REL = V3_REL / "gate1_target/TARGET_AUDIT_SPEC.json"
+TARGET_CODE_REL = V3_REL / "gate1_target/run_exact_target_audit.py"
+NUMERICAL_CODE_REL = V3_REL / "numerical_existence/run_numerical_existence_audit.py"
+PRE_EXECUTION_AUTHORIZATION_REL = (
+    V3_REL / "gate1_transfer/PRE_EXECUTION_AUTHORIZATION.json"
+)
 
 R3_BASELINE_REL = Path(
     "yax/revision/substantive_r3_20260905/rebuilt_baseline/"
@@ -81,6 +89,7 @@ CELL_SCHEMA = "yax-numerical-cells-v1"
 RECEIPT_SCHEMA = "yax-numerical-cells-receipt-v1"
 CELL_SPEC_PREFIX = "yaxcellspec_v1_"
 NUMERICAL_SPEC_PREFIX = "yaxnumspec_v1_"
+TARGET_SPEC_PREFIX = "yaxtargetspec_v1_"
 CELLS_FILENAME = "aggregate_cells.csv"
 RECEIPT_FILENAME = "EXECUTION_RECEIPT.json"
 ASSIGNMENT_FILENAME = "ASSIGNMENT_FINGERPRINT.json"
@@ -114,11 +123,34 @@ REFERENCE_CODE_PATHS = {
 }
 MARCH_REPAIR_MONTHS = {f"{year}-03" for year in range(2017, 2022)}
 COMMAND_TEMPLATE = (
-    "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_cells/"
+    "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_cells/"
     "run_gate1_cells.py --repo-root <YAX_REPO_ROOT> "
     "--microdata <INPUT:ipums_cps_extract_9_wide> "
     "--repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> "
-    "--output-leaf <YAX_V3_RUN_ROOT>/gate1_cells_<UNIQUE_RUN_ID>"
+    "--output-parent <YAX_V3_RUN_ROOT>"
+)
+COMMAND_BINDING_SCHEMA = "yax-execution-command-binding-v2"
+COMMAND_BINDING_STATUS = "RUNNER_RECORDED_HASH_CONSISTENT"
+PRE_EXECUTION_AUTHORIZATION_SCHEMA = "yax-gate1-pre-execution-authorization-v1"
+PRE_EXECUTION_AUTHORIZATION_STATUS = "AUTHORIZED_FRESH_GATE1_EXECUTION"
+PRE_EXECUTION_AUTHORIZATION_PREFIX = "yaxgate1auth_v1_"
+MODULE_KEY = "cells"
+JOB_ID_PATTERN = re.compile(r"^[1-9][0-9]{0,19}$")
+RUN_ID_PATTERN = re.compile(r"^gate1_cells_sge_([1-9][0-9]{0,19})$")
+EXPECTED_PYTHON_RESOLVED_SHA256 = (
+    "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7"
+)
+EXPECTED_GIT_PATH = Path("/usr/bin/git")
+EXPECTED_GIT_SHA256 = (
+    "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e"
+)
+EXPECTED_GIT_VERSION = "git version 2.43.7"
+SANITIZED_GIT_ENVIRONMENT = {"PATH": "/usr/bin:/bin", "LC_ALL": "C"}
+IMPORT_AFFECTING_ENVIRONMENT = (
+    "PYTHONHOME", "PYTHONPATH", "PYTHONUSERBASE", "PYTHONSTARTUP",
+)
+EXPECTED_PRODUCTION_FLAGS = (
+    "--repo-root", "--microdata", "--repair-microdata", "--output-parent",
 )
 
 SECRET_PATTERNS = (
@@ -133,6 +165,13 @@ PRIVATE_PATH_PATTERNS = (
 
 class CellBuildError(RuntimeError):
     """Fail-closed aggregate-cell construction error."""
+
+
+class NonEchoingArgumentParser(argparse.ArgumentParser):
+    """Never echo a possibly sensitive argv token in a parser error."""
+
+    def error(self, message: str) -> None:
+        raise CellBuildError("production command-line grammar is invalid")
 
 
 def utc_now() -> str:
@@ -155,6 +194,137 @@ def canonical_bytes(value: Any) -> bytes:
         ensure_ascii=False,
         allow_nan=False,
     ).encode("utf-8")
+
+
+def scheduler_jobnumber(environ: dict[str, str]) -> str:
+    """Return the non-array Grid Engine job ID without persisting raw env."""
+    job = environ.get("JOB_ID")
+    alias = environ.get("SGE_JOB_ID")
+    if job is None or not JOB_ID_PATTERN.fullmatch(job):
+        raise CellBuildError("a canonical numeric SCC JOB_ID is required")
+    if alias is not None and alias != job:
+        raise CellBuildError("SGE_JOB_ID conflicts with JOB_ID")
+    task = environ.get("SGE_TASK_ID")
+    if task not in {None, "", "undefined"}:
+        raise CellBuildError("Grid Engine array jobs are not authorized")
+    return job
+
+
+def execution_runtime_authentication() -> dict[str, Any]:
+    """Verify the byte-pinned isolated Python and Git executables."""
+    if (
+        sys.flags.isolated != 1
+        or sys.flags.ignore_environment != 1
+        or sys.flags.no_user_site != 1
+        or not bool(getattr(sys.flags, "safe_path", False))
+    ):
+        raise CellBuildError("production Python must be invoked with isolated mode")
+    if any(os.environ.get(name) for name in IMPORT_AFFECTING_ENVIRONMENT):
+        raise CellBuildError("import-affecting Python environment variables are forbidden")
+    try:
+        python_path = Path(sys.executable).resolve(strict=True)
+    except OSError as exc:
+        raise CellBuildError("Python executable cannot be resolved") from exc
+    python_hash = sha256_file(python_path)
+    if python_hash != EXPECTED_PYTHON_RESOLVED_SHA256:
+        raise CellBuildError("resolved Python executable differs from the pinned runtime")
+    if platform.python_version() != "3.13.8":
+        raise CellBuildError("Python version differs from the pinned runtime")
+    if not EXPECTED_GIT_PATH.is_file() or EXPECTED_GIT_PATH.is_symlink():
+        raise CellBuildError("pinned Git executable is absent or indirect")
+    git_hash = sha256_file(EXPECTED_GIT_PATH)
+    if git_hash != EXPECTED_GIT_SHA256:
+        raise CellBuildError("Git executable differs from the pinned runtime")
+    completed = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "--version"],
+        env=SANITIZED_GIT_ENVIRONMENT,
+        text=True, capture_output=True, check=False,
+    )
+    if completed.returncode != 0 or completed.stdout.strip() != EXPECTED_GIT_VERSION:
+        raise CellBuildError("Git version differs from the pinned runtime")
+    return {
+        "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES",
+        "python_invocation": "<YAX_PYTHON_BIN>",
+        "python_resolved_executable_sha256": python_hash,
+        "python_version": platform.python_version(),
+        "isolated_mode": True,
+        "ignore_environment": True,
+        "no_user_site": True,
+        "safe_path": True,
+        "git_invocation": "<YAX_GIT_BIN>",
+        "git_resolved_executable_sha256": git_hash,
+        "git_version": EXPECTED_GIT_VERSION,
+        "import_affecting_environment_absent": True,
+    }
+
+
+def build_execution_command_binding(
+    args: argparse.Namespace,
+    raw_cli_argv: list[str],
+    original_argv: list[str],
+    environ: dict[str, str],
+) -> dict[str, Any]:
+    """Bind the receipt to the exact direct invocation, token by token."""
+    expected_length = 2 * len(EXPECTED_PRODUCTION_FLAGS)
+    if len(raw_cli_argv) != expected_length:
+        raise CellBuildError("production command-line grammar is invalid")
+    if raw_cli_argv[::2] != list(EXPECTED_PRODUCTION_FLAGS):
+        raise CellBuildError("production command-line grammar is invalid")
+    if any(not value or any(ord(char) < 32 for char in value) for value in raw_cli_argv[1::2]):
+        raise CellBuildError("production command-line values are invalid")
+    if len(original_argv) != len(raw_cli_argv) + 3 or original_argv[1] != "-I":
+        raise CellBuildError("production must use direct isolated-script invocation")
+    try:
+        invoked_python = Path(original_argv[0]).resolve(strict=True)
+        invoked_script = Path(original_argv[2]).resolve(strict=True)
+    except OSError as exc:
+        raise CellBuildError("production executable or runner cannot be resolved") from exc
+    if invoked_python != Path(sys.executable).resolve(strict=True):
+        raise CellBuildError("invoked Python differs from the running interpreter")
+    if invoked_script != Path(__file__).resolve():
+        raise CellBuildError("production runner path is not the authorized script")
+    executing_repo = Path(__file__).resolve().parents[4]
+    if args.repo_root.resolve(strict=True) != executing_repo:
+        raise CellBuildError("repo-root differs from the executing runner checkout")
+    if not os.path.samefile(
+        executing_repo / HERE_REL / "run_gate1_cells.py", Path(__file__).resolve()
+    ):
+        raise CellBuildError("executing runner is not the repo-root runner inode")
+    if original_argv[3:] != raw_cli_argv:
+        raise CellBuildError("raw process argv and script argv differ")
+    parsed_values = (
+        args.repo_root, args.microdata, args.repair_microdata, args.output_parent,
+    )
+    if any(Path(raw).resolve(strict=False) != Path(parsed).resolve(strict=False)
+           for raw, parsed in zip(raw_cli_argv[1::2], parsed_values)):
+        raise CellBuildError("parsed paths differ from the captured invocation")
+    job = scheduler_jobnumber(environ)
+    run_id = f"gate1_cells_sge_{job}"
+    if RUN_ID_PATTERN.fullmatch(run_id) is None:
+        raise CellBuildError("derived output run ID is invalid")
+    sanitized_argv = [
+        "<YAX_PYTHON_BIN>", "-I",
+        str(HERE_REL / "run_gate1_cells.py"),
+        "--repo-root", "<YAX_REPO_ROOT>",
+        "--microdata", "<INPUT:ipums_cps_extract_9_wide>",
+        "--repair-microdata", "<INPUT:ipums_cps_extract_11_march_basic_repair>",
+        "--output-parent", "<YAX_V3_RUN_ROOT>",
+    ]
+    core = {
+        "schema_version": COMMAND_BINDING_SCHEMA,
+        "status": COMMAND_BINDING_STATUS,
+        "module_key": MODULE_KEY,
+        "run_id": run_id,
+        "scheduler_jobnumber": job,
+        "sanitized_argv": sanitized_argv,
+        "sanitized_argv_sha256": hashlib.sha256(
+            canonical_bytes(sanitized_argv)
+        ).hexdigest(),
+    }
+    return {
+        **core,
+        "binding_sha256": hashlib.sha256(canonical_bytes(core)).hexdigest(),
+    }
 
 
 def _unique_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -197,6 +367,169 @@ def expected_numerical_spec_id(document: dict[str, Any]) -> str:
     clean = dict(document)
     clean.pop("audit_spec_id", None)
     return NUMERICAL_SPEC_PREFIX + hashlib.sha256(canonical_bytes(clean)).hexdigest()
+
+
+def expected_target_spec_id(document: dict[str, Any]) -> str:
+    clean = dict(document)
+    clean.pop("target_audit_spec_id", None)
+    return TARGET_SPEC_PREFIX + hashlib.sha256(canonical_bytes(clean)).hexdigest()
+
+
+def expected_pre_execution_authorization_id(document: dict[str, Any]) -> str:
+    clean = dict(document)
+    clean.pop("authorization_id", None)
+    return PRE_EXECUTION_AUTHORIZATION_PREFIX + hashlib.sha256(
+        canonical_bytes(clean)
+    ).hexdigest()
+
+
+def validate_pre_execution_authorization(
+    repo: Path,
+    canonical: dict[str, Any],
+    cell_spec: dict[str, Any],
+    code_sha256: str,
+    git_state: dict[str, Any],
+    source_hashes: dict[str, str],
+) -> dict[str, Any]:
+    """Require a separately committed, live execution-window authorization."""
+    path = repo / PRE_EXECUTION_AUTHORIZATION_REL
+    require_file(path, "pre-execution authorization")
+    document = load_json(path)
+    expected_fields = {
+        "schema_version", "status", "authorization_id", "issued_at_utc",
+        "not_before_utc", "not_after_utc", "authorized_implementation_commit",
+        "canonical_spec", "source_registry_sha256", "modules",
+    }
+    if set(document) != expected_fields:
+        raise CellBuildError("pre-execution authorization field set is not exact")
+    if (
+        document.get("schema_version") != PRE_EXECUTION_AUTHORIZATION_SCHEMA
+        or document.get("status") != PRE_EXECUTION_AUTHORIZATION_STATUS
+        or document.get("authorization_id")
+        != expected_pre_execution_authorization_id(document)
+    ):
+        raise CellBuildError("pre-execution authorization identity is invalid")
+    try:
+        issued = datetime.fromisoformat(
+            str(document["issued_at_utc"]).replace("Z", "+00:00")
+        )
+        not_before = datetime.fromisoformat(
+            str(document["not_before_utc"]).replace("Z", "+00:00")
+        )
+        not_after = datetime.fromisoformat(
+            str(document["not_after_utc"]).replace("Z", "+00:00")
+        )
+    except (TypeError, ValueError) as exc:
+        raise CellBuildError("pre-execution authorization timestamps are invalid") from exc
+    if any(value.tzinfo is None for value in (issued, not_before, not_after)):
+        raise CellBuildError("pre-execution authorization timestamps require offsets")
+    now = datetime.now(timezone.utc)
+    if not (issued <= not_before <= now <= not_after):
+        raise CellBuildError("execution is outside the authorized time window")
+    canonical_binding = {
+        "id": canonical["spec_id"],
+        "sha256": sha256_file(repo / CANONICAL_SPEC_REL),
+    }
+    if document.get("canonical_spec") != canonical_binding:
+        raise CellBuildError("authorization canonical binding differs")
+    source_registry_sha = hashlib.sha256(
+        canonical_bytes(source_hashes)
+    ).hexdigest()
+    if document.get("source_registry_sha256") != source_registry_sha:
+        raise CellBuildError("authorization source registry differs")
+    modules = document.get("modules")
+    if not isinstance(modules, dict) or set(modules) != {"cells", "target", "numerical"}:
+        raise CellBuildError("authorization module registry is incomplete")
+    target_spec = load_json(repo / TARGET_SPEC_REL)
+    numerical_spec = load_json(repo / NUMERICAL_SPEC_REL)
+    if target_spec.get("target_audit_spec_id") != expected_target_spec_id(target_spec):
+        raise CellBuildError("authorization target specification ID is invalid")
+    if numerical_spec.get("audit_spec_id") != expected_numerical_spec_id(numerical_spec):
+        raise CellBuildError("authorization numerical specification ID is invalid")
+    expected_modules = {
+        "cells": {
+            "typed_spec_id": cell_spec["cell_build_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / CELL_SPEC_REL),
+            "code_sha256": code_sha256,
+        },
+        "target": {
+            "typed_spec_id": target_spec["target_audit_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / TARGET_SPEC_REL),
+            "code_sha256": sha256_file(repo / TARGET_CODE_REL),
+        },
+        "numerical": {
+            "typed_spec_id": numerical_spec["audit_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / NUMERICAL_SPEC_REL),
+            "code_sha256": sha256_file(repo / NUMERICAL_CODE_REL),
+        },
+    }
+    if modules != expected_modules:
+        raise CellBuildError("authorization module registry binding differs")
+    expected_own = expected_modules["cells"]
+    head = git_state["git_commit"]
+    implementation = document.get("authorized_implementation_commit")
+    if (
+        not isinstance(implementation, str)
+        or not re.fullmatch(r"[0-9a-f]{40}", implementation)
+        or implementation == head
+    ):
+        raise CellBuildError("authorization implementation commit is invalid")
+    ancestor = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "merge-base", "--is-ancestor", implementation, head],
+        cwd=repo, env=SANITIZED_GIT_ENVIRONMENT, capture_output=True, check=False,
+    )
+    committed = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "show", f"{head}:{PRE_EXECUTION_AUTHORIZATION_REL}"],
+        cwd=repo, env=SANITIZED_GIT_ENVIRONMENT, capture_output=True, check=False,
+    )
+    last_commit = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "log", "-1", "--format=%H", "--",
+         str(PRE_EXECUTION_AUTHORIZATION_REL)],
+        cwd=repo, env=SANITIZED_GIT_ENVIRONMENT, text=True,
+        capture_output=True, check=False,
+    )
+    parent_commit = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "rev-parse", "HEAD^"],
+        cwd=repo, env=SANITIZED_GIT_ENVIRONMENT, text=True,
+        capture_output=True, check=False,
+    )
+    changed_paths = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "diff-tree", "--no-commit-id", "--name-only",
+         "-r", "HEAD"],
+        cwd=repo, env=SANITIZED_GIT_ENVIRONMENT, text=True,
+        capture_output=True, check=False,
+    )
+    if (
+        ancestor.returncode != 0
+        or committed.returncode != 0
+        or committed.stdout != path.read_bytes()
+        or last_commit.returncode != 0
+        or last_commit.stdout.strip() != head
+        or parent_commit.returncode != 0
+        or parent_commit.stdout.strip() != implementation
+        or changed_paths.returncode != 0
+        or changed_paths.stdout.splitlines()
+        != [str(PRE_EXECUTION_AUTHORIZATION_REL)]
+    ):
+        raise CellBuildError(
+            "authorization is not the sole file in a separate current commit"
+        )
+    return {
+        "schema_version": PRE_EXECUTION_AUTHORIZATION_SCHEMA,
+        "status": PRE_EXECUTION_AUTHORIZATION_STATUS,
+        "authorization_id": document["authorization_id"],
+        "authorization_file_sha256": sha256_file(path),
+        "authorization_git_commit": head,
+        "authorized_implementation_commit": implementation,
+        "issued_at_utc": document["issued_at_utc"],
+        "not_before_utc": document["not_before_utc"],
+        "not_after_utc": document["not_after_utc"],
+        "module_key": "cells",
+        "typed_spec_id": expected_own["typed_spec_id"],
+        "typed_spec_sha256": expected_own["typed_spec_sha256"],
+        "code_sha256": code_sha256,
+        "source_registry_sha256": source_registry_sha,
+    }
 
 
 def support_hash(codes: Iterable[str]) -> str:
@@ -468,8 +801,9 @@ def authenticate_runtime(repo: Path, cell_spec: dict[str, Any]) -> dict[str, Any
 
 def git_command(repo: Path, *arguments: str) -> str:
     completed = subprocess.run(
-        ["git", *arguments],
+        [str(EXPECTED_GIT_PATH), *arguments],
         cwd=repo,
+        env=SANITIZED_GIT_ENVIRONMENT,
         text=True,
         capture_output=True,
         check=False,
@@ -481,8 +815,9 @@ def git_command(repo: Path, *arguments: str) -> str:
 
 def git_blob_sha256(repo: Path, commit: str, relative: str) -> str:
     completed = subprocess.run(
-        ["git", "show", f"{commit}:{relative}"],
+        [str(EXPECTED_GIT_PATH), "show", f"{commit}:{relative}"],
         cwd=repo,
+        env=SANITIZED_GIT_ENVIRONMENT,
         capture_output=True,
         check=False,
     )
@@ -507,8 +842,9 @@ def authenticate_git(repo: Path, cell_spec: dict[str, Any]) -> dict[str, Any]:
     if not re.fullmatch(r"[0-9a-f]{40}", head) or not re.fullmatch(r"[0-9a-f]{40}", tree):
         raise CellBuildError("Git HEAD or tree identifier is invalid")
     ancestor = subprocess.run(
-        ["git", "merge-base", "--is-ancestor", required_ancestor, head],
+        [str(EXPECTED_GIT_PATH), "merge-base", "--is-ancestor", required_ancestor, head],
         cwd=repo,
+        env=SANITIZED_GIT_ENVIRONMENT,
         capture_output=True,
         check=False,
     )
@@ -1469,21 +1805,92 @@ def reserve_staging_leaf(output_leaf: Path, repo: Path) -> Path:
     return staging
 
 
-def atomic_publish(staging: Path, output_leaf: Path) -> None:
+def atomic_publish(
+    staging: Path,
+    output_leaf: Path,
+    expected_filenames: set[str] | None = None,
+) -> tuple[str, ...]:
     if os.path.lexists(output_leaf):
         raise CellBuildError("output leaf appeared during construction; refusing overwrite")
-    for path in staging.iterdir():
-        if path.is_file():
+    observed_filenames: set[str] = set()
+    for directory, dirnames, filenames in os.walk(
+        staging, topdown=False, followlinks=False
+    ):
+        base = Path(directory)
+        if base != staging or dirnames:
+            raise CellBuildError("staging output must be a flat file set")
+        for name in filenames:
+            path = base / name
+            if path.is_symlink() or not path.is_file():
+                raise CellBuildError("staging contains a non-regular output")
+            if path.stat().st_nlink != 1:
+                raise CellBuildError("staging contains a multiply linked output")
+            observed_filenames.add(name)
             fsync_file(path)
-    directory_fd = os.open(staging, os.O_RDONLY)
+        for name in dirnames:
+            if (base / name).is_symlink():
+                raise CellBuildError("staging contains a symlink directory")
+        directory_fd = os.open(base, os.O_RDONLY)
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
+    if expected_filenames is not None and observed_filenames != expected_filenames:
+        raise CellBuildError("staging output inventory differs from the exact contract")
+    libc = ctypes.CDLL(None, use_errno=True)
+    source_bytes = os.fsencode(staging)
+    target_bytes = os.fsencode(output_leaf)
+    if sys.platform.startswith("linux") and hasattr(libc, "renameat2"):
+        function = libc.renameat2
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-100, source_bytes, -100, target_bytes, 1)
+    elif sys.platform == "darwin" and hasattr(libc, "renameatx_np"):
+        function = libc.renameatx_np
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-2, source_bytes, -2, target_bytes, 0x00000004)
+    else:
+        raise CellBuildError("platform lacks atomic no-replace directory rename")
+    if result != 0:
+        error = ctypes.get_errno()
+        if error in {errno.EEXIST, errno.ENOTEMPTY}:
+            raise CellBuildError("output leaf appeared during publication; refusing overwrite")
+        raise CellBuildError(f"atomic no-replace publication failed with errno {error}")
+    # The rename above is the commit point. A post-commit durability attempt
+    # is best effort and cannot be raised as an ambiguous pre-publication error.
+    warnings: list[str] = []
     try:
-        os.fsync(directory_fd)
-    finally:
-        os.close(directory_fd)
-    os.replace(staging, output_leaf)
+        parent_fd = os.open(output_leaf.parent, os.O_RDONLY)
+        try:
+            os.fsync(parent_fd)
+        finally:
+            os.close(parent_fd)
+    except OSError as error:
+        warnings.append(f"parent_fsync_errno_{error.errno}")
+    return tuple(warnings)
 
 
-def execute(args: argparse.Namespace) -> dict[str, Any]:
+def execute(
+    args: argparse.Namespace,
+) -> dict[str, Any]:
+    job = scheduler_jobnumber(dict(os.environ))
+    derived_output_leaf = args.output_parent / f"gate1_cells_sge_{job}"
+    supplied_output_leaf = getattr(args, "output_leaf", derived_output_leaf)
+    if supplied_output_leaf.resolve(strict=False) != derived_output_leaf.resolve(strict=False):
+        raise CellBuildError("output leaf is not derived from the scheduler job ID")
+    args.output_leaf = derived_output_leaf
+    execution_binding = build_execution_command_binding(
+        args, list(sys.argv[1:]), list(getattr(sys, "orig_argv", [])),
+        dict(os.environ),
+    )
+    execution_runtime = execution_runtime_authentication()
     repo = args.repo_root.resolve()
     if not (repo / ".git").exists():
         # A linked worktree has a .git file, while an ordinary checkout has a directory.
@@ -1505,6 +1912,14 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         consumer = validate_consumer_contract(repo, cell_spec, canonical)
         runtime = authenticate_runtime(repo, cell_spec)
         git_state = authenticate_git(repo, cell_spec)
+        source_hashes = canonical_source_hashes(canonical)
+        pre_execution_authorization = validate_pre_execution_authorization(
+            repo, canonical, cell_spec,
+            code_hashes["runtime"][str(HERE_REL / "run_gate1_cells.py")],
+            git_state, source_hashes,
+        )
+        # No protected input byte is opened before the complete execution
+        # authorization has been authenticated above.
         source_hashes, authenticated_source_hashes = authenticate_sources(
             repo, canonical, args.microdata, args.repair_microdata
         )
@@ -1597,6 +2012,9 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
                 "the empty map proves that historical reference code is not imported at runtime"
             ),
             "command_template": COMMAND_TEMPLATE,
+            "execution_command_binding": execution_binding,
+            "execution_runtime_authentication": execution_runtime,
+            "pre_execution_authorization": pre_execution_authorization,
             "runtime_environment_lock_sha256": runtime["environment_lock_sha256"],
             "runtime_environment_lock_path": runtime["environment_lock_path"],
             "runtime_contract_sha256": runtime["runtime_contract_sha256"],
@@ -1667,7 +2085,51 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         }
         assert_sanitized(receipt)
         write_json(staging / RECEIPT_FILENAME, receipt)
-        atomic_publish(staging, output_leaf)
+        # Re-open and re-authenticate every authorization-bound input at the
+        # publication boundary. Reusing start-of-run objects would not detect
+        # a concurrent source, code, specification, or HEAD change.
+        final_cell_spec, final_canonical = load_and_validate_specs(repo)
+        final_code_hashes = authenticate_code(repo, final_cell_spec)
+        final_consumer = validate_consumer_contract(
+            repo, final_cell_spec, final_canonical
+        )
+        final_git_state = authenticate_git(repo, final_cell_spec)
+        final_source_registry = canonical_source_hashes(final_canonical)
+        boundary_pre_execution_authorization = validate_pre_execution_authorization(
+            repo, final_canonical, final_cell_spec,
+            final_code_hashes["runtime"][str(HERE_REL / "run_gate1_cells.py")],
+            final_git_state, final_source_registry,
+        )
+        if boundary_pre_execution_authorization != pre_execution_authorization:
+            raise CellBuildError(
+                "pre-execution authorization changed before final source authentication"
+            )
+        final_source_hashes, final_authenticated_source_hashes = authenticate_sources(
+            repo, final_canonical, args.microdata, args.repair_microdata
+        )
+        final_pre_execution_authorization = validate_pre_execution_authorization(
+            repo, final_canonical, final_cell_spec,
+            final_code_hashes["runtime"][str(HERE_REL / "run_gate1_cells.py")],
+            final_git_state, final_source_hashes,
+        )
+        if (
+            final_pre_execution_authorization != pre_execution_authorization
+            or final_cell_spec != cell_spec
+            or final_canonical != canonical
+            or final_code_hashes != code_hashes
+            or final_consumer != consumer
+            or final_git_state != git_state
+            or final_source_hashes != source_hashes
+            or final_authenticated_source_hashes != authenticated_source_hashes
+        ):
+            raise CellBuildError(
+                "authorization-bound execution state changed during cell construction"
+            )
+        post_commit_warnings = atomic_publish(
+            staging,
+            output_leaf,
+            {CELLS_FILENAME, RECEIPT_FILENAME, ASSIGNMENT_FILENAME},
+        )
         return {
             "status": receipt["status"],
             "schema_version": receipt["aggregate_schema_version"],
@@ -1677,6 +2139,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
             "cells_sha256": receipt["cells_sha256"],
             "assignment_fingerprint_sha256": fingerprint,
             "output_leaf": "<YAX_GATE1_CELLS_LEAF>",
+            "post_commit_cleanup_warnings": list(post_commit_warnings),
         }
     except Exception:
         if staging.exists():
@@ -1685,24 +2148,34 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def parser() -> argparse.ArgumentParser:
-    value = argparse.ArgumentParser(description=__doc__)
+    value = NonEchoingArgumentParser(description=__doc__, allow_abbrev=False)
     value.add_argument("--repo-root", type=Path, required=True)
     value.add_argument("--microdata", type=Path, required=True)
     value.add_argument("--repair-microdata", type=Path, required=True)
-    value.add_argument("--output-leaf", type=Path, required=True)
+    value.add_argument("--output-parent", type=Path, required=True)
     return value
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = parser().parse_args(argv)
-    replacements = {
-        str(args.microdata.resolve(strict=False)): "<INPUT:ipums_cps_extract_9_wide>",
-        str(args.repair_microdata.resolve(strict=False)):
-            "<INPUT:ipums_cps_extract_11_march_basic_repair>",
-        str(args.repo_root.resolve(strict=False)): "<YAX_REPO_ROOT>",
-        str(args.output_leaf.resolve(strict=False)): "<YAX_GATE1_CELLS_LEAF>",
-    }
+    replacements: dict[str, str] = {}
     try:
+        if argv is not None:
+            raise CellBuildError(
+                "production entry point does not accept a substituted argv source"
+            )
+        raw_cli_argv = list(sys.argv[1:])
+        args = parser().parse_args(raw_cli_argv)
+        job = scheduler_jobnumber(dict(os.environ))
+        args.output_leaf = args.output_parent / f"gate1_cells_sge_{job}"
+        replacements = {
+            str(args.microdata.resolve(strict=False)):
+                "<INPUT:ipums_cps_extract_9_wide>",
+            str(args.repair_microdata.resolve(strict=False)):
+                "<INPUT:ipums_cps_extract_11_march_basic_repair>",
+            str(args.repo_root.resolve(strict=False)): "<YAX_REPO_ROOT>",
+            str(args.output_parent.resolve(strict=False)): "<YAX_V3_RUN_ROOT>",
+            str(args.output_leaf.resolve(strict=False)): "<YAX_GATE1_CELLS_LEAF>",
+        }
         result = execute(args)
     except Exception as exc:
         message = sanitize_text(str(exc), replacements)

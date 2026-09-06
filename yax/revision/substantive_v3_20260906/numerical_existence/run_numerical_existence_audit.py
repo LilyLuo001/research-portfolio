@@ -15,6 +15,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
 import pathlib
 import platform
 import re
@@ -50,18 +51,59 @@ CELL_SCHEMA = "yax-numerical-cells-v1"
 RECEIPT_SCHEMA = "yax-numerical-cells-receipt-v1"
 SPEC_PREFIX = "yaxspec_v1_"
 AUDIT_SPEC_PREFIX = "yaxnumspec_v1_"
+PRE_EXECUTION_AUTHORIZATION_SCHEMA = "yax-gate1-pre-execution-authorization-v1"
+PRE_EXECUTION_AUTHORIZATION_STATUS = "AUTHORIZED_FRESH_GATE1_EXECUTION"
+PRE_EXECUTION_AUTHORIZATION_PREFIX = "yaxgate1auth_v1_"
 CELL_SPEC_PREFIX = "yaxcellspec_v1_"
 CELL_SPEC_SCHEMA = "yax-gate1-cell-build-spec-v1"
 MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 CANONICAL_SPEC_SHA256 = "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
 COMMAND_TEMPLATE = (
-    "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/numerical_existence/"
+    "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/numerical_existence/"
     "run_numerical_existence_audit.py --canonical-spec <YAX_REPO_ROOT>/yax/revision/"
     "substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json "
     "--analysis-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/"
-    "numerical_existence/ANALYSIS_SPEC.json --cells <NUMERICAL_CELL_LEAF>/aggregate_cells.csv "
-    "--cells-receipt <NUMERICAL_CELL_LEAF>/EXECUTION_RECEIPT.json "
-    "--output-dir <YAX_V3_RUN_ROOT>/gate1_numerical_existence_<RUN_ID>"
+    "numerical_existence/ANALYSIS_SPEC.json --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv "
+    "--cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json "
+    "--legacy-engine <YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py "
+    "--output-parent <YAX_V3_RUN_ROOT>"
+)
+COMMAND_BINDING_SCHEMA = "yax-execution-command-binding-v2"
+COMMAND_BINDING_STATUS = "RUNNER_RECORDED_HASH_CONSISTENT"
+MODULE_KEY = "numerical"
+JOB_ID_PATTERN = re.compile(r"^[1-9][0-9]{0,19}$")
+RUN_ID_PATTERN = re.compile(r"^gate1_numerical_sge_([1-9][0-9]{0,19})$")
+EXPECTED_PYTHON_RESOLVED_SHA256 = (
+    "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7"
+)
+EXPECTED_GIT_PATH = pathlib.Path("/usr/bin/git")
+EXPECTED_GIT_SHA256 = (
+    "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e"
+)
+EXPECTED_GIT_VERSION = "git version 2.43.7"
+SANITIZED_GIT_ENVIRONMENT = {"PATH": "/usr/bin:/bin", "LC_ALL": "C"}
+IMPORT_AFFECTING_ENVIRONMENT = (
+    "PYTHONHOME", "PYTHONPATH", "PYTHONUSERBASE", "PYTHONSTARTUP",
+)
+EXPECTED_PRODUCTION_FLAGS = (
+    "--canonical-spec", "--analysis-spec", "--cells", "--cells-receipt",
+    "--legacy-engine", "--output-parent",
+)
+PRE_EXECUTION_AUTHORIZATION_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/gate1_transfer/"
+    "PRE_EXECUTION_AUTHORIZATION.json"
+)
+CELL_SPEC_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json"
+)
+TARGET_SPEC_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/gate1_target/TARGET_AUDIT_SPEC.json"
+)
+CELL_CODE_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py"
+)
+TARGET_CODE_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py"
 )
 HIGHS_CERTIFIED_OPTIONS = {
     "presolve": False,
@@ -87,6 +129,13 @@ SENSITIVE_ARTIFACT_PATTERNS = (
 
 class AuditBlocked(RuntimeError):
     """Raised before fitting when an authenticated input contract fails."""
+
+
+class NonEchoingArgumentParser(argparse.ArgumentParser):
+    """Never echo a possibly sensitive argv token in a parser error."""
+
+    def error(self, message: str) -> None:
+        raise AuditBlocked("production command-line grammar is invalid")
 
 
 @dataclass
@@ -205,6 +254,173 @@ def canonical_bytes(value: Any) -> bytes:
     ).encode("utf-8")
 
 
+def scheduler_jobnumber(environ: dict[str, str]) -> str:
+    job = environ.get("JOB_ID")
+    alias = environ.get("SGE_JOB_ID")
+    if job is None or not JOB_ID_PATTERN.fullmatch(job):
+        raise AuditBlocked("a canonical numeric SCC JOB_ID is required")
+    if alias is not None and alias != job:
+        raise AuditBlocked("SGE_JOB_ID conflicts with JOB_ID")
+    if environ.get("SGE_TASK_ID") not in {None, "", "undefined"}:
+        raise AuditBlocked("Grid Engine array jobs are not authorized")
+    return job
+
+
+def require_job_derived_output_leaf(
+    args: argparse.Namespace, run_id: str,
+) -> None:
+    expected = pathlib.Path(args.output_parent) / run_id
+    observed = getattr(args, "output_dir", None)
+    if (
+        observed is None
+        or pathlib.Path(observed).resolve(strict=False)
+        != expected.resolve(strict=False)
+    ):
+        raise AuditBlocked(
+            "output leaf is not exactly the scheduler-job-derived destination"
+        )
+
+
+def execution_runtime_authentication() -> dict[str, Any]:
+    if (
+        sys.flags.isolated != 1
+        or sys.flags.ignore_environment != 1
+        or sys.flags.no_user_site != 1
+        or not bool(getattr(sys.flags, "safe_path", False))
+    ):
+        raise AuditBlocked("production Python must be invoked with isolated mode")
+    if any(os.environ.get(name) for name in IMPORT_AFFECTING_ENVIRONMENT):
+        raise AuditBlocked("import-affecting Python environment variables are forbidden")
+    if os.environ.get("OMP_NUM_THREADS") != "1":
+        raise AuditBlocked("OMP_NUM_THREADS=1 is required for the numerical audit")
+    try:
+        python_path = pathlib.Path(sys.executable).resolve(strict=True)
+    except OSError as exc:
+        raise AuditBlocked("Python executable cannot be resolved") from exc
+    python_hash = sha256_file(python_path)
+    if python_hash != EXPECTED_PYTHON_RESOLVED_SHA256:
+        raise AuditBlocked("resolved Python executable differs from the pinned runtime")
+    if platform.python_version() != "3.13.8":
+        raise AuditBlocked("Python version differs from the pinned runtime")
+    if not EXPECTED_GIT_PATH.is_file() or EXPECTED_GIT_PATH.is_symlink():
+        raise AuditBlocked("pinned Git executable is absent or indirect")
+    git_hash = sha256_file(EXPECTED_GIT_PATH)
+    if git_hash != EXPECTED_GIT_SHA256:
+        raise AuditBlocked("Git executable differs from the pinned runtime")
+    completed = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "--version"],
+        env=SANITIZED_GIT_ENVIRONMENT,
+        text=True, capture_output=True, check=False,
+    )
+    if completed.returncode != 0 or completed.stdout.strip() != EXPECTED_GIT_VERSION:
+        raise AuditBlocked("Git version differs from the pinned runtime")
+    return {
+        "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES",
+        "python_invocation": "<YAX_PYTHON_BIN>",
+        "python_resolved_executable_sha256": python_hash,
+        "python_version": platform.python_version(),
+        "isolated_mode": True,
+        "ignore_environment": True,
+        "no_user_site": True,
+        "safe_path": True,
+        "git_invocation": "<YAX_GIT_BIN>",
+        "git_resolved_executable_sha256": git_hash,
+        "git_version": EXPECTED_GIT_VERSION,
+        "import_affecting_environment_absent": True,
+        "omp_num_threads": "1",
+    }
+
+
+def build_execution_command_binding(
+    args: argparse.Namespace,
+    raw_cli_argv: list[str],
+    original_argv: list[str],
+    environ: dict[str, str],
+) -> dict[str, Any]:
+    if len(raw_cli_argv) != 2 * len(EXPECTED_PRODUCTION_FLAGS):
+        raise AuditBlocked("production command-line grammar is invalid")
+    if raw_cli_argv[::2] != list(EXPECTED_PRODUCTION_FLAGS):
+        raise AuditBlocked("production command-line grammar is invalid")
+    if any(not value or any(ord(char) < 32 for char in value) for value in raw_cli_argv[1::2]):
+        raise AuditBlocked("production command-line values are invalid")
+    if len(original_argv) != len(raw_cli_argv) + 3 or original_argv[1] != "-I":
+        raise AuditBlocked("production must use direct isolated-script invocation")
+    try:
+        invoked_python = pathlib.Path(original_argv[0]).resolve(strict=True)
+        invoked_script = pathlib.Path(original_argv[2]).resolve(strict=True)
+    except OSError as exc:
+        raise AuditBlocked("production executable or runner cannot be resolved") from exc
+    if invoked_python != pathlib.Path(sys.executable).resolve(strict=True):
+        raise AuditBlocked("invoked Python differs from the running interpreter")
+    if invoked_script != pathlib.Path(__file__).resolve():
+        raise AuditBlocked("production runner path is not the authorized script")
+    if original_argv[3:] != raw_cli_argv:
+        raise AuditBlocked("raw process argv and script argv differ")
+    parsed_values = (
+        args.canonical_spec, args.analysis_spec, args.cells, args.cells_receipt,
+        args.legacy_engine, args.output_parent,
+    )
+    if any(pathlib.Path(raw).resolve(strict=False) != pathlib.Path(parsed).resolve(strict=False)
+           for raw, parsed in zip(raw_cli_argv[1::2], parsed_values)):
+        raise AuditBlocked("parsed paths differ from the captured invocation")
+    repo = pathlib.Path(__file__).resolve().parents[4]
+    expected_paths = (
+        repo / "yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json",
+        repo / "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+        pathlib.Path(args.cells).resolve(strict=False),
+        pathlib.Path(args.cells_receipt).resolve(strict=False),
+        repo / "dax/memo/power_calcs/young_relative_employment_power.py",
+        pathlib.Path(args.output_parent).resolve(strict=False),
+    )
+    if any(pathlib.Path(value).resolve(strict=False) != expected.resolve(strict=False)
+           for value, expected in zip(parsed_values, expected_paths)):
+        raise AuditBlocked("production invocation path roles differ from the locked contract")
+    cells = pathlib.Path(args.cells).resolve(strict=False)
+    cells_receipt = pathlib.Path(args.cells_receipt).resolve(strict=False)
+    if (
+        cells.name != "aggregate_cells.csv"
+        or cells_receipt.name != "EXECUTION_RECEIPT.json"
+        or cells.parent != cells_receipt.parent
+    ):
+        raise AuditBlocked("numerical inputs are not the exact colocated cell artifacts")
+    job = scheduler_jobnumber(environ)
+    run_id = f"gate1_numerical_sge_{job}"
+    if RUN_ID_PATTERN.fullmatch(run_id) is None:
+        raise AuditBlocked("derived output run ID is invalid")
+    require_job_derived_output_leaf(args, run_id)
+    sanitized_argv = [
+        "<YAX_PYTHON_BIN>", "-I",
+        "yax/revision/substantive_v3_20260906/numerical_existence/"
+        "run_numerical_existence_audit.py",
+        "--canonical-spec",
+        "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/"
+        "canonical_baseline_reproduction_v2.json",
+        "--analysis-spec",
+        "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/"
+        "ANALYSIS_SPEC.json",
+        "--cells", "<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv",
+        "--cells-receipt", "<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json",
+        "--legacy-engine",
+        "<YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py",
+        "--output-parent", "<YAX_V3_RUN_ROOT>",
+    ]
+    core = {
+        "schema_version": COMMAND_BINDING_SCHEMA,
+        "status": COMMAND_BINDING_STATUS,
+        "module_key": MODULE_KEY,
+        "run_id": run_id,
+        "scheduler_jobnumber": job,
+        "sanitized_argv": sanitized_argv,
+        "sanitized_argv_sha256": hashlib.sha256(
+            canonical_bytes(sanitized_argv)
+        ).hexdigest(),
+    }
+    return {
+        **core,
+        "binding_sha256": hashlib.sha256(canonical_bytes(core)).hexdigest(),
+    }
+
+
 def runtime_payload() -> dict[str, Any]:
     libc_name, libc_version = platform.libc_ver()
     return {
@@ -251,6 +467,152 @@ def expected_cell_spec_id(document: dict[str, Any]) -> str:
     clean = dict(document)
     clean.pop("cell_build_spec_id", None)
     return CELL_SPEC_PREFIX + hashlib.sha256(canonical_bytes(clean)).hexdigest()
+
+
+def expected_target_spec_id(document: dict[str, Any]) -> str:
+    clean = dict(document)
+    clean.pop("target_audit_spec_id", None)
+    return "yaxtargetspec_v1_" + hashlib.sha256(canonical_bytes(clean)).hexdigest()
+
+
+def expected_pre_execution_authorization_id(document: dict[str, Any]) -> str:
+    clean = dict(document)
+    clean.pop("authorization_id", None)
+    return PRE_EXECUTION_AUTHORIZATION_PREFIX + hashlib.sha256(
+        canonical_bytes(clean)
+    ).hexdigest()
+
+
+def validate_pre_execution_authorization(
+    repo: pathlib.Path,
+    canonical: dict[str, Any],
+    analysis: dict[str, Any],
+) -> dict[str, Any]:
+    path = repo / PRE_EXECUTION_AUTHORIZATION_REL
+    if not path.is_file() or path.is_symlink():
+        raise AuditBlocked("pre-execution authorization is absent or indirect")
+    document = load_json(path)
+    if set(document) != {
+        "schema_version", "status", "authorization_id", "issued_at_utc",
+        "not_before_utc", "not_after_utc", "authorized_implementation_commit",
+        "canonical_spec", "source_registry_sha256", "modules",
+    }:
+        raise AuditBlocked("pre-execution authorization field set is not exact")
+    if (
+        document.get("schema_version") != PRE_EXECUTION_AUTHORIZATION_SCHEMA
+        or document.get("status") != PRE_EXECUTION_AUTHORIZATION_STATUS
+        or document.get("authorization_id")
+        != expected_pre_execution_authorization_id(document)
+    ):
+        raise AuditBlocked("pre-execution authorization identity is invalid")
+    try:
+        issued = datetime.fromisoformat(str(document["issued_at_utc"]).replace("Z", "+00:00"))
+        not_before = datetime.fromisoformat(str(document["not_before_utc"]).replace("Z", "+00:00"))
+        not_after = datetime.fromisoformat(str(document["not_after_utc"]).replace("Z", "+00:00"))
+    except (TypeError, ValueError) as exc:
+        raise AuditBlocked("pre-execution authorization timestamps are invalid") from exc
+    if any(value.tzinfo is None for value in (issued, not_before, not_after)):
+        raise AuditBlocked("pre-execution authorization timestamps require offsets")
+    if not (issued <= not_before <= datetime.now(timezone.utc) <= not_after):
+        raise AuditBlocked("execution is outside the authorized time window")
+    if document.get("canonical_spec") != {
+        "id": canonical["spec_id"], "sha256": CANONICAL_SPEC_SHA256,
+    }:
+        raise AuditBlocked("authorization canonical binding differs")
+    source_hashes = {
+        row["source_id"]: row["sha256"] for row in canonical["data"]["sources"]
+    }
+    source_registry_sha = hashlib.sha256(
+        canonical_bytes(source_hashes)
+    ).hexdigest()
+    if document.get("source_registry_sha256") != source_registry_sha:
+        raise AuditBlocked("authorization source registry differs")
+    modules = document.get("modules")
+    if not isinstance(modules, dict) or set(modules) != {"cells", "target", "numerical"}:
+        raise AuditBlocked("authorization module registry is incomplete")
+    cell_spec = load_json(repo / CELL_SPEC_REL)
+    target_spec = load_json(repo / TARGET_SPEC_REL)
+    if cell_spec.get("cell_build_spec_id") != expected_cell_spec_id(cell_spec):
+        raise AuditBlocked("authorization cell specification ID is invalid")
+    if target_spec.get("target_audit_spec_id") != expected_target_spec_id(target_spec):
+        raise AuditBlocked("authorization target specification ID is invalid")
+    expected_modules = {
+        "cells": {
+            "typed_spec_id": cell_spec["cell_build_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / CELL_SPEC_REL),
+            "code_sha256": sha256_file(repo / CELL_CODE_REL),
+        },
+        "target": {
+            "typed_spec_id": target_spec["target_audit_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / TARGET_SPEC_REL),
+            "code_sha256": sha256_file(repo / TARGET_CODE_REL),
+        },
+        "numerical": {
+            "typed_spec_id": analysis["audit_spec_id"],
+            "typed_spec_sha256": analysis["_loaded_file_sha256"],
+            "code_sha256": sha256_file(pathlib.Path(__file__).resolve()),
+        },
+    }
+    if modules != expected_modules:
+        raise AuditBlocked("authorization module registry binding differs")
+    expected_own = expected_modules["numerical"]
+    def git_run(arguments: list[str], *, text: bool = False):
+        return subprocess.run(
+            [str(EXPECTED_GIT_PATH), *arguments], cwd=repo,
+            env=SANITIZED_GIT_ENVIRONMENT, text=text,
+            capture_output=True, check=False,
+        )
+    head_result = git_run(["rev-parse", "HEAD"], text=True)
+    if head_result.returncode != 0:
+        raise AuditBlocked("authorization Git HEAD cannot be resolved")
+    head = head_result.stdout.strip()
+    implementation = document.get("authorized_implementation_commit")
+    if (
+        not isinstance(implementation, str)
+        or not re.fullmatch(r"[0-9a-f]{40}", implementation)
+        or implementation == head
+    ):
+        raise AuditBlocked("authorization implementation commit is invalid")
+    ancestor = git_run(["merge-base", "--is-ancestor", implementation, head])
+    committed = git_run(["show", f"{head}:{PRE_EXECUTION_AUTHORIZATION_REL}"])
+    last_commit = git_run(
+        ["log", "-1", "--format=%H", "--", str(PRE_EXECUTION_AUTHORIZATION_REL)],
+        text=True,
+    )
+    parent_commit = git_run(["rev-parse", "HEAD^"], text=True)
+    changed_paths = git_run(
+        ["diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"],
+        text=True,
+    )
+    if (
+        ancestor.returncode != 0 or committed.returncode != 0
+        or committed.stdout != path.read_bytes()
+        or last_commit.returncode != 0 or last_commit.stdout.strip() != head
+        or parent_commit.returncode != 0
+        or parent_commit.stdout.strip() != implementation
+        or changed_paths.returncode != 0
+        or changed_paths.stdout.splitlines()
+        != [str(PRE_EXECUTION_AUTHORIZATION_REL)]
+    ):
+        raise AuditBlocked(
+            "authorization is not the sole file in a separate current commit"
+        )
+    return {
+        "schema_version": PRE_EXECUTION_AUTHORIZATION_SCHEMA,
+        "status": PRE_EXECUTION_AUTHORIZATION_STATUS,
+        "authorization_id": document["authorization_id"],
+        "authorization_file_sha256": sha256_file(path),
+        "authorization_git_commit": head,
+        "authorized_implementation_commit": implementation,
+        "issued_at_utc": document["issued_at_utc"],
+        "not_before_utc": document["not_before_utc"],
+        "not_after_utc": document["not_after_utc"],
+        "module_key": "numerical",
+        "typed_spec_id": expected_own["typed_spec_id"],
+        "typed_spec_sha256": expected_own["typed_spec_sha256"],
+        "code_sha256": expected_own["code_sha256"],
+        "source_registry_sha256": source_registry_sha,
+    }
 
 
 def load_json(path: pathlib.Path) -> dict[str, Any]:
@@ -653,14 +1015,17 @@ def current_git_receipt_checks(
     """Bind a cell receipt to the exact committed clean checkout consuming it."""
     try:
         head = subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=repo_root, text=True
+            [str(EXPECTED_GIT_PATH), "rev-parse", "HEAD"], cwd=repo_root,
+            env=SANITIZED_GIT_ENVIRONMENT, text=True,
         ).strip()
         tree = subprocess.check_output(
-            ["git", "rev-parse", "HEAD^{tree}"], cwd=repo_root, text=True
+            [str(EXPECTED_GIT_PATH), "rev-parse", "HEAD^{tree}"], cwd=repo_root,
+            env=SANITIZED_GIT_ENVIRONMENT, text=True,
         ).strip()
         status = subprocess.check_output(
-            ["git", "status", "--porcelain=v1", "--untracked-files=all"],
+            [str(EXPECTED_GIT_PATH), "status", "--porcelain=v1", "--untracked-files=all"],
             cwd=repo_root,
+            env=SANITIZED_GIT_ENVIRONMENT,
             text=True,
         ).strip()
     except (OSError, subprocess.CalledProcessError):
@@ -668,10 +1033,11 @@ def current_git_receipt_checks(
     execution = analysis["input_contract"]["cell_builder_execution_contract"]
     ancestor = subprocess.run(
         [
-            "git", "merge-base", "--is-ancestor",
+            str(EXPECTED_GIT_PATH), "merge-base", "--is-ancestor",
             execution["git_required_ancestor_commit"], head,
         ],
         cwd=repo_root,
+        env=SANITIZED_GIT_ENVIRONMENT,
         capture_output=True,
         check=False,
     )
@@ -681,7 +1047,8 @@ def current_git_receipt_checks(
         path = repo_root / relative
         try:
             blob = subprocess.check_output(
-                ["git", "show", f"{head}:{relative}"], cwd=repo_root
+                [str(EXPECTED_GIT_PATH), "show", f"{head}:{relative}"],
+                cwd=repo_root, env=SANITIZED_GIT_ENVIRONMENT,
             )
         except (OSError, subprocess.CalledProcessError):
             artifact_match = False
@@ -2497,33 +2864,532 @@ def resolve_extended_likelihood_face(
 
 
 class BinomialObjective:
-    def __init__(self, design: sparse.csr_matrix, young: np.ndarray, total: np.ndarray):
+    def __init__(
+        self,
+        design: sparse.csr_matrix,
+        young: np.ndarray,
+        total: np.ndarray,
+        offset: np.ndarray | None = None,
+    ):
         self.design = design
         self.young = np.asarray(young, float)
         self.total = np.asarray(total, float)
+        self.offset = (
+            np.zeros(len(self.young), dtype=float)
+            if offset is None else np.asarray(offset, float)
+        )
+        if self.offset.shape != self.young.shape:
+            raise AuditBlocked("binomial objective offset has the wrong shape")
+        if not np.isfinite(self.offset).all():
+            raise AuditBlocked("binomial objective offset is nonfinite")
         self.scale = max(float(self.total.sum()), 1.0)
 
     def raw_nll(self, theta: np.ndarray) -> float:
-        eta = np.asarray(self.design @ theta).reshape(-1)
+        eta = self.offset + np.asarray(self.design @ theta).reshape(-1)
         return float(np.sum(self.total * np.logaddexp(0.0, eta) - self.young * eta))
 
     def function(self, theta: np.ndarray) -> float:
         return self.raw_nll(theta) / self.scale
 
     def gradient(self, theta: np.ndarray) -> np.ndarray:
-        eta = np.asarray(self.design @ theta).reshape(-1)
+        eta = self.offset + np.asarray(self.design @ theta).reshape(-1)
         residual = self.total * expit(eta) - self.young
         return np.asarray(self.design.T @ residual).reshape(-1) / self.scale
 
     def hessp(self, theta: np.ndarray, direction: np.ndarray) -> np.ndarray:
-        eta = np.asarray(self.design @ theta).reshape(-1)
+        eta = self.offset + np.asarray(self.design @ theta).reshape(-1)
         probability = expit(eta)
         weight = self.total * probability * (1.0 - probability)
         projection = np.asarray(self.design @ direction).reshape(-1)
         return np.asarray(self.design.T @ (weight * projection)).reshape(-1) / self.scale
 
     def probability(self, theta: np.ndarray) -> np.ndarray:
-        return expit(np.asarray(self.design @ theta).reshape(-1))
+        return expit(self.offset + np.asarray(self.design @ theta).reshape(-1))
+
+
+def design_only_diagonal_reparameterization(
+    objective: BinomialObjective,
+) -> tuple[BinomialObjective, np.ndarray, dict[str, Any]]:
+    """Normalize columns using the fixed p=.5 geometric information.
+
+    If ``phi = scale * theta``, then ``X theta = (X / scale) phi``.
+    This changes only numerical coordinates; the likelihood, fitted means and
+    every original-coordinate target are exactly unchanged.  The scale uses no
+    fitted probability or outcome share beyond the already-declared totals.
+    """
+    geometric_weight = objective.total * 0.25 / objective.scale
+    diagonal = np.asarray(
+        objective.design.multiply(objective.design).T @ geometric_weight
+    ).reshape(-1)
+    if (
+        diagonal.shape != (objective.design.shape[1],)
+        or not np.isfinite(diagonal).all()
+        or np.any(diagonal <= 0.0)
+    ):
+        raise AuditBlocked(
+            "design-only diagonal optimizer reparameterization is nonpositive"
+        )
+    parameter_scale = np.sqrt(diagonal)
+    transformed_design = (
+        objective.design @ sparse.diags(1.0 / parameter_scale)
+    ).tocsr()
+    transformed = BinomialObjective(
+        transformed_design,
+        objective.young,
+        objective.total,
+        objective.offset,
+    )
+    scale_payload = "".join(f"{float(value).hex()}\n" for value in parameter_scale)
+    audit = {
+        "status": "DESIGN_ONLY_P_HALF_DIAGONAL_REPARAMETERIZATION",
+        "definition": "sqrt(diag(X' diag(total/4) X) / sum(total))",
+        "column_count": int(len(parameter_scale)),
+        "parameter_scale_min": float(parameter_scale.min()),
+        "parameter_scale_max": float(parameter_scale.max()),
+        "parameter_scale_sha256": hashlib.sha256(
+            scale_payload.encode("utf-8")
+        ).hexdigest(),
+        "uses_fitted_probabilities": False,
+        "changes_linear_predictor_or_likelihood": False,
+    }
+    return transformed, parameter_scale, audit
+
+
+def original_coordinate_score_diagnostics(
+    objective: BinomialObjective,
+    theta: np.ndarray,
+    probability: np.ndarray | None = None,
+) -> dict[str, Any]:
+    probability = (
+        objective.probability(theta)
+        if probability is None else np.asarray(probability, float)
+    )
+    gradient = objective.gradient(theta)
+    raw_gradient = gradient * objective.scale
+    information_weight = objective.total * probability * (1.0 - probability)
+    hessian_diagonal = np.asarray(
+        objective.design.multiply(objective.design).T @ information_weight
+    ).reshape(-1)
+    standardized_score = np.divide(
+        np.abs(raw_gradient), np.sqrt(hessian_diagonal),
+        out=np.full_like(raw_gradient, np.inf), where=hessian_diagonal > 0,
+    )
+    coordinate_step = np.divide(
+        np.abs(raw_gradient), hessian_diagonal,
+        out=np.full_like(raw_gradient, np.inf), where=hessian_diagonal > 0,
+    )
+    return {
+        "raw_gradient": raw_gradient,
+        "gradient": gradient,
+        "hessian_diagonal": hessian_diagonal,
+        "standardized_score": standardized_score,
+        "coordinate_step": coordinate_step,
+        "raw_gradient_infinity_norm": float(np.max(np.abs(raw_gradient))),
+        "gradient_infinity_norm_per_total": float(np.max(np.abs(gradient))),
+        "standardized_score_max_abs": float(np.max(standardized_score)),
+        "coordinate_newton_step_max_abs": float(np.max(coordinate_step)),
+    }
+
+
+def refined_sparse_linear_solve(
+    factor: Any,
+    matrix: sparse.csc_matrix,
+    rhs: np.ndarray,
+    relative_tolerance: float,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Sparse direct solve with original-system iterative refinement.
+
+    The right-hand-side-relative residual is required to meet the declared
+    tolerance except where ordinary floating-point sparse dot products cannot
+    represent that threshold.  That numerical floor is computed from the
+    standard ``gamma_k`` bound using the maximum row sparsity and the observed
+    absolute matrix-vector product; it is not a fitted or scientific tolerance.
+    The normwise backward-error requirement is never relaxed.
+    """
+    rhs = np.asarray(rhs, float)
+    matrix_norm = float(
+        np.max(np.asarray(np.abs(matrix).sum(axis=1)).reshape(-1))
+    )
+    solution = np.asarray(factor.solve(rhs), float)
+    refinements = 0
+    for _ in range(8):
+        residual = np.asarray(matrix @ solution).reshape(-1) - rhs
+        rhs_norm = float(np.max(np.abs(rhs)))
+        solution_norm = float(np.max(np.abs(solution)))
+        residual_norm = float(np.max(np.abs(residual)))
+        rhs_relative = (
+            residual_norm / rhs_norm if rhs_norm > 0.0
+            else (0.0 if residual_norm == 0.0 else math.inf)
+        )
+        denominator = matrix_norm * solution_norm + rhs_norm
+        backward = (
+            residual_norm / denominator if denominator > 0.0
+            else (0.0 if residual_norm == 0.0 else math.inf)
+        )
+        if rhs_relative <= relative_tolerance and backward <= relative_tolerance:
+            break
+        correction = np.asarray(factor.solve(-residual), float)
+        solution = solution + correction
+        refinements += 1
+    residual = np.asarray(matrix @ solution).reshape(-1) - rhs
+    rhs_norm = float(np.max(np.abs(rhs)))
+    solution_norm = float(np.max(np.abs(solution)))
+    residual_norm = float(np.max(np.abs(residual)))
+    rhs_relative = (
+        residual_norm / rhs_norm if rhs_norm > 0.0
+        else (0.0 if residual_norm == 0.0 else math.inf)
+    )
+    denominator = matrix_norm * solution_norm + rhs_norm
+    backward = (
+        residual_norm / denominator if denominator > 0.0
+        else (0.0 if residual_norm == 0.0 else math.inf)
+    )
+    csr_matrix = matrix.tocsr()
+    maximum_row_nonzeros = int(np.max(np.diff(csr_matrix.indptr), initial=0))
+    machine_epsilon = float(np.finfo(float).eps)
+    gamma_denominator = 1.0 - maximum_row_nonzeros * machine_epsilon
+    gamma_k = (
+        maximum_row_nonzeros * machine_epsilon / gamma_denominator
+        if gamma_denominator > 0.0 else math.inf
+    )
+    absolute_product_norm = float(np.max(
+        np.asarray(abs(csr_matrix) @ np.abs(solution)).reshape(-1),
+        initial=0.0,
+    ))
+    rhs_relative_roundoff_floor = (
+        gamma_k * (absolute_product_norm + rhs_norm) / rhs_norm
+        if rhs_norm > 0.0 else 0.0
+    )
+    effective_rhs_relative_tolerance = max(
+        relative_tolerance, rhs_relative_roundoff_floor,
+    )
+    passed = bool(
+        np.isfinite(solution).all() and np.isfinite(residual).all()
+        and rhs_relative <= effective_rhs_relative_tolerance
+        and backward <= relative_tolerance
+    )
+    return solution, {
+        "status": (
+            "PASS_REFINED_SPARSE_ORIGINAL_SYSTEM_SOLVE"
+            if passed else "BLOCKED_REFINED_SPARSE_ORIGINAL_SYSTEM_SOLVE"
+        ),
+        "iterative_refinement_steps": refinements,
+        "rhs_infinity_norm": rhs_norm,
+        "solution_infinity_norm": solution_norm,
+        "matrix_infinity_norm": matrix_norm,
+        "residual_infinity_norm": residual_norm,
+        "rhs_relative_residual": rhs_relative,
+        "rhs_relative_roundoff_floor": rhs_relative_roundoff_floor,
+        "effective_rhs_relative_tolerance": effective_rhs_relative_tolerance,
+        "maximum_row_nonzeros": maximum_row_nonzeros,
+        "floating_point_gamma_k": gamma_k,
+        "normwise_backward_error": backward,
+        "relative_tolerance": relative_tolerance,
+        "backward_error_tolerance_relaxed": False,
+        "rhs_relative_tolerance_uses_only_declared_or_roundoff_floor": True,
+    }
+
+
+def scaled_original_hessian_direction(
+    objective: BinomialObjective,
+    theta: np.ndarray,
+    information_weight: np.ndarray,
+    linear_solve_relative_tolerance: float,
+) -> tuple[np.ndarray, dict[str, Any], dict[str, Any]]:
+    """Solve ``H d = -g`` in diagonally scaled original coordinates.
+
+    The returned residual is recomputed against the unscaled original system;
+    a solver status is never accepted as a certificate.
+    """
+    weight = np.asarray(information_weight, float)
+    if (
+        weight.shape != objective.total.shape
+        or not np.isfinite(weight).all()
+        or np.any(weight <= 0.0)
+    ):
+        raise AuditBlocked("full-Hessian certificate has invalid information weights")
+    raw_gradient = objective.gradient(theta) * objective.scale
+    hessian = (
+        objective.design.T @ objective.design.multiply(weight[:, None])
+    ).tocsc()
+    hessian = ((hessian + hessian.T) * 0.5).tocsc()
+    diagonal = np.asarray(hessian.diagonal(), float)
+    if (
+        diagonal.shape != raw_gradient.shape
+        or not np.isfinite(diagonal).all()
+        or np.any(diagonal <= 0.0)
+    ):
+        raise AuditBlocked("full-Hessian certificate has nonpositive diagonal")
+    root_diagonal = np.sqrt(diagonal)
+    inverse_scale = sparse.diags(1.0 / root_diagonal)
+    scaled_hessian = (inverse_scale @ hessian @ inverse_scale).tocsc()
+    scaled_rhs = -raw_gradient / root_diagonal
+    try:
+        factor = splu(scaled_hessian)
+    except RuntimeError as error:
+        raise AuditBlocked("full-Hessian certificate system is singular") from error
+    scaled_direction, solve_audit = refined_sparse_linear_solve(
+        factor, scaled_hessian, scaled_rhs,
+        linear_solve_relative_tolerance,
+    )
+    direction = np.asarray(scaled_direction, float) / root_diagonal
+    residual = np.asarray(hessian @ direction).reshape(-1) + raw_gradient
+    standardized_residual = np.abs(residual) / root_diagonal
+    descent = float(raw_gradient @ direction)
+    decrement_squared = float(-descent)
+    return direction, {
+        "linear_system": "diagonally_scaled_original_full_Hessian",
+        "linear_system_residual_max_abs": float(np.max(np.abs(residual))),
+        "linear_system_standardized_residual_max_abs": float(
+            np.max(standardized_residual)
+        ),
+        "scaled_rhs_infinity_norm": solve_audit["rhs_infinity_norm"],
+        "scaled_solution_infinity_norm": solve_audit["solution_infinity_norm"],
+        "scaled_matrix_infinity_norm": solve_audit["matrix_infinity_norm"],
+        "scaled_residual_infinity_norm": solve_audit["residual_infinity_norm"],
+        "scaled_rhs_relative_residual": solve_audit["rhs_relative_residual"],
+        "normwise_backward_error": solve_audit["normwise_backward_error"],
+        "linear_solve_relative_tolerance": linear_solve_relative_tolerance,
+        "finite_direction_and_residual": bool(
+            np.isfinite(direction).all()
+            and solve_audit["status"]
+            == "PASS_REFINED_SPARSE_ORIGINAL_SYSTEM_SOLVE"
+        ),
+        "solve_audit": solve_audit,
+        "spectral_lower_bound_used": False,
+        "dense_conversion_used": False,
+        "linear_solve_residual_pass": bool(
+            np.isfinite(direction).all()
+            and solve_audit["status"]
+            == "PASS_REFINED_SPARSE_ORIGINAL_SYSTEM_SOLVE"
+        ),
+        "directional_derivative": descent,
+        "newton_decrement_squared": decrement_squared,
+        "half_newton_decrement_squared": decrement_squared / 2.0,
+        "direction_max_abs": float(np.max(np.abs(direction))),
+    }, {
+        "root_diagonal": root_diagonal,
+        "scaled_hessian": scaled_hessian,
+        "scaled_rhs": scaled_rhs,
+        "scaled_direction": scaled_direction,
+        "factor": factor,
+    }
+
+
+def deterministic_decreasing_step(
+    objective: BinomialObjective,
+    theta: np.ndarray,
+    direction: np.ndarray,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Select the largest attained decrease on a fixed dyadic grid.
+
+    Returning the first nonincrease can select a point near the far root of a
+    convex line restriction and badly understate the attainable improvement.
+    Evaluating the complete machine-scale grid makes that failure impossible.
+    """
+    base = objective.raw_nll(theta)
+    if not math.isfinite(base):
+        raise AuditBlocked("candidate raw likelihood is nonfinite")
+    candidates: list[tuple[float, int, float, np.ndarray]] = []
+    for halvings in range(65):
+        step = math.ldexp(1.0, -halvings)
+        candidate = np.asarray(theta, float) + step * direction
+        value = objective.raw_nll(candidate)
+        if math.isfinite(value):
+            candidates.append((value, halvings, step, candidate))
+    improving = [row for row in candidates if row[0] <= base]
+    if improving:
+        value, halvings, step, candidate = min(
+            improving, key=lambda row: (row[0], row[1]),
+        )
+        return candidate, {
+            "status": "PASS_MAXIMUM_DECREASE_ON_COMPLETE_DYADIC_GRID",
+            "step_fraction": step,
+            "halvings": halvings,
+            "finite_grid_points": len(candidates),
+            "evaluated_halvings_inclusive": [0, 64],
+            "selection_rule": "minimum raw NLL; fewer halvings breaks exact ties",
+            "raw_negative_log_likelihood_before": base,
+            "raw_negative_log_likelihood_after": value,
+            "actual_raw_negative_log_likelihood_decrease": float(base - value),
+        }
+    raise AuditBlocked("deterministic full-Hessian direction has no finite decrease")
+
+
+def fisher_scoring_start(
+    objective: BinomialObjective,
+    start: np.ndarray,
+    focal_column: int,
+    standardized_score_tolerance: float,
+    linear_solve_relative_tolerance: float,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Construct the L-BFGS-B-only p=.5 full-Hessian start."""
+    direction, solve, _context = scaled_original_hessian_direction(
+        objective, start, objective.total * 0.25,
+        linear_solve_relative_tolerance,
+    )
+    if (
+        not math.isfinite(solve["newton_decrement_squared"])
+        or solve["newton_decrement_squared"] < 0.0
+        or solve["linear_system_standardized_residual_max_abs"]
+        > standardized_score_tolerance
+        or solve["linear_solve_residual_pass"] is not True
+    ):
+        raise AuditBlocked("p=.5 Fisher-scoring start failed its original-system solve")
+    candidate, line_search = deterministic_decreasing_step(
+        objective, start, direction,
+    )
+    return candidate, {
+        "status": "PASS_L_BFGS_B_ONLY_P_HALF_FULL_HESSIAN_START",
+        "shared_with_other_solver": False,
+        "uses_fitted_probabilities": False,
+        "solve": solve,
+        "line_search": line_search,
+        "focal_displacement": float(candidate[focal_column] - start[focal_column]),
+        "parameter_displacement_max_abs": float(
+            np.max(np.abs(candidate - start))
+        ),
+    }
+
+
+def full_hessian_stationarity_certificate(
+    objective: BinomialObjective,
+    theta: np.ndarray,
+    target_functionals: dict[str, np.ndarray],
+    standardized_score_tolerance: float,
+    target_coefficient_tolerance: float,
+    raw_likelihood_tolerance: float,
+    linear_solve_relative_tolerance: float,
+) -> dict[str, Any]:
+    """Certify a solver candidate against joint weak directions.
+
+    The candidate is not replaced by the Newton trial.  The trial is used only
+    to measure an actual attainable likelihood decrease and target correction.
+    """
+    probability = objective.probability(theta)
+    information_weight = objective.total * probability * (1.0 - probability)
+    direction, solve, context = scaled_original_hessian_direction(
+        objective, theta, information_weight,
+        linear_solve_relative_tolerance,
+    )
+    _trial, line_search = deterministic_decreasing_step(
+        objective, theta, direction,
+    )
+    root_diagonal = context["root_diagonal"]
+    scaled_hessian = context["scaled_hessian"]
+    scaled_rhs = context["scaled_rhs"]
+    scaled_direction = context["scaled_direction"]
+    factor = context["factor"]
+    target_audits: dict[str, dict[str, Any]] = {}
+    for label, raw_functional in target_functionals.items():
+        functional = np.asarray(raw_functional, float)
+        if functional.shape != theta.shape or not np.isfinite(functional).all():
+            raise AuditBlocked(
+                f"full-Hessian certificate target has invalid shape: {label}"
+            )
+        scaled_functional = functional / root_diagonal
+        adjoint_solution, adjoint_solve = refined_sparse_linear_solve(
+            factor, scaled_hessian, scaled_functional,
+            linear_solve_relative_tolerance,
+        )
+        primal_correction = float(scaled_functional @ scaled_direction)
+        adjoint_correction = float(adjoint_solution @ scaled_rhs)
+        agreement = float(abs(primal_correction - adjoint_correction))
+        conservative_correction = float(max(
+            abs(primal_correction), abs(adjoint_correction),
+        ))
+        target_audits[label] = {
+            "primal_target_correction": primal_correction,
+            "adjoint_target_correction": adjoint_correction,
+            "primal_adjoint_absolute_disagreement": agreement,
+            "conservative_absolute_target_correction": conservative_correction,
+            "target_coefficient_tolerance": target_coefficient_tolerance,
+            "adjoint_solve": adjoint_solve,
+            "adjoint_solve_pass": bool(
+                adjoint_solve["status"]
+                == "PASS_REFINED_SPARSE_ORIGINAL_SYSTEM_SOLVE"
+            ),
+            "primal_adjoint_agreement_pass": bool(
+                agreement <= target_coefficient_tolerance
+            ),
+            "target_correction_pass": bool(
+                conservative_correction <= target_coefficient_tolerance
+            ),
+        }
+    corrections = {
+        label: audit["primal_target_correction"]
+        for label, audit in target_audits.items()
+    }
+    maximum_nominal_target_correction = max((
+        audit["conservative_absolute_target_correction"]
+        for audit in target_audits.values()
+    ), default=0.0)
+    maximum_primal_adjoint_disagreement = max((
+        audit["primal_adjoint_absolute_disagreement"]
+        for audit in target_audits.values()
+    ), default=0.0)
+    checks = {
+        "finite_nonnegative_newton_decrement": bool(
+            math.isfinite(solve["newton_decrement_squared"])
+            and solve["newton_decrement_squared"] >= 0.0
+        ),
+        "original_system_residual": bool(
+            solve["linear_solve_residual_pass"] is True
+            and
+            solve["linear_system_standardized_residual_max_abs"]
+            <= standardized_score_tolerance
+        ),
+        "joint_newton_decrement": bool(
+            solve["half_newton_decrement_squared"]
+            <= raw_likelihood_tolerance
+        ),
+        "actual_raw_likelihood_decrease": bool(
+            line_search["actual_raw_negative_log_likelihood_decrease"]
+            <= raw_likelihood_tolerance
+        ),
+        "all_declared_target_adjoint_solves": all(
+            audit["adjoint_solve_pass"]
+            for audit in target_audits.values()
+        ),
+        "all_declared_target_primal_adjoint_agreements": all(
+            audit["primal_adjoint_agreement_pass"]
+            for audit in target_audits.values()
+        ),
+        "all_declared_target_corrections": all(
+            audit["target_correction_pass"]
+            for audit in target_audits.values()
+        ),
+    }
+    passed = all(checks.values())
+    return {
+        "status": (
+            "PASS_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE"
+            if passed else
+            "BLOCKED_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE"
+        ),
+        "candidate_left_untouched": True,
+        "solve": solve,
+        "line_search": line_search,
+        "target_newton_corrections": corrections,
+        "target_primal_adjoint_audits": target_audits,
+        "maximum_absolute_target_newton_correction": (
+            maximum_nominal_target_correction
+        ),
+        "maximum_primal_adjoint_absolute_disagreement": (
+            maximum_primal_adjoint_disagreement
+        ),
+        "newton_decrement_squared": solve["newton_decrement_squared"],
+        "half_newton_decrement_squared": solve[
+            "half_newton_decrement_squared"
+        ],
+        "certificate_method": (
+            "sparse_primal_newton_plus_declared_target_adjoint_solves_"
+            "with_original_system_residuals"
+        ),
+        "spectral_lower_bound_used": False,
+        "dense_conversion_used": False,
+        "checks": checks,
+    }
 
 
 def fit_exact_solver(
@@ -2534,12 +3400,21 @@ def fit_exact_solver(
     gradient_tolerance: float,
     standardized_score_tolerance: float,
     focal_column: int,
+    target_functionals: dict[str, np.ndarray],
+    target_coefficient_tolerance: float,
+    raw_likelihood_tolerance: float,
+    use_fisher_scoring_start: bool,
+    linear_solve_relative_tolerance: float,
 ) -> tuple[dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]]:
+    transformed, parameter_scale, reparameterization = (
+        design_only_diagonal_reparameterization(objective)
+    )
     trajectory: list[dict[str, Any]] = []
     previous: np.ndarray | None = None
 
-    def callback(theta: np.ndarray) -> None:
+    def callback(phi: np.ndarray) -> None:
         nonlocal previous
+        theta = np.asarray(phi, float) / parameter_scale
         gradient = objective.gradient(theta)
         change = None if previous is None else theta - previous
         trajectory.append({
@@ -2557,40 +3432,64 @@ def fit_exact_solver(
         previous = np.asarray(theta, float).copy()
 
     options: dict[str, Any]
-    kwargs: dict[str, Any] = {"fun": objective.function, "jac": objective.gradient}
+    # Disable the optimizers' coordinatewise gradient shortcut.  Acceptance is
+    # determined below in original coordinates, including the full-Hessian
+    # weak-direction certificate.  A positive internal gtol can stop at zero
+    # in a nearly collinear but rank-identified target direction.
+    internal_gtol = 0.0
+    kwargs: dict[str, Any] = {
+        "fun": transformed.function, "jac": transformed.gradient,
+    }
     if method == "L-BFGS-B":
         options = {
             "maxiter": max_iterations, "maxls": 50,
-            "gtol": gradient_tolerance / 1000.0, "ftol": 1e-15,
+            "gtol": internal_gtol, "ftol": 0.0,
             "maxcor": 20,
         }
     elif method == "trust-ncg":
-        kwargs["hessp"] = objective.hessp
-        options = {"maxiter": max_iterations, "gtol": gradient_tolerance / 100.0}
+        kwargs["hessp"] = transformed.hessp
+        options = {"maxiter": max_iterations, "gtol": internal_gtol}
     else:
         raise ValueError(method)
+    optimizer_start = np.asarray(start, float)
+    if use_fisher_scoring_start:
+        if method != "L-BFGS-B":
+            raise AuditBlocked("p=.5 Fisher start is authorized only for L-BFGS-B")
+        optimizer_start, start_audit = fisher_scoring_start(
+            objective, optimizer_start, focal_column,
+            standardized_score_tolerance,
+            linear_solve_relative_tolerance,
+        )
+    else:
+        start_audit = {
+            "status": "DECLARED_ZERO_OR_CALLER_START_UNCHANGED",
+            "shared_with_other_solver": False,
+        }
     result = minimize(
-        x0=np.asarray(start, float), method=method, callback=callback,
+        x0=optimizer_start * parameter_scale,
+        method=method, callback=callback,
         options=options, **kwargs,
     )
-    theta = np.asarray(result.x, float)
+    phi = np.asarray(result.x, float)
+    theta = phi / parameter_scale
     probability = objective.probability(theta)
-    gradient = objective.gradient(theta)
-    raw_gradient = gradient * objective.scale
-    information_weight = objective.total * probability * (1.0 - probability)
-    hessian_diagonal = np.asarray(
-        objective.design.multiply(objective.design).T @ information_weight
-    ).reshape(-1)
-    standardized_score = np.divide(
-        np.abs(raw_gradient), np.sqrt(hessian_diagonal),
-        out=np.full_like(raw_gradient, np.inf), where=hessian_diagonal > 0,
-    )
-    coordinate_step = np.divide(
-        np.abs(raw_gradient), hessian_diagonal,
-        out=np.full_like(raw_gradient, np.inf), where=hessian_diagonal > 0,
-    )
+    score = original_coordinate_score_diagnostics(objective, theta, probability)
+    try:
+        stationarity = full_hessian_stationarity_certificate(
+            objective, theta, target_functionals,
+            standardized_score_tolerance, target_coefficient_tolerance,
+            raw_likelihood_tolerance,
+            linear_solve_relative_tolerance,
+        )
+    except AuditBlocked as error:
+        stationarity = {
+            "status": "BLOCKED_ORIGINAL_FULL_HESSIAN_CERTIFICATE_EXCEPTION",
+            "candidate_left_untouched": True,
+            "error_type": type(error).__name__,
+            "message": str(error),
+        }
     if not trajectory or trajectory[-1]["iteration"] != int(getattr(result, "nit", -1)):
-        callback(theta)
+        callback(phi)
     diagnostics = {
         "method": method,
         "scipy_success": bool(result.success),
@@ -2601,10 +3500,31 @@ def fit_exact_solver(
         "gradient_evaluations": int(getattr(result, "njev", 0)),
         "objective_per_total": objective.function(theta),
         "raw_negative_log_likelihood": objective.raw_nll(theta),
-        "raw_gradient_infinity_norm": float(np.max(np.abs(raw_gradient))),
-        "gradient_infinity_norm_per_total": float(np.max(np.abs(gradient))),
-        "standardized_score_max_abs": float(np.max(standardized_score)),
-        "coordinate_newton_step_max_abs": float(np.max(coordinate_step)),
+        "raw_gradient_infinity_norm": score["raw_gradient_infinity_norm"],
+        "gradient_infinity_norm_per_total": score[
+            "gradient_infinity_norm_per_total"
+        ],
+        "standardized_score_max_abs": score["standardized_score_max_abs"],
+        "coordinate_newton_step_max_abs": score[
+            "coordinate_newton_step_max_abs"
+        ],
+        "transformed_gradient_infinity_norm": float(np.max(np.abs(
+            transformed.gradient(phi)
+        ))),
+        "internal_transformed_gradient_tolerance": float(internal_gtol),
+        "optimizer_reparameterization": reparameterization,
+        "optimizer_reparameterization_status": reparameterization["status"],
+        "optimizer_parameter_scale_min": reparameterization[
+            "parameter_scale_min"
+        ],
+        "optimizer_parameter_scale_max": reparameterization[
+            "parameter_scale_max"
+        ],
+        "optimizer_parameter_scale_sha256": reparameterization[
+            "parameter_scale_sha256"
+        ],
+        "optimizer_start": start_audit,
+        "full_hessian_stationarity_certificate": stationarity,
         "parameter_max_abs": float(np.max(np.abs(theta))),
         "focal_target": float(theta[focal_column]),
         "probability_exact_zero": int(np.sum(probability == 0.0)),
@@ -2618,8 +3538,16 @@ def fit_exact_solver(
     diagnostics["numerically_valid"] = bool(
         np.isfinite(theta).all() and np.isfinite(probability).all() and
         diagnostics["gradient_infinity_norm_per_total"] <= gradient_tolerance and
-        diagnostics["standardized_score_max_abs"] <= standardized_score_tolerance
+        diagnostics["standardized_score_max_abs"] <= standardized_score_tolerance and
+        stationarity["status"]
+        == "PASS_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE"
     )
+    diagnostics["acceptance_source"] = (
+        "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE"
+        if diagnostics["numerically_valid"] else
+        "BLOCKED_ORIGINAL_COORDINATE_DECLARED_KKT"
+    )
+    diagnostics["scipy_status_is_not_acceptance_evidence"] = True
     return diagnostics, theta, probability, trajectory
 
 
@@ -2628,11 +3556,32 @@ def compare_solvers(
     right: dict[str, Any], right_theta: np.ndarray, right_probability: np.ndarray,
     nuisance_columns: int, focal_target: int, tolerances: dict[str, Any],
     reported_target_weights: dict[str, np.ndarray] | None = None,
+    row_identifiers: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
+    if (
+        left.get("method") != "L-BFGS-B"
+        or right.get("method") != "trust-ncg"
+    ):
+        raise AuditBlocked(
+            "solver comparison requires the declared independent algorithm pair"
+        )
     beta_left = left_theta[nuisance_columns:]
     beta_right = right_theta[nuisance_columns:]
     difference = left_probability - right_probability
+    argmax = int(np.argmax(np.abs(difference)))
+    if row_identifiers is not None and len(row_identifiers) != len(difference):
+        raise AuditBlocked("solver-comparison row identifiers have the wrong length")
+    argmax_record = {
+        "row_position_zero_based": argmax,
+        "left_fitted_probability": float(left_probability[argmax]),
+        "right_fitted_probability": float(right_probability[argmax]),
+        "signed_difference_left_minus_right": float(difference[argmax]),
+        "absolute_difference": float(abs(difference[argmax])),
+    }
+    if row_identifiers is not None:
+        argmax_record["row_identifiers"] = row_identifiers[argmax]
     result = {
+        "declared_independent_algorithm_pair": True,
         "left_solver": left["method"],
         "right_solver": right["method"],
         "left_valid": left["numerically_valid"],
@@ -2642,9 +3591,14 @@ def compare_solvers(
         "focal_target_absolute_difference": float(abs(beta_left[focal_target] - beta_right[focal_target])),
         "all_slope_max_abs_difference": float(np.max(np.abs(beta_left - beta_right))),
         "fitted_probability_max_abs_difference": float(np.max(np.abs(difference))),
+        "fitted_probability_max_abs_difference_location": argmax_record,
         "fitted_probability_rmse": float(np.sqrt(np.mean(np.square(difference)))),
         "objective_difference_per_total": float(abs(
             left["objective_per_total"] - right["objective_per_total"]
+        )),
+        "raw_negative_log_likelihood_difference": float(abs(
+            left["raw_negative_log_likelihood"] -
+            right["raw_negative_log_likelihood"]
         )),
     }
     reported_differences: dict[str, float] = {}
@@ -2676,73 +3630,196 @@ def compare_solvers(
 def fixed_target_profile(
     objective: BinomialObjective,
     optimum: np.ndarray,
+    optimum_diagnostics: dict[str, Any],
     focal_column: int,
     conditional_information: float,
     multipliers: list[float],
     max_iterations: int,
     gradient_tolerance: float,
+    standardized_score_tolerance: float,
     raw_rise_tolerance: float,
+    linear_solve_relative_tolerance: float,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    if (
+        optimum_diagnostics.get("numerically_valid") is not True
+        or optimum_diagnostics.get("acceptance_source")
+        != "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE"
+    ):
+        return [], {
+            "status": "BLOCKED_FULL_OPTIMUM_NOT_ORIGINAL_KKT_CERTIFIED",
+            "two_sided_rise": False,
+            "center_source": "UNAVAILABLE",
+        }
     if not math.isfinite(conditional_information) or conditional_information <= 0:
         return [], {"status": "BLOCKED_NONPOSITIVE_TARGET_INFORMATION"}
+    if 0.0 not in multipliers or multipliers != sorted(multipliers):
+        return [], {"status": "BLOCKED_PROFILE_GRID_HAS_NO_EXACT_ORDERED_CENTER"}
     likelihood_se = 1.0 / math.sqrt(conditional_information)
     keep = np.arange(len(optimum)) != focal_column
     reduced_design = objective.design[:, keep]
     target_column = np.asarray(objective.design[:, focal_column].todense()).reshape(-1)
     reduced_start = optimum[keep]
+    full_optimum_raw_nll = objective.raw_nll(optimum)
+    if not math.isfinite(full_optimum_raw_nll):
+        return [], {"status": "BLOCKED_NONFINITE_CERTIFIED_FULL_OPTIMUM"}
     rows: list[dict[str, Any]] = []
     for multiplier in multipliers:
         fixed_value = float(optimum[focal_column] + multiplier * likelihood_se)
-        offset = target_column * fixed_value
-        scale = objective.scale
-
-        def function(theta: np.ndarray) -> float:
-            eta = offset + np.asarray(reduced_design @ theta).reshape(-1)
-            return float(np.sum(
-                objective.total * np.logaddexp(0.0, eta) - objective.young * eta
-            ) / scale)
-
-        def gradient(theta: np.ndarray) -> np.ndarray:
-            eta = offset + np.asarray(reduced_design @ theta).reshape(-1)
-            residual = objective.total * expit(eta) - objective.young
-            return np.asarray(reduced_design.T @ residual).reshape(-1) / scale
-
-        result = minimize(
-            function, reduced_start, jac=gradient, method="L-BFGS-B",
-            options={
-                "maxiter": max_iterations, "maxls": 50,
-                "gtol": gradient_tolerance / 10.0, "ftol": 1e-14,
-            },
+        # Preserve any offset already present in the full objective.  The YAX
+        # production objective currently has a zero offset, but dropping a
+        # nonzero offset here would silently profile a different likelihood.
+        offset = objective.offset + target_column * fixed_value
+        reduced_objective = BinomialObjective(
+            reduced_design, objective.young, objective.total, offset,
         )
-        theta = np.asarray(result.x, float)
-        eta = offset + np.asarray(reduced_design @ theta).reshape(-1)
-        probability = expit(eta)
-        target_score = float(target_column @ (objective.total * probability - objective.young) / scale)
+        if multiplier == 0.0:
+            theta = reduced_start.copy()
+            probability = objective.probability(optimum)
+            full_score = original_coordinate_score_diagnostics(
+                objective, optimum, probability
+            )
+            nuisance_raw = full_score["raw_gradient"][keep]
+            nuisance_standardized = full_score["standardized_score"][keep]
+            nuisance_steps = full_score["coordinate_step"][keep]
+            center_kkt_valid = bool(
+                np.isfinite(probability).all()
+                and float(
+                    np.max(np.abs(nuisance_raw)) / objective.scale
+                    if len(nuisance_raw) else 0.0
+                ) <= gradient_tolerance
+                and float(
+                    np.max(nuisance_standardized)
+                    if len(nuisance_standardized) else 0.0
+                ) <= standardized_score_tolerance
+            )
+            diagnostics = {
+                "method": "CERTIFIED_FULL_OPTIMUM_CENTER",
+                "scipy_success": optimum_diagnostics.get("scipy_success", False),
+                "scipy_status": optimum_diagnostics.get("scipy_status", -1),
+                "message": "center is the supplied original-KKT-certified full optimum",
+                "iterations": optimum_diagnostics.get("iterations", 0),
+                "objective_per_total": objective.function(optimum),
+                "raw_negative_log_likelihood": full_optimum_raw_nll,
+                "raw_gradient_infinity_norm": float(
+                    np.max(np.abs(nuisance_raw)) if len(nuisance_raw) else 0.0
+                ),
+                "gradient_infinity_norm_per_total": float(
+                    np.max(np.abs(nuisance_raw)) / objective.scale
+                    if len(nuisance_raw) else 0.0
+                ),
+                "standardized_score_max_abs": float(
+                    np.max(nuisance_standardized)
+                    if len(nuisance_standardized) else 0.0
+                ),
+                "coordinate_newton_step_max_abs": float(
+                    np.max(nuisance_steps) if len(nuisance_steps) else 0.0
+                ),
+                "numerically_valid": center_kkt_valid,
+                "acceptance_source": (
+                    "SUPPLIED_FULL_OPTIMUM_ORIGINAL_COORDINATE_KKT"
+                    if center_kkt_valid else
+                    "BLOCKED_RECOMPUTED_FULL_OPTIMUM_ORIGINAL_COORDINATE_KKT"
+                ),
+                "optimizer_reparameterization": optimum_diagnostics.get(
+                    "optimizer_reparameterization", {"status": "UNRECORDED"}
+                ),
+            }
+        elif reduced_design.shape[1] == 0:
+            theta = np.empty(0, dtype=float)
+            probability = reduced_objective.probability(theta)
+            diagnostics = {
+                "method": "NO_NUISANCE_PARAMETERS",
+                "scipy_success": True,
+                "scipy_status": 0,
+                "message": "fixed target leaves no nuisance parameters",
+                "iterations": 0,
+                "objective_per_total": reduced_objective.function(theta),
+                "raw_negative_log_likelihood": reduced_objective.raw_nll(theta),
+                "raw_gradient_infinity_norm": 0.0,
+                "gradient_infinity_norm_per_total": 0.0,
+                "standardized_score_max_abs": 0.0,
+                "coordinate_newton_step_max_abs": 0.0,
+                "numerically_valid": True,
+                "acceptance_source": "VACUOUS_NO_NUISANCE_KKT",
+                "scipy_status_is_not_acceptance_evidence": True,
+                "optimizer_reparameterization": {
+                    "status": "NOT_APPLICABLE_NO_NUISANCE_PARAMETERS",
+                },
+            }
+        else:
+            diagnostics, theta, probability, _ = fit_exact_solver(
+                reduced_objective,
+                "L-BFGS-B",
+                reduced_start,
+                max_iterations,
+                gradient_tolerance,
+                standardized_score_tolerance,
+                0,
+                {},
+                math.inf,
+                raw_rise_tolerance,
+                False,
+                linear_solve_relative_tolerance,
+            )
+        target_score = float(
+            target_column @ (objective.total * probability - objective.young) /
+            objective.scale
+        )
         row = {
             "multiplier": float(multiplier),
             "fixed_target": fixed_value,
             "likelihood_curvature_se": likelihood_se,
-            "objective_per_total": function(theta),
-            "raw_negative_log_likelihood": function(theta) * scale,
-            "nuisance_gradient_infinity_norm_per_total": float(np.max(np.abs(gradient(theta)))),
+            "objective_per_total": diagnostics["objective_per_total"],
+            "raw_negative_log_likelihood": diagnostics[
+                "raw_negative_log_likelihood"
+            ],
+            "nuisance_raw_gradient_infinity_norm": diagnostics[
+                "raw_gradient_infinity_norm"
+            ],
+            "nuisance_gradient_infinity_norm_per_total": diagnostics[
+                "gradient_infinity_norm_per_total"
+            ],
+            "nuisance_standardized_score_max_abs": diagnostics[
+                "standardized_score_max_abs"
+            ],
+            "nuisance_coordinate_newton_step_max_abs": diagnostics[
+                "coordinate_newton_step_max_abs"
+            ],
             "target_score_per_total": target_score,
-            "success": bool(result.success) or float(np.max(np.abs(gradient(theta)))) <= gradient_tolerance,
-            "message": str(result.message),
-            "iterations": int(getattr(result, "nit", 0)),
+            "success": diagnostics["numerically_valid"],
+            "acceptance_source": diagnostics["acceptance_source"],
+            "scipy_success": diagnostics["scipy_success"],
+            "scipy_status": diagnostics["scipy_status"],
+            "scipy_status_is_not_acceptance_evidence": True,
+            "message": diagnostics["message"],
+            "iterations": diagnostics["iterations"],
+            "optimizer_reparameterization": diagnostics[
+                "optimizer_reparameterization"
+            ],
+            "optimizer_reparameterization_status": diagnostics[
+                "optimizer_reparameterization"
+            ]["status"],
         }
         rows.append(row)
-    center = min(rows, key=lambda row: abs(row["multiplier"]))
+    center = next(row for row in rows if row["multiplier"] == 0.0)
     for row in rows:
-        row["objective_rise_from_center_per_total"] = row["objective_per_total"] - center["objective_per_total"]
+        row["objective_rise_from_center_per_total"] = (
+            row["objective_per_total"] - full_optimum_raw_nll / objective.scale
+        )
         row["raw_negative_log_likelihood_rise_from_center"] = (
-            row["raw_negative_log_likelihood"] - center["raw_negative_log_likelihood"]
+            row["raw_negative_log_likelihood"] - full_optimum_raw_nll
         )
     low, high = rows[0], rows[-1]
+    minimum_rise = min(
+        row["raw_negative_log_likelihood_rise_from_center"] for row in rows
+    )
+    all_rises_nonnegative = minimum_rise >= -raw_rise_tolerance
     passed = bool(
         all(row["success"] for row in rows) and
+        all_rises_nonnegative and
         low["raw_negative_log_likelihood_rise_from_center"] > raw_rise_tolerance and
         high["raw_negative_log_likelihood_rise_from_center"] > raw_rise_tolerance and
-        center["raw_negative_log_likelihood"] <= min(
+        full_optimum_raw_nll <= min(
             row["raw_negative_log_likelihood"] for row in rows
         ) + raw_rise_tolerance
     )
@@ -2750,6 +3827,13 @@ def fixed_target_profile(
         "status": "PASS_TWO_SIDED_FINITE_PROFILE" if passed else "BLOCKED_PROFILE_BENCHMARK",
         "likelihood_curvature_se": likelihood_se,
         "two_sided_rise": passed,
+        "center_source": "SUPPLIED_L_BFGS_B_ORIGINAL_KKT_CERTIFIED_FULL_OPTIMUM",
+        "center_fixed_target_equals_certified_full_optimum": bool(
+            center["fixed_target"] == float(optimum[focal_column])
+        ),
+        "center_raw_negative_log_likelihood": full_optimum_raw_nll,
+        "all_grid_rises_nonnegative_within_raw_tolerance": all_rises_nonnegative,
+        "minimum_raw_negative_log_likelihood_rise_from_center": minimum_rise,
     }
 
 
@@ -2986,6 +4070,18 @@ def audit_model(
 
     objective = BinomialObjective(design.full, young, total)
     start = np.zeros(design.full.shape[1], dtype=float)
+    certificate_targets = {
+        "focal_target": np.eye(1, design.full.shape[1], focal_column).reshape(-1),
+    }
+    for label, weights in (bundle.reported_target_weights or {}).items():
+        raw_weights = np.asarray(weights, float)
+        if raw_weights.shape != (x.shape[1],):
+            raise AuditBlocked(
+                f"reported target has wrong full-Hessian certificate shape: {label}"
+            )
+        functional = np.zeros(design.full.shape[1], dtype=float)
+        functional[design.nuisance.shape[1]:] = raw_weights
+        certificate_targets[label] = functional
     solver_outputs: dict[str, tuple[dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]]] = {}
     solver_failures: dict[str, dict[str, str]] = {}
     for method in ("L-BFGS-B", "trust-ncg"):
@@ -2996,6 +4092,11 @@ def audit_model(
                 float(tolerances["gradient_infinity_norm_per_total"]),
                 float(tolerances["standardized_score_absolute"]),
                 focal_column,
+                certificate_targets,
+                float(tolerances["target_coefficient_absolute_difference"]),
+                float(analysis["profile"]["likelihood_rise_tolerance_raw"]),
+                method == "L-BFGS-B",
+                float(tolerances["conditioning_rank_relative"]),
             )
         except Exception as error:
             solver_failures[method] = {
@@ -3027,11 +4128,21 @@ def audit_model(
     left, left_theta, left_probability, left_trajectory = solver_outputs["L-BFGS-B"]
     right, right_theta, right_probability, right_trajectory = solver_outputs["trust-ncg"]
     try:
+        identifier_columns = [
+            column for column in ("occ_code", "month", "family")
+            if column in bundle.frame.columns
+        ]
+        active_identifiers = (
+            bundle.frame.loc[active, identifier_columns]
+            .reset_index(drop=True)
+            .to_dict(orient="records")
+        )
         comparison = compare_solvers(
             left, left_theta, left_probability,
             right, right_theta, right_probability,
             design.nuisance.shape[1], focal, tolerances,
             bundle.reported_target_weights,
+            active_identifiers,
         )
 
         probability = left_probability
@@ -3065,12 +4176,14 @@ def audit_model(
         return result, pruning, solver_rows, [], trajectory
     try:
         profile_rows, profile_summary = fixed_target_profile(
-            objective, left_theta, focal_column,
+            objective, left_theta, left, focal_column,
             float(fitted_information["focal_target_conditional_information"]),
             [float(value) for value in analysis["profile"]["grid_standard_error_multipliers"]],
             int(tolerances["profile_max_iterations"]),
             float(tolerances["gradient_infinity_norm_per_total"]),
+            float(tolerances["standardized_score_absolute"]),
             float(analysis["profile"]["likelihood_rise_tolerance_raw"]),
+            float(tolerances["conditioning_rank_relative"]),
         )
     except Exception as error:
         result.update({
@@ -3161,10 +4274,137 @@ def audit_model(
 
 def git_commit(repo_root: pathlib.Path) -> str | None:
     result = subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=repo_root,
+        [str(EXPECTED_GIT_PATH), "rev-parse", "HEAD"], cwd=repo_root,
+        env=SANITIZED_GIT_ENVIRONMENT,
         text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
     )
     return result.stdout.strip() if result.returncode == 0 else None
+
+
+def authenticated_execution_state(
+    args: argparse.Namespace,
+    repo_root: pathlib.Path,
+    canonical: dict[str, Any],
+    analysis: dict[str, Any],
+) -> dict[str, Any]:
+    """Capture every mutable input that can affect a production result.
+
+    The numerical run can be long.  A start-only authorization check would
+    allow a changed checkout or changed aggregate input to be described by the
+    stale receipt.  This snapshot is taken after initial authentication and
+    compared with fresh snapshots immediately before publication.  It hashes
+    only the already-authorized aggregate artifacts and committed code/specs;
+    it never opens protected row-level microdata.
+    """
+    authorization = validate_pre_execution_authorization(
+        repo_root, canonical, analysis,
+    )
+    runtime = execution_runtime_authentication()
+    parity_paths = analysis["design_parity"]["submitted_source_sha256"]
+    paths: dict[str, pathlib.Path] = {
+        "canonical_spec": args.canonical_spec,
+        "analysis_spec": args.analysis_spec,
+        "aggregate_cells": args.cells,
+        "aggregate_cells_receipt": args.cells_receipt,
+        "legacy_engine": args.legacy_engine,
+        "numerical_runner": pathlib.Path(__file__).resolve(),
+        "artifact_safety": HERE / "artifact_safety.py",
+        "cell_build_spec": repo_root / CELL_SPEC_REL,
+        "target_audit_spec": repo_root / TARGET_SPEC_REL,
+        "cell_builder": repo_root / CELL_CODE_REL,
+        "target_auditor": repo_root / TARGET_CODE_REL,
+        "pre_execution_authorization": (
+            repo_root / PRE_EXECUTION_AUTHORIZATION_REL
+        ),
+    }
+    for relative in parity_paths:
+        paths[f"submitted_design::{relative}"] = repo_root / relative
+    hashes: dict[str, str] = {}
+    for label, raw_path in sorted(paths.items()):
+        path = pathlib.Path(raw_path)
+        if not path.is_file() or path.is_symlink():
+            raise AuditBlocked(
+                f"authenticated execution input became absent or indirect: {label}"
+            )
+        hashes[label] = sha256_file(path)
+
+    def git(arguments: list[str]) -> str:
+        result = subprocess.run(
+            [str(EXPECTED_GIT_PATH), *arguments], cwd=repo_root,
+            env=SANITIZED_GIT_ENVIRONMENT, text=True,
+            capture_output=True, check=False,
+        )
+        if result.returncode != 0 or result.stderr:
+            raise AuditBlocked("authenticated execution Git state cannot be read")
+        return result.stdout
+
+    head = git(["rev-parse", "HEAD"]).strip()
+    tree = git(["rev-parse", "HEAD^{tree}"]).strip()
+    porcelain = git([
+        "status", "--porcelain=v1", "--untracked-files=all",
+    ])
+    if (
+        re.fullmatch(r"[0-9a-f]{40}", head) is None
+        or re.fullmatch(r"[0-9a-f]{40}", tree) is None
+        or porcelain != ""
+    ):
+        raise AuditBlocked(
+            "authenticated execution requires the exact clean authorization checkout"
+        )
+    return {
+        "authorization": authorization,
+        "runtime": runtime,
+        "input_hashes": hashes,
+        "git_head": head,
+        "git_tree": tree,
+        "git_porcelain_sha256": hashlib.sha256(
+            porcelain.encode("utf-8")
+        ).hexdigest(),
+    }
+
+
+def require_unchanged_execution_state(
+    initial: dict[str, Any],
+    args: argparse.Namespace,
+    repo_root: pathlib.Path,
+    canonical: dict[str, Any],
+    analysis: dict[str, Any],
+) -> dict[str, Any]:
+    observed = authenticated_execution_state(
+        args, repo_root, canonical, analysis,
+    )
+    if observed != initial:
+        raise AuditBlocked(
+            "authenticated execution state changed during the numerical audit"
+        )
+    return {
+        "status": "PASS_COMPLETE_PREPUBLICATION_REAUTHENTICATION",
+        "state_sha256": hashlib.sha256(canonical_bytes(observed)).hexdigest(),
+        "protected_row_level_microdata_reread": False,
+        "residual_window": (
+            "bounded_same-process interval from final recheck to atomic "
+            "no-replace rename; not claimed eliminated"
+        ),
+    }
+
+
+def publish_after_final_reauthentication(
+    reservation: AtomicOutputLeaf,
+    initial: dict[str, Any],
+    args: argparse.Namespace,
+    repo_root: pathlib.Path,
+    canonical: dict[str, Any],
+    analysis: dict[str, Any],
+) -> None:
+    """Make reauthentication the operation immediately preceding publish."""
+    require_unchanged_execution_state(
+        initial, args, repo_root, canonical, analysis,
+    )
+    # The same-user final-check-to-rename TOCTOU window cannot be eliminated
+    # without holding every input descriptor through the complete run.  It is
+    # deliberately bounded here to this direct call and the atomic no-replace
+    # rename; the receipt makes no stronger claim.
+    reservation.publish()
 
 
 def exit_code_for_status(status: str) -> int:
@@ -3212,12 +4452,38 @@ def render_report(audit: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def acquire_execution_attestations(
+    args: argparse.Namespace,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Derive attestations only from the live process and pinned executables."""
+    raw_cli_argv = list(sys.argv[1:])
+    original_argv = list(getattr(sys, "orig_argv", []))
+    binding = build_execution_command_binding(
+        args, raw_cli_argv, original_argv, dict(os.environ),
+    )
+    runtime = execution_runtime_authentication()
+    return binding, runtime
+
+
 def run(args: argparse.Namespace) -> int:
+    # Receipt attestations are deliberately not parameters.  An imported
+    # caller cannot supply claims that were not derived from this process.
+    execution_binding, execution_runtime = acquire_execution_attestations(args)
     started = utc_now()
     canonical, analysis = validate_specs(args.canonical_spec, args.analysis_spec)
     runtime = verify_runtime_contract(analysis)
-    frame = authenticate_cells(args.cells, args.cells_receipt, canonical, analysis)
     repo_root = pathlib.Path(__file__).resolve().parents[4]
+    pre_execution_authorization = validate_pre_execution_authorization(
+        repo_root, canonical, analysis
+    )
+    initial_execution_state = authenticated_execution_state(
+        args, repo_root, canonical, analysis,
+    )
+    if initial_execution_state["authorization"] != pre_execution_authorization:
+        raise AuditBlocked(
+            "pre-execution authorization changed during initial authentication"
+        )
+    frame = authenticate_cells(args.cells, args.cells_receipt, canonical, analysis)
     legacy_path = args.legacy_engine
     legacy_engine = import_legacy_engine(
         legacy_path, analysis["software"]["legacy_engine_sha256"]
@@ -3227,6 +4493,9 @@ def run(args: argparse.Namespace) -> int:
         repo_root / relative
         for relative in analysis["design_parity"]["submitted_source_sha256"]
     ]
+    require_unchanged_execution_state(
+        initial_execution_state, args, repo_root, canonical, analysis,
+    )
     reservation = AtomicOutputLeaf.reserve(
         args.output_dir, repo_root,
         [
@@ -3336,6 +4605,12 @@ def run(args: argparse.Namespace) -> int:
         "objective_per_total", "raw_negative_log_likelihood",
         "raw_gradient_infinity_norm", "gradient_infinity_norm_per_total",
         "standardized_score_max_abs", "coordinate_newton_step_max_abs",
+        "transformed_gradient_infinity_norm",
+        "internal_transformed_gradient_tolerance",
+        "optimizer_reparameterization_status",
+        "optimizer_parameter_scale_min", "optimizer_parameter_scale_max",
+        "optimizer_parameter_scale_sha256", "acceptance_source",
+        "scipy_status_is_not_acceptance_evidence",
         "parameter_max_abs", "focal_target",
         "probability_exact_zero", "probability_exact_one",
         "probability_at_or_below_1e_10", "probability_at_or_above_1_minus_1e_10",
@@ -3345,7 +4620,8 @@ def run(args: argparse.Namespace) -> int:
         "reported_target_max_absolute_difference",
         "reported_target_comparison_pass",
         "all_slope_max_abs_difference", "fitted_probability_max_abs_difference",
-        "fitted_probability_rmse", "objective_difference_per_total", "comparison_pass",
+        "fitted_probability_rmse", "objective_difference_per_total",
+        "raw_negative_log_likelihood_difference", "comparison_pass",
     ]
         write_csv(output_dir / "SOLVER_COMPARISON.csv", solver_rows, solver_fields)
         profile_fields = [
@@ -3353,8 +4629,13 @@ def run(args: argparse.Namespace) -> int:
         "objective_per_total", "raw_negative_log_likelihood",
         "objective_rise_from_center_per_total",
         "raw_negative_log_likelihood_rise_from_center",
-        "nuisance_gradient_infinity_norm_per_total", "target_score_per_total",
-        "success", "message", "iterations",
+        "nuisance_raw_gradient_infinity_norm",
+        "nuisance_gradient_infinity_norm_per_total",
+        "nuisance_standardized_score_max_abs",
+        "nuisance_coordinate_newton_step_max_abs", "target_score_per_total",
+        "success", "acceptance_source", "scipy_success", "scipy_status",
+        "scipy_status_is_not_acceptance_evidence",
+        "optimizer_reparameterization_status", "message", "iterations",
     ]
         write_csv(output_dir / "TARGET_PROFILE.csv", profile_rows, profile_fields)
         report_path = output_dir / "CONVERGENCE_EXISTENCE_REPORT.md"
@@ -3370,12 +4651,19 @@ def run(args: argparse.Namespace) -> int:
         output_dir / "OPTIMIZER_TRAJECTORIES.json",
         report_path,
         ]
+        prepublication_revalidation = require_unchanged_execution_state(
+            initial_execution_state, args, repo_root, canonical, analysis,
+        )
         receipt = {
         "schema_version": "yax-numerical-existence-receipt-v1",
         "status": status,
         "started_at_utc": started,
         "finished_at_utc": utc_now(),
         "command_template": COMMAND_TEMPLATE,
+        "execution_command_binding": execution_binding,
+        "execution_runtime_authentication": execution_runtime,
+        "pre_execution_authorization": pre_execution_authorization,
+        "prepublication_revalidation": prepublication_revalidation,
         "canonical_spec_id": canonical["spec_id"],
         "canonical_spec_sha256": sha256_file(args.canonical_spec),
         "audit_spec_id": analysis["audit_spec_id"],
@@ -3413,31 +4701,51 @@ def run(args: argparse.Namespace) -> int:
             # must not remain even in an unpublished diagnostic directory.
             reservation.discard()
             raise
-        reservation.publish()
+        # Recheck once more after every output byte, including the receipt, is
+        # final.  Publication is the next state-changing operation.
+        publish_after_final_reauthentication(
+            reservation, initial_execution_state, args, repo_root,
+            canonical, analysis,
+        )
     except Exception:
         reservation.abandon()
         raise
-    print(json.dumps({"status": status, "output_leaf": args.output_dir.name}, sort_keys=True))
+    print(json.dumps({
+        "status": status,
+        "output_leaf": args.output_dir.name,
+        "post_commit_cleanup_warnings": list(
+            reservation.post_commit_cleanup_warnings
+        ),
+    }, sort_keys=True))
     return exit_code_for_status(status)
 
 
 def parser() -> argparse.ArgumentParser:
-    root = pathlib.Path(__file__).resolve().parents[4]
-    local = pathlib.Path(__file__).resolve().parent
-    result = argparse.ArgumentParser(description=__doc__)
+    result = NonEchoingArgumentParser(description=__doc__, allow_abbrev=False)
     result.add_argument("--canonical-spec", type=pathlib.Path, required=True)
-    result.add_argument("--analysis-spec", type=pathlib.Path, default=local / "ANALYSIS_SPEC.json")
+    result.add_argument("--analysis-spec", type=pathlib.Path, required=True)
     result.add_argument("--cells", type=pathlib.Path, required=True)
     result.add_argument("--cells-receipt", type=pathlib.Path, required=True)
-    result.add_argument("--legacy-engine", type=pathlib.Path,
-                        default=root / "dax/memo/power_calcs/young_relative_employment_power.py")
-    result.add_argument("--output-dir", type=pathlib.Path, required=True)
+    result.add_argument("--legacy-engine", type=pathlib.Path, required=True)
+    result.add_argument("--output-parent", type=pathlib.Path, required=True)
     return result
 
 
-if __name__ == "__main__":
+def main(argv: list[str] | None = None) -> int:
+    if argv is not None:
+        raise AuditBlocked(
+            "production entry point does not accept a substituted argv source"
+        )
+    raw_cli_argv = list(sys.argv[1:])
     try:
-        raise SystemExit(run(parser().parse_args()))
+        args = parser().parse_args(raw_cli_argv)
+        job = scheduler_jobnumber(dict(os.environ))
+        args.output_dir = args.output_parent / f"gate1_numerical_sge_{job}"
+        return run(args)
     except (AuditBlocked, OutputSafetyError) as error:
         print(f"BLOCKED: {error}", file=sys.stderr)
-        raise SystemExit(2)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,53 +1,34 @@
-# Independent implementation review
+# Independent Gate-1 cell-producer review
 
-Review date: 2026-09-06
+Review date: 2026-09-06 UTC.
 
-Reviewed builder SHA-256: `4ed76f7a570e785202b3cbd1b13953e5986d9461abd1e1191ba189507b0903c4`
+Reviewed terminal objects:
 
-Disposition at that hash: **PASS, conditional only on the declared terminal consumer/spec restamp**
+- builder SHA-256:
+  `c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc`;
+- cell-spec ID:
+  `yaxcellspec_v1_cc2ef1a97ff01b7bc57f9598b139c6c70315866121c85eaef2158827cace0aa7`;
+- cell-spec SHA-256:
+  `879f99c3b06363303402cb1cfc2c0ff443d78886295c7d63edfcd59cc6897765`;
+- test-file SHA-256:
+  `da14c1a134010cac329f9a802fc2fe71aa2830fecbc12afc8f9584e239bbc2a1`.
 
-After that review, one narrow semantics correction changed the builder to
-`38c528dd45b8f932100a78d751bc7b513e4e6596e1d635401dd4b73660bccfc3`:
-zero, unit, and strictly fractional bridge contributions are now classified by
-exact comparisons, and any route weight outside `[0,1]` is rejected. The
-full producer suite is 20/20 passing. An independent reverse application of
-the four-line change reproduced the previously reviewed SHA byte-for-byte, and
-boundary tests verified the current classification. **The PASS therefore
-extends to the current SHA.**
+Disposition: **PASS for a fresh protected-data producer execution; empirical
+cell construction remains UNRUN at the time of this review.**
 
-The review found no remaining P0 or P1 defect in the aggregate-cell producer.
-It independently checked that:
+The independent reviewer obtained 24/24 passing cell tests and found no
+remaining P1 or P2 defect. The final review checked the exact six-field target
+router, March replacement, bridge-boundary classification, physical-row and
+weighted-stock reconciliation, assignment fingerprint, and balanced-grid
+contract. It also checked the direct isolated-Python command grammar, numeric
+nonarray SGE job binding, scheduler-derived output leaf, internally acquired
+runtime and Git attestations, pre-execution authorization, final immutable-state
+reauthentication, exact artifact inventory, fsync, and atomic no-replace
+publication.
 
-- production imports only the standard library, NumPy, and pandas and does not
-  execute the historical analysis modules;
-- the exact six-field, ages-22--65 target router matches the byte-locked
-  inherited target on the supplied fixture and on an additional adversarial
-  fixture containing positive-weight replaced March records, excluded ages,
-  unmatched routes, and split bridges;
-- the parity test loads only the byte-locked historical constants and three
-  target functions into a controlled namespace rather than importing the
-  historical dynamic closure;
-- per-source and total record identities cover physical rows, eligibility,
-  valid/invalid occupation records, early/current routes, matched/unmatched
-  early records, expanded/direct contributions, and fractional/unit/zero route
-  weights;
-- weighted-stock conservation is checked separately by source and in total;
-- command, runtime, Git, and committed-blob provenance and receipt sanitization
-  are fail-closed; and
-- the numerical consumer recomputes the producer accounting identities and
-  authenticates the cell spec, Git state, committed files, command, runtime,
-  and six-field build flags.
-
-The reviewer obtained 16/16 passes on the non-placeholder producer tests and
-2/2 passes on targeted consumer receipt/accounting tests. The remaining stale
-hashes and IDs are the explicit fail-closed placeholders reserved for the
-terminal cross-spec restamp; they are not treated as executed or validated.
-
-After the terminal restamp, all 20 producer tests passed. One nonbinding edge
-is retained transparently: the standalone bridge loader's `1e-12` mass
-tolerance could accept an unused route one floating-point unit above one, and
-pandas' declared parser maps textual `0.9999999999999999` to `1.0`. Neither
-can affect this production run because bridge bytes and runtime are
-authenticated; the canonical 595-row bridge has minimum weight `0.0036`,
-maximum `1.0`, 447 exact-unit weights, 148 strict-fraction weights, and no
-out-of-range value or parser/round-trip classification change.
+The cell spec is bound to analysis-spec
+`yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec`
+with byte hash
+`86b1704dd774e89b395035dd8fdf5b0be6e18332c678d5943a44d4637e297f7a`.
+The reviewer independently recomputed both self-identifiers and all code/hash
+locks. No protected input was opened in this review.

@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from argparse import Namespace
 import importlib.util
+import inspect
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
+from unittest import mock
 
 import numpy as np
 import pandas as pd
@@ -28,6 +31,146 @@ def load_runner():
 
 
 RUNNER = load_runner()
+
+
+def synthetic_pre_execution_authorization(
+    module_key: str, cell_spec: dict, canonical: dict
+) -> dict:
+    common = {
+        "schema_version": RUNNER.PRE_EXECUTION_AUTHORIZATION_SCHEMA,
+        "status": RUNNER.PRE_EXECUTION_AUTHORIZATION_STATUS,
+        "authorization_id": RUNNER.PRE_EXECUTION_AUTHORIZATION_PREFIX + "a" * 64,
+        "authorization_file_sha256": "b" * 64,
+        "authorization_git_commit": "c" * 40,
+        "authorized_implementation_commit": "d" * 40,
+        "issued_at_utc": "2026-09-06T11:00:00+00:00",
+        "not_before_utc": "2026-09-06T11:30:00+00:00",
+        "not_after_utc": "2026-09-06T13:30:00+00:00",
+        "source_registry_sha256": RUNNER.hashlib.sha256(
+            RUNNER.canonical_bytes(RUNNER.canonical_source_hashes(canonical))
+        ).hexdigest(),
+    }
+    if module_key == "cells":
+        return {
+            **common,
+            "module_key": "cells",
+            "typed_spec_id": cell_spec["cell_build_spec_id"],
+            "typed_spec_sha256": RUNNER.sha256_file(REPO / RUNNER.CELL_SPEC_REL),
+            "code_sha256": cell_spec["runtime_code_hashes"][str(RUNNER.BUILDER_REL)],
+        }
+    target = RUNNER.load_json(REPO / RUNNER.TARGET_SPEC_REL)
+    return {
+        **common,
+        "module_key": "target",
+        "typed_spec_id": target["target_audit_spec_id"],
+        "typed_spec_sha256": RUNNER.sha256_file(REPO / RUNNER.TARGET_SPEC_REL),
+        "code_sha256": RUNNER.sha256_file(SCRIPT),
+    }
+
+
+def target_entry_fixture(tmp_path: Path) -> tuple[Namespace, list[str], list[str]]:
+    cells_leaf = tmp_path / "gate1_cells_sge_699999"
+    args = Namespace(
+        repo_root=REPO,
+        cells=cells_leaf / "aggregate_cells.csv",
+        cells_receipt=cells_leaf / RUNNER.RECEIPT_FILENAME,
+        output_parent=tmp_path,
+    )
+    raw = [
+        "--repo-root", str(args.repo_root),
+        "--cells", str(args.cells),
+        "--cells-receipt", str(args.cells_receipt),
+        "--output-parent", str(args.output_parent),
+    ]
+    original = [sys.executable, "-I", str(SCRIPT), *raw]
+    return args, raw, original
+
+
+def execute_target(args: Namespace):
+    """Exercise the one-argument production wrapper under a synthetic runner.
+
+    Entry attestations are replaced at their internal acquisition boundaries;
+    they are never accepted as arguments by ``execute``.  The helper renames a
+    successfully derived synthetic leaf only so older content tests can keep
+    their descriptive per-test output names.
+    """
+    desired_output = args.output_leaf
+    execution_args = Namespace(
+        repo_root=args.repo_root,
+        cells=args.cells,
+        cells_receipt=args.cells_receipt,
+        output_parent=desired_output.parent,
+    )
+    binding = {
+        "schema_version": RUNNER.COMMAND_BINDING_SCHEMA,
+        "status": RUNNER.COMMAND_BINDING_STATUS,
+        "module_key": "target",
+        "run_id": "gate1_target_sge_700002",
+        "scheduler_jobnumber": "700002",
+        "sanitized_argv": ["synthetic-unit-test"],
+        "sanitized_argv_sha256": "a" * 64,
+        "binding_sha256": "b" * 64,
+    }
+    runtime = {
+        "status": "SYNTHETIC_UNIT_TEST_ENTRY_ATTESTATION",
+        "private_paths_persisted": False,
+    }
+    target = RUNNER.load_json(REPO / RUNNER.TARGET_SPEC_REL)
+    live_code_hashes = {
+        relative: RUNNER.sha256_file(REPO / relative)
+        for relative in target["code_hashes"]
+    }
+    with (
+        mock.patch.object(RUNNER, "scheduler_jobnumber", return_value="700002"),
+        mock.patch.object(
+            RUNNER, "build_execution_command_binding", return_value=binding
+        ),
+        mock.patch.object(
+            RUNNER, "execution_runtime_authentication", return_value=runtime
+        ),
+        mock.patch.object(
+            RUNNER, "authenticate_code", return_value=live_code_hashes
+        ),
+    ):
+        result = RUNNER.execute(execution_args)
+    actual_output = desired_output.parent / "gate1_target_sge_700002"
+    if actual_output != desired_output:
+        actual_output.rename(desired_output)
+    return result
+
+
+def test_production_entry_and_command_binding_are_not_caller_attested(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+):
+    assert list(inspect.signature(RUNNER.execute).parameters) == ["args"]
+    assert RUNNER.main([]) == 2
+    assert "substituted argv" in capsys.readouterr().err
+    args, raw, original = target_entry_fixture(tmp_path)
+    binding = RUNNER.build_execution_command_binding(
+        args, raw, original, {"JOB_ID": "700002", "SGE_JOB_ID": "700002"}
+    )
+    assert binding["run_id"] == "gate1_target_sge_700002"
+    assert binding["scheduler_jobnumber"] == "700002"
+    assert str(tmp_path) not in json.dumps(binding)
+    with pytest.raises(RUNNER.TargetAuditError, match="direct isolated"):
+        RUNNER.build_execution_command_binding(
+            args, raw, [sys.executable, str(SCRIPT), *raw], {"JOB_ID": "700002"}
+        )
+    with pytest.raises(RUNNER.TargetAuditError, match="array jobs"):
+        RUNNER.build_execution_command_binding(
+            args, raw, original, {"JOB_ID": "700002", "SGE_TASK_ID": "1"}
+        )
+
+
+def test_target_command_binding_rejects_noncolocated_inputs(tmp_path: Path):
+    args, raw, original = target_entry_fixture(tmp_path)
+    args.cells_receipt = tmp_path / "other" / RUNNER.RECEIPT_FILENAME
+    raw[5] = str(args.cells_receipt)
+    original = [sys.executable, "-I", str(SCRIPT), *raw]
+    with pytest.raises(RUNNER.TargetAuditError, match="colocated"):
+        RUNNER.build_execution_command_binding(
+            args, raw, original, {"JOB_ID": "700002"}
+        )
 
 
 def fixed_assignments() -> pd.DataFrame:
@@ -292,6 +435,25 @@ def make_authenticated_product(root: Path) -> tuple[Path, Path, pd.DataFrame]:
         ],
         str(RUNNER.ENVIRONMENT_REL): runtime_contract["environment_lock_sha256"],
     }
+    sanitized_cell_argv = [
+        "<YAX_PYTHON_BIN>", "-I",
+        str(RUNNER.V3_REL / "gate1_cells/run_gate1_cells.py"),
+        "--repo-root", "<YAX_REPO_ROOT>",
+        "--microdata", "<INPUT:ipums_cps_extract_9_wide>",
+        "--repair-microdata", "<INPUT:ipums_cps_extract_11_march_basic_repair>",
+        "--output-parent", "<YAX_V3_RUN_ROOT>",
+    ]
+    command_core = {
+        "schema_version": RUNNER.COMMAND_BINDING_SCHEMA,
+        "status": RUNNER.COMMAND_BINDING_STATUS,
+        "module_key": "cells",
+        "run_id": "gate1_cells_sge_700001",
+        "scheduler_jobnumber": "700001",
+        "sanitized_argv": sanitized_cell_argv,
+        "sanitized_argv_sha256": RUNNER.hashlib.sha256(
+            RUNNER.canonical_bytes(sanitized_cell_argv)
+        ).hexdigest(),
+    }
     receipt = {
         "schema_version": RUNNER.EXPECTED_UPSTREAM_RECEIPT_SCHEMA,
         "status": RUNNER.EXPECTED_UPSTREAM_STATUS,
@@ -323,6 +485,29 @@ def make_authenticated_product(root: Path) -> tuple[Path, Path, pd.DataFrame]:
             "the empty map proves that historical reference code is not imported at runtime"
         ),
         "command_template": runtime_contract["command_template"],
+        "execution_command_binding": {
+            **command_core,
+            "binding_sha256": RUNNER.hashlib.sha256(
+                RUNNER.canonical_bytes(command_core)
+            ).hexdigest(),
+        },
+        "execution_runtime_authentication": {
+            "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES",
+            "python_invocation": "<YAX_PYTHON_BIN>",
+            "python_resolved_executable_sha256": RUNNER.EXPECTED_PYTHON_RESOLVED_SHA256,
+            "python_version": "3.13.8",
+            "isolated_mode": True,
+            "ignore_environment": True,
+            "no_user_site": True,
+            "safe_path": True,
+            "git_invocation": "<YAX_GIT_BIN>",
+            "git_resolved_executable_sha256": RUNNER.EXPECTED_GIT_SHA256,
+            "git_version": RUNNER.EXPECTED_GIT_VERSION,
+            "import_affecting_environment_absent": True,
+        },
+        "pre_execution_authorization": synthetic_pre_execution_authorization(
+            "cells", cell_spec, canonical
+        ),
         "runtime_environment_lock_sha256": runtime_contract[
             "environment_lock_sha256"
         ],
@@ -482,6 +667,14 @@ def isolate_synthetic_product_from_live_git(request, monkeypatch: pytest.MonkeyP
         }
 
     monkeypatch.setattr(RUNNER, "verify_producer_git_checkout", synthetic_verification)
+    _target, canonical, cell_spec = RUNNER.load_and_validate_specs(REPO)
+    monkeypatch.setattr(
+        RUNNER,
+        "validate_pre_execution_authorization",
+        lambda *_args, **_kwargs: synthetic_pre_execution_authorization(
+            "target", cell_spec, canonical
+        ),
+    )
 
 
 def test_target_spec_and_semantic_contracts_authenticate():
@@ -657,7 +850,7 @@ def test_authenticated_synthetic_execution_reconciles_zero_and_fractional_cells(
         "wide_march_positive_weight_rows_explicitly_replaced"
     ] == 0
     output = tmp_path / "target-audit"
-    result = RUNNER.execute(
+    result = execute_target(
         Namespace(repo_root=REPO, cells=cells, cells_receipt=receipt, output_leaf=output)
     )
     assert result["status"] == "PASS_EXACT_TARGET_AUDIT"
@@ -688,7 +881,7 @@ def test_weight_once_failure_is_blocking(product, tmp_path: Path):
     value["weight_application_count"] = 2
     altered_receipt.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(RUNNER.TargetAuditError, match="weight count differs from one"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -706,7 +899,7 @@ def test_fractional_physical_count_is_refused(product, tmp_path: Path):
     value["six_field_cell_build_checks"]["routed_rows"] = 10.5
     altered_receipt.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(RUNNER.TargetAuditError, match="physical integer count"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -726,7 +919,7 @@ def test_by_source_physical_count_must_reconcile(product, tmp_path: Path):
     ]["ipums_cps_extract_9_wide"] -= 1
     altered_receipt.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(RUNNER.TargetAuditError, match="eligible source-record total"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -744,7 +937,7 @@ def test_six_field_runtime_universe_is_binding(product, tmp_path: Path):
     value["six_field_cell_build_checks"]["runtime_raw_fields"].append("OCC2010")
     altered_receipt.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(RUNNER.TargetAuditError, match="raw-field universe"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -767,7 +960,7 @@ def test_unexpected_cell_column_is_refused(product, tmp_path: Path):
     value["weight_once_checks"]["older_stock"] = float(changed.older.sum())
     altered_receipt.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(RUNNER.TargetAuditError, match="columns or column order"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -783,7 +976,7 @@ def test_hash_mismatch_is_refused_before_reading_target(product, tmp_path: Path)
     altered_cells, altered_receipt = clone_authenticated_leaf(cells, receipt, altered)
     altered_cells.write_bytes(cells.read_bytes() + b"\n")
     with pytest.raises(RUNNER.TargetAuditError, match="cells_sha256"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -806,6 +999,14 @@ def mutate_producer_receipt(value: dict, case: str) -> None:
         value["authorization"]["checks"]["microdata_sha256"] = False
     elif case == "runtime_status":
         value["runtime_authentication"]["status"] = "UNVERIFIED"
+    elif case == "execution_command_binding":
+        value["execution_command_binding"]["scheduler_jobnumber"] = "700099"
+    elif case == "execution_runtime_authentication":
+        value["execution_runtime_authentication"]["isolated_mode"] = False
+    elif case == "pre_execution_authorization":
+        value["pre_execution_authorization"]["authorization_id"] = (
+            RUNNER.PRE_EXECUTION_AUTHORIZATION_PREFIX + "e" * 64
+        )
     elif case == "runtime_code_map":
         value["runtime_code_hashes"] = {}
     elif case == "builder_hash":
@@ -843,6 +1044,9 @@ def mutate_producer_receipt(value: dict, case: str) -> None:
         "unread_source",
         "authorization_subcheck",
         "runtime_status",
+        "execution_command_binding",
+        "execution_runtime_authentication",
+        "pre_execution_authorization",
         "runtime_code_map",
         "builder_hash",
         "git_committed_map",
@@ -864,7 +1068,7 @@ def test_each_load_bearing_producer_receipt_mutation_is_refused(
     mutate_producer_receipt(value, case)
     altered_receipt.write_text(json.dumps(value), encoding="utf-8")
     with pytest.raises(RUNNER.TargetAuditError):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=altered_cells,
@@ -879,11 +1083,9 @@ def test_output_leaf_must_be_new_and_outside_repo(product, tmp_path: Path):
     existing = tmp_path / "existing"
     existing.mkdir()
     with pytest.raises(RUNNER.TargetAuditError, match="pre-existing"):
-        RUNNER.execute(
-            Namespace(repo_root=REPO, cells=cells, cells_receipt=receipt, output_leaf=existing)
-        )
+        RUNNER.reserve_output_leaf(existing, REPO, cells.parent)
     with pytest.raises(RUNNER.TargetAuditError, match="outside the Git repository"):
-        RUNNER.execute(
+        execute_target(
             Namespace(
                 repo_root=REPO,
                 cells=cells,
@@ -901,6 +1103,42 @@ def test_dangling_symlink_output_leaf_is_refused(tmp_path: Path):
     assert RUNNER.os.path.lexists(dangling)
     with pytest.raises(RUNNER.TargetAuditError, match="pre-existing output leaf"):
         RUNNER.reserve_output_leaf(dangling, REPO, input_leaf)
+
+
+def test_target_atomic_publish_is_noreplace_and_inventory_bound(tmp_path: Path):
+    staging = tmp_path / ".staging"
+    staging.mkdir()
+    (staging / "expected.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "published"
+    RUNNER.atomic_publish(staging, destination, {"expected.txt"})
+    assert (destination / "expected.txt").read_text(encoding="utf-8") == "complete\n"
+    second = tmp_path / ".second"
+    second.mkdir()
+    with pytest.raises(RUNNER.TargetAuditError, match="appeared"):
+        RUNNER.atomic_publish(second, destination)
+
+    inventory = tmp_path / ".inventory"
+    inventory.mkdir()
+    (inventory / "expected.txt").write_text("expected\n", encoding="utf-8")
+    (inventory / "extra.txt").write_text("extra\n", encoding="utf-8")
+    with pytest.raises(RUNNER.TargetAuditError, match="inventory"):
+        RUNNER.atomic_publish(
+            inventory, tmp_path / "inventory-output", {"expected.txt"}
+        )
+
+
+def test_target_atomic_publish_rejects_hardlinked_outputs(tmp_path: Path):
+    linked = tmp_path / ".linked"
+    linked.mkdir()
+    source = linked / "expected.txt"
+    source.write_text("linked\n", encoding="utf-8")
+    os.link(source, linked / "alias.txt")
+    with pytest.raises(RUNNER.TargetAuditError, match="multiply linked"):
+        RUNNER.atomic_publish(
+            linked,
+            tmp_path / "linked-output",
+            {"expected.txt", "alias.txt"},
+        )
 
 
 def test_semantic_mutation_of_age_contract_is_refused():

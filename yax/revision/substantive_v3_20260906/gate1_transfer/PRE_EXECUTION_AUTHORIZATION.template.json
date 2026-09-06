@@ -1,0 +1,31 @@
+{
+  "authorization_id": "<REQUIRED_GENERATED_SELF_ID>",
+  "authorized_implementation_commit": "<REQUIRED_IMPLEMENTATION_COMMIT>",
+  "canonical_spec": {
+    "id": "<REQUIRED_CANONICAL_SPEC_ID>",
+    "sha256": "<REQUIRED_CANONICAL_SPEC_SHA256>"
+  },
+  "issued_at_utc": "<REQUIRED_CANONICAL_UTC_TIMESTAMP>",
+  "modules": {
+    "cells": {
+      "code_sha256": "<REQUIRED_CELL_CODE_SHA256>",
+      "typed_spec_id": "<REQUIRED_CELL_SPEC_ID>",
+      "typed_spec_sha256": "<REQUIRED_CELL_SPEC_SHA256>"
+    },
+    "numerical": {
+      "code_sha256": "<REQUIRED_NUMERICAL_CODE_SHA256>",
+      "typed_spec_id": "<REQUIRED_NUMERICAL_SPEC_ID>",
+      "typed_spec_sha256": "<REQUIRED_NUMERICAL_SPEC_SHA256>"
+    },
+    "target": {
+      "code_sha256": "<REQUIRED_TARGET_CODE_SHA256>",
+      "typed_spec_id": "<REQUIRED_TARGET_SPEC_ID>",
+      "typed_spec_sha256": "<REQUIRED_TARGET_SPEC_SHA256>"
+    }
+  },
+  "not_after_utc": "<REQUIRED_CANONICAL_UTC_TIMESTAMP>",
+  "not_before_utc": "<REQUIRED_CANONICAL_UTC_TIMESTAMP>",
+  "schema_version": "yax-gate1-pre-execution-authorization-v1",
+  "source_registry_sha256": "<REQUIRED_SOURCE_REGISTRY_SHA256>",
+  "status": "UNSTAMPED_FAIL_CLOSED"
+}

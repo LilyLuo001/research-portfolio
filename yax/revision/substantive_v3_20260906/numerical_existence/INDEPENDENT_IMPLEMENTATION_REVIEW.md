@@ -1,39 +1,47 @@
 # Independent numerical implementation review
 
-Review date: 2026-09-06
+Review date: 2026-09-06 UTC.
 
-Runner SHA-256: `fe2a927f9cca2d6f1935178a4d6489244af83e18f7eaa877f0dc0038ce8cd876`
+Reviewed terminal objects:
 
-Analysis-spec SHA-256: `9b27c3b987a9f70bca3004dfe36141bb91e57890e9a481ecf23ee40271cceb82`
+- runner SHA-256:
+  `26a1bec8cf9496fabec12c33b60361c95ed150ac217abbc6d3c2fed78866a1c3`;
+- artifact-safety SHA-256:
+  `91018c48dc37590fb831b808ea462796d9bdc85eefe1d0ec97e9b9ac007ebcc4`;
+- test-file SHA-256:
+  `e519fa0d46d5fd7b888158af3e68239fc1e23bb0875f352bcca46fb2da4b8da7`;
+- analysis-spec ID:
+  `yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec`;
+- analysis-spec SHA-256:
+  `86b1704dd774e89b395035dd8fdf5b0be6e18332c678d5943a44d4637e297f7a`.
 
-Test-file SHA-256: `e74f243fefe20f7c73da50d73319146cbe4b936676dd4a3e348959178805d195`
+Disposition: **PASS for implementation; fresh empirical SCC execution remains
+UNRUN at the time of this review.**
 
-Disposition: **PASS for implementation; empirical production audit remains UNRUN**
+The independent reviewer found no remaining P1 or P2 code defect. Fourteen
+focused weak-direction, adjoint, large-sparse, profile, and dyadic tests passed;
+the full code-scoped suite passed 66 tests and 17 subtests before the two
+intentionally stale spec-binding checks were restamped. After the coordinated
+restamp, the integrating agent ran all 68 tests and 17 subtests successfully.
 
-The independent review reran all 43 tests plus 12 adversarial subtests and
-found no remaining P0 or P1 defect. In particular, it verified:
+The reviewer independently reproduced the previously missed nearly collinear
+fixture. The zero candidate is now blocked with an attainable raw-NLL gain of
+approximately `0.000749975` and a focal Newton correction of approximately
+`0.24896564`. Native L-BFGS-B and trust-ncg fits both pass the full certificate
+and recover the generating target within the declared coefficient tolerance.
+The reviewer also confirmed that:
 
-- the near-dependent `1e-8` example has no separation, while the `1e-9`
-  candidate fails independent primal certification rather than receiving a
-  false PASS;
-- signed `+1` and `-1` target LPs distinguish feasible and infeasible target
-  directions, and a zero-gain unit-target direction is correctly classified as
-  target-moving;
-- all eleven registered models reproduce the byte-locked submitted regressor
-  matrices, semantic labels, and both fixed-effect partitions;
-- both dynamic models construct all 38 reported Q5 targets, all 23 pretrend
-  coordinates, and 42 post months with weights summing to one;
-- both post-2020 models and all four conditioned/unconditioned seasonal models
-  pass parity;
-- the family-post reference follows the all-analysis-period stock rule;
-- receipt, producer/cell spec, source, runtime, Git, route, physical-record,
-  and weight-once checks fail closed under mutation; and
-- unsafe output paths and every blocked status produce nonzero failure rather
-  than a report-only success.
+- target scaling and signs are correct in both primal and adjoint systems;
+- the conservative maximum of primal and adjoint corrections is binding;
+- the IEEE `gamma_k` sparse-dot floor does not relax the backward-error rule;
+- a mocked omitted weak component fails its target-adjoint solve;
+- an 8,000-column sparse system invokes neither dense conversion nor an
+  approximate eigenvalue certificate;
+- noncenter nuisance profile fits remain bound to the same stationarity logic;
+- runtime and command attestations are acquired internally; and
+- output leaves are derived from the scheduler job number.
 
-The independent run used local macOS Python 3.10/SciPy 1.9, so it validates
-the code and adversarial logic only. The production program correctly refuses
-that runtime. The committed code must next be rerun under the declared SCC
-CPython 3.13.8/SciPy 1.16.2 environment before any empirical model can be
-described as executed or validated. No protected aggregate or microdata was
-read during this review.
+This review used public/synthetic fixtures and local execution only. The
+production program must still run under the authenticated SCC CPython
+3.13.8/SciPy 1.16.2 environment before any empirical model is described as
+executed or validated.

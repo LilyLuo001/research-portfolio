@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.util
 import copy
 import hashlib
+import inspect
 import json
 import pathlib
 import subprocess
@@ -56,6 +57,22 @@ def bundle(
         regressors=np.asarray(regressors, float),
         regressor_labels=[label],
         focal_target_label=label,
+    )
+
+
+def fit_solver(
+    objective, method, start, max_iterations, gradient_tolerance,
+    standardized_score_tolerance, focal_column, *, fisher_start=False,
+    targets=None,
+):
+    if targets is None:
+        focal = np.zeros(objective.design.shape[1], dtype=float)
+        focal[focal_column] = 1.0
+        targets = {"focal_target": focal}
+    return AUDIT.fit_exact_solver(
+        objective, method, start, max_iterations, gradient_tolerance,
+        standardized_score_tolerance, focal_column, targets, 1e-6, 1e-4,
+        fisher_start, 1e-10,
     )
 
 
@@ -283,10 +300,10 @@ class ObjectiveTests(unittest.TestCase):
         true = np.array([-0.4, 0.7])
         young = total * expit(design @ true)
         objective = AUDIT.BinomialObjective(design, young, total)
-        left = AUDIT.fit_exact_solver(
+        left = fit_solver(
             objective, "L-BFGS-B", np.zeros(2), 1000, 1e-7, 1e-4, 1,
         )
-        right = AUDIT.fit_exact_solver(
+        right = fit_solver(
             objective, "trust-ncg", np.zeros(2), 1000, 1e-7, 1e-4, 1,
         )
         comparison = AUDIT.compare_solvers(
@@ -323,11 +340,12 @@ class ObjectiveTests(unittest.TestCase):
 
     def test_solver_comparison_binds_every_reported_event_target(self):
         diagnostics = {
-            "method": "left", "numerically_valid": True,
+            "method": "L-BFGS-B", "numerically_valid": True,
             "objective_per_total": 0.5,
+            "raw_negative_log_likelihood": 10.0,
         }
         right_diagnostics = {
-            **diagnostics, "method": "right",
+            **diagnostics, "method": "trust-ncg",
         }
         tolerances = {
             "target_coefficient_absolute_difference": 1e-6,
@@ -344,13 +362,605 @@ class ObjectiveTests(unittest.TestCase):
         self.assertFalse(result["reported_target_comparison_pass"])
         self.assertFalse(result["comparison_pass"])
 
+    def test_solver_comparison_records_raw_objective_and_argmax_location(self):
+        left = {
+            "method": "L-BFGS-B", "numerically_valid": True,
+            "objective_per_total": 0.5,
+            "raw_negative_log_likelihood": 100.25,
+        }
+        right = {
+            "method": "trust-ncg", "numerically_valid": True,
+            "objective_per_total": 0.5001,
+            "raw_negative_log_likelihood": 100.75,
+        }
+        result = AUDIT.compare_solvers(
+            left, np.array([0.0, 0.1]), np.array([0.4, 0.5]),
+            right, np.array([0.0, 0.1]), np.array([0.4, 0.5002]),
+            nuisance_columns=1, focal_target=0,
+            tolerances={
+                "target_coefficient_absolute_difference": 1e-6,
+                "fitted_probability_max_abs_difference": 1e-7,
+                "objective_difference_per_total": 1e-10,
+            },
+            row_identifiers=[
+                {"occ_code": "0001", "month": "2023-01", "family": "11"},
+                {"occ_code": "0002", "month": "2023-02", "family": "13"},
+            ],
+        )
+        self.assertEqual(result["raw_negative_log_likelihood_difference"], 0.5)
+        location = result["fitted_probability_max_abs_difference_location"]
+        self.assertEqual(location["row_position_zero_based"], 1)
+        self.assertEqual(location["row_identifiers"]["occ_code"], "0002")
+
+    def test_solver_comparison_rejects_duplicate_or_substituted_algorithm(self):
+        diagnostics = {
+            "method": "L-BFGS-B", "numerically_valid": True,
+            "objective_per_total": 0.5,
+            "raw_negative_log_likelihood": 10.0,
+        }
+        with self.assertRaisesRegex(
+            AUDIT.AuditBlocked, "independent algorithm pair",
+        ):
+            AUDIT.compare_solvers(
+                diagnostics, np.array([0.0, 0.1]), np.array([0.4, 0.5]),
+                diagnostics, np.array([0.0, 0.1]), np.array([0.4, 0.5]),
+                nuisance_columns=1, focal_target=0,
+                tolerances={
+                    "target_coefficient_absolute_difference": 1e-6,
+                    "fitted_probability_max_abs_difference": 1e-7,
+                    "objective_difference_per_total": 1e-10,
+                },
+            )
+
+    def test_design_only_reparameterization_preserves_objective_and_chain_rule(self):
+        rng = np.random.default_rng(8501)
+        dense = np.column_stack([
+            np.ones(50), rng.normal(size=50), 1e-4 * rng.normal(size=50),
+        ])
+        total = rng.integers(10, 200, size=50).astype(float)
+        young = total * rng.uniform(0.1, 0.9, size=50)
+        offset = rng.normal(scale=0.2, size=50)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total, offset,
+        )
+        transformed, parameter_scale, audit = (
+            AUDIT.design_only_diagonal_reparameterization(objective)
+        )
+        theta = rng.normal(size=3)
+        phi = parameter_scale * theta
+        self.assertEqual(
+            objective.raw_nll(theta).hex(), transformed.raw_nll(phi).hex()
+        )
+        np.testing.assert_allclose(
+            transformed.gradient(phi),
+            objective.gradient(theta) / parameter_scale,
+            rtol=2e-15, atol=2e-15,
+        )
+        direction = rng.normal(size=3)
+        np.testing.assert_allclose(
+            transformed.hessp(phi, direction),
+            objective.hessp(theta, direction / parameter_scale) /
+            parameter_scale,
+            rtol=2e-15, atol=2e-15,
+        )
+        np.testing.assert_allclose(
+            objective.probability(theta), transformed.probability(phi),
+            rtol=0, atol=2e-16,
+        )
+        self.assertFalse(audit["uses_fitted_probabilities"])
+        self.assertFalse(audit["changes_linear_predictor_or_likelihood"])
+
+    def test_large_weight_weak_column_fixture_passes_original_kkt_for_both_solvers(self):
+        rng = np.random.default_rng(7391)
+        x = np.linspace(-2.0, 2.0, 120)
+        weak = np.zeros(len(x))
+        weak[-3:] = [0.5, 1.0, 1.5]
+        dense = np.column_stack([np.ones(len(x)), x, weak])
+        total = np.full(len(x), 1.0e8)
+        total[-3:] = [1.0e3, 2.0e3, 3.0e3]
+        truth = np.array([-0.35, 0.42, -0.8])
+        young = total * expit(dense @ truth)
+        objective = AUDIT.BinomialObjective(sparse.csr_matrix(dense), young, total)
+        fits = [
+            fit_solver(
+                objective, method, np.zeros(3), 3000, 1e-7, 1e-4, 1,
+            )
+            for method in ("L-BFGS-B", "trust-ncg")
+        ]
+        for diagnostics, theta, _probability, _trajectory in fits:
+            self.assertTrue(diagnostics["numerically_valid"], diagnostics)
+            self.assertEqual(
+                diagnostics["acceptance_source"],
+                "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE",
+            )
+            np.testing.assert_allclose(theta, truth, rtol=0, atol=2e-6)
+
+    def test_near_collinear_false_pass_is_detected_and_native_solvers_recover(self):
+        n = 200
+        total_per_row = 1.0e6
+        index = np.arange(n)
+        z = np.sqrt(2.0) * np.cos(2.0 * np.pi * index / n)
+        orthogonal = np.sqrt(2.0) * np.sin(4.0 * np.pi * index / n)
+        epsilon = 2.2e-5
+        dense = np.column_stack([z, z + epsilon * orthogonal])
+        total = np.full(n, total_per_row)
+        delta = np.sqrt(4.0 * 0.0015 / (total_per_row * n)) / epsilon
+        truth = np.array([delta, -delta])
+        young = total * expit(dense @ truth)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total,
+        )
+        focal = np.array([1.0, 0.0])
+
+        zero_certificate = AUDIT.full_hessian_stationarity_certificate(
+            objective, np.zeros(2), {"focal_target": focal},
+            1e-4, 1e-6, 1e-4, 1e-10,
+        )
+        self.assertEqual(
+            zero_certificate["status"],
+            "BLOCKED_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE",
+        )
+        self.assertGreater(
+            zero_certificate["line_search"][
+                "actual_raw_negative_log_likelihood_decrease"
+            ],
+            1e-4,
+        )
+        self.assertGreater(
+            abs(zero_certificate["target_newton_corrections"]["focal_target"]),
+            0.24,
+        )
+        weak_solve = zero_certificate["solve"]["solve_audit"]
+        self.assertGreater(
+            weak_solve["rhs_relative_residual"],
+            weak_solve["relative_tolerance"],
+        )
+        self.assertLessEqual(
+            weak_solve["rhs_relative_residual"],
+            weak_solve["rhs_relative_roundoff_floor"],
+        )
+        self.assertLessEqual(
+            weak_solve["normwise_backward_error"],
+            weak_solve["relative_tolerance"],
+        )
+        self.assertFalse(weak_solve["backward_error_tolerance_relaxed"])
+
+        left = fit_solver(
+            objective, "L-BFGS-B", np.zeros(2), 2000,
+            1e-7, 1e-4, 0, fisher_start=True,
+        )
+        right = fit_solver(
+            objective, "trust-ncg", np.zeros(2), 2000,
+            1e-7, 1e-4, 0,
+        )
+        for fit in (left, right):
+            self.assertTrue(fit[0]["numerically_valid"], fit[0])
+            self.assertEqual(
+                fit[0]["full_hessian_stationarity_certificate"]["status"],
+                "PASS_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE",
+            )
+            np.testing.assert_allclose(fit[1], truth, rtol=0, atol=2e-6)
+        self.assertEqual(
+            left[0]["optimizer_start"]["status"],
+            "PASS_L_BFGS_B_ONLY_P_HALF_FULL_HESSIAN_START",
+        )
+        self.assertEqual(
+            right[0]["optimizer_start"]["status"],
+            "DECLARED_ZERO_OR_CALLER_START_UNCHANGED",
+        )
+
+    def test_full_hessian_solve_rejects_zero_or_wrong_direction(self):
+        dense = np.column_stack([
+            np.ones(20), np.linspace(-1.0, 1.0, 20),
+        ])
+        total = np.full(20, 100.0)
+        young = total * expit(dense @ np.array([-0.3, 0.6]))
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total,
+        )
+
+        class ZeroFactor:
+            @staticmethod
+            def solve(rhs):
+                return np.zeros_like(rhs)
+
+        with mock.patch.object(AUDIT, "splu", return_value=ZeroFactor()):
+            direction, solve, _scale = AUDIT.scaled_original_hessian_direction(
+                objective, np.zeros(2), total * 0.25, 1e-10,
+            )
+            certificate = AUDIT.full_hessian_stationarity_certificate(
+                objective, np.zeros(2),
+                {"focal_target": np.array([0.0, 1.0])},
+                1e-4, 1e-6, 1e-4, 1e-10,
+            )
+        np.testing.assert_array_equal(direction, np.zeros(2))
+        self.assertEqual(solve["scaled_rhs_relative_residual"], 1.0)
+        self.assertFalse(solve["linear_solve_residual_pass"])
+        self.assertEqual(
+            certificate["status"],
+            "BLOCKED_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE",
+        )
+
+    def test_target_adjoint_catches_omitted_weak_primal_solve_component(self):
+        weak_eigenvalue = 1.2e-10
+        correlation = 1.0 - weak_eigenvalue
+        scaled_hessian = np.array([
+            [1.0, correlation], [correlation, 1.0],
+        ])
+        dense = np.linalg.cholesky(scaled_hessian).T
+        total = np.full(2, 4.0)
+        strong = np.array([1.0, 1.0]) / np.sqrt(2.0)
+        weak = np.array([1.0, -1.0]) / np.sqrt(2.0)
+        scaled_rhs = 9.0e-5 * strong + 6.0e-15 * weak
+        young = total * 0.5 + np.linalg.solve(dense.T, scaled_rhs)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total,
+        )
+
+        class OmitWeakFactor:
+            @staticmethod
+            def solve(rhs):
+                strong_eigenvalue = 2.0 - weak_eigenvalue
+                return strong * (strong @ rhs) / strong_eigenvalue
+
+        with mock.patch.object(AUDIT, "splu", return_value=OmitWeakFactor()):
+            direction, solve, _context = AUDIT.scaled_original_hessian_direction(
+                objective, np.zeros(2), total * 0.25, 1e-10,
+            )
+            certificate = AUDIT.full_hessian_stationarity_certificate(
+                objective, np.zeros(2), {"weak_target": weak},
+                1e-4, 1e-6, 1e-4, 1e-10,
+            )
+        self.assertLessEqual(solve["scaled_rhs_relative_residual"], 1e-10)
+        self.assertTrue(solve["linear_solve_residual_pass"])
+        self.assertLess(abs(weak @ direction), 1e-12)
+        target = certificate["target_primal_adjoint_audits"]["weak_target"]
+        self.assertEqual(
+            target["adjoint_solve"]["status"],
+            "BLOCKED_REFINED_SPARSE_ORIGINAL_SYSTEM_SOLVE",
+        )
+        self.assertGreater(target["adjoint_solve"]["rhs_relative_residual"], 0.9)
+        self.assertFalse(
+            certificate["checks"]["all_declared_target_adjoint_solves"]
+        )
+        self.assertEqual(
+            certificate["status"],
+            "BLOCKED_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE",
+        )
+
+    def test_nonminimum_iterative_ritz_pair_cannot_enter_certificate_path(self):
+        weak_eigenvalue = 1.0e-12
+        scaled_hessian = np.array([
+            [1.0, 1.0 - weak_eigenvalue, 0.0],
+            [1.0 - weak_eigenvalue, 1.0, 0.0],
+            [0.0, 0.0, 1.0],
+        ])
+        dense = np.linalg.cholesky(scaled_hessian).T
+        total = np.full(3, 4.0)
+        young = total * 0.5 + np.array([1e-6, -1e-6, 1e-6])
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total,
+        )
+        fake_nonminimum = (
+            np.array([1.0]), np.array([[0.0], [0.0], [1.0]]),
+        )
+        with mock.patch.object(AUDIT, "eigsh", return_value=fake_nonminimum) as ritz:
+            _direction, solve, _context = AUDIT.scaled_original_hessian_direction(
+                objective, np.zeros(3), total * 0.25, 1e-10,
+            )
+        ritz.assert_not_called()
+        self.assertFalse(solve["spectral_lower_bound_used"])
+        self.assertFalse(solve["dense_conversion_used"])
+
+    def test_sparse_8000_column_certificate_solve_has_no_dense_or_eigen_path(self):
+        columns = 8000
+        objective = AUDIT.BinomialObjective(
+            sparse.eye(columns, format="csr"),
+            np.full(columns, 2.0),
+            np.full(columns, 4.0),
+        )
+        with (
+            mock.patch.object(
+                AUDIT, "eigsh", side_effect=AssertionError("eigsh forbidden")
+            ) as ritz,
+            mock.patch.object(
+                sparse.csc_matrix, "toarray",
+                side_effect=AssertionError("dense conversion forbidden"),
+            ) as dense_conversion,
+        ):
+            direction, solve, context = AUDIT.scaled_original_hessian_direction(
+                objective, np.zeros(columns), np.ones(columns), 1e-10,
+            )
+        ritz.assert_not_called()
+        dense_conversion.assert_not_called()
+        np.testing.assert_array_equal(direction, np.zeros(columns))
+        self.assertEqual(context["scaled_hessian"].shape, (columns, columns))
+        self.assertTrue(solve["linear_solve_residual_pass"])
+        self.assertFalse(solve["spectral_lower_bound_used"])
+        self.assertFalse(solve["dense_conversion_used"])
+
+    def test_complete_dyadic_grid_does_not_accept_far_root_nonincrease(self):
+        objective = mock.Mock()
+        objective.raw_nll.side_effect = lambda theta: float(
+            (np.asarray(theta)[0] - 0.5) ** 2
+        )
+        candidate, audit = AUDIT.deterministic_decreasing_step(
+            objective, np.array([0.0]), np.array([1.0]),
+        )
+        np.testing.assert_array_equal(candidate, np.array([0.5]))
+        self.assertEqual(audit["step_fraction"], 0.5)
+        self.assertEqual(
+            audit["actual_raw_negative_log_likelihood_decrease"], 0.25,
+        )
+
+    def test_uniform_frequency_weight_rescaling_does_not_change_fit(self):
+        x = np.linspace(-1.8, 1.8, 90)
+        dense = np.column_stack([np.ones(len(x)), x])
+        total = np.linspace(20.0, 100.0, len(x))
+        truth = np.array([-0.2, 0.6])
+        young = total * expit(dense @ truth)
+        base = fit_solver(
+            AUDIT.BinomialObjective(sparse.csr_matrix(dense), young, total),
+            "L-BFGS-B", np.zeros(2), 2000, 1e-9, 1e-4, 1,
+        )
+        scaled = fit_solver(
+            AUDIT.BinomialObjective(
+                sparse.csr_matrix(dense), young * 1e7, total * 1e7,
+            ),
+            "L-BFGS-B", np.zeros(2), 2000, 1e-9, 1e-4, 1,
+        )
+        self.assertTrue(base[0]["numerically_valid"])
+        self.assertTrue(scaled[0]["numerically_valid"])
+        np.testing.assert_allclose(base[1], scaled[1], rtol=0, atol=2e-8)
+        np.testing.assert_allclose(base[2], scaled[2], rtol=0, atol=2e-9)
+
+    def test_scipy_success_or_stopping_message_cannot_override_original_kkt(self):
+        design = sparse.csr_matrix(np.ones((10, 1)))
+        objective = AUDIT.BinomialObjective(
+            design, np.zeros(10), np.full(10, 10.0)
+        )
+
+        stopping_cases = (
+            (True, 0, "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"),
+            (False, 1, "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"),
+            (True, 0, "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL"),
+        )
+        for success, status, message in stopping_cases:
+            with self.subTest(message=message):
+                result = type("SyntheticStop", (), {
+                    "x": np.zeros(1), "success": success, "status": status,
+                    "message": message, "nit": 0, "nfev": 1, "njev": 1,
+                })()
+                with mock.patch.object(AUDIT, "minimize", return_value=result):
+                    diagnostics, _theta, _probability, _trajectory = fit_solver(
+                        objective, "L-BFGS-B", np.zeros(1), 1, 1e-7, 1e-4, 0,
+                    )
+                self.assertFalse(diagnostics["numerically_valid"])
+                self.assertEqual(
+                    diagnostics["acceptance_source"],
+                    "BLOCKED_ORIGINAL_COORDINATE_DECLARED_KKT",
+                )
+                self.assertTrue(diagnostics["scipy_status_is_not_acceptance_evidence"])
+
+    def test_fixed_target_profile_requires_kkt_and_has_no_material_negative_rises(self):
+        x = np.linspace(-2.0, 2.0, 100)
+        dense = np.column_stack([np.ones(len(x)), x])
+        total = np.full(len(x), 50.0)
+        truth = np.array([-0.3, 0.7])
+        young = total * expit(dense @ truth)
+        objective = AUDIT.BinomialObjective(sparse.csr_matrix(dense), young, total)
+        fit = fit_solver(
+            objective, "L-BFGS-B", np.zeros(2), 2000, 1e-9, 1e-6, 1,
+        )
+        probability = fit[2]
+        weight = total * probability * (1.0 - probability)
+        information, _ = AUDIT.schur_information(
+            sparse.csr_matrix(dense[:, [0]]), dense[:, [1]], weight,
+        )
+        rows, summary = AUDIT.fixed_target_profile(
+            objective, fit[1], fit[0], 1, float(information[0, 0]),
+            [-2.0, -1.0, 0.0, 1.0, 2.0], 1000,
+            1e-7, 1e-4, 1e-4, 1e-10,
+        )
+        self.assertEqual(summary["status"], "PASS_TWO_SIDED_FINITE_PROFILE")
+        self.assertTrue(summary["all_grid_rises_nonnegative_within_raw_tolerance"])
+        self.assertTrue(all(row["success"] for row in rows))
+        self.assertTrue(all(
+            row["nuisance_standardized_score_max_abs"] <= 1e-4
+            for row in rows
+        ))
+        self.assertTrue(all(
+            row["acceptance_source"]
+            == "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE"
+            for row in rows if row["multiplier"] != 0.0
+        ))
+        self.assertEqual(
+            next(row for row in rows if row["multiplier"] == 0.0)[
+                "acceptance_source"
+            ],
+            "SUPPLIED_FULL_OPTIMUM_ORIGINAL_COORDINATE_KKT",
+        )
+
+    def test_fixed_target_profile_blocks_a_material_negative_grid_rise(self):
+        design = sparse.csr_matrix(np.column_stack([
+            np.ones(8), np.linspace(-1.0, 1.0, 8),
+        ]))
+        total = np.full(8, 10.0)
+        young = np.full(8, 5.0)
+        objective = AUDIT.BinomialObjective(design, young, total)
+        center_raw = objective.raw_nll(np.zeros(2))
+        raw_values = iter([
+            center_raw + 2.0, center_raw - 1.0,
+            center_raw + 1.0, center_raw + 3.0,
+        ])
+
+        def synthetic_profile_fit(reduced, method, start, *args, **kwargs):
+            raw = next(raw_values)
+            theta = np.asarray(start, float)
+            probability = reduced.probability(theta)
+            diagnostics = {
+                "method": method,
+                "scipy_success": True,
+                "scipy_status": 0,
+                "message": "synthetic KKT fixture",
+                "iterations": 1,
+                "objective_per_total": raw / reduced.scale,
+                "raw_negative_log_likelihood": raw,
+                "raw_gradient_infinity_norm": 0.0,
+                "gradient_infinity_norm_per_total": 0.0,
+                "standardized_score_max_abs": 0.0,
+                "coordinate_newton_step_max_abs": 0.0,
+                "numerically_valid": True,
+                "acceptance_source": "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE",
+                "optimizer_reparameterization": {"status": "SYNTHETIC"},
+            }
+            return diagnostics, theta, probability, []
+
+        with mock.patch.object(
+            AUDIT, "fit_exact_solver", side_effect=synthetic_profile_fit
+        ):
+            rows, summary = AUDIT.fixed_target_profile(
+                objective, np.zeros(2), {
+                    "numerically_valid": True,
+                    "acceptance_source": "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE",
+                }, 1, 1.0,
+                [-2.0, -1.0, 0.0, 1.0, 2.0], 100,
+                1e-7, 1e-4, 1e-4, 1e-10,
+            )
+        self.assertEqual(summary["status"], "BLOCKED_PROFILE_BENCHMARK")
+        self.assertFalse(summary["all_grid_rises_nonnegative_within_raw_tolerance"])
+        self.assertEqual(
+            min(row["raw_negative_log_likelihood_rise_from_center"] for row in rows),
+            -1.0,
+        )
+
+    def test_profile_zero_multiplier_uses_supplied_full_optimum_not_reoptimization(self):
+        design = sparse.csr_matrix(np.column_stack([
+            np.ones(10), np.linspace(-1.0, 1.0, 10),
+        ]))
+        total = np.full(10, 20.0)
+        young = np.full(10, 10.0)
+        objective = AUDIT.BinomialObjective(design, young, total)
+        optimum = np.zeros(2)
+        center_raw = objective.raw_nll(optimum)
+        calls = []
+
+        def constrained_fit(reduced, method, start, *args, **kwargs):
+            calls.append(reduced.offset.copy())
+            raw = center_raw + 2.0
+            theta = np.asarray(start, float)
+            diagnostics = {
+                "method": method, "scipy_success": True, "scipy_status": 0,
+                "message": "fixture", "iterations": 1,
+                "objective_per_total": raw / reduced.scale,
+                "raw_negative_log_likelihood": raw,
+                "raw_gradient_infinity_norm": 0.0,
+                "gradient_infinity_norm_per_total": 0.0,
+                "standardized_score_max_abs": 0.0,
+                "coordinate_newton_step_max_abs": 0.0,
+                "numerically_valid": True,
+                "acceptance_source": "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE",
+                "optimizer_reparameterization": {"status": "SYNTHETIC"},
+            }
+            return diagnostics, theta, reduced.probability(theta), []
+
+        with mock.patch.object(AUDIT, "fit_exact_solver", side_effect=constrained_fit):
+            rows, summary = AUDIT.fixed_target_profile(
+                objective, optimum,
+                {
+                    "numerically_valid": True, "scipy_success": True,
+                    "scipy_status": 0, "iterations": 1,
+                    "acceptance_source": "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE",
+                    "optimizer_reparameterization": {"status": "FULL"},
+                },
+                1, 1.0, [-1.0, 0.0, 1.0], 100,
+                1e-7, 1e-4, 1e-4, 1e-10,
+            )
+        self.assertEqual(len(calls), 2)
+        center = next(row for row in rows if row["multiplier"] == 0.0)
+        self.assertEqual(center["raw_negative_log_likelihood"], center_raw)
+        self.assertEqual(
+            center["acceptance_source"],
+            "SUPPLIED_FULL_OPTIMUM_ORIGINAL_COORDINATE_KKT",
+        )
+        self.assertEqual(summary["center_raw_negative_log_likelihood"], center_raw)
+
+    def test_profile_preserves_existing_offset_exactly(self):
+        x = np.linspace(-1.5, 1.5, 60)
+        dense = np.column_stack([np.ones(len(x)), x])
+        offset = 0.15 * np.sin(x)
+        total = np.full(len(x), 40.0)
+        truth = np.array([-0.25, 0.55])
+        young = total * expit(offset + dense @ truth)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total, offset,
+        )
+        fit = fit_solver(
+            objective, "L-BFGS-B", np.zeros(2), 2000, 1e-9, 1e-6, 1,
+        )
+        probability = fit[2]
+        information, _ = AUDIT.schur_information(
+            sparse.csr_matrix(dense[:, [0]]), dense[:, [1]],
+            total * probability * (1.0 - probability),
+        )
+        rows, summary = AUDIT.fixed_target_profile(
+            objective, fit[1], fit[0], 1, float(information[0, 0]),
+            [-1.0, 0.0, 1.0], 1000, 1e-7, 1e-4, 1e-4, 1e-10,
+        )
+        center = next(row for row in rows if row["multiplier"] == 0.0)
+        self.assertEqual(summary["status"], "PASS_TWO_SIDED_FINITE_PROFILE")
+        self.assertEqual(
+            center["raw_negative_log_likelihood"].hex(),
+            objective.raw_nll(fit[1]).hex(),
+        )
+
+    def test_profile_rejects_uncertified_or_false_kkt_center(self):
+        design = sparse.csr_matrix(np.column_stack([
+            np.ones(10), np.linspace(-1.0, 1.0, 10),
+        ]))
+        objective = AUDIT.BinomialObjective(
+            design, np.zeros(10), np.full(10, 10.0),
+        )
+        for diagnostics in (
+            {"numerically_valid": True},
+            {
+                "numerically_valid": True,
+                "acceptance_source": "SCIPY_SUCCESS",
+            },
+        ):
+            with self.subTest(diagnostics=diagnostics):
+                rows, summary = AUDIT.fixed_target_profile(
+                    objective, np.zeros(2), diagnostics, 1, 1.0,
+                    [-1.0, 0.0, 1.0], 100, 1e-7, 1e-4, 1e-4, 1e-10,
+                )
+                self.assertEqual(rows, [])
+                self.assertEqual(
+                    summary["status"],
+                    "BLOCKED_FULL_OPTIMUM_NOT_ORIGINAL_KKT_CERTIFIED",
+                )
+        rows, summary = AUDIT.fixed_target_profile(
+            objective, np.zeros(2), {
+                "numerically_valid": True,
+                "acceptance_source": "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE",
+                "optimizer_reparameterization": {"status": "SYNTHETIC"},
+            }, 1, 1.0, [-1.0, 0.0, 1.0], 100,
+            1e-7, 1e-4, 1e-4, 1e-10,
+        )
+        center = next(row for row in rows if row["multiplier"] == 0.0)
+        self.assertFalse(center["success"])
+        self.assertEqual(
+            center["acceptance_source"],
+            "BLOCKED_RECOMPUTED_FULL_OPTIMUM_ORIGINAL_COORDINATE_KKT",
+        )
+        self.assertEqual(summary["status"], "BLOCKED_PROFILE_BENCHMARK")
+
     def test_retained_one_sided_cells_have_finite_exact_fit(self):
         x = np.linspace(-2.0, 2.0, 7)
         design = sparse.csr_matrix(np.column_stack([np.ones(len(x)), x]))
         total = np.full(len(x), 10.0)
         young = np.array([0.0, 6.0, 3.0, 5.0, 7.0, 4.0, 10.0])
         objective = AUDIT.BinomialObjective(design, young, total)
-        fit = AUDIT.fit_exact_solver(
+        fit = fit_solver(
             objective, "L-BFGS-B", np.zeros(2), 2000, 1e-7, 1e-4, 1,
         )
         self.assertTrue(fit[0]["numerically_valid"])
@@ -389,7 +999,7 @@ class ObjectiveTests(unittest.TestCase):
         truth = np.array([-0.25, 0.55, -0.35])
         young = total * expit(dense @ truth)
         objective = AUDIT.BinomialObjective(sparse.csr_matrix(dense), young, total)
-        audited = AUDIT.fit_exact_solver(
+        audited = fit_solver(
             objective, "L-BFGS-B", np.zeros(3), 2000, 1e-9, 1e-6, 1,
         )
         reference = np.zeros(3)
@@ -478,6 +1088,67 @@ class ObjectiveTests(unittest.TestCase):
 
 
 class AuthenticationAndSafetyTests(unittest.TestCase):
+    def test_run_cannot_accept_caller_supplied_receipt_attestations(self):
+        self.assertEqual(
+            list(inspect.signature(AUDIT.run).parameters), ["args"],
+        )
+        with mock.patch.object(AUDIT, "acquire_execution_attestations") as acquire:
+            with self.assertRaises(TypeError):
+                AUDIT.run(
+                    mock.Mock(),
+                    {"status": "FABRICATED_BINDING"},
+                    {"status": "FABRICATED_RUNTIME"},
+                )
+        acquire.assert_not_called()
+
+    def test_attestation_acquisition_uses_live_process_boundaries(self):
+        args = mock.Mock()
+        binding = {"status": "AUTHENTICATED_BINDING"}
+        runtime = {"status": "AUTHENTICATED_RUNTIME"}
+        with (
+            mock.patch.object(
+                AUDIT, "build_execution_command_binding",
+                return_value=binding,
+            ) as build,
+            mock.patch.object(
+                AUDIT, "execution_runtime_authentication",
+                return_value=runtime,
+            ) as authenticate_runtime,
+            mock.patch.object(AUDIT.sys, "argv", ["runner.py", "--flag", "value"]),
+            mock.patch.object(
+                AUDIT.sys, "orig_argv",
+                ["python", "-I", "runner.py", "--flag", "value"],
+                create=True,
+            ),
+            mock.patch.dict(AUDIT.os.environ, {"JOB_ID": "123"}, clear=True),
+        ):
+            observed = AUDIT.acquire_execution_attestations(args)
+        self.assertEqual(observed, (binding, runtime))
+        build.assert_called_once_with(
+            args, ["--flag", "value"],
+            ["python", "-I", "runner.py", "--flag", "value"],
+            {"JOB_ID": "123"},
+        )
+        authenticate_runtime.assert_called_once_with()
+
+    def test_scheduler_binding_rejects_mismatched_output_leaf(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = pathlib.Path(temporary)
+            args = mock.Mock(
+                output_parent=parent,
+                output_dir=parent / "gate1_numerical_sge_999",
+            )
+            AUDIT.require_job_derived_output_leaf(
+                args, "gate1_numerical_sge_999",
+            )
+            args.output_dir = parent / "fabricated-leaf"
+            with self.assertRaisesRegex(
+                AUDIT.AuditBlocked, "scheduler-job-derived",
+            ):
+                AUDIT.require_job_derived_output_leaf(
+                    args, "gate1_numerical_sge_999",
+                )
+
     def test_receipt_authentication_detects_each_load_bearing_mutation(self):
         with tempfile.TemporaryDirectory() as temporary:
             cells = pathlib.Path(temporary) / "cells.csv"
@@ -674,6 +1345,138 @@ class AuthenticationAndSafetyTests(unittest.TestCase):
             self.assertFalse(checks["current_git_worktree_clean"])
             self.assertFalse(checks["current_git_committed_artifacts"])
 
+    def test_prepublication_state_reauthenticates_every_mutable_input(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            repo = root / "repo"
+            external = root / "external"
+            repo.mkdir(); external.mkdir()
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "test@example.invalid"],
+                cwd=repo, check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "YAX test"],
+                cwd=repo, check=True,
+            )
+            repo_paths = [
+                AUDIT.CELL_SPEC_REL, AUDIT.TARGET_SPEC_REL,
+                AUDIT.CELL_CODE_REL, AUDIT.TARGET_CODE_REL,
+                AUDIT.PRE_EXECUTION_AUTHORIZATION_REL,
+                pathlib.Path("submitted/baseline.py"),
+            ]
+            for relative in repo_paths:
+                path = repo / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(str(relative) + "\n", encoding="utf-8")
+            subprocess.run(["git", "add", "."], cwd=repo, check=True)
+            subprocess.run(
+                ["git", "commit", "-qm", "fixture"], cwd=repo, check=True,
+            )
+            external_paths = {}
+            for name in (
+                "canonical_spec", "analysis_spec", "cells", "cells_receipt",
+                "legacy_engine",
+            ):
+                path = external / name
+                path.write_text(name + "\n", encoding="utf-8")
+                external_paths[name] = path
+            args = mock.Mock(
+                canonical_spec=external_paths["canonical_spec"],
+                analysis_spec=external_paths["analysis_spec"],
+                cells=external_paths["cells"],
+                cells_receipt=external_paths["cells_receipt"],
+                legacy_engine=external_paths["legacy_engine"],
+            )
+            analysis = {"design_parity": {"submitted_source_sha256": {
+                "submitted/baseline.py": "fixture-hash",
+            }}}
+            canonical = {"spec_id": "fixture"}
+            authorization = {"authorization_id": "fixture-auth"}
+            runtime = {"status": "fixture-runtime"}
+            with (
+                mock.patch.object(
+                    AUDIT, "validate_pre_execution_authorization",
+                    return_value=authorization,
+                ),
+                mock.patch.object(
+                    AUDIT, "execution_runtime_authentication",
+                    return_value=runtime,
+                ),
+            ):
+                initial = AUDIT.authenticated_execution_state(
+                    args, repo, canonical, analysis,
+                )
+                passed = AUDIT.require_unchanged_execution_state(
+                    initial, args, repo, canonical, analysis,
+                )
+                self.assertEqual(
+                    passed["status"],
+                    "PASS_COMPLETE_PREPUBLICATION_REAUTHENTICATION",
+                )
+                external_paths["cells"].write_text(
+                    "mutated aggregate\n", encoding="utf-8",
+                )
+                with self.assertRaisesRegex(
+                    AUDIT.AuditBlocked, "state changed",
+                ):
+                    AUDIT.require_unchanged_execution_state(
+                        initial, args, repo, canonical, analysis,
+                    )
+                external_paths["cells"].write_text(
+                    "cells\n", encoding="utf-8",
+                )
+                (repo / AUDIT.TARGET_CODE_REL).write_text(
+                    "changed target code\n", encoding="utf-8",
+                )
+                with self.assertRaisesRegex(
+                    AUDIT.AuditBlocked, "clean authorization checkout",
+                ):
+                    AUDIT.authenticated_execution_state(
+                        args, repo, canonical, analysis,
+                    )
+
+    def test_prepublication_state_rejects_any_changed_snapshot(self):
+        with mock.patch.object(
+            AUDIT, "authenticated_execution_state",
+            return_value={"state": "changed"},
+        ):
+            with self.assertRaisesRegex(AUDIT.AuditBlocked, "state changed"):
+                AUDIT.require_unchanged_execution_state(
+                    {"state": "initial"}, mock.Mock(), pathlib.Path("."),
+                    {}, {},
+                )
+
+    def test_post_receipt_mutation_blocks_before_publication(self):
+        reservation = mock.Mock()
+        with mock.patch.object(
+            AUDIT, "require_unchanged_execution_state",
+            side_effect=AUDIT.AuditBlocked("synthetic post-receipt mutation"),
+        ):
+            with self.assertRaisesRegex(
+                AUDIT.AuditBlocked, "post-receipt mutation",
+            ):
+                AUDIT.publish_after_final_reauthentication(
+                    reservation, {"initial": True}, mock.Mock(),
+                    pathlib.Path("."), {}, {},
+                )
+        reservation.publish.assert_not_called()
+
+    def test_final_reauthentication_directly_precedes_publication(self):
+        events = []
+        reservation = mock.Mock()
+        reservation.publish.side_effect = lambda: events.append("publish")
+        with mock.patch.object(
+            AUDIT, "require_unchanged_execution_state",
+            side_effect=lambda *args: events.append("reauthenticate"),
+        ):
+            AUDIT.publish_after_final_reauthentication(
+                reservation, {"initial": True}, mock.Mock(),
+                pathlib.Path("."), {}, {},
+            )
+        self.assertEqual(events, ["reauthenticate", "publish"])
+
     def test_assignment_authentication_detects_tuple_mutations(self):
         frame = pd.DataFrame({
             "occ_code": ["0001", "0002"], "family": ["11", "13"],
@@ -711,6 +1514,42 @@ class AuthenticationAndSafetyTests(unittest.TestCase):
             reservation.publish()
             self.assertEqual((target / "done.txt").read_text(encoding="utf-8"), "complete")
             self.assertFalse(reservation.staging.exists())
+
+    def test_atomic_output_leaf_never_raises_after_publication_commit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            repo = root / "repo"
+            outside = root / "outside"
+            repo.mkdir(); outside.mkdir()
+            source = outside / "input.csv"
+            source.write_text("input", encoding="utf-8")
+            reservation = AUDIT.AtomicOutputLeaf.reserve(
+                outside / "committed-run", repo, [source]
+            )
+            (reservation.staging / "done.txt").write_text(
+                "complete", encoding="utf-8"
+            )
+            def fail_cleanup_after_closing() -> None:
+                if reservation.lock_fd is not None:
+                    import os
+                    os.close(reservation.lock_fd)
+                    reservation.lock_fd = None
+                raise OSError(5, "synthetic cleanup failure")
+
+            with mock.patch.object(
+                reservation, "release_lock", side_effect=fail_cleanup_after_closing
+            ):
+                reservation.publish()
+            self.assertTrue(reservation.published)
+            self.assertEqual(
+                (reservation.target / "done.txt").read_text(encoding="utf-8"),
+                "complete",
+            )
+            self.assertEqual(
+                reservation.post_commit_cleanup_warnings,
+                ("lock_cleanup_errno_5",),
+            )
+            reservation.release_lock()
 
 
 class ArtifactPublicationTests(unittest.TestCase):

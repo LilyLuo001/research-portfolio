@@ -2,54 +2,49 @@
 
 Validation date: 2026-09-06 UTC.
 
-This validates code, not the empirical YAX models. No licensed microdata,
-protected aggregate cells, or post-period outcome result was opened.
+This validates the final code and restamped contracts before the fresh SCC
+execution. It does not claim that the eleven protected-data models have run.
+No licensed microdata or protected aggregate cell was opened locally.
 
-The 43 passing tests cover:
+The final suite covers the original likelihood, boundary, separation, rank,
+design-parity, dynamic-target, authentication, and atomic-publication checks.
+It additionally verifies:
 
-- retained genuine one-sided cells, all-young and all-older nuisance groups,
-  zero-total rows, and cascading boundary profiling;
-- disconnected fixed-effect graphs and normalization rank;
-- complete and quasi separation, direct focal-direction LPs, a lower-gain
-  target direction missed by the maximum-gain witness, zero-gain target
-  lineality, near-dependent `1e-8`/`1e-9` false-certification counterexamples,
-  independently certified LP residuals, and exact profiling of a
-  target-invariant nuisance recession;
-- focal-preserving treatment-basis reduction;
-- analytic gradient and Hessian-vector products against finite differences;
-- sparse Schur information and full-Hessian spectra against dense calculations,
-  including a regression test that a null eigenvalue cannot be thresholded
-  away and called positive definite;
-- two unclipped solvers against each other and an independent dense Newton
-  implementation, with every reported dynamic Q5 target included in the
-  binding solver comparison;
-- output overwrite/repository/overlap rejection, exact artifact-set checking,
-  whole-output private-path and credential scanning (including bearer/basic
-  authorization forms), discard on sanitation failure, atomic publication,
-  nonzero blocked exits, and absence of a report-only escape;
-- mutations of builder, producer spec, transitive code, source, lookup,
-  membership, analysis, assignment, runtime, command, Git, physical-count,
-  routing-mass, and weight-once authentication fields;
-- retained pruning and optimizer trajectory evidence after downstream
-  exceptions; and
-- exact regressor, label, fixed-effect-partition, and fingerprint parity for all
-  eleven models against the byte-locked submitted implementations, including
-  the all-period family-post reference and December-2022 dynamics adjudication;
-  and
-- exact construction of the observed-month-weighted post Q5 functional, all 38
-  Q5 event targets, and all 23 joint-pretrend coordinates on the canonical
-  calendar, plus the byte-locked SCC runtime payload.
+- design-only `p=0.5` diagonal coordinates preserve the exact likelihood,
+  fitted probabilities, original-coordinate coefficients, score, and Hessian
+  products;
+- neither SciPy success nor a stopping message can override the declared
+  original-coordinate score and sparse full-Hessian acceptance checks;
+- the L-BFGS-B-only Fisher-scoring start and trust-ncg zero start remain
+  independent, and both recover a deterministic nearly collinear target that
+  previously produced a false zero solution;
+- a complete 65-point dyadic line search detects the attainable raw-likelihood
+  improvement rather than accepting the first nonincrease;
+- refined sparse primal and declared-target adjoint solves agree, retain the
+  unrelaxed backward-error tolerance, and catch a mocked solver that silently
+  drops the weak component;
+- an 8,000-column synthetic system uses no dense conversion or iterative Ritz
+  certificate; and
+- the same full-Hessian stationarity logic governs noncenter nuisance profile
+  fits.
 
-Command and observed result:
+Observed local result:
 
 ```text
-python3 -m unittest yax/revision/substantive_v3_20260906/numerical_existence/test_numerical_existence_audit.py
-...........................................
-Ran 43 tests
-OK
+python3 -m pytest -q \
+  yax/revision/substantive_v3_20260906/numerical_existence/test_numerical_existence_audit.py
+....................................................................     [100%]
+68 passed, 17 subtests passed
 ```
 
-The production numerical audit remains **UNRUN** here. It must remain unverified
-until the authenticated fresh cell leaf exists and the eleven empirical models
-are run. A blocked model is a numerical finding; it is not authorization to
-substitute another objective, penalty, pseudocount, support rule, or design.
+The complete cell, target, and numerical producer/consumer suite also passed:
+
+```text
+134 passed, 17 subtests passed
+```
+
+The production numerical audit remains **UNRUN** until the newly authorized
+SCC chain produces and authenticates a fresh cell leaf, passes the exact-target
+audit, and executes all eleven models. A blocked model is a numerical finding;
+it is not permission to substitute another objective, support rule, penalty,
+pseudocount, tolerance, or design.

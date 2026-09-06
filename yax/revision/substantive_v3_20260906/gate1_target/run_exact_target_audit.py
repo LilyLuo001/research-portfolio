@@ -10,13 +10,16 @@ V2 contract and inspected R3 implementation.
 from __future__ import annotations
 
 import argparse
+import ctypes
 import csv
 from datetime import datetime, timezone
 import hashlib
 import json
 import math
+import errno
 import os
 from pathlib import Path
+import platform
 import re
 import shutil
 import subprocess
@@ -34,6 +37,9 @@ TARGET_SPEC_REL = HERE_REL / "TARGET_AUDIT_SPEC.json"
 CANONICAL_SPEC_REL = V3_REL / "contracts/specs/canonical_baseline_reproduction_v2.json"
 CELL_SPEC_REL = V3_REL / "gate1_cells/CELL_BUILD_SPEC.json"
 REQUIREMENT_SEED_REL = V3_REL / "revision_inputs/requirements_seed.json"
+PRE_EXECUTION_AUTHORIZATION_REL = (
+    V3_REL / "gate1_transfer/PRE_EXECUTION_AUTHORIZATION.json"
+)
 
 TARGET_SPEC_PREFIX = "yaxtargetspec_v1_"
 CELL_SPEC_PREFIX = "yaxcellspec_v1_"
@@ -48,6 +54,36 @@ AUDIT_FILENAME = "EXACT_TARGET_AUDIT.json"
 ROW_ACCOUNTING_FILENAME = "ROW_ACCOUNTING.csv"
 REPORT_FILENAME = "EXACT_TARGET_AUDIT_REPORT.md"
 RECEIPT_FILENAME = "EXECUTION_RECEIPT.json"
+COMMAND_TEMPLATE = (
+    "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_target/"
+    "run_exact_target_audit.py --repo-root <YAX_REPO_ROOT> "
+    "--cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv "
+    "--cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json "
+    "--output-parent <YAX_V3_RUN_ROOT>"
+)
+COMMAND_BINDING_SCHEMA = "yax-execution-command-binding-v2"
+COMMAND_BINDING_STATUS = "RUNNER_RECORDED_HASH_CONSISTENT"
+PRE_EXECUTION_AUTHORIZATION_SCHEMA = "yax-gate1-pre-execution-authorization-v1"
+PRE_EXECUTION_AUTHORIZATION_STATUS = "AUTHORIZED_FRESH_GATE1_EXECUTION"
+PRE_EXECUTION_AUTHORIZATION_PREFIX = "yaxgate1auth_v1_"
+MODULE_KEY = "target"
+JOB_ID_PATTERN = re.compile(r"^[1-9][0-9]{0,19}$")
+RUN_ID_PATTERN = re.compile(r"^gate1_target_sge_([1-9][0-9]{0,19})$")
+EXPECTED_PYTHON_RESOLVED_SHA256 = (
+    "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7"
+)
+EXPECTED_GIT_PATH = Path("/usr/bin/git")
+EXPECTED_GIT_SHA256 = (
+    "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e"
+)
+EXPECTED_GIT_VERSION = "git version 2.43.7"
+SANITIZED_GIT_ENVIRONMENT = {"PATH": "/usr/bin:/bin", "LC_ALL": "C"}
+IMPORT_AFFECTING_ENVIRONMENT = (
+    "PYTHONHOME", "PYTHONPATH", "PYTHONUSERBASE", "PYTHONSTARTUP",
+)
+EXPECTED_PRODUCTION_FLAGS = (
+    "--repo-root", "--cells", "--cells-receipt", "--output-parent",
+)
 
 SECRET_PATTERNS = (
     re.compile(r"ghp_[A-Za-z0-9]{20,}"),
@@ -60,6 +96,7 @@ PRIVATE_PATH_PATTERNS = (
 
 BUILDER_REL = V3_REL / "gate1_cells/run_gate1_cells.py"
 NUMERICAL_SPEC_REL = V3_REL / "numerical_existence/ANALYSIS_SPEC.json"
+NUMERICAL_CODE_REL = V3_REL / "numerical_existence/run_numerical_existence_audit.py"
 ENVIRONMENT_REL = Path("yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt")
 ASSIGNMENT_FILENAME = "ASSIGNMENT_FINGERPRINT.json"
 MARCH_REPAIR_MONTHS = [f"{year}-03" for year in range(2017, 2022)]
@@ -120,6 +157,13 @@ class TargetAuditError(RuntimeError):
     """Fail-closed exact-target audit error."""
 
 
+class NonEchoingArgumentParser(argparse.ArgumentParser):
+    """Never echo a possibly sensitive argv token in a parser error."""
+
+    def error(self, message: str) -> None:
+        raise TargetAuditError("production command-line grammar is invalid")
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -140,6 +184,141 @@ def canonical_bytes(value: Any) -> bytes:
         ensure_ascii=False,
         allow_nan=False,
     ).encode("utf-8")
+
+
+def scheduler_jobnumber(environ: dict[str, str]) -> str:
+    job = environ.get("JOB_ID")
+    alias = environ.get("SGE_JOB_ID")
+    if job is None or not JOB_ID_PATTERN.fullmatch(job):
+        raise TargetAuditError("a canonical numeric SCC JOB_ID is required")
+    if alias is not None and alias != job:
+        raise TargetAuditError("SGE_JOB_ID conflicts with JOB_ID")
+    if environ.get("SGE_TASK_ID") not in {None, "", "undefined"}:
+        raise TargetAuditError("Grid Engine array jobs are not authorized")
+    return job
+
+
+def execution_runtime_authentication() -> dict[str, Any]:
+    if (
+        sys.flags.isolated != 1
+        or sys.flags.ignore_environment != 1
+        or sys.flags.no_user_site != 1
+        or not bool(getattr(sys.flags, "safe_path", False))
+    ):
+        raise TargetAuditError("production Python must be invoked with isolated mode")
+    if any(os.environ.get(name) for name in IMPORT_AFFECTING_ENVIRONMENT):
+        raise TargetAuditError("import-affecting Python environment variables are forbidden")
+    try:
+        python_path = Path(sys.executable).resolve(strict=True)
+    except OSError as exc:
+        raise TargetAuditError("Python executable cannot be resolved") from exc
+    python_hash = sha256_file(python_path)
+    if python_hash != EXPECTED_PYTHON_RESOLVED_SHA256:
+        raise TargetAuditError("resolved Python executable differs from the pinned runtime")
+    if platform.python_version() != "3.13.8":
+        raise TargetAuditError("Python version differs from the pinned runtime")
+    if not EXPECTED_GIT_PATH.is_file() or EXPECTED_GIT_PATH.is_symlink():
+        raise TargetAuditError("pinned Git executable is absent or indirect")
+    git_hash = sha256_file(EXPECTED_GIT_PATH)
+    if git_hash != EXPECTED_GIT_SHA256:
+        raise TargetAuditError("Git executable differs from the pinned runtime")
+    completed = subprocess.run(
+        [str(EXPECTED_GIT_PATH), "--version"],
+        env=SANITIZED_GIT_ENVIRONMENT,
+        text=True, capture_output=True, check=False,
+    )
+    if completed.returncode != 0 or completed.stdout.strip() != EXPECTED_GIT_VERSION:
+        raise TargetAuditError("Git version differs from the pinned runtime")
+    return {
+        "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES",
+        "python_invocation": "<YAX_PYTHON_BIN>",
+        "python_resolved_executable_sha256": python_hash,
+        "python_version": platform.python_version(),
+        "isolated_mode": True,
+        "ignore_environment": True,
+        "no_user_site": True,
+        "safe_path": True,
+        "git_invocation": "<YAX_GIT_BIN>",
+        "git_resolved_executable_sha256": git_hash,
+        "git_version": EXPECTED_GIT_VERSION,
+        "import_affecting_environment_absent": True,
+    }
+
+
+def build_execution_command_binding(
+    args: argparse.Namespace,
+    raw_cli_argv: list[str],
+    original_argv: list[str],
+    environ: dict[str, str],
+) -> dict[str, Any]:
+    if len(raw_cli_argv) != 2 * len(EXPECTED_PRODUCTION_FLAGS):
+        raise TargetAuditError("production command-line grammar is invalid")
+    if raw_cli_argv[::2] != list(EXPECTED_PRODUCTION_FLAGS):
+        raise TargetAuditError("production command-line grammar is invalid")
+    if any(not value or any(ord(char) < 32 for char in value) for value in raw_cli_argv[1::2]):
+        raise TargetAuditError("production command-line values are invalid")
+    if len(original_argv) != len(raw_cli_argv) + 3 or original_argv[1] != "-I":
+        raise TargetAuditError("production must use direct isolated-script invocation")
+    try:
+        invoked_python = Path(original_argv[0]).resolve(strict=True)
+        invoked_script = Path(original_argv[2]).resolve(strict=True)
+    except OSError as exc:
+        raise TargetAuditError("production executable or runner cannot be resolved") from exc
+    if invoked_python != Path(sys.executable).resolve(strict=True):
+        raise TargetAuditError("invoked Python differs from the running interpreter")
+    if invoked_script != Path(__file__).resolve():
+        raise TargetAuditError("production runner path is not the authorized script")
+    executing_repo = Path(__file__).resolve().parents[4]
+    if args.repo_root.resolve(strict=True) != executing_repo:
+        raise TargetAuditError("repo-root differs from the executing runner checkout")
+    if not os.path.samefile(
+        executing_repo / HERE_REL / "run_exact_target_audit.py",
+        Path(__file__).resolve(),
+    ):
+        raise TargetAuditError("executing runner is not the repo-root runner inode")
+    if original_argv[3:] != raw_cli_argv:
+        raise TargetAuditError("raw process argv and script argv differ")
+    parsed_values = (
+        args.repo_root, args.cells, args.cells_receipt, args.output_parent,
+    )
+    if any(Path(raw).resolve(strict=False) != Path(parsed).resolve(strict=False)
+           for raw, parsed in zip(raw_cli_argv[1::2], parsed_values)):
+        raise TargetAuditError("parsed paths differ from the captured invocation")
+    cells = Path(args.cells).resolve(strict=False)
+    cells_receipt = Path(args.cells_receipt).resolve(strict=False)
+    if (
+        cells.name != "aggregate_cells.csv"
+        or cells_receipt.name != "EXECUTION_RECEIPT.json"
+        or cells.parent != cells_receipt.parent
+    ):
+        raise TargetAuditError("target inputs are not the exact colocated cell artifacts")
+    job = scheduler_jobnumber(environ)
+    run_id = f"gate1_target_sge_{job}"
+    if RUN_ID_PATTERN.fullmatch(run_id) is None:
+        raise TargetAuditError("derived output run ID is invalid")
+    sanitized_argv = [
+        "<YAX_PYTHON_BIN>", "-I",
+        str(HERE_REL / "run_exact_target_audit.py"),
+        "--repo-root", "<YAX_REPO_ROOT>",
+        "--cells", "<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv",
+        "--cells-receipt", "<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json",
+        "--output-parent", "<YAX_V3_RUN_ROOT>",
+    ]
+    core = {
+        "schema_version": COMMAND_BINDING_SCHEMA,
+        "status": COMMAND_BINDING_STATUS,
+        "module_key": MODULE_KEY,
+        "run_id": run_id,
+        "scheduler_jobnumber": job,
+        "sanitized_argv": sanitized_argv,
+        "sanitized_argv_sha256": hashlib.sha256(
+            canonical_bytes(sanitized_argv)
+        ).hexdigest(),
+    }
+    return {
+        **core,
+        "binding_sha256": hashlib.sha256(canonical_bytes(core)).hexdigest(),
+    }
 
 
 def _unique_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -205,6 +384,144 @@ def expected_numerical_spec_id(document: dict[str, Any]) -> str:
     clean = dict(document)
     clean.pop("audit_spec_id", None)
     return NUMERICAL_SPEC_PREFIX + hashlib.sha256(canonical_bytes(clean)).hexdigest()
+
+
+def expected_pre_execution_authorization_id(document: dict[str, Any]) -> str:
+    clean = dict(document)
+    clean.pop("authorization_id", None)
+    return PRE_EXECUTION_AUTHORIZATION_PREFIX + hashlib.sha256(
+        canonical_bytes(clean)
+    ).hexdigest()
+
+
+def validate_pre_execution_authorization(
+    repo: Path,
+    canonical: dict[str, Any],
+    target: dict[str, Any],
+    cell_spec: dict[str, Any],
+    code_sha256: str,
+) -> dict[str, Any]:
+    path = repo / PRE_EXECUTION_AUTHORIZATION_REL
+    require_file(path, "pre-execution authorization")
+    document = load_json(path)
+    if set(document) != {
+        "schema_version", "status", "authorization_id", "issued_at_utc",
+        "not_before_utc", "not_after_utc", "authorized_implementation_commit",
+        "canonical_spec", "source_registry_sha256", "modules",
+    }:
+        raise TargetAuditError("pre-execution authorization field set is not exact")
+    if (
+        document.get("schema_version") != PRE_EXECUTION_AUTHORIZATION_SCHEMA
+        or document.get("status") != PRE_EXECUTION_AUTHORIZATION_STATUS
+        or document.get("authorization_id")
+        != expected_pre_execution_authorization_id(document)
+    ):
+        raise TargetAuditError("pre-execution authorization identity is invalid")
+    try:
+        issued = datetime.fromisoformat(str(document["issued_at_utc"]).replace("Z", "+00:00"))
+        not_before = datetime.fromisoformat(str(document["not_before_utc"]).replace("Z", "+00:00"))
+        not_after = datetime.fromisoformat(str(document["not_after_utc"]).replace("Z", "+00:00"))
+    except (TypeError, ValueError) as exc:
+        raise TargetAuditError("pre-execution authorization timestamps are invalid") from exc
+    if any(value.tzinfo is None for value in (issued, not_before, not_after)):
+        raise TargetAuditError("pre-execution authorization timestamps require offsets")
+    if not (issued <= not_before <= datetime.now(timezone.utc) <= not_after):
+        raise TargetAuditError("execution is outside the authorized time window")
+    if document.get("canonical_spec") != {
+        "id": canonical["spec_id"], "sha256": sha256_file(repo / CANONICAL_SPEC_REL),
+    }:
+        raise TargetAuditError("authorization canonical binding differs")
+    source_registry_sha = hashlib.sha256(
+        canonical_bytes(canonical_source_hashes(canonical))
+    ).hexdigest()
+    if document.get("source_registry_sha256") != source_registry_sha:
+        raise TargetAuditError("authorization source registry differs")
+    modules = document.get("modules")
+    if not isinstance(modules, dict) or set(modules) != {"cells", "target", "numerical"}:
+        raise TargetAuditError("authorization module registry is incomplete")
+    numerical_spec = load_json(repo / NUMERICAL_SPEC_REL)
+    if numerical_spec.get("audit_spec_id") != expected_numerical_spec_id(numerical_spec):
+        raise TargetAuditError("authorization numerical specification ID is invalid")
+    expected_modules = {
+        "cells": {
+            "typed_spec_id": cell_spec["cell_build_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / CELL_SPEC_REL),
+            "code_sha256": sha256_file(repo / BUILDER_REL),
+        },
+        "target": {
+            "typed_spec_id": target["target_audit_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / TARGET_SPEC_REL),
+            "code_sha256": code_sha256,
+        },
+        "numerical": {
+            "typed_spec_id": numerical_spec["audit_spec_id"],
+            "typed_spec_sha256": sha256_file(repo / NUMERICAL_SPEC_REL),
+            "code_sha256": sha256_file(repo / NUMERICAL_CODE_REL),
+        },
+    }
+    if modules != expected_modules:
+        raise TargetAuditError("authorization module registry binding differs")
+    expected_own = expected_modules["target"]
+    git_run = lambda arguments, text=False: subprocess.run(
+        [str(EXPECTED_GIT_PATH), *arguments], cwd=repo,
+        env=SANITIZED_GIT_ENVIRONMENT, text=text, capture_output=True, check=False,
+    )
+    head_result = git_run(["rev-parse", "HEAD"], text=True)
+    if head_result.returncode != 0:
+        raise TargetAuditError("authorization Git HEAD cannot be resolved")
+    head = head_result.stdout.strip()
+    implementation = document.get("authorized_implementation_commit")
+    if (
+        not isinstance(implementation, str)
+        or not re.fullmatch(r"[0-9a-f]{40}", implementation)
+        or implementation == head
+    ):
+        raise TargetAuditError("authorization implementation commit is invalid")
+    ancestor = git_run(["merge-base", "--is-ancestor", implementation, head])
+    committed = git_run(["show", f"{head}:{PRE_EXECUTION_AUTHORIZATION_REL}"])
+    last_commit = git_run(
+        ["log", "-1", "--format=%H", "--", str(PRE_EXECUTION_AUTHORIZATION_REL)],
+        text=True,
+    )
+    parent_commit = git_run(["rev-parse", "HEAD^"], text=True)
+    changed_paths = git_run(
+        ["diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"],
+        text=True,
+    )
+    worktree_status = git_run(
+        ["status", "--porcelain=v1", "--untracked-files=all"], text=True
+    )
+    if (
+        ancestor.returncode != 0 or committed.returncode != 0
+        or committed.stdout != path.read_bytes()
+        or last_commit.returncode != 0 or last_commit.stdout.strip() != head
+        or parent_commit.returncode != 0
+        or parent_commit.stdout.strip() != implementation
+        or changed_paths.returncode != 0
+        or changed_paths.stdout.splitlines()
+        != [str(PRE_EXECUTION_AUTHORIZATION_REL)]
+        or worktree_status.returncode != 0
+        or worktree_status.stdout != ""
+    ):
+        raise TargetAuditError(
+            "authorization is not the sole file in a separate clean current commit"
+        )
+    return {
+        "schema_version": PRE_EXECUTION_AUTHORIZATION_SCHEMA,
+        "status": PRE_EXECUTION_AUTHORIZATION_STATUS,
+        "authorization_id": document["authorization_id"],
+        "authorization_file_sha256": sha256_file(path),
+        "authorization_git_commit": head,
+        "authorized_implementation_commit": implementation,
+        "issued_at_utc": document["issued_at_utc"],
+        "not_before_utc": document["not_before_utc"],
+        "not_after_utc": document["not_after_utc"],
+        "module_key": "target",
+        "typed_spec_id": expected_own["typed_spec_id"],
+        "typed_spec_sha256": expected_own["typed_spec_sha256"],
+        "code_sha256": code_sha256,
+        "source_registry_sha256": source_registry_sha,
+    }
 
 
 def canonical_source_hashes(canonical: dict[str, Any]) -> dict[str, str]:
@@ -683,6 +1000,118 @@ def authenticate_producer_runtime(
     }
 
 
+def authenticate_producer_execution_entry(
+    receipt: dict[str, Any],
+    cell_spec: dict[str, Any],
+    canonical: dict[str, Any],
+    current_authorization: dict[str, Any],
+) -> dict[str, Any]:
+    """Authenticate the cell runner's non-caller-supplied entry attestations."""
+    binding = _require_mapping(
+        receipt.get("execution_command_binding"), "execution_command_binding"
+    )
+    if set(binding) != {
+        "schema_version", "status", "module_key", "run_id",
+        "scheduler_jobnumber", "sanitized_argv", "sanitized_argv_sha256",
+        "binding_sha256",
+    }:
+        raise TargetAuditError("producer execution-command field set is not exact")
+    job = binding.get("scheduler_jobnumber")
+    run_id = binding.get("run_id")
+    expected_argv = [
+        "<YAX_PYTHON_BIN>", "-I",
+        str(V3_REL / "gate1_cells/run_gate1_cells.py"),
+        "--repo-root", "<YAX_REPO_ROOT>",
+        "--microdata", "<INPUT:ipums_cps_extract_9_wide>",
+        "--repair-microdata", "<INPUT:ipums_cps_extract_11_march_basic_repair>",
+        "--output-parent", "<YAX_V3_RUN_ROOT>",
+    ]
+    binding_core = {
+        key: binding[key] for key in binding if key != "binding_sha256"
+    }
+    if (
+        binding.get("schema_version") != COMMAND_BINDING_SCHEMA
+        or binding.get("status") != COMMAND_BINDING_STATUS
+        or binding.get("module_key") != "cells"
+        or not isinstance(job, str)
+        or JOB_ID_PATTERN.fullmatch(job) is None
+        or run_id != f"gate1_cells_sge_{job}"
+        or binding.get("sanitized_argv") != expected_argv
+        or binding.get("sanitized_argv_sha256")
+        != hashlib.sha256(canonical_bytes(expected_argv)).hexdigest()
+        or binding.get("binding_sha256")
+        != hashlib.sha256(canonical_bytes(binding_core)).hexdigest()
+    ):
+        raise TargetAuditError("producer execution-command binding is invalid")
+
+    runtime = _require_mapping(
+        receipt.get("execution_runtime_authentication"),
+        "execution_runtime_authentication",
+    )
+    expected_runtime = {
+        "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES",
+        "python_invocation": "<YAX_PYTHON_BIN>",
+        "python_resolved_executable_sha256": EXPECTED_PYTHON_RESOLVED_SHA256,
+        "python_version": "3.13.8",
+        "isolated_mode": True,
+        "ignore_environment": True,
+        "no_user_site": True,
+        "safe_path": True,
+        "git_invocation": "<YAX_GIT_BIN>",
+        "git_resolved_executable_sha256": EXPECTED_GIT_SHA256,
+        "git_version": EXPECTED_GIT_VERSION,
+        "import_affecting_environment_absent": True,
+    }
+    if runtime != expected_runtime:
+        raise TargetAuditError("producer isolated-runtime authentication differs")
+
+    producer_authorization = _require_mapping(
+        receipt.get("pre_execution_authorization"),
+        "pre_execution_authorization",
+    )
+    common_fields = (
+        "schema_version", "status", "authorization_id",
+        "authorization_file_sha256", "authorization_git_commit",
+        "authorized_implementation_commit", "issued_at_utc",
+        "not_before_utc", "not_after_utc", "source_registry_sha256",
+    )
+    if any(field not in current_authorization for field in common_fields):
+        raise TargetAuditError("current authorization summary is incomplete")
+    expected_authorization = {
+        **{field: current_authorization[field] for field in common_fields},
+        "module_key": "cells",
+        "typed_spec_id": cell_spec["cell_build_spec_id"],
+        "typed_spec_sha256": sha256_file(Path(__file__).resolve().parents[4] / CELL_SPEC_REL),
+        "code_sha256": cell_spec["runtime_code_hashes"][str(BUILDER_REL)],
+    }
+    if producer_authorization != expected_authorization:
+        raise TargetAuditError("producer pre-execution authorization differs")
+    try:
+        generated = datetime.fromisoformat(str(receipt["generated_at_utc"]))
+        not_before = datetime.fromisoformat(str(producer_authorization["not_before_utc"]))
+        not_after = datetime.fromisoformat(str(producer_authorization["not_after_utc"]))
+    except (TypeError, ValueError) as exc:
+        raise TargetAuditError("producer authorization timing is malformed") from exc
+    if (
+        generated.tzinfo is None
+        or not_before.tzinfo is None
+        or not_after.tzinfo is None
+        or not (not_before <= generated <= not_after)
+    ):
+        raise TargetAuditError("producer generation falls outside its authorization window")
+    expected_source_registry = hashlib.sha256(
+        canonical_bytes(canonical_source_hashes(canonical))
+    ).hexdigest()
+    if producer_authorization["source_registry_sha256"] != expected_source_registry:
+        raise TargetAuditError("producer authorization source registry differs")
+    return {
+        "command_binding_sha256": binding["binding_sha256"],
+        "scheduler_jobnumber": job,
+        "runtime_status": runtime["status"],
+        "authorization_id": producer_authorization["authorization_id"],
+    }
+
+
 def verify_producer_git_checkout(
     repo: Path,
     receipt: dict[str, Any],
@@ -693,8 +1122,9 @@ def verify_producer_git_checkout(
 
     def run(arguments: list[str], *, text: bool = True) -> subprocess.CompletedProcess[Any]:
         return subprocess.run(
-            ["git", *arguments],
+            [str(EXPECTED_GIT_PATH), *arguments],
             cwd=repo,
+            env=SANITIZED_GIT_ENVIRONMENT,
             capture_output=True,
             text=text,
             check=False,
@@ -1122,6 +1552,7 @@ def authenticate_aggregate_receipt(
     canonical: dict[str, Any],
     cell_spec: dict[str, Any],
     repo: Path,
+    current_authorization: dict[str, Any],
 ) -> dict[str, Any]:
     require_file(receipt_path, "aggregate-cell receipt")
     require_file(cells_path, "aggregate-cell file")
@@ -1163,6 +1594,9 @@ def authenticate_aggregate_receipt(
         raise TargetAuditError("producer generation timestamp lacks a UTC offset")
     source_summary = authenticate_producer_sources_and_authorization(receipt, canonical)
     runtime_summary = authenticate_producer_runtime(receipt, cell_spec)
+    execution_entry_summary = authenticate_producer_execution_entry(
+        receipt, cell_spec, canonical, current_authorization
+    )
     git_summary = authenticate_producer_git(receipt, cell_spec, repo)
     if receipt.get("balanced_grid_complete") is not True:
         raise TargetAuditError("aggregate receipt does not certify a complete balanced grid")
@@ -1262,6 +1696,7 @@ def authenticate_aggregate_receipt(
     receipt["_target_authentication_summary"] = {
         "sources": source_summary,
         "runtime": runtime_summary,
+        "execution_entry": execution_entry_summary,
         "git": git_summary,
         "accounting": accounting_summary,
     }
@@ -1837,27 +2272,96 @@ def fsync_file(path: Path) -> None:
         os.fsync(stream.fileno())
 
 
-def atomic_publish(staging: Path, output_leaf: Path) -> None:
+def atomic_publish(
+    staging: Path,
+    output_leaf: Path,
+    expected_filenames: set[str] | None = None,
+) -> tuple[str, ...]:
     if os.path.lexists(output_leaf):
         raise TargetAuditError("output leaf appeared during audit; refusing overwrite")
-    for path in staging.iterdir():
-        if path.is_file():
+    observed_filenames: set[str] = set()
+    for directory, dirnames, filenames in os.walk(
+        staging, topdown=False, followlinks=False
+    ):
+        base = Path(directory)
+        if base != staging or dirnames:
+            raise TargetAuditError("staging output must be a flat file set")
+        for name in filenames:
+            path = base / name
+            if path.is_symlink() or not path.is_file():
+                raise TargetAuditError("staging contains a non-regular output")
+            if path.stat().st_nlink != 1:
+                raise TargetAuditError("staging contains a multiply linked output")
+            observed_filenames.add(name)
             fsync_file(path)
-    descriptor = os.open(staging, os.O_RDONLY)
+        for name in dirnames:
+            if (base / name).is_symlink():
+                raise TargetAuditError("staging contains a symlink directory")
+        descriptor = os.open(base, os.O_RDONLY)
+        try:
+            os.fsync(descriptor)
+        finally:
+            os.close(descriptor)
+    if expected_filenames is not None and observed_filenames != expected_filenames:
+        raise TargetAuditError("staging output inventory differs from the exact contract")
+    libc = ctypes.CDLL(None, use_errno=True)
+    source_bytes = os.fsencode(staging)
+    target_bytes = os.fsencode(output_leaf)
+    if sys.platform.startswith("linux") and hasattr(libc, "renameat2"):
+        function = libc.renameat2
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-100, source_bytes, -100, target_bytes, 1)
+    elif sys.platform == "darwin" and hasattr(libc, "renameatx_np"):
+        function = libc.renameatx_np
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-2, source_bytes, -2, target_bytes, 0x00000004)
+    else:
+        raise TargetAuditError("platform lacks atomic no-replace directory rename")
+    if result != 0:
+        error = ctypes.get_errno()
+        if error in {errno.EEXIST, errno.ENOTEMPTY}:
+            raise TargetAuditError("output leaf appeared during publication; refusing overwrite")
+        raise TargetAuditError(f"atomic no-replace publication failed with errno {error}")
+    warnings: list[str] = []
     try:
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
-    os.replace(staging, output_leaf)
+        parent_fd = os.open(output_leaf.parent, os.O_RDONLY)
+        try:
+            os.fsync(parent_fd)
+        finally:
+            os.close(parent_fd)
+    except OSError as error:
+        warnings.append(f"parent_fsync_errno_{error.errno}")
+    return tuple(warnings)
 
 
-def execute(args: argparse.Namespace) -> dict[str, Any]:
+def execute(
+    args: argparse.Namespace,
+) -> dict[str, Any]:
+    job = scheduler_jobnumber(dict(os.environ))
+    derived_output_leaf = args.output_parent / f"gate1_target_sge_{job}"
+    supplied_output_leaf = getattr(args, "output_leaf", derived_output_leaf)
+    if supplied_output_leaf.resolve(strict=False) != derived_output_leaf.resolve(strict=False):
+        raise TargetAuditError("output leaf is not derived from the scheduler job ID")
+    args.output_leaf = derived_output_leaf
+    execution_binding = build_execution_command_binding(
+        args, list(sys.argv[1:]), list(getattr(sys, "orig_argv", [])),
+        dict(os.environ),
+    )
+    execution_runtime = execution_runtime_authentication()
     repo = args.repo_root.resolve()
     if not ((repo / ".git").is_dir() or (repo / ".git").is_file()):
         raise TargetAuditError("repo-root is not a Git worktree")
     cells_path = args.cells.resolve()
     receipt_path = args.cells_receipt.resolve()
-    output_leaf = Path(os.path.abspath(args.output_leaf))
+    output_leaf = args.output_leaf.resolve(strict=False)
     replacements = {
         str(repo): "<YAX_REPO_ROOT>",
         str(cells_path.parent): "<YAX_GATE1_CELLS_LEAF>",
@@ -1867,10 +2371,15 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     try:
         target, canonical, cell_spec = load_and_validate_specs(repo)
         code_hashes = authenticate_code(repo, target, cell_spec)
+        pre_execution_authorization = validate_pre_execution_authorization(
+            repo, canonical, target, cell_spec,
+            code_hashes[str(HERE_REL / "run_exact_target_audit.py")],
+        )
         source_evidence_hashes = authenticate_source_evidence(repo, target)
         requirement_binding = validate_requirement_source(repo, target)
         receipt = authenticate_aggregate_receipt(
-            receipt_path, cells_path, target, canonical, cell_spec, repo
+            receipt_path, cells_path, target, canonical, cell_spec, repo,
+            pre_execution_authorization,
         )
         staging = reserve_output_leaf(output_leaf, repo, cells_path.parent)
         _frame, _static, facts = read_and_validate_cells(
@@ -1902,6 +2411,10 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
             "schema_version": TARGET_RECEIPT_SCHEMA,
             "status": "PASS_EXACT_TARGET_AUDIT",
             "generated_at_utc": utc_now(),
+            "command_template": COMMAND_TEMPLATE,
+            "execution_command_binding": execution_binding,
+            "execution_runtime_authentication": execution_runtime,
+            "pre_execution_authorization": pre_execution_authorization,
             "requirement": "T01",
             "target_audit_spec_id": target["target_audit_spec_id"],
             "target_audit_spec_sha256": sha256_file(repo / TARGET_SPEC_REL),
@@ -1932,7 +2445,63 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         }
         assert_sanitized(execution_receipt)
         write_json(staging / RECEIPT_FILENAME, execution_receipt)
-        atomic_publish(staging, output_leaf)
+        # Re-open all authorization-bound files and the authenticated aggregate
+        # at the publication boundary. Reusing start-of-run dictionaries would
+        # make a concurrent checkout or input mutation invisible here.
+        final_target, final_canonical, final_cell_spec = load_and_validate_specs(repo)
+        final_code_hashes = authenticate_code(
+            repo, final_target, final_cell_spec
+        )
+        final_source_evidence_hashes = authenticate_source_evidence(
+            repo, final_target
+        )
+        final_requirement_binding = validate_requirement_source(
+            repo, final_target
+        )
+        boundary_pre_execution_authorization = validate_pre_execution_authorization(
+            repo, final_canonical, final_target, final_cell_spec,
+            final_code_hashes[str(HERE_REL / "run_exact_target_audit.py")],
+        )
+        if boundary_pre_execution_authorization != pre_execution_authorization:
+            raise TargetAuditError(
+                "pre-execution authorization changed before final aggregate authentication"
+            )
+        final_receipt = authenticate_aggregate_receipt(
+            receipt_path,
+            cells_path,
+            final_target,
+            final_canonical,
+            final_cell_spec,
+            repo,
+            boundary_pre_execution_authorization,
+        )
+        final_pre_execution_authorization = validate_pre_execution_authorization(
+            repo, final_canonical, final_target, final_cell_spec,
+            final_code_hashes[str(HERE_REL / "run_exact_target_audit.py")],
+        )
+        if (
+            final_pre_execution_authorization != pre_execution_authorization
+            or final_target != target
+            or final_canonical != canonical
+            or final_cell_spec != cell_spec
+            or final_code_hashes != code_hashes
+            or final_source_evidence_hashes != source_evidence_hashes
+            or final_requirement_binding != requirement_binding
+            or final_receipt != receipt
+        ):
+            raise TargetAuditError(
+                "authorization-bound execution state changed during target audit"
+            )
+        post_commit_warnings = atomic_publish(
+            staging,
+            output_leaf,
+            {
+                AUDIT_FILENAME,
+                ROW_ACCOUNTING_FILENAME,
+                REPORT_FILENAME,
+                RECEIPT_FILENAME,
+            },
+        )
         staging = None
         return {
             "status": execution_receipt["status"],
@@ -1940,7 +2509,8 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
             "target_audit_spec_id": target["target_audit_spec_id"],
             "static_grid_rows": facts["static_grid_rows"],
             "positive_total_estimating_rows": facts["positive_total_estimating_rows"],
-            "output_leaf": "<YAX_TARGET_AUDIT_LEAF>",
+            "output_leaf": "<YAX_GATE1_TARGET_LEAF>",
+            "post_commit_cleanup_warnings": list(post_commit_warnings),
         }
     except Exception as exc:
         if staging is not None and staging.exists():
@@ -1952,22 +2522,31 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def parser() -> argparse.ArgumentParser:
-    value = argparse.ArgumentParser(description=__doc__)
+    value = NonEchoingArgumentParser(description=__doc__, allow_abbrev=False)
     value.add_argument("--repo-root", type=Path, required=True)
     value.add_argument("--cells", type=Path, required=True)
     value.add_argument("--cells-receipt", type=Path, required=True)
-    value.add_argument("--output-leaf", type=Path, required=True)
+    value.add_argument("--output-parent", type=Path, required=True)
     return value
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = parser().parse_args(argv)
-    replacements = {
-        str(args.repo_root.resolve(strict=False)): "<YAX_REPO_ROOT>",
-        str(args.cells.resolve(strict=False).parent): "<YAX_GATE1_CELLS_LEAF>",
-        str(args.output_leaf.resolve(strict=False)): "<YAX_TARGET_AUDIT_LEAF>",
-    }
+    replacements: dict[str, str] = {}
     try:
+        if argv is not None:
+            raise TargetAuditError(
+                "production entry point does not accept a substituted argv source"
+            )
+        raw_cli_argv = list(sys.argv[1:])
+        args = parser().parse_args(raw_cli_argv)
+        job = scheduler_jobnumber(dict(os.environ))
+        args.output_leaf = args.output_parent / f"gate1_target_sge_{job}"
+        replacements = {
+            str(args.repo_root.resolve(strict=False)): "<YAX_REPO_ROOT>",
+            str(args.cells.resolve(strict=False).parent): "<YAX_GATE1_CELLS_LEAF>",
+            str(args.output_parent.resolve(strict=False)): "<YAX_V3_RUN_ROOT>",
+            str(args.output_leaf.resolve(strict=False)): "<YAX_GATE1_TARGET_LEAF>",
+        }
         result = execute(args)
     except Exception as exc:
         print(

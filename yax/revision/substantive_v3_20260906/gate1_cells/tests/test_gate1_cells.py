@@ -5,7 +5,9 @@ from argparse import Namespace
 import ast
 import hashlib
 import importlib.util
+import inspect
 import json
+import os
 import pathlib
 from pathlib import Path
 import shutil
@@ -35,6 +37,23 @@ def load_module(name: str, path: Path):
 BUILDER = load_module("yax_v3_gate1_cells_test", SCRIPT)
 
 
+def cell_entry_fixture(tmp_path: Path) -> tuple[Namespace, list[str], list[str]]:
+    args = Namespace(
+        repo_root=REPO,
+        microdata=tmp_path / "wide.dat.gz",
+        repair_microdata=tmp_path / "repair.dat.gz",
+        output_parent=tmp_path,
+    )
+    raw = [
+        "--repo-root", str(args.repo_root),
+        "--microdata", str(args.microdata),
+        "--repair-microdata", str(args.repair_microdata),
+        "--output-parent", str(args.output_parent),
+    ]
+    original = [sys.executable, "-I", str(SCRIPT), *raw]
+    return args, raw, original
+
+
 def test_cli_help_does_not_read_protected_inputs():
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--help"],
@@ -45,7 +64,42 @@ def test_cli_help_does_not_read_protected_inputs():
     assert completed.returncode == 0
     assert "--microdata" in completed.stdout
     assert "--repair-microdata" in completed.stdout
-    assert "--output-leaf" in completed.stdout
+    assert "--output-parent" in completed.stdout
+    assert "--output-leaf" not in completed.stdout
+
+
+def test_production_entry_and_command_binding_are_not_caller_attested(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+):
+    assert list(inspect.signature(BUILDER.execute).parameters) == ["args"]
+    assert BUILDER.main([]) == 2
+    assert "substituted argv" in capsys.readouterr().err
+    args, raw, original = cell_entry_fixture(tmp_path)
+    binding = BUILDER.build_execution_command_binding(
+        args, raw, original, {"JOB_ID": "700001", "SGE_JOB_ID": "700001"}
+    )
+    assert binding["run_id"] == "gate1_cells_sge_700001"
+    assert binding["scheduler_jobnumber"] == "700001"
+    assert str(tmp_path) not in json.dumps(binding)
+    with pytest.raises(BUILDER.CellBuildError, match="direct isolated"):
+        BUILDER.build_execution_command_binding(
+            args, raw, [sys.executable, str(SCRIPT), *raw], {"JOB_ID": "700001"}
+        )
+    with pytest.raises(BUILDER.CellBuildError, match="array jobs"):
+        BUILDER.build_execution_command_binding(
+            args, raw, original, {"JOB_ID": "700001", "SGE_TASK_ID": "1"}
+        )
+
+
+def test_command_binding_rejects_repo_root_other_than_executing_checkout(tmp_path: Path):
+    args, raw, original = cell_entry_fixture(tmp_path)
+    args.repo_root = tmp_path
+    raw[1] = str(tmp_path)
+    original = [sys.executable, "-I", str(SCRIPT), *raw]
+    with pytest.raises(BUILDER.CellBuildError, match="executing runner checkout"):
+        BUILDER.build_execution_command_binding(
+            args, raw, original, {"JOB_ID": "700001"}
+        )
 
 
 def test_pre_result_spec_and_runtime_reference_locks_authenticate():
@@ -509,12 +563,35 @@ def test_atomic_publish_refuses_overwrite(tmp_path: Path):
     staging = Path(tmp_path / ".staging")
     staging.mkdir()
     (staging / "file.txt").write_text("complete\n", encoding="utf-8")
-    BUILDER.atomic_publish(staging, destination)
+    BUILDER.atomic_publish(staging, destination, {"file.txt"})
     assert (destination / "file.txt").read_text(encoding="utf-8") == "complete\n"
     second = tmp_path / ".second"
     second.mkdir()
     with pytest.raises(BUILDER.CellBuildError, match="appeared"):
         BUILDER.atomic_publish(second, destination)
+
+
+def test_atomic_publish_rejects_inventory_drift_and_hardlinks(tmp_path: Path):
+    inventory = tmp_path / ".inventory"
+    inventory.mkdir()
+    (inventory / "expected.txt").write_text("expected\n", encoding="utf-8")
+    (inventory / "extra.txt").write_text("extra\n", encoding="utf-8")
+    with pytest.raises(BUILDER.CellBuildError, match="inventory"):
+        BUILDER.atomic_publish(
+            inventory, tmp_path / "inventory-output", {"expected.txt"}
+        )
+
+    linked = tmp_path / ".linked"
+    linked.mkdir()
+    source = linked / "expected.txt"
+    source.write_text("linked\n", encoding="utf-8")
+    os.link(source, linked / "alias.txt")
+    with pytest.raises(BUILDER.CellBuildError, match="multiply linked"):
+        BUILDER.atomic_publish(
+            linked,
+            tmp_path / "linked-output",
+            {"expected.txt", "alias.txt"},
+        )
 
 
 def test_private_paths_and_common_secret_shapes_are_removed():

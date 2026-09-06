@@ -9,16 +9,18 @@ Production invocation on SCC:
 ```sh
 mkdir -p '<YAX_V3_RUN_ROOT>'
 <YAX_PYTHON_BIN> \
+  -I \
   yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py \
   --repo-root '<YAX_REPO_ROOT>' \
   --microdata '<YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz' \
   --repair-microdata '<YAX_PRIVATE_ROOT>/yax_referee_march_repair/cps_00011.csv.gz' \
-  --output-leaf '<YAX_V3_RUN_ROOT>/gate1_cells_<UNIQUE_RUN_ID>'
+  --output-parent '<YAX_V3_RUN_ROOT>'
 ```
 
 This displayed command corresponds exactly to the placeholder-only immutable
 command template in `CELL_BUILD_SPEC.json`; resolved paths are never written to
-the receipt. Production also requires the declared CPython/compiler/libc and
+the receipt. The runner derives the unique output leaf from the numeric SGE
+`JOB_ID`; callers cannot choose or restamp it. Production also requires the declared CPython/compiler/libc and
 package payload, a Git HEAD descending from the declared ancestor, and a clean
 worktree whose builder, cell spec, numerical spec, and environment lock equal
 their committed blobs. Kernel release is recorded, not patch-equality locked.

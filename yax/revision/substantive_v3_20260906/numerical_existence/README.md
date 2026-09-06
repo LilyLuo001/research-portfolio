@@ -83,13 +83,21 @@ pretrend test.
 For a finite face, unclipped sparse L-BFGS-B and trust-ncg solve the same exact
 objective. The audit compares the focal coefficient, all slopes, fitted means,
 all reported dynamic Q5 targets, objective, gradients, and a fixed-target
-likelihood profile. It reports raw
+likelihood profile. Optimizer termination is not acceptance evidence. Each
+untouched candidate must also pass original-coordinate score checks and a
+sparse full-Hessian certificate: a refined primal Newton solve, a complete
+dyadic raw-likelihood-decrease check, and independent adjoint solves for every
+reported target. The adjoints must agree with the primal target corrections
+and satisfy the existing coefficient tolerance. This catches weak joint
+directions without converting the 5,000--8,000-column production Hessians to
+dense matrices. It reports raw
 and diagonally scaled spectra of the full nuisance-plus-treatment Hessian both
 at total/4 weights and at fitted probabilities. The inherited clipped solver
 is only a disclosed comparator.
 
-No licensed microdata or protected aggregate cells are committed here. The 43
-implementation tests are synthetic or use public byte-locked submitted code.
+No licensed microdata or protected aggregate cells are committed here. The 68
+implementation tests (plus 17 unittest subtests) are synthetic or use public
+byte-locked submitted code.
 
 ## Production invocation
 
@@ -97,10 +105,14 @@ Build the cells first using `../gate1_cells/README.md`. Then run from the YAX
 repository root, with a new outside-repository output leaf:
 
 ```sh
-python3 yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py \
-  --canonical-spec yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json \
-  --analysis-spec yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json \
+<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py \
+  --canonical-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json \
+  --analysis-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json \
   --cells '<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv' \
   --cells-receipt '<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json' \
-  --output-dir '<YAX_V3_RUN_ROOT>/gate1_numerical_existence_<RUN_ID>'
+  --legacy-engine <YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py \
+  --output-parent '<YAX_V3_RUN_ROOT>'
 ```
+
+The numerical runner derives its unique output leaf from the numeric SGE
+`JOB_ID`; callers cannot select or overwrite a result leaf.

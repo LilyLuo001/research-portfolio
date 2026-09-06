@@ -1,0 +1,99 @@
+{
+  "canonical_spec": {
+    "id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+  },
+  "execution_command_policy": "receipt_native_exact_sanitized_argv_binding_v2",
+  "modules": [
+    {
+      "canonical_id_pointer": "/canonical_spec_id",
+      "canonical_sha256_pointer": "/canonical_spec_sha256",
+      "code_hash_pointer": "/builder_code_sha256",
+      "depends_on": [],
+      "expected_code_hash": "c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc",
+      "expected_jobnumber": "<REQUIRED_CELL_JOBNUMBER>",
+      "expected_receipt_schema": "yax-numerical-cells-receipt-v1",
+      "expected_receipt_status": "PASS_FRESH_AGGREGATE_REBUILD",
+      "generated_at_pointer": "/generated_at_utc",
+      "key": "cells",
+      "mode": "empirical_reestimate",
+      "module_receipt_file": "cells/EXECUTION_RECEIPT.json",
+      "module_receipt_sha256": "<REQUIRED_CELL_RECEIPT_SHA256>",
+      "run_id": "gate1_cells_sge_<REQUIRED_CELL_JOBNUMBER>",
+      "scheduler_boundary_tolerance_seconds": 2.0,
+      "scheduler_record_file": "scheduler/cells.json",
+      "scheduler_record_sha256": "<REQUIRED_CELL_SCHEDULER_SHA256>",
+      "time_source": "scheduler",
+      "typed_spec": {
+        "id": "yaxcellspec_v1_cc2ef1a97ff01b7bc57f9598b139c6c70315866121c85eaef2158827cace0aa7",
+        "id_pointer": "/cell_build_spec_id",
+        "kind": "cell_build_spec",
+        "sha256": "879f99c3b06363303402cb1cfc2c0ff443d78886295c7d63edfcd59cc6897765",
+        "sha256_pointer": "/cell_build_spec_sha256"
+      }
+    },
+    {
+      "canonical_id_pointer": "/canonical_spec_id",
+      "canonical_sha256_pointer": "/canonical_spec_sha256",
+      "code_hash_pointer": "/code_hashes/yax~1revision~1substantive_v3_20260906~1gate1_target~1run_exact_target_audit.py",
+      "depends_on": [
+        "cells"
+      ],
+      "expected_code_hash": "c05e4671fae0aafa2e603fdd4274e11d346baf2fb7a0f273f85b580a0fd40d7f",
+      "expected_jobnumber": "<REQUIRED_TARGET_JOBNUMBER>",
+      "expected_receipt_schema": "yax-exact-target-audit-receipt-v1",
+      "expected_receipt_status": "PASS_EXACT_TARGET_AUDIT",
+      "generated_at_pointer": "/generated_at_utc",
+      "key": "target",
+      "mode": "aggregate_analysis",
+      "module_receipt_file": "target/EXECUTION_RECEIPT.json",
+      "module_receipt_sha256": "<REQUIRED_TARGET_RECEIPT_SHA256>",
+      "run_id": "gate1_target_sge_<REQUIRED_TARGET_JOBNUMBER>",
+      "scheduler_boundary_tolerance_seconds": 2.0,
+      "scheduler_record_file": "scheduler/target.json",
+      "scheduler_record_sha256": "<REQUIRED_TARGET_SCHEDULER_SHA256>",
+      "time_source": "scheduler",
+      "typed_spec": {
+        "id": "yaxtargetspec_v1_700c7cf5a3e733f8b255b81f63551b94da72224fdebb93d31ee10caa4195c34d",
+        "id_pointer": "/target_audit_spec_id",
+        "kind": "target_audit_spec",
+        "sha256": "85014b2152c6833eca439c3eeda36496b0a0d91a9fd77aef4732f8127c47e95f",
+        "sha256_pointer": "/target_audit_spec_sha256"
+      }
+    },
+    {
+      "canonical_id_pointer": "/canonical_spec_id",
+      "canonical_sha256_pointer": "/canonical_spec_sha256",
+      "code_hash_pointer": "/code_sha256",
+      "depends_on": [
+        "cells",
+        "target"
+      ],
+      "end_time_pointer": "/finished_at_utc",
+      "expected_code_hash": "26a1bec8cf9496fabec12c33b60361c95ed150ac217abbc6d3c2fed78866a1c3",
+      "expected_jobnumber": "<REQUIRED_NUMERICAL_JOBNUMBER>",
+      "expected_receipt_schema": "yax-numerical-existence-receipt-v1",
+      "expected_receipt_status": "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED",
+      "key": "numerical",
+      "mode": "numerical_analysis",
+      "module_receipt_file": "numerical/EXECUTION_RECEIPT.json",
+      "module_receipt_sha256": "<REQUIRED_NUMERICAL_RECEIPT_SHA256>",
+      "run_id": "gate1_numerical_sge_<REQUIRED_NUMERICAL_JOBNUMBER>",
+      "scheduler_boundary_tolerance_seconds": 2.0,
+      "scheduler_record_file": "scheduler/numerical.json",
+      "scheduler_record_sha256": "<REQUIRED_NUMERICAL_SCHEDULER_SHA256>",
+      "start_time_pointer": "/started_at_utc",
+      "time_source": "module_receipt",
+      "typed_spec": {
+        "id": "yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec",
+        "id_pointer": "/audit_spec_id",
+        "kind": "numerical_analysis_spec",
+        "sha256": "86b1704dd774e89b395035dd8fdf5b0be6e18332c678d5943a44d4637e297f7a",
+        "sha256_pointer": "/audit_spec_sha256"
+      }
+    }
+  ],
+  "scheduler_time_zone": "<REQUIRED_SCC_SCHEDULER_TIME_ZONE>",
+  "schema_version": "yax-gate1-transfer-normalization-spec-v2",
+  "status": "UNSTAMPED_FAIL_CLOSED"
+}

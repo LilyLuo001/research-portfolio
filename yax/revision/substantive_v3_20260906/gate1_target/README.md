@@ -24,15 +24,16 @@ clean.
 Placeholder SCC command:
 
 ```sh
-<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py \
+<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py \
   --repo-root <YAX_REPO_ROOT> \
   --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv \
   --cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json \
-  --output-leaf <YAX_V3_RUN_ROOT>/gate1_target/<UNIQUE_RUN_ID>
+  --output-parent <YAX_V3_RUN_ROOT>
 ```
 
-The output leaf must not exist and must be outside the repository and disjoint
-from the input leaf. The successful leaf contains:
+The runner derives the unique output leaf from the numeric SGE `JOB_ID`. The
+leaf must not exist and must be outside the repository and disjoint from the
+input leaf. The successful leaf contains:
 
 - `EXACT_TARGET_AUDIT.json`;
 - `ROW_ACCOUNTING.csv`;

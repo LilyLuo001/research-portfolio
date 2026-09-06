@@ -3,14 +3,47 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import ctypes
+import errno
 import os
 from pathlib import Path
 import shutil
+import sys
 import uuid
 
 
 class OutputSafetyError(RuntimeError):
     """A requested artifact destination is unsafe or already reserved."""
+
+
+def atomic_rename_noreplace(source: Path, target: Path) -> None:
+    """Atomically rename a same-parent directory without replacing a target."""
+    libc = ctypes.CDLL(None, use_errno=True)
+    source_bytes = os.fsencode(source)
+    target_bytes = os.fsencode(target)
+    if os.name == "posix" and hasattr(libc, "renameat2"):
+        function = libc.renameat2
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-100, source_bytes, -100, target_bytes, 1)
+    elif sys.platform == "darwin" and hasattr(libc, "renameatx_np"):
+        function = libc.renameatx_np
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-2, source_bytes, -2, target_bytes, 0x00000004)
+    else:
+        raise OutputSafetyError("platform lacks atomic no-replace directory rename")
+    if result != 0:
+        error = ctypes.get_errno()
+        if error in {errno.EEXIST, errno.ENOTEMPTY}:
+            raise OutputSafetyError("output target appeared; refusing overwrite")
+        raise OutputSafetyError(f"atomic no-replace publication failed with errno {error}")
 
 
 def is_within(path: Path, parent: Path) -> bool:
@@ -34,6 +67,7 @@ class AtomicOutputLeaf:
     lock: Path
     lock_fd: int | None
     published: bool = False
+    post_commit_cleanup_warnings: tuple[str, ...] = ()
 
     @classmethod
     def reserve(
@@ -76,11 +110,44 @@ class AtomicOutputLeaf:
             raise OutputSafetyError("output leaf was already published")
         if self.target.exists() or self.target.is_symlink():
             raise OutputSafetyError("output target appeared after reservation; refusing overwrite")
-        # The same-name exclusive lock serializes cooperating YAX publishers.
-        # rename is atomic on the required same-parent filesystem.
-        self.staging.rename(self.target)
+        for directory, dirnames, filenames in os.walk(
+            self.staging, topdown=False, followlinks=False
+        ):
+            base = Path(directory)
+            for name in filenames:
+                path = base / name
+                if path.is_symlink() or not path.is_file():
+                    raise OutputSafetyError("staging contains a non-regular output")
+                with path.open("rb") as stream:
+                    os.fsync(stream.fileno())
+            for name in dirnames:
+                if (base / name).is_symlink():
+                    raise OutputSafetyError("staging contains a symlink directory")
+            directory_fd = os.open(base, os.O_RDONLY)
+            try:
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
+        # Atomic no-replace rename is the publication commit point.
+        atomic_rename_noreplace(self.staging, self.target)
         self.published = True
-        self.release_lock()
+        warnings: list[str] = []
+        try:
+            parent_fd = os.open(self.target.parent, os.O_RDONLY)
+            try:
+                os.fsync(parent_fd)
+            finally:
+                os.close(parent_fd)
+        except OSError as error:
+            warnings.append(f"parent_fsync_errno_{error.errno}")
+        # Once rename commits, cleanup failure must not turn success into an
+        # ambiguous exception whose caller might misclassify the published leaf.
+        try:
+            self.release_lock()
+        except OSError as error:
+            warnings.append(f"lock_cleanup_errno_{error.errno}")
+            self.lock_fd = None
+        self.post_commit_cleanup_warnings = tuple(warnings)
 
     def release_lock(self) -> None:
         if self.lock_fd is not None:
