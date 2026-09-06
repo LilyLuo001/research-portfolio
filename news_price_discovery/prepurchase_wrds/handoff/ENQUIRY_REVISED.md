@@ -141,36 +141,47 @@ second or certify the SEC 8-K acceptance timestamp timezone conversion. The
 EDGAR UTC interpretation is internally consistent with all session assignments
 but has not been confirmed against SEC documentation.
 
-**PERMNO crosswalk resolution (Category A unmapped lines).** The three Category A
-securities identified in `MAPPING_OUTCOMES.md` were searched in CRSP DSF/MSF
-for their historical PERMNOs. Results:
+**PERMNO crosswalk resolution (Category A unmapped lines).** All three Category A
+securities are now resolved:
 
-| security | CUSIP | resolved PERMNO | source |
-|---|---|---|---|
-| BlackRock Inc | 09290D10 | **87267** | crsp_msf_full.parquet |
-| LabCorp Holdings | 50492210 | **12062** | crsp_msf_full.parquet |
-| Federal Realty Investment Trust | 31374720 | **not found** | searched crsp_dsf + crsp_msf_full; REIT, possible CUSIP format mismatch |
+| security | CUSIP (MFDB) | CUSIP (DSF) | resolved PERMNO | source |
+|---|---|---|---|---|
+| BlackRock Inc | 09290D10 | 09290D10 | **87267** | crsp_msf_full.parquet |
+| LabCorp Holdings | 50492210 | 50492210 | **12062** | crsp_msf_full.parquet |
+| Federal Realty Investment Trust | 31374720 | **31374510** | **58413** | crsp_dsf_2022/2023.parquet |
 
-Adding BLK (PERMNO 87267) and LH (PERMNO 12062) to the quote manifest repairs
-the primary source of unmapped equity weight. FRT (0.02% weight, two snapshots)
-remains unresolved and must be carried as an explicit exclusion if not resolved
-before the quote request is submitted. Full before/after coverage numbers are
-in `MAPPING_OUTCOMES.md`.
+FRT's CUSIP changed from 31374720 (Maryland trust) to 31374510 (Maryland
+corporation) on January 1, 2022. The MFDB snapshots for 2022-09-30 and
+2023-01-31 retain the pre-conversion CUSIP; CRSP DSF for those years uses the
+new CUSIP, resolving to PERMNO 58413. No Category A exclusion remains after
+all three repairs are applied. Full before/after coverage is in
+`MAPPING_OUTCOMES.md`.
 
-**XLK futures identification.** The XLK snapshot lines labelled "ES&P TE SIF
-SP21" (2021-08-31) and "ES&P TE SIF MR22" (2021-12-31) are identified as CME
-E-mini Technology Select Sector futures (CME root symbol XAK):
+**XLK futures identification and expiry flag.**
 
-| label | contract | expiry | direction | units | economic exposure |
-|---|---|---|---|---|---|
-| ES&P TE SIF SP21 | XAK U1 (XAKU1) | September 2021 | LONG (cash-equitization) | ~67,100 | ~$107M (~0.23% TNA) |
-| ES&P TE SIF MR22 | XAK H2 (XAKH2) | March 2022 | LONG (cash-equitization) | ~47,400 | ~$83M (~0.16% TNA) |
+| label | CME ticker | expiry date | direction | est. contracts | market_val | percent_tna |
+|---|---|---|---|---|---|---|
+| ES&P TE SIF SP21 | XAKU1 | **Sep 17, 2021** | LONG | 671 | $107,192,250 | 0.23% |
+| ES&P TE SIF MR22 | XAKH2 | Mar 18, 2022 | LONG | 474 | $82,987,920 | 0.16% |
+
+Reconciliation: CRSP records nbr_shares = multiplier × contracts ($100/pt for
+CME XAK). 671 × $100 × 1,597.50 = $107,192,250 (exact); 474 × $100 × 1,750.80
+= $82,987,920 (exact).
+
+**XAKU1 expired September 17, 2021 — five days before the FOMC 2021-09-22
+event.** The governing snapshot (2021-08-31) records this position, but the
+contract had expired before the event date. The September 30 snapshot shows the
+fund held XAKZ1 (December 2021) instead. The exact XAK exposure on September 22
+is unknown from monthly snapshots. This leaves the XLK basket futures exposure
+for the FOMC 2021-09-22 event unresolved; no replacement contract or quantity
+is assumed.
+
+XAKH2 (March 2022) does not have this problem: its expiry (March 18, 2022) is
+after the FOMC 2022-01-26 event date.
 
 These positions must not be excluded from the economic exposure merely because
-they lack a stock PERMNO. They represent cash-equitization overlay and carry
-genuine beta exposure to the XLK basket. There is no equity quote to request for
-these lines, but the ~0.16–0.23% weight is Category B (non-quotable) and must
-be reported as an exclusion, not silently dropped from the basket return.
+they lack a stock PERMNO. Category B (non-quotable); must be reported as an
+explicit exclusion, not silently dropped.
 
 **Restrictions.** Full constituent lists and portfolio weights are derived from
 licensed CRSP mutual-fund holdings and have not been cleared for third-party

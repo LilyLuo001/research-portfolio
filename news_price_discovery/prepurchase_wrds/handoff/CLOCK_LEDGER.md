@@ -57,15 +57,18 @@ block; that block is superseded by the PR Newswire confirmation.
 
 **What this changes for the measurement.** Using 06:55 as T rather than 06:57:
 
-- The 5-minute and 15-minute horizons are unaffected — the 2-minute shift is
-  small relative to these windows.
-- The 1-minute horizon (already marginal at minute-precision clock resolution)
-  is more sensitive: at 06:55 the first full minute after release is
-  06:56:00–06:57:00, which overlaps the I/B/E/S stamp. Any return computed at
-  h=1m is therefore uncertain over a 2-minute band, not a 1-minute band, making
-  this horizon doubly marginal for EMR specifically.
-- The 10-second and 30-second horizons remain unsupported for the same
-  reason as all other events: the release time is minute-precision at best.
+- All return windows shift by 2 minutes relative to the I/B/E/S-based
+  placement. Returns at every horizon are computed over different intervals
+  under T=06:55 than under T=06:57; the direction and magnitude of any
+  difference depends on price realizations in those intervals and is not
+  knowable without intraday data.
+- The 1-minute horizon is doubly marginal for EMR: the first full minute after
+  T=06:55 is 06:56–06:57, which overlaps the I/B/E/S stamp of 06:57. The
+  event-window boundary is demonstrably pre-release (T−5m = 06:50 < 06:55),
+  but a 1-minute return cannot be attributed cleanly to a single release time
+  given the 2-minute source conflict.
+- The 10-second and 30-second horizons remain unsupported: the release time is
+  minute-resolution at best, regardless of source.
 
 **Baseline window implication.** With T=06:55, the event window opens at
 T−5m = 06:50 and the baseline runs 05:55–06:50. The 06:50 window open is

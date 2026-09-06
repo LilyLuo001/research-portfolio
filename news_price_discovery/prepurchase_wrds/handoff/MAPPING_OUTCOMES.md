@@ -86,7 +86,7 @@ security is an S&P 500 constituent with an observable return.
 
 ---
 
-### Federal Realty Investment Trust (CUSIP 31374720) — Category A
+### Federal Realty Investment Trust (CUSIP 31374720 → 31374510) — Category A
 
 Appears in two SPY snapshots.
 
@@ -95,10 +95,15 @@ Appears in two SPY snapshots.
 | EMR 2023-02-08 | SPY | 2023-01-31 | 0.02% | A |
 | ESS 2022-10-26 | SPY | 2022-09-30 | 0.02% | A |
 
-**Why unmapped.** FRT (NYSE: FRT) is an S&P 500 REIT constituent. CUSIP
-31374720 does not link to a PERMNO in the MFDB crosswalk for these snapshots.
-The security's return is observable. Weight is 0.02% — negligible for basket
-return precision but still an identifiable crosswalk gap.
+**Why unmapped.** Federal Realty Investment Trust converted from a Maryland real
+estate investment trust to a Maryland corporation on January 1, 2022, with a
+documented CUSIP change from 31374720 (trust) to 31374510 (corporation). The
+MFDB snapshots dated 2022-09-30 and 2023-01-31 still record the pre-conversion
+CUSIP 31374720, but CRSP DSF for 2022 and 2023 carries CUSIP 31374510. The
+automatic PERMNO crosswalk fails because no 31374720 entry exists in the
+post-conversion DSF; CUSIP 31374510 in DSF resolves to **PERMNO 58413**
+(confirmed in crsp_dsf_2022.parquet and crsp_dsf_2023.parquet). Weight is
+0.02% per snapshot — negligible for basket return precision but resoluble.
 
 ---
 
@@ -163,16 +168,16 @@ XLK that cannot be closed by PERMNO crosswalk resolution.
 
 | event | ETF | Cat A weight | Cat B weight | total unmapped | Cat A resoluble? |
 |---|---|---|---|---|---|
-| FOMC 2021-09-22 | SPY | 0.43% | 0.10% | 0.53% | yes, manual PERMNO lookup |
+| FOMC 2021-09-22 | SPY | 0.43% | 0.10% | 0.53% | yes — BLK (87267), LH (12062) |
 | FOMC 2021-09-22 | XLK | 0.00% | 0.09%* | 0.09% | n/a (net −0.14 + 0.23) |
-| FOMC 2021-09-22 | XLF | 3.12% | 0.09% | 3.21% | yes, BLK lookup |
-| FOMC 2022-01-26 | SPY | 0.40% | 0.00% | 0.40% | yes |
+| FOMC 2021-09-22 | XLF | 3.12% | 0.09% | 3.21% | yes — BLK (87267) |
+| FOMC 2022-01-26 | SPY | 0.40% | 0.00% | 0.40% | yes — BLK (87267), LH (12062) |
 | FOMC 2022-01-26 | XLK | 0.00% | 0.16% | 0.16% | no (derivative) |
-| FOMC 2022-01-26 | XLF | 3.03% | 0.00% | 3.03% | yes, BLK lookup |
-| NDAQ 2022-04-20 | XLF | 2.56% | 0.00% | 2.56% | yes, BLK lookup |
-| EMR 2023-02-08 | SPY | 0.42% | 0.00% | 0.42% | yes |
-| ESS 2022-10-26 | SPY | 0.36% | 0.00% | 0.36% | yes |
-| GL 2021-07-21 | XLF | 3.02% | 0.06% | 3.08% | yes (BLK); 0.06% B |
+| FOMC 2022-01-26 | XLF | 3.03% | 0.00% | 3.03% | yes — BLK (87267) |
+| NDAQ 2022-04-20 | XLF | 2.56% | 0.00% | 2.56% | yes — BLK (87267) |
+| EMR 2023-02-08 | SPY | 0.42% | 0.00% | 0.42% | yes — BLK (87267), LH (12062), FRT (58413) |
+| ESS 2022-10-26 | SPY | 0.36% | 0.00% | 0.36% | yes — BLK (87267), LH (12062), FRT (58413) |
+| GL 2021-07-21 | XLF | 3.02% | 0.06% | 3.08% | yes — BLK (87267); 0.06% B |
 
 \* XLK 2021-09-22 net: 0.23% futures − 0.14% other assets = 0.09% net; reported sum 99.99%.
 
@@ -194,18 +199,17 @@ it ranges from 0 to 0.23% depending on event and ETF.
 The three Category A securities were searched against CRSP DSF and CRSP MSF
 (`crsp_msf_full.parquet`, SCC archive) by CUSIP. Results:
 
-| security | CUSIP | exchange ticker | resolved PERMNO | source | note |
+| security | CUSIP (MFDB) | CUSIP (DSF post-2022) | exchange ticker | resolved PERMNO | source |
 |---|---|---|---|---|---|
-| BlackRock Inc | 09290D10 | BLK (NYSE) | **87267** | crsp_msf_full.parquet | Confirmed present in CRSP |
-| LabCorp Holdings | 50492210 | LH (NYSE) | **12062** | crsp_msf_full.parquet | Confirmed present in CRSP |
-| Federal Realty Investment Trust | 31374720 | FRT (NYSE) | **not found** | searched crsp_dsf + crsp_msf_full | REIT; possible CUSIP format mismatch or CRSP universe gap |
+| BlackRock Inc | 09290D10 | 09290D10 | BLK (NYSE) | **87267** | crsp_msf_full.parquet |
+| LabCorp Holdings | 50492210 | 50492210 | LH (NYSE) | **12062** | crsp_msf_full.parquet |
+| Federal Realty Investment Trust | 31374720 | **31374510** | FRT (NYSE) | **58413** | crsp_dsf_2022.parquet, crsp_dsf_2023.parquet |
 
-**FRT status.** Federal Realty Investment Trust (0.02% weight, two snapshots:
-EMR 2023-02-08 and ESS 2022-10-26) was not found in either crsp_dsf or
-crsp_msf_full by CUSIP 31374720. This may reflect a CUSIP variant in the MFDB
-filing or a CRSP universe exclusion for REITs at this path. Weight is negligible
-(0.02%) but the security must be listed as an unresolved exclusion rather than
-silently dropped.
+**FRT resolution.** The CUSIP changed from 31374720 (Maryland trust) to 31374510
+(Maryland corporation) on January 1, 2022. The MFDB snapshots dated 2022-09-30
+and 2023-01-31 record the pre-conversion CUSIP; CRSP DSF for those years carries
+the post-conversion CUSIP 31374510 → PERMNO 58413. All three Category A
+securities are now resolved. No Category A exclusion remains.
 
 ---
 
@@ -214,6 +218,11 @@ silently dropped.
 Applying BLK (PERMNO 87267) and LH (PERMNO 12062) to the governing snapshots.
 "Before" = automated pipeline result; "After" = with these two PERMNOs added.
 FRT remains unresolved; its weight appears in the remaining-unmapped column.
+
+Percentages are PERMNO-matched equity weight as a share of reported percent_tna
+(the MFDB-reported sum, which itself deviates from 100% by filing rounding —
+see raw totals below). "Before" = automated pipeline result; "After" = with all
+three Category A PERMNOs added (BLK 87267, LH 12062, FRT 58413).
 
 | ETF | snapshot | before | after | gain | remaining unmapped | remaining unmapped detail |
 |---|---|---|---|---|---|---|
@@ -224,8 +233,8 @@ FRT remains unresolved; its weight appears in the remaining-unmapped column.
 | XLK | 2021-12-31 | 99.82% | 99.82% | +0.00% | 0.16% | ES&P TE SIF MR22 (0.16%) |
 | XLF | 2021-12-31 | 96.76% | 99.79% | +3.03% | 0.00% | none |
 | XLF | 2022-03-31 | 97.22% | 99.78% | +2.56% | 0.00% | none |
-| SPY | 2022-09-30 | 99.56% | 99.90% | +0.34% | 0.02% | FEDERAL REALTY INVESTMENT TRUST (0.02%) |
-| SPY | 2023-01-31 | 99.46% | 99.86% | +0.40% | 0.02% | FEDERAL REALTY INVESTMENT TRUST (0.02%) |
+| SPY | 2022-09-30 | 99.56% | 99.92% | +0.36% | 0.00% | none |
+| SPY | 2023-01-31 | 99.46% | 99.88% | +0.42% | 0.00% | none |
 | XLF | 2021-06-30 | 96.78% | 99.80% | +3.02% | 0.06% | OTHER ASSETS (0.06%) |
 
 Snapshot-to-event mapping: FOMC 2021-09-22 uses SPY/XLK/XLF 2021-08-31; FOMC
@@ -233,40 +242,84 @@ Snapshot-to-event mapping: FOMC 2021-09-22 uses SPY/XLK/XLF 2021-08-31; FOMC
 EMR 2023-02-08 uses SPY 2023-01-31; ESS 2022-10-26 uses SPY 2022-09-30; GL
 2021-07-21 uses XLF 2021-06-30.
 
-After repair, XLF equity coverage reaches 99.78–99.80% in all snapshots (down
-from 96.68–97.22%). SPY reaches 99.85–100.12%. XLK is unchanged because its
-unmapped lines are all Category B (futures and balance-sheet entries, no PERMNO
-resolution possible). Remaining unmapped equity weight after repair is zero for
-most snapshots; the residuals are Category B instruments.
+After full Category A repair, XLF equity coverage reaches 99.78–99.80% in all
+snapshots. SPY reaches 99.85–99.92% (ESS/EMR snapshots now 0.00% remaining
+after FRT resolution). XLK is unchanged because all its unmapped lines are
+Category B. The only residual unmapped weight in any snapshot is Category B
+(balance-sheet entries and expired futures; see §below).
 
-The SPY 2021-12-31 "after" figure of 100.12% reflects rounding in the MFDB
-filing; the 0.12% excess is within the typical MFDB rounding band and does not
-indicate a data error.
+The "after" figure exceeds 100% in SPY 2021-12-31 (100.12%). The source of that
+excess is unverified; the raw MFDB sum for that snapshot is 100.39% (see raw
+weight totals below), indicating the MFDB filing itself sums above 100%.
+
+**Raw MFDB weight totals (sum of percent_tna, all rows, from holdings parquet).**
+The PERMNO repair is a join operation that assigns PERMNOs to existing rows
+without modifying any weight field. Row counts and signed weight totals are
+preserved by construction.
+
+| event | ETF | snapshot | rows | raw sum percent_tna | cat_b rows (SIF + OTHER ASSETS) |
+|---|---|---|---|---|---|
+| FOMC 2021-09-22 | SPY | 2021-08-31 | 508 | 100.07% | 0.10% |
+| FOMC 2021-09-22 | XLK | 2021-08-31 | 77 | 99.99% | 0.09% |
+| FOMC 2021-09-22 | XLF | 2021-08-31 | 67 | 99.98% | 0.09% |
+| FOMC 2022-01-26 | SPY | 2021-12-31 | 507 | 100.39% | 0.00% |
+| FOMC 2022-01-26 | XLK | 2021-12-31 | 79 | 100.11% | 0.16% |
+| FOMC 2022-01-26 | XLF | 2021-12-31 | 68 | 99.93% | 0.00% |
+| NDAQ 2022-04-20 | XLF | 2022-03-31 | 69 | 99.94% | 0.00% |
+| EMR 2023-02-08 | SPY | 2023-01-31 | 505 | 99.93% | 0.00% |
+| ESS 2022-10-26 | SPY | 2022-09-30 | 507 | 100.33% | 0.00% |
+| GL 2021-07-21 | XLF | 2021-06-30 | 67 | 100.02% | 0.06% |
 
 ---
 
-## XLK futures contract identification
+## XLK futures contract identification and reconciliation
 
 The XLK snapshot lines labelled "ES&P TE SIF SP21" (snapshot 2021-08-31) and
 "ES&P TE SIF MR22" (snapshot 2021-12-31) are identified as CME E-mini
-Technology Select Sector futures, CME root symbol **XAK**:
+Technology Select Sector futures, CME root symbol **XAK**. Fields are from
+`holdings_three_etfs.parquet` directly; arithmetic is verified against reported
+market_val.
 
-| CRSP label | Bloomberg / CME ticker | contract | expiry | direction | CRSP-recorded units | economic exposure (est.) |
-|---|---|---|---|---|---|---|
-| ES&P TE SIF SP21 | XAKU1 | E-mini Technology Select Sector Sep 2021 | September 2021 | **LONG** (cash-equitization) | ~67,100 contracts | ~$107M (~0.23% TNA) |
-| ES&P TE SIF MR22 | XAKH2 | E-mini Technology Select Sector Mar 2022 | March 2022 | **LONG** (cash-equitization) | ~47,400 contracts | ~$83M (~0.16% TNA) |
+| CRSP label | CME ticker | expiry | direction | nbr_shares (CRSP) | est. contracts | multiplier | implied index level | market_val | percent_tna |
+|---|---|---|---|---|---|---|---|---|---|
+| ES&P TE SIF SP21 | XAKU1 | September 2021 | LONG | 67,100 | 671 | $100/pt | 1,597.50 | $107,192,250 | 0.23% |
+| ES&P TE SIF MR22 | XAKH2 | March 2022 | LONG | 47,400 | 474 | $100/pt | 1,750.80 | $82,987,920 | 0.16% |
 
-CME XAK multiplier: $100 × index level. Cash-equitization overlays of this type
-hold long futures to deploy uninvested cash while awaiting equity settlement.
+**CRSP convention.** The `nbr_shares` field for futures is recorded as
+`contracts × multiplier` (i.e., 100 × number of contracts). The implied index
+level equals `market_val / nbr_shares`. Verification: 671 × $100 × 1,597.50 =
+$107,192,250 (exact); 474 × $100 × 1,750.80 = $82,987,920 (exact).
+
+**XAKU1 expiry — critical.** CME September 2021 quarterly futures (XAKU1)
+expired on the third Friday of September 2021, which is **September 17, 2021**
+— five days before the FOMC 2021-09-22 event. The governing snapshot (2021-08-31)
+records XAKU1 with 671 contracts at $107M. By the event date, this contract had
+expired and the fund had rolled: the 2021-09-30 snapshot shows XAKZ1 (December
+2021) with 50,900 nbr_shares / 509 contracts at $76.6M. The exact roll date,
+quantity held on September 22, and whether the fund maintained an equivalent
+notional exposure are not known from the available monthly snapshots.
+
+**Consequence for the FOMC 2021-09-22 event.** The August 31 snapshot cannot be
+used to assert the fund held a specific XAK futures quantity on September 22. The
+XLK basket return for this event carries an unresolved futures exposure. The
+direction and approximate magnitude (cash-equitization, LONG) are inferred from
+the surrounding month-end records, but no specific contract, quantity, or
+notional can be assigned without intraday position data. Retain this as an
+unresolved exposure; do not substitute the August 31 position as the September 22
+position.
+
+**XAKH2 (March 2022) is not affected.** The FOMC 2022-01-26 event date is January
+26, 2022. XAKH2 expires on the third Friday of March 2022 (March 18, 2022) —
+well after the event. The 2021-12-31 snapshot showing 474 XAKH2 contracts at
+$82.99M governs this event without an expiry concern.
 
 **Exclusion rule.** These positions must **not** be excluded from the economic
 exposure of the fund merely because they lack a stock PERMNO or because the
 carrying value is small. They carry genuine beta exposure to the XLK basket.
 There is no equity quote to request for futures; the 0.16–0.23% weight is
 Category B and must be reported as an explicit exclusion in any basket return
-calculation, not silently dropped. Claiming a "complete" XLK basket return
-without this disclosure would overstate precision by up to 0.23%.
+calculation, not silently dropped.
 
-The "OTHER ASSETS LESS LIABILITIES" (negative) lines in the same XLK snapshots
-(−0.14% in 2021-08-31) are balance-sheet netting entries unrelated to the
-futures position; they are a separate Category B item.
+The "OTHER ASSETS LESS LIABILITIES" (negative) lines in the XLK 2021-08-31
+snapshot (−0.14%) are balance-sheet netting entries unrelated to the futures
+position; they are a separate Category B item.
