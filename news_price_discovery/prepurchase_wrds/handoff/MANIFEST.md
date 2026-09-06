@@ -47,12 +47,25 @@ The twelve 2023 controls that resolved the archive-wide `anntims` timezone are
 **not** carried over to these events. Each earnings release was checked
 individually against a first-public-release filing.
 
-| event | I/B/E/S `anntims` | SEC 8-K acceptance | source locator | items |
-|---|---|---|---|---|
-| NDAQ 2022-04-20 | 07:00:00 | 2022-04-20T11:44:10Z | `sec.gov/Archives/edgar/data/1120193/000119312522110289/d336569d8k.htm` | 2.02, 7.01, 8.01, 9.01 |
-| EMR 2023-02-08 | 06:57:00 | 2023-02-08T11:54:31Z | `sec.gov/Archives/edgar/data/32604/000003260423000007/emr-20230208.htm` | 2.02, 9.01 |
-| ESS 2022-10-26 | 16:15:00 | 2022-10-26T20:57:59Z | `sec.gov/Archives/edgar/data/920522/000114036122038510/brhc10043188_8k.htm` | 2.02, 9.01 |
-| GL 2021-07-21 | 16:15:00 | 2021-07-21T20:58:32Z | `sec.gov/Archives/edgar/data/320335/000032033521000038/gl-20210721.htm` | 2.02, 9.01 |
+| event | primary time (ET) | primary source | I/B/E/S `anntims` | SEC 8-K acceptance | source locator | items |
+|---|---|---|---|---|---|---|
+| NDAQ 2022-04-20 | 07:00:00 EDT | I/B/E/S (no earlier confirmed source) | 07:00:00 | 2022-04-20T11:44:10Z | `sec.gov/Archives/edgar/data/1120193/000119312522110289/d336569d8k.htm` | 2.02, 7.01, 8.01, 9.01 |
+| **EMR 2023-02-08** | **06:55:00 EST** | **Company press release (wire) — see CLOCK_LEDGER.md §2** | 06:57:00 | 2023-02-08T11:54:31Z | `sec.gov/Archives/edgar/data/32604/000003260423000007/emr-20230208.htm` | 2.02, 9.01 |
+| ESS 2022-10-26 | 16:15:00 EDT | I/B/E/S (no earlier confirmed source) | 16:15:00 | 2022-10-26T20:57:59Z | `sec.gov/Archives/edgar/data/920522/000114036122038510/brhc10043188_8k.htm` | 2.02, 9.01 |
+| GL 2021-07-21 | 16:15:00 EDT | I/B/E/S (no earlier confirmed source) | 16:15:00 | 2021-07-21T20:58:32Z | `sec.gov/Archives/edgar/data/320335/000032033521000038/gl-20210721.htm` | 2.02, 9.01 |
+
+**EMR timing discrepancy.** The company-issued press release (wire distribution)
+carries 06:55 ET; I/B/E/S records 06:57 — a 2-minute gap. The SEC 8-K
+acceptance at 06:54:31 EST (2023-02-08T11:54:31Z) is 29 seconds before the
+press release time and is consistent with it. The primary event time is updated
+to 06:55; the I/B/E/S value is retained. Detailed source analysis and
+measurement consequences are in `CLOCK_LEDGER.md`. The EDGAR exhibit body
+(EX-99.1) carries only "ST. LOUIS, February 8, 2023" without a time; the
+06:55 source is the wire distribution, whose URL was not independently confirmed
+in this session (Business Wire returned an edge block). The 1-minute horizon is
+doubly marginal for EMR: the 2-minute source discrepancy spans the entire
+horizon. **Do not infer the timezone from proximity to the I/B/E/S time or to
+other earnings release times; the 06:55 is a separately sourced claim.**
 
 Every one carries **Item 2.02, Results of Operations and Financial Condition** —
 i.e. each is an earnings release, not a conference call, not a guidance update,
@@ -68,7 +81,7 @@ and not an unrelated 8-K.
 | FOMC 2021-09-22 | 14:00:00 EDT | 18:00:00Z | minute |
 | FOMC 2022-01-26 | 14:00:00 EST | 19:00:00Z | minute |
 | NDAQ 2022-04-20 | 07:00:00 EDT | 11:00:00Z | minute |
-| EMR 2023-02-08 | 06:57:00 EST | 11:57:00Z | minute |
+| EMR 2023-02-08 | **06:55:00 EST** (company press release; I/B/E/S: 06:57) | **11:55:00Z** | minute |
 | ESS 2022-10-26 | 16:15:00 EDT | 20:15:00Z | minute |
 | GL 2021-07-21 | 16:15:00 EDT | 20:15:00Z | minute |
 
@@ -138,14 +151,32 @@ filed holdings. It is not what a market participant knew at 16:15 on the event
 day. Both labels are preserved and they are not interchangeable. No weight is
 backfilled from a later filing and no snapshot is interpolated.
 
-**Missing mass is the named weight gap.** XLF carries roughly **2.6–3.2%** of
-TNA in lines that do not map to a CRSP PERMNO, in every snapshot governing a
-selected event. SPY carries 0.36–0.53% and XLK 0.09–0.16%. These lines are not
-treated as cash and not treated as zero-return; the covered sleeve is reported
-as a sleeve and is never renormalised to 100% and called the fund. For the two
-XLF events and the two FOMC events that include XLF, roughly 3% of the portfolio
-is simply not reconstructable from this source. That is a gap in the **weight
-record**, not in the quote data, and buying quotes will not close it.
+**Unmapped lines — categorized in `MAPPING_OUTCOMES.md`.** XLF carries roughly
+**2.6–3.2%** of TNA in lines that do not map to a CRSP PERMNO, in every
+snapshot governing a selected event. SPY carries 0.36–0.53% and XLK 0.09–0.16%.
+These lines divide into two distinct categories:
+
+- **Category A — known equity, PERMNO crosswalk absent** (dominant): BlackRock
+  Inc (CUSIP 09290D10) accounts for 2.56–3.12% in every XLF snapshot and
+  0.28–0.35% in SPY. LabCorp Holdings (50492210, 0.06–0.08% SPY) and Federal
+  Realty Investment Trust (31374720, 0.02% SPY) also fall here. These are
+  identifiable, exchange-traded equities whose returns are observable. The gap
+  is in the MFDB-to-DSF PERMNO crosswalk, not in the securities' observability.
+  Adding these three securities to the quote manifest by CUSIP resolves most of
+  the unmapped mass. **This weight is not a return bound.**
+
+- **Category B — non-equity / non-quotable** (small): balance-sheet netting
+  entries labelled "OTHER ASSETS" (0–0.10%) and apparent futures or
+  cash-equitization instruments in XLK labelled "ES&P TE SIF SP21/MR22"
+  (0.16–0.23%). These carry no CUSIP and have no equity return to compute.
+  They are the only lines for which "return unknown" is literally correct.
+
+The covered sleeve is reported as a sleeve and is never renormalised to 100%.
+Category A lines are a crosswalk gap — a gap in the **automated pipeline**,
+not in the quote data or in the securities' existence. Category B lines are a
+genuine exclusion; their weight (at most 0.23% in XLK) is the only portion
+that propagates directly into basket-return uncertainty with no remedy from
+additional quote data.
 
 **Cash and non-equity.** Cash and money-market lines run 0.05–0.41% of TNA and
 are identified by name pattern, held separately, and excluded from the equity
