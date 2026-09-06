@@ -1,0 +1,33 @@
+# stage 0 of the no-purchase price-discovery feasibility module.
+#
+# The catalog is a record of what was OBSERVED in the archive: one row per
+# (logical family, manifest entry) that the discovery pass matched, carrying the
+# real Parquet footer facts. It is deliberately not a data table — it is the
+# provenance layer every later stage joins back to (manual §31/§49).
+#
+# strict_columns is false for the same reason outcomes_panel.yaml keeps it false:
+# the later stages add provenance columns as they land, and freezing the full set
+# now would freeze a guess. What IS frozen is the grain and the four columns any
+# consumer keys on — path, resolution, schema identity, and the family label.
+producer: NPD-prepurchase-stage0
+primary_key: [logical_family, manifest_path]
+strict_columns: false
+columns:
+  # ---- grain ----
+  logical_family: {required: true}   # which needed dataset family this row serves
+  manifest_path: {required: true}    # path exactly as FINAL_SCC_MANIFEST.tsv records it
+  # ---- resolution: did the manifest entry actually exist on disk, and where ----
+  resolved: {required: true}         # False rows are findings, not rows to delete
+  resolved_base: {}                  # which candidate base the relative path hung off
+  # ---- provenance the overlap policy needs (manual §30) ----
+  source_download_stage: {}          # maximal | rescue | rescue_remaining | raw_or_other
+  partition_hint: {}                 # STORAGE hint only — never an economic date (§44)
+  bytes: {min: 0}
+  # ---- observed schema facts (Parquet footer; no data row is read) ----
+  n_rows: {}                         # blank for non-parquet or unreadable footers
+  n_columns: {}
+  n_row_groups: {}
+  schema_sha1: {}                    # differing values within a family = a real variant
+  columns_csv: {}                    # the observed column names, verbatim
+  read_error: {}                     # populated when a footer could not be parsed
+  needed_for: {}                     # why this task reads the family at all

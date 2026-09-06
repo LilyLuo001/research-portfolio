@@ -1,0 +1,143 @@
+# config.yaml — bounded no-purchase feasibility test, ETF/stock price discovery.
+#
+# Every value here is a PROJECT CHOICE frozen from the owner's 2026-09-06
+# instruction, not a measurement and not a fact recovered from data. Nothing in
+# this file may be edited after seeing a diagnostic coefficient (instruction §
+# "Do not expand the research universe after seeing the diagnostic coefficients"
+# and CLAUDE.md meta-rule "never specification-search").
+#
+# Stage 0 (stage0_discover.py) reads only the `archive` and `families` blocks.
+# The later stages read the rest. Values marked UNVERIFIED are hypotheses that
+# stage 0 must confirm against real schemas before any stage consumes them.
+
+archive:
+  # Canonical roots. Override at run time with --archive or $P1_WRDS_ARCHIVE so
+  # a moved archive needs one change, not edits throughout (manual §61/§62).
+  root: /projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902
+  project_subdir: p1_refraction_wrds_shared
+  migration_meta_subdir: _migration_meta
+  manifest: FINAL_SCC_MANIFEST.tsv
+  # Read, never re-run (instruction §7: do not restart a whole-archive checksum
+  # exercise for this task).
+  verify_reports: [FINAL_VERIFY_REPORT.txt, FINAL_CHECKSUM_DIFF.txt]
+
+instruments:
+  # The three already-proposed ETFs. crsp_portno and the ETF security PERMNO are
+  # deliberately null: they are RESOLVED by stage 1 from the CRSP fund header
+  # (et_flag = 'F') and stocknames, with a dated mapping. Do not hand-fill them.
+  - ticker: SPY
+    permno: 84398        # manual §6/§42, to be re-confirmed against dsf, not trusted
+    shrcd: 73            # so (shrcd in 10,11) EXCLUDES it — extract separately
+    crsp_portno: null
+  - ticker: XLK
+    permno: null
+    crsp_portno: null
+  - ticker: XLF
+    permno: null
+    crsp_portno: null
+
+sample:
+  analysis_start: 2019-01-01
+  analysis_end:   2023-12-31
+  # Pre-2019 history is read ONLY to fill lagged/warm-up variables (Hou-Moskowitz
+  # needs ~1 year of weekly rows; beta-style windows need more).
+  warmup_start:   2017-01-01
+  # 2024-2025 stay unexamined for this question. If any later stage inspects
+  # them, it must disclose the inspection rather than silently widen the sample.
+  heldback:       [2024, 2025]
+
+holdings:
+  weight_field: percent_tna     # weight = percent_tna / 100 (accepted V3 reading)
+  weight_divisor: 100
+  # A project choice for approximate diagnostics — NOT proof of event-date
+  # weights, and never relaxed on the basis of a response sign.
+  max_report_age_days: 120
+  coverage_bins_days: [30, 60, 90, 120]
+  # Two distinct labels that must both survive into the output; the second alone
+  # supports a "known before the event" claim.
+  snapshot_labels: [economic_date_prior, demonstrably_available_pre_event]
+
+hou_moskowitz:
+  frequency: weekly             # Wednesday-to-Wednesday, compounded from daily
+  week_anchor_weekday: 2        # Python weekday(): Monday=0, so Wednesday=2
+  n_lags: 4
+  formation: annual
+  min_weekly_rows: 40           # pilot engineering minimum, not a theoretical one
+  r2_kind: raw                  # D1 = 1 - R2_contemporaneous / R2_with_four_lags
+  # UNVERIFIED until stage 0 confirms crsp.dsi carries a value-weighted return.
+  # If it does not, the original-style baseline is marked UNAVAILABLE and any
+  # substitute is labelled an adaptation. Never regress SPY on itself.
+  market_return_source: crsp_dsi
+  market_return_col_candidates: [vwretd, vwretx]
+  daily_sensitivity: true       # fixed-frequency sensitivity, not a chosen winner
+
+earnings_response:
+  horizons_days: [0, 1, 2, 5, 10]
+  drift_window: [2, 20]         # reported separately, never as a headline horizon
+  # Both mappings are reported as sensitivities while anntims semantics are
+  # unresolved. Selecting the more significant one is specification search.
+  h0_mappings: [same_day_close, next_day_close]
+  surprise_scale: fixed_pre_event_normalisation
+  session_categories: [BMO, RTH, AMC, NONTRADING, UNKNOWN]
+
+macro:
+  # Public external supplement, NOT a WRDS file. Never infer a policy surprise
+  # from the equity return being explained.
+  usmpd_url: https://www.frbsf.org/research-and-insights/data-and-indicators/us-monetary-policy-event-study-database/
+  required: false               # a blocked macro module does not void the rest
+
+precision:
+  # Assumptions for the conditional planning table. These are NOT measurements
+  # and must be labelled as assumptions wherever they are printed.
+  residual_sd_bps_grid: [0.5, 1, 2, 5, 10]
+  z_alpha: 1.96
+  z_power: 0.84                 # 80% power
+  # Explicitly forbidden: sqrt-of-time scaling of daily vol into a 5-minute
+  # variance. Intraday noise is unobserved here.
+  forbid_sqrt_time_scaling: true
+
+# Logical families stage 0 searches for in the manifest. `patterns` are matched
+# case-insensitively against the manifest's relative path. `needed_for` records
+# WHY this task reads it, so an unused family can be dropped rather than pulled
+# (instruction §7: read only what is needed).
+families:
+  crsp_holdings:
+    patterns: ['holdings']
+    needed_for: "§2 portfolio approximation — ETF holdings snapshots by report_dt"
+  crsp_fund_hdr:
+    patterns: ['fund_hdr', 'fund_summary', 'fundhdr', 'fund_header']
+    needed_for: "§1 crosswalk — resolve SPY/XLK/XLF to crsp_portno via et_flag='F'"
+  crsp_stocknames:
+    patterns: ['stocknames', 'stknames']
+    needed_for: "§1 crosswalk — dated CUSIP/ticker to PERMNO mapping"
+  crsp_dsf_legacy:
+    patterns: ['crsp_dsf', 'dsf_', '_dsf']
+    exclude: ['newcrsp', '_v2_']
+    needed_for: "§2/§3 daily returns for ETF securities and source stocks"
+  crsp_dsf_ciz:
+    patterns: ['newcrsp']
+    needed_for: "§7 overlap check only — do NOT stack with legacy dsf"
+  crsp_dsi:
+    patterns: ['dsi']
+    needed_for: "§3A CRSP value-weighted market return — gates the original-style D1"
+  crsp_dsedist:
+    patterns: ['dsedist']
+    needed_for: "§2 distribution screening by true ex-date (total-return convention)"
+  crsp_dsedelist:
+    patterns: ['dsedelist']
+    needed_for: "§2 delisting screen for the source-stock panel"
+  ibes_actuals:
+    patterns: ['actu_epsus', 'actu']
+    needed_for: "§1 earnings event registry — actual EPS, anntims (timezone UNVERIFIED)"
+  ibes_statsum:
+    patterns: ['statsum']
+    needed_for: "§1 latest legitimate pre-release consensus"
+  ibes_idsum:
+    patterns: ['idsum']
+    needed_for: "§1 identifier aid — never ticker-alone matching"
+  crsp_ibes_link:
+    patterns: ['ibcrsp', 'crsp_ibes_link', 'ibes_link']
+    needed_for: "§1 effective-dated link (sdate/edate/score) — required, not optional"
+  fama_french:
+    patterns: ['fama', 'ff_daily', 'ff_factors']
+    needed_for: "§3B optional pre-event-estimated factor adjustment, labelled as such"

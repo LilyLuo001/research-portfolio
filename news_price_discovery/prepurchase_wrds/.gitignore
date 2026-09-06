@@ -1,0 +1,6 @@
+# Stage outputs land here. Ignored by default and added deliberately with
+# `git add -f` once a stage passes its contract — the same pattern as
+# ops/l1/out/. Two reasons it is not the other way round: licensed WRDS data
+# stays private (instruction §7), and a half-finished run should never reach
+# main just because someone typed `git add -A`.
+out/
