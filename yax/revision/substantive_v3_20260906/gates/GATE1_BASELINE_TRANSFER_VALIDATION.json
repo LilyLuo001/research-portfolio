@@ -1,0 +1,43 @@
+{
+  "excluded_restricted_artifact": {
+    "name": "EXECUTION_RECEIPT.json",
+    "reason": "The original R3 runner receipt contains private absolute SCC paths; it remains retained in the authorized SCC run root and is authenticated by the sanitized wrapper receipt.",
+    "sha256": "f72fb19deca62013ef25b97677cce702b13b3830fe6e7d64eab04e146f474301"
+  },
+  "private_marker_scan": "PASS",
+  "schema_version": "yax-gate1-public-transfer-validation-v1",
+  "scientific_scope": "Transfer and hash integrity only; numerical existence is adjudicated separately by N01-N03.",
+  "source_git_head": "ffdac61e47fa802cabf2485ba495acae092a0fdf",
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "status": "PASS_SANITIZED_GATE1_PUBLIC_TRANSFER",
+  "validated_at_utc": "2026-09-06T07:22:16.744059+00:00",
+  "verified_audit_artifact_count": 6,
+  "verified_audit_artifact_hashes": {
+    "WRAPPER_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "runner.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runner.stdout.log": "3e14c67ba59ee93d0f1c21d7be19f82993d19b76d2b612b0ad07949b0a46494e",
+    "selfcheck.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "selfcheck.stdout.log": "ea451f977bdf59862286559694c934998246c96eb3c969ec1fccfd129c603aaf",
+    "wrapper.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "verified_public_result_count": 16,
+  "verified_public_result_hashes": {
+    "BASELINE_DECOMPOSITION.csv": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2",
+    "CALENDAR_RECEIPT.json": "378d1668fc6289ae73a9e86174f83dcd4b790b844ca5ca5c8faf02337a56b3f3",
+    "COMMON_SUPPORT_RECLASSIFICATION.csv": "11452f704e200b2df1cf616d4a2783443422ec4bca904974c5190c1886b98e96",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "NATIVE_TREATMENT_CONTRACTS.csv": "95db83635da57b58db98217c96bf85c40aa0249146031db23cfa1221d11804b6",
+    "PAIRED_CENTERED_DRAWS.csv": "49fc0f1f2a776f07e1d61bb8aecfa4610bde69b39f5003c4ebfabb643bd6c477",
+    "PAIRED_COMPARISONS.csv": "fda0bfde9ef7ea4db04ed9bae523c4bedf1294f14ee1839c777257af3e78d2f9",
+    "PREFIT_GATE.json": "5bcbb339aefd74296286b37d4c3784a7d2c803482f851cf5283f9e7b265bab7a",
+    "REBUILT_ELIGIBLE_UNIVERSE.csv": "b47fff762a90b15ba1876e09151f25e204462959ac779dab267eb11a9194a748",
+    "REBUILT_NORMALIZATION_AND_CUTS.json": "e756d597c12fc2b61ddf62e536b50d3edab32375980e7cea70e5de42fca57557",
+    "REBUILT_QUINTILE_SUPPORT.csv": "4f18cc4ca8734279bcfa3000dcf6c254b2a64275afad433759a16cbc9f54d2c8",
+    "REBUILT_TREATMENT_MEMBERSHIP.csv": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "ROUTE_CONSERVATION_RECEIPT.json": "6590c506703874a29c7345c9199eb76d98778740af253c2e106552950ec0c5ff",
+    "SELF_CHECK.json": "c010171e6826377369a00afd61488e8e611de4260430f81117defb9fb3b02555",
+    "SUPPORT_CHANGING_COMPARISONS.csv": "361af1f959cd372787fd99d5aa72621cbe53ffcf5e4d0f075d25f5b057674858",
+    "TREATMENT_CONTRACT_SUMMARY.csv": "c4b4ca152576011241d7e02364568b73a6939b541cea821b036bc7f45c3e5938"
+  },
+  "wrapper_receipt_sha256": "788348d1bbd982394c2dcb1bb3e8553a9a92c32ba89a4d8ef465802403477a96"
+}

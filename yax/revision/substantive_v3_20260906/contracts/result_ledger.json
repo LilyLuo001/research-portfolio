@@ -1,4 +1,59 @@
 {
-  "results": [],
+  "results": [
+    {
+      "canonical": false,
+      "logical_key": "gate1_baseline.historical_108_historical_treatment.coefficient",
+      "result_id": "yaxresult_v1_7c3d3858f506ae25fcc00c8b67c4d837e841ea2b98991d79d8d331030d84c6be",
+      "selector": {
+        "column": "coefficient",
+        "keys": {
+          "row_id": "historical_108_historical_treatment"
+        },
+        "kind": "csv_key"
+      },
+      "source_path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+      "source_sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2",
+      "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+      "target_key": "diagnostic_baseline.historical_membership.108_months.q5_post_vs_q1",
+      "tolerance": 0.0,
+      "value": -0.1310739764223351
+    },
+    {
+      "canonical": false,
+      "logical_key": "gate1_baseline.corrected_113_historical_treatment.coefficient",
+      "result_id": "yaxresult_v1_693ef5a75df3b8ea794fd235e1b3b6026c3aed00b472e3a9b2ade0d59ad55d29",
+      "selector": {
+        "column": "coefficient",
+        "keys": {
+          "row_id": "corrected_113_historical_treatment"
+        },
+        "kind": "csv_key"
+      },
+      "source_path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+      "source_sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2",
+      "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+      "target_key": "diagnostic_baseline.historical_membership.113_months.q5_post_vs_q1",
+      "tolerance": 0.0,
+      "value": -0.1345539535732939
+    },
+    {
+      "canonical": true,
+      "logical_key": "gate1_baseline.corrected_113_recomputed_preperiod_treatment.coefficient",
+      "result_id": "yaxresult_v1_b5dc80f0d6f3bc9d03b294f1a7a24fb4e9a1b540c144cdade5cee171d80891c6",
+      "selector": {
+        "column": "coefficient",
+        "keys": {
+          "row_id": "corrected_113_recomputed_preperiod_treatment"
+        },
+        "kind": "csv_key"
+      },
+      "source_path": "runs/gate1_baseline/results/BASELINE_DECOMPOSITION.csv",
+      "source_sha256": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2",
+      "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+      "target_key": "canonical_baseline.recomputed_preperiod_membership.113_months.q5_post_vs_q1",
+      "tolerance": 0.0,
+      "value": -0.13210945079219036
+    }
+  ],
   "schema_version": "yax-result-ledger-v1"
 }

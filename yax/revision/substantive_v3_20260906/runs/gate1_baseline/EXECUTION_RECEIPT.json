@@ -1,0 +1,352 @@
+{
+  "analysis_status": "post-outcome referee-led diagnostic; checkpoint reproduction, not a confirmatory result",
+  "audit_artifact_hashes": {
+    "WRAPPER_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "runner.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runner.stdout.log": "3e14c67ba59ee93d0f1c21d7be19f82993d19b76d2b612b0ad07949b0a46494e",
+    "selfcheck.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "selfcheck.stdout.log": "ea451f977bdf59862286559694c934998246c96eb3c969ec1fccfd129c603aaf",
+    "wrapper.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "authentication": {
+    "code": {
+      "analysis_spec_sha256": "040846ff52a7e1d4213aed73d182485749ba3c62a6a554502ec4d9a6f5ea0b68",
+      "companion_files": {
+        "yax/revision/substantive_r3_20260905/rebuilt_baseline/ANALYSIS_SPEC.md": {
+          "sha256": "040846ff52a7e1d4213aed73d182485749ba3c62a6a554502ec4d9a6f5ea0b68",
+          "status": "AUTHENTICATED"
+        },
+        "yax/revision/substantive_r3_20260905/rebuilt_baseline/selfcheck.py": {
+          "sha256": "efe56af8729126f665360cece2cb9d823176063ceb273eef4fdcbccca79ee9d7",
+          "status": "AUTHENTICATED"
+        }
+      },
+      "runner_sha256": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+      "selfcheck_sha256": "efe56af8729126f665360cece2cb9d823176063ceb273eef4fdcbccca79ee9d7",
+      "specification_validator_sha256": "de2b607202e4b93b3d712e0f930f13d2da00cee7c4696ccf2fec9dc1e46cdcc8",
+      "status": "AUTHENTICATED",
+      "transitive_code_lock_sha256": "b4fdbca971ff398d5563aa2972c2bda7d8eb8863351da81e71a41753b568197d",
+      "transitive_imports": {
+        "dax/memo/power_calcs/young_relative_employment_power.py": {
+          "sha256": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+          "source_commit": "09968071462ac88de5cc649f38a1af7425329c60",
+          "status": "AUTHENTICATED_TO_REFERENCE_SOURCE_COMMIT"
+        },
+        "yax/analysis/run_frozen_v11.py": {
+          "sha256": "e40fdda2353dd0c0d6f92401e7bdfb5874c8a32ffa9d641b38144cc07054ddff",
+          "source_commit": "09968071462ac88de5cc649f38a1af7425329c60",
+          "status": "AUTHENTICATED_TO_REFERENCE_SOURCE_COMMIT"
+        },
+        "yax/revision/referee_20260905/run_referee_cells.py": {
+          "sha256": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
+          "source_commit": "09968071462ac88de5cc649f38a1af7425329c60",
+          "status": "AUTHENTICATED_TO_REFERENCE_SOURCE_COMMIT"
+        },
+        "yax/revision/referee_20260905/run_referee_core.py": {
+          "sha256": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
+          "source_commit": "09968071462ac88de5cc649f38a1af7425329c60",
+          "status": "AUTHENTICATED_TO_REFERENCE_SOURCE_COMMIT"
+        }
+      },
+      "transitive_source_commit": "09968071462ac88de5cc649f38a1af7425329c60"
+    },
+    "declared_sources": {
+      "census_occ2010_to_2018_bridge": {
+        "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+        "status": "AUTHENTICATED"
+      },
+      "computerization_measures_census2018": {
+        "sha256": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+        "status": "AUTHENTICATED"
+      },
+      "cps_occupation_exposure_lookup": {
+        "sha256": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+        "status": "AUTHENTICATED"
+      },
+      "first_post_outcome_access_receipt": {
+        "sha256": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+        "status": "AUTHENTICATED"
+      },
+      "historical_preperiod_cells": {
+        "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+        "status": "AUTHENTICATED"
+      },
+      "ipums_cps_extract_11_march_basic_repair": {
+        "sha256": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+        "status": "AUTHENTICATED"
+      },
+      "ipums_cps_extract_9_wide": {
+        "sha256": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+        "status": "AUTHENTICATED"
+      },
+      "rule_b_values_census2018": {
+        "sha256": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6",
+        "status": "AUTHENTICATED"
+      }
+    },
+    "dependencies": {
+      "R3 prefit gate reference": {
+        "sha256": "92fc18a380ee960abecce6ee5c6317f882a0beefcb9dae958f9446d41c3ff8b5",
+        "status": "AUTHENTICATED"
+      },
+      "reference rebuilt fixed-membership vector for checkpoint comparison": {
+        "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+        "status": "AUTHENTICATED"
+      }
+    },
+    "environment": {
+      "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+      "kernel_release_comparison": {
+        "lock": "4.18.0-553.158.1.el8_10",
+        "rule": "allow only duplicate dot-machine suffix already declared separately",
+        "runtime": "4.18.0-553.158.1.el8_10.x86_64"
+      },
+      "runtime": {
+        "kernel_release": "4.18.0-553.158.1.el8_10.x86_64",
+        "kernel_system": "Linux",
+        "libc": "2.28",
+        "libc_name": "glibc",
+        "machine": "x86_64",
+        "numpy": "2.5.1",
+        "pandas": "3.0.3",
+        "pytest": "9.1.1",
+        "python": "3.13.8",
+        "python_compiler": "GCC 12.2.0"
+      },
+      "status": "AUTHENTICATED_DECLARED_RUNTIME"
+    },
+    "historical_preperiod_cross_authentication": {
+      "historical_preperiod_cells": {
+        "sha256": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+        "status": "AUTHENTICATED_SUPPLEMENTAL_COMMAND_INPUT"
+      }
+    },
+    "reference": {
+      "output_manifest_authenticated": true,
+      "read_only_after_fresh_selfcheck": true,
+      "receipt_sha256": "e3379ea442fa36d92fbc652f7a4a28b66fdef12c3e6c21a2462d1a7765574d21",
+      "selfcheck_sha256": "3c1f6ee3b86499cb573cab829efefc6cea48fbfc04a32479e4b28fb75abaa26b"
+    },
+    "status": "PASS_ALL_PRE_RUN_AUTHENTICATION"
+  },
+  "checkpoint_comparison": {
+    "calendar": {
+      "december_2022_excluded": true,
+      "first_month": "2017-01",
+      "last_month": "2026-07",
+      "observed_month_count": 114,
+      "october_2025_missing_not_interpolated": true,
+      "static_month_count": 113
+    },
+    "checkpoints": {
+      "corrected_113_historical_treatment": {
+        "analytic_cluster_se": {
+          "fresh": 0.04495662370942422,
+          "reference": 0.04495662370942422
+        },
+        "bootstrap_p_value": {
+          "fresh": 0.0021,
+          "reference": 0.0021
+        },
+        "bootstrap_se": {
+          "fresh": 0.045651073014342264,
+          "reference": 0.045651073014342264
+        },
+        "ci_lower": {
+          "fresh": -0.2226427725867391,
+          "reference": -0.2226427725867391
+        },
+        "ci_upper": {
+          "fresh": -0.046465134559848686,
+          "reference": -0.046465134559848686
+        },
+        "coefficient": {
+          "fresh": -0.1345539535732939,
+          "reference": -0.1345539535732939
+        },
+        "months": 113,
+        "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
+      },
+      "corrected_113_recomputed_preperiod_treatment": {
+        "analytic_cluster_se": {
+          "fresh": 0.045173895228400755,
+          "reference": 0.045173895228400755
+        },
+        "bootstrap_p_value": {
+          "fresh": 0.0027,
+          "reference": 0.0027
+        },
+        "bootstrap_se": {
+          "fresh": 0.04585289978811848,
+          "reference": 0.04585289978811848
+        },
+        "ci_lower": {
+          "fresh": -0.22056491719974503,
+          "reference": -0.22056491719974503
+        },
+        "ci_upper": {
+          "fresh": -0.04365398438463568,
+          "reference": -0.04365398438463568
+        },
+        "coefficient": {
+          "fresh": -0.13210945079219036,
+          "reference": -0.13210945079219036
+        },
+        "months": 113,
+        "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
+      },
+      "historical_108_historical_treatment": {
+        "analytic_cluster_se": {
+          "fresh": 0.04440978614525459,
+          "reference": 0.04440978614525459
+        },
+        "bootstrap_p_value": {
+          "fresh": 0.0025,
+          "reference": 0.0025
+        },
+        "bootstrap_se": {
+          "fresh": 0.04506325529096762,
+          "reference": 0.04506325529096762
+        },
+        "ci_lower": {
+          "fresh": -0.21777866926756834,
+          "reference": -0.21777866926756834
+        },
+        "ci_upper": {
+          "fresh": -0.04436928357710186,
+          "reference": -0.04436928357710186
+        },
+        "coefficient": {
+          "fresh": -0.1310739764223351,
+          "reference": -0.1310739764223351
+        },
+        "months": 108,
+        "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
+      }
+    },
+    "comparison_order": "runner_exit_then_selfcheck_then_checkpoint_comparison",
+    "membership": {
+      "file_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+      "occupation_count": 468,
+      "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
+    },
+    "no_estimator_retuning_or_retry": true,
+    "normalization": {
+      "beta_quintile_cuts": [
+        0.153846153846,
+        0.324615384615,
+        0.45652173913,
+        0.537037037037
+      ],
+      "beta_weighted_mean": 0.3752005086249182,
+      "beta_weighted_sd": 0.21041324630099784,
+      "construction_end": "2022-11",
+      "construction_months": 71,
+      "construction_start": "2017-01",
+      "total_preperiod_stock": 8399768787.326893,
+      "webb_weighted_mean": 45.17590301148972,
+      "webb_weighted_sd": 26.258625996515853
+    },
+    "status": "PASS_POST_RUN_CHECKPOINT_COMPARISON"
+  },
+  "command_template": "<YAX_PYTHON_BIN> yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py --repo-root <YAX_REPO_ROOT> --microdata <YAX_PRIVATE_ROOT>/ai_telework_2017_2026/cps_00009.csv.gz --repair-microdata <YAX_PRIVATE_ROOT>/yax_referee_march_repair/cps_00011.csv.gz --historical-preperiod-cells <YAX_PRIVATE_ROOT>/ai_telework_2017_2026/preperiod_gate_v1/young_relative_employment_cells_v1.csv --lookup <YAX_REPO_ROOT>/yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv --computerization <YAX_REPO_ROOT>/yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv --rule-b-values <YAX_REPO_ROOT>/yax/measurement/RULE_B_VALUES_CENSUS2018.csv --bridge <YAX_REPO_ROOT>/yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv --first-access-receipt <YAX_REPO_ROOT>/yax/analysis/FIRST_OUTCOME_ACCESS_RECEIPT.json --output-dir <YAX_V3_RUN_ROOT>/gate1_baseline/results",
+  "ended_at_utc": "2026-09-06T07:19:22.257533+00:00",
+  "exit_code": 0,
+  "failures": [],
+  "fresh_bundle_authentication": {
+    "execution_receipt_integrity": {
+      "analysis_spec_sha256": "040846ff52a7e1d4213aed73d182485749ba3c62a6a554502ec4d9a6f5ea0b68",
+      "common_draw_semantics_authenticated": true,
+      "draws": 9999,
+      "git_head": "ffdac61e47fa802cabf2485ba495acae092a0fdf",
+      "input_hashes_authenticated": true,
+      "runner_sha256": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+      "seed": 2026090521,
+      "status": "PASS_FRESH_EXECUTION_RECEIPT_INTEGRITY"
+    },
+    "runner_output_manifest_authenticated": true,
+    "runner_receipt_sha256": "f72fb19deca62013ef25b97677cce702b13b3830fe6e7d64eab04e146f474301",
+    "selfcheck_sha256": "c010171e6826377369a00afd61488e8e611de4260430f81117defb9fb3b02555"
+  },
+  "output_hashes": {
+    "BASELINE_DECOMPOSITION.csv": "f40f9fe32c7d077ad4d83d88fc492a62d80bcf92d8f591b0c6a9d735436d0ab2",
+    "CALENDAR_RECEIPT.json": "378d1668fc6289ae73a9e86174f83dcd4b790b844ca5ca5c8faf02337a56b3f3",
+    "COMMON_SUPPORT_RECLASSIFICATION.csv": "11452f704e200b2df1cf616d4a2783443422ec4bca904974c5190c1886b98e96",
+    "EXECUTION_RECEIPT.json": "f72fb19deca62013ef25b97677cce702b13b3830fe6e7d64eab04e146f474301",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "NATIVE_TREATMENT_CONTRACTS.csv": "95db83635da57b58db98217c96bf85c40aa0249146031db23cfa1221d11804b6",
+    "PAIRED_CENTERED_DRAWS.csv": "49fc0f1f2a776f07e1d61bb8aecfa4610bde69b39f5003c4ebfabb643bd6c477",
+    "PAIRED_COMPARISONS.csv": "fda0bfde9ef7ea4db04ed9bae523c4bedf1294f14ee1839c777257af3e78d2f9",
+    "PREFIT_GATE.json": "5bcbb339aefd74296286b37d4c3784a7d2c803482f851cf5283f9e7b265bab7a",
+    "REBUILT_ELIGIBLE_UNIVERSE.csv": "b47fff762a90b15ba1876e09151f25e204462959ac779dab267eb11a9194a748",
+    "REBUILT_NORMALIZATION_AND_CUTS.json": "e756d597c12fc2b61ddf62e536b50d3edab32375980e7cea70e5de42fca57557",
+    "REBUILT_QUINTILE_SUPPORT.csv": "4f18cc4ca8734279bcfa3000dcf6c254b2a64275afad433759a16cbc9f54d2c8",
+    "REBUILT_TREATMENT_MEMBERSHIP.csv": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "ROUTE_CONSERVATION_RECEIPT.json": "6590c506703874a29c7345c9199eb76d98778740af253c2e106552950ec0c5ff",
+    "SELF_CHECK.json": "c010171e6826377369a00afd61488e8e611de4260430f81117defb9fb3b02555",
+    "SUPPORT_CHANGING_COMPARISONS.csv": "361af1f959cd372787fd99d5aa72621cbe53ffcf5e4d0f075d25f5b057674858",
+    "TREATMENT_CONTRACT_SUMMARY.csv": "c4b4ca152576011241d7e02364568b73a6939b541cea821b036bc7f45c3e5938"
+  },
+  "private_paths_or_credentials_persisted": false,
+  "record": "YAX V3 Gate-1 canonical BASE-03 reconstruction",
+  "repository": {
+    "head": "ffdac61e47fa802cabf2485ba495acae092a0fdf",
+    "porcelain_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status_entry_count": 0,
+    "worktree_clean": true
+  },
+  "result_id": "yaxresult_v1_b5dc80f0d6f3bc9d03b294f1a7a24fb4e9a1b540c144cdade5cee171d80891c6",
+  "result_ids": {
+    "corrected_113_historical_treatment": "yaxresult_v1_693ef5a75df3b8ea794fd235e1b3b6026c3aed00b472e3a9b2ade0d59ad55d29",
+    "corrected_113_recomputed_preperiod_treatment": "yaxresult_v1_b5dc80f0d6f3bc9d03b294f1a7a24fb4e9a1b540c144cdade5cee171d80891c6",
+    "historical_108_historical_treatment": "yaxresult_v1_7c3d3858f506ae25fcc00c8b67c4d837e841ea2b98991d79d8d331030d84c6be"
+  },
+  "result_selectors": {
+    "corrected_113_historical_treatment": {
+      "column": "coefficient",
+      "keys": {
+        "row_id": "corrected_113_historical_treatment"
+      },
+      "kind": "csv_key"
+    },
+    "corrected_113_recomputed_preperiod_treatment": {
+      "column": "coefficient",
+      "keys": {
+        "row_id": "corrected_113_recomputed_preperiod_treatment"
+      },
+      "kind": "csv_key"
+    },
+    "historical_108_historical_treatment": {
+      "column": "coefficient",
+      "keys": {
+        "row_id": "historical_108_historical_treatment"
+      },
+      "kind": "csv_key"
+    }
+  },
+  "runner": {
+    "ended_at_utc": "2026-09-06T07:19:21.364919+00:00",
+    "exit_code": 0,
+    "started_at_utc": "2026-09-06T07:18:12.127459+00:00",
+    "stderr_file": "runner.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_file": "runner.stdout.log",
+    "stdout_sha256": "3e14c67ba59ee93d0f1c21d7be19f82993d19b76d2b612b0ad07949b0a46494e"
+  },
+  "schema_version": "yax-v3-empirical-run-receipt-v1",
+  "selfcheck": {
+    "ended_at_utc": "2026-09-06T07:19:22.203671+00:00",
+    "exit_code": 0,
+    "started_at_utc": "2026-09-06T07:19:21.368727+00:00",
+    "stderr_file": "selfcheck.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_file": "selfcheck.stdout.log",
+    "stdout_sha256": "ea451f977bdf59862286559694c934998246c96eb3c969ec1fccfd129c603aaf"
+  },
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "specification_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+  "started_at_utc": "2026-09-06T07:18:10.073520+00:00",
+  "status": "PASS_GATE1_CANONICAL_BASELINE_RECONSTRUCTION",
+  "wrapper_code_sha256": "80190d2f1bab7d3c1527524e773cbd3ab97e07a0711795b47937d60e2883d00d",
+  "wrapper_command_template": "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_baseline/run_gate1_baseline.py --repo-root <YAX_REPO_ROOT> --python-bin <YAX_PYTHON_BIN> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --historical-preperiod-cells <INPUT:historical_preperiod_cells> --output-dir <YAX_V3_RUN_ROOT>/gate1_baseline/results --audit-dir <YAX_V3_RUN_ROOT>/gate1_baseline/audit"
+}
