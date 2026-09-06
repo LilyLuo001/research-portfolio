@@ -194,8 +194,8 @@
     "subgroup_eligibility": {
       "rule": "none in the pooled baseline; family and other subgroup models require distinct specifications"
     },
-    "taxonomy": "IPUMS/Census 2018 four-digit detailed occupation codes"
-    ,"universe": {
+    "taxonomy": "IPUMS/Census 2018 four-digit detailed occupation codes",
+    "universe": {
       "content_support_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
       "membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
       "rule": "positive rebuilt preperiod employment stock in both age groups, finite strict Rule-A beta, and finite Webb software exposure"
@@ -216,6 +216,7 @@
     ]
   },
   "schema_version": "yax-canonical-spec-v1",
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
   "target": {
     "contrast": "coefficient on Q5-by-post relative to omitted Q1-by-post in the joint Q2-Q5 profile, conditional on occupation FE, month FE, and Webb-software-z-by-post",
     "temporal_weights": "grouped-binomial likelihood implied over the 113 included observed months; no equal-month post averaging is substituted"

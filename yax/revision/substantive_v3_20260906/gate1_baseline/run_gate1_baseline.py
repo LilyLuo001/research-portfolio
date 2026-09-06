@@ -28,7 +28,7 @@ from typing import Any, Iterable
 
 
 V3_REL = Path("yax/revision/substantive_v3_20260906")
-SPEC_REL = V3_REL / "contracts/specs/canonical_baseline_reproduction.json"
+SPEC_REL = V3_REL / "contracts/specs/canonical_baseline_reproduction_v2.json"
 SPEC_TOOL_REL = V3_REL / "scripts/spec_contract.py"
 R3_REL = Path("yax/revision/substantive_r3_20260905")
 RUNNER_REL = R3_REL / "rebuilt_baseline/run_rebuilt_corrected_baseline.py"
@@ -47,6 +47,7 @@ REPO_SOURCE_PATHS = {
 PRIVATE_SOURCE_ARGUMENTS = {
     "ipums_cps_extract_9_wide": "microdata",
     "ipums_cps_extract_11_march_basic_repair": "repair_microdata",
+    "historical_preperiod_cells": "historical_preperiod_cells",
 }
 DEPENDENCY_ROLE_PATHS = {
     "reference rebuilt fixed-membership vector for checkpoint comparison":
@@ -70,8 +71,8 @@ FLOAT_ABS_TOL = 1e-10
 FLOAT_REL_TOL = 1e-10
 CUT_ABS_TOL = 1e-12
 RECEIPT_SCHEMA = "yax-v3-empirical-run-receipt-v1"
-EXPECTED_SPEC_ID = "yaxspec_v1_a9f56e292c5964f6cf77447d845466859b04612e0be3e77492add3c00ed04e4b"
-EXPECTED_SPEC_SHA256 = "ff0cf7a49e85987f9c384debdf34b0d544a42e4900097ea8fafe327782d676cd"
+EXPECTED_SPEC_ID = "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3"
+EXPECTED_SPEC_SHA256 = "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
 EXPECTED_TRANSITIVE_LOCK_SHA256 = "b4fdbca971ff398d5563aa2972c2bda7d8eb8863351da81e71a41753b568197d"
 EXPECTED_SPEC_TOOL_SHA256 = "de2b607202e4b93b3d712e0f930f13d2da00cee7c4696ccf2fec9dc1e46cdcc8"
 EXPECTED_REFERENCE_RECEIPT_SHA256 = "e3379ea442fa36d92fbc652f7a4a28b66fdef12c3e6c21a2462d1a7765574d21"
@@ -927,7 +928,9 @@ def execute(args: argparse.Namespace) -> int:
             "code": code_auth,
             "environment": environment_auth,
             "declared_sources": source_auth,
-            "supplemental_command_inputs": {"historical_preperiod_cells": preperiod_auth},
+            "historical_preperiod_cross_authentication": {
+                "historical_preperiod_cells": preperiod_auth
+            },
             "dependencies": dependency_auth,
             "reference": {"status": "NOT_READ_BEFORE_FRESH_RUN"},
             "status": "PASS_ALL_PRE_RUN_AUTHENTICATION",

@@ -223,7 +223,7 @@
         "G03"
       ],
       "status": "VERIFIED",
-      "summary": "Implemented canonical JSON contracts with full SHA-256 specification and result identifiers, stamped a nonempty baseline reconstruction contract, and tested mutation and incompatibility failures for support, membership, scale-relevant construction fields, age, endpoint, objective, calendar, contrast, uncertainty, command, code, and environment content.",
+      "summary": "Implemented canonical JSON contracts with full SHA-256 specification and result identifiers. Before any V3 empirical run, a provenance audit found that the historical preperiod cell input named in the command was not separately enumerated in data.sources; the original stamp was preserved and a provenance-only v2 contract was issued. Mutation and incompatibility tests cover support, membership, scale-relevant construction fields, age, endpoint, objective, calendar, contrast, uncertainty, command, code, environment, and source content.",
       "evidence": [
         {
           "role": "code",
@@ -232,23 +232,29 @@
         },
         {
           "role": "specification",
-          "path": "contracts/specs/canonical_baseline_reproduction.json",
-          "sha256": "ff0cf7a49e85987f9c384debdf34b0d544a42e4900097ea8fafe327782d676cd"
+          "path": "contracts/specs/canonical_baseline_reproduction_v2.json",
+          "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+        },
+        {
+          "role": "source_evidence",
+          "path": "contracts/CONTRACT_AMENDMENT_01.md",
+          "sha256": "72610122dd86db11152cf06fbb79e0dca9106ec76ef02d3b90dd0f29ce059d44"
         },
         {
           "role": "run_receipt",
           "path": "runs/foundation/EXECUTION_RECEIPT.json",
-          "sha256": "476515bdb03e76c3f37f1afa0596c8eb0fe62b37c70acd851a0e3f99823f8062"
+          "sha256": "e636941670c3a11a7c512a4532ab088fab58829e8ecd6d3f3c1f5abe51656431"
         },
         {
           "role": "validation_report",
           "path": "gates/FOUNDATION_VALIDATION.json",
-          "sha256": "000d8a1532fedbcbe35277dc1092f3e8fca030f2454fd81c9b32f83684156f2f"
+          "sha256": "036d0537e0a5a9f989e1597fc77debcd1143d7c4aa6ad8e19387c5e761e7a479"
         }
       ],
       "response_locations": [
         "contracts/README.md",
-        "contracts/specs/canonical_baseline_reproduction.json",
+        "contracts/specs/canonical_baseline_reproduction_v2.json",
+        "contracts/CONTRACT_AMENDMENT_01.md",
         "gates/FOUNDATION_VALIDATION.json"
       ],
       "review": {
@@ -295,12 +301,12 @@
         {
           "role": "run_receipt",
           "path": "runs/foundation/EXECUTION_RECEIPT.json",
-          "sha256": "476515bdb03e76c3f37f1afa0596c8eb0fe62b37c70acd851a0e3f99823f8062"
+          "sha256": "e636941670c3a11a7c512a4532ab088fab58829e8ecd6d3f3c1f5abe51656431"
         },
         {
           "role": "validation_report",
           "path": "gates/FOUNDATION_VALIDATION.json",
-          "sha256": "000d8a1532fedbcbe35277dc1092f3e8fca030f2454fd81c9b32f83684156f2f"
+          "sha256": "036d0537e0a5a9f989e1597fc77debcd1143d7c4aa6ad8e19387c5e761e7a479"
         }
       ],
       "response_locations": [
@@ -348,12 +354,12 @@
         {
           "role": "run_receipt",
           "path": "runs/foundation/EXECUTION_RECEIPT.json",
-          "sha256": "476515bdb03e76c3f37f1afa0596c8eb0fe62b37c70acd851a0e3f99823f8062"
+          "sha256": "e636941670c3a11a7c512a4532ab088fab58829e8ecd6d3f3c1f5abe51656431"
         },
         {
           "role": "validation_report",
           "path": "gates/FOUNDATION_VALIDATION.json",
-          "sha256": "000d8a1532fedbcbe35277dc1092f3e8fca030f2454fd81c9b32f83684156f2f"
+          "sha256": "036d0537e0a5a9f989e1597fc77debcd1143d7c4aa6ad8e19387c5e761e7a479"
         }
       ],
       "response_locations": [

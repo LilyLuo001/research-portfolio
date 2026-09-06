@@ -5,26 +5,26 @@ post-outcome, referee-led diagnostic. It is neither preregistration nor a new
 confirmatory analysis.
 
 Canonical specification:
-`contracts/specs/canonical_baseline_reproduction.json`, identifier
-`yaxspec_v1_a9f56e292c5964f6cf77447d845466859b04612e0be3e77492add3c00ed04e4b`.
+`contracts/specs/canonical_baseline_reproduction_v2.json`, identifier
+`yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3`.
 The wrapper also pins its byte hash; `--spec` may point to an immutable copy but
 cannot substitute another validly restamped specification.
 
 The wrapper must validate that identifier and authenticate every source listed
 in the contract, the BASE-03 runner and its transitive imports, the R3
 environment lock and exact SCC runtime, and both declared reference
-dependencies. The command-only historical preperiod-cell input must match the
-hash authenticated by the declared first-access receipt. A nonempty result
+dependencies. The declared historical preperiod-cell input must match both its
+own source hash and the hash authenticated by the declared first-access
+receipt. A nonempty result
 directory is an unconditional stop. No estimator option is exposed by the
 wrapper.
 
-The historical preperiod-cell file is present in the contract's command but is
-not a separate row in `data.sources`. This wrapper does not conceal that schema
-limitation: it records the file as a supplemental command input and
-authenticates it transitively through the hash in the separately
-contract-authenticated first-access receipt. Calling T02 fully verified still
-requires the project-level ledger to acknowledge that distinction or an
-intentional contract restamp; this wrapper does not restamp it.
+The first stamped contract omitted that command input from `data.sources`.
+Before this V3 run, the omission was corrected through a new immutable,
+content-addressed contract. The original contract remains preserved, and
+`CONTRACT_AMENDMENT_01.md` records the exact change and chronology. The wrapper
+authenticates the file directly and cross-checks it against the separately
+contract-authenticated first-access receipt.
 
 The transitive-code lock is supplemental execution authentication, not an
 amendment to the scientific specification. Its own byte hash is pinned inside
@@ -38,7 +38,8 @@ Execution order is fixed:
 2. validate the canonical JSON and recompute its `spec_id`;
 3. authenticate the contract-hashed runner, its transitive imports, declared
    reference dependency files, the environment, all declared sources, and the
-   supplemental command input, without loading reference checkpoint values;
+   historical-input cross-authentication, without loading reference checkpoint
+   values;
 4. invoke the existing R3 BASE-03 runner exactly once;
 5. if and only if it exits zero, invoke the existing R3 self-check exactly once;
 6. if and only if that exits zero, authenticate the fresh output manifest and

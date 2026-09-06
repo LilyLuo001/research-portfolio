@@ -41,8 +41,8 @@ hash, so `--spec` permits an immutable copy but not a substitute restamped
 contract. The source contract intentionally names the R3 command template with
 placeholders. The V3 receipt records that template, source and dependency
 hashes, runtime versions, subprocess timestamps and exit codes, code hashes,
-fresh output hashes, and post-run checkpoint comparisons. The supplemental
-code lock binds the frozen engine and cell-building modules imported by the
+fresh output hashes, and post-run checkpoint comparisons. The transitive code
+lock binds the frozen engine and cell-building modules imported by the
 BASE-03 entry point to the source commit recorded by the byte-pinned,
 authenticated R3 reference. The receipt never records the resolved command
 line. It records a sanitized wrapper command template, Git state, and one
@@ -52,10 +52,11 @@ The wrapper intentionally does not mutate the project-level result ledger or
 run DAG. After a passing SCC execution, a separate reviewed transfer must copy
 the sanitized receipt to the contract-named repository location and register
 its result IDs and dependencies. Do not mark the baseline requirement verified
-until that integration step passes. The canonical contract also carries the
-historical preperiod cells in its command rather than as a standalone
-`data.sources` row; `PRE_RESULTS_SPEC.md` records the wrapper's transitive
-authentication and the remaining project-level adjudication.
+until that integration step passes. The corrected v2 canonical contract lists
+the historical preperiod cells as a standalone `data.sources` row. The wrapper
+authenticates that row directly and cross-checks it against the separately
+authenticated first-access receipt; `PRE_RESULTS_SPEC.md` records the
+provenance-only amendment.
 
 Tests exercise contract validation, immutable reference authentication,
 post-run comparison logic, output-directory refusal, runtime-lock parsing, and

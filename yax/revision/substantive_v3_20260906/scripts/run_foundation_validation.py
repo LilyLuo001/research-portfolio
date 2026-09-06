@@ -56,7 +56,7 @@ def main() -> int:
     script_paths = sorted((ROOT / "scripts").glob("*.py"))
     test_paths = sorted((ROOT / "tests").glob("test_*.py"))
     combined_hash = code_digest(script_paths + test_paths)
-    spec = ROOT / "contracts/specs/canonical_baseline_reproduction.json"
+    spec = ROOT / "contracts/specs/canonical_baseline_reproduction_v2.json"
     with spec.open("r", encoding="utf-8") as stream:
         spec_id = json.load(stream)["spec_id"]
     commands = [
