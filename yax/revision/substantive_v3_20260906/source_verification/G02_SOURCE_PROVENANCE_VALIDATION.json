@@ -1,0 +1,101 @@
+{
+  "checks": [
+    {
+      "check": "immutable_seed_hash",
+      "detail": "38de2d5b80e72c85f3dd06086a862cea63c521d511a5baacb7f6390f66eeeb59",
+      "passed": true
+    },
+    {
+      "check": "acceptance_crosswalk_hash",
+      "detail": "3598080b42a5063d04b196ba32485af00107fe064befbf1e468d0b1218752ac0",
+      "passed": true
+    },
+    {
+      "check": "document_hash:A",
+      "detail": "revision_inputs/referee_A_major_revision.md",
+      "passed": true
+    },
+    {
+      "check": "document_hash:B",
+      "detail": "revision_inputs/referee_B_rejection.md",
+      "passed": true
+    },
+    {
+      "check": "document_hash:C",
+      "detail": "revision_inputs/ASSISTANT_AUDIT_AND_FAILURE_MODES.md",
+      "passed": true
+    },
+    {
+      "check": "document_hash:EARLIER",
+      "detail": "revision_inputs/earlier_uploaded_referee.md",
+      "passed": true
+    },
+    {
+      "check": "document_hash:P0",
+      "detail": "revision_inputs/previous_execution_prompt.md",
+      "passed": true
+    },
+    {
+      "check": "document_hash:V3",
+      "detail": "revision_inputs/EXECUTION_PROMPT_V3.md",
+      "passed": true
+    },
+    {
+      "check": "all_seed_source_refs_registered_once",
+      "detail": "seed=76 registry_seed_refs=76",
+      "passed": true
+    },
+    {
+      "check": "v3_prompt_registered",
+      "detail": "V3:all",
+      "passed": true
+    },
+    {
+      "check": "resolved_span_hashes_recompute",
+      "detail": "all resolved spans authenticate",
+      "passed": true
+    },
+    {
+      "check": "unresolved_locators_are_explicit",
+      "detail": "all unresolved rows carry reasons",
+      "passed": true
+    },
+    {
+      "check": "seed_refs_crosslinked_to_acceptance_rows",
+      "detail": "all seed refs have acceptance atomic IDs",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "g02_completion_claim": false,
+  "g02_requirement_status_recommendation": "NOT_VERIFIED",
+  "limitations": [
+    "The acceptance crosswalk atomizes the seed's acceptance checks; it does not prove that every request sentence in A, B, C, P0, or the earlier referee has been independently extracted.",
+    "The supplied C document is explicitly a non-verbatim summary and lacks the numbered C locator system used by the seed.",
+    "A:minor front matter inherited is a synthetic inherited label with no matching request in the supplied A report.",
+    "No unresolved locator was assigned by topical similarity."
+  ],
+  "registered_documents": 6,
+  "resolved_seed_source_refs": 62,
+  "schema_version": "yax.source_provenance_validation.v1",
+  "scope": "source_ref provenance integrity, not exhaustive request extraction",
+  "seed_unique_source_refs": 76,
+  "status": "PASS",
+  "unresolved_refs": [
+    "A:minor front matter inherited",
+    "C:1",
+    "C:2.1",
+    "C:2.2",
+    "C:3.1",
+    "C:3.2",
+    "C:3.3",
+    "C:3.4",
+    "C:4",
+    "C:4.1",
+    "C:4.2",
+    "C:4.3",
+    "C:5",
+    "C:6"
+  ],
+  "unresolved_seed_source_refs": 14
+}
