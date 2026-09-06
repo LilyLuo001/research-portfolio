@@ -1,0 +1,29 @@
+{
+  "status": "IMPLEMENTED_UNRUN",
+  "summary": "Implemented and regression-tested content-addressed result and claim ledgers, unique canonical-target enforcement, source-value reconciliation, and manuscript-only patch rejection. No V3 empirical results or manuscript claims are populated yet.",
+  "evidence": [
+    {
+      "role": "code",
+      "path": "scripts/validate_claim_ledger.py",
+      "sha256": "430480379f1e84909bc6f697b8480bb8a1e99a9bffadd918c56a77ff4cd066ed"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/foundation/EXECUTION_RECEIPT.json",
+      "sha256": "476515bdb03e76c3f37f1afa0596c8eb0fe62b37c70acd851a0e3f99823f8062"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/FOUNDATION_VALIDATION.json",
+      "sha256": "000d8a1532fedbcbe35277dc1092f3e8fca030f2454fd81c9b32f83684156f2f"
+    }
+  ],
+  "response_locations": [
+    "contracts/result_ledger.json",
+    "contracts/claim_ledger.json",
+    "scripts/validate_claim_ledger.py"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

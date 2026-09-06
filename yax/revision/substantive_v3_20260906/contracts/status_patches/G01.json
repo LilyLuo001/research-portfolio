@@ -1,0 +1,27 @@
+{
+  "status": "VERIFIED",
+  "summary": "Inventoried and hash-checked the supplied V3 package, clean local repository and editable sources, authorized SCC inputs, and current access state; absent, restricted, stale, and verified objects are distinguished.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "source_inventory.json",
+      "sha256": "4caf9529e4edb6c5cc37c3cc6bdb5549c33c2415372cb74d4bd4a1c41edb0cfa"
+    },
+    {
+      "role": "verification_report",
+      "path": "reviews/SOURCE_INVENTORY_SELF_REVIEW.md",
+      "sha256": "dad2e8e8776a028ed2a255c7bda71ce3be104cfca4706e25c12c73af0b944718"
+    }
+  ],
+  "response_locations": [
+    "source_inventory.json",
+    "reviews/SOURCE_INVENTORY_SELF_REVIEW.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent self-review",
+    "report_path": "reviews/SOURCE_INVENTORY_SELF_REVIEW.md",
+    "independent": false
+  },
+  "blocker": null,
+  "approval": null
+}

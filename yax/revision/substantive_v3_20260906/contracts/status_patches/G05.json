@@ -1,0 +1,38 @@
+{
+  "status": "VERIFIED",
+  "summary": "Implemented canonical JSON contracts with full SHA-256 specification and result identifiers, stamped a nonempty baseline reconstruction contract, and tested mutation and incompatibility failures for support, membership, scale-relevant construction fields, age, endpoint, objective, calendar, contrast, uncertainty, command, code, and environment content.",
+  "evidence": [
+    {
+      "role": "code",
+      "path": "scripts/spec_contract.py",
+      "sha256": "de2b607202e4b93b3d712e0f930f13d2da00cee7c4696ccf2fec9dc1e46cdcc8"
+    },
+    {
+      "role": "specification",
+      "path": "contracts/specs/canonical_baseline_reproduction.json",
+      "sha256": "ff0cf7a49e85987f9c384debdf34b0d544a42e4900097ea8fafe327782d676cd"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/foundation/EXECUTION_RECEIPT.json",
+      "sha256": "476515bdb03e76c3f37f1afa0596c8eb0fe62b37c70acd851a0e3f99823f8062"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/FOUNDATION_VALIDATION.json",
+      "sha256": "000d8a1532fedbcbe35277dc1092f3e8fca030f2454fd81c9b32f83684156f2f"
+    }
+  ],
+  "response_locations": [
+    "contracts/README.md",
+    "contracts/specs/canonical_baseline_reproduction.json",
+    "gates/FOUNDATION_VALIDATION.json"
+  ],
+  "review": {
+    "reviewer": "execution-agent self-review informed by a separate-agent contract-design challenge",
+    "report_path": "reviews/FOUNDATION_ENGINEERING_SELF_REVIEW.md",
+    "independent": false
+  },
+  "blocker": null,
+  "approval": null
+}

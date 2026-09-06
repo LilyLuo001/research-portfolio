@@ -1,0 +1,28 @@
+{
+  "status": "IMPLEMENTED_UNRUN",
+  "summary": "Implemented and regression-tested dependency fingerprints, cycle/missing-dependency checks, transitive stale-input detection, retained failure logs, and sibling-branch continuation. The real V3 run DAG is still empty, so operational use is not yet verified.",
+  "evidence": [
+    {
+      "role": "code",
+      "path": "scripts/dependency_guard.py",
+      "sha256": "86d6f715950561678a47bec02dda458abf1fcc3e1aac184072c452cb9c891150"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/foundation/EXECUTION_RECEIPT.json",
+      "sha256": "476515bdb03e76c3f37f1afa0596c8eb0fe62b37c70acd851a0e3f99823f8062"
+    },
+    {
+      "role": "validation_report",
+      "path": "gates/FOUNDATION_VALIDATION.json",
+      "sha256": "000d8a1532fedbcbe35277dc1092f3e8fca030f2454fd81c9b32f83684156f2f"
+    }
+  ],
+  "response_locations": [
+    "contracts/run_manifest.json",
+    "scripts/dependency_guard.py"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

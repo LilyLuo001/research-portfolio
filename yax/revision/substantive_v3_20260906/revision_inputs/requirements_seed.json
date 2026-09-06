@@ -1,0 +1,3446 @@
+{
+  "schema_version": "1.0",
+  "title": "V3 minimum requirement ledger",
+  "created_on": "2026-09-06",
+  "notice": "All statuses deliberately start NOT_STARTED. This file is a task specification, not evidence of completed empirical work.",
+  "source_aliases": {
+    "A": "latest major-revision referee",
+    "B": "latest rejection referee",
+    "C": "preceding assistant audit plus explicitly labeled new methodological checks",
+    "P0": "previous execution prompt"
+  },
+  "requirements": [
+    {
+      "id": "G01",
+      "title": "Inventory source versions, real code, inputs, and access",
+      "source_refs": [
+        "P0:1",
+        "P0:3",
+        "B:reproducibility",
+        "C:execution audit"
+      ],
+      "prompt_section": "1",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Record verified filenames and hashes",
+        "Separate absent and inaccessible inputs",
+        "Do not infer code or data from PDF paths"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G02",
+      "title": "Extract every source request and retain inherited tasks",
+      "source_refs": [
+        "A:all",
+        "B:all",
+        "C:all",
+        "P0:all"
+      ],
+      "prompt_section": "4.1",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Map every numbered and unnumbered request",
+        "Split compound requests into child rows",
+        "Keep inherited unresolved tasks and explicit justified retirements"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G03",
+      "title": "Complete and review the understanding contract",
+      "source_refs": [
+        "C:root-cause diagnosis",
+        "P0:2"
+      ],
+      "prompt_section": "3",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Answer all fourteen conceptual checks",
+        "Resolve target and universe ambiguities",
+        "Identify self-review versus independent review"
+      ],
+      "depends_on": [
+        "G01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G04",
+      "title": "Investigate prior execution failure causes with code evidence",
+      "source_refs": [
+        "C:execution audit",
+        "P0:3"
+      ],
+      "prompt_section": "2",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Separate observed failures from inferred and verified causes",
+        "Inspect stale-cache, solver, local-label and source-selection evidence",
+        "Do not invent the prior agents internal reasoning"
+      ],
+      "depends_on": [
+        "G01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G05",
+      "title": "Implement immutable canonical specification IDs",
+      "source_refs": [
+        "P0:3",
+        "P0:4",
+        "B:specific exposure reconstruction",
+        "C:3.3"
+      ],
+      "prompt_section": "4.2",
+      "kind": "engineering",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Hash support labels scales age universe objective calendar contrast and uncertainty target",
+        "Fail on incompatible module inputs",
+        "Recomputed groups have distinct IDs"
+      ],
+      "depends_on": [
+        "G03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "code",
+        "run_receipt",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G06",
+      "title": "Implement dependency-aware runs, caches and failure handling",
+      "source_refs": [
+        "P0:3",
+        "P0:14",
+        "C:execution audit"
+      ],
+      "prompt_section": "4.3",
+      "kind": "engineering",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Changes invalidate all dependent artifacts",
+        "Failed runs cannot silently pass gates",
+        "Independent work continues when other branches are blocked"
+      ],
+      "depends_on": [
+        "G05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "code",
+        "run_receipt",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G07",
+      "title": "Create a canonical numerical and claim ledger",
+      "source_refs": [
+        "P0:4",
+        "P0:12",
+        "B:reproducibility",
+        "C:5"
+      ],
+      "prompt_section": "4.2",
+      "kind": "engineering",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Every numerical claim has a result ID",
+        "Repeated target intervals use declared canonical output",
+        "No manuscript-only numerical patches"
+      ],
+      "depends_on": [
+        "G05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "code",
+        "run_receipt",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G08",
+      "title": "Make blocked-work claims evidence based",
+      "source_refs": [
+        "P0:3",
+        "C:3.4",
+        "A:3.11"
+      ],
+      "prompt_section": "4.1",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Check official availability before declaring missing data",
+        "Record exact error or access obstacle",
+        "Provide resumable next step and claim consequences"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G09",
+      "title": "Preserve context across stages and agents",
+      "source_refs": [
+        "C:failure prevention",
+        "P0:3"
+      ],
+      "prompt_section": "4.3",
+      "kind": "engineering",
+      "priority": "required",
+      "acceptance_checks": [
+        "Update STATE.md after gates",
+        "Handoffs identify authoritative IDs and dependencies",
+        "No reconstructed conventions from memory"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "code",
+        "run_receipt",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "G10",
+      "title": "Set plan and resource rules without outcome selection",
+      "source_refs": [
+        "P0:2",
+        "A:3.7",
+        "C:6"
+      ],
+      "prompt_section": "4.3",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Record outcome-informed chronology",
+        "Choose accuracy and compute rules before new outputs",
+        "Do not present revision plan as preregistration"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "T01",
+      "title": "Define the mean-ratio estimand and observed estimating data",
+      "source_refs": [
+        "B:specific dependent variable",
+        "A:minor9",
+        "P0:4"
+      ],
+      "prompt_section": "6.1",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Correct equations and table notes",
+        "No observed log ratio in zero cells",
+        "No individual-probability or hiring interpretation"
+      ],
+      "depends_on": [
+        "G03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "T02",
+      "title": "Reproduce the current canonical baseline and upstream construction",
+      "source_refs": [
+        "P0:4",
+        "C:2.1",
+        "B:5"
+      ],
+      "prompt_section": "6.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Check current coefficient as diagnostic not forced target",
+        "Rebuild every affected preperiod object",
+        "Verify construction age universe and nine historical assignment changes"
+      ],
+      "depends_on": [
+        "G05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "T03",
+      "title": "Reconcile calendar weights route counts and zero cells",
+      "source_refs": [
+        "P0:4",
+        "A:minor1",
+        "B:5"
+      ],
+      "prompt_section": "6.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Verify March repairs and missing/transition months",
+        "Apply weights once and conserve stock",
+        "Separate integer rows from fractional contributions and sampled people"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "T04",
+      "title": "Verify data vintages and 2025-2026 production changes",
+      "source_refs": [
+        "P0:4",
+        "A:3.7",
+        "C:1"
+      ],
+      "prompt_section": "6.1",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Inspect actual extract receipts and corrected files",
+        "Verify official production and identifier changes",
+        "No invented age-occupation counterfactual weights"
+      ],
+      "depends_on": [
+        "G01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "T05",
+      "title": "Show through-2024 and full-window targets without significance selection",
+      "source_refs": [
+        "A:3.7",
+        "B:4",
+        "P0:4",
+        "C:4"
+      ],
+      "prompt_section": "5",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Hold preperiod labels fixed",
+        "Show both core structures and paired changes for both windows",
+        "Explain primary-emphasis decision by comparability not favorable estimates"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "N01",
+      "title": "Audit boundary and separated groups in all central models",
+      "source_refs": [
+        "B:5",
+        "C:4.2",
+        "P0:7"
+      ],
+      "prompt_section": "6.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Report family-month zero-age counts",
+        "Distinguish finite cell contributions from finite optimum",
+        "Establish target estimability"
+      ],
+      "depends_on": [
+        "T03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "N02",
+      "title": "Diagnose rank, graph connectivity and numerical conditioning",
+      "source_refs": [
+        "B:5",
+        "C:4.2",
+        "P0:7"
+      ],
+      "prompt_section": "6.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Check nuisance normalizations and rank",
+        "Inspect target profile and gradients",
+        "Classify nonconvergence cause"
+      ],
+      "depends_on": [
+        "N01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "N03",
+      "title": "Benchmark same-objective solvers and boundary handling",
+      "source_refs": [
+        "B:5",
+        "C:4.2",
+        "P0:7"
+      ],
+      "prompt_section": "6.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Use valid profiling or a second solver",
+        "Compare fitted means and target at stated tolerances",
+        "No hidden penalty clipping pseudocount or selective deletion"
+      ],
+      "depends_on": [
+        "N02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "N04",
+      "title": "Complete coding-stable post-2020 and feasible seasonality fits",
+      "source_refs": [
+        "B:5",
+        "C:4.2",
+        "P0:8"
+      ],
+      "prompt_section": "6.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Reattempt after diagnosis",
+        "Declare any changed target separately",
+        "Demonstrated nonexistence is distinct from one solver failure"
+      ],
+      "depends_on": [
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S01",
+      "title": "Produce the full family-by-quintile matrix",
+      "source_refs": [
+        "A:3.1",
+        "B:3",
+        "C:4.1",
+        "P0:5"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Show every family-quintile count and preperiod stock share",
+        "Label denominators",
+        "Promote readable matrix to main text"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S02",
+      "title": "Explain direct and indirect comparisons and common-profile restrictions",
+      "source_refs": [
+        "A:3.1",
+        "B:3",
+        "C:2.2",
+        "P0:5"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Supply graph or equivalent connection table",
+        "Name spanning families and occupations",
+        "Do not treat connected contrast as average of direct tail effects"
+      ],
+      "depends_on": [
+        "S01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S03",
+      "title": "Reestimate direct-tail and supported heterogeneous pairwise contrasts",
+      "source_refs": [
+        "B:3",
+        "A:3.1",
+        "P0:5"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Show supported family-specific contrasts without full common profile",
+        "Specify aggregation and population",
+        "No fabricated missing family tails"
+      ],
+      "depends_on": [
+        "N03",
+        "S02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S04",
+      "title": "Update continuous companion and information diagnostics",
+      "source_refs": [
+        "A:3.1",
+        "B:3",
+        "C:2.2",
+        "P0:5"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "State raw and within-family SD units",
+        "Distinguish fixed and model-fitted curvature",
+        "Reconcile information denominators and effective counts"
+      ],
+      "depends_on": [
+        "S02",
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S05",
+      "title": "Test support on the broader beta-valid universe without Webb",
+      "source_refs": [
+        "B:3",
+        "P0:12"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "First extend fixed raw cutoffs to isolate added support",
+        "Separate new-cutoff sensitivity",
+        "Compare direct-tail support before claiming intrinsic limitation"
+      ],
+      "depends_on": [
+        "S01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S06",
+      "title": "Update family and occupation influence and substantive paths",
+      "source_refs": [
+        "A:3.1",
+        "A:minor4",
+        "B:3",
+        "C:4.1",
+        "P0:5"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Use current contract not historical coefficients",
+        "Name economically important between-family comparisons",
+        "Readable paths with raw series retained"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "S07",
+      "title": "Report full profile, actual joint tests and simultaneous uncertainty",
+      "source_refs": [
+        "B:3",
+        "C:1",
+        "P0:5"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Display test statistic degrees of freedom and p-values",
+        "Retain covariance and actual multipliers",
+        "No replacement by one tail coefficient or marginal stars"
+      ],
+      "depends_on": [
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D01",
+      "title": "Compute exact aggregate young and older log-stock components",
+      "source_refs": [
+        "A:3.3",
+        "B:2",
+        "B:6",
+        "C:4.1"
+      ],
+      "prompt_section": "8.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Common support temporal weights and positive aggregates",
+        "Verify D_ratio equals D_young minus D_older",
+        "Label difference from nonlinear headline"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D02",
+      "title": "Adjudicate separate age-regression decomposition",
+      "source_refs": [
+        "A:3.3",
+        "B:2",
+        "B:6"
+      ],
+      "prompt_section": "8.1",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "State companion nuisance structures",
+        "Do not retain absorbing occupation-month effects in single-age contrast",
+        "Prove any claimed additivity rather than forcing coefficient split"
+      ],
+      "depends_on": [
+        "D01",
+        "T01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D03",
+      "title": "Decompose changing family weights and within-family ratios",
+      "source_refs": [
+        "B:2",
+        "A:3.1",
+        "C:4.1"
+      ],
+      "prompt_section": "8.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Use explicit exact symmetric accounting",
+        "Label level versus log units",
+        "Report numerical closure and paired uncertainty when justified"
+      ],
+      "depends_on": [
+        "D01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D04",
+      "title": "Handle zero denominators in accounting without deleting evidence",
+      "source_refs": [
+        "B:2",
+        "B:5"
+      ],
+      "prompt_section": "8.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Audit all component denominators",
+        "Account for zero older positive young groups explicitly",
+        "No arbitrary zero ratios or pseudocounts"
+      ],
+      "depends_on": [
+        "D03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D05",
+      "title": "Update older-band and fixed-age-composition comparisons",
+      "source_refs": [
+        "B:6",
+        "A:3.3",
+        "P0:10",
+        "C:4"
+      ],
+      "prompt_section": "8.3",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Use current groups and covariance",
+        "Define fixed-age standardization and population denominator",
+        "Do not call older workers untreated"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D06",
+      "title": "Verify enrollment universe and estimate valid restrictions",
+      "source_refs": [
+        "A:3.6",
+        "P0:10"
+      ],
+      "prompt_section": "8.3",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Audit SCHLCOLL in actual monthly files",
+        "Not-in-universe is never nonenrolled",
+        "Compare restricted young and common-eligible older samples with appropriate baselines"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "D07",
+      "title": "Show education enrollment and cohort composition over time",
+      "source_refs": [
+        "A:3.6",
+        "B:6",
+        "P0:6"
+      ],
+      "prompt_section": "8.3",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Separate employed occupation profiles from national population supply",
+        "No exposure imputation for nonworkers",
+        "Discuss selection from contemporaneous enrollment restriction"
+      ],
+      "depends_on": [
+        "D06"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y01",
+      "title": "Reconcile static and dynamic quantities with a common functional",
+      "source_refs": [
+        "B:4",
+        "C:3.1",
+        "P0:8"
+      ],
+      "prompt_section": "9.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Report static reference-post and post-minus-pre functionals together",
+        "Use fixed explicit time weights and common support",
+        "Report their paired conditioning movements"
+      ],
+      "depends_on": [
+        "N03",
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y02",
+      "title": "Verify nested-model moment preservation and nonlinear projection",
+      "source_refs": [
+        "B:4",
+        "C:3.1",
+        "New methodological audit"
+      ],
+      "prompt_section": "9.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Establish design nesting or identify its failure",
+        "Test X_static transpose times dynamic residual moment",
+        "Project fitted dynamic stocks back to static model at declared tolerance"
+      ],
+      "depends_on": [
+        "Y01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y03",
+      "title": "Verify reference invariance and full covariance transformations",
+      "source_refs": [
+        "B:4",
+        "C:3.1"
+      ],
+      "prompt_section": "9.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Equivalent joint null and common contrast invariant to rebasing",
+        "Account for two-month reference and partial endpoint quarters",
+        "No covariance submatrix or pointwise-only shortcut"
+      ],
+      "depends_on": [
+        "Y01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y04",
+      "title": "Run all requested pandemic and nonpandemic preperiod tests",
+      "source_refs": [
+        "A:3.2",
+        "B:4"
+      ],
+      "prompt_section": "9.2",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Report 2017-2019 2021-2022Q3 and excluding 2020Q2-Q4 plus full window",
+        "Separate within-block equality from reference equality",
+        "Retain all results with rank and uncertainty"
+      ],
+      "depends_on": [
+        "Y01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y05",
+      "title": "Identify quarters and restrictions driving rejection without pretest selection",
+      "source_refs": [
+        "A:3.2",
+        "B:4"
+      ],
+      "prompt_section": "9.2",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Use valid simultaneous or leave-block diagnostics",
+        "No fictional additive contributions to correlated Wald statistic",
+        "No assertion pandemic must explain rejection"
+      ],
+      "depends_on": [
+        "Y04"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y06",
+      "title": "Derive and validate the HonestDiD target and restrictions",
+      "source_refs": [
+        "A:3.2",
+        "B:4",
+        "C:3.1",
+        "P0:8"
+      ],
+      "prompt_section": "9.3",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Correct bias-process smoothness and relative-change definitions",
+        "No static SE or negative-preweights fed blindly to post l_vec",
+        "Publish exact vector covariance weights parameters and official package receipts"
+      ],
+      "depends_on": [
+        "Y03",
+        "I06"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y07",
+      "title": "Assess nonpandemic sensitivity without compressing calendar gaps",
+      "source_refs": [
+        "A:3.2",
+        "B:4",
+        "C:3.1"
+      ],
+      "prompt_section": "9.3",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Retain full-window result",
+        "Use justified contiguous window or valid elapsed-time restrictions",
+        "No exclusion chosen to obtain positive breakdown value"
+      ],
+      "depends_on": [
+        "Y06"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y08",
+      "title": "Display complete onset and feasible seasonality results",
+      "source_refs": [
+        "C:1",
+        "C:5",
+        "P0:8"
+      ],
+      "prompt_section": "9.2",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Numerical onset grid Nov2022-Jun2023 not prose claim",
+        "Exposure-season and matched-month check actually shown",
+        "Declare changed window and target"
+      ],
+      "depends_on": [
+        "N04"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "Y09",
+      "title": "Report endpoint and era magnitudes with paired inference consistently",
+      "source_refs": [
+        "A:3.7",
+        "C:4",
+        "P0:8"
+      ],
+      "prompt_section": "5",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Compare magnitudes rather than significance statuses",
+        "Show shutdown-adjacent exclusions and early-late eras",
+        "Do not interpret unweighted counts as old-vintage weights"
+      ],
+      "depends_on": [
+        "T05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I01",
+      "title": "State stochastic targets and preserve paired covariance",
+      "source_refs": [
+        "A:3.4",
+        "B:5",
+        "C:3.2",
+        "P0:7"
+      ],
+      "prompt_section": "10",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Separate occupation family household and construction uncertainty",
+        "Same multipliers for paired observations",
+        "No mechanical addition of overlapping variances"
+      ],
+      "depends_on": [
+        "G03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "I02",
+      "title": "Establish the true target for each simulation DGP",
+      "source_refs": [
+        "A:3.4",
+        "B:5",
+        "C:3.2",
+        "New methodological audit"
+      ],
+      "prompt_section": "10.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Define population or pseudo-true pooled and conditioned coefficients and difference",
+        "Structural AI zero is not assumed projection zero",
+        "Separate size distortion bias confounding and estimand mismatch"
+      ],
+      "depends_on": [
+        "N03",
+        "I01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I03",
+      "title": "Calibrate empirical and adverse designs with factor ablations",
+      "source_refs": [
+        "A:3.4",
+        "B:5",
+        "C:3.2"
+      ],
+      "prompt_section": "10.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Document estimated dependence and its uncertainty",
+        "Reproduce old adverse design",
+        "Isolate sparsity family shocks serial dependence and concentration"
+      ],
+      "depends_on": [
+        "I02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I04",
+      "title": "Compare actual inference methods and paired movement in simulations",
+      "source_refs": [
+        "A:3.4",
+        "B:5",
+        "C:3.2",
+        "P0:7"
+      ],
+      "prompt_section": "10.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Evaluate occupation wild family wild and valid full-refit benchmark",
+        "Show coverage bias empirical SD lengths and failures",
+        "No normal-interval result relabeled wild-score validation"
+      ],
+      "depends_on": [
+        "I03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I05",
+      "title": "Control and report simulation and bootstrap Monte Carlo error",
+      "source_refs": [
+        "A:3.4",
+        "B:5",
+        "C:3.2"
+      ],
+      "prompt_section": "10.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Declare accuracy target and expansion rule",
+        "Report inner and outer replication counts and Monte Carlo uncertainty",
+        "No significance selection of procedures or failed-draw deletion"
+      ],
+      "depends_on": [
+        "I04"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I06",
+      "title": "Resolve implications of coverage results for reported inference",
+      "source_refs": [
+        "A:3.4",
+        "B:5",
+        "C:3.2"
+      ],
+      "prompt_section": "10.2",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Validate any calibrated or test-inverted interval",
+        "No ad hoc SE inflation from one adverse DGP",
+        "Demote sharp claims if preferred inference remains unvalidated"
+      ],
+      "depends_on": [
+        "I05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I07",
+      "title": "Run household refits for the same family-month target",
+      "source_refs": [
+        "B:5",
+        "C:3.2",
+        "P0:7"
+      ],
+      "prompt_section": "10.3",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Preserve household months and routed descendants",
+        "Same central target rather than family-post substitute",
+        "Assess interval endpoint stability beyond 199-draw pilot"
+      ],
+      "depends_on": [
+        "N03",
+        "I01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I08",
+      "title": "Audit generated treatment and shortfall sampling uncertainty",
+      "source_refs": [
+        "P0:7",
+        "P0:6",
+        "C:3.3"
+      ],
+      "prompt_section": "10.3",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Explicitly distinguish fixed-label and regenerated-input targets",
+        "Run feasible full-pipeline resampling or retain exact blocker",
+        "No implication fixed inputs include first-stage uncertainty"
+      ],
+      "depends_on": [
+        "I07"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "I09",
+      "title": "Verify CPS sampling identifiers and available design variables",
+      "source_refs": [
+        "B:5",
+        "P0:7",
+        "C:3.2"
+      ],
+      "prompt_section": "10.3",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Check actual IDs and revisions",
+        "Do not treat MIS categories as independent PSUs",
+        "Do not use ASEC replicate weights for Basic Monthly"
+      ],
+      "depends_on": [
+        "G01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "I10",
+      "title": "Validate HAC overlap and joint cross-model covariance",
+      "source_refs": [
+        "P0:7",
+        "C:1"
+      ],
+      "prompt_section": "10.4",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Include lagged within-occupation subtraction",
+        "Use elapsed month lags and consistent units",
+        "Report rank definiteness and no undisclosed matrix clipping"
+      ],
+      "depends_on": [
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C01",
+      "title": "Use canonical assignments in primary characteristic modules",
+      "source_refs": [
+        "B:2",
+        "B:specific reconstruction",
+        "C:3.3",
+        "P0:6"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Retire unnecessary support-specific requintiling from primary comparisons",
+        "Separate maximal and cumulative support",
+        "Reconcile 408 455 and 341 conventions"
+      ],
+      "depends_on": [
+        "G05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C02",
+      "title": "Estimate the four matched computer-family models",
+      "source_refs": [
+        "B:2",
+        "A:3.5",
+        "C:3.3"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Baseline computer-only family-month-only and combined on identical support",
+        "Same exposure labels Webb scale and uncertainty target",
+        "Report component coefficients paired changes and information"
+      ],
+      "depends_on": [
+        "C01",
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C03",
+      "title": "Report computer coefficient covariance and formal collinearity diagnostics",
+      "source_refs": [
+        "A:3.5",
+        "A:minor5",
+        "B:2",
+        "C:3.3"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "State computer coefficient in raw and standardized units",
+        "Report covariance and SE",
+        "Do not call variance inflation a signed mechanism"
+      ],
+      "depends_on": [
+        "C02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C04",
+      "title": "Adjudicate and implement valid omitted-confounder sensitivity",
+      "source_refs": [
+        "A:3.5",
+        "B:2"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Check exact method assumptions and target",
+        "No nonlinear pseudo-R2 inserted into linear formula",
+        "Any companion estimand and family-common versus within-family confound are explicit"
+      ],
+      "depends_on": [
+        "C03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C05",
+      "title": "Complete pandemic-shortfall definitions and error investigation",
+      "source_refs": [
+        "P0:6",
+        "C:3.3"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Define total and young-relative construction",
+        "Use independent-source or household-split diagnostic and/or generated-input refit",
+        "Report regression-to-mean and shared-error limits"
+      ],
+      "depends_on": [
+        "I08",
+        "C01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C06",
+      "title": "Retain informative characteristic and education results coherently",
+      "source_refs": [
+        "P0:6",
+        "C:3.3",
+        "A:3.6"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "One coherent smaller-support block",
+        "Show support-only versus conditioning change",
+        "No horse-race survivor called purified AI"
+      ],
+      "depends_on": [
+        "C01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "C07",
+      "title": "Label and verify the industry-cell objective and comparator",
+      "source_refs": [
+        "A:minor3",
+        "B:2",
+        "P0:6",
+        "C:1"
+      ],
+      "prompt_section": "11",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Use actual microcells not dominant industry",
+        "Label industry-cell baseline as different objective",
+        "Verify nuisance lower-order terms and paired comparison"
+      ],
+      "depends_on": [
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "W01",
+      "title": "Re-run historical mapping service and influence diagnostics",
+      "source_refs": [
+        "P0:4",
+        "P0:11",
+        "C:5",
+        "A:3.8"
+      ],
+      "prompt_section": "12",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "No historical contract supports current claims",
+        "Downstream rebuild invalidates cached claims",
+        "Keep genuine history separate"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "W02",
+      "title": "Estimate rebuilt-contract odds-tilt sensitivity",
+      "source_refs": [
+        "A:3.8",
+        "C:5",
+        "P0:11"
+      ],
+      "prompt_section": "12",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Define odds rule eligible stock and grid",
+        "No-tilt reproduces canonical data and coefficient",
+        "Separate fixed-label from rebuilt-treatment analysis"
+      ],
+      "depends_on": [
+        "W01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "W03",
+      "title": "Assess joint feasible coefficient bounds or adverse envelopes",
+      "source_refs": [
+        "A:3.8",
+        "B:5"
+      ],
+      "prompt_section": "12",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Joint source-age-month mass and route constraints",
+        "Do not combine independent marginal extrema",
+        "Label local searches and grids as envelopes not sharp global bounds"
+      ],
+      "depends_on": [
+        "W02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "W04",
+      "title": "Verify stable-taxonomy and unsplit-support alternatives",
+      "source_refs": [
+        "B:5",
+        "P0:11",
+        "C:4.2"
+      ],
+      "prompt_section": "12",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "State changed populations and labels",
+        "No adjacent-vintage pseudo-validation",
+        "Use successful post-2020 test or exact numerical blocker"
+      ],
+      "depends_on": [
+        "N04",
+        "W01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "W05",
+      "title": "Specify AIOE units and implementation attribution",
+      "source_refs": [
+        "P0:11",
+        "C:5",
+        "B:1"
+      ],
+      "prompt_section": "12",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "State units plus illustrative increment",
+        "Verify same-support score repair versus population expansion",
+        "No attributed published error without inspected code"
+      ],
+      "depends_on": [
+        "W01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "W06",
+      "title": "Preserve valid lambda primitive and architecture diagnostics",
+      "source_refs": [
+        "P0:11",
+        "C:5"
+      ],
+      "prompt_section": "12",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Lambda .5 raw identity and full baseline identity",
+        "D/S scales and covariance visible",
+        "Paired components support and memberships explicit"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F01",
+      "title": "Show baseline flow probabilities and linking by age exposure and period",
+      "source_refs": [
+        "A:3.9",
+        "B:6",
+        "P0:10"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Weighted rates counts and eligibility",
+        "Separate rotation ineligibility from attrition",
+        "Report actual observable risk sets"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F02",
+      "title": "Compare linked and eligible unlinked composition",
+      "source_refs": [
+        "A:3.9",
+        "B:6"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Use eligible-origin weights and observable characteristics",
+        "No clustering-as-selection-correction claim",
+        "Report exposure-period imbalance"
+      ],
+      "depends_on": [
+        "F01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F03",
+      "title": "Analyze selective-linkage bias and supported sensitivity or bounds",
+      "source_refs": [
+        "A:3.9",
+        "B:6"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "No assumed attenuation sign",
+        "Propensity or missing-outcome bounds use explicit assumptions",
+        "Allow unbounded log contrasts and no unjustified Lee trimming"
+      ],
+      "depends_on": [
+        "F02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F04",
+      "title": "Estimate destination-specific entry probabilities on one risk set",
+      "source_refs": [
+        "B:6",
+        "P0:10"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Common nonemployment denominator",
+        "Destinations include outside support and remaining nonemployed",
+        "Destination probabilities reconcile with entry; no imputed origin occupation"
+      ],
+      "depends_on": [
+        "F01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F05",
+      "title": "Specify annual-link onset and coding-transition rules",
+      "source_refs": [
+        "C:3.4",
+        "B:6",
+        "P0:10"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Handle links spanning January2023 and taxonomy changes",
+        "State origin versus destination age",
+        "Annual endpoints not sums of monthly flows"
+      ],
+      "depends_on": [
+        "F01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F06",
+      "title": "Audit flow weights and valid clustering for all risk sets",
+      "source_refs": [
+        "B:6",
+        "P0:10",
+        "C:3.4"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Official weights appropriate to link horizon",
+        "No destination-cluster assignment for unknown failed entries",
+        "Preserve person household and route dependence"
+      ],
+      "depends_on": [
+        "F04",
+        "I09"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F07",
+      "title": "Resolve post-March2023 earnings coverage using official data definitions",
+      "source_refs": [
+        "C:3.4",
+        "B:6",
+        "P0:10"
+      ],
+      "prompt_section": "13",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Check EARNWEEK2 and authorized replacement extract",
+        "Address rounding topcodes and outgoing-rotation weights",
+        "No three-post-month estimate passed as full-window evidence"
+      ],
+      "depends_on": [
+        "G08"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "F08",
+      "title": "Keep ancillary outcomes and mechanism narrative proportionate",
+      "source_refs": [
+        "A:3.9",
+        "B:6",
+        "P0:10"
+      ],
+      "prompt_section": "13",
+      "kind": "editorial",
+      "priority": "required",
+      "acceptance_checks": [
+        "State hours earnings and selection units",
+        "No occupation imputation for nonworkers",
+        "Shorten non-discriminating mechanism discussion; retain justified no-calibration explanation"
+      ],
+      "depends_on": [
+        "F03",
+        "F07"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "B01",
+      "title": "Identify the exact BCC public CPS and ACS benchmark",
+      "source_refs": [
+        "A:3.10",
+        "B:1",
+        "C:4.3",
+        "P0:9"
+      ],
+      "prompt_section": "14.1",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Inspect the specified version and public evidence",
+        "Distinguish plotted aggregate target from regression",
+        "Record sample map grouping objective and inference"
+      ],
+      "depends_on": [
+        "G01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "B02",
+      "title": "Verify public code memberships and access limits",
+      "source_refs": [
+        "A:3.10",
+        "B:1",
+        "C:4.3"
+      ],
+      "prompt_section": "14.1",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Search real public artifacts",
+        "No exact replication claim without assignments",
+        "No external contact or paid access without authorization"
+      ],
+      "depends_on": [
+        "B01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "B03",
+      "title": "Reproduce public benchmark before adding family conditioning",
+      "source_refs": [
+        "A:3.10",
+        "B:1",
+        "C:4.3"
+      ],
+      "prompt_section": "14.1",
+      "kind": "analysis",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Benchmark reproduction or precise verified gap",
+        "Then same-target family-post and family-month extension",
+        "Do not transfer Q5-Q1 paired rejection to different grouping"
+      ],
+      "depends_on": [
+        "B02",
+        "N03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "B04",
+      "title": "Align feasible benchmark endpoints and employment populations",
+      "source_refs": [
+        "A:3.10",
+        "B:1",
+        "C:4.3",
+        "P0:9"
+      ],
+      "prompt_section": "14.1",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Show common endpoint and appropriate wage-salary/full-time sample",
+        "Keep unavailable firm controls distinct",
+        "Avoid adding unrequested Webb control to exact replication without labeling"
+      ],
+      "depends_on": [
+        "B03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "B05",
+      "title": "Assess annual ACS feasibility with current release and comparability rules",
+      "source_refs": [
+        "A:3.11 ACS",
+        "B:1"
+      ],
+      "prompt_section": "14.2",
+      "kind": "feasibility",
+      "priority": "required",
+      "acceptance_checks": [
+        "Verify latest one-year PUMS actually available",
+        "No overlapping five-year annual substitution",
+        "Address 2020 experimental data and 2024 weighting changes"
+      ],
+      "depends_on": [
+        "B01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "B06",
+      "title": "Execute focused ACS and aligned annual CPS extension when feasible",
+      "source_refs": [
+        "A:3.11 ACS",
+        "B:1",
+        "B:3"
+      ],
+      "prompt_section": "14.2",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Annual target and transition treatment explicit",
+        "Compare sampling precision and actual support graph separately",
+        "Use validated official replicate method or record evidenced blocker"
+      ],
+      "depends_on": [
+        "B05",
+        "S05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "B07",
+      "title": "Assess adoption data sources definitions and residual variation",
+      "source_refs": [
+        "A:3.11 adoption",
+        "A:minor8",
+        "P0:13"
+      ],
+      "prompt_section": "14.3",
+      "kind": "feasibility",
+      "priority": "required",
+      "acceptance_checks": [
+        "Census not BLS for BTOS",
+        "Verify RPS granularity and Nov2025 question change",
+        "Check collinearity and map exposure-adoption interaction target"
+      ],
+      "depends_on": [
+        "B01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "B08",
+      "title": "Execute or explicitly adjudicate one focused adoption extension",
+      "source_refs": [
+        "A:3.11 adoption",
+        "P0:13"
+      ],
+      "prompt_section": "14.3",
+      "kind": "analysis",
+      "priority": "extension",
+      "acceptance_checks": [
+        "One supported descriptive test after core gates or approved scientific/access disposition",
+        "No inferred exogeneity or invented pre-adoption zeros",
+        "Report ecological and generated-input uncertainty"
+      ],
+      "depends_on": [
+        "B07",
+        "I06"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "B09",
+      "title": "Verify cited literature and requested missing references",
+      "source_refs": [
+        "A:minor8",
+        "B:1",
+        "P0:13"
+      ],
+      "prompt_section": "14.4",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Record ten-journal scope searches plus primary work outside scope",
+        "Verify author titles versions and publication status",
+        "No literature claim that own audit proves another papers error"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E01",
+      "title": "Reframe around a positive supported descriptive contribution",
+      "source_refs": [
+        "A:3.1",
+        "A:overall",
+        "B:1",
+        "B:conclusion",
+        "C:6"
+      ],
+      "prompt_section": "15.1",
+      "kind": "editorial",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Title does not imply AI versus composition identified",
+        "Lead with actual target and support",
+        "Say why description useful despite causal limits"
+      ],
+      "depends_on": [
+        "D03",
+        "Y01",
+        "I06",
+        "B03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E02",
+      "title": "Correct the alleged route-count discrepancy from render evidence",
+      "source_refs": [
+        "A:minor1",
+        "C:new source verification"
+      ],
+      "prompt_section": "5",
+      "kind": "verification",
+      "priority": "required",
+      "acceptance_checks": [
+        "Inspect pages3-4 and raw audit",
+        "Do not change six million to a fabricated thirty-six million",
+        "Record footer-concatenation explanation"
+      ],
+      "depends_on": [
+        "T03"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E03",
+      "title": "Repair chapter language scales services counts labels and rounding",
+      "source_refs": [
+        "A:minor2",
+        "A:minor3",
+        "A:minor5",
+        "C:5",
+        "P0:12"
+      ],
+      "prompt_section": "15.2",
+      "kind": "editorial",
+      "priority": "required",
+      "acceptance_checks": [
+        "No chapter remnant",
+        "Service codes and percentages consistent",
+        "Raw AIOE units and canonical CI rounding visible"
+      ],
+      "depends_on": [
+        "G07",
+        "W05"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E04",
+      "title": "Consolidate MDEs and repeated qualifications",
+      "source_refs": [
+        "A:minor6",
+        "A:minor7",
+        "B:specific prose",
+        "P0:12"
+      ],
+      "prompt_section": "15.1",
+      "kind": "editorial",
+      "priority": "required",
+      "acceptance_checks": [
+        "One diagnostics table for most MDEs",
+        "Definitions once then readable prose",
+        "Keep uncertainty without significance-star narratives"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E05",
+      "title": "Repair figures table typography and float placement",
+      "source_refs": [
+        "A:minor4",
+        "C:5",
+        "P0:12"
+      ],
+      "prompt_section": "15.2",
+      "kind": "editorial",
+      "priority": "required",
+      "acceptance_checks": [
+        "Readable family paths and full matrix",
+        "Every table and figure visually inspected",
+        "No tiny compressed tables empty float pages or conclusion interruption"
+      ],
+      "depends_on": [
+        "S06"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E06",
+      "title": "State estimand before abstract values and signpost limitations",
+      "source_refs": [
+        "A:minor9",
+        "A:minor10",
+        "B:specific dependent variable"
+      ],
+      "prompt_section": "15.1",
+      "kind": "editorial",
+      "priority": "required",
+      "acceptance_checks": [
+        "Ratio of conditional mean stocks stated first",
+        "Compact what-is-established subsection",
+        "Signpost substantive limitations without retaining operational logs"
+      ],
+      "depends_on": [
+        "T01",
+        "E01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E07",
+      "title": "Remove superseded machinery and keep scientific scope controlled",
+      "source_refs": [
+        "P0:11",
+        "P0:12",
+        "B:specific prose",
+        "C:5"
+      ],
+      "prompt_section": "15.1",
+      "kind": "editorial",
+      "priority": "required",
+      "acceptance_checks": [
+        "No mobility-rematching or F/G machinery revived",
+        "Historical failures live in archive",
+        "Main compression not replaced by unfocused appendix expansion"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "presentation",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E08",
+      "title": "Deliver editable sources PDFs and change record",
+      "source_refs": [
+        "P0:14",
+        "C:1",
+        "B:reproducibility"
+      ],
+      "prompt_section": "15.3",
+      "kind": "delivery",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Actual files rather than proposed paths",
+        "Build completes and renders reviewed",
+        "Reconstructed versus original source distinguished"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "delivery_artifact",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E09",
+      "title": "Deliver responses to every new and inherited request",
+      "source_refs": [
+        "A:all",
+        "B:all",
+        "C:all",
+        "P0:14"
+      ],
+      "prompt_section": "15.3",
+      "kind": "delivery",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Responses cite real analysis and revised location",
+        "No done language for unrun tasks",
+        "All source IDs accounted for with valid corrections and blockers"
+      ],
+      "depends_on": [
+        "G02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "delivery_artifact",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E10",
+      "title": "Deliver sanitized executable package with actual results and covariance",
+      "source_refs": [
+        "P0:14",
+        "B:reproducibility",
+        "C:execution audit"
+      ],
+      "prompt_section": "15.3",
+      "kind": "delivery",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Code contracts numeric ledger covariance support and receipts present",
+        "No licensed raw data credentials identifiers or private roots",
+        "Manifest without files does not count"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "delivery_artifact",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E11",
+      "title": "Distinguish clean microdata rerun from cached aggregate build",
+      "source_refs": [
+        "P0:14",
+        "B:reproducibility",
+        "C:execution audit"
+      ],
+      "prompt_section": "15.3",
+      "kind": "delivery",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Separate runnable commands",
+        "Report exact executed modes and exit codes",
+        "No cached build described as empirical re-estimation"
+      ],
+      "depends_on": [
+        "E10"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "delivery_artifact",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E12",
+      "title": "Obtain author and journal disclosure fields without invention",
+      "source_refs": [
+        "A:minor front matter inherited",
+        "B:reproducibility",
+        "P0:12",
+        "C:5"
+      ],
+      "prompt_section": "15.3",
+      "kind": "delivery",
+      "priority": "required",
+      "acceptance_checks": [
+        "Author supplies affiliation funding conflicts and acknowledgments",
+        "Pending fields marked explicitly",
+        "No submission-ready claim with unresolved fields"
+      ],
+      "depends_on": [],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "delivery_artifact",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E13",
+      "title": "Run an independent challenge or label self-review accurately",
+      "source_refs": [
+        "P0:14",
+        "B:reproducibility",
+        "C:execution audit"
+      ],
+      "prompt_section": "15.4",
+      "kind": "verification",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Trace source requests forward and paper results backward",
+        "Re-estimate selected targets when possible",
+        "Do not call the same agents second pass independent"
+      ],
+      "depends_on": [
+        "E08",
+        "E10"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "E14",
+      "title": "Validate delivered coverage and report separate completion flags",
+      "source_refs": [
+        "P0:14",
+        "C:execution audit"
+      ],
+      "prompt_section": "15.4",
+      "kind": "delivery",
+      "priority": "blocking",
+      "acceptance_checks": [
+        "Validator runs on actual artifact hashes",
+        "Report accounted core-verified executed and submission-ready separately",
+        "Remaining blockers not hidden or deleted"
+      ],
+      "depends_on": [
+        "E09",
+        "E11",
+        "E13"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "delivery_artifact",
+        "validation_report"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "L01",
+      "title": "Resolve inherited equal-occupation weighting companion",
+      "source_refs": [
+        "P0:5",
+        "Earlier referee:4.1"
+      ],
+      "prompt_section": "7",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Define changed objective and target",
+        "Do not merely remove survey weights",
+        "Execute supported comparison or retain approved disposition"
+      ],
+      "depends_on": [
+        "T02"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    },
+    {
+      "id": "L02",
+      "title": "Resolve inherited symmetric occupation-coding-error sensitivity",
+      "source_refs": [
+        "P0:11",
+        "Earlier referee:4.7"
+      ],
+      "prompt_section": "12",
+      "kind": "feasibility",
+      "priority": "required",
+      "acceptance_checks": [
+        "State hypothetical misclassification assumptions",
+        "Do not infer error rate from immediate reversals",
+        "Record executed sensitivity or explicit scientific feasibility disposition"
+      ],
+      "depends_on": [
+        "W01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "verification_report",
+        "source_evidence"
+      ],
+      "empirical": false
+    },
+    {
+      "id": "L03",
+      "title": "Reconcile every inherited non-lambda architecture comparison",
+      "source_refs": [
+        "P0:11",
+        "Earlier referee:3.8",
+        "C:5"
+      ],
+      "prompt_section": "12",
+      "kind": "analysis",
+      "priority": "required",
+      "acceptance_checks": [
+        "Account separately for AIOE variants Webb AI and OECD",
+        "Lambda grid not substituted for different constructs",
+        "Current-contract rerun or explicit approved scientific retirement"
+      ],
+      "depends_on": [
+        "W01"
+      ],
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
+      "blocker": null,
+      "approval": null,
+      "minimum_verified_evidence_roles": [
+        "specification",
+        "code",
+        "run_receipt",
+        "result",
+        "validation_report",
+        "presentation"
+      ],
+      "empirical": true
+    }
+  ]
+}

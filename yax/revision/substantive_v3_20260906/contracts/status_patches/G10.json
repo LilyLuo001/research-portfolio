@@ -1,0 +1,26 @@
+{
+  "status": "VERIFIED",
+  "summary": "Recorded that V3 is an outcome-informed referee-led revision, not a preregistration, and fixed accuracy, sequencing, compute, storage, cache, and no-result-targeting rules before the first new V3 empirical run.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "revision_inputs/EXECUTION_PROMPT_V3.md",
+      "sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b"
+    },
+    {
+      "role": "verification_report",
+      "path": "CHRONOLOGY_AND_RESOURCE_RULES.md",
+      "sha256": "c15865780102c71c4b78ff49c156b46f0446ae790cfaf500093fa513e554c954"
+    }
+  ],
+  "response_locations": [
+    "CHRONOLOGY_AND_RESOURCE_RULES.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent self-review",
+    "report_path": "CHRONOLOGY_AND_RESOURCE_RULES.md",
+    "independent": false
+  },
+  "blocker": null,
+  "approval": null
+}
