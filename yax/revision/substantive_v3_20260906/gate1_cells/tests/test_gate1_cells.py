@@ -231,10 +231,35 @@ def test_local_six_field_router_matches_byte_locked_historical_target(tmp_path: 
     assert counts["eligible_employed_age_22_65_records_total"] == 8
     assert counts["repair_eligible_employed_age_22_65_records"] == 5
     assert counts["wide_march_rows_explicitly_replaced"] == 5
+    assert counts["wide_march_positive_weight_rows_explicitly_replaced"] == 0
     assert route["route_conservation_pass"] is True
     assert route["early_absolute_gap"] == 0.0
     assert route["current_absolute_gap"] == 0.0
     assert 18 not in set(local.age)
+
+
+def test_producer_counts_unexpected_positive_weight_wide_march_rows(tmp_path: Path):
+    """The producer reports, rather than conceals, a source-contract violation."""
+    args = synthetic_inputs(tmp_path, helpers=False)
+    baseline_cells, _baseline_counts, _baseline_route = (
+        BUILDER.build_six_field_target_cells(
+            args.microdata, args.repair_microdata, args.bridge
+        )
+    )
+    primary = pd.read_csv(args.microdata)
+    march = primary.MONTH.eq(3)
+    primary.loc[primary.index[march][0], "WTFINL"] = 2.5
+    primary.to_csv(args.microdata, index=False)
+
+    cells, counts, _route = BUILDER.build_six_field_target_cells(
+        args.microdata, args.repair_microdata, args.bridge
+    )
+    assert counts["wide_march_rows_explicitly_replaced"] == 5
+    assert counts["wide_march_positive_weight_rows_explicitly_replaced"] == 1
+    assert counts["repair_eligible_employed_age_22_65_records"] == 5
+    pd.testing.assert_frame_equal(
+        normalized_target(cells), normalized_target(baseline_cells)
+    )
 
 
 def test_physical_records_reconcile_through_routes_and_fractional_descendants(

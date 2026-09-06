@@ -965,8 +965,23 @@ def authenticate_producer_accounting(
     replaced_positive = raw["wide_march_positive_weight_rows_explicitly_replaced"]
     if replaced <= 0 or replaced > physical_by_source[wide_source]:
         raise TargetAuditError("wide March replacement count is invalid")
-    if replaced_positive <= 0 or replaced_positive > replaced:
-        raise TargetAuditError("positive-weight replaced-row count is invalid")
+    # The authenticated wide source contains March ASEC samples in these five
+    # months.  Every one of those superseded records has WTFINL == 0; the
+    # separately authenticated Basic-month source supplies the positive-weight
+    # replacement.  Requiring a positive subset here reverses the documented
+    # source contract and rejects the genuine producer receipt.  Require the
+    # known zero exactly so a future or mismatched source cannot pass silently.
+    expected_replaced_positive = contract.get(
+        "wide_march_positive_weight_rows_expected"
+    )
+    if expected_replaced_positive != 0:
+        raise TargetAuditError(
+            "target contract does not bind the authenticated zero-weight March fact"
+        )
+    if replaced_positive != expected_replaced_positive:
+        raise TargetAuditError(
+            "positive-weight replaced-row count differs from the authenticated wide source"
+        )
     if eligible_by_source[wide_source] > physical_by_source[wide_source] - replaced:
         raise TargetAuditError("wide eligible records exceed nonreplaced physical rows")
     if raw["routed_rows"] != raw["routed_contribution_rows"]:

@@ -114,7 +114,10 @@ def make_authenticated_product(root: Path) -> tuple[Path, Path, pd.DataFrame]:
             zip(source_ids, [71000, 4000])
         ),
         "wide_march_rows_explicitly_replaced": 5000,
-        "wide_march_positive_weight_rows_explicitly_replaced": 4500,
+        # The authenticated wide source contains ASEC March rows, all with
+        # zero final Basic weight.  The repair source supplies the positive-
+        # weight Basic-month records.
+        "wide_march_positive_weight_rows_explicitly_replaced": 0,
         "repair_eligible_employed_age_22_65_records": 4000,
         "aggregate_rows": 60000,
         "observed_month_count": 114,
@@ -649,6 +652,10 @@ def test_authenticated_synthetic_execution_reconciles_zero_and_fractional_cells(
     product, tmp_path: Path
 ):
     cells, receipt, _ = product
+    producer = json.loads(receipt.read_text(encoding="utf-8"))
+    assert producer["six_field_cell_build_checks"][
+        "wide_march_positive_weight_rows_explicitly_replaced"
+    ] == 0
     output = tmp_path / "target-audit"
     result = RUNNER.execute(
         Namespace(repo_root=REPO, cells=cells, cells_receipt=receipt, output_leaf=output)
@@ -807,6 +814,10 @@ def mutate_producer_receipt(value: dict, case: str) -> None:
         value["git_committed_artifact_hashes"].pop(str(RUNNER.BUILDER_REL))
     elif case == "repair_months":
         value["six_field_cell_build_checks"]["repair_observed_months"] = ["2017-03"]
+    elif case == "wide_march_positive_weight_rows":
+        value["six_field_cell_build_checks"][
+            "wide_march_positive_weight_rows_explicitly_replaced"
+        ] = 1
     elif case == "route_record_identity":
         value["route_checks"]["total_record_identities"][
             "valid_equals_early_plus_current"
@@ -836,6 +847,7 @@ def mutate_producer_receipt(value: dict, case: str) -> None:
         "builder_hash",
         "git_committed_map",
         "repair_months",
+        "wide_march_positive_weight_rows",
         "route_record_identity",
         "route_source_gap",
         "freshness_field",

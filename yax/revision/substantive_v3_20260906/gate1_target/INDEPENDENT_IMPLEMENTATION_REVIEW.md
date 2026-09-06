@@ -1,5 +1,10 @@
 # Independent exact-target implementation review
 
+> Historical review preserved for the pre-correction implementation.  It no
+> longer authorizes protected execution after retained job `7474597` exposed
+> the zero-weight March boundary error.  The corrected hashes and disposition
+> are in `INDEPENDENT_CORRECTION_REVIEW.md`.
+
 Review date: 2026-09-06
 
 Target spec ID: `yaxtargetspec_v1_a72f6e037e1709537683fa9042846d79f8e743eb63af021392f4ad5f86a2a3a5`

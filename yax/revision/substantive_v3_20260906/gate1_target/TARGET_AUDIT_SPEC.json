@@ -108,7 +108,7 @@
     "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
     "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
     "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "38c528dd45b8f932100a78d751bc7b513e4e6596e1d635401dd4b73660bccfc3",
-    "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py": "01ce88a080b816407aeabffc0c8a4e6eac5d950a917138e821cf8c0004616b24"
+    "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py": "18eb1621f8b119de461c16d7c80bae6c4d36abf03f73b4d147ffdad4e192a1f1"
   },
   "contract_binding": {
     "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
@@ -166,6 +166,7 @@
       "stock": "real-valued employment stock after one WTFINL application and any bridge allocation",
       "unique_people_or_households": "not recoverable from the sanctioned aggregate schema"
     },
+    "wide_march_positive_weight_rows_expected": 0,
     "runtime_raw_fields": [
       "YEAR",
       "MONTH",
@@ -240,6 +241,16 @@
       "sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b"
     },
     {
+      "path": "yax/revision/substantive_r3_20260905/survey_sim/MARCH_REPLACEMENT_FINDINGS.md",
+      "role": "authenticated March-source finding: all superseded wide-file ASEC records have zero WTFINL",
+      "sha256": "52fc5a763ba09d1ce5d0185d6257b5c4aa16386608757ca77bf059408504ce06"
+    },
+    {
+      "path": "yax/revision/substantive_r3_20260905/survey_sim/selfcheck_march_replacement.py",
+      "role": "fail-closed historical test requiring zero positive-weight wide ASEC records in every repaired March",
+      "sha256": "453f7740e33414a6225bf8a1ffeffb6be826af721f980a1254dd9fe8b926b3ac"
+    },
+    {
       "path": "yax/revision/substantive_v3_20260906/revision_inputs/referee_A_major_revision.md",
       "role": "source A:minor9",
       "sha256": "0a85a496591e67a661289de00a122cdea3201ef8c1181b6cbba0195def2012ac",
@@ -268,7 +279,7 @@
       "sha256": "38de2d5b80e72c85f3dd06086a862cea63c521d511a5baacb7f6390f66eeeb59"
     }
   ],
-  "target_audit_spec_id": "yaxtargetspec_v1_a72f6e037e1709537683fa9042846d79f8e743eb63af021392f4ad5f86a2a3a5",
+  "target_audit_spec_id": "yaxtargetspec_v1_d5c530d22f2e0f18dc73c0106fa5acf3447ab3e7c48f510e5ae55156ba22e70c",
   "upstream_assertions": [
     {
       "equals": "yax-numerical-cells-v1",
