@@ -81,6 +81,25 @@ def test_versioned_reference_satisfies_post_run_comparison_contract():
     assert all(value.startswith("yaxresult_v1_") for value in result_ids.values())
 
 
+def test_checkpoint_result_ids_use_claim_ledger_selector_encoding():
+    contract = WRAPPER.load_and_validate_contract(REPO, SPEC)
+    result_ids = WRAPPER.compute_checkpoint_result_ids(REPO, contract, REFERENCE)
+    tool = WRAPPER._load_module(
+        "yax_v3_spec_contract_result_id_test", REPO / WRAPPER.SPEC_TOOL_REL
+    )
+    artifact_hash = WRAPPER.sha256_file(REFERENCE / "BASELINE_DECOMPOSITION.csv")
+    for row_id in WRAPPER.CHECKPOINT_ROWS:
+        selector = WRAPPER.checkpoint_selector(row_id)
+        selector_text = json.dumps(selector, sort_keys=True, separators=(",", ":"))
+        expected = tool.compute_result_id(
+            contract["spec_id"],
+            f"gate1_baseline.{row_id}.coefficient",
+            artifact_hash,
+            selector_text,
+        )
+        assert result_ids[row_id] == expected
+
+
 def test_post_run_comparison_fails_on_normalization_drift(tmp_path: Path):
     contract = WRAPPER.load_and_validate_contract(REPO, SPEC)
     fresh = tmp_path / "fresh"

@@ -747,9 +747,20 @@ def compute_checkpoint_result_ids(
             contract["spec_id"],
             f"gate1_baseline.{row_id}.coefficient",
             artifact_hash,
-            f"BASELINE_DECOMPOSITION.csv::row_id={row_id}::coefficient",
+            json.dumps(checkpoint_selector(row_id), sort_keys=True, separators=(",", ":")),
         )
         for row_id in CHECKPOINT_ROWS
+    }
+
+
+def checkpoint_selector(row_id: str) -> dict[str, Any]:
+    """Return the canonical result-ledger selector for one checkpoint."""
+    if row_id not in CHECKPOINT_ROWS:
+        raise Gate1Error(f"unknown checkpoint row for result selector: {row_id}")
+    return {
+        "kind": "csv_key",
+        "keys": {"row_id": row_id},
+        "column": "coefficient",
     }
 
 
@@ -974,6 +985,9 @@ def execute(args: argparse.Namespace) -> int:
         }
         receipt["checkpoint_comparison"] = checkpoint
         receipt["result_ids"] = compute_checkpoint_result_ids(repo, contract, output_dir)
+        receipt["result_selectors"] = {
+            row_id: checkpoint_selector(row_id) for row_id in CHECKPOINT_ROWS
+        }
         receipt["result_id"] = receipt["result_ids"][
             "corrected_113_recomputed_preperiod_treatment"
         ]
