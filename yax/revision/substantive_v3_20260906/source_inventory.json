@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "recorded_at": "2026-09-06T05:52:40Z",
+  "external_availability_updated_at": "2026-09-06T06:26:24Z",
   "chronology": "post-outcome V3 inventory; no new substantive V3 model was run before this record",
   "instruction_root": "<YAX_V3_INSTRUCTION_ROOT>",
   "repository": {
@@ -187,27 +188,28 @@
     },
     {
       "id": "earnweek2_current_extract",
-      "state": "absent",
-      "reason": "The DDIs for extracts 9, 10, 11, and 12 do not contain EARNWEEK2; extracts 9 and 11 contain EARNWEEK and EARNWT.",
-      "next_step": "Verify official EARNWEEK2 availability and submit or locate a minimal authorized replacement extract before extending weekly earnings."
+      "state": "officially_available_but_absent_from_authorized_extracts",
+      "reason": "The official IPUMS CPS EARNWEEK2 page confirms availability through current monthly samples and requires EARNWT. The DDIs for authorized extracts 9, 10, 11, and 12 do not contain EARNWEEK2; extracts 9 and 11 contain EARNWEEK and EARNWT.",
+      "official_locator": "https://cps.ipums.org/cps-action/variables/EARNWEEK2",
+      "next_step": "Submit and authenticate a minimal authorized extract containing EARNWEEK2, EARNWT, MISH, and the existing sample/identification fields before extending weekly earnings."
     },
     {
       "id": "exact_bcc_occupation_membership",
-      "state": "unverified",
-      "reason": "No exact public occupation lookup, universe, cutoff, or tie-rule artifact has yet been authenticated locally.",
-      "next_step": "Search official paper/dashboard/workbook and record either a versioned artifact or the exact public-information gap."
+      "state": "public_information_gap_verified",
+      "reason": "The official paper lists only the top 50 occupation names per quintile and the inspected official dashboard ZIPs contain aggregate series, not an exhaustive SOC-code membership. Exact code is request-only and author contact was not authorized.",
+      "next_step": "Use only a clearly labeled independent reconstruction from public rules, or obtain an exact primary membership artifact if contact is later authorized. Do not label a reconstruction as exact BCC membership."
     },
     {
       "id": "acs_microdata_for_v3",
-      "state": "absent",
-      "reason": "No authorized ACS analysis extract is present in the verified local/SCC input inventory.",
-      "next_step": "Complete official release and design feasibility audit before requesting data."
+      "state": "public_2024_release_available_but_not_present_locally",
+      "reason": "No authorized ACS analysis extract is present locally or on SCC. Official 2024 one-year PUMS is available; no verified 2025 one-year release is available in this audit, and standard 2020 one-year products were not released.",
+      "next_step": "Design and acquire a 2017-2019 and 2021-2024 one-year PUMS extract with person and 80 replicate weights; do not splice 2020 experimental or overlapping five-year data."
     },
     {
       "id": "adoption_analysis_input",
-      "state": "absent",
-      "reason": "No versioned occupation/industry adoption analysis file is present in the verified repository inventory.",
-      "next_step": "Complete official BTOS/RPS and occupation-adoption feasibility audit before deciding whether the extension is estimable."
+      "state": "official_public_sources_verified_but_not_captured_as_analysis_inputs",
+      "reason": "No versioned adoption file is present locally. BTOS publishes aggregate business cells without worker age or occupation and has a November-2025 wording break. The RPS authors publish pooled detailed-occupation adoption workbooks for four 2025-2026 waves, but not a detailed occupation-by-quarter panel with verified sampling intervals.",
+      "next_step": "Capture and hash the RPS workbook for a descriptive exposure-validation design, or specify an ecological BTOS design with its jackknife uncertainty and wording break; neither is an exogenous worker-level treatment."
     },
     {
       "id": "author_disclosures",

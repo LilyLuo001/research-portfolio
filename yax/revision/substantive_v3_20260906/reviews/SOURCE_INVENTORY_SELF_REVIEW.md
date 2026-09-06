@@ -16,8 +16,11 @@ The inventory passes the three G01 acceptance checks:
 3. historical `/mnt/data/...` PDF locators are not treated as current code or
    data evidence.
 
-The inventory does not claim that `EARNWEEK2` is unavailable from IPUMS merely
-because it is absent from the authorized extracts. It records that ACS
-microdata, exact BCC membership, proprietary ADP outcomes, and a selected
-adoption-analysis input are not currently supplied. No private absolute path
-or credential is needed in the public inventory.
+The later official-source update confirms that `EARNWEEK2` is available from
+IPUMS but absent from the authorized extracts, so the blocker is now correctly
+classified as a missing extract field rather than survey unavailability. It
+also distinguishes public-but-not-local ACS 2024 data, the verified public gap
+in exact BCC membership, and public adoption sources that have not yet been
+captured as versioned analysis inputs. Proprietary ADP outcomes remain
+unavailable. No private absolute path or credential is needed in the public
+inventory.

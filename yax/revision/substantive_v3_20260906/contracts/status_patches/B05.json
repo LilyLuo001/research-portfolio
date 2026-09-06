@@ -1,0 +1,26 @@
+{
+  "status": "VERIFIED",
+  "summary": "Verified that 2024 is the latest available one-year ACS PUMS in this audit, that standard 2020 one-year data were not released and experimental estimates must not be spliced, and that 2024 population-control changes require weighting/rate sensitivity and 80 replicate weights.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "source_verification/external/source_claim_matrix.json",
+      "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+    },
+    {
+      "role": "verification_report",
+      "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+      "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+    }
+  ],
+  "response_locations": [
+    "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+  ],
+  "review": {
+    "reviewer": "separate external-source verification agent on the same execution team",
+    "report_path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+    "independent": false
+  },
+  "blocker": null,
+  "approval": null
+}

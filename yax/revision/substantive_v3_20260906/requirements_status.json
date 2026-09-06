@@ -34,12 +34,12 @@
         {
           "role": "source_evidence",
           "path": "source_inventory.json",
-          "sha256": "4caf9529e4edb6c5cc37c3cc6bdb5549c33c2415372cb74d4bd4a1c41edb0cfa"
+          "sha256": "d14185a3c696b7ec8b1ad468bc9b7233364cbb589cef14ead80ae421292f5de8"
         },
         {
           "role": "verification_report",
           "path": "reviews/SOURCE_INVENTORY_SELF_REVIEW.md",
-          "sha256": "dad2e8e8776a028ed2a255c7bda71ce3be104cfca4706e25c12c73af0b944718"
+          "sha256": "91961deb1408286a5bbb7ea03c9d1410a8c263cc34ad16226f7abbdfc5b82da5"
         }
       ],
       "response_locations": [
@@ -388,11 +388,29 @@
         "Provide resumable next step and claim consequences"
       ],
       "depends_on": [],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "VERIFIED",
+      "summary": "Official or primary sources were checked before classifying EARNWEEK2, ACS, BCC membership, and adoption inputs. The audit distinguishes public availability from local extract absence, records exact access limits, states claim consequences, and gives resumable next steps.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_inventory.json",
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+      ],
+      "review": {
+        "reviewer": "separate external-source verification agent on the same execution team",
+        "report_path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -2688,12 +2706,31 @@
       "depends_on": [
         "G08"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "BLOCKED_INPUT",
+      "summary": "Official EARNWEEK2 availability, harmonized rounding/topcodes, outgoing-rotation universe, and EARNWT requirement are verified, but all four authorized YAX extract DDIs omit EARNWEEK2. No full-window post-March-2023 earnings estimate has been run or claimed.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_inventory.json",
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+      ],
       "review": null,
-      "blocker": null,
+      "blocker": {
+        "missing_requirement": "An authorized IPUMS CPS extract containing EARNWEEK2, EARNWT, MISH, and the existing sample/identification fields for the analysis window.",
+        "attempts": "Read the DDIs for authorized extracts 9, 10, 11, and 12 and checked the official IPUMS EARNWEEK2 description, universe, availability, rounding, and weight instructions. Existing EARNWEEK was considered but does not provide the declared post-April-2023 harmonized field.",
+        "claim_impact": "The manuscript cannot present the existing three-post-month EARNWEEK result as full-window earnings evidence or claim the later earnings margin has been tested.",
+        "next_step": "Submit, download, hash, and schema-check a minimal EARNWEEK2 extract; predefine the rounding/topcode and outgoing-rotation comparison before estimation."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -2758,11 +2795,29 @@
       "depends_on": [
         "G01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "VERIFIED",
+      "summary": "Verified the August 12, 2026 BCC paper and public evidence. The 19 percent descriptive top-two/bottom-three shortfall, the ADP Q5-minus-Q1 regression, the ACS 2022-to-2024 Q5-minus-Q1 estimate, and the public CPS indexed plot are distinct targets and are recorded separately.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+        "source_verification/external/source_claim_matrix.json"
+      ],
+      "review": {
+        "reviewer": "separate external-source verification agent on the same execution team",
+        "report_path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -2790,12 +2845,30 @@
       "depends_on": [
         "B01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "BLOCKED_INPUT",
+      "summary": "The inspected official paper, dashboard, and three official ZIPs do not disclose an exhaustive SOC-code-to-quintile membership. A public reconstruction is feasible but is not exact BCC membership.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+      ],
       "review": null,
-      "blocker": null,
+      "blocker": {
+        "missing_requirement": "An exhaustive primary BCC SOC-code membership, including the exact universe, crosswalk, cutoffs, and tie rule.",
+        "attempts": "Inspected the fixed August 2026 paper, official dashboard, three official dashboard ZIPs, and documented code-access statement; only top-50 names and aggregate series were public.",
+        "claim_impact": "YAX may report an independently reconstructed public-rule bridge but cannot claim exact BCC occupation-group replication or membership identity.",
+        "next_step": "If author contact is later authorized, request the exact membership/code artifact; otherwise preserve and label the independent reconstruction and its deviations."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "verification_report",
@@ -2895,11 +2968,28 @@
       "depends_on": [
         "B01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "VERIFIED",
+      "summary": "Verified that 2024 is the latest available one-year ACS PUMS in this audit, that standard 2020 one-year data were not released and experimental estimates must not be spliced, and that 2024 population-control changes require weighting/rate sensitivity and 80 replicate weights.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+      ],
+      "review": {
+        "reviewer": "separate external-source verification agent on the same execution team",
+        "report_path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -2964,10 +3054,23 @@
       "depends_on": [
         "B01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "SPECIFIED",
+      "summary": "Verified BTOS and RPS definitions and granularity, including the BTOS November-2025 wording break and the new pooled detailed-occupation RPS workbook. The RPS input is not yet captured/hashed locally and exposure-adoption residual variation and the exact interaction target remain to be run.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -3030,10 +3133,23 @@
         "No literature claim that own audit proves another papers error"
       ],
       "depends_on": [],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "Verified named primary-source citation corrections, including Autor-Thompson in JEEA, Deming-Noray, Hampole et al., and Bick et al. publication status. The required reproducible ten-journal novelty search remains incomplete, so B09 is not verified.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        }
+      ],
+      "response_locations": [
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
