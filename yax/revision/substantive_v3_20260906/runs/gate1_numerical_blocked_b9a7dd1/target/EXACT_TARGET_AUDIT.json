@@ -1,0 +1,186 @@
+{
+  "analysis_status": "post-outcome referee-led target audit; no coefficient estimated by this module",
+  "authenticated_cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+  "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "cell_build_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+  "criterion_and_parameter": {
+    "coefficient_unit": "log points",
+    "conditional_mean_share": "p(o,t) = mu_y(o,t) / [mu_y(o,t) + mu_o(o,t)]",
+    "criterion": "sum_over_o,t_with_T_positive [N_y(o,t)*log(p(o,t)) + N_o(o,t)*log(1-p(o,t))]",
+    "headline_parameter": "beta_5: Q5-versus-Q1 post-2023 change in the log conditional-mean young-to-older employment-stock ratio, conditional on the declared nuisance space",
+    "linear_predictor": "logit(p(o,t)) = log[mu_y(o,t)/mu_o(o,t)] = alpha_o + lambda_t + sum_{q=2}^5 beta_q 1{Q_o=q}1{t>=2023-01} + theta WebbZ_o 1{t>=2023-01}",
+    "ratio_percent_transform": "100*[exp(beta_5)-1], only when labeled as a ratio change",
+    "total_stock": "T(o,t) = N_y(o,t) + N_o(o,t)"
+  },
+  "interpretation_bounds": {
+    "allowed": [
+      "conditional-mean employment-stock ratio contrast",
+      "grouped-binomial estimating criterion on continuous survey-weighted stocks"
+    ],
+    "forbidden": [
+      "observed log young-to-older ratio in every cell",
+      "literal binomial likelihood for independent persons",
+      "individual employment probability",
+      "employer hiring rate",
+      "causal effect of AI"
+    ]
+  },
+  "observed_estimating_data": {
+    "both_zero_rule": "balanced-grid row retained for accounting; no criterion contribution",
+    "criterion_rows": "positive young-plus-older total stock",
+    "facts": {
+      "aggregate_months": 114,
+      "aggregate_older_stock": 12491585038.820843,
+      "aggregate_rows": 53352,
+      "aggregate_young_stock": 1225277713.3401504,
+      "assignment_fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+      "both_zero_rows_no_criterion_contribution": 993,
+      "design_nonzero_rows": {
+        "Q1_reference_post_rows": 5206,
+        "Q2_x_post_nonzero_rows": 4107,
+        "Q3_x_post_nonzero_rows": 3301,
+        "Q4_x_post_nonzero_rows": 2764,
+        "Q5_x_post_nonzero_rows": 3769,
+        "Webb_z_x_post_nonzero_rows": 19147
+      },
+      "estimating_rows_content_sha256": "d3f009273546181dc708d766793c43bb363174d522536b93724669344884f45a",
+      "occupations": 468,
+      "one_sided_zero_rows_retained": 12965,
+      "positive_total_estimating_rows": 51891,
+      "positive_young_zero_older_rows_retained": 75,
+      "static_grid_rows": 52884,
+      "static_months": 113,
+      "static_older_noninteger_stock_rows": 51811,
+      "static_older_stock": 12380182137.007343,
+      "static_young_noninteger_stock_rows": 38997,
+      "static_young_stock": 1214266456.0190506,
+      "support_content_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "zero_young_positive_older_rows_retained": 12890
+    },
+    "grid_key": [
+      "Census-2018 detailed occupation",
+      "calendar month"
+    ],
+    "missing_month_rule": "2025-10 is absent and is not interpolated",
+    "one_sided_zero_rule": "retain",
+    "static_transition_rule": "exclude observed 2022-12",
+    "stock_columns": {
+      "older": "ages 26-65",
+      "young": "ages 22-25"
+    },
+    "stock_unit": "CPS-weighted employed-person stock",
+    "survey_weight": "WTFINL enters routed stock once"
+  },
+  "producer_execution_authentication": {
+    "accounting": {
+      "eligible_employed_age_22_65_records_by_source": {
+        "ipums_cps_extract_11_march_basic_repair": 240019,
+        "ipums_cps_extract_9_wide": 4801576
+      },
+      "eligible_employed_age_22_65_records_total": 5041595,
+      "physical_rows_read_by_source": {
+        "ipums_cps_extract_11_march_basic_repair": 580541,
+        "ipums_cps_extract_9_wide": 9262480
+      },
+      "physical_rows_read_total": 9843021,
+      "repair_observed_months": [
+        "2017-03",
+        "2018-03",
+        "2019-03",
+        "2020-03",
+        "2021-03"
+      ],
+      "route_conservation_pass": true,
+      "weight_application_count": 1
+    },
+    "execution_entry": {
+      "authorization_id": "yaxgate1auth_v1_43fcddf8efd4cc01b89261e75bba42e536dff23bc448a9539c8fd24e43a2567a",
+      "command_binding_sha256": "a8650037a8d00eb2b975d5b6a6816e988bb079cca6184785c15e5da1da78d572",
+      "runtime_status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES",
+      "scheduler_jobnumber": "7477104"
+    },
+    "git": {
+      "commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+      "committed_artifact_hashes": {
+        "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+        "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15",
+        "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+        "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+      },
+      "object_and_checkout_checks": {
+        "commit_object_exists": true,
+        "commit_tree_verified": true,
+        "committed_blob_hashes_verified": true,
+        "consuming_head_matches": true,
+        "consuming_tree_matches": true,
+        "consuming_worktree_clean": true,
+        "required_ancestor_verified": true
+      },
+      "required_ancestor_commit": "f2e16bc4228b40a258a4417f7598366c2af1142f",
+      "status": "PASS_COMMITTED_CLEAN_WORKTREE",
+      "tree": "3ec00fb684ed2ee00bd0b9593644cf53331faa06"
+    },
+    "runtime": {
+      "builder_code_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+      "builder_transitive_code_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
+      "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+      "observed_kernel_release": "4.18.0-553.158.1.el8_10.x86_64",
+      "observed_kernel_system": "Linux",
+      "runtime_contract_sha256": "35baa5eb70c9587d61ec6bbe001f3080607640a8301d095ba4b5db674ba95834",
+      "runtime_payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+      "status": "AUTHENTICATED_DECLARED_RUNTIME"
+    },
+    "sources": {
+      "authenticated_source_count": 7,
+      "authorization_status": "PASS_AUTHORIZATION_CHAIN",
+      "canonical_source_count": 8,
+      "unread_canonical_source_ids": [
+        "historical_preperiod_cells"
+      ]
+    }
+  },
+  "requirement": "T01",
+  "row_count_reconciliation": {
+    "continuous_quantities": "young and older stocks are real-valued sums after one WTFINL application and, before 2020, fractional bridge allocation",
+    "physical_counts": "source rows, routed descendants, grouped rows, and occupation-month rows are integer counts of stored or in-memory rows",
+    "respondent_equivalents": "not constructed by the six-field target router, not present in the sanctioned aggregate schema, and never substituted for physical rows",
+    "route_descendants": "route-expanded rows are not distinct respondents; several descendants can share one physical source record",
+    "unique_people_or_households": "not recoverable from the sanctioned aggregate schema and not reported by this audit"
+  },
+  "status": "PASS_EXACT_TARGET_AUDIT",
+  "target_audit_spec_id": "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b",
+  "weight_and_schema_checks": {
+    "aggregate_schema_version": "yax-numerical-cells-v1",
+    "canonical_assertions_passed": 18,
+    "columns": [
+      "occ_code",
+      "month",
+      "family",
+      "young",
+      "older",
+      "beta_quintile",
+      "webb_z"
+    ],
+    "output_applies_no_additional_weight": true,
+    "route_weight_is_allocation_not_second_survey_weight": true,
+    "upstream_assertions_passed": 25,
+    "weight_application_count": 1
+  }
+}

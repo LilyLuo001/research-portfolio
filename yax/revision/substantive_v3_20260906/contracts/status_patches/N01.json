@@ -1,0 +1,39 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The frozen numerical audit evaluated all 11 central models, retained one-sided zero cells, reported profiled boundary rows and graph components, and found no recession-direction separation. Finite diagnostic focal values were produced, but none passed the full frozen numerical certificate, so target estimability is not established and N01 is not VERIFIED.",
+  "evidence": [
+    {
+      "role": "specification",
+      "path": "numerical_existence/ANALYSIS_SPEC.json",
+      "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+    },
+    {
+      "role": "code",
+      "path": "numerical_existence/run_numerical_existence_audit.py",
+      "sha256": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/numerical/EXECUTION_RECEIPT.json",
+      "sha256": "137e7128aeaf08edac0073f00d3b85f98750958ab8e9cc6493f15451a6375c48"
+    },
+    {
+      "role": "result",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/numerical/MODEL_AUDIT.json",
+      "sha256": "f863238a616161dfb1258334126eed3aab2717d88bae9369d6f1ba442f7026e1"
+    },
+    {
+      "role": "validation_report",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/numerical/CONVERGENCE_EXISTENCE_REPORT.md",
+      "sha256": "69f2c21d31a75ee1c6b04c1998474dcf7ec6497af83c89bfb226b58d135e5f44"
+    }
+  ],
+  "response_locations": [
+    "runs/gate1_numerical_blocked_b9a7dd1/numerical/CONVERGENCE_EXISTENCE_REPORT.md",
+    "runs/gate1_numerical_blocked_b9a7dd1/numerical/BOUNDARY_PROFILING.csv",
+    "runs/gate1_numerical_blocked_b9a7dd1/numerical/FAMILY_MONTH_BOUNDARY_CELLS.csv"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

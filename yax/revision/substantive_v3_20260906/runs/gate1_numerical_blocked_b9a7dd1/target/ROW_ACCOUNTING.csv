@@ -1,0 +1,29 @@
+stage,value,unit,integer_physical_count,criterion_role
+source_rows_scanned,9843021,physical input rows,True,upstream only; includes rows later replaced or excluded
+wide_source_rows_scanned,9262480,physical input rows,True,wide-source component of source_rows_scanned
+repair_source_rows_scanned,580541,physical input rows,True,March-repair component of source_rows_scanned
+eligible_employed_age_22_65_source_records,5041595,physical source records,True,exact target-age routing universe before occupation validity
+wide_eligible_employed_age_22_65_source_records,4801576,physical source records,True,wide-source component of exact target-age eligibility
+repair_eligible_employed_age_22_65_source_records,240019,physical source records,True,repair-source component of exact target-age eligibility
+eligible_records_with_invalid_raw_occupation,0,physical source records,True,excluded before occupation routing
+eligible_records_with_valid_raw_occupation,5041595,physical source records,True,partitioned into early and current source records
+early_valid_source_records,1854390,physical source records,True,2017–2019 valid records offered to the occupation bridge
+current_valid_source_records,3187205,physical source records,True,2020 onward valid records routed directly
+early_matched_source_records,1846744,physical source records,True,early source records with a bridge route
+early_unmatched_source_records,7646,physical source records,True,early source records excluded for no bridge route
+wide_march_rows_explicitly_replaced,621589,physical input rows,True,wide-source March records removed before target eligibility
+wide_march_positive_weight_rows_explicitly_replaced,0,physical input rows,True,positive-weight subset of explicitly replaced wide-source rows
+early_expanded_route_descendants,2696977,in-memory bridge-contribution rows,True,not respondents; one matched early source record may have several descendants
+early_fractional_route_contributions,1224850,in-memory bridge-contribution rows,True,strictly positive bridge allocation below one
+early_unit_route_contributions,1472127,in-memory bridge-contribution rows,True,bridge allocation exactly one
+early_zero_mass_route_contributions,0,in-memory bridge-contribution rows,True,bridge allocation exactly zero
+current_direct_route_contributions,3187205,in-memory direct-contribution rows,True,one direct route for each valid current source record
+all_routed_contribution_rows,5884182,in-memory route-contribution rows,True,early descendants plus current direct contributions
+routed_age_level_aggregate_rows,1411327,grouped intermediate rows,True,pre-target aggregation
+authenticated_aggregate_grid_rows,53352,occupation-month rows,True,114-month transport grid including 2022-12
+canonical_static_grid_rows,52884,occupation-month rows,True,113-month static grid after excluding 2022-12
+positive_total_estimating_rows,51891,occupation-month rows,True,rows with a nonzero grouped-binomial criterion contribution
+one_sided_zero_rows_retained,12965,occupation-month rows,True,valid boundary stock observations retained
+both_zero_rows,993,occupation-month rows,True,present on balanced grid; excluded because total stock is zero
+young_stock,1214266456.0190506,CPS-weighted employed-person stock,False,continuous criterion numerator; not a row count
+older_stock,12380182137.007343,CPS-weighted employed-person stock,False,continuous comparison stock; not a row count

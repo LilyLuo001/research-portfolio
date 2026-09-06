@@ -1,0 +1,33 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The fresh exact-target audit defines the grouped-binomial mean-ratio estimand, retains one-sided zero-stock contributions, excludes only both-zero rows from the criterion, and rules out individual-probability and hiring interpretations. The audit passed, but the corrected equations and notes have not yet been integrated into the manuscript and appendix, so T01 is not VERIFIED.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "gate1_target/PRE_RESULTS_SPEC.md",
+      "sha256": "57c2763d245a926fdcde7ff2b51cb90831421afef7210a2a79d83550d7fb956a"
+    },
+    {
+      "role": "code",
+      "path": "gate1_target/run_exact_target_audit.py",
+      "sha256": "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/target/EXECUTION_RECEIPT.json",
+      "sha256": "cc87e834db44f2b0d61cb6f473bdf6be14f1901c2bd32c6959cf8e1bc1af4e6e"
+    },
+    {
+      "role": "verification_report",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/target/EXACT_TARGET_AUDIT_REPORT.md",
+      "sha256": "d7271c1b684813a41b9f9605dfbb7c19e777368a6b644b5717ff54cf21558c42"
+    }
+  ],
+  "response_locations": [
+    "runs/gate1_numerical_blocked_b9a7dd1/target/EXACT_TARGET_AUDIT_REPORT.md",
+    "runs/gate1_numerical_blocked_b9a7dd1/target/ROW_ACCOUNTING.csv"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

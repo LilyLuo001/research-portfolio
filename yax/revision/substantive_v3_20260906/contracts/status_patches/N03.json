@@ -1,0 +1,65 @@
+{
+  "status": "BLOCKED_COMPUTE",
+  "summary": "The fresh authorized run evaluated the exact objective with the two frozen solvers and declared boundary treatment for all 11 models. Every model failed the predeclared combined numerical certificate, so the diagnostic focal values are not validated estimates and dependent Gate 2 estimation cannot proceed under this specification.",
+  "evidence": [
+    {
+      "role": "specification",
+      "path": "numerical_existence/ANALYSIS_SPEC.json",
+      "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+    },
+    {
+      "role": "code",
+      "path": "numerical_existence/run_numerical_existence_audit.py",
+      "sha256": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/numerical/EXECUTION_RECEIPT.json",
+      "sha256": "137e7128aeaf08edac0073f00d3b85f98750958ab8e9cc6493f15451a6375c48"
+    },
+    {
+      "role": "result",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/numerical/SOLVER_COMPARISON.csv",
+      "sha256": "367b291eceeaacbab095ba54da7506d1f375bab3f366cc7df793950f16ccab50"
+    },
+    {
+      "role": "validation_report",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/numerical/CONVERGENCE_EXISTENCE_REPORT.md",
+      "sha256": "69f2c21d31a75ee1c6b04c1998474dcf7ec6497af83c89bfb226b58d135e5f44"
+    },
+    {
+      "role": "scheduler_record",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/scheduler/numerical.json",
+      "sha256": "d87b8b5daf5be086cab0730a36d9cc9819277f468fcf42f2340f7284b9ba8da7"
+    },
+    {
+      "role": "verification_report",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/README.md",
+      "sha256": "ecfbb404ebd9cd3dd2f6ebfbae2f678eff0887075e593f0f4971f1375b50ec22"
+    },
+    {
+      "role": "verification_report",
+      "path": "reviews/GATE1_BLOCKED_RUN_TEAM_REVIEW.md",
+      "sha256": "4e1dc2dc57f82cf8b30761868c496907bb14ec2b9c72652285e6587b4d6c2d81"
+    }
+  ],
+  "response_locations": [
+    "runs/gate1_numerical_blocked_b9a7dd1/README.md",
+    "runs/gate1_numerical_blocked_b9a7dd1/numerical/CONVERGENCE_EXISTENCE_REPORT.md",
+    "runs/gate1_numerical_blocked_b9a7dd1/numerical/SOLVER_COMPARISON.csv",
+    "runs/gate1_numerical_blocked_b9a7dd1/scheduler/numerical.json",
+    "reviews/GATE1_BLOCKED_RUN_TEAM_REVIEW.md"
+  ],
+  "review": {
+    "reviewer": "separate blocked-run review agent on the same execution team",
+    "report_path": "reviews/GATE1_BLOCKED_RUN_TEAM_REVIEW.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "A successful frozen two-solver, original-coordinate KKT, target-profile, fitted-mean, and full-Hessian certificate for every predeclared core model.",
+    "attempts": "Ran the fresh authenticated 11-model numerical audit with isolated pinned executables, one BLAS thread, an 8 GB request, and a two-hour limit. The run completed in 580 seconds using 2.054 GB. Most trust-region fits passed the frozen KKT/full-Hessian checks while L-BFGS-B did not; the unconditioned quintile-by-month seasonal model failed the original-coordinate KKT rule under both solvers, and some dynamic L-BFGS-B fits exceeded target-correction tolerance. The PASS-only transfer normalizer then rejected the blocked receipt as designed.",
+    "claim_impact": "No diagnostic focal coefficient from this run may be reported as a validated confirmatory estimate. Gate 2 analyses that depend on a certified core estimator remain blocked, and failure to detect or reproduce an effect cannot be inferred from these values.",
+    "next_step": "Retain this run unchanged. An identical deterministic rerun or an unapproved estimator substitution is not a remedy. Resume dependent estimation only after a separately documented scientific adjudication authorizes a new immutable numerical specification and explains which validation rule changes and why."
+  },
+  "approval": null
+}

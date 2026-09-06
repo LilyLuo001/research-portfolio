@@ -1,0 +1,464 @@
+{
+  "aggregate_schema_version": "yax-numerical-cells-v1",
+  "analysis_spec_id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
+  "analysis_spec_sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce",
+  "assignment_fingerprint": {
+    "algorithm": "SHA-256 of occ_code, family, integer beta_quintile, and float.hex(webb_z), tab-delimited and sorted by occ_code, with one LF per row",
+    "columns": [
+      "occ_code",
+      "family",
+      "beta_quintile",
+      "webb_z"
+    ],
+    "record_count": 468,
+    "schema_version": "yax-assignment-fingerprint-v1",
+    "sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa"
+  },
+  "assignment_fingerprint_artifact_sha256": "f895bbb8eb71317f8a97b1e0146e5bddda394e0f6ae223c98b9fe966c43492ff",
+  "assignment_fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+  "authenticated_source_hashes": {
+    "census_occ2010_to_2018_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization_measures_census2018": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "cps_occupation_exposure_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "first_post_outcome_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+    "ipums_cps_extract_11_march_basic_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "ipums_cps_extract_9_wide": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "rule_b_values_census2018": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "authorization": {
+    "checks": {
+      "frozen_tag": true,
+      "microdata_sha256": true,
+      "status": true
+    },
+    "repair_source_bound_by_canonical_v2": true,
+    "status": "PASS_AUTHORIZATION_CHAIN"
+  },
+  "balanced_grid_complete": true,
+  "builder_code_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+  "builder_transitive_code_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+  "builder_transitive_code_sha256_algorithm": "SHA-256 of canonical JSON runtime path-to-hash map excluding the builder; the empty map proves that historical reference code is not imported at runtime",
+  "calendar_checks": {
+    "missing_months": [
+      "2025-10"
+    ],
+    "observed_end": "2026-07",
+    "observed_month_count": 114,
+    "observed_start": "2017-01",
+    "october_2025_absent_not_interpolated": true,
+    "preperiod_month_count": 71,
+    "restored_march_months": [
+      "2017-03",
+      "2018-03",
+      "2019-03",
+      "2020-03",
+      "2021-03"
+    ],
+    "status": "PASS_CALENDAR",
+    "transition_2022_12_present": true
+  },
+  "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+  "cell_build_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+  "cell_build_spec_sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15",
+  "cells_filename": "aggregate_cells.csv",
+  "cells_row_count": 53352,
+  "cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+  "command_template": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-parent <YAX_V3_RUN_ROOT>",
+  "contains_resolved_private_paths": false,
+  "execution_command_binding": {
+    "binding_sha256": "a8650037a8d00eb2b975d5b6a6816e988bb079cca6184785c15e5da1da78d572",
+    "module_key": "cells",
+    "run_id": "gate1_cells_sge_7477104",
+    "sanitized_argv": [
+      "<YAX_PYTHON_BIN>",
+      "-I",
+      "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+      "--repo-root",
+      "<YAX_REPO_ROOT>",
+      "--microdata",
+      "<INPUT:ipums_cps_extract_9_wide>",
+      "--repair-microdata",
+      "<INPUT:ipums_cps_extract_11_march_basic_repair>",
+      "--output-parent",
+      "<YAX_V3_RUN_ROOT>"
+    ],
+    "sanitized_argv_sha256": "3262e0e0982b41dafec4eb2ce637144a457ef0ac907203910d15ad88c18ea9a6",
+    "scheduler_jobnumber": "7477104",
+    "schema_version": "yax-execution-command-binding-v2",
+    "status": "RUNNER_RECORDED_HASH_CONSISTENT"
+  },
+  "execution_runtime_authentication": {
+    "git_invocation": "<YAX_GIT_BIN>",
+    "git_resolved_executable_sha256": "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e",
+    "git_version": "git version 2.43.7",
+    "ignore_environment": true,
+    "import_affecting_environment_absent": true,
+    "isolated_mode": true,
+    "no_user_site": true,
+    "python_invocation": "<YAX_PYTHON_BIN>",
+    "python_resolved_executable_sha256": "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7",
+    "python_version": "3.13.8",
+    "safe_path": true,
+    "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES"
+  },
+  "fixed_membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+  "freshness_and_security": {
+    "atomic_directory_publish": true,
+    "credentials_persisted": false,
+    "historical_preperiod_cells_read": false,
+    "historical_reference_code_imported_at_runtime": false,
+    "new_output_leaf_required": true,
+    "only_six_canonical_raw_fields_read": true,
+    "output_outside_repository": true,
+    "private_paths_persisted": false,
+    "row_level_microdata_written": false
+  },
+  "generated_at_utc": "2026-09-06T15:43:07.603065+00:00",
+  "git_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+  "git_committed_artifact_hashes": {
+    "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+    "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15",
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+    "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+  },
+  "git_porcelain_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "git_required_ancestor_commit": "f2e16bc4228b40a258a4417f7598366c2af1142f",
+  "git_status": "PASS_COMMITTED_CLEAN_WORKTREE",
+  "git_tree": "3ec00fb684ed2ee00bd0b9593644cf53331faa06",
+  "git_worktree_clean": true,
+  "grid": {
+    "observed_month_count": 114,
+    "occupation_count": 468,
+    "row_count": 53352
+  },
+  "historical_reference_code_hashes": {
+    "dax/memo/power_calcs/young_relative_employment_power.py": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+    "yax/analysis/run_frozen_v11.py": "e40fdda2353dd0c0d6f92401e7bdfb5874c8a32ffa9d641b38144cc07054ddff",
+    "yax/revision/referee_20260905/run_referee_cells.py": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
+    "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
+    "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704"
+  },
+  "lookup_and_bridge_hashes": {
+    "census_occ2010_to_2018_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization_measures_census2018": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "cps_occupation_exposure_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "first_post_outcome_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+    "rule_b_values_census2018": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "observed_month_count": 114,
+  "occupation_count": 468,
+  "pre_execution_authorization": {
+    "authorization_file_sha256": "4a3b9438a2385ca379b791472eb3cf361081bc3b16e0437d1d0296fc3d5953ca",
+    "authorization_git_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+    "authorization_id": "yaxgate1auth_v1_43fcddf8efd4cc01b89261e75bba42e536dff23bc448a9539c8fd24e43a2567a",
+    "authorized_implementation_commit": "98d841b3555ec4e219e7c0b2f30e4ba7ce8b82c1",
+    "code_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+    "issued_at_utc": "2026-09-06T15:39:12Z",
+    "module_key": "cells",
+    "not_after_utc": "2026-09-07T11:39:12Z",
+    "not_before_utc": "2026-09-06T15:39:12Z",
+    "schema_version": "yax-gate1-pre-execution-authorization-v1",
+    "source_registry_sha256": "11857cd6b7074f7f8c9da05370d716f54239286fe59b3cdebd45ce34ce007bf1",
+    "status": "AUTHORIZED_FRESH_GATE1_EXECUTION",
+    "typed_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+    "typed_spec_sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15"
+  },
+  "raw_column_contract": {
+    "canonical_v2_variable_universe_parity": true,
+    "rejected_inherited_helper_fields": [
+      "OCC2010",
+      "IND1990"
+    ],
+    "required_columns_present": true,
+    "runtime_fields": [
+      "YEAR",
+      "MONTH",
+      "AGE",
+      "EMPSTAT",
+      "OCC",
+      "WTFINL"
+    ],
+    "source_column_counts": {
+      "ipums_cps_extract_11_march_basic_repair": 35,
+      "ipums_cps_extract_9_wide": 39
+    }
+  },
+  "reference_artifacts": {
+    "fixed_membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+  },
+  "route_checks": {
+    "actual_current_direct_stock": 10814425119.819199,
+    "actual_early_routed_stock": 4928695994.973938,
+    "bridge_mass_max": 1.0000000000009,
+    "bridge_mass_min": 0.9999999999997999,
+    "bridge_source_count": 503,
+    "current_absolute_gap": -1.9073486328125e-06,
+    "current_relative_gap": -1.7637078362279026e-16,
+    "early_absolute_gap": 0.0,
+    "early_relative_gap": 0.0,
+    "expected_early_routed_stock": 4928695994.973938,
+    "raw_current_valid_stock": 10814425119.8192,
+    "raw_early_matched_stock": 4928695994.973899,
+    "raw_early_valid_stock": 4949178509.196,
+    "record_count_definitions": {
+      "aggregate_rows": "unique occupation-month-age-route cells after summing routed contributions",
+      "eligible_records": "integer employed age-22-through-65 positive-weight source records after explicit March replacement and before occupation routing",
+      "expanded_route_descendants": "integer early-period source-to-destination bridge rows after matching; not respondents",
+      "fractional_route_contributions": "expanded early bridge rows with route weight strictly between zero and one",
+      "physical_rows": "integer input-file records before filtering"
+    },
+    "record_identities_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": {
+        "direct_contributions_equal_current_valid_records": true,
+        "early_descendants_partition_by_route_weight": true,
+        "early_equals_matched_plus_unmatched": true,
+        "eligible_equals_invalid_plus_valid": true,
+        "expanded_descendants_cover_each_matched_record": true,
+        "routed_contributions_equal_descendants_plus_direct": true,
+        "valid_equals_early_plus_current": true
+      },
+      "ipums_cps_extract_9_wide": {
+        "direct_contributions_equal_current_valid_records": true,
+        "early_descendants_partition_by_route_weight": true,
+        "early_equals_matched_plus_unmatched": true,
+        "eligible_equals_invalid_plus_valid": true,
+        "expanded_descendants_cover_each_matched_record": true,
+        "routed_contributions_equal_descendants_plus_direct": true,
+        "valid_equals_early_plus_current": true
+      }
+    },
+    "route_conservation_pass": true,
+    "source_stock_reconciliation": {
+      "ipums_cps_extract_11_march_basic_repair": {
+        "actual_current_direct_stock": 269940435.2477,
+        "actual_early_routed_stock": 408359442.6473031,
+        "current_absolute_gap": 0.0,
+        "current_relative_gap": 0.0,
+        "early_absolute_gap": 0.0,
+        "early_relative_gap": 0.0,
+        "expected_early_routed_stock": 408359442.6473031,
+        "raw_current_valid_stock": 269940435.2477,
+        "raw_early_matched_stock": 408359442.6473,
+        "raw_early_valid_stock": 410088001.31680006,
+        "route_conservation_pass": true,
+        "unmatched_early_stock": 1728558.669500053
+      },
+      "ipums_cps_extract_9_wide": {
+        "actual_current_direct_stock": 10544484684.5715,
+        "actual_early_routed_stock": 4520336552.326635,
+        "current_absolute_gap": 0.0,
+        "current_relative_gap": 0.0,
+        "early_absolute_gap": 0.0,
+        "early_relative_gap": 0.0,
+        "expected_early_routed_stock": 4520336552.326635,
+        "raw_current_valid_stock": 10544484684.5715,
+        "raw_early_matched_stock": 4520336552.326599,
+        "raw_early_valid_stock": 4539090507.8792,
+        "route_conservation_pass": true,
+        "unmatched_early_stock": 18753955.55260086
+      }
+    },
+    "total_record_identities": {
+      "direct_contributions_equal_current_valid_records": true,
+      "early_descendants_partition_by_route_weight": true,
+      "early_equals_matched_plus_unmatched": true,
+      "eligible_equals_invalid_plus_valid": true,
+      "eligible_total_equals_source_sum": true,
+      "physical_total_equals_source_sum": true,
+      "routed_contributions_equal_descendants_plus_direct": true,
+      "valid_equals_early_plus_current": true
+    },
+    "unmatched_early_stock": 20482514.22210121
+  },
+  "runtime_authentication": {
+    "command_template": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-parent <YAX_V3_RUN_ROOT>",
+    "environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
+    "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+    "kernel_release_rule": "recorded but nonbinding because SCC compute-node kernel patch levels may differ",
+    "observed": {
+      "kernel_release": "4.18.0-553.158.1.el8_10.x86_64",
+      "kernel_system": "Linux",
+      "libc": "2.28",
+      "libc_name": "glibc",
+      "machine": "x86_64",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "pytest": "9.1.1",
+      "python": "3.13.8",
+      "python_compiler": "GCC 12.2.0",
+      "python_implementation": "CPython",
+      "scipy": "1.16.2"
+    },
+    "runtime_contract_sha256": "35baa5eb70c9587d61ec6bbe001f3080607640a8301d095ba4b5db674ba95834",
+    "runtime_payload": {
+      "architecture": "x86_64",
+      "libc": {
+        "name": "glibc",
+        "version": "2.28"
+      },
+      "packages": {
+        "numpy": "2.5.1",
+        "pandas": "3.0.3",
+        "pytest": "9.1.1",
+        "scipy": "1.16.2"
+      },
+      "python_compiler": "GCC 12.2.0",
+      "python_implementation": "CPython",
+      "python_version": "3.13.8"
+    },
+    "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+    "status": "AUTHENTICATED_DECLARED_RUNTIME"
+  },
+  "runtime_code_hashes": {
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34"
+  },
+  "runtime_contract_sha256": "35baa5eb70c9587d61ec6bbe001f3080607640a8301d095ba4b5db674ba95834",
+  "runtime_environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
+  "runtime_environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+  "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+  "schema_version": "yax-numerical-cells-receipt-v1",
+  "six_field_cell_build_checks": {
+    "aggregate_rows": 1411327,
+    "current_direct_route_contributions": 3187205,
+    "current_direct_route_contributions_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 86229,
+      "ipums_cps_extract_9_wide": 3100976
+    },
+    "current_valid_source_records": 3187205,
+    "current_valid_source_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 86229,
+      "ipums_cps_extract_9_wide": 3100976
+    },
+    "early_expanded_route_descendants": 2696977,
+    "early_expanded_route_descendants_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 222970,
+      "ipums_cps_extract_9_wide": 2474007
+    },
+    "early_fractional_route_contributions": 1224850,
+    "early_fractional_route_contributions_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 100835,
+      "ipums_cps_extract_9_wide": 1124015
+    },
+    "early_matched_source_records": 1846744,
+    "early_matched_source_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 153136,
+      "ipums_cps_extract_9_wide": 1693608
+    },
+    "early_unit_route_contributions": 1472127,
+    "early_unit_route_contributions_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 122135,
+      "ipums_cps_extract_9_wide": 1349992
+    },
+    "early_unmatched_source_records": 7646,
+    "early_unmatched_source_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 654,
+      "ipums_cps_extract_9_wide": 6992
+    },
+    "early_valid_source_records": 1854390,
+    "early_valid_source_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 153790,
+      "ipums_cps_extract_9_wide": 1700600
+    },
+    "early_zero_mass_route_contributions": 0,
+    "early_zero_mass_route_contributions_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 0,
+      "ipums_cps_extract_9_wide": 0
+    },
+    "eligible_employed_age_22_65_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 240019,
+      "ipums_cps_extract_9_wide": 4801576
+    },
+    "eligible_employed_age_22_65_records_total": 5041595,
+    "invalid_raw_occ_records": 0,
+    "invalid_raw_occ_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 0,
+      "ipums_cps_extract_9_wide": 0
+    },
+    "observed_month_count": 114,
+    "physical_rows_read_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 580541,
+      "ipums_cps_extract_9_wide": 9262480
+    },
+    "physical_rows_read_total": 9843021,
+    "repair_eligible_employed_age_22_65_records": 240019,
+    "repair_observed_months": [
+      "2017-03",
+      "2018-03",
+      "2019-03",
+      "2020-03",
+      "2021-03"
+    ],
+    "routed_contribution_rows": 5884182,
+    "routed_contribution_rows_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 309199,
+      "ipums_cps_extract_9_wide": 5574983
+    },
+    "routed_rows": 5884182,
+    "runtime_raw_fields": [
+      "YEAR",
+      "MONTH",
+      "AGE",
+      "EMPSTAT",
+      "OCC",
+      "WTFINL"
+    ],
+    "source_ids": [
+      "ipums_cps_extract_9_wide",
+      "ipums_cps_extract_11_march_basic_repair"
+    ],
+    "valid_raw_occ_records": 5041595,
+    "valid_raw_occ_records_by_source": {
+      "ipums_cps_extract_11_march_basic_repair": 240019,
+      "ipums_cps_extract_9_wide": 4801576
+    },
+    "wide_march_positive_weight_rows_explicitly_replaced": 0,
+    "wide_march_rows_explicitly_replaced": 621589
+  },
+  "source_hashes": {
+    "census_occ2010_to_2018_bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization_measures_census2018": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "cps_occupation_exposure_lookup": "c6eb70623ea598bfc41f2352391add7a342a8809a4e57b02f2af0e75dd0223f8",
+    "first_post_outcome_access_receipt": "d13b1e1635433e8ef8f90c35667dedb24f503f9029d694557351e77b6904d9b3",
+    "historical_preperiod_cells": "4b8c8b96caeebc4121ad4914adbadf7ebfa98d677a80b32b78a9f905956ea800",
+    "ipums_cps_extract_11_march_basic_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "ipums_cps_extract_9_wide": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "rule_b_values_census2018": "8092f0eef57aaf4271a7dc563a4820e2f9a6d13519bcac9372837bc7a2c991e6"
+  },
+  "status": "PASS_FRESH_AGGREGATE_REBUILD",
+  "support_checks": {
+    "beta_quintile_cuts": [
+      0.153846153846,
+      0.324615384615,
+      0.45652173913,
+      0.537037037037
+    ],
+    "construction_month_count": 71,
+    "content_support_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+    "fresh_quintiles_match_fixed": true,
+    "fresh_support_matches_fixed": true,
+    "fresh_webb_z_matches_fixed_within_declared_tolerance": true,
+    "maximum_webb_z_absolute_difference": 0.0,
+    "no_postperiod_stock_used": true,
+    "occupation_count": 468,
+    "rebuild_webb_z_tolerance": 5e-15,
+    "webb_weighted_mean": 45.17590301148972,
+    "webb_weighted_sd": 26.258625996515853
+  },
+  "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+  "unread_canonical_source_ids": [
+    "historical_preperiod_cells"
+  ],
+  "weight_application_count": 1,
+  "weight_once_checks": {
+    "independent_aggregation_max_absolute_gap": 0.0,
+    "older_stock": 12491585038.820843,
+    "output_applies_no_additional_weight": true,
+    "route_weight_is_allocation_not_second_survey_weight": true,
+    "rows": 53352,
+    "status": "PASS_WEIGHT_ONCE",
+    "survey_weight_field": "WTFINL",
+    "weight_application_count": 1,
+    "young_stock": 1225277713.3401504
+  }
+}

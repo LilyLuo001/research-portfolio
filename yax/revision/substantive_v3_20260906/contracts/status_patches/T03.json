@@ -1,0 +1,38 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The fresh cell and exact-target audits reconcile the 2017-2019 bridge, current-period direct routing, March replacement, the 114-month transport grid, the 113-month static grid, and zero-cell treatment. They confirm that WTFINL enters routed stock once and distinguish physical records, fractional route descendants, aggregate rows, and weighted stocks. Manuscript and appendix integration remains incomplete, so T03 is not VERIFIED.",
+  "evidence": [
+    {
+      "role": "specification",
+      "path": "gate1_target/TARGET_AUDIT_SPEC.json",
+      "sha256": "fa425dce6d75475b6f562aba52898b8e71c7db0269d549f17ef9645720052651"
+    },
+    {
+      "role": "code",
+      "path": "gate1_target/run_exact_target_audit.py",
+      "sha256": "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9"
+    },
+    {
+      "role": "run_receipt",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/target/EXECUTION_RECEIPT.json",
+      "sha256": "cc87e834db44f2b0d61cb6f473bdf6be14f1901c2bd32c6959cf8e1bc1af4e6e"
+    },
+    {
+      "role": "result",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/target/ROW_ACCOUNTING.csv",
+      "sha256": "b9dbd6cc73848e867521ea5f6b095215fb949ae44945a31663db09b6cc941e2b"
+    },
+    {
+      "role": "validation_report",
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/target/EXACT_TARGET_AUDIT.json",
+      "sha256": "7dff9fc89c4a945d12f29947bed42c89ffc1138e102bc87cb85f5e47ffa1eb22"
+    }
+  ],
+  "response_locations": [
+    "runs/gate1_numerical_blocked_b9a7dd1/target/EXACT_TARGET_AUDIT_REPORT.md",
+    "runs/gate1_numerical_blocked_b9a7dd1/target/ROW_ACCOUNTING.csv"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}
