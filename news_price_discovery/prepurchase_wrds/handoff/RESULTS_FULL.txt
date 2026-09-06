@@ -1,0 +1,853 @@
+################################################################################
+### prepurchase_wrds - FULL NUMERIC APPENDIX
+### ETF-stock price discovery, no-purchase feasibility test
+### Generated 2026-09-06 from stage logs on SCC. Decision report: REPORT.md
+###
+### Every number below is stdout from code in src/ executed against the
+### archived WRDS mirror. Nothing is transcribed by hand.
+### Order of stages: s7 (safeguards) -> s1 (census/clock/macro) -> s2
+### (portfolio) -> s3A (delay) -> s3B (response) -> s4 (macro/Rigobon)
+### -> s5 (precision/manifest).
+################################################################################
+
+################################################################################
+### STAGE LOG: s7_03.out
+################################################################################
+
+  scanning 779 holdings parts for 3 portfolios
+    500/779 parts, 10 with our portfolios
+  12 parts contained our portfolios -> 46,068 rows
+
+--------------------------------------------------------------------------------------------
+etf   snapshots     rows        first         last  permno%  tna sum
+--------------------------------------------------------------------------------------------
+SPY         108   35,942   2018-01-31   2023-12-31   98.8%     99.5
+XLF          76    4,909   2018-01-31   2023-12-31   95.8%     99.9
+XLK          77    5,217   2018-01-31   2023-12-31   96.2%    100.0
+--------------------------------------------------------------------------------------------
+  eff_dt per (etf, report_dt): max=3, 21.1% of report dates carry more than one
+    example SPY report_dt=2018-01-31: eff_dt=['2018-02-09', '2018-03-07']
+    -> the snapshot unit is (portno, report_dt, eff_dt), not report_dt
+
+============================================================================================
+SINGLE EVENT ROUND TRIP
+============================================================================================
+  snapshot        XLK report_dt=2021-06-30 eff_dt=2021-07-07
+  position        MICROSOFT CORP ticker=MSFT permno=10107 weight=20.4300%
+  link rows for permno 10107: 1 (['MSFT'], score [1.0])
+  actual          pends=2021-06-30 anndats=2021-07-27 anntims=16:02:00 value=2.17 curr=USD
+  link check      interval covers anndats -> permno 10107 confirmed for THIS date, not assumed from the ticker
+  consensus file  ibes_statsum_eps_2021.parquet
+
+  daily returns around the release (h is ambiguous until the clock is verified):
+    2021-07-23  ret=+0.0123  retx=+0.0123
+    2021-07-26  ret=-0.0021  retx=-0.0021
+    2021-07-27  ret=-0.0087  retx=-0.0087  <- anndats
+    2021-07-28  ret=-0.0011  retx=-0.0011
+    2021-07-29  ret=+0.0010  retx=+0.0010
+    2021-07-30  ret=-0.0056  retx=-0.0056
+    2021-08-02  ret=-0.0003  retx=-0.0003
+
+  contribution_bps = 10000 * w * source_return
+    same-day mapping  w=20.4300% r=-0.0087 -> -17.741 bps
+    next-day mapping  w=20.4300% r=-0.0011 -> -2.282 bps
+    the two mappings differ; with the clock unverified BOTH are reported, neither is chosen
+
+  XLK own daily return on the same days:
+    2021-07-23  ret=+0.0099
+    2021-07-26  ret=-0.0005
+    2021-07-27  ret=-0.0095
+    2021-07-28  ret=-0.0012
+    2021-07-29  ret=+0.0046
+    2021-07-30  ret=-0.0007
+    2021-08-02  ret=-0.0036
+
+  checkpoint: holdings_three_etfs.parquet
+
+################################################################################
+### STAGE LOG: s1_01.out
+################################################################################
+
+============================================================================================
+ETF / SECURITY CROSSWALK
+============================================================================================
+etf   snapshots     rows  securities  med holdings  top weight   top5 wt
+--------------------------------------------------------------------------------------------
+SPY         107   35,500         615           497      4.31%    14.50%
+XLF          76    4,705          84            66     12.95%    40.77%
+XLK          76    5,020         104            71     21.97%    54.36%
+--------------------------------------------------------------------------------------------
+  union of source securities across all three: 615 PERMNOs
+  securities held by n of the three ETFs: 1->435, 2->172, 3->8
+
+  summary rows 2019-2023 (QTR/EPS/USD, actual present): 919,228
+  after requiring statpers < anndats_act:                 915,926
+  latest pre-release consensus per (ticker, fiscal end):  97,612
+  consensus age at release: median 20d, p90 144d, max 628d
+  consensus older than 100d dropped to a ledger: 12,000 (12.3%)
+  link rows lacking a permno: 7,337; lacking an edate: 760 (read as open-ended)
+  events with no interval-valid link: 2,012 (logged, not force-matched)
+  events resolved via an open-ended edate: 0
+  events whose link stays ambiguous:  0
+  events on securities held by SPY/XLK/XLF:              11,863
+  outside the 2019-2023 window, removed: 550
+
+  pre-event price found for 100.0% of events (t-5 trading days, strictly pre-release)
+
+============================================================================================
+EARNINGS EVENT CENSUS 2019-2023
+============================================================================================
+  unique news events (firm x fiscal quarter): 11,313
+  unique source firms (PERMNO):               597
+  unique calendar announcement dates:         978
+  repeated source firms: median 20 events per firm, max 20
+
+  by year:
+    2019   2,280 events   583 firms   194 dates
+    2020   2,289 events   578 firms   204 dates
+    2021   2,275 events   572 firms   197 dates
+    2022   2,244 events   568 firms   192 dates
+    2023   2,225 events   563 firms   191 dates
+
+  ETF-event observations (ETF held the firm at the prior snapshot):
+    SPY  10,578 obs   592 firms   958 dates
+    XLF   1,369 obs    83 firms   410 dates
+    XLK   1,732 obs   101 firms   522 dates
+    total 13,679 ETF-event rows over 958 distinct dates
+    these are NOT independent shocks: one firm's release appears once per holding ETF
+
+  announcement-date concentration: 978 dates, busiest 83 events, median 5
+    inverse HHI over dates = 348 effective dates (descriptive only; not a count of independent observations)
+
+  events sharing their date with another sample firm: 98.3%
+    (recorded, not eliminated; the daily ETF panel must aggregate these, not treat them as separate observations)
+
+  written: s1_earnings_events.parquet, s1_etf_event_obs.parquet, s1_unlinked_events.parquet
+
+################################################################################
+### STAGE LOG: s2_01.out
+################################################################################
+
+
+  amendment cells folded into their report date: 46 of 259 (median summed weight 0.1350%)
+============================================================================================
+SLEEVE COMPOSITION (share of reported TNA)
+============================================================================================
+etf      covered      cash   unmapped      sum  unmapped names
+--------------------------------------------------------------------------------------------
+SPY      98.64%     0.08%      0.36%   99.09%              24
+XLF      97.26%     0.14%      2.24%   99.65%               4
+XLK      99.77%     0.15%      0.16%  100.08%              16
+--------------------------------------------------------------------------------------------
+  the covered sleeve is reported as a sleeve; it is never renormalised to 100%
+  and called the fund, and unmapped lines are not treated as cash or zero-return
+
+  daily returns loaded: 871,824 rows, 618 securities, 2018-01-02..2023-12-29
+  convention: CRSP RET, which includes distributions; reinvestment is
+  implicit in the compounding and no separate dividend series is added
+
+============================================================================================
+ETF vs APPROXIMATE PORTFOLIO, DAILY
+============================================================================================
+etf      days    corr    beta    TE sd   TE p50   TE p95   cov wt  assets
+--------------------------------------------------------------------------------------------
+SPY     1,464  0.9986   1.017      7.3      2.8     12.2   99.41%     501
+XLF     1,481  0.9987   1.012      8.5      4.8     15.7   97.28%      66
+XLK     1,481  0.9993   1.006      6.3      2.8     11.2   99.78%      71
+--------------------------------------------------------------------------------------------
+  TE in basis points per day; weights are never fitted to improve this
+
+  tracking error by holding age (drift since the snapshot):
+age_bin    1-5d   6-10d  11-20d  21-40d    >40d
+etf                                            
+SPY         2.6     2.9     2.9     2.7     NaN
+XLF         4.7     4.8     5.0     4.9     4.3
+XLK         2.3     2.7     3.0     3.4     1.6
+  a rising row is the reported snapshot going stale between filings
+
+============================================================================================
+SNAPSHOT REPORT AGE AT EVENT
+============================================================================================
+age_bin  <=30d  31-60d  61-90d  91-120d  >120d (excluded)  total
+etf                                                             
+SPY       9333     584      28       11               622  10578
+XLF       1263      26       3        0                77   1369
+XLK       1381      47       9        2               293   1732
+
+  registered rule: snapshots older than 120 days are excluded from weighted
+  quantities. Excluded: 992 of 13,679 ETF-event rows (7.25%).
+  This is a project choice, not proof that a within-limit snapshot gives the
+  exact event-date weight. Exclusions stay in the ledger and the rule does not
+  move with the sign of any response.
+
+  availability labels (both preserved):
+    report_dt before the event (economic-date-prior): 13,679 rows, 100%
+    eff_dt   before the event (demonstrably available): 8,509 rows (62.2%)
+    only the second supports a knowable-before-the-event claim
+
+============================================================================================
+REALISED ACCOUNTING CONTRIBUTION (development sample)
+============================================================================================
+  contribution_bps = 10,000 x prior-snapshot weight x source return on
+  its reaction date. This is an accounting decomposition of a realised
+  return. It is not a flow, an AP trade, a causal news effect, a price-
+  discovery share, or a bound on anything.
+
+etf        obs   |c| p50   |c| p90   |c| p99       max   wt p50   wt max
+--------------------------------------------------------------------------------------------
+SPY      9,956      0.24      1.49      8.71      60.6   0.080%    7.57%
+XLF      1,292      1.89      8.90     34.25      90.2   0.740%   15.17%
+XLK      1,439      1.61     12.44     87.48     220.7   0.400%   24.50%
+--------------------------------------------------------------------------------------------
+
+  by year (median |contribution| in bps):
+etf            SPY     XLF     XLK
+event_date                        
+2019          0.26    1.58    1.88
+2020          0.23    2.06    1.46
+2021          0.20    1.66    1.40
+2022          0.27    2.50    1.82
+2023          0.25    1.97    1.83
+
+  by verified session (median |contribution| in bps):
+etf                SPY     XLF     XLK
+session                               
+AMC               0.24    1.39    1.89
+BMO               0.25    2.28    1.30
+NONTRADING_DAY    1.32   20.67    <NA>
+REGULAR_HOURS     0.31    4.39    2.56
+
+  largest single-firm median contributions (>=4 events):
+    XLK  permno 14593   APPLE INC                          79.81 bps  n=20
+    XLK  permno 10107   MICROSOFT CORP                     60.51 bps  n=20
+    XLF  permno 47896   JPMORGAN CHASE & CO                22.76 bps  n=19
+    SPY  permno 84788   AMAZON COM INC                     21.74 bps  n=20
+    XLF  permno 83443   BERKSHIRE HATHAWAY INC DEL         20.11 bps  n=20
+    SPY  permno 14593   APPLE INC                          19.71 bps  n=20
+    XLF  permno 38703   WELLS FARGO & CO NEW               17.05 bps  n=19
+    SPY  permno 10107   MICROSOFT CORP                     16.48 bps  n=20
+
+  simultaneous-earnings ledger:
+    ETF-event rows whose reaction date carries other sample releases: 98.6%
+    distinct ETF-reaction-date cells: 1,800
+    announcers per cell: median 3, max 71
+    summed announcing weight per cell: median 1.48%, max 49.91%
+
+  written: s2_tracking.parquet, s2_tracking_daily.parquet, s2_contributions.parquet,
+           s2_simultaneous_ledger.parquet, s2_exclusion_ledger.parquet
+
+################################################################################
+### STAGE LOG: s3_01.out
+################################################################################
+
+============================================================================================
+HOU-MOSKOWITZ FIRST-STAGE DELAY (D1)
+============================================================================================
+  benchmark   CRSP value-weighted index (vwretd), verified in stage 7;
+              the original-style baseline needs no adaptation and the
+              benchmark is not changed anywhere in this stage
+  securities  618 (615 constituents + 3 ETFs)
+  returns     2017-01-03..2023-12-29, 2017-2018 read as regression warm-up only
+  D1 = 1 - R2(contemporaneous only) / R2(contemporaneous + 4 lags),
+  raw R-squared, identical rows in both models
+
+============================================================================================
+WEEKLY D1, INDIVIDUAL SOURCE STOCKS
+============================================================================================
+  regressions: 2,853   securities: 596   formation dates: 5
+  median regression rows: 52 (minimum enforced: 40)
+  numerically unstable denominators (R2 with lags <= 0.01): 0 (0.0%) -> D1 withheld, not winsorised
+
+  quantity                     p10       p25       p50       p75       p90
+  R2 contemporaneous        0.0953    0.2168    0.3634    0.5180    0.6375
+  R2 with 4 lags            0.1840    0.2934    0.4265    0.5696    0.6955
+  D1                        0.0297    0.0571    0.1192    0.2518    0.4870
+  beta contemporaneous      0.4140    0.7162    1.0297    1.3685    1.7647
+
+  mean D1 0.1996   sd 0.2170
+
+  lag coefficients (the sign is reported, not selected):
+  lag            mean     median   share > 0
+  1           -0.0161    -0.0061      49.1%
+  2           -0.0148    -0.0106      47.8%
+  3            0.0137     0.0069      51.3%
+  4           -0.0325    -0.0220      45.6%
+
+  joint test that all four lags are zero: rejected at 5% in 15.0% of regressions
+
+  by formation year:
+             n    d1_med       r2c       r2u
+formation                                   
+2019       577    0.1311    0.3441    0.4066
+2020       578    0.1118    0.5778    0.6558
+2021       572    0.1767    0.2429    0.3002
+2022       566    0.1038    0.3998    0.4660
+2023       560    0.0924    0.3526    0.3900
+
+============================================================================================
+WEEKLY D1, ETF SECURITIES (ADAPTATION, NOT HM's SAMPLE)
+============================================================================================
+  regressions: 15   securities: 3   formation dates: 5
+  median regression rows: 52 (minimum enforced: 40)
+  numerically unstable denominators (R2 with lags <= 0.01): 0 (0.0%) -> D1 withheld, not winsorised
+
+  quantity                     p10       p25       p50       p75       p90
+  R2 contemporaneous        0.6855    0.7208    0.8955    0.9750    0.9887
+  R2 with 4 lags            0.6930    0.7274    0.9011    0.9764    0.9905
+  D1                        0.0012    0.0025    0.0058    0.0098    0.0168
+  beta contemporaneous      0.9175    0.9589    0.9822    1.1868    1.2866
+
+  mean D1 0.0070   sd 0.0061
+
+  lag coefficients (the sign is reported, not selected):
+  lag            mean     median   share > 0
+  1           -0.0152    -0.0206      33.3%
+  2            0.0060     0.0097      53.3%
+  3           -0.0010    -0.0049      46.7%
+  4            0.0127     0.0092      60.0%
+
+  joint test that all four lags are zero: rejected at 5% in 6.7% of regressions
+
+  by formation year:
+           n    d1_med       r2c       r2u
+formation                                 
+2019       3    0.0148    0.8540    0.8704
+2020       3    0.0036    0.9059    0.9091
+2021       3    0.0092    0.7468    0.7537
+2022       3    0.0058    0.9034    0.9088
+2023       3    0.0033    0.8233    0.8290
+
+  per instrument:
+formation     2019     2020     2021     2022     2023
+label                                                 
+SPY         0.0014   0.0032   0.0007   0.0019   0.0011
+XLF         0.0148   0.0036   0.0182   0.0105   0.0033
+XLK         0.0189   0.0062   0.0092   0.0058   0.0069
+
+============================================================================================
+DAILY FOUR-LAG SENSITIVITY, SOURCE STOCKS (FIXED FREQUENCY)
+============================================================================================
+  regressions: 2,901   securities: 607   formation dates: 5
+  median regression rows: 252 (minimum enforced: 40)
+  numerically unstable denominators (R2 with lags <= 0.01): 0 (0.0%) -> D1 withheld, not winsorised
+
+  quantity                     p10       p25       p50       p75       p90
+  R2 contemporaneous        0.1141    0.1978    0.3434    0.4905    0.6067
+  R2 with 4 lags            0.1326    0.2128    0.3575    0.5059    0.6231
+  D1                        0.0091    0.0178    0.0378    0.0791    0.1542
+  beta contemporaneous      0.5026    0.7591    1.0063    1.2759    1.5562
+
+  mean D1 0.0742   sd 0.1169
+
+  lag coefficients (the sign is reported, not selected):
+  lag            mean     median   share > 0
+  1            0.0191     0.0160      56.1%
+  2           -0.0053    -0.0083      46.7%
+  3           -0.0017    -0.0000      50.0%
+  4           -0.0106    -0.0115      45.1%
+
+  joint test that all four lags are zero: rejected at 5% in 21.6% of regressions
+
+  by formation year:
+             n    d1_med       r2c       r2u
+formation                                   
+2019       593    0.0358    0.3083    0.3219
+2020       585    0.0408    0.5511    0.5844
+2021       580    0.0613    0.1882    0.2055
+2022       575    0.0300    0.3588    0.3691
+2023       568    0.0258    0.3807    0.3945
+
+============================================================================================
+DAILY FOUR-LAG SENSITIVITY, ETF SECURITIES
+============================================================================================
+  regressions: 15   securities: 3   formation dates: 5
+  median regression rows: 252 (minimum enforced: 40)
+  numerically unstable denominators (R2 with lags <= 0.01): 0 (0.0%) -> D1 withheld, not winsorised
+
+  quantity                     p10       p25       p50       p75       p90
+  R2 contemporaneous        0.6703    0.7730    0.8957    0.9748    0.9895
+  R2 with 4 lags            0.6736    0.7745    0.9013    0.9751    0.9898
+  D1                        0.0002    0.0004    0.0029    0.0062    0.0072
+  beta contemporaneous      0.9235    0.9796    1.0026    1.2763    1.3032
+
+  mean D1 0.0037   sd 0.0036
+
+  lag coefficients (the sign is reported, not selected):
+  lag            mean     median   share > 0
+  1           -0.0166     0.0016      53.3%
+  2           -0.0179    -0.0117      20.0%
+  3            0.0006     0.0024      53.3%
+  4           -0.0052    -0.0054      33.3%
+
+  joint test that all four lags are zero: rejected at 5% in 33.3% of regressions
+
+  by formation year:
+           n    d1_med       r2c       r2u
+formation                                 
+2019       3    0.0033    0.8621    0.8687
+2020       3    0.0055    0.9188    0.9303
+2021       3    0.0024    0.7634    0.7652
+2022       3    0.0061    0.8957    0.9013
+2023       3    0.0015    0.8543    0.8568
+
+============================================================================================
+  These are market-response delay measures at daily and weekly
+  resolution. They do not estimate firm-news event speed, do not
+  identify a causal ETF-to-stock channel, and cannot establish
+  minute-level or subminute leadership in either direction.
+  written: s3_delay.parquet
+
+################################################################################
+### STAGE LOG: s3_02.out
+################################################################################
+
+============================================================================================
+EARNINGS RESPONSE, SETUP
+============================================================================================
+  events with a scaled surprise: 11,313 over 978 dates, 597 firms
+  surprise (% of pre-event price): p1 -2.1184  p25 0.0000  p50 0.0586  p75 0.1911  p99 2.4565
+  positive surprises: 74.8%   exactly zero: 3.8%
+  the scale is fixed here and never re-chosen after seeing a response
+
+============================================================================================
+SOURCE-STOCK RESPONSE, CAR(0,h) IN BPS PER 1% SURPRISE
+============================================================================================
+  raw signed returns; all three reaction-date mappings shown, none selected
+
+  mapping        h       n  dates        beta              95% block CI  sig
+--------------------------------------------------------------------------------------------
+  session        0  11,313    962       -0.21   [    -2.62,     10.13]     
+  session        1  11,313    962       -0.37   [    -3.76,     13.99]     
+  session        2  11,313    962        0.06   [    -3.32,     15.54]     
+  session        5  11,311    961       -0.93   [    -4.06,     15.46]     
+  session       10  11,296    957       -3.27   [    -6.80,     13.60]     
+  sameday        0  11,313    948       -0.80   [    -2.89,      6.42]     
+  sameday        1  11,313    948       -0.42   [    -3.66,     13.64]     
+  sameday        2  11,313    948       -0.09   [    -3.35,     13.76]     
+  sameday        5  11,312    948       -1.06   [    -4.16,     11.60]     
+  sameday       10  11,298    944       -3.30   [    -6.91,     13.04]     
+  nextday        0  11,313    948        0.12   [    -1.29,      7.96]     
+  nextday        1  11,313    948        0.56   [    -0.93,      9.42]     
+  nextday        2  11,313    948       -0.44   [    -2.79,     11.90]     
+  nextday        5  11,306    947       -0.65   [    -2.49,      7.97]     
+  nextday       10  11,295    943       -3.68   [    -5.60,      7.91]     
+--------------------------------------------------------------------------------------------
+
+============================================================================================
+LEVERAGE IN THE RAW SLOPE
+============================================================================================
+  |surprise| > 5% of price: 94 events; > 25%: 13
+  top  2 events by |surprise| carry  79.7% of total regressor variance
+  top  5 events by |surprise| carry  92.5% of total regressor variance
+  top 10 events by |surprise| carry  98.5% of total regressor variance
+  top 50 events by |surprise| carry  99.6% of total regressor variance
+
+  the extreme names:
+    CHESAPEAKE ENRGY              permno 78877   2020-02-26  pre-event price     0.48  surprise     834.6% of price
+    CHESAPEAKE ENRGY              permno 78877   2019-08-06  pre-event price     1.80  surprise    -444.4% of price
+    CHESAPEAKE ENRGY              permno 78877   2020-05-11  pre-event price    15.57  surprise    -266.0% of price
+    CHESAPEAKE ENRGY              permno 78877   2019-02-27  pre-event price     2.75  surprise     218.2% of price
+    NEKTAR                        permno 80539   2023-11-07  pre-event price     0.47  surprise    -159.9% of price
+
+============================================================================================
+RESPONSE BY SURPRISE DECILE (TAIL-ROBUST DESCRIPTIVE)
+============================================================================================
+
+  mapping: session   (mean CAR in bps)
+  dec        n  surprise%       h=0       h=1       h=2       h=5      h=10
+  1      1,132    -0.3866    -268.7    -252.0    -237.4    -197.8    -147.1
+  2      1,131    -0.0482    -188.1    -180.9    -182.4    -175.8    -157.5
+  3      1,131     0.0000     -74.0     -74.0     -63.8     -71.5     -65.5
+  4      1,131     0.0220     -10.9      -6.9      10.2      18.5      47.9
+  5      1,132     0.0447      37.3      49.2      55.2      84.4      84.5
+  6      1,131     0.0755      55.3      71.5      73.4      86.8     117.6
+  7      1,131     0.1205      79.2      91.0     102.1     139.4     173.0
+  8      1,131     0.1911     129.2     134.2     145.0     162.5     194.0
+  9      1,131     0.3286     144.6     157.0     173.9     193.8     252.0
+  10     1,132     0.8469     235.8     266.8     291.4     337.2     409.7
+  ------------------------------------------------------------
+  D10-D1                       504.5     518.8     528.8     535.1     556.8
+
+  mapping: sameday   (mean CAR in bps)
+  dec        n  surprise%       h=0       h=1       h=2       h=5      h=10
+  1      1,132    -0.3866    -134.9    -244.6    -231.7    -187.0    -137.0
+  2      1,131    -0.0482    -125.0    -186.1    -181.5    -174.9    -160.0
+  3      1,131     0.0000     -34.6     -67.9     -66.7     -67.7     -62.6
+  4      1,131     0.0220     -15.9      -8.7       0.7      18.2      51.7
+  5      1,132     0.0447      11.6      47.9      51.2      78.8      84.7
+  6      1,131     0.0755      48.8      71.4      82.1      89.8     124.7
+  7      1,131     0.1205      46.1      86.0     101.2     132.3     173.3
+  8      1,131     0.1911      74.2     135.8     137.5     158.8     203.4
+  9      1,131     0.3286      93.2     164.6     183.9     205.2     267.7
+  10     1,132     0.8469     158.3     263.7     293.3     351.2     422.8
+  ------------------------------------------------------------
+  D10-D1                       293.1     508.3     525.0     538.2     559.8
+
+  mapping: nextday   (mean CAR in bps)
+  dec        n  surprise%       h=0       h=1       h=2       h=5      h=10
+  1      1,132    -0.3866    -110.7     -98.1     -92.4     -36.7      15.3
+  2      1,131    -0.0482     -62.3     -56.6     -51.0     -42.2     -31.2
+  3      1,131     0.0000     -33.3     -32.4     -28.2     -25.8     -23.9
+  4      1,131     0.0220       7.3      16.4      32.9      49.4      61.5
+  5      1,132     0.0447      36.6      39.5      54.9      70.0      77.5
+  6      1,131     0.0755      23.0      33.5      43.5      56.3      87.3
+  7      1,131     0.1205      39.9      55.5      65.6      98.4     127.9
+  8      1,131     0.1911      63.0      65.3      80.8     110.0     132.2
+  9      1,131     0.3286      69.9      88.1     100.7     119.9     175.5
+  10     1,132     0.8469     105.8     136.0     162.8     211.1     269.3
+  ------------------------------------------------------------
+  D10-D1                       216.5     234.1     255.2     247.8     254.0
+
+============================================================================================
+SOURCE-STOCK POST-EVENT DRIFT [+2,+20], REPORTED SEPARATELY
+============================================================================================
+  a distinct interval, never folded into CAR(0,h) and never used as a divisor
+
+  mapping        h       n  dates        beta              95% block CI  sig
+--------------------------------------------------------------------------------------------
+  session     +2..+20  11,276    950       -5.50   [   -27.12,     -0.43]    *
+  sameday     +2..+20  11,277    937       -5.61   [   -25.40,     -0.10]    *
+  nextday     +2..+20  11,275    936       -4.88   [   -17.61,     -0.60]    *
+--------------------------------------------------------------------------------------------
+
+  pre-event market-model coverage: 11,277 of 11,312 (alpha, beta) pairs estimated on [-250, -21]
+
+============================================================================================
+SOURCE-STOCK RESPONSE, PRE-EVENT FACTOR-ADJUSTED (DIAGNOSTIC)
+============================================================================================
+  accompanies the raw baseline; it does not replace it
+
+  mapping        h       n  dates        beta              95% block CI  sig
+--------------------------------------------------------------------------------------------
+  factor-adj     0  11,278    960        0.04   [    -2.33,     10.27]     
+  factor-adj     1  11,278    960        0.64   [    -2.09,     13.83]     
+  factor-adj     2  11,278    960        1.37   [    -1.41,     14.65]     
+  factor-adj     5  11,276    959       -0.37   [    -3.51,     12.79]     
+  factor-adj    10  11,261    955        0.10   [    -1.87,     13.85]     
+--------------------------------------------------------------------------------------------
+
+============================================================================================
+ETF DAILY PANEL: AGGREGATED WEIGHTED SURPRISE
+============================================================================================
+  S(f,d) = sum over announcing holdings of prior-snapshot weight x
+  signed surprise, summed to the ETF reaction date. Source-event
+  detail is preserved in s2_contributions.parquet.
+
+  ETF-date cells: 1,800 over 928 distinct dates
+  announcers per cell: median 3, max 71
+  announcing weight per cell: median 1.48%, p95 14.18%, max 49.91%
+  S dispersion: sd 0.018150, p5 -0.002648, p95 0.015509
+
+============================================================================================
+ETF RESPONSE TO THE AGGREGATED WEIGHTED SURPRISE
+============================================================================================
+  resampled by whole calendar date jointly across the three ETFs; duplicated
+  ETF-date rows are not treated as independent shocks
+
+  mapping        h       n  dates        beta              95% block CI  sig
+--------------------------------------------------------------------------------------------
+  etf-agg        0   1,800    928        0.49   [    -4.81,      6.40]     
+  etf-agg        1   1,800    928        4.20   [    -6.56,     10.98]     
+  etf-agg        2   1,800    928        3.15   [    -6.29,      9.67]     
+  etf-agg        5   1,799    927        4.20   [    -9.40,     11.68]     
+  etf-agg       10   1,792    923       -0.64   [   -10.18,     12.30]     
+  etf-agg     +2..+20   1,782    916       22.57   [    12.67,     41.32]    *
+--------------------------------------------------------------------------------------------
+
+  same specification with each ETF alone (dependence unchanged):
+  etf      h      n        beta              95% block CI
+  SPY      0    928       -9.85   [   -31.05,     12.95]
+  SPY      1    928       -1.79   [   -21.54,     18.00]
+  XLF      0    362        0.98   [    -4.10,      6.12]
+  XLF      1    362        4.73   [    -6.30,     10.76]
+  XLK      0    510       -3.31   [   -25.99,     22.99]
+  XLK      1    510       -5.70   [   -31.54,     33.84]
+
+============================================================================================
+  A daily response coefficient measures how much of a surprise is
+  reflected by a day's close. It does not order the ETF against its
+  constituents inside the day, and a wide or zero-centred interval
+  here is inconclusive about intraday leadership, not evidence
+  against it.
+  written: s3_response.parquet, s3_etf_daily_panel.parquet
+
+################################################################################
+### STAGE LOG: s4_01.out
+################################################################################
+
+============================================================================================
+MACRO SUPPLEMENT (FRBSF USMPD) AND VARIANCE REGIMES
+============================================================================================
+  status    public external supplement, hashed in stage 1; not a
+            WRDS file and not a substitute for quote histories
+  aligned trading days 2019-2023: 1,258
+  FOMC event days in window: 46
+
+============================================================================================
+DAILY ETF RESPONSE TO RATE-BASED POLICY SURPRISE
+============================================================================================
+  the surprise is the published rate-futures move; it is never
+  inferred from the equity return being explained. A statement and
+  its press conference on one day are one daily observation.
+
+  series etf       n   beta bps/bp          95% bootstrap CI
+--------------------------------------------------------------------------------------------
+  MP1    SPY      45          6.81   [   -32.50,      9.89]
+  MP1    XLF      45          9.79   [   -26.10,     13.49]
+  MP1    XLK      45          9.15   [   -46.26,     13.56]
+  MP2    SPY      45         -2.48   [   -33.28,      9.84]
+  MP2    XLF      45          2.57   [   -28.17,     15.08]
+  MP2    XLK      45         -1.85   [   -42.96,     14.32]
+  FF1    SPY      45         10.27   [   -67.07,     14.68]
+  FF1    XLF      45         13.17   [   -61.77,     25.89]
+  FF1    XLK      45         14.21   [   -88.91,     16.98]
+  ED1    SPY      45         -0.99   [   -16.29,      9.84]
+  ED1    XLF      45          3.45   [   -13.73,     16.48]
+  ED1    XLK      45         -1.09   [   -21.76,     13.35]
+  ED4    SPY      45         -4.04   [    -8.74,      0.72]
+  ED4    XLF      45         -1.52   [    -6.32,      4.61]
+  ED4    XLK      45         -4.79   [   -11.48,      1.25]
+--------------------------------------------------------------------------------------------
+  a coarse daily elasticity. It says nothing about whether the ETF or
+  its constituents moved first inside the announcement window, and an
+  FOMC decision is a shock to both, not to the ETF alone.
+
+============================================================================================
+RIGOBON RELEVANCE DIAGNOSTIC: MONETARY (FOMC)
+============================================================================================
+  announcement days 45, control days 752 (2-10 trading days either side, event days excluded)
+  means are left in; returns are not standardised, because the
+  variance change is the object under study
+
+  announcement window: n=45 days
+                       SPY  SPY_basket         XLK         XLF
+    SPY            19758.7     20257.8     24125.1     22460.1
+    SPY_basket     20257.8     20852.5     24709.7     23303.7
+    XLK            24125.1     24709.7     34961.4     22462.6
+    XLF            22460.1     23303.7     22462.6     35537.2
+    correlation off-diagonal: SPY~SPY_basket 0.9980, SPY~XLK 0.9179, SPY~XLF 0.8476, SPY_basket~XLK 0.9152, SPY_basket~XLF 0.8561, XLK~XLF 0.6373
+
+  control window: n=752 days
+                       SPY  SPY_basket         XLK         XLF
+    SPY            21377.8     21786.9     25875.7     23731.9
+    SPY_basket     21786.9     22266.0     26378.6     24299.8
+    XLK            25875.7     26378.6     34842.8     25667.6
+    XLF            23731.9     24299.8     25667.6     33623.4
+    correlation off-diagonal: SPY~SPY_basket 0.9986, SPY~XLK 0.9481, SPY~XLF 0.8852, SPY_basket~XLK 0.9471, SPY_basket~XLF 0.8881, XLK~XLF 0.7499
+
+  variance ratio, announcement / control:
+    SPY          0.924   (sd 140.6 vs 146.2 bps)
+    SPY_basket   0.937   (sd 144.4 vs 149.2 bps)
+    XLK          1.003   (sd 187.0 vs 186.7 bps)
+    XLF          1.057   (sd 188.5 vs 183.4 bps)
+
+  generalised eigenvalues of Sigma_ann relative to Sigma_ctrl:
+    1.606  1.433  1.009  0.897
+    spread (max/min) = 1.790
+    -> the change is not proportional; relative variances do move
+
+  near-collinearity: condition number of the announcement covariance = 2,600
+    -> the system is close to singular. The ETF and its own basket
+       are nearly the same series at daily resolution, so any
+       structural matrix recovered by inverting this is dominated
+       by the direction with almost no independent variation.
+
+  earnings-dense days: top quintile of summed announcing weight, 186 days
+
+============================================================================================
+RIGOBON RELEVANCE DIAGNOSTIC: MICRO (EARNINGS-DENSE)
+============================================================================================
+  announcement days 186, control days 621 (2-10 trading days either side, event days excluded)
+  means are left in; returns are not standardised, because the
+  variance change is the object under study
+
+  announcement window: n=186 days
+                       SPY  SPY_basket         XLK         XLF
+    SPY            13778.2     14015.2     17907.5     13352.5
+    SPY_basket     14015.2     14295.0     18208.5     13642.0
+    XLK            17907.5     18208.5     27260.8     14066.2
+    XLF            13352.5     13642.0     14066.2     21570.2
+    correlation off-diagonal: SPY~SPY_basket 0.9986, SPY~XLK 0.9240, SPY~XLF 0.7745, SPY_basket~XLK 0.9224, SPY_basket~XLF 0.7769, XLK~XLF 0.5801
+
+  control window: n=621 days
+                       SPY  SPY_basket         XLK         XLF
+    SPY            14420.1     14541.9     17730.2     15285.8
+    SPY_basket     14541.9     14705.3     17854.3     15503.9
+    XLK            17730.2     17854.3     25048.3     15793.1
+    XLF            15285.8     15503.9     15793.1     22824.3
+    correlation off-diagonal: SPY~SPY_basket 0.9986, SPY~XLK 0.9329, SPY~XLF 0.8426, SPY_basket~XLK 0.9303, SPY_basket~XLF 0.8463, XLK~XLF 0.6605
+
+  variance ratio, announcement / control:
+    SPY          0.955   (sd 117.4 vs 120.1 bps)
+    SPY_basket   0.972   (sd 119.6 vs 121.3 bps)
+    XLK          1.088   (sd 165.1 vs 158.3 bps)
+    XLF          0.945   (sd 146.9 vs 151.1 bps)
+
+  generalised eigenvalues of Sigma_ann relative to Sigma_ctrl:
+    1.604  1.368  1.009  0.798
+    spread (max/min) = 2.010
+    -> the change is not proportional; relative variances do move
+
+  near-collinearity: condition number of the announcement covariance = 3,475
+    -> the system is close to singular. The ETF and its own basket
+       are nearly the same series at daily resolution, so any
+       structural matrix recovered by inverting this is dominated
+       by the direction with almost no independent variation.
+
+============================================================================================
+  Comparing these two families shows only that second moments differ
+  across calendar regimes. It does not identify a transmission matrix,
+  and it is not evidence that one matrix governs both regimes.
+  written: s4_regimes.parquet, s4_rate_response.parquet
+
+################################################################################
+### STAGE LOG: s5_01.out
+################################################################################
+
+============================================================================================
+OBSERVED PRECISION OF THE DAILY QUANTITIES (MEASURED)
+============================================================================================
+  ETF minus approximate basket, daily, in bps:
+  etf       days       sd   p50 |.|   p95 |.|     corr
+  SPY      1,464      7.3       2.8      12.2   0.9986
+  XLF      1,481      8.5       4.8      15.7   0.9987
+  XLK      1,481      6.3       2.8      11.2   0.9993
+
+  this is the difference series, so the common factor is already
+  netted out; it is not the sum of two independent return variances
+  and it is NOT rescaled to any shorter horizon anywhere below
+
+  achieved 95% interval half-widths on the ETF daily response
+  (block-resampled by calendar date, the dependence the sample has):
+    h=0       beta     0.49   half-width     5.61 bps per unit surprise   n=1,800 rows on 928 dates
+    h=1       beta     4.20   half-width     8.77 bps per unit surprise   n=1,800 rows on 928 dates
+    h=2       beta     3.15   half-width     7.98 bps per unit surprise   n=1,800 rows on 928 dates
+    h=5       beta     4.20   half-width    10.54 bps per unit surprise   n=1,799 rows on 927 dates
+    h=10      beta    -0.64   half-width    11.24 bps per unit surprise   n=1,792 rows on 923 dates
+    h=+2..+20 beta    22.57   half-width    14.32 bps per unit surprise   n=1,782 rows on 916 dates
+
+============================================================================================
+DEPENDENCE: WHAT COUNTS AS AN OBSERVATION
+============================================================================================
+  ETF-event rows                         12,687
+  distinct source events                 9,958
+  distinct reaction dates                928
+  distinct source firms                  583
+  inverse-HHI effective number of dates  355
+
+  the inverse HHI is a descriptive concentration number. It does not
+  prove the dates are independent and it does not substitute for the
+  clustered intervals reported in stage 3.
+  Replicating one source event across three ETFs does not create three
+  shocks, so the row count is never used as the sample size below.
+
+============================================================================================
+OUTCOME-INDEPENDENT SELECTION OF THE INTRADAY BATCH
+============================================================================================
+  eligible after pre-event screens: 7,467 ETF-event rows
+    holdings demonstrably available before the event (eff_dt), price >= $5,
+    session verified as BMO or AMC, snapshot age within 120 days
+  distinct source events available: 5,901 in 48 strata
+  earnings events drawn: 60 across 31 strata, 53 firms, 5 years
+    by session: BMO 37, AMC 23
+  FOMC events drawn: 12 stratified by year, 5 years
+  the draw is seeded and stratified on pre-event information only;
+  it is not the set of events with the largest realised contributions
+
+============================================================================================
+CONDITIONAL PLANNING TABLE (ASSUMPTIONS, NOT MEASUREMENTS)
+============================================================================================
+  prespecified horizon: release time T to T+15 minutes, quote-clock sampled at 1 second
+  every number in this table is conditional on an ASSUMED per-event
+  residual dispersion of the ETF-minus-basket difference. None of
+  these values is estimated from the daily data, and the daily
+  dispersion is deliberately not rescaled into them.
+
+  sum of squared residualised standardised surprises in the batch:
+    event level (one row per source event, 60 events): 58.81
+    date level (events summed to 52 reaction dates): 59.52
+    if ETF rows were counted as independent (NOT recommended): 74.93
+
+  MDE80 = (1.96 + 0.84) x assumed_residual_SD / sqrt(sum(residualised standardised surprise^2))
+
+    assumed resid SD   event-level    date-level   rows-independent
+         (bps/event)   MDE80 (bps)   MDE80 (bps)        MDE80 (bps)
+--------------------------------------------------------------------------------------------
+                 0.5         0.183         0.181              0.162
+                 1.0         0.365         0.363              0.323
+                 2.0         0.730         0.726              0.647
+                 5.0         1.826         1.815              1.617
+                10.0         3.651         3.629              3.235
+--------------------------------------------------------------------------------------------
+  the three columns are dependence scenarios, not alternative
+  estimates. The rows-independent column is shown only to size the
+  overstatement that treating replicated ETF rows as shocks produces.
+
+  Reading the table: a response-gap contrast between the ETF and its
+  basket is worth buying only if the gap the project cares about is
+  larger than the MDE80 in the row matching the dispersion the data
+  turn out to have. This is a requirement statement, not a final MDE
+  and not a pass/fail gate.
+
+============================================================================================
+ACQUISITION MANIFEST
+============================================================================================
+  requested rows before de-duplication: 61,856
+  union of distinct security-time intervals: 57,942
+    overlapping event windows are counted once, not purchased twice
+  distinct securities: 587
+  distinct dates: 120
+  security-days: 49,863
+  intervals needing extended-hours coverage: 45,832 (79.1%)
+
+  by family and role (union rows):
+family    role              
+earnings  basket_constituent    23047
+          etf                      60
+          matched_control       22665
+          source_stock             60
+monetary  basket_constituent     6019
+          etf                      36
+          matched_control        6055
+
+  a minimal variant covering only the ETFs, the announcing stocks
+  and their controls would be 28,876 intervals; the full
+  basket variant above is 57,942. Both are stated so the cost
+  of the basket leg is visible before anything is priced.
+
+============================================================================================
+HISTORICAL-WEIGHT GAPS (SEPARATE FROM THE QUOTE REQUEST)
+============================================================================================
+  ETF-event rows whose snapshot is older than 120 days: 992
+  rows where eff_dt is NOT before the event, so the weight is not
+  demonstrably knowable in advance: 5,170 (37.8%)
+  median snapshot age at event: 22 days
+
+  These are gaps in the historical weight record, not in the quote
+  data. Buying quotes does not close them; a holdings source with a
+  shorter reporting lag would. They are listed here so the two are
+  not confused in a purchase decision.
+
+============================================================================================
+PRODUCT SPECIFICATION REQUIRED (NO PRICING, NO VENDOR CONTACT)
+============================================================================================
+  REQUIRED   quote updates, or a clock-sampled bid/ask series, with an
+             exchange or SIP timestamp and quote condition codes
+  REQUIRED   coverage of the extended session for the AMC and BMO windows
+             flagged above; a regular-hours-only product cannot see them
+  SUFFICIENT a one-second bid/ask grid, for a descriptive contrast at 10
+             seconds or coarser, which is the horizon prespecified here
+  NOT ENOUGH trade-only OHLC bars: within-bar quote leadership is exactly
+             what a bar aggregates away
+  NOT ENOUGH a trade-triggered BBO sample, which observes the quote only
+             when a trade happens and is not the quote update stream
+  NOT ENOUGH any one-second product for a millisecond-resolution claim
+  NOT NEEDED full depth of book, order imbalance, or message-level data
+
+  Specifications are to be confirmed with the owner before any
+  vendor is approached. No unit price is quoted here, no trial
+  credit is assumed, no claim is made that any sample product covers
+  these historical dates, and nothing has been purchased.
+
+  written: s5_planning_table.parquet, s5_acquisition_manifest.parquet,
+           s5_batch_earnings.parquet, s5_batch_fomc.parquet
