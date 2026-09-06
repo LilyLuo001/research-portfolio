@@ -102,6 +102,34 @@ def test_command_binding_rejects_repo_root_other_than_executing_checkout(tmp_pat
         )
 
 
+def test_postcommit_stdout_failure_does_not_change_success_exit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    observed = {}
+
+    def completed(args):
+        observed["output_leaf"] = args.output_leaf
+        return {"status": "PASS_FRESH_AGGREGATE_REBUILD"}
+
+    monkeypatch.setattr(BUILDER, "execute", completed)
+    monkeypatch.setattr(BUILDER, "scheduler_jobnumber", lambda _env: "12345")
+    monkeypatch.setattr(
+        BUILDER.sys, "argv",
+        [
+            str(BUILDER.__file__), "--repo-root", str(REPO),
+            "--microdata", str(tmp_path / "wide.csv.gz"),
+            "--repair-microdata", str(tmp_path / "repair.csv.gz"),
+            "--output-parent", str(tmp_path),
+        ],
+    )
+    monkeypatch.setattr(
+        "builtins.print",
+        lambda *args, **kwargs: (_ for _ in ()).throw(BrokenPipeError()),
+    )
+    assert BUILDER.main() == 0
+    assert observed["output_leaf"] == tmp_path / "gate1_cells_sge_12345"
+
+
 def test_pre_result_spec_and_runtime_reference_locks_authenticate():
     cell_spec, canonical = BUILDER.load_and_validate_specs(REPO)
     observed = BUILDER.authenticate_code(REPO, cell_spec)
@@ -569,6 +597,91 @@ def test_atomic_publish_refuses_overwrite(tmp_path: Path):
     second.mkdir()
     with pytest.raises(BUILDER.CellBuildError, match="appeared"):
         BUILDER.atomic_publish(second, destination)
+
+
+def test_atomic_publish_uses_reserved_gpfs_fallback_on_einval(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    staging = tmp_path / ".gpfs-staging"
+    staging.mkdir()
+    (staging / "file.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "gpfs-published"
+    monkeypatch.setattr(
+        BUILDER, "atomic_noreplace_rename_errno",
+        lambda _source, _target: BUILDER.errno.EINVAL,
+    )
+    BUILDER.atomic_publish(staging, destination, {"file.txt"})
+    assert (destination / "file.txt").read_text(encoding="utf-8") == "complete\n"
+    assert not (tmp_path / ".gpfs-published.publish.lock").exists()
+
+
+def test_gpfs_fallback_has_no_raising_postcommit_destination_probe(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    staging = tmp_path / ".gpfs-postcommit-staging"
+    staging.mkdir()
+    (staging / "file.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "gpfs-postcommit-published"
+    real_rename = BUILDER.os.rename
+    real_stat = BUILDER.os.stat
+    committed = False
+
+    def tracked_rename(source, target):
+        nonlocal committed
+        real_rename(source, target)
+        committed = True
+
+    def guarded_stat(path, *args, **kwargs):
+        if committed and Path(path) == destination:
+            raise OSError("postcommit destination probe must not occur")
+        return real_stat(path, *args, **kwargs)
+
+    monkeypatch.setattr(
+        BUILDER, "atomic_noreplace_rename_errno",
+        lambda _source, _target: BUILDER.errno.EINVAL,
+    )
+    monkeypatch.setattr(BUILDER.os, "rename", tracked_rename)
+    monkeypatch.setattr(BUILDER.os, "stat", guarded_stat)
+    BUILDER.atomic_publish(staging, destination, {"file.txt"})
+    assert (destination / "file.txt").read_text(encoding="utf-8") == "complete\n"
+
+
+def test_gpfs_postcommit_cleanup_failure_is_reported_not_raised(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    staging = tmp_path / ".gpfs-cleanup-staging"
+    staging.mkdir()
+    (staging / "file.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "gpfs-cleanup-published"
+    lock = tmp_path / ".gpfs-cleanup-published.publish.lock"
+    real_unlink = Path.unlink
+
+    def guarded_unlink(path, *args, **kwargs):
+        if path == lock:
+            raise OSError(BUILDER.errno.EIO, "injected cleanup failure")
+        return real_unlink(path, *args, **kwargs)
+
+    monkeypatch.setattr(
+        BUILDER, "atomic_noreplace_rename_errno",
+        lambda _source, _target: BUILDER.errno.EINVAL,
+    )
+    monkeypatch.setattr(Path, "unlink", guarded_unlink)
+    warnings = BUILDER.atomic_publish(staging, destination, {"file.txt"})
+    assert warnings == (f"publication_lock_unlink_errno_{BUILDER.errno.EIO}",)
+    assert (destination / "file.txt").read_text(encoding="utf-8") == "complete\n"
+
+
+def test_gpfs_fallback_refuses_an_existing_reservation(tmp_path: Path):
+    staging = tmp_path / ".reserved-staging"
+    staging.mkdir()
+    destination = tmp_path / "reserved-published"
+    (tmp_path / ".reserved-published.publish.lock").write_text(
+        "other publisher\n", encoding="utf-8"
+    )
+    with pytest.raises(BUILDER.CellBuildError, match="reserved"):
+        BUILDER.gpfs_atomic_publish_under_reservation(staging, destination)
+    assert staging.exists()
+    assert not destination.exists()
 
 
 def test_atomic_publish_rejects_inventory_drift_and_hardlinks(tmp_path: Path):

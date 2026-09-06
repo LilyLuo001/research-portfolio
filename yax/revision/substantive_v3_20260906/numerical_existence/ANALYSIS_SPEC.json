@@ -1,6 +1,6 @@
 {
   "analysis_status": "post-outcome referee-led numerical audit specified before V3 Gate-1 results",
-  "audit_spec_id": "yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec",
+  "audit_spec_id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
   "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
   "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
   "created_at_utc": "2026-09-06T06:10:00Z",
@@ -205,9 +205,9 @@
     "target_invariance": "normalization changes nuisance coordinates only, not fitted means or treatment coefficients"
   },
   "output_safety": {
-    "atomic_publish": "write and fsync all artifacts in a private same-parent staging directory, then publish by atomic no-replace rename only after every artifact, the sanitized receipt, and the final immutable-state recheck are complete",
+    "atomic_publish": "write and fsync all artifacts in a private same-parent staging directory, then attempt kernel no-replace publication after every artifact, the sanitized receipt, and the final immutable-state recheck are complete; when the mounted filesystem explicitly rejects the no-replace flag, use a same-parent atomic ordinary rename only under the already-open exclusive sibling reservation and after an immediate target-absence, lock-identity, and staging-identity recheck; the durable precommit receipt must disclose both permitted paths without claiming the not-yet-observed backend, and the runner must attempt to emit the actual postcommit method in sanitized scheduler stdout without permitting an output-stream failure after the commit point to invalidate the published leaf; the fallback retains a bounded noncooperating same-user check-to-rename window",
     "disjointness": "output leaf must be outside the Git repository and disjoint from all input files",
-    "failure_behavior": "never overwrite a pre-existing target; preserve an unpublished staging leaf for diagnosis after an ordinary numerical failure, but discard it if final sanitation detects a private path or credential; every BLOCKED status exits nonzero and there is no report-only success override",
+    "failure_behavior": "refuse any target observed at reservation or immediate prepublication recheck; the kernel no-replace path never replaces a racing target, while the explicitly labeled unsupported-filesystem fallback coordinates cooperating publishers but cannot eliminate the bounded noncooperating same-user empty-directory lstat-to-rename race; preserve an unpublished staging leaf for diagnosis after an ordinary numerical failure, but discard it if final sanitation detects a private path or credential; every BLOCKED status exits nonzero and there is no report-only success override",
     "receipt_command": "persist the fixed placeholder command template and runner-recorded exact sanitized argv binding; resolved private paths, extra argv tokens, and credentials are forbidden",
     "whole_artifact_sanitization": "scan every staged output as UTF-8 text for private absolute paths, GitHub tokens, named password/API-key/secret assignments, private-key headers, and credential-bearing URLs before atomic publication"
   },
@@ -234,10 +234,10 @@
     "target": "model-specific focal_target"
   },
   "software": {
-    "audit_runner_sha256": "26a1bec8cf9496fabec12c33b60361c95ed150ac217abbc6d3c2fed78866a1c3",
-    "artifact_safety_sha256": "91018c48dc37590fb831b808ea462796d9bdc85eefe1d0ec97e9b9ac007ebcc4",
+    "audit_runner_sha256": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02",
+    "artifact_safety_sha256": "6c03ad94fb5d4ecb618e3cd0e4f9de6ece0a5f20e633283002f3fc01d1248fd2",
     "cell_builder_path": "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
-    "cell_builder_sha256": "c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc",
+    "cell_builder_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
     "cell_builder_transitive_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
     "independent_solver_1": "scipy.optimize.minimize L-BFGS-B with analytic score in fixed design-only p=0.5 diagonal coordinates and an L-BFGS-B-only p=0.5 full-Hessian Fisher-scoring start; acceptance uses the untouched final candidate's original-coordinate KKT and sparse full-Hessian certificate",
     "independent_solver_2": "scipy.optimize.minimize trust-ncg from the declared zero start with analytic score and Hessian-vector product in the same fixed coordinates; acceptance uses the untouched final candidate's original-coordinate KKT and sparse full-Hessian certificate",
@@ -275,7 +275,7 @@
       },
       "payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
     },
-    "synthetic_test_sha256": "e519fa0d46d5fd7b888158af3e68239fc1e23bb0875f352bcca46fb2da4b8da7"
+    "synthetic_test_sha256": "90b67d3701a9f2eb34bfce6628d1cdb561b5cfc5e146b11e8ca7956bcc00da3e"
   },
   "tolerances": {
     "conditioning_rank_relative": 1e-10,

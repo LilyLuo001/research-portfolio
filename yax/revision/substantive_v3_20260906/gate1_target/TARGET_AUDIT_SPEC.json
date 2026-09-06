@@ -107,14 +107,14 @@
     "yax/revision/referee_20260905/run_referee_cells.py": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
     "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
     "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
-    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc",
-    "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py": "c05e4671fae0aafa2e603fdd4274e11d346baf2fb7a0f273f85b580a0fd40d7f"
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+    "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py": "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9"
   },
   "contract_binding": {
     "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
     "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
-    "cell_build_spec_id": "yaxcellspec_v1_cc2ef1a97ff01b7bc57f9598b139c6c70315866121c85eaef2158827cace0aa7",
-    "cell_build_spec_sha256": "879f99c3b06363303402cb1cfc2c0ff443d78886295c7d63edfcd59cc6897765"
+    "cell_build_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+    "cell_build_spec_sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15"
   },
   "created_at_utc": "2026-09-06T07:36:00Z",
   "empirical_execution": {
@@ -151,6 +151,7 @@
     "credentials_forbidden": true,
     "new_leaf_required": true,
     "outside_repository_required": true,
+    "publication_fallback": "attempt kernel no-replace first; when the mounted filesystem explicitly rejects that flag, use a same-parent atomic ordinary rename only under an exclusive sibling reservation for the SGE-job-derived unique leaf and after an immediate target-absence and reservation-inode recheck; this fallback does not claim kernel no-replace and retains a bounded noncooperating same-user check-to-rename window",
     "private_paths_forbidden": true,
     "receipt_schema_version": "yax-exact-target-audit-receipt-v1"
   },
@@ -279,7 +280,7 @@
       "sha256": "38de2d5b80e72c85f3dd06086a862cea63c521d511a5baacb7f6390f66eeeb59"
     }
   ],
-  "target_audit_spec_id": "yaxtargetspec_v1_700c7cf5a3e733f8b255b81f63551b94da72224fdebb93d31ee10caa4195c34d",
+  "target_audit_spec_id": "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b",
   "upstream_assertions": [
     {
       "equals": "yax-numerical-cells-v1",

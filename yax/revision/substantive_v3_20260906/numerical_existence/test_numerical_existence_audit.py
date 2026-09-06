@@ -26,6 +26,7 @@ SPEC = importlib.util.spec_from_file_location("yax_v3_numerical_audit", MODULE_P
 AUDIT = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = AUDIT
 SPEC.loader.exec_module(AUDIT)
+SAFETY = sys.modules[AUDIT.AtomicOutputLeaf.__module__]
 
 
 def bundle(
@@ -1466,16 +1467,151 @@ class AuthenticationAndSafetyTests(unittest.TestCase):
     def test_final_reauthentication_directly_precedes_publication(self):
         events = []
         reservation = mock.Mock()
-        reservation.publish.side_effect = lambda: events.append("publish")
+        semantics = {"status": "PASS_SYNTHETIC_PUBLICATION"}
+        reservation.publish.side_effect = lambda: (
+            events.append("publish") or semantics
+        )
         with mock.patch.object(
             AUDIT, "require_unchanged_execution_state",
             side_effect=lambda *args: events.append("reauthenticate"),
         ):
-            AUDIT.publish_after_final_reauthentication(
+            observed = AUDIT.publish_after_final_reauthentication(
                 reservation, {"initial": True}, mock.Mock(),
                 pathlib.Path("."), {}, {},
             )
         self.assertEqual(events, ["reauthenticate", "publish"])
+        self.assertIs(observed, semantics)
+
+    def test_production_publication_discloses_fallback_in_stdout_not_receipt_claim(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            repo = root / "repo"
+            outside = root / "outside"
+            repo.mkdir(); outside.mkdir()
+            source = outside / "input.csv"
+            source.write_text("input", encoding="utf-8")
+            reservation = AUDIT.AtomicOutputLeaf.reserve(
+                outside / "gate1_numerical_sge_67890", repo, [source],
+            )
+            precommit_protocol = AUDIT.precommit_publication_protocol()
+            receipt = {
+                "prepublication_revalidation": {
+                    "residual_window": (
+                        "bounded through publication; backend not yet observed"
+                    ),
+                },
+                "publication_protocol": precommit_protocol,
+            }
+            (reservation.staging / "EXECUTION_RECEIPT.json").write_text(
+                json.dumps(receipt, sort_keys=True) + "\n", encoding="utf-8",
+            )
+            with (
+                mock.patch.object(
+                    SAFETY, "_try_kernel_atomic_rename_noreplace",
+                    return_value=(
+                        False, "linux_renameat2_RENAME_NOREPLACE",
+                        SAFETY.errno.EINVAL,
+                    ),
+                ),
+                mock.patch.object(
+                    AUDIT, "require_unchanged_execution_state",
+                    return_value={
+                        "status": "PASS_COMPLETE_PREPUBLICATION_REAUTHENTICATION"
+                    },
+                ),
+            ):
+                actual_semantics = AUDIT.publish_after_final_reauthentication(
+                    reservation, {"initial": True}, mock.Mock(), repo, {}, {},
+                )
+            with mock.patch("builtins.print") as output:
+                payload = AUDIT.emit_final_publication_stdout(
+                    "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED",
+                    reservation.target.name,
+                    reservation.post_commit_cleanup_warnings,
+                    actual_semantics,
+                )
+            printed = json.loads(output.call_args.args[0])
+            self.assertEqual(printed, payload)
+            self.assertEqual(
+                printed["publication_semantics"]["status"],
+                "PASS_PORTABLE_GPFS_SAME_PARENT_PUBLICATION",
+            )
+            self.assertFalse(
+                printed["publication_semantics"][
+                    "kernel_no_replace_guarantee"
+                ]
+            )
+            self.assertIn(
+                "not eliminated",
+                printed["publication_semantics"][
+                    "bounded_noncooperating_same_user_toctou"
+                ],
+            )
+            published_receipt = json.loads(
+                (reservation.target / "EXECUTION_RECEIPT.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            protocol = published_receipt["publication_protocol"]
+            self.assertFalse(protocol["actual_backend_claimed_before_commit"])
+            self.assertFalse(protocol["fallback_kernel_no_replace_guarantee"])
+            self.assertIn(
+                "not eliminated",
+                protocol[
+                    "fallback_bounded_noncooperating_same_user_toctou"
+                ],
+            )
+            self.assertNotIn("publication_semantics", published_receipt)
+
+    def test_final_stdout_downgrades_overclaim_without_postcommit_exception(self):
+        with mock.patch("builtins.print") as output:
+            payload = AUDIT.emit_final_publication_stdout(
+                "PASS", "gate1_numerical_sge_1", (), {
+                    "status": "PASS_BAD_FIXTURE",
+                    "publication_backend": "bad",
+                    "same_parent_directory_rename_atomic": True,
+                    "kernel_no_replace_guarantee": True,
+                    "portable_gpfs_fallback_used": True,
+                    "bounded_noncooperating_same_user_toctou": None,
+                },
+            )
+        self.assertEqual(json.loads(output.call_args.args[0]), payload)
+        self.assertEqual(
+            payload["publication_semantics"]["status"],
+            "POSTCOMMIT_SEMANTICS_WITHHELD_FAIL_CLOSED",
+        )
+        self.assertIsNone(
+            payload["publication_semantics"]["kernel_no_replace_guarantee"]
+        )
+
+    def test_final_stdout_broken_pipe_never_raises_after_commit(self):
+        valid_semantics = {
+            "status": "PASS_PORTABLE_GPFS_SAME_PARENT_PUBLICATION",
+            "publication_backend": (
+                "posix_os_rename_under_exclusive_sibling_lock"
+            ),
+            "same_parent_directory_rename_atomic": True,
+            "kernel_no_replace_guarantee": False,
+            "portable_gpfs_fallback_used": True,
+            "bounded_noncooperating_same_user_toctou": (
+                "not eliminated: synthetic bounded lstat-to-rename race"
+            ),
+        }
+        with mock.patch(
+            "builtins.print", side_effect=BrokenPipeError("closed scheduler pipe"),
+        ):
+            result = AUDIT.emit_final_publication_stdout(
+                "PASS", "gate1_numerical_sge_2", (), valid_semantics,
+            )
+        self.assertEqual(
+            result["scheduler_stdout_emission_status"],
+            "FAILED_AFTER_COMMIT_WITHOUT_PROPAGATION",
+        )
+        self.assertEqual(result["scheduler_stdout_error_type"], "BrokenPipeError")
+        self.assertEqual(
+            result["publication_semantics"]["status"],
+            "POSTCOMMIT_STDOUT_UNAVAILABLE",
+        )
 
     def test_assignment_authentication_detects_tuple_mutations(self):
         frame = pd.DataFrame({
@@ -1510,10 +1646,187 @@ class AuthenticationAndSafetyTests(unittest.TestCase):
                 AUDIT.AtomicOutputLeaf.reserve(outside, repo, [source])
             target = outside / "new-run"
             reservation = AUDIT.AtomicOutputLeaf.reserve(target, repo, [source])
+            with self.assertRaisesRegex(
+                AUDIT.OutputSafetyError, "already reserved",
+            ):
+                AUDIT.AtomicOutputLeaf.reserve(target, repo, [source])
             (reservation.staging / "done.txt").write_text("complete", encoding="utf-8")
             reservation.publish()
             self.assertEqual((target / "done.txt").read_text(encoding="utf-8"), "complete")
             self.assertFalse(reservation.staging.exists())
+            self.assertTrue(
+                reservation.publication_semantics[
+                    "same_parent_directory_rename_atomic"
+                ]
+            )
+
+    def test_gpfs_einval_uses_truthful_portable_atomic_rename_semantics(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            repo = root / "repo"
+            outside = root / "outside"
+            repo.mkdir(); outside.mkdir()
+            source = outside / "input.csv"
+            source.write_text("input", encoding="utf-8")
+            reservation = AUDIT.AtomicOutputLeaf.reserve(
+                outside / "gate1_numerical_sge_12345", repo, [source],
+            )
+            (reservation.staging / "done.txt").write_text(
+                "complete", encoding="utf-8",
+            )
+            with mock.patch.object(
+                SAFETY, "_try_kernel_atomic_rename_noreplace",
+                return_value=(
+                    False, "linux_renameat2_RENAME_NOREPLACE",
+                    SAFETY.errno.EINVAL,
+                ),
+            ):
+                publication_receipt = reservation.publish()
+            semantics = json.loads(json.dumps(publication_receipt))
+            self.assertEqual(semantics, reservation.publication_semantics)
+            self.assertEqual(
+                semantics["status"],
+                "PASS_PORTABLE_GPFS_SAME_PARENT_PUBLICATION",
+            )
+            self.assertTrue(semantics["portable_gpfs_fallback_used"])
+            self.assertTrue(semantics["same_parent_directory_rename_atomic"])
+            self.assertFalse(semantics["kernel_no_replace_guarantee"])
+            self.assertTrue(
+                semantics[
+                    "target_absence_rechecked_immediately_before_portable_rename"
+                ]
+            )
+            self.assertIn(
+                "not eliminated",
+                semantics["bounded_noncooperating_same_user_toctou"],
+            )
+            self.assertIn(
+                "not kernel-enforced",
+                semantics["target_replacement_prevention"],
+            )
+            self.assertEqual(
+                (reservation.target / "done.txt").read_text(encoding="utf-8"),
+                "complete",
+            )
+            self.assertFalse(reservation.lock.exists())
+
+    def test_portable_fallback_collision_recheck_precedes_os_rename(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = pathlib.Path(temporary)
+            source = parent / "staging"
+            target = parent / "target"
+            source.mkdir()
+            original_rename = SAFETY.os.rename
+            guard_calls = 0
+
+            def guard():
+                nonlocal guard_calls
+                guard_calls += 1
+                if guard_calls == 2:
+                    target.mkdir()
+                return {"status": "PASS_SYNTHETIC_GUARD"}
+
+            with (
+                mock.patch.object(
+                    SAFETY, "_try_kernel_atomic_rename_noreplace",
+                    return_value=(
+                        False, "linux_renameat2_RENAME_NOREPLACE",
+                        SAFETY.errno.EINVAL,
+                    ),
+                ),
+                mock.patch.object(
+                    SAFETY.os, "rename", wraps=original_rename,
+                ) as portable_rename,
+            ):
+                with self.assertRaisesRegex(
+                    AUDIT.OutputSafetyError, "portable publication recheck",
+                ):
+                    SAFETY.atomic_publish_same_parent(source, target, guard)
+            portable_rename.assert_not_called()
+            self.assertEqual(guard_calls, 2)
+            self.assertTrue(source.is_dir())
+            self.assertTrue(target.is_dir())
+
+    def test_kernel_noreplace_is_attempted_before_portable_rename(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            parent = pathlib.Path(temporary)
+            source = parent / "staging"
+            target = parent / "target"
+            source.mkdir()
+            original_rename = SAFETY.os.rename
+
+            def kernel_commit(source_path, target_path):
+                original_rename(source_path, target_path)
+                return True, "synthetic_kernel_noreplace", None
+
+            with (
+                mock.patch.object(
+                    SAFETY, "_try_kernel_atomic_rename_noreplace",
+                    side_effect=kernel_commit,
+                ) as kernel,
+                mock.patch.object(SAFETY.os, "rename") as portable_rename,
+            ):
+                semantics = SAFETY.atomic_publish_same_parent(
+                    source, target,
+                    lambda: {"status": "PASS_SYNTHETIC_GUARD"},
+                )
+            kernel.assert_called_once_with(source, target)
+            portable_rename.assert_not_called()
+            self.assertTrue(semantics["kernel_no_replace_guarantee"])
+            self.assertFalse(semantics["portable_gpfs_fallback_used"])
+            self.assertIsNone(
+                semantics["bounded_noncooperating_same_user_toctou"]
+            )
+            self.assertTrue(target.is_dir())
+
+    def test_publication_lock_and_staging_inode_state_are_revalidated(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            repo = root / "repo"
+            outside = root / "outside"
+            repo.mkdir(); outside.mkdir()
+            source = outside / "input.csv"
+            source.write_text("input", encoding="utf-8")
+            reservation = AUDIT.AtomicOutputLeaf.reserve(
+                outside / "gate1_numerical_sge_54321", repo, [source],
+            )
+            state = reservation.verify_publication_state()
+            self.assertEqual(
+                state["status"],
+                "PASS_EXCLUSIVE_SIBLING_LOCK_AND_STAGING_INODE",
+            )
+            replacement = reservation.staging.with_name(
+                reservation.staging.name + "-original"
+            )
+            SAFETY.os.rename(reservation.staging, replacement)
+            reservation.staging.mkdir()
+            with self.assertRaisesRegex(
+                AUDIT.OutputSafetyError, "staging inode identity changed",
+            ):
+                reservation.verify_publication_state()
+            reservation.staging.rmdir()
+            SAFETY.os.rename(replacement, reservation.staging)
+            SAFETY.os.pwrite(
+                reservation.lock_fd,
+                b"X" * len(reservation.lock_token), 0,
+            )
+            with self.assertRaisesRegex(
+                AUDIT.OutputSafetyError, "lock token changed",
+            ):
+                reservation.verify_publication_state()
+            SAFETY.os.pwrite(
+                reservation.lock_fd, reservation.lock_token, 0,
+            )
+            reservation.lock.unlink()
+            reservation.lock.write_bytes(reservation.lock_token)
+            with self.assertRaisesRegex(
+                AUDIT.OutputSafetyError, "lock inode identity changed",
+            ):
+                reservation.verify_publication_state()
+            SAFETY.os.close(reservation.lock_fd)
+            reservation.lock_fd = None
+            reservation.lock.unlink()
+            SAFETY.shutil.rmtree(reservation.staging)
 
     def test_atomic_output_leaf_never_raises_after_publication_commit(self):
         with tempfile.TemporaryDirectory() as temporary:

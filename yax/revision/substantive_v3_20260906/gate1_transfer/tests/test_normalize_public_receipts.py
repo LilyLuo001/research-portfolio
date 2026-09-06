@@ -116,6 +116,42 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def test_terminal_bindings_equal_live_repository_bytes_and_template():
+    repo = HERE.parents[3]
+    paths = {
+        "cells": repo / "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
+        "target": repo / "yax/revision/substantive_v3_20260906/gate1_target/TARGET_AUDIT_SPEC.json",
+        "numerical": repo / "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+    }
+    code_paths = {
+        "cells": repo / TRANSFER.CELL_CODE_PATH,
+        "target": repo / TRANSFER.TARGET_CODE_PATH,
+        "numerical": repo / TRANSFER.NUMERICAL_CODE_PATH,
+    }
+    id_fields = {
+        "cells": "cell_build_spec_id",
+        "target": "target_audit_spec_id",
+        "numerical": "audit_spec_id",
+    }
+    constants = {
+        "cells": (TRANSFER.CELL_SPEC_ID, TRANSFER.CELL_SPEC_SHA256, TRANSFER.CELL_CODE_SHA256),
+        "target": (TRANSFER.TARGET_SPEC_ID, TRANSFER.TARGET_SPEC_SHA256, TRANSFER.TARGET_CODE_SHA256),
+        "numerical": (
+            TRANSFER.NUMERICAL_SPEC_ID, TRANSFER.NUMERICAL_SPEC_SHA256,
+            TRANSFER.NUMERICAL_CODE_SHA256,
+        ),
+    }
+    template = json.loads((HERE / "TRANSFER_SPEC.template.json").read_text())
+    template_modules = {row["key"]: row for row in template["modules"]}
+    for key in TRANSFER.MODULE_KEYS:
+        document = json.loads(paths[key].read_text())
+        expected = (document[id_fields[key]], digest(paths[key]), digest(code_paths[key]))
+        assert constants[key] == expected
+        assert template_modules[key]["typed_spec"]["id"] == expected[0]
+        assert template_modules[key]["typed_spec"]["sha256"] == expected[1]
+        assert template_modules[key]["expected_code_hash"] == expected[2]
+
+
 def command_binding(key: str, argv: list[str] | None = None) -> dict[str, object]:
     argv = copy.deepcopy(argv or ARGV[key])
     core: dict[str, object] = {
@@ -1209,6 +1245,101 @@ def test_atomic_no_replace_primitive_refuses_existing_target(tmp_path: Path):
     with pytest.raises(TRANSFER.TransferBlocked, match="refusing overwrite"):
         TRANSFER._atomic_rename_noreplace(source, target)
     assert source.exists() and target.exists()
+
+
+def test_einval_probe_selects_truthfully_labeled_locked_fallback(
+    tmp_path: Path, monkeypatch
+):
+    def unsupported(_source, _target):
+        raise TRANSFER.KernelNoReplaceUnavailable(
+            errno.EINVAL, "synthetic GPFS EINVAL"
+        )
+
+    monkeypatch.setattr(TRANSFER, "_atomic_rename_noreplace", unsupported)
+    method = TRANSFER._select_publication_method(tmp_path)
+    assert method == TRANSFER.LOCKED_RENAME_METHOD
+    semantics = TRANSFER.publication_semantics(method)
+    assert semantics == {
+        "method": TRANSFER.LOCKED_RENAME_METHOD,
+        "kernel_noreplace_used": False,
+        "exclusive_cooperating_publisher_lock_required": True,
+        "same_parent_atomic_rename": True,
+        "noncooperating_same_user_toctou": (
+            "BOUNDED_BUT_NOT_ELIMINATED_BETWEEN_FINAL_ABSENCE_CHECK_AND_RENAME"
+        ),
+    }
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_locked_fallback_publishes_and_records_noncooperating_race_limit(
+    tmp_path: Path, monkeypatch
+):
+    monkeypatch.setattr(
+        TRANSFER, "_select_publication_method",
+        lambda _parent: TRANSFER.LOCKED_RENAME_METHOD,
+    )
+    spec_path, source, output, _spec = make_fixture(tmp_path)
+    report = TRANSFER.validate_and_publish(spec_path, source, output)
+    persisted = json.loads((output / "TRANSFER_VALIDATION.json").read_text())
+    assert report["publication_semantics"] == persisted["publication_semantics"]
+    assert persisted["publication_semantics"]["kernel_noreplace_used"] is False
+    assert persisted["publication_semantics"]["method"] == (
+        TRANSFER.LOCKED_RENAME_METHOD
+    )
+    assert "NOT_ELIMINATED" in persisted["publication_semantics"][
+        "noncooperating_same_user_toctou"
+    ]
+
+
+def test_locked_fallback_blocks_collision_after_final_absence_check(
+    tmp_path: Path, monkeypatch
+):
+    monkeypatch.setattr(
+        TRANSFER, "_select_publication_method",
+        lambda _parent: TRANSFER.LOCKED_RENAME_METHOD,
+    )
+    source = tmp_path / "source"
+    source.mkdir()
+    target = tmp_path / "published"
+    reservation = TRANSFER.OutputReservation.reserve(target, [source])
+    dump(reservation.staging / "artifact.json", {"status": "safe"})
+    real_rename = os.rename
+
+    def racing_rename(staging, destination):
+        destination = Path(destination)
+        destination.mkdir()
+        (destination / "competitor.txt").write_text("keep", encoding="utf-8")
+        return real_rename(staging, destination)
+
+    monkeypatch.setattr(os, "rename", racing_rename)
+    try:
+        with pytest.raises(TRANSFER.TransferBlocked, match="collision blocked"):
+            reservation.publish()
+        assert (target / "competitor.txt").read_text(encoding="utf-8") == "keep"
+        assert reservation.staging.exists()
+    finally:
+        reservation.abandon()
+
+
+def test_locked_fallback_rechecks_exclusive_lock_identity(
+    tmp_path: Path, monkeypatch
+):
+    monkeypatch.setattr(
+        TRANSFER, "_select_publication_method",
+        lambda _parent: TRANSFER.LOCKED_RENAME_METHOD,
+    )
+    source = tmp_path / "source"
+    source.mkdir()
+    target = tmp_path / "published"
+    reservation = TRANSFER.OutputReservation.reserve(target, [source])
+    dump(reservation.staging / "artifact.json", {"status": "safe"})
+    reservation.lock.write_bytes(reservation.lock.read_bytes() + b" ")
+    try:
+        with pytest.raises(TRANSFER.TransferBlocked, match="fallback lock changed"):
+            reservation.publish()
+        assert not target.exists()
+    finally:
+        reservation.abandon()
 
 
 def test_post_commit_cleanup_failure_is_success_with_warning(

@@ -156,12 +156,27 @@ one exact non-array record, and an exact job-number join.
 ```
 
 The output leaf must not exist and must not overlap the input or spec. A
-same-name lock plus an atomic no-replace directory rename prevents racing
-publishers. The lock is JSON containing PID, host, UTC creation time, and
-target leaf. A pre-existing lock is never deleted automatically. To recover a
-stale lock, inspect that metadata, verify on the recorded host that the PID is
-not an active publisher, verify the target does not exist, and only then remove
-that one lock manually.
+same-name exclusive lock serializes cooperating publishers. Before rendering
+the public validation report, the normalizer probes the target filesystem for
+kernel no-replace support. Where supported, publication uses the kernel
+no-replace primitive. BU GPFS returns `EINVAL` for that primitive, so the
+truthfully labeled fallback rechecks the open lock's inode and metadata,
+rechecks target absence immediately, and performs one atomic ordinary rename
+within the same parent directory. The fallback is never labeled kernel
+no-replace.
+
+The GPFS fallback prevents collisions from cooperating publishers and blocks
+an observed target that appears before either absence check. It cannot
+eliminate the bounded same-user TOCTOU interval between the final absence
+check and ordinary rename if a noncooperating process ignores or removes the
+lock. `TRANSFER_VALIDATION.json` records that residual explicitly as
+`BOUNDED_BUT_NOT_ELIMINATED_BETWEEN_FINAL_ABSENCE_CHECK_AND_RENAME`.
+
+The lock is JSON containing PID, host, UTC creation time, and target leaf. A
+pre-existing lock is never deleted automatically. To recover a stale lock,
+inspect that metadata, verify on the recorded host that the PID is not an
+active publisher, verify the target does not exist, and only then remove that
+one lock manually.
 
 Input and staged files must be regular, single-link files. Symlinks and
 hardlinks are rejected. Inputs are snapshotted with filesystem identity and
@@ -188,10 +203,13 @@ never copied wholesale. No `RUN_LEDGER_MAP.json` is emitted. The normalizer
 does not modify `run_manifest.json`, result/claim ledgers, requirement statuses,
 or the Gate-1 decision.
 
-Replay of identical inputs and terminal spec to a **different fresh leaf** is
-allowed. The output bytes, module fingerprints, and validation identity must
-be identical because the destination and lock metadata are excluded from the
-identity. Replay to an existing leaf is forbidden.
+Replay of identical inputs and terminal spec to a **different fresh leaf on
+the same filesystem with the same selected publication method** is allowed.
+The output bytes, module fingerprints, and validation identity must be
+identical because the destination and lock metadata are excluded from the
+identity. The validation report records the selected method, so moving between
+a kernel-no-replace filesystem and GPFS intentionally changes that report.
+Replay to an existing leaf is forbidden.
 
 ## Fail-closed boundaries
 

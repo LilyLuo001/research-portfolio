@@ -33,7 +33,12 @@ Placeholder SCC command:
 
 The runner derives the unique output leaf from the numeric SGE `JOB_ID`. The
 leaf must not exist and must be outside the repository and disjoint from the
-input leaf. The successful leaf contains:
+input leaf. Publication first attempts kernel no-replace. When the mounted
+filesystem explicitly rejects that flag, the runner uses an ordinary
+same-parent atomic rename under an exclusive sibling reservation, after an
+immediate reservation-identity and target-absence recheck. This fallback does
+not claim kernel no-replace and retains a bounded noncooperating same-user
+check-to-rename window. The successful leaf contains:
 
 - `EXACT_TARGET_AUDIT.json`;
 - `ROW_ACCOUNTING.csv`;

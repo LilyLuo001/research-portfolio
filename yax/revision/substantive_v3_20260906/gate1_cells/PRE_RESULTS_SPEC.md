@@ -54,7 +54,10 @@ Protected aggregate cells and their receipt are never repository outputs. The
 caller must supply a nonexistent leaf outside the Git worktree, whose parent
 already exists. Files are completed in a private staging directory and the
 whole directory is renamed atomically. A failure removes only that newly
-created staging directory and never overwrites an existing leaf.
+created staging directory. Any leaf observed at reservation or immediately
+before publication is refused. Kernel no-replace prevents a racing overwrite;
+the GPFS fallback coordinates cooperating publishers but retains the explicitly
+disclosed bounded noncooperating same-user empty-directory check-to-rename race.
 
 Execution is permitted only in the declared CPython 3.13.8 SCC environment,
 including the exact compiler, x86-64 architecture, glibc version, and package

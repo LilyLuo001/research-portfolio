@@ -22,6 +22,7 @@ from pathlib import Path
 import platform
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -2272,6 +2273,97 @@ def fsync_file(path: Path) -> None:
         os.fsync(stream.fileno())
 
 
+def atomic_noreplace_rename_errno(source: Path, target: Path) -> int:
+    """Attempt a kernel no-replace rename and return zero or ``errno``."""
+    libc = ctypes.CDLL(None, use_errno=True)
+    source_bytes = os.fsencode(source)
+    target_bytes = os.fsencode(target)
+    if sys.platform.startswith("linux") and hasattr(libc, "renameat2"):
+        function = libc.renameat2
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-100, source_bytes, -100, target_bytes, 1)
+    elif sys.platform == "darwin" and hasattr(libc, "renameatx_np"):
+        function = libc.renameatx_np
+        function.argtypes = [
+            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
+            ctypes.c_uint,
+        ]
+        function.restype = ctypes.c_int
+        result = function(-2, source_bytes, -2, target_bytes, 0x00000004)
+    else:
+        return errno.ENOSYS
+    return 0 if result == 0 else ctypes.get_errno()
+
+
+def gpfs_atomic_publish_under_reservation(
+    staging: Path, output_leaf: Path,
+) -> tuple[str, ...]:
+    """Atomically rename under an exclusive unique-job sibling reservation.
+
+    This fallback is used only when the filesystem rejects the kernel
+    no-replace flag. It does not claim kernel no-replace semantics. The
+    noncooperating same-user check-to-rename window is explicitly bounded to
+    the direct target absence check and ``os.rename`` call.
+    """
+    lock = output_leaf.parent / f".{output_leaf.name}.publish.lock"
+    try:
+        descriptor = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as error:
+        raise TargetAuditError(
+            "output leaf is reserved by another publisher"
+        ) from error
+    held: os.stat_result | None = None
+    warnings: list[str] = []
+    try:
+        os.write(descriptor, b"job-derived atomic publish reservation\n")
+        os.fsync(descriptor)
+        held = os.fstat(descriptor)
+        observed = os.stat(lock, follow_symlinks=False)
+        if (
+            not stat.S_ISREG(observed.st_mode)
+            or observed.st_nlink != 1
+            or (held.st_dev, held.st_ino) != (observed.st_dev, observed.st_ino)
+        ):
+            raise TargetAuditError("publication reservation identity changed")
+        if os.path.lexists(output_leaf):
+            raise TargetAuditError(
+                "output leaf appeared during publication; refusing overwrite"
+            )
+        source_identity = os.stat(staging, follow_symlinks=False)
+        if not stat.S_ISDIR(source_identity.st_mode):
+            raise TargetAuditError("publication staging is not a directory")
+        os.rename(staging, output_leaf)
+    finally:
+        try:
+            os.close(descriptor)
+        except OSError as error:
+            # The rename is the commit point. Cleanup failures after it may
+            # leave a conservative job-specific lock but cannot invalidate a
+            # published leaf or trigger an ambiguous retry.
+            warnings.append(f"publication_lock_close_errno_{error.errno}")
+        try:
+            observed = os.stat(lock, follow_symlinks=False)
+        except FileNotFoundError:
+            observed = None
+        except OSError as error:
+            observed = None
+            warnings.append(f"publication_lock_stat_errno_{error.errno}")
+        if (
+            held is not None
+            and observed is not None
+            and (held.st_dev, held.st_ino) == (observed.st_dev, observed.st_ino)
+        ):
+            try:
+                lock.unlink()
+            except OSError as error:
+                warnings.append(f"publication_lock_unlink_errno_{error.errno}")
+    return tuple(warnings)
+
+
 def atomic_publish(
     staging: Path,
     output_leaf: Path,
@@ -2304,33 +2396,21 @@ def atomic_publish(
             os.close(descriptor)
     if expected_filenames is not None and observed_filenames != expected_filenames:
         raise TargetAuditError("staging output inventory differs from the exact contract")
-    libc = ctypes.CDLL(None, use_errno=True)
-    source_bytes = os.fsencode(staging)
-    target_bytes = os.fsencode(output_leaf)
-    if sys.platform.startswith("linux") and hasattr(libc, "renameat2"):
-        function = libc.renameat2
-        function.argtypes = [
-            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
-            ctypes.c_uint,
-        ]
-        function.restype = ctypes.c_int
-        result = function(-100, source_bytes, -100, target_bytes, 1)
-    elif sys.platform == "darwin" and hasattr(libc, "renameatx_np"):
-        function = libc.renameatx_np
-        function.argtypes = [
-            ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p,
-            ctypes.c_uint,
-        ]
-        function.restype = ctypes.c_int
-        result = function(-2, source_bytes, -2, target_bytes, 0x00000004)
-    else:
-        raise TargetAuditError("platform lacks atomic no-replace directory rename")
-    if result != 0:
-        error = ctypes.get_errno()
+    warnings: list[str] = []
+    error = atomic_noreplace_rename_errno(staging, output_leaf)
+    if error != 0:
         if error in {errno.EEXIST, errno.ENOTEMPTY}:
             raise TargetAuditError("output leaf appeared during publication; refusing overwrite")
-        raise TargetAuditError(f"atomic no-replace publication failed with errno {error}")
-    warnings: list[str] = []
+        unsupported = {errno.EINVAL, errno.ENOSYS, errno.ENOTSUP}
+        if hasattr(errno, "EOPNOTSUPP"):
+            unsupported.add(errno.EOPNOTSUPP)
+        if error not in unsupported:
+            raise TargetAuditError(
+                f"atomic no-replace publication failed with errno {error}"
+            )
+        warnings.extend(
+            gpfs_atomic_publish_under_reservation(staging, output_leaf)
+        )
     try:
         parent_fd = os.open(output_leaf.parent, os.O_RDONLY)
         try:
@@ -2557,7 +2637,13 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
-    print(json.dumps(result, indent=2, sort_keys=True))
+    # execute() returns only after publication commits. Scheduler stdout is
+    # diagnostic, so an output-stream failure cannot invalidate the published
+    # leaf or create a nonzero retry signal after commit.
+    try:
+        print(json.dumps(result, indent=2, sort_keys=True))
+    except Exception:
+        pass
     return 0
 
 

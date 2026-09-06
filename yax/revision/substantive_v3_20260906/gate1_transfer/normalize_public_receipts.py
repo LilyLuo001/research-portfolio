@@ -49,6 +49,8 @@ PASS_STATUS = "PASS_SANITIZED_GATE1_RECEIPT_NORMALIZATION"
 MODULE_KEYS = ("cells", "target", "numerical")
 SCHEDULER_BOUNDARY_TOLERANCE_SECONDS = 2.0
 MAX_FUTURE_CLOCK_SKEW_SECONDS = 300.0
+KERNEL_NOREPLACE_METHOD = "atomic_kernel_noreplace"
+LOCKED_RENAME_METHOD = "exclusive_lock_same_parent_ordinary_rename"
 EXPECTED_PYTHON_RESOLVED_SHA256 = (
     "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7"
 )
@@ -81,28 +83,28 @@ CANONICAL_BINDING = {
     "id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
     "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
 }
-CELL_SPEC_ID = "yaxcellspec_v1_cc2ef1a97ff01b7bc57f9598b139c6c70315866121c85eaef2158827cace0aa7"
-CELL_SPEC_SHA256 = "879f99c3b06363303402cb1cfc2c0ff443d78886295c7d63edfcd59cc6897765"
+CELL_SPEC_ID = "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b"
+CELL_SPEC_SHA256 = "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15"
 CELL_CODE_PATH = (
     "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py"
 )
-CELL_CODE_SHA256 = "c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc"
+CELL_CODE_SHA256 = "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34"
 CELL_TRANSITIVE_SHA256 = "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
-TARGET_SPEC_ID = "yaxtargetspec_v1_700c7cf5a3e733f8b255b81f63551b94da72224fdebb93d31ee10caa4195c34d"
-TARGET_SPEC_SHA256 = "85014b2152c6833eca439c3eeda36496b0a0d91a9fd77aef4732f8127c47e95f"
+TARGET_SPEC_ID = "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b"
+TARGET_SPEC_SHA256 = "fa425dce6d75475b6f562aba52898b8e71c7db0269d549f17ef9645720052651"
 TARGET_CODE_PATH = (
     "yax/revision/substantive_v3_20260906/gate1_target/"
     "run_exact_target_audit.py"
 )
-TARGET_CODE_SHA256 = "c05e4671fae0aafa2e603fdd4274e11d346baf2fb7a0f273f85b580a0fd40d7f"
-NUMERICAL_SPEC_ID = "yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec"
-NUMERICAL_SPEC_SHA256 = "86b1704dd774e89b395035dd8fdf5b0be6e18332c678d5943a44d4637e297f7a"
+TARGET_CODE_SHA256 = "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9"
+NUMERICAL_SPEC_ID = "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991"
+NUMERICAL_SPEC_SHA256 = "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
 NUMERICAL_CODE_PATH = (
     "yax/revision/substantive_v3_20260906/numerical_existence/"
     "run_numerical_existence_audit.py"
 )
-NUMERICAL_CODE_SHA256 = "26a1bec8cf9496fabec12c33b60361c95ed150ac217abbc6d3c2fed78866a1c3"
-ARTIFACT_SAFETY_SHA256 = "91018c48dc37590fb831b808ea462796d9bdc85eefe1d0ec97e9b9ac007ebcc4"
+NUMERICAL_CODE_SHA256 = "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+ARTIFACT_SAFETY_SHA256 = "6c03ad94fb5d4ecb618e3cd0e4f9de6ece0a5f20e633283002f3fc01d1248fd2"
 LEGACY_ENGINE_SHA256 = "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf"
 
 TARGET_CODE_HASHES = {
@@ -1926,6 +1928,10 @@ def paths_overlap(left: Path, right: Path) -> bool:
     return left == right or left in right.parents or right in left.parents
 
 
+class KernelNoReplaceUnavailable(OSError):
+    """The mounted filesystem rejects the kernel no-replace primitive."""
+
+
 def _atomic_rename_noreplace(source: Path, target: Path) -> None:
     """Atomically publish a directory without overwriting a racing target."""
     libc = ctypes.CDLL(None, use_errno=True)
@@ -1950,16 +1956,65 @@ def _atomic_rename_noreplace(source: Path, target: Path) -> None:
             -2, source_bytes, -2, target_bytes, 0x00000004
         )  # AT_FDCWD, RENAME_EXCL
     else:
-        raise TransferBlocked(
-            "platform lacks an atomic no-replace directory rename"
+        raise KernelNoReplaceUnavailable(
+            errno.ENOSYS, "platform lacks an atomic no-replace directory rename"
         )
     if result != 0:
         error = ctypes.get_errno()
         if error in {errno.EEXIST, errno.ENOTEMPTY}:
             raise TransferBlocked("output target appeared during publication; refusing overwrite")
+        unavailable = {
+            errno.EINVAL, errno.ENOSYS,
+            getattr(errno, "ENOTSUP", errno.EINVAL),
+            getattr(errno, "EOPNOTSUPP", errno.EINVAL),
+        }
+        if error in unavailable:
+            raise KernelNoReplaceUnavailable(
+                error, "filesystem does not support atomic no-replace rename"
+            )
         raise TransferBlocked(
             f"atomic no-replace publication failed with errno {error}"
         )
+
+
+def _select_publication_method(parent: Path) -> str:
+    """Probe the target filesystem before any public report is rendered."""
+    probe_root = Path(tempfile.mkdtemp(prefix=".gate1-rename-probe-", dir=parent))
+    source = probe_root / "source"
+    target = probe_root / "target"
+    source.mkdir(mode=0o700)
+    try:
+        try:
+            _atomic_rename_noreplace(source, target)
+        except KernelNoReplaceUnavailable:
+            return LOCKED_RENAME_METHOD
+        if source.exists() or not target.is_dir():
+            raise TransferBlocked("kernel no-replace probe produced an invalid state")
+        return KERNEL_NOREPLACE_METHOD
+    finally:
+        shutil.rmtree(probe_root)
+
+
+def publication_semantics(method: str) -> dict[str, Any]:
+    if method == KERNEL_NOREPLACE_METHOD:
+        return {
+            "method": KERNEL_NOREPLACE_METHOD,
+            "kernel_noreplace_used": True,
+            "exclusive_cooperating_publisher_lock_required": True,
+            "same_parent_atomic_rename": True,
+            "noncooperating_same_user_toctou": "NOT_APPLICABLE_KERNEL_NOREPLACE",
+        }
+    if method == LOCKED_RENAME_METHOD:
+        return {
+            "method": LOCKED_RENAME_METHOD,
+            "kernel_noreplace_used": False,
+            "exclusive_cooperating_publisher_lock_required": True,
+            "same_parent_atomic_rename": True,
+            "noncooperating_same_user_toctou": (
+                "BOUNDED_BUT_NOT_ELIMINATED_BETWEEN_FINAL_ABSENCE_CHECK_AND_RENAME"
+            ),
+        }
+    raise TransferBlocked("publication method is not recognized")
 
 
 @dataclass
@@ -1968,6 +2023,8 @@ class OutputReservation:
     staging: Path
     lock: Path
     lock_fd: int | None
+    lock_identity: tuple[int, int, int, int, int, int]
+    publication_method: str
     committed: bool = False
     post_commit_warnings: tuple[str, ...] = ()
 
@@ -1996,6 +2053,7 @@ class OutputReservation:
                 "output name is locked; inspect PID/host/time metadata and remove the "
                 "lock manually only after confirming no publisher is active"
             ) from exc
+        staging: Path | None = None
         try:
             host = socket.gethostname()
             if not SAFE_HOST_TOKEN.fullmatch(host):
@@ -2012,17 +2070,54 @@ class OutputReservation:
             if written != len(payload):
                 raise TransferBlocked("could not write complete transfer lock metadata")
             os.fsync(lock_fd)
+            lock_opened = os.fstat(lock_fd)
+            lock_current = lock.lstat()
+            if (
+                _identity(lock_opened) != _identity(lock_current)
+                or not stat.S_ISREG(lock_current.st_mode)
+                or lock_current.st_nlink != 1
+            ):
+                raise TransferBlocked("transfer lock identity is invalid")
             if os.path.lexists(resolved):
                 raise TransferBlocked("output target appeared during reservation")
+            method = _select_publication_method(parent)
             staging = Path(
                 tempfile.mkdtemp(prefix=f".{resolved.name}.tmp-", dir=parent)
             )
             os.chmod(staging, 0o700)
         except Exception:
+            if staging is not None and staging.exists():
+                shutil.rmtree(staging)
             os.close(lock_fd)
             lock.unlink(missing_ok=True)
             raise
-        return cls(resolved, staging, lock, lock_fd)
+        if staging is None:  # pragma: no cover - guarded by successful mkdtemp
+            raise AssertionError("internal staging reservation is absent")
+        return cls(
+            resolved, staging, lock, lock_fd, _identity(lock_current), method
+        )
+
+    def _verify_lock_and_absence_for_fallback(self) -> None:
+        if self.lock_fd is None:
+            raise TransferBlocked("ordinary-rename fallback lacks its open lock")
+        try:
+            opened = os.fstat(self.lock_fd)
+            current = self.lock.lstat()
+        except OSError as exc:
+            raise TransferBlocked("ordinary-rename fallback lock is missing") from exc
+        if (
+            _identity(opened) != self.lock_identity
+            or _identity(current) != self.lock_identity
+            or not stat.S_ISREG(current.st_mode)
+            or current.st_nlink != 1
+        ):
+            raise TransferBlocked("ordinary-rename fallback lock changed")
+        if self.staging.parent != self.target.parent:
+            raise TransferBlocked("ordinary-rename fallback is not same-parent")
+        if os.path.lexists(self.target):
+            raise TransferBlocked(
+                "output target appeared before locked ordinary rename; refusing overwrite"
+            )
 
     def release(self) -> None:
         if self.lock_fd is not None:
@@ -2051,8 +2146,26 @@ class OutputReservation:
                 os.fsync(descriptor)
             finally:
                 os.close(descriptor)
-        # The no-replace rename is the sole publication commit point.
-        _atomic_rename_noreplace(self.staging, self.target)
+        # The selected rename is the sole publication commit point.  GPFS can
+        # reject renameat2(RENAME_NOREPLACE) with EINVAL.  On that filesystem,
+        # an ordinary same-parent rename is used only while the cooperating
+        # publisher lock is still open and after an immediate absence recheck.
+        if self.publication_method == KERNEL_NOREPLACE_METHOD:
+            _atomic_rename_noreplace(self.staging, self.target)
+        elif self.publication_method == LOCKED_RENAME_METHOD:
+            self._verify_lock_and_absence_for_fallback()
+            try:
+                os.rename(self.staging, self.target)
+            except OSError as exc:
+                if os.path.lexists(self.target):
+                    raise TransferBlocked(
+                        "output collision blocked during locked ordinary rename"
+                    ) from exc
+                raise TransferBlocked(
+                    f"locked ordinary rename failed with errno {exc.errno}"
+                ) from exc
+        else:
+            raise TransferBlocked("publication method changed before publication")
         self.committed = True
         warnings: list[str] = []
         try:
@@ -2181,6 +2294,9 @@ def validate_and_publish(spec_path: Path, input_dir: Path, output_dir: Path) -> 
                 "PASS_ENUMERATED_FORMS_AND_EXACT_PROJECTION_ALLOWLISTS"
             ),
             "runner_recorded_exact_argv_bindings": "PASS_HASH_CONSISTENT",
+            "publication_semantics": publication_semantics(
+                reservation.publication_method
+            ),
             "normalizer_execution_provenance": normalizer_state,
             "run_ledger_map_generated": False,
             "run_manifest_or_status_updated": False,

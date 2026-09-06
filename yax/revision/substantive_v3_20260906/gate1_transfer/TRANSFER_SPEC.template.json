@@ -10,7 +10,7 @@
       "canonical_sha256_pointer": "/canonical_spec_sha256",
       "code_hash_pointer": "/builder_code_sha256",
       "depends_on": [],
-      "expected_code_hash": "c8dba2fce9f752753aaa67d95d5a2638bc7160b7702efffee1c51e17103b12dc",
+      "expected_code_hash": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
       "expected_jobnumber": "<REQUIRED_CELL_JOBNUMBER>",
       "expected_receipt_schema": "yax-numerical-cells-receipt-v1",
       "expected_receipt_status": "PASS_FRESH_AGGREGATE_REBUILD",
@@ -25,10 +25,10 @@
       "scheduler_record_sha256": "<REQUIRED_CELL_SCHEDULER_SHA256>",
       "time_source": "scheduler",
       "typed_spec": {
-        "id": "yaxcellspec_v1_cc2ef1a97ff01b7bc57f9598b139c6c70315866121c85eaef2158827cace0aa7",
+        "id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
         "id_pointer": "/cell_build_spec_id",
         "kind": "cell_build_spec",
-        "sha256": "879f99c3b06363303402cb1cfc2c0ff443d78886295c7d63edfcd59cc6897765",
+        "sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15",
         "sha256_pointer": "/cell_build_spec_sha256"
       }
     },
@@ -39,7 +39,7 @@
       "depends_on": [
         "cells"
       ],
-      "expected_code_hash": "c05e4671fae0aafa2e603fdd4274e11d346baf2fb7a0f273f85b580a0fd40d7f",
+      "expected_code_hash": "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9",
       "expected_jobnumber": "<REQUIRED_TARGET_JOBNUMBER>",
       "expected_receipt_schema": "yax-exact-target-audit-receipt-v1",
       "expected_receipt_status": "PASS_EXACT_TARGET_AUDIT",
@@ -54,10 +54,10 @@
       "scheduler_record_sha256": "<REQUIRED_TARGET_SCHEDULER_SHA256>",
       "time_source": "scheduler",
       "typed_spec": {
-        "id": "yaxtargetspec_v1_700c7cf5a3e733f8b255b81f63551b94da72224fdebb93d31ee10caa4195c34d",
+        "id": "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b",
         "id_pointer": "/target_audit_spec_id",
         "kind": "target_audit_spec",
-        "sha256": "85014b2152c6833eca439c3eeda36496b0a0d91a9fd77aef4732f8127c47e95f",
+        "sha256": "fa425dce6d75475b6f562aba52898b8e71c7db0269d549f17ef9645720052651",
         "sha256_pointer": "/target_audit_spec_sha256"
       }
     },
@@ -70,7 +70,7 @@
         "target"
       ],
       "end_time_pointer": "/finished_at_utc",
-      "expected_code_hash": "26a1bec8cf9496fabec12c33b60361c95ed150ac217abbc6d3c2fed78866a1c3",
+      "expected_code_hash": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02",
       "expected_jobnumber": "<REQUIRED_NUMERICAL_JOBNUMBER>",
       "expected_receipt_schema": "yax-numerical-existence-receipt-v1",
       "expected_receipt_status": "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED",
@@ -85,10 +85,10 @@
       "start_time_pointer": "/started_at_utc",
       "time_source": "module_receipt",
       "typed_spec": {
-        "id": "yaxnumspec_v1_f5a1571b8ae9842d15a7334466cbbbf7d381a2f945b4c5517c3f25386f1977ec",
+        "id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
         "id_pointer": "/audit_spec_id",
         "kind": "numerical_analysis_spec",
-        "sha256": "86b1704dd774e89b395035dd8fdf5b0be6e18332c678d5943a44d4637e297f7a",
+        "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce",
         "sha256_pointer": "/audit_spec_sha256"
       }
     }

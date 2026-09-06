@@ -173,6 +173,34 @@ def test_target_command_binding_rejects_noncolocated_inputs(tmp_path: Path):
         )
 
 
+def test_target_postcommit_stdout_failure_does_not_change_success_exit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    observed = {}
+
+    def completed(args):
+        observed["output_leaf"] = args.output_leaf
+        return {"status": "PASS_EXACT_TARGET_AUDIT"}
+
+    monkeypatch.setattr(RUNNER, "execute", completed)
+    monkeypatch.setattr(RUNNER, "scheduler_jobnumber", lambda _env: "23456")
+    monkeypatch.setattr(
+        RUNNER.sys, "argv",
+        [
+            str(RUNNER.__file__), "--repo-root", str(REPO),
+            "--cells", str(tmp_path / "cells" / "aggregate_cells.csv"),
+            "--cells-receipt", str(tmp_path / "cells" / "EXECUTION_RECEIPT.json"),
+            "--output-parent", str(tmp_path),
+        ],
+    )
+    monkeypatch.setattr(
+        "builtins.print",
+        lambda *args, **kwargs: (_ for _ in ()).throw(BrokenPipeError()),
+    )
+    assert RUNNER.main() == 0
+    assert observed["output_leaf"] == tmp_path / "gate1_target_sge_23456"
+
+
 def fixed_assignments() -> pd.DataFrame:
     membership = pd.read_csv(
         REPO
@@ -1125,6 +1153,91 @@ def test_target_atomic_publish_is_noreplace_and_inventory_bound(tmp_path: Path):
         RUNNER.atomic_publish(
             inventory, tmp_path / "inventory-output", {"expected.txt"}
         )
+
+
+def test_target_atomic_publish_uses_reserved_gpfs_fallback_on_einval(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    staging = tmp_path / ".gpfs-staging"
+    staging.mkdir()
+    (staging / "expected.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "gpfs-published"
+    monkeypatch.setattr(
+        RUNNER, "atomic_noreplace_rename_errno",
+        lambda _source, _target: RUNNER.errno.EINVAL,
+    )
+    RUNNER.atomic_publish(staging, destination, {"expected.txt"})
+    assert (destination / "expected.txt").read_text(encoding="utf-8") == "complete\n"
+    assert not (tmp_path / ".gpfs-published.publish.lock").exists()
+
+
+def test_target_gpfs_fallback_has_no_raising_postcommit_destination_probe(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    staging = tmp_path / ".gpfs-postcommit-staging"
+    staging.mkdir()
+    (staging / "expected.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "gpfs-postcommit-published"
+    real_rename = RUNNER.os.rename
+    real_stat = RUNNER.os.stat
+    committed = False
+
+    def tracked_rename(source, target):
+        nonlocal committed
+        real_rename(source, target)
+        committed = True
+
+    def guarded_stat(path, *args, **kwargs):
+        if committed and Path(path) == destination:
+            raise OSError("postcommit destination probe must not occur")
+        return real_stat(path, *args, **kwargs)
+
+    monkeypatch.setattr(
+        RUNNER, "atomic_noreplace_rename_errno",
+        lambda _source, _target: RUNNER.errno.EINVAL,
+    )
+    monkeypatch.setattr(RUNNER.os, "rename", tracked_rename)
+    monkeypatch.setattr(RUNNER.os, "stat", guarded_stat)
+    RUNNER.atomic_publish(staging, destination, {"expected.txt"})
+    assert (destination / "expected.txt").read_text(encoding="utf-8") == "complete\n"
+
+
+def test_target_gpfs_postcommit_cleanup_failure_is_reported_not_raised(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    staging = tmp_path / ".gpfs-cleanup-staging"
+    staging.mkdir()
+    (staging / "expected.txt").write_text("complete\n", encoding="utf-8")
+    destination = tmp_path / "gpfs-cleanup-published"
+    lock = tmp_path / ".gpfs-cleanup-published.publish.lock"
+    real_unlink = Path.unlink
+
+    def guarded_unlink(path, *args, **kwargs):
+        if path == lock:
+            raise OSError(RUNNER.errno.EIO, "injected cleanup failure")
+        return real_unlink(path, *args, **kwargs)
+
+    monkeypatch.setattr(
+        RUNNER, "atomic_noreplace_rename_errno",
+        lambda _source, _target: RUNNER.errno.EINVAL,
+    )
+    monkeypatch.setattr(Path, "unlink", guarded_unlink)
+    warnings = RUNNER.atomic_publish(staging, destination, {"expected.txt"})
+    assert warnings == (f"publication_lock_unlink_errno_{RUNNER.errno.EIO}",)
+    assert (destination / "expected.txt").read_text(encoding="utf-8") == "complete\n"
+
+
+def test_target_gpfs_fallback_refuses_existing_reservation(tmp_path: Path):
+    staging = tmp_path / ".reserved-staging"
+    staging.mkdir()
+    destination = tmp_path / "reserved-published"
+    (tmp_path / ".reserved-published.publish.lock").write_text(
+        "other publisher\n", encoding="utf-8"
+    )
+    with pytest.raises(RUNNER.TargetAuditError, match="reserved"):
+        RUNNER.gpfs_atomic_publish_under_reservation(staging, destination)
+    assert staging.exists()
+    assert not destination.exists()
 
 
 def test_target_atomic_publish_rejects_hardlinked_outputs(tmp_path: Path):

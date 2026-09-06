@@ -43,6 +43,17 @@ an input/output overlap. Artifacts are written to a private same-parent staging
 directory and atomically published only when complete. Persisted commands use
 placeholders, never resolved SCC or workstation paths.
 
+Publication attempts kernel no-replace first. If the mounted filesystem
+explicitly rejects that primitive, the already-open exclusive sibling lock is
+revalidated and the runner performs an ordinary same-parent atomic rename only
+after immediate target-absence and staging-identity checks. Before publication,
+the receipt discloses both permitted paths without claiming the not-yet-observed
+backend. The runner attempts to record the actual postcommit method in
+sanitized scheduler stdout; an output-stream failure after commit is reported
+conservatively when possible and cannot invalidate the published leaf. Both
+records state that the fallback does not provide kernel no-replace and retains
+a bounded but uneliminated noncooperating same-user check-to-rename window.
+
 ## Existence logic
 
 No pseudocount, penalty, probability clip, minimum-count rule, or selective

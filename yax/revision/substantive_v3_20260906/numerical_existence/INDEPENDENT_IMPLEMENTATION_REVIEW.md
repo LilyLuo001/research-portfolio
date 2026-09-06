@@ -1,5 +1,11 @@
 # Independent numerical implementation review
 
+> **Historical record—superseded.** This review authenticates the pre-GPFS
+> implementation bytes listed below. It is not the terminal review for the
+> current numerical auditor. The later GPFS compatibility review records the
+> current runner, safety helper, specification hashes, tests, postcommit-output
+> behavior, and qualified publication fallback.
+
 Review date: 2026-09-06 UTC.
 
 Reviewed terminal objects:

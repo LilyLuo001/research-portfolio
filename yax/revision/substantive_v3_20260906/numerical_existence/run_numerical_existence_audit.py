@@ -4382,8 +4382,43 @@ def require_unchanged_execution_state(
         "state_sha256": hashlib.sha256(canonical_bytes(observed)).hexdigest(),
         "protected_row_level_microdata_reread": False,
         "residual_window": (
-            "bounded_same-process interval from final recheck to atomic "
-            "no-replace rename; not claimed eliminated"
+            "bounded same-process interval from final recheck through "
+            "publication; kernel no-replace is attempted first, while an "
+            "unsupported-filesystem fallback adds a disclosed bounded "
+            "noncooperating same-user lstat-to-os.rename collision window; "
+            "neither interval is claimed eliminated"
+        ),
+    }
+
+
+def precommit_publication_protocol() -> dict[str, Any]:
+    """Truthfully disclose both allowed backends before the commit point."""
+    return {
+        "status": "PRECOMMIT_PUBLICATION_METHOD_NOT_YET_OBSERVED",
+        "actual_backend_claimed_before_commit": False,
+        "selection_order": [
+            "kernel_atomic_noreplace",
+            "portable_same_parent_atomic_rename_if_filesystem_unsupported",
+        ],
+        "kernel_path": (
+            "renameat2(RENAME_NOREPLACE) or renameatx_np(RENAME_EXCL)"
+        ),
+        "unsupported_filesystem_fallback": (
+            "revalidated exclusive sibling lock, immediate target lstat "
+            "absence check, then atomic same-parent os.rename"
+        ),
+        "fallback_kernel_no_replace_guarantee": False,
+        "fallback_target_replacement_prevention": (
+            "cooperative lock plus immediate absence recheck; not "
+            "kernel-enforced"
+        ),
+        "fallback_bounded_noncooperating_same_user_toctou": (
+            "not eliminated: a noncooperating same-user writer could create "
+            "an empty target between final lstat and os.rename"
+        ),
+        "actual_backend_recording": (
+            "attempted in sanitized scheduler stdout after publication commit; "
+            "stdout failure cannot reverse or invalidate the committed leaf"
         ),
     }
 
@@ -4395,16 +4430,102 @@ def publish_after_final_reauthentication(
     repo_root: pathlib.Path,
     canonical: dict[str, Any],
     analysis: dict[str, Any],
-) -> None:
+) -> dict[str, Any]:
     """Make reauthentication the operation immediately preceding publish."""
     require_unchanged_execution_state(
         initial, args, repo_root, canonical, analysis,
     )
-    # The same-user final-check-to-rename TOCTOU window cannot be eliminated
-    # without holding every input descriptor through the complete run.  It is
-    # deliberately bounded here to this direct call and the atomic no-replace
-    # rename; the receipt makes no stronger claim.
-    reservation.publish()
+    # The input-state race is deliberately bounded to this direct call.  The
+    # output collision guarantee is backend-specific: kernel no-replace when
+    # supported, otherwise the disclosed cooperative GPFS fallback.
+    return reservation.publish()
+
+
+def emit_final_publication_stdout(
+    status: str,
+    output_leaf: str,
+    post_commit_cleanup_warnings: tuple[str, ...],
+    publication_semantics: dict[str, Any],
+) -> dict[str, Any]:
+    """Emit the actual post-commit backend without ever raising after commit."""
+    required = {
+        "status", "publication_backend", "same_parent_directory_rename_atomic",
+        "kernel_no_replace_guarantee", "portable_gpfs_fallback_used",
+        "bounded_noncooperating_same_user_toctou",
+    }
+    semantics_valid = required.issubset(publication_semantics)
+    if semantics_valid and (
+        publication_semantics["portable_gpfs_fallback_used"] is True
+        and (
+            publication_semantics["kernel_no_replace_guarantee"] is not False
+            or not publication_semantics[
+                "bounded_noncooperating_same_user_toctou"
+            ]
+        )
+    ):
+        semantics_valid = False
+    payload = {
+        "status": status,
+        "output_leaf": output_leaf,
+        "post_commit_cleanup_warnings": list(post_commit_cleanup_warnings),
+        "publication_semantics": publication_semantics,
+    }
+    if not semantics_valid or contains_resolved_private_path(payload):
+        payload = {
+            "status": status,
+            "output_leaf": (
+                output_leaf
+                if re.fullmatch(r"gate1_numerical_sge_[0-9]+", output_leaf)
+                else "WITHHELD_NONCANONICAL_OUTPUT_LEAF"
+            ),
+            "post_commit_cleanup_warnings": [
+                "publication_semantics_withheld_after_validation_failure"
+            ],
+            "publication_semantics": {
+                "status": "POSTCOMMIT_SEMANTICS_WITHHELD_FAIL_CLOSED",
+                "actual_backend_claimed": False,
+                "kernel_no_replace_guarantee": None,
+                "portable_gpfs_fallback_used": None,
+                "bounded_noncooperating_same_user_toctou": (
+                    "not claimed eliminated; consult the precommit protocol"
+                ),
+            },
+        }
+    payload["scheduler_stdout_emission_status"] = "EMITTED_AFTER_COMMIT"
+    try:
+        rendered = json.dumps(payload, sort_keys=True)
+        print(rendered)
+    except Exception as error:
+        # Publication has already committed.  A closed scheduler pipe or an
+        # unexpected serialization problem must not turn that commit into an
+        # ambiguous nonzero process result.  The conservative protocol is
+        # already inside the published receipt.
+        return {
+            "status": status,
+            "output_leaf": (
+                output_leaf
+                if re.fullmatch(r"gate1_numerical_sge_[0-9]+", output_leaf)
+                else "WITHHELD_NONCANONICAL_OUTPUT_LEAF"
+            ),
+            "post_commit_cleanup_warnings": [
+                "scheduler_stdout_emission_failed_after_commit"
+            ],
+            "publication_semantics": {
+                "status": "POSTCOMMIT_STDOUT_UNAVAILABLE",
+                "actual_backend_claimed": False,
+                "kernel_no_replace_guarantee": None,
+                "portable_gpfs_fallback_used": None,
+                "bounded_noncooperating_same_user_toctou": (
+                    "not claimed eliminated; consult the published precommit "
+                    "protocol"
+                ),
+            },
+            "scheduler_stdout_emission_status": (
+                "FAILED_AFTER_COMMIT_WITHOUT_PROPAGATION"
+            ),
+            "scheduler_stdout_error_type": type(error).__name__,
+        }
+    return payload
 
 
 def exit_code_for_status(status: str) -> int:
@@ -4664,6 +4785,7 @@ def run(args: argparse.Namespace) -> int:
         "execution_runtime_authentication": execution_runtime,
         "pre_execution_authorization": pre_execution_authorization,
         "prepublication_revalidation": prepublication_revalidation,
+        "publication_protocol": precommit_publication_protocol(),
         "canonical_spec_id": canonical["spec_id"],
         "canonical_spec_sha256": sha256_file(args.canonical_spec),
         "audit_spec_id": analysis["audit_spec_id"],
@@ -4703,20 +4825,18 @@ def run(args: argparse.Namespace) -> int:
             raise
         # Recheck once more after every output byte, including the receipt, is
         # final.  Publication is the next state-changing operation.
-        publish_after_final_reauthentication(
+        publication_semantics = publish_after_final_reauthentication(
             reservation, initial_execution_state, args, repo_root,
             canonical, analysis,
         )
     except Exception:
         reservation.abandon()
         raise
-    print(json.dumps({
-        "status": status,
-        "output_leaf": args.output_dir.name,
-        "post_commit_cleanup_warnings": list(
-            reservation.post_commit_cleanup_warnings
-        ),
-    }, sort_keys=True))
+    emit_final_publication_stdout(
+        status, args.output_dir.name,
+        reservation.post_commit_cleanup_warnings,
+        publication_semantics,
+    )
     return exit_code_for_status(status)
 
 

@@ -1,5 +1,11 @@
 # Independent Gate-1 cell-producer review
 
+> **Historical record—superseded.** This review authenticates the pre-GPFS
+> implementation bytes listed below. It is not the terminal review for the
+> current producer and its unconditional no-replace wording is not the current
+> publication contract. The later GPFS compatibility review records the
+> qualified cooperative fallback, current hashes, tests, and disposition.
+
 Review date: 2026-09-06 UTC.
 
 Reviewed terminal objects:

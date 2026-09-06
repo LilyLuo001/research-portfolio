@@ -37,6 +37,13 @@ The output leaf must not exist. A successful leaf contains
 `EXECUTION_RECEIPT.json`. The receipt deliberately contains identifiers,
 hashes, counts, and checks rather than private paths or credentials.
 
+Publication first attempts the kernel no-replace primitive. When GPFS
+explicitly rejects that flag, the runner uses an ordinary same-parent atomic
+rename under an exclusive sibling reservation for the SGE-job-derived unique
+leaf, after immediately rechecking the reservation identity and target
+absence. The fallback does not claim kernel no-replace; a noncooperating
+same-user check-to-rename race is bounded but not eliminated.
+
 The downstream numerical audit should consume the aggregate and receipt
 directly. A production PASS means only that cell construction satisfied this
 pre-result contract; it is not a numerical-existence or empirical-result PASS.
