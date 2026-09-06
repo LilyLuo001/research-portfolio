@@ -1,0 +1,441 @@
+{
+  "analysis_status": "pre-result Gate-1 exact-target audit contract; post-outcome referee-led verification, not preregistration",
+  "canonical_assertions": [
+    {
+      "equals": "ages 22 through 25",
+      "name": "young_age_group",
+      "pointer": "/outcome/age_groups/young"
+    },
+    {
+      "equals": "ages 26 through 65",
+      "name": "comparison_age_group",
+      "pointer": "/outcome/age_groups/comparison"
+    },
+    {
+      "equals": "sum WTFINL into occupation-by-calendar-month-by-age-group employment-stock cells after declared routing; absent eligible cells enter as zero stock",
+      "name": "cell_construction",
+      "pointer": "/outcome/cell_construction"
+    },
+    {
+      "equals": "weighted CPS employed-person stock; likelihood outcome is young stock with grouped total young plus older stock",
+      "name": "stock_units",
+      "pointer": "/outcome/units"
+    },
+    {
+      "equals": "frequency-weighted grouped-binomial log likelihood for young stock conditional on young-plus-older employed stock; conditional equivalent of the two-age PPML for the age-share contrast",
+      "name": "estimator_objective",
+      "pointer": "/estimator/objective"
+    },
+    {
+      "equals": [
+        "Census-2018 detailed-occupation fixed effects",
+        "observed calendar-month fixed effects",
+        "Webb software-exposure z-score interacted with post"
+      ],
+      "name": "nuisance_column_space",
+      "pointer": "/estimator/nuisance_column_space"
+    },
+    {
+      "equals": "coefficient on Q5-by-post relative to omitted Q1-by-post in the joint Q2-Q5 profile, conditional on occupation FE, month FE, and Webb-software-z-by-post",
+      "name": "headline_contrast",
+      "pointer": "/target/contrast"
+    },
+    {
+      "equals": "grouped-binomial likelihood implied over the 113 included observed months; no equal-month post averaging is substituted",
+      "name": "temporal_weighting",
+      "pointer": "/target/temporal_weights"
+    },
+    {
+      "equals": "exclude 2022-12",
+      "name": "static_transition_rule",
+      "pointer": "/calendar/transition_handling/static_models"
+    },
+    {
+      "equals": "2023-01",
+      "name": "treatment_start",
+      "pointer": "/calendar/transition_handling/treatment_start"
+    },
+    {
+      "equals": [
+        "2025-10"
+      ],
+      "name": "genuinely_missing_month",
+      "pointer": "/calendar/missing_handling/missing_months"
+    },
+    {
+      "equals": 113,
+      "name": "static_month_count",
+      "pointer": "/calendar/estimation_window/included_month_count"
+    },
+    {
+      "equals": [
+        "2017-01",
+        "2026-07"
+      ],
+      "name": "calendar_range",
+      "pointer": "/calendar/estimation_window/range"
+    },
+    {
+      "equals": "ages 22 through 65, young plus older employed stock",
+      "name": "treatment_construction_age_universe",
+      "pointer": "/exposure/construction_age_universe"
+    },
+    {
+      "equals": "IPUMS/Census 2018 four-digit detailed occupation codes",
+      "name": "occupation_taxonomy",
+      "pointer": "/occupation/taxonomy"
+    },
+    {
+      "equals": "22 through 65 inclusive",
+      "name": "target_microdata_age_eligibility",
+      "pointer": "/data/microdata_eligibility/age"
+    },
+    {
+      "equals": "IPUMS EMPSTAT in {10, 12}",
+      "name": "employment_status_eligibility",
+      "pointer": "/data/microdata_eligibility/employment_status"
+    },
+    {
+      "equals": "finite WTFINL strictly greater than zero",
+      "name": "weight_eligibility",
+      "pointer": "/data/microdata_eligibility/weight"
+    }
+  ],
+  "code_hashes": {
+    "dax/memo/power_calcs/young_relative_employment_power.py": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+    "yax/analysis/run_frozen_v11.py": "e40fdda2353dd0c0d6f92401e7bdfb5874c8a32ffa9d641b38144cc07054ddff",
+    "yax/revision/referee_20260905/run_referee_cells.py": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
+    "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
+    "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "38c528dd45b8f932100a78d751bc7b513e4e6596e1d635401dd4b73660bccfc3",
+    "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py": "01ce88a080b816407aeabffc0c8a4e6eac5d950a917138e821cf8c0004616b24"
+  },
+  "contract_binding": {
+    "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+    "cell_build_spec_id": "yaxcellspec_v1_d921ee5ba28774910f84d90e155190cc5e24d8ba33869d96cebb2ea2261ac671",
+    "cell_build_spec_sha256": "cc77e12fc9e28b52c4bbf859fc560f39673fd32b1131fdb2985eba1df663ed1f"
+  },
+  "created_at_utc": "2026-09-06T07:36:00Z",
+  "empirical_execution": {
+    "coefficient_estimated": false,
+    "input": "authenticated aggregate_cells.csv plus its colocated Gate-1 cell receipt",
+    "output": "new atomic leaf outside the repository and disjoint from the aggregate input leaf",
+    "raw_microdata_argument_exposed": false,
+    "row_level_microdata_read": false
+  },
+  "equation_contract": {
+    "coefficient_unit": "log points",
+    "criterion": "N_y*log(p) + N_o*log(1-p) on rows with N_y+N_o>0",
+    "forbidden_interpretations": [
+      "observed log ratio in cells with a zero stock",
+      "literal independent-person binomial likelihood",
+      "individual employment probability",
+      "employer hiring rate",
+      "causal AI effect"
+    ],
+    "headline_parameter": "beta_5 is the Q5-versus-Q1 post-2023 change in log(mu_y/mu_o) conditional on occupation FE, calendar-month FE, and Webb-z-by-post",
+    "linear_predictor": "logit(p)=log(mu_y/mu_o)=alpha_o+lambda_t+sum_q=2^5 beta_q*1{Q=q}*post+theta*WebbZ*post",
+    "mean_share": "p=mu_y/(mu_y+mu_o)",
+    "observed_stocks": "N_y is the ages-22-25 CPS-weighted employed stock and N_o is the ages-26-65 CPS-weighted employed stock",
+    "ratio_percent_transform": "100*[exp(beta_5)-1], labeled as a conditional-mean stock-ratio change"
+  },
+  "output_contract": {
+    "artifact_names": [
+      "EXACT_TARGET_AUDIT.json",
+      "ROW_ACCOUNTING.csv",
+      "EXACT_TARGET_AUDIT_REPORT.md",
+      "EXECUTION_RECEIPT.json"
+    ],
+    "atomic_publish": true,
+    "credentials_forbidden": true,
+    "new_leaf_required": true,
+    "outside_repository_required": true,
+    "private_paths_forbidden": true,
+    "receipt_schema_version": "yax-exact-target-audit-receipt-v1"
+  },
+  "physical_row_accounting": {
+    "continuous_stock_fields": [
+      "young",
+      "older"
+    ],
+    "distinctions": {
+      "physical_rows": "integer counts at a named file or aggregation stage",
+      "respondent_equivalent": "not constructed by the six-field target router and absent from the sanctioned aggregate output; never inferred from routed descendants",
+      "route_descendant": "one in-memory routed row; multiple descendants can share one source record",
+      "stock": "real-valued employment stock after one WTFINL application and any bridge allocation",
+      "unique_people_or_households": "not recoverable from the sanctioned aggregate schema"
+    },
+    "runtime_raw_fields": [
+      "YEAR",
+      "MONTH",
+      "AGE",
+      "EMPSTAT",
+      "OCC",
+      "WTFINL"
+    ],
+    "source_ids": [
+      "ipums_cps_extract_9_wide",
+      "ipums_cps_extract_11_march_basic_repair"
+    ],
+    "partition_integer_fields": [
+      "invalid_raw_occ_records",
+      "valid_raw_occ_records",
+      "early_valid_source_records",
+      "current_valid_source_records",
+      "early_matched_source_records",
+      "early_unmatched_source_records",
+      "early_expanded_route_descendants",
+      "early_fractional_route_contributions",
+      "early_unit_route_contributions",
+      "early_zero_mass_route_contributions",
+      "current_direct_route_contributions",
+      "routed_contribution_rows"
+    ],
+    "upstream_integer_fields": [
+      "physical_rows_read_total",
+      "eligible_employed_age_22_65_records_total",
+      "invalid_raw_occ_records",
+      "valid_raw_occ_records",
+      "early_valid_source_records",
+      "current_valid_source_records",
+      "early_matched_source_records",
+      "early_unmatched_source_records",
+      "early_expanded_route_descendants",
+      "early_fractional_route_contributions",
+      "early_unit_route_contributions",
+      "early_zero_mass_route_contributions",
+      "current_direct_route_contributions",
+      "routed_contribution_rows",
+      "wide_march_rows_explicitly_replaced",
+      "wide_march_positive_weight_rows_explicitly_replaced",
+      "repair_eligible_employed_age_22_65_records",
+      "routed_rows",
+      "aggregate_rows",
+      "observed_month_count"
+    ]
+  },
+  "requirement": {
+    "acceptance_checks": [
+      "Correct equations and table notes",
+      "No observed log ratio in zero cells",
+      "No individual-probability or hiring interpretation"
+    ],
+    "depends_on": [
+      "G03"
+    ],
+    "id": "T01",
+    "prompt_section": "6.1"
+  },
+  "schema_version": "yax-exact-target-audit-spec-v1",
+  "source_evidence": [
+    {
+      "path": "yax/revision/substantive_v3_20260906/UNDERSTANDING_CONTRACT.md",
+      "role": "Gate-0 scientific interpretation, sections 1 and 14",
+      "sha256": "fbfe8ef57ad0f5aa35fbde73e90f6a0c5fdcbee21b182a197d85c38d1af16950"
+    },
+    {
+      "path": "yax/revision/substantive_v3_20260906/revision_inputs/EXECUTION_PROMPT_V3.md",
+      "role": "execution instructions, sections 4 and 6.1",
+      "sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b"
+    },
+    {
+      "path": "yax/revision/substantive_v3_20260906/revision_inputs/referee_A_major_revision.md",
+      "role": "source A:minor9",
+      "sha256": "0a85a496591e67a661289de00a122cdea3201ef8c1181b6cbba0195def2012ac",
+      "span_sha256": "0d75943c58d3f6ec5fc06fe1db2b247a5e6d5945581db13cd9db0a636451d060"
+    },
+    {
+      "path": "yax/revision/substantive_v3_20260906/revision_inputs/referee_B_rejection.md",
+      "role": "source B:specific dependent variable",
+      "sha256": "3efb3800c32acbf13346565545439923385049eb37b3dc10ce287cc51cdf16ee",
+      "span_sha256": "9072b62b4482b4fddee260dd00dcd23fbe1ca69201ca47992034ab947925f8df"
+    },
+    {
+      "path": "yax/revision/substantive_v3_20260906/revision_inputs/previous_execution_prompt.md",
+      "role": "source P0:4",
+      "sha256": "bc9daa996ee9778f59d0a6550ceac814e36dd9b0b5b82a45d16fdf7bfdfcfb17",
+      "span_sha256": "ae4b96f78453d96d7f096f028354495021b5e2ec941d59fcccdc705a4836d0ee"
+    },
+    {
+      "path": "yax/revision/substantive_v3_20260906/source_verification/SOURCE_LOCATOR_REGISTRY.json",
+      "role": "hashed locator registry for T01 source spans",
+      "sha256": "c24a6625255369fc305decfbf424baa4b0e8dce95602175c692289f5bcf55335"
+    },
+    {
+      "path": "yax/revision/substantive_v3_20260906/revision_inputs/requirements_seed.json",
+      "role": "immutable source requirement T01",
+      "sha256": "38de2d5b80e72c85f3dd06086a862cea63c521d511a5baacb7f6390f66eeeb59"
+    }
+  ],
+  "target_audit_spec_id": "yaxtargetspec_v1_a72f6e037e1709537683fa9042846d79f8e743eb63af021392f4ad5f86a2a3a5",
+  "upstream_assertions": [
+    {
+      "equals": "yax-numerical-cells-v1",
+      "name": "aggregate_schema_version",
+      "pointer": "/aggregate_schema_version"
+    },
+    {
+      "equals": [
+        "occ_code",
+        "month",
+        "family",
+        "young",
+        "older",
+        "beta_quintile",
+        "webb_z"
+      ],
+      "name": "aggregate_columns",
+      "pointer": "/output_contract/columns"
+    },
+    {
+      "equals": "yax-numerical-cells-receipt-v1",
+      "name": "aggregate_receipt_schema",
+      "pointer": "/output_contract/receipt_schema_version"
+    },
+    {
+      "equals": 53352,
+      "name": "aggregate_grid_rows",
+      "pointer": "/grid_contract/expected_rows"
+    },
+    {
+      "equals": 468,
+      "name": "aggregate_occupation_count",
+      "pointer": "/grid_contract/occupation_count"
+    },
+    {
+      "equals": 114,
+      "name": "aggregate_observed_month_count",
+      "pointer": "/grid_contract/observed_month_count"
+    },
+    {
+      "equals": true,
+      "name": "balanced_grid",
+      "pointer": "/grid_contract/balanced"
+    },
+    {
+      "equals": true,
+      "name": "zero_total_cells_retained_in_transport",
+      "pointer": "/grid_contract/zero_total_cells_retained"
+    },
+    {
+      "equals": 1,
+      "name": "one_survey_weight_application",
+      "pointer": "/route_contract/weight_application_count"
+    },
+    {
+      "equals": "2022-12",
+      "name": "transport_grid_retains_transition",
+      "pointer": "/calendar_contract/transition_month_retained"
+    },
+    {
+      "equals": [
+        "YEAR",
+        "MONTH",
+        "AGE",
+        "EMPSTAT",
+        "OCC",
+        "WTFINL"
+      ],
+      "name": "final_estimand_source_fields",
+      "pointer": "/input_field_contract/production_runtime_reads_only"
+    },
+    {
+      "equals": "exact canonical V2 analysis and exposure-construction fields",
+      "name": "canonical_v2_variable_universe_parity",
+      "pointer": "/input_field_contract/variable_universe"
+    },
+    {
+      "equals": [
+        "OCC2010",
+        "IND1990"
+      ],
+      "name": "inherited_helper_fields_rejected",
+      "pointer": "/input_field_contract/historical_helper_fields_rejected"
+    },
+    {
+      "equals": [
+        22,
+        65
+      ],
+      "name": "producer_age_eligibility",
+      "pointer": "/input_field_contract/age_eligibility"
+    },
+    {
+      "equals": [
+        10,
+        12
+      ],
+      "name": "producer_employment_status_codes",
+      "pointer": "/input_field_contract/employment_status_codes"
+    },
+    {
+      "equals": false,
+      "name": "historical_reference_not_executed",
+      "pointer": "/historical_reference_code_contract/imported_or_executed_in_production"
+    },
+    {
+      "equals": [
+        "ipums_cps_extract_9_wide",
+        "ipums_cps_extract_11_march_basic_repair"
+      ],
+      "name": "producer_raw_sources",
+      "pointer": "/freshness_contract/raw_sources"
+    },
+    {
+      "equals": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+      "name": "scc_environment_lock",
+      "pointer": "/runtime_contract/environment_lock_sha256"
+    },
+    {
+      "equals": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "name": "scc_runtime_payload",
+      "pointer": "/runtime_contract/runtime_payload"
+    },
+    {
+      "equals": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+      "name": "scc_runtime_payload_hash",
+      "pointer": "/runtime_contract/runtime_payload_sha256"
+    },
+    {
+      "equals": {},
+      "name": "producer_empty_transitive_runtime_map",
+      "pointer": "/runtime_transitive_code_fingerprint/map"
+    },
+    {
+      "equals": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "name": "producer_empty_transitive_runtime_hash",
+      "pointer": "/runtime_transitive_code_fingerprint/sha256"
+    },
+    {
+      "equals": "SHA-256 of occ_code, family, integer beta_quintile, and float.hex(webb_z), tab-delimited and sorted by occ_code, with one LF per row",
+      "name": "assignment_fingerprint_algorithm",
+      "pointer": "/assignment_contract/fingerprint_algorithm"
+    },
+    {
+      "equals": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+      "name": "assignment_fingerprint",
+      "pointer": "/assignment_contract/fingerprint_sha256"
+    },
+    {
+      "equals": false,
+      "name": "row_level_outputs_forbidden",
+      "pointer": "/freshness_contract/protected_cell_outputs_committed"
+    }
+  ]
+}

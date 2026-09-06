@@ -1,0 +1,288 @@
+{
+  "analysis_status": "post-outcome referee-led numerical audit specified before V3 Gate-1 results",
+  "audit_spec_id": "yaxnumspec_v1_98d113b751b4395300668cefc36305cdd797f4dc8ff8257f8dcc25bff5696db2",
+  "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+  "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "created_at_utc": "2026-09-06T06:10:00Z",
+  "input_contract": {
+    "aggregate_schema_version": "yax-numerical-cells-v1",
+    "assignment_fingerprint_algorithm": "SHA-256 of sorted occ_code\\tfamily\\tbeta_quintile\\tfloat.hex(webb_z)\\n records",
+    "assignment_fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+    "balanced_grid_required": true,
+    "expected_balanced_grid_rows": 53352,
+    "cell_builder_execution_contract": {
+      "analysis_spec_path": "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+      "cell_build_spec_path": "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
+      "command_template": "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-leaf <YAX_V3_RUN_ROOT>/gate1_cells_<UNIQUE_RUN_ID>",
+      "environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
+      "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+      "git_committed_paths": [
+        "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+        "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
+        "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+        "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt"
+      ],
+      "git_required_ancestor_commit": "f2e16bc4228b40a258a4417f7598366c2af1142f",
+      "historical_reference_code_hashes": {
+        "dax/memo/power_calcs/young_relative_employment_power.py": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+        "yax/analysis/run_frozen_v11.py": "e40fdda2353dd0c0d6f92401e7bdfb5874c8a32ffa9d641b38144cc07054ddff",
+        "yax/revision/referee_20260905/run_referee_cells.py": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
+        "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
+        "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704"
+      },
+      "runtime_contract_sha256": "d79c54c00bfd1ba1f343456946527b9d37153902590d1db0865f3173061a7f4b",
+      "runtime_payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+      "runtime_raw_fields": [
+        "YEAR",
+        "MONTH",
+        "AGE",
+        "EMPSTAT",
+        "OCC",
+        "WTFINL"
+      ],
+      "runtime_raw_source_ids": [
+        "ipums_cps_extract_9_wide",
+        "ipums_cps_extract_11_march_basic_repair"
+      ]
+    },
+    "cells_receipt_schema_version": "yax-numerical-cells-receipt-v1",
+    "fresh_rebuild_status": "PASS_FRESH_AGGREGATE_REBUILD",
+    "required_columns": [
+      "occ_code",
+      "month",
+      "family",
+      "young",
+      "older",
+      "beta_quintile",
+      "webb_z"
+    ],
+    "receipt_authentication": "fail unless the receipt binds this analysis ID and byte hash, the canonical ID and byte hash, all canonical source hashes, every lookup/bridge hash, the fixed-membership hash, the byte-locked builder and transitive code aggregate, exact authenticated SCC runtime, clean committed Git checkout and required ancestry, canonical six-field raw router, exact per-occupation assignment fingerprint, balanced grid counts, and a sanitized no-private-path command template",
+    "support_hash_algorithm": "SHA-256 of sorted zero-padded occupation codes, one code plus newline per record",
+    "weight_application_count": 1
+  },
+  "likelihood": {
+    "objective": "sum_i young_i*eta_i - total_i*log(1+exp(eta_i)); implemented with logaddexp and multiplied by a positive numerical scale only",
+    "penalty": "none",
+    "probability_clipping": "none in the two audit solvers or profile; inherited solver clipping is measured as a comparator",
+    "pseudocount": "none",
+    "sparse_cell_rule": "no minimum young or older count; retain genuine one-sided cells",
+    "zero_total_rule": "zero likelihood and score contribution; retain in input/accounting and omit only from design fitting"
+  },
+  "boundary_and_separation": {
+    "boundary_group_rule": "iteratively profile out and record a nuisance FE group only when, on the remaining positive-total rows, its aggregate young stock is exactly zero or its aggregate older stock is exactly zero",
+    "cell_boundary_rule": "young==0 or older==0 exactly; no count threshold",
+    "extended_face_rule": "after pure nuisance boundary profiling, if the certified normalized recession LP finds separation, solve two direct minimum-infinity-norm LPs with each declared target fixed at +1 and -1; any certified cone-feasible unit-target direction, including a zero-gain likelihood-lineality direction, proves that target can diverge and blocks it; only when both signs are infeasible for the focal and every reported Q5 event target may certified strict-margin rows be profiled as a target-invariant extended-likelihood face, followed by cascading pure-nuisance profiling and repetition to a finite face",
+    "highs_options": "presolve=false, primal_feasibility_tolerance=1e-10, dual_feasibility_tolerance=1e-10, ipm_optimality_tolerance=1e-12",
+    "linear_program": "on the profiled core, interior rows impose Xd=0; all-young rows impose Xd>=0; all-older rows impose Xd<=0; coefficients are scaled to [-1,1] only to normalize the global recession-direction search; focal-direction LPs use an explicit infinity-norm epigraph and target=+1 or -1",
+    "lp_primal_certification_tolerance": 1e-11,
+    "lp_margin_tolerance": 1e-09,
+    "no_selective_deletion": true,
+    "separation_classification": "report complete versus quasi separation and counts of strict-margin and zero-margin boundary rows",
+    "target_rule": "a finite target is not established if it is rank unidentified, either direct signed-target LP is incomplete, or it can move in a remaining likelihood recession or lineality direction; for dynamics this applies to the observed-month-weighted post functional and every one of the 38 reported Q5 event coefficients; nuisance-only recession is resolved by exact face profiling rather than globally blocking",
+    "treatment_rank_rule": "if nonfocal treatment columns are dependent after face profiling but the focal coordinate is rank identified, use a pivoted-QR exact column-space basis that retains the focal original column; otherwise block"
+  },
+  "design_parity": {
+    "comparison": "exact regressor matrix equality, normalized semantic label equality, both FE partition equalities, and an independent SHA-256 design fingerprint for every one of the eleven core or preserved-failure models",
+    "dynamics_transition_adjudication": "the byte-locked submitted setup_historical implementation removes TRANSITION=2022-12; the audit therefore excludes 2022-12, notwithstanding the superseded draft spec text",
+    "submitted_source_sha256": {
+      "yax/revision/substantive_r3_20260905/dynamics/run_dynamics.py": "df2f54712dd763d2fd747c73ef68f164038e3db0a3a4771846d4bc2b325e8bd2",
+      "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+      "yax/revision/substantive_r3_20260905/within_family/run_within_family.py": "b16916bb3484926f15fd195fee2e5bffe8601f695427f52d08440a8c0b201a71"
+    }
+  },
+  "hessian_diagnostics": {
+    "fitted": "full normalized nuisance-plus-treatment observed information at the exact L-BFGS-B fitted probabilities; require rank equal to every normalized design column and positive definiteness at the declared tolerance in both the raw and diagonal-scaled extreme spectra",
+    "geometric": "full normalized nuisance-plus-treatment information at total/4 weights, raw and diagonal-scaled extreme spectrum",
+    "rank_accounting": "full rank equals normalized nuisance rank plus Schur-complement treatment rank; report any deficiency"
+  },
+  "dynamic_target_scope": {
+    "joint_pretrend_target_count": 23,
+    "observed_post_month_count": 42,
+    "post_functional_weighting": "equal weight per observed calendar month",
+    "post_start_month": "2023-01",
+    "reference_quarter": "2022Q4",
+    "reported_q5_event_target_count": 38
+  },
+  "models": [
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "pooled",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "family_post",
+      "regressors": "pooled regressors plus family-by-post slopes, omitting the family with largest all-analysis-period stock (lexicographic tie break), matching the byte-locked submitted implementation",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "family_month",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12, matching the byte-locked submitted dynamics implementation",
+      "focal_target": "observed-calendar-month-weighted post-2022 Q5-versus-Q1 functional",
+      "model_id": "dynamics_unconditioned",
+      "regressors": "Q2-Q5 and Webb-z interacted with calendar quarters; 2022Q4 omitted",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12, matching the byte-locked submitted dynamics implementation",
+      "focal_target": "observed-calendar-month-weighted post-2022 Q5-versus-Q1 functional",
+      "model_id": "dynamics_family_month",
+      "regressors": "Q2-Q5 and Webb-z interacted with calendar quarters; 2022Q4 omitted",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "2020-01 onward except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "post_2020_unconditioned",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "2020-01 onward except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "post_2020_family_month",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_quintile_month_unconditioned",
+      "regressors": "pooled regressors plus Q2-Q5 by month-of-year, January omitted",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_quintile_month_family_month",
+      "regressors": "pooled regressors plus Q2-Q5 by month-of-year, January omitted",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "first_fixed_effect": "occupation by month-of-year",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_occupation_month_unconditioned",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "first_fixed_effect": "occupation by month-of-year",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_occupation_month_family_month",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "family by calendar month"
+    }
+  ],
+  "normalization": {
+    "rule": "include every first-FE dummy and omit one lexicographically first second-FE dummy in each connected component of the positive-total bipartite FE graph",
+    "target_invariance": "normalization changes nuisance coordinates only, not fitted means or treatment coefficients"
+  },
+  "output_safety": {
+    "atomic_publish": "write all artifacts to a private same-parent staging directory and atomically rename only after every artifact and the sanitized receipt is complete",
+    "disjointness": "output leaf must be outside the Git repository and disjoint from all input files",
+    "failure_behavior": "never overwrite a pre-existing target; preserve an unpublished staging leaf for diagnosis after an ordinary numerical failure, but discard it if final sanitation detects a private path or credential; every BLOCKED status exits nonzero and there is no report-only success override",
+    "receipt_command": "persist only a placeholder command template; resolved private paths and credentials are forbidden",
+    "whole_artifact_sanitization": "scan every staged output as UTF-8 text for private absolute paths, GitHub tokens, named password/API-key/secret assignments, private-key headers, and credential-bearing URLs before atomic publication"
+  },
+  "outputs": [
+    "EXECUTION_RECEIPT.json",
+    "MODEL_AUDIT.json",
+    "MODEL_DIAGNOSTICS.csv",
+    "FAMILY_MONTH_BOUNDARY_CELLS.csv",
+    "BOUNDARY_PROFILING.csv",
+    "SOLVER_COMPARISON.csv",
+    "TARGET_PROFILE.csv",
+    "OPTIMIZER_TRAJECTORIES.json",
+    "CONVERGENCE_EXISTENCE_REPORT.md"
+  ],
+  "profile": {
+    "grid_standard_error_multipliers": [
+      -2.0,
+      -1.0,
+      0.0,
+      1.0,
+      2.0
+    ],
+    "likelihood_rise_tolerance_raw": 0.0001,
+    "target": "model-specific focal_target"
+  },
+  "software": {
+    "audit_runner_sha256": "fe2a927f9cca2d6f1935178a4d6489244af83e18f7eaa877f0dc0038ce8cd876",
+    "artifact_safety_sha256": "3bc351988c6f04a2b6a63c3c6bc62df19d927409b420a7d42977b7354c1f46b2",
+    "cell_builder_path": "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+    "cell_builder_sha256": "38c528dd45b8f932100a78d751bc7b513e4e6596e1d635401dd4b73660bccfc3",
+    "cell_builder_transitive_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "independent_solver_1": "scipy.optimize.minimize L-BFGS-B with analytic score",
+    "independent_solver_2": "scipy.optimize.minimize trust-ncg with analytic score and Hessian-vector product",
+    "optimizer_options": {
+      "L-BFGS-B": "gtol is 0.001 times the declared scaled-gradient audit tolerance; ftol=1e-15; maxls=50; maxcor=20",
+      "trust-ncg": "gtol is 0.01 times the declared scaled-gradient audit tolerance"
+    },
+    "legacy_engine_path": "dax/memo/power_calcs/young_relative_employment_power.py",
+    "legacy_engine_sha256": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+    "required_python_packages": [
+      "numpy",
+      "pandas",
+      "pytest",
+      "scipy"
+    ],
+    "runtime_contract": {
+      "kernel_policy": "record compute-node kernel release but do not equality-lock its patch version",
+      "payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
+    },
+    "synthetic_test_sha256": "e74f243fefe20f7c73da50d73319146cbe4b936676dd4a3e348959178805d195"
+  },
+  "tolerances": {
+    "conditioning_rank_relative": 1e-10,
+    "fitted_probability_max_abs_difference": 1e-07,
+    "gradient_infinity_norm_per_total": 1e-07,
+    "objective_difference_per_total": 1e-10,
+    "optimizer_max_iterations": 2000,
+    "profile_max_iterations": 1000,
+    "standardized_score_absolute": 0.0001,
+    "target_coefficient_absolute_difference": 1e-06
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "aggregate_schema_version": "yax-numerical-cells-v1",
+  "analysis_status": "pre-result Gate-1 aggregate build contract; terminal numerical-consumer binding stamped before protected execution",
+  "assignment_contract": {
+    "columns": [
+      "occ_code",
+      "family",
+      "beta_quintile",
+      "webb_z"
+    ],
+    "fingerprint_algorithm": "SHA-256 of occ_code, family, integer beta_quintile, and float.hex(webb_z), tab-delimited and sorted by occ_code, with one LF per row",
+    "fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+    "record_count": 468,
+    "rebuild_webb_z_tolerance": 5e-15,
+    "source": "hash-locked R3 fixed-membership artifact after exact fresh preperiod reconstruction agrees"
+  },
+  "calendar_contract": {
+    "excluded_missing_months": [
+      "2025-10"
+    ],
+    "observed_end": "2026-07",
+    "observed_month_count": 114,
+    "observed_start": "2017-01",
+    "preperiod_end": "2022-11",
+    "preperiod_month_count": 71,
+    "preperiod_start": "2017-01",
+    "transition_month_retained": "2022-12"
+  },
+  "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+  "cell_build_spec_id": "yaxcellspec_v1_d921ee5ba28774910f84d90e155190cc5e24d8ba33869d96cebb2ea2261ac671",
+  "consumer_contract": {
+    "analysis_spec_id": "yaxnumspec_v1_98d113b751b4395300668cefc36305cdd797f4dc8ff8257f8dcc25bff5696db2",
+    "analysis_spec_sha256": "9b27c3b987a9f70bca3004dfe36141bb91e57890e9a481ecf23ee40271cceb82"
+  },
+  "created_at_utc": "2026-09-06T07:25:00Z",
+  "freshness_contract": {
+    "historical_preperiod_cells_read": false,
+    "protected_cell_outputs_committed": false,
+    "raw_sources": [
+      "ipums_cps_extract_9_wide",
+      "ipums_cps_extract_11_march_basic_repair"
+    ],
+    "rule": "construct from the authenticated raw extracts in a new atomic output leaf outside the repository"
+  },
+  "git_contract": {
+    "clean_worktree_required": true,
+    "committed_paths": [
+      "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+      "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
+      "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+      "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt"
+    ],
+    "live_files_must_equal_head_blobs": true,
+    "required_ancestor_commit": "f2e16bc4228b40a258a4417f7598366c2af1142f",
+    "runtime_head_and_tree_recorded": true
+  },
+  "grid_contract": {
+    "balanced": true,
+    "expected_rows": 53352,
+    "occupation_count": 468,
+    "observed_month_count": 114,
+    "zero_total_cells_retained": true
+  },
+  "historical_reference_code_contract": {
+    "imported_or_executed_in_production": false,
+    "role": "byte-locked provenance and synthetic target-parity testing only",
+    "why_inherited_route_was_rejected": "the general-purpose helper imports an opaque transitive closure and reads OCC2010 and IND1990 only to build stable-code and industry outputs that this target object discards",
+    "synthetic_parity_rule": "the local target router must equal the byte-locked inherited target after the latter is restricted to canonical ages 22 through 65"
+  },
+  "historical_reference_code_hashes": {
+    "dax/memo/power_calcs/young_relative_employment_power.py": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+    "yax/analysis/run_frozen_v11.py": "e40fdda2353dd0c0d6f92401e7bdfb5874c8a32ffa9d641b38144cc07054ddff",
+    "yax/revision/referee_20260905/run_referee_cells.py": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
+    "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
+    "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704"
+  },
+  "input_field_contract": {
+    "age_eligibility": [
+      22,
+      65
+    ],
+    "employment_status_codes": [
+      10,
+      12
+    ],
+    "historical_helper_fields_rejected": [
+      "OCC2010",
+      "IND1990"
+    ],
+    "production_runtime_reads_only": [
+      "YEAR",
+      "MONTH",
+      "AGE",
+      "EMPSTAT",
+      "OCC",
+      "WTFINL"
+    ],
+    "variable_universe": "exact canonical V2 analysis and exposure-construction fields"
+  },
+  "output_contract": {
+    "atomic_directory_publish": true,
+    "cells_filename": "aggregate_cells.csv",
+    "columns": [
+      "occ_code",
+      "month",
+      "family",
+      "young",
+      "older",
+      "beta_quintile",
+      "webb_z"
+    ],
+    "new_leaf_required": true,
+    "outside_repository_required": true,
+    "receipt_filename": "EXECUTION_RECEIPT.json",
+    "receipt_schema_version": "yax-numerical-cells-receipt-v1"
+  },
+  "physical_row_contract": {
+    "aggregate_cell_counts": "unique occupation-month-age-route cells after routed contributions are summed; not respondent counts",
+    "early_route_accounting": "integer valid early source records partition into matched and unmatched records; matched records expand into bridge descendants classified as unit, zero-mass, or strictly fractional route contributions",
+    "eligible_record_counts": "nonnegative integer source records after employment, ages 22 through 65, finite positive WTFINL, explicit March replacement, and before occupation routing",
+    "physical_rows_read_by_source": true,
+    "physical_rows_read_total": "sum of exact input-file physical rows before filtering",
+    "reconciliation_assertions": "required both by source and in total from eligible records through routing, contribution rows, and weighted-stock conservation",
+    "route_descendants_are_not_respondent_counts": true,
+    "weighted_stocks_are_not_physical_row_counts": true
+  },
+  "reference_artifacts": {
+    "fixed_membership_path": "yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv",
+    "fixed_membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "support_content_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b"
+  },
+  "route_contract": {
+    "current": "2020 onward OCC is Census-2018 direct and WTFINL is applied once",
+    "early": "2017-2019 OCC is allocated over the fixed Census-2010-to-2018 bridge using bridge_weight after one WTFINL application",
+    "march_repair": "2017-2021 primary-file March rows are explicitly replaced by extract 11 before eligibility filtering",
+    "route_mass_conservation_required": true,
+    "weight_application_count": 1
+  },
+  "runtime_code_hashes": {
+    "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py": "38c528dd45b8f932100a78d751bc7b513e4e6596e1d635401dd4b73660bccfc3"
+  },
+  "runtime_contract": {
+    "command_template": "<YAX_PYTHON_BIN> yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-leaf <YAX_V3_RUN_ROOT>/gate1_cells_<UNIQUE_RUN_ID>",
+    "environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
+    "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+    "expected_runtime": {
+      "kernel_release": "4.18.0-553.158.1.el8_10",
+      "kernel_system": "Linux",
+      "libc": "2.28",
+      "machine": "x86_64",
+      "numpy": "2.5.1",
+      "pandas": "3.0.3",
+      "pytest": "9.1.1",
+      "python": "3.13.8",
+      "python_compiler": "GCC 12.2.0"
+    },
+    "kernel_release_binding": false,
+    "runtime_payload": {
+      "architecture": "x86_64",
+      "libc": {
+        "name": "glibc",
+        "version": "2.28"
+      },
+      "packages": {
+        "numpy": "2.5.1",
+        "pandas": "3.0.3",
+        "pytest": "9.1.1",
+        "scipy": "1.16.2"
+      },
+      "python_compiler": "GCC 12.2.0",
+      "python_implementation": "CPython",
+      "python_version": "3.13.8"
+    },
+    "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
+  },
+  "runtime_transitive_code_fingerprint": {
+    "algorithm": "SHA-256 of canonical JSON runtime path-to-hash map excluding the builder",
+    "map": {},
+    "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "schema_version": "yax-gate1-cell-build-spec-v1"
+}

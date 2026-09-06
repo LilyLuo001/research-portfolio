@@ -1,0 +1,8 @@
+# Protected production outputs must live outside the repository. These entries
+# are a second-line guard against accidental staging, not an authorized path.
+aggregate_cells.csv
+EXECUTION_RECEIPT.json
+ASSIGNMENT_FINGERPRINT.json
+.*.tmp-*
+__pycache__/
+*.pyc
