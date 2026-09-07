@@ -69,16 +69,22 @@ Updated: 2026-09-07 Asia/Shanghai
   independently recomputed 11 model certificates, 20 consumer releases, 9
   requirement releases, the three non-model prerequisites, and the pre-outcome
   map binding.
-- N03 is `RUN_UNVALIDATED` pending the final independent artifact review and
-  manuscript/appendix integration. Dependent Gates 2--5 have not yet run under
-  V3; downstream work must use the explicit target-level release map and may
-  not treat a numerical certificate alone as a manuscript claim.
+- The final independent read-only artifact review at reviewed commit `d98371d5`
+  found no P1 numerical defect and independently upheld all 11 certificates.
+  Its one bounded P2 evidence-labeling defect and four P3 provenance/ledger
+  defects are preserved and adjudicated in
+  `reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW_DISPOSITION.md`. The closure
+  commit is `85ac2d21023b1db09a39e2420447c953cd1630ee`.
+- N03 remains `RUN_UNVALIDATED` only because manuscript/appendix integration
+  and presentation validation have not occurred. The numerical prerequisites
+  are independently certified. Dependent Gate 2 units named as `RELEASED` in
+  `runs/gate1_numerical_a1_pass_7482383/DEPENDENCY_RELEASE.json` may now run;
+  no unreleased or presentation claim is implied.
 
-No V3 coefficient is currently represented as independently reviewed or
-manuscript-ready. The 11 A1 focal values are candidate-certified numerical
-targets; interpretation and presentation remain separately governed. The cell
-and exact-target audits establish the estimating-data object, not a causal or
-substantive manuscript claim.
+All 11 A1 numerical targets are now independently artifact-reviewed, but no V3
+coefficient is yet manuscript-ready. Interpretation and presentation remain
+separately governed. The cell and exact-target audits establish the estimating-
+data object, not a causal or substantive manuscript claim.
 
 ## Verified inputs and blockers
 
@@ -107,18 +113,15 @@ selective subset.
 
 ## Next resumable tasks
 
-Owner authorization A1 is now preserved at
-`revision_inputs/GATE1_NUMERICAL_ADJUDICATION_A1.md`. The same-estimator repair,
-new `ANALYSIS_SPEC_A1.json`, original-solver diagnostics, and target-level
-dependency map are implemented and locally tested. The first A1 execution is
-preserved as a compatibility failure, not numerical evidence; the corrected
-replacement run has not yet executed. The old specification and blocked runs
-above remain unchanged.
+The A1 execution, independent audit, finding disposition, and remote push are
+complete. The original and compatibility-blocked runs remain preserved.
 
-1. Commit and issue a fresh one-shot execution authorization for the
-   compatibility-corrected A1 implementation.
-2. Run all 11 models on the exact retained authenticated cell artifact without
-   rebuilding or opening row-level microdata.
-3. Preserve every model disposition and apply the target-level dependency map;
-   never describe a partial set as suite completion.
-4. Continue only the Gate 2 units whose exact target prerequisites certify.
+1. Specify Gate 2 from the canonical contract and exact released targets,
+   beginning with the support matrix and common-profile restrictions.
+2. Implement the full family-by-quintile support/accounting objects before
+   heterogeneous coefficient interpretation.
+3. Execute only target consumers and requirement groups marked `RELEASED` in
+   `DEPENDENCY_RELEASE.json`; keep manuscript status distinct from numerical
+   certification.
+4. Integrate and validate the numerical-existence evidence in the manuscript
+   and appendix before changing N01--N03 to `VERIFIED`.
