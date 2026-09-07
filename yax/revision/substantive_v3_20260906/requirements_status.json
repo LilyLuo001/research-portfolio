@@ -758,11 +758,46 @@
       "depends_on": [
         "G01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "IMPLEMENTED_UNRUN",
+      "summary": "The outcome-free D02 implementation proves that unrestricted occupation-by-calendar-month effects span all 52,884 single-age panel rows and absorb every exposure-by-post target. It separately establishes rank five for an additive occupation-plus-month companion but does not claim that separate age coefficients add to the grouped-binomial headline. A pre-execution adversarial review found one fail-closed contract defect; the repair was re-reviewed with no remaining finding. Authoritative execution, result validation, any outcome-bearing companion estimate, and manuscript integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/d02/D02_IDENTIFICATION_SPEC.json",
+          "sha256": "af283f391706d15d4606c56a79a2158816e6cc565a2523526c7f2f8706eb3c89"
+        },
+        {
+          "role": "code",
+          "path": "gate2/d02/run_single_age_identification_audit.py",
+          "sha256": "2e1e0c712d04b16e2d6f6c5661645c05c1814f14ae2cd498a08800420db6bc0d"
+        },
+        {
+          "role": "test",
+          "path": "gate2/d02/tests/test_single_age_identification_audit.py",
+          "sha256": "c9c59d84fc8da19275f5a163c4f518b20e0872e7c9f6946dd5bb17054204a68d"
+        },
+        {
+          "role": "team_review",
+          "path": "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md",
+          "sha256": "02c48cfcce1073749f1f9fb4c2cb38f2c563a26b8d3bb838ec020ae16921cecf"
+        },
+        {
+          "role": "review_disposition",
+          "path": "reviews/GATE2_D02_PREEXECUTION_REVIEW_DISPOSITION.md",
+          "sha256": "530f13304257c0b4e9a9dc43eb5e078e161d24545196d5aebfbd08c862b9391a"
+        }
+      ],
+      "response_locations": [
+        "gate2/d02/D02_IDENTIFICATION_SPEC.json",
+        "gate2/d02/run_single_age_identification_audit.py",
+        "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md"
+      ],
+      "review": {
+        "reviewer": "separate-agent read-only pre-execution challenge within the execution team",
+        "report_path": "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md",
+        "independent": false,
+        "status": "PASS_AFTER_P2_CONTRACT_REPAIR"
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [

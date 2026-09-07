@@ -96,6 +96,15 @@ Updated: 2026-09-07 Asia/Shanghai
   package. S01, S02, D01, D03, and D04 now have validated point/support evidence
   but remain `RUN_UNVALIDATED` pending their outstanding inference and
   manuscript/appendix presentation checks.
+- The outcome-free D02 identification implementation is frozen at specification
+  `yaxgate2d02spec_v1_2357904781f082216bc398baadef1e2005bc0b1d4c40d0b7ed1c63250e09e0c3`.
+  It proves that unrestricted occupation-by-calendar-month effects absorb all
+  five single-age exposure-by-post columns on 52,884 rows and separately shows
+  rank five for an additive occupation-plus-month companion. A pre-execution
+  adversarial review found one fail-closed contract defect; the repaired
+  producer/specification handshake passed re-review with 24 focused tests. D02
+  remains `IMPLEMENTED_UNRUN`; no authoritative result or age-specific
+  coefficient is yet claimed.
 
 All 11 A1 numerical targets are now independently artifact-reviewed, but no V3
 coefficient is yet manuscript-ready. Interpretation and presentation remain
@@ -135,9 +144,10 @@ complete. The original and compatibility-blocked runs remain preserved.
 1. Complete Gate 2 support inference and heterogeneous pairwise contrasts
    (S03, S04, S06, S07) from the authenticated fixed-support contract; S05
    requires a separate broader-beta aggregate producer without Webb.
-2. Complete the D02 single-age identification audit and the remaining D05--D07
-   decomposition/inference work without relabeling exact stock accounting as a
-   regression coefficient.
+2. Execute and validate the frozen outcome-free D02 identification audit, then
+   separately specify any outcome-bearing additive companion. Complete the
+   remaining D05--D07 decomposition/inference work without relabeling exact
+   stock accounting as a regression coefficient.
 3. Execute the dynamic reconciliation core (Y01--Y05) from the four certified
    static/dynamic models. Keep the onset grid and through-2024 comparisons
    partial until their additional models receive same-objective numerical

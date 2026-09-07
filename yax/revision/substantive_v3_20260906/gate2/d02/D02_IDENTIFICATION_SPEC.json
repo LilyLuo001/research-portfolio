@@ -1,0 +1,241 @@
+{
+  "schema_version": "yax-gate2-d02-identification-spec-v1",
+  "spec_id": "yaxgate2d02spec_v1_2357904781f082216bc398baadef1e2005bc0b1d4c40d0b7ed1c63250e09e0c3",
+  "execution_state": "PRE_RESULTS_FROZEN_NOT_EXECUTED",
+  "analysis_status": "post-outcome referee-led identification audit; serialized before D02 output execution and not a preregistration",
+  "requirement": {
+    "id": "D02",
+    "title": "Adjudicate separate age-regression decomposition",
+    "prompt_section": "8.1",
+    "scope": "Identification geometry only; no coefficient, protected outcome, sampling inference, or row-level data is used."
+  },
+  "governing_documents": {
+    "execution_prompt_v3_sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b",
+    "understanding_contract_sha256": "fbfe8ef57ad0f5aa35fbde73e90f6a0c5fdcbee21b182a197d85c38d1af16950",
+    "governing_rule": "EXECUTION_PROMPT_V3 section 8.1 and UNDERSTANDING_CONTRACT section 7 require that unrestricted occupation-by-month effects be rejected in a single-age exposure-by-post model."
+  },
+  "authenticated_inputs": {
+    "canonical_spec": {
+      "role": "frozen V3 canonical model and 113-month static calendar contract",
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    "membership": {
+      "role": "frozen 468-occupation Rule-A beta quintile and Webb membership metadata",
+      "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+    },
+    "support_accounting_spec": {
+      "role": "Gate 2 support/accounting contract that authenticates the same membership and observed calendar",
+      "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+    },
+    "support_accounting_receipt": {
+      "role": "authoritative Gate 2 metadata receipt; protected aggregate itself is neither needed nor opened",
+      "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+    },
+    "support_accounting_validation": {
+      "role": "post-run validation binding the support/accounting receipt, 468 occupations, and 114 observed months",
+      "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+    }
+  },
+  "upstream_binding": {
+    "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "support_accounting_spec_id": "yaxgate2sa_v1_6069f368581e958805977c30572cce09f6fabe8f6d0da70505682e68f8cdca5f",
+    "support_accounting_receipt_status": "PASS_GATE2_SUPPORT_AND_ACCOUNTING",
+    "support_accounting_validation_status": "PASS_AGGREGATE_ARTIFACT_VALIDATION_NOT_MANUSCRIPT_VALIDATION"
+  },
+  "calendar": {
+    "range": [
+      "2017-01",
+      "2026-07"
+    ],
+    "excluded_transition_month": "2022-12",
+    "genuinely_missing_month": "2025-10",
+    "expected_estimation_month_count": 113,
+    "exact_estimation_months_sha256": "a8235b7e11699d41d1ba0e8bb121e2ed84a4147e7ab392000b98a679eb677225",
+    "exact_estimation_months": [
+      "2017-01",
+      "2017-02",
+      "2017-03",
+      "2017-04",
+      "2017-05",
+      "2017-06",
+      "2017-07",
+      "2017-08",
+      "2017-09",
+      "2017-10",
+      "2017-11",
+      "2017-12",
+      "2018-01",
+      "2018-02",
+      "2018-03",
+      "2018-04",
+      "2018-05",
+      "2018-06",
+      "2018-07",
+      "2018-08",
+      "2018-09",
+      "2018-10",
+      "2018-11",
+      "2018-12",
+      "2019-01",
+      "2019-02",
+      "2019-03",
+      "2019-04",
+      "2019-05",
+      "2019-06",
+      "2019-07",
+      "2019-08",
+      "2019-09",
+      "2019-10",
+      "2019-11",
+      "2019-12",
+      "2020-01",
+      "2020-02",
+      "2020-03",
+      "2020-04",
+      "2020-05",
+      "2020-06",
+      "2020-07",
+      "2020-08",
+      "2020-09",
+      "2020-10",
+      "2020-11",
+      "2020-12",
+      "2021-01",
+      "2021-02",
+      "2021-03",
+      "2021-04",
+      "2021-05",
+      "2021-06",
+      "2021-07",
+      "2021-08",
+      "2021-09",
+      "2021-10",
+      "2021-11",
+      "2021-12",
+      "2022-01",
+      "2022-02",
+      "2022-03",
+      "2022-04",
+      "2022-05",
+      "2022-06",
+      "2022-07",
+      "2022-08",
+      "2022-09",
+      "2022-10",
+      "2022-11",
+      "2023-01",
+      "2023-02",
+      "2023-03",
+      "2023-04",
+      "2023-05",
+      "2023-06",
+      "2023-07",
+      "2023-08",
+      "2023-09",
+      "2023-10",
+      "2023-11",
+      "2023-12",
+      "2024-01",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-05",
+      "2024-06",
+      "2024-07",
+      "2024-08",
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07"
+    ]
+  },
+  "membership": {
+    "expected_occupation_count": 468,
+    "expected_panel_row_count": 52884,
+    "ordered_occupation_codes_sha256": "e71368597acb7b2fa79a62b2ed47121c3b604c53eb7d8a5a79ae4bb2ee8bb3cb",
+    "required_columns_in_order": [
+      "occupation_code",
+      "occupation_name",
+      "preperiod_weight",
+      "rule_A_beta",
+      "beta_quintile",
+      "webb_pct_software",
+      "webb_z",
+      "beta_tied_at_cut"
+    ],
+    "input_limit": "Membership metadata only; the runner has no argument for protected stocks, outcomes, or row-level records."
+  },
+  "design": {
+    "row_unit": "one row per frozen occupation and included calendar month in a single age-specific stock panel",
+    "post_definition": "1 for 2023-01 through 2026-07 among included months and 0 otherwise",
+    "exposure_post_columns": [
+      "q2_post",
+      "q3_post",
+      "q4_post",
+      "q5_post",
+      "webb_z_post"
+    ],
+    "q1_normalization": "Q1-by-post is omitted; q2_post through q5_post are relative to Q1.",
+    "invalid_saturated_nuisance": {
+      "terms": "unrestricted occupation-by-calendar-month indicators, one for every single-age panel row",
+      "disposition": "invalid because it absorbs every exposure-by-post column and leaves the target unidentified"
+    },
+    "possible_companion": {
+      "estimand": "For each age group separately, a log-stock quasi-Poisson projection with its own coefficient vector.",
+      "linear_predictor": "log(mu_aot)=alpha_ao+lambda_at+sum(q=2..5) beta_aq 1{Q_o=q}post_t+theta_a WebbZ_o post_t",
+      "nuisance": "additive occupation fixed effects plus additive calendar-month fixed effects; no occupation-by-month interaction",
+      "common_normalization": "same included calendar, fixed membership, post definition, Q1 omission, and Webb-z normalization in both age regressions",
+      "status": "possible companion estimand subject to a separate outcome-bearing specification and execution; not executed here"
+    }
+  },
+  "proof_contract": {
+    "method": "Construct the exact ordered row-key to nuisance-pivot bijection. For row r=(o,t), the occupation-by-month indicator indexed by the same key is one at r and zero elsewhere.",
+    "factorization": "For every declared exposure-by-post column X_k, set B[pivot(o,t),k]=X[(o,t),k], so X=ZB exactly.",
+    "residual_identity": "M_Z X = X - Z(Z'Z)^(-1)Z'X = 0",
+    "rank_identity": "rank([Z,X])=rank(Z)=52884",
+    "dense_saturated_matrix_permitted": false,
+    "fixture_materialization_limit": 64,
+    "companion_geometry": "On the balanced panel, residualizing e_o post_t against additive occupation and month effects gives (e_o-mean_o e)(post_t-mean_t post); rank is checked on only the centered 468-by-5 occupation feature matrix."
+  },
+  "interpretation": {
+    "invalid_model": "The saturated single-age occupation-by-month nuisance is inadmissible for the requested exposure-by-post contrast.",
+    "possible_companion": "The separately defined additive occupation-plus-month model changes the nuisance space and therefore changes the projection estimand.",
+    "age_coefficient_additivity": "Separate age-specific coefficients need not add to the nonlinear grouped-binomial headline.",
+    "identity_claim": "No coefficient additivity identity is claimed or forced; any future identity requires a derivation and an outcome-bearing matched execution."
+  },
+  "execution": {
+    "code_sha256": "2e1e0c712d04b16e2d6f6c5661645c05c1814f14ae2cd498a08800420db6bc0d",
+    "command": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate2/d02/run_single_age_identification_audit.py --spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/gate2/d02/D02_IDENTIFICATION_SPEC.json --canonical-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json --membership <YAX_REPO_ROOT>/yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv --support-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/gate2/SUPPORT_ACCOUNTING_SPEC.json --support-receipt <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/runs/gate2_support_accounting_authoritative_20260907/EXECUTION_RECEIPT.json --support-validation <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/gate2/evidence/SUPPORT_ACCOUNTING_VALIDATION_REPORT.json --output-parent <YAX_D02_RUN_ROOT> --run-id <RUN_ID>",
+    "authoritative_output_executed_at_spec_freeze": false,
+    "atomic_new_leaf": true,
+    "overwrite_existing_leaf": false
+  },
+  "outputs": {
+    "files": [
+      "SINGLE_AGE_IDENTIFICATION_AUDIT.json",
+      "EXECUTION_RECEIPT.json"
+    ],
+    "audit_schema_version": "yax-gate2-d02-identification-audit-v1",
+    "receipt_schema_version": "yax-gate2-d02-identification-receipt-v1",
+    "result_id_rule": "SHA-256 over canonical JSON containing spec_id, logical filename, and artifact SHA-256",
+    "receipt_id_rule": "SHA-256 over canonical receipt JSON after removing only receipt_id"
+  }
+}
