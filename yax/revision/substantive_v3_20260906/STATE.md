@@ -103,8 +103,10 @@ Updated: 2026-09-07 Asia/Shanghai
   rank five for an additive occupation-plus-month companion. A pre-execution
   adversarial review found one fail-closed contract defect; the repaired
   producer/specification handshake passed re-review with 24 focused tests. D02
-  remains `IMPLEMENTED_UNRUN`; no authoritative result or age-specific
-  coefficient is yet claimed.
+  was executed directly from clean SCC worktree commit `9c19741` and passed
+  post-run artifact validation. D02 is `RUN_UNVALIDATED`, not `VERIFIED`;
+  manuscript presentation and any outcome-bearing age-specific companion
+  coefficient remain outstanding.
 
 All 11 A1 numerical targets are now independently artifact-reviewed, but no V3
 coefficient is yet manuscript-ready. Interpretation and presentation remain
@@ -144,10 +146,11 @@ complete. The original and compatibility-blocked runs remain preserved.
 1. Complete Gate 2 support inference and heterogeneous pairwise contrasts
    (S03, S04, S06, S07) from the authenticated fixed-support contract; S05
    requires a separate broader-beta aggregate producer without Webb.
-2. Execute and validate the frozen outcome-free D02 identification audit, then
-   separately specify any outcome-bearing additive companion. Complete the
-   remaining D05--D07 decomposition/inference work without relabeling exact
-   stock accounting as a regression coefficient.
+2. Separately specify any outcome-bearing additive D02 companion, if retained,
+   and integrate the validated identification result without implying
+   coefficient additivity. Complete the remaining D05--D07
+   decomposition/inference work without relabeling exact stock accounting as a
+   regression coefficient.
 3. Execute the dynamic reconciliation core (Y01--Y05) from the four certified
    static/dynamic models. Keep the onset grid and through-2024 comparisons
    partial until their additional models receive same-objective numerical

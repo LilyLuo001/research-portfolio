@@ -758,46 +758,11 @@
       "depends_on": [
         "G01"
       ],
-      "status": "IMPLEMENTED_UNRUN",
-      "summary": "The outcome-free D02 implementation proves that unrestricted occupation-by-calendar-month effects span all 52,884 single-age panel rows and absorb every exposure-by-post target. It separately establishes rank five for an additive occupation-plus-month companion but does not claim that separate age coefficients add to the grouped-binomial headline. A pre-execution adversarial review found one fail-closed contract defect; the repair was re-reviewed with no remaining finding. Authoritative execution, result validation, any outcome-bearing companion estimate, and manuscript integration remain outstanding.",
-      "evidence": [
-        {
-          "role": "specification",
-          "path": "gate2/d02/D02_IDENTIFICATION_SPEC.json",
-          "sha256": "af283f391706d15d4606c56a79a2158816e6cc565a2523526c7f2f8706eb3c89"
-        },
-        {
-          "role": "code",
-          "path": "gate2/d02/run_single_age_identification_audit.py",
-          "sha256": "2e1e0c712d04b16e2d6f6c5661645c05c1814f14ae2cd498a08800420db6bc0d"
-        },
-        {
-          "role": "test",
-          "path": "gate2/d02/tests/test_single_age_identification_audit.py",
-          "sha256": "c9c59d84fc8da19275f5a163c4f518b20e0872e7c9f6946dd5bb17054204a68d"
-        },
-        {
-          "role": "team_review",
-          "path": "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md",
-          "sha256": "02c48cfcce1073749f1f9fb4c2cb38f2c563a26b8d3bb838ec020ae16921cecf"
-        },
-        {
-          "role": "review_disposition",
-          "path": "reviews/GATE2_D02_PREEXECUTION_REVIEW_DISPOSITION.md",
-          "sha256": "530f13304257c0b4e9a9dc43eb5e078e161d24545196d5aebfbd08c862b9391a"
-        }
-      ],
-      "response_locations": [
-        "gate2/d02/D02_IDENTIFICATION_SPEC.json",
-        "gate2/d02/run_single_age_identification_audit.py",
-        "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md"
-      ],
-      "review": {
-        "reviewer": "separate-agent read-only pre-execution challenge within the execution team",
-        "report_path": "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md",
-        "independent": false,
-        "status": "PASS_AFTER_P2_CONTRACT_REPAIR"
-      },
+      "status": "NOT_STARTED",
+      "summary": "",
+      "evidence": [],
+      "response_locations": [],
+      "review": null,
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -1673,11 +1638,97 @@
         "D01",
         "T01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative outcome-free D02 audit proves that unrestricted occupation-by-calendar-month effects span all 52,884 single-age panel rows and absorb every exposure-by-post target. It separately establishes rank five for an additive occupation-plus-month companion but does not estimate that companion or claim coefficient additivity with the grouped-binomial headline. The two-file SCC artifact, hashes, result ID, receipt ID, calendar, support, sanitation, and geometry passed post-run validation and external-model adversarial review after one platform-invariance evidence-contract repair. No authoritative run byte changed and no rerun was required. Manuscript and appendix integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/d02/D02_IDENTIFICATION_SPEC.json",
+          "sha256": "af283f391706d15d4606c56a79a2158816e6cc565a2523526c7f2f8706eb3c89"
+        },
+        {
+          "role": "code",
+          "path": "gate2/d02/run_single_age_identification_audit.py",
+          "sha256": "2e1e0c712d04b16e2d6f6c5661645c05c1814f14ae2cd498a08800420db6bc0d"
+        },
+        {
+          "role": "pre_execution_test",
+          "path": "gate2/d02/tests/test_single_age_identification_audit.py",
+          "sha256": "c9c59d84fc8da19275f5a163c4f518b20e0872e7c9f6946dd5bb17054204a68d"
+        },
+        {
+          "role": "pre_execution_team_review",
+          "path": "reviews/GATE2_D02_PREEXECUTION_ADVERSARIAL_REVIEW.md",
+          "sha256": "02c48cfcce1073749f1f9fb4c2cb38f2c563a26b8d3bb838ec020ae16921cecf"
+        },
+        {
+          "role": "pre_execution_review_disposition",
+          "path": "reviews/GATE2_D02_PREEXECUTION_REVIEW_DISPOSITION.md",
+          "sha256": "530f13304257c0b4e9a9dc43eb5e078e161d24545196d5aebfbd08c862b9391a"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_d02_authoritative_20260907/EXECUTION_RECEIPT.json",
+          "sha256": "791fdaf891ff3632a1f0625d350a283158ceb8632dae0a7c287690a4ca1a9a41"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_d02_authoritative_20260907/SINGLE_AGE_IDENTIFICATION_AUDIT.json",
+          "sha256": "feb420718760cefda087cb4abb699096f8e0d821fb9659ae95b540b042c92c7a"
+        },
+        {
+          "role": "validation_code",
+          "path": "gate2/d02/validate_d02_artifact.py",
+          "sha256": "b6a195dcc73677202b9ba147179958a6ec882ab3854fe78622df5902d6dc25d8"
+        },
+        {
+          "role": "validation_test",
+          "path": "gate2/d02/tests/test_d02_authoritative_evidence.py",
+          "sha256": "67345256008982f030de5fb1ff846433b59d0663fcbc2bd0cc1c526c7b6184ab"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/d02/evidence/D02_VALIDATION_REPORT.json",
+          "sha256": "20a0afc0a9653ee1072b590fbcd1e707c6370ccd4f71e268552852f36f3b173a"
+        },
+        {
+          "role": "team_review",
+          "path": "reviews/GATE2_D02_POSTRUN_ARTIFACT_REVIEW.md",
+          "sha256": "cfe02c1df9c6c83533f3dea4d22094f9ae0e2f4f0d9766267dfb5dc73c31feeb"
+        },
+        {
+          "role": "review_disposition",
+          "path": "reviews/GATE2_D02_POSTRUN_REVIEW_DISPOSITION.md",
+          "sha256": "89748e9fda354f3734ead7cd7968a5180cb346cba7ba01662e52d793f58f6062"
+        },
+        {
+          "role": "external_model_review",
+          "path": "reviews/GATE2_D02_CLAUDE_FINAL_REVIEW.md",
+          "sha256": "87461c4734cdfdce48e8dac20185f3aa24df9ba35386ed43f3f5fbc04aab786d"
+        },
+        {
+          "role": "external_model_review_disposition",
+          "path": "reviews/GATE2_D02_CLAUDE_REVIEW_DISPOSITION.md",
+          "sha256": "00559ff6059286742a6d3b3d08ba8c8e810d0a731c8f69c17f3e215735d8bfd1"
+        },
+        {
+          "role": "evidence_ownership_test",
+          "path": "tests/test_requirement_evidence_ownership.py",
+          "sha256": "e3a2eacfaab67dd083e5f1f85d9cc6721900cb729b27cfce4c9c3c0e67d14cc5"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_d02_authoritative_20260907/SINGLE_AGE_IDENTIFICATION_AUDIT.json",
+        "gate2/d02/evidence/D02_VALIDATION_REPORT.json",
+        "reviews/GATE2_D02_CLAUDE_FINAL_REVIEW.md",
+        "reviews/GATE2_D02_CLAUDE_REVIEW_DISPOSITION.md"
+      ],
+      "review": {
+        "reviewer": "external-model read-only post-run challenge plus separate-agent post-repair verification",
+        "report_path": "reviews/GATE2_D02_CLAUDE_FINAL_REVIEW.md",
+        "independent": false,
+        "status": "PASS_AFTER_ONE_P2_PLATFORM_INVARIANCE_REPAIR; FIVE_P3_CLOSED_OR_DISCLOSED"
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [

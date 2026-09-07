@@ -1,0 +1,55 @@
+{
+  "asserted_geometry_identities": {
+    "augmented_rank": 52884,
+    "companion_smallest_singular_value": 4.73188801352071,
+    "companion_target_rank": 5,
+    "dense_saturated_matrix_constructed": false,
+    "full_scale_residual_measured": false,
+    "observation_count": 52884,
+    "residual_max_abs": 0,
+    "saturated_indicator_rank": 52884
+  },
+  "audit_sha256": "feb420718760cefda087cb4abb699096f8e0d821fb9659ae95b540b042c92c7a",
+  "checks": {
+    "audit_hash": true,
+    "audit_semantics_recomputed_cross_platform": true,
+    "no_absolute_path_disclosure": true,
+    "no_coefficient_estimated": true,
+    "no_protected_outcomes": true,
+    "no_row_level_data": true,
+    "receipt_code_hash": true,
+    "receipt_id": true,
+    "receipt_input_hashes": true,
+    "receipt_run_id": true,
+    "receipt_schema": true,
+    "receipt_spec_hash": true,
+    "receipt_spec_id": true,
+    "receipt_status": true,
+    "receipt_utc_timestamp": true,
+    "result_id": true
+  },
+  "cross_platform_numeric_comparison": {
+    "absolute_tolerance": 1e-15,
+    "finite_float_count": 6,
+    "maximum_absolute_difference_bound": 1e-12,
+    "maximum_absolute_difference_within_bound": true,
+    "reason": "SVD singular values may differ by floating-point roundoff across BLAS implementations.",
+    "relative_tolerance": 1e-12
+  },
+  "execution_receipt_sha256": "791fdaf891ff3632a1f0625d350a283158ceb8632dae0a7c287690a4ca1a9a41",
+  "limits": [
+    "This validates an outcome-free identification artifact, not an estimated coefficient.",
+    "It does not validate an outcome-bearing additive companion model.",
+    "The semantic validator permits bounded cross-BLAS roundoff; byte-exact evidence hashes are checked separately by the requirements ledger.",
+    "Manuscript and appendix presentation remain unvalidated."
+  ],
+  "receipt_id": "yaxgate2d02receipt_v1_78e8b7266af0e898668c6508e6a598ba2c7727c4f877cd9a0db518262536af32",
+  "result_id": "yaxresult_v1_7ca3fe60fb0532c8895b206c4830a7477ebc3e166859fec7ccad3d30f52730b0",
+  "run_inventory": [
+    "EXECUTION_RECEIPT.json",
+    "SINGLE_AGE_IDENTIFICATION_AUDIT.json"
+  ],
+  "schema_version": "yax-gate2-d02-validation-v1",
+  "spec_id": "yaxgate2d02spec_v1_2357904781f082216bc398baadef1e2005bc0b1d4c40d0b7ed1c63250e09e0c3",
+  "status": "PASS_D02_AUTHORITATIVE_ARTIFACT_VALIDATION_NOT_MANUSCRIPT_VALIDATION"
+}

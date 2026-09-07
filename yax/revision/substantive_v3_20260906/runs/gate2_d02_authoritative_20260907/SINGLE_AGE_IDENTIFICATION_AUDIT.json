@@ -1,0 +1,88 @@
+{
+  "authenticated_inputs": {
+    "canonical_spec": {
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    "membership": {
+      "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+    },
+    "support_accounting_receipt": {
+      "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+    },
+    "support_accounting_spec": {
+      "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+    },
+    "support_accounting_validation": {
+      "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+    }
+  },
+  "calendar_authentication": {
+    "estimation_month_count": 113,
+    "exact_estimation_months_sha256": "a8235b7e11699d41d1ba0e8bb121e2ed84a4147e7ab392000b98a679eb677225",
+    "excluded_transition_month": "2022-12",
+    "first_month": "2017-01",
+    "genuinely_missing_month": "2025-10",
+    "last_month": "2026-07"
+  },
+  "coefficient_estimated": false,
+  "interpretation": {
+    "additivity": "Separate age-specific coefficients need not add to the nonlinear grouped-binomial headline.",
+    "claimed_coefficient_identity": false,
+    "companion": "separate age-specific log-stock projection with a distinct additive occupation-plus-month nuisance space",
+    "headline": "nonlinear jointly estimated grouped-binomial conditional-mean stock-ratio contrast"
+  },
+  "invalid_saturated_single_age_model": {
+    "disposition": "INVALID_TARGET_NOT_IDENTIFIED",
+    "nuisance": "unrestricted occupation-by-calendar-month indicators",
+    "proof": {
+      "augmented_rank": 52884,
+      "dense_saturated_matrix_constructed": false,
+      "exposure_post_column_count": 5,
+      "exposure_post_columns": [
+        "q2_post",
+        "q3_post",
+        "q4_post",
+        "q5_post",
+        "webb_z_post"
+      ],
+      "factorization": "X = Z B, where B[pivot(o,t),k] = X[(o,t),k]",
+      "observation_count": 52884,
+      "proof_basis": "Each single-age occupation-month observation has its own unrestricted occupation-by-month indicator and a unique pivot. Thus Z is a row/column permutation of the identity, spans R^n, and absorbs every possible row-level column, including every declared exposure-by-post column.",
+      "rank_identity": "rank([Z,X]) = rank(Z)",
+      "residual_identity": "M_Z X = X - Z(Z'Z)^(-1)Z'X = 0",
+      "residual_max_abs": 0,
+      "row_pivot_bijection": true,
+      "row_pivot_mapping_sha256": "fdf7e199782842a4cfc247f2da772083ca6fe2da0e0eefe75f2083a7090cc3a7",
+      "saturated_indicator_column_count": 52884,
+      "saturated_indicator_rank": 52884,
+      "saturated_matrix_nnz_implied": 52884,
+      "status": "PASS_EXACT_SATURATED_ABSORPTION"
+    },
+    "reason": "the nuisance spans every single-age occupation-month row"
+  },
+  "membership_authentication": {
+    "occupation_count": 468,
+    "ordered_occupation_codes_sha256": "e71368597acb7b2fa79a62b2ed47121c3b604c53eb7d8a5a79ae4bb2ee8bb3cb"
+  },
+  "possible_separate_age_companion": {
+    "limit": "This outcome-free rank check does not estimate, validate, or equate age-specific coefficients.",
+    "nuisance": "additive occupation fixed effects plus additive calendar-month fixed effects",
+    "occupation_feature_singular_values": [
+      23.8166410001074,
+      9.753526959089017,
+      9.232475276834855,
+      8.463951350002787,
+      4.73188801352071
+    ],
+    "rank_tolerance": 2.47495090822675e-12,
+    "residual_formula": "(exposure_o - mean_o exposure) * (post_t - mean_t post)",
+    "residual_target_rank": 5,
+    "status": "PASS_POSSIBLE_COMPANION_TARGET_COLUMNS_NOT_ABSORBED",
+    "target_column_count": 5
+  },
+  "protected_outcomes_opened": false,
+  "row_level_data_opened": false,
+  "schema_version": "yax-gate2-d02-identification-audit-v1",
+  "spec_id": "yaxgate2d02spec_v1_2357904781f082216bc398baadef1e2005bc0b1d4c40d0b7ed1c63250e09e0c3",
+  "status": "PASS_D02_SINGLE_AGE_IDENTIFICATION_AUDIT"
+}
