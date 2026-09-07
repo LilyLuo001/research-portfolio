@@ -1,0 +1,238 @@
+{
+  "schema_version": "yax-gate2-dynamic-reconciliation-spec-v1",
+  "spec_id": "yaxgate2dyn_v1_73d2a2bac3e50ab53a116419e63d85d59fdc38a0375d9ea4d0f91324ed06bb62",
+  "status": "post-outcome referee-led V3 pre-result contract; immutable before any Gate 2 dynamic result execution",
+  "canonical_contract": {
+    "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+    "support_content_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+    "fixed_membership_sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "assignment_fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa"
+  },
+  "authenticated_inputs": {
+    "dependency_release": {
+      "sha256": "65db43c62b151ed06846039374ebb523702cd23a3a8465ee1035cbe4b5c43587",
+      "role": "narrow Gate 1 release for certified numerical targets only"
+    },
+    "model_audit": {
+      "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89",
+      "expected_schema": "yax-numerical-existence-audit-v1",
+      "expected_status": "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED"
+    },
+    "a1_spec": {
+      "sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e",
+      "role": "immutable numerical amendment A1"
+    },
+    "canonical_spec": {
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+      "role": "frozen canonical V3 analysis contract"
+    },
+    "target_dependency_map": {
+      "sha256": "f8bb26301c56822edab1927c48edb2da9c754c99bf0b1309e69fe4cd8f73ee68",
+      "role": "pre-outcome narrow target release map"
+    },
+    "focal_target_source_audit": {
+      "sha256": "c911e77717bac021841c441889ec046eb2336cdeace3fe75111ce7c2147f86be",
+      "role": "binds every reported focal value to the certified A1 reference path"
+    },
+    "execution_prompt": {
+      "sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b",
+      "role": "V3 sections 9.1-9.2 and governing safeguards"
+    },
+    "requirements_seed": {
+      "sha256": "38de2d5b80e72c85f3dd06086a862cea63c521d511a5baacb7f6390f66eeeb59",
+      "role": "requirements Y01-Y05, N04, Y08, and T05"
+    }
+  },
+  "calendar": {
+    "observed_window": ["2017-01", "2026-07"],
+    "preperiod": ["2017-01", "2022-11"],
+    "transition_month": "2022-12",
+    "reference_quarter": "2022Q4",
+    "postperiod": ["2023-01", "2026-07"],
+    "missing_months": ["2025-10"],
+    "expected_month_counts": {
+      "observed": 114,
+      "fit": 113,
+      "pre": 71,
+      "post": 42,
+      "reference": 2
+    },
+    "partial_quarters": {
+      "2022Q4": ["2022-10", "2022-11"],
+      "2025Q4": ["2025-11", "2025-12"],
+      "2026Q3": ["2026-07"]
+    },
+    "rule": "equal weight per actually observed calendar month; omit transition December 2022; never interpolate October 2025 or complete partial quarters"
+  },
+  "models": {
+    "certified_core_model_ids": [
+      "pooled",
+      "family_month",
+      "dynamics_unconditioned",
+      "dynamics_family_month"
+    ],
+    "a1_audit_spec_id": "yaxnumspec_v1_5989d8d88e772711ff47c43011e9f90f4764dc8d89230ef5486b6687f59dc05c",
+    "cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+    "objective": "unchanged frequency-weighted grouped-binomial likelihood",
+    "support": "unchanged canonical 468-occupation fixed assignment",
+    "static_nuisance": {
+      "pooled": "occupation and calendar-month fixed effects plus Webb-z by post",
+      "family_month": "occupation and family-by-calendar-month fixed effects plus Webb-z by post"
+    },
+    "dynamic_nuisance": "same structure-specific fixed effects; Q2-Q5 and Webb-z interacted with quarters; 2022Q4 omitted"
+  },
+  "functionals": {
+    "S": "certified static Q5-by-post coefficient relative to Q1-by-post",
+    "P": "equal-observed-post-month average of quarterly Q5 coefficients relative to published omitted 2022Q4",
+    "D": "equal-observed-post-month average minus equal-observed-pre-month average, with the two observed 2022Q4 months entering the pre mean at coefficient zero under published normalization",
+    "gaps": ["P_minus_S", "D_minus_S", "P_minus_D"],
+    "conditioning_movement": "family_month minus unconditioned, separately for S, P, D and the P-S and D-S gaps",
+    "pre_quarter_weights": {
+      "2017Q1": 0.04225352112676056,
+      "2017Q2": 0.04225352112676056,
+      "2017Q3": 0.04225352112676056,
+      "2017Q4": 0.04225352112676056,
+      "2018Q1": 0.04225352112676056,
+      "2018Q2": 0.04225352112676056,
+      "2018Q3": 0.04225352112676056,
+      "2018Q4": 0.04225352112676056,
+      "2019Q1": 0.04225352112676056,
+      "2019Q2": 0.04225352112676056,
+      "2019Q3": 0.04225352112676056,
+      "2019Q4": 0.04225352112676056,
+      "2020Q1": 0.04225352112676056,
+      "2020Q2": 0.04225352112676056,
+      "2020Q3": 0.04225352112676056,
+      "2020Q4": 0.04225352112676056,
+      "2021Q1": 0.04225352112676056,
+      "2021Q2": 0.04225352112676056,
+      "2021Q3": 0.04225352112676056,
+      "2021Q4": 0.04225352112676056,
+      "2022Q1": 0.04225352112676056,
+      "2022Q2": 0.04225352112676056,
+      "2022Q3": 0.04225352112676056,
+      "2022Q4": 0.028169014084507043
+    },
+    "post_quarter_weights": {
+      "2023Q1": 0.07142857142857142,
+      "2023Q2": 0.07142857142857142,
+      "2023Q3": 0.07142857142857142,
+      "2023Q4": 0.07142857142857142,
+      "2024Q1": 0.07142857142857142,
+      "2024Q2": 0.07142857142857142,
+      "2024Q3": 0.07142857142857142,
+      "2024Q4": 0.07142857142857142,
+      "2025Q1": 0.07142857142857142,
+      "2025Q2": 0.07142857142857142,
+      "2025Q3": 0.07142857142857142,
+      "2025Q4": 0.047619047619047616,
+      "2026Q1": 0.07142857142857142,
+      "2026Q2": 0.07142857142857142,
+      "2026Q3": 0.023809523809523808
+    }
+  },
+  "reparameterization": {
+    "coefficient_rule": "beta_new = B beta_old over every quarter and all five interacted components",
+    "covariance_rule": "V_new = B V_old B'",
+    "influence_rule": "IF_new = IF_old B'",
+    "restriction_rule": "R_new = R_old B^{-1}",
+    "reference_rebase_ground_truth": "B is the unique free_rebase_matrix(period_labels, old_reference, new_reference) derived independently from labels",
+    "reference_rebase_transform_tolerance": "coefficient_rebase_absolute",
+    "generic_linear_transform_scope": "arbitrary invertible transforms may pass only generic linear equivalence and cannot certify a reference rebase",
+    "common_draw_rule": "transform the full occupation influence/common-draw vector, never a pointwise covariance submatrix",
+    "available_now": "full certified dynamic coefficient vectors only",
+    "unavailable_now": ["full covariance", "occupation influence", "common multiplier matrix"]
+  },
+  "nesting": {
+    "identity": "X_static = X_dynamic A on the exact same active rows and nuisance normalization",
+    "predeclared_mapping_required": true,
+    "score_check": "X_static'(young-total*p_dynamic)=0",
+    "projection_check": "refit grouped-binomial static criterion to pseudo-young total*p_dynamic and pseudo-older total*(1-p_dynamic)",
+    "target_tolerance": 0.000001,
+    "available_now": false,
+    "missing_objects": [
+      "full static design and ordered rows",
+      "full dynamic design and ordered rows",
+      "nesting map or sufficient columns to construct it",
+      "dynamic fitted probabilities",
+      "young and total vectors",
+      "static full parameter vector"
+    ]
+  },
+  "pretrend": {
+    "windows": {
+      "full_preperiod": {
+        "span": ["2017Q1", "2022Q3"],
+        "excluded_quarters": [],
+        "expected_quarter_count": 23
+      },
+      "2017Q1_2019Q4": {
+        "span": ["2017Q1", "2019Q4"],
+        "excluded_quarters": [],
+        "expected_quarter_count": 12
+      },
+      "2021Q1_2022Q3": {
+        "span": ["2021Q1", "2022Q3"],
+        "excluded_quarters": [],
+        "expected_quarter_count": 7
+      },
+      "full_excluding_2020Q2_2020Q4": {
+        "span": ["2017Q1", "2022Q3"],
+        "excluded_quarters": ["2020Q2", "2020Q3", "2020Q4"],
+        "expected_quarter_count": 20
+      }
+    },
+    "nulls_per_window": [
+      "all selected coefficients equal the original 2022Q4 reference",
+      "all selected coefficients equal one another within the selected block"
+    ],
+    "rank_rule": "require finite symmetric positive-semidefinite restricted covariance; use one eigendecomposition and one scale-relative cutoff for retained inverse eigenvalues, covariance rank, Wald statistic, degrees of freedom, and diagnostics; block rather than project away a target outside the retained covariance range using a dimensionless null-residual tolerance equal to the square root of the eigenvalue tolerance",
+    "minimum_common_multiplier_draws": 9999,
+    "influence_diagnostics": [
+      "simultaneous maximum-studentized common-draw intervals",
+      "leave-one-quarter or declared leave-block diagnostics that rebuild the null on remaining labels, including anchor replacement",
+      "persistent level, equal-elapsed-quarter drift, and seasonal mean contrasts"
+    ],
+    "interpretation": "leave-out Wald changes are not additive quarter contributions; no date-based claim that COVID drives rejection; no p-value-selected prewindow"
+  },
+  "requirements": {
+    "Y01": "IMPLEMENTED_POINT_ONLY; paired conditioning uncertainty blocked by missing cross-model influence/common draws",
+    "Y02": "IMPLEMENTED_UNRUN; exact nesting, score, and pseudo-stock projection require missing bound design/fitted objects",
+    "Y03": "IMPLEMENTED_COEFFICIENT_ONLY; covariance/influence/common-draw rebasing and numerical joint-Wald invariance are blocked by missing objects",
+    "Y04": "IMPLEMENTED_DEFINITIONS_ONLY; numerical tests require covariance and inferential procedure objects",
+    "Y05": "IMPLEMENTED_DEFINITIONS_ONLY; simultaneous and leave-block diagnostics require influence/common draws",
+    "N04": "SIX A1 coding-stable/seasonality models are numerically certified; this does not supply onset-grid or endpoint fits",
+    "Y08": "UNMET: requires 16 fresh onset fits (8 starts November 2022 through June 2023 times 2 structures) with same-objective numerical certification; the dependency map complete_onset label binds only six post-2020/seasonality fits and is insufficient",
+    "T05": "UNMET: requires 2 through-December-2024 fits (pooled and family-month) with fixed preperiod labels and same-objective numerical certification"
+  },
+  "tolerances": {
+    "target_absolute": 0.000001,
+    "fitted_probability_max_absolute": 1e-7,
+    "objective_per_total_absolute": 1e-10,
+    "conditioning_rank_relative": 1e-10,
+    "target_range_relative": 1e-5,
+    "coefficient_rebase_absolute": 1e-12,
+    "design_nesting_relative": 1e-12
+  },
+  "execution": {
+    "code_sha256": "003374bc13f23afa775744dc2f06c2e27efb85cf68df90151d5e6536854f77ec",
+    "mode": "preflight point reconciliation only; no authoritative result claim",
+    "runtime_requirements": {
+      "python": ">=3.10",
+      "numpy": ">=1.22"
+    },
+    "tested_runtime": {
+      "python": "3.10.5",
+      "numpy": "1.22.4"
+    },
+    "production_runtime_pin": "UNAVAILABLE_REQUIRES_PREEXECUTION_BINDING",
+    "command": "<YAX_PYTHON_BIN> -I run_dynamic_reconciliation.py --spec DYNAMIC_RECONCILIATION_SPEC.json --dependency-release <BOUND_DEPENDENCY_RELEASE> --model-audit <BOUND_MODEL_AUDIT> --a1-spec <BOUND_A1_SPEC> --canonical-spec <BOUND_CANONICAL_SPEC> --target-dependency-map <BOUND_TARGET_MAP> --focal-target-source-audit <BOUND_FOCAL_SOURCE_AUDIT> --execution-prompt <BOUND_EXECUTION_PROMPT> --requirements-seed <BOUND_REQUIREMENTS_SEED>"
+  },
+  "outputs": {
+    "identity_rule": "any material output receives yaxresult_v1 SHA-256 identity over spec_id, logical key, and artifact hash",
+    "authoritative_output_forbidden_before_object_amendment": true,
+    "declared_preflight_file": "DYNAMIC_PREFLIGHT_REPORT.json",
+    "never_imply_requirement_completion": true
+  }
+}
