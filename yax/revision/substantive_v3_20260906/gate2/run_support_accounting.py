@@ -101,6 +101,15 @@ def compute_spec_id(spec: dict[str, Any]) -> str:
     return SPEC_PREFIX + hashlib.sha256(canonical_bytes(payload)).hexdigest()
 
 
+def compute_result_id(spec_id: str, logical_key: str, artifact_sha256: str) -> str:
+    payload = {
+        "spec_id": spec_id,
+        "logical_key": logical_key,
+        "artifact_sha256": artifact_sha256,
+    }
+    return "yaxresult_v1_" + hashlib.sha256(canonical_bytes(payload)).hexdigest()
+
+
 def validate_spec(spec: dict[str, Any], code_path: Path) -> None:
     required = {
         "schema_version", "spec_id", "status", "canonical_spec",
@@ -127,6 +136,19 @@ def validate_spec(spec: dict[str, Any], code_path: Path) -> None:
         raise Gate2Error("preperiod differs from the canonical construction window")
     if spec["calendar"]["transition_month"] != "2022-12":
         raise Gate2Error("transition month must remain explicit")
+    expected_months = expected_observed_months(spec)
+    if len(expected_months) != int(spec["calendar"]["observed_month_count"]):
+        raise Gate2Error("signed observed calendar does not match its month count")
+    pre_count = sum(
+        spec["calendar"]["preperiod"][0] <= month <= spec["calendar"]["preperiod"][1]
+        for month in expected_months
+    )
+    post_count = sum(
+        spec["calendar"]["postperiod"][0] <= month <= spec["calendar"]["postperiod"][1]
+        for month in expected_months
+    )
+    if {"pre": pre_count, "post": post_count} != spec["calendar"]["expected_period_month_counts"]:
+        raise Gate2Error("signed observed calendar does not match its period counts")
     if spec["accounting"]["temporal_weights"] != "equal_observed_month":
         raise Gate2Error("unsupported temporal weighting rule")
 
@@ -142,6 +164,43 @@ def _normalize_code(series: pd.Series, width: int) -> pd.Series:
     if not result.str.fullmatch(r"\d+", na=False).all():
         raise Gate2Error("occupation/family code is not numeric")
     return result
+
+
+def expected_observed_months(spec: dict[str, Any]) -> list[str]:
+    start, end = spec["calendar"]["observed_window"]
+    missing = set(spec["calendar"]["missing_months"])
+    months = [str(value) for value in pd.period_range(start, end, freq="M")]
+    if not missing.issubset(months):
+        raise Gate2Error("declared missing month lies outside the observed window")
+    return [month for month in months if month not in missing]
+
+
+def validate_authenticated_metadata(
+    cells_receipt: dict[str, Any],
+    model_audit: dict[str, Any],
+    spec: dict[str, Any],
+) -> None:
+    receipt_rule = spec["authenticated_inputs"]["cells_receipt"]
+    if cells_receipt.get("schema_version") != receipt_rule["expected_schema_version"]:
+        raise Gate2Error("cell receipt schema version differs")
+    if cells_receipt.get("status") != receipt_rule["expected_status"]:
+        raise Gate2Error("cell receipt does not carry the required PASS status")
+    audit_rule = spec["authenticated_inputs"]["model_audit"]
+    if model_audit.get("schema_version") != audit_rule["expected_schema_version"]:
+        raise Gate2Error("model audit schema version differs")
+    if model_audit.get("status") != audit_rule["expected_status"]:
+        raise Gate2Error("model audit does not carry the required overall PASS status")
+    models = model_audit.get("models")
+    if not isinstance(models, list):
+        raise Gate2Error("model audit models must be a list")
+    model_ids = [row.get("model_id") for row in models if isinstance(row, dict)]
+    if len(model_ids) != len(models) or None in model_ids or len(model_ids) != len(set(model_ids)):
+        raise Gate2Error("model audit contains missing or duplicate model IDs")
+    indexed = {row["model_id"]: row for row in models}
+    for model_id in spec["numerical_comparison"]["certified_models"]:
+        row = indexed.get(model_id)
+        if row is None or row.get("a1_certification", {}).get("status") != audit_rule["required_model_certification_status"]:
+            raise Gate2Error(f"required A1-certified model absent or invalid: {model_id}")
 
 
 def validate_inputs(
@@ -182,6 +241,14 @@ def validate_inputs(
         raise Gate2Error("membership contains duplicate occupation codes")
     if not cells["month"].astype(str).str.fullmatch(r"\d{4}-\d{2}").all():
         raise Gate2Error("month must use YYYY-MM")
+    expected_months = set(expected_observed_months(spec))
+    observed_months = set(cells["month"].astype(str))
+    if observed_months != expected_months:
+        raise Gate2Error(
+            "observed month set differs from the exact signed calendar: "
+            f"missing={sorted(expected_months - observed_months)}, "
+            f"extra={sorted(observed_months - expected_months)}"
+        )
     expected_occ = int(spec["support"]["expected_occupation_count"])
     if cells["occ_code"].nunique() != expected_occ or len(membership) != expected_occ:
         raise Gate2Error("occupation count differs from the canonical 468-occupation support")
@@ -254,7 +321,7 @@ def build_support(
     if not total_stock > 0:
         raise Gate2Error("preperiod stock is not positive")
     if not np.allclose(
-        occ["preperiod_stock"], occ["preperiod_weight"], rtol=1e-10, atol=1e-5
+        occ["preperiod_stock"], occ["preperiod_weight"], rtol=1e-12, atol=1e-6
     ):
         raise Gate2Error("cell preperiod stocks do not reproduce frozen construction weights")
     families = spec["support"]["expected_soc2_families"]
@@ -334,8 +401,11 @@ def build_support(
         occ["family"].isin(direct_families) & occ["beta_quintile"].isin([1, 5]),
         ["family", "beta_quintile", "occupation_code", "occupation_name", "rule_A_beta", "preperiod_stock"],
     ].copy()
-    direct["within_family_tail_preperiod_stock_share"] = direct.groupby(
+    direct["within_family_quintile_preperiod_stock_share"] = direct.groupby(
         ["family", "beta_quintile"], observed=True
+    )["preperiod_stock"].transform(lambda values: values / values.sum())
+    direct["within_direct_family_tails_preperiod_stock_share"] = direct.groupby(
+        "family", observed=True
     )["preperiod_stock"].transform(lambda values: values / values.sum())
     direct = direct.sort_values(
         ["family", "beta_quintile", "preperiod_stock", "occupation_code"],
@@ -364,14 +434,14 @@ def build_support(
         incidence[quintiles.index(right), column] = 1.0
     incidence_rank = int(np.linalg.matrix_rank(incidence))
     graph = {
-        "status": "PASS_CONNECTED_QUINTILE_SUPPORT_GRAPH" if reached == set(quintiles) else "BLOCKED_DISCONNECTED_QUINTILE_SUPPORT_GRAPH",
+        "status": "PASS_CONNECTED_QUINTILE_SUPPORT_TOPOLOGY" if reached == set(quintiles) else "BLOCKED_DISCONNECTED_QUINTILE_SUPPORT_TOPOLOGY",
         "nodes": quintiles,
         "reached_from_q1": sorted(reached),
         "connected": reached == set(quintiles),
         "represented_edges": [f"Q{left}-Q{right}" for left, right in represented_edges],
         "represented_edge_count": len(represented_edges),
         "incidence_rank": incidence_rank,
-        "full_contrast_rank": incidence_rank == len(quintiles) - 1,
+        "graph_incidence_full_rank": incidence_rank == len(quintiles) - 1,
         "direct_q1_q5_families": direct_families,
         "direct_q1_q5_family_count": len(direct_families),
         "edge_family_counts": {
@@ -380,9 +450,9 @@ def build_support(
             )
             for left in quintiles for right in quintiles if left < right
         },
-        "interpretation": "Connectivity identifies a common-profile comparison only under the imposed common coefficient restrictions; it is not a family-average of directly observed Q5-Q1 contrasts.",
+        "interpretation": "This is occupational-support topology only. Connectivity and five-node incidence rank do not certify full design-matrix information, finite regression estimability, or absence of separation; those require the separate A1 numerical evidence. The common-profile coefficient is not a family-average of directly observed Q5-Q1 contrasts.",
     }
-    if not graph["connected"] or not graph["full_contrast_rank"]:
+    if not graph["connected"] or not graph["graph_incidence_full_rank"]:
         raise Gate2Error("national quintile support graph is disconnected")
     return {
         "matrix": matrix,
@@ -712,6 +782,7 @@ def run(args: argparse.Namespace) -> Path:
     if receipt_hash != expected["cells"]["sha256"]:
         raise Gate2Error("cell receipt does not authenticate aggregate_cells.csv")
     model_audit = load_json(args.model_audit)
+    validate_authenticated_metadata(cells_receipt, model_audit, spec)
     if model_audit.get("cells_sha256") != expected["cells"]["sha256"]:
         raise Gate2Error("numerical audit is not bound to the same cell artifact")
     cells = _read_csv(args.cells, ["occ_code", "month", "family"])
@@ -756,6 +827,10 @@ def run(args: argparse.Namespace) -> Path:
         _write_json(staging / "ZERO_DENOMINATOR_AUDIT.json", composition["zero_audit"])
         _write_json(staging / "LOG_SHAPLEY_DECOMPOSITION.json", composition["log_shapley"])
         output_hashes = {name: sha256_file(staging / name) for name in OUTPUT_FILES}
+        result_ids = {
+            name: compute_result_id(spec["spec_id"], name, digest)
+            for name, digest in output_hashes.items()
+        }
         receipt = {
             "schema_version": RECEIPT_SCHEMA,
             "status": "PASS_GATE2_SUPPORT_AND_ACCOUNTING",
@@ -777,6 +852,7 @@ def run(args: argparse.Namespace) -> Path:
             "family_composition_status": composition["summary"]["status"],
             "inference_executed": False,
             "output_hashes": output_hashes,
+            "result_ids": result_ids,
         }
         _write_json(staging / "EXECUTION_RECEIPT.json", receipt)
         os.replace(staging, final)

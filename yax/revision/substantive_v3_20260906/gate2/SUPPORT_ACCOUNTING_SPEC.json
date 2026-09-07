@@ -1,7 +1,7 @@
 {
   "schema_version": "yax-gate2-support-accounting-spec-v1",
-  "spec_id": "yaxgate2sa_v1_180278405fb251eb3741d8bdff18695b98a8594bb804334662f47326062f2c33",
-  "status": "post-outcome referee-led V3 module specified before Gate 2 output execution",
+  "spec_id": "yaxgate2sa_v1_6069f368581e958805977c30572cce09f6fabe8f6d0da70505682e68f8cdca5f",
+  "status": "post-outcome referee-led V3 module amended after a non-citable provisional contract review and frozen before authoritative Gate 2 output execution",
   "canonical_spec": {
     "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
     "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
@@ -13,7 +13,9 @@
     },
     "cells_receipt": {
       "role": "Gate 1 aggregate authentication receipt",
-      "sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a"
+      "sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+      "expected_schema_version": "yax-numerical-cells-receipt-v1",
+      "expected_status": "PASS_FRESH_AGGREGATE_REBUILD"
     },
     "canonical_spec": {
       "role": "frozen canonical V3 contract",
@@ -25,7 +27,10 @@
     },
     "model_audit": {
       "role": "independently upheld Gate 1 A1 numerical targets",
-      "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"
+      "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89",
+      "expected_schema_version": "yax-numerical-existence-audit-v1",
+      "expected_status": "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED",
+      "required_model_certification_status": "PASS_A1_NUMERICAL_CERTIFICATE"
     }
   },
   "calendar": {
@@ -52,7 +57,7 @@
       "within_family": "same preperiod stock within the row SOC2 family",
       "within_quintile": "same preperiod stock within the column exposure quintile"
     },
-    "support_graph": "an undirected Q1-Q5 graph with a family-specific edge for every pair of quintiles jointly represented in that family",
+    "support_graph": "an undirected five-node occupational-support topology with a family-specific edge for every pair of quintiles jointly represented in that family; its incidence rank is not a regression design-matrix or finite-estimability certificate",
     "direct_tail_definition": "a family with at least one canonical occupation in both Q1 and Q5",
     "interpretation_limit": "graph connectivity plus a common coefficient restriction is not a family-weighted average of directly observed Q5-Q1 effects"
   },
@@ -75,11 +80,12 @@
     "interpretation_limit": "an exact aggregate log-stock identity is not automatically the grouped-binomial regression coefficient"
   },
   "execution": {
-    "code_sha256": "344d9bd244d8746af1aa124628d14b89505dc2c6eba4a9805e43d8e8efcd1556",
+    "code_sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382",
     "command": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate2/run_support_accounting.py --spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/gate2/SUPPORT_ACCOUNTING_SPEC.json --canonical-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv --cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json --membership <YAX_REPO_ROOT>/yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv --model-audit <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/runs/gate1_numerical_a1_pass_7482383/numerical/MODEL_AUDIT.json --output-parent <YAX_GATE2_RUN_ROOT> --run-id <RUN_ID>",
     "input_scope": "authenticated aggregate cells only; no row-level microdata"
   },
   "outputs": {
+    "identity_rule": "the execution receipt maps every non-receipt output filename to a result_id computed from this spec_id, the logical filename, and the output artifact SHA-256",
     "files": [
       "SUPPORT_MATRIX.csv",
       "FAMILY_SUPPORT_SUMMARY.csv",

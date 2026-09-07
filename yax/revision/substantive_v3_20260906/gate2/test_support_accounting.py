@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import itertools
+import math
 from pathlib import Path
 
 import numpy as np
@@ -24,7 +26,7 @@ FAMILIES = [
     "11", "13", "15", "17", "19", "21", "23", "25", "27", "29", "31",
     "33", "35", "37", "39", "41", "43", "45", "47", "49", "51", "53",
 ]
-MONTHS = ["2017-01", "2017-02", "2022-12", "2023-01", "2023-02"]
+MONTHS = ["2022-10", "2022-11", "2022-12", "2023-01", "2023-02"]
 
 
 def fixture() -> tuple[pd.DataFrame, pd.DataFrame, dict]:
@@ -73,6 +75,8 @@ def fixture() -> tuple[pd.DataFrame, pd.DataFrame, dict]:
             "expected_occupation_count": len(assignments),
         },
         "calendar": {
+            "observed_window": ["2022-10", "2023-02"],
+            "missing_months": [],
             "preperiod": ["2017-01", "2022-11"],
             "postperiod": ["2023-01", "2026-07"],
             "transition_month": "2022-12",
@@ -98,7 +102,7 @@ def test_support_matrix_is_complete_connected_and_names_direct_tails():
     assert len(result["matrix"]) == 22 * 5
     assert result["graph"]["connected"] is True
     assert result["graph"]["incidence_rank"] == 4
-    assert result["graph"]["full_contrast_rank"] is True
+    assert result["graph"]["graph_incidence_full_rank"] is True
     assert result["graph"]["direct_q1_q5_families"] == ["19"]
     assert set(result["direct"]["beta_quintile"]) == {1, 5}
     assert result["direct"]["occupation_name"].str.startswith("Occupation").all()
@@ -159,6 +163,31 @@ def test_positive_young_stock_with_zero_older_is_retained_as_boundary_mass():
         & composition["rows"]["beta_quintile"].eq(5)
     ].iloc[0]
     assert np.isnan(family_row["young_older_ratio_post"])
+    log_q5 = composition["log_shapley"]["quintiles"]["Q5"]
+    assert log_q5["boundary_mass_component"] != 0
+    hybrids = log_q5["hybrid_log_values"]
+    assert set(hybrids) == {
+        "".join(map(str, bits)) for bits in itertools.product((0, 1), repeat=3)
+    }
+    assert all(math.isfinite(value) for value in hybrids.values())
+    factors = ("composition", "within", "boundary")
+    independent = {factor: 0.0 for factor in factors}
+    for ordering in itertools.permutations(range(3)):
+        state = [0, 0, 0]
+        previous = hybrids["000"]
+        for index in ordering:
+            state[index] = 1
+            current = hybrids["".join(map(str, state))]
+            independent[factors[index]] += (current - previous) / 6.0
+            previous = current
+    assert np.isclose(independent["within"], log_q5["within_family_ratio_component"])
+    assert np.isclose(independent["composition"], log_q5["older_family_weight_component"])
+    assert np.isclose(independent["boundary"], log_q5["boundary_mass_component"])
+    assert np.isclose(sum(independent.values()), hybrids["111"] - hybrids["000"])
+    assert np.isclose(
+        composition["log_shapley"]["q5_minus_q1"]["log_ratio_change_q5_minus_q1"],
+        accounting["tail"]["D_relative"],
+    )
 
 
 def test_quintile_assignment_mismatch_fails_closed():
@@ -166,6 +195,48 @@ def test_quintile_assignment_mismatch_fails_closed():
     membership.loc[0, "beta_quintile"] = 5
     with pytest.raises(MODULE.Gate2Error, match="quintiles differ"):
         MODULE.validate_inputs(cells, membership, spec)
+
+
+def test_wrong_missing_month_fails_closed():
+    cells, membership, spec = fixture()
+    mask = cells["occ_code"].eq(cells["occ_code"].iloc[0]) & cells["month"].eq("2023-02")
+    cells.loc[mask, "month"] = "2023-03"
+    with pytest.raises(MODULE.Gate2Error, match="exact signed calendar"):
+        MODULE.validate_inputs(cells, membership, spec)
+
+
+def test_authenticated_metadata_rejects_duplicate_model_ids():
+    spec = {
+        "authenticated_inputs": {
+            "cells_receipt": {
+                "expected_schema_version": "cells-v1",
+                "expected_status": "PASS_CELLS",
+            },
+            "model_audit": {
+                "expected_schema_version": "audit-v1",
+                "expected_status": "PASS_AUDIT",
+                "required_model_certification_status": "PASS_MODEL",
+            },
+        },
+        "numerical_comparison": {"certified_models": ["pooled"]},
+    }
+    cells_receipt = {"schema_version": "cells-v1", "status": "PASS_CELLS"}
+    model = {"model_id": "pooled", "a1_certification": {"status": "PASS_MODEL"}}
+    audit = {
+        "schema_version": "audit-v1",
+        "status": "PASS_AUDIT",
+        "models": [model, model],
+    }
+    with pytest.raises(MODULE.Gate2Error, match="duplicate model IDs"):
+        MODULE.validate_authenticated_metadata(cells_receipt, audit, spec)
+
+
+def test_preperiod_stock_mismatch_fails_at_gate1_tolerance():
+    cells, membership, spec = validated_fixture()
+    membership = membership.copy()
+    membership.loc[0, "preperiod_weight"] += 1e-5
+    with pytest.raises(MODULE.Gate2Error, match="preperiod stocks"):
+        MODULE.build_support(cells, membership, spec)
 
 
 def test_spec_identifier_changes_with_temporal_weighting():
@@ -187,6 +258,13 @@ def test_spec_identifier_changes_with_temporal_weighting():
     changed = copy.deepcopy(full)
     changed["accounting"]["temporal_weights"] = "stock_weighted_month"
     assert MODULE.compute_spec_id(changed) != first
+
+
+def test_result_identifier_binds_spec_logical_key_and_artifact():
+    first = MODULE.compute_result_id("spec-a", "SUPPORT_MATRIX.csv", "a" * 64)
+    assert first != MODULE.compute_result_id("spec-b", "SUPPORT_MATRIX.csv", "a" * 64)
+    assert first != MODULE.compute_result_id("spec-a", "SUPPORT_GRAPH.json", "a" * 64)
+    assert first != MODULE.compute_result_id("spec-a", "SUPPORT_MATRIX.csv", "b" * 64)
 
 
 def test_frozen_membership_repairs_historical_direct_tail_support():
