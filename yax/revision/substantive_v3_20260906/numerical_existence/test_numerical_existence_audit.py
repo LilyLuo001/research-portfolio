@@ -1720,12 +1720,16 @@ class A1IndependentReferenceTests(unittest.TestCase):
             component_sizes=[{"first": 1, "second": 1}],
             second_references=["all"], nuisance_column_labels=["intercept"],
         )
-        left = AUDIT.a1_shared_problem_binding(
-            active, design, ["x", "x2"], targets,
-        )
-        right = AUDIT.a1_shared_problem_binding(
-            active.copy(), design, ["x", "x2"], targets,
-        )
+        # NumPy 2.5 removed the row_stack alias.  Exercise this production
+        # path with that alias unavailable so future compatibility cannot be
+        # hidden by an older local NumPy release.
+        with mock.patch.object(AUDIT.np, "row_stack", None, create=True):
+            left = AUDIT.a1_shared_problem_binding(
+                active, design, ["x", "x2"], targets,
+            )
+            right = AUDIT.a1_shared_problem_binding(
+                active.copy(), design, ["x", "x2"], targets,
+            )
         self.assertEqual(left, right)
         self.assertEqual(
             left["trust_path_problem_sha256"],
@@ -1733,9 +1737,10 @@ class A1IndependentReferenceTests(unittest.TestCase):
         )
         changed_active = np.ones_like(active)
         changed_active[0] = False
-        changed = AUDIT.a1_shared_problem_binding(
-            changed_active, design, ["x", "x2"], targets,
-        )
+        with mock.patch.object(AUDIT.np, "row_stack", None, create=True):
+            changed = AUDIT.a1_shared_problem_binding(
+                changed_active, design, ["x", "x2"], targets,
+            )
         self.assertNotEqual(
             left["active_rows_sha256"], changed["active_rows_sha256"],
         )

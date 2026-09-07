@@ -291,12 +291,22 @@
         "G05"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "Implemented and regression-tested dependency fingerprints, cycle/missing-dependency checks, transitive stale-input detection, retained failure logs, and sibling-branch continuation. The first real V3 run is now recorded and dependency_guard confirms it as successful. End-to-end invalidation of a downstream empirical artifact has not yet been exercised, so this remains RUN_UNVALIDATED.",
+      "summary": "Implemented and regression-tested dependency fingerprints, cycle/missing-dependency checks, transitive stale-input detection, retained failure logs, and sibling-branch continuation. An external A1 adversarial review identified that the frozen requirement-to-model contract was declared but not enforced; the guard now rejects shortened requirement claims and emits requirement-keyed release evidence. End-to-end invalidation of a downstream empirical artifact has not yet been exercised, so this remains RUN_UNVALIDATED.",
       "evidence": [
         {
           "role": "code",
           "path": "scripts/dependency_guard.py",
-          "sha256": "86d6f715950561678a47bec02dda458abf1fcc3e1aac184072c452cb9c891150"
+          "sha256": "29f35dba1944bcb175c891a86c777aeb36adfbc62afbf5c7a09c1609e3d8eb09"
+        },
+        {
+          "role": "code",
+          "path": "tests/test_dependency_guard.py",
+          "sha256": "46ef368ce4f9140a261c055f788f7dab5a32fe5a0ba6680c0fb4680cd106366b"
+        },
+        {
+          "role": "verification_report",
+          "path": "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_REVIEW_DISPOSITION.md",
+          "sha256": "0232e03e3da2b65b96ff951d264f2b2858fa32ba9dfecfba0921b2b7a0a0ccc3"
         },
         {
           "role": "run_receipt",
@@ -322,8 +332,10 @@
       "response_locations": [
         "contracts/run_manifest.json",
         "scripts/dependency_guard.py",
+        "tests/test_dependency_guard.py",
         "runs/gate1_baseline/EXECUTION_RECEIPT.json",
-        "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json"
+        "gates/GATE1_BASELINE_TRANSFER_VALIDATION.json",
+        "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_REVIEW_DISPOSITION.md"
       ],
       "review": null,
       "blocker": null,
@@ -948,7 +960,7 @@
         "N02"
       ],
       "status": "IMPLEMENTED_UNRUN",
-      "summary": "The original frozen run remains blocked for all 11 models and its diagnostic values remain unvalidated. The owner authorized numerical amendment A1. A new same-estimator specification now replaces the mandatory solver pair with trust-ncg plus an independently coded zero-start damped sparse Newton/IRLS reference, retains L-BFGS-B as a contradiction diagnostic, preserves every final threshold, and binds target-specific downstream release. The amended full-data run has not yet executed, so no A1 target is certified.",
+      "summary": "The original frozen run remains blocked for all 11 models and its diagnostic values remain unvalidated. The owner authorized numerical amendment A1. The first A1 SCC execution retained all 11 dispositions but stopped before solver certification because pinned NumPy 2.5 removed the row_stack alias; no target was certified. A same-operation vstack compatibility correction, pinned-runtime regression test, replacement specification identity, and requirement-level release guard are now implemented. The replacement full-data run has not yet executed.",
       "evidence": [
         {
           "role": "specification",
@@ -998,22 +1010,37 @@
         {
           "role": "specification",
           "path": "numerical_existence/ANALYSIS_SPEC_A1.json",
-          "sha256": "7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca"
+          "sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e"
         },
         {
           "role": "code",
           "path": "numerical_existence/run_numerical_existence_audit.py",
-          "sha256": "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7"
+          "sha256": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a"
         },
         {
           "role": "specification",
           "path": "contracts/TARGET_DEPENDENCY_MAP_A1.json",
-          "sha256": "2aa676c09ac9ccb8f76cc93fad5d3455f14cecc56b32659f21a7dadf0d58cc98"
+          "sha256": "f8bb26301c56822edab1927c48edb2da9c754c99bf0b1309e69fe4cd8f73ee68"
         },
         {
           "role": "verification_report",
           "path": "reviews/GATE1_NUMERICAL_A1_PREEXECUTION_TEAM_REVIEW.md",
           "sha256": "3ed0430d0a9167de20b1d535038b1f6a9175c7659cce1f9bd05e778b37845a24"
+        },
+        {
+          "role": "verification_report",
+          "path": "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_FINAL_REVIEW.md",
+          "sha256": "5fc64c812ebc4082dbe2c3e095205677b5f18b615d9b8db5ff9e32c0e062bb3a"
+        },
+        {
+          "role": "verification_report",
+          "path": "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_REVIEW_DISPOSITION.md",
+          "sha256": "0232e03e3da2b65b96ff951d264f2b2858fa32ba9dfecfba0921b2b7a0a0ccc3"
+        },
+        {
+          "role": "verification_report",
+          "path": "numerical_existence/NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md",
+          "sha256": "86df32f9659d2533deb0f982ea8911b5c281a73b1cafa3ff26d76323a0f19342"
         }
       ],
       "response_locations": [
@@ -1026,7 +1053,10 @@
         "numerical_existence/NUMERICAL_AMENDMENT_A1.md",
         "numerical_existence/ANALYSIS_SPEC_A1.json",
         "contracts/TARGET_DEPENDENCY_MAP_A1.json",
-        "reviews/GATE1_NUMERICAL_A1_PREEXECUTION_TEAM_REVIEW.md"
+        "reviews/GATE1_NUMERICAL_A1_PREEXECUTION_TEAM_REVIEW.md",
+        "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_FINAL_REVIEW.md",
+        "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_REVIEW_DISPOSITION.md",
+        "numerical_existence/NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md"
       ],
       "review": {
         "reviewer": "separate blocked-run review agent on the same execution team",
@@ -1034,10 +1064,10 @@
         "independent": false
       },
       "blocker": {
-        "missing_requirement": "Fresh execution evidence under owner-authorized A1 and independent numerical certification at the unchanged thresholds.",
-        "attempts": "The historical 11-model run and its failures remain unchanged. A1 implementation, independent evaluator/derivative tests, strict parent-cell reuse binding, and target-level dependency checks are implemented and locally tested before the amended run.",
+        "missing_requirement": "Fresh replacement execution evidence under the compatibility-corrected owner-authorized A1 specification and independent numerical certification at the unchanged thresholds.",
+        "attempts": "The historical 11-model run and its failures remain unchanged. The first A1 execution (SCC job 7482111) emitted all 11 blocked dispositions after a removed NumPy alias stopped the common problem-binding path; its receipt and classifications are preserved and no coefficient is certified. The exact vstack compatibility repair and a regression test with row_stack unavailable are implemented without changing the mathematical operation.",
         "claim_impact": "No historical or A1 coefficient may yet be reported as a validated confirmatory estimate. Only particular targets that pass the fresh A1 certificate may later release their exact mapped consumers.",
-        "next_step": "Commit and authorize the immutable A1 implementation, execute all 11 models on the authenticated retained cells, preserve every disposition, and apply the target-level guard to the fresh artifacts."
+        "next_step": "Commit and authorize the compatibility-corrected A1 implementation, execute all 11 models on the authenticated retained cells, preserve every disposition, and apply the corrected consumer- and requirement-level guard to the fresh artifacts."
       },
       "approval": {
         "status": "OWNER_AUTHORIZED_NUMERICAL_AMENDMENT_A1",

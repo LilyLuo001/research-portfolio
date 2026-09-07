@@ -181,6 +181,9 @@ class TargetDependencyGuardTests(unittest.TestCase):
                 "registered models are certified, even when individual "
                 "consumers are released."
             ),
+            "downstream_requirement_model_contract": {
+                "Y01": ["pooled", "family_month"],
+            },
             "certification_contract": {
                 "audit_schema_version": guard.NUMERICAL_AUDIT_SCHEMA,
                 "receipt_schema_version": guard.NUMERICAL_RECEIPT_SCHEMA,
@@ -606,6 +609,45 @@ class TargetDependencyGuardTests(unittest.TestCase):
             row["release_status"] == "RELEASED"
             for row in result["consumers"].values()
         ))
+        self.assertEqual(
+            result["downstream_requirement_releases"]["Y01"][
+                "release_status"
+            ],
+            "RELEASED",
+        )
+
+    def test_consumer_cannot_claim_requirement_without_full_model_contract(self):
+        weakened = copy.deepcopy(self.target_map)
+        consumer = next(
+            row for row in weakened["consumers"]
+            if row["consumer_id"] == "compare.pooled.family_month"
+        )
+        consumer["required_model_ids"] = ["pooled"]
+        with self.assertRaisesRegex(
+            guard.DependencyError, "full declared model prerequisite set",
+        ):
+            guard.validate_target_dependency_map(weakened, self.root)
+
+    def test_requirement_release_blocks_when_any_contract_model_is_blocked(self):
+        row = next(
+            model for model in self.models
+            if model["model_id"] == "family_month"
+        )
+        row["a1_certification"]["status"] = (
+            "BLOCKED_A1_NUMERICAL_CERTIFICATE"
+        )
+        self.write_numerical_artifacts()
+        result = self.evaluate()
+        self.assertEqual(
+            result["consumers"]["use.pooled"]["release_status"],
+            "RELEASED",
+        )
+        requirement = result["downstream_requirement_releases"]["Y01"]
+        self.assertEqual(requirement["release_status"], "BLOCKED")
+        self.assertEqual(requirement["blocking_model_ids"], ["family_month"])
+        self.assertEqual(
+            requirement["consumer_ids"], ["compare.pooled.family_month"],
+        )
 
     def test_unresolved_seasonal_blocks_only_its_consumers(self):
         seasonal = "seasonal_quintile_month_unconditioned"
@@ -828,6 +870,9 @@ class TargetDependencyGuardTests(unittest.TestCase):
             if row["consumer_id"] == "compare.pooled.family_month"
         )
         consumer["required_model_ids"] = ["pooled"]
+        weakened["downstream_requirement_model_contract"]["Y01"] = [
+            "pooled"
+        ]
         self.target_map = weakened
         self.write_json(
             guard.TARGET_DEPENDENCY_MAP_REL.as_posix(), self.target_map

@@ -26,7 +26,7 @@ Updated: 2026-09-07 Asia/Shanghai
 - Numerical specification:
   `yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991`
 - Owner-authorized A1 numerical specification (pre-execution):
-  `yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4`
+  `yaxnumspec_v1_5989d8d88e772711ff47c43011e9f90f4764dc8d89230ef5486b6687f59dc05c`
 
 ## Stage state
 
@@ -44,6 +44,13 @@ Updated: 2026-09-07 Asia/Shanghai
   models and blocked. Every model is classified
   `BLOCKED_NUMERICAL_OR_FULL_HESSIAN_BENCHMARK`; the diagnostic coefficients are
   not validated estimates.
+- The first owner-authorized A1 replacement attempt, SCC job `7482111`,
+  completed at the scheduler level but retained all 11 models as
+  `BLOCKED_UNEXPECTED_NUMERICAL_FAILURE_NO_SUBSTITUTION`: pinned NumPy 2.5 had
+  removed the `row_stack` alias used by the shared-problem digest. No solver or
+  coefficient was certified. The exact same-operation `vstack` repair and its
+  regression test are recorded in
+  `numerical_existence/NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md`.
 - The standard PASS-only transfer normalizer correctly rejected the blocked
   numerical receipt. A separate sanitized receipt-only evidence package was
   validated and retained under `runs/gate1_numerical_blocked_b9a7dd1/`. A
@@ -87,11 +94,13 @@ selective subset.
 Owner authorization A1 is now preserved at
 `revision_inputs/GATE1_NUMERICAL_ADJUDICATION_A1.md`. The same-estimator repair,
 new `ANALYSIS_SPEC_A1.json`, original-solver diagnostics, and target-level
-dependency map are implemented and locally tested, but the amended full-data
-run is not yet evidence. The old specification and blocked run above remain
-unchanged.
+dependency map are implemented and locally tested. The first A1 execution is
+preserved as a compatibility failure, not numerical evidence; the corrected
+replacement run has not yet executed. The old specification and blocked runs
+above remain unchanged.
 
-1. Commit and issue a fresh one-shot execution authorization for A1.
+1. Commit and issue a fresh one-shot execution authorization for the
+   compatibility-corrected A1 implementation.
 2. Run all 11 models on the exact retained authenticated cell artifact without
    rebuilding or opening row-level microdata.
 3. Preserve every model disposition and apply the target-level dependency map;

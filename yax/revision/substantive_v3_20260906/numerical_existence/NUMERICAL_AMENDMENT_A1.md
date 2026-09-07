@@ -54,12 +54,16 @@ A1 leaves unchanged:
   estimand.
 
 The new full numerical specification is `ANALYSIS_SPEC_A1.json`, ID
-`yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4`
+`yaxnumspec_v1_5989d8d88e772711ff47c43011e9f90f4764dc8d89230ef5486b6687f59dc05c`
 and SHA-256
-`7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca`.
+`07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e`.
 Its explicit scientific-target fingerprint matches the A1 parent while its
 algorithm, implementation hashes, and corroboration rule receive the new full
 identity.
+
+The pinned-runtime `row_stack` compatibility failure and exact same-operation
+`vstack` correction are permanently recorded in
+`NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md`.
 
 ## Uniform A1 algorithms
 

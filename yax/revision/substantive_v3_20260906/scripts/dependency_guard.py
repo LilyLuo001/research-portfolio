@@ -196,7 +196,9 @@ def validate_manifest(document: Any, root: Path) -> dict[str, dict[str, Any]]:
 
 def validate_target_dependency_map(
     document: Any, root: Path,
-) -> tuple[list[str], dict[str, dict[str, Any]]]:
+) -> tuple[
+    list[str], dict[str, dict[str, Any]], dict[str, list[str]],
+]:
     """Validate the narrow A1 model-to-consumer dependency contract.
 
     This is deliberately not a second general DAG.  It records only which of
@@ -332,11 +334,48 @@ def validate_target_dependency_map(
             "target map must contain exactly 11 unique registered model IDs"
         )
     known_models = set(model_ids)
+    raw_requirement_contract = document.get(
+        "downstream_requirement_model_contract"
+    )
+    if (
+        not isinstance(raw_requirement_contract, dict)
+        or not raw_requirement_contract
+    ):
+        raise DependencyError(
+            "target map needs downstream_requirement_model_contract"
+        )
+    requirement_contract: dict[str, list[str]] = {}
+    for requirement_id, required_models in raw_requirement_contract.items():
+        if not isinstance(requirement_id, str) or not requirement_id:
+            raise DependencyError(
+                "target map has an invalid downstream requirement ID"
+            )
+        if (
+            not isinstance(required_models, list)
+            or not required_models
+            or any(
+                not isinstance(model_id, str) or not model_id
+                for model_id in required_models
+            )
+            or len(required_models) != len(set(required_models))
+        ):
+            raise DependencyError(
+                f"invalid requirement model contract: {requirement_id}"
+            )
+        unknown = sorted(set(required_models) - known_models)
+        if unknown:
+            raise DependencyError(
+                f"invalid requirement model contract: {requirement_id}; "
+                "unknown models: " + ", ".join(unknown)
+            )
+        requirement_contract[requirement_id] = list(required_models)
+
     consumers = document.get("consumers")
     if not isinstance(consumers, list) or not consumers:
         raise DependencyError("target map consumers must be a nonempty list")
     indexed: dict[str, dict[str, Any]] = {}
     covered_models: set[str] = set()
+    referenced_requirements: set[str] = set()
     for row in consumers:
         if not isinstance(row, dict):
             raise DependencyError("each target-map consumer must be an object")
@@ -370,6 +409,22 @@ def validate_target_dependency_map(
             raise DependencyError(
                 f"{consumer_id} has invalid downstream_requirement_ids"
             )
+        for requirement_id in downstream:
+            if requirement_id not in requirement_contract:
+                raise DependencyError(
+                    f"{consumer_id} names unmapped requirement "
+                    f"{requirement_id}"
+                )
+            missing_required = sorted(
+                set(requirement_contract[requirement_id]) - set(required)
+            )
+            if missing_required:
+                raise DependencyError(
+                    f"{consumer_id} claims {requirement_id} without its "
+                    "full declared model prerequisite set; missing: "
+                    + ", ".join(missing_required)
+                )
+            referenced_requirements.add(requirement_id)
         covered_models.update(required)
         indexed[consumer_id] = row
     missing_coverage = sorted(known_models - covered_models)
@@ -378,7 +433,15 @@ def validate_target_dependency_map(
             "target map has registered models with no exact consumer: "
             + ", ".join(missing_coverage)
         )
-    return model_ids, indexed
+    unreferenced_requirements = sorted(
+        set(requirement_contract) - referenced_requirements
+    )
+    if unreferenced_requirements:
+        raise DependencyError(
+            "target map has downstream requirements with no consumer: "
+            + ", ".join(unreferenced_requirements)
+        )
+    return model_ids, indexed, requirement_contract
 
 
 def _load_bound_json(
@@ -1189,7 +1252,9 @@ def validate_target_certifications(
 ) -> dict[str, Any]:
     """Validate A1 model certificates and compute exact consumer releases."""
     root = root.resolve(strict=True)
-    model_ids, consumers = validate_target_dependency_map(target_map, root)
+    model_ids, consumers, requirement_contract = validate_target_dependency_map(
+        target_map, root
+    )
     audit_file = _contained_file(root, audit_path)
     if not isinstance(audit, dict) or audit.get("schema_version") != NUMERICAL_AUDIT_SCHEMA:
         raise DependencyError(
@@ -1281,6 +1346,9 @@ def validate_target_certifications(
         target_map, root, audit, receipt,
     )
 
+    non_model_pass = (
+        non_model["status"] == "PASS_BOUND_NON_MODEL_PREREQUISITES"
+    )
     releases: dict[str, dict[str, Any]] = {}
     for consumer_id, row in consumers.items():
         required = list(row["required_model_ids"])
@@ -1290,12 +1358,37 @@ def validate_target_certifications(
                 "CERTIFIED" if not blocking else "BLOCKED"
             ),
             "non_model_dependency_status": non_model["status"],
-            "release_status": "RELEASED" if not blocking else "BLOCKED",
+            "release_status": (
+                "RELEASED" if not blocking and non_model_pass else "BLOCKED"
+            ),
             "required_model_ids": required,
             "blocking_model_ids": blocking,
             "downstream_requirement_ids": row.get(
                 "downstream_requirement_ids", []
             ),
+        }
+    requirement_releases: dict[str, dict[str, Any]] = {}
+    for requirement_id, required in requirement_contract.items():
+        blocking = [
+            model_id for model_id in required if model_id not in certified
+        ]
+        requirement_releases[requirement_id] = {
+            "numerical_dependency_status": (
+                "CERTIFIED" if not blocking else "BLOCKED"
+            ),
+            "non_model_dependency_status": non_model["status"],
+            "release_status": (
+                "RELEASED" if not blocking and non_model_pass else "BLOCKED"
+            ),
+            "required_model_ids": list(required),
+            "certified_model_ids": [
+                model_id for model_id in required if model_id in certified
+            ],
+            "blocking_model_ids": blocking,
+            "consumer_ids": [
+                consumer_id for consumer_id, row in consumers.items()
+                if requirement_id in row.get("downstream_requirement_ids", [])
+            ],
         }
     result = {
         "status": (
@@ -1319,6 +1412,7 @@ def validate_target_certifications(
         "non_model_prerequisites": non_model,
         "preoutcome_target_map_binding": preoutcome_map_binding,
         "consumers": releases,
+        "downstream_requirement_releases": requirement_releases,
     }
     if requirements_status is not None:
         result["working_ledger_snapshot"] = requirement_ledger_snapshot(

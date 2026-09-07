@@ -5135,7 +5135,7 @@ def a1_shared_problem_binding(
     ).hexdigest()
 
     target_labels = list(target_functionals)
-    target_matrix = np.ascontiguousarray(np.row_stack([
+    target_matrix = np.ascontiguousarray(np.vstack([
         np.asarray(target_functionals[label], dtype="<f8")
         for label in target_labels
     ]), dtype="<f8")
