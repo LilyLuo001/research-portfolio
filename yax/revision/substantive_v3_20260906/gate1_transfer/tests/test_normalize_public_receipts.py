@@ -539,6 +539,14 @@ def test_valid_transfer_uses_public_projections_and_receipt_native_commands(tmp_
     original = (source / "cells/EXECUTION_RECEIPT.json").read_bytes()
     report = TRANSFER.validate_and_publish(spec_path, source, output)
     assert report["status"] == TRANSFER.PASS_STATUS
+    checks = report["cross_receipt_hash_consistency"]
+    assert checks["cells_matches_committed_authorization"] is True
+    assert checks["target_matches_committed_authorization"] is True
+    assert checks["numerical_matches_committed_authorization"] is True
+    assert any(key.startswith("shared_authorization_") for key in checks)
+    assert not any(
+        key.startswith("shared_cells_target_authorization_") for key in checks
+    )
     normalized = json.loads((output / "normalized_receipts/cells.json").read_text())
     assert json.loads(normalized["command"]) == ARGV["cells"]
     assert normalized["mode"] == "empirical_reestimate"
@@ -592,6 +600,18 @@ def test_a1_partial_suite_transfers_evidence_without_claiming_suite_pass(
     assert report["numerical_suite_pass"] is False
     assert report["partial_numerical_evidence_transfer"] is True
     assert report["a1_authenticated_parent_reuse"] == policy.public
+    checks = report["cross_receipt_hash_consistency"]
+    assert checks["cells_matches_committed_authorization"] == (
+        TRANSFER.PARENT_REUSE_AUTHORIZATION_SKIP
+    )
+    assert checks["target_matches_committed_authorization"] == (
+        TRANSFER.PARENT_REUSE_AUTHORIZATION_SKIP
+    )
+    assert checks["numerical_matches_committed_authorization"] is True
+    assert any(
+        key.startswith("shared_cells_target_authorization_") for key in checks
+    )
+    assert not any(key.startswith("shared_authorization_") for key in checks)
     numerical_projection = json.loads(
         (output / "receipt_projections/numerical.json").read_text()
     )

@@ -49,7 +49,11 @@ nonbinding contradiction diagnostic.
 
 These are numerical target estimates, not by themselves manuscript claims or
 inference. Their interpretation remains governed by the frozen design and
-downstream requirement ledger.
+downstream requirement ledger. The reported focal values are the independent
+damped sparse Newton/IRLS reference-path values. That existing producer choice
+and the corresponding primary-path differences are made explicit in
+`FOCAL_TARGET_SOURCE_AUDIT.json`; the maximum absolute difference is
+`4.632128597359397e-09`, below the unchanged `1e-07` tolerance.
 
 ## Independent release guard
 
@@ -64,7 +68,12 @@ prerequisites, and the pre-outcome target-map byte binding.
 ## Sanitized transfer
 
 `public_transfer/TRANSFER_VALIDATION.json` reports
-`PASS_SANITIZED_GATE1_RECEIPT_NORMALIZATION`; all cross-receipt checks are true.
+`PASS_SANITIZED_GATE1_RECEIPT_NORMALIZATION`. Two parent-reuse authorization
+fields were historically written as `true` although those named comparisons
+were skipped; the source is preserved unchanged and
+`public_transfer/TRANSFER_VALIDATION_INTERPRETATION_CORRECTION.json` records
+their truthful skip interpretation. All other cross-receipt checks are true,
+and the parent byte binding was enforced separately.
 The transfer copied only schema-specific receipt projections and normalized
 receipts. The terminal spec is retained as `TRANSFER_SPEC.json`.
 

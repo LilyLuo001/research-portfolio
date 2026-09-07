@@ -296,12 +296,12 @@
         {
           "role": "code",
           "path": "scripts/dependency_guard.py",
-          "sha256": "29f35dba1944bcb175c891a86c777aeb36adfbc62afbf5c7a09c1609e3d8eb09"
+          "sha256": "d52bb764dc9cf842e3469ff01d4eecd21a88dff837bf263c9a758b0dfc6d9611"
         },
         {
           "role": "code",
           "path": "tests/test_dependency_guard.py",
-          "sha256": "46ef368ce4f9140a261c055f788f7dab5a32fe5a0ba6680c0fb4680cd106366b"
+          "sha256": "3ffda2d815dc0171bb51eb35f0a59322965d60ba2bcedcba490f6a35346fca8f"
         },
         {
           "role": "verification_report",
@@ -828,7 +828,7 @@
         "T03"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "The frozen numerical audit evaluated all 11 central models, retained one-sided zero cells, reported profiled boundary rows and graph components, and found no recession-direction separation. Finite diagnostic focal values were produced, but none passed the full frozen numerical certificate, so target estimability is not established and N01 is not VERIFIED.",
+      "summary": "The original frozen numerical audit evaluated all 11 central models but did not certify them. The authorized A1 replacement preserved the estimands, retained and profiled boundary structure, and independently certified finite targets for all 11 models at the unchanged thresholds. Independent post-run review recomputed and upheld those certificates. N01 remains RUN_UNVALIDATED until the released numerical evidence is integrated into and checked against the required manuscript/appendix presentation.",
       "evidence": [
         {
           "role": "specification",
@@ -838,7 +838,7 @@
         {
           "role": "code",
           "path": "numerical_existence/run_numerical_existence_audit.py",
-          "sha256": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+          "sha256": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a"
         },
         {
           "role": "run_receipt",
@@ -894,7 +894,7 @@
         "N01"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "The frozen audit computed graph connectivity, treatment rank, target profiles, gradients, solver trajectories, and full-Hessian diagnostics for all 11 models. Rank and recession-direction checks passed, but the run classified the numerical failure as a two-solver or full-Hessian benchmark failure rather than separation. Because the focal targets are not certified or integrated, N02 remains RUN_UNVALIDATED.",
+      "summary": "The original frozen audit computed graph connectivity, treatment rank, target profiles, gradients, solver trajectories, and full-Hessian diagnostics but failed its original numerical benchmark. The authorized A1 replacement diagnosed and repaired the same-estimator numerical path without changing the scientific estimand: all 11 models now pass the distinct-reference, profile, rank, boundary, derivative, and unchanged-tolerance checks, as independently recomputed in the post-run review. N02 remains RUN_UNVALIDATED pending manuscript/appendix integration and presentation validation.",
       "evidence": [
         {
           "role": "specification",
@@ -904,7 +904,7 @@
         {
           "role": "code",
           "path": "numerical_existence/run_numerical_existence_audit.py",
-          "sha256": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+          "sha256": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a"
         },
         {
           "role": "run_receipt",
@@ -960,7 +960,7 @@
         "N02"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "The original frozen run and first A1 compatibility attempt remain blocked and preserved. Replacement SCC job 7482383 executed all 11 frozen models under the corrected A1 specification. The runner emitted 11 A1 certificates; the reader-corrected dependency guard independently recomputed all 11 certificates, 20 consumer releases, 9 requirement releases, the three non-model prerequisites, and the pre-outcome map binding. The sanitized transfer passed. Independent post-run review and manuscript/appendix integration remain outstanding, so N03 is RUN_UNVALIDATED rather than VERIFIED.",
+      "summary": "The original frozen run and first A1 compatibility attempt remain blocked and preserved. Replacement SCC job 7482383 executed all 11 frozen models under the corrected A1 specification. The runner emitted 11 A1 certificates; the reader-corrected dependency guard independently recomputed all 11 certificates, 20 consumer releases, 9 requirement releases, the three non-model prerequisites, and the pre-outcome map binding. An independent post-run artifact review recomputed and upheld the numerical result, finding one bounded P2 evidence-labeling defect and four P3 documentation/ledger defects. Those findings are corrected or explicitly disclosed without modifying immutable result bytes. Manuscript/appendix integration remains outstanding, so N03 remains RUN_UNVALIDATED rather than VERIFIED.",
       "evidence": [
         {
           "role": "specification",
@@ -970,7 +970,7 @@
         {
           "role": "code",
           "path": "numerical_existence/run_numerical_existence_audit.py",
-          "sha256": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+          "sha256": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a"
         },
         {
           "role": "run_receipt",
@@ -1070,12 +1070,32 @@
         {
           "role": "verification_report",
           "path": "reviews/GATE1_NUMERICAL_A1_POSTRUN_GUARD_SCHEMA_CORRECTION.md",
-          "sha256": "5a543add252d729e5df2f1aa3605960126bed441d7ece07b472cdf30526b613d"
+          "sha256": "de0724f618a9f5144bd169af7119fe7bf56f8fbb7b66080352499b707d64dd0e"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate1_numerical_a1_pass_7482383/public_transfer/TRANSFER_VALIDATION_INTERPRETATION_CORRECTION.json",
+          "sha256": "2d978bdf27307d9956dfc7329da4886d25d77b63124cc2a8e4dbb79f6903b6f3"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate1_numerical_a1_pass_7482383/FOCAL_TARGET_SOURCE_AUDIT.json",
+          "sha256": "c911e77717bac021841c441889ec046eb2336cdeace3fe75111ce7c2147f86be"
+        },
+        {
+          "role": "independent_review",
+          "path": "reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW.md",
+          "sha256": "96d5e16674dd06c790882ac3482830dd08152f1965a18450097f5c2044cc86bb"
+        },
+        {
+          "role": "verification_report",
+          "path": "reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW_DISPOSITION.md",
+          "sha256": "a8ddf70de309c0a3161a50fe7572f1adfcfff982262c8f16a2c5c61ddccbefaf"
         },
         {
           "role": "presentation",
           "path": "runs/gate1_numerical_a1_pass_7482383/README.md",
-          "sha256": "e642bf335a2f697e0eabb8cce180c8b441603dc89be32bc959b78e0e9cf6a67b"
+          "sha256": "f4fd7f38226820cce2a2ad3b60bf27fcc64cd281243a82748e99ac02a41cdced"
         }
       ],
       "response_locations": [
@@ -1097,19 +1117,23 @@
         "runs/gate1_numerical_a1_pass_7482383/numerical/MODEL_AUDIT.json",
         "runs/gate1_numerical_a1_pass_7482383/numerical/SOLVER_COMPARISON.csv",
         "runs/gate1_numerical_a1_pass_7482383/public_transfer/TRANSFER_VALIDATION.json",
+        "runs/gate1_numerical_a1_pass_7482383/public_transfer/TRANSFER_VALIDATION_INTERPRETATION_CORRECTION.json",
+        "runs/gate1_numerical_a1_pass_7482383/FOCAL_TARGET_SOURCE_AUDIT.json",
         "runs/gate1_numerical_a1_pass_7482383/DEPENDENCY_RELEASE.json",
-        "reviews/GATE1_NUMERICAL_A1_POSTRUN_GUARD_SCHEMA_CORRECTION.md"
+        "reviews/GATE1_NUMERICAL_A1_POSTRUN_GUARD_SCHEMA_CORRECTION.md",
+        "reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW.md",
+        "reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW_DISPOSITION.md"
       ],
       "review": {
-        "reviewer": "separate blocked-run review agent on the same execution team",
-        "report_path": "reviews/GATE1_BLOCKED_RUN_TEAM_REVIEW.md",
-        "independent": false
+        "reviewer": "independent adversarial artifact review (Claude, read-only session)",
+        "report_path": "reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW.md",
+        "independent": true
       },
       "blocker": {
-        "missing_requirement": "Independent post-run review and downstream manuscript/appendix integration.",
-        "attempts": "Replacement SCC job 7482383 completed all 11 models, the corrected guard recomputed all model and requirement releases, and the sanitized evidence transfer passed. The exact aggregate evidence is retained for an independent artifact-only challenge.",
-        "claim_impact": "The numerical prerequisites are candidate-certified, but N03 is not yet marked VERIFIED and no manuscript claim may cite the run as independently reviewed.",
-        "next_step": "Complete the independent post-run numerical/release review, adjudicate any findings, then reconcile N03 and only the downstream requirements whose presentation obligations are actually met."
+        "missing_requirement": "Downstream manuscript/appendix integration.",
+        "attempts": "Replacement SCC job 7482383 completed all 11 models, the corrected guard recomputed all model and requirement releases, the sanitized evidence transfer passed, and the independent post-run review upheld the numerical result. The review's evidence defects are corrected or disclosed in a separate disposition.",
+        "claim_impact": "The numerical prerequisites are independently certified, but N03 remains RUN_UNVALIDATED until its required manuscript/appendix presentation is integrated and checked.",
+        "next_step": "Integrate only the released numerical targets into the manuscript and appendix, retain the frozen interpretation limits, and validate that presentation before marking N03 VERIFIED."
       },
       "approval": {
         "status": "OWNER_AUTHORIZED_NUMERICAL_AMENDMENT_A1",

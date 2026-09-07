@@ -1,0 +1,36 @@
+{
+  "schema_version": "yax-transfer-validation-interpretation-correction-v1",
+  "status": "CORRECTED_INTERPRETATION_PRESERVED_SOURCE_UNCHANGED",
+  "source_transfer_validation": {
+    "path": "public_transfer/TRANSFER_VALIDATION.json",
+    "sha256": "26d0fc5a4456a2a63957459b6e0022255dfb8783295bdb8eec90d593b72a3000"
+  },
+  "independent_review": {
+    "path": "reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW.md",
+    "sha256": "96d5e16674dd06c790882ac3482830dd08152f1965a18450097f5c2044cc86bb",
+    "finding": "P2-1"
+  },
+  "transfer_mode": "a1_authenticated_parent_reuse",
+  "corrected_fields": {
+    "/cross_receipt_hash_consistency/cells_matches_committed_authorization": {
+      "preserved_value": true,
+      "corrected_interpretation": "SKIPPED_PARENT_REUSE_BOUND_BY_VALIDATE_A1_PARENT_REUSE"
+    },
+    "/cross_receipt_hash_consistency/target_matches_committed_authorization": {
+      "preserved_value": true,
+      "corrected_interpretation": "SKIPPED_PARENT_REUSE_BOUND_BY_VALIDATE_A1_PARENT_REUSE"
+    }
+  },
+  "renamed_scope": {
+    "preserved_prefix": "shared_authorization_",
+    "corrected_prefix": "shared_cells_target_authorization_",
+    "reason": "In parent-reuse mode these fields compare the historical cells and target receipt authorization summaries only, not all three modules."
+  },
+  "underlying_enforcement": {
+    "historical_cells_and_target": "Authenticated by exact retained parent bytes, producer commit/tree, parent specification, receipt links, scheduler bytes, and the A1 parent-reuse policy.",
+    "new_numerical_module": "Compared directly with the committed replacement pre-execution authorization and its scheduler window.",
+    "scientific_or_numerical_effect": "NONE"
+  },
+  "source_artifact_modified": false,
+  "normalization_pass_with_corrected_interpretation": true
+}

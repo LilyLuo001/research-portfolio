@@ -1,0 +1,28 @@
+{
+  "schema_version": "yax-a1-focal-target-source-audit-v1",
+  "status": "PASS_REPORTED_FOCAL_TARGET_IS_REFERENCE_PATH_FOR_ALL_11_MODELS",
+  "source_model_audit": {
+    "path": "numerical/MODEL_AUDIT.json",
+    "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"
+  },
+  "reported_value_rule": "The existing producer reports solver_comparison.focal_target_right, the independent damped sparse Newton/IRLS reference-path value, as focal_target_estimate.",
+  "scientific_or_numerical_change": "NONE",
+  "models": [
+    {"model_id":"pooled","primary_path_value":-0.132109450792428,"reference_path_value":-0.1321094507921904,"reported_value":-0.1321094507921904,"reported_equals_reference":true,"absolute_primary_reference_difference":2.375877272697835e-13},
+    {"model_id":"family_post","primary_path_value":-0.021598984632326634,"reference_path_value":-0.021598984631522548,"reported_value":-0.021598984631522548,"reported_equals_reference":true,"absolute_primary_reference_difference":8.040859644786735e-13},
+    {"model_id":"family_month","primary_path_value":-0.021674952016782417,"reference_path_value":-0.021674952018246887,"reported_value":-0.021674952018246887,"reported_equals_reference":true,"absolute_primary_reference_difference":1.4644709056543803e-12},
+    {"model_id":"dynamics_unconditioned","primary_path_value":-0.11988876536815188,"reference_path_value":-0.11988876533150447,"reported_value":-0.11988876533150447,"reported_equals_reference":true,"absolute_primary_reference_difference":3.6647407331003024e-11},
+    {"model_id":"dynamics_family_month","primary_path_value":-0.20743369380613366,"reference_path_value":-0.20743368917400506,"reported_value":-0.20743368917400506,"reported_equals_reference":true,"absolute_primary_reference_difference":4.632128597359397e-09},
+    {"model_id":"post_2020_unconditioned","primary_path_value":-0.1180690918932917,"reference_path_value":-0.11806909201488339,"reported_value":-0.11806909201488339,"reported_equals_reference":true,"absolute_primary_reference_difference":1.2159168116809838e-10},
+    {"model_id":"post_2020_family_month","primary_path_value":-0.03040219654771788,"reference_path_value":-0.030402196515066253,"reported_value":-0.030402196515066253,"reported_equals_reference":true,"absolute_primary_reference_difference":3.2651627929203286e-11},
+    {"model_id":"seasonal_quintile_month_unconditioned","primary_path_value":-0.13260072425006542,"reference_path_value":-0.13260072425006528,"reported_value":-0.13260072425006528,"reported_equals_reference":true,"absolute_primary_reference_difference":1.3877787807814457e-16},
+    {"model_id":"seasonal_quintile_month_family_month","primary_path_value":-0.02257021254783623,"reference_path_value":-0.022570212527552782,"reported_value":-0.022570212527552782,"reported_equals_reference":true,"absolute_primary_reference_difference":2.0283448531888126e-11},
+    {"model_id":"seasonal_occupation_month_unconditioned","primary_path_value":-0.1323736719626981,"reference_path_value":-0.13237367196313388,"reported_value":-0.13237367196313388,"reported_equals_reference":true,"absolute_primary_reference_difference":4.3579029274098957e-13},
+    {"model_id":"seasonal_occupation_month_family_month","primary_path_value":-0.020605758186410084,"reference_path_value":-0.02060575818647418,"reported_value":-0.02060575818647418,"reported_equals_reference":true,"absolute_primary_reference_difference":6.409803243734302e-14}
+  ],
+  "all_11_reported_values_equal_reference_path_exactly": true,
+  "maximum_absolute_primary_reference_difference": 4.632128597359397e-09,
+  "comparison_tolerance": 1e-07,
+  "all_11_primary_reference_differences_within_tolerance": true,
+  "interpretation": "This additive audit documents the producer's already-emitted reporting choice. It does not amend the signed pre-outcome specification, select a different scientific estimand, or alter any immutable result artifact."
+}

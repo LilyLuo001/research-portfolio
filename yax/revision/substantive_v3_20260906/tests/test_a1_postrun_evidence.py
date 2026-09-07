@@ -78,11 +78,32 @@ def test_failed_compatibility_run_is_retained_and_cannot_certify():
 
 def test_sanitized_transfer_and_dependency_release_are_complete():
     transfer = load(PASS / "public_transfer" / "TRANSFER_VALIDATION.json")
+    correction = load(
+        PASS
+        / "public_transfer"
+        / "TRANSFER_VALIDATION_INTERPRETATION_CORRECTION.json"
+    )
     release = load(PASS / "DEPENDENCY_RELEASE.json")
     assert transfer["status"] == "PASS_SANITIZED_GATE1_RECEIPT_NORMALIZATION"
     assert transfer["numerical_suite_pass"] is True
     assert transfer["partial_numerical_evidence_transfer"] is False
-    assert all(transfer["cross_receipt_hash_consistency"].values())
+    historically_skipped = {
+        "cells_matches_committed_authorization",
+        "target_matches_committed_authorization",
+    }
+    checks = transfer["cross_receipt_hash_consistency"]
+    assert all(value is True for key, value in checks.items() if key not in historically_skipped)
+    assert set(correction["corrected_fields"]) == {
+        f"/cross_receipt_hash_consistency/{key}" for key in historically_skipped
+    }
+    assert all(
+        row["corrected_interpretation"]
+        == "SKIPPED_PARENT_REUSE_BOUND_BY_VALIDATE_A1_PARENT_REUSE"
+        for row in correction["corrected_fields"].values()
+    )
+    assert correction["source_transfer_validation"]["sha256"] == digest(
+        PASS / "public_transfer" / "TRANSFER_VALIDATION.json"
+    )
     target = release["target_dependencies"]
     assert target["status"] == "PASS_ALL_11_MODELS_CERTIFIED"
     assert target["certified_model_count"] == 11
@@ -99,3 +120,29 @@ def test_sanitized_transfer_and_dependency_release_are_complete():
     assert target["preoutcome_target_map_binding"]["status"] == (
         "PASS_PREOUTCOME_TARGET_MAP_BYTE_BINDING"
     )
+
+
+def test_focal_target_source_is_explicit_and_within_frozen_tolerance():
+    audit = load(PASS / "FOCAL_TARGET_SOURCE_AUDIT.json")
+    source = load(PASS / "numerical" / "MODEL_AUDIT.json")
+    assert audit["source_model_audit"]["sha256"] == digest(
+        PASS / "numerical" / "MODEL_AUDIT.json"
+    )
+    assert len(audit["models"]) == 11
+    assert audit["all_11_reported_values_equal_reference_path_exactly"] is True
+    assert audit["all_11_primary_reference_differences_within_tolerance"] is True
+    tolerance = audit["comparison_tolerance"]
+    source_by_id = {row["model_id"]: row for row in source["models"]}
+    for row in audit["models"]:
+        source_row = source_by_id[row["model_id"]]
+        comparison = source_row["solver_comparison"]
+        assert comparison["right_solver"] == "independent-damped-sparse-newton-irls"
+        assert row["primary_path_value"] == comparison["focal_target_left"]
+        assert row["reference_path_value"] == comparison["focal_target_right"]
+        assert row["reported_value"] == source_row["focal_target_estimate"]
+        assert row["reported_equals_reference"] is True
+        assert row["reported_value"] == row["reference_path_value"]
+        assert row["absolute_primary_reference_difference"] == abs(
+            row["primary_path_value"] - row["reference_path_value"]
+        )
+        assert row["absolute_primary_reference_difference"] <= tolerance

@@ -9,6 +9,14 @@ result byte. The replacement job ran from authorization commit
 `b7c9e1c2d165c88d185cf85559f83b6329204ceb`, whose parent is implementation
 commit `576133d86e9305726d0ceb78413fec2ac795cdb0`.
 
+The guard reader was edited after protected outcomes had been opened and was
+outside the pre-outcome authorization's byte binding. It is therefore recorded
+as an evidence-reader correction, not represented as frozen code. The guard
+SHA-256 changed from
+`29f35dba1944bcb175c891a86c777aeb36adfbc62afbf5c7a09c1609e3d8eb09`
+to `d52bb764dc9cf842e3469ff01d4eecd21a88dff837bf263c9a758b0dfc6d9611`.
+The numerical producer and every retained result byte remained unchanged.
+
 ## Observed contradiction
 
 SCC job 7482383 completed with scheduler `failed = 0`, `exit_status = 0`, and
@@ -58,7 +66,10 @@ pre-outcome target-map byte binding. The result was
 ## Verification
 
 - Focused guard suite: 29 passed, 9 subtests passed.
-- Full repository suite: 1,111 passed, 3 skipped, 26 subtests passed.
+- Full repository suite at commit `d98371d5`: 1,114 passed, 3 skipped, 26
+  subtests passed. Three post-run evidence tests were added in the same commit
+  as this document; this commit-specific count supersedes the earlier 1,111
+  count.
 - Corrected guard SHA-256:
   `d52bb764dc9cf842e3469ff01d4eecd21a88dff837bf263c9a758b0dfc6d9611`.
 - Corrected guard-test SHA-256:

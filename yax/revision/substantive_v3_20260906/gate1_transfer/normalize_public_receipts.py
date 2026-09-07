@@ -50,6 +50,9 @@ PARTIAL_TRANSFER_STATUS = "COMPLETE_SANITIZED_A1_PARTIAL_EVIDENCE_TRANSFER"
 FRESH_TRANSFER_MODE = "fresh_all_pass"
 A1_REUSE_TRANSFER_MODE = "a1_authenticated_parent_reuse"
 TRANSFER_MODES = {FRESH_TRANSFER_MODE, A1_REUSE_TRANSFER_MODE}
+PARENT_REUSE_AUTHORIZATION_SKIP = (
+    "SKIPPED_PARENT_REUSE_BOUND_BY_VALIDATE_A1_PARENT_REUSE"
+)
 NUMERICAL_PASS_STATUS = "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED"
 NUMERICAL_BLOCKED_STATUS = "BLOCKED_ONE_OR_MORE_CORE_TARGETS_NOT_ESTABLISHED"
 MODULE_KEYS = ("cells", "target", "numerical")
@@ -2025,8 +2028,8 @@ def validate_shared_execution_authorization(
     schedulers: dict[str, dict[str, Any]],
     committed_authorization: dict[str, Any],
     transfer_mode: str = FRESH_TRANSFER_MODE,
-) -> dict[str, bool]:
-    """Bind every fresh job to one authorization and its validity window."""
+) -> dict[str, bool | str]:
+    """Bind fresh jobs and label parent-reuse checks without vacuous booleans."""
     authorizations = {
         key: projections[key]["pre_execution_authorization"] for key in MODULE_KEYS
     }
@@ -2039,9 +2042,14 @@ def validate_shared_execution_authorization(
     authorization_keys = (
         MODULE_KEYS if transfer_mode == FRESH_TRANSFER_MODE else ("cells", "target")
     )
+    shared_prefix = (
+        "shared_authorization"
+        if transfer_mode == FRESH_TRANSFER_MODE
+        else "shared_cells_target_authorization"
+    )
     first = authorizations[authorization_keys[0]]
-    checks: dict[str, bool] = {
-        f"shared_authorization_{field}": all(
+    checks: dict[str, bool | str] = {
+        f"{shared_prefix}_{field}": all(
             authorizations[key][field] == first[field] for key in authorization_keys
         )
         for field in common_fields
@@ -2079,16 +2087,20 @@ def validate_shared_execution_authorization(
                 "source_registry_sha256"
             ],
         }
-        checks[f"{key}_matches_committed_authorization"] = (
-            authorizations[key] == expected_receipt_summary
-            if transfer_mode == FRESH_TRANSFER_MODE or key == "numerical"
-            else True
-        )
+        if transfer_mode == FRESH_TRANSFER_MODE or key == "numerical":
+            checks[f"{key}_matches_committed_authorization"] = (
+                authorizations[key] == expected_receipt_summary
+            )
+        else:
+            checks[f"{key}_matches_committed_authorization"] = (
+                PARENT_REUSE_AUTHORIZATION_SKIP
+            )
         checks[f"{key}_scheduler_within_authorization_window"] = (
             schedulers[key]["_start"] >= not_before
             and schedulers[key]["_end"] <= not_after
         )
-    failed = sorted(key for key, value in checks.items() if value is not True)
+    allowed = {True, PARENT_REUSE_AUTHORIZATION_SKIP}
+    failed = sorted(key for key, value in checks.items() if value not in allowed)
     if failed:
         raise TransferBlocked(
             "execution authorization consistency differs: " + ", ".join(failed)
