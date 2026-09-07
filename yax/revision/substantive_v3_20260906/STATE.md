@@ -13,6 +13,10 @@ Updated: 2026-09-07 Asia/Shanghai
 - Numerical/claim ledger code: `scripts/validate_claim_ledger.py`
 - Canonical stamped specifications: `contracts/specs/`
 - Sanitized blocked Gate 1 run: `runs/gate1_numerical_blocked_b9a7dd1/`
+- Preserved compatibility-blocked A1 run:
+  `runs/gate1_numerical_a1_compat_blocked_7482111/`
+- Candidate-passing A1 replacement run:
+  `runs/gate1_numerical_a1_pass_7482383/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -40,10 +44,8 @@ Updated: 2026-09-07 Asia/Shanghai
   was not transferred into Git.
 - Gate 1 exact-target integrity audit: passed on 52,884 static
   occupation-month rows and 51,891 positive-total estimating rows.
-- Gate 1 numerical existence/convergence audit: executed on all 11 predeclared
-  models and blocked. Every model is classified
-  `BLOCKED_NUMERICAL_OR_FULL_HESSIAN_BENCHMARK`; the diagnostic coefficients are
-  not validated estimates.
+- The original Gate 1 numerical existence/convergence audit remains blocked on
+  all 11 predeclared models. Its diagnostic coefficients remain unvalidated.
 - The first owner-authorized A1 replacement attempt, SCC job `7482111`,
   completed at the scheduler level but retained all 11 models as
   `BLOCKED_UNEXPECTED_NUMERICAL_FAILURE_NO_SUBSTITUTION`: pinned NumPy 2.5 had
@@ -56,13 +58,27 @@ Updated: 2026-09-07 Asia/Shanghai
   validated and retained under `runs/gate1_numerical_blocked_b9a7dd1/`. A
   separate-agent same-team review found no P1/P2 defects in that package or its
   ledger disposition.
-- Dependent Gates 2--5 have not run under V3. Unrelated feasible verification
-  work may continue, but no downstream result may bypass the Gate 1 blocker.
+- The compatibility-corrected replacement, SCC job `7482383`, completed with
+  scheduler `failed = 0`, `exit_status = 0`. All 11 models emitted A1 numerical
+  certificates at the unchanged thresholds, including the seasonal model that
+  failed under both original solvers. The sanitized transfer passed.
+- A post-run dependency-guard schema mismatch initially blocked release. The
+  reader-only correction is recorded in
+  `reviews/GATE1_NUMERICAL_A1_POSTRUN_GUARD_SCHEMA_CORRECTION.md`; it changes no
+  producer, target map, result, estimator, or threshold. The corrected guard
+  independently recomputed 11 model certificates, 20 consumer releases, 9
+  requirement releases, the three non-model prerequisites, and the pre-outcome
+  map binding.
+- N03 is `RUN_UNVALIDATED` pending the final independent artifact review and
+  manuscript/appendix integration. Dependent Gates 2--5 have not yet run under
+  V3; downstream work must use the explicit target-level release map and may
+  not treat a numerical certificate alone as a manuscript claim.
 
-No V3 coefficient is currently represented as verified. Existing R3 outputs
-and the 11 new diagnostic focal values are reference artifacts only. The cell
-and exact-target audits establish the estimating-data object, not a validated
-coefficient.
+No V3 coefficient is currently represented as independently reviewed or
+manuscript-ready. The 11 A1 focal values are candidate-certified numerical
+targets; interpretation and presentation remain separately governed. The cell
+and exact-target audits establish the estimating-data object, not a causal or
+substantive manuscript claim.
 
 ## Verified inputs and blockers
 

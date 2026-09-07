@@ -1,0 +1,464 @@
+{
+  "status": "PASS",
+  "runs": 1,
+  "status_counts": {
+    "SUCCESS": 1
+  },
+  "target_dependencies": {
+    "status": "PASS_ALL_11_MODELS_CERTIFIED",
+    "release_scope": "authorizes reuse of the named certified numerical targets only; broader requirement completion, inference, and presentation remain separately governed",
+    "registered_model_count": 11,
+    "certified_model_count": 11,
+    "certified_model_ids": [
+      "pooled",
+      "family_post",
+      "family_month",
+      "dynamics_unconditioned",
+      "dynamics_family_month",
+      "post_2020_unconditioned",
+      "post_2020_family_month",
+      "seasonal_quintile_month_unconditioned",
+      "seasonal_quintile_month_family_month",
+      "seasonal_occupation_month_unconditioned",
+      "seasonal_occupation_month_family_month"
+    ],
+    "blocked_model_ids": [],
+    "non_model_prerequisites": {
+      "status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+      "requirement_ids": [
+        "T01",
+        "T02",
+        "T03"
+      ],
+      "authenticated_cells_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+      "exact_target_audit_sha256": "7dff9fc89c4a945d12f29947bed42c89ffc1138e102bc87cb85f5e47ffa1eb22",
+      "exact_target_receipt_sha256": "cc87e834db44f2b0d61cb6f473bdf6be14f1901c2bd32c6959cf8e1bc1af4e6e"
+    },
+    "preoutcome_target_map_binding": {
+      "status": "PASS_PREOUTCOME_TARGET_MAP_BYTE_BINDING",
+      "authorization_git_commit": "b7c9e1c2d165c88d185cf85559f83b6329204ceb",
+      "authorized_implementation_commit": "576133d86e9305726d0ceb78413fec2ac795cdb0",
+      "target_dependency_map_sha256": "f8bb26301c56822edab1927c48edb2da9c754c99bf0b1309e69fe4cd8f73ee68"
+    },
+    "consumers": {
+      "gate2.static.pooled_target": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.static.family_post_target": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "family_post"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.static.family_month_target": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": [
+          "I07"
+        ]
+      },
+      "gate2.static.pooled_vs_family_post": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_post"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.static.pooled_vs_family_month": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": [
+          "S07",
+          "I02",
+          "I10"
+        ]
+      },
+      "gate2.dynamic.unconditioned_event_vector": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "dynamics_unconditioned"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.dynamic.family_month_event_vector": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.dynamic.static_reconciliation_unconditioned": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "dynamics_unconditioned"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.dynamic.static_reconciliation_family_month": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "family_month",
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.dynamic.conditioning_movement": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": [
+          "Y01",
+          "Y02",
+          "Y03",
+          "Y04"
+        ]
+      },
+      "gate2.sensitivity.post_2020_unconditioned": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "post_2020_unconditioned"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.post_2020_family_month": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "post_2020_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.post_2020_comparison": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "post_2020_unconditioned",
+          "post_2020_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.seasonal_quintile_month_unconditioned": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "seasonal_quintile_month_unconditioned"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.seasonal_quintile_month_family_month": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "seasonal_quintile_month_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.seasonal_quintile_month_comparison": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "seasonal_quintile_month_unconditioned",
+          "seasonal_quintile_month_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.seasonal_occupation_month_unconditioned": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "seasonal_occupation_month_unconditioned"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.seasonal_occupation_month_family_month": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "seasonal_occupation_month_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.seasonal_occupation_month_comparison": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "seasonal_occupation_month_unconditioned",
+          "seasonal_occupation_month_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": []
+      },
+      "gate2.sensitivity.complete_onset_and_seasonality": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "post_2020_unconditioned",
+          "post_2020_family_month",
+          "seasonal_quintile_month_unconditioned",
+          "seasonal_quintile_month_family_month",
+          "seasonal_occupation_month_unconditioned",
+          "seasonal_occupation_month_family_month"
+        ],
+        "blocking_model_ids": [],
+        "downstream_requirement_ids": [
+          "Y08"
+        ]
+      }
+    },
+    "downstream_requirement_releases": {
+      "S07": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.static.pooled_vs_family_month"
+        ]
+      },
+      "I02": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.static.pooled_vs_family_month"
+        ]
+      },
+      "I07": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "family_month"
+        ],
+        "certified_model_ids": [
+          "family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.static.family_month_target"
+        ]
+      },
+      "I10": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.static.pooled_vs_family_month"
+        ]
+      },
+      "Y01": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.dynamic.conditioning_movement"
+        ]
+      },
+      "Y02": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.dynamic.conditioning_movement"
+        ]
+      },
+      "Y03": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.dynamic.conditioning_movement"
+        ]
+      },
+      "Y04": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "certified_model_ids": [
+          "pooled",
+          "family_month",
+          "dynamics_unconditioned",
+          "dynamics_family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.dynamic.conditioning_movement"
+        ]
+      },
+      "Y08": {
+        "numerical_dependency_status": "CERTIFIED",
+        "non_model_dependency_status": "PASS_BOUND_NON_MODEL_PREREQUISITES",
+        "release_status": "RELEASED",
+        "required_model_ids": [
+          "post_2020_unconditioned",
+          "post_2020_family_month",
+          "seasonal_quintile_month_unconditioned",
+          "seasonal_quintile_month_family_month",
+          "seasonal_occupation_month_unconditioned",
+          "seasonal_occupation_month_family_month"
+        ],
+        "certified_model_ids": [
+          "post_2020_unconditioned",
+          "post_2020_family_month",
+          "seasonal_quintile_month_unconditioned",
+          "seasonal_quintile_month_family_month",
+          "seasonal_occupation_month_unconditioned",
+          "seasonal_occupation_month_family_month"
+        ],
+        "blocking_model_ids": [],
+        "consumer_ids": [
+          "gate2.sensitivity.complete_onset_and_seasonality"
+        ]
+      }
+    },
+    "working_ledger_snapshot": {
+      "statuses": {
+        "T01": "RUN_UNVALIDATED",
+        "T02": "RUN_UNVALIDATED",
+        "T03": "RUN_UNVALIDATED"
+      },
+      "stale_or_unresolved_requirement_ids": [
+        "T01",
+        "T02",
+        "T03"
+      ],
+      "interpretation": "working ledger is stale or unresolved; it is not used as PASS evidence and must be reconciled separately"
+    }
+  }
+}

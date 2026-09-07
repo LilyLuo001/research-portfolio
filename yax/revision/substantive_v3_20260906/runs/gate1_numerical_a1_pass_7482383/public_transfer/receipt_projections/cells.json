@@ -1,0 +1,104 @@
+{
+  "a1_authenticated_reuse": {
+    "a1_numerical_consumer_spec": {
+      "id": "yaxnumspec_v1_5989d8d88e772711ff47c43011e9f90f4764dc8d89230ef5486b6687f59dc05c",
+      "sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e"
+    },
+    "parent_numerical_spec": {
+      "id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
+      "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+    },
+    "parent_producer_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+    "parent_producer_tree": "3ec00fb684ed2ee00bd0b9593644cf53331faa06",
+    "parent_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a"
+  },
+  "aggregate_artifact": {
+    "filename": "aggregate_cells.csv",
+    "sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717"
+  },
+  "assignment_fingerprint_artifact_sha256": "f895bbb8eb71317f8a97b1e0146e5bddda394e0f6ae223c98b9fe966c43492ff",
+  "assignment_fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+  "canonical_spec": {
+    "id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+  },
+  "code_hashes": {
+    "builder": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+    "transitive": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "execution_command_binding": {
+    "binding_sha256": "a8650037a8d00eb2b975d5b6a6816e988bb079cca6184785c15e5da1da78d572",
+    "module_key": "cells",
+    "run_id": "gate1_cells_sge_7477104",
+    "sanitized_argv": [
+      "<YAX_PYTHON_BIN>",
+      "-I",
+      "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+      "--repo-root",
+      "<YAX_REPO_ROOT>",
+      "--microdata",
+      "<INPUT:ipums_cps_extract_9_wide>",
+      "--repair-microdata",
+      "<INPUT:ipums_cps_extract_11_march_basic_repair>",
+      "--output-parent",
+      "<YAX_V3_RUN_ROOT>"
+    ],
+    "sanitized_argv_sha256": "3262e0e0982b41dafec4eb2ce637144a457ef0ac907203910d15ad88c18ea9a6",
+    "scheduler_jobnumber": "7477104",
+    "schema_version": "yax-execution-command-binding-v2",
+    "status": "RUNNER_RECORDED_HASH_CONSISTENT"
+  },
+  "execution_runtime_authentication": {
+    "git_invocation": "<YAX_GIT_BIN>",
+    "git_resolved_executable_sha256": "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e",
+    "git_version": "git version 2.43.7",
+    "ignore_environment": true,
+    "import_affecting_environment_absent": true,
+    "isolated_mode": true,
+    "no_user_site": true,
+    "python_invocation": "<YAX_PYTHON_BIN>",
+    "python_resolved_executable_sha256": "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7",
+    "python_version": "3.13.8",
+    "safe_path": true,
+    "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES"
+  },
+  "generated_at_utc": "2026-09-06T15:43:07.603065Z",
+  "grid": {
+    "observed_month_count": 114,
+    "occupation_count": 468,
+    "row_count": 53352
+  },
+  "module_key": "cells",
+  "numerical_consumer_spec": {
+    "id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
+    "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+  },
+  "pre_execution_authorization": {
+    "authorization_file_sha256": "4a3b9438a2385ca379b791472eb3cf361081bc3b16e0437d1d0296fc3d5953ca",
+    "authorization_git_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+    "authorization_id": "yaxgate1auth_v1_43fcddf8efd4cc01b89261e75bba42e536dff23bc448a9539c8fd24e43a2567a",
+    "authorized_implementation_commit": "98d841b3555ec4e219e7c0b2f30e4ba7ce8b82c1",
+    "code_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+    "issued_at_utc": "2026-09-06T15:39:12Z",
+    "module_key": "cells",
+    "not_after_utc": "2026-09-07T11:39:12Z",
+    "not_before_utc": "2026-09-06T15:39:12Z",
+    "schema_version": "yax-gate1-pre-execution-authorization-v1",
+    "source_registry_sha256": "11857cd6b7074f7f8c9da05370d716f54239286fe59b3cdebd45ce34ce007bf1",
+    "status": "AUTHORIZED_FRESH_GATE1_EXECUTION",
+    "typed_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+    "typed_spec_sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15"
+  },
+  "schema_version": "yax-gate1-public-receipt-projection-v2",
+  "source_receipt_schema": "yax-numerical-cells-receipt-v1",
+  "source_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+  "source_receipt_status": "PASS_FRESH_AGGREGATE_REBUILD",
+  "typed_spec": {
+    "id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+    "id_pointer": "/cell_build_spec_id",
+    "kind": "cell_build_spec",
+    "sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15",
+    "sha256_pointer": "/cell_build_spec_sha256"
+  },
+  "weight_application_count": 1
+}

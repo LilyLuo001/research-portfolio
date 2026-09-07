@@ -1,0 +1,150 @@
+{
+  "amendment_a1": {
+    "owner_authorization_sha256": "ff4963e66940741abc8a4eda87fd9050c51cae5cedfabb3ae1ab42c21f5836a9",
+    "parent_audit_spec_id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
+    "parent_audit_spec_sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce",
+    "protected_row_level_microdata_rebuilt": false,
+    "reused_authenticated_cells": true,
+    "reused_cells_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+    "reused_cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+    "scientific_target_fingerprint_sha256": "f5cf1106872117c3c67ce85da2fc76f661093a500ad31bfdcd58dfadfe6956e0"
+  },
+  "artifact_safety_sha256": "6c03ad94fb5d4ecb618e3cd0e4f9de6ece0a5f20e633283002f3fc01d1248fd2",
+  "audit_spec_id": "yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4",
+  "audit_spec_sha256": "7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca",
+  "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+  "cell_builder_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+  "cells_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+  "cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+  "code_sha256": "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7",
+  "command_template": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py --canonical-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json --analysis-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv --cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json --legacy-engine <YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py --output-parent <YAX_V3_RUN_ROOT>",
+  "execution_command_binding": {
+    "binding_sha256": "363752429998866824abd86229b5b2d9a1c678a48b0a2d751aecb3b530a05390",
+    "module_key": "numerical",
+    "run_id": "gate1_numerical_sge_7482111",
+    "sanitized_argv": [
+      "<YAX_PYTHON_BIN>",
+      "-I",
+      "yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py",
+      "--canonical-spec",
+      "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json",
+      "--analysis-spec",
+      "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json",
+      "--cells",
+      "<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv",
+      "--cells-receipt",
+      "<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json",
+      "--legacy-engine",
+      "<YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py",
+      "--output-parent",
+      "<YAX_V3_RUN_ROOT>"
+    ],
+    "sanitized_argv_sha256": "de664e3970c3dd7a608f0fa805ea817ac35bfcce395b11ab5dd6c153ebf1b9b0",
+    "scheduler_jobnumber": "7482111",
+    "schema_version": "yax-execution-command-binding-v2",
+    "status": "RUNNER_RECORDED_HASH_CONSISTENT"
+  },
+  "execution_runtime_authentication": {
+    "git_invocation": "<YAX_GIT_BIN>",
+    "git_resolved_executable_sha256": "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e",
+    "git_version": "git version 2.43.7",
+    "ignore_environment": true,
+    "import_affecting_environment_absent": true,
+    "isolated_mode": true,
+    "no_user_site": true,
+    "omp_num_threads": "1",
+    "python_invocation": "<YAX_PYTHON_BIN>",
+    "python_resolved_executable_sha256": "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7",
+    "python_version": "3.13.8",
+    "safe_path": true,
+    "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES"
+  },
+  "finished_at_utc": "2026-09-07T07:09:47.214308+00:00",
+  "git_commit": "1cba225e203a1ef9a945f4c088ec16871439bdd2",
+  "legacy_engine_sha256": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+  "model_count": 11,
+  "output_hashes": {
+    "BOUNDARY_PROFILING.csv": "f38e98c93389a67d7e010d3783950c25037f04020695ae3eacc1620b3131d3b1",
+    "CONVERGENCE_EXISTENCE_REPORT.md": "1e212f3864b1b62cd65e9fb38c6aaf66e13a16bd41718f3b68b28be999a47bd4",
+    "FAMILY_MONTH_BOUNDARY_CELLS.csv": "3c3ca1621e8991b6aca0ee494759361ac623f9040036df237862181adb7d3abe",
+    "MODEL_AUDIT.json": "18869185dfecad9f546bb51609e3bbf51d8c85fdb3fef4f6fd6c218032c4fc74",
+    "MODEL_DIAGNOSTICS.csv": "f865b81c8854b040f57ab3ba2bcfbcf2981f2249280ad3eb8a2b456538a23b4b",
+    "OPTIMIZER_TRAJECTORIES.json": "442b329d703c2a4b20aefc28b0c3a8e03e838e69e117abe9fbb140b05f7c829a",
+    "SOLVER_COMPARISON.csv": "af32638d3ca4d7627776d18e736fc12bd1afa60c33a411b232de1202afc4db6c",
+    "TARGET_PROFILE.csv": "c89a8c9444b134f6e9eeed2ff6b0438dc21e3b65b249237dbed1ae5155ef56e3"
+  },
+  "packages": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "scipy": "1.16.2"
+  },
+  "passed_model_count": 0,
+  "platform": "Linux-4.18.0-553.158.1.el8_10.x86_64-x86_64-with-glibc2.28",
+  "pre_execution_authorization": {
+    "authorization_file_sha256": "1e789a52b707abdd9428368e6724058d88c1819b996126db5ea2100a2dbf9b05",
+    "authorization_git_commit": "1cba225e203a1ef9a945f4c088ec16871439bdd2",
+    "authorization_id": "yaxgate1auth_v1_9e88d9edf03c69bc8622cda60a6c6b417758be7ec0d431f3d47097229fdf0d46",
+    "authorized_implementation_commit": "f6a1f9c2c51455c9d309b1eb49ebf59d9006c9ea",
+    "code_sha256": "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7",
+    "issued_at_utc": "2026-09-07T06:50:54Z",
+    "module_key": "numerical",
+    "not_after_utc": "2026-09-08T05:50:54Z",
+    "not_before_utc": "2026-09-07T06:50:54Z",
+    "schema_version": "yax-gate1-pre-execution-authorization-v1",
+    "source_registry_sha256": "11857cd6b7074f7f8c9da05370d716f54239286fe59b3cdebd45ce34ce007bf1",
+    "status": "AUTHORIZED_FRESH_GATE1_EXECUTION",
+    "typed_spec_id": "yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4",
+    "typed_spec_sha256": "7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca"
+  },
+  "prepublication_revalidation": {
+    "protected_row_level_microdata_reread": false,
+    "residual_window": "bounded same-process interval from final recheck through publication; kernel no-replace is attempted first, while an unsupported-filesystem fallback adds a disclosed bounded noncooperating same-user lstat-to-os.rename collision window; neither interval is claimed eliminated",
+    "state_sha256": "78c44401047f65cd9bb70abef6722514b48ef974b9c67a39b6485e6c07dc5615",
+    "status": "PASS_COMPLETE_PREPUBLICATION_REAUTHENTICATION"
+  },
+  "protected_microdata_read_by_this_program": false,
+  "publication_protocol": {
+    "actual_backend_claimed_before_commit": false,
+    "actual_backend_recording": "attempted in sanitized scheduler stdout after publication commit; stdout failure cannot reverse or invalidate the committed leaf",
+    "fallback_bounded_noncooperating_same_user_toctou": "not eliminated: a noncooperating same-user writer could create an empty target between final lstat and os.rename",
+    "fallback_kernel_no_replace_guarantee": false,
+    "fallback_target_replacement_prevention": "cooperative lock plus immediate absence recheck; not kernel-enforced",
+    "kernel_path": "renameat2(RENAME_NOREPLACE) or renameatx_np(RENAME_EXCL)",
+    "selection_order": [
+      "kernel_atomic_noreplace",
+      "portable_same_parent_atomic_rename_if_filesystem_unsupported"
+    ],
+    "status": "PRECOMMIT_PUBLICATION_METHOD_NOT_YET_OBSERVED",
+    "unsupported_filesystem_fallback": "revalidated exclusive sibling lock, immediate target lstat absence check, then atomic same-parent os.rename"
+  },
+  "python": "3.13.8 (tags/v3.13.8-dirty:a15ae614deb, Oct 28 2025, 13:59:45) [GCC 12.2.0]",
+  "runtime_contract": {
+    "kernel_recorded_not_equality_locked": "4.18.0-553.158.1.el8_10.x86_64",
+    "payload": {
+      "architecture": "x86_64",
+      "libc": {
+        "name": "glibc",
+        "version": "2.28"
+      },
+      "packages": {
+        "numpy": "2.5.1",
+        "pandas": "3.0.3",
+        "pytest": "9.1.1",
+        "scipy": "1.16.2"
+      },
+      "python_compiler": "GCC 12.2.0",
+      "python_implementation": "CPython",
+      "python_version": "3.13.8"
+    },
+    "payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
+  },
+  "schema_version": "yax-numerical-existence-receipt-v1",
+  "started_at_utc": "2026-09-07T06:59:52.759236+00:00",
+  "status": "BLOCKED_ONE_OR_MORE_CORE_TARGETS_NOT_ESTABLISHED",
+  "submitted_design_source_sha256": {
+    "yax/revision/substantive_r3_20260905/dynamics/run_dynamics.py": "df2f54712dd763d2fd747c73ef68f164038e3db0a3a4771846d4bc2b325e8bd2",
+    "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+    "yax/revision/substantive_r3_20260905/within_family/run_within_family.py": "b16916bb3484926f15fd195fee2e5bffe8601f695427f52d08440a8c0b201a71"
+  }
+}

@@ -746,6 +746,18 @@ def _a1_model_is_certified(model: dict[str, Any]) -> bool:
         treatment_basis.get("selected_original_labels")
         if isinstance(treatment_basis, dict) else None
     )
+    selected_columns = (
+        treatment_basis.get("selected_original_columns")
+        if isinstance(treatment_basis, dict) else None
+    )
+    dropped_columns = (
+        treatment_basis.get("dropped_dependent_original_columns")
+        if isinstance(treatment_basis, dict) else None
+    )
+    dropped_labels = (
+        treatment_basis.get("dropped_dependent_original_labels")
+        if isinstance(treatment_basis, dict) else None
+    )
     transformed_labels = (
         {
             f"treatment_basis::{index}::{label}"
@@ -774,7 +786,20 @@ def _a1_model_is_certified(model: dict[str, Any]) -> bool:
             isinstance(label, str) and label for label in original_regressor_labels
         )
         and len(original_rows) == len(original_regressor_labels)
-        and treatment_basis.get("original_columns") == len(original_regressor_labels)
+        and isinstance(selected_columns, list)
+        and isinstance(dropped_columns, list)
+        and isinstance(dropped_labels, list)
+        and all(
+            isinstance(index, int) and not isinstance(index, bool)
+            for index in [*selected_columns, *dropped_columns]
+        )
+        and len(selected_columns) == len(set(selected_columns))
+        and len(dropped_columns) == len(set(dropped_columns))
+        and set(selected_columns).isdisjoint(dropped_columns)
+        and set(selected_columns) | set(dropped_columns)
+        == set(range(len(original_regressor_labels)))
+        and len(selected_columns) == len(selected_labels)
+        and len(dropped_columns) == len(dropped_labels)
         if isinstance(treatment_basis, dict) else False
     ):
         for expected_index, row in enumerate(original_rows):
@@ -783,7 +808,7 @@ def _a1_model_is_certified(model: dict[str, Any]) -> bool:
                 or row.get("original_index") != expected_index
                 or row.get("original_label") != original_regressor_labels[expected_index]
                 or not isinstance(row.get("weights"), list)
-                or len(row["weights"]) != len(original_regressor_labels)
+                or len(row["weights"]) != len(selected_columns)
                 or any(not _finite_number(weight) for weight in row["weights"])
             ):
                 original_labels = []

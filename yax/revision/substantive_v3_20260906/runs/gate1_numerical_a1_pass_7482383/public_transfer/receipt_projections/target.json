@@ -1,0 +1,89 @@
+{
+  "a1_authenticated_reuse": {
+    "parent_producer_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+    "parent_producer_tree": "3ec00fb684ed2ee00bd0b9593644cf53331faa06",
+    "parent_receipt_sha256": "cc87e834db44f2b0d61cb6f473bdf6be14f1901c2bd32c6959cf8e1bc1af4e6e"
+  },
+  "artifact_hashes": {
+    "EXACT_TARGET_AUDIT.json": "7dff9fc89c4a945d12f29947bed42c89ffc1138e102bc87cb85f5e47ffa1eb22",
+    "EXACT_TARGET_AUDIT_REPORT.md": "d7271c1b684813a41b9f9605dfbb7c19e777368a6b644b5717ff54cf21558c42",
+    "ROW_ACCOUNTING.csv": "b9dbd6cc73848e867521ea5f6b095215fb949ae44945a31663db09b6cc941e2b"
+  },
+  "audit_result_id": "yaxtargetaudit_v1_f0d9c4cb99375bcca751d06c846d56c04b401753a4bd5036aebfd59b15eb9204",
+  "authenticated_cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+  "canonical_spec": {
+    "id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+  },
+  "cell_spec": {
+    "id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+    "sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15"
+  },
+  "executed_code_sha256": "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9",
+  "execution_command_binding": {
+    "binding_sha256": "ff560ebb2114d5b6a50a6701173edef6248c0fdfcea7c0c104060ac40074f65f",
+    "module_key": "target",
+    "run_id": "gate1_target_sge_7477105",
+    "sanitized_argv": [
+      "<YAX_PYTHON_BIN>",
+      "-I",
+      "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py",
+      "--repo-root",
+      "<YAX_REPO_ROOT>",
+      "--cells",
+      "<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv",
+      "--cells-receipt",
+      "<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json",
+      "--output-parent",
+      "<YAX_V3_RUN_ROOT>"
+    ],
+    "sanitized_argv_sha256": "e67dde414f1e98c766a398db0fa3e5ca79951291796d82a5cb771cfcb7868859",
+    "scheduler_jobnumber": "7477105",
+    "schema_version": "yax-execution-command-binding-v2",
+    "status": "RUNNER_RECORDED_HASH_CONSISTENT"
+  },
+  "execution_runtime_authentication": {
+    "git_invocation": "<YAX_GIT_BIN>",
+    "git_resolved_executable_sha256": "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e",
+    "git_version": "git version 2.43.7",
+    "ignore_environment": true,
+    "import_affecting_environment_absent": true,
+    "isolated_mode": true,
+    "no_user_site": true,
+    "python_invocation": "<YAX_PYTHON_BIN>",
+    "python_resolved_executable_sha256": "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7",
+    "python_version": "3.13.8",
+    "safe_path": true,
+    "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES"
+  },
+  "generated_at_utc": "2026-09-06T15:45:30.716175Z",
+  "module_key": "target",
+  "pre_execution_authorization": {
+    "authorization_file_sha256": "4a3b9438a2385ca379b791472eb3cf361081bc3b16e0437d1d0296fc3d5953ca",
+    "authorization_git_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+    "authorization_id": "yaxgate1auth_v1_43fcddf8efd4cc01b89261e75bba42e536dff23bc448a9539c8fd24e43a2567a",
+    "authorized_implementation_commit": "98d841b3555ec4e219e7c0b2f30e4ba7ce8b82c1",
+    "code_sha256": "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9",
+    "issued_at_utc": "2026-09-06T15:39:12Z",
+    "module_key": "target",
+    "not_after_utc": "2026-09-07T11:39:12Z",
+    "not_before_utc": "2026-09-06T15:39:12Z",
+    "schema_version": "yax-gate1-pre-execution-authorization-v1",
+    "source_registry_sha256": "11857cd6b7074f7f8c9da05370d716f54239286fe59b3cdebd45ce34ce007bf1",
+    "status": "AUTHORIZED_FRESH_GATE1_EXECUTION",
+    "typed_spec_id": "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b",
+    "typed_spec_sha256": "fa425dce6d75475b6f562aba52898b8e71c7db0269d549f17ef9645720052651"
+  },
+  "schema_version": "yax-gate1-public-receipt-projection-v2",
+  "source_aggregate_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+  "source_receipt_schema": "yax-exact-target-audit-receipt-v1",
+  "source_receipt_sha256": "cc87e834db44f2b0d61cb6f473bdf6be14f1901c2bd32c6959cf8e1bc1af4e6e",
+  "source_receipt_status": "PASS_EXACT_TARGET_AUDIT",
+  "typed_spec": {
+    "id": "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b",
+    "id_pointer": "/target_audit_spec_id",
+    "kind": "target_audit_spec",
+    "sha256": "fa425dce6d75475b6f562aba52898b8e71c7db0269d549f17ef9645720052651",
+    "sha256_pointer": "/target_audit_spec_sha256"
+  }
+}

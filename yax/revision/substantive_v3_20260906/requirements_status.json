@@ -959,8 +959,8 @@
       "depends_on": [
         "N02"
       ],
-      "status": "IMPLEMENTED_UNRUN",
-      "summary": "The original frozen run remains blocked for all 11 models and its diagnostic values remain unvalidated. The owner authorized numerical amendment A1. The first A1 SCC execution retained all 11 dispositions but stopped before solver certification because pinned NumPy 2.5 removed the row_stack alias; no target was certified. A same-operation vstack compatibility correction, pinned-runtime regression test, replacement specification identity, and requirement-level release guard are now implemented. The replacement full-data run has not yet executed.",
+      "status": "RUN_UNVALIDATED",
+      "summary": "The original frozen run and first A1 compatibility attempt remain blocked and preserved. Replacement SCC job 7482383 executed all 11 frozen models under the corrected A1 specification. The runner emitted 11 A1 certificates; the reader-corrected dependency guard independently recomputed all 11 certificates, 20 consumer releases, 9 requirement releases, the three non-model prerequisites, and the pre-outcome map binding. The sanitized transfer passed. Independent post-run review and manuscript/appendix integration remain outstanding, so N03 is RUN_UNVALIDATED rather than VERIFIED.",
       "evidence": [
         {
           "role": "specification",
@@ -1041,6 +1041,41 @@
           "role": "verification_report",
           "path": "numerical_existence/NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md",
           "sha256": "86df32f9659d2533deb0f982ea8911b5c281a73b1cafa3ff26d76323a0f19342"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate1_numerical_a1_pass_7482383/numerical/EXECUTION_RECEIPT.json",
+          "sha256": "84aa54a8b194774cddf814baca8d13520382262373682c3732b1dbd739aa4383"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate1_numerical_a1_pass_7482383/numerical/MODEL_AUDIT.json",
+          "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"
+        },
+        {
+          "role": "scheduler_record",
+          "path": "runs/gate1_numerical_a1_pass_7482383/scheduler/numerical.json",
+          "sha256": "27c79c0c501e189bc4edbc8599996419c7254743113d41a48eb2495dd3bc1457"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate1_numerical_a1_pass_7482383/public_transfer/TRANSFER_VALIDATION.json",
+          "sha256": "26d0fc5a4456a2a63957459b6e0022255dfb8783295bdb8eec90d593b72a3000"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate1_numerical_a1_pass_7482383/DEPENDENCY_RELEASE.json",
+          "sha256": "65db43c62b151ed06846039374ebb523702cd23a3a8465ee1035cbe4b5c43587"
+        },
+        {
+          "role": "verification_report",
+          "path": "reviews/GATE1_NUMERICAL_A1_POSTRUN_GUARD_SCHEMA_CORRECTION.md",
+          "sha256": "5a543add252d729e5df2f1aa3605960126bed441d7ece07b472cdf30526b613d"
+        },
+        {
+          "role": "presentation",
+          "path": "runs/gate1_numerical_a1_pass_7482383/README.md",
+          "sha256": "e642bf335a2f697e0eabb8cce180c8b441603dc89be32bc959b78e0e9cf6a67b"
         }
       ],
       "response_locations": [
@@ -1056,7 +1091,14 @@
         "reviews/GATE1_NUMERICAL_A1_PREEXECUTION_TEAM_REVIEW.md",
         "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_FINAL_REVIEW.md",
         "reviews/GATE1_NUMERICAL_A1_ADVERSARIAL_REVIEW_DISPOSITION.md",
-        "numerical_existence/NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md"
+        "numerical_existence/NUMERICAL_AMENDMENT_A1_COMPATIBILITY_01.md",
+        "runs/gate1_numerical_a1_compat_blocked_7482111/README.md",
+        "runs/gate1_numerical_a1_pass_7482383/README.md",
+        "runs/gate1_numerical_a1_pass_7482383/numerical/MODEL_AUDIT.json",
+        "runs/gate1_numerical_a1_pass_7482383/numerical/SOLVER_COMPARISON.csv",
+        "runs/gate1_numerical_a1_pass_7482383/public_transfer/TRANSFER_VALIDATION.json",
+        "runs/gate1_numerical_a1_pass_7482383/DEPENDENCY_RELEASE.json",
+        "reviews/GATE1_NUMERICAL_A1_POSTRUN_GUARD_SCHEMA_CORRECTION.md"
       ],
       "review": {
         "reviewer": "separate blocked-run review agent on the same execution team",
@@ -1064,10 +1106,10 @@
         "independent": false
       },
       "blocker": {
-        "missing_requirement": "Fresh replacement execution evidence under the compatibility-corrected owner-authorized A1 specification and independent numerical certification at the unchanged thresholds.",
-        "attempts": "The historical 11-model run and its failures remain unchanged. The first A1 execution (SCC job 7482111) emitted all 11 blocked dispositions after a removed NumPy alias stopped the common problem-binding path; its receipt and classifications are preserved and no coefficient is certified. The exact vstack compatibility repair and a regression test with row_stack unavailable are implemented without changing the mathematical operation.",
-        "claim_impact": "No historical or A1 coefficient may yet be reported as a validated confirmatory estimate. Only particular targets that pass the fresh A1 certificate may later release their exact mapped consumers.",
-        "next_step": "Commit and authorize the compatibility-corrected A1 implementation, execute all 11 models on the authenticated retained cells, preserve every disposition, and apply the corrected consumer- and requirement-level guard to the fresh artifacts."
+        "missing_requirement": "Independent post-run review and downstream manuscript/appendix integration.",
+        "attempts": "Replacement SCC job 7482383 completed all 11 models, the corrected guard recomputed all model and requirement releases, and the sanitized evidence transfer passed. The exact aggregate evidence is retained for an independent artifact-only challenge.",
+        "claim_impact": "The numerical prerequisites are candidate-certified, but N03 is not yet marked VERIFIED and no manuscript claim may cite the run as independently reviewed.",
+        "next_step": "Complete the independent post-run numerical/release review, adjudicate any findings, then reconcile N03 and only the downstream requirements whose presentation obligations are actually met."
       },
       "approval": {
         "status": "OWNER_AUTHORIZED_NUMERICAL_AMENDMENT_A1",

@@ -1,0 +1,55 @@
+{
+  "code_hash": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+  "command": "[\"<YAX_PYTHON_BIN>\",\"-I\",\"yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py\",\"--repo-root\",\"<YAX_REPO_ROOT>\",\"--microdata\",\"<INPUT:ipums_cps_extract_9_wide>\",\"--repair-microdata\",\"<INPUT:ipums_cps_extract_11_march_basic_repair>\",\"--output-parent\",\"<YAX_V3_RUN_ROOT>\"]",
+  "dependency_semantics": "Immutable temporal and topological ordering. source_receipt_hash_link_present says only whether the downstream source receipt names that upstream receipt hash; no stronger provenance is implied.",
+  "end_utc": "2026-09-06T15:43:09Z",
+  "exit_code": 0,
+  "mode": "empirical_reestimate",
+  "module_run_fingerprint_algorithm": "yax-gate1-module-run-fingerprint-v3",
+  "module_run_fingerprint_sha256": "07cbe5ba86dab5c0ddb4016c0978eef06465f4f003da6fb4155b28c7ca0d1f16",
+  "normalization_dependencies": [],
+  "numerical_suite_pass": true,
+  "run_id": "gate1_cells_sge_7477104",
+  "scheduler": {
+    "end_utc": "2026-09-06T15:43:09Z",
+    "exit_status": 0,
+    "failed": 0,
+    "hostname": "scc-tb4.scc.bu.edu",
+    "jobnumber": "7477104",
+    "maxvmem": "1.036G",
+    "qacct_export_provenance": {
+      "exporter_code_sha256": "b7c2ed004001afd8c1db9e628db7b266d3be11d88663ea4442d3a9901ef7d00f",
+      "join_rule": "one_delimiter_one_record_exact_jobnumber_nonarray",
+      "qacct_resolved_executable_sha256": "aa8575f51ad1f07673ef862d6dfbe06381ebc53bdb88bb3a0256573ededc37e0",
+      "qacct_version": "OGS/GE 2011.11p1",
+      "role": "scheduler_accounting_export",
+      "status": "RUNNER_RECORDED_BYTE_PINNED_CONSISTENCY"
+    },
+    "qname": "econ",
+    "ru_wallclock_seconds": 42.0,
+    "start_utc": "2026-09-06T15:42:27Z"
+  },
+  "schema_version": "yax-normalized-run-receipt-v1",
+  "scope": "Execution-receipt normalization, public projection, and byte provenance only; no result, ledger integration, or scientific claim is validated.",
+  "source_bindings": {
+    "execution_command_binding_sha256": "a8650037a8d00eb2b975d5b6a6816e988bb079cca6184785c15e5da1da78d572",
+    "input_receipt": "cells/EXECUTION_RECEIPT.json",
+    "module_receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+    "normalizer_git_commit": "b7c9e1c2d165c88d185cf85559f83b6329204ceb",
+    "normalizer_git_tree": "dbd73721209d0a559ec22fbfda5ce95139dfc89c",
+    "normalizer_source_sha256": "fc05ff81e8959255d5c438ff9d0f554b72c7d40ce80f5882b335e65f0e603763",
+    "public_projection": "receipt_projections/cells.json",
+    "public_projection_sha256": "387671b7bbc6e6a82dfce1edf04b76f4797627ef47f3329ce989262a0f4d163e",
+    "scheduler_record": "scheduler/cells.json",
+    "scheduler_record_sha256": "6e57fbd5d56fe03dee13864059680d01c8c5eb216138d4cb1cc19daafa1feb4c"
+  },
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "start_utc": "2026-09-06T15:42:27Z",
+  "time_source": "scheduler_record",
+  "transfer_mode": "a1_authenticated_parent_reuse",
+  "typed_spec": {
+    "id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+    "kind": "cell_build_spec",
+    "sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15"
+  }
+}

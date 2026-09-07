@@ -367,8 +367,11 @@ class TargetDependencyGuardTests(unittest.TestCase):
                 "original_coefficient_functionals_in_current_basis": original_rows,
             },
             "treatment_basis": {
+                "status": "FULL_ORIGINAL_TREATMENT_RANK",
+                "selected_original_columns": list(range(len(labels))),
                 "selected_original_labels": labels,
-                "original_columns": len(labels),
+                "dropped_dependent_original_columns": [],
+                "dropped_dependent_original_labels": [],
             },
             "a1_certification": {
                 "status": guard.A1_CERTIFICATE_STATUS,
@@ -601,6 +604,11 @@ class TargetDependencyGuardTests(unittest.TestCase):
             "MODEL_AUDIT.json", ledger,
         )
 
+    def test_runner_emitted_basis_without_legacy_count_certifies(self):
+        for model in self.models:
+            self.assertNotIn("original_columns", model["treatment_basis"])
+            self.assertTrue(guard._a1_model_is_certified(model))
+
     def test_all_models_release_exact_consumers(self):
         result = self.evaluate()
         self.assertEqual(result["status"], "PASS_ALL_11_MODELS_CERTIFIED")
@@ -627,6 +635,41 @@ class TargetDependencyGuardTests(unittest.TestCase):
             guard.DependencyError, "full declared model prerequisite set",
         ):
             guard.validate_target_dependency_map(weakened, self.root)
+
+    def test_requirement_contract_malformed_unknown_and_orphan_cases_fail_closed(self):
+        cases = []
+
+        unknown_requirement = copy.deepcopy(self.target_map)
+        unknown_requirement["consumers"][0]["downstream_requirement_ids"] = ["ZZ9"]
+        cases.append(("unknown_requirement", unknown_requirement))
+
+        orphan_requirement = copy.deepcopy(self.target_map)
+        orphan_requirement["downstream_requirement_model_contract"]["Q99"] = ["pooled"]
+        cases.append(("orphan_requirement", orphan_requirement))
+
+        missing_contract = copy.deepcopy(self.target_map)
+        del missing_contract["downstream_requirement_model_contract"]
+        cases.append(("missing_contract", missing_contract))
+
+        empty_contract = copy.deepcopy(self.target_map)
+        empty_contract["downstream_requirement_model_contract"] = {}
+        cases.append(("empty_contract", empty_contract))
+
+        for label, value in (
+            ("contract_value_not_list", "pooled"),
+            ("contract_value_empty", []),
+            ("contract_value_duplicate", ["pooled", "pooled"]),
+            ("contract_value_non_string", [1]),
+            ("contract_value_unknown_model", ["not_a_model"]),
+        ):
+            malformed = copy.deepcopy(self.target_map)
+            malformed["downstream_requirement_model_contract"]["Y01"] = value
+            cases.append((label, malformed))
+
+        for label, document in cases:
+            with self.subTest(label=label):
+                with self.assertRaises(guard.DependencyError):
+                    guard.validate_target_dependency_map(document, self.root)
 
     def test_requirement_release_blocks_when_any_contract_model_is_blocked(self):
         row = next(

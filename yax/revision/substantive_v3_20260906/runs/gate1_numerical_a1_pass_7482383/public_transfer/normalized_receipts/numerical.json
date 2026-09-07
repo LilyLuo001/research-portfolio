@@ -1,0 +1,70 @@
+{
+  "code_hash": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a",
+  "command": "[\"<YAX_PYTHON_BIN>\",\"-I\",\"yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py\",\"--canonical-spec\",\"<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json\",\"--analysis-spec\",\"<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json\",\"--cells\",\"<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv\",\"--cells-receipt\",\"<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json\",\"--legacy-engine\",\"<YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py\",\"--output-parent\",\"<YAX_V3_RUN_ROOT>\"]",
+  "dependency_semantics": "Immutable temporal and topological ordering. source_receipt_hash_link_present says only whether the downstream source receipt names that upstream receipt hash; no stronger provenance is implied.",
+  "end_utc": "2026-09-07T08:15:14.436839Z",
+  "exit_code": 0,
+  "mode": "numerical_analysis",
+  "module_run_fingerprint_algorithm": "yax-gate1-module-run-fingerprint-v3",
+  "module_run_fingerprint_sha256": "2092c49899af93002033df6487f5f9fde2604bc3a8ef17380035672ba02d63f0",
+  "normalization_dependencies": [
+    {
+      "module_key": "cells",
+      "module_run_fingerprint_sha256": "07cbe5ba86dab5c0ddb4016c0978eef06465f4f003da6fb4155b28c7ca0d1f16",
+      "relationship": "source_receipt_hash_link_and_temporal_dependency",
+      "source_receipt_hash_link_present": true,
+      "typed_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b"
+    },
+    {
+      "module_key": "target",
+      "module_run_fingerprint_sha256": "610131f493f29aa29795500a8ed10242586c89b3caca720982ac0a708d6e2d87",
+      "relationship": "temporal_and_topological_dependency_only",
+      "source_receipt_hash_link_present": false,
+      "typed_spec_id": "yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b"
+    }
+  ],
+  "numerical_suite_pass": true,
+  "run_id": "gate1_numerical_sge_7482383",
+  "scheduler": {
+    "end_utc": "2026-09-07T08:15:22Z",
+    "exit_status": 0,
+    "failed": 0,
+    "hostname": "scc-wh3.scc.bu.edu",
+    "jobnumber": "7482383",
+    "maxvmem": "2.246G",
+    "qacct_export_provenance": {
+      "exporter_code_sha256": "b7c2ed004001afd8c1db9e628db7b266d3be11d88663ea4442d3a9901ef7d00f",
+      "join_rule": "one_delimiter_one_record_exact_jobnumber_nonarray",
+      "qacct_resolved_executable_sha256": "aa8575f51ad1f07673ef862d6dfbe06381ebc53bdb88bb3a0256573ededc37e0",
+      "qacct_version": "OGS/GE 2011.11p1",
+      "role": "scheduler_accounting_export",
+      "status": "RUNNER_RECORDED_BYTE_PINNED_CONSISTENCY"
+    },
+    "qname": "w",
+    "ru_wallclock_seconds": 1316.0,
+    "start_utc": "2026-09-07T07:53:26Z"
+  },
+  "schema_version": "yax-normalized-run-receipt-v1",
+  "scope": "Execution-receipt normalization, public projection, and byte provenance only; no result, ledger integration, or scientific claim is validated.",
+  "source_bindings": {
+    "execution_command_binding_sha256": "6556133694d28256dac6836ff923015f3b7c42556a9611b3aaccfcdcc0c6d8b2",
+    "input_receipt": "numerical/EXECUTION_RECEIPT.json",
+    "module_receipt_sha256": "84aa54a8b194774cddf814baca8d13520382262373682c3732b1dbd739aa4383",
+    "normalizer_git_commit": "b7c9e1c2d165c88d185cf85559f83b6329204ceb",
+    "normalizer_git_tree": "dbd73721209d0a559ec22fbfda5ce95139dfc89c",
+    "normalizer_source_sha256": "fc05ff81e8959255d5c438ff9d0f554b72c7d40ce80f5882b335e65f0e603763",
+    "public_projection": "receipt_projections/numerical.json",
+    "public_projection_sha256": "54402c0fd7ec328e83d5e7ef6f57c16793e8741cfd4f065fdec9bca412cb6288",
+    "scheduler_record": "scheduler/numerical.json",
+    "scheduler_record_sha256": "27c79c0c501e189bc4edbc8599996419c7254743113d41a48eb2495dd3bc1457"
+  },
+  "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "start_utc": "2026-09-07T07:53:37.263730Z",
+  "time_source": "module_receipt",
+  "transfer_mode": "a1_authenticated_parent_reuse",
+  "typed_spec": {
+    "id": "yaxnumspec_v1_5989d8d88e772711ff47c43011e9f90f4764dc8d89230ef5486b6687f59dc05c",
+    "kind": "numerical_analysis_spec",
+    "sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e"
+  }
+}
