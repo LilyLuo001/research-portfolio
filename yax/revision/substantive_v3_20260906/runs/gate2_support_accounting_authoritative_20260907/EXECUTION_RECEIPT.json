@@ -1,0 +1,63 @@
+{
+  "authenticated_aggregate_cells_opened": true,
+  "authenticated_inputs": {
+    "canonical_spec": {
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    "cells": {
+      "sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717"
+    },
+    "cells_receipt": {
+      "sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a"
+    },
+    "membership": {
+      "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+    },
+    "model_audit": {
+      "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"
+    }
+  },
+  "code_sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382",
+  "direct_tail_family_count": 4,
+  "family_composition_status": "PASS_Q1_Q5_FAMILY_COMPOSITION_DECOMPOSITIONS",
+  "inference_executed": false,
+  "observed_month_count": 114,
+  "occupation_count": 468,
+  "output_hashes": {
+    "DIRECT_TAIL_MEMBERSHIP.csv": "2bc3e298c713433c2efbaa74d7162cc66e317bf7581fdbee50ccca34efe3e1c1",
+    "FAMILY_COMPOSITION_DECOMPOSITION.csv": "2b4ec70662576b29dc8aa15a1d997baa485ee7ee8fdcdd5887aa497fa5303bab",
+    "FAMILY_COMPOSITION_SUMMARY.json": "f098d52723f9745be81fc6e7535f093f4e7354cdbf34b0a59436f614c370fb2e",
+    "FAMILY_SUPPORT_SUMMARY.csv": "b05996df62503285ee33ffae6605ac66f8696823aba1ebd141d8639b164acae7",
+    "LOG_SHAPLEY_DECOMPOSITION.json": "1efc0336e1612549e00c229ae329470b8f75146df440cd7fba7f92258a622dd6",
+    "MONTHLY_QUINTILE_STOCKS.csv": "8ce605f4de48b61bcf30207ec13f634dfa5f813edbd22fcfdfb7adb6e96662c6",
+    "PERIOD_STOCKS.csv": "b1a4d55666b318037a0889b6addea01d1a9a952aae308b81e512dcb27fea63d9",
+    "SUPPORT_EDGES.csv": "5831022f3c0e14cc5e7d5c593da46ceb73ac80f0428e2d072952566721ba359a",
+    "SUPPORT_GRAPH.json": "c6ecc85ba32ca4899889d2208c20f801f0c53529b9e5d71c42d447cf374cd2ec",
+    "SUPPORT_MATRIX.csv": "1a62bed6fc5f2f1302eda3e7e00539af60ba88753539686dfed695c4d3058cbd",
+    "TAIL_LOG_STOCK_ACCOUNTING.json": "433259ff238078db153da01d1a610185253f1c3af0505ad6a42f06e6614e5145",
+    "ZERO_DENOMINATOR_AUDIT.json": "8c8882466c33295e7319e3e11cbe78728b0d7595b7a941f4380c64c5e1904b36"
+  },
+  "protected_row_level_microdata_opened": false,
+  "result_ids": {
+    "DIRECT_TAIL_MEMBERSHIP.csv": "yaxresult_v1_eaccaf1f0dc00d834d81d3565b27647fd1afb048ce74bf2bbd25c987ae87e5a7",
+    "FAMILY_COMPOSITION_DECOMPOSITION.csv": "yaxresult_v1_77b9bd5a79e8106177849f9583eeb23f7bb1d20def8c41938fb16e348c2a552d",
+    "FAMILY_COMPOSITION_SUMMARY.json": "yaxresult_v1_6bac5ce5069a5387481f59a2dfbffa04582f9c03480b542dd3318e70e44588eb",
+    "FAMILY_SUPPORT_SUMMARY.csv": "yaxresult_v1_cebc1996ce65e5093cdeecd2757586f0911e0a1070ca82a73229a5bc7645bc4a",
+    "LOG_SHAPLEY_DECOMPOSITION.json": "yaxresult_v1_cf05c2ae5055012acc97a556c5ced720b7732ff434fda41e4a268e5bf5c3a9a3",
+    "MONTHLY_QUINTILE_STOCKS.csv": "yaxresult_v1_2f01ccff5fb8030718d8d78a63836149d0a44f5509decf8a9a22f7107c71d0b9",
+    "PERIOD_STOCKS.csv": "yaxresult_v1_65073541d0b289e2ea6efb55a19ee896cba6995d9902c39000c3a255061b0335",
+    "SUPPORT_EDGES.csv": "yaxresult_v1_3adbe7666ee56131a8ac5feeef20dd101d55433178f47736d6c6ebc228015851",
+    "SUPPORT_GRAPH.json": "yaxresult_v1_c12814833331e32cb5ef8edf38ffdee0ca5f424710b38494f1fe2e4a10529df2",
+    "SUPPORT_MATRIX.csv": "yaxresult_v1_eb2125ebc43591aa6bd835ac113c91fedafd9d52759b9a3776e895176af095e1",
+    "TAIL_LOG_STOCK_ACCOUNTING.json": "yaxresult_v1_3ca262b44bdcd3873fb268fe1411265aeac655b0dc593183ed93323b81099cf6",
+    "ZERO_DENOMINATOR_AUDIT.json": "yaxresult_v1_e72e011cfa5aabd86ebdb3810f4f0a42c2e37ca52dccdf2713b8bf01501049d7"
+  },
+  "run_id": "gate2_support_accounting_authoritative_20260907",
+  "schema_version": "yax-gate2-support-accounting-receipt-v1",
+  "spec_id": "yaxgate2sa_v1_6069f368581e958805977c30572cce09f6fabe8f6d0da70505682e68f8cdca5f",
+  "spec_sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5",
+  "status": "PASS_GATE2_SUPPORT_AND_ACCOUNTING",
+  "support_graph_connected": true,
+  "support_matrix_rows": 110,
+  "tail_log_identity_status": "PASS_EXACT_TAIL_LOG_STOCK_IDENTITY"
+}

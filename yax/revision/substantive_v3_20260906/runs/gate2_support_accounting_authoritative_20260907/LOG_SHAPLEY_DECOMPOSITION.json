@@ -1,0 +1,49 @@
+{
+  "q5_minus_q1": {
+    "boundary_mass_component_q5_minus_q1": 0.0,
+    "closure_residual": 0.0,
+    "log_ratio_change_q5_minus_q1": -0.1581148440303377,
+    "older_family_weight_component_q5_minus_q1": -0.028793543815389788,
+    "within_family_ratio_component_q5_minus_q1": -0.12932130021494792
+  },
+  "quintiles": {
+    "Q1": {
+      "boundary_mass_component": 0.0,
+      "closure_residual": 0.0,
+      "hybrid_log_values": {
+        "000": -2.0994873093275346,
+        "001": -2.0994873093275346,
+        "010": -1.9981000922681984,
+        "011": -1.9981000922681984,
+        "100": -2.087880725492101,
+        "101": -2.087880725492101,
+        "110": -1.987680010678628,
+        "111": -1.987680010678628
+      },
+      "log_ratio_change": 0.11180729864890648,
+      "older_family_weight_component": 0.011013332712502044,
+      "status": "PASS_EXACT_THREE_FACTOR_LOG_SHAPLEY",
+      "within_family_ratio_component": 0.10079396593640444
+    },
+    "Q5": {
+      "boundary_mass_component": 0.0,
+      "closure_residual": 0.0,
+      "hybrid_log_values": {
+        "000": -2.379729325185086,
+        "001": -2.379729325185086,
+        "010": -2.4060478521998263,
+        "011": -2.4060478521998263,
+        "100": -2.3953007290241706,
+        "101": -2.3953007290241706,
+        "110": -2.4260368705665174,
+        "111": -2.4260368705665174
+      },
+      "log_ratio_change": -0.046307545381431225,
+      "older_family_weight_component": -0.017780211102887744,
+      "status": "PASS_EXACT_THREE_FACTOR_LOG_SHAPLEY",
+      "within_family_ratio_component": -0.02852733427854348
+    }
+  },
+  "status": "PASS_Q1_Q5_EXACT_LOG_SHAPLEY_DECOMPOSITIONS",
+  "units": "log change in the young-to-older stock ratio; exact descriptive decomposition"
+}

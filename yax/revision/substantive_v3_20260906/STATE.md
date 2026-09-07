@@ -17,6 +17,10 @@ Updated: 2026-09-07 Asia/Shanghai
   `runs/gate1_numerical_a1_compat_blocked_7482111/`
 - Candidate-passing A1 replacement run:
   `runs/gate1_numerical_a1_pass_7482383/`
+- Authoritative Gate 2 support/accounting run:
+  `runs/gate2_support_accounting_authoritative_20260907/`
+- Gate 2 validation and findings:
+  `gate2/evidence/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -80,6 +84,18 @@ Updated: 2026-09-07 Asia/Shanghai
   are independently certified. Dependent Gate 2 units named as `RELEASED` in
   `runs/gate1_numerical_a1_pass_7482383/DEPENDENCY_RELEASE.json` may now run;
   no unreleased or presentation claim is implied.
+- The first Gate 2 support/accounting execution was retained outside the
+  repository as provisional because its receipt lacked artifact-level result
+  IDs. Its scientific values were not retrofitted or cited.
+- A distinct authoritative Gate 2 execution ran directly in a fresh clean SCC
+  clone at commit `9d49bba5a931b4d6c62bf41c81251f922b57c40e`. Its receipt authenticates 12
+  aggregate-only result artifacts and their result IDs. The signed run package
+  contains exactly those 12 artifacts plus the receipt; later validation and
+  findings documents are kept separately under `gate2/evidence/`.
+- Separate-agent artifact review found no P1 or P2 defect in the authoritative
+  package. S01, S02, D01, D03, and D04 now have validated point/support evidence
+  but remain `RUN_UNVALIDATED` pending their outstanding inference and
+  manuscript/appendix presentation checks.
 
 All 11 A1 numerical targets are now independently artifact-reviewed, but no V3
 coefficient is yet manuscript-ready. Interpretation and presentation remain
@@ -116,12 +132,15 @@ selective subset.
 The A1 execution, independent audit, finding disposition, and remote push are
 complete. The original and compatibility-blocked runs remain preserved.
 
-1. Specify Gate 2 from the canonical contract and exact released targets,
-   beginning with the support matrix and common-profile restrictions.
-2. Implement the full family-by-quintile support/accounting objects before
-   heterogeneous coefficient interpretation.
-3. Execute only target consumers and requirement groups marked `RELEASED` in
-   `DEPENDENCY_RELEASE.json`; keep manuscript status distinct from numerical
+1. Complete Gate 2 support inference and heterogeneous pairwise contrasts
+   (S03, S04, S06, S07) from the authenticated fixed-support contract; S05
+   requires a separate broader-beta aggregate producer without Webb.
+2. Complete the D02 single-age identification audit and the remaining D05--D07
+   decomposition/inference work without relabeling exact stock accounting as a
+   regression coefficient.
+3. Execute the dynamic reconciliation core (Y01--Y05) from the four certified
+   static/dynamic models. Keep the onset grid and through-2024 comparisons
+   partial until their additional models receive same-objective numerical
    certification.
-4. Integrate and validate the numerical-existence evidence in the manuscript
-   and appendix before changing N01--N03 to `VERIFIED`.
+4. Integrate and validate all released evidence in the manuscript and appendix
+   before changing any `RUN_UNVALIDATED` requirement to `VERIFIED`.

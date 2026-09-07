@@ -1,0 +1,29 @@
+{
+  "D_older": 0.04833052969506634,
+  "D_relative": -0.15811484403033707,
+  "D_young": -0.10978431433527074,
+  "accounting_minus_grouped_binomial": {
+    "family_month": -0.13643989201209017,
+    "pooled": -0.026005393238146657
+  },
+  "certified_grouped_binomial_targets": {
+    "family_month": -0.021674952018246887,
+    "pooled": -0.1321094507921904
+  },
+  "closure_absolute_tolerance": 1e-10,
+  "closure_residual": -2.498001805406602e-16,
+  "interpretation": "This exact aggregate identity is not automatically the grouped-binomial regression coefficient.",
+  "ratio_identity_value": -0.15811484403033682,
+  "status": "PASS_EXACT_TAIL_LOG_STOCK_IDENTITY",
+  "stocks": {
+    "N_older_q1_post": 21198291.63829524,
+    "N_older_q1_pre": 21141067.702440556,
+    "N_older_q5_post": 22236651.866709523,
+    "N_older_q5_pre": 21130305.14612295,
+    "N_young_q1_post": 2904439.9535761904,
+    "N_young_q1_pre": 2590187.264786513,
+    "N_young_q5_post": 1965418.189811905,
+    "N_young_q5_pre": 1956151.3534969003
+  },
+  "temporal_weighting": "equal observed calendar-month averages within period"
+}

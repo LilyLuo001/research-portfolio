@@ -1206,11 +1206,54 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative aggregate-only Gate 2 run produced the complete fixed-support 22-family by 5-quintile matrix for 468 occupations, including occupation counts and explicitly labeled national, within-family, and within-quintile preperiod stock shares. Artifact integrity is validated, but main-text table integration and presentation review remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/SUPPORT_ACCOUNTING_SPEC.json",
+          "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+        },
+        {
+          "role": "code",
+          "path": "gate2/run_support_accounting.py",
+          "sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/EXECUTION_RECEIPT.json",
+          "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/SUPPORT_MATRIX.csv",
+          "sha256": "1a62bed6fc5f2f1302eda3e7e00539af60ba88753539686dfed695c4d3058cbd"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_VALIDATION_REPORT.json",
+          "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md",
+          "sha256": "c26743756569202b27ef8bbcc2f633252019025a73846dfbb562b28e4e923930"
+        },
+        {
+          "role": "independent_review",
+          "path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+          "sha256": "5611975cbdba7ba380c56a4364dbd193737e3b493ec80a62dc19524083ea6c7b"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_accounting_authoritative_20260907/SUPPORT_MATRIX.csv",
+        "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "separate-agent read-only artifact challenge within the execution team",
+        "report_path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -1243,11 +1286,61 @@
       "depends_on": [
         "S01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run maps every represented quintile-pair edge, names the occupations in each family-edge, and identifies 29 direct Q1-Q5 occupations in families 27, 29, 31, and 41. The five-node support topology is connected with incidence rank four. The output explicitly states that topology is not a full regression information or finite-estimability certificate and that the common-profile coefficient is not a family-average of direct tail effects. Manuscript integration remains outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/SUPPORT_ACCOUNTING_SPEC.json",
+          "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+        },
+        {
+          "role": "code",
+          "path": "gate2/run_support_accounting.py",
+          "sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/EXECUTION_RECEIPT.json",
+          "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/SUPPORT_GRAPH.json",
+          "sha256": "c6ecc85ba32ca4899889d2208c20f801f0c53529b9e5d71c42d447cf374cd2ec"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/DIRECT_TAIL_MEMBERSHIP.csv",
+          "sha256": "2bc3e298c713433c2efbaa74d7162cc66e317bf7581fdbee50ccca34efe3e1c1"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_VALIDATION_REPORT.json",
+          "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md",
+          "sha256": "c26743756569202b27ef8bbcc2f633252019025a73846dfbb562b28e4e923930"
+        },
+        {
+          "role": "independent_review",
+          "path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+          "sha256": "5611975cbdba7ba380c56a4364dbd193737e3b493ec80a62dc19524083ea6c7b"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_accounting_authoritative_20260907/SUPPORT_GRAPH.json",
+        "runs/gate2_support_accounting_authoritative_20260907/SUPPORT_EDGES.csv",
+        "runs/gate2_support_accounting_authoritative_20260907/DIRECT_TAIL_MEMBERSHIP.csv",
+        "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "separate-agent read-only artifact challenge within the execution team",
+        "report_path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -1464,11 +1557,55 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative aggregate-only run computes period-average Q1/Q5 stocks on common fixed support and equal observed-month weights. It obtains D_young=-0.109784, D_older=0.048331, and D_relative=-0.158115; D_relative=D_young-D_older closes to 2.50e-16. The output labels the exact stock identity as distinct from the separately certified grouped-binomial targets. Sampling inference and manuscript integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/SUPPORT_ACCOUNTING_SPEC.json",
+          "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+        },
+        {
+          "role": "code",
+          "path": "gate2/run_support_accounting.py",
+          "sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/EXECUTION_RECEIPT.json",
+          "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/TAIL_LOG_STOCK_ACCOUNTING.json",
+          "sha256": "433259ff238078db153da01d1a610185253f1c3af0505ad6a42f06e6614e5145"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_VALIDATION_REPORT.json",
+          "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md",
+          "sha256": "c26743756569202b27ef8bbcc2f633252019025a73846dfbb562b28e4e923930"
+        },
+        {
+          "role": "independent_review",
+          "path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+          "sha256": "5611975cbdba7ba380c56a4364dbd193737e3b493ec80a62dc19524083ea6c7b"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_accounting_authoritative_20260907/PERIOD_STOCKS.csv",
+        "runs/gate2_support_accounting_authoritative_20260907/TAIL_LOG_STOCK_ACCOUNTING.json",
+        "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "separate-agent read-only artifact challenge within the execution team",
+        "report_path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -1537,11 +1674,61 @@
       "depends_on": [
         "D01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run reports separate exact level-midpoint and log-Shapley decompositions. On the log scale, the Q5-minus-Q1 relative-stock change of -0.158115 splits into -0.129321 from within-family ratio changes and -0.028794 from changing older-family weights, with zero observed boundary contribution and exact closure. These are descriptive accounting components, not causal shares. Paired uncertainty and manuscript integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/SUPPORT_ACCOUNTING_SPEC.json",
+          "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+        },
+        {
+          "role": "code",
+          "path": "gate2/run_support_accounting.py",
+          "sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/EXECUTION_RECEIPT.json",
+          "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/FAMILY_COMPOSITION_SUMMARY.json",
+          "sha256": "f098d52723f9745be81fc6e7535f093f4e7354cdbf34b0a59436f614c370fb2e"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/LOG_SHAPLEY_DECOMPOSITION.json",
+          "sha256": "1efc0336e1612549e00c229ae329470b8f75146df440cd7fba7f92258a622dd6"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_VALIDATION_REPORT.json",
+          "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md",
+          "sha256": "c26743756569202b27ef8bbcc2f633252019025a73846dfbb562b28e4e923930"
+        },
+        {
+          "role": "independent_review",
+          "path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+          "sha256": "5611975cbdba7ba380c56a4364dbd193737e3b493ec80a62dc19524083ea6c7b"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_accounting_authoritative_20260907/FAMILY_COMPOSITION_DECOMPOSITION.csv",
+        "runs/gate2_support_accounting_authoritative_20260907/FAMILY_COMPOSITION_SUMMARY.json",
+        "runs/gate2_support_accounting_authoritative_20260907/LOG_SHAPLEY_DECOMPOSITION.json",
+        "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "separate-agent read-only artifact challenge within the execution team",
+        "report_path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -1572,11 +1759,56 @@
       "depends_on": [
         "D03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run classifies all 88 family-tail-period denominator cells before division: 52 valid positive cells and 36 structural absences, with no undefined active denominator in the observed data. The implemented boundary-mass rule preserves young stock whenever an older denominator is zero, uses no pseudocount, and is covered by an asymmetric adversarial log-Shapley test. Manuscript integration remains outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/SUPPORT_ACCOUNTING_SPEC.json",
+          "sha256": "1c2c9a41a475204d730c618363953f6e763670eb4c252cf48908a22f2cfaa8c5"
+        },
+        {
+          "role": "code",
+          "path": "gate2/run_support_accounting.py",
+          "sha256": "3bbc4b2c6fe234d2cb96427747badd78855e2a365d929a4972bf6fdae137b382"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/EXECUTION_RECEIPT.json",
+          "sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_accounting_authoritative_20260907/ZERO_DENOMINATOR_AUDIT.json",
+          "sha256": "8c8882466c33295e7319e3e11cbe78728b0d7595b7a941f4380c64c5e1904b36"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_VALIDATION_REPORT.json",
+          "sha256": "82ba6c825a899e6859fcd16b1172f7ef939af3c5ecb7bdeaa08e9e5cd4b51715"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md",
+          "sha256": "c26743756569202b27ef8bbcc2f633252019025a73846dfbb562b28e4e923930"
+        },
+        {
+          "role": "independent_review",
+          "path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+          "sha256": "5611975cbdba7ba380c56a4364dbd193737e3b493ec80a62dc19524083ea6c7b"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_accounting_authoritative_20260907/ZERO_DENOMINATOR_AUDIT.json",
+        "runs/gate2_support_accounting_authoritative_20260907/FAMILY_COMPOSITION_SUMMARY.json",
+        "runs/gate2_support_accounting_authoritative_20260907/LOG_SHAPLEY_DECOMPOSITION.json",
+        "gate2/evidence/SUPPORT_ACCOUNTING_FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "separate-agent read-only artifact challenge within the execution team",
+        "report_path": "reviews/GATE2_SUPPORT_ACCOUNTING_AUTHORITATIVE_REVIEW.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [

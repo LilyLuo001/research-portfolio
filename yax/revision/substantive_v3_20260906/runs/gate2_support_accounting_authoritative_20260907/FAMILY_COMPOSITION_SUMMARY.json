@@ -1,0 +1,46 @@
+{
+  "formula": "delta R_q = sum_g mean(s_gq) delta R_gq + sum_g mean(R_gq) delta s_gq",
+  "q5_minus_q1": {
+    "boundary_mass_component_q5_minus_q1": 0.0,
+    "closure_residual": -3.469446951953614e-18,
+    "national_level_ratio_change_q5_minus_q1": -0.018682904692371563,
+    "older_family_weight_component_q5_minus_q1": -0.003032744368201279,
+    "within_family_ratio_component_q5_minus_q1": -0.01565016032417028
+  },
+  "quintiles": {
+    "Q1": {
+      "boundary_mass_change_component": 0.0,
+      "boundary_mass_post": 0.0,
+      "boundary_mass_pre": 0.0,
+      "closure_absolute_tolerance": 1e-10,
+      "closure_residual": 1.5178830414797062e-18,
+      "common_positive_denominator_family_count": 14,
+      "fixed_support_family_count": 14,
+      "national_level_ratio_change": 0.014493698910608088,
+      "national_ratio_post": 0.13701292552883124,
+      "national_ratio_pre": 0.12251922661822315,
+      "older_family_weight_change_component": 0.0014252937394808216,
+      "status": "PASS_EXACT_SYMMETRIC_LEVEL_RATIO_DECOMPOSITION",
+      "units": "level change in the national young/older stock ratio; not log points and not a causal share",
+      "within_family_ratio_change_component": 0.013068405171127265
+    },
+    "Q5": {
+      "boundary_mass_change_component": 0.0,
+      "boundary_mass_post": 0.0,
+      "boundary_mass_pre": 0.0,
+      "closure_absolute_tolerance": 1e-10,
+      "closure_residual": -8.673617379884035e-19,
+      "common_positive_denominator_family_count": 12,
+      "fixed_support_family_count": 12,
+      "national_level_ratio_change": -0.004189205781763475,
+      "national_ratio_post": 0.08838642622967582,
+      "national_ratio_pre": 0.0925756320114393,
+      "older_family_weight_change_component": -0.0016074506287204575,
+      "status": "PASS_EXACT_SYMMETRIC_LEVEL_RATIO_DECOMPOSITION",
+      "units": "level change in the national young/older stock ratio; not log points and not a causal share",
+      "within_family_ratio_change_component": -0.0025817551530430164
+    }
+  },
+  "status": "PASS_Q1_Q5_FAMILY_COMPOSITION_DECOMPOSITIONS",
+  "zero_denominator_policy": "All family-quintile-period cells are classified. Common-positive families enter the ratio terms; all remaining young stock is retained as boundary mass. No undefined ratio is assigned zero and no stock is dropped."
+}

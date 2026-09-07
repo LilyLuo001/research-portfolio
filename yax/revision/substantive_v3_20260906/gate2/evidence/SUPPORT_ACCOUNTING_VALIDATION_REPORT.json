@@ -1,0 +1,35 @@
+{
+  "schema_version": "yax-gate2-support-accounting-validation-v1",
+  "status": "PASS_AGGREGATE_ARTIFACT_VALIDATION_NOT_MANUSCRIPT_VALIDATION",
+  "run_id": "gate2_support_accounting_authoritative_20260907",
+  "execution_commit": "9d49bba5a931b4d6c62bf41c81251f922b57c40e",
+  "spec_id": "yaxgate2sa_v1_6069f368581e958805977c30572cce09f6fabe8f6d0da70505682e68f8cdca5f",
+  "execution_receipt_sha256": "5c39aaedfe33182a578a21c63047bef6c548be53c31b4ca682ca2246d165e9e1",
+  "checks": {
+    "receipt_status_and_schema_verified": true,
+    "all_12_output_sha256_values_recomputed": true,
+    "all_12_result_ids_independently_recomputed": true,
+    "spec_and_runner_hashes_match_receipt": true,
+    "occupation_count_equals_468": true,
+    "observed_month_count_equals_114": true,
+    "support_matrix_is_complete_22_by_5": true,
+    "support_topology_is_connected_with_incidence_rank_4": true,
+    "all_10_quintile_pair_edges_are_represented": true,
+    "direct_tail_support_is_29_occupations_in_families_27_29_31_41": true,
+    "tail_log_stock_identity_recomputed": true,
+    "level_midpoint_decomposition_recomputed": true,
+    "log_shapley_decomposition_and_all_hybrid_endpoints_recomputed": true,
+    "zero_denominators_classified_without_imputation": true,
+    "no_private_path_or_credential_marker_found": true,
+    "no_occupation_month_cell_artifact_published": true
+  },
+  "scope": {
+    "protected_row_level_microdata_opened_by_gate2": false,
+    "sampling_inference_executed": false,
+    "graph_topology_certifies_regression_estimability": false,
+    "requirements_advanced": ["S01", "S02", "D01", "D03", "D04"],
+    "requirements_verified": [],
+    "reason_not_verified": "paired uncertainty and manuscript/appendix integration remain outstanding"
+  },
+  "test_file": "../../tests/test_gate2_support_accounting_evidence.py"
+}
