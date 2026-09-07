@@ -1,0 +1,207 @@
+{
+  "schema_version": "yax-target-dependency-map-v1",
+  "authorization": {
+    "path": "revision_inputs/GATE1_NUMERICAL_ADJUDICATION_A1.md",
+    "sha256": "ff4963e66940741abc8a4eda87fd9050c51cae5cedfabb3ae1ab42c21f5836a9"
+  },
+  "scope": "This narrow map controls only reuse of the eleven frozen Gate-1 numerical targets. The exact authenticated-cells and exact-target prerequisites are verified below. Model-independent support/accounting tasks S01-S02, S05, and D01-D04 are not made dependent on any seasonal model. Tasks S03-S04, S06, C02, C07, and B03 create different fits or supports and cannot inherit certification from these eleven models; their new fits require their own later numerical validation.",
+  "unmapped_consumer_policy": "FAIL_CLOSED",
+  "whole_suite_rule": "The overall numerical suite remains BLOCKED unless all 11 registered models are certified, even when individual consumers are released.",
+  "downstream_requirement_model_contract": {
+    "S07": ["pooled", "family_month"],
+    "I02": ["pooled", "family_month"],
+    "I07": ["family_month"],
+    "I10": ["pooled", "family_month"],
+    "Y01": ["pooled", "family_month", "dynamics_unconditioned", "dynamics_family_month"],
+    "Y02": ["pooled", "family_month", "dynamics_unconditioned", "dynamics_family_month"],
+    "Y03": ["pooled", "family_month", "dynamics_unconditioned", "dynamics_family_month"],
+    "Y04": ["pooled", "family_month", "dynamics_unconditioned", "dynamics_family_month"],
+    "Y08": [
+      "post_2020_unconditioned",
+      "post_2020_family_month",
+      "seasonal_quintile_month_unconditioned",
+      "seasonal_quintile_month_family_month",
+      "seasonal_occupation_month_unconditioned",
+      "seasonal_occupation_month_family_month"
+    ]
+  },
+  "certification_contract": {
+    "audit_schema_version": "yax-numerical-existence-audit-v1",
+    "receipt_schema_version": "yax-numerical-existence-receipt-v1",
+    "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "required_a1_audit_spec_id": "yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4",
+    "required_a1_audit_spec_sha256": "7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca",
+    "required_a1_runner_code_sha256": "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7",
+    "forbidden_audit_spec_ids": [
+      "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991"
+    ],
+    "model_pass_classification": "PASS_FINITE_EXTENDED_MLE_TARGET",
+    "target_estimability_pass_status": "FINITE_TARGET_ESTABLISHED_ON_PROFILED_EXTENDED_LIKELIHOOD",
+    "solver_comparison_pass_status": "PASS_A1_TRUST_PATH_VS_ZERO_START_REFERENCE",
+    "target_profile_pass_status": "PASS_TWO_SIDED_FINITE_PROFILE",
+    "reference_method": "independent-damped-sparse-newton-irls",
+    "a1_model_certificate_status": "PASS_A1_NUMERICAL_CERTIFICATE",
+    "primary_path": "trust-path",
+    "target_absolute_tolerance": 0.000001
+  },
+  "non_model_prerequisites": {
+    "authenticated_cells": {
+      "requirement_ids": ["T02", "T03"],
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/cells/EXECUTION_RECEIPT.json",
+      "sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+      "receipt_path": "runs/gate1_numerical_blocked_b9a7dd1/cells/EXECUTION_RECEIPT.json",
+      "receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+      "expected_status": "PASS_FRESH_AGGREGATE_REBUILD"
+    },
+    "exact_target_audit": {
+      "requirement_ids": ["T01"],
+      "path": "runs/gate1_numerical_blocked_b9a7dd1/target/EXACT_TARGET_AUDIT.json",
+      "sha256": "7dff9fc89c4a945d12f29947bed42c89ffc1138e102bc87cb85f5e47ffa1eb22",
+      "receipt_path": "runs/gate1_numerical_blocked_b9a7dd1/target/EXECUTION_RECEIPT.json",
+      "receipt_sha256": "cc87e834db44f2b0d61cb6f473bdf6be14f1901c2bd32c6959cf8e1bc1af4e6e",
+      "expected_status": "PASS_EXACT_TARGET_AUDIT"
+    }
+  },
+  "registered_model_ids": [
+    "pooled",
+    "family_post",
+    "family_month",
+    "dynamics_unconditioned",
+    "dynamics_family_month",
+    "post_2020_unconditioned",
+    "post_2020_family_month",
+    "seasonal_quintile_month_unconditioned",
+    "seasonal_quintile_month_family_month",
+    "seasonal_occupation_month_unconditioned",
+    "seasonal_occupation_month_family_month"
+  ],
+  "consumers": [
+    {
+      "consumer_id": "gate2.static.pooled_target",
+      "description": "Use the certified pooled static target or its fitted quantities.",
+      "required_model_ids": ["pooled"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.static.family_post_target",
+      "description": "Use the certified family-by-post static target or its fitted quantities.",
+      "required_model_ids": ["family_post"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.static.family_month_target",
+      "description": "Use the certified family-by-month static target or its fitted quantities.",
+      "required_model_ids": ["family_month"],
+      "downstream_requirement_ids": ["I07"]
+    },
+    {
+      "consumer_id": "gate2.static.pooled_vs_family_post",
+      "description": "Compare pooled and family-by-post static targets; later paired inference remains separately required.",
+      "required_model_ids": ["pooled", "family_post"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.static.pooled_vs_family_month",
+      "description": "Compare pooled and family-by-month static targets; later paired inference remains separately required.",
+      "required_model_ids": ["pooled", "family_month"],
+      "downstream_requirement_ids": ["S07", "I02", "I10"]
+    },
+    {
+      "consumer_id": "gate2.dynamic.unconditioned_event_vector",
+      "description": "Use the certified complete unconditioned dynamic target vector; inference is not certified here.",
+      "required_model_ids": ["dynamics_unconditioned"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.dynamic.family_month_event_vector",
+      "description": "Use the certified complete family-by-month dynamic target vector; inference is not certified here.",
+      "required_model_ids": ["dynamics_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.dynamic.static_reconciliation_unconditioned",
+      "description": "Reconcile the unconditioned static and dynamic targets on their declared common functional.",
+      "required_model_ids": ["pooled", "dynamics_unconditioned"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.dynamic.static_reconciliation_family_month",
+      "description": "Reconcile the family-by-month static and dynamic targets on their declared common functional.",
+      "required_model_ids": ["family_month", "dynamics_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.dynamic.conditioning_movement",
+      "description": "Compare static and dynamic conditioning movements; all four constituent fits are required.",
+      "required_model_ids": ["pooled", "family_month", "dynamics_unconditioned", "dynamics_family_month"],
+      "downstream_requirement_ids": ["Y01", "Y02", "Y03", "Y04"]
+    },
+    {
+      "consumer_id": "gate2.sensitivity.post_2020_unconditioned",
+      "description": "Use the certified coding-stable unconditioned post-2020 target.",
+      "required_model_ids": ["post_2020_unconditioned"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.post_2020_family_month",
+      "description": "Use the certified coding-stable family-by-month post-2020 target.",
+      "required_model_ids": ["post_2020_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.post_2020_comparison",
+      "description": "Compare both coding-stable post-2020 targets.",
+      "required_model_ids": ["post_2020_unconditioned", "post_2020_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.seasonal_quintile_month_unconditioned",
+      "description": "Use only the unconditioned quintile-by-month seasonal target.",
+      "required_model_ids": ["seasonal_quintile_month_unconditioned"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.seasonal_quintile_month_family_month",
+      "description": "Use only the family-by-month quintile-seasonal target.",
+      "required_model_ids": ["seasonal_quintile_month_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.seasonal_quintile_month_comparison",
+      "description": "Compare both quintile-by-month seasonal targets.",
+      "required_model_ids": ["seasonal_quintile_month_unconditioned", "seasonal_quintile_month_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.seasonal_occupation_month_unconditioned",
+      "description": "Use only the unconditioned occupation-by-month seasonal target.",
+      "required_model_ids": ["seasonal_occupation_month_unconditioned"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.seasonal_occupation_month_family_month",
+      "description": "Use only the family-by-month occupation-seasonal target.",
+      "required_model_ids": ["seasonal_occupation_month_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.seasonal_occupation_month_comparison",
+      "description": "Compare both occupation-by-month seasonal targets.",
+      "required_model_ids": ["seasonal_occupation_month_unconditioned", "seasonal_occupation_month_family_month"],
+      "downstream_requirement_ids": []
+    },
+    {
+      "consumer_id": "gate2.sensitivity.complete_onset_and_seasonality",
+      "description": "Claim complete onset and seasonality coverage only when all six post-2020 and seasonal targets are certified.",
+      "required_model_ids": [
+        "post_2020_unconditioned",
+        "post_2020_family_month",
+        "seasonal_quintile_month_unconditioned",
+        "seasonal_quintile_month_family_month",
+        "seasonal_occupation_month_unconditioned",
+        "seasonal_occupation_month_family_month"
+      ],
+      "downstream_requirement_ids": ["Y08"]
+    }
+  ]
+}

@@ -4,6 +4,7 @@
     "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
   },
   "execution_command_policy": "receipt_native_exact_sanitized_argv_binding_v2",
+  "transfer_mode": "a1_authenticated_parent_reuse",
   "modules": [
     {
       "canonical_id_pointer": "/canonical_spec_id",
@@ -70,10 +71,10 @@
         "target"
       ],
       "end_time_pointer": "/finished_at_utc",
-      "expected_code_hash": "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02",
+      "expected_code_hash": "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7",
       "expected_jobnumber": "<REQUIRED_NUMERICAL_JOBNUMBER>",
       "expected_receipt_schema": "yax-numerical-existence-receipt-v1",
-      "expected_receipt_status": "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED",
+      "expected_receipt_status": "<REQUIRED_NUMERICAL_RECEIPT_STATUS>",
       "key": "numerical",
       "mode": "numerical_analysis",
       "module_receipt_file": "numerical/EXECUTION_RECEIPT.json",
@@ -85,10 +86,10 @@
       "start_time_pointer": "/started_at_utc",
       "time_source": "module_receipt",
       "typed_spec": {
-        "id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
+        "id": "yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4",
         "id_pointer": "/audit_spec_id",
         "kind": "numerical_analysis_spec",
-        "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce",
+        "sha256": "7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca",
         "sha256_pointer": "/audit_spec_sha256"
       }
     }

@@ -3,7 +3,7 @@
 
 This program implements V3 requirements N01--N03.  It does not build CPS
 microdata.  It accepts only a balanced, authenticated aggregate cell file and
-never writes row-level data.  See ANALYSIS_SPEC.json and README.md.
+never writes row-level data.  See ANALYSIS_SPEC_A1.json and README.md.
 """
 from __future__ import annotations
 
@@ -63,7 +63,7 @@ COMMAND_TEMPLATE = (
     "run_numerical_existence_audit.py --canonical-spec <YAX_REPO_ROOT>/yax/revision/"
     "substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json "
     "--analysis-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/"
-    "numerical_existence/ANALYSIS_SPEC.json --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv "
+    "numerical_existence/ANALYSIS_SPEC_A1.json --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv "
     "--cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json "
     "--legacy-engine <YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py "
     "--output-parent <YAX_V3_RUN_ROOT>"
@@ -105,6 +105,16 @@ CELL_CODE_REL = pathlib.Path(
 TARGET_CODE_REL = pathlib.Path(
     "yax/revision/substantive_v3_20260906/gate1_target/run_exact_target_audit.py"
 )
+A1_SPEC_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json"
+)
+A1_OWNER_AUTHORIZATION_REL = pathlib.Path(
+    "yax/revision/substantive_v3_20260906/revision_inputs/"
+    "GATE1_NUMERICAL_ADJUDICATION_A1.md"
+)
+A1_OWNER_AUTHORIZATION_SHA256 = (
+    "ff4963e66940741abc8a4eda87fd9050c51cae5cedfabb3ae1ab42c21f5836a9"
+)
 HIGHS_CERTIFIED_OPTIONS = {
     "presolve": False,
     "primal_feasibility_tolerance": 1e-10,
@@ -129,6 +139,22 @@ SENSITIVE_ARTIFACT_PATTERNS = (
 
 class AuditBlocked(RuntimeError):
     """Raised before fitting when an authenticated input contract fails."""
+
+
+class IndependentNewtonFailure(AuditBlocked):
+    """Fail-closed standalone-Newton termination with an owned code."""
+
+    def __init__(
+        self, termination_code: str, message: str,
+        evaluation_counts: dict[str, int] | None = None,
+        trajectory: list[dict[str, Any]] | None = None,
+        last_metrics: dict[str, Any] | None = None,
+    ):
+        self.termination_code = termination_code
+        self.evaluation_counts = dict(evaluation_counts or {})
+        self.trajectory = list(trajectory or [])
+        self.last_metrics = dict(last_metrics or {})
+        super().__init__(message)
 
 
 class NonEchoingArgumentParser(argparse.ArgumentParser):
@@ -162,12 +188,22 @@ class ModelBundle:
 def target_coordinate_bundle(bundle: ModelBundle) -> tuple[ModelBundle, dict[str, Any]]:
     """Make an identified linear slope functional an exact coefficient."""
     if bundle.focal_target_weights is None:
+        identity = np.eye(bundle.regressors.shape[1])
         return bundle, {
             "status": "ORIGINAL_COORDINATE_TARGET",
             "target_label": bundle.focal_target_label,
+            "original_regressor_labels": bundle.regressor_labels,
             "original_target_weights": [
                 1.0 if label == bundle.focal_target_label else 0.0
                 for label in bundle.regressor_labels
+            ],
+            "original_coefficient_functionals_in_current_basis": [
+                {
+                    "original_index": index,
+                    "original_label": label,
+                    "weights": identity[index].tolist(),
+                }
+                for index, label in enumerate(bundle.regressor_labels)
             ],
         }
     weights = np.asarray(bundle.focal_target_weights, float)
@@ -211,6 +247,14 @@ def target_coordinate_bundle(bundle: ModelBundle) -> tuple[ModelBundle, dict[str
         "original_regressor_labels": bundle.regressor_labels,
         "pivot_original_column": pivot,
         "pivot_original_label": bundle.regressor_labels[pivot],
+        "original_coefficient_functionals_in_current_basis": [
+            {
+                "original_index": index,
+                "original_label": label,
+                "weights": transform[index].tolist(),
+            }
+            for index, label in enumerate(bundle.regressor_labels)
+        ],
         # The matrix is a permuted triangular basis with this determinant.
         # Record it analytically rather than running a large, avoidable dense
         # determinant for the roughly 190-column dynamic design.
@@ -366,7 +410,7 @@ def build_execution_command_binding(
     repo = pathlib.Path(__file__).resolve().parents[4]
     expected_paths = (
         repo / "yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json",
-        repo / "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+        repo / A1_SPEC_REL,
         pathlib.Path(args.cells).resolve(strict=False),
         pathlib.Path(args.cells_receipt).resolve(strict=False),
         repo / "dax/memo/power_calcs/young_relative_employment_power.py",
@@ -397,7 +441,7 @@ def build_execution_command_binding(
         "canonical_baseline_reproduction_v2.json",
         "--analysis-spec",
         "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/"
-        "ANALYSIS_SPEC.json",
+        "ANALYSIS_SPEC_A1.json",
         "--cells", "<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv",
         "--cells-receipt", "<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json",
         "--legacy-engine",
@@ -672,6 +716,245 @@ def support_hash(codes: Iterable[str]) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def scientific_target_payload(document: dict[str, Any]) -> dict[str, Any]:
+    """Return only the scientific/data/target identity carried across A1."""
+    inputs = document.get("input_contract", {})
+    execution = inputs.get("cell_builder_execution_contract", {})
+    tolerance_names = (
+        "conditioning_rank_relative",
+        "fitted_probability_max_abs_difference",
+        "gradient_infinity_norm_per_total",
+        "objective_difference_per_total",
+        "standardized_score_absolute",
+        "target_coefficient_absolute_difference",
+    )
+    return {
+        "canonical_spec_id": document.get("canonical_spec_id"),
+        "canonical_spec_sha256": document.get("canonical_spec_sha256"),
+        "aggregate_input": {
+            key: inputs.get(key) for key in (
+                "aggregate_schema_version",
+                "assignment_fingerprint_algorithm",
+                "assignment_fingerprint_sha256",
+                "balanced_grid_required",
+                "expected_balanced_grid_rows",
+                "cells_receipt_schema_version",
+                "required_columns",
+                "support_hash_algorithm",
+                "weight_application_count",
+            )
+        },
+        "protected_source_route": {
+            key: execution.get(key) for key in (
+                "runtime_raw_fields", "runtime_raw_source_ids",
+            )
+        },
+        "likelihood": document.get("likelihood"),
+        "boundary_and_separation": document.get("boundary_and_separation"),
+        "design_parity": document.get("design_parity"),
+        "dynamic_target_scope": document.get("dynamic_target_scope"),
+        "models": document.get("models"),
+        "normalization": document.get("normalization"),
+        "profile": document.get("profile"),
+        "final_tolerances": {
+            key: document.get("tolerances", {}).get(key)
+            for key in tolerance_names
+        },
+    }
+
+
+def scientific_target_fingerprint(document: dict[str, Any]) -> str:
+    return hashlib.sha256(
+        canonical_bytes(scientific_target_payload(document))
+    ).hexdigest()
+
+
+def validate_a1_amendment(
+    repo_root: pathlib.Path,
+    analysis_path: pathlib.Path,
+    analysis: dict[str, Any],
+) -> dict[str, Any]:
+    """Validate A1 authority, immutable parent, and unchanged science."""
+    if analysis_path.resolve(strict=True) != (repo_root / A1_SPEC_REL).resolve(
+        strict=True
+    ):
+        raise AuditBlocked("A1 execution requires the canonical A1 spec path")
+    amendment = analysis.get("amendment_a1")
+    if not isinstance(amendment, dict):
+        raise AuditBlocked("A1 amendment binding is absent")
+    authorization = amendment.get("authorization")
+    if authorization != {
+        "path": A1_OWNER_AUTHORIZATION_REL.as_posix(),
+        "sha256": A1_OWNER_AUTHORIZATION_SHA256,
+    }:
+        raise AuditBlocked("A1 owner authorization binding differs")
+    authorization_path = repo_root / A1_OWNER_AUTHORIZATION_REL
+    if (
+        not authorization_path.is_file()
+        or authorization_path.is_symlink()
+        or sha256_file(authorization_path) != A1_OWNER_AUTHORIZATION_SHA256
+    ):
+        raise AuditBlocked("A1 owner authorization file differs")
+
+    parent_binding = amendment.get("parent_numerical_spec")
+    if not isinstance(parent_binding, dict):
+        raise AuditBlocked("A1 parent numerical specification binding is absent")
+    parent_relative = pathlib.Path(str(parent_binding.get("path", "")))
+    if parent_relative.is_absolute() or ".." in parent_relative.parts:
+        raise AuditBlocked("A1 parent numerical specification path is unsafe")
+    parent_path = repo_root / parent_relative
+    if not parent_path.is_file() or parent_path.is_symlink():
+        raise AuditBlocked("A1 parent numerical specification is absent or indirect")
+    parent_sha = sha256_file(parent_path)
+    parent = load_json(parent_path)
+    if (
+        parent_sha != parent_binding.get("sha256")
+        or parent.get("audit_spec_id") != parent_binding.get("id")
+        or parent.get("audit_spec_id") != expected_audit_spec_id(parent)
+    ):
+        raise AuditBlocked("A1 parent numerical specification is not authentic")
+    parent["_loaded_file_sha256"] = parent_sha
+
+    fingerprint = scientific_target_fingerprint(parent)
+    target_binding = amendment.get("scientific_target_fingerprint")
+    if (
+        not isinstance(target_binding, dict)
+        or target_binding.get("algorithm")
+        != "SHA-256 of canonical JSON scientific_target_payload_v1"
+        or target_binding.get("sha256") != fingerprint
+        or scientific_target_fingerprint(analysis) != fingerprint
+        or scientific_target_payload(analysis) != scientific_target_payload(parent)
+    ):
+        raise AuditBlocked("A1 changed the scientific/data/treatment target")
+
+    required_files = {
+        "preserved_blocked_run": (
+            "numerical_receipt_path", "numerical_receipt_sha256",
+        ),
+        "authenticated_cell_reuse": ("receipt_path", "receipt_sha256"),
+    }
+    for section_name, (path_key, hash_key) in required_files.items():
+        section = amendment.get(section_name)
+        if not isinstance(section, dict):
+            raise AuditBlocked(f"A1 {section_name} binding is absent")
+        relative = pathlib.Path(str(section.get(path_key, "")))
+        if relative.is_absolute() or ".." in relative.parts:
+            raise AuditBlocked(f"A1 {section_name} path is unsafe")
+        path = repo_root / relative
+        if (
+            not path.is_file() or path.is_symlink()
+            or sha256_file(path) != section.get(hash_key)
+        ):
+            raise AuditBlocked(f"A1 {section_name} artifact differs")
+
+    blocked = amendment["preserved_blocked_run"]
+    blocked_run_relative = pathlib.Path(str(blocked.get("path", "")))
+    if (
+        blocked_run_relative.is_absolute()
+        or ".." in blocked_run_relative.parts
+        or not blocked_run_relative.parts
+    ):
+        raise AuditBlocked("preserved blocked numerical run path is unsafe")
+    blocked_run_path = repo_root / blocked_run_relative
+    blocked_receipt_path = repo_root / blocked["numerical_receipt_path"]
+    expected_blocked_receipt_path = (
+        blocked_run_path / "numerical" / "EXECUTION_RECEIPT.json"
+    )
+    if blocked_receipt_path.resolve() != expected_blocked_receipt_path.resolve():
+        raise AuditBlocked("preserved blocked numerical receipt path differs")
+    blocked_receipt = load_json(blocked_receipt_path)
+    if (
+        blocked_receipt.get("status")
+        != "BLOCKED_ONE_OR_MORE_CORE_TARGETS_NOT_ESTABLISHED"
+        or blocked.get("status") != blocked_receipt.get("status")
+        or blocked_receipt.get("audit_spec_id") != parent["audit_spec_id"]
+        or blocked_receipt.get("audit_spec_sha256") != parent_sha
+        or blocked_receipt.get("git_commit") != blocked.get("producer_commit")
+    ):
+        raise AuditBlocked("preserved blocked numerical run binding differs")
+
+    blocked_model_audit_path = blocked_run_path / "numerical" / "MODEL_AUDIT.json"
+    blocked_model_audit_expected_sha = blocked.get("model_audit_sha256")
+    blocked_output_hashes = blocked_receipt.get("output_hashes", {})
+    if (
+        not blocked_model_audit_path.is_file()
+        or blocked_model_audit_path.is_symlink()
+        or not isinstance(blocked_model_audit_expected_sha, str)
+        or not re.fullmatch(r"[0-9a-f]{64}", blocked_model_audit_expected_sha)
+        or sha256_file(blocked_model_audit_path)
+        != blocked_model_audit_expected_sha
+        or blocked_output_hashes.get("MODEL_AUDIT.json")
+        != blocked_model_audit_expected_sha
+    ):
+        raise AuditBlocked("preserved blocked MODEL_AUDIT bytes differ")
+    blocked_model_audit = load_json(blocked_model_audit_path)
+    blocked_models = blocked_model_audit.get("models")
+    expected_model_ids = [model.get("model_id") for model in parent["models"]]
+    actual_model_ids = (
+        [model.get("model_id") for model in blocked_models]
+        if isinstance(blocked_models, list)
+        and all(isinstance(model, dict) for model in blocked_models)
+        else None
+    )
+    passed_model_count = (
+        sum(
+            model.get("finite_target_established") is True
+            for model in blocked_models
+        )
+        if actual_model_ids is not None else None
+    )
+    classifications_consistent = bool(
+        actual_model_ids is not None
+        and all(
+            (
+                model.get("classification")
+                == "PASS_FINITE_EXTENDED_MLE_TARGET"
+            )
+            == (model.get("finite_target_established") is True)
+            and isinstance(model.get("classification"), str)
+            and (
+                model.get("classification")
+                == "PASS_FINITE_EXTENDED_MLE_TARGET"
+                or model.get("classification").startswith("BLOCKED_")
+            )
+            for model in blocked_models
+        )
+    )
+    if (
+        blocked_model_audit.get("status") != blocked_receipt.get("status")
+        or blocked_model_audit.get("audit_spec_id") != parent["audit_spec_id"]
+        or blocked_model_audit.get("canonical_spec_id")
+        != parent.get("canonical_spec_id")
+        or blocked_model_audit.get("cells_sha256")
+        != amendment["authenticated_cell_reuse"].get("cells_sha256")
+        or actual_model_ids != expected_model_ids
+        or len(set(actual_model_ids or [])) != len(expected_model_ids)
+        or blocked_receipt.get("model_count") != len(expected_model_ids)
+        or blocked_receipt.get("passed_model_count") != passed_model_count
+        or passed_model_count == len(expected_model_ids)
+        or not classifications_consistent
+    ):
+        raise AuditBlocked("preserved blocked MODEL_AUDIT semantics differ")
+
+    cells = amendment["authenticated_cell_reuse"]
+    cells_receipt = load_json(repo_root / cells["receipt_path"])
+    expected_cell_values = {
+        "cells_sha256": cells.get("cells_sha256"),
+        "git_commit": cells.get("producer_commit"),
+        "git_tree": cells.get("producer_tree"),
+        "cell_build_spec_id": cells.get("cell_build_spec_id"),
+        "cell_build_spec_sha256": cells.get("cell_build_spec_sha256"),
+        "analysis_spec_id": parent["audit_spec_id"],
+        "analysis_spec_sha256": parent_sha,
+    }
+    if any(
+        cells_receipt.get(key) != value
+        for key, value in expected_cell_values.items()
+    ):
+        raise AuditBlocked("A1 authenticated-cell reuse binding differs")
+    return parent
+
+
 def validate_specs(
     canonical_path: pathlib.Path, analysis_path: pathlib.Path,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
@@ -693,12 +976,15 @@ def validate_specs(
     if analysis.get("audit_spec_id") != expected_audit_spec_id(analysis):
         raise AuditBlocked("audit_spec_id does not match canonical audit JSON")
     analysis["_loaded_file_sha256"] = sha256_file(analysis_path)
+    repo_root = pathlib.Path(__file__).resolve().parents[4]
+    analysis["_a1_parent_analysis"] = validate_a1_amendment(
+        repo_root, analysis_path, analysis,
+    )
     observed_runner_hash = sha256_file(pathlib.Path(__file__).resolve())
     if analysis.get("software", {}).get("audit_runner_sha256") != observed_runner_hash:
         raise AuditBlocked(
             "audit runner hash differs from the pre-result analysis specification"
         )
-    repo_root = pathlib.Path(__file__).resolve().parents[4]
     locked_local_code = {
         HERE / "artifact_safety.py": analysis["software"]["artifact_safety_sha256"],
         HERE / "test_numerical_existence_audit.py": analysis["software"]["synthetic_test_sha256"],
@@ -1070,6 +1356,94 @@ def current_git_receipt_checks(
     }
 
 
+def a1_parent_git_receipt_checks(
+    repo_root: pathlib.Path,
+    receipt: dict[str, Any],
+    parent_analysis: dict[str, Any],
+    analysis: dict[str, Any],
+) -> dict[str, bool]:
+    """Authenticate reused cells at their historical producer commit.
+
+    A1 changes only the numerical consumer, so equality with the current HEAD
+    would incorrectly force a protected-data rebuild.  This instead verifies
+    the producer commit/tree and every producer input blob, requires that
+    commit to be an ancestor of the authorized A1 checkout, and verifies that
+    the unchanged producer files still have those bytes at current HEAD.
+    """
+    reuse = analysis.get("amendment_a1", {}).get(
+        "authenticated_cell_reuse", {}
+    )
+    producer = str(reuse.get("producer_commit", ""))
+    producer_tree = str(reuse.get("producer_tree", ""))
+    execution = parent_analysis["input_contract"][
+        "cell_builder_execution_contract"
+    ]
+    committed = receipt.get("git_committed_artifact_hashes", {})
+    checks: dict[str, bool] = {
+        "a1_producer_commit_binding": producer == receipt.get("git_commit"),
+        "a1_producer_tree_binding": producer_tree == receipt.get("git_tree"),
+    }
+    try:
+        head = subprocess.check_output(
+            [str(EXPECTED_GIT_PATH), "rev-parse", "HEAD"], cwd=repo_root,
+            env=SANITIZED_GIT_ENVIRONMENT, text=True,
+        ).strip()
+        observed_tree = subprocess.check_output(
+            [str(EXPECTED_GIT_PATH), "rev-parse", f"{producer}^{{tree}}"],
+            cwd=repo_root, env=SANITIZED_GIT_ENVIRONMENT, text=True,
+        ).strip()
+        status = subprocess.check_output(
+            [
+                str(EXPECTED_GIT_PATH), "status", "--porcelain=v1",
+                "--untracked-files=all",
+            ],
+            cwd=repo_root, env=SANITIZED_GIT_ENVIRONMENT, text=True,
+        ).strip()
+        ancestor = subprocess.run(
+            [
+                str(EXPECTED_GIT_PATH), "merge-base", "--is-ancestor",
+                producer, head,
+            ],
+            cwd=repo_root, env=SANITIZED_GIT_ENVIRONMENT,
+            capture_output=True, check=False,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return {**checks, "a1_historical_git_commands": False}
+    checks.update({
+        "a1_historical_git_commands": True,
+        "a1_producer_commit_is_current_ancestor": ancestor.returncode == 0,
+        "a1_producer_tree_object": observed_tree == producer_tree,
+        "a1_current_worktree_clean": status == "",
+    })
+    exact_blobs = True
+    expected_paths = execution.get("git_committed_paths", [])
+    if not isinstance(committed, dict) or set(committed) != set(expected_paths):
+        exact_blobs = False
+    for relative in expected_paths:
+        try:
+            producer_blob = subprocess.check_output(
+                [str(EXPECTED_GIT_PATH), "show", f"{producer}:{relative}"],
+                cwd=repo_root, env=SANITIZED_GIT_ENVIRONMENT,
+            )
+            current_blob = subprocess.check_output(
+                [str(EXPECTED_GIT_PATH), "show", f"HEAD:{relative}"],
+                cwd=repo_root, env=SANITIZED_GIT_ENVIRONMENT,
+            )
+            local = (repo_root / relative).read_bytes()
+        except (OSError, subprocess.CalledProcessError):
+            exact_blobs = False
+            continue
+        digest = hashlib.sha256(producer_blob).hexdigest()
+        if (
+            current_blob != producer_blob
+            or local != producer_blob
+            or committed.get(relative) != digest
+        ):
+            exact_blobs = False
+    checks["a1_historical_producer_blobs_unchanged"] = exact_blobs
+    return checks
+
+
 def current_cell_spec_binding_checks(
     repo_root: pathlib.Path,
     receipt: dict[str, Any],
@@ -1390,16 +1764,39 @@ def authenticate_cells(
     canonical: dict[str, Any],
     analysis: dict[str, Any],
 ) -> pd.DataFrame:
+    amendment = analysis.get("amendment_a1")
+    if isinstance(amendment, dict):
+        reuse = amendment.get("authenticated_cell_reuse", {})
+        expected_receipt_sha = reuse.get("receipt_sha256")
+        if not isinstance(expected_receipt_sha, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", expected_receipt_sha,
+        ):
+            raise AuditBlocked(
+                "validated A1 cell-receipt byte-hash binding is absent"
+            )
+        if (
+            not receipt_path.is_file()
+            or sha256_file(receipt_path) != expected_receipt_sha
+        ):
+            raise AuditBlocked(
+                "caller-supplied A1 cell receipt bytes differ from the exact "
+                "authenticated-cell reuse artifact"
+            )
+        # Exact byte identity is intentionally established before JSON parsing
+        # or semantic checks.  Equivalent reserialization is not substitutable.
     receipt = load_json(receipt_path)
+    parent_analysis = analysis.get("_a1_parent_analysis")
+    if not isinstance(parent_analysis, dict):
+        raise AuditBlocked("validated A1 parent analysis is absent")
     checks = cell_receipt_authentication_checks(
-        receipt, cells_path, canonical, analysis,
+        receipt, cells_path, canonical, parent_analysis,
     )
     failed = sorted(key for key, passed in checks.items() if not passed)
     if failed:
         raise AuditBlocked("aggregate-cell authentication failed: " + ", ".join(failed))
     repo_root = pathlib.Path(__file__).resolve().parents[4]
     cell_spec_checks = current_cell_spec_binding_checks(
-        repo_root, receipt, canonical, analysis,
+        repo_root, receipt, canonical, parent_analysis,
     )
     failed_cell_spec = sorted(
         key for key, passed in cell_spec_checks.items() if not passed
@@ -1409,7 +1806,7 @@ def authenticate_cells(
             "aggregate-cell producer-spec authentication failed: "
             + ", ".join(failed_cell_spec)
         )
-    accounting_checks = producer_accounting_checks(receipt, analysis)
+    accounting_checks = producer_accounting_checks(receipt, parent_analysis)
     failed_accounting = sorted(
         key for key, passed in accounting_checks.items() if not passed
     )
@@ -1418,7 +1815,9 @@ def authenticate_cells(
             "aggregate-cell producer accounting failed: "
             + ", ".join(failed_accounting)
         )
-    git_checks = current_git_receipt_checks(repo_root, receipt, analysis)
+    git_checks = a1_parent_git_receipt_checks(
+        repo_root, receipt, parent_analysis, analysis,
+    )
     failed_git = sorted(key for key, passed in git_checks.items() if not passed)
     if failed_git:
         raise AuditBlocked(
@@ -2206,58 +2605,132 @@ def full_hessian_diagnostics(
             "nonpositive_diagonal_columns": int(np.sum(diagonal <= 0)),
         }
 
-    def spectrum(matrix: sparse.csc_matrix) -> tuple[float, float, str]:
+    def spectrum(matrix: sparse.csc_matrix) -> dict[str, Any]:
+        conservative_upper = float(np.max(np.asarray(
+            np.abs(matrix).sum(axis=1)
+        ).reshape(-1), initial=0.0))
         if columns <= dense_limit:
-            eigen = np.linalg.eigvalsh(matrix.toarray())
-            largest = float(eigen[-1])
-            # Use the smallest algebraic eigenvalue, not the smallest value
-            # remaining after thresholding.  Dropping the null spectrum here
-            # would falsely certify a rank-deficient Hessian as positive
-            # definite.
+            eigen, vectors = np.linalg.eigh(matrix.toarray())
             smallest = float(eigen[0])
-            return smallest, largest, "dense_eigvalsh"
-        try:
-            largest = float(eigsh(matrix, k=1, which="LA", return_eigenvectors=False)[0])
-            smallest = float(eigsh(
-                matrix, k=1, which="SA", return_eigenvectors=False,
-                tol=1e-7, maxiter=max(10_000, columns * 20),
-            )[0])
-            return smallest, largest, "sparse_eigsh_extrema"
-        except (ArpackNoConvergence, RuntimeError, ValueError) as error:
-            return math.nan, math.nan, f"FAILED_{type(error).__name__}"
+            largest = float(eigen[-1])
+            smallest_vector = vectors[:, 0]
+            largest_vector = vectors[:, -1]
+            method = "dense_eigh_with_explicit_residual_bounds"
+        else:
+            try:
+                small_values, small_vectors = eigsh(
+                    matrix, k=1, which="SA", return_eigenvectors=True,
+                    tol=0.0, maxiter=max(50_000, columns * 100),
+                )
+                large_values, large_vectors = eigsh(
+                    matrix, k=1, which="LA", return_eigenvectors=True,
+                    tol=0.0, maxiter=max(50_000, columns * 100),
+                )
+                smallest = float(small_values[0])
+                largest = float(large_values[0])
+                smallest_vector = np.asarray(small_vectors[:, 0], float)
+                largest_vector = np.asarray(large_vectors[:, 0], float)
+                method = (
+                    "sparse_eigsh_SA_LA_machine_tolerance_with_explicit_"
+                    "residual_bounds"
+                )
+            except (ArpackNoConvergence, RuntimeError, ValueError) as error:
+                return {
+                    "smallest_estimate": math.nan,
+                    "largest_estimate": math.nan,
+                    "smallest_residual_norm_2": math.inf,
+                    "largest_residual_norm_2": math.inf,
+                    "smallest_certified_lower_bound": -math.inf,
+                    "largest_conservative_upper_bound": conservative_upper,
+                    "method": f"FAILED_{type(error).__name__}",
+                }
+        smallest_residual = float(np.linalg.norm(
+            np.asarray(matrix @ smallest_vector).reshape(-1)
+            - smallest * smallest_vector
+        ))
+        largest_residual = float(np.linalg.norm(
+            np.asarray(matrix @ largest_vector).reshape(-1)
+            - largest * largest_vector
+        ))
+        return {
+            "smallest_estimate": smallest,
+            "largest_estimate": largest,
+            "smallest_residual_norm_2": smallest_residual,
+            "largest_residual_norm_2": largest_residual,
+            "smallest_certified_lower_bound": smallest - smallest_residual,
+            # The induced infinity norm is a rigorous eigenvalue upper bound
+            # for this symmetric matrix and is never replaced by the Ritz
+            # estimate when setting the declared relative rank threshold.
+            "largest_conservative_upper_bound": conservative_upper,
+            "method": method,
+        }
 
-    smallest, largest, method = spectrum(hessian)
+    raw_spectrum = spectrum(hessian)
     inv_scale = sparse.diags(1.0 / np.sqrt(diagonal))
     scaled = (inv_scale @ hessian @ inv_scale).tocsc()
-    scaled_smallest, scaled_largest, scaled_method = spectrum(scaled)
+    scaled_spectrum = spectrum(scaled)
+    smallest = raw_spectrum["smallest_estimate"]
+    largest = raw_spectrum["largest_estimate"]
+    smallest_lower = raw_spectrum["smallest_certified_lower_bound"]
+    largest_upper = raw_spectrum["largest_conservative_upper_bound"]
+    scaled_smallest = scaled_spectrum["smallest_estimate"]
+    scaled_largest = scaled_spectrum["largest_estimate"]
+    scaled_smallest_lower = scaled_spectrum[
+        "smallest_certified_lower_bound"
+    ]
+    scaled_largest_upper = scaled_spectrum[
+        "largest_conservative_upper_bound"
+    ]
     raw_threshold = max(
-        largest * relative_tolerance,
-        np.finfo(float).eps * max(1.0, largest),
-    ) if math.isfinite(largest) else math.inf
+        largest_upper * relative_tolerance,
+        np.finfo(float).eps * max(1.0, largest_upper),
+    ) if math.isfinite(largest_upper) else math.inf
     scaled_threshold = max(
-        scaled_largest * relative_tolerance,
-        np.finfo(float).eps * max(1.0, scaled_largest),
-    ) if math.isfinite(scaled_largest) else math.inf
+        scaled_largest_upper * relative_tolerance,
+        np.finfo(float).eps * max(1.0, scaled_largest_upper),
+    ) if math.isfinite(scaled_largest_upper) else math.inf
     spectrum_pass = bool(
         expected_rank == columns and
-        math.isfinite(smallest) and math.isfinite(largest) and
-        math.isfinite(scaled_smallest) and math.isfinite(scaled_largest) and
-        smallest > raw_threshold and scaled_smallest > scaled_threshold
+        math.isfinite(smallest_lower) and math.isfinite(largest_upper) and
+        math.isfinite(scaled_smallest_lower) and
+        math.isfinite(scaled_largest_upper) and
+        smallest_lower > raw_threshold and
+        scaled_smallest_lower > scaled_threshold
     )
     return {
         "columns": columns,
         "rank_from_nuisance_plus_schur": expected_rank,
         "rank_deficiency": columns - expected_rank,
-        "spectrum_method": method,
+        "spectrum_method": raw_spectrum["method"],
         "smallest_positive_or_extreme_eigenvalue": smallest,
         "largest_eigenvalue": largest,
+        "smallest_eigenpair_residual_norm_2": raw_spectrum[
+            "smallest_residual_norm_2"
+        ],
+        "largest_eigenpair_residual_norm_2": raw_spectrum[
+            "largest_residual_norm_2"
+        ],
+        "smallest_certified_lower_bound": smallest_lower,
+        "largest_conservative_upper_bound": largest_upper,
         "condition_number": (
             largest / smallest if math.isfinite(smallest) and smallest > 0 else math.inf
         ),
         "rank_threshold": raw_threshold,
-        "diagonally_scaled_spectrum_method": scaled_method,
+        "diagonally_scaled_spectrum_method": scaled_spectrum["method"],
         "diagonally_scaled_smallest_positive_or_extreme_eigenvalue": scaled_smallest,
         "diagonally_scaled_largest_eigenvalue": scaled_largest,
+        "diagonally_scaled_smallest_eigenpair_residual_norm_2": (
+            scaled_spectrum["smallest_residual_norm_2"]
+        ),
+        "diagonally_scaled_largest_eigenpair_residual_norm_2": (
+            scaled_spectrum["largest_residual_norm_2"]
+        ),
+        "diagonally_scaled_smallest_certified_lower_bound": (
+            scaled_smallest_lower
+        ),
+        "diagonally_scaled_largest_conservative_upper_bound": (
+            scaled_largest_upper
+        ),
         "diagonally_scaled_condition_number": (
             scaled_largest / scaled_smallest
             if math.isfinite(scaled_smallest) and scaled_smallest > 0 else math.inf
@@ -2663,6 +3136,7 @@ def separation_lp(
 def resolve_extended_likelihood_face(
     bundle: ModelBundle,
     analysis: dict[str, Any],
+    original_treatment_functionals: dict[str, np.ndarray] | None = None,
 ) -> tuple[np.ndarray, SparseDesign | None, dict[str, Any], list[dict[str, Any]]]:
     """Find the finite face while preserving the focal treatment coordinate.
 
@@ -2681,6 +3155,23 @@ def resolve_extended_likelihood_face(
         pruning.append({**row, "face_iteration": 0, "reason": "pure_nuisance_boundary"})
     trace: list[dict[str, Any]] = []
     maximum_iterations = max(int(np.sum(bundle.total > 0)), 1)
+    if original_treatment_functionals is None:
+        original_treatment_functionals = {
+            f"original_treatment::{index}::{label}": np.eye(
+                1, bundle.regressors.shape[1], index,
+            ).reshape(-1)
+            for index, label in enumerate(bundle.regressor_labels)
+        }
+    if not original_treatment_functionals:
+        raise AuditBlocked("original treatment functional family is empty")
+    for label, functional in original_treatment_functionals.items():
+        vector = np.asarray(functional, float)
+        if (
+            not label.startswith("original_treatment::")
+            or vector.shape != (bundle.regressors.shape[1],)
+            or not np.isfinite(vector).all()
+        ):
+            raise AuditBlocked("original treatment functional family is invalid")
 
     for face_iteration in range(1, maximum_iterations + 1):
         if not active.any():
@@ -2719,16 +3210,52 @@ def resolve_extended_likelihood_face(
                 "focal_target_finite": False,
             }, pruning
         focal_column = design.nuisance.shape[1] + bundle.focal_target
+        treatment_direction_labels = list(original_treatment_functionals)
         additional_targets = {
+            label: np.r_[
+                np.zeros(design.nuisance.shape[1]),
+                np.asarray(original_treatment_functionals[label], float),
+            ]
+            for label in treatment_direction_labels
+        }
+        additional_targets.update({
             label: np.r_[
                 np.zeros(design.nuisance.shape[1]), np.asarray(weights, float)
             ]
             for label, weights in (bundle.reported_target_weights or {}).items()
-        }
+        })
         separation = separation_lp(
             design.full, young, total, focal_column, tolerance,
             design.nuisance_column_labels + bundle.regressor_labels,
             additional_target_vectors=additional_targets,
+        )
+        direction_audits = separation.get(
+            "reported_target_direction_audits", {}
+        )
+        treatment_direction_audits = {
+            label: direction_audits.get(label, {})
+            for label in treatment_direction_labels
+        }
+        treatment_direction_complete = all(
+            row.get("audit_complete") is True
+            for row in treatment_direction_audits.values()
+        )
+        any_treatment_direction_moves = bool(
+            treatment_direction_complete
+            and any(
+                row.get("target_can_move") is True
+                for row in treatment_direction_audits.values()
+            )
+        )
+        separation["treatment_column_direction_audits"] = (
+            treatment_direction_audits
+        )
+        separation[
+            "all_treatment_columns_direction_audit_complete"
+        ] = treatment_direction_complete
+        separation["any_treatment_column_can_move"] = (
+            any_treatment_direction_moves
+            if treatment_direction_complete else None
         )
         step = {
             "face_iteration": face_iteration,
@@ -2769,6 +3296,16 @@ def resolve_extended_likelihood_face(
                 "separation": separation,
                 "focal_target_finite": False,
             }, pruning
+        if not treatment_direction_complete:
+            trace.append(step)
+            return active, design, {
+                "status": "BLOCKED_INCOMPLETE_TREATMENT_VECTOR_DIRECTION_AUDIT",
+                "iterations": face_iteration,
+                "trace": trace,
+                "geometric_information": geometry,
+                "separation": separation,
+                "focal_target_finite": False,
+            }, pruning
         if separation.get("all_reported_targets_direction_audit_complete") is not True:
             trace.append(step)
             return active, design, {
@@ -2783,6 +3320,16 @@ def resolve_extended_likelihood_face(
             trace.append(step)
             return active, design, {
                 "status": "BLOCKED_TARGET_MOVING_RECESSION_DIRECTION",
+                "iterations": face_iteration,
+                "trace": trace,
+                "geometric_information": geometry,
+                "separation": separation,
+                "focal_target_finite": False,
+            }, pruning
+        if any_treatment_direction_moves:
+            trace.append(step)
+            return active, design, {
+                "status": "BLOCKED_TREATMENT_VECTOR_MOVING_RECESSION_DIRECTION",
                 "iterations": face_iteration,
                 "trace": trace,
                 "geometric_information": geometry,
@@ -2905,6 +3452,243 @@ class BinomialObjective:
 
     def probability(self, theta: np.ndarray) -> np.ndarray:
         return expit(self.offset + np.asarray(self.design @ theta).reshape(-1))
+
+
+class IndependentGroupedBinomialEvaluator:
+    """Standalone algebraically equivalent evaluator for the A1 reference.
+
+    This implementation deliberately does not call ``BinomialObjective`` or
+    its score/Hessian methods.  It works in the original parameter coordinates
+    and exposes raw objective, raw score, and sparse observed information for
+    the independently initialized damped Newton/IRLS path.
+    """
+
+    def __init__(
+        self,
+        design: sparse.csr_matrix,
+        young: np.ndarray,
+        total: np.ndarray,
+        offset: np.ndarray | None = None,
+    ):
+        self.design = sparse.csr_matrix(design, dtype=float)
+        self.successes = np.array(young, dtype=float, copy=True)
+        self.trials = np.array(total, dtype=float, copy=True)
+        self.offset = (
+            np.zeros(self.design.shape[0], dtype=float)
+            if offset is None else np.array(offset, dtype=float, copy=True)
+        )
+        if (
+            self.successes.shape != (self.design.shape[0],)
+            or self.trials.shape != self.successes.shape
+            or self.offset.shape != self.successes.shape
+            or not np.isfinite(self.successes).all()
+            or not np.isfinite(self.trials).all()
+            or not np.isfinite(self.offset).all()
+            or np.any(self.trials < 0.0)
+            or np.any(self.successes < 0.0)
+            or np.any(self.successes > self.trials)
+        ):
+            raise AuditBlocked("independent grouped-binomial inputs are invalid")
+        self.scale = max(float(np.add.reduce(self.trials)), 1.0)
+        self.evaluation_counts = {
+            "linear_predictor": 0,
+            "probability": 0,
+            "raw_objective": 0,
+            "raw_score": 0,
+            "raw_hessian": 0,
+            "raw_hessian_product": 0,
+        }
+
+    def linear_predictor(self, theta: np.ndarray) -> np.ndarray:
+        self.evaluation_counts["linear_predictor"] += 1
+        return self.offset + np.asarray(
+            self.design.dot(np.asarray(theta, dtype=float))
+        ).reshape(-1)
+
+    def probabilities(self, theta: np.ndarray) -> np.ndarray:
+        self.evaluation_counts["probability"] += 1
+        return expit(self.linear_predictor(theta))
+
+    def raw_objective(self, theta: np.ndarray) -> float:
+        self.evaluation_counts["raw_objective"] += 1
+        eta = self.linear_predictor(theta)
+        # Deliberately use the outcome/failure decomposition rather than the
+        # canonical ``n*softplus(eta) - y*eta`` expression.  The two are
+        # algebraically equivalent, but this standalone reference therefore
+        # does not merely duplicate the canonical evaluator's loss formula.
+        failures = self.trials - self.successes
+        contributions = (
+            self.successes * np.logaddexp(0.0, -eta)
+            + failures * np.logaddexp(0.0, eta)
+        )
+        return float(np.add.reduce(contributions))
+
+    def objective_per_total(self, theta: np.ndarray) -> float:
+        return self.raw_objective(theta) / self.scale
+
+    def raw_score(self, theta: np.ndarray) -> np.ndarray:
+        self.evaluation_counts["raw_score"] += 1
+        eta = self.linear_predictor(theta)
+        success_probability = expit(eta)
+        failure_probability = expit(-eta)
+        failures = self.trials - self.successes
+        residual = (
+            failures * success_probability
+            - self.successes * failure_probability
+        )
+        return np.asarray(self.design.transpose().dot(residual)).reshape(-1)
+
+    def raw_hessian(self, theta: np.ndarray) -> sparse.csc_matrix:
+        self.evaluation_counts["raw_hessian"] += 1
+        eta = self.linear_predictor(theta)
+        weights = self.trials * expit(eta) * expit(-eta)
+        weighted_design = self.design.multiply(weights[:, None])
+        hessian = (self.design.transpose() @ weighted_design).tocsc()
+        return ((hessian + hessian.transpose()) * 0.5).tocsc()
+
+    def raw_hessian_product(
+        self, theta: np.ndarray, direction: np.ndarray,
+    ) -> np.ndarray:
+        self.evaluation_counts["raw_hessian_product"] += 1
+        eta = self.linear_predictor(theta)
+        weights = self.trials * expit(eta) * expit(-eta)
+        projected = np.asarray(
+            self.design.dot(np.asarray(direction, dtype=float))
+        ).reshape(-1)
+        return np.asarray(
+            self.design.transpose().dot(weights * projected)
+        ).reshape(-1)
+
+
+def independent_evaluator_checks(
+    objective: BinomialObjective,
+    evaluator: IndependentGroupedBinomialEvaluator,
+    theta: np.ndarray,
+    gradient_tolerance: float,
+    objective_tolerance: float,
+    probability_tolerance: float,
+) -> dict[str, Any]:
+    """Check evaluator equivalence plus directional score/Hessian identities."""
+    theta = np.asarray(theta, dtype=float)
+    columns = len(theta)
+    direction = np.cos(np.arange(columns, dtype=float) + 0.5)
+    direction /= max(float(np.max(np.abs(direction), initial=0.0)), 1.0)
+    step = float(np.cbrt(np.finfo(float).eps) * (1.0 + np.linalg.norm(theta)))
+    primary_probability = objective.probability(theta)
+    independent_probability = evaluator.probabilities(theta)
+    primary_score = objective.gradient(theta)
+    independent_score = evaluator.raw_score(theta) / evaluator.scale
+    primary_hessian_product = objective.hessp(theta, direction)
+    independent_hessian_product = (
+        evaluator.raw_hessian_product(theta, direction) / evaluator.scale
+    )
+    numeric_directional_score = (
+        evaluator.objective_per_total(theta + step * direction)
+        - evaluator.objective_per_total(theta - step * direction)
+    ) / (2.0 * step)
+    analytic_directional_score = float(independent_score @ direction)
+    numeric_hessian_product = (
+        evaluator.raw_score(theta + step * direction)
+        - evaluator.raw_score(theta - step * direction)
+    ) / (2.0 * step * evaluator.scale)
+    objective_gap = abs(
+        objective.function(theta) - evaluator.objective_per_total(theta)
+    )
+    probability_gap = float(np.max(
+        np.abs(primary_probability - independent_probability), initial=0.0,
+    ))
+    score_gap = float(np.max(
+        np.abs(primary_score - independent_score), initial=0.0,
+    ))
+    hessian_gap = float(np.max(
+        np.abs(primary_hessian_product - independent_hessian_product),
+        initial=0.0,
+    ))
+    directional_gap = abs(
+        numeric_directional_score - analytic_directional_score
+    )
+    finite_difference_hessian_gap = float(np.max(
+        np.abs(numeric_hessian_product - independent_hessian_product),
+        initial=0.0,
+    ))
+    checks = {
+        "objective_equivalence": objective_gap <= objective_tolerance,
+        "probability_equivalence": probability_gap <= probability_tolerance,
+        "score_equivalence": score_gap <= gradient_tolerance,
+        "hessian_product_equivalence": hessian_gap <= gradient_tolerance,
+        "directional_derivative": directional_gap <= gradient_tolerance,
+        "finite_difference_hessian_product": (
+            finite_difference_hessian_gap <= gradient_tolerance
+        ),
+    }
+    return {
+        "status": (
+            "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+            if all(checks.values()) else
+            "BLOCKED_INDEPENDENT_EVALUATOR_OR_DERIVATIVE_CHECK"
+        ),
+        "checks": checks,
+        "finite_difference_step": step,
+        "objective_per_total_absolute_difference": objective_gap,
+        "fitted_probability_max_absolute_difference": probability_gap,
+        "score_per_total_max_absolute_difference": score_gap,
+        "hessian_product_per_total_max_absolute_difference": hessian_gap,
+        "directional_derivative_absolute_difference": directional_gap,
+        "finite_difference_hessian_product_max_absolute_difference": (
+            finite_difference_hessian_gap
+        ),
+        "objective_tolerance": objective_tolerance,
+        "probability_tolerance": probability_tolerance,
+        "gradient_or_derivative_tolerance": gradient_tolerance,
+        "direction_definition": "cos(j+0.5) normalized to max absolute one",
+    }
+
+
+def independent_evaluator_preflight(
+    objective: BinomialObjective,
+    gradient_tolerance: float,
+    objective_tolerance: float,
+    probability_tolerance: float,
+) -> dict[str, Any]:
+    """Cross-check both evaluators at deterministic, outcome-blind vectors."""
+    columns = objective.design.shape[1]
+    coordinate = np.arange(columns, dtype=float) + 1.0
+    vectors = {
+        "exact_zero": np.zeros(columns, dtype=float),
+        "bounded_sine_cosine": (
+            0.125 * np.sin(coordinate) + 0.075 * np.cos(2.0 * coordinate)
+        ),
+    }
+    evaluator = IndependentGroupedBinomialEvaluator(
+        objective.design, objective.young, objective.total, objective.offset,
+    )
+    checks = {
+        label: independent_evaluator_checks(
+            objective, evaluator, theta, gradient_tolerance,
+            objective_tolerance, probability_tolerance,
+        )
+        for label, theta in vectors.items()
+    }
+    passed = all(
+        audit["status"]
+        == "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+        for audit in checks.values()
+    )
+    return {
+        "status": (
+            "PASS_DETERMINISTIC_INDEPENDENT_EVALUATOR_PREFLIGHT"
+            if passed else
+            "BLOCKED_DETERMINISTIC_INDEPENDENT_EVALUATOR_PREFLIGHT"
+        ),
+        "vectors_are_outcome_blind": True,
+        "vector_definitions": {
+            "exact_zero": "theta_j = 0",
+            "bounded_sine_cosine": (
+                "theta_j = 0.125*sin(j+1)+0.075*cos(2*(j+1))"
+            ),
+        },
+        "checks": checks,
+    }
 
 
 def design_only_diagonal_reparameterization(
@@ -3392,6 +4176,449 @@ def full_hessian_stationarity_certificate(
     }
 
 
+def fit_independent_sparse_newton(
+    objective: BinomialObjective,
+    start: np.ndarray,
+    max_iterations: int,
+    gradient_tolerance: float,
+    standardized_score_tolerance: float,
+    focal_column: int,
+    target_functionals: dict[str, np.ndarray],
+    target_coefficient_tolerance: float,
+    raw_likelihood_tolerance: float,
+    linear_solve_relative_tolerance: float,
+    objective_equivalence_tolerance: float,
+    probability_equivalence_tolerance: float,
+    path_role: str,
+) -> tuple[dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]]:
+    """Standalone damped sparse Newton/IRLS reference or trust polish.
+
+    The Newton algebra, sparse Hessian construction, solve, and line search are
+    coded independently of ``BinomialObjective`` and ``fit_exact_solver``.
+    It returns before canonical cross-evaluation; the caller applies the same
+    unchanged external certificate to both reference and trust-path candidates.
+    """
+    evaluator = IndependentGroupedBinomialEvaluator(
+        objective.design, objective.young, objective.total, objective.offset,
+    )
+    line_search_candidate_evaluations = 0
+    newton_iterations_evaluated = 0
+    trajectory: list[dict[str, Any]] = []
+    last_metrics: dict[str, Any] = {}
+
+    def failure(code: str, message: str) -> IndependentNewtonFailure:
+        return IndependentNewtonFailure(code, message, {
+            **evaluator.evaluation_counts,
+            "line_search_candidate_objective": (
+                line_search_candidate_evaluations
+            ),
+            "newton_iterations_evaluated": newton_iterations_evaluated,
+        }, trajectory, last_metrics)
+
+    theta = np.array(start, dtype=float, copy=True)
+    if theta.shape != (objective.design.shape[1],) or not np.isfinite(theta).all():
+        raise failure(
+            "A1_NEWTON_INVALID_START", "independent Newton start is invalid",
+        )
+    if (
+        path_role == "standalone_zero_reference"
+        and not np.array_equal(theta, np.zeros_like(theta))
+    ):
+        raise failure(
+            "A1_NEWTON_NONZERO_REFERENCE_START",
+            "standalone Newton reference must start at exact zero",
+        )
+    internal_certificate: dict[str, Any] = {
+        "status": "BLOCKED_INDEPENDENT_NEWTON_CERTIFICATE_NOT_EVALUATED",
+    }
+    termination_code = "A1_NEWTON_ITERATION_LIMIT"
+    termination_message = (
+        "iteration budget exhausted without the complete internal certificate"
+    )
+    for iteration in range(max_iterations + 1):
+        newton_iterations_evaluated += 1
+        probability = evaluator.probabilities(theta)
+        raw_score = evaluator.raw_score(theta)
+        hessian = evaluator.raw_hessian(theta)
+        raw_before = evaluator.raw_objective(theta)
+        last_metrics = {
+            "iteration_zero_based": iteration,
+            "parameter_max_abs": float(np.max(np.abs(theta), initial=0.0)),
+            "focal_target": float(theta[focal_column]),
+            "raw_negative_log_likelihood": raw_before,
+            "objective_per_total": raw_before / evaluator.scale,
+            "raw_score_max_abs": float(np.max(
+                np.abs(raw_score), initial=0.0,
+            )),
+        }
+        diagonal = np.asarray(hessian.diagonal(), dtype=float)
+        if (
+            diagonal.shape != theta.shape
+            or not np.isfinite(diagonal).all()
+            or np.any(diagonal <= 0.0)
+        ):
+            raise failure(
+                "A1_NEWTON_INVALID_HESSIAN_DIAGONAL",
+                "independent Newton Hessian diagonal is invalid",
+            )
+        root_diagonal = np.sqrt(diagonal)
+        inverse_scale = sparse.diags(1.0 / root_diagonal)
+        scaled_hessian = (inverse_scale @ hessian @ inverse_scale).tocsc()
+        scaled_rhs = -raw_score / root_diagonal
+        try:
+            factor = splu(scaled_hessian)
+            scaled_direction = np.asarray(
+                factor.solve(scaled_rhs), dtype=float,
+            )
+        except (RuntimeError, ValueError) as error:
+            raise failure(
+                "A1_NEWTON_SINGULAR_HESSIAN",
+                "independent Newton sparse Hessian is singular",
+            ) from error
+        direction = scaled_direction / root_diagonal
+        residual = np.asarray(
+            scaled_hessian @ scaled_direction
+        ).reshape(-1) - scaled_rhs
+        matrix_norm = float(np.max(np.asarray(
+            np.abs(scaled_hessian).sum(axis=1)
+        ).reshape(-1), initial=0.0))
+        residual_norm = float(np.max(np.abs(residual), initial=0.0))
+        rhs_norm = float(np.max(np.abs(scaled_rhs), initial=0.0))
+        solution_norm = float(np.max(np.abs(scaled_direction), initial=0.0))
+        denominator = matrix_norm * solution_norm + rhs_norm
+        backward_error = (
+            residual_norm / denominator if denominator > 0.0
+            else (0.0 if residual_norm == 0.0 else math.inf)
+        )
+        if (
+            not np.isfinite(direction).all()
+            or backward_error > linear_solve_relative_tolerance
+            or (
+                float(np.max(np.abs(raw_score), initial=0.0)) > 0.0
+                and float(raw_score @ direction) >= 0.0
+            )
+        ):
+            raise failure(
+                "A1_NEWTON_INVALID_DIRECTION",
+                "independent Newton direction failed sparse-solve or descent checks",
+            )
+
+        candidates: list[tuple[float, int, float, np.ndarray]] = []
+        for halvings in range(65):
+            fraction = math.ldexp(1.0, -halvings)
+            candidate = theta + fraction * direction
+            value = evaluator.raw_objective(candidate)
+            line_search_candidate_evaluations += 1
+            if math.isfinite(value) and value <= raw_before:
+                candidates.append((value, halvings, fraction, candidate))
+        if not candidates:
+            raise failure(
+                "A1_NEWTON_LINE_SEARCH_FAILURE",
+                "independent Newton line search found no nonincrease",
+            )
+        raw_after, halvings, fraction, candidate = min(
+            candidates, key=lambda row: (row[0], row[1]),
+        )
+        gradient_max = float(
+            np.max(np.abs(raw_score), initial=0.0) / evaluator.scale
+        )
+        standardized_max = float(np.max(
+            np.abs(raw_score) / root_diagonal, initial=0.0,
+        ))
+        coordinate_step_max = float(np.max(
+            np.abs(raw_score) / diagonal, initial=0.0,
+        ))
+        decrement_squared = float(max(0.0, -raw_score @ direction))
+        target_corrections = {
+            label: float(np.asarray(functional, float) @ direction)
+            for label, functional in target_functionals.items()
+        }
+        maximum_target_correction = max(
+            (abs(value) for value in target_corrections.values()), default=0.0,
+        )
+        last_metrics.update({
+            "scaled_solve_normwise_backward_error": backward_error,
+            "newton_decrement_squared": decrement_squared,
+            "target_newton_corrections": target_corrections,
+            "maximum_absolute_target_newton_correction": (
+                maximum_target_correction
+            ),
+            "selected_line_search_fraction": fraction,
+            "selected_line_search_halvings": halvings,
+            "candidate_raw_negative_log_likelihood": raw_after,
+        })
+        internal_checks = {
+            "gradient_per_total": gradient_max <= gradient_tolerance,
+            "standardized_score": (
+                standardized_max <= standardized_score_tolerance
+            ),
+            "sparse_solve_backward_error": (
+                backward_error <= linear_solve_relative_tolerance
+            ),
+            "half_newton_decrement": (
+                decrement_squared / 2.0 <= raw_likelihood_tolerance
+            ),
+            "actual_raw_likelihood_decrease": (
+                raw_before - raw_after <= raw_likelihood_tolerance
+            ),
+            "all_declared_target_corrections": (
+                maximum_target_correction <= target_coefficient_tolerance
+            ),
+        }
+        internal_certificate = {
+            "status": (
+                "PASS_INDEPENDENT_NEWTON_INTERNAL_CERTIFICATE"
+                if all(internal_checks.values()) else
+                "BLOCKED_INDEPENDENT_NEWTON_INTERNAL_CERTIFICATE"
+            ),
+            "checks": internal_checks,
+            "gradient_infinity_norm_per_total": gradient_max,
+            "standardized_score_max_abs": standardized_max,
+            "coordinate_newton_step_max_abs": coordinate_step_max,
+            "scaled_solve_normwise_backward_error": backward_error,
+            "newton_decrement_squared": decrement_squared,
+            "actual_raw_negative_log_likelihood_decrease": (
+                raw_before - raw_after
+            ),
+            "target_newton_corrections": target_corrections,
+            "maximum_absolute_target_newton_correction": (
+                maximum_target_correction
+            ),
+        }
+        if all(internal_checks.values()):
+            termination_code = "A1_NEWTON_INTERNAL_CERTIFICATE_PASS"
+            termination_message = (
+                "complete standalone Newton internal certificate passed"
+            )
+            break
+        if iteration == max_iterations:
+            break
+        change = candidate - theta
+        trajectory.append({
+            "iteration": iteration + 1,
+            "path_role": path_role,
+            "objective_per_total_before": raw_before / evaluator.scale,
+            "objective_per_total": raw_after / evaluator.scale,
+            "raw_negative_log_likelihood": raw_after,
+            "raw_negative_log_likelihood_decrease": raw_before - raw_after,
+            "gradient_infinity_norm_per_total_before": float(
+                np.max(np.abs(raw_score), initial=0.0) / evaluator.scale
+            ),
+            "newton_direction_max_abs": float(
+                np.max(np.abs(direction), initial=0.0)
+            ),
+            "parameter_change_max_abs": float(
+                np.max(np.abs(change), initial=0.0)
+            ),
+            "focal_target": float(candidate[focal_column]),
+            "focal_target_change": float(change[focal_column]),
+            "dyadic_step_fraction": fraction,
+            "dyadic_halvings": halvings,
+            "scaled_solve_normwise_backward_error": backward_error,
+        })
+        theta = np.asarray(candidate, dtype=float)
+
+    probability = evaluator.probabilities(theta)
+    final_raw_score = evaluator.raw_score(theta)
+    final_hessian_diagonal = np.asarray(
+        evaluator.raw_hessian(theta).diagonal(), float,
+    )
+    final_gradient_max = float(
+        np.max(np.abs(final_raw_score), initial=0.0) / evaluator.scale
+    )
+    final_standardized_max = float(np.max(
+        np.divide(
+            np.abs(final_raw_score), np.sqrt(final_hessian_diagonal),
+            out=np.full_like(final_raw_score, np.inf),
+            where=final_hessian_diagonal > 0.0,
+        ), initial=0.0,
+    ))
+    final_coordinate_step = float(np.max(
+        np.divide(
+            np.abs(final_raw_score), final_hessian_diagonal,
+            out=np.full_like(final_raw_score, np.inf),
+            where=final_hessian_diagonal > 0.0,
+        ), initial=0.0,
+    ))
+    internally_valid = bool(
+        np.isfinite(theta).all() and np.isfinite(probability).all()
+        and internal_certificate["status"]
+        == "PASS_INDEPENDENT_NEWTON_INTERNAL_CERTIFICATE"
+    )
+    final_raw_objective = evaluator.raw_objective(theta)
+    evaluation_counts = {
+        **evaluator.evaluation_counts,
+        "line_search_candidate_objective": (
+            line_search_candidate_evaluations
+        ),
+        "newton_iterations_evaluated": newton_iterations_evaluated,
+    }
+    diagnostics = {
+        "method": "independent-damped-sparse-newton-irls",
+        "optimizer_options": {
+            "max_iterations": max_iterations,
+            "dyadic_line_search_candidate_count_per_iteration": 65,
+            "line_search_selection": (
+                "minimum finite nonincreasing objective; ties by fewer halvings"
+            ),
+            "gradient_tolerance": gradient_tolerance,
+            "standardized_score_tolerance": standardized_score_tolerance,
+            "target_coefficient_tolerance": target_coefficient_tolerance,
+            "raw_likelihood_tolerance": raw_likelihood_tolerance,
+            "linear_solve_relative_tolerance": (
+                linear_solve_relative_tolerance
+            ),
+        },
+        "path_role": path_role,
+        "independent_zero_start": bool(np.array_equal(
+            np.asarray(start, float), np.zeros_like(theta)
+        )),
+        "uses_scipy_minimize": False,
+        "scipy_success": None,
+        "scipy_status": None,
+        "scipy_status_is_not_acceptance_evidence": True,
+        "message": termination_message,
+        "implementation_owned_termination_code": termination_code,
+        "implementation_owned_termination_message": termination_message,
+        "implementation_owned_termination_namespace": (
+            "YAX_A1_INDEPENDENT_NEWTON"
+        ),
+        "iterations": len(trajectory),
+        "newton_iterations_evaluated": newton_iterations_evaluated,
+        "function_evaluations": evaluation_counts["raw_objective"],
+        "gradient_evaluations": evaluation_counts["raw_score"],
+        "hessian_evaluations": evaluation_counts["raw_hessian"],
+        "line_search_candidate_evaluations": (
+            line_search_candidate_evaluations
+        ),
+        "independent_evaluation_counts": evaluation_counts,
+        "last_iteration_metrics": last_metrics,
+        "objective_per_total": final_raw_objective / evaluator.scale,
+        "raw_negative_log_likelihood": final_raw_objective,
+        "raw_gradient_infinity_norm": float(np.max(
+            np.abs(final_raw_score), initial=0.0,
+        )),
+        "gradient_infinity_norm_per_total": final_gradient_max,
+        "standardized_score_max_abs": final_standardized_max,
+        "coordinate_newton_step_max_abs": final_coordinate_step,
+        "transformed_gradient_infinity_norm": None,
+        "internal_transformed_gradient_tolerance": None,
+        "optimizer_reparameterization": {
+            "status": "NOT_USED_INDEPENDENT_ORIGINAL_COORDINATE_NEWTON",
+        },
+        "optimizer_reparameterization_status": (
+            "NOT_USED_INDEPENDENT_ORIGINAL_COORDINATE_NEWTON"
+        ),
+        "optimizer_parameter_scale_min": None,
+        "optimizer_parameter_scale_max": None,
+        "optimizer_parameter_scale_sha256": None,
+        "optimizer_start": {
+            "status": (
+                "EXACT_ZERO_INDEPENDENT_REFERENCE_START"
+                if path_role == "standalone_zero_reference" else
+                "TRUST_CANDIDATE_CONDITIONAL_POLISH_START"
+            ),
+        },
+        "optimizer_start_original_coordinates": np.asarray(
+            start, float,
+        ).tolist(),
+        "optimizer_start_original_coordinates_sha256": hashlib.sha256(
+            np.ascontiguousarray(start, dtype="<f8").tobytes()
+        ).hexdigest(),
+        "independent_internal_stationarity_certificate": internal_certificate,
+        "full_hessian_stationarity_certificate": {
+            "status": "PENDING_UNCHANGED_EXTERNAL_CERTIFICATE",
+            "candidate_left_untouched": True,
+        },
+        "parameter_max_abs": float(np.max(np.abs(theta), initial=0.0)),
+        "focal_target": float(theta[focal_column]),
+        "probability_exact_zero": int(np.sum(probability == 0.0)),
+        "probability_exact_one": int(np.sum(probability == 1.0)),
+        "probability_at_or_below_1e_10": int(np.sum(probability <= 1e-10)),
+        "probability_at_or_above_1_minus_1e_10": int(
+            np.sum(probability >= 1.0 - 1e-10)
+        ),
+        "zero_information_weight_rows": int(np.sum(
+            evaluator.trials * probability * (1.0 - probability) == 0.0
+        )),
+        "independent_internal_numerically_valid": internally_valid,
+        "numerically_valid": False,
+        "acceptance_source": "PENDING_UNCHANGED_EXTERNAL_CERTIFICATE",
+        "cross_evaluation_tolerances_reserved_for_external_audit": {
+            "objective": objective_equivalence_tolerance,
+            "probability": probability_equivalence_tolerance,
+            "gradient": gradient_tolerance,
+        },
+    }
+    return diagnostics, theta, probability, trajectory
+
+
+def externally_certify_independent_output(
+    objective: BinomialObjective,
+    output: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ],
+    target_functionals: dict[str, np.ndarray],
+    gradient_tolerance: float,
+    standardized_score_tolerance: float,
+    target_coefficient_tolerance: float,
+    raw_likelihood_tolerance: float,
+    linear_solve_relative_tolerance: float,
+    objective_equivalence_tolerance: float,
+    probability_equivalence_tolerance: float,
+) -> tuple[dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]]:
+    """Apply unchanged canonical checks only after the independent path ends."""
+    diagnostics, theta, probability, trajectory = output
+    evaluator = IndependentGroupedBinomialEvaluator(
+        objective.design, objective.young, objective.total, objective.offset,
+    )
+    cross_evaluation = independent_evaluator_checks(
+        objective, evaluator, theta, gradient_tolerance,
+        objective_equivalence_tolerance, probability_equivalence_tolerance,
+    )
+    canonical_score = original_coordinate_score_diagnostics(
+        objective, theta, objective.probability(theta),
+    )
+    try:
+        stationarity = full_hessian_stationarity_certificate(
+            objective, theta, target_functionals,
+            standardized_score_tolerance, target_coefficient_tolerance,
+            raw_likelihood_tolerance, linear_solve_relative_tolerance,
+        )
+    except AuditBlocked as error:
+        stationarity = {
+            "status": "BLOCKED_ORIGINAL_FULL_HESSIAN_CERTIFICATE_EXCEPTION",
+            "candidate_left_untouched": True,
+            "error_type": type(error).__name__, "message": str(error),
+        }
+    valid = bool(
+        diagnostics["independent_internal_numerically_valid"] is True
+        and canonical_score["gradient_infinity_norm_per_total"]
+        <= gradient_tolerance
+        and canonical_score["standardized_score_max_abs"]
+        <= standardized_score_tolerance
+        and stationarity["status"]
+        == "PASS_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE"
+        and cross_evaluation["status"]
+        == "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+    )
+    certified = {
+        **diagnostics,
+        "cross_evaluation_under_canonical_and_independent_implementations": (
+            cross_evaluation
+        ),
+        "independent_evaluator_final_checks": cross_evaluation,
+        "canonical_external_score": canonical_score,
+        "full_hessian_stationarity_certificate": stationarity,
+        "numerically_valid": valid,
+        "acceptance_source": (
+            "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE"
+            if valid else "BLOCKED_ORIGINAL_COORDINATE_DECLARED_KKT"
+        ),
+    }
+    return certified, theta, probability, trajectory
+
+
 def fit_exact_solver(
     objective: BinomialObjective,
     method: str,
@@ -3492,6 +4719,16 @@ def fit_exact_solver(
         callback(phi)
     diagnostics = {
         "method": method,
+        "optimizer_options": options,
+        "optimizer_start_original_coordinates": optimizer_start.tolist(),
+        "optimizer_start_original_coordinates_sha256": hashlib.sha256(
+            np.ascontiguousarray(optimizer_start, dtype="<f8").tobytes()
+        ).hexdigest(),
+        "optimizer_start_transformed_coordinates_sha256": hashlib.sha256(
+            np.ascontiguousarray(
+                optimizer_start * parameter_scale, dtype="<f8",
+            ).tobytes()
+        ).hexdigest(),
         "scipy_success": bool(result.success),
         "scipy_status": int(result.status),
         "message": str(result.message),
@@ -3557,6 +4794,7 @@ def compare_solvers(
     nuisance_columns: int, focal_target: int, tolerances: dict[str, Any],
     reported_target_weights: dict[str, np.ndarray] | None = None,
     row_identifiers: list[dict[str, Any]] | None = None,
+    treatment_labels: list[str] | None = None,
 ) -> dict[str, Any]:
     if (
         left.get("method") != "L-BFGS-B"
@@ -3610,11 +4848,32 @@ def compare_solvers(
             abs(weights @ beta_left - weights @ beta_right)
         )
     reported_max = max(reported_differences.values(), default=0.0)
+    if treatment_labels is None:
+        treatment_labels = [
+            f"treatment_column_{index}" for index in range(len(beta_left))
+        ]
+    if len(treatment_labels) != len(beta_left):
+        raise AuditBlocked(
+            "treatment labels have wrong historical solver-comparison length"
+        )
+    complete_treatment_differences = {
+        label: float(abs(beta_left[index] - beta_right[index]))
+        for index, label in enumerate(treatment_labels)
+    }
     result.update({
         "reported_target_absolute_differences": reported_differences,
         "reported_target_max_absolute_difference": float(reported_max),
         "reported_target_comparison_pass": bool(
             reported_max <= tolerances["target_coefficient_absolute_difference"]
+        ),
+        "complete_identified_treatment_vector_absolute_differences": (
+            complete_treatment_differences
+        ),
+        "complete_identified_treatment_vector_count": len(
+            complete_treatment_differences
+        ),
+        "complete_identified_treatment_vector_max_absolute_difference": max(
+            complete_treatment_differences.values(), default=0.0,
         ),
     })
     result["comparison_pass"] = bool(
@@ -3625,6 +4884,587 @@ def compare_solvers(
         result["objective_difference_per_total"] <= tolerances["objective_difference_per_total"]
     )
     return result
+
+
+def target_vector(
+    theta: np.ndarray,
+    target_functionals: dict[str, np.ndarray],
+) -> dict[str, float]:
+    return {
+        label: float(np.asarray(functional, float) @ theta)
+        for label, functional in target_functionals.items()
+    }
+
+
+def audit_lbfgsb_diagnostic_contradictions(
+    objective: BinomialObjective,
+    lbfgsb_output: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ] | None,
+    trust_path: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ],
+    reference: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ],
+    target_functionals: dict[str, np.ndarray],
+    tolerances: dict[str, Any],
+    standardized_score_tolerance: float,
+    unavailable_failure: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Let a nonessential L-BFGS-B diagnostic falsify, never certify, A1.
+
+    A visibly unfinished diagnostic is not required to agree in coefficients.
+    It blocks only if it exposes a lower objective, if the two evaluator
+    implementations disagree at its candidate, or if a candidate satisfying
+    the unchanged stationarity requirements nevertheless disagrees on a
+    declared target.  Thus failure to converge is not elevated into evidence,
+    while an actual contradiction cannot be ignored.
+    """
+    if lbfgsb_output is None:
+        return {
+            "status": "BLOCKED_LBFGSB_DIAGNOSTIC_NOT_RUN_OR_REPORTED",
+            "available": False,
+            "binding_pass": False,
+            "contradiction_detected": None,
+            "unavailable_failure": unavailable_failure,
+            "interpretation": (
+                "L-BFGS-B need not converge, but the predeclared diagnostic "
+                "must be executed and reported for every model"
+            ),
+        }
+    diagnostic, theta, _probability, _trajectory = lbfgsb_output
+    _trust_diagnostic, trust_theta, _trust_probability, _ = trust_path
+    reference_diagnostic, reference_theta, _reference_probability, _ = reference
+    evaluator = IndependentGroupedBinomialEvaluator(
+        objective.design, objective.young, objective.total, objective.offset,
+    )
+    cross_evaluation = independent_evaluator_checks(
+        objective, evaluator, theta,
+        float(tolerances["gradient_infinity_norm_per_total"]),
+        float(tolerances["objective_difference_per_total"]),
+        float(tolerances["fitted_probability_max_abs_difference"]),
+    )
+    canonical_score = original_coordinate_score_diagnostics(
+        objective, theta, objective.probability(theta),
+    )
+    diagnostic_objective = objective.function(theta)
+    best_binding_objective = min(
+        objective.function(reference_theta),
+        objective.function(trust_theta),
+    )
+    signed_objective_gap = diagnostic_objective - best_binding_objective
+    target_differences = {
+        label: abs(float(np.asarray(functional, float) @ (
+            theta - reference_theta
+        )))
+        for label, functional in target_functionals.items()
+    }
+    maximum_target_difference = max(
+        target_differences.values(), default=0.0,
+    )
+    stationarity = diagnostic.get(
+        "full_hessian_stationarity_certificate", {},
+    )
+    independently_stationary = bool(
+        canonical_score["gradient_infinity_norm_per_total"]
+        <= float(tolerances["gradient_infinity_norm_per_total"])
+        and canonical_score["standardized_score_max_abs"]
+        <= standardized_score_tolerance
+        and stationarity.get("status")
+        == "PASS_ORIGINAL_FULL_HESSIAN_WEAK_DIRECTION_CERTIFICATE"
+    )
+    materially_lower_objective = bool(
+        signed_objective_gap
+        < -float(tolerances["objective_difference_per_total"])
+    )
+    derivative_implementation_contradiction = bool(
+        cross_evaluation["status"]
+        != "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+    )
+    stationary_target_contradiction = bool(
+        independently_stationary
+        and maximum_target_difference
+        > float(tolerances["target_coefficient_absolute_difference"])
+    )
+    contradiction = bool(
+        materially_lower_objective
+        or derivative_implementation_contradiction
+        or stationary_target_contradiction
+    )
+    return {
+        "status": (
+            "BLOCKED_LBFGSB_DIAGNOSTIC_CONTRADICTION"
+            if contradiction else
+            "PASS_NO_LBFGSB_DIAGNOSTIC_CONTRADICTION"
+        ),
+        "available": True,
+        "binding_pass": not contradiction,
+        "contradiction_detected": contradiction,
+        "diagnostic_candidate_numerically_valid": diagnostic.get(
+            "numerically_valid"
+        ),
+        "diagnostic_candidate_independently_stationary": (
+            independently_stationary
+        ),
+        "recomputed_objective_per_total": diagnostic_objective,
+        "best_binding_objective_per_total": best_binding_objective,
+        "signed_objective_gap_diagnostic_minus_best_binding": (
+            signed_objective_gap
+        ),
+        "target_absolute_differences_vs_reference": target_differences,
+        "maximum_declared_target_absolute_difference_vs_reference": (
+            maximum_target_difference
+        ),
+        "canonical_recomputed_score": canonical_score,
+        "independent_cross_evaluation": cross_evaluation,
+        "checks": {
+            "no_materially_lower_diagnostic_objective": (
+                not materially_lower_objective
+            ),
+            "no_derivative_implementation_contradiction": (
+                not derivative_implementation_contradiction
+            ),
+            "no_stationary_declared_target_contradiction": (
+                not stationary_target_contradiction
+            ),
+        },
+        "interpretation": (
+            "nonstationary target differences do not block; lower objective, "
+            "cross-evaluator derivative disagreement, or a stationary target "
+            "disagreement does block"
+        ),
+    }
+
+
+def dual_candidate_fitted_hessian_audit(
+    design: sparse.csr_matrix,
+    total: np.ndarray,
+    trust_probability: np.ndarray,
+    reference_probability: np.ndarray,
+    expected_rank: int,
+    relative_tolerance: float,
+) -> dict[str, Any]:
+    """Require raw and diagonally scaled fitted-Hessian PD on both paths."""
+    candidates = {}
+    for label, probability in (
+        ("trust_path", trust_probability),
+        ("independent_zero_start_reference", reference_probability),
+    ):
+        probability = np.asarray(probability, float)
+        weight = np.asarray(total, float) * probability * (1.0 - probability)
+        candidates[label] = full_hessian_diagnostics(
+            design, weight, expected_rank, relative_tolerance,
+        )
+    checks = {
+        label: bool(
+            audit.get("status") == "PASS_FULL_HESSIAN_SPECTRUM"
+            and audit.get("rank_deficiency") == 0
+            and audit.get("positive_definite_at_declared_tolerance") is True
+            and math.isfinite(audit.get(
+                "smallest_positive_or_extreme_eigenvalue", math.nan,
+            ))
+            and math.isfinite(audit.get(
+                "diagonally_scaled_smallest_positive_or_extreme_eigenvalue",
+                math.nan,
+            ))
+        )
+        for label, audit in candidates.items()
+    }
+    return {
+        "status": (
+            "PASS_BOTH_CANDIDATE_RAW_AND_SCALED_FITTED_HESSIANS"
+            if all(checks.values()) else
+            "BLOCKED_CANDIDATE_RAW_OR_SCALED_FITTED_HESSIAN"
+        ),
+        "expected_full_rank": expected_rank,
+        "checks": checks,
+        "candidates": candidates,
+    }
+
+
+def a1_shared_problem_binding(
+    active: np.ndarray,
+    design: SparseDesign,
+    treatment_labels: list[str],
+    target_functionals: dict[str, np.ndarray],
+) -> dict[str, Any]:
+    """Hash the one problem instance consumed by both binding A1 paths."""
+    active_positions = np.ascontiguousarray(
+        np.flatnonzero(np.asarray(active, bool)), dtype="<i8",
+    )
+    active_hash = hashlib.sha256(
+        canonical_bytes({
+            "semantic": "zero-based positions in exact input-model row order",
+            "count": len(active_positions),
+        }) + b"\0" + active_positions.tobytes(order="C")
+    ).hexdigest()
+
+    matrix = design.full.copy().tocsr()
+    matrix.sort_indices()
+    if len(active_positions) != matrix.shape[0]:
+        raise AuditBlocked(
+            "A1 shared-problem active-row count differs from final design rows"
+        )
+    matrix_header = canonical_bytes({
+        "shape": list(matrix.shape),
+        "parameter_labels": design.nuisance_column_labels + treatment_labels,
+        "serialization": (
+            "CSR little-endian float64 data, int64 indices, int64 indptr"
+        ),
+    })
+    design_hash = hashlib.sha256(
+        matrix_header + b"\0"
+        + np.ascontiguousarray(matrix.data, dtype="<f8").tobytes()
+        + b"\0"
+        + np.ascontiguousarray(matrix.indices, dtype="<i8").tobytes()
+        + b"\0"
+        + np.ascontiguousarray(matrix.indptr, dtype="<i8").tobytes()
+    ).hexdigest()
+
+    normalization_payload = {
+        "first_levels": design.first_levels,
+        "second_levels": design.second_levels,
+        "second_references": design.second_references,
+        "nuisance_column_labels": design.nuisance_column_labels,
+        "component_count": design.component_count,
+        "component_sizes": design.component_sizes,
+    }
+    normalization_hash = hashlib.sha256(
+        canonical_bytes(normalization_payload)
+    ).hexdigest()
+
+    target_labels = list(target_functionals)
+    target_matrix = np.ascontiguousarray(np.row_stack([
+        np.asarray(target_functionals[label], dtype="<f8")
+        for label in target_labels
+    ]), dtype="<f8")
+    target_hash = hashlib.sha256(
+        canonical_bytes({
+            "shape": list(target_matrix.shape),
+            "labels_in_row_order": target_labels,
+            "serialization": "row-major little-endian float64",
+        }) + b"\0" + target_matrix.tobytes(order="C")
+    ).hexdigest()
+    combined = hashlib.sha256(canonical_bytes({
+        "active_rows_sha256": active_hash,
+        "ordered_sparse_design_sha256": design_hash,
+        "nuisance_normalization_sha256": normalization_hash,
+        "ordered_target_matrix_sha256": target_hash,
+    })).hexdigest()
+    return {
+        "status": "PASS_SINGLE_HASHED_PROBLEM_SHARED_BY_BOTH_A1_PATHS",
+        "active_rows_sha256": active_hash,
+        "ordered_sparse_design_sha256": design_hash,
+        "nuisance_normalization_sha256": normalization_hash,
+        "ordered_target_matrix_sha256": target_hash,
+        "combined_problem_sha256": combined,
+        "trust_path_problem_sha256": combined,
+        "zero_start_reference_problem_sha256": combined,
+        "both_paths_receive_same_objective_instance": True,
+        "active_row_count": len(active_positions),
+        "parameter_count": matrix.shape[1],
+        "target_functional_count": len(target_labels),
+    }
+
+
+def conditionally_polish_trust_candidate(
+    objective: BinomialObjective,
+    trust_output: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ],
+    max_iterations: int,
+    gradient_tolerance: float,
+    standardized_score_tolerance: float,
+    focal_column: int,
+    target_functionals: dict[str, np.ndarray],
+    target_coefficient_tolerance: float,
+    raw_likelihood_tolerance: float,
+    linear_solve_relative_tolerance: float,
+    objective_equivalence_tolerance: float,
+    probability_equivalence_tolerance: float,
+) -> tuple[
+    tuple[dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]],
+    dict[str, Any],
+]:
+    """Apply the same independent exact-Newton engine only after trust fails."""
+    trust_diagnostics, trust_theta, trust_probability, trust_trajectory = (
+        trust_output
+    )
+    before = {
+        "numerically_valid": trust_diagnostics["numerically_valid"],
+        "acceptance_source": trust_diagnostics["acceptance_source"],
+        "certificate_status": trust_diagnostics[
+            "full_hessian_stationarity_certificate"
+        ]["status"],
+        "objective_per_total": trust_diagnostics["objective_per_total"],
+        "target_vector": target_vector(trust_theta, target_functionals),
+    }
+    if trust_diagnostics["numerically_valid"] is True:
+        trust_path_diagnostics = {
+            **trust_diagnostics,
+            "method": "trust-path-unpolished-trust-ncg",
+            "trust_candidate_preserved": True,
+            "conditional_exact_newton_polish_applied": False,
+        }
+        return (
+            trust_path_diagnostics, trust_theta, trust_probability,
+            trust_trajectory,
+        ), {
+            "status": "PASS_TRUST_EXTERNAL_CERTIFICATE_NO_POLISH_REQUIRED",
+            "applied": False,
+            "trigger": "trust candidate passed unchanged external certificate",
+            "before": before,
+            "after": before,
+            "trust_candidate_parameter_change_max_abs": 0.0,
+        }
+
+    polished_raw = fit_independent_sparse_newton(
+        objective, trust_theta, max_iterations, gradient_tolerance,
+        standardized_score_tolerance, focal_column, target_functionals,
+        target_coefficient_tolerance, raw_likelihood_tolerance,
+        linear_solve_relative_tolerance, objective_equivalence_tolerance,
+        probability_equivalence_tolerance, "conditional_trust_polish",
+    )
+    polished = externally_certify_independent_output(
+        objective, polished_raw, target_functionals, gradient_tolerance,
+        standardized_score_tolerance, target_coefficient_tolerance,
+        raw_likelihood_tolerance, linear_solve_relative_tolerance,
+        objective_equivalence_tolerance, probability_equivalence_tolerance,
+    )
+    polished_diagnostics, polished_theta, polished_probability, trajectory = (
+        polished
+    )
+    trust_path_diagnostics = {
+        **polished_diagnostics,
+        "method": "trust-path-with-independent-exact-newton-polish",
+        "trust_candidate_preserved": True,
+        "conditional_exact_newton_polish_applied": True,
+        "pre_polish_trust_diagnostics": before,
+    }
+    after = {
+        "numerically_valid": polished_diagnostics["numerically_valid"],
+        "acceptance_source": polished_diagnostics["acceptance_source"],
+        "certificate_status": polished_diagnostics[
+            "full_hessian_stationarity_certificate"
+        ]["status"],
+        "objective_per_total": polished_diagnostics["objective_per_total"],
+        "target_vector": target_vector(polished_theta, target_functionals),
+    }
+    return (
+        trust_path_diagnostics, polished_theta, polished_probability, trajectory,
+    ), {
+        "status": (
+            "PASS_CONDITIONAL_TRUST_EXACT_NEWTON_POLISH"
+            if polished_diagnostics["numerically_valid"] else
+            "BLOCKED_CONDITIONAL_TRUST_EXACT_NEWTON_POLISH"
+        ),
+        "applied": True,
+        "trigger": "trust candidate failed unchanged external certificate",
+        "before": before,
+        "after": after,
+        "trust_candidate_parameter_change_max_abs": float(np.max(
+            np.abs(polished_theta - trust_theta), initial=0.0,
+        )),
+    }
+
+
+def compare_trust_path_to_reference(
+    objective: BinomialObjective,
+    trust_path: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ],
+    reference: tuple[
+        dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]
+    ],
+    target_functionals: dict[str, np.ndarray],
+    tolerances: dict[str, Any],
+    row_identifiers: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Binding A1 comparison on every declared target and fitted quantity."""
+    trust, trust_theta, trust_probability, _ = trust_path
+    ref, ref_theta, ref_probability, _ = reference
+    trust_targets = target_vector(trust_theta, target_functionals)
+    reference_targets = target_vector(ref_theta, target_functionals)
+    target_differences = {
+        label: abs(trust_targets[label] - reference_targets[label])
+        for label in target_functionals
+    }
+    maximum_target_difference = max(target_differences.values(), default=0.0)
+    identified_treatment_labels = [
+        label for label in target_functionals
+        if label.startswith("original_treatment::")
+    ]
+    # Generic synthetic callers may supply only unit-functionals with shorter
+    # names.  Production always supplies the explicit treatment_basis family.
+    if not identified_treatment_labels:
+        identified_treatment_labels = list(target_functionals)
+    identified_treatment_differences = {
+        label: target_differences[label]
+        for label in identified_treatment_labels
+    }
+    transformed_basis_differences = {
+        label: target_differences[label]
+        for label in target_functionals
+        if label.startswith("treatment_basis::")
+    }
+    maximum_identified_treatment_difference = max(
+        identified_treatment_differences.values(), default=math.inf,
+    )
+    probability_difference = trust_probability - ref_probability
+    fitted_stock_difference = objective.total * probability_difference
+    trust_eta = objective.offset + np.asarray(
+        objective.design @ trust_theta
+    ).reshape(-1)
+    reference_eta = objective.offset + np.asarray(
+        objective.design @ ref_theta
+    ).reshape(-1)
+    eta_difference = trust_eta - reference_eta
+    argmax = int(np.argmax(np.abs(probability_difference)))
+    if row_identifiers is not None and len(row_identifiers) != len(
+        probability_difference
+    ):
+        raise AuditBlocked("A1 comparison row identifiers have the wrong length")
+    location: dict[str, Any] = {
+        "row_position_zero_based": argmax,
+        "trust_path_fitted_probability": float(trust_probability[argmax]),
+        "reference_fitted_probability": float(ref_probability[argmax]),
+        "absolute_difference": float(abs(probability_difference[argmax])),
+    }
+    if row_identifiers is not None:
+        location["row_identifiers"] = row_identifiers[argmax]
+    objective_gap = abs(
+        trust["objective_per_total"] - ref["objective_per_total"]
+    )
+    probability_gap = float(np.max(
+        np.abs(probability_difference), initial=0.0,
+    ))
+    evaluator = IndependentGroupedBinomialEvaluator(
+        objective.design, objective.young, objective.total, objective.offset,
+    )
+    trust_cross_evaluation = independent_evaluator_checks(
+        objective, evaluator, trust_theta,
+        float(tolerances["gradient_infinity_norm_per_total"]),
+        float(tolerances["objective_difference_per_total"]),
+        float(tolerances["fitted_probability_max_abs_difference"]),
+    )
+    reference_cross_evaluation = independent_evaluator_checks(
+        objective, evaluator, ref_theta,
+        float(tolerances["gradient_infinity_norm_per_total"]),
+        float(tolerances["objective_difference_per_total"]),
+        float(tolerances["fitted_probability_max_abs_difference"]),
+    )
+    checks = {
+        "trust_path_externally_certified": trust["numerically_valid"] is True,
+        "zero_start_reference_externally_certified": (
+            ref["numerically_valid"] is True
+        ),
+        "full_target_vector": (
+            maximum_target_difference
+            <= tolerances["target_coefficient_absolute_difference"]
+        ),
+        "full_identified_treatment_vector": (
+            maximum_identified_treatment_difference
+            <= tolerances["target_coefficient_absolute_difference"]
+        ),
+        "fitted_probabilities": (
+            probability_gap
+            <= tolerances["fitted_probability_max_abs_difference"]
+        ),
+        "objective_per_total": (
+            objective_gap <= tolerances["objective_difference_per_total"]
+        ),
+        "trust_candidate_cross_evaluator_equivalence": (
+            trust_cross_evaluation["status"]
+            == "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+        ),
+        "reference_candidate_cross_evaluator_equivalence": (
+            reference_cross_evaluation["status"]
+            == "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+        ),
+    }
+    return {
+        "status": (
+            "PASS_A1_TRUST_PATH_VS_ZERO_START_REFERENCE"
+            if all(checks.values()) else
+            "BLOCKED_A1_TRUST_PATH_VS_ZERO_START_REFERENCE"
+        ),
+        "left_solver": trust["method"],
+        "right_solver": ref["method"],
+        "left_valid": trust["numerically_valid"],
+        "right_valid": ref["numerically_valid"],
+        "trust_path_target_vector": trust_targets,
+        "reference_target_vector": reference_targets,
+        "target_absolute_differences": target_differences,
+        "identified_treatment_target_labels": identified_treatment_labels,
+        "identified_treatment_target_count": len(identified_treatment_labels),
+        "identified_treatment_absolute_differences": (
+            identified_treatment_differences
+        ),
+        "transformed_basis_absolute_differences_nonbinding_diagnostic": (
+            transformed_basis_differences
+        ),
+        "maximum_absolute_full_identified_treatment_vector_difference": (
+            maximum_identified_treatment_difference
+        ),
+        "reported_target_absolute_differences": target_differences,
+        "reported_target_max_absolute_difference": maximum_target_difference,
+        "reported_target_comparison_pass": checks["full_target_vector"],
+        "focal_target_left": trust_targets.get("focal_target"),
+        "focal_target_right": reference_targets.get("focal_target"),
+        "focal_target_absolute_difference": target_differences.get(
+            "focal_target", 0.0,
+        ),
+        "all_parameter_max_abs_difference_including_nuisance": float(np.max(
+            np.abs(trust_theta - ref_theta), initial=0.0,
+        )),
+        "all_slope_max_abs_difference": (
+            maximum_identified_treatment_difference
+        ),
+        "fitted_probability_max_abs_difference": probability_gap,
+        "fitted_probability_max_abs_difference_location": location,
+        "fitted_probability_rmse": float(np.sqrt(np.mean(
+            np.square(probability_difference)
+        ))),
+        "conditional_fitted_stock_mean_max_absolute_difference": float(
+            np.max(np.abs(fitted_stock_difference), initial=0.0)
+        ),
+        "conditional_fitted_stock_mean_rmse": float(np.sqrt(np.mean(
+            np.square(fitted_stock_difference)
+        ))),
+        "normalized_conditional_fitted_mean_max_absolute_difference": (
+            probability_gap
+        ),
+        "normalized_conditional_fitted_mean_comparison_pass": checks[
+            "fitted_probabilities"
+        ],
+        "linear_predictor_all_finite": bool(
+            np.isfinite(trust_eta).all()
+            and np.isfinite(reference_eta).all()
+        ),
+        "linear_predictor_max_absolute_difference_nonbinding": float(
+            np.max(np.abs(eta_difference), initial=0.0)
+        ),
+        "linear_predictor_rmse_nonbinding": float(np.sqrt(np.mean(
+            np.square(eta_difference)
+        ))),
+        "objective_difference_per_total": objective_gap,
+        "raw_negative_log_likelihood_difference": abs(
+            trust["raw_negative_log_likelihood"]
+            - ref["raw_negative_log_likelihood"]
+        ),
+        "checks": checks,
+        "trust_candidate_cross_evaluation": trust_cross_evaluation,
+        "reference_candidate_cross_evaluation": reference_cross_evaluation,
+        "comparison_pass": all(checks.values()),
+        "same_final_tolerances": {
+            key: tolerances[key] for key in (
+                "target_coefficient_absolute_difference",
+                "fitted_probability_max_abs_difference",
+                "objective_difference_per_total",
+            )
+        },
+    }
 
 
 def fixed_target_profile(
@@ -3639,6 +5479,8 @@ def fixed_target_profile(
     standardized_score_tolerance: float,
     raw_rise_tolerance: float,
     linear_solve_relative_tolerance: float,
+    objective_equivalence_tolerance: float = 1e-10,
+    probability_equivalence_tolerance: float = 1e-7,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     if (
         optimum_diagnostics.get("numerically_valid") is not True
@@ -3673,6 +5515,7 @@ def fixed_target_profile(
             reduced_design, objective.young, objective.total, offset,
         )
         if multiplier == 0.0:
+            profile_fit_method = "supplied-certified-full-optimum"
             theta = reduced_start.copy()
             probability = objective.probability(optimum)
             full_score = original_coordinate_score_diagnostics(
@@ -3725,6 +5568,7 @@ def fixed_target_profile(
                 ),
             }
         elif reduced_design.shape[1] == 0:
+            profile_fit_method = "vacuous-no-nuisance-parameters"
             theta = np.empty(0, dtype=float)
             probability = reduced_objective.probability(theta)
             diagnostics = {
@@ -3747,19 +5591,27 @@ def fixed_target_profile(
                 },
             }
         else:
-            diagnostics, theta, probability, _ = fit_exact_solver(
-                reduced_objective,
-                "L-BFGS-B",
-                reduced_start,
-                max_iterations,
-                gradient_tolerance,
-                standardized_score_tolerance,
-                0,
-                {},
-                math.inf,
-                raw_rise_tolerance,
-                False,
-                linear_solve_relative_tolerance,
+            profile_fit_method = (
+                "independent-damped-sparse-newton-irls-from-zero"
+            )
+            independent_profile = fit_independent_sparse_newton(
+                reduced_objective, np.zeros(reduced_design.shape[1]),
+                max_iterations, gradient_tolerance,
+                standardized_score_tolerance, 0, {}, math.inf,
+                raw_rise_tolerance, linear_solve_relative_tolerance,
+                objective_equivalence_tolerance,
+                probability_equivalence_tolerance,
+                "standalone_zero_reference",
+            )
+            diagnostics, theta, probability, _ = (
+                externally_certify_independent_output(
+                    reduced_objective, independent_profile, {},
+                    gradient_tolerance, standardized_score_tolerance,
+                    math.inf, raw_rise_tolerance,
+                    linear_solve_relative_tolerance,
+                    objective_equivalence_tolerance,
+                    probability_equivalence_tolerance,
+                )
             )
         target_score = float(
             target_column @ (objective.total * probability - objective.young) /
@@ -3787,6 +5639,7 @@ def fixed_target_profile(
             ],
             "target_score_per_total": target_score,
             "success": diagnostics["numerically_valid"],
+            "nuisance_fit_method": profile_fit_method,
             "acceptance_source": diagnostics["acceptance_source"],
             "scipy_success": diagnostics["scipy_success"],
             "scipy_status": diagnostics["scipy_status"],
@@ -3827,7 +5680,13 @@ def fixed_target_profile(
         "status": "PASS_TWO_SIDED_FINITE_PROFILE" if passed else "BLOCKED_PROFILE_BENCHMARK",
         "likelihood_curvature_se": likelihood_se,
         "two_sided_rise": passed,
-        "center_source": "SUPPLIED_L_BFGS_B_ORIGINAL_KKT_CERTIFIED_FULL_OPTIMUM",
+        "center_source": (
+            "SUPPLIED_INDEPENDENT_ZERO_START_REFERENCE_ORIGINAL_KKT_"
+            "CERTIFIED_FULL_OPTIMUM"
+        ),
+        "noncenter_nuisance_fit_method": (
+            "independent-damped-sparse-newton-irls-from-zero"
+        ),
         "center_fixed_target_equals_certified_full_optimum": bool(
             center["fixed_target"] == float(optimum[focal_column])
         ),
@@ -3937,9 +5796,20 @@ def audit_model(
             "error_type": type(error).__name__, "message": str(error),
         }, [], [], [], {})
     base["target_parameterization"] = target_parameterization
+    original_treatment_functionals = {
+        (
+            f"original_treatment::{int(row['original_index'])}::"
+            f"{row['original_label']}"
+        ): np.asarray(row["weights"], float)
+        for row in target_parameterization[
+            "original_coefficient_functionals_in_current_basis"
+        ]
+    }
 
     try:
-        active, design, face, pruning = resolve_extended_likelihood_face(bundle, analysis)
+        active, design, face, pruning = resolve_extended_likelihood_face(
+            bundle, analysis, original_treatment_functionals,
+        )
     except Exception as error:
         active, recovered = profile_boundary_nuisance(bundle)
         pruning = [
@@ -4069,10 +5939,56 @@ def audit_model(
         return result, pruning, [], [], {}
 
     objective = BinomialObjective(design.full, young, total)
+    evaluator_preflight = independent_evaluator_preflight(
+        objective,
+        float(tolerances["gradient_infinity_norm_per_total"]),
+        float(tolerances["objective_difference_per_total"]),
+        float(tolerances["fitted_probability_max_abs_difference"]),
+    )
+    result["independent_evaluator_preflight"] = evaluator_preflight
+    if (
+        evaluator_preflight["status"]
+        != "PASS_DETERMINISTIC_INDEPENDENT_EVALUATOR_PREFLIGHT"
+    ):
+        result.update({
+            "classification": (
+                "BLOCKED_DETERMINISTIC_INDEPENDENT_EVALUATOR_PREFLIGHT"
+            ),
+            "finite_target_established": False,
+            "target_estimability_status": (
+                "INDEPENDENT_REFERENCE_ALGEBRA_FAILED_PREFIT_CROSS_CHECK"
+            ),
+            "a1_certification": {
+                "status": "BLOCKED_A1_NUMERICAL_CERTIFICATE",
+            },
+        })
+        return result, pruning, [], [], {}
     start = np.zeros(design.full.shape[1], dtype=float)
     certificate_targets = {
         "focal_target": np.eye(1, design.full.shape[1], focal_column).reshape(-1),
     }
+    dropped_basis_columns = sorted(
+        set(range(bundle.regressors.shape[1])) - set(selected)
+    )
+    for label, raw_functional in original_treatment_functionals.items():
+        raw_functional = np.asarray(raw_functional, float)
+        if any(
+            abs(float(raw_functional[index])) > 1e-13
+            for index in dropped_basis_columns
+        ):
+            raise AuditBlocked(
+                "identified original treatment functional requires a dropped "
+                "transformed-basis column"
+            )
+        functional = np.zeros(design.full.shape[1], dtype=float)
+        functional[design.nuisance.shape[1]:] = raw_functional[selected]
+        certificate_targets[label] = functional
+    for treatment_index, treatment_label in enumerate(reduced_labels):
+        functional = np.zeros(design.full.shape[1], dtype=float)
+        functional[design.nuisance.shape[1] + treatment_index] = 1.0
+        certificate_targets[
+            f"treatment_basis::{treatment_index}::{treatment_label}"
+        ] = functional
     for label, weights in (bundle.reported_target_weights or {}).items():
         raw_weights = np.asarray(weights, float)
         if raw_weights.shape != (x.shape[1],):
@@ -4082,6 +5998,10 @@ def audit_model(
         functional = np.zeros(design.full.shape[1], dtype=float)
         functional[design.nuisance.shape[1]:] = raw_weights
         certificate_targets[label] = functional
+    shared_problem_binding = a1_shared_problem_binding(
+        active, design, reduced_labels, certificate_targets,
+    )
+    result["a1_shared_problem_binding"] = shared_problem_binding
     solver_outputs: dict[str, tuple[dict[str, Any], np.ndarray, np.ndarray, list[dict[str, Any]]]] = {}
     solver_failures: dict[str, dict[str, str]] = {}
     for method in ("L-BFGS-B", "trust-ncg"):
@@ -4102,19 +6022,66 @@ def audit_model(
             solver_failures[method] = {
                 "error_type": type(error).__name__, "message": str(error),
             }
+    try:
+        reference_raw_output = fit_independent_sparse_newton(
+            objective, np.zeros_like(start),
+            int(tolerances["optimizer_max_iterations"]),
+            float(tolerances["gradient_infinity_norm_per_total"]),
+            float(tolerances["standardized_score_absolute"]),
+            focal_column, certificate_targets,
+            float(tolerances["target_coefficient_absolute_difference"]),
+            float(analysis["profile"]["likelihood_rise_tolerance_raw"]),
+            float(tolerances["conditioning_rank_relative"]),
+            float(tolerances["objective_difference_per_total"]),
+            float(tolerances["fitted_probability_max_abs_difference"]),
+            "standalone_zero_reference",
+        )
+        reference_output = externally_certify_independent_output(
+            objective, reference_raw_output, certificate_targets,
+            float(tolerances["gradient_infinity_norm_per_total"]),
+            float(tolerances["standardized_score_absolute"]),
+            float(tolerances["target_coefficient_absolute_difference"]),
+            float(analysis["profile"]["likelihood_rise_tolerance_raw"]),
+            float(tolerances["conditioning_rank_relative"]),
+            float(tolerances["objective_difference_per_total"]),
+            float(tolerances["fitted_probability_max_abs_difference"]),
+        )
+        solver_outputs["independent-damped-sparse-newton-irls"] = (
+            reference_output
+        )
+    except Exception as error:
+        solver_failures["independent-damped-sparse-newton-irls"] = {
+            "error_type": type(error).__name__, "message": str(error),
+            "implementation_owned_termination_code": getattr(
+                error, "termination_code", None,
+            ),
+            "independent_evaluation_counts": getattr(
+                error, "evaluation_counts", None,
+            ),
+            "retained_trajectory": getattr(error, "trajectory", None),
+            "last_iteration_metrics": getattr(error, "last_metrics", None),
+        }
     trajectory = {
         method: output[3] for method, output in solver_outputs.items()
     }
+    for method, failure_record in solver_failures.items():
+        retained = failure_record.get("retained_trajectory")
+        if retained is not None:
+            trajectory[method] = retained
     solver_rows = [
         {"model_id": bundle.model_id, **output[0]}
         for output in solver_outputs.values()
     ]
-    if solver_failures:
-        for method, failure in solver_failures.items():
-            solver_rows.append({
-                "model_id": bundle.model_id, "method": method,
-                "numerically_valid": False, **failure,
-            })
+    for method, failure in solver_failures.items():
+        solver_rows.append({
+            "model_id": bundle.model_id, "method": method,
+            "numerically_valid": False, **failure,
+        })
+    required_methods = {
+        "trust-ncg", "independent-damped-sparse-newton-irls",
+    }
+    required_failures = required_methods & set(solver_failures)
+    if required_failures:
         result.update({
             "solvers": {
                 **{method: output[0] for method, output in solver_outputs.items()},
@@ -4122,11 +6089,56 @@ def audit_model(
             },
             "classification": "BLOCKED_EXACT_SOLVER_EXCEPTION_NO_SUBSTITUTION",
             "finite_target_established": False,
-            "target_estimability_status": "FINAL_FACE_ESTABLISHED_BUT_REQUIRED_SOLVER_COMPARISON_INCOMPLETE",
+            "target_estimability_status": (
+                "FINAL_FACE_ESTABLISHED_BUT_A1_TRUST_OR_REFERENCE_PATH_INCOMPLETE"
+            ),
+            "a1_certification": {
+                "status": "BLOCKED_A1_NUMERICAL_CERTIFICATE",
+                "required_solver_failures": sorted(required_failures),
+            },
         })
         return result, pruning, solver_rows, [], trajectory
-    left, left_theta, left_probability, left_trajectory = solver_outputs["L-BFGS-B"]
-    right, right_theta, right_probability, right_trajectory = solver_outputs["trust-ncg"]
+    trust_output = solver_outputs["trust-ncg"]
+    reference_output = solver_outputs[
+        "independent-damped-sparse-newton-irls"
+    ]
+    try:
+        trust_path, trust_polish = conditionally_polish_trust_candidate(
+            objective, trust_output,
+            int(tolerances["optimizer_max_iterations"]),
+            float(tolerances["gradient_infinity_norm_per_total"]),
+            float(tolerances["standardized_score_absolute"]),
+            focal_column, certificate_targets,
+            float(tolerances["target_coefficient_absolute_difference"]),
+            float(analysis["profile"]["likelihood_rise_tolerance_raw"]),
+            float(tolerances["conditioning_rank_relative"]),
+            float(tolerances["objective_difference_per_total"]),
+            float(tolerances["fitted_probability_max_abs_difference"]),
+        )
+    except Exception as error:
+        result.update({
+            "solvers": {
+                **{method: output[0] for method, output in solver_outputs.items()},
+            },
+            "classification": "BLOCKED_TRUST_POLISH_EXCEPTION_NO_SUBSTITUTION",
+            "finite_target_established": False,
+            "target_estimability_status": (
+                "TRUST_CANDIDATE_RETAINED_BUT_CONDITIONAL_POLISH_FAILED"
+            ),
+            "error_type": type(error).__name__, "message": str(error),
+            "implementation_owned_termination_code": getattr(
+                error, "termination_code", None,
+            ),
+            "independent_evaluation_counts": getattr(
+                error, "evaluation_counts", None,
+            ),
+            "a1_certification": {
+                "status": "BLOCKED_A1_NUMERICAL_CERTIFICATE",
+            },
+        })
+        return result, pruning, solver_rows, [], trajectory
+    trajectory["trust-path"] = trust_path[3]
+    solver_rows.append({"model_id": bundle.model_id, **trust_path[0]})
     try:
         identifier_columns = [
             column for column in ("occ_code", "month", "family")
@@ -4137,15 +6149,31 @@ def audit_model(
             .reset_index(drop=True)
             .to_dict(orient="records")
         )
-        comparison = compare_solvers(
-            left, left_theta, left_probability,
-            right, right_theta, right_probability,
-            design.nuisance.shape[1], focal, tolerances,
-            bundle.reported_target_weights,
+        comparison = compare_trust_path_to_reference(
+            objective, trust_path, reference_output, certificate_targets, tolerances,
             active_identifiers,
         )
+        diagnostic_lbfgsb_trust_comparison = None
+        if "L-BFGS-B" in solver_outputs:
+            diagnostic_lbfgsb_trust_comparison = compare_solvers(
+                *solver_outputs["L-BFGS-B"][:3],
+                *solver_outputs["trust-ncg"][:3],
+                design.nuisance.shape[1], focal, tolerances,
+                bundle.reported_target_weights, active_identifiers,
+                reduced_labels,
+            )
+        lbfgsb_contradiction_audit = audit_lbfgsb_diagnostic_contradictions(
+            objective, solver_outputs.get("L-BFGS-B"), trust_path,
+            reference_output, certificate_targets, tolerances,
+            float(tolerances["standardized_score_absolute"]),
+            solver_failures.get("L-BFGS-B"),
+        )
 
-        probability = left_probability
+        reference_diagnostics, reference_theta, reference_probability, _ = (
+            reference_output
+        )
+        trust_path_probability = trust_path[2]
+        probability = reference_probability
         fitted_weight = total * probability * (1.0 - probability)
         fitted_information = information_diagnostics(
             design, x, fitted_weight, focal,
@@ -4156,10 +6184,20 @@ def audit_model(
         # positive, so the fitted Hessian must retain that entire rank.  Do
         # not redefine the expected rank downward after numerical underflow.
         fitted_expected_rank = design.full.shape[1]
-        fitted_full_hessian = full_hessian_diagnostics(
-            design.full, fitted_weight, fitted_expected_rank,
+        dual_fitted_hessian = dual_candidate_fitted_hessian_audit(
+            design.full, total, trust_path_probability, reference_probability,
+            fitted_expected_rank,
             float(tolerances["conditioning_rank_relative"]),
         )
+        trust_path_fitted_full_hessian = dual_fitted_hessian["candidates"][
+            "trust_path"
+        ]
+        reference_fitted_full_hessian = dual_fitted_hessian["candidates"][
+            "independent_zero_start_reference"
+        ]
+        # Retain the historical key as an explicit alias of the primary
+        # reporting/reference path while separately binding both candidates.
+        fitted_full_hessian = reference_fitted_full_hessian
         fitted_reported_targets = reported_target_information_diagnostics(
             design.nuisance, x, fitted_weight,
             bundle.reported_target_weights,
@@ -4167,16 +6205,29 @@ def audit_model(
         )
     except Exception as error:
         result.update({
-            "solvers": {"L-BFGS-B": left, "trust-ncg": right},
+            "solvers": {
+                **{method: output[0] for method, output in solver_outputs.items()},
+                "trust-path": trust_path[0],
+            },
+            "trust_newton_polish": trust_polish,
             "classification": "BLOCKED_POST_SOLVER_DIAGNOSTIC_EXCEPTION_NO_SUBSTITUTION",
             "finite_target_established": False,
             "target_estimability_status": "SOLVER_TRAJECTORIES_RETAINED_BUT_POST_SOLVER_DIAGNOSTICS_FAILED",
             "error_type": type(error).__name__, "message": str(error),
+            "implementation_owned_termination_code": getattr(
+                error, "termination_code", None,
+            ),
+            "independent_evaluation_counts": getattr(
+                error, "evaluation_counts", None,
+            ),
+            "a1_certification": {
+                "status": "BLOCKED_A1_NUMERICAL_CERTIFICATE",
+            },
         })
         return result, pruning, solver_rows, [], trajectory
     try:
         profile_rows, profile_summary = fixed_target_profile(
-            objective, left_theta, left, focal_column,
+            objective, reference_theta, reference_diagnostics, focal_column,
             float(fitted_information["focal_target_conditional_information"]),
             [float(value) for value in analysis["profile"]["grid_standard_error_multipliers"]],
             int(tolerances["profile_max_iterations"]),
@@ -4184,13 +6235,26 @@ def audit_model(
             float(tolerances["standardized_score_absolute"]),
             float(analysis["profile"]["likelihood_rise_tolerance_raw"]),
             float(tolerances["conditioning_rank_relative"]),
+            float(tolerances["objective_difference_per_total"]),
+            float(tolerances["fitted_probability_max_abs_difference"]),
         )
     except Exception as error:
         result.update({
             "fitted_information": fitted_information,
             "fitted_full_hessian": fitted_full_hessian,
+            "trust_path_fitted_full_hessian": (
+                trust_path_fitted_full_hessian
+            ),
+            "reference_fitted_full_hessian": (
+                reference_fitted_full_hessian
+            ),
+            "dual_candidate_fitted_hessian_audit": dual_fitted_hessian,
             "fitted_reported_target_information": fitted_reported_targets,
-            "solvers": {"L-BFGS-B": left, "trust-ncg": right},
+            "solvers": {
+                **{method: output[0] for method, output in solver_outputs.items()},
+                "trust-path": trust_path[0],
+            },
+            "trust_newton_polish": trust_polish,
             "solver_comparison": comparison,
             "target_profile": {
                 "status": "BLOCKED_PROFILE_EXCEPTION_NO_SUBSTITUTION",
@@ -4199,6 +6263,9 @@ def audit_model(
             "classification": "BLOCKED_PROFILE_EXCEPTION_NO_SUBSTITUTION",
             "finite_target_established": False,
             "target_estimability_status": "SOLVERS_COMPLETED_BUT_REQUIRED_TARGET_PROFILE_FAILED",
+            "a1_certification": {
+                "status": "BLOCKED_A1_NUMERICAL_CERTIFICATE",
+            },
         })
         solver_rows.append({
             "model_id": bundle.model_id, "method": "PAIR_COMPARISON", **comparison,
@@ -4213,20 +6280,52 @@ def audit_model(
     )
     if legacy_beta is not None and legacy_probability is not None:
         legacy_core["focal_target"] = float(legacy_beta[focal])
-        legacy_core["focal_target_minus_lbfgsb"] = float(
-            legacy_beta[focal] - left_theta[design.nuisance.shape[1] + focal]
+        legacy_core["focal_target_minus_a1_reference"] = float(
+            legacy_beta[focal]
+            - reference_theta[design.nuisance.shape[1] + focal]
         )
-        legacy_core["fitted_probability_max_abs_difference_vs_lbfgsb"] = float(
-            np.max(np.abs(legacy_probability - left_probability))
+        legacy_core[
+            "fitted_probability_max_abs_difference_vs_a1_reference"
+        ] = float(
+            np.max(np.abs(legacy_probability - reference_probability))
         )
-        legacy_core["fitted_probability_rmse_vs_lbfgsb"] = float(
-            np.sqrt(np.mean(np.square(legacy_probability - left_probability)))
+        legacy_core["fitted_probability_rmse_vs_a1_reference"] = float(
+            np.sqrt(np.mean(np.square(
+                legacy_probability - reference_probability
+            )))
         )
+        if "L-BFGS-B" in solver_outputs:
+            lbfg_theta = solver_outputs["L-BFGS-B"][1]
+            lbfg_probability = solver_outputs["L-BFGS-B"][2]
+            legacy_core["focal_target_minus_lbfgsb_diagnostic"] = float(
+                legacy_beta[focal]
+                - lbfg_theta[design.nuisance.shape[1] + focal]
+            )
+            legacy_core[
+                "fitted_probability_max_abs_difference_vs_lbfgsb_diagnostic"
+            ] = float(np.max(np.abs(
+                legacy_probability - lbfg_probability
+            )))
 
-    solver_rows.append({"model_id": bundle.model_id, "method": "PAIR_COMPARISON", **comparison})
+    solver_rows.append({
+        "model_id": bundle.model_id,
+        "method": "A1_TRUST_PATH_REFERENCE_COMPARISON", **comparison,
+    })
+    if diagnostic_lbfgsb_trust_comparison is not None:
+        solver_rows.append({
+            "model_id": bundle.model_id,
+            "method": "DIAGNOSTIC_LBFGSB_TRUST_COMPARISON",
+            **diagnostic_lbfgsb_trust_comparison,
+        })
+    solver_rows.append({
+        "model_id": bundle.model_id,
+        "method": "DIAGNOSTIC_LBFGSB_CONTRADICTION_AUDIT",
+        **lbfgsb_contradiction_audit,
+    })
     hessian_pass = bool(
-        fitted_full_hessian.get("status") == "PASS_FULL_HESSIAN_SPECTRUM" and
-        fitted_full_hessian.get("rank_deficiency") == 0
+        dual_fitted_hessian.get("status")
+        == "PASS_BOTH_CANDIDATE_RAW_AND_SCALED_FITTED_HESSIANS"
+        and all(dual_fitted_hessian.get("checks", {}).values())
         and fitted_information.get("treatment_information_rank")
         == fitted_information.get("treatment_information_columns")
         and fitted_information.get("focal_target_rank_identified") is True
@@ -4237,8 +6336,13 @@ def audit_model(
     )
     passed = bool(
         comparison["comparison_pass"] and
+        trust_polish["status"] in {
+            "PASS_TRUST_EXTERNAL_CERTIFICATE_NO_POLISH_REQUIRED",
+            "PASS_CONDITIONAL_TRUST_EXACT_NEWTON_POLISH",
+        } and
         profile_summary["status"] == "PASS_TWO_SIDED_FINITE_PROFILE" and
-        hessian_pass
+        hessian_pass and
+        lbfgsb_contradiction_audit["binding_pass"] is True
     )
     if original_bundle.focal_target_weights is not None:
         result["dynamic_event_target_scope"].update({
@@ -4256,12 +6360,118 @@ def audit_model(
     result.update({
         "fitted_information": fitted_information,
         "fitted_full_hessian": fitted_full_hessian,
+        "trust_path_fitted_full_hessian": trust_path_fitted_full_hessian,
+        "reference_fitted_full_hessian": reference_fitted_full_hessian,
+        "dual_candidate_fitted_hessian_audit": dual_fitted_hessian,
         "fitted_reported_target_information": fitted_reported_targets,
-        "solvers": {"L-BFGS-B": left, "trust-ncg": right},
+        "solvers": {
+            **{method: output[0] for method, output in solver_outputs.items()},
+            "trust-path": trust_path[0],
+        },
+        "trust_newton_polish": trust_polish,
         "solver_comparison": comparison,
+        "diagnostic_lbfgsb_trust_comparison": (
+            diagnostic_lbfgsb_trust_comparison
+        ),
+        "lbfgsb_diagnostic_contradiction_audit": (
+            lbfgsb_contradiction_audit
+        ),
         "target_profile": profile_summary,
         "legacy_profiled_core_comparator": legacy_core,
-        "focal_target_estimate": float(left_theta[focal_column]),
+        "focal_target_estimate": float(reference_theta[focal_column]),
+        "numerical_evidence_context": {
+            "face_status": face["status"],
+            "face_iterations": face["iterations"],
+            "profiled_boundary_rows": result["profiled_boundary_rows"],
+            "active_rows_sha256": shared_problem_binding[
+                "active_rows_sha256"
+            ],
+            "ordered_final_design_sha256": shared_problem_binding[
+                "ordered_sparse_design_sha256"
+            ],
+            "nuisance_normalization_sha256": shared_problem_binding[
+                "nuisance_normalization_sha256"
+            ],
+            "treatment_basis_status": basis["status"],
+            "selected_treatment_labels": reduced_labels,
+            "dropped_treatment_labels": result["treatment_basis"][
+                "dropped_dependent_original_labels"
+            ],
+            "optimizer_evidence": {
+                method: {
+                    "options": output[0].get("optimizer_options"),
+                    "start_status": output[0].get(
+                        "optimizer_start", {}
+                    ).get("status"),
+                    "start_original_coordinates_sha256": output[0].get(
+                        "optimizer_start_original_coordinates_sha256"
+                    ),
+                }
+                for method, output in solver_outputs.items()
+            },
+        },
+        "a1_certification": {
+            "status": (
+                "PASS_A1_NUMERICAL_CERTIFICATE"
+                if passed else "BLOCKED_A1_NUMERICAL_CERTIFICATE"
+            ),
+            "primary_path": "trust-path",
+            "reference_path": "independent-damped-sparse-newton-irls",
+            "shared_problem_binding_pass": (
+                shared_problem_binding["status"]
+                == "PASS_SINGLE_HASHED_PROBLEM_SHARED_BY_BOTH_A1_PATHS"
+                and shared_problem_binding["trust_path_problem_sha256"]
+                == shared_problem_binding[
+                    "zero_start_reference_problem_sha256"
+                ]
+            ),
+            "deterministic_evaluator_preflight_pass": (
+                evaluator_preflight["status"]
+                == "PASS_DETERMINISTIC_INDEPENDENT_EVALUATOR_PREFLIGHT"
+            ),
+            "trust_reference_full_target_vector_pass": comparison[
+                "checks"
+            ]["full_target_vector"],
+            "trust_reference_full_identified_treatment_vector_pass": comparison[
+                "checks"
+            ]["full_identified_treatment_vector"],
+            "identified_treatment_vector_length": comparison[
+                "identified_treatment_target_count"
+            ],
+            "maximum_absolute_full_identified_treatment_vector_difference": (
+                comparison[
+                    "maximum_absolute_full_identified_treatment_vector_difference"
+                ]
+            ),
+            "trust_reference_fitted_probability_pass": comparison[
+                "checks"
+            ]["fitted_probabilities"],
+            "trust_reference_objective_pass": comparison[
+                "checks"
+            ]["objective_per_total"],
+            "reference_evaluator_checks_pass": (
+                reference_diagnostics[
+                    "independent_evaluator_final_checks"
+                ]["status"]
+                == "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+            ),
+            "reference_external_certificate_pass": (
+                reference_diagnostics["numerically_valid"] is True
+            ),
+            "trust_path_external_certificate_pass": (
+                trust_path[0]["numerically_valid"] is True
+            ),
+            "profile_reference_method_pass": (
+                profile_summary["status"] == "PASS_TWO_SIDED_FINITE_PROFILE"
+                and profile_summary["noncenter_nuisance_fit_method"]
+                == "independent-damped-sparse-newton-irls-from-zero"
+            ),
+            "fitted_hessian_pass": hessian_pass,
+            "both_candidates_raw_scaled_fitted_hessian_pass": hessian_pass,
+            "lbfgsb_diagnostic_contradiction_free": (
+                lbfgsb_contradiction_audit["binding_pass"] is True
+            ),
+        },
         "classification": "PASS_FINITE_EXTENDED_MLE_TARGET" if passed else "BLOCKED_NUMERICAL_OR_FULL_HESSIAN_BENCHMARK",
         "finite_target_established": passed,
         "target_estimability_status": (
@@ -4317,6 +6527,21 @@ def authenticated_execution_state(
             repo_root / PRE_EXECUTION_AUTHORIZATION_REL
         ),
     }
+    a1 = analysis.get("amendment_a1")
+    if isinstance(a1, dict):
+        for label, section, key in (
+            ("a1_owner_authorization", a1["authorization"], "path"),
+            ("a1_parent_numerical_spec", a1["parent_numerical_spec"], "path"),
+            (
+                "a1_preserved_blocked_numerical_receipt",
+                a1["preserved_blocked_run"], "numerical_receipt_path",
+            ),
+            (
+                "a1_retained_cell_receipt",
+                a1["authenticated_cell_reuse"], "receipt_path",
+            ),
+        ):
+            paths[label] = repo_root / section[key]
     for relative in parity_paths:
         paths[f"submitted_design::{relative}"] = repo_root / relative
     hashes: dict[str, str] = {}
@@ -4723,12 +6948,19 @@ def run(args: argparse.Namespace) -> int:
         solver_fields = [
         "model_id", "method", "scipy_success", "scipy_status", "message",
         "iterations", "function_evaluations", "gradient_evaluations",
+        "hessian_evaluations", "line_search_candidate_evaluations",
+        "newton_iterations_evaluated",
+        "implementation_owned_termination_namespace",
+        "implementation_owned_termination_code",
+        "implementation_owned_termination_message",
         "objective_per_total", "raw_negative_log_likelihood",
         "raw_gradient_infinity_norm", "gradient_infinity_norm_per_total",
         "standardized_score_max_abs", "coordinate_newton_step_max_abs",
         "transformed_gradient_infinity_norm",
         "internal_transformed_gradient_tolerance",
         "optimizer_reparameterization_status",
+        "optimizer_options", "optimizer_start_original_coordinates_sha256",
+        "optimizer_start_transformed_coordinates_sha256",
         "optimizer_parameter_scale_min", "optimizer_parameter_scale_max",
         "optimizer_parameter_scale_sha256", "acceptance_source",
         "scipy_status_is_not_acceptance_evidence",
@@ -4741,7 +6973,17 @@ def run(args: argparse.Namespace) -> int:
         "reported_target_max_absolute_difference",
         "reported_target_comparison_pass",
         "all_slope_max_abs_difference", "fitted_probability_max_abs_difference",
-        "fitted_probability_rmse", "objective_difference_per_total",
+        "fitted_probability_rmse",
+        "conditional_fitted_stock_mean_max_absolute_difference",
+        "conditional_fitted_stock_mean_rmse",
+        "normalized_conditional_fitted_mean_max_absolute_difference",
+        "normalized_conditional_fitted_mean_comparison_pass",
+        "linear_predictor_all_finite",
+        "linear_predictor_max_absolute_difference_nonbinding",
+        "linear_predictor_rmse_nonbinding",
+        "complete_identified_treatment_vector_count",
+        "complete_identified_treatment_vector_max_absolute_difference",
+        "objective_difference_per_total",
         "raw_negative_log_likelihood_difference", "comparison_pass",
     ]
         write_csv(output_dir / "SOLVER_COMPARISON.csv", solver_rows, solver_fields)
@@ -4754,7 +6996,8 @@ def run(args: argparse.Namespace) -> int:
         "nuisance_gradient_infinity_norm_per_total",
         "nuisance_standardized_score_max_abs",
         "nuisance_coordinate_newton_step_max_abs", "target_score_per_total",
-        "success", "acceptance_source", "scipy_success", "scipy_status",
+        "success", "nuisance_fit_method", "acceptance_source",
+        "scipy_success", "scipy_status",
         "scipy_status_is_not_acceptance_evidence",
         "optimizer_reparameterization_status", "message", "iterations",
     ]
@@ -4809,6 +7052,26 @@ def run(args: argparse.Namespace) -> int:
         "model_count": len(models),
         "passed_model_count": sum(model.get("finite_target_established") is True for model in models),
         "protected_microdata_read_by_this_program": False,
+        "amendment_a1": {
+            "owner_authorization_sha256": A1_OWNER_AUTHORIZATION_SHA256,
+            "parent_audit_spec_id": analysis["amendment_a1"][
+                "parent_numerical_spec"
+            ]["id"],
+            "parent_audit_spec_sha256": analysis["amendment_a1"][
+                "parent_numerical_spec"
+            ]["sha256"],
+            "scientific_target_fingerprint_sha256": analysis[
+                "amendment_a1"
+            ]["scientific_target_fingerprint"]["sha256"],
+            "reused_authenticated_cells": True,
+            "reused_cells_sha256": analysis["amendment_a1"][
+                "authenticated_cell_reuse"
+            ]["cells_sha256"],
+            "reused_cells_receipt_sha256": analysis["amendment_a1"][
+                "authenticated_cell_reuse"
+            ]["receipt_sha256"],
+            "protected_row_level_microdata_rebuilt": False,
+        },
         "output_hashes": {path.name: sha256_file(path) for path in output_paths},
         }
         if contains_resolved_private_path(receipt):

@@ -1,0 +1,332 @@
+{
+  "analysis_status": "owner-authorized A1 same-estimator numerical repair specified before amended execution",
+  "audit_spec_id": "yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4",
+  "canonical_spec_sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+  "canonical_spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+  "created_at_utc": "2026-09-07T05:05:00Z",
+  "input_contract": {
+    "aggregate_schema_version": "yax-numerical-cells-v1",
+    "assignment_fingerprint_algorithm": "SHA-256 of sorted occ_code\\tfamily\\tbeta_quintile\\tfloat.hex(webb_z)\\n records",
+    "assignment_fingerprint_sha256": "c6f6b79c616a79e0c46cd8164ce4bce740bd20445bd6cd10c497850ef650c0fa",
+    "balanced_grid_required": true,
+    "expected_balanced_grid_rows": 53352,
+    "cell_builder_execution_contract": {
+      "analysis_spec_path": "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+      "cell_build_spec_path": "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
+      "command_template": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py --repo-root <YAX_REPO_ROOT> --microdata <INPUT:ipums_cps_extract_9_wide> --repair-microdata <INPUT:ipums_cps_extract_11_march_basic_repair> --output-parent <YAX_V3_RUN_ROOT>",
+      "environment_lock_path": "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt",
+      "environment_lock_sha256": "c2ee986e3a90f52a1ab3def2792d070d57beb4818ff9615816434b5846fc7f6b",
+      "git_committed_paths": [
+        "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+        "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
+        "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+        "yax/revision/substantive_r3_20260905/ENVIRONMENT_LOCK.txt"
+      ],
+      "git_required_ancestor_commit": "f2e16bc4228b40a258a4417f7598366c2af1142f",
+      "historical_reference_code_hashes": {
+        "dax/memo/power_calcs/young_relative_employment_power.py": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+        "yax/analysis/run_frozen_v11.py": "e40fdda2353dd0c0d6f92401e7bdfb5874c8a32ffa9d641b38144cc07054ddff",
+        "yax/revision/referee_20260905/run_referee_cells.py": "a82b1331153645d438509a71e43080e568838ebdb9cdc509fd98cec257e1d4b0",
+        "yax/revision/referee_20260905/run_referee_core.py": "1f084084ba67425f398c6bfa5237d74621bad3c1ba63ffd2df7f0d0954563ade",
+        "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704"
+      },
+      "runtime_contract_sha256": "35baa5eb70c9587d61ec6bbe001f3080607640a8301d095ba4b5db674ba95834",
+      "runtime_payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+      "runtime_raw_fields": [
+        "YEAR",
+        "MONTH",
+        "AGE",
+        "EMPSTAT",
+        "OCC",
+        "WTFINL"
+      ],
+      "runtime_raw_source_ids": [
+        "ipums_cps_extract_9_wide",
+        "ipums_cps_extract_11_march_basic_repair"
+      ]
+    },
+    "cells_receipt_schema_version": "yax-numerical-cells-receipt-v1",
+    "fresh_rebuild_status": "PASS_FRESH_AGGREGATE_REBUILD",
+    "required_columns": [
+      "occ_code",
+      "month",
+      "family",
+      "young",
+      "older",
+      "beta_quintile",
+      "webb_z"
+    ],
+    "receipt_authentication": "reuse only the exact A1-parent authenticated cell artifact after verifying its bytes, parent analysis ID/hash, producer spec ID/hash, builder/source/lookup/assignment/accounting bindings, producer commit/tree and unchanged producer blobs; the new numerical consumer is separately authorized and hash-locked",
+    "support_hash_algorithm": "SHA-256 of sorted zero-padded occupation codes, one code plus newline per record",
+    "weight_application_count": 1
+  },
+  "likelihood": {
+    "objective": "sum_i young_i*eta_i - total_i*log(1+exp(eta_i)); implemented with logaddexp, divided by the positive sum of total stock for numerical optimization, and evaluated in design-only p=0.5 diagonal coordinates that preserve the exact likelihood and linear predictor",
+    "penalty": "none",
+    "probability_clipping": "none in the two audit solvers or profile; inherited solver clipping is measured as a comparator",
+    "pseudocount": "none",
+    "sparse_cell_rule": "no minimum young or older count; retain genuine one-sided cells",
+    "zero_total_rule": "zero likelihood and score contribution; retain in input/accounting and omit only from design fitting"
+  },
+  "boundary_and_separation": {
+    "boundary_group_rule": "iteratively profile out and record a nuisance FE group only when, on the remaining positive-total rows, its aggregate young stock is exactly zero or its aggregate older stock is exactly zero",
+    "cell_boundary_rule": "young==0 or older==0 exactly; no count threshold",
+    "extended_face_rule": "after pure nuisance boundary profiling, if the certified normalized recession LP finds separation, solve two direct minimum-infinity-norm LPs with each declared target fixed at +1 and -1; any certified cone-feasible unit-target direction, including a zero-gain likelihood-lineality direction, proves that target can diverge and blocks it; only when both signs are infeasible for the focal and every reported Q5 event target may certified strict-margin rows be profiled as a target-invariant extended-likelihood face, followed by cascading pure-nuisance profiling and repetition to a finite face",
+    "highs_options": "presolve=false, primal_feasibility_tolerance=1e-10, dual_feasibility_tolerance=1e-10, ipm_optimality_tolerance=1e-12",
+    "linear_program": "on the profiled core, interior rows impose Xd=0; all-young rows impose Xd>=0; all-older rows impose Xd<=0; coefficients are scaled to [-1,1] only to normalize the global recession-direction search; focal-direction LPs use an explicit infinity-norm epigraph and target=+1 or -1",
+    "lp_primal_certification_tolerance": 1e-11,
+    "lp_margin_tolerance": 1e-09,
+    "no_selective_deletion": true,
+    "separation_classification": "report complete versus quasi separation and counts of strict-margin and zero-margin boundary rows",
+    "target_rule": "a finite target is not established if it is rank unidentified, either direct signed-target LP is incomplete, or it can move in a remaining likelihood recession or lineality direction; for dynamics this applies to the observed-month-weighted post functional and every one of the 38 reported Q5 event coefficients; nuisance-only recession is resolved by exact face profiling rather than globally blocking",
+    "treatment_rank_rule": "if nonfocal treatment columns are dependent after face profiling but the focal coordinate is rank identified, use a pivoted-QR exact column-space basis that retains the focal original column; otherwise block"
+  },
+  "design_parity": {
+    "comparison": "exact regressor matrix equality, normalized semantic label equality, both FE partition equalities, and an independent SHA-256 design fingerprint for every one of the eleven core or preserved-failure models",
+    "dynamics_transition_adjudication": "the byte-locked submitted setup_historical implementation removes TRANSITION=2022-12; the audit therefore excludes 2022-12, notwithstanding the superseded draft spec text",
+    "submitted_source_sha256": {
+      "yax/revision/substantive_r3_20260905/dynamics/run_dynamics.py": "df2f54712dd763d2fd747c73ef68f164038e3db0a3a4771846d4bc2b325e8bd2",
+      "yax/revision/substantive_r3_20260905/rebuilt_baseline/run_rebuilt_corrected_baseline.py": "4c38abcd43d177819d683a0f8774d9e50e02179bde13f9eaae418c6a1aec1704",
+      "yax/revision/substantive_r3_20260905/within_family/run_within_family.py": "b16916bb3484926f15fd195fee2e5bffe8601f695427f52d08440a8c0b201a71"
+    }
+  },
+  "hessian_diagnostics": {
+    "fitted": "full normalized nuisance-plus-treatment observed information at each independently certified A1 candidate; require rank equal to every normalized design column and positive definiteness at the declared tolerance in both the raw and diagonal-scaled extreme spectra; sparse spectra require explicit eigenpair residuals and conservative lower and upper eigenvalue bounds, and pass only when the certified smallest lower bound exceeds the threshold formed from the certified largest upper bound",
+    "geometric": "full normalized nuisance-plus-treatment information at total/4 weights, raw and diagonal-scaled extreme spectrum",
+    "rank_accounting": "full rank equals normalized nuisance rank plus Schur-complement treatment rank; report any deficiency"
+  },
+  "dynamic_target_scope": {
+    "joint_pretrend_target_count": 23,
+    "observed_post_month_count": 42,
+    "post_functional_weighting": "equal weight per observed calendar month",
+    "post_start_month": "2023-01",
+    "reference_quarter": "2022Q4",
+    "reported_q5_event_target_count": 38
+  },
+  "models": [
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "pooled",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "family_post",
+      "regressors": "pooled regressors plus family-by-post slopes, omitting the family with largest all-analysis-period stock (lexicographic tie break), matching the byte-locked submitted implementation",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "family_month",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12, matching the byte-locked submitted dynamics implementation",
+      "focal_target": "observed-calendar-month-weighted post-2022 Q5-versus-Q1 functional",
+      "model_id": "dynamics_unconditioned",
+      "regressors": "Q2-Q5 and Webb-z interacted with calendar quarters; 2022Q4 omitted",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12, matching the byte-locked submitted dynamics implementation",
+      "focal_target": "observed-calendar-month-weighted post-2022 Q5-versus-Q1 functional",
+      "model_id": "dynamics_family_month",
+      "regressors": "Q2-Q5 and Webb-z interacted with calendar quarters; 2022Q4 omitted",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "2020-01 onward except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "post_2020_unconditioned",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "2020-01 onward except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "post_2020_family_month",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_quintile_month_unconditioned",
+      "regressors": "pooled regressors plus Q2-Q5 by month-of-year, January omitted",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_quintile_month_family_month",
+      "regressors": "pooled regressors plus Q2-Q5 by month-of-year, January omitted",
+      "second_fixed_effect": "family by calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "first_fixed_effect": "occupation by month-of-year",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_occupation_month_unconditioned",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "calendar month"
+    },
+    {
+      "calendar": "all observed months except 2022-12",
+      "first_fixed_effect": "occupation by month-of-year",
+      "focal_target": "Q5_x_post",
+      "model_id": "seasonal_occupation_month_family_month",
+      "regressors": "Q2-Q5 by post from 2023-01 plus Webb-z by post",
+      "second_fixed_effect": "family by calendar month"
+    }
+  ],
+  "normalization": {
+    "rule": "include every first-FE dummy and omit one lexicographically first second-FE dummy in each connected component of the positive-total bipartite FE graph",
+    "target_invariance": "normalization changes nuisance coordinates only, not fitted means or treatment coefficients"
+  },
+  "output_safety": {
+    "atomic_publish": "write and fsync all artifacts in a private same-parent staging directory, then attempt kernel no-replace publication after every artifact, the sanitized receipt, and the final immutable-state recheck are complete; when the mounted filesystem explicitly rejects the no-replace flag, use a same-parent atomic ordinary rename only under the already-open exclusive sibling reservation and after an immediate target-absence, lock-identity, and staging-identity recheck; the durable precommit receipt must disclose both permitted paths without claiming the not-yet-observed backend, and the runner must attempt to emit the actual postcommit method in sanitized scheduler stdout without permitting an output-stream failure after the commit point to invalidate the published leaf; the fallback retains a bounded noncooperating same-user check-to-rename window",
+    "disjointness": "output leaf must be outside the Git repository and disjoint from all input files",
+    "failure_behavior": "refuse any target observed at reservation or immediate prepublication recheck; the kernel no-replace path never replaces a racing target, while the explicitly labeled unsupported-filesystem fallback coordinates cooperating publishers but cannot eliminate the bounded noncooperating same-user empty-directory lstat-to-rename race; preserve an unpublished staging leaf for diagnosis after an ordinary numerical failure, but discard it if final sanitation detects a private path or credential; every BLOCKED status exits nonzero and there is no report-only success override",
+    "receipt_command": "persist the fixed placeholder command template and runner-recorded exact sanitized argv binding; resolved private paths, extra argv tokens, and credentials are forbidden",
+    "whole_artifact_sanitization": "scan every staged output as UTF-8 text for private absolute paths, GitHub tokens, named password/API-key/secret assignments, private-key headers, and credential-bearing URLs before atomic publication"
+  },
+  "outputs": [
+    "EXECUTION_RECEIPT.json",
+    "MODEL_AUDIT.json",
+    "MODEL_DIAGNOSTICS.csv",
+    "FAMILY_MONTH_BOUNDARY_CELLS.csv",
+    "BOUNDARY_PROFILING.csv",
+    "SOLVER_COMPARISON.csv",
+    "TARGET_PROFILE.csv",
+    "OPTIMIZER_TRAJECTORIES.json",
+    "CONVERGENCE_EXISTENCE_REPORT.md"
+  ],
+  "profile": {
+    "grid_standard_error_multipliers": [
+      -2.0,
+      -1.0,
+      0.0,
+      1.0,
+      2.0
+    ],
+    "likelihood_rise_tolerance_raw": 0.0001,
+    "target": "model-specific focal_target"
+  },
+  "software": {
+    "audit_runner_sha256": "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7",
+    "artifact_safety_sha256": "6c03ad94fb5d4ecb618e3cd0e4f9de6ece0a5f20e633283002f3fc01d1248fd2",
+    "cell_builder_path": "yax/revision/substantive_v3_20260906/gate1_cells/run_gate1_cells.py",
+    "cell_builder_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+    "cell_builder_transitive_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "independent_solver_1": "trust-ncg from exact zero in the existing fixed design-only p=0.5 diagonal coordinates; if and only if the untouched candidate fails the unchanged external certificate, apply the declared deterministic exact-Hessian damped-Newton polish and retain before/after evidence",
+    "independent_solver_2": "standalone original-coordinate damped sparse Newton/IRLS from its own exact-zero start, using independently coded success/failure softplus loss, score, Hessian and deterministic dyadic line search; it does not call the canonical evaluator or use another solver result as its start",
+    "optimizer_reparameterization": "phi_j=s_j*theta_j with s_j=sqrt(diag(X' diag(total/4) X)_j/sum(total)); X theta=(X diag(1/s)) phi exactly; scaling uses declared totals and design only, not fitted probabilities or outcome shares",
+    "optimizer_options": {
+      "trust-ncg": "internal transformed-coordinate gtol=0; maxiter=2000; exact-zero start; solver status is not acceptance evidence; unchanged external original-coordinate certificate is binding",
+      "independent-damped-sparse-newton-irls": "original-coordinate exact-zero start; sparse direct Newton solve with diagonal scaling; all 65 dyadic fractions 2^-k for k=0,...,64 evaluated and the minimum nonincreasing candidate selected; maxiter=2000; no nonincrease, singular solve, invalid descent, iteration exhaustion or failed external certificate blocks; retain implementation-owned termination code and message, exact objective, score, Hessian and line-search evaluation counts, last-candidate metrics, and full trajectory for both pass and failure",
+      "conditional_trust_polish": "triggered only by failure of the untouched trust candidate under the unchanged external certificate; same independent Newton mechanics, trust candidate start, maxiter=2000; before and after retained; failure blocks the trust path",
+      "fixed-target_profiles": "five frozen grid points; each noncenter nuisance fit uses standalone independent Newton/IRLS from exact zero with maxiter=1000; all KKT and likelihood-rise checks remain binding",
+      "L-BFGS-B_diagnostic": "historical p=0.5 Fisher-scoring start and settings retained and executed for every model; absence or exception blocks the affected model but numerical invalidity alone does not veto. Re-evaluate its candidate under both implementations. An objective lower than the better mandatory candidate by more than objective_difference_per_total blocks. Any cross-evaluator objective, score, Hessian-product, probability, or directional-derivative failure at the diagnostic candidate blocks. A diagnostic candidate that independently passes the unchanged original-coordinate score and full-Hessian stationarity certificate but differs from the zero-start reference on any declared target by more than target_coefficient_absolute_difference blocks. A merely nonstationary diagnostic coefficient does not certify or contradict the mandatory pair.",
+      "dual_candidate_fitted_hessian": "at both the final trust path and the independently initialized zero-start reference, require the full normalized nuisance-plus-treatment fitted Hessian to have expected rank equal to every normalized design column and to be positive definite at conditioning_rank_relative in both raw and diagonally scaled extreme-spectrum audits"
+    },
+    "stationarity_certificate": "for each untouched solver candidate and each noncenter nuisance profile fit, solve the diagonally scaled original full-Hessian Newton system by sparse LU with iterative refinement, retain the declared original-coordinate score checks, measure the complete-dyadic-grid attainable raw-NLL decrease and Newton decrement against the existing raw likelihood tolerance, and independently solve the sparse adjoint system for every declared reported target; require primal and adjoint target corrections to agree and both to satisfy the existing coefficient tolerance; right-hand-side-relative residuals may use only the IEEE gamma_k sparse-dot roundoff floor while the declared backward-error tolerance is never relaxed; no dense spectrum or approximate Ritz pair is used for this certificate",
+    "legacy_engine_path": "dax/memo/power_calcs/young_relative_employment_power.py",
+    "legacy_engine_sha256": "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf",
+    "required_python_packages": [
+      "numpy",
+      "pandas",
+      "pytest",
+      "scipy"
+    ],
+    "runtime_contract": {
+      "kernel_policy": "record compute-node kernel release but do not equality-lock its patch version",
+      "payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
+    },
+    "synthetic_test_sha256": "2f108a57aa954fb0c62c2e6ae4d9bc3989a5e572dab8e0b2acd203b8016d60dd",
+    "diagnostic_solver": "L-BFGS-B retained with its historical settings as a visible diagnostic and contradiction check, not an indispensable passing solver",
+    "a1_cross_implementation_checks": "at exact zero, a deterministic bounded sine-cosine vector, and both final candidates: common objective, probabilities, score and Hessian-product under both implementations plus directional finite differences; both final candidates rerun the untouched external certificate; reconstruct and bind every original treatment coefficient as an explicit linear functional after any exact target reparameterization while retaining transformed-basis comparisons as diagnostics; compare fitted stock means and normalized conditional means and report finite linear-predictor differences"
+  },
+  "tolerances": {
+    "conditioning_rank_relative": 1e-10,
+    "fitted_probability_max_abs_difference": 1e-07,
+    "gradient_infinity_norm_per_total": 1e-07,
+    "objective_difference_per_total": 1e-10,
+    "optimizer_max_iterations": 2000,
+    "profile_max_iterations": 1000,
+    "standardized_score_absolute": 0.0001,
+    "target_coefficient_absolute_difference": 1e-06
+  },
+  "amendment_a1": {
+    "authorization": {
+      "path": "yax/revision/substantive_v3_20260906/revision_inputs/GATE1_NUMERICAL_ADJUDICATION_A1.md",
+      "sha256": "ff4963e66940741abc8a4eda87fd9050c51cae5cedfabb3ae1ab42c21f5836a9"
+    },
+    "parent_numerical_spec": {
+      "path": "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+      "id": "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991",
+      "sha256": "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+    },
+    "preserved_blocked_run": {
+      "path": "yax/revision/substantive_v3_20260906/runs/gate1_numerical_blocked_b9a7dd1",
+      "producer_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+      "numerical_receipt_path": "yax/revision/substantive_v3_20260906/runs/gate1_numerical_blocked_b9a7dd1/numerical/EXECUTION_RECEIPT.json",
+      "numerical_receipt_sha256": "137e7128aeaf08edac0073f00d3b85f98750958ab8e9cc6493f15451a6375c48",
+      "model_audit_sha256": "f863238a616161dfb1258334126eed3aab2717d88bae9369d6f1ba442f7026e1",
+      "status": "BLOCKED_ONE_OR_MORE_CORE_TARGETS_NOT_ESTABLISHED"
+    },
+    "authenticated_cell_reuse": {
+      "receipt_path": "yax/revision/substantive_v3_20260906/runs/gate1_numerical_blocked_b9a7dd1/cells/EXECUTION_RECEIPT.json",
+      "receipt_sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+      "cells_sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+      "producer_commit": "b9a7dd1c8703397f1a6686ff9b1a55d4bb67cbde",
+      "producer_tree": "3ec00fb684ed2ee00bd0b9593644cf53331faa06",
+      "cell_build_spec_id": "yaxcellspec_v1_e08b69694a4ebb0b15919b6af989cca98cea9e86eea80ef252f93b5cfccaa08b",
+      "cell_build_spec_sha256": "09f49d3f459fd532dd37f76dfd111fc0c0a7aa10e1fffe869b08596cad665a15",
+      "builder_code_sha256": "70b9bf3d756536a9d5bf38938235b84a83d9d1a8defcc3dbecb5c19b6916bc34",
+      "protected_microdata_rebuild_required": false,
+      "caller_supplied_receipt_must_match_declared_sha256_byte_for_byte": true
+    },
+    "scientific_target_fingerprint": {
+      "algorithm": "SHA-256 of canonical JSON scientific_target_payload_v1",
+      "sha256": "f5cf1106872117c3c67ce85da2fc76f661093a500ad31bfdcd58dfadfe6956e0"
+    },
+    "implementation_change": "replace the mandatory L-BFGS-B/trust-ncg pair with trust path plus independently coded zero-start damped sparse Newton/IRLS reference; retain L-BFGS-B as diagnostic; preserve all final tolerances"
+  }
+}

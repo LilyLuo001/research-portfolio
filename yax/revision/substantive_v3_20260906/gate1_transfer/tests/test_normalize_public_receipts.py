@@ -121,7 +121,7 @@ def test_terminal_bindings_equal_live_repository_bytes_and_template():
     paths = {
         "cells": repo / "yax/revision/substantive_v3_20260906/gate1_cells/CELL_BUILD_SPEC.json",
         "target": repo / "yax/revision/substantive_v3_20260906/gate1_target/TARGET_AUDIT_SPEC.json",
-        "numerical": repo / "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+        "numerical": repo / "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json",
     }
     code_paths = {
         "cells": repo / TRANSFER.CELL_CODE_PATH,
@@ -388,11 +388,104 @@ def make_fixture(tmp_path: Path) -> tuple[Path, Path, Path, dict[str, object]]:
         "canonical_spec": copy.deepcopy(TRANSFER.CANONICAL_BINDING),
         "scheduler_time_zone": "America/New_York",
         "execution_command_policy": TRANSFER.COMMAND_POLICY,
+        "transfer_mode": TRANSFER.FRESH_TRANSFER_MODE,
         "modules": modules,
     }
     spec_path = tmp_path / "terminal_spec.json"
     dump(spec_path, spec)
     return spec_path, source, output, spec
+
+
+def make_a1_reuse_fixture(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, *, partial: bool = True,
+) -> tuple[Path, Path, Path, dict[str, object], TRANSFER.A1ReusePolicy]:
+    spec_path, source, output, spec = make_fixture(tmp_path)
+    spec["transfer_mode"] = TRANSFER.A1_REUSE_TRANSFER_MODE
+    parent_id = "yaxnumspec_v1_" + "1" * 64
+    parent_sha = "2" * 64
+    producer_commit = "3" * 40
+    producer_tree = "4" * 40
+    old_authorization_common = {
+        "authorization_id": "yaxgate1auth_v1_" + "5" * 64,
+        "authorization_file_sha256": "6" * 64,
+        "authorization_git_commit": "7" * 40,
+        "authorized_implementation_commit": "8" * 40,
+    }
+    for key in ("cells", "target"):
+        module = find_module(spec, key)
+        path = source / str(module["module_receipt_file"])
+        receipt = json.loads(path.read_text())
+        receipt["pre_execution_authorization"].update(old_authorization_common)
+        if key == "cells":
+            receipt["analysis_spec_id"] = parent_id
+            receipt["analysis_spec_sha256"] = parent_sha
+            receipt["git_commit"] = producer_commit
+            receipt["git_tree"] = producer_tree
+        else:
+            receipt["producer_execution_authentication"] = {
+                "git": {"commit": producer_commit, "tree": producer_tree}
+            }
+        dump(path, receipt)
+        refresh_hash(spec, source, key)
+    refresh_downstream_cell_receipt_links(spec_path, source, spec)
+
+    numerical_module = find_module(spec, "numerical")
+    numerical_path = source / str(numerical_module["module_receipt_file"])
+    numerical = json.loads(numerical_path.read_text())
+    if partial:
+        numerical["status"] = TRANSFER.NUMERICAL_BLOCKED_STATUS
+        numerical["passed_model_count"] = 4
+        numerical_module["expected_receipt_status"] = TRANSFER.NUMERICAL_BLOCKED_STATUS
+        scheduler_path = source / str(numerical_module["scheduler_record_file"])
+        scheduler_value = json.loads(scheduler_path.read_text())
+        scheduler_value["exit_status"] = 2
+        dump(scheduler_path, scheduler_value)
+        refresh_hash(spec, source, "numerical", scheduler_only=True)
+    dump(numerical_path, numerical)
+    refresh_hash(spec, source, "numerical")
+
+    policy_public = {
+        "mode": TRANSFER.A1_REUSE_TRANSFER_MODE,
+        "a1_spec": {
+            "path": TRANSFER.A1_SPEC_REL.as_posix(),
+            "id": TRANSFER.NUMERICAL_SPEC_ID,
+            "sha256": TRANSFER.NUMERICAL_SPEC_SHA256,
+        },
+        "parent_numerical_spec": {
+            "path": "numerical_existence/ANALYSIS_SPEC.json",
+            "id": parent_id,
+            "sha256": parent_sha,
+        },
+        "parent_run": {
+            "path": "runs/synthetic-parent",
+            "producer_commit": producer_commit,
+            "producer_tree": producer_tree,
+        },
+        "receipts": {
+            key: {
+                "path": f"runs/synthetic-parent/{key}/EXECUTION_RECEIPT.json",
+                "sha256": digest(source / f"{key}/EXECUTION_RECEIPT.json"),
+            }
+            for key in ("cells", "target")
+        },
+        "scheduler_records": {
+            key: {
+                "path": f"runs/synthetic-parent/scheduler/{key}.json",
+                "sha256": digest(source / f"scheduler/{key}.json"),
+            }
+            for key in ("cells", "target")
+        },
+        "cells_sha256": CELL_ARTIFACT_SHA,
+        "authorization": {
+            "path": "revision_inputs/A1.md", "sha256": "9" * 64,
+        },
+    }
+    policy = TRANSFER.A1ReusePolicy(public=policy_public, snapshots={})
+    monkeypatch.setattr(
+        TRANSFER, "capture_a1_reuse_policy", lambda _state: copy.deepcopy(policy)
+    )
+    dump(spec_path, spec)
+    return spec_path, source, output, spec, policy
 
 
 def find_module(spec: dict[str, object], key: str) -> dict[str, object]:
@@ -485,6 +578,124 @@ def test_valid_transfer_uses_public_projections_and_receipt_native_commands(tmp_
         "source_receipt_hash_link_present": False,
         "relationship": "temporal_and_topological_dependency_only",
     }
+
+
+def test_a1_partial_suite_transfers_evidence_without_claiming_suite_pass(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    spec_path, source, output, _spec, policy = make_a1_reuse_fixture(
+        tmp_path, monkeypatch, partial=True
+    )
+    report = TRANSFER.validate_and_publish(spec_path, source, output)
+    assert report["status"] == TRANSFER.PARTIAL_TRANSFER_STATUS
+    assert report["numerical_suite_status"] == TRANSFER.NUMERICAL_BLOCKED_STATUS
+    assert report["numerical_suite_pass"] is False
+    assert report["partial_numerical_evidence_transfer"] is True
+    assert report["a1_authenticated_parent_reuse"] == policy.public
+    numerical_projection = json.loads(
+        (output / "receipt_projections/numerical.json").read_text()
+    )
+    assert numerical_projection["source_receipt_status"] == TRANSFER.NUMERICAL_BLOCKED_STATUS
+    assert numerical_projection["model_count"] == 11
+    assert numerical_projection["passed_model_count"] == 4
+    assert numerical_projection["numerical_suite_pass"] is False
+    assert numerical_projection["partial_model_evidence_transferred"] is True
+    assert set(numerical_projection["output_hashes"]) == TRANSFER.NUMERICAL_ARTIFACTS
+    normalized = json.loads(
+        (output / "normalized_receipts/numerical.json").read_text()
+    )
+    assert normalized["exit_code"] == 2
+    assert normalized["numerical_suite_pass"] is False
+    assert normalized["transfer_mode"] == TRANSFER.A1_REUSE_TRANSFER_MODE
+
+
+@pytest.mark.parametrize("key", ["cells", "target"])
+def test_a1_reuse_rejects_any_parent_receipt_byte_change_even_when_rehashed_in_spec(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, key: str,
+):
+    spec_path, source, output, spec, _policy = make_a1_reuse_fixture(
+        tmp_path, monkeypatch
+    )
+    mutate_receipt(
+        spec_path, source, spec, key,
+        lambda receipt: receipt.__setitem__("harmless_but_unapproved_change", True),
+    )
+    if key == "cells":
+        refresh_downstream_cell_receipt_links(spec_path, source, spec)
+    with pytest.raises(TRANSFER.TransferBlocked, match="exact_parent_bytes"):
+        TRANSFER.validate_and_publish(spec_path, source, output)
+
+
+def test_a1_reuse_rejects_wrong_parent_spec_hash(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    spec_path, source, output, spec, _policy = make_a1_reuse_fixture(
+        tmp_path, monkeypatch
+    )
+    mutate_receipt(
+        spec_path, source, spec, "cells",
+        lambda receipt: receipt.__setitem__("analysis_spec_sha256", "f" * 64),
+    )
+    refresh_downstream_cell_receipt_links(spec_path, source, spec)
+    with pytest.raises(TRANSFER.TransferBlocked, match="reciprocally bound|parent spec"):
+        TRANSFER.validate_and_publish(spec_path, source, output)
+
+
+@pytest.mark.parametrize("field", ["audit_spec_id", "audit_spec_sha256"])
+def test_a1_reuse_rejects_wrong_new_numerical_spec_binding(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, field: str,
+):
+    spec_path, source, output, spec, _policy = make_a1_reuse_fixture(
+        tmp_path, monkeypatch
+    )
+    replacement = (
+        "yaxnumspec_v1_" + "f" * 64 if field == "audit_spec_id" else "f" * 64
+    )
+    mutate_receipt(
+        spec_path, source, spec, "numerical",
+        lambda receipt: receipt.__setitem__(field, replacement),
+    )
+    with pytest.raises(TRANSFER.TransferBlocked, match="typed specification"):
+        TRANSFER.validate_and_publish(spec_path, source, output)
+
+
+def test_a1_reuse_requires_new_numerical_receipt_to_match_current_authorization(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    spec_path, source, output, spec, _policy = make_a1_reuse_fixture(
+        tmp_path, monkeypatch
+    )
+    mutate_receipt(
+        spec_path, source, spec, "numerical",
+        lambda receipt: receipt["pre_execution_authorization"].__setitem__(
+            "authorization_file_sha256", "b" * 64
+        ),
+    )
+    with pytest.raises(TRANSFER.TransferBlocked, match="authorization consistency"):
+        TRANSFER.validate_and_publish(spec_path, source, output)
+
+
+def test_partial_model_count_cannot_be_mislabeled_as_suite_pass(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+):
+    spec_path, source, output, spec, _policy = make_a1_reuse_fixture(
+        tmp_path, monkeypatch, partial=True
+    )
+    numerical_module = find_module(spec, "numerical")
+    numerical_module["expected_receipt_status"] = TRANSFER.NUMERICAL_PASS_STATUS
+    path = source / str(numerical_module["module_receipt_file"])
+    receipt = json.loads(path.read_text())
+    receipt["status"] = TRANSFER.NUMERICAL_PASS_STATUS
+    dump(path, receipt)
+    refresh_hash(spec, source, "numerical")
+    scheduler_path = source / str(numerical_module["scheduler_record_file"])
+    scheduler_value = json.loads(scheduler_path.read_text())
+    scheduler_value["exit_status"] = 0
+    dump(scheduler_path, scheduler_value)
+    refresh_hash(spec, source, "numerical", scheduler_only=True)
+    dump(spec_path, spec)
+    with pytest.raises(TRANSFER.TransferBlocked, match="does not certify all eleven"):
+        TRANSFER.validate_and_publish(spec_path, source, output)
 
 
 def test_qacct_exporter_code_hash_is_pinned_by_normalizer():

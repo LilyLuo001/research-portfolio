@@ -28,7 +28,8 @@ AUTHORIZATION_REL = V3_REL / "gate1_transfer/PRE_EXECUTION_AUTHORIZATION.json"
 CANONICAL_REL = V3_REL / "contracts/specs/canonical_baseline_reproduction_v2.json"
 CELL_SPEC_REL = V3_REL / "gate1_cells/CELL_BUILD_SPEC.json"
 TARGET_SPEC_REL = V3_REL / "gate1_target/TARGET_AUDIT_SPEC.json"
-NUMERICAL_SPEC_REL = V3_REL / "numerical_existence/ANALYSIS_SPEC.json"
+NUMERICAL_SPEC_REL = V3_REL / "numerical_existence/ANALYSIS_SPEC_A1.json"
+OWNER_AMENDMENT_REL = V3_REL / "revision_inputs/GATE1_NUMERICAL_ADJUDICATION_A1.md"
 CELL_CODE_REL = V3_REL / "gate1_cells/run_gate1_cells.py"
 TARGET_CODE_REL = V3_REL / "gate1_target/run_exact_target_audit.py"
 NUMERICAL_CODE_REL = V3_REL / "numerical_existence/run_numerical_existence_audit.py"
@@ -44,6 +45,9 @@ EXPECTED_GIT_SHA256 = (
     "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e"
 )
 EXPECTED_GIT_VERSION = "git version 2.43.7"
+OWNER_AMENDMENT_SHA256 = (
+    "ff4963e66940741abc8a4eda87fd9050c51cae5cedfabb3ae1ab42c21f5836a9"
+)
 SANITIZED_GIT_ENVIRONMENT = {"PATH": "/usr/bin:/bin", "LC_ALL": "C"}
 IMPORT_AFFECTING_ENVIRONMENT = (
     "PYTHONHOME", "PYTHONPATH", "PYTHONUSERBASE", "PYTHONSTARTUP",
@@ -145,6 +149,7 @@ def verify_authorization_inputs_at_head(repo: Path) -> None:
     """Reject indirect, hardlinked, changing, or non-HEAD authorization inputs."""
     required = (
         CANONICAL_REL, CELL_SPEC_REL, TARGET_SPEC_REL, NUMERICAL_SPEC_REL,
+        OWNER_AMENDMENT_REL,
         CELL_CODE_REL, TARGET_CODE_REL, NUMERICAL_CODE_REL,
         Path(__file__).resolve(strict=True).relative_to(repo.resolve(strict=True)),
     )
@@ -249,6 +254,16 @@ def build_document(
     cell_spec = load_json(repo / CELL_SPEC_REL)
     target_spec = load_json(repo / TARGET_SPEC_REL)
     numerical_spec = load_json(repo / NUMERICAL_SPEC_REL)
+    if sha256_file(repo / OWNER_AMENDMENT_REL) != OWNER_AMENDMENT_SHA256:
+        raise AuthorizationGenerationError("owner A1 amendment hash differs")
+    amendment = numerical_spec.get("amendment_a1")
+    if not isinstance(amendment, dict) or amendment.get("authorization") != {
+        "path": OWNER_AMENDMENT_REL.as_posix(),
+        "sha256": OWNER_AMENDMENT_SHA256,
+    }:
+        raise AuthorizationGenerationError(
+            "numerical specification is not linked to owner A1"
+        )
     canonical_id = self_id(canonical, "spec_id", "yaxspec_v1_")
     cell_id = self_id(cell_spec, "cell_build_spec_id", "yaxcellspec_v1_")
     target_id = self_id(target_spec, "target_audit_spec_id", "yaxtargetspec_v1_")

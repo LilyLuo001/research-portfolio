@@ -4,10 +4,13 @@ This directory implements requirements N01--N03 without changing the YAX
 estimand. It audits the exact frequency-weighted grouped-binomial likelihood,
 including genuine one-sided cells and both fixed-effect partitions.
 
-`ANALYSIS_SPEC.json` is the pre-result numerical contract. The production cell
-builder is `../gate1_cells/run_gate1_cells.py`; there is no second or substitute
-builder in this directory. A run requires the byte-locked canonical V2 spec, a
-fresh balanced occupation-month cell leaf, and its authenticated receipt.
+`ANALYSIS_SPEC.json` is the immutable blocked-run parent contract.
+`ANALYSIS_SPEC_A1.json` is the owner-authorized amended numerical contract.
+The production cell builder is `../gate1_cells/run_gate1_cells.py`; there is no
+second or substitute builder in this directory. A1 reuses only the exact
+authenticated parent occupation-month cell leaf after checking its bytes,
+receipt, producer spec, producer commit/tree, and unchanged producer blobs. It
+does not reread or rebuild protected row-level microdata.
 
 ## Authentication and publication
 
@@ -91,34 +94,50 @@ construction, rank, recession invariance, and two-solver agreement for all 38
 reported Q5 event coefficients and full rank for the 23-dimensional joint
 pretrend test.
 
-For a finite face, unclipped sparse L-BFGS-B and trust-ncg solve the same exact
-objective. The audit compares the focal coefficient, all slopes, fitted means,
-all reported dynamic Q5 targets, objective, gradients, and a fixed-target
-likelihood profile. Optimizer termination is not acceptance evidence. Each
-untouched candidate must also pass original-coordinate score checks and a
-sparse full-Hessian certificate: a refined primal Newton solve, a complete
-dyadic raw-likelihood-decrease check, and independent adjoint solves for every
-reported target. The adjoints must agree with the primal target corrections
-and satisfy the existing coefficient tolerance. This catches weak joint
-directions without converting the 5,000--8,000-column production Hessians to
-dense matrices. It reports raw
+For a finite face, the A1 mandatory pair is trust-ncg (with deterministic exact
+Newton polishing only when its untouched candidate fails the external
+certificate) and a standalone zero-start damped sparse Newton/IRLS reference.
+The reference independently codes the success/failure softplus loss, score,
+Hessian, sparse solve, and dyadic line search. Both candidates are evaluated by
+both implementations and must agree in the focal functional, every identified
+treatment coefficient, all reported dynamic Q5 targets, fitted means,
+probabilities, and objective at the unchanged thresholds. L-BFGS-B remains a
+visible diagnostic; a materially better objective or unresolved contradiction
+still blocks. Optimizer termination is not acceptance evidence. Each candidate
+must also pass original-coordinate score checks and a sparse full-Hessian
+certificate: a refined primal Newton solve, a complete dyadic
+raw-likelihood-decrease check, and independent adjoint solves for every target.
+The adjoints must agree with the primal target corrections and satisfy the
+existing coefficient tolerance. This catches weak joint directions without
+converting the 5,000--8,000-column production Hessians to dense matrices. It
+reports raw
 and diagonally scaled spectra of the full nuisance-plus-treatment Hessian both
 at total/4 weights and at fitted probabilities. The inherited clipped solver
 is only a disclosed comparator.
 
-No licensed microdata or protected aggregate cells are committed here. The 68
-implementation tests (plus 17 unittest subtests) are synthetic or use public
-byte-locked submitted code.
+The diagnostic contradiction rule uses the unchanged numerical units: an
+L-BFGS-B objective lower than the better mandatory candidate by more than
+`1e-10` per total blocks, as does any failed independent evaluator/derivative
+check at that candidate. A declared-target difference above `1e-6` blocks only
+when the L-BFGS-B candidate independently passes the unchanged score and
+full-Hessian stationarity certificate; an unfinished diagnostic coefficient is
+not promoted into a contradictory solution. Both mandatory candidates must
+separately pass the full raw and diagonally scaled fitted-Hessian rank and
+positive-definiteness audit.
+
+No licensed microdata or protected aggregate cells are committed here. All
+implementation tests are synthetic, exercise sanitized retained receipts, or
+use public byte-locked submitted code.
 
 ## Production invocation
 
-Build the cells first using `../gate1_cells/README.md`. Then run from the YAX
-repository root, with a new outside-repository output leaf:
+Run from the YAX repository root against the exact retained authenticated cell
+leaf, with a new outside-repository output leaf:
 
 ```sh
 <YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py \
   --canonical-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json \
-  --analysis-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json \
+  --analysis-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json \
   --cells '<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv' \
   --cells-receipt '<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json' \
   --legacy-engine <YAX_REPO_ROOT>/dax/memo/power_calcs/young_relative_employment_power.py \

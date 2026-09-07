@@ -46,6 +46,12 @@ REPORT_SCHEMA = "yax-gate1-public-transfer-validation-v3"
 PROJECTION_SCHEMA = "yax-gate1-public-receipt-projection-v2"
 NORMALIZED_SCHEMA = "yax-normalized-run-receipt-v1"
 PASS_STATUS = "PASS_SANITIZED_GATE1_RECEIPT_NORMALIZATION"
+PARTIAL_TRANSFER_STATUS = "COMPLETE_SANITIZED_A1_PARTIAL_EVIDENCE_TRANSFER"
+FRESH_TRANSFER_MODE = "fresh_all_pass"
+A1_REUSE_TRANSFER_MODE = "a1_authenticated_parent_reuse"
+TRANSFER_MODES = {FRESH_TRANSFER_MODE, A1_REUSE_TRANSFER_MODE}
+NUMERICAL_PASS_STATUS = "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED"
+NUMERICAL_BLOCKED_STATUS = "BLOCKED_ONE_OR_MORE_CORE_TARGETS_NOT_ESTABLISHED"
 MODULE_KEYS = ("cells", "target", "numerical")
 SCHEDULER_BOUNDARY_TOLERANCE_SECONDS = 2.0
 MAX_FUTURE_CLOCK_SKEW_SECONDS = 300.0
@@ -66,6 +72,10 @@ EXPECTED_QACCT_VERSION = "OGS/GE 2011.11p1"
 AUTHORIZATION_REL = Path(
     "yax/revision/substantive_v3_20260906/gate1_transfer/"
     "PRE_EXECUTION_AUTHORIZATION.json"
+)
+A1_SPEC_REL = Path(
+    "yax/revision/substantive_v3_20260906/numerical_existence/"
+    "ANALYSIS_SPEC_A1.json"
 )
 CANONICAL_SPEC_REL = Path(
     "yax/revision/substantive_v3_20260906/contracts/specs/"
@@ -97,13 +107,13 @@ TARGET_CODE_PATH = (
     "run_exact_target_audit.py"
 )
 TARGET_CODE_SHA256 = "b62cfd28c71d7c7a933158ba4afefec0fa314be4b1f6bd4d205a0991088e80b9"
-NUMERICAL_SPEC_ID = "yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991"
-NUMERICAL_SPEC_SHA256 = "152cb4b5a27ff168a0bcfae898ac68b479fb2ae4ae2c811722a145560fc6b2ce"
+NUMERICAL_SPEC_ID = "yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4"
+NUMERICAL_SPEC_SHA256 = "7d5798546004e5d6804a1f1440158e4f168eb1adf54e692f93bf60df00b47cca"
 NUMERICAL_CODE_PATH = (
     "yax/revision/substantive_v3_20260906/numerical_existence/"
     "run_numerical_existence_audit.py"
 )
-NUMERICAL_CODE_SHA256 = "23f4a4dd70fb1ff5798405248fb742a07e4204a0a42bff9d9e24ad816f47df02"
+NUMERICAL_CODE_SHA256 = "80cbf824a5aef833fa4f748fb0a027ca50f717f08ea0467bc976102b8d1f5cc7"
 ARTIFACT_SAFETY_SHA256 = "6c03ad94fb5d4ecb618e3cd0e4f9de6ece0a5f20e633283002f3fc01d1248fd2"
 LEGACY_ENGINE_SHA256 = "096f0290b057e565077278ef38b352a9af5551c3b525438015bf9f192087bddf"
 
@@ -216,7 +226,7 @@ EXPECTED_SANITIZED_ARGV: dict[str, list[str]] = {
         "--canonical-spec",
         "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json",
         "--analysis-spec",
-        "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC.json",
+        "<YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json",
         "--cells", "<YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv",
         "--cells-receipt", "<YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json",
         "--legacy-engine",
@@ -269,7 +279,7 @@ MODULE_CONTRACTS: dict[str, dict[str, Any]] = {
         "receipt_file": "numerical/EXECUTION_RECEIPT.json",
         "scheduler_file": "scheduler/numerical.json",
         "receipt_schema": "yax-numerical-existence-receipt-v1",
-        "receipt_status": "PASS_ALL_CORE_TARGETS_NUMERICALLY_AUDITED",
+        "receipt_status": NUMERICAL_PASS_STATUS,
         "mode": "numerical_analysis",
         "depends_on": ["cells", "target"],
         "time_source": "module_receipt",
@@ -763,6 +773,172 @@ class AuthorizationState:
     committed_payload_sha256: str
 
 
+@dataclass(frozen=True)
+class A1ReusePolicy:
+    """Committed A1 authority for reusing the exact historical producer leaves."""
+
+    public: dict[str, Any]
+    snapshots: dict[str, FileSnapshot]
+
+
+def capture_a1_reuse_policy(normalizer_state: dict[str, Any]) -> A1ReusePolicy:
+    """Authenticate A1 and derive byte pins for its historical parent receipts.
+
+    A1 directly pins the cells receipt and the preserved parent-run directory.
+    The target receipt and both scheduler records are consequently pinned to the
+    bytes tracked at the same clean HEAD under that exact parent-run directory.
+    This does not treat a transfer-spec hash, or a receipt-carried summary, as
+    authority.
+    """
+    source = Path(__file__).resolve(strict=True)
+    root_text = _git_output(["rev-parse", "--show-toplevel"], source.parent)
+    assert isinstance(root_text, str)
+    root = Path(root_text.strip()).resolve(strict=True)
+    head = _git_output(["rev-parse", "--verify", "HEAD^{commit}"], root)
+    assert isinstance(head, str)
+    if normalizer_state.get("git_commit") != head.strip():
+        raise TransferBlocked("A1 reuse-policy HEAD differs from normalizer HEAD")
+
+    def committed_snapshot(relative: Path, label: str) -> FileSnapshot:
+        path = contained_path(root, relative)
+        snapshot = stable_snapshot(path, relative)
+        committed = _git_output(
+            ["show", f"HEAD:{relative.as_posix()}"], root, binary=True
+        )
+        assert isinstance(committed, bytes)
+        if snapshot.payload != committed:
+            raise TransferBlocked(f"{label} differs from committed HEAD bytes")
+        return snapshot
+
+    spec_snapshot = committed_snapshot(A1_SPEC_REL, "A1 numerical specification")
+    if spec_snapshot.sha256 != NUMERICAL_SPEC_SHA256:
+        raise TransferBlocked("A1 numerical specification byte hash differs")
+    spec = load_json_bytes(spec_snapshot.payload, "A1 numerical specification")
+    if spec.get("audit_spec_id") != NUMERICAL_SPEC_ID:
+        raise TransferBlocked("A1 numerical specification ID differs")
+    amendment = spec.get("amendment_a1")
+    if not isinstance(amendment, dict):
+        raise TransferBlocked("A1 numerical specification lacks amendment_a1")
+    parent = amendment.get("parent_numerical_spec")
+    reuse = amendment.get("authenticated_cell_reuse")
+    preserved = amendment.get("preserved_blocked_run")
+    authorization = amendment.get("authorization")
+    if not all(isinstance(value, dict) for value in (parent, reuse, preserved, authorization)):
+        raise TransferBlocked("A1 amendment parent/reuse authority is malformed")
+
+    parent_path = _safe_relative(parent.get("path"), "A1 parent numerical spec path")
+    parent_snapshot = committed_snapshot(parent_path, "A1 parent numerical specification")
+    parent_id = require_nonempty_string(parent.get("id"), "A1 parent spec ID")
+    parent_sha = require_sha256(parent.get("sha256"), "A1 parent spec hash")
+    parent_document = load_json_bytes(parent_snapshot.payload, "A1 parent numerical spec")
+    if (
+        parent_snapshot.sha256 != parent_sha
+        or parent_document.get("audit_spec_id") != parent_id
+    ):
+        raise TransferBlocked("A1 parent numerical specification binding differs")
+
+    run_path = _safe_relative(preserved.get("path"), "A1 preserved parent run path")
+    cells_path = _safe_relative(reuse.get("receipt_path"), "A1 reused cells receipt path")
+    expected_cells_path = run_path / "cells" / "EXECUTION_RECEIPT.json"
+    target_path = run_path / "target" / "EXECUTION_RECEIPT.json"
+    numerical_parent_path = run_path / "numerical" / "EXECUTION_RECEIPT.json"
+    if cells_path != expected_cells_path:
+        raise TransferBlocked("A1 reused cells receipt is outside its preserved parent run")
+    if _safe_relative(
+        preserved.get("numerical_receipt_path"),
+        "A1 preserved numerical receipt path",
+    ) != numerical_parent_path:
+        raise TransferBlocked("A1 preserved numerical receipt path differs")
+
+    receipt_paths = {"cells": cells_path, "target": target_path}
+    scheduler_paths = {
+        key: run_path / "scheduler" / f"{key}.json" for key in ("cells", "target")
+    }
+    snapshots = {"a1_spec": spec_snapshot, "parent_spec": parent_snapshot}
+    for key, relative in {**receipt_paths, **{
+        f"{name}_scheduler": path for name, path in scheduler_paths.items()
+    }}.items():
+        snapshots[key] = committed_snapshot(relative, f"A1 parent {key}")
+
+    cells_receipt_sha = require_sha256(
+        reuse.get("receipt_sha256"), "A1 reused cells receipt hash"
+    )
+    if snapshots["cells"].sha256 != cells_receipt_sha:
+        raise TransferBlocked("A1 reused cells receipt differs from its amendment byte pin")
+    cells_sha = require_sha256(reuse.get("cells_sha256"), "A1 reused cells hash")
+    producer_commit = require_nonempty_string(
+        reuse.get("producer_commit"), "A1 reused cells producer commit"
+    )
+    preserved_commit = require_nonempty_string(
+        preserved.get("producer_commit"), "A1 preserved run producer commit"
+    )
+    producer_tree = require_nonempty_string(
+        reuse.get("producer_tree"), "A1 reused cells producer tree"
+    )
+    if (
+        not re.fullmatch(r"[0-9a-f]{40}", producer_commit)
+        or producer_commit != preserved_commit
+        or not re.fullmatch(r"[0-9a-f]{40}", producer_tree)
+    ):
+        raise TransferBlocked("A1 parent producer Git binding is malformed")
+    observed_commit = _git_output(
+        ["rev-parse", "--verify", f"{producer_commit}^{{commit}}"], root
+    )
+    observed_tree = _git_output(
+        ["show", "-s", "--format=%T", producer_commit], root
+    )
+    assert isinstance(observed_commit, str) and isinstance(observed_tree, str)
+    if observed_commit.strip() != producer_commit or observed_tree.strip() != producer_tree:
+        raise TransferBlocked("A1 parent producer commit/tree cannot be authenticated")
+
+    authorization_path = _safe_relative(
+        authorization.get("path"), "A1 amendment authorization path"
+    )
+    authorization_snapshot = committed_snapshot(
+        authorization_path, "A1 amendment authorization"
+    )
+    if authorization_snapshot.sha256 != require_sha256(
+        authorization.get("sha256"), "A1 amendment authorization hash"
+    ):
+        raise TransferBlocked("A1 amendment authorization byte hash differs")
+    snapshots["authorization"] = authorization_snapshot
+
+    public = {
+        "mode": A1_REUSE_TRANSFER_MODE,
+        "a1_spec": {
+            "path": A1_SPEC_REL.as_posix(),
+            "id": NUMERICAL_SPEC_ID,
+            "sha256": spec_snapshot.sha256,
+        },
+        "parent_numerical_spec": {
+            "path": parent_path.as_posix(), "id": parent_id, "sha256": parent_sha,
+        },
+        "parent_run": {
+            "path": run_path.as_posix(),
+            "producer_commit": producer_commit,
+            "producer_tree": producer_tree,
+        },
+        "receipts": {
+            key: {"path": path.as_posix(), "sha256": snapshots[key].sha256}
+            for key, path in receipt_paths.items()
+        },
+        "scheduler_records": {
+            key: {
+                "path": path.as_posix(),
+                "sha256": snapshots[f"{key}_scheduler"].sha256,
+            }
+            for key, path in scheduler_paths.items()
+        },
+        "cells_sha256": cells_sha,
+        "authorization": {
+            "path": authorization_path.as_posix(),
+            "sha256": authorization_snapshot.sha256,
+        },
+    }
+    assert_safe_document(public, "A1 reuse policy")
+    return A1ReusePolicy(public=public, snapshots=snapshots)
+
+
 def _authorization_identifier(document: dict[str, Any]) -> str:
     core = dict(document)
     core.pop("authorization_id", None)
@@ -1045,7 +1221,9 @@ def validate_no_future_scheduler_times(
 
 
 def validate_scheduler(
-    scheduler: dict[str, Any], module: dict[str, Any], zone_name: str
+    scheduler: dict[str, Any], module: dict[str, Any], zone_name: str,
+    transfer_mode: str = FRESH_TRANSFER_MODE,
+    receipt_status: str | None = None,
 ) -> dict[str, Any]:
     if set(scheduler) != SCHEDULER_FIELDS:
         raise TransferBlocked(
@@ -1071,8 +1249,19 @@ def validate_scheduler(
         exit_status = int(exit_status)
     require_exact_int(failed, "scheduler failed", 0)
     require_exact_int(exit_status, "scheduler exit_status", 0)
-    if failed != 0 or exit_status != 0:
-        raise TransferBlocked("scheduler record does not establish a successful run")
+    expected_exit = 0
+    if (
+        transfer_mode == A1_REUSE_TRANSFER_MODE
+        and module["key"] == "numerical"
+        and receipt_status == NUMERICAL_BLOCKED_STATUS
+    ):
+        expected_exit = 2
+    if failed != 0 or exit_status != expected_exit:
+        raise TransferBlocked(
+            "scheduler result is inconsistent with the declared numerical suite status"
+            if module["key"] == "numerical"
+            else "scheduler record does not establish a successful run"
+        )
     wallclock = require_finite_number(
         scheduler["ru_wallclock"], "scheduler ru_wallclock", 0.0
     )
@@ -1200,7 +1389,7 @@ def exact_module_fields(key: str) -> set[str]:
 def validate_spec(document: dict[str, Any]) -> list[dict[str, Any]]:
     expected_top = {
         "schema_version", "status", "canonical_spec", "scheduler_time_zone",
-        "execution_command_policy", "modules",
+        "execution_command_policy", "transfer_mode", "modules",
     }
     if set(document) != expected_top:
         raise TransferBlocked("transfer spec top-level field set is not exact")
@@ -1214,6 +1403,9 @@ def validate_spec(document: dict[str, Any]) -> list[dict[str, Any]]:
         raise TransferBlocked(
             "arbitrary command strings are forbidden; receipt-native exact argv is required"
         )
+    transfer_mode = document.get("transfer_mode")
+    if transfer_mode not in TRANSFER_MODES:
+        raise TransferBlocked("transfer_mode is not an allowed immutable workflow")
     if document.get("canonical_spec") != CANONICAL_BINDING:
         raise TransferBlocked("canonical specification binding is not the immutable Gate-1 value")
     if not CANONICAL_ID.fullmatch(CANONICAL_BINDING["id"]):
@@ -1243,7 +1435,6 @@ def validate_spec(document: dict[str, Any]) -> list[dict[str, Any]]:
             "module_receipt_file": contract["receipt_file"],
             "scheduler_record_file": contract["scheduler_file"],
             "expected_receipt_schema": contract["receipt_schema"],
-            "expected_receipt_status": contract["receipt_status"],
             "canonical_id_pointer": "/canonical_spec_id",
             "canonical_sha256_pointer": "/canonical_spec_sha256",
             "typed_spec": contract["typed_spec"],
@@ -1256,6 +1447,11 @@ def validate_spec(document: dict[str, Any]) -> list[dict[str, Any]]:
                 "scheduler_boundary_tolerance_seconds"
             ],
         }
+        allowed_statuses = {contract["receipt_status"]}
+        if key == "numerical" and transfer_mode == A1_REUSE_TRANSFER_MODE:
+            allowed_statuses.add(NUMERICAL_BLOCKED_STATUS)
+        if module.get("expected_receipt_status") not in allowed_statuses:
+            raise TransferBlocked(f"{key} immutable expected_receipt_status differs")
         if key in {"cells", "target"}:
             fixed["generated_at_pointer"] = contract["generated_at_pointer"]
         if key == "numerical":
@@ -1432,13 +1628,14 @@ def validate_pre_execution_authorization_receipt(
 
 
 def validate_common_receipt(
-    receipt: dict[str, Any], module: dict[str, Any]
+    receipt: dict[str, Any], module: dict[str, Any],
+    transfer_mode: str = FRESH_TRANSFER_MODE,
 ) -> tuple[dict[str, str], dict[str, Any], dict[str, Any], dict[str, Any]]:
     key = module["key"]
     contract = MODULE_CONTRACTS[key]
     if receipt.get("schema_version") != contract["receipt_schema"]:
         raise TransferBlocked(f"{key} receipt schema differs")
-    if receipt.get("status") != contract["receipt_status"]:
+    if receipt.get("status") != module.get("expected_receipt_status"):
         raise TransferBlocked(f"{key} receipt status differs")
     if (
         receipt.get("canonical_spec_id") != CANONICAL_BINDING["id"]
@@ -1473,16 +1670,26 @@ def require_aware_timestamp(receipt: dict[str, Any], field: str, label: str) -> 
 
 
 def project_cells_receipt(
-    receipt: dict[str, Any], module: dict[str, Any], receipt_sha256: str
+    receipt: dict[str, Any], module: dict[str, Any], receipt_sha256: str,
+    transfer_mode: str = FRESH_TRANSFER_MODE,
+    a1_policy: A1ReusePolicy | None = None,
 ) -> tuple[dict[str, Any], dict[str, str], dict[str, Any]]:
     identity, command, execution_runtime, execution_authorization = (
-        validate_common_receipt(receipt, module)
+        validate_common_receipt(receipt, module, transfer_mode)
     )
     if receipt.get("aggregate_schema_version") != "yax-numerical-cells-v1":
         raise TransferBlocked("cells aggregate schema differs")
+    expected_consumer = {"id": NUMERICAL_SPEC_ID, "sha256": NUMERICAL_SPEC_SHA256}
+    if transfer_mode == A1_REUSE_TRANSFER_MODE:
+        if a1_policy is None:
+            raise TransferBlocked("A1 reused cells lack committed amendment authority")
+        expected_consumer = {
+            "id": a1_policy.public["parent_numerical_spec"]["id"],
+            "sha256": a1_policy.public["parent_numerical_spec"]["sha256"],
+        }
     if (
-        receipt.get("analysis_spec_id") != NUMERICAL_SPEC_ID
-        or receipt.get("analysis_spec_sha256") != NUMERICAL_SPEC_SHA256
+        receipt.get("analysis_spec_id") != expected_consumer["id"]
+        or receipt.get("analysis_spec_sha256") != expected_consumer["sha256"]
     ):
         raise TransferBlocked("cells receipt is not reciprocally bound to the numerical spec")
     if receipt.get("cells_filename") != "aggregate_cells.csv":
@@ -1526,9 +1733,7 @@ def project_cells_receipt(
         "generated_at_utc": generated,
         "canonical_spec": CANONICAL_BINDING,
         "typed_spec": MODULE_CONTRACTS["cells"]["typed_spec"],
-        "numerical_consumer_spec": {
-            "id": NUMERICAL_SPEC_ID, "sha256": NUMERICAL_SPEC_SHA256,
-        },
+        "numerical_consumer_spec": expected_consumer,
         "code_hashes": {
             "builder": CELL_CODE_SHA256, "transitive": CELL_TRANSITIVE_SHA256,
         },
@@ -1543,14 +1748,30 @@ def project_cells_receipt(
         "execution_runtime_authentication": execution_runtime,
         "pre_execution_authorization": execution_authorization,
     }
+    if transfer_mode == A1_REUSE_TRANSFER_MODE:
+        projection["a1_authenticated_reuse"] = {
+            "a1_numerical_consumer_spec": {
+                "id": NUMERICAL_SPEC_ID, "sha256": NUMERICAL_SPEC_SHA256,
+            },
+            "parent_receipt_sha256": a1_policy.public["receipts"]["cells"][
+                "sha256"
+            ],
+            "parent_numerical_spec": expected_consumer,
+            "parent_producer_commit": a1_policy.public["parent_run"][
+                "producer_commit"
+            ],
+            "parent_producer_tree": a1_policy.public["parent_run"]["producer_tree"],
+        }
     return projection, identity, command
 
 
 def project_target_receipt(
-    receipt: dict[str, Any], module: dict[str, Any], receipt_sha256: str
+    receipt: dict[str, Any], module: dict[str, Any], receipt_sha256: str,
+    transfer_mode: str = FRESH_TRANSFER_MODE,
+    a1_policy: A1ReusePolicy | None = None,
 ) -> tuple[dict[str, Any], dict[str, str], dict[str, Any]]:
     identity, command, execution_runtime, execution_authorization = (
-        validate_common_receipt(receipt, module)
+        validate_common_receipt(receipt, module, transfer_mode)
     )
     if (
         receipt.get("cell_build_spec_id") != CELL_SPEC_ID
@@ -1594,14 +1815,28 @@ def project_target_receipt(
         "execution_runtime_authentication": execution_runtime,
         "pre_execution_authorization": execution_authorization,
     }
+    if transfer_mode == A1_REUSE_TRANSFER_MODE:
+        if a1_policy is None:
+            raise TransferBlocked("A1 reused target lacks committed amendment authority")
+        projection["a1_authenticated_reuse"] = {
+            "parent_receipt_sha256": a1_policy.public["receipts"]["target"][
+                "sha256"
+            ],
+            "parent_producer_commit": a1_policy.public["parent_run"][
+                "producer_commit"
+            ],
+            "parent_producer_tree": a1_policy.public["parent_run"]["producer_tree"],
+        }
     return projection, identity, command
 
 
 def project_numerical_receipt(
-    receipt: dict[str, Any], module: dict[str, Any], receipt_sha256: str
+    receipt: dict[str, Any], module: dict[str, Any], receipt_sha256: str,
+    transfer_mode: str = FRESH_TRANSFER_MODE,
+    a1_policy: A1ReusePolicy | None = None,
 ) -> tuple[dict[str, Any], dict[str, str], dict[str, Any]]:
     identity, command, execution_runtime, execution_authorization = (
-        validate_common_receipt(receipt, module)
+        validate_common_receipt(receipt, module, transfer_mode)
     )
     cells_sha = require_sha256(receipt.get("cells_sha256"), "numerical cells hash")
     cells_receipt_sha = require_sha256(
@@ -1625,8 +1860,17 @@ def project_numerical_receipt(
     passed_count = require_exact_int(
         receipt.get("passed_model_count"), "numerical passed_model_count", 0
     )
-    if model_count != 11 or passed_count != model_count:
+    if model_count != 11 or passed_count > model_count:
+        raise TransferBlocked("numerical receipt model counts are inconsistent")
+    suite_pass = receipt["status"] == NUMERICAL_PASS_STATUS
+    if suite_pass and passed_count != model_count:
         raise TransferBlocked("numerical PASS receipt does not certify all eleven models")
+    if not suite_pass and (
+        transfer_mode != A1_REUSE_TRANSFER_MODE
+        or receipt["status"] != NUMERICAL_BLOCKED_STATUS
+        or passed_count == model_count
+    ):
+        raise TransferBlocked("partial numerical evidence is mislabeled or unauthorized")
     if receipt.get("protected_microdata_read_by_this_program") is not False:
         raise TransferBlocked("numerical receipt does not deny protected-microdata access")
     start = require_aware_timestamp(receipt, "started_at_utc", "numerical receipt")
@@ -1654,6 +1898,8 @@ def project_numerical_receipt(
         },
         "model_count": model_count,
         "passed_model_count": passed_count,
+        "numerical_suite_pass": suite_pass,
+        "partial_model_evidence_transferred": not suite_pass,
         "output_hashes": output_hashes,
         "execution_command_binding": command,
         "execution_runtime_authentication": execution_runtime,
@@ -1669,9 +1915,70 @@ PROJECTORS = {
 }
 
 
+def validate_a1_parent_reuse(
+    receipts: dict[str, dict[str, Any]],
+    snapshots: dict[Path, FileSnapshot],
+    policy: A1ReusePolicy,
+) -> dict[str, bool]:
+    """Require exact committed A1 parent bytes, not merely compatible metadata."""
+    cells = receipts["cells"]
+    target = receipts["target"]
+    parent = policy.public["parent_numerical_spec"]
+    parent_run = policy.public["parent_run"]
+    checks = {
+        "a1_cells_receipt_exact_parent_bytes": snapshots[
+            Path(MODULE_CONTRACTS["cells"]["receipt_file"])
+        ].sha256 == policy.public["receipts"]["cells"]["sha256"],
+        "a1_target_receipt_exact_parent_bytes": snapshots[
+            Path(MODULE_CONTRACTS["target"]["receipt_file"])
+        ].sha256 == policy.public["receipts"]["target"]["sha256"],
+        "a1_cells_scheduler_exact_parent_bytes": snapshots[
+            Path(MODULE_CONTRACTS["cells"]["scheduler_file"])
+        ].sha256 == policy.public["scheduler_records"]["cells"]["sha256"],
+        "a1_target_scheduler_exact_parent_bytes": snapshots[
+            Path(MODULE_CONTRACTS["target"]["scheduler_file"])
+        ].sha256 == policy.public["scheduler_records"]["target"]["sha256"],
+        "a1_cells_parent_spec_id": cells.get("analysis_spec_id") == parent["id"],
+        "a1_cells_parent_spec_sha256": (
+            cells.get("analysis_spec_sha256") == parent["sha256"]
+        ),
+        "a1_cells_artifact_sha256": (
+            cells.get("cells_sha256") == policy.public["cells_sha256"]
+        ),
+        "a1_cells_producer_commit": (
+            cells.get("git_commit") == parent_run["producer_commit"]
+        ),
+        "a1_cells_producer_tree": cells.get("git_tree") == parent_run["producer_tree"],
+        "a1_target_to_cells_receipt": (
+            target.get("source_aggregate_receipt_sha256")
+            == policy.public["receipts"]["cells"]["sha256"]
+        ),
+        "a1_target_to_cells_artifact": (
+            target.get("authenticated_cells_sha256") == policy.public["cells_sha256"]
+        ),
+        "a1_target_producer_commit": (
+            target.get("producer_execution_authentication", {}).get("git", {}).get(
+                "commit"
+            ) == parent_run["producer_commit"]
+        ),
+        "a1_target_producer_tree": (
+            target.get("producer_execution_authentication", {}).get("git", {}).get(
+                "tree"
+            ) == parent_run["producer_tree"]
+        ),
+    }
+    failed = sorted(key for key, value in checks.items() if value is not True)
+    if failed:
+        raise TransferBlocked(
+            "A1 historical parent reuse authentication differs: " + ", ".join(failed)
+        )
+    return checks
+
+
 def validate_cross_receipt_bindings(
     projections: dict[str, dict[str, Any]],
     snapshots: dict[Path, FileSnapshot],
+    transfer_mode: str = FRESH_TRANSFER_MODE,
 ) -> dict[str, bool]:
     cells = projections["cells"]
     target = projections["target"]
@@ -1691,11 +1998,20 @@ def validate_cross_receipt_bindings(
         "numerical_to_cell_artifact": (
             numerical["cells_sha256"] == cells_artifact_sha
         ),
-        "cell_to_numerical_spec": (
+        "cell_to_declared_producer_numerical_spec": (
             cells["numerical_consumer_spec"]
-            == {"id": NUMERICAL_SPEC_ID, "sha256": NUMERICAL_SPEC_SHA256}
+            == (
+                {"id": NUMERICAL_SPEC_ID, "sha256": NUMERICAL_SPEC_SHA256}
+                if transfer_mode == FRESH_TRANSFER_MODE
+                else cells["a1_authenticated_reuse"]["parent_numerical_spec"]
+            )
         ),
     }
+    if transfer_mode == A1_REUSE_TRANSFER_MODE:
+        checks["a1_new_numerical_consumer_spec"] = (
+            cells["a1_authenticated_reuse"]["a1_numerical_consumer_spec"]
+            == {"id": NUMERICAL_SPEC_ID, "sha256": NUMERICAL_SPEC_SHA256}
+        )
     failed = sorted(key for key, value in checks.items() if value is not True)
     if failed:
         raise TransferBlocked(
@@ -1708,6 +2024,7 @@ def validate_shared_execution_authorization(
     projections: dict[str, dict[str, Any]],
     schedulers: dict[str, dict[str, Any]],
     committed_authorization: dict[str, Any],
+    transfer_mode: str = FRESH_TRANSFER_MODE,
 ) -> dict[str, bool]:
     """Bind every fresh job to one authorization and its validity window."""
     authorizations = {
@@ -1719,16 +2036,24 @@ def validate_shared_execution_authorization(
         "authorized_implementation_commit", "issued_at_utc", "not_before_utc",
         "not_after_utc", "source_registry_sha256",
     )
-    first = authorizations[MODULE_KEYS[0]]
+    authorization_keys = (
+        MODULE_KEYS if transfer_mode == FRESH_TRANSFER_MODE else ("cells", "target")
+    )
+    first = authorizations[authorization_keys[0]]
     checks: dict[str, bool] = {
         f"shared_authorization_{field}": all(
-            authorizations[key][field] == first[field] for key in MODULE_KEYS
+            authorizations[key][field] == first[field] for key in authorization_keys
         )
         for field in common_fields
     }
-    not_before = parse_module_time(first["not_before_utc"], "authorization not_before")
-    not_after = parse_module_time(first["not_after_utc"], "authorization not_after")
     for key in MODULE_KEYS:
+        receipt_authorization = authorizations[key]
+        not_before = parse_module_time(
+            receipt_authorization["not_before_utc"], f"{key} authorization not_before"
+        )
+        not_after = parse_module_time(
+            receipt_authorization["not_after_utc"], f"{key} authorization not_after"
+        )
         expected_module = committed_authorization["modules"][key]
         expected_receipt_summary = {
             "schema_version": committed_authorization["schema_version"],
@@ -1756,6 +2081,8 @@ def validate_shared_execution_authorization(
         }
         checks[f"{key}_matches_committed_authorization"] = (
             authorizations[key] == expected_receipt_summary
+            if transfer_mode == FRESH_TRANSFER_MODE or key == "numerical"
+            else True
         )
         checks[f"{key}_scheduler_within_authorization_window"] = (
             schedulers[key]["_start"] >= not_before
@@ -1773,8 +2100,12 @@ def build_normalized_receipts(
     spec: dict[str, Any], snapshots: dict[Path, FileSnapshot],
     normalizer_state: dict[str, Any],
     committed_authorization: dict[str, Any],
+    a1_policy: A1ReusePolicy | None = None,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]], dict[str, bool]]:
     modules = validate_spec(spec)
+    transfer_mode = spec["transfer_mode"]
+    if (transfer_mode == A1_REUSE_TRANSFER_MODE) != (a1_policy is not None):
+        raise TransferBlocked("A1 transfer mode and committed reuse authority differ")
     zone_name = spec["scheduler_time_zone"]
     projections: dict[str, dict[str, Any]] = {}
     identities: dict[str, dict[str, str]] = {}
@@ -1795,17 +2126,23 @@ def build_normalized_receipts(
             scheduler_snapshot.payload, f"{key} scheduler receipt"
         )
         projection, identity, command_binding = PROJECTORS[key](
-            receipt, module, receipt_snapshot.sha256
+            receipt, module, receipt_snapshot.sha256, transfer_mode, a1_policy
         )
         projections[key] = projection
         identities[key] = identity
         command_bindings[key] = command_binding
-        schedulers[key] = validate_scheduler(scheduler_raw, module, zone_name)
+        schedulers[key] = validate_scheduler(
+            scheduler_raw, module, zone_name, transfer_mode, receipt["status"]
+        )
     validate_no_future_scheduler_times(schedulers)
-    cross_checks = validate_cross_receipt_bindings(projections, snapshots)
+    cross_checks = validate_cross_receipt_bindings(
+        projections, snapshots, transfer_mode
+    )
+    if a1_policy is not None:
+        cross_checks.update(validate_a1_parent_reuse(receipts, snapshots, a1_policy))
     cross_checks.update(
         validate_shared_execution_authorization(
-            projections, schedulers, committed_authorization
+            projections, schedulers, committed_authorization, transfer_mode
         )
     )
 
@@ -1918,6 +2255,8 @@ def build_normalized_receipts(
                 "Execution-receipt normalization, public projection, and byte provenance "
                 "only; no result, ledger integration, or scientific claim is validated."
             ),
+            "transfer_mode": transfer_mode,
+            "numerical_suite_pass": projections["numerical"]["numerical_suite_pass"],
         }
     return normalized, projections, cross_checks
 
@@ -2243,6 +2582,11 @@ def validate_and_publish(spec_path: Path, input_dir: Path, output_dir: Path) -> 
     spec_snapshot = stable_snapshot(spec_path, Path(spec_path.name))
     spec = load_json_bytes(spec_snapshot.payload, "terminal transfer spec")
     modules = validate_spec(spec)
+    a1_policy = (
+        capture_a1_reuse_policy(normalizer_state)
+        if spec["transfer_mode"] == A1_REUSE_TRANSFER_MODE
+        else None
+    )
     allowed = {
         Path(module[field])
         for module in modules
@@ -2251,7 +2595,7 @@ def validate_and_publish(spec_path: Path, input_dir: Path, output_dir: Path) -> 
     input_root = input_dir.resolve(strict=True)
     snapshots = snapshot_sources(input_root, allowed)
     normalized, projections, cross_checks = build_normalized_receipts(
-        spec, snapshots, normalizer_state, authorization_state.public
+        spec, snapshots, normalizer_state, authorization_state.public, a1_policy
     )
 
     reservation = OutputReservation.reserve(
@@ -2274,9 +2618,18 @@ def validate_and_publish(spec_path: Path, input_dir: Path, output_dir: Path) -> 
         artifact_hashes = validate_staged_json(
             reservation.staging, expected_without_report
         )
+        numerical_suite_pass = projections["numerical"]["numerical_suite_pass"]
         report = {
             "schema_version": REPORT_SCHEMA,
-            "status": PASS_STATUS,
+            "status": (
+                PASS_STATUS if numerical_suite_pass else PARTIAL_TRANSFER_STATUS
+            ),
+            "transfer_mode": spec["transfer_mode"],
+            "numerical_suite_status": projections["numerical"][
+                "source_receipt_status"
+            ],
+            "numerical_suite_pass": numerical_suite_pass,
+            "partial_numerical_evidence_transfer": not numerical_suite_pass,
             "transfer_spec_sha256": spec_snapshot.sha256,
             "canonical_spec_id": CANONICAL_BINDING["id"],
             "canonical_spec_sha256": CANONICAL_BINDING["sha256"],
@@ -2302,6 +2655,8 @@ def validate_and_publish(spec_path: Path, input_dir: Path, output_dir: Path) -> 
             "run_manifest_or_status_updated": False,
             "scientific_validity": "NOT DETERMINED BY THIS NORMALIZER",
         }
+        if a1_policy is not None:
+            report["a1_authenticated_parent_reuse"] = a1_policy.public
         write_json(reservation.staging / "TRANSFER_VALIDATION.json", report)
         expected = expected_without_report | {Path("TRANSFER_VALIDATION.json")}
         validate_staged_json(reservation.staging, expected)

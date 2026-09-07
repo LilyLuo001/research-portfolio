@@ -25,6 +25,8 @@ Updated: 2026-09-07 Asia/Shanghai
   `yaxtargetspec_v1_e0598066c90d6b7efad743ea68e074b5be2b455fb12eddf4b998430c0081b83b`
 - Numerical specification:
   `yaxnumspec_v1_4c784c23726ad5ce258af6151afdf83e1e05efe6d1086d43007e5d06a5843991`
+- Owner-authorized A1 numerical specification (pre-execution):
+  `yaxnumspec_v1_e0b71ceb9f1d0daf501300114234121c087d1ee145a401107fbaa2caf6df18a4`
 
 ## Stage state
 
@@ -82,11 +84,16 @@ selective subset.
 
 ## Next resumable tasks
 
-1. Keep N01--N03 and the target rows linked to the blocked-run evidence without
-   describing the 11 diagnostic coefficients as results.
-2. Do not start dependent Gate 2 estimation unless the numerical blocker is
-   resolved through a separately documented scientific adjudication.
-3. Continue only dependency-independent verification work, including source
-   provenance and data-vintage checks, while preserving the frozen design.
-4. If a numerical amendment is authorized, stamp a new specification and
-   retain this failed run unchanged; never overwrite it.
+Owner authorization A1 is now preserved at
+`revision_inputs/GATE1_NUMERICAL_ADJUDICATION_A1.md`. The same-estimator repair,
+new `ANALYSIS_SPEC_A1.json`, original-solver diagnostics, and target-level
+dependency map are implemented and locally tested, but the amended full-data
+run is not yet evidence. The old specification and blocked run above remain
+unchanged.
+
+1. Commit and issue a fresh one-shot execution authorization for A1.
+2. Run all 11 models on the exact retained authenticated cell artifact without
+   rebuilding or opening row-level microdata.
+3. Preserve every model disposition and apply the target-level dependency map;
+   never describe a partial set as suite completion.
+4. Continue only the Gate 2 units whose exact target prerequisites certify.

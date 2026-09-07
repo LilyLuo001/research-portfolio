@@ -229,7 +229,7 @@ class GraphAndSeparationTests(unittest.TestCase):
                 self.assertEqual(result["status"], "LP_NUMERICAL_CERTIFICATION_FAILURE")
                 self.assertFalse(result["global_primal_certificate"]["passed"])
 
-    def test_target_invariant_separation_is_profiled_to_finite_face(self):
+    def test_focal_invariant_but_nonfocal_treatment_separation_blocks(self):
         # Boundary checkerboard is separated by the second regressor.  Four
         # duplicated interior cells identify the focal checkerboard regressor,
         # so the recession direction cannot move the target.
@@ -250,10 +250,13 @@ class GraphAndSeparationTests(unittest.TestCase):
         active, design, face, pruning = AUDIT.resolve_extended_likelihood_face(
             model, settings,
         )
-        self.assertEqual(face["status"], "PASS_FINITE_FACE_RESOLVED")
-        self.assertEqual(int(active.sum()), 4)
+        self.assertEqual(
+            face["status"],
+            "BLOCKED_TREATMENT_VECTOR_MOVING_RECESSION_DIRECTION",
+        )
+        self.assertEqual(int(active.sum()), 8)
         self.assertIsNotNone(design)
-        self.assertEqual(sum(row["reason"] == "target_invariant_recession_face" for row in pruning), 4)
+        self.assertEqual(pruning, [])
         self.assertTrue(face["geometric_information"]["focal_target_rank_identified"])
 
     def test_reported_event_target_movement_blocks_focal_only_face_profiling(self):
@@ -274,6 +277,69 @@ class GraphAndSeparationTests(unittest.TestCase):
         self.assertTrue(
             result["reported_target_direction_audits"]["reported_event"]["target_can_move"]
         )
+
+    def test_nonfocal_original_treatment_recession_blocks_face_profiling(self):
+        regressors = np.array([
+            [0, 1], [0, -1], [0, -1], [0, 1],
+            [1, 0], [-1, 0], [-1, 0], [1, 0],
+        ], float)
+        model = bundle(
+            young=[10, 0, 0, 10, 5, 5, 5, 5], total=[10] * 8,
+            first=["all"] * 8, second=["all"] * 8,
+            regressors=regressors, label="focal",
+        )
+        model.regressor_labels = ["focal", "nonfocal"]
+        original_targets = {
+            "original_treatment::0::focal": np.array([1.0, 0.0]),
+            "original_treatment::1::nonfocal": np.array([0.0, 1.0]),
+        }
+
+        def synthetic_separation(
+            design, young, total, focal_column, margin_tolerance,
+            column_labels=None, certification_tolerance=None,
+            additional_target_vectors=None,
+        ):
+            self.assertEqual(set(additional_target_vectors), set(original_targets))
+            audits = {
+                label: {
+                    "audit_complete": True,
+                    "target_can_move": label.endswith("::nonfocal"),
+                }
+                for label in additional_target_vectors
+            }
+            return {
+                "status": "PASS", "separation_exists": True,
+                "focal_target_direction_audit_complete": True,
+                "focal_target_can_move": False,
+                "reported_target_direction_audits": audits,
+                "all_reported_targets_direction_audit_complete": True,
+                "any_reported_target_can_move": True,
+            }
+
+        with mock.patch.object(
+            AUDIT, "separation_lp", side_effect=synthetic_separation,
+        ):
+            _active, _design, face, pruning = (
+                AUDIT.resolve_extended_likelihood_face(
+                    model, {
+                        "boundary_and_separation": {
+                            "lp_margin_tolerance": 1e-9,
+                        },
+                        "tolerances": {"conditioning_rank_relative": 1e-10},
+                    }, original_targets,
+                )
+            )
+        self.assertEqual(
+            face["status"],
+            "BLOCKED_TREATMENT_VECTOR_MOVING_RECESSION_DIRECTION",
+        )
+        self.assertEqual(pruning, [])
+        self.assertFalse(face["separation"][
+            "treatment_column_direction_audits"
+        ]["original_treatment::0::focal"]["target_can_move"])
+        self.assertTrue(face["separation"][
+            "treatment_column_direction_audits"
+        ]["original_treatment::1::nonfocal"]["target_can_move"])
 
     def test_zero_gain_lineality_with_unit_target_is_target_moving(self):
         # The first coordinate strictly separates the boundary row.  The
@@ -322,6 +388,11 @@ class ObjectiveTests(unittest.TestCase):
         self.assertAlmostEqual(left[1][1], true[1], places=6)
         self.assertEqual(left[0]["probability_at_or_below_1e_10"], 0)
         self.assertEqual(left[0]["probability_at_or_above_1_minus_1e_10"], 0)
+        self.assertEqual(left[0]["optimizer_options"]["maxls"], 50)
+        self.assertRegex(
+            left[0]["optimizer_start_original_coordinates_sha256"],
+            r"^[0-9a-f]{64}$",
+        )
 
     def test_schur_information_matches_dense_weighted_projection(self):
         nuisance = sparse.csr_matrix(np.array([
@@ -362,6 +433,34 @@ class ObjectiveTests(unittest.TestCase):
         self.assertTrue(result["focal_target_absolute_difference"] == 0.0)
         self.assertFalse(result["reported_target_comparison_pass"])
         self.assertFalse(result["comparison_pass"])
+
+    def test_historical_solver_comparison_labels_complete_treatment_vector(self):
+        left = {
+            "method": "L-BFGS-B", "numerically_valid": False,
+            "objective_per_total": 0.5, "raw_negative_log_likelihood": 10.0,
+        }
+        right = {
+            **left, "method": "trust-ncg", "numerically_valid": True,
+        }
+        result = AUDIT.compare_solvers(
+            left, np.array([0.0, 0.1, 0.2]), np.array([0.4, 0.6]),
+            right, np.array([0.0, 0.11, 0.18]), np.array([0.4, 0.6]),
+            nuisance_columns=1, focal_target=0,
+            tolerances={
+                "target_coefficient_absolute_difference": 1e-6,
+                "fitted_probability_max_abs_difference": 1e-7,
+                "objective_difference_per_total": 1e-10,
+            }, treatment_labels=["event_a", "event_b"],
+        )
+        differences = result[
+            "complete_identified_treatment_vector_absolute_differences"
+        ]
+        self.assertEqual(set(differences), {"event_a", "event_b"})
+        self.assertAlmostEqual(differences["event_a"], 0.01)
+        self.assertAlmostEqual(differences["event_b"], 0.02)
+        self.assertEqual(
+            result["complete_identified_treatment_vector_count"], 2,
+        )
 
     def test_solver_comparison_records_raw_objective_and_argmax_location(self):
         left = {
@@ -775,6 +874,15 @@ class ObjectiveTests(unittest.TestCase):
             == "ORIGINAL_COORDINATE_DECLARED_KKT_AND_FULL_HESSIAN_CERTIFICATE"
             for row in rows if row["multiplier"] != 0.0
         ))
+        self.assertTrue(all(
+            row["nuisance_fit_method"]
+            == "independent-damped-sparse-newton-irls-from-zero"
+            for row in rows if row["multiplier"] != 0.0
+        ))
+        self.assertEqual(
+            summary["noncenter_nuisance_fit_method"],
+            "independent-damped-sparse-newton-irls-from-zero",
+        )
         self.assertEqual(
             next(row for row in rows if row["multiplier"] == 0.0)[
                 "acceptance_source"
@@ -795,12 +903,12 @@ class ObjectiveTests(unittest.TestCase):
             center_raw + 1.0, center_raw + 3.0,
         ])
 
-        def synthetic_profile_fit(reduced, method, start, *args, **kwargs):
+        def synthetic_profile_fit(reduced, start, *args, **kwargs):
             raw = next(raw_values)
             theta = np.asarray(start, float)
             probability = reduced.probability(theta)
             diagnostics = {
-                "method": method,
+                "method": "independent-damped-sparse-newton-irls",
                 "scipy_success": True,
                 "scipy_status": 0,
                 "message": "synthetic KKT fixture",
@@ -817,8 +925,15 @@ class ObjectiveTests(unittest.TestCase):
             }
             return diagnostics, theta, probability, []
 
-        with mock.patch.object(
-            AUDIT, "fit_exact_solver", side_effect=synthetic_profile_fit
+        with (
+            mock.patch.object(
+                AUDIT, "fit_independent_sparse_newton",
+                side_effect=synthetic_profile_fit,
+            ),
+            mock.patch.object(
+                AUDIT, "externally_certify_independent_output",
+                side_effect=lambda objective, output, *args, **kwargs: output,
+            ),
         ):
             rows, summary = AUDIT.fixed_target_profile(
                 objective, np.zeros(2), {
@@ -846,12 +961,13 @@ class ObjectiveTests(unittest.TestCase):
         center_raw = objective.raw_nll(optimum)
         calls = []
 
-        def constrained_fit(reduced, method, start, *args, **kwargs):
+        def constrained_fit(reduced, start, *args, **kwargs):
             calls.append(reduced.offset.copy())
             raw = center_raw + 2.0
             theta = np.asarray(start, float)
             diagnostics = {
-                "method": method, "scipy_success": True, "scipy_status": 0,
+                "method": "independent-damped-sparse-newton-irls",
+                "scipy_success": True, "scipy_status": 0,
                 "message": "fixture", "iterations": 1,
                 "objective_per_total": raw / reduced.scale,
                 "raw_negative_log_likelihood": raw,
@@ -865,7 +981,16 @@ class ObjectiveTests(unittest.TestCase):
             }
             return diagnostics, theta, reduced.probability(theta), []
 
-        with mock.patch.object(AUDIT, "fit_exact_solver", side_effect=constrained_fit):
+        with (
+            mock.patch.object(
+                AUDIT, "fit_independent_sparse_newton",
+                side_effect=constrained_fit,
+            ),
+            mock.patch.object(
+                AUDIT, "externally_certify_independent_output",
+                side_effect=lambda objective, output, *args, **kwargs: output,
+            ),
+        ):
             rows, summary = AUDIT.fixed_target_profile(
                 objective, optimum,
                 {
@@ -1041,6 +1166,29 @@ class ObjectiveTests(unittest.TestCase):
             result["rank_threshold"],
         )
 
+    def test_sparse_extreme_certificate_blocks_below_threshold_eigenvalue(self):
+        columns = 1201
+        diagonal = np.ones(columns)
+        diagonal[0] = 5.0e-11
+        design = sparse.diags(np.sqrt(diagonal), format="csr")
+        result = AUDIT.full_hessian_diagnostics(
+            design, np.ones(columns), columns, 1e-10, dense_limit=1200,
+        )
+        self.assertEqual(
+            result["status"], "BLOCKED_FULL_HESSIAN_SPECTRUM_FAILURE",
+        )
+        self.assertIn("machine_tolerance", result["spectrum_method"])
+        self.assertTrue(np.isfinite(
+            result["smallest_eigenpair_residual_norm_2"]
+        ))
+        self.assertLessEqual(
+            result["smallest_certified_lower_bound"],
+            result["rank_threshold"],
+        )
+        self.assertGreaterEqual(
+            result["largest_conservative_upper_bound"], 1.0,
+        )
+
     def test_rank_reduction_preserves_identified_focal_original_column(self):
         nuisance = sparse.csr_matrix(np.ones((8, 1)))
         focal = np.array([-2, -1, 0, 1, 2, -1.5, 0.5, 1.5], float)
@@ -1088,7 +1236,713 @@ class ObjectiveTests(unittest.TestCase):
         self.assertAlmostEqual(gamma[0], float(weights @ beta), places=11)
 
 
+class A1IndependentReferenceTests(unittest.TestCase):
+    @staticmethod
+    def problem():
+        x = np.linspace(-1.75, 1.75, 120)
+        dense = np.column_stack([np.ones(len(x)), x, x * x - np.mean(x * x)])
+        total = np.linspace(30.0, 90.0, len(x))
+        truth = np.array([-0.25, 0.55, -0.20])
+        young = total * expit(dense @ truth)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense), young, total,
+        )
+        targets = {
+            f"treatment_basis::{index}::b{index}": np.eye(3)[index]
+            for index in range(3)
+        }
+        return objective, truth, targets
+
+    @staticmethod
+    def raw_reference(objective, targets, max_iterations=100):
+        return AUDIT.fit_independent_sparse_newton(
+            objective, np.zeros(objective.design.shape[1]), max_iterations,
+            1e-9, 1e-6, 1, targets, 1e-6, 1e-4, 1e-10,
+            1e-10, 1e-7, "standalone_zero_reference",
+        )
+
+    @staticmethod
+    def certify(objective, raw, targets):
+        return AUDIT.externally_certify_independent_output(
+            objective, raw, targets, 1e-9, 1e-6, 1e-6, 1e-4,
+            1e-10, 1e-10, 1e-7,
+        )
+
+    def test_independent_loss_is_algebraically_distinct_and_stable_at_extremes(self):
+        eta = np.array([-1000.0, -50.0, 0.0, 50.0, 1000.0])
+        design = sparse.eye(len(eta), format="csr")
+        total = np.array([9.0, 12.0, 15.0, 18.0, 21.0])
+        young = np.array([9.0, 4.0, 7.5, 12.0, 0.0])
+        canonical = AUDIT.BinomialObjective(design, young, total)
+        independent = AUDIT.IndependentGroupedBinomialEvaluator(
+            design, young, total,
+        )
+        expected = np.sum(
+            young * np.logaddexp(0.0, -eta)
+            + (total - young) * np.logaddexp(0.0, eta)
+        )
+        self.assertTrue(np.isfinite(independent.raw_objective(eta)))
+        self.assertEqual(independent.raw_objective(eta), float(expected))
+        self.assertAlmostEqual(
+            independent.raw_objective(eta), canonical.raw_nll(eta),
+            delta=1e-10,
+        )
+        source = inspect.getsource(
+            AUDIT.IndependentGroupedBinomialEvaluator.raw_objective
+        )
+        self.assertIn("self.successes * np.logaddexp(0.0, -eta)", source)
+        self.assertNotIn("self.trials * np.logaddexp", source)
+
+    def test_independent_score_hessian_and_directional_checks(self):
+        rng = np.random.default_rng(2107)
+        dense = np.column_stack([np.ones(80), rng.normal(size=(80, 3))])
+        total = rng.integers(10, 80, size=80).astype(float)
+        young = total * rng.uniform(0.05, 0.95, size=80)
+        objective = AUDIT.BinomialObjective(sparse.csr_matrix(dense), young, total)
+        evaluator = AUDIT.IndependentGroupedBinomialEvaluator(
+            objective.design, young, total,
+        )
+        theta = rng.normal(scale=0.25, size=4)
+        eta = dense @ theta
+        success_probability = expit(eta)
+        failure_probability = expit(-eta)
+        hand_score = dense.T @ (
+            (total - young) * success_probability
+            - young * failure_probability
+        )
+        hand_hessian = dense.T @ (
+            (total * success_probability * failure_probability)[:, None]
+            * dense
+        )
+        np.testing.assert_allclose(
+            evaluator.raw_score(theta), hand_score, rtol=2e-15, atol=2e-13,
+        )
+        np.testing.assert_allclose(
+            evaluator.raw_hessian(theta).toarray(), hand_hessian,
+            rtol=2e-15, atol=2e-13,
+        )
+        checks = AUDIT.independent_evaluator_checks(
+            objective, evaluator, theta, 2e-7, 1e-12, 1e-12,
+        )
+        self.assertEqual(
+            checks["status"],
+            "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS",
+        )
+        self.assertTrue(all(checks["checks"].values()))
+        np.testing.assert_allclose(
+            evaluator.raw_hessian(theta).toarray(),
+            evaluator.raw_hessian(theta).toarray().T, rtol=0, atol=0,
+        )
+        preflight = AUDIT.independent_evaluator_preflight(
+            objective, 2e-7, 1e-12, 1e-12,
+        )
+        self.assertEqual(
+            preflight["status"],
+            "PASS_DETERMINISTIC_INDEPENDENT_EVALUATOR_PREFLIGHT",
+        )
+        self.assertEqual(
+            set(preflight["checks"]), {"exact_zero", "bounded_sine_cosine"},
+        )
+
+    def test_zero_start_reference_does_not_call_canonical_evaluator_or_minimize(self):
+        objective, truth, targets = self.problem()
+        forbidden = AssertionError("canonical evaluator entered independent path")
+        with (
+            mock.patch.object(AUDIT, "minimize", side_effect=forbidden) as minimize,
+            mock.patch.object(AUDIT.BinomialObjective, "raw_nll", side_effect=forbidden),
+            mock.patch.object(AUDIT.BinomialObjective, "function", side_effect=forbidden),
+            mock.patch.object(AUDIT.BinomialObjective, "gradient", side_effect=forbidden),
+            mock.patch.object(AUDIT.BinomialObjective, "hessp", side_effect=forbidden),
+            mock.patch.object(AUDIT.BinomialObjective, "probability", side_effect=forbidden),
+        ):
+            raw = self.raw_reference(objective, targets)
+        minimize.assert_not_called()
+        self.assertTrue(raw[0]["independent_zero_start"])
+        self.assertTrue(raw[0]["independent_internal_numerically_valid"])
+        self.assertFalse(raw[0]["numerically_valid"])
+        self.assertEqual(
+            raw[0]["acceptance_source"],
+            "PENDING_UNCHANGED_EXTERNAL_CERTIFICATE",
+        )
+        certified = self.certify(objective, raw, targets)
+        self.assertTrue(certified[0]["numerically_valid"])
+        np.testing.assert_allclose(certified[1], truth, rtol=0, atol=2e-8)
+
+    def test_reference_damping_is_deterministic_and_iteration_limit_fails_closed(self):
+        objective, _truth, targets = self.problem()
+        left = self.raw_reference(objective, targets)
+        right = self.raw_reference(objective, targets)
+        self.assertEqual(left[3], right[3])
+        self.assertTrue(all(
+            row["dyadic_step_fraction"] == 2.0 ** (-row["dyadic_halvings"])
+            for row in left[3]
+        ))
+        counts = left[0]["independent_evaluation_counts"]
+        evaluated = left[0]["newton_iterations_evaluated"]
+        self.assertEqual(
+            left[0]["implementation_owned_termination_code"],
+            "A1_NEWTON_INTERNAL_CERTIFICATE_PASS",
+        )
+        self.assertIsNone(left[0]["scipy_status"])
+        self.assertEqual(counts["line_search_candidate_objective"], 65 * evaluated)
+        self.assertEqual(counts["raw_objective"], 66 * evaluated + 1)
+        self.assertEqual(counts["raw_score"], evaluated + 1)
+        self.assertEqual(counts["raw_hessian"], evaluated + 1)
+        self.assertEqual(counts["probability"], evaluated + 1)
+        self.assertEqual(left[0]["function_evaluations"], counts["raw_objective"])
+        self.assertEqual(left[0]["gradient_evaluations"], counts["raw_score"])
+        self.assertEqual(left[0]["hessian_evaluations"], counts["raw_hessian"])
+        self.assertTrue(all(
+            isinstance(value, int) and value >= 0 for value in counts.values()
+        ))
+        stopped = self.raw_reference(objective, targets, max_iterations=0)
+        self.assertFalse(stopped[0]["independent_internal_numerically_valid"])
+        self.assertFalse(stopped[0]["numerically_valid"])
+        np.testing.assert_array_equal(stopped[1], np.zeros(3))
+        self.assertEqual(
+            stopped[0]["implementation_owned_termination_code"],
+            "A1_NEWTON_ITERATION_LIMIT",
+        )
+        self.assertEqual(
+            stopped[0]["independent_evaluation_counts"]["raw_objective"], 67,
+        )
+
+    def test_rank_deficient_reference_blocks_instead_of_regularizing(self):
+        x = np.linspace(-1.0, 1.0, 50)
+        design = sparse.csr_matrix(np.column_stack([np.ones(50), x, x]))
+        total = np.full(50, 40.0)
+        young = total * expit(0.4 * x)
+        objective = AUDIT.BinomialObjective(design, young, total)
+        targets = {
+            f"treatment_basis::{j}::b{j}": np.eye(3)[j] for j in range(3)
+        }
+        with self.assertRaisesRegex(AUDIT.AuditBlocked, "singular") as caught:
+            self.raw_reference(objective, targets)
+        self.assertEqual(
+            caught.exception.termination_code, "A1_NEWTON_SINGULAR_HESSIAN",
+        )
+        self.assertTrue(all(
+            isinstance(value, int) and value >= 0
+            for value in caught.exception.evaluation_counts.values()
+        ))
+
+    def test_line_search_failure_retains_owned_code_counts_and_last_metrics(self):
+        objective, _truth, targets = self.problem()
+        calls = 0
+
+        def no_candidate(_evaluator, _theta):
+            nonlocal calls
+            calls += 1
+            return 0.0 if calls == 1 else np.inf
+
+        with mock.patch.object(
+            AUDIT.IndependentGroupedBinomialEvaluator,
+            "raw_objective", no_candidate,
+        ):
+            with self.assertRaises(AUDIT.IndependentNewtonFailure) as caught:
+                self.raw_reference(objective, targets)
+        error = caught.exception
+        self.assertEqual(
+            error.termination_code, "A1_NEWTON_LINE_SEARCH_FAILURE",
+        )
+        self.assertEqual(
+            error.evaluation_counts["line_search_candidate_objective"], 65,
+        )
+        self.assertEqual(error.evaluation_counts["newton_iterations_evaluated"], 1)
+        self.assertEqual(error.trajectory, [])
+        self.assertEqual(error.last_metrics["iteration_zero_based"], 0)
+        self.assertIn("raw_score_max_abs", error.last_metrics)
+
+    def test_one_sided_finite_and_nearly_collinear_fixtures_are_certified(self):
+        x = np.linspace(-2.0, 2.0, 9)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(np.column_stack([np.ones(9), x])),
+            np.array([0.0, 3.0, 5.0, 8.0, 4.0, 6.0, 7.0, 9.0, 10.0]),
+            np.full(9, 10.0),
+        )
+        targets = {
+            f"treatment_basis::{j}::b{j}": np.eye(2)[j] for j in range(2)
+        }
+        one_sided = self.certify(
+            objective, self.raw_reference(objective, targets), targets,
+        )
+        self.assertTrue(one_sided[0]["numerically_valid"])
+        self.assertGreater(one_sided[2].min(), 0.0)
+        self.assertLess(one_sided[2].max(), 1.0)
+
+        n = 200
+        trials = 1.0e6
+        index = np.arange(n, dtype=float)
+        z = np.sqrt(2.0) * np.cos(2.0 * np.pi * index / n)
+        e = np.sqrt(2.0) * np.sin(4.0 * np.pi * index / n)
+        epsilon = 2.2e-5
+        dense = np.column_stack([z, z + epsilon * e])
+        delta = np.sqrt(4.0 * 0.0015 / (trials * n)) / epsilon
+        truth = np.array([delta, -delta])
+        near = AUDIT.BinomialObjective(
+            sparse.csr_matrix(dense),
+            np.full(n, trials) * expit(dense @ truth),
+            np.full(n, trials),
+        )
+        near_targets = {
+            f"treatment_basis::{j}::b{j}": np.eye(2)[j] for j in range(2)
+        }
+        certified = self.certify(
+            near, self.raw_reference(near, near_targets), near_targets,
+        )
+        self.assertTrue(certified[0]["numerically_valid"])
+        np.testing.assert_allclose(certified[1], truth, rtol=0, atol=2e-6)
+
+    def test_conditional_polish_only_runs_after_failed_external_certificate(self):
+        objective, _truth, targets = self.problem()
+        trust = fit_solver(
+            objective, "trust-ncg", np.zeros(3), 1000, 1e-9, 1e-6, 1,
+            targets=targets,
+        )
+        untouched, no_polish = AUDIT.conditionally_polish_trust_candidate(
+            objective, trust, 100, 1e-9, 1e-6, 1, targets, 1e-6,
+            1e-4, 1e-10, 1e-10, 1e-7,
+        )
+        self.assertFalse(no_polish["applied"])
+        np.testing.assert_array_equal(untouched[1], trust[1])
+
+        failed_diagnostic = copy.deepcopy(trust[0])
+        failed_diagnostic["numerically_valid"] = False
+        failed_diagnostic["acceptance_source"] = "BLOCKED_TEST_FIXTURE"
+        failed_diagnostic["full_hessian_stationarity_certificate"]["status"] = (
+            "BLOCKED_TEST_FIXTURE"
+        )
+        failed = (failed_diagnostic, trust[1] + 0.01, trust[2], trust[3])
+        polished, audit = AUDIT.conditionally_polish_trust_candidate(
+            objective, failed, 100, 1e-9, 1e-6, 1, targets, 1e-6,
+            1e-4, 1e-10, 1e-10, 1e-7,
+        )
+        self.assertTrue(audit["applied"])
+        self.assertIn("before", audit)
+        self.assertIn("after", audit)
+        self.assertTrue(polished[0]["numerically_valid"])
+        self.assertEqual(
+            audit["status"], "PASS_CONDITIONAL_TRUST_EXACT_NEWTON_POLISH",
+        )
+
+    def test_full_identified_treatment_vector_and_both_cross_evaluations_bind(self):
+        objective, _truth, targets = self.problem()
+        reference = self.certify(
+            objective, self.raw_reference(objective, targets), targets,
+        )
+        trust_diagnostic = {
+            **reference[0], "method": "trust-path-unpolished-trust-ncg",
+        }
+        perturbed_theta = reference[1].copy()
+        perturbed_theta[2] += 2.0e-6
+        perturbed_probability = objective.probability(perturbed_theta)
+        trust_diagnostic["objective_per_total"] = objective.function(
+            perturbed_theta
+        )
+        trust_diagnostic["raw_negative_log_likelihood"] = objective.raw_nll(
+            perturbed_theta
+        )
+        trust = (trust_diagnostic, perturbed_theta, perturbed_probability, [])
+        tolerances = {
+            "gradient_infinity_norm_per_total": 1e-6,
+            "target_coefficient_absolute_difference": 1e-6,
+            "fitted_probability_max_abs_difference": 1e-3,
+            "objective_difference_per_total": 1e-8,
+        }
+        with mock.patch.object(
+            AUDIT, "independent_evaluator_checks",
+            wraps=AUDIT.independent_evaluator_checks,
+        ) as cross_check:
+            comparison = AUDIT.compare_trust_path_to_reference(
+                objective, trust, reference, targets, tolerances,
+            )
+        self.assertEqual(cross_check.call_count, 2)
+        self.assertEqual(comparison["identified_treatment_target_count"], 3)
+        self.assertGreater(
+            comparison[
+                "maximum_absolute_full_identified_treatment_vector_difference"
+            ], 1e-6,
+        )
+        self.assertFalse(
+            comparison["checks"]["full_identified_treatment_vector"]
+        )
+        self.assertFalse(comparison["comparison_pass"])
+
+        blocked_cross = copy.deepcopy(reference[0])
+        blocked_cross["method"] = "trust-path-unpolished-trust-ncg"
+        same = (blocked_cross, reference[1], reference[2], [])
+        pass_check = {
+            "status": "PASS_INDEPENDENT_EVALUATOR_AND_DERIVATIVE_CHECKS"
+        }
+        fail_check = {
+            "status": "BLOCKED_INDEPENDENT_EVALUATOR_OR_DERIVATIVE_CHECK"
+        }
+        with mock.patch.object(
+            AUDIT, "independent_evaluator_checks",
+            side_effect=[pass_check, fail_check],
+        ) as cross_check:
+            contradiction = AUDIT.compare_trust_path_to_reference(
+                objective, same, reference, targets, tolerances,
+            )
+        self.assertEqual(cross_check.call_count, 2)
+        self.assertFalse(
+            contradiction["checks"][
+                "reference_candidate_cross_evaluator_equivalence"
+            ]
+        )
+        self.assertFalse(contradiction["comparison_pass"])
+
+    def test_original_dynamic_coordinates_bind_when_transformed_basis_would_pass(self):
+        x = np.linspace(-1.0, 1.0, 40)
+        model = bundle(
+            young=np.full(40, 5.0), total=np.full(40, 10.0),
+            first=["all"] * 40, second=["all"] * 40,
+            regressors=np.column_stack([np.ones(40), x]), label="unused",
+        )
+        model.regressor_labels = ["event_a", "event_b"]
+        model.focal_target_label = "post_average"
+        model.focal_target_weights = np.array([0.5, 0.5])
+        transformed, parameterization = AUDIT.target_coordinate_bundle(model)
+        objective = AUDIT.BinomialObjective(
+            sparse.csr_matrix(transformed.regressors),
+            model.young, model.total,
+        )
+        targets = {}
+        for row in parameterization[
+            "original_coefficient_functionals_in_current_basis"
+        ]:
+            targets[
+                f"original_treatment::{row['original_index']}::"
+                f"{row['original_label']}"
+            ] = np.asarray(row["weights"], float)
+        targets.update({
+            "treatment_basis::0::post_average": np.array([1.0, 0.0]),
+            "treatment_basis::1::null": np.array([0.0, 1.0]),
+        })
+        reference_theta = np.zeros(2)
+        trust_theta = np.array([0.75e-6, -0.75e-6])
+        reference_diagnostic = {
+            "method": "independent-damped-sparse-newton-irls",
+            "numerically_valid": True,
+            "objective_per_total": objective.function(reference_theta),
+            "raw_negative_log_likelihood": objective.raw_nll(reference_theta),
+        }
+        trust_diagnostic = {
+            **reference_diagnostic,
+            "method": "trust-path-unpolished-trust-ncg",
+            "objective_per_total": objective.function(trust_theta),
+            "raw_negative_log_likelihood": objective.raw_nll(trust_theta),
+        }
+        comparison = AUDIT.compare_trust_path_to_reference(
+            objective,
+            (
+                trust_diagnostic, trust_theta,
+                objective.probability(trust_theta), [],
+            ),
+            (
+                reference_diagnostic, reference_theta,
+                objective.probability(reference_theta), [],
+            ),
+            targets, {
+                "gradient_infinity_norm_per_total": 1.0,
+                "target_coefficient_absolute_difference": 1e-6,
+                "fitted_probability_max_abs_difference": 1.0,
+                "objective_difference_per_total": 1.0,
+            },
+        )
+        self.assertLessEqual(
+            max(comparison[
+                "transformed_basis_absolute_differences_nonbinding_diagnostic"
+            ].values()), 1e-6,
+        )
+        self.assertGreater(
+            comparison[
+                "maximum_absolute_full_identified_treatment_vector_difference"
+            ], 1e-6,
+        )
+        self.assertFalse(
+            comparison["checks"]["full_identified_treatment_vector"]
+        )
+        self.assertFalse(comparison["comparison_pass"])
+
+    def test_trust_reference_comparison_reports_stock_mean_and_eta_diagnostics(self):
+        objective, _truth, targets = self.problem()
+        reference = self.certify(
+            objective, self.raw_reference(objective, targets), targets,
+        )
+        theta = reference[1] + np.array([1e-8, -2e-8, 1e-8])
+        probability = objective.probability(theta)
+        diagnostic = {
+            **reference[0], "method": "trust-path-unpolished-trust-ncg",
+            "objective_per_total": objective.function(theta),
+            "raw_negative_log_likelihood": objective.raw_nll(theta),
+        }
+        result = AUDIT.compare_trust_path_to_reference(
+            objective, (diagnostic, theta, probability, []), reference,
+            targets, {
+                "gradient_infinity_norm_per_total": 1e-6,
+                "target_coefficient_absolute_difference": 1e-6,
+                "fitted_probability_max_abs_difference": 1e-7,
+                "objective_difference_per_total": 1e-10,
+            },
+        )
+        probability_gap = probability - reference[2]
+        fitted_gap = objective.total * probability_gap
+        self.assertAlmostEqual(
+            result[
+                "normalized_conditional_fitted_mean_max_absolute_difference"
+            ], np.max(np.abs(probability_gap)),
+        )
+        self.assertAlmostEqual(
+            result["conditional_fitted_stock_mean_max_absolute_difference"],
+            np.max(np.abs(fitted_gap)),
+        )
+        self.assertAlmostEqual(
+            result["conditional_fitted_stock_mean_rmse"],
+            np.sqrt(np.mean(fitted_gap ** 2)),
+        )
+        self.assertTrue(result["linear_predictor_all_finite"])
+        self.assertGreaterEqual(
+            result["linear_predictor_max_absolute_difference_nonbinding"], 0,
+        )
+
+    def test_shared_problem_binding_hashes_rows_design_normalization_and_targets(self):
+        objective, _truth, targets = self.problem()
+        active = np.ones(objective.design.shape[0], dtype=bool)
+        active[-1] = False
+        design = AUDIT.SparseDesign(
+            nuisance=objective.design[active, :1].tocsr(),
+            full=objective.design[active].copy().tocsr(),
+            first_codes=np.zeros(int(active.sum()), dtype=int),
+            second_codes=np.zeros(int(active.sum()), dtype=int),
+            first_levels=["all"], second_levels=["all"],
+            component_count=1,
+            component_sizes=[{"first": 1, "second": 1}],
+            second_references=["all"], nuisance_column_labels=["intercept"],
+        )
+        left = AUDIT.a1_shared_problem_binding(
+            active, design, ["x", "x2"], targets,
+        )
+        right = AUDIT.a1_shared_problem_binding(
+            active.copy(), design, ["x", "x2"], targets,
+        )
+        self.assertEqual(left, right)
+        self.assertEqual(
+            left["trust_path_problem_sha256"],
+            left["zero_start_reference_problem_sha256"],
+        )
+        changed_active = np.ones_like(active)
+        changed_active[0] = False
+        changed = AUDIT.a1_shared_problem_binding(
+            changed_active, design, ["x", "x2"], targets,
+        )
+        self.assertNotEqual(
+            left["active_rows_sha256"], changed["active_rows_sha256"],
+        )
+
+    def test_dual_fitted_hessian_requires_raw_and_scaled_pd_for_both_candidates(self):
+        objective, _truth, _targets = self.problem()
+        probability = objective.probability(np.array([-0.25, 0.55, -0.20]))
+        audit = AUDIT.dual_candidate_fitted_hessian_audit(
+            objective.design, objective.total, probability, probability.copy(),
+            objective.design.shape[1], 1e-10,
+        )
+        self.assertEqual(
+            audit["status"],
+            "PASS_BOTH_CANDIDATE_RAW_AND_SCALED_FITTED_HESSIANS",
+        )
+        self.assertTrue(all(audit["checks"].values()))
+        for candidate in audit["candidates"].values():
+            self.assertEqual(candidate["status"], "PASS_FULL_HESSIAN_SPECTRUM")
+            self.assertEqual(candidate["rank_deficiency"], 0)
+            self.assertTrue(candidate["positive_definite_at_declared_tolerance"])
+            self.assertGreater(
+                candidate["smallest_positive_or_extreme_eigenvalue"],
+                candidate["rank_threshold"],
+            )
+            self.assertGreater(
+                candidate[
+                    "diagonally_scaled_smallest_positive_or_extreme_eigenvalue"
+                ],
+                candidate["diagonally_scaled_rank_threshold"],
+            )
+
+        blocked = AUDIT.dual_candidate_fitted_hessian_audit(
+            objective.design, objective.total, np.ones_like(probability),
+            probability, objective.design.shape[1], 1e-10,
+        )
+        self.assertEqual(
+            blocked["status"],
+            "BLOCKED_CANDIDATE_RAW_OR_SCALED_FITTED_HESSIAN",
+        )
+        self.assertFalse(blocked["checks"]["trust_path"])
+        self.assertTrue(
+            blocked["checks"]["independent_zero_start_reference"]
+        )
+
+    def test_lbfgsb_diagnostic_can_falsify_but_is_not_indispensable(self):
+        objective, _truth, targets = self.problem()
+        reference = self.certify(
+            objective, self.raw_reference(objective, targets), targets,
+        )
+        trust = (
+            {**reference[0], "method": "trust-path-unpolished-trust-ncg"},
+            reference[1], reference[2], [],
+        )
+        tolerances = {
+            "gradient_infinity_norm_per_total": 1e-7,
+            "target_coefficient_absolute_difference": 1e-6,
+            "fitted_probability_max_abs_difference": 1e-7,
+            "objective_difference_per_total": 1e-10,
+        }
+        unavailable = AUDIT.audit_lbfgsb_diagnostic_contradictions(
+            objective, None, trust, reference, targets, tolerances, 1e-4,
+            {"error_type": "Synthetic", "message": "not available"},
+        )
+        self.assertFalse(unavailable["binding_pass"])
+        self.assertFalse(unavailable["available"])
+        self.assertEqual(
+            unavailable["status"],
+            "BLOCKED_LBFGSB_DIAGNOSTIC_NOT_RUN_OR_REPORTED",
+        )
+
+        unfinished_theta = np.zeros(3)
+        unfinished_diagnostic = copy.deepcopy(reference[0])
+        unfinished_diagnostic.update({
+            "method": "L-BFGS-B", "numerically_valid": False,
+        })
+        unfinished_diagnostic[
+            "full_hessian_stationarity_certificate"
+        ]["status"] = "BLOCKED_TEST_NONSTATIONARY"
+        unfinished = (
+            unfinished_diagnostic, unfinished_theta,
+            objective.probability(unfinished_theta), [],
+        )
+        unfinished_audit = AUDIT.audit_lbfgsb_diagnostic_contradictions(
+            objective, unfinished, trust, reference, targets, tolerances, 1e-4,
+        )
+        self.assertTrue(unfinished_audit["binding_pass"])
+        self.assertGreater(
+            unfinished_audit[
+                "maximum_declared_target_absolute_difference_vs_reference"
+            ], 1e-6,
+        )
+        self.assertFalse(
+            unfinished_audit["diagnostic_candidate_independently_stationary"]
+        )
+
+        # A lower recomputed likelihood is a contradiction even if the
+        # purported binding candidates were marked valid by stale metadata.
+        zero_diagnostic = copy.deepcopy(reference[0])
+        zero_diagnostic["objective_per_total"] = objective.function(
+            unfinished_theta
+        )
+        zero_diagnostic["raw_negative_log_likelihood"] = objective.raw_nll(
+            unfinished_theta
+        )
+        zero_binding = (
+            zero_diagnostic, unfinished_theta,
+            objective.probability(unfinished_theta), [],
+        )
+        lower = AUDIT.audit_lbfgsb_diagnostic_contradictions(
+            objective, reference, zero_binding, zero_binding, targets,
+            tolerances, 1e-4,
+        )
+        self.assertFalse(lower["binding_pass"])
+        self.assertFalse(
+            lower["checks"]["no_materially_lower_diagnostic_objective"]
+        )
+
+        with mock.patch.object(
+            AUDIT, "independent_evaluator_checks",
+            return_value={
+                "status": "BLOCKED_INDEPENDENT_EVALUATOR_OR_DERIVATIVE_CHECK"
+            },
+        ):
+            derivative = AUDIT.audit_lbfgsb_diagnostic_contradictions(
+                objective, unfinished, trust, reference, targets, tolerances,
+                1e-4,
+            )
+        self.assertFalse(derivative["binding_pass"])
+        self.assertFalse(
+            derivative["checks"][
+                "no_derivative_implementation_contradiction"
+            ]
+        )
+
+    def test_stationary_lbfgsb_target_contradiction_blocks(self):
+        objective, _truth, targets = self.problem()
+        reference = self.certify(
+            objective, self.raw_reference(objective, targets), targets,
+        )
+        trust = (
+            {**reference[0], "method": "trust-path-unpolished-trust-ncg"},
+            reference[1], reference[2], [],
+        )
+        theta = reference[1].copy()
+        theta[2] += 2.0e-6
+        diagnostic = copy.deepcopy(reference[0])
+        diagnostic["method"] = "L-BFGS-B"
+        output = (diagnostic, theta, objective.probability(theta), [])
+        audit = AUDIT.audit_lbfgsb_diagnostic_contradictions(
+            objective, output, trust, reference, targets, {
+                "gradient_infinity_norm_per_total": 1.0,
+                "target_coefficient_absolute_difference": 1e-6,
+                "fitted_probability_max_abs_difference": 1.0,
+                "objective_difference_per_total": 1e-10,
+            }, 1.0,
+        )
+        self.assertTrue(
+            audit["diagnostic_candidate_independently_stationary"]
+        )
+        self.assertFalse(
+            audit["checks"]["no_stationary_declared_target_contradiction"]
+        )
+        self.assertFalse(audit["binding_pass"])
+
+
 class AuthenticationAndSafetyTests(unittest.TestCase):
+    def test_a1_cli_cell_receipt_requires_exact_bytes_before_json_loading(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = pathlib.Path(temporary)
+            receipt_path = root / "receipt.json"
+            payload = {"status": "same semantics", "nested": {"value": 1}}
+            original_bytes = json.dumps(
+                payload, sort_keys=True, separators=(",", ":")
+            ).encode("utf-8")
+            receipt_path.write_bytes(original_bytes)
+            analysis = {
+                "amendment_a1": {
+                    "authenticated_cell_reuse": {
+                        "receipt_sha256": hashlib.sha256(
+                            original_bytes
+                        ).hexdigest(),
+                    },
+                },
+                "_a1_parent_analysis": {},
+            }
+            # Reformatting changes only bytes, not parsed JSON semantics.
+            receipt_path.write_text(
+                json.dumps(payload, indent=2, sort_keys=False) + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(json.loads(original_bytes), json.loads(
+                receipt_path.read_text(encoding="utf-8")
+            ))
+            with (
+                mock.patch.object(AUDIT, "load_json") as loader,
+                mock.patch.object(AUDIT, "cell_receipt_authentication_checks")
+                as semantic_checks,
+            ):
+                with self.assertRaisesRegex(
+                    AUDIT.AuditBlocked, "receipt bytes differ",
+                ):
+                    AUDIT.authenticate_cells(
+                        root / "cells.csv", receipt_path, {}, analysis,
+                    )
+            loader.assert_not_called()
+            semantic_checks.assert_not_called()
+
     def test_run_cannot_accept_caller_supplied_receipt_attestations(self):
         self.assertEqual(
             list(inspect.signature(AUDIT.run).parameters), ["args"],
@@ -2200,18 +3054,131 @@ class FailureRetentionTests(unittest.TestCase):
 
 class RegistryTests(unittest.TestCase):
     def test_declared_scc_runtime_payload_hash_is_canonical(self):
-        analysis = json.loads((HERE / "ANALYSIS_SPEC.json").read_text())
+        analysis = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())
         contract = analysis["software"]["runtime_contract"]
         observed = AUDIT.hashlib.sha256(AUDIT.canonical_bytes(contract["payload"])).hexdigest()
         self.assertEqual(observed, contract["payload_sha256"])
 
     def test_analysis_spec_identifier_is_valid(self):
-        spec = json.loads((HERE / "ANALYSIS_SPEC.json").read_text(encoding="utf-8"))
+        spec = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text(encoding="utf-8"))
         self.assertEqual(spec["audit_spec_id"], AUDIT.expected_audit_spec_id(spec))
+
+    def test_a1_spec_preserves_parent_scientific_target_and_cell_identity(self):
+        repo = HERE.parents[3]
+        spec = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())
+        parent = json.loads((HERE / "ANALYSIS_SPEC.json").read_text())
+        self.assertEqual(
+            AUDIT.scientific_target_payload(spec),
+            AUDIT.scientific_target_payload(parent),
+        )
+        self.assertEqual(
+            AUDIT.scientific_target_fingerprint(spec),
+            spec["amendment_a1"]["scientific_target_fingerprint"]["sha256"],
+        )
+        validated_parent = AUDIT.validate_a1_amendment(
+            repo, HERE / "ANALYSIS_SPEC_A1.json", spec,
+        )
+        self.assertEqual(
+            validated_parent["audit_spec_id"], parent["audit_spec_id"]
+        )
+        retained = json.loads((
+            repo
+            / spec["amendment_a1"]["authenticated_cell_reuse"]["receipt_path"]
+        ).read_text())
+        self.assertEqual(
+            retained["analysis_spec_id"], parent["audit_spec_id"]
+        )
+        self.assertNotEqual(
+            retained["analysis_spec_id"], spec["audit_spec_id"]
+        )
+
+    def test_a1_scientific_or_authority_change_fails_closed(self):
+        repo = HERE.parents[3]
+        spec = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())
+        changed = copy.deepcopy(spec)
+        changed["models"][0]["calendar"] = "changed scientific calendar"
+        with self.assertRaisesRegex(AUDIT.AuditBlocked, "scientific"):
+            AUDIT.validate_a1_amendment(
+                repo, HERE / "ANALYSIS_SPEC_A1.json", changed,
+            )
+        changed = copy.deepcopy(spec)
+        changed["amendment_a1"]["authorization"]["sha256"] = "0" * 64
+        with self.assertRaisesRegex(AUDIT.AuditBlocked, "authorization"):
+            AUDIT.validate_a1_amendment(
+                repo, HERE / "ANALYSIS_SPEC_A1.json", changed,
+            )
+
+    def test_a1_preserved_blocked_model_audit_is_byte_and_semantic_bound(self):
+        source_repo = HERE.parents[3]
+        source_spec_path = source_repo / AUDIT.A1_SPEC_REL
+        source_spec = json.loads(source_spec_path.read_text())
+        blocked = source_spec["amendment_a1"]["preserved_blocked_run"]
+        relative_paths = (
+            AUDIT.A1_SPEC_REL,
+            AUDIT.A1_OWNER_AUTHORIZATION_REL,
+            pathlib.Path(
+                source_spec["amendment_a1"]["parent_numerical_spec"]["path"]
+            ),
+            pathlib.Path(blocked["numerical_receipt_path"]),
+            pathlib.Path(blocked["path"]) / "numerical" / "MODEL_AUDIT.json",
+            pathlib.Path(
+                source_spec["amendment_a1"]["authenticated_cell_reuse"][
+                    "receipt_path"
+                ]
+            ),
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            repo = pathlib.Path(temporary)
+            for relative in relative_paths:
+                destination = repo / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((source_repo / relative).read_bytes())
+            spec_path = repo / AUDIT.A1_SPEC_REL
+            spec = json.loads(spec_path.read_text())
+            AUDIT.validate_a1_amendment(repo, spec_path, spec)
+
+            model_path = (
+                repo / pathlib.Path(blocked["path"])
+                / "numerical" / "MODEL_AUDIT.json"
+            )
+            model_path.write_bytes(model_path.read_bytes() + b"\n")
+            with self.assertRaisesRegex(
+                AUDIT.AuditBlocked, "MODEL_AUDIT bytes",
+            ):
+                AUDIT.validate_a1_amendment(repo, spec_path, spec)
+
+            model_document = json.loads(
+                (source_repo / pathlib.Path(blocked["path"])
+                 / "numerical" / "MODEL_AUDIT.json").read_text()
+            )
+            model_document["models"][0]["classification"] = (
+                "PASS_FINITE_EXTENDED_MLE_TARGET"
+            )
+            model_path.write_text(
+                json.dumps(model_document, indent=2, sort_keys=True) + "\n"
+            )
+            changed_model_sha = AUDIT.sha256_file(model_path)
+            receipt_path = repo / pathlib.Path(blocked["numerical_receipt_path"])
+            receipt = json.loads(receipt_path.read_text())
+            receipt["output_hashes"]["MODEL_AUDIT.json"] = changed_model_sha
+            receipt_path.write_text(
+                json.dumps(receipt, indent=2, sort_keys=True) + "\n"
+            )
+            changed = copy.deepcopy(spec)
+            changed["amendment_a1"]["preserved_blocked_run"][
+                "model_audit_sha256"
+            ] = changed_model_sha
+            changed["amendment_a1"]["preserved_blocked_run"][
+                "numerical_receipt_sha256"
+            ] = AUDIT.sha256_file(receipt_path)
+            with self.assertRaisesRegex(
+                AUDIT.AuditBlocked, "MODEL_AUDIT semantics",
+            ):
+                AUDIT.validate_a1_amendment(repo, spec_path, changed)
 
     def test_analysis_spec_is_bound_to_canonical_spec_and_runner(self):
         canonical = HERE.parent / "contracts/specs/canonical_baseline_reproduction_v2.json"
-        loaded, audit = AUDIT.validate_specs(canonical, HERE / "ANALYSIS_SPEC.json")
+        loaded, audit = AUDIT.validate_specs(canonical, HERE / "ANALYSIS_SPEC_A1.json")
         self.assertEqual(audit["canonical_spec_id"], loaded["spec_id"])
 
     def test_all_predeclared_models_build_on_balanced_synthetic_grid(self):
@@ -2232,7 +3199,7 @@ class RegistryTests(unittest.TestCase):
                     "webb_z": (index - 4.5) / 3.0,
                 })
         frame = pd.DataFrame(rows)
-        models = json.loads((HERE / "ANALYSIS_SPEC.json").read_text())["models"]
+        models = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())["models"]
         for registry in models:
             built = AUDIT.model_bundle(frame, registry["model_id"])
             self.assertGreater(len(built.young), 0)
@@ -2249,7 +3216,7 @@ class RegistryTests(unittest.TestCase):
             self.assertEqual(built.regressors.shape[0], len(built.young))
 
     def test_all_eleven_designs_match_byte_locked_submitted_implementations(self):
-        analysis = json.loads((HERE / "ANALYSIS_SPEC.json").read_text())
+        analysis = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())
         repo = HERE.parents[3]
         modules = AUDIT.load_submitted_design_modules(repo, analysis)
         months = [
@@ -2293,7 +3260,7 @@ class RegistryTests(unittest.TestCase):
                     "webb_z": (index - 4.5) / 3.0,
                 })
         frame = pd.DataFrame(rows)
-        analysis = json.loads((HERE / "ANALYSIS_SPEC.json").read_text())
+        analysis = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())
         modules = AUDIT.load_submitted_design_modules(HERE.parents[3], analysis)
         built = AUDIT.model_bundle(frame, "family_post")
         parity = AUDIT.submitted_design_parity(built, modules)
@@ -2325,7 +3292,7 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(sum(label.rsplit("_", 1)[1] < "2022Q4" for label in targets), 23)
         self.assertAlmostEqual(float(built.focal_target_weights.sum()), 1.0)
         self.assertEqual(sum(month >= "2023-01" and month != "2022-12" for month in months), 42)
-        analysis = json.loads((HERE / "ANALYSIS_SPEC.json").read_text())
+        analysis = json.loads((HERE / "ANALYSIS_SPEC_A1.json").read_text())
         scope = AUDIT.dynamic_target_scope_diagnostics(built, analysis)
         self.assertEqual(
             scope["status"], "PASS_COMPLETE_DYNAMIC_TARGET_SCOPE_CONSTRUCTION"
