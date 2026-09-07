@@ -1,0 +1,101 @@
+{
+  "schema_version": "yax-gate2-support-accounting-spec-v1",
+  "spec_id": "yaxgate2sa_v1_180278405fb251eb3741d8bdff18695b98a8594bb804334662f47326062f2c33",
+  "status": "post-outcome referee-led V3 module specified before Gate 2 output execution",
+  "canonical_spec": {
+    "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
+    "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+  },
+  "authenticated_inputs": {
+    "cells": {
+      "role": "authenticated Gate 1 occupation-month aggregate; restricted SCC input",
+      "sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717"
+    },
+    "cells_receipt": {
+      "role": "Gate 1 aggregate authentication receipt",
+      "sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a"
+    },
+    "canonical_spec": {
+      "role": "frozen canonical V3 contract",
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    "membership": {
+      "role": "fixed 468-occupation Rule-A beta membership and readable names",
+      "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+    },
+    "model_audit": {
+      "role": "independently upheld Gate 1 A1 numerical targets",
+      "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"
+    }
+  },
+  "calendar": {
+    "observed_window": ["2017-01", "2026-07"],
+    "observed_month_count": 114,
+    "preperiod": ["2017-01", "2022-11"],
+    "postperiod": ["2023-01", "2026-07"],
+    "transition_month": "2022-12",
+    "missing_months": ["2025-10"],
+    "expected_period_month_counts": {"pre": 71, "post": 42},
+    "rule": "exclude the transition month from static accounting; retain the genuinely missing October 2025 as absent and never interpolate"
+  },
+  "support": {
+    "expected_occupation_count": 468,
+    "expected_soc2_families": [
+      "11", "13", "15", "17", "19", "21", "23", "25", "27", "29", "31",
+      "33", "35", "37", "39", "41", "43", "45", "47", "49", "51", "53"
+    ],
+    "quintiles": [1, 2, 3, 4, 5],
+    "matrix_cells": 110,
+    "occupation_count_denominator": "fixed canonical 468-occupation Rule-A beta plus Webb universe",
+    "employment_share_denominators": {
+      "national": "sum of young plus older CPS final-weight stock over all 468 occupations and 71 preperiod months",
+      "within_family": "same preperiod stock within the row SOC2 family",
+      "within_quintile": "same preperiod stock within the column exposure quintile"
+    },
+    "support_graph": "an undirected Q1-Q5 graph with a family-specific edge for every pair of quintiles jointly represented in that family",
+    "direct_tail_definition": "a family with at least one canonical occupation in both Q1 and Q5",
+    "interpretation_limit": "graph connectivity plus a common coefficient restriction is not a family-weighted average of directly observed Q5-Q1 effects"
+  },
+  "accounting": {
+    "temporal_weights": "equal_observed_month",
+    "period_stock_definition": "arithmetic mean of monthly CPS final-weight employment stocks over observed months in the declared period",
+    "tail_quintiles": [1, 5],
+    "log_stock_target": "D_a = log(N_a5post/N_a5pre) - log(N_a1post/N_a1pre); D_relative = D_young - D_older",
+    "family_identity": "R_qP = sum_g s_older_gqP R_gqP",
+    "symmetric_decomposition": "delta R_q = sum_g mean(s_gq) delta R_gq + sum_g mean(R_gq) delta s_gq",
+    "decomposition_units": "level change in the young-to-older stock ratio, never relabeled as log points",
+    "zero_denominator_rule": "classify all family-quintile-period cells; structural absences are explicit, common-positive families enter ratio terms, and all young stock outside the common-positive set is retained through a boundary-mass term; no undefined ratio is assigned zero and no stock is dropped",
+    "log_decomposition": "exact three-factor Shapley decomposition of log(sum_g s_g R_g + boundary) over within-family ratios, older-family weights, and boundary mass; all eight hybrid levels must be strictly positive",
+    "closure_absolute_tolerance": 1e-10,
+    "inference": "not executed in this module; paired uncertainty remains a Gate 3 requirement"
+  },
+  "numerical_comparison": {
+    "certified_models": ["pooled", "family_month"],
+    "operation": "report D_relative beside each certified grouped-binomial focal target and their numerical difference",
+    "interpretation_limit": "an exact aggregate log-stock identity is not automatically the grouped-binomial regression coefficient"
+  },
+  "execution": {
+    "code_sha256": "344d9bd244d8746af1aa124628d14b89505dc2c6eba4a9805e43d8e8efcd1556",
+    "command": "<YAX_PYTHON_BIN> -I yax/revision/substantive_v3_20260906/gate2/run_support_accounting.py --spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/gate2/SUPPORT_ACCOUNTING_SPEC.json --canonical-spec <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/contracts/specs/canonical_baseline_reproduction_v2.json --cells <YAX_GATE1_CELLS_LEAF>/aggregate_cells.csv --cells-receipt <YAX_GATE1_CELLS_LEAF>/EXECUTION_RECEIPT.json --membership <YAX_REPO_ROOT>/yax/revision/substantive_r3_20260905/rebuilt_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv --model-audit <YAX_REPO_ROOT>/yax/revision/substantive_v3_20260906/runs/gate1_numerical_a1_pass_7482383/numerical/MODEL_AUDIT.json --output-parent <YAX_GATE2_RUN_ROOT> --run-id <RUN_ID>",
+    "input_scope": "authenticated aggregate cells only; no row-level microdata"
+  },
+  "outputs": {
+    "files": [
+      "SUPPORT_MATRIX.csv",
+      "FAMILY_SUPPORT_SUMMARY.csv",
+      "SUPPORT_EDGES.csv",
+      "DIRECT_TAIL_MEMBERSHIP.csv",
+      "SUPPORT_GRAPH.json",
+      "MONTHLY_QUINTILE_STOCKS.csv",
+      "PERIOD_STOCKS.csv",
+      "TAIL_LOG_STOCK_ACCOUNTING.json",
+      "FAMILY_COMPOSITION_DECOMPOSITION.csv",
+      "FAMILY_COMPOSITION_SUMMARY.json",
+      "ZERO_DENOMINATOR_AUDIT.json",
+      "LOG_SHAPLEY_DECOMPOSITION.json",
+      "EXECUTION_RECEIPT.json"
+    ],
+    "requirements_advanced": ["S01", "S02", "D01", "D03", "D04"],
+    "requirements_not_completed": ["S03", "S04", "S05", "S06", "S07", "D02", "D05", "D06", "D07"]
+  }
+}
