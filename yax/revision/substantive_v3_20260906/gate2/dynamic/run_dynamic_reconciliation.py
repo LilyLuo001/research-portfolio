@@ -29,7 +29,7 @@ CORE_MODELS = (
     "dynamics_family_month",
 )
 EVENT_COMPONENTS = ("Q2", "Q3", "Q4", "Q5", "Webb_z")
-EXPECTED_SIGNED_BEHAVIOR_SHA256 = "f144dba560a6bbfd0b9a6eb6fa7bcfa7eddffd2ac5e6f56b91be903016779215"
+EXPECTED_SIGNED_BEHAVIOR_SHA256 = "a5252b78dd1b38aa0edd861ef77b1683f84c7d12f4c08e17bb0d384ad6a80686"
 REQUIREMENT_DISPOSITIONS = {
     "Y01": "IMPLEMENTED_POINT_ONLY; paired conditioning uncertainty blocked by missing cross-model influence/common draws",
     "Y02": "IMPLEMENTED_UNRUN; exact nesting, score, and pseudo-stock projection require missing bound design/fitted objects",
@@ -46,7 +46,8 @@ EXPECTED_TOLERANCES = {
     "objective_per_total_absolute": 1e-10,
     "conditioning_rank_relative": 1e-10,
     "target_range_relative": 1e-5,
-    "coefficient_rebase_absolute": 1e-12,
+    "reparameterization_relative": 1e-12,
+    "reference_rebase_transform_absolute": 1e-12,
     "design_nesting_relative": 1e-12,
 }
 EXPECTED_PRETREND_WINDOWS = {
@@ -80,7 +81,7 @@ EXPECTED_REPARAMETERIZATION = {
         "B is the unique free_rebase_matrix(period_labels, old_reference, "
         "new_reference) derived independently from labels"
     ),
-    "reference_rebase_transform_tolerance": "coefficient_rebase_absolute",
+    "reference_rebase_transform_tolerance": "reference_rebase_transform_absolute",
     "generic_linear_transform_scope": (
         "arbitrary invertible transforms may pass only generic linear equivalence "
         "and cannot certify a reference rebase"
@@ -630,15 +631,34 @@ def transform_restrictions(restrictions: np.ndarray, transform: np.ndarray) -> n
     return restrictions @ inverse
 
 
+def relative_maximum_difference(
+    left: np.ndarray, right: np.ndarray,
+) -> tuple[float, float, float]:
+    """Return absolute gap, own-unit infinity scale, and dimensionless gap."""
+    left = np.asarray(left, dtype=float)
+    right = np.asarray(right, dtype=float)
+    if left.shape != right.shape:
+        raise DynamicGateError("relative comparison shapes differ")
+    if not np.all(np.isfinite(left)) or not np.all(np.isfinite(right)):
+        raise DynamicGateError("relative comparison objects must be finite")
+    maximum = float(np.max(np.abs(left - right))) if left.size else 0.0
+    scale = max(
+        float(np.max(np.abs(left))) if left.size else 0.0,
+        float(np.max(np.abs(right))) if right.size else 0.0,
+    )
+    relative = 0.0 if scale == 0.0 else maximum / scale
+    return maximum, scale, relative
+
+
 def verify_equivalent_linear_reparameterization(
     beta: np.ndarray,
     restrictions: np.ndarray,
     transform: np.ndarray,
     covariance: np.ndarray | None = None,
     influence: np.ndarray | None = None,
-    tolerance: float = 1e-12,
+    relative_tolerance: float = 1e-12,
 ) -> dict[str, Any]:
-    if not np.isfinite(tolerance) or tolerance < 0:
+    if not np.isfinite(relative_tolerance) or relative_tolerance < 0:
         raise DynamicGateError("linear-reparameterization tolerance is invalid")
     beta_new, covariance_new, influence_new = transform_parameterization(
         beta, covariance, influence, transform
@@ -647,27 +667,44 @@ def verify_equivalent_linear_reparameterization(
     restrictions_new = transform_restrictions(restrictions, transform)
     old_target = restrictions @ np.asarray(beta, dtype=float)
     new_target = restrictions_new @ beta_new
-    maximum = float(np.max(np.abs(old_target - new_target))) if old_target.size else 0.0
-    if maximum > tolerance:
+    target_maximum, target_scale, target_relative = relative_maximum_difference(
+        old_target, new_target)
+    if target_relative > relative_tolerance:
         raise DynamicGateError("equivalent restriction target changed after linear reparameterization")
     covariance_difference = None
+    covariance_scale = None
+    covariance_relative_difference = None
     influence_difference = None
+    influence_scale = None
+    influence_relative_difference = None
     if covariance is not None and influence is not None:
         old_covariance = restrictions @ covariance @ restrictions.T
         new_covariance = restrictions_new @ covariance_new @ restrictions_new.T
-        covariance_difference = float(np.max(np.abs(old_covariance - new_covariance)))
+        (covariance_difference, covariance_scale,
+         covariance_relative_difference) = relative_maximum_difference(
+             old_covariance, new_covariance)
         old_influence = influence @ restrictions.T
         new_influence = influence_new @ restrictions_new.T
-        influence_difference = float(np.max(np.abs(old_influence - new_influence)))
-        if covariance_difference > tolerance or influence_difference > tolerance:
+        (influence_difference, influence_scale,
+         influence_relative_difference) = relative_maximum_difference(
+             old_influence, new_influence)
+        if (covariance_relative_difference > relative_tolerance or
+                influence_relative_difference > relative_tolerance):
             raise DynamicGateError(
                 "equivalent restriction uncertainty changed after linear reparameterization"
             )
     return {
         "status": "PASS_EQUIVALENT_GENERIC_LINEAR_REPARAMETERIZATION",
-        "maximum_absolute_target_difference": maximum,
+        "maximum_absolute_target_difference": target_maximum,
+        "target_comparison_scale": target_scale,
+        "maximum_relative_target_difference": target_relative,
         "maximum_absolute_covariance_difference": covariance_difference,
+        "covariance_comparison_scale": covariance_scale,
+        "maximum_relative_covariance_difference": covariance_relative_difference,
         "maximum_absolute_influence_difference": influence_difference,
+        "influence_comparison_scale": influence_scale,
+        "maximum_relative_influence_difference": influence_relative_difference,
+        "relative_tolerance": relative_tolerance,
         "uncertainty_objects_checked": covariance is not None,
     }
 
@@ -681,10 +718,13 @@ def verify_equivalent_reference_rebase(
     transform: np.ndarray | None = None,
     covariance: np.ndarray | None = None,
     influence: np.ndarray | None = None,
-    tolerance: float = 1e-12,
+    relative_tolerance: float = 1e-12,
+    transform_absolute_tolerance: float = 1e-12,
 ) -> dict[str, Any]:
     """Certify restriction equivalence under the unique label-defined rebase."""
-    if not np.isfinite(tolerance) or tolerance < 0:
+    if (not np.isfinite(relative_tolerance) or relative_tolerance < 0 or
+            not np.isfinite(transform_absolute_tolerance) or
+            transform_absolute_tolerance < 0):
         raise DynamicGateError("reference-rebase tolerance is invalid")
     expected_transform = free_rebase_matrix(
         period_labels, old_reference, new_reference
@@ -703,7 +743,7 @@ def verify_equivalent_reference_rebase(
         transform_difference = float(
             np.max(np.abs(supplied_transform - expected_transform))
         )
-        if transform_difference > tolerance:
+        if transform_difference > transform_absolute_tolerance:
             raise DynamicGateError(
                 "supplied transform does not equal unique reference-rebase map"
             )
@@ -713,7 +753,7 @@ def verify_equivalent_reference_rebase(
         expected_transform,
         covariance,
         influence,
-        tolerance,
+        relative_tolerance,
     )
     return {
         **result,
@@ -722,6 +762,7 @@ def verify_equivalent_reference_rebase(
         "new_reference": new_reference,
         "period_labels": list(period_labels),
         "maximum_absolute_supplied_transform_difference": transform_difference,
+        "transform_absolute_tolerance": transform_absolute_tolerance,
         "transform_used": "EXACT_LABEL_DERIVED_FREE_REBASE_MATRIX",
     }
 
@@ -731,7 +772,7 @@ def verify_reference_invariance(
     period_labels: Sequence[str],
     pre_weights: dict[str, float],
     post_weights: dict[str, float],
-    tolerance: float = 1e-12,
+    relative_tolerance: float = 1e-12,
 ) -> dict[str, Any]:
     coefficients = np.asarray(full_coefficients, dtype=float)
     labels = list(period_labels)
@@ -747,14 +788,21 @@ def verify_reference_invariance(
         rebased = coefficients - coefficients[labels.index(new_reference)]
         differences[new_reference] = functional(rebased) - baseline
     maximum = max(abs(value) for value in differences.values())
-    if not np.isfinite(tolerance) or tolerance < 0:
+    comparison_values = np.asarray(
+        [baseline + differences[label] for label in labels], dtype=float)
+    scale = max(abs(float(baseline)), float(np.max(np.abs(comparison_values))))
+    relative = 0.0 if scale == 0.0 else maximum / scale
+    if not np.isfinite(relative_tolerance) or relative_tolerance < 0:
         raise DynamicGateError("reference-invariance tolerance is invalid")
-    if maximum > tolerance:
+    if relative > relative_tolerance:
         raise DynamicGateError("reference-invariant contrast changed after rebasing")
     return {
         "status": "PASS_COEFFICIENT_REFERENCE_INVARIANCE",
         "functional": baseline,
         "maximum_absolute_rebase_difference": maximum,
+        "functional_comparison_scale": scale,
+        "maximum_relative_rebase_difference": relative,
+        "relative_tolerance": relative_tolerance,
         "references_checked": len(labels),
     }
 
@@ -1250,7 +1298,7 @@ def preflight_report(
         for component, vector in vectors.items():
             invariance[structure][component] = verify_reference_invariance(
                 vector, reconciliation["quarter_labels"], weights["pre"], weights["post"],
-                tolerance=spec["tolerances"]["coefficient_rebase_absolute"],
+                relative_tolerance=spec["tolerances"]["reparameterization_relative"],
             )
     pre_labels = [label for label in reconciliation["quarter_labels"] if label < "2022Q4"]
     y04 = build_y04_restrictions(pre_labels, spec["pretrend"]["windows"])
@@ -1281,14 +1329,17 @@ def preflight_report(
                         all_labels,
                         old_reference,
                         new_reference,
-                        tolerance=spec["tolerances"]["coefficient_rebase_absolute"],
+                        relative_tolerance=spec["tolerances"]["reparameterization_relative"],
+                        transform_absolute_tolerance=spec["tolerances"][
+                            "reference_rebase_transform_absolute"],
                     )
-                    maximum = max(maximum, check["maximum_absolute_target_difference"])
+                    maximum = max(maximum, check["maximum_relative_target_difference"])
                     checks += 1
         restriction_reparameterization[structure] = {
             "status": "PASS_ALL_Y04_RESTRICTION_TARGETS_REPARAMETERIZED",
             "checks": checks,
-            "maximum_absolute_target_difference": maximum,
+            "maximum_relative_target_difference": maximum,
+            "relative_tolerance": spec["tolerances"]["reparameterization_relative"],
             "covariance_influence_checks": "BLOCKED_MISSING_OBJECTS",
         }
     y04_serializable = {

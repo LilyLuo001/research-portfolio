@@ -182,6 +182,9 @@ def test_full_reparameterization_preserves_covariance_influence_and_functional()
     assert equivalent["maximum_absolute_target_difference"] <= 1e-12
     assert equivalent["maximum_absolute_covariance_difference"] <= 1e-12
     assert equivalent["maximum_absolute_influence_difference"] <= 1e-12
+    assert equivalent["maximum_relative_target_difference"] <= 1e-12
+    assert equivalent["maximum_relative_covariance_difference"] <= 1e-12
+    assert equivalent["maximum_relative_influence_difference"] <= 1e-12
 
     rebased = DYN.verify_equivalent_reference_rebase(
         beta,
@@ -249,7 +252,36 @@ def test_reference_rebase_accepts_randomized_correct_old_new_reference_pairs():
         )
         assert result["status"] == "PASS_EQUIVALENT_REFERENCE_REBASE_RESTRICTIONS"
         assert result["maximum_absolute_supplied_transform_difference"] == 0.0
-        assert result["maximum_absolute_target_difference"] <= 1e-12
+        assert result["maximum_relative_target_difference"] <= 1e-12
+
+
+def test_reparameterization_checks_are_invariant_to_coefficient_units():
+    labels = ["2021Q1", "2021Q2", "2021Q3", "2021Q4"]
+    transform = DYN.free_rebase_matrix(labels, "2021Q4", "2021Q2")
+    beta = np.array([0.2, -0.1, 0.4])
+    influence = np.array([
+        [0.10, 0.02, -0.03],
+        [-0.04, 0.08, 0.01],
+        [0.03, -0.02, 0.06],
+        [-0.02, -0.01, -0.04],
+    ])
+    restrictions = np.array([[1.0, -1.0, 0.0], [0.0, 1.0, -1.0]])
+    for scale in (1e-6, 1.0, 1e4):
+        scaled_beta = beta * scale
+        scaled_influence = influence * scale
+        result = DYN.verify_equivalent_reference_rebase(
+            scaled_beta,
+            restrictions,
+            labels,
+            "2021Q4",
+            "2021Q2",
+            transform=transform,
+            covariance=scaled_influence.T @ scaled_influence,
+            influence=scaled_influence,
+        )
+        assert result["maximum_relative_target_difference"] <= 1e-12
+        assert result["maximum_relative_covariance_difference"] <= 1e-12
+        assert result["maximum_relative_influence_difference"] <= 1e-12
 
 
 def test_reference_invariant_D_but_published_reference_P_moves():
@@ -522,6 +554,16 @@ def test_resealed_behavior_mutations_fail_semantic_validation():
     changed = copy.deepcopy(signed_spec())
     changed["tolerances"]["target_range_relative"] = 2e-5
     mutations.append((changed, "tolerances"))
+    changed = copy.deepcopy(signed_spec())
+    changed["tolerances"]["reparameterization_relative"] = 2e-12
+    mutations.append((changed, "tolerances"))
+    changed = copy.deepcopy(signed_spec())
+    changed["tolerances"]["reference_rebase_transform_absolute"] = 2e-12
+    mutations.append((changed, "tolerances"))
+    changed = copy.deepcopy(signed_spec())
+    changed["reparameterization"]["reference_rebase_transform_tolerance"] = \
+        "reparameterization_relative"
+    mutations.append((changed, "reparameterization semantics"))
     changed = copy.deepcopy(signed_spec())
     changed["nesting"]["available_now"] = True
     mutations.append((changed, "availability"))

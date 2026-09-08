@@ -1,6 +1,6 @@
 {
   "schema_version": "yax-gate2-dynamic-reconciliation-spec-v1",
-  "spec_id": "yaxgate2dyn_v1_73d2a2bac3e50ab53a116419e63d85d59fdc38a0375d9ea4d0f91324ed06bb62",
+  "spec_id": "yaxgate2dyn_v1_53179466ec9e75d9cc6d9c3a2c71f365da0c89a0dd3c2f29bdf37af95288205e",
   "status": "post-outcome referee-led V3 pre-result contract; immutable before any Gate 2 dynamic result execution",
   "canonical_contract": {
     "spec_id": "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3",
@@ -138,7 +138,7 @@
     "influence_rule": "IF_new = IF_old B'",
     "restriction_rule": "R_new = R_old B^{-1}",
     "reference_rebase_ground_truth": "B is the unique free_rebase_matrix(period_labels, old_reference, new_reference) derived independently from labels",
-    "reference_rebase_transform_tolerance": "coefficient_rebase_absolute",
+    "reference_rebase_transform_tolerance": "reference_rebase_transform_absolute",
     "generic_linear_transform_scope": "arbitrary invertible transforms may pass only generic linear equivalence and cannot certify a reference rebase",
     "common_draw_rule": "transform the full occupation influence/common-draw vector, never a pointwise covariance submatrix",
     "available_now": "full certified dynamic coefficient vectors only",
@@ -212,11 +212,12 @@
     "objective_per_total_absolute": 1e-10,
     "conditioning_rank_relative": 1e-10,
     "target_range_relative": 1e-5,
-    "coefficient_rebase_absolute": 1e-12,
+    "reparameterization_relative": 1e-12,
+    "reference_rebase_transform_absolute": 1e-12,
     "design_nesting_relative": 1e-12
   },
   "execution": {
-    "code_sha256": "003374bc13f23afa775744dc2f06c2e27efb85cf68df90151d5e6536854f77ec",
+    "code_sha256": "31d1c8eb3fcb900d6cffa14127662fa872a53bfc54da8030602a61bdf820a116",
     "mode": "preflight point reconciliation only; no authoritative result claim",
     "runtime_requirements": {
       "python": ">=3.10",

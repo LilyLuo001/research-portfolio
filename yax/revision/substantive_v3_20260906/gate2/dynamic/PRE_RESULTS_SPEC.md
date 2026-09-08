@@ -40,6 +40,15 @@ implement caller-predeclared exact `Xs = Xd A` validation (the mapping is never
 fitted inside a PASS-exact check), dynamic score-moment preservation, and
 pseudo-stock grouped-binomial projection.
 
+Reparameterization accuracy is evaluated in dimensionless relative units,
+separately scaling the transformed target, restricted covariance, and
+restricted influence comparisons by their own infinity norms. The retained
+absolute differences remain diagnostics only. The reference-map comparison is
+dimensionless by construction and retains its separate absolute tolerance.
+This prevents a common absolute threshold from being applied to quantities in
+coefficient and squared-coefficient units, and makes the certification invariant
+to a change in coefficient units.
+
 The public release does not contain the full covariance, occupation influence,
 common multiplier matrix, ordered full designs, fitted dynamic probabilities,
 or full static parameter vectors. The runner must not synthesize them. Therefore
