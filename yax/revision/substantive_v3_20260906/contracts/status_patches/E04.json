@@ -1,0 +1,26 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The appendix now consolidates the principal coefficient and paired-difference MDE80 diagnostics in one scale-labeled table, and the source audit pins the displayed values and the nondetection/equivalence boundary. Source checks pass; final PDF placement remains to be rendered and visually inspected.",
+  "evidence": [
+    {
+      "role": "validation_report",
+      "path": "editorial/E04_PRECISION_CONSOLIDATION.md",
+      "sha256": "4ab77f04f85a53e15d9075a647c6e59cd5ca9ac80e86a2d071b2a41a319823f6"
+    }
+  ],
+  "response_locations": [
+    "editorial/E04_PRECISION_CONSOLIDATION.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent source audit",
+    "report_path": "editorial/E04_PRECISION_CONSOLIDATION.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "Final PDF rendering and visual float-placement review.",
+    "attempts": "The source-level numerical and interpretation audit passes; the current local environment does not provide a TeX engine and SCC authentication is unavailable.",
+    "claim_impact": "The content requirement is implemented, but E04 is not marked VERIFIED until the rendered table is inspected.",
+    "next_step": "Compile the full paper package on SCC or another TeX environment and inspect the precision table's placement and readability."
+  },
+  "approval": null
+}

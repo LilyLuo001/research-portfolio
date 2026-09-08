@@ -12,6 +12,10 @@ The conditional likelihood retains one-sided zero cells and drops only occupatio
 
 For the reconstructed pooled comparison, the analytic standard error is 0.04517 and the 9,999-draw 95-percent interval is $[-0.2206,-0.0437]$.  After SOC2-by-calendar-month conditioning, the coefficient is $-0.0217$, with standard error 0.07132 and interval $[-0.1607,0.1173]$.  The paired movement is 0.11043, with standard error 0.05189 and interval $[0.0107,0.2102]$.  The corresponding two-sided normal-theory paired $\mathrm{MDE}_{80}$ is 0.14539.  The detected movement remains smaller than this planning quantity; that is not a contradiction because an MDE is a power summary, not an acceptance threshold for an observed draw.
 
+Table~\ref{tab:appendix_precision_summary} consolidates the principal precision diagnostics.  It states the scale and whether the quantity is a coefficient or a paired difference; the same numerical formula is not reinterpreted as an equivalence margin.
+
+\input{tables/r3_appendix_precision_summary.tex}
+
 \subsection{Broad-family and household sensitivity}
 
 The few-family exercise uses 22 broad-family weights and reports baseline, conditioned, and paired targets from common draws.  Its role is sensitivity to cross-occupation dependence, not a declaration that SOC2 is the uniquely correct cluster.  The household/sample-unit exercise performs 399 positive-weight full refits.  With labels fixed, its basic interval is $[-0.1865,-0.0794]$ for the pooled coefficient, $[-0.1212,0.0587]$ for the family-conditioned coefficient, and $[0.0362,0.1753]$ for their movement.  Regenerating preperiod exposure labels within the same draws gives $[-0.1864,-0.0762]$, $[-0.1236,0.0665]$, and $[0.0355,0.1771]$.  A median of two occupations changes quintile per regenerated-label draw.  Webb restandardization by itself is an affine transformation absorbed by the specified fixed effects, so this difference is a quintile-membership sensitivity rather than a separate normalization channel.

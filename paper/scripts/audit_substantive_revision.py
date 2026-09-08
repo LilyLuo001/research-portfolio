@@ -811,6 +811,23 @@ for stale_household_claim in [
     if stale_household_claim in all_text:
         raise AssertionError(f"superseded household claim survives: {stale_household_claim}")
 
+precision_table = (PAPER / "tables" / "r3_appendix_precision_summary.tex").read_text()
+for required in [
+    "Core pooled & Q5--Q1 coefficient & Log young-to-older stock ratio & 0.1266",
+    "Family-month vs. pooled & Paired coefficient difference & Log young-to-older stock ratio & 0.1454",
+    "Direct tail within family & Q5--Q1 coefficient & Log young-to-older stock ratio & 0.4576",
+    "Continuous within family & Exposure slope & One within-family exposure SD & 0.0313",
+    "Computer-use conditioning & Paired coefficient difference & Log young-to-older stock ratio & 0.1131",
+    "Industry conditioning & Paired coefficient difference & Log young-to-older stock ratio & 0.0444",
+    "BA vs. non-BA & Paired coefficient difference & Log young-to-older stock ratio & 0.2014",
+    "Architecture comparisons & Paired coefficient differences & Log young-to-older stock ratio & 0.0609--0.1689",
+    "Adjacent exit & Q5--Q1 coefficient & Log conditional transition-rate ratio & 0.254",
+    "Twelve-month entry destination & Q5--Q1 coefficient & Log conditional allocation ratio & 0.282",
+    "not a wild-score critical value, equivalence margin, or acceptance threshold",
+]:
+    if required not in precision_table:
+        raise AssertionError(f"consolidated precision diagnostic absent: {required}")
+
 for token in [
     "-0.1321", "-0.2206", "-0.0437", "-0.0217", "-0.1607", "0.1173",
     "0.1104", "0.0107", "0.2102", "0.1454", "3.33", "97.7",
