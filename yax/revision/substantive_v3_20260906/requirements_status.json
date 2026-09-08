@@ -3284,12 +3284,60 @@
       "depends_on": [
         "I07"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "A corrected ages-22--65 pandemic-shortfall pipeline completed 399 linked-household full refits with fixed inputs, regenerated shortfalls, and jointly regenerated shortfalls and exposure labels. All 7,182 retained model rows completed without failure; independent public-output reconstruction passes and the maximum binding endpoint MCSE is 0.00979 against the declared 0.01 threshold. Regeneration raises the sampling sensitivity of the young-relative family-month conditioning movement from 0.00363 to 0.00695, but does not change its observed 0.00613 magnitude. These released-weight household sensitivities remain separate from occupation/family shock inference.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/shortfall/SHORTFALL_RESAMPLING_SPEC.md",
+          "sha256": "14fd9bd5cc1cbb84e899533fe07a2cd642d572877e1f5663ca306c3d3915c201"
+        },
+        {
+          "role": "code",
+          "path": "gate3/shortfall/shortfall_engine.py",
+          "sha256": "62f4bd676a474e629ac9dbeae2e26d37743862d7fe7f3e0d176040041eed4104"
+        },
+        {
+          "role": "code",
+          "path": "gate3/shortfall/run_shortfall_refit_batch.py",
+          "sha256": "083e4ab7c282177197a06be7edd7dcef11244ab6153f894f7ae8e817c32e4ca9"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_shortfall_20260908/household_0399/summary/SUMMARY_RECEIPT.json",
+          "sha256": "c88fe3785ccf74598494615304583b16923483666856835b8b49139e6e115086"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_shortfall_20260908/household_0399/summary/SHORTFALL_REFIT_SUMMARY.csv",
+          "sha256": "b3e68d1c4e45e3ff2947c95feccd5648c95c9d23923fafbd1ebc12caec714b0f"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_shortfall_20260908/household_0399/summary/INDEPENDENT_VALIDATION.json",
+          "sha256": "bcf531b05f4c80889240ce8173ea252e1ff0dff32ad1594b2daaff4a98d9c5de"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/shortfall/I08_C05_SHORTFALL_FINDINGS.md",
+          "sha256": "2d4d823e08509e5a4b5e79c4d9af97004c5d531cf77ab38f33594f89c6f82814"
+        }
+      ],
+      "response_locations": [
+        "gate3/shortfall/I08_C05_SHORTFALL_FINDINGS.md",
+        "runs/gate3_shortfall_20260908/household_0399/summary/SHORTFALL_REFIT_SUMMARY.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_shortfall_20260908/household_0399/summary/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Upstream I07 remains RUN_UNVALIDATED until N03 and manuscript/appendix integration are complete.",
+        "attempts": "The full feasible I08 generated-input resampling, stopping check, and public-output validation are complete.",
+        "claim_impact": "I08 is computed and numerically validated but cannot receive final VERIFIED status before I07.",
+        "next_step": "Integrate the result and inference boundary into the manuscript and appendix, resolve N03 and I07, then promote I08 without rerunning the calculation."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3604,12 +3652,60 @@
         "I08",
         "C01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Both corrected pandemic shortfalls are defined on ages 22--65 with bounded predictions, strict one-to-one occupation mappings, and the same 363-occupation support for baseline and controlled models. Total-stock conditioning moves the pooled/family-month coefficients by +0.00040/-0.00050; young-relative conditioning moves them by +0.00114/+0.00613. The two-fold linked-household cross-fit average is close to the in-sample result, but directional heterogeneity and the shared CPS source preclude a claim that regression-to-the-mean or all common error is removed. The result is conditional on the narrower support, whose baseline coefficients differ materially from the 468-occupation central estimates.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/shortfall/SHORTFALL_RESAMPLING_SPEC.md",
+          "sha256": "14fd9bd5cc1cbb84e899533fe07a2cd642d572877e1f5663ca306c3d3915c201"
+        },
+        {
+          "role": "code",
+          "path": "gate3/shortfall/shortfall_engine.py",
+          "sha256": "62f4bd676a474e629ac9dbeae2e26d37743862d7fe7f3e0d176040041eed4104"
+        },
+        {
+          "role": "code",
+          "path": "gate3/shortfall/run_shortfall_crossfit.py",
+          "sha256": "a87d426ad926838da295550bf497f7da01f292ed900b08e8bf30c9c8f7b85827"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_shortfall_20260908/crossfit/EXECUTION_RECEIPT.json",
+          "sha256": "f991dbc5821a306e9c3d8667ad6ddecb4b993b9c7d965de13fad900192103471"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_shortfall_20260908/crossfit/SHORTFALL_CROSSFIT_RESULTS.csv",
+          "sha256": "e338d564c18700e490be079f191870f05e4691118e2e1f58e7203413e1225caa"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_shortfall_20260908/crossfit/INDEPENDENT_VALIDATION.json",
+          "sha256": "dfa09e2d8624c96e2d5a0668390766429d63e3d8b94204106eeabbbdb53b9bcc"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/shortfall/I08_C05_SHORTFALL_FINDINGS.md",
+          "sha256": "2d4d823e08509e5a4b5e79c4d9af97004c5d531cf77ab38f33594f89c6f82814"
+        }
+      ],
+      "response_locations": [
+        "gate3/shortfall/I08_C05_SHORTFALL_FINDINGS.md",
+        "runs/gate3_shortfall_20260908/crossfit/SHORTFALL_CROSSFIT_RESULTS.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_shortfall_20260908/crossfit/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Upstream I08 and C01 remain RUN_UNVALIDATED or NOT_STARTED pending manuscript-level characteristic integration.",
+        "attempts": "The corrected C05 definitions, generated-input refits, linked-household split, and validation are complete.",
+        "claim_impact": "The C05 calculation is complete, but final VERIFIED status awaits dependency and manuscript integration.",
+        "next_step": "Complete C01 and manuscript integration, preserve the support and regression-to-the-mean limits, then promote C05 without rerunning the shortfall calculation."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",

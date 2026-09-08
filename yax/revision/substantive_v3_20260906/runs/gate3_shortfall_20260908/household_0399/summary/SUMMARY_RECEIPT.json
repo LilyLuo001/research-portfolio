@@ -1,0 +1,69 @@
+{
+  "batch_ranges": [
+    [
+      1,
+      50
+    ],
+    [
+      51,
+      100
+    ],
+    [
+      101,
+      150
+    ],
+    [
+      151,
+      200
+    ],
+    [
+      201,
+      250
+    ],
+    [
+      251,
+      300
+    ],
+    [
+      301,
+      350
+    ],
+    [
+      351,
+      399
+    ]
+  ],
+  "batch_receipt_hashes": {
+    "batch_0001_0050": "f47336fd859f4e0c6d5f449dbb39680e593ddab731974b41c235ea523d2dc044",
+    "batch_0051_0100": "cb3c39689246c4f113b53753c4009324cfa175f17449c5353c0815d5c3272af7",
+    "batch_0101_0150": "bfbc8247587d48680f4cb308e9bd7bccea1b0ea55774d1ff51320d187995d38d",
+    "batch_0151_0200": "c992c69ca13da1571a94de92675fd2d3ac772d1fb4bd5c552892e41c927a946f",
+    "batch_0201_0250": "1e31f82a1f11aba3f6c3e5bc6301a5c0f7e57e8998e88f4e33afb62c36e0ebef",
+    "batch_0251_0300": "abe15e4776f1b03df37bb9e1b5097458faa33730db8385b596ac04fc62928c4f",
+    "batch_0301_0350": "61e33739a3c51c152d0d1e396ff88807b54a4b37e991407be82a9b4718beee8e",
+    "batch_0351_0399": "b3e32b22c13461d3dfb0f44fa030ce92b5ac869a79c79559a6625324e126c626"
+  },
+  "interpretation": "linked-household full-pipeline sensitivity; not CPS design-based inference and not mechanically combined with cluster variance",
+  "observed_construction_sha256": "7aae9f91959e4e3043117892056e5bbeb539efabb667c0f50cf24428684297e1",
+  "observed_models_sha256": "f198206a302d5bf3d465c17ed706556bd1203c7d3b8670ed4e1f77faa0e90829",
+  "output_hashes": {
+    "SHORTFALL_REFIT_SUMMARY.csv": "b3e68d1c4e45e3ff2947c95feccd5648c95c9d23923fafbd1ebc12caec714b0f",
+    "SHORTFALL_STOPPING.json": "16bb91d71f37e7129195a3b3202ffa2b8532ef1263da282f51e59f6304ae25df"
+  },
+  "schema_version": "yax-gate3-shortfall-refit-summary-v1",
+  "status": "PASS_SHORTFALL_ENDPOINT_PRECISION",
+  "stopping": {
+    "binding_statistics": [
+      "q5",
+      "conditioning_movement",
+      "shortfall_z_coefficient"
+    ],
+    "cap_reached": false,
+    "endpoint_mcse_target_log_point": 0.01,
+    "failure_records_through_draw": 0,
+    "maximum_binding_interval_endpoint_mcse": 0.009786256779018374,
+    "passes": true,
+    "through_draw": 399
+  },
+  "through_draw": 399
+}

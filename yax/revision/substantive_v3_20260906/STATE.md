@@ -187,6 +187,28 @@ Updated: 2026-09-08 Asia/Shanghai
   every onset-grid paired change includes zero. The cross-structure movement
   remains about 0.088--0.134 across the declared variants. N04, T05, Y08, and
   Y09 are `RUN_UNVALIDATED` pending manuscript and appendix integration.
+- The complete Gate 3 finite-sample program ran all eleven declared DGPs at
+  799--1,599 outer replications and 9,999 common multiplier draws, with zero
+  failed joint refits. Independent reconstruction passes. Occupation
+  wild-score intervals under-cover all three empirical targets; family
+  clustering is conservative for pooled and paired empirical targets but
+  under-covers family-month and fails more broadly in the adverse designs. The
+  near-nominal oracle is not implementable and, under the empirical structural
+  null, still rejects zero for pooled and paired projections because those
+  pseudo-targets are nonzero. I02--I06 remain `RUN_UNVALIDATED` pending
+  manuscript integration; no universal correction or ad hoc SE inflation is
+  adopted.
+- The repaired pandemic-shortfall pipeline completed 399 linked-household
+  full refits on a strict 363-occupation support, with zero failures and
+  maximum endpoint MCSE 0.00979 against 0.01. Total-stock conditioning moves
+  the pooled/family-month exposure coefficients by +0.00040/-0.00050;
+  young-relative conditioning moves them by +0.00114/+0.00613. Regenerating
+  the shortfalls roughly doubles some conditioning-movement sampling
+  sensitivities but does not overturn those magnitudes. A two-direction
+  linked-household split produces a similar average with heterogeneous
+  directions. I08 and C05 are `RUN_UNVALIDATED`: the calculation and public
+  validation are complete, while their dependencies and manuscript treatment
+  remain open.
 
 All 11 A1 numerical targets and the completed static/support and Y01--Y05
 dynamic outputs have now been independently reconstructed from retained public
@@ -225,18 +247,20 @@ selective subset.
 The A1 execution, independent audit, finding disposition, and remote push are
 complete. The original and compatibility-blocked runs remain preserved.
 
-1. Integrate the validated static/support and dynamic Y01--Y05 evidence into the
-   manuscript and appendix. Keep the onset grid and through-2024 comparisons
-   partial until their additional estimands are actually executed; existing
-   numerical certification alone does not supply those result objects.
-2. Execute Gate 3 inference validation on the exact pooled, family-month, and
-   paired targets. Establish pseudo-truths before interpreting size; compare
-   the actual occupation/family wild-score procedures and a full-refit
-   benchmark; and extend household refits to the same family-month target.
-3. Separately specify any outcome-bearing additive D02 companion, if retained,
+1. Complete the Gate 3 canonical characteristic block C01--C07, preserving the
+   fixed assignments and reporting computer-use covariance and shortfall
+   support limits rather than selecting controls by attenuation.
+2. Complete the remaining Gate 3 mapping, flow, benchmark, and education
+   requirements whose inputs are available; retain exact blockers for missing
+   earnings, public memberships, or external data rather than substituting.
+3. Integrate the validated static/support, dynamic, inference, household, and
+   shortfall evidence into the manuscript and appendix. Demote sharp structural
+   rejection language and keep the released-weight and support restrictions
+   visible.
+4. Separately specify any outcome-bearing additive D02 companion, if retained,
    and integrate the validated identification result without implying
    coefficient additivity. Complete the remaining D05--D07
    decomposition/inference work without relabeling exact stock accounting as a
    regression coefficient.
-4. Integrate and validate all released evidence in the manuscript and appendix
+5. Integrate and validate all released evidence in the manuscript and appendix
    before changing any `RUN_UNVALIDATED` requirement to `VERIFIED`.

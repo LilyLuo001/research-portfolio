@@ -1,0 +1,64 @@
+{
+  "common_support_occupations": 361,
+  "fold_households": [
+    320200,
+    320201
+  ],
+  "fold_preperiod_weights": [
+    1770891449.1641998,
+    1766245473.5137
+  ],
+  "fold_scaling": [
+    {
+      "total": {
+        "standardization_weight": 1770891449.1641998,
+        "weighted_mean": 0.07781227564039732,
+        "weighted_sd": 0.21397718853218936
+      },
+      "young_relative": {
+        "standardization_weight": 1770891449.1641998,
+        "weighted_mean": 0.006233477823612437,
+        "weighted_sd": 0.05243981025466281
+      }
+    },
+    {
+      "total": {
+        "standardization_weight": 1766245473.5137,
+        "weighted_mean": 0.046430258311031036,
+        "weighted_sd": 0.22144248918276654
+      },
+      "young_relative": {
+        "standardization_weight": 1766245473.5137,
+        "weighted_mean": -0.005443922463071093,
+        "weighted_sd": 0.04500286712053386
+      }
+    }
+  ],
+  "fold_share_out_of_bounds_predictions_before_bound": [
+    1850,
+    2118
+  ],
+  "fold_total_negative_predictions_before_bound": [
+    277,
+    364
+  ],
+  "full_preperiod_weight": 3537136922.6779003,
+  "full_scaling": {
+    "total": {
+      "standardization_weight": 3537136922.6779003,
+      "weighted_mean": 0.06174198829270918,
+      "weighted_sd": 0.1780524759612336
+    },
+    "young_relative": {
+      "standardization_weight": 3537136922.6779003,
+      "weighted_mean": -0.00048211845180352143,
+      "weighted_sd": 0.03808846094635741
+    }
+  },
+  "households": 640401,
+  "interpretation": "descriptive two-direction household split diagnostic for shared first- and second-stage error; not CPS design-based inference",
+  "schema_version": "yax-gate3-shortfall-crossfit-construction-v1",
+  "split_seed": 202609084900,
+  "split_unit": "encoded positive CPSID; all months, co-residents, and route descendants remain together",
+  "structural_one_to_one_occupations": 369
+}
