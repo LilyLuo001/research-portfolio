@@ -1,0 +1,93 @@
+{
+  "schema_version": "yax-gate2-timing-extensions-spec-v1",
+  "spec_id": "yaxgate2timing_v1_ec02985a012e7f1476a337c878db71401e2e977d542944a6b92bc33b6eca6904",
+  "status": "frozen before protected N04/T05/Y08/Y09 timing-extension execution",
+  "authenticated_inputs": {
+    "support_spec": {"sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"},
+    "support_runner": {"sha256": "f8e214b6afb198084c7c3a4b9412c0c372ff9eba26a5d521519c73dc067ab5fe"},
+    "canonical_spec": {"sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"},
+    "a1_spec": {"sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e"},
+    "a1_runner": {"sha256": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a"},
+    "a1_model_audit": {"sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"},
+    "a1_dependency_release": {"sha256": "65db43c62b151ed06846039374ebb523702cd23a3a8465ee1035cbe4b5c43587"},
+    "cells": {"sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717", "privacy": "protected SCC aggregate; never publish"},
+    "cells_receipt": {"sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a"},
+    "fixed_membership": {"sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"},
+    "support_matrix": {"sha256": "1a62bed6fc5f2f1302eda3e7e00539af60ba88753539686dfed695c4d3058cbd"},
+    "support_edges": {"sha256": "5831022f3c0e14cc5e7d5c593da46ceb73ac80f0428e2d072952566721ba359a"},
+    "direct_tail_membership": {"sha256": "2bc3e298c713433c2efbaa74d7162cc66e317bf7581fdbee50ccca34efe3e1c1"},
+    "support_result_manifest": {"sha256": "e5532877d99a945f114b2a654f56c8d851cef228f85baa1d7e20708e5243a5eb"},
+    "common_draw_binding": {"sha256": "fb77f6c655beb50159a47225b6c099daa2e97e340cffadb9d4154ca16a083a59"},
+    "common_multipliers": {"sha256": "3172bf843f0f801465f2a7ae2702347f38db1d5971bf0f522be225b3c1329205"},
+    "dynamic_core_runner": {"sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"},
+    "dynamic_core_spec": {"sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"},
+    "dynamic_core_estimates": {"sha256": "6d3bc6be1d6ab9bd96ea80def9bcd353ff66472869c07e0bdae7a5b3b45d6c5d"},
+    "dynamic_core_receipt": {"sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"}
+  },
+  "scientific_contract": {
+    "support_occupations": 468,
+    "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+    "fixed_assignment": "canonical preperiod beta quintiles and Webb_z retained in every fit",
+    "structures": ["unconditioned", "family_month"],
+    "target": "Q5_x_post conditional on Q2-Q4 and Webb_z by post",
+    "objective": "unchanged frequency-weighted grouped-binomial likelihood",
+    "transition_month_excluded": "2022-12",
+    "missing_month": "2025-10",
+    "onset_dates": ["2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"],
+    "coding_stable_window": "2020-01 through 2026-07 excluding 2022-12 and missing 2025-10",
+    "seasonality": [
+      "Q2-Q5 by month-of-year slopes with January omitted",
+      "occupation by month-of-year first fixed effects"
+    ],
+    "endpoint_windows": ["through 2024-12", "full through 2026-07"],
+    "era_windows": [
+      "common preperiod plus 2023-01 through 2024-12",
+      "common preperiod plus 2025-01 through 2026-07"
+    ],
+    "shutdown_adjacent_exclusion": ["2025-09", "2025-11"],
+    "duplicate_views": [
+      "baseline full equals January-2023 onset",
+      "through-2024 endpoint equals 2023-2024 era",
+      "December-2022 onset equals January-2023 onset because December 2022 is excluded"
+    ]
+  },
+  "inference": {
+    "cluster": "occupation",
+    "draws": 9999,
+    "multipliers": "same hash-bound Rademacher draws for all 34 fits",
+    "paired_rule": "difference occupation influence before applying common draws",
+    "pointwise": "common-multiplier critical value",
+    "onset_family": "maximum absolute studentized statistic over all eight onsets separately by structure",
+    "nondetection_rule": "CI including zero means does not detect a difference, never equivalence",
+    "mde80_factor": 2.8015852181129683
+  },
+  "numerical_contract": {
+    "procedure": "fresh A1 same-objective trust-path fit corroborated by independent zero-start damped sparse Newton IRLS",
+    "thresholds": "unchanged from ANALYSIS_SPEC_A1.json",
+    "all_models_must_pass": true
+  },
+  "requirements": {
+    "N04": "coding-stable and two feasible seasonality specifications",
+    "T05": "through-2024 and full-window paired comparison under both structures",
+    "Y08": "complete November-2022 through June-2023 onset grid and seasonality",
+    "Y09": "early-late eras and shutdown-adjacent exclusions under both structures"
+  },
+  "outputs": {
+    "files": [
+      "MODEL_RESULTS.csv",
+      "PAIRED_COMPARISONS.csv",
+      "MODEL_COVARIANCE.csv",
+      "MODEL_INFLUENCE.csv",
+      "NUMERICAL_AUDITS.json",
+      "VALIDATION_REPORT.json",
+      "RESULT_SUMMARY.md"
+    ],
+    "protected_cells_published": false,
+    "publication": "new immutable output directory with manifest and receipt"
+  },
+  "execution": {
+    "runner_sha256": "e05f49a05ee85091de4b04927d48d0d71389b3509d2101960ed25da3685a81c5",
+    "environment": "SCC project-tier Python 3.13.8 A1 runtime",
+    "output_must_not_preexist": true
+  }
+}
