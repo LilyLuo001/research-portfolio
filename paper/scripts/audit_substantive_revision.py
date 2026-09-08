@@ -587,6 +587,45 @@ record(
     0.1,
 )
 
+# Corrected bounded shortfalls supersede the unbounded characteristic rows.
+# The published brackets are linked-household sampling sensitivities with the
+# shortfall regenerated and labels fixed; they are not occupation-wild CIs.
+rel = "yax/revision/substantive_v3_20260906/runs/gate3_shortfall_20260908/household_0399/summary/SHORTFALL_REFIT_SUMMARY.csv"
+shortfall = pd.read_csv(ROOT / rel)
+for control, target, baseline, conditioned, movement, lo, hi, tokens in [
+    ("total", "pooled", -0.164168, -0.163771, 0.000397, -0.006553, 0.006612,
+     ("-0.16417", "-0.16377", "0.00040", "-0.00655", "0.00661")),
+    ("total", "family_month", -0.087077, -0.087575, -0.000499, -0.013769, 0.009701,
+     ("-0.08708", "-0.08758", "-0.00050", "-0.01377", "0.00970")),
+    ("young_relative", "pooled", -0.164168, -0.163027, 0.001141, -0.005087, 0.005729,
+     ("-0.16417", "-0.16303", "0.00114", "-0.00509", "0.00573")),
+    ("young_relative", "family_month", -0.087077, -0.080950, 0.006126, -0.008891, 0.018348,
+     ("-0.08708", "-0.08095", "0.00613", "-0.00889", "0.01835")),
+]:
+    row = one(
+        shortfall,
+        mode="regenerated_shortfalls_fixed_labels",
+        control=control,
+        target=target,
+    )
+    for field, actual, expected, token in [
+        ("derived_baseline_q5", row["q5_observed"] - row["conditioning_movement_observed"], baseline, tokens[0]),
+        ("q5_observed", row["q5_observed"], conditioned, tokens[1]),
+        ("conditioning_movement_observed", row["conditioning_movement_observed"], movement, tokens[2]),
+        ("conditioning_movement_basic_ci_lower", row["conditioning_movement_basic_ci_lower"], lo, tokens[3]),
+        ("conditioning_movement_basic_ci_upper", row["conditioning_movement_basic_ci_upper"], hi, tokens[4]),
+    ]:
+        record(
+            f"SHORTFALL-{control}-{target}",
+            rel,
+            f"mode=regenerated_shortfalls_fixed_labels/control={control}/target={target}",
+            field,
+            actual,
+            expected,
+            token,
+            8e-6,
+        )
+
 # Every core module must carry a passing self-check.
 core_selfchecks = [
     "rebuilt_baseline/results/SELF_CHECK.json",
@@ -708,6 +747,24 @@ for required_mapping_token in ["480 of the 503", "not the regression sample", "4
 core_table = (PAPER / "tables" / "r3_table2_occupation.tex").read_text()
 if "SOC2 $\\times$ young $\\times$ month & $-0.0217$ & $[-0.1607,0.1173]$ & $0.1104$ & 0.1998" not in core_table:
     raise AssertionError("family-conditioned MDE80 is not source-consistent in Main Table 2")
+
+shortfall_table = (PAPER / "tables" / "r3_appendix_shortfall.tex").read_text()
+for required_row in [
+    "Total stock & Pooled & $-0.16417$ & $-0.16377$ & $0.00040\\;[-0.00655,0.00661]$",
+    "Total stock & SOC2 $\\times$ month & $-0.08708$ & $-0.08758$ & $-0.00050\\;[-0.01377,0.00970]$",
+    "Young relative & Pooled & $-0.16417$ & $-0.16303$ & $0.00114\\;[-0.00509,0.00573]$",
+    "Young relative & SOC2 $\\times$ month & $-0.08708$ & $-0.08095$ & $0.00613\\;[-0.00889,0.01835]$",
+]:
+    if required_row not in shortfall_table:
+        raise AssertionError(f"corrected shortfall table row absent: {required_row}")
+for stale_shortfall_row in [
+    "Total-employment pandemic shortfall & 468",
+    "Young-relative pandemic shortfall & 458",
+    "$+$ total-employment pandemic shortfall",
+    "Parsimonious block plus SOC2",
+]:
+    if stale_shortfall_row in all_text:
+        raise AssertionError(f"superseded shortfall row survives: {stale_shortfall_row}")
 
 for token in [
     "-0.1321", "-0.2206", "-0.0437", "-0.0217", "-0.1607", "0.1173",

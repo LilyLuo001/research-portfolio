@@ -1,0 +1,16 @@
+\begin{table}[!htbp]
+\centering
+\caption{Corrected bounded pandemic-shortfall diagnostics}\label{tab:appendix_shortfall}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrr}
+\toprule
+Shortfall & Model & Baseline Q5--Q1 & Conditioned Q5--Q1 & Movement [sampling interval] \\
+\midrule
+Total stock & Pooled & $-0.16417$ & $-0.16377$ & $0.00040\;[-0.00655,0.00661]$ \\
+Total stock & SOC2 $\times$ month & $-0.08708$ & $-0.08758$ & $-0.00050\;[-0.01377,0.00970]$ \\
+Young relative & Pooled & $-0.16417$ & $-0.16303$ & $0.00114\;[-0.00509,0.00573]$ \\
+Young relative & SOC2 $\times$ month & $-0.08708$ & $-0.08095$ & $0.00613\;[-0.00889,0.01835]$ \\
+\bottomrule
+\end{tabular}}
+\tabnote{The common population contains 363 one-to-one-mapped occupations with sufficient preperiod histories.  Total-employment predictions are bounded below at zero and young-share predictions to $[0,1]$.  Movement is the conditioned minus baseline exposure coefficient.  Brackets are basic intervals from 399 linked-household draws that regenerate the shortfall but hold exposure labels fixed.  They are released-weight sampling sensitivities, not occupation-wild or complete CPS design-based intervals, and are not mechanically combined with the article's shock-cluster variance.  Joint label regeneration gives the same displayed point estimates and very similar uncertainty.}
+\end{table}
