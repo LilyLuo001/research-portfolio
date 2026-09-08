@@ -300,9 +300,28 @@ def scaled_influence(fit) -> np.ndarray:
     return value
 
 
-def summarize_fit(fit, definition: ModelDefinition, signs: np.ndarray) -> tuple[dict[str, Any], np.ndarray, np.ndarray]:
+def align_target_influence(fit, target: int,
+                           occupation_universe: list[str]) -> tuple[np.ndarray, list[str]]:
+    active_occupations = sorted(
+        fit.bundle.frame.loc[fit.active, "occ_code"].astype(str).unique().tolist())
+    require(len(active_occupations) == fit.influence.shape[0],
+            f"{fit.model_id}: active occupation labels do not match influence")
+    require(set(active_occupations).issubset(occupation_universe),
+            f"{fit.model_id}: active occupation lies outside fixed support")
+    active_influence = scaled_influence(fit)[:, target]
+    active_map = dict(zip(active_occupations, active_influence))
+    influence = np.asarray([active_map.get(code, 0.0) for code in occupation_universe], float)
+    require(np.isclose(influence @ influence, fit.covariance[target, target],
+                       rtol=1e-9, atol=1e-12),
+            f"{fit.model_id}: aligned influence changes covariance")
+    return influence, active_occupations
+
+
+def summarize_fit(fit, definition: ModelDefinition, signs: np.ndarray,
+                  occupation_universe: list[str]) -> tuple[dict[str, Any], np.ndarray, np.ndarray]:
     target = fit.labels.index("Q5_x_post")
-    influence = scaled_influence(fit)[:, target]
+    influence, active_occupations = align_target_influence(
+        fit, target, occupation_universe)
     centered = signs @ influence
     estimate = float(fit.treatment[target])
     se = float(np.sqrt(fit.covariance[target, target]))
@@ -324,7 +343,9 @@ def summarize_fit(fit, definition: ModelDefinition, signs: np.ndarray) -> tuple[
         "bootstrap_p_value": float((1 + np.sum(np.abs(centered / se) >= abs(estimate / se))) /
                                    (len(centered) + 1)),
         "bootstrap_critical": critical, "mde80": MDE_FACTOR * se,
-        "occupation_clusters": fit.influence.shape[0],
+        "support_occupations": len(occupation_universe),
+        "estimating_occupation_clusters": fit.influence.shape[0],
+        "zero_influence_support_occupations": len(occupation_universe) - fit.influence.shape[0],
         "active_rows": int(fit.active.sum()),
         "profiled_boundary_rows": int(np.sum((fit.bundle.total > 0) & ~fit.active)),
         "a1_certificate": fit.audit["a1_certification"]["status"],
@@ -432,7 +453,7 @@ def run(args: argparse.Namespace) -> None:
         require(bundle_occupations == occupations, f"{definition.model_id}: support order differs")
         assert_registered_n04_parity(a1, cells, bundle, definition)
         fit = support.certified_fit(a1, bundle, analysis)
-        row, influence, draws = summarize_fit(fit, definition, signs)
+        row, influence, draws = summarize_fit(fit, definition, signs, occupations)
         rows[definition.model_id] = row
         influences[definition.model_id] = influence
         centered[definition.model_id] = draws
@@ -491,7 +512,9 @@ def run(args: argparse.Namespace) -> None:
             "n04_models_6": sum(row["requirement"] == "N04" for row in output_rows) == 6,
             "full_checkpoint_reproduced": max(abs(value) for value in checkpoint_differences.values()) <= 1e-8,
             "duplicate_views_reproduced": maximum_duplicate_difference <= 1e-10,
-            "all_support_468": all(row["occupation_clusters"] == 468 for row in output_rows),
+            "all_support_468": all(row["support_occupations"] == 468 for row in output_rows),
+            "estimating_cluster_counts_valid": all(
+                2 <= row["estimating_occupation_clusters"] <= 468 for row in output_rows),
             "all_transition_excluded": all(row["transition_2022_12_excluded"] for row in output_rows),
             "all_october_2025_absent": all(row["october_2025_absent"] for row in output_rows),
             "paired_inventory_complete": len(pairs) == len(pair_inventory()),

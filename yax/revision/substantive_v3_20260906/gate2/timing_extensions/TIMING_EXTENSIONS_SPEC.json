@@ -1,6 +1,6 @@
 {
   "schema_version": "yax-gate2-timing-extensions-spec-v1",
-  "spec_id": "yaxgate2timing_v1_ec02985a012e7f1476a337c878db71401e2e977d542944a6b92bc33b6eca6904",
+  "spec_id": "yaxgate2timing_v1_ecc1747e760a05f649be7afcf23a08aa5c9505be6ab81384e2b279d31161e10d",
   "status": "frozen before protected N04/T05/Y08/Y09 timing-extension execution",
   "authenticated_inputs": {
     "support_spec": {"sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"},
@@ -55,6 +55,7 @@
     "cluster": "occupation",
     "draws": 9999,
     "multipliers": "same hash-bound Rademacher draws for all 34 fits",
+    "changing_window_cluster_rule": "retain the fixed 468-occupation draw universe; align each model's finite-cluster-corrected influence to it and assign zero influence to support occupations with no positive estimating row in that model",
     "paired_rule": "difference occupation influence before applying common draws",
     "pointwise": "common-multiplier critical value",
     "onset_family": "maximum absolute studentized statistic over all eight onsets separately by structure",
@@ -86,7 +87,7 @@
     "publication": "new immutable output directory with manifest and receipt"
   },
   "execution": {
-    "runner_sha256": "e05f49a05ee85091de4b04927d48d0d71389b3509d2101960ed25da3685a81c5",
+    "runner_sha256": "5d3125b4e437cbb00679b7e21d0ebd1e62d16f3eee67a6a70da4e9a1bc035a1b",
     "environment": "SCC project-tier Python 3.13.8 A1 runtime",
     "output_must_not_preexist": true
   }

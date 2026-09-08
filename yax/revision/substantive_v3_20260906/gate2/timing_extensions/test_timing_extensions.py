@@ -108,6 +108,23 @@ def test_paired_difference_uses_difference_influence_and_common_draws():
     assert result["common_occupation_draws"] is True
 
 
+def test_influence_alignment_zeros_nonestimating_fixed_support_occupations():
+    class Fit:
+        model_id = "subset"
+        influence = np.array([[1.0], [2.0]])
+        covariance = np.array([[10.0]])  # 2/(2-1) * (1^2 + 2^2)
+        bundle = Bundle(
+            frame=pd.DataFrame({"occ_code": ["0001", "0002", "0003"]}),
+        )
+        active = np.array([True, False, True])
+
+    aligned, active = MODULE.align_target_influence(
+        Fit(), 0, ["0001", "0002", "0003"])
+    assert active == ["0001", "0003"]
+    assert np.array_equal(aligned, [np.sqrt(2), 0.0, 2 * np.sqrt(2)])
+    assert np.isclose(aligned @ aligned, 10.0)
+
+
 def test_custom_family_month_bundle_passes_full_a1_numerical_interface():
     root = HERE.parents[4]
     support_path = root / "yax/revision/substantive_v3_20260906/gate2/support_inference/run_support_inference.py"
