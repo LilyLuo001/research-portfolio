@@ -1,0 +1,98 @@
+{
+  "SOC2_families": 22,
+  "aggregate_rebuild": {
+    "maximum_absolute_gap": 1.4901161193847656e-08,
+    "maximum_relative_gap": 3.146668096024428e-15
+  },
+  "analysis_months": 113,
+  "construction_weight_rebuild": {
+    "maximum_absolute_gap": 5.960464477539063e-08,
+    "maximum_relative_gap": 8.715005636401562e-16
+  },
+  "effective_count_diagnostics": {
+    "below_10": 14585,
+    "below_20": 23671,
+    "below_5": 6748,
+    "median": 23.8545072062333,
+    "minimum": 1.0,
+    "p01": 1.0,
+    "p05": 2.7925794064474676,
+    "p95": 296.3705842244635,
+    "positive_cells": 51891
+  },
+  "family_shock_calibration": {
+    "consecutive_pairs": 2420,
+    "estimator": "weighted pooled AR(1) on consecutive observed family-month residual-score/information shocks",
+    "innovation_sd": 0.08973819718772193,
+    "leave_one_family_rho_max": 0.5821676511843294,
+    "leave_one_family_rho_min": 0.5664679600812538,
+    "leave_one_family_stationary_sd_max": 0.11413740365391693,
+    "leave_one_family_stationary_sd_min": 0.10726651178438805,
+    "rho": 0.5742538344742641,
+    "stationary_sd": 0.10961363699788072,
+    "uncertainty": "leave-one-SOC2-family range",
+    "weighted_RMS_logit_shock": 0.10986659462742475
+  },
+  "generated_at_utc": "2026-09-08T10:44:43.520960+00:00",
+  "git_head": "7a21a1fea6df27de710f43327083aaeb43392f43",
+  "input_hashes": {
+    "aggregate_cells": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "computerization": "352cb40834ec83225f747d316eb3e03fce1d1c5c65d80720c558177f85801fdd",
+    "march_audit_receipt": "b2e1810c1f154f8efd290ccc65a155a6553642fb03d76fd818d7348e98bb3b8a",
+    "march_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "treatment_contract": "95db83635da57b58db98217c96bf85c40aa0249146031db23cfa1221d11804b6",
+    "wide_microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9"
+  },
+  "observed_models": {
+    "certified_checkpoint_differences": {
+      "family_month_difference": -2.913641550250645e-14,
+      "pooled_difference": 2.391420395042587e-13
+    },
+    "family_month": {
+      "coefficient": -0.021674952018246537,
+      "family_se": 0.06919157388070622,
+      "iterations": 6,
+      "occupation_se": 0.07132258234982004
+    },
+    "family_month_minus_pooled": {
+      "coefficient": 0.1104344987739437,
+      "family_se": 0.05482765416113518,
+      "occupation_se": 0.05189441789538426
+    },
+    "pooled": {
+      "coefficient": -0.13210945079219025,
+      "family_se": 0.04144364690887418,
+      "iterations": 5,
+      "occupation_se": 0.045173895228400755
+    }
+  },
+  "privacy": "NPZ remains protected on SCC; receipt contains no row, identifier value, cell stock, or private path",
+  "private_npz_bytes": 42085662,
+  "private_npz_sha256": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+  "route_counts": {
+    "CPSID_analysis_month_visits_maximum": 8,
+    "CPSID_analysis_month_visits_median": 4.0,
+    "CPSID_analysis_month_visits_p95": 8.0,
+    "CPSID_units_observed_more_than_one_analysis_month": 567373,
+    "active_employed_age_22_65_source_records": 5001069,
+    "active_source_records_with_nonpositive_CPSID": 0,
+    "analysis_contributing_CPSID_units": 640401,
+    "bridge_mass_maximum_on_support": 1.0000000000001,
+    "bridge_mass_minimum_on_support": 0.0036,
+    "bridge_sources_on_support": 421,
+    "explicitly_excluded_wide_ASEC_March_rows": 621589,
+    "fractional_descendant_rows": 916747,
+    "raw_rows": 9843021,
+    "repair_active_source_records": 240019,
+    "respondent_equivalent_total": 4345316.767017238,
+    "route_stock_total": 13594448593.026394,
+    "routed_descendant_rows_on_support": 4984188,
+    "static_months": 113,
+    "support_occupations": 468
+  },
+  "schema_version": "yax-gate3-private-calibration-receipt-v1",
+  "sge_job_id": "7490560",
+  "status": "PASS_PRIVATE_CALIBRATION_BUILD",
+  "support_occupations": 468
+}

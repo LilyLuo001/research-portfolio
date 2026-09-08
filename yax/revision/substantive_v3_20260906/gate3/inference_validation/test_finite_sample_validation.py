@@ -1,0 +1,101 @@
+from __future__ import annotations
+
+import importlib.util
+from pathlib import Path
+import sys
+
+import numpy as np
+import pandas as pd
+
+
+HERE = Path(__file__).resolve().parent
+spec = importlib.util.spec_from_file_location(
+    "yax_gate3_finite_sample", HERE / "run_finite_sample_validation.py")
+SIM = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = SIM
+spec.loader.exec_module(SIM)
+
+
+def test_scenario_inventory_has_declared_dgps_and_ablations():
+    designs = {value["design"] for value in SIM.SCENARIOS.values()}
+    assert designs == {
+        "empirical_gaussian_ar1", "prior_adverse_rademacher",
+        "sparsity_equalized", "family_variance_zero",
+        "serial_independent", "influence_equalized",
+    }
+    assert len(SIM.SCENARIOS) == 10
+
+
+def test_influence_equalization_preserves_family_information():
+    families = np.asarray(["A", "A", "B", "B"], object)
+    months = 3
+    total = np.asarray([
+        100, 100, 100, 400, 400, 400, 50, 50, 50, 200, 200, 200,
+    ], float)
+    probability = np.full_like(total, .2)
+    rescaled, diagnostics = SIM.influence_equalized_total(
+        total, probability, families, months)
+    before = (total * probability * (1 - probability)).reshape(4, 3).sum(axis=1)
+    after = (rescaled * probability * (1 - probability)).reshape(4, 3).sum(axis=1)
+    assert np.isclose(before[:2].sum(), after[:2].sum())
+    assert np.isclose(before[2:].sum(), after[2:].sum())
+    assert np.isclose(after[0], after[1]) and np.isclose(after[2], after[3])
+    assert diagnostics["maximum_family_information_total_gap"] < 1e-8
+
+
+def test_crossfit_oracle_never_calibrates_on_evaluation_half():
+    frame = pd.DataFrame({
+        "replicate": np.arange(1, 401), "estimate": np.linspace(-.2, .2, 400),
+        "pseudo_truth": np.zeros(400), "occupation_se": np.full(400, .1),
+    })
+    lower, upper, critical = SIM.crossfit_oracle(frame)
+    odd_standardized = np.abs(frame.loc[frame.replicate % 2 == 1, "estimate"] / .1)
+    even_standardized = np.abs(frame.loc[frame.replicate % 2 == 0, "estimate"] / .1)
+    assert critical["odd_calibration_critical"] == np.quantile(odd_standardized, .95, method="higher")
+    assert critical["even_calibration_critical"] == np.quantile(even_standardized, .95, method="higher")
+    assert np.allclose((upper - lower) / .2,
+                       np.where(frame.replicate.to_numpy() % 2 == 1,
+                                critical["even_calibration_critical"],
+                                critical["odd_calibration_critical"]))
+
+
+def test_multiplier_methods_are_alternatives_not_variance_sums():
+    source = (HERE / "run_finite_sample_validation.py").read_text(encoding="utf-8")
+    assert "occupation_se + family_se" not in source
+    assert "occupation_se ** 2 + family_se ** 2" not in source
+    assert SIM.PROCEDURES[:3] == (
+        "occupation_rademacher", "family_rademacher", "family_webb")
+
+
+def test_stopping_constants_match_declared_design():
+    assert (SIM.PILOT, SIM.BLOCK, SIM.CAP, SIM.INNER_DRAWS) == (399, 400, 1999, 9999)
+    assert SIM.MCSE_TARGET == .0125
+    assert SIM.SD_RELATIVE_MC_ERROR_TARGET == .05
+
+
+def test_summary_executes_all_targets_and_procedures():
+    rows = []
+    for replicate in range(1, 400):
+        estimate = .01 * np.sin(replicate)
+        for target in SIM.TARGETS:
+            row = {
+                "scenario": "synthetic", "replicate": replicate, "target": target,
+                "pseudo_truth": 0.0, "estimate": estimate, "bias": estimate,
+                "occupation_se": .01, "family_se": .02, "iterations": 2,
+            }
+            for procedure, half in (
+                ("occupation_rademacher", .02),
+                ("family_rademacher", .03),
+                ("family_webb", .03),
+            ):
+                row.update({
+                    f"{procedure}_critical": 2.0,
+                    f"{procedure}_lower": estimate - half,
+                    f"{procedure}_upper": estimate + half,
+                    f"{procedure}_covers_truth": True,
+                    f"{procedure}_rejects_zero": False,
+                })
+            rows.append(row)
+    summary, stopping = SIM.summarize(rows, 399, 0)
+    assert len(summary) == len(SIM.TARGETS) * len(SIM.PROCEDURES)
+    assert stopping["passes"]
