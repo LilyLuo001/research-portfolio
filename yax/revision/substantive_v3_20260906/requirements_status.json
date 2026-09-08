@@ -5666,12 +5666,40 @@
       "depends_on": [
         "G02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "A machine-readable response matrix now joins all 297 immutable atomic acceptance checks to the live status, evidence, response locations, dependencies, review state, and blocker for all 99 requirements. Completion language is mechanically permitted only for resolved statuses. E09 remains unverified because G02 has not established exhaustive sentence-level extraction from every supplied source document.",
+      "evidence": [
+        {
+          "role": "delivery_artifact",
+          "path": "responses/COMMENT_RESPONSE_MATRIX.csv",
+          "sha256": "173a5e6e4278790edf88c4bd32abe083bd3d0c2f0afc1c1849b603a803c0f5cc"
+        },
+        {
+          "role": "validation_report",
+          "path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
+          "sha256": "e8a6e46f0330a1d2c5597707195a6de2d3fe9867c22963708a500d0a49f7550b"
+        },
+        {
+          "role": "code",
+          "path": "responses/build_comment_response_matrix.py",
+          "sha256": "43cba2007e44addb15cec743bae53c27334c1a39e0d50ffc648d2eff1405479b"
+        }
+      ],
+      "response_locations": [
+        "responses/COMMENT_RESPONSE_MATRIX.csv",
+        "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json"
+      ],
+      "review": {
+        "reviewer": "execution-agent lossless-join and completion-boundary audit",
+        "report_path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified G02 exhaustive extraction of every numbered and unnumbered source request.",
+        "attempts": "Joined the immutable 297-row acceptance crosswalk to all 99 live requirement rows, preserved evidence and blockers, and added tests preventing unresolved statuses from being rendered as completed.",
+        "claim_impact": "The matrix is an accurate view of the current ledger, but it cannot prove that the seed and crosswalk omitted no source-document request.",
+        "next_step": "Complete G02 sentence-level source extraction, compare it with the atomic crosswalk, then regenerate and review this matrix."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "delivery_artifact",
