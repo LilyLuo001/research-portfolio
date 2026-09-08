@@ -58,7 +58,9 @@ def test_calibrated_family_path_is_family_and_month_residualized():
         structure="pooled", beta=np.zeros(5), fitted_probability=probability,
         residual=residual, occupation_influence=np.zeros((10, 5)),
         family_influence=np.zeros((2, 5)), active_occupation_count=10,
-        active_family_count=2, iterations=1, maximum_normalized_score=0.0,
+        active_family_count=2, separated_observation_count=0,
+        separated_first_group_count=0, separated_second_group_count=0,
+        iterations=1, maximum_normalized_score=0.0,
     )
     shock, weight = CAL.calibrated_family_path(fit, total, design, 2, 4)
     assert shock.shape == weight.shape == (2, 4)

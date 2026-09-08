@@ -105,3 +105,29 @@ def test_binomial_stock_draw_preserves_weighted_total_and_zeros():
 def test_webb_support_has_zero_mean_and_unit_variance():
     assert abs(float(CORE.WEBB_SUPPORT.mean())) < 1e-15
     assert abs(float(np.mean(CORE.WEBB_SUPPORT ** 2)) - 1.0) < 1e-15
+
+
+def test_fixed_effect_separation_is_trimmed_iteratively_to_closure():
+    young = np.asarray([0.0, 10.0, 0.0, 5.0])
+    total = np.full(4, 10.0)
+    first = np.asarray(["A", "A", "B", "B"], object)
+    second = np.asarray(["X", "Y", "X", "Y"], object)
+    active, diagnostics = CORE.drop_separated_fixed_effect_groups(
+        young, total, first, second)
+    assert active.tolist() == [False, False, False, True]
+    assert diagnostics == {
+        "separated_observation_count": 3,
+        "separated_first_group_count": 1,
+        "separated_second_group_count": 1,
+    }
+
+
+def test_nonseparated_sample_is_unchanged():
+    young = np.asarray([2.0, 8.0, 3.0, 7.0])
+    total = np.full(4, 10.0)
+    first = np.asarray(["A", "A", "B", "B"], object)
+    second = np.asarray(["X", "Y", "X", "Y"], object)
+    active, diagnostics = CORE.drop_separated_fixed_effect_groups(
+        young, total, first, second)
+    assert active.all()
+    assert diagnostics["separated_observation_count"] == 0

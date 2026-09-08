@@ -21,6 +21,14 @@ Every simulated sample is fit with both current central models:
 1. the pooled occupation-plus-calendar-month model; and
 2. the SOC2-family-by-calendar-month model.
 
+For every refit, iteratively remove fixed-effect groups whose retained outcome
+is entirely young or entirely older. Such groups have no finite grouped-logit
+fixed-effect maximizer and supply no within-group coefficient information;
+removing one group can create another one-sided group in the other fixed-effect
+dimension, so removal continues to closure. Report the removed-row fraction
+separately for the pooled and family-month estimators. A successfully trimmed
+maximum-likelihood fit is not counted as an unexplained optimizer failure.
+
 For each model the reported target is its Q5-by-post projection coefficient.
 The third target is the paired family-month-minus-pooled coefficient. Common
 simulation innovations and common multiplier draws must preserve covariance.

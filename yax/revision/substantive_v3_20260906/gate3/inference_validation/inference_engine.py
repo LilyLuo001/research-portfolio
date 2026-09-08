@@ -48,6 +48,9 @@ class FitArtifacts:
     family_influence: np.ndarray
     active_occupation_count: int
     active_family_count: int
+    separated_observation_count: int
+    separated_first_group_count: int
+    separated_second_group_count: int
     iterations: int
     maximum_normalized_score: float
 
@@ -131,6 +134,54 @@ def _active_contiguous(labels: np.ndarray, active: np.ndarray) -> tuple[np.ndarr
     return codes, len(active_values)
 
 
+def drop_separated_fixed_effect_groups(
+        young: np.ndarray, total: np.ndarray,
+        first_labels: np.ndarray, second_labels: np.ndarray,
+        absolute_tolerance: float = 1e-10) -> tuple[np.ndarray, dict[str, int]]:
+    """Iteratively remove fixed-effect groups with one-sided outcomes.
+
+    A grouped-logit fixed effect has no finite maximizer when every retained
+    observation in its group is all-young or all-older. Such a group supplies
+    no within-group coefficient information. Removing it may create a new
+    one-sided group in the other fixed-effect dimension, so trimming iterates
+    to closure.
+    """
+    young = np.asarray(young, float).reshape(-1)
+    total = np.asarray(total, float).reshape(-1)
+    first_labels = np.asarray(first_labels, object)
+    second_labels = np.asarray(second_labels, object)
+    require(len(young) == len(total) == len(first_labels) == len(second_labels),
+            "separation-trim arrays differ")
+    active = total > 0
+    initial = int(active.sum())
+    dropped_first: set[Any] = set()
+    dropped_second: set[Any] = set()
+    while True:
+        changed = False
+        for labels, dropped in ((first_labels, dropped_first),
+                                (second_labels, dropped_second)):
+            levels, inverse = np.unique(labels[active], return_inverse=True)
+            require(len(levels) > 0, "separation trimming removed every observation")
+            group_young = np.bincount(
+                inverse, weights=young[active], minlength=len(levels))
+            group_total = np.bincount(
+                inverse, weights=total[active], minlength=len(levels))
+            separated = ((group_young <= absolute_tolerance) |
+                         (group_total - group_young <= absolute_tolerance))
+            if np.any(separated):
+                values = levels[separated]
+                dropped.update(values.tolist())
+                active &= ~np.isin(labels, values)
+                changed = True
+        if not changed:
+            break
+    return active, {
+        "separated_observation_count": initial - int(active.sum()),
+        "separated_first_group_count": len(dropped_first),
+        "separated_second_group_count": len(dropped_second),
+    }
+
+
 def fit_with_influence(engine: Any, young: np.ndarray, total: np.ndarray,
                        design: ModelDesign, max_iterations: int = 5000) -> FitArtifacts:
     """Fit one central grouped logit and form alternative cluster influences."""
@@ -142,11 +193,16 @@ def fit_with_influence(engine: Any, young: np.ndarray, total: np.ndarray,
             "outcomes are nonfinite")
     require(np.all(total >= 0) and np.all(young >= 0) and np.all(young <= total),
             "invalid grouped-binomial outcome")
-    active = total > 0
+    active, separation = drop_separated_fixed_effect_groups(
+        young, total, design.first_labels, design.second_labels)
     first, n_first = _active_contiguous(design.first_labels, active)
     second, n_second = _active_contiguous(design.second_labels, active)
+    fit_young = young.copy()
+    fit_total = total.copy()
+    fit_young[~active] = 0.0
+    fit_total[~active] = 0.0
     fit = engine.fit_grouped_logit_fe(
-        young, total, first, second, x,
+        fit_young, fit_total, first, second, x,
         tolerance=1e-8, max_iterations=max_iterations,
     )
     require(bool(fit.converged), f"{design.structure} grouped-logit fit did not converge")
@@ -194,6 +250,9 @@ def fit_with_influence(engine: Any, young: np.ndarray, total: np.ndarray,
         residual=np.asarray(fit.residual, float),
         occupation_influence=occ_influence, family_influence=family_influence,
         active_occupation_count=len(active_occ), active_family_count=len(active_family),
+        separated_observation_count=separation["separated_observation_count"],
+        separated_first_group_count=separation["separated_first_group_count"],
+        separated_second_group_count=separation["separated_second_group_count"],
         iterations=int(fit.iterations), maximum_normalized_score=normalized_score,
     )
 

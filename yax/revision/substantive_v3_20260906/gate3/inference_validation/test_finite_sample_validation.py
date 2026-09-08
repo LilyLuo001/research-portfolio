@@ -83,6 +83,8 @@ def test_summary_executes_all_targets_and_procedures():
                 "scenario": "synthetic", "replicate": replicate, "target": target,
                 "pseudo_truth": 0.0, "estimate": estimate, "bias": estimate,
                 "occupation_se": .01, "family_se": .02, "iterations": 2,
+                "pooled_separated_fraction": 0.0,
+                "family_month_separated_fraction": 0.0,
             }
             for procedure, half in (
                 ("occupation_rademacher", .02),
@@ -114,3 +116,42 @@ def test_stationary_variance_diagnostic_checks_all_months():
     result = SIM.stationary_variance_diagnostic(months, .6, .1)
     assert result["diagnostic_paths"] == 5000
     assert result["maximum_relative_month_variance_difference"] <= .08
+
+
+def test_sparsity_equalization_matches_rounded_baseline_counts():
+    total = np.asarray([10.0, 20.0])
+    probability = np.asarray([.5, .5])
+    rounded_baseline = np.asarray([2, 4])
+    common_float, common = SIM.variance_preserving_equalized_count(
+        total, probability, rounded_baseline)
+    expected = (25.0 + 100.0) / (25.0 / 2.0 + 100.0 / 4.0)
+    assert common_float == expected
+    assert common == 3
+
+
+def test_occupation_webb_reports_occupation_studentizer():
+    local = pd.DataFrame({"occupation_se": [.01, .02], "family_se": [.10, .20]})
+    assert np.array_equal(
+        SIM.reported_standard_error(local, "occupation_webb"), [.01, .02])
+    assert np.array_equal(
+        SIM.reported_standard_error(local, "family_webb"), [.10, .20])
+
+
+def test_historical_null_label_and_failed_gap_are_retained(tmp_path):
+    old = pd.DataFrame({
+        "effect_label": ["null"] * 195,
+        "model": ["baseline"] * 195,
+        "replicate": np.arange(1, 196),
+        "coefficient": np.linspace(-.1, .1, 195),
+    })
+    path = tmp_path / "historical.csv"
+    old.to_csv(path, index=False)
+    rows = [
+        {"target": "pooled", "replicate": int(row.replicate),
+         "estimate": float(row.coefficient + .01)}
+        for row in old.itertuples()
+    ]
+    result = SIM.historical_reproduction(rows, path, "adverse_null")
+    assert result["compared_draws"] == 195
+    assert not result["passes_tolerance"]
+    assert np.isclose(result["maximum_pooled_coefficient_difference"], .01)
