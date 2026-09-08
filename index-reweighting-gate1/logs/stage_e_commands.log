@@ -1,0 +1,45 @@
+Stage E final execution record: 2026-09-08
+Working directory: repository folder `index-reweighting-gate1/`
+
+1. Read the governing Gate 1 prompt completely.
+2. Reviewed the official Federal Reserve historical pages for 2017-2020 and
+   the current 2021-2027 calendar, including scheduled meetings and explicit
+   unscheduled/cancelled/notation-vote exceptions.
+3. Reviewed the official SF Fed USMPD page and downloaded the public workbook
+   to temporary storage only. Inspected only workbook structure and event
+   metadata; no factor, surprise, or return values were used. The temporary
+   workbook was deleted after the build.
+4. Built the calendar and support table with the final Stage B ledger:
+   python3 src/build_fomc_calendar.py --usmpd-xlsx TEMPORARY_USMPD_WORKBOOK
+   Result: wrote 78 calendar rows and 11,745 support rows;
+   ledger_status=CONSUMED.
+5. Ran the Stage E suite:
+   python3 -m pytest -q tests/test_fomc_calendar.py
+   Result: 21 passed.
+6. Ran the complete package suite after integration:
+   python3 -m pytest -q tests
+   Result: 53 passed before final memo/validator closure; the final validation
+   log records the controlling end-to-end result.
+7. Checked all distinct Stage E registry URLs and Stage E official calendar
+   communication URLs with curl -L in parallel; this was not a package-wide
+   check of Stage B sources, whose transport statuses are logged separately.
+   Result: 89 of 89 endpoints returned HTTP 200.
+
+Independent-audit corrections incorporated before this final run:
+- retained four initially omitted official notation-vote records, without
+  changing the 63 eligible primary scheduled-meeting count;
+- corrected anticipation-band semantics to interval intersection;
+- left unknown anticipation and next-intervention results blank with explicit
+  non-evaluation statuses;
+- made FOMC and trading-calendar source ID/URL pairs registry-resolvable;
+- propagated event binding/classification/assignment semantics and FOMC scope;
+- separated confirmed-binding treatment support from nonbinding, uncertain,
+  outside-regime, and other-intervention context;
+- split dated all-event, confirmed-intervention, and confirmed-binding overlap
+  counts and carried undated-group counts separately;
+- stopped calling announcement/reference dates intervention dates; and
+- optimized signed session distances with an exact bisect implementation.
+
+No WRDS archive content was written. No return regressions, factor
+construction, intraday feasibility assessment, power calculation, or MDE
+calculation was run.

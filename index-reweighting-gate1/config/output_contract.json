@@ -1,0 +1,41 @@
+{
+  "required_files": {
+    "local_data_catalog.csv": ["evidence_key", "source_locator", "schema_hash", "status"],
+    "fund_identifier_and_coverage_audit.csv": ["evidence_key", "screening_coverage_status", "assignment_fitness_status", "source_locator", "status"],
+    "source_and_rule_registry.csv": ["evidence_key", "rule_id", "regime_id", "source_id", "source_url", "grade_dimension", "rule_source_grade", "status"],
+    "rebalance_event_ledger.csv": ["evidence_key", "event_id", "event_group_id", "regime_id", "binding_status", "assignment_observability", "comparison_id", "interference_event_ids", "rule_evidence_keys", "source_id", "source_url", "grade_dimension", "classification_evidence_grade", "assignment_evidence_grade", "status"],
+    "assignment_doses_and_evidence.csv": ["evidence_key", "event_id", "vector_complete", "source_id", "source_url", "grade_dimension", "evidence_grade", "status"],
+    "fomc_calendar.csv": ["evidence_key", "meeting_id", "calendar_scope", "statement_date", "eligible_common_news", "source_id", "source_url", "status"],
+    "assignment_and_fomc_support.csv": ["evidence_key", "event_id", "event_evidence_key", "event_binding_status", "event_rule_evidence_keys", "event_interference_event_ids", "support_role", "meeting_id", "fomc_evidence_key", "fomc_calendar_scope", "anticipation_window_status", "next_intervention_status", "source_id", "source_url", "event_source_id", "event_source_url", "trading_calendar_source_id", "trading_calendar_source_url", "status"],
+    "comparison_and_interference_audit.csv": ["evidence_key", "event_id", "assignment_grade", "assignment_vector_complete", "dose_information_n", "matrix_rank_status", "status"],
+    "remaining_input_gaps.csv": ["evidence_key", "gap_id", "source_locator", "blocks_gate1_assignment", "blocks_future_measurement", "status"],
+    "remaining_input_gaps_stage_a.csv": ["evidence_key", "gap_id", "source_locator", "status"]
+  },
+  "required_auxiliary_files": {
+    "logs/stage_e_sources.csv": ["evidence_key", "source_id", "source_url", "status"]
+  },
+  "required_json_documents": [
+    "logs/stage_a_evidence.json",
+    "logs/gate1_summary.json"
+  ],
+  "required_documents": [
+    "RUN_README.md",
+    "STATUS.md",
+    "FINAL_DECISION.md",
+    "docs/EVIDENCE_CONTRACT.md",
+    "docs/INPUT_LINEAGE.md",
+    "docs/OPUS_5_HIGH_REVIEW_PACKAGE.md",
+    "docs/CLAUDE_READ_ONLY_REVIEW_PROMPT.md"
+  ],
+  "required_directories": [
+    "src",
+    "tests",
+    "logs"
+  ],
+  "allowed_assignment_grades": ["A", "B", "C", "U"],
+  "allowed_recommendations": [
+    "PROCEED TO A TARGETED MEASUREMENT PILOT",
+    "REVISE / RESOLVE A SPECIFIC INPUT GAP",
+    "STOP THIS REWEIGHTING DESIGN"
+  ]
+}

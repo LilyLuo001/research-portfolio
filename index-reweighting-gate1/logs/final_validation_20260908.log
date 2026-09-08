@@ -1,0 +1,51 @@
+Gate 1 final validation record
+execution_date=2026-09-08
+scope=assignment_and_support_audit_only
+
+DETERMINISTIC_REBUILD
+rule_registry_rows=21
+event_ledger_rows=785
+assignment_dose_rows=34
+fomc_calendar_rows=78
+fomc_support_rows=11745
+comparison_audit_rows=785
+integrated_gap_rows=10
+local_catalog_rows=19
+fund_year_rows=96
+headline_outcome_regressions_run=false
+
+TESTS_AND_CONTRACT
+command=python3 -m pytest -q
+result=64 passed in 8.93s
+command=python3 src/validate_gate1.py
+result=PASS: Gate 1 package contract validated
+validator_scope=schemas; LF line endings; typed keys; URLs; event/rule/dose/comparison/FOMC/support foreign keys; copied provenance; grade semantics; complete-vector gating; seven anchor groups; exact eligible plus-or-minus-60-session/nearest support sets; gap booleans; Stage A redaction; stale-summary rejection; required artifacts; raw/private artifact rejection; credential and account-path hygiene; exactly one decision phrase
+limitation=Validator success establishes internal contract consistency and public-output hygiene, not the truth of every institutional claim or a legal redistribution opinion.
+verbatim_prompt_appendices=PASS: 315-line upstream prompt and 223-line Gate 1 prompt match their hashed input files byte-for-byte
+
+PUBLIC_OUTPUT_HYGIENE
+licensed_raw_rows_committed=false
+temporary_workbook_committed=false
+private_lineage_artifact_committed=false
+known_credential_pattern_found=false
+account_specific_runtime_locator_found_outside_verbatim_prompt_appendices=false
+stage_a_output_profile=PUBLIC_AGGREGATE_REDACTED
+stage_a_raw_rows_exported=false
+stage_a_exact_identifiers=WITHHELD_LICENSED_IDENTIFIER
+stage_a_file_locators=SCC_PRIVATE_LINEAGE:evidence_key
+stage_a_schema_and_file_fingerprints=withheld
+license_caveat=Technical redaction is not a legal opinion; public redistribution of remaining aggregate statistics requires institutional and vendor-license confirmation.
+
+KEY_ARTIFACT_SHA256
+gate1_summary_json=07b8cb21ab63be9a7b060aa6bb7ea254251a26a0c626ff741908610b41daadd9
+final_decision_md=41e33e98bde016c87ed951812d512040e7ff5db401e47ca902786005f9fe373d
+opus_review_package_md=4f426daa07f126a3c598dfd31c4b178f9e73d50e69f3c927563863fe8d3fe685
+validator_py=65f9b752dedd47c14770dee66e827c323dbacab098add3eeca9569dcc1850a0e
+output_contract_json=5984263567a861fedf9506b6a192b97a5ddd8886f1c8e8c90d45fbd1a1f98145
+
+GIT_PREPUBLICATION_SAFETY
+origin_main_at_check=58f42bdee03898ac9f5f807e7652fb0edda3a82b
+changes_outside_new_folder_relative_to_origin_main=0
+diff_check=PASS
+delivery_rule=Publish from a fresh branch whose parent is the checked origin/main commit; do not publish the earlier task-branch ancestry containing superseded pre-sanitization artifacts.
+post_push_rule=Verify the remote branch and main commit ancestry and confirm that the diff against origin/main's parent contains only the new index-reweighting-gate1 folder. This post-push fact is reported at handoff rather than self-recorded in the commit.

@@ -1,0 +1,6 @@
+2026-09-08 Stage B/C unit tests
+command: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m pytest -q tests/test_rule_registry.py
+result: PASS
+tests_run: 18
+checks: exact CSV schemas and LF line endings; stable unique evidence keys; source lineage; 785-row bounded calendar including separately linked TTD/ATVI interference; four fixed pilots and stage dates; one common September transition; 2018 sector reorganization; conservative secondary-check classification; distinct uncapped/rule/ETF/creation objects; same-table cap-distortion arithmetic; no false grade-A dose; no renormalization; approximate NDX turnover label; Nasdaq publisher attribution; market-day implementation closes and 2026 Juneteenth rollback; historical NDX stock/issuer regime split with explicit 2020Q2 uncertainty; unsupported pre-2026 announcement dates remain blank; rule-evidence foreign keys and regimes resolve; classification and assignment grades remain separate.
+elapsed_seconds: 0.05

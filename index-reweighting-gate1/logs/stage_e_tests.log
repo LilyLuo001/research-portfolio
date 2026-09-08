@@ -1,0 +1,35 @@
+2026-09-08
+
+Interpreter: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+pytest: 9.1.1
+Command: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m pytest -q tests/test_fomc_calendar.py
+Result: PASS
+Output: 21 passed in 0.53s
+
+Covered invariants:
+- evidence_key is first and unique in both declared schemas;
+- 2018-2025 has 63 eligible scheduled statement meetings, preserving all
+  explicit 2020 exceptions and the cancelled March 17-18 meeting;
+- five official notation votes are retained but ineligible;
+- 2017 boundary and realized 2026 partial rows are separately labelled;
+- SEP and press-conference flags remain dependent meeting-package phases;
+- NYSE session counts include one-off closures and Juneteenth only from 2022;
+- signed trading-day distances handle weekends, holidays, nearest pre/post,
+  and 20/40/60-session bands;
+- anticipation overlap means interval intersection, not meeting membership;
+- unknown anticipation and next-intervention states remain blank, not false 0;
+- unresolved anchors and missing ledgers produce explicit noncomputed rows;
+- event, group, basket, intervention date, comparison, and FOMC meeting remain
+  distinct counting concepts;
+- event binding status, classification grade, assignment grade, and scope are
+  propagated without relabeling contextual rows as treatment support;
+- all-event, confirmed-intervention, and confirmed-binding overlap counts are
+  distinct, and undated groups are disclosed;
+- source ID/URL pairs resolve to the source registry; and
+- USMPD screening does not assign surprise/factor/return classifications.
+
+Independent clean rebuild and full-package result:
+- every one of 8,646 resolved rows independently reproduced distances, nearest
+  flags, band counts, interval overlaps, and group counts;
+- 3,099 unresolved anchors remained explicitly noncomputed;
+- 53 package tests passed before final memo/validator closure.

@@ -1,0 +1,74 @@
+Stage A public-safe execution record
+====================================
+
+Execution date: 2026-09-08
+Host/account locators: withheld from the public repository
+
+The governing prompt and archive manual were read in full and integrity-hashed.
+The configured SCC host alias successfully reached the authorized environment.
+Read-only checks established that the canonical archive root, project subtree,
+baseline manifest, and post-snapshot directory were present. Observed public-safe
+access facts were:
+
+- baseline manifest rows: 12,100;
+- post-snapshot files: 195; and
+- SCC Python: 3.12.4.
+
+The final command pattern was:
+
+  module purge
+  module load python3/3.12.4
+  python3 -m pytest -q tests/test_audit_archive.py
+  python3 src/audit_archive.py \
+    --archive AUTHORIZED_SCC_ARCHIVE \
+    --output-dir AUTHORIZED_SCC_PUBLIC_OUTPUT \
+    --private-output-dir AUTHORIZED_SCC_PRIVATE_LINEAGE
+
+Final observed output:
+
+  11 passed
+  catalog_rows=19
+  fund_audit_rows=96
+  gap_rows=5
+  holdings_part_files_read=41
+  candidate_funds=12
+  screen_start=2018-01-01
+  screen_end=2025-12-31
+  output_profile=PUBLIC_AGGREGATE_REDACTED
+  private_lineage_written=true
+
+Only the four public-safe artifacts were retrieved into the repository:
+
+- local_data_catalog.csv;
+- fund_identifier_and_coverage_audit.csv;
+- remaining_input_gaps_stage_a.csv; and
+- logs/stage_a_evidence.json.
+
+The detailed catalog, fund audit, gap audit, and evidence JSON remain in the
+permission-restricted SCC lineage directory. That directory is mode 700 and all
+four detailed files are mode 600. It contains licensed identifiers, exact file
+locators, batch metadata, and integrity hashes and must never be copied to Git.
+The public artifacts instead carry stable `SCC_PRIVATE_LINEAGE:<evidence_key>`
+references.
+
+Safety checks:
+
+- an executed archive new-file scan returned zero files attributable to the run;
+- the Stage A run tree contains zero Parquet files;
+- the output-directory guard rejects writes inside the archive;
+- the private-lineage guard rejects writes inside the owning Git worktree; and
+- Git ignore rules cover the private directory and private artifact names.
+
+Correction history:
+
+- removed raw target metadata and its low-entropy identifier fingerprint;
+- corrected fund-year source contributions and interval-end catalog dates;
+- separated screening coverage from assignment fitness and header/map intervals;
+- replaced public licensed identifiers, fund names sourced from licensed history,
+  file locators, per-batch details, and schema/file fingerprints with public-safe
+  labels or stable private-lineage keys;
+- persisted the detailed crosswalk only on SCC under restrictive permissions; and
+- fixed one intermediate public-export NameError before the final successful run.
+
+No raw archive row or credential was exported. Account-specific command output
+and paths are intentionally omitted from this public log.

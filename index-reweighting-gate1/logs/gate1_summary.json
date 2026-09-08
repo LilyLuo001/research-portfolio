@@ -1,0 +1,173 @@
+{
+  "assignment": {
+    "complete_grade_a_events": [],
+    "dose_grade_counts": {
+      "B": 34
+    },
+    "dose_rows": 34,
+    "dose_status_counts": {
+      "EVENT_CONFIRMED_APPROXIMATE_TURNOVER_ONLY": 1,
+      "FULL_VECTOR_NOT_PUBLICLY_RECOVERED": 2,
+      "RULE_CHANGE_CONFIRMED_FULL_VECTOR_BLOCKED": 1,
+      "SELECTED_ROUNDED_SAME_TABLE_CAP_DISTORTION_ONLY": 30
+    }
+  },
+  "common_news": {
+    "anticipation_window_status_counts": {
+      "NOT_EVALUATED_UNRESOLVED_ANCHOR": 3099,
+      "UNRESOLVED_MISSING_OR_INVALID_STAGE_DATES": 8572,
+      "VALID_DOCUMENTED_STAGE_DATES": 74
+    },
+    "confirmed_binding_primary_distinct_meetings_by_band": {
+      "20": 24,
+      "40": 36,
+      "60": 39
+    },
+    "confirmed_binding_primary_event_group_meeting_pairs_by_band": {
+      "20": 37,
+      "40": 70,
+      "60": 86
+    },
+    "distinct_support_meeting_ids": 69,
+    "eligible_all_scope_meeting_ids": 69,
+    "eligible_primary_2018_2025_meeting_ids": 63,
+    "fomc_calendar_rows": 78,
+    "fomc_meeting_status_counts": {
+      "cancelled": 1,
+      "held": 77
+    },
+    "primary_2018_2025_event_group_meeting_pairs_by_band": {
+      "20": 190,
+      "40": 393,
+      "60": 509
+    },
+    "support_role_counts": {
+      "BINDING_UNCERTAIN_SCREENING_CONTEXT": 8889,
+      "CONFIRMED_BINDING_EVENT_SUPPORT": 590,
+      "CONFIRMED_NONBINDING_EVENT_CONTEXT": 2193,
+      "OTHER_CONFIRMED_INTERVENTION_CONTEXT": 19,
+      "OUTSIDE_REGIME_CONTEXT": 54
+    },
+    "support_rows": 11745,
+    "unique_event_group_meeting_pairs_by_band": {
+      "20": 204,
+      "40": 422,
+      "60": 548
+    }
+  },
+  "design": {
+    "comparison_rows": 785,
+    "comparison_status_counts": {
+      "ASSIGNMENT_UNKNOWN": 575,
+      "CONFIRMED_NONBINDING_CONTEXT": 175,
+      "EVENT_DOCUMENTED_DOSE_INCOMPLETE": 30,
+      "OTHER_INTERVENTION_CONTEXT_NOT_CANDIDATE_TREATMENT": 1,
+      "OUTSIDE_APPLICABLE_REGIME": 4
+    },
+    "matrix_rank_status_counts": {
+      "BLOCKED_ASSIGNMENT_UNKNOWN": 575,
+      "BLOCKED_INCOMPLETE_ASSIGNMENT_VECTOR": 30,
+      "NOT_APPLICABLE_INTERFERENCE_CONTEXT": 1,
+      "NOT_APPLICABLE_NO_CONFIRMED_CAP_TREATMENT": 175,
+      "NOT_APPLICABLE_OUTSIDE_REGIME": 4
+    }
+  },
+  "gaps": {
+    "future_measurement_blockers": [
+      "EXACT_SELECT_SECTOR_ASSIGNMENTS",
+      "EXACT_NDX_202307_ASSIGNMENT",
+      "POINT_IN_TIME_INDEX_MEMBERSHIP",
+      "INTRADAY_OUTCOME_MEASUREMENT",
+      "CAUSAL_COMPARISON_SUPPORT",
+      "STAGE_A_exact_assignment_inputs",
+      "STAGE_A_target_membership",
+      "STAGE_A_holdings_timing_metadata",
+      "STAGE_A_provider_issuer_float_mapping"
+    ],
+    "gate1_assignment_blockers": [
+      "EXACT_SELECT_SECTOR_ASSIGNMENTS",
+      "POINT_IN_TIME_INDEX_MEMBERSHIP",
+      "STAGE_A_exact_assignment_inputs",
+      "STAGE_A_target_membership",
+      "STAGE_A_provider_issuer_float_mapping"
+    ],
+    "rows": 10,
+    "status_counts": {
+      "MISSING_FIELDS": 1,
+      "MISSING_LOCAL_INPUT": 2,
+      "OBSERVED_COVERAGE_GAPS": 1,
+      "OPEN_BLOCKING_EXACT_NDX_DOSE": 1,
+      "OPEN_BLOCKING_GATE1_ASSIGNMENT": 1,
+      "OPEN_BLOCKING_RECONSTRUCTION": 1,
+      "OPEN_DESIGN_GAP": 1,
+      "OPEN_NOT_A_GATE1_EVENT_COUNT_FAILURE": 1,
+      "UNRESOLVED_LOCAL_INPUT": 1
+    }
+  },
+  "headline_outcome_regressions_run": false,
+  "institutional": {
+    "confirmed_binding_unique_event_groups": 17,
+    "confirmed_other_intervention_unique_event_groups": 1,
+    "event_assignment_evidence_grade_counts": {
+      "B": 31,
+      "U": 754
+    },
+    "event_binding_status_counts": {
+      "confirmed_binding": 30,
+      "confirmed_nonbinding": 175,
+      "confirmed_other_intervention": 1,
+      "outside_applicable_regime": 4,
+      "uncertain": 575
+    },
+    "event_classification_evidence_grade_counts": {
+      "B": 206,
+      "U": 579
+    },
+    "event_rows": 785,
+    "rule_source_grade_counts": {
+      "A": 10,
+      "B": 7,
+      "U": 4
+    },
+    "rule_source_rows": 21,
+    "unique_event_groups": 104,
+    "unique_event_ids": 785
+  },
+  "local": {
+    "catalog_rows": 19,
+    "catalog_status_counts": {
+      "AVAILABLE": 8,
+      "AVAILABLE_DAILY_NOT_INTRADAY": 1,
+      "AVAILABLE_EFFECTIVE_DATE_REQUIRED": 1,
+      "AVAILABLE_METADATA_ONLY": 1,
+      "AVAILABLE_NON_TARGET": 1,
+      "AVAILABLE_NOT_DAILY_FLOW": 1,
+      "AVAILABLE_NOT_MEMBERSHIP": 1,
+      "AVAILABLE_PARTIAL_IDENTIFIERS": 1,
+      "AVAILABLE_SCHEMA_TRANSITION": 1,
+      "AVAILABLE_SCREENING_ONLY_WITH_GAPS": 1,
+      "AVAILABLE_UNRESOLVED_INDEX_CODES": 1,
+      "TARGET_NOT_IDENTIFIED": 1
+    },
+    "fund_period_rows": 96,
+    "fund_status_counts": {
+      "AVAILABLE_SCREENING_PROXY_ONLY": 2,
+      "AVAILABLE_SCREENING_PROXY_WITH_COVERAGE_GAPS": 94
+    },
+    "unique_fund_tickers": [
+      "QQQ",
+      "XLB",
+      "XLC",
+      "XLE",
+      "XLF",
+      "XLI",
+      "XLK",
+      "XLP",
+      "XLRE",
+      "XLU",
+      "XLV",
+      "XLY"
+    ]
+  },
+  "summary_type": "assignment_and_support_audit_only"
+}

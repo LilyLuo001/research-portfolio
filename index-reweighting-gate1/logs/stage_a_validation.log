@@ -1,0 +1,73 @@
+Stage A final public-package validation
+=======================================
+
+Executed SCC tests:
+...........                                                              [100%]
+11 passed in 0.33s
+
+Public CSV validation:
+local_data_catalog.csv: 19 data rows, 24 columns, first column evidence_key, 19 unique evidence keys, 0 CR bytes
+fund_identifier_and_coverage_audit.csv: 96 data rows, 47 columns, first column evidence_key, 96 unique evidence keys, 0 CR bytes
+remaining_input_gaps_stage_a.csv: 5 data rows, 10 columns, first column evidence_key, 5 unique evidence keys, 0 CR bytes
+
+Public artifact SHA-256:
+8abd1ab416296cd1b28a3e37f9bfaae128494d77463fc546a67ddc0e902e9afa  src/audit_archive.py
+59d7dbd3a0a3b56913a1bdd0ad4897b028151bb26c3d2837f28a8b3250e4419d  tests/test_audit_archive.py
+4fc71db24869c875c39671dd4750f7bcf5ad1ae68a28da04ee36154120f73a2b  local_data_catalog.csv
+d108160636be70fc9bf109a4626f39fca62d407fe1a18bfee6d8c505498cfafc  fund_identifier_and_coverage_audit.csv
+d969f0d48b28b76a162b6d0fc91dd21e4e629b14e019bbc1fe1c8e67faafcb90  remaining_input_gaps_stage_a.csv
+26b158139d2edae180c02f4637717d8c5eaaa3658005588bcdfc5b00c5d4dbc8  logs/stage_a_evidence.json
+
+Executed coverage checks:
+
+- 12 candidate funds x 8 years = 96 fund-period audit rows.
+- 59,605 holdings rows across 1,133 fund-report-date observations.
+- 24 relevant saved batches and 41 Parquet parts; every private `_DONE` parts/rows count matched Parquet metadata.
+- Zero duplicate rows on the documented fallback holdings natural key.
+- 13 fund-period rows flag an absent eligible calendar month. The split taxonomy
+  flags 94 rows with at least one month, identifier-map, or data-source coverage
+  gap and two as complete for recorded screening fields; all 96 are separately
+  marked unfit to substitute for exact index assignments.
+- Lowest row-count identifier mapping/price-match share: 0.85436893.
+- Lowest absolute-percent-TNA mapping/price-match share: 0.95272884.
+- Every mapped holdings row found a nonmissing daily price on the latest trading
+  date no more than seven calendar days before the report date.
+- Candidate ETF daily returns are fully nonmissing except one fund-year cell
+  (134/135); candidate open and bid/ask pairs are fully nonmissing in every cell.
+- Target-name search: one Nasdaq-100 metadata match, zero local constituent rows
+  for its private metadata key, and no Select Sector metadata-name match.
+- Baseline manifest: 12,100 rows. Post-snapshot: 195 files, including 168
+  canonical monthly MIDAS files and two superseded quarterly MIDAS files.
+- Selected 2018-2025 canonical MIDAS: 13,444,373 rows, 12,792 tickers, 2,011
+  dates, and 435 duplicates on the documented category/ticker/date screen key.
+- Three overlapping source-file pairs were byte-identical and were not stacked;
+  names and hashes remain only in the private lineage bundle.
+- No regression or outcome estimation ran. No raw rows were exported. No Parquet
+  file exists in the Stage A run tree.
+
+Public-redaction checks:
+
+- exact CRSP fund/portfolio/security identifiers and CUSIPs are replaced by
+  `WITHHELD_LICENSED_IDENTIFIER`;
+- licensed-history fund names are replaced by curated ticker labels;
+- exact file paths are replaced by stable `SCC_PRIVATE_LINEAGE:` keys;
+- schema/file hashes, target keys, per-batch names/timestamps, account/host/PID,
+  interpreter paths, and private output locators are absent;
+- the public evidence JSON contains only aggregate run/inventory/coverage facts;
+- the private lineage directory is mode 700 and all detailed files are mode 600.
+
+Caveats encoded in the tables:
+
+- CRSP holdings are report snapshots and screening evidence, not exact index
+  assignments or creation/redemption baskets.
+- `report_dt` and `eff_dt` exist; filing, publication/first-availability, and
+  download/vintage dates do not.
+- Calendar-month absence is a coverage flag, not proof of failed extraction or
+  non-reporting.
+- Index returns, generic membership, fund holdings, and exact target membership
+  are different objects.
+- 2025 daily data use the CIZ schema and are explicitly harmonized.
+- MIDAS is daily and ticker-linked only; it is not modern TAQ or an effective-date
+  PERMNO link.
+- Public-export redaction is a technical safeguard, not an independent legal
+  determination that aggregate redistribution is permitted.

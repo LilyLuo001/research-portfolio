@@ -1,0 +1,10 @@
+2026-09-08 Stage B/C public-rule and assignment-evidence build
+command: python3 src/build_rule_registry.py
+result: PASS
+wrote 21 rows source_and_rule_registry.csv
+wrote 785 rows rebalance_event_ledger.csv
+wrote 34 rows assignment_doses_and_evidence.csv
+scope: 2018-2025 primary calendar plus 2026Q1-Q2 partial extension
+invariants: LF-only CSV; first-column evidence_key; unique typed keys; no complete vector inferred; no ETF holding or creation-basket substitution; September 2024 represented as one common policy transition; historical NDX rule level not backcast; exact unsupported announcement dates blank; all implementation closes are market sessions; rule/source, classification, and assignment grades are separate; event rule_evidence_keys resolve by regime
+format_check: git diff --check -- owned artifacts
+format_result: PASS

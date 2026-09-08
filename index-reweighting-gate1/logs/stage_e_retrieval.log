@@ -1,0 +1,38 @@
+Retrieval/screening date: 2026-09-08
+
+Federal Reserve official records
+- https://www.federalreserve.gov/monetarypolicy/fomc_historical.htm
+- https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm
+- https://www.federalreserve.gov/monetarypolicy/fomchistorical2018.htm
+- https://www.federalreserve.gov/monetarypolicy/fomchistorical2019.htm
+- https://www.federalreserve.gov/monetarypolicy/fomchistorical2020.htm
+- https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
+- The final calendar has 77 nonblank official communication URLs: eligible
+  scheduled statements plus explicitly retained ineligible exception pages.
+- Those 77 URLs plus 12 distinct registered institutional sources formed an
+  89-URL final live check; every endpoint returned HTTP 200.
+
+SF Fed USMPD metadata screen
+- Page: https://www.frbsf.org/research-and-insights/data-and-indicators/us-monetary-policy-event-study-database/
+- Workbook: https://www.frbsf.org/wp-content/uploads/USMPD.xlsx?2026-09-04=
+- Page/workbook update stated: 2026-08-03
+- Bytes inspected: 197257
+- SHA-256: a45c62daa56a2690e71c29ffdd53475220a97a476c3af3ffc172252d9033cca4
+- Statements: 278 rows, 1994-02-04 through 2026-07-29
+- Press Conferences: 94 rows, 2011-04-27 through 2026-07-29
+- Monetary Events: 278 rows, 1994-02-04 through 2026-07-29
+- Minutes: 205 rows, 2001-02-01 through 2026-07-08
+- Availability/schema metadata only. No row-level USMPD classification,
+  surprise, factor, or return was imported. An independent metadata-only check
+  found all 69 eligible boundary/primary/partial calendar meetings and matching
+  SEP/press-conference flags.
+
+NYSE daily-session sources
+- https://www.nyse.com/trade/hours-calendars
+- https://www.nyse.com/publicdocs/Trading_Days.pdf
+- Official 2018-12-05 and 2025-01-09 NYSE-family venue closure notices are
+  registered with their exact venue provenance in logs/stage_e_sources.csv.
+- Direct NYSE LLC Juneteenth filing:
+  https://www.nyse.com/publicdocs/nyse/markets/nyse/rule-filings/sec-approvals/2021/%28SR-NYSE-2021-56%29%2034-93183.pdf
+- The mutable Trading_Days.pdf covered 2026-2028 at retrieval and is not
+  represented as proof of 2018-2025 annual counts.
