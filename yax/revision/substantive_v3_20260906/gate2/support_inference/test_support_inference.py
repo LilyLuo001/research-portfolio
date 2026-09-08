@@ -6,6 +6,7 @@ import pathlib
 import sys
 import copy
 import ast
+import csv
 from datetime import datetime, timedelta, timezone
 
 import numpy as np
@@ -665,6 +666,49 @@ def test_cell_schema_and_assignment_semantics_are_recomputed():
     mutated.loc[0, "webb_z"] += .1
     with pytest.raises(si.Blocked, match="family or Webb assignment changes"):
         si.validate_cells(mutated, receipt, membership)
+
+
+def test_fixed_membership_float_parser_matches_gate1_python_float_producer():
+    path = HERE.parents[1] / (
+        "runs/gate1_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv")
+    with path.open("r", encoding="utf-8", newline="") as stream:
+        producer_rows = list(csv.DictReader(stream))
+    exact = si.read_fixed_membership(path)
+    default = pd.read_csv(path, dtype={"occupation_code": str})
+    assert len(producer_rows) == len(exact) == 468
+    assert any(
+        float(row["webb_z"]).hex() != float(value).hex()
+        for row, value in zip(producer_rows, default.webb_z)
+    )
+    assert all(
+        float(row["webb_z"]).hex() == float(value).hex()
+        for row, value in zip(producer_rows, exact.webb_z)
+    )
+
+
+def test_repaired_public_assignment_payload_matches_gate1_frozen_fingerprint():
+    root = HERE.parents[3]
+    membership = si.read_fixed_membership(
+        HERE.parents[1] /
+        "runs/gate1_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv")
+    families = pd.read_csv(
+        root / "measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+        dtype={"census2018": str})
+    families["census2018"] = families.census2018.str.zfill(4)
+    assignments = membership[[
+        "occupation_code", "beta_quintile", "webb_z"]].merge(
+            families[["census2018", "soc_major_group"]],
+            left_on="occupation_code", right_on="census2018",
+            validate="one_to_one")
+    assignments["family"] = assignments.soc_major_group.astype(str)
+    payload = "".join(
+        f"{str(row.occupation_code).zfill(4)}\t{row.family}\t"
+        f"{int(row.beta_quintile)}\t{float(row.webb_z).hex()}\n"
+        for row in assignments.sort_values(
+            "occupation_code", kind="mergesort").itertuples(index=False))
+    cell_spec = json.loads((HERE.parents[1] / "gate1_cells/CELL_BUILD_SPEC.json").read_text())
+    assert hashlib.sha256(payload.encode()).hexdigest() == \
+        cell_spec["assignment_contract"]["fingerprint_sha256"]
 
 
 def test_complete_numerical_evidence_redacts_only_occupation_month_identifier():

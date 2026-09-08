@@ -193,11 +193,14 @@ while freezing this package.
 The Gate 1 assignment fingerprint is reconstructed from the same semantic
 sources used by its producer: stable family assignments authenticated from the
 aggregate cells and quintile/Webb values from the hash-pinned fixed-membership
-file. Aggregate-cell quintiles must match exactly and their serialized Webb
-values must match fixed membership within the signed absolute tolerance of
-`1e-12` before this reconstruction. This avoids treating a harmless CSV float
-round trip as assignment drift while preserving both semantic checks and the
-producer's exact byte-level fingerprint.
+file. The fixed-membership CSV is read with pandas' round-trip float parser so
+its decimals reproduce the Python `float()` values hashed by Gate 1; the default
+pandas parser does not guarantee that byte-level property. Aggregate-cell
+quintiles must match exactly and their serialized Webb values must match fixed
+membership within the signed absolute tolerance of `1e-12` before this
+reconstruction. This avoids treating a harmless CSV float round trip as
+assignment drift while preserving both semantic checks and the producer's exact
+byte-level fingerprint.
 
 Authoritative execution additionally requires Python `-I`, absence of
 import-affecting Python environment variables, the pinned Python 3.13.8 and Git

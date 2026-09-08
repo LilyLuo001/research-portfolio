@@ -646,6 +646,15 @@ def read_json(path: pathlib.Path) -> dict[str, Any]:
     return value
 
 
+def read_fixed_membership(path: pathlib.Path) -> pd.DataFrame:
+    """Parse producer-hashed decimal floats with round-trip fidelity."""
+    try:
+        return pd.read_csv(
+            path, dtype={"occupation_code": str}, float_precision="round_trip")
+    except Exception as error:
+        raise Blocked("fixed membership could not be parsed exactly") from error
+
+
 def require_file(path: pathlib.Path, expected_hash: str, label: str) -> None:
     if not path.is_file() or path.is_symlink():
         raise Blocked(f"{label} is absent or indirect")
@@ -835,7 +844,7 @@ def authenticate(args: argparse.Namespace, spec: dict[str, Any]) -> tuple[Any, .
     if consumer.get("release_status") != "RELEASED" or "S07" not in consumer.get(
             "downstream_requirement_ids", []):
         raise Blocked("A1 dependency release does not authorize S07")
-    membership = pd.read_csv(args.fixed_membership, dtype={"occupation_code": str})
+    membership = read_fixed_membership(args.fixed_membership)
     cells = pd.read_csv(args.cells, dtype={"occ_code": str, "month": str,
                                           "family": str})
     cells = validate_cells(cells, receipt, membership)
