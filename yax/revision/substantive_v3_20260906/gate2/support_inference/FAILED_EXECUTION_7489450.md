@@ -24,15 +24,17 @@ authorization and command binding passed on the hard-pinned execution host.
 
 A same-host reconstruction under the explicitly pinned library environment
 passed the A1 and independent runtime-contract checks, including exact package
-versions, executable hashes, payload hash, and the NumPy structural probe. The
-remaining operational difference is the scheduler-provided batch environment.
-Both the A1 runner and support runner explicitly forbid nonempty `PYTHONHOME`,
-`PYTHONPATH`, `PYTHONUSERBASE`, and `PYTHONSTARTUP`; isolated Python ignores
-these variables, but the signed runtime guard additionally requires them to be
-absent. The retry therefore sanitizes exactly those four declared variables
-before starting the same hash-pinned runner. This does not alter scientific
-inputs, code imports under `python -I`, estimator, targets, thresholds, or
-inference.
+versions, executable hashes, payload hash, and the NumPy structural probe. A
+subsequent same-queue batch diagnostic passed the same checks as well.
+
+The external launcher, rather than SCC or the scientific runner, caused the
+failure. It resolved the virtual-environment Python symlink before `exec`,
+turning the authorized venv path into the base SCC interpreter path. The venv
+provided NumPy 2.5.1, pandas 3.0.3, and pytest 9.1.1; the dereferenced base
+interpreter instead loaded NumPy 2.2.6, pandas 2.3.3, and pytest 8.4.2. The
+runtime guard correctly rejected that environment. The corrected launcher
+validates but does not dereference the venv interpreter path. This does not
+alter scientific inputs, estimator, targets, thresholds, or inference.
 
 The authorization committed at `e7bc0d5` is single-use and preserved in Git
 history. It is removed from the subsequent implementation state. Any retry
