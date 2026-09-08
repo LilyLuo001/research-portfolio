@@ -1,0 +1,57 @@
+{
+  "schema_version": "yax-bcc-public-dashboard-source-manifest-v1",
+  "verified_date": "2026-09-09",
+  "source_vintage_in_files": "2026-08-12",
+  "dashboard_url": "https://digitaleconomy.stanford.edu/project/indicators/canaries-dashboard/",
+  "archives": [
+    {
+      "name": "canaries_by_exposure_results.zip",
+      "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_by_exposure_results.zip?generation=1787096610925555",
+      "gcs_generation": "1787096610925555",
+      "etag": "c031a6154b8fb950317fd979fc6d9720",
+      "content_length": 5115,
+      "sha256": "64c48834a8a978e3db80a0416fa417bc49a970f3f2c2afa99bf10206697317ac",
+      "members": {
+        "canaries_by_exposure.csv": "cf16e9279d58e69930a0dbf7c1268e749256a9c3837b970e3d9f2319e2437197",
+        "canaries_by_exposure_annualized.csv": "13e9d9605d90d6053bd254062d282fe386570c6cf2120af1db956a8dc3e94941",
+        "canaries_by_exposure_yoy_change.csv": "4525dfe07b07c87470b0701edd2946a6d0aa339eac4c679ab93ffaf6386caf34",
+        "canaries_by_exposure_data_dictionary.md": "fb120b9226242fa20fadf403a59f2c026c4f25a13f0eefbfdee7a583e2a18ed2"
+      }
+    },
+    {
+      "name": "canaries_age_by_exposure_results.zip",
+      "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_age_by_exposure_results.zip?generation=1787096607071868",
+      "gcs_generation": "1787096607071868",
+      "etag": "a9a428915a62de1eb2a1f445482adbf7",
+      "content_length": 15896,
+      "sha256": "7726e1948f76dc867c272e2d61d204e37d00856586763b16ab8030a6dd7fb969",
+      "members": {
+        "canaries_age_by_exposure.csv": "c0ff8261eed7590e49f7e00a2a7dcd5caea76e36360b1b28e803e5e4eea9029c",
+        "canaries_age_by_exposure_annualized.csv": "9942e89532a5ceb6320c76cbefed61c1afe6a444bd32f71588d0eb8d6dc7948a",
+        "canaries_age_by_exposure_yoy_change.csv": "9d469e7c6a905bba0b5f5c9764a48b9f632dfdf920799df93cde07d6fb594855",
+        "canaries_age_by_exposure_data_dictionary.md": "bbcbb427e2f46d52aab17732fd47785e4f0205e76a920262769e23ed908a47ba"
+      }
+    },
+    {
+      "name": "canaries_composition_results.zip",
+      "url": "https://storage.googleapis.com/aviary-del-public/release_memos/latest/downloads/canaries_composition_results.zip?generation=1787096611073491",
+      "gcs_generation": "1787096611073491",
+      "etag": "9ab5f7441e70c589dc816377b206dbdf",
+      "content_length": 1543,
+      "sha256": "555ded8ab0d226c726dcb3dcd61606c690b2b60fe1d40269379f301aad5ae4f4",
+      "members": {
+        "canaries_composition.csv": "557bc1bf7c9ad7ade598b1507e5dce7fb6065e1e6c731c1ce9c1040508826cb8",
+        "canaries_composition_data_dictionary.md": "349ff4ff6bb10a2e68d8723da138a95dd2cd7fbf4e5aebe285526eaf10a2d01e"
+      }
+    }
+  ],
+  "membership_disposition": {
+    "occupation_or_soc_field_in_downloads": false,
+    "occupation_to_quintile_membership_in_downloads": false,
+    "analysis_code_in_downloads": false,
+    "paper_says_code_available_upon_request": true,
+    "authors_contacted": false,
+    "exact_membership_replication_status": "BLOCKED_INPUT_AUTHORIZATION_REQUIRED_FOR_AUTHOR_CONTACT"
+  }
+}
+

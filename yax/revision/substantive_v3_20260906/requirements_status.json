@@ -4664,15 +4664,27 @@
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
           "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+        },
+        {
+          "role": "source_evidence",
+          "path": "source_verification/BCC_PUBLIC_DASHBOARD_MANIFEST.json",
+          "sha256": "2998f96bd6b2088b5d7fbff84fef1072f00ea94d0c1eba9b39bec7705dbcc4c9"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/B02_PUBLIC_CODE_AND_MEMBERSHIP_AUDIT.md",
+          "sha256": "a1de2e7a944cd519a647b358ac36eb3b23f11e7a84109876937e76f4ead388fa"
         }
       ],
       "response_locations": [
-        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+        "source_verification/B02_PUBLIC_CODE_AND_MEMBERSHIP_AUDIT.md",
+        "source_verification/BCC_PUBLIC_DASHBOARD_MANIFEST.json"
       ],
       "review": null,
       "blocker": {
         "missing_requirement": "An exhaustive primary BCC SOC-code membership, including the exact universe, crosswalk, cutoffs, and tie rule.",
-        "attempts": "Inspected the fixed August 2026 paper, official dashboard, three official dashboard ZIPs, and documented code-access statement; only top-50 names and aggregate series were public.",
+        "attempts": "Inspected the fixed August 2026 paper, official dashboard, three official dashboard ZIPs, and documented code-access statement; only top-50 names and aggregate series were public. Re-downloaded all three archives from immutable GCS generations on 2026-09-09 and authenticated every archive/member hash with a reproducible downloader.",
         "claim_impact": "YAX may report an independently reconstructed public-rule bridge but cannot claim exact BCC occupation-group replication or membership identity.",
         "next_step": "If author contact is later authorized, request the exact membership/code artifact; otherwise preserve and label the independent reconstruction and its deviations."
       },
