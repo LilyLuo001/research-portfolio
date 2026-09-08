@@ -1,5 +1,5 @@
 {
-  "status": "VERIFIED",
+  "status": "PREMISE_CORRECTED",
   "summary": "Visual inspection and independent machine-readable receipts establish 6,188,956 route-expanded descendants. The alleged 36,188,956 count concatenates printed-page footer 3 with the next page's leading 6,188,956.",
   "evidence": [
     {
@@ -9,19 +9,18 @@
     },
     {
       "role": "source_evidence",
-      "path": "../substantive_r3_20260905/data_audit/results/EXECUTION_RECEIPT.json",
-      "sha256": "de7511cbd63b1b2d97ebea39c93c79f425760b829ae32ed7acc4e234913d7935"
-    },
-    {
-      "role": "source_evidence",
-      "path": "../substantive_r3_20260905/data_audit/results/SAMPLE_FLOW_CORRECTED.csv",
-      "sha256": "6d5bb5971c0714c85265d7fee3452f34e50f1b17a30abf652a0876e8256a38ce"
+      "path": "revision_inputs/SOURCE_VERIFICATION.md",
+      "sha256": "daaf7dc23636c533a01a994af468ab72475197350794de736a1e76b20a7b13d3"
     }
   ],
   "response_locations": [
     "source_verification/E02_ROUTE_COUNT_VERIFICATION.md"
   ],
-  "review": null,
+  "review": {
+    "reviewer": "execution-agent render and receipt cross-check",
+    "report_path": "source_verification/E02_ROUTE_COUNT_VERIFICATION.md",
+    "independent": false
+  },
   "blocker": null,
   "approval": null
 }

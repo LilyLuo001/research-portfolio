@@ -758,11 +758,28 @@
       "depends_on": [
         "G01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "VERIFIED",
+      "summary": "Authenticated extract 9 was created after the applicable 2025-2026 IPUMS production corrections; its data/DDI hashes, March Basic replacement, calendar, and corrected protected-cell rebuild are verified. Population-control breaks remain disclosed and no unavailable age-by-occupation counterfactual weights are invented.",
+      "evidence": [
+        {
+          "role": "verification_report",
+          "path": "source_verification/T04_DATA_VINTAGE_VERIFICATION.md",
+          "sha256": "3a8bd39f011ea562575868665861404b9f028481cc90b85025f7a371cd94f607"
+        },
+        {
+          "role": "source_evidence",
+          "path": "source_verification/external/source_claim_matrix.json",
+          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+        }
+      ],
+      "response_locations": [
+        "source_verification/T04_DATA_VINTAGE_VERIFICATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent source and receipt audit",
+        "report_path": "source_verification/T04_DATA_VINTAGE_VERIFICATION.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -5203,11 +5220,28 @@
       "depends_on": [
         "T03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "PREMISE_CORRECTED",
+      "summary": "Visual inspection and independent machine-readable receipts establish 6,188,956 route-expanded descendants. The alleged 36,188,956 count concatenates printed-page footer 3 with the next page's leading 6,188,956.",
+      "evidence": [
+        {
+          "role": "verification_report",
+          "path": "source_verification/E02_ROUTE_COUNT_VERIFICATION.md",
+          "sha256": "ee24649d17d590345d93a75281244da97fe9ded6c49476358d1af636442a6575"
+        },
+        {
+          "role": "source_evidence",
+          "path": "revision_inputs/SOURCE_VERIFICATION.md",
+          "sha256": "daaf7dc23636c533a01a994af468ab72475197350794de736a1e76b20a7b13d3"
+        }
+      ],
+      "response_locations": [
+        "source_verification/E02_ROUTE_COUNT_VERIFICATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent render and receipt cross-check",
+        "report_path": "source_verification/E02_ROUTE_COUNT_VERIFICATION.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [

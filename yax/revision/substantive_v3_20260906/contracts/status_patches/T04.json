@@ -9,19 +9,18 @@
     },
     {
       "role": "source_evidence",
-      "path": "../../../dax/memo/power_calcs/ipums_ai_telework_extract_v2_download_receipt.json",
-      "sha256": "3a5eef306d791ef608577b5ad07435cda9ce2c3ee1b2bf69b501aace88c89f9e"
-    },
-    {
-      "role": "source_evidence",
-      "path": "../substantive_r3_20260905/literature_evidence/CPS_DOCUMENTATION_AUDIT.md",
-      "sha256": "0da4c6fcd95f2b0a46e53c6a5c7a5f5ef83ee27132e16a401d57ae3a4d7c9e26"
+      "path": "source_verification/external/source_claim_matrix.json",
+      "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
     }
   ],
   "response_locations": [
     "source_verification/T04_DATA_VINTAGE_VERIFICATION.md"
   ],
-  "review": null,
+  "review": {
+    "reviewer": "execution-agent source and receipt audit",
+    "report_path": "source_verification/T04_DATA_VINTAGE_VERIFICATION.md",
+    "independent": false
+  },
   "blocker": null,
   "approval": null
 }
