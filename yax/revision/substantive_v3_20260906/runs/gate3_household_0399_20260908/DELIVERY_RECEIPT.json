@@ -1,0 +1,24 @@
+{
+  "schema_version": "yax-v3-delivery-receipt-v1",
+  "command": "eight disjoint SCC invocations of gate3/inference_validation/run_household_refit_batch.py covering draws 1--399, followed by summarize_household_refits.py --through-draw 399",
+  "start_utc": "2026-09-08T11:28:37Z",
+  "end_utc": "2026-09-08T11:36:39Z",
+  "exit_code": 0,
+  "mode": "empirical_reestimate",
+  "code_hash": "3587ca20421ff35e5f9537c28b92e32b26790ab699e647176ecfd577faf1df10",
+  "spec_id": "yax-gate3-i07-linked-household-refit-v1",
+  "git_commit": "bb64d6be521e19903b3111e721edf5bc6a2b4e23",
+  "scheduler_jobs": [
+    "7490659",
+    "7490660",
+    "7490661",
+    "7490662",
+    "7490663",
+    "7490664",
+    "7490665",
+    "7490666",
+    "7490673"
+  ],
+  "source_summary_receipt": "summary_0399/SUMMARY_RECEIPT.json",
+  "source_summary_receipt_sha256": "044c06e0764eb222296b992ec70f10e2bd689bf1299f1ff0a4beb485051e98b2"
+}

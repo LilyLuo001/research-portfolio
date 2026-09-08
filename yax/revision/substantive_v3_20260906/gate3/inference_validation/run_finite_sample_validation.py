@@ -593,7 +593,9 @@ def main() -> int:
                                       "replicate": replicate,
                                       "error": repr(error)}), flush=True)
         attempts = target_reps
-        require(bool(rows), f"all joint refits failed; first failure: {failures[0]['error']}")
+        if not rows:
+            first_failure = failures[0]["error"] if failures else "no failure record retained"
+            raise RuntimeError(f"all joint refits failed; first failure: {first_failure}")
         summaries, stopping = summarize(rows, attempts, len(failures))
         if args.fixed_replications is not None or stopping["passes"] or attempts == CAP:
             break

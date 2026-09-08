@@ -2299,8 +2299,8 @@
       ],
       "empirical": true
     },
-  {
-    "id": "Y01",
+    {
+      "id": "Y01",
       "title": "Reconcile static and dynamic quantities with a common functional",
       "source_refs": [
         "B:4",
@@ -2319,44 +2319,44 @@
         "N03",
         "T02"
       ],
-    "status": "RUN_UNVALIDATED",
-    "summary": "The authoritative dynamic-core run reports the static reference-post coefficient S, the observed-calendar post functional P, the reference-invariant post-minus-pre functional D, all three gaps, and their paired family-month conditioning movements on common support with fixed month weights. S and D are nearly identical within each structure, while P differs because the published 2022Q4 reference is not the preperiod average. All 18 estimates and their full paired covariance independently reconstruct from retained occupation influence arrays. Manuscript and appendix presentation remain outstanding.",
-    "evidence": [
-      {
-        "role": "specification",
-        "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
-        "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
-      },
-      {
-        "role": "code",
-        "path": "gate2/dynamic/run_dynamic_core.py",
-        "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
-      },
-      {
-        "role": "run_receipt",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
-        "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_ESTIMATES.csv",
-        "sha256": "6d3bc6be1d6ab9bd96ea80def9bcd353ff66472869c07e0bdae7a5b3b45d6c5d"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_COVARIANCE.csv",
-        "sha256": "04bc7b906aaa2cd4b9c6c66cff8013c62aba4f02728b3a6d8cbd6dfc54688635"
-      },
-      {
-        "role": "validation_report",
-        "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
-        "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
-      }
-    ],
-    "response_locations": [
-      "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_ESTIMATES.csv",
-      "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_COVARIANCE.csv"
-    ],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative dynamic-core run reports the static reference-post coefficient S, the observed-calendar post functional P, the reference-invariant post-minus-pre functional D, all three gaps, and their paired family-month conditioning movements on common support with fixed month weights. S and D are nearly identical within each structure, while P differs because the published 2022Q4 reference is not the preperiod average. All 18 estimates and their full paired covariance independently reconstruct from retained occupation influence arrays. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
+          "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
+        },
+        {
+          "role": "code",
+          "path": "gate2/dynamic/run_dynamic_core.py",
+          "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_ESTIMATES.csv",
+          "sha256": "6d3bc6be1d6ab9bd96ea80def9bcd353ff66472869c07e0bdae7a5b3b45d6c5d"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_COVARIANCE.csv",
+          "sha256": "04bc7b906aaa2cd4b9c6c66cff8013c62aba4f02728b3a6d8cbd6dfc54688635"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
+          "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_ESTIMATES.csv",
+        "runs/gate2_dynamic_core_authoritative_20260908/RECONCILIATION_COVARIANCE.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2370,8 +2370,8 @@
       ],
       "empirical": true
     },
-  {
-    "id": "Y02",
+    {
+      "id": "Y02",
       "title": "Verify nested-model moment preservation and nonlinear projection",
       "source_refs": [
         "B:4",
@@ -2389,38 +2389,38 @@
       "depends_on": [
         "Y01"
       ],
-    "status": "RUN_UNVALIDATED",
-    "summary": "The protected run verifies the predeclared exact sparse nesting map in both structures: identical active rows and nuisance columns, with each static post column exactly equal to the sum of same-component post-quarter columns. The maximum design residual is zero. Static score moments evaluated at dynamic fitted probabilities are below 9.0e-13 per total, and same-criterion pseudo-stock projections reproduce every static treatment coefficient exactly at reported precision. These are moment and projection checks, not causal identification. Manuscript and appendix presentation remain outstanding.",
-    "evidence": [
-      {
-        "role": "specification",
-        "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
-        "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
-      },
-      {
-        "role": "code",
-        "path": "gate2/dynamic/run_dynamic_core.py",
-        "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
-      },
-      {
-        "role": "run_receipt",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
-        "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/NESTING_PROJECTION_AUDIT.json",
-        "sha256": "ee2452f4c8a80897f3cd82bf92713d25a3251301ec465e8fcf7af278e9abd836"
-      },
-      {
-        "role": "validation_report",
-        "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
-        "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
-      }
-    ],
-    "response_locations": [
-      "runs/gate2_dynamic_core_authoritative_20260908/NESTING_PROJECTION_AUDIT.json"
-    ],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The protected run verifies the predeclared exact sparse nesting map in both structures: identical active rows and nuisance columns, with each static post column exactly equal to the sum of same-component post-quarter columns. The maximum design residual is zero. Static score moments evaluated at dynamic fitted probabilities are below 9.0e-13 per total, and same-criterion pseudo-stock projections reproduce every static treatment coefficient exactly at reported precision. These are moment and projection checks, not causal identification. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
+          "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
+        },
+        {
+          "role": "code",
+          "path": "gate2/dynamic/run_dynamic_core.py",
+          "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/NESTING_PROJECTION_AUDIT.json",
+          "sha256": "ee2452f4c8a80897f3cd82bf92713d25a3251301ec465e8fcf7af278e9abd836"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
+          "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_dynamic_core_authoritative_20260908/NESTING_PROJECTION_AUDIT.json"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2434,8 +2434,8 @@
       ],
       "empirical": true
     },
-  {
-    "id": "Y03",
+    {
+      "id": "Y03",
       "title": "Verify reference invariance and full covariance transformations",
       "source_refs": [
         "B:4",
@@ -2452,50 +2452,50 @@
       "depends_on": [
         "Y01"
       ],
-    "status": "RUN_UNVALIDATED",
-    "summary": "The authoritative run transforms the complete coefficient, covariance, and occupation-influence objects for all five dynamic components, both conditioning structures, and all 39 possible reference quarters. It also transforms the reference-invariant D functional and every frozen Q5 pretrend restriction. Across 390 functional and 624 restriction checks, the largest relative discrepancy is 1.70e-15, below the frozen 1e-12 tolerance. Partial endpoint quarters and the two-month 2022Q4 reference retain their observed-calendar weights. Manuscript and appendix presentation remain outstanding.",
-    "evidence": [
-      {
-        "role": "specification",
-        "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
-        "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
-      },
-      {
-        "role": "code",
-        "path": "gate2/dynamic/run_dynamic_core.py",
-        "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
-      },
-      {
-        "role": "run_receipt",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
-        "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/REPARAMETERIZATION_AUDIT.json",
-        "sha256": "68d23ac6e2f8e5039933269ea326eca836ac1a58c98966c927486c694785d3d0"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_COVARIANCE.csv",
-        "sha256": "210325d7b02ed627fa9476fb248ef4acc8d567fd95048cd5d1a998b7b28fd902"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_INFLUENCE.csv",
-        "sha256": "8f31d8d30e60c0992e8e7dfc291b1aa7ac6d1e65fa99fe67b81b652a2ffeafcb"
-      },
-      {
-        "role": "validation_report",
-        "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
-        "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
-      }
-    ],
-    "response_locations": [
-      "runs/gate2_dynamic_core_authoritative_20260908/REPARAMETERIZATION_AUDIT.json",
-      "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_COVARIANCE.csv",
-      "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_INFLUENCE.csv"
-    ],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run transforms the complete coefficient, covariance, and occupation-influence objects for all five dynamic components, both conditioning structures, and all 39 possible reference quarters. It also transforms the reference-invariant D functional and every frozen Q5 pretrend restriction. Across 390 functional and 624 restriction checks, the largest relative discrepancy is 1.70e-15, below the frozen 1e-12 tolerance. Partial endpoint quarters and the two-month 2022Q4 reference retain their observed-calendar weights. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
+          "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
+        },
+        {
+          "role": "code",
+          "path": "gate2/dynamic/run_dynamic_core.py",
+          "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/REPARAMETERIZATION_AUDIT.json",
+          "sha256": "68d23ac6e2f8e5039933269ea326eca836ac1a58c98966c927486c694785d3d0"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_COVARIANCE.csv",
+          "sha256": "210325d7b02ed627fa9476fb248ef4acc8d567fd95048cd5d1a998b7b28fd902"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_INFLUENCE.csv",
+          "sha256": "8f31d8d30e60c0992e8e7dfc291b1aa7ac6d1e65fa99fe67b81b652a2ffeafcb"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
+          "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_dynamic_core_authoritative_20260908/REPARAMETERIZATION_AUDIT.json",
+        "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_COVARIANCE.csv",
+        "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_INFLUENCE.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2509,8 +2509,8 @@
       ],
       "empirical": true
     },
-  {
-    "id": "Y04",
+    {
+      "id": "Y04",
       "title": "Run all requested pandemic and nonpandemic preperiod tests",
       "source_refs": [
         "A:3.2",
@@ -2527,49 +2527,49 @@
       "depends_on": [
         "Y01"
       ],
-    "status": "RUN_UNVALIDATED",
-    "summary": "The run reports both equality-to-2022Q4 and equality-within-window tests for the full preperiod, 2017Q1-2019Q4, 2021Q1-2022Q3, and the full period excluding 2020Q2-Q4, under both conditioning structures. All 16 tests retain rank, degrees of freedom, chi-square p-values, and common-multiplier p-values. Full-preperiod unconditioned equality rejects at multiplier p=0.0171, but the 2017-2019, 2021-2022Q3, and pandemic-excluded windows do not reject at five percent. Family-month equality to the published 2022Q4 reference rejects in every window, while within-window equality does not reject at five percent in any window. Manuscript and appendix presentation remain outstanding.",
-    "evidence": [
-      {
-        "role": "specification",
-        "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
-        "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
-      },
-      {
-        "role": "code",
-        "path": "gate2/dynamic/run_dynamic_core.py",
-        "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
-      },
-      {
-        "role": "run_receipt",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
-        "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_TESTS.csv",
-        "sha256": "71072179538c9c1651dbd480ab6c3ff65ef9f02dddb20b82cb8b386f903fc607"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_EVENT_STUDY.csv",
-        "sha256": "5046f60def81546340a98b0d13ba87887b4422b17e3018a98b76b5e6cf04ccc9"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_CENTERED_DRAWS.npz",
-        "sha256": "e7cb95c336221843ff9d8c906ebdc345a1ee99b09eeadf91860efceab28fe7d2"
-      },
-      {
-        "role": "validation_report",
-        "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
-        "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
-      }
-    ],
-    "response_locations": [
-      "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_TESTS.csv",
-      "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_EVENT_STUDY.csv"
-    ],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The run reports both equality-to-2022Q4 and equality-within-window tests for the full preperiod, 2017Q1-2019Q4, 2021Q1-2022Q3, and the full period excluding 2020Q2-Q4, under both conditioning structures. All 16 tests retain rank, degrees of freedom, chi-square p-values, and common-multiplier p-values. Full-preperiod unconditioned equality rejects at multiplier p=0.0171, but the 2017-2019, 2021-2022Q3, and pandemic-excluded windows do not reject at five percent. Family-month equality to the published 2022Q4 reference rejects in every window, while within-window equality does not reject at five percent in any window. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
+          "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
+        },
+        {
+          "role": "code",
+          "path": "gate2/dynamic/run_dynamic_core.py",
+          "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_TESTS.csv",
+          "sha256": "71072179538c9c1651dbd480ab6c3ff65ef9f02dddb20b82cb8b386f903fc607"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_EVENT_STUDY.csv",
+          "sha256": "5046f60def81546340a98b0d13ba87887b4422b17e3018a98b76b5e6cf04ccc9"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_CENTERED_DRAWS.npz",
+          "sha256": "e7cb95c336221843ff9d8c906ebdc345a1ee99b09eeadf91860efceab28fe7d2"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
+          "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_TESTS.csv",
+        "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_EVENT_STUDY.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2583,8 +2583,8 @@
       ],
       "empirical": true
     },
-  {
-    "id": "Y05",
+    {
+      "id": "Y05",
       "title": "Identify quarters and restrictions driving rejection without pretest selection",
       "source_refs": [
         "A:3.2",
@@ -2601,39 +2601,39 @@
       "depends_on": [
         "Y04"
       ],
-    "status": "RUN_UNVALIDATED",
-    "summary": "The run retains simultaneous common-draw intervals, true leave-one-quarter-out tests that rebuild each null and its within-block anchor, and predeclared persistent-level, equal-elapsed-quarter drift, and seasonal-mean contrasts. It does not treat leave-out Wald changes as additive contributions and does not attribute rejection to the pandemic from dates alone. The unconditioned persistent level and drift are not distinguishable from zero, while Q2-Q4 seasonal means differ from Q1; family-month level, drift, and seasonal contrasts are not distinguishable from zero at five percent. All diagnostic quantities independently reconstruct. Manuscript and appendix presentation remain outstanding.",
-    "evidence": [
-      {
-        "role": "specification",
-        "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
-        "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
-      },
-      {
-        "role": "code",
-        "path": "gate2/dynamic/run_dynamic_core.py",
-        "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
-      },
-      {
-        "role": "run_receipt",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
-        "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
-      },
-      {
-        "role": "result",
-        "path": "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_DIAGNOSTICS.csv",
-        "sha256": "736e822ffe0d19e32ff3cc48fa3f16f5170eb12d8db06dc2afe353b601be7528"
-      },
-      {
-        "role": "validation_report",
-        "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
-        "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
-      }
-    ],
-    "response_locations": [
-      "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_DIAGNOSTICS.csv",
-      "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_EVENT_STUDY.csv"
-    ],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The run retains simultaneous common-draw intervals, true leave-one-quarter-out tests that rebuild each null and its within-block anchor, and predeclared persistent-level, equal-elapsed-quarter drift, and seasonal-mean contrasts. It does not treat leave-out Wald changes as additive contributions and does not attribute rejection to the pandemic from dates alone. The unconditioned persistent level and drift are not distinguishable from zero, while Q2-Q4 seasonal means differ from Q1; family-month level, drift, and seasonal contrasts are not distinguishable from zero at five percent. All diagnostic quantities independently reconstruct. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/dynamic/DYNAMIC_CORE_SPEC.json",
+          "sha256": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084"
+        },
+        {
+          "role": "code",
+          "path": "gate2/dynamic/run_dynamic_core.py",
+          "sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_DIAGNOSTICS.csv",
+          "sha256": "736e822ffe0d19e32ff3cc48fa3f16f5170eb12d8db06dc2afe353b601be7528"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json",
+          "sha256": "b2543bafdd35cd69e106340dd75f888bfc95564eaacfad340c2f1ae96bbadda0"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_dynamic_core_authoritative_20260908/PRETREND_DIAGNOSTICS.csv",
+        "runs/gate2_dynamic_core_authoritative_20260908/DYNAMIC_Q5_EVENT_STUDY.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2893,11 +2893,28 @@
       "depends_on": [
         "G03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "VERIFIED",
+      "summary": "Gate 3 distinguishes occupation-shock, broad-family-shock, linked-household repeated-sample, and generated-label uncertainty targets. Paired model influences are differenced before common cluster multipliers are applied, and no implementation mechanically adds household, occupation, or family variances.",
+      "evidence": [
+        {
+          "role": "verification_report",
+          "path": "gate3/inference_validation/I01_STOCHASTIC_TARGETS.md",
+          "sha256": "577ff660ed845a9e613fa8971f9745a4396c9747f867c3f6b23656d1c9202997"
+        },
+        {
+          "role": "source_evidence",
+          "path": "revision_inputs/EXECUTION_PROMPT_V3.md",
+          "sha256": "c5f707f8b0de1f93cf9c851143037533fcec4de8fc3b751317f62231eb3cfd6b"
+        }
+      ],
+      "response_locations": [
+        "gate3/inference_validation/I01_STOCHASTIC_TARGETS.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent self-review",
+        "report_path": "gate3/inference_validation/I01_STOCHASTIC_TARGETS.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
@@ -3109,12 +3126,60 @@
         "N03",
         "I01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Eight parallel SCC batches completed 399 linked-positive-CPSID multiplier full refits for the pooled, family-month, and paired targets under fixed and regenerated pre-period labels, with zero failures. The maximum bootstrap-of-bootstrap endpoint MCSE is 0.00820, below the declared 0.01 target. Results are explicitly a released-weight household sensitivity rather than CPS design-based inference and are not mechanically added to cluster variance.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md",
+          "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/run_household_refit_batch.py",
+          "sha256": "e34c005b14d9f70819b30494ec12057040ab3517c8050c633ef5815ce16a182d"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/summarize_household_refits.py",
+          "sha256": "28fb4814b28007489eea80b63f6b6ba26c4190624957094301b374effde47827"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_household_0399_20260908/DELIVERY_RECEIPT.json",
+          "sha256": "812c35988e42dbff315be483ba85594635080725a141275648e99c5a8313050a"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_household_0399_20260908/summary_0399/HOUSEHOLD_REFIT_SUMMARY.csv",
+          "sha256": "f6cc8a745a335f37ecaf30900b8e6e90d17f3bc7e2e884e7e59bc47a431f083c"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_household_0399_20260908/summary_0399/INDEPENDENT_VALIDATION.json",
+          "sha256": "92042ec2332894451850c90332cc9dc21f8b9f79fb99ded8887056951025dac3"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/inference_validation/I07_HOUSEHOLD_FINDINGS.md",
+          "sha256": "3ef1b47fdab2a53e59f4917cac08c40b20813b7bbdc909757e49ed7143330d33"
+        }
+      ],
+      "response_locations": [
+        "gate3/inference_validation/I07_HOUSEHOLD_FINDINGS.md",
+        "runs/gate3_household_0399_20260908/summary_0399/HOUSEHOLD_REFIT_SUMMARY.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_household_0399_20260908/summary_0399/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Upstream N03 remains RUN_UNVALIDATED until manuscript/appendix integration.",
+        "attempts": "The 399-draw I07 run and public-output validation are complete and pass.",
+        "claim_impact": "I07 results are computed and numerically validated but cannot receive final ledger VERIFIED status before N03.",
+        "next_step": "Resolve N03 during manuscript integration, then rerun the delivery validator and promote I07 without rerunning the empirical calculation."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3235,12 +3300,60 @@
       "depends_on": [
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The I10 SCC run constructed occupation plus aggregate elapsed-calendar HAC minus within-occupation elapsed-calendar HAC on stacked pooled/family-month influence objects. All five unmodified 10-by-10 covariance matrices are symmetric, full rank, and positive definite; no clipping was applied. Public-output validation recovered every target variance, standard error, interval, spectrum, and paired cross-model contrast.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/inference_validation/HAC_VALIDATION_SPEC.md",
+          "sha256": "3d84a1c07cb3947fa2eba1e942c03a6e0829b68e80983759c4f8b26fbd99abca"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/run_hac_validation.py",
+          "sha256": "cc30ef535ba250457a559af7731fe1cf33f26e9bdc114c193d7b35c960ba6dcc"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_hac_authoritative_20260908/DELIVERY_RECEIPT.json",
+          "sha256": "a5e0db38556236482d20c2f827c9cf2e490247cd3872bc498fceb4cba83afdd0"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_hac_authoritative_20260908/HAC_TARGET_SUMMARY.csv",
+          "sha256": "b09d5e355298c784c2ef77266febecd30c20177921f2725b961b446eaeca7c33"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_hac_authoritative_20260908/HAC_JOINT_COVARIANCE.csv",
+          "sha256": "f18050f49199539dc3fed7f34998a46a2917b7a4c0ea62b94d6d0942c4b84731"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_hac_authoritative_20260908/INDEPENDENT_VALIDATION.json",
+          "sha256": "6bd56c55fa1a219bb6ccfd0c04546caf94e4e523ef509338d8d2ae85d175d462"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/inference_validation/I10_HAC_FINDINGS.md",
+          "sha256": "347ad776d74206d553b827ba0f463e69cf3cbcc93946b29f829cc372f669b6b3"
+        }
+      ],
+      "response_locations": [
+        "gate3/inference_validation/I10_HAC_FINDINGS.md",
+        "runs/gate3_hac_authoritative_20260908/HAC_TARGET_SUMMARY.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_hac_authoritative_20260908/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Upstream N03 remains RUN_UNVALIDATED until manuscript/appendix integration.",
+        "attempts": "The I10 run and public-output validation are complete and pass.",
+        "claim_impact": "I10 results are computed and numerically validated but cannot receive final ledger VERIFIED status before N03.",
+        "next_step": "Resolve N03 during manuscript integration, then rerun the delivery validator and promote I10 without rerunning the empirical calculation."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",

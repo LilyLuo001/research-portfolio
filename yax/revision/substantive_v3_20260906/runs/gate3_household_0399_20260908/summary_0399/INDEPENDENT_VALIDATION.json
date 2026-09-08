@@ -1,0 +1,65 @@
+{
+  "batch_ranges": [
+    [
+      1,
+      50
+    ],
+    [
+      51,
+      100
+    ],
+    [
+      101,
+      150
+    ],
+    [
+      151,
+      200
+    ],
+    [
+      201,
+      250
+    ],
+    [
+      251,
+      300
+    ],
+    [
+      301,
+      350
+    ],
+    [
+      351,
+      399
+    ]
+  ],
+  "batch_receipt_hashes": {
+    "batch_0001_0050": "0fd72f553dfd5a8d624730b3e4ab01620817c0e65c09f17fcf256f522f47f2e2",
+    "batch_0051_0100": "8a482bee2305b2a70cd95153c0eebe74edb6d2dd68f8e58a814a8b259e9e6b81",
+    "batch_0101_0150": "70dba3004991e182e87b6e41075e29b5837504f58a79cc0368d70efbe54db75c",
+    "batch_0151_0200": "dbcae55f3473c3ee987131f576501e7c7c988da4447a759d7bb99fd5b369d62a",
+    "batch_0201_0250": "68118c8cce74a49e42423d6a8ec761a970be7f7d6567edd505bb357114123916",
+    "batch_0251_0300": "9b882952884715af89fe5380f78ff3eabfb37516fffd75a092cc5e73063155c4",
+    "batch_0301_0350": "4746e86dca4b89dea28ffa184d443747530e27381e774b0e64351f7d937da44d",
+    "batch_0351_0399": "41bedcd884923e6ad357686a3e447b0c7f3b1fbe75b4c22b8912f18309c55517"
+  },
+  "draws": 399,
+  "maximum_recomputed_endpoint_mcse": 0.008203718152740474,
+  "maximum_recomputed_summary_difference": 9.107298248878237e-17,
+  "modes": [
+    "fixed_labels",
+    "regenerated_preperiod_labels"
+  ],
+  "schema_version": "yax-gate3-household-independent-validation-v1",
+  "status": "PASS_HOUSEHOLD_PUBLIC_OUTPUT_VALIDATION",
+  "summary_hashes": {
+    "HOUSEHOLD_REFIT_SUMMARY.csv": "f6cc8a745a335f37ecaf30900b8e6e90d17f3bc7e2e884e7e59bc47a431f083c",
+    "HOUSEHOLD_STOPPING.json": "8c658db6ed2314fa30ae4c8af7734aee611a52b4934b35f3f8457ca8f38f359b",
+    "SUMMARY_RECEIPT.json": "044c06e0764eb222296b992ec70f10e2bd689bf1299f1ff0a4beb485051e98b2"
+  },
+  "targets": [
+    "pooled",
+    "family_month",
+    "family_month_minus_pooled"
+  ]
+}

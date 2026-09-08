@@ -155,3 +155,9 @@ def test_historical_null_label_and_failed_gap_are_retained(tmp_path):
     assert result["compared_draws"] == 195
     assert not result["passes_tolerance"]
     assert np.isclose(result["maximum_pooled_coefficient_difference"], .01)
+
+
+def test_successful_run_does_not_index_empty_failure_inventory():
+    source = (HERE / "run_finite_sample_validation.py").read_text(encoding="utf-8")
+    assert 'require(bool(rows), f"all joint refits failed' not in source
+    assert 'if not rows:' in source

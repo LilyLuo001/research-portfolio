@@ -1,0 +1,58 @@
+{
+  "batch_ranges": [
+    [
+      1,
+      50
+    ],
+    [
+      51,
+      100
+    ],
+    [
+      101,
+      150
+    ],
+    [
+      151,
+      200
+    ],
+    [
+      201,
+      250
+    ],
+    [
+      251,
+      300
+    ],
+    [
+      301,
+      350
+    ],
+    [
+      351,
+      399
+    ]
+  ],
+  "batch_receipt_hashes": {
+    "batch_0001_0050": "0fd72f553dfd5a8d624730b3e4ab01620817c0e65c09f17fcf256f522f47f2e2",
+    "batch_0051_0100": "8a482bee2305b2a70cd95153c0eebe74edb6d2dd68f8e58a814a8b259e9e6b81",
+    "batch_0101_0150": "70dba3004991e182e87b6e41075e29b5837504f58a79cc0368d70efbe54db75c",
+    "batch_0151_0200": "dbcae55f3473c3ee987131f576501e7c7c988da4447a759d7bb99fd5b369d62a",
+    "batch_0201_0250": "68118c8cce74a49e42423d6a8ec761a970be7f7d6567edd505bb357114123916",
+    "batch_0251_0300": "9b882952884715af89fe5380f78ff3eabfb37516fffd75a092cc5e73063155c4",
+    "batch_0301_0350": "4746e86dca4b89dea28ffa184d443747530e27381e774b0e64351f7d937da44d",
+    "batch_0351_0399": "41bedcd884923e6ad357686a3e447b0c7f3b1fbe75b4c22b8912f18309c55517"
+  },
+  "interpretation": "linked-household released-weight sensitivity, not CPS design-based inference",
+  "schema_version": "yax-gate3-household-refit-summary-v1",
+  "status": "PASS_HOUSEHOLD_ENDPOINT_PRECISION",
+  "stopping": {
+    "cap_reached": false,
+    "endpoint_mcse_target": 0.01,
+    "maximum_interval_endpoint_mcse": 0.008203718152740465,
+    "missing_any_mode_draws": [],
+    "passes": true,
+    "through_draw": 399
+  },
+  "through_draw": 399
+}

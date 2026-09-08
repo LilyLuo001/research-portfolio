@@ -1,0 +1,65 @@
+{
+  "input_hashes": {
+    "EXECUTION_RECEIPT.json": "f0db431f87d860a5fd8d6befec93eae71d6c111af1134184efd254eaaa82d1e7",
+    "HAC_JOINT_COVARIANCE.csv": "f18050f49199539dc3fed7f34998a46a2917b7a4c0ea62b94d6d0942c4b84731",
+    "HAC_TARGET_SUMMARY.csv": "b09d5e355298c784c2ef77266febecd30c20177921f2725b961b446eaeca7c33",
+    "VALIDATION.json": "14c9542f79a9add4310f638747a3e59a148bdec57e87336b3fea10f4d49c5c58"
+  },
+  "lags": [
+    0,
+    1,
+    4,
+    12,
+    16
+  ],
+  "maximum_recomputed_variance_difference": 1.0061396160665481e-16,
+  "schema_version": "yax-gate3-hac-independent-validation-v1",
+  "spectra": {
+    "0": {
+      "maximum_eigenvalue": 0.014534387465594965,
+      "maximum_symmetry_gap": 0.0,
+      "minimum_eigenvalue": 2.7345157309186978e-05,
+      "negative_rank": 0,
+      "positive_rank": 10,
+      "rank": 10
+    },
+    "1": {
+      "maximum_eigenvalue": 0.014064102575719436,
+      "maximum_symmetry_gap": 0.0,
+      "minimum_eigenvalue": 2.6301767292185793e-05,
+      "negative_rank": 0,
+      "positive_rank": 10,
+      "rank": 10
+    },
+    "12": {
+      "maximum_eigenvalue": 0.011274652553581939,
+      "maximum_symmetry_gap": 0.0,
+      "minimum_eigenvalue": 1.7749819002056023e-05,
+      "negative_rank": 0,
+      "positive_rank": 10,
+      "rank": 10
+    },
+    "16": {
+      "maximum_eigenvalue": 0.010852209842184974,
+      "maximum_symmetry_gap": 0.0,
+      "minimum_eigenvalue": 1.4646016576584022e-05,
+      "negative_rank": 0,
+      "positive_rank": 10,
+      "rank": 10
+    },
+    "4": {
+      "maximum_eigenvalue": 0.012652448399247986,
+      "maximum_symmetry_gap": 0.0,
+      "minimum_eigenvalue": 2.4096119879543356e-05,
+      "negative_rank": 0,
+      "positive_rank": 10,
+      "rank": 10
+    }
+  },
+  "status": "PASS_HAC_PUBLIC_OUTPUT_VALIDATION",
+  "targets": [
+    "pooled",
+    "family_month",
+    "family_month_minus_pooled"
+  ]
+}

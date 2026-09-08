@@ -1,0 +1,26 @@
+{
+  "calibration_receipt_sha256": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+  "design_based_CPS_inference": false,
+  "failure_records": 0,
+  "fixed_observed_targets": {
+    "family_month": -0.021674952018246537,
+    "family_month_minus_pooled": 0.1104344987739437,
+    "pooled": -0.13210945079219025
+  },
+  "generated_at_utc": "2026-09-08T11:30:04.402727+00:00",
+  "git_head": "bb64d6be521e19903b3111e721edf5bc6a2b4e23",
+  "last_draw": 150,
+  "output_hashes": {
+    "HOUSEHOLD_REFIT_DRAWS.csv": "b62a30a2ad4383e72a50b52280f5501299ae9821eb2aa41d21830852dd51ca35",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "privacy": "outputs contain coefficients and aggregate diagnostics only; no cell, route, household code, microdata row, or private path",
+  "private_calibration_sha256": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+  "requested_draws": 50,
+  "sampling_unit": "positive CPSID with one mean-one Exponential multiplier across all months and route descendants",
+  "schema_version": "yax-gate3-household-refit-batch-v1",
+  "sge_job_id": "7490661",
+  "start_draw": 101,
+  "status": "PASS_HOUSEHOLD_REFIT_BATCH",
+  "successful_mode_target_rows": 300
+}

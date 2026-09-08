@@ -1,0 +1,38 @@
+{
+  "calendar": {
+    "full_elapsed_months": 115,
+    "gaps": [
+      "2022-12",
+      "2025-10"
+    ],
+    "observed_months": 113
+  },
+  "coefficient_checkpoint_differences": {
+    "family_month": -2.909478213908301e-14,
+    "pooled": 2.390310172017962e-13
+  },
+  "cross_model_blocks_included": true,
+  "formula": "occupation meat + aggregate elapsed-month Bartlett HAC - within-occupation elapsed-month Bartlett HAC; one occupation CRV1 factor after combination",
+  "lags": [
+    0,
+    1,
+    4,
+    12,
+    16
+  ],
+  "matrix_clipping_or_projection": false,
+  "parameter_order": [
+    "pooled::Q2_x_post",
+    "pooled::Q3_x_post",
+    "pooled::Q4_x_post",
+    "pooled::Q5_x_post",
+    "pooled::Webb_z_x_post",
+    "family_month::Q2_x_post",
+    "family_month::Q3_x_post",
+    "family_month::Q4_x_post",
+    "family_month::Q5_x_post",
+    "family_month::Webb_z_x_post"
+  ],
+  "schema_version": "yax-gate3-hac-validation-v1",
+  "status": "PASS_HAC_CONSTRUCTION"
+}

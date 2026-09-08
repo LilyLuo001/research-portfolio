@@ -1,0 +1,14 @@
+{
+  "schema_version": "yax-v3-delivery-receipt-v1",
+  "command": "<YAX_PYTHON_BIN> gate3/inference_validation/run_hac_validation.py --aggregate-cells <AUTHENTICATED_AGGREGATE_CELLS> --timing-model-results runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv --output-dir <SCC_RUN_DIR>",
+  "start_utc": "2026-09-08T11:26:31Z",
+  "end_utc": "2026-09-08T11:26:38Z",
+  "exit_code": 0,
+  "mode": "aggregate_analysis",
+  "code_hash": "cc30ef535ba250457a559af7731fe1cf33f26e9bdc114c193d7b35c960ba6dcc",
+  "spec_id": "yax-gate3-i10-hac-validation-v1",
+  "git_commit": "bb64d6be521e19903b3111e721edf5bc6a2b4e23",
+  "scheduler_job": "7490658",
+  "source_execution_receipt": "EXECUTION_RECEIPT.json",
+  "source_execution_receipt_sha256": "f0db431f87d860a5fd8d6befec93eae71d6c111af1134184efd254eaaa82d1e7"
+}
