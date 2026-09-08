@@ -741,6 +741,7 @@ def validate_cells(cells: pd.DataFrame, receipt: dict[str, Any],
     member = membership.copy()
     member["occupation_code"] = member.occupation_code.astype(str).str.zfill(4)
     member["beta_quintile"] = member.beta_quintile.astype(int)
+    member["webb_z"] = pd.to_numeric(member.webb_z, errors="raise")
     required_membership = {"occupation_code", "preperiod_weight", "rule_A_beta",
                            "beta_quintile", "webb_z"}
     if not required_membership.issubset(member.columns):
@@ -771,10 +772,20 @@ def validate_cells(cells: pd.DataFrame, receipt: dict[str, Any],
     if not np.allclose(semantic.webb_z_cell, semantic.webb_z_fixed,
                        rtol=0, atol=1e-12, equal_nan=False):
         raise Blocked("cell Webb values differ from fixed membership")
+    # Gate 1 fingerprints the fixed assignment frame before writing aggregate
+    # cells.  Reconstruct that same semantic frame here: family is authenticated
+    # from the stable cells, while quintile and Webb values come from the
+    # hash-pinned fixed membership.  The separate checks above still require the
+    # serialized cell values to agree, but harmless CSV float round trips cannot
+    # change the byte-level producer/consumer fingerprint.
+    fingerprint_assignments = stable[["occ_code", "family"]].merge(
+        member[["occupation_code", "beta_quintile", "webb_z"]],
+        left_on="occ_code", right_on="occupation_code", validate="one_to_one")
     fingerprint_payload = "".join(
         f"{row.occ_code}\t{row.family}\t{int(row.beta_quintile)}\t{float(row.webb_z).hex()}\n"
-        for row in frame[["occ_code", "family", "beta_quintile", "webb_z"]]
-        .drop_duplicates("occ_code").sort_values("occ_code").itertuples(index=False))
+        for row in fingerprint_assignments[
+            ["occ_code", "family", "beta_quintile", "webb_z"]
+        ].sort_values("occ_code", kind="mergesort").itertuples(index=False))
     fingerprint = hashlib.sha256(fingerprint_payload.encode("utf-8")).hexdigest()
     if fingerprint != receipt.get("assignment_fingerprint_sha256") or fingerprint != receipt.get(
             "assignment_fingerprint", {}).get("sha256"):

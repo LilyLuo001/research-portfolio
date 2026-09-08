@@ -190,6 +190,15 @@ without exact row/probability alignment. Authoritative execution requires the
 authenticated aggregate file in the controlled environment; it was not run
 while freezing this package.
 
+The Gate 1 assignment fingerprint is reconstructed from the same semantic
+sources used by its producer: stable family assignments authenticated from the
+aggregate cells and quintile/Webb values from the hash-pinned fixed-membership
+file. Aggregate-cell quintiles must match exactly and their serialized Webb
+values must match fixed membership within the signed absolute tolerance of
+`1e-12` before this reconstruction. This avoids treating a harmless CSV float
+round trip as assignment drift while preserving both semantic checks and the
+producer's exact byte-level fingerprint.
+
 Authoritative execution additionally requires Python `-I`, absence of
 import-affecting Python environment variables, the pinned Python 3.13.8 and Git
 2.43.7 executable hashes, and the authenticated A1 runtime payload. Before any

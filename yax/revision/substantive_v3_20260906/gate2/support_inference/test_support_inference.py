@@ -651,6 +651,16 @@ def test_cell_schema_and_assignment_semantics_are_recomputed():
                "assignment_fingerprint": {"sha256": fingerprint}}
     validated = si.validate_cells(grid, receipt, membership)
     assert len(validated) == 468*114
+    rounded = grid.copy()
+    rounded.loc[rounded.occ_code.eq(codes[0]), "webb_z"] += 5e-13
+    assert float(rounded.loc[rounded.occ_code.eq(codes[0]), "webb_z"].iloc[0]).hex() != \
+        float(mapping.loc[codes[0], "webb_z"]).hex()
+    rounded_validated = si.validate_cells(rounded, receipt, membership)
+    assert len(rounded_validated) == 468*114
+    drifted = grid.copy()
+    drifted.loc[drifted.occ_code.eq(codes[0]), "webb_z"] += 2e-12
+    with pytest.raises(si.Blocked, match="cell Webb values differ"):
+        si.validate_cells(drifted, receipt, membership)
     mutated = grid.copy()
     mutated.loc[0, "webb_z"] += .1
     with pytest.raises(si.Blocked, match="family or Webb assignment changes"):
