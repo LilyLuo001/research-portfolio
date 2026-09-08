@@ -1,6 +1,6 @@
 # YAX V3 execution state
 
-Updated: 2026-09-08 Asia/Shanghai
+Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
 
 ## Authoritative locations
 
@@ -43,6 +43,14 @@ Updated: 2026-09-08 Asia/Shanghai
   `gate4/flows/`
 - Gate 4 annual-ACS pre-results package:
   `gate4/acs_extension/`
+- Gate 3 characteristic findings and authenticated industry carry-forward:
+  `gate3/characteristics/`
+- Gate 3 mapping, architecture, and equal-occupation execution packages:
+  `gate3/mapping/`, `gate3/architecture/`, and `gate3/equal_occupation/`
+- Gate 4 cohort/enrollment and HonestDiD pre-results packages:
+  `gate4/cohort_enrollment/` and `gate4/honestdid/`
+- Active manuscript, appendix, referee response, and revision diagnosis:
+  `paper/main/`, `paper/appendix/`, and `paper/revision/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -224,6 +232,22 @@ Updated: 2026-09-08 Asia/Shanghai
   six-point Webb support and added a refusal for silently separated estimating
   rows. Thirteen focused tests and the full 1,493-test repository suite pass.
   B06 is `IMPLEMENTED_UNRUN`; public ZIP acquisition and execution remain.
+- The Gate 3 characteristic block and authenticated industry carry-forward are
+  validated and integrated into the manuscript. On fixed 455-occupation
+  support, adding pre-2022 computer use moves the pooled coefficient from
+  -0.0958 to -0.1966, while adding family-by-month paths moves it to 0.0354.
+  The combined-minus-baseline interval contains zero. These are non-additive
+  conditional projections, not causal AI or computerization components.
+- The retained 113-month lambda and D/S architecture audit passes a fresh
+  public carry-forward check. Lambda 0.5 reproduces literal beta within the
+  signed `1e-10` tolerance; all memberships, paired draws, primitive
+  covariance, and illustrative contrasts are complete. W06 remains
+  `RUN_UNVALIDATED` until T02, final packaging, and rendered review pass.
+- The active paper now uses the comparison-centered title "Occupational AI
+  Exposure and Young-Worker Employment: Support and Comparisons in the CPS."
+  Both abstracts and the introduction define the exact conditional-mean stock-
+  ratio estimand before reporting its value. The scientific source and 1,494-
+  test suite pass; compilation and visual review still require SCC.
 
 All 11 A1 numerical targets and the completed static/support and Y01--Y05
 dynamic outputs have now been independently reconstructed from retained public
@@ -280,4 +304,5 @@ complete. The original and compatibility-blocked runs remain preserved.
    larger sample as automatic exposure support.
 5. Integrate all validated evidence into the manuscript, appendix, referee
    response, revision diagnosis, and source diff before changing any
-   `RUN_UNVALIDATED` requirement to `VERIFIED`.
+   `RUN_UNVALIDATED` requirement to `VERIFIED`. E01/E06/W06 source integration
+   is complete but remains unverified for the explicitly recorded dependencies.

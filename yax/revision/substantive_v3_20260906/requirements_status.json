@@ -476,14 +476,25 @@
         "No reconstructed conventions from memory"
       ],
       "depends_on": [],
-      "status": "IMPLEMENTED_UNRUN",
-      "summary": "Created STATE.md with authoritative locations, stage status, blockers, scientific limits, operational rules, and exact next tasks. It has not yet been updated after a completed substantive gate, so G09 is not verified.",
-      "evidence": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "STATE.md now records authoritative Gate 1 through Gate 4 locations, fixed identifiers, completed and pending scientific stages, protected-data boundaries, SCC operational rules, and exact resumable tasks. It was updated after the validated Gate 3 characteristic, inference, shortfall, timing, and manuscript-integration stages. Final end-to-end handoff validation remains open.",
+      "evidence": [
+        {
+          "role": "presentation",
+          "path": "STATE.md",
+          "sha256": "7ccc9501bcad0a26034b92d436c4772f577d9dae41a708a4cbca3cf48e455188"
+        }
+      ],
       "response_locations": [
         "STATE.md"
       ],
       "review": null,
-      "blocker": null,
+      "blocker": {
+        "missing_requirement": "End-to-end final-delivery validation after the remaining SCC stages complete.",
+        "attempts": "Updated the authoritative paths, identifiers, gate outcomes, blockers, and exact next tasks after substantive execution and manuscript integration.",
+        "claim_impact": "Current handoffs no longer depend on recalled conventions, but G09 is not VERIFIED until the final package proves that every listed authoritative location and dependency is current.",
+        "next_step": "Re-run the state/handoff audit after the pending SCC packages and final delivery are assembled."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "code",
@@ -2015,7 +2026,7 @@
         {
           "role": "evidence_ownership_test",
           "path": "tests/test_requirement_evidence_ownership.py",
-          "sha256": "e761ee9628a181c82d89a4fb3cfac953dccb57183db171b62698968feaa802b2"
+          "sha256": "70496069db277b50c77b1640b95d44ade6e31b5415fb3be53544ccb734fff39f"
         }
       ],
       "response_locations": [
@@ -4448,12 +4459,39 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The public carry-forward validator authenticates the retained 113-month lambda and D/S architecture audit: lambda 0.5 reproduces literal beta membership and coefficients within the signed 1e-10 tolerance; all 2,340 memberships, 30 common-draw pairs, raw/standardized primitive results, covariance, 9,999 centered draws, and three illustrative contrasts are complete with zero model failures. Active paper sources present the units, support, membership changes, and noncausal boundary. Upstream T02 verification, compiled-document review, and final V3 result packaging remain open.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/architecture/ARCHITECTURE_RECONCILIATION_SPEC.md",
+          "sha256": "304bfa7b9eedc6481a259bef5d5323ceec32d393630fd8ea12d848dbe1057b2f"
+        },
+        {
+          "role": "code",
+          "path": "gate3/architecture/run_architecture_reconciliation.py",
+          "sha256": "df8cf47018598ce7bf047be9ddddd345a1725076b55bfd700d63db04492fb15a"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md",
+          "sha256": "958ca0b2f87d6b8285e08671393a09e949634573e273a17f373e0fa9053421bc"
+        }
+      ],
+      "response_locations": [
+        "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent retained-artifact and presentation audit",
+        "report_path": "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified T02 dependency, final V3 packaging of the retained result set, and compiled-PDF inspection.",
+        "attempts": "Ran the hash-authenticated public W06 validator and focused tests, audited the active paper and appendix sources, and made no protected-data read or new outcome fit.",
+        "claim_impact": "The retained computation and source presentation pass, but W06 is not VERIFIED until upstream construction, packaged result evidence, and rendered presentation are validated together.",
+        "next_step": "Complete the current-contract architecture delivery and T02 integration, then compile and inspect the active tables."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",

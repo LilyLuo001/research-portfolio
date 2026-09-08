@@ -1,11 +1,22 @@
 {
-  "status": "IMPLEMENTED_UNRUN",
-  "summary": "Created STATE.md with authoritative locations, stage status, blockers, scientific limits, operational rules, and exact next tasks. It has not yet been updated after a completed substantive gate, so G09 is not verified.",
-  "evidence": [],
+  "status": "RUN_UNVALIDATED",
+  "summary": "STATE.md now records authoritative Gate 1 through Gate 4 locations, fixed identifiers, completed and pending scientific stages, protected-data boundaries, SCC operational rules, and exact resumable tasks. It was updated after the validated Gate 3 characteristic, inference, shortfall, timing, and manuscript-integration stages. Final end-to-end handoff validation remains open.",
+  "evidence": [
+    {
+      "role": "presentation",
+      "path": "STATE.md",
+      "sha256": "7ccc9501bcad0a26034b92d436c4772f577d9dae41a708a4cbca3cf48e455188"
+    }
+  ],
   "response_locations": [
     "STATE.md"
   ],
   "review": null,
-  "blocker": null,
+  "blocker": {
+    "missing_requirement": "End-to-end final-delivery validation after the remaining SCC stages complete.",
+    "attempts": "Updated the authoritative paths, identifiers, gate outcomes, blockers, and exact next tasks after substantive execution and manuscript integration.",
+    "claim_impact": "Current handoffs no longer depend on recalled conventions, but G09 is not VERIFIED until the final package proves that every listed authoritative location and dependency is current.",
+    "next_step": "Re-run the state/handoff audit after the pending SCC packages and final delivery are assembled."
+  },
   "approval": null
 }

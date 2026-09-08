@@ -71,3 +71,16 @@ def test_editorial_and_aioe_evidence_is_attached_to_its_named_requirement():
     }
     assert w05_owners == {"W05"}
     assert rows["W05"]["status"] == "RUN_UNVALIDATED"
+
+    w06_marker = "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md"
+    w06_owners = {
+        requirement_id
+        for requirement_id, row in rows.items()
+        if w06_marker in [entry.get("path", "") for entry in row.get("evidence", [])]
+        or w06_marker in row.get("response_locations", [])
+        or (isinstance(row.get("review"), dict) and row["review"].get("report_path") == w06_marker)
+    }
+    assert w06_owners == {"W06"}
+    assert rows["W06"]["status"] == "RUN_UNVALIDATED"
+    assert rows["D05"]["status"] == "NOT_STARTED"
+    assert not rows["D05"]["evidence"]

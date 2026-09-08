@@ -1,0 +1,36 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The public carry-forward validator authenticates the retained 113-month lambda and D/S architecture audit: lambda 0.5 reproduces literal beta membership and coefficients within the signed 1e-10 tolerance; all 2,340 memberships, 30 common-draw pairs, raw/standardized primitive results, covariance, 9,999 centered draws, and three illustrative contrasts are complete with zero model failures. Active paper sources present the units, support, membership changes, and noncausal boundary. Upstream T02 verification, compiled-document review, and final V3 result packaging remain open.",
+  "evidence": [
+    {
+      "role": "specification",
+      "path": "gate3/architecture/ARCHITECTURE_RECONCILIATION_SPEC.md",
+      "sha256": "304bfa7b9eedc6481a259bef5d5323ceec32d393630fd8ea12d848dbe1057b2f"
+    },
+    {
+      "role": "code",
+      "path": "gate3/architecture/run_architecture_reconciliation.py",
+      "sha256": "df8cf47018598ce7bf047be9ddddd345a1725076b55bfd700d63db04492fb15a"
+    },
+    {
+      "role": "validation_report",
+      "path": "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md",
+      "sha256": "958ca0b2f87d6b8285e08671393a09e949634573e273a17f373e0fa9053421bc"
+    }
+  ],
+  "response_locations": [
+    "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent retained-artifact and presentation audit",
+    "report_path": "gate3/architecture/W06_CARRY_FORWARD_VALIDATION.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "Verified T02 dependency, final V3 packaging of the retained result set, and compiled-PDF inspection.",
+    "attempts": "Ran the hash-authenticated public W06 validator and focused tests, audited the active paper and appendix sources, and made no protected-data read or new outcome fit.",
+    "claim_impact": "The retained computation and source presentation pass, but W06 is not VERIFIED until upstream construction, packaged result evidence, and rendered presentation are validated together.",
+    "next_step": "Complete the current-contract architecture delivery and T02 integration, then compile and inspect the active tables."
+  },
+  "approval": null
+}
