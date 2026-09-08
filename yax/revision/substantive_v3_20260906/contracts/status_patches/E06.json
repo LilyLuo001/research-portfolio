@@ -1,0 +1,26 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "Both abstracts and the introduction state the exact conditional-mean employment-stock-ratio estimand before the headline coefficient. The design section now compactly separates supported magnitude, support, and sensitivity statements from unsupported causal allocation, explained-share, AI-remainder, and equivalence claims. Source checks pass; T01/E01 completion and rendered review remain outstanding.",
+  "evidence": [
+    {
+      "role": "validation_report",
+      "path": "editorial/E06_ESTIMAND_AND_LIMITATIONS.md",
+      "sha256": "c7faeaca5831ce547b3bb9fbb506685ec9e9bddc412e812899168f47d9a3f42a"
+    }
+  ],
+  "response_locations": [
+    "editorial/E06_ESTIMAND_AND_LIMITATIONS.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent estimand-order and limitation audit",
+    "report_path": "editorial/E06_ESTIMAND_AND_LIMITATIONS.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "Verified T01/E01 dependencies and compiled-PDF review of the abstracts and design signposting.",
+    "attempts": "Defined the exact estimand before every abstract and introduction coefficient, added a compact interpretation-boundary subsection, and installed fail-closed order checks.",
+    "claim_impact": "The requested source revision is implemented, but dependency and visual validation are incomplete.",
+    "next_step": "Resolve T01 and E01, then compile and inspect both manuscript modes and the online appendix."
+  },
+  "approval": null
+}

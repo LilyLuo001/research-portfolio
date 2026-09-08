@@ -1,0 +1,26 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The active manuscript, appendix, and referee response now use a comparison-centered title that does not imply an identified AI-versus-composition allocation. The introduction leads with the actual stock-ratio target and support, and explains why localizing the identifying occupational comparisons is useful to future adoption or quasi-experimental designs. Source checks pass; upstream B03 and final rendered review remain unresolved.",
+  "evidence": [
+    {
+      "role": "validation_report",
+      "path": "editorial/E01_COMPARISON_CENTERED_FRAMING.md",
+      "sha256": "875d1fe826eb3a3e1bcca2823be7b2991dc18a0acbda1f960f8ed927bc959785"
+    }
+  ],
+  "response_locations": [
+    "editorial/E01_COMPARISON_CENTERED_FRAMING.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent active-source framing audit",
+    "report_path": "editorial/E01_COMPARISON_CENTERED_FRAMING.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "Completed B03 dependency and compiled-PDF review of the revised title and opening.",
+    "attempts": "Reframed all active title-bearing sources, reordered the opening around the exact target and support, and added fail-closed source checks without using protected data.",
+    "claim_impact": "The requested framing is implemented in source, but E01 cannot be VERIFIED while a declared upstream contribution dependency and visual inspection remain open.",
+    "next_step": "Complete B03, compile the manuscript package, and visually inspect the revised title and opening pages."
+  },
+  "approval": null
+}

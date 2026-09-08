@@ -5216,12 +5216,29 @@
         "I06",
         "B03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The active manuscript, appendix, and referee response now use a comparison-centered title that does not imply an identified AI-versus-composition allocation. The introduction leads with the actual stock-ratio target and support, and explains why localizing the identifying occupational comparisons is useful to future adoption or quasi-experimental designs. Source checks pass; upstream B03 and final rendered review remain unresolved.",
+      "evidence": [
+        {
+          "role": "validation_report",
+          "path": "editorial/E01_COMPARISON_CENTERED_FRAMING.md",
+          "sha256": "875d1fe826eb3a3e1bcca2823be7b2991dc18a0acbda1f960f8ed927bc959785"
+        }
+      ],
+      "response_locations": [
+        "editorial/E01_COMPARISON_CENTERED_FRAMING.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent active-source framing audit",
+        "report_path": "editorial/E01_COMPARISON_CENTERED_FRAMING.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Completed B03 dependency and compiled-PDF review of the revised title and opening.",
+        "attempts": "Reframed all active title-bearing sources, reordered the opening around the exact target and support, and added fail-closed source checks without using protected data.",
+        "claim_impact": "The requested framing is implemented in source, but E01 cannot be VERIFIED while a declared upstream contribution dependency and visual inspection remain open.",
+        "next_step": "Complete B03, compile the manuscript package, and visually inspect the revised title and opening pages."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "presentation",
@@ -5429,12 +5446,29 @@
         "T01",
         "E01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Both abstracts and the introduction state the exact conditional-mean employment-stock-ratio estimand before the headline coefficient. The design section now compactly separates supported magnitude, support, and sensitivity statements from unsupported causal allocation, explained-share, AI-remainder, and equivalence claims. Source checks pass; T01/E01 completion and rendered review remain outstanding.",
+      "evidence": [
+        {
+          "role": "validation_report",
+          "path": "editorial/E06_ESTIMAND_AND_LIMITATIONS.md",
+          "sha256": "c7faeaca5831ce547b3bb9fbb506685ec9e9bddc412e812899168f47d9a3f42a"
+        }
+      ],
+      "response_locations": [
+        "editorial/E06_ESTIMAND_AND_LIMITATIONS.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent estimand-order and limitation audit",
+        "report_path": "editorial/E06_ESTIMAND_AND_LIMITATIONS.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified T01/E01 dependencies and compiled-PDF review of the abstracts and design signposting.",
+        "attempts": "Defined the exact estimand before every abstract and introduction coefficient, added a compact interpretation-boundary subsection, and installed fail-closed order checks.",
+        "claim_impact": "The requested source revision is implemented, but dependency and visual validation are incomplete.",
+        "next_step": "Resolve T01 and E01, then compile and inspect both manuscript modes and the online appendix."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "presentation",

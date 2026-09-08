@@ -685,6 +685,49 @@ appendix_text = "\n".join(path.read_text() for path in appendix_paths)
 response_text = "\n".join(path.read_text() for path in response_paths)
 all_text = "\n".join((main_text, appendix_text, response_text))
 
+# Framing and estimand order are substantive presentation contracts.  The
+# former question-form title implied a causal AI-versus-composition allocation
+# that the design does not identify.  Both abstracts and the introduction must
+# define the conditional-mean stock-ratio target before reporting its value.
+paper_preamble_text = (PAPER / "main" / "preamble.tex").read_text()
+old_title = "AI Exposure or Occupational Composition?"
+new_title = "Occupational AI Exposure and Young-Worker Employment"
+for source_name, source_text in [
+    ("main preamble", paper_preamble_text),
+    ("appendix driver", (PAPER / "appendix" / "appendix.tex").read_text()),
+    ("referee response", (PAPER / "revision" / "referee_response.tex").read_text()),
+]:
+    if old_title in source_text:
+        raise AssertionError(f"causally overbroad former title remains in {source_name}")
+    if new_title not in source_text:
+        raise AssertionError(f"comparison-centered title absent from {source_name}")
+
+estimand_phrase = "post-December-2022 change in the log conditional-mean employment-stock ratio"
+for abstract_name in ["abstract_working.tex", "abstract_restat.tex"]:
+    abstract_text = (PAPER / "main" / abstract_name).read_text()
+    estimand_position = abstract_text.find(estimand_phrase)
+    result_position = abstract_text.find("$-0.132$")
+    if estimand_position < 0 or result_position < 0 or estimand_position > result_position:
+        raise AssertionError(f"estimand does not precede first coefficient in {abstract_name}")
+
+introduction_text = (PAPER / "main" / "sections" / "01_introduction.tex").read_text()
+introduction_estimand_position = introduction_text.find(estimand_phrase)
+introduction_result_position = introduction_text.find("$-0.132$")
+if (
+    introduction_estimand_position < 0
+    or introduction_result_position < 0
+    or introduction_estimand_position > introduction_result_position
+):
+    raise AssertionError("introduction reports coefficient before defining the estimand")
+design_text = (PAPER / "main" / "sections" / "04_data_design.tex").read_text()
+for required_design_boundary in [
+    r"\subsection{What the design establishes}",
+    "cannot allocate movement among AI, computerization, pandemic recovery",
+    "nondetection rather than economic equivalence",
+]:
+    if required_design_boundary not in design_text:
+        raise AssertionError(f"compact design-boundary statement absent: {required_design_boundary}")
+
 
 def prose_words(text: str) -> int:
     text = re.sub(r"%.*", " ", text)
