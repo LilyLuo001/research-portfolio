@@ -30,12 +30,14 @@ Primary retained & 468 \\
 
 A literal exact-code merge between SOC-2010 AIOE and post-2018 employment data leaves only 3.33 percent of computer-and-mathematical employment.  The version-aware route reaches 97.7 percent.  The four-row continuous comparison separates the two operations that an aggregate ``crosswalk effect'' would conflate:
 
+The source workbook standardizes AIOE without employment weights across 774 source occupations: its mean is approximately zero and its sample standard deviation is approximately one.  A raw AIOE point is therefore one unit of that source index, not a probability or percentage.  As a common descriptive increment, the source-workbook interquartile difference is 1.879 raw units.  The historical four-row audit below uses a different, explicitly fixed unit: one full-window employment-stock-weighted standard deviation of repaired equal-administrative AIOE on the expanded 495-occupation AIOE-plus-Webb support.  The retained artifact does not store the numerical weighted standard deviation, so I do not manufacture a raw-point conversion.
+
 \begin{table}[!htbp]
 \centering
 \caption{AIOE taxonomy repair and support expansion}\label{tab:app_crosswalk}
 \begin{tabular}{llrr}
 \toprule
-Score & Support & Occupations & Continuous coefficient \\
+Score & Support & Occupations & Coefficient per fixed SD \\
 \midrule
 Literal original & original & 410 & $-0.01885$ \\
 Repaired & same original & 410 & $-0.01920$ \\
@@ -43,7 +45,7 @@ Repaired & expanded & 495 & $-0.03156$ \\
 Repaired & expanded, excluding SOC15 & --- & $-0.02940$ \\
 \bottomrule
 \end{tabular}
-\tabnote{The first row is an invalid vintage merge retained as an implementation audit, not a defensible specification.  Row 1 to 2 isolates score repair on fixed support; row 2 to 3 changes the population; the last row tests whether readmitted computer-and-mathematical occupations alone account for that expansion movement.  The continuous-score scale is held fixed within the audit.}
+\tabnote{The first row is an invalid vintage merge retained as an implementation audit, not a defensible specification.  Row 1 to 2 isolates score repair on fixed support; row 2 to 3 changes the population; the last row tests whether readmitted computer-and-mathematical occupations alone account for that expansion movement.  Every coefficient uses the fixed weighted-SD unit defined in the text; none is a percentage or a coefficient per raw AIOE point.}
 \end{table}
 
 The invalid merge is documented as a failure encountered in this project.  I do not claim that a published paper made the same error without direct verification of its code and occupational universe.

@@ -828,6 +828,38 @@ for required in [
     if required not in precision_table:
         raise AssertionError(f"consolidated precision diagnostic absent: {required}")
 
+# W05: AIOE source units and the distinct fixed-SD mapping-audit unit.
+w05_root = ROOT / "yax" / "revision" / "substantive_v3_20260906" / "source_verification"
+w05_receipt = json.loads((w05_root / "W05_AIOE_SOURCE_RECEIPT.json").read_text())
+if w05_receipt["source_occupation_count"] != 774:
+    raise AssertionError("AIOE source occupation count changed")
+close(w05_receipt["unweighted_mean"], 0.0, 1e-6)
+close(w05_receipt["unweighted_sample_sd"], 1.0, 1e-6)
+close(w05_receipt["source_iqr_raw_units"], 1.87897915, 1e-10)
+aioe_workbook = ROOT / w05_receipt["workbook_repo_path"]
+if sha256(aioe_workbook.read_bytes()).hexdigest() != w05_receipt["workbook_sha256"]:
+    raise AssertionError("vendored AIOE workbook differs from W05 receipt")
+mapping_appendix = (PAPER / "appendix" / "sections" / "r3_B_mapping.tex").read_text()
+architecture_appendix = (PAPER / "appendix" / "sections" / "r3_H_bcc_architecture.tex").read_text()
+for required in [
+    "standardizes AIOE without employment weights across 774 source occupations",
+    "source-workbook interquartile difference is 1.879 raw units",
+    "one full-window employment-stock-weighted standard deviation",
+    "Coefficient per fixed SD",
+    "none is a percentage or a coefficient per raw AIOE point",
+]:
+    if required not in mapping_appendix:
+        raise AssertionError(f"AIOE mapping-unit disclosure absent: {required}")
+for required in [
+    "standardized source-occupation index",
+    "source interquartile difference is 1.879 points",
+    "The direct-ability reconstruction has its own raw scale",
+]:
+    if required not in architecture_appendix:
+        raise AssertionError(f"AIOE architecture-unit disclosure absent: {required}")
+if "do not attribute it to another paper without implementation evidence" not in all_text:
+    raise AssertionError("AIOE implementation-attribution boundary absent")
+
 for token in [
     "-0.1321", "-0.2206", "-0.0437", "-0.0217", "-0.1607", "0.1173",
     "0.1104", "0.0107", "0.2102", "0.1454", "3.33", "97.7",

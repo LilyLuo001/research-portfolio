@@ -1,0 +1,36 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The vendored source workbook now verifies that raw AIOE is a standardized source-occupation index rather than a percentage; the source IQR is 1.87897915 raw units. The historical four-row audit is explicitly labeled per one fixed full-window employment-stock-weighted SD, and the invalid literal merge is attributed only to this project. W05 remains RUN_UNVALIDATED because its dependency W01 has not yet produced the current-contract mapping rerun and stored raw-scale conversion.",
+  "evidence": [
+    {
+      "role": "source_evidence",
+      "path": "source_verification/W05_AIOE_SOURCE_RECEIPT.json",
+      "sha256": "550ffcc26e80c626e1d3e6d6f4e36a4792fde7ae31d355473eb6cf90c75e82e0"
+    },
+    {
+      "role": "verification_report",
+      "path": "source_verification/W05_AIOE_UNITS_AND_ATTRIBUTION.md",
+      "sha256": "cfe06d9765c5ca367d8a502ae02076452ba351245411d937b233cb18efdaaa4c"
+    },
+    {
+      "role": "code",
+      "path": "source_verification/verify_aioe_units.py",
+      "sha256": "fcd80d86dd7498a60aa23f3c1887daef402993f401891ca597b2bc905f90b93d"
+    }
+  ],
+  "response_locations": [
+    "source_verification/W05_AIOE_UNITS_AND_ATTRIBUTION.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent workbook and implementation audit",
+    "report_path": "source_verification/W05_AIOE_UNITS_AND_ATTRIBUTION.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "The current-contract W01 mapping rerun, including stored raw weighted scale and raw-unit conversion.",
+    "attempts": "Verified the vendored AIOE workbook directly, inspected the historical estimator and result, and integrated the source and historical units without opening protected data.",
+    "claim_impact": "Source units and historical attribution are resolved, but W05 cannot be VERIFIED as a current-contract result until W01 executes and validates.",
+    "next_step": "Complete the authorized W01 SCC mapping run, validate its scale outputs, and replace or retire the historical four-row exhibit as required by the V3 contract."
+  },
+  "approval": null
+}
