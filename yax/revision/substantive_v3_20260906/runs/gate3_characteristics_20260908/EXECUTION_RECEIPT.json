@@ -1,0 +1,38 @@
+{
+  "coefficient_rows": 90,
+  "common_draws_within_block": true,
+  "draws": 9999,
+  "failures": 0,
+  "generated_at_utc": "2026-09-08T14:45:01.011845+00:00",
+  "git_head": "a6f448d0bf8e4f23df46b9a9a8e280a1a96970b7",
+  "influence_rows": 35586,
+  "input_hashes": {
+    "calibration_receipt": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+    "characteristics": "88311c3bc26f00fde4aa792888491ae4a1e340c601d1c62147d52727afbf207c",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "private_calibration": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d"
+  },
+  "model_count": 14,
+  "output_hashes": {
+    "CHARACTERISTIC_SCALING.csv": "0136a1708db4af1f523223f9342fc60ce8ef7e2d917907299070147e547f7b24",
+    "COMPUTER_OVERLAP_BY_QUINTILE.csv": "9038e01080cae86037add3372c72074c6f8667dcdc5d23924cb808c921a8766e",
+    "MODEL_COEFFICIENTS.csv": "1782b28b357683faa7357560c44f0caa5f972576eadb077c9972bf5a8110f759",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MODEL_INFLUENCE.csv": "05740d351397b9bdc2743d5e6573bd2df4c6fff0f2581cb5095abf02e1b0d7c3",
+    "MODEL_RESULTS.csv": "d8904774b3ebb81289184e3f971eb6fd83d486f9516e77d91d9d1dc646546c80",
+    "PAIRED_MOVEMENTS.csv": "5d18f2fae921eef1b0871d34472d3a30ea00286db9458058f6db8e5308723c18",
+    "SUPPORT_ACCOUNTING.csv": "a254b48aea6cb1580e72ff1c854923e3086a3476cded5078b78eaeb43d18a9e5"
+  },
+  "paired_comparisons": 14,
+  "privacy": "outputs contain coefficients and aggregate diagnostics only",
+  "schema_version": "yax-gate3-characteristic-block-v1",
+  "sge_job_id": "7492126",
+  "status": "PASS_GATE3_CHARACTERISTIC_BLOCK",
+  "support_counts": {
+    "canonical": 468,
+    "computer": 455,
+    "historical_all_including_superseded_shortfall": 341,
+    "remotability": 408,
+    "static_common": 347
+  }
+}

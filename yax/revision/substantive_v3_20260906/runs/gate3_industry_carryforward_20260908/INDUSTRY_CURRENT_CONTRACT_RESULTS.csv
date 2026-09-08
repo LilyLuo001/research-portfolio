@@ -1,0 +1,4 @@
+model,panel,coefficient_Q5_x_post,occupation_cluster_se,ci_lower,ci_upper,bootstrap_p_value,occupations,row_fixed_effects,second_fixed_effects,slope_parameters,conditional_target_information,relative_information_to_full_microdata_baseline,interpretation
+industry_cell_baseline,occupation_industry_month,-0.1375910970549625,0.0460163647358476,-0.2275171132690943,-0.0476650808408308,0.0021,468,3127,113,5,25657607.553512312,0.9759740527937714,different industry-cell objective
+industry_conditioned,occupation_industry_month_plus_industry_post,-0.0986807207727173,0.0462392633056909,-0.1879811855052033,-0.0093802560402313,0.03,468,3127,113,17,21669892.50872354,0.8242877973417728,descriptive broad-industry conditioning
+valid_industry_aggregate_baseline,occupation_month_preconnected_industry_records,-0.1322094781911371,0.0453563471441345,-0.2211647168981928,-0.0432542394840813,0.0026,468,468,113,5,26147088.823039703,0.9945931316533626,valid-industry occupation-month reference

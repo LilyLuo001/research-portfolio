@@ -1,0 +1,4 @@
+contrast,left_model,right_model,coefficient_difference,paired_occupation_se,paired_ci_lower,paired_ci_upper,paired_bootstrap_p_value,paired_mde80,common_occupation_multipliers,interpretation
+industry_cell_minus_valid_industry_aggregate,industry_cell_baseline,valid_industry_aggregate_baseline,-0.0053816188638254,0.004272742645369,-0.0137922488959019,0.003029011168251,0.2153,0.0119704526360668,True,descriptive sensitivity; no causal industry share
+industry_conditioned_minus_industry_cell,industry_conditioned,industry_cell_baseline,0.0389103762822452,0.0158541868838864,0.008169652046807,0.0696511005176833,0.013,0.0444168556190968,True,descriptive sensitivity; no causal industry share
+industry_conditioned_minus_valid_industry_aggregate,industry_conditioned,valid_industry_aggregate_baseline,0.0335287574184197,0.0164583142632954,0.0012701992161244,0.0657873156207151,0.041,0.0461093699551063,True,descriptive sensitivity; no causal industry share

@@ -3507,12 +3507,55 @@
       "depends_on": [
         "G05"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Canonical assignments are fixed across a maximal 455-occupation computer comparison and a separate 347-occupation six-characteristic common-support block. The 455, 408, 347, and historical 341 counts are reconciled and support coverage is explicit.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/characteristics/CHARACTERISTIC_BLOCK_SPEC.md",
+          "sha256": "7fb1fad9c81965219cd87d394954b1d279b6da755fc96fb220018e866d37e41a"
+        },
+        {
+          "role": "code",
+          "path": "gate3/characteristics/run_characteristic_block.py",
+          "sha256": "27b2fbfe6464c4412d73ed495db6c3f0484329618e3317890309a055c9524569"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_characteristics_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "fc443945d244396fcccdf6251c61702f9604093c71d974e7cd5998713055d5ae"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/SUPPORT_ACCOUNTING.csv",
+          "sha256": "a254b48aea6cb1580e72ff1c854923e3086a3476cded5078b78eaeb43d18a9e5"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+          "sha256": "2b5e4d340b72d43d3cd9eec83efc2171665d002b925cd2dd7eaaa9829d41da7d"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/characteristics/C01_C07_FINDINGS.md",
+          "sha256": "0f25d065ab60108d137cfd65d7e4961c5c0ca85b6b9a165ab26c4eec4c3b9bf6"
+        }
+      ],
+      "response_locations": [
+        "gate3/characteristics/C01_C07_FINDINGS.md",
+        "runs/gate3_characteristics_20260908/SUPPORT_ACCOUNTING.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final manuscript integration and result-focused independent review remain outstanding; requirements depending on N03 also inherit its RUN_UNVALIDATED state.",
+        "attempts": "The declared models, public-output reconstruction, support accounting, and presentation findings are complete.",
+        "claim_impact": "Numerical work is complete, but final VERIFIED status awaits dependency closure and manuscript-level audit.",
+        "next_step": "Integrate the fixed-support results and limitations into the revised manuscript, then perform one result-focused audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3544,12 +3587,60 @@
         "C01",
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The fixed-support 2x2 was completed with zero failures. Q5-by-post is -0.09575 baseline, -0.19660 computer-only, 0.03539 family-only, and -0.04665 combined. Paired common-draw intervals are retained.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/characteristics/CHARACTERISTIC_BLOCK_SPEC.md",
+          "sha256": "7fb1fad9c81965219cd87d394954b1d279b6da755fc96fb220018e866d37e41a"
+        },
+        {
+          "role": "code",
+          "path": "gate3/characteristics/run_characteristic_block.py",
+          "sha256": "27b2fbfe6464c4412d73ed495db6c3f0484329618e3317890309a055c9524569"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_characteristics_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "fc443945d244396fcccdf6251c61702f9604093c71d974e7cd5998713055d5ae"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/MODEL_RESULTS.csv",
+          "sha256": "d8904774b3ebb81289184e3f971eb6fd83d486f9516e77d91d9d1dc646546c80"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/PAIRED_MOVEMENTS.csv",
+          "sha256": "5d18f2fae921eef1b0871d34472d3a30ea00286db9458058f6db8e5308723c18"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+          "sha256": "2b5e4d340b72d43d3cd9eec83efc2171665d002b925cd2dd7eaaa9829d41da7d"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/characteristics/C01_C07_FINDINGS.md",
+          "sha256": "0f25d065ab60108d137cfd65d7e4961c5c0ca85b6b9a165ab26c4eec4c3b9bf6"
+        }
+      ],
+      "response_locations": [
+        "gate3/characteristics/C01_C07_FINDINGS.md",
+        "runs/gate3_characteristics_20260908/PAIRED_MOVEMENTS.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final manuscript integration and result-focused independent review remain outstanding; requirements depending on N03 also inherit its RUN_UNVALIDATED state.",
+        "attempts": "The declared models, public-output reconstruction, support accounting, and presentation findings are complete.",
+        "claim_impact": "Numerical work is complete, but final VERIFIED status awaits dependency closure and manuscript-level audit.",
+        "next_step": "Integrate the fixed-support results and limitations into the revised manuscript, then perform one result-focused audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3581,12 +3672,60 @@
       "depends_on": [
         "C02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Computer-use coefficients, raw-unit translations, occupation/family SEs and covariances with Q5 are reported. Weighted beta/computer correlation is 0.7970; information retention falls to 0.290 in the pooled controlled model. These are precision and residual-comparison facts, not a signed mechanism.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/characteristics/CHARACTERISTIC_BLOCK_SPEC.md",
+          "sha256": "7fb1fad9c81965219cd87d394954b1d279b6da755fc96fb220018e866d37e41a"
+        },
+        {
+          "role": "code",
+          "path": "gate3/characteristics/run_characteristic_block.py",
+          "sha256": "27b2fbfe6464c4412d73ed495db6c3f0484329618e3317890309a055c9524569"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_characteristics_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "fc443945d244396fcccdf6251c61702f9604093c71d974e7cd5998713055d5ae"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/MODEL_COEFFICIENTS.csv",
+          "sha256": "1782b28b357683faa7357560c44f0caa5f972576eadb077c9972bf5a8110f759"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/COMPUTER_OVERLAP_BY_QUINTILE.csv",
+          "sha256": "9038e01080cae86037add3372c72074c6f8667dcdc5d23924cb808c921a8766e"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+          "sha256": "2b5e4d340b72d43d3cd9eec83efc2171665d002b925cd2dd7eaaa9829d41da7d"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/characteristics/C01_C07_FINDINGS.md",
+          "sha256": "0f25d065ab60108d137cfd65d7e4961c5c0ca85b6b9a165ab26c4eec4c3b9bf6"
+        }
+      ],
+      "response_locations": [
+        "gate3/characteristics/C01_C07_FINDINGS.md",
+        "runs/gate3_characteristics_20260908/MODEL_COEFFICIENTS.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final manuscript integration and result-focused independent review remain outstanding; requirements depending on N03 also inherit its RUN_UNVALIDATED state.",
+        "attempts": "The declared models, public-output reconstruction, support accounting, and presentation findings are complete.",
+        "claim_impact": "Numerical work is complete, but final VERIFIED status awaits dependency closure and manuscript-level audit.",
+        "next_step": "Integrate the fixed-support results and limitations into the revised manuscript, then perform one result-focused audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3616,12 +3755,55 @@
       "depends_on": [
         "C03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Oster, Cinelli-Hazlett, and Diegert-Masten-Poirier were adjudicated as linear-regression sensitivity frameworks that cannot be implemented by inserting the grouped-binomial pseudo-R2. No arbitrary nonlinear analogue is reported. Family-common and within-family omitted dimensions, endogenous-control risk, and sign versus magnitude sensitivity are stated separately.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/characteristics/CHARACTERISTIC_BLOCK_SPEC.md",
+          "sha256": "7fb1fad9c81965219cd87d394954b1d279b6da755fc96fb220018e866d37e41a"
+        },
+        {
+          "role": "code",
+          "path": "gate3/characteristics/run_characteristic_block.py",
+          "sha256": "27b2fbfe6464c4412d73ed495db6c3f0484329618e3317890309a055c9524569"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_characteristics_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "fc443945d244396fcccdf6251c61702f9604093c71d974e7cd5998713055d5ae"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/PAIRED_MOVEMENTS.csv",
+          "sha256": "5d18f2fae921eef1b0871d34472d3a30ea00286db9458058f6db8e5308723c18"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+          "sha256": "2b5e4d340b72d43d3cd9eec83efc2171665d002b925cd2dd7eaaa9829d41da7d"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/characteristics/C04_OMITTED_CONFOUNDER_APPLICABILITY.md",
+          "sha256": "753b637d4227ea2a070358b1ee94fcf21b648979249c8f7e3a2f5e9018470600"
+        }
+      ],
+      "response_locations": [
+        "gate3/characteristics/C04_OMITTED_CONFOUNDER_APPLICABILITY.md",
+        "gate3/characteristics/C01_C07_FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final manuscript integration and result-focused independent review remain outstanding; requirements depending on N03 also inherit its RUN_UNVALIDATED state.",
+        "attempts": "The declared models, public-output reconstruction, support accounting, and presentation findings are complete.",
+        "claim_impact": "Numerical work is complete, but final VERIFIED status awaits dependency closure and manuscript-level audit.",
+        "next_step": "Integrate the fixed-support results and limitations into the revised manuscript, then perform one result-focused audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3736,12 +3918,60 @@
       "depends_on": [
         "C01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "On a fixed 347-occupation common support, the support-only baseline and six one-at-a-time controls, all controls, family-only, and family-plus-all models are reported. Computer adjustment makes the coefficient more negative; other one-at-a-time paired intervals include zero. No surviving coefficient is labeled purified AI.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/characteristics/CHARACTERISTIC_BLOCK_SPEC.md",
+          "sha256": "7fb1fad9c81965219cd87d394954b1d279b6da755fc96fb220018e866d37e41a"
+        },
+        {
+          "role": "code",
+          "path": "gate3/characteristics/run_characteristic_block.py",
+          "sha256": "27b2fbfe6464c4412d73ed495db6c3f0484329618e3317890309a055c9524569"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_characteristics_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "fc443945d244396fcccdf6251c61702f9604093c71d974e7cd5998713055d5ae"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/MODEL_RESULTS.csv",
+          "sha256": "d8904774b3ebb81289184e3f971eb6fd83d486f9516e77d91d9d1dc646546c80"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_characteristics_20260908/PAIRED_MOVEMENTS.csv",
+          "sha256": "5d18f2fae921eef1b0871d34472d3a30ea00286db9458058f6db8e5308723c18"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+          "sha256": "2b5e4d340b72d43d3cd9eec83efc2171665d002b925cd2dd7eaaa9829d41da7d"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/characteristics/C01_C07_FINDINGS.md",
+          "sha256": "0f25d065ab60108d137cfd65d7e4961c5c0ca85b6b9a165ab26c4eec4c3b9bf6"
+        }
+      ],
+      "response_locations": [
+        "gate3/characteristics/C01_C07_FINDINGS.md",
+        "runs/gate3_characteristics_20260908/MODEL_RESULTS.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_characteristics_20260908/LOCAL_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final manuscript integration and result-focused independent review remain outstanding; requirements depending on N03 also inherit its RUN_UNVALIDATED state.",
+        "attempts": "The declared models, public-output reconstruction, support accounting, and presentation findings are complete.",
+        "claim_impact": "Numerical work is complete, but final VERIFIED status awaits dependency closure and manuscript-level audit.",
+        "next_step": "Integrate the fixed-support results and limitations into the revised manuscript, then perform one result-focused audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3773,12 +4003,60 @@
       "depends_on": [
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The prior protected analysis uses 3,127 actual occupation-industry strata, not a dominant-industry proxy. Its receipt hashes, byte-identical current membership, model scores, and three paired intervals were publicly revalidated. The cell baseline is labeled as a different objective and conditioning as descriptive.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/characteristics/CHARACTERISTIC_BLOCK_SPEC.md",
+          "sha256": "7fb1fad9c81965219cd87d394954b1d279b6da755fc96fb220018e866d37e41a"
+        },
+        {
+          "role": "code",
+          "path": "gate3/characteristics/validate_industry_carryforward.py",
+          "sha256": "20cc36fe9f7383c1ab31f766a4e0491e119efc9f65074ca6eed3645b931972b2"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_industry_carryforward_20260908/VALIDATION_REPORT.json",
+          "sha256": "9365f510083ed351be19b9c93d72f0c62cf89e4f75f6b78794880dd8579d48e1"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_industry_carryforward_20260908/INDUSTRY_CURRENT_CONTRACT_RESULTS.csv",
+          "sha256": "5fdd0544e9b57f1403075bee38e592272d3effce8b0a72762e1872a573aa2696"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_industry_carryforward_20260908/INDUSTRY_CURRENT_CONTRACT_PAIRED.csv",
+          "sha256": "6d03ec92688236bd742c8f90d2216d55b5728a02987288bece7152a22e8519a3"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_industry_carryforward_20260908/VALIDATION_REPORT.json",
+          "sha256": "9365f510083ed351be19b9c93d72f0c62cf89e4f75f6b78794880dd8579d48e1"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/characteristics/C01_C07_FINDINGS.md",
+          "sha256": "0f25d065ab60108d137cfd65d7e4961c5c0ca85b6b9a165ab26c4eec4c3b9bf6"
+        }
+      ],
+      "response_locations": [
+        "gate3/characteristics/C01_C07_FINDINGS.md",
+        "runs/gate3_industry_carryforward_20260908/VALIDATION_REPORT.json"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_industry_carryforward_20260908/VALIDATION_REPORT.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final manuscript integration and result-focused independent review remain outstanding; requirements depending on N03 also inherit its RUN_UNVALIDATED state.",
+        "attempts": "The declared models, public-output reconstruction, support accounting, and presentation findings are complete.",
+        "claim_impact": "Numerical work is complete, but final VERIFIED status awaits dependency closure and manuscript-level audit.",
+        "next_step": "Integrate the fixed-support results and limitations into the revised manuscript, then perform one result-focused audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
