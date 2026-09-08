@@ -1,6 +1,6 @@
 {
-  "status": "RUN_UNVALIDATED",
-  "summary": "Verified named primary-source citation corrections, including Autor-Thompson in JEEA, Deming-Noray, Hampole et al., and Bick et al. publication status. The required reproducible ten-journal novelty search remains incomplete, so B09 is not verified.",
+  "status": "VERIFIED",
+  "summary": "Completed a dated, journal-by-journal search of the declared ten journals with exact domain-constrained queries, stable official-publisher candidate URLs, verified bibliographic fields, candidate dispositions, and primary work outside the journal scope. The result supports only a narrow search-qualified statement and explicitly disallows claims of broad priority, proven absence, or errors in another paper's private implementation.",
   "evidence": [
     {
       "role": "source_evidence",
@@ -11,9 +11,26 @@
       "role": "verification_report",
       "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
       "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+    },
+    {
+      "role": "source_evidence",
+      "path": "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.json",
+      "sha256": "c64bb3a4d71dd0ecaed7964101670fdeeb1efb5fe693108b1134fda34d138e77"
+    },
+    {
+      "role": "verification_report",
+      "path": "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.md",
+      "sha256": "bd3e94d4711ac47e06f5836bf5d45fd2ef9879b95f535093f64cf63a4679484d"
+    },
+    {
+      "role": "code",
+      "path": "source_verification/check_b09_ten_journal_ledger.py",
+      "sha256": "492c6c3687aa14f12c40109c0a1d698cfa0baa60f4133d662e0a8cc859c623c1"
     }
   ],
   "response_locations": [
+    "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.md",
+    "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.json",
     "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
   ],
   "review": null,

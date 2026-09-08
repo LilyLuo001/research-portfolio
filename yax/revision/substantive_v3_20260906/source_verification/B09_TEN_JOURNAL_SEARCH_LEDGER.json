@@ -1,0 +1,211 @@
+{
+  "ledger_id": "yax_b09_ten_journal_search_20260908_v1",
+  "search_date": "2026-09-08",
+  "method": "Targeted web search constrained to each journal's official publisher domain, followed by title and abstract review on stable publisher pages.",
+  "scope_limit": "This is a dated, targeted search. It is not a systematic review, does not prove absence, and does not establish priority for the broader young-worker or public-CPS pattern.",
+  "exact_design_definition": "A peer-reviewed article combining a national monthly CPS young-versus-older employment-stock design with systematic within-design variation across named occupational AI-exposure architectures and mapping/support constructions.",
+  "journal_searches": [
+    {
+      "journal_id": "AER",
+      "journal": "American Economic Review",
+      "publisher_domain": "aeaweb.org",
+      "query": "site:aeaweb.org/articles \"American Economic Review\" artificial intelligence occupation employment labor market young workers",
+      "closest_candidates": [
+        {
+          "authors": "Daron Acemoglu and Pascual Restrepo",
+          "title": "The Race between Man and Machine: Implications of Technology for Growth, Factor Shares, and Employment",
+          "year": 2018,
+          "publication_status": "published",
+          "url": "https://www.aeaweb.org/articles?id=10.1257/aer.20160696",
+          "disposition": "Related task-automation and employment theory; not a post-ChatGPT monthly CPS age-by-occupation exposure-construction design."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "QJE",
+      "journal": "Quarterly Journal of Economics",
+      "publisher_domain": "academic.oup.com",
+      "query": "site:academic.oup.com/qje artificial intelligence occupation employment labor market young workers CPS",
+      "closest_candidates": [
+        {
+          "authors": "Natalia Emanuel, Emma Harrington, and Amanda Pallais",
+          "title": "The Power of Proximity to Coworkers",
+          "year": 2026,
+          "publication_status": "published",
+          "url": "https://academic.oup.com/qje/article/141/3/1825/8676722",
+          "disposition": "Uses CPS evidence on young college graduates and remotable jobs, with AI-related controls; outcome, population, treatment, and comparison differ from YAX."
+        },
+        {
+          "authors": "Erik Brynjolfsson, Danielle Li, and Lindsey R. Raymond",
+          "title": "Generative AI at Work",
+          "year": 2025,
+          "publication_status": "published",
+          "url": "https://academic.oup.com/qje/article/140/2/889/7990658",
+          "disposition": "Causal tool deployment in one customer-support setting; studies productivity rather than national CPS employment stocks."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "JPE",
+      "journal": "Journal of Political Economy",
+      "publisher_domain": "journals.uchicago.edu",
+      "query": "site:journals.uchicago.edu/doi \"Journal of Political Economy\" artificial intelligence occupations employment",
+      "closest_candidates": [
+        {
+          "authors": "Enrique Ide and Eduard Talam\u00e0s",
+          "title": "Artificial Intelligence in the Knowledge Economy",
+          "year": 2025,
+          "publication_status": "published",
+          "url": "https://www.journals.uchicago.edu/doi/full/10.1086/737233",
+          "disposition": "Theory of AI, occupational choice, and knowledge hierarchies; no YAX CPS design."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "ECMA",
+      "journal": "Econometrica",
+      "publisher_domain": "onlinelibrary.wiley.com",
+      "query": "site:onlinelibrary.wiley.com/doi Econometrica artificial intelligence automation occupations employment",
+      "closest_candidates": [
+        {
+          "authors": "Daron Acemoglu and Pascual Restrepo",
+          "title": "Tasks, Automation, and the Rise in U.S. Wage Inequality",
+          "year": 2022,
+          "publication_status": "published",
+          "url": "https://onlinelibrary.wiley.com/doi/10.3982/ECTA19815",
+          "disposition": "Long-run task displacement and demographic wage inequality through 2016; not monthly post-ChatGPT CPS employment stocks or exposure sensitivity."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "RESTUD",
+      "journal": "Review of Economic Studies",
+      "publisher_domain": "academic.oup.com",
+      "query": "site:academic.oup.com/restud artificial intelligence automation occupation employment young workers",
+      "closest_candidates": [
+        {
+          "authors": "Ashesh Rambachan and Jonathan Roth",
+          "title": "A More Credible Approach to Parallel Trends",
+          "year": 2023,
+          "publication_status": "published",
+          "url": "https://academic.oup.com/restud/article/90/5/2555/7039335",
+          "disposition": "Methodological trend-sensitivity article; not substantive AI-labor evidence or the YAX design."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "RESTAT",
+      "journal": "Review of Economics and Statistics",
+      "publisher_domain": "direct.mit.edu",
+      "query": "site:direct.mit.edu/rest artificial intelligence automation occupation employment workers",
+      "closest_candidates": [
+        {
+          "authors": "James E. Bessen, Maarten Goos, Anna Salomons, and Wiljan Van den Berge",
+          "title": "What Happens to Workers at Firms that Automate?",
+          "year": 2025,
+          "publication_status": "published",
+          "url": "https://direct.mit.edu/rest/article/107/1/125/114750/What-Happens-to-Workers-at-Firms-that-Automate",
+          "disposition": "Dutch firm-level automation-investment event study; not U.S. CPS or AI-score construction sensitivity."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "JEEA",
+      "journal": "Journal of the European Economic Association",
+      "publisher_domain": "academic.oup.com",
+      "query": "site:academic.oup.com/jeea artificial intelligence automation occupation employment Expertise Autor Thompson",
+      "closest_candidates": [
+        {
+          "authors": "David Autor and Neil Thompson",
+          "title": "Expertise",
+          "year": 2025,
+          "publication_status": "published",
+          "url": "https://academic.oup.com/jeea/article/23/4/1203/8175003",
+          "disposition": "Theory and evidence on expertise changes after task automation; not a post-ChatGPT monthly CPS age contrast or exposure-construction audit."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "JF",
+      "journal": "Journal of Finance",
+      "publisher_domain": "onlinelibrary.wiley.com",
+      "query": "site:onlinelibrary.wiley.com/doi \"Journal of Finance\" artificial intelligence automation occupation labor",
+      "closest_candidates": [
+        {
+          "authors": "Miao Ben Zhang",
+          "title": "Labor-Technology Substitution: Implications for Asset Pricing",
+          "year": 2019,
+          "publication_status": "published",
+          "url": "https://onlinelibrary.wiley.com/doi/10.1111/jofi.12766",
+          "disposition": "Firm routine-labor exposure and asset pricing; not a post-ChatGPT CPS age contrast."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "JFE",
+      "journal": "Journal of Financial Economics",
+      "publisher_domain": "sciencedirect.com",
+      "query": "site:sciencedirect.com/science/article \"Journal of Financial Economics\" artificial intelligence firm growth employment Babina",
+      "closest_candidates": [
+        {
+          "authors": "Tania Babina, Anastassia Fedyk, Alex He, and James Hodson",
+          "title": "Artificial intelligence, firm growth, and product innovation",
+          "year": 2024,
+          "publication_status": "published",
+          "url": "https://www.sciencedirect.com/science/article/pii/S0304405X2300185X",
+          "disposition": "Firm-level resume measure of AI investment and firm growth; no young-versus-older national CPS stock design."
+        }
+      ],
+      "exact_design_located": false
+    },
+    {
+      "journal_id": "RFS",
+      "journal": "Review of Financial Studies",
+      "publisher_domain": "academic.oup.com",
+      "query": "site:academic.oup.com/rfs artificial intelligence machine learning employment occupations knowledge production",
+      "closest_candidates": [
+        {
+          "authors": "Simona Abis and Laura Veldkamp",
+          "title": "The Changing Economics of Knowledge Production",
+          "year": 2024,
+          "publication_status": "published",
+          "url": "https://academic.oup.com/rfs/article/37/1/89/7235570",
+          "disposition": "Finance-sector machine-learning labor and knowledge production; not national CPS exposure-construction sensitivity."
+        }
+      ],
+      "exact_design_located": false
+    }
+  ],
+  "outside_scope_primary_work": [
+    {
+      "authors": "Erik Brynjolfsson, Bharat Chandar, and Ruyu Chen",
+      "title": "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence",
+      "version_date": "2026-08-12",
+      "url": "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/",
+      "reason": "Directly relevant ADP and public-data benchmark but outside the declared ten journals."
+    },
+    {
+      "authors": "Daron Acemoglu, David Autor, Jonathon Hazell, and Pascual Restrepo",
+      "title": "Artificial Intelligence and Jobs: Evidence from Online Vacancies",
+      "year": 2022,
+      "url": "https://www.journals.uchicago.edu/doi/full/10.1086/718327",
+      "reason": "Directly relevant occupation and firm AI-exposure evidence in the Journal of Labor Economics, outside the declared ten journals."
+    }
+  ],
+  "search_result": "No exact-design article was located in the dated targeted searches.",
+  "allowed_claim": "In targeted official-publisher-domain searches through September 8, 2026, we did not locate a peer-reviewed article in the declared ten journals that combines the exact set of design features defined in this ledger.",
+  "forbidden_claims": [
+    "YAX is the first public-data study of AI exposure and young workers.",
+    "No prior paper studies this question.",
+    "The search proves that the exact design does not exist.",
+    "YAX's audit proves that another paper made an implementation error."
+  ]
+}
