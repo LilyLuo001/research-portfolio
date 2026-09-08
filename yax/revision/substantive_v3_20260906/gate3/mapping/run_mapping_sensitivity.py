@@ -368,6 +368,13 @@ def influence_rows(model: dict[str, Any], occupations: np.ndarray,
     return rows
 
 
+def public_source_path(path: Path) -> str:
+    """Return a stable repo-relative receipt path for relative or absolute inputs."""
+    if not path.is_absolute():
+        return path.as_posix()
+    return path.relative_to(ROOT).as_posix()
+
+
 def carry_forward_rows(stable_path: Path, timing_path: Path) -> list[dict[str, Any]]:
     stable = pd.read_csv(stable_path, float_precision="round_trip")
     row = stable.loc[stable.specification.eq("stable_Census2010_observed_calendar")]
@@ -388,7 +395,7 @@ def carry_forward_rows(stable_path: Path, timing_path: Path) -> list[dict[str, A
         "months": int(stable_row.months),
         "changed_population_or_labels": True,
         "interpretation": "stable Census-2010 taxonomy; changed occupation population, exposure mapping, and labels",
-        "source_path": str(stable_path.relative_to(ROOT)),
+        "source_path": public_source_path(stable_path),
         "source_sha256": sha256_file(stable_path),
     }]
     for _, value in selected.sort_values("model_id").iterrows():
@@ -403,7 +410,7 @@ def carry_forward_rows(stable_path: Path, timing_path: Path) -> list[dict[str, A
             "months": int(value.months),
             "changed_population_or_labels": False,
             "interpretation": "current 468-occupation labels; post-2020 coding-stable calendar",
-            "source_path": str(timing_path.relative_to(ROOT)),
+            "source_path": public_source_path(timing_path),
             "source_sha256": sha256_file(timing_path),
         })
     return result

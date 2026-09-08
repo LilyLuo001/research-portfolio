@@ -134,3 +134,10 @@ def test_current_carry_forward_sources_exist_with_required_rows():
         "CALENDAR_TAXONOMY_SENSITIVITIES.csv"
     )
     assert (stable.specification == "stable_Census2010_observed_calendar").sum() == 1
+
+
+def test_public_source_path_accepts_repo_relative_and_absolute_inputs():
+    relative = Path("yax/revision/example.csv")
+    assert RUN.public_source_path(relative) == relative.as_posix()
+    absolute = RUN.ROOT / relative
+    assert RUN.public_source_path(absolute) == relative.as_posix()
