@@ -136,6 +136,30 @@ def test_current_carry_forward_sources_exist_with_required_rows():
     assert (stable.specification == "stable_Census2010_observed_calendar").sum() == 1
 
 
+def test_current_carry_forward_schema_is_consumed_end_to_end():
+    root = HERE.parents[4]
+    timing_path = (
+        root / "yax/revision/substantive_v3_20260906/runs/"
+        "gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv"
+    )
+    stable_path = (
+        root / "yax/revision/referee_20260905/results/balanced_cells/"
+        "CALENDAR_TAXONOMY_SENSITIVITIES.csv"
+    )
+    rows = RUN.carry_forward_rows(stable_path, timing_path)
+    assert [row["model_id"] for row in rows] == [
+        "stable_Census2010_observed_calendar",
+        "post_2020_family_month",
+        "post_2020_unconditioned",
+    ]
+    timing = pd.read_csv(timing_path, float_precision="round_trip").set_index("model_id")
+    for row in rows[1:]:
+        source = timing.loc[row["model_id"]]
+        assert row["occupation_se"] == source["occupation_cluster_se"]
+        assert row["occupation_ci_lower"] == source["ci_lower"]
+        assert row["occupation_ci_upper"] == source["ci_upper"]
+
+
 def test_public_source_path_accepts_repo_relative_and_absolute_inputs():
     relative = Path("yax/revision/example.csv")
     assert RUN.public_source_path(relative) == relative.as_posix()

@@ -19,6 +19,16 @@ sys.modules["acs_extension_tested"] = MOD
 spec.loader.exec_module(MOD)
 
 
+def test_scc_downloader_uses_cluster_compatible_curl_contract():
+    source = (HERE / "download_acs_one_year_scc.sh").read_text(encoding="utf-8")
+    command_lines = " ".join(
+        line.strip() for line in source.splitlines() if not line.lstrip().startswith("#")
+    )
+    assert "--retry-all-errors" not in command_lines
+    assert "curl --fail --location --retry 8" in command_lines
+    assert "ACS_INPUT_SHA256.txt" in command_lines
+
+
 def weight_frame(rows: int, value: float = 10.0) -> pd.DataFrame:
     return pd.DataFrame({column: np.full(rows, value + index / 100.0)
                          for index, column in enumerate(MOD.WEIGHT_COLUMNS)})
