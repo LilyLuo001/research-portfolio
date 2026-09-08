@@ -38,7 +38,7 @@ from scipy.stats import chi2, norm
 
 HERE = pathlib.Path(__file__).resolve().parent
 SPEC_PATH = HERE / "SUPPORT_INFERENCE_SPEC.json"
-REVIEWED_SPEC_DIGEST = "a9ce9aad52483ebf9f77ad51ea32d54e8e81ec2950e9cec600481e507d3f482f"
+REVIEWED_SPEC_DIGEST = "490b6beb386a42a4f5f0be6b25c5166f0ed2f6757fe8cd740a247bbae51894fa"
 EXPECTED_CANONICAL_SPEC_ID = "yaxspec_v1_83bb387f9fc28e2655db5101c7697989510475027d1dd5a9c361c797ed3925c3"
 SAFE_RUN_ID_PATTERN = re.compile(r"gate2_support_inference_sge_[1-9][0-9]{0,19}\Z")
 SGE_JOB_ID_PATTERN = re.compile(r"[1-9][0-9]{0,19}\Z")
@@ -335,6 +335,7 @@ def validate_frozen_spec(spec: dict[str, Any]) -> None:
             "authorization_status": PRE_EXECUTION_AUTHORIZATION_STATUS,
             "authorization_relative_path": str(AUTHORIZATION_REL),
             "authorization_commit_rule": "time-limited authorization is the sole changed file in HEAD whose parent is the exact clean implementation commit",
+            "protected_input_read_order": "committed pre-execution authorization validation precedes every aggregate-cells or cells-receipt open; complete provenance revalidates authorization after input authentication and immediately before publication",
             "run_binding": "positive numeric SGE JOB_ID exactly equals run_id suffix; canonical sanitized argv and output-parent path hash/device/inode are authorization-bound and revalidated",
             "single_use_semantics": SINGLE_USE_SEMANTICS,
             "maximum_authorization_lifetime_hours": 24,
@@ -2792,6 +2793,8 @@ def _main_impl(argv: list[str] | None = None) -> int:
     if sha256_file(pathlib.Path(__file__)) != spec["implementation_sha256"]:
         raise Blocked("runner hash differs from frozen support-inference spec")
     args.run_identity = build_run_identity(args)
+    early_authorization = validate_pre_execution_authorization(
+        args.pre_execution_authorization, repository_root(), spec, args.run_identity)
     require_file(args.a1_spec, spec["authenticated_inputs"]["a1_spec"]["sha256"], "a1_spec")
     require_file(args.a1_runner, spec["authenticated_inputs"]["a1_runner"]["sha256"], "a1_runner")
     pre_cell_analysis = read_json(args.a1_spec)
@@ -2808,6 +2811,8 @@ def _main_impl(argv: list[str] | None = None) -> int:
     args.runtime_contract = runtime_contract
     initial_provenance = execution_provenance(
         args, spec, read_json(args.cells_receipt), runtime_contract)
+    if initial_provenance.get("pre_execution_authorization") != early_authorization:
+        raise Blocked("authorization changed between the protected-input boundary and full provenance")
     args.initial_execution_provenance = initial_provenance
     args.execution_provenance = initial_provenance
     issue_publication_capability(args, initial_provenance)

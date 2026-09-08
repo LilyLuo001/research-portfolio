@@ -220,7 +220,9 @@ numeric SGE `JOB_ID`, exact `gate2_support_inference_sge_<JOB_ID>` run ID,
 canonical sanitized argument identities, and output-parent resolved-path hash,
 device, and inode. The authorization is single-use for that held scheduler job,
 run ID, and output parent. The runner reconstitutes the same run identity before
-each provenance checkpoint and publication; publication additionally requires
+opening either the aggregate-cells file or its receipt, at each complete
+provenance checkpoint after input authentication, and before publication;
+publication additionally requires
 the capability issued in-process after the initial authenticated provenance.
 That
 authorization is intentionally absent from this pre-execution package:

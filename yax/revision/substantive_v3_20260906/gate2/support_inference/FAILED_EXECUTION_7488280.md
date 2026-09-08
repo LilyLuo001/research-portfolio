@@ -25,13 +25,24 @@ a numerical or scientific result.
 - `sge.out` SHA-256 (empty):
   `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 
-The runner failed closed before authenticating aggregate cells or fitting any
-model with:
+The runner failed closed before fitting any model, but not before reading the
+aggregate cells, with:
 
 > BLOCKED: pre-execution authorization run binding differs
 
 No result receipt, failure-evidence leaf, or scientific output was created.
 The SCC evidence directory is retained unchanged.
+
+The implementation at `6497ef5` called `authenticate(args, spec)` before
+`execution_provenance(...)`, and the latter was the first call that validated
+the committed pre-execution authorization. Consequently, the hash-pinned
+aggregate-cells file and receipt were opened and authenticated before the
+command-binding mismatch blocked execution. This ordering defect does not
+change any scientific result—no fit began—but it invalidates any claim that
+this failed attempt read zero protected aggregate outcomes. The subsequent
+implementation moves committed authorization validation ahead of every
+aggregate-cells or cells-receipt read and retains the later full-provenance
+revalidations.
 
 The authorization bound the support matrix, support edges, and direct-tail
 membership files inside the exact authorized Git checkout. Those files remained

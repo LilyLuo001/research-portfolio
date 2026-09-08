@@ -1160,6 +1160,29 @@ def test_pre_execution_authorization_is_required_and_fail_closed(tmp_path):
             tmp_path / "missing.json", tmp_path, json.loads(SPEC.read_text()), {})
 
 
+def test_invalid_authorization_blocks_before_any_protected_input_read(monkeypatch, tmp_path):
+    args = _args(tmp_path)
+    calls = []
+
+    monkeypatch.setattr(si, "parse_args", lambda _argv: args)
+
+    def reject_authorization(*_args, **_kwargs):
+        calls.append("authorization")
+        raise si.Blocked("deliberate invalid authorization sentinel")
+
+    def protected_read_sentinel(*_args, **_kwargs):
+        calls.append("protected_read")
+        raise AssertionError("a protected input was reached before authorization")
+
+    monkeypatch.setattr(si, "validate_pre_execution_authorization", reject_authorization)
+    monkeypatch.setattr(si, "require_file", protected_read_sentinel)
+    monkeypatch.setattr(si, "authenticate", protected_read_sentinel)
+
+    with pytest.raises(si.Blocked, match="deliberate invalid authorization sentinel"):
+        si._main_impl([])
+    assert calls == ["authorization"]
+
+
 def test_authorization_lifetime_and_issue_age_are_each_capped_at_24_hours():
     now = datetime(2026, 9, 7, 12, tzinfo=timezone.utc)
     boundary = {"issued_at_utc": (now-timedelta(hours=24)).isoformat(),
@@ -1190,9 +1213,13 @@ def test_runtime_and_final_state_bindings_are_exactly_pinned_in_spec_and_runner(
     assert contract["a1_runtime_payload_sha256"] == si.EXPECTED_A1_RUNTIME_PAYLOAD_SHA256
     assert contract["status_at_freeze"].startswith("PENDING_EXACT_CLEAN_IMPLEMENTATION_COMMIT")
     source = RUNNER.read_text()
+    authorization_index = source.index(
+        "early_authorization = validate_pre_execution_authorization")
     runtime_index = source.index("runtime_contract = verify_signed_a1_runtime_contract")
     authenticate_index = source.index("canonical, analysis, a1_audit, membership, cells")
-    assert runtime_index < authenticate_index
+    assert authorization_index < runtime_index < authenticate_index
+    assert contract["protected_input_read_order"].startswith(
+        "committed pre-execution authorization validation precedes")
     assert source.count("execution_provenance(") >= 4
 
 
