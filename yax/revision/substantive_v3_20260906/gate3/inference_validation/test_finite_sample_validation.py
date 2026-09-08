@@ -21,9 +21,9 @@ def test_scenario_inventory_has_declared_dgps_and_ablations():
     assert designs == {
         "empirical_gaussian_ar1", "prior_adverse_rademacher",
         "sparsity_equalized", "family_variance_zero",
-        "serial_independent", "influence_equalized",
+        "serial_independent", "influence_equalized", "occupation_gaussian_ar1",
     }
-    assert len(SIM.SCENARIOS) == 10
+    assert len(SIM.SCENARIOS) == 11
 
 
 def test_influence_equalization_preserves_family_information():
@@ -63,8 +63,9 @@ def test_multiplier_methods_are_alternatives_not_variance_sums():
     source = (HERE / "run_finite_sample_validation.py").read_text(encoding="utf-8")
     assert "occupation_se + family_se" not in source
     assert "occupation_se ** 2 + family_se ** 2" not in source
-    assert SIM.PROCEDURES[:3] == (
-        "occupation_rademacher", "family_rademacher", "family_webb")
+    assert SIM.PROCEDURES[:4] == (
+        "occupation_rademacher", "occupation_webb",
+        "family_rademacher", "family_webb")
 
 
 def test_stopping_constants_match_declared_design():
@@ -85,6 +86,7 @@ def test_summary_executes_all_targets_and_procedures():
             }
             for procedure, half in (
                 ("occupation_rademacher", .02),
+                ("occupation_webb", .02),
                 ("family_rademacher", .03),
                 ("family_webb", .03),
             ):
@@ -99,3 +101,16 @@ def test_summary_executes_all_targets_and_procedures():
     summary, stopping = SIM.summarize(rows, 399, 0)
     assert len(summary) == len(SIM.TARGETS) * len(SIM.PROCEDURES)
     assert stopping["passes"]
+
+
+def test_sd_mc_error_uses_observed_fourth_moment():
+    normal = np.random.default_rng(90).normal(size=5000)
+    heavy = np.random.default_rng(91).standard_t(df=5, size=5000)
+    assert SIM.empirical_sd_relative_mc_error(heavy) > SIM.empirical_sd_relative_mc_error(normal)
+
+
+def test_stationary_variance_diagnostic_checks_all_months():
+    months = ["2022-10", "2022-11", "2023-01", "2023-02"]
+    result = SIM.stationary_variance_diagnostic(months, .6, .1)
+    assert result["diagnostic_paths"] == 5000
+    assert result["maximum_relative_month_variance_difference"] <= .08

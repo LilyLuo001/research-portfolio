@@ -70,10 +70,12 @@ SCENARIOS: dict[str, dict[str, Any]] = {
     "family_variance_zero_null": {"design": "family_variance_zero", "theta": 0.0},
     "serial_independent_null": {"design": "serial_independent", "theta": 0.0},
     "influence_equalized_null": {"design": "influence_equalized", "theta": 0.0},
+    "occupation_ar1_null": {"design": "occupation_gaussian_ar1", "theta": 0.0},
 }
 TARGETS = ("pooled", "family_month", "family_month_minus_pooled")
 PROCEDURES = (
-    "occupation_rademacher", "family_rademacher", "family_webb",
+    "occupation_rademacher", "occupation_webb",
+    "family_rademacher", "family_webb",
     "crossfit_full_refit_oracle",
 )
 
@@ -173,6 +175,30 @@ def influence_equalized_total(total: np.ndarray, probability: np.ndarray,
     }
 
 
+def stationary_variance_diagnostic(months: list[str], rho: float,
+                                   stationary_sd: float) -> dict[str, float]:
+    """Empirically challenge the stationary initialization and gap transitions."""
+    rng = np.random.default_rng(202609082111)
+    draws = np.asarray([
+        CORE.draw_stationary_ar1(rng, 1, months, rho, stationary_sd)[0]
+        for _ in range(5000)
+    ])
+    variance = np.var(draws, axis=0, ddof=1)
+    target = stationary_sd ** 2
+    if target == 0:
+        maximum_relative = 0.0
+    else:
+        maximum_relative = float(np.max(np.abs(variance - target) / target))
+    require(maximum_relative <= .08, "realized AR(1) marginal variance is not flat")
+    return {
+        "theoretical_marginal_variance": target,
+        "minimum_realized_month_variance": float(variance.min()),
+        "maximum_realized_month_variance": float(variance.max()),
+        "maximum_relative_month_variance_difference": maximum_relative,
+        "diagnostic_paths": len(draws),
+    }
+
+
 def scenario_objects(arrays: dict[str, np.ndarray], receipt: dict,
                      scenario_name: str) -> dict[str, Any]:
     definition = SCENARIOS[scenario_name]
@@ -207,18 +233,36 @@ def scenario_objects(arrays: dict[str, np.ndarray], receipt: dict,
         check = MATH.gaussian_logit_mean(eta, family_sd, order=82)
         require(float(np.max(np.abs(mean_probability - check))) <= 1e-10,
                 "Gaussian quadrature is not stable")
-        shock_law = ("stationary Gaussian SOC2-family AR(1)" if design_name != "serial_independent"
-                     else "independent Gaussian SOC2-family month shocks at fixed marginal variance")
+        if design_name == "serial_independent":
+            shock_law = "independent Gaussian SOC2-family month shocks at fixed marginal variance"
+        elif design_name == "occupation_gaussian_ar1":
+            shock_law = "independent stationary Gaussian occupation-by-month AR(1) paths"
+        else:
+            shock_law = "stationary Gaussian SOC2-family AR(1)"
     count_rule = "rounded observed cell Kish effective count"
     diagnostics: dict[str, Any] = {}
     if design_name == "sparsity_equalized":
         positive = effective > 0
-        common = int(np.rint(np.median(np.asarray(arrays["effective_count"], float)[positive])))
+        raw_count = np.asarray(arrays["effective_count"], float)
+        variance_weight = np.square(total[positive]) * mean_probability[positive] * (
+            1.0 - mean_probability[positive])
+        common_float = float(np.sum(variance_weight) /
+                             np.sum(variance_weight / raw_count[positive]))
+        common = int(np.rint(common_float))
         effective[positive] = max(1, common)
-        count_rule = f"all positive cells fixed to rounded observed median {max(1, common)}"
+        count_rule = ("all positive cells fixed to variance-preserving weighted harmonic "
+                      f"effective count {common_float:.12g}, rounded once to {max(1, common)}")
+        diagnostics.update({"variance_preserving_common_count_unrounded": common_float,
+                            "variance_preserving_common_count_rounded": max(1, common)})
     if design_name == "influence_equalized":
         total, diagnostics = influence_equalized_total(
             total, mean_probability, arrays["families"], len(arrays["months"]))
+    if design_name not in {"prior_adverse_rademacher", "family_variance_zero"}:
+        diagnostics["stationary_variance_diagnostic"] = stationary_variance_diagnostic(
+            arrays["months"].tolist(),
+            0.0 if design_name == "serial_independent" else rho,
+            family_sd,
+        )
     return {
         "scenario": scenario_name, "design": design_name, "theta": theta,
         "total": total, "effective_integer": effective, "eta": eta,
@@ -256,9 +300,10 @@ def draw_probability(objects: dict[str, Any], arrays: dict[str, np.ndarray],
                      replicate: int) -> np.ndarray:
     family_count = len(set(arrays["families"].tolist()))
     months = arrays["months"].tolist()
-    family_code = CORE.build_design(
+    design = CORE.build_design(
         arrays["quintiles"], arrays["webb_z"], arrays["families"], months, "pooled"
-    ).family_codes
+    )
+    family_code = design.family_codes
     month_code = np.arange(len(objects["eta"])) % len(months)
     if objects["design"] == "prior_adverse_rademacher":
         rng = np.random.default_rng(HISTORICAL_SEED + replicate)
@@ -266,9 +311,15 @@ def draw_probability(objects: dict[str, Any], arrays: dict[str, np.ndarray],
         shock = signs[:, None] * objects["family_path"]
     else:
         rng = np.random.default_rng(OUTER_SEED + replicate)
+        unit_count = (len(arrays["occupations"])
+                      if objects["design"] == "occupation_gaussian_ar1"
+                      else family_count)
         shock = CORE.draw_stationary_ar1(
-            rng, family_count, months, objects["rho"], objects["stationary_sd"])
-    probability = MATH.expit(objects["eta"] + shock[family_code, month_code])
+            rng, unit_count, months, objects["rho"], objects["stationary_sd"])
+    shock_code = (design.occupation_codes
+                  if objects["design"] == "occupation_gaussian_ar1"
+                  else family_code)
+    probability = MATH.expit(objects["eta"] + shock[shock_code, month_code])
     return probability
 
 
@@ -313,6 +364,8 @@ def one_replicate(objects: dict[str, Any], arrays: dict[str, np.ndarray],
         estimate = float(target_object["estimate"])
         occ_interval = CORE.multiplier_interval(
             estimate, target_object["occupation"], multipliers["occupation_rademacher"])
+        occupation_webb = CORE.multiplier_interval(
+            estimate, target_object["occupation"], multipliers["occupation_webb"])
         family_rademacher = CORE.multiplier_interval(
             estimate, target_object["family"], multipliers["family_rademacher"])
         family_webb = CORE.multiplier_interval(
@@ -326,6 +379,7 @@ def one_replicate(objects: dict[str, Any], arrays: dict[str, np.ndarray],
         }
         for name, interval in (
             ("occupation_rademacher", occ_interval),
+            ("occupation_webb", occupation_webb),
             ("family_rademacher", family_rademacher),
             ("family_webb", family_webb),
         ):
@@ -356,6 +410,17 @@ def crossfit_oracle(local: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, dict[s
              "even_calibration_critical": critical_even})
 
 
+def empirical_sd_relative_mc_error(values: np.ndarray) -> float:
+    """Delta-method MC error for an SD using the observed fourth moment."""
+    values = np.asarray(values, float)
+    require(len(values) > 3 and np.all(np.isfinite(values)), "invalid SD MC sample")
+    centered = values - np.mean(values)
+    mu2 = float(np.mean(np.square(centered)))
+    require(mu2 > 0, "zero empirical simulation variance")
+    mu4 = float(np.mean(centered ** 4))
+    return float(math.sqrt(max(0.0, mu4 / (mu2 * mu2) - 1.0) / (4.0 * len(values))))
+
+
 def summarize(rows: list[dict[str, Any]], attempts: int, failures: int) -> tuple[list[dict], dict]:
     frame = pd.DataFrame(rows)
     summaries: list[dict[str, Any]] = []
@@ -367,7 +432,10 @@ def summarize(rows: list[dict[str, Any]], attempts: int, failures: int) -> tuple
         estimate = local.estimate.to_numpy(float)
         truth = float(local.pseudo_truth.iloc[0])
         empirical_sd = float(np.std(estimate, ddof=1))
-        relative_sd_mc_error = 1.0 / math.sqrt(2.0 * max(len(local) - 1, 1))
+        relative_sd_mc_error = empirical_sd_relative_mc_error(estimate)
+        mean_occupation_se = float(local.occupation_se.mean())
+        zero_tolerance = max(1e-10, 1e-6 * mean_occupation_se)
+        truth_is_numerical_zero = abs(truth) <= zero_tolerance
         stopping_sd_rmc.append(relative_sd_mc_error)
         oracle_lower, oracle_upper, oracle_critical = crossfit_oracle(local)
         for procedure in PROCEDURES:
@@ -392,7 +460,7 @@ def summarize(rows: list[dict[str, Any]], attempts: int, failures: int) -> tuple
             coverage_mcse = MATH.binomial_monte_carlo_se(coverage_rate, len(coverage))
             rejection_mcse = MATH.binomial_monte_carlo_se(rejection_rate, len(rejection))
             stopping_mcse.append(coverage_mcse)
-            if abs(truth) <= 1e-8:
+            if truth_is_numerical_zero:
                 stopping_mcse.append(rejection_mcse)
             summaries.append({
                 "scenario": str(local.scenario.iloc[0]), "target": target,
@@ -406,7 +474,8 @@ def summarize(rows: list[dict[str, Any]], attempts: int, failures: int) -> tuple
                 "mean_interval_length": float(np.mean(upper - lower)),
                 "coverage": coverage_rate, "coverage_mcse": coverage_mcse,
                 "zero_rejection": rejection_rate,
-                "zero_rejection_is_size": abs(truth) <= 1e-8,
+                "zero_rejection_is_size": truth_is_numerical_zero,
+                "numerical_zero_tolerance": zero_tolerance,
                 "zero_rejection_mcse": rejection_mcse,
                 "mean_or_crossfit_critical": critical_mean,
                 "empirical_sd_relative_mc_error": relative_sd_mc_error,
@@ -485,7 +554,13 @@ def main() -> int:
             except Exception as error:
                 failures.append({"scenario": args.scenario, "replicate": replicate,
                                  "stage": "joint_full_refit", "error": repr(error)})
+                if len(failures) <= 3:
+                    print(json.dumps({"stage": "joint_full_refit_failure",
+                                      "scenario": args.scenario,
+                                      "replicate": replicate,
+                                      "error": repr(error)}), flush=True)
         attempts = target_reps
+        require(bool(rows), f"all joint refits failed; first failure: {failures[0]['error']}")
         summaries, stopping = summarize(rows, attempts, len(failures))
         if args.fixed_replications is not None or stopping["passes"] or attempts == CAP:
             break
@@ -505,9 +580,7 @@ def main() -> int:
         "shock_law": objects["shock_law"], "count_rule": objects["count_rule"],
         "rho": objects["rho"], "stationary_sd": objects["stationary_sd"],
         "diagnostics": objects["diagnostics"],
-        "structural_zero_is_projection_zero": {
-            name: abs(value) <= 1e-8 for name, value in truth.items()
-        },
+        "zero_size_classification_rule": "abs(pseudo_truth) <= max(1e-10, 1e-6 * mean occupation SE); evaluated in SIMULATION_SUMMARY.csv",
         "historical_adverse_reproduction": history,
     }
     write_json(args.output_dir / "DGP_AND_TRUTHS.json", dgp)

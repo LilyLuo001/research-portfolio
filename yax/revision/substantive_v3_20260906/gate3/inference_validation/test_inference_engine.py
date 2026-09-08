@@ -66,6 +66,7 @@ def test_fit_influences_reproduce_covariance_and_pairing():
     interval = CORE.multiplier_interval(pair["estimate"], direct,
                                         draws["occupation_rademacher"])
     assert interval["lower"] < pair["estimate"] < interval["upper"]
+    assert draws["occupation_webb"].shape == draws["occupation_rademacher"].shape
 
 
 def test_calendar_ar1_respects_two_month_gap():

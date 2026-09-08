@@ -58,9 +58,13 @@ design receives newly computed pseudo-true targets.
    and complete-path SOC2-family sign shock as exactly as the current contract
    permits. Any unavoidable change from the archived implementation is listed
    field by field.
-3. **Sparsity/weight ablation.** Keep the empirically calibrated probability process but
-   replace heterogeneous effective counts by the declared common count (the
-   observed positive-cell median, rounded once) while retaining cell totals.
+3. **Sparsity/weight ablation.** Keep the empirically calibrated probability
+   process but replace heterogeneous effective counts by one
+   variance-preserving common count while retaining cell totals. With
+   \(v_c=N_c^2p_c(1-p_c)\), set
+   \(n^*=\sum_c v_c/\sum_c(v_c/n_c)\) and round once. This removes count
+   heterogeneity without mechanically changing aggregate stock-innovation
+   variance at the analytic DGP mean.
 4. **Family-dependence ablation.** Keep actual sparse counts and fitted index
    but set the calibrated broad-family shock variance to zero.
 5. **Serial-dependence ablation.** Keep the calibrated family-shock variance
@@ -69,6 +73,11 @@ design receives newly computed pseudo-true targets.
    information totals within SOC2 family while preserving the family total,
    calendar, treatment, and probability process. Report the exact rescaling
    rule and recompute all pseudo-true targets.
+7. **Occupation-shock design.** Replace the common family shock by independent
+   occupation-by-month stationary Gaussian AR(1) paths, holding calibrated
+   persistence and marginal variance fixed. This is the design in which the
+   article's occupation cluster is the imposed shock unit; a family-shock-only
+   collection cannot by itself validate occupation clustering.
 
 The ablations diagnose this finite design; they do not identify a universal
 variance correction or the true CPS sampling law.
@@ -81,9 +90,13 @@ available.
 
 For the Gaussian calibrated layer, compute marginal mean probabilities by a
 fixed high-order Gauss--Hermite quadrature and verify quadrature stability by
-doubling its order. Serial persistence affects the joint sampling law but not
-the marginal Gaussian integration used to define mean-stock projection
-targets.
+doubling its order. Initialize every AR(1) path from its stationary marginal,
+\(u_{g1}\sim N(0,\sigma_\varepsilon^2/(1-\rho^2))\), and use the
+\(\rho^h\) transition across calendar gaps. The serial-independence ablation
+sets \(\rho=0\) while retaining
+\(\sigma_u=\sigma_\varepsilon/\sqrt{1-\rho^2}\), so it changes dependence but
+not marginal variance or analytic pseudo-truth. The runner verifies constant
+theoretical marginal variance and a simulation diagnostic across months.
 
 ## 3. Inference procedures compared on every successful refit
 
@@ -92,6 +105,8 @@ family-month, and their paired movement, evaluate:
 
 - occupation-cluster Rademacher wild-score inference using the article's
   fixed-studentizer rule;
+- occupation-cluster Webb six-point wild-score inference with the same score
+  and fixed studentizer, isolating multiplier choice from cluster level;
 - SOC2-family Rademacher wild-score inference with the declared family
   finite-cluster correction;
 - SOC2-family Webb six-point wild-score inference with the same score and
@@ -104,6 +119,13 @@ No normal interval may be described as validation of a wild-score interval.
 Occupation and family uncertainty are alternative shock structures and are
 not added. Household sampling sensitivity is reported separately and is not
 added to either cluster covariance.
+
+Occupation influence uses the active-occupation correction
+\(G_o/(G_o-1)\); family influence uses \(22/21\). Every multiplier interval
+holds that fitted influence covariance fixed: the multiplier changes the
+reference distribution, not the studentizer. The nesting of family-by-month
+fixed effects inside 22 family clusters is reported as a limitation of that
+alternative procedure rather than hidden.
 
 For the full-refit benchmark, deterministic odd/even replicate streams form
 calibration and evaluation halves. Critical values are learned only on the
@@ -123,7 +145,10 @@ factor ablations wherever their innovation dimensions coincide.
   draws, up to 1,999 per DGP.
 - Stop only when, for every primary null-target coverage/rejection comparison,
   the binomial Monte Carlo standard error is at most 0.0125 and the approximate
-  relative Monte Carlo error of the empirical SD is at most 5 percent.
+  relative Monte Carlo error of the empirical SD is at most 5 percent. The SD
+  error uses the observed fourth central moment,
+  \(\sqrt{(\hat\mu_4/\hat\sigma^4-1)/(4n)}\), rather than the normal-theory
+  shortcut that is mechanically nonbinding at the 399-draw pilot.
 - If the cap is reached first, label that comparison numerically unresolved
   and report its achieved uncertainty. Do not select a procedure by its effect
   on the observed headline.
@@ -137,6 +162,12 @@ silently deleted or replaced.
 For each DGP, model, target, and procedure report the pseudo-truth, mean
 estimate, bias, empirical SD, mean reported SE where defined, interval length,
 coverage, zero-rejection rate, failure rate, and Monte Carlo uncertainty.
+
+`Zero rejection` is called empirical size only when the pseudo-truth is zero
+within a numerical tolerance of
+\(\max(10^{-10},10^{-6}\times\overline{SE}_{occupation})\). This is a
+numerical classification rule, not an economic equivalence region; larger
+projection offsets remain confounding or estimand differences.
 
 ## 5. Household full-refit sensitivity
 
@@ -174,6 +205,12 @@ designs at resolved Monte Carlo precision, the manuscript must demote sharp
 rejection language and show the uncertainty limitation. A calibrated or
 test-inverted interval may enter only if its construction and out-of-sample
 coverage are separately validated.
+
+The historical 26.7% and 11.3% rejection figures are withdrawn as validation
+claims. They came from a 199-draw exercise without independently established
+pseudo-truths and without the current same-target wild-score comparisons. The
+new design may reproduce them only as historical diagnostics and replaces
+their inferential interpretation with the Gate 3 results.
 
 ## 7. Required mechanical validation
 

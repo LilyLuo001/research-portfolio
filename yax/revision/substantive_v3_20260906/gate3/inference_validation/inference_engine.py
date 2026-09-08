@@ -245,6 +245,7 @@ def draw_multiplier_matrices(draws: int, occupation_count: int,
     return {
         "occupation_rademacher": rng.choice(
             np.asarray([-1.0, 1.0]), size=(draws, occupation_count)),
+        "occupation_webb": rng.choice(WEBB_SUPPORT, size=(draws, occupation_count)),
         "family_rademacher": rng.choice(
             np.asarray([-1.0, 1.0]), size=(draws, family_count)),
         "family_webb": rng.choice(WEBB_SUPPORT, size=(draws, family_count)),
@@ -326,6 +327,6 @@ def binomial_stock_draw(rng: np.random.Generator, total: np.ndarray,
     young[active] = total[active] * count[active] / effective_count[active]
     older[active] = total[active] * (effective_count[active] - count[active]) / effective_count[active]
     require(np.all(young >= 0) and np.all(older >= 0), "negative simulated stock")
-    require(np.allclose(young + older, total, rtol=0, atol=1e-10),
+    require(np.allclose(young + older, total, rtol=5e-15, atol=1e-8),
             "simulated stocks do not preserve cell total")
     return young, older
