@@ -25,6 +25,10 @@ Updated: 2026-09-08 Asia/Shanghai
   `runs/gate2_support_inference_authoritative_20260908/`
 - Gate 2 support-inference post-run validation:
   `gate2/support_inference/evidence/POSTRUN_VALIDATION_REPORT.json`
+- Authoritative Gate 2 dynamic-core run:
+  `runs/gate2_dynamic_core_authoritative_20260908/`
+- Gate 2 dynamic-core independent validation:
+  `gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json`
 
 ## Authoritative Gate 1 identifiers
 
@@ -128,11 +132,32 @@ Updated: 2026-09-08 Asia/Shanghai
   normal p=0.0333), but the four-coefficient paired profile does not reject
   jointly (chi-square 5.4169 on 4 df, p=0.2471; multiplier p=0.2368). These are
   validated run facts, not yet manuscript-ready interpretation.
+- The authoritative Y01--Y05 dynamic-core execution, SCC job `7489898`, ran
+  from clean frozen commit `6c65820f9ba525ec31f97ead0d4db5fc6d60d668`,
+  exited successfully in 223 seconds, and published 14 result artifacts plus a
+  manifest and receipt under result ID
+  `yaxresult_v1_b039944581f0da60fb7e8368bff687858b740a7e638c190a8c934369fc10defe`.
+  All four models passed fresh unchanged A1 certification. Repository-side
+  recomputation reproduces all 18 reconciliation targets and their covariance,
+  every event-study interval, all 16 pretrend tests, and all leave-one-quarter,
+  level, drift, and seasonality diagnostics to at most `1.19e-12`.
+- Exact nesting holds with zero design residual. The static-score discrepancy at
+  dynamic fitted probabilities is below `9.0e-13` per total, and the pseudo-stock
+  projection reproduces the static treatment targets exactly at reported
+  precision. Full coefficient/covariance/influence rebasing changes governed
+  quantities by at most `1.70e-15` relative.
+- The reference-invariant dynamic contrast D agrees closely with the static S:
+  unconditioned S is -0.1321 and D is -0.1314; family-month S is -0.0217 and D
+  is -0.0217. The published-reference post functional P is -0.1199 and -0.2074,
+  respectively, showing that its family-month discrepancy is driven by the
+  2022Q4 reference-period level rather than by failure of static/dynamic nesting.
+- Y01--Y05 are `RUN_UNVALIDATED`: their computation and numerical validation are
+  complete, while manuscript and appendix presentation remains outstanding.
 
-All 11 A1 numerical targets are independently artifact-reviewed, and the first
-authoritative Gate 2 inferential outputs are now retained and numerically
-reconstructed. No new coefficient is yet manuscript-ready because interpretation
-and presentation remain separately governed. The cell and exact-target audits
+All 11 A1 numerical targets and the completed static/support and Y01--Y05
+dynamic outputs have now been independently reconstructed from retained public
+objects. No new coefficient is yet manuscript-ready because interpretation and
+presentation remain separately governed. The cell and exact-target audits
 establish the estimating-data object, not a causal or substantive manuscript
 claim.
 
@@ -166,11 +191,10 @@ selective subset.
 The A1 execution, independent audit, finding disposition, and remote push are
 complete. The original and compatibility-blocked runs remain preserved.
 
-1. Execute the dynamic reconciliation core (Y01--Y05) using only the objects
-   released by the certified static and dynamic models. Repair or explicitly
-   block any required object that the support-inference run did not publish.
-   Keep the onset grid and through-2024 comparisons partial until their
-   additional models receive same-objective numerical certification.
+1. Integrate the validated static/support and dynamic Y01--Y05 evidence into the
+   manuscript and appendix. Keep the onset grid and through-2024 comparisons
+   partial until their additional estimands are actually executed; existing
+   numerical certification alone does not supply those result objects.
 2. Complete the separate broader-beta/no-Webb producer required by S05; the
    fixed-support inference run does not answer that requirement.
 3. Separately specify any outcome-bearing additive D02 companion, if retained,

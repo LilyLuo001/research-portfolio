@@ -31,6 +31,10 @@ def load_module(name: str, path: Path):
 
 CORE = load_module("test_gate2_dynamic_core", CORE_PATH)
 DYNAMIC = load_module("test_gate2_dynamic_parent_for_core", PARENT_PATH)
+VALIDATOR = load_module(
+    "test_gate2_dynamic_core_validator",
+    HERE.parent / "validate_authoritative_dynamic_core.py",
+)
 
 
 def load_json(path: Path) -> dict:
@@ -202,3 +206,23 @@ def test_original_coordinate_probability_reconstruction_is_stable():
     beta, maximum = CORE.original_full_beta(fit)
     assert np.array_equal(beta, np.array([-1000.0, 3.0]))
     assert maximum == 0.0
+
+
+def test_authoritative_dynamic_core_result_recomputes_from_public_objects(tmp_path: Path):
+    run_dir = ROOT / "runs/gate2_dynamic_core_authoritative_20260908"
+    support_dir = ROOT / "runs/gate2_support_inference_authoritative_20260908"
+    report = tmp_path / "validation.json"
+    assert VALIDATOR.main([
+        "--run-dir", str(run_dir),
+        "--support-run-dir", str(support_dir),
+        "--core-spec", str(CORE_SPEC_PATH),
+        "--parent-spec", str(PARENT_SPEC_PATH),
+        "--common-multipliers", str(support_dir / "COMMON_MULTIPLIERS.npz"),
+        "--report", str(report),
+    ]) == 0
+    result = load_json(report)
+    assert result["status"] == "PASS_INDEPENDENT_DYNAMIC_CORE_RECOMPUTATION"
+    assert result["result"]["result_id"] == (
+        "yaxresult_v1_b039944581f0da60fb7e8368bff687858b740a7e638c190a8c934369fc10defe"
+    )
+    assert max(result["maximum_absolute_recomputation_differences"].values()) < 2e-12
