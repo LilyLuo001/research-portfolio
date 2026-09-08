@@ -1,0 +1,26 @@
+{
+  "schema": "yax.comment_response_matrix_validation.v1",
+  "status": "PASS_CURRENT_LEDGER_MATRIX",
+  "atomic_request_rows": 297,
+  "unique_atomic_ids": 297,
+  "requirements_represented": 99,
+  "live_requirements": 99,
+  "status_counts": {
+    "BLOCKED_INPUT": 2,
+    "IMPLEMENTED_UNRUN": 1,
+    "NOT_STARTED": 28,
+    "PREMISE_CORRECTED": 1,
+    "RUN_UNVALIDATED": 53,
+    "SPECIFIED": 2,
+    "VERIFIED": 12
+  },
+  "crosswalk_sha256": "3598080b42a5063d04b196ba32485af00107fe064befbf1e468d0b1218752ac0",
+  "requirements_status_projection_sha256": "19ff793bf6c7b907966f5cffdbf28b98ad7fe60ef842fe463fd469722769e16e",
+  "comment_response_matrix_sha256": "2d487a1fc3809ceab8643b5448afd7fd0e2aa7ae8694c59a908f0cd220d4277e",
+  "completion_boundary": "Only VERIFIED, PREMISE_CORRECTED, and INAPPLICABLE_APPROVED rows permit a completion claim. The matrix does not establish G02 source-request exhaustiveness or scientific validity.",
+  "self_reference_rule": "E09 evidence is omitted from its own matrix row and status projection so the matrix and receipt can be hash-pinned by E09.",
+  "remaining_dependency": {
+    "requirement_id": "G02",
+    "status": "SPECIFIED"
+  }
+}
