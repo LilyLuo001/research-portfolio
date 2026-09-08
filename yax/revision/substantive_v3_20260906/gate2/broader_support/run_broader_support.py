@@ -101,6 +101,15 @@ def groups_from_fixed_cuts(values: np.ndarray, cuts: np.ndarray) -> np.ndarray:
     return (np.searchsorted(cuts, values, side="left") + 1).astype(int)
 
 
+def select_sign_columns(signs: np.ndarray, indices: list[int]) -> np.ndarray:
+    matrix = np.asarray(signs, float)
+    selected = np.asarray(indices, int)
+    require(matrix.ndim == 2, "multiplier matrix must be two dimensional")
+    require(selected.ndim == 1 and len(selected) > 0, "multiplier column selection is empty")
+    require(selected.min() >= 0 and selected.max() < matrix.shape[1], "multiplier column selection is out of range")
+    return matrix[:, selected]
+
+
 def inference(fit, influence: np.ndarray, target: int, signs: np.ndarray) -> tuple[dict[str, Any], np.ndarray]:
     centered = signs @ influence[:, target]
     estimate = float(fit.beta[target])
@@ -354,7 +363,7 @@ def run(args: argparse.Namespace) -> None:
 
     broad_young, broad_older = CELLS.panel_for_ages(data["cells"], broad_support, data["months"], (22, 25), (26, 65))
     broad_signs = np.random.default_rng(SEED).choice(np.asarray([-1.0, 1.0]), size=(DRAWS, len(broad_support)))
-    primary_signs = broad_signs[[broad_index[code] for code in primary]]
+    primary_signs = select_sign_columns(broad_signs, [broad_index[code] for code in primary])
     model_defs = [
         ("primary_with_webb", primary, data["young"], data["older"], primary_groups, {"Webb_software_z": np.asarray(data["rebuilt"]["webb_z"], float)}, primary_signs, primary_cuts),
         ("primary_without_webb", primary, data["young"], data["older"], primary_groups, {}, primary_signs, primary_cuts),

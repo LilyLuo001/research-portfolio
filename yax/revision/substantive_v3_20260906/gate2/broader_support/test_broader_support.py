@@ -64,3 +64,10 @@ def test_paired_difference_uses_covariance_from_common_draws():
 def test_support_hash_is_order_invariant_but_membership_sensitive():
     assert MODULE.support_hash(["b", "a"]) == MODULE.support_hash(["a", "b"])
     assert MODULE.support_hash(["a", "b"]) != MODULE.support_hash(["a", "c"])
+
+
+def test_common_multiplier_subsupport_selects_occupation_columns():
+    signs = np.arange(5 * 7, dtype=float).reshape(5, 7)
+    selected = MODULE.select_sign_columns(signs, [1, 4, 6])
+    assert selected.shape == (5, 3)
+    assert np.array_equal(selected, signs[:, [1, 4, 6]])
