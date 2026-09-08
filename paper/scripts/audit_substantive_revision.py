@@ -712,6 +712,7 @@ if "SOC2 $\\times$ young $\\times$ month & $-0.0217$ & $[-0.1607,0.1173]$ & $0.1
 for token in [
     "-0.1321", "-0.2206", "-0.0437", "-0.0217", "-0.1607", "0.1173",
     "0.1104", "0.0107", "0.2102", "0.1454", "3.33", "97.7",
+    "0.865", "0.921", "0.889", "6.1 percent", "8.9 percent", "5.6 percent",
 ]:
     if token not in all_text:
         raise AssertionError(f"required rounded manuscript token absent: {token}")
@@ -731,6 +732,8 @@ for forbidden in [
     "demonstrates economic equivalence",
     "replicates the ADP",
     "uses Eloundou et al.'s published notation $\\alpha$, $\\beta$, and $\\zeta$",
+    "26.7 percent of null replications",
+    "11.3 percent of null replications",
 ]:
     if forbidden.lower() in all_text.lower():
         raise AssertionError(f"forbidden overclaim found: {forbidden}")

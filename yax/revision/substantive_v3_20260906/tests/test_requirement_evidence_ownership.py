@@ -29,7 +29,16 @@ def test_d02_evidence_is_owned_only_by_d02():
         {"specification", "code", "run_receipt", "result", "validation_report"}
     )
     assert "D02" not in rows["T04"]["summary"]
-    assert rows["T04"]["status"] == "NOT_STARTED"
-    assert rows["T04"]["evidence"] == []
-    assert rows["T04"]["response_locations"] == []
-    assert rows["T04"]["review"] is None
+    assert rows["T04"]["status"] == "VERIFIED"
+    assert not any(
+        marker in entry.get("path", "")
+        for entry in rows["T04"].get("evidence", [])
+        for marker in d02_markers
+    )
+    assert {entry["role"] for entry in rows["T04"]["evidence"]} == {
+        "verification_report",
+        "source_evidence",
+    }
+    assert rows["T04"]["response_locations"] == [
+        "source_verification/T04_DATA_VINTAGE_VERIFICATION.md"
+    ]
