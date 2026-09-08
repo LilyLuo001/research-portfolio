@@ -1,0 +1,27 @@
+{
+  "required_files": {
+    "local_data_catalog.csv": ["evidence_key", "status"],
+    "fund_identifier_and_coverage_audit.csv": ["evidence_key", "status"],
+    "source_and_rule_registry.csv": ["evidence_key", "source_url", "status"],
+    "rebalance_event_ledger.csv": ["evidence_key", "event_id", "status"],
+    "assignment_doses_and_evidence.csv": ["evidence_key", "event_id", "evidence_grade", "status"],
+    "assignment_and_fomc_support.csv": ["evidence_key", "event_id", "status"],
+    "comparison_and_interference_audit.csv": ["evidence_key", "event_id", "status"],
+    "remaining_input_gaps.csv": ["evidence_key", "gap_id", "status"]
+  },
+  "required_documents": [
+    "RUN_README.md",
+    "FINAL_DECISION.md"
+  ],
+  "required_directories": [
+    "src",
+    "tests",
+    "logs"
+  ],
+  "allowed_assignment_grades": ["A", "B", "C", "U"],
+  "allowed_recommendations": [
+    "PROCEED TO A TARGETED MEASUREMENT PILOT",
+    "REVISE / RESOLVE A SPECIFIC INPUT GAP",
+    "STOP THIS REWEIGHTING DESIGN"
+  ]
+}
