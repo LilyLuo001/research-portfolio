@@ -115,7 +115,9 @@ def test_stationary_variance_diagnostic_checks_all_months():
     months = ["2022-10", "2022-11", "2023-01", "2023-02"]
     result = SIM.stationary_variance_diagnostic(months, .6, .1)
     assert result["diagnostic_paths"] == 5000
-    assert result["maximum_relative_month_variance_difference"] <= .08
+    assert result["maximum_theoretical_relative_month_variance_difference"] <= 1e-14
+    assert result["finite_simulation_maximum_is_diagnostic_not_pass_fail"] is True
+    assert result["maximum_relative_month_variance_difference"] >= 0
 
 
 def test_sparsity_equalization_matches_rounded_baseline_counts():

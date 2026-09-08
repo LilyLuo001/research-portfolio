@@ -19,12 +19,15 @@ PSU/stratum design variables or suitable replicate weights.
 | Regenerated pre-period | Family-month | -0.0217 | 0.0484 | [-0.1236, 0.0665] |
 | Regenerated pre-period | Family-month minus pooled | 0.1104 | 0.0381 | [0.0355, 0.1771] |
 
-Regenerating pre-period exposure quintiles and Webb normalization changes a
-median of two occupations per draw (maximum five); 92.5% of draws reclassify
-at least one occupation. Despite this, the fixed- and regenerated-label
-sensitivities are nearly identical. Mean bootstrap shifts are small: 0.0010,
-0.0021, and 0.0011 for the fixed pooled, family-month, and paired targets, and
--0.0003, -0.0005, and -0.0002 when labels are regenerated.
+Regenerating pre-period exposure quintiles changes a median of two occupations
+per draw (maximum five); 92.5% of draws reclassify at least one occupation.
+Webb restandardization alone is an affine transformation absorbed by the
+specified fixed effects and therefore leaves the reported interaction targets
+unchanged. Thus, this row is specifically a quintile-membership sensitivity.
+The fixed- and regenerated-label sensitivities are nearly identical. Mean
+bootstrap shifts are small: 0.0010, 0.0021, and 0.0011 for the fixed pooled,
+family-month, and paired targets, and -0.0003, -0.0005, and -0.0002 when labels
+are regenerated.
 
 The bootstrap-of-bootstrap maximum endpoint Monte Carlo standard error is
 0.00820, below the declared 0.01 target. An independent public-output validator
