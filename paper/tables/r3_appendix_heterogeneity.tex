@@ -6,7 +6,7 @@
 \toprule
 Model & Occupations & Coefficient & Pointwise 95\% interval & Simultaneous 95\% interval \\
 \midrule
-Industry-cell baseline & 468 & $-0.138$ & $[-0.228,-0.048]$ & --- \\
+Occupation--industry-cell baseline & 468 & $-0.138$ & $[-0.228,-0.048]$ & --- \\
 Industry-conditioned & 468 & $-0.099$ & $[-0.188,-0.009]$ & --- \\
 BA or higher & 429 & $-0.138$ & $[-0.275,-0.001]$ & $[-0.293,0.017]$ \\
 No BA & 429 & $-0.123$ & $[-0.231,-0.014]$ & $[-0.243,-0.002]$ \\
@@ -16,5 +16,5 @@ Age 24 & 439 & $-0.222$ & $[-0.358,-0.086]$ & $[-0.394,-0.050]$ \\
 Age 25 & 439 & $-0.082$ & $[-0.188,0.024]$ & $[-0.212,0.047]$ \\
 \bottomrule
 \end{tabular}}
-\tabnote{Industry models use occupation--industry--month cells.  Education and age collections use their own common occupational support and 9,999 common occupation multipliers.  The four-age common-score equality test gives $\chi^2(3)=8.21$, $p=.0419$, but every simultaneous age-minus-pooled interval includes zero; no individual age departure is promoted.}
+\tabnote{Both industry rows use occupation--broad-industry--age--month weighted-stock cells.  The baseline includes common Q2--Q5 and Webb interactions; the conditioned row additionally includes 13 broad-industry-specific young-by-post shifts.  Education and age collections use their own common occupational support and 9,999 common occupation multipliers.  The four-age common-score equality test gives $\chi^2(3)=8.21$, $p=.0419$, but every simultaneous age-minus-pooled interval includes zero; no individual age departure is promoted.}
 \end{table}

@@ -860,6 +860,50 @@ for required in [
 if "do not attribute it to another paper without implementation evidence" not in all_text:
     raise AssertionError("AIOE implementation-attribution boundary absent")
 
+# E03: source labels, scale language, and estimand wording.
+service_source = pd.read_csv(
+    R3 / "results" / "baseline_reproduction" / "OCCUPATION_SERVICE_EXCLUSIONS.csv"
+)
+service_all = one(service_source, specification="exclude_all_SOC35_37_39_in_person_services")
+service_q1 = one(service_source, specification="exclude_Q1_SOC35_37_39_in_person_services")
+if int(service_all["excluded_occupations"]) != 33 or int(service_q1["excluded_occupations"]) != 17:
+    raise AssertionError("service-exclusion counts changed")
+close(service_all["excluded_stock_share"], 0.08201851297535387, 1e-12)
+close(service_q1["excluded_stock_share"], 0.04885584890094974, 1e-12)
+support_text = (PAPER / "appendix" / "sections" / "r3_C_occupational_support.tex").read_text()
+if "Protective-service occupations (SOC33) are not part of that exclusion" not in support_text:
+    raise AssertionError("SOC33 versus SOC35/37/39 service boundary is not explicit")
+if "food, building-and-grounds, personal-care, and protective-service occupations" in support_text:
+    raise AssertionError("protective services remain mislabeled as part of SOC35/37/39")
+table2_text = (PAPER / "tables" / "r3_table2_occupation.tex").read_text()
+for required in [
+    "weighted-stock criterion is the grouped-binomial conditional likelihood",
+    "Coefficients parameterize log ratios of conditional means",
+    "no observed log ratio is constructed",
+    "one-sided zero-stock cells remain in the criterion",
+]:
+    if required not in table2_text:
+        raise AssertionError(f"Table 2 estimand wording absent: {required}")
+if "The dependent variable is the log young-to-older employment-stock ratio" in table2_text:
+    raise AssertionError("Table 2 still labels an unobserved log ratio as the dependent variable")
+industry_text = (PAPER / "tables" / "r3_appendix_heterogeneity.tex").read_text()
+for required in [
+    "Occupation--industry-cell baseline",
+    "occupation--broad-industry--age--month weighted-stock cells",
+    "13 broad-industry-specific young-by-post shifts",
+]:
+    if required not in industry_text:
+        raise AssertionError(f"industry-cell comparator label absent: {required}")
+measurement_appendix = (PAPER / "appendix" / "sections" / "appendix_A_measurement.tex").read_text()
+for required in [
+    "overlap percentages on a 0--100 scale",
+    "preperiod employment-weighted standardized score",
+]:
+    if required not in measurement_appendix:
+        raise AssertionError(f"Webb scale disclosure absent: {required}")
+if re.search(r"\bchapter\b", all_text, flags=re.IGNORECASE):
+    raise AssertionError("dissertation-remnant 'chapter' remains in active paper or revision documents")
+
 for token in [
     "-0.1321", "-0.2206", "-0.0437", "-0.0217", "-0.1607", "0.1173",
     "0.1104", "0.0107", "0.2102", "0.1454", "3.33", "97.7",

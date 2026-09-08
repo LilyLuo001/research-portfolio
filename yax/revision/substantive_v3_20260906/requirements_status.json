@@ -5299,12 +5299,29 @@
         "G07",
         "W05"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The active sources remove the dissertation-remnant chapter language, correctly separate SOC33 from the SOC35/37/39 service exclusion, identify the industry microcell baseline, state raw and standardized Webb units, carry the W05 AIOE unit disclosure, and replace the inaccurate observed-log-dependent-variable table note. Source and numerical checks pass; upstream G07/W05 completion and final PDF inspection remain.",
+      "evidence": [
+        {
+          "role": "validation_report",
+          "path": "editorial/E03_LANGUAGE_SCALE_LABEL_AUDIT.md",
+          "sha256": "c67c1e29e0b628cb9c48d60cd48439d4132356918a5cb4c719618ea18d4202c5"
+        }
+      ],
+      "response_locations": [
+        "editorial/E03_LANGUAGE_SCALE_LABEL_AUDIT.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent source and numerical audit",
+        "report_path": "editorial/E03_LANGUAGE_SCALE_LABEL_AUDIT.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Resolved G07 and W05 dependencies plus compiled-PDF inspection of the changed notes and labels.",
+        "attempts": "Checked source results, corrected active TeX, and added fail-closed source/numerical assertions; no protected data were required.",
+        "claim_impact": "The requested wording and labeling repairs are implemented, but E03 is not marked VERIFIED before its upstream requirements and visual review pass.",
+        "next_step": "Complete W01/W05 and the canonical ledger, then compile and visually inspect the paper and appendix."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "presentation",
