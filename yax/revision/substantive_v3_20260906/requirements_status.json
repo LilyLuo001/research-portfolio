@@ -1373,10 +1373,50 @@
         "N03",
         "S02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative Gate 2 support-inference run estimated all 89 support-respecting family-specific pairwise contrasts, the four directly supported Q5-Q1 family effects, and the pre-stock-weighted direct-tail aggregate. It did not fabricate missing family tails: the full 89-edge joint test is explicitly blocked at structural rank 50, while valid rank-appropriate and simultaneous outputs are retained. Artifact identities and the published estimates, covariance-derived standard errors, and shared-draw calculations independently reconstruct. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/support_inference/SUPPORT_INFERENCE_SPEC.json",
+          "sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"
+        },
+        {
+          "role": "code",
+          "path": "gate2/support_inference/run_support_inference.py",
+          "sha256": "f8e214b6afb198084c7c3a4b9412c0c372ff9eba26a5d521519c73dc067ab5fe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_inference_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "864011bfe23c1a514ee47749da4b0570144151f2c4b38027da2c82b42032c58f"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/SUPPORTED_PAIRWISE_CONTRASTS.csv",
+          "sha256": "fbd20f41e69d5327907e018521bfe3aaef716bb6250584c371525b8b9e5e7ec9"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/DIRECT_TAIL_ESTIMATES.csv",
+          "sha256": "0429802c5b0e38c2bdc45568af4d238382d1f93563178bb041ba9cd9a12ba1d0"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/PAIRWISE_AGGREGATES.csv",
+          "sha256": "2a5c915f3b4ec92f0c9475e5196fff0e72397ed59b60d0bee9e2b2243702c8aa"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/support_inference/evidence/POSTRUN_VALIDATION_REPORT.json",
+          "sha256": "ec2be1f0fc746a66444960d29c3868b3928cc8efa335f150f7c0e66275cf4ff7"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_inference_authoritative_20260908/SUPPORTED_PAIRWISE_CONTRASTS.csv",
+        "runs/gate2_support_inference_authoritative_20260908/DIRECT_TAIL_ESTIMATES.csv",
+        "runs/gate2_support_inference_authoritative_20260908/PAIRWISE_AGGREGATES.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -1411,10 +1451,44 @@
         "S02",
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run estimated the continuous raw-beta companion and expressed it in raw, within-family-SD, and family-Webb-residual-SD units. It also retained fixed-half, own-fitted, and fixed-pooled-within-support information diagnostics with explicit denominators and effective occupation equivalents. The public numerical quantities and artifact identities independently reconstruct, but manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/support_inference/SUPPORT_INFERENCE_SPEC.json",
+          "sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"
+        },
+        {
+          "role": "code",
+          "path": "gate2/support_inference/run_support_inference.py",
+          "sha256": "f8e214b6afb198084c7c3a4b9412c0c372ff9eba26a5d521519c73dc067ab5fe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_inference_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "864011bfe23c1a514ee47749da4b0570144151f2c4b38027da2c82b42032c58f"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/CONTINUOUS_WITHIN_FAMILY.json",
+          "sha256": "ec2db0099eb798a9d4515e242a458b6cce5eb872a27873fd8d5b871b2fc6cae5"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/INFORMATION_DIAGNOSTICS.csv",
+          "sha256": "d363e6e8c36920dfc13cf051038c4e3c166e4b11e359a3c00cf34dcd270185f1"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/support_inference/evidence/POSTRUN_VALIDATION_REPORT.json",
+          "sha256": "ec2be1f0fc746a66444960d29c3868b3928cc8efa335f150f7c0e66275cf4ff7"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_inference_authoritative_20260908/CONTINUOUS_WITHIN_FAMILY.json",
+        "runs/gate2_support_inference_authoritative_20260908/INFORMATION_DIAGNOSTICS.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -1484,10 +1558,50 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run produced current-contract occupation and family influence arrays for every fitted model, identified the extreme positive and negative family contributors for the pooled and paired Q5 targets under a predeclared rule, and retained both monthly raw and calendar-safe quarterly family-quintile paths. The run artifacts and public numerical identities validate; substantive selection and manuscript presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/support_inference/SUPPORT_INFERENCE_SPEC.json",
+          "sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"
+        },
+        {
+          "role": "code",
+          "path": "gate2/support_inference/run_support_inference.py",
+          "sha256": "f8e214b6afb198084c7c3a4b9412c0c372ff9eba26a5d521519c73dc067ab5fe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_inference_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "864011bfe23c1a514ee47749da4b0570144151f2c4b38027da2c82b42032c58f"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/OCCUPATION_INFLUENCE.csv",
+          "sha256": "5f3c927cd97f0ea626843c579f0941825a51393eea622ec4a6bfcb1ca32f12ac"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/FAMILY_INFLUENCE.csv",
+          "sha256": "edcb46b90c999573941e2e267803888bcedbf0b18a368169f722fc7275582be0"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/FAMILY_QUINTILE_PATHS_QUARTERLY.csv",
+          "sha256": "4a8583b784333a79fedd181894465937fbfa432de0a2601e2a72684b2ff9f67e"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/support_inference/evidence/POSTRUN_VALIDATION_REPORT.json",
+          "sha256": "ec2be1f0fc746a66444960d29c3868b3928cc8efa335f150f7c0e66275cf4ff7"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_inference_authoritative_20260908/OCCUPATION_INFLUENCE.csv",
+        "runs/gate2_support_inference_authoritative_20260908/FAMILY_INFLUENCE.csv",
+        "runs/gate2_support_inference_authoritative_20260908/FAMILY_QUINTILE_PATHS_QUARTERLY.csv"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -1520,10 +1634,60 @@
       "depends_on": [
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative run produced the complete Q2-Q5 coefficient profiles for pooled and family-by-month models, their paired common-draw differences, covariance matrices, pointwise and simultaneous intervals, and full-rank four-degree-of-freedom joint tests. The pooled profile rejects jointly (chi-square 11.1383, p=0.0251; multiplier p=0.0212), the family-month profile does not (chi-square 2.0708, p=0.7227), and their paired movement does not reject jointly (chi-square 5.4169, p=0.2471), even though the marginal Q5 difference is 0.1104 with normal p=0.0333. All published inferential quantities independently reconstruct from retained covariances and common draws. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/support_inference/SUPPORT_INFERENCE_SPEC.json",
+          "sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"
+        },
+        {
+          "role": "code",
+          "path": "gate2/support_inference/run_support_inference.py",
+          "sha256": "f8e214b6afb198084c7c3a4b9412c0c372ff9eba26a5d521519c73dc067ab5fe"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_support_inference_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "864011bfe23c1a514ee47749da4b0570144151f2c4b38027da2c82b42032c58f"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/PROFILE_ESTIMATES.csv",
+          "sha256": "f8c8c93bb3bb1a8042e5bc78bbcfb3fa12f61de269125f598c0250e90ff3ac4b"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/PROFILE_COVARIANCE.csv",
+          "sha256": "f92a74e6f84781da4f0a43407babe646e28e32c1dde3d5055de108eb0850b0a3"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/PROFILE_INTERVALS.csv",
+          "sha256": "0f709e6f8bc4445171e43c1bc4763d7d6faede9e12a2f9df814a0fb94f1e3302"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/PROFILE_JOINT_TESTS.json",
+          "sha256": "469f2aca2ba3416f2f98f33e1c8745cccf302998c6c84ad6fd342f247ebd8fe6"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_support_inference_authoritative_20260908/CENTERED_TARGET_DRAWS.npz",
+          "sha256": "70ddbe80772ac695c3a4c9ab965992fbca69f89e9dc46a10340c26e55c3a094a"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/support_inference/evidence/POSTRUN_VALIDATION_REPORT.json",
+          "sha256": "ec2be1f0fc746a66444960d29c3868b3928cc8efa335f150f7c0e66275cf4ff7"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_support_inference_authoritative_20260908/PROFILE_ESTIMATES.csv",
+        "runs/gate2_support_inference_authoritative_20260908/PROFILE_INTERVALS.csv",
+        "runs/gate2_support_inference_authoritative_20260908/PROFILE_JOINT_TESTS.json"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,

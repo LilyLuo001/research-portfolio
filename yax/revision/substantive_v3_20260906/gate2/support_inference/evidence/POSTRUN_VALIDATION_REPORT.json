@@ -1,0 +1,62 @@
+{
+  "expected_structural_rank_block": {
+    "chi2_or_p_value_emitted": false,
+    "covariance_rank": 50,
+    "restriction_count": 89,
+    "status": "EXPECTED_STRUCTURAL_RANK_BLOCK"
+  },
+  "inventory": {
+    "artifact_hash_and_id_checks": 40,
+    "manifest_artifacts": 40,
+    "total_files": 42
+  },
+  "model_certificates": {
+    "model_count": 5,
+    "models": [
+      "continuous_raw_beta_family_month",
+      "direct_tail_four_family",
+      "family_heterogeneous_supported",
+      "family_month",
+      "pooled"
+    ],
+    "status": "ALL_REQUIRED_A1_CERTIFICATES_PASS"
+  },
+  "numeric_reconstruction": {
+    "direct_tail_standard_error_max_abs": 2.7755575615628914e-16,
+    "paired_common_draw_identity_max_abs": 0.0,
+    "paired_point_estimate_identity_max_abs": 1.0408340855860843e-16,
+    "pairwise_aggregate_standard_error_max_abs": 1.2975731600306517e-15,
+    "profile_joint_chi2_p_value_max_abs": 1.5376588891058418e-14,
+    "profile_joint_multiplier_p_value_max_abs": 0.0,
+    "profile_joint_statistic_max_abs": 1.7053025658242404e-13,
+    "profile_pointwise_interval_max_abs": 1.7381929229287607e-15,
+    "profile_simultaneous_critical_value_max_abs": 3.197442310920451e-14,
+    "profile_simultaneous_interval_max_abs": 2.1649348980190553e-15,
+    "profile_standard_error_max_abs": 8.534839501805891e-16,
+    "supported_edge_standard_error_max_abs": 3.2231162183649076e-15
+  },
+  "producer_validation": {
+    "failed_checks": [],
+    "passing_check_count": 26,
+    "status": "PASS_RECOMPUTED_VALIDATION"
+  },
+  "receipt_id": "yaxreceipt_v1_7de4623cf604275dcfb753c763e0bf2ac2b3f967f6cba586136b636f1e5e7cd2",
+  "result_id": "yaxresult_v1_b53fefb7dd5185f8a7d6d3e7cf45df938d6e5205bf75eacabc9e8ee26bfc496a",
+  "run_directory": "runs/gate2_support_inference_authoritative_20260908",
+  "schema_version": "yax-gate2-support-inference-postrun-validation-v1",
+  "scope": {
+    "S05": "UNRESOLVED_OUT_OF_SCOPE",
+    "presentation_validation": "NOT_YET_PERFORMED",
+    "run_evidence_present": [
+      "S03",
+      "S04",
+      "S06",
+      "S07"
+    ]
+  },
+  "status": "PASS_AUTHORITATIVE_RESULT_AND_PUBLIC_NUMERIC_RECONSTRUCTION_NOT_PRESENTATION",
+  "tolerances": {
+    "identity": 1e-14,
+    "published_numeric_reconstruction": 1e-12
+  }
+}

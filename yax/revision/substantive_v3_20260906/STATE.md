@@ -1,6 +1,6 @@
 # YAX V3 execution state
 
-Updated: 2026-09-07 Asia/Shanghai
+Updated: 2026-09-08 Asia/Shanghai
 
 ## Authoritative locations
 
@@ -21,6 +21,10 @@ Updated: 2026-09-07 Asia/Shanghai
   `runs/gate2_support_accounting_authoritative_20260907/`
 - Gate 2 validation and findings:
   `gate2/evidence/`
+- Authoritative Gate 2 support-inference run:
+  `runs/gate2_support_inference_authoritative_20260908/`
+- Gate 2 support-inference post-run validation:
+  `gate2/support_inference/evidence/POSTRUN_VALIDATION_REPORT.json`
 
 ## Authoritative Gate 1 identifiers
 
@@ -107,11 +111,30 @@ Updated: 2026-09-07 Asia/Shanghai
   post-run artifact validation. D02 is `RUN_UNVALIDATED`, not `VERIFIED`;
   manuscript presentation and any outcome-bearing age-specific companion
   coefficient remain outstanding.
+- The authoritative Gate 2 support-inference execution, SCC job `7489785`, ran
+  from authorization commit `62c3da6` and exited successfully. It published 40
+  result artifacts plus a manifest and receipt under result ID
+  `yaxresult_v1_b53fefb7dd5185f8a7d6d3e7cf45df938d6e5205bf75eacabc9e8ee26bfc496a`.
+  All five required models passed their unchanged A1 certificates and all 26
+  producer validation checks passed. A repository-side validator independently
+  checked every artifact hash and content identity and reconstructed the
+  published profile differences, covariance-based standard errors, confidence
+  intervals, simultaneous critical values, and joint tests from the retained
+  public objects. S03, S04, S06, and S07 are now `RUN_UNVALIDATED`; their run
+  evidence is complete, while manuscript/appendix presentation is not.
+- The resulting profile changes materially after family-by-month conditioning:
+  pooled Q5-by-post is -0.1321 (SE 0.0452), versus -0.0217 (SE 0.0713) in the
+  family-month model. The paired Q5 movement is 0.1104 (SE 0.0519; marginal
+  normal p=0.0333), but the four-coefficient paired profile does not reject
+  jointly (chi-square 5.4169 on 4 df, p=0.2471; multiplier p=0.2368). These are
+  validated run facts, not yet manuscript-ready interpretation.
 
-All 11 A1 numerical targets are now independently artifact-reviewed, but no V3
-coefficient is yet manuscript-ready. Interpretation and presentation remain
-separately governed. The cell and exact-target audits establish the estimating-
-data object, not a causal or substantive manuscript claim.
+All 11 A1 numerical targets are independently artifact-reviewed, and the first
+authoritative Gate 2 inferential outputs are now retained and numerically
+reconstructed. No new coefficient is yet manuscript-ready because interpretation
+and presentation remain separately governed. The cell and exact-target audits
+establish the estimating-data object, not a causal or substantive manuscript
+claim.
 
 ## Verified inputs and blockers
 
@@ -143,17 +166,17 @@ selective subset.
 The A1 execution, independent audit, finding disposition, and remote push are
 complete. The original and compatibility-blocked runs remain preserved.
 
-1. Complete Gate 2 support inference and heterogeneous pairwise contrasts
-   (S03, S04, S06, S07) from the authenticated fixed-support contract; S05
-   requires a separate broader-beta aggregate producer without Webb.
-2. Separately specify any outcome-bearing additive D02 companion, if retained,
+1. Execute the dynamic reconciliation core (Y01--Y05) using only the objects
+   released by the certified static and dynamic models. Repair or explicitly
+   block any required object that the support-inference run did not publish.
+   Keep the onset grid and through-2024 comparisons partial until their
+   additional models receive same-objective numerical certification.
+2. Complete the separate broader-beta/no-Webb producer required by S05; the
+   fixed-support inference run does not answer that requirement.
+3. Separately specify any outcome-bearing additive D02 companion, if retained,
    and integrate the validated identification result without implying
    coefficient additivity. Complete the remaining D05--D07
    decomposition/inference work without relabeling exact stock accounting as a
    regression coefficient.
-3. Execute the dynamic reconciliation core (Y01--Y05) from the four certified
-   static/dynamic models. Keep the onset grid and through-2024 comparisons
-   partial until their additional models receive same-objective numerical
-   certification.
 4. Integrate and validate all released evidence in the manuscript and appendix
    before changing any `RUN_UNVALIDATED` requirement to `VERIFIED`.
