@@ -1,0 +1,114 @@
+{
+  "schema_version": "yax-gate2-broader-support-spec-v1",
+  "spec_id": "yaxgate2broadsupport_v1_d064c513c8a2a37fe883a5d844a8ca41180620b756756c93932703b9d7fd1d71",
+  "status": "post-outcome required-revision specification frozen before the S05 protected execution",
+  "purpose": "Separate auxiliary-Webb conditioning, support expansion under the primary raw beta cutoffs, and reclassification after recomputing cutoffs on the broader beta-valid support.",
+  "parent_records": {
+    "original_architecture_spec": {
+      "path": "yax/revision/substantive_r3_20260905/architecture/ANALYSIS_SPEC_BEFORE_RESULTS.md",
+      "sha256": "dab34b66bf7ac25fa2c982d125cc6288e0b04722d337d366987223769372e9f4"
+    },
+    "original_architecture_results": {
+      "path": "yax/revision/substantive_r3_20260905/architecture/results/WEBB_AVAILABILITY_RESULTS.csv",
+      "sha256": "c978fa116577f40cced1007c841727f556bcdca799e6c09b2fafeffc366b939b"
+    },
+    "numerical_amendment_spec": {
+      "path": "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json",
+      "sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e"
+    }
+  },
+  "scientific_contract": {
+    "outcome": "CPS employment-stock share of workers aged 22-25 relative to workers aged 26-65",
+    "calendar": "113 observed Basic CPS months from 2017-01 through 2026-07, excluding 2022-12 and unavailable 2025-10",
+    "post": "month >= 2023-01",
+    "objective": "frequency-weighted grouped-binomial likelihood with occupation and month fixed effects",
+    "exposure": "strict Census-2018 Rule-A Eloundou beta",
+    "primary_support": {
+      "occupations": 468,
+      "sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+      "raw_beta_cuts": [
+        0.153846153846,
+        0.324615384615,
+        0.45652173913,
+        0.537037037037
+      ],
+      "tie_rule": "numpy.searchsorted(cuts, raw_beta, side='left') + 1"
+    },
+    "broader_support_rule": "positive 2017-01 through 2022-11 corrected preperiod stock in both age groups and finite strict Rule-A beta; Webb availability is not required",
+    "models_in_fixed_order": [
+      {
+        "model_id": "primary_with_webb",
+        "support": "primary 468",
+        "classification": "primary fixed membership",
+        "webb": true
+      },
+      {
+        "model_id": "primary_without_webb",
+        "support": "primary 468",
+        "classification": "primary fixed membership",
+        "webb": false
+      },
+      {
+        "model_id": "broader_fixed_primary_cuts_without_webb",
+        "support": "broader beta-valid",
+        "classification": "apply the four fixed primary raw-beta cut values to every broader-support occupation",
+        "webb": false
+      },
+      {
+        "model_id": "broader_recomputed_cuts_without_webb",
+        "support": "broader beta-valid",
+        "classification": "recompute employment-weighted raw-beta cuts on broader support",
+        "webb": false
+      }
+    ],
+    "ordered_interpretation": [
+      "primary_with_webb to primary_without_webb isolates Webb conditioning on identical support and labels",
+      "primary_without_webb to broader_fixed_primary_cuts_without_webb isolates support expansion while preserving the primary raw cut values",
+      "broader_fixed_primary_cuts_without_webb to broader_recomputed_cuts_without_webb isolates reclassification on identical broader support"
+    ],
+    "support_change_inference": "The primary-to-broader coefficient movement changes the estimation population and is descriptive; do not report it as an equivalence or same-estimand paired test.",
+    "direct_tail_definition": "A family directly supports Q5-versus-Q1 only when that family contains at least one positive-preperiod-stock occupation in each tail under the stated support and classification rule."
+  },
+  "inference": {
+    "cluster": "occupation",
+    "draws": 9999,
+    "seed": 2026090851,
+    "interval": "95 percent occupation wild-score interval using common Rademacher draws within an identical ordered support",
+    "same_support_paired_comparisons": [
+      "primary_without_webb minus primary_with_webb",
+      "broader_recomputed_cuts_without_webb minus broader_fixed_primary_cuts_without_webb"
+    ],
+    "null_interval_interpretation": "does not detect a difference; never economic equivalence"
+  },
+  "numerical_validation": {
+    "candidate": "existing frozen grouped-logit fixed-effect engine used for scientific estimates and occupation influence",
+    "reference": "independent zero-start damped sparse Newton implementation from the authorized A1 numerical module on the same grouped-binomial objective",
+    "all_models_required": true,
+    "thresholds": {
+      "full_treatment_vector_maximum_absolute_difference": 1e-06,
+      "objective_per_total_difference": 1e-10,
+      "fitted_probability_maximum_absolute_difference": 1e-07,
+      "gradient_infinity_norm_per_total": 1e-07,
+      "standardized_score_maximum_absolute": 0.0001
+    }
+  },
+  "required_public_outputs": [
+    "MODEL_RESULTS.csv",
+    "SAME_SUPPORT_PAIRED_COMPARISONS.csv",
+    "SUPPORT_CHANGE_DECOMPOSITION.json",
+    "BROADER_SUPPORT_MEMBERSHIP.csv",
+    "DIRECT_TAIL_BY_FAMILY.csv",
+    "DIRECT_TAIL_SUMMARY.csv",
+    "NUMERICAL_AUDITS.json",
+    "RESULT_SUMMARY.md",
+    "VALIDATION_REPORT.json",
+    "RESULT_MANIFEST.json",
+    "EXECUTION_RECEIPT.json"
+  ],
+  "privacy": {
+    "publish_protected_cells": false,
+    "publish_row_microdata": false,
+    "allowed": "occupation-level memberships, preperiod stock aggregates and shares, coefficient/inference summaries, numerical diagnostics, and hashes"
+  },
+  "requirement": "S05"
+}
