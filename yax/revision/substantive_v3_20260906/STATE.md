@@ -29,6 +29,10 @@ Updated: 2026-09-08 Asia/Shanghai
   `runs/gate2_dynamic_core_authoritative_20260908/`
 - Gate 2 dynamic-core independent validation:
   `gate2/dynamic/evidence/DYNAMIC_CORE_POSTRUN_VALIDATION.json`
+- Authoritative Gate 2 broader-support run:
+  `runs/gate2_broader_support_authoritative_20260908/`
+- Gate 2 broader-support independent validation and findings:
+  `gate2/broader_support/evidence/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -153,6 +157,16 @@ Updated: 2026-09-08 Asia/Shanghai
   2022Q4 reference-period level rather than by failure of static/dynamic nesting.
 - Y01--Y05 are `RUN_UNVALIDATED`: their computation and numerical validation are
   complete, while manuscript and appendix presentation remains outstanding.
+- The authoritative S05 broader-beta/no-Webb execution, SCC job `7490033`, ran
+  successfully and published four same-objective models. Removing Webb expands
+  beta-valid support from 468 to 490 occupations but changes the coefficient by
+  only -0.000601 when primary raw-beta cutoffs are held fixed. Recomputing the
+  cutoffs on the broader support changes it by another -0.000458. Direct Q1--Q5
+  support expands from four to five occupational families, so limited
+  within-family tail support remains after relaxing Webb availability. All four
+  numerical fits pass independent corroboration, and all 64 public artifact and
+  calculation checks pass. S05 remains `RUN_UNVALIDATED` pending manuscript and
+  appendix integration.
 
 All 11 A1 numerical targets and the completed static/support and Y01--Y05
 dynamic outputs have now been independently reconstructed from retained public
@@ -195,8 +209,8 @@ complete. The original and compatibility-blocked runs remain preserved.
    manuscript and appendix. Keep the onset grid and through-2024 comparisons
    partial until their additional estimands are actually executed; existing
    numerical certification alone does not supply those result objects.
-2. Complete the separate broader-beta/no-Webb producer required by S05; the
-   fixed-support inference run does not answer that requirement.
+2. Complete the coding-stable, onset-grid, seasonality, endpoint, and era
+   extensions required by N04, T05, Y08, and Y09 on the frozen treatment.
 3. Separately specify any outcome-bearing additive D02 companion, if retained,
    and integrate the validated identification result without implying
    coefficient additivity. Complete the remaining D05--D07

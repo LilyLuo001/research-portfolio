@@ -162,6 +162,7 @@ def validate(repo: pathlib.Path, results: pathlib.Path) -> dict[str, Any]:
 
     checks["producer_validation"] = validation["status"] == "PASS_S05_BROADER_SUPPORT_VALIDATION" and all(validation["checks"].values())
     checks["privacy"] = receipt["protected_cells_published"] is False and receipt["row_microdata_published"] is False
+    checks = {key: bool(value) for key, value in checks.items()}
     passed = all(checks.values())
     return {
         "schema_version": "yax-gate2-broader-support-independent-validation-v1",

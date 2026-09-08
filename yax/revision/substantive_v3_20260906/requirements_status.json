@@ -1520,10 +1520,50 @@
       "depends_on": [
         "S01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative S05 run separates Webb conditioning, support expansion under the unchanged primary raw-beta cutoffs, and broader-support reclassification. Removing Webb adds 22 beta-valid occupations (1.88% of broader preperiod stock), changes the fixed-cutoff coefficient by -0.000601, and expands direct Q1-Q5 support from four to five families; recomputing cutoffs changes the coefficient by another -0.000458. All four models pass independent same-objective numerical corroboration and all 64 public validation checks. Manuscript and appendix presentation remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/broader_support/BROADER_SUPPORT_SPEC.json",
+          "sha256": "de1416528d2e569d26de4dff9ba3a75e60610396cdafa41041bfad954b2c5460"
+        },
+        {
+          "role": "code",
+          "path": "gate2/broader_support/run_broader_support.py",
+          "sha256": "9bc12f35f09c8e3870904b1d4bbca95c7f2aa1f4acca9728a07b74211c37085e"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_broader_support_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "182a6f0eea6beecd72910825ddf6688795726a6b4b4636bfc004ff4f3d6a82f4"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_broader_support_authoritative_20260908/MODEL_RESULTS.csv",
+          "sha256": "6b6a67a56af3124fff74dc685f7723dd64401cdf1da0a84580f0ca2b44d8d58d"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_broader_support_authoritative_20260908/DIRECT_TAIL_SUMMARY.csv",
+          "sha256": "ac8242719e7b856b976f294c8d11a39e4a3edfa6a6f07cd1d63156eb2f03314f"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/broader_support/evidence/BROADER_SUPPORT_POSTRUN_VALIDATION.json",
+          "sha256": "31020da4ab9d5eae96dbd55fa291d611c1149792f558a8b64fbb024d06f86248"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/broader_support/evidence/BROADER_SUPPORT_FINDINGS.md",
+          "sha256": "714e67ac631ec8428fc129a1b2bbc331e45024d19c60bc74192cb8c6da0a4794"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_broader_support_authoritative_20260908/MODEL_RESULTS.csv",
+        "runs/gate2_broader_support_authoritative_20260908/DIRECT_TAIL_SUMMARY.csv",
+        "gate2/broader_support/evidence/BROADER_SUPPORT_FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,

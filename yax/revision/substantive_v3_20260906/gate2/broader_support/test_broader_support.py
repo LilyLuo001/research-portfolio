@@ -93,3 +93,42 @@ def test_a1_face_functionals_use_required_original_treatment_namespace():
         "original_treatment::1::Q5_x_post",
     ]
     assert np.array_equal(values["original_treatment::1::Q5_x_post"], [0.0, 1.0])
+
+
+def test_complete_numerical_interface_on_synthetic_same_objective_problem():
+    repo = HERE.parents[4]
+    arch = MODULE.load_module(
+        "yax_test_s05_architecture",
+        repo / "yax/revision/substantive_r3_20260905/architecture/run_architecture.py",
+    )
+    frozen = MODULE.load_module(
+        "yax_test_s05_frozen",
+        repo / "yax/analysis/run_frozen_v11.py",
+    )
+    numerical = MODULE.load_module(
+        "yax_test_s05_numerical",
+        repo / "yax/revision/substantive_v3_20260906/numerical_existence/run_numerical_existence_audit.py",
+    )
+    analysis = json.loads(
+        (repo / "yax/revision/substantive_v3_20260906/numerical_existence/ANALYSIS_SPEC_A1.json").read_text()
+    )
+    months = [f"2022-{month:02d}" for month in range(1, 7)] + [
+        f"2023-{month:02d}" for month in range(1, 7)
+    ]
+    support = [f"{index:04d}" for index in range(1, 16)]
+    groups = np.repeat(np.arange(1, 6), 3)
+    columns, labels = arch.categorical_design(groups, months, {})
+    regressors = np.column_stack([column.reshape(-1) for column in columns])
+    occ_effect = np.repeat(np.linspace(-0.7, 0.7, len(support)), len(months))
+    month_effect = np.tile(np.linspace(-0.2, 0.2, len(months)), len(support))
+    probability = 1.0 / (1.0 + np.exp(-(occ_effect + month_effect + regressors @ [0.02, -0.01, 0.03, -0.08])))
+    total = np.full(len(probability), 10_000.0)
+    young = (total * probability).reshape(len(support), len(months))
+    older = total.reshape(len(support), len(months)) - young
+    fit, _ = arch.fit_design(frozen, young, older, columns)
+    bundle = MODULE.build_bundle(
+        numerical, "synthetic_s05", support, months, young, older, regressors, labels
+    )
+    audit = MODULE.certify_model(numerical, bundle, analysis, frozen.ENGINE, fit)
+    assert audit["status"] == "PASS_SAME_OBJECTIVE_NUMERICAL_CERTIFICATION"
+    assert audit["scientific_engine_reference_maximum_absolute_difference"] <= 1e-6

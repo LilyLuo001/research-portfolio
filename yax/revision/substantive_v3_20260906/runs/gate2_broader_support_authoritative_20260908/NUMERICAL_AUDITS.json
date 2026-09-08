@@ -1,0 +1,144 @@
+{
+  "all_pass": true,
+  "models": [
+    {
+      "active_rows": 51891,
+      "face_status": "PASS_FINITE_FACE_RESOLVED",
+      "independent_reference_treatment_coefficients": [
+        -0.07844368937430833,
+        -0.04997713169592308,
+        -0.0895990228668639,
+        -0.13210945079219052,
+        0.004594334901092953
+      ],
+      "input_rows": 52884,
+      "model_id": "primary_with_webb",
+      "profiled_boundary_rows": 0,
+      "reference_numerically_valid": true,
+      "scientific_engine_reference_maximum_absolute_difference": 1.6653345369377348e-16,
+      "scientific_engine_treatment_coefficients": [
+        -0.07844368937430836,
+        -0.04997713169592316,
+        -0.08959902286686391,
+        -0.13210945079219036,
+        0.0045943349010928855
+      ],
+      "status": "PASS_SAME_OBJECTIVE_NUMERICAL_CERTIFICATION",
+      "treatment_basis_status": "FULL_ORIGINAL_TREATMENT_RANK",
+      "treatment_labels": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post",
+        "Webb_software_z_x_post"
+      ],
+      "trust_numerically_valid": true,
+      "trust_polish_status": "PASS_TRUST_EXTERNAL_CERTIFICATE_NO_POLISH_REQUIRED",
+      "trust_reference_fitted_probability_maximum_absolute_difference": 6.9567650251567414e-12,
+      "trust_reference_objective_difference_per_total": 0.0,
+      "trust_reference_treatment_maximum_absolute_difference": 9.702100234321165e-13
+    },
+    {
+      "active_rows": 51891,
+      "face_status": "PASS_FINITE_FACE_RESOLVED",
+      "independent_reference_treatment_coefficients": [
+        -0.08060191974104963,
+        -0.051887488328712934,
+        -0.09051435574944836,
+        -0.13378536057223966
+      ],
+      "input_rows": 52884,
+      "model_id": "primary_without_webb",
+      "profiled_boundary_rows": 0,
+      "reference_numerically_valid": true,
+      "scientific_engine_reference_maximum_absolute_difference": 1.942890293094024e-16,
+      "scientific_engine_treatment_coefficients": [
+        -0.08060191974104966,
+        -0.05188748832871313,
+        -0.09051435574944831,
+        -0.13378536057223958
+      ],
+      "status": "PASS_SAME_OBJECTIVE_NUMERICAL_CERTIFICATION",
+      "treatment_basis_status": "FULL_ORIGINAL_TREATMENT_RANK",
+      "treatment_labels": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post"
+      ],
+      "trust_numerically_valid": true,
+      "trust_polish_status": "PASS_TRUST_EXTERNAL_CERTIFICATE_NO_POLISH_REQUIRED",
+      "trust_reference_fitted_probability_maximum_absolute_difference": 6.974594513042831e-12,
+      "trust_reference_objective_difference_per_total": 0.0,
+      "trust_reference_treatment_maximum_absolute_difference": 3.779199175824033e-13
+    },
+    {
+      "active_rows": 53938,
+      "face_status": "PASS_FINITE_FACE_RESOLVED",
+      "independent_reference_treatment_coefficients": [
+        -0.08191146835180536,
+        -0.05875788231568706,
+        -0.0898288017995052,
+        -0.13438642078812432
+      ],
+      "input_rows": 55370,
+      "model_id": "broader_fixed_primary_cuts_without_webb",
+      "profiled_boundary_rows": 0,
+      "reference_numerically_valid": true,
+      "scientific_engine_reference_maximum_absolute_difference": 1.942890293094024e-16,
+      "scientific_engine_treatment_coefficients": [
+        -0.08191146835180528,
+        -0.05875788231568721,
+        -0.08982880179950509,
+        -0.13438642078812452
+      ],
+      "status": "PASS_SAME_OBJECTIVE_NUMERICAL_CERTIFICATION",
+      "treatment_basis_status": "FULL_ORIGINAL_TREATMENT_RANK",
+      "treatment_labels": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post"
+      ],
+      "trust_numerically_valid": true,
+      "trust_polish_status": "PASS_TRUST_EXTERNAL_CERTIFICATE_NO_POLISH_REQUIRED",
+      "trust_reference_fitted_probability_maximum_absolute_difference": 6.954419679017221e-12,
+      "trust_reference_objective_difference_per_total": 0.0,
+      "trust_reference_treatment_maximum_absolute_difference": 5.540568004391844e-13
+    },
+    {
+      "active_rows": 53938,
+      "face_status": "PASS_FINITE_FACE_RESOLVED",
+      "independent_reference_treatment_coefficients": [
+        -0.08327226555684615,
+        -0.057965176393714006,
+        -0.09028708779649672,
+        -0.134844767330782
+      ],
+      "input_rows": 55370,
+      "model_id": "broader_recomputed_cuts_without_webb",
+      "profiled_boundary_rows": 0,
+      "reference_numerically_valid": true,
+      "scientific_engine_reference_maximum_absolute_difference": 3.122502256758253e-16,
+      "scientific_engine_treatment_coefficients": [
+        -0.08327226555684614,
+        -0.057965176393713694,
+        -0.09028708779649641,
+        -0.1348447673307818
+      ],
+      "status": "PASS_SAME_OBJECTIVE_NUMERICAL_CERTIFICATION",
+      "treatment_basis_status": "FULL_ORIGINAL_TREATMENT_RANK",
+      "treatment_labels": [
+        "Q2_x_post",
+        "Q3_x_post",
+        "Q4_x_post",
+        "Q5_x_post"
+      ],
+      "trust_numerically_valid": true,
+      "trust_polish_status": "PASS_TRUST_EXTERNAL_CERTIFICATE_NO_POLISH_REQUIRED",
+      "trust_reference_fitted_probability_maximum_absolute_difference": 6.973149488387342e-12,
+      "trust_reference_objective_difference_per_total": 5.551115123125783e-17,
+      "trust_reference_treatment_maximum_absolute_difference": 1.1532858001928048e-12
+    }
+  ]
+}
