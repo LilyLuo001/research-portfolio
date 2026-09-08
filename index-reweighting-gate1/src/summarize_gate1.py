@@ -98,7 +98,7 @@ def build_summary(root: Path) -> dict[str, object]:
                     row.get("meeting_id", "")
                     for row in fomc
                     if yes(row.get("eligible_common_news", ""))
-                    and row.get("calendar_scope") == "PRIMARY_2018_2025"
+                    and row.get("calendar_scope", "").lower() == "primary_2018_2025"
                 }
             ),
             "fomc_meeting_status_counts": counts(fomc, "meeting_status"),

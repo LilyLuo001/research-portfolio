@@ -1,0 +1,17 @@
+Stage E execution date: 2026-09-08
+Working directory: /Users/lilyluo/Documents/Codex/2026-09-08/files-mentioned-by-the-user-index/work/research-portfolio/index-reweighting-gate1
+
+1. Read /Users/lilyluo/Documents/index_reweighting_gate1_execution_prompt.txt completely with sed ranges 1-960.
+2. Reviewed official Federal Reserve historical pages for 2017, 2018, 2019, and 2020 and the current 2021-2027 calendar page.
+3. Reviewed the official SF Fed USMPD page and downloaded the public workbook to temporary storage only.
+4. Inspected the USMPD XLSX ZIP/XML structure without openpyxl; no factor or return values were used.
+5. Ran:
+   python3 src/build_fomc_calendar.py --usmpd-xlsx /tmp/usmpd.XXXXXX.xlsx
+   Result: wrote 74 calendar rows and 1 support row; ledger_status=BLOCKED_INPUT
+6. Ran with Python 3.10 and pytest 9.1.1:
+   /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m pytest -q tests/test_fomc_calendar.py
+   Result: 15 passed in 0.69s
+7. Checked every distinct registered source URL and official statement URL with curl -L in parallel.
+   Result: 85 of 85 endpoints returned HTTP 200; 0 non-200 endpoints.
+
+No WRDS archive content was written. No return regressions, factor construction, intraday feasibility assessment, power calculation, or MDE calculation was run.

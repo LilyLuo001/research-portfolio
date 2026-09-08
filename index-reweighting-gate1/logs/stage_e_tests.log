@@ -1,0 +1,19 @@
+2026-09-08
+
+Interpreter: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+pytest: 9.1.1 at /Users/lilyluo/Library/Python/3.10/lib/python/site-packages/pytest
+Command: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3 -m pytest -q tests/test_fomc_calendar.py
+Result: PASS
+Output: 15 passed in 0.69s
+
+Covered invariants:
+- evidence_key is first and unique in both declared schemas;
+- 2018-2025 has 63 eligible scheduled statement meetings, preserving the cancelled March 17-18, 2020 exception;
+- unscheduled meetings, notation votes, and cancelled meetings are retained but ineligible;
+- 2017 boundary and realized 2026 partial rows are separately labelled;
+- SEP and press-conference package flags remain meeting-level dependent phases;
+- NYSE session counts include the 2018 and 2025 national-mourning closures and Juneteenth only from 2022;
+- signed trading-day distances handle weekends, holidays, nearest pre/post statements, and 20/40/60 bands;
+- unresolved Stage B anchors and a missing ledger produce explicit noncomputed rows;
+- event, intervention-group, basket-assignment, and FOMC-meeting identifiers remain separate;
+- USMPD registry screening does not assign row-level event classifications.
