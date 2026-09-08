@@ -1807,12 +1807,16 @@ def sanitized_numerical_evidence(value: Any) -> Any:
         return retained
     if isinstance(value, (list, tuple, set)):
         return [sanitized_numerical_evidence(item) for item in value]
+    if isinstance(value, np.ndarray):
+        return sanitized_numerical_evidence(value.tolist())
     if isinstance(value, pathlib.Path):
         return "REDACTED_PRIVATE_PATH"
     if isinstance(value, bytes):
         return "REDACTED_BINARY_VALUE"
     if isinstance(value, np.generic):
         return sanitized_numerical_evidence(value.item())
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
     if isinstance(value, Exception):
         return sanitized_numerical_evidence(str(value))
     if isinstance(value, str):
@@ -2865,7 +2869,8 @@ def _main_impl(argv: list[str] | None = None) -> int:
         [row for fit in all_fits for row in fit.profile_rows])
     outputs["NUMERICAL_TRAJECTORIES.json"] = {
         "schema_version": "yax-gate2-fresh-a1-trajectories-v1",
-        "models": {fit.model_id: fit.trajectory for fit in all_fits}}
+        "models": {fit.model_id: sanitized_numerical_evidence(fit.trajectory)
+                   for fit in all_fits}}
     outputs["NUMERICAL_STATE_SOURCES.json"] = {
         "schema_version": "yax-gate2-state-sources-v1",
         "models": {fit.model_id: sanitized_numerical_evidence(fit.state_source)

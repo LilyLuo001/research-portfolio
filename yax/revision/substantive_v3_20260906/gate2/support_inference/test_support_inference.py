@@ -787,6 +787,34 @@ def test_typed_sanitizer_redacts_embedded_paths_and_generic_credentials():
     assert "/usr3" not in serialized and "opaque-session-value" not in serialized
 
 
+def test_typed_sanitizer_converts_numpy_arrays_and_nonfinite_values_to_json():
+    evidence = {
+        "matrix": np.asarray([[1.0, np.nan], [np.inf, -np.inf]]),
+        "integer": np.int64(7),
+        "boolean": np.bool_(True),
+    }
+    sanitized = si.sanitized_numerical_evidence(evidence)
+    assert sanitized == {
+        "matrix": [[1.0, None], [None, None]],
+        "integer": 7,
+        "boolean": True,
+    }
+    assert json.loads(si.canonical_bytes(sanitized)) == sanitized
+
+
+def test_failure_evidence_with_numpy_audit_is_canonically_serializable():
+    failure = si.certification_failure(
+        "POST_CERTIFICATION_PIPELINE", "synthetic", "serialization check",
+        audit={"target_vector": np.asarray([1.0, 2.0]),
+               "objective": np.float64(3.0)},
+        trajectory={"iterates": np.asarray([[0.0, 1.0]])},
+    )
+    encoded = si.canonical_bytes(failure.evidence)
+    decoded = json.loads(encoded)
+    assert decoded["audit"]["target_vector"] == [1.0, 2.0]
+    assert decoded["trajectory"]["iterates"] == [[0.0, 1.0]]
+
+
 def test_staged_scan_rejects_quoted_json_secret_key(tmp_path):
     path = tmp_path / "FAILURE_EVIDENCE.json"
     path.write_text('{"token":"opaque-value"}\n')
