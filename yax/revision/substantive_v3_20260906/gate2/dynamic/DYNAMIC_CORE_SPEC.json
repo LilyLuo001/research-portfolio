@@ -1,0 +1,192 @@
+{
+  "schema_version": "yax-gate2-dynamic-core-spec-v1",
+  "spec_id": "yaxgate2dyncore_v1_b60adea233448a6ab3c5b8174b6059a77fd21a6e8bb4508964eeb15f4cb78441",
+  "status": "frozen before protected Y01-Y05 dynamic-core execution",
+  "parent_contract": {
+    "spec_id": "yaxgate2dyn_v1_53179466ec9e75d9cc6d9c3a2c71f365da0c89a0dd3c2f29bdf37af95288205e",
+    "role": "reviewed pre-result definitions, calendar, functionals, restrictions, and tolerances"
+  },
+  "authenticated_inputs": {
+    "support_spec": {
+      "sha256": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"
+    },
+    "dynamic_parent_spec": {
+      "sha256": "8d530008dbccb32aa99ba26ef35128283840f700aa0cd80600ba352ac5e975eb"
+    },
+    "dynamic_parent_runner": {
+      "sha256": "31d1c8eb3fcb900d6cffa14127662fa872a53bfc54da8030602a61bdf820a116"
+    },
+    "canonical_spec": {
+      "sha256": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b"
+    },
+    "a1_spec": {
+      "sha256": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e"
+    },
+    "a1_runner": {
+      "sha256": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a"
+    },
+    "a1_model_audit": {
+      "sha256": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89"
+    },
+    "a1_dependency_release": {
+      "sha256": "65db43c62b151ed06846039374ebb523702cd23a3a8465ee1035cbe4b5c43587"
+    },
+    "cells": {
+      "sha256": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+      "privacy": "protected SCC aggregate; never publish"
+    },
+    "cells_receipt": {
+      "sha256": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a"
+    },
+    "fixed_membership": {
+      "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+    },
+    "support_matrix": {
+      "sha256": "1a62bed6fc5f2f1302eda3e7e00539af60ba88753539686dfed695c4d3058cbd"
+    },
+    "support_edges": {
+      "sha256": "5831022f3c0e14cc5e7d5c593da46ceb73ac80f0428e2d072952566721ba359a"
+    },
+    "direct_tail_membership": {
+      "sha256": "2bc3e298c713433c2efbaa74d7162cc66e317bf7581fdbee50ccca34efe3e1c1"
+    },
+    "support_result_manifest": {
+      "sha256": "e5532877d99a945f114b2a654f56c8d851cef228f85baa1d7e20708e5243a5eb",
+      "result_id": "yaxresult_v1_b53fefb7dd5185f8a7d6d3e7cf45df938d6e5205bf75eacabc9e8ee26bfc496a"
+    },
+    "common_draw_binding": {
+      "sha256": "fb77f6c655beb50159a47225b6c099daa2e97e340cffadb9d4154ca16a083a59"
+    },
+    "common_multipliers": {
+      "sha256": "3172bf843f0f801465f2a7ae2702347f38db1d5971bf0f522be225b3c1329205"
+    }
+  },
+  "models": {
+    "core_model_ids": [
+      "pooled",
+      "family_month",
+      "dynamics_unconditioned",
+      "dynamics_family_month"
+    ],
+    "objective": "unchanged frequency-weighted grouped-binomial likelihood",
+    "support": "unchanged canonical 468-occupation fixed assignment",
+    "reported_state_source": "trust-path after fresh unchanged A1 certification",
+    "independent_reference": "independent damped sparse Newton IRLS from zero"
+  },
+  "functionals": {
+    "component_order": [
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5",
+      "Webb_z"
+    ],
+    "transition_month": "2022-12",
+    "reference_quarter": "2022Q4",
+    "S": "static Q5-by-post coefficient",
+    "P": "observed-post-month-weighted mean of dynamic Q5 coefficients relative to 2022Q4",
+    "D": "observed-post-month-weighted mean minus observed-pre-month-weighted mean, with observed reference months at coefficient zero",
+    "reported_gaps": [
+      "P_minus_S",
+      "D_minus_S",
+      "P_minus_D"
+    ],
+    "conditioning_movements": "family-month minus unconditioned for S, P, D, and each reported gap",
+    "calendar_rule": "equal weight per actually observed month; omit December 2022; do not interpolate October 2025 or complete partial quarters"
+  },
+  "nesting": {
+    "predeclared_mapping": "identity on identically ordered nuisance columns; each static component-by-post column equals the sum of that component's dynamic post-quarter columns",
+    "required_checks": [
+      "identical active occupation-month rows",
+      "exact sparse nuisance equality",
+      "exact treatment-column reconstruction",
+      "static score moment at dynamic fitted probabilities",
+      "same-criterion pseudo-stock static refit reproduces all five static treatment targets"
+    ],
+    "target_absolute_tolerance": 1e-06,
+    "interpretation": "moment preservation and nonlinear projection check, not a causal estimator"
+  },
+  "pretrend": {
+    "windows": [
+      "full_preperiod",
+      "2017Q1_2019Q4",
+      "2021Q1_2022Q3",
+      "full_excluding_2020Q2_2020Q4"
+    ],
+    "nulls": [
+      "equality_to_original_2022Q4_reference",
+      "equality_within_selected_block"
+    ],
+    "diagnostics": [
+      "simultaneous common-draw intervals over the frozen full event grid and preperiod grid",
+      "true leave-one-quarter-out rebuilt full-preperiod nulls",
+      "persistent preperiod level",
+      "equal-elapsed-quarter linear drift",
+      "seasonal mean contrasts"
+    ],
+    "no_date_attribution": true,
+    "no_p_value_selected_window": true
+  },
+  "reparameterization": {
+    "scope": "all five dynamic components, both structures, every possible reference quarter, the D functional, and every frozen Q5 pretrend restriction",
+    "coefficient_rule": "beta_new = B beta_old",
+    "covariance_rule": "V_new = B V_old B'",
+    "influence_rule": "IF_new = IF_old B'",
+    "restriction_rule": "R_new = R_old B^{-1}",
+    "relative_tolerance": 1e-12,
+    "reference_map_absolute_tolerance": 1e-12
+  },
+  "inference": {
+    "cluster": "occupation",
+    "cluster_count": 468,
+    "draws": 9999,
+    "multipliers": "same hash-bound common Rademacher matrix used by Gate 2 support inference",
+    "pointwise": "normal approximation",
+    "simultaneous": "maximum absolute studentized common-multiplier statistic",
+    "joint": "rank-aware Wald with chi-square and common-multiplier p-values",
+    "conditioning_rank_relative": 1e-10,
+    "target_range_relative": 1e-05
+  },
+  "requirements": {
+    "Y01": "AUTHORITATIVE_RUN_REQUIRED",
+    "Y02": "AUTHORITATIVE_RUN_REQUIRED",
+    "Y03": "AUTHORITATIVE_RUN_REQUIRED",
+    "Y04": "AUTHORITATIVE_RUN_REQUIRED",
+    "Y05": "AUTHORITATIVE_RUN_REQUIRED",
+    "Y08": "OUT_OF_SCOPE_REQUIRES_16_ADDITIONAL_ONSET_MODELS",
+    "T05": "OUT_OF_SCOPE_REQUIRES_2_ADDITIONAL_ENDPOINT_MODELS"
+  },
+  "outputs": {
+    "artifact_filenames": [
+      "MODEL_CATALOG.json",
+      "RECONCILIATION_ESTIMATES.csv",
+      "RECONCILIATION_COVARIANCE.csv",
+      "DYNAMIC_COEFFICIENTS.csv",
+      "DYNAMIC_COVARIANCE.csv",
+      "DYNAMIC_INFLUENCE.csv",
+      "DYNAMIC_Q5_EVENT_STUDY.csv",
+      "DYNAMIC_Q5_CENTERED_DRAWS.npz",
+      "PRETREND_TESTS.csv",
+      "PRETREND_DIAGNOSTICS.csv",
+      "REPARAMETERIZATION_AUDIT.json",
+      "NESTING_PROJECTION_AUDIT.json",
+      "NUMERICAL_MODEL_AUDITS.json",
+      "VALIDATION_REPORT.json"
+    ],
+    "protected_objects_must_not_be_published": true,
+    "protected_objects": [
+      "aggregate cells",
+      "young and total cell stocks",
+      "full fitted designs",
+      "full fitted probabilities",
+      "private absolute paths"
+    ],
+    "publication": "new immutable run leaf with artifact manifest and execution receipt"
+  },
+  "execution": {
+    "code_sha256": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe",
+    "runtime_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+    "environment": "SCC project-tier compute using the A1-pinned Python 3.13.8 runtime",
+    "output_must_not_preexist": true
+  }
+}
