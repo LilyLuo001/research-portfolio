@@ -1,0 +1,36 @@
+{
+  "all_age_target_margins_imposed": false,
+  "constraints": "official structural zeros and source-age-month supported route mass preserved",
+  "maximum": {
+    "coefficient_Q5_x_post": -0.07021791911305932,
+    "maximum_absolute_source_age_month_gap": 9.313225746154785e-10,
+    "maximum_relative_source_age_month_gap": 4.366491707656406e-16,
+    "older_high_low_odds": 20.0,
+    "relative_young_older_high_low_odds": 0.0025,
+    "young_high_low_odds": 0.05
+  },
+  "minimum": {
+    "coefficient_Q5_x_post": -0.15993912811224723,
+    "maximum_absolute_source_age_month_gap": 5.820766091346741e-11,
+    "maximum_relative_source_age_month_gap": 4.4286140336903565e-16,
+    "older_high_low_odds": 1.0,
+    "relative_young_older_high_low_odds": 20.0,
+    "young_high_low_odds": 20.0
+  },
+  "older_grid": [
+    0.05,
+    0.25,
+    1.0,
+    4.0,
+    20.0
+  ],
+  "outcome_directed_optimization_performed": false,
+  "status": "EXPLORED_FEASIBLE_GRID_NOT_A_SHARP_OR_GLOBAL_BOUND",
+  "young_grid": [
+    0.05,
+    0.25,
+    1.0,
+    4.0,
+    20.0
+  ]
+}

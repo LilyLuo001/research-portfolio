@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The clean-route support alternative executed on 369 occupations under fixed and rebuilt labels, and the run authenticated the successful current-contract post-2020 models plus the earlier stable-Census-2010 result by hash. Population, taxonomy, exposure-map, and label changes are stated explicitly; none is presented as adjacent-vintage validation. The estimates are complete but remain pending dependency and manuscript integration checks.",
+  "evidence": [
+    {"role": "specification", "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md", "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"},
+    {"role": "code", "path": "gate3/mapping/run_mapping_sensitivity.py", "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"},
+    {"role": "run_receipt", "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"},
+    {"role": "result", "path": "runs/gate3_mapping_authoritative_20260908/CARRY_FORWARD_RESULTS.csv", "sha256": "a771f4bf499eba39cf9d6dd658aff2a1ef8485fc0169d0f68c04cc414464edfc"},
+    {"role": "validation_report", "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json", "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"},
+    {"role": "presentation", "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"}
+  ],
+  "response_locations": ["gate3/mapping/MAPPING_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent public-output reconstruction", "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "Verified N04/W01 dependencies and final presentation of the support-changing estimands.", "attempts": "Executed clean-route models and authenticated the stable-taxonomy and post-2020 carry-forward artifacts by hash.", "claim_impact": "The alternatives are complete but cannot be promoted to VERIFIED until their dependencies and manuscript labels are closed together.", "next_step": "Integrate the support-changing results with explicit population labels, then close N04 and W01."},
+  "approval": null
+}

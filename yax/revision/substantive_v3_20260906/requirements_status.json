@@ -4257,12 +4257,54 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The current-contract mapping run completed 65 models with zero failures and reproduced the canonical cells and coefficients before running rule-based service exclusions, inherited outcome-informed deletion refits, and occupation influence diagnostics. Fast food and counter workers supply 19.51 percent of squared local influence; the effective contributing-occupation count is 14.54. Exact inherited deletion estimates are reported as post-outcome diagnostics, not confirmatory tests. Public reconstruction passed at machine precision, but W01 remains RUN_UNVALIDATED pending closure of upstream T02 and integrated manuscript presentation.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md",
+          "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"
+        },
+        {
+          "role": "code",
+          "path": "gate3/mapping/run_mapping_sensitivity.py",
+          "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_mapping_authoritative_20260908/BASELINE_INFLUENCE_DIAGNOSTICS.csv",
+          "sha256": "76e9f00f7252a877dd554ace7d302cc2c126aec8053fd6244a1ff161add2ac3d"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json",
+          "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+        }
+      ],
+      "response_locations": [
+        "gate3/mapping/MAPPING_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output reconstruction",
+        "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified upstream T02 baseline contract and final manuscript integration of the current mapping results.",
+        "attempts": "Executed the current-contract SCC run, reconstructed all public intervals and identities, and preserved the historical outcome-informed status of inherited deletions.",
+        "claim_impact": "The mapping computation is complete and numerically validated, but the requirement cannot be promoted to VERIFIED while its baseline dependency and final presentation remain open.",
+        "next_step": "Integrate the current mapping table and limitations into the manuscript, then close T02 and the end-to-end delivery checks."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -4293,12 +4335,54 @@
       "depends_on": [
         "W01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The jointly feasible symmetric bridge-tilt grid executed for fixed and rebuilt treatment labels under pooled and family-month models. Thirty-one eligible split sources account for 14.86 percent of supported early routed stock. Across K=0.25 to 4, pooled coefficients range from -0.1446 to -0.1163 and family-month coefficients from -0.0783 to 0.0439; endpoint paired occupation-clustered intervals versus K=1 contain zero. The correct interpretation is that the design does not detect those endpoint differences, not economic equivalence.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md",
+          "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"
+        },
+        {
+          "role": "code",
+          "path": "gate3/mapping/run_mapping_sensitivity.py",
+          "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_mapping_authoritative_20260908/PAIRED_MOVEMENTS.csv",
+          "sha256": "b832575dc095ef1f550cb1bfabcd9b5a6b93dda024446eb828486ec46e9309d7"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json",
+          "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+        }
+      ],
+      "response_locations": [
+        "gate3/mapping/MAPPING_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output reconstruction",
+        "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified W01 dependency and final manuscript integration.",
+        "attempts": "Executed every prespecified K value under both label rules and structures with common draws and validated all paired intervals.",
+        "claim_impact": "The sensitivity results are numerically complete but remain downstream of an unverified requirement and are not yet integrated into the final presentation.",
+        "next_step": "Integrate the W02 results and close W01/T02 in the final validation pass."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -4328,12 +4412,54 @@
       "depends_on": [
         "W02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "All 25 points in the prespecified joint young/older bridge-allocation grid executed with source-age-month mass and official structural zeros preserved. The pooled coefficient spans -0.1599391 to -0.0702179. The retained result is explicitly an explored feasible-grid envelope, not a sharp/global bound or an identified set, and no outcome-directed optimization followed inspection of the grid.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md",
+          "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"
+        },
+        {
+          "role": "code",
+          "path": "gate3/mapping/run_mapping_sensitivity.py",
+          "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_mapping_authoritative_20260908/ADVERSE_ENVELOPE.json",
+          "sha256": "cfd14c6c06b328bf83ce04f43d5d8c556105d7c6d55d4fce963f4bcbbe6fa267"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json",
+          "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+        }
+      ],
+      "response_locations": [
+        "gate3/mapping/MAPPING_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output reconstruction",
+        "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified W02 dependency and final manuscript integration.",
+        "attempts": "Executed and validated the complete finite joint grid with mass conservation and no post-inspection optimization.",
+        "claim_impact": "The finite-grid result is complete, but its downstream dependency and final presentation are not yet verified.",
+        "next_step": "Present the grid as an explored envelope, integrate it into the manuscript or appendix, and close W02."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -4365,12 +4491,54 @@
         "N04",
         "W01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The clean-route support alternative executed on 369 occupations under fixed and rebuilt labels, and the run authenticated the successful current-contract post-2020 models plus the earlier stable-Census-2010 result by hash. Population, taxonomy, exposure-map, and label changes are stated explicitly; none is presented as adjacent-vintage validation. The estimates are complete but remain pending dependency and manuscript integration checks.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md",
+          "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"
+        },
+        {
+          "role": "code",
+          "path": "gate3/mapping/run_mapping_sensitivity.py",
+          "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate3_mapping_authoritative_20260908/CARRY_FORWARD_RESULTS.csv",
+          "sha256": "a771f4bf499eba39cf9d6dd658aff2a1ef8485fc0169d0f68c04cc414464edfc"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json",
+          "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+        }
+      ],
+      "response_locations": [
+        "gate3/mapping/MAPPING_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output reconstruction",
+        "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified N04/W01 dependencies and final presentation of the support-changing estimands.",
+        "attempts": "Executed clean-route models and authenticated the stable-taxonomy and post-2020 carry-forward artifacts by hash.",
+        "claim_impact": "The alternatives are complete but cannot be promoted to VERIFIED until their dependencies and manuscript labels are closed together.",
+        "next_step": "Integrate the support-changing results with explicit population labels, then close N04 and W01."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -5672,12 +5840,12 @@
         {
           "role": "delivery_artifact",
           "path": "responses/COMMENT_RESPONSE_MATRIX.csv",
-          "sha256": "173a5e6e4278790edf88c4bd32abe083bd3d0c2f0afc1c1849b603a803c0f5cc"
+          "sha256": "e78646e0ac8d6102e8b4abeb5acc13e63d0bce8a36d96d8f9344ab2a655b6091"
         },
         {
           "role": "validation_report",
           "path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
-          "sha256": "e8a6e46f0330a1d2c5597707195a6de2d3fe9867c22963708a500d0a49f7550b"
+          "sha256": "6fe028c2d02662a60de71c32e839e5f84cbba1d36b3894a1fc1eab14c771b557"
         },
         {
           "role": "code",
@@ -5919,12 +6087,34 @@
       "depends_on": [
         "W01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The coding-error feasibility audit found no authenticated dual-coded CPS validation sample or external symmetric misclassification matrix. Immediate occupation reversals were not converted into an error rate, and no arbitrary symmetric-error simulation was fabricated. The executed bridge-allocation sensitivities are retained as related measurement analyses, not as a validated occupation-code error model.",
+      "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "runs/gate3_mapping_authoritative_20260908/CODING_ERROR_DISPOSITION.json",
+          "sha256": "9411d845aafe4c45192d2bedae9dff1d18eef51175cae3796acb9a662a030973"
+        },
+        {
+          "role": "verification_report",
+          "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+        }
+      ],
+      "response_locations": [
+        "gate3/mapping/MAPPING_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent scientific-feasibility audit",
+        "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "A validated dual-coded CPS sample or external occupation-coding misclassification matrix and verified W01 dependency.",
+        "attempts": "Checked the available mapping and longitudinal evidence, rejected immediate reversals as a pure error-rate measure, and completed the feasible bridge-allocation analyses.",
+        "claim_impact": "No calibrated random coding-error correction can be claimed; the chapter must state this exact limitation.",
+        "next_step": "Keep the explicit feasibility disposition unless validated external coding-error data become available, and close W01 in the integrated review."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "verification_report",

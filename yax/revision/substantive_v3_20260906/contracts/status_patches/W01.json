@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The current-contract mapping run completed 65 models with zero failures and reproduced the canonical cells and coefficients before running rule-based service exclusions, inherited outcome-informed deletion refits, and occupation influence diagnostics. Fast food and counter workers supply 19.51 percent of squared local influence; the effective contributing-occupation count is 14.54. Exact inherited deletion estimates are reported as post-outcome diagnostics, not confirmatory tests. Public reconstruction passed at machine precision, but W01 remains RUN_UNVALIDATED pending closure of upstream T02 and integrated manuscript presentation.",
+  "evidence": [
+    {"role": "specification", "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md", "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"},
+    {"role": "code", "path": "gate3/mapping/run_mapping_sensitivity.py", "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"},
+    {"role": "run_receipt", "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"},
+    {"role": "result", "path": "runs/gate3_mapping_authoritative_20260908/BASELINE_INFLUENCE_DIAGNOSTICS.csv", "sha256": "76e9f00f7252a877dd554ace7d302cc2c126aec8053fd6244a1ff161add2ac3d"},
+    {"role": "validation_report", "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json", "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"},
+    {"role": "presentation", "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"}
+  ],
+  "response_locations": ["gate3/mapping/MAPPING_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent public-output reconstruction", "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "Verified upstream T02 baseline contract and final manuscript integration of the current mapping results.", "attempts": "Executed the current-contract SCC run, reconstructed all public intervals and identities, and preserved the historical outcome-informed status of inherited deletions.", "claim_impact": "The mapping computation is complete and numerically validated, but the requirement cannot be promoted to VERIFIED while its baseline dependency and final presentation remain open.", "next_step": "Integrate the current mapping table and limitations into the manuscript, then close T02 and the end-to-end delivery checks."},
+  "approval": null
+}

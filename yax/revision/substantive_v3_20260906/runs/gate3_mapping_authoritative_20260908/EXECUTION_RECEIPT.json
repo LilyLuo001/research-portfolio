@@ -1,0 +1,75 @@
+{
+  "adverse_envelope_status": "EXPLORED_FEASIBLE_GRID_NOT_A_SHARP_OR_GLOBAL_BOUND",
+  "canonical_identity": {
+    "analysis_months": 113,
+    "cell_maximum_absolute_gap": 1.4901161193847656e-08,
+    "cell_maximum_relative_gap": 3.146668096024438e-15,
+    "family_month_coefficient": -0.021674952018246086,
+    "official_rebuilt_labels_exact": true,
+    "official_rebuilt_webb_maximum_absolute_gap": 0.0,
+    "pooled_coefficient": -0.13210945079219036,
+    "support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+    "support_occupations": 468
+  },
+  "common_draws_across_all_models": true,
+  "draws": 9999,
+  "generated_at_utc": "2026-09-08T23:42:29.884362+00:00",
+  "git_head": "baeda97a9da64b46ff9dba68344e5e12a21a3959",
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "calibration_receipt": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+    "march_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "private_calibration": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+    "runner": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861",
+    "specification": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f",
+    "stable_taxonomy_results": "ad0b3a8fb1d706af65c9d8273e645c605dfb54073b38d8d7b3e6f88a54616491",
+    "timing_model_results": "85c04fe8fd37ca245400a80dfa6458957a86fb0b546b4a7516c594dc3123a403",
+    "wide_microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9"
+  },
+  "model_count": 65,
+  "model_failures": 0,
+  "official_mass_check": {
+    "maximum_absolute_source_age_month_gap": 0.0,
+    "maximum_relative_source_age_month_gap": 0.0
+  },
+  "output_hashes": {
+    "ADVERSE_ENVELOPE.json": "cfd14c6c06b328bf83ce04f43d5d8c556105d7c6d55d4fce963f4bcbbe6fa267",
+    "ADVERSE_GRID.csv": "5299a042aa3296d7198aee2ee4244b370ff627090e8d529d360fe0d4a2754920",
+    "BASELINE_INFLUENCE_DIAGNOSTICS.csv": "76e9f00f7252a877dd554ace7d302cc2c126aec8053fd6244a1ff161add2ac3d",
+    "CARRY_FORWARD_RESULTS.csv": "a771f4bf499eba39cf9d6dd658aff2a1ef8485fc0169d0f68c04cc414464edfc",
+    "CODING_ERROR_DISPOSITION.json": "9411d845aafe4c45192d2bedae9dff1d18eef51175cae3796acb9a662a030973",
+    "MASS_CONSERVATION.csv": "f78a91bbb1abc256d559138d8314d10156965d5a8fb5831356e806c267ec11da",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MODEL_INFLUENCE.csv": "908e1ba0f07aadf8e14af1cf79f674383c9d900a09d4028173fa7b67ea721e5e",
+    "MODEL_RESULTS.csv": "af4eb5c74e2e72203616bda369c8ef245b3e0c70574be0d79591d53d4109f648",
+    "PAIRED_MOVEMENTS.csv": "b832575dc095ef1f550cb1bfabcd9b5a6b93dda024446eb828486ec46e9309d7",
+    "ROUTE_ELIGIBILITY.csv": "0fd8122e144495e20503c554963707e8d57d379f3f6f9b2e394966c87e7908c0",
+    "SERVICE_AND_DELETION_MEMBERS.csv": "87249caef9dd84ca7468a46bee8fa26e32fcea07d478cd9b893b95bd429375ea",
+    "SYMMETRIC_TILT_MEMBERSHIP.csv": "91452382957844f793511bd90b525654cbbd0dfe1bc812c908c34de5bc4d8115"
+  },
+  "paired_comparisons": 32,
+  "raw_aggregate_counters": {
+    "active_records": 5001069,
+    "direct_aggregate_rows": 69308,
+    "direct_target_records": 3146679,
+    "early_aggregate_rows": 30643,
+    "early_source_records": 1854390,
+    "raw_rows": 9843021,
+    "wide_repair_month_rows_removed": 621589
+  },
+  "raw_microdata_or_identifiers_written": false,
+  "route_constraints": {
+    "all_age_target_margins_imposed": false,
+    "eligible_split_sources": 31,
+    "eligible_stock_share_of_supported_early_source_stock": 0.1485776235837001,
+    "full_bridge_sources": 503,
+    "source_age_month_mass_preserved": true,
+    "structural_route_zeros_preserved": true,
+    "supported_bridge_sources": 421
+  },
+  "schema_version": "yax-gate3-mapping-sensitivity-v1",
+  "seed": 202609086401,
+  "sge_job_id": "7500525",
+  "status": "PASS_GATE3_MAPPING_SENSITIVITY"
+}

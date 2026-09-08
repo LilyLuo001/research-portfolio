@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The jointly feasible symmetric bridge-tilt grid executed for fixed and rebuilt treatment labels under pooled and family-month models. Thirty-one eligible split sources account for 14.86 percent of supported early routed stock. Across K=0.25 to 4, pooled coefficients range from -0.1446 to -0.1163 and family-month coefficients from -0.0783 to 0.0439; endpoint paired occupation-clustered intervals versus K=1 contain zero. The correct interpretation is that the design does not detect those endpoint differences, not economic equivalence.",
+  "evidence": [
+    {"role": "specification", "path": "gate3/mapping/MAPPING_SENSITIVITY_SPEC.md", "sha256": "28bd8d1e5c5349ea535986a12f7af7d9803b5c5e5470dbec0672f2fbf661348f"},
+    {"role": "code", "path": "gate3/mapping/run_mapping_sensitivity.py", "sha256": "3fb8fe1c81e0e6b7d67e3baa46091015a66d482ca95d740936a41bd0f5030861"},
+    {"role": "run_receipt", "path": "runs/gate3_mapping_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "10da5705d6511e807618f3d336afadf61c1b0ae843e9211d036ce782fbc1c17c"},
+    {"role": "result", "path": "runs/gate3_mapping_authoritative_20260908/PAIRED_MOVEMENTS.csv", "sha256": "b832575dc095ef1f550cb1bfabcd9b5a6b93dda024446eb828486ec46e9309d7"},
+    {"role": "validation_report", "path": "runs/gate3_mapping_authoritative_20260908/PUBLIC_VALIDATION.json", "sha256": "2846f3fe66f3f6f8be9a032b2573767275fa23775abfb709231caa7fea05cece"},
+    {"role": "presentation", "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"}
+  ],
+  "response_locations": ["gate3/mapping/MAPPING_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent public-output reconstruction", "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "Verified W01 dependency and final manuscript integration.", "attempts": "Executed every prespecified K value under both label rules and structures with common draws and validated all paired intervals.", "claim_impact": "The sensitivity results are numerically complete but remain downstream of an unverified requirement and are not yet integrated into the final presentation.", "next_step": "Integrate the W02 results and close W01/T02 in the final validation pass."},
+  "approval": null
+}

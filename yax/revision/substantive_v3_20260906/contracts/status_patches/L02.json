@@ -1,0 +1,12 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The coding-error feasibility audit found no authenticated dual-coded CPS validation sample or external symmetric misclassification matrix. Immediate occupation reversals were not converted into an error rate, and no arbitrary symmetric-error simulation was fabricated. The executed bridge-allocation sensitivities are retained as related measurement analyses, not as a validated occupation-code error model.",
+  "evidence": [
+    {"role": "source_evidence", "path": "runs/gate3_mapping_authoritative_20260908/CODING_ERROR_DISPOSITION.json", "sha256": "9411d845aafe4c45192d2bedae9dff1d18eef51175cae3796acb9a662a030973"},
+    {"role": "verification_report", "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"}
+  ],
+  "response_locations": ["gate3/mapping/MAPPING_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent scientific-feasibility audit", "report_path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "A validated dual-coded CPS sample or external occupation-coding misclassification matrix and verified W01 dependency.", "attempts": "Checked the available mapping and longitudinal evidence, rejected immediate reversals as a pure error-rate measure, and completed the feasible bridge-allocation analyses.", "claim_impact": "No calibrated random coding-error correction can be claimed; the chapter must state this exact limitation.", "next_step": "Keep the explicit feasibility disposition unless validated external coding-error data become available, and close W01 in the integrated review."},
+  "approval": null
+}
