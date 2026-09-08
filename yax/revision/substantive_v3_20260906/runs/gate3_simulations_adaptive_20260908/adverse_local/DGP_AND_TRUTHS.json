@@ -1,0 +1,34 @@
+{
+  "count_rule": "rounded observed cell Kish effective count",
+  "design": "prior_adverse_rademacher",
+  "diagnostics": {},
+  "historical_adverse_reproduction": {
+    "applicable": true,
+    "compared_draws": 196,
+    "interpretation": "historical pooled coefficients reproduced",
+    "maximum_pooled_coefficient_difference": 1.734723475976807e-16,
+    "passes_tolerance": true,
+    "tolerance": 1e-08
+  },
+  "pseudo_truth_fit_diagnostics": {
+    "family_month": {
+      "iterations": 5,
+      "maximum_normalized_score": 6.167922482710011e-20
+    },
+    "pooled": {
+      "iterations": 5,
+      "maximum_normalized_score": 1.2773134834982315e-19
+    }
+  },
+  "pseudo_truths": {
+    "family_month": -0.049826177787663364,
+    "family_month_minus_pooled": 0.00031698389715372616,
+    "pooled": -0.05014316168481709
+  },
+  "rho": 0.5742538344742641,
+  "scenario": "adverse_local",
+  "shock_law": "complete-path SOC2 Rademacher sign times archived residual path",
+  "stationary_sd": 0.10961363699788072,
+  "structural_theta": -0.05,
+  "zero_size_classification_rule": "abs(pseudo_truth) <= max(1e-10, 1e-6 * mean occupation SE); evaluated in SIMULATION_SUMMARY.csv"
+}

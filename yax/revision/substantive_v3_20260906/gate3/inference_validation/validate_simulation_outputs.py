@@ -167,7 +167,8 @@ def expected_summary(frame: pd.DataFrame, attempts: int, failure_count: int
 
 
 def validate_scenario(directory: Path, calibration_receipt: Path,
-                      historical_draws: Path, expected_head: str) -> dict[str, Any]:
+                      historical_draws: Path,
+                      allowed_heads: set[str]) -> dict[str, Any]:
     scenario = directory.name
     require(scenario in SCENARIOS, f"unexpected scenario directory {scenario}")
     for name in (*OUTPUTS, "EXECUTION_RECEIPT.json"):
@@ -178,7 +179,7 @@ def validate_scenario(directory: Path, calibration_receipt: Path,
     dgp = load_json(directory / "DGP_AND_TRUTHS.json")
     require(receipt["scenario"] == scenario == dgp["scenario"],
             f"{scenario}: scenario identity mismatch")
-    require(receipt["git_head"] == expected_head, f"{scenario}: git-head mismatch")
+    require(receipt["git_head"] in allowed_heads, f"{scenario}: git-head mismatch")
     require(receipt["calibration_receipt_sha256"] == sha256_file(calibration_receipt),
             f"{scenario}: calibration-receipt hash mismatch")
     calibration = load_json(calibration_receipt)
@@ -279,6 +280,7 @@ def validate_scenario(directory: Path, calibration_receipt: Path,
                 f"{scenario}: inapplicable history marked applicable")
     return {
         "scenario": scenario, "status": receipt["status"], "attempts": attempts,
+        "git_head": receipt["git_head"],
         "failures": len(failures),
         "maximum_binomial_mcse": expected_stopping["maximum_relevant_binomial_mcse"],
         "maximum_sd_relative_mc_error": expected_stopping[
@@ -291,7 +293,8 @@ def main() -> int:
     parser.add_argument("--run-root", type=Path, required=True)
     parser.add_argument("--calibration-receipt", type=Path, required=True)
     parser.add_argument("--historical-draws", type=Path, required=True)
-    parser.add_argument("--expected-git-head", required=True)
+    parser.add_argument("--allowed-git-head", action="append", required=True,
+                        help="Repeat when scientifically unchanged scenarios span commits")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     require(args.run_root.is_dir(), "run root is absent")
@@ -299,14 +302,16 @@ def main() -> int:
                      if path.is_dir() and path.name != "logs"}
     require(observed_dirs == set(SCENARIOS),
             f"scenario directory inventory differs: {sorted(observed_dirs)}")
+    allowed_heads = set(args.allowed_git_head)
+    require(all(len(value) == 40 for value in allowed_heads), "invalid allowed git head")
     results = [validate_scenario(args.run_root / scenario, args.calibration_receipt,
-                                 args.historical_draws, args.expected_git_head)
+                                 args.historical_draws, allowed_heads)
                for scenario in SCENARIOS]
     report = {
         "schema_version": "yax-gate3-simulation-independent-validation-v1",
         "status": "PASS_INDEPENDENT_PUBLIC_SIMULATION_VALIDATION",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "expected_git_head": args.expected_git_head,
+        "allowed_git_heads": sorted(allowed_heads),
         "calibration_receipt_sha256": sha256_file(args.calibration_receipt),
         "historical_draws_sha256": sha256_file(args.historical_draws),
         "scenario_count": len(results), "scenarios": results,

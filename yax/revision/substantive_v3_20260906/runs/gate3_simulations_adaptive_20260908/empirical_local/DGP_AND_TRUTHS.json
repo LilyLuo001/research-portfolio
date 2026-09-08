@@ -1,0 +1,39 @@
+{
+  "count_rule": "rounded observed cell Kish effective count",
+  "design": "empirical_gaussian_ar1",
+  "diagnostics": {
+    "stationary_variance_diagnostic": {
+      "diagnostic_paths": 5000,
+      "finite_simulation_maximum_is_diagnostic_not_pass_fail": true,
+      "maximum_realized_month_variance": 0.012994816233073478,
+      "maximum_relative_month_variance_difference": 0.08153596624222026,
+      "maximum_theoretical_relative_month_variance_difference": 0.0,
+      "minimum_realized_month_variance": 0.01125034926215319,
+      "theoretical_marginal_variance": 0.012015149415903165
+    }
+  },
+  "historical_adverse_reproduction": {
+    "applicable": false
+  },
+  "pseudo_truth_fit_diagnostics": {
+    "family_month": {
+      "iterations": 6,
+      "maximum_normalized_score": 1.7800856835054138e-19
+    },
+    "pooled": {
+      "iterations": 5,
+      "maximum_normalized_score": 7.973777764289631e-20
+    }
+  },
+  "pseudo_truths": {
+    "family_month": -0.049943218817239884,
+    "family_month_minus_pooled": 0.11031428444587275,
+    "pooled": -0.16025750326311264
+  },
+  "rho": 0.5742538344742641,
+  "scenario": "empirical_local",
+  "shock_law": "stationary Gaussian SOC2-family AR(1)",
+  "stationary_sd": 0.10961363699788072,
+  "structural_theta": -0.05,
+  "zero_size_classification_rule": "abs(pseudo_truth) <= max(1e-10, 1e-6 * mean occupation SE); evaluated in SIMULATION_SUMMARY.csv"
+}

@@ -1,0 +1,29 @@
+{
+  "attempted_replications": 1599,
+  "calibration_receipt_sha256": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+  "failed_joint_refits": 0,
+  "generated_at_utc": "2026-09-08T12:57:17.627154+00:00",
+  "git_head": "5346c14d75c450d81490c76345053155a523986f",
+  "historical_draws_sha256": "ffc6a0d70a0821b00d83b8b600662bd2442e8e34607ef9cc2d75e1b8a4f4bef4",
+  "output_hashes": {
+    "DGP_AND_TRUTHS.json": "f249c49f311d5d7f6d6cb825aef4a505e0898972fce155df498d33d6340461be",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MONTE_CARLO_STOPPING.json": "693614ec8acf395988ec55673fdcf9e6c7a0c976faa1f2bbfec34547b77211f9",
+    "REPLICATE_RESULTS.csv": "36ff18aed5324195be4e8b541a62a747166b7cb9261120b7270c880662dec296",
+    "SIMULATION_SUMMARY.csv": "9ea004bb94571c4e9a90c9b2223e49e5b9457377cb8215f9db8841c0b51b1f6c"
+  },
+  "privacy": "outputs contain coefficients and aggregate diagnostics only; no cell, route, household code, microdata row, or private path",
+  "private_calibration_sha256": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+  "scenario": "adverse_null",
+  "schema_version": "yax-gate3-simulation-scenario-receipt-v1",
+  "sge_job_id": "7490808",
+  "status": "PASS_SIMULATION_SCENARIO_RESOLVED",
+  "stopping": {
+    "maximum_empirical_sd_relative_mc_error": 0.018368865338580863,
+    "maximum_relevant_binomial_mcse": 0.011618488492818598,
+    "mcse_target": 0.0125,
+    "passes": true,
+    "sd_relative_mc_error_target": 0.05
+  },
+  "successful_joint_refits": 1599
+}

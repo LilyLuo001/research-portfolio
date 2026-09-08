@@ -1,0 +1,114 @@
+{
+  "allowed_git_heads": [
+    "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+    "5346c14d75c450d81490c76345053155a523986f"
+  ],
+  "calibration_receipt_sha256": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+  "generated_at_utc": "2026-09-08T13:35:09.498598+00:00",
+  "historical_draws_sha256": "ffc6a0d70a0821b00d83b8b600662bd2442e8e34607ef9cc2d75e1b8a4f4bef4",
+  "privacy": "validated public aggregate simulation artifacts only; protected NPZ not read",
+  "scenario_count": 11,
+  "scenarios": [
+    {
+      "attempts": 1199,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.010268194761783525,
+      "maximum_sd_relative_mc_error": 0.021346813140201044,
+      "scenario": "empirical_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 799,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.011805824039216695,
+      "maximum_sd_relative_mc_error": 0.02612177318057338,
+      "scenario": "empirical_local",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 799,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.012095692358378938,
+      "maximum_sd_relative_mc_error": 0.02674685589040475,
+      "scenario": "empirical_observed",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 1599,
+      "failures": 0,
+      "git_head": "5346c14d75c450d81490c76345053155a523986f",
+      "maximum_binomial_mcse": 0.011618488492818598,
+      "maximum_sd_relative_mc_error": 0.018368865338580887,
+      "scenario": "adverse_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 1599,
+      "failures": 0,
+      "git_head": "5346c14d75c450d81490c76345053155a523986f",
+      "maximum_binomial_mcse": 0.011661440537611985,
+      "maximum_sd_relative_mc_error": 0.01831256870423465,
+      "scenario": "adverse_local",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 1599,
+      "failures": 0,
+      "git_head": "5346c14d75c450d81490c76345053155a523986f",
+      "maximum_binomial_mcse": 0.011738083105762229,
+      "maximum_sd_relative_mc_error": 0.018592558681423753,
+      "scenario": "adverse_observed",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 1199,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.010723112422748872,
+      "maximum_sd_relative_mc_error": 0.021204493667350836,
+      "scenario": "sparsity_equalized_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 799,
+      "failures": 0,
+      "git_head": "5346c14d75c450d81490c76345053155a523986f",
+      "maximum_binomial_mcse": 0.010130089553110143,
+      "maximum_sd_relative_mc_error": 0.02761177439567855,
+      "scenario": "family_variance_zero_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 799,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.011019945689620256,
+      "maximum_sd_relative_mc_error": 0.026745847051557036,
+      "scenario": "serial_independent_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 799,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.01107531194884865,
+      "maximum_sd_relative_mc_error": 0.026589323746928087,
+      "scenario": "influence_equalized_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    },
+    {
+      "attempts": 799,
+      "failures": 0,
+      "git_head": "0969c312a0d277b7760c83200fdc04e2f4dc67fd",
+      "maximum_binomial_mcse": 0.011184696485965272,
+      "maximum_sd_relative_mc_error": 0.025286630579753704,
+      "scenario": "occupation_ar1_null",
+      "status": "PASS_SIMULATION_SCENARIO_RESOLVED"
+    }
+  ],
+  "schema_version": "yax-gate3-simulation-independent-validation-v1",
+  "status": "PASS_INDEPENDENT_PUBLIC_SIMULATION_VALIDATION"
+}

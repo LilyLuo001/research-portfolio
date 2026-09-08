@@ -1,0 +1,43 @@
+{
+  "count_rule": "rounded observed cell Kish effective count",
+  "design": "influence_equalized",
+  "diagnostics": {
+    "maximum_family_information_total_gap": 1.043081283569336e-07,
+    "maximum_rescaling_factor": 290.86667545552746,
+    "maximum_within_family_information_range": 3.725290298461914e-09,
+    "minimum_rescaling_factor": 0.06802747058849129,
+    "stationary_variance_diagnostic": {
+      "diagnostic_paths": 5000,
+      "finite_simulation_maximum_is_diagnostic_not_pass_fail": true,
+      "maximum_realized_month_variance": 0.012994816233073478,
+      "maximum_relative_month_variance_difference": 0.08153596624222026,
+      "maximum_theoretical_relative_month_variance_difference": 0.0,
+      "minimum_realized_month_variance": 0.01125034926215319,
+      "theoretical_marginal_variance": 0.012015149415903165
+    }
+  },
+  "historical_adverse_reproduction": {
+    "applicable": false
+  },
+  "pseudo_truth_fit_diagnostics": {
+    "family_month": {
+      "iterations": 6,
+      "maximum_normalized_score": 3.8921524263520855e-20
+    },
+    "pooled": {
+      "iterations": 5,
+      "maximum_normalized_score": 2.7346776837513546e-19
+    }
+  },
+  "pseudo_truths": {
+    "family_month": -3.805452219486149e-06,
+    "family_month_minus_pooled": 0.09457403096355514,
+    "pooled": -0.09457783641577462
+  },
+  "rho": 0.5742538344742641,
+  "scenario": "influence_equalized_null",
+  "shock_law": "stationary Gaussian SOC2-family AR(1)",
+  "stationary_sd": 0.10961363699788072,
+  "structural_theta": 0.0,
+  "zero_size_classification_rule": "abs(pseudo_truth) <= max(1e-10, 1e-6 * mean occupation SE); evaluated in SIMULATION_SUMMARY.csv"
+}

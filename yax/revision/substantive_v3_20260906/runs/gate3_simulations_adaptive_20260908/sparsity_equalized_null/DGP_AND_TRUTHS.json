@@ -1,0 +1,41 @@
+{
+  "count_rule": "all positive cells fixed to variance-preserving weighted harmonic effective count 261.258316896, rounded once to 261",
+  "design": "sparsity_equalized",
+  "diagnostics": {
+    "stationary_variance_diagnostic": {
+      "diagnostic_paths": 5000,
+      "finite_simulation_maximum_is_diagnostic_not_pass_fail": true,
+      "maximum_realized_month_variance": 0.012994816233073478,
+      "maximum_relative_month_variance_difference": 0.08153596624222026,
+      "maximum_theoretical_relative_month_variance_difference": 0.0,
+      "minimum_realized_month_variance": 0.01125034926215319,
+      "theoretical_marginal_variance": 0.012015149415903165
+    },
+    "variance_preserving_common_count_rounded": 261,
+    "variance_preserving_common_count_unrounded": 261.25831689613483
+  },
+  "historical_adverse_reproduction": {
+    "applicable": false
+  },
+  "pseudo_truth_fit_diagnostics": {
+    "family_month": {
+      "iterations": 6,
+      "maximum_normalized_score": 7.894680480443407e-20
+    },
+    "pooled": {
+      "iterations": 5,
+      "maximum_normalized_score": 3.320307942376956e-19
+    }
+  },
+  "pseudo_truths": {
+    "family_month": 4.995248553026578e-06,
+    "family_month_minus_pooled": 0.1103517925425527,
+    "pooled": -0.11034679729399967
+  },
+  "rho": 0.5742538344742641,
+  "scenario": "sparsity_equalized_null",
+  "shock_law": "stationary Gaussian SOC2-family AR(1)",
+  "stationary_sd": 0.10961363699788072,
+  "structural_theta": 0.0,
+  "zero_size_classification_rule": "abs(pseudo_truth) <= max(1e-10, 1e-6 * mean occupation SE); evaluated in SIMULATION_SUMMARY.csv"
+}

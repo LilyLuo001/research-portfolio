@@ -1,0 +1,29 @@
+{
+  "count_rule": "rounded observed cell Kish effective count",
+  "design": "family_variance_zero",
+  "diagnostics": {},
+  "historical_adverse_reproduction": {
+    "applicable": false
+  },
+  "pseudo_truth_fit_diagnostics": {
+    "family_month": {
+      "iterations": 6,
+      "maximum_normalized_score": 2.4020863690000952e-20
+    },
+    "pooled": {
+      "iterations": 5,
+      "maximum_normalized_score": 1.5664281340962022e-19
+    }
+  },
+  "pseudo_truths": {
+    "family_month": -1.3057865364479967e-16,
+    "family_month_minus_pooled": 0.1104517300905644,
+    "pooled": -0.11045173009056453
+  },
+  "rho": 0.5742538344742641,
+  "scenario": "family_variance_zero_null",
+  "shock_law": "family shock variance fixed to zero",
+  "stationary_sd": 0.0,
+  "structural_theta": 0.0,
+  "zero_size_classification_rule": "abs(pseudo_truth) <= max(1e-10, 1e-6 * mean occupation SE); evaluated in SIMULATION_SUMMARY.csv"
+}
