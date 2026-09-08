@@ -626,6 +626,33 @@ for control, target, baseline, conditioned, movement, lo, hi, tokens in [
             8e-6,
         )
 
+# The current household companion uses 399 full refits on the family-month
+# target.  The displayed main-table row uses regenerated preperiod labels.
+rel = "yax/revision/substantive_v3_20260906/runs/gate3_household_0399_20260908/summary_0399/HOUSEHOLD_REFIT_SUMMARY.csv"
+household = pd.read_csv(ROOT / rel)
+for target, lo, hi, tokens in [
+    ("pooled", -0.186358, -0.076175, ("-0.186", "-0.076")),
+    ("family_month", -0.123557, 0.066458, ("-0.124", "0.066")),
+    ("family_month_minus_pooled", 0.035490, 0.177078, ("0.035", "0.177")),
+]:
+    row = one(household, classification_mode="regenerated_preperiod_labels", target=target)
+    if int(row["successful_full_refits"]) != 399 or int(row["failed_or_missing_draws"]) != 0:
+        raise AssertionError(f"household refit inventory changed for {target}")
+    for field, expected, token in [
+        ("basic_ci_lower", lo, tokens[0]),
+        ("basic_ci_upper", hi, tokens[1]),
+    ]:
+        record(
+            f"HOUSEHOLD-{target}",
+            rel,
+            f"classification_mode=regenerated_preperiod_labels/target={target}",
+            field,
+            row[field],
+            expected,
+            token,
+            8e-6,
+        )
+
 # Every core module must carry a passing self-check.
 core_selfchecks = [
     "rebuilt_baseline/results/SELF_CHECK.json",
@@ -765,6 +792,24 @@ for stale_shortfall_row in [
 ]:
     if stale_shortfall_row in all_text:
         raise AssertionError(f"superseded shortfall row survives: {stale_shortfall_row}")
+
+inference_table = (PAPER / "tables" / "r3_table4_inference.tex").read_text()
+for required in [
+    "Household full refit, 399 draws",
+    "$[-0.186,-0.076]$",
+    "$[-0.124,0.066]$",
+    "$[0.035,0.177]$",
+    "regenerates preperiod exposure labels",
+]:
+    if required not in inference_table:
+        raise AssertionError(f"current household sensitivity absent: {required}")
+for stale_household_claim in [
+    "199-draw household",
+    "performs 199 positive-weight full refits",
+    "Household full refit, SOC2-by-post",
+]:
+    if stale_household_claim in all_text:
+        raise AssertionError(f"superseded household claim survives: {stale_household_claim}")
 
 for token in [
     "-0.1321", "-0.2206", "-0.0437", "-0.0217", "-0.1607", "0.1173",
