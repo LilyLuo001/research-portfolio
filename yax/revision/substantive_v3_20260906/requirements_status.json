@@ -5204,9 +5204,24 @@
         "No literature claim that own audit proves another papers error"
       ],
       "depends_on": [],
-      "status": "RUN_UNVALIDATED",
-      "summary": "Verified named primary-source citation corrections, including Autor-Thompson in JEEA, Deming-Noray, Hampole et al., and Bick et al. publication status. The required reproducible ten-journal novelty search remains incomplete, so B09 is not verified.",
+      "status": "VERIFIED",
+      "summary": "Named primary-source citation corrections and publication statuses are verified. A dated journal-by-journal ledger now records exact domain-constrained queries, stable official-publisher URLs, closest-candidate dispositions, and primary work outside the ten-journal scope. The result is explicitly a targeted search rather than proof of absence, and it does not claim priority for the broader young-worker or public-CPS pattern.",
       "evidence": [
+        {
+          "role": "source_evidence",
+          "path": "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.json",
+          "sha256": "c64bb3a4d71dd0ecaed7964101670fdeeb1efb5fe693108b1134fda34d138e77"
+        },
+        {
+          "role": "verification_report",
+          "path": "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.md",
+          "sha256": "bd3e94d4711ac47e06f5836bf5d45fd2ef9879b95f535093f64cf63a4679484d"
+        },
+        {
+          "role": "code",
+          "path": "source_verification/check_b09_ten_journal_ledger.py",
+          "sha256": "492c6c3687aa14f12c40109c0a1d698cfa0baa60f4133d662e0a8cc859c623c1"
+        },
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
@@ -5219,9 +5234,14 @@
         }
       ],
       "response_locations": [
+        "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.md",
         "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
       ],
-      "review": null,
+      "review": {
+        "reviewer": "execution-agent publisher-record and reproducibility audit",
+        "report_path": "source_verification/B09_TEN_JOURNAL_SEARCH_LEDGER.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
