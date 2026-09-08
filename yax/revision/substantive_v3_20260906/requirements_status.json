@@ -2945,7 +2945,7 @@
         "I01"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "All eleven declared DGPs independently establish the pooled, family-month, and paired projection pseudo-targets before evaluating inference. In the empirically calibrated structural-null design, the pooled pseudo-target is -0.11035 while the family-month target is approximately zero, so the 0.11035 paired movement is an estimand/composition difference rather than size distortion. Bias is reported separately from coverage and zero rejection.",
+      "summary": "All eleven declared DGPs independently establish the pooled, family-month, and paired projection pseudo-targets before evaluating inference. In the empirically calibrated structural-null design, the pooled pseudo-target is -0.11035 while the family-month target is approximately zero. The null calibration inherits that 0.11035 movement from the observed family-by-month fitted surface by construction; it shows that no occupation-level exposure gradient is required, not that composition independently caused the gap. Bias is reported separately from coverage and zero rejection.",
       "evidence": [
         {
           "role": "specification",
@@ -2975,7 +2975,7 @@
         {
           "role": "presentation",
           "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
-          "sha256": "7ff986b8c076b93efdfc63bea5798c1752d6b8d1a1901722cb333d18cb0737e0"
+          "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"
         }
       ],
       "response_locations": [
@@ -3031,7 +3031,7 @@
         {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
         {"role": "result", "path": "gate3/inference_validation/results_20260908/NULL_AND_ABLATION_COMPARISON.csv", "sha256": "32e150e2e4b8aaac0d349e2161c0601c4c8e70d7ab93d7caeeb5db7a1983b314"},
         {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "7ff986b8c076b93efdfc63bea5798c1752d6b8d1a1901722cb333d18cb0737e0"}
+        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
       ],
       "response_locations": [
         "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
@@ -3078,7 +3078,7 @@
         {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
         {"role": "result", "path": "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv", "sha256": "4ffa570d15ce2cfc0fe9cb1258aa86077b369eda2380220c856894ace58bfc6c"},
         {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "7ff986b8c076b93efdfc63bea5798c1752d6b8d1a1901722cb333d18cb0737e0"}
+        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
       ],
       "response_locations": ["gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv"],
       "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},
@@ -3121,7 +3121,7 @@
         {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
         {"role": "result", "path": "gate3/inference_validation/results_20260908/ALL_SIMULATION_SUMMARY.csv", "sha256": "6a62f012f2766a7c4a24d912398c6d9afa759d5a5bada39ef28381b37bdd8c05"},
         {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "7ff986b8c076b93efdfc63bea5798c1752d6b8d1a1901722cb333d18cb0737e0"}
+        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
       ],
       "response_locations": ["gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json"],
       "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},
@@ -3157,14 +3157,14 @@
         "I05"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "No article procedure has adequate coverage across all three targets in the empirical design. The full-refit oracle is near nominal but is not transferred to the data; no universal correction factor or ad hoc inflation is used. Sharp rejection language must be demoted and the coefficient movement presented as a descriptive projection/support decomposition with an explicit uncertainty limitation.",
+      "summary": "No article procedure has adequate coverage across all three targets and declared DGPs. Family clustering is conservative for pooled and paired targets in the empirical designs but under-covers family-month and under-covers pooled/paired in the adverse designs; the full-refit oracle is near nominal but is not transferred to the data. More fundamentally, the near-nominal oracle rejects zero 96.5% for the pooled projection and 93.7% for the paired movement under an empirical structural null because those projection targets are nonzero. Sharp structural-rejection language must therefore be demoted; no universal correction factor or ad hoc inflation is used.",
       "evidence": [
         {"role": "specification", "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md", "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"},
         {"role": "code", "path": "gate3/inference_validation/run_finite_sample_validation.py", "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"},
         {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
         {"role": "result", "path": "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv", "sha256": "4ffa570d15ce2cfc0fe9cb1258aa86077b369eda2380220c856894ace58bfc6c"},
         {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "7ff986b8c076b93efdfc63bea5798c1752d6b8d1a1901722cb333d18cb0737e0"}
+        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
       ],
       "response_locations": ["gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv"],
       "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},

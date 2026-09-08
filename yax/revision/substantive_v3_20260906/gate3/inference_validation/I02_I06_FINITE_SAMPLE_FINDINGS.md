@@ -15,7 +15,10 @@ family-month-minus-pooled pseudo-target of **0.11035**. Rejection of zero for
 the pooled or paired projection in that design is not a size failure: zero is
 not the fitted target. It is evidence that the pooled exposure contrast can
 arise from broad occupational composition even when the DGP supplies no
-structural exposure effect.
+structural exposure effect. This agreement is inherited from the calibration:
+the null DGP retains the observed family-by-month fitted surface after removing
+its exposure coefficient. It is a generative restatement of the fixed-effect
+decomposition, not independent corroboration that composition caused the gap.
 
 Finite-sample estimator bias is small relative to sampling dispersion. In the
 empirical observed-effect design, absolute bias is at most 0.00102 log point
@@ -49,6 +52,15 @@ nonzero pooled and paired projection targets, occupation coverage is 0.852
 and 0.877, respectively. These are coverage comparisons to their independently
 computed pseudo-targets, not mislabeled tests of a structural zero.
 
+The replacement for the withdrawn 26.7% and 11.3% figures is more favorable
+but still target-specific. In the family-variance-zero structural-null design,
+the family-month pseudo-target is zero to numerical precision. At a nominal
+five percent level, occupation Rademacher rejects 6.1%, family Rademacher 8.9%,
+and the cross-fit oracle 5.6%. In the empirical structural-null design, whose
+family-month pseudo-target is only 0.000005, the corresponding rejection rates
+are 8.4%, 11.2%, and 4.8%. The exact 6.1%/8.9%/5.6% comparison is the clean
+size result; the latter rates are reported as near-zero-target diagnostics.
+
 The prior adverse DGP was reproduced for every archived successful baseline
 draw (195/196/196 across null/local/observed inputs), with maximum coefficient
 differences below 1.8e-16. Under its structural-null input, occupation
@@ -81,15 +93,26 @@ reported, not classified as an unexplained numerical failure.
 
 ## Consequence for the paper
 
-No article procedure is validated across the pooled, family-month, and paired
-targets in the empirically calibrated DGP. The manuscript therefore cannot
-use a significant wild-score interval as a sharp rejection claim or present
-the family procedure as a universal repair. The point-estimate decomposition
-remains informative: the pooled coefficient is sensitive to broad-family
-composition, and the calibrated structural-null DGP reproduces almost exactly
-the observed 0.110 movement between pooled and family-month projections. The
-revision must present that movement as descriptive evidence about projection
-and support, with the finite-sample uncertainty limitation visible.
+The main limit on a sharp structural rejection is the projection target, not
+coverage alone. Under the empirically calibrated structural null, the
+near-nominal oracle rejects zero for the pooled projection 96.5% of the time
+and for the paired movement 93.7% of the time because those projection targets
+are nonzero. Thus statistical significance of either projection does not by
+itself test a structural exposure effect.
+
+The interval evidence supplies a separate limitation. Family clustering is
+conservative for the pooled and paired targets in all empirical designs, but
+under-covers the family-month target and is not a universal repair; in the
+adverse designs it also under-covers the pooled and paired targets. Occupation
+clustering under-covers all three targets in the empirical design. No article
+procedure is therefore validated across all targets and declared DGPs. The
+point-estimate decomposition remains informative, but the null calibration
+inherits the observed 0.110 movement from the fitted family-by-month surface
+by construction. It shows that the gap requires no occupation-level exposure
+gradient; it cannot distinguish composition from a real effect operating at
+the broad-family level. The revision must present the movement as descriptive
+evidence about projection and support, with the target-specific finite-sample
+limitations visible.
 
 The simulation does not prove that the empirical null DGP is the true CPS
 sampling law. It shows that the article's preferred inference is not reliable
