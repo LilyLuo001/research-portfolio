@@ -3181,11 +3181,34 @@
       "depends_on": [
         "G01"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
+      "status": "VERIFIED",
+      "summary": "SCC job 7490381 authenticated both authorized extract hashes and verified the actual header inventory. CPSID, CPSIDP, CPSIDV, MISH, SERIAL, WTFINL, and HWTFINL are available; public PSU/stratum variables and REPWT fields are absent. Official IPUMS definitions establish CPSID as the longitudinal household unit, SERIAL as within-year-month only, MISH as rotation position rather than a PSU, and the documented replicate weights as ASEC-specific. The permitted household exercise is therefore a linked-household released-weight sensitivity, not CPS design-based inference, and its variance is not mechanically added to occupation/family uncertainty.",
+      "evidence": [
+        {
+          "role": "verification_report",
+          "path": "gate3/sampling_design/evidence/I09_DESIGN_VARIABLE_AUDIT.json",
+          "sha256": "f3bf847660da7b2ba344d008f7c2927bb590cebf026b3adb3399dd9b161e1b58"
+        },
+        {
+          "role": "source_evidence",
+          "path": "gate3/sampling_design/I09_SOURCE_EVIDENCE.md",
+          "sha256": "a9e3c28713fee0fa5694a4bb49e63ea1c9b097e7d75812f22455d6bc9067b539"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/sampling_design/I09_FINDINGS.md",
+          "sha256": "744c423767256dc58e95c54bfd00111164dbaf358d42f0a042a0202b9bd7405b"
+        }
+      ],
+      "response_locations": [
+        "gate3/sampling_design/I09_FINDINGS.md",
+        "gate3/sampling_design/evidence/I09_DESIGN_VARIABLE_AUDIT.json"
+      ],
+      "review": {
+        "reviewer": "execution-agent self-review",
+        "report_path": "gate3/sampling_design/I09_FINDINGS.md",
+        "independent": false
+      },
       "blocker": null,
       "approval": null,
       "minimum_verified_evidence_roles": [
