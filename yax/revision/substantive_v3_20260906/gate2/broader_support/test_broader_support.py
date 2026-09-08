@@ -4,6 +4,7 @@ import pathlib
 import sys
 
 import numpy as np
+import pandas as pd
 
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -13,6 +14,13 @@ assert MODULE_SPEC and MODULE_SPEC.loader
 MODULE = importlib.util.module_from_spec(MODULE_SPEC)
 sys.modules[MODULE_SPEC.name] = MODULE
 MODULE_SPEC.loader.exec_module(MODULE)
+
+VALIDATOR_PATH = HERE / "validate_broader_support.py"
+VALIDATOR_SPEC = importlib.util.spec_from_file_location("yax_test_broader_support_validator", VALIDATOR_PATH)
+assert VALIDATOR_SPEC and VALIDATOR_SPEC.loader
+VALIDATOR = importlib.util.module_from_spec(VALIDATOR_SPEC)
+sys.modules[VALIDATOR_SPEC.name] = VALIDATOR
+VALIDATOR_SPEC.loader.exec_module(VALIDATOR)
 
 
 def test_spec_identity_and_four_model_order():
@@ -71,3 +79,17 @@ def test_common_multiplier_subsupport_selects_occupation_columns():
     selected = MODULE.select_sign_columns(signs, [1, 4, 6])
     assert selected.shape == (5, 3)
     assert np.array_equal(selected, signs[:, [1, 4, 6]])
+
+
+def test_validator_boolean_parser_does_not_treat_false_string_as_true():
+    values = pd.Series(["True", "False", " false ", "TRUE"])
+    assert VALIDATOR.boolean_series(values).tolist() == [True, False, False, True]
+
+
+def test_a1_face_functionals_use_required_original_treatment_namespace():
+    values = MODULE.original_treatment_functionals(["Q2_x_post", "Q5_x_post"])
+    assert list(values) == [
+        "original_treatment::0::Q2_x_post",
+        "original_treatment::1::Q5_x_post",
+    ]
+    assert np.array_equal(values["original_treatment::1::Q5_x_post"], [0.0, 1.0])

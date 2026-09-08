@@ -178,11 +178,16 @@ def build_bundle(NUM, model_id: str, support: list[str], months: list[str], youn
     )
 
 
-def certify_model(NUM, bundle: Any, analysis: dict[str, Any], legacy_engine, candidate_fit) -> dict[str, Any]:
-    target_functionals = {
-        f"treatment::{index}::{label}": np.eye(len(bundle.regressor_labels))[index]
-        for index, label in enumerate(bundle.regressor_labels)
+def original_treatment_functionals(labels: list[str]) -> dict[str, np.ndarray]:
+    identity = np.eye(len(labels))
+    return {
+        f"original_treatment::{index}::{label}": identity[index]
+        for index, label in enumerate(labels)
     }
+
+
+def certify_model(NUM, bundle: Any, analysis: dict[str, Any], legacy_engine, candidate_fit) -> dict[str, Any]:
+    target_functionals = original_treatment_functionals(bundle.regressor_labels)
     active, design, face, _ = NUM.resolve_extended_likelihood_face(bundle, analysis, target_functionals)
     require(design is not None and face.get("status") == "PASS_FINITE_FACE_RESOLVED", f"{bundle.model_id}: finite face not established")
     original_target = bundle.focal_target
