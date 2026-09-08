@@ -1,0 +1,38 @@
+{
+  "status": "IMPLEMENTED_UNRUN",
+  "summary": "Specified and implemented a focused annual ACS extension using ordinary one-year 2017-2019 and 2021-2024 PUMS, BCC-aligned 2022-to-2024 growth contrasts, official 80-replicate SDR inference, fixed exposure assignments, explicit support graphs, pooled and family-year young-relative models, and a subframe-cycle sensitivity. The public ACS ZIPs have not yet been acquired and no ACS result has been run.",
+  "evidence": [
+    {
+      "role": "specification",
+      "path": "gate4/acs_extension/ACS_EXTENSION_SPEC.md",
+      "sha256": "f7927ec1a9a717319fe45877571d6c1ab37bc57139351a59f0e04b3c93f16c5d"
+    },
+    {
+      "role": "source_evidence",
+      "path": "gate4/acs_extension/ACS_SOURCE_EVIDENCE.md",
+      "sha256": "dd23b76593f44e633118a67d2aaff97563860f1499e4e02f59093b1565560695"
+    },
+    {
+      "role": "code",
+      "path": "gate4/acs_extension/run_acs_extension.py",
+      "sha256": "44776b4a10ee7b98af7e80cc74b6614b49507fe82f3b031a6aef63c0434cedad"
+    },
+    {
+      "role": "validation_code",
+      "path": "gate4/acs_extension/validate_acs_extension_outputs.py",
+      "sha256": "bd68a7a2f15098e969316116865a909bb9f8ff0983b333e4a6b60af55fd85bee"
+    },
+    {
+      "role": "verification_report",
+      "path": "gate4/acs_extension/PREEXECUTION_AUDIT.md",
+      "sha256": "63fe5e7f7aa3daed40dd9e2cd520ec48ecd281b97d3cba5320f13fffb95cce4c"
+    }
+  ],
+  "response_locations": [
+    "gate4/acs_extension/ACS_EXTENSION_SPEC.md",
+    "gate4/acs_extension/PREEXECUTION_AUDIT.md"
+  ],
+  "review": null,
+  "blocker": null,
+  "approval": null
+}

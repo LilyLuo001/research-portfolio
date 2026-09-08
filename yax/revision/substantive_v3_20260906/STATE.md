@@ -37,6 +37,12 @@ Updated: 2026-09-08 Asia/Shanghai
   `runs/gate2_timing_extensions_authoritative_20260908/`
 - Gate 2 timing-extension independent validation and findings:
   `gate2/timing_extensions/`
+- Gate 4 public-benchmark pre-results package:
+  `gate4/public_benchmark/`
+- Gate 4 CPS-flow pre-results package:
+  `gate4/flows/`
+- Gate 4 annual-ACS pre-results package:
+  `gate4/acs_extension/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -209,6 +215,15 @@ Updated: 2026-09-08 Asia/Shanghai
   directions. I08 and C05 are `RUN_UNVALIDATED`: the calculation and public
   validation are complete, while their dependencies and manuscript treatment
   remain open.
+- The annual ACS extension is specified and implemented without reading ACS
+  outcomes. It fixes the BCC analogue to a Q5-minus-Q1 difference in
+  2022-to-2024 growth factors, uses all 80 official replicate weights, separates
+  ACS sampling uncertainty from occupation/family shocks, and pairs pooled and
+  family-year estimates on fixed support. A pre-execution audit corrected the
+  intended family multiplier from an accidental Rademacher fallback to the
+  six-point Webb support and added a refusal for silently separated estimating
+  rows. Thirteen focused tests and the full 1,493-test repository suite pass.
+  B06 is `IMPLEMENTED_UNRUN`; public ZIP acquisition and execution remain.
 
 All 11 A1 numerical targets and the completed static/support and Y01--Y05
 dynamic outputs have now been independently reconstructed from retained public
@@ -219,17 +234,20 @@ claim.
 
 ## Verified inputs and blockers
 
-The source inventory records authenticated CPS extracts 9, 10, 11, and 12,
-the public/versioned measurement inputs, and SCC access. `EARNWEEK2`, ACS
-microdata, exact BCC code membership, proprietary BCC outcomes, and an adopted
-external-adoption analysis input are not currently available. Absence from the
+The source inventory records authenticated CPS extracts 9, 10, 11, and 12 and
+the public/versioned measurement inputs. `EARNWEEK2`, exact BCC code membership,
+proprietary BCC outcomes, and an adopted external-adoption analysis input are
+not currently available. Ordinary one-year ACS PUMS through 2024 are verified
+as public but have not yet been downloaded into the authorized SCC project
+storage. The current local session cannot authenticate to SCC. Absence from the
 current extracts is not evidence of absence from the survey.
 
 ## Operational rule
 
 Use a fresh SCC worktree on the authorized project compute tier. Do not reuse a
-stale dirty SCC checkout. Do not cancel, kill, or alter pre-existing SCC jobs or
-sessions. Restricted inputs remain read-only. Do not publish restricted
+stale dirty SCC checkout. Do not cancel or kill pre-existing SCC jobs or
+sessions. Queue/resource corrections requested by the owner may be made without
+deletion. Restricted inputs remain read-only. Do not publish restricted
 aggregate cells or private compute paths.
 
 ## Gate 1 scientific decision
@@ -247,20 +265,19 @@ selective subset.
 The A1 execution, independent audit, finding disposition, and remote push are
 complete. The original and compatibility-blocked runs remain preserved.
 
-1. Complete the Gate 3 canonical characteristic block C01--C07, preserving the
-   fixed assignments and reporting computer-use covariance and shortfall
-   support limits rather than selecting controls by attenuation.
-2. Complete the remaining Gate 3 mapping, flow, benchmark, and education
-   requirements whose inputs are available; retain exact blockers for missing
-   earnings, public memberships, or external data rather than substituting.
-3. Integrate the validated static/support, dynamic, inference, household, and
-   shortfall evidence into the manuscript and appendix. Demote sharp structural
-   rejection language and keep the released-weight and support restrictions
-   visible.
-4. Separately specify any outcome-bearing additive D02 companion, if retained,
-   and integrate the validated identification result without implying
-   coefficient additivity. Complete the remaining D05--D07
-   decomposition/inference work without relabeling exact stock accounting as a
-   regression coefficient.
-5. Integrate and validate all released evidence in the manuscript and appendix
-   before changing any `RUN_UNVALIDATED` requirement to `VERIFIED`.
+1. Restore SCC authentication. First move still-pending job `7493813` from the
+   disabled `econ-pub` queue to `econ` and set `-pe omp 1`; inspect all jobs and
+   do not cancel any of them.
+2. Synchronize the current branch to a fresh `/projectnb/econdept` worktree,
+   download and hash the seven public ACS one-year ZIPs, and run the annual ACS
+   producer plus independent validator.
+3. Execute and validate the already-specified mapping, CPS-flow, public-CPS
+   benchmark, cohort/enrollment, and HonestDiD packages whose prerequisites are
+   available. Use separate scheduler windows where safe; do not wait on an
+   unrelated queued job.
+4. Build the explicit aligned ACS-versus-annual-CPS comparison after both public
+   runs pass. Let the results narrow the paper's claim rather than treating a
+   larger sample as automatic exposure support.
+5. Integrate all validated evidence into the manuscript, appendix, referee
+   response, revision diagnosis, and source diff before changing any
+   `RUN_UNVALIDATED` requirement to `VERIFIED`.

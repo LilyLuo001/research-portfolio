@@ -3026,19 +3026,52 @@
       "status": "RUN_UNVALIDATED",
       "summary": "The empirical design, exactly reproduced prior adverse design, and five factor ablations plus an occupation-level AR(1) design are complete. Removing common family shocks or their serial persistence materially repairs occupation-procedure coverage for pooled and paired targets; equalizing sparse counts does not. The archived adverse successful draws reproduce to below 1.8e-16.",
       "evidence": [
-        {"role": "specification", "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md", "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"},
-        {"role": "code", "path": "gate3/inference_validation/run_finite_sample_validation.py", "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"},
-        {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
-        {"role": "result", "path": "gate3/inference_validation/results_20260908/NULL_AND_ABLATION_COMPARISON.csv", "sha256": "32e150e2e4b8aaac0d349e2161c0601c4c8e70d7ab93d7caeeb5db7a1983b314"},
-        {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
+        {
+          "role": "specification",
+          "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md",
+          "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/run_finite_sample_validation.py",
+          "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"
+        },
+        {
+          "role": "run_receipt",
+          "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json",
+          "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"
+        },
+        {
+          "role": "result",
+          "path": "gate3/inference_validation/results_20260908/NULL_AND_ABLATION_COMPARISON.csv",
+          "sha256": "32e150e2e4b8aaac0d349e2161c0601c4c8e70d7ab93d7caeeb5db7a1983b314"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+          "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+          "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"
+        }
       ],
       "response_locations": [
         "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
         "gate3/inference_validation/results_20260908/NULL_AND_ABLATION_COMPARISON.csv"
       ],
-      "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},
-      "blocker": {"missing_requirement": "I02 and N03 remain RUN_UNVALIDATED pending manuscript integration.", "attempts": "All I03 runs and validations are complete.", "claim_impact": "Final VERIFIED status awaits dependency closure only.", "next_step": "Resolve N03 and promote I02--I03 without rerunning the simulations."},
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "I02 and N03 remain RUN_UNVALIDATED pending manuscript integration.",
+        "attempts": "All I03 runs and validations are complete.",
+        "claim_impact": "Final VERIFIED status awaits dependency closure only.",
+        "next_step": "Resolve N03 and promote I02--I03 without rerunning the simulations."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3073,16 +3106,52 @@
       "status": "RUN_UNVALIDATED",
       "summary": "Occupation- and family-cluster Rademacher and Webb wild-score procedures plus an out-of-sample cross-fit full-refit oracle are evaluated for pooled, family-month, and paired targets. In the empirical observed-effect DGP, occupation coverage is 0.865/0.921/0.889; family coverage is 0.990/0.895/0.992; the oracle is 0.945/0.949/0.945. Multiplier choice has negligible effect at fixed cluster level.",
       "evidence": [
-        {"role": "specification", "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md", "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"},
-        {"role": "code", "path": "gate3/inference_validation/run_finite_sample_validation.py", "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"},
-        {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
-        {"role": "result", "path": "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv", "sha256": "4ffa570d15ce2cfc0fe9cb1258aa86077b369eda2380220c856894ace58bfc6c"},
-        {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
+        {
+          "role": "specification",
+          "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md",
+          "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/run_finite_sample_validation.py",
+          "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"
+        },
+        {
+          "role": "run_receipt",
+          "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json",
+          "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"
+        },
+        {
+          "role": "result",
+          "path": "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv",
+          "sha256": "4ffa570d15ce2cfc0fe9cb1258aa86077b369eda2380220c856894ace58bfc6c"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+          "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+          "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"
+        }
       ],
-      "response_locations": ["gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv"],
-      "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},
-      "blocker": {"missing_requirement": "I03 and N03 remain RUN_UNVALIDATED pending manuscript integration.", "attempts": "All I04 comparisons and validations are complete.", "claim_impact": "Final VERIFIED status awaits dependency closure only.", "next_step": "Resolve N03 and promote I02--I04 without rerunning the simulations."},
+      "response_locations": [
+        "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+        "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "I03 and N03 remain RUN_UNVALIDATED pending manuscript integration.",
+        "attempts": "All I04 comparisons and validations are complete.",
+        "claim_impact": "Final VERIFIED status awaits dependency closure only.",
+        "next_step": "Resolve N03 and promote I02--I04 without rerunning the simulations."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3116,16 +3185,52 @@
       "status": "RUN_UNVALIDATED",
       "summary": "All eleven scenarios resolved under the declared adaptive rule at 799--1,599 outer replications with 9,999 common multiplier draws and zero failed joint refits. The maximum relevant binomial MCSE is 0.01210 against 0.0125 and the maximum empirical-SD relative Monte Carlo error is 0.02761 against 0.05.",
       "evidence": [
-        {"role": "specification", "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md", "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"},
-        {"role": "code", "path": "gate3/inference_validation/run_finite_sample_validation.py", "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"},
-        {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
-        {"role": "result", "path": "gate3/inference_validation/results_20260908/ALL_SIMULATION_SUMMARY.csv", "sha256": "6a62f012f2766a7c4a24d912398c6d9afa759d5a5bada39ef28381b37bdd8c05"},
-        {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
+        {
+          "role": "specification",
+          "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md",
+          "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/run_finite_sample_validation.py",
+          "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"
+        },
+        {
+          "role": "run_receipt",
+          "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json",
+          "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"
+        },
+        {
+          "role": "result",
+          "path": "gate3/inference_validation/results_20260908/ALL_SIMULATION_SUMMARY.csv",
+          "sha256": "6a62f012f2766a7c4a24d912398c6d9afa759d5a5bada39ef28381b37bdd8c05"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+          "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+          "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"
+        }
       ],
-      "response_locations": ["gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json"],
-      "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},
-      "blocker": {"missing_requirement": "I04 and N03 remain RUN_UNVALIDATED pending manuscript integration.", "attempts": "All I05 accuracy and failed-draw checks are complete.", "claim_impact": "Final VERIFIED status awaits dependency closure only.", "next_step": "Resolve N03 and promote I02--I05 without rerunning the simulations."},
+      "response_locations": [
+        "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+        "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "I04 and N03 remain RUN_UNVALIDATED pending manuscript integration.",
+        "attempts": "All I05 accuracy and failed-draw checks are complete.",
+        "claim_impact": "Final VERIFIED status awaits dependency closure only.",
+        "next_step": "Resolve N03 and promote I02--I05 without rerunning the simulations."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -3159,16 +3264,52 @@
       "status": "RUN_UNVALIDATED",
       "summary": "No article procedure has adequate coverage across all three targets and declared DGPs. Family clustering is conservative for pooled and paired targets in the empirical designs but under-covers family-month and under-covers pooled/paired in the adverse designs; the full-refit oracle is near nominal but is not transferred to the data. More fundamentally, the near-nominal oracle rejects zero 96.5% for the pooled projection and 93.7% for the paired movement under an empirical structural null because those projection targets are nonzero. Sharp structural-rejection language must therefore be demoted; no universal correction factor or ad hoc inflation is used.",
       "evidence": [
-        {"role": "specification", "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md", "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"},
-        {"role": "code", "path": "gate3/inference_validation/run_finite_sample_validation.py", "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"},
-        {"role": "run_receipt", "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json", "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"},
-        {"role": "result", "path": "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv", "sha256": "4ffa570d15ce2cfc0fe9cb1258aa86077b369eda2380220c856894ace58bfc6c"},
-        {"role": "validation_report", "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"},
-        {"role": "presentation", "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"}
+        {
+          "role": "specification",
+          "path": "gate3/inference_validation/SCIENTIFIC_DESIGN_DRAFT.md",
+          "sha256": "7c195af1afe22c7de59ea6f9fb6ec26b20564b220d7bea40832f082dbf1b0ce0"
+        },
+        {
+          "role": "code",
+          "path": "gate3/inference_validation/run_finite_sample_validation.py",
+          "sha256": "d7daba6aeeda0f3e116b30eb590704f09b546e6094a3cebe364b3c58864e939c"
+        },
+        {
+          "role": "run_receipt",
+          "path": "gate3/inference_validation/results_20260908/ASSEMBLY_RECEIPT.json",
+          "sha256": "172f1f6bff65546f8f37e148b1af5a2d8b5d4193442d6d2d9ae68c1ae0ef63d4"
+        },
+        {
+          "role": "result",
+          "path": "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv",
+          "sha256": "4ffa570d15ce2cfc0fe9cb1258aa86077b369eda2380220c856894ace58bfc6c"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+          "sha256": "e73ee61892f1c214224112c3c89170f16560418ed6f1bbd8e6a45c84b4ef4cb0"
+        },
+        {
+          "role": "presentation",
+          "path": "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+          "sha256": "a432322b76f2df496ddecd972e9558d964d03981345c036281d2870b39a27f9c"
+        }
       ],
-      "response_locations": ["gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md", "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv"],
-      "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json", "independent": false},
-      "blocker": {"missing_requirement": "I05 and N03 remain RUN_UNVALIDATED pending manuscript integration.", "attempts": "The I06 inferential disposition is complete.", "claim_impact": "Final VERIFIED status and manuscript implementation await dependency closure.", "next_step": "Integrate the demoted inference claims into the manuscript and appendix, resolve N03, and promote I02--I06."},
+      "response_locations": [
+        "gate3/inference_validation/I02_I06_FINITE_SAMPLE_FINDINGS.md",
+        "gate3/inference_validation/results_20260908/CORE_SIMULATION_COMPARISON.csv"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "runs/gate3_simulations_adaptive_20260908/INDEPENDENT_VALIDATION.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "I05 and N03 remain RUN_UNVALIDATED pending manuscript integration.",
+        "attempts": "The I06 inferential disposition is complete.",
+        "claim_impact": "Final VERIFIED status and manuscript implementation await dependency closure.",
+        "next_step": "Integrate the demoted inference claims into the manuscript and appendix, resolve N03, and promote I02--I06."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -4837,10 +4978,39 @@
         "B05",
         "S05"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "IMPLEMENTED_UNRUN",
+      "summary": "Specified and implemented a focused annual ACS extension using ordinary one-year 2017-2019 and 2021-2024 PUMS, BCC-aligned 2022-to-2024 growth contrasts, official 80-replicate SDR inference, fixed exposure assignments, explicit support graphs, pooled and family-year young-relative models, and a subframe-cycle sensitivity. The public ACS ZIPs have not yet been acquired and no ACS result has been run.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/acs_extension/ACS_EXTENSION_SPEC.md",
+          "sha256": "f7927ec1a9a717319fe45877571d6c1ab37bc57139351a59f0e04b3c93f16c5d"
+        },
+        {
+          "role": "source_evidence",
+          "path": "gate4/acs_extension/ACS_SOURCE_EVIDENCE.md",
+          "sha256": "dd23b76593f44e633118a67d2aaff97563860f1499e4e02f59093b1565560695"
+        },
+        {
+          "role": "code",
+          "path": "gate4/acs_extension/run_acs_extension.py",
+          "sha256": "44776b4a10ee7b98af7e80cc74b6614b49507fe82f3b031a6aef63c0434cedad"
+        },
+        {
+          "role": "validation_code",
+          "path": "gate4/acs_extension/validate_acs_extension_outputs.py",
+          "sha256": "bd68a7a2f15098e969316116865a909bb9f8ff0983b333e4a6b60af55fd85bee"
+        },
+        {
+          "role": "verification_report",
+          "path": "gate4/acs_extension/PREEXECUTION_AUDIT.md",
+          "sha256": "63fe5e7f7aa3daed40dd9e2cd520ec48ecd281b97d3cba5320f13fffb95cce4c"
+        }
+      ],
+      "response_locations": [
+        "gate4/acs_extension/ACS_EXTENSION_SPEC.md",
+        "gate4/acs_extension/PREEXECUTION_AUDIT.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
