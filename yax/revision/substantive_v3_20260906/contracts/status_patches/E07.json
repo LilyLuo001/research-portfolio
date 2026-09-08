@@ -1,0 +1,26 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The active paper and nine-section scientific appendix omit mobility-rematching, F/G coordinates, and operational installation failures. Interpretable D/S, lambda, and direct architecture comparisons remain, while scientifically relevant historical failures are confined to bounded replication-history language. Source checks pass; rendered scope and float placement remain uninspected.",
+  "evidence": [
+    {
+      "role": "validation_report",
+      "path": "editorial/E07_SCOPE_CONTROL_AUDIT.md",
+      "sha256": "ee891c8731f63a568103633b82c3dd8c1c34174a86f481789b1656cb068612e0"
+    }
+  ],
+  "response_locations": [
+    "editorial/E07_SCOPE_CONTROL_AUDIT.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent active-source scope audit",
+    "report_path": "editorial/E07_SCOPE_CONTROL_AUDIT.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "Compiled-PDF review of paper length, appendix focus, and float placement.",
+    "attempts": "Audited both active TeX drivers and added source guards against retired sections and named superseded machinery; local TeX is unavailable and SCC authentication is currently unavailable.",
+    "claim_impact": "The scientific source is controlled, but visual confirmation that compression was not replaced by poor page layout remains outstanding.",
+    "next_step": "Compile and inspect the main and appendix PDFs when SCC access returns."
+  },
+  "approval": null
+}

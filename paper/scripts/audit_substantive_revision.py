@@ -937,6 +937,12 @@ appendix_driver = (PAPER / "appendix" / "appendix.tex").read_text()
 for retired_input in ["appendix_H_mobility", "appendix_I_FG_AE"]:
     if retired_input in appendix_driver:
         raise AssertionError(f"retired scientific-appendix input remains active: {retired_input}")
+for retired_exposition in ["mobility-rematching", "F/G coordinates", "unsuccessful software installation"]:
+    if retired_exposition.lower() in (main_text + "\n" + appendix_text).lower():
+        raise AssertionError(f"superseded machinery remains in scientific exposition: {retired_exposition}")
+active_appendix_inputs = re.findall(r"\\input\{appendix/sections/(r3_[^}]+)\.tex\}", appendix_driver)
+if len(active_appendix_inputs) != 9 or len(set(active_appendix_inputs)) != 9:
+    raise AssertionError(f"unexpected active scientific-appendix section set: {active_appendix_inputs}")
 
 # No unfinished response/registry statuses may survive production, except
 # explicitly documented external blockers.
