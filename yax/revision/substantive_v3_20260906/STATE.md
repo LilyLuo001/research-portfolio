@@ -33,6 +33,10 @@ Updated: 2026-09-08 Asia/Shanghai
   `runs/gate2_broader_support_authoritative_20260908/`
 - Gate 2 broader-support independent validation and findings:
   `gate2/broader_support/evidence/`
+- Authoritative Gate 2 timing-extension run:
+  `runs/gate2_timing_extensions_authoritative_20260908/`
+- Gate 2 timing-extension independent validation and findings:
+  `gate2/timing_extensions/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -167,6 +171,22 @@ Updated: 2026-09-08 Asia/Shanghai
   numerical fits pass independent corroboration, and all 64 public artifact and
   calculation checks pass. S05 remains `RUN_UNVALIDATED` pending manuscript and
   appendix integration.
+- The authoritative N04/T05/Y08/Y09 timing-extension execution, SCC job
+  `7490289`, ran at commit `4b298853f439fda1577a14f7dc598f7832f54466`
+  and exited with scheduler `failed=0`, `exit_status=0`. It published 34 models,
+  47 paired comparisons, their complete covariance and influence objects, and
+  result ID
+  `yaxresult_v1_cc076af4f71d56d02f4944b07bc69e93db2c10f369512aa83641be1e71e659e4`.
+  All 34 fits pass fresh A1 numerical certification. Independent validation
+  reconstructs all marginal, paired, and simultaneous intervals to at most
+  `1.07e-14`.
+- Timing choices do not materially alter estimates within either structure at
+  the design's precision. The through-2024-minus-full movements are 0.0211
+  (95% CI -0.0073 to 0.0495) unconditioned and 0.0097 (-0.0536 to 0.0730)
+  family-month. Seasonality changes are below 0.0011 in absolute value, and
+  every onset-grid paired change includes zero. The cross-structure movement
+  remains about 0.088--0.134 across the declared variants. N04, T05, Y08, and
+  Y09 are `RUN_UNVALIDATED` pending manuscript and appendix integration.
 
 All 11 A1 numerical targets and the completed static/support and Y01--Y05
 dynamic outputs have now been independently reconstructed from retained public
@@ -209,8 +229,10 @@ complete. The original and compatibility-blocked runs remain preserved.
    manuscript and appendix. Keep the onset grid and through-2024 comparisons
    partial until their additional estimands are actually executed; existing
    numerical certification alone does not supply those result objects.
-2. Complete the coding-stable, onset-grid, seasonality, endpoint, and era
-   extensions required by N04, T05, Y08, and Y09 on the frozen treatment.
+2. Execute Gate 3 inference validation on the exact pooled, family-month, and
+   paired targets. Establish pseudo-truths before interpreting size; compare
+   the actual occupation/family wild-score procedures and a full-refit
+   benchmark; and extend household refits to the same family-month target.
 3. Separately specify any outcome-bearing additive D02 companion, if retained,
    and integrate the validated identification result without implying
    coefficient additivity. Complete the remaining D05--D07

@@ -791,10 +791,50 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative 34-model timing run holds the corrected preperiod treatment labels fixed and reports full-window and through-2024 coefficients under both unconditioned and family-month structures, with common-draw paired movements. The through-2024-minus-full changes are 0.0211 (95% CI -0.0073 to 0.0495) and 0.0097 (-0.0536 to 0.0730), respectively. All fits and derived intervals independently validate; manuscript and appendix integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/timing_extensions/TIMING_EXTENSIONS_SPEC.json",
+          "sha256": "59a62d3689263d1a6ee2bf3e95cee8007d6eb2fe92dcdf0e7e125c440fa348d1"
+        },
+        {
+          "role": "code",
+          "path": "gate2/timing_extensions/run_timing_extensions.py",
+          "sha256": "5d3125b4e437cbb00679b7e21d0ebd1e62d16f3eee67a6a70da4e9a1bc035a1b"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "857f7bfa7b7ec97c8f6c2d0a9401dc31b7e01e7e1885b9a77a422c4fa7af422d"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+          "sha256": "85c04fe8fd37ca245400a80dfa6458957a86fb0b546b4a7516c594dc3123a403"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+          "sha256": "38b02350b1d00eaa2172a516e43888c6cb76fd88e144be7e0aa55317d0163120"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/timing_extensions/evidence/TIMING_EXTENSIONS_POSTRUN_VALIDATION.json",
+          "sha256": "c5c9d87a61eb7af1a46d1f20dc1912d8b9b503ed299c9f2d505ed3cbdfa3ce87"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/timing_extensions/FINDINGS.md",
+          "sha256": "c199b97ed84ba5c578da5bce9354d129d4894a0b19f92e26502f7823d0b8f2f4"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+        "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+        "gate2/timing_extensions/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -1169,10 +1209,50 @@
       "depends_on": [
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative timing run completes the post-2020 coding-stable and both feasible seasonality specifications under the unconditioned and family-month structures. The post-2020 paired changes relative to full-window estimates are 0.0140 (95% CI -0.0288 to 0.0569) and -0.0087 (-0.1053 to 0.0878). Both seasonality movements are below 0.0011 in absolute value. All six fits pass A1 certification and independent reconstruction; manuscript and appendix integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/timing_extensions/TIMING_EXTENSIONS_SPEC.json",
+          "sha256": "59a62d3689263d1a6ee2bf3e95cee8007d6eb2fe92dcdf0e7e125c440fa348d1"
+        },
+        {
+          "role": "code",
+          "path": "gate2/timing_extensions/run_timing_extensions.py",
+          "sha256": "5d3125b4e437cbb00679b7e21d0ebd1e62d16f3eee67a6a70da4e9a1bc035a1b"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "857f7bfa7b7ec97c8f6c2d0a9401dc31b7e01e7e1885b9a77a422c4fa7af422d"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+          "sha256": "85c04fe8fd37ca245400a80dfa6458957a86fb0b546b4a7516c594dc3123a403"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+          "sha256": "38b02350b1d00eaa2172a516e43888c6cb76fd88e144be7e0aa55317d0163120"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/timing_extensions/evidence/TIMING_EXTENSIONS_POSTRUN_VALIDATION.json",
+          "sha256": "c5c9d87a61eb7af1a46d1f20dc1912d8b9b503ed299c9f2d505ed3cbdfa3ce87"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/timing_extensions/FINDINGS.md",
+          "sha256": "c199b97ed84ba5c578da5bce9354d129d4894a0b19f92e26502f7823d0b8f2f4"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+        "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+        "gate2/timing_extensions/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2660,10 +2740,50 @@
       "depends_on": [
         "N04"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The complete November-2022 through June-2023 onset grid is now estimated under both structures with simultaneous common-draw intervals, alongside quintile-by-month and occupation-by-month seasonality fits. Unconditioned onset coefficients range from -0.1324 to -0.1257 and family-month coefficients from -0.0251 to -0.0145; every paired onset change relative to January 2023 includes zero. All results independently reconstruct; manuscript and appendix displays remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/timing_extensions/TIMING_EXTENSIONS_SPEC.json",
+          "sha256": "59a62d3689263d1a6ee2bf3e95cee8007d6eb2fe92dcdf0e7e125c440fa348d1"
+        },
+        {
+          "role": "code",
+          "path": "gate2/timing_extensions/run_timing_extensions.py",
+          "sha256": "5d3125b4e437cbb00679b7e21d0ebd1e62d16f3eee67a6a70da4e9a1bc035a1b"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "857f7bfa7b7ec97c8f6c2d0a9401dc31b7e01e7e1885b9a77a422c4fa7af422d"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+          "sha256": "85c04fe8fd37ca245400a80dfa6458957a86fb0b546b4a7516c594dc3123a403"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+          "sha256": "38b02350b1d00eaa2172a516e43888c6cb76fd88e144be7e0aa55317d0163120"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/timing_extensions/evidence/TIMING_EXTENSIONS_POSTRUN_VALIDATION.json",
+          "sha256": "c5c9d87a61eb7af1a46d1f20dc1912d8b9b503ed299c9f2d505ed3cbdfa3ce87"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/timing_extensions/FINDINGS.md",
+          "sha256": "c199b97ed84ba5c578da5bce9354d129d4894a0b19f92e26502f7823d0b8f2f4"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+        "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+        "gate2/timing_extensions/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2696,10 +2816,50 @@
       "depends_on": [
         "T05"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The authoritative timing run reports early (2023-2024), late (2025-2026), full-window, and shutdown-adjacent-exclusion estimates under both structures, always with common-draw paired movements. The late-minus-early changes are -0.0566 (95% CI -0.1249 to 0.0118) unconditioned and -0.0216 (-0.1676 to 0.1244) family-month; shutdown-adjacent exclusions are small. Results compare magnitudes without selecting by significance. Manuscript and appendix integration remain outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate2/timing_extensions/TIMING_EXTENSIONS_SPEC.json",
+          "sha256": "59a62d3689263d1a6ee2bf3e95cee8007d6eb2fe92dcdf0e7e125c440fa348d1"
+        },
+        {
+          "role": "code",
+          "path": "gate2/timing_extensions/run_timing_extensions.py",
+          "sha256": "5d3125b4e437cbb00679b7e21d0ebd1e62d16f3eee67a6a70da4e9a1bc035a1b"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "857f7bfa7b7ec97c8f6c2d0a9401dc31b7e01e7e1885b9a77a422c4fa7af422d"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+          "sha256": "85c04fe8fd37ca245400a80dfa6458957a86fb0b546b4a7516c594dc3123a403"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+          "sha256": "38b02350b1d00eaa2172a516e43888c6cb76fd88e144be7e0aa55317d0163120"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate2/timing_extensions/evidence/TIMING_EXTENSIONS_POSTRUN_VALIDATION.json",
+          "sha256": "c5c9d87a61eb7af1a46d1f20dc1912d8b9b503ed299c9f2d505ed3cbdfa3ce87"
+        },
+        {
+          "role": "presentation",
+          "path": "gate2/timing_extensions/FINDINGS.md",
+          "sha256": "c199b97ed84ba5c578da5bce9354d129d4894a0b19f92e26502f7823d0b8f2f4"
+        }
+      ],
+      "response_locations": [
+        "runs/gate2_timing_extensions_authoritative_20260908/MODEL_RESULTS.csv",
+        "runs/gate2_timing_extensions_authoritative_20260908/PAIRED_COMPARISONS.csv",
+        "gate2/timing_extensions/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,

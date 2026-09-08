@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "calendar_contract": true,
+    "covariance_recomputed": true,
+    "duplicate_definitions": true,
+    "influence_order": true,
+    "manifest_hashes": true,
+    "manifest_inventory": true,
+    "model_inference_recomputed": true,
+    "model_inventory": true,
+    "numerical_certificates": true,
+    "onset_simultaneous_recomputed": true,
+    "pair_inventory": true,
+    "paired_inference_recomputed": true,
+    "privacy": true,
+    "producer_validation": true,
+    "receipt_binding": true,
+    "requirement_counts": true,
+    "result_id": true
+  },
+  "failed": [],
+  "maximum_absolute_covariance_difference": 7.19910242530375e-17,
+  "maximum_absolute_model_inference_difference": 2.6645352591003757e-15,
+  "maximum_absolute_onset_simultaneous_difference": 1.0658141036401503e-14,
+  "maximum_absolute_paired_inference_difference": 2.566523382707686e-15,
+  "schema_version": "yax-gate2-timing-extensions-independent-validation-v1",
+  "status": "PASS_INDEPENDENT_TIMING_EXTENSIONS_VALIDATION"
+}

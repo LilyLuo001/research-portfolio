@@ -1,0 +1,138 @@
+{
+  "authenticated_input_hashes": {
+    "a1_dependency_release": "65db43c62b151ed06846039374ebb523702cd23a3a8465ee1035cbe4b5c43587",
+    "a1_model_audit": "ffb4364af0bc55026fd6ebf0f0211938e71c41b382e62897263f1d437b4b8f89",
+    "a1_runner": "9f66a4f97ba3630fc263a06315ed5887efa99a1abf3848839d77d805d528fd8a",
+    "a1_spec": "07d6053a5c40959f777409d269a9edbe55e5e9368992602c6b78cf1e99ce231e",
+    "canonical_spec": "34b8a785a267d334643b04d3ff35f47bf30780068e126e0a63dd14b0079c5e8b",
+    "cells": "5e10dabf78b1b1cbc8b6aa9f8745435224b9fe3cb078e73cd9d9e27a9c292717",
+    "cells_receipt": "9cd1e5fe999dcdff124b0ab413be13106928f42b55951a99c1893e263395b51a",
+    "common_draw_binding": "fb77f6c655beb50159a47225b6c099daa2e97e340cffadb9d4154ca16a083a59",
+    "common_multipliers": "3172bf843f0f801465f2a7ae2702347f38db1d5971bf0f522be225b3c1329205",
+    "direct_tail_membership": "2bc3e298c713433c2efbaa74d7162cc66e317bf7581fdbee50ccca34efe3e1c1",
+    "dynamic_core_estimates": "6d3bc6be1d6ab9bd96ea80def9bcd353ff66472869c07e0bdae7a5b3b45d6c5d",
+    "dynamic_core_receipt": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56",
+    "dynamic_core_runner": "946f76f1bfc2929f42ecef9867c89d918c2d52213b739620b32882b40c784afe",
+    "dynamic_core_spec": "b751e4ab7d23a9808f9c2e1ad3a7b77ebcc3782c4a049f318c1620418af37084",
+    "fixed_membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "support_edges": "5831022f3c0e14cc5e7d5c593da46ceb73ac80f0428e2d072952566721ba359a",
+    "support_matrix": "1a62bed6fc5f2f1302eda3e7e00539af60ba88753539686dfed695c4d3058cbd",
+    "support_result_manifest": "e5532877d99a945f114b2a654f56c8d851cef228f85baa1d7e20708e5243a5eb",
+    "support_runner": "f8e214b6afb198084c7c3a4b9412c0c372ff9eba26a5d521519c73dc067ab5fe",
+    "support_spec": "93a1dc73bb35ba722f79fa9eff9330cb8312bcfe9e7a757e3dc3dd182eaeb5bb"
+  },
+  "generated_at_utc": "2026-09-08T09:49:36.661606+00:00",
+  "git_head": "4b298853f439fda1577a14f7dc598f7832f54466",
+  "models": 34,
+  "protected_cells_published": false,
+  "receipt_id": "yaxreceipt_v1_d4e1f78140d9f8b176669707f6742dbb772ad8dacab80186f34612f02fa26c07",
+  "result_id": "yaxresult_v1_cc076af4f71d56d02f4944b07bc69e93db2c10f369512aa83641be1e71e659e4",
+  "result_manifest_sha256": "65b82007a051d4441e01bee1c1f619f0d6c8956fc086b2842819adc140e3bbee",
+  "row_microdata_published": false,
+  "runner_sha256": "5d3125b4e437cbb00679b7e21d0ebd1e62d16f3eee67a6a70da4e9a1bc035a1b",
+  "runtime": {
+    "hash_pinned_a1_execution_runtime_authentication": {
+      "git_invocation": "<YAX_GIT_BIN>",
+      "git_resolved_executable_sha256": "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e",
+      "git_version": "git version 2.43.7",
+      "ignore_environment": true,
+      "import_affecting_environment_absent": true,
+      "isolated_mode": true,
+      "no_user_site": true,
+      "omp_num_threads": "1",
+      "python_invocation": "<YAX_PYTHON_BIN>",
+      "python_resolved_executable_sha256": "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7",
+      "python_version": "3.13.8",
+      "safe_path": true,
+      "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES"
+    },
+    "hash_pinned_a1_verification": {
+      "kernel_recorded_not_equality_locked": "4.18.0-553.158.1.el8_10.x86_64",
+      "payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
+    },
+    "independent_execution_runtime_authentication": {
+      "git_invocation": "<YAX_GIT_BIN>",
+      "git_resolved_executable_sha256": "507917bbb5d24123c8e11df46df1d32483da1ce6420aa7ba7dd17de8ccd13a9e",
+      "git_version": "git version 2.43.7",
+      "ignore_environment": true,
+      "import_affecting_environment_absent": true,
+      "isolated_mode": true,
+      "no_user_site": true,
+      "omp_num_threads": "1",
+      "python_invocation": "<YAX_PYTHON_BIN>",
+      "python_resolved_executable_sha256": "0887a2530329cef5a3a6b7c83c76590da9730f98f1e68497096bc05f20b92aa7",
+      "python_version": "3.13.8",
+      "safe_path": true,
+      "status": "AUTHENTICATED_ISOLATED_PINNED_EXECUTABLES"
+    },
+    "independently_recomputed_payload": {
+      "architecture": "x86_64",
+      "libc": {
+        "name": "glibc",
+        "version": "2.28"
+      },
+      "packages": {
+        "numpy": "2.5.1",
+        "pandas": "3.0.3",
+        "pytest": "9.1.1",
+        "scipy": "1.16.2"
+      },
+      "python_compiler": "GCC 12.2.0",
+      "python_implementation": "CPython",
+      "python_version": "3.13.8"
+    },
+    "independently_recomputed_payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79",
+    "numpy_structural_probe": {
+      "constructor": "numpy.vstack",
+      "dtype": "<f8",
+      "numpy_version": "2.5.1",
+      "shape": [
+        2,
+        2
+      ],
+      "status": "PASS_NUMPY_2_5_VSTACK_STRUCTURAL_PROBE",
+      "value_sha256": "4304bd98e089e183337a5a8d7246b0e8d406849249bfa96120bbf81d498f4834"
+    },
+    "signed_runtime_contract": {
+      "kernel_policy": "record compute-node kernel release but do not equality-lock its patch version",
+      "payload": {
+        "architecture": "x86_64",
+        "libc": {
+          "name": "glibc",
+          "version": "2.28"
+        },
+        "packages": {
+          "numpy": "2.5.1",
+          "pandas": "3.0.3",
+          "pytest": "9.1.1",
+          "scipy": "1.16.2"
+        },
+        "python_compiler": "GCC 12.2.0",
+        "python_implementation": "CPython",
+        "python_version": "3.13.8"
+      },
+      "payload_sha256": "8003414233a40768089a6c584b3ecc4e3a1de9ca89c1c0b6cf5c5810024f7f79"
+    },
+    "status": "PASS_A1_AND_INDEPENDENT_RUNTIME_CONTRACT"
+  },
+  "schema_version": "yax-gate2-timing-extensions-receipt-v1",
+  "sge_job_id": "7490289",
+  "spec_id": "yaxgate2timing_v1_ecc1747e760a05f649be7afcf23a08aa5c9505be6ab81384e2b279d31161e10d",
+  "status": "PASS_TIMING_EXTENSIONS_EXECUTION"
+}
