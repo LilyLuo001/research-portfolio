@@ -5451,12 +5451,29 @@
       "depends_on": [
         "S06"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "All five current draft PDFs compile without LaTeX errors, unresolved references or citations, or overfull boxes. Every rendered page and four dense appendix pages were visually inspected; no clipping, blank pages, black boxes, tiny float pages, or unreadably compressed tables remain. E05 is not VERIFIED because S06/T02 remains unresolved and later scientific edits require a fresh render audit.",
+      "evidence": [
+        {
+          "role": "validation_report",
+          "path": "editorial/E05_PDF_LAYOUT_AUDIT.md",
+          "sha256": "f04d79bae5e9405950eab61e4b7c68ccb4cd424f906739f065c734072a666ee8"
+        }
+      ],
+      "response_locations": [
+        "editorial/E05_PDF_LAYOUT_AUDIT.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent rendered-PDF audit",
+        "report_path": "editorial/E05_PDF_LAYOUT_AUDIT.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Resolved S06/T02 dependency and a repeated final render after all scientific edits.",
+        "attempts": "Built all five documents locally with Tectonic, passed the log and source audits, rendered every page, inspected all contact sheets, and spot-checked dense appendix tables at page resolution.",
+        "claim_impact": "The current draft layout passes, but the final V3 package cannot inherit that result after unresolved scientific content changes without a fresh build and inspection.",
+        "next_step": "Resolve S06/T02 and remaining scientific requirements, then rebuild and repeat the same five-document visual audit."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "presentation",
@@ -5579,12 +5596,29 @@
         "Reconstructed versus original source distinguished"
       ],
       "depends_on": [],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "Actual editable TeX sources, five built draft PDFs, a unified source diff, retained build logs, and a five-file SHA-256 manifest now exist in the repository and pass the current render audit. This is a draft delivery rather than final completion because unresolved V3 scientific dependencies and author-supplied affiliation/email can still change the package.",
+      "evidence": [
+        {
+          "role": "validation_report",
+          "path": "editorial/E05_PDF_LAYOUT_AUDIT.md",
+          "sha256": "f04d79bae5e9405950eab61e4b7c68ccb4cd424f906739f065c734072a666ee8"
+        }
+      ],
+      "response_locations": [
+        "editorial/E05_PDF_LAYOUT_AUDIT.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent build and delivery audit",
+        "report_path": "editorial/E05_PDF_LAYOUT_AUDIT.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Final scientific dependency resolution, author-supplied affiliation/email, and a final rebuild from the completed source tree.",
+        "attempts": "Produced and inspected the manuscript, appendix, referee response, revision diagnosis, and source-diff PDFs; retained their editable sources, logs, and hashes.",
+        "claim_impact": "The requested file types exist and are usable as the current draft, but they must not be described as the final V3 delivery.",
+        "next_step": "Complete the remaining scientific tasks, obtain the author fields, rebuild all artifacts, and replace this RUN_UNVALIDATED draft status with final validated delivery evidence."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "delivery_artifact",

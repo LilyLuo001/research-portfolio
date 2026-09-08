@@ -1,8 +1,12 @@
 % ---- Select text fonts ----
 
-% Make PDF searchable and copyable
-\input{glyphtounicode}
-\pdfgentounicode=1
+% Make pdfTeX output searchable and copyable. XeTeX/LuaTeX emit Unicode
+% mappings natively and do not define the pdfTeX-only primitive below.
+\RequirePackage{iftex}
+\ifPDFTeX
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+\fi
 \RequirePackage{xparse}
 
 % Select font encoding 
@@ -162,8 +166,9 @@ Available at \url{#2}}}%
 % Enable multiple rows in tables when the optional package is installed.
 \IfFileExists{multirow.sty}{\usepackage{multirow}}{}
 
-% Allow small figures and tables to be on their own page
-\renewcommand{\floatpagefraction}{0}
+% Avoid nearly empty float-only pages while retaining room for substantive
+% tables and figures that genuinely need a page.
+\renewcommand{\floatpagefraction}{0.45}
 
 % Center figures and tables
 \makeatletter\g@addto@macro\@floatboxreset\centering\makeatother 

@@ -1,0 +1,26 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "Actual editable TeX sources, five built draft PDFs, a unified source diff, retained build logs, and a five-file SHA-256 manifest now exist in the repository and pass the current render audit. This is a draft delivery rather than final completion because unresolved V3 scientific dependencies and author-supplied affiliation/email can still change the package.",
+  "evidence": [
+    {
+      "role": "validation_report",
+      "path": "editorial/E05_PDF_LAYOUT_AUDIT.md",
+      "sha256": "f04d79bae5e9405950eab61e4b7c68ccb4cd424f906739f065c734072a666ee8"
+    }
+  ],
+  "response_locations": [
+    "editorial/E05_PDF_LAYOUT_AUDIT.md"
+  ],
+  "review": {
+    "reviewer": "execution-agent build and delivery audit",
+    "report_path": "editorial/E05_PDF_LAYOUT_AUDIT.md",
+    "independent": false
+  },
+  "blocker": {
+    "missing_requirement": "Final scientific dependency resolution, author-supplied affiliation/email, and a final rebuild from the completed source tree.",
+    "attempts": "Produced and inspected the manuscript, appendix, referee response, revision diagnosis, and source-diff PDFs; retained their editable sources, logs, and hashes.",
+    "claim_impact": "The requested file types exist and are usable as the current draft, but they must not be described as the final V3 delivery.",
+    "next_step": "Complete the remaining scientific tasks, obtain the author fields, rebuild all artifacts, and replace this RUN_UNVALIDATED draft status with final validated delivery evidence."
+  },
+  "approval": null
+}
