@@ -1,0 +1,20 @@
+\begin{table}[!htbp]
+\centering
+\caption{Linked-flow selection sensitivities}\label{tab:app_flow_selection}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrr}
+\toprule
+Horizon & Margin & Official link & Origin-weight complete case & Observable poststratification & Linear accounting interval \\
+\midrule
+Adjacent & Employment exit & 0.0088 & 0.0088 & 0.0086 & $[-0.441,0.463]$ \\
+Adjacent & Unemployment entry & 0.0037 & 0.0039 & 0.0038 & $[-0.445,0.459]$ \\
+Adjacent & Labor-force exit & 0.0051 & 0.0050 & 0.0048 & $[-0.444,0.460]$ \\
+Twelve month & Employment exit & 0.0166 & 0.0167 & 0.0210 & $[-1.570,1.575]$ \\
+Twelve month & Unemployment entry & 0.0119 & 0.0128 & 0.0130 & $[-1.573,1.572]$ \\
+Twelve month & Labor-force exit & 0.0047 & 0.0039 & 0.0080 & $[-1.576,1.569]$ \\
+\bottomrule
+\end{tabular}}
+\tabnote{The first three numerical columns are descriptive linear-probability Q5--Q1, young--older, post--pre differences, not nonlinear regression coefficients.  Observable poststratification assumes outcome missingness is independent of linkage within fixed observed strata.  Accounting intervals impose no conditional-MAR assumption or Lee trimming and may exceed the probability-contrast parameter space because they bound the linear regression contrast jointly over source records.}
+\end{table}

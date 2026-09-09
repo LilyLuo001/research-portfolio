@@ -1,0 +1,16 @@
+\begin{table}[!htbp]
+\centering
+\caption{Current-contract bridge-allocation sensitivity}\label{tab:app_mapping_tilts}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Model & Exposure labels & Coefficient range & Paired intervals excluding zero \\
+\midrule
+Pooled & Fixed at $K=1$ & $[-0.1433,-0.1167]$ & 0 of 6 \\
+Pooled & Rebuilt at each $K$ & $[-0.1446,-0.1163]$ & 0 of 6 \\
+Family by month & Fixed at $K=1$ & $[-0.0748,0.0409]$ & 0 of 6 \\
+Family by month & Rebuilt at each $K$ & $[-0.0783,0.0439]$ & 5 of 6 \\
+\bottomrule
+\end{tabular}}
+\tabnote{The grid is $K\in\{0.25,0.5,2/3,1,1.5,2,4\}$, where $K$ is the relative young-versus-older high/low allocation odds for jointly feasible splits.  Ranges summarize coefficients, not confidence intervals.  The last column counts occupation-clustered paired intervals for the six nonbaseline points relative to $K=1$.  All rows are post-outcome mapping sensitivities; the grid is neither an identified set nor a sharp bound.}
+\end{table}

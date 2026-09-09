@@ -6,17 +6,16 @@
   "requirements_represented": 99,
   "live_requirements": 99,
   "status_counts": {
-    "BLOCKED_INPUT": 2,
-    "IMPLEMENTED_UNRUN": 1,
-    "NOT_STARTED": 14,
+    "BLOCKED_INPUT": 3,
+    "NOT_STARTED": 1,
     "PREMISE_CORRECTED": 1,
-    "RUN_UNVALIDATED": 67,
+    "RUN_UNVALIDATED": 80,
     "SPECIFIED": 1,
     "VERIFIED": 13
   },
   "crosswalk_sha256": "3598080b42a5063d04b196ba32485af00107fe064befbf1e468d0b1218752ac0",
-  "requirements_status_projection_sha256": "694ecc5599cd7bf1785983ebd10310b6cad6347281c83d9e0aad7d8bba76bcee",
-  "comment_response_matrix_sha256": "487435c7820eb3693ed61606bc09da009ddacc2d8c414a0f4a1869249436564e",
+  "requirements_status_projection_sha256": "bffcb2d312bf0e71c40ae77ae237b8b08006f713e94b956b60a038893fbdd8cf",
+  "comment_response_matrix_sha256": "f450d77984b8da274a3dfdfd975886ed513aeaabfdd673413ba3b23e45064ed2",
   "completion_boundary": "Only VERIFIED, PREMISE_CORRECTED, and INAPPLICABLE_APPROVED rows permit a completion claim. The matrix does not establish G02 source-request exhaustiveness or scientific validity.",
   "self_reference_rule": "E09 evidence is omitted from its own matrix row and status projection so the matrix and receipt can be hash-pinned by E09.",
   "remaining_dependency": {

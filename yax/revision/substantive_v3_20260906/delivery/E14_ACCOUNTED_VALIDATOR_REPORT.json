@@ -1,0 +1,35 @@
+{
+  "schema": "yax.v3.delivery_validation_report.v1",
+  "date": "2026-09-09",
+  "validator": "scripts/validate_revision_delivery.py",
+  "mode": "accounted",
+  "expected_exit_code": 2,
+  "structural_errors": [],
+  "requirement_count": 99,
+  "status_counts": {
+    "BLOCKED_INPUT": 3,
+    "NOT_STARTED": 1,
+    "PREMISE_CORRECTED": 1,
+    "RUN_UNVALIDATED": 80,
+    "SPECIFIED": 1,
+    "VERIFIED": 13
+  },
+  "completion_flags": {
+    "all_requests_accounted_for_structurally": false,
+    "core_requirements_structurally_resolved": false,
+    "all_requested_empirical_tasks_reported_verified": false,
+    "all_requirements_structurally_resolved": false
+  },
+  "interpretation": "The validator is expected to find no malformed or tampered evidence after final hash reconciliation. Exit code 2 is retained because the requested accounted completion mode is not reached. The validator does not determine scientific validity or submission readiness.",
+  "named_unresolved_inputs": [
+    "B02: exact public BCC occupation membership",
+    "F07: authorized EARNWEEK2 extract",
+    "E12: author-controlled metadata and disclosures"
+  ],
+  "other_unresolved_delivery_items": [
+    "G02 exhaustive source-request extraction remains SPECIFIED",
+    "E10 bounded sanitized executable export remains NOT_STARTED",
+    "E09, E11, E13, and E14 remain RUN_UNVALIDATED"
+  ],
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/validate_revision_delivery.py --seed revision_inputs/requirements_seed.json --status requirements_status.json --root . --mode accounted"
+}

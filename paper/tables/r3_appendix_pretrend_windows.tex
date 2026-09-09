@@ -1,0 +1,21 @@
+\begin{table}[!htbp]
+\centering
+\caption{Preperiod joint tests across fixed calendar windows}\label{tab:app_pretrend_windows}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Structure & Window & Equal to 2022Q4 & Equal within window \\
+\midrule
+Pooled & 2017Q1--2022Q3 & 0.0171 & 0.0121 \\
+Pooled & 2017Q1--2019Q4 & 0.1365 & 0.0925 \\
+Pooled & 2021Q1--2022Q3 & 0.4285 & 0.3281 \\
+Pooled & Full, excluding 2020Q2--Q4 & 0.0772 & 0.0676 \\
+\addlinespace
+Family by month & 2017Q1--2022Q3 & 0.0053 & 0.0641 \\
+Family by month & 2017Q1--2019Q4 & 0.0126 & 0.0744 \\
+Family by month & 2021Q1--2022Q3 & 0.0116 & 0.3264 \\
+Family by month & Full, excluding 2020Q2--Q4 & 0.0079 & 0.1048 \\
+\bottomrule
+\end{tabular}}
+\tabnote{Entries are common-multiplier $p$-values.  The third column tests every selected preperiod coefficient against the omitted 2022Q4 coefficient, which represents October--November 2022.  The fourth tests equality among coefficients inside the selected window and is invariant to the omitted reference.  The two nulls therefore answer different questions.  Windows were declared before this result audit and are not selected for favorable $p$-values.}
+\end{table}

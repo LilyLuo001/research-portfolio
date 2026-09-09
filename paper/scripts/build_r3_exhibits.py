@@ -17,9 +17,11 @@ import pandas as pd
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 REVISION = ROOT / "yax/revision/substantive_r3_20260905"
+V3_RUNS = ROOT / "yax/revision/substantive_v3_20260906/runs"
 FIGURES = ROOT / "paper/figures"
 TABLES = ROOT / "paper/tables"
 FAMILY_RESULTS = REVISION / "dynamics/rebuilt_family_harmonization/results"
+SUPPORT_RESULTS = V3_RUNS / "gate2_support_inference_authoritative_20260908"
 
 
 def quarter_index(value: str) -> int:
@@ -130,10 +132,41 @@ def build_paths() -> pathlib.Path:
 
 def build_family_paths() -> pathlib.Path:
     """Plot young and older stocks in the four selected direct-tail families."""
-    selection = pd.read_csv(FAMILY_RESULTS / "FAMILY_TRAJECTORY_SELECTION.csv").sort_values(
-        "selection_rank"
+    information = pd.read_csv(SUPPORT_RESULTS / "FAMILY_INFORMATION.csv")
+    direct = information.loc[
+        information["model_id"].eq("direct_tail_four_family")
+        & information["panel"].eq("own")
+        & information["target"].str.startswith("family_")
+    ].copy()
+    direct["target_family"] = direct["target"].str.extract(r"family_(\d+):")[0].astype(int)
+    direct = direct.loc[direct["family"].eq(direct["target_family"])]
+    selection = (
+        direct.loc[:, ["family", "information_contribution"]]
+        .sort_values(["information_contribution", "family"], ascending=[False, True])
+        .rename(columns={"family": "SOC2"})
     )
-    trajectories = pd.read_csv(FAMILY_RESULTS / "FAMILY_TAIL_TRAJECTORIES.csv")
+    family_names = {
+        27: "Arts, Design, Entertainment, Sports, and Media",
+        29: "Healthcare Practitioners and Technical",
+        31: "Healthcare Support",
+        41: "Sales and Related",
+    }
+    selection["SOC2_name"] = selection["SOC2"].map(family_names)
+
+    trajectories = pd.read_csv(SUPPORT_RESULTS / "RAW_FAMILY_QUINTILE_PATHS_MONTHLY.csv")
+    trajectories = trajectories.loc[
+        trajectories["calendar_status"].eq("OBSERVED")
+        & trajectories["family"].isin(selection["SOC2"])
+        & trajectories["beta_quintile"].isin([1, 5])
+    ].copy()
+    trajectories = trajectories.rename(
+        columns={
+            "family": "SOC2",
+            "young": "young_weighted_employment_stock",
+            "older": "older_weighted_employment_stock",
+        }
+    )
+    trajectories["tail"] = "Q" + trajectories["beta_quintile"].astype(str)
     trajectories["date"] = pd.to_datetime(trajectories["month"])
     full_dates = pd.date_range(
         trajectories["date"].min(), trajectories["date"].max(), freq="MS"
@@ -171,13 +204,84 @@ def build_family_paths() -> pathlib.Path:
                 )
         axis.axhline(100, color="0.72", linewidth=0.5)
         axis.axvline(pd.Timestamp("2023-01-01"), color="#b30000", linewidth=0.8, linestyle="--")
+        # Sparse family-tail cells can be exactly zero in a month and can also
+        # produce large indexed spikes.  A symmetric-log axis preserves the
+        # zeros while keeping the other three series visible.
+        axis.set_yscale("symlog", linthresh=10, linscale=1.0, base=10)
+        axis.set_ylim(bottom=0)
         axis.set_title(textwrap.fill(str(selected.SOC2_name), 34), loc="left")
-        axis.set_ylabel("Employment stock\n(2019=100)")
+        axis.set_ylabel("Employment stock\n(2019=100; symlog)")
         axis.grid(axis="y", color="0.9", linewidth=0.4)
     handles, labels = axes[0, 0].get_legend_handles_labels()
     fig.legend(handles, labels, frameon=False, ncol=2, loc="upper center")
     fig.tight_layout(rect=(0, 0, 1, 0.92), h_pad=1.0, w_pad=1.0)
     output = FIGURES / "r3_figure3_family_paths.pdf"
+    fig.savefig(output, bbox_inches="tight")
+    plt.close(fig)
+    return output
+
+
+def build_influential_between_family_paths() -> pathlib.Path:
+    """Plot the two family-tail endpoints with the largest LOFO movements."""
+    trajectories = pd.read_csv(
+        SUPPORT_RESULTS / "RAW_FAMILY_QUINTILE_PATHS_MONTHLY.csv"
+    )
+    trajectories = trajectories.loc[
+        trajectories["calendar_status"].eq("OBSERVED")
+    ].copy()
+    trajectories["date"] = pd.to_datetime(trajectories["month"])
+    full_dates = pd.date_range(
+        trajectories["date"].min(), trajectories["date"].max(), freq="MS"
+    )
+    panels = [
+        (35, 1, "Food preparation and serving (SOC35, Q1)"),
+        (43, 5, "Office and administrative support (SOC43, Q5)"),
+    ]
+    series_spec = [
+        ("young", "Ages 22--25", "#08519c", "-"),
+        ("older", "Ages 26--65", "#636363", "--"),
+    ]
+    plt.rcParams.update({
+        "font.family": "serif",
+        "font.size": 9,
+        "axes.titlesize": 10,
+        "axes.labelsize": 9,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+    })
+    fig, axes = plt.subplots(2, 1, figsize=(7.2, 5.0), sharex=True)
+    for axis, (family, quintile, title) in zip(axes, panels):
+        frame = trajectories.loc[
+            trajectories["family"].eq(family)
+            & trajectories["beta_quintile"].eq(quintile)
+        ].copy()
+        for variable, label, color, linestyle in series_spec:
+            base = frame.loc[frame["date"].dt.year.eq(2019), variable].mean()
+            series = frame.loc[:, ["date", variable]].copy()
+            series["index"] = 100 * series[variable] / base
+            series = series.set_index("date").reindex(full_dates)
+            axis.plot(
+                series.index,
+                series["index"],
+                color=color,
+                linestyle=linestyle,
+                linewidth=1.15,
+                label=label,
+            )
+        axis.axhline(100, color="0.72", linewidth=0.55)
+        axis.axvline(
+            pd.Timestamp("2023-01-01"),
+            color="#b30000",
+            linewidth=0.9,
+            linestyle="--",
+        )
+        axis.set_title(title, loc="left")
+        axis.set_ylabel("Employment stock\n(2019 = 100)")
+        axis.grid(axis="y", color="0.9", linewidth=0.45)
+    axes[0].legend(frameon=False, ncol=2, loc="upper left")
+    axes[-1].set_xlabel("Month")
+    fig.tight_layout(h_pad=0.9)
+    output = FIGURES / "r3_figure4_influential_family_paths.pdf"
     fig.savefig(output, bbox_inches="tight")
     plt.close(fig)
     return output
@@ -414,7 +518,11 @@ def main() -> None:
     if args.only in {"all", "dynamics"}:
         outputs.append(build_dynamics())
     if args.only in {"all", "paths"}:
-        outputs.extend([build_paths(), build_family_paths()])
+        outputs.extend([
+            build_paths(),
+            build_family_paths(),
+            build_influential_between_family_paths(),
+        ])
     if args.only in {"all", "tables"}:
         outputs.extend([
             build_family_support_table(), build_profile_table(), build_lofo_table(),

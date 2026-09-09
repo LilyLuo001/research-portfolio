@@ -4,9 +4,16 @@ Recent evidence associates generative-AI exposure with weaker employment growth 
 
 This paper asks which occupational comparisons support the public Current Population Survey (CPS) pattern.  I rebuild monthly employment stocks from January 2017 through July 2026 and classify occupations with the GPT-4 beta score of \citet{eloundou2024gpts}.  The target is the post-December-2022 change in the log conditional-mean employment-stock ratio of ages 22--25 to ages 26--65 in the highest relative to the lowest exposure quintile, conditional on intermediate quintiles and preperiod Webb software exposure.  I examine broad-family paths, direct within-family support, preperiod computer use, dynamics, and linked-CPS flows.  Exposure measures susceptibility rather than adoption; January 2023 is chronology, not an instrument.
 
-The reconstructed coefficient is $-0.132$ log points, with 95-percent occupation wild-score interval $[-0.221,-0.044]$; it is neither an individual probability nor an employer hiring rate.  With two-digit occupation-family young-relative monthly paths, it is $-0.022$ ($[-0.161,0.117]$).  Their paired difference is $0.110$ ($[0.011,0.210]$).  This distinguishes conditional estimands without making a causal decomposition: family paths may absorb AI-related and non-AI-related evolution.
-
 Direct support is thin.  Four families span both exposure tails; their 29 occupations represent 5.03 percent of preperiod stock, and the interval includes large effects of either sign.  The conditioned comparison otherwise relies on intermediate quintiles and common-coefficient restrictions, so its near-zero estimate is not economic equivalence or evidence of no AI effect.
+
+The reconstructed coefficient is $-0.132$ log points, with 95-percent occupation wild-score interval $[-0.221,-0.044]$; it is neither an individual probability nor an employer hiring rate.  With two-digit occupation-family young-relative monthly paths, it is $-0.022$ ($[-0.161,0.117]$).  Their paired difference is $0.110$ ($[0.011,0.210]$).  This distinguishes conditional estimands without making a causal decomposition: family paths may absorb AI-related and non-AI-related evolution.  The coefficient movement is therefore a consequence of the support result, not evidence that one known share of an AI effect is explained by composition.
+
+Annual ACS data separate person-sampling resolution from occupational support.
+With fixed primary exposure labels, the full-calendar family-year coefficient is negative
+with an ACS replicate interval excluding zero, but occupation- and family-shock
+intervals include zero; the nonreuse-calendar family-year coefficient is also
+undetected.  More respondents therefore narrow one uncertainty component
+without creating the missing within-family tail comparisons.
 
 Adding a pre-2022 O*NET computer-use measure makes the common-support coefficient more negative; one control therefore does not resolve computerization.  Unrestricted quarterly coefficients reject preperiod equality, while linked-flow intervals include zero.  The data neither isolate an AI counterfactual nor attribute the stock pattern to exit, switching, or entry allocation.
 

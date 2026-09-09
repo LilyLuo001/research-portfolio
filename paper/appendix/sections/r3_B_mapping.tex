@@ -54,4 +54,53 @@ The invalid merge is documented as a failure encountered in this project.  I do 
 
 Within the primary support, split sources contribute 14.93 percent of young and 17.75 percent of older early stock.  Ninety-nine target occupations can receive a split route.  A one-to-one-target restriction and an aggregation to stable Census-2010 categories both retain negative historical-contract estimates, but each changes the target population.  They are mapping sensitivities, not repairs of the primary bridge.
 
-Using the same route proportions by age is transparent but unvalidated.  Accounting ranges that allocate every ambiguous source in all feasible ways place the 2017--2019 young-to-older stock ratio between 0.1031 and 0.1480 in Q1 and between 0.0790 and 0.1175 in Q5.  These are stock-accounting bounds, not bounds on the nonlinear regression coefficient.  A limited odds-tilt sensitivity changes the historical-contract coefficient only modestly because 6.88 percent of early stock is eligible, but it cannot validate age-specific routing.  No adjacent coding vintage is treated as a same-person validation sample.
+Using the same route proportions by age is transparent but unvalidated.  Accounting ranges that allocate every ambiguous source in all feasible ways place the 2017--2019 young-to-older stock ratio between 0.1031 and 0.1480 in Q1 and between 0.0790 and 0.1175 in Q5.  These are stock-accounting bounds, not bounds on the nonlinear regression coefficient.  An earlier historical-contract tilt involved 6.88 percent of early stock and is retained only as an implementation checkpoint; the current-contract sensitivity follows below.  No adjacent coding vintage is treated as a same-person validation sample.
+
+\subsection{Current-contract route-allocation sensitivity}
+
+The current 113-month contract repeats the exercise on the 468-occupation
+support.  Thirty-one split source occupations, accounting for 14.86 percent of
+supported early-period routed stock, receive jointly feasible young-versus-older
+high/low allocation-odds tilts $K\in\{0.25,0.5,2/3,1,1.5,2,4\}$.  Each grid
+point preserves source--age--month mass and official structural route zeros.
+Fixed-label rows hold the no-tilt exposure groups constant; rebuilt-treatment
+rows recompute them after allocation.  Table~\ref{tab:app_mapping_tilts} keeps
+those objects separate.
+
+\input{tables/r3_appendix_mapping_tilts.tex}
+
+All pooled paired occupation-clustered intervals relative to $K=1$ contain
+zero under both label rules.  For rebuilt treatment in the family-month model,
+however, the coefficient moves from $-0.0217$ at $K=1$ to $0.0439$ at
+$K=0.25$; the paired movement is $0.0656$ with interval
+$[0.0031,0.1280]$.  Five of the six rebuilt-treatment family-month comparisons
+exclude zero, even though rebuilding changes at most two occupations at a grid
+point.  Thus the pooled pattern is stable over this declared grid while the
+family-conditioned estimand is sensitive to route allocation and resulting
+membership.  Null intervals are nondetections, not equivalence.
+
+A separate 25-point grid allows young and older allocation odds to vary jointly
+while maintaining the same mass constraints.  The pooled coefficient ranges
+from $-0.1599391$ to $-0.0702179$.  No outcome-directed optimization followed
+inspection of the grid, but its extrema remain an explored feasible-grid
+envelope rather than sharp or global bounds.
+
+Finally, excluding every current occupation that can receive an inbound
+one-to-many route leaves 369 occupations.  On this clean-route support, pooled
+coefficients are $-0.1642$ ($[-0.2665,-0.0618]$) with fixed labels and
+$-0.1468$ ($[-0.2415,-0.0521]$) with rebuilt labels; family-month
+coefficients are $-0.0871$ ($[-0.2325,0.0584]$) and $-0.0524$
+($[-0.1897,0.0848]$).  On a separate stable-Census-2010 support of 408
+occupations, the estimate is $-0.1522$ ($[-0.2438,-0.0606]$).  On the full
+468-occupation support restricted to the 77 months from 2020 onward, the
+current-label estimates are $-0.1181$ ($[-0.1941,-0.0420]$) pooled and
+$-0.0304$ ($[-0.1716,0.1108]$) with family-by-month effects.  These three
+exercises change the sample or calendar as well as the labeling rule and are
+not a single nested robustness ladder; none validates one coding vintage
+against another.
+
+The inherited optional symmetric coding-error sensitivity is not executed:
+no authenticated dual-coded CPS sample or validated external misclassification
+matrix is available, immediate occupation reversals mix true mobility with
+reporting and coding changes, and the route-allocation exercises above are not
+relabelled as a coding-error correction.

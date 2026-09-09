@@ -1,16 +1,65 @@
 \section{Characteristics and Inferential Resolution}\label{sec:characteristics}
 
-On the focused 408-occupation support, beta's preperiod-weighted correlation is 0.794 with O*NET computer use and 0.589 with remotability.  A static horse race is therefore descriptive: residual variation may be narrow, and a control may also be an AI channel.
+The leading computerization measure is the May 2020 O*NET rating
+``Interacting With Computers.''  On the 455-occupation matched support, its
+preperiod-weighted correlation with beta is 0.797.  Table~\ref{tab:characteristics}
+holds that support, treatment, outcome, and calendar fixed while crossing a
+computer-use control with family-specific young-relative monthly paths.  The
+pooled coefficient is $-0.0958$.  Adding computer use moves it to $-0.1966$;
+the paired change is $-0.1009$ ($[-0.1772,-0.0245]$).  Adding family paths
+without computer use instead gives $0.0354$, while adding both gives $-0.0467$.
+The combined-minus-baseline change is $0.0491$ ($[-0.0642,0.1624]$).
 
-The leading computerization measure is the May 2020 O*NET rating ``Interacting With Computers.''  On common support the beta-plus-Webb coefficient is $-0.107$.  Adding computer use makes it $-0.212$; the paired movement is $-0.105$ ($[-0.183,-0.027]$).  Computer use acts as a suppressor, rejecting the simple claim that this control necessarily attenuates the CPS contrast but not isolating AI.  Remotability alone gives $-0.116$ and an undetected $-0.009$ movement.  Rebuilt-treatment checks of wages, education requirements, and routine/manual content likewise do not yield individually detected movements on their declared maximal supports.  A separately repaired pandemic-shortfall exercise uses bounded predictions and a stricter 363-occupation support; total-stock and young-relative conditioning move the pooled coefficient by only 0.0004 and 0.0011 log point.  Regenerating these controls within linked-household draws widens uncertainty but does not resolve a conditioning movement.  These are exploratory diagnostics, not equivalence results.
+The computer-use-by-young-by-post coefficient is $0.0460$ per preperiod-
+weighted standard deviation in the pooled computer model
+($[0.0117,0.0803]$) and $0.0487$ in the combined model
+($[0.0105,0.0868]$).  Computer use reduces retained Q5 target information
+from 69.1 to 29.0 percent in the pooled comparison, a VIF-like ratio of 3.45.
+The positive computer coefficient and more negative exposure coefficient are
+joint-projection facts under collinearity, not evidence that computerization
+raises employment or that the residual isolates AI.
+
+On a separate 347-occupation common support, remotability, wages, education
+requirements, and routine/manual content do not individually produce detected
+movements from their common baseline; computer use remains the exception.
+A repaired pandemic-shortfall exercise uses bounded predictions and a stricter
+363-occupation support; total-stock and young-relative conditioning move the
+pooled coefficient by only 0.0004 and 0.0011 log point.  Regenerating these
+controls within linked-household draws widens uncertainty but does not resolve
+a conditioning movement.  These are exploratory diagnostics, not equivalence
+results.
 
 \input{tables/r3_table3_characteristics.tex}
 
-Broad-family paths and a computer-use control need not move the coefficient alike: the former remove all family-common evolution, while the latter partials one correlated dimension.  Neither is a causal technology decomposition.
+Broad-family paths and a computer-use control need not move the coefficient
+alike: the former remove all family-common evolution, while the latter partials
+one correlated dimension.  The matched four-model comparison shows that their
+projections interact rather than add.  Neither is a causal technology
+decomposition.
 
 Industry conditioning is built from occupation--industry--age--month cells rather than dominant-industry labels.  Allowing 13 broad industries their own young-relative post shifts moves the stratified coefficient from $-0.138$ to $-0.099$; the paired 0.039 interval $[0.008,0.070]$ excludes zero.  It does not measure firm AI adoption.  BA and non-BA estimates are $-0.138$ and $-0.123$; their paired difference is $-0.015$ ($[-0.156,0.125]$), with $\mathrm{MDE}_{80}=0.201$.  Exact-age estimates vary but simultaneous paired intervals do not isolate a particular age mechanism.
 
 The industry row changes the cell objective as well as the nuisance set, so it is reported separately from occupation-level characteristic controls.  Education and exact-age estimates use literal common supports and common draws; no subgroup is selected by its point estimate.  The age coefficients are jointly unequal, but each simultaneous age-minus-pooled interval contains zero.
+
+Changing the older comparison band does not remove the pooled pattern.  For ages
+22--25 relative to ages 26--65, 26--30, 31--40, 41--50, and 51--65, the pooled
+coefficients are respectively $-0.132$, $-0.121$, $-0.160$, $-0.139$, and
+$-0.097$.  Relative to the 26--65 benchmark, only the 51--65 comparison has a
+paired interval excluding zero: the movement is 0.035
+($[0.004,0.066]$).  All five family-month coefficient intervals include zero.
+Holding the older group's preperiod exact-age composition fixed changes the
+pooled coefficient by only 0.0008 ($[-0.0011,0.0027]$).  Restricting the young
+numerator to nonenrolled workers changes it from $-0.132$ to $-0.124$, a paired
+movement of 0.008 ($[-0.012,0.029]$).  These are non-detections, not evidence of
+equivalence, and older workers are comparison groups rather than untreated
+controls.
+
+Separate annual profiles show heterogeneous, nonmonotone enrollment and
+education changes across the five exposure quintiles.  The national
+ages-22--25 profile, reported without assigning exposure to nonworkers, also
+changes in enrollment, education, and weighted population, so these diagnostics
+document rather than eliminate cohort composition as an alternative (Online
+Appendix D.6).
 
 Table~\ref{tab:inference} separates uncertainty targets.  Occupation wild scores allow serial dependence within occupation.  A 22-family sensitivity permits common broad-family shocks.  Household full-refit multipliers preserve repeated observations and co-residence under released weights but are not full CPS design inference.  None covers exposure labels or route allocation.
 

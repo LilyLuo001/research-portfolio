@@ -6,13 +6,56 @@ The characteristic exercise uses one variable at a time before considering a par
 
 The leading computer-use variable is O*NET item 4.A.3.b.1, ``Interacting With Computers,'' from release 24.3 (May 2020).  Remotability is the Dingel--Neiman occupation classification.  Wage and observed education composition are calculated from the CPS preperiod, while externally coded education requirements are kept conceptually separate.  Routine and manual indices use preperiod O*NET inputs.  All scales, source files, checksums, weighted correlations, and support counts are stored in the characteristic result directory.
 
-The focused rebuilt-treatment comparison uses the 408 occupations with both computer use and remotability, so every row has identical support.  The baseline coefficient is $-0.1070$ and the computer-use-conditioned coefficient is $-0.2124$.  Their paired difference is $-0.1054$, with 95-percent interval $[-0.1835,-0.0273]$ and paired $\mathrm{MDE}_{80}=0.1131$.  Thus computer use is a suppressor in this particular regression rather than an attenuating control.  This result neither validates the residual as AI nor makes computer use exogenous.
+The primary matched comparison uses all 455 occupations with computer-use
+ratings and crosses computer conditioning with family-month paths.  The four
+Q5-by-post coefficients are $-0.09575$ without either adjustment, $-0.19660$
+with computer use only, $0.03539$ with family paths only, and $-0.04665$ with
+both.  Relative to the pooled baseline, the corresponding paired movements
+are $-0.10086$ ($[-0.17723,-0.02448]$), $0.13114$
+($[0.03517,0.22710]$), and $0.04910$ ($[-0.06418,0.16237]$).
+The combined-minus-computer movement is $0.14995$
+($[0.06039,0.23951]$), while combined-minus-family is $-0.08204$
+($[-0.15461,-0.00947]$) under occupation clustering.  These distinct
+conditional projections are not additive components.
 
-Adding remotability on the same support gives $-0.1155$; its paired difference from $-0.1070$ is $-0.0085$, with interval $[-0.0437,0.0267]$ and paired $\mathrm{MDE}_{80}=0.0510$.  Adding both computer use and remotability gives $-0.2120$ and a paired movement of $-0.1049$, with interval $[-0.1814,-0.0284]$.  The other one-at-a-time characteristics likewise do not produce individually detected movements.  The expanded module's joint characteristic support falls to 341 occupations and 76.77 percent of rebuilt treatment-construction stock; its wider interval precludes a claim that the combined residual is a purified AI contrast.
+The computer-use-by-post coefficient itself is $0.04602$ per weighted standard
+deviation in the pooled computer-only model, with occupation interval
+$[0.01171,0.08032]$, and $0.04868$ ($[0.01053,0.08684]$) in the combined
+family-month model.  The weighted standard deviation is 0.97290 O*NET points,
+and the beta--computer correlation is 0.7970.  Adding computer use reduces
+Q5 information retention from 69.1 to 29.0 percent in the pooled model and
+from 42.5 to 30.0 percent in the family-month model.  Thus coefficient
+movement and inflation occur in a thin residual comparison; the computer
+coefficient does not make computer use exogenous or purify the exposure
+coefficient as AI.
+
+I also evaluated formal omitted-confounder sensitivity rather than inserting
+the grouped-binomial pseudo-$R^2$ into a linear formula.  The coefficient-
+stability calculations of \citet{oster2019selection}, the partial-$R^2$
+framework of \citet{cinelli2020sensitivity}, and the endogenous-control
+selection model of \citet{diegert2022assessing} are derived for linear
+regression targets with specific strength restrictions.  The present target is
+one component of a vector-valued grouped-binomial fixed-effect projection with
+generated exposure groups; no verified mapping supplies those scalar inputs.
+A linear-probability companion would answer a different estimand.  I therefore
+report no arbitrary breakdown value.  This applicability ruling is not
+evidence that unobserved confounding is weak.
+
+The separate common-characteristic block uses 347 occupations and holds its
+support and primary-universe assignments fixed.  Relative to its $-0.12372$
+baseline, computer use moves the coefficient by $-0.12475$
+($[-0.20934,-0.04016]$).  The paired movements for remotability, wages,
+education requirements, routine intensity, and manual/physical content each
+include zero.  Adding all six gives $-0.23331$ and a paired movement of
+$-0.10958$ ($[-0.22069,0.00152]$).  Family paths alone give $-0.00348$;
+adding all six characteristics to that model gives $-0.10506$, with a paired
+movement of $-0.10158$ ($[-0.20057,-0.00258]$).  The common-support block
+covers 76.78 percent of rebuilt treatment-construction stock and likewise
+does not identify a purified AI contrast.
 
 \subsection{Expanded support-specific and cumulative audit}
 
-The separate characteristic module in Tables~\ref{tab:appendix_characteristic_estimates} and \ref{tab:appendix_characteristic_information} reports the support-specific comparisons and the uncontaminated portion of the cumulative sequence.  Its one-at-a-time rows use each characteristic's maximal finite support, whereas its cumulative rows use the literal 341-occupation common support.  An audit found that an earlier version of this module had retained historical full-static-panel exposure groups.  The reported module now authenticates and uses the canonical corrected-preperiod membership and Webb normalization throughout; its 468-occupation baseline exactly reproduces $-0.1321$.  The support-specific computer comparison retains 455 occupations and holds those rebuilt primary-universe groups fixed, while the focused exercise requires both computer-use and remotability data and rebuilds groups on its 408-occupation support.  Their coefficients therefore differ by design, not by transcription.  Rows at and after the superseded unbounded shortfall control are removed rather than mixed with the corrected shortfall population.  Every addition and this corrective rerun are labeled post-outcome exploratory.
+The separate characteristic module in Tables~\ref{tab:appendix_characteristic_estimates} and \ref{tab:appendix_characteristic_information} reports the support-specific comparisons and the uncontaminated portion of the cumulative sequence.  Its one-at-a-time rows use each characteristic's maximal finite support, whereas its corrected joint rows use the literal 347-occupation common support.  An audit found that an earlier version of this module had retained historical full-static-panel exposure groups and a 341-occupation historical intersection.  The reported module now authenticates and uses the canonical corrected-preperiod membership and Webb normalization throughout; its 468-occupation baseline exactly reproduces $-0.1321$.  The support-specific computer comparison retains 455 occupations and holds those rebuilt primary-universe groups fixed, while the focused exercise requires both computer-use and remotability data and rebuilds groups on its 408-occupation support.  Their coefficients therefore differ by design, not by transcription.  Rows at and after the superseded unbounded shortfall control are removed rather than mixed with the corrected shortfall population.  Every addition and this corrective rerun are labeled post-outcome exploratory.
 
 \input{tables/r3_appendix_characteristic_estimates.tex}
 
@@ -23,6 +66,11 @@ The separate characteristic module in Tables~\ref{tab:appendix_characteristic_es
 The corrected exercise uses ages 22--65 throughout and admits only one-to-one occupation mappings with sufficient 2017--2019 histories.  It retains 363 occupations, rather than the central 468.  Linear trend predictions for total employment are bounded below at zero; predicted young employment shares are bounded to $[0,1]$.  This is consequential: before bounding there are 174 negative total predictions and 1,258 out-of-range share predictions.  The characteristics are the average bounded trend-prediction-minus-realized gaps from January 2020 through November 2022; December 2022 remains the transition month.
 
 On this narrower common support, the pooled and family-month baseline coefficients are $-0.16417$ and $-0.08708$.  Total-stock conditioning moves them by 0.00040 and $-0.00050$; young-relative conditioning moves them by 0.00114 and 0.00613.  Table~\ref{tab:appendix_shortfall} reports linked-household sampling sensitivities that regenerate the shortfall inside each draw.  All four conditioning-movement intervals include zero.  Jointly regenerating exposure labels changes an average of 1.99 occupations per draw and leaves the young-relative family-month movement at 0.00613 with sampling-sensitivity standard error 0.00695.
+
+All 399 linked-household draws finish with zero failed joint refits.  The
+largest binding bootstrap-of-bootstrap endpoint Monte Carlo standard error is
+0.00979 log point, below the declared 0.01 threshold, so the predeclared
+expansion to 799 draws is not triggered.
 
 The controls are generated from related CPS outcomes and may share sampling error and regression-to-the-mean with the dependent stocks.  A deterministic household split gives a similar average but heterogeneous directions; it does not eliminate PSU-level common error.  The bounded functional form and changed population also remain consequential.  The exercise therefore does not establish that pandemic dynamics are absent, and the linked-household intervals are not complete CPS design-based inference.
 
@@ -35,3 +83,59 @@ The industry analysis is rebuilt at the occupation-by-broad-industry-by-age-by-m
 Education-specific models are estimated on a common occupational support.  The BA-or-higher estimate is $-0.1380$ and the non-BA estimate is $-0.1226$; their paired difference is $-0.0154$, with interval $[-0.1557,0.1250]$ and paired $\mathrm{MDE}_{80}=0.2014$.  The comparison is too imprecise to distinguish moderate education differences.  Exact-age estimates for ages 22, 23, 24, and 25 are reported as one jointly estimated exploratory collection with simultaneous intervals.  No single age is selected after inspection.
 
 \input{tables/r3_appendix_heterogeneity.tex}
+
+\subsection{Older comparison bands, age composition, and enrollment}
+
+Table~\ref{tab:app_cohort_enrollment} varies the older comparison group while
+holding the current exposure labels and occupational support fixed.  The pooled
+coefficient remains negative across all five bands, but its magnitude is not
+constant.  Against the 26--65 benchmark, paired movements for the 26--30,
+31--40, and 41--50 comparisons have occupation-multiplier intervals
+$[-0.0412,0.0644]$, $[-0.0610,0.0056]$, and $[-0.0413,0.0271]$.
+The 51--65 movement is 0.0350 ($[0.0036,0.0663]$).  Under family-month
+conditioning, every coefficient interval and all four corresponding paired
+movement intervals include zero when shocks are assigned at the occupation
+level.  Under 22-family shock assignment the ages 22--25 versus 26--30 paired
+movement instead has interval $[-0.1712,-0.0041]$; the two procedures answer
+different stochastic questions and are not combined, and neither is evidence
+of a causal age effect.
+
+Fixing the older group's exact-age composition at its preperiod shares gives a
+pooled coefficient of $-0.1313$ ($[-0.2202,-0.0425]$) and a family-month
+coefficient of $-0.0218$ ($[-0.1597,0.1161]$).  Relative to observed age
+composition, the paired movements are 0.0008 ($[-0.0011,0.0027]$) and
+$-0.0001$ ($[-0.0026,0.0023]$).
+
+Enrollment restrictions change the numerator rather than assigning exposure to
+nonemployed people.  With all ages 26--65 in the denominator, restricting ages
+22--25 to nonenrolled workers changes the pooled coefficient from $-0.1321$ to
+$-0.1239$; the paired movement is 0.0082 ($[-0.0125,0.0289]$).  On the common
+22--54 enrollment-question universe, restricting both age groups to nonenrolled
+workers changes the pooled coefficient from $-0.1407$ to $-0.1354$, a paired
+movement of 0.0053 ($[-0.0144,0.0250]$).  The analogous family-month movements
+are $-0.0068$ ($[-0.0393,0.0257]$) and $-0.0059$
+($[-0.0377,0.0260]$).  Enrollment may itself respond to labor-market conditions,
+so these comparisons describe composition rather than a causal correction.
+Older workers throughout are comparison groups, not untreated controls.
+
+\input{tables/r3_appendix_cohort_enrollment.tex}
+
+\subsection{Young-worker composition and national cohort supply}
+
+Table~\ref{tab:app_young_composition} keeps employment-conditioned composition
+separate from national cohort supply.  The Q1--Q5 columns summarize employed
+ages 22--25 in occupations on the fixed 468-occupation support.  The national
+profile uses every positive-weight CPS record ages 22--25 and assigns no
+occupation or exposure quintile.  Across Q1--Q5, the pre-to-post enrolled-share
+changes are $-0.10$, $-0.74$, $-2.00$, $-1.46$, and $-1.80$ percentage points;
+BA-or-higher shares change by 1.79, 1.71, 2.69, 1.48, and 3.81 points.  No
+employed-quintile mean-age change exceeds 0.017 year in absolute value, and the
+largest exact-age-share change is 1.62 points.  Nationally, enrollment changes
+from 0.2336 to 0.2211, BA-or-higher from 0.2941 to 0.3121, employment from
+0.7110 to 0.7247, and mean age by $-0.0085$ year; average monthly weighted
+population rises from 16.94 to 17.60 million.  These are descriptive
+composition and selection patterns.  Current enrollment may respond to
+labor-market conditions, and the profiles do not identify a cohort correction
+or assign exposure to nonworkers.
+
+\input{tables/r3_appendix_young_composition.tex}

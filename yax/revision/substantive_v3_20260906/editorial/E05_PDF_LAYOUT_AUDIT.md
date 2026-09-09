@@ -1,34 +1,36 @@
-# E05 PDF layout and draft-delivery audit
+# E05/E08 PDF layout and draft-delivery audit
 
-Date: 2026-09-08
+Date: 2026-09-09
 Reviewer: execution agent (not independent)
 
 ## Result
 
 `PASS_DRAFT_PDF_LAYOUT`; overall V3 status remains `RUN_UNVALIDATED`.
 
-The five current draft PDFs were rebuilt from the editable TeX sources with
-Tectonic 0.17.0. Each retained log passed `paper/scripts/check_latex_log.sh`:
-there are no LaTeX errors, unresolved references or citations, or overfull
-boxes. The source-level audit separately returned
-`PASS_SUBSTANTIVE_R3_AUDIT` with 206 numerical checks and 405 hashed files.
+The five current draft PDFs were rebuilt from the settled editable TeX sources
+with Tectonic 0.17.0. Each retained log passed
+`paper/scripts/check_latex_log.sh`: there are no LaTeX errors, unresolved
+references or citations, or overfull boxes. The five-file SHA-256 manifest
+also verifies against the rebuilt PDFs.
 
 ## Rendered inspection
 
-Every page was rasterized with Poppler and inspected in contact sheets. Dense
-appendix table pages 9, 14, 20, and 26 were also inspected individually. The
-inspection found no clipped text, clipped tables, black render boxes, blank
-pages, or unreadably compressed tables. Raising `\floatpagefraction` from zero
-to 0.45 removed the small isolated float pages in the earlier draft without
-truncating any exhibit.
+Every page was rasterized at 144 dpi with Poppler and inspected in contact
+sheets: 25 manuscript pages, 49 appendix pages, 10 response pages, 6 diagnosis
+pages, and 36 source-diff pages. Dense and newly added manuscript/appendix
+exhibits were also inspected individually, including the family-support,
+direct-tail, stock-accounting, precision, simulation, BCC/ACS, architecture,
+and task-weight tables. The inspection found no clipped text or tables, black
+render boxes, blank pages, unreadably compressed tables, or figures interrupting
+the conclusion.
 
 | Artifact | Pages | SHA-256 |
 |---|---:|---|
-| `paper/build/YAX_REVISED_MANUSCRIPT.pdf` | 19 | `246f331b02e37834549663edde86b1acadb77e827460e28976f833625995eb63` |
-| `paper/build/YAX_FOCUSED_ONLINE_APPENDIX.pdf` | 29 | `d291939b0ed8053aa1e6c637ee5fa3b0b4dbc618b8db52793a6fb3d503c4159c` |
-| `paper/build/YAX_REFEREE_RESPONSE.pdf` | 10 | `5c7cd6ac0765dec9ec1a424e0b4c661119632d79963182ba624001ebf638e019` |
-| `paper/build/YAX_REVISION_DIAGNOSIS.pdf` | 4 | `97ef2d81ea93ffa37b9f6bc359c5de817f6a281376456d845d98993f77680967` |
-| `paper/build/YAX_SOURCE_DIFF.pdf` | 23 | `aa5b5707eb716d94e0605feab8075ef6f1bc1db8fa3194cc419b87572b0aa237` |
+| `paper/build/YAX_REVISED_MANUSCRIPT.pdf` | 25 | `971f725b963b201f5b5df22d97b15938799a5f44bc60eb01447b5e8b31bab72c` |
+| `paper/build/YAX_FOCUSED_ONLINE_APPENDIX.pdf` | 49 | `6c70bc26ca471e5457494429a612337f268a4fe77c80c29c480fccd15682ea65` |
+| `paper/build/YAX_REFEREE_RESPONSE.pdf` | 10 | `050adcebd7a6716b5947bb82f7fab1207e09f7b2b63ec3056d714b844eafab66` |
+| `paper/build/YAX_REVISION_DIAGNOSIS.pdf` | 6 | `25f542379316582951ef751deeaff92688c4f99ad23d87a64af968b424ad4b9f` |
+| `paper/build/YAX_SOURCE_DIFF.pdf` | 36 | `c2fe1af251bcad316cd04803af793a13f1cc24a3341256d7c23e592d93f6eab2` |
 
 The PDF metadata carries the comparison-centered manuscript and appendix
 titles. Text extraction confirms that the old question-form title is absent.
@@ -47,7 +49,9 @@ source to compile under XeTeX/Tectonic while retaining native Unicode mapping.
 ## Remaining limits
 
 This audit establishes the current files' buildability and layout, not final
-scientific completeness. E05 still depends on unresolved S06/T02 validation.
-E08 remains a draft delivery because downstream V3 empirical requirements and
-the author-supplied affiliation/email are incomplete. Any later scientific or
-author edit requires rebuilding, rehashing, and repeating this visual audit.
+scientific completeness. E08 remains a draft delivery because E10 has no
+bounded sanitized public export, G02 has not established exhaustive source-
+request extraction, F07 lacks an authorized `EARNWEEK2` extract, B02 lacks
+exact public BCC membership, and E12 requires author-supplied metadata. Any
+later scientific or author edit requires rebuilding, rehashing, and repeating
+this visual audit.

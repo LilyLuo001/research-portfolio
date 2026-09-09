@@ -14,6 +14,47 @@ SPEC = importlib.util.spec_from_file_location("yax_flow_selection_test_runner",
 RUN = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = RUN
 SPEC.loader.exec_module(RUN)
+VALIDATOR_SPEC = importlib.util.spec_from_file_location(
+    "yax_flow_selection_test_validator", HERE / "validate_flow_selection_outputs.py")
+VALIDATOR = importlib.util.module_from_spec(VALIDATOR_SPEC)
+sys.modules[VALIDATOR_SPEC.name] = VALIDATOR
+VALIDATOR_SPEC.loader.exec_module(VALIDATOR)
+
+
+def test_eligibility_validator_permits_zero_mass_optional_statuses_to_be_absent() -> None:
+    rows = [{
+        "horizon": "adjacent_month", "eligibility_status": status,
+        "period": "pre", "age_group": "young_22_25",
+        "origin_state": "employed", "origin_records": 1,
+        "origin_WTFINL": 1.0,
+    } for status in sorted(VALIDATOR.REQUIRED_POSITIVE_ELIGIBILITY_STATUSES)]
+    frame = pd.DataFrame(rows)
+    VALIDATOR.validate_eligibility_inventory(frame)
+    frame.loc[len(frame)] = {**rows[0], "eligibility_status": "unknown_status"}
+    with np.testing.assert_raises(RuntimeError):
+        VALIDATOR.validate_eligibility_inventory(frame)
+
+
+def test_eligibility_validator_rejects_omitted_positive_mass_status() -> None:
+    rows = [{
+        "horizon": "adjacent_month", "eligibility_status": status,
+        "period": "pre", "age_group": "young_22_25",
+        "origin_state": "employed", "origin_records": 1,
+        "origin_WTFINL": 1.0,
+    } for status in sorted(VALIDATOR.REQUIRED_POSITIVE_ELIGIBILITY_STATUSES)]
+    with np.testing.assert_raises(RuntimeError):
+        VALIDATOR.validate_eligibility_inventory(pd.DataFrame(rows[1:]))
+
+
+def test_entry_reconciliation_uses_scale_aware_roundoff_tolerance() -> None:
+    frame = pd.DataFrame({
+        "all_destination_probability_sum": [1.0 + 4e-16],
+        "risk_weight": [2.3e9], "identity_error": [9.6e-7],
+    })
+    VALIDATOR.validate_entry_reconciliation(frame)
+    frame.loc[0, "identity_error"] = 0.01
+    with np.testing.assert_raises(RuntimeError):
+        VALIDATOR.validate_entry_reconciliation(frame)
 
 
 def test_period_contract_and_annual_duration() -> None:

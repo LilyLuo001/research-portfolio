@@ -1,0 +1,29 @@
+\begin{table}[!htbp]
+\centering
+\caption{Exact descriptive accounting for the Q5--Q1 stock-ratio change}\label{tab:app_stock_accounting}
+\begin{tabular}{lrr}
+\toprule
+\multicolumn{3}{l}{\textit{Panel A. Underlying equal-month employment stocks}} \\
+Series & Preperiod & Postperiod \\
+\midrule
+Q1 young, ages 22--25 (millions) & 2.5902 & 2.9044 \\
+Q1 older, ages 26--65 (millions) & 21.1411 & 21.1983 \\
+Q5 young, ages 22--25 (millions) & 1.9562 & 1.9654 \\
+Q5 older, ages 26--65 (millions) & 21.1303 & 22.2367 \\
+Q1 young-to-older ratio & 0.1225 & 0.1370 \\
+Q5 young-to-older ratio & 0.0926 & 0.0884 \\
+\addlinespace
+\multicolumn{3}{l}{\textit{Panel B. Exact Q5--Q1 changes and decomposition}} \\
+Component & \multicolumn{2}{r}{Log points} \\
+\midrule
+Young-stock Q5--Q1 change & \multicolumn{2}{r}{$-0.1098$} \\
+Older-stock Q5--Q1 change & \multicolumn{2}{r}{$\phantom{-}0.0483$} \\
+Young-relative change (young minus older) & \multicolumn{2}{r}{$-0.1581$} \\
+\addlinespace
+Within-family young-to-older ratio component & \multicolumn{2}{r}{$-0.1293$} \\
+Changing older-family-weight component & \multicolumn{2}{r}{$-0.0288$} \\
+Observed boundary-mass component & \multicolumn{2}{r}{$\phantom{-}0.0000$} \\
+\bottomrule
+\end{tabular}
+\tabnote{Panel A uses equal observed-month averages over the 71 preperiod and 42 postperiod months; it reports the four underlying tail-by-age series before forming ratios.  The identity $-0.1581=-0.1098-0.0483$ closes to $2.5\times10^{-16}$.  Panel B's final three rows are an exact symmetric log-Shapley accounting of the same $-0.1581$ change.  All 88 family--tail--period denominator cells are classified before division: 52 are positive and 36 are structural absences, with no undefined active denominator.  No pseudocount is used.  These are model-free descriptions, not the grouped-binomial coefficient, confidence intervals, or causal shares.}
+\end{table}

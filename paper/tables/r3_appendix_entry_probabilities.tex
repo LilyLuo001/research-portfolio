@@ -1,0 +1,22 @@
+\begin{table}[!htbp]
+\centering
+\caption{Employment-entry destinations on a common risk set}\label{tab:app_entry_probabilities}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllrrrrrrrr}
+\toprule
+Horizon & Age & Period & Remain nonemployed & Q1 & Q2 & Q3 & Q4 & Q5 & Outside support & Any entry \\
+\midrule
+Adjacent & 26--65 & Pre & .9154 & .0221 & .0180 & .0117 & .0087 & .0113 & .0128 & .0846 \\
+Adjacent & 26--65 & Post & .9179 & .0210 & .0175 & .0115 & .0091 & .0105 & .0125 & .0821 \\
+Adjacent & 22--25 & Pre & .8491 & .0361 & .0398 & .0191 & .0129 & .0211 & .0219 & .1509 \\
+Adjacent & 22--25 & Post & .8626 & .0361 & .0352 & .0162 & .0117 & .0193 & .0190 & .1374 \\
+Twelve month & 26--65 & Pre & .8169 & .0439 & .0396 & .0252 & .0213 & .0263 & .0268 & .1831 \\
+Twelve month & 26--65 & Post & .8276 & .0399 & .0385 & .0230 & .0215 & .0246 & .0250 & .1724 \\
+Twelve month & 22--25 & Pre & .6408 & .0772 & .0885 & .0492 & .0390 & .0589 & .0465 & .3592 \\
+Twelve month & 22--25 & Post & .6611 & .0695 & .0843 & .0555 & .0351 & .0530 & .0415 & .3389 \\
+\bottomrule
+\end{tabular}}
+\tabnote{The denominator is all retained nonemployed origins, weighted with the horizon-specific official link weight.  Q1--Q5 are employed destinations on the retained exposure support.  Outside support records an employed endpoint with a valid occupation outside that support.  Any entry equals one minus remaining nonemployment and reconciles to the sum of all observed employed destinations.}
+\end{table}

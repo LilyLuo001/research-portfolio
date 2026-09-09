@@ -4,7 +4,21 @@
 
 The revision archive separates restricted inputs from distributable code and derived aggregate outputs.  Two commands serve different purposes.  The restricted-data orchestrator authenticates the licensed inputs, refuses to overwrite an existing output root, runs the rebuilt baseline before dependent modules, passes named treatment objects downstream, invokes each self-check, and runs the pinned official HonestDiD implementation.  A separate aggregate-only command regenerates exhibits from committed results, checks numerical and prose consistency, runs repository tests, and builds the LaTeX{} documents.  The latter neither reads CPS microdata nor independently re-estimates the empirical models.  Environment records report Python and R package versions, seeds, scheduler resources, source hashes, and git state where captured.  Every module declares its treatment contract, calendar, support, objective, inference target, and output paths before interpreting the result.
 
-The Git repository is not itself labeled a sanitized public-release artifact.  A machine-readable positive allowlist defines the files eligible for staging; unlisted files and suffixes are excluded.  The release scan rejects private absolute roots, credential-token patterns, restricted-data formats, symlinks, caches, and tabular columns containing direct CPS link identifiers, followed by manual disclosure and metadata review.  Licensed CPS records, the historical private access receipt, account metadata, download links, longitudinal identifier values, credentials, and operational path history remain outside the staged package.  The manifest records IPUMS extract numbers 9, 10, and 11 and the available request, data, DDI, and codebook hashes; unavailable API timestamps are left blank rather than inferred.
+The retained R3 \texttt{baseline\_inventory} directory contains a provisional
+machine-readable allowlist (\nolinkurl{PUBLIC_REPLICATION_MANIFEST.csv}) and a
+written scan contract (\nolinkurl{INPUT_PROVENANCE_RECEIPT.md}).
+They have not yet been updated and applied to a separately staged V3 release
+candidate.  Accordingly, neither the current Git checkout nor this delivery is
+labeled a sanitized public-release artifact.  Before release, a new empty
+stage must be built from the updated positive allowlist and actually checked
+for private absolute roots, credential-token patterns, restricted-data
+formats, symlinks, caches, and direct CPS link-identifier columns, followed by
+manual disclosure, licensing, and PDF-metadata review.  Licensed CPS records,
+account metadata, credentials, longitudinal identifiers, and operational path
+history are not eligible for that future stage.  The retained input manifest
+records IPUMS extract numbers 9, 10, and 11 and available request, data, DDI,
+and codebook hashes; unavailable API timestamps remain blank rather than
+inferred.
 
 The canonical results ledger is the numerical source of truth.  Manuscript tables are generated from or checked against it, and repeated estimates use one declared draw set.  If an interval comes from a different stochastic target---occupation shocks, broad-family shocks, or household resampling---the table labels that procedure rather than presenting multiple intervals as interchangeable versions of one result.  The test suite verifies calendar membership, one-sided zeros, route conservation, fixed-support pairing, covariance symmetry and rank, draw hashes, and table/prose consistency.
 
@@ -14,6 +28,6 @@ The failure registry is part of the replication evidence.  It includes the liter
 
 \subsection{Unresolved limitations}
 
-The analysis cannot observe firm adoption, employer identifiers, worker--firm hiring, confidential CPS design variables, exact BCC dashboard memberships, age-specific occupational route probabilities, or a validated latent ``true'' AI exposure.  The public data therefore do not identify an AI causal effect or a complete stock--flow mechanism.  The direct within-family tail population is small, unrestricted preperiod differences are present, several linked-flow intervals are wide, and January 2025--2026 survey-production changes cannot be undone with published aggregate factors.  These are limits on interpretation, not missing robustness rows that a specification search can solve.
+The analysis cannot observe firm adoption, employer identifiers, worker--firm hiring, confidential CPS design variables, exact BCC dashboard memberships, age-specific occupational route probabilities, or a validated latent ``true'' AI exposure.  The public data therefore do not identify an AI causal effect or a complete stock--flow mechanism.  The direct within-family tail population is small, unrestricted preperiod differences are present, several linked-flow intervals are wide, and January 2025--2026 survey-production changes cannot be undone with published aggregate factors.  The annual ACS extension omits the unavailable standard 2020 one-year file, combines year-specific sampling components under a block-independence approximation, and cannot recreate BCC's undisclosed membership or missing family-by-tail support.  These are limits on interpretation, not missing robustness rows that a specification search can solve.
 
 Author affiliation, email, acknowledgments, funding, conflicts, data-access wording, and journal-required disclosures remain marked \texttt{[AUTHOR TO COMPLETE]} wherever author-supplied information is unavailable.  No identifying or disclosure information is inferred from directory names, credentials, or institutional access.

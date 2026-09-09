@@ -1,0 +1,48 @@
+\begin{table}[!htbp]
+\centering
+\caption{Declared simulation designs: occupation-Rademacher estimation performance}\label{tab:appendix_simulation_designs}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Design & Structural $\theta$ & $N$ & Pseudo-truth & Bias & Empirical SD & Mean SE & Failed/$N$ & SD MC error \\
+\midrule
+Empirical, null & 0 & 1,199 & $-0.1103/0.0000/0.1104$ & $+0.0003/+0.0003/-0.0000$ & $0.0283/0.0236/0.0319$ & $0.0218/0.0216/0.0257$ & 0/1,199 & 0.0213 \\
+Empirical, local & $-0.0500$ & 799 & $-0.1603/-0.0499/0.1103$ & $+0.0004/-0.0001/-0.0005$ & $0.0273/0.0236/0.0317$ & $0.0217/0.0218/0.0259$ & 0/799 & 0.0261 \\
+Empirical, observed & $-0.0217$ & 799 & $-0.1320/-0.0216/0.1103$ & $+0.0006/+0.0010/+0.0004$ & $0.0279/0.0235/0.0309$ & $0.0217/0.0217/0.0259$ & 0/799 & 0.0267 \\
+Prior adverse, null & 0 & 1,599 & $-0.0002/0.0001/0.0003$ & $+0.0004/-0.0005/-0.0009$ & $0.0327/0.0238/0.0355$ & $0.0174/0.0216/0.0222$ & 0/1,599 & 0.0184 \\
+Prior adverse, local & $-0.0500$ & 1,599 & $-0.0501/-0.0498/0.0003$ & $+0.0001/-0.0004/-0.0004$ & $0.0332/0.0238/0.0360$ & $0.0174/0.0216/0.0223$ & 0/1,599 & 0.0183 \\
+Prior adverse, observed & $-0.1321$ & 1,599 & $-0.1322/-0.1319/0.0003$ & $+0.0005/+0.0002/-0.0003$ & $0.0330/0.0237/0.0354$ & $0.0176/0.0217/0.0223$ & 0/1,599 & 0.0186 \\
+Equalized sparsity, null & 0 & 1,199 & $-0.1103/0.0000/0.1104$ & $+0.0002/+0.0002/+0.0000$ & $0.0276/0.0189/0.0300$ & $0.0207/0.0155/0.0227$ & 0/1,199 & 0.0212 \\
+No family variance, null & 0 & 799 & $-0.1105/-0.0000/0.1105$ & $+0.0007/-0.0002/-0.0009$ & $0.0123/0.0235/0.0205$ & $0.0196/0.0217/0.0241$ & 0/799 & 0.0276 \\
+No serial persistence, null & 0 & 799 & $-0.1103/0.0000/0.1104$ & $-0.0002/-0.0008/-0.0007$ & $0.0190/0.0242/0.0245$ & $0.0203/0.0218/0.0246$ & 0/799 & 0.0267 \\
+Equalized influence, null & 0 & 799 & $-0.0946/-0.0000/0.0946$ & $+0.0014/+0.0028/+0.0014$ & $0.0353/0.0486/0.0423$ & $0.0293/0.0447/0.0364$ & 0/799 & 0.0266 \\
+Occupation AR(1), null & 0 & 799 & $-0.1103/0.0000/0.1104$ & $-0.0007/-0.0004/+0.0004$ & $0.0169/0.0307/0.0259$ & $0.0224/0.0271/0.0279$ & 0/799 & 0.0253 \\
+\bottomrule
+\end{tabular}}
+\tabnote{Within every slash-delimited cell the order is pooled, family-month, and movement (family-month minus pooled).  This table holds the article procedure fixed at occupation-cluster Rademacher weights to isolate changes in the DGP; Table~\ref{tab:appendix_simulation_core} compares all five procedures in the empirical observed-effect design.  The empirical designs use actual support, totals, Kish counts, fitted nuisance indices, and a calibrated stationary family-month Gaussian AR(1) shock.  The prior-adverse rows reproduce the archived sparse-cell and family-sign-shock design; all 195, 196, and 196 archived successful null, local, and observed draws match before extension, with maximum coefficient difference below $1.8\times10^{-16}$.  The remaining rows separately equalize variance-preserving effective counts, remove family variance, remove serial persistence while holding marginal variance fixed, equalize information within family, or impose occupation-level AR(1) shocks.  SD MC error is the largest relative Monte Carlo error of the three empirical SDs.  Every joint refit succeeded.}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{Declared simulation designs: occupation-Rademacher interval performance}\label{tab:appendix_simulation_designs_inference}
+\scriptsize
+\begin{tabular}{lrrrr}
+\toprule
+Design & Coverage & Reject 0 & Mean interval length & Binomial MCSE max \\
+\midrule
+Empirical, null & $0.852/0.916/0.877$ & $0.992/0.084/0.975$ & $0.0845/0.0842/0.1002$ & 0.0103 \\
+Empirical, local & $0.872/0.926/0.881$ & $1.000/0.627/0.970$ & $0.0843/0.0850/0.1008$ & 0.0171 \\
+Empirical, observed & $0.865/0.921/0.889$ & $1.000/0.169/0.979$ & $0.0844/0.0849/0.1008$ & 0.0133 \\
+Prior adverse, null & $0.686/0.917/0.775$ & $0.313/0.083/0.227$ & $0.0677/0.0841/0.0868$ & 0.0116 \\
+Prior adverse, local & $0.680/0.926/0.757$ & $0.675/0.629/0.244$ & $0.0678/0.0844/0.0870$ & 0.0121 \\
+Prior adverse, observed & $0.674/0.921/0.764$ & $1.000/1.000/0.235$ & $0.0684/0.0848/0.0872$ & 0.0117 \\
+Equalized sparsity, null & $0.835/0.883/0.859$ & $0.993/0.117/0.982$ & $0.0799/0.0604/0.0881$ & 0.0107 \\
+No family variance, null & $0.995/0.939/0.977$ & $1.000/0.061^{\dagger}/0.995$ & $0.0761/0.0847/0.0941$ & 0.0085 \\
+No serial persistence, null & $0.959/0.934/0.954$ & $1.000/0.066/0.994$ & $0.0790/0.0851/0.0961$ & 0.0088 \\
+Equalized influence, null & $0.890/0.929/0.902$ & $0.840/0.071/0.717$ & $0.1147/0.1733/0.1416$ & 0.0159 \\
+Occupation AR(1), null & $0.990/0.909/0.960$ & $1.000/0.091/0.977$ & $0.0868/0.1054/0.1086$ & 0.0102 \\
+\bottomrule
+\end{tabular}
+\tabnote{Slash order is pooled, family-month, and movement (family-month minus pooled).  Binomial MCSE max is the largest of the coverage and zero-rejection Monte Carlo standard errors shown in the complete result matrix.  Only the daggered rejection rate is empirical size: its independently computed family-month pseudo-target is $-1.31\times10^{-16}$.  All other zero-rejection entries are rejection frequencies for nonzero pseudo-targets, including values that round to 0.0000 in Table~\ref{tab:appendix_simulation_designs}, and they do not enter the size stopping rule.  Thus a displayed maximum may exceed the 0.0125 stopping threshold when it belongs only to a nonzero-target rejection rate.  All designs satisfied the declared accuracy rule before the 1,999-replication cap.  Each multiplier procedure used 9,999 common draws.  The complete 165-row five-procedure matrix is retained in \texttt{ALL\_SIMULATION\_SUMMARY.csv}.}
+\end{table}

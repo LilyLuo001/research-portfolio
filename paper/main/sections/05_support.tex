@@ -1,5 +1,51 @@
 \section{Which Occupational Comparisons Support the Pattern?}\label{sec:results}
 
+\subsection{Public benchmark reconstruction}\label{subsec:public_benchmark}
+
+We first reconstruct the public stock comparison before conditioning on broad
+occupation families.  These are independent CPS analogues using equal-occupation
+Rule-A beta quintiles on the fixed primary support, not an exact replication of
+BCC: exhaustive BCC occupation membership is unavailable.  For all employed
+workers, the annual 2022--2024 Q5--Q1 growth-factor difference is $-0.0346$
+($[-0.1455,0.0763]$); the November 2022--June 2026 contrast is $-0.2312$
+($[-0.4660,0.0036]$).  The top-two/bottom-three dashboard analogue is a
+different grouping, with estimates $-0.0269$ ($[-0.0972,0.0435]$) and
+$-0.1007$ ($[-0.2380,0.0367]$), respectively.  Its inference is computed
+separately; no Q5--Q1 rejection or precision statement transfers to it.
+
+No-control occupation long differences provide another distinct estimand.  With
+baseline employment-stock weights and HC1 standard errors, the all-employed
+Q5--Q1 coefficient is $-0.0318$ ($[-0.1447,0.0811]$) over 2022--2024 and
+$-0.2466$ ($[-0.4771,-0.0160]$) from November 2022 to June 2026.  On the
+468-occupation common support, the separately defined no-Webb young-relative
+model gives a pooled coefficient of $-0.1146$ ($[-0.2057,-0.0236]$); allowing
+family-specific young-relative calendar-month paths gives $-0.0124$
+($[-0.1446,0.1197]$).  Family conditioning therefore changes the descriptive
+estimand by absorbing cross-family evolution.  It does not identify a causal AI
+effect, and intervals containing zero establish non-detection rather than
+equivalence.
+
+An independent annual ACS reconstruction gives a different view of sampling
+precision.  Between 2022 and 2024, the equal-occupation BCC analogue has an
+all-employed Q5--Q1 growth-factor difference of $-0.0859$
+($[-0.1238,-0.0480]$ under ACS successive-difference replication) and a
+full-time civilian wage-and-salary difference of $-0.0834$
+($[-0.1272,-0.0396]$).  The corresponding published BCC comparisons are
+$-0.022$ and $-0.019$.  Because exhaustive BCC occupation membership is not
+public, the gap cannot be assigned separately to samples and grouping rules.
+
+The annual young-relative ACS extension also remains sensitive to broad-family
+conditioning and calendar construction.  On the fixed primary grouping and the
+full 2017--2019, 2021, 2023--2024 calendar, the all-employed coefficient moves
+from $-0.1089$ ($[-0.1310,-0.0869]$) pooled to $-0.0474$
+($[-0.0885,-0.0063]$) with family-year effects.  On a nonreuse calendar that
+drops 2018--2019, the corresponding estimates are $-0.0951$
+($[-0.1204,-0.0698]$) and $-0.0220$ ($[-0.0705,0.0264]$).  These intervals
+capture ACS person-sampling uncertainty under a year-block approximation.
+Occupation- and family-shock intervals are wider and include zero for each of
+the four reported family-year variants.  The ACS therefore supplies a larger
+public-sample analogue, not an exact payroll replication or causal AI design.
+
 Table~\ref{tab:occupation} begins with the rebuilt pooled result.  The Q5--Q1 coefficient is $-0.1321$, with standard error 0.0452 clustered by occupation.  Its 95-percent interval is $[-0.2206,-0.0437]$.  Giving every SOC two-digit family its own young-relative calendar-month path yields $-0.0217$ ($[-0.1607,0.1173]$).  On common draws, the conditioned-minus-pooled movement is 0.1104 ($[0.0107,0.2102]$), with paired $\mathrm{MDE}_{80}=0.1454$.  Thus the conditional estimands are distinguishable while the residual gradient is imprecise.
 
 \input{tables/r3_table2_occupation.tex}
@@ -12,15 +58,39 @@ The full Q2--Q5 profile reaches the same conclusion.  Pooled coefficients are jo
 
 Only SOC27, 29, 31, and 41 contain Q1 and Q5 occupations.  Elsewhere the regression links partial segments---for example Q1--Q3 in one family and Q4--Q5 in another---through common quintile coefficients.  That is valid regression variation but not repeated side-by-side tail comparisons.
 
+\input{tables/r3_table2b_family_quintile_support.tex}
+
 A direct-tail benchmark uses only Q1 and Q5 occupations in the four spanning families.  Its 29 occupations account for 5.03 percent of preperiod stock.  The family-month estimate is 0.1494 ($[-0.1694,0.4682]$), so the CPS cannot precisely resolve a direct tail contrast within broad families.  This row changes population and support and cannot replace the primary estimand.
 
 A continuous companion instead subtracts each family's preperiod-weighted beta mean and imposes a common within-family slope.  Its family-month coefficient is $-0.0025$ per 0.1084 raw beta units ($[-0.0240,0.0191]$).  It uses more residual variation but trades the tail contrast for linearity and a common slope.  Together, the specifications expose the support--functional-form tradeoff.
+
+The pre-2020 occupational bridge adds a separate allocation uncertainty.  A
+jointly feasible odds-tilt grid reallocates the 14.86 percent of supported
+early-period stock routed through 31 split source occupations while preserving
+source--age--month mass.  With exposure groups rebuilt after each allocation,
+the pooled coefficient ranges from $-0.1446$ to $-0.1163$, and all six paired
+intervals relative to the no-tilt allocation contain zero.  The family-month
+estimand is less stable: at the $K=0.25$ endpoint it moves from $-0.0217$ to
+$0.0439$, a paired change of $0.0656$ ($[0.0031,0.1280]$), and five of six
+nonbaseline paired intervals exclude zero.  A wider 25-point feasible grid
+places the pooled coefficient between $-0.1599$ and $-0.0702$.  These are
+post-outcome mapping sensitivities over finite declared grids, not estimates of
+true age-specific routes, sharp bounds, or identified sets.
 
 \subsection{Influence and observed paths}
 
 The online appendix reports nuisance-adjusted information, effective information counts, and family and occupation deletions.  Fast-food and counter workers have substantial signed influence because low-exposure service employment recovered differently after the pandemic, but other occupations push oppositely.  Outcome-selected deletion is not a design correction; symmetric trimming and economically defined service exclusions remain diagnostics.
 
-Figure~\ref{fig:paths} separates young and older stocks for both tails.  Because numerator and denominator move, the coefficient is not an individual young worker's loss.  The low-exposure reference trajectory is part of the result.
+Figure~\ref{fig:paths} separates young and older stocks for both tails.  Exact
+equal-month accounting gives a Q5--Q1 young-stock change of $-0.1098$ log point
+and an older-stock change of $0.0483$, so their young-relative difference is
+$-0.1581$.  The numerator supplies the larger movement, while the denominator
+reinforces it.  This identity is not the grouped-binomial coefficient
+$-0.1321$, and neither component is an individual probability or a causal
+share.  A symmetric family accounting assigns $-0.1293$ to within-family
+ratio changes and $-0.0288$ to changing older-family weights; the appendix
+reports the zero-denominator audit.  The low-exposure reference trajectory is
+part of every comparison.
 
 \begin{figure}[!htbp]
 \centering

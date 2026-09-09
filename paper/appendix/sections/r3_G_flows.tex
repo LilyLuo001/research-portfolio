@@ -2,9 +2,19 @@
 
 \subsection{Link construction and risk sets}
 
-Person links follow official IPUMS/Census matching guidance and use the available longitudinal weight for each eligible link.  Adjacent-month and twelve-month endpoints are distinct samples.  A twelve-month link is not the sum of twelve observed monthly transitions and may conceal intervening changes.  The annual young link rate is 50.98 percent, compared with 70.55 percent for the older group, so the longer horizon entails appreciable differential selection.
+Person links follow official IPUMS/Census matching guidance and use the available longitudinal weight for each eligible link.  Adjacent-month and twelve-month endpoints are distinct samples.  A twelve-month link is not the sum of twelve observed monthly transitions and may conceal intervening changes.  Table~\ref{tab:app_flow_retention} reports fixed-support retention ranges across exposure quintiles rather than collapsing different periods and risk sets into one number.
 
 Employment exit begins with an employed person in an occupation on the analysis support.  Reported occupation change requires employment at both endpoints and a valid occupation at each.  Entry-destination allocation begins with a nonemployed origin, ends with observed employment, and asks whether the destination falls in Q5 rather than Q1.  It therefore conditions on entry and is neither an employment-finding probability nor an employer hiring rate.  Every crosswalk descendant of one source record shares its link and resampling weight.
+
+\input{tables/r3_appendix_flow_retention.tex}
+
+Retained and eligible-unlinked origins differ observably.  Among postperiod
+older Q5 origins at twelve months, retained records average age 44.69 and have
+a 59.25-percent BA-or-higher share, versus 41.50 and 53.35 percent among
+eligible-unlinked records.  Among postperiod young Q2 origins, the 35-or-more
+hours share is 60.83 percent retained versus 66.24 percent unlinked.  These
+comparisons use origin \texttt{WTFINL}; they diagnose observable selection but
+do not correct selection or sign bias from unobserved outcomes.
 
 \subsection{Results and uncertainty}
 
@@ -13,6 +23,50 @@ At the adjacent-month horizon, the young-relative Q5--Q1 estimate is 0.132 for e
 Usual-hours changes are estimated within linked employed persons.  The adjacent estimate is $-0.119$ hours per week with interval $[-0.295,0.057]$.  Weekly earnings use the eligible outgoing-rotation sample and its earnings weight; the conditional log-earnings coefficient is $-0.0245$ with interval $[-0.1024,0.0534]$.  The earnings extract covers 74 months through March 2023 and therefore contains only three postperiod months.  Both outcomes condition on employment.  Unemployment duration is described only among persons observed unemployed, and no occupation is imputed to never-employed or out-of-labor-force respondents.  These restrictions prevent the outcomes from being misreported as population employment effects.
 
 \input{tables/r3_appendix_exit_components.tex}
+
+\subsection{Selection sensitivity and missing-outcome bounds}
+
+Table~\ref{tab:app_flow_selection} compares three descriptive linear
+probability contrasts.  Official link weights and origin-weight complete cases
+use the retained population directly.  Observable poststratification instead
+reweights within fixed observed strata and therefore requires conditional
+missing-at-random.  Factors are neither trimmed nor capped; their maximum is
+102.7.  Similarity across those three columns cannot rule out selection on
+unobservables.
+
+\input{tables/r3_appendix_flow_selection.tex}
+
+The last column assigns one common binary missing outcome to each eligible
+source record and all of its bridge descendants.  Its linear interval is sharp
+under that source-record coupling for the named margin.  No conditional-MAR
+assumption or Lee trimming is used.  The analogous log intervals are only
+conservative marginal outer intervals because bridge coupling need not preserve
+joint sharpness.  These accounting intervals concern missing outcomes, whereas
+Main Table 5's confidence intervals concern sampling uncertainty.
+
+\subsection{Entry denominators and annual timing}
+
+Table~\ref{tab:app_entry_probabilities} places every observed destination on
+one retained-nonemployment denominator.  The destination probabilities sum to
+one after including people who remain nonemployed and employed destinations
+outside the exposure support.  The conditional Q1--Q5 allocation used in the
+regression divides only by observed supported entries and remains a different
+object; neither is employer hiring.
+
+\input{tables/r3_appendix_entry_probabilities.tex}
+
+The annual exclusion rule drops origins whose twelve-month window straddles
+January 2023 and is reported with the other primary margins in
+main Table 5.  The exposure-duration sensitivity retains those origins
+and codes the fraction of the twelve destination months at or after onset.  Age
+and exposure remain defined at the origin.  Table~\ref{tab:app_annual_timing}
+reports only this additional sensitivity, avoiding a second finite-draw
+interval for the primary target.  No paired interval comparing the two rules
+is available, so their difference is not described as detected or equivalent.
+October 2025 is absent rather than interpolated, and annual endpoints remain
+distinct from sums of monthly transitions.
+
+\input{tables/r3_appendix_annual_timing.tex}
 
 \subsection{Why no stock--flow calibration is reported}
 

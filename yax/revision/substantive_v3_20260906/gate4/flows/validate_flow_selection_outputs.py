@@ -22,6 +22,20 @@ REQUIRED = {
     "FLOW_SELECTION_FINDINGS.md", "EXECUTION_RECEIPT.json",
 }
 MARGINS = {"employment_exit", "unemployment_entry", "labor_force_exit"}
+ELIGIBILITY_STATUSES = {
+    "target_calendar_month_absent", "rotation_ineligible",
+    "rotation_eligible_missing_identifier", "eligible_no_validated_endpoint",
+    "eligible_validated_zero_official_weight",
+    "eligible_positive_official_weight_link",
+}
+REQUIRED_POSITIVE_ELIGIBILITY_STATUSES = {
+    "target_calendar_month_absent", "rotation_ineligible",
+    "eligible_no_validated_endpoint", "eligible_positive_official_weight_link",
+}
+STRUCTURAL_ZERO_ELIGIBILITY_STATUSES = {
+    "rotation_eligible_missing_identifier",
+    "eligible_validated_zero_official_weight",
+}
 SIGNS = {
     ("post", "young_22_25", 5): 1, ("post", "older_26_65", 5): -1,
     ("post", "young_22_25", 1): -1, ("post", "older_26_65", 1): 1,
@@ -100,9 +114,35 @@ def validate_bounds(groups: pd.DataFrame, contrasts: pd.DataFrame) -> None:
                 "bounds used a prohibited operation")
 
 
+def validate_eligibility_inventory(eligibility: pd.DataFrame) -> None:
+    statuses = set(eligibility.eligibility_status)
+    require(statuses.issubset(ELIGIBILITY_STATUSES),
+            "eligibility output contains an unknown status")
+    require(REQUIRED_POSITIVE_ELIGIBILITY_STATUSES.issubset(statuses),
+            "eligibility output omits a required positive-mass status")
+    require(ELIGIBILITY_STATUSES - statuses == STRUCTURAL_ZERO_ELIGIBILITY_STATUSES,
+            "structural-zero eligibility inventory differs")
+    require(not eligibility.duplicated([
+        "horizon", "eligibility_status", "period", "age_group", "origin_state"
+    ]).any(), "eligibility output contains duplicate accounting cells")
+    require((eligibility.origin_records > 0).all() and
+            (eligibility.origin_WTFINL > 0).all(),
+            "eligibility output contains nonpositive cells")
+
+
+def validate_entry_reconciliation(reconcile: pd.DataFrame) -> None:
+    require(np.max(np.abs(reconcile.all_destination_probability_sum - 1)) <= 1e-12,
+            "entry destination probabilities do not sum to one")
+    tolerance = np.maximum(1e-7, np.abs(reconcile.risk_weight.to_numpy(float)) * 1e-12)
+    require(np.all(np.abs(reconcile.identity_error.to_numpy(float)) <= tolerance),
+            "entry destination weights do not reconcile")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output_dir", type=Path)
+    parser.add_argument("--report", type=Path,
+                        help="JSON report path (default: OUTPUT_DIR/VALIDATION_REPORT.json)")
     args = parser.parse_args()
     out = args.output_dir
     require(out.is_dir() and REQUIRED.issubset({path.name for path in out.iterdir()}),
@@ -123,14 +163,7 @@ def main() -> int:
     eligibility = pd.read_csv(out / "LINK_ELIGIBILITY_ACCOUNTING.csv")
     require(set(eligibility.horizon) == {"adjacent_month", "twelve_month"},
             "eligibility horizon inventory differs")
-    statuses = set(eligibility.eligibility_status)
-    require(statuses == {
-        "target_calendar_month_absent",
-        "rotation_ineligible", "rotation_eligible_missing_identifier",
-        "eligible_no_validated_endpoint", "eligible_validated_zero_official_weight",
-        "eligible_positive_official_weight_link"}, "eligibility statuses are incomplete")
-    require((eligibility.origin_records > 0).all() and (eligibility.origin_WTFINL > 0).all(),
-            "eligibility output contains nonpositive cells")
+    validate_eligibility_inventory(eligibility)
 
     baseline = pd.read_csv(out / "FLOW_BASELINE_PROBABILITIES.csv")
     require(set(baseline.margin) == {"link_retention", *MARGINS, "occupational_outflow"},
@@ -183,9 +216,7 @@ def main() -> int:
             "entry probabilities do not share one denominator")
     require(((entry.probability >= 0) & (entry.probability <= 1)).all(),
             "entry probability is outside [0,1]")
-    require(np.max(np.abs(reconcile.all_destination_probability_sum - 1)) <= 1e-12 and
-            np.max(np.abs(reconcile.identity_error)) <= 1e-7,
-            "entry destination probabilities do not reconcile")
+    validate_entry_reconciliation(reconcile)
     for _, group in allocation.groupby(["horizon", "period", "age_group"], observed=True):
         require(abs(float(group.conditional_allocation_share.sum()) - 1) <= 1e-12,
                 "conditional entry allocation does not sum to one")
@@ -231,7 +262,12 @@ def main() -> int:
         "baseline_rows": len(baseline), "selection_rows": len(rates),
         "entry_rows": len(entry), "annual_timing_models": len(results),
         "core_flow_models_with_person_household_sensitivity": len(core),
+        "structurally_zero_eligibility_statuses":
+            sorted(STRUCTURAL_ZERO_ELIGIBILITY_STATUSES),
     }
+    report_path = args.report or (out / "VALIDATION_REPORT.json")
+    report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n",
+                           encoding="utf-8")
     print(json.dumps(report, sort_keys=True))
     return 0
 

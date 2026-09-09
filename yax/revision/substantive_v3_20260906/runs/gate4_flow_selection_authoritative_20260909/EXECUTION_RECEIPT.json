@@ -1,0 +1,84 @@
+{
+  "EARNWEEK2_full_window_status": "BLOCKED_AUTHORIZED_INPUT_ABSENT",
+  "Lee_trimming_used": false,
+  "annual_primary_rule": "exclude 2021-12 through 2022-12 origins",
+  "annual_sensitivity_rule": "fraction of t+1 through t+12 months at or after 2023-01",
+  "current_and_legacy_membership_byte_identical": true,
+  "entry_denominator": "all retained nonemployed origins",
+  "generated_at_utc": "2026-09-09T03:37:47.741791+00:00",
+  "git_commit": "6447e6d1d35c625c59c3fb9a0053b4c7cb57d855",
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "legacy_flow_results": "759d815ad6047098b4336cb6be2c99cc27c2f89c422085cff05a1770e5bef250",
+    "legacy_household_results": "7dcbd1cc80c4fabb5560e7b647d7e5764688f1a16cfe2e1f3036ab66e4113b05",
+    "legacy_membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "legacy_runner": "32c92a71c537ded03c7f5e96f4d4cda3eee3ef756278b350d20782339264d103",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9",
+    "repair_microdata": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "runner": "4b418b421232a91e6fe01bc05336d174912ddf9abbb377b981067995239097dd",
+    "spec": "0243a2b930a865b76c5d17d00ca8322c5c5f94fcc7cc97ec8fda2d5c668fb79e",
+    "weight_patch": "bc97f807eace1bf3f0ca04b09e6a9d099bf1c86433c56bb1edd08b4156ac9fd6"
+  },
+  "mapping": {
+    "bridge_max_route_sum_error": 8.999467837611519e-13,
+    "bridge_source_codes": 503,
+    "lineage_components": 415,
+    "q5_sha256": "82549d91f47b526448b7ae7c2b35feec056dc01981ab60a88dae501d731a9e4d",
+    "support_occupations": 468,
+    "support_sha256": "96a4a0aaf8f1e5b58a9d644b537e356eb31f563e4f3a751bd71428aef0adde10"
+  },
+  "observable_selection_assumption": "conditional missing-at-random within fixed strata",
+  "output_hashes": {
+    "ANNUAL_TIMING_AUDIT.csv": "89e538b1a55eec1fb47da713a6a0e6d84c97edb368eecd28798bb00964d27005",
+    "ANNUAL_TIMING_INFLUENCE.csv": "aca4c37dfca7003ab715a7105811b68769adc1cfb5f981a9d2e705b53c893b8e",
+    "ANNUAL_TIMING_SENSITIVITY.csv": "30251247a91a4d043728bc58232574a52b84c30cfa1270eb88f42384842c45e0",
+    "CONDITIONAL_ENTRY_ALLOCATION.csv": "b6acfd5e03e28c2d3181cc2965feb696d5ae1f7524c3fe8b9178fd3173e69486",
+    "CORE_FLOW_REGRESSION_REFERENCE.csv": "3603d58903f17425c22ed998b2d91172fd2f2bafb3bd3899560707ed7ca9a8af",
+    "ENTRY_DESTINATION_PROBABILITIES.csv": "874983305a42a92de38b26c1f9f57dc9d72451eba320b5bb81966d4e2047b747",
+    "ENTRY_RECONCILIATION.csv": "f44895bb0863447749aeaa67ddb3ae79982c5d71a874c8bdd717e0d1ea2ff0e1",
+    "FLOW_BASELINE_PROBABILITIES.csv": "d1400c46a505d49cdbcbc7442998dd2dc6486a28210abf31d52d743f7f93e2db",
+    "FLOW_SELECTION_FINDINGS.md": "8ff95effeddd77b70f2d06da88d0e5013cbb1688c98ab46d48bb8b97685f1163",
+    "LINKED_UNLINKED_BALANCE.csv": "a39a17c5c2f6d936f25c235be9e1ef4b91be389a8d455e3f6bb719ee1bfcd83d",
+    "LINK_ELIGIBILITY_ACCOUNTING.csv": "af55f6116823f3a8292d27dfd95e7980b34c51b4b05948d96855946ef1fba192",
+    "MISSING_OUTCOME_CONTRAST_BOUNDS.csv": "2db4f8dc257aa36fd946983743eb1869d2b2a8dfe00d74d2ee16c45c3ec1bcdc",
+    "MISSING_OUTCOME_GROUP_BOUNDS.csv": "646ea5b8f0007c46b32dd6a98b7d421e496a2040b49b9d70681cd93ffe8cc006",
+    "SELECTION_REWEIGHTED_CONTRASTS.csv": "c961815ee2df6d3fe8b153c6d9189c9dda312619280477d06b0b1af6e277e01e",
+    "SELECTION_REWEIGHTED_RATES.csv": "826ad330b1b8c8c9df3c639308d56283ca4754c40e278f09ce2658d34d75a7c8"
+  },
+  "poststratification_trimmed_or_capped": false,
+  "probability_bounds_clipped": false,
+  "protected_identifiers_written": false,
+  "reconstruction": {
+    "base": {
+      "raw_rows": 9262480,
+      "retained_analysis_scope_rows": 6748518,
+      "source": "base_wide",
+      "superseded_march_positive_weight_rows": 0,
+      "superseded_march_rows": 621589
+    },
+    "corrected_analysis_scope_rows": 7087861,
+    "duplicate_corrected_keys": 0,
+    "march_positive_LNKFW1MWT_rows": 236417,
+    "march_positive_LNKFW1YWT_rows": 121835,
+    "march_rows_after_replacement": 339343,
+    "merge_key": [
+      "YEAR",
+      "MONTH",
+      "SERIAL",
+      "PERNUM"
+    ],
+    "merge_unmatched": 0,
+    "repair": {
+      "raw_rows": 580541,
+      "retained_analysis_scope_rows": 339343,
+      "source": "march_basic_repair",
+      "superseded_march_positive_weight_rows": 0,
+      "superseded_march_rows": 0
+    },
+    "weight_patch_analysis_scope_rows": 7127033,
+    "weight_patch_raw_rows": 9069883
+  },
+  "schema_version": "yax-gate4-flow-selection-v1",
+  "status": "PASS_GATE4_FLOW_SELECTION"
+}

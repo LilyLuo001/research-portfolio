@@ -1,0 +1,61 @@
+{
+  "SDR_factor": 0.05,
+  "benchmark_paired_count": 15,
+  "benchmark_result_count": 18,
+  "code_sha256": "3d029d271e67e2689d6d36e7d3fc4e7bd6b84a138052f5327d287a0f99fc8a35",
+  "created_utc": "2026-09-09T03:37:42.651304+00:00",
+  "cross_year_variance_assumption": "year-block independent approximation; exact cross-year address linkage unavailable",
+  "git_commit": "6447e6d1d35c625c59c3fb9a0053b4c7cb57d855",
+  "model_years": [
+    2017,
+    2018,
+    2019,
+    2021,
+    2023,
+    2024
+  ],
+  "nonreuse_model_years": [
+    2017,
+    2021,
+    2023,
+    2024
+  ],
+  "output_hashes": {
+    "ACS_BENCHMARK_PAIRED.csv": "5febc5c96aa5561666450f9817418b60c93be5a2a70dd14474e177bee43b23fe",
+    "ACS_BENCHMARK_RESULTS.csv": "9a96b2378f67c3562385d5d3224b80271ffdcd94435311b2bfba0c60d2473e8c",
+    "ACS_DIRECT_TAIL_SUPPORT.csv": "60e31cf5c06eefc6dd4fe9625c947c911d792690a35a1a2d693aac60e8ce089d",
+    "ACS_INPUT_MANIFEST.json": "235a7b2730beedf241285c644d9bdabd0b4b0cc51da5e44d0ef8045e0b69be3e",
+    "ACS_PANEL_PAIRED.csv": "eec17ec7c82e7296039c33b68118f760feb17616013ac8823d26a01b7488b3e6",
+    "ACS_PANEL_RESULTS.csv": "4402808c58f2f27da9461b121ab7b2050030343acb164a5884a830c859cd310b",
+    "ACS_SUPPORT_INFORMATION.csv": "43f6078062e901ece9080b7f9e0e416dc0be71e1b1c60cdd1a09dc4ebaf35eea",
+    "ACS_SURVEY_REPLICATE_ESTIMATES.csv": "8f8906b393ee7b6295465ad256b96188285af55208e5297c3f597655d010fb6c",
+    "FINDINGS.md": "8ec9c1e24b8bc7c60d34f5c1950442f03a7c39b04a4cc405767c55d0bc866660"
+  },
+  "paired_result_count": 8,
+  "panel_model_count": 16,
+  "panel_replicate_estimator": "same_grouped_logit_score_signed_SDR_weights",
+  "panel_replicate_fit_count": 6400,
+  "panel_replicate_maximum_iterations": 5,
+  "panel_replicate_maximum_normalized_score": 3.658099285906053e-16,
+  "panel_replicates_with_inactive_first_effects": 0,
+  "panel_replicates_with_inactive_second_effects": 1600,
+  "panel_replicates_with_negative_older_cells": 0,
+  "panel_replicates_with_negative_young_cells": 48,
+  "panel_replicates_with_nonpositive_total_cells": 6400,
+  "receipt_id": "yax_acs_extension_v1_275d52c5189ba5486c7c0e24e198929dbde0967cc5c858ec0bdcd766c8654319",
+  "replicate_count_per_year": 80,
+  "replicate_result_count": 9280,
+  "spec_sha256": "d052322e013684f8abbe78df93c376469451e0b62c466228a1ed5a9d00d5fb48",
+  "standard_2020_one_year_spliced": false,
+  "status": "PASS_PUBLIC_ACS_EXTENSION",
+  "transition_year": 2022,
+  "years": [
+    2017,
+    2018,
+    2019,
+    2021,
+    2022,
+    2023,
+    2024
+  ]
+}

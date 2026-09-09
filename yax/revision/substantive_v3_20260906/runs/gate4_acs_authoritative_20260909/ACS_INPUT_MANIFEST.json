@@ -1,0 +1,277 @@
+{
+  "bridge": {
+    "path": "/projectnb/econdept/qluo/yax-v3-6447e6d/yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
+    "sha256": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc"
+  },
+  "broader_membership": {
+    "path": "/projectnb/econdept/qluo/yax-v3-6447e6d/yax/revision/substantive_v3_20260906/runs/gate2_broader_support_authoritative_20260908/BROADER_SUPPORT_MEMBERSHIP.csv",
+    "sha256": "2fe1967db31dea51e007861867e01bd6fa872828a9d589bc0490212e534220fc"
+  },
+  "definition_audit": {
+    "assignments_fixed_under_replicate_weights": true,
+    "definition_counts": {
+      "BCC_analogue_broader_equal": 490,
+      "BCC_analogue_primary_equal": 468,
+      "YAX_primary_fixed": 468
+    },
+    "equal_broader_cuts": [
+      0.102291808775,
+      0.260869565217,
+      0.412575757576,
+      0.532258064516
+    ],
+    "equal_primary_cuts": [
+      0.10291641051,
+      0.261904761905,
+      0.416666666667,
+      0.533333333333
+    ],
+    "primary_frozen_cuts": [
+      0.153846153846,
+      0.324615384615,
+      0.45652173913,
+      0.537037037037
+    ]
+  },
+  "files": [
+    {
+      "age_22_65_rows": 1796737,
+      "employed_positive_weight_rows": 1300571,
+      "fractional_descendant_rows": 757749,
+      "negative_replicate_weight_entries": 975,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1557409099,
+          "zip_crc32_hex": "964731ca"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1474291038,
+          "zip_crc32_hex": "7ed6d53b"
+        }
+      ],
+      "raw_rows": 3190040,
+      "records_with_negative_replicate_weight": 193,
+      "routed_descendant_rows": 1689882,
+      "routed_supported_full_weight_stock": 120889443.06740242,
+      "source_rows_with_full_supported_route": 1110654,
+      "source_rows_with_partial_supported_route": 71767,
+      "source_rows_with_supported_route": 1182421,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2017/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 137678140.0,
+      "valid_occupation_rows": 1300571,
+      "year": 2017,
+      "zip_bytes": 628817174,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2017_csv_pus.zip",
+      "zip_sha256": "a6c8898f72fba21a6da17e7c4942fc5354626659bb062a4bdc094ca94e473ee5"
+    },
+    {
+      "age_22_65_rows": 1800719,
+      "employed_positive_weight_rows": 1313164,
+      "fractional_descendant_rows": 0,
+      "negative_replicate_weight_entries": 853,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1156639846,
+          "zip_crc32_hex": "b928ce35"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1097026010,
+          "zip_crc32_hex": "33255b21"
+        }
+      ],
+      "raw_rows": 3214539,
+      "records_with_negative_replicate_weight": 172,
+      "routed_descendant_rows": 1154057,
+      "routed_supported_full_weight_stock": 122214843.0,
+      "source_rows_with_full_supported_route": 1154057,
+      "source_rows_with_partial_supported_route": 0,
+      "source_rows_with_supported_route": 1154057,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2018/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 139111376.0,
+      "valid_occupation_rows": 1313164,
+      "year": 2018,
+      "zip_bytes": 562224936,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2018_csv_pus.zip",
+      "zip_sha256": "73fba8988d84f6425966fa14ab26af6ab40ebc0f0e16156b0dada39322349243"
+    },
+    {
+      "age_22_65_rows": 1803173,
+      "employed_positive_weight_rows": 1326146,
+      "fractional_descendant_rows": 0,
+      "negative_replicate_weight_entries": 1470,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1169745409,
+          "zip_crc32_hex": "9952ab9b"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1112807189,
+          "zip_crc32_hex": "c49df1b4"
+        }
+      ],
+      "raw_rows": 3239553,
+      "records_with_negative_replicate_weight": 199,
+      "routed_descendant_rows": 1167154,
+      "routed_supported_full_weight_stock": 123395848.0,
+      "source_rows_with_full_supported_route": 1167154,
+      "source_rows_with_partial_supported_route": 0,
+      "source_rows_with_supported_route": 1167154,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2019/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 140344252.0,
+      "valid_occupation_rows": 1326146,
+      "year": 2019,
+      "zip_bytes": 567851237,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2019_csv_pus.zip",
+      "zip_sha256": "18e4ece4cc24781c01e8046c2d5afbabeb1f15452ddec43f60fdf3b1f6e67b92"
+    },
+    {
+      "age_22_65_rows": 1788712,
+      "employed_positive_weight_rows": 1274831,
+      "fractional_descendant_rows": 0,
+      "negative_replicate_weight_entries": 1550,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1173093592,
+          "zip_crc32_hex": "b7f9bed0"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1111149045,
+          "zip_crc32_hex": "cef824ed"
+        }
+      ],
+      "raw_rows": 3252599,
+      "records_with_negative_replicate_weight": 333,
+      "routed_descendant_rows": 1121318,
+      "routed_supported_full_weight_stock": 121787809.0,
+      "source_rows_with_full_supported_route": 1121318,
+      "source_rows_with_partial_supported_route": 0,
+      "source_rows_with_supported_route": 1121318,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2021/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 138271639.0,
+      "valid_occupation_rows": 1274831,
+      "year": 2021,
+      "zip_bytes": 571180899,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2021_csv_pus.zip",
+      "zip_sha256": "e1e64f81718e7d478cf2bf4ad8d1ae1fa03c690f6c86afa3984d1a6bd38dc8f2"
+    },
+    {
+      "age_22_65_rows": 1847178,
+      "employed_positive_weight_rows": 1351679,
+      "fractional_descendant_rows": 0,
+      "negative_replicate_weight_entries": 541,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1211007352,
+          "zip_crc32_hex": "b84d024b"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1156485296,
+          "zip_crc32_hex": "17253beb"
+        }
+      ],
+      "raw_rows": 3373378,
+      "records_with_negative_replicate_weight": 134,
+      "routed_descendant_rows": 1191473,
+      "routed_supported_full_weight_stock": 126521180.0,
+      "source_rows_with_full_supported_route": 1191473,
+      "source_rows_with_partial_supported_route": 0,
+      "source_rows_with_supported_route": 1191473,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2022/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 143281980.0,
+      "valid_occupation_rows": 1351679,
+      "year": 2022,
+      "zip_bytes": 591122084,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2022_csv_pus.zip",
+      "zip_sha256": "687a97773d0fdfec6c624ea6bf48466f12059d3ee80283a2ad8604ea7a66231e"
+    },
+    {
+      "age_22_65_rows": 1852792,
+      "employed_positive_weight_rows": 1367920,
+      "fractional_descendant_rows": 0,
+      "negative_replicate_weight_entries": 580,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1219778391,
+          "zip_crc32_hex": "297a4d5f"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1176135954,
+          "zip_crc32_hex": "e1eaa8b3"
+        }
+      ],
+      "raw_rows": 3405809,
+      "records_with_negative_replicate_weight": 143,
+      "routed_descendant_rows": 1206104,
+      "routed_supported_full_weight_stock": 127665750.0,
+      "source_rows_with_full_supported_route": 1206104,
+      "source_rows_with_partial_supported_route": 0,
+      "source_rows_with_supported_route": 1206104,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2023/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 144646723.0,
+      "valid_occupation_rows": 1367920,
+      "year": 2023,
+      "zip_bytes": 597292173,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2023_csv_pus.zip",
+      "zip_sha256": "98b6ecb14b4830d1f2b54c265a5bd997828415c2dab14e17369c40e98b78d9d4"
+    },
+    {
+      "age_22_65_rows": 1851433,
+      "employed_positive_weight_rows": 1371789,
+      "fractional_descendant_rows": 0,
+      "negative_replicate_weight_entries": 875,
+      "person_members": [
+        {
+          "name": "psam_pusa.csv",
+          "uncompressed_bytes": 1226543489,
+          "zip_crc32_hex": "1f2cda8d"
+        },
+        {
+          "name": "psam_pusb.csv",
+          "uncompressed_bytes": 1178924624,
+          "zip_crc32_hex": "5041636a"
+        }
+      ],
+      "raw_rows": 3422888,
+      "records_with_negative_replicate_weight": 152,
+      "routed_descendant_rows": 1205301,
+      "routed_supported_full_weight_stock": 129300138.0,
+      "source_rows_with_full_supported_route": 1205301,
+      "source_rows_with_partial_supported_route": 0,
+      "source_rows_with_supported_route": 1205301,
+      "source_url": "https://www2.census.gov/programs-surveys/acs/data/pums/2024/1-Year/csv_pus.zip",
+      "valid_occupation_full_weight_stock": 147019125.0,
+      "valid_occupation_rows": 1371789,
+      "year": 2024,
+      "zip_bytes": 602847146,
+      "zip_path": "/projectnb/econdept/qluo/yax-acs-pums-1yr/acs1_pums_2024_csv_pus.zip",
+      "zip_sha256": "afdc6d90c6e2f0bab365ed32d95ba4c4d8ac651162f46ac7861295b2dc469894"
+    }
+  ],
+  "omitted_year": 2020,
+  "primary_membership": {
+    "path": "/projectnb/econdept/qluo/yax-v3-6447e6d/yax/revision/substantive_v3_20260906/runs/gate1_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv",
+    "sha256": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1"
+  },
+  "status": "PASS_PUBLIC_ACS_INPUT_READ",
+  "years": [
+    2017,
+    2018,
+    2019,
+    2021,
+    2022,
+    2023,
+    2024
+  ]
+}

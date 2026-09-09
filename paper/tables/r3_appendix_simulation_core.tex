@@ -1,0 +1,30 @@
+\begin{table}[!htbp]
+\centering
+\caption{Finite-sample performance in the empirical observed-effect design}\label{tab:appendix_simulation_core}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrrrrr}
+\toprule
+Target & Procedure & $\theta^*$ & Bias & Empirical SD & Mean SE & Coverage (MCSE) & Reject 0 (MCSE) & Mean length & Failed/$N$ \\
+\midrule
+Pooled & Occupation Rademacher & $-0.13198$ & $+0.00065$ & 0.02790 & 0.02173 & 0.865 (0.012) & 1.000 (0.000) & 0.08439 & 0/799 \\
+Pooled & Occupation Webb & $-0.13198$ & $+0.00065$ & 0.02790 & 0.02173 & 0.869 (0.012) & 1.000 (0.000) & 0.08495 & 0/799 \\
+Pooled & Family Rademacher & $-0.13198$ & $+0.00065$ & 0.02790 & 0.03845 & 0.990 (0.004) & 0.977 (0.005) & 0.14806 & 0/799 \\
+Pooled & Family Webb & $-0.13198$ & $+0.00065$ & 0.02790 & 0.03845 & 0.990 (0.004) & 0.977 (0.005) & 0.14814 & 0/799 \\
+Pooled & Cross-fit oracle & $-0.13198$ & $+0.00065$ & 0.02790 & 0.02173 & 0.945 (0.008) & 0.999 (0.001) & 0.10663 & 0/799 \\
+\addlinespace
+Family-month & Occupation Rademacher & $-0.02165$ & $+0.00101$ & 0.02352 & 0.02175 & 0.921 (0.010) & 0.169 (0.013) & 0.08488 & 0/799 \\
+Family-month & Occupation Webb & $-0.02165$ & $+0.00101$ & 0.02352 & 0.02175 & 0.921 (0.010) & 0.169 (0.013) & 0.08487 & 0/799 \\
+Family-month & Family Rademacher & $-0.02165$ & $+0.00101$ & 0.02352 & 0.02114 & 0.895 (0.011) & 0.190 (0.014) & 0.08102 & 0/799 \\
+Family-month & Family Webb & $-0.02165$ & $+0.00101$ & 0.02352 & 0.02114 & 0.891 (0.011) & 0.189 (0.014) & 0.08134 & 0/799 \\
+Family-month & Cross-fit oracle & $-0.02165$ & $+0.00101$ & 0.02352 & 0.02175 & 0.949 (0.008) & 0.121 (0.012) & 0.09519 & 0/799 \\
+\addlinespace
+Family minus pooled & Occupation Rademacher & 0.11034 & $+0.00036$ & 0.03092 & 0.02585 & 0.889 (0.011) & 0.979 (0.005) & 0.10082 & 0/799 \\
+Family minus pooled & Occupation Webb & 0.11034 & $+0.00036$ & 0.03092 & 0.02585 & 0.892 (0.011) & 0.977 (0.005) & 0.10135 & 0/799 \\
+Family minus pooled & Family Rademacher & 0.11034 & $+0.00036$ & 0.03092 & 0.04109 & 0.992 (0.003) & 0.836 (0.013) & 0.15848 & 0/799 \\
+Family minus pooled & Family Webb & 0.11034 & $+0.00036$ & 0.03092 & 0.04109 & 0.992 (0.003) & 0.834 (0.013) & 0.15865 & 0/799 \\
+Family minus pooled & Cross-fit oracle & 0.11034 & $+0.00036$ & 0.03092 & 0.02585 & 0.945 (0.008) & 0.944 (0.008) & 0.11853 & 0/799 \\
+\bottomrule
+\end{tabular}}
+\tabnote{Movement is family-month minus pooled.  The table reports all five procedures in the empirically calibrated design with the observed structural input.  $\theta^*$ is the independently computed pseudo-true projection target.  Parentheses give binomial Monte Carlo standard errors.  Reject 0 is not an empirical-size statistic here because none of the three pseudo-targets is zero.  The largest relative Monte Carlo error of an empirical SD in this panel is 0.02675.  The cross-fit full-refit oracle learns critical values on one deterministic half of the replications and evaluates them on the other; it is a benchmark, not an implementable article interval.  Every joint refit succeeded, and each multiplier procedure used 9,999 common draws.}
+\end{table}

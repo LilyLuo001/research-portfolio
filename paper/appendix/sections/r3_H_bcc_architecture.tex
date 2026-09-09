@@ -4,9 +4,45 @@
 
 The comparison uses the August 12, 2026 version of Brynjolfsson--Chandar--Chen and records the accessed paper, dashboard, and workbook in the evidence ledger.  Their reported 19-percent young-worker ``kept pace'' shortfall is a stock-growth counterfactual in ADP data, not a regression coefficient, employment probability, or hiring rate.  Their public dashboard forms equal-occupation exposure groups; later regressions employ other weights and employer controls.  Exact dashboard memberships and the treatment of ties are not released.
 
-The CPS bridge therefore applies an equal-occupation, tie-preserving top-two-versus-bottom-three approximation on the present support and labels it as such.  The pooled estimate is $-0.0720$, with interval $[-0.1218,-0.0222]$.  The SOC2-by-calendar-month estimate is $-0.0168$, with interval $[-0.0810,0.0474]$.  Their paired movement is 0.0553, with interval $[-0.0024,0.1129]$.  The archive provides group summaries and a membership file; it cannot provide concordance with undisclosed assignments.  Differences in occupation universe, age comparison, denominator, endpoint, firm controls, and employer-matched flows remain.
+The CPS bridge therefore applies an equal-occupation, tie-preserving top-two-versus-bottom-three approximation on the present support and labels it as such.  The pooled estimate is $-0.0720$, with interval $[-0.1223,-0.0218]$.  The SOC2-by-calendar-month estimate is $-0.0168$, with interval $[-0.0808,0.0473]$.  Their paired movement is 0.0553, with interval $[-0.0013,0.1118]$.  The intermediate SOC2-by-post specification moves by 0.0573 relative to the pooled model, with interval $[0.0005,0.1141]$; this post-outcome bridge contrast is detected narrowly, whereas the stronger family-month comparison is not.  The archive provides group summaries and a membership file; it cannot provide concordance with undisclosed assignments.  Differences in occupation universe, age comparison, denominator, endpoint, firm controls, and employer-matched flows remain.
 
 \input{tables/r3_appendix_bcc_bridge.tex}
+
+\subsection{Annual ACS reconstruction}
+
+The annual extension uses ordinary one-year ACS PUMS for 2017--2019 and
+2021--2024; no standard 2020 one-year file exists, and no experimental 2020
+estimate is spliced into the panel.  Eighty replicate weights per endpoint year
+form the successive-difference-replication intervals in
+Table~\ref{tab:appendix_acs}.  The BCC-labelled rows remain public analogues:
+complete BCC occupation membership is unavailable, so they cannot be exact
+replications.
+
+\input{tables/r3_appendix_acs.tex}
+
+For the benchmark, changing from all employed to full-time civilian
+wage-and-salary workers is not detected under common ACS replicate
+perturbations: the paired differences are $-0.0025$
+($[-0.0266,0.0216]$) for the equal-occupation BCC analogue and $0.0056$
+($[-0.0174,0.0285]$) for fixed primary groups.  The fixed-primary versus BCC-analogue
+grouping difference is likewise not detected among all employed workers
+($0.0090$, $[-0.0045,0.0224]$).  Among full-time civilian wage-and-salary
+workers that grouping difference is narrowly detected ($0.0171$,
+$[0.0002,0.0340]$), which reinforces rather than resolves the missing-membership
+limitation.
+
+For the annual young-relative regressions, full-calendar family-year estimates
+retain negative ACS sampling intervals under the fixed primary exposure groups,
+while the broader equal-occupation grouping and every nonreuse-calendar
+family-year interval contain zero.  The paired ACS sampling intervals for the
+pooled-minus-family-year movements exclude zero in all eight reported
+definition--population--calendar combinations.  This is not universal across
+stochastic targets: supplementary occupation- and family-multiplier intervals
+are wider, and every family-year coefficient reported in
+Table~\ref{tab:appendix_acs} includes zero under those shock assignments.  The
+annual exercise thus shows that large respondent counts sharpen person-sampling
+uncertainty but do not create within-family occupational comparisons or
+identify an AI effect.
 
 \subsection{Equal-occupation estimation objective}
 
@@ -16,13 +52,13 @@ The public-dashboard grouping bridge above changes the grouping rule.  A separat
 
 \subsection{Task-capability weighting}
 
-Write the two Eloundou primitives as $D=E1$ and $S=E2$.  The score family $D+\lambda S$ is evaluated on a fixed grid from zero to one under common preperiod weights and common bootstrap draws.  The implementation verifies numerically that $\lambda=0.5$ reproduces raw beta before grouping.  Any earlier mismatch between that row and the headline arose from a different support or treatment contract and is preserved only as implementation history.
+Write the two Eloundou primitives as $E_1$ (the E1 share) and $E_2$ (the E2 share).  The score family $E_1+\lambda E_2$ is evaluated on a fixed grid from zero to one under common preperiod weights and common bootstrap draws.  The implementation verifies numerically that $\lambda=0.5$ reproduces raw beta before grouping.  Any earlier mismatch between that row and the headline arose from a different support or treatment contract and is preserved only as implementation history.
 
 Two versions are kept separate.  The native-rank analysis recomputes the score normalization and tie-preserving groups at each $\lambda$, so both scale and membership can change.  The fixed-membership analysis changes only the continuous score representation while holding the beta groups fixed.  For every grid point the result files report coefficient, paired difference from beta, interval, occupation coverage, tail turnover, and correlations with computer use and remotability.  A focused 408-occupation run adds both computer use and remotability on common support.  None of these paths measures realized deployment.
 
 \subsection{Primitive and architecture comparisons}
 
-The joint primitive model reports $D$ and $S$ in raw share units, in preperiod-standard-deviation units, their covariance, and an illustrative common change.  This is a two-regressor parameterization, not a causal decomposition into technologies.  Architecture comparisons likewise report both component coefficients and their paired difference on each declared support.  Webb-AI comparisons are shown first on identical support and then on broader native support so that score changes are not confused with population changes.  Coordinate rotations that do not change the fitted predictor are not interpreted as additional scientific results.
+The joint primitive model reports $E_1$ and $E_2$ in raw share units, in preperiod-standard-deviation units, their covariance, and an illustrative common change.  This is a two-regressor parameterization, not a causal decomposition into technologies.  Architecture comparisons likewise report both component coefficients and their paired difference on each declared support.  Webb-AI comparisons are shown first on identical support and then on broader native support so that score changes are not confused with population changes.  Coordinate rotations that do not change the fitted predictor are not interpreted as additional scientific results.
 
 Raw AIOE is a standardized source-occupation index: one point is approximately one unweighted standard deviation across the 774 occupations in the source workbook, and the source interquartile difference is 1.879 points.  It is not a percentage.  Equal-administrative and source-employment-weighted mappings preserve that source scale through averaging, although their target-support distributions need not retain unit variance.  The direct-ability reconstruction has its own raw scale and is not numerically interchangeable.  Categorical AIOE estimates use ranks and tie-preserving groups; continuous comparisons must state whether their increment is a raw point or a current-support weighted standard deviation.
 

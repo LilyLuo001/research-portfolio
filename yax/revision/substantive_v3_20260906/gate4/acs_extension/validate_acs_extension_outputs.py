@@ -38,6 +38,35 @@ def close(left: float, right: float, tolerance: float = 2e-11) -> bool:
     return bool(np.isclose(float(left), float(right), atol=tolerance, rtol=tolerance))
 
 
+def finite_numeric(frame: pd.DataFrame, columns: list[str] | None = None) -> bool:
+    selected = frame.select_dtypes(include=[np.number]) if columns is None else frame[columns]
+    return bool(np.isfinite(selected.to_numpy(float)).all())
+
+
+def replicate_schema_is_finite(reps: pd.DataFrame) -> bool:
+    """Permit only structural blanks in diagnostics that do not apply to benchmarks."""
+    shared = ["perturbed_year", "replicate", "estimate", "full_weight_estimate", "delta"]
+    diagnostics = [
+        "replicate_iterations", "replicate_maximum_normalized_score",
+        "replicate_minimum_first_effect_information",
+        "replicate_minimum_second_effect_information",
+        "replicate_minimum_treatment_information_eigenvalue",
+        "replicate_negative_young_cells", "replicate_negative_older_cells",
+        "replicate_nonpositive_total_cells", "replicate_inactive_first_effects",
+        "replicate_inactive_second_effects",
+    ]
+    if set(reps.result_type) != {"benchmark", "annual_panel"}:
+        return False
+    benchmark = reps.loc[reps.result_type.eq("benchmark")]
+    panel = reps.loc[reps.result_type.eq("annual_panel")]
+    return bool(
+        finite_numeric(reps, shared) and finite_numeric(panel, diagnostics) and
+        benchmark[diagnostics].isna().all().all() and
+        benchmark.structure.isna().all() and benchmark.replicate_estimator.isna().all() and
+        panel.structure.notna().all() and panel.replicate_estimator.notna().all()
+    )
+
+
 def validate(output: Path) -> dict:
     receipt = json.loads((output / "EXECUTION_RECEIPT.json").read_text(encoding="utf-8"))
     manifest = json.loads((output / "ACS_INPUT_MANIFEST.json").read_text(encoding="utf-8"))
@@ -61,7 +90,8 @@ def validate(output: Path) -> dict:
         len(reps) == receipt.get("replicate_result_count") == 116 * REPLICATES)
     checks["finite_outputs"] = all(
         np.isfinite(frame.select_dtypes(include=[np.number]).to_numpy(float)).all()
-        for frame in (benchmark, benchmark_paired, panel, paired, reps, support, tails))
+        for frame in (benchmark, benchmark_paired, panel, paired, support, tails))
+    checks["replicate_schema_and_finiteness"] = replicate_schema_is_finite(reps)
     checks["output_hashes"] = all(
         (output / name).is_file() and sha256_file(output / name) == digest
         for name, digest in receipt.get("output_hashes", {}).items())

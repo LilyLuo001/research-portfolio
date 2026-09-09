@@ -1,0 +1,15 @@
+\begin{table}[!htbp]
+\centering
+\caption{Static and dynamic target reconciliation}\label{tab:app_static_dynamic_reconciliation}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+Specification & Static $S$ & Post/reference $P$ & Post/pre $D$ & $D-S$ & $p(D-S=0)$ \\
+\midrule
+Pooled & $-0.132109$ & $-0.119889$ & $-0.131372$ & $\phantom{-}0.000737$ & 0.454 \\
+Family by calendar month & $-0.021675$ & $-0.207434$ & $-0.021689$ & $-0.000014$ & 0.995 \\
+Family minus pooled & $\phantom{-}0.110434$ & $-0.087545$ & $\phantom{-}0.109683$ & $-0.000752$ & 0.693 \\
+\bottomrule
+\end{tabular}}
+\tabnote{$S$ is the static grouped-binomial Q5-by-post coefficient. $P$ is the observed-post-month-weighted average of quarterly Q5 coefficients relative to the two observed months in omitted 2022Q4. $D$ subtracts the corresponding observed-pre-month-weighted average and is invariant to the omitted event-time reference. The last two columns use the stored joint covariance, so they preserve the covariance between the static and dynamic fits. The tests establish nondetection of a difference, not economic equivalence.}
+\end{table}

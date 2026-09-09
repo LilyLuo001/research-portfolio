@@ -1,6 +1,7 @@
 # YAX V3 execution state
 
-Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
+Updated: 2026-09-09 Asia/Shanghai after validated Gate 3/4 result integration;
+the final integration commit is pending.
 
 ## Authoritative locations
 
@@ -37,20 +38,28 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   `runs/gate2_timing_extensions_authoritative_20260908/`
 - Gate 2 timing-extension independent validation and findings:
   `gate2/timing_extensions/`
-- Gate 4 public-benchmark pre-results package:
-  `gate4/public_benchmark/`
-- Gate 4 CPS-flow pre-results package:
-  `gate4/flows/`
-- Gate 4 annual-ACS pre-results package:
-  `gate4/acs_extension/`
+- Gate 4 public-benchmark package and authoritative run:
+  `gate4/public_benchmark/` and
+  `runs/gate4_public_benchmark_authoritative_20260908/`
+- Gate 4 CPS-flow package and authoritative run:
+  `gate4/flows/` and
+  `runs/gate4_flow_selection_authoritative_20260909/`
+- Gate 4 annual-ACS package and authoritative run:
+  `gate4/acs_extension/` and
+  `runs/gate4_acs_authoritative_20260909/`
 - Gate 3 characteristic findings and authenticated industry carry-forward:
   `gate3/characteristics/`
-- Gate 3 mapping, architecture, and equal-occupation execution packages:
-  `gate3/mapping/`, `gate3/architecture/`, and `gate3/equal_occupation/`
-- Gate 4 cohort/enrollment and HonestDiD pre-results packages:
-  `gate4/cohort_enrollment/` and `gate4/honestdid/`
+- Gate 3 mapping, architecture, and equal-occupation packages and runs:
+  `gate3/mapping/`, `gate3/architecture/`, `gate3/equal_occupation/`,
+  `runs/gate3_mapping_authoritative_20260908/`,
+  `runs/gate3_architecture_authoritative_20260909/`, and
+  `runs/gate3_equal_occupation_authoritative_20260909/`
+- Gate 4 cohort/enrollment and HonestDiD packages and cohort run:
+  `gate4/cohort_enrollment/`, `gate4/honestdid/`, and
+  `runs/gate4_cohort_enrollment_authoritative_20260908/`
 - Active manuscript, appendix, referee response, and revision diagnosis:
   `paper/main/`, `paper/appendix/`, and `paper/revision/`
+- Draft delivery PDFs and hashes: `paper/build/`
 
 ## Authoritative Gate 1 identifiers
 
@@ -109,9 +118,10 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   defects are preserved and adjudicated in
   `reviews/GATE1_NUMERICAL_A1_POSTRUN_FINAL_REVIEW_DISPOSITION.md`. The closure
   commit is `85ac2d21023b1db09a39e2420447c953cd1630ee`.
-- N03 remains `RUN_UNVALIDATED` only because manuscript/appendix integration
-  and presentation validation have not occurred. The numerical prerequisites
-  are independently certified. Dependent Gate 2 units named as `RELEASED` in
+- N03 numerical prerequisites are independently certified and the findings are
+  integrated in Online Appendix E. N03 remains `RUN_UNVALIDATED` pending its
+  upstream dependency and final compiled-document review. Gate 2 units named as
+  `RELEASED` in
   `runs/gate1_numerical_a1_pass_7482383/DEPENDENCY_RELEASE.json` may now run;
   no unreleased or presentation claim is implied.
 - The first Gate 2 support/accounting execution was retained outside the
@@ -123,9 +133,9 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   contains exactly those 12 artifacts plus the receipt; later validation and
   findings documents are kept separately under `gate2/evidence/`.
 - Separate-agent artifact review found no P1 or P2 defect in the authoritative
-  package. S01, S02, D01, D03, and D04 now have validated point/support evidence
-  but remain `RUN_UNVALIDATED` pending their outstanding inference and
-  manuscript/appendix presentation checks.
+  package. S01, S02, D01, D03, and D04 have validated point/support evidence and
+  are integrated in the current paper sources. They remain `RUN_UNVALIDATED`
+  pending their upstream, inference, and final rendered-delivery checks.
 - The outcome-free D02 identification implementation is frozen at specification
   `yaxgate2d02spec_v1_2357904781f082216bc398baadef1e2005bc0b1d4c40d0b7ed1c63250e09e0c3`.
   It proves that unrestricted occupation-by-calendar-month effects absorb all
@@ -134,9 +144,9 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   adversarial review found one fail-closed contract defect; the repaired
   producer/specification handshake passed re-review with 24 focused tests. D02
   was executed directly from clean SCC worktree commit `9c19741` and passed
-  post-run artifact validation. D02 is `RUN_UNVALIDATED`, not `VERIFIED`;
-  manuscript presentation and any outcome-bearing age-specific companion
-  coefficient remain outstanding.
+  post-run artifact validation. D02 is integrated in Online Appendix C but
+  remains `RUN_UNVALIDATED`, not `VERIFIED`; the outcome-bearing additive
+  companion was not estimated and upstream/final render checks remain open.
 - The authoritative Gate 2 support-inference execution, SCC job `7489785`, ran
   from authorization commit `62c3da6` and exited successfully. It published 40
   result artifacts plus a manifest and receipt under result ID
@@ -146,14 +156,15 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   checked every artifact hash and content identity and reconstructed the
   published profile differences, covariance-based standard errors, confidence
   intervals, simultaneous critical values, and joint tests from the retained
-  public objects. S03, S04, S06, and S07 are now `RUN_UNVALIDATED`; their run
-  evidence is complete, while manuscript/appendix presentation is not.
+  public objects. S03, S04, S06, and S07 are integrated in the current sources
+  but remain `RUN_UNVALIDATED` pending upstream and final rendered review.
 - The resulting profile changes materially after family-by-month conditioning:
   pooled Q5-by-post is -0.1321 (SE 0.0452), versus -0.0217 (SE 0.0713) in the
   family-month model. The paired Q5 movement is 0.1104 (SE 0.0519; marginal
   normal p=0.0333), but the four-coefficient paired profile does not reject
   jointly (chi-square 5.4169 on 4 df, p=0.2471; multiplier p=0.2368). These are
-  validated run facts, not yet manuscript-ready interpretation.
+  validated run facts. The manuscript now presents them as conditional-estimand
+  comparisons, not as a causal decomposition.
 - The authoritative Y01--Y05 dynamic-core execution, SCC job `7489898`, ran
   from clean frozen commit `6c65820f9ba525ec31f97ead0d4db5fc6d60d668`,
   exited successfully in 223 seconds, and published 14 result artifacts plus a
@@ -173,8 +184,9 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   is -0.0217. The published-reference post functional P is -0.1199 and -0.2074,
   respectively, showing that its family-month discrepancy is driven by the
   2022Q4 reference-period level rather than by failure of static/dynamic nesting.
-- Y01--Y05 are `RUN_UNVALIDATED`: their computation and numerical validation are
-  complete, while manuscript and appendix presentation remains outstanding.
+- Y01--Y05 computation, numerical validation, and source integration are
+  complete. They remain `RUN_UNVALIDATED` until their dependencies and the
+  final compiled-document review are closed.
 - The authoritative S05 broader-beta/no-Webb execution, SCC job `7490033`, ran
   successfully and published four same-objective models. Removing Webb expands
   beta-valid support from 468 to 490 occupations but changes the coefficient by
@@ -183,8 +195,8 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   support expands from four to five occupational families, so limited
   within-family tail support remains after relaxing Webb availability. All four
   numerical fits pass independent corroboration, and all 64 public artifact and
-  calculation checks pass. S05 remains `RUN_UNVALIDATED` pending manuscript and
-  appendix integration.
+  calculation checks pass. The decomposition is integrated in Online Appendix C;
+  S05 remains `RUN_UNVALIDATED` pending S01 and final compiled review.
 - The authoritative N04/T05/Y08/Y09 timing-extension execution, SCC job
   `7490289`, ran at commit `4b298853f439fda1577a14f7dc598f7832f54466`
   and exited with scheduler `failed=0`, `exit_status=0`. It published 34 models,
@@ -200,7 +212,8 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   family-month. Seasonality changes are below 0.0011 in absolute value, and
   every onset-grid paired change includes zero. The cross-structure movement
   remains about 0.088--0.134 across the declared variants. N04, T05, Y08, and
-  Y09 are `RUN_UNVALIDATED` pending manuscript and appendix integration.
+  Y09 are integrated in source and remain `RUN_UNVALIDATED` pending dependencies
+  and final compiled review.
 - The complete Gate 3 finite-sample program ran all eleven declared DGPs at
   799--1,599 outer replications and 9,999 common multiplier draws, with zero
   failed joint refits. Independent reconstruction passes. Occupation
@@ -209,9 +222,10 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   under-covers family-month and fails more broadly in the adverse designs. The
   near-nominal oracle is not implementable and, under the empirical structural
   null, still rejects zero for pooled and paired projections because those
-  pseudo-targets are nonzero. I02--I06 remain `RUN_UNVALIDATED` pending
-  manuscript integration; no universal correction or ad hoc SE inflation is
-  adopted.
+  pseudo-targets are nonzero. The finite-sample findings are integrated in
+  Online Appendix E; I02--I06 remain `RUN_UNVALIDATED` for their recorded
+  dependencies and final delivery review. No universal correction or ad hoc SE
+  inflation is adopted.
 - The repaired pandemic-shortfall pipeline completed 399 linked-household
   full refits on a strict 363-occupation support, with zero failures and
   maximum endpoint MCSE 0.00979 against 0.01. Total-stock conditioning moves
@@ -220,51 +234,64 @@ Updated: 2026-09-08 Asia/Shanghai after manuscript integration commit `e5f373c`
   the shortfalls roughly doubles some conditioning-movement sampling
   sensitivities but does not overturn those magnitudes. A two-direction
   linked-household split produces a similar average with heterogeneous
-  directions. I08 and C05 are `RUN_UNVALIDATED`: the calculation and public
-  validation are complete, while their dependencies and manuscript treatment
-  remain open.
-- The annual ACS extension is specified and implemented without reading ACS
-  outcomes. It fixes the BCC analogue to a Q5-minus-Q1 difference in
-  2022-to-2024 growth factors, uses all 80 official replicate weights, separates
-  ACS sampling uncertainty from occupation/family shocks, and pairs pooled and
-  family-year estimates on fixed support. A pre-execution audit corrected the
-  intended family multiplier from an accidental Rademacher fallback to the
-  six-point Webb support and added a refusal for silently separated estimating
-  rows. Thirteen focused tests and the full 1,493-test repository suite pass.
-  B06 is `IMPLEMENTED_UNRUN`; public ZIP acquisition and execution remain.
+  directions. I08 and C05 calculations, public validation, and bounded source
+  presentation are complete; they remain `RUN_UNVALIDATED` for their recorded
+  dependencies and final delivery review.
+- The annual ACS extension completed on seven ordinary one-year PUMS files and
+  passes all 17 independent output checks. It uses all 80 replicate weights per
+  perturbed endpoint year, separates ACS sampling uncertainty from
+  occupation/family shocks, and pairs pooled and family-year estimates on fixed
+  support. The results are integrated in Online Appendix H. B06 is
+  `RUN_UNVALIDATED` pending S05 and final compiled-document review.
+- The Gate 4 public-CPS benchmark is independently reconstructed and integrated
+  as an analogue, not an exact BCC replication. Exact BCC occupation membership
+  and proprietary payroll conditions remain unavailable.
+- The Gate 4 flow run passes its recomputation validator with 300 baseline-rate
+  rows, 120 eligibility rows, 84 destination rows, selection sensitivities,
+  missing-outcome intervals, and annual-onset diagnostics. The paper distinguishes
+  the risk sets and does not call entry allocation a hiring rate or a stock-flow
+  decomposition. F01--F06 and F08 are `RUN_UNVALIDATED`; full-window EARNWEEK2
+  evidence remains `BLOCKED_INPUT` under F07.
+- The cohort/enrollment package validates 20 models, 14 paired comparisons,
+  national and employed-young composition profiles, and no exposure assignment
+  to nonworkers. The full composition exhibit is integrated in Online Appendix D.
+- The current mapping, architecture, and equal-occupation runs all pass their
+  public validators. The appendix separates their 369-, 408-, 444-, 455-, 468-,
+  and 490-occupation estimands instead of presenting them as one support.
 - The Gate 3 characteristic block and authenticated industry carry-forward are
   validated and integrated into the manuscript. On fixed 455-occupation
   support, adding pre-2022 computer use moves the pooled coefficient from
   -0.0958 to -0.1966, while adding family-by-month paths moves it to 0.0354.
   The combined-minus-baseline interval contains zero. These are non-additive
   conditional projections, not causal AI or computerization components.
-- The retained 113-month lambda and D/S architecture audit passes a fresh
+- The retained 113-month lambda and E1/E2 architecture audit passes a fresh
   public carry-forward check. Lambda 0.5 reproduces literal beta within the
   signed `1e-10` tolerance; all memberships, paired draws, primitive
   covariance, and illustrative contrasts are complete. W06 remains
   `RUN_UNVALIDATED` until T02, final packaging, and rendered review pass.
-- The active paper now uses the comparison-centered title "Occupational AI
-  Exposure and Young-Worker Employment: Support and Comparisons in the CPS."
-  Both abstracts and the introduction define the exact conditional-mean stock-
-  ratio estimand before reporting its value. The scientific source and 1,494-
-  test suite pass; compilation and visual review still require SCC.
+- The active paper uses the comparison-centered title "Occupational AI Exposure
+  and Young-Worker Employment: Support and Comparisons in the CPS." Both
+  abstracts and the introduction define the exact conditional-mean stock-ratio
+  estimand before reporting its value. The manuscript, appendix, referee
+  response, revision diagnosis, and source diff now contain the validated result
+  packages. The settled source tree has been rebuilt into five PDFs; all 126
+  pages, including the new support and simulation tables, pass visual review.
 
-All 11 A1 numerical targets and the completed static/support and Y01--Y05
-dynamic outputs have now been independently reconstructed from retained public
-objects. No new coefficient is yet manuscript-ready because interpretation and
-presentation remain separately governed. The cell and exact-target audits
-establish the estimating-data object, not a causal or substantive manuscript
-claim.
+All statuses remain conservative. Source integration does not by itself promote
+an empirical row to `VERIFIED`; unresolved dependencies, external-input blocks,
+and final rendered-delivery review remain explicit in `requirements_status.json`.
 
 ## Verified inputs and blockers
 
 The source inventory records authenticated CPS extracts 9, 10, 11, and 12 and
-the public/versioned measurement inputs. `EARNWEEK2`, exact BCC code membership,
-proprietary BCC outcomes, and an adopted external-adoption analysis input are
-not currently available. Ordinary one-year ACS PUMS through 2024 are verified
-as public but have not yet been downloaded into the authorized SCC project
-storage. The current local session cannot authenticate to SCC. Absence from the
-current extracts is not evidence of absence from the survey.
+the public/versioned measurement inputs. All seven required one-year ACS PUMS
+files were acquired and used in the authoritative public extension; raw ZIPs
+remain outside Git. `EARNWEEK2`, exact BCC occupation membership, and proprietary
+BCC outcomes are not currently available. Author-controlled affiliation,
+contact, acknowledgment, funding, conflict, journal-disclosure, repository,
+license, and redistribution fields are separately retained as an E12
+`BLOCKED_INPUT` item. Absence from the current authorized extracts is not
+evidence that a survey variable does not exist.
 
 ## Operational rule
 
@@ -286,23 +313,18 @@ selective subset.
 
 ## Next resumable tasks
 
-The A1 execution, independent audit, finding disposition, and remote push are
-complete. The original and compatibility-blocked runs remain preserved.
+The original and compatibility-blocked numerical runs remain preserved.
 
-1. Restore SCC authentication. First move still-pending job `7493813` from the
-   disabled `econ-pub` queue to `econ` and set `-pe omp 1`; inspect all jobs and
-   do not cancel any of them.
-2. Synchronize the current branch to a fresh `/projectnb/econdept` worktree,
-   download and hash the seven public ACS one-year ZIPs, and run the annual ACS
-   producer plus independent validator.
-3. Execute and validate the already-specified mapping, CPS-flow, public-CPS
-   benchmark, cohort/enrollment, and HonestDiD packages whose prerequisites are
-   available. Use separate scheduler windows where safe; do not wait on an
-   unrelated queued job.
-4. Build the explicit aligned ACS-versus-annual-CPS comparison after both public
-   runs pass. Let the results narrow the paper's claim rather than treating a
-   larger sample as automatic exposure support.
-5. Integrate all validated evidence into the manuscript, appendix, referee
-   response, revision diagnosis, and source diff before changing any
-   `RUN_UNVALIDATED` requirement to `VERIFIED`. E01/E06/W06 source integration
-   is complete but remains unverified for the explicitly recorded dependencies.
+1. Retain F07 as `BLOCKED_INPUT` until an authorized `EARNWEEK2` extract exists,
+   B02 as blocked on exact public BCC membership, and E12 as blocked on the
+   author's metadata and disclosure decisions.
+2. Complete G02 only after an exhaustive sentence-level source extraction can
+   be demonstrated; the current 297-row matrix is internally valid but does not
+   prove that premise.
+3. Build a bounded sanitized executable export before advancing E10. The current
+   research tree contains necessary provenance records with private compute-path
+   strings and is not itself a public-release package.
+4. Obtain the author fields, repeat the five-document build if they change the
+   PDFs, and run a final end-to-end external review against the frozen package.
+5. Commit and push the source, public run packages, ledger, state, and five draft
+   PDFs together; verify the remote commit without claiming submission readiness.

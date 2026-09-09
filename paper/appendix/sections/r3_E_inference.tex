@@ -16,9 +16,32 @@ Table~\ref{tab:appendix_precision_summary} consolidates the principal precision 
 
 \input{tables/r3_appendix_precision_summary.tex}
 
+\subsection{Numerical existence and separation}
+
+All eleven declared grouped-binomial specifications pass the treatment-rank,
+recession-direction, binding trust-path versus independent zero-start
+Newton/IRLS agreement, fitted-mean, normalized-gradient, raw and diagonally
+scaled fitted-Hessian, and two-sided target-profile checks at the unchanged A1
+thresholds.  The pooled, family-post, family-month, dynamic, and
+quintile-by-month seasonality specifications require no boundary-row profiling.
+Each post-2020 specification profiles one boundary nuisance group spanning 77
+positive-total data rows, and each occupation-by-month seasonality specification
+profiles 110 boundary nuisance groups spanning 770 rows; these rows are
+profiled on the extended-likelihood face rather than deleted.  In every model
+the recession audit finds no direction capable of moving a reported target or
+treatment coefficient, and the focal target is finite on the resolved
+extended-likelihood face.  The retained L-BFGS-B path is diagnostic rather than
+a passing solver: it fails the standardized-score threshold in all eleven fits
+but reveals no better independently stationary contradictory target.
+
 \subsection{Broad-family and household sensitivity}
 
 The few-family exercise uses 22 broad-family weights and reports baseline, conditioned, and paired targets from common draws.  Its role is sensitivity to cross-occupation dependence, not a declaration that SOC2 is the uniquely correct cluster.  The household/sample-unit exercise performs 399 positive-weight full refits.  With labels fixed, its basic interval is $[-0.1865,-0.0794]$ for the pooled coefficient, $[-0.1212,0.0587]$ for the family-conditioned coefficient, and $[0.0362,0.1753]$ for their movement.  Regenerating preperiod exposure labels within the same draws gives $[-0.1864,-0.0762]$, $[-0.1236,0.0665]$, and $[0.0355,0.1771]$.  A median of two occupations changes quintile per regenerated-label draw.  Webb restandardization by itself is an affine transformation absorbed by the specified fixed effects, so this difference is a quintile-membership sensitivity rather than a separate normalization channel.
+
+All 399 household refits succeed.  The authoritative stopping calculation
+puts the largest bootstrap-of-bootstrap interval-endpoint Monte Carlo standard
+error at 0.00820 log point, below the declared 0.01 threshold, so the
+predeclared expansion to 799 draws is not triggered.
 
 The source does not expose official Basic Monthly replicate weights or all confidential design identifiers.  Household identifiers are therefore a dependence-preserving public-data approximation, not an ASEC replication-weight procedure.  Link-specific flow analyses additionally report person- and household-cluster sensitivities using their own risk sets.
 
@@ -29,3 +52,16 @@ The time-HAC audit operates on nuisance-adjusted score sums and implements occup
 The completed finite-sample audit uses 11 declared designs, 799--1,599 retained outer replications per design, 9,999 common multiplier draws per joint refit, and independently computed pseudo-targets.  Absolute coefficient bias is at most 0.00102 log point in the empirical observed-effect design.  Interval performance is target-specific: occupation-Rademacher coverage is 0.865 for the pooled projection, 0.921 for the family-month projection, and 0.889 for their paired movement.  Family-Rademacher coverage is respectively 0.990, 0.895, and 0.992.  Rademacher and Webb weights give nearly identical coverage at a fixed cluster level, so changing the multiplier law does not repair the cluster-level mismatch.
 
 The earlier 26.7-percent and 11.3-percent rejection figures are withdrawn rather than reinterpreted.  In the clean family-variance-zero design, the family-month pseudo-target is zero to numerical precision; its five-percent rejection rates are 6.1 percent under occupation Rademacher weights, 8.9 percent under family Rademacher weights, and 5.6 percent for the cross-fit full-refit oracle.  In the empirically calibrated structural-null design, removing the structural exposure coefficient still leaves a pooled pseudo-target of $-0.11035$ and a paired pseudo-target of 0.11035 because the data-generating process retains the observed fitted family-by-month surface.  The near-nominal oracle then rejects zero for the pooled projection 96.5 percent of the time.  This is a restatement of the broad-family decomposition built into the calibration, not independent evidence that composition caused the empirical gap.  The simulations therefore limit both the inferential and structural interpretation: none of the feasible cluster procedures is adequate for every target and significance of the pooled projection does not by itself test a structural exposure effect.
+
+Tables~\ref{tab:appendix_simulation_core}--
+\ref{tab:appendix_simulation_designs_inference} make the simulation inventory
+and its Monte Carlo uncertainty explicit.  The first compares every declared
+procedure on a common empirically calibrated design; the next two report
+estimation and interval performance for all eleven core, adverse, and
+factor-ablation designs while holding the occupation-Rademacher procedure
+fixed.  This separation prevents a change in the DGP from being mistaken for
+a change in the cluster or multiplier rule.
+
+\input{tables/r3_appendix_simulation_core.tex}
+
+\input{tables/r3_appendix_simulation_designs.tex}

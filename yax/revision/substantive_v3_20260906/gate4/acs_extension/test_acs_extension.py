@@ -17,6 +17,38 @@ assert spec and spec.loader
 MOD = importlib.util.module_from_spec(spec)
 sys.modules["acs_extension_tested"] = MOD
 spec.loader.exec_module(MOD)
+validator_spec = importlib.util.spec_from_file_location(
+    "acs_extension_validator_tested", HERE / "validate_acs_extension_outputs.py")
+assert validator_spec and validator_spec.loader
+VALIDATOR = importlib.util.module_from_spec(validator_spec)
+sys.modules["acs_extension_validator_tested"] = VALIDATOR
+validator_spec.loader.exec_module(VALIDATOR)
+
+
+def test_replicate_validator_allows_only_structural_benchmark_blanks():
+    frame = pd.DataFrame({
+        "result_type": ["benchmark", "annual_panel"],
+        "structure": [np.nan, "pooled"],
+        "replicate_estimator": [np.nan, "same_score"],
+        "perturbed_year": [2022, 2023], "replicate": [1, 1],
+        "estimate": [0.1, 0.2], "full_weight_estimate": [0.0, 0.0],
+        "delta": [0.1, 0.2], "replicate_iterations": [np.nan, 2],
+        "replicate_maximum_normalized_score": [np.nan, 1e-10],
+        "replicate_minimum_first_effect_information": [np.nan, 1.0],
+        "replicate_minimum_second_effect_information": [np.nan, 1.0],
+        "replicate_minimum_treatment_information_eigenvalue": [np.nan, 1.0],
+        "replicate_negative_young_cells": [np.nan, 0],
+        "replicate_negative_older_cells": [np.nan, 0],
+        "replicate_nonpositive_total_cells": [np.nan, 0],
+        "replicate_inactive_first_effects": [np.nan, 0],
+        "replicate_inactive_second_effects": [np.nan, 0],
+    })
+    assert VALIDATOR.replicate_schema_is_finite(frame)
+    frame.loc[1, "replicate_maximum_normalized_score"] = np.inf
+    assert not VALIDATOR.replicate_schema_is_finite(frame)
+    frame.loc[1, "replicate_maximum_normalized_score"] = 1e-10
+    frame.loc[0, "replicate_iterations"] = 0
+    assert not VALIDATOR.replicate_schema_is_finite(frame)
 
 
 def test_scc_downloader_uses_cluster_compatible_curl_contract():
