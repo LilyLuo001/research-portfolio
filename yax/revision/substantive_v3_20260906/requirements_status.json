@@ -5572,8 +5572,8 @@
       "depends_on": [
         "B01"
       ],
-      "status": "SPECIFIED",
-      "summary": "Verified BTOS and RPS definitions and granularity, including the BTOS November-2025 wording break. The official pooled detailed-occupation RPS workbook is captured unchanged and hash-authenticated. A fixed pre-result specification limits it to a no-inference external validation of the exposure measure because it provides one future pooled occupation classification, not detailed occupation-by-time adoption or cell sampling uncertainty. Residual exposure variation and the descriptive association are implemented but await an authoritative run.",
+      "status": "VERIFIED",
+      "summary": "Verified BTOS and RPS definitions and granularity, including the BTOS November-2025 wording break. The official pooled detailed-occupation RPS workbook is captured unchanged and hash-authenticated. It provides one future pooled occupation classification rather than detailed occupation-by-time adoption or cell sampling uncertainty. The pre-result specification, authoritative descriptive run, and independent recomputation now quantify both the exposure-adoption association and the residual exposure variation after major-family means without treating adoption as a causal treatment.",
       "evidence": [
         {
           "role": "source_evidence",
@@ -5598,7 +5598,7 @@
         {
           "role": "source_evidence",
           "path": "gate4/adoption/ADOPTION_SOURCE_EVIDENCE.md",
-          "sha256": "e2b4571e9268b4069e15d04cafbd8982a0e0a9350bd3293813473051e99b3201"
+          "sha256": "0902bae1dfc4a403815ce07fe1a932139cec19d2f05f8ca6980abfe7d6066636"
         }
       ],
       "response_locations": [
@@ -5634,10 +5634,45 @@
         "B07",
         "I06"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The fixed external-validation extension merged the frozen 468-occupation beta support to the official pooled RPS detailed-occupation workbook. It retained 121 nonsuppressed occupations spanning all five quintiles and 20 major families. The unweighted exposure-adoption correlation is 0.504 and the Q5-minus-Q1 mean-adoption difference is 0.267; the profile is nonmonotone and 26.2 percent of exposure sum of squares remains after family means. A separate validator recomputes all metrics and confirms that no unsupported inference was published. The pooled 2025--26 timing, suppression, and unavailable detailed-cell sampling uncertainty remain explicit; final compiled-document validation is outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/adoption/ADOPTION_EXTENSION_SPEC.md",
+          "sha256": "9b88dd4a4d760f6211692286c242bca6145e41c8f24b1a892630e3ee1f8e9634"
+        },
+        {
+          "role": "code",
+          "path": "gate4/adoption/run_adoption_extension.py",
+          "sha256": "94935b29a972f30e588a740a69775df5d5b0e2b513fbe51c511c6d8c09dc6422"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_adoption_authoritative_20260909/ADOPTION_RUN_RECEIPT.json",
+          "sha256": "c24e097242529df76236fd3312c02224ab2de2240fd1476a76ef4b4ad33b07b8"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_adoption_authoritative_20260909/ADOPTION_SUMMARY.csv",
+          "sha256": "0e7160f82b66343bd83c6adfe4bbdc95d78b985393cea289cf235fd68cd92d4d"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate4_adoption_authoritative_20260909/ADOPTION_VALIDATION.json",
+          "sha256": "4d206d55b4455b7de34d7b87e6cb12ff14eb548604f4d98032f7fbf4b3ec8a94"
+        },
+        {
+          "role": "presentation",
+          "path": "runs/gate4_adoption_authoritative_20260909/FINDINGS.md",
+          "sha256": "bf37718ac058783f1b94728019a6fba76c77acf826e64a012a85ec750ac85b74"
+        }
+      ],
+      "response_locations": [
+        "runs/gate4_adoption_authoritative_20260909/ADOPTION_SUMMARY.csv",
+        "runs/gate4_adoption_authoritative_20260909/ADOPTION_VALIDATION.json",
+        "runs/gate4_adoption_authoritative_20260909/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -6136,12 +6171,12 @@
         {
           "role": "delivery_artifact",
           "path": "responses/COMMENT_RESPONSE_MATRIX.csv",
-          "sha256": "c0ab988da0384042f47b7027cd7d475973b04aa28b073eb13e70102b830a3fc7"
+          "sha256": "487435c7820eb3693ed61606bc09da009ddacc2d8c414a0f4a1869249436564e"
         },
         {
           "role": "validation_report",
           "path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
-          "sha256": "e039e8fafd1324a33fe229bafb5a83c9e291fcdaa0bf86c6568fb6d1341c4b9e"
+          "sha256": "b002a9a7d0a38e7c0ecada2df6a897aafeed1873a0f3704212d69d5ab08389ad"
         },
         {
           "role": "code",

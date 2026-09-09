@@ -366,10 +366,10 @@ index 0000000..8b20797
 +A compatible accounting identity would require entries from nonemployment, exits, switches among all occupations, aging into and out of ages 22--25, corresponding movements for the older denominator, job-to-job moves, and population/sample-composition residuals.  The CPS endpoint links do not measure all of these components on a common employer-match risk set, and the BCC hiring and separation objects are not identical to CPS employment transitions.  A single implied stock response would therefore be assumption driven.  The revision reports the measurable margins and the precise comparability gap instead of manufacturing a calibration.
 diff --git a/paper/appendix/sections/r3_H_bcc_architecture.tex b/paper/appendix/sections/r3_H_bcc_architecture.tex
 new file mode 100644
-index 0000000..d53aa80
+index 0000000..ea479ed
 --- /dev/null
 +++ b/paper/appendix/sections/r3_H_bcc_architecture.tex
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,41 @@
 +\section{Payroll Bridge and Exposure-Construction Diagnostics}\label{app:bcc_architecture}
 +
 +\subsection{BCC version and grouping bridge}
@@ -397,6 +397,14 @@ index 0000000..d53aa80
 +\input{tables/r3_appendix_architecture_pairs.tex}
 +
 +\input{tables/r3_appendix_webb_support.tex}
++
++\subsection{Later self-reported use}
++
++An external descriptive check merges the frozen beta score to the author-maintained Real-Time Population Survey occupation workbook.  The workbook pools four waves from August 2025 through May 2026; it is not a preperiod measure or a detailed occupation-by-time panel.  The exact-code merge retains 121 nonsuppressed occupations from the frozen 468, with all five quintiles and 20 major families represented.  The unweighted exposure--adoption correlation is 0.504 and mean adoption differs by 0.267 between Q5 and Q1, although the quintile profile is not monotone because Q4's mean exceeds Q5's.  After major-family means are removed, 26.2 percent of the exposure sum of squares remains and the residualized slope is 0.302.
++
++The workbook supplies pooled point estimates and respondent counts but no detailed-cell standard errors or replicate weights.  Table~\ref{tab:rps_adoption} therefore reports no p-values or confidence intervals, and its respondent-count weighting is only a descriptive sensitivity.  These results show positive alignment between the capability score and later reported use; they do not establish adoption timing, explain the CPS coefficient, or identify an employment effect.
++
++\input{tables/r3_appendix_adoption.tex}
 +
 +\subsection{What validation would require}
 +
@@ -837,10 +845,10 @@ index f0b742d..2f7dc2f 100644
 +
 +\input{tables/r3_table6_lambda.tex}
 diff --git a/paper/main/sections/08_competing_interpretations.tex b/paper/main/sections/08_competing_interpretations.tex
-index 344106e..41b344d 100644
+index 344106e..97fbac7 100644
 --- a/paper/main/sections/08_competing_interpretations.tex
 +++ b/paper/main/sections/08_competing_interpretations.tex
-@@ -1,13 +1,7 @@
+@@ -1,13 +1,9 @@
 -\section{Conclusion}\label{sec:competing}
 +\section{Conclusion}\label{sec:conclusion}
 
@@ -851,7 +859,8 @@ index 344106e..41b344d 100644
 +Direct within-family tails cover only 29 occupations and are highly imprecise.  Preperiod computer use strengthens rather than attenuates the coefficient, showing that computerization is not settled by one control.  Unrestricted dynamics reject joint preperiod equality, and linked-CPS flow estimates do not identify a mechanism or replicate employer-match hiring and separation.
 
 -That conclusion should not be embellished into a mechanism the data reject. Low-exposure food-service occupations matter, but removing them attenuates the point estimate by less than one tenth. Broader in-person-service exclusions do not attenuate it. Joint influence exercises show large, oppositely signed occupation contributions rather than one occupation whose removal makes the result vanish. The evidence supports a broad-composition interpretation, not a demonstrated food-service-recovery explanation.
--
++Later self-reported use is descriptively aligned with the score.  An exact-code merge to a public RPS workbook retains 121 nonsuppressed occupations: the unweighted exposure--adoption correlation is 0.504 and mean adoption is 0.267 higher in Q5 than Q1.  The profile is not monotone, and only 26.2 percent of exposure variation remains after removing broad-family means.  Because the rates pool four 2025--26 waves and lack detailed-cell sampling uncertainty, this check validates neither adoption timing nor an employment mechanism.
+
 -Nor do alternative exposure estimates permit a horse-race winner. All seven paired beta-minus-alternative Q5--Q1 intervals include zero, with minimum detectable differences as large as 0.169 log points. A confidence interval containing zero means that the design does not detect a difference; it does not establish economic equivalence. The original six implementations are also highly dependent, with two components accounting for 96.11 percent of their score variance. Claims of six independent validations or universal architecture robustness are therefore retired.
 -
 -The measurement work remains useful precisely because it distinguishes objects that should not be pooled. Exact-code matching across incompatible occupational vintages is an implementation error. Repairing scores on fixed support is a measurement comparison. Readmitting occupations changes the population. Switching from Q5--Q1 to top-two-versus-bottom-three changes the estimand. Moving from LLM task acceleration to patent overlap changes the construct. Rotating $F/G$ into $A/E$ changes only coordinates. The revised tables report these layers rather than treating every row as interchangeable robustness evidence.
@@ -881,7 +890,7 @@ index 29c293d..3427812 100644
  \vfill
  \end{titlepage}
 diff --git a/paper/revision/referee_response.tex b/paper/revision/referee_response.tex
-index 2ff8296..2b15cd9 100644
+index 2ff8296..6d7a518 100644
 --- a/paper/revision/referee_response.tex
 +++ b/paper/revision/referee_response.tex
 @@ -3,138 +3,161 @@
@@ -990,7 +999,7 @@ index 2ff8296..2b15cd9 100644
 +\subsection*{M9. January 2023 and adoption timing}
 
 -\emph{Response.} We supplement the binary coefficient with the existing event-time profile, balanced pre-AI pseudo-breaks, and joint post-era coefficients. We do not introduce a new adoption series in this revision. A national adoption series interacted with fixed exposure would largely reparameterize exposure-by-time dynamics already shown. BTOS would require an occupation--industry ecological bridge and still would not identify exogenous adoption.
-+\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  The post-outcome exploratory December-2024 endpoint gives $-0.1110$ pooled and $-0.0120$ after family-by-month conditioning; neither endpoint-minus-full-window paired interval excludes zero.  The official HonestDiD exercise uses the full quarterly vector and covariance.  Its conventional dynamic-functional intervals are $[-0.264,0.024]$ pooled and $[-0.425,0.010]$ after family conditioning.  A consecutive 2021Q1--2022Q3 calibration excludes zero for the family-conditioned smoothness interval only under exact linear differential-trend bias ($M=0$); the interval includes zero at $M=0.005$.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present either as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
++\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  The post-outcome exploratory December-2024 endpoint gives $-0.1110$ pooled and $-0.0120$ after family-by-month conditioning; neither endpoint-minus-full-window paired interval excludes zero.  The official HonestDiD exercise uses the full quarterly vector and covariance.  Its conventional dynamic-functional intervals are $[-0.264,0.024]$ pooled and $[-0.425,0.010]$ after family conditioning.  A consecutive 2021Q1--2022Q3 calibration excludes zero for the family-conditioned smoothness interval only under exact linear differential-trend bias ($M=0$); the interval includes zero at $M=0.005$.  We also add a focused external validation using the public RPS detailed-occupation workbook: 121 nonsuppressed occupations give an unweighted exposure--adoption correlation of 0.504 and Q5-minus-Q1 mean-adoption difference of 0.267, but the pooled 2025--26 rates have no detailed-cell sampling uncertainty or adoption timing.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present any adoption measure as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
 
 -This is a principled scope decision, not a claim that adoption is irrelevant. The binary term is now called a chronology benchmark, not a causal shock. A separate adoption design remains future work. See Section 7 and Appendix F.
 +\subsection*{M10. F/G parameterization}
@@ -1109,10 +1118,10 @@ index 2ff8296..2b15cd9 100644
 
  \end{document}
 diff --git a/paper/revision/revision_diagnosis.tex b/paper/revision/revision_diagnosis.tex
-index 3b2771b..e668597 100644
+index 3b2771b..482622c 100644
 --- a/paper/revision/revision_diagnosis.tex
 +++ b/paper/revision/revision_diagnosis.tex
-@@ -3,50 +3,66 @@
+@@ -3,50 +3,67 @@
  \usepackage{styles/working-paper}
  \usepackage{styles/yax-common}
  \geometry{margin=1in}
@@ -1162,6 +1171,7 @@ index 3b2771b..e668597 100644
 +\item \textbf{Later observations matter.}  Extending from 2025 endpoints through July 2026 makes the pooled coefficient roughly 0.02 log point more negative on paired draws.  Family-conditioned endpoint movements remain near zero.  This is an informative data-extension result, not proof that AI adoption intensified.
 +\item \textbf{Flows do not resolve the mechanism.}  Corrected adjacent and twelve-month CPS links give intervals containing zero for employment exit, reported occupation change, and exposure allocation conditional on entry.  Annual links have substantially lower young-worker retention.  Hours and conditional earnings are also imprecise.  None is an employer hiring rate.
 +\item \textbf{External comparability is bounded.}  An equal-occupation approximation to BCC's top-two-versus-bottom-three grouping gives $-0.0720$ in CPS and $-0.0168$ after family-month conditioning; their paired movement is not detected at five percent.  Exact dashboard membership, employer controls, and proprietary payroll flows cannot be reproduced.
++\item \textbf{Later reported use is aligned but not identifying.}  A public RPS detailed-occupation workbook retains 121 nonsuppressed occupations.  The unweighted correlation of beta exposure with pooled 2025--26 adoption is 0.504 and the Q5-minus-Q1 adoption difference is 0.267, but Q4 exceeds Q5 and only 26.2 percent of exposure variation remains after major-family means.  The workbook provides neither detailed-cell sampling uncertainty nor adoption timing, so this is descriptive construct validation rather than a mechanism test.
 +\item \textbf{Mapping matters for population, not just score values.}  A literal SOC-vintage mismatch retains 3.33 percent of computer-and-mathematical employment; documented routing restores 97.7 percent.  Fixed-support score repair changes little, while readmission changes the population.  The invalid merge is an implementation failure, not a robustness specification attributed to another paper.
 +\item \textbf{Inference remains conditional.}  Occupation wild scores, 22-family dependence weights, household/sample-unit full refits, elapsed-calendar HAC, and the completed 11-design finite-sample audit answer different stochastic questions.  In the empirical observed-effect design, neither occupation nor family clustering attains nominal coverage for every target; the clean zero-target family-month rejection rates are 6.1 percent, 8.9 percent, and 5.6 percent for occupation weights, family weights, and the cross-fit oracle.  Public Basic Monthly files do not permit complete CPS design-based inference, and these variances cannot be added without a valid decomposition.
  \end{enumerate}
@@ -1190,7 +1200,7 @@ index 3b2771b..e668597 100644
 
 -\section*{Remaining work before submission}
 +\begin{itemize}[leftmargin=1.8em]
-+\item observed firm adoption, employer identities, and employer-match hiring/separation are unavailable in the CPS;
++\item observed firm adoption, employer identities, employer-match hiring/separation, and detailed occupation-by-time adoption are unavailable; the RPS extension supplies only a later pooled occupation classification;
 +\item public files do not supply all confidential survey-design variables or counterfactual age-by-occupation weights for population-control revisions;
 +\item exact BCC dashboard occupation memberships and tie rules are unavailable;
 +\item adjacent occupational coding vintages do not validate age-specific route shares;

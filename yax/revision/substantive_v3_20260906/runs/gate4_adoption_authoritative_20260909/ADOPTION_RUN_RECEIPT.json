@@ -1,0 +1,34 @@
+{
+  "schema": "yax.rps_adoption_extension.v1",
+  "status": "PASS_FOCUSED_DESCRIPTIVE_ADOPTION_EXTENSION",
+  "created_utc": "2026-09-09T02:33:39.812719+00:00",
+  "git_commit": "31e2bcf0f0f49de6095ffc374b442c06df79ed13",
+  "input_sha256": {
+    "rps_adoption_rates_by_occupation_20260806.xlsx": "2212465781179782c6f69750af21b00bd545edc21581d9577fbf7affc1bf0c43",
+    "REBUILT_TREATMENT_MEMBERSHIP.csv": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "BROADER_SUPPORT_MEMBERSHIP.csv": "2fe1967db31dea51e007861867e01bd6fa872828a9d589bc0490212e534220fc"
+  },
+  "output_sha256": {
+    "summary": "0e7160f82b66343bd83c6adfe4bbdc95d78b985393cea289cf235fd68cd92d4d",
+    "quintiles": "716b5afc8d142f2618af2def86a41403acbad05f9a1360c4a26e15663cc5f714",
+    "coverage": "88b9fdf8fa04ca8131ad4f009ea3102b3f9a3abd3050bf95bdf3fd1c04622281",
+    "unmatched_rps": "b6f5865588147d0d4237857069f34639e13e0798dcfbd91628c5e1dba7100848"
+  },
+  "rps_rows": 505,
+  "frozen_yax_occupations": 468,
+  "matched_nonsuppressed_occupations": 121,
+  "matched_quintiles": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "matched_families": 20,
+  "families_with_at_least_two_occupations": 20,
+  "suppressed_or_missing_rate": 318,
+  "rps_code_absent": 29,
+  "inference": "none_detailed_cell_sampling_uncertainty_unavailable",
+  "timing": "pooled_future_post_outcome_occupation_classification",
+  "causal_interpretation_permitted": false
+}
