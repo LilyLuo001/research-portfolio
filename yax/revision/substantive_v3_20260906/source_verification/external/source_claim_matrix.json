@@ -475,7 +475,7 @@
       "publisher": "Real-Time Population Survey research team",
       "source_type": "public_google_sheets_workbook",
       "url": "https://docs.google.com/spreadsheets/d/1_JfNtZVoBi5W_jHEJ1UOs2rhHYRtLXGM/edit?ouid=107605825426010680643&rtpof=true&sd=true&usp=sharing",
-      "accessed_date": "2026-09-06",
+      "accessed_date": "2026-09-09",
       "published_or_updated": "generated 2026-08-06",
       "verification_status": "VERIFIED_PUBLIC_ARTIFACT",
       "exact_supported_claims": [
@@ -489,7 +489,7 @@
       ],
       "limitations": [
         "The workbook exposes point estimates and pooled counts but no standard errors or confidence intervals in the inspected interface.",
-        "The binary workbook export was not successfully downloaded in this environment, so only the accessible sheet contents were verified."
+        "The binary workbook is captured unchanged with SHA-256 2212465781179782c6f69750af21b00bd545edc21581d9577fbf7affc1bf0c43; the missing object is a detailed-cell variance or replication procedure."
       ]
     },
     {
@@ -732,10 +732,10 @@
     },
     {
       "requirement_ids": ["B07"],
-      "status": "PARTIALLY_VERIFIED",
-      "issue": "The RPS occupation and task sheets were readable, but a binary export was not captured locally and the displayed sheets supply no standard errors or confidence intervals.",
+      "status": "PARTIALLY_VERIFIED_UNCERTAINTY_UNAVAILABLE",
+      "issue": "The official RPS occupation workbook is captured and hash-authenticated, but it supplies no detailed-cell standard errors, replicate weights, or confidence intervals.",
       "consequence": "The pooled adoption shares support descriptive ranking or mechanism checks but not unqualified inference or a claimed occupation-by-quarter treatment panel.",
-      "next_authorized_step": "Acquire and hash the official workbook or replication files and verify the microdata/variance procedure before uncertainty claims."
+      "next_authorized_step": "Use the captured occupation workbook only for the fixed no-inference descriptive validation; obtain public replication files and verify a variance procedure before any detailed-cell uncertainty claim."
     },
     {
       "requirement_ids": ["F07"],

@@ -306,7 +306,7 @@ index 0000000..e50d0bc
 +The earlier 26.7-percent and 11.3-percent rejection figures are withdrawn rather than reinterpreted.  In the clean family-variance-zero design, the family-month pseudo-target is zero to numerical precision; its five-percent rejection rates are 6.1 percent under occupation Rademacher weights, 8.9 percent under family Rademacher weights, and 5.6 percent for the cross-fit full-refit oracle.  In the empirically calibrated structural-null design, removing the structural exposure coefficient still leaves a pooled pseudo-target of $-0.11035$ and a paired pseudo-target of 0.11035 because the data-generating process retains the observed fitted family-by-month surface.  The near-nominal oracle then rejects zero for the pooled projection 96.5 percent of the time.  This is a restatement of the broad-family decomposition built into the calibration, not independent evidence that composition caused the empirical gap.  The simulations therefore limit both the inferential and structural interpretation: none of the feasible cluster procedures is adequate for every target and significance of the pooled projection does not by itself test a structural exposure effect.
 diff --git a/paper/appendix/sections/r3_F_dynamics.tex b/paper/appendix/sections/r3_F_dynamics.tex
 new file mode 100644
-index 0000000..5bd2413
+index 0000000..4c60b0d
 --- /dev/null
 +++ b/paper/appendix/sections/r3_F_dynamics.tex
 @@ -0,0 +1,29 @@
@@ -318,11 +318,11 @@ index 0000000..5bd2413
 +
 +The joint null that all 23 Q5 preperiod coefficients equal zero is rejected in both the pooled model ($p=.0149$) and the family-conditioned model ($p=.0053$).  As a precision diagnostic, an OLS linear functional through those coefficients is $-0.0078$ log point per year in the pooled model and $0.0041$ after family conditioning.  Its occupation-cluster standard errors are 0.0119 and 0.0292, implying normal-theory $\mathrm{MDE}_{80}$ values of 0.0332 and 0.0819 log point per year.  Thus an insignificant linear slope cannot rule out economically relevant smooth drift and is not a substitute for the rejected unrestricted joint test.  Simultaneous bands exclude zero only in late pooled quarters and never in the family-conditioned path.  These results do not establish which preperiod force produces the differences; they make a parallel-evolution interpretation of the January 2023 split untenable.
 +
-+The postperiod dynamic functional averages the 15 post-quarter coefficients with predeclared calendar weights.  Its pooled value is $-0.1199$, with interval $[-0.2618,0.0221]$.  Its family-conditioned value is $-0.2074$, with interval $[-0.4216,0.0067]$.  This linear functional is not the nonlinear static grouped-binomial coefficient.  The mapping file reports their paired relationship rather than silently treating them as identical.
++The postperiod dynamic functional averages the 15 post-quarter coefficients with predeclared calendar weights.  Its pooled value is $-0.1199$, with interval $[-0.2636,0.0239]$.  Its family-conditioned value is $-0.2074$, with interval $[-0.4252,0.0103]$.  This linear functional is not the nonlinear static grouped-binomial coefficient.  The mapping file reports their paired relationship rather than silently treating them as identical.
 +
 +\subsection{Official HonestDiD implementation}
 +
-+The trend-sensitivity program passes the joint event-time vector and covariance matrix to the official \texttt{HonestDiD} implementation.  The environment receipt fixes HonestDiD 0.2.8 and its source commit, and records the compatible official CVXR and solver versions.  The program does not feed a single static coefficient and standard error into an event-study procedure.  The conventional event-functional interval already includes zero for both the pooled and family-conditioned vectors.  The correct zero-exclusion breakdown is therefore zero: there is no positive robustness threshold to lose.  Earlier installation and API failures remain in the execution log; the successful official run is not replaced with a home-built approximation.
++The trend-sensitivity program passes the joint event-time vector and covariance matrix to the official \texttt{HonestDiD} implementation.  The environment receipt fixes HonestDiD 0.2.8 and its source commit, and records the compatible official CVXR and solver versions.  The program does not feed a single static coefficient and standard error into an event-study procedure.  It reports both the complete 2017Q1--2022Q3 calibration and the prespecified consecutive 2021Q1--2022Q3 post-reopening calibration.  The latter does not delete an internal pandemic quarter or compress a calendar gap.  For the family-conditioned vector its $M=0$ smoothness interval excludes zero, but the interval includes zero at $M=0.005$; the pooled intervals include zero even at $M=0$.  The conventional event-functional interval already includes zero in both structures.  The correct positive zero-exclusion breakdown is therefore undefined: there is no positive robustness threshold to lose.  Earlier installation and API failures remain in the execution log; the successful official run is not replaced with a home-built approximation.
 +
 +\input{tables/r3_appendix_honestdid.tex}
 +
@@ -782,7 +782,7 @@ index 427faae..649a9b7 100644
 -The prior draft emphasized ``consensus'' and ``disagreement'' coordinates $F=(A+E)/2$ and $G=(A-E)/2$. Those coordinates are retained in the online appendix only as a complete record. A representative two-score model is more transparent: administrative AIOE enters at $+0.0449$ and beta at $-0.0788$ when included jointly. In direct task units, $D$ and $S$ enter at $-0.0323$ and $-0.0303$. These are conditional associations among correlated constructed regressors, not causal technology channels. Transforming $F/G$ back to $A/E$ reproduces the same fitted predictor exactly and supplies no additional evidence.
 +With 22 family clusters, the paired movement remains detected under Rademacher and Webb weights; the Webb interval is $[0.0059,0.2150]$.  The completed finite-sample audit finds small coefficient bias but target-specific interval performance.  In the empirical observed-effect design, occupation-wild coverage is 0.865 for the pooled coefficient, 0.921 for the family-conditioned coefficient, and 0.889 for their paired movement; family clustering is conservative for the pooled and paired targets but covers the family-conditioned target only 0.895 of the time.  In the clean zero-target design, rejection rates for the family-conditioned coefficient are 6.1 percent under occupation weights, 8.9 percent under family weights, and 5.6 percent for the cross-fit oracle.  No one procedure is therefore validated for all targets and declared designs.  In the rebuilt-treatment audit, elapsed-calendar HAC leaves scalar uncertainty similar and none of the 15 five-parameter covariance matrices across three targets and five lags is indefinite.  Earlier indefinite matrices belong to the superseded historical-treatment audit and remain labeled in the archive.
 diff --git a/paper/main/sections/07_reallocation.tex b/paper/main/sections/07_reallocation.tex
-index f0b742d..e5cee9e 100644
+index f0b742d..2f7dc2f 100644
 --- a/paper/main/sections/07_reallocation.tex
 +++ b/paper/main/sections/07_reallocation.tex
 @@ -1,23 +1,38 @@
@@ -807,7 +807,7 @@ index f0b742d..e5cee9e 100644
 +\end{figure}
 
 -\subsection{Population controls and response composition}
-+The calendar-weighted post functional is distinct from the nonlinear static coefficient.  It is $-0.120$ ($[-0.262,0.022]$) when pooled and $-0.207$ ($[-0.422,0.007]$) after family conditioning.  Official \texttt{HonestDiD} 0.2.8 applies smoothness and relative-magnitude restrictions to the full event vector and covariance.  Both conventional intervals already include zero, so no positive zero-exclusion threshold exists.  The exercise cannot repair rejected preperiod equality or identify adoption.
++The calendar-weighted post functional is distinct from the nonlinear static coefficient.  It is $-0.120$ ($[-0.264,0.024]$) when pooled and $-0.207$ ($[-0.425,0.010]$) after family conditioning.  Official \texttt{HonestDiD} 0.2.8 applies smoothness and relative-magnitude restrictions to the full event vector and covariance.  Both the full 2017Q1--2022Q3 calibration and a consecutive 2021Q1--2022Q3 post-reopening calibration are reported.  Under the latter, the family-conditioned smoothness interval is $[-0.772,-0.007]$ when differential-trend bias is restricted to be exactly linear ($M=0$), but expands to $[-1.100,0.207]$ at the first positive grid value, $M=0.005$.  Both conventional intervals already include zero, so no positive zero-exclusion threshold exists.  The exercise cannot repair rejected preperiod equality or identify adoption.
 
 -January 2025 introduced unusually large CPS population-control revisions. A literal age-by-occupation counterfactual series ``without'' those controls cannot be constructed: BLS provides aggregate experimental adjustments, not subgroup weights, and official earlier microdata are not revised. I therefore report what the available data identify rather than rescale cells ad hoc.
 +Onset estimates from November 2022 through June 2023 are similar within each structure, but common timing does not distinguish AI from coincident shocks.  Ending in December 2024 gives a pooled coefficient of $-0.111$ ($[-0.201,-0.021]$); its paired movement relative to the July-2026 estimate is $0.021$ ($[-0.007,0.049]$), so the design does not detect a change from extending the endpoint beyond 2024.  Ending in late 2025 also gives a pooled coefficient near $-0.111$, versus $-0.132$ through July 2026, but those paired endpoint movements are detected.  Splitting the postperiod instead gives $-0.111$ in 2023--24 and $-0.166$ in 2025--26; their paired difference is $-0.056$ ($[-0.123,0.012]$), so the official-weight design does not detect a change between eras.  Family-conditioned endpoint changes remain near zero.  Survey-gap exclusions are small.  Declared post-2020 and saturated seasonal models that did not converge remain recorded failures.
@@ -881,7 +881,7 @@ index 29c293d..3427812 100644
  \vfill
  \end{titlepage}
 diff --git a/paper/revision/referee_response.tex b/paper/revision/referee_response.tex
-index 2ff8296..0ea9ea5 100644
+index 2ff8296..2b15cd9 100644
 --- a/paper/revision/referee_response.tex
 +++ b/paper/revision/referee_response.tex
 @@ -3,138 +3,161 @@
@@ -990,7 +990,7 @@ index 2ff8296..0ea9ea5 100644
 +\subsection*{M9. January 2023 and adoption timing}
 
 -\emph{Response.} We supplement the binary coefficient with the existing event-time profile, balanced pre-AI pseudo-breaks, and joint post-era coefficients. We do not introduce a new adoption series in this revision. A national adoption series interacted with fixed exposure would largely reparameterize exposure-by-time dynamics already shown. BTOS would require an occupation--industry ecological bridge and still would not identify exogenous adoption.
-+\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  The post-outcome exploratory December-2024 endpoint gives $-0.1110$ pooled and $-0.0120$ after family-by-month conditioning; neither endpoint-minus-full-window paired interval excludes zero.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present either as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
++\emph{Response.} January 2023 is now a chronology split, not an instrument.  We report all declared onsets from November 2022 through June 2023, fully interacted quarterly paths for Q2--Q5, joint preperiod tests, seasonality checks, and endpoint comparisons.  The post-outcome exploratory December-2024 endpoint gives $-0.1110$ pooled and $-0.0120$ after family-by-month conditioning; neither endpoint-minus-full-window paired interval excludes zero.  The official HonestDiD exercise uses the full quarterly vector and covariance.  Its conventional dynamic-functional intervals are $[-0.264,0.024]$ pooled and $[-0.425,0.010]$ after family conditioning.  A consecutive 2021Q1--2022Q3 calibration excludes zero for the family-conditioned smoothness interval only under exact linear differential-trend bias ($M=0$); the interval includes zero at $M=0.005$.  A national adoption rate interacted with a fixed occupation score would largely reparameterize time; an ecological industry bridge would change the treatment without creating exogenous adoption.  We therefore do not present either as causal identification.  The unrestricted preperiod rejection is the binding interpretive fact.
 
 -This is a principled scope decision, not a claim that adoption is irrelevant. The binary term is now called a chronology benchmark, not a causal shock. A separate adoption design remains future work. See Section 7 and Appendix F.
 +\subsection*{M10. F/G parameterization}
@@ -1109,7 +1109,7 @@ index 2ff8296..0ea9ea5 100644
 
  \end{document}
 diff --git a/paper/revision/revision_diagnosis.tex b/paper/revision/revision_diagnosis.tex
-index 3b2771b..0fd9e6f 100644
+index 3b2771b..e668597 100644
 --- a/paper/revision/revision_diagnosis.tex
 +++ b/paper/revision/revision_diagnosis.tex
 @@ -3,50 +3,66 @@
@@ -1158,7 +1158,7 @@ index 3b2771b..0fd9e6f 100644
 +\item \textbf{Broad-family sensitivity.}  The pooled-to-SOC2-month movement is 0.1104 and statistically distinguishable from zero on common draws.  The family-conditioned coefficient itself remains imprecise.  A direct-tail and continuous within-family analysis expose the support and functional-form cost.
 +\item \textbf{Computerization and pandemic shortfalls are not one-control explanations.}  A May 2020 O*NET computer-use measure is highly correlated with beta exposure.  On common support it acts as a suppressor, making the coefficient more negative.  The repaired shortfall exercise bounds impossible trend predictions, uses a strict 363-occupation population, and regenerates the controls in linked-household draws; its pooled conditioning movements are 0.0004 for total stock and 0.0011 for the young-relative measure, with sampling intervals containing zero.  Remotability and other characteristics likewise do not yield detected movements.  These are correlated diagnostics, not causal horse races, and the shortfall result does not establish that pandemic dynamics are absent.
 +\item \textbf{Industry and education.}  Conditioning occupation--industry microcells on 13 broad-industry post shifts moves $-0.1376$ to $-0.0987$; the paired 0.0389 interval excludes zero while the residual remains negative.  BA and non-BA coefficients differ by only $-0.0154$, but their paired interval $[-0.1557,0.1250]$ is too wide for equivalence.  Exact-age evidence is nonmonotone and does not isolate experience or cohort mechanisms.
-+\item \textbf{Preperiod dynamics.}  The fully interacted quarterly Q5 path rejects joint equality over 23 preperiod coefficients in both pooled and family-conditioned models.  A linear-slope nondetection cannot override that result.  January 2023 consequently remains descriptive chronology, not causal timing.
++\item \textbf{Preperiod dynamics.}  The fully interacted quarterly Q5 path rejects joint equality over 23 preperiod coefficients in both pooled and family-conditioned models.  A linear-slope nondetection cannot override that result.  Official HonestDiD intervals for the dynamic post functional conventionally include zero in both structures.  Under the consecutive 2021Q1--2022Q3 calibration, the family-conditioned smoothness interval excludes zero only at the exact-linear restriction $M=0$ and includes zero at $M=0.005$.  January 2023 consequently remains descriptive chronology, not causal timing.
 +\item \textbf{Later observations matter.}  Extending from 2025 endpoints through July 2026 makes the pooled coefficient roughly 0.02 log point more negative on paired draws.  Family-conditioned endpoint movements remain near zero.  This is an informative data-extension result, not proof that AI adoption intensified.
 +\item \textbf{Flows do not resolve the mechanism.}  Corrected adjacent and twelve-month CPS links give intervals containing zero for employment exit, reported occupation change, and exposure allocation conditional on entry.  Annual links have substantially lower young-worker retention.  Hours and conditional earnings are also imprecise.  None is an employer hiring rate.
 +\item \textbf{External comparability is bounded.}  An equal-occupation approximation to BCC's top-two-versus-bottom-three grouping gives $-0.0720$ in CPS and $-0.0168$ after family-month conditioning; their paired movement is not detected at five percent.  Exact dashboard membership, employer controls, and proprietary payroll flows cannot be reproduced.
@@ -1508,30 +1508,42 @@ index 0000000..7691df8
 +\end{table}
 diff --git a/paper/tables/r3_appendix_honestdid.tex b/paper/tables/r3_appendix_honestdid.tex
 new file mode 100644
-index 0000000..44681bc
+index 0000000..bc06ef8
 --- /dev/null
 +++ b/paper/tables/r3_appendix_honestdid.tex
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,33 @@
 +\begin{table}[!htbp]
 +\centering
 +\caption{Official HonestDiD sensitivity intervals}\label{tab:app_honestdid}
-+\begin{tabular}{llrr}
++\small
++\begin{tabular}{lllrr}
 +\toprule
-+Structure & Restriction & Lower & Upper \\
++Structure & Calibration & Restriction & Lower & Upper \\
 +\midrule
-+Pooled & Conventional event-functional interval & $-0.264$ & $0.024$ \\
-+Pooled & Smoothness, $M=0$ & $-0.140$ & $0.016$ \\
-+Pooled & Smoothness, $M=0.005$ per quarter & $-0.482$ & $0.516$ \\
-+Pooled & Relative magnitude, $\bar M=0$ & $-0.260$ & $0.019$ \\
-+Pooled & Relative magnitude, $\bar M=0.5$ & $-1.023$ & $0.789$ \\
-+SOC2 monthly paths & Conventional event-functional interval & $-0.425$ & $0.010$ \\
-+SOC2 monthly paths & Smoothness, $M=0$ & $-0.351$ & $0.007$ \\
-+SOC2 monthly paths & Smoothness, $M=0.005$ per quarter & $-0.869$ & $0.352$ \\
-+SOC2 monthly paths & Relative magnitude, $\bar M=0$ & $-0.420$ & $0.007$ \\
-+SOC2 monthly paths & Relative magnitude, $\bar M=0.5$ & $-2.222$ & $1.884$ \\
++Pooled & 2017Q1--2022Q3 & Conventional & $-0.264$ & $0.024$ \\
++       &                 & Smoothness, $M=0$ & $-0.140$ & $0.016$ \\
++       &                 & Smoothness, $M=0.005$ & $-0.482$ & $0.516$ \\
++       &                 & Relative magnitude, $\bar M=0$ & $-0.260$ & $0.019$ \\
++       &                 & Relative magnitude, $\bar M=0.5$ & $-1.023$ & $0.789$ \\
++Pooled & 2021Q1--2022Q3 & Conventional & $-0.264$ & $0.024$ \\
++       &                 & Smoothness, $M=0$ & $-0.230$ & $0.204$ \\
++       &                 & Smoothness, $M=0.005$ & $-0.540$ & $0.495$ \\
++       &                 & Relative magnitude, $\bar M=0$ & $-0.260$ & $0.019$ \\
++       &                 & Relative magnitude, $\bar M=0.5$ & $-0.985$ & $0.742$ \\
++\addlinespace
++SOC2 monthly paths & 2017Q1--2022Q3 & Conventional & $-0.425$ & $0.010$ \\
++       &                 & Smoothness, $M=0$ & $-0.351$ & $0.007$ \\
++       &                 & Smoothness, $M=0.005$ & $-0.869$ & $0.352$ \\
++       &                 & Relative magnitude, $\bar M=0$ & $-0.420$ & $0.007$ \\
++       &                 & Relative magnitude, $\bar M=0.5$ & $-2.222$ & $1.884$ \\
++SOC2 monthly paths & 2021Q1--2022Q3 & Conventional & $-0.425$ & $0.010$ \\
++       &                 & Smoothness, $M=0$ & $-0.772$ & $-0.007$ \\
++       &                 & Smoothness, $M=0.005$ & $-1.100$ & $0.207$ \\
++       &                 & Relative magnitude, $\bar M=0$ & $-0.420$ & $0.007$ \\
++       &                 & Relative magnitude, $\bar M=0.5$ & $-2.222$ & $1.884$ \\
 +\bottomrule
 +\end{tabular}
-+\tabnote{Intervals use the reconstructed quarterly Q5--Q1 vector, its full occupation-cluster covariance, and the observed-calendar post-quarter functional.  Smoothness $M$ is in log points per quarter; $\bar M$ bounds post violations relative to the largest preperiod violation.  The conventional interval already includes zero in both structures, so positive zero-exclusion robustness is undefined (reported as zero), not an omitted threshold.}
++\tabnote{The target is the observed-month-weighted average of the 15 post-quarter Q5--Q1 coefficients relative to 2022Q4.  Intervals use the full occupation-cluster covariance and official HonestDiD 0.2.8.  Smoothness $M$ is in log points per quarter squared; $\bar M$ bounds post changes relative to the largest signed preperiod change.  Both the full 2017Q1--2022Q3 calibration and the consecutive post-reopening 2021Q1--2022Q3 calibration are fixed and reported.  The recent-window family-path interval excludes zero only at the exact-linear-bias restriction $M=0$ and includes zero at $M=0.005$.  Because each conventional interval includes zero, positive zero-exclusion robustness is undefined, not an omitted threshold.}
 +\end{table}
 diff --git a/paper/tables/r3_appendix_lofo.tex b/paper/tables/r3_appendix_lofo.tex
 new file mode 100644

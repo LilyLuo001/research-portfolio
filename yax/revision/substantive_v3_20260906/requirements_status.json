@@ -435,12 +435,12 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
         }
       ],
       "response_locations": [
@@ -780,7 +780,7 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         }
       ],
       "response_locations": [
@@ -2822,10 +2822,50 @@
         "Y03",
         "I06"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The current-contract program passes the certified quarterly Q5-minus-Q1 vector, full occupation-cluster covariance, and nonnegative observed-month post functional to official HonestDiD 0.2.8 at the pinned source commit. Official matrix parity is exact for both DeltaSD and DeltaRM restrictions, all 52 result rows are finite, and an independent validator recomputes the dynamic functional, covariance, calendars, weights, and restriction matrices. The conventional dynamic-functional intervals contain zero in both structures, so no positive zero-exclusion breakdown exists. Final compiled-document validation remains outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/honestdid/HONESTDID_CURRENT_SPEC.md",
+          "sha256": "31a69b208b40802a81c59bcf1282de43adf5b0eecb97c692c248d7764902f285"
+        },
+        {
+          "role": "code",
+          "path": "gate4/honestdid/prepare_honestdid_inputs.py",
+          "sha256": "b590315b6b89985c1791d80fdc599a3a6cc091ef376d95f000ff37654e6e24a5"
+        },
+        {
+          "role": "code",
+          "path": "gate4/honestdid/run_honestdid_current.R",
+          "sha256": "122272c982b4f5cf44b56544799721a9f175e741d5bd658657c091cae11ef3d6"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_honestdid_authoritative_20260909/OFFICIAL_EXECUTION_RECEIPT.json",
+          "sha256": "25ca8cde6ae8ba687e65d9c052d0af2c35f76f67a86a6d862c0a6b1f5f9e9df6"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_honestdid_authoritative_20260909/HONESTDID_SUMMARY.csv",
+          "sha256": "3bdcc90c02c65fb7e057c32f123c0afd14aa07a862b796ff6b2331d41a07cf5b"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate4_honestdid_authoritative_20260909/VALIDATION_REPORT.json",
+          "sha256": "1586f9d274a6b9678f0697885e3f1566b463baa6ad7e24173247b7fc16cb699b"
+        },
+        {
+          "role": "presentation",
+          "path": "runs/gate4_honestdid_authoritative_20260909/FINDINGS.md",
+          "sha256": "c682052679d224127f1b1fed889160843800baf7409863e6884465e1118a3bb8"
+        }
+      ],
+      "response_locations": [
+        "runs/gate4_honestdid_authoritative_20260909/HONESTDID_SUMMARY.csv",
+        "runs/gate4_honestdid_authoritative_20260909/VALIDATION_REPORT.json",
+        "runs/gate4_honestdid_authoritative_20260909/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -2858,10 +2898,39 @@
       "depends_on": [
         "Y06"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
+      "status": "RUN_UNVALIDATED",
+      "summary": "The full 2017Q1--2022Q3 calibration and the fixed consecutive 2021Q1--2022Q3 post-reopening calibration are both retained on the same quarterly target and covariance. No internal pandemic quarter is deleted and no calendar gap is compressed. The recent-window family-conditioned smoothness interval excludes zero only under the exact-linear-bias restriction M=0 and includes zero at M=0.005; pooled recent-window intervals contain zero at M=0. Final compiled-document validation remains outstanding.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/honestdid/HONESTDID_CURRENT_SPEC.md",
+          "sha256": "31a69b208b40802a81c59bcf1282de43adf5b0eecb97c692c248d7764902f285"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_honestdid_authoritative_20260909/OFFICIAL_EXECUTION_RECEIPT.json",
+          "sha256": "25ca8cde6ae8ba687e65d9c052d0af2c35f76f67a86a6d862c0a6b1f5f9e9df6"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_honestdid_authoritative_20260909/HONESTDID_SUMMARY.csv",
+          "sha256": "3bdcc90c02c65fb7e057c32f123c0afd14aa07a862b796ff6b2331d41a07cf5b"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate4_honestdid_authoritative_20260909/VALIDATION_REPORT.json",
+          "sha256": "1586f9d274a6b9678f0697885e3f1566b463baa6ad7e24173247b7fc16cb699b"
+        },
+        {
+          "role": "presentation",
+          "path": "runs/gate4_honestdid_authoritative_20260909/FINDINGS.md",
+          "sha256": "c682052679d224127f1b1fed889160843800baf7409863e6884465e1118a3bb8"
+        }
+      ],
+      "response_locations": [
+        "runs/gate4_honestdid_authoritative_20260909/HONESTDID_SUMMARY.csv",
+        "runs/gate4_honestdid_authoritative_20260909/FINDINGS.md"
+      ],
       "review": null,
       "blocker": null,
       "approval": null,
@@ -5036,12 +5105,12 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
         }
       ],
       "response_locations": [
@@ -5125,12 +5194,12 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
         }
       ],
       "response_locations": [
@@ -5175,12 +5244,12 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
         },
         {
           "role": "source_evidence",
@@ -5394,12 +5463,12 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
         }
       ],
       "response_locations": [
@@ -5454,7 +5523,7 @@
         {
           "role": "code",
           "path": "gate4/acs_extension/run_acs_extension.py",
-      "sha256": "635629a0c24529140f32e7e940bd2f8b9143f44b9a5fa93a51f4c59592160995"
+      "sha256": "eeafc16ed23c76450cf24e518ed5b46f0ffeb734f1d747664f1343753fe8ca1d"
         },
         {
           "role": "validation_code",
@@ -5464,7 +5533,7 @@
         {
           "role": "verification_report",
           "path": "gate4/acs_extension/PREEXECUTION_AUDIT.md",
-      "sha256": "cafbb3f4ea495374115d6c98e667bd70adccdcea3e174ea7afd8eda994e57bde"
+      "sha256": "9294facb014265e8196f94f781eaf0bbc84d15047ed6bcb53d0c663363f55364"
         }
       ],
       "response_locations": [
@@ -5504,21 +5573,38 @@
         "B01"
       ],
       "status": "SPECIFIED",
-      "summary": "Verified BTOS and RPS definitions and granularity, including the BTOS November-2025 wording break and the new pooled detailed-occupation RPS workbook. The RPS input is not yet captured/hashed locally and exposure-adoption residual variation and the exact interaction target remain to be run.",
+      "summary": "Verified BTOS and RPS definitions and granularity, including the BTOS November-2025 wording break. The official pooled detailed-occupation RPS workbook is captured unchanged and hash-authenticated. A fixed pre-result specification limits it to a no-inference external validation of the exposure measure because it provides one future pooled occupation classification, not detailed occupation-by-time adoption or cell sampling uncertainty. Residual exposure variation and the descriptive association are implemented but await an authoritative run.",
       "evidence": [
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
+        },
+        {
+          "role": "source_artifact",
+          "path": "gate4/adoption/inputs/rps_adoption_rates_by_occupation_20260806.xlsx",
+          "sha256": "2212465781179782c6f69750af21b00bd545edc21581d9577fbf7affc1bf0c43"
+        },
+        {
+          "role": "specification",
+          "path": "gate4/adoption/ADOPTION_EXTENSION_SPEC.md",
+          "sha256": "9b88dd4a4d760f6211692286c242bca6145e41c8f24b1a892630e3ee1f8e9634"
+        },
+        {
+          "role": "source_evidence",
+          "path": "gate4/adoption/ADOPTION_SOURCE_EVIDENCE.md",
+          "sha256": "e2b4571e9268b4069e15d04cafbd8982a0e0a9350bd3293813473051e99b3201"
         }
       ],
       "response_locations": [
-        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md"
+        "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
+        "gate4/adoption/ADOPTION_EXTENSION_SPEC.md",
+        "gate4/adoption/ADOPTION_SOURCE_EVIDENCE.md"
       ],
       "review": null,
       "blocker": null,
@@ -5603,12 +5689,12 @@
         {
           "role": "source_evidence",
           "path": "source_verification/external/source_claim_matrix.json",
-          "sha256": "1de0b24bf2ae1ec48e81c622a81046382b3691da4fa33d0f44fafb7bd04c3442"
+          "sha256": "8e377f51c61bec5d3bbfe04dc42cdf006ed2c2fc71cbf5617133baed4eaf968f"
         },
         {
           "role": "verification_report",
           "path": "source_verification/external/EXTERNAL_SOURCE_AUDIT.md",
-          "sha256": "852d38bba80b4eaa3a2489ffc79fc480a84a0827d6870844f1f06d5e57521ad6"
+          "sha256": "8335909bd37bfcb9d2098e9d95320b2fe245eb56011490e5afe2412023c77cce"
         }
       ],
       "response_locations": [
@@ -6050,12 +6136,12 @@
         {
           "role": "delivery_artifact",
           "path": "responses/COMMENT_RESPONSE_MATRIX.csv",
-          "sha256": "363a173fbf1b47dbc55fc45e90667f86594ee77acf472c6d633dfdd429d2a79d"
+          "sha256": "c0ab988da0384042f47b7027cd7d475973b04aa28b073eb13e70102b830a3fc7"
         },
         {
           "role": "validation_report",
           "path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
-          "sha256": "abe8c0f350ea226811bc7876dda4140dc08a862de795fcd6044228623c619b9a"
+          "sha256": "e039e8fafd1324a33fe229bafb5a83c9e291fcdaa0bf86c6568fb6d1341c4b9e"
         },
         {
           "role": "code",

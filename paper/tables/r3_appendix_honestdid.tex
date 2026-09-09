@@ -1,21 +1,33 @@
 \begin{table}[!htbp]
 \centering
 \caption{Official HonestDiD sensitivity intervals}\label{tab:app_honestdid}
-\begin{tabular}{llrr}
+\small
+\begin{tabular}{lllrr}
 \toprule
-Structure & Restriction & Lower & Upper \\
+Structure & Calibration & Restriction & Lower & Upper \\
 \midrule
-Pooled & Conventional event-functional interval & $-0.264$ & $0.024$ \\
-Pooled & Smoothness, $M=0$ & $-0.140$ & $0.016$ \\
-Pooled & Smoothness, $M=0.005$ per quarter & $-0.482$ & $0.516$ \\
-Pooled & Relative magnitude, $\bar M=0$ & $-0.260$ & $0.019$ \\
-Pooled & Relative magnitude, $\bar M=0.5$ & $-1.023$ & $0.789$ \\
-SOC2 monthly paths & Conventional event-functional interval & $-0.425$ & $0.010$ \\
-SOC2 monthly paths & Smoothness, $M=0$ & $-0.351$ & $0.007$ \\
-SOC2 monthly paths & Smoothness, $M=0.005$ per quarter & $-0.869$ & $0.352$ \\
-SOC2 monthly paths & Relative magnitude, $\bar M=0$ & $-0.420$ & $0.007$ \\
-SOC2 monthly paths & Relative magnitude, $\bar M=0.5$ & $-2.222$ & $1.884$ \\
+Pooled & 2017Q1--2022Q3 & Conventional & $-0.264$ & $0.024$ \\
+       &                 & Smoothness, $M=0$ & $-0.140$ & $0.016$ \\
+       &                 & Smoothness, $M=0.005$ & $-0.482$ & $0.516$ \\
+       &                 & Relative magnitude, $\bar M=0$ & $-0.260$ & $0.019$ \\
+       &                 & Relative magnitude, $\bar M=0.5$ & $-1.023$ & $0.789$ \\
+Pooled & 2021Q1--2022Q3 & Conventional & $-0.264$ & $0.024$ \\
+       &                 & Smoothness, $M=0$ & $-0.230$ & $0.204$ \\
+       &                 & Smoothness, $M=0.005$ & $-0.540$ & $0.495$ \\
+       &                 & Relative magnitude, $\bar M=0$ & $-0.260$ & $0.019$ \\
+       &                 & Relative magnitude, $\bar M=0.5$ & $-0.985$ & $0.742$ \\
+\addlinespace
+SOC2 monthly paths & 2017Q1--2022Q3 & Conventional & $-0.425$ & $0.010$ \\
+       &                 & Smoothness, $M=0$ & $-0.351$ & $0.007$ \\
+       &                 & Smoothness, $M=0.005$ & $-0.869$ & $0.352$ \\
+       &                 & Relative magnitude, $\bar M=0$ & $-0.420$ & $0.007$ \\
+       &                 & Relative magnitude, $\bar M=0.5$ & $-2.222$ & $1.884$ \\
+SOC2 monthly paths & 2021Q1--2022Q3 & Conventional & $-0.425$ & $0.010$ \\
+       &                 & Smoothness, $M=0$ & $-0.772$ & $-0.007$ \\
+       &                 & Smoothness, $M=0.005$ & $-1.100$ & $0.207$ \\
+       &                 & Relative magnitude, $\bar M=0$ & $-0.420$ & $0.007$ \\
+       &                 & Relative magnitude, $\bar M=0.5$ & $-2.222$ & $1.884$ \\
 \bottomrule
 \end{tabular}
-\tabnote{Intervals use the reconstructed quarterly Q5--Q1 vector, its full occupation-cluster covariance, and the observed-calendar post-quarter functional.  Smoothness $M$ is in log points per quarter; $\bar M$ bounds post violations relative to the largest preperiod violation.  The conventional interval already includes zero in both structures, so positive zero-exclusion robustness is undefined (reported as zero), not an omitted threshold.}
+\tabnote{The target is the observed-month-weighted average of the 15 post-quarter Q5--Q1 coefficients relative to 2022Q4.  Intervals use the full occupation-cluster covariance and official HonestDiD 0.2.8.  Smoothness $M$ is in log points per quarter squared; $\bar M$ bounds post changes relative to the largest signed preperiod change.  Both the full 2017Q1--2022Q3 calibration and the consecutive post-reopening 2021Q1--2022Q3 calibration are fixed and reported.  The recent-window family-path interval excludes zero only at the exact-linear-bias restriction $M=0$ and includes zero at $M=0.005$.  Because each conventional interval includes zero, positive zero-exclusion robustness is undefined, not an omitted threshold.}
 \end{table}

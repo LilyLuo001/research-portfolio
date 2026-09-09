@@ -17,7 +17,7 @@ The machine-readable record is [`source_claim_matrix.json`](source_claim_matrix.
 | B01 | Verified with estimand corrections | BCC's 19% headline, its ADP long-difference coefficient, and its ACS comparison are three different quantities. They are not interchangeable literature benchmarks. |
 | B02 | Open | The paper, dashboard, and three inspected ZIP downloads do not provide an exhaustive SOC-code-to-quintile membership artifact. A public reconstruction is not exact BCC membership. |
 | B05 | Feasible through 2024 only | Official 2024 one-year PUMS is public. Census had not released a verified 2025 one-year product as of this audit. Standard 2020 one-year estimates do not exist and the experimental 2020 estimates must not be spliced into the series. |
-| B07 | Partially verified | BTOS is public at aggregate business cells but lacks worker age and occupation. Detailed RPS occupation adoption is now public as pooled post-period sheets, but those sheets are not an occupation-by-quarter panel and expose no sampling intervals in the inspected interface. |
+| B07 | Verified for the focused descriptive use | BTOS is public at aggregate business cells but lacks worker age and occupation. The official RPS detailed-occupation workbook is now captured and hashed. It is a pooled post-period cross-section, not an occupation-by-quarter panel, and exposes no detailed-cell sampling intervals. |
 | B09 | Targeted corrections complete; broad search incomplete | Named publisher records were verified and prior citation premises corrected. The prescribed full ten-journal novelty search and reproducible query ledger have not been completed. |
 | F07 | Official variable verified; input blocked | `EARNWEEK2` is available through current monthly samples and harmonizes the April 2023 privacy transition, but it is absent from all four authorized YAX extract DDIs. A new extract is required. |
 
@@ -74,7 +74,7 @@ There is also a binding series break: starting November 17, 2025, the core AI wo
 
 The author-maintained RPS page links public occupation and task workbooks. The occupation workbook pools four waves—August 2025, November 2025, February 2026, and May 2026—and exposes detailed 2018 SOC/Census occupation tabs. Cells with fewer than 20 pooled observations are suppressed.
 
-This corrects the premise that only SOC2 adoption is publicly available. But it does not create pre-2022 observations or detailed occupation-by-quarter adoption. The displayed workbook supplies pooled point estimates and counts, not standard errors or confidence intervals. A binary export was not captured in this environment, and the task workbook still contains an unresolved exact-O*NET-release placeholder.
+This corrects the premise that only SOC2 adoption is publicly available. But it does not create pre-2022 observations or detailed occupation-by-quarter adoption. The downloaded workbook supplies pooled point estimates and counts, not standard errors or confidence intervals. Its unchanged binary is retained at `../../gate4/adoption/inputs/rps_adoption_rates_by_occupation_20260806.xlsx`, SHA-256 `2212465781179782c6f69750af21b00bd545edc21581d9577fbf7affc1bf0c43`. The task workbook still contains an unresolved exact-O*NET-release placeholder.
 
 Accordingly, these data can support descriptive exposure validation or mechanism checks. They should not be described as a causal treatment series or used for inference without verified variance/replication materials.
 
@@ -98,7 +98,7 @@ F07 needs a new minimal authorized extract containing `EARNWEEK2`, `EARNWT`, `MI
 
 1. Exact exhaustive BCC SOC-code-to-quintile membership.
 2. Release of 2025 ACS one-year PUMS.
-3. A locally captured and hashed RPS detailed workbook or replication file, plus a verified variance procedure for detailed cells.
+3. A verified variance procedure or replication file for the detailed RPS occupation cells. The workbook itself is now captured and hashed.
 4. A new authorized IPUMS extract containing `EARNWEEK2` and required weights/design fields.
 5. A verified public Hampole et al. occupation-score artifact.
 6. The complete ten-journal search with journal-by-journal queries, dates, candidate disposition, and stable publisher URLs.

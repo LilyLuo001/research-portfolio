@@ -1,0 +1,50 @@
+{
+  "all_post_weights_nonnegative": true,
+  "analysis_count": 4,
+  "calibration_windows": [
+    "full_2017Q1_2022Q3",
+    "recent_2021Q1_2022Q3"
+  ],
+  "created_utc": "2026-09-09T01:24:25.229146+00:00",
+  "gapped_calendar_not_compressed": true,
+  "official_package": {
+    "name": "HonestDiD",
+    "paper": "Rambachan and Roth (Review of Economic Studies, 2023)",
+    "source_commit": "6813f02ed38f0b63bdca6915604b2eac90491303",
+    "version": "0.2.8"
+  },
+  "output_hashes": {
+    "ANALYSIS_MANIFEST.csv": "b43990b0822e688caf601077a6df20dd14c758075bcad48977625acb3308b776",
+    "CONSTRAINT_MATRIX_CATALOG.csv": "9c92d6f430567793f0f5ca76a00d983b184fd5952bebf7ef6b53df5987dda4bd",
+    "CONVENTIONAL_FUNCTIONALS.csv": "874d35fddcad5e7d1731cf84163902d0166e2e624a77ccdf741cee9edc462caf",
+    "EVENT_COVARIANCES.csv": "c85119412f5dddc72c35f6c1cedf18b39a7ad98ea287c9e5b69502fba60d18c0",
+    "EVENT_VECTORS.csv": "d5ae247f585113e02844caa633ea50b5ac8ce530ff0bbe8b61fc6cf4915ba961",
+    "RELATIVE_CONSTRAINT_MATRICES.csv": "ad44d577b2dcc9d1fb2349576d60b753f37bd2a267ff9bc301c49d2aca8a828d",
+    "SENSITIVITY_GRID.csv": "6ee004c1f50606baa0543363c8240033c213fa924c5d613b2e0ce89e47e45a84",
+    "SMOOTHNESS_CONSTRAINT_MATRIX.csv": "db7a1effe015648f8ca2f83071e4cfbd0192e84810aafd3ef011530d900eea14"
+  },
+  "post_only_l_vec": true,
+  "post_weight_sum": 0.9999999999999999,
+  "relative_definition": "union over every signed maximal pre consecutive-quarter change; post consecutive changes <= Mbar times that magnitude",
+  "schema_version": "yax-gate4-honestdid-preparation-receipt-v1",
+  "smoothness_definition": "absolute adjacent-quarter second differences <= M",
+  "source": {
+    "consumed_artifact_hashes": {
+      "DYNAMIC_COVARIANCE.csv": "210325d7b02ed627fa9476fb248ef4acc8d567fd95048cd5d1a998b7b28fd902",
+      "DYNAMIC_Q5_EVENT_STUDY.csv": "5046f60def81546340a98b0d13ba87887b4422b17e3018a98b76b5e6cf04ccc9",
+      "RECONCILIATION_ESTIMATES.csv": "6d3bc6be1d6ab9bd96ea80def9bcd353ff66472869c07e0bdae7a5b3b45d6c5d"
+    },
+    "dynamic_manifest_sha256": "63e268d9f25038b86e37ff503cc3438481e7e7d8a439172b65a90c44bbaaf507",
+    "dynamic_receipt_sha256": "f3b803c514993412f41152598a722386dc8a340bb322e7054e6fc1f64f132d56",
+    "dynamic_result_id": "yaxresult_v1_b039944581f0da60fb7e8368bff687858b740a7e638c190a8c934369fc10defe",
+    "dynamic_run_id": "gate2_dynamic_core_sge_7489898",
+    "dynamic_spec_sha256": "8d530008dbccb32aa99ba26ef35128283840f700aa0cd80600ba352ac5e975eb"
+  },
+  "static_target_not_substituted": true,
+  "status": "PASS_CURRENT_CONTRACT_HONESTDID_INPUT_PREPARATION",
+  "structures": [
+    "unconditioned",
+    "family_month"
+  ],
+  "target": "dynamic P; equal-observed-post-month average"
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "yax-gate4-honestdid-official-execution-receipt-v1",
+  "status": "PASS_OFFICIAL_CURRENT_CONTRACT_HONESTDID_EXECUTION",
+  "created_utc": "2026-09-09 01:49:55 UTC",
+  "analysis_count": 4,
+  "official_package": {
+    "name": "HonestDiD",
+    "version": "0.2.8",
+    "source_commit": "6813f02ed38f0b63bdca6915604b2eac90491303",
+    "installed_remote_sha": "6813f02ed38f0b63bdca6915604b2eac90491303"
+  },
+  "dependencies": {
+    "CVXR": {
+      "version": "1.8.2",
+      "source_commit": "2fe1dac4d0c903c4a29515bef19c5d3824d09656",
+      "installed_remote_sha": "2fe1dac4d0c903c4a29515bef19c5d3824d09656",
+      "status_export_verified": true
+    },
+    "highs": {
+      "version": "1.12.0-3"
+    },
+    "osqp": {
+      "version": "1.0.0"
+    }
+  },
+  "parameters": {
+    "alpha": 0.05,
+    "seed": 2026090529,
+    "smoothness_grid": [0, 0.005, 0.01, 0.02, 0.03, 0.04, 0.05],
+    "relative_magnitude_grid": [0, 0.5, 1, 1.5, 2],
+    "relative_test_inversion_grid_points": 1000
+  },
+  "matrix_parity": {
+    "tolerance": 1e-12,
+    "all_pass": true
+  },
+  "optimizer_disclosure": "The official high-level functions returned finite intervals. Their returned objects do not expose every underlying optimizer status; no unobserved status is represented as independently verified.",
+  "prepared_input_hashes": {
+    "ANALYSIS_MANIFEST.csv": "b43990b0822e688caf601077a6df20dd14c758075bcad48977625acb3308b776",
+    "CONSTRAINT_MATRIX_CATALOG.csv": "9c92d6f430567793f0f5ca76a00d983b184fd5952bebf7ef6b53df5987dda4bd",
+    "CONVENTIONAL_FUNCTIONALS.csv": "874d35fddcad5e7d1731cf84163902d0166e2e624a77ccdf741cee9edc462caf",
+    "EVENT_COVARIANCES.csv": "c85119412f5dddc72c35f6c1cedf18b39a7ad98ea287c9e5b69502fba60d18c0",
+    "EVENT_VECTORS.csv": "d5ae247f585113e02844caa633ea50b5ac8ce530ff0bbe8b61fc6cf4915ba961",
+    "RELATIVE_CONSTRAINT_MATRICES.csv": "ad44d577b2dcc9d1fb2349576d60b753f37bd2a267ff9bc301c49d2aca8a828d",
+    "SENSITIVITY_GRID.csv": "6ee004c1f50606baa0543363c8240033c213fa924c5d613b2e0ce89e47e45a84",
+    "SMOOTHNESS_CONSTRAINT_MATRIX.csv": "db7a1effe015648f8ca2f83071e4cfbd0192e84810aafd3ef011530d900eea14"
+  },
+  "output_hashes": {
+    "OFFICIAL_ORIGINAL_RESULTS.csv": "9ce4c768fd751ede1ed7e850c89404c4acd5d34e475e44de778d835b47d73026",
+    "OFFICIAL_SMOOTHNESS_RESULTS.csv": "e7cf2b15bfaa28369dab2a0ebab28d597d7bcb024cfcfa819c3da8c181d0a37c",
+    "OFFICIAL_RELATIVE_MAGNITUDE_RESULTS.csv": "58bd300f55a9a3b21f379331c11d1db6ba2aa2e39af5fcb5be2b08d5113b292a",
+    "OFFICIAL_EXECUTION_LOG.csv": "a1556ce6836608a7cf4d691eab365d81e98e9ab63ff4823ea22ea387153a6c83",
+    "OFFICIAL_MATRIX_PARITY.csv": "4067882ceaf9161a5894b00f08ee69c85819930c76da6d83ab66e43ed6a8e38d"
+  }
+}
