@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The run reports separate national ages-22-25 population profiles and employed-young occupation-quintile profiles without assigning exposure to nonworkers. National enrollment falls from 0.2336 pre to 0.2211 post while BA-or-higher rises from 0.2941 to 0.3121; employed-young changes differ across quintiles. These are composition and selection diagnostics, not an age-period-cohort estimate or causal correction.",
+  "evidence": [
+    {"role": "specification", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_SPEC.md", "sha256": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f"},
+    {"role": "code", "path": "gate4/cohort_enrollment/run_cohort_enrollment.py", "sha256": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f"},
+    {"role": "run_receipt", "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "3fd35964476feb207437248c3103cb342edc420b5d2091c06f8c9251614a5f8b"},
+    {"role": "result", "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EMPLOYED_YOUNG_COMPOSITION.csv", "sha256": "f16240901b99ef8c4b63ab5f3e9c8a3afde32b27849f5287b017bfacad62888c"},
+    {"role": "validation_report", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"},
+    {"role": "presentation", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"}
+  ],
+  "response_locations": ["gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "Verified D06 dependency and final manuscript integration.", "attempts": "Produced separate national and employed-occupation profiles, audited their columns and supports, and verified that national rows carry no occupational exposure.", "claim_impact": "The composition accounting is complete but cannot be promoted to VERIFIED before D06 and final presentation are closed.", "next_step": "Integrate the national-versus-employed distinction and selection caveat into the manuscript, then close D06."},
+  "approval": null
+}

@@ -51,10 +51,16 @@ relative young-versus-older high/low allocation-odds grid
 - family-month, rebuilt-treatment coefficients range from `-0.0783` to
   `0.0439`.
 
-At the two grid endpoints, occupation-clustered paired intervals for changes
-from `K=1` contain zero for both the pooled and family-month specifications.
-This means the design does not detect a difference at those comparisons; it
-does not establish economic equivalence. Rebuilding treatment labels changes
+All pooled occupation-clustered paired intervals for changes from `K=1`
+contain zero, under both fixed and rebuilt labels. The fixed-label family-month
+endpoint intervals also contain zero. The rebuilt-treatment family-month
+estimand is more sensitive: at `K=0.25` its coefficient moves from `-0.0217`
+to `0.0439`, and the paired movement is `0.0656` with occupation-clustered
+interval `[0.0031, 0.1280]`. Five of its six nonbaseline grid comparisons have
+occupation-clustered paired intervals that exclude zero. Thus the pooled result
+is stable over this grid, while the family-month result is sensitive to the
+allocation and label reconstruction. An interval containing zero means only
+non-detection, never economic equivalence. Rebuilding treatment labels changes
 at most two occupations at a grid point.
 
 ## W03: explored adverse envelope

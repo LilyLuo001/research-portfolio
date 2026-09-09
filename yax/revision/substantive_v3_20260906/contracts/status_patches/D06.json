@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The actual monthly files were audited for SCHLCOLL, invalid/not-in-universe codes were never treated as nonenrolled, and the common-observable older sample correctly ends at age 54. Restricting young workers to nonenrolled changes the pooled coefficient by 0.0082 against ages 26-65 and by 0.0053 on the common 22-54 universe; all paired occupation- and family-clustered intervals contain zero. These are selected-population descriptions, not causal corrections.",
+  "evidence": [
+    {"role": "specification", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_SPEC.md", "sha256": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f"},
+    {"role": "code", "path": "gate4/cohort_enrollment/run_cohort_enrollment.py", "sha256": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f"},
+    {"role": "run_receipt", "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "3fd35964476feb207437248c3103cb342edc420b5d2091c06f8c9251614a5f8b"},
+    {"role": "result", "path": "runs/gate4_cohort_enrollment_authoritative_20260908/SCHLCOLL_CODE_AUDIT.csv", "sha256": "dc48840ee7057b3fcabb3f3fc9206b761ecb1973574d00ab2f23fcc7c2e96e44"},
+    {"role": "validation_report", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"},
+    {"role": "presentation", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"}
+  ],
+  "response_locations": ["gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "Verified T02 dependency and final manuscript integration.", "attempts": "Audited every observed enrollment code by source and age bucket, executed both required paired restrictions, and reconstructed inference from stored influences.", "claim_impact": "The enrollment restrictions are complete but remain selected-population descriptions downstream of T02.", "next_step": "Integrate the valid-universe caveat and paired results, then close T02."},
+  "approval": null
+}

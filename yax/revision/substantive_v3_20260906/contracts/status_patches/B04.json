@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The benchmark run reports common annual 2022-to-2024 and November-2022-to-June-2026 endpoints for all employed and feasible full-time civilian wage-and-salary CPS populations. Unavailable positive-payroll-match and firm-control conditions remain distinct. No-Webb public-benchmark rows are separated from the labeled Webb-controlled YAX extension, and paired sample-alignment differences preserve common-draw covariance.",
+  "evidence": [
+    {"role": "specification", "path": "gate4/public_benchmark/PUBLIC_BENCHMARK_SPEC.md", "sha256": "261bc0f1ef3c5a417bd143a802ed34c6cca4e2e471c79f13e579299fe584568a"},
+    {"role": "code", "path": "gate4/public_benchmark/run_public_benchmark.py", "sha256": "71d26f7533b1209f218bcfd1626459283c26a978a9e52889eb91e10569ab3cbd"},
+    {"role": "run_receipt", "path": "runs/gate4_public_benchmark_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "99127de0dd85052287b57645275fc571c64165efdff8b52b79b0562a6f5a6c8a"},
+    {"role": "result", "path": "runs/gate4_public_benchmark_authoritative_20260908/AGGREGATE_BENCHMARKS.csv", "sha256": "22e4af2487e61334c7ed03e8a4478ee6623c1527454f2148c565ef2b093d0139"},
+    {"role": "validation_report", "path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json", "sha256": "cf51b8110aee64e55c2504bbfb25340da5c471bb6f2214005dbf6141d0560bba"},
+    {"role": "presentation", "path": "runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md", "sha256": "50cabea217970376aafaa8909e0e08f5743c6cdffd83c27da8469b800f2a3076"}
+  ],
+  "response_locations": ["runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md"],
+  "review": {"reviewer": "execution-agent public numerical reconstruction", "report_path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json", "independent": false},
+  "blocker": {"missing_requirement": "Verified B03 dependency and final manuscript integration of the aligned populations and endpoints.", "attempts": "Ran both endpoints and both feasible CPS populations, separated no-Webb and Webb extensions, and validated all stored calculations.", "claim_impact": "The aligned CPS comparisons are complete but inherit B03's exact-membership limitation and are not yet integrated into the final paper.", "next_step": "Present the population and endpoint alignment table with the unavailable ADP conditions kept explicit, then close B03."},
+  "approval": null
+}

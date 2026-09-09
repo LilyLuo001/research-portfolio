@@ -2026,7 +2026,7 @@
         {
           "role": "evidence_ownership_test",
           "path": "tests/test_requirement_evidence_ownership.py",
-          "sha256": "70496069db277b50c77b1640b95d44ade6e31b5415fb3be53544ccb734fff39f"
+          "sha256": "dbe925a3df14ecccf24cccc98472b0b05a920106b1eee87341287074bdac53df"
         }
       ],
       "response_locations": [
@@ -2239,12 +2239,54 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The current-contract age-band analysis executed five older denominators plus a fixed-exact-age-composition denominator on common preperiod-selected support with covariance-preserving paired inference. The pooled coefficient ranges from -0.1598 against ages 31-40 to -0.0971 against ages 51-65; only the paired 51-65 versus 26-65 change excludes zero under occupation clustering. Fixed-age standardization changes the pooled coefficient by 0.0008 with interval [-0.0011, 0.0027]. Older groups are labeled comparators, not untreated workers.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_SPEC.md",
+          "sha256": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f"
+        },
+        {
+          "role": "code",
+          "path": "gate4/cohort_enrollment/run_cohort_enrollment.py",
+          "sha256": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "3fd35964476feb207437248c3103cb342edc420b5d2091c06f8c9251614a5f8b"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_cohort_enrollment_authoritative_20260908/MODEL_RESULTS.csv",
+          "sha256": "ec554adaeb67a62fc572f533a3d100fbdd56e24a07279b44332ce8cc8e4e1983"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+          "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"
+        },
+        {
+          "role": "presentation",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+          "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"
+        }
+      ],
+      "response_locations": [
+        "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified T02 dependency and final manuscript integration.",
+        "attempts": "Executed all specified older-band and fixed-age models, validated the denominator identity, and reconstructed all paired standard errors.",
+        "claim_impact": "The descriptive comparator analysis is complete but remains downstream of an unverified baseline and outside the final presentation.",
+        "next_step": "Integrate the age-comparator results and close T02 during end-to-end validation."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -2274,12 +2316,54 @@
       "depends_on": [
         "T02"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The actual monthly files were audited for SCHLCOLL, invalid/not-in-universe codes were never treated as nonenrolled, and the common-observable older sample correctly ends at age 54. Restricting young workers to nonenrolled changes the pooled coefficient by 0.0082 against ages 26-65 and by 0.0053 on the common 22-54 universe; all paired occupation- and family-clustered intervals contain zero. These are selected-population descriptions, not causal corrections.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_SPEC.md",
+          "sha256": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f"
+        },
+        {
+          "role": "code",
+          "path": "gate4/cohort_enrollment/run_cohort_enrollment.py",
+          "sha256": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "3fd35964476feb207437248c3103cb342edc420b5d2091c06f8c9251614a5f8b"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_cohort_enrollment_authoritative_20260908/SCHLCOLL_CODE_AUDIT.csv",
+          "sha256": "dc48840ee7057b3fcabb3f3fc9206b761ecb1973574d00ab2f23fcc7c2e96e44"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+          "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"
+        },
+        {
+          "role": "presentation",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+          "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"
+        }
+      ],
+      "response_locations": [
+        "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified T02 dependency and final manuscript integration.",
+        "attempts": "Audited every observed enrollment code by source and age bucket, executed both required paired restrictions, and reconstructed inference from stored influences.",
+        "claim_impact": "The enrollment restrictions are complete but remain selected-population descriptions downstream of T02.",
+        "next_step": "Integrate the valid-universe caveat and paired results, then close T02."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -2310,12 +2394,54 @@
       "depends_on": [
         "D06"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The run reports separate national ages-22-25 population profiles and employed-young occupation-quintile profiles without assigning exposure to nonworkers. National enrollment falls from 0.2336 pre to 0.2211 post while BA-or-higher rises from 0.2941 to 0.3121; employed-young changes differ across quintiles. These are composition and selection diagnostics, not an age-period-cohort estimate or causal correction.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_SPEC.md",
+          "sha256": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f"
+        },
+        {
+          "role": "code",
+          "path": "gate4/cohort_enrollment/run_cohort_enrollment.py",
+          "sha256": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "3fd35964476feb207437248c3103cb342edc420b5d2091c06f8c9251614a5f8b"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EMPLOYED_YOUNG_COMPOSITION.csv",
+          "sha256": "f16240901b99ef8c4b63ab5f3e9c8a3afde32b27849f5287b017bfacad62888c"
+        },
+        {
+          "role": "validation_report",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+          "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"
+        },
+        {
+          "role": "presentation",
+          "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+          "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"
+        }
+      ],
+      "response_locations": [
+        "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public-output recomputation",
+        "report_path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified D06 dependency and final manuscript integration.",
+        "attempts": "Produced separate national and employed-occupation profiles, audited their columns and supports, and verified that national rows carry no occupational exposure.",
+        "claim_impact": "The composition accounting is complete but cannot be promoted to VERIFIED before D06 and final presentation are closed.",
+        "next_step": "Integrate the national-versus-employed distinction and selection caveat into the manuscript, then close D06."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -4288,7 +4414,7 @@
         {
           "role": "presentation",
           "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
-          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+          "sha256": "93fa6033a8baec4e52fa7ec5f2113af2fd415e517e4a68d50e84b2be3cbf006d"
         }
       ],
       "response_locations": [
@@ -4336,7 +4462,7 @@
         "W01"
       ],
       "status": "RUN_UNVALIDATED",
-      "summary": "The jointly feasible symmetric bridge-tilt grid executed for fixed and rebuilt treatment labels under pooled and family-month models. Thirty-one eligible split sources account for 14.86 percent of supported early routed stock. Across K=0.25 to 4, pooled coefficients range from -0.1446 to -0.1163 and family-month coefficients from -0.0783 to 0.0439; endpoint paired occupation-clustered intervals versus K=1 contain zero. The correct interpretation is that the design does not detect those endpoint differences, not economic equivalence.",
+      "summary": "The jointly feasible symmetric bridge-tilt grid executed for fixed and rebuilt treatment labels under pooled and family-month models. Thirty-one eligible split sources account for 14.86 percent of supported early routed stock. Across K=0.25 to 4, pooled coefficients range from -0.1446 to -0.1163 and all pooled paired occupation-clustered intervals versus K=1 contain zero. Family-month coefficients range from -0.0783 to 0.0439 and are more sensitive: five of six rebuilt-treatment paired occupation-clustered intervals exclude zero, including a 0.0656 movement at K=0.25 with interval [0.0031, 0.1280]. Null intervals imply non-detection, never economic equivalence.",
       "evidence": [
         {
           "role": "specification",
@@ -4366,7 +4492,7 @@
         {
           "role": "presentation",
           "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
-          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+          "sha256": "93fa6033a8baec4e52fa7ec5f2113af2fd415e517e4a68d50e84b2be3cbf006d"
         }
       ],
       "response_locations": [
@@ -4443,7 +4569,7 @@
         {
           "role": "presentation",
           "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
-          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+          "sha256": "93fa6033a8baec4e52fa7ec5f2113af2fd415e517e4a68d50e84b2be3cbf006d"
         }
       ],
       "response_locations": [
@@ -4522,7 +4648,7 @@
         {
           "role": "presentation",
           "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
-          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+          "sha256": "93fa6033a8baec4e52fa7ec5f2113af2fd415e517e4a68d50e84b2be3cbf006d"
         }
       ],
       "response_locations": [
@@ -5106,12 +5232,54 @@
         "B02",
         "N03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The public-benchmark run completed an independently reconstructed CPS analogue before adding family conditioning, then estimated separately labeled family-post and family-month extensions on the same 468-occupation support. The annual 2022-to-2024 Q5-minus-Q1 growth-factor difference is -0.0346 with occupation-linearized interval [-0.1455, 0.0763]; the November-2022-to-June-2026 analogue is -0.2312 [-0.4660, 0.0036]. Every family-conditioned young-relative interval contains zero. The unavailable exact BCC membership remains explicit, and no Q5-Q1 inference is transferred to the top-two/bottom-three grouping.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/public_benchmark/PUBLIC_BENCHMARK_SPEC.md",
+          "sha256": "261bc0f1ef3c5a417bd143a802ed34c6cca4e2e471c79f13e579299fe584568a"
+        },
+        {
+          "role": "code",
+          "path": "gate4/public_benchmark/run_public_benchmark.py",
+          "sha256": "71d26f7533b1209f218bcfd1626459283c26a978a9e52889eb91e10569ab3cbd"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "99127de0dd85052287b57645275fc571c64165efdff8b52b79b0562a6f5a6c8a"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/CONDITIONAL_MODEL_RESULTS.csv",
+          "sha256": "9351f3925accf552099cf3fbe71f4928685b4997d0309418fdaa99ba087aae38"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json",
+          "sha256": "cf51b8110aee64e55c2504bbfb25340da5c471bb6f2214005dbf6141d0560bba"
+        },
+        {
+          "role": "presentation",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md",
+          "sha256": "50cabea217970376aafaa8909e0e08f5743c6cdffd83c27da8469b800f2a3076"
+        }
+      ],
+      "response_locations": [
+        "runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public numerical reconstruction",
+        "report_path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Exact BCC occupation membership under B02, verified N03 dependency, and final manuscript integration.",
+        "attempts": "Executed the independent CPS analogue and same-support conditional extensions, validated 60 public numerical and contract checks, and documented every alignment gap.",
+        "claim_impact": "The reconstructed public comparison is complete, but it is not an exact BCC replication and cannot be promoted to VERIFIED while B02 and N03 remain unresolved.",
+        "next_step": "Integrate the independently reconstructed benchmark with its exact alignment caveats and close the upstream dependencies."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -5143,12 +5311,54 @@
       "depends_on": [
         "B03"
       ],
-      "status": "NOT_STARTED",
-      "summary": "",
-      "evidence": [],
-      "response_locations": [],
-      "review": null,
-      "blocker": null,
+      "status": "RUN_UNVALIDATED",
+      "summary": "The benchmark run reports common annual 2022-to-2024 and November-2022-to-June-2026 endpoints for all employed and feasible full-time civilian wage-and-salary CPS populations. Unavailable positive-payroll-match and firm-control conditions remain distinct. No-Webb public-benchmark rows are separated from the labeled Webb-controlled YAX extension, and paired sample-alignment differences preserve common-draw covariance.",
+      "evidence": [
+        {
+          "role": "specification",
+          "path": "gate4/public_benchmark/PUBLIC_BENCHMARK_SPEC.md",
+          "sha256": "261bc0f1ef3c5a417bd143a802ed34c6cca4e2e471c79f13e579299fe584568a"
+        },
+        {
+          "role": "code",
+          "path": "gate4/public_benchmark/run_public_benchmark.py",
+          "sha256": "71d26f7533b1209f218bcfd1626459283c26a978a9e52889eb91e10569ab3cbd"
+        },
+        {
+          "role": "run_receipt",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/EXECUTION_RECEIPT.json",
+          "sha256": "99127de0dd85052287b57645275fc571c64165efdff8b52b79b0562a6f5a6c8a"
+        },
+        {
+          "role": "result",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/AGGREGATE_BENCHMARKS.csv",
+          "sha256": "22e4af2487e61334c7ed03e8a4478ee6623c1527454f2148c565ef2b093d0139"
+        },
+        {
+          "role": "validation_report",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json",
+          "sha256": "cf51b8110aee64e55c2504bbfb25340da5c471bb6f2214005dbf6141d0560bba"
+        },
+        {
+          "role": "presentation",
+          "path": "runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md",
+          "sha256": "50cabea217970376aafaa8909e0e08f5743c6cdffd83c27da8469b800f2a3076"
+        }
+      ],
+      "response_locations": [
+        "runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md"
+      ],
+      "review": {
+        "reviewer": "execution-agent public numerical reconstruction",
+        "report_path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json",
+        "independent": false
+      },
+      "blocker": {
+        "missing_requirement": "Verified B03 dependency and final manuscript integration of the aligned populations and endpoints.",
+        "attempts": "Ran both endpoints and both feasible CPS populations, separated no-Webb and Webb extensions, and validated all stored calculations.",
+        "claim_impact": "The aligned CPS comparisons are complete but inherit B03's exact-membership limitation and are not yet integrated into the final paper.",
+        "next_step": "Present the population and endpoint alignment table with the unavailable ADP conditions kept explicit, then close B03."
+      },
       "approval": null,
       "minimum_verified_evidence_roles": [
         "specification",
@@ -5840,12 +6050,12 @@
         {
           "role": "delivery_artifact",
           "path": "responses/COMMENT_RESPONSE_MATRIX.csv",
-          "sha256": "e78646e0ac8d6102e8b4abeb5acc13e63d0bce8a36d96d8f9344ab2a655b6091"
+          "sha256": "0d680941dd35808bf24aaf052aadbdb6afaa595a0a3497fb3e3fd9f00034024b"
         },
         {
           "role": "validation_report",
           "path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
-          "sha256": "6fe028c2d02662a60de71c32e839e5f84cbba1d36b3894a1fc1eab14c771b557"
+          "sha256": "893474a01b3728fab67b80f123dd98e31e7fcccdfb2876507441fa2ca0bb3118"
         },
         {
           "role": "code",
@@ -6098,7 +6308,7 @@
         {
           "role": "verification_report",
           "path": "gate3/mapping/MAPPING_RESULTS_VALIDATION.md",
-          "sha256": "ba24af64def18cfdca882e96eb9391ee662c349a73b5ca03a0ed9838f3ec7c98"
+          "sha256": "93fa6033a8baec4e52fa7ec5f2113af2fd415e517e4a68d50e84b2be3cbf006d"
         }
       ],
       "response_locations": [

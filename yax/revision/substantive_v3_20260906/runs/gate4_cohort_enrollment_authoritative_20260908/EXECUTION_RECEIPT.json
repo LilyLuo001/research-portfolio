@@ -1,0 +1,54 @@
+{
+  "SCHLCOLL_invalid_codes_never_classified_nonenrolled": true,
+  "SCHLCOLL_valid_code_weight_ages_55_65": 0.0,
+  "canonical_rebuild_maximum_relative_gap": 3.146668096024438e-15,
+  "common_draws_preserve_covariance": true,
+  "draws": 9999,
+  "fixed_age_population_identity_maximum_relative_gap": 5.319556625235735e-16,
+  "generated_at_utc": "2026-09-08T23:42:50.146792+00:00",
+  "git_head": "baeda97a9da64b46ff9dba68344e5e12a21a3959",
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "calibration_receipt": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+    "march_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "private_calibration": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+    "runner": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f",
+    "specification": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f",
+    "wide_microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9"
+  },
+  "model_count": 20,
+  "model_failure_count": 0,
+  "nonworker_occupational_exposure_assignment_count": 0,
+  "older_groups_are_untreated": false,
+  "output_hashes": {
+    "AGE_STANDARDIZATION_WEIGHTS.csv": "de0baca84df59c698a7e1b4c4aeb90f5d84098c68183c7fe133c881fb1465bf0",
+    "EMPLOYED_YOUNG_COMPOSITION.csv": "f16240901b99ef8c4b63ab5f3e9c8a3afde32b27849f5287b017bfacad62888c",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MODEL_INFLUENCE.csv": "b2f485f20a483a047d46649163c65b0f204659853dd40fe6a80d5b96c2e101d1",
+    "MODEL_RESULTS.csv": "ec554adaeb67a62fc572f533a3d100fbdd56e24a07279b44332ce8cc8e4e1983",
+    "NATIONAL_YOUNG_POPULATION_COMPOSITION.csv": "e2a529de4daa435a2e8a2b7fd1c98664c3d3d736b2845e6d6c3a4e655acd6c76",
+    "PAIRED_COMPARISONS.csv": "4812f1ff39ce4f48d171253902a687eea5b1f5e2bf4399e95f88112a0196f45d",
+    "SCHLCOLL_CODE_AUDIT.csv": "dc48840ee7057b3fcabb3f3fc9206b761ecb1973574d00ab2f23fcc7c2e96e44",
+    "SUPPORT_MEMBERSHIP.csv": "862e76ce6bc125bd302c02ab1a3094d6825acaab1148bb06f2c49730dc637011"
+  },
+  "paired_comparison_count": 14,
+  "protected_person_or_household_rows_written": false,
+  "scan_counters": {
+    "employed_source_rows": 5001069,
+    "fractional_descendant_rows": 916747,
+    "positive_weight_person_rows": 7590385,
+    "raw_rows": 9843021,
+    "routed_descendant_rows": 4984188,
+    "wide_march_rows_removed": 621589
+  },
+  "schema_version": "yax-gate4-cohort-enrollment-v1",
+  "seed": 202609089101,
+  "sge_job_id": "7500522",
+  "status": "PASS_GATE4_COHORT_ENROLLMENT",
+  "support_counts": {
+    "D05": 467,
+    "D06_common_enrollment_universe": 468,
+    "D06_young_restriction": 468
+  }
+}

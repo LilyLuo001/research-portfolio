@@ -1,0 +1,8 @@
+dimension,BCC_public_or_ADP_target,this_run,aligned,reason
+data_source_and_unit,ADP worker-firm matches or annual ACS persons,monthly Basic CPS weighted persons aggregated to occupation-month,False,ADP employer panel and ACS survey design are unavailable here
+age,22-25,22-25 for benchmark; 26-65 only in separate YAX extension,True,exact young age band aligned
+employment_population,full-time positive-earnings ADP matches; ACS full-time civilian wage/salary sensitivity,all employed and feasible full-time civilian wage/salary CPS analogue,partial,CPS has usual hours/class but no balanced-firm or positive-payroll-match condition
+exposure_membership,Eloundou beta quintiles on undisclosed exhaustive BCC universe,equal-occupation tie-preserving beta quintiles on fixed YAX 468 support,False,complete BCC membership and tie algorithm are not public
+endpoint,November 2022-June 2026 and annual 2022-2024,same named endpoints; CPS 2022 is a 12-month stock average,named_dates_only,monthly CPS and annual ACS measurement differ
+controls,no controls for public long difference; proprietary firm controls elsewhere,no controls first; Webb and family conditioning separately labeled,True,no inaccessible control is represented as reproduced
+inference,HC robust for ADP long difference; ACS successive-difference replicate weights,HC1 for CPS occupation long difference; occupation/family multiplier inference for YAX extension,partial,CPS extract has no design replicate weights

@@ -44,7 +44,7 @@ def test_d02_evidence_is_owned_only_by_d02():
     ]
 
 
-def test_editorial_and_aioe_evidence_is_attached_to_its_named_requirement():
+def test_editorial_aioe_and_cohort_evidence_is_attached_to_named_requirements():
     ledger = json.loads((ROOT / "requirements_status.json").read_text(encoding="utf-8"))
     rows = {row["id"]: row for row in ledger["requirements"]}
 
@@ -58,8 +58,6 @@ def test_editorial_and_aioe_evidence_is_attached_to_its_named_requirement():
     }
     assert e04_owners == {"E04"}
     assert rows["E04"]["status"] == "RUN_UNVALIDATED"
-    assert rows["D05"]["status"] == "NOT_STARTED"
-    assert not rows["D05"]["evidence"]
 
     w05_marker = "source_verification/W05_AIOE_UNITS_AND_ATTRIBUTION.md"
     w05_owners = {
@@ -82,5 +80,17 @@ def test_editorial_and_aioe_evidence_is_attached_to_its_named_requirement():
     }
     assert w06_owners == {"W06"}
     assert rows["W06"]["status"] == "RUN_UNVALIDATED"
-    assert rows["D05"]["status"] == "NOT_STARTED"
-    assert not rows["D05"]["evidence"]
+
+    cohort_marker = "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"
+    cohort_owners = {
+        requirement_id
+        for requirement_id, row in rows.items()
+        if cohort_marker in [entry.get("path", "") for entry in row.get("evidence", [])]
+        or cohort_marker in row.get("response_locations", [])
+        or (isinstance(row.get("review"), dict) and
+            row["review"].get("report_path") == cohort_marker)
+    }
+    assert cohort_owners == {"D05", "D06", "D07"}
+    for requirement_id in cohort_owners:
+        assert rows[requirement_id]["status"] == "RUN_UNVALIDATED"
+        assert rows[requirement_id]["evidence"]

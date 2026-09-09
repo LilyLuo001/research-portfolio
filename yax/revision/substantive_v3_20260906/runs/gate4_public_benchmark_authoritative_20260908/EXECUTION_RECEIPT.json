@@ -1,0 +1,89 @@
+{
+  "December_2022_in_annual_benchmark": true,
+  "December_2022_in_conditional_models": false,
+  "October_2025_treated_as_collection_gap": true,
+  "aggregate_row_count": 12,
+  "all_employed_calibration_maximum_relative_gap": 3.146668096024438e-15,
+  "annual_2022_month_count": 12,
+  "benchmark_calendar_months": 114,
+  "common_draws_preserve_covariance": true,
+  "conditional_common_support_hash_sha256": "11ec58ab1004cd83d62c57785f6c0dd3ee5a8abf08b7f71a3b664e91ded8333b",
+  "conditional_common_support_occupations": 468,
+  "draws": 9999,
+  "generated_at_utc": "2026-09-08T23:42:20.214945+00:00",
+  "git_head": "baeda97a9da64b46ff9dba68344e5e12a21a3959",
+  "grouping": {
+    "BCC_exact_membership": false,
+    "cuts": [
+      0.10291641051,
+      0.261904761905,
+      0.416666666667,
+      0.533333333333
+    ],
+    "name": "independent_equal_occupation_Rule_A_beta_approximation",
+    "tie_rule": "cut_value_stays_in_lower_bin"
+  },
+  "input_hashes": {
+    "bridge": "0bd2f63c72e24bed2cc1cb414395c3cbddf7c00011e47ec1c1de6ae534fd1dcc",
+    "calibration_receipt": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+    "march_repair": "a4ae2ef06d66a0d47359ccceffff9a15843ac501a9f25f9a05aa8fdca9c4f911",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "private_calibration": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+    "runner": "71d26f7533b1209f218bcfd1626459283c26a978a9e52889eb91e10569ab3cbd",
+    "specification": "261bc0f1ef3c5a417bd143a802ed34c6cca4e2e471c79f13e579299fe584568a",
+    "wide_microdata": "3fe42477e6f2ce401e85123f0e278e758595c1c4071a8743f243a92752db38c9"
+  },
+  "long_difference_row_count": 20,
+  "model_calendar_months": 113,
+  "model_count": 24,
+  "model_failure_count": 0,
+  "output_hashes": {
+    "AGGREGATE_BENCHMARKS.csv": "22e4af2487e61334c7ed03e8a4478ee6623c1527454f2148c565ef2b093d0139",
+    "BENCHMARK_DIFFERENCES.csv": "7cb4e1c97f58c72694d975815f3b355cdde5e4ab03ee5e784284fba68cc94e7f",
+    "CONDITIONAL_MODEL_RESULTS.csv": "9351f3925accf552099cf3fbe71f4928685b4997d0309418fdaa99ba087aae38",
+    "CONDITIONAL_PAIRED_COMPARISONS.csv": "3282fe7ee7e57787590e1e1a0715cf850aee98af900b9d7b92cd4f07074366a1",
+    "FINDINGS.md": "50cabea217970376aafaa8909e0e08f5743c6cdffd83c27da8469b800f2a3076",
+    "INDEXED_STOCK_SERIES.csv": "633be92e985a225b6d2d24f257b97a61991d78e9a5674585adc503bbeff486ab",
+    "LONG_DIFFERENCE_RESULTS.csv": "22e66326d2613ca6589f3e256943c57ec4ef9d3d40ca95884a0a71c7d54bcad8",
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MODEL_INFLUENCE.csv": "135b55b7a98b9dc36c0ab6d491452f3497a510896cb99777f9dfce7fa6c6529d",
+    "SUPPORT_AND_POPULATION_AUDIT.csv": "353e2828be3b3090c0cfbd4350eca00bbe5ccc2e4a82df82db55d54cb47bcaee"
+  },
+  "paired_model_comparison_count": 36,
+  "person_or_household_identifiers_read": false,
+  "population_rule": {
+    "ADP_balanced_firm_or_positive_earnings_match_reproduced": false,
+    "armed_forces_code_excluded": 26,
+    "full_time_rule": "35 <= UHRSWORKT < 997",
+    "wage_salary_CLASSWKR_codes": [
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      27,
+      28
+    ]
+  },
+  "protected_person_rows_written": false,
+  "requirements": [
+    "B03",
+    "B04"
+  ],
+  "scan_counters": {
+    "fractional_descendant_rows": 916747,
+    "full_time_wage_salary_rows": 3807964,
+    "hours_100_to_996_rows": 2855,
+    "positive_weight_employed_rows": 5041595,
+    "raw_rows": 9843021,
+    "routed_descendant_rows": 5019491,
+    "unexpected_class_codes": [],
+    "wide_march_rows_removed": 621589
+  },
+  "schema_version": "yax-gate4-public-benchmark-v1",
+  "seed": 202609089301,
+  "sge_job_id": "7500521",
+  "status": "PASS_GATE4_PUBLIC_BENCHMARK",
+  "support_occupations": 468
+}

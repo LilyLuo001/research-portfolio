@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The current-contract age-band analysis executed five older denominators plus a fixed-exact-age-composition denominator on common preperiod-selected support with covariance-preserving paired inference. The pooled coefficient ranges from -0.1598 against ages 31-40 to -0.0971 against ages 51-65; only the paired 51-65 versus 26-65 change excludes zero under occupation clustering. Fixed-age standardization changes the pooled coefficient by 0.0008 with interval [-0.0011, 0.0027]. Older groups are labeled comparators, not untreated workers.",
+  "evidence": [
+    {"role": "specification", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_SPEC.md", "sha256": "6ab267e64769b786f118f0b0a7bc4e9866cfe2ad21da754e5cd5865bea8e3a1f"},
+    {"role": "code", "path": "gate4/cohort_enrollment/run_cohort_enrollment.py", "sha256": "f306a28369c6f6f1604cf6c2541916a87afa434c5a02b5b9bd0bab7164e12a5f"},
+    {"role": "run_receipt", "path": "runs/gate4_cohort_enrollment_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "3fd35964476feb207437248c3103cb342edc420b5d2091c06f8c9251614a5f8b"},
+    {"role": "result", "path": "runs/gate4_cohort_enrollment_authoritative_20260908/MODEL_RESULTS.csv", "sha256": "ec554adaeb67a62fc572f533a3d100fbdd56e24a07279b44332ce8cc8e4e1983"},
+    {"role": "validation_report", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"},
+    {"role": "presentation", "path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "sha256": "869a37019d2dff23b1c34fd3932a128f09498411dcd4e4f3520eae3131c0f2a7"}
+  ],
+  "response_locations": ["gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md"],
+  "review": {"reviewer": "execution-agent public-output recomputation", "report_path": "gate4/cohort_enrollment/COHORT_ENROLLMENT_RESULTS_VALIDATION.md", "independent": false},
+  "blocker": {"missing_requirement": "Verified T02 dependency and final manuscript integration.", "attempts": "Executed all specified older-band and fixed-age models, validated the denominator identity, and reconstructed all paired standard errors.", "claim_impact": "The descriptive comparator analysis is complete but remains downstream of an unverified baseline and outside the final presentation.", "next_step": "Integrate the age-comparator results and close T02 during end-to-end validation."},
+  "approval": null
+}

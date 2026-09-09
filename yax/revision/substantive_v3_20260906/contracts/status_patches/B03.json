@@ -1,0 +1,16 @@
+{
+  "status": "RUN_UNVALIDATED",
+  "summary": "The public-benchmark run completed an independently reconstructed CPS analogue before adding family conditioning, then estimated separately labeled family-post and family-month extensions on the same 468-occupation support. The annual 2022-to-2024 Q5-minus-Q1 growth-factor difference is -0.0346 with occupation-linearized interval [-0.1455, 0.0763]; the November-2022-to-June-2026 analogue is -0.2312 [-0.4660, 0.0036]. Every family-conditioned young-relative interval contains zero. The unavailable exact BCC membership remains explicit, and no Q5-Q1 inference is transferred to the top-two/bottom-three grouping.",
+  "evidence": [
+    {"role": "specification", "path": "gate4/public_benchmark/PUBLIC_BENCHMARK_SPEC.md", "sha256": "261bc0f1ef3c5a417bd143a802ed34c6cca4e2e471c79f13e579299fe584568a"},
+    {"role": "code", "path": "gate4/public_benchmark/run_public_benchmark.py", "sha256": "71d26f7533b1209f218bcfd1626459283c26a978a9e52889eb91e10569ab3cbd"},
+    {"role": "run_receipt", "path": "runs/gate4_public_benchmark_authoritative_20260908/EXECUTION_RECEIPT.json", "sha256": "99127de0dd85052287b57645275fc571c64165efdff8b52b79b0562a6f5a6c8a"},
+    {"role": "result", "path": "runs/gate4_public_benchmark_authoritative_20260908/CONDITIONAL_MODEL_RESULTS.csv", "sha256": "9351f3925accf552099cf3fbe71f4928685b4997d0309418fdaa99ba087aae38"},
+    {"role": "validation_report", "path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json", "sha256": "cf51b8110aee64e55c2504bbfb25340da5c471bb6f2214005dbf6141d0560bba"},
+    {"role": "presentation", "path": "runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md", "sha256": "50cabea217970376aafaa8909e0e08f5743c6cdffd83c27da8469b800f2a3076"}
+  ],
+  "response_locations": ["runs/gate4_public_benchmark_authoritative_20260908/FINDINGS.md"],
+  "review": {"reviewer": "execution-agent public numerical reconstruction", "report_path": "runs/gate4_public_benchmark_authoritative_20260908/VALIDATION_REPORT.json", "independent": false},
+  "blocker": {"missing_requirement": "Exact BCC occupation membership under B02, verified N03 dependency, and final manuscript integration.", "attempts": "Executed the independent CPS analogue and same-support conditional extensions, validated 60 public numerical and contract checks, and documented every alignment gap.", "claim_impact": "The reconstructed public comparison is complete, but it is not an exact BCC replication and cannot be promoted to VERIFIED while B02 and N03 remain unresolved.", "next_step": "Integrate the independently reconstructed benchmark with its exact alignment caveats and close the upstream dependencies."},
+  "approval": null
+}
