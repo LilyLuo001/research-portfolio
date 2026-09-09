@@ -217,6 +217,28 @@ def test_missing_relationship_is_refused(tmp_path):
         MOD.aggregate_year(2024, path, bridge, {"0010"})
 
 
+def test_documented_negative_replicate_weights_are_preserved(tmp_path):
+    frame = pd.DataFrame({
+        "AGEP": [23], "ESR": [1], "OCCP": ["0010"], "COW": [1],
+        "WKHP": [40], "RELSHIPP": [20],
+    })
+    weights = weight_frame(1)
+    weights.loc[0, "PWGTP36"] = -3
+    frame = pd.concat([frame, weights], axis=1)
+    path = tmp_path / "acs_2024.zip"
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("psam_pusa.csv", frame.to_csv(index=False))
+    bridge = pd.DataFrame({
+        "census_2010": ["0010"], "census_2018": ["0010"],
+        "bridge_weight": [1.0],
+    })
+    cells, receipt = MOD.aggregate_year(2024, path, bridge, {"0010"})
+    all_employed = cells.loc[cells.population.eq("all_employed")]
+    assert all_employed.PWGTP36.sum() == -3
+    assert receipt["records_with_negative_replicate_weight"] == 1
+    assert receipt["negative_replicate_weight_entries"] == 1
+
+
 def test_membership_definitions_have_fixed_expected_support():
     definitions, audit = MOD.load_memberships(
         MOD.ROOT / "yax/revision/substantive_v3_20260906/runs/gate1_baseline/results/REBUILT_TREATMENT_MEMBERSHIP.csv",

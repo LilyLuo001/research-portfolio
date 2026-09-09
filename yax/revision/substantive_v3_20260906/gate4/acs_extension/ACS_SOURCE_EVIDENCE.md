@@ -24,6 +24,10 @@ Checked 2026-09-08. These are source facts used by
 - [2024 one-year PUMS user guide](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/2024ACS_PUMS_User_Guide.pdf),
   pages 10--11: use `PWGTP` for person estimates and `PWGTP1`--`PWGTP80` for
   replicate estimates; the SDR variance is `(4/80) sum_r (theta_r-theta)^2`.
+- [2021 one-year PUMS accuracy documentation](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/accuracy/2021AccuracyPUMS.pdf)
+  states that the 80 PUMS replicate weights may be positive, zero, or negative,
+  while full-sample weights are never negative. Negative released replicate
+  weights are therefore retained rather than treated as corrupt observations.
 - [ACS 2020 experimental-PUMS page](https://www.census.gov/programs-surveys/acs/data/experimental-data/2020-1-year-pums.html):
   2020 is explicitly an experimental product, not an ordinary one-year wave.
 - [2026 ACS updates](https://www.census.gov/programs-surveys/acs/news/updates/2026.html):

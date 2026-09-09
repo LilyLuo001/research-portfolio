@@ -35,6 +35,10 @@ vintage-specific relationship field (`RELP` in 2017--2018 and `RELSHIPP` from
 2019), `PWGTP`, and `PWGTP1` through `PWGTP80`. The relationship codes identify
 institutional and noninstitutional group-quarters residents directly in the
 person file. Each input ZIP is hashed.
+Official successive-difference replicate weights may be positive, zero, or
+negative; the runner preserves them as released, requires every full and
+replicate weight to be finite, and requires the analysis record's full
+`PWGTP` to be positive.
 The output receipt records URLs, byte sizes, ZIP member names, uncompressed
 sizes, and ZIP-directory CRC32 values. No household or person identifier is
 read.

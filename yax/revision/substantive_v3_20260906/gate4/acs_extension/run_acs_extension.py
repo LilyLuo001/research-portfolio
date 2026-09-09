@@ -169,6 +169,8 @@ def aggregate_year(year: int, path: Path, bridge: pd.DataFrame,
         "source_rows_with_supported_route": 0,
         "source_rows_with_full_supported_route": 0,
         "source_rows_with_partial_supported_route": 0,
+        "records_with_negative_replicate_weight": 0,
+        "negative_replicate_weight_entries": 0,
         "valid_occupation_full_weight_stock": 0.0,
         "routed_supported_full_weight_stock": 0.0,
     }
@@ -210,9 +212,15 @@ def aggregate_year(year: int, path: Path, bridge: pd.DataFrame,
                     masks = {name: mask.loc[keep] for name, mask in masks.items()}
                     if chunk.empty:
                         continue
-                    require(np.isfinite(weights.to_numpy(float)).all() and
-                            (weights.to_numpy(float) >= 0).all(),
+                    weight_values = weights.to_numpy(float)
+                    require(np.isfinite(weight_values).all() and
+                            (weight_values[:, 0] > 0).all(),
                             f"{year} has invalid full or replicate person weights")
+                    negative_replicates = weight_values[:, 1:] < 0
+                    counters["records_with_negative_replicate_weight"] += int(
+                        negative_replicates.any(axis=1).sum())
+                    counters["negative_replicate_weight_entries"] += int(
+                        negative_replicates.sum())
                     chunk["source_occ"] = valid_occ(chunk.OCCP)
                     occ_keep = chunk.source_occ.notna()
                     counters["valid_occupation_rows"] += int(occ_keep.sum())

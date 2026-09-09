@@ -12,6 +12,12 @@ group-quarters residents. This changes only the household-only sensitivity's
 input construction; the populations, exposure definitions, estimands, support,
 and inference rules are unchanged.
 
+The corrected job then stopped on released negative replicate-weight values.
+Official ACS accuracy documentation confirms that negative SDR replicate
+weights are valid. The input guard now requires finite replicate weights and a
+positive full person weight, preserves the signed replicate values, and records
+their incidence. No estimate from either failed attempt was produced.
+
 ## Scientific checks completed
 
 - The BCC comparison target is a Q5-minus-Q1 difference in 2022-to-2024
