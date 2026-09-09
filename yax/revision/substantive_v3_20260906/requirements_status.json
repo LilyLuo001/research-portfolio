@@ -5439,7 +5439,7 @@
         "S05"
       ],
       "status": "IMPLEMENTED_UNRUN",
-      "summary": "Specified and implemented a focused annual ACS extension using ordinary one-year 2017-2019 and 2021-2024 PUMS, BCC-aligned 2022-to-2024 growth contrasts, official 80-replicate SDR inference, fixed exposure assignments, explicit support graphs, pooled and family-year young-relative models, and a subframe-cycle sensitivity. All public ACS inputs are acquired. Failed attempts published no result; a same-score numerical correction now handles valid signed SDR weights without clipping or dropping cells, and a fresh run is pending.",
+      "summary": "Specified and implemented a focused annual ACS extension using ordinary one-year 2017-2019 and 2021-2024 PUMS, BCC-aligned 2022-to-2024 growth contrasts, official 80-replicate SDR inference, fixed exposure assignments, explicit support graphs, pooled and family-year young-relative models, and a subframe-cycle sensitivity. All public ACS inputs are acquired. Failed attempts published no result; the same-score numerical path now handles valid signed SDR weights and initializes from the certified positive-stock full-weight rows without clipping or dropping replicate cells. A fresh run is pending.",
       "evidence": [
         {
           "role": "specification",
@@ -5454,7 +5454,7 @@
         {
           "role": "code",
           "path": "gate4/acs_extension/run_acs_extension.py",
-          "sha256": "b82129e16d6e7b63978d3f5d1da16cbad8aeeb3d92832980cf0d829c628dcbbe"
+      "sha256": "635629a0c24529140f32e7e940bd2f8b9143f44b9a5fa93a51f4c59592160995"
         },
         {
           "role": "validation_code",
@@ -5464,7 +5464,7 @@
         {
           "role": "verification_report",
           "path": "gate4/acs_extension/PREEXECUTION_AUDIT.md",
-          "sha256": "10112aba3dd4d115cff84e96b7d88bf37e3404f6fbcf13df3eca7fdebcea29f9"
+      "sha256": "cafbb3f4ea495374115d6c98e667bd70adccdcea3e174ea7afd8eda994e57bde"
         }
       ],
       "response_locations": [
@@ -6050,12 +6050,12 @@
         {
           "role": "delivery_artifact",
           "path": "responses/COMMENT_RESPONSE_MATRIX.csv",
-          "sha256": "0d680941dd35808bf24aaf052aadbdb6afaa595a0a3497fb3e3fd9f00034024b"
+          "sha256": "363a173fbf1b47dbc55fc45e90667f86594ee77acf472c6d633dfdd429d2a79d"
         },
         {
           "role": "validation_report",
           "path": "responses/COMMENT_RESPONSE_MATRIX_VALIDATION.json",
-          "sha256": "893474a01b3728fab67b80f123dd98e31e7fcccdfb2876507441fa2ca0bb3118"
+          "sha256": "abe8c0f350ea226811bc7876dda4140dc08a862de795fcd6044228623c619b9a"
         },
         {
           "role": "code",

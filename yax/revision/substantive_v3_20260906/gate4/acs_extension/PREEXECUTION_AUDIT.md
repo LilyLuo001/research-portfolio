@@ -32,6 +32,20 @@ weighted grouped-logit score from the certified full-weight solution, and
 requires score and local-curvature certificates. The main estimator, age
 groups, treatment, support, calendars, outcomes and SDR formula do not change.
 
+The first run of that signed-score implementation stopped before publishing an
+output because its initializer tried to reconstruct the full-weight nuisance
+surface on cells with zero full-weight stock. The shared estimator deliberately
+stores a neutral fitted probability on such unused cells; that placeholder is
+not part of the fitted linear predictor and need not be additive in the fixed
+effects. The corrected initializer reconstructs the certified full-weight
+nuisance effects only on the estimator's positive-stock rows, then uses those
+effects to initialize every replicate row. A regression test now sets a
+full-weight cell to zero, makes it positive in a replicate, and verifies both
+pooled and family-year coefficients against an independent explicit-dummy
+Newton solution. No empirical output or transient coefficient from the failed
+run was published or inspected. The estimand, estimating rows in each
+replicate, score, and final acceptance tolerances remain unchanged.
+
 ## Scientific checks completed
 
 - The BCC comparison target is a Q5-minus-Q1 difference in 2022-to-2024
@@ -82,6 +96,8 @@ empirical result, or independent review.
 The signed-score implementation is checked against the ordinary estimator on
 nonnegative weights and against a separate explicit-dummy Newton solution on
 synthetic signed cells, under both pooled and family-year structures. The
+initializer is also checked when a zero-stock full-weight cell becomes active
+under a replicate weight. The
 independent output validator recomputes every SDR variance and paired variance
 and rejects any replicate fit with a score over `1e-8` or nonpositive certified
 local curvature. Passing public-data evidence remains outstanding until the

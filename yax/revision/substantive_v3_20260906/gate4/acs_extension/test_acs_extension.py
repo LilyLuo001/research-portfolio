@@ -285,7 +285,8 @@ def test_signed_replicate_solver_matches_ordinary_fit_when_weights_are_nonnegati
     ordinary = MOD.fit_annual(
         young, older, quintiles, families, years, structure)
     signed = MOD.fit_annual_signed_replicate(
-        young, older, quintiles, families, years, structure, ordinary)
+        young, older, quintiles, families, years, structure, ordinary,
+        young + older)
     assert signed.beta == pytest.approx(ordinary.beta, abs=2e-8)
     assert signed.maximum_normalized_score <= 1e-8
     assert signed.negative_young_cell_count == 0
@@ -346,7 +347,8 @@ def test_signed_replicate_solver_keeps_negative_cells_and_certifies_score(struct
     young_rep[1, 1] = -10.0
     older_rep[1, 1] = 5.0
     signed = MOD.fit_annual_signed_replicate(
-        young_rep, older_rep, quintiles, families, years, structure, ordinary)
+        young_rep, older_rep, quintiles, families, years, structure, ordinary,
+        young + older)
     assert np.isfinite(signed.beta).all()
     assert signed.maximum_normalized_score <= 1e-8
     assert signed.negative_young_cell_count == 2
@@ -358,6 +360,31 @@ def test_signed_replicate_solver_keeps_negative_cells_and_certifies_score(struct
     reference = dense_signed_score_reference(
         young_rep, older_rep, quintiles, families, years, structure)
     assert signed.beta == pytest.approx(reference, abs=2e-8)
+
+
+@pytest.mark.parametrize("structure", ["pooled", "family_year"])
+def test_signed_replicate_initializer_ignores_full_weight_zero_cells(structure):
+    years = (2017, 2018, 2023, 2024)
+    quintiles = np.tile(np.arange(1, 6), 2)
+    families = np.asarray(["11"] * 5 + ["15"] * 5)
+    total = np.full((10, 4), 1000.0)
+    young = np.full((10, 4), 300.0)
+    total[0, 0] = 0.0
+    young[0, 0] = 0.0
+    older = total - young
+    ordinary = MOD.fit_annual(
+        young, older, quintiles, families, years, structure)
+    young_rep = young.copy()
+    older_rep = older.copy()
+    young_rep[0, 0] = 250.0
+    older_rep[0, 0] = 750.0
+    signed = MOD.fit_annual_signed_replicate(
+        young_rep, older_rep, quintiles, families, years, structure, ordinary,
+        total)
+    reference = dense_signed_score_reference(
+        young_rep, older_rep, quintiles, families, years, structure)
+    assert signed.beta == pytest.approx(reference, abs=2e-8)
+    assert signed.maximum_normalized_score <= 1e-8
 
 
 def test_family_multiplier_support_is_six_point_unit_variance():

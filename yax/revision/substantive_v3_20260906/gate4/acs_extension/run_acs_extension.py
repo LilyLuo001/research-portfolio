@@ -536,9 +536,15 @@ def _contiguous_codes(labels: np.ndarray) -> tuple[np.ndarray, int]:
 
 
 def _effect_components(first: np.ndarray, second: np.ndarray,
-                       n_first: int, n_second: int
+                       n_first: int, n_second: int,
+                       active: np.ndarray | None = None,
                        ) -> tuple[list[np.ndarray], list[np.ndarray]]:
     """Return connected components of the two-way fixed-effect graph."""
+    if active is None:
+        active = np.ones(len(first), bool)
+    active = np.asarray(active, bool)
+    require(active.shape == first.shape and bool(active.any()),
+            "fixed-effect component mask is invalid")
     parent = np.arange(n_first + n_second, dtype=int)
 
     def find(value: int) -> int:
@@ -552,7 +558,7 @@ def _effect_components(first: np.ndarray, second: np.ndarray,
         if left_root != right_root:
             parent[right_root] = left_root
 
-    for left, right in zip(first, second):
+    for left, right in zip(first[active], second[active]):
         union(int(left), n_first + int(right))
     first_groups: dict[int, list[int]] = {}
     second_groups: dict[int, list[int]] = {}
@@ -579,23 +585,32 @@ def _anchor_effects(first_effect: np.ndarray, second_effect: np.ndarray,
 def _initial_effects(linear_nuisance: np.ndarray, first: np.ndarray,
                      second: np.ndarray, n_first: int, n_second: int,
                      first_components: list[np.ndarray],
-                     second_components: list[np.ndarray]
+                     second_components: list[np.ndarray],
+                     active: np.ndarray | None = None,
                      ) -> tuple[np.ndarray, np.ndarray]:
     """Recover additive nuisance effects from a certified full-weight fit."""
+    if active is None:
+        active = np.ones(len(first), bool)
+    active = np.asarray(active, bool)
+    require(active.shape == first.shape and bool(active.any()),
+            "full-weight active-cell mask is invalid")
     first_effect = np.zeros(n_first, float)
     second_effect = np.zeros(n_second, float)
-    first_count = np.bincount(first, minlength=n_first).astype(float)
-    second_count = np.bincount(second, minlength=n_second).astype(float)
+    first_active = first[active]
+    second_active = second[active]
+    nuisance_active = linear_nuisance[active]
+    first_count = np.bincount(first_active, minlength=n_first).astype(float)
+    second_count = np.bincount(second_active, minlength=n_second).astype(float)
     require(np.all(first_count > 0) and np.all(second_count > 0),
             "fixed-effect graph loses a level")
     for _ in range(1000):
         prior_first = first_effect.copy()
         prior_second = second_effect.copy()
         first_effect = np.bincount(
-            first, weights=linear_nuisance - second_effect[second],
+            first_active, weights=nuisance_active - second_effect[second_active],
             minlength=n_first) / first_count
         second_effect = np.bincount(
-            second, weights=linear_nuisance - first_effect[first],
+            second_active, weights=nuisance_active - first_effect[first_active],
             minlength=n_second) / second_count
         _anchor_effects(first_effect, second_effect,
                         first_components, second_components)
@@ -604,7 +619,8 @@ def _initial_effects(linear_nuisance: np.ndarray, first: np.ndarray,
         if movement <= 1e-12:
             break
     reconstruction = first_effect[first] + second_effect[second]
-    require(float(np.max(np.abs(reconstruction - linear_nuisance))) <= 1e-7,
+    require(float(np.max(np.abs(
+        reconstruction[active] - linear_nuisance[active]))) <= 1e-7,
             "full-weight nuisance effects cannot be reconstructed")
     return first_effect, second_effect
 
@@ -641,7 +657,7 @@ def _signed_weighted_absorb(matrix: np.ndarray, weight: np.ndarray,
 def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
                                 quintiles: np.ndarray, families: np.ndarray,
                                 years: tuple[int, ...], structure: str,
-                                full_fit: Any,
+                                full_fit: Any, full_total: np.ndarray,
                                 tolerance: float = 1e-9,
                                 max_iterations: int = 5000
                                 ) -> SignedReplicateFit:
@@ -665,17 +681,22 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
     require(float(total.sum()) > 0.0, "signed replicate total stock is nonpositive")
     first, n_first = _contiguous_codes(design.first_labels)
     second, n_second = _contiguous_codes(design.second_labels)
-    first_components, second_components = _effect_components(
-        first, second, n_first, n_second)
     beta = np.asarray(full_fit.beta, float).copy()
     full_probability = np.asarray(full_fit.fitted_probability, float).reshape(-1)
-    require(beta.shape == (x.shape[1],) and full_probability.shape == young.shape,
+    full_total = np.asarray(full_total, float).reshape(-1)
+    require(beta.shape == (x.shape[1],) and
+            full_probability.shape == young.shape == full_total.shape and
+            np.all(np.isfinite(full_total)) and np.all(full_total >= 0),
             "full-weight initializer differs from replicate design")
+    full_active = full_total > 0
+    require(bool(full_active.any()), "full-weight initializer has no active cells")
+    first_components, second_components = _effect_components(
+        first, second, n_first, n_second, full_active)
     eta = np.log(np.clip(full_probability, 1e-12, 1.0 - 1e-12) /
                  np.clip(1.0 - full_probability, 1e-12, 1.0))
     first_effect, second_effect = _initial_effects(
         eta - x @ beta, first, second, n_first, n_second,
-        first_components, second_components)
+        first_components, second_components, full_active)
     converged = False
     maximum_normalized_score = math.inf
     min_first_information = math.nan
@@ -836,6 +857,12 @@ def panel_results(cells: pd.DataFrame, definitions: dict[str, pd.DataFrame]
                 for structure in STRUCTURES:
                     fit = fit_annual(young, older, q, families, years, structure)
                     estimate = float(fit.beta[3])
+                    print(
+                        "ACS_PANEL_FULL_FIT "
+                        f"{definition_name}/{population}/{calendar_rule}/{structure} "
+                        f"support={len(occupations)}",
+                        flush=True,
+                    )
                     occ_if = fit.occupation_influence[:, 3]
                     family_if = fit.family_influence[:, 3]
                     model_id = "__".join((definition_name, population, calendar_rule, structure))
@@ -851,7 +878,8 @@ def panel_results(cells: pd.DataFrame, definitions: dict[str, pd.DataFrame]
                             older_rep[:, year_index] = older_cube[
                                 keep, year_location[year], replicate]
                             replicate_fit = fit_annual_signed_replicate(
-                                young_rep, older_rep, q, families, years, structure, fit)
+                                young_rep, older_rep, q, families, years, structure, fit,
+                                young_full[keep] + older_full[keep])
                             value = float(replicate_fit.beta[3])
                             delta = value - estimate
                             deltas.append(delta)
@@ -880,6 +908,12 @@ def panel_results(cells: pd.DataFrame, definitions: dict[str, pd.DataFrame]
                                 "replicate_nonpositive_total_cells":
                                     replicate_fit.nonpositive_total_cell_count,
                             })
+                        print(
+                            "ACS_PANEL_REPLICATES "
+                            f"{definition_name}/{population}/{calendar_rule}/{structure} "
+                            f"year={year} complete={REPLICATES}",
+                            flush=True,
+                        )
                     survey_se = math.sqrt(max(sdr_variance(deltas), 0.0))
                     row = {
                         "model_id": model_id, "definition": definition_name,
