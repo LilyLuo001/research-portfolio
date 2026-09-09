@@ -562,9 +562,9 @@ def _effect_components(first: np.ndarray, second: np.ndarray,
         union(int(left), n_first + int(right))
     first_groups: dict[int, list[int]] = {}
     second_groups: dict[int, list[int]] = {}
-    for value in range(n_first):
+    for value in sorted(set(first[active].tolist())):
         first_groups.setdefault(find(value), []).append(value)
-    for value in range(n_second):
+    for value in sorted(set(second[active].tolist())):
         second_groups.setdefault(find(n_first + value), []).append(value)
     roots = sorted(first_groups)
     require(set(roots) == set(second_groups), "fixed-effect graph has an empty side")
@@ -601,17 +601,23 @@ def _initial_effects(linear_nuisance: np.ndarray, first: np.ndarray,
     nuisance_active = linear_nuisance[active]
     first_count = np.bincount(first_active, minlength=n_first).astype(float)
     second_count = np.bincount(second_active, minlength=n_second).astype(float)
-    require(np.all(first_count > 0) and np.all(second_count > 0),
-            "fixed-effect graph loses a level")
+    first_observed = first_count > 0
+    second_observed = second_count > 0
     for _ in range(1000):
         prior_first = first_effect.copy()
         prior_second = second_effect.copy()
-        first_effect = np.bincount(
+        first_numerator = np.bincount(
             first_active, weights=nuisance_active - second_effect[second_active],
-            minlength=n_first) / first_count
-        second_effect = np.bincount(
+            minlength=n_first)
+        first_effect = np.divide(
+            first_numerator, first_count, out=np.zeros(n_first, float),
+            where=first_observed)
+        second_numerator = np.bincount(
             second_active, weights=nuisance_active - first_effect[first_active],
-            minlength=n_second) / second_count
+            minlength=n_second)
+        second_effect = np.divide(
+            second_numerator, second_count, out=np.zeros(n_second, float),
+            where=second_observed)
         _anchor_effects(first_effect, second_effect,
                         first_components, second_components)
         movement = max(float(np.max(np.abs(first_effect - prior_first))),
@@ -690,13 +696,15 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
             "full-weight initializer differs from replicate design")
     full_active = full_total > 0
     require(bool(full_active.any()), "full-weight initializer has no active cells")
-    first_components, second_components = _effect_components(
+    initial_first_components, initial_second_components = _effect_components(
         first, second, n_first, n_second, full_active)
+    first_components, second_components = _effect_components(
+        first, second, n_first, n_second)
     eta = np.log(np.clip(full_probability, 1e-12, 1.0 - 1e-12) /
                  np.clip(1.0 - full_probability, 1e-12, 1.0))
     first_effect, second_effect = _initial_effects(
         eta - x @ beta, first, second, n_first, n_second,
-        first_components, second_components, full_active)
+        initial_first_components, initial_second_components, full_active)
     converged = False
     maximum_normalized_score = math.inf
     min_first_information = math.nan

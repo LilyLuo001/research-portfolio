@@ -387,6 +387,30 @@ def test_signed_replicate_initializer_ignores_full_weight_zero_cells(structure):
     assert signed.maximum_normalized_score <= 1e-8
 
 
+def test_signed_replicate_initializer_allows_empty_full_weight_family_year():
+    years = (2017, 2018, 2023, 2024)
+    quintiles = np.tile(np.arange(1, 6), 2)
+    families = np.asarray(["11"] * 5 + ["15"] * 5)
+    total = np.full((10, 4), 1000.0)
+    young = np.full((10, 4), 300.0)
+    total[:5, 0] = 0.0
+    young[:5, 0] = 0.0
+    older = total - young
+    ordinary = MOD.fit_annual(
+        young, older, quintiles, families, years, "family_year")
+    young_rep = young.copy()
+    older_rep = older.copy()
+    young_rep[:5, 0] = 250.0
+    older_rep[:5, 0] = 750.0
+    signed = MOD.fit_annual_signed_replicate(
+        young_rep, older_rep, quintiles, families, years, "family_year",
+        ordinary, total)
+    reference = dense_signed_score_reference(
+        young_rep, older_rep, quintiles, families, years, "family_year")
+    assert signed.beta == pytest.approx(reference, abs=2e-8)
+    assert signed.maximum_normalized_score <= 1e-8
+
+
 def test_family_multiplier_support_is_six_point_unit_variance():
     support = np.asarray(MOD.CORE.WEBB_SUPPORT, float)
     assert len(support) == 6

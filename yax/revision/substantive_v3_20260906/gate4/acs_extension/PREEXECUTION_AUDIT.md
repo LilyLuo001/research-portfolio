@@ -46,6 +46,18 @@ Newton solution. No empirical output or transient coefficient from the failed
 run was published or inspected. The estimand, estimating rows in each
 replicate, score, and final acceptance tolerances remain unchanged.
 
+The next run advanced through several complete specification blocks and then
+stopped before publication because one broader-support family-by-year effect
+had no positive full-weight cell.  Valid signed replicate weights can activate
+such a row, so the initializer now reconstructs only the fixed-effect levels
+observed under full weights, initializes absent levels neutrally, and applies
+the model's full structural normalization during the replicate solve.  A
+regression test removes an entire family-year under full weights, activates it
+in the replicate, and compares the resulting coefficient with an independent
+explicit-dummy Newton solution.  No output directory or empirical estimate
+from the failed run was published or inspected, and no scientific input,
+estimand, estimating row, score, or acceptance tolerance changed.
+
 ## Scientific checks completed
 
 - The BCC comparison target is a Q5-minus-Q1 difference in 2022-to-2024
