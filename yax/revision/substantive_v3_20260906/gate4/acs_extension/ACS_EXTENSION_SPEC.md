@@ -30,9 +30,11 @@ experimental 2020 product is not spliced into the series. As verified on
 2026-09-08, 2024 remains the latest released one-year PUMS; no five-year file
 may substitute for a missing annual file.
 
-Required person fields are `AGEP`, `ESR`, `OCCP`, `COW`, `WKHP`, the type-of-
-unit field (`TYPE` in 2017--2019 and `TYPEHUGQ` from 2021), `PWGTP`, and
-`PWGTP1` through `PWGTP80`. Each input ZIP is hashed.
+Required person fields are `AGEP`, `ESR`, `OCCP`, `COW`, `WKHP`, the
+vintage-specific relationship field (`RELP` in 2017--2018 and `RELSHIPP` from
+2019), `PWGTP`, and `PWGTP1` through `PWGTP80`. The relationship codes identify
+institutional and noninstitutional group-quarters residents directly in the
+person file. Each input ZIP is hashed.
 The output receipt records URLs, byte sizes, ZIP member names, uncompressed
 sizes, and ZIP-directory CRC32 values. No household or person identifier is
 read.
@@ -44,8 +46,9 @@ forward are Census-2018 codes and are used directly. Every descendant of one
 official route share. No surviving partial route is renormalized.
 
 Group-quarters persons remain in the all-employed benchmark, matching the
-national ACS person universe. A household-only sensitivity using
-`TYPEHUGQ == 1` quantifies their contribution.
+national ACS person universe. A household-only sensitivity excludes `RELP`
+16--17 or `RELSHIPP` 37--38, as appropriate for the year, and quantifies their
+contribution.
 
 ## 3. Employment populations
 

@@ -136,7 +136,7 @@ def test_cell_weight_cube_orders_occupation_year_weight():
 def test_zip_member_selection_and_aggregate_current_year(tmp_path):
     frame = pd.DataFrame({
         "AGEP": [23, 40], "ESR": [1, 4], "OCCP": ["0010", "0020"],
-        "COW": [1, 1], "WKHP": [40, 40], "TYPEHUGQ": [1, 2],
+        "COW": [1, 1], "WKHP": [40, 40], "RELSHIPP": [20, 37],
     })
     frame = pd.concat([frame, weight_frame(2)], axis=1)
     path = tmp_path / "acs.zip"
@@ -156,7 +156,7 @@ def test_zip_member_selection_and_aggregate_current_year(tmp_path):
 def test_2017_routes_replicates_without_renormalizing(tmp_path):
     frame = pd.DataFrame({
         "AGEP": [23], "ESR": [1], "OCCP": ["0010"], "COW": [1],
-        "WKHP": [40], "TYPE": [1],
+        "WKHP": [40], "RELP": [0],
     })
     frame = pd.concat([frame, weight_frame(1, 20.0)], axis=1)
     path = tmp_path / "acs.zip"
@@ -171,6 +171,50 @@ def test_2017_routes_replicates_without_renormalizing(tmp_path):
     assert all_emp.PWGTP.tolist() == pytest.approx([5.0, 15.0])
     assert all_emp.PWGTP80.tolist() == pytest.approx([5.2, 15.6])
     assert all_emp.respondent_equivalent.tolist() == pytest.approx([0.25, 0.75])
+
+
+@pytest.mark.parametrize(
+    ("year", "relationship_field", "relationships"),
+    [(2018, "RELP", [0, 16, 17]), (2019, "RELSHIPP", [20, 37, 38])],
+)
+def test_person_relationship_field_identifies_group_quarters(
+        tmp_path, year, relationship_field, relationships):
+    frame = pd.DataFrame({
+        "AGEP": [23, 23, 23], "ESR": [1, 1, 1],
+        "OCCP": ["0010", "0010", "0010"], "COW": [1, 1, 1],
+        "WKHP": [40, 40, 40], relationship_field: relationships,
+    })
+    frame = pd.concat([frame, weight_frame(3)], axis=1)
+    path = tmp_path / f"acs_{year}.zip"
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("psam_pusa.csv", frame.to_csv(index=False))
+    bridge = pd.DataFrame({
+        "census_2010": ["0010"], "census_2018": ["0010"],
+        "bridge_weight": [1.0],
+    })
+    cells, _ = MOD.aggregate_year(year, path, bridge, {"0010"})
+    all_employed = cells.loc[cells.population.eq("all_employed"), "PWGTP"].sum()
+    household_only = cells.loc[
+        cells.population.eq("all_employed_household_only"), "PWGTP"].sum()
+    assert all_employed == 30
+    assert household_only == 10
+
+
+def test_missing_relationship_is_refused(tmp_path):
+    frame = pd.DataFrame({
+        "AGEP": [23], "ESR": [1], "OCCP": ["0010"], "COW": [1],
+        "WKHP": [40], "RELSHIPP": [None],
+    })
+    frame = pd.concat([frame, weight_frame(1)], axis=1)
+    path = tmp_path / "acs_2024.zip"
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("psam_pusa.csv", frame.to_csv(index=False))
+    bridge = pd.DataFrame({
+        "census_2010": ["0010"], "census_2018": ["0010"],
+        "bridge_weight": [1.0],
+    })
+    with pytest.raises(RuntimeError, match="invalid RELSHIPP"):
+        MOD.aggregate_year(2024, path, bridge, {"0010"})
 
 
 def test_membership_definitions_have_fixed_expected_support():

@@ -36,9 +36,13 @@ Checked 2026-09-08. These are source facts used by
 
 ## Variable and occupation vintages
 
-- Official one-year PUMS metadata show `TYPE` as the type-of-unit field in
-  2017--2019 and `TYPEHUGQ` from 2021 onward. The runner requires the proper
-  vintage-specific name and normalizes it only after reading.
+- The national person CSVs do not carry the housing-record `TYPE` or
+  `TYPEHUGQ` field. The [2017 PUMS documentation](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2017.pdf)
+  identifies group-quarters residents through `RELP` codes 16--17; the
+  [2019--2023 PUMS dictionary](https://www2.census.gov/programs-surveys/acs/tech_docs/pums/data_dict/PUMS_Data_Dictionary_2019-2023.pdf)
+  uses `RELSHIPP` codes 37--38. The runner uses those vintage-specific person
+  fields for the household-only sensitivity and does not read or join
+  identifiers.
 - [Census occupation guidance](https://www.census.gov/topics/employment/industry-occupation/about/occupation.html)
   places the 2010 occupation list through the 2017 ACS and the 2018 occupation
   list beginning with the 2018 ACS.

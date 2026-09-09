@@ -180,13 +180,20 @@ def aggregate_year(year: int, path: Path, bridge: pd.DataFrame,
                 "uncompressed_bytes": info.file_size,
             })
             with archive.open(member) as stream:
-                type_field = "TYPE" if year <= 2019 else "TYPEHUGQ"
-                input_columns = BASE_INPUT_COLUMNS + (type_field,) + WEIGHT_COLUMNS
+                relationship_field = "RELP" if year <= 2018 else "RELSHIPP"
+                input_columns = BASE_INPUT_COLUMNS + (relationship_field,) + WEIGHT_COLUMNS
                 reader = pd.read_csv(stream, usecols=list(input_columns), chunksize=200_000,
                                      dtype={"OCCP": str}, low_memory=False)
                 for chunk in reader:
-                    if type_field != "TYPEHUGQ":
-                        chunk = chunk.rename(columns={type_field: "TYPEHUGQ"})
+                    relationship = pd.to_numeric(chunk[relationship_field], errors="coerce")
+                    require(relationship.notna().all(),
+                            f"{year} has missing or invalid {relationship_field}")
+                    institutional_code, noninstitutional_code = (
+                        (16, 17) if relationship_field == "RELP" else (37, 38))
+                    chunk["TYPEHUGQ"] = np.select(
+                        [relationship.eq(institutional_code),
+                         relationship.eq(noninstitutional_code)],
+                        [2, 3], default=1)
                     counters["raw_rows"] += len(chunk)
                     age = pd.to_numeric(chunk.AGEP, errors="coerce")
                     age_keep = age.between(22, 65)

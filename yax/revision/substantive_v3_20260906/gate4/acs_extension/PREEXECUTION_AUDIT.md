@@ -5,6 +5,13 @@ Date: 2026-09-08 Asia/Shanghai
 Status: **implemented and locally tested; public-data execution not yet run**.
 No ACS outcome was opened while writing or correcting this package.
 
+The first protected execution stopped before reading any outcome row because
+the runner requested a housing-record type field from the person CSV. The
+runner now uses the vintage-specific person relationship field to identify
+group-quarters residents. This changes only the household-only sensitivity's
+input construction; the populations, exposure definitions, estimands, support,
+and inference rules are unchanged.
+
 ## Scientific checks completed
 
 - The BCC comparison target is a Q5-minus-Q1 difference in 2022-to-2024
