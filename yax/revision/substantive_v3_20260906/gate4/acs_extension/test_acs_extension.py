@@ -332,6 +332,46 @@ def dense_signed_score_reference(young, older, quintiles, families, years, struc
     return theta[-4:]
 
 
+def dense_active_family_year_reference(young, older, quintiles, families, years):
+    """Independent rank-reduced reference when one family-year has zero weight."""
+    n_occ, n_year = young.shape
+    total = np.asarray(young, float) + np.asarray(older, float)
+    active = total.reshape(-1) > 0
+    occupation = np.repeat(np.arange(n_occ), n_year)[active]
+    year = np.tile(np.arange(n_year), n_occ)[active]
+    family_levels = {value: index for index, value in enumerate(sorted(set(families)))}
+    family_by_occ = np.asarray([family_levels[value] for value in families], int)
+    family = np.repeat(family_by_occ, n_year)[active]
+    occupation_dummies = np.eye(n_occ)[occupation]
+    second_columns = []
+    for family_value in sorted(set(family.tolist())):
+        observed_years = sorted(set(year[family == family_value].tolist()))
+        for year_value in observed_years[1:]:
+            second_columns.append(
+                ((family == family_value) & (year == year_value)).astype(float))
+    second_dummies = np.column_stack(second_columns)
+    design = MOD.annual_design(quintiles, families, years, "family_year")
+    matrix = np.column_stack(
+        [occupation_dummies, second_dummies, design.regressors[active]])
+    y = np.asarray(young, float).reshape(-1)[active]
+    total_active = total.reshape(-1)[active]
+    assert np.linalg.matrix_rank(matrix) == matrix.shape[1]
+    theta = np.zeros(matrix.shape[1])
+    for _ in range(200):
+        probability = 1.0 / (1.0 + np.exp(-np.clip(matrix @ theta, -700, 700)))
+        score = matrix.T @ (y - total_active * probability)
+        weight = total_active * probability * (1.0 - probability)
+        information = matrix.T @ (weight[:, None] * matrix)
+        theta += np.linalg.solve(information, score)
+        if np.max(np.abs(score)) / max(1.0, total_active.sum()) <= 1e-11:
+            break
+    final_probability = 1.0 / (
+        1.0 + np.exp(-np.clip(matrix @ theta, -700, 700)))
+    final_score = matrix.T @ (y - total_active * final_probability)
+    assert np.max(np.abs(final_score)) / max(1.0, total_active.sum()) <= 1e-10
+    return theta[-4:]
+
+
 @pytest.mark.parametrize("structure", ["pooled", "family_year"])
 def test_signed_replicate_solver_keeps_negative_cells_and_certifies_score(structure):
     years = (2017, 2018, 2023, 2024)
@@ -409,6 +449,36 @@ def test_signed_replicate_initializer_allows_empty_full_weight_family_year():
         young_rep, older_rep, quintiles, families, years, "family_year")
     assert signed.beta == pytest.approx(reference, abs=2e-8)
     assert signed.maximum_normalized_score <= 1e-8
+
+
+def test_signed_replicate_solver_drops_only_empty_replicate_family_year_effect():
+    years = (2017, 2018, 2023, 2024)
+    quintiles = np.tile(np.arange(1, 6), 2)
+    families = np.asarray(["11"] * 5 + ["15"] * 5)
+    total = np.full((10, 4), 1000.0)
+    young = np.empty_like(total)
+    for occ in range(10):
+        for year in range(4):
+            eta = -1.1 + 0.04 * occ + 0.03 * year
+            if year >= 2:
+                eta += 0.025 * quintiles[occ]
+            young[occ, year] = total[occ, year] / (1.0 + np.exp(-eta))
+    older = total - young
+    ordinary = MOD.fit_annual(
+        young, older, quintiles, families, years, "family_year")
+    young_rep = young.copy()
+    older_rep = older.copy()
+    young_rep[:5, 0] = 0.0
+    older_rep[:5, 0] = 0.0
+    signed = MOD.fit_annual_signed_replicate(
+        young_rep, older_rep, quintiles, families, years, "family_year",
+        ordinary, total)
+    reference = dense_active_family_year_reference(
+        young_rep, older_rep, quintiles, families, years)
+    assert signed.beta == pytest.approx(reference, abs=2e-8)
+    assert signed.maximum_normalized_score <= 1e-8
+    assert signed.inactive_first_effect_count == 0
+    assert signed.inactive_second_effect_count == 1
 
 
 def test_family_multiplier_support_is_six_point_unit_variance():

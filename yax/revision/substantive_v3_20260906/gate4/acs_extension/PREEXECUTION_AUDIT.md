@@ -58,6 +58,20 @@ explicit-dummy Newton solution.  No output directory or empirical estimate
 from the failed run was published or inspected, and no scientific input,
 estimand, estimating row, score, or acceptance tolerance changed.
 
+The subsequent Python-3 run completed all primary YAX replicate blocks and
+stopped in the broader-support family-year block because one released replicate
+assigned exactly zero information to a family-year nuisance level.  The score
+and objective contain no contribution from such a level; requiring positive
+curvature for it incorrectly rejected a rank-reduced but otherwise identified
+replicate problem.  The correction updates and absorbs only nonzero-information
+fixed-effect levels, records how often a replicate level is inactive, and still
+fails on a zero-curvature level with nonzero score or on cancellation of
+nonzero signed curvature.  A new test removes one replicate family-year and
+matches the treatment coefficients to an independently constructed,
+rank-reduced explicit-dummy Newton solution.  No result directory was published
+by the failed run, and treatment, support, objective, SDR formula, and final
+score and curvature tolerances are unchanged.
+
 ## Scientific checks completed
 
 - The BCC comparison target is a Q5-minus-Q1 difference in 2022-to-2024
@@ -94,7 +108,7 @@ result existed when this was corrected.
 
 ## Local evidence before the first execution
 
-- Focused unit tests: 13 passed.
+- Focused unit tests: 26 passed after the recorded numerical corrections.
 - A reduced-replicate synthetic end-to-end producer run completed and its
   independent validator passed all 15 checks.
 - Python byte compilation and `git diff --check` passed.
@@ -109,7 +123,8 @@ The signed-score implementation is checked against the ordinary estimator on
 nonnegative weights and against a separate explicit-dummy Newton solution on
 synthetic signed cells, under both pooled and family-year structures. The
 initializer is also checked when a zero-stock full-weight cell becomes active
-under a replicate weight. The
+under a replicate weight, and the rank-reduced solution is checked when a
+replicate family-year receives exactly zero information. The
 independent output validator recomputes every SDR variance and paired variance
 and rejects any replicate fit with a score over `1e-8` or nonpositive certified
 local curvature. Passing public-data evidence remains outstanding until the

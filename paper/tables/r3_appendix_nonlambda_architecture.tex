@@ -1,0 +1,19 @@
+\begin{table}[!htbp]
+\centering
+\caption{Non-$\lambda$ exposure definitions on the current CPS contract}\label{tab:appendix_nonlambda_architecture}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+Exposure definition & Occupations & Pooled coefficient [95\% CI] & Alternative $-$ beta [95\% CI] & Family-month coefficient [95\% CI] & Alternative $-$ beta [95\% CI] \\
+\midrule
+AIOE, administrative/equal component & 466 & $-0.072\;[-0.143,-0.001]$ & $0.064\;[-0.025,0.152]$ & $0.065\;[-0.050,0.181]$ & $0.095\;[-0.063,0.253]$ \\
+AIOE, direct ability & 455 & $-0.099\;[-0.174,-0.024]$ & $0.027\;[-0.059,0.113]$ & $0.024\;[-0.084,0.132]$ & $0.011\;[-0.143,0.165]$ \\
+AIOE, source-employment weighted & 456 & $-0.072\;[-0.145,0.000]$ & $0.068\;[-0.020,0.157]$ & $0.071\;[-0.044,0.186]$ & $0.114\;[-0.047,0.274]$ \\
+Webb artificial intelligence & 443 & $-0.068\;[-0.160,0.023]$ & $0.067\;[-0.036,0.171]$ & $-0.079\;[-0.177,0.019]$ & $-0.036\;[-0.203,0.131]$ \\
+OECD reversed AI-skills gap & 448 & $-0.014\;[-0.096,0.067]$ & $0.119\;[-0.0004,0.238]$ & $0.069\;[-0.033,0.171]$ & $0.065\;[-0.125,0.255]$ \\
+\bottomrule
+\end{tabular}}
+\tabnote{Rows use each alternative's native finite-score support.  The outcome cells, age contrast, calendar, estimator, Webb-software control, and preperiod weighting rule are fixed.  Each beta anchor is rebuilt on exactly the alternative row's support.  Coefficients compare Q5 with Q1; intervals and paired differences use 9,999 common occupation-level Rademacher score multipliers.  A null-containing paired interval is a nondetection, not equivalence.  Continuous-score estimates and raw-to-weighted-SD scaling are preserved in the public result files.}
+\end{table}

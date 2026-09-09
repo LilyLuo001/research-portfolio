@@ -1,0 +1,81 @@
+{
+  "aioe_raw_unit": "one unit of the published occupation index standardized across source occupations without employment weighting",
+  "historical_four_row_contract_status": "RETAINED_AS_SIGNED_HISTORICAL_CONTRACT_NOT_CURRENT_OUTCOME_EVIDENCE",
+  "historical_four_row_records": [
+    {
+      "analytic_cluster_se": 0.012022699175880806,
+      "bootstrap_critical": 1.8700878277835502,
+      "bootstrap_draws": 999,
+      "bootstrap_p_value": 0.106,
+      "bootstrap_se": 0.011774614093797793,
+      "bootstrap_seed": 20270830,
+      "ci_lower": -0.04132892753188745,
+      "ci_upper": 0.0036380792399485773,
+      "coefficient": -0.018845424145969437,
+      "converged": true,
+      "iterations": 4,
+      "label": "original exposure, original support",
+      "occupations": 410,
+      "row": 1
+    },
+    {
+      "analytic_cluster_se": 0.011989413238106737,
+      "bootstrap_critical": 1.9122211627856285,
+      "bootstrap_draws": 999,
+      "bootstrap_p_value": 0.119,
+      "bootstrap_se": 0.012163951849710744,
+      "bootstrap_seed": 20270831,
+      "ci_lower": -0.042126468987181656,
+      "ci_upper": 0.0037263504593980853,
+      "coefficient": -0.019200059263891785,
+      "converged": true,
+      "iterations": 4,
+      "label": "repaired exposure, original support",
+      "occupations": 410,
+      "row": 2
+    },
+    {
+      "analytic_cluster_se": 0.012396499856508716,
+      "bootstrap_critical": 1.9842489479541552,
+      "bootstrap_draws": 999,
+      "bootstrap_p_value": 0.008,
+      "bootstrap_se": 0.012770442924548637,
+      "bootstrap_seed": 20270832,
+      "ci_lower": -0.05616266803954435,
+      "ci_upper": -0.006967184442361843,
+      "coefficient": -0.0315649262409531,
+      "converged": true,
+      "iterations": 4,
+      "label": "repaired exposure, expanded support",
+      "occupations": 495,
+      "row": 3
+    },
+    {
+      "analytic_cluster_se": 0.012980441508966052,
+      "bootstrap_critical": 1.8915168262920266,
+      "bootstrap_draws": 999,
+      "bootstrap_p_value": 0.017,
+      "bootstrap_se": 0.012666834180757428,
+      "bootstrap_seed": 20270833,
+      "ci_lower": -0.053956441794002885,
+      "ci_upper": -0.004850994740185379,
+      "coefficient": -0.02940371826709413,
+      "converged": true,
+      "iterations": 5,
+      "label": "repaired exposure, expanded support, group 15 excluded",
+      "occupations": 480,
+      "row": 4
+    }
+  ],
+  "one_raw_unit_is_percentage": false,
+  "published_implementation_error_attributed": false,
+  "raw_unit_and_weighted_sd_both_reported_in_current_models": true,
+  "reason": "No published-paper implementation is accused without inspected code.",
+  "source_hashes": {
+    "AIOE_DataAppendix.xlsx": "c123b4c64840aff3568ae6c97256678719b88a74d45b6362dbefb5af34667b95",
+    "EVIDENCE_LEDGER.md": "f01886617a47c308e1afd22c7c919a9817dbef58db57e3a2612b78c7fe9dbeac",
+    "MAPPING_DECOMPOSITION_AUDIT.csv": "60ce9e364ccf370e64283ca27626d3e375f35c0f8ee4eba4f2d7aec9ed826647"
+  },
+  "status": "PASS_W05_UNIT_AND_IMPLEMENTATION_VERIFICATION",
+  "yax_continuous_unit": "one current-support preperiod-employment-weighted SD"
+}

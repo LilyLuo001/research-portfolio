@@ -145,6 +145,10 @@ def validate(output: Path) -> dict:
         panel_reps.replicate_negative_older_cells, errors="raise").to_numpy(int)
     nonpositive_total = pd.to_numeric(
         panel_reps.replicate_nonpositive_total_cells, errors="raise").to_numpy(int)
+    inactive_first = pd.to_numeric(
+        panel_reps.replicate_inactive_first_effects, errors="raise").to_numpy(int)
+    inactive_second = pd.to_numeric(
+        panel_reps.replicate_inactive_second_effects, errors="raise").to_numpy(int)
     checks["signed_replicate_score_certificates"] = (
         len(panel_reps) == receipt.get("panel_replicate_fit_count") and
         set(panel_reps.replicate_estimator) == {
@@ -161,7 +165,11 @@ def validate(output: Path) -> dict:
         int((negative_older > 0).sum()) ==
             receipt.get("panel_replicates_with_negative_older_cells") and
         int((nonpositive_total > 0).sum()) ==
-            receipt.get("panel_replicates_with_nonpositive_total_cells"))
+            receipt.get("panel_replicates_with_nonpositive_total_cells") and
+        int((inactive_first > 0).sum()) ==
+            receipt.get("panel_replicates_with_inactive_first_effects") and
+        int((inactive_second > 0).sum()) ==
+            receipt.get("panel_replicates_with_inactive_second_effects"))
     for row in panel.itertuples(index=False):
         block = panel_reps.loc[
             panel_reps.definition.eq(row.definition) &

@@ -152,8 +152,14 @@ renormalize them. Require convergence of every occupation, calendar and
 treatment score, positive local fixed-effect and treatment curvature, and a
 maximum normalized score no larger than `1e-8`. Record those certificates and
 the incidence of negative young, negative older and nonpositive-total cells for
-every replicate fit. On ordinary nonnegative weights the signed-score path must
-numerically reproduce the standard grouped-logit estimator.
+every replicate fit. A fixed-effect level whose replicate-weight information is
+exactly zero contributes neither score nor curvature and is initialized at zero;
+it is recorded rather than treated as a failed model. Any zero-curvature level
+with a nonzero score, or any cancellation of nonzero signed curvature, remains a
+hard failure. On ordinary nonnegative weights the signed-score path must
+numerically reproduce the standard grouped-logit estimator, including an
+independent rank-reduced explicit-dummy check when a replicate family-year level
+has zero weight.
 
 ## 7. Refusal and interpretation rules
 

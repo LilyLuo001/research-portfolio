@@ -525,6 +525,8 @@ class SignedReplicateFit:
     negative_young_cell_count: int
     negative_older_cell_count: int
     nonpositive_total_cell_count: int
+    inactive_first_effect_count: int
+    inactive_second_effect_count: int
 
 
 def _contiguous_codes(labels: np.ndarray) -> tuple[np.ndarray, int]:
@@ -641,20 +643,31 @@ def _signed_weighted_absorb(matrix: np.ndarray, weight: np.ndarray,
     first_weight = np.bincount(first, weights=weight, minlength=n_first)
     second_weight = np.bincount(second, weights=weight, minlength=n_second)
     scale = max(1.0, float(np.max(np.abs(weight))))
-    require(np.all(np.abs(first_weight) > 1e-12 * scale) and
-            np.all(np.abs(second_weight) > 1e-12 * scale),
-            "signed replicate fixed-effect curvature is singular")
+    threshold = 1e-12 * scale
+    first_absolute = np.bincount(first, weights=np.abs(weight), minlength=n_first)
+    second_absolute = np.bincount(second, weights=np.abs(weight), minlength=n_second)
+    first_active = np.abs(first_weight) > threshold
+    second_active = np.abs(second_weight) > threshold
+    require(np.all((first_absolute <= threshold) | first_active) and
+            np.all((second_absolute <= threshold) | second_active),
+            "signed replicate fixed-effect curvature cancels within an active level")
     for _ in range(max_iterations):
         largest = 0.0
-        for group, denominator, count in (
-                (first, first_weight, n_first),
-                (second, second_weight, n_second)):
+        for group, denominator, active_level, count in (
+                (first, first_weight, first_active, n_first),
+                (second, second_weight, second_active, n_second)):
             for column in range(result.shape[1]):
                 numerator = np.bincount(
                     group, weights=weight * result[:, column], minlength=count)
-                adjustment = numerator / denominator
+                require(np.all(np.abs(numerator[~active_level]) <= threshold),
+                        "zero-curvature fixed effect has a nonzero projection score")
+                adjustment = np.divide(
+                    numerator, denominator, out=np.zeros(count, float),
+                    where=active_level)
                 result[:, column] -= adjustment[group]
-                largest = max(largest, float(np.max(np.abs(adjustment))))
+                if bool(active_level.any()):
+                    largest = max(
+                        largest, float(np.max(np.abs(adjustment[active_level]))))
         if largest <= tolerance:
             return result
     raise RuntimeError("signed replicate fixed-effect absorption did not converge")
@@ -698,8 +711,11 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
     require(bool(full_active.any()), "full-weight initializer has no active cells")
     initial_first_components, initial_second_components = _effect_components(
         first, second, n_first, n_second, full_active)
+    replicate_scale = max(1.0, float(np.max(np.abs(total))))
+    replicate_active = np.abs(total) > 1e-12 * replicate_scale
+    require(bool(replicate_active.any()), "signed replicate has no active cells")
     first_components, second_components = _effect_components(
-        first, second, n_first, n_second)
+        first, second, n_first, n_second, replicate_active)
     eta = np.log(np.clip(full_probability, 1e-12, 1.0 - 1e-12) /
                  np.clip(1.0 - full_probability, 1e-12, 1.0))
     first_effect, second_effect = _initial_effects(
@@ -720,11 +736,19 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
             weight = total * probability * (1.0 - probability)
             first_score = np.bincount(first, weights=residual, minlength=n_first)
             first_information = np.bincount(first, weights=weight, minlength=n_first)
-            require(np.all(np.abs(first_information) > 1e-10),
-                    "signed replicate occupation curvature is singular")
-            step = np.clip(first_score / first_information, -1.0, 1.0)
+            first_absolute = np.bincount(
+                first, weights=np.abs(weight), minlength=n_first)
+            first_active = np.abs(first_information) > 1e-10
+            require(np.all((first_absolute <= 1e-10) | first_active),
+                    "signed replicate occupation curvature cancels within an active level")
+            require(np.all(np.abs(first_score[~first_active]) <= 1e-8 * scale),
+                    "zero-curvature occupation effect has a nonzero score")
+            step = np.zeros(n_first, float)
+            step[first_active] = np.clip(
+                first_score[first_active] / first_information[first_active], -1.0, 1.0)
             first_effect += step
-            largest_step = max(largest_step, float(np.max(np.abs(step))))
+            largest_step = max(
+                largest_step, float(np.max(np.abs(step[first_active]))))
 
             eta = first_effect[first] + second_effect[second] + x @ beta
             probability = ENGINE._sigmoid(eta)
@@ -732,11 +756,19 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
             weight = total * probability * (1.0 - probability)
             second_score = np.bincount(second, weights=residual, minlength=n_second)
             second_information = np.bincount(second, weights=weight, minlength=n_second)
-            require(np.all(np.abs(second_information) > 1e-10),
-                    "signed replicate calendar curvature is singular")
-            step = np.clip(second_score / second_information, -1.0, 1.0)
+            second_absolute = np.bincount(
+                second, weights=np.abs(weight), minlength=n_second)
+            second_active = np.abs(second_information) > 1e-10
+            require(np.all((second_absolute <= 1e-10) | second_active),
+                    "signed replicate calendar curvature cancels within an active level")
+            require(np.all(np.abs(second_score[~second_active]) <= 1e-8 * scale),
+                    "zero-curvature calendar effect has a nonzero score")
+            step = np.zeros(n_second, float)
+            step[second_active] = np.clip(
+                second_score[second_active] / second_information[second_active], -1.0, 1.0)
             second_effect += step
-            largest_step = max(largest_step, float(np.max(np.abs(step))))
+            largest_step = max(
+                largest_step, float(np.max(np.abs(step[second_active]))))
             _anchor_effects(first_effect, second_effect,
                             first_components, second_components)
 
@@ -772,10 +804,18 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
             float(np.max(np.abs(second_score))),
             float(np.max(np.abs(raw_treatment_score))),
         ) / scale
-        min_first_information = float(np.min(np.bincount(
-            first, weights=weight, minlength=n_first)))
-        min_second_information = float(np.min(np.bincount(
-            second, weights=weight, minlength=n_second)))
+        final_first_information = np.bincount(
+            first, weights=weight, minlength=n_first)
+        final_second_information = np.bincount(
+            second, weights=weight, minlength=n_second)
+        final_first_active = np.abs(final_first_information) > 1e-10
+        final_second_active = np.abs(final_second_information) > 1e-10
+        require(bool(final_first_active.any()) and bool(final_second_active.any()),
+                "signed replicate loses an entire fixed-effect dimension")
+        min_first_information = float(np.min(
+            final_first_information[final_first_active]))
+        min_second_information = float(np.min(
+            final_second_information[final_second_active]))
         min_treatment_eigenvalue = float(eigenvalues.min())
         if largest_step <= tolerance and maximum_normalized_score <= tolerance:
             converged = True
@@ -794,6 +834,8 @@ def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
         negative_young_cell_count=int((young < 0).sum()),
         negative_older_cell_count=int((older < 0).sum()),
         nonpositive_total_cell_count=int((total <= 0).sum()),
+        inactive_first_effect_count=int((~final_first_active).sum()),
+        inactive_second_effect_count=int((~final_second_active).sum()),
     )
 
 
@@ -915,6 +957,10 @@ def panel_results(cells: pd.DataFrame, definitions: dict[str, pd.DataFrame]
                                     replicate_fit.negative_older_cell_count,
                                 "replicate_nonpositive_total_cells":
                                     replicate_fit.nonpositive_total_cell_count,
+                                "replicate_inactive_first_effects":
+                                    replicate_fit.inactive_first_effect_count,
+                                "replicate_inactive_second_effects":
+                                    replicate_fit.inactive_second_effect_count,
                             })
                         print(
                             "ACS_PANEL_REPLICATES "
@@ -1151,6 +1197,10 @@ def main() -> int:
             int(row["replicate_negative_older_cells"] > 0) for row in panel_reps),
         "panel_replicates_with_nonpositive_total_cells": sum(
             int(row["replicate_nonpositive_total_cells"] > 0) for row in panel_reps),
+        "panel_replicates_with_inactive_first_effects": sum(
+            int(row["replicate_inactive_first_effects"] > 0) for row in panel_reps),
+        "panel_replicates_with_inactive_second_effects": sum(
+            int(row["replicate_inactive_second_effects"] > 0) for row in panel_reps),
         "output_hashes": {name: sha256_file(args.output_dir / name) for name in outputs},
     }
     receipt["receipt_id"] = "yax_acs_extension_v1_" + hashlib.sha256(

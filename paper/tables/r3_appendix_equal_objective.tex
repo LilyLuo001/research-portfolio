@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering
+\caption{Equal-occupation objective sensitivity}\label{tab:appendix_equal_objective}
+\small
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+Conditioning structure & Objective & Q5 $\times$ post [95\% CI] & Equal occupation $-$ stock weighted [95\% CI] \\
+\midrule
+Occupation and calendar-month FE & Employment-stock weighted & $-0.132\;[-0.220,-0.045]$ & --- \\
+Occupation and calendar-month FE & Equal occupation & $-0.083\;[-0.206,0.040]$ & $0.049\;[-0.060,0.158]$ \\
+SOC2 family by calendar month & Employment-stock weighted & $-0.022\;[-0.159,0.115]$ & --- \\
+SOC2 family by calendar month & Equal occupation & $-0.005\;[-0.203,0.193]$ & $0.017\;[-0.159,0.193]$ \\
+\bottomrule
+\end{tabular}}
+\tabnote{This sensitivity changes the estimation objective: every occupation receives total weight one, while \texttt{WTFINL} continues to determine young and older shares within occupation--month cells.  Treatment membership, 468-occupation support, calendar, and nuisance structures are unchanged.  Intervals use 9,999 common occupation-level Rademacher score multipliers; paired differences are formed before applying the common draws.  A paired interval containing zero means that this design does not detect a difference, not that the objectives are economically equivalent.}
+\end{table}

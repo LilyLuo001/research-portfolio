@@ -1,0 +1,37 @@
+{
+  "WTFINL_removed": false,
+  "WTFINL_role": "constructs within-occupation-month employment shares",
+  "canonical_identity": {
+    "analysis_months": 113,
+    "family_month": -0.021674952018246218,
+    "pooled": -0.1321094507921903,
+    "support_occupations": 468
+  },
+  "common_draws_across_objectives": true,
+  "draws": 9999,
+  "equal_objective_weight_maximum_absolute_sum_gap": 4.440892098500626e-16,
+  "generated_at_utc": "2026-09-09T02:56:18.359313+00:00",
+  "git_head": "bb78e090036d970c63aaa1500bd37602de4e93a2",
+  "input_hashes": {
+    "calibration_receipt": "9d0851fac65db630373060e28e076871a964c71363170feaec3cfa6fe254cfae",
+    "membership": "c76eb85956e4a413e130bab53fe8c50616cf6d7a02c81c266ec369879dd56bc1",
+    "private_calibration": "c3342044b1f0c92926c2e92bcd5aa4e1340b13af6420044feb8bc68b3623167d",
+    "runner": "ac7624b6d54e3768276705c7aaa72635cd8baf4aa75c03d6a398df0c5fdce465",
+    "specification": "1255367a4ff4b01a62cac0add4c72440ad3a048151614e99474f99b6291f6056"
+  },
+  "model_count": 4,
+  "model_failure_count": 0,
+  "output_hashes": {
+    "MODEL_FAILURES.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "MODEL_INFLUENCE.csv": "f30c77f7dd477ef14a17af1e4593b3a65431b8064e73a320e6d5c405010cb4a4",
+    "MODEL_RESULTS.csv": "da968aecb8df4c118c7c083d7435191c3c7578683b2ecd09e325587b1f6227b4",
+    "OBJECTIVE_WEIGHTS.csv": "e815e26a1dc27175496033a44e1dc3aa97ae57921d8f19806409a08f957c21bc",
+    "PAIRED_COMPARISONS.csv": "a191654ba91ba3aae23664916cb4558ba90140bd800b5748b06970d6113b8495"
+  },
+  "paired_comparison_count": 2,
+  "protected_microdata_or_identifiers_written": false,
+  "schema_version": "yax-gate3-equal-occupation-v1",
+  "seed": 202609088101,
+  "sge_job_id": "7501649",
+  "status": "PASS_GATE3_EQUAL_OCCUPATION"
+}
