@@ -267,6 +267,99 @@ def test_fit_annual_refuses_silent_separation(monkeypatch):
             (2021, 2023), "pooled")
 
 
+@pytest.mark.parametrize("structure", ["pooled", "family_year"])
+def test_signed_replicate_solver_matches_ordinary_fit_when_weights_are_nonnegative(
+        structure):
+    years = (2017, 2018, 2023, 2024)
+    quintiles = np.tile(np.arange(1, 6), 2)
+    families = np.asarray(["11"] * 5 + ["15"] * 5)
+    total = np.full((10, 4), 1000.0)
+    young = np.empty_like(total)
+    for occ in range(10):
+        for year in range(4):
+            eta = -1.1 + 0.04 * occ + 0.03 * year
+            if year >= 2:
+                eta += 0.025 * quintiles[occ]
+            young[occ, year] = total[occ, year] / (1.0 + np.exp(-eta))
+    older = total - young
+    ordinary = MOD.fit_annual(
+        young, older, quintiles, families, years, structure)
+    signed = MOD.fit_annual_signed_replicate(
+        young, older, quintiles, families, years, structure, ordinary)
+    assert signed.beta == pytest.approx(ordinary.beta, abs=2e-8)
+    assert signed.maximum_normalized_score <= 1e-8
+    assert signed.negative_young_cell_count == 0
+    assert signed.negative_older_cell_count == 0
+    assert signed.nonpositive_total_cell_count == 0
+
+
+def dense_signed_score_reference(young, older, quintiles, families, years, structure):
+    """Independent small-system Newton reference used only by this test."""
+    n_occ, n_year = young.shape
+    rows = n_occ * n_year
+    occupation = np.repeat(np.arange(n_occ), n_year)
+    year = np.tile(np.arange(n_year), n_occ)
+    occupation_dummies = np.eye(n_occ)[occupation]
+    if structure == "pooled":
+        second_dummies = np.eye(n_year)[year, 1:]
+    else:
+        family_levels = {value: index for index, value in enumerate(sorted(set(families)))}
+        family = np.repeat(np.asarray([family_levels[value] for value in families]), n_year)
+        columns = []
+        for family_value in range(len(family_levels)):
+            for year_value in range(1, n_year):
+                columns.append(((family == family_value) & (year == year_value)).astype(float))
+        second_dummies = np.column_stack(columns)
+    design = MOD.annual_design(quintiles, families, years, structure)
+    matrix = np.column_stack([occupation_dummies, second_dummies, design.regressors])
+    y = np.asarray(young, float).reshape(rows)
+    total = (np.asarray(young, float) + np.asarray(older, float)).reshape(rows)
+    theta = np.zeros(matrix.shape[1])
+    for _ in range(200):
+        probability = 1.0 / (1.0 + np.exp(-np.clip(matrix @ theta, -700, 700)))
+        score = matrix.T @ (y - total * probability)
+        weight = total * probability * (1.0 - probability)
+        information = matrix.T @ (weight[:, None] * matrix)
+        step = np.linalg.solve(information, score)
+        theta += step
+        if np.max(np.abs(score)) / max(1.0, total.sum()) <= 1e-11:
+            break
+    final_probability = 1.0 / (
+        1.0 + np.exp(-np.clip(matrix @ theta, -700, 700)))
+    final_score = matrix.T @ (y - total * final_probability)
+    assert np.max(np.abs(final_score)) / max(1.0, total.sum()) <= 1e-10
+    return theta[-4:]
+
+
+@pytest.mark.parametrize("structure", ["pooled", "family_year"])
+def test_signed_replicate_solver_keeps_negative_cells_and_certifies_score(structure):
+    years = (2017, 2018, 2023, 2024)
+    quintiles = np.tile(np.arange(1, 6), 2)
+    families = np.asarray(["11"] * 5 + ["15"] * 5)
+    young = np.full((10, 4), 300.0)
+    older = np.full((10, 4), 700.0)
+    ordinary = MOD.fit_annual(
+        young, older, quintiles, families, years, structure)
+    young_rep = young.copy()
+    older_rep = older.copy()
+    young_rep[0, 0] = -5.0
+    young_rep[1, 1] = -10.0
+    older_rep[1, 1] = 5.0
+    signed = MOD.fit_annual_signed_replicate(
+        young_rep, older_rep, quintiles, families, years, structure, ordinary)
+    assert np.isfinite(signed.beta).all()
+    assert signed.maximum_normalized_score <= 1e-8
+    assert signed.negative_young_cell_count == 2
+    assert signed.negative_older_cell_count == 0
+    assert signed.nonpositive_total_cell_count == 1
+    assert signed.minimum_first_effect_information > 0
+    assert signed.minimum_second_effect_information > 0
+    assert signed.minimum_treatment_information_eigenvalue > 0
+    reference = dense_signed_score_reference(
+        young_rep, older_rep, quintiles, families, years, structure)
+    assert signed.beta == pytest.approx(reference, abs=2e-8)
+
+
 def test_family_multiplier_support_is_six_point_unit_variance():
     support = np.asarray(MOD.CORE.WEBB_SUPPORT, float)
     assert len(support) == 6

@@ -126,6 +126,42 @@ def validate(output: Path) -> dict:
 
     panel_ok = True
     panel_reps = reps.loc[reps.result_type.eq("annual_panel")]
+    score = pd.to_numeric(
+        panel_reps.replicate_maximum_normalized_score, errors="raise").to_numpy(float)
+    iterations = pd.to_numeric(
+        panel_reps.replicate_iterations, errors="raise").to_numpy(int)
+    first_information = pd.to_numeric(
+        panel_reps.replicate_minimum_first_effect_information,
+        errors="raise").to_numpy(float)
+    second_information = pd.to_numeric(
+        panel_reps.replicate_minimum_second_effect_information,
+        errors="raise").to_numpy(float)
+    treatment_information = pd.to_numeric(
+        panel_reps.replicate_minimum_treatment_information_eigenvalue,
+        errors="raise").to_numpy(float)
+    negative_young = pd.to_numeric(
+        panel_reps.replicate_negative_young_cells, errors="raise").to_numpy(int)
+    negative_older = pd.to_numeric(
+        panel_reps.replicate_negative_older_cells, errors="raise").to_numpy(int)
+    nonpositive_total = pd.to_numeric(
+        panel_reps.replicate_nonpositive_total_cells, errors="raise").to_numpy(int)
+    checks["signed_replicate_score_certificates"] = (
+        len(panel_reps) == receipt.get("panel_replicate_fit_count") and
+        set(panel_reps.replicate_estimator) == {
+            "same_grouped_logit_score_signed_SDR_weights"} and
+        receipt.get("panel_replicate_estimator") ==
+            "same_grouped_logit_score_signed_SDR_weights" and
+        np.all(score <= 1e-8) and np.all(iterations > 0) and
+        np.all(first_information > 0.0) and np.all(second_information > 0.0) and
+        np.all(treatment_information > 0.0) and
+        close(score.max(), receipt.get("panel_replicate_maximum_normalized_score")) and
+        int(iterations.max()) == receipt.get("panel_replicate_maximum_iterations") and
+        int((negative_young > 0).sum()) ==
+            receipt.get("panel_replicates_with_negative_young_cells") and
+        int((negative_older > 0).sum()) ==
+            receipt.get("panel_replicates_with_negative_older_cells") and
+        int((nonpositive_total > 0).sum()) ==
+            receipt.get("panel_replicates_with_nonpositive_total_cells"))
     for row in panel.itertuples(index=False):
         block = panel_reps.loc[
             panel_reps.definition.eq(row.definition) &

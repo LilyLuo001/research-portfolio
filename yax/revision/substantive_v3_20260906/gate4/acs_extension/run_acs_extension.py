@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
 import importlib.util
@@ -511,6 +512,262 @@ def annual_design(quintiles: np.ndarray, families: np.ndarray,
         regressor_labels=labels, focal_target_index=3)
 
 
+@dataclass(frozen=True)
+class SignedReplicateFit:
+    """Root of the grouped-logit score under signed ACS replicate weights."""
+
+    beta: np.ndarray
+    iterations: int
+    maximum_normalized_score: float
+    minimum_first_effect_information: float
+    minimum_second_effect_information: float
+    minimum_treatment_information_eigenvalue: float
+    negative_young_cell_count: int
+    negative_older_cell_count: int
+    nonpositive_total_cell_count: int
+
+
+def _contiguous_codes(labels: np.ndarray) -> tuple[np.ndarray, int]:
+    values = np.asarray(labels, object)
+    levels = sorted(set(values.tolist()))
+    require(bool(levels), "empty fixed-effect dimension")
+    lookup = {value: index for index, value in enumerate(levels)}
+    return np.asarray([lookup[value] for value in values], int), len(levels)
+
+
+def _effect_components(first: np.ndarray, second: np.ndarray,
+                       n_first: int, n_second: int
+                       ) -> tuple[list[np.ndarray], list[np.ndarray]]:
+    """Return connected components of the two-way fixed-effect graph."""
+    parent = np.arange(n_first + n_second, dtype=int)
+
+    def find(value: int) -> int:
+        while parent[value] != value:
+            parent[value] = parent[parent[value]]
+            value = int(parent[value])
+        return value
+
+    def union(left: int, right: int) -> None:
+        left_root, right_root = find(left), find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    for left, right in zip(first, second):
+        union(int(left), n_first + int(right))
+    first_groups: dict[int, list[int]] = {}
+    second_groups: dict[int, list[int]] = {}
+    for value in range(n_first):
+        first_groups.setdefault(find(value), []).append(value)
+    for value in range(n_second):
+        second_groups.setdefault(find(n_first + value), []).append(value)
+    roots = sorted(first_groups)
+    require(set(roots) == set(second_groups), "fixed-effect graph has an empty side")
+    return ([np.asarray(first_groups[root], int) for root in roots],
+            [np.asarray(second_groups[root], int) for root in roots])
+
+
+def _anchor_effects(first_effect: np.ndarray, second_effect: np.ndarray,
+                    first_components: list[np.ndarray],
+                    second_components: list[np.ndarray]) -> None:
+    """Anchor one second effect within every connected FE component."""
+    for first_group, second_group in zip(first_components, second_components):
+        shift = float(second_effect[int(second_group.min())])
+        first_effect[first_group] += shift
+        second_effect[second_group] -= shift
+
+
+def _initial_effects(linear_nuisance: np.ndarray, first: np.ndarray,
+                     second: np.ndarray, n_first: int, n_second: int,
+                     first_components: list[np.ndarray],
+                     second_components: list[np.ndarray]
+                     ) -> tuple[np.ndarray, np.ndarray]:
+    """Recover additive nuisance effects from a certified full-weight fit."""
+    first_effect = np.zeros(n_first, float)
+    second_effect = np.zeros(n_second, float)
+    first_count = np.bincount(first, minlength=n_first).astype(float)
+    second_count = np.bincount(second, minlength=n_second).astype(float)
+    require(np.all(first_count > 0) and np.all(second_count > 0),
+            "fixed-effect graph loses a level")
+    for _ in range(1000):
+        prior_first = first_effect.copy()
+        prior_second = second_effect.copy()
+        first_effect = np.bincount(
+            first, weights=linear_nuisance - second_effect[second],
+            minlength=n_first) / first_count
+        second_effect = np.bincount(
+            second, weights=linear_nuisance - first_effect[first],
+            minlength=n_second) / second_count
+        _anchor_effects(first_effect, second_effect,
+                        first_components, second_components)
+        movement = max(float(np.max(np.abs(first_effect - prior_first))),
+                       float(np.max(np.abs(second_effect - prior_second))))
+        if movement <= 1e-12:
+            break
+    reconstruction = first_effect[first] + second_effect[second]
+    require(float(np.max(np.abs(reconstruction - linear_nuisance))) <= 1e-7,
+            "full-weight nuisance effects cannot be reconstructed")
+    return first_effect, second_effect
+
+
+def _signed_weighted_absorb(matrix: np.ndarray, weight: np.ndarray,
+                            first: np.ndarray, second: np.ndarray,
+                            n_first: int, n_second: int,
+                            tolerance: float = 1e-11,
+                            max_iterations: int = 1000) -> np.ndarray:
+    """Residualize against two FE dimensions under locally signed curvature."""
+    result = np.asarray(matrix, float).copy()
+    first_weight = np.bincount(first, weights=weight, minlength=n_first)
+    second_weight = np.bincount(second, weights=weight, minlength=n_second)
+    scale = max(1.0, float(np.max(np.abs(weight))))
+    require(np.all(np.abs(first_weight) > 1e-12 * scale) and
+            np.all(np.abs(second_weight) > 1e-12 * scale),
+            "signed replicate fixed-effect curvature is singular")
+    for _ in range(max_iterations):
+        largest = 0.0
+        for group, denominator, count in (
+                (first, first_weight, n_first),
+                (second, second_weight, n_second)):
+            for column in range(result.shape[1]):
+                numerator = np.bincount(
+                    group, weights=weight * result[:, column], minlength=count)
+                adjustment = numerator / denominator
+                result[:, column] -= adjustment[group]
+                largest = max(largest, float(np.max(np.abs(adjustment))))
+        if largest <= tolerance:
+            return result
+    raise RuntimeError("signed replicate fixed-effect absorption did not converge")
+
+
+def fit_annual_signed_replicate(young: np.ndarray, older: np.ndarray,
+                                quintiles: np.ndarray, families: np.ndarray,
+                                years: tuple[int, ...], structure: str,
+                                full_fit: Any,
+                                tolerance: float = 1e-9,
+                                max_iterations: int = 5000
+                                ) -> SignedReplicateFit:
+    """Solve the unchanged grouped-logit score with signed SDR weights.
+
+    ACS replicate weights are used only for variance estimation and may be
+    negative.  Their aggregated young/older cells therefore need not be valid
+    binomial counts, but the weighted score remains well-defined.  This solver
+    starts at the certified full-weight solution, retains every fixed row, and
+    Newton-solves that score without clipping, deleting or renormalizing a
+    released replicate weight.
+    """
+    design = annual_design(quintiles, families, years, structure)
+    young = np.asarray(young, float).reshape(-1)
+    older = np.asarray(older, float).reshape(-1)
+    total = young + older
+    x = np.asarray(design.regressors, float)
+    require(len(young) == len(older) == len(x) and
+            np.all(np.isfinite(young)) and np.all(np.isfinite(older)),
+            "signed replicate outcome/design rows differ or are nonfinite")
+    require(float(total.sum()) > 0.0, "signed replicate total stock is nonpositive")
+    first, n_first = _contiguous_codes(design.first_labels)
+    second, n_second = _contiguous_codes(design.second_labels)
+    first_components, second_components = _effect_components(
+        first, second, n_first, n_second)
+    beta = np.asarray(full_fit.beta, float).copy()
+    full_probability = np.asarray(full_fit.fitted_probability, float).reshape(-1)
+    require(beta.shape == (x.shape[1],) and full_probability.shape == young.shape,
+            "full-weight initializer differs from replicate design")
+    eta = np.log(np.clip(full_probability, 1e-12, 1.0 - 1e-12) /
+                 np.clip(1.0 - full_probability, 1e-12, 1.0))
+    first_effect, second_effect = _initial_effects(
+        eta - x @ beta, first, second, n_first, n_second,
+        first_components, second_components)
+    converged = False
+    maximum_normalized_score = math.inf
+    min_first_information = math.nan
+    min_second_information = math.nan
+    min_treatment_eigenvalue = math.nan
+    scale = max(1.0, float(total.sum()))
+    for iteration in range(1, max_iterations + 1):
+        largest_step = 0.0
+        for _ in range(2):
+            eta = first_effect[first] + second_effect[second] + x @ beta
+            probability = ENGINE._sigmoid(eta)
+            residual = young - total * probability
+            weight = total * probability * (1.0 - probability)
+            first_score = np.bincount(first, weights=residual, minlength=n_first)
+            first_information = np.bincount(first, weights=weight, minlength=n_first)
+            require(np.all(np.abs(first_information) > 1e-10),
+                    "signed replicate occupation curvature is singular")
+            step = np.clip(first_score / first_information, -1.0, 1.0)
+            first_effect += step
+            largest_step = max(largest_step, float(np.max(np.abs(step))))
+
+            eta = first_effect[first] + second_effect[second] + x @ beta
+            probability = ENGINE._sigmoid(eta)
+            residual = young - total * probability
+            weight = total * probability * (1.0 - probability)
+            second_score = np.bincount(second, weights=residual, minlength=n_second)
+            second_information = np.bincount(second, weights=weight, minlength=n_second)
+            require(np.all(np.abs(second_information) > 1e-10),
+                    "signed replicate calendar curvature is singular")
+            step = np.clip(second_score / second_information, -1.0, 1.0)
+            second_effect += step
+            largest_step = max(largest_step, float(np.max(np.abs(step))))
+            _anchor_effects(first_effect, second_effect,
+                            first_components, second_components)
+
+        eta = first_effect[first] + second_effect[second] + x @ beta
+        probability = ENGINE._sigmoid(eta)
+        residual = young - total * probability
+        weight = total * probability * (1.0 - probability)
+        residualized = _signed_weighted_absorb(
+            x, weight, first, second, n_first, n_second)
+        information = residualized.T @ (weight[:, None] * residualized)
+        information = (information + information.T) / 2.0
+        eigenvalues = np.linalg.eigvalsh(information)
+        require(float(eigenvalues.min()) > 1e-10,
+                "signed replicate treatment curvature is not positive definite")
+        score = residualized.T @ residual
+        try:
+            step = np.linalg.solve(information, score)
+        except np.linalg.LinAlgError as error:
+            raise RuntimeError("signed replicate treatment curvature is singular") from error
+        step = np.clip(step, -1.0, 1.0)
+        beta += step
+        largest_step = max(largest_step, float(np.max(np.abs(step))))
+
+        eta = first_effect[first] + second_effect[second] + x @ beta
+        probability = ENGINE._sigmoid(eta)
+        residual = young - total * probability
+        weight = total * probability * (1.0 - probability)
+        first_score = np.bincount(first, weights=residual, minlength=n_first)
+        second_score = np.bincount(second, weights=residual, minlength=n_second)
+        raw_treatment_score = x.T @ residual
+        maximum_normalized_score = max(
+            float(np.max(np.abs(first_score))),
+            float(np.max(np.abs(second_score))),
+            float(np.max(np.abs(raw_treatment_score))),
+        ) / scale
+        min_first_information = float(np.min(np.bincount(
+            first, weights=weight, minlength=n_first)))
+        min_second_information = float(np.min(np.bincount(
+            second, weights=weight, minlength=n_second)))
+        min_treatment_eigenvalue = float(eigenvalues.min())
+        if largest_step <= tolerance and maximum_normalized_score <= tolerance:
+            converged = True
+            break
+    require(converged, f"{structure} signed replicate score did not converge")
+    require(maximum_normalized_score <= 1e-8,
+            f"{structure} signed replicate score certificate failed")
+    require(min_first_information > 0.0 and min_second_information > 0.0,
+            f"{structure} signed replicate fixed-effect curvature is not locally concave")
+    return SignedReplicateFit(
+        beta=beta, iterations=iteration,
+        maximum_normalized_score=maximum_normalized_score,
+        minimum_first_effect_information=min_first_information,
+        minimum_second_effect_information=min_second_information,
+        minimum_treatment_information_eigenvalue=min_treatment_eigenvalue,
+        negative_young_cell_count=int((young < 0).sum()),
+        negative_older_cell_count=int((older < 0).sum()),
+        nonpositive_total_cell_count=int((total <= 0).sum()),
+    )
+
+
 def fit_annual(young: np.ndarray, older: np.ndarray, quintiles: np.ndarray,
                families: np.ndarray, years: tuple[int, ...], structure: str):
     design = annual_design(quintiles, families, years, structure)
@@ -593,8 +850,9 @@ def panel_results(cells: pd.DataFrame, definitions: dict[str, pd.DataFrame]
                                 keep, year_location[year], replicate]
                             older_rep[:, year_index] = older_cube[
                                 keep, year_location[year], replicate]
-                            value = float(fit_annual(
-                                young_rep, older_rep, q, families, years, structure).beta[3])
+                            replicate_fit = fit_annual_signed_replicate(
+                                young_rep, older_rep, q, families, years, structure, fit)
+                            value = float(replicate_fit.beta[3])
                             delta = value - estimate
                             deltas.append(delta)
                             rep_values[(year, replicate)] = value
@@ -604,6 +862,23 @@ def panel_results(cells: pd.DataFrame, definitions: dict[str, pd.DataFrame]
                                 "calendar_rule": calendar_rule, "perturbed_year": year,
                                 "replicate": replicate, "estimate": value,
                                 "full_weight_estimate": estimate, "delta": delta,
+                                "replicate_estimator":
+                                    "same_grouped_logit_score_signed_SDR_weights",
+                                "replicate_iterations": replicate_fit.iterations,
+                                "replicate_maximum_normalized_score":
+                                    replicate_fit.maximum_normalized_score,
+                                "replicate_minimum_first_effect_information":
+                                    replicate_fit.minimum_first_effect_information,
+                                "replicate_minimum_second_effect_information":
+                                    replicate_fit.minimum_second_effect_information,
+                                "replicate_minimum_treatment_information_eigenvalue":
+                                    replicate_fit.minimum_treatment_information_eigenvalue,
+                                "replicate_negative_young_cells":
+                                    replicate_fit.negative_young_cell_count,
+                                "replicate_negative_older_cells":
+                                    replicate_fit.negative_older_cell_count,
+                                "replicate_nonpositive_total_cells":
+                                    replicate_fit.nonpositive_total_cell_count,
                             })
                     survey_se = math.sqrt(max(sdr_variance(deltas), 0.0))
                     row = {
@@ -820,6 +1095,20 @@ def main() -> int:
         "benchmark_paired_count": len(benchmark_paired),
         "paired_result_count": len(paired),
         "replicate_result_count": len(benchmark_reps) + len(panel_reps),
+        "panel_replicate_estimator":
+            "same_grouped_logit_score_signed_SDR_weights",
+        "panel_replicate_fit_count": len(panel_reps),
+        "panel_replicate_maximum_normalized_score": max(
+            float(row["replicate_maximum_normalized_score"])
+            for row in panel_reps),
+        "panel_replicate_maximum_iterations": max(
+            int(row["replicate_iterations"]) for row in panel_reps),
+        "panel_replicates_with_negative_young_cells": sum(
+            int(row["replicate_negative_young_cells"] > 0) for row in panel_reps),
+        "panel_replicates_with_negative_older_cells": sum(
+            int(row["replicate_negative_older_cells"] > 0) for row in panel_reps),
+        "panel_replicates_with_nonpositive_total_cells": sum(
+            int(row["replicate_nonpositive_total_cells"] > 0) for row in panel_reps),
         "output_hashes": {name: sha256_file(args.output_dir / name) for name in outputs},
     }
     receipt["receipt_id"] = "yax_acs_extension_v1_" + hashlib.sha256(

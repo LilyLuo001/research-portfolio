@@ -143,13 +143,26 @@ panel variance is an approximation. Repeat the model on the non-reuse calendar
 2017, 2021, 2023 and 2024; do not call either construction exact multi-year ACS
 design-based inference.
 
+The released signed replicate weights can make an occupation-age-year
+aggregate negative even though its full-weight counterpart is a valid stock.
+For replicate refits only, solve the same grouped-logit weighted score equations
+directly, initialized at the certified full-weight fit. Retain every frozen row;
+do not clip negative replicate weights or cells, drop them as separated, or
+renormalize them. Require convergence of every occupation, calendar and
+treatment score, positive local fixed-effect and treatment curvature, and a
+maximum normalized score no larger than `1e-8`. Record those certificates and
+the incidence of negative young, negative older and nonpositive-total cells for
+every replicate fit. On ordinary nonnegative weights the signed-score path must
+numerically reproduce the standard grouped-logit estimator.
+
 ## 7. Refusal and interpretation rules
 
 The runner refuses publication if a ZIP/member hash changes during use; a
 required field or replicate is missing; occupation vintage is ambiguous; the
 bridge loses source mass; support or labels drift across paired models; a
-quintile disappears; a fit fails; a replicate estimate is missing; or a
-reported SDR quantity cannot be recomputed.
+quintile disappears; a full-weight fit or signed replicate-score fit fails its
+numerical certificate; a replicate estimate is missing; or a reported SDR
+quantity cannot be recomputed.
 
 The extension remains descriptive. More precise ACS sampling intervals do not
 identify an AI effect, and family-year conditioning does not create exposure

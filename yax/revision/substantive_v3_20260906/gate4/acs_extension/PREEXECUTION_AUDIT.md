@@ -2,8 +2,12 @@
 
 Date: 2026-09-08 Asia/Shanghai
 
-Status: **implemented and locally tested; public-data execution not yet run**.
-No ACS outcome was opened while writing or correcting this package.
+Status: **historical pre-execution audit, with failed-execution corrections
+recorded below; no ACS result has been published**.
+
+No ACS outcome was opened when the original package and its estimands were
+written. Public-data execution has since begun. Failed attempts are retained
+below rather than relabeled as pre-execution work.
 
 The first protected execution stopped before reading any outcome row because
 the runner requested a housing-record type field from the person CSV. The
@@ -17,6 +21,16 @@ Official ACS accuracy documentation confirms that negative SDR replicate
 weights are valid. The input guard now requires finite replicate weights and a
 positive full person weight, preserves the signed replicate values, and records
 their incidence. No estimate from either failed attempt was produced.
+
+A later attempt completed public aggregation and full-weight fitting but
+stopped on the first nonlinear replicate refit: the shared ordinary-binomial
+routine rejected an aggregate made negative by valid signed replicate weights.
+No output directory or estimate was published, and no transient coefficient
+was inspected. The correction is confined to replicate-weight numerics. It
+retains the signed values and all fixed estimating rows, solves the unchanged
+weighted grouped-logit score from the certified full-weight solution, and
+requires score and local-curvature certificates. The main estimator, age
+groups, treatment, support, calendars, outcomes and SDR formula do not change.
 
 ## Scientific checks completed
 
@@ -52,7 +66,7 @@ six-point support exposed by the shared inference engine, and the output labels
 the two multiplier distributions. No outcome had been read and no retained
 result existed when this was corrected.
 
-## Local evidence
+## Local evidence before the first execution
 
 - Focused unit tests: 13 passed.
 - A reduced-replicate synthetic end-to-end producer run completed and its
@@ -62,3 +76,13 @@ result existed when this was corrected.
 
 This audit is pre-result evidence only. It is not an execution receipt,
 empirical result, or independent review.
+
+## Post-attempt numerical evidence
+
+The signed-score implementation is checked against the ordinary estimator on
+nonnegative weights and against a separate explicit-dummy Newton solution on
+synthetic signed cells, under both pooled and family-year structures. The
+independent output validator recomputes every SDR variance and paired variance
+and rejects any replicate fit with a score over `1e-8` or nonpositive certified
+local curvature. Passing public-data evidence remains outstanding until the
+full job completes.

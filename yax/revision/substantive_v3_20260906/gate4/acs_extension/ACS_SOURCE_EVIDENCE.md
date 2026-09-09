@@ -28,6 +28,11 @@ Checked 2026-09-08. These are source facts used by
   states that the 80 PUMS replicate weights may be positive, zero, or negative,
   while full-sample weights are never negative. Negative released replicate
   weights are therefore retained rather than treated as corrupt observations.
+  The same documentation instructs users to compute every replicate estimate
+  with its released replicate weights in the same way as the full estimate.
+  For the nonlinear annual panel, this means solving the unchanged weighted
+  score rather than forcing signed aggregate cells into an ordinary-binomial
+  input validator.
 - [ACS 2020 experimental-PUMS page](https://www.census.gov/programs-surveys/acs/data/experimental-data/2020-1-year-pums.html):
   2020 is explicitly an experimental product, not an ordinary one-year wave.
 - [2026 ACS updates](https://www.census.gov/programs-surveys/acs/news/updates/2026.html):
