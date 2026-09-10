@@ -1262,7 +1262,7 @@ index 0983e58..828c2b2 100644
 +\tabnote{Monthly CPS-weighted stocks use rebuilt beta labels and are indexed to each series' 2019 mean.  The ratio panel divides young by older stock before indexing.  The vertical line marks January 2023; December 2022 is the transition month, and October 2025 is absent rather than interpolated.  Paths are descriptive.}
 +\end{figure}
 diff --git a/paper/main/sections/06_stock_results.tex b/paper/main/sections/06_stock_results.tex
-index 427faae..9f8370a 100644
+index 427faae..5452f98 100644
 --- a/paper/main/sections/06_stock_results.tex
 +++ b/paper/main/sections/06_stock_results.tex
 @@ -1,36 +1,68 @@
@@ -1275,7 +1275,7 @@ index 427faae..9f8370a 100644
 +preperiod-weighted correlation with beta is 0.797.  Table~\ref{tab:characteristics}
 +holds that support, treatment, outcome, and calendar fixed while crossing a
 +computer-use control with family-specific young-relative monthly paths.  The
-+pooled coefficient is $-0.0958$.  Adding computer use moves it to $-0.1966$;
++pooled coefficient is $-0.0957$.  Adding computer use moves it to $-0.1966$;
 +the paired change is $-0.1009$ ($[-0.1772,-0.0245]$).  Adding family paths
 +without computer use instead gives $0.0354$, while adding both gives $-0.0467$.
 +The combined-minus-baseline change is $0.0491$ ($[-0.0642,0.1624]$).
@@ -1626,7 +1626,7 @@ index 0feff99..3de9c42 100644
 +prompt. The presence of a run directory or a polished PDF is not a substitute
 +for those checks.
 diff --git a/paper/revision/referee_response.tex b/paper/revision/referee_response.tex
-index 2ff8296..93ef469 100644
+index 2ff8296..aa76fb0 100644
 --- a/paper/revision/referee_response.tex
 +++ b/paper/revision/referee_response.tex
 @@ -3,138 +3,159 @@
@@ -1706,7 +1706,7 @@ index 2ff8296..93ef469 100644
 +\subsection*{3.5. Computer use, collinearity, and sensitivity}
 
 -BLS does not publish age-by-occupation bridge weights for the January 2025 revision; its experimental factors are aggregate. We therefore do not fabricate a counterfactual micro-weight series. The raw official-weight contrast becomes slightly less negative between December 2024 and January 2025, and the official 2025--26 era is not distinguishable from 2023--24. The documentation, bounded inference, and refusal are now explicit. See Section 7 and Appendix F.
-+\emph{Response: accepted in substance; the proposed scalar bound was not imposed.}  On a fixed 455-occupation support, the paper now reports the four matched models: baseline, computer use, family-month paths, and both together, all with common draws.  Computer use moves the exposure coefficient from $-0.0958$ to $-0.1966$; family paths alone give $0.0354$; both give $-0.0467$.  The computer-use coefficient itself is $0.0460$ per preperiod-weighted standard deviation in the pooled computer model and $0.0487$ in the combined model, with both intervals reported.  The beta--computer-use correlation is 0.797 on this support, retained Q5 information falls from 69.1 to 29.0 percent, and the VIF-like ratio is 3.45.
++\emph{Response: accepted in substance; the proposed scalar bound was not imposed.}  On a fixed 455-occupation support, the paper now reports the four matched models: baseline, computer use, family-month paths, and both together, all with common draws.  Computer use moves the exposure coefficient from $-0.0957$ to $-0.1966$; family paths alone give $0.0354$; both give $-0.0467$.  The computer-use coefficient itself is $0.0460$ per preperiod-weighted standard deviation in the pooled computer model and $0.0487$ in the combined model, with both intervals reported.  The beta--computer-use correlation is 0.797 on this support, retained Q5 information falls from 69.1 to 29.0 percent, and the VIF-like ratio is 3.45.
 
 -\subsection*{M6. Selected architecture space}
 +The text treats the positive computer coefficient and the more negative exposure coefficient as joint-projection facts under collinearity, not as evidence that computerization raises employment or that the residual isolates AI.  We added an explicit applicability ruling for Oster, Cinelli--Hazlett, and Diegert--Masten--Poirier style analyses: none maps automatically to this nonlinear grouped-binomial target with generated, highly collinear treatments and changing nuisance spaces.  Rather than choose an arbitrary proportional-selection parameter after outcomes were known, we report the matched projection matrix and information loss and leave a scalar confounder bound unreported.
@@ -1795,7 +1795,7 @@ index 2ff8296..93ef469 100644
 +\emph{Response: accepted.}  The revision distinguishes three objects: employment reallocations across families, within-family young-to-older ratio changes, and movements in a fitted coefficient after family paths are added.  Exact log-stock accounting gives a young Q5--Q1 change of $-0.1098$, an older change of $0.0483$, and a relative change of $-0.1581$.  A symmetric Shapley decomposition of the same family stocks assigns $-0.1293$ to within-family ratio changes and $-0.0288$ to changes in older-family weights.  It audits 36 structurally absent family-tail-period cells and obtains a zero boundary term.  This accounting is deliberately kept distinct from the nonlinear regression coefficient.
 
 -\subsection*{M4. Reference group and broad occupational variation}
-+We also added the requested matched-support four-model comparison.  On the same 455 occupations and common draws, the baseline, computer-use, family-month, and combined coefficients are $-0.0958$, $-0.1966$, $0.0354$, and $-0.0467$.  Thus family and computer-use conditioning are different projections whose effects interact; no one residual is labeled an AI component.
++We also added the requested matched-support four-model comparison.  On the same 455 occupations and common draws, the baseline, computer-use, family-month, and combined coefficients are $-0.0957$, $-0.1966$, $0.0354$, and $-0.0467$.  Thus family and computer-use conditioning are different projections whose effects interact; no one residual is labeled an AI component.
 
 -\emph{Response.} This is now the substantive center of the paper. We replace ``reference dependence'' with exact descriptions of changed contrasts, retain the Q1/Q5 stock paths, add profile/equality/monotonicity tests, and estimate both SOC2-by-post and SOC2-by-month conditioned models with information and support diagnostics. The regression results, not the assumption-dependent permutation percentile, determine the framing. See Section 5 and Appendix C/E.
 +\subsection*{3. Direct overlap and common-coefficient restrictions}
@@ -3148,7 +3148,7 @@ index 0000000..8c147c5
 +\end{table}
 diff --git a/paper/tables/r3_table3_characteristics.tex b/paper/tables/r3_table3_characteristics.tex
 new file mode 100644
-index 0000000..d9f8723
+index 0000000..6e69d2d
 --- /dev/null
 +++ b/paper/tables/r3_table3_characteristics.tex
 @@ -0,0 +1,16 @@
@@ -3160,7 +3160,7 @@ index 0000000..d9f8723
 +\toprule
 +Family-month paths & Computer-use control & Occupations & Q5 by post [95\% CI] & Change from pooled baseline [95\% CI] \\
 +\midrule
-+No & No & 455 & $-0.0958\;[-0.1807,-0.0108]$ & --- \\
++No & No & 455 & $-0.0957\;[-0.1807,-0.0108]$ & --- \\
 +No & Yes & 455 & $-0.1966\;[-0.3161,-0.0771]$ & $-0.1009\;[-0.1772,-0.0245]$ \\
 +Yes & No & 455 & $\phantom{-}0.0354\;[-0.0859,0.1567]$ & $\phantom{-}0.1311\;[0.0352,0.2271]$ \\
 +Yes & Yes & 455 & $-0.0467\;[-0.1821,0.0888]$ & $\phantom{-}0.0491\;[-0.0642,0.1624]$ \\

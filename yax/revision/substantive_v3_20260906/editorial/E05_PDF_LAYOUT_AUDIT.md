@@ -1,6 +1,6 @@
 # E05/E08 PDF layout and draft-delivery audit
 
-Date: 2026-09-09
+Date: 2026-09-10
 Reviewer: execution agent (not independent)
 
 ## Result
@@ -26,14 +26,17 @@ the conclusion.
 
 | Artifact | Pages | SHA-256 |
 |---|---:|---|
-| `paper/build/YAX_REVISED_MANUSCRIPT.pdf` | 25 | `971f725b963b201f5b5df22d97b15938799a5f44bc60eb01447b5e8b31bab72c` |
-| `paper/build/YAX_FOCUSED_ONLINE_APPENDIX.pdf` | 49 | `6c70bc26ca471e5457494429a612337f268a4fe77c80c29c480fccd15682ea65` |
-| `paper/build/YAX_REFEREE_RESPONSE.pdf` | 10 | `050adcebd7a6716b5947bb82f7fab1207e09f7b2b63ec3056d714b844eafab66` |
-| `paper/build/YAX_REVISION_DIAGNOSIS.pdf` | 6 | `25f542379316582951ef751deeaff92688c4f99ad23d87a64af968b424ad4b9f` |
-| `paper/build/YAX_SOURCE_DIFF.pdf` | 36 | `c2fe1af251bcad316cd04803af793a13f1cc24a3341256d7c23e592d93f6eab2` |
+| `paper/build/YAX_REVISED_MANUSCRIPT.pdf` | 25 | `383537fc2b0942fade11a00bcf1e5edd3cee96583fdabac0bc3b70719873eee8` |
+| `paper/build/YAX_FOCUSED_ONLINE_APPENDIX.pdf` | 49 | `22557cb4543971667130f1754954542ba69e99093a3ced6f9ed8b7860a9ade77` |
+| `paper/build/YAX_REFEREE_RESPONSE.pdf` | 10 | `2c5b57ae007d1f7ed30a3a29785d2bf0977ca7d0d6262fe7d470a33a633012b0` |
+| `paper/build/YAX_REVISION_DIAGNOSIS.pdf` | 6 | `c4479d50805391199ea14b1eeeea8a6b9d489868c2a1ea2747b2c8cd83844a9d` |
+| `paper/build/YAX_SOURCE_DIFF.pdf` | 36 | `1c4d46699a3a12ed8966b4f7c53d8cc457a645428ed938c08b5a32d8a2f22f89` |
 
 The PDF metadata carries the comparison-centered manuscript and appendix
 titles. Text extraction confirms that the old question-form title is absent.
+The four corrected displays of the 455-occupation baseline render as
+`-0.0957`, consistently rounded directly from the stored estimate
+`-0.09574719`; the correction changes no interval, test, sign, or conclusion.
 The TeX driver still contains explicit author-affiliation and email
 placeholders; those are intentionally not invented.
 
