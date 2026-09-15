@@ -1,0 +1,53 @@
+{
+  "status": "PUBLIC_SOURCE_INSUFFICIENT",
+  "search_rounds_completed": 1,
+  "search_scope": "ONE_BOUNDED_ISSUER_IR_SEC_WIRE_SEARCH_ROUND_FOR_FROZEN_24_KEYS",
+  "keys_selected": 24,
+  "tier_side_composition": [
+    {
+      "tier": "high",
+      "event_side": "POST",
+      "keys": 2,
+      "stocks": 1
+    },
+    {
+      "tier": "high",
+      "event_side": "PRE",
+      "keys": 2,
+      "stocks": 1
+    },
+    {
+      "tier": "low",
+      "event_side": "POST",
+      "keys": 5,
+      "stocks": 3
+    },
+    {
+      "tier": "low",
+      "event_side": "PRE",
+      "keys": 15,
+      "stocks": 3
+    }
+  ],
+  "certified_public_timestamps": 0,
+  "directional_schedule_hits_not_usable_as_timestamps": [
+    {
+      "issuer": "Qualcomm",
+      "url": "https://investor.qualcomm.com/news-events/press-releases/news-details/2025/Qualcomm-Schedules-Third-Quarter-Fiscal-2025-Earnings-Release-and-Conference-Call/default.aspx",
+      "timestamp_role": "SCHEDULE_DIRECTION_AFTER_MARKET_CLOSE_NOT_RELEASE_TIMESTAMP",
+      "raw_timezone": "NOT_STATED_FOR_RELEASE"
+    },
+    {
+      "issuer": "AbbVie",
+      "url": "https://investors.abbvie.com/news-releases/news-release-details/abbvie-host-first-quarter-2022-earnings-conference-call",
+      "timestamp_role": "SCHEDULE_DIRECTION_BEFORE_MARKET_OPEN_NOT_RELEASE_TIMESTAMP",
+      "raw_timezone": "NOT_STATED_FOR_RELEASE"
+    }
+  ],
+  "unresolved_keys": 24,
+  "SEC_ACCEPTANCE_NOT_TREATED_AS_FIRST_PUBLIC": true,
+  "no_further_web_search": true,
+  "protected_manifest": "SCC_ONLY_NOT_EXPORTED",
+  "safe_aggregate_sha256": "128045ff21cabef35591b71871280925330ce1a7d1e3751de20806260af5acc6",
+  "public_values_or_outcomes_used": false
+}

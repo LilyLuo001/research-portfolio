@@ -1,0 +1,30 @@
+{
+  "status": "HOLD_DATA_CLOCK_CONTRACT_DECISION_RELEVANT",
+  "date": "2026-09-15",
+  "frozen_release_keys": 1082,
+  "primary_code_sha256": "3d2c03715c4c91e00e19458d590750092fd503e0796128674ed44cf10ef465bb",
+  "primary_aggregate_sha256": "471071b46bfd4e24587fa3a47e70bdd4a13b128abfefb16816cdcf31e161f62b",
+  "primary_support_sha256": "9b3b91a6ed58cc5fe9b52b3954bd2a86bc1be7c9c3372f9155895fc9da1cebb9",
+  "primary_receipt_sha256": "c26ec07c5aac517c9409730dc445dcfd4b10cfd921c4d71067f2a8a22acf2ea6",
+  "calendar_sha256": "dd6fc11ab324f8e19fdd3ab977d6789ae099272ad32e3a75b8f6fa6845fc3562",
+  "public_rescue_receipt_sha256": "9beb76ec58c0407cec9cfdab8e1bfd72660faa8a0fc35fb8e2b873d74a8f0f7f",
+  "public_rescue_evidence_sha256": "110bbefe9cf28e56bfa89d1feddf65734f53fb9fbf8fc02f76a7076d43dd8c22",
+  "independent_review_verdict": "PASS_HOLD_DATA_UPHELD",
+  "independent_review_sha256": "b2e7f929755aa2d7da1bd0d5f4d530cc8550ac45ee9b84efa239f79072ffdc30",
+  "secondary_diagnostic_status": "QUARANTINED_NON_DECISION_CLASSIFICATION_MISMATCH",
+  "primary_invariants_verified_locally": true,
+  "public_rescue_invariants_verified_locally": true,
+  "source_clock_certified": false,
+  "scenario_selected": false,
+  "prices_quotes_returns_eps_forecast_values_outcomes_read": false,
+  "rank_power_or_effect_estimation_run": false,
+  "row_level_licensed_metadata_exported": false,
+  "agent_routing": {
+    "coordinator_requested": "gpt-5.6-sol/medium retained",
+    "coordinator_actual": "NOT_OBSERVED",
+    "bounded_support_agent_requested": "gpt-5.6-terra/medium",
+    "bounded_support_agent_actual": "NOT_OBSERVED",
+    "independent_referee_requested": "gpt-6-astra/high",
+    "independent_referee_actual": "RECORDED_IN_REVIEW"
+  }
+}
