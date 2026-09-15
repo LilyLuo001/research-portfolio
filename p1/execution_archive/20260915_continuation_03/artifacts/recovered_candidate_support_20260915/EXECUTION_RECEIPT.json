@@ -1,0 +1,73 @@
+{
+  "status": "COMPLETE",
+  "authority": "USER_AUTHORIZED_SCC_ONLY_CENSUS_USING_EXISTING_CUSTODIAN_METADATA",
+  "backend_routing_requested": "Sol/medium",
+  "backend_telemetry": "NOT_OBSERVED",
+  "source_choice": {
+    "diagnostic_primary": "CORE_IBES_ACTUALS_EPS",
+    "comparison_not_pooled": "RESCUE_ALLCOLS_ACTU_EPSUS"
+  },
+  "population_status": "VERSIONED_DIAGNOSTIC_SIDECAR_NOT_FINAL_POPULATION_CHANGE",
+  "counts": {
+    "recovered_stock_wave_candidate_keys": 99,
+    "full_clock_both_pre_post_candidate_keys": 27,
+    "nominal_source_clock_both_pre_post_candidate_keys": 2,
+    "full_clock_observed_min2_both_pre_post_candidate_keys": 19,
+    "nominal_source_clock_observed_min2_both_pre_post_candidate_keys": 0,
+    "source_path_rows": 1151,
+    "distinct_source_rows": 1124,
+    "distinct_source_row_candidate_keys": 1151,
+    "distinct_period_keys": 1151,
+    "distinct_release_keys": 1151,
+    "distinct_release_inclusive_analyst_event_keys": 1151,
+    "nominal_source_clock_release_keys": 35,
+    "observed_source_min2_event_keys_lower_bound": 525,
+    "unknown_observed_lt2_event_keys_completeness_uncertified": 626,
+    "nominal_observed_source_min2_event_keys_lower_bound": 1,
+    "nominal_unknown_observed_lt2_event_keys_completeness_uncertified": 34
+  },
+  "definitions": {
+    "nominal_source_clock": "inclusive 09:30:00 to 15:00:00; source display clock only",
+    "analyst_window": "release date minus 90 days inclusive to release date exclusive",
+    "analyst_event_key": "wave, tier, permno, side, pends, anndats",
+    "analyst_min2": "at least two distinct observed analyst IDs; lower-bound envelope, not SUE certification"
+  },
+  "lineage": {
+    "protected_recovery_input_sha256": "0617673212b10584a28777c7cc3fff6e949f0e66270543cc7306db48b3238116",
+    "upstream_recovery_full_receipt_sha256": "29d4dd4e58407117effed7aaa840fd9ab2dd6d2a0affdfde3b8ebabded594092",
+    "upstream_recovery_code_sha256": "63a34f0819feb610877d3c6c9465cc887a18b4a36ba416ef11c08f3e1f6cdc87",
+    "code_sha256": "5ddf1f3591f2d8e932d8e69aa2564e86057c4ebc0dec05489a9f69ab880f36e0",
+    "config_sha256": "ee2d664509737c04df3ed11fcab263a2eeb28a6a6f77ad5faa9123f708f0553f",
+    "manifest_sha256": "c81e890723b99a696bf988134e7cf7efaf0c4947f6d452c4a537a9f42c4137a6",
+    "pilot_receipt_sha256": "c0e06827a3441bb6b6ab72bc4b78569c6d8adad1f98e6954037f1d1be34996d2",
+    "gate_sha256": "2011d525c3749dd17738011bbdaee0d93d612c456f714bd397ab5f1bb5b7d91a",
+    "full_receipt_sha256": "d6d57c6a5072c344f988606083e991ee5e17be5fe32664b18faade669d2513e1"
+  },
+  "validation": {
+    "fixture_count": 9,
+    "fixtures_passed": true,
+    "pilot_candidate_keys": 20,
+    "pilot_required_invariants_passed": true,
+    "full_required_invariants_passed": true,
+    "aggregate_reconciliations_passed": true,
+    "all_key_complete_filter_applied": false,
+    "unknown_competing_conversion_status_retained": true,
+    "local_protected_rows_exported": false,
+    "financial_forecast_price_return_response_values_read": false
+  },
+  "failed_attempts": [
+    {
+      "stage": "local_fixture_before_any_SCC_source_run",
+      "cause": "empty fixture used an object-typed date column",
+      "correction": "made the empty fixture explicitly datetime-typed; all nine fixtures then passed",
+      "data_effect": "none"
+    }
+  ],
+  "limitations": [
+    "Source clock timezone, first-public semantics, and RTH classification remain UNKNOWN",
+    "Forecast partition presence does not certify source completeness",
+    "Observed min2 is not final SUE or analyst eligibility",
+    "Sidecar does not apply the old clean flag or approve a final population",
+    "Release keys are wave-specific candidate metadata keys rather than independently verified unique economic events"
+  ]
+}

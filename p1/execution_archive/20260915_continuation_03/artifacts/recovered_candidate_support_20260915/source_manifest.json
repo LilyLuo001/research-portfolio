@@ -1,0 +1,77 @@
+{
+  "allowed_forecast_columns": [
+    "cusip",
+    "fpedats",
+    "analys",
+    "anndats"
+  ],
+  "authority": "USER_AUTHORIZED_SCC_ONLY_CENSUS_USING_EXISTING_CUSTODIAN_METADATA",
+  "inputs": [
+    {
+      "mtime_epoch": 1789452885,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/unrepresented_source_recovery_20260915/full_run/protected_source_candidate_paths.csv",
+      "sha256": "0617673212b10584a28777c7cc3fff6e949f0e66270543cc7306db48b3238116",
+      "size_bytes": 1288831,
+      "verification": "sha256"
+    },
+    {
+      "mtime_epoch": 1788333446,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2018.parquet",
+      "size_bytes": 18213993,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333469,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2019.parquet",
+      "size_bytes": 17272993,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333495,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2020.parquet",
+      "size_bytes": 18863826,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333519,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2021.parquet",
+      "size_bytes": 17514976,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333543,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2022.parquet",
+      "size_bytes": 17670340,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333567,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2023.parquet",
+      "size_bytes": 17059022,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333589,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2024.parquet",
+      "size_bytes": 16578447,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333612,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2025.parquet",
+      "size_bytes": 16552570,
+      "verification": "stat"
+    },
+    {
+      "mtime_epoch": 1788333622,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2026.parquet",
+      "size_bytes": 6514840,
+      "verification": "stat"
+    }
+  ],
+  "source_comparison_not_pooled": "RESCUE_ALLCOLS_ACTU_EPSUS",
+  "source_primary": "CORE_IBES_ACTUALS_EPS",
+  "status": "PINNED_RECOVERED99_SUPPORT_MANIFEST",
+  "upstream_recovery_code_sha256": "63a34f0819feb610877d3c6c9465cc887a18b4a36ba416ef11c08f3e1f6cdc87",
+  "upstream_recovery_full_receipt_sha256": "29d4dd4e58407117effed7aaa840fd9ab2dd6d2a0affdfde3b8ebabded594092"
+}

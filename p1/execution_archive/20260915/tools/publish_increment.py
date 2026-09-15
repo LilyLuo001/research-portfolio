@@ -41,6 +41,13 @@ def main():
                 "candidate_source_overlap_aggregate.csv", "source_family_record_overlap.csv",
                 "source_partition_counts.csv",
             }: reason = None
+            if stage == "recovered_candidate_support_20260915" and path.name in {
+                "analyst_coverage_by_wave_tier_side_clock.csv",
+                "candidate_analyst_support_by_wave_tier.csv",
+                "candidate_clock_support_by_wave_tier.csv",
+                "candidate_conversion_status_aggregate.csv",
+                "source_key_support_by_wave_tier_side.csv",
+            }: reason = None
             entry = {"source_path": str(path), "relative_path": str(rel), "size_bytes": path.stat().st_size}
             if reason:
                 entries.append({**entry, "status": "EXCLUDED", "reason": reason}); continue

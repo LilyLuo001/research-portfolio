@@ -1,0 +1,132 @@
+{
+  "aggregate_hashes": {
+    "analyst_coverage_by_wave_tier_side_clock.csv": "2602e07e55d280fabcbb6a1ef80cbba0ff771be9fa4769789851c41ae28c5bf8",
+    "candidate_analyst_support_by_wave_tier.csv": "649d9286bdb24f26f524fa6e15e8ba2ebe5de7d3c9ce60945533d8a540b32daf",
+    "candidate_clock_support_by_wave_tier.csv": "94537053bae581f2d2ab5d3e6c1a19aa503546c45e2ad3cd8e43df556bec2c5b",
+    "candidate_conversion_status_aggregate.csv": "f8d2688437a345067128b98d80df0ddb2526f5361cec08b676477881402b4022",
+    "source_key_support_by_wave_tier_side.csv": "2ceeed89e7b5c7f385faa508c522de931e21fba3fee19bc0f77a2f7cdcfa1495"
+  },
+  "all_clock_both_pre_post_candidate_keys": 27,
+  "backend_telemetry": "NOT_OBSERVED",
+  "code_sha256": "5ddf1f3591f2d8e932d8e69aa2564e86057c4ebc0dec05489a9f69ab880f36e0",
+  "config_sha256": "ee2d664509737c04df3ed11fcab263a2eeb28a6a6f77ad5faa9123f708f0553f",
+  "distinct_analyst_event_keys": 1151,
+  "distinct_period_keys": 1151,
+  "distinct_release_keys": 1151,
+  "distinct_source_row_candidate_keys": 1151,
+  "distinct_source_rows": 1124,
+  "financial_forecast_price_return_response_values_read": false,
+  "forecast_source_partitions": [
+    {
+      "matched_metadata_rows": 18041,
+      "mtime_epoch": 1788333446,
+      "observed_anndats_max": "2018-12-31",
+      "size_bytes": 18213993,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2018
+    },
+    {
+      "matched_metadata_rows": 18944,
+      "mtime_epoch": 1788333469,
+      "observed_anndats_max": "2019-12-31",
+      "size_bytes": 17272993,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2019
+    },
+    {
+      "matched_metadata_rows": 16427,
+      "mtime_epoch": 1788333495,
+      "observed_anndats_max": "2020-12-31",
+      "size_bytes": 18863826,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2020
+    },
+    {
+      "matched_metadata_rows": 5781,
+      "mtime_epoch": 1788333519,
+      "observed_anndats_max": "2021-12-31",
+      "size_bytes": 17514976,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2021
+    },
+    {
+      "matched_metadata_rows": 4779,
+      "mtime_epoch": 1788333543,
+      "observed_anndats_max": "2022-12-31",
+      "size_bytes": 17670340,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2022
+    },
+    {
+      "matched_metadata_rows": 2697,
+      "mtime_epoch": 1788333567,
+      "observed_anndats_max": "2023-12-31",
+      "size_bytes": 17059022,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2023
+    },
+    {
+      "matched_metadata_rows": 1240,
+      "mtime_epoch": 1788333589,
+      "observed_anndats_max": "2024-12-31",
+      "size_bytes": 16578447,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2024
+    },
+    {
+      "matched_metadata_rows": 343,
+      "mtime_epoch": 1788333612,
+      "observed_anndats_max": "2025-12-31",
+      "size_bytes": 16552570,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2025
+    },
+    {
+      "matched_metadata_rows": 0,
+      "mtime_epoch": 1788333622,
+      "observed_anndats_max": "2026-05-14",
+      "size_bytes": 6514840,
+      "status": "AVAILABLE_PARTITION_COMPLETENESS_UNKNOWN",
+      "year": 2026
+    }
+  ],
+  "manifest_sha256": "c81e890723b99a696bf988134e7cf7efaf0c4947f6d452c4a537a9f42c4137a6",
+  "mode": "full",
+  "nominal_clock_both_pre_post_candidate_keys": 2,
+  "observed_min2_event_keys": 525,
+  "recovered_candidate_stock_wave_keys": 99,
+  "required_invariant_expectations": {
+    "all_clock_before_analyst_reported": true,
+    "analyst_90d_lower_inclusive_release_exclusive": true,
+    "analyst_exact_release_inclusive_key": true,
+    "clock_timezone_or_rth_certified": false,
+    "core_only_primary_not_pooled": true,
+    "exact_recovered_candidate_count": true,
+    "financial_values_read": false,
+    "protected_rows_local_exported": false,
+    "rescue_comparison_not_read_as_primary": true,
+    "source_completeness_certified": false,
+    "unknown_conversion_status_retained": true
+  },
+  "required_invariants": {
+    "all_clock_before_analyst_reported": true,
+    "analyst_90d_lower_inclusive_release_exclusive": true,
+    "analyst_exact_release_inclusive_key": true,
+    "clock_timezone_or_rth_certified": false,
+    "core_only_primary_not_pooled": true,
+    "exact_recovered_candidate_count": true,
+    "financial_values_read": false,
+    "protected_rows_local_exported": false,
+    "rescue_comparison_not_read_as_primary": true,
+    "source_completeness_certified": false,
+    "unknown_conversion_status_retained": true
+  },
+  "required_invariants_passed": true,
+  "source_clock_interpretation": "SOURCE_DISPLAY_CLOCK_ONLY_TIMEZONE_AND_RTH_UNKNOWN",
+  "source_comparison_not_pooled": "RESCUE_ALLCOLS_ACTU_EPSUS",
+  "source_completeness_certified": false,
+  "source_path_rows": 1151,
+  "source_primary": "CORE_IBES_ACTUALS_EPS",
+  "status": "RECOVERED_CANDIDATE_SUPPORT_FULL_COMPLETE",
+  "unknown_analyst_event_keys": 626
+}

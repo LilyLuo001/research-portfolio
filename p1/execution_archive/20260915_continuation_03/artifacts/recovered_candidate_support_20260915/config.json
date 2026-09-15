@@ -1,0 +1,15 @@
+{
+  "protected_recovery_paths": "/projectnb/econdept/qluo/P1_Refraction_WRDS/unrepresented_source_recovery_20260915/full_run/protected_source_candidate_paths.csv",
+  "source_family_primary": "CORE_IBES_ACTUALS_EPS",
+  "source_family_comparison": "RESCUE_ALLCOLS_ACTU_EPSUS",
+  "forecast_path_template": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_{year}.parquet",
+  "forecast_years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  "forecast_columns": ["cusip", "fpedats", "analys", "anndats"],
+  "event_sides": ["PRE", "POST"],
+  "analyst_window_days": 90,
+  "nominal_clock_lower_inclusive": "09:30:00",
+  "nominal_clock_upper_inclusive": "15:00:00",
+  "source_clock_interpretation": "SOURCE_DISPLAY_CLOCK_ONLY_TIMEZONE_AND_RTH_UNKNOWN",
+  "expected_recovered_candidates": 99,
+  "expected_all_clock_both_side_candidates": 27
+}

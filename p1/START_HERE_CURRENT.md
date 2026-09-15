@@ -12,7 +12,7 @@ Manual: [updated archive manual](execution_archive/20260915/manuals/P1_Refractio
 
 ## Read in this order
 
-0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_02/STATUS.md): 99 of the 202 formerly unrepresented candidates recovered from existing SCC metadata; their versioned support sidecar is the next packet. Fixed-key comparison and calendar are in checkpoint 01.
+0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_03/STATUS.md): recovered99 support is measured (27 all-clock PRE/POST pairs, 2 nominal-clock pairs, 0 nominal pairs with observed-min2 on both sides). These are not certified RTH or final eligibility. Package-level provenance is the next packet. Recovery is in checkpoint 02; fixed-key comparison and calendar are in checkpoint 01.
 1. [Current execution roadmap](execution_archive/20260915/EXECUTION_ROADMAP.md).
 2. [Current status and stage ledger](execution_archive/20260915/STATUS.md).
 3. [Uncapped census decision](execution_archive/20260915/artifacts/pilot_workspace/pilot_uncapped_metadata_20260915/corrected_v2/DECISION.md).
