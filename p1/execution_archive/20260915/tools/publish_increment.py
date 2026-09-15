@@ -56,6 +56,14 @@ def main():
                 "matched_other_wave_metadata_coverage.csv", "source_version_wave_coverage.csv",
                 "source_wave_to_public_universe_coverage.csv",
             }: reason = None
+            if stage == "source_wave_gap_resolution_20260915" and path.name in {
+                "wave_gap_classification.csv", "gap_classification_summary.csv",
+                "w006_fund_attribution_feasibility.csv", "w032_date_version_conflict.csv",
+                "w006_attribution_by_focal_wave_tier.csv", "w006_attribution_total.csv",
+            }: reason = None
+            if stage == "step4_readiness_early_stop_20260915" and path.name in {
+                "early_stop_support_table.csv", "readiness_ledger.csv",
+            }: reason = None
             entry = {"source_path": str(path), "relative_path": str(rel), "size_bytes": path.stat().st_size}
             if reason:
                 entries.append({**entry, "status": "EXCLUDED", "reason": reason}); continue

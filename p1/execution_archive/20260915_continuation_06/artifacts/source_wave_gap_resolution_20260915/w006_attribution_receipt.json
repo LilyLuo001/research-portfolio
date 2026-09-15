@@ -1,0 +1,22 @@
+{
+  "status": "W006_PRE_AGGREGATION_ATTRIBUTION_COMPLETE",
+  "counts": {
+    "candidate_date_bucket_pairs": 12,
+    "BOTH_DFA_AND_JPM": 1,
+    "DFA_ONLY": 11
+  },
+  "invariants": {
+    "exact_12_pairs": true,
+    "all_pair_keys_unique": true,
+    "aggregate_sum_12": true,
+    "no_unexpected_series_set": true
+  },
+  "inputs_sha256": {
+    "protected_candidate_other_wave_sidecar": "dc6cf2d58e3cd1e95e5e8c3401195c9c9ef0d5b415d783a7b578cddef501ada8",
+    "protected_w006_permno_series_projection": "2c01a01abbec82d991efbd3a0b1588a39878e49bda803b285b91b2c39cdde798",
+    "code": "bf9be01f80ab609a2cc61b546ffb7b72ba8be6c42879a7d9a8e1269c88864315"
+  },
+  "protected_output_sha256": "dcebcfed4b4ae750daa3f59d3f638dc37eb6aa62a64d6cbeba2bc7ccfe626fd9",
+  "interpretation": "DATE_BUCKET_LINKAGE_ATTRIBUTED_TO_PREDECESSOR_HOLDINGS_SOURCE_ONLY_NOT_SHARED_PACKAGE_OR_SPONSOR",
+  "backend_telemetry": "NOT_OBSERVED"
+}

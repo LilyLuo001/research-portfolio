@@ -1,0 +1,80 @@
+{
+  "status": "ADJUSTED_DETAIL_W002_HIGH_FOUR_KEY_CHECK_COMPLETE",
+  "source_family": "RESCUE_ALLCOLS_DET_EPSUS_SEPARATE_NOT_POOLED",
+  "target": {
+    "event_keys": 4,
+    "candidate_keys": 1,
+    "PRE": 3,
+    "POST": 1
+  },
+  "pilot": {
+    "definition": "first deterministic target key evaluated within same bounded source pass",
+    "executed": true,
+    "key_count": 1
+  },
+  "rules": {
+    "columns": [
+      "cusip",
+      "fpedats",
+      "analys",
+      "anndats"
+    ],
+    "window": "[release_date-90 days,release_date)",
+    "distinct_analyst_ids": true,
+    "pooling": false
+  },
+  "by_side": {
+    "PRE": {
+      "keys": 3,
+      "observed_min2_keys": 0,
+      "observed_lt2_keys": 3,
+      "matched_keys": 2,
+      "rows_in_windows": 3,
+      "analyst_count_histogram": {
+        "1": 2,
+        "0": 1
+      }
+    },
+    "POST": {
+      "keys": 1,
+      "observed_min2_keys": 0,
+      "observed_lt2_keys": 1,
+      "matched_keys": 1,
+      "rows_in_windows": 1,
+      "analyst_count_histogram": {
+        "1": 1
+      }
+    }
+  },
+  "total": {
+    "matched_keys": 3,
+    "rows_in_windows": 4,
+    "analyst_count_histogram": {
+      "1": 3,
+      "0": 1
+    }
+  },
+  "source_manifest": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_det_epsus_2019.parquet",
+      "bytes": 18345946,
+      "sha256": "NOT_REHASHED_LARGE_ARCHIVE_EXISTING_LOCATOR_PROVENANCE"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_det_epsus_2020.parquet",
+      "bytes": 19953777,
+      "sha256": "NOT_REHASHED_LARGE_ARCHIVE_EXISTING_LOCATOR_PROVENANCE"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_det_epsus_2021.parquet",
+      "bytes": 18710056,
+      "sha256": "NOT_REHASHED_LARGE_ARCHIVE_EXISTING_LOCATOR_PROVENANCE"
+    }
+  ],
+  "targets_sha256": "fc4755dfa8bad1460f3ee6b50e89552eea88bd7fb3bd85d0feff479c27aaa06c",
+  "code_sha256": "a2ce1953c9e84e7986981c1c20d59f553b43849e61a93d000207e0cda1c44fc5",
+  "interpretation": "OBSERVED_ANALYST_ID_LOWER_BOUND_ONLY_SOURCE_COMPLETENESS_NOT_CERTIFIED_NOT_SUE",
+  "raw_values_read": false,
+  "protected_rows_exported_local": false,
+  "backend_telemetry": "NOT_OBSERVED"
+}

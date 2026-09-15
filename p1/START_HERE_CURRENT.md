@@ -1,6 +1,6 @@
 # P1 — current continuation entry
 
-Updated: 2026-09-15. Research status: **HOLD_DESIGN + HOLD_DATA**, not GO.
+Updated: 2026-09-15. Latest independent evidence verdict: **HOLD_DATA**, not GO. Final scientific choices remain unapproved; current results do not establish design failure.
 
 Read this entry before historical plans. The user approved the finite pilot execution roadmap and Git publication of safe artifacts on 2026-09-15. POST headline response remains sealed; approval to execute the roadmap is not a silent choice of a new population, session, inference method or economic margin.
 
@@ -12,7 +12,7 @@ Manual: [updated archive manual](execution_archive/20260915/manuals/P1_Refractio
 
 ## Read in this order
 
-0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_05/STATUS.md): the recovered99 other-wave join is complete: 24 candidates have 45 pairs with other waves; 75 have no match in this 30-wave source version, not a clean-calendar certificate. Public metadata covers 47 waves; reconcile the 17 absent exposure-wave memberships next. Package provenance is in checkpoint 04 and recovered99 earnings support in checkpoint 03. Final competing-conversion eligibility remains unresolved. Supported clock uncertainty intervals are allowed; exact seconds are not universally required.
+0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_06/STATUS.md): all 17 source-wave gaps were classified (14 affirmative legacy scope absences, 3 mapping-unknown); W006 fund attribution and W032 date-type discrepancies were measured. Independent scientific review verified the corrected support diagnostics and rejected an unsupported two-stock gate. Existing Sol/medium execution continues with factual package/clock repair; no new blanket PI signature is required. Current counts are not final support or power. Prior checkpoints are preserved.
 1. [Current execution roadmap](execution_archive/20260915/EXECUTION_ROADMAP.md).
 2. [Current status and stage ledger](execution_archive/20260915/STATUS.md).
 3. [Uncapped census decision](execution_archive/20260915/artifacts/pilot_workspace/pilot_uncapped_metadata_20260915/corrected_v2/DECISION.md).

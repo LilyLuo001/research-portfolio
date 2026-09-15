@@ -1,0 +1,48 @@
+{
+  "status": "STEP4_READINESS_DIAGNOSTIC_COMPLETE",
+  "decision": "HOLD_DATA_AND_SCIENTIFIC_CHOICE_ACTUAL_RANK_NOT_RUN",
+  "invariants": {
+    "four_main_waves": true,
+    "no_final_support_claim": true,
+    "all_status_no_min2_nonempty_all_four_main_waves": true,
+    "cached_min2_nonempty_not_all_four_main_waves": true,
+    "proposed_clean_nonempty_not_all_four_main_waves": true,
+    "two_stock_threshold_explicitly_unapproved_heuristic": true,
+    "no_quote_power_effect_run": true
+  },
+  "inputs_sha256": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_uncapped_metadata_20260915/corrected_v2/scc/full/nominal_support_before_vs_cached_min2.csv": "d31a229a99d8c21ded17fbac76ea0d55bc35b628573ede17bfcc052d767e9429",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_uncapped_metadata_20260915/corrected_v2/scc/full/nominal_support_receipt.json": "d1f5a91d7243f69bb7eead0548842212257674918059d21e64da9b519df4f2c1",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_uncapped_metadata_20260915/corrected_v2/EXECUTION_RECEIPT.json": "a52918f5050a7d637db96e610bdade7b59ce255cf002e563b6e30ac19388b5a9",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/gate1_20260915/support_by_wave_tier.csv": "a437b6391d734badf4aa413de82a9fcafa8c14105561b0d40c688573e08a4ed2",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/EXECUTION_RECEIPT.json": "6f494d47137b0990229a6f52b6fd5806ca9a35c41cb99dcc3fbfb8a6a526402c",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/w006_attribution_receipt.json": "05c9385862307f84e9d5f40ee76d13e657af91d56eb700e0972a8386310dfffd",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/adjusted_detail_w002_high_receipt.json": "f6cfb67a2d35a48f7fece6e5dbe38b1d0853f33865a9fd845631c98bf8898c05",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/package_provenance_inventory_20260915/package_readiness_ledger.csv": "72a4a4920a94bd0f6c4fa02cef1904814933052c4eb6c0affa1daf4ac8934b2b",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_clock_evidence_20260915/CLOCK_EVIDENCE_RECEIPT.json": "a15f323320e63ae34f9ef3e39b023f6600001f8f1a703a9ffde005fc40148955",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/exchange_calendar_20260915/CALENDAR_RECEIPT.json": "1ab366c5cef380ed6758c3e001ac9eb20da5f7f605ee7283109611e6bf9c8a91",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/primary_package_checks_20260915/FINDINGS.md": "5b8b5b09b335884af5a0c9cecef097b36f04e376b3f58e9394518cf1f2724815"
+  },
+  "outputs_sha256": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/step4_readiness_early_stop_20260915/early_stop_support_table.csv": "3082f2a7f9768bd6515a231bded2776986ca0c8d239fef76752c504aaf870772",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/step4_readiness_early_stop_20260915/readiness_ledger.csv": "7d4e01cc68a7d1a803feee05e9b959e897cbc964c569ac43d24c40df3cbde3f0"
+  },
+  "counts": {
+    "main_waves": 4,
+    "main_waves_with_nonempty_both_tiers_all_status_no_min2": 4,
+    "main_waves_with_nonempty_both_tiers_cached_min2": 2,
+    "main_waves_with_nonempty_both_tiers_proposed_clean_no_min2": 1,
+    "main_waves_passing_unapproved_two_stock_heuristic_all_status_no_min2": 2
+  },
+  "source_authority": {
+    "nominal_aggregate_sha256": "d31a229a99d8c21ded17fbac76ea0d55bc35b628573ede17bfcc052d767e9429",
+    "nominal_receipt_sha256": "d1f5a91d7243f69bb7eead0548842212257674918059d21e64da9b519df4f2c1",
+    "corrected_v2_execution_receipt_sha256": "a52918f5050a7d637db96e610bdade7b59ce255cf002e563b6e30ac19388b5a9",
+    "invalid_initial_run_used": false
+  },
+  "requested_route": "Sol/medium",
+  "backend_telemetry": "NOT_OBSERVED",
+  "post_response_read": false,
+  "quote_body_read": false,
+  "power_run": false
+}

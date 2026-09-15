@@ -1,0 +1,69 @@
+{
+  "status": "SOURCE_WAVE_GAP_RESOLUTION_COMPLETE",
+  "counts": {
+    "public_waves": 47,
+    "exposure_waves": 30,
+    "gap_waves": 17,
+    "intentional_stock_scope_absence_waves": 14,
+    "identifier_link_unknown_waves": 3,
+    "w006_predecessor_series": 2,
+    "w032_date_conflict_series": 2
+  },
+  "gap_waves": [
+    "W005",
+    "W008",
+    "W010",
+    "W012",
+    "W015",
+    "W019",
+    "W020",
+    "W022",
+    "W026",
+    "W027",
+    "W028",
+    "W031",
+    "W033",
+    "W035",
+    "W043",
+    "W046",
+    "W047"
+  ],
+  "invariants": {
+    "public_wave_count_47": true,
+    "exposure_wave_count_30": true,
+    "gap_set_exactly_17": true,
+    "all_gap_gate0_rows_pass": true,
+    "all_gap_strict_pre": true,
+    "all_gap_series_id_match": true,
+    "no_exact_mapped_rows_in_gap_waves": true,
+    "candidate_mapping_rows_reconcile": true,
+    "mapping_statuses_exhaustive": true,
+    "w006_two_distinct_predecessor_series": true,
+    "w032_two_series_preserved": true,
+    "no_final_sample_inference": true
+  },
+  "input_sha256": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/config.json": "07eea87a52564624dcebbf7ed9cc01afc91a900c3d5b4cec260dddec76b7ec34",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/recovered99_other_wave_provenance_20260915/public_fund_series_metadata_projection.csv": "5dc5a5ac025bc2e4561423e901f6d739ffebc52640d85ff890d652eb25fa2b42",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_stock_wave_all.csv": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_universe_gate0_pass.csv": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/nport_pre_parse_audit.csv": "fd4ac18a4209c1ae969d74478fbe74eaf0fd8688f11c8345a184d6fac99f0727",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/nport_crsp_security_crosswalk.csv": "ff5b4813caad614fc2e05d02e4bad3e1169533825f9c3f7581b3f0346f2049e1",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/universe_v2/output/event_master_final_reconciled.csv": "b3fd7514c410d4f793e77fd1c77149bf6e529c7ce3bd1bce7bd114658ad884a1",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/events_merged.csv": "e5a441368fcadb53064c226d4d90a858f5024fce14a90d913cf8dfb127a67a4e"
+  },
+  "output_sha256": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/wave_gap_classification.csv": "113f5d3729c85de4f130c70bad65b7a25a59ffba427f58b3cd63b10d4ade71a6",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/gap_classification_summary.csv": "52e95d77718c15a39b5a7e0c8f24c80d115aeefe86c37c8cb9a7a533f46cea87",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/w006_fund_attribution_feasibility.csv": "44668c773da538ebbbdf94d3ac83e953ff7fee9d7b59df6cdd54d336eaeb3d8c",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/source_wave_gap_resolution_20260915/w032_date_version_conflict.csv": "34af59ba6897277a24a6770358eaf0ee79c575a568334aad7e21846650984978"
+  },
+  "limits": [
+    "No outcome, forecast value, price, return, quote, or response was read.",
+    "Intentional means absent under the pinned U.S.-common-stock construction, not absent from the fund or vendor universe.",
+    "W006 candidate links remain date-bucket-only until a versioned fund-level rebuild is executed.",
+    "W032 proposed and verified completion dates are preserved; this stage does not select I_w."
+  ],
+  "requested_route": "Sol/medium",
+  "backend_telemetry": "NOT_OBSERVED"
+}
