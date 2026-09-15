@@ -1,6 +1,6 @@
 # P1 execution ledger — 2026-09-15
 
-Research: **HOLD_DESIGN + HOLD_DATA**. Safe Git snapshot is being prepared; push status must be verified against the remote commit, not inferred from this file.
+Research: **HOLD_DESIGN + HOLD_DATA**. Safe artifact commit `e2256c4c54d51b5053da60973b0cb8e9bda43b94` was pushed and independently matched with `git ls-remote` on `task/p1-feasibility-adjudication-20260913`. See `GIT_DELIVERY.json`; its bookkeeping commit may advance the branch tip. No merge into main occurred.
 
 | Stage | Actual state | Evidence location under `artifacts/` |
 |---|---|---|
