@@ -1,0 +1,40 @@
+{
+  "status": "PUBLIC_FUND_PACKAGE_CLOCK_FACTS_COMPLETE",
+  "counts": {
+    "fund_series_rows": 17,
+    "package_rows": 9,
+    "holdings_version_rows": 29,
+    "focal_included_series": 12,
+    "excluded_bond_series": 1,
+    "other_wave_series": 4
+  },
+  "invariants": {
+    "17_expected_series": true,
+    "w021_selected_holding_is_after_known_public_fact_date": true,
+    "other_four_focal_selected_holdings_strictly_pre_Aw_interval": true,
+    "legacy_gate0_holdings_not_promoted_to_preannouncement": true,
+    "package_A_uses_min_constituent_bounds": true,
+    "w006_two_independent_packages": true,
+    "w032_one_two_constituent_package": true,
+    "pinned_focal_package_series_exact": true,
+    "w021_bond_exclusion_matches_pinned_input": true,
+    "no_clean_exclude_assigned": true
+  },
+  "input_sha256": {
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_universe_gate0_pass.csv": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/universe_v2/output/event_master_final_reconciled.csv": "b3fd7514c410d4f793e77fd1c77149bf6e529c7ce3bd1bce7bd114658ad884a1",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/PACKAGE_INPUTS.csv": "bcbbe2593b640930380f8a7189ae0dcd47963bb245549dbaa6e8489a3bcf8807",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/SELECTED_PREANNOUNCEMENT_FILINGS.csv": "c42627aee27552e8f1446f4fe59bd5cbcdcedbb0e7925895ba7593fe27499426"
+  },
+  "output_sha256": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/fund_package_clock_facts_20260915/fund_package_clock_facts.csv": "4c2f3df9eab0cf4273872dc8a6a2894c746e7bb5bf40ab11096d533f2605281a",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/fund_package_clock_facts_20260915/package_fact_summary.csv": "e750ac5ca0cfcea0932af4ee268c24e2298b1bb526261aede824629ef685886e",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/fund_package_clock_facts_20260915/holdings_date_version_facts.csv": "064f2b2657249217a9c9bbee1500f411784536d773c4278e61e865f49270b8e9"
+  },
+  "public_primary_locators": [
+    "SEC accessions in announcement_source_accession and implementation_source_accession",
+    "primary_package_checks_20260915/FINDINGS.md",
+    "primary_announcement_repair_20260915/FINDINGS.md"
+  ],
+  "backend_telemetry": "NOT_OBSERVED"
+}

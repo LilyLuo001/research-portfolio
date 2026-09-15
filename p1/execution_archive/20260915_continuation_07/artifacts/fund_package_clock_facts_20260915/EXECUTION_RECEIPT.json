@@ -1,0 +1,43 @@
+{
+  "status": "FUND_PACKAGE_CLOCK_FACTUAL_SIDECAR_COMPLETE",
+  "requested_routing": "gpt-5.6-sol/medium",
+  "backend_telemetry": "NOT_OBSERVED",
+  "contract_sha256": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+  "counts": {
+    "fund_series_facts": 17,
+    "package_facts": 9,
+    "recovered_candidates": 99,
+    "candidate_other_wave_keys": 120,
+    "real_candidate_other_wave_keys": 45,
+    "protected_candidate_pair_series_rows": 139,
+    "exact_series_membership_rows": 64,
+    "contract_exclusion_condition_pairs": 25,
+    "distinct_candidates_with_observed_exclusion_condition": 17,
+    "candidates_not_certified_clean": 82,
+    "no_match_unknown_keys": 75
+  },
+  "gate": {
+    "fixtures_passed": 6,
+    "pilot_candidates": 20,
+    "pilot_real_pairs": 34,
+    "pilot_exact_series_membership_rows": 44,
+    "full_gate_pass": true,
+    "direct_full_bypass_rejected": true,
+    "stale_pilot_rejected": true
+  },
+  "sha256": {
+    "build_protected_membership_sidecar.py": "1adfa3a99c4b2ac526531ce3268726b972bbde99bce09f0debd4c3a91e023149",
+    "gate_full.py": "ffee6b67077e3682acf3a8d644de6357f82d9aed0ec9acfa4f2ff0af0be09b53",
+    "source_manifest.json": "1b2784048a1dbdb5ea71bd0414f5797d93c4cd51ccc3cde7ad6d06560752f483",
+    "fund_package_clock_facts.csv": "4c2f3df9eab0cf4273872dc8a6a2894c746e7bb5bf40ab11096d533f2605281a",
+    "holdings_date_version_facts.csv": "064f2b2657249217a9c9bbee1500f411784536d773c4278e61e865f49270b8e9",
+    "candidate_pair_fact_aggregate.csv": "c7731104523171af1c8b8d80016ace57c94764c755666e59151f5fd3f153a525",
+    "candidate_contract_condition_aggregate.csv": "0ab808b1af6bd7914d92628d391a5dd940a4d2237f13536eef56903d83180975",
+    "protected_scc_output": "d38a0264d6b7fff662c9a54ade3a8175a7eb6baf02e1e565d8204dc0062c14ef",
+    "pilot_receipt": "bf5601dde87277e578ad8ba37eae2d253d96f7b733c1c54e3e16a0446a0d4f1f",
+    "gate_negative_test_receipt": "da2c3bce21cade88c8e4e91cbc8d0bbbc2fcc553996814e9e0e332b1bf47f8c1"
+  },
+  "protected_rows_local_exported": false,
+  "scientific_status": "FACTS_IMPLEMENTED; FINAL_POPULATION_SUPPORT_AND_RANK_NOT_RUN",
+  "next_action": "Version W021 2022-09-30 NPORT-P into the existing strict pre-announcement exposure/denominator logic, preserving the superseded 2022-12-31 holding version, then attach only its resulting metadata membership to this sidecar."
+}

@@ -64,6 +64,12 @@ def main():
             if stage == "step4_readiness_early_stop_20260915" and path.name in {
                 "early_stop_support_table.csv", "readiness_ledger.csv",
             }: reason = None
+            if stage == "fund_package_clock_facts_20260915" and path.name in {
+                "candidate_contract_condition_aggregate.csv", "candidate_pair_fact_aggregate.csv",
+                "candidate_pair_series_aggregate.csv", "fund_package_clock_facts.csv",
+                "holdings_date_version_facts.csv", "package_fact_summary.csv",
+                "w006_independent_package_aggregate.csv",
+            }: reason = None
             entry = {"source_path": str(path), "relative_path": str(rel), "size_bytes": path.stat().st_size}
             if reason:
                 entries.append({**entry, "status": "EXCLUDED", "reason": reason}); continue

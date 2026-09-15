@@ -1,0 +1,33 @@
+{
+  "status": "PROTECTED_MEMBERSHIP_SIDECAR_COMPLETE",
+  "mode": "pilot",
+  "code_sha256": "1adfa3a99c4b2ac526531ce3268726b972bbde99bce09f0debd4c3a91e023149",
+  "contract_sha256": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+  "counts": {
+    "candidate_denominator": 20,
+    "candidate_other_wave_pairs_including_no_match": 34,
+    "real_candidate_other_wave_pairs": 34,
+    "protected_candidate_pair_series_rows": 44,
+    "exact_series_membership_rows": 44,
+    "robust_contract_exclusion_condition_candidate_pairs": 15,
+    "unknown_candidate_pairs": 0
+  },
+  "invariants": {
+    "input_candidate_count_expected": true,
+    "input_pairs_unique": true,
+    "pair_reconciliation": true,
+    "no_clean_flag_emitted": true
+  },
+  "input_sha256": {
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/input/protected_pilot_pairs.csv": "ca78b04223ffab8cac3605f31915c19a45c785971130ea5bd0d6ed0474594cbe",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/input/protected_relevant_wave_permno_series.csv": "e70518de3f7920044089f92edf5ee2656a7a7396014d592c22a3fb17f621b7d1",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/input/fund_package_clock_facts.csv": "4c2f3df9eab0cf4273872dc8a6a2894c746e7bb5bf40ab11096d533f2605281a"
+  },
+  "output_sha256": {
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/pilot_v4/protected_candidate_package_membership.csv": "471c4771130da862503ebceb7c09c95eb9c173346b72586cfc7adb2a1d878b72",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/pilot_v4/candidate_pair_fact_aggregate.csv": "48dee986ed11554d77f197857e41cc8bd4f97b90616b49ecb0a6ebe0914ff6b2",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/pilot_v4/candidate_pair_series_aggregate.csv": "d8e24f2720e2225de14292665fdb1fa3e05d13bf60f38c014dee800aeae82121"
+  },
+  "protected_rows_local_exported": false,
+  "interpretation": "Observed other conversion robustly before or inside the contract window satisfies the exclusion condition. An additional unknown constituent does not erase that positive fact. No-match/after rows are not certified clean because the versioned calendar is incomplete."
+}

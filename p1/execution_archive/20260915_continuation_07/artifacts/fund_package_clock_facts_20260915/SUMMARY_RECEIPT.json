@@ -1,0 +1,24 @@
+{
+  "status": "PROTECTED_RESULT_SUMMARY_COMPLETE",
+  "counts": {
+    "candidates": 99,
+    "candidate_pairs": 120,
+    "candidates_with_observed_contract_exclusion_condition": 17,
+    "candidates_without_observed_exclusion_but_calendar_incomplete": 82,
+    "w006_independent_packages": 2
+  },
+  "invariants": {
+    "candidate_denominator_99": true,
+    "pair_denominator_120": true,
+    "exclusion_positive_not_erased_by_unknown": true,
+    "w006_packages_separate": true,
+    "no_candidate_clean_status": true
+  },
+  "input_sha256": "d38a0264d6b7fff662c9a54ade3a8175a7eb6baf02e1e565d8204dc0062c14ef",
+  "code_sha256": "f08ec3e8e45990c2122ddb4bfcc1fec2d8b53a7b8f11bf97857d8628b66cc4e9",
+  "output_sha256": {
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/summary_v4/candidate_contract_condition_aggregate.csv": "0ab808b1af6bd7914d92628d391a5dd940a4d2237f13536eef56903d83180975",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/fund_package_clock_facts_20260915/summary_v4/w006_independent_package_aggregate.csv": "e6fd5f2bd9f6154fee65ca0e0570e02a641137d2b086467c1b974ccfa7163d30"
+  },
+  "protected_rows_local_exported": false
+}
