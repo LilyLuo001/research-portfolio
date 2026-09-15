@@ -48,6 +48,9 @@ def main():
                 "candidate_conversion_status_aggregate.csv",
                 "source_key_support_by_wave_tier_side.csv",
             }: reason = None
+            if stage == "package_provenance_inventory_20260915" and path.name in {
+                "package_readiness_ledger.csv", "missing_primary_package_evidence.csv",
+            }: reason = None
             entry = {"source_path": str(path), "relative_path": str(rel), "size_bytes": path.stat().st_size}
             if reason:
                 entries.append({**entry, "status": "EXCLUDED", "reason": reason}); continue

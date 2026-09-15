@@ -1,0 +1,49 @@
+{
+  "announcement_earliest_public_timestamp_ready_packages": 0,
+  "backend_telemetry": "NOT_OBSERVED",
+  "code_sha256": "ff470b13e068a4a5690f9cf080d1decdb3fddc097201a580ccb3eca6a4b10a40",
+  "holdings_strictly_pre_recorded_cutoff_packages": 5,
+  "included_predecessor_series": 12,
+  "invariants": {
+    "explicit_metadata_usecols": true,
+    "five_target_packages_only": true,
+    "missing_not_zero": true,
+    "no_final_clock_eligibility_claim": true,
+    "old_40_roster_not_relabelled_recovered99": true,
+    "permno_identity_status_not_relabelled_competing_conversion": true
+  },
+  "network_or_live_wrds_used": false,
+  "next_action": {
+    "name": "BUILD_RECOVERED99_CONCURRENT_CONVERSION_PROVENANCE_SIDECAR",
+    "operation": "On SCC, join protected recovered99 candidate keys [candidate_id,wave_id,permno] to existing exposure_stock_wave_all.csv [permno,wave_id,effective_date] for every other wave, then attach exposure_universe_gate0_pass.csv [wave_id,effective_date,adviser,pre_series_id,post_series_id]. Emit protected candidate-by-other-wave evidence rows and local aggregates. Label sponsor provenance ADVISER_ONLY and both announcement/implementation clocks UNKNOWN wherever the exact fields listed in missing_primary_package_evidence.csv are absent; do not create a clean/exclude boolean.",
+    "reason": "This mechanical, currently authorized join extends the existing effective-date evidence to the exact 99-key denominator without waiting for or inventing missing primary provenance."
+  },
+  "outcomes_quotes_financial_values_read": false,
+  "output_hashes": {
+    "missing_primary_package_evidence.csv": "3aad60d3f9428946489c168d275ceb550c125963e001d59cc5e2810c53dc3d53",
+    "package_readiness_ledger.csv": "72a4a4920a94bd0f6c4fa02cef1904814933052c4eb6c0affa1daf4ac8934b2b"
+  },
+  "packages": 5,
+  "positive_exposure_stock_wave_rows": 4191,
+  "recovered99_competing_conversion_status": "UNKNOWN",
+  "recovered99_stock_wave_keys": 99,
+  "requested_routing": "Sol/medium",
+  "source_hashes": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/conversion_cohorts.csv": "119efd4452f6554aace35bfc85726ec63973b2995a3c41c50570309914fe2d91",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/PACKAGE_INPUTS.csv": "bcbbe2593b640930380f8a7189ae0dcd47963bb245549dbaa6e8489a3bcf8807",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/PREANNOUNCEMENT_EXPOSURE_PROVISIONAL_TIERS.csv": "9f31091f3b7ea9ecbaba39c8c43b64e76713227e361552c9ca6bc52a895fa35e",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/SELECTED_PREANNOUNCEMENT_FILINGS.csv": "c42627aee27552e8f1446f4fe59bd5cbcdcedbb0e7925895ba7593fe27499426",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/build_competing_conversion_flags.py": "f6debf7be5c5e919bcbbc1ea89f661f2bd59f6b268a7da1f2deffee66b9bcbfd",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/build_preannouncement_holdings.py": "6df8e10a6c7a5ccc518260a3c2c8bfd82492ad310bce753397d753761251614f",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/build_scc_exposure.py": "e007adba197f3334f98d7fb40fefd540bf450269818d225f151ea3e393fc7107",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/build_strict_preannouncement_holdings.py": "40d0c9251a5bdd4bbaaf2960cad0e3beece3ba63a1b9f96df0355a2689227a22",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/competing_conversion/overlap_summary_by_wave.csv": "fb00d30a3493e878b014ecfc222021f55216a5ccb87cf7232c6ee7f232791b24",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/recovered_candidate_support_20260915/full_artifacts/candidate_clock_support_by_wave_tier.csv": "94537053bae581f2d2ab5d3e6c1a19aa503546c45e2ad3cd8e43df556bec2c5b",
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/recovered_candidate_support_20260915/full_artifacts/candidate_conversion_status_aggregate.csv": "f8d2688437a345067128b98d80df0ddb2526f5361cec08b676477881402b4022",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_stock_wave_all.csv": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_universe_gate0_pass.csv": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda",
+    "/Users/lilyluo/research-portfolio-p1-feasibility-20260913/p1/feasibility_adjudication/20260913/reconciliation/estimation_contract.reconciled.PROPOSED.yaml": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+    "/Users/lilyluo/research-portfolio-p1-feasibility-20260913/p1/t5_spec/sponsor_crosswalk_PROPOSED.csv": "997faffc1d21309c46390076db1a955241f6f99f1f2e29104a5e93c09e49e9dc"
+  },
+  "status": "PACKAGE_PROVENANCE_INVENTORY_COMPLETE"
+}
