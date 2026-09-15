@@ -12,7 +12,7 @@ Manual: [updated archive manual](execution_archive/20260915/manuals/P1_Refractio
 
 ## Read in this order
 
-0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_09/STATUS.md): event-clock sensitivity shows that the frozen W021 RTH/RTH-60 design has zero high/low PRE+POST stock support if the display clock is Eastern or fixed EST, but potentially sufficient necessary support if it is UTC. The harvested `actu_epsus` timezone/first-public/precision/revision bridge remains uncertified, so the supported decision is `HOLD_DATA`; no further quote purchase, rank test or power run is justified until that single metadata fact is resolved. Prior checkpoints are preserved.
+0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_10/STATUS.md): a bounded check of archived manufacturer evidence and public official WRDS/LSEG material found no decisive bridge for the harvested `actu_epsus.anndats/anntims` timezone, first-public meaning, precision or revision behavior. A delivery-specific four-question provider inquiry is ready to send. The supported decision remains `HOLD_DATA`; no further quote purchase, rank test or power run is justified until the authenticated answer is applied to checkpoint 09's frozen 1,082-key classifier. Prior checkpoints are preserved.
 1. [Current execution roadmap](execution_archive/20260915/EXECUTION_ROADMAP.md).
 2. [Current status and stage ledger](execution_archive/20260915/STATUS.md).
 3. [Uncapped census decision](execution_archive/20260915/artifacts/pilot_workspace/pilot_uncapped_metadata_20260915/corrected_v2/DECISION.md).
