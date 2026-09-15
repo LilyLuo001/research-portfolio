@@ -1,0 +1,55 @@
+{
+  "status": "COMPLETE_BOUNDED_METADATA_RECONCILIATION",
+  "selector": "existing select_targets() exact frozen selector",
+  "target": {
+    "wave": "W002",
+    "tier": "high",
+    "event_keys": 4,
+    "candidate_keys": 1,
+    "PRE": 3,
+    "POST": 1
+  },
+  "rules": {
+    "window": "[release_date-90_days, release_date)",
+    "columns": [
+      "cusip",
+      "fpedats",
+      "analys",
+      "anndats"
+    ],
+    "pooling": false
+  },
+  "sources": {
+    "core": {
+      "matched_keys": 3,
+      "total_rows_in_windows": 4,
+      "distinct_analyst_histogram": {
+        "0": 1,
+        "1": 3
+      }
+    },
+    "rescue_allcols_detu_epsus": {
+      "matched_keys": 3,
+      "total_rows_in_windows": 4,
+      "distinct_analyst_histogram": {
+        "0": 1,
+        "1": 3
+      }
+    }
+  },
+  "core_rescue_aggregate_match": true,
+  "overlap_assessment": "metadata aggregate only; no row-level identity claim",
+  "invalid_attempt": {
+    "status": "INVALID_OUT_OF_TARGET",
+    "description": "broad W002/high filter before frozen select_targets selector; excluded from findings"
+  },
+  "raw_values_printed": false,
+  "backend_telemetry": "NOT_OBSERVED",
+  "runtime": "existing SCC databento_runtime Python; PyArrow footer/batch metadata access",
+  "reproducibility": {
+    "code_path": "scc_detail_reconciliation_20260915/reconcile_exact.py",
+    "code_hash_recorded_after_execution": true,
+    "multiset_identity_comparison": "NOT_RUN",
+    "aggregate_agreement_is_not_row_identity": true
+  }
+}

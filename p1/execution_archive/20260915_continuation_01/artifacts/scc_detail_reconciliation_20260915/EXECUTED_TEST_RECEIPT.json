@@ -1,0 +1,17 @@
+{
+  "status": "SYNTHETIC_EXECUTION_PASS",
+  "tests_run": 7,
+  "failures": 0,
+  "errors": 0,
+  "exit_code": 0,
+  "checked_script_sha256": "6b0cd7aea794e63f6430923c2af5e890c3843cdda0a0b42baeb3053cfaff132b",
+  "test_harness_sha256": "2dbb96cac52ea332c925cafe1303f59746b38c43447be5e9bce59d1c2f530ec6",
+  "original_scc_execution_script_sha256": "b7387de639b55ec0bdf002b17cece662c87107d35a75f6b192dd7f92685f48a9",
+  "command": "python3 -B -m unittest discover -s scc_detail_reconciliation_20260915 -p test_reconcile_exact.py",
+  "scope": "Saved script executed with synthetic pandas input and in-memory mocked parquet I/O; no SCC or licensed rows read",
+  "tests": ["minus90 inclusive", "release exclusive", "before window excluded", "duplicate analyst counted once", "null analyst ignored", "period mismatch excluded", "ambiguous CUSIP rejected"],
+  "initial_harness_attempt": "Seven import errors because local pyarrow absent; corrected to mock the entire parquet module as intended. No dependency installation or data read was performed.",
+  "earlier_worker_test_record": "test_receipt.json lists claimed checks without a saved runnable harness; this receipt and test_reconcile_exact.py provide the actual executed synthetic verification",
+  "research_gate_or_multiset_identity_pass": false,
+  "final_guarded_script_rerun_on_source_data": false
+}
