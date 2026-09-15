@@ -1,0 +1,42 @@
+{
+  "actual_eps_or_financial_values_read": false,
+  "aggregate_hashes": {
+    "candidate_source_overlap_aggregate.csv": "c741ccb9a5c419db364b1815930ed46895edd03dab8b7fc612f8079904b1b6ba",
+    "full_archive_qtr_source_family_record_overlap.csv": "d9fce8845528adb7f26b1905aa5da838886ea58f034e43601cc0745424a0df35",
+    "recovery_by_wave_tier_family.csv": "ba15f62c6e0f6e1641d46df9ba72eafa332d7006ccca402c04e0d8fc3faef166",
+    "source_partition_counts.csv": "1dbe17bde1fdefac8e234f6138c442decb4cf509abecbc26ca73636cb12e5e99",
+    "support_by_wave_tier_family_side.csv": "e18039efd6b9a9bcb8be2273d2aff391771becbf88c8622e5be5df4e1e4a4391"
+  },
+  "backend_telemetry": "NOT_OBSERVED",
+  "candidate_denominator": 202,
+  "code_sha256": "63a34f0819feb610877d3c6c9465cc887a18b4a36ba416ef11c08f3e1f6cdc87",
+  "config_sha256": "0648318caa4927863293297d2b894a6a3f5408a395ff4178b17c176e19074690",
+  "manifest_sha256": "16640170332fb8acd90baf01f76e8e764601590f0fed2f2b2526c014578c1986",
+  "mode": "full",
+  "positive_control_candidates": 0,
+  "required_invariant_expectations": {
+    "actual_value_column_read": false,
+    "ambiguity_assessed_all_links_before_candidate_filter": true,
+    "candidate_universe_2794_verified_before_subset": true,
+    "families_pooled": false,
+    "full_subset_exact_202": true,
+    "no_match_labeled_global_vendor_absence": false,
+    "protected_rows_local_exported": false,
+    "score_threshold_applied": false
+  },
+  "required_invariants": {
+    "actual_value_column_read": false,
+    "ambiguity_assessed_all_links_before_candidate_filter": true,
+    "candidate_universe_2794_verified_before_subset": true,
+    "families_pooled": false,
+    "full_subset_exact_202": true,
+    "no_match_labeled_global_vendor_absence": false,
+    "protected_rows_local_exported": false,
+    "score_threshold_applied": false
+  },
+  "required_invariants_passed": true,
+  "source_families_kept_separate": true,
+  "source_record_overlap_scope": "FULL_QTR_ARCHIVE_ROWS_IN_DATE_WINDOW_NOT_202_TARGET",
+  "status": "UNREPRESENTED_SOURCE_RECOVERY_FULL_COMPLETE",
+  "unrepresented_candidates": 202
+}

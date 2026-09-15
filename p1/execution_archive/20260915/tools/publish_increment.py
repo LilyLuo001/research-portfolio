@@ -36,6 +36,11 @@ def main():
             # New calendar is generated exchange metadata, not research-row data.
             calendar = stage.startswith("exchange_calendar_") and path.suffix == ".csv"
             if calendar: reason = None
+            if stage == "unrepresented_source_recovery_20260915" and path.name in {
+                "recovery_by_wave_tier_family.csv", "support_by_wave_tier_family_side.csv",
+                "candidate_source_overlap_aggregate.csv", "source_family_record_overlap.csv",
+                "source_partition_counts.csv",
+            }: reason = None
             entry = {"source_path": str(path), "relative_path": str(rel), "size_bytes": path.stat().st_size}
             if reason:
                 entries.append({**entry, "status": "EXCLUDED", "reason": reason}); continue

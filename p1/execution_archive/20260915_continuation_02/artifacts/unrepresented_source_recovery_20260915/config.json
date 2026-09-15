@@ -1,0 +1,18 @@
+{
+  "date_lower_inclusive": "2019-01-01",
+  "date_upper_exclusive": "2026-09-01",
+  "allowed_actual_columns": ["ticker", "cusip", "pends", "pdicity", "anndats", "anntims", "actdats", "acttims"],
+  "allowed_link_columns": ["permno", "ncusip", "sdate", "edate", "score"],
+  "candidate_path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/unrepresented_source_recovery_20260915/inputs/candidates_v2.csv",
+  "link_path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ibes_link_full.parquet",
+  "families": {
+    "CORE_IBES_ACTUALS_EPS": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_{year}.parquet",
+    "RESCUE_ALLCOLS_ACTU_EPSUS": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_{year}.parquet"
+  },
+  "years": [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  "expected_unrepresented_breakdown": {
+    "W002|high": 59, "W002|low": 73,
+    "W016|high": 24, "W016|low": 29,
+    "W025|high": 6, "W025|low": 11
+  }
+}

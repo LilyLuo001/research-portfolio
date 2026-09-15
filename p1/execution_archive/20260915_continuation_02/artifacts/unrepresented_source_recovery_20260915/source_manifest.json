@@ -1,0 +1,151 @@
+{
+  "allowed_actual_columns": [
+    "ticker",
+    "cusip",
+    "pends",
+    "pdicity",
+    "anndats",
+    "anntims",
+    "actdats",
+    "acttims"
+  ],
+  "allowed_link_columns": [
+    "permno",
+    "ncusip",
+    "sdate",
+    "edate",
+    "score"
+  ],
+  "authority": "UPDATED_ARCHIVE_MANUAL_PLUS_FINAL_SCC_MANIFEST",
+  "candidate_sha256": "72a3c02d78458605716a23c2fce07f9a8611cb6dadd3d402c9c3d0babe1f42b3",
+  "family_pooling": false,
+  "inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/unrepresented_source_recovery_20260915/inputs/candidates_v2.csv",
+      "sha256": "72a3c02d78458605716a23c2fce07f9a8611cb6dadd3d402c9c3d0babe1f42b3",
+      "verification": "sha256"
+    },
+    {
+      "mtime_epoch": 1788337523,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ibes_link_full.parquet",
+      "size_bytes": 606920,
+      "upstream_sha256": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326",
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333097,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2019.parquet",
+      "size_bytes": 481856,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335104,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2019.parquet",
+      "size_bytes": 481856,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333097,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2020.parquet",
+      "size_bytes": 478470,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335105,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2020.parquet",
+      "size_bytes": 478470,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333097,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2021.parquet",
+      "size_bytes": 527754,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335105,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2021.parquet",
+      "size_bytes": 527754,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333098,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2022.parquet",
+      "size_bytes": 520665,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335105,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2022.parquet",
+      "size_bytes": 520665,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333098,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2023.parquet",
+      "size_bytes": 513872,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335106,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2023.parquet",
+      "size_bytes": 513872,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333098,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2024.parquet",
+      "size_bytes": 495363,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335106,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2024.parquet",
+      "size_bytes": 495363,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333099,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2025.parquet",
+      "size_bytes": 477849,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335106,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2025.parquet",
+      "size_bytes": 477849,
+      "verification": "stat"
+    },
+    {
+      "family": "CORE_IBES_ACTUALS_EPS",
+      "mtime_epoch": 1788333099,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2026.parquet",
+      "size_bytes": 312800,
+      "verification": "stat"
+    },
+    {
+      "family": "RESCUE_ALLCOLS_ACTU_EPSUS",
+      "mtime_epoch": 1788335107,
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/ibes_allcols_actu_epsus_2026.parquet",
+      "size_bytes": 312800,
+      "verification": "stat"
+    }
+  ],
+  "status": "PINNED_SOURCE_MANIFEST",
+  "upstream_full_receipt_sha256": "fa84cae932d64797e1a0b86ef8e7e94d3a5449ebe03fba8e9a435b74e9132a40",
+  "upstream_input_manifest_sha256": "54e4b8b943c5a8a8af173cf2dfaaa66590ad56d1e381f8157854cf11b6f4d9c9"
+}

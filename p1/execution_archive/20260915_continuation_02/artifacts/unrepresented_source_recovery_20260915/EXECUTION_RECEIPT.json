@@ -1,0 +1,73 @@
+{
+  "status": "COMPLETE",
+  "scope": "SCC_ARCHIVE_METADATA_ONLY_202_PREVIOUSLY_UNREPRESENTED_CANDIDATES",
+  "backend_routing_requested": "Sol/medium",
+  "backend_telemetry": "NOT_OBSERVED",
+  "candidate_units": "stock-wave candidate keys",
+  "candidate_denominator": 202,
+  "fixed_parent_universe_hl": 2794,
+  "date_bounds": "2019-01-01 inclusive to 2026-09-01 exclusive",
+  "results": {
+    "recovered_both_families": 99,
+    "not_recovered_uniquely_in_either_checked_family": 103,
+    "core_only": 0,
+    "rescue_only": 0,
+    "per_family_wave_specific_candidate_release_keys": 1246,
+    "per_family_release_keys_by_side": {
+      "PRE": 833,
+      "POST": 318,
+      "TRANSITION": 95
+    },
+    "per_family_candidates_with_at_least_one_key_by_side": {
+      "PRE": 99,
+      "POST": 27,
+      "TRANSITION": 59
+    }
+  },
+  "source_families": {
+    "CORE_IBES_ACTUALS_EPS": "raw/ibes_actuals_eps_{2019..2026}.parquet",
+    "RESCUE_ALLCOLS_ACTU_EPSUS": "raw/rescue/ibes_allcols_actu_epsus_{2019..2026}.parquet"
+  },
+  "source_authority": "UPDATED_ARCHIVE_MANUAL_PLUS_FINAL_SCC_MANIFEST",
+  "allowed_actual_columns": ["ticker", "cusip", "pends", "pdicity", "anndats", "anntims", "actdats", "acttims"],
+  "allowed_link_columns": ["permno", "ncusip", "sdate", "edate", "score"],
+  "lineage": {
+    "candidate_sha256": "72a3c02d78458605716a23c2fce07f9a8611cb6dadd3d402c9c3d0babe1f42b3",
+    "link_upstream_sha256": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326",
+    "upstream_input_manifest_sha256": "54e4b8b943c5a8a8af173cf2dfaaa66590ad56d1e381f8157854cf11b6f4d9c9",
+    "upstream_full_receipt_sha256": "fa84cae932d64797e1a0b86ef8e7e94d3a5449ebe03fba8e9a435b74e9132a40",
+    "code_sha256": "63a34f0819feb610877d3c6c9465cc887a18b4a36ba416ef11c08f3e1f6cdc87",
+    "config_sha256": "0648318caa4927863293297d2b894a6a3f5408a395ff4178b17c176e19074690",
+    "manifest_sha256": "16640170332fb8acd90baf01f76e8e764601590f0fed2f2b2526c014578c1986",
+    "pilot_receipt_sha256": "0b4a6c7d50ce8ea8f5a61a5a71e8ec9f264b6bb2b74622c032ad2f3e2d810d76",
+    "lineage_receipt_sha256": "4f4ec9e595d42cabaf03e4a235671129a84c885504be71456a55d6ba1d131feb",
+    "gate_sha256": "d3d3c843409c72c996292c0b449d4b7821c9cae8666d056b1a54a7d69e26f53a",
+    "full_receipt_sha256": "29d4dd4e58407117effed7aaa840fd9ab2dd6d2a0affdfde3b8ebabded594092"
+  },
+  "validation": {
+    "fixture_count": 10,
+    "fixtures_passed": true,
+    "pilot_candidates": 20,
+    "pilot_required_invariants_passed": true,
+    "actual_source_candidate_lineage_observations_reread": 20,
+    "lineage_assertions_passed": true,
+    "full_required_invariants_passed": true,
+    "aggregate_denominator_checks_passed": true,
+    "local_protected_rows_exported": false,
+    "financial_or_actual_value_columns_read": false
+  },
+  "failed_attempts": [
+    {
+      "stage": "pilot_lineage_receipt_serialization",
+      "effect": "No lineage receipt was produced and no full run was launched",
+      "cause": "numpy.bool_ was not JSON serializable",
+      "correction": "Explicitly cast all assertion outputs to Python bool; reran only the 20-observation lineage verifier"
+    }
+  ],
+  "interpretation_limits": [
+    "NO_MATCH refers only to the two checked SCC family versions and is not global vendor absence",
+    "Release keys are wave-specific candidate metadata keys, not independently verified unique economic events",
+    "This does not certify timestamp timezone, first-public semantics, RTH classification, analyst eligibility, or final sample approval"
+  ],
+  "next_action": "Create a versioned metadata-projection proposal for only the 99 uniquely recovered candidate keys and apply the already frozen session/analyst rules; keep the remaining 103 UNKNOWN until a distinct approved source supplies evidence."
+}
