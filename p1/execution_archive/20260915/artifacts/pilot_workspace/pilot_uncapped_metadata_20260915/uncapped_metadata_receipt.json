@@ -1,0 +1,39 @@
+{
+  "status": "COMPLETE_SOURCE_WINDOW_METADATA_CENSUS_NOT_FINAL_ANALYSIS_SUPPORT",
+  "candidate_count": 2794,
+  "date_bounds": {
+    "lower_inclusive": "2019-01-01",
+    "upper_exclusive": "2026-09-01"
+  },
+  "source_hashes": {
+    "metadata": "97a3c35c1f59013047924b89859df67ff361327a61b7bec0a28bdf3412c562cb",
+    "link": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326"
+  },
+  "source_columns": {
+    "metadata": [
+      "ticker",
+      "cusip",
+      "pends",
+      "pdicity",
+      "anndats",
+      "anntims",
+      "actdats",
+      "acttims",
+      "source_partition"
+    ],
+    "link": [
+      "permno",
+      "ncusip",
+      "sdate",
+      "edate",
+      "score"
+    ]
+  },
+  "raw_financial_values_read": false,
+  "quote_or_native_files_read": false,
+  "economic_events_certified": false,
+  "clock_timezone": "UNVERIFIED",
+  "output_row_level": "SCC_ONLY",
+  "aggregate_sha256": "5a84b832e4b5bd891e3f94e0b943e6fac54a56f3670d3a2ce14157d22bf98794",
+  "protected_projection_sha256": "42acb61aef3dc009a0d2820a6d9662c02a592cf59cd752c4d51bb22a93ff5e0e"
+}

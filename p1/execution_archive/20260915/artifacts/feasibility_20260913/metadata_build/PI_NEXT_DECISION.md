@@ -1,0 +1,11 @@
+# One-page next decision
+
+**Status:** partial source inventory, with the candidate population still unresolved. Lily Luo's census/SCC authorization is already recorded. Research remains `HOLD_DESIGN + HOLD_DATA` pending the next scientific assessment.
+
+The partial census is real but deliberately narrow: it compares, rather than resolves, two non-pooled versions: 6,377 free-path stock-wave cells across 49 waves and 8,826 reconstructed cells across 30 waves.  It does **not** validate the new announcement clock.  Date-only constituent announcements can support strict ordering only after an explicit report-date join; they cannot classify intraday timing.  The free source's 48 old-clock tier-feasible waves (2,142 low and 2,109 high cells) are therefore not an approved study sample.  The reconstructed source has 8,801 positive `primary_ready` cells out of 8,826 total, but that is PRE-effective readiness, not new-clock eligibility.
+
+The census cannot select RTH/non-RTH or inference: it lacks earnings events, session masks, horizons, SPY availability, clean controls, response-leg dates and signed sponsor links.  Reused CUSIPs (1,541; maximum 23 waves) demonstrate why reuse needs treatment in the next adapter, but are not connected components or an effective sample size.
+
+The single next request is to the P1 source owner/custodian: supply one versioned candidate CUSIP roster with the authoritative exposure version and point-in-time membership provenance, attached to the source-specific IBES custodian projection in `PROTECTED_SOURCE_ADAPTER_REQUEST.md`. The available versions use different stock keys and neither may be silently selected or pooled. Lily Luo's existing census/SCC permission is retained; this is not a request for broad access again. The handoff identifies the actual archive partitions, eight projected metadata fields, verified schema/SQL and executable adapter. The projection remains NOT_RUN until its candidate roster and custodian process reference are resolved.
+
+The projection must return no response values and must not choose a session, margin, inference procedure, H3 rule or causal interpretation. A later scientific assessment remains required even if it succeeds. The independent report `DATA_REVIEW.md` certifies only the corrected inventory, not the full census or P1 GO.

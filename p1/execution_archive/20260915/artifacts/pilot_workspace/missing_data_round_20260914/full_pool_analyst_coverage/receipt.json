@@ -1,0 +1,50 @@
+{
+  "status": "FULL_POOL_ANALYST_COVERAGE_COMPLETE",
+  "pool_sha256": "f33bc3532b127554531380e80635c961a5a251ada51ca287b412c144ba0a6b3f",
+  "pool_rows": 29729,
+  "unique_events": 29729,
+  "candidate_rows": 2592,
+  "candidates_all_12_events_min2": 895,
+  "event_coverage_sha256": "95c720b62390e513742fc85bbb464712c75b98c3e1a5763c43ae1b64f1fd29e3",
+  "candidate_coverage_sha256": "856f3eb24343b29c6a4a32887b4df30e94774b41931fa4f4219bde5d5c257954",
+  "summary_sha256": "0072ff2ebfbd014d83c9dc959761f69f6110d69668137967bfa023d8467702a0",
+  "forecast_inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2018.parquet",
+      "sha256": "074c9c8e107e4aac39a3eb7e64eb921f92dfe75e93471fe95ebf779f1d99c5a0",
+      "matched_rows": 7660
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2019.parquet",
+      "sha256": "ed22feb899b937cdb5534013a6b9ab57d1e05cdbd164eb1cd21c99825f2a0341",
+      "matched_rows": 55381
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2020.parquet",
+      "sha256": "c6f09a52bd83e8d06032eb98c9ec6b05c23595fcfdbc90a7560673e197ce2784",
+      "matched_rows": 65869
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2021.parquet",
+      "sha256": "8f1319bd4a6e40f64aa1ac486161343002fa8e061a145784e6bf04d0d2a7e541",
+      "matched_rows": 60358
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2022.parquet",
+      "sha256": "5c80116dcc0865841f85d36b04846672d33e12d47e7aca60db49a5f057fc6673",
+      "matched_rows": 57980
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2023.parquet",
+      "sha256": "9544b0ed865581359a2b2b69c4af4a2286e847af0adba8bf98fb3d099d51a4b5",
+      "matched_rows": 26237
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2024.parquet",
+      "sha256": "0d51e5156cc25e0f386decbff2b6a00a30a2b8fb3cd12ad4c6e10b602fa1b533",
+      "matched_rows": 24424
+    }
+  ],
+  "forecast_values_read": false,
+  "price_return_quote_values_read": false
+}

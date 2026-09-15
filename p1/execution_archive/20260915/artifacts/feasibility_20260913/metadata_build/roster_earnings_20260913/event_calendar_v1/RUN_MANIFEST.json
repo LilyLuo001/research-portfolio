@@ -1,0 +1,17 @@
+{
+    "version": "event_calendar_v1",
+    "record_unit": "IBES source record",
+    "pit_link_rule": "retain every seed-PERMNO historical link with sdate <= anndats <= edate, allowing missing edate; do not choose a score threshold",
+    "historical_identifier_delta": "report SCC-only delta; do not issue a new IBES query for identifiers absent from v2 candidate list",
+    "event_identity_rule": "UNSPECIFIED_NO_COLLAPSE",
+    "timezone_semantics": "UNVERIFIED",
+    "session_rule": "NOT_RUN until a source-pinned exchange timezone and open/close/early-close interval source is verified",
+    "outcome_boundary": "No EPS, forecast, SUE, price, quote, return, CAR, coefficient or p-value is read or exported",
+    "final_execution": {
+        "scc_directory": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_roster_earnings_20260913/event_calendar_v1/run_v2",
+        "aggregate_receipt": "receipts/event_calendar_aggregate_receipt_v2.json",
+        "aggregate_receipt_sha256": "76d012ee560336f72555cbdf3d10532b5b94e522855efd730dbbcd0a9b3f31a4",
+        "query_sha256": "09865c9b451349669c910b605bc2e98ee17b5d7e35c162c0ed79d673702f9b9f",
+        "linkage_contract_sha256": "70c812ee9d649944abab7d41cc982767b6fdd5d811d88653db3cde758a3fbeca"
+    }
+}

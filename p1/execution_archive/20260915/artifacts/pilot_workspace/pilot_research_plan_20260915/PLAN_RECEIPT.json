@@ -1,0 +1,87 @@
+{
+  "created_utc": "2026-09-15T02:43:21.546315+00:00",
+  "task": "P1 entire pilot research plan; pause Gate 1 verification",
+  "status": "PLAN_COMPLETE_REVIEWED_NOT_EXECUTED",
+  "research_status": [
+    "HOLD_DESIGN",
+    "HOLD_DATA"
+  ],
+  "gate1": "PAUSED_NOT_PASSED",
+  "contract": {
+    "path": "/Users/lilyluo/research-portfolio-p1-feasibility-20260913/p1/feasibility_adjudication/20260913/reconciliation/estimation_contract.reconciled.PROPOSED.yaml",
+    "sha256": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+    "status": "PROPOSAL_NOT_PI_APPROVED"
+  },
+  "artifacts": {
+    "START_HERE.md": {
+      "path": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_research_plan_20260915/START_HERE.md",
+      "sha256": "8c33879978611d0c2f25c78b03b3ac45e50a1a80269bb393e4523d1ed2ce78f9"
+    },
+    "PILOT_RESEARCH_PLAN.md": {
+      "path": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_research_plan_20260915/PILOT_RESEARCH_PLAN.md",
+      "sha256": "4d83c93dd68554786d2e22ef6f6bd5f2089f7e9f226096b4d1cd7a7f4d501ab4"
+    },
+    "DATA_GAP_MATRIX.md": {
+      "path": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_research_plan_20260915/DATA_GAP_MATRIX.md",
+      "sha256": "f14aa922b56a64bab556822d80f1d886a44290bdc0d45a1adc57374f5a43a9fe"
+    },
+    "PLAN_REVIEW.md": {
+      "path": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_research_plan_20260915/PLAN_REVIEW.md",
+      "sha256": "7023df1d9accd29223f64d819776cbb6e1b6b29f05d4ef60fc09c7c15649162f"
+    },
+    "finalize_plan_receipt.py": {
+      "path": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/pilot_research_plan_20260915/finalize_plan_receipt.py",
+      "sha256": "b7772806858c2c114c63dd2184b8821a8668cc9ff8e12b208c43322ed0b19e6c"
+    }
+  },
+  "delegation": [
+    {
+      "role": "coordinator",
+      "requested": "retain existing coordinator",
+      "effective_model_effort": "NOT_OBSERVED"
+    },
+    {
+      "role": "local evidence inventory",
+      "agent": "/root/pilot_inventory",
+      "requested_model": "gpt-5.6-sol",
+      "requested_effort": "medium",
+      "dispatch_accepted": true,
+      "effective_backend_telemetry": "NOT_OBSERVED"
+    },
+    {
+      "role": "independent bounded plan referee",
+      "agent": "/root/pilot_plan_referee",
+      "requested_model": "gpt-6-astra",
+      "requested_effort": "high",
+      "dispatch_accepted": true,
+      "effective_backend_telemetry": "NOT_OBSERVED"
+    }
+  ],
+  "scope_record": {
+    "local_docs_receipts_code_only": true,
+    "official_model_and_primary_methodology_web_read": true,
+    "raw_research_values_read": false,
+    "scc_access_this_turn": false,
+    "provider_queries_or_contact_this_turn": false,
+    "market_data_download_this_turn": false,
+    "data_spend_this_turn_usd": 0,
+    "post_response_unsealed": false,
+    "empirical_power_run": false,
+    "treatment_effect_run": false,
+    "commit_push_merge": false,
+    "configuration_or_authentication_changed": false,
+    "full_archive_hashing": false
+  },
+  "validation": {
+    "required_artifacts_present": true,
+    "baseline_contract_hash_matches": true,
+    "review_references_final_plan_hash": true
+  },
+  "next_action": "One zero-purchase outcome-blind P0/P1/P3 design build; queue necessary P2 measurement, not another Gate1 audit",
+  "limitations": [
+    "Planning pass is not scientific GO",
+    "Full realized PRE+POST numeric rank not observed",
+    "New scientific choices remain explicitly proposed",
+    "Future workpackets have not been executed"
+  ]
+}

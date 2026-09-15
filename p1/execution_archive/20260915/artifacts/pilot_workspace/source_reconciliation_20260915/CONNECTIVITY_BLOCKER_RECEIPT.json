@@ -1,0 +1,42 @@
+{
+  "status": "BLOCKED_DIRECT_SOURCE_CONNECTIVITY",
+  "scope": "W002_HIGH_4_EXACT_EVENT_KEYS_COUNT_ONLY_SOURCE_RECONCILIATION",
+  "target": {
+    "PRE_exact_event_keys": 3,
+    "POST_exact_event_keys": 1,
+    "window_start_min": "2019-07-31",
+    "release_max": "2021-11-02",
+    "required_source_partitions": [2019, 2020, 2021]
+  },
+  "approved_columns": ["cusip", "fpedats", "analys", "anndats"],
+  "producer_scope": {
+    "table": "ibes.detu_epsus",
+    "filters": ["calendar-year anndats bounds", "usfirm = 1", "upper(measure) = 'EPS'"],
+    "visible_limit_or_offset": false,
+    "scope_applicability": "MATCHES_HISTORICAL_PRODUCER_FILTER_APPLICABILITY_TO_ALL_FOUR_KEYS_NOT_INDEPENDENTLY_ESTABLISHED"
+  },
+  "adapter_check": {
+    "project_adapter_found": false,
+    "runtime_wrds_module": false,
+    "runtime_psycopg2_module": false,
+    "runtime_sqlalchemy_module": false,
+    "system_psql_found": true
+  },
+  "connectivity_test": {
+    "method": "NONINTERACTIVE_PSQL_PASSWORD_PROMPTS_DISABLED",
+    "host": "wrds-pgdata.wharton.upenn.edu",
+    "port": 9737,
+    "database": "wrds",
+    "result": "fe_sendauth: no password supplied",
+    "source_query_executed": false
+  },
+  "credential_store_read": false,
+  "credential_printed_or_copied": false,
+  "authentication_changed": false,
+  "parquet_rescanned": false,
+  "forecast_eps_price_return_quote_post_response_values_read": false,
+  "purchase": false,
+  "backend_telemetry": "NOT_OBSERVED",
+  "exact_unblock_operation": "EXISTING_AUTHENTICATED_WRDS_CUSTODIAN_RUNS_THE_FOUR_KEY_FOUR_COLUMN_90_DAY_QUERY_AND_RETURNS_AGGREGATE_DISTINCT_ANALYST_COUNTS_WRDS_RETURNED_ROW_COUNT_SUCCESS_STATUS_AND_QUERY_HASH",
+  "step2_safe_action": "RUN_EXISTING_METADATA_ONLY_CLOCK_SESSION_ADAPTER_FOR_THE_SAME_FOUR_KEYS_WITH_APPROVED_CALENDAR_KEEP_SOURCE_TIMEZONE_FIRST_PUBLIC_RELEASE_AND_RTH_STATUS_UNKNOWN"
+}

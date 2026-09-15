@@ -1,0 +1,114 @@
+{
+  "daily_sources": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2019.parquet",
+      "selected_rows": 674446,
+      "sha256": "af79cfacfec1826d227dfd6bbab0f44a9af5e44d099b771e15293df562325ec7"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2020.parquet",
+      "selected_rows": 688437,
+      "sha256": "88f1526597d15749c293e3bb7287a32c59a6bb8afc1453b5ca217ef429189020"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2021.parquet",
+      "selected_rows": 678151,
+      "sha256": "de4e524c690d0e337d0725fcdde79b1f0ffc2119626aeb25702daa18f56e68e9"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2022.parquet",
+      "selected_rows": 648225,
+      "sha256": "08b8ed85d0d5563a5b5e539a9cf1a87849c7df6f800a764c3df5ee5108bb931b"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2023.parquet",
+      "selected_rows": 618283,
+      "sha256": "26c7bcb5248674968b4109638c48f1d4769f78ff7d33cd4626d2d00221e6679f"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2024.parquet",
+      "selected_rows": 591594,
+      "sha256": "696d4a64e9ff80a0390610d52ca6d4344c4c92a305e9b47d266b34f6431c88f2"
+    }
+  ],
+  "earnings_or_return_values_read": false,
+  "exact_mapped_positions": 9342,
+  "exposure_rows": 4191,
+  "input_hashes": {
+    "holdings": "2887d29a462f50ed118cdee8e88dd0e09b4590817eb10f441792cd916043fc63",
+    "packages": "bcbbe2593b640930380f8a7189ae0dcd47963bb245549dbaa6e8489a3bcf8807",
+    "stocknames": "299bb5ba031d1cea2ca3ae6a2876536209e3949fb94234feb7c9b1837cf0f515"
+  },
+  "liquidity_rule_signed": false,
+  "output_hashes": {
+    "POSITION_IDENTIFIER_MAPPING.csv": "0a055df5591e21e7abf0e3fd9c0561206f17844f85f642da04947c0d6c066fcd",
+    "POSITION_MAPPING_AND_DENOMINATORS.parquet": "bcd97b904947d2e17e89f102ec0b8f05fc44f05760c89b6722fa72737287f0c3",
+    "PREANNOUNCEMENT_EXPOSURE_ALL.csv": "99f92b0becac9e81250e827e71351d482600ed27c640656b8c2c1a36d5af0f55",
+    "PREANNOUNCEMENT_EXPOSURE_PROVISIONAL_TIERS.csv": "9f31091f3b7ea9ecbaba39c8c43b64e76713227e361552c9ca6bc52a895fa35e"
+  },
+  "position_candidates": 9458,
+  "post_quote_outcomes_read": false,
+  "primary_ready_positive_rows": 4191,
+  "share_sources": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dseshares_2019.parquet",
+      "selected_rows": 28271,
+      "sha256": "552f6788b033cf17e9cc4a0b0af44b7ef94e317e336e616a730662d163bea360"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dseshares_2020.parquet",
+      "selected_rows": 28653,
+      "sha256": "77fc013680faa428d9aa40bd5cc2814b3a38e4495175e2235c14d2bb01d392b7"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dseshares_2021.parquet",
+      "selected_rows": 28089,
+      "sha256": "2a80af288854c063ade8b360f02627fbc905321e98e3b512f3ec68e84c75d0cd"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dseshares_2022.parquet",
+      "selected_rows": 26564,
+      "sha256": "b4f0ccdc0975f8eca0e8319b5de18d854281ec83746691639b8d6cfcb487fcf4"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dseshares_2023.parquet",
+      "selected_rows": 25718,
+      "sha256": "bc78b3ff85aefab785a4d26004ba0992c3796df4360670ebf920755c277849ef"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dseshares_2024.parquet",
+      "selected_rows": 23426,
+      "sha256": "efa097a60f8fae3df76d3e9ffd70e8d6420feae0972d18529f0693e4b3210ef3"
+    }
+  ],
+  "status": "SCC_EXPOSURE_AND_DIAGNOSTIC_LIQUIDITY_COMPLETE",
+  "unique_mapped_permnos": 2779,
+  "w021_bond_included": false,
+  "wave_counts": {
+    "W002": {
+      "high": 834,
+      "low": 835,
+      "middle": 834
+    },
+    "W013": {
+      "high": 32,
+      "low": 33,
+      "middle": 33
+    },
+    "W016": {
+      "high": 196,
+      "low": 196,
+      "middle": 196
+    },
+    "W021": {
+      "high": 13,
+      "low": 13,
+      "middle": 13
+    },
+    "W025": {
+      "high": 321,
+      "low": 321,
+      "middle": 321
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "status": "MISSING_DATA_ROUND_COMPLETE_WITH_EXPLICIT_FREEZE_BLOCKERS",
+  "date": "2026-09-14",
+  "requested_model": "gpt-5.6-sol",
+  "requested_effort": "high",
+  "runtime_routing_telemetry": "NOT_OBSERVED",
+  "scope": "acquisition_and_build_only",
+  "authoritative_input_hashes": {
+    "/Users/lilyluo/.codex/attachments/51ad735b-7537-4c82-aa97-7ce68c540873/pasted-text.txt": "42de9eb9488d425874bc8d6a4bd25ef42b2e8f369cecfa99c62f29e55e83402d",
+    "/Users/lilyluo/Documents/P1_Fixed_125USD_Pilot_Order.zip": "3578a89ee362197178e0a7d62bf2f81afc7294d9b2446c0080501b6006dabcef",
+    "/Users/lilyluo/Documents/P1_documents_bundle.zip": "b600c8688c4ccaff07e62032857c9c12dac0bb728c2a25540968cd2b71de4435",
+    "../evaluation_20260914/cached_filing_metadata_receipt.json": "6afb8bd834ebef78727a20775ae54195504035155272f3c05931f51d0ed7ec10",
+    "../evaluation_20260914/scc_metadata_readiness_receipt_v2.json": "238d801a1e7734c422bbd03c3ceee743dee93b729a49bddb52f24c67cf95535d"
+  },
+  "scc_output_directory": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_missing_data_round_20260914",
+  "counts": {
+    "waves": 5,
+    "included_equity_series": 12,
+    "nport_positions": 10010,
+    "common_equity_candidates": 9458,
+    "exact_mapped_positions": 9342,
+    "unique_mapped_permnos": 2779,
+    "positive_exposure_stock_wave_rows": 4191,
+    "tail_stock_wave_candidates": 2592,
+    "earnings_metadata_associations": 29729,
+    "full_8pre_4post_candidates": 2088
+  },
+  "primary_output_hashes": {
+    "PACKAGE_INPUTS.csv": "bcbbe2593b640930380f8a7189ae0dcd47963bb245549dbaa6e8489a3bcf8807",
+    "SELECTED_PREANNOUNCEMENT_FILINGS.csv": "c42627aee27552e8f1446f4fe59bd5cbcdcedbb0e7925895ba7593fe27499426",
+    "PREANNOUNCEMENT_PARSE_AUDIT.csv": "cad76eb40d2bf739bb64222fda50ac12aac3000a5c643c10615b1595bc7eabce",
+    "PREANNOUNCEMENT_HOLDINGS.parquet": "2887d29a462f50ed118cdee8e88dd0e09b4590817eb10f441792cd916043fc63",
+    "POSITION_IDENTIFIER_MAPPING.csv": "0a055df5591e21e7abf0e3fd9c0561206f17844f85f642da04947c0d6c066fcd",
+    "POSITION_MAPPING_AND_DENOMINATORS.parquet": "bcd97b904947d2e17e89f102ec0b8f05fc44f05760c89b6722fa72737287f0c3",
+    "PREANNOUNCEMENT_EXPOSURE_ALL.csv": "99f92b0becac9e81250e827e71351d482600ed27c640656b8c2c1a36d5af0f55",
+    "PREANNOUNCEMENT_EXPOSURE_PROVISIONAL_TIERS.csv": "9f31091f3b7ea9ecbaba39c8c43b64e76713227e361552c9ca6bc52a895fa35e",
+    "EARNINGS_METADATA_POOL_8PRE_4POST.csv": "f33bc3532b127554531380e80635c961a5a251ada51ca287b412c144ba0a6b3f",
+    "EARNINGS_METADATA_ELIGIBILITY.csv": "cc7a7f32913f5a0ef72eab30bb69ea714a2c2d882d20b248ebf39ed42b10cf5b",
+    "FULL_SUPPORTED_CANDIDATE_POOL.csv": "7441a055f4104ecae421ed21c5fed52a6b4ff6f841a3115684502ccf408644c5",
+    "EARNINGS_METADATA_WAVE_TIER_SUMMARY.csv": "d655394b2fbe178583a660bbd9048cafb8dd57d99700f438d986a9112db21638",
+    "VALIDATION_RECEIPT.json": "6c39effba216d6a4a876203988a53ef3d7af17f9f89e678b175757eac5586bd8"
+  },
+  "code_hashes": {
+    "build_preannouncement_holdings.py": "6df8e10a6c7a5ccc518260a3c2c8bfd82492ad310bce753397d753761251614f",
+    "build_scc_exposure.py": "e007adba197f3334f98d7fb40fefd540bf450269818d225f151ea3e393fc7107",
+    "build_scc_earnings_pool.py": "d54100f4f4eb238fa514a4f4f253e0140476dc03fc69cc9afc1d0ab1fd281490",
+    "validate_round.py": "821022fb521522fb1d0b200772c6052fed18f602dfa5ea0b08c53438b4ed78c8"
+  },
+  "roster_frozen": false,
+  "roster_freeze_reason": "authoritative liquidity and selection compiler rules are absent",
+  "databento_cost_call_made": false,
+  "databento_purchase_made": false,
+  "raw_financial_values_read": false,
+  "post_quote_outcomes_read": false,
+  "git_commit_or_push": false
+}

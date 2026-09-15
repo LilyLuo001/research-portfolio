@@ -1,0 +1,19 @@
+{
+  "run_id": "20260913-protected-metadata-build",
+  "execution_environment": "scc1.bu.edu:/usr3/graduate/qluo/dax-codex (read-only source inspection)",
+  "authorization": "Lily Luo task instruction, 2026-09-13: full metadata access and SCC permitted for bounded census",
+  "inventoried_free_exposure_source": "p1/conv_exposure_free.parquet",
+  "inventoried_free_exposure_sha256": "350c3c7aed6d1bf047a8970f4d5940f37f1ec89e012876cb0f081668a5d2b4e7",
+  "selected_candidate_exposure_source": null,
+  "compared_reconstructed_exposure_source": "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_stock_wave_all.csv",
+  "compared_reconstructed_exposure_sha256": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+  "source_selection": "PENDING_VERSIONED_RECONCILIATION; sources were not pooled",
+  "output_fields": ["aggregate counts", "calendar dates", "presence flags", "reuse counts"],
+  "forbidden_fields_read_or_returned": false,
+  "forbidden_field_categories": ["EPS", "forecast", "SUE", "price", "quote", "return", "CAR", "coefficient", "p-value", "outcome ranking"],
+  "source_modified": false,
+  "remote_job_submitted": false,
+  "status": "PARTIAL_SOURCE_INVENTORY_COMPLETE; FULL_CANDIDATE_SUPPORT_CENSUS_INCOMPLETE",
+  "protected_ibes_projection": "NOT_RUN; schema-specific custodian handoff prepared",
+  "research_status": ["HOLD_DESIGN", "HOLD_DATA"]
+}

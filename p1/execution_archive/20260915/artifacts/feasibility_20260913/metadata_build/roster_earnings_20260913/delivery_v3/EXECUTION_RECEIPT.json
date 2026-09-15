@@ -1,0 +1,35 @@
+{
+  "status": "METADATA_PROJECTED_ECONOMIC_EVENT_RULE_PENDING",
+  "purpose": "EARNINGS_METADATA_RETRIEVAL_SEED_ONLY",
+  "analysis_eligible": "NOT_ASSESSED",
+  "new_clock_completeness": "UNKNOWN",
+  "source_hashes": {
+    "E007": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "E011": "c0c0f817068609ff4c20ef4eb21958932d35a785390733d9b5c7993475aaff4a"
+  },
+  "local_input_hashes": {
+    "seed_stock_wave.csv": "0c5d9175d53e76d746777776c2ff3ee46cc038f7227120eb22e86077a6d05555",
+    "ROSTER_RECEIPT.json": "562ac06c013867c197f3f64045fb636ccec52d470458a0a25a0433800a43200c",
+    "pit_bridge_receipt.json": "3b2e7c4880d45e258ecf41992cb85c5bc3ec7906cea9939f62e83a3334106799",
+    "earnings_metadata_aggregate.json": "70849963654933e4b6901fb532910fb186f100b30b2ce6c98f1153cd22e45605",
+    "ibes_projection_receipt.json": "2618fd2d5e8d431920dbe90ccf3393379a7bf84083ee20a01feea56be60ec2ac"
+  },
+  "local_output_hashes": {
+    "NEW_CLOCK_MEMBERSHIP_GAPS.csv": "f229ad241dc956389ddf4b41fbe11a3192ec3eac1d1890683f63b0455b30889e",
+    "EARNINGS_METADATA_CENSUS.csv": "d0e3bf492ed4f1f6a5874914597ca21756b2795787b3894ce6955a1e749fcda5"
+  },
+  "scc_raw_metadata_location": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_roster_earnings_20260913/ibes_metadata_projection/ibes_announcement_metadata.csv",
+  "raw_metadata_copied_to_local": false,
+  "outcome_fields_read_or_exported": false,
+  "projection_columns": [
+    "ticker",
+    "cusip",
+    "pends",
+    "pdicity",
+    "anndats",
+    "anntims",
+    "actdats",
+    "acttims",
+    "source_partition"
+  ]
+}

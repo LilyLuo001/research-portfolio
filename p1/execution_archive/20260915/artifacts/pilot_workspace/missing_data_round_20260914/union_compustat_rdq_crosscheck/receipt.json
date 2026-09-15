@@ -1,0 +1,53 @@
+{
+  "status": "COMPUSTAT_RDQ_METADATA_CROSSCHECK_COMPLETE",
+  "event_manifest_sha256": "05cf4e5a0df2c97a00fc945bc1e60518c42a2f322a4557d155cbc6c079590f01",
+  "events": 744,
+  "unique_rdq": 732,
+  "missing_rdq": 12,
+  "ambiguous_rdq": 0,
+  "rdq_equals_ibes_date": 714,
+  "output_sha256": "cc4d5da65f2006013e04a3d02053efe78d8a4a6228e0c45175f07ff00d613543",
+  "ccm_input": {
+    "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ccm_linktable_full.parquet",
+    "sha256": "b1b88c537f7263febf107f40df321c4ce49af8586243829c4d079a6e64e06982"
+  },
+  "fundq_inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2018.parquet",
+      "sha256": "317904ef23266be1a58e1c9ab44a72ac147965b389c989c40de03ef41953960d",
+      "selected_rows": 248
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2019.parquet",
+      "sha256": "232ed99c7d98972021d34679d05cebe3c2dc8c182e7243674dfdc8f36565b1b3",
+      "selected_rows": 248
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2020.parquet",
+      "sha256": "dcf1e74e99fc0a5eab8760bc261234d4dd186a26eaa9a38d374ad0beffca6eee",
+      "selected_rows": 248
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2021.parquet",
+      "sha256": "7394b12ff45dfffc7a8301d6344b2dcf4edc85796ffad79017f10d9959593553",
+      "selected_rows": 248
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2022.parquet",
+      "sha256": "0ecd3fbff1761db5bf8dd9c64a4273ca7eb75de43bc0c4622ab62c8ca6e46f55",
+      "selected_rows": 245
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2023.parquet",
+      "sha256": "d0c8e2b35cc0cbdababecc136d20e73d479a2e32d10253076cc2504f5c0abbe5",
+      "selected_rows": 241
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/comp_fundq_2024.parquet",
+      "sha256": "673e72a287338984c2265336b4f6cec0fe18e40a7719b499cc58e95ca01be9ce",
+      "selected_rows": 236
+    }
+  ],
+  "financial_values_read": false,
+  "price_return_quote_values_read": false
+}

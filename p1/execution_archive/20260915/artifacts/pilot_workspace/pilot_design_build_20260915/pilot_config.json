@@ -1,0 +1,39 @@
+{
+  "run_id": "pilot-design-build-20260915",
+  "execution_authority": "User: scc logged in, go ahead and continue the plan",
+  "execution_scope": "P0/P1 outcome-blind metadata design build; P2 metadata interface; P3 synthetic implementation tests",
+  "scientific_contract_status": "CANDIDATE_BASELINE_NOT_PROMOTED_TO_FINAL_CONTRACT",
+  "contract_sha256": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+  "plan_sha256": "4d83c93dd68554786d2e22ef6f6bd5f2089f7e9f226096b4d1cd7a7f4d501ab4",
+  "data_selection": {
+    "existing_versions_must_be_separate": true,
+    "final_eligibility": "NOT_CERTIFIED",
+    "acquisition_universe": "71 stock-wave union V2; not a random or final eligible sample",
+    "all_12_min2_filter": "ACQUISITION_SCREEN_DIAGNOSTIC_NOT_FINAL_EVENT_ELIGIBILITY",
+    "competing_conversion_rule": "EXISTING_PROPOSED_RULE_DIAGNOSTIC_ONLY",
+    "unknown_is_zero": false
+  },
+  "scientific_choices_not_silently_resolved": [
+    "final population and tier membership",
+    "final announcement and implementation clock",
+    "new source clock uncertainty bounds",
+    "primary session or alternative estimand",
+    "inference method and economic margin",
+    "H3 decomposition",
+    "beta anchor and response endpoints"
+  ],
+  "permissions": {
+    "local_metadata_projection": true,
+    "local_synthetic_tests": true,
+    "scc_connectivity_check": true,
+    "remote_raw_value_scan": false,
+    "post_response_access": false,
+    "empirical_power": false,
+    "effect_estimation": false,
+    "new_data_spend_usd": 0,
+    "commit_push_merge": false,
+    "authentication_change": false
+  },
+  "full_archive_entrypoint": "NOT_RUN; requires matching research PILOT_PASS.json before archive access",
+  "synthetic_fixture_status_is_research_pilot_pass": false
+}

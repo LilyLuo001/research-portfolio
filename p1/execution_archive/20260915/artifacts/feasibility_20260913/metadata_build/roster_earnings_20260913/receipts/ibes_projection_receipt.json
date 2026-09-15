@@ -1,0 +1,84 @@
+{
+  "authorization_reference": "Lily Luo explicit 2026-09-13 roster-metadata instruction",
+  "query_sha256": "3f16ac72cbf27ef85679ff6f5d8222f90d883006aa49f2b3a3c8e5c42399b351",
+  "candidate_sha256": "68f39fbb19803dc2c63ecaf0754a1b9c900c27af1ec5ba3fd1b3d84764ce3d87",
+  "bridge_receipt_sha256": "54588a28f6683a115330b48bcbcfc156e4c5222f8d7696262a99396311c97259",
+  "retrieval_seed_only": true,
+  "inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2019.parquet",
+      "sha256": "e180dbeda607c83b64da12c527d6124ee9237e93b88b177c2deaf714aa5bfdfb",
+      "projected_rows": 26092,
+      "candidate_records": 12155,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2020.parquet",
+      "sha256": "17a2ddbba1a961c73ebe0ab51083ba22404b9279d6277630e9e0e3976128e4f6",
+      "projected_rows": 26693,
+      "candidate_records": 13089,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2021.parquet",
+      "sha256": "71749bcc6f2626e0fc5233ba5384158f06e51dbcabf41ff358a35a70cf0fb3b1",
+      "projected_rows": 29269,
+      "candidate_records": 14179,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2022.parquet",
+      "sha256": "03da0e3f6102f660a7a70dc8afe128a5aacfd287aa240a09c0113f2719ba4a76",
+      "projected_rows": 29031,
+      "candidate_records": 14834,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2023.parquet",
+      "sha256": "e774cc2e823249c58f6131f284ad4ece1baaf00208f635316074b578c8f60ba1",
+      "projected_rows": 28468,
+      "candidate_records": 14618,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2024.parquet",
+      "sha256": "7fb0fe578058cae041760843d7738da1a95ab26ec174c2c1680e292e0bf564e4",
+      "projected_rows": 27619,
+      "candidate_records": 14279,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2025.parquet",
+      "sha256": "067143fa2b9e49555cdef836f29bd7257a247f546d6a2b4fb87ed7fc04554f3b",
+      "projected_rows": 26649,
+      "candidate_records": 13677,
+      "invalid_announcement_dates": 0
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2026.parquet",
+      "sha256": "5d52d0bfa19c0cde70d796fa3cfd2219d0f1f1e5031ac61f54c21a7b69848537",
+      "projected_rows": 13522,
+      "candidate_records": 7045,
+      "invalid_announcement_dates": 0
+    }
+  ],
+  "output_sha256": "97a3c35c1f59013047924b89859df67ff361327a61b7bec0a28bdf3412c562cb",
+  "record_count": 103876,
+  "columns": [
+    "ticker",
+    "cusip",
+    "pends",
+    "pdicity",
+    "anndats",
+    "anntims",
+    "actdats",
+    "acttims",
+    "source_partition"
+  ],
+  "economic_event_count": null,
+  "timezone": "UNVERIFIED",
+  "session_classification": "NOT_RUN",
+  "population_link": "DATE_VALID_PIT_BRIDGE_CANDIDATE_CUSIP_MATCH; analysis eligibility NOT_ASSESSED",
+  "forbidden_value_columns_projected": [],
+  "filters": "approved candidate CUSIPs; 2019-01-01 <= anndats < 2026-09-01; PRE/POST not inferred"
+}

@@ -1,0 +1,134 @@
+schema_version: 1
+reconciliation_run_id: '20260913-reconciliation'
+document_status: PROPOSAL_NOT_PI_APPROVED
+base_contract:
+  path: '../estimation_contract.yaml'
+  sha256: '6704be74ff67b72308b4e823892a493549ec5ea128a23caa82d4b8a2d189b6f5'
+  inherited_verdict: 'HOLD_DESIGN + HOLD_DATA'
+pi_approval:
+  primary_contract: false
+  protected_extract: false
+  outcome_access: false
+  SCC_job: false
+  data_purchase: false
+authority_labels:
+  EXISTING_AUTHORIZED: 'Located documentary instruction or owner receipt; not proof of identification.'
+  PROPOSED: 'This reconciliation recommendation; requires PI approval before use.'
+  PENDING_METADATA: 'Frozen algorithm, but realized eligible counts/values require permitted protected metadata.'
+  BLOCKED: 'Cannot execute or interpret without a missing input or stronger scientific support.'
+scope:
+  status: EXISTING_AUTHORIZED
+  value: 'Underlying-stock earnings-response timing around a mutual-fund-to-ETF conversion package; no AP-only claim.'
+outcome_boundary:
+  status: EXISTING_AUTHORIZED
+  value: 'No actual/uncertain post-conversion response values or raw earnings/quote inputs in this reconciliation.'
+  sealed_outputs: ['headline coefficients', 'response curves', 'treatment p-values', 'treatment-selected specification choices']
+population_and_comparator:
+  status: PROPOSED
+  target: 'Eligible US common-stock holdings with positive PRE-announcement ownership in a verified conversion package wave.'
+  primary_comparator: 'Within-wave top versus bottom tercile of positive PRE-announcement ownership.'
+  terciles:
+    status: PROPOSED
+    algorithm: 'Compute empirical inverse-CDF q1/q2 on all eligible positive exposures before earnings-coverage selection: low D<=q1; middle q1<D<=q2; high D>q2. Do not split identical doses.'
+    invalid_wave: 'Coincident cutpoints or an empty high/low group blocks that wave.'
+  middle_role: 'Retained; middle-versus-low is secondary.'
+  zero_role: 'Retained data; clean zero-dose comparisons are secondary and never relabeled as primary low tier.'
+  secondary_contrasts: ['positive-dose continuous projection with explicit strong slope-trend label', 'D>=0.005 support diagnostic/secondary contrast']
+  reporting: ['absolute high-low dose gap by wave', 'unequal group sizes', 'all-sponsor and ex-Dimensional diagnostics with unsigned-proxy caveat']
+  interpretation_limit: 'Low exposure is exposed; this is neither a no-conversion control, a universal derivative, nor the average effect of creating an ETF.'
+conversion_clock_and_exposure:
+  status: PROPOSED
+  announcement_clock:
+    definition: 'A_w is the earliest independently verified public announcement instant among constituent funds; retain source and timestamp uncertainty and use the earliest plausible instant for exclusion.'
+    status: PENDING_METADATA
+  pre_exposure:
+    definition: 'D_iw=sum pre-announcement split-consistent fund shares / contemporaneously split-consistent shares outstanding.'
+    as_of_requirement: 'Holdings and denominator strictly predate A_w; no post-announcement transaction enters D.'
+    public_availability: 'Later-published filing may measure predetermined economic ownership retrospectively, but must never be described as publicly observable at A_w.'
+    status: PROPOSED
+  implementation_clock:
+    definition: 'I_w is the latest verified constituent legal-effective or first-ETF-trading instant under a PI-approved package rule.'
+    status: PENDING_METADATA
+  regimes:
+    pre: 'earnings response window strictly before A_w'
+    transition: 'omit any response window intersecting [A_w,I_w)'
+    post: 'response window at or after I_w'
+  overlap_rule:
+    status: PROPOSED
+    value: 'Complete conversion calendar excludes any stock-wave cell exposed to another conversion before or inside its [A_w-24 months,A_w+24 months) analysis window. Synchronized constituent conversions form one package; no first-wave recoding.'
+  known_limit: '8,801 cells/30 waves are PRE-effective support only and do not establish this new-clock eligibility.'
+outcome_and_sessions:
+  status: EXISTING_AUTHORIZED
+  car: 'Signed CAR_h=R_stock,h-beta_i*R_SPY,h, matching midpoint price-return clocks; no alpha subtraction; beta uses CRSP price returns RETX on [-250,-21].'
+  horizons: ['5m', '15m', '30m', '60m', 'close', '+1d close']
+  gaps: 'Opening gaps are separate, never appended to CAR.'
+  proposed_implementation_details:
+    status: PROPOSED
+    beta_regression: 'Daily regression includes intercept and requires >=120 usable days.'
+    returns: 'Simple RTH-only legs chained multiplicatively; exchange calendar governs DST and half-days.'
+    quote_diagnostics: 'Require live bid and ask state plus midpoint; distinguish unchanged live quote from missing feed.'
+  sessions:
+    status: PROPOSED
+    RTH_primary_candidate: 'RTH release at least 60 trading minutes before actual close, common six-horizon live-quote mask, timestamp certainty.'
+    non_RTH: 'Separate post-opening estimand only; no automatic fallback to a largest sample.'
+    selection_rule: 'Before response values, run only the permitted coverage table. RTH is feasible only when each included high/low tier has nonempty common six-horizon live-quote support, all required design columns are identified, and the signed fixed session rule (>=60 trading minutes before actual close; open inclusive/close exclusive) holds. If any condition fails, primary is NOT_ESTIMABLE unless PI amends scope; no automatic fallback based on sample size.'
+sue_and_selection:
+  status: PROPOSED
+  construction: 'Signed quarterly actual EPS minus median analyst consensus; each analyst contributes latest forecast within 90 calendar days strictly before release; require >=2 analysts and common currency/share/accounting basis.'
+  scale: 'Divide by split-consistent closing price immediately before stock earliest relevant announcement, then a single SD over unique eligible events before each stock earliest announcement.'
+  invariance: 'Same SUE follows a reused economic event across stacks; no group/treatment re-standardization.'
+  protected_metadata: 'Field semantics, eligibility, calibration coverage and post-treatment selection require explicit protected permission.'
+  conditional_interpretation: 'Absent stable surprise/coverage measurement, estimate only selected-population association conditional on measured surprise.'
+estimator_and_aggregation:
+  status: PROPOSED
+  estimand: 'For each eligible wave w/group g/period p/horizon h, b_gph is the model-standardized signed SUE response slope. delta_wh=(b_H1h-b_H0h)-(b_L1h-b_L0h); theta_h=W^-1 sum_w delta_wh over a frozen estimable-wave set.'
+  wave_fit: 'Separate wave fits with equal event-row weights; all lower-order SUE/group/post interactions; stock-by-wave intercepts and baseline SUE slopes; industry-by-calendar-quarter-by-wave intercepts and SUE slopes; omit only exact redundancy.'
+  standardization: 'For each w,p,h, let S_gw be the frozen PRE eligible stocks in tier g and assign omega_gws=1/|S_gw|; let C_wph be calendar cells with observed eligible rows from BOTH tiers after fixed controls and assign lambda_wphc=1/|C_wph|. Let m_wgph(s,c) be the fitted linear SUE derivative at stock s, period p and cell c from the wave-fit coefficients: it is the sum of the applicable stock-by-wave baseline SUE slope, period/group SUE interaction, and industry-by-calendar-quarter-by-wave SUE slope (with only exact redundant terms omitted). b_gph=sum_s in S_gw omega_gws sum_c in C_wph lambda_wphc*m_wgph(s,c). Required observed rows, not merely model predictions, must exist for every (s,c) receiving positive weight; otherwise the affected b_gph is NOT_ESTIMABLE. PRE and POST have separate C_wph sets and are not forced to share impossible dates. Model extrapolation beyond this observed support is prohibited.'
+  rank: 'Report required rank failure and excluded waves; never drop load-bearing controls or call the supported-wave target all registered waves.'
+  covariance: 'Aggregate wave influence vectors over unique economic earnings IDs. Retain every cross-wave/event and cross-horizon covariance term; repeated stack appearances do not create independent observations.'
+  causal_restrictions:
+    - 'Conditional on fixed PRE covariates and standardized SUE, conversion-absent changes in signed response slopes are equal for high and low groups.'
+    - 'Overlap, stable SUE measurement/selection, no differential exposure-proportional sponsor shock, and no residual conversion/peer spillover difference.'
+    - 'These identify a differential package effect only, not AP arbitrage or a universal dose derivative.'
+timing_interpretation:
+  raw_curve:
+    status: PROPOSED
+    value: 'theta_h is the primary signed differential response curve.'
+  relative_shape:
+    status: PROPOSED
+    formula: 'F_gph=b_gph/b_gpT; kappa_wh=(F_H1h-F_H0h)-(F_L1h-F_L0h), then equal-wave average.'
+    caveat: 'A supplementary estimand requiring normalized-shape parallel trends; raw-slope parallel trends do not imply it.'
+    uncertainty: 'References and coefficients are jointly estimated; use joint confidence-set inversion/projection and preserve covariance.'
+    weak_reference: 'Any required terminal confidence set containing zero, or sign ambiguity under the declared signed-response convention, blocks normalized interpretation; do not trim weak waves.'
+  pure_timing:
+    status: BLOCKED
+    sufficient_unverified_conditions:
+      - 'Tier-specific conversion-absent terminal levels and normalized shapes are transportable: b^0_g1h=b_g0h after standardization for each g/h.'
+      - 'For early horizons H={5m,15m,30m,60m}, a directional high-group acceleration claim requires the joint confidence region to support each high-tier causal normalized-shape component >=0 and their equal-horizon mean >0.05; the 0.05 margin is PI-pending. Positive relative kappa alone is insufficient. Mixed-sign, all-negative, or slower alternatives are reported as such, not relabeled as a timing failure or a preferred-direction result.'
+      - 'Both high- and low-tier terminal package effects satisfy signed terminal-equivalence margins.'
+      - 'All terminal slopes required as completion references are confidently positive under the declared sign convention.'
+    statement: 'A high-group acceleration claim additionally requires its own positive causal shape change, not merely positive relative kappa. Without all conditions, report differential signed change, conditional relative-shape change, or mixed amplitude/shape change; finite +1d is not fundamental value.'
+margins:
+  status: PROPOSED
+  early_shape: 'Two distinct PI-pending five-percentage-point thresholds across 5m/15m/30m/60m with equal horizon weights: (i) the high-vs-low relative-shape contrast for the supplementary kappa estimand, and (ii) the high-tier own causal normalized-shape mean required for a directional high-acceleration claim. They share a numerical proposal but are not interchangeable estimands.'
+  terminal: 'Half-width 0.05*B*, B*=10000*W^-1 sum_w (abs(b_H0T)+abs(b_L0T))/2 bps per one calibrated SUE SD. Treat B* as estimated: terminal-equivalence inference must jointly propagate B* and coefficient covariance, not plug in a fixed threshold.'
+  approvals_needed: 'PI must approve economic magnitude; protected PRE calibration may translate B* and its uncertainty but cannot choose a margin after treatment outcomes.'
+  prohibitions: 'No import of standalone stock-minus-ETF ten-percentage-point margin; no power-based choice.'
+inference:
+  existing_family:
+    status: EXISTING_AUTHORIZED
+    value: 'Stata boottest family: null-imposed Rademacher, 9,999 draws, sponsor-by-stock errors; bootcluster dimension deferred pending sample metadata.'
+  proposed_amendment:
+    status: PROPOSED
+    value: 'Build a dependency graph on unique economic events, linking every shared signed economic sponsor/wave membership, stock across dates, or response-leg calendar date (including every date contributing to +1d). Aggregate equal-wave scores by connected component and apply one multiplier jointly across stacks, horizons and references.'
+    failure_state: 'This assumes independence across resulting components. If components collapse or no pre-signed design-validity protocol supports non-dominant information, confirmatory inference is BLOCKED; no p-value/interval-width selection.'
+  multiplicity: 'Romano-Wolf across six primary raw signed slopes; joint regions for shape/directional/equivalence claims.'
+  randomization: 'Sensitivity only; no exact randomization claim from endogenous dates.'
+H3_decomposition:
+  status: BLOCKED
+  value: 'Documentary co-primary; exact decomposition/formula remains unresolved and is not silently removed by this narrower reconciliation.'
+protected_extract_gate:
+  status: PENDING_METADATA
+  requirements: ['document status explicitly PI_APPROVED after owner decision', 'primary_contract and protected_extract approvals true', 'signed contract hash', 'authorized row-filtered metadata view', 'no response values in extraction/contract phase']
+  scope: 'Metadata/design and permitted pre-treatment or genuinely untreated calibration only. It neither requires nor authorizes outcome_access, SCC_job, data_purchase, or empirical treatment estimation.'
+  current_gate: 'FAIL_CLOSED: proposal cannot authorize extraction, SCC, purchase, outcome access, or empirical estimation.'

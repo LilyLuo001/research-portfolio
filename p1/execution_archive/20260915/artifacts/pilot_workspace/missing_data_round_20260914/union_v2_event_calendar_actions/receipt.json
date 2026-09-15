@@ -1,0 +1,51 @@
+{
+  "status": "EVENT_CALENDAR_AND_ACTION_INPUTS_ACQUIRED",
+  "event_manifest_sha256": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+  "event_rows": 852,
+  "non_session_announcement_dates": 1,
+  "distribution_flagged_associations": 10,
+  "price_factor_change_associations": 0,
+  "share_factor_change_associations": 0,
+  "calendar_sha256": "7a791bb56ce116ddc196d40bb2b7eb2a8b2a4b333e1377d582c7c6162e26b770",
+  "export_sha256": "e075616e43700f815abfc55745801364f235a4de09ad1c373997f9f0d4a6c8cd",
+  "licensed_distribution_subset_sha256": "e1a724f3092abe1b4021004fffa49b4fbd2e91b86b0d6b3f21a6f2006f307511",
+  "daily_factor_subset_sha256": "f1a382ae220447e7db9764fe9c06e857cfc9b6e741b4da935d585b7b9978013c",
+  "daily_inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2019.parquet",
+      "sha256": "2514c219384b5ddd75bc1e2f224454e26777df5ac9d9d5b7a60cbd63d6fa3605",
+      "selected_rows": 17455
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2020.parquet",
+      "sha256": "38c7a54f6542d03496b78fc490927cabb4d541a52a6183911d0f97070aec6fa2",
+      "selected_rows": 17949
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2021.parquet",
+      "sha256": "1dc96d11cc1f3dd8874768f0e4cc078371d86b1ac49f15d3be4aab812c0296a1",
+      "selected_rows": 18144
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2022.parquet",
+      "sha256": "921ecea098b8dc1ea4ab630933bc60f04aa89854e7f0977d03096da8c3408008",
+      "selected_rows": 17932
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2023.parquet",
+      "sha256": "d8baeffadd5e187cf76bd68c0a5b4ba2ebb0b89c65cac2a4eaa04a869d297e24",
+      "selected_rows": 17521
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2024.parquet",
+      "sha256": "3e45d0d07a87f6c5687fc751151804d0263d808d6234f4d6185f5c405c965952",
+      "selected_rows": 17272
+    }
+  ],
+  "distribution_input": {
+    "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsedist.parquet",
+    "sha256": "a4f9bf6e8a688c1e2b3358585217faa0e60655934877822018474ff982f441fe"
+  },
+  "price_or_return_values_read": false,
+  "licensed_distribution_values_exported": false
+}

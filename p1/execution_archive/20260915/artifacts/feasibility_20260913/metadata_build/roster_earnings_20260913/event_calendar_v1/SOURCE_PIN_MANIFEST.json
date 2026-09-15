@@ -1,0 +1,12 @@
+{
+  "purpose": "EXECUTED_OUTCOME_BLIND_EVENT_DATE_LINKAGE_AND_SESSION_CENSUS",
+  "raw_metadata_location_scc": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_roster_earnings_20260913/ibes_metadata_projection_v2/ibes_announcement_metadata.csv",
+  "raw_metadata_sha256": "97a3c35c1f59013047924b89859df67ff361327a61b7bec0a28bdf3412c562cb",
+  "historical_link_location_scc": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ibes_link_full.parquet",
+  "historical_link_sha256": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326",
+  "projection_columns": ["ticker", "cusip", "pends", "pdicity", "anndats", "anntims", "actdats", "acttims", "source_partition"],
+  "link_columns": ["permno", "ncusip", "sdate", "edate", "score"],
+  "no_score_rule": "All historically date-valid links retained; ambiguity is reported, not resolved.",
+  "local_raw_export": false,
+  "status": "DATE_LINKAGE_EXECUTED_SESSION_CENSUS_NOT_RUN"
+}

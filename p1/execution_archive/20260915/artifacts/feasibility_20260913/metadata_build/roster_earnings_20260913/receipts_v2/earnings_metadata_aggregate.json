@@ -1,0 +1,36 @@
+{
+  "status": "METADATA_PROJECTED_ECONOMIC_EVENT_RULE_PENDING",
+  "metadata_sha256": "97a3c35c1f59013047924b89859df67ff361327a61b7bec0a28bdf3412c562cb",
+  "projection_receipt_sha256": "2618fd2d5e8d431920dbe90ccf3393379a7bf84083ee20a01feea56be60ec2ac",
+  "source_record_count": 103876,
+  "candidate_cusips_with_source_records": 3339,
+  "announcement_date_parseable_records": 103876,
+  "announcement_date_unparseable_or_missing_records": 0,
+  "announcement_time_parseable_records": 103876,
+  "announcement_time_unparseable_or_missing_records": 0,
+  "records_in_exact_duplicate_source_key_groups": 0,
+  "records_in_same_security_period_groups": 0,
+  "annual_partition_record_counts": {
+    "ibes_actuals_eps_2019.parquet": 12155,
+    "ibes_actuals_eps_2020.parquet": 13089,
+    "ibes_actuals_eps_2021.parquet": 14179,
+    "ibes_actuals_eps_2022.parquet": 14834,
+    "ibes_actuals_eps_2023.parquet": 14618,
+    "ibes_actuals_eps_2024.parquet": 14279,
+    "ibes_actuals_eps_2025.parquet": 13677,
+    "ibes_actuals_eps_2026.parquet": 7045
+  },
+  "economic_event_count": null,
+  "session_support": "NOT_ASSESSED_TIMEZONE_AND_CALENDAR_RULE_PENDING",
+  "forbidden_value_fields_read_or_exported": false,
+  "metadata_columns_read": [
+    "cusip",
+    "pends",
+    "pdicity",
+    "anndats",
+    "anntims",
+    "actdats",
+    "acttims",
+    "source_partition"
+  ]
+}

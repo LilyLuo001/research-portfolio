@@ -1,0 +1,61 @@
+{
+  "status": "DOCUMENTARY_SUPPORT_ONLY_NOT_CLOCK_CERTIFICATION",
+  "scope": "EXISTING_DOCS_CODE_AND_AGGREGATE_RECEIPTS_ONLY",
+  "evidence": {
+    "associations": 852,
+    "pdicity_QTR": 852,
+    "announcement_date_matches_manifest": 852,
+    "announcement_time_matches_manifest": 852,
+    "announcement_nonzero_seconds": 0,
+    "midnight_sentinel": 0,
+    "activation_same_date": 796,
+    "activation_later_date": 56,
+    "activation_earlier_date": 0,
+    "public_checks": 8,
+    "public_time_bearing": 6,
+    "public_displayed_minute_matches": 5,
+    "public_one_minute_disagreements": 1,
+    "public_date_only_unknown": 2,
+    "calendar_non_session_dates": 1
+  },
+  "documentary_findings": {
+    "detail_history_eastern_dst_convention": "SUPPORTED_BY_2013_MANUFACTURER_GUIDE",
+    "wrds_actu_epsus_2019_2024_timezone_bridge": "UNKNOWN",
+    "first_public_release": "UNKNOWN",
+    "precision_rounding_imputation": "UNKNOWN",
+    "revision_correction_semantics": "UNKNOWN",
+    "W002_high_four_key_applicability": "NOT_ASSESSED_BY_EVENT_SPECIFIC_SOURCE",
+    "activation_substitutable_for_announcement": false
+  },
+  "calendar": {
+    "observed_fields": ["calendar_basis", "session_date"],
+    "missing_fields": ["calendar_id", "calendar_timezone", "open_local", "close_local"],
+    "intraday_session_or_RTH_supported": false
+  },
+  "source_files": [
+    "gate1_20260915/followup/identity_clock_receipt.json",
+    "gate1_20260915/followup/FINDINGS.md",
+    "gate1_20260915/followup/clock_sources_v2/CLOCK_EVIDENCE_V2.md",
+    "gate1_20260915/followup/clock_crosscheck_v3/RESULTS.md",
+    "gate1_20260915/followup/clock_crosscheck_v3/comparison_receipt.json",
+    "pilot_design_build_20260915/measurement/measurement_input_adapter.py",
+    "pilot_design_build_20260915/measurement/prepared/strict_clock_and_calendar_gap_receipt.json",
+    "missing_data_round_20260914/union_v2_event_calendar_actions/receipt.json"
+  ],
+  "source_sha256_in_same_order": [
+    "41d2dd1d3705ff247b93fc45e6456dfe1716ac85c1eb9627b54f43479e18736d",
+    "617dfad403c5febb5709f454e5ec8a93c1b56fa4619a4b54a68db6929bfff126",
+    "f4f43382e97f1d09cdd87527aeeba9f1f7dfe234fd05da64a16249520d753edd",
+    "ca40639b07f4e3688cea1a6ed1475701dde9cfd5f22d91be86699f4b22e3112c",
+    "bd8b2cdbf25478862916604d58db61ad1428b53845c607d96c1aa9f917aafefb",
+    "460b3627c86a23c9593df1080b802ad3b39a05d7e655acc439cf4b3c61baf35d",
+    "3c66922da84d061f5b56c2246877cdba369c5f0e0203dab8f61d4d8020f359a5",
+    "e1839dfacad3e110463ced552352839dc3b43b0c541739aa245fa33fa3683f2b"
+  ],
+  "web_sources_opened_this_step": 0,
+  "raw_rows_or_news_bodies_read": false,
+  "financial_forecast_price_return_post_response_values_read": false,
+  "full_census_run": false,
+  "backend_telemetry": "NOT_OBSERVED",
+  "exact_next_action": "OBTAIN_WRDS_LSEG_FIELD_SEMANTICS_FOR_ACTU_EPSUS_ANNDATS_ANNTIMS_TIMEZONE_ANNOUNCEMENT_VS_ACTIVATION_ROUNDING_IMPUTATION_AND_REVISION_CORRECTION_THEN_VERSION_UNCERTAINTY_INTERVAL; SEPARATELY_SUPPLY_VERSIONED_CALENDAR_ID_SESSION_DATE_TIMEZONE_OPEN_CLOSE"
+}

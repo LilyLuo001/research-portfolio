@@ -1,0 +1,6 @@
+{
+  "free_parquet_sha256": "350c3c7aed6d1bf047a8970f4d5940f37f1ec89e012876cb0f081668a5d2b4e7",
+  "required_scc_events_merged_sha256": "758b2aeb5655ab48f50f53717e2c74d0b35f4a8fcae8df9f1f30b61b2023a821",
+  "local_advanced_snapshot_events_merged_sha256": "e5a441368fcadb53064c226d4d90a858f5024fce14a90d913cf8dfb127a67a4e",
+  "rule": "Do not use the local advanced-snapshot events file to generate free-path chronology. Reject it because it differs from the SCC pinned input."
+}

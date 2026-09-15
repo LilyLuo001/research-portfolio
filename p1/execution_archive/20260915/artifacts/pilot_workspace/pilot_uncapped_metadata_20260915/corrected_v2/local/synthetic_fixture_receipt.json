@@ -1,0 +1,19 @@
+{
+  "source_data_opened": false,
+  "status": "ALL_GOLDEN_SEMANTIC_FIXTURES_PASS",
+  "test_count": 12,
+  "tests": {
+    "ambiguity_includes_permno_outside_candidate_set_before_filter": true,
+    "candidate_without_source_path_preserved_in_denominator": true,
+    "closed_link_bounds_are_inclusive": true,
+    "cusip_requires_exact_8_alphanumeric_without_truncation": true,
+    "distinct_source_row_candidate_count_is_pair_not_source_only": true,
+    "exact_duplicate_paths_retained_without_inflating_distinct_source_candidate_count": true,
+    "invalid_and_open_link_dates_explicit": true,
+    "invalid_link_permno_is_explicit_unknown": true,
+    "missing_event_bound_is_unknown": true,
+    "new_uncapped_analyst_key_remains_unknown": true,
+    "source_date_bounds_lower_inclusive_upper_exclusive": true,
+    "transition_is_separate_from_pre_and_post": true
+  }
+}

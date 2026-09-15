@@ -1,0 +1,84 @@
+{
+  "status": "SUPPORTED_EARNINGS_INPUTS_ACQUIRED_SCC_ONLY",
+  "roster_sha256": "55bdd43af41fc8421936d327395f6274400e7cc2ef34d0eaddef2112e9fc08d7",
+  "roster_rows": 71,
+  "selected_event_associations": 852,
+  "selected_unique_stock_periods": 852,
+  "pre_associations": 568,
+  "post_associations": 284,
+  "unique_date_valid_symbols": 74,
+  "symbol_failures": 0,
+  "associations_with_at_least_2_analysts": 659,
+  "selected_actual_source_rows": 852,
+  "forecast_rows_90d": 8193,
+  "event_metadata_sha256": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+  "actuals_sha256": "f19b33918d80a8a9f4a7198eb24e7b57e1476fd86e9734f7534cb18a4050adf0",
+  "forecasts_sha256": "ab359ef85430f96ec3623ed8e553a5ee02a6e7e9b3d102e8616b95521a741010",
+  "actual_inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2019.parquet",
+      "sha256": "e180dbeda607c83b64da12c527d6124ee9237e93b88b177c2deaf714aa5bfdfb",
+      "selected_rows": 338
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2020.parquet",
+      "sha256": "17a2ddbba1a961c73ebe0ab51083ba22404b9279d6277630e9e0e3976128e4f6",
+      "selected_rows": 349
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2021.parquet",
+      "sha256": "71749bcc6f2626e0fc5233ba5384158f06e51dbcabf41ff358a35a70cf0fb3b1",
+      "selected_rows": 353
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2022.parquet",
+      "sha256": "03da0e3f6102f660a7a70dc8afe128a5aacfd287aa240a09c0113f2719ba4a76",
+      "selected_rows": 350
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2023.parquet",
+      "sha256": "e774cc2e823249c58f6131f284ad4ece1baaf00208f635316074b578c8f60ba1",
+      "selected_rows": 347
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2024.parquet",
+      "sha256": "7fb0fe578058cae041760843d7738da1a95ab26ec174c2c1680e292e0bf564e4",
+      "selected_rows": 339
+    }
+  ],
+  "forecast_inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2019.parquet",
+      "sha256": "ed22feb899b937cdb5534013a6b9ab57d1e05cdbd164eb1cd21c99825f2a0341",
+      "candidate_rows": 25005
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2020.parquet",
+      "sha256": "c6f09a52bd83e8d06032eb98c9ec6b05c23595fcfdbc90a7560673e197ce2784",
+      "candidate_rows": 28054
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2021.parquet",
+      "sha256": "8f1319bd4a6e40f64aa1ac486161343002fa8e061a145784e6bf04d0d2a7e541",
+      "candidate_rows": 24315
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2022.parquet",
+      "sha256": "5c80116dcc0865841f85d36b04846672d33e12d47e7aca60db49a5f057fc6673",
+      "candidate_rows": 22555
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2023.parquet",
+      "sha256": "9544b0ed865581359a2b2b69c4af4a2286e847af0adba8bf98fb3d099d51a4b5",
+      "candidate_rows": 17102
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2024.parquet",
+      "sha256": "0d51e5156cc25e0f386decbff2b6a00a30a2b8fb3cd12ad4c6e10b602fa1b533",
+      "candidate_rows": 5016
+    }
+  ],
+  "financial_values_exported_from_scc": false,
+  "price_quote_return_values_read": false,
+  "post_treatment_effect_estimated": false
+}

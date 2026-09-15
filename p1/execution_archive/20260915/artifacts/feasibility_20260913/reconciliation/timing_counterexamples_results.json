@@ -1,0 +1,65 @@
+{
+  "draft_gate_outcome_denied": "FAIL_SEALED_OUTCOME_NOT_AUTHORIZED",
+  "draft_gate_pending": "FAIL_DRAFT_CANNOT_SELF_APPROVE",
+  "heterogeneous_baseline_amplitude_only": {
+    "common_reference_shape_residual": [
+      0.07999999999999996,
+      0.0
+    ],
+    "group_specific_normalized_did": [
+      0.0,
+      0.0
+    ],
+    "high_minus_low_did": [
+      0.07999999999999996,
+      0.0
+    ],
+    "high_normalized": [
+      0.8,
+      1.0
+    ],
+    "high_post": [
+      0.96,
+      1.2
+    ],
+    "high_post_normalized": [
+      0.8,
+      1.0
+    ],
+    "high_pre": [
+      0.8,
+      1.0
+    ],
+    "low_normalized": [
+      0.4,
+      1.0
+    ],
+    "low_post": [
+      0.48,
+      1.2
+    ],
+    "low_post_normalized": [
+      0.4,
+      1.0
+    ],
+    "low_pre": [
+      0.4,
+      1.0
+    ],
+    "pure_timing_classification": "FAIL_PURE_TIMING: both groups retain their own normalized shape; a positive early DID is amplitude-composition, not timing."
+  },
+  "pooled_vs_equal_wave": {
+    "equal_wave_target": 0.5,
+    "pooled_information_weighted": 0.9,
+    "wave1_information": 2.0,
+    "wave2_information": 18.0
+  },
+  "reference_failure_precise": "REFERENCE_REQUIRES_JOINT_UNCERTAINTY_PROPAGATION",
+  "reference_failure_weak": "WEAK_OR_SIGN_UNCERTAIN_REFERENCE_BLOCK",
+  "reference_variance_covariance_positive": 0.0344,
+  "reference_variance_covariance_zero": 0.046400000000000004,
+  "reused_event_variance": {
+    "correct_shared_event_variance_at_sigma2_1": 1.0,
+    "incorrect_row_independent_variance_at_sigma2_1": 0.5
+  }
+}

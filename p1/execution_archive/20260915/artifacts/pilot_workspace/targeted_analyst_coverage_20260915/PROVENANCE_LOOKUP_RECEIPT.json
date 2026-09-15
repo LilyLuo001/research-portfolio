@@ -1,0 +1,34 @@
+{
+  "status": "PRODUCER_QUERY_FOUND_EXECUTION_COMPLETENESS_UNRESOLVED",
+  "lookup_scope": "ONE_TARGETED_LOOKUP_IN_WRDS_MIRROR_20260902_META_AND_MIGRATION_MANIFESTS",
+  "parquet_or_database_query_performed": false,
+  "W002_high": {
+    "exact_event_keys": 4,
+    "release_range": ["2019-10-29", "2021-11-02"],
+    "window_start_min": "2019-07-31",
+    "required_query_partitions": [2019, 2020, 2021]
+  },
+  "producer_query_evidence": {
+    "table": "ibes.detu_epsus",
+    "partition_definition": "anndats >= YEAR-01-01 and anndats < NEXT_YEAR-01-01",
+    "filters": ["usfirm = 1", "upper(measure) = 'EPS'"],
+    "limit_or_offset_observed": false,
+    "sql_paths": [
+      "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/meta/ibes_detu_eps_2019.sql.txt",
+      "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/meta/ibes_detu_eps_2020.sql.txt",
+      "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/meta/ibes_detu_eps_2021.sql.txt"
+    ]
+  },
+  "mirror_manifest_evidence": {
+    "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/meta/manifest.json",
+    "statuses": ["existing_not_overwritten"],
+    "parquet_sha256": {
+      "2019": "ed22feb899b937cdb5534013a6b9ab57d1e05cdbd164eb1cd21c99825f2a0341",
+      "2020": "c6f09a52bd83e8d06032eb98c9ec6b05c23595fcfdbc90a7560673e197ce2784",
+      "2021": "8f1319bd4a6e40f64aa1ac486161343002fa8e061a145784e6bf04d0d2a7e541"
+    },
+    "migration_size_match_observed": true
+  },
+  "conclusion": "QUERY_HAS_NO_VISIBLE_ROW_LIMIT_BUT_EXISTING_NOT_OVERWRITTEN_AND_FILE_LINEAGE_DO_NOT_PROVE_ORIGINAL_EXTRACTION_COMPLETION_OR_ROWCOUNT",
+  "exact_missing_artifact": "ORIGINAL_PRODUCER_QUERY_EXECUTION_RECEIPT_OR_LOG_FOR_2019_2020_2021_WITH_WRDS_RETURNED_ROW_COUNTS_SUCCESS_STATUS_NO_CLIENT_TRUNCATION_AND_PARQUET_ROWCOUNT_RECONCILIATION"
+}

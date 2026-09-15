@@ -1,0 +1,18 @@
+{
+  "authority": "EXISTING_LICENSED_SCC_CUSTODIAN_COUNT_ONLY_ANALYST_METADATA",
+  "allowed_forecast_columns": ["cusip", "fpedats", "analys", "anndats"],
+  "historical_hash_receipt": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/full_pool_analyst_coverage/receipt.json",
+  "identity_note": "Current run verifies pinned SCC stat identity. Historical SHA-256 is recorded for 2018-2024; no new full archive hash pass was made.",
+  "inputs": [
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/pilot_uncapped_metadata_20260915/corrected_v2/full_run_v2/protected_metadata_paths.csv","verification":"stat","size_bytes":39439264,"mtime_epoch":1789448540,"upstream_sha256":"fc4755dfa8bad1460f3ee6b50e89552eea88bd7fb3bd85d0feff479c27aaa06c"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2018.parquet","verification":"stat","size_bytes":18213993,"mtime_epoch":1788333446,"historical_sha256":"074c9c8e107e4aac39a3eb7e64eb921f92dfe75e93471fe95ebf779f1d99c5a0"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2019.parquet","verification":"stat","size_bytes":17272993,"mtime_epoch":1788333469,"historical_sha256":"ed22feb899b937cdb5534013a6b9ab57d1e05cdbd164eb1cd21c99825f2a0341"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2020.parquet","verification":"stat","size_bytes":18863826,"mtime_epoch":1788333495,"historical_sha256":"c6f09a52bd83e8d06032eb98c9ec6b05c23595fcfdbc90a7560673e197ce2784"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2021.parquet","verification":"stat","size_bytes":17514976,"mtime_epoch":1788333519,"historical_sha256":"8f1319bd4a6e40f64aa1ac486161343002fa8e061a145784e6bf04d0d2a7e541"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2022.parquet","verification":"stat","size_bytes":17670340,"mtime_epoch":1788333543,"historical_sha256":"5c80116dcc0865841f85d36b04846672d33e12d47e7aca60db49a5f057fc6673"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2023.parquet","verification":"stat","size_bytes":17059022,"mtime_epoch":1788333567,"historical_sha256":"9544b0ed865581359a2b2b69c4af4a2286e847af0adba8bf98fb3d099d51a4b5"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2024.parquet","verification":"stat","size_bytes":16578447,"mtime_epoch":1788333589,"historical_sha256":"0d51e5156cc25e0f386decbff2b6a00a30a2b8fb3cd12ad4c6e10b602fa1b533"},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2025.parquet","verification":"stat","size_bytes":16552570,"mtime_epoch":1788333612,"historical_sha256":null},
+    {"path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2026.parquet","verification":"stat","size_bytes":6514840,"mtime_epoch":1788333622,"historical_sha256":null}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "strict_clock_session_status": "UNKNOWN_FOR_ALL_852",
+  "reason": "NO_SOURCE_SPECIFIC_TIMEZONE_AND_NO_UNCERTAINTY_BOUNDS; existing calendar lacks intraday open/close fields",
+  "existing_calendar_version_sha256": "7a791bb56ce116ddc196d40bb2b7eb2a8b2a4b333e1377d582c7c6162e26b770",
+  "existing_calendar_fields": [
+    "calendar_basis",
+    "session_date"
+  ],
+  "required_but_absent_calendar_fields": [
+    "calendar_id",
+    "calendar_timezone",
+    "open_local",
+    "close_local"
+  ],
+  "source_clock_session_if_eastern": "NOT_COMPUTABLE: existing calendar supplies observed trading dates only, not intraday boundaries",
+  "source_clock_time_of_day_histogram": "WRITTEN_WITHOUT_MARKET_SESSION_LABELS",
+  "source_clock_candidate_interpretation": "Eastern/DST is documentary support for checked records only; not a full-population timezone or first-public-release certification",
+  "source_clock_time_parseable_rows": 852,
+  "source_clock_time_unparseable_rows": 0,
+  "candidate_repair_associations": 13,
+  "financial_values_read_or_written": false,
+  "quote_archives_read": false,
+  "sha256": {
+    "events": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+    "calendar": "7a791bb56ce116ddc196d40bb2b7eb2a8b2a4b333e1377d582c7c6162e26b770"
+  }
+}

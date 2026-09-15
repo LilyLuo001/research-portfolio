@@ -1,0 +1,23 @@
+{
+  "status": "REVIEWED_PARTIAL_SOURCE_INVENTORY_PASS; FULL_CANDIDATE_SUPPORT_CENSUS_INCOMPLETE",
+  "independent_review_file": "DATA_REVIEW.md",
+  "independent_review_sha256": "c22f0d55da514ba821cfe5243a152c42547f9f18057cafe6422fd3370cdbb24e",
+  "scc_checkout": "/usr3/graduate/qluo/dax-codex",
+  "scc_head": "e4b0c81b008493cf8553f1d51ae2c40f0fc4c54d",
+  "dirty_tree_preserved": true,
+  "source_hashes": {
+    "conv_exposure_free.parquet": "350c3c7aed6d1bf047a8970f4d5940f37f1ec89e012876cb0f081668a5d2b4e7",
+    "conv_exposure_free.parquet.lineage.json": "ff26b812b5849825d9df0aa6b98815066564739596b2413c09b28656f89d116a",
+    "events_merged.csv": "758b2aeb5655ab48f50f53717e2c74d0b35f4a8fcae8df9f1f30b61b2023a821",
+    "conv_exposure_free_crosswalk.csv": "0bf63d37896fca60822d9ad773451c3b13935c5438e1a68c01d17ee9da353b3e"
+  },
+  "generated_output_hashes": {"advanced_source_inventory.csv": "0bd24dfa4d10e7b3725ae6c295a54d50fa229df19c8d19f9df0bf468dba66280", "free_source_inventory.csv": "fbb0be83524481ba6a66ee6da1f4c4ba92d608a7559ec35ac0c0ae0f521e33b2", "free_reuse_summary.csv": "a454f9cc73021c1ec5fa61f5b9ac9b69cf85062abd34590dcf3c05989417f11a", "free_chronology_summary.csv": "2af470a2e93b7ecc69312a9ceba3b47ac17216c65c113048d1073ff2a8b90fd2", "source_comparison_by_effective_date.csv": "98ee57a6e34e36cad903282025fd865cde77a72fecdb43521545917b498ec7f7", "chronology_uncertainty.csv": "10d83f7338ba7baaf1e67acdffc84057e537ff03c5fe200961687047b7fc8821"},
+  "requested_agent_routing": {"protected_view_engineer": "gpt-5.6-terra / medium", "independent_reviewer": "gpt-6-astra / high"},
+  "actual_agent_routing": {"protected_view_engineer": "separate agent /root/p1_census_build (Bohr); runtime model/effort not returned by current status interface", "independent_reviewer": "separate agent /root/p1_census_data_reviewer (Darwin); independently reproduced counts; runtime model/effort not returned by current status interface", "coordinator": "existing /root retained; no model/config/authentication change performed; exact runtime settings not returned by current status interface"},
+  "source_specific_query_sha256": "da6e0e6a2c957a205939bee01406d64c85883f071f685c00952b91ca5b471bfa",
+  "runtime_preflight": "Pinned free parquet and SCC chronology SHA-256 checked before data parsing or output directory creation; mismatched local chronology rejected in coordinator test",
+  "prohibited_outcome_fields_read": false,
+  "remote_scheduler_jobs_submitted_by_this_task": 0,
+  "scc_connectivity_check": "2026-09-13 07:50:41 UTC; SSH succeeded; qstat showed unrelated yax jobs only; those jobs were not changed",
+  "commit_push_merge": false
+}

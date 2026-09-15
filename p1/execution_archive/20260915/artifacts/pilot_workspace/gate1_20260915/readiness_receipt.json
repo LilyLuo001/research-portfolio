@@ -1,0 +1,63 @@
+{
+  "status": "DATA_READINESS_ASSESSMENT_NOT_LEGACY_GATE1_PASS",
+  "associations": 852,
+  "stock_wave_units": 71,
+  "unique_permnos": 71,
+  "waves": 5,
+  "periods": {
+    "POST": 284,
+    "PRE": 568
+  },
+  "unique_permno_release_date_keys": 852,
+  "reused_key_extra_associations": 0,
+  "stocks_in_multiple_waves": 0,
+  "unique_announcement_dates": 417,
+  "clock_parse_counts": {
+    "one_parseable_time": 852
+  },
+  "certified_release_timezone": "NOT_ESTABLISHED",
+  "session_and_RTH60": "UNKNOWN_NOT_ZERO",
+  "endpoint_quote_coverage": "NOT_ASSESSED",
+  "source_mapping_status": {
+    "UNAMBIGUOUS": 852
+  },
+  "date_valid_symbol_status": {
+    "DATE_VALID_UNIQUE": 852
+  },
+  "analyst_min2_associations": 659,
+  "observed_session_dates": 851,
+  "distribution_flag_associations": 10,
+  "rdq_status": {
+    "UNIQUE": 828,
+    "MISSING": 24
+  },
+  "rdq_same_date": 809,
+  "core_logical_legs": 6816,
+  "core_all8_header_mapping_supported_associations": 839,
+  "core_header_mapping_incomplete_associations": 13,
+  "final_eligibility": {
+    "NOT_CERTIFIED": 71
+  },
+  "split_basis_status": {
+    "PROVISIONAL_PENDING_CONTRACT_CONFIRMATION": 71
+  },
+  "holdings_reports_strictly_pre_cutoff": 71,
+  "denominator_strictly_pre_cutoff": 71,
+  "pre_dates_strictly_before_cutoff": 568,
+  "post_dates_at_or_after_recorded_20session_threshold": 284,
+  "economic_event_deduplication": "NOT_CERTIFIED_DATE_KEYS_ONLY",
+  "input_hashes": {
+    "missing_data_round_20260914/union_v2_earnings_inputs/selected_event_metadata.csv": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+    "missing_data_round_20260914/union_v2_event_calendar_actions/event_calendar_and_action_flags.csv": "e075616e43700f815abfc55745801364f235a4de09ad1c373997f9f0d4a6c8cd",
+    "missing_data_round_20260914/union_v2_compustat_rdq_crosscheck/event_rdq_crosscheck.csv": "bbe4d310f9870ecf26f92eb51a0148f927703eeebe695ba98e405ed5ac009e66",
+    "missing_data_round_20260914/analysis_ready_acquisition/full_support_overlap_analyst_intersection.csv": "60c8ef59a7dfce9ac9444d7f7f775f46806ae12309bd3868129595a0d43f472a",
+    "missing_data_round_20260914/analysis_ready_acquisition/PILOT_STOCKS_ACQUISITION_UNION_V2.csv": "55bdd43af41fc8421936d327395f6274400e7cc2ef34d0eaddef2112e9fc08d7",
+    "gate1_20260915/job_symbol_header_audit.csv": "87bb7e6e9e0b79afd75673cfcb9c9f7acfb53596ca39cdb7dd449e96cb48a0b1",
+    "missing_data_round_20260914/databento_final_acquisition/core_grouped_job_map.csv": "4bb7330a64dd304472c91e03980f8d902f2b581ad6d09e6fbd90d28b9483c94e",
+    "missing_data_round_20260914/databento_final_acquisition/event_request_map.csv": "cc1fa4e8c429d5276ef6543c62bbef9b352990362548978f10243ed24cd90f38"
+  },
+  "code_sha256": "113a58bab0981499f0e41fba3b74b1989a147e3631fb26ab4f0c3aaa4e1b513b",
+  "raw_eps_forecast_price_quote_return_sources_opened": false,
+  "existing_metadata_containers_hashed_and_csv_parsed_before_column_projection": true,
+  "liquidity_or_ownership_values_analyzed_or_returned": false
+}

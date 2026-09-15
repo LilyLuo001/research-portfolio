@@ -1,0 +1,25 @@
+{
+  "status": "NOT_FROZEN_RULE_UNDERSPECIFIED",
+  "candidate_pool_available": true,
+  "candidate_pool_artifacts": [
+    "PREANNOUNCEMENT_EXPOSURE_PROVISIONAL_TIERS.csv",
+    "EARNINGS_METADATA_ELIGIBILITY.csv",
+    "FULL_SUPPORTED_CANDIDATE_POOL.csv",
+    "EARNINGS_METADATA_POOL_8PRE_4POST.csv"
+  ],
+  "target_stock_wave_units": 40,
+  "full_support_candidates_actual_scc": 2088,
+  "missing_authoritative_rules": [
+    "liquidity metric",
+    "liquidity measurement window",
+    "liquidity eligibility and missing-value handling",
+    "median and tie handling within exposure tier",
+    "selection order within each liquidity half",
+    "cross-wave duplicate handling for the 40 stock-wave units",
+    "reserve ordering when an event clock fails certification"
+  ],
+  "missing_expected_artifact": "P1_Research_Decision_Pilot.zip or its claimed roster-selection compiler",
+  "provisional_roster_is_not_final": true,
+  "post_quote_outcomes_read": false,
+  "databento_purchase_made": false
+}

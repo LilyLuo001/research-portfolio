@@ -1,0 +1,37 @@
+{
+  "status": "METADATA_PILOT_PASS_FULL_BATCH_COMPLETED",
+  "synthetic_golden_fixtures_passed": 12,
+  "pilot_candidate_denominator": 20,
+  "pilot_previous_v1_represented": 10,
+  "pilot_previous_v1_unrepresented_unknown": 10,
+  "pilot_mapping_status_counts": {
+    "HAS_UNIQUE_SOURCE_MAPPING_ROWS": 10,
+    "NO_SOURCE_ROW_PATH_FOR_CANDIDATE": 10
+  },
+  "pilot_path_units": {
+    "valid_link_path_rows": 266,
+    "distinct_source_row_candidate_ids": 266,
+    "distinct_exact_path_signatures": 266,
+    "period_keys": 266,
+    "wave_specific_candidate_public_release_keys": 266
+  },
+  "actual_lineage_observations_checked": 20,
+  "actual_lineage_assertions_passed": 7,
+  "tampered_required_invariant_rejected": true,
+  "protected_row_level_files_copied_local": false,
+  "full_batch_completed": true,
+  "gate": {
+    "status": "METADATA_PILOT_PASS",
+    "scope": "IMPLEMENTATION_GATE_NOT_RESEARCH_PILOT_PASS",
+    "code_sha256": "28897abb6196b36d5b6fbb2b8b3dc4417c6bd861f0f2833335dd9ab15605e41e",
+    "config_sha256": "19aba25f327923de4c7048b241933e2d3edbf5413243285ab14df52b8efd9c79",
+    "manifest_sha256": "54e4b8b943c5a8a8af173cf2dfaaa66590ad56d1e381f8157854cf11b6f4d9c9",
+    "gate_file_sha256": "7b85859d42897dc7e2c70f07d9a72015832c41afec9d43471e2097082750f706"
+  },
+  "control_hashes": {
+    "synthetic_fixture_receipt.json": "9d8758cf040af0f7e5ce3cffaf11ea602837a7f017458d7793869daa5db0e86f",
+    "final_pilot_receipt.json": "131f1a9114ff9cf89a3da447274a00da99e0f290e35dc5b8cef72f43a8ff7cf1",
+    "lineage_verification_receipt.json": "d65c79f03b7110b7bee0dfc6d5f2995001dc2fdd0c1e4c209c9b607f61bc657e",
+    "full_receipt.json": "fa84cae932d64797e1a0b86ef8e7e94d3a5449ebe03fba8e9a435b74e9132a40"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "status": "BOUNDED_P0_P1_COMPLETE_P2_PREPARED_P3_SYNTHETIC_PASS_HOLD_DESIGN_HOLD_DATA",
+  "date": "2026-09-15",
+  "contract_sha256": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+  "contract_preserved": true,
+  "decision": "HOLD_DESIGN_AND_HOLD_DATA",
+  "not_gate1_pass": true,
+  "not_final_sample_approval": true,
+  "population_and_support": {
+    "source_high_low_tail": 2794,
+    "v1_snapshot_represented": 2592,
+    "v1_snapshot_unrepresented_unknown": 202,
+    "v1_8pre_4post": 2088,
+    "v1_proposed_overlap_clean": 508,
+    "v1_clean_all12_min2": 182,
+    "acquisition_stock_wave_units": 71,
+    "acquisition_event_associations": 852,
+    "acquisition_pre_associations": 568,
+    "acquisition_post_associations": 284,
+    "acquisition_event_min2_metadata": 659,
+    "representation_policy": "ABSENCE_BEFORE_SNAPSHOT_SCREEN_IS_UNKNOWN_RETRIEVAL_OR_COVERAGE_NOT_NO_EARNINGS"
+  },
+  "nominal_source_clock_diagnostics": {
+    "acquisition_associations": 852,
+    "acquisition_nominal_0930_1500": 18,
+    "acquisition_nominal_min2": 5,
+    "v1_capped_rows": 29729,
+    "v1_capped_nominal_0930_1500": 465,
+    "v1_capped_nominal_min2": 207,
+    "v1_proposed_clean_rows": 6096,
+    "v1_proposed_clean_nominal_0930_1500": 101,
+    "v1_proposed_clean_nominal_min2": 38,
+    "clean_high_stocks_with_nominal_min2_both_pre_post_in_every_wave": 0,
+    "source_clock_certified_rth": false,
+    "strict_session_status_852": "UNKNOWN_FOR_ALL_852",
+    "capped_history_is_upper_bound": false
+  },
+  "calendar_and_dependency": {
+    "common_high_low_quarter_cells": 860,
+    "common_high_low_quarter_missing": 13,
+    "base_event_stock_release_components": 3,
+    "base_largest_event_component": 828,
+    "wave_edge_proxy_components": 1,
+    "component_counts_are_ess": false,
+    "sponsor": "UNKNOWN"
+  },
+  "tests": {
+    "synthetic_design_fixtures_passed": 11,
+    "synthetic_design_status": "INTERFACE_AND_FAILURE_CHECKS_ONLY_NOT_REAL_POWER_OR_INFERENCE",
+    "measurement_interface_fixtures_passed": 16,
+    "measurement_status": "PREPARED_NOT_EMPIRICALLY_RUN"
+  },
+  "scc_connectivity_and_source_controls": {
+    "scc_logged_in_connectivity_succeeded": true,
+    "operation": "STAT_AND_HEADER_ONLY_NO_REMOTE_RAW_BODY_READ",
+    "sources": [
+      {
+        "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_roster_earnings_20260913/ibes_metadata_projection_v2/ibes_announcement_metadata.csv",
+        "size_bytes": 10260575,
+        "header": "ticker,cusip,pends,pdicity,anndats,anntims,actdats,acttims,source_partition"
+      },
+      {
+        "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ibes_link_full.parquet",
+        "size_bytes": 606920,
+        "format_or_header_check": "PARQUET_STAT_ONLY_NO_BODY_OR_SCHEMA_PROJECTION"
+      }
+    ]
+  },
+  "independent_review": {
+    "status": "FINAL_ACCEPT_METADATA_FINDINGS_WITHIN_SCOPE",
+    "research_pilot_status": "HOLD_DESIGN_AND_HOLD_DATA",
+    "real_empirical_power_ready": false
+  },
+  "stage_status": {
+    "P0": "COMPLETE",
+    "P1": "COMPLETE",
+    "P2": "PREPARED_REAL_MEASUREMENT_NOT_RUN",
+    "P3": "SYNTHETIC_TESTS_PASS",
+    "P4": "NOT_RUN_INPUTS_AND_DESIGN_NOT_READY",
+    "P5": "NOT_RUN_INPUTS_AND_DESIGN_NOT_READY"
+  },
+  "routing": {
+    "requested": {
+      "P0_P1": "gpt-5.6-sol/medium",
+      "P2": "gpt-5.6-terra/medium",
+      "independent_review": "gpt-6-astra/high"
+    },
+    "actual_backend_telemetry": "NOT_OBSERVED"
+  },
+  "safety": {
+    "remote_raw_body_read": false,
+    "purchase": false,
+    "post_response_read": false,
+    "effect_estimation": false,
+    "real_numeric_rank": false,
+    "real_power": false,
+    "git_operation": false
+  },
+  "next_action": {
+    "action": "PREPARE_VERSIONED_UNCAPPED_METADATA_CENSUS_MANIFEST_ONLY",
+    "freeze": [
+      "original_candidate_ids",
+      "original_documented_date_bounds"
+    ],
+    "retain_202_unrepresented_as": "UNKNOWN",
+    "before_dispatch": "VERIFY_EXACT_MANIFEST_MATCHES_EXISTING_METADATA_AUTHORITY_AND_ORIGINAL_BOUNDS",
+    "not_authorized_by_this_receipt": [
+      "RUN_UNCAPPED_CENSUS_NOW",
+      "EXPAND_IDS_OR_WINDOWS",
+      "NEW_OUTCOME_QUERY",
+      "NEW_SESSION_CHOICE",
+      "PURCHASE"
+    ]
+  },
+  "small_output_control_hashes": {
+    "RUN_RESULTS.md": "c007c42ee8aa6f980c970a6a812fbf95aca1e2a524cbceead888623086cf29a6",
+    "pilot_config.json": "fd5d9374a61f3d901c483645e7b7140220bfd350d4c002f975dd96549756038c",
+    "design/build_receipt.json": "f1cfa0392fce89c1468630f102412038a2fdf01e37a768df8edf128bac2d5d24",
+    "nominal_clock/NOMINAL_CLOCK_RECEIPT.json": "828ebf7653d5f2513ff4fc740f487cd65d3a9e0ceb67a43904af4d4885c35f46",
+    "nominal_clock/V1_NOMINAL_CLOCK_RECEIPT.json": "0636e04eac3372aeab7f92142a2ccb4ff5bafa7fe8e4ff934c701dab441c2970",
+    "measurement/prepared/strict_clock_and_calendar_gap_receipt.json": "3c66922da84d061f5b56c2246877cdba369c5f0e0203dab8f61d4d8020f359a5",
+    "measurement/SUMMARY.md": "84185310302a40efa105babaa5bc1fc1a1d99dee4ce58a98a6109f3979544380",
+    "synthetic/SYNTHETIC_RECEIPT.json": "d0508f40d374f260ef15405da76341fdaa37e82f01ee8851a41ce0416dcf2387",
+    "review/INDEPENDENT_VERIFICATION_RECEIPT.json": "7d2d592ac7c65a58473c4c792834db1d5e98e066d406e9f57a86f8c20c3cacd9",
+    "INDEPENDENT_BUILD_REVIEW.md": "319cef2db5264831abf7de65bd634fb17734ebc0f9383d5c9fa24c45546f1018"
+  }
+}

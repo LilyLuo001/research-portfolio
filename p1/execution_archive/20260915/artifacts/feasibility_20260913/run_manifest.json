@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "run_id": "20260913",
+  "generated_at_timezone": "Asia/Shanghai",
+  "scope": "P1 feasibility adjudication with observed post-conversion earnings-response outcomes sealed",
+  "git": {
+    "source_checkout": "/Users/lilyluo/research-portfolio",
+    "source_branch": "task/prepurchase-wrds-20260906",
+    "source_head": "35361cc5a8c6360e1d48da9a2aa4fd40458b0e04",
+    "source_upstream": "origin/main",
+    "source_ahead_behind": {"ahead": 16, "behind": 116},
+    "preexisting_untracked_preserved": [".DS_Store", "p1/.DS_Store", "p1/etf_weight_shape_gates/"],
+    "output_worktree": "/Users/lilyluo/research-portfolio-p1-feasibility-20260913",
+    "output_branch": "task/p1-feasibility-adjudication-20260913",
+    "advanced_readonly_worktree": "/Users/lilyluo/research-portfolio-p1-advanced-readonly",
+    "advanced_readonly_head": "cb36417304b282cda5e38ede13d1af872ad9f346",
+    "merge_performed": false,
+    "push_performed": false,
+    "raw_input_modified": false
+  },
+  "client": {
+    "codex_cli_version": "0.143.0",
+    "codex_cli_path": "/opt/homebrew/bin/codex",
+    "multi_agent_feature": "stable:true",
+    "configured_default_model": "gpt-6-astra",
+    "configured_default_effort": "medium",
+    "coordinator_actual_model": "NOT_OBSERVED",
+    "cli_catalogue_observed": ["gpt-5.5", "gpt-5.3-codex-spark"],
+    "desktop_collaboration_runtime_observed": ["gpt-5.6-luna", "gpt-5.6-terra", "gpt-6-astra"],
+    "catalogue_discrepancy": "Recorded; CLI catalogue was not assumed to describe desktop collaboration routing.",
+    "custom_agent_templates": "NOT_AVAILABLE; none installed",
+    "configuration_or_auth_changed": false
+  },
+  "agents": [
+    {"role": "coordinator", "model": "NOT_OBSERVED", "effort": "NOT_OBSERVED", "task": "scope, evidence reconciliation, deliverables", "usage": "NOT_OBSERVED"},
+    {"role": "p1_mapper", "model": "gpt-5.6-luna", "effort": "low", "task": "targeted file/history/provenance map", "artifact": "handoffs/p1_mapper.md (coordinator-preserved orchestration receipt)", "usage": "NOT_OBSERVED"},
+    {"role": "p1_data", "model": "gpt-5.6-terra", "effort": "medium", "task": "schemas, exposure and missing-design support", "artifact": "handoffs/p1_data.md", "usage": "NOT_OBSERVED"},
+    {"role": "p1_literature", "model": "gpt-5.6-terra", "effort": "medium", "task": "targeted primary-source matrix", "artifact": "handoffs/p1_literature.md", "usage": "NOT_OBSERVED"},
+    {"role": "p1_econometrician", "model": "gpt-6-astra", "effort": "high", "task": "estimand, assumptions, variance/power mathematics", "artifact": "estimation_contract.yaml; handoffs/p1_econometrician.md", "usage": "NOT_OBSERVED"},
+    {"role": "p1_compute", "model": "gpt-5.6-terra", "effort": "high", "task": "sealed support, generic oracle fixture, guards and tests", "artifact": "code/; tests/; support_diagnostics.csv; power_results.csv; handoffs/p1_compute.md", "usage": "NOT_OBSERVED"},
+    {"role": "p1_referee", "model": "gpt-6-astra", "effort": "high", "task": "fresh independent identification/code/power challenge", "artifact": "review.md; handoffs/p1_referee.md", "usage": "NOT_OBSERVED"}
+  ],
+  "input_hashes_sha256": {
+    "master_prompt": "f8ee9fe8ab5182a899b0e8c72510d0e3c430a94688a93fcf79954cf4d2dcca17",
+    "variable_spec": "c55f3ddab30bb653012eeaa88ea7e2d83989243a2b235986948a47099d9a192b",
+    "estimator_blueprint": "fc7508b48de0f5c27273d05f6a7c172817f36e8a2e378cede03dea06acef4dc7",
+    "research_plan": "df0c5fea0c1688917b39a0ee87659cb4a42c94f0292b1a71a0dd72044492d334",
+    "owner_decisions": "0fd47aa3a39e6ee1c4b9ccfd180a2ad0795b9ce90cbee8b6021616980b136be7",
+    "gate0_event_metadata": "e9c602cc4ac44e35826a89dd47ef588e445541546861c2ad2fa32824ccb8e083",
+    "exposure_all": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "exposure_dimensional_only": "c4acb697f4d8e2a13168deca58187ebfc9bcfcc73b086c77ed6cd6b925044967",
+    "exposure_excluding_dimensional": "383ea34668d74efcaf1da771dfa2e994960a7e56c2d28f99d829639ad259a9ba",
+    "exposure_leakage_audit": "576f380661102d33fd94124a815d243032fc9c65c9b2be5ff79fb9f12efcb1e4",
+    "exposure_lineage": "c0c0f817068609ff4c20ef4eb21958932d35a785390733d9b5c7993475aaff4a",
+    "legacy_viability_code": "99a9391e7929c1ccd95982b7072694a5da43e16aa40d0759cca64e18890b01bf"
+  },
+  "code_and_output_hashes_sha256": {
+    "estimation_contract.yaml": "6704be74ff67b72308b4e823892a493549ec5ea128a23caa82d4b8a2d189b6f5",
+    "code/sealed_support_and_conditional_power.py": "6fdf52bfed7eb3a32d336e8b85cd6816a8fdbc55e54c69232bdb0d1118f6239d",
+    "tests/test_sealed_support_and_conditional_power.py": "05f8c63ec83431608d7a15ab1b1edb43386f091936ed51a4451df4517950e3bb",
+    "support_diagnostics.csv": "34f848586e71fcc72f0d6cec9f74265980c30bacea61fecc67adbbcf818c884f",
+    "power_results.csv": "e5b9cb8d94acd4f917b7832e3c7c89d507c3cf347be05b8c7c4a936db9c28669"
+  },
+  "simulation": {
+    "seed": 20260913,
+    "replications_per_fixture_cell": 2000,
+    "status": "DEVELOPMENT_FIXTURE/ASSUMED_SCENARIO/CONDITIONAL",
+    "actual_empirical_power": "NOT_AVAILABLE"
+  },
+  "command_receipts": [
+    {"command": "codex --version", "exit_code": 0},
+    {"command": "codex features list", "exit_code": 0},
+    {"command": "codex doctor --json", "exit_code": 1, "note": "TERM=dumb check only; auth/config/provider HTTPS checks passed; websocket warning fell back to HTTPS"},
+    {"command": "git fetch --all --prune", "exit_code": 0, "note": "fetch only"},
+    {"command": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider p1/feasibility_adjudication/20260913/tests/test_sealed_support_and_conditional_power.py", "exit_code": 0, "result": "7 passed"},
+    {"command": "python3 p1/feasibility_adjudication/20260913/code/sealed_support_and_conditional_power.py --readonly-exposure-dir /Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure --output-dir p1/feasibility_adjudication/20260913 --reps 2000 --seed 20260913", "exit_code": 0},
+    {"command": "independent referee support-count reproduction", "exit_code": 0, "result": "8801 cells / 3440 stocks / 30 waves; 583 / 573 / 4 at >=0.005"},
+    {"command": "independent referee WLS/FWL/covariance 50000-draw fixture", "exit_code": 0, "result": "max beta difference 9.2148511e-15; analytic variance 1.439058712944; Monte Carlo 1.431445511247; null size 0.04936"}
+  ],
+  "environment_access": {
+    "scc_opened": false,
+    "scc_job_launched": false,
+    "wrds_or_licensed_outcome_rows_opened": false,
+    "sealed_post_conversion_outcomes_opened": false,
+    "stata_boottest_executed": false
+  },
+  "rerun": [
+    "cd /Users/lilyluo/research-portfolio-p1-feasibility-20260913",
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider p1/feasibility_adjudication/20260913/tests/test_sealed_support_and_conditional_power.py",
+    "python3 p1/feasibility_adjudication/20260913/code/sealed_support_and_conditional_power.py --readonly-exposure-dir /Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure --output-dir p1/feasibility_adjudication/20260913 --reps 2000 --seed 20260913"
+  ],
+  "runtime_seconds": "NOT_OBSERVED",
+  "token_usage": "NOT_OBSERVED"
+}

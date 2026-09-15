@@ -1,0 +1,63 @@
+{
+  "run_id": "20260913-p1-bounded-contract-reconciliation",
+  "status": "BLOCKED_RECONCILIATION/REVIEW",
+  "research_verdict_unchanged": "HOLD_DESIGN + HOLD_DATA",
+  "repository": {
+    "path": "/Users/lilyluo/research-portfolio-p1-feasibility-20260913",
+    "branch": "task/p1-feasibility-adjudication-20260913",
+    "head": "35361cc5a8c6360e1d48da9a2aa4fd40458b0e04",
+    "commit_or_push_performed": false
+  },
+  "client_and_routing": {
+    "codex_cli": "0.143.0",
+    "multi_agent_capability": "stable true",
+    "coordinator_actual_model": "NOT_OBSERVED",
+    "coordinator_requested_model": "gpt-5.6-terra",
+    "coordinator_requested_reasoning": "medium",
+    "custom_templates": "NOT_FOUND; no configuration, authentication, or template file was modified",
+    "specialists": [
+      {
+        "role": "contract_architect",
+        "requested_and_dispatched": "gpt-6-astra/high",
+        "usage": "NOT_OBSERVED",
+        "handoff_sha256": "fcc00389eba24fcf2cdd75c62c269d26bc26adcdf7fab645e112908f60942788"
+      },
+      {
+        "role": "delta_referee",
+        "requested_and_dispatched": "gpt-6-astra/high",
+        "usage": "NOT_OBSERVED",
+        "fresh_review": true
+      }
+    ]
+  },
+  "scope_guards": {
+    "full_feasibility_rerun": false,
+    "empirical_power": false,
+    "sealed_outcome_access": false,
+    "raw_earnings_or_quote_access": false,
+    "scc_access_or_job": false,
+    "data_purchase": false,
+    "raw_input_modification": false,
+    "stock_etf_merge_or_irr_or_refraction": false
+  },
+  "validation": {
+    "yaml_parse": "PASS (Ruby YAML)",
+    "deterministic_tests": "PASS: 6 passed; finite synthetic fixtures only",
+    "test_command": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider p1/feasibility_adjudication/20260913/reconciliation/tests/test_contract_counterexamples.py",
+    "secret_scan_reconciliation": "PASS: no supplied credential patterns found",
+    "independent_referee_final_status": "BLOCKED_RECONCILIATION/REVIEW",
+    "review_limit_note": "The coordinator made final mechanical fail-closed edits after the one permitted referee re-review. They are recorded as unreviewed; no independent final signoff is claimed."
+  },
+  "artifacts_sha256": {
+    "PI_DECISION_ONE_PAGE.md": "277c87ce23bb35f391864726d2a55b80535ccf2c0218297f2c0b223d80c776dd",
+    "estimation_contract.reconciled.PROPOSED.yaml": "5153c8530ffb767789d321c5e4a520ec6cc2eb04fa907b4ad5fbe7a9a302b47b",
+    "CONTRACT_DIFF.md": "cf9faa9dbf8b95173e8edd21a846c84634e5738b3a9cccf9ddebdf5f0da2fa4e",
+    "TIMING_COUNTEREXAMPLES.md": "c10459e5bcb40c750ec714f3bd24b670e1579fac3fc1dc4ba2d62a0d26ef0b0c",
+    "PROTECTED_EXTRACT_REQUEST.PROPOSED.md": "9387846ee12e9865fd0abd012b20f1f0e941bce6a646af6265a9a5b17630589d",
+    "REVIEW_DELTA.md": "2e3920d8ebe27acc4123c1e5ae8dc57f768127623a16091dc1d1762fe2eb5c54",
+    "timing_counterexamples_results.json": "b40f9d7f0084a748d853984ba4788f44f366b8a9340cf772795636c2e916ea81",
+    "code/contract_counterexamples.py": "d05c448040c1871ad0e9977b28e396e36258f249b5952bc567cdd0278654516e",
+    "tests/test_contract_counterexamples.py": "9c21bc51a74dc30bd6e45e13078f83ac7d3602139c064ad4bb0a40b2c7da7c4d"
+  },
+  "next_action": "Obtain a PI decision on the proposed contract and, if revision is desired, authorize a new bounded independent review of the final delta before any protected metadata request."
+}

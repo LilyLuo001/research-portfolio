@@ -1,0 +1,13 @@
+{
+  "overrides": [
+    {
+      "date": "2021-10-26",
+      "dataset": "XNAS.ITCH",
+      "status": "DEGRADED_VENDOR_METADATA_QUALITY_EXCEPTION",
+      "vendor_condition": "degraded",
+      "vendor_last_modified_date": "2026-05-22",
+      "provenance": "DATASET_CONDITIONS.json from free metadata.get_dataset_condition",
+      "note": "Preserve as an explicit quality exception; do not recode absent observations as zero coverage."
+    }
+  ]
+}

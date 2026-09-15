@@ -1,0 +1,45 @@
+{
+  "status": "TARGETED_ANALYST_COVERAGE_COMPLETE",
+  "authority": "EXISTING_LICENSED_SCC_CUSTODIAN_COUNT_ONLY_ANALYST_METADATA",
+  "target_scope": {
+    "stock_wave_candidate_keys": 16,
+    "exact_event_keys": 108,
+    "W002_high": {"PRE": [3, 0, 3], "POST": [1, 0, 1], "both_side_candidates_before": 1, "both_side_observed_min2_after": 0},
+    "W002_low": {"PRE": [45, 9, 36], "POST": [42, 9, 33], "both_side_candidates_before": 14, "both_side_observed_min2_after": 4},
+    "W016_low_stress": {"PRE": [8, 7, 1], "POST": [9, 3, 6], "both_side_candidates_before": 1, "both_side_observed_min2_after": 1},
+    "side_tuple_units": ["target_exact_event_keys", "observed_source_min2_lower_bound", "unknown_observed_lt2_source_completeness_uncertified"]
+  },
+  "W002_high_observed_count_distribution": {
+    "PRE": {"0_analysts": 1, "1_analyst": 2},
+    "POST": {"1_analyst": 1},
+    "missing_source_year_keys": 0,
+    "source_not_observed_through_release_keys": 0,
+    "interpretation": "BOTH_SIDES_LACK_OBSERVED_MIN2_BUT_NOT_DEFINITIVE_EXCLUSION"
+  },
+  "method": {"allowed_columns": ["cusip", "fpedats", "analys", "anndats"], "window": "[release_date-90_days,release_date)", "source_completeness_certified": false, "distinct_analyst_revision_safe": true},
+  "gate": {"fixtures_passed": 8, "pilot_exact_event_keys": 20, "pilot_receipt_sha256": "cfcd4cc76adcfee2d2304a64ddc13fd7aacb64f1a3f0ac1cb523cbd4f596de94"},
+  "hashes": {
+    "code_sha256": "62448835a5bd9d45fcf74da188335dc91c1b3a2b393b6abe10a701bf2b31b351",
+    "config_sha256": "7cefcb73f78cffd3ceb8177c87fe81fa544afc56f1b1b192f0cf341c5ca1f3b2",
+    "manifest_sha256": "79b4cc7f3ad3a4422978c37b21248a6cf48dd5939c02a2b7c258e5f8b6d25325",
+    "gate_sha256": "ed81f3eaafccbac6692f295c94c9e871472aadb8196997ee4b96cf62138903e9",
+    "full_receipt_sha256": "e1901d25b62c5613437ae6803c4f4b94bf6cec0b7b9332cb6ddd3ffb3b42a822",
+    "coverage_aggregate_sha256": "0ffe6f8b3eb1c38afbdba4822d16e8fc16a9eb86e174199b66e067c589427cb0",
+    "candidate_aggregate_sha256": "dfaf0d1ff7912fb70afba837c498836e857bc4aa335d96c5ba8c7df986586585",
+    "observed_count_distribution_sha256": "a6bc9d5a8c8f58806590a18ccff96c4e91bfde22051942ecede36355b2ac6dd0",
+    "provenance_lookup_receipt_sha256": "2ccbbf5766d7462b0c2a74457740d46c2f64f2dfc495110606875477b0007734"
+  },
+  "protected_rows_local_exported": false,
+  "forecast_eps_price_return_quote_response_values_read": false,
+  "backend_telemetry": "NOT_OBSERVED",
+  "provenance_lookup": {
+    "status": "QUERY_DEFINITION_AND_MIRROR_LINEAGE_FOUND_PRODUCER_EXECUTION_RECEIPT_NOT_FOUND",
+    "W002_high_window": ["2019-07-31", "2021-11-02"],
+    "required_partitions": [2019, 2020, 2021],
+    "query_filters": "CALENDAR_YEAR_ANNDATS_BOUNDS_AND_USFIRM_EQ_1_AND_UPPER_MEASURE_EQ_EPS",
+    "query_limit_or_offset_present": false,
+    "manifest_status": "existing_not_overwritten",
+    "manifest_status_not_completion_proof": true
+  },
+  "single_next_input": "ORIGINAL_PRODUCER_EXECUTION_RECEIPT_OR_LOG_FOR_IBES_DETU_EPS_2019_2020_2021_WITH_WRDS_RETURNED_ROW_COUNTS_SUCCESSFUL_COMPLETION_NO_CLIENT_ROW_CAP_OR_TRUNCATION_AND_PARQUET_ROWCOUNT_RECONCILIATION"
+}

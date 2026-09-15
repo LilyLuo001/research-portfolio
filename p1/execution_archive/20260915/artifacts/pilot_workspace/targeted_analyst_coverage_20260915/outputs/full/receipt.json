@@ -1,0 +1,131 @@
+{
+  "aggregate_hashes": {
+    "candidate_both_side_summary.csv": "dfaf0d1ff7912fb70afba837c498836e857bc4aa335d96c5ba8c7df986586585",
+    "coverage_by_wave_tier_side.csv": "0ffe6f8b3eb1c38afbdba4822d16e8fc16a9eb86e174199b66e067c589427cb0"
+  },
+  "backend_telemetry": "NOT_OBSERVED",
+  "code_sha256": "62448835a5bd9d45fcf74da188335dc91c1b3a2b393b6abe10a701bf2b31b351",
+  "config_sha256": "7cefcb73f78cffd3ceb8177c87fe81fa544afc56f1b1b192f0cf341c5ca1f3b2",
+  "events_lt2": 0,
+  "events_min2": 28,
+  "events_unknown": 80,
+  "forecast_values_read": false,
+  "manifest_sha256": "79b4cc7f3ad3a4422978c37b21248a6cf48dd5939c02a2b7c258e5f8b6d25325",
+  "mode": "full",
+  "price_return_quote_response_values_read": false,
+  "required_invariant_expectations": {
+    "distinct_analyst_count_revision_safe": true,
+    "exact_key_includes_wave_tier_permno_side_pends_release": true,
+    "lower_90d_inclusive": true,
+    "missing_source_coverage_unknown_not_zero": true,
+    "only_four_forecast_metadata_columns": true,
+    "protected_rows_local_exported": false,
+    "release_date_exclusive": true
+  },
+  "required_invariants": {
+    "distinct_analyst_count_revision_safe": true,
+    "exact_key_includes_wave_tier_permno_side_pends_release": true,
+    "lower_90d_inclusive": true,
+    "missing_source_coverage_unknown_not_zero": true,
+    "only_four_forecast_metadata_columns": true,
+    "protected_rows_local_exported": false,
+    "release_date_exclusive": true
+  },
+  "required_invariants_passed": true,
+  "source_completeness_certified": false,
+  "source_partitions": [
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 2045,
+      "mtime_epoch": 1788333446,
+      "observed_anndats_max": "2018-12-31",
+      "observed_anndats_min": "2018-01-01",
+      "size_bytes": 18213993,
+      "status": "AVAILABLE",
+      "year": 2018
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 2483,
+      "mtime_epoch": 1788333469,
+      "observed_anndats_max": "2019-12-31",
+      "observed_anndats_min": "2019-01-01",
+      "size_bytes": 17272993,
+      "status": "AVAILABLE",
+      "year": 2019
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 3061,
+      "mtime_epoch": 1788333495,
+      "observed_anndats_max": "2020-12-31",
+      "observed_anndats_min": "2020-01-01",
+      "size_bytes": 18863826,
+      "status": "AVAILABLE",
+      "year": 2020
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 2916,
+      "mtime_epoch": 1788333519,
+      "observed_anndats_max": "2021-12-31",
+      "observed_anndats_min": "2021-01-01",
+      "size_bytes": 17514976,
+      "status": "AVAILABLE",
+      "year": 2021
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 2934,
+      "mtime_epoch": 1788333543,
+      "observed_anndats_max": "2022-12-31",
+      "observed_anndats_min": "2022-01-01",
+      "size_bytes": 17670340,
+      "status": "AVAILABLE",
+      "year": 2022
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 3132,
+      "mtime_epoch": 1788333567,
+      "observed_anndats_max": "2023-12-31",
+      "observed_anndats_min": "2023-01-01",
+      "size_bytes": 17059022,
+      "status": "AVAILABLE",
+      "year": 2023
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 2037,
+      "mtime_epoch": 1788333589,
+      "observed_anndats_max": "2024-12-31",
+      "observed_anndats_min": "2024-01-01",
+      "size_bytes": 16578447,
+      "status": "AVAILABLE",
+      "year": 2024
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 631,
+      "mtime_epoch": 1788333612,
+      "observed_anndats_max": "2025-12-31",
+      "observed_anndats_min": "2025-01-01",
+      "size_bytes": 16552570,
+      "status": "AVAILABLE",
+      "year": 2025
+    },
+    {
+      "identity_verification": "PINNED_MANIFEST_STAT_WITH_HISTORICAL_SHA_WHERE_AVAILABLE",
+      "matched_metadata_rows": 0,
+      "mtime_epoch": 1788333622,
+      "observed_anndats_max": "2026-05-14",
+      "observed_anndats_min": "2026-01-01",
+      "size_bytes": 6514840,
+      "status": "AVAILABLE",
+      "year": 2026
+    }
+  ],
+  "status": "TARGETED_ANALYST_COVERAGE_FULL_COMPLETE",
+  "target_event_keys": 108,
+  "target_stock_wave_keys": 16
+}

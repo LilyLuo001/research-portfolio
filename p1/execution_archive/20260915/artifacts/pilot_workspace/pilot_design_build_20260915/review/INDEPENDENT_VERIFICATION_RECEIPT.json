@@ -1,0 +1,187 @@
+{
+  "status": "INDEPENDENT_METADATA_COUNTS_REPRODUCED",
+  "source_universe": {
+    "projected_all_tiers": 4191,
+    "projected_tail": 2794,
+    "represented_v1": 2592,
+    "tail_not_represented": 202,
+    "represented_v2": 4186,
+    "v2_supported": 3246,
+    "all_tiers_not_represented": 5,
+    "missing_tail_by_wave_tier": {
+      "W002/low": 73,
+      "W025/low": 11,
+      "W016/high": 24,
+      "W002/high": 59,
+      "W016/low": 29,
+      "W025/high": 6
+    }
+  },
+  "attrition": {
+    "v1": 2592,
+    "support": 2088,
+    "clean": 508,
+    "all12": 895,
+    "clean_all12": 182
+  },
+  "capped_nominal_stages": {
+    "all_capped": {
+      "rows": 29729,
+      "nominal": 465,
+      "nominal_min2": 207
+    },
+    "supported": {
+      "rows": 25056,
+      "nominal": 354,
+      "nominal_min2": 185
+    },
+    "clean": {
+      "rows": 6096,
+      "nominal": 101,
+      "nominal_min2": 38
+    },
+    "clean_all12": {
+      "rows": 2184,
+      "nominal": 11,
+      "nominal_min2": 11
+    }
+  },
+  "clean_nominal_min2_both_sides_by_wave_tier": {
+    "W002/high": 0,
+    "W002/low": 2,
+    "W013/high": 0,
+    "W013/low": 0,
+    "W016/high": 0,
+    "W016/low": 1,
+    "W021/high": 0,
+    "W021/low": 0,
+    "W025/high": 0,
+    "W025/low": 0
+  },
+  "union_nominal": {
+    "rows": 852,
+    "nominal": 18,
+    "nominal_min2": 5,
+    "POST": 6,
+    "PRE": 12
+  },
+  "calendar": {
+    "excluded_quarters": 4,
+    "all_cells": 910,
+    "all_missing": 59,
+    "common_cells": 860,
+    "common_missing": 13
+  },
+  "base_component_sizes": [
+    828,
+    12,
+    12
+  ],
+  "wave_proxy_component_sizes": [
+    852
+  ],
+  "input_projections": {
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/EARNINGS_METADATA_ELIGIBILITY.csv": {
+      "sha256": "cc7a7f32913f5a0ef72eab30bb69ea714a2c2d882d20b248ebf39ed42b10cf5b",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "provisional_tier",
+        "has_8pre_4post"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/clean_acquisition/full_supported_pool_with_overlap_flag.csv": {
+      "sha256": "be9b710a2a2ab3ccf1e84534d6fb96e1885c3522119116d2a29b61c0fa930ba4",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "provisional_tier",
+        "proposed_overlap_clean"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/analysis_ready_acquisition/full_support_overlap_analyst_intersection.csv": {
+      "sha256": "60c8ef59a7dfce9ac9444d7f7f775f46806ae12309bd3868129595a0d43f472a",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "provisional_tier",
+        "proposed_overlap_clean",
+        "all_12_events_min2"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/union_v2_earnings_inputs/selected_event_metadata.csv": {
+      "sha256": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+      "usecols": [
+        "association_id",
+        "announcement_times_all",
+        "sue_analyst_min2_coverage",
+        "sample_period"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/analysis_ready_acquisition/PILOT_STOCKS_ACQUISITION_UNION_V2.csv": {
+      "sha256": "55bdd43af41fc8421936d327395f6274400e7cc2ef34d0eaddef2112e9fc08d7",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "tier",
+        "roster_source",
+        "purpose",
+        "final_analysis_eligibility"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/PREANNOUNCEMENT_EXPOSURE_PROVISIONAL_TIERS.csv": {
+      "sha256": "9f31091f3b7ea9ecbaba39c8c43b64e76713227e361552c9ca6bc52a895fa35e",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "provisional_tier"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/supported_roster/ALL_CANDIDATE_EVENT_SUPPORT.csv": {
+      "sha256": "31cdfdba68b2c65f6fa25153b8f06403839cf0de5edbc64f5042d8ac342c3cc6",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "has_8pre_4post"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/EARNINGS_METADATA_POOL_8PRE_4POST.csv": {
+      "sha256": "f33bc3532b127554531380e80635c961a5a251ada51ca287b412c144ba0a6b3f",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "provisional_tier",
+        "event_side",
+        "pends",
+        "anndats",
+        "anntims"
+      ]
+    },
+    "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/full_pool_analyst_coverage/event_analyst_coverage.csv": {
+      "sha256": "95c720b62390e513742fc85bbb464712c75b98c3e1a5763c43ae1b64f1fd29e3",
+      "usecols": [
+        "wave_id",
+        "permno",
+        "provisional_tier",
+        "event_side",
+        "pends",
+        "anndats",
+        "analyst_min2"
+      ]
+    }
+  },
+  "code_hashes": {
+    "design/build_design.py": "71fbd6cb8e0facb9e0eee13b3e2b834fb82e5d045ad618a872fe48581522b15a",
+    "measurement/measurement_input_adapter.py": "460b3627c86a23c9593df1080b802ad3b39a05d7e655acc439cf4b3c61baf35d",
+    "measurement/prepare_existing_metadata_diagnostic.py": "b7dbd2c0546f4e0ad374f21ab4f0d5e7f3504a69d5eb18b92d26c446e8b24207",
+    "measurement/test_measurement_input_adapter.py": "cfa31b8bd43f735294ba26a9c2018b34d70594dfaba38cd371d8c08741436044",
+    "nominal_clock/count_source_wallclock.py": "1e9e0fc750f5471f753a1205ba3c2947c4f14738c2e18ca53e54e31b595046eb",
+    "nominal_clock/count_v1_metadata_pool.py": "e8f3303b96e57c677a9dfa8097c1a3e9547d0c665822cdc8b3fe5c198502a1e1",
+    "review/verify_support.py": "7dac5509291d06c761750f208f3e7c35ea6f7bad3403b3aec6b919ee64fa892b",
+    "synthetic/design_engine.py": "79444bd602946a45a400fc0af98bf0dec2256217138adab0dc96a6d0d43b4042",
+    "synthetic/test_design_engine.py": "9515bbbbe4bc2beaf8dfd709664611d5aead1abc8d1a1e24245e3a44472c3aa2"
+  },
+  "requested_model_effort_acceptance_telemetry": "NOT_OBSERVED",
+  "network_or_scc": false,
+  "financial_or_response_values_parsed": false
+}

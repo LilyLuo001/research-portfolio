@@ -1,0 +1,42 @@
+{
+  "status": "SYNTHETIC_INTERFACE_TESTS_PASS_NOT_RESEARCH_PILOT_PASS",
+  "synthetic_rows": 128,
+  "synthetic_columns": 40,
+  "synthetic_rank": 30,
+  "quarterly_fixture": {
+    "rows": 96,
+    "columns": 72,
+    "rank": 62,
+    "PRE_quarters": 8,
+    "POST_quarters": 4,
+    "known_contrast_recovered": true
+  },
+  "tests": {
+    "known_two_horizon_slope_DID": true,
+    "exact_nuisance_redundancy_does_not_invalidate_identified_contrast": true,
+    "missing_required_observed_stock_cell_fails_closed": true,
+    "absent_low_POST_group_fails_closed": true,
+    "duplicate_within_wave_not_new_information": true,
+    "zero_SUE_variation_blocks_contrast": true,
+    "duplicate_stacks_joint_event_scores_do_not_gain_precision": true,
+    "cross_horizon_covariance_retained": true,
+    "row_order_invariant": true,
+    "calendar_cell_can_appear_in_both_regimes": true,
+    "one_event_per_stock_quarter_synthetic_truth_recovered": true
+  },
+  "test_count": 11,
+  "source_data_opened": false,
+  "empirical_power": false,
+  "actual_POST_values": false,
+  "inference_validated": false,
+  "limitations": [
+    "Stock-industry identity fixed in fixture; changing classification requires explicit policy",
+    "Event-score covariance primitive omits sponsor/date/serial dependence; not an inference estimator",
+    "Synthetic multiple events per stock-quarter are artificial for interface tests, not a proposed earnings panel",
+    "No numeric rank of real PRE or POST sample is established"
+  ],
+  "code_hashes": {
+    "design_engine.py": "79444bd602946a45a400fc0af98bf0dec2256217138adab0dc96a6d0d43b4042",
+    "test_design_engine.py": "9515bbbbe4bc2beaf8dfd709664611d5aead1abc8d1a1e24245e3a44472c3aa2"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "status": "SNAPSHOT_PREPARED_NOT_YET_PUSHED",
+  "source_roots": {
+    "feasibility_20260913": "/Users/lilyluo/research-portfolio-p1-feasibility-20260913/p1/feasibility_adjudication/20260913",
+    "pilot_workspace": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot"
+  },
+  "counts": {
+    "PUBLISHED": 297,
+    "EXCLUDED": 602
+  },
+  "exclusion_reasons": {
+    "ROW_LEVEL_OR_UNREVIEWED_DATA_NOT_OPENED": 479,
+    "RUNTIME_OR_CACHE": 32,
+    "OS_METADATA": 2,
+    "LARGE_PAYLOAD_NOT_OPENED": 68,
+    "JSON_NOT_ALLOWLISTED": 12,
+    "HISTORICAL_VALUE_BEARING_OUTPUT_NOT_OPENED": 8,
+    "JSON_POSSIBLE_ROW_LEVEL_OR_VALUE_FIELDS": 1
+  },
+  "index_sha256": "cd62c452498492f2b9e40a184c38b39c0ac3a393138f9eeaddc7b0e6100137fa",
+  "secret_matches_printed": false,
+  "raw_inputs_modified": false,
+  "excluded_raw_payloads_opened_or_hashed": false,
+  "note": "Some textual candidates are inspected then rejected by content checks; excluded raw/unreviewed data are not opened. Historical documents remain historical, not current authority."
+}

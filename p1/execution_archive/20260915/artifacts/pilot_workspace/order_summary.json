@@ -1,0 +1,49 @@
+{
+  "order_date": "2026-09-14",
+  "purpose": "P1_CONVERSION_MATCHED_QUOTATION_DEVELOPMENT",
+  "full_events": 32,
+  "minimum_events": 16,
+  "stocks": 8,
+  "conversion_waves": [
+    "W002",
+    "W016"
+  ],
+  "core_symbols": [
+    "AROC",
+    "AXL",
+    "BHE",
+    "JJSF",
+    "MSFT",
+    "ORCL",
+    "PLXS",
+    "SKYW",
+    "SPY"
+  ],
+  "optional_symbols": [
+    "IWM",
+    "DFAC",
+    "BSVO"
+  ],
+  "core32_atomic_requests": 220,
+  "core16_atomic_requests": 115,
+  "extra_atomic_requests": 138,
+  "validation_atomic_requests": 16,
+  "earliest_requested_date": "2019-07-26",
+  "latest_requested_date": "2023-11-07",
+  "core32_distinct_dates": 92,
+  "core32_symbol_hours": 1939.0,
+  "estimated_cost_status": "NOT_QUOTED_ACCOUNT_REQUIRED",
+  "market_data_downloaded": false,
+  "planning_limit_usd": 100,
+  "hard_total_limit_usd": 125,
+  "reserve_usd": 25,
+  "calendar_package_version": "4.13.1",
+  "calendar": "XNYS; selected requested days checked for regular closes",
+  "limitations": [
+    "single_venue_core_not_NBBO",
+    "pre_effective_membership_not_pre_announcement_eligibility",
+    "pre_focal_does_not_mean_never_treated",
+    "two_waves_not_empirical_power",
+    "release_dates_supported_but_intraday_release_clocks_not_certified"
+  ]
+}

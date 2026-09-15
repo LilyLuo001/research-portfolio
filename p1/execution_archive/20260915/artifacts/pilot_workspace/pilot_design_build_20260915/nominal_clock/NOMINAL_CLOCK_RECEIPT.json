@@ -1,0 +1,77 @@
+{
+  "status": "EXECUTED_SOURCE_CLOCK_DIAGNOSTIC_NOT_SESSION_CENSUS",
+  "source": "/Users/lilyluo/P1_Fixed_125USD_Pilot_Order_extracted/p1_fixed_pilot/missing_data_round_20260914/union_v2_earnings_inputs/selected_event_metadata.csv",
+  "source_sha256": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+  "allowed_columns": [
+    "association_id",
+    "wave_id",
+    "tier",
+    "sample_period",
+    "announcement_times_all",
+    "sue_analyst_min2_coverage",
+    "permno"
+  ],
+  "source_rows": 852,
+  "clock_window": "[09:30:00,15:00:00] source displayed local clock; no timezone attached",
+  "nominal_band_associations": 18,
+  "nominal_band_by_period": {
+    "POST": 6,
+    "PRE": 12
+  },
+  "nominal_band_with_min2": 5,
+  "four_cell_diagnostic": [
+    {
+      "wave_id": "W002",
+      "four_cells_nonempty_in_nominal_band": false,
+      "empty_nominal_cells": [
+        "HIGH/POST",
+        "HIGH/PRE",
+        "LOW/PRE"
+      ]
+    },
+    {
+      "wave_id": "W013",
+      "four_cells_nonempty_in_nominal_band": false,
+      "empty_nominal_cells": [
+        "HIGH/POST",
+        "HIGH/PRE",
+        "LOW/POST",
+        "LOW/PRE"
+      ]
+    },
+    {
+      "wave_id": "W016",
+      "four_cells_nonempty_in_nominal_band": true,
+      "empty_nominal_cells": []
+    },
+    {
+      "wave_id": "W021",
+      "four_cells_nonempty_in_nominal_band": false,
+      "empty_nominal_cells": [
+        "HIGH/POST",
+        "HIGH/PRE",
+        "LOW/POST",
+        "LOW/PRE"
+      ]
+    },
+    {
+      "wave_id": "W025",
+      "four_cells_nonempty_in_nominal_band": false,
+      "empty_nominal_cells": [
+        "HIGH/POST",
+        "HIGH/PRE",
+        "LOW/POST"
+      ]
+    }
+  ],
+  "limitations": [
+    "This nominal band is chosen to expose the candidate RTH60 support problem, not to certify actual exchange sessions",
+    "No Eastern/UTC conversion, early-close calendar, first-public timestamp or uncertainty bound is assumed",
+    "No observation is added to or excluded from a final population by this diagnostic",
+    "Acquisition roster does not bound support in a broader eligible population",
+    "Analyst count is not SUE compatibility or actual numeric variation"
+  ],
+  "financial_values_read": false,
+  "SCC_access": false,
+  "code_sha256": "1e9e0fc750f5471f753a1205ba3c2947c4f14738c2e18ca53e54e31b595046eb"
+}

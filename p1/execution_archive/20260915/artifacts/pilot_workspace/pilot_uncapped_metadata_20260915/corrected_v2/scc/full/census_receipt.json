@@ -1,0 +1,72 @@
+{
+  "aggregate_hashes": {
+    "candidate_coverage_status.csv": "609cfb61dbddb7c50bb70a05c38220b5cc010d7ba0de479c13ae8cb855aabdbb",
+    "candidate_link_path_status_aggregate.csv": "0a84047961d0cc632a773151dc55ccc6ac4d16aa3b06ee4e59df145827ee9d46",
+    "nominal_both_pre_post_stocks.csv": "3ffd4ef6b9a776b4e311cbafc81dedf84d88c49debd65ccebb04b651d1746f27",
+    "old_cap_vs_uncapped.csv": "708e7b76281e41e8e9a5732a54949d37d40fac0c045a5337ba73f9b78704b81d",
+    "support_by_wave_tier_regime_mapping_analyst.csv": "ff4b579ad01d8df6b2fef3acf6160bc4fc59aaf77703b0eeb83d4ee9430b0230"
+  },
+  "candidate_denominator": 2794,
+  "candidate_link_event_status_counts": {
+    "OUTSIDE_CLOSED_DATE_PATH": 4617,
+    "VALID_CLOSED_DATE_PATH": 66939
+  },
+  "candidate_previous_unrepresented_unknown": 202,
+  "code_sha256": "28897abb6196b36d5b6fbb2b8b3dc4417c6bd861f0f2833335dd9ab15605e41e",
+  "config_sha256": "19aba25f327923de4c7048b241933e2d3edbf5413243285ab14df52b8efd9c79",
+  "date_bounds": {
+    "announcement_date_lower_inclusive": "2019-01-01",
+    "announcement_date_upper_exclusive": "2026-09-01"
+  },
+  "input_hashes": {
+    "candidates": "72a3c02d78458605716a23c2fce07f9a8611cb6dadd3d402c9c3d0babe1f42b3",
+    "old_events": "cd856cea955f1f9b82273c1766352ef99eb59b3de74b55cc831be4b3df3e2350",
+    "overlap": "4c2d233c312bf53feb845b850e33528577698618e872529a22d643bb70c88803"
+  },
+  "invariants": {
+    "analyst_exact_key_fields": [
+      "wave_id",
+      "permno",
+      "provisional_tier",
+      "event_side",
+      "pends",
+      "anndats"
+    ],
+    "candidate_denominator_preserved": true,
+    "identity_ambiguity_assessed_before_candidate_filter": true,
+    "new_uncapped_analyst_is_unknown": true,
+    "open_invalid_link_dates_not_imputed": true,
+    "overlap_unknown_outside_exact_existing_view": true,
+    "protected_rows_local_exported": false,
+    "score_threshold_applied": false,
+    "source_clock_not_rth": true
+  },
+  "manifest_sha256": "54e4b8b943c5a8a8af173cf2dfaaa66590ad56d1e381f8157854cf11b6f4d9c9",
+  "mapping_status_counts": {
+    "HAS_UNIQUE_SOURCE_MAPPING_ROWS": 2592,
+    "NO_SOURCE_ROW_PATH_FOR_CANDIDATE": 202
+  },
+  "mode": "full",
+  "path_units": {
+    "distinct_exact_path_signatures": 66939,
+    "distinct_source_row_candidate_ids": 66939,
+    "period_keys": 66939,
+    "public_release_keys": 66923,
+    "valid_candidate_link_path_rows": 66939
+  },
+  "protected_output": "SCC_ONLY",
+  "purchase": false,
+  "quote_native_files_read": false,
+  "raw_financial_or_response_values_read": false,
+  "source_hashes": {
+    "identity_link": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326",
+    "metadata": "97a3c35c1f59013047924b89859df67ff361327a61b7bec0a28bdf3412c562cb"
+  },
+  "source_lineage": {
+    "invalid_announcement_date_rows": 0,
+    "invalid_or_missing_cusip8_rows_in_window": 0,
+    "metadata_source_rows": 103876,
+    "quarterly_rows_in_closed_window": 82300
+  },
+  "status": "CORRECTED_UNCAPPED_METADATA_FULL_COMPLETE"
+}

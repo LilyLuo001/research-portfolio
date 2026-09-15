@@ -1,0 +1,75 @@
+{
+  "utc": "2026-09-15T01:56:38.850268+00:00",
+  "identity": {
+    "event_rows": 852,
+    "matching_name_interval_rows": 852,
+    "associations_matched": 852,
+    "associations_with_multiple_intervals": 0,
+    "ncusip_agreement": 852,
+    "base_ticker_agreement": 852,
+    "crd_associations": 12,
+    "crd_class_counts": {
+      "B": 12
+    },
+    "crd_cusip_agreement": 12,
+    "class_identity": "HISTORICAL_CRSP_CLASS_B"
+  },
+  "clock_metadata": {
+    "projected_source_rows": 852,
+    "unique_associations": 852,
+    "pdicity_counts": {
+      "QTR": 852
+    },
+    "date_agreement": 852,
+    "time_agreement": 852,
+    "announcement_seconds_nonzero": 0,
+    "midnight_sentinel": 0,
+    "activation_date_before_announcement": 0,
+    "activation_date_same": 796,
+    "activation_date_later": 56,
+    "timezone": "UNVERIFIED",
+    "public_release_precision": "UNVERIFIED_NOT_INFERRED_FROM_FORMAT",
+    "session": "NOT_CLASSIFIED"
+  },
+  "approved_columns": {
+    "events": [
+      "association_id",
+      "permno",
+      "pends",
+      "announcement_date",
+      "announcement_times_all",
+      "date_valid_raw_symbol",
+      "date_valid_ncusip",
+      "sample_period",
+      "wave_id"
+    ],
+    "names": [
+      "permno",
+      "namedt",
+      "nameendt",
+      "ticker",
+      "ncusip",
+      "shrcls",
+      "tsymbol"
+    ],
+    "actuals_metadata_projection": [
+      "permno",
+      "cusip",
+      "pends",
+      "pdicity",
+      "anndats",
+      "anntims",
+      "actdats",
+      "acttims"
+    ]
+  },
+  "raw_values_projected": false,
+  "row_level_outputs": "SCC_ONLY",
+  "source_files": [
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/union_v2_earnings_inputs/selected_event_metadata.csv",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsenames_full.parquet",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/union_v2_earnings_inputs/licensed_actuals_selected.parquet"
+  ],
+  "event_manifest_sha256": "3d644fb4210accf8ac5fde5a4f8509bd6b31ea26f2caeffe36496cae0591f5c5",
+  "code_sha256": "910bc3cec8e28f6af54128e170d72b606ba11877f8960a928c4203ccb904f77f"
+}

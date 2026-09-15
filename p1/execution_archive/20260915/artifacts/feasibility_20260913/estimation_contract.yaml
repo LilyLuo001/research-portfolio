@@ -1,0 +1,256 @@
+schema_version: 1
+run_id: '20260913'
+role: p1_econometrician
+runtime:
+  model: gpt-6-astra
+  effort: high
+  provenance: 'Requested role routing; actual runtime per coordinator dispatch. No separate backend telemetry exposed to this agent.'
+  usage: NOT_OBSERVED
+authority_semantics:
+  SIGNED: 'Explicit current user authorization or located owner decision; never scientific approval of an assumption.'
+  PROPOSED: 'Documentary specification or audit-derived implementation without verified owner receipt; preserve as constraint pending reconciliation.'
+  UNKNOWN: 'Consequential choice, causal assumption, or conflict unresolved.'
+  NOT_AVAILABLE: 'Required observation, input, or execution unavailable.'
+repository:
+  worktree_head: 35361cc5a8c6360e1d48da9a2aa4fd40458b0e04
+  advanced_source_head: cb36417304b282cda5e38ede13d1af872ad9f346
+  initial_status: '?? p1/feasibility_adjudication/'
+  instructions: 'No AGENTS.md found in searched ancestor paths or repository rg inventory.'
+scope:
+  status: SIGNED
+  value: 'Audit stock earnings-response timing around MF-to-ETF conversion; conversion package, no isolated AP mechanism claim.'
+  source: '/Users/lilyluo/Documents/P1_Feasibility_Codex_Prompt.md sections 1, 2, 6'
+outcome_boundary:
+  status: SIGNED
+  value: 'Never inspect actual/uncertain post-conversion earnings-response outcomes. Only metadata, safely filtered pre-anticipation/untreated calibration, and conspicuous synthetic outcomes.'
+  access_this_pass: 'No actual or uncertain earnings-response/result file opened. Existing exposure report and synthetic-design source code inspected.'
+  prior_blinding: UNKNOWN
+  prohibited: ['IRR', 'stock-ETF VECM', 'Refraction', 'fund-flow headline fallback', 'uncertain mixed outcome partitions']
+authority_resolution:
+  status: UNKNOWN
+  preferred_document: 'docs/基金转换实验_博士研究计划.md; blueprint explicitly defers to it'
+  exact_current_object: 'Documentary P1 object: stock-by-earnings-event signed CAR horizon curve, primary dose terciles, conversion-holdings high-versus-low exposure gradient, equal-average wave target, separate announcement sessions. A complete executable estimand is not authorized/resolved.'
+  signed_receipts: 'ops/decisions.md:84-101 records July 10 T0/T2a approval and 0.1-SD ambition only. It does not sign current timing contrast.'
+  missing_receipts: 'No V-1/V-2/V-3/V-6 entries located in current ops/decisions.md; plan/blueprint assertions cannot substitute for receipts.'
+  conflicts:
+    - 'Plan section 5 labels continuous primary; sections 6.1.3/16 explicitly prioritize terciles. Preserve latter documentary priority, continuous robustness only; verify missing V-3 receipt.'
+    - 'Plan section 5 primary high-versus-low holdings terciles; blueprint sections 1-2 uses >=0.005 treated tiers versus zero controls.'
+    - 'Plan section 6.4 equal-wave effect target is not implemented by equal total row weight pooled regression.'
+    - 'Plan exposure definition and advanced build use PRE-effective holdings/denominator; blueprint tiers require PRE-announcement holdings.'
+    - 'Plan section 6.3 post-conversion flow/fee controls and post-holdings continuity exclusion conflict with total conversion-package causal target.'
+    - 'Blueprint stock/industry FE shorthand, event-study wave inference and RI main-table remnants conflict with later stack FE and headline multiway WCB instructions.'
+population:
+  status: UNKNOWN
+  documentary_scope: 'Eligible US common stocks held by equity converters; plan 2017Q1-2026Q2 earnings panel and 2021-03 to 2026-11 conversions.'
+  restrictions: 'Future conversions after audit date cannot count as observed support; report truncation and missing follow-up. International-sleeve eligibility receipt missing.'
+  arms:
+    status: PROPOSED
+    value: 'All sponsors, Dimensional-only, excluding economic Dimensional group; unconditional reporting. Adviser proxy is not signed sponsor grouping.'
+  analyst_coverage_target:
+    status: UNKNOWN
+    value: 'Eligible earnings events with comparable measured surprises and quotes; this selected population need not be invariant to conversion.'
+exposure:
+  status: PROPOSED
+  formula: 'D_iw = sum_f shares_held_pre_fi / contemporaneously aligned shares_outstanding_i; ownership fraction, not portfolio weight or value/market-cap ratio.'
+  observed_build: 'Latest holdings as-of before effective; split-adjusted numerator and denominator dated just before effective. Public/as-of anticipation eligibility not established.'
+  scale:
+    status: PROPOSED
+    value: 'For continuous reporting x=D/0.005. One x unit = 0.5 percentage-point ownership. This is a reporting reference, not an authorized threshold.'
+  corporate_action_consistency:
+    status: UNKNOWN
+    value: 'Numerator and denominator must share units and split basis; multiplying raw holdings by CFACSHR alone does not prove economic comparability across dates.'
+  anticipation_clock:
+    status: UNKNOWN
+    value: 'Earliest relevant public announcement/credible anticipation date across all relevant conversions, not focal legal date alone.'
+  public_availability:
+    status: UNKNOWN
+    value: 'Separately decide ex-ante economic holdings versus publicly observable holdings requirement; retain as-of and publication dates. Neither waive nor impose retrospectively.'
+timing:
+  status: PROPOSED
+  source: 'Plan sections 6.3, 7.1; blueprint sections 2,5'
+  event_window: 'Documentary +/-8 quarters around announcement; exact event-date inclusion and maturity rule unresolved.'
+  post:
+    status: UNKNOWN
+    proposed_rule: 'P=0 strictly before anticipation; omit anticipation-to-effective interval; P=1 on/after implementation when ETF trading begins. Resolve effective-versus-first-trade date and date-boundary conventions before use.'
+  transition:
+    status: UNKNOWN
+    conflict: 'Plan omits interval; blueprint drops quarters strictly between dates, retaining possibly mixed endpoint quarters. Use event-level timestamps only after decision.'
+  other_treatments:
+    status: UNKNOWN
+    proposed_rule: 'Clean controls exclude any earlier relevant exposure and any other conversion inside stack horizon, including low positive doses; audit treated-stock earlier/later conversion histories separately. No automatic first-wave recoding.'
+  interference:
+    status: UNKNOWN
+    assumption: 'Conditional exposure mapping sufficient; no residual spillover difference across comparator groups from other funds, peers or overlapping baskets. Baseline ETF ownership must be real ETF ownership, not conv_exp alias.'
+measurement:
+  stock_outcome:
+    status: PROPOSED
+    value: 'Signed CAR_h = R_stock_h - beta_market_i * R_SPY_h; quote midpoint price returns; same start/end on both legs; omit alpha.'
+    source: 'Plan sections 6.1.2, 7.1 and T3 0-0; repeatedly declared frozen, independent owner receipt not located.'
+  market_beta:
+    status: PROPOSED
+    value: 'CRSP stock and SPY daily price returns RETX, [-250,-21]; no vwretd substitution. Minimum usable days and daily regression intercept convention need explicit implementation check.'
+  return_compounding:
+    status: UNKNOWN
+    value: 'Specify simple/log price return and multi-session RTH-only chaining, including +1d. No overnight return in CAR legs.'
+  horizons:
+    status: PROPOSED
+    value: ['5m', '15m', '30m', '60m', 'close', '+1d close']
+    note: 'No seconds endpoints. +2d/+5d secondary endpoint sensitivity only; not replacement primary family.'
+  sessions:
+    status: PROPOSED
+    value: 'Estimate separately: RTH release clock, premarket current opening, aftermarket next trading opening. Non-RTH CAR means post-open adjustment only.'
+  primary_session:
+    status: UNKNOWN
+    reason: 'Plan section 7.1.1 explicitly awaits sealed-design counts and decision; no pooling sessions or power-based retrospective choice.'
+  session_boundaries:
+    status: UNKNOWN
+    value: 'Resolve 09:30/16:00 inclusivity, half-day closes, late RTH horizons crossing close, DST, timestamp uncertainty and valid start-quote convention.'
+  open_gap:
+    status: PROPOSED
+    value: 'Separate signed coefficient family, preceding close to first RTH midpoint; exclude/flag ex-distributions with verified ex-date semantics. Never silently append to CAR.'
+  missingness:
+    status: PROPOSED
+    value: 'Documentary entire-event exclusion for missing intraday quotes; halt/circuit-breaker events separate; use common full horizon mask for primary curve after explicit agreement. Do not confuse live unchanged quote with feed absence.'
+  mask_authorization:
+    status: UNKNOWN
+    value: 'Common-mask support, selection and any coverage transport assumptions remain unverified; no horizon-specific changing population disguised as timing.'
+  winsorization:
+    status: PROPOSED
+    value: 'No inherited Speed denominator/winsorization filter for CAR; |CAR|>50% flags review, not automatic deletion.'
+  sue:
+    status: UNKNOWN
+    value: 'Signed IBES forecast surprise is recommended in D1, which remains open. Consensus estimator, forecast lookback, normalization and minimum analysts not signed. Use one latest eligible pre-release forecast per analyst and common currency/share/accounting basis.'
+  sue_reporting_unit:
+    status: UNKNOWN
+    value: 'Freeze raw SUE or one-SD scale using permitted pre-treatment calibration; no treatment-dependent standardization. No empirical one-SD meaning before calibration.'
+  h3_decomposition:
+    status: UNKNOWN
+    value: 'Systematic/idiosyncratic components are documentary co-primary; exact GNZ equation/scaling not verified. Do not implement placeholder regression or transplant BMZ decomposition without a decision.'
+causal_contract:
+  status: UNKNOWN
+  assumptions:
+    - 'Consistency for conversion package and stable dose/announcement mapping; conversion is selected, not randomized.'
+    - 'For each session/horizon at fixed comparable surprise s and pre-covariates c, counterfactual conversion-absent change in response slope is common across chosen dose/comparator groups.'
+    - 'No conversion-induced surprise measurement/analyst selection difference, or an explicitly standardized common covariate population with overlap and transport assumptions. Otherwise target is conditional association in selected post-treatment SUE.'
+    - 'Counterfactual slope functions correctly modeled or standardized; merely equal mean-return trends is insufficient. Non-rejected slope pretrends are a diagnostic, not proof.'
+    - 'Higher-minus-lower group effects differ from a causal dose increment for the same population. The latter requires slope-level cross-dose transport/strong parallel trends; binning does not remove selection.'
+    - 'No omitted exposure-proportional fund/sponsor shocks or earnings-slope industry/time shocks; within-holdings comparisons remove common additive shocks only.'
+    - 'Pre-existing ETF saturation, Russell membership shocks, overlapping funds and changing earnings composition do not generate unmodeled differential slope changes.'
+  mediators:
+    status: PROPOSED
+    value: 'For total package effect, exclude post-conversion flows, fees, clientele and holdings from primary adjustment/selection. Predetermined covariates or separately defined mediation estimands need their own assumptions.'
+candidate_designs:
+  status: PROPOSED
+  execution: 'DESIGN_ONLY; alternatives may be calculated separately, never selected for favorable power.'
+  A_plan_high_low:
+    population: 'Positive eligible holdings; wave-specific low/mid/high dose bins. No >=0.005 rule inherited.'
+    target: 'Vector of changes in high-versus-low conditional earnings-response slope; mid-versus-low reported.'
+    Z: '[S*P*I(mid), S*P*I(high)] with low reference'
+    primary_coefficient_contrast: '[0,1]'
+  B_blueprint_zero_control:
+    population: 'D>=0.005 treated divided into tiers; D=0 clean controls; 0<D<0.005 omitted, not relabeled untreated.'
+    target: 'Three tier-versus-zero slope changes; high-minus-low is a separate coefficient contrast.'
+    Z: '[S*P*I(low), S*P*I(mid), S*P*I(high)]'
+    high_low_contrast: '[-1,0,1]'
+  C_continuous_robustness:
+    population: 'Must explicitly match chosen risk set; all-positive versus positive-plus-zero variants are distinct.'
+    target: 'Weighted linear projection change of SUE response on dose; not automatically ACRT.'
+    Z: '[S*P*(D/0.005)]'
+  tier_cutpoints:
+    status: UNKNOWN
+    value: 'Treated universe, quantile algorithm, ties, minimum cells and whether cut before earnings coverage selection unresolved. Freeze from exposure metadata, not response/power.'
+nuisance:
+  status: PROPOSED
+  required_per_wave: 'For each dose column d: S, P, d, S*P, S*d, P*d, and intercept, omitting only exactly absorbed redundancies with documented rank. Target S*P*d remains.'
+  fixed_effects: 'stock*wave and wave*industry*calendar-quarter; all nuisance parameters wave-specific for separate-wave aggregation.'
+  source: 'Plan section 6.4 fixes stock*wave; blueprint separate stacks supports wave-specific time FE; additive industry-quarter shorthand needs confirmation.'
+  slope_controls:
+    status: UNKNOWN
+    proposed_extension: 'Include S*stock*wave baseline slope FE and S*wave*industry*calendar-quarter common slope FE, plus predetermined covariate-by-S and time interactions as specified. Additive FE cannot absorb these slope shocks. Compare base and extension as labeled design scenarios; never drop required columns to recover rank.'
+  calendar_controls:
+    status: UNKNOWN
+    value: 'Exact Russell and other predetermined control variables/basis not yet frozen; contemporaneous untreated calendar shocks may need slope interactions.'
+aggregation:
+  status: UNKNOWN
+  documentary_target: 'Equal average conversion-wave effects, within-wave equal event-row weights, retain duplicated stock-event rows across stacks.'
+  correct_implementation_proposal: 'Estimate beta_w separately (or interact all targets/nuisance by wave) and theta_h=sum_w c_prime*beta_wh/W over a frozen estimable-wave set. Covariance must include shared stock/event cross-wave terms.'
+  pooled_weight_counterexample: 'With W_w=I/(W*n_w), A_w=Ztilde_w_prime W_w Ztilde_w. Pooled beta=(sum A_w)^-1 sum A_w beta_w. Scalar weights A_w/sum A_w are information weights, generally not 1/W; vector matrix weights can mix tier effects.'
+  repeated_rows: 'Duplicated stock-event outcomes are the SAME economic shock, not independent replications. Do not add inverse reuse weights unless separately changing estimand.'
+  unidentified_wave: 'Fail/mark NOT_ESTIMABLE; do not silently drop rank-deficient waves or rename survivors the full equal-wave target.'
+timing_contrast:
+  status: UNKNOWN
+  distinction: 'A significant early beta, or beta_h-beta_T alone, cannot distinguish amplitude from timing.'
+  candidate_joint_test:
+    status: PROPOSED
+    definition: 'Let b0_h be the transported counterfactual SUE-response curve of the target population; beta_h the conversion contrast. Fix or jointly estimate f_h=b0_h/b0_T. Test q_h=beta_h-f_h*beta_T (h<T), jointly; amplitude-only beta_h=a*f_h gives q=0.'
+    assumptions: 'Requires identified counterfactual b0 for this exact target/aggregation and amplitude proportionality reference. Different tier baseline shapes need tier-specific amplitude scenarios. Normalization choice is not signed.'
+    pure_timing_rule: 'Nonzero directional q plus equivalence of beta_T within a scientifically chosen terminal margin supports redistribution within observed horizon. Terminal non-rejection is not equivalence. Mixed amplitude/timing effects reported as mixed.'
+    weak_denominator: 'If b0_T is near zero/sign uncertain, normalized completion fails; use joint level contrasts and report no timing fraction. Estimate joint uncertainty of b0 and beta, including covariance; Fieller/test inversion or valid joint bootstrap, not plug-in denominator.'
+    finite_terminal: '+1d close is not fundamental value; post-open terminal is residual response, not total release response.'
+    illustrative_shape: 'Conditional fixture only: f=[.25,.50,.70,.85,.95,1]; g=[.20,.20,.15,.10,.05,0]; beta=a*f+t*g. These numbers are arbitrary synthetic scenarios, not empirical calibration.'
+  effect_margin:
+    status: UNKNOWN
+    value: 'No signed timing/terminal equivalence margin. July 0.1-SD ambition, historical 0.5-SD rule and standalone 10-percentage-point margin do not define this contrast.'
+inference:
+  family:
+    status: SIGNED
+    value: 'Recorded owner approval 2026-08-28: Stata boottest, null imposed, Rademacher, 9999 draws, seed; error clustering sponsor plus stock.'
+    source: 'Plan 15.3.1a and p1/t5_spec/BOOTCLUSTER-DECISION.md explicit owner-instruction record; not executed here.'
+  scientific_validity:
+    status: UNKNOWN
+    value: 'Sponsor-stock clustering need not cover common earnings-date shocks across different sponsors/stocks, or multi-sponsor wave exposure without a partition. Resolve dependency graph and inference after actual design; more listed SEs do not jointly cover it.'
+  economic_sponsors:
+    status: NOT_AVAILABLE
+    value: 'Signed crosswalk and multi-sponsor membership/row assignment rule missing; no trust-label or semicolon-fraction proxy signoff.'
+  bootcluster:
+    status: UNKNOWN
+    value: 'Explicitly deferred. Requires true sponsors, treated sponsors, control-inclusive stock reuse, imbalance/leverage. No outcome coefficient allowed to choose it.'
+  multiplicity:
+    status: PROPOSED
+    value: 'Romano-Wolf horizon family required by plan; freeze tier, session, H3 and gap family boundaries and joint timing/equivalence tests before inference. Preserve cross-horizon resampling draws.'
+  randomization_inference:
+    status: PROPOSED
+    value: 'Sensitivity only unless assignment/exchangeability justified; endogenous date permutation or matched fund substitution is not exact RI by construction.'
+  few_cluster_failure:
+    status: UNKNOWN
+    value: 'Size/coverage must be verified at actual residualized design geometry. No effective-count cutoff or bootstrap invocation establishes validity with dominant/one treated sponsor.'
+compute_contract:
+  status: PROPOSED
+  authorization: 'Approved here as mathematical instructions for conditional diagnostics, not as a signed empirical estimator or scientific GO; independent referee review remains open.'
+  weighted_fwl: 'Q=W^(1/2); Zr=M_(QX0)*QZ; yr=M_(QX0)*Qy; A=Zr_prime*Zr; B=A^-1*Zr_prime*Q; beta_hat=B*y. Sparse/absorbed projections; exact rank audit, no dense NxN projector.'
+  covariance: 'V_hk=B_h*Omega_hk*B_k_prime; contrast theta=L*vec(beta), Var(theta)=L*V*L_prime. In same-mask design B_h=B; cross-wave off-diagonal covariance remains. Unweighted scalar reduces to ztilde_prime*Omega*ztilde/(ztilde_prime*ztilde)^2.'
+  concentration: 'Report A rank/eigenvalues and row leverage; for scalar contrast influence a=B_prime*c, report group sum a_i^2 and group-score/covariance concentration when justified. Multivariate diagnostics must use chosen L; raw dose^2 ESS is not estimator ESS.'
+  direct_fit_check: 'Independent small synthetic fixture comparing full weighted least squares and FWL coefficients/contrasts; separately form B*Omega*B_prime and Monte Carlo variance, including duplicated economic outcomes.'
+  conditional_errors: 'Generate unique-event errors first and replicate same draw across stacks. Add stock serial, sponsor exposure-related slope, shared wave/date heterogeneous slope, and cross-horizon errors. Additive shocks absorbed by X0 contribute no residual variance; do not equate them with slope shocks.'
+  scenario_labels: 'All absent SUE/calendar/control/mask/covariance replacements ASSUMED_SCENARIO and CONDITIONAL. Existing exposure-only cells can anchor geometry but cannot become actual earnings design.'
+  simulation_protocol: 'Fixed seeds/manifests/common draws; null, faster/slower, amplitude-only including unequal baseline curves, mixed effects, dependence and missingness. Full estimator and declared inference. Test size and CI coverage before power; equivalence at zero and near/outside margins.'
+  precision: 'Smoke debug first; final cells start ~2000 replications with binomial Monte Carlo intervals. Predeclare precision/cap and decision threshold; unresolved boundary stays unresolved. No final empirical MDE without data.'
+  reporting: 'Return outcome in bps: 10000*delta_S*theta for tier contrast; continuous x coefficient uses delta_D/0.005 as well. If simulated y is in assumed SD units multiply by explicitly assumed sigma_h first. Detection MDE80/MDE90 and equivalence probabilities must use actual contrast/test, not critical-value multipliers alone.'
+  headline_engine_execution:
+    status: NOT_AVAILABLE
+    value: 'No Stata/boottest estimation executed by this role. Alternative analytic/known-covariance fixtures cannot certify headline procedure.'
+data_availability:
+  actual_earnings_design:
+    status: NOT_AVAILABLE
+    value: 'No joined calendar/SUE/controls/session/horizon masks; exposure support only.'
+  empirical_covariance:
+    status: NOT_AVAILABLE
+    value: 'No safely filtered pre-anticipation or untreated earnings quote outcome panel.'
+  empirical_power:
+    status: NOT_AVAILABLE
+    value: 'NOT_ESTIMABLE; neither pass nor intrinsic precision failure established.'
+  old_power:
+    status: PROPOSED
+    value: 'Retire from feasibility evidence: audit_viability.py design_stats uses x=D/0.005, row weights 1/(W*n_w), raw x^2 denominator and assumed variance shares .30/.25/.20/.25; missing SUE, Post, nuisance residualization and horizon covariance. Valid only for its own simplified synthetic through-origin model.'
+domain_verdicts:
+  authority_estimand: HOLD_DESIGN
+  causal_identification: HOLD_DESIGN
+  outcome_measurement: HOLD_DATA
+  inference: HOLD_DESIGN
+  empirical_power: HOLD_DATA
+  contribution: HOLD_DESIGN
+scientific_signoff:
+  estimator_mathematics: 'PROPOSED; derived by p1_econometrician for independent review'
+  empirical_design: UNKNOWN
+  independent_referee: UNKNOWN
+  overall_verdict: 'Not supplied by this role'

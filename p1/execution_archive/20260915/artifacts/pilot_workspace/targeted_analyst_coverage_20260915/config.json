@@ -1,0 +1,14 @@
+{
+  "source_years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+  "forecast_columns": ["cusip", "fpedats", "analys", "anndats"],
+  "window_days": 90,
+  "window_lower_inclusive": true,
+  "release_date_exclusive": true,
+  "target_waves": ["W002", "W016"],
+  "target_overlap_status": "PROPOSED_CLEAN_TRUE",
+  "target_clock_flag": true,
+  "target_event_sides": ["PRE", "POST"],
+  "source_clock_interpretation": "SOURCE_DISPLAY_CLOCK_ONLY_NOT_ET_OR_RTH",
+  "protected_census_path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/pilot_uncapped_metadata_20260915/corrected_v2/full_run_v2/protected_metadata_paths.csv",
+  "forecast_path_template": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_{year}.parquet"
+}

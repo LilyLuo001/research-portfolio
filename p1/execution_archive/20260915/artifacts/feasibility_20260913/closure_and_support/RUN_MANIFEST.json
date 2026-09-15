@@ -1,0 +1,61 @@
+{
+  "run_id": "20260913-p1-review-closure-and-support-census",
+  "review_status": "VERIFIED_PROPOSAL_DELTA_WITH_CONCRETE_SUPPORT_BLOCKER",
+  "support_measurement_status": "UNKNOWN_PENDING_AUTHORIZED_METADATA_VIEW",
+  "research_status": "HOLD_DESIGN + HOLD_DATA",
+  "repository": {
+    "path": "/Users/lilyluo/research-portfolio-p1-feasibility-20260913",
+    "branch": "task/p1-feasibility-adjudication-20260913",
+    "head": "35361cc5a8c6360e1d48da9a2aa4fd40458b0e04",
+    "commit": false,
+    "push": false,
+    "merge": false
+  },
+  "routing": {
+    "codex_cli": "0.143.0",
+    "multi_agent": "stable true",
+    "coordinator_requested": "retain existing gpt-5.6-sol/medium; actual backend routing NOT_OBSERVED",
+    "metadata_engineer_dispatched": "gpt-5.6-terra/medium; usage NOT_OBSERVED",
+    "independent_delta_referee_dispatched": "gpt-6-astra/high; usage NOT_OBSERVED",
+    "new_agent_configuration_or_authentication": false
+  },
+  "permissions_and_prohibitions": {
+    "local_metadata_exposure_only": true,
+    "sealed_outcomes_opened": false,
+    "remote_or_scc_work": false,
+    "data_purchase": false,
+    "empirical_effect_or_power": false,
+    "raw_input_modification": false
+  },
+  "commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider reconciliation/tests/test_contract_counterexamples.py closure_and_support/tests/test_closure_checks.py",
+      "exit_code": 0,
+      "result": "7 passed"
+    },
+    {
+      "command": "ruby -e require YAML; parse proposed YAML",
+      "exit_code": 0,
+      "result": "valid"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "clean"
+    }
+  ],
+  "artifacts_sha256": {
+    "FINAL_DELTA_REVIEW.md": "9c6eaf7a8e91830294d9d959d30ee9cd4bc7eba4cd62f9eebb00ea1cbd4dbdf5",
+    "SUPPORT_CENSUS.csv": "a8f7f14c2a82903f0a5a09866409105b1a9add110626d367ddaaaa99901866a4",
+    "DEPENDENCE_CENSUS.csv": "3656f22b90fba59baa5e0f222aa5a2af0c04fdef0da7d50aa749388e8ba1d1b1",
+    "MINIMUM_METADATA_REQUEST.md": "32741af09c8e2cccc427c1cc3b486965f270a99f82820a3fd30202323d641abd",
+    "PI_NEXT_DECISION.md": "e6fc7a693a376175f717f0eaa67429e414cce49b5d9d82f555f79b44d11b399a",
+    "reconciled_contract": "00af7d39fd51e9c3c6a9051036f26a68b337f2132848368a729ff8a70d32663f",
+    "timing_counterexamples": "3c81b6df1b785871acae65ecedeb2693a3dbdba395f55852efc4812814d61c35",
+    "counterexample_code": "e90d080293a12743430e9faaadd131368752b3509ad4ad2aa91c390d1661b85b",
+    "counterexample_tests": "26b3b623e96109219841690f07699e8efa9e65b8c8e321d72fc441ff7388e5d6",
+    "closure_check_code": "484ebcf5866e7276420b7200576cd6cf1238f1718f10df52ee267d3247aef96b",
+    "closure_check_tests": "e27642a0493ae784aee9d9a76e48e118cc61a83c2c7867ea41602993319cdb70"
+  },
+  "single_next_action": "Obtain the PI-signed, authorized metadata-only protected census view specified in MINIMUM_METADATA_REQUEST.md; do not open response fields or choose a session/inference method from this request alone."
+}

@@ -1,0 +1,21 @@
+{
+  "status": "SEED_BUILT_AND_METADATA_PROJECTED",
+  "purpose": "EARNINGS_METADATA_RETRIEVAL_SEED_ONLY",
+  "analysis_eligible": "NOT_ASSESSED",
+  "new_clock_completeness": "UNKNOWN",
+  "source_version": "E007_exposure_stock_wave_all.csv",
+  "source_sha256": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+  "lineage_sha256": "c0c0f817068609ff4c20ef4eb21958932d35a785390733d9b5c7993475aaff4a",
+  "filter": "primary_ready parsed as exact string True; exposure_ownership > 0",
+  "row_counts": {
+    "input": 8826,
+    "stock_wave_seed": 8801,
+    "security_seed": 3440
+  },
+  "named_outputs": {
+    "RETRIEVAL_SEED_STOCK_WAVE.csv": "0c5d9175d53e76d746777776c2ff3ee46cc038f7227120eb22e86077a6d05555",
+    "RETRIEVAL_SEED_SECURITIES.csv": "1d60a3cbd5bb4463411f2ca2a7c9469ef8b315517101893c123eb22d6ac46e4e"
+  },
+  "old_free_parquet": "EXCLUDED_FROM_THIS_RETRIEVAL_SEED",
+  "no_cross_version_pooling": true
+}

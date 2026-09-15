@@ -1,0 +1,47 @@
+{
+  "status": "SCC_INPUT_BUILD_COMPLETE",
+  "positions_input": 9458,
+  "mapped_positions": 9342,
+  "ambiguous_positions": 0,
+  "unmatched_positions": 116,
+  "candidate_stock_wave_rows": 4191,
+  "waves": 5,
+  "unique_permnos": 2779,
+  "position_inputs_sha256": "9b078d1615dd0108ba4a23415fa64acbca49465fcc27d06d5a7a9cb3134794cc",
+  "candidate_roster_sha256": "3a50a47383b6479835d30a7be31792cbf0f476f6ce51f5eb16372acfe7ba22f5",
+  "stocknames": {
+    "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/newcrsp_crsp_stocknames_v2_full.parquet",
+    "sha256": "299bb5ba031d1cea2ca3ae6a2876536209e3949fb94234feb7c9b1837cf0f515"
+  },
+  "daily_sources": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2019.parquet",
+      "sha256": "2514c219384b5ddd75bc1e2f224454e26777df5ac9d9d5b7a60cbd63d6fa3605",
+      "selected_rows": 674446
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2020.parquet",
+      "sha256": "38c7a54f6542d03496b78fc490927cabb4d541a52a6183911d0f97070aec6fa2",
+      "selected_rows": 688437
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2021.parquet",
+      "sha256": "1dc96d11cc1f3dd8874768f0e4cc078371d86b1ac49f15d3be4aab812c0296a1",
+      "selected_rows": 678151
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2022.parquet",
+      "sha256": "921ecea098b8dc1ea4ab630933bc60f04aa89854e7f0977d03096da8c3408008",
+      "selected_rows": 648225
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue/crsp_dsf_allcols_2023.parquet",
+      "sha256": "d8baeffadd5e187cf76bd68c0a5b4ba2ebb0b89c65cac2a4eaa04a869d297e24",
+      "selected_rows": 618283
+    }
+  ],
+  "return_fields_read": false,
+  "post_outcomes_read": false,
+  "raw_inputs_modified": false,
+  "formula_status": "BOTH_FACTORS_RETAINED_PROVISIONAL"
+}

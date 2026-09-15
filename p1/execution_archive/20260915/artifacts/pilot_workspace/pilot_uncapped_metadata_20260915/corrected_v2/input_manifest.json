@@ -1,0 +1,81 @@
+{
+  "authority": {
+    "no_auth_change": true,
+    "no_financial_or_response_values": true,
+    "no_git": true,
+    "no_purchase": true,
+    "no_remote_raw_body_export": true,
+    "source": "USER_CONTINUATION_OF_EXISTING_METADATA_ONLY_CENSUS_AUTHORITY"
+  },
+  "candidate_count": 2794,
+  "candidate_keyset_exact_match_pinned_HL_2794": true,
+  "code_hashes": {
+    "prepare_local_inputs.py": "b3db18a1b395c1b03a759df02067d83207e5151b2d0c2c2498ea74c24cad2711",
+    "run_uncapped_census_v2.py": "28897abb6196b36d5b6fbb2b8b3dc4417c6bd861f0f2833335dd9ab15605e41e",
+    "test_census_semantics.py": "655bb275bf056b17dc68533c285fe8978bbc4f61fa1479bce8ef5adfda8cbbb5",
+    "verify_pilot_lineage.py": "92c0df97a65f0d4b4b77d657104e5116c6cd660ed0eea4a6c277d7db799356ba"
+  },
+  "config_sha256": "19aba25f327923de4c7048b241933e2d3edbf5413243285ab14df52b8efd9c79",
+  "date_bounds": {
+    "announcement_date_lower_inclusive": "2019-01-01",
+    "announcement_date_upper_exclusive": "2026-09-01"
+  },
+  "local_input_allowed_columns": {
+    "candidates_v2.csv": [
+      "candidate_id",
+      "wave_id",
+      "permno",
+      "provisional_tier",
+      "announcement_cutoff",
+      "post_20_session_threshold",
+      "threshold_source_status",
+      "previous_v1_representation_status"
+    ],
+    "old_event_keys_v2.csv": [
+      "wave_id",
+      "permno",
+      "provisional_tier",
+      "event_side",
+      "pends",
+      "anndats",
+      "analyst_min2"
+    ],
+    "overlap_flags_v2.csv": [
+      "wave_id",
+      "permno",
+      "provisional_tier",
+      "proposed_overlap_clean"
+    ],
+    "pilot_candidates_20.csv": [
+      "candidate_id",
+      "wave_id",
+      "permno",
+      "provisional_tier",
+      "announcement_cutoff",
+      "post_20_session_threshold",
+      "threshold_source_status",
+      "previous_v1_representation_status"
+    ]
+  },
+  "local_input_hashes": {
+    "candidates_v2.csv": "72a3c02d78458605716a23c2fce07f9a8611cb6dadd3d402c9c3d0babe1f42b3",
+    "old_event_keys_v2.csv": "cd856cea955f1f9b82273c1766352ef99eb59b3de74b55cc831be4b3df3e2350",
+    "overlap_flags_v2.csv": "4c2d233c312bf53feb845b850e33528577698618e872529a22d643bb70c88803",
+    "pilot_candidates_20.csv": "eb128d9657edf894bae05a5129432e61c66e3e1c54a8e3d968f5ab8db11f398e"
+  },
+  "previous_v1_represented": 2592,
+  "previous_v1_unrepresented_unknown": 202,
+  "remote_source_hashes": {
+    "identity_link": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326",
+    "metadata": "97a3c35c1f59013047924b89859df67ff361327a61b7bec0a28bdf3412c562cb"
+  },
+  "source_hashes": {
+    "candidates_original": "64a0bbbeb9d7ca288b4a9438b52adca25a6a0018a5cd1d4acac1020e929f6d6e",
+    "old_analyst_events": "95c720b62390e513742fc85bbb464712c75b98c3e1a5763c43ae1b64f1fd29e3",
+    "overlap_flags": "be9b710a2a2ab3ccf1e84534d6fb96e1885c3522119116d2a29b61c0fa930ba4",
+    "scope_review": "319cef2db5264831abf7de65bd634fb17734ebc0f9383d5c9fa24c45546f1018",
+    "tier_universe": "9f31091f3b7ea9ecbaba39c8c43b64e76713227e361552c9ca6bc52a895fa35e",
+    "v1_representation": "cc7a7f32913f5a0ef72eab30bb69ea714a2c2d882d20b248ebf39ed42b10cf5b"
+  },
+  "status": "CORRECTED_V2_INPUT_MANIFEST"
+}
