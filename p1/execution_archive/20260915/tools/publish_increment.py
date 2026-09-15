@@ -51,6 +51,11 @@ def main():
             if stage == "package_provenance_inventory_20260915" and path.name in {
                 "package_readiness_ledger.csv", "missing_primary_package_evidence.csv",
             }: reason = None
+            if stage == "recovered99_other_wave_provenance_20260915" and path.name in {
+                "matches_by_focal_wave_tier.csv", "matches_by_focal_wave_tier_other_wave.csv",
+                "matched_other_wave_metadata_coverage.csv", "source_version_wave_coverage.csv",
+                "source_wave_to_public_universe_coverage.csv",
+            }: reason = None
             entry = {"source_path": str(path), "relative_path": str(rel), "size_bytes": path.stat().st_size}
             if reason:
                 entries.append({**entry, "status": "EXCLUDED", "reason": reason}); continue

@@ -1,0 +1,63 @@
+{
+  "allowed_exposure_columns": [
+    "permno",
+    "wave_id",
+    "effective_date"
+  ],
+  "allowed_universe_columns": [
+    "wave_id",
+    "effective_date",
+    "adviser",
+    "pre_series_id",
+    "pre_series_name",
+    "post_series_id",
+    "post_series_name",
+    "gate0"
+  ],
+  "exposure_rows": 8826,
+  "exposure_wave_count": 30,
+  "exposure_wave_ids": [
+    "W001",
+    "W002",
+    "W003",
+    "W004",
+    "W006",
+    "W007",
+    "W009",
+    "W011",
+    "W013",
+    "W014",
+    "W016",
+    "W017",
+    "W018",
+    "W021",
+    "W023",
+    "W024",
+    "W025",
+    "W029",
+    "W030",
+    "W032",
+    "W034",
+    "W036",
+    "W037",
+    "W038",
+    "W039",
+    "W040",
+    "W041",
+    "W042",
+    "W044",
+    "W045"
+  ],
+  "financial_or_outcome_values_read": false,
+  "projection_hashes": {
+    "exposure_stock_wave_metadata_projection.csv": "5ef410debe850fb764654c493134b62e26e3a3fc9509d68a335e2da037a47137",
+    "public_fund_series_metadata_projection.csv": "5dc5a5ac025bc2e4561423e901f6d739ffebc52640d85ff890d652eb25fa2b42"
+  },
+  "public_universe_rows": 71,
+  "public_universe_wave_count": 47,
+  "source_hashes": {
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_stock_wave_all.csv": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "/Users/lilyluo/research-portfolio-p1-advanced-readonly/p1/exposure/exposure_universe_gate0_pass.csv": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda"
+  },
+  "status": "METADATA_PROJECTIONS_COMPLETE"
+}

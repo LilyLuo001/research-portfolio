@@ -1,0 +1,32 @@
+{
+  "authority": "USER_AUTHORIZED_SCC_ONLY_EXISTING_METADATA_JOIN",
+  "inputs": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/recovered_candidate_support_20260915/full_run/protected_recovered99_event_sidecar.csv",
+      "sha256": "34dd3531e65e48149eec8641c9f3cb5e8514bb65c80231f15c6118d2d1c5f08a",
+      "verification": "sha256"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/recovered99_other_wave_provenance_20260915/inputs/exposure_stock_wave_metadata_projection.csv",
+      "sha256": "5ef410debe850fb764654c493134b62e26e3a3fc9509d68a335e2da037a47137",
+      "verification": "sha256"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/recovered99_other_wave_provenance_20260915/inputs/public_fund_series_metadata_projection.csv",
+      "sha256": "5dc5a5ac025bc2e4561423e901f6d739ffebc52640d85ff890d652eb25fa2b42",
+      "verification": "sha256"
+    }
+  ],
+  "original_source_hashes": {
+    "exposure_stock_wave_all.csv": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "exposure_universe_gate0_pass.csv": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda"
+  },
+  "permitted_columns": {
+    "exposure_projection": ["permno", "wave_id", "effective_date"],
+    "public_universe_projection": ["wave_id", "effective_date", "adviser", "pre_series_id", "pre_series_name", "post_series_id", "post_series_name", "gate0"],
+    "recovered99_candidate_projection": ["candidate_id", "wave_id", "provisional_tier", "permno"]
+  },
+  "projection_receipt_sha256": "b343a4e6a632a1887f62687f9d893fa24c31754eb8617211a4dea0d2429f9586",
+  "status": "PINNED_OTHER_WAVE_PROVENANCE_MANIFEST",
+  "upstream_recovered_support_full_receipt_sha256": "d6d57c6a5072c344f988606083e991ee5e17be5fe32664b18faade669d2513e1"
+}

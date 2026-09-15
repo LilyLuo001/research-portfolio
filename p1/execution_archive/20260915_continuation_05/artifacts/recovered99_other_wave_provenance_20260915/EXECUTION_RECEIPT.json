@@ -1,0 +1,70 @@
+{
+  "status": "COMPLETE",
+  "authority": "USER_AUTHORIZED_SCC_ONLY_EXISTING_METADATA_JOIN",
+  "requested_routing": "Sol/medium",
+  "backend_telemetry": "NOT_OBSERVED",
+  "units": {
+    "focal_denominator": "stock-wave candidate keys",
+    "match_unit": "unique candidate_id by other_wave_id pairs",
+    "fund_series": "public package metadata aggregated by wave before candidate join"
+  },
+  "counts": {
+    "focal_candidate_denominator": 99,
+    "candidates_with_any_other_wave_match": 24,
+    "candidates_with_no_other_wave_match_in_versioned_source": 75,
+    "candidate_other_wave_pairs": 45,
+    "matched_other_waves": 4,
+    "pairs_by_other_wave": {"W002": 10, "W006": 12, "W016": 11, "W032": 12},
+    "exposure_projection_rows": 8826,
+    "exposure_source_observed_waves": 30,
+    "public_fund_series_rows": 71,
+    "public_universe_observed_waves": 47,
+    "exposure_waves_with_exact_public_universe_effective_date": 30,
+    "exposure_waves_missing_public_universe": 0,
+    "exposure_waves_with_effective_date_conflict": 0,
+    "matched_pairs_missing_public_universe": 0,
+    "matched_pairs_with_effective_date_conflict": 0
+  },
+  "status_semantics": {
+    "no_other_wave_match": "NO_OTHER_WAVE_MATCH_IN_THIS_VERSIONED_EXPOSURE_SOURCE; not evidence of no competing conversion in a complete calendar",
+    "sponsor": "ADVISER_ONLY_NOT_SIGNED_ECONOMIC_SPONSOR",
+    "announcement": "PRIMARY_PUBLIC_ANNOUNCEMENT_BOUND_NOT_ATTACHED_UNKNOWN",
+    "implementation": "EFFECTIVE_DATE_METADATA_ONLY_RULE_CORRECT_IW_UNKNOWN",
+    "competing_conversion": "NOT_ASSESSED_NO_CLEAN_EXCLUDE_INFERENCE"
+  },
+  "clock_boundary_clarification": "No clock rule was applied. Source-supported uncertainty intervals may later classify observations lying wholly outside boundaries; exact seconds are not universally required.",
+  "validation": {
+    "fixture_count": 13,
+    "fixtures_passed": true,
+    "pilot_candidate_denominator": 20,
+    "pilot_required_invariants_passed": true,
+    "full_required_invariants_passed": true,
+    "candidate_denominator_reconciled": true,
+    "candidate_pair_deduplication_reconciled": true,
+    "no_match_sentinels_reconciled_separately": true,
+    "missing_dates_cannot_false_match": true,
+    "missing_adviser_not_labeled_adviser_only": true,
+    "local_identity_membership_rows_exported": false,
+    "financial_outcome_quote_values_read": false
+  },
+  "lineage": {
+    "original_exposure_source_sha256": "905b7faa844a3a415f5b6c42d0e8de4c1fa28060efe16370182ef86df20b7320",
+    "original_public_universe_sha256": "b39ab9a24a9f7f3e7403c104de402ae7c1071af3e360aedcf8c6b4053d6b4bda",
+    "protected_recovered99_input_sha256": "34dd3531e65e48149eec8641c9f3cb5e8514bb65c80231f15c6118d2d1c5f08a",
+    "exposure_metadata_projection_sha256": "5ef410debe850fb764654c493134b62e26e3a3fc9509d68a335e2da037a47137",
+    "public_fund_series_projection_sha256": "5dc5a5ac025bc2e4561423e901f6d739ffebc52640d85ff890d652eb25fa2b42",
+    "code_sha256": "8e6864c442b70bc84a59bda31c979871decf76ec91ab947f1cb7b6efde98c60a",
+    "config_sha256": "877076c408818d93c8e1598ac668e4db152b63488a813a51379936fc62c12396",
+    "manifest_sha256": "0b10518ebc168738f5c5381d2a9a2df7ed6be5882007c885269f65928324bec2",
+    "pilot_receipt_sha256": "638afca48a55c325995bcbcaa380f6d493113a04337eca38b655fb1da12c3210",
+    "gate_sha256": "3ca810375137af58a42bf03bbeaca17d74a4398926cc2397cce825447622b8c0",
+    "full_receipt_sha256": "1ef8013a0cbce49e641c9a0b6d29130cf01e57887c76756548f64a78ed97475b",
+    "source_wave_coverage_receipt_sha256": "484d9462d9a3b23b3462f2c7493d7075635c1156216e4de7ae2f83bbee3d45bf"
+  },
+  "limits": [
+    "The 30-wave exposure source is a versioned observed universe, not a complete conversion calendar",
+    "Effective-date agreement does not establish earliest-public announcement bounds or rule-correct implementation bounds",
+    "Adviser labels are not signed economic sponsor provenance",
+    "No clean/exclude, final sample, clock eligibility, power, or effect conclusion was made"
+  ]
+}

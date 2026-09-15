@@ -12,7 +12,7 @@ Manual: [updated archive manual](execution_archive/20260915/manuals/P1_Refractio
 
 ## Read in this order
 
-0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_04/STATUS.md): the five-package provenance inventory is complete; earliest-public timestamps and final competing-conversion eligibility remain unresolved. Recovered99 support is measured in checkpoint 03 (27 all-clock PRE/POST pairs, 2 nominal-clock pairs, 0 nominal pairs with observed-min2 on both sides), not certified RTH or final eligibility. The exact recovered99 other-wave metadata join is next and NOT_RUN. Recovery is in checkpoint 02; fixed-key comparison and calendar are in checkpoint 01.
+0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_05/STATUS.md): the recovered99 other-wave join is complete: 24 candidates have 45 pairs with other waves; 75 have no match in this 30-wave source version, not a clean-calendar certificate. Public metadata covers 47 waves; reconcile the 17 absent exposure-wave memberships next. Package provenance is in checkpoint 04 and recovered99 earnings support in checkpoint 03. Final competing-conversion eligibility remains unresolved. Supported clock uncertainty intervals are allowed; exact seconds are not universally required.
 1. [Current execution roadmap](execution_archive/20260915/EXECUTION_ROADMAP.md).
 2. [Current status and stage ledger](execution_archive/20260915/STATUS.md).
 3. [Uncapped census decision](execution_archive/20260915/artifacts/pilot_workspace/pilot_uncapped_metadata_20260915/corrected_v2/DECISION.md).
