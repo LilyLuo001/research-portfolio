@@ -12,7 +12,7 @@ Manual: [updated archive manual](execution_archive/20260915/manuals/P1_Refractio
 
 ## Read in this order
 
-0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_07/STATUS.md): the factual package/clock sidecar is complete and hash-gated. It identifies 17 recovered candidates with observed competing-conversion conditions while leaving 82 not-clean/unknown. W021's earlier September 2022 NPORT-P was located, acquired and fieldwise checked; historical mapping and denominator reconstruction are active. Current counts are not final support, rank or power. Prior checkpoints are preserved.
+0. [Latest completed continuation checkpoint](execution_archive/20260915_continuation_08/STATUS.md): strict necessary-support analysis reaches a supported `HOLD_DATA` early stop. W021 now has a valid 39-stock pre-announcement roster and strong H/L PRE/POST analyst support, while W002's only currently proposed-clean high candidate fails the two-analyst gate. The fixed RTH/RTH-60 design remains blocked by uncertified source-clock semantics and incomplete repaired-roster competing-conversion eligibility; quotes, rank and power were therefore not run. Prior checkpoints are preserved.
 1. [Current execution roadmap](execution_archive/20260915/EXECUTION_ROADMAP.md).
 2. [Current status and stage ledger](execution_archive/20260915/STATUS.md).
 3. [Uncapped census decision](execution_archive/20260915/artifacts/pilot_workspace/pilot_uncapped_metadata_20260915/corrected_v2/DECISION.md).

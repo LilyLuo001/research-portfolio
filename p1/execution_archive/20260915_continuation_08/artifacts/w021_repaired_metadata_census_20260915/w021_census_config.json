@@ -1,0 +1,22 @@
+{
+  "config_version": "w021-repaired-metadata-census-20260915-current-v1",
+  "candidate_stock_doses": "/projectnb/econdept/qluo/P1_Refraction_WRDS/w021_preannouncement_exposure_repair_20260915/full_v3/protected/stock_doses.parquet",
+  "announcement_metadata": "/projectnb/econdept/qluo/P1_Refraction_WRDS/p1_roster_earnings_20260913/ibes_metadata_projection_v2/ibes_announcement_metadata.csv",
+  "historical_crsp_ibes_link": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ibes_link_full.parquet",
+  "source_clock_evidence": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/gate1_followup_20260915/identity_clock_receipt.json",
+  "source_clock_audit": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/gate1_followup_20260915/licensed_clock_metadata_audit.csv",
+  "raw_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw",
+  "event_contract": {
+    "wave_id": "W021",
+    "A_date_only": "2022-12-15",
+    "I_verified": "2023-07-28",
+    "pre": "announcement date strictly before A",
+    "transition": "date in [A,I)",
+    "post": "date at or after I",
+    "same_day_A": "UNKNOWN_DATE_ONLY_BOUNDARY"
+  },
+  "allowed_announcement_columns": ["ticker", "cusip", "pends", "pdicity", "anndats", "anntims", "actdats", "acttims", "source_partition"],
+  "allowed_link_columns": ["permno", "ncusip", "sdate", "edate", "score"],
+  "allowed_analyst_columns": ["cusip", "fpedats", "analys", "anndats", "anntims", "measure", "usfirm", "pdicity", "fpi"],
+  "prohibitions": {"financial_values": true, "prices_returns_quotes": true, "purchase": true, "local_protected_rows": true}
+}

@@ -1,0 +1,61 @@
+{
+  "backend_telemetry": "NOT_OBSERVED",
+  "candidate_positions": 39,
+  "class_status_counts": {
+    "US_COMMON_CERTIFIED": 39
+  },
+  "code_sha256": "2005fb255f00410b65dc5b7ac0fa6aa84adda137724a9eee755339eb031c3be8",
+  "columns_read": {
+    "dseshares": [
+      "permno",
+      "shrout",
+      "shrsdt",
+      "shrenddt",
+      "shrflg"
+    ],
+    "excluded": [
+      "prc",
+      "vol",
+      "returns",
+      "financial_values"
+    ],
+    "stocknames": [
+      "permno",
+      "namedt",
+      "nameenddt",
+      "cusip9",
+      "ticker(provenance-only)",
+      "sharetype",
+      "securitytype",
+      "securitysubtype",
+      "usincflg"
+    ]
+  },
+  "config_sha256": "686fe0df106460ed47a888206f10617191a247683dc252e390b650630bf72ee1",
+  "denominator_status_counts": {
+    "ACTIVE_DSESHARES_UNIQUE_POSITIVE": 39
+  },
+  "eligible_stock_doses": 39,
+  "fixture_assertions": 5,
+  "mapping_status_counts": {
+    "MAP_UNIQUE_DATE_VALID_CUSIP9": 39
+  },
+  "no_ticker_match": true,
+  "position_to_stock_duplicates": 0,
+  "q1": 1.9810883140053524e-05,
+  "q2": 7.58001609161396e-05,
+  "row_level_output": "SCC_ONLY",
+  "source_hashes": {
+    "dseshares": "b4f0ccdc0975f8eca0e8319b5de18d854281ec83746691639b8d6cfcb487fcf4",
+    "projection": "9e019cdeb95c3cab9db85ddcb810cee4fcfaab4445dcaa5fd8031f4f3e6a371a",
+    "stocknames": "299bb5ba031d1cea2ca3ae6a2876536209e3949fb94234feb7c9b1837cf0f515",
+    "xml": "cb68bd2cd53956060fd3d27a3224450628ff5e086580b1d992ee172a2f86aa2d"
+  },
+  "status": "PASS",
+  "tier_counts": {
+    "high": 13,
+    "low": 13,
+    "middle": 13
+  },
+  "tier_status": "ESTIMABLE"
+}
