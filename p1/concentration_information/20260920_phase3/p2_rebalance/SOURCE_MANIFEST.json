@@ -1,0 +1,27 @@
+{
+  "package": "P2 Nasdaq-100 special rebalance public/outcome-blind evidence",
+  "accessed_date": "2026-09-20",
+  "scope": {
+    "outcome_blind_only": true,
+    "excluded": ["prices", "returns", "quotes", "earnings", "EPS", "forecasts", "post-event response"],
+    "public_sources_only": true,
+    "scc_access": "not used; no SCC data read"
+  },
+  "scc_public_archive_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/p2_rebalance/public_sources",
+  "sources": [
+    {"id":"S01","title":"The Nasdaq-100 Index Special Rebalance","publisher":"Nasdaq","publication_date":"2023-07-07","url":"https://indexes.nasdaqomx.com/docs/NDX_SpecialRebalance_2023.pdf","scc_archive_file":"nasdaq_special_rebalance_announcement_20230707.pdf","sha256":"3e5d3549fe019b660fd897ef45ebf1a7e858f8bb96fb4f891d632e102bb3a3c7","grade":"A primary","use":"official timeline and no-add/delete statement"},
+    {"id":"S02","title":"The Trade Desk, Inc. to Join the Nasdaq-100 Index Beginning July 17th, 2023","publisher":"Nasdaq","publication_date":"2023-07-12","url":"https://ir.nasdaq.com/node/106501","grade":"A primary","use":"TTD/ATVI replacement and independence from special rebalance"},
+    {"id":"S03","title":"Invesco QQQ Trust, Series 1 prospectus","publisher":"Invesco / SEC EDGAR","publication_date":"2023-01-31","url":"https://www.sec.gov/Archives/edgar/data/1067839/000119312523017732/d365144d485bpos.htm","scc_archive_file":"qqq_485bpos_20230130.html","sha256":"7eeeb296c2d548c14d9d2c5eec88d1863f3a89f7bd909767eebb2820ded85d90","grade":"A contemporaneous issuer/SEC","use":"2023 methodology text and QQQ Portfolio Deposit tracking mechanism"},
+    {"id":"S04","title":"How Nasdaq-100 special rebalance has impacted the big seven tech stocks","publisher":"interactive investor","publication_date":"2023-07-25","url":"https://www.ii.co.uk/analysis-commentary/how-nasdaq-100-special-rebalance-has-impacted-big-seven-tech-stocks-ii528666","grade":"B secondary table attributed to Nasdaq","use":"nine publicly reported old/new security weights; not an original pro-forma file"},
+    {"id":"S05","title":"QQQ Form N-PORT, reporting period 2023-06-30","publisher":"Invesco QQQ Trust / SEC EDGAR","publication_date":"2023-08-29","url":"https://www.sec.gov/Archives/edgar/data/1067839/000175272423198395/xslFormNPORT-P_X01/primary_doc.xml","scc_archive_file":"qqq_nport_20230630.xml","sha256":"8037d5866609ccddf5143368ca8464864b290f2a6fe9cef9150c86e0285cf6fd","grade":"A issuer/SEC","use":"pre-event actual fund holding snapshot"},
+    {"id":"S06","title":"QQQ Form N-PORT, reporting period 2023-09-30","publisher":"Invesco QQQ Trust / SEC EDGAR","publication_date":"2023-11-28","url":"https://www.sec.gov/Archives/edgar/data/1067839/000175272423269960/xslFormNPORT-P_X01/primary_doc.xml","scc_archive_file":"qqq_nport_20230930.xml","sha256":"9116731bbdb459317ed8704a3d47bc8f04073728ce29985cfc828136ea4612b4","grade":"A issuer/SEC","use":"post-event actual fund holding snapshot"},
+    {"id":"S07","title":"Nasdaq 100 Performance Drivers","publisher":"Invesco","publication_date":"2023-07","url":"https://www.invescomutualfund.com/docs/default-source/default-document-library/nasdaq-100-commentary---july-2023.pdf?sfvrsn=d53291c2_0","scc_archive_file":"invesco_nasdaq100_commentary_202307.pdf","sha256":"2295d90f0934e8c6f0776bc9468d0d99b2e6507cfdf487dd7aa169fc14a86ed1","grade":"A issuer commentary","use":"July event description and approximately 12 percent redistribution statement"},
+    {"id":"S08","title":"All About Index Concentration","publisher":"Nasdaq","publication_date":"2024","url":"https://www.nasdaq.com/articles/all-about-index-concentration","grade":"A primary retrospective","use":"retrospective corroboration of largest-six reductions and approximately 12 percent one-way turnover; not used for exact weights"},
+    {"id":"S09","title":"Invesco QQQ Trust annual shareholder report, reporting period 2023-09-30","publisher":"Invesco QQQ Trust / SEC EDGAR","publication_date":"2023-12-28","url":"https://www.sec.gov/Archives/edgar/data/1067839/000119312523304771/d538532dn30b2.htm","scc_archive_file":"qqq_annual_20230930.html","sha256":"929b020e90eda078222337a8bc94faa86611ef29f40b7288f50555114a261d27","grade":"A issuer/SEC audited report","use":"audited post-event schedule-of-investments corroboration; not a July 24 execution record"}
+  ],
+  "known_missing_primary_inputs": [
+    "The actual 2023-07-14 Nasdaq pro-forma constituent/index-share file was not located in a public, reproducible endpoint.",
+    "A Nasdaq-hosted methodology PDF explicitly versioned as in force on 2023-07-03/14 was not located; S03 is a contemporaneous SEC-filed prospectus reproducing the relevant procedure.",
+    "No public QQQ holdings file dated 2023-07-24 or trade blotter was located; SEC N-PORT snapshots are 2023-06-30 and 2023-09-30."
+  ]
+}

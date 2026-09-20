@@ -1,0 +1,17 @@
+{
+  "stage": "P3 event clock",
+  "status": "COMPLETE_ZERO_SCIENTIFICALLY_FROZEN_TWO_CONDITIONAL_TECHNICAL_ANCHORS",
+  "started_and_completed_utc": "2026-09-20T08:55:32.551770+00:00",
+  "script": "build_event_clock.py",
+  "outputs": [
+    "CLOCK_EVIDENCE.csv",
+    "CLOCK_SUMMARY.json",
+    "REPORT.md",
+    "RECEIPT.json"
+  ],
+  "network_reads_this_execution": "SEC submissions metadata JSON only",
+  "imported_prior_public_metadata_findings": "FOLLOWUP dictionary records exactly six pre-specified issuer-page URLs and prior bounded metadata findings; this execution does not refetch issuer pages",
+  "prohibited_data_read": false,
+  "spend_usd": 0,
+  "unresolved": "First-public status is unproven for both technical anchors; four of six provisional events and 30 of 32 total events lack a qualifying interval."
+}

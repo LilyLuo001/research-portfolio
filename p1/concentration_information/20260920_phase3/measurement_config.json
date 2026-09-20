@@ -1,0 +1,31 @@
+{
+  "version": "P1_CONCENTRATION_MEASUREMENT_V1_20260920",
+  "schema": "bbo-1s",
+  "datasets": [
+    "XNAS.ITCH",
+    "BATS.PITCH",
+    "ARCX.PILLAR",
+    "XNYS.PILLAR"
+  ],
+  "dataset_interpretation": "VENUE_SPECIFIC_NOT_SIP_NBBO",
+  "alignment_timestamp": "ts_recv_interval_end_utc",
+  "event_window_minutes": [-15, 75],
+  "baseline_minutes": -5,
+  "post_horizons_minutes": [1, 5, 15, 30, 60],
+  "primary_horizon_minutes": 15,
+  "persistence_horizon_minutes": 60,
+  "midpoint_rule": "(bid_px_00 + ask_px_00) / 2",
+  "validity": {
+    "positive_bid_ask": true,
+    "positive_bid_ask_size": true,
+    "locked_quote": "KEEP_AND_FLAG",
+    "crossed_quote": "INVALID",
+    "no_row": "UNCHANGED_OR_UNKNOWN_NOT_AUTOMATICALLY_MISSING",
+    "future_fill": "PROHIBITED",
+    "session_carry": "PROHIBITED",
+    "arbitrary_staleness_cutoff": "NONE"
+  },
+  "development_event_count": 6,
+  "selection_response_blind": true,
+  "validation_response_sealed": true
+}

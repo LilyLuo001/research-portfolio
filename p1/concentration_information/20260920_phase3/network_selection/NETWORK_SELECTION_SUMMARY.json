@@ -1,0 +1,63 @@
+{
+  "status": "SELECTED20_FROZEN_OUTCOME_BLIND_REPORTED_WEIGHT_NETWORK",
+  "as_of": "2022-12-30",
+  "primary_network": "PURE_D",
+  "sensitivity_network": "INDEX_BD",
+  "network_formula": "sum_f (issuer percent_tna_f/100)*(receiver percent_tna_f/100)",
+  "portfolio_contract": {
+    "PURE_D": "all date-valid recorded ETF classes have index_fund_flag D; leverage-risk name tokens excluded; mapped-stock reported weight is 80%-120%",
+    "INDEX_BD": "all date-valid recorded ETF classes have flag B or D; leverage-risk name tokens excluded; mapped-stock reported weight is 80%-120%",
+    "excluded": "enhanced E, unflagged classes, name-flagged leverage/inverse/short products"
+  },
+  "holding_quality": {
+    "physical_joined_rows": 257412,
+    "duplicate_security_keys": 9,
+    "conflicting_percent_tna_keys_excluded": 0,
+    "negative_percent_rows_excluded": 846,
+    "percent_over_100_rows_excluded": 7,
+    "invalid_company_weights_excluded": 0
+  },
+  "network_variants": {
+    "PURE_D": {
+      "portfolios": 217,
+      "receivers": 490,
+      "issuer_receiver_pairs": 3912
+    },
+    "INDEX_BD": {
+      "portfolios": 737,
+      "receivers": 490,
+      "issuer_receiver_pairs": 3914
+    }
+  },
+  "selection_rule": "Residualize log PURE_D strength on standardized log market cap, standardized December-2022 dollar volume, and same-SIC2-as-any-issuer. Within each industry status, define HIGH at/above the residual 70th percentile and LOW at/below the 30th percentile; greedily select five nonreused nearest-covariate pairs by squared standardized size/liquidity distance, breaking ties by larger residual gap then PERMCO.",
+  "selection": {
+    "receivers": 20,
+    "high": 10,
+    "low": 10,
+    "same_industry": 10,
+    "cross_industry": 10,
+    "size_quintiles_represented": 5,
+    "liquidity_quintiles_represented": 4,
+    "connected_issuer_range": [
+      8,
+      8
+    ]
+  },
+  "privacy": "full scores and licensed identifiers remain on SCC; public config exports 20 historical symbols and design strata only",
+  "outcome_columns_read": [],
+  "sources": {
+    "manifest_sha256": "ce2f23683d69d89fae705363f4dadc0e551f639684c2980210c960753ff3e3bb",
+    "membership_sha256": "d8209314e4334648f0e05036b6ce28b0aa1a927ab21f0c49910e2ae7700b8cbd",
+    "roster_sha256": "d9265cc2b685211233b6520cbbd82b971bcdda3ec776612480bcf33769f752f3",
+    "holdings_parts": 149,
+    "header_parts": 6,
+    "dsf": "raw/crsp_dsf_2022.parquet; price and volume only for PRE liquidity",
+    "names": "raw/crsp_dsenames_full.parquet; date-valid identity and SIC only"
+  },
+  "outputs": {
+    "private_receiver_scores": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_receiver_scores.parquet",
+    "private_pair_scores": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_pair_scores.parquet",
+    "private_selected20": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_selected20.parquet",
+    "public_config": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/SELECTED20_PUBLIC_CONFIG.csv"
+  }
+}

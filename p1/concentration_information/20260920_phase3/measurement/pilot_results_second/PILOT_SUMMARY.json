@@ -1,0 +1,47 @@
+{
+  "adapter_limits": "BBO snapshots are validated from sides/sizes. No halt or withdrawal state is inferred from stringified flags; non-BBOMsg records are a hard error. Session is derived from America/New_York timestamp. No separate status feed was acquired, so carried-state liveness remains unverified.",
+  "events": 2,
+  "git_safe_outputs": [
+    "COVERAGE_SUMMARY.csv",
+    "AGGREGATE_PAIR_SUMMARY.csv",
+    "TRACE_AUDIT.csv",
+    "PILOT_SUMMARY.json"
+  ],
+  "inputs": {
+    "clock_sha256": "267f9b679e9b61245268bf70a1026e1205576ffe611e4adf5cda998bd8e90dec",
+    "download_receipt_sha256": "64155b3730547162589be8fa444d446ad2131d82705fb48e6289bd452b288084",
+    "event_symbols_sha256": "bed9006da916743212d04ac1c8f5166ad69e5d597a33859cfc821475adb9fe96",
+    "proposal_sha256": "c2e3439dc6f54f7d16736021fca90180b348fac04e34fbb5d304423b40995d66",
+    "selected_sha256": "1ed95a1424f47008bb57b01fc7224fe99aa7925182b6ce5392a86c78af911235"
+  },
+  "issuers": 1,
+  "no_claims": [
+    "causal identification",
+    "empirical power",
+    "price-discovery share",
+    "SIP NBBO",
+    "research GO"
+  ],
+  "private_outputs_stay_on_scc": [
+    "PRIVATE_RECEIVER_RESPONSES.csv",
+    "PRIVATE_REFERENCE_RESPONSES.csv",
+    "PRIVATE_PAIR_DIFFERENCES.csv",
+    "PRIVATE_TRACE20.csv"
+  ],
+  "private_trace_observations": 20,
+  "raw_bbo_records": {
+    "P1-2023-08-01|ARCX.PILLAR": 8880,
+    "P1-2023-08-01|XNYS.PILLAR": 1473,
+    "P1-2023-08-03|ARCX.PILLAR": 9531,
+    "P1-2023-08-03|XNYS.PILLAR": 377
+  },
+  "reason": "This diagnostic contains 2 conditional PRE_OPEN technical anchor date(s) from one issuer; first-public status is not certified, live-state status data are absent, and identification/power are not estimable.",
+  "receiver_event_venue_rows": 80,
+  "receivers": 20,
+  "reference_event_venue_rows": 12,
+  "scientific_decision": "HOLD_DATA",
+  "status": "PARTIAL_TECHNICAL_COVERAGE_DIAGNOSTIC",
+  "stream_anomalies": [],
+  "trace_validation_status": "MISSINGNESS_PROVENANCE_ONLY_NOT_20_VALID_ENDPOINTS",
+  "venues": 2
+}

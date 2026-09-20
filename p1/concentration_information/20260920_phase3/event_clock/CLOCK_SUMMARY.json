@@ -1,0 +1,119 @@
+{
+  "scope": "Public issuer identity/date plus SEC submissions metadata and imported prior issuer-page metadata findings; licensed nominal times are not exported; no financial values, forecasts, prices, returns, quotes, call times, or outcomes read/stored.",
+  "input_roster": "2022-12-30 top-8 / 32 2023 release groups preserved; licensed nominal times not exported",
+  "events": 32,
+  "session_counts": {
+    "UNKNOWN_NO_PUBLIC_RELEASE_CLOCK": 30,
+    "PRE_OPEN_FROM_ISSUER_METADATA_TECHNICAL_ANCHOR": 2
+  },
+  "clock_precision_counts": {
+    "SECOND_FOR_SEC_ACCEPTANCE_ONLY": 24,
+    "UNKNOWN": 6,
+    "MINUTE_ISSUER_PAGE_PUBLICATION_CLOCK": 2
+  },
+  "horizon_support_counts": {
+    "1m": {
+      "certified_yes": 0,
+      "conditional_technical_anchor": 0
+    },
+    "5m": {
+      "certified_yes": 0,
+      "conditional_technical_anchor": 2
+    },
+    "15m": {
+      "certified_yes": 0,
+      "conditional_technical_anchor": 2
+    },
+    "60m": {
+      "certified_yes": 0,
+      "conditional_technical_anchor": 2
+    }
+  },
+  "scientifically_freezable_events": 0,
+  "conditional_technical_anchor_events": 2,
+  "reason_no_event_is_frozen": "SEC acceptance is never substituted for release time. Two issuer-page metadata clocks are retained only as technical anchors because first-public status is not independently certified; four of six remain UNKNOWN.",
+  "candidate_pilot_design": "If independent issuer/wire time-stamped releases are later found, prioritize three PRE_OPEN and three AFTER_CLOSE events across winter/summer before looking at any outcomes; this output does not select by response.",
+  "provisional_six_to_recheck_before_freeze": [
+    "P1-2023-08-01",
+    "P1-2023-06-02",
+    "P1-2023-08-03",
+    "P1-2023-01-01",
+    "P1-2023-02-02",
+    "P1-2023-01-03"
+  ],
+  "bounded_followup_result": {
+    "checked": 6,
+    "issuer_page_minute_intervals": 2,
+    "unknown_after_check": 4,
+    "checked_event_ids": [
+      "P1-2023-08-01",
+      "P1-2023-06-02",
+      "P1-2023-08-03",
+      "P1-2023-01-01",
+      "P1-2023-02-02",
+      "P1-2023-01-03"
+    ]
+  },
+  "sec_metadata_receipts": [
+    {
+      "issuer": "Apple Inc.",
+      "cik": "0000320193",
+      "url": "https://data.sec.gov/submissions/CIK0000320193.json",
+      "sha256": "133af3edf1c80d65e3ddc168f87e008ca6808af5f5ea87fcd46c598d2701db00",
+      "retrieved_utc": "2026-09-20T08:55:19.649686+00:00"
+    },
+    {
+      "issuer": "Microsoft Corp.",
+      "cik": "0000789019",
+      "url": "https://data.sec.gov/submissions/CIK0000789019.json",
+      "sha256": "30fc20c27ad0214739d61352574f61be53fa691318ae5d49f3b822728b98834d",
+      "retrieved_utc": "2026-09-20T08:55:21.608367+00:00"
+    },
+    {
+      "issuer": "Alphabet Inc.",
+      "cik": "0001652044",
+      "url": "https://data.sec.gov/submissions/CIK0001652044.json",
+      "sha256": "564de3d6baf499046512b174f47c1191f9e77c0213161de108429cb17ef335dd",
+      "retrieved_utc": "2026-09-20T08:55:23.912792+00:00"
+    },
+    {
+      "issuer": "Amazon.com, Inc.",
+      "cik": "0001018724",
+      "url": "https://data.sec.gov/submissions/CIK0001018724.json",
+      "sha256": "369f945da9f336dec5c9a0cba4e44bcb4ee78646510155e31251ef5919853625",
+      "retrieved_utc": "2026-09-20T08:55:26.998055+00:00"
+    },
+    {
+      "issuer": "Berkshire Hathaway Inc.",
+      "cik": "0001067983",
+      "url": "https://data.sec.gov/submissions/CIK0001067983.json",
+      "sha256": "613cdabc231d0736e7df609fdf63e02ffd17f401616fc5069e337cbe0ea69318",
+      "retrieved_utc": "2026-09-20T08:55:28.126513+00:00"
+    },
+    {
+      "issuer": "UnitedHealth Group Inc.",
+      "cik": "0000731766",
+      "url": "https://data.sec.gov/submissions/CIK0000731766.json",
+      "sha256": "54e23764cce0037c49ded36abb447175bd913000e115b752d6ac660317df4ff5",
+      "retrieved_utc": "2026-09-20T08:55:29.228995+00:00"
+    },
+    {
+      "issuer": "Johnson & Johnson",
+      "cik": "0000200406",
+      "url": "https://data.sec.gov/submissions/CIK0000200406.json",
+      "sha256": "c5a8b2fbbfdad74e0e92fe8e7b37245a86f02142c50479f62ca05610143f9114",
+      "retrieved_utc": "2026-09-20T08:55:31.060530+00:00"
+    },
+    {
+      "issuer": "Exxon Mobil Corp.",
+      "cik": "0000034088",
+      "url": "https://data.sec.gov/submissions/CIK0000034088.json",
+      "sha256": "1dfa1b8975285d658712ce27b1a655ed3c1533e7d25c9742077a57baabe2c8c1",
+      "retrieved_utc": "2026-09-20T08:55:32.547263+00:00"
+    }
+  ],
+  "no_next_open_substitution": true,
+  "no_modified_time_used": true,
+  "no_call_time_used": true,
+  "no_price_inference_used": true
+}

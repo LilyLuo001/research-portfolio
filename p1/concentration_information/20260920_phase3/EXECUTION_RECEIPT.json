@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-20",
+  "status": "PHASE3_EXECUTED_HOLD_DATA",
+  "branch": "task/p1-feasibility-adjudication-20260913",
+  "scope": "New concentration-information direction only",
+  "routing": {
+    "coordinator": "existing coordinator; backend model/effort telemetry NOT_OBSERVED",
+    "p2_public_evidence_engineer_requested": "gpt-5.6-terra/medium",
+    "p3_clock_engineer_requested": "gpt-5.6-terra/medium",
+    "independent_final_referee_requested": "existing p1_final_scientific_referee; backend model/effort telemetry NOT_OBSERVED",
+    "nested_delegation": false
+  },
+  "scc": {
+    "raw_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared",
+    "phase_output_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3",
+    "licensed_raw_exported_to_git": false,
+    "private_scores_exported_to_git": false,
+    "private_response_rows_exported_to_git": false
+  },
+  "network_jobs": [
+    {"job_id": 7653941, "status": "FAILED_STARTUP_MODULE_UNAVAILABLE_NO_DATA_READ"},
+    {"job_id": 7653942, "status": "FAILED_POST_CALCULATION_SUMMARY_QUERY_PARTIAL_OUTPUT_INVALID"},
+    {"job_id": 7653956, "status": "COMPLETE_PRE_BALANCE_REPAIR_NOT_FROZEN"},
+    {"job_id": 7653959, "status": "COMPLETE_FINAL", "exit_status": 0, "wall_seconds": 14, "maxvmem": "2.682G"}
+  ],
+  "databento": {
+    "datasets_downloaded": ["XNAS.ITCH", "BATS.PITCH", "ARCX.PILLAR", "XNYS.PILLAR", "EQUS.MINI"],
+    "native_files": 9,
+    "quoted_total_usd": "0.015124082565",
+    "actual_billing": "RECONCILE_WITH_VENDOR",
+    "decoded_bbo_records": 45891,
+    "api_key_persisted": false,
+    "raw_dbn_in_git": false
+  },
+  "final_counts": {
+    "candidate_events": 32,
+    "scientifically_frozen_intraday_events": 0,
+    "conditional_technical_anchor_events": 2,
+    "qualified_issuers": 1,
+    "qualified_sessions": 1,
+    "selected_receivers": 20,
+    "venue_feeds_with_20_of_20_baseline": 0,
+    "empirical_power_estimated": false,
+    "causal_effect_estimated": false
+  },
+  "decision": "HOLD_DATA",
+  "next_action": "Source-lock three AFTER_CLOSE and one additional PRE_OPEN release clock, and independently certify or replace the two conditional anchors; then rerun the same common-mask diagnostic before any larger quote purchase."
+}

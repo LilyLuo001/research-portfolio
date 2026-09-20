@@ -1,0 +1,51 @@
+{
+  "api_scope": [
+    "symbology.resolve",
+    "metadata.get_cost",
+    "metadata.get_record_count"
+  ],
+  "download_calls": 0,
+  "proposal_sha256": "9bd42a4a50b9c8e36d756a03ce253bd94c40b891a2ad1eba0f95d69160e03cde",
+  "requests": [
+    {
+      "bundle_id": "3e771140b59d588abd71",
+      "dataset": "XNAS.ITCH",
+      "estimated_record_count": 11915,
+      "event_id": "P1-2023-08-01",
+      "quoted_cost_usd": "0.003550946712",
+      "symbol_count": 23,
+      "unresolved_symbols": []
+    },
+    {
+      "bundle_id": "4813a1381403d9d1c15e",
+      "dataset": "BATS.PITCH",
+      "estimated_record_count": 4064,
+      "event_id": "P1-2023-08-01",
+      "quoted_cost_usd": "0.001211166382",
+      "symbol_count": 23,
+      "unresolved_symbols": []
+    },
+    {
+      "bundle_id": "951e711f4f00f69187f1",
+      "dataset": "XNAS.ITCH",
+      "estimated_record_count": 10673,
+      "event_id": "P1-2023-08-03",
+      "quoted_cost_usd": "0.003180801868",
+      "symbol_count": 23,
+      "unresolved_symbols": []
+    },
+    {
+      "bundle_id": "48c74aa54b7d14acdb99",
+      "dataset": "BATS.PITCH",
+      "estimated_record_count": 1511,
+      "event_id": "P1-2023-08-03",
+      "quoted_cost_usd": "0.000450313091",
+      "symbol_count": 23,
+      "unresolved_symbols": []
+    }
+  ],
+  "sdk_version": "0.86.0",
+  "status": "QUOTED_NO_DOWNLOAD",
+  "total_estimated_records": 28163,
+  "total_quoted_cost_usd": "0.008393228053"
+}

@@ -1,0 +1,38 @@
+{
+  "status": "METADATA_ONLY_NO_DBN_OPENED_NO_API_CALL",
+  "eligible_events": 2,
+  "event_ids": [
+    "P1-2023-08-01",
+    "P1-2023-08-03"
+  ],
+  "receiver_symbols_per_event": 20,
+  "symbols_per_event": 23,
+  "datasets": [
+    "XNAS.ITCH",
+    "BATS.PITCH",
+    "ARCX.PILLAR",
+    "XNYS.PILLAR"
+  ],
+  "physical_requests": 184,
+  "coverage_counts": {
+    "MISSING_REQUEST": 180,
+    "EXISTING_FILE_COVERS_INTERVAL": 4
+  },
+  "missing_requests": 180,
+  "first_download_proposal": {
+    "bundled_requests": 4,
+    "datasets": [
+      "XNAS.ITCH",
+      "BATS.PITCH"
+    ],
+    "symbols_per_bundle": 23,
+    "scope": "two clock-qualified events; technical measurement only",
+    "does_not_establish": "power, identification, or research GO"
+  },
+  "inputs": {
+    "clock_sha256": "267f9b679e9b61245268bf70a1026e1205576ffe611e4adf5cda998bd8e90dec",
+    "event_symbols_sha256": "bed9006da916743212d04ac1c8f5166ad69e5d597a33859cfc821475adb9fe96",
+    "manifest_sha256": "d10551cc3abb6145cef241deb4110b2ea0cc0d9bdb638d2a82fcb43db6fba5ac"
+  },
+  "boundaries": "No DBN read; no price/quote values; no Databento API call or purchase"
+}

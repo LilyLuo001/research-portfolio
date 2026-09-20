@@ -1,0 +1,21 @@
+record_id,evidence_type,subject,as_of_or_effective_date,old_weight_pct,new_weight_pct,public_source_id,evidence_grade,claim_supported,limitation
+TL01,timeline,NDX special rebalance,2023-07-03,,,S01,A,Reference date for pricing and TSO,Does not supply constituent weights
+TL02,timeline,NDX special rebalance,2023-07-14,,,S01,A,Index-share announcement and pro-forma-file release scheduled,Original pro-forma file not located publicly in this run
+TL03,timeline,NDX special rebalance,2023-07-24,,,S01,A,Effective before market open,No transaction-level implementation evidence
+TL04,timeline,TTD replaces ATVI,2023-07-17,,,S02,A,TTD entered and ATVI exited before market open,Independent of the July 24 special rebalance
+R01,rule,NDX quarterly/special weight procedure,2023-01-31,,,S03,A,Contemporaneous QQQ SEC prospectus describes 20% Stage-1 issuer cap and 48%/40% Stage-2 test,Prospectus reproduces methodology; original dated Nasdaq methodology PDF was not recovered
+R02,rule,NDX special rebalance,2023-07-07,,,S01,A,Nasdaq says special rebalance may address concentration and does not add or remove securities,Must be read with independent July 17 TTD/ATVI replacement
+W01,weight,Apple,2023-07-24,12.2,11.6,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W02,weight,Microsoft,2023-07-24,12.8,9.8,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W03,weight,Amazon,2023-07-24,6.7,5.1,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W04,weight,Nvidia,2023-07-24,7.2,4.2,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W05,weight,Meta Platforms,2023-07-24,4.3,3.5,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W06,weight,Tesla,2023-07-24,4.2,3.2,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W07,weight,Broadcom,2023-07-24,2.5,3.1,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W08,weight,Alphabet Class A,2023-07-24,3.7,2.7,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+W09,weight,Alphabet Class C,2023-07-24,3.6,2.7,S04,B,Public table attributes old/new weights to Nasdaq,Old-weight observation date is not stated in table; not original July 14 file
+F01,fund,Invesco QQQ Trust tracking mechanism,2023-01-31,,,S03,A,Trust holds all NDX stocks and adjusts Portfolio Deposit to conform to index identity and relative weights,Mechanism disclosure is not a trade blotter
+F02,fund,Invesco QQQ Trust reported ATVI holding,2023-06-30,0.440386,,S05,A,SEC N-PORT records 10529573 ATVI shares and 0.440386151446 percent of net assets,Pre-event quarter-end only; cannot identify July 17 execution time
+F03,fund,Invesco QQQ Trust reported TTD holding,2023-09-30,,0.302176,S06,A,SEC N-PORT records 7627965 TTD shares and 0.302175764966 percent of net assets,Post-event quarter-end is 68 days after July 24; cannot prove July 24 trade timing
+F04,fund,Invesco NDX commentary,2023-07-24,,,S07,A,Issuer commentary says seven companies were reduced and approximately 12 percent was redistributed to remaining 93,Commentary is NDX-level and does not disclose QQQ day-specific trades
+F05,fund,QQQ reported holdings roster,2023-06-30 to 2023-09-30,,,S05;S06,A,Both SEC N-PORT filings contain 101 named investment records and show ATVI before versus TTD after,Two snapshots support realized membership implementation but not intraday execution or exact July 24 holdings

@@ -1,0 +1,12 @@
+{
+  "phase": "P2 institutional branch",
+  "run_date": "2026-09-20",
+  "scope": "Public, outcome-blind evidence on the 2023 Nasdaq-100 special rebalance and QQQ implementation support.",
+  "outcome_blind_only": true,
+  "inputs": ["9 public source records in SOURCE_MANIFEST.json"],
+  "outputs": ["SOURCE_MANIFEST.json", "P2_SUPPORT_TABLE.csv", "REPORT.md", "verify_p2.py"],
+  "actions_not_taken": ["No SCC data read", "No price/return/quote/EPS/forecast/outcome data read", "No paid data purchased", "No credential or certification changes", "No git commit or push"],
+  "counts": {"source_records": 9, "local_archived_source_files": 0, "scc_archived_source_files": 6, "support_rows": 20, "timeline_rows": 4, "rule_rows": 2, "weight_rows": 9, "fund_rows": 5, "primary_or_issuer_sec_sources": 8, "secondary_weight_source_records": 1},
+  "validation": "python3 verify_p2.py",
+  "status": "completed_with_primary_file_gaps"
+}

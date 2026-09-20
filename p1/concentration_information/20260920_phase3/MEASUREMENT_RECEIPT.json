@@ -1,0 +1,80 @@
+{
+  "actual_billing": "RECONCILE_WITH_VENDOR",
+  "artifact_sha256": {
+    "COMPOSITE_COVERAGE_DIAGNOSTIC.md": "f343b631bf20f0c5e96762e7f22008cfce148ea8b3ee66bbe5af2c57bf5aca6f",
+    "DIAGNOSTIC_RULE_AMENDMENT.md": "386f1504579183b5b5b232d94e614bb41435c88afc442adac826eccc48195909",
+    "MEASUREMENT_CONTRACT.md": "f47691e1c322c06fbb6fe0dcb5d8ca53e6d7f29fa547d134c1182c45ebdf5689",
+    "event_clock/CLOCK_EVIDENCE.csv": "267f9b679e9b61245268bf70a1026e1205576ffe611e4adf5cda998bd8e90dec",
+    "event_clock/CLOCK_SUMMARY.json": "28113f670e14184dbf3371a7b4ef6a5e1a83da81676533f674d74ac6bacab16c",
+    "event_clock/build_event_clock.py": "480196748be09afea191ae107d6ef2b39570688eb97c809c9329bfb04d9a76b9",
+    "measurement/EVENT_SYMBOLS_PUBLIC.csv": "bed9006da916743212d04ac1c8f5166ad69e5d597a33859cfc821475adb9fe96",
+    "measurement/build_event_symbols.py": "5564268c2e1801211a2501d9e9a7707b2a5ac34078b110b29804670e11244bf3",
+    "measurement/build_quote_gap.py": "9d6a71bdc8ea5ffbd1cd98a6cbb82bf942cd3e756ae50e1e9c540b30602befb6",
+    "measurement/measure_technical_pilot.py": "33f3514f811e73fa4736a0c7c2a46522322a160efdd5d74e9f4f951082bf03cf",
+    "measurement/pilot_results/AGGREGATE_PAIR_SUMMARY.csv": "83abbc0d4fc0a4b49ecf93c5bb01cb4b4ad63f735ed1e08ae248482c10b80a72",
+    "measurement/pilot_results/COVERAGE_SUMMARY.csv": "47f66008f64111da9def5947f4e186a96c21faf1eaada7c8eab470d46ebd22d3",
+    "measurement/pilot_results/TRACE_AUDIT.csv": "0f652ab80ce2f907a5e4002ee1381b83a398fa02ddc348c7de881defab742cbc",
+    "measurement/pilot_results_second/AGGREGATE_PAIR_SUMMARY.csv": "822abcd1c733c748b8718190607d5532dcaf2e018abcae418b07dcbd09c53f3b",
+    "measurement/pilot_results_second/COVERAGE_SUMMARY.csv": "606ab265a8e1d94fae6775b412e5492845106caba9a90a955ab2bba98482b4c0",
+    "measurement/pilot_results_second/TRACE_AUDIT.csv": "1434d065f25b735d21a3102aeea3fb8bb516c15dad1f347854b26911ff404b22",
+    "measurement/pilot_results_third/AGGREGATE_PAIR_SUMMARY.csv": "ce469809a4ffbf888a28c2e9708ae8cb00a71b516b8e293b8cd014ff657c8f1d",
+    "measurement/pilot_results_third/COVERAGE_SUMMARY.csv": "93f8f4e49f38e80641286933317e3df58b43c256e67499b48edd11fda7983c55",
+    "measurement/pilot_results_third/TRACE_AUDIT.csv": "40f9033b3c6de8c4f28ba9de295faca78c5c84e39422287445b3822c50ca5e3f",
+    "measurement/quote_state.py": "a25fab03cf009fe54f526f2c6a19d560dc44335f685897f2e99eb201a8e6871e",
+    "measurement/run_first_download.py": "a2b1ad2a5d2f3002ab3d4d1a6b93b38acac92fdf3ef6020e499acdb76d05421a",
+    "measurement/test_quote_state.py": "ff2560b50baeb424b7c3804d04a101d023a8893a369559e61caef0984616d2d7",
+    "measurement_config.json": "6e81261ca0d69692a136a23388dd6b64c75053441eab3a3ad874895599306c33",
+    "network_selection/NETWORK_SELECTION_SUMMARY.json": "7aeb9611ec28d6df6a24ae01666674a7ee845c309c2f4a0fdc49eb463d6e6efd",
+    "network_selection/SELECTED20_PUBLIC_CONFIG.csv": "1ed95a1424f47008bb57b01fc7224fe99aa7925182b6ce5392a86c78af911235",
+    "network_selection/SELECTION_SUPPORT_AUDIT.json": "7437d319d666ad13e058f298f98ae4634e5663173b6a3de9ce02e58321987924"
+  },
+  "licensed_nominal_time_export": false,
+  "p2_validator": "PASS",
+  "proposal_receipt_chains": [
+    {
+      "download_receipt": "measurement/DOWNLOAD_RECEIPT.json",
+      "download_receipt_sha256": "032dc648a44382be85fcd47e77e9bed31c085dc4e9a1e8f256fc3717c266d8ea",
+      "pilot_summary": "measurement/pilot_results/PILOT_SUMMARY.json",
+      "pilot_summary_sha256": "84d664afdaefc2b5e347e1a3c265163baf2a1e87ce0e49377b4f3cfba035c0de",
+      "proposal": "measurement/results/FIRST_DOWNLOAD_PROPOSAL.csv",
+      "proposal_sha256": "9bd42a4a50b9c8e36d756a03ce253bd94c40b891a2ad1eba0f95d69160e03cde",
+      "quote_receipt": "measurement/QUOTE_RECEIPT.json",
+      "quote_receipt_sha256": "b16b540882a6a222624ab169df409b0f1b063c88f3c881bdb8db84d04faa1cd6"
+    },
+    {
+      "download_receipt": "measurement/SECOND_DOWNLOAD_RECEIPT.json",
+      "download_receipt_sha256": "64155b3730547162589be8fa444d446ad2131d82705fb48e6289bd452b288084",
+      "pilot_summary": "measurement/pilot_results_second/PILOT_SUMMARY.json",
+      "pilot_summary_sha256": "32f701a8082e2cea1647570da7fdb9eeeb87d8ddc2ea5f69927d8c4165c6fb7f",
+      "proposal": "measurement/results/SECOND_DOWNLOAD_PROPOSAL.csv",
+      "proposal_sha256": "c2e3439dc6f54f7d16736021fca90180b348fac04e34fbb5d304423b40995d66",
+      "quote_receipt": "measurement/SECOND_QUOTE_RECEIPT.json",
+      "quote_receipt_sha256": "20af0ad4eddf4f354634231d91aede351329faa45e499578d23f243bab52fac7"
+    },
+    {
+      "download_receipt": "measurement/THIRD_DOWNLOAD_RECEIPT.json",
+      "download_receipt_sha256": "e2383ad55248a5426b8001fc1698563b4cfb7ff3197b7360e5b0541568dbb69a",
+      "pilot_summary": "measurement/pilot_results_third/PILOT_SUMMARY.json",
+      "pilot_summary_sha256": "b64813ece8c7812c163ce0b8dc36dad1985f81156765ac5d7cf385c9e6b40da1",
+      "proposal": "measurement/results/THIRD_LATE_ONLY_PROPOSAL.csv",
+      "proposal_sha256": "3f81325e320c5461478ad91c90dea5b095ee175dbac16ebc786471018b077510",
+      "quote_receipt": "measurement/THIRD_LATE_QUOTE_RECEIPT.json",
+      "quote_receipt_sha256": "b0147aa7420e5e726628baa016020d08467b653afe5bc687c5ec750442519ad8"
+    }
+  ],
+  "quote_state_synthetic_fixtures": "PASS_8",
+  "quoted_total_usd": "0.015124082565",
+  "row_level_trace_export": false,
+  "scientific_gate": "NOT_PASSED",
+  "secret_scan": "PASS_NO_KNOWN_PREFIX",
+  "status": "VERIFIED_DIAGNOSTIC_PACKET_HOLD_DATA",
+  "unpassed_requirements": [
+    "scientifically certified first-public clocks",
+    "six-event cross-session development pilot",
+    "20-of-20 common quote mask",
+    "live-state halt/gap validation",
+    "twenty valid raw endpoint reconstructions",
+    "event-level independence and empirical power",
+    "authoritative Nasdaq treatment vector"
+  ]
+}

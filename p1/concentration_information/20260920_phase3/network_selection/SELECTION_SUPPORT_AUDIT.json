@@ -1,0 +1,24 @@
+{
+  "status": "PASS_SELECTION_HAS_CONTINUOUS_WEIGHT_VARIATION",
+  "primary_receiver_count": 490,
+  "primary_distinct_raw_strengths": 490,
+  "connected_issuer_range": [
+    2,
+    8
+  ],
+  "variant_overlap_receivers": 490,
+  "pure_d_vs_index_bd_spearman": 0.9534331884016212,
+  "pure_d_vs_index_bd_log_score_correlation": 0.9558228701928777,
+  "matched_pairs": 10,
+  "index_bd_preserves_high_above_low_pairs": 10,
+  "balance_smd": {
+    "log_company_market_cap": 0.011902943014648549,
+    "log_pre_avg_daily_dollar_volume": 0.005812083615768523
+  },
+  "interpretation": "Identity support was nearly ubiquitous, but reported-weight strength is continuous. This validates exposure ranking and a balanced technical sample; it does not establish causal treatment or dollar exposure.",
+  "input_sha256": {
+    "private_receiver_scores": "f414e9830ec46c0bc89804467ac79ce979a34275d5a487204740e80e834df583",
+    "private_selected20": "ab2f49244c1483ae9736d882d28a5527bf3dc7d708793fad5006e74c5ae67c32"
+  },
+  "outcome_columns_read": []
+}
