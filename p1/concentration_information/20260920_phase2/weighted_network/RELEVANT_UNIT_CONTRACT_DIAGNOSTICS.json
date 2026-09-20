@@ -1,0 +1,51 @@
+{
+  "available_class_sum_diagnostic": {
+    "eligible_rows": 0,
+    "label": "NOT a portfolio TNA or documented complete-class sum",
+    "within_1pct_unscaled": 0
+  },
+  "decision": "percent_tna supports numerical holding weight; dollar weighted L remains pending documented TNA units/denominator and allocation",
+  "documented_contract": {
+    "market_val": "Security market value as of report_dt",
+    "percent_tna": "Security percentage of total net assets (reported percent weight)",
+    "tna_latest": "Latest month-end TNA; mirror metadata has no portfolio-to-fund-class allocation or TNA-unit statement"
+  },
+  "holdings": {
+    "market_val_null_rows": 0,
+    "percent_tna_gt_100_rows": 0,
+    "percent_tna_null_rows": 0,
+    "positive_market_and_percent_rows": 777,
+    "rows": 991
+  },
+  "mapping_and_tna_coverage": {
+    "all_date_valid_fund_ids": 3,
+    "asset_date_equals_report_date": 0,
+    "conflicting_tna_fund_ids": 0,
+    "portfolio_dates_with_multiple_valid_fund_ids": 0,
+    "portfolio_dates_with_no_same_date_tna": 3,
+    "same_date_available_fund_ids": 0,
+    "tna_latest_date_equals_report_date": 0
+  },
+  "selected_issuer_security_count": 19,
+  "selected_portfolio_report_dates": 3,
+  "selected_receiver_security_count": 635,
+  "selection_rule": "ETF_ONLY_RECORDED_CLASSES; >=100 distinct frozen top500 securities (the top8 are a subset); sort crsp_portno,report_dt; first 3",
+  "source_manifest": {
+    "fund_summary": "raw/crsp_fund_summary2_2022.parquet",
+    "header_parts": 6,
+    "holding_part_sha256": {
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0002/part_00001.parquet": "ea036438e4ebeef3367e504ae4aca5284b08a826789802de4ee66f595a71c0a5",
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0005/part_00001.parquet": "7ccdaaaddda1613fa46e5db8e059cf7e7ed4cf3cbff29d097145dab2014b96aa",
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0005/part_00002.parquet": "2a22006e5be2aabb6153a209460b9aec0892110e6248bd9410311b41b485f20b"
+    },
+    "holding_parts": [
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0002/part_00001.parquet",
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0005/part_00001.parquet",
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0005/part_00002.parquet"
+    ],
+    "membership": "derived/p1_concentration_information/20260920/network/results/economic_date_only_membership.parquet",
+    "top500": "derived/p1_concentration_information/20260920/roster/private_top500_common_shareclasses.parquet",
+    "top8": "derived/p1_concentration_information/20260920/roster/private_top8_permno_permco.parquet"
+  },
+  "status": "TARGET_RELEVANT_DIAGNOSTIC_ONLY_NO_WEIGHTED_L"
+}

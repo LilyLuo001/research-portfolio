@@ -1,0 +1,18 @@
+{
+  "scope": "P0 safe quote metadata inventory",
+  "created": "2026-09-20",
+  "api_calls_or_purchases_in_this_run": false,
+  "raw_dbn_read": false,
+  "quote_or_return_values_read": false,
+  "planned_manifest": {"events": 852, "core_physical_requests": 4648, "date_min": "2019-01-29", "date_max": "2024-12-11", "status": "PLANNED_NOT_DOWNLOADED_RECEIPT"},
+  "download_receipt": {"manifest_rows": 5544, "downloaded_native_dbn_on_scc": 3787, "transferred_to_scc": 1154, "verified_on_scc": 600, "uncertain_or_partial": 3, "status": "COMPLETE_WITH_EXPLICIT_GAPS"},
+  "catalog": {"datasets": ["XNAS.ITCH", "ARCX.PILLAR", "BATS.PITCH", "XNYS.PILLAR"], "primary_schema": "bbo-1s", "available_from": "2018-05-01T00:00:00Z", "status": "METADATA_ONLY"},
+  "physical_paths": "NOT_EXPORTED_IN_RECEIPT",
+  "2023_roster_overlap": "NOT_OBSERVED_PENDING_SCC_ROSTER_WORKER",
+  "luna_low_telemetry": "NOT_OBSERVED",
+  "source_receipts": [
+    "p1/execution_archive/20260915/artifacts/pilot_workspace/missing_data_round_20260914/databento_final_acquisition/manifest_receipt.json",
+    "p1/execution_archive/20260915/artifacts/pilot_workspace/missing_data_round_20260914/databento_final_acquisition/scc_direct_receipt.json",
+    "p1/execution_archive/20260915/artifacts/pilot_workspace/delivery/QUOTE_RECEIPT.json"
+  ]
+}

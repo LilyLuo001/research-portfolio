@@ -1,0 +1,60 @@
+{
+  "date_valid_class_mapping": {
+    "by_class_count": {
+      "5": 2
+    },
+    "multi_class": 2,
+    "no_mapping": 0
+  },
+  "decision": "NO_GLOBAL_WEIGHTED_L_INFERENCE_FROM_NONREPRESENTATIVE_NEGATIVE_CONTROL",
+  "holdings": {
+    "market_value_null_rows": 0,
+    "percent_tna_gt_100_rows": 0,
+    "percent_tna_le_1_rows": 493,
+    "percent_tna_null_rows": 0,
+    "portfolio_report_dates": 2,
+    "positive_market_and_percent_rows": 519,
+    "rows": 527
+  },
+  "ratio_diagnostic": {
+    "class_tna_within_1pct_of_implied": 0,
+    "class_tna_within_1pct_of_implied_x1000": 0,
+    "eligible_rows": 259,
+    "formula": "implied_denominator = market_val / (percent_tna / 100); only mathematical check, not a documented unit inference",
+    "multi_class_tna_range_over_1pct": 259
+  },
+  "same_report_date_summary_match": {
+    "asset_date_not_report_date": 263,
+    "multi_summary_class": 263,
+    "no_summary": 264,
+    "one_summary_class": 0,
+    "positive_tna_available": 263,
+    "same_date_tna_range_disagreement": 263,
+    "tna_date_not_report_date": 0
+  },
+  "scope": {
+    "holdings_partition": "raw/rescue_remaining/crsp_holdings_etf_2022_b0001/part_00001.parquet",
+    "outcome_fields_read": [],
+    "report_date_window": "2022-09-01..2022-12-30"
+  },
+  "source_manifest": {
+    "fund_header_parts": [
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00004.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00001.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00003.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00002.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00006.parquet",
+      "raw/rescue_remaining/crsp_fund_hdr_hist_full_max/part_00005.parquet"
+    ],
+    "fund_summary": "raw/crsp_fund_summary2_2022.parquet",
+    "holdings": [
+      "raw/rescue_remaining/crsp_holdings_etf_2022_b0001/part_00001.parquet"
+    ],
+    "sha256": {
+      "fund_summary": "6dccba61486cdfb954a9c2b45d30320e0cba5e692e9a2f654278136b73d5f502",
+      "header_paths": "3cf504dcd726986d143178f26cb6801595dbf2b90af2629a5d2d4b1a1118bc96",
+      "holdings": "9ce8680b0cf57abbbd53750d9aca56aa1b257909cbc57010fcca1c6fc195c3be"
+    }
+  },
+  "status": "B0001_NEGATIVE_CONTROL_NOT_TARGET_REPRESENTATIVE"
+}

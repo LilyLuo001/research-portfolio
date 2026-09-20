@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-20",
+  "status": "ROSTER_CALENDAR_IDENTITY_SUPPORT_AND_MANIFEST_OVERLAP_EXECUTED",
+  "scientific_status": "NO_EFFECT_POWER_OR_CAUSAL_GO_CLAIM",
+  "scope": "New concentration direction P0/P1 metadata, not the old conversion run",
+  "scc_output_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920",
+  "routing": {
+    "roster_requested": "gpt-5.6-terra/medium",
+    "quote_inventory_requested": "gpt-5.6-luna/low",
+    "spawn_interfaces_accepted": true,
+    "backend_model_effort_telemetry": "NOT_OBSERVED",
+    "independent_astra_review": "NOT_RUN_NOT_YET_SCIENTIFIC_REVIEW_STAGE",
+    "nested_delegation": false
+  },
+  "network_jobs": [
+    {"job_id": 7653869, "result": "FAILED_AT_MODULE_INITIALIZATION_NO_VALID_RESULTS"},
+    {"job_id": 7653871, "result": "FAILED_AT_SQL_TYPE_BINDING_NO_VALID_RESULTS"},
+    {"job_id": 7653883, "result": "COMPLETE", "failed": 0, "exit_status": 0, "compute_host": "scc-ei3.scc.bu.edu", "wall_seconds": 6, "maxvmem": "2.272G"}
+  ],
+  "local_code_sha256": {
+    "roster/build_roster.py": "fc686fa1de1998749b0c25417014d701fc7e2a79f7e36104d0d6c47a58937747",
+    "roster/build_manifest_overlap_census.py": "0690188ae13375fd90077d34e85242f0deed0537e2fd4186686a369645c3333f",
+    "network/build_network_support.py": "50f7357a8aca3379facae3a0d1816ff2d33be1a7c2762dff3244feb452d9eb57",
+    "network/join_roster_support.py": "696f6cba91aa33629ab299d69b15cce7d4d52ec72dbf9febf18e06820aa05087"
+  },
+  "validation": {
+    "synthetic_identity_date_fixture": "PASS",
+    "local_python_syntax": "PASS",
+    "aggregate_json_and_denominators": "PASS",
+    "credential_prefix_check": "PASS",
+    "weighted_exposure_invariants": "NOT_RUN",
+    "earliest_public_clock": "UNKNOWN",
+    "body_quote_validity": "NOT_ASSESSED"
+  },
+  "databento_api_calls": 0,
+  "databento_spend_usd": 0,
+  "wrds_access": false,
+  "raw_input_modification": false,
+  "licensed_row_export_to_local": false,
+  "eps_forecast_quote_return_values_read": false,
+  "pre2023_market_cap_ingredients_read_on_scc": true,
+  "old_conversion_seal_changed": false,
+  "commit_push_merge": false,
+  "next_action": "Validate public announcement clocks and same-date weighted holdings inputs; select the receiver pilot under the frozen rule, then price only the exact missing quote intervals."
+}

@@ -1,0 +1,37 @@
+{
+  "input_groups": 32,
+  "session_counts": {
+    "AFTER_CLOSE": 16,
+    "WEEKEND_CLOSED": 4,
+    "PRE_OPEN": 12
+  },
+  "transition_counts": [
+    {
+      "old": "AFTER_CLOSE_COARSE",
+      "new": "AFTER_CLOSE",
+      "n": 16
+    },
+    {
+      "old": "PRE_OPEN_COARSE",
+      "new": "WEEKEND_CLOSED",
+      "n": 4
+    },
+    {
+      "old": "PRE_OPEN_COARSE",
+      "new": "PRE_OPEN",
+      "n": 12
+    }
+  ],
+  "source_clock_precision_pass": false,
+  "source_clock_shift_applied": false,
+  "next_open_substitution": false,
+  "calendar_source": "https://ir.theice.com/press/news-details/2022/NYSE-Group-Announces-2023-2024-and-2025-Holiday-and-Early-Closings-Calendar/default.aspx",
+  "calendar_sha256": "1338e20afc98f723086b37916c1fda014a67500cda83e3b17270172df5db94a9",
+  "code_sha256": "82aeb765b307afc7cc5154929e318557415d12a0eefdd143d6bad1cb8b1eb8c0",
+  "input_path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920/roster/private_2023_top8_earnings_release_group_candidates.parquet",
+  "input_sha256": "d6dc10e2c2415892fea723fa22d1827b55dd91fd515496dab7a01a08c7f4b768",
+  "closed_event_handling": "Retain in population; exclude from same-time equity-quote pilot, not relabeled next open",
+  "tests": "PASS: weekend, holiday, early close, open boundary, winter/summer UTC offsets",
+  "raw_outcome_values_read": false,
+  "row_level_output": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase2/clock/results/private_calendar_classification.parquet"
+}

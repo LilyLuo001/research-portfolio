@@ -1,0 +1,69 @@
+{
+  "run_scope": "2022-12-30 PRE issuer ranking and 2023 I/B/E/S EPS announcement metadata only; no returns, quotes, EPS values, or forecasts read",
+  "source_provenance": {
+    "ranking": {
+      "files": [
+        "raw/crsp_dsf_2022.parquet",
+        "raw/crsp_dsenames_full.parquet"
+      ],
+      "unit": "security trading-date; aggregated to PERMCO issuer",
+      "date": "2022-12-30",
+      "market_cap_formula": "abs(prc) * shrout * 1000; CRSP shrout is thousands",
+      "common_stock_rule": "active CRSP name history SHRCd in {10,11} at ranking date"
+    },
+    "calendar": {
+      "files": [
+        "raw/ibes_actuals_eps_2023.parquet",
+        "raw/crsp_ibes_link_full.parquet",
+        "raw/crsp_dsenames_full.parquet"
+      ],
+      "unit": "I/B/E/S actuals source row; release-group candidate is an issuer/date/time tuple, preserving annual/quarterly source-record flags; it is not definitive earliest public-release evidence",
+      "mapping": "I/B/E/S ticker joins only to historical CRSP-I/B/E/S link effective at anndats, then historical CRSP PERMNO-PERMCO name interval effective at anndats",
+      "economic_date": "anndats (source announcement date)",
+      "available_date": "not observed separately; anntims follows the archived W021 nominal Eastern/DST convention, while timestamp precision and earliest-public-release status remain UNKNOWN",
+      "physical_partition_audit": "meta/ibes_actuals_eps_2023.sql.txt filters anndats >= 2023-01-01 and < 2024-01-01, usfirm=1, upper(measure)=EPS; this is an anndats partition, not a pends partition"
+    }
+  },
+  "actual_counts": {
+    "crsp_rows_at_rank_date_before_common_filter": 9501,
+    "active_common_security_rows_used": 4295,
+    "active_common_permco_ranked": 4253,
+    "receiver_pool_permcos_top500": 500,
+    "receiver_pool_common_shareclass_rows": 519,
+    "top8_permcos": 8,
+    "top8_common_shareclass_rows": 10,
+    "overlapping_active_name_permnos_excluded": 0,
+    "identical_active_name_rows_deduplicated": 0,
+    "duplicate_dsf_permno_permco_date_keys_excluded": 0,
+    "invalid_or_nonpositive_market_cap_rows_excluded": 2,
+    "ibes_2023_actual_rows_with_valid_anndats": 28468,
+    "ibes_joined_rows_effective_link_and_permco_history": 24105,
+    "ibes_source_rows_with_zero_valid_historical_mapping": 4363,
+    "ibes_source_rows_with_one_valid_historical_permno_mapping": 24105,
+    "ibes_source_rows_with_multiple_valid_historical_permno_mappings": 0,
+    "top8_mapped_joined_rows": 50,
+    "top8_mapped_distinct_source_rows": 50,
+    "top8_distinct_source_metadata_tuples": 40,
+    "top8_release_group_candidates_issuer_date_time": 32,
+    "top8_quarterly_source_metadata_tuples": 32,
+    "top8_annual_source_metadata_tuples": 8,
+    "top8_source_rows_with_multiple_permno_links": 0,
+    "all_2023_source_rows_with_multiple_valid_permno_alternatives": 0,
+    "all_2023_source_rows_with_multiple_valid_permco_alternatives": 0,
+    "top8_release_group_candidates_with_missing_anntims": 0
+  },
+  "scc_private_output_paths": [
+    "private_top500_permco_marketcap.parquet",
+    "private_top500_common_shareclasses.parquet",
+    "private_top8_permco_marketcap.parquet",
+    "private_top8_permno_permco.parquet",
+    "private_2023_top8_ibes_mapped_source_rows.parquet",
+    "private_2023_top8_earnings_source_metadata_tuples.parquet",
+    "private_2023_top8_earnings_release_group_candidates.parquet"
+  ],
+  "unknowns_not_zero": [
+    "I/B/E/S anntims follows the accepted nominal Eastern/DST convention, but its precision and whether it is the earliest public release timestamp remain UNKNOWN",
+    "external IR evidence and release-time precision",
+    "any event-source-row ambiguity not resolved by the historical link"
+  ]
+}

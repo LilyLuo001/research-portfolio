@@ -1,0 +1,34 @@
+{
+  "stage": "PRE2023_IDENTITY_COHOLDING_SUPPORT",
+  "weighted_L": "NOT_RUN",
+  "roster_source": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920/roster/private_top500_common_shareclasses.parquet",
+  "code_sha256": "696f6cba91aa33629ab299d69b15cce7d4d52ec72dbf9febf18e06820aa05087",
+  "population": "top8 issuers to top500 receiver companies excluding same issuer",
+  "cohorts": {
+    "economic_date_only": {
+      "companies_held": 498,
+      "issuers_held": 8,
+      "observed_pairs_any_class": 3976,
+      "observed_pairs_by_recorded_class": {
+        "ETF_ONLY_RECORDED_CLASSES": 3976,
+        "MIXED_RECORDED_CLASSES": 3976,
+        "NO_ETF_RECORDED_CLASS": 694,
+        "UNKNOWN_HEADER": 3968
+      },
+      "candidate_pairs_not_observed_are": "UNKNOWN_FULL_UNIVERSE_EXPOSURE_NOT_ZERO"
+    },
+    "vendor_observed_by_cutoff": {
+      "companies_held": 498,
+      "issuers_held": 8,
+      "observed_pairs_any_class": 3976,
+      "observed_pairs_by_recorded_class": {
+        "ETF_ONLY_RECORDED_CLASSES": 3976,
+        "MIXED_RECORDED_CLASSES": 3976,
+        "UNKNOWN_HEADER": 3968,
+        "NO_ETF_RECORDED_CLASS": 108
+      },
+      "candidate_pairs_not_observed_are": "UNKNOWN_FULL_UNIVERSE_EXPOSURE_NOT_ZERO"
+    }
+  },
+  "candidate_pair_denominator": 3992
+}

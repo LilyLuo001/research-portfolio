@@ -1,0 +1,82 @@
+{
+  "scope": "outcome-blind Databento manifest metadata census; no DBN, price, quote, return, EPS-value, or forecast data read",
+  "manifest": {
+    "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/control/download_manifest.csv",
+    "symbol_syntax": "semicolon-delimited explicit symbols",
+    "body_validity": "UNKNOWN; manifest completion status is not treated as payload validation"
+  },
+  "candidate_clock": {
+    "convention": "anntims interpreted under accepted nominal America/New_York ET/DST convention",
+    "window": "[-15,+75] minutes",
+    "earliest_public_release": "UNKNOWN"
+  },
+  "session": {
+    "method": "coarse nominal clock buckets only; no archived verified 2023 trading calendar located",
+    "certified": false,
+    "counts": {
+      "AFTER_CLOSE_COARSE": 16,
+      "PRE_OPEN_COARSE": 16
+    }
+  },
+  "actual_counts": {
+    "release_group_candidates": 32,
+    "historical_security_symbol_candidate_rows": 50,
+    "release_groups_with_multiple_permno_candidates": 8,
+    "release_groups_with_multiple_historical_symbol_candidates": 4,
+    "release_groups_with_any_manifest_symbol_match": 8,
+    "manifest_venues_with_any_match": 4
+  },
+  "venue_summary": [
+    {
+      "venue": "ARCX",
+      "release_groups_with_symbol_match": 8,
+      "security_symbol_candidates_with_match": 8,
+      "release_groups_date_intersection": 4,
+      "positive_interval_union_candidates": 4,
+      "total_interval_union_seconds": 21600.0
+    },
+    {
+      "venue": "BATS",
+      "release_groups_with_symbol_match": 8,
+      "security_symbol_candidates_with_match": 8,
+      "release_groups_date_intersection": 4,
+      "positive_interval_union_candidates": 4,
+      "total_interval_union_seconds": 21600.0
+    },
+    {
+      "venue": "XNAS",
+      "release_groups_with_symbol_match": 8,
+      "security_symbol_candidates_with_match": 8,
+      "release_groups_date_intersection": 4,
+      "positive_interval_union_candidates": 4,
+      "total_interval_union_seconds": 21600.0
+    },
+    {
+      "venue": "XNYS",
+      "release_groups_with_symbol_match": 8,
+      "security_symbol_candidates_with_match": 8,
+      "release_groups_date_intersection": 4,
+      "positive_interval_union_candidates": 4,
+      "total_interval_union_seconds": 21600.0
+    }
+  ],
+  "comparators": [
+    {
+      "comparator": "SPY",
+      "release_groups_with_historical_identity": 32,
+      "release_groups_with_manifest_symbol_match": 32,
+      "venue_count_with_manifest_symbol_match": 4
+    },
+    {
+      "comparator": "QQQ",
+      "release_groups_with_historical_identity": 32,
+      "release_groups_with_manifest_symbol_match": 0,
+      "venue_count_with_manifest_symbol_match": 0
+    }
+  ],
+  "scc_private_output_paths": [
+    "private_2023_top8_release_security_historical_symbol_candidates.parquet",
+    "private_2023_top8_manifest_overlap_by_venue.parquet",
+    "private_2023_comparator_identity_manifest_summary.parquet"
+  ]
+}
