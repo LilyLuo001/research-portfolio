@@ -1,0 +1,1071 @@
+{
+  "status": "METADATA_ONLY_NOT_DECODED",
+  "physical_manifest": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/control/download_manifest.csv",
+  "physical_manifest_sha256": "d10551cc3abb6145cef241deb4110b2ea0cc0d9bdb638d2a82fcb43db6fba5ac",
+  "physical_rows": 5544,
+  "contract_sha256": "e5d120000de850c8ac0f1abc0e724875c086ba8142238e85747bcd7b23ebad91",
+  "locator_code_sha256": "ab60f43d0f65ad4e2f12fa34df09ad7e82b4910c132df99b3765c5e33b796734",
+  "files": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_00928.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "physical_manifest",
+      "job_id": "COREJOB_00928",
+      "expected_sha256": "5212b72acb071297ed342cae5fbc8a3c70332bac6e9604fbc86562543a3b1d24",
+      "candidate_variants": [
+        "AAPL_FEB_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1599332,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675328400000000000,
+      "header_end_ns": 1675386000000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-02-02",
+            "end_date": "2023-02-03",
+            "symbol": "9876"
+          },
+          {
+            "start_date": "2023-02-03",
+            "end_date": "2023-02-04",
+            "symbol": "9867"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_FEB_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "5212b72acb071297ed342cae5fbc8a3c70332bac6e9604fbc86562543a3b1d24",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/pre_development/COREJOB_01002.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "physical_manifest",
+      "job_id": "COREJOB_01002",
+      "expected_sha256": "cf7e920051ebb9ad1572c1ac9caccba2801ea8de12ae5856b72ffbba4f3276fe",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 1145247,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682409600000000000,
+      "header_end_ns": 1682467200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "9687"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "cf7e920051ebb9ad1572c1ac9caccba2801ea8de12ae5856b72ffbba4f3276fe",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_01004.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "physical_manifest",
+      "job_id": "COREJOB_01004",
+      "expected_sha256": "e68c78dfe81d7051db73b41dabed446075258df47f4517156ae3933a5c65256b",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 61440,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682451600000000000,
+      "header_end_ns": 1682453400000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "9687"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "e68c78dfe81d7051db73b41dabed446075258df47f4517156ae3933a5c65256b",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_01080.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "physical_manifest",
+      "job_id": "COREJOB_01080",
+      "expected_sha256": "e05e61adc2198a2891eb18bc789893d6fbba0b14072d624d68e3d25067978ce4",
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1559499,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690531200000000000,
+      "header_end_ns": 1690588800000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "9514"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "e05e61adc2198a2891eb18bc789893d6fbba0b14072d624d68e3d25067978ce4",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_01088.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "physical_manifest",
+      "job_id": "COREJOB_01088",
+      "expected_sha256": "24d6600bb1adebf1984ed5e6b0b34b7fd38e4daae171e04def3ba32affb804df",
+      "candidate_variants": [
+        "AAPL_AUG_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1338892,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1691049600000000000,
+      "header_end_ns": 1691107200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-08-03",
+            "end_date": "2023-08-04",
+            "symbol": "9513"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_AUG_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "24d6600bb1adebf1984ed5e6b0b34b7fd38e4daae171e04def3ba32affb804df",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_02780.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_02780",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "AAPL_FEB_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1501346,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675328400000000000,
+      "header_end_ns": 1675386000000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-02-02",
+            "end_date": "2023-02-04",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_FEB_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "ace8f65361fae6ad1b019f0be4fb7a845fedc9e0b299e0b437542c7d0214eaae",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_02782.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_02782",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "AAPL_FEB_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1349729,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675328400000000000,
+      "header_end_ns": 1675386000000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-02-02",
+            "end_date": "2023-02-04",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_FEB_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "03157315378521e3ad97f085ccb663983c3313cae8a49d047f336c29c3659362",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_02784.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_02784",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "AAPL_FEB_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1059481,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675328400000000000,
+      "header_end_ns": 1675386000000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-02-02",
+            "end_date": "2023-02-04",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_FEB_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "03926e512dde96719175d9f5e87cea4c81d686a1a8a38c6f35200e2eb11c8c9e",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/pre_development/ALTJOB_03004.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03004",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 1109030,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682409600000000000,
+      "header_end_ns": 1682467200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "bd4269cbce4543c1cdb8d19f7baaf966d2d7b5291423da0e635cd2dfce9ab847",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03006.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03006",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 59269,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682451600000000000,
+      "header_end_ns": 1682453400000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "35453144552c4d9ca14790c64a866c81f7a893a6b9db01ef0b1f2553acbfae55",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/pre_development/ALTJOB_03007.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03007",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 960812,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682409600000000000,
+      "header_end_ns": 1682467200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "2f94e9e840a66b2d5336c933c5c8f1d5a0f2f0c184b164ccb622c8c5551b5b69",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03009.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03009",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 58137,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682451600000000000,
+      "header_end_ns": 1682453400000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "4da491af3938dfcfae8a1d1e46ed30db486f997aaee79c9810672a2786771aa3",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/pre_development/ALTJOB_03010.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03010",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 681292,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682409600000000000,
+      "header_end_ns": 1682467200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "716d362252d3747f77236568eeec6ab869e8ffb0aa2aa8dd7bfe97df72f37a84",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03012.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03012",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "MSFT_APR_NOTICE_ONLY"
+      ],
+      "exists": true,
+      "bytes": 36111,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1682451600000000000,
+      "header_end_ns": 1682453400000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-04-25",
+            "end_date": "2023-04-26",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "MSFT_APR_NOTICE_ONLY",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "7631acf9f61a1220b521383dfd28652d6cafe5276fec62183fd12307ea4dd8ba",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03238.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03238",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1333356,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690531200000000000,
+      "header_end_ns": 1690588800000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "da24d5f1748b9bcb46694437b08cc6ccf11546eb89286bdb818bdd30f914d7ae",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03240.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03240",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1199329,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690531200000000000,
+      "header_end_ns": 1690588800000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "cad76deeaf420123b9e8c099d1751f9c06f4468c50adb66a298559319b22cc79",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03242.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03242",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1032410,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690531200000000000,
+      "header_end_ns": 1690588800000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "1aa6deba0f01859cbeb79fb1907b5aa41cbf549ed92d963699db9eaf2bc043dd",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03262.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03262",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "AAPL_AUG_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1292052,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1691049600000000000,
+      "header_end_ns": 1691107200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-08-03",
+            "end_date": "2023-08-04",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_AUG_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "b089c62a67073955c2a7667644adcdef6de631ec5354c6e4018364e4b6a5507f",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03264.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03264",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "AAPL_AUG_WIRE"
+      ],
+      "exists": true,
+      "bytes": 1086789,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1691049600000000000,
+      "header_end_ns": 1691107200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-08-03",
+            "end_date": "2023-08-04",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_AUG_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "9ee1fbdca69229fc263f67ecd3e202c3e44c513ee561603271977ad2211b96cb",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03266.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "physical_manifest",
+      "job_id": "ALTJOB_03266",
+      "expected_sha256": "",
+      "candidate_variants": [
+        "AAPL_AUG_WIRE"
+      ],
+      "exists": true,
+      "bytes": 906288,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1691049600000000000,
+      "header_end_ns": 1691107200000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-08-03",
+            "end_date": "2023-08-04",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "AAPL_AUG_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "38643d2facea02a731e1b86c6d7fc7fd4db427b529948e8abdd40d00d371be07",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/3e771140b59d588abd71.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JAN_ISSUER_WIRE"
+      ],
+      "exists": true,
+      "bytes": 216189,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675163700000000000,
+      "header_end_ns": 1675169159000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "9880"
+          }
+        ],
+        "QQQ": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "8687"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JAN_ISSUER_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "1e8beff7dda8716c5cc62ffe9f95f04a76e4c47bd4ab252e705f5f2b2e707080",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/4813a1381403d9d1c15e.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JAN_ISSUER_WIRE"
+      ],
+      "exists": true,
+      "bytes": 80152,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675163700000000000,
+      "header_end_ns": 1675169159000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "15144"
+          }
+        ],
+        "QQQ": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "13340"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JAN_ISSUER_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "0d7f9b45dbf97d0f00e76d4ee928c2cc3b1464c4684a651fa6f2e56a1a9d6bcd",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/0960f2ea732a055227d0.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JAN_ISSUER_WIRE"
+      ],
+      "exists": true,
+      "bytes": 189151,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675163700000000000,
+      "header_end_ns": 1675169159000000000,
+      "target_mappings": {
+        "QQQ": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "13340"
+          }
+        ],
+        "SPY": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JAN_ISSUER_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "2a4087bb0dde47564f30aa2c8bb8e4b48d6e3203b55e593e3a73b729eeaf7439",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/c44a02dd5fbacdfcb1f2.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JAN_ISSUER_WIRE"
+      ],
+      "exists": true,
+      "bytes": 26032,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1675163700000000000,
+      "header_end_ns": 1675169159000000000,
+      "target_mappings": {
+        "QQQ": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "13340"
+          }
+        ],
+        "SPY": [
+          {
+            "start_date": "2023-01-31",
+            "end_date": "2023-02-01",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JAN_ISSUER_WIRE",
+          "full_requested_window": true
+        }
+      ],
+      "sha256": "30542c1576e0abf8c76487d9a97233515c15ae0d3dc1285af6ed97c3e2c313fe",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/951e711f4f00f69187f1.dbn.zst",
+      "dataset": "XNAS.ITCH",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 185860,
+      "header_dataset": "XNAS.ITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690537500000000000,
+      "header_end_ns": 1690542959000000000,
+      "target_mappings": {
+        "QQQ": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "8389"
+          }
+        ],
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "9514"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "254654a387dd46798266ca782da9a25ef6620e689a0332eb7114d790f9bab2e6",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/48c74aa54b7d14acdb99.dbn.zst",
+      "dataset": "BATS.PITCH",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 26245,
+      "header_dataset": "BATS.PITCH",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690537500000000000,
+      "header_end_ns": 1690542959000000000,
+      "target_mappings": {
+        "QQQ": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "13340"
+          }
+        ],
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "8cd51ade93abf0385fb9a2ab63000c949fe7c63a01a13f28d003cc602b957cd8",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/ddfffe94fb838815f703.dbn.zst",
+      "dataset": "ARCX.PILLAR",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 187923,
+      "header_dataset": "ARCX.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690537500000000000,
+      "header_end_ns": 1690542959000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ],
+        "QQQ": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "13340"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "98c5ad99dbb6d9bac1c4b108dd8fd2d6d6bdd803aef690b7715b6bc86ebb5a9d",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/0b84fb997b78f60c8050.dbn.zst",
+      "dataset": "XNYS.PILLAR",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 7568,
+      "header_dataset": "XNYS.PILLAR",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690537500000000000,
+      "header_end_ns": 1690542959000000000,
+      "target_mappings": {
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ],
+        "QQQ": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "13340"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "300ff4d58781846f04ed553df7535d685a3c964752c122ca922f6bc067f4ce7f",
+      "status": "HEADER_ONLY_CHECKED"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_third/ecbe25d45ab3ebe5d87f.dbn.zst",
+      "dataset": "EQUS.MINI",
+      "source": "legacy_nine_manifest",
+      "job_id": null,
+      "candidate_variants": [
+        "XOM_JUL_ISSUER",
+        "XOM_JUL_WIRE"
+      ],
+      "exists": true,
+      "bytes": 4875,
+      "header_dataset": "EQUS.MINI",
+      "header_schema": "bbo-1s",
+      "header_start_ns": 1690537500000000000,
+      "header_end_ns": 1690542959000000000,
+      "target_mappings": {
+        "QQQ": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "13340"
+          }
+        ],
+        "SPY": [
+          {
+            "start_date": "2023-07-28",
+            "end_date": "2023-07-29",
+            "symbol": "15144"
+          }
+        ]
+      },
+      "intervals": [
+        {
+          "variant": "XOM_JUL_ISSUER",
+          "full_requested_window": true
+        },
+        {
+          "variant": "XOM_JUL_WIRE",
+          "full_requested_window": false
+        }
+      ],
+      "sha256": "ec7547d7937ab0b247f1bc63cccff62b6c5a8cc961a56c1af21c274e3cbefea4",
+      "status": "HEADER_ONLY_CHECKED"
+    }
+  ]
+}

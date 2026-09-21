@@ -1,0 +1,7 @@
+# Quote-support diagnostic semantics
+
+The official [Databento schema documentation](https://databento.com/docs/knowledge-base), opened on 2026-09-21, distinguishes BBO interval timestamps from last-trade timestamps. In `bbo-1s`, `ts_recv` is the interval-end clock; `ts_event` describes the last trade, and may be undefined without a trade. A quiet second need not produce a row. A trade-only interval can carry the previous BBO forward. Therefore missing rows, old last-trade times and unchanged quotes are not interchangeable with missing/invalid quotes.
+
+The frozen diagnostic must use `ts_recv`, preserve publisher/venue scope, inspect the latest observed state rather than search backwards for a favorable valid state, and avoid certifying continuous live coverage from sampled rows alone. Quote sizes/prices may be evaluated inside the SCC custodian routine solely to emit specified eligibility booleans; no levels, midpoints, returns or response values may leave it. Full body validity, tradability and synchronized basket support are distinct from this limited diagnostic.
+
+The current SPY/QQQ issuer product pages identify daily holdings resources, but this turn has not established access to archived 2023 daily files. Current holdings and current fund values must not be backfilled into historical analysis. No inference is made that Databento quotations also supply historical fund positions or I/B/E/S vintages.

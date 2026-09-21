@@ -4,6 +4,7 @@
 
 ## 最新状态（2026-09-21）
 
+- **最新执行：[系统性 pilot 支持阶段](20260921_systematic_pilot/README.md)**：已取得绑定正确 32 事件名单的 SCC 持仓汇总、六公告时钟证据、独立数值修复检验和 29 个已有报价文件的实际端点诊断。[科学决定](20260921_systematic_pilot/DECISION.md)仍为 HOLD_DATA + HOLD_MEASUREMENT，不是假设通过或失败、功效通过或研究 GO。旧名单误绑定汇总已作废，接手者以新目录机器生成 receipt 为准。
 - **最新续作：[六公告来源定位与组间比值区间](20260921_ratio_continuation/README.md)**：SCC 连接正常但既有记录未给出所需历史源位置；新增联合区域保守投影的提案代码，不等于真实数据推断或研究 GO。此目录保存实际执行与独立审查记录。
 - **本轮执行：[新闻—ETF—真实篮子 readiness](20260921_news_basket_readiness/README.md)**。已运行元数据回执再计数和合成方法实现；不是新经验结果。最终状态与下一行动见[决定](20260921_news_basket_readiness/DECISION.md)，独立复核见该目录报告。
 - **先读：[新方向始末与接手说明](20260921_price_discovery_method/RESEARCH_HANDOFF.md)**。当前为 `HOLD_CONTRIBUTION_AND_EMPIRICAL_VALIDATION`，不是实证通过。

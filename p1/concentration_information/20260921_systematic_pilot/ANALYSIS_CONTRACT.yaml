@@ -1,0 +1,83 @@
+version: systematic_pilot_v1
+status: SPECIFIED_BUT_NOT_EMPIRICALLY_RELEASED
+base_commit: 355b038
+question: Does aggregate ETF-versus-actual-basket news-response leadership conceal differences across company news sources beyond mechanical composition?
+claim_scope: descriptive_measurement_not_causal_transmission_or_information_production
+population:
+  technical_probe: six_existing_2023_announcements
+  inventory: existing_32_2023_release_groups_not_automatically_analysis_sample
+  etfs: [SPY, QQQ]
+  expansion: one_outcome_blind_expansion_only_if_named_source_support_and_scientific_need_are_documented_before_responses
+  groups: prior_quarter_end_actual_fund_top5_issuers_versus_remaining_issuers
+  public_availability_and_economic_dates_separate: true
+  long_tail_generalization_from_eight_large_issuers: prohibited
+clock:
+  target: earliest_evidenced_public_release_interval
+  metadata_only_or_wire_repost: not_automatically_first_public
+  conflicting_timestamps: retain_all_do_not_choose_using_prices
+  five_minute_primary: requires_operationally_justified_release_interval_and_timing_sensitivity_no_result_selected_anchor
+  uncertainty_sensitivity: both_interval_endpoints_and_all_predeclared_plausible_anchors
+  sessions: separate_premarket_regular_afterhours_never_pool
+  primary_session: NOT_FROZEN_PENDING_OUTCOME_BLIND_SUPPORT
+  precision_note: printed_seconds_do_not_establish_actual_second_precision
+basket:
+  definition: frozen_preannouncement_actual_per_etf_share_positions_plus_cash_and_documented_actions
+  report_snapshot: not_event_date_actual_without_intervening_change_evidence
+  public_after_event_snapshot: not_pre_event_available
+  missing_components: no_renormalization_disguised_as_full_basket
+  proxy_output: diagnostic_only_separately_labeled_not_primary
+news:
+  signal: historically_available_consensus_and_release_actual_in_matched_period_currency_split_and_measure_units
+  status: NOT_VERIFIED
+  price_derived_signal: prohibited
+  incidental_public_financial_snippets_and_current_fund_page_values: not_used_to_define_signal_sample_or_hypothesis
+measurement:
+  paired_venues: ETF_and_actual_basket
+  sides: [bid, ask, mid]
+  primary_side: mid_with_bid_ask_concordance_diagnostics
+  horizons_clock_minutes: [1, 5, 15, 30, 60]
+  primary_horizon_clock_minutes: 5
+  terminal_reference_clock_minutes: 60
+  return_anchor: latest_certain_valid_quote_before_earliest_release_bound
+  fresh_unchanged_live_quote: valid_if_feed_state_proves_no_cancel_halt_or_gap
+  feed_scope: document_actual_quote_venues_never_relabel_single_venue_as_NBBO
+  endpoint_and_missingness_policy: NOT_FROZEN_PENDING_FEED_SEMANTICS
+estimand:
+  raw_N: standardized_slope_ETF_5min_minus_basket_5min
+  terminal_k: mean_of_standardized_ETF_and_basket_60min_slopes
+  group_D: N_divided_by_k_with_weak_denominator_sets_retained
+  primary_contrast: D_TOP_minus_D_REST
+  standardization_F_star: NOT_FROZEN_PENDING_OVERLAP_OF_PRE_EVENT_WEIGHT_AND_LIQUIDITY_AND_NEWS_QUALITY
+  interpretation: ratio_of_average_news_responses_not_average_company_speed
+  concentration_state_effect: NOT_AUTHORIZED_AS_IDENTIFIED_FROM_ONE_GROUP_COMPARISON
+  composition_check: compare_capital_weighted_and_fixed_source_composition_on_same_supported_population
+inference:
+  alpha: 0.05
+  main_test_family: one_primary_contrast_in_one_frozen_session
+  dependence: retain_shared_message_cross_ETF_reuse_issuer_and_calendar_overlap
+  empirical_covariance: NOT_CALIBRATED
+  empirical_critical_value: NOT_CALIBRATED
+  gate: independent_review_of_actual_support_structure_and_null_size_calibration_before_primary_p_values
+  ratio_utility: new_fail_closed_exact_PSD_validation_proposal_pending_independent_review
+  unbounded_or_disconnected_sets: retain_never_replace_with_zero_or_drop_group
+precision:
+  economically_meaningful_margin: NOT_JUSTIFIED
+  terminal_equivalence_margin: NOT_JUSTIFIED
+  unsupported_old_ten_percent_band: not_inherited_as_approved
+  MDE: only_after_valid_variance_and_dependence_assumptions
+  observed_posthoc_power: prohibited
+  exclusion_claim: prohibited_without_justified_margin_and_valid_interval
+diagnostics:
+  - pre_news_response
+  - predeclared_pseudo_event_or_time_permutation_compatible_with_calendar
+  - timing_bound_sensitivity
+  - quote_side_and_staleness
+  - terminal_stability_and_reversal
+  - leave_one_issuer_or_date_block_out
+release_conditions:
+  source_signal_clock_holdings_common_quote_support: ALL_REQUIRED
+  remaining_NOT_FROZEN_parameters: resolve_from_documentation_and_outcome_blind_metadata_only
+  independent_contract_review: REQUIRED
+  automated_response_read_guard: must_exit_if_any_required_release_condition_is_unmet
+  known_past_response_access: record_do_not_call_reused_inventory_untouched_confirmation_sample
+failure_rule: Report_measured_support_and_exact_NOT_RUN_reasons_not_empirical_disproof

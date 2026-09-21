@@ -1,0 +1,118 @@
+{
+  "scope": "same six events; one bounded follow-up; failed fetch is not source absence",
+  "rows": [
+    {
+      "event_id": "P1-2023-08-01",
+      "source_type": "distributor",
+      "url": "https://www.businesswire.com/news/home/20230131005178/en/ExxonMobil-Announces-Full-Year-2022-Results",
+      "retrieved_at_utc": "2026-09-21T13:49:46.770031+00:00",
+      "status": "FETCH_FAILED",
+      "error_type": "RemoteDisconnected",
+      "error": "Remote end closed connection without response"
+    },
+    {
+      "event_id": "P1-2023-08-03",
+      "source_type": "distributor",
+      "url": "https://www.businesswire.com/news/home/20230728950771/en/",
+      "retrieved_at_utc": "2026-09-21T13:49:46.770673+00:00",
+      "status": "FETCH_FAILED",
+      "error_type": "TimeoutError",
+      "error": "The read operation timed out"
+    },
+    {
+      "event_id": "P1-2023-01-01",
+      "source_type": "distributor",
+      "url": "https://www.businesswire.com/news/home/20230202005816/en/",
+      "retrieved_at_utc": "2026-09-21T13:49:46.770761+00:00",
+      "status": "FETCH_FAILED",
+      "error_type": "TimeoutError",
+      "error": "The read operation timed out"
+    },
+    {
+      "event_id": "P1-2023-02-02",
+      "source_type": "distributor",
+      "url": "https://www.prnewswire.com/news-releases/microsoft-earnings-press-release-available-on-investor-relations-website-301807439.html",
+      "retrieved_at_utc": "2026-09-21T13:49:46.770829+00:00",
+      "http_status": 200,
+      "final_url": "https://www.prnewswire.com/news-releases/microsoft-earnings-press-release-available-on-investor-relations-website-301807439.html",
+      "response_bytes": 205346,
+      "response_sha256": "41d1381b336aed13c053e3bc8964348f88ba747f0a6b5dec33e677c429d3bd97",
+      "status": "METADATA_FETCHED",
+      "metadata": [
+        {
+          "field": "Publisher",
+          "value": "Cision PR Newswire"
+        },
+        {
+          "field": "msvalidate.01",
+          "value": "9D28F7743C790DD88F2D9C7375EF7ED5"
+        },
+        {
+          "field": "date",
+          "value": "2023-04-25T16:07:00-04:00"
+        }
+      ],
+      "json_dates": [
+        {
+          "field": "datePublished",
+          "value": "2023-04-25T16:07:00-04:00"
+        },
+        {
+          "field": "dateModified",
+          "value": "2023-04-25T16:07:00-04:00"
+        }
+      ],
+      "visible_timestamp_strings": [],
+      "distributor_links": []
+    },
+    {
+      "event_id": "P1-2023-02-02",
+      "source_type": "issuer_scheduled_session",
+      "url": "https://news.microsoft.com/source/2023/04/11/microsoft-announces-quarterly-earnings-release-date-55/",
+      "retrieved_at_utc": "2026-09-21T13:49:46.770885+00:00",
+      "http_status": 200,
+      "final_url": "https://news.microsoft.com/source/2023/04/11/microsoft-announces-quarterly-earnings-release-date-55/",
+      "response_bytes": 137490,
+      "response_sha256": "d046119c1d5cfea661a62dc1eee9e1e04873e722c19873b53df4d724860c0467",
+      "status": "METADATA_FETCHED",
+      "metadata": [
+        {
+          "field": "article:published_time",
+          "value": "2023-04-11T07:00:00+00:00"
+        },
+        {
+          "field": "article:modified_time",
+          "value": "2025-05-07T16:36:43+00:00"
+        },
+        {
+          "field": "time.datetime",
+          "value": "1681196400"
+        }
+      ],
+      "json_dates": [
+        {
+          "field": "datePublished",
+          "value": "2023-04-11T07:00:00+00:00"
+        },
+        {
+          "field": "dateModified",
+          "value": "2025-05-07T16:36:43+00:00"
+        },
+        {
+          "field": "datePublished",
+          "value": "2023-04-11T07:00:00+00:00"
+        },
+        {
+          "field": "dateModified",
+          "value": "2025-05-07T16:36:43+00:00"
+        },
+        {
+          "field": "datePublished",
+          "value": "2023-04-11T00:00:00"
+        }
+      ],
+      "visible_timestamp_strings": [],
+      "distributor_links": []
+    }
+  ]
+}

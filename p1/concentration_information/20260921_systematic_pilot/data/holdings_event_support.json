@@ -1,0 +1,14 @@
+{
+  "status": "SUPERSEDED_WRONG_HAND_TRANSCRIBED_ISSUER_SET_DO_NOT_USE_EVENT_COUNTS",
+  "scope": "aggregate SCC metadata only; no financial or quote values exported",
+  "scc": {"ssh_batchmode": "CONFIRMED", "databento_api_key_present": false},
+  "holdings_path": "raw/rescue_remaining/crsp_holdings_etf_2023_b####/part_*.parquet",
+  "schema": ["crsp_portno", "report_dt", "eff_dt", "percent_tna", "nbr_shares", "security_name", "cusip", "permno", "ticker"],
+  "funds": [
+    {"ticker": "QQQ", "portno": 1026023, "et_flag": "F", "reports": 12, "report_range": ["2023-01-31", "2023-12-31"], "distinct_securities_per_report": 101, "shares_and_weights_present": true, "events": 32, "no_prior_2023_report": 2, "exact_event_date_report": 0, "vendor_observed_by_event": 19, "not_vendor_observed_by_event": 11, "issuer_member": 26, "issuer_not_confirmed": 6, "report_age_days": [1, 27]},
+    {"ticker": "SPY", "portno": 1021980, "et_flag": "F", "reports": 12, "report_range": ["2023-01-31", "2023-12-31"], "distinct_securities_per_report": [500, 501], "shares_and_weights_present": true, "events": 32, "no_prior_2023_report": 2, "exact_event_date_report": 0, "vendor_observed_by_event": 18, "not_vendor_observed_by_event": 12, "issuer_member": 30, "issuer_not_confirmed": 2, "report_age_days": [1, 27]}
+  ],
+  "availability": "report_dt is a report snapshot; eff_dt is vendor acquisition metadata, not first-public proof",
+  "ibes": {"files": ["raw/ibes_actuals_eps_2023.parquet", "raw/ibes_detu_eps_2023.parquet", "raw/rescue/ibes_allcols_det_epsus_2023.parquet"], "identifiers": ["AAPL", "AMZN", "BRK.B", "GOOGL", "META", "MSFT", "NVDA", "TSLA"], "measure": "EPS", "currency": "USD", "pit_rule": "NOT_FROZEN"},
+  "quotes": {"existing_dbn_manifest_rows": 9, "coverage": "two old XOM anchors only", "representation": "venue-specific bbo-1s", "six_event_support": "UNTESTED"}
+}

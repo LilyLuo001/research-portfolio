@@ -1,0 +1,31 @@
+{
+  "status": "PENDING_REVIEW_NOT_DECODED",
+  "selection": "5544-row SCC download manifest; bbo-1s; full [-15,+75] UTC window; explicit SPY or QQQ symbol; physical path existence checked",
+  "no_full_window_symbol_hit": ["XOM_JAN_ISSUER_WIRE", "UNH_APR_WIRE", "QQQ_ALL_SEVEN_VARIANTS"],
+  "critical_limit": "This is a strict full-request-window locator, not an endpoint-availability result. A follow-up manifest must retain every matching-symbol DBN that intersects the diagnostic window, including partial files, and test baseline/endpoints separately inside requested-window intersection.",
+  "variants": {
+    "XOM_JUL_ISSUER": ["COREJOB_01080", "ALTJOB_03238", "ALTJOB_03240", "ALTJOB_03242"],
+    "XOM_JUL_WIRE": ["COREJOB_01080", "ALTJOB_03238", "ALTJOB_03240", "ALTJOB_03242"],
+    "AAPL_FEB_WIRE": ["COREJOB_00928", "ALTJOB_02780", "ALTJOB_02782", "ALTJOB_02784"],
+    "AAPL_AUG_WIRE": ["COREJOB_01088", "ALTJOB_03262", "ALTJOB_03264", "ALTJOB_03266"],
+    "MSFT_APR_NOTICE_ONLY": ["COREJOB_01002", "ALTJOB_03004", "ALTJOB_03007", "ALTJOB_03010"]
+  },
+  "files": [
+    {"job_id":"COREJOB_01080","dataset":"XNAS.ITCH","symbols":"AEP;AX;CBNK;FSFG;LAZY;MHK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_01080.dbn.zst","sha256":"e05e61adc2198a2891eb18bc789893d6fbba0b14072d624d68e3d25067978ce4"},
+    {"job_id":"ALTJOB_03238","dataset":"ARCX.PILLAR","symbols":"AEP;AX;CBNK;FSFG;LAZY;MHK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03238.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_03240","dataset":"BATS.PITCH","symbols":"AEP;AX;CBNK;FSFG;LAZY;MHK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03240.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_03242","dataset":"XNYS.PILLAR","symbols":"AEP;AX;CBNK;FSFG;LAZY;MHK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03242.dbn.zst","sha256":""},
+    {"job_id":"COREJOB_00928","dataset":"XNAS.ITCH","symbols":"MRK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_00928.dbn.zst","sha256":"5212b72acb071297ed342cae5fbc8a3c70332bac6e9604fbc86562543a3b1d24"},
+    {"job_id":"ALTJOB_02780","dataset":"ARCX.PILLAR","symbols":"MRK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_02780.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_02782","dataset":"BATS.PITCH","symbols":"MRK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_02782.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_02784","dataset":"XNYS.PILLAR","symbols":"MRK;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_02784.dbn.zst","sha256":""},
+    {"job_id":"COREJOB_01088","dataset":"XNAS.ITCH","symbols":"BBGI;CFBK;CRD;DVA;GTIM;REI;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/sealed_post/COREJOB_01088.dbn.zst","sha256":"24d6600bb1adebf1984ed5e6b0b34b7fd38e4daae171e04def3ba32affb804df"},
+    {"job_id":"ALTJOB_03262","dataset":"ARCX.PILLAR","symbols":"BBGI;CFBK;CRD;DVA;GTIM;REI;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03262.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_03264","dataset":"BATS.PITCH","symbols":"BBGI;CFBK;CRD;DVA;GTIM;REI;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03264.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_03266","dataset":"XNYS.PILLAR","symbols":"BBGI;CFBK;CRD;DVA;GTIM;REI;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/sealed_post/ALTJOB_03266.dbn.zst","sha256":""},
+    {"job_id":"COREJOB_01002","dataset":"XNAS.ITCH","symbols":"SFNC;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/CORE_XNAS_BBO1S_DATE_WIDE/pre_development/COREJOB_01002.dbn.zst","sha256":"cf7e920051ebb9ad1572c1ac9caccba2801ea8de12ae5856b72ffbba4f3276fe"},
+    {"job_id":"ALTJOB_03004","dataset":"ARCX.PILLAR","symbols":"SFNC;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_ARCX.PILLAR_BBO1S_DATE_WIDE/pre_development/ALTJOB_03004.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_03007","dataset":"BATS.PITCH","symbols":"SFNC;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_BATS.PITCH_BBO1S_DATE_WIDE/pre_development/ALTJOB_03007.dbn.zst","sha256":""},
+    {"job_id":"ALTJOB_03010","dataset":"XNYS.PILLAR","symbols":"SFNC;SPY","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/databento_final_native/ALTERNATIVE_XNYS.PILLAR_BBO1S_DATE_WIDE/pre_development/ALTJOB_03010.dbn.zst","sha256":""}
+  ]
+}
