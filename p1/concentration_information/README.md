@@ -4,6 +4,7 @@
 
 ## 最新状态（2026-09-21）
 
+- **2026-09-22 下一轮 prompt 已准备、尚未执行：[固定六公告路径比较](20260921_xom_spy_observed_paths/NEXT_EXECUTION_PROMPT.md)**：保留六个原技术事件，补齐 bid/ask 路径和价差敏感性，修正先过滤无效报价可能绕过后续状态的问题。股票／SPY 幅度分离可能仅来自指数稀释，不能作为价格发现证据；下一轮判断测量是否可用及有经济可比性的后续检验是否值得开展，不以分离重复出现自动触发全面购数。
 - **最新实际结果：[XOM/SPY 单事件可观测路径](20260921_xom_spy_observed_paths/RESULTS.md)**：SCC 已直接读取既有四个 venue 的 bbo-1s；独立 reviewer 从原始 DBN 复算关键端点。06:30 ET 锚点下，XNAS +5 分钟 SPY 为 −8.65bp、XOM 为 −241.19bp；ARCX 方向一致。六股滞后代理只占报告 `percent_tna` 约 2.10%，且基准价值 67.62% 来自 XOM；剔除 XOM 的五股诊断 +5 分钟为 −15.64bp，不能代表完整篮子。工程测量可行，但单事件和低覆盖代理不能裁定价格发现。下一步改为固定六公告的 SPY/发行人股票有限复现，不再等待同一历史持仓缺口后才出结果。
 - **本轮已执行 prompt（按用户要求去掉程序性冻结）：[固定 XOM/SPY 可观测路径](20260921_spy_xom_event_packet/NEXT_EXECUTION_PROMPT.md)**：两证券路径、可用滞后股票子组合和独立复算均已完成，实际产物见上一条。取消事前 reviewer 放行、release 文件、多层哈希及单独规格审批没有妨碍必要的数据质量检查；历史 HOLD 文件仍作为历史记录保留，不阻塞本轮诊断。
 - **最新执行：[XOM × SPY 单事件 Stage-A 包](20260921_spy_xom_event_packet/DECISION.md)**：最终 SCC 脚本与输出已绑定，并由独立 Sol/high 代理用第二套 metadata-only 程序复算。裁定为 `HOLD_NAMED_INPUT`：现有 CRSP 仅给出 2022-12-31（`eff_dt=2023-01-09`）和 2023-01-31（`eff_dt=2023-02-07`）月度快照，不能证明 2023-01-31 06:30 ET 的实际 SPY 持仓或申赎篮子。XOM 精确 CUSIP/季度期间可定位，但 PIT 共识单位仍未准入。没有读取预测、EPS 或报价数值，没有购数或 Stage-B release。唯一下一输入是 State Street 当日历史 holdings/portfolio-composition/cash 文件及可用时间证据；滞后持仓代理只能作为待批准的规格修订。
