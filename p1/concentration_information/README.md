@@ -4,6 +4,7 @@
 
 ## 最新状态（2026-09-21）
 
+- **待 PI 采用的下一轮 prompt：[固定 XOM/SPY 可观测路径](20260921_spy_xom_event_packet/NEXT_EXECUTION_PROMPT.md)**：按用户要求加快形成实际结果，提出有限规格修订：必做固定单事件两证券路径，条件具备时补滞后持仓代理，历史篮子追索限时一次；I/B/E/S 惊喜信号不进入本轮。此文件尚未执行，须用户随后要求执行才采用新增诊断值访问范围；不能据此声称价格发现或主假设已通过。
 - **最新执行：[XOM × SPY 单事件 Stage-A 包](20260921_spy_xom_event_packet/DECISION.md)**：最终 SCC 脚本与输出已绑定，并由独立 Sol/high 代理用第二套 metadata-only 程序复算。裁定为 `HOLD_NAMED_INPUT`：现有 CRSP 仅给出 2022-12-31（`eff_dt=2023-01-09`）和 2023-01-31（`eff_dt=2023-02-07`）月度快照，不能证明 2023-01-31 06:30 ET 的实际 SPY 持仓或申赎篮子。XOM 精确 CUSIP/季度期间可定位，但 PIT 共识单位仍未准入。没有读取预测、EPS 或报价数值，没有购数或 Stage-B release。唯一下一输入是 State Street 当日历史 holdings/portfolio-composition/cash 文件及可用时间证据；滞后持仓代理只能作为待批准的规格修订。
 - **最新执行：[系统性 pilot 支持阶段](20260921_systematic_pilot/README.md)**：已取得绑定正确 32 事件名单的 SCC 持仓汇总、六公告时钟证据、独立数值修复检验和 29 个已有报价文件的实际端点诊断。[科学决定](20260921_systematic_pilot/DECISION.md)仍为 HOLD_DATA + HOLD_MEASUREMENT，不是假设通过或失败、功效通过或研究 GO。旧名单误绑定汇总已作废，接手者以新目录机器生成 receipt 为准。
 - **最新续作：[六公告来源定位与组间比值区间](20260921_ratio_continuation/README.md)**：SCC 连接正常但既有记录未给出所需历史源位置；新增联合区域保守投影的提案代码，不等于真实数据推断或研究 GO。此目录保存实际执行与独立审查记录。
