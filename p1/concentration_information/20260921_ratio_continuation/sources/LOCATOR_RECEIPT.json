@@ -1,0 +1,50 @@
+{
+  "stage": "20260921_ratio_continuation",
+  "operation": "six_event_historical_publisher_metadata_locator",
+  "completed_utc": "2026-09-21T13:07:47Z",
+  "scope": "Locate an already documented historical publisher CMS/version or release-distribution provenance view for the fixed six-event request; metadata only.",
+  "result": "SOURCE_VIEW_NOT_DOCUMENTED_OR_LOCATED",
+  "conclusion": "SCC connectivity is available, but the examined request, support/review records, prior receipt, and metadata code specify no SCC path, publisher archive identifier, distribution archive identifier, or other retrievable historical-view location. No historical source was retrieved and no status was assigned to any event.",
+  "authorization_interpretation": "The latest approval continues only the fixed six-event metadata locator. It does not authorize a generic SCC/archive scan, discovery of new publisher sources, current-page refetch, WRDS, page-body/financial/quote data, or any population expansion.",
+  "fixed_request": {
+    "event_count": 6,
+    "binding_list_sha256": "76770d75413a5f7c7b15ab2adcd92dced4551be4c3b173de5b6e37275eea5940",
+    "roster_sha256": "267f9b679e9b61245268bf70a1026e1205576ffe611e4adf5cda998bd8e90dec",
+    "required_source_view": "publisher-maintained historical CMS/version or release-distribution provenance linked to each exact whitelisted URL"
+  },
+  "local_metadata_paths_examined": [
+    "p1/concentration_information/20260921_news_basket_readiness/sources/CUSTODIAN_OPERATION_REQUEST.json",
+    "p1/concentration_information/20260921_news_basket_readiness/JOINT_SUPPORT.md",
+    "p1/concentration_information/20260921_news_basket_readiness/INDEPENDENT_REVIEW.md",
+    "p1/concentration_information/20260920_phase3/event_clock/RECEIPT.json",
+    "p1/concentration_information/20260920_phase3/event_clock/CLOCK_SUMMARY.json",
+    "p1/concentration_information/20260920_phase3/event_clock/build_event_clock.py",
+    "p1/concentration_information/20260921_news_basket_readiness/sources/first_public_adapter.py"
+  ],
+  "documented_remote_historical_view_paths": [],
+  "remote_actions": [
+    {
+      "command": "ssh -o BatchMode=yes -o ConnectTimeout=10 qluo@scc1.bu.edu true",
+      "exit_code": 0,
+      "result": "CONNECTIVITY_AND_EXISTING_LOGIN_CONFIRMED"
+    }
+  ],
+  "remote_path_actions": "None. There was no documented exact SCC historical-publisher-view or receipt path to test; directory enumeration and guessed-path tests were prohibited by scope.",
+  "data_handling": {
+    "financial_or_page_body_data_read": false,
+    "licensed_rows_read_or_exported": false,
+    "wrds_access": false,
+    "current_page_refetch": false,
+    "aggregate_output_only": true
+  },
+  "next_concrete_source_requirement": "Provide one exact, authorized retrieval location or export for each fixed URL (a publisher CMS version-history endpoint/record or an independently captured release-distribution provenance record) that exposes the requested historical metadata fields, especially initial_publication_at_utc or first_distribution_at_utc and an explicit first-public assertion where available. Then the existing SCC-side aggregate adapter can consume private rows and release counts only.",
+  "source_file_sha256": {
+    "CUSTODIAN_OPERATION_REQUEST.json": "abe1912fec9bfb5b98b0b12a4c25f1f7cb2091af8cb3503c42bee03e31c6aa78",
+    "JOINT_SUPPORT.md": "dfcb1677736323480562947959660ff1e3b05373b2980667b12933e038f21fd5",
+    "INDEPENDENT_REVIEW.md": "3141bf8c65d260347547c5b7ad7afaa6573289452e26895aa5d375062ce1906c",
+    "event_clock/RECEIPT.json": "6ac3411551c8a5b3597782f72f31a72c2f0c7d37b4c7fa7f04fb2dcd23771f96",
+    "event_clock/CLOCK_SUMMARY.json": "28113f670e14184dbf3371a7b4ef6a5e1a83da81676533f674d74ac6bacab16c",
+    "event_clock/build_event_clock.py": "480196748be09afea191ae107d6ef2b39570688eb97c809c9329bfb04d9a76b9",
+    "first_public_adapter.py": "377df4c3e5d823ba1e4a52230bf383ae00ce55ea7f8bd6bfa57b7a52c94371c9"
+  }
+}

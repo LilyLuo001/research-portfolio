@@ -1,0 +1,67 @@
+{
+  "stage": "20260921_ratio_continuation",
+  "base_commit": "9dd076ebc84bb27ae84cb2e52d7acb27b23d983c",
+  "status": "BOUNDED_CONTINUATION_ENDED_HOLD_IMPLEMENTATION_DATA_AND_METHOD",
+  "authorization": "User instructed continuation of unfinished work with SCC logged in; prior bounded value-blind restrictions retained.",
+  "previous_stage_publication": {"commit": "9dd076ebc84bb27ae84cb2e52d7acb27b23d983c", "pushed": true, "remote_tip_verified": true, "branch": "task/p1-feasibility-adjudication-20260913"},
+  "routing": [
+    {"role": "coordinator", "requested_model": "gpt-5.6-sol", "requested_effort": "medium", "dispatch": "RETAINED_NO_SWITCH_CLAIM", "backend_telemetry": "NOT_OBSERVED"},
+    {"role": "clock_locator", "agent": "/root/six_clock_locator", "requested_model": "gpt-5.6-terra", "requested_effort": "medium", "dispatch": "EXPLICIT_REQUEST_ACCEPTED", "backend_telemetry": "NOT_OBSERVED"},
+    {"role": "method_engineer", "agent": "/root/joint_ratio_completion", "requested_model": "gpt-5.6-terra", "requested_effort": "medium", "dispatch": "EXPLICIT_REQUEST_ACCEPTED", "backend_telemetry": "NOT_OBSERVED"},
+    {"role": "independent_referee", "agent": "/root/ratio_referee", "requested_model": "gpt-5.6-sol", "requested_effort": "high", "dispatch": "EXPLICIT_REQUEST_ACCEPTED_AFTER_ARTIFACTS", "backend_telemetry": "NOT_OBSERVED"}
+  ],
+  "token_usage": "NOT_OBSERVED",
+  "nested_delegation_or_configuration_changes": false,
+  "clock_result": {
+    "ssh_existing_login_exit": 0,
+    "documented_source_locations_in_examined_records": 0,
+    "scc_file_search_performed": false,
+    "upstream_historical_provenance_retrieved": false,
+    "not_a_claim_of_scc_data_absence": true,
+    "receipt": "sources/LOCATOR_RECEIPT.json"
+  },
+  "method_amendment": {
+    "status": "PROPOSED_NOT_FROZEN",
+    "target": "Conservative outer image of ONE supplied joint four-coefficient confidence region for N_TOP/k_TOP-N_REST/k_REST",
+    "exact_fieller_difference": false,
+    "empirical_joint_covariance_or_critical_value_calibrated": false,
+    "golden_fixtures": "Synthetic only; no empirical pilot or full run authorized.",
+    "prior_reviewed_stage_modified": false
+  },
+  "independent_review": {
+    "status": "HOLD_IMPLEMENTATION_AFTER_TWO_REPAIR_ROUNDS",
+    "provisional_limited_pass_withdrawn": true,
+    "decisive_failure": "test_near_indefinite_matrix_is_not_treated_as_an_existing_ellipsoid",
+    "third_repair_performed": false,
+    "repair_rounds": 2,
+    "scope": "Scale-consistent covariance validation and finite-output arithmetic; no change in mathematical target.",
+    "report": "INDEPENDENT_REVIEW.md"
+  },
+  "pre_final_adversarial_check_commands_not_final_pass": [
+    {"cwd": "stage root", "command": "python3 -W error method/synthetic_tests.py", "exit_code": 0, "synthetic_scenarios_passed": 8},
+    {"cwd": "stage root", "command": "python3 -W error -m pytest -p no:cacheprovider -q reviewer/test_ratio_adversarial.py", "exit_code": 0, "tests_passed": 14},
+    {"cwd": "stage root", "command": "python3 -m py_compile method/estimator.py method/synthetic_tests.py reviewer/test_ratio_adversarial.py", "exit_code": 0}
+  ],
+  "final_coordinator_verified_commands": [
+    {"cwd": "stage root", "command": "python3 -W error -m pytest -p no:cacheprovider -q reviewer/test_ratio_adversarial.py", "exit_code": 1, "tests_passed": 14, "tests_failed": 1}
+  ],
+  "historical_integrity": "Prior readiness stage files remain unchanged. Its historical manifest's external ../README index is intentionally updated for the new continuation, not claimed unchanged.",
+  "source_scope_question": {
+    "asked_via": "request_user_input_async",
+    "question": "Allow additional public release/archive time-metadata sources for the same fixed six announcements, relaxing no-new-URL only?",
+    "answer_observed": "NOT_OBSERVED",
+    "new_source_lookup_executed": false
+  },
+  "boundaries": {
+    "financial_values_prices_quote_values_returns_outcomes_read": false,
+    "new_licensed_rows_accessed_or_exported": false,
+    "wrds_access": false,
+    "data_purchase": false,
+    "raw_source_modification": false,
+    "credential_copy_or_authentication_change": false,
+    "scc_job_or_monitor_change": false,
+    "empirical_effect_or_power_estimation": false,
+    "merge_or_force_push": false
+  },
+  "research_status": "HOLD_DATA + HOLD_METHOD; HOLD_CONTRIBUTION_AND_EMPIRICAL_VALIDATION"
+}

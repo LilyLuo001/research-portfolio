@@ -1,0 +1,14 @@
+# What the conservative joint projection can legitimately solve
+
+This is a proposed implementation amendment, not empirical inference approval.
+Let theta=(N_TOP,k_TOP,N_REST,k_REST), and let E be **one** simultaneous confidence region for all four coefficients. Conditional on a valid joint region covering theta with probability at least 1-alpha, any set containing the image of E under g(theta)=N_TOP/k_TOP-N_REST/k_REST has at least that coverage whenever the true denominators are nonzero. This is a set-inclusion argument, not a calibration theorem for an arbitrary covariance estimator.
+
+For the joint ellipsoid E={theta_hat+A*u: ||u||²<=q}, AA'=V, each coordinate lies in theta_hat_i ± sqrt(q*V_ii). Its axis-aligned enclosure B contains E. If both denominator intervals exclude zero, evaluate each ratio on the four corners of its numerator/denominator rectangle and form an enclosure of g(B). Because E is contained in B, the resulting interval encloses g(E). Dependence need not be assumed absent; the enclosure discards some geometric dependence information and can be substantially conservative. Off-diagonal covariance must not be falsely claimed to tighten this box-based result.
+
+If a denominator interval touches zero, returning ALL_REAL is an honest conservative fallback, not a proof the exact projected set is all real. True zero denominator means the ratio estimand is undefined, not an estimand equal to zero. Singular covariance requires the confidence region to remain confined to its actual support; the same coordinate enclosure is valid for the parameterized ellipsoid, but rank-dependent calibration is external.
+
+This construction is **not** subtraction of two ordinary marginal 95% ratio intervals. Its coverage depends on a single correctly calibrated joint region. The implementation must require a supplied joint-region critical value and its calibration status, with no default 1.96 that purports to cover four coefficients jointly. A bootstrap or clustered covariance is not automatically calibrated, and a supplied matrix does not prove that the shared-news cross-group covariance was estimated correctly.
+
+The new utility can remove a missing *conservative projection* function. It cannot by itself remove HOLD_METHOD for empirical group covariance, few-cluster or overlap calibration, final parameters or terminal-response assumptions. It must not be advertised as exact Fieller inversion for a difference of ratios.
+
+Background checked: von Luxburg and Franz (2009), [A geometric approach to confidence sets for ratios](https://www3.stat.sinica.edu.tw/sstest/j19n3/j19n312/j19n312.html). The publisher abstract supports geometric exact/conservative ratio constructions generally; it does not establish this particular four-parameter implementation. The enclosure proof above is the explicit justification, and the new code must receive independent review.
