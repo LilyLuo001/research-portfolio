@@ -4,9 +4,12 @@
 
 ## 最新状态（2026-09-21）
 
+- **先读：[新方向始末与接手说明](20260921_price_discovery_method/RESEARCH_HANDOFF.md)**。当前为 `HOLD_CONTRIBUTION_AND_EMPIRICAL_VALIDATION`，不是实证通过。
+- [下一轮完整执行 prompt（含模型/effort 分工）](20260921_price_discovery_method/NEXT_EXECUTION_PROMPT.md)：仅已编写，尚未部署。先绑定现有新闻—ETF—真实篮子元数据、完善方法实现，再独立复核；不自动打开响应值。
+- [文献贡献定位](20260921_price_discovery_literature/CONTRIBUTION_ASSESSMENT.md)与[方法原型/测试](20260921_price_discovery_method/README.md)：保留导师的价格发现问题，但宽泛 ETF/个股领先、权重效应与信息分解不是新贡献。原型及合成测试不能证明实际样本可行。
 - [已完成的 H2 冻结检验](20260921_same_industry_replication/DECISION.md)：`INCONCLUSIVE_STOP_SPENDING`，停止共同持仓/两日反应路线的自动扩样与购买。
 - [信息质量方向的定位执行与 SCC 字段核查](20260921_information_quality_repositioning/DECISION.md)：`HOLD_CONTRIBUTION_AND_MEASUREMENT`。通用 bellwether/ETF 信息外溢不是新贡献；新的独有信息质量命题尚未冻结或运行。只核查了文献、文件与 footer，没有新财务值/收益访问。
-- 后续唯一具体工作是现有 I/B/E/S 历史时点与值口径裁定，不是启动另一轮全量回归或报价采购。旧计划与报告保留为历史，不能把它们的执行授权当作新定位已经通过。
+- [未完成：I/B/E/S 历史时点与值口径裁定](20260921_ibes_pit_semantics/未完成.md)：2026-09-21 按用户要求暂停，保留全部已有工作，未完成独立复核。下一步先讨论 ETF 与个股谁完成价格发现的研究定位，不自动执行新分析。旧计划与报告保留为历史，不能把它们的执行授权当作新定位已经通过。
 
 ## 历史入口
 

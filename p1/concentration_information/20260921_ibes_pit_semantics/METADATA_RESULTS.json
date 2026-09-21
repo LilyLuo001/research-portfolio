@@ -1,0 +1,36 @@
+{
+  "status": "COMPLETE_SCC_METADATA_ONLY",
+  "unit": "source records, not companies and not economic events",
+  "year_partition": 2023,
+  "detail_candidate": {
+    "physical_rows": 1260016,
+    "projected_rows": 1260016,
+    "filtered_rows": 757586,
+    "filter": "EPS plus documented quarterly FPI codes 6,7,8,9,N,O,P,Q,R,S,T,L,Y; pdicity absent from direct-detail schema",
+    "date": {"announcement": {"parseable": 757586, "missing_or_unparseable": 0, "min": "2023-01-01", "max": "2023-12-31"}, "activation": {"parseable": 757586, "missing_or_unparseable": 0, "min": "2023-01-01", "max": "2024-10-30"}},
+    "time": {"announcement": {"parseable": 757586, "missing_or_unparseable": 0}, "activation": {"parseable": 757586, "missing_or_unparseable": 0}},
+    "activation_vs_announcement": {"activation_before_date": 0, "same_date_time_comparable": 556050, "same_date_activation_before_announcement_raw_time": 0, "same_date_activation_equal_announcement_raw_time": 845, "same_date_activation_after_announcement_raw_time": 555205, "same_date_time_missing_or_unparseable": 0, "activation_after_date": 201536, "date_order_missing_or_unparseable": 0},
+    "categories_before_filter": {"measure": {"EPS": 1260016}, "usfirm": {"1": 1260016}, "curr": {"<MISSING>": 1260016}, "fpi": {"0": 15304, "1": 175467, "2": 174455, "3": 98059, "4": 23441, "5": 14632, "6": 139738, "7": 131846, "8": 119651, "9": 108188, "A": 166, "B": 118, "C": 81, "D": 53, "E": 79, "F": 34, "G": 25, "H": 16, "I": 25, "J": 25, "K": 8, "L": 2256, "N": 83324, "O": 63553, "P": 46755, "Q": 31330, "R": 16123, "S": 8498, "T": 4674, "X": 437, "Y": 1650, "Z": 5}},
+    "categories_filtered": {"fpi": {"6": 139738, "7": 131846, "8": 119651, "9": 108188, "L": 2256, "N": 83324, "O": 63553, "P": 46755, "Q": 31330, "R": 16123, "S": 8498, "T": 4674, "Y": 1650}},
+    "candidate_duplicate_key_group_records": 0,
+    "projection_schema_missing": ["pdicity"],
+    "currency_schema_status": "curr exists but all 1,260,016 projected records are missing; no currency inference"
+  },
+  "actual": {
+    "physical_rows": 28468,
+    "projected_rows": 28468,
+    "filtered_rows": 22319,
+    "filter": "EPS and pdicity=QTR",
+    "date": {"announcement": {"parseable": 22319, "missing_or_unparseable": 0, "min": "2023-01-02", "max": "2023-12-29"}, "activation": {"parseable": 22319, "missing_or_unparseable": 0, "min": "2023-01-02", "max": "2026-03-03"}},
+    "time": {"announcement": {"parseable": 22319, "missing_or_unparseable": 0}, "activation": {"parseable": 22319, "missing_or_unparseable": 0}},
+    "activation_vs_announcement": {"activation_before_date": 0, "same_date_time_comparable": 18956, "same_date_activation_before_announcement_raw_time": 0, "same_date_activation_equal_announcement_raw_time": 5, "same_date_activation_after_announcement_raw_time": 18951, "same_date_time_missing_or_unparseable": 0, "activation_after_date": 3363, "date_order_missing_or_unparseable": 0},
+    "categories_before_filter": {"measure": {"EPS": 28468}, "pdicity": {"ANN": 5887, "QTR": 22319, "SAN": 262}},
+    "candidate_duplicate_key_group_records": 0,
+    "projection_schema_missing": ["fpi", "curr"],
+    "currency_schema_status": "Base whitelist lacks curr, but a separate actual-only verified curr_act supplement exists; it does not establish compatibility with Detail's all-missing curr.",
+    "curr_act_supplement": {"filtered_rows": 22319, "categories": {"AED": 4, "ARS": 8, "AUD": 55, "BPN": 115, "BRL": 71, "CAD": 490, "CHF": 53, "CLP": 6, "CNY": 321, "DKK": 44, "EUR": 566, "HKD": 4, "IDR": 8, "ILS": 20, "INR": 6, "JPY": 150, "KRW": 4, "KZT": 4, "MAD": 4, "MXN": 28, "MYR": 4, "NOK": 16, "NZD": 4, "PEN": 5, "PLN": 4, "RUB": 12, "SEK": 36, "SGD": 34, "THB": 15, "TRY": 4, "USD": 20209, "ZAR": 15}}
+  },
+  "period_identity_match": {"detail_period_identity_unmatchable_missing_identity_or_period_records": 0, "detail_period_identity_unmatched_records": 516639, "detail_period_identity_unique_actual_records": 240940, "detail_period_identity_ambiguous_actual_records": 7, "match_key": "normalized ticker + measure + parsed detail.fpedats=actual.pends", "limitation": "No CUSIP cross-check or share-basis/version adjudication; this is metadata-match ambiguity, not an economic forecast/actual pairing."},
+  "clock_interpretation": "Raw recorded same-day time ordering is reported only. Under the established nominal seasonal Eastern convention these source fields distinguish reported announcement from vendor activation, but neither result establishes earliest-public time or a precision/error bound.",
+  "prohibitions_observed": {"financial_value_columns_read": false, "select_star_used": false, "licensed_rows_exported_locally": false}
+}

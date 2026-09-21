@@ -1,0 +1,31 @@
+{
+  "stage": "20260921_ibes_pit_semantics",
+  "raw_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw",
+  "sources": {
+    "detail_candidate": {
+      "file": "ibes_detu_eps_2023.parquet",
+      "physical_source": "frozen WRDS mirror direct unadjusted I/B/E/S Detail EPS partition",
+      "original_extraction_provenance": {"source_table": "ibes.detu_epsus", "year_partition_predicate": "anndats >= '2023-01-01' AND anndats < '2024-01-01' AND usfirm = 1 AND upper(measure) = 'EPS'", "evidence": "canonical SCC meta/ibes_detu_eps_2023.sql.txt", "note": "Announcement-date, not fpedats, partition."},
+      "projection_fields": ["ticker", "cusip", "analys", "estimator", "fpedats", "fpi", "pdicity", "measure", "usfirm", "curr", "anndats", "anntims", "actdats", "acttims"],
+      "filter": "UPPER(TRIM(measure)) = 'EPS' AND UPPER(TRIM(fpi)) IN ('6','7','8','9','N','O','P','Q','R','S','T','L','Y'); pdicity is absent from this direct-detail schema, so the documented FPI strata are the only quarterly selector",
+      "quarterly_fpi_codes": ["6", "7", "8", "9", "N", "O", "P", "Q", "R", "S", "T", "L", "Y"],
+      "candidate_key": ["ticker", "estimator", "analys", "fpedats", "fpi", "measure", "anndats", "anntims", "actdats", "acttims"]
+    },
+    "actual": {
+      "file": "ibes_actuals_eps_2023.parquet",
+      "physical_source": "frozen WRDS mirror direct unadjusted I/B/E/S Actuals EPS partition",
+      "original_extraction_provenance": {"source_table": "ibes.actu_epsus", "year_partition_predicate": "anndats >= '2023-01-01' AND anndats < '2024-01-01' AND usfirm = 1 AND upper(measure) = 'EPS'", "evidence": "canonical SCC meta/ibes_actuals_eps_2023.sql.txt", "note": "Announcement-date, not pends, partition."},
+      "projection_fields": ["ticker", "cusip", "pends", "fpi", "pdicity", "measure", "curr", "anndats", "anntims", "actdats", "acttims"],
+      "supplemental_verified_currency_metadata": {"field": "curr_act", "justification": "The verified original ibes.actu_epsus extraction SQL selected curr_act. Actual parquet schema confirms curr_act; this one-source supplement is restricted to curr_act, measure and pdicity and does not read value fields."},
+      "filter": "UPPER(TRIM(measure)) = 'EPS' AND UPPER(TRIM(pdicity)) = 'QTR'",
+      "actual_key": ["ticker", "pends", "measure", "pdicity", "anndats", "anntims", "actdats", "acttims"]
+    }
+  },
+  "boundaries": {
+    "year_partitions": [2023],
+    "prohibit_select_star": true,
+    "prohibit_value_eps_prices_returns": true,
+    "unit": "source records, never companies or economic events",
+    "same_day_time_rule": "same-date announcement versus activation has unknown intra-day ordering unless both populated source times are directly comparable; this audit does not assert timezone conversion or earliest-public accuracy"
+  }
+}

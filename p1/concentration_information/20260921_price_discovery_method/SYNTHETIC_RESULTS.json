@@ -1,0 +1,207 @@
+{
+  "status": "SYNTHETIC_FIXTURES_ONLY",
+  "seed": 20260921,
+  "numpy_version": "1.22.4",
+  "checks": [
+    {
+      "name": "equal_news_response_unequal_noise",
+      "passed": true,
+      "details": {
+        "slopes": [
+          0.5994720020351827,
+          0.599029979174236,
+          0.9993835486100349,
+          0.999622425716001
+        ],
+        "early_difference": 0.0004420228609467447,
+        "terminal_response": 0.9995029871630179,
+        "ratio_set": {
+          "kind": "BOUNDED",
+          "boundaries": [
+            -0.010211903403533078,
+            0.011095440835064703
+          ]
+        },
+        "ratio_point": 0.0004422426612264354,
+        "interval_assumption": "IID_HC0_NORMAL_APPROXIMATION_SYNTHETIC_ONLY"
+      }
+    },
+    {
+      "name": "weight_rescaling_does_not_create_speed_change",
+      "passed": true,
+      "details": {
+        "low": {
+          "slopes": [
+            0.8,
+            0.4,
+            0.9979451620334499,
+            0.9987414190533389
+          ],
+          "early_difference": 0.4,
+          "terminal_response": 0.9983432905433944,
+          "ratio_set": {
+            "kind": "BOUNDED",
+            "boundaries": [
+              0.39898537839467163,
+              0.4023563692539277
+            ]
+          },
+          "ratio_point": 0.40066378347900905,
+          "interval_assumption": "IID_HC0_NORMAL_APPROXIMATION_SYNTHETIC_ONLY"
+        },
+        "high": {
+          "slopes": [
+            0.8,
+            0.4,
+            0.9997945162033448,
+            0.9998741419053334
+          ],
+          "early_difference": 0.4,
+          "terminal_response": 0.9998343290543391,
+          "ratio_set": {
+            "kind": "BOUNDED",
+            "boundaries": [
+              0.3998983056817235,
+              0.4002343942068877
+            ]
+          },
+          "ratio_point": 0.40006627935882844,
+          "interval_assumption": "IID_HC0_NORMAL_APPROXIMATION_SYNTHETIC_ONLY"
+        }
+      }
+    },
+    {
+      "name": "composition_only_is_not_mechanism_change",
+      "passed": true,
+      "details": {
+        "total_change": 0.19999999999999996,
+        "within_response_change": 0.0,
+        "composition_change": 0.19999999999999996
+      }
+    },
+    {
+      "name": "true_top_only_change_remains_separate_from_composition",
+      "passed": true,
+      "details": {
+        "total_change": 0.2799999999999999,
+        "within_response_change": 0.16,
+        "composition_change": 0.12
+      }
+    },
+    {
+      "name": "both_directions_recoverable",
+      "passed": true,
+      "details": {
+        "ETF_first": {
+          "slopes": [
+            0.797888008140731,
+            0.29967665972474516,
+            0.9993835486100349,
+            0.999622425716001
+          ],
+          "early_difference": 0.49821134841598586,
+          "terminal_response": 0.9995029871630179,
+          "ratio_set": {
+            "kind": "BOUNDED",
+            "boundaries": [
+              0.4933973854261125,
+              0.5035220019640445
+            ]
+          },
+          "ratio_point": 0.49845908898192026,
+          "interval_assumption": "IID_HC0_NORMAL_APPROXIMATION_SYNTHETIC_ONLY"
+        },
+        "basket_first": {
+          "slopes": [
+            0.29788800814073135,
+            0.7996766597247453,
+            0.9993835486100349,
+            0.999622425716001
+          ],
+          "early_difference": -0.501788651584014,
+          "terminal_response": 0.9995029871630179,
+          "ratio_set": {
+            "kind": "BOUNDED",
+            "boundaries": [
+              -0.5071389093591567,
+              -0.4969394027247894
+            ]
+          },
+          "ratio_point": -0.5020381709996559,
+          "interval_assumption": "IID_HC0_NORMAL_APPROXIMATION_SYNTHETIC_ONLY"
+        }
+      }
+    },
+    {
+      "name": "zero_terminal_signal_not_forced_into_finite_ratio",
+      "passed": true,
+      "details": {
+        "kind": "ALL_REAL"
+      }
+    },
+    {
+      "name": "overshoot_can_fake_leadership",
+      "passed": true,
+      "details": {
+        "slopes": [
+          1.7978880081407311,
+          0.8996766597247453,
+          0.9993835486100349,
+          0.999622425716001
+        ],
+        "early_difference": 0.8982113484159858,
+        "terminal_response": 0.9995029871630179,
+        "ratio_set": {
+          "kind": "BOUNDED",
+          "boundaries": [
+            0.8935245023769286,
+            0.9037939648028699
+          ]
+        },
+        "ratio_point": 0.8986579929745507,
+        "interval_assumption": "IID_HC0_NORMAL_APPROXIMATION_SYNTHETIC_ONLY"
+      }
+    },
+    {
+      "name": "midpoint_lead_can_reflect_slow_opposite_quote_side",
+      "passed": true,
+      "details": {
+        "midpoint_gap": 0.44999999999999996,
+        "ask_gap": 0.0,
+        "interpretation": "MIDQUOTE_ONLY_LEADERSHIP_NOT_CERTIFIED"
+      }
+    },
+    {
+      "name": "relay_and_common_news_delay_observational_equivalence",
+      "passed": true,
+      "details": {
+        "max_observable_difference": 0.0,
+        "causal_route": "NOT_IDENTIFIED_FROM_THESE_PRICES"
+      }
+    },
+    {
+      "name": "timestamp_uncertainty_blocks_fine_ordering",
+      "passed": true,
+      "details": {
+        "apparent_gap_seconds": 1,
+        "each_timestamp_uncertainty_seconds": 2,
+        "ordering": "UNRESOLVED"
+      }
+    },
+    {
+      "name": "unchanged_live_quote_is_not_missing",
+      "passed": true,
+      "details": {
+        "valid_live_state": true,
+        "quote_changed": false,
+        "scope": "logical_fixture_not_feed_parser_validation"
+      }
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "code_sha256": "bee7fcf5bf7b7d3d39ab8a1fcfa99e7a82e9274b0b1dfa49064ed0f4b06194be",
+  "empirical_data_read": false,
+  "empirical_power": "NOT_RUN",
+  "production_inference": "NOT_IMPLEMENTED_OR_CERTIFIED"
+}

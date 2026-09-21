@@ -1,0 +1,27 @@
+{
+  "status": "SYNTHETIC_NULL_CALIBRATION_ONLY",
+  "seed": 20260922,
+  "replications": 500,
+  "design": {
+    "independent_events": 80,
+    "ETF_rows_per_event": 8,
+    "true_event_response_difference_slope": 0,
+    "critical_value": 1.99
+  },
+  "false_rejection_rate_IID_rows": 0.502,
+  "false_rejection_rate_event_cluster": 0.06,
+  "weak_denominator_ratio_coverage": 0.95,
+  "strong_denominator_ratio_coverage": 0.96,
+  "weak_denominator_unbounded_set_rate": 0.936,
+  "strong_denominator_unbounded_set_rate": 0.0,
+  "MC_standard_error_near_nominal_5pct": 0.009746794344808964,
+  "limits": [
+    "Not P1 power or sample feasibility",
+    "No empirical inputs; independent event clusters are assumed",
+    "No real issuer/date multiway inference certification",
+    "Fieller uses known Gaussian covariance in this experiment",
+    "No seed search or tuning to obtain a pass"
+  ],
+  "code_sha256": "b685c277a187de80ea364e724245afc4043279273b7d24fd9f90886e6ecc3ff3",
+  "fieller_source_sha256": "bee7fcf5bf7b7d3d39ab8a1fcfa99e7a82e9274b0b1dfa49064ed0f4b06194be"
+}
