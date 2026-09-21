@@ -1,0 +1,71 @@
+{
+  "status": "ALL_SIX_EVENT_PATHS_COMPUTED_AND_INDEPENDENTLY_REVIEWED",
+  "scc_host": "scc1.bu.edu",
+  "raw_licensed_rows_exported": false,
+  "quoted_download_total_usd": 0.015461146832,
+  "billing_ledger_debit_usd": "NOT_OBSERVED",
+  "purchase_amount_basis": "Sum of the pre-download Databento get_cost quotes for eight successfully downloaded requests; an independent billing-ledger debit was not observed.",
+  "download_requests": 8,
+  "download_files": 8,
+  "counts": {
+    "events": 6,
+    "issuers": 4,
+    "event_dates": 6,
+    "clock_variants": 7,
+    "endpoint_rows": 168,
+    "path_rows": 637,
+    "independently_recomputed_available_key_cells": 52,
+    "unavailable_archive_end_key_cells": 4
+  },
+  "routing": {
+    "coordinator": {
+      "requested": "gpt-5.6-sol / medium",
+      "backend_telemetry": "NOT_OBSERVED"
+    },
+    "engineer": {
+      "dispatch": "gpt-5.6-terra / medium",
+      "backend_telemetry": "NOT_OBSERVED"
+    },
+    "independent_reviewer": {
+      "dispatch": "gpt-5.6-sol / high",
+      "backend_telemetry": "NOT_OBSERVED"
+    },
+    "nested_delegation": false
+  },
+  "state_repair": "The decoder retains the full BBO state sequence. A target-time invalid BBO state replaces a prior valid state; with no update, the last state is carried and its age reported without separately certifying continuity. Same-timestamp conflicts are invalid, and targets beyond the archive end are unavailable.",
+  "xom_january_endpoint_impact_of_state_repair": "ZERO",
+  "computed_variants": [
+    "XOM 2023-01-31 06:30 ET",
+    "XOM 2023-07-28 06:00 ET",
+    "XOM 2023-07-28 06:30 ET",
+    "UNH 2023-04-14 05:55 ET",
+    "AAPL 2023-02-02 16:30 ET",
+    "AAPL 2023-08-03 16:30 ET",
+    "MSFT availability notice 2023-04-25 16:07 ET"
+  ],
+  "commands": [
+    "Databento exact eight-window request; receipt DATABENTO_DOWNLOAD_RECEIPT.json",
+    "scp code/reconstruct_six_scc.py SCC",
+    "ssh SCC dbn_runtime/bin/python reconstruct_six_20260922.py",
+    "scp derived ENDPOINTS.csv PATHS.csv QUALITY_SUMMARY.json",
+    "python3 code/build_event_summary.py",
+    "python3 code/plot_six.py",
+    "independent raw-DBN decode and key-cell recomputation"
+  ],
+  "artifacts": [
+    "RESULTS.md",
+    "EVENT_SUMMARY.csv",
+    "ENDPOINTS.csv",
+    "PATHS.csv",
+    "SIX_EVENT_PATHS.png",
+    "QUALITY_SUMMARY.json",
+    "DATABENTO_REQUESTS.csv",
+    "DATABENTO_DOWNLOAD_RECEIPT.json",
+    "EXECUTION_RECEIPT.json",
+    "INDEPENDENT_REVIEW.md",
+    "code/reconstruct_six_scc.py",
+    "code/build_event_summary.py",
+    "code/plot_six.py",
+    "code/download_missing_scc.py"
+  ]
+}

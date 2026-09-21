@@ -1,0 +1,361 @@
+{
+  "state_logic": "Every BBO update, including invalid/undefined/crossed states, is retained until target selection; invalid target state cannot be bypassed by prior valid quote. With no new update, the last state is carried and its age is reported; continuity beyond that observation is not separately certified. Same-timestamp conflicting states are invalid.",
+  "state_fix_impact_jan31_xnas": "0 endpoint values changed versus the previous valid-row-only reconstruction; no later invalid target state was present at its declared endpoints.",
+  "purchases_usd": 0.015461146832,
+  "retrospective_static_report_dilution": {
+    "XOM_2023-01-31": {
+      "report_dt": "2022-12-31",
+      "max_eff_dt": "2023-01-09",
+      "percent_tna": 1.4099998474
+    },
+    "XOM_2023-07-28": {
+      "report_dt": "2023-06-30",
+      "max_eff_dt": "2023-07-07",
+      "percent_tna": 1.1699991226
+    },
+    "UNH_2023-04-14": {
+      "report_dt": "2023-03-31",
+      "max_eff_dt": "2023-04-10",
+      "percent_tna": 1.2899999619
+    },
+    "AAPL_2023-02-02": {
+      "report_dt": "2022-12-31",
+      "max_eff_dt": "2023-01-09",
+      "percent_tna": 6.0499992371
+    },
+    "AAPL_2023-08-03": {
+      "report_dt": "2023-06-30",
+      "max_eff_dt": "2023-07-07",
+      "percent_tna": 7.719997406
+    },
+    "MSFT_2023-04-25": {
+      "report_dt": "2023-03-31",
+      "max_eff_dt": "2023-04-10",
+      "percent_tna": 6.25
+    }
+  },
+  "events": [
+    {
+      "event_id": "P1-2023-08-01",
+      "anchor": "06:30_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/3e771140b59d588abd71.dbn.zst",
+      "mapped_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FCNCA",
+        "FISV",
+        "HEI",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "QQQ",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM",
+        "YUMC"
+      ],
+      "selected_record_counts": {
+        "SPY": 2665,
+        "XOM": 938
+      }
+    },
+    {
+      "event_id": "P1-2023-08-01",
+      "anchor": "06:30_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/0960f2ea732a055227d0.dbn.zst",
+      "mapped_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FCNCA",
+        "FISV",
+        "HEI",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "QQQ",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM",
+        "YUMC"
+      ],
+      "selected_record_counts": {
+        "SPY": 2862,
+        "XOM": 858
+      }
+    },
+    {
+      "event_id": "P1-2023-08-03",
+      "anchor": "06:00_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/951e711f4f00f69187f1.dbn.zst",
+      "mapped_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FCNCA",
+        "FI",
+        "HEI",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "QQQ",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM",
+        "YUMC"
+      ],
+      "selected_record_counts": {
+        "SPY": 1677,
+        "XOM": 445
+      }
+    },
+    {
+      "event_id": "P1-2023-08-03",
+      "anchor": "06:00_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/ddfffe94fb838815f703.dbn.zst",
+      "mapped_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FCNCA",
+        "FI",
+        "HEI",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "QQQ",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM",
+        "YUMC"
+      ],
+      "selected_record_counts": {
+        "SPY": 2087,
+        "XOM": 415
+      }
+    },
+    {
+      "event_id": "P1-2023-08-03",
+      "anchor": "06:30_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/951e711f4f00f69187f1.dbn.zst",
+      "mapped_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FCNCA",
+        "FI",
+        "HEI",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "QQQ",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM",
+        "YUMC"
+      ],
+      "selected_record_counts": {
+        "SPY": 1124,
+        "XOM": 430
+      }
+    },
+    {
+      "event_id": "P1-2023-08-03",
+      "anchor": "06:30_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/ddfffe94fb838815f703.dbn.zst",
+      "mapped_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FCNCA",
+        "FI",
+        "HEI",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "QQQ",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM",
+        "YUMC"
+      ],
+      "selected_record_counts": {
+        "SPY": 1311,
+        "XOM": 308
+      }
+    },
+    {
+      "event_id": "P1-2023-06-02",
+      "anchor": "05:55_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/UNH_APR_XNAS.dbn.zst",
+      "mapped_symbols": [
+        "SPY",
+        "UNH"
+      ],
+      "selected_record_counts": {
+        "SPY": 2028,
+        "UNH": 223
+      }
+    },
+    {
+      "event_id": "P1-2023-06-02",
+      "anchor": "05:55_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/UNH_APR_ARCX.dbn.zst",
+      "mapped_symbols": [
+        "SPY",
+        "UNH"
+      ],
+      "selected_record_counts": {
+        "SPY": 2133,
+        "UNH": 200
+      }
+    },
+    {
+      "event_id": "P1-2023-01-01",
+      "anchor": "16:30_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/AAPL_FEB_XNAS.dbn.zst",
+      "mapped_symbols": [
+        "AAPL",
+        "SPY"
+      ],
+      "selected_record_counts": {
+        "SPY": 2892,
+        "AAPL": 4322
+      }
+    },
+    {
+      "event_id": "P1-2023-01-01",
+      "anchor": "16:30_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/AAPL_FEB_ARCX.dbn.zst",
+      "mapped_symbols": [
+        "AAPL",
+        "SPY"
+      ],
+      "selected_record_counts": {
+        "SPY": 3128,
+        "AAPL": 4952
+      }
+    },
+    {
+      "event_id": "P1-2023-01-03",
+      "anchor": "16:30_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/AAPL_AUG_XNAS.dbn.zst",
+      "mapped_symbols": [
+        "AAPL",
+        "SPY"
+      ],
+      "selected_record_counts": {
+        "SPY": 2331,
+        "AAPL": 4077
+      }
+    },
+    {
+      "event_id": "P1-2023-01-03",
+      "anchor": "16:30_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/AAPL_AUG_ARCX.dbn.zst",
+      "mapped_symbols": [
+        "AAPL",
+        "SPY"
+      ],
+      "selected_record_counts": {
+        "AAPL": 4895,
+        "SPY": 2489
+      }
+    },
+    {
+      "event_id": "P1-2023-02-02",
+      "anchor": "16:07_ET",
+      "feed": "XNAS.ITCH",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/MSFT_APR_XNAS.dbn.zst",
+      "mapped_symbols": [
+        "MSFT",
+        "SPY"
+      ],
+      "selected_record_counts": {
+        "MSFT": 3165,
+        "SPY": 3095
+      }
+    },
+    {
+      "event_id": "P1-2023-02-02",
+      "anchor": "16:07_ET",
+      "feed": "ARCX.PILLAR",
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/missing_data_round_20260914/p1_six_event_20260922/MSFT_APR_ARCX.dbn.zst",
+      "mapped_symbols": [
+        "MSFT",
+        "SPY"
+      ],
+      "selected_record_counts": {
+        "SPY": 3205,
+        "MSFT": 3534
+      }
+    }
+  ]
+}
