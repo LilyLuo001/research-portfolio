@@ -1,0 +1,99 @@
+{
+  "status": "HOLD_DATA__RETAINED_METADATA_BINDING_COMPLETE",
+  "scope_guard": "The archived 32 release groups are a retained inventory universe only. They are not an inherited or newly approved research population, and no row is selected for empirical use here.",
+  "generated_by": "sources/build_joint_support.py",
+  "staged_counts_file": "sources/STAGED_COUNTS.json",
+  "sources": [
+    {
+      "id": "NEWS_CLOCK_RETAINED",
+      "kind": "candidate issuer/release metadata plus public-clock receipt",
+      "source_file": "../20260920_phase3/event_clock/CLOCK_SUMMARY.json",
+      "sha256": "28113f670e14184dbf3371a7b4ef6a5e1a83da81676533f674d74ac6bacab16c",
+      "field_binding": {
+        "event_key": "retained candidate release group",
+        "issuer_identity": "public issuer/CIK metadata",
+        "first_public_interval": "not certified in retained evidence",
+        "timezone": "not certified for a usable event"
+      },
+      "record_coverage": "32 candidate groups",
+      "economic_event_authentication": "0 CERTIFIED; 2 conditional technical anchors; 30 UNKNOWN",
+      "use_for_new_design": "No: inventory/provenance only, pending first-public certification.",
+      "permission": "Existing local-read authority: ../20260920_phase3/event_clock/RECEIPT.json and CLOCK_SUMMARY.json. The completed procedure was limited to SEC submissions metadata plus six imported issuer-page findings; it records first-public status as unproven and does not authorize a re-read."
+    },
+    {
+      "id": "QQQ_NPORT_RETAINED",
+      "kind": "actual fund holdings snapshots",
+      "source_file": "../20260920_phase3/p2_rebalance/SOURCE_MANIFEST.json",
+      "sha256": "37a2778730780010e76ac0cf151b66717c7cfbc939b6b527ff2c93ecc95ba892",
+      "field_binding": {
+        "fund": "Invesco QQQ Trust",
+        "holding_as_of": "two retained quarter-end Form N-PORT snapshots",
+        "availability_time": "not bound to each candidate release",
+        "constituent_identity_and_weight": "actual-fund record fields; not exported or read in this workstream"
+      },
+      "record_file_coverage": "2 actual-fund snapshot files. A prior report states a per-file named-record figure, but this workstream did not recount it and does not use it as a newly measured count.",
+      "actual_basket_status": "Not availability-matched to any candidate event; UNKNOWN joint mapping, not zero holdings or zero events.",
+      "proxy_exclusion": "The QQQ Portfolio Deposit prospectus mechanism and Nasdaq index materials are not substituted for actual, availability-matched holdings.",
+      "permission": "Existing local-read authority: ../20260920_phase3/p2_rebalance/SOURCE_MANIFEST.json. It documents snapshot provenance, not a new holdings parsing or event join permission."
+    },
+    {
+      "id": "ARCHIVED_CRSP_ETF_HOLDINGS_METADATA",
+      "kind": "licensed holdings file inventory",
+      "source_file": "../20260920/execution/network/NETWORK_SUPPORT.json",
+      "sha256": "6a955b980817e43272c52a0620c1214c5d22ddc78818ff47350cee13cf186553",
+      "field_binding": {
+        "historical_file_count": "149",
+        "historical_header_file_count": "6",
+        "time_scope": "2022 archive inventory",
+        "holding_mapping": "not read or reused"
+      },
+      "actual_basket_status": "IDENTITY_SUPPORT_ONLY_NOT_WEIGHTED_NETWORK; not a 2023 actual-basket authorization and not a proxy for the new design.",
+      "permission": "Existing local-read authority: ../20260920/execution/network/NETWORK_SUPPORT.json. Its status is identity support only; no new SCC holding-row or header query permission is recorded."
+    },
+    {
+      "id": "ARCHIVED_QUOTE_MANIFEST_METADATA",
+      "kind": "Databento physical-request and header metadata",
+      "source_files": [
+        "../20260920/execution/quote_inventory/inventory_summary.json",
+        "../20260920/execution/quote_inventory/scc_inventory_summary.json",
+        "../20260920/execution/roster/safe_manifest_overlap_summary.json"
+      ],
+      "sha256": [
+        "bc054da8ff1e0d06a389cf399ea63acfa132abb5cb892a9802d8847ffb125eb7",
+        "bbd74eff77a38009fe1c0dc97fce2fa8006239619c011f114dc3e80a44eb59b1",
+        "40a32362d9985923ba89a80c0ec7bd12912fd022c93bf21932445c657aadcc2c"
+      ],
+      "field_binding": {
+        "dataset_schema": "venue BBO-1s metadata",
+        "requested_interval": "old candidate-window manifest only",
+        "security_identity": "historical name-interval comparator identity only",
+        "quote_validity": "NOT_ASSESSED"
+      },
+      "record_file_coverage": "5,544 old manifest rows; physical interval/header accounting only",
+      "comparator_metadata": "SPY historical identity plus manifest symbol match: 32/32; QQQ: 0/32. Neither is a price, all-window, live-quote, or actual-basket coverage assertion.",
+      "new_design_status": "UNKNOWN: no ETF plus availability-matched actual-basket set has been authorized for a custodian validity procedure.",
+      "permission": "Existing operation evidence: ../20260920/execution/quote_inventory/INVENTORY.md and ../20260920/execution/EXECUTION_RECEIPT.json. The former records the prior exact manifest-metadata procedure and the latter records body validity as NOT_ASSESSED; neither grants a new join, DBN-body read, or valid-quote determination."
+    },
+    {
+      "id": "OLD_INTRADAY_DBN_REFERENCE",
+      "kind": "old intraday source-manifest receipt",
+      "source_file": "../20260921_empirical_decision/intraday/SCC_DBN_SOURCE_MANIFEST.csv",
+      "sha256": "2c7bed23ce85401e60049b80605ce45a73a42ebd3a3645fb92eae8ac4bbc1d76",
+      "record_file_coverage": "9 receipt rows for an old workflow",
+      "new_design_status": "Not imported: no ETF/actual-basket binding, and no current population authorization."
+    }
+  ],
+  "permission_boundary": {
+    "allowed_completed": [
+      "local reads of named aggregate receipts/manifests",
+      "local recomputation of their counts and hashes"
+    ],
+    "not_authorized_or_not_recorded": [
+      "new SCC query or join for this design",
+      "DBN/Parquet body read",
+      "valid-quote boolean without a custodian process",
+      "WRDS access",
+      "new news-source retrieval or historical-holdings parsing"
+    ]
+  }
+}

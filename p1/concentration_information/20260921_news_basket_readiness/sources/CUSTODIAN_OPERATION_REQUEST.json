@@ -1,0 +1,40 @@
+{
+  "status": "NOT_EXECUTED__ONE_FIRST_BLOCKING_OPERATION_REQUIRES_AUTHORIZATION",
+  "name": "issuer_historical_distribution_provenance_adapter_v1",
+  "purpose": "Resolve the first blocking view: historical version/distribution provenance for the retained six-event clock recheck only. A replay of current page timestamp metadata would add no new evidence to the prior receipt and cannot certify first-public status.",
+  "authorization_basis_to_cite": [
+    "../../20260920_phase3/event_clock/RECEIPT.json: prior bounded public metadata procedure; first-public remained unproven",
+    "../../20260920_phase3/event_clock/CLOCK_SUMMARY.json: exact six-event bounded follow-up and no financial/market values read",
+    "../../20260920_phase3/event_clock/build_event_clock.py: FOLLOWUP dictionary is the retained source whitelist"
+  ],
+  "environment": "approved public-metadata or SCC-custodian environment; no WRDS",
+  "input_roster": {
+    "path": "../../20260920_phase3/event_clock/CLOCK_EVIDENCE.csv",
+    "sha256": "267f9b679e9b61245268bf70a1026e1205576ffe611e4adf5cda998bd8e90dec",
+    "filter": "event_id IN {P1-2023-08-01,P1-2023-06-02,P1-2023-08-03,P1-2023-01-01,P1-2023-02-02,P1-2023-01-03}; use issuer_page_url only; do not add IDs"
+  },
+  "whitelisted_source_urls": [
+    "https://corporate.exxonmobil.com/news/news-releases/2023/0131_exxonmobil-announces-full-year-2022-results",
+    "https://www.unitedhealthgroup.com/newsroom/2023/2023-04-14-uhg-reports-first-quarter-results.html",
+    "https://corporate.exxonmobil.com/news/news-releases/2023/0728_exxonmobil-announces-second-quarter-2023-results",
+    "https://www.apple.com/newsroom/2023/02/apple-reports-first-quarter-results/",
+    "https://news.microsoft.com/source/2023/04/25/microsoft-earnings-press-release-available-on-investor-relations-website-18/",
+    "https://www.apple.com/newsroom/2023/08/apple-reports-third-quarter-results/"
+  ],
+  "fixed_event_source_bindings": {
+    "P1-2023-08-01": {"publisher_or_issuer": "EXXONMOBIL", "url_hash": "8b65270af7ea0fbc1b3029f9099c9e12524b4125ac4e280840b1fde47e8691fe"},
+    "P1-2023-06-02": {"publisher_or_issuer": "UNITEDHEALTH", "url_hash": "e575e7011f376549c45dd2fcb21e8a64d0a7d12ae79d82b529116a73eb623112"},
+    "P1-2023-08-03": {"publisher_or_issuer": "EXXONMOBIL", "url_hash": "56403ccd3f40a7053aea2281057cc3de071b68b3d8bf509e9acf7d6e25526fce"},
+    "P1-2023-01-01": {"publisher_or_issuer": "APPLE", "url_hash": "d461fe367503daf9ea33d381f61118d5bb1a79804396920d10f878a4be78836a"},
+    "P1-2023-02-02": {"publisher_or_issuer": "MICROSOFT", "url_hash": "58e5f8d03b52406808e6e8066432e9d2daf421026443abcda31291815b08c61f"},
+    "P1-2023-01-03": {"publisher_or_issuer": "APPLE", "url_hash": "d88d329bba9578a91ec4ae95ef4c204e069880525f1ee77cb84e1f5d31851673"}
+  },
+  "fixed_event_source_binding_sha256": "76770d75413a5f7c7b15ab2adcd92dced4551be4c3b173de5b6e37275eea5940",
+  "required_unavailable_source_view": "publisher-maintained historical CMS/version or release-distribution provenance linked to each exact whitelisted URL; the retained current-page metadata view is insufficient",
+  "read_only_metadata_fields": ["event_id", "issuer_page_url", "canonical_url", "publisher_or_issuer", "original_release_identifier", "release_created_at_utc", "initial_publication_at_utc", "first_distribution_at_utc", "timezone_or_offset", "version_history_identifier", "explicit_first_public_statement_if_present"],
+  "prohibited": ["page-body financial values", "EPS or forecast fields", "prices, quotes, quote sizes, returns, CARs, or responses", "conference-call time as a replacement clock", "new URLs, source discovery, or population expansion"],
+  "scc_private_output": {"permitted_columns": ["event_id", "url_hash", "publisher_or_issuer", "published_time_status", "first_public_status", "interval_precision", "missing_reason"], "row_policy": "retain on SCC/custodian environment only"},
+  "local_output": "one aggregate receipt: counts by first_public_status, interval_precision, and missing_reason; source-list hash and adapter hash only",
+  "success_rule": "Only an explicit historical source assertion or independently captured distribution provenance may mark FIRST_PUBLIC_CERTIFIED. Absence of this view is UNKNOWN, not evidence that no earlier publication occurred.",
+  "later_dependencies_not_authorized_by_this_request": ["availability-matched actual historical holdings", "ETF/issuer historical mapping for the new design", "DBN quote-validity receipt"]
+}

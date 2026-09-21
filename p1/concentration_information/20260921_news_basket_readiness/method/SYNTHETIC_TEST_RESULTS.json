@@ -1,0 +1,116 @@
+{
+  "status": "SYNTHETIC_LOGIC_TESTS_ONLY",
+  "seed": 20260921,
+  "checks": [
+    {
+      "name": "fixed_fstar_event_total_then_issuer_weighting",
+      "passed": true,
+      "details": {
+        "weights_sum": 1.0,
+        "A_mass": 0.25,
+        "B_mass": 0.25,
+        "interpretation": "PROPOSED_CONDITIONAL_LINEAR_PROJECTION_NOT_ISSUER_MEAN"
+      }
+    },
+    {
+      "name": "common_support_failure_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "top_rest_pooling_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "paired_actual_basket_response",
+      "passed": true,
+      "details": {
+        "etf_h": 0.010000000000000009,
+        "basket_h": 0.010000000000000009,
+        "etf_H": 0.020000000000000018,
+        "basket_H": 0.020000000000000018,
+        "quote_side": "mid"
+      }
+    },
+    {
+      "name": "proxy_basket_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "uncertain_clock_order_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "cross_market_evaluation_interval_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "joint_covariance_psd_and_cluster_ordering",
+      "passed": true,
+      "details": {
+        "min_eigenvalue": 2.3832075553353098e-07,
+        "event_cluster_var": 0.0012575246125590966,
+        "row_iid_var": 0.0005781434436474839
+      }
+    },
+    {
+      "name": "nonfinite_and_nonpsd_inputs_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "repeat_event_dependence_required",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fixed_fstar_cell_standardization_not_pooled_x2_weighting",
+      "passed": true,
+      "details": {
+        "fixed_Fstar_slope": 0.5,
+        "pooled_x2_weighted_slope": 0.205940594059406
+      }
+    },
+    {
+      "name": "weak_denominator_retains_unbounded_set",
+      "passed": true,
+      "details": {
+        "kind": "ALL_REAL"
+      }
+    },
+    {
+      "name": "joint_ratio_contrast_not_marginal_ci_subtraction",
+      "passed": true,
+      "details": {
+        "status": "NOT_IMPLEMENTED",
+        "reason": "Requires validated joint four-coefficient test inversion; marginal ratio confidence sets are not subtracted.",
+        "grid_search": "NOT_USED_MAY_MISS_UNBOUNDED_TAILS"
+      }
+    },
+    {
+      "name": "composition_change_separated_from_within_response",
+      "passed": true,
+      "details": {
+        "total_change": 0.19999999999999996,
+        "within_response_change": 0.0,
+        "composition_change": 0.19999999999999996
+      }
+    },
+    {
+      "name": "unsupported_composition_rejected",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "passed": 15,
+  "total": 15,
+  "empirical_data_read": false,
+  "empirical_power": "NOT_RUN",
+  "production_ready": "NOT_CLAIMED",
+  "parameters": "PROPOSED_NOT_FROZEN",
+  "code_sha256": "a6820cad01da9d1b38ea45564f4c1952430582cb8601352c77e9cb6be3c12dc8"
+}

@@ -1,0 +1,40 @@
+{
+  "scope": "permitted local metadata only; no financial, quote, return, or response values",
+  "inputs_sha256": {
+    "clock_evidence": "267f9b679e9b61245268bf70a1026e1205576ffe611e4adf5cda998bd8e90dec",
+    "qqq_source_manifest": "37a2778730780010e76ac0cf151b66717c7cfbc939b6b527ff2c93ecc95ba892",
+    "safe_manifest_overlap_summary": "40a32362d9985923ba89a80c0ec7bd12912fd022c93bf21932445c657aadcc2c"
+  },
+  "independent_row_census": {
+    "old_clock_inventory_rows": 32,
+    "unique_old_clock_event_ids": 32,
+    "scientifically_frozen_rows": 0,
+    "conditional_technical_anchor_rows": 2,
+    "qqq_form_nport_source_files": 2,
+    "old_inventory_unique_issuers": 8,
+    "old_inventory_events_per_issuer_min": 4,
+    "old_inventory_events_per_issuer_max": 4,
+    "old_inventory_unique_event_dates": 25,
+    "old_inventory_shared_date_blocks": 6,
+    "old_inventory_events_on_shared_dates": 13,
+    "old_inventory_max_events_on_one_date": 3
+  },
+  "propagated_aggregate_reaccounting_not_row_census": {
+    "SPY": {
+      "old_groups_with_historical_identity": 32,
+      "old_groups_with_manifest_symbol_match": 32
+    },
+    "QQQ": {
+      "old_groups_with_historical_identity": 32,
+      "old_groups_with_manifest_symbol_match": 0
+    }
+  },
+  "interpretation": {
+    "old_32_denominator": "retained inventory, not a newly approved research population",
+    "old_manifest_matches": "request/name support only, not valid quote support",
+    "availability_matched_actual_baskets": "UNKNOWN",
+    "valid_news_etf_actual_basket_joint_quotes": "UNKNOWN",
+    "cross_etf_event_reuse": "UNKNOWN; the permitted clock inventory has no new-design ETF join",
+    "issuer_and_date_counts": "inventory dependence diagnostics only, not inference clusters or effective sample size"
+  }
+}

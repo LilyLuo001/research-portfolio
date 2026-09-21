@@ -4,8 +4,9 @@
 
 ## 最新状态（2026-09-21）
 
+- **本轮执行：[新闻—ETF—真实篮子 readiness](20260921_news_basket_readiness/README.md)**。已运行元数据回执再计数和合成方法实现；不是新经验结果。最终状态与下一行动见[决定](20260921_news_basket_readiness/DECISION.md)，独立复核见该目录报告。
 - **先读：[新方向始末与接手说明](20260921_price_discovery_method/RESEARCH_HANDOFF.md)**。当前为 `HOLD_CONTRIBUTION_AND_EMPIRICAL_VALIDATION`，不是实证通过。
-- [下一轮完整执行 prompt（含模型/effort 分工）](20260921_price_discovery_method/NEXT_EXECUTION_PROMPT.md)：仅已编写，尚未部署。先绑定现有新闻—ETF—真实篮子元数据、完善方法实现，再独立复核；不自动打开响应值。
+- [本轮所执行的 prompt（含模型/effort 分工）](20260921_price_discovery_method/NEXT_EXECUTION_PROMPT.md)：原始文件保留提交时状态；用户随后已批准执行，实际委派、产物及边界记录在 readiness 目录。不自动打开响应值。
 - [文献贡献定位](20260921_price_discovery_literature/CONTRIBUTION_ASSESSMENT.md)与[方法原型/测试](20260921_price_discovery_method/README.md)：保留导师的价格发现问题，但宽泛 ETF/个股领先、权重效应与信息分解不是新贡献。原型及合成测试不能证明实际样本可行。
 - [已完成的 H2 冻结检验](20260921_same_industry_replication/DECISION.md)：`INCONCLUSIVE_STOP_SPENDING`，停止共同持仓/两日反应路线的自动扩样与购买。
 - [信息质量方向的定位执行与 SCC 字段核查](20260921_information_quality_repositioning/DECISION.md)：`HOLD_CONTRIBUTION_AND_MEASUREMENT`。通用 bellwether/ETF 信息外溢不是新贡献；新的独有信息质量命题尚未冻结或运行。只核查了文献、文件与 footer，没有新财务值/收益访问。

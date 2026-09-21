@@ -1,0 +1,85 @@
+{
+  "stage": "20260921_news_basket_readiness",
+  "status": "BOUNDED_STAGE_COMPLETED_WITH_HOLD_DATA_AND_HOLD_METHOD",
+  "base_commit": "c05a9acfd5f47670eb214f952699bf90792ff522",
+  "authorization": "User explicitly submitted NEXT_EXECUTION_PROMPT.md for execution and requested retry of Git push.",
+  "historical_archive_publication": {
+    "commit": "c05a9acfd5f47670eb214f952699bf90792ff522",
+    "branch": "task/p1-feasibility-adjudication-20260913",
+    "pushed": true,
+    "remote_tip_verified_by_ls_remote": true,
+    "main_merged": false
+  },
+  "routing": [
+    {"role": "coordinator", "requested_model": "gpt-5.6-sol", "requested_effort": "medium", "dispatch": "EXISTING_COORDINATOR_RETAINED_NO_SWITCH_CLAIM", "actual_backend_telemetry": "NOT_OBSERVED"},
+    {"role": "metadata_engineer", "requested_model": "gpt-5.6-terra", "requested_effort": "medium", "dispatch": "EXPLICIT_PARAMETERS_ACCEPTED", "agent": "/root/basket_sources", "actual_backend_telemetry": "NOT_OBSERVED"},
+    {"role": "method_engineer", "requested_model": "gpt-5.6-terra", "requested_effort": "medium", "dispatch": "EXPLICIT_PARAMETERS_ACCEPTED", "agent": "/root/basket_method", "actual_backend_telemetry": "NOT_OBSERVED"},
+    {"role": "independent_reviewer", "requested_model": "gpt-5.6-sol", "requested_effort": "high", "dispatch": "EXPLICIT_PARAMETERS_ACCEPTED_AFTER_ENGINEERING", "agent": "/root/basket_referee", "actual_backend_telemetry": "NOT_OBSERVED"}
+  ],
+  "token_usage": "NOT_OBSERVED",
+  "nesting_or_configuration_changes": false,
+  "completed_work": {
+    "metadata": "Recomputed seven retained small manifest/summary inputs; no fresh licensed row-level joint census.",
+    "method": "Synthetic-only cell-specific response projections, fixed-F* linear standardization, joint event-cluster covariance, single-group ratio sets and composition accounting.",
+    "custodian_handoff": "Prepared precise six-event historical provenance view request and validated-view aggregate consumer; upstream source retrieval NOT_RUN."
+  },
+  "coordinator_verified_commands": [
+    {"cwd": "stage root", "command": "python3 -m pytest -q sources", "exit_code": 0, "passed": 4},
+    {"cwd": "stage root", "command": "python3 method/synthetic_tests.py", "exit_code": 0, "passed": 13, "total": 13},
+    {"cwd": "stage root", "command": "python3 -m py_compile method/estimator.py method/synthetic_tests.py sources/build_joint_support.py sources/first_public_adapter.py", "exit_code": 0}
+  ],
+  "post_round_1_coordinator_verification": [
+    {"cwd": "stage root", "command": "python3 -m pytest -q sources reviewer", "exit_code": 0, "passed": 21},
+    {"cwd": "stage root", "command": "python3 method/synthetic_tests.py", "exit_code": 0, "passed": 15, "total": 15}
+  ],
+  "final_coordinator_verification": [
+    {"cwd": "stage root", "command": "python3 -m pytest -q sources reviewer", "exit_code": 0, "passed": 24, "source_tests": 9, "independent_reviewer_tests": 15},
+    {"cwd": "stage root", "command": "python3 method/synthetic_tests.py", "exit_code": 0, "passed": 15, "total": 15},
+    {"cwd": "stage root", "command": "python3 reviewer/independent_counts.py", "exit_code": 0, "result": "reviewer/INDEPENDENT_COUNTS.json"},
+    {"cwd": "stage root", "command": "python3 -m py_compile method/estimator.py method/synthetic_tests.py sources/build_joint_support.py sources/first_public_adapter.py reviewer/independent_counts.py reviewer/test_method_adversarial.py reviewer/test_source_security.py", "exit_code": 0}
+  ],
+  "coordinator_pre_review_repairs": [
+    "Preserve repeated event-ETF rows and within-event ETF weights rather than arbitrary response aggregation.",
+    "Use V1 regressor x=w*z; pooled F* row weights cannot replace cell-specific slopes followed by fixed-F* linear standardization.",
+    "Separate historical summary recounting and unverified narrative counts from fresh joint evidence.",
+    "Limit permission request to one exact missing historical-provenance view; current-page replay does not add evidence.",
+    "Restricted-view consumer checks allowed headers before consuming rows and rejects duplicate event IDs/free-text statuses."
+  ],
+  "independent_review": {
+    "status": "ROUND_1_S1_S4_M1_M2_CLOSED",
+    "report": "INDEPENDENT_REVIEW.md",
+    "repair_rounds": 1,
+    "second_round_requested": false,
+    "limited_passes": ["PASS_SOURCE_ADAPTER_LOGIC", "PASS_SYNTHETIC_IMPLEMENTED_MODULES"],
+    "overall": "HOLD_DATA + HOLD_METHOD",
+    "final_reviewed_hashes": "See independent review artifact manifest; receipt does not self-hash or imply whole-project certification."
+  },
+  "repair_routing": {
+    "original_method_resume": "FAILED_AGENT_THREAD_LIMIT_REACHED",
+    "assigned_existing_agent": "/root/basket_sources",
+    "requested_model": "gpt-5.6-terra",
+    "requested_effort": "medium",
+    "scope": "After S1-S4 source fixes, sequentially apply M1-M2 method fixes; original method engineer no longer running. Separate referee unchanged.",
+    "extra_agents_created": false,
+    "actual_backend_telemetry": "NOT_OBSERVED"
+  },
+  "boundaries": {
+    "scc_connection_or_job": false,
+    "wrds_connection": false,
+    "new_protected_rows_read": false,
+    "financial_values_quotes_returns_outcomes_read": false,
+    "raw_inputs_modified": false,
+    "empirical_power_or_effect_estimation": false,
+    "data_purchase": false,
+    "authentication_changes_or_credentials_copied": false,
+    "licensed_rows_exported_to_git": false
+  },
+  "unimplemented_or_uncertified": [
+    "Historical first-public source provenance and real quote/basket joint support",
+    "Cross-group ratio-difference joint confidence set",
+    "Actual issuer/date/overlap inference calibration",
+    "Terminal equivalence/platform stability and source/feed validity",
+    "Final parameters and contribution validation"
+  ],
+  "research_status": "HOLD_CONTRIBUTION_AND_EMPIRICAL_VALIDATION"
+}

@@ -1,0 +1,78 @@
+{
+  "purpose": "retained-metadata readiness accounting; no values, bodies, or SCC query",
+  "inputs_sha256": {
+    "event_clock": "28113f670e14184dbf3371a7b4ef6a5e1a83da81676533f674d74ac6bacab16c",
+    "quote_inventory": "bc054da8ff1e0d06a389cf399ea63acfa132abb5cb892a9802d8847ffb125eb7",
+    "quote_scc_inventory": "bbd74eff77a38009fe1c0dc97fce2fa8006239619c011f114dc3e80a44eb59b1",
+    "manifest_overlap": "40a32362d9985923ba89a80c0ec7bd12912fd022c93bf21932445c657aadcc2c",
+    "holdings_inventory": "6a955b980817e43272c52a0620c1214c5d22ddc78818ff47350cee13cf186553",
+    "qqq_source_manifest": "37a2778730780010e76ac0cf151b66717c7cfbc939b6b527ff2c93ecc95ba892",
+    "old_intraday_manifest": "2c7bed23ce85401e60049b80605ce45a73a42ebd3a3645fb92eae8ac4bbc1d76"
+  },
+  "stages": [
+    {
+      "stage": "candidate_news_records",
+      "count": 32,
+      "denominator": "retained candidate release groups",
+      "status": "RECORD_COVERAGE_ONLY"
+    },
+    {
+      "stage": "first_public_clock_certified",
+      "count": 0,
+      "denominator": 32,
+      "status": "ZERO_CERTIFIED_NOT_DATA_ABSENCE",
+      "reason": "SEC acceptance is never substituted for release time. Two issuer-page metadata clocks are retained only as technical anchors because first-public status is not independently certified; four of six remain UNKNOWN."
+    },
+    {
+      "stage": "conditional_clock_technical_anchors",
+      "count": 2,
+      "denominator": 32,
+      "status": "NOT_SCIENTIFICALLY_ELIGIBLE"
+    },
+    {
+      "stage": "actual_fund_holdings_files",
+      "count": 2,
+      "denominator": "retained public QQQ Form N-PORT snapshots",
+      "status": "RECORD_FILE_COVERAGE_ONLY",
+      "reason": "quarter-end reports, not availability-matched event baskets"
+    },
+    {
+      "stage": "candidate_events_with_availability_matched_actual_basket",
+      "count": null,
+      "denominator": 32,
+      "status": "UNKNOWN_NO_AUTHORIZED_JOIN"
+    },
+    {
+      "stage": "historical_identity_and_manifest_coverage_spy",
+      "count": 32,
+      "denominator": 32,
+      "status": "MANIFEST_INTERVAL_COVERAGE_NOT_VALID_QUOTES"
+    },
+    {
+      "stage": "historical_identity_and_manifest_coverage_qqq",
+      "count": 0,
+      "denominator": 32,
+      "status": "ZERO_OLD_MANIFEST_MATCH_NOT_DATA_ABSENCE"
+    },
+    {
+      "stage": "candidate_news_etf_actual_basket_valid_quote_joint_support",
+      "count": null,
+      "denominator": 32,
+      "status": "UNKNOWN_NO_AUTHORIZED_CUSTODIAN_VALIDITY_PROCESS"
+    }
+  ],
+  "retained_source_metadata": {
+    "quote_manifest_rows": 5544,
+    "quote_catalog_datasets": [
+      "XNAS.ITCH",
+      "ARCX.PILLAR",
+      "BATS.PITCH",
+      "XNYS.PILLAR"
+    ],
+    "old_intraday_manifest_rows": 9,
+    "archived_holdings_files": 149,
+    "archived_holdings_header_files": 6,
+    "archived_holdings_status": "IDENTITY_SUPPORT_ONLY_NOT_WEIGHTED_NETWORK",
+    "nport_record_count_each": "NOT_INDEPENDENTLY_RECOUNTED: historical narrative figure, excluded from this recomputed accounting"
+  }
+}
