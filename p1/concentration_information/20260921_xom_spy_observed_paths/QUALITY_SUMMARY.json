@@ -1,0 +1,121 @@
+{
+  "event_id": "P1-2023-08-01",
+  "schema": "bbo-1s",
+  "time_semantics": "ts_recv interval end",
+  "primary_feed": "XNAS.ITCH",
+  "feeds": {
+    "XNAS.ITCH": {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/3e771140b59d588abd71.dbn.zst",
+      "mapped_symbol_count": 23,
+      "selected_record_counts": {
+        "LHX": 854,
+        "CMI": 437,
+        "SPY": 2665,
+        "EA": 209,
+        "XOM": 938,
+        "AIG": 189,
+        "BSX": 138,
+        "IR": 4,
+        "IDXX": 6,
+        "TDG": 1,
+        "SNPS": 10,
+        "VMC": 136,
+        "HSIC": 6,
+        "D": 4,
+        "FISV": 134,
+        "ANSS": 10,
+        "ORLY": 6,
+        "ADSK": 9,
+        "NTRS": 3
+      },
+      "observed_symbols": [
+        "ADSK",
+        "AIG",
+        "ANSS",
+        "BSX",
+        "CMI",
+        "D",
+        "EA",
+        "FISV",
+        "HSIC",
+        "IDXX",
+        "IR",
+        "LHX",
+        "NTRS",
+        "ORLY",
+        "SNPS",
+        "SPY",
+        "TDG",
+        "VMC",
+        "XOM"
+      ]
+    },
+    "BATS.PITCH": {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn/4813a1381403d9d1c15e.dbn.zst",
+      "mapped_symbol_count": 23,
+      "selected_record_counts": {
+        "XOM": 87,
+        "SPY": 1436
+      },
+      "observed_symbols": [
+        "SPY",
+        "XOM"
+      ]
+    },
+    "ARCX.PILLAR": {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/0960f2ea732a055227d0.dbn.zst",
+      "mapped_symbol_count": 23,
+      "selected_record_counts": {
+        "SPY": 2862,
+        "XOM": 858
+      },
+      "observed_symbols": [
+        "SPY",
+        "XOM"
+      ]
+    },
+    "XNYS.PILLAR": {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/measurement/native_dbn_second/c44a02dd5fbacdfcb1f2.dbn.zst",
+      "mapped_symbol_count": 23,
+      "selected_record_counts": {
+        "SPY": 1277
+      },
+      "observed_symbols": [
+        "SPY"
+      ]
+    }
+  },
+  "basket": {
+    "report_date": "2022-12-31",
+    "report_effective_date": "2023-01-09",
+    "report_stock_rows": 504,
+    "fixed_available_subset_count": 6,
+    "fixed_available_subset_report_weight_sum": 2.0999996066093445,
+    "weight_rows_available": 18,
+    "selection_rule": "date-valid XNAS mapping; Dec-31 CRSP report stock; quote state at 06:30-anchor baseline and every +1/+5/+15/+30/+60 endpoint",
+    "retained_symbols": [
+      "AIG",
+      "BSX",
+      "CMI",
+      "EA",
+      "LHX",
+      "XOM"
+    ],
+    "quantity_basis": "sum of CRSP 2022-12-31 nbr_shares by ticker; common scale cancels after baseline normalization",
+    "baseline_value_weights": {
+      "AIG": 0.0682374618595508,
+      "BSX": 0.09628011539855574,
+      "CMI": 0.05070551567036413,
+      "EA": 0.04910179919252149,
+      "LHX": 0.059487845964314126,
+      "XOM": 0.6761872619146937
+    },
+    "xom_baseline_value_share": 0.6761872619146937,
+    "ex_xom_subset_count": 5
+  },
+  "anchors": {
+    "06:29_ET": "2023-01-31T11:29:00+00:00",
+    "06:30_ET": "2023-01-31T11:30:00+00:00",
+    "06:31_ET": "2023-01-31T11:31:00+00:00"
+  }
+}

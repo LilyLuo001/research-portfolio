@@ -1,0 +1,33 @@
+{
+  "status": "PATHS_AND_PROXY_COMPUTED",
+  "event_id": "P1-2023-08-01",
+  "event_date": "2023-01-31",
+  "anchor_utc": "2023-01-31T11:30:00Z",
+  "scc_host": "scc1.bu.edu",
+  "raw_data_location": "SCC only",
+  "primary_feed": "XNAS.ITCH bbo-1s; ts_recv interval end",
+  "diagnostic_feeds": ["BATS.PITCH", "ARCX.PILLAR", "XNYS.PILLAR"],
+  "window_utc": "2023-01-31 11:15:00Z to 12:45:00Z",
+  "baseline": "anchor minus 5 minutes; latest valid BBO state at or before target",
+  "endpoints_minutes": [1, 5, 15, 30, 60],
+  "anchors_et": ["06:29", "06:30", "06:31"],
+  "proxy": "retrospective fixed Dec-31 CRSP available-report-stock subset; 6 stocks, 2.10% report percent_tna, XOM baseline-value share 67.62%; ex-XOM five-stock diagnostic included",
+  "licensed_raw_rows_exported": false,
+  "purchases_usd": 0,
+  "routing": {
+    "coordinator_requested": "gpt-5.6-sol / medium",
+    "coordinator_backend_telemetry": "NOT_OBSERVED",
+    "engineer_dispatch": "gpt-5.6-terra / medium",
+    "engineer_backend_telemetry": "NOT_OBSERVED",
+    "independent_reviewer_dispatch": "gpt-5.6-sol / high",
+    "independent_reviewer_backend_telemetry": "NOT_OBSERVED",
+    "nested_delegation": false
+  },
+  "commands": [
+    "scp code/reconstruct_paths_scc.py qluo@scc1.bu.edu:/scratch/qluo/xom_spy_observed_paths_20260921_reconstruct.py",
+    "ssh qluo@scc1.bu.edu /scratch/qluo/systematic_pilot_support/dbn_runtime/bin/python /scratch/qluo/xom_spy_observed_paths_20260921_reconstruct.py",
+    "scp derived ENDPOINTS.csv PATHS.csv QUALITY_SUMMARY.json from SCC",
+    "python3 code/plot_paths.py"
+  ],
+  "artifacts": ["ENDPOINTS.csv", "PATHS.csv", "PATHS.png", "QUALITY_SUMMARY.json", "RESULTS.md", "INDEPENDENT_REVIEW.md"]
+}
