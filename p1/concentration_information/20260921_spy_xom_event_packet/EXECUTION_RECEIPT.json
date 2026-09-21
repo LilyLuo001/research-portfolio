@@ -1,0 +1,110 @@
+{
+  "status": "A_STAGE_INDEPENDENT_REVIEWED_HOLD_NAMED_INPUT",
+  "event_id": "P1-2023-08-01",
+  "base_commit": "6a68794bd52209ad311ae1e06d9a65f7a9cc1ef7",
+  "review_decision": "HOLD_NAMED_INPUT",
+  "review_completed_at_utc": "2026-09-21T15:22:16Z",
+  "scc_clock_observed_at_utc": "2026-09-21T15:22:17Z",
+  "scc_host": "scc1.bu.edu",
+  "scc_user": "qluo",
+  "raw_data_location": "SCC only",
+  "commands": [
+    "python3 -m py_compile code/stage_a_scc_probe.py code/independent_stage_a_recompute.py",
+    "scp -q code/stage_a_scc_probe.py code/independent_stage_a_recompute.py qluo@scc1.bu.edu:/scratch/qluo/spy_xom_event_packet_20260921/",
+    "ssh -o BatchMode=yes qluo@scc1.bu.edu '/scratch/qluo/systematic_pilot_support/dbn_runtime/bin/python /scratch/qluo/spy_xom_event_packet_20260921/stage_a_scc_probe.py'",
+    "ssh -o BatchMode=yes qluo@scc1.bu.edu '/scratch/qluo/systematic_pilot_support/dbn_runtime/bin/python /scratch/qluo/spy_xom_event_packet_20260921/independent_stage_a_recompute.py'",
+    "scp -q qluo@scc1.bu.edu:/scratch/qluo/spy_xom_event_packet_20260921/stage_a_probe_aggregate.json qluo@scc1.bu.edu:/scratch/qluo/spy_xom_event_packet_20260921/independent_stage_a_recompute.json ./",
+    "test ! -e EVENT_PIPELINE_RELEASE.json"
+  ],
+  "artifacts": {
+    "stage_a_probe_script": {
+      "path": "code/stage_a_scc_probe.py",
+      "sha256": "bfc5939ae1bacbc1c15492e6497a1ed9874d8927767e7a3f68d0b7e7128160a9"
+    },
+    "stage_a_probe_output": {
+      "path": "stage_a_probe_aggregate.json",
+      "scc_path": "/scratch/qluo/spy_xom_event_packet_20260921/stage_a_probe_aggregate.json",
+      "sha256": "d2f7133db078219451dbb34b207daab42303bba304129501dd7b0ed7763b5969"
+    },
+    "independent_recompute_script": {
+      "path": "code/independent_stage_a_recompute.py",
+      "sha256": "e1ef79d1503bfd8172e7aa34328ea7b2d85d5b01e0dc9f754fb763a3cf3b04b2"
+    },
+    "independent_recompute_output": {
+      "path": "independent_stage_a_recompute.json",
+      "scc_path": "/scratch/qluo/spy_xom_event_packet_20260921/independent_stage_a_recompute.json",
+      "sha256": "e1ef18056f83b184068b12f5ab9fc620b07a17942451fa27351dd1df74bd84d3"
+    },
+    "source_manifest": {
+      "path": "SOURCE_MANIFEST.json",
+      "sha256": "d2001d7c61caf9b42e7a7b149b8a5420b2271846fab8e60bb7bf5698951161b7"
+    },
+    "independent_review": {
+      "path": "INDEPENDENT_REVIEW.md",
+      "sha256": "396e539e15ee2c273630653059c2d8dbf3c0824c169998fc58f7039e6364f04e"
+    },
+    "decision": {
+      "path": "DECISION.md",
+      "sha256": "f0d71e95db30b3a0d8ad4af75841744492166ab081e6014adedbdd58501f19e1"
+    },
+    "event_packet": {
+      "path": "EVENT_PACKET.md",
+      "sha256": "0b49fb982de9ce70464c0e523b08e92d7410f4b5e4d47700eb7546d227856e92"
+    },
+    "results": {
+      "path": "RESULTS.md",
+      "sha256": "72203a13e6e848462aa8a0addd019bb6e11822d75ba662a9f6c4be9c2327ab4a"
+    },
+    "gap_manifest": {
+      "path": "GAP_OR_DOWNLOAD_MANIFEST.csv",
+      "sha256": "45c2b966a2de32aac1bbe0145aa4b0ed0aed0b7809901975fb840e5dd72d62bd"
+    }
+  },
+  "licensed_source_hashes": {
+    "ibes_detail": "9544b0ed865581359a2b2b69c4af4a2286e847af0adba8bf98fb3d099d51a4b5",
+    "ibes_actual": "e774cc2e823249c58f6131f284ad4ece1baaf00208f635316074b578c8f60ba1"
+  },
+  "projection_contract": {
+    "explicit_metadata_and_holdings_columns_only": true,
+    "select_star_over_licensed_parquet": false,
+    "forecast_value_columns_projected": false,
+    "actual_eps_value_columns_projected": false,
+    "quote_value_columns_projected": false
+  },
+  "corrected_issues": [
+    "stale aggregate was replaced by output from final exact-CUSIP code",
+    "missing security IDs are separated from valid-ID additions and drops",
+    "share-ratio count is labeled diagnostic and is not used to infer economic proportionality",
+    "exact CUSIP 30231G10 is retained on both sides of the fiscal-period join; ticker is not an identity key",
+    "candidate quarterly fiscal period 2022-12-31 is exported as metadata",
+    "all broad licensed-file projections were replaced with explicit permitted metadata/holdings columns",
+    "issuer page and Nasdaq timestamp claims were separated"
+  ],
+  "historical_execution_failures": [
+    "initial scp before remote directory existed",
+    "system python3: ModuleNotFoundError duckdb",
+    "DuckDB CREATE VIEW prepared parameter rejected",
+    "SQL alias rows reserved"
+  ],
+  "values_read": {
+    "forecast": false,
+    "actual_eps": false,
+    "quote": false
+  },
+  "licensed_rows_exported": false,
+  "purchases_usd": 0,
+  "authentication_changed": false,
+  "release_created": false,
+  "event_pipeline_release_present": false,
+  "treatment_inference": "NOT_RUN",
+  "power_inference": "NOT_RUN",
+  "reviewer_routing": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_effort": "high",
+    "dispatch_accepted": true,
+    "actual_model_routing": "NOT_OBSERVED",
+    "actual_backend_telemetry": "NOT_OBSERVED",
+    "observable_token_statistics": "NOT_OBSERVED"
+  },
+  "nested_delegation_used": false
+}

@@ -1,0 +1,85 @@
+{
+  "scope": "P1-2023-08-01 Stage A; no EPS/actual/quote values selected",
+  "holdings_files": 307,
+  "holdings_glob": "raw/rescue_remaining/crsp_holdings_etf_2022_*/part_*.parquet + raw/rescue_remaining/crsp_holdings_etf_2023_*/part_*.parquet",
+  "holdings_date_aggregate": [
+    {
+      "report_dt": "2023-01-31",
+      "min_eff_dt": "2023-02-07",
+      "max_eff_dt": "2023-02-07",
+      "eff_dt_count": 1,
+      "n_rows": 505,
+      "security_ids": 501,
+      "missing_security_id_rows": 4,
+      "rows_with_shares": 505,
+      "rows_with_weight": 505,
+      "xom_rows": 1,
+      "xom_units_weight_present": 1
+    }
+  ],
+  "latest_strictly_prior_report_dt": "2022-12-31",
+  "latest_strictly_prior_snapshot_metadata": {
+    "min_eff_dt": "2023-01-09",
+    "max_eff_dt": "2023-01-09",
+    "eff_dt_count": 1,
+    "n_rows": 505,
+    "valid_security_ids": 501,
+    "missing_security_id_rows": 4
+  },
+  "prior_vs_same_day_snapshot_aggregate": {
+    "prior_rows": 505,
+    "same_day_rows": 505,
+    "prior_valid_security_ids": 501,
+    "same_day_valid_security_ids": 501,
+    "overlap_valid_security_ids": 500,
+    "dropped_valid_security_ids": 1,
+    "added_valid_security_ids": 1,
+    "prior_missing_security_id_rows": 4,
+    "same_day_missing_security_id_rows": 4,
+    "comparable_share_pairs": 500,
+    "distinct_rounded_share_ratios_diagnostic": 500
+  },
+  "ibes_sources": {
+    "detail": {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2023.parquet",
+      "sha256": "9544b0ed865581359a2b2b69c4af4a2286e847af0adba8bf98fb3d099d51a4b5"
+    },
+    "actual": {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2023.parquet",
+      "sha256": "e774cc2e823249c58f6131f284ad4ece1baaf00208f635316074b578c8f60ba1"
+    }
+  },
+  "detail_metadata": {
+    "records": 49,
+    "period_count": 9,
+    "same_date_activation": 48,
+    "later_date_activation": 1,
+    "same_date_later_time": 48,
+    "currency_missing": 49
+  },
+  "actual_metadata": {
+    "records": 2,
+    "period_count": 1,
+    "same_date_activation": 2,
+    "later_date_activation": 0,
+    "same_date_later_time": 2,
+    "usd_actual_metadata": 2,
+    "quarterly_records": 1
+  },
+  "candidate_period_and_pre_anchor_detail_metadata": {
+    "actual_period_candidates": 1,
+    "candidate_period_min": "2022-12-31",
+    "candidate_period_max": "2022-12-31",
+    "detail_pre_anchor_records": 41,
+    "detail_analyst_estimator_keys": 18,
+    "detail_fpi_code_count": 2,
+    "detail_currency_missing": 41,
+    "detail_cusip_missing": 0
+  },
+  "prohibitions": {
+    "forecast_values_read": false,
+    "actual_values_read": false,
+    "quote_values_read": false,
+    "licensed_rows_exported": false
+  }
+}

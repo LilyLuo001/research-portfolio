@@ -1,0 +1,15 @@
+{
+  "event_id":"P1-2023-08-01", "stage":"A_REVIEW_PACKAGE", "base_commit":"6a68794bd52209ad311ae1e06d9a65f7a9cc1ef7",
+  "sources":[
+    {"id":"issuer_release","url":"https://corporate.exxonmobil.com/news/news-releases/2023/0131_exxonmobil-announces-full-year-2022-results","use":"confirms release date/content; current page does not expose a publication minute"},
+    {"id":"distributor_clock","url":"https://www.nasdaq.com/press-release/exxonmobil-announces-full-year-2022-results-2023-01-31","use":"Business Wire republication displays 2023-01-31 06:30 EST; candidate anchor only, not earliest-public proof"},
+    {"id":"spy_prospectus","url":"https://www.sec.gov/Archives/edgar/data/884394/000119312523017928/d449477d497.htm","use":"2023 prospectus distinguishes actual Portfolio Securities from Index Securities and describes Creation Units/cash; no event-date historical basket"},
+    {"id":"state_street_ap_resources","url":"https://www.ssga.com/us/en/intermediary/resources/authorized-participants","use":"current page lists authenticated daily portfolio composition/basket, CIL, balancing cash and daily holdings; historical 2023-01-31 availability not established"},
+    {"id":"crsp_holdings","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue_remaining/crsp_holdings_etf_2022_*/part_*.parquet;...2023_*/part_*.parquet","projection":"report_dt,eff_dt,permno,ticker,nbr_shares,percent_tna aggregate only","permission":"A allowed; raw SCC only"},
+    {"id":"ibes_detail","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_detu_eps_2023.parquet","projection":"identity/period/announcement/activation/currency metadata only","permission":"no forecast value"},
+    {"id":"ibes_actual","path":"/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2023.parquet","projection":"identity/period/announcement/activation/currency metadata only","permission":"no actual value"},
+    {"id":"stage_a_probe","path":"code/stage_a_scc_probe.py","sha256":"bfc5939ae1bacbc1c15492e6497a1ed9874d8927767e7a3f68d0b7e7128160a9","projection":"explicit metadata/holdings columns only; no SELECT *","output":"stage_a_probe_aggregate.json","output_sha256":"d2f7133db078219451dbb34b207daab42303bba304129501dd7b0ed7763b5969"},
+    {"id":"independent_recompute","path":"code/independent_stage_a_recompute.py","sha256":"e1ef79d1503bfd8172e7aa34328ea7b2d85d5b01e0dc9f754fb763a3cf3b04b2","projection":"explicit metadata/holdings columns only; no SELECT *","output":"independent_stage_a_recompute.json","output_sha256":"e1ef18056f83b184068b12f5ab9fc620b07a17942451fa27351dd1df74bd84d3"}
+  ],
+  "prohibitions":{"response_values_opened":false,"forecast_actual_values_opened":false,"raw_licensed_rows_exported":false}
+}

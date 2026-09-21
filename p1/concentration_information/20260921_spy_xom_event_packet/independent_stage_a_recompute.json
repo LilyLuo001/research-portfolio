@@ -1,0 +1,48 @@
+{
+  "scope": "independent Stage-A aggregate-only recomputation; no values",
+  "holdings_files": 307,
+  "latest_strictly_prior_report_dt": "2022-12-31",
+  "snapshots": [
+    {
+      "report_dt": "2022-12-31",
+      "min_eff_dt": "2023-01-09",
+      "max_eff_dt": "2023-01-09",
+      "rows": 505,
+      "valid_security_ids": 501,
+      "missing_security_id_rows": 4
+    },
+    {
+      "report_dt": "2023-01-31",
+      "min_eff_dt": "2023-02-07",
+      "max_eff_dt": "2023-02-07",
+      "rows": 505,
+      "valid_security_ids": 501,
+      "missing_security_id_rows": 4
+    }
+  ],
+  "valid_id_overlap_drop_add": {
+    "overlap": 500,
+    "dropped": 1,
+    "added": 1
+  },
+  "share_ratio_diagnostic": {
+    "comparable_pairs": 500,
+    "distinct_rounded_ratios": 500
+  },
+  "ibes_exact_cusip_30231G10": {
+    "event_date_eps_actual_rows": 2,
+    "quarterly_actual_period_candidates": 1,
+    "candidate_period_min": "2022-12-31",
+    "candidate_period_max": "2022-12-31",
+    "nominal_pre_anchor_detail_records": 41,
+    "analyst_estimator_keys": 18,
+    "fpi_code_count": 2,
+    "currency_missing_records": 41
+  },
+  "prohibitions": {
+    "forecast_values_read": false,
+    "actual_values_read": false,
+    "quote_values_read": false,
+    "licensed_rows_exported": false
+  }
+}
