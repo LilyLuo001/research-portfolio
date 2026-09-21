@@ -1,0 +1,12 @@
+#!/bin/bash -l
+#$ -N p1daily21
+#$ -cwd
+#$ -j y
+#$ -l h_rt=02:00:00
+#$ -l mem_per_core=4G
+#$ -pe omp 2
+set -euo pipefail
+module load python3/3.12.4
+ROOT=/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared
+STAGE=$ROOT/derived/p1_concentration_information/20260921_empirical_decision/daily_network
+python -u "$STAGE/run_daily_network.py" --root "$ROOT" --out "$STAGE/results" --macro "$STAGE/public_macro_calendar.json"

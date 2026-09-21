@@ -1,0 +1,63 @@
+{
+  "status": "FULL_DEVELOPMENT_EXECUTED",
+  "privacy": "licensed identifiers, row-level returns and private pair data remain on SCC",
+  "seal": {
+    "return_dates_read_latest": "2023-06-30",
+    "analysis_filter_latest": "2023-06-30",
+    "holdout_responses_used": false,
+    "h2_delisting_return_values_loaded_into_process": true,
+    "h2_delisting_return_values_joined_analyzed_or_exported": false,
+    "final_code_source_filters_delisting_input_to_h1": true,
+    "previously_exposed_dates_excluded": [
+      "2023-01-31",
+      "2023-07-28"
+    ]
+  },
+  "counts": {
+    "issuer_dates": 15,
+    "unique_dates": 11,
+    "overlap_blocks": 10,
+    "broad_response_rows": 5025,
+    "network_rows": 6658,
+    "network_receivers": 490,
+    "macro_event_dates": 2
+  },
+  "pair_scale": {
+    "transform": "log positive observed PURE_D pair_strength, standardized on eligible primary rows",
+    "mean": -7.120058696390034,
+    "sd_ddof1": 1.575275281258204,
+    "missing_pair": "UNKNOWN_NOT_ZERO"
+  },
+  "control_dependence": {
+    "unique_control_windows": 40,
+    "receiver_control_window_keys": 18186,
+    "receiver_control_window_keys_reused_across_focal_dates": 3151,
+    "rows_in_reused_receiver_control_window_keys": 6302,
+    "event_plus_control_calendar_components": 2,
+    "largest_component_event_dates": 10,
+    "event_overlap_bootstrap_fully_adjusts_shared_control_dependence": false,
+    "precision_status": "HEURISTIC_NOT_FULLY_DEPENDENCE_ADJUSTED"
+  },
+  "source_sha256": {
+    "dsf2022": "08b8ed85d0d5563a5b5e539a9cf1a87849c7df6f800a764c3df5ee5108bb931b",
+    "dsf2023": "26c7bcb5248674968b4109638c48f1d4769f78ff7d33cd4626d2d00221e6679f",
+    "names": "34bb5fc4eb3d808a0d5e87e62d2495cb52f651fbf8750a663b240f1d13d62d16",
+    "links": "fd259ac817ab9ea64553e0cdacadc22fcd94de361d1f1851855f9e27ed87e326",
+    "actuals": "e774cc2e823249c58f6131f284ad4ece1baaf00208f635316074b578c8f60ba1",
+    "delist": "bd6d167d40bf9e741b53b906a378a184a0b3a92f8a0df3a2eb2e9b1566b30f66",
+    "roster": "25e0207199caeb0141ba320cbf95748239213c18893fe0195ccb0943527a4ed1",
+    "events": "d6dc10e2c2415892fea723fa22d1827b55dd91fd515496dab7a01a08c7f4b768",
+    "pairs": "2bb42ca989e457bbc63c574ac5b7a2cdc57edae01553932bb9801fe4cc63f265",
+    "receivers": "f414e9830ec46c0bc89804467ac79ce979a34275d5a487204740e80e834df583"
+  },
+  "macro_calendar_sha256": "72bbd4e41beb17bdb4164cb351b518fe5adce2b3c1c5d2518ec836065821c527",
+  "limits": [
+    "development-only descriptive estimates",
+    "small number of overlapping-window blocks; bootstrap intervals are heuristic",
+    "limited macro calendar is not exhaustive",
+    "baseline holding reports may be stale relative to cutoff",
+    "positive observed pair table does not distinguish absent from true zero",
+    "date-only own-news exclusion cannot rule out an after-close own announcement on the preceding trading date",
+    "reported primary absolute metric is mean stock-level absolute response; an after-pilot same-mask aggregated-basket absolute supplement is separately reported without an interval"
+  ]
+}

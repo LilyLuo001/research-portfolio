@@ -1,0 +1,163 @@
+{
+  "generated_utc": "2026-09-21T05:05:43.049668+00:00",
+  "baseline_commit": "4ee495f618494d847f2361e96d6fe103c04ebc37",
+  "git_branch": "task/p1-feasibility-adjudication-20260913",
+  "observed_cli_version": "codex-cli 0.143.0",
+  "requested_dispatch": {
+    "scientific_executor": [
+      "gpt-5.6-sol",
+      "medium"
+    ],
+    "intraday_engineer": [
+      "gpt-5.6-terra",
+      "medium"
+    ],
+    "independent_referee": [
+      "gpt-6-astra",
+      "high"
+    ]
+  },
+  "backend_model_effort_telemetry": "NOT_OBSERVED",
+  "dispatch_and_completion_evidence": "COORDINATION.md and INDEPENDENT_REVIEW.md",
+  "scope": "Daily exploratory association and bounded intraday feasibility, not causal certification",
+  "raw_location": "SCC only; see source-specific execution receipts",
+  "hash_scope": "This small new publication directory only; no raw archive hash sweep",
+  "artifact_files": {
+    "COORDINATION.md": {
+      "sha256": "1f7b8483d3732b681fa0f5e8fe65bab25459b14ebe13476aa27438f7941c0a6d",
+      "bytes": 3242
+    },
+    "INDEPENDENT_REVIEW.md": {
+      "sha256": "5982eb7f2f01f34b51891b8dacc888101f495375ab06a68f622d15fab05c7144",
+      "bytes": 11536
+    },
+    "PRECISION_AND_DECISION.md": {
+      "sha256": "2942e20ed8f215264256bd108e06b5c2799fc4c4fd48c89f7f7f2b0b2f92b5bf",
+      "bytes": 7153
+    },
+    "README.md": {
+      "sha256": "ae14248dc3f44a3f95d0c4a508e33b299921c7fb56abd5c778956e6b915d7168",
+      "bytes": 3722
+    },
+    "SPEC_AMENDMENT.md": {
+      "sha256": "0021199e9783e4d73be43545c0097f8534fcaa89d23f7d17b50cd2549c940f14",
+      "bytes": 8126
+    },
+    "analysis_config.json": {
+      "sha256": "bd46f7726845d535d92a4f199bd6f36fa0c8bded5a56518702cb27af4a6ce857",
+      "bytes": 3164
+    },
+    "daily_network/ACTUAL_RESULTS.md": {
+      "sha256": "a2679c8de083d9023708d54ff0bcb72801653d2cd81b4916a28a53e1d4f544a1",
+      "bytes": 6531
+    },
+    "daily_network/EXECUTION_RECEIPT.json": {
+      "sha256": "b053f6c5ed3e39251a4c2fb5b43e31ceeefd3895006684c83d4dbcf263ccc78b",
+      "bytes": 2919
+    },
+    "daily_network/RUN_CHRONOLOGY.md": {
+      "sha256": "05895058f7a603fefa60ac3c41801ed92b3cd0308c09383acbb5d11b114bf5ef",
+      "bytes": 2430
+    },
+    "daily_network/audit_daily_inputs.py": {
+      "sha256": "59335018c2715bd982ba7280ce7feed54e57012052b8ad07ebdbf989ba93aed6",
+      "bytes": 4036
+    },
+    "daily_network/build_basket_absolute_supplement.py": {
+      "sha256": "62d057edb64b751ceb2ce52471ad9bf59d51019b5bb62532888ea66a26237aa8",
+      "bytes": 6057
+    },
+    "daily_network/repair_network_only.py": {
+      "sha256": "831e009e797b12a1fe920924825a0d171ce4c85f6805915cb112a856aa6f75c4",
+      "bytes": 6480
+    },
+    "daily_network/results/PUBLIC_CONTROL_REUSE_AND_DEPENDENCE.json": {
+      "sha256": "0ec4b6210b53c34c5b9359a4fb31f2c286e16edfa590b7637edc2a3d43bf84f7",
+      "bytes": 424
+    },
+    "daily_network/results/PUBLIC_DAILY_INPUT_AUDIT.json": {
+      "sha256": "85641a982cff9cccffbbd6635279b518dfcc1330cc3b5e7a2958c97d192f1488",
+      "bytes": 548
+    },
+    "daily_network/results/PUBLIC_DAILY_NONMECHANICAL_RESULTS.csv": {
+      "sha256": "517816ef8ca8e91856d020cde30ddcf3ceb8fe1a44cd67405b43b05de24a90f5",
+      "bytes": 1839
+    },
+    "daily_network/results/PUBLIC_ISSUER_RECEIVER_NETWORK_RESULTS.csv": {
+      "sha256": "b6583cdc7b479852012cb5cea4d3dbaa69ffedd59001846c41fbe2b68e59020e",
+      "bytes": 2751
+    },
+    "daily_network/results/PUBLIC_LEAVE_ONE_BLOCK_OUT.csv": {
+      "sha256": "c0d40c400b453d55b32b2ddf93157e52abec859dfab727254f1739745d0ae38f",
+      "bytes": 13274
+    },
+    "daily_network/results/PUBLIC_MATCHED_BASKET_ABSOLUTE_SUPPLEMENT.csv": {
+      "sha256": "ff2778c5956648c77ecec9608462d4475fc1d3a12478cf58ad0051bb913e8653",
+      "bytes": 547
+    },
+    "daily_network/results/PUBLIC_MATCHED_BASKET_SUPPLEMENT_RECEIPT.json": {
+      "sha256": "2f84e3f5e59b9281f59051d43c8499a4996a7c47aa90664407cb84cf8dab38cb",
+      "bytes": 332
+    },
+    "daily_network/results/PUBLIC_METRIC_GAPS.json": {
+      "sha256": "592348ce731d7d53d09e192ae3007dffb472580395c5bf6457e0b4ccda81f78d",
+      "bytes": 723
+    },
+    "daily_network/results/PUBLIC_NETWORK_REPAIR_RECEIPT.json": {
+      "sha256": "15bc88fa22534f7a532cb0ed6b622e49f1c28c5731d79bded8b9bb646eec5ade",
+      "bytes": 457
+    },
+    "daily_network/results/PUBLIC_RUN_SUMMARY.json": {
+      "sha256": "de05ed4379d43797351f30255ccf28a38276d4a3f740f77b41f63c748fd22af6",
+      "bytes": 3046
+    },
+    "daily_network/results/PUBLIC_SAMPLE_ATTRITION_AND_DEPENDENCE.csv": {
+      "sha256": "a8280ee911cd40b7998dc617859f7e227d48af86c274a2c135ed654d6c9e016e",
+      "bytes": 482
+    },
+    "daily_network/run_daily_network.py": {
+      "sha256": "6491f4cf0acd4d9cae756583038a07df4c4c34e6d0f93474f0182b4cc89f4f82",
+      "bytes": 26406
+    },
+    "daily_network/run_full.qsub": {
+      "sha256": "60c01f22c497d086de6b2205a0357c2c868598dadb15b9875e64805b7be98c8f",
+      "bytes": 456
+    },
+    "daily_network/run_network_repair.qsub": {
+      "sha256": "79f96d41d195f300eb5d67e8c058e2cef9faee555bb88cc504cc275135e497ef",
+      "bytes": 400
+    },
+    "daily_network/test_daily_logic.py": {
+      "sha256": "aa0e000dcaa32383bb71bf8c95ff53352a28edeb3d3f3c694fb9e5114f32e924",
+      "bytes": 1271
+    },
+    "daily_network/test_response_read_boundaries.py": {
+      "sha256": "d2624a2c7d73052b3749532e1ef25fef2a345c684038a57f5671b8ace8ab6db4",
+      "bytes": 481
+    },
+    "finalize_receipt.py": {
+      "sha256": "8ced081e0fdd096a259118eb60497c40a9d995cdd9d6f93d27b2872f1a1c49b7",
+      "bytes": 2381
+    },
+    "intraday/EXISTING_FILE_INITIALIZATION_DIAGNOSTIC.csv": {
+      "sha256": "ba7f4a98e639d7b2c6941af0a5fe5d32c214aba96fed279f6b07204e8020c4e4",
+      "bytes": 1550
+    },
+    "intraday/INTRADAY_FEASIBILITY.md": {
+      "sha256": "0884d33f14bcc41fe967342169f0f8bf0eabd7994ba5c5d06338e08ff0a18b1f",
+      "bytes": 7670
+    },
+    "intraday/SCC_DBN_SOURCE_MANIFEST.csv": {
+      "sha256": "2c7bed23ce85401e60049b80605ce45a73a42ebd3a3645fb92eae8ac4bbc1d76",
+      "bytes": 2259
+    },
+    "intraday/run_existing_file_initialization_diagnostic.py": {
+      "sha256": "43c3d4cfdc9333cd74ca79090a6cce10081adc9287a9aef9c3893b89ac6f11c0",
+      "bytes": 2687
+    },
+    "public_macro_calendar.json": {
+      "sha256": "72bbd4e41beb17bdb4164cb351b518fe5adce2b3c1c5d2518ec836065821c527",
+      "bytes": 1133
+    }
+  }
+}

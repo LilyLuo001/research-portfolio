@@ -1,0 +1,36 @@
+{
+  "stage": "daily_nonmechanical_and_issuer_receiver_network",
+  "status": "COMPLETE_DEVELOPMENT_WITH_DISCLOSED_EXECUTION_DEVIATIONS",
+  "requested_role": {"model": "gpt-5.6-sol", "effort": "medium", "backend_telemetry": "NOT_OBSERVED"},
+  "baseline_git_commit": "4ee495f618494d847f2361e96d6fe103c04ebc37",
+  "scc_jobs": [
+    {"job_id": 7671355, "status": "CANCELED_WHILE_QUEUED_BEFORE_EXECUTION", "reason": "preceding-close calendar-span correction"},
+    {"job_id": 7671360, "status": "EXIT_0", "wall_seconds": 140, "maxvmem": "1.703G", "role": "first full H1 development run"},
+    {"job_id": 7671406, "status": "EXIT_0", "wall_seconds": 21, "maxvmem": "1.606G", "role": "optimized duplicate full run plus control-reuse diagnostics; deletion was requested only after completion was effectively reached"},
+    {"job_id": 7671414, "status": "EXIT_0", "wall_seconds": 15, "maxvmem": "979.309M", "role": "network-only issuer-SIC finite repair; no new outcomes read"}
+  ],
+  "other_runs": [
+    "one initial two-block response pilot before the calendar-span correction",
+    "one one-block final-code verification after the calendar correction",
+    "one H1-only same-mask aggregated-basket secondary supplement without inference",
+    "one no-return adjacency and date-valid class source-presence audit"
+  ],
+  "tests": {"logical_fixtures": "PASS_LOCAL_AND_SCC", "response_source_predicates": "PASS_LOCAL_AND_SCC"},
+  "seal_deviation": {
+    "issue": "full-year 2023 daily delisting parquet was loaded without an H1 source predicate in response runs",
+    "scope": "H2 delisting-return values loaded into process memory only",
+    "not_observed": "no H2 delisting value joined the H1-only CRSP rows, entered a model, was exported, or was inspected for selection",
+    "final_code": "explicit dlstdt 2023-01-01 through 2023-06-30 source predicate",
+    "claim_boundary": "no H2 response entered an estimate; do not claim every H2 response-bearing source value remained unread"
+  },
+  "final_output_sha256": {
+    "PUBLIC_CONTROL_REUSE_AND_DEPENDENCE.json": "0ec4b6210b53c34c5b9359a4fb31f2c286e16edfa590b7637edc2a3d43bf84f7",
+    "PUBLIC_DAILY_INPUT_AUDIT.json": "85641a982cff9cccffbbd6635279b518dfcc1330cc3b5e7a2958c97d192f1488",
+    "PUBLIC_DAILY_NONMECHANICAL_RESULTS.csv": "517816ef8ca8e91856d020cde30ddcf3ceb8fe1a44cd67405b43b05de24a90f5",
+    "PUBLIC_ISSUER_RECEIVER_NETWORK_RESULTS.csv": "b6583cdc7b479852012cb5cea4d3dbaa69ffedd59001846c41fbe2b68e59020e",
+    "PUBLIC_LEAVE_ONE_BLOCK_OUT.csv": "c0d40c400b453d55b32b2ddf93157e52abec859dfab727254f1739745d0ae38f",
+    "PUBLIC_MATCHED_BASKET_ABSOLUTE_SUPPLEMENT.csv": "ff2778c5956648c77ecec9608462d4475fc1d3a12478cf58ad0051bb913e8653",
+    "PUBLIC_NETWORK_REPAIR_RECEIPT.json": "15bc88fa22534f7a532cb0ed6b622e49f1c28c5731d79bded8b9bb646eec5ade"
+  },
+  "private_data_boundary": "licensed identifiers, returns, full pair scores and row-level controls remain on SCC"
+}

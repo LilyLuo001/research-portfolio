@@ -1,0 +1,11 @@
+#!/bin/bash -l
+#$ -N p1netfix
+#$ -cwd
+#$ -j y
+#$ -l h_rt=00:30:00
+#$ -l mem_per_core=3G
+set -euo pipefail
+module load python3/3.12.4
+ROOT=/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared
+STAGE=$ROOT/derived/p1_concentration_information/20260921_empirical_decision/daily_network
+python -u "$STAGE/repair_network_only.py" --root "$ROOT" --out "$STAGE/results"

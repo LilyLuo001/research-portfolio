@@ -1,0 +1,47 @@
+{
+  "version": "P1_DAILY_NETWORK_V1_20260921",
+  "frozen_before_new_daily_response_access": true,
+  "development_announcement_dates": ["2023-01-01", "2023-06-30"],
+  "holdout_announcement_dates": ["2023-07-01", "2023-12-31"],
+  "latest_permitted_event_or_control_return_date": "2023-06-30",
+  "previously_exposed_dates_excluded": ["2023-01-31", "2023-07-28"],
+  "event_source": "frozen top8 2023 I/B/E/S release groups; issuer-date collapse; unique-date blocks",
+  "event_window": {
+    "rule": "announcement trading date plus next trading date",
+    "sessions": 2,
+    "interpretation": "coarse daily response, not immediate response"
+  },
+  "receiver_populations": {
+    "daily_fact": "fixed 2022-12-30 top500 issuers excluding all announcers on date and receiver own-EPS-announcement overlap",
+    "network": "fixed 2022-12-30 ranks 9-500 with a frozen PURE_D focal-issuer pair score"
+  },
+  "company_return": "prior-trading-day market-cap weighted across date-valid SHRCD 10/11 share classes; combine RET and DLRET when available",
+  "aggregate_weights": ["equal", "fixed_2022_12_30_company_market_cap"],
+  "control_calendar_offsets_days": [-28, -21, -14, 14, 21, 28],
+  "minimum_valid_control_windows_per_receiver_event": 2,
+  "control_exclusions": ["any top8 announcement-window overlap", "receiver own EPS announcement on any calendar date from first through second control return date"],
+  "macro_overlap": {
+    "source": "public_macro_calendar.json",
+    "window_rule": "calendar dates strictly after the preceding trading date through the second trading return date",
+    "primary": "flag only",
+    "pre_specified_sensitivity": "exclude overlapping-window blocks containing a focal event window with overlap",
+    "coverage_limit": "CPI, Employment Situation and FOMC statements only; not exhaustive"
+  },
+  "primary_daily_outcomes": ["signed_event_minus_control", "absolute_event_minus_control"],
+  "primary_network_outcome": "absolute_event_minus_mean_absolute_control",
+  "secondary_network_outcomes": ["signed_event_minus_mean_control", "raw_absolute_event_return"],
+  "primary_network": "PURE_D",
+  "network_exposure": "focal issuer-receiver pair_strength frozen at 2022-12-30",
+  "network_controls": ["event fixed effects", "pre-event log company market cap", "December-2022 log average dollar volume", "focal same SIC2"],
+  "strict_specification": "within focal same-SIC2 support if rank and variation are sufficient",
+  "inference": {
+    "block": "connected component of announcement dates whose two-session windows share a trading day",
+    "bootstrap_repetitions": 1999,
+    "minimum_unique_dates_for_interval": 6,
+    "interval_warning": "threshold only enables a heuristic block bootstrap; it is not a reliability guarantee",
+    "required_sensitivity": "leave one overlapping-window block out"
+  },
+  "claims_prohibited": ["causal ETF mechanism", "confirmatory power", "long-run concentration trend", "minute price discovery"],
+  "scc_private_output": "derived/p1_concentration_information/20260921_empirical_decision/daily_network/private",
+  "git_safe_output": "p1/concentration_information/20260921_empirical_decision/daily_network"
+}
