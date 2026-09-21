@@ -1,0 +1,57 @@
+{
+  "stage": "20260921_information_quality_repositioning",
+  "scope": "RESEARCH_POSITIONING_AND_BOUNDED_SOURCE_FOOTER_CHECK",
+  "base_commit": "8028cd986b38a1b8817bbda486f383f12868d167",
+  "decision": "HOLD_CONTRIBUTION_AND_MEASUREMENT",
+  "old_route_decision": "INCONCLUSIVE_STOP_SPENDING_PRESERVED",
+  "executed": [
+    "Read old H2 decision and source manifests",
+    "Targeted primary-source literature overlap check",
+    "SCC bounded nonrecursive name and Parquet footer query",
+    "Drafted differentiated candidate test and explicit falsification/stop conditions",
+    "Validated JSON, script syntax, file counts and absence of reported footer errors"
+  ],
+  "not_executed": [
+    "Financial value or return reads",
+    "New outcome analysis",
+    "Empirical power",
+    "Data purchase",
+    "Independent referee review"
+  ],
+  "scc": {
+    "host": "scc1.bu.edu",
+    "read_only": true,
+    "queries": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "first_attempt_note": "Full schema output exceeded terminal output budget. Repeated footer-only query with relevant-field projection and compact JSON; second response retained. No row-level data scan in either attempt.",
+    "files_matched": 103,
+    "distinct_relevant_schema_signatures_not_full_schemas": true,
+    "job_submitted": false
+  },
+  "routing": {
+    "main_actual_model": "NOT_OBSERVED",
+    "main_actual_effort": "NOT_OBSERVED",
+    "subagents_launched": 0,
+    "note": "No model switch or independent review claimed. Single bounded positioning task; no parallel team needed."
+  },
+  "boundaries": {
+    "credentials_accessed": false,
+    "raw_inputs_modified": false,
+    "licensed_rows_exported": false,
+    "new_outcome_values_read": false,
+    "purchase_usd": 0,
+    "wrds_access": false
+  },
+  "artifact_sha256": {
+    "CANDIDATE_TEST.md": "325828afb79f105902d6582e79bbd7aa1d04051319c596358f0a7cca93ce3cd6",
+    "DATA_READINESS.md": "9b900428b23eae65f5a91819c20778cb8a3718f7f45258a705513d0e70e6b7b9",
+    "DECISION.md": "46071738082875d446a4237f1c49e65ca38f1d43208786304a0d60d8993b71ea",
+    "LITERATURE_BOUNDARY.md": "20df7eed1765d38ea0f9fb48e3cdc7d219b8c26a0a5f137c90ffb711d7f660a6",
+    "SCC_FOOTER_PREFLIGHT.json": "9dfedba854e4283c59d46fe7c38967d7ce4b39c2c157ade66df2503a38113179",
+    "footer_preflight.py": "d8675fb8ab0143f3836d96f94eb539b5d03fbf59ec97dd19adf149a08291f117"
+  },
+  "next_action": "Resolve existing direct I/B/E/S point-in-time and adjustment/currency semantics using source documentation and permitted metadata only; do not run values until the new measurement contract and access scope are resolved."
+}

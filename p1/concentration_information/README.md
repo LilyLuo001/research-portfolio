@@ -2,6 +2,14 @@
 
 此目录是新方向后续工作的主入口，与旧 MF→ETF conversion 档案分开。
 
+## 最新状态（2026-09-21）
+
+- [已完成的 H2 冻结检验](20260921_same_industry_replication/DECISION.md)：`INCONCLUSIVE_STOP_SPENDING`，停止共同持仓/两日反应路线的自动扩样与购买。
+- [信息质量方向的定位执行与 SCC 字段核查](20260921_information_quality_repositioning/DECISION.md)：`HOLD_CONTRIBUTION_AND_MEASUREMENT`。通用 bellwether/ETF 信息外溢不是新贡献；新的独有信息质量命题尚未冻结或运行。只核查了文献、文件与 footer，没有新财务值/收益访问。
+- 后续唯一具体工作是现有 I/B/E/S 历史时点与值口径裁定，不是启动另一轮全量回归或报价采购。旧计划与报告保留为历史，不能把它们的执行授权当作新定位已经通过。
+
+## 历史入口
+
 - [研究计划](20260920/RESEARCH_PLAN.md)
 - [第一阶段实际结果](20260920/execution/RESULTS.md)
 - [第一阶段执行记录](20260920/execution/EXECUTION_RECEIPT.json)

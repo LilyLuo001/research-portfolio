@@ -1,0 +1,1026 @@
+{
+  "scope": "BOUNDED_NONRECURSIVE_FILE_AND_FOOTER_ONLY",
+  "utc": "2026-09-21T06:35:07.894077+00:00",
+  "raw_rows_read": false,
+  "column_statistics_read": false,
+  "directory_scope": [
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/maximal",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue_remaining"
+  ],
+  "families": {
+    "quarterly_fundamentals": {
+      "patterns": [
+        "*fundq*.parquet"
+      ],
+      "matched_files": 34,
+      "schemas": [
+        {
+          "schema_id": 1,
+          "relevant_fields": [
+            [
+              "gvkey",
+              "string"
+            ],
+            [
+              "datadate",
+              "string"
+            ],
+            [
+              "fyearq",
+              "int64"
+            ],
+            [
+              "fqtr",
+              "int64"
+            ],
+            [
+              "fyr",
+              "int64"
+            ],
+            [
+              "cusip",
+              "string"
+            ],
+            [
+              "rdq",
+              "string"
+            ],
+            [
+              "epspxq",
+              "double"
+            ],
+            [
+              "ibq",
+              "double"
+            ],
+            [
+              "atq",
+              "double"
+            ],
+            [
+              "saleq",
+              "double"
+            ],
+            [
+              "ajexq",
+              "double"
+            ]
+          ]
+        },
+        {
+          "schema_id": 2,
+          "relevant_fields": [
+            [
+              "gvkey",
+              "string"
+            ],
+            [
+              "datadate",
+              "string"
+            ],
+            [
+              "fyearq",
+              "int64"
+            ],
+            [
+              "fqtr",
+              "int64"
+            ],
+            [
+              "fyr",
+              "int64"
+            ],
+            [
+              "indfmt",
+              "string"
+            ],
+            [
+              "consol",
+              "string"
+            ],
+            [
+              "popsrc",
+              "string"
+            ],
+            [
+              "datafmt",
+              "string"
+            ],
+            [
+              "cusip",
+              "string"
+            ],
+            [
+              "ajexq",
+              "double"
+            ],
+            [
+              "finalq",
+              "string"
+            ],
+            [
+              "updq",
+              "int64"
+            ],
+            [
+              "fdateq",
+              "string"
+            ],
+            [
+              "pdateq",
+              "string"
+            ],
+            [
+              "rdq",
+              "string"
+            ],
+            [
+              "atq",
+              "double"
+            ],
+            [
+              "epspxq",
+              "double"
+            ],
+            [
+              "ibq",
+              "double"
+            ],
+            [
+              "saleq",
+              "double"
+            ]
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "comp_fundq_2010.parquet",
+          "schema_id": 1,
+          "physical_rows": 43882,
+          "size_bytes": 2561227
+        },
+        {
+          "path": "comp_fundq_2011.parquet",
+          "schema_id": 1,
+          "physical_rows": 44805,
+          "size_bytes": 2582868
+        },
+        {
+          "path": "comp_fundq_2012.parquet",
+          "schema_id": 1,
+          "physical_rows": 47366,
+          "size_bytes": 2686616
+        },
+        {
+          "path": "comp_fundq_2013.parquet",
+          "schema_id": 1,
+          "physical_rows": 47626,
+          "size_bytes": 2721096
+        },
+        {
+          "path": "comp_fundq_2014.parquet",
+          "schema_id": 1,
+          "physical_rows": 47194,
+          "size_bytes": 2711281
+        },
+        {
+          "path": "comp_fundq_2015.parquet",
+          "schema_id": 1,
+          "physical_rows": 46524,
+          "size_bytes": 2668065
+        },
+        {
+          "path": "comp_fundq_2016.parquet",
+          "schema_id": 1,
+          "physical_rows": 45988,
+          "size_bytes": 2598027
+        },
+        {
+          "path": "comp_fundq_2017.parquet",
+          "schema_id": 1,
+          "physical_rows": 45723,
+          "size_bytes": 2552889
+        },
+        {
+          "path": "comp_fundq_2018.parquet",
+          "schema_id": 1,
+          "physical_rows": 45842,
+          "size_bytes": 2534570
+        },
+        {
+          "path": "comp_fundq_2019.parquet",
+          "schema_id": 1,
+          "physical_rows": 46333,
+          "size_bytes": 2519863
+        },
+        {
+          "path": "comp_fundq_2020.parquet",
+          "schema_id": 1,
+          "physical_rows": 47045,
+          "size_bytes": 2555366
+        },
+        {
+          "path": "comp_fundq_2021.parquet",
+          "schema_id": 1,
+          "physical_rows": 48634,
+          "size_bytes": 2653104
+        },
+        {
+          "path": "comp_fundq_2022.parquet",
+          "schema_id": 1,
+          "physical_rows": 50118,
+          "size_bytes": 2674675
+        },
+        {
+          "path": "comp_fundq_2023.parquet",
+          "schema_id": 1,
+          "physical_rows": 50690,
+          "size_bytes": 2642254
+        },
+        {
+          "path": "comp_fundq_2024.parquet",
+          "schema_id": 1,
+          "physical_rows": 51190,
+          "size_bytes": 2588974
+        },
+        {
+          "path": "comp_fundq_2025.parquet",
+          "schema_id": 1,
+          "physical_rows": 52847,
+          "size_bytes": 2554659
+        },
+        {
+          "path": "comp_fundq_2026.parquet",
+          "schema_id": 1,
+          "physical_rows": 27011,
+          "size_bytes": 1419007
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2010.parquet",
+          "schema_id": 2,
+          "physical_rows": 43882,
+          "size_bytes": 26193099
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2011.parquet",
+          "schema_id": 2,
+          "physical_rows": 44805,
+          "size_bytes": 26409380
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2012.parquet",
+          "schema_id": 2,
+          "physical_rows": 47366,
+          "size_bytes": 27269512
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2013.parquet",
+          "schema_id": 2,
+          "physical_rows": 47626,
+          "size_bytes": 27649382
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2014.parquet",
+          "schema_id": 2,
+          "physical_rows": 47194,
+          "size_bytes": 27282919
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2015.parquet",
+          "schema_id": 2,
+          "physical_rows": 46524,
+          "size_bytes": 26087147
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2016.parquet",
+          "schema_id": 2,
+          "physical_rows": 45988,
+          "size_bytes": 24721443
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2017.parquet",
+          "schema_id": 2,
+          "physical_rows": 45723,
+          "size_bytes": 24225467
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2018.parquet",
+          "schema_id": 2,
+          "physical_rows": 45842,
+          "size_bytes": 24050012
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2019.parquet",
+          "schema_id": 2,
+          "physical_rows": 46333,
+          "size_bytes": 23826086
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2020.parquet",
+          "schema_id": 2,
+          "physical_rows": 47045,
+          "size_bytes": 24201564
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2021.parquet",
+          "schema_id": 2,
+          "physical_rows": 48634,
+          "size_bytes": 25011891
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2022.parquet",
+          "schema_id": 2,
+          "physical_rows": 50118,
+          "size_bytes": 25170197
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2023.parquet",
+          "schema_id": 2,
+          "physical_rows": 50690,
+          "size_bytes": 24617153
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2024.parquet",
+          "schema_id": 2,
+          "physical_rows": 51190,
+          "size_bytes": 23898617
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2025.parquet",
+          "schema_id": 2,
+          "physical_rows": 52847,
+          "size_bytes": 23191320
+        },
+        {
+          "path": "rescue/comp_fundq_allcols_2026.parquet",
+          "schema_id": 2,
+          "physical_rows": 27011,
+          "size_bytes": 11224349
+        }
+      ]
+    },
+    "annual_fundamentals": {
+      "patterns": [
+        "*funda*.parquet"
+      ],
+      "matched_files": 34,
+      "schemas": [
+        {
+          "schema_id": 1,
+          "relevant_fields": [
+            [
+              "gvkey",
+              "string"
+            ],
+            [
+              "datadate",
+              "string"
+            ],
+            [
+              "fyr",
+              "int64"
+            ],
+            [
+              "cusip",
+              "string"
+            ]
+          ]
+        },
+        {
+          "schema_id": 2,
+          "relevant_fields": [
+            [
+              "gvkey",
+              "string"
+            ],
+            [
+              "datadate",
+              "string"
+            ],
+            [
+              "indfmt",
+              "string"
+            ],
+            [
+              "consol",
+              "string"
+            ],
+            [
+              "popsrc",
+              "string"
+            ],
+            [
+              "datafmt",
+              "string"
+            ],
+            [
+              "cusip",
+              "string"
+            ],
+            [
+              "fyr",
+              "int64"
+            ]
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "comp_funda_2010.parquet",
+          "schema_id": 1,
+          "physical_rows": 18846,
+          "size_bytes": 955824
+        },
+        {
+          "path": "comp_funda_2011.parquet",
+          "schema_id": 1,
+          "physical_rows": 19555,
+          "size_bytes": 975505
+        },
+        {
+          "path": "comp_funda_2012.parquet",
+          "schema_id": 1,
+          "physical_rows": 20304,
+          "size_bytes": 1014957
+        },
+        {
+          "path": "comp_funda_2013.parquet",
+          "schema_id": 1,
+          "physical_rows": 20389,
+          "size_bytes": 1024318
+        },
+        {
+          "path": "comp_funda_2014.parquet",
+          "schema_id": 1,
+          "physical_rows": 19996,
+          "size_bytes": 1006471
+        },
+        {
+          "path": "comp_funda_2015.parquet",
+          "schema_id": 1,
+          "physical_rows": 19488,
+          "size_bytes": 979456
+        },
+        {
+          "path": "comp_funda_2016.parquet",
+          "schema_id": 1,
+          "physical_rows": 19399,
+          "size_bytes": 976053
+        },
+        {
+          "path": "comp_funda_2017.parquet",
+          "schema_id": 1,
+          "physical_rows": 19042,
+          "size_bytes": 962250
+        },
+        {
+          "path": "comp_funda_2018.parquet",
+          "schema_id": 1,
+          "physical_rows": 19107,
+          "size_bytes": 956330
+        },
+        {
+          "path": "comp_funda_2019.parquet",
+          "schema_id": 1,
+          "physical_rows": 19603,
+          "size_bytes": 970856
+        },
+        {
+          "path": "comp_funda_2020.parquet",
+          "schema_id": 1,
+          "physical_rows": 20131,
+          "size_bytes": 990885
+        },
+        {
+          "path": "comp_funda_2021.parquet",
+          "schema_id": 1,
+          "physical_rows": 20392,
+          "size_bytes": 1009797
+        },
+        {
+          "path": "comp_funda_2022.parquet",
+          "schema_id": 1,
+          "physical_rows": 20715,
+          "size_bytes": 1018691
+        },
+        {
+          "path": "comp_funda_2023.parquet",
+          "schema_id": 1,
+          "physical_rows": 20705,
+          "size_bytes": 1013906
+        },
+        {
+          "path": "comp_funda_2024.parquet",
+          "schema_id": 1,
+          "physical_rows": 20614,
+          "size_bytes": 1005544
+        },
+        {
+          "path": "comp_funda_2025.parquet",
+          "schema_id": 1,
+          "physical_rows": 20613,
+          "size_bytes": 998415
+        },
+        {
+          "path": "comp_funda_2026.parquet",
+          "schema_id": 1,
+          "physical_rows": 1541,
+          "size_bytes": 88868
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2010.parquet",
+          "schema_id": 2,
+          "physical_rows": 18846,
+          "size_bytes": 10371961
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2011.parquet",
+          "schema_id": 2,
+          "physical_rows": 19555,
+          "size_bytes": 10542434
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2012.parquet",
+          "schema_id": 2,
+          "physical_rows": 20304,
+          "size_bytes": 10944104
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2013.parquet",
+          "schema_id": 2,
+          "physical_rows": 20389,
+          "size_bytes": 11084344
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2014.parquet",
+          "schema_id": 2,
+          "physical_rows": 19996,
+          "size_bytes": 10865257
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2015.parquet",
+          "schema_id": 2,
+          "physical_rows": 19488,
+          "size_bytes": 10458189
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2016.parquet",
+          "schema_id": 2,
+          "physical_rows": 19399,
+          "size_bytes": 10266475
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2017.parquet",
+          "schema_id": 2,
+          "physical_rows": 19042,
+          "size_bytes": 10124556
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2018.parquet",
+          "schema_id": 2,
+          "physical_rows": 19107,
+          "size_bytes": 10009983
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2019.parquet",
+          "schema_id": 2,
+          "physical_rows": 19603,
+          "size_bytes": 10086891
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2020.parquet",
+          "schema_id": 2,
+          "physical_rows": 20131,
+          "size_bytes": 10338046
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2021.parquet",
+          "schema_id": 2,
+          "physical_rows": 20392,
+          "size_bytes": 10517462
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2022.parquet",
+          "schema_id": 2,
+          "physical_rows": 20715,
+          "size_bytes": 10548307
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2023.parquet",
+          "schema_id": 2,
+          "physical_rows": 20705,
+          "size_bytes": 10374089
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2024.parquet",
+          "schema_id": 2,
+          "physical_rows": 20614,
+          "size_bytes": 10141151
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2025.parquet",
+          "schema_id": 2,
+          "physical_rows": 20613,
+          "size_bytes": 9785090
+        },
+        {
+          "path": "rescue/comp_funda_allcols_2026.parquet",
+          "schema_id": 2,
+          "physical_rows": 1541,
+          "size_bytes": 1379500
+        }
+      ]
+    },
+    "ccm_link": {
+      "patterns": [
+        "*ccm*.parquet"
+      ],
+      "matched_files": 5,
+      "schemas": [
+        {
+          "schema_id": 1,
+          "relevant_fields": [
+            [
+              "gvkey",
+              "string"
+            ],
+            [
+              "linkprim",
+              "string"
+            ],
+            [
+              "linktype",
+              "string"
+            ],
+            [
+              "lpermno",
+              "double"
+            ],
+            [
+              "lpermco",
+              "double"
+            ],
+            [
+              "linkdt",
+              "string"
+            ],
+            [
+              "linkenddt",
+              "string"
+            ]
+          ]
+        },
+        {
+          "schema_id": 2,
+          "relevant_fields": []
+        }
+      ],
+      "files": [
+        {
+          "path": "crsp_ccm_linktable_full.parquet",
+          "schema_id": 1,
+          "physical_rows": 92711,
+          "size_bytes": 1046361
+        },
+        {
+          "path": "rescue/crsp_ccmxpf_linktable_full.parquet",
+          "schema_id": 1,
+          "physical_rows": 92711,
+          "size_bytes": 1046361
+        },
+        {
+          "path": "rescue/crsp_ccmxpf_lnkhist_full.parquet",
+          "schema_id": 1,
+          "physical_rows": 123388,
+          "size_bytes": 1212806
+        },
+        {
+          "path": "rescue/crsp_ccmxpf_lnkrng_full.parquet",
+          "schema_id": 2,
+          "physical_rows": 376359,
+          "size_bytes": 1715078
+        },
+        {
+          "path": "rescue/crsp_ccmxpf_lnkused_full.parquet",
+          "schema_id": 2,
+          "physical_rows": 100942,
+          "size_bytes": 1375141
+        }
+      ]
+    },
+    "detail_eps_direct": {
+      "patterns": [
+        "ibes_detu_eps_*.parquet"
+      ],
+      "matched_files": 15,
+      "schemas": [
+        {
+          "schema_id": 1,
+          "relevant_fields": [
+            [
+              "ticker",
+              "string"
+            ],
+            [
+              "cusip",
+              "string"
+            ],
+            [
+              "actdats",
+              "string"
+            ],
+            [
+              "estimator",
+              "double"
+            ],
+            [
+              "analys",
+              "double"
+            ],
+            [
+              "fpi",
+              "string"
+            ],
+            [
+              "measure",
+              "string"
+            ],
+            [
+              "value",
+              "double"
+            ],
+            [
+              "curr",
+              "string"
+            ],
+            [
+              "usfirm",
+              "int64"
+            ],
+            [
+              "fpedats",
+              "string"
+            ],
+            [
+              "acttims",
+              "string"
+            ],
+            [
+              "anndats",
+              "string"
+            ],
+            [
+              "anntims",
+              "string"
+            ]
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "ibes_detu_eps_2012.parquet",
+          "schema_id": 1,
+          "physical_rows": 1226027,
+          "size_bytes": 16486802
+        },
+        {
+          "path": "ibes_detu_eps_2013.parquet",
+          "schema_id": 1,
+          "physical_rows": 1255746,
+          "size_bytes": 16992712
+        },
+        {
+          "path": "ibes_detu_eps_2014.parquet",
+          "schema_id": 1,
+          "physical_rows": 1333060,
+          "size_bytes": 18493449
+        },
+        {
+          "path": "ibes_detu_eps_2015.parquet",
+          "schema_id": 1,
+          "physical_rows": 1412666,
+          "size_bytes": 19492687
+        },
+        {
+          "path": "ibes_detu_eps_2016.parquet",
+          "schema_id": 1,
+          "physical_rows": 1364068,
+          "size_bytes": 18856690
+        },
+        {
+          "path": "ibes_detu_eps_2017.parquet",
+          "schema_id": 1,
+          "physical_rows": 1304910,
+          "size_bytes": 18124882
+        },
+        {
+          "path": "ibes_detu_eps_2018.parquet",
+          "schema_id": 1,
+          "physical_rows": 1332654,
+          "size_bytes": 18213993
+        },
+        {
+          "path": "ibes_detu_eps_2019.parquet",
+          "schema_id": 1,
+          "physical_rows": 1272334,
+          "size_bytes": 17272993
+        },
+        {
+          "path": "ibes_detu_eps_2020.parquet",
+          "schema_id": 1,
+          "physical_rows": 1427342,
+          "size_bytes": 18863826
+        },
+        {
+          "path": "ibes_detu_eps_2021.parquet",
+          "schema_id": 1,
+          "physical_rows": 1284222,
+          "size_bytes": 17514976
+        },
+        {
+          "path": "ibes_detu_eps_2022.parquet",
+          "schema_id": 1,
+          "physical_rows": 1313328,
+          "size_bytes": 17670340
+        },
+        {
+          "path": "ibes_detu_eps_2023.parquet",
+          "schema_id": 1,
+          "physical_rows": 1260016,
+          "size_bytes": 17059022
+        },
+        {
+          "path": "ibes_detu_eps_2024.parquet",
+          "schema_id": 1,
+          "physical_rows": 1219047,
+          "size_bytes": 16578447
+        },
+        {
+          "path": "ibes_detu_eps_2025.parquet",
+          "schema_id": 1,
+          "physical_rows": 1227469,
+          "size_bytes": 16552570
+        },
+        {
+          "path": "ibes_detu_eps_2026.parquet",
+          "schema_id": 1,
+          "physical_rows": 535667,
+          "size_bytes": 6514840
+        }
+      ]
+    },
+    "actual_eps_direct": {
+      "patterns": [
+        "ibes_actuals_eps_*.parquet"
+      ],
+      "matched_files": 15,
+      "schemas": [
+        {
+          "schema_id": 1,
+          "relevant_fields": [
+            [
+              "ticker",
+              "string"
+            ],
+            [
+              "cusip",
+              "string"
+            ],
+            [
+              "pends",
+              "string"
+            ],
+            [
+              "measure",
+              "string"
+            ],
+            [
+              "pdicity",
+              "string"
+            ],
+            [
+              "anndats",
+              "string"
+            ],
+            [
+              "anntims",
+              "string"
+            ],
+            [
+              "actdats",
+              "string"
+            ],
+            [
+              "acttims",
+              "string"
+            ],
+            [
+              "value",
+              "double"
+            ],
+            [
+              "usfirm",
+              "int64"
+            ]
+          ]
+        }
+      ],
+      "files": [
+        {
+          "path": "ibes_actuals_eps_2012.parquet",
+          "schema_id": 1,
+          "physical_rows": 27131,
+          "size_bytes": 492865
+        },
+        {
+          "path": "ibes_actuals_eps_2013.parquet",
+          "schema_id": 1,
+          "physical_rows": 28813,
+          "size_bytes": 514232
+        },
+        {
+          "path": "ibes_actuals_eps_2014.parquet",
+          "schema_id": 1,
+          "physical_rows": 29285,
+          "size_bytes": 526844
+        },
+        {
+          "path": "ibes_actuals_eps_2015.parquet",
+          "schema_id": 1,
+          "physical_rows": 29022,
+          "size_bytes": 525238
+        },
+        {
+          "path": "ibes_actuals_eps_2016.parquet",
+          "schema_id": 1,
+          "physical_rows": 27900,
+          "size_bytes": 505901
+        },
+        {
+          "path": "ibes_actuals_eps_2017.parquet",
+          "schema_id": 1,
+          "physical_rows": 27362,
+          "size_bytes": 488981
+        },
+        {
+          "path": "ibes_actuals_eps_2018.parquet",
+          "schema_id": 1,
+          "physical_rows": 26639,
+          "size_bytes": 483094
+        },
+        {
+          "path": "ibes_actuals_eps_2019.parquet",
+          "schema_id": 1,
+          "physical_rows": 26092,
+          "size_bytes": 481856
+        },
+        {
+          "path": "ibes_actuals_eps_2020.parquet",
+          "schema_id": 1,
+          "physical_rows": 26693,
+          "size_bytes": 478470
+        },
+        {
+          "path": "ibes_actuals_eps_2021.parquet",
+          "schema_id": 1,
+          "physical_rows": 29269,
+          "size_bytes": 527754
+        },
+        {
+          "path": "ibes_actuals_eps_2022.parquet",
+          "schema_id": 1,
+          "physical_rows": 29031,
+          "size_bytes": 520665
+        },
+        {
+          "path": "ibes_actuals_eps_2023.parquet",
+          "schema_id": 1,
+          "physical_rows": 28468,
+          "size_bytes": 513872
+        },
+        {
+          "path": "ibes_actuals_eps_2024.parquet",
+          "schema_id": 1,
+          "physical_rows": 27619,
+          "size_bytes": 495363
+        },
+        {
+          "path": "ibes_actuals_eps_2025.parquet",
+          "schema_id": 1,
+          "physical_rows": 26649,
+          "size_bytes": 477849
+        },
+        {
+          "path": "ibes_actuals_eps_2026.parquet",
+          "schema_id": 1,
+          "physical_rows": 13522,
+          "size_bytes": 312800
+        }
+      ]
+    }
+  },
+  "warning": "Filename years and footer rows are not economic-date coverage or unique observations. No-match is absence within this bounded name search, not archive-wide absence. No source versions pooled. Forecast/actual value comparability and point-in-time vintages NOT_VERIFIED."
+}
