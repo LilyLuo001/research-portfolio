@@ -1,0 +1,34 @@
+{
+  "status": "PRIVATE_RESPONSE_PANEL_BUILT_PENDING_ESTIMATION",
+  "gate_status": "PASS_OPEN_RESULTS",
+  "gate_sha256": "8ec64e0fea3e61af8b644884cabab5d5bf53346ae68676c8bd25979b2f0e618e",
+  "approved_h2_response_range": [
+    "2023-07-01",
+    "2023-12-31"
+  ],
+  "source_predicates": {
+    "RET": "date IN exact frozen event/control response dates AND permco IN frozen receivers",
+    "DLRET": "dlstdt IN exact frozen response dates AND permno IN selected receiver share classes",
+    "cap_fields": "exact response dates plus their immediately preceding trading dates; RET omitted"
+  },
+  "counts": {
+    "metadata_design_rows": 4904,
+    "response_panel_rows": 4871,
+    "missing_event_response_rows": 31,
+    "fewer_than_two_valid_control_response_rows": 2,
+    "duplicate_dsf_cap_source_rows_excluded": 0,
+    "duplicate_dsf_ret_source_rows_excluded": 0,
+    "duplicate_delist_source_rows_excluded": 0,
+    "required_class_dates_with_nonadjacent_or_nonpositive_lag_cap": 2,
+    "required_adjacent_positive_lag_class_dates_missing_ret_and_dlret": 0,
+    "analysis_window_missing_return_shareclass_uses": 0
+  },
+  "lagged_cap_weight_coverage": {
+    "minimum": 1.0,
+    "mean": 1.0,
+    "scope": "CONDITIONAL_ON_OBSERVED_ADJACENT_POSITIVE_LAG_CLASSES_NOT_COMPLETE_COMPANY_WEIGHT"
+  },
+  "private_panel_sha256": "63a8c106014baffa5e4bedf3dd594224d6eb9bc24a6cfc076fc83ccc6fce5b91",
+  "private_panel_not_exported": true,
+  "sample_refilled_after_response": false
+}

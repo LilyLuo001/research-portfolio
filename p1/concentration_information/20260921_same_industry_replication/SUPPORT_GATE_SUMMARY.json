@@ -1,0 +1,18 @@
+{
+  "status": "PASS_PREOUTCOME_SUPPORT_GATE",
+  "rows": 4904,
+  "issuer_events": 12,
+  "calendar_blocks": 9,
+  "within_event_design_rank": 5,
+  "design_columns": 5,
+  "blocks_with_within_event_exposure_variation": {
+    "same_industry": 9,
+    "outside_industry": 9
+  },
+  "maximum_equal_event_block_weight_share": 0.16666666666666666,
+  "minimum_leave_one_block_rank": 5,
+  "duplicate_event_receiver_keys": 0,
+  "cross_block_calendar_date_reuse": 0,
+  "minimum_receiver_event_controls": 2,
+  "interpretation": "This passes the predeclared study-specific descriptive-inference gate; it is not an effective sample size, power guarantee, or proof of cross-block shock independence."
+}

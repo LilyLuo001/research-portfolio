@@ -1,0 +1,27 @@
+#!/bin/bash -l
+#$ -N p1sameind
+#$ -cwd
+#$ -j y
+#$ -l h_rt=01:00:00
+#$ -l mem_per_core=4G
+#$ -pe omp 2
+set -euo pipefail
+module load python3/3.12.4
+ROOT=/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared
+STAGE=$ROOT/derived/p1_concentration_information/20260921_same_industry_replication
+DESIGN=$STAGE/metadata/private/receiver_event_design.parquet
+CONTROLS=$STAGE/metadata/private/control_assignment.parquet
+PRIVATE=$STAGE/private/private_replication_analysis.parquet
+mkdir -p "$STAGE/private" "$STAGE/results"
+date -u +RUN_BEGIN_UTC=%Y-%m-%dT%H:%M:%SZ
+python -u "$STAGE/build_replication_response.py" \
+  --root "$ROOT" --stage "$STAGE" --design "$DESIGN" --controls "$CONTROLS" \
+  --bind "$DESIGN" "$CONTROLS" "$STAGE/SOURCE_MANIFEST.json" "$STAGE/EXPOSURE_LEDGER.json" \
+    "$STAGE/AUTHORITATIVE_SUPPORT_GATE.json" "$STAGE/metadata/build_result_blind_metadata.py" \
+  --private-out "$PRIVATE" --public-receipt "$STAGE/results/RESPONSE_BUILD_RECEIPT.json"
+python -u "$STAGE/run_frozen_estimation.py" \
+  --stage "$STAGE" \
+  --metadata "$DESIGN" "$CONTROLS" "$STAGE/SOURCE_MANIFEST.json" "$STAGE/EXPOSURE_LEDGER.json" \
+    "$STAGE/AUTHORITATIVE_SUPPORT_GATE.json" "$STAGE/metadata/build_result_blind_metadata.py" \
+  --private-panel "$PRIVATE" --public-out "$STAGE/results"
+date -u +RUN_END_UTC=%Y-%m-%dT%H:%M:%SZ

@@ -1,0 +1,31 @@
+{
+  "status": "FROZEN_BEFORE_NEW_H2_RESPONSE_ACCESS",
+  "frozen_utc": "2026-09-21T06:04:33Z",
+  "preoutcome_review_status": "PASS_OPEN_RESULTS",
+  "preoutcome_review_sha256": "8ec64e0fea3e61af8b644884cabab5d5bf53346ae68676c8bd25979b2f0e618e",
+  "approved_new_response_scope_at_freeze": {
+    "period": ["2023-07-01", "2023-12-31"],
+    "RET": "exact frozen event/control response dates and frozen receiver companies",
+    "DLRET": "exact frozen response dates and selected receiver share classes",
+    "response_opened_before_this_freeze": false
+  },
+  "bound_sha256": {
+    "analysis_config.json": "887536835063f13bf0110fa05acaf7621f229962e00ee0436251602e2e93b95d",
+    "SPECIFICATION.md": "616abcd25c47f08d1fa5be042171e6353a5af90962180fc1443f3107646f8001",
+    "replication_statistics.py": "46f615c3808eb20add08b9ae1449379918c37e4d562ecc59df3bd8ade9fa5936",
+    "build_replication_response.py": "6c1b3bade33df51764a71caa8da1366494a4b4b4f366d4ee49476c0a829223b9",
+    "run_frozen_estimation.py": "24b5aff86ebc576e3d0b53a387c07b1ea6ddd10507d2d7c00fb185ec1acc6c74",
+    "receiver_event_design.parquet": "c02a825c6946994e44c459a1c14af1335d569b8621eb7411c13ad1e1181749dc",
+    "control_assignment.parquet": "242ef8f836065b9161f6cad3e5b21c74ac66a09d321e2410e6460e79ad0556b5",
+    "SOURCE_MANIFEST.json": "1281fedbaaa177619378f5db99fff4c28aeaffc38469e0d3cb56c2e45a7c317f",
+    "EXPOSURE_LEDGER.json": "6197efcfcb25b6b7c3d0a4f87494d7e8869370e69109def1c3dc0a26beed5132",
+    "AUTHORITATIVE_SUPPORT_GATE.json": "aef51d91cb7b3b3e093cbbbcd522c58a83cb7af8e343464cf6fd151db6a94d05",
+    "build_result_blind_metadata.py": "792b453309beb2ce25794ea90e19c5cc952b6664fa0ed9cc5c91902adb156654"
+  },
+  "main_hypotheses": [
+    "same-industry slope is positive",
+    "same-industry slope minus outside-industry slope is positive"
+  ],
+  "decision_and_inference": "analysis_config.json and SPECIFICATION.md; frozen without an approved economic-importance threshold",
+  "post_opening_change_rule": "No sample, allocation, model, weight, exposure scale, covariance, multiplicity or decision-rule change; implementation repair must be disclosed and independently reviewed."
+}

@@ -1,0 +1,68 @@
+{
+  "result_blind": true,
+  "prohibited_columns_not_read": [
+    "RET",
+    "DLRET",
+    "PRC",
+    "quote fields",
+    "EPS value",
+    "forecast fields"
+  ],
+  "sources": [
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920/roster/private_2023_top8_earnings_release_group_candidates.parquet",
+      "purpose": "candidate issuer/date/timing metadata"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_pair_scores.parquet",
+      "purpose": "PURE_D positive pair strengths"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_receiver_scores.parquet",
+      "purpose": "baseline mcap/liquidity and receiver identities"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2023.parquet",
+      "columns": [
+        "permno",
+        "permco",
+        "date"
+      ],
+      "purpose": "trading-date presence only"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsenames_full.parquet",
+      "purpose": "historical identity and SIC2"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/ibes_actuals_eps_2023.parquet",
+      "columns": [
+        "ticker",
+        "pends",
+        "measure",
+        "pdicity",
+        "anndats",
+        "anntims",
+        "actdats",
+        "acttims",
+        "usfirm"
+      ],
+      "purpose": "own-announcement date metadata only"
+    },
+    {
+      "path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_ibes_link_full.parquet",
+      "purpose": "historical ticker/PERMNO linkage"
+    }
+  ],
+  "private_outputs": [
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260921_same_industry_replication/metadata/private/event_candidates.csv",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260921_same_industry_replication/metadata/private/control_assignment.parquet",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260921_same_industry_replication/metadata/private/receiver_event_design.parquet"
+  ],
+  "sha256_inputs": {
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920/roster/private_2023_top8_earnings_release_group_candidates.parquet": "d6dc10e2c2415892fea723fa22d1827b55dd91fd515496dab7a01a08c7f4b768",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_pair_scores.parquet": "2bb42ca989e457bbc63c574ac5b7a2cdc57edae01553932bb9801fe4cc63f265",
+    "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260920_phase3/network_selection/results/private_receiver_scores.parquet": "f414e9830ec46c0bc89804467ac79ce979a34275d5a487204740e80e834df583"
+  },
+  "known_exposure": "452 H2 delisting rows were process-loaded in the prior stage but did not enter estimates, outputs, or selection; H2 is not a strictly pristine holdout. This program did not read delisting or return fields."
+}

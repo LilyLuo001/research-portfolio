@@ -1,0 +1,33 @@
+{
+  "status": "ESTIMATION_COMPLETE_PENDING_INDEPENDENT_REVIEW",
+  "preoutcome_review_sha256": "8ec64e0fea3e61af8b644884cabab5d5bf53346ae68676c8bd25979b2f0e618e",
+  "gate_status": "PASS_OPEN_RESULTS",
+  "private_panel_sha256": "63a8c106014baffa5e4bedf3dd594224d6eb9bc24a6cfc076fc83ccc6fce5b91",
+  "private_panel_not_exported": true,
+  "counts": {
+    "rows": 4871,
+    "issuer_events": 12,
+    "calendar_blocks": 9,
+    "cluster_df": 8
+  },
+  "cr1_k_full_including_event_fixed_effects": 17,
+  "post_response_design_diagnostics": {
+    "rows": 4871,
+    "issuer_events": 12,
+    "calendar_blocks": 9,
+    "design_rank": 5,
+    "design_columns": 5,
+    "blocks_by_same_sic2": {
+      "0": 9,
+      "1": 9
+    },
+    "duplicate_event_receiver_keys": 0,
+    "max_block_weight_share": 0.16666666666666666,
+    "leave_one_block_rank_checks": 9,
+    "minimum_leave_one_block_rank": 5,
+    "block_labels_omitted_from_publication": true
+  },
+  "multiplicity": "Bonferroni 95% familywise coverage for two primary quantities via two-sided 97.5% marginal intervals",
+  "scientific_action_pending_independent_review": "INCONCLUSIVE_STOP_SPENDING",
+  "inference_limit": "descriptive; requires independent calendar-support blocks conditional on controls and can be violated by repeated firms or common shocks"
+}

@@ -1,0 +1,10 @@
+{
+  "status": "DISCLOSURE_ONLY_CORRECTION_NO_EMPIRICAL_RERUN",
+  "corrected_file": "SOURCE_MANIFEST.json",
+  "prior_sha256": "be32879f332bb1f10fa84a9fbe25b064e066d797f76dfd9cfcae2ebc7ebae299",
+  "corrected_sha256": "1281fedbaaa177619378f5db99fff4c28aeaffc38469e0d3cb56c2e45a7c317f",
+  "issue": "The completed metadata builder read private_2023_top8_release_security_historical_symbol_candidates.parquet into process but did not use it; the initial source manifest omitted that access.",
+  "correction": "The metadata-only process read is now disclosed. No outcome field was read and no event, control, design row, count, coefficient, or decision changed.",
+  "empirical_rerun": "NOT_RUN_NOT_NEEDED",
+  "new_outcome_fields_read": false
+}

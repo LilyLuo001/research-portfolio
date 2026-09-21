@@ -1,0 +1,51 @@
+{
+  "algorithm": "absolute offset; past before future; date ascending; chronological global greedy; reserve all known top8 H2 event dates first; prohibit any event/control trading-date intersection across date blocks",
+  "offsets_days": [
+    -28,
+    -21,
+    -14,
+    14,
+    21,
+    28
+  ],
+  "minimum_controls_per_receiver_event": 2,
+  "minimum_observed_receiver_controls": 2,
+  "all_event_and_control_response_dates_h2_only": true,
+  "event_level_control_assignments": 32,
+  "receiver_control_assignments": 12999,
+  "distinct_control_windows": 24,
+  "reused_receiver_control_keys": 3163,
+  "event_control_date_intersections": 0,
+  "allocation_claim": "This is the predeclared deterministic greedy allocation, not a proof of global feasibility or optimality; exact result-blind feasibility check NOT_RUN because allocation retained support.",
+  "support_graph_components_by_date_count": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "components_are_not_effective_sample_size": true,
+  "residual_dependence": [
+    "same receivers repeat across issuer-events",
+    "same issuer can appear more than once",
+    "common macro shocks beyond three named labels",
+    "calendar nonreuse does not establish shock independence"
+  ],
+  "macro_coverage_limit": "CPI, Employment Situation, FOMC statement labels only; incomplete news calendar",
+  "event_timing_rule": "unknown timing treated conservatively; own-news predicate inclusively spans prior_trading_date <= own_anndats <= second_window_date",
+  "same_industry_support": {
+    "pairs": 433,
+    "unique_receivers": 137,
+    "log_pair_strength_sd": 1.4463502311535366
+  },
+  "outside_industry_support": {
+    "pairs": 4471,
+    "unique_receivers": 489,
+    "log_pair_strength_sd": 1.5550353836579236
+  },
+  "status": "SUPPORT_READY"
+}

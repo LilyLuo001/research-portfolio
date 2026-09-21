@@ -1,0 +1,37 @@
+{
+  "stage": "bounded_same_industry_replication",
+  "status": "SINGLE_FROZEN_RUN_EXIT_0_INDEPENDENT_ARITHMETIC_VERIFIED",
+  "preoutcome_review_status": "PASS_OPEN_RESULTS",
+  "preoutcome_review_sha256": "8ec64e0fea3e61af8b644884cabab5d5bf53346ae68676c8bd25979b2f0e618e",
+  "scc_job": {
+    "job_id": 7671847,
+    "job_name": "p1sameind",
+    "qsub_time": "2026-09-21 02:05:36 EDT",
+    "start_time": "2026-09-21 02:07:20 EDT",
+    "end_time": "2026-09-21 02:07:44 EDT",
+    "log_begin_utc": "2026-09-21T06:07:21Z",
+    "log_end_utc": "2026-09-21T06:07:44Z",
+    "qacct_failed": 0,
+    "qacct_exit_status": 0,
+    "wall_seconds": 24,
+    "maxvmem": "1.556G",
+    "submission_count": 1
+  },
+  "response_opening": {
+    "new_RET_scope": "exact frozen event/control response dates and frozen receiver companies",
+    "new_DLRET_scope": "exact frozen response dates and selected receiver share classes",
+    "private_panel_path": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260921_same_industry_replication/private/private_replication_analysis.parquet",
+    "private_panel_sha256": "63a8c106014baffa5e4bedf3dd594224d6eb9bc24a6cfc076fc83ccc6fce5b91",
+    "private_panel_exported": false,
+    "sample_refilled": false,
+    "post_opening_specification_change": false
+  },
+  "public_output_sha256": {
+    "RESPONSE_BUILD_RECEIPT.json": "4c59c4f72937008193fab8a17b8f93df585b80d83ed5766a42234046a42caa68",
+    "REPLICATION_RESULTS.csv": "d44d5a98bcdab7339e2d321306eb544a9df532df2507b9ef9c0dea6a82ecb4f9",
+    "SENSITIVITY_RESULTS.csv": "ed6bf2f41147b83402c72f43859a0ca156063de430243d2eefa1938d8360651a",
+    "ESTIMATION_RECEIPT.json": "8d61634ed6c02d2be21c4b219a6f9ae073aec7af4e7f986e2990d3376c731955"
+  },
+  "publication_transformation": "The public ESTIMATION_RECEIPT replaces exact date-derived block labels with the number of checks and minimum rank. The immutable SCC source receipt has SHA-256 68ca7eb7dd27550ec48e610e9992afffd6104c6b1205bb066da5d42ab60641c1.",
+  "reruns_or_repairs": "NONE"
+}

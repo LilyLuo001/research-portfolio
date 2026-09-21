@@ -1,0 +1,45 @@
+{
+  "version": "P1_SAME_INDUSTRY_REPLICATION_V1_20260921",
+  "outcome_period": ["2023-07-01", "2023-12-31"],
+  "response_dates_must_remain_in_period": true,
+  "excluded_exposed_anchor_dates": ["2023-07-28"],
+  "event_window": "first trading session on or after announcement date plus the next trading session",
+  "control_offsets_calendar_days": [-28, -21, -14, 14, 21, 28],
+  "control_order": "ascending absolute offset, past before future at a tie, then control start date",
+  "minimum_controls_per_receiver_event": 2,
+  "calendar_assignment": "global deterministic greedy assignment; no event or control trading date may be reused across distinct calendar-support blocks",
+  "own_news_interval": "with date-only metadata, inclusive calendar predicate prior_trading_date <= own_announcement_date <= second_window_date; this conservatively excludes the entire prior trading date because after-close timing is unknown",
+  "exposure": {
+    "measure": "log positive observed 2022-12-30 PURE_D pair_strength",
+    "missing_pair": "UNKNOWN_NOT_ZERO",
+    "fixed_development_mean": -7.120058696390034,
+    "fixed_development_sd_ddof1": 1.575275281258204
+  },
+  "main_outcome": "absolute two-session event return minus mean absolute two-session control return",
+  "main_model": "event fixed effects plus x_std, same_sic2, x_std:in_same_sic2, log_size and log_liquidity",
+  "weights": "each issuer-event has total weight one; rows are equal-weighted within issuer-event",
+  "main_quantities": ["same_industry_slope=x_std+x_std:in_same_sic2", "same_minus_other_slope=x_std:in_same_sic2"],
+  "exposed_h1_benchmark": {
+    "adjusted_same_industry_slope_per_fixed_h1_sd": 0.002599258363117126,
+    "status": "development comparison only; H1 was row-weighted and did not estimate the direct pooled interaction, so this is not an identical estimand"
+  },
+  "multiplicity": "two primary quantities use Bonferroni-adjusted two-sided 97.5% marginal intervals, giving 95% familywise coverage conditional on the cluster-sandwich approximation",
+  "scientific_decision_rule": {
+    "continue_mechanism_feasibility": "both familywise interval lower bounds exceed zero and both estimates remain positive in every leave-one-calendar-block and leave-one-issuer deletion",
+    "stop_signal_route": "with the support gate passed, either familywise interval upper bound is at or below zero",
+    "inconclusive_stop_spending": "all other outcome patterns; non-significance is not zero and no economic threshold is invented"
+  },
+  "support_gate": {
+    "minimum_disjoint_calendar_blocks": 8,
+    "minimum_blocks_with_each_industry_group": 6,
+    "maximum_calendar_block_weight_share": 0.25,
+    "require_full_rank_main_design": true,
+    "require_full_rank_after_every_leave_one_block_out": true,
+    "interpretation": "study-specific triage for a finite descriptive interval, not a general validity or power guarantee"
+  },
+  "inference": "calendar-support-block cluster sandwich with finite-sample factor and t reference on G-1 degrees of freedom; descriptive under explicit cross-block independence assumption",
+  "required_sensitivities": ["leave_one_calendar_block_out", "leave_one_issuer_out"],
+  "claims_prohibited": ["causal ETF mediation", "concentration trend", "price-discovery speed", "confirmatory power", "equivalence from non-significance"],
+  "response_gate_file": "PREOUTCOME_REVIEW.json",
+  "response_gate_required_status": "PASS_OPEN_RESULTS"
+}

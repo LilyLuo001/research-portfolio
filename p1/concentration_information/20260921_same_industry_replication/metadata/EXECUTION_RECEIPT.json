@@ -1,0 +1,37 @@
+{
+  "stage": "20260921 same-industry replication metadata-only design",
+  "status": "METADATA_DESIGN_READY_FOR_INDEPENDENT_GATE_NOT_OPEN_RESULTS",
+  "execution_environment": "SCC existing mirror",
+  "private_output_root": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/derived/p1_concentration_information/20260921_same_industry_replication/metadata/private",
+  "result_blind_boundary": {
+    "new_return_price_quote_or_eps_value_fields_read": false,
+    "crsp_2023_projection": ["permno", "permco", "date"],
+    "ibes_actuals_projection": ["ticker", "pends", "measure", "pdicity", "anndats", "anntims", "actdats", "acttims", "usfirm"]
+  },
+  "final_private_artifacts": {
+    "receiver_event_design.parquet": "c02a825c6946994e44c459a1c14af1335d569b8621eb7411c13ad1e1181749dc",
+    "control_assignment.parquet": "242ef8f836065b9161f6cad3e5b21c74ac66a09d321e2410e6460e79ad0556b5",
+    "build_result_blind_metadata.py": "792b453309beb2ce25794ea90e19c5cc952b6664fa0ed9cc5c91902adb156654"
+  },
+  "final_metadata_counts": {
+    "eligible_issuer_receiver_event_rows": 4904,
+    "issuer_events": 12,
+    "event_date_blocks": 9,
+    "receivers": 490,
+    "same_sic2_rows": 433,
+    "outside_sic2_rows": 4471,
+    "receiver_control_rows": 12999,
+    "minimum_controls_per_receiver_event": 2,
+    "event_control_trading_date_intersections": 0
+  },
+  "superseded_initial_run": {
+    "status": "INVALID_NOT_A_GATE_ARTIFACT",
+    "reason": "receiver scores were not restricted to PURE_D and duplicated pair joins; its 11736-row output must not be used",
+    "initial_counts": {"rows": 11736, "issuer_events": 12, "event_blocks": 9, "event_level_controls": 24}
+  },
+  "limits": [
+    "452 H2 delisting rows had historical process access without analytic use; the H2 candidate is not a strictly pristine holdout.",
+    "This is a deterministic greedy allocation, not a global feasibility proof.",
+    "SCC row-level identifiers, assignments and inputs remain private."
+  ]
+}
