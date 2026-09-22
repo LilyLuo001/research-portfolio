@@ -1,0 +1,73 @@
+{
+  "status": "PASS_WITH_LIMITATIONS",
+  "review_date": "2026-09-22",
+  "scope": "P1 ES futures-control execution only",
+  "routing": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_effort": "high",
+    "actual_model_effort_telemetry": "NOT_OBSERVED",
+    "nested_delegation": false
+  },
+  "scc_inputs": {
+    "stock_features": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/directional_evidence/features/DIRECTIONAL_FEATURES.parquet",
+      "sha256": "fda00799a65aef1a11eeb32e9f10d74a0c0077040e41aa47b6f6de9af98cb3b2",
+      "rows": 4147200
+    },
+    "futures_features": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/futures_control/features/FUTURES_FEATURES.parquet",
+      "sha256": "bc669c05cb8d1970e62a0b0f6dc664807f78c37d668095b36d3aa0cc4240b61b",
+      "rows": 86400
+    }
+  },
+  "checks": {
+    "contract_files_checked": 24,
+    "contract_instrument_id_mismatches": 0,
+    "utc_dst_interval_mismatches": 0,
+    "unique_raw_es_centers_recomputed": 20,
+    "venue_specific_stock_es_center_traces": 24,
+    "raw_feature_mismatches": 0,
+    "lag_identity_comparisons_per_field": 86352,
+    "lag_identity_mismatches": 0,
+    "train_dates": 12,
+    "validation_dates": 4,
+    "test_dates": 8,
+    "test_rows_per_stock_cell": 14400,
+    "es_valid_fraction": 1.0,
+    "full_es_valid_model_max_abs_difference": 0.0,
+    "full_es_valid_interval_max_abs_difference": 0.0,
+    "max_abs_daily_to_model_sse_error": 1.4551915228366852e-11,
+    "max_abs_model_mse_error": 1.3322676295501878e-15,
+    "max_abs_model_g_error": 4.2825985813177425e-16,
+    "max_abs_aggregate_or_loo_error": 1.8344700758454735e-16,
+    "max_abs_bootstrap_endpoint_error": 1.0321604682062002e-16,
+    "bootstrap_repetitions": 2000,
+    "bootstrap_seed": 20260922,
+    "common_whole_date_draws_verified": true,
+    "raw_rows_exported_locally": false
+  },
+  "reviewed_hashes": {
+    "results/RESULTS.md": "711badff940b3ce8e900ffeda67c8adba835e6f1b39f733cc830e3c3baaece8f",
+    "results/MODEL_COMPARISON.csv": "d47d369b08be3dd9c362d23a11dc2686cecea5cf6cc7d2a496b6b52d9d79be64",
+    "results/DAILY_LOSS_DIFFERENCES.csv": "53bbdac99e2b11479319763fd0385c1f8508832b5418b7aaca2e00ba46ad96d3",
+    "results/AGGREGATE_COMPARISON.csv": "068e5f6698de353e3c36fd254122c2c3bca85d0244331421db3d0c345e165f0d",
+    "results/DATE_SENSITIVITY.csv": "44c01aca59619f3d3d7411736daa0550ba34d651b612ce38728e8e1061208849",
+    "results/REVERSE_CHECK.csv": "82148719c61aee92a9894489aa2d1c84f53dc703d1bd0d28dbd0be19478dd603",
+    "results/PRIMARY_DECISION_TABLE.csv": "2146c44becd267b304b50d267d2fd2e56e5826011d516c289547bb9077a360bb",
+    "results/CONTRACT_MAP.csv": "0375b4c9c207818448e1876f028e21096027251265c87094058105b1795a8f7d",
+    "results/COVERAGE_AND_CLOCK.csv": "cf5d84e09af0d2cb4ab6a04330025a1135fe8d4b531fed05b53aef76a00e396a",
+    "code/run_futures_control_models.py": "452fd5dd2b341ff8ea1e69a376f8259e9f57c64e9b710e678ba9adf8ec5b0bf1",
+    "code/reaggregate_futures_results.py": "484c9a032389a4325177cc5bae7f677d8eef7416f35f10a21b48d40fa9577ddf",
+    "code/scc_build_es_features.py": "c7d8bd2e111973e5df032789115813de5bfdd98fc79b1fdd23b91f1cc93e8f15",
+    "results/REVIEW.md": "dd60f37d82d1c2e2cda289799544e48b4887a6b6fa26ac2d8d8b6bbb994aecab"
+  },
+  "scientific_decision_reviewed": "MIXED_OR_UNRESOLVED",
+  "material_unresolved_code_error": false,
+  "limitations": [
+    "Only eight previously viewed test dates support uncertainty calculations.",
+    "Dates are ordinary mechanically selected sessions, not earnings or macro events.",
+    "Quote-only SPY given ES is positive in all four cells, but only two synchronized-date intervals exclude zero.",
+    "Quote-plus-trade SPY given ES changes sign and all four intervals cross zero.",
+    "Predictive gains do not identify permanent price discovery, ETF arbitrage, or a causal mechanism."
+  ]
+}

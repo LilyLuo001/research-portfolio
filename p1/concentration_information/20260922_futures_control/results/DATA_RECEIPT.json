@@ -1,0 +1,33 @@
+{
+  "status": "COMPLETE_ES_ACQUISITION_AND_FEATURES_ON_SCC",
+  "dataset": "GLBX.MDP3",
+  "schema": "mbp-1",
+  "continuous_selection_rule": "ES.v.0, Databento's previous-day-volume-ranked front contract; resolved per date through continuous to instrument_id to raw_symbol.",
+  "dates": 24,
+  "shared_futures_request_copies": 24,
+  "equity_venues_reusing_same_futures_data": ["XNAS.ITCH", "ARCX.PILLAR"],
+  "quoted_total_usd": "3.422716096042",
+  "native_dbn_location_scc": "/scratch/qluo/bidirectional_information_20260922/futures_control/raw",
+  "native_dbn_file_count": 24,
+  "native_dbn_total_compressed_bytes": 315269762,
+  "feature_location_scc": "/scratch/qluo/bidirectional_information_20260922/futures_control/features/FUTURES_FEATURES.parquet",
+  "feature_sha256": "bc669c05cb8d1970e62a0b0f6dc664807f78c37d668095b36d3aa0cc4240b61b",
+  "feature_rows": 86400,
+  "feature_columns": 25,
+  "keys": ["date", "grid_shift_ms", "second_index"],
+  "key_unique": true,
+  "rows_per_date_grid": 1800,
+  "grid_shifts_ms": [0, 500],
+  "es_valid_rate": 1.0,
+  "lag1_es_valid_rate": 1.0,
+  "timestamp_basis": "ts_event; source records ordered by ts_event, sequence, source order",
+  "clock_rule": "09:59-10:31 America/New_York acquisition, with 10:00-10:30 ET core and IANA daylight-saving conversion.",
+  "raw_or_row_level_data_exported_locally": false,
+  "aggregate_file_sha256": {
+    "FUTURES_REQUEST_MANIFEST.json": "5a381d0c00e2186662616a9580f8595da7bd454e532c14ca2328cfbfd580fa6f",
+    "CONTRACT_MAP.csv": "0375b4c9c207818448e1876f028e21096027251265c87094058105b1795a8f7d",
+    "QUOTE_RECEIPT.json": "243ff7404e8d5e7658caa6b9c4793f1147682635cf700542e11051f4ea276903",
+    "DOWNLOAD_RECEIPT.json": "0e21d66b7f460e477644124866d170d8ccd0c4d4d665ef88ac45dec25140b5c3",
+    "FEATURE_RECEIPT.json": "93d9a5d2440e6952e8aee1cad9c12815dc75de4ad7d7530a8a7804fa7622c345"
+  }
+}

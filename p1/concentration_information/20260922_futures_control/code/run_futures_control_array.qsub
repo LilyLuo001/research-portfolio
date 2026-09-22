@@ -1,0 +1,44 @@
+#!/bin/bash
+#$ -P econdept
+#$ -N p1_es_ctrl
+#$ -t 1-8
+#$ -l h_rt=02:00:00
+#$ -l mem_per_core=8G
+#$ -j y
+
+set -euo pipefail
+
+BASE=/project/econdept/qluo/bidirectional_information_20260922
+ROOT="$BASE/futures_control"
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+case "$SGE_TASK_ID" in
+  1) VENUE=XNAS.ITCH; SHIFT=0;   FAMILY=QUOTE_WITH_REST_BASKET ;;
+  2) VENUE=XNAS.ITCH; SHIFT=0;   FAMILY=QUOTE_TRADE_WITH_REST_BASKET ;;
+  3) VENUE=XNAS.ITCH; SHIFT=500; FAMILY=QUOTE_WITH_REST_BASKET ;;
+  4) VENUE=XNAS.ITCH; SHIFT=500; FAMILY=QUOTE_TRADE_WITH_REST_BASKET ;;
+  5) VENUE=ARCX.PILLAR; SHIFT=0;   FAMILY=QUOTE_WITH_REST_BASKET ;;
+  6) VENUE=ARCX.PILLAR; SHIFT=0;   FAMILY=QUOTE_TRADE_WITH_REST_BASKET ;;
+  7) VENUE=ARCX.PILLAR; SHIFT=500; FAMILY=QUOTE_WITH_REST_BASKET ;;
+  8) VENUE=ARCX.PILLAR; SHIFT=500; FAMILY=QUOTE_TRADE_WITH_REST_BASKET ;;
+  *) echo "Unexpected SGE_TASK_ID=$SGE_TASK_ID" >&2; exit 2 ;;
+esac
+
+OUT="$ROOT/model_parts/${VENUE}_${SHIFT}_${FAMILY}"
+mkdir -p "$OUT"
+
+exec "$PY" "$ROOT/code/run_futures_control_models.py" \
+  --stock-features "$BASE/directional_evidence/features/DIRECTIONAL_FEATURES.parquet" \
+  --futures-features "$ROOT/features/FUTURES_FEATURES.parquet" \
+  --base-code "$ROOT/code/directional_base.py" \
+  --roster "$ROOT/results/SAFE_ROSTER.csv" \
+  --dates "$ROOT/results/DATE_MANIFEST.csv" \
+  --out "$OUT" \
+  --venue "$VENUE" \
+  --grid-shift "$SHIFT" \
+  --family "$FAMILY"

@@ -1,0 +1,76 @@
+{
+  "status": "COMPLETE_EIGHT_SHARD_COMBINE",
+  "cells": [
+    {
+      "venue": "ARCX.PILLAR",
+      "grid_shift_ms": 0,
+      "family": "QUOTE_TRADE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "ARCX.PILLAR",
+      "grid_shift_ms": 0,
+      "family": "QUOTE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "ARCX.PILLAR",
+      "grid_shift_ms": 500,
+      "family": "QUOTE_TRADE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "ARCX.PILLAR",
+      "grid_shift_ms": 500,
+      "family": "QUOTE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "XNAS.ITCH",
+      "grid_shift_ms": 0,
+      "family": "QUOTE_TRADE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "XNAS.ITCH",
+      "grid_shift_ms": 0,
+      "family": "QUOTE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "XNAS.ITCH",
+      "grid_shift_ms": 500,
+      "family": "QUOTE_TRADE_WITH_REST_BASKET"
+    },
+    {
+      "venue": "XNAS.ITCH",
+      "grid_shift_ms": 500,
+      "family": "QUOTE_WITH_REST_BASKET"
+    }
+  ],
+  "shard_receipt_hashes": {
+    "ARCX.PILLAR_0_QUOTE_TRADE_WITH_REST_BASKET/MODEL_RECEIPT.json": "e04c96dc0dbd3e7f3a6a9455dbec268b947786155a6b24a5d41a8aa10a2c4316",
+    "ARCX.PILLAR_0_QUOTE_WITH_REST_BASKET/MODEL_RECEIPT.json": "3c9d874f82f84835e8272d592dc53c1853f0dd28a492047bac084988ac8ae6b4",
+    "ARCX.PILLAR_500_QUOTE_TRADE_WITH_REST_BASKET/MODEL_RECEIPT.json": "af9c6b9581075e1bf86a528c55fedaa73f5f85a65d50012a9a24f4dd1942b091",
+    "ARCX.PILLAR_500_QUOTE_WITH_REST_BASKET/MODEL_RECEIPT.json": "653aa0f4f253359fbebbe394ec7bf1e0815e820872c7918f3ba9f3d5975bc386",
+    "XNAS.ITCH_0_QUOTE_TRADE_WITH_REST_BASKET/MODEL_RECEIPT.json": "818f8b4d383a8fe4c2873284202488167a33350c4cfd3fead967ea51e4f73f5c",
+    "XNAS.ITCH_0_QUOTE_WITH_REST_BASKET/MODEL_RECEIPT.json": "95695001673c5dec139f8f87ae5d637eab785ad0479cd116f9283dc75e4da04f",
+    "XNAS.ITCH_500_QUOTE_TRADE_WITH_REST_BASKET/MODEL_RECEIPT.json": "e7410a8055bc44929dae10c8d7d9d7c247dd171f4f5b5c9db8be7e1888c38924",
+    "XNAS.ITCH_500_QUOTE_WITH_REST_BASKET/MODEL_RECEIPT.json": "3f2e593b063bc93fce782a41e75c9c380cd84fbe59bc740cafd19e86814e12e3"
+  },
+  "output_rows": {
+    "MODEL_COMPARISON.csv": 736,
+    "DAILY_LOSS_DIFFERENCES.csv": 5888,
+    "AGGREGATE_COMPARISON.csv": 128,
+    "DATE_SENSITIVITY.csv": 1024,
+    "REVERSE_CHECK.csv": 32
+  },
+  "output_hashes": {
+    "MODEL_COMPARISON.csv": "d47d369b08be3dd9c362d23a11dc2686cecea5cf6cc7d2a496b6b52d9d79be64",
+    "DAILY_LOSS_DIFFERENCES.csv": "53bbdac99e2b11479319763fd0385c1f8508832b5418b7aaca2e00ba46ad96d3",
+    "AGGREGATE_COMPARISON.csv": "068e5f6698de353e3c36fd254122c2c3bca85d0244331421db3d0c345e165f0d",
+    "DATE_SENSITIVITY.csv": "44c01aca59619f3d3d7411736daa0550ba34d651b612ce38728e8e1061208849",
+    "REVERSE_CHECK.csv": "82148719c61aee92a9894489aa2d1c84f53dc703d1bd0d28dbd0be19478dd603"
+  },
+  "row_level_features_or_predictions_exported": false,
+  "bootstrap": {
+    "repetitions": 2000,
+    "seed": 20260922,
+    "unit": "whole test date",
+    "common_draws_across_venue_grid_family_cutoff_support": true
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "status": "COMPLETE_WITH_INDEPENDENT_REVIEW",
+  "execution_date": "2026-09-22",
+  "scientific_decision": "MIXED_OR_UNRESOLVED",
+  "routing": {
+    "main_executor": {
+      "requested": "gpt-5.6-sol / medium",
+      "actual_model_effort_telemetry": "NOT_OBSERVED"
+    },
+    "data_engineer": {
+      "requested": "gpt-5.6-terra / medium",
+      "actual_model_effort_telemetry": "NOT_OBSERVED",
+      "delegation_completed": true
+    },
+    "independent_reviewer": {
+      "requested": "gpt-5.6-sol / high",
+      "actual_model_effort_telemetry": "NOT_OBSERVED",
+      "delegation_completed": true,
+      "decision": "PASS_WITH_LIMITATIONS"
+    },
+    "nested_delegation": false,
+    "gpt_6_escalation_used": false
+  },
+  "sample": {
+    "date_definition": "Fifth and fifteenth NYSE sessions of each month in 2023; not earnings or macro dates",
+    "dates": 24,
+    "train_validation_test_dates": [12, 4, 8],
+    "window_et": "10:00:00 inclusive to 10:30:00 exclusive",
+    "equity_venues": ["XNAS.ITCH", "ARCX.PILLAR"],
+    "grid_shifts_ms": [0, 500],
+    "stocks": 23,
+    "target": "future one-second stock midpoint log return in basis points"
+  },
+  "data": {
+    "dataset_schema": "GLBX.MDP3 / mbp-1",
+    "futures_request_windows": 24,
+    "estimated_records": 25521621,
+    "quoted_cost_usd": "3.422716096042",
+    "final_billing_charge_verified": false,
+    "native_dbn_files": 24,
+    "native_dbn_compressed_bytes": 315269762,
+    "futures_feature_rows": 86400,
+    "futures_feature_sha256": "bc669c05cb8d1970e62a0b0f6dc664807f78c37d668095b36d3aa0cc4240b61b",
+    "es_valid_fraction": 1.0,
+    "raw_or_row_level_data_exported_locally": false
+  },
+  "scc_storage": {
+    "original_raw_and_feature_root": "/scratch/qluo/bidirectional_information_20260922/futures_control",
+    "shared_working_mirror_root": "/project/econdept/qluo/bidirectional_information_20260922",
+    "shared_working_mirror_size_gb_approx": 1.2,
+    "local_git_contains_raw_dbn_or_parquet": false
+  },
+  "execution": {
+    "model_cells": 8,
+    "model_rows": 736,
+    "daily_loss_rows": 5888,
+    "aggregate_rows": 128,
+    "date_sensitivity_rows": 1024,
+    "reverse_rows": 32,
+    "bootstrap_repetitions": 2000,
+    "bootstrap_seed": 20260922,
+    "bootstrap_unit": "whole test date",
+    "common_date_draws_across_cells": true,
+    "full_es_valid_max_abs_difference": 0.0
+  },
+  "recovery_and_corrections": [
+    "The initial monolithic login-node model process was killed after memory accumulated across cells; no output from that attempt was accepted.",
+    "The runner was sharded into eight independent cells and changed to iterate only the filtered grid shift.",
+    "A numpy.int64 progress-log serialization error was fixed by casting the grid shift to int before rerunning the affected empty-output shards.",
+    "The working data and Python runtime were mirrored to /project/econdept; public compute queues were temporarily unavailable, so at most four bounded independent shards ran concurrently on scc1.",
+    "Matplotlib cache was redirected from the quota-limited home directory to /project/econdept; models were not rerun.",
+    "Independent review found cell-specific bootstrap seeds. Aggregate intervals alone were rebuilt from saved daily losses with one synchronized date-draw seed; no model was refit. Final independent recomputation passed."
+  ],
+  "final_hashes": {
+    "prompt": "1127735b257c2f073f5c8a1f5ac38328cf8cd4c2dfa7518e12e54bcdfdc1c944",
+    "model_code": "452fd5dd2b341ff8ea1e69a376f8259e9f57c64e9b710e678ba9adf8ec5b0bf1",
+    "reaggregate_code": "484c9a032389a4325177cc5bae7f677d8eef7416f35f10a21b48d40fa9577ddf",
+    "model_comparison": "d47d369b08be3dd9c362d23a11dc2686cecea5cf6cc7d2a496b6b52d9d79be64",
+    "daily_loss_differences": "53bbdac99e2b11479319763fd0385c1f8508832b5418b7aaca2e00ba46ad96d3",
+    "aggregate_comparison": "068e5f6698de353e3c36fd254122c2c3bca85d0244331421db3d0c345e165f0d",
+    "date_sensitivity": "44c01aca59619f3d3d7411736daa0550ba34d651b612ce38728e8e1061208849",
+    "reverse_check": "82148719c61aee92a9894489aa2d1c84f53dc703d1bd0d28dbd0be19478dd603",
+    "results_report": "711badff940b3ce8e900ffeda67c8adba835e6f1b39f733cc830e3c3baaece8f",
+    "independent_review": "dd60f37d82d1c2e2cda289799544e48b4887a6b6fa26ac2d8d8b6bbb994aecab",
+    "independent_review_receipt": "4825bb0c7a1a27a1ce8d7946d192b6fa5abcd07556b258564555f9463437d0b6"
+  },
+  "prohibited_actions_not_taken": [
+    "No raw DBN or Parquet was added to local Git.",
+    "No credential was written to code, logs, reports, or Git.",
+    "No treatment effect, permanent price-discovery share, trading profit, or empirical event-study power was estimated.",
+    "No merge to main was performed."
+  ]
+}
