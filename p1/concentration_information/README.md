@@ -4,6 +4,7 @@
 
 ## 最新状态（2026-09-22）
 
+- **下一轮已准备、尚未执行：[期货控制执行 prompt](20260922_futures_control/NEXT_EXECUTION_PROMPT.md)**：承接 `999faf6` 的探索性结果，在相同24日加入一套ES期货报价，用四个同支持模型比较SPY与ES的条件预测增量。本文件细化并取代旧 `NEXT_ACTION.md` 的执行建议：两个股票场所共用24个ES窗口；SPY残余增量不等于ETF机制，增量被吸收也不证明因果中介。主执行Sol/medium、数据Terra/medium、独立复核Sol/high；本准备阶段未运行新分析或采购。
 - **最新探索性结果：[一秒方向性证据包](20260922_directional_evidence/RESULTS.md)**：在控制目标股自身历史和其余22只抽样股票的报告权重篮子后，SPY历史对23只股票未来一秒midpoint的样本外增量在XNAS/ARCX、0/500ms网格和报价／成交扩展口径均为正；反方向及股票联合面板对SPY的增量为负。原生报价更新后的同向响应在两个方向都存在，ETF→股票在较长窗口通常更持久，但不足以证明单向因果价格发现。横截面权重／high-mid-low梯度不稳定，故集中度暂不构成贡献。全部原始DBN、事件行和特征行留在SCC；本轮无需新增Databento购买。研究决定为 `ADVANCE_CONDITIONAL_ETF_LEAD_MECHANISM`，下一步只加入同窗口E-mini期货基准，区分ETF特有先行与一般共同信息传递。
 - **最新实际结果：[双向增量信息传递完整试点](20260922_bidirectional_information/results/RESULTS.md)**：48/48 个精确 `mbp-1` 双场所窗口已留在 SCC，形成 4,147,200 行特征和 552 个日期外股票×方向×时距结果。五秒主尺度的 ETF→股票与股票→ETF区间都跨零，裁定 `PREDICTIVE_TRANSMISSION_NOT_ESTABLISHED`；整数秒的一秒次指标显示 ETF→股票为正、反向为负且错日安慰剂消失，但 +500ms 网格明显减弱，不能升级成结构性价格发现主导。组删除模型因联合 complete-case 支持只有 XNAS 4、ARCX 595 个测试中心而不作经济解释；集中度贡献尚未成立。独立 Sol/high 原始中心与损失复算见结果目录。
 - **同轮探索性续作：[一秒非平衡联合模型](20260922_bidirectional_information/results/exploratory_eda/EDA_RESULTS.md)**：改用层内可用股票的报告权重重归一化、覆盖率变量和训练期插补后，每个场所×网格均保留 14,400 个测试中心。三层股票历史联合起来仍未改善 SPY 的下一秒预测，与逐股 ETF→股票先行构成方向性一致的早期证据；但 high/mid/low 删除结果没有稳定巨头排序。该文件用于假设生成，不改写五秒确认性裁定。
