@@ -4,7 +4,8 @@
 
 ## 最新状态（2026-09-22）
 
-- **最新准备：[逐笔 pilot 解释与下一样本裁定 prompt](20260922_native_tick_interpretation/NEXT_EXECUTION_PROMPT.md)**，尚未执行。复核现有数字发现：四个 AAPL 比较中三个的绝对 excess 增加，但股票交易分母增加更快；不能将每千笔率下降统称为同步活动减弱。原规格中的五分钟格内响应比较亦未实现。本轮下一步先用已购数据完成数量/份额分解和格内比较，再裁定唯一延伸；此指令取代下条“直接扩权重×财报面板”的后续建议，不改写历史计数或独立复算。
+- **最新实际结果：[原生逐笔解释与分支裁定](20260922_native_tick_interpretation/results/RESULTS.md)**：18 个已购 DBN 已按原生主动买/卖、50µs–60s horizon 和共同五分钟格完成重算。AAPL 的绝对 excess 在四格中三格增加，但每千笔股票率四格均下降；报价响应在 2 月、8 月、方向和场所间不稳定，XOM 无共同支持格。独立原始数据复算为 `PASS_WITH_LIMITATIONS`。决定 `METHOD_ONLY_STOP_THIS_BRANCH`：保留方法模块，停止自动扩张同三事件；这不终止 ETF–股票价格发现研究问题。
+- **本轮执行规格：[逐笔 pilot 解释与下一样本裁定 prompt](20260922_native_tick_interpretation/NEXT_EXECUTION_PROMPT.md)**。该规格因发现绝对 excess 与股票交易分母增长相反、旧五分钟格内比较未实现而建立；现已执行完毕，结果以上一条为准。它取代下条“直接扩权重×财报面板”的后续建议，不改写历史计数或旧独立复算。
 - **最新实际结果：[有限逐笔机制试点](20260922_native_tick_results/RESULTS.md)**：18/18 个 XNAS/ARCX `mbp-1` 请求、12,298,752 条原生记录已经计算；原生方向优先、严格前序 midpoint 补缺和独立复算已纳入。AAPL 在 RTH 与普通日均有稳健的同向近同步交易及后续报价响应，但两个普通对照日的每千笔 excess 都高于相应财报后 RTH；XOM 近乎为零，公告分钟稀疏或时钟敏感。决定为 `COACTIVITY_ONLY`：测量工程可用，但三事件不支持财报特定、ETF 主导或集中度因果机制。唯一下一行动是用这套代码做一个预声明的“权重/集中度 × 财报日/匹配普通日”较大 RTH 面板，而不是继续购买同三事件窗口。
 - **本轮已执行规格：[有限逐笔机制试点 prompt](20260922_native_tick_pilot/NEXT_EXECUTION_PROMPT.md)** 与[参考信息核查](20260922_native_tick_pilot/REFERENCE_CHECK.md)。原生 `mbp-1`、两证券/双场所、公告/RTH/普通比较窗口和范围计数均按规格保存；实际结果以上一条目录为准。
 - **同日追加：[Ernst participant/SIP 时间戳核查](20260922_one_second_design/ERNST_TIMESTAMP_ADDENDUM.md)**：其20微秒同步检验使用 participant、不用 SIP timestamp。一秒稿尚未执行；先核对逐笔 trades/mbp-1 与源时钟，一秒仅保留为粗诊断。Databento ts_recv 不能当 SIP 时间。

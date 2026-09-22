@@ -71,9 +71,9 @@
 
 ## 工作块二：完成原定五分钟格内响应比较
 
-每个 RTH/control 小时切成固定 12 个五分钟格。以中心成交确定格；post quote 可进入支持尾部。按场所、证券、窗口、五分钟格和方向来源生成配对/未配对统计，沿用 1/5/60 秒 horizon，5 秒为主要展示。
+每个 RTH/control 小时切成固定 12 个五分钟格。以中心成交确定格；post quote 可进入支持尾部。按场所、证券、窗口、五分钟格和方向来源生成配对/未配对统计。根据执行中追加的负责人指令，短时信息吸收曲线使用 50µs、200µs、1ms、10ms；同时保留 1/5/60 秒作为较慢响应参照，5 秒仍作为原规格的主要长时展示。
 
-- 主签名沿用原生 aggressor 优先；另给 native-only 和 midpoint-fallback 统计。任一 pair 是否同向须由两条成交的签名决定，native-only 版本需两端均为 native，不能只过滤中心成交。
+- 主结果只使用 MBP-1 原生 aggressor side，并严格分别展示主动买和主动卖；不得先混合无符号报价变化，以免正负抵消。midpoint fallback 只作为明确分开的敏感性结果，不得与原生方向混入主结果。任一 pair 是否同向须由两条成交的签名决定，native-only 版本需两端均为 native，不能只过滤中心成交。
 - 每格计算 effective spread、signed midpoint change、realized spread 的组内均值、交易数，以及事前 quoted spread、size、signed buy/sell 构成；未知方向保持未知。
 - paired 与 unpaired 同格都有有效观测才计算该格差额。单边缺组不是零；报告丢弃格、保留交易数、paired 组最小/中位/最大 n。
 - 主格内差额使用有支持格的等权平均；敏感性用 paired n 加权。跨 RTH/control 差额只用两天共同支持的相同钟点格，使用同一套权重。完整小时 raw means 与标准化结果并列，不混成同一估计量。

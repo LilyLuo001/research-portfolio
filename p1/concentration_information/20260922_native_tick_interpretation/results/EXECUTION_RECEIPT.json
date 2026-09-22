@@ -1,0 +1,52 @@
+{
+  "status": "COMPLETE",
+  "date": "2026-09-22",
+  "decision": "METHOD_ONLY_STOP_THIS_BRANCH",
+  "scope": "Interpret already purchased native MBP-1 pilot; activity-denominator decomposition and direction-separated matched five-minute response",
+  "data": {
+    "dbn_files_reused": 18,
+    "raw_location": "/scratch/qluo/native_tick_pilot_20260922",
+    "raw_inputs_modified": false,
+    "fine_cells_retained_on_scc": true,
+    "raw_or_fine_rows_exported_to_git": false,
+    "new_purchase_usd": 0
+  },
+  "routing": {
+    "coordinator": {
+      "requested": "gpt-5.6-sol / medium",
+      "dispatch_or_backend_observed": "NOT_OBSERVED"
+    },
+    "engineer": {
+      "requested_dispatch": "gpt-5.6-terra / medium",
+      "backend_telemetry": "NOT_OBSERVED",
+      "nested_delegation": false
+    },
+    "independent_reviewer": {
+      "requested_dispatch": "gpt-5.6-sol / high",
+      "backend_telemetry": "NOT_OBSERVED",
+      "nested_delegation": false
+    }
+  },
+  "outputs": {
+    "activity_rows": 96,
+    "direction_rows": 36,
+    "response_summary_rows": 24640,
+    "primary_aapl_rows_independently_matched": 160,
+    "primary_xom_zero_support_rows_independently_confirmed": 80,
+    "raw_native_trades_audited": 48,
+    "response_endpoints_audited": 240
+  },
+  "verification": {
+    "aggregate_validator": "PASS",
+    "independent_review": "PASS_WITH_LIMITATIONS",
+    "maximum_absolute_primary_response_difference_bp": 6.67e-16,
+    "limitations": "No validation of causal interpretation, price-discovery direction, full research design, or contribution"
+  },
+  "prohibited_or_unused": {
+    "wrds": false,
+    "eps_or_sue": false,
+    "effect_estimation": false,
+    "power_simulation": false,
+    "new_market_data_download": false
+  }
+}

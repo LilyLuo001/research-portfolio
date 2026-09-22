@@ -1,0 +1,41 @@
+{
+  "scope": "12 RTH/control DBNs; event-time primary native-only response",
+  "files_decoded": 12,
+  "response_rows": 240,
+  "activity_rows": 4,
+  "final_engineering_comparison": {
+    "finite_primary_rows_compared": 160,
+    "explicit_zero_support_xom_rows_compared": 80,
+    "maximum_absolute_signed_mid_estimate_difference_bp": 6.661338147750939e-16,
+    "maximum_absolute_activity_or_decomposition_difference": 7.105427357601002e-15,
+    "support_count_discrepancies": 0,
+    "local_aggregate_validator": "PASS"
+  },
+  "horizons_ns": [
+    50000,
+    200000,
+    1000000,
+    10000000,
+    5000000000
+  ],
+  "raw_trade_audit": {
+    "native_sign_matches_raw_side": 48,
+    "finite_prior_bbo": 48,
+    "oriented_half_open_pair_matches_explicit": 48,
+    "endpoint_lookup_brackets_target": 240,
+    "endpoint_lookup_returns_valid_bbo": 240,
+    "endpoint_checks": 240,
+    "audited_native_trades": 48,
+    "clear_messages_seen": 0,
+    "invalid_bbo_messages_seen": 0
+  },
+  "raw_inputs_modified": false,
+  "raw_rows_exported": false,
+  "new_data_purchased_usd": 0,
+  "reviewer_routing": {
+    "requested_model": "gpt-5.6-sol",
+    "requested_effort": "high",
+    "actual_model_or_effort": "NOT_OBSERVED",
+    "note": "No independently verifiable backend routing telemetry was exposed to the reviewer."
+  }
+}

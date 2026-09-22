@@ -1,0 +1,21 @@
+{
+  "status": "EXECUTED_EXPLORATORY_PILOT",
+  "time_axis": "ts_event",
+  "economic_window": "10:00:00-11:00:00 America/New_York, start inclusive and end exclusive",
+  "pair_definition": {
+    "difference": "t_SPY - t_stock",
+    "near_interval_microseconds": "[-20, 20)",
+    "background_intervals_microseconds": [
+      [-1200, -1000],
+      [1000, 1200]
+    ]
+  },
+  "five_minute_bins": 12,
+  "primary_direction_source": "MBP-1 native aggressor side; buyer and seller shown separately",
+  "sensitivity_direction_source": "native side plus strict prior-midpoint fallback, separately labelled",
+  "response_horizons": ["50us", "200us", "1ms", "10ms", "1s", "5s", "60s"],
+  "primary_bin_weighting": "equal weight over common supported clock bins",
+  "sensitivity_bin_weighting": "paired-trade-count weighted",
+  "data_purchase_usd": 0,
+  "raw_exported_to_git": false
+}

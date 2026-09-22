@@ -1,0 +1,27 @@
+{
+  "files": 18,
+  "raw_location": "/scratch/qluo/native_tick_pilot_20260922",
+  "fine_cells_location": "/scratch/qluo/native_tick_pilot_20260922/interpretation_20260922/WITHIN_BIN_FINE_SCC_ONLY.csv",
+  "horizons_ns": [
+    50000,
+    200000,
+    1000000,
+    10000000,
+    1000000000,
+    5000000000,
+    60000000000
+  ],
+  "status": "COMPUTED_ON_SCC_VALIDATED_LOCALLY_FINAL_RERUN",
+  "actual_execution_host": "scc1",
+  "actual_runtime": "/scratch/qluo/systematic_pilot_support/dbn_runtime/bin/python",
+  "raw_inputs_modified": false,
+  "new_data_purchased_usd": 0,
+  "fine_grained_records_retained_on_scc_only": true,
+  "final_state_rules": "Clear and every invalid/undefined BBO invalidate carried BBO and both age clocks.",
+  "routing_observability": {
+    "requested_model": "gpt-5.6-terra",
+    "requested_effort": "medium",
+    "actual_model_or_effort_observable": false
+  },
+  "validation": "code/validate_interpretation_outputs.py passed locally after final 18-file SCC rerun"
+}
