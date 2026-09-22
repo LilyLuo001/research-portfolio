@@ -1,0 +1,118 @@
+{
+  "status": "PASS_WITH_LIMITATIONS",
+  "review_date": "2026-09-22",
+  "material_errors_found": 0,
+  "material_corrections_made": [],
+  "decision_reviewed": "LIMITED_TO_INFORMATION_SET",
+  "decision_supported": true,
+  "scope": {
+    "scc_root": "/project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922",
+    "samples": ["2023_FROZEN_FIT", "2024_EXTERNAL"],
+    "stocks": 23,
+    "reference_etf": "SPY",
+    "cells": 4,
+    "external_dates": 24,
+    "nested_delegation": false,
+    "data_purchase_by_reviewer": false,
+    "commit_or_push_by_reviewer": false
+  },
+  "model_audit": {
+    "expected_blocks": {
+      "A0": ["B"],
+      "A1": ["B", "Q"],
+      "A2": ["B", "C"],
+      "A3": ["B", "C", "Q"],
+      "A4": ["B", "Q", "P"],
+      "A5": ["B", "C", "Q", "P"]
+    },
+    "raw_column_counts": {"A0": 37, "A1": 45, "A2": 64, "A3": 72, "A4": 54, "A5": 81},
+    "time_controls": ["minute_1", "minute_2", "minute_3", "minute_4", "minute_5"],
+    "unknown_or_misassigned_columns": 0,
+    "frozen_objects_checked": 4,
+    "frozen_symbols_per_object": 23,
+    "frozen_object_date_years": [2023],
+    "external_refit_rescale_or_lambda_selection": false,
+    "fixed_a2_lambda_mismatches": 0,
+    "model_code_sha256": "5b22680a27ae5201627db2a4803739d974be81424193a81cf01dbe9641c9712a",
+    "base_code_sha256": "7e41557e311719ac361a7abcc0603919590cea59b48f937cd2778c37d79c76f5"
+  },
+  "independent_recomputation": {
+    "source": "four SCC model_parts_2024 DAILY_LOSS_CELL.csv files",
+    "contrasts": [
+      "A0_TO_A1_SPY_QUOTE_BEFORE_C",
+      "A2_TO_A3_SPY_QUOTE_AFTER_C",
+      "A3_TO_A5_SPY_TRADE_AFTER_CQ",
+      "A2_TO_A5_COMPLETE_SPY_AFTER_C"
+    ],
+    "fit_specs": ["OWN_LAMBDA", "FIXED_A2_LAMBDA"],
+    "bootstrap_repetitions": 2000,
+    "synchronized_whole_date_draws": true,
+    "leave_one_date_out_per_contrast_fit_spec": 24,
+    "leave_one_date_out_values_recomputed": 192,
+    "max_abs_summary_difference": 9.996344030316351e-17,
+    "max_abs_loo_difference": 9.974659986866641e-17,
+    "max_abs_cell_sse_reaggregation_difference": 5.820766091346741e-11,
+    "primary_own_lambda": {
+      "point": -0.00015578662887993076,
+      "ci_low": -0.00031040922823594614,
+      "ci_high": -0.0000196509088510532,
+      "loo_min": -0.00018831476449527603,
+      "loo_max": -0.00013042455724138202
+    },
+    "primary_fixed_a2_lambda": {
+      "point": -0.00032076622749467295,
+      "ci_low": -0.000484534788862059,
+      "ci_high": -0.00019434787766539795,
+      "loo_min": -0.00035316548682588224,
+      "loo_max": -0.0002928388830210856
+    }
+  },
+  "center_audit": {
+    "centers_checked": 24,
+    "dates": ["2024-01-08", "2024-08-07"],
+    "winter_centers": 12,
+    "summer_centers": 12,
+    "venues": ["ARCX.PILLAR", "XNAS.ITCH"],
+    "grid_shifts_ms": [0, 500],
+    "second_indices": [60, 900, 1740],
+    "centers_per_venue_shift": 6,
+    "raw_files_redecoded": 6,
+    "raw_hash_matches": 6,
+    "time_key_mismatches": 0,
+    "invalid_es_centers": 0,
+    "nonfinite_target_centers": 0,
+    "future_event_predictor_violations": 0,
+    "max_abs_equity_rebuild_difference": 8.881784197001252e-12,
+    "max_abs_es_rebuild_difference": 1.7763568394002505e-11,
+    "difference_interpretation": "floating-point serialization/recalculation rounding only"
+  },
+  "inventory_audit": {
+    "equity_symbols_including_spy": 24,
+    "stocks_excluding_spy": 23,
+    "external_dates": 24,
+    "request_count": 72,
+    "receipt_file_count": 72,
+    "actual_raw_file_count": 72,
+    "unique_raw_paths": 72,
+    "files_per_date": 3,
+    "dataset_counts": {"XNAS.ITCH": 24, "ARCX.PILLAR": 24, "GLBX.MDP3": 24},
+    "reused_files": 36,
+    "newly_downloaded_files": 36,
+    "quoted_cost_usd": 7.057148829108,
+    "quote_is_billing_confirmation": false,
+    "credential_value_found_in_receipts": false
+  },
+  "reviewed_output_sha256": {
+    "MODEL_COMPARISON_2024.csv": "05376834b327c3f6852c442aeb8e19de0e1b2d31a085efbef3e5b792c64d6a0f",
+    "PAIRED_CONTRASTS.csv": "abef5417b683afa7761b817993a52c0284eb69164b497ca41ccee806766540ad",
+    "DATE_SENSITIVITY.csv": "b6b5caf9f5546a97d41486d0797a0fc9cf1247549f1f5c24645e897aba3c8cd1",
+    "DOWNLOAD_RECEIPT.json": "df4fa9a589356693143a622732a849b12fc257a18728a1671ba384666c356bf4",
+    "QUOTE_RECEIPT.json": "f31d94b42a2389ea6ecd5be4de2a843055c028d5a882cb3028f7e089c61b6837"
+  },
+  "limitations": [
+    "G is a conditional out-of-sample squared-error improvement, not a structural information share or causal effect.",
+    "The 24 dates are mechanically selected ordinary trading days and do not identify the arrival of new fundamental information.",
+    "The all-stock equal-weight estimand is primary; report-weight and venue results are auxiliary and heterogeneous.",
+    "Six sampled raw files were hash-verified and redecoded for 24 centers; all 72 files were existence/size/inventory checked but not redundantly redecoded."
+  ]
+}

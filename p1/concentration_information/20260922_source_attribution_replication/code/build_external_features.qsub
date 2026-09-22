@@ -1,0 +1,32 @@
+#!/bin/bash
+#$ -P econdept
+#$ -N p1_ext_feat
+#$ -t 1-2
+#$ -l h_rt=04:00:00
+#$ -l mem_per_core=16G
+#$ -j y
+#$ -o /project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922/logs
+
+set -euo pipefail
+BASE=/project/econdept/qluo/bidirectional_information_20260922
+ROOT="$BASE/source_attribution_replication_20260922"
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+RECEIPT="$ROOT/raw_2024/DOWNLOAD_RECEIPT.json"
+mkdir -p "$ROOT/features_2024" "$ROOT/results"
+
+if [[ "$SGE_TASK_ID" == 1 ]]; then
+  exec "$PY" "$ROOT/code/scc_build_external_features.py" \
+    --download-receipt "$RECEIPT" \
+    --validated-builder "$ROOT/code/scc_build_directional_features.py" \
+    --base-code "$ROOT/code/scc_build_bidirectional_features.py" \
+    --out "$ROOT/features_2024/DIRECTIONAL_FEATURES_2024.parquet" \
+    --receipt "$ROOT/results/EQUITY_FEATURE_RECEIPT.json"
+elif [[ "$SGE_TASK_ID" == 2 ]]; then
+  exec "$PY" "$ROOT/code/scc_build_external_es_features.py" \
+    --download-receipt "$RECEIPT" \
+    --validated-es-builder "$ROOT/code/scc_build_es_features_validated.py" \
+    --out "$ROOT/features_2024/FUTURES_FEATURES_2024.parquet" \
+    --receipt "$ROOT/results/ES_FEATURE_RECEIPT.json"
+else
+  exit 2
+fi

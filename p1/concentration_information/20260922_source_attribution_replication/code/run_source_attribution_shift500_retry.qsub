@@ -1,0 +1,31 @@
+#!/bin/bash
+#$ -P econdept
+#$ -N p1_src_500
+#$ -t 1-2
+#$ -l h_rt=02:00:00
+#$ -l mem_per_core=12G
+#$ -j y
+#$ -o /project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922/logs
+
+set -euo pipefail
+BASE=/project/econdept/qluo/bidirectional_information_20260922
+ROOT="$BASE/source_attribution_replication_20260922"
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+case "$SGE_TASK_ID" in
+  1) VENUE=XNAS.ITCH ;;
+  2) VENUE=ARCX.PILLAR ;;
+  *) exit 2 ;;
+esac
+SHIFT=500
+OUT="$ROOT/model_parts_2023/${VENUE}_${SHIFT}"
+ARTIFACT="$ROOT/frozen_2023/${VENUE}_${SHIFT}.pkl"
+mkdir -p "$OUT" "$(dirname "$ARTIFACT")"
+exec "$PY" "$ROOT/code/run_source_attribution_cell.py" \
+  --mode fit2023 \
+  --stock-features "$BASE/directional_evidence/features/DIRECTIONAL_FEATURES.parquet" \
+  --futures-features "$BASE/futures_control/features/FUTURES_FEATURES.parquet" \
+  --base-code "$ROOT/code/directional_base.py" \
+  --roster "$BASE/futures_control/results/SAFE_ROSTER.csv" \
+  --dates "$BASE/futures_control/results/DATE_MANIFEST.csv" \
+  --artifact "$ARTIFACT" --out "$OUT" --venue "$VENUE" --grid-shift "$SHIFT"

@@ -1,0 +1,23 @@
+{
+  "status": "EXECUTED_SPECIFICATION",
+  "models": {
+    "A0": ["B"],
+    "A1": ["B", "Q"],
+    "A2": ["B", "C"],
+    "A3": ["B", "C", "Q"],
+    "A4": ["B", "Q", "P"],
+    "A5": ["B", "C", "Q", "P"]
+  },
+  "primary_contrast": "A2_TO_A5_COMPLETE_SPY_AFTER_C",
+  "main_fit": "each model selects ridge lambda from [0.01,0.1,1,10,100] on 2023 July-August validation dates",
+  "fixed_lambda_sensitivity": "all six models use the A2-selected lambda within stock x venue x grid cell",
+  "fit_dates": {
+    "train": "2023 January-June, fifth and fifteenth NYSE sessions",
+    "validation": "2023 July-August, fifth and fifteenth NYSE sessions",
+    "historical_exploratory_test": "2023 September-December, fifth and fifteenth NYSE sessions",
+    "external_test": "2024 January-December, fifth and fifteenth NYSE sessions; amended by user from 12 to 24 dates"
+  },
+  "external_freeze": "2023 feature order, medians, means, scales, lambda, coefficients and intercept are persisted before 2024 scoring; 2024 does not refit, calibrate or update them",
+  "inference": "2,000 synchronized whole-date bootstrap draws shared across stocks, models, venues and grids; leave-one-date-out on every actual external date",
+  "estimand_limit": "G is conditional out-of-sample squared-error improvement, not a structural information share or causal effect"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "SPEC_AMENDED_TO_24_DATES_AWAITING_72_REQUEST_REQUOTE",
+  "audit_at_utc": "2026-09-22T11:24:22Z",
+  "scc_host": "scc1",
+  "storage_observed": {
+    "project_shared": "/project/econdept/qluo/bidirectional_information_20260922",
+    "scratch": "/scratch/qluo/bidirectional_information_20260922",
+    "scratch_free_gb_approx": 83,
+    "project_free_gb_approx": 1126400
+  },
+  "databento": {
+    "scc_sdk_version": "0.86.0",
+    "authenticated_environment": false,
+    "credential_value_logged": false,
+    "quote_or_download_calls": 0,
+    "exact_cost_usd": null,
+    "cost_proxy_usd": 9.25,
+    "cost_proxy_method": "The prior 24-date exact-design quoted total was 2023 equity 5.823790758848 USD plus ES 3.422716096042 USD. This 9.25 USD proxy is not a vendor quote and may differ with 2024 record volume and symbology."
+  },
+  "frozen_equity_design": "23 stocks plus SPY (24 symbols per equity request); BF excluded because it is not in the frozen 2023 DIRECTIONAL_FEATURES panel",
+  "request_manifest_total": {"total": 72, "XNAS.ITCH": 24, "ARCX.PILLAR": 24, "GLBX.MDP3": 24},
+  "new_purchase_count": "DYNAMIC: quote all 72 for audit; downloader reuses exact nonempty existing native files and purchases only missing targets",
+  "raw_and_row_features_destination": "/project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922",
+  "requested_routing": "gpt-5.6-terra/medium",
+  "actual_routing_telemetry": "NOT_OBSERVED"
+}

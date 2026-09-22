@@ -1,0 +1,39 @@
+{
+  "status": "EXECUTED_SPECIFICATION",
+  "target": "target-stock future one-second midpoint log return, basis points",
+  "quote_fields": [
+    "ret_0_100ms",
+    "ret_100ms_1s",
+    "ret_1s_5s",
+    "spread_bp",
+    "bid_depth",
+    "ask_depth",
+    "mid_update_count_1s",
+    "mid_update_age_ms"
+  ],
+  "trade_fields": [
+    "known_signed_flow_0_100ms",
+    "unknown_dollar_volume_0_100ms",
+    "no_trade_0_100ms",
+    "known_signed_flow_100ms_1s",
+    "unknown_dollar_volume_100ms_1s",
+    "no_trade_100ms_1s",
+    "known_signed_flow_1s_5s",
+    "unknown_dollar_volume_1s_5s",
+    "no_trade_1s_5s"
+  ],
+  "blocks": {
+    "B": "target-stock quote history + report-weighted rest-of-22 quote history and coverage + ES quote history + five-minute time controls",
+    "Q": "SPY quote history",
+    "C": "target-stock and report-weighted rest-of-22 separated trade history and coverage; excludes SPY trades",
+    "P": "SPY separated trade history"
+  },
+  "transform": {
+    "depth_update_count_update_age": "log1p(nonnegative value)",
+    "known_signed_flow": "sign(x)*log1p(abs(x))",
+    "unknown_dollar_volume": "log1p(nonnegative value)",
+    "missing_predictors": "training-period median plus explicit missing indicator",
+    "target": "never imputed"
+  },
+  "important_limit": "ES contributes quote fields only; no ES trade block was purchased or inferred. Rest-of-22 is the fixed sampled basket, not the complete cash market."
+}

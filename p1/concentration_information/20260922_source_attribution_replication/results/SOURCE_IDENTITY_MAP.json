@@ -1,0 +1,39 @@
+{
+  "status": "AUDITED_2026-09-22T11:24:22Z",
+  "2023_reusable_inputs": {
+    "equity_features": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/directional_evidence/features/DIRECTIONAL_FEATURES.parquet",
+      "scratch_mirror": "/scratch/qluo/bidirectional_information_20260922/directional_evidence/features/DIRECTIONAL_FEATURES.parquet",
+      "bytes": 119522779,
+      "dates": 24,
+      "identity": "XNAS.ITCH and ARCX.PILLAR; 23 observed stocks plus SPY; BF was in SAFE_ROSTER.csv but never entered this frozen panel; mbp-1; 2023 only"
+    },
+    "es_features": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/futures_control/features/FUTURES_FEATURES.parquet",
+      "scratch_mirror": "/scratch/qluo/bidirectional_information_20260922/futures_control/features/FUTURES_FEATURES.parquet",
+      "bytes": 4079028,
+      "dates": 24,
+      "identity": "GLBX.MDP3 mbp-1 ES.v.0 resolved per date; 2023 only"
+    },
+    "equity_raw": {
+      "path": "/scratch/qluo/bidirectional_information_20260922/raw",
+      "files": 48,
+      "identity": "24 dates x XNAS.ITCH/ARCX.PILLAR, 09:59-10:31 ET; 2023 only"
+    },
+    "futures_raw": {
+      "path": "/scratch/qluo/bidirectional_information_20260922/futures_control/raw",
+      "files": 24,
+      "identity": "24 dates x GLBX.MDP3 ES.v.0, 09:59-10:31 ET; 2023 only"
+    }
+  },
+  "external_2024_full_year": {
+    "required": {"XNAS.ITCH": 24, "ARCX.PILLAR": 24, "GLBX.MDP3": 24},
+    "status": "EXPANDED_BY_USER_INSTRUCTION; existing Jan-Jun native files must be checked and reused; only exact nonempty targets may be reused",
+    "canonical_equity_symbols": "SPY plus the 23 stocks observed in the frozen 2023 panel; BF is excluded because it never entered that panel; retain any new date-specific symbology failure as a documented coverage gap",
+    "canonical_es_identity": "ES.v.0 continuous -> instrument_id -> raw_symbol, resolved separately per date"
+  },
+  "routing": {
+    "requested_data_engineer": "gpt-5.6-terra/medium",
+    "actual_telemetry": "NOT_OBSERVED"
+  }
+}

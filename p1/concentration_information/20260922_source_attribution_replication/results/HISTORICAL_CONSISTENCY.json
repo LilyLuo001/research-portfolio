@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "comparison": "new OWN_LAMBDA A0/A1 and A2/A5 versus predecessor futures-control M2/M3, AT_T, ES_VALID, all 23 stocks x 2 venues x 2 grids",
+  "mapping": {
+    "A0": "QUOTE_WITH_REST_BASKET M2",
+    "A1": "QUOTE_WITH_REST_BASKET M3",
+    "A2": "QUOTE_TRADE_WITH_REST_BASKET M2",
+    "A5": "QUOTE_TRADE_WITH_REST_BASKET M3"
+  },
+  "maximum_absolute_sse_difference": {
+    "A0": 7.275957614183426e-12,
+    "A1": 7.275957614183426e-12,
+    "A2": 3.637978807091713e-12,
+    "A5": 2.1827872842550278e-11
+  },
+  "maximum_absolute_validation_mse_difference": {
+    "A0": 8.881784197001252e-16,
+    "A1": 8.881784197001252e-16,
+    "A2": 4.440892098500626e-16,
+    "A5": 4.440892098500626e-16
+  },
+  "lambda_mismatches": {"A0": 0, "A1": 0, "A2": 0, "A5": 0},
+  "implementation_note": "An initial draft accidentally included minute_bin_5m as a sixth time control. It was removed before external scoring; the corrected five-dummy specification produces the exact predecessor match reported here."
+}

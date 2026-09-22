@@ -4,7 +4,7 @@
 
 ## 最新状态（2026-09-22）
 
-- **下一轮准备完成、尚未执行：[信息块拆分与一次跨期复现prompt](20260922_source_attribution_replication/NEXT_EXECUTION_PROMPT.md)**。先用现有2023特征拆分SPY报价、SPY成交与目标股/rest成交，再以2024年上半年12个机械日期作纯外部测试。此前成交扩展同时改变多个输入块并重新调参，不能单独认定“股票成交吸收SPY信息”；解释修正见[下一步判断](20260922_source_attribution_replication/ASSESSMENT.md)。本计划细化并取代上一轮直接复现的建议，保留其数值与review。本次只写计划，没有新采购、SCC作业或代理执行。
+- **最新实际结果：[信息来源六模型拆分与2024全年跨期复现](20260922_source_attribution_replication/results/RESULTS.md)**：用户将外部样本扩为2024全年每月第5/15个NYSE交易日，共24日；72个XNAS/ARCX/ES窗口已齐备且原始DBN仅留SCC。弱基准下SPY报价在主调参规格仍有很小正增量，但控制目标股/rest成交后明显减弱，SPY成交增量为负，完整SPY块A2→A5在2024等权主指标为−0.000156，日期区间[−0.000310,−0.000020]，24次LOO全负；固定A2 lambda为−0.000321。现金股票成交块反而稳定为正。决定为 `LIMITED_TO_INFORMATION_SET`：SPY报价可作共同信息代理，但现有普通日条件预测不能建立ETF独立结构性价格发现主导。唯一下一行动是停止扩买普通机械日，先冻结一个独立定时的earnings或macro事件设计。原执行prompt和解释修正仍保留在同目录。
 - **最新实际结果：[ES期货控制后的条件预测比较](20260922_futures_control/results/RESULTS.md)**：24个普通机械日期（不是earnings或macro日）的ES原生报价已取得并形成100%有效的一秒特征。ES与SPY相对基础模型的原始增量均稳定为正；quote-only下SPY|ES四格为正且leave-one-date-out不翻号，但加入分离成交历史后SPY|ES接近零并变号。决定为 `MIXED_OR_UNRESOLVED`：一秒尺度的共同市场信息高度重叠，SPY是有用预测代理，但独立ETF结构性贡献未建立。反向股票层增量八格均为负。原始DBN和逐行特征只留SCC；API报价金额为USD 3.422716096042，非已核实账单扣款。唯一下一行动是12个未查看2024普通日期的固定规格复现，带停止规则。
 - **本轮已执行规格：[期货控制执行 prompt](20260922_futures_control/NEXT_EXECUTION_PROMPT.md)**：承接 `999faf6` 的探索性结果，在相同24日加入一套ES期货报价，用四个同支持模型比较SPY与ES的条件预测增量。历史prompt保留为执行规格，实际结论以上一条为准。
 - **最新探索性结果：[一秒方向性证据包](20260922_directional_evidence/RESULTS.md)**：在控制目标股自身历史和其余22只抽样股票的报告权重篮子后，SPY历史对23只股票未来一秒midpoint的样本外增量在XNAS/ARCX、0/500ms网格和报价／成交扩展口径均为正；反方向及股票联合面板对SPY的增量为负。原生报价更新后的同向响应在两个方向都存在，ETF→股票在较长窗口通常更持久，但不足以证明单向因果价格发现。横截面权重／high-mid-low梯度不稳定，故集中度暂不构成贡献。全部原始DBN、事件行和特征行留在SCC；本轮无需新增Databento购买。研究决定为 `ADVANCE_CONDITIONAL_ETF_LEAD_MECHANISM`，下一步只加入同窗口E-mini期货基准，区分ETF特有先行与一般共同信息传递。

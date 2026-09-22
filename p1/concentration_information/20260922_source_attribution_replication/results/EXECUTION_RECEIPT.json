@@ -1,0 +1,102 @@
+{
+  "status": "COMPLETE_INDEPENDENT_REVIEW_PASS_WITH_LIMITATIONS",
+  "decision": "LIMITED_TO_INFORMATION_SET",
+  "executed_at": "2026-09-22",
+  "independent_review": {
+    "status": "PASS_WITH_LIMITATIONS",
+    "decision_supported": true,
+    "material_errors_found": 0,
+    "review_path": "results/REVIEW.md",
+    "receipt_path": "results/REVIEW_RECEIPT.json"
+  },
+  "routing": {
+    "main_requested": "gpt-5.6-sol / medium",
+    "main_actual_telemetry": "NOT_OBSERVED",
+    "data_engineer_requested": "gpt-5.6-terra / medium",
+    "data_engineer_tool_confirmed": "gpt-5.6-terra / medium",
+    "independent_reviewer_requested": "gpt-5.6-sol / high",
+    "independent_reviewer_tool_confirmed": "gpt-5.6-sol / high",
+    "nested_delegation": false
+  },
+  "scope_amendment": "User changed the 2024 external test from January-June 12 dates to the symmetric full-year 24-date calendar before any 2024 model score was inspected.",
+  "scc_root": "/project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922",
+  "inputs": {
+    "stock_features_2023": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/directional_evidence/features/DIRECTIONAL_FEATURES.parquet",
+      "rows": 4147200,
+      "sha256": "fda00799a65aef1a11eeb32e9f10d74a0c0077040e41aa47b6f6de9af98cb3b2"
+    },
+    "es_features_2023": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/futures_control/features/FUTURES_FEATURES.parquet",
+      "rows": 86400,
+      "sha256": "bc669c05cb8d1970e62a0b0f6dc664807f78c37d668095b36d3aa0cc4240b61b"
+    },
+    "stock_features_2024": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922/features_2024/DIRECTIONAL_FEATURES_2024.parquet",
+      "rows": 4147200,
+      "columns": 35,
+      "dates": 24,
+      "symbols": "23 stocks plus SPY"
+    },
+    "es_features_2024": {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922/features_2024/FUTURES_FEATURES_2024.parquet",
+      "rows": 86400,
+      "dates": 24,
+      "es_valid_fraction": 1.0
+    },
+    "request_manifest_sha256": "e9f9a09843ca6e4388012fb8ea210bbd4ec237a71dfe168366b08fe5177efe4c"
+  },
+  "databento": {
+    "dataset_schema": ["XNAS.ITCH/mbp-1", "ARCX.PILLAR/mbp-1", "GLBX.MDP3/mbp-1"],
+    "requests": 72,
+    "reused_requests": 36,
+    "newly_downloaded_requests": 36,
+    "all_raw_bytes": 1010711718,
+    "all_72_quote_usd": 7.057148829108,
+    "reused_half_quote_usd": 3.624499440195,
+    "new_half_quote_usd": 3.432649388913,
+    "quote_is_not_billing_confirmation": true,
+    "credential_logged_or_committed": false
+  },
+  "frozen_analysis": {
+    "stocks": 23,
+    "excluded_safe_roster_symbol": "BF",
+    "venues": ["XNAS.ITCH", "ARCX.PILLAR"],
+    "grid_shifts_ms": [0, 500],
+    "models": ["A0", "A1", "A2", "A3", "A4", "A5"],
+    "fit_specs": ["OWN_LAMBDA", "FIXED_A2_LAMBDA"],
+    "external_dates": 24,
+    "bootstrap_repetitions": 2000,
+    "leave_one_date_out_repetitions": 24,
+    "model_code_sha256": "5b22680a27ae5201627db2a4803739d974be81424193a81cf01dbe9641c9712a",
+    "frozen_object_pattern": "/project/econdept/qluo/bidirectional_information_20260922/source_attribution_replication_20260922/frozen_2023/{venue}_{grid}.pkl",
+    "external_refit_or_rescale": false
+  },
+  "scheduler_jobs": {
+    "final_2023_fit_array": "7688484.1-4",
+    "equity_feature_build": "7688466.1",
+    "es_feature_build": "7688470",
+    "final_2024_score_array": "7688503.1-4"
+  },
+  "implementation_corrections": [
+    "Redirected SGE logs from the full home directory to project storage; completed shards were preserved.",
+    "Converted semicolon-delimited equity symbol strings to full-symbol lists before the validated feature builder iterated them.",
+    "Accepted ES.v.0 as the DBN metadata mapping label while retaining the pre-resolved actual raw futures contract in the receipt.",
+    "Removed accidental minute_bin_5m inclusion so the final time controls are exactly minute_1 through minute_5; predecessor SSE and lambda then matched numerically."
+  ],
+  "aggregate_output_sha256": {
+    "MODEL_COMPARISON_2023.csv": "75a20ccdca57d15af1a2fe0dfe3ac27ef35bf899e228a5f89fe3eb4c009a178c",
+    "MODEL_COMPARISON_2024.csv": "05376834b327c3f6852c442aeb8e19de0e1b2d31a085efbef3e5b792c64d6a0f",
+    "PAIRED_CONTRASTS.csv": "abef5417b683afa7761b817993a52c0284eb69164b497ca41ccee806766540ad",
+    "DATE_SENSITIVITY.csv": "b6b5caf9f5546a97d41486d0797a0fc9cf1247549f1f5c24645e897aba3c8cd1"
+  },
+  "local_or_git_contains": "code, manifests, aggregate model/date tables, figures, documentation and receipts only",
+  "scc_only_contains": "native DBN, row-level features, predictions, coefficients, preprocessing objects and frozen fit objects",
+  "not_run": [
+    "treatment-effect estimation",
+    "empirical power simulation",
+    "profit extrapolation",
+    "earnings or macro event study",
+    "new year or stock search selected from results"
+  ]
+}
