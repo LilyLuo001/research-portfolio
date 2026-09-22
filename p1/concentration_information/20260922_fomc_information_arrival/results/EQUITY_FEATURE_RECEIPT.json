@@ -1,0 +1,23 @@
+{
+  "dates": 32,
+  "event_clock_definition": "second_index=600 is 14:00 ET; retained [13:50,14:10)",
+  "event_clock_shift_from_reused_builder_seconds": 300,
+  "feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/DIRECTIONAL_FEATURES_FOMC.parquet",
+  "feature_sha256": "d2b2b2b65207199c1e6fc0ab1e9198a0fde966d10386bfb92db13001e5e97203",
+  "grid_shifts_ms": [
+    0,
+    500
+  ],
+  "raw_or_feature_rows_exported_locally": false,
+  "rows": 3686400,
+  "source_status_counts": {
+    "BUILT": 1536
+  },
+  "status": "COMPLETE_DIRECTIONAL_FEATURES_ON_SCC",
+  "symbols": 24,
+  "unknown_trade_handling": "known signed flow and unknown dollar volume are separate; no-trade is explicit",
+  "venues": [
+    "ARCX.PILLAR",
+    "XNAS.ITCH"
+  ]
+}

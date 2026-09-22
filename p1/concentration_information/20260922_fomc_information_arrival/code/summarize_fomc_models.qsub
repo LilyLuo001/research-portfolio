@@ -1,0 +1,13 @@
+#!/bin/bash
+#$ -P econdept
+#$ -N p1_fomc_sum
+#$ -l h_rt=02:00:00
+#$ -l mem_per_core=8G
+#$ -j y
+#$ -o /project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/logs
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+exec "$PY" "$ROOT/code/combine_fomc_model_parts.py" \
+  --parts "$ROOT/model_parts" --out "$ROOT/model_summary" \
+  --summarizer "$ROOT/code/summarize_fomc_models.py"

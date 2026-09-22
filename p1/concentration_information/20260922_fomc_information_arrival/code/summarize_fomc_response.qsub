@@ -1,0 +1,15 @@
+#!/bin/bash
+#$ -P econdept
+#$ -N p1_fomc_resp
+#$ -l h_rt=10:00:00
+#$ -l mem_per_core=16G
+#$ -j y
+#$ -o /project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/logs
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+mkdir -p "$ROOT/response_summary" "$ROOT/logs"
+exec "$PY" "$ROOT/code/scc_summarize_fomc_response.py" \
+  --download-receipt "$ROOT/raw/DOWNLOAD_RECEIPT.json" \
+  --analysis-dates "$ROOT/ANALYSIS_DATES.csv" \
+  --out "$ROOT/response_summary"

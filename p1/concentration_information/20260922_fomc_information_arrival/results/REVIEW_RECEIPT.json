@@ -1,0 +1,132 @@
+{
+  "review_date": "2026-09-22",
+  "review_status": "NUMERICAL_IMPLEMENTATION_PASS_AFTER_ONE_CORRECTION_RESEARCH_INTERPRETATION_LIMITED",
+  "reviewer": {
+    "delegation": "none",
+    "effort": "high",
+    "model": "gpt-5.6-sol",
+    "role": "independent_data_and_clock_reviewer"
+  },
+  "final_hashes": {
+    "analysis_dates_sha256": "7c5cf3a6f5387039699e473c21ed2c4691cc92afdbf494186d40cc7410101b5c",
+    "control_manifest_sha256": "98b3e7fadce29b4659a61ea6d4a16ecdb44b3532c100a4f065aa9b37bb75e340",
+    "daily_model_sse_sha256": "f5058bdba46644eba95973cf8683ee2304686bcb0ce8b51c5b72876237f02854",
+    "event_manifest_sha256": "c00419c4fc2f22d031a40df8a866a11a3f097789576524a790359059e049937c",
+    "event_response_summary_sha256": "51e5bc3425d1d7ba158d6e18e6ab6866237b1ccb32eb6a277e92a9f285c06a22",
+    "loo_sha256": "138ee55c59ee4b93141e938a98114317c4e7d5925653eac97ffdd9ee204f7ce6",
+    "paired_event_control_sha256": "655c6fe3e7b55b557ff1f7d05c63476c9a42128d8415623077177c847a63f640",
+    "prediction_summary_sha256": "8259b6569894de88245fffc3d0889816b80ed3aa45fa229fe3e9d5b50d9bc427",
+    "request_manifest_sha256": "e255ce1ac5d62c2393df094437bf9795cab048762549e05e546cfa69452aaaa8",
+    "run_fomc_models_code_sha256": "7c0496168790bf1c44b4599ca3c498ce860c52cb00397eb1f72e50121bf98c9a",
+    "summarize_fomc_models_code_sha256": "1f0d7917d3f33b1950f5d7cb98b437400e7eb9750b6e2c031fa956340ed1d8fa",
+    "timing_diagnostics_sha256": "1340f0779341aeea746f94b4eb24619a079becda59b4f5757040ce808123e015",
+    "vendor_conditions_sha256": "6a5e5556a96209bead55a6e1f26e28e45eaaf5e037e759d333863a062e0624c2"
+  },
+  "correction": {
+    "issue": "Window assignment originally used the predictor/start second although y_1s_bp ends one second later.",
+    "resolution": "Assign by target_rel = predictor_rel + 1 and rerun all four venue-grid cells plus summary.",
+    "reviewed_only_after_rerun": true
+  },
+  "clock_and_control_checks": {
+    "controls_verified_as_fifth_prior_nyse_session": 16,
+    "edt_events_utc_1800": 11,
+    "est_events_utc_1900": 5,
+    "event_control_pairs_crossing_splits": 0,
+    "official_1400_statement_pages_verified": 16,
+    "official_regular_event_dates_verified": 16,
+    "sep_flags_verified": 8
+  },
+  "raw_endpoint_audit": {
+    "maximum_absolute_bp_difference_from_saved_summary": 3.553e-15,
+    "records": [
+      {"asset": "SPY", "baseline_mid": 487.315, "date": "2024-01-24", "endpoint_100ms_bp": 0.0, "endpoint_60s_bp": 0.615599286098, "role": "CONTROL", "raw_sha256": "c1ef0d2678fca8ae36c6171251e21bda0612c189e583d0001d3777804c0da7f4"},
+      {"asset": "ES", "baseline_mid": 4918.375, "contract": "ESH4", "date": "2024-01-24", "endpoint_100ms_bp": 0.0, "endpoint_60s_bp": 0.508285046372, "role": "CONTROL", "raw_sha256": "f02ea3c0be37f29b75524407441ff33e2cb540d1359f9a9cab1e01aa9b5c3a45"},
+      {"asset": "SPY", "baseline_mid": 487.415, "date": "2024-01-31", "endpoint_100ms_bp": 0.0, "endpoint_60s_bp": -22.593541699019, "role": "EVENT", "raw_sha256": "3666d49641cc5d354bea91a343c1c3cdf1ebed5d0c96a29c113c7789ec44ded9"},
+      {"asset": "ES", "baseline_mid": 4913.25, "contract": "ESH4", "date": "2024-01-31", "endpoint_100ms_bp": 0.254410848104, "endpoint_60s_bp": -22.413539004678, "role": "EVENT", "raw_sha256": "a260d63400463977fe02d1f34e7b32fac9c7a6fec8e43a9f5c405b5a47702bc1"},
+      {"asset": "SPY", "baseline_mid": 543.885, "date": "2024-07-24", "endpoint_100ms_bp": 0.643497685928, "endpoint_60s_bp": -1.011294319682, "role": "CONTROL", "raw_sha256": "53a4e409a93d8284ec3eaadcc2b8b6acb0de7f28f3d8db19cdf25b63ea341e7a"},
+      {"asset": "ES", "baseline_mid": 5497.625, "contract": "ESU4", "date": "2024-07-24", "endpoint_100ms_bp": 0.90944228516, "endpoint_60s_bp": -0.90952500118, "role": "CONTROL", "raw_sha256": "98cab679cf6b925ee5bac113de81ae29c3f785232d759b93c84cde03a204b2a9"},
+      {"asset": "SPY", "baseline_mid": 550.285, "date": "2024-07-31", "endpoint_100ms_bp": 1.453686460566, "endpoint_60s_bp": -11.091313548377, "role": "EVENT", "raw_sha256": "c241250c3111b4ee0fdd3927d79775bbf120c7c99a4f24ecade163368ace145c"},
+      {"asset": "ES", "baseline_mid": 5556.0, "contract": "ESU4", "date": "2024-07-31", "endpoint_100ms_bp": 2.024633042179, "endpoint_60s_bp": -10.804971337546, "role": "EVENT", "raw_sha256": "77bb6a26d6fb2a24d06f61cd3e21cfe03fb25deb7ca7067f6303b4911752a48d"}
+    ]
+  },
+  "split_and_timing_checks": {
+    "event_control_pairs": {"HISTORY": 2, "TEST": 8, "TRAIN": 4, "VALID": 2},
+    "external_refit_or_rescale": false,
+    "future_response_features_found": false,
+    "same_target_rows_a2_a5": true,
+    "test_year": 2024,
+    "training_and_validation_year": 2023
+  },
+  "es_trade_audit": {
+    "aggressor_buy": 429682,
+    "aggressor_sell": 426096,
+    "files": 32,
+    "known_side_fraction": 0.9999988314732245,
+    "total_action_t": 855779,
+    "unknown_side": 1,
+    "unknown_side_dates": ["2024-09-18"]
+  },
+  "primary_recomputation": {
+    "cells_per_event_or_control": 92,
+    "comparison": "A2_TO_A5_COMPLETE_SPY_AFTER_C",
+    "event_order": [
+      "FOMC_20240131",
+      "FOMC_20240320",
+      "FOMC_20240501",
+      "FOMC_20240612",
+      "FOMC_20240731",
+      "FOMC_20240918",
+      "FOMC_20241107",
+      "FOMC_20241218"
+    ],
+    "events": 8,
+    "fit_specs": {
+      "FIXED_A2_LAMBDA": {
+        "control_G": -0.026190498243,
+        "event_G": -0.000770320037,
+        "event_values": [-0.004134003136, 0.004842555936, -0.000857059897, -0.003384238054, -0.005962266953, 0.003523791356, 0.001209528144, -0.001400867688],
+        "loo_paired": [0.025565140410, 0.018978062080, 0.027286413610, 0.028067268308, 0.028010518199, 0.022626149896, 0.027624637972, 0.025203235172],
+        "paired_difference_G": 0.025420178206,
+        "paired_values": [0.024405442779, 0.070514991086, 0.012356530377, 0.006890547491, 0.007287798253, 0.044978376377, 0.009988959842, 0.026938779443]
+      },
+      "OWN_LAMBDA": {
+        "control_G": -0.009621280842,
+        "event_G": 0.002511776876,
+        "event_values": [-0.003268270452, -0.000217159618, -0.002183069697, 0.004543462440, 0.014143837705, 0.004419094590, 0.003372094426, -0.000715774388],
+        "loo_paired": [0.013683751484, 0.005400231062, 0.013682027742, 0.017012038728, 0.013365935006, 0.008142108970, 0.012949969293, 0.012828399453],
+        "paired_difference_G": 0.012133057717,
+        "paired_values": [0.001278201351, 0.059262844303, 0.001290267546, -0.022019809359, 0.003502916696, 0.040069698948, 0.006414676685, 0.007265665569]
+      }
+    },
+    "n_target_observations_per_event_or_control": 5520,
+    "split": "TEST",
+    "window": "POST_0_60S"
+  },
+  "vendor_condition_sensitivity": {
+    "degraded": [
+      {"dataset": "ARCX.PILLAR", "date": "2023-12-06", "primary_2024_result": false},
+      {"dataset": "GLBX.MDP3", "date": "2024-09-18", "primary_2024_result": true}
+    ],
+    "leave_out_2024_09_18_pair": {
+      "FIXED_A2_LAMBDA": {"control_G": -0.024009914417, "event_G": -0.001383764521, "paired_difference_G": 0.022626149896},
+      "OWN_LAMBDA": {"control_G": -0.005902806054, "event_G": 0.002239302916, "paired_difference_G": 0.008142108970}
+    }
+  },
+  "security_and_api_scope": {
+    "batch_or_live_calls_found": false,
+    "literal_credentials_found_in_task_directory": false,
+    "manifest_matched_downloads": 96,
+    "out_of_manifest_downloads_found": false,
+    "timeseries_get_range_calls_authorized": true,
+    "unique_download_request_ids": 96
+  },
+  "interpretation": {
+    "supported_decision": "COMMON_NEWS_WITHOUT_DISTINCT_SPY_INCREMENT",
+    "unsupported_claims": [
+      "ETF_CAUSAL_LEADERSHIP",
+      "PERMANENT_INFORMATION_SHARE",
+      "CONCENTRATION_MECHANISM",
+      "FORMAL_POWER_CERTIFICATION"
+    ]
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "cells": [
+    {
+      "analysis_dates_sha256": "7c5cf3a6f5387039699e473c21ed2c4691cc92afdbf494186d40cc7410101b5c",
+      "code_sha256": "7c0496168790bf1c44b4599ca3c498ce860c52cb00397eb1f72e50121bf98c9a",
+      "daily_sse_rows": 16560,
+      "equity_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/DIRECTIONAL_FEATURES_FOMC.parquet",
+      "es_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/FUTURES_FEATURES_FOMC.parquet",
+      "external_refit_or_rescale": false,
+      "fit_specs": [
+        "OWN_LAMBDA",
+        "FIXED_A2_LAMBDA"
+      ],
+      "fitted_objects_stay_on_scc": true,
+      "grid_shifts_ms": [
+        0
+      ],
+      "models": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ],
+      "status": "COMPLETE_FOMC_MODELS_ON_SCC",
+      "stocks": 23,
+      "validation_rows": 828,
+      "venues": [
+        "ARCX.PILLAR"
+      ],
+      "windows": {
+        "POST_0_60S": [
+          0,
+          60
+        ],
+        "POST_60_600S": [
+          60,
+          600
+        ],
+        "PRE_600S": [
+          -600,
+          0
+        ]
+      }
+    },
+    {
+      "analysis_dates_sha256": "7c5cf3a6f5387039699e473c21ed2c4691cc92afdbf494186d40cc7410101b5c",
+      "code_sha256": "7c0496168790bf1c44b4599ca3c498ce860c52cb00397eb1f72e50121bf98c9a",
+      "daily_sse_rows": 16560,
+      "equity_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/DIRECTIONAL_FEATURES_FOMC.parquet",
+      "es_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/FUTURES_FEATURES_FOMC.parquet",
+      "external_refit_or_rescale": false,
+      "fit_specs": [
+        "OWN_LAMBDA",
+        "FIXED_A2_LAMBDA"
+      ],
+      "fitted_objects_stay_on_scc": true,
+      "grid_shifts_ms": [
+        500
+      ],
+      "models": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ],
+      "status": "COMPLETE_FOMC_MODELS_ON_SCC",
+      "stocks": 23,
+      "validation_rows": 828,
+      "venues": [
+        "ARCX.PILLAR"
+      ],
+      "windows": {
+        "POST_0_60S": [
+          0,
+          60
+        ],
+        "POST_60_600S": [
+          60,
+          600
+        ],
+        "PRE_600S": [
+          -600,
+          0
+        ]
+      }
+    },
+    {
+      "analysis_dates_sha256": "7c5cf3a6f5387039699e473c21ed2c4691cc92afdbf494186d40cc7410101b5c",
+      "code_sha256": "7c0496168790bf1c44b4599ca3c498ce860c52cb00397eb1f72e50121bf98c9a",
+      "daily_sse_rows": 16560,
+      "equity_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/DIRECTIONAL_FEATURES_FOMC.parquet",
+      "es_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/FUTURES_FEATURES_FOMC.parquet",
+      "external_refit_or_rescale": false,
+      "fit_specs": [
+        "OWN_LAMBDA",
+        "FIXED_A2_LAMBDA"
+      ],
+      "fitted_objects_stay_on_scc": true,
+      "grid_shifts_ms": [
+        0
+      ],
+      "models": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ],
+      "status": "COMPLETE_FOMC_MODELS_ON_SCC",
+      "stocks": 23,
+      "validation_rows": 828,
+      "venues": [
+        "XNAS.ITCH"
+      ],
+      "windows": {
+        "POST_0_60S": [
+          0,
+          60
+        ],
+        "POST_60_600S": [
+          60,
+          600
+        ],
+        "PRE_600S": [
+          -600,
+          0
+        ]
+      }
+    },
+    {
+      "analysis_dates_sha256": "7c5cf3a6f5387039699e473c21ed2c4691cc92afdbf494186d40cc7410101b5c",
+      "code_sha256": "7c0496168790bf1c44b4599ca3c498ce860c52cb00397eb1f72e50121bf98c9a",
+      "daily_sse_rows": 16560,
+      "equity_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/DIRECTIONAL_FEATURES_FOMC.parquet",
+      "es_feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/FUTURES_FEATURES_FOMC.parquet",
+      "external_refit_or_rescale": false,
+      "fit_specs": [
+        "OWN_LAMBDA",
+        "FIXED_A2_LAMBDA"
+      ],
+      "fitted_objects_stay_on_scc": true,
+      "grid_shifts_ms": [
+        500
+      ],
+      "models": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ],
+      "status": "COMPLETE_FOMC_MODELS_ON_SCC",
+      "stocks": 23,
+      "validation_rows": 828,
+      "venues": [
+        "XNAS.ITCH"
+      ],
+      "windows": {
+        "POST_0_60S": [
+          0,
+          60
+        ],
+        "POST_60_600S": [
+          60,
+          600
+        ],
+        "PRE_600S": [
+          -600,
+          0
+        ]
+      }
+    }
+  ],
+  "status": "COMPLETE_FOUR_CELLS"
+}

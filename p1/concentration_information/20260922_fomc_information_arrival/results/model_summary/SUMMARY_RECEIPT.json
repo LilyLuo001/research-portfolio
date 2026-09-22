@@ -1,0 +1,43 @@
+{
+  "bootstrap_repetitions": 2000,
+  "cell_rows": 66240,
+  "comparisons": {
+    "A0_TO_A1_SPY_QUOTE_WEAK_BASE": [
+      "A0",
+      "A1"
+    ],
+    "A0_TO_A2_CASH_TRADES": [
+      "A0",
+      "A2"
+    ],
+    "A1_TO_A3_CASH_TRADES_AFTER_Q": [
+      "A1",
+      "A3"
+    ],
+    "A2_TO_A3_SPY_QUOTE_AFTER_C": [
+      "A2",
+      "A3"
+    ],
+    "A2_TO_A5_COMPLETE_SPY_AFTER_C": [
+      "A2",
+      "A5"
+    ],
+    "A3_TO_A5_SPY_TRADE_AFTER_CQ": [
+      "A3",
+      "A5"
+    ]
+  },
+  "daily_sse_sha256": "f5058bdba46644eba95973cf8683ee2304686bcb0ce8b51c5b72876237f02854",
+  "event_rows": 720,
+  "loo_rows": 360,
+  "pair_rows": 360,
+  "primary": {
+    "comparison": "A2_TO_A5_COMPLETE_SPY_AFTER_C",
+    "split": "TEST",
+    "weighting": "equal stocks, equal venue-grid cells, equal event clusters",
+    "window": "POST_0_60S"
+  },
+  "seed": 20260922,
+  "status": "COMPLETE_FOMC_PREDICTION_SUMMARY",
+  "summary_rows": 72
+}

@@ -1,0 +1,19 @@
+{
+  "status": "EXECUTED_SPECIFICATION",
+  "target": "next-one-second individual-stock midpoint log return",
+  "models": ["A0", "A1", "A2", "A3", "A4", "A5"],
+  "primary_comparison": "A2_TO_A5_COMPLETE_SPY_AFTER_C",
+  "primary_split": "2024_TEST",
+  "primary_window": "POST_0_60S",
+  "window_assignment": "prediction target endpoint g+1, not predictor center g",
+  "fit_specs": ["OWN_LAMBDA", "FIXED_A2_LAMBDA"],
+  "grids_ms": [0, 500],
+  "venues": ["XNAS.ITCH", "ARCX.PILLAR"],
+  "stocks": 23,
+  "event_clusters_test": 8,
+  "weighting": "equal stocks, equal venue-grid cells, equal event clusters",
+  "bootstrap_repetitions": 2000,
+  "bootstrap_unit": "event plus its matched control",
+  "external_test_refit_or_rescale": false,
+  "interpretation_boundary": "conditional predictive increment; not permanent information share or causal ETF leadership"
+}

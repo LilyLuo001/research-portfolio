@@ -1,0 +1,27 @@
+#!/bin/bash
+#$ -P econdept
+#$ -N p1_fomc_model
+#$ -t 1-4
+#$ -l h_rt=12:00:00
+#$ -l mem_per_core=16G
+#$ -j y
+#$ -o /project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/logs
+set -euo pipefail
+BASE=/project/econdept/qluo/bidirectional_information_20260922
+ROOT="$BASE/fomc_information_arrival_20260922"
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+case "$SGE_TASK_ID" in
+  1) VENUE=XNAS.ITCH; SHIFT=0 ;;
+  2) VENUE=XNAS.ITCH; SHIFT=500 ;;
+  3) VENUE=ARCX.PILLAR; SHIFT=0 ;;
+  4) VENUE=ARCX.PILLAR; SHIFT=500 ;;
+esac
+OUT="$ROOT/model_parts/${VENUE}_${SHIFT}"
+mkdir -p "$OUT" "$ROOT/logs"
+exec "$PY" "$ROOT/code/run_fomc_models.py" \
+  --features "$ROOT/features/DIRECTIONAL_FEATURES_FOMC.parquet" \
+  --es-features "$ROOT/features/FUTURES_FEATURES_FOMC.parquet" \
+  --analysis-dates "$ROOT/ANALYSIS_DATES.csv" \
+  --roster "$BASE/futures_control/results/SAFE_ROSTER.csv" \
+  --base-code "$BASE/directional_evidence/code/run_directional_models.py" \
+  --venue "$VENUE" --grid-shift-ms "$SHIFT" --out "$OUT"

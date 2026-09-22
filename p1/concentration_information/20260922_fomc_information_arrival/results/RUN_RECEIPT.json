@@ -1,0 +1,44 @@
+{
+  "status": "COMPLETE_WITH_INDEPENDENT_REVIEW",
+  "decision": "COMMON_NEWS_WITHOUT_DISTINCT_SPY_INCREMENT",
+  "execution_date": "2026-09-22",
+  "git_branch": "task/p1-feasibility-adjudication-20260913",
+  "git_head_before_execution": "1bacd70895f04da4a9027a459859c55d11c0256a",
+  "routing": {
+    "main_requested": "gpt-5.6-sol / medium",
+    "main_actual_telemetry": "NOT_OBSERVED",
+    "data_engineer_requested": "gpt-5.6-terra / medium",
+    "data_engineer_actual": "gpt-5.6-terra / medium (tool-confirmed)",
+    "independent_reviewer_requested": "gpt-5.6-sol / high",
+    "independent_reviewer_actual": "gpt-5.6-sol / high (tool-confirmed)",
+    "nested_delegation": false
+  },
+  "scc_jobs": {
+    "feature_final": "7689056",
+    "response_summary": "7688917",
+    "model_initial_invalidated": "7689125.1-4",
+    "model_final": "7690662.1-4",
+    "summary_final": "7690693"
+  },
+  "recovered_failures": [
+    {"job": "7688916", "cause": "feature wrapper path typo", "action": "corrected wrapper; no data rerun beyond affected feature job"},
+    {"job": "7688919.1-4", "cause": "shared base-code file absent on SCC path", "action": "copied tracked dependency and reran model array"},
+    {"job": "7688922", "cause": "summary started after failed model array", "action": "discarded; final summary ran only after complete model parts"},
+    {"job": "7689126", "cause": "hold argument captured scheduler prose rather than numeric job id", "action": "discarded; submitted final summary explicitly after array completion"},
+    {"job": "7689125.1-4", "cause": "review found windows assigned by predictor center rather than target endpoint", "action": "changed to target_rel=rel+1 and invalidated all initial model summaries"}
+  ],
+  "final_hashes": {
+    "analysis_dates_sha256": "7c5cf3a6f5387039699e473c21ed2c4691cc92afdbf494186d40cc7410101b5c",
+    "request_manifest_sha256": "e255ce1ac5d62c2393df094437bf9795cab048762549e05e546cfa69452aaaa8",
+    "model_code_sha256": "7c0496168790bf1c44b4599ca3c498ce860c52cb00397eb1f72e50121bf98c9a",
+    "daily_model_sse_sha256": "f5058bdba46644eba95973cf8683ee2304686bcb0ce8b51c5b72876237f02854",
+    "prediction_summary_sha256": "8259b6569894de88245fffc3d0889816b80ed3aa45fa229fe3e9d5b50d9bc427"
+  },
+  "security": {
+    "credential_written_to_files": false,
+    "raw_market_data_committed": false,
+    "secret_scan_patterns": ["Databento credential marker", "GitHub PAT marker", "provided SCC password fragment"],
+    "secret_scan_result": "NO_MATCH_IN_TASK_DIRECTORY"
+  },
+  "background_jobs_left_by_this_run": false
+}

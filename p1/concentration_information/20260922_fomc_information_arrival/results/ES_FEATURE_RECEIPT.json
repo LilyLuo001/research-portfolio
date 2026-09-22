@@ -1,0 +1,319 @@
+{
+  "clock_sensitivity_fields": [
+    "lag1_ret_0_100ms",
+    "lag1_ret_100ms_1s",
+    "lag1_ret_1s_5s",
+    "lag1_spread_bp",
+    "lag1_bid_depth",
+    "lag1_ask_depth",
+    "lag1_mid_update_count_1s",
+    "lag1_mid_update_age_ms",
+    "lag1_known_signed_flow_0_100ms",
+    "lag1_unknown_dollar_volume_0_100ms",
+    "lag1_no_trade_0_100ms",
+    "lag1_known_signed_flow_100ms_1s",
+    "lag1_unknown_dollar_volume_100ms_1s",
+    "lag1_no_trade_100ms_1s",
+    "lag1_known_signed_flow_1s_5s",
+    "lag1_unknown_dollar_volume_1s_5s",
+    "lag1_no_trade_1s_5s",
+    "lag1_es_valid"
+  ],
+  "contracts": [
+    {
+      "actual_raw_contract": "ESH3",
+      "date": "2023-02-01",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-02-01_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "e7ea7ca002eaf4d0ed4f7f1f8c33e3b6afe20bb14d1eeb742fc299f717ff3080",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESH3",
+      "date": "2023-01-25",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-01-25_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "76dbc90d0cad7cc8285245232916a6f06c50cce01a1d2e0d30cb7c64180b5a96",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM3",
+      "date": "2023-03-22",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-03-22_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "3fbb6b8d6901e1afd890e789671baa2fcb3b43fe4da6b1362b4e926bb2a72d22",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM3",
+      "date": "2023-03-15",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-03-15_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "07efa25d167902d8062b5c48597cbcb47b389f6a90e69d380b9beb4cb033193d",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM3",
+      "date": "2023-05-03",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-05-03_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "212d4141a8e0bccefbf342fa465db487b397f9a31fad8a10c515d01c9b087f01",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM3",
+      "date": "2023-04-26",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-04-26_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "174c3a60d4005ea4db3cf19172c0955ca7bf930521493eba8dee1f91e4a7daa3",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESU3",
+      "date": "2023-06-14",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-06-14_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "8f833d71b222ff414b58a255bf0267f9c5c1fadfbc90f90075e1698065571f20",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM3",
+      "date": "2023-06-07",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-06-07_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "7584e0859b74ddd173b9c54271833ac956d811f567471d789db3aac05bb7318f",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESU3",
+      "date": "2023-07-26",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-07-26_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "38eef6144fee3c8d24116303a3567d256d8877c6e28b54f7622f85d84e9ae33a",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESU3",
+      "date": "2023-07-19",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-07-19_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "3ae7a9352f6cee60a043cac3e1cc3aabcfbd85d57c57b66b4ee97dd8bf624b1d",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ3",
+      "date": "2023-09-20",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-09-20_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "23bf00ae2f1aeabb4bf7cf583028f97bfe248bbcbe44e7fe0954dd0c8e2e8fc8",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ3",
+      "date": "2023-09-13",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-09-13_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "55ec2cc00ffe452e82210fc6cd90a687cf751b9fb0b6a5d0d6e3800f917fb833",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ3",
+      "date": "2023-11-01",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-11-01_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "da1c377b2d9761edef88f7500c42234d083e40340b5ea4f81a6876afa84f2aa7",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ3",
+      "date": "2023-10-25",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-10-25_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "f118f9999b33d7d644bce9b5f6b509c387262f63dfb5306a3f93f61491c27264",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESH4",
+      "date": "2023-12-13",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-12-13_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "d2e57950eb3ed71aa2534960163236a7131eef10f76861ef2929b0b041cc6ecf",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ3",
+      "date": "2023-12-06",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2023-12-06_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "88c8679b768409a10f77ba76f8c1f6981d2fe700bf84e9a607db6121201f9e3a",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESH4",
+      "date": "2024-01-31",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-01-31_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "a260d63400463977fe02d1f34e7b32fac9c7a6fec8e43a9f5c405b5a47702bc1",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESH4",
+      "date": "2024-01-24",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-01-24_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "f02ea3c0be37f29b75524407441ff33e2cb540d1359f9a9cab1e01aa9b5c3a45",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM4",
+      "date": "2024-03-20",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-03-20_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "6b98a60e5152e12a4f3c1abc024f78b5d601fea704764e05d7ae337e90480b5b",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM4",
+      "date": "2024-03-13",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-03-13_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "e492c4f0cbc5657895480c8383a7abe6e249ff074da171c00baa5c3217d41415",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM4",
+      "date": "2024-05-01",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-05-01_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "5a4a24ec1da83da1d6b03955db72c9cc1e84a3cf28e5441164fd2b445999fb8d",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM4",
+      "date": "2024-04-24",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-04-24_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "00423f34aa42be31cf2167969d538969363c24e16c1027890c56e2a11a47fd4a",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM4",
+      "date": "2024-06-12",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-06-12_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "773bbdf17d5d7affa0aa5d99a530fb364555023be10f17a5f4b4dc05555b1368",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESM4",
+      "date": "2024-06-05",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-06-05_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "1f9cf891ea1157550a3a88cf9ece199b4995d0a53d2be09ef075baba3cdd1104",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESU4",
+      "date": "2024-07-31",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-07-31_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "77bb6a26d6fb2a24d06f61cd3e21cfe03fb25deb7ca7067f6303b4911752a48d",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESU4",
+      "date": "2024-07-24",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-07-24_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "98cab679cf6b925ee5bac113de81ae29c3f785232d759b93c84cde03a204b2a9",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ4",
+      "date": "2024-09-18",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-09-18_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "8714c461d0ec837c0835675e5d0a28b40ac0e59c5b037708bb685364d532a0a7",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESU4",
+      "date": "2024-09-11",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-09-11_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "b96d1959aa3c77d5167683637088d50a08ae114b7d720e47e15632fd7b820eba",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ4",
+      "date": "2024-11-07",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-11-07_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "bb27444bedb2b13b002b5beda90548d9b5cd70eab3d34d2372a1cd31c450c00b",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ4",
+      "date": "2024-10-31",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-10-31_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "31467991c1794ead0713f0d19f5950b362873c8a938d9baf1e0a920d42b0a476",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESH5",
+      "date": "2024-12-18",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-12-18_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "d47a53d68f5ddabe61d9b61a7ebbbb9da67e8c02ddc6a578b082e4b86d5b7b4a",
+      "requested_continuous_contract": "ES.v.0"
+    },
+    {
+      "actual_raw_contract": "ESZ4",
+      "date": "2024-12-11",
+      "dbn_metadata_symbol": "ES.V.0",
+      "raw_file": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/raw/GLBX_MDP3_2024-12-11_ESV0_MBP1.dbn.zst",
+      "raw_sha256": "f0b8004d95cfd1fcdd5902e034ccf4f452d5f3ea457217ede98ebe36aec11534",
+      "requested_continuous_contract": "ES.v.0"
+    }
+  ],
+  "dates": 32,
+  "event_clock_definition": "second_index=600 is 14:00 ET; retained [13:50,14:10)",
+  "event_clock_shift_from_reused_builder_seconds": 300,
+  "feature_path": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922/features/FUTURES_FEATURES_FOMC.parquet",
+  "feature_sha256": "b504fc2d0679852a101a2fafdf315a1dc5396045e5ab216be0a67508db94d4c2",
+  "grid_shifts_ms": [
+    0,
+    500
+  ],
+  "keys": [
+    "date",
+    "grid_shift_ms",
+    "second_index"
+  ],
+  "primary_predictors": [
+    "ret_0_100ms",
+    "ret_100ms_1s",
+    "ret_1s_5s",
+    "spread_bp",
+    "bid_depth",
+    "ask_depth",
+    "mid_update_count_1s",
+    "mid_update_age_ms",
+    "known_signed_flow_0_100ms",
+    "unknown_dollar_volume_0_100ms",
+    "no_trade_0_100ms",
+    "known_signed_flow_100ms_1s",
+    "unknown_dollar_volume_100ms_1s",
+    "no_trade_100ms_1s",
+    "known_signed_flow_1s_5s",
+    "unknown_dollar_volume_1s_5s",
+    "no_trade_1s_5s",
+    "es_valid"
+  ],
+  "raw_or_row_data_exported_locally": false,
+  "rows": 76800,
+  "status": "COMPLETE_ES_FEATURES_ON_SCC",
+  "trade_semantics": "Databento MBP-1 action=T; side B/A is buyer/seller aggressor. Flow unit is futures price times contracts, a scaled notional proxy without contract multiplier.",
+  "ts_basis": "ts_event; source records ordered by ts_event, sequence, source order"
+}
