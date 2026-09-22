@@ -4,6 +4,8 @@
 
 ## 最新状态（2026-09-22）
 
+- **同日追加：[Ernst participant/SIP 时间戳核查](20260922_one_second_design/ERNST_TIMESTAMP_ADDENDUM.md)**：其20微秒同步检验使用 participant、不用 SIP timestamp。一秒稿尚未执行；先核对逐笔 trades/mbp-1 与源时钟，一秒仅保留为粗诊断。Databento ts_recv 不能当 SIP 时间。
+- **最新准备、尚未执行：[一秒报价与价差诊断 prompt](20260922_one_second_design/NEXT_EXECUTION_PROMPT.md)**，及[文献方法对照/解释修正](20260922_one_second_design/LITERATURE_AND_MEASUREMENT.md)。复用两次 AAPL 和一次 XOM 的已有 bbo-1s，分别计算 bid/ask/mid、价差与相对检测时刻。修正：lag0 不是领先时长上界；同秒同步不否定 ETF 信息作用；bbo-1s 快照间隔不等于精确报价年龄。新准备不改变下述历史计算数字，不代表秒级检验已运行。
 - **最新实际结果：[ETF／完整滞后篮子时序决定](20260922_etf_basket_timing_decision/RESULTS.md)**：六事件、七时钟变体、双场所和双时间网格已完成，独立 reviewer 从 SCC 原始 holdings/DBN 复算关键结果一致。两个 AAPL 财报和 MSFT 通知窗口在四种设定下均为一分钟 lag 0；四个 XOM／UNH 变体受场所、网格或陈旧报价影响，无稳定 ETF-leading 或 basket-leading 结果。决定为 `ADVANCE_BOUNDED_RESEARCH`，仅用现有数据做一次一秒级反应起点检验；失败即停止“谁领先”的主叙述，不再自动购数或扩事件。
 - **本轮已执行 prompt：[一次完成 ETF／篮子时序检验并作决定](20260922_six_event_observed_paths/NEXT_EXECUTION_PROMPT.md)**。以同六日期整体滞后篮子／SPY 比较为主，ETF-implied issuer 为误差放大诊断；实际产物与最终决定见上一条。
 
