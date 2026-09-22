@@ -4,7 +4,8 @@
 
 ## 最新状态（2026-09-22）
 
-- **最新待执行：[有限逐笔机制试点 prompt](20260922_native_tick_pilot/NEXT_EXECUTION_PROMPT.md)** 与[参考信息核查](20260922_native_tick_pilot/REFERENCE_CHECK.md)。原生mbp-1/trades、两证券/双场所，保留原公告窗口，明确新增RTH及普通比较窗口；以范围计数避免全配对，先实算同步/方向/后续报价。此稿取代一秒稿作为下一轮入口，尚未执行或购数。
+- **最新实际结果：[有限逐笔机制试点](20260922_native_tick_results/RESULTS.md)**：18/18 个 XNAS/ARCX `mbp-1` 请求、12,298,752 条原生记录已经计算；原生方向优先、严格前序 midpoint 补缺和独立复算已纳入。AAPL 在 RTH 与普通日均有稳健的同向近同步交易及后续报价响应，但两个普通对照日的每千笔 excess 都高于相应财报后 RTH；XOM 近乎为零，公告分钟稀疏或时钟敏感。决定为 `COACTIVITY_ONLY`：测量工程可用，但三事件不支持财报特定、ETF 主导或集中度因果机制。唯一下一行动是用这套代码做一个预声明的“权重/集中度 × 财报日/匹配普通日”较大 RTH 面板，而不是继续购买同三事件窗口。
+- **本轮已执行规格：[有限逐笔机制试点 prompt](20260922_native_tick_pilot/NEXT_EXECUTION_PROMPT.md)** 与[参考信息核查](20260922_native_tick_pilot/REFERENCE_CHECK.md)。原生 `mbp-1`、两证券/双场所、公告/RTH/普通比较窗口和范围计数均按规格保存；实际结果以上一条目录为准。
 - **同日追加：[Ernst participant/SIP 时间戳核查](20260922_one_second_design/ERNST_TIMESTAMP_ADDENDUM.md)**：其20微秒同步检验使用 participant、不用 SIP timestamp。一秒稿尚未执行；先核对逐笔 trades/mbp-1 与源时钟，一秒仅保留为粗诊断。Databento ts_recv 不能当 SIP 时间。
 - **最新准备、尚未执行：[一秒报价与价差诊断 prompt](20260922_one_second_design/NEXT_EXECUTION_PROMPT.md)**，及[文献方法对照/解释修正](20260922_one_second_design/LITERATURE_AND_MEASUREMENT.md)。复用两次 AAPL 和一次 XOM 的已有 bbo-1s，分别计算 bid/ask/mid、价差与相对检测时刻。修正：lag0 不是领先时长上界；同秒同步不否定 ETF 信息作用；bbo-1s 快照间隔不等于精确报价年龄。新准备不改变下述历史计算数字，不代表秒级检验已运行。
 - **最新实际结果：[ETF／完整滞后篮子时序决定](20260922_etf_basket_timing_decision/RESULTS.md)**：六事件、七时钟变体、双场所和双时间网格已完成，独立 reviewer 从 SCC 原始 holdings/DBN 复算关键结果一致。两个 AAPL 财报和 MSFT 通知窗口在四种设定下均为一分钟 lag 0；四个 XOM／UNH 变体受场所、网格或陈旧报价影响，无稳定 ETF-leading 或 basket-leading 结果。决定为 `ADVANCE_BOUNDED_RESEARCH`，仅用现有数据做一次一秒级反应起点检验；失败即停止“谁领先”的主叙述，不再自动购数或扩事件。

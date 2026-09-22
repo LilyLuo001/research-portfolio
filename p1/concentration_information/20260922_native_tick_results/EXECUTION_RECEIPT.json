@@ -1,0 +1,95 @@
+{
+  "task": "P1 bounded native-tick mechanism pilot",
+  "executed_at": "2026-09-22",
+  "status": "COMPLETE_REVIEWED",
+  "decision": "COACTIVITY_ONLY",
+  "git": {
+    "branch": "task/p1-feasibility-adjudication-20260913",
+    "parent_commit": "b47d6c8",
+    "push_target": "origin/task/p1-feasibility-adjudication-20260913",
+    "main_merge_authorized": false
+  },
+  "routing": [
+    {
+      "role": "coordinator_and_final_judgment",
+      "requested": "gpt-5.6-sol / medium",
+      "agent": "/root",
+      "actual_backend_telemetry": "NOT_OBSERVED"
+    },
+    {
+      "role": "data_engineer",
+      "requested": "gpt-5.6-terra / medium",
+      "agent": "/root/xom_spy_paths_engineer",
+      "actual_backend_telemetry": "NOT_OBSERVED",
+      "note": "Agent supplied an initial counter; coordinator completed acquisition, native-side correction, full calculation and figures after the agent stopped early."
+    },
+    {
+      "role": "independent_reviewer",
+      "requested": "gpt-5.6-sol / high",
+      "agent": "/root/xom_spy_paths_referee",
+      "actual_backend_telemetry": "NOT_OBSERVED",
+      "review_status": "PASS_WITH_LIMITATIONS",
+      "review_scope": "Independent raw-DBN decode, two-pointer reconstruction of all corrected 20us cells, explicit bounded pair enumeration, and all 72 five-second response rows."
+    }
+  ],
+  "source": {
+    "provider": "Databento",
+    "schema": "mbp-1",
+    "datasets": [
+      "XNAS.ITCH",
+      "ARCX.PILLAR"
+    ],
+    "raw_location": "/scratch/qluo/native_tick_pilot_20260922/",
+    "raw_exported_from_scc": false,
+    "request_count": 18,
+    "complete_request_count": 18,
+    "compressed_bytes": 280208005,
+    "mbp1_records": 12298752,
+    "trade_records": 513606,
+    "raw_stock_trades": 286168,
+    "raw_spy_trades": 227438,
+    "analysis_window_stock_trades": 264831,
+    "analysis_window_spy_trades": 217189,
+    "support_only_trades": 31586
+  },
+  "direction": {
+    "raw_native_side_trades": 438478,
+    "raw_midpoint_fallback_trades": 54347,
+    "raw_unknown_trades": 20781,
+    "analysis_native_side_trades": 411837,
+    "analysis_midpoint_fallback_trades": 50457,
+    "analysis_unknown_trades": 19726,
+    "analysis_available_rate": 0.959076386871914,
+    "analysis_native_rate": 0.8543981577527904
+  },
+  "quality": {
+    "bad_receive_timestamp_flag_records": 0,
+    "maybe_bad_book_flag_records": 0,
+    "invalid_bbo_records": 0,
+    "quote_response_identity_max_abs_bp": 2.273736754432321e-13
+  },
+  "cost": {
+    "quoted_total_usd": 1.365348368882,
+    "self_cap_usd": 10.0,
+    "download_completed": true,
+    "posted_account_debit": "NOT_OBSERVED"
+  },
+  "artifact_sha256": {
+    "code/scc_analyze_native_ticks.py": "e1aabe737abd15f84a935a04a15cdd02dfbe04d03b20a22ea3669846006fd0bc",
+    "code/independent_scc_review.py": "d584402bc5e0f5b207c2f949ae58dd58725836c6dbf51f45cf777e0f38b7174f",
+    "analysis_config.json": "69966f4d17f211b8f0fd6d66319080cf5f50432af474bb7dd1177cb2cc3b6362",
+    "REQUEST_MANIFEST.json": "6a00216a04e30ee6085f24d925806e12de71c65300de08d13be0e874c350b521",
+    "EVENT_SUMMARY.csv": "cd36a86f264e1761e6e593f2abe6d7832e5b779092ec822e6240e6f572eb1e9a",
+    "PAIR_COUNTS.csv": "72e23c27ec91b17ad07c75010d8bd67a4ce1054519b2384197cc67fa3b644e76",
+    "TRADE_RESPONSE.csv": "0bc67008a829a95fcd0c99340c4d397c2150656f5619d7811a6705badd0f90a7",
+    "RESULTS.md": "5d40481289602f510b484a811fc61a0c1f0d144fadca0e5bb7e7bd68ed3bdfbe",
+    "INDEPENDENT_REVIEW.md": "f141fbb4121f396f8d781c53d861ca53cb3d3f044742b5b771ee929789d073e5"
+  },
+  "boundaries": {
+    "wrds_accessed": false,
+    "sip_or_taq_used": false,
+    "raw_rows_committed": false,
+    "credentials_persisted": false,
+    "main_merged": false
+  }
+}
