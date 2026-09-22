@@ -4,7 +4,8 @@
 
 ## 最新状态（2026-09-22）
 
-- **下一步已准备：[双向增量信息传递完整试点 prompt](20260922_bidirectional_information/NEXT_EXECUTION_PROMPT.md)**，未执行。针对最多24只分层股票、24个日期，直接比较ETF→股票和股票→ETF的日期外预测增量，另报告公司覆盖与组删除结果。旧三事件作为方法开发样本，不再用其同步交易差额替代价格发现方向。包含预算适配、独立复核与一次研究交付，尚未访问SCC或采购新数据。
+- **最新实际结果：[双向增量信息传递完整试点](20260922_bidirectional_information/results/RESULTS.md)**：48/48 个精确 `mbp-1` 双场所窗口已留在 SCC，形成 4,147,200 行特征和 552 个日期外股票×方向×时距结果。五秒主尺度的 ETF→股票与股票→ETF区间都跨零，裁定 `PREDICTIVE_TRANSMISSION_NOT_ESTABLISHED`；整数秒的一秒次指标显示 ETF→股票为正、反向为负且错日安慰剂消失，但 +500ms 网格明显减弱，不能升级成结构性价格发现主导。组删除模型因联合 complete-case 支持只有 XNAS 4、ARCX 595 个测试中心而不作经济解释；集中度贡献尚未成立。独立 Sol/high 原始中心与损失复算见结果目录。
+- **同轮探索性续作：[一秒非平衡联合模型](20260922_bidirectional_information/results/exploratory_eda/EDA_RESULTS.md)**：改用层内可用股票的报告权重重归一化、覆盖率变量和训练期插补后，每个场所×网格均保留 14,400 个测试中心。三层股票历史联合起来仍未改善 SPY 的下一秒预测，与逐股 ETF→股票先行构成方向性一致的早期证据；但 high/mid/low 删除结果没有稳定巨头排序。该文件用于假设生成，不改写五秒确认性裁定。
 - **最新实际结果：[原生逐笔解释与分支裁定](20260922_native_tick_interpretation/results/RESULTS.md)**：18 个已购 DBN 已按原生主动买/卖、50µs–60s horizon 和共同五分钟格完成重算。AAPL 的绝对 excess 在四格中三格增加，但每千笔股票率四格均下降；报价响应在 2 月、8 月、方向和场所间不稳定，XOM 无共同支持格。独立原始数据复算为 `PASS_WITH_LIMITATIONS`。决定 `METHOD_ONLY_STOP_THIS_BRANCH`：保留方法模块，停止自动扩张同三事件；这不终止 ETF–股票价格发现研究问题。
 - **本轮执行规格：[逐笔 pilot 解释与下一样本裁定 prompt](20260922_native_tick_interpretation/NEXT_EXECUTION_PROMPT.md)**。该规格因发现绝对 excess 与股票交易分母增长相反、旧五分钟格内比较未实现而建立；现已执行完毕，结果以上一条为准。它取代下条“直接扩权重×财报面板”的后续建议，不改写历史计数或旧独立复算。
 - **最新实际结果：[有限逐笔机制试点](20260922_native_tick_results/RESULTS.md)**：18/18 个 XNAS/ARCX `mbp-1` 请求、12,298,752 条原生记录已经计算；原生方向优先、严格前序 midpoint 补缺和独立复算已纳入。AAPL 在 RTH 与普通日均有稳健的同向近同步交易及后续报价响应，但两个普通对照日的每千笔 excess 都高于相应财报后 RTH；XOM 近乎为零，公告分钟稀疏或时钟敏感。决定为 `COACTIVITY_ONLY`：测量工程可用，但三事件不支持财报特定、ETF 主导或集中度因果机制。唯一下一行动是用这套代码做一个预声明的“权重/集中度 × 财报日/匹配普通日”较大 RTH 面板，而不是继续购买同三事件窗口。

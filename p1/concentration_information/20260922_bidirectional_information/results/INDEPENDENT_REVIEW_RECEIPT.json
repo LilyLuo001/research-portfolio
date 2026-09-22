@@ -1,0 +1,86 @@
+{
+  "status": "COMPLETE",
+  "verdict": "PASS_WITH_LIMITATIONS",
+  "date": "2026-09-22",
+  "review_scope": "P1 bidirectional information pilot",
+  "routing": {
+    "requested": "gpt-5.6-sol / high",
+    "dispatch": "ACCEPTED",
+    "actual_telemetry": "NOT_OBSERVED"
+  },
+  "evidence": {
+    "scc_root": "/scratch/qluo/bidirectional_information_20260922/",
+    "native_or_feature_data_copied_locally": false,
+    "source_data_modified": false,
+    "predictive_gain_rows": 552,
+    "daily_loss_rows": 4416,
+    "group_ablation_rows": 15,
+    "resolved_stocks": 23,
+    "roster_stocks": 24,
+    "unresolved_symbols": ["BF"],
+    "raw_centers_reconstructed": 20,
+    "raw_reconstruction": {
+      "venue": "XNAS.ITCH",
+      "date": "2023-10-20",
+      "symbols": ["AAPL", "CMI", "NWSA", "SPY"],
+      "centers_per_symbol": 5,
+      "feature_value_mismatches": 0,
+      "missingness_mismatches": 0
+    }
+  },
+  "independent_checks": {
+    "daily_loss_identity": "PASS",
+    "pairwise_sse_and_g_from_daily": "PASS_ALL_ROWS",
+    "whole_date_bootstrap_from_daily": "PASS",
+    "chronological_date_split": "PASS",
+    "no_test_use_in_scaling_or_lambda_selection": "PASS_CODE_REVIEW",
+    "input_cutoff": "PASS_CODE_AND_RAW_RECONSTRUCTION",
+    "native_trade_sign": "PASS_CODE_AND_RAW_RECONSTRUCTION",
+    "bbo_invalidation": "PASS_CODE_REVIEW_RAW_SAMPLE_HAD_NO_INVALID_EVENT",
+    "offday_mapping": "PASS_CODE_AND_OUTPUT_REPRODUCTION",
+    "bf_coverage_loss": "PASS_REPORTED",
+    "degraded_date_exclusion_arithmetic": "PASS_RESOLVED_ARCX_ONLY_XNAS_EQUALS_FULL_RESULT",
+    "degraded_date_condition_provenance": "CORRECTED_FROM_AUTHENTICATED_DATABENTO_METADATA_GET_DATASET_CONDITION",
+    "degraded_dates": {
+      "venue": "ARCX.PILLAR",
+      "dates": ["2023-09-22", "2023-11-21", "2023-12-07"],
+      "xnas_condition": "available",
+      "current_coverage_label": "CORRECT_ARCX_PILLAR",
+      "correction_status": "RESOLVED"
+    },
+    "adjacent_two_day_block_sensitivity": "NOT_DELIVERED"
+  },
+  "primary_xnas_grid0_5s": {
+    "ETF_TO_STOCK": {
+      "equal_stock_G": 0.001224880549969252,
+      "ci_low": -0.0009297062141773445,
+      "ci_high": 0.0030677132298709904
+    },
+    "STOCK_TO_ETF": {
+      "equal_stock_G": 0.0006856799737974697,
+      "ci_low": -0.0007153948062965228,
+      "ci_high": 0.0016200657915923767
+    },
+    "pair_test_support_min": 833,
+    "pair_test_support_median": 3023,
+    "pair_test_support_max": 3918,
+    "test_dates": 8
+  },
+  "group_ablation_support": [
+    {"venue": "XNAS.ITCH", "grid_shift_ms": 0, "n_train": 2, "n_valid": 2, "n_test": 4, "certified": false},
+    {"venue": "XNAS.ITCH", "grid_shift_ms": 500, "status": "NO_OUTPUT_NO_COMPLETE_TRAIN_SUPPORT", "certified": false},
+    {"venue": "ARCX.PILLAR", "grid_shift_ms": 0, "n_train": 383, "n_valid": 98, "n_test": 595, "certified": false},
+    {"venue": "ARCX.PILLAR", "grid_shift_ms": 500, "n_train": 386, "n_valid": 105, "n_test": 595, "certified": false}
+  ],
+  "research_decision_supported": "PREDICTIVE_TRANSMISSION_NOT_ESTABLISHED",
+  "group_ablation_economic_values_certified": false,
+  "correction_status": "ALL_SIX_REQUIRED_CORRECTIONS_RESOLVED",
+  "resolved_corrections": [
+    "RESULTS.md and EXECUTION_RECEIPT.json replaced with completed empirical state.",
+    "Primary decision states PREDICTIVE_TRANSMISSION_NOT_ESTABLISHED; one-second evidence is boundary-sensitive and secondary.",
+    "Group-ablation economics labeled insufficient-support and Figure 4 made support-only; non-certification remains in force.",
+    "Final provenance hashes regenerated from files actually used.",
+    "Adjacent-two-test-day block sensitivity added; primary intervals cross zero.",
+    "BF loss retained and authenticated ARCX.PILLAR degraded-date provenance and venue-specific sensitivity corrected."
+  ]
+}

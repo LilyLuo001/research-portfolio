@@ -1,0 +1,92 @@
+{
+  "status": "COMPLETE_WITH_INDEPENDENT_PASS_WITH_LIMITATIONS",
+  "date": "2026-09-22",
+  "research_decision": "PREDICTIVE_TRANSMISSION_NOT_ESTABLISHED",
+  "contribution_decision": "LITERATURE_CONSISTENT_REPLICATION",
+  "routing": {
+    "coordinator_requested": "gpt-5.6-sol / medium",
+    "coordinator_actual_telemetry": "NOT_OBSERVED",
+    "data_engineer_requested": "gpt-5.6-terra / medium",
+    "data_engineer_dispatch": "ACCEPTED",
+    "data_engineer_actual_telemetry": "NOT_OBSERVED",
+    "independent_reviewer_requested": "gpt-5.6-sol / high",
+    "independent_reviewer_dispatch": "ACCEPTED",
+    "independent_reviewer_actual_telemetry": "NOT_OBSERVED",
+    "independent_reviewer_verdict": "PASS_WITH_LIMITATIONS"
+  },
+  "sample": {
+    "eligible_common_stocks": 446,
+    "fixed_roster_stocks": 24,
+    "resolved_model_stocks": 23,
+    "unresolved_symbols": ["BF"],
+    "dates": 24,
+    "train_dates": 12,
+    "validation_dates": 4,
+    "test_dates": 8,
+    "fixed_seed": 20260922
+  },
+  "market_data": {
+    "selected_variant": "V1_24_STOCK_TWO_VENUE_30M",
+    "exact_requests": 48,
+    "downloaded_files": 48,
+    "quoted_total_usd": "5.823790758848",
+    "estimated_records": 65137997,
+    "actual_billing": "RECONCILE_WITH_VENDOR",
+    "credential_value_logged_or_serialized": false,
+    "raw_downloaded_locally": false,
+    "scc_raw_path": "/scratch/qluo/bidirectional_information_20260922/raw"
+  },
+  "feature_and_model": {
+    "feature_rows": 4147200,
+    "feature_dates": 24,
+    "feature_symbols_including_spy": 24,
+    "feature_venues": 2,
+    "grid_shifts_ms": [0, 500],
+    "pair_model_rows": 552,
+    "daily_loss_rows": 4416,
+    "group_ablation_rows": 15,
+    "group_ablation_economic_values_certified": false,
+    "scc_feature_path": "/scratch/qluo/bidirectional_information_20260922/features/BIDIRECTIONAL_FEATURES.parquet",
+    "raw_or_feature_rows_exported_locally": false
+  },
+  "vendor_conditions": {
+    "ARCX.PILLAR_degraded_dates": ["2023-09-22", "2023-11-21", "2023-12-07"],
+    "XNAS.ITCH_same_dates": "available",
+    "source": "authenticated metadata.get_dataset_condition",
+    "venue_specific_sensitivity": "COMPLETE"
+  },
+  "validation": {
+    "python_compile": "PASS",
+    "model_synthetic_test": "PASS",
+    "feature_builder_synthetic_interval_test": "PASS_ON_SCC",
+    "independent_daily_loss_identity": "PASS",
+    "independent_pairwise_sse_and_g": "PASS_ALL_ROWS",
+    "independent_whole_date_bootstrap": "PASS",
+    "independent_raw_centers": 20,
+    "independent_raw_feature_mismatches": 0,
+    "adjacent_two_test_day_block_sensitivity": "COMPLETE_PRIMARY_INTERVALS_CROSS_ZERO",
+    "group_ablation": "NOT_CERTIFIED_INSUFFICIENT_COMPLETE_CASE_SUPPORT"
+  },
+  "sha256": {
+    "NEXT_EXECUTION_PROMPT.md": "3ee8db20a8693112ca7682461ff8eee96026d1e290892412d0728cf0d6bdf306",
+    "SAFE_ROSTER.csv": "f8e12da4cc9108dee8b12f49185d8caf669e89e93d6f582d98b0628b5d4008cf",
+    "DATE_MANIFEST.csv": "55b0734f8804a4c6ff7f7537274c463256adc57045408d450c9cfcfdc05fb26a",
+    "REQUEST_MANIFEST.json": "207b7feb6cc0a388c0c2bdacf93120929bc162563014605267f6ee8e479415b7",
+    "analysis_config.json": "8b19fe1f7fc1a337b34ed3541ad1ac6be8eaedbe49164ae9f84c0e1ff5c6a2d8",
+    "QUOTE_RECEIPT.json": "96ddcab226d0466fb276e298001962b2e570ccb8db8454a0ca2386cba3a164e5",
+    "DOWNLOAD_RECEIPT.json": "d2605f39bd5ca3aa0ffafa7c5accda889190c0ae0a0f5bd4ebd54b076b05c44c",
+    "FEATURE_RECEIPT.json": "b8c1463002e45381276f0ea4e2c4dd519fd57fb658197eddca2e87565e391905",
+    "MODEL_RECEIPT.json": "b6a64a45943b72a655238e0b1937ad015d32abd385f17feeba352c5597a72717",
+    "PREDICTIVE_GAINS.csv": "170891312cb4ba228852b0cc5299922b60e1d7311871af524ff456ed10340c89",
+    "DAILY_LOSS_SUMMARY.csv": "4d479bb5a2e717daa3798263b9be33ec857337c16a05bcf73236267006500596",
+    "AGGREGATE_GAINS.csv": "9ec00f0f4485d43b41196c9145b07d9b52a84e12a1938e8dbf3e850ec34a8395",
+    "GROUP_ABLATION.csv": "340346d5b5d8e57cf4084a21b321902972c6996e3e398a2c2891898bfb818f70",
+    "run_bidirectional_models.py": "47ea2c9e9e410a09b68574e3240d552dac751511ec30bb3ef7d87054a924d8ad",
+    "scc_quote_download.py": "4b9197a8526241ca3e1fb02b3580bac3d4f7cdacc6b0f0e559c2d7559046f708",
+    "scc_build_bidirectional_features.py": "8edbc599a7f8df8164ffe568fdfc330128348778ca30b8a95d631c45ee9d15f1",
+    "summarize_bidirectional_results.py": "6cb6df96ad27875d3868d699a0e101095ae011fa11b4097b9e2a1ca33576451a",
+    "INDEPENDENT_REVIEW.md": "9259c0fadb4e7c1c68bb90daf46f3b7b961c44c87037bf69c624f324c2e97a93",
+    "INDEPENDENT_REVIEW_RECEIPT.json": "244be7e6f710e7272e28f85673c6f9ec4a203185659bf21643cd463688ebacac"
+  },
+  "single_next_action": "Use the existing SCC data only: predeclare training-only missingness handling plus nonoverlapping one-second centers for a viable group-ablation rerun, and require agreement across 0ms/500ms grids; do not buy more data."
+}

@@ -1,0 +1,20 @@
+{
+  "status": "COMPLETE",
+  "features": "/scratch/qluo/bidirectional_information_20260922/features/BIDIRECTIONAL_FEATURES.parquet",
+  "roster": "/scratch/qluo/bidirectional_information_20260922/manifests/SAFE_ROSTER.csv",
+  "dates": "/scratch/qluo/bidirectional_information_20260922/manifests/DATE_MANIFEST.csv",
+  "gain_rows": 552,
+  "daily_rows": 4416,
+  "ablation_rows": 15,
+  "lambda_grid": [
+    0.0,
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+  ],
+  "ridge_objective": "mean squared error plus lambda times squared standardized coefficients",
+  "main_horizon": "5s",
+  "bootstrap_repetitions": 1000
+}

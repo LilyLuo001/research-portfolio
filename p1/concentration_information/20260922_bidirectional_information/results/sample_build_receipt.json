@@ -1,0 +1,25 @@
+{
+  "status": "COMPLETE",
+  "required": {
+    "report_date": "2022-12-31",
+    "portno": 1021980,
+    "liquidity": "prior 60 NYSE sessions of daily price*volume",
+    "security_identity": "dated CRSP identity / ordinary common-stock filter"
+  },
+  "source_counts": {
+    "holdings": 149,
+    "daily_liquidity": 1,
+    "security_history": 1
+  },
+  "missing": [],
+  "diagnostics": {
+    "held_rows": 501,
+    "valid_common_rows": 4290,
+    "liquid_60_rows": 9350
+  },
+  "candidate_count": 446,
+  "selected_count": 24,
+  "seed": 20260922,
+  "tier_order": "descending report_weight, PERMNO tie-breaker",
+  "draw_order": "sha256(seed|weight_tier|liquidity_tier|PERMNO), PERMNO tie-breaker"
+}

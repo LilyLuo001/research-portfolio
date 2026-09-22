@@ -1,0 +1,14 @@
+{
+  "status": "ROSTER_DOWNLOAD_AND_FEATURE_PANEL_COMPLETE",
+  "execution_host": "scc1.bu.edu",
+  "scc_runtime_used_for_roster": "/scratch/qluo/systematic_pilot_support/dbn_runtime/bin/python",
+  "raw_wrds_inputs": {
+    "holdings": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/rescue_remaining/crsp_holdings_etf_2022_b*/part_*.parquet",
+    "daily": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsf_2022.parquet",
+    "identity": "/projectnb/econdept/qluo/P1_Refraction_WRDS/WRDS_MIRROR_20260902/p1_refraction_wrds_shared/raw/crsp_dsenames_full.parquet"
+  },
+  "roster": {"eligible_common_stocks": 446, "selected_stocks": 24, "holdings_report_date": "2022-12-31", "holdings_eff_dt": "2023-01-09", "liquidity_sessions": 60, "seed": 20260922},
+  "market_data": {"exact_requests": 48, "venues": ["XNAS.ITCH", "ARCX.PILLAR"], "schema": "mbp-1", "authenticated_cost_available": true, "quoted_total_usd": 5.823790758848, "estimated_records": 65137997, "new_debit_usd": "RECONCILE_WITH_VENDOR", "downloaded_files": 48, "unresolved_symbols": ["BF"]},
+  "credential_check": {"scc_noninteractive_DATABENTO_API_KEY": "ABSENT", "local_DATABENTO_API_KEY": "ABSENT", "credential_value_logged": false},
+  "preprocessing": {"raw_or_fine_data_exported_locally": false, "feature_table_created": true, "feature_rows": 4147200, "feature_symbols": 24, "feature_dates": 24, "feature_venues": 2, "feature_grid_shifts_ms": [0, 500], "scc_path": "/scratch/qluo/bidirectional_information_20260922/features/BIDIRECTIONAL_FEATURES.parquet"}
+}

@@ -1,0 +1,41 @@
+{
+  "status": "FROZEN_BEFORE_RESPONSE_ACCESS",
+  "sample": {
+    "etf": "SPY",
+    "stock_count": 24,
+    "selection_seed": 20260922,
+    "weight_tiers": ["high", "mid", "low"],
+    "liquidity_tiers": ["high", "low"]
+  },
+  "dates": {
+    "count": 24,
+    "train": 12,
+    "validation": 4,
+    "test": 8,
+    "core_window_et": "10:00:00-10:30:00",
+    "grid_shifts_ms": [0, 500]
+  },
+  "market_data": {
+    "schema": "mbp-1",
+    "primary_venue": "XNAS.ITCH",
+    "secondary_venue": "ARCX.PILLAR",
+    "clock": "ts_event",
+    "request_lead_tail_seconds": 60
+  },
+  "model": {
+    "family": "linear_ridge_with_intercept",
+    "lambda_grid": [0, 0.01, 0.1, 1, 10, 100],
+    "primary_horizon": "5s",
+    "secondary_horizons": ["1s", "100ms"],
+    "selection_loss": "validation_mean_squared_error",
+    "test_gain": "1-SSE_full/SSE_baseline",
+    "bootstrap": "1000 fixed-model whole-test-date resamples",
+    "placebo": "deterministic cyclic off-day source-feature mapping"
+  },
+  "budget_adaptation_order": [
+    "24 stocks, 24 dates, two venues, 30-minute core",
+    "24 stocks, 24 dates, XNAS only, 30-minute core",
+    "12 stocks, 24 dates, XNAS only, 30-minute core",
+    "12 stocks, 24 dates, XNAS only, 15-minute core"
+  ]
+}
