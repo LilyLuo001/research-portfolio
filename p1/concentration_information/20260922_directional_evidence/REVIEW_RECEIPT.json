@@ -1,0 +1,70 @@
+{
+  "status": "PASS_WITH_LIMITATIONS",
+  "review_date": "2026-09-22",
+  "reviewer_route_requested": "gpt-5.6-sol/high",
+  "reviewer_route_actual": "NOT_OBSERVED",
+  "scope": [
+    "missing_quote_vs_unknown_aggressor_vs_no_trade",
+    "prediction_leakage_and_split_discipline",
+    "baseline_full_common_target_support",
+    "zero_vs_500ms_one_second_grid_and_paired_support",
+    "independent_G_and_date_bootstrap_recompute",
+    "SCC_raw_quote_event_and_matched_control_backtrace",
+    "per_stock_rest_basket_tier_and_marginal_tier_distinctions"
+  ],
+  "recomputation": {
+    "prediction_rows_checked": 772,
+    "daily_rows_checked": 6176,
+    "aggregate_rows_checked": 32,
+    "max_saved_G_error": 5.2e-16,
+    "max_aggregate_or_bootstrap_error": 1.0e-16,
+    "grid_rows_checked": 736,
+    "grid_rows_with_natural_or_paired_n_not_14400": 0,
+    "grid_rows_with_paired_G_not_equal_natural_G": 0
+  },
+  "scc_backtrace": {
+    "raw_files_scanned_for_persistent_invalid_endpoints": 48,
+    "decoded_venue_date_symbol_series_scanned": 1152,
+    "persistent_invalid_timestamp_endpoints_found": 0,
+    "example": "ARCX.PILLAR|2023-01-09|SPY_TO_AAPL",
+    "example_source_events_in_core": 81715,
+    "example_equal_timestamp_order_uncertain_events": 7,
+    "example_matched_pairs": 81126,
+    "example_minimum_control_separation_seconds": 10.000101888,
+    "example_control_separation_violations": 0,
+    "example_matching_cell_mismatches": 0
+  },
+  "material_issues_fixed_before_final_review": [
+    "matched covariates changed from trigger-inclusive to strictly pre-center",
+    "Work-C centers restricted from 09:59-10:31 buffers to 10:00-10:30 ET",
+    "prepath changed from reverse to standard forward signed return"
+  ],
+  "remaining_limitations": [
+    "exploratory reuse of eight previously viewed test dates",
+    "23-stock basket covers 15.07 percent of report weight",
+    "venue BBO rather than SIP NBBO",
+    "matched controls are noncausal and may be after the trigger",
+    "rare equal-timestamp order-uncertain events retained in matched-control table",
+    "no persistent invalid timestamp endpoint existed for empirical epoch backtrace",
+    "per-stock joint trade model not run; tier aggregate only",
+    "concentration mechanism not identified"
+  ],
+  "required_wording_corrections_outstanding": [],
+  "purchase": "NONE",
+  "raw_or_event_rows_exported_locally": false,
+  "sha256": {
+    "results_md": "e644e4fca6f0fc6df85c20d8bf824c703e7cf945fc90302c2d8675952192979c",
+    "bidirectional_prediction_csv": "abeb8820c0465cdfb9266cfdf57c97efc39938a096fcddc595fcda2b5ef666a6",
+    "prediction_daily_csv": "3a50cbc907bafd6dbf28af7b733cef4c5582bf81f43d8415005e58f05e095265",
+    "bidirectional_aggregates_csv": "52281b0bb1966015c9cb7f2381bea5708b69dfe40689c690dd2b6a52a4dd7709",
+    "grid_shift_comparison_csv": "2ee8ce529e465d3a82d9934e5ff47690b182714d0f2322f620cba2b590f1208d",
+    "quote_response_summary_csv": "dbbbae3c546d808b126efeb717db129ea58230a3a7ebbbafbfc7715abb3875f2",
+    "matched_control_response_summary_csv": "4b9bfbc02861bb433dc8f98d6295188aca4df569594d43ca821dd5ca4b251e6d",
+    "quote_update_diagnostics_csv": "8639db548f7e2cca223c84e08f0324286b64bc98360bb96df3cdcafd2596fd79",
+    "run_directional_models_py": "7e41557e311719ac361a7abcc0603919590cea59b48f937cd2778c37d79c76f5",
+    "scc_build_directional_features_py": "64f838c9d4e0402c707eca9aee6e4374bee2c91dd71f786cc87cdb2c0893ed55",
+    "scc_quote_response_py": "f776b188d08939b867dfd1dd21f39b46431b94348ae0a81bf11e54ed7fb00b98",
+    "scc_matched_controls_py": "9ff9339254af70be4f44f5cc2096074ace5fb5f2c25d65c7a95f524c5081f80d",
+    "summarize_directional_py": "1b10964f432fcf807d6d6cef41fb396fb2ffe52f4e917c84017ae5e9b2c83e13"
+  }
+}

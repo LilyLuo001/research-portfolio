@@ -1,0 +1,17 @@
+{
+  "status": "COMPLETE",
+  "feature_path": "/scratch/qluo/bidirectional_information_20260922/directional_evidence/features/DIRECTIONAL_FEATURES.parquet",
+  "prediction_rows": 772,
+  "daily_rows": 6176,
+  "grid_rows": 736,
+  "families": [
+    "QUOTE_ONLY",
+    "QUOTE_WITH_REST_BASKET",
+    "QUOTE_PLUS_TRADE",
+    "QUOTE_TRADE_WITH_REST_BASKET"
+  ],
+  "target": "future one-second midpoint log return bp",
+  "test_dates": 8,
+  "per_stock_joint_trade_extension": "NOT_RUN_DIMENSIONALITY_CONTROL; tier aggregate reported",
+  "raw_or_prediction_rows_exported_locally": false
+}

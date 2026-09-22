@@ -1,0 +1,38 @@
+{
+  "status": "COMPLETE_SCC_NATIVE_QUOTE_RESPONSE_AND_CORRECTED_SEPARATED_PRECENTER_MATCHED_CONTROLS",
+  "routing_requested": "gpt-5.6-terra/medium",
+  "routing_actual": "NOT_OBSERVED",
+  "source": "/scratch/qluo/bidirectional_information_20260922/raw/DOWNLOAD_RECEIPT.json",
+  "native_and_event_rows_location": "/scratch/qluo/bidirectional_information_20260922/",
+  "local_exports": [
+    "QUOTE_RESPONSE_SUMMARY.csv",
+    "QUOTE_UPDATE_DIAGNOSTICS.csv",
+    "MATCHED_CONTROL_RESPONSE_SUMMARY.csv"
+  ],
+  "purchase": "NOT_REQUIRED_EXISTING_NATIVE_DBN_SUPPORTED_ALL_WORK_C_OUTPUTS",
+  "dates": 24,
+  "venues": ["ARCX.PILLAR", "XNAS.ITCH"],
+  "directions": ["ETF_TO_STOCK", "STOCK_TO_ETF"],
+  "horizons_ms": [100, 500, 1000, 2000, 5000],
+  "matched_control_minimum_absolute_separation_seconds": 10,
+  "analysis_center_bounds": "REQUEST_START_PLUS_60_SECONDS_INCLUSIVE_TO_REQUEST_END_MINUS_60_SECONDS_EXCLUSIVE; 10:00:00_TO_10:30:00_ET",
+  "matched_control_covariates": "STRICTLY_PRE_CENTER_SOURCE_BBO_SPREAD; STRICTLY_PRE_CENTER_TO_MINUS_5S_ABSOLUTE_MIDPOINT_MOVE; STRICTLY_PRE_CENTER_PRIOR_5S_SOURCE_MIDPOINT_UPDATE_COUNT",
+  "matched_control_counts": {
+    "ARCX.PILLAR|ETF_TO_STOCK|all": 27284301,
+    "ARCX.PILLAR|ETF_TO_STOCK|nonoverlap": 189376,
+    "ARCX.PILLAR|STOCK_TO_ETF|all": 1908141,
+    "ARCX.PILLAR|STOCK_TO_ETF|nonoverlap": 106336,
+    "XNAS.ITCH|ETF_TO_STOCK|all": 28371075,
+    "XNAS.ITCH|ETF_TO_STOCK|nonoverlap": 189750,
+    "XNAS.ITCH|STOCK_TO_ETF|all": 2038443,
+    "XNAS.ITCH|STOCK_TO_ETF|nonoverlap": 102591
+  },
+  "sha256": {
+    "scc_quote_response_py": "f776b188d08939b867dfd1dd21f39b46431b94348ae0a81bf11e54ed7fb00b98",
+    "scc_matched_controls_py": "9ff9339254af70be4f44f5cc2096074ace5fb5f2c25d65c7a95f524c5081f80d",
+    "quote_response_summary_csv": "dbbbae3c546d808b126efeb717db129ea58230a3a7ebbbafbfc7715abb3875f2",
+    "quote_update_diagnostics_csv": "8639db548f7e2cca223c84e08f0324286b64bc98360bb96df3cdcafd2596fd79",
+    "matched_control_response_summary_csv": "4b9bfbc02861bb433dc8f98d6295188aca4df569594d43ca821dd5ca4b251e6d"
+  },
+  "raw_or_event_rows_exported_locally": false
+}

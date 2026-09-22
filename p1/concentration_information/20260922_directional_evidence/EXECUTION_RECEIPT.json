@@ -1,0 +1,72 @@
+{
+  "status": "COMPLETE_PASS_WITH_LIMITATIONS",
+  "execution_date": "2026-09-22",
+  "research_decision": "ADVANCE_CONDITIONAL_ETF_LEAD_MECHANISM",
+  "routing": {
+    "coordinator_requested": "gpt-5.6-sol/medium",
+    "coordinator_actual": "NOT_OBSERVED",
+    "scc_engineer_requested": "gpt-5.6-terra/medium",
+    "scc_engineer_actual": "NOT_OBSERVED",
+    "independent_reviewer_requested": "gpt-5.6-sol/high",
+    "independent_reviewer_actual": "NOT_OBSERVED"
+  },
+  "source": {
+    "raw_receipt": "/scratch/qluo/bidirectional_information_20260922/raw/DOWNLOAD_RECEIPT.json",
+    "raw_files": 48,
+    "feature_panel": "/scratch/qluo/bidirectional_information_20260922/directional_evidence/features/DIRECTIONAL_FEATURES.parquet",
+    "feature_rows": 4147200,
+    "dates": 24,
+    "stocks": 23,
+    "etf": "SPY",
+    "venues": [
+      "XNAS.ITCH",
+      "ARCX.PILLAR"
+    ],
+    "analysis_center_window_et": "10:00:00_INCLUSIVE_TO_10:30:00_EXCLUSIVE",
+    "raw_or_row_level_data_exported_locally": false
+  },
+  "outputs": {
+    "prediction_rows": 772,
+    "prediction_daily_rows": 6176,
+    "aggregate_rows": 32,
+    "grid_rows": 736,
+    "quote_response_rows": 80,
+    "matched_control_rows": 40,
+    "quote_update_diagnostic_rows": 1152,
+    "review_verdict": "PASS_WITH_LIMITATIONS"
+  },
+  "decisive_results": {
+    "etf_to_stock_G_positive_in_all_rest_basket_controlled_cells": true,
+    "stock_to_etf_G_negative_in_all_rest_basket_controlled_cells": true,
+    "zero_and_500ms_paired_support_per_stock": 14400,
+    "quote_response_positive_in_both_directions": true,
+    "concentration_gradient_supported": false,
+    "causal_price_discovery_claim_supported": false
+  },
+  "corrections_completed_before_seal": [
+    "matched-control covariates made strictly pre-center",
+    "Work-C event and control centers restricted to 10:00-10:30 ET",
+    "prepath changed to standard forward signed return",
+    "matched controls separated from triggers by more than 10 seconds"
+  ],
+  "purchase": {
+    "databento_purchase_required": false,
+    "new_charge_usd": 0
+  },
+  "next_action": "Add E-mini S&P 500 futures lagged quote state on the same 24 dates and windows to test whether SPY adds information beyond the futures common-information baseline.",
+  "sha256": {
+    "execution_prompt_md": "4485b4775cb33acd422901b4f1ad12a3fe09a944403c12686b0c5514af426846",
+    "results_md": "e644e4fca6f0fc6df85c20d8bf824c703e7cf945fc90302c2d8675952192979c",
+    "next_action_md": "65d78a4e131ce7c342f334592a72eba0ddc728d9714544c30b5ee5590f526bfc",
+    "bidirectional_prediction_csv": "abeb8820c0465cdfb9266cfdf57c97efc39938a096fcddc595fcda2b5ef666a6",
+    "prediction_daily_csv": "3a50cbc907bafd6dbf28af7b733cef4c5582bf81f43d8415005e58f05e095265",
+    "bidirectional_aggregates_csv": "52281b0bb1966015c9cb7f2381bea5708b69dfe40689c690dd2b6a52a4dd7709",
+    "grid_shift_comparison_csv": "2ee8ce529e465d3a82d9934e5ff47690b182714d0f2322f620cba2b590f1208d",
+    "concentration_diagnostic_csv": "d648dffc667612a380c413c528909d882aaf277e774ff958a77f1e02620896dc",
+    "quote_response_summary_csv": "dbbbae3c546d808b126efeb717db129ea58230a3a7ebbbafbfc7715abb3875f2",
+    "matched_control_response_summary_csv": "4b9bfbc02861bb433dc8f98d6295188aca4df569594d43ca821dd5ca4b251e6d",
+    "quote_update_diagnostics_csv": "8639db548f7e2cca223c84e08f0324286b64bc98360bb96df3cdcafd2596fd79",
+    "review_md": "174dc251c232b7f7408912c2646bd9fb950894d57e736343f9f2be3715c1f5a4",
+    "review_receipt_json": "dc9d1a9f84e1f6c5940261e5bbbab3a6b4f248f010ee7bb1eef6c0094de0bdc5"
+  }
+}
