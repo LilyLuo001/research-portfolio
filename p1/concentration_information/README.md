@@ -4,7 +4,8 @@
 
 ## 最新状态（2026-09-22）
 
-- **下一轮执行 prompt（已准备、未运行）：[一次完成 ETF／篮子时序检验并作决定](20260922_six_event_observed_paths/NEXT_EXECUTION_PROMPT.md)**。以同六日期整体滞后篮子／SPY 比较为主，ETF-implied issuer 为误差放大诊断；直接补齐精确数据、计算、独立复算并给推进／停止决定。修正单靠 residual 隔离个股的过度期待，不增加 freeze、release 或事前审批。
+- **最新实际结果：[ETF／完整滞后篮子时序决定](20260922_etf_basket_timing_decision/RESULTS.md)**：六事件、七时钟变体、双场所和双时间网格已完成，独立 reviewer 从 SCC 原始 holdings/DBN 复算关键结果一致。两个 AAPL 财报和 MSFT 通知窗口在四种设定下均为一分钟 lag 0；四个 XOM／UNH 变体受场所、网格或陈旧报价影响，无稳定 ETF-leading 或 basket-leading 结果。决定为 `ADVANCE_BOUNDED_RESEARCH`，仅用现有数据做一次一秒级反应起点检验；失败即停止“谁领先”的主叙述，不再自动购数或扩事件。
+- **本轮已执行 prompt：[一次完成 ETF／篮子时序检验并作决定](20260922_six_event_observed_paths/NEXT_EXECUTION_PROMPT.md)**。以同六日期整体滞后篮子／SPY 比较为主，ETF-implied issuer 为误差放大诊断；实际产物与最终决定见上一条。
 
 - **2026-09-22 最新实际结果：[固定六公告 SPY／发行人路径](20260922_six_event_observed_paths/RESULTS.md)**：六事件、四发行人、六日期和七个时钟变体均已取得 XNAS/ARCX 共同路径；八个精确 Databento 窗口报价合计 $0.015461。独立 Sol/high reviewer 从 SCC 原始 DBN 复算 52 个可用关键单元，数值完全一致，并修复 7 月越过 archive 结尾携带报价及重复路径假斜线。AAPL、UNH 等窗口的滞后权重×发行人变动已能解释 SPY 同期变动的较大部分，说明幅度分离本身不能证明谁主导价格发现。下一步是在同六日期构造预声明的 rest-of-SPY 代理与 ETF-implied issuer component，先检验可比经济成分的时序。
 - **本轮执行 prompt：[固定六公告路径比较](20260921_xom_spy_observed_paths/NEXT_EXECUTION_PROMPT.md)**：bid/ask/mid、跨价差区间、文件边界、双场所对照、静态报告权重量级和独立复算均已完成。历史 prompt 保留为执行规格，实际最终产物以上一条目录为准。

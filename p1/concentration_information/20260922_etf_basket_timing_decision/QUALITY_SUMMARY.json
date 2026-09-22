@@ -1,0 +1,23 @@
+{
+  "status": "COMPUTED",
+  "events": 6,
+  "clock_variants": 7,
+  "feeds": [
+    "XNAS.ITCH",
+    "ARCX.PILLAR"
+  ],
+  "grid_shifts_seconds": [
+    0,
+    30
+  ],
+  "path_rows": 2548,
+  "lag_rows": 616,
+  "coverage_rows": 28,
+  "event_rows": 7,
+  "fixed_constituent_rule": "intersection with valid states at baseline and every -5..+30 minute target across both feeds and both 0/30-second grids; original report weights retained without survivor renormalization",
+  "lag_pair_rule": "same t support for every lag: t=1..25 for main window and t=6..25 for supplemental window",
+  "holdings_role": "retrospective lagged-report proxy, not verified event-time holdings",
+  "basket_quoted_total_usd": "0.332191586494",
+  "spy_supplement_quoted_total_usd": "0.010294616223",
+  "billing_ledger_debit_usd": "NOT_OBSERVED"
+}

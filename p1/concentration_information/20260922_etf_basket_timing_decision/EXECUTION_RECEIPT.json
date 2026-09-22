@@ -1,0 +1,58 @@
+{
+  "status": "COMPUTED_AND_INDEPENDENTLY_REVIEWED",
+  "decision": "ADVANCE_BOUNDED_RESEARCH",
+  "scc_host": "scc1.bu.edu",
+  "raw_licensed_rows_exported": false,
+  "security_level_membership_exported": false,
+  "counts": {
+    "events": 6,
+    "clock_variants": 7,
+    "feeds": 2,
+    "grid_shifts": 2,
+    "downloaded_basket_files": 12,
+    "downloaded_spy_supplement_files": 12,
+    "path_rows": 2548,
+    "lag_rows": 616,
+    "coverage_rows": 28,
+    "event_result_rows": 7,
+    "main_pairs_per_lag": 25,
+    "supplement_pairs_per_lag": 20
+  },
+  "costs": {
+    "basket_quote_usd": "0.332191586494",
+    "spy_supplement_quote_usd": "0.010294616223",
+    "combined_quote_usd": "0.342486202717",
+    "billing_ledger_debit_usd": "NOT_OBSERVED"
+  },
+  "routing": {
+    "coordinator_requested": "gpt-5.6-sol / medium",
+    "coordinator_backend_telemetry": "NOT_OBSERVED",
+    "engineer_dispatch": "gpt-5.6-terra / medium",
+    "engineer_backend_telemetry": "NOT_OBSERVED",
+    "independent_reviewer_dispatch": "gpt-5.6-sol / high",
+    "independent_reviewer_backend_telemetry": "NOT_OBSERVED",
+    "nested_delegation": false
+  },
+  "data_contract": {
+    "portfolio": "CRSP pooled portfolio 1021980",
+    "report_dates": ["2022-12-31", "2023-03-31", "2023-06-30"],
+    "holdings_role": "retrospective lagged-report proxy, not verified event-time holdings",
+    "weight": "percent_tna / 100",
+    "baseline": "anchor minus five minutes",
+    "fixed_constituents": "valid at baseline and every -5 through +30 one-minute target on both XNAS/ARCX and both 0/30-second grids",
+    "renormalization": false,
+    "lag_sign": "positive lag means SPY earlier"
+  },
+  "material_repairs": [
+    "Added a SPY-only supplement after the initial consolidated basket request omitted SPY.",
+    "Made basket and discrepancy unavailable whenever a target lacks the complete fixed constituent set; missing paths are not zero.",
+    "Added a uniform leave-largest-plus5-contributor sensitivity after independent review identified a stale, very wide ICE quote in the July 06:00 XNAS window."
+  ],
+  "commands": [
+    "SCC scc_acquire_baskets.py",
+    "SCC scc_acquire_spy_supplement.py",
+    "SCC scc_reconstruct_baskets.py",
+    "local plot_basket_results.py",
+    "independent SCC raw recomputation"
+  ]
+}
