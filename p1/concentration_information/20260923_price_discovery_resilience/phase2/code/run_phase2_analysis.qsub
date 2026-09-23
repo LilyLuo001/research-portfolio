@@ -1,0 +1,20 @@
+#!/bin/bash -l
+#$ -N p1_pd_phase2
+#$ -j y
+#$ -l h_rt=08:00:00
+#$ -l mem_per_core=8G
+#$ -pe omp 4
+#$ -o /project/econdept/qluo/p1_price_discovery_resilience_20260923/phase2/logs
+
+set -euo pipefail
+
+ROOT=/project/econdept/qluo/p1_price_discovery_resilience_20260923
+mkdir -p "$ROOT/phase2/logs" "$ROOT/phase2/outputs" "$ROOT/phase2/work"
+export MPLCONFIGDIR="$ROOT/phase2/work/mplconfig"
+mkdir -p "$MPLCONFIGDIR"
+
+"$ROOT/venv/bin/python" "$ROOT/phase2/code/run_phase2_analysis.py" \
+  --raw-dir "$ROOT/phase2/raw/databento" \
+  --roster "$ROOT/phase2/reference/SP500_ROSTER_20230123.parquet" \
+  --out-dir "$ROOT/phase2/outputs" \
+  --work-dir "$ROOT/phase2/work"

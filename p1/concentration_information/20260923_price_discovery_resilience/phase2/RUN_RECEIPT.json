@@ -1,0 +1,52 @@
+{
+  "status": "COMPLETE_INDEPENDENT_LIMITED_PASS",
+  "event": "2023-01-24 NYSE opening-auction failure",
+  "scc_root": "/project/econdept/qluo/p1_price_discovery_resilience_20260923/phase2",
+  "final_scc_job": "7703146",
+  "input_dates": 11,
+  "processed_input_files": 221,
+  "derived_one_second_path_rows": 82511,
+  "roster_security_issues": 503,
+  "historical_nyse_listed_issues": 349,
+  "main_download": {
+    "status": "COMPLETE_NATIVE_DBN_ON_SCC",
+    "requests": 116,
+    "quoted_total_usd": "38.659188836815",
+    "compressed_bytes": 5374027255
+  },
+  "class_ticker_supplement": {
+    "status": "COMPLETE_NATIVE_DBN_ON_SCC",
+    "requests": 105,
+    "quoted_total_usd": "0.105998367064",
+    "compressed_bytes": 10992067
+  },
+  "event_date_dataset_conditions": {
+    "XNYS.PILLAR": "degraded",
+    "XNAS.ITCH": "available",
+    "ARCX.PILLAR": "available",
+    "GLBX.MDP3": "available"
+  },
+  "composite_label": "THREE_FEED_COMPOSITE_BBO_NOT_NBBO",
+  "raw_market_data_location": "SCC_ONLY",
+  "raw_rows_exported_to_git_or_local": false,
+  "credential_serialized": false,
+  "full_file_hashing_skipped_under_user_speed_instruction": true,
+  "code_sha256": "81a04f5d118adc6eeb050ebaa14b709a3720e7014f0c1c52f406a3de3aab66c7",
+  "analysis_spec_sha256": "9647151126878941e5c5dd07c3f5de84bdae8cc243119381aa0c02ec8f87fd38",
+  "source_manifest_sha256": "bb5e936b2aafc2624aba717537c259e1762ce3fcd117dd50bab4a9f3912065c1",
+  "scc_analysis_receipt_sha256": "ceb32c484faf6d4531b019c0dd2891fa2e9295a43b47a4b6cf0d6842273df859",
+  "base_git_head_before_phase2_commit": "d38679b8c54b2bfeb61151254f20d4482b889832",
+  "independent_review": {
+    "status": "LIMITED_PASS",
+    "review_md_sha256": "99623d2dd3ab01fef144c8bab03904a0a983288bbd04237108b843f53a1da3d0",
+    "review_receipt_sha256": "93267934d8c9a15a9e44a5c26e3b3d00c29ddbf7f9c95374475f55be266cab07",
+    "decisive_limitation": "All three opening basket-band exceedances are driven by one crossed-composite constituent exclusion rather than broad cross-sectional dislocation."
+  },
+  "requested_routing": {
+    "coordinator": "existing gpt-5.6-sol / medium",
+    "engineering": "gpt-5.6-terra / medium",
+    "method_review": "gpt-6-astra / high",
+    "final_numerical_review": "gpt-5.6-sol / high"
+  },
+  "actual_backend_model_telemetry": "NOT_OBSERVED"
+}

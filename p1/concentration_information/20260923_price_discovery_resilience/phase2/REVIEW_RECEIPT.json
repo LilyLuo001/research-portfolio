@@ -1,0 +1,186 @@
+{
+  "review_date": "2026-09-23",
+  "status": "LIMITED_PASS",
+  "scope": {
+    "paper": "PAPER_1_PHASE_2_2023_01_24_NYSE_OPENING_AUCTION_FAILURE",
+    "scc_root": "/project/econdept/qluo/p1_price_discovery_resilience_20260923/phase2",
+    "final_job": "7703146",
+    "new_method_review": false,
+    "delegation": false,
+    "raw_rows_copied_locally": false,
+    "commit_or_push": false
+  },
+  "reviewer": {
+    "role": "independent_numerical_reviewer",
+    "actual_model_effort_telemetry": "NOT_OBSERVED"
+  },
+  "decision": {
+    "roster_and_listing_counts": "PASS",
+    "aggregate_paths_and_endpoint": "PASS",
+    "normal_band_and_recovery_arithmetic": "PASS",
+    "opening_recovery_interpretation": "LIMITED",
+    "venue_activity_ratios": "PASS_WITH_301_BUCKET_LABEL_CAVEAT",
+    "auc_rank_recomputation": "PASS_NOT_EXPORTED_BY_FINAL_CODE",
+    "databento_condition_disclosure": "PASS_WITH_DEGRADED_XNYS_CAVEAT",
+    "finite_corrections_in_code": "PASS",
+    "credential_and_raw_export_boundary": "PASS",
+    "overall": "LIMITED_PASS"
+  },
+  "verified_hashes": {
+    "local_and_scc_run_phase2_analysis_py": "81a04f5d118adc6eeb050ebaa14b709a3720e7014f0c1c52f406a3de3aab66c7",
+    "local_and_scc_analysis_receipt": "ceb32c484faf6d4531b019c0dd2891fa2e9295a43b47a4b6cf0d6842273df859",
+    "scc_roster_parquet": "c8d940cfbea5b164ab816d42c74fbe2c7598cb139cb0c065bb02be14dd81c5c4",
+    "scc_composite_paths_csv": "beeac5f280802a23ffe016020efcf998463ac8ebc57639b3331f4fef17d015d8",
+    "scc_normal_bands_csv": "7a91fc902019e771ce40ae185cebaaca225665fcc6b6d1d99cde169a50ba7b15",
+    "scc_recovery_csv": "5810bbc0d5949911633443d0d57fd1e00fea57078dacfa800cdd597c533c50d0",
+    "scc_venue_activity_csv": "f1c162af9138d89898cc19c69cf7f95d23b7198f093291ff4549028c3bcf0a45"
+  },
+  "roster": {
+    "rows": 503,
+    "unique_permno": 503,
+    "unique_ticker": 503,
+    "historical_nyse_exchcd_1": 349,
+    "prior_close_complete": 503,
+    "weight_sum": 0.9999999999999999,
+    "event_open_stat_absent_with_reference_support": 308,
+    "event_open_stat_present_requires_reconciliation": 41
+  },
+  "event_coverage": {
+    "postopen_seconds": 7201,
+    "postopen_seconds_meeting_95_percent": 7201,
+    "postopen_min_covered_weight": 0.9867533441793204,
+    "postopen_seconds_below_complete_coverage": 46,
+    "covered_weight_at_open": 0.9961063344085386,
+    "covered_weight_at_plus_4": 0.9980666142794056,
+    "covered_weight_at_plus_30_and_31": 0.996731602371884,
+    "covered_weight_at_plus_60": 1.0
+  },
+  "plus_60_endpoint": {
+    "basket_value": 0.994614063676952,
+    "basket_norm": 0.9993242722166292,
+    "spy_mid": 398.35,
+    "spy_norm": 0.9984960521368592,
+    "esh3_mid": 4012.625,
+    "esh3_norm": 0.9985690733194388,
+    "basket_spy_signed_bp": 8.282200797700146,
+    "basket_esh3_signed_bp": 7.551988971904455,
+    "spy_esh3_signed_bp": -0.7302118257956902
+  },
+  "normal_band_support": {
+    "basket_pair_n_at_exact_open": 9,
+    "basket_pair_n_at_seconds_4_30_31": 10,
+    "basket_spy_seconds_with_n_10_of_7501": 7338,
+    "basket_esh3_seconds_with_n_10_of_7501": 7339,
+    "spy_esh3_seconds_with_n_10_of_7501": 7499
+  },
+  "opening_recovery": {
+    "basket_spy": {
+      "exceedance_seconds_in_first_minute": [4, 30, 31],
+      "first_loss_second": 4,
+      "recovery_run_start_second": 32,
+      "recovery_confirmed_second": 61,
+      "elapsed_first_loss_to_run_start_seconds": 28
+    },
+    "basket_esh3": {
+      "exceedance_seconds_in_first_minute": [4, 30, 31],
+      "first_loss_second": 4,
+      "recovery_run_start_second": 32,
+      "recovery_confirmed_second": 61,
+      "elapsed_first_loss_to_run_start_seconds": 28
+    },
+    "spy_esh3": {
+      "status": "NO_DETECTABLE_INITIAL_LOSS"
+    }
+  },
+  "spike_decomposition": {
+    "plus_4": {
+      "single_invalid_composite_symbol": "MMM",
+      "symbol_weight": 0.0019333857205945345,
+      "cause": "crossed three-feed composite: XNYS bid 116.32 exceeds XNAS/ARCX ask 116.30; venue quotes individually valid",
+      "missing_contribution_bp": -18.40915481852763,
+      "reported_basket_spy_gap_bp": -14.790319717791212,
+      "carry_previous_basket_spy_gap_bp": 3.6758661728453212,
+      "normal_band_bp": 12.606624
+    },
+    "plus_30": {
+      "single_invalid_composite_symbol": "CVS",
+      "symbol_weight": 0.0032683976281161296,
+      "cause": "crossed three-feed composite: XNYS bid 86.50 exceeds XNAS ask 86.49; venue quotes individually valid",
+      "missing_contribution_bp": -32.67870698384814,
+      "reported_basket_spy_gap_bp": -26.00638308760672,
+      "carry_previous_basket_spy_gap_bp": 6.564995385835992,
+      "normal_band_bp": 12.703913,
+      "top_1_absolute_share_of_total_constituent_delta": 0.21438970667872478,
+      "top_3_absolute_share_of_total_constituent_delta": 0.32590214504238635,
+      "top_3_contributions_bp": {
+        "CVS": -32.67870698384814,
+        "XOM": -9.743614724155908,
+        "WMT": 7.253853833424552
+      },
+      "observed_constituent_direction_counts": {
+        "negative": 256,
+        "positive": 243,
+        "unchanged": 3
+      },
+      "observed_constituent_median_return_bp": -2.4773094877450497
+    },
+    "conclusion": "opening basket spikes are dominated by one crossed-composite exclusion, not a broad cross-sectional dislocation"
+  },
+  "activity_event_over_ten_reference_median_saved_0_through_300_seconds": {
+    "XNYS": {
+      "valid_quote_seconds": 0.9150545666003278,
+      "midpoint_change_seconds": 0.8714220628726502,
+      "trade_count": 0.6301249851598033,
+      "trade_notional": 0.2708035086199845
+    },
+    "XNAS_PLUS_ARCX": {
+      "valid_quote_seconds": 0.9959970299009016,
+      "midpoint_change_seconds": 0.8522807743847302,
+      "trade_count": 0.9307981001824275,
+      "trade_notional": 0.9512140983338513
+    },
+    "window_bucket_count": 301,
+    "strict_first_five_minute_label": false
+  },
+  "event_auc_rank_descending_of_11": {
+    "basket_spy": {
+      "300": {"auc_bp_seconds": 1148.4718374937809, "rank": 8},
+      "1800": {"auc_bp_seconds": 9665.271436509493, "rank": 5},
+      "7200": {"auc_bp_seconds": 34509.85560142985, "rank": 5}
+    },
+    "basket_esh3": {
+      "300": {"auc_bp_seconds": 1097.7796515365412, "rank": 9},
+      "1800": {"auc_bp_seconds": 9095.18194487816, "rank": 5},
+      "7200": {"auc_bp_seconds": 30035.332872940933, "rank": 7}
+    },
+    "spy_esh3": {
+      "300": {"auc_bp_seconds": 75.48824202447958, "rank": 8},
+      "1800": {"auc_bp_seconds": 687.7885070156431, "rank": 3},
+      "7200": {"auc_bp_seconds": 4615.112601965422, "rank": 5}
+    }
+  },
+  "dataset_conditions": {
+    "XNYS.PILLAR": "degraded",
+    "XNAS.ITCH": "available",
+    "ARCX.PILLAR": "available",
+    "GLBX.MDP3": "available"
+  },
+  "implementation_checks": {
+    "three_feed_composite_labeled_non_nbbo": true,
+    "activity_windows_disjoint": true,
+    "first_60_second_loss_search_implemented": true,
+    "thirty_consecutive_supported_second_recovery_implemented": true,
+    "credential_value_serialized": false,
+    "raw_dbn_or_parquet_under_local_phase2": false,
+    "raw_rows_exported_locally": false,
+    "failed_auction_covered_weight_exported_beside_each_basket_value": false,
+    "normal_session_auc_rank_exported": false
+  },
+  "remaining_discrepancies": [
+    "All first-minute basket-band exceedances are caused by one crossed-composite constituent being dropped under the non-renormalized basket rule; the stored recovery is estimator-specific rather than broad system recovery.",
+    "OPEN_0_300S contains 301 integer-second buckets, so the first-five-minute label is not a strict 300-bucket interval.",
+    "The final code exports event AUCs but not the requested rank against ten normal sessions; the reviewer recomputed ranks from COMPOSITE_PATHS.csv.",
+    "The specification requests failed-auction covered weight beside every basket value, but COMPOSITE_PATHS.csv contains total covered weight only.",
+    "XNYS.PILLAR is degraded on the event date, so record absence and the 308/41 auction-stat split require explicit caveating."
+  ]
+}

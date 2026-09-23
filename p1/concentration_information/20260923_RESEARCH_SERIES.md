@@ -1,6 +1,6 @@
 # P1新研究系列：价格发现的集中化与风险承接韧性
 
-日期：2026-09-23。版本：1.0。状态：`PLANS_WRITTEN / NEW_EMPIRICAL_STUDIES_NOT_STARTED`。
+日期：2026-09-23。版本：1.3。当前状态：`PAPER1_PHASE2_COMPLETE_CONTINUE / PAPER2_NOT_STARTED`。第一篇2023当代主案例已经执行，见[结果](20260923_price_discovery_resilience/phase2/RESULTS.md)与[决定](20260923_price_discovery_resilience/phase2/DECISION.md)；下文计划起源和早期分工记录保留其历史含义。
 
 ## 用户决定与本次交付
 
@@ -8,7 +8,7 @@ Lily Luo已同意将方向发展为一个研究系列，要求保存两篇研究
 
 | 论文 | 独立研究问题 | 入口 | 当前阶段 |
 |---|---|---|---|
-| 第一篇 | 价格发现集中在哪里；主要渠道受限时，其他市场能否接替？ | [论文草稿](20260923_price_discovery_resilience/PAPER_DRAFT.md)；[研究计划](20260923_price_discovery_resilience/RESEARCH_PLAN.md)；[Phase 1决定](20260923_price_discovery_resilience/phase1/DESIGN_DECISION.md) | Phase 1完成；2015主事件数据待取得 |
+| 第一篇 | 价格发现集中在哪里；主要渠道受限时，其他市场能否接替？ | [论文草稿](20260923_price_discovery_resilience/PAPER_DRAFT.md)；[研究计划](20260923_price_discovery_resilience/RESEARCH_PLAN.md)；[Phase 2结果](20260923_price_discovery_resilience/phase2/RESULTS.md) | Phase 2完成；2023案例支持“活动替代不完全、共同价格有韧性”；2015为可选历史对照 |
 | 第二篇 | 持仓分散是否掩盖共同退出风险；什么结构造成联合流动性损失？ | [研究计划](20260923_liquidity_diversification/RESEARCH_PLAN.md) | 已规划，未启动实证 |
 
 两篇均使用新目录，置于既有 `concentration_information` 研究线下。第一篇延续导师的ETF—股票价格发现问题，但其经济对象、主估计量和潜在识别与旧一秒预测不同，不能直接追加在旧结果目录。第二篇研究风险承接和交易成本，可以独立成立，不能把第一篇的同一张信息份额表换标题重复发表。
@@ -40,6 +40,6 @@ Lily Luo已同意将方向发展为一个研究系列，要求保存两篇研究
 
 该分工使用当前会话工具目录支持的型号，不因网页出现其他型号自动迁移。官方文档说明模型/effort可继承或显式设置，但不证明本机某次调用的实际运行设置：[Codex subagents](https://developers.openai.com/codex/subagents)。
 
-第一篇的有终点设计落地与测量原型已经完成；唯一下一行动是取得/落地2015 NYSE事件的全国现金、SPY/ES和完整同期篮子数据并执行主案例。第二篇的文档保存不构成自动开跑或采购指令。两篇共享来源规范和基础设施，但分别记录研究样本、估计量、结果及失败条件。
+第一篇的设计、测量原型和2023主案例已经完成。下一行动是围绕活动替代与价格韧性的分离修改论文；若增加第二事件，只作预先限定的外部有效性证据，不按结果换事件。2015不再是必须先取得的数据。第二篇文档不构成自动开跑或采购指令。两篇共享来源规范和基础设施，但分别记录样本、估计量、结果及失败条件。
 
 共同来源与读取深度见 [LITERATURE_AND_DATA.md](20260923_price_discovery_resilience/LITERATURE_AND_DATA.md)。新颖性为候选，不是独立referee认证。本计划编写者完成内部一致性检查，不冒称独立审查。

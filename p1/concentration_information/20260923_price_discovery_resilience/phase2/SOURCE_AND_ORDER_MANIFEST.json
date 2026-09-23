@@ -1,0 +1,137 @@
+{
+  "manifest_version": "2026-09-23-case-selected-v2",
+  "status": "SCC_INPUT_AND_ANALYSIS_COMPLETE_INDEPENDENT_LIMITED_PASS",
+  "routing": {
+    "requested": "gpt-5.6-terra / medium",
+    "tool_request_accepted": "NOT_OBSERVED",
+    "actual_model_telemetry": "NOT_OBSERVED"
+  },
+  "screen_scope": {
+    "research_range": "2019-01-01 through 2025-12-31",
+    "contemporary_priority": "2021-2025",
+    "detailed_candidate_count": 5,
+    "outcome_blind_selection_rule": "Rank facts, mechanism, substitute-channel availability, correctable bad-data states, and predeclared input availability. Never use returns, volumes, spreads, significance, or ETF leadership to select a case."
+  },
+  "selected_case": {
+    "case_id": "NYSE_OPEN_20230124",
+    "status": "SELECTED_AFTER_BOUNDED_INDEPENDENT_METHOD_REVIEW",
+    "event_date": "2023-01-24",
+    "timezone": "America/New_York",
+    "documented_clocks": {
+      "opening_auction_failed": "09:30:00",
+      "NYSE_internal_discovery": "approximately 10:09",
+      "NYSE_member_status_update_not_recovery": "10:21",
+      "NYSE_still_investigating_full_scope": "10:53",
+      "exact_LULD_pause_reopen_and_bust_clocks": "TO_OBTAIN_FROM_STATUS_RECORDS"
+    },
+    "documented_scope": "2,824 NYSE-listed securities skipped opening auctions; 84 entered LULD pauses; more than 4,000 trades were ultimately busted.",
+    "primary_evidence": [
+      {
+        "publisher": "U.S. Securities and Exchange Commission",
+        "title": "Release No. 34-104934, NYSE opening-auction order",
+        "url": "https://www.sec.gov/files/litigation/admin/2026/34-104934.pdf",
+        "relevant_pages": "1, 5-8"
+      },
+      {
+        "publisher": "NYSE",
+        "title": "Opening and closing auction mechanics",
+        "url": "https://www.nyse.com/trade/auctions",
+        "role": "mechanism reference only"
+      }
+    ],
+    "why_this_is_strongest_in_bounded_screen": "It is an auditable, recent primary-market auction failure with a documented systems cause and a distinct cash-market mechanism. Cash, SPY and ESH3 can be compared only after actual status and valid-price support are staged; this is not a claim that the ETF or futures were untreated."
+  },
+  "predeclared_normal_sessions": ["2023-01-17", "2023-01-18", "2023-01-19", "2023-01-20", "2023-01-23", "2023-01-25", "2023-01-26", "2023-01-27", "2023-01-30", "2023-01-31"],
+  "normal_session_rule": "Five complete sessions before and five after the incident. Preserve and flag scheduled-news overlaps; remove a date only for a documented closure or operator incident, record the reason, and replace it without inspecting the response. Post-event sessions are descriptive benchmarks, not inputs to treatment membership.",
+  "minimal_retrieval_package": {
+    "event_and_control_window_ET": "09:25:00-11:30:00",
+    "rationale": "Covers state initialization, the 09:30 failed opening auction, documented 10:09 discovery, 10:21 disclosure and the SEC-described 10:53 continuing scope investigation. 11:30 is a collection endpoint, not an asserted recovery. Exact status may extend an affected symbol to 30 minutes after its documented operational boundary without consulting price responses.",
+    "objects": [
+      {
+        "id": "cash_consolidated",
+        "minimum_product": "Preferred: CTA/UTP consolidated quote/trade/status. Executable current package: explicitly named XNYS.PILLAR + XNAS.ITCH + ARCX.PILLAR direct-feed composite, never labeled NBBO or full NMS.",
+        "universe": "point-in-time S&P 500 constituents plus SPY",
+        "fields": ["SIP timestamp", "participant/exchange timestamp when present", "market center", "bid/ask and sizes", "trade price/size/condition", "NBBO", "LULD/regulatory status", "cancel/correction state"],
+        "status": "DIRECT_FEED_COMPOSITE_AVAILABLE_FOR_2023; NATIONAL_SIP_NOT_AVAILABLE_IN_CURRENT_DATABENTO_ACCOUNT"
+      },
+      {
+        "id": "nyse_status",
+        "minimum_product": "NYSE Pillar auction/security-status, opening statistics/imbalances and archived LULD/reopen sequence",
+        "universe": "all S&P 500 members plus SPY in the first package; treatment is actual failed-auction membership, while the 84 LULD symbols are a consequence stratum",
+        "fields": ["auction state", "open state", "pause/reopen time", "reason", "auction print", "cancellation/bust reference"],
+        "status": "XNYS.PILLAR_STATUS_STATISTICS_IMBALANCE_AVAILABLE_AND_QUEUED; EXTERNAL_OFFICIAL_SYMBOL_ROSTER_STILL_TO_ARCHIVE_IF_FOUND"
+      },
+      {
+        "id": "es_front",
+        "minimum_product": "GLBX.MDP3 MBP-1 for actual front contract ESH3 (id 206299 on the event date)",
+        "universe": "ESH3",
+        "fields": ["event timestamp", "sequence", "BBO", "trades", "depth", "trading-status/session fields"],
+        "status": "PARTIAL_EXISTING_0959_1031_ET_EVENT_ONLY"
+      },
+      {
+        "id": "basket_reference",
+        "minimum_product": "point-in-time S&P 500 constituents and weights/shares, plus corporate-action identifiers; SPY holdings/PCF only if claiming exact ETF basket",
+        "universe": "S&P 500 as of prior close",
+        "fields": ["effective date", "identifier", "weight or shares", "cash/fees if PCF", "corporate-action flag"],
+        "status": "COMPLETE_503_SECURITY_CRSP_HISTORICAL_MEMBERSHIP_AND_PRIOR_CLOSE_CAP_WEIGHT_PROXY_BUILT_ON_SCC; NOT_OFFICIAL_FLOAT_ADJUSTED_WEIGHT"
+      }
+    ]
+  },
+  "existing_data_reuse": {
+    "equities": {
+      "paths": [
+        "/scratch/qluo/bidirectional_information_20260922/raw/XNAS_ITCH_2023-01-24.dbn.zst",
+        "/scratch/qluo/bidirectional_information_20260922/raw/ARCX_PILLAR_2023-01-24.dbn.zst"
+      ],
+      "time_utc": "2023-01-24T14:59:00Z through 2023-01-24T15:31:00Z",
+      "universe": "SPY plus 23 stocks",
+      "limit": "venue-specific, non-NBBO, incomplete basket, begins after the opening failure"
+    },
+    "futures": {
+      "path": "/scratch/qluo/bidirectional_information_20260922/futures_control/raw/GLBX_MDP3_2023-01-24_ESV0_MBP1.dbn.zst",
+      "time_utc": "2023-01-24T14:59:00Z through 2023-01-24T15:31:00Z",
+      "resolved_contract": "ESH3 / instrument id 206299",
+      "limit": "event-date post-opening segment only"
+    },
+    "live_access_check": "AUTHENTICATED_SSH_CONTROLMASTER_RESTORED_2026-09-23; all three named legacy files verified present"
+  },
+  "current_supplier_availability": {
+    "checked_at": "2026-09-23",
+    "metadata_discovery_used_free_methods": true,
+    "XNYS.PILLAR": "all required schemas available from 2018-05-01",
+    "XNAS.ITCH": "all required schemas available from 2018-05-01",
+    "ARCX.PILLAR": "all required schemas available from 2018-05-01",
+    "GLBX.MDP3": "mbp-1 available for 2023",
+    "EQUS.MINI": "starts 2023-03-28 and therefore cannot cover the event",
+    "EQUS.SIP": "dataset_not_found for this account; do not treat direct feeds as SIP/NBBO",
+    "event_date_dataset_conditions": {
+      "XNYS.PILLAR": "degraded",
+      "XNAS.ITCH": "available",
+      "ARCX.PILLAR": "available",
+      "GLBX.MDP3": "available"
+    },
+    "condition_receipt": "DATASET_CONDITIONS.json",
+    "completed_main_package": {
+      "request_count": 116,
+      "quoted_total_usd": "38.659188836815",
+      "compressed_bytes_on_scc": 5374027255,
+      "receipt_status": "COMPLETE_NATIVE_DBN_ON_SCC"
+    },
+    "completed_class_ticker_supplement": {
+      "purpose": "historical BF.B and BRK.B direct-feed spellings",
+      "request_count": 105,
+      "quoted_total_usd": "0.105998367064",
+      "compressed_bytes_on_scc": 10992067,
+      "receipt_status": "COMPLETE_NATIVE_DBN_ON_SCC"
+    }
+  },
+  "execution_controls": [
+    "Raw market data downloaded directly to SCC; none copied into Git or the local workstation",
+    "No national-NBBO or complete-NMS claim",
+    "No raw-row export",
+    "No live WRDS connection",
+    "Credentials were not serialized and were removed from the acquisition shells after completion",
+    "Full-file hashing skipped under the user's speed instruction; request receipts, byte counts and nonempty-file checks retained"
+  ],
+  "next_engineering_action": "No further engineering action is required for Phase 2. Revise the paper around the verified activity-versus-common-price result; treat any additional event as external-validity evidence."
+}

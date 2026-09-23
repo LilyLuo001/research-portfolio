@@ -4,7 +4,9 @@
 
 ## 最新状态（2026-09-23）
 
-- **新的优先方向：两篇研究计划已保存；第一篇Phase 1已执行。** [系列始末与总入口](20260923_RESEARCH_SERIES.md)说明为何从一秒条件预测转向“价格发现的集中化与风险承接韧性”。[第一篇论文草稿](20260923_price_discovery_resilience/PAPER_DRAFT.md)、[研究计划](20260923_price_discovery_resilience/RESEARCH_PLAN.md)及[Phase 1决定](20260923_price_discovery_resilience/phase1/DESIGN_DECISION.md)现已包含真实事件筛选、固定方法、SCC真实FOMC演示和有限复核；2015 NYSE主事件尚未估计。[第二篇](20260923_liquidity_diversification/RESEARCH_PLAN.md)独立建目录，已规划但不自动开跑。下方旧结果的“下一行动”保留历史地位，以本条及系列入口为当前方向；旧数值结论不改写。
+- **第一篇当代 Phase 2 已执行完成。** [结果](20260923_price_discovery_resilience/phase2/RESULTS.md)、[决定](20260923_price_discovery_resilience/phase2/DECISION.md)、[论文草稿](20260923_price_discovery_resilience/PAPER_DRAFT.md)。2023-01-24 NYSE开盘竞价故障显示：绝对开盘交易活动替代不完全，但SPY、ESH3与完整现金篮子的共同价格一致性具有韧性。原执行prompt保留为规格，不再是“尚未启动”状态；2015仍只作可选历史对照。
+
+- **新的优先方向：两篇研究计划已保存；第一篇Phase 1和Phase 2均已执行。** [系列始末与总入口](20260923_RESEARCH_SERIES.md)说明为何从一秒条件预测转向“价格发现的集中化与风险承接韧性”。[第二篇](20260923_liquidity_diversification/RESEARCH_PLAN.md)独立建目录，已规划但不自动开跑。下方旧结果的“下一行动”保留历史地位，以本条及系列入口为当前方向；旧数值结论不改写。
 
 - **已完成 earnings 跨年试点：[综合结果](20260922_earnings_information_test/RESULTS.md)、[一页导师摘要](20260922_earnings_information_test/ADVISER_BRIEF.md)**。固定六发行人、48个候选公告及48个对照、288个原生请求已完成；事件权重及固定22股覆盖分母修复后四单元重拟合，并完成独立数值复算。决定 `NO_REPRODUCIBLE_DISTINCT_SPY_SIGNAL`：整数秒盘后局部为正，但跨网格/场所/发行人没有一致独立SPY信号。XNAS盘后相对MSE增量为+0.1148%，平移500ms后−0.0010%，删除AAPL后也翻负；不把这解释为ETF无信息或股票已赢。48个首次公开时钟仍未充分验证，结果相对候选锚点。下一行动为将普通日/FOMC/earnings证据交导师作方向决定，停止同路线自动购数。本轮关闭后不自动启动新分析。
 
@@ -56,4 +58,4 @@
 
 后续阶段使用独立 SCC 子目录，不覆盖第一阶段结果。这里保存代码、配置、聚合结果、公开来源及执行记录，不保存密钥、许可逐行数据或原始报价。
 
-当前没有效果、经验功效或因果 GO 结论。本次用户明确要求保存到 GitHub：只提交本方向文件到既有 `task/p1-feasibility-adjudication-20260913` 分支，不合并 main，不提交其他项目的未跟踪文件。
+当前已有一个描述性的当代案例结果与继续写作决定，但没有把单一事件升级为普遍因果效应或经验功效 GO。本次用户明确要求保存到 GitHub：只提交本方向文件到既有 `task/p1-feasibility-adjudication-20260913` 分支，不合并 main，不提交其他项目的未跟踪文件。

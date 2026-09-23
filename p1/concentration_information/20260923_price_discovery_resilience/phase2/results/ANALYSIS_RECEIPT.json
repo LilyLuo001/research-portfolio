@@ -1,0 +1,1383 @@
+{
+  "basket_threshold": 0.95,
+  "composite_label": "THREE_FEED_COMPOSITE_BBO_NOT_NBBO",
+  "dates": [
+    "2023-01-17",
+    "2023-01-18",
+    "2023-01-19",
+    "2023-01-20",
+    "2023-01-23",
+    "2023-01-24",
+    "2023-01-25",
+    "2023-01-26",
+    "2023-01-27",
+    "2023-01-30",
+    "2023-01-31"
+  ],
+  "event_date": "2023-01-24",
+  "limitations": [
+    "Direct-feed composite is not NBBO or complete NMS coverage.",
+    "As-disseminated and later corrected/busted states are only separated where source fields identify them.",
+    "Missing ESH3/state support remains missing; it is never interpolated."
+  ],
+  "no_missing_weight_renormalization": true,
+  "output_files": [
+    "ANALYSIS_RECEIPT.json",
+    "COMPOSITE_PATHS.csv",
+    "DEVIATION_AUC.csv",
+    "FIG1_COVERAGE.png",
+    "FIG2_VENUE_ACTIVITY.png",
+    "FIG3_THREE_TOOL_PATHS.png",
+    "FIG4_DEVIATION_RECOVERY.png",
+    "MBP1_UPDATE_COUNTS.csv",
+    "NORMAL_BANDS.csv",
+    "PATH_ENDPOINTS.csv",
+    "RECOVERY.csv",
+    "VENUE_ACTIVITY.csv",
+    "XNYS_AUCTION_ADMIN_RECORDS.csv",
+    "XNYS_AUCTION_VALIDATION.csv"
+  ],
+  "processed_files": [
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-17",
+      "file": "2023-01-17_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-17",
+      "file": "2023-01-17_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-18",
+      "file": "2023-01-18_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-18",
+      "file": "2023-01-18_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-19",
+      "file": "2023-01-19_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-19",
+      "file": "2023-01-19_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-20",
+      "file": "2023-01-20_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-20",
+      "file": "2023-01-20_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_ARCX_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-23",
+      "file": "2023-01-23_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNAS_ITCH_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_ARCX_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNAS_ITCH_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-23",
+      "file": "2023-01-23_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_ARCX_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-24",
+      "file": "2023-01-24_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNAS_ITCH_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_ARCX_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNAS_ITCH_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-24",
+      "file": "2023-01-24_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-25",
+      "file": "2023-01-25_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-25",
+      "file": "2023-01-25_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-26",
+      "file": "2023-01-26_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-26",
+      "file": "2023-01-26_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-27",
+      "file": "2023-01-27_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-27",
+      "file": "2023-01-27_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-30",
+      "file": "2023-01-30_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-30",
+      "file": "2023-01-30_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "GLBX.MDP3",
+      "date": "2023-01-31",
+      "file": "2023-01-31_GLBX_MDP3_ESH3_mbp-1.dbn.zst",
+      "schema": "mbp-1"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_ARCX_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "ARCX.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_ARCX_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNAS_ITCH_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNAS.ITCH",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNAS_ITCH_trades.dbn.zst",
+      "schema": "trades"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_bbo-1s.dbn.zst",
+      "schema": "bbo-1s"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_imbalance.dbn.zst",
+      "schema": "imbalance"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_statistics.dbn.zst",
+      "schema": "statistics"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_status.dbn.zst",
+      "schema": "status"
+    },
+    {
+      "dataset": "XNYS.PILLAR",
+      "date": "2023-01-31",
+      "file": "2023-01-31_XNYS_PILLAR_trades.dbn.zst",
+      "schema": "trades"
+    }
+  ],
+  "raw_dir": "/project/econdept/qluo/p1_price_discovery_resilience_20260923/phase2/raw/databento",
+  "raw_rows_exported": false,
+  "roster_rows": 503,
+  "status": "COMPLETE_DERIVED_AGGREGATES_ON_SCC",
+  "unrecognised_record_type_counts": {
+    "IMBALANCEMSG": 308297,
+    "MBP1_MESSAGES": 123412402,
+    "STATMSG": 3572,
+    "STATUSMSG": 5715
+  },
+  "venues": [
+    "XNYS.PILLAR",
+    "XNAS.ITCH",
+    "ARCX.PILLAR"
+  ]
+}
