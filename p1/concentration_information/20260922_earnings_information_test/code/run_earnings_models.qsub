@@ -1,0 +1,25 @@
+#!/bin/bash -l
+#$ -P econdept
+#$ -l h_rt=08:00:00
+#$ -l mem_per_core=16G
+#$ -j y
+#$ -N p1_earn_model
+#$ -t 1-4
+
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+case "$SGE_TASK_ID" in
+  1) VENUE=XNAS.ITCH; SHIFT=0 ;;
+  2) VENUE=XNAS.ITCH; SHIFT=500 ;;
+  3) VENUE=ARCX.PILLAR; SHIFT=0 ;;
+  4) VENUE=ARCX.PILLAR; SHIFT=500 ;;
+esac
+OUT="$ROOT/model_parts/${VENUE//./_}_${SHIFT}"
+mkdir -p "$OUT" "$ROOT/logs"
+"$PY" "$ROOT/code/run_earnings_models.py" \
+  --features "$ROOT/features/equity_parts" \
+  --es-features "$ROOT/features/es_parts" \
+  --roster /project/econdept/qluo/bidirectional_information_20260922/futures_control/results/SAFE_ROSTER.csv \
+  --base-code "$ROOT/code/run_directional_models.py" \
+  --venue "$VENUE" --grid-shift-ms "$SHIFT" --out "$OUT"

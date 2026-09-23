@@ -1,0 +1,22 @@
+#!/bin/bash -l
+#$ -P econdept
+#$ -l h_rt=08:00:00
+#$ -l mem_per_core=8G
+#$ -j y
+#$ -N p1_earn_panel
+#$ -t 1-12
+
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+mkdir -p "$ROOT/features/equity_parts" "$ROOT/features/es_parts" "$ROOT/features/receipts" "$ROOT/logs"
+SHARD=$((SGE_TASK_ID-1))
+"$PY" "$ROOT/code/scc_build_earnings_panels.py" \
+  --download-receipt "$ROOT/raw/DOWNLOAD_RECEIPT.json" \
+  --equity-feature-code "$ROOT/code/scc_build_directional_features.py" \
+  --equity-base-code "$ROOT/code/scc_build_bidirectional_features.py" \
+  --es-code "$ROOT/code/scc_build_fomc_es_features.py" \
+  --equity-out "$ROOT/features/equity_parts/part_${SHARD}.parquet" \
+  --es-out "$ROOT/features/es_parts/part_${SHARD}.parquet" \
+  --receipt "$ROOT/features/receipts/part_${SHARD}.json" \
+  --shard-index "$SHARD" --shard-count 12

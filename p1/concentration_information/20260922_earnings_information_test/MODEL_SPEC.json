@@ -1,0 +1,38 @@
+{
+  "status": "FIXED_BEFORE_NEW_RESPONSE_SUMMARY",
+  "target": "issuer future midpoint log return in basis points",
+  "prediction_horizons_seconds": [1, 5, 30],
+  "grid_shifts_ms": [0, 500],
+  "windows_relative_to_candidate_release_minute": {
+    "PRE_600S": [-600, 0],
+    "POST_0_60S": [0, 60],
+    "POST_60_600S": [60, 600]
+  },
+  "models": {
+    "A0": "B",
+    "A1": "B+Q",
+    "A2": "B+C",
+    "A3": "B+C+Q",
+    "A4": "B+Q+P",
+    "A5": "B+C+Q+P"
+  },
+  "blocks": {
+    "B": "issuer quote, rest-of-22 weighted quote/coverage, ES quote and verified native-side trade features, relative-time, issuer, session, event/control controls",
+    "Q": "SPY quote history",
+    "C": "issuer and rest-of-22 separated cash-stock trade history",
+    "P": "SPY separated trade history"
+  },
+  "primary_comparison": "A2_TO_A5",
+  "secondary_comparisons": ["A0_TO_A1", "A2_TO_A3", "A3_TO_A5", "A0_TO_A2"],
+  "fit": "pooled ridge; issuer and event hierarchical weighting; train-median missing indicators; train standardization",
+  "lambda_grid": [0.01, 0.1, 1.0, 10.0, 100.0],
+  "lambda_outputs": ["OWN_LAMBDA", "FIXED_A2_LAMBDA"],
+  "folds": {
+    "TRAIN": "2023 January-June",
+    "VALID": "2023 July-September",
+    "HISTORY": "2023 October-December",
+    "TEST": "all 2024; no refit, rescaling or lambda selection"
+  },
+  "uncertainty": "2000 resamples of connected event/date components; leave-one-issuer and leave-one-component sensitivity",
+  "interpretation_boundary": "conditional predictive content at a candidate minute clock; not structural information share, permanent price discovery, or causal ETF leadership"
+}

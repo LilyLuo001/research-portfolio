@@ -1,0 +1,14 @@
+#!/bin/bash -l
+#$ -P econdept
+#$ -l h_rt=02:00:00
+#$ -l mem_per_core=16G
+#$ -j y
+#$ -N p1_earn_path
+
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+mkdir -p "$ROOT/path_summary" "$ROOT/logs"
+"$PY" "$ROOT/code/summarize_earnings_paths.py" \
+  --features "$ROOT/features/equity_parts" \
+  --out "$ROOT/path_summary"
