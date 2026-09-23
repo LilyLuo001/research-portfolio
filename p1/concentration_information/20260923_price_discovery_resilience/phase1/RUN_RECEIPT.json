@@ -1,0 +1,99 @@
+{
+  "date": "2026-09-23",
+  "status": "PHASE1_COMPLETE_WITH_LIMITED_FINAL_PASS",
+  "scientific_decision": "SELECT_NYSE_2015_VENUE_CAPACITY_LOSS_CASE_MAIN_EVENT_NOT_YET_ESTIMATED",
+  "source_prompt": "../NEXT_EXECUTION_PROMPT.md",
+  "repository_branch": "task/p1-feasibility-adjudication-20260913",
+  "git_head_before_execution": "bbda650",
+  "routing": {
+    "main_requested": "gpt-5.6-sol / medium",
+    "main_actual_telemetry": "NOT_OBSERVED",
+    "source_engineering": {
+      "agent": "paper1_sources_engineering",
+      "requested": "gpt-5.6-terra / medium",
+      "tool_request_accepted": true,
+      "actual_telemetry": "NOT_OBSERVED"
+    },
+    "method_review": {
+      "agent": "paper1_method_review",
+      "requested": "gpt-6-astra / high",
+      "tool_request_accepted": true,
+      "actual_telemetry": "NOT_OBSERVED"
+    },
+    "independent_recomputation": {
+      "agent": "paper1_independent_recompute",
+      "requested": "gpt-5.6-sol / high",
+      "tool_request_accepted": true,
+      "actual_telemetry": "NOT_OBSERVED",
+      "final_status": "LIMITED_FINAL_PASS"
+    },
+    "nested_delegation": false,
+    "extra_agents": false
+  },
+  "event_screen": {
+    "official_operator_or_regulator_candidates": 4,
+    "retained_primary_case": "NYSE_2015_07_08",
+    "primary_population": "NYSE-listed S&P 500 securities",
+    "simultaneous_accompanying_treatment": "NYSE American/MKT impairment",
+    "causal_att_estimated": false
+  },
+  "scc_execution": {
+    "connection": "SUCCESS",
+    "execution_mode": "direct small read of existing named feature parquets",
+    "derived_root": "/project/econdept/qluo/p1_price_discovery_resilience_20260923",
+    "input_root": "/project/econdept/qluo/bidirectional_information_20260922/fomc_information_arrival_20260922",
+    "selected_dates": ["2023-01-25", "2023-02-01", "2023-03-15", "2023-03-22"],
+    "selection_rule": "first two chronological 2023 FOMC event/control pairs with existing inputs; response-blind",
+    "metric_rows": 8,
+    "derived_path_rows_scc_only": 480,
+    "post_joint_valid_bins_each": 60,
+    "new_market_data_downloaded": false,
+    "new_data_purchased": false,
+    "background_jobs_left": false
+  },
+  "final_output_hashes": {
+    "paper_draft": "0f685dae771a76f4866c2ef60f95df5cd1b99887be678468f05feca98b9a4e23",
+    "design_decision": "a08a7217dde37f9ac66b0601260bca509e2c49e291c5ffecdee47099386ef4e2",
+    "event_candidates": "0bac67914371aba2ca9907c3d513e033ad7b0df80855c1d8553a82a63e82da59",
+    "measurement_spec": "344965e523e3c4fc92e47cd0a1870d66f2dc849c7e0308366e522d80d68939ea",
+    "data_requirements": "301bd2ef26de63f4db5d489bc0e11b2c3126fc40dd6b6fd074c21cbbebeaf2ae",
+    "pilot_results": "ad4756d482b3131e77c55f64785d61e7a2a0fa3d5784e9ddb902174e9414b9f7",
+    "review": "b0ec01f6ffad2fff1a8cfab423cf8ea50d2315d3cf20d9c1560443ff73a380a6",
+    "review_receipt": "455cecb687ce86eb015526aa26fb8872215d76fb95e1114fd32b3cd1d526800b",
+    "next_action": "1042b61290c84355f7ad15f604a1a228e0d68b4cfe80e36c42417d4e7fa7c7f2",
+    "demo_code": "3c21815553ac86e9b69780cc616fa1714ad792066efa303776fd2a0985edfe36",
+    "demo_metrics": "fd0990dfdf175cd371ebf0b11cb8b4348bcc8cae67d833ffb9c800c3e73854d4",
+    "demo_receipt": "d8456e72bd165e49242d28d13ea9e091903d47aa82439dc78012504170505f63",
+    "scc_demo_paths": "fe309e5087e1fa7cb70ea6a6d458c673db3ba76056f8b803964304a5b1312327"
+  },
+  "verification": {
+    "local_tests": "2 PASSED",
+    "independent_recomputed_rows": 8,
+    "independent_numeric_fields_per_row": 25,
+    "independent_max_absolute_difference": 2.1316282072803006e-14,
+    "initial_review": "LIMITED_FAIL_REQUIRES_CORRECTION",
+    "corrections": [
+      "strict primary post-clock support",
+      "explicit shifted-grid support",
+      "complete-grid lag and missing propagation",
+      "support-neutral field labels",
+      "NYSE and NYSE American/MKT treatment scope plus second SEC source"
+    ],
+    "final_review": "LIMITED_FINAL_PASS",
+    "remaining_fixes": []
+  },
+  "interpretation": {
+    "measurement_demo_complete": true,
+    "main_2015_case_estimated": false,
+    "information_share_estimated": false,
+    "substitution_effect_estimated": false,
+    "full_paper_empirical_result_available": false
+  },
+  "security": {
+    "credentials_written": false,
+    "raw_or_row_level_market_data_committed": false,
+    "authentication_changed": false,
+    "wrds_connected": false
+  },
+  "one_next_action": "Stage the exact 2015 nationwide cash, SPY/active-ES, venue-status, and complete point-in-time S&P 500 basket package specified in DATA_REQUIREMENTS.md on SCC, then run the fixed event-state measurement."
+}

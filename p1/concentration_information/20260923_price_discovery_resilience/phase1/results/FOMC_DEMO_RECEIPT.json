@@ -1,0 +1,21 @@
+{
+  "dates": ["2023-01-25", "2023-02-01", "2023-03-15", "2023-03-22"],
+  "event_second_index": 600,
+  "grid_shifts_ms": [0, 500],
+  "grid_support": {"0": "(t0,t0+60s]", "500": "(t0+0.5s,t0+60.5s]"},
+  "input_hashes": {
+    "equity": "d2b2b2b65207199c1e6fc0ab1e9198a0fde966d10386bfb92db13001e5e97203",
+    "futures": "b504fc2d0679852a101a2fafdf315a1dc5396045e5ab216be0a67508db94d4c2"
+  },
+  "instruments": ["SPY XNAS venue BBO", "front ES GLBX venue BBO"],
+  "interpretation": "non-structural measurement demo; not information share and not channel-treatment evidence",
+  "output_hashes": {
+    "metrics": "fd0990dfdf175cd371ebf0b11cb8b4348bcc8cae67d833ffb9c800c3e73854d4",
+    "paths": "fe309e5087e1fa7cb70ea6a6d458c673db3ba76056f8b803964304a5b1312327"
+  },
+  "output_rows": {"metrics": 8, "paths": 480},
+  "post_grid_indices_relative": [1, 60],
+  "pre_beta_grid_indices_relative": [-540, -60],
+  "selection": "first two chronological 2023 event/control pairs with existing feature files; no response selection",
+  "status": "COMPLETE_REAL_EXISTING_DATA_DEMO"
+}

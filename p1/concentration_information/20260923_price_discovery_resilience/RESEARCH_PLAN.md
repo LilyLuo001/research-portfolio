@@ -4,7 +4,7 @@
 
 英文工作题目：**Price Discovery Hubs and Market Resilience: Substitution Across Stocks, ETFs, and Futures**。
 
-日期：2026-09-23；版本1.0；状态 `PROPOSED_RESEARCH_DESIGN / NOT_EMPIRICALLY_EXECUTED`。用户已批准撰写及保存此方向，尚未运行本文的新样本、估计或采购。入口：[系列始末](../20260923_RESEARCH_SERIES.md)；[下一轮prompt](NEXT_EXECUTION_PROMPT.md)。
+日期：2026-09-23；版本1.1；状态 `PHASE1_COMPLETE / MAIN_2015_EVENT_NOT_YET_ESTIMATED`。用户已批准并执行第一阶段：完成真实事件筛选、方法落地、SCC真实数据测量原型及有限独立复核；没有采购新数据，2015主事件尚未估计。入口：[论文草稿](PAPER_DRAFT.md)、[系列始末](../20260923_RESEARCH_SERIES.md)、[Phase 1决定](phase1/DESIGN_DECISION.md)。原执行prompt保留为历史授权与范围记录。
 
 本论文回答导师的问题，但从平均领先竞赛转向：**当价格发现集中在一个交易工具或渠道时，其他市场能否在该渠道受限后接替它？** 研究重点是替代能力，不预设ETF、股票或期货必然主导。
 

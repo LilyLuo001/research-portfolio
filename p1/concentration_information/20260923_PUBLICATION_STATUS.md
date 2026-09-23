@@ -6,12 +6,12 @@
 
 目标仓库：`LilyLuo001/research-portfolio`。目标分支：`task/p1-feasibility-adjudication-20260913`。
 
-**尚未发布到远端。** 本轮终端 GitHub HTTPS 连接与有限推送重试失败；已配置 GitHub 连接器可以读取仓库，但创建 Git tree 返回 HTTP 403 `Resource not accessible by integration`。没有修改认证、使用聊天中的凭据或强制推送。最后一次连接器核实的远端分支为 `d7a61b096e707cfdc24c10481e62b0fbc6b9c040`。
+两篇计划已在本轮通过正常Git认证发布到远端，远端分支推进至本文件首次提交 `bbda650`。没有修改认证、使用聊天中的凭据或强制推送。此后执行的第一篇Phase 1产物将在其最终独立复核、提交和远端核实后另记最终commit。
 
-下一执行者先核实网络、当前工作区和远端分支；连接恢复后使用现有认证正常推送，不 force、不覆盖远端新增工作：
+后续仍使用现有认证正常推送，不 force、不覆盖远端新增工作：
 
 ```sh
 git -C /Users/lilyluo/research-portfolio-p1-feasibility-20260913 push origin task/p1-feasibility-adjudication-20260913
 ```
 
-核实远端提交后再标记同步完成。研究计划撰写完成不等于新实证已经执行；第一篇执行 prompt 仍为 `PREPARED_NOT_EXECUTED`。
+研究计划的远端同步已经完成。第一篇执行prompt随后已获用户授权并执行；当前科学状态以第一篇 `phase1/` 产物和最终运行回执为准。

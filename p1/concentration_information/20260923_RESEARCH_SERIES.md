@@ -8,7 +8,7 @@ Lily Luo已同意将方向发展为一个研究系列，要求保存两篇研究
 
 | 论文 | 独立研究问题 | 入口 | 当前阶段 |
 |---|---|---|---|
-| 第一篇 | 价格发现集中在哪里；主要渠道受限时，其他市场能否接替？ | [研究计划](20260923_price_discovery_resilience/RESEARCH_PLAN.md)；[下一轮执行prompt](20260923_price_discovery_resilience/NEXT_EXECUTION_PROMPT.md) | 优先推进；prompt尚未执行 |
+| 第一篇 | 价格发现集中在哪里；主要渠道受限时，其他市场能否接替？ | [论文草稿](20260923_price_discovery_resilience/PAPER_DRAFT.md)；[研究计划](20260923_price_discovery_resilience/RESEARCH_PLAN.md)；[Phase 1决定](20260923_price_discovery_resilience/phase1/DESIGN_DECISION.md) | Phase 1完成；2015主事件数据待取得 |
 | 第二篇 | 持仓分散是否掩盖共同退出风险；什么结构造成联合流动性损失？ | [研究计划](20260923_liquidity_diversification/RESEARCH_PLAN.md) | 已规划，未启动实证 |
 
 两篇均使用新目录，置于既有 `concentration_information` 研究线下。第一篇延续导师的ETF—股票价格发现问题，但其经济对象、主估计量和潜在识别与旧一秒预测不同，不能直接追加在旧结果目录。第二篇研究风险承接和交易成本，可以独立成立，不能把第一篇的同一张信息份额表换标题重复发表。
@@ -40,6 +40,6 @@ Lily Luo已同意将方向发展为一个研究系列，要求保存两篇研究
 
 该分工使用当前会话工具目录支持的型号，不因网页出现其他型号自动迁移。官方文档说明模型/effort可继承或显式设置，但不证明本机某次调用的实际运行设置：[Codex subagents](https://developers.openai.com/codex/subagents)。
 
-下一步只执行第一篇的有终点设计落地与测量原型。第二篇的文档保存不构成自动开跑或采购指令。两篇共享来源规范和基础设施，但分别记录研究样本、估计量、结果及失败条件。
+第一篇的有终点设计落地与测量原型已经完成；唯一下一行动是取得/落地2015 NYSE事件的全国现金、SPY/ES和完整同期篮子数据并执行主案例。第二篇的文档保存不构成自动开跑或采购指令。两篇共享来源规范和基础设施，但分别记录研究样本、估计量、结果及失败条件。
 
 共同来源与读取深度见 [LITERATURE_AND_DATA.md](20260923_price_discovery_resilience/LITERATURE_AND_DATA.md)。新颖性为候选，不是独立referee认证。本计划编写者完成内部一致性检查，不冒称独立审查。

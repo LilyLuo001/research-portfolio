@@ -1,6 +1,6 @@
 # 执行Prompt：第一篇设计落地、候选事件与真实测量原型
 
-准备日期：2026-09-23。状态：`PREPARED_NOT_EXECUTED`。
+准备日期：2026-09-23。提交执行日期：2026-09-23。状态：`EXECUTED_PHASE1_COMPLETE`。本文件保留原始执行规格；实际产物、偏离和限制以 `phase1/RUN_RECEIPT.json`、`phase1/DESIGN_DECISION.md` 与 `phase1/REVIEW.md` 为准。
 
 ## 任务与完成标准
 
