@@ -1,0 +1,19 @@
+{
+  "date": "2026-09-23",
+  "action": "REMOVED_FIVE_LOCAL_DETAIL_COPIES_AND_TASK_TEMP_ARCHIVE",
+  "authority": "user requested local data removal and SCC-only storage; closure prompt reaffirmed after-verification cleanup",
+  "verification": "five local SHA256 values matched existing SCC originals before deletion",
+  "scc_files_deleted": false,
+  "recoverable": true,
+  "scc_root": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922",
+  "files": [
+    {"scc_relative_path": "model_parts/ARCX_PILLAR_0/SAMPLE_MODEL_LOSSES.csv", "sha256": "fefc033622bae81570df2ede168e5c7ace3f5ddaacbebc905a6932953d6c043c"},
+    {"scc_relative_path": "model_parts/ARCX_PILLAR_500/SAMPLE_MODEL_LOSSES.csv", "sha256": "e383ca25ad4d407a18f5b2bce4d70db967e41e63343061cb667860de6d0a0243"},
+    {"scc_relative_path": "model_parts/XNAS_ITCH_0/SAMPLE_MODEL_LOSSES.csv", "sha256": "e2695dc0f7ca584bb951ccfa41cc6334507b045ea8e34ab51c1c21e67bb7d8e0"},
+    {"scc_relative_path": "model_parts/XNAS_ITCH_500/SAMPLE_MODEL_LOSSES.csv", "sha256": "81909322fd6ba1baa471e0295e411dd90e5f58c200e210e5169ae5adfd35f72e"},
+    {"scc_relative_path": "path_summary/EVENT_PATH_DETAIL.csv", "sha256": "55aa4b57717edae46c2cbd4ce2bf8867571c410643bdc28075dee6626616aa00"}
+  ],
+  "temporary_archive_removed": "/tmp/p1_earnings_model_parts.tar.gz",
+  "deletion_method": "apply_patch for five text files; explicit single-file unlink for the temporary archive after rm-f syntax was rejected",
+  "old_results_authority": "historical; corrected v2/final outputs supersede these numerical outputs"
+}

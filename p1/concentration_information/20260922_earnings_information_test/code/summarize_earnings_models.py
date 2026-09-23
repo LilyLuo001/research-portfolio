@@ -49,17 +49,43 @@ def bootstrap(frame: pd.DataFrame, seed: int, draws: int = 2000) -> tuple[float,
     components = sorted(frame.component_id.unique())
     if len(components) < 2:
         return np.nan, np.nan
+    # The resampling unit is the connected date component.  Pre-aggregate each
+    # component's event-level losses by issuer, then apply bootstrap
+    # multiplicities by matrix multiplication.  This is algebraically
+    # equivalent to cloning component DataFrames (including cloned event IDs)
+    # but avoids millions of small concat/groupby operations.
+    event_loss = (
+        frame.groupby(["component_id", "issuer", "event_id"], as_index=False)[
+            ["mean_loss_baseline", "mean_loss_full"]
+        ]
+        .mean()
+    )
+    issuers = sorted(event_loss.issuer.unique())
+    component_index = {value: idx for idx, value in enumerate(components)}
+    issuer_index = {value: idx for idx, value in enumerate(issuers)}
+    counts = np.zeros((len(components), len(issuers)), dtype=float)
+    loss_b = np.zeros_like(counts)
+    loss_f = np.zeros_like(counts)
+    for row in event_loss.itertuples(index=False):
+        c = component_index[row.component_id]
+        i = issuer_index[row.issuer]
+        counts[c, i] += 1.0
+        loss_b[c, i] += row.mean_loss_baseline
+        loss_f[c, i] += row.mean_loss_full
     rng = np.random.default_rng(seed)
-    values = []
-    groups = {component: frame[frame.component_id == component] for component in components}
-    for _ in range(draws):
-        sampled = rng.choice(components, len(components), replace=True)
-        pieces = []
-        for draw_id, component in enumerate(sampled):
-            part = groups[component].copy()
-            part["event_id"] = part.event_id + f"__draw{draw_id}"
-            pieces.append(part)
-        values.append(statistic(pd.concat(pieces, ignore_index=True))["G_equal_issuer_event"])
+    sampled = rng.integers(0, len(components), size=(draws, len(components)))
+    multiplicities = np.zeros((draws, len(components)), dtype=float)
+    rows = np.repeat(np.arange(draws), len(components))
+    np.add.at(multiplicities, (rows, sampled.ravel()), 1.0)
+    issuer_counts = multiplicities @ counts
+    with np.errstate(divide="ignore", invalid="ignore"):
+        issuer_b = (multiplicities @ loss_b) / issuer_counts
+        issuer_f = (multiplicities @ loss_f) / issuer_counts
+    issuer_b[issuer_counts == 0] = np.nan
+    issuer_f[issuer_counts == 0] = np.nan
+    mean_b = np.nanmean(issuer_b, axis=1)
+    mean_f = np.nanmean(issuer_f, axis=1)
+    values = 1.0 - mean_f / mean_b
     return float(np.nanquantile(values, 0.025)), float(np.nanquantile(values, 0.975))
 
 
@@ -97,7 +123,15 @@ def main() -> None:
         for component in sorted(group.component_id.unique()):
             part = group[group.component_id != component]
             if len(part): loo.append({**meta, "deletion_type": "DATE_COMPONENT", "deleted": component, **statistic(part)})
-    support = paired.groupby(["split", "sample_kind", "session"]).agg(events=("event_id", "nunique"), issuers=("issuer", "nunique"), dates=("date", "nunique"), components=("component_id", "nunique"), prediction_centers=("n", "sum")).reset_index()
+    # Support must not sum the same target centers over comparisons, model
+    # specifications, grids, or horizons.  The loss table has one identical
+    # target-support row per model; retain one representative model row and
+    # report each actual scoring cell separately.
+    support_key = ["venue", "grid_shift_ms", "horizon_seconds", "window", "split", "sample_kind", "session", "sample_id", "event_id", "issuer", "date", "n"]
+    support_rows = raw.drop_duplicates(support_key)[support_key].copy()
+    support_rows["component_id"] = support_rows.event_id.map(union_components(support_rows))
+    support = support_rows.groupby(["venue", "grid_shift_ms", "horizon_seconds", "window", "split", "sample_kind", "session"], dropna=False).agg(unique_events=("event_id", "nunique"), unique_issuers=("issuer", "nunique"), unique_dates=("date", "nunique"), date_components=("component_id", "nunique"), actual_prediction_centers=("n", "sum"), sample_rows=("sample_id", "nunique")).reset_index()
+    support["support_definition"] = "deduplicated across model and fit_spec; per venue/grid/horizon/window/scoring cell"
     args.out.mkdir(parents=True, exist_ok=True)
     results.to_csv(args.out / "PREDICTION_RESULTS.csv", index=False)
     pd.DataFrame(loo).to_csv(args.out / "LOO.csv", index=False)

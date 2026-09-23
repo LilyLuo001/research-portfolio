@@ -1,0 +1,25 @@
+#!/bin/bash -l
+#$ -P econdept
+#$ -l h_rt=01:00:00
+#$ -l mem_per_core=4G
+#$ -j y
+#$ -N p1_earn_final
+
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+export MPLCONFIGDIR="/tmp/p1_earn_mpl_${JOB_ID:-manual}"
+mkdir -p "$MPLCONFIGDIR"
+mkdir -p "$ROOT/model_summary/final_engineering" "$ROOT/results/final" "$ROOT/logs"
+"$PY" "$ROOT/code/validate_earnings_v2_cells.py" --parts-root "$ROOT/model_parts_v2" --code "$ROOT/code/run_earnings_models.py"
+"$PY" "$ROOT/code/summarize_earnings_models.py" \
+  --input "$ROOT/model_parts_v2/XNAS_ITCH_0/SAMPLE_MODEL_LOSSES.csv" \
+  --input "$ROOT/model_parts_v2/XNAS_ITCH_500/SAMPLE_MODEL_LOSSES.csv" \
+  --input "$ROOT/model_parts_v2/ARCX_PILLAR_0/SAMPLE_MODEL_LOSSES.csv" \
+  --input "$ROOT/model_parts_v2/ARCX_PILLAR_500/SAMPLE_MODEL_LOSSES.csv" \
+  --out "$ROOT/model_summary/final_engineering"
+"$PY" "$ROOT/code/build_earnings_final_tables_figures.py" \
+  --models "$ROOT/model_summary/final_engineering" \
+  --paths "$ROOT/path_summary/final_engineering" \
+  --out "$ROOT/results/final"

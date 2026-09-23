@@ -1,14 +1,16 @@
 #!/bin/bash -l
 #$ -P econdept
 #$ -l h_rt=02:00:00
-#$ -l mem_per_core=16G
+#$ -l mem_per_core=4G
 #$ -j y
 #$ -N p1_earn_path
+#$ -t 1-12
 
 set -euo pipefail
 ROOT=/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922
 PY=/project/econdept/qluo/dbn_runtime/bin/python
-mkdir -p "$ROOT/path_summary" "$ROOT/logs"
+SHARD=$((SGE_TASK_ID-1))
+mkdir -p "$ROOT/path_parts/part_${SHARD}" "$ROOT/logs"
 "$PY" "$ROOT/code/summarize_earnings_paths.py" \
-  --features "$ROOT/features/equity_parts" \
-  --out "$ROOT/path_summary"
+  --features "$ROOT/features/equity_parts/part_${SHARD}.parquet" \
+  --out "$ROOT/path_parts/part_${SHARD}"

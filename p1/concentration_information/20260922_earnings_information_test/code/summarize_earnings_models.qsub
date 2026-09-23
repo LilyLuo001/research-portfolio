@@ -1,0 +1,17 @@
+#!/bin/bash -l
+#$ -P econdept
+#$ -l h_rt=02:00:00
+#$ -l mem_per_core=4G
+#$ -j y
+#$ -N p1_earn_msum_wfix
+
+set -euo pipefail
+ROOT=/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922
+PY=/project/econdept/qluo/dbn_runtime/bin/python
+mkdir -p "$ROOT/model_summary" "$ROOT/logs"
+"$PY" "$ROOT/code/summarize_earnings_models.py" \
+  --input "$ROOT/model_parts_v2/XNAS_ITCH_0/SAMPLE_MODEL_LOSSES.csv" \
+  --input "$ROOT/model_parts_v2/XNAS_ITCH_500/SAMPLE_MODEL_LOSSES.csv" \
+  --input "$ROOT/model_parts_v2/ARCX_PILLAR_0/SAMPLE_MODEL_LOSSES.csv" \
+  --input "$ROOT/model_parts_v2/ARCX_PILLAR_500/SAMPLE_MODEL_LOSSES.csv" \
+  --out "$ROOT/model_summary/final_engineering"

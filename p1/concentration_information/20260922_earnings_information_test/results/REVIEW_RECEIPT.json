@@ -1,0 +1,132 @@
+{
+  "status": "PASS_CORRECTED_NUMERICAL_OUTPUTS__SCIENTIFIC_NO_REPRODUCIBLE_DISTINCT_SPY_SIGNAL",
+  "review_scope": "finite earnings-information test only; corrected SCC model/path aggregates and final three scoped figures",
+  "review_date": "2026-09-23",
+  "authoritative_scc_root": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922",
+  "design_checks": {
+    "fixed_stock_roster_excluding_BF": 23,
+    "selected_issuers": ["AAPL", "LLY", "CVS", "CMI", "EBAY", "NWSA"],
+    "events": 48,
+    "events_per_issuer_year": 4,
+    "logical_event_control_windows": 96,
+    "requests": 288,
+    "completed_requests": 288,
+    "requests_by_dataset": {
+      "XNAS.ITCH": 96,
+      "ARCX.PILLAR": 96,
+      "GLBX.MDP3": 96
+    },
+    "candidate_clocks_not_yet_verified": 48,
+    "first_public_error_bound_established": false,
+    "fixed_basket_samples_missing_at_least_one_member": 53,
+    "maximum_missing_fixed_basket_members": 7
+  },
+  "implementation_checks": {
+    "train_valid_history_test_isolation": "PASS",
+    "fixed_rest_of_22_coverage_denominator": "PASS",
+    "issuer_event_available_sample_row_weighting": "PASS",
+    "maximum_within_issuer_event_weight_mass_spread": 9.8e-17,
+    "native_trade_sign_and_separated_unknown_volume": "PASS",
+    "a2_to_a5_block_definition": "PASS__JOINT_SPY_QUOTES_AND_TRADES",
+    "date_component_dependence": "PASS",
+    "grid_timestamp_membership": {
+      "distinct_centers_per_horizon_window": 299520,
+      "mismatches": 0
+    },
+    "git_tracked_raw_parquet_pickle_or_fitted_objects": 0,
+    "git_secret_pattern_matches": 0
+  },
+  "independent_recomputation": {
+    "primary_point_cells": 288,
+    "primary_loo_cells": 3372,
+    "support_cells": 288,
+    "point_max_abs_difference_G": 9.6e-17,
+    "loo_max_abs_difference_G": 1.0e-16,
+    "support_max_integer_difference": 0,
+    "selected_interval_cells": 8,
+    "selected_interval_max_abs_difference": 9.9e-17,
+    "direct_vs_optimized_bootstrap_draws": 250,
+    "direct_bootstrap_draws_with_absent_issuer": 32,
+    "direct_vs_optimized_bootstrap_max_abs_difference": 5.6e-16,
+    "independent_primary_canonical_sha256": "3a637fb3656cea5d2e777e1dd473770b62fff0e42e81b16f8581b83a910ddc99",
+    "independent_loo_canonical_sha256": "0aaede969494e7ddab990bc498bd25194de69ebd3771e2894ffc7ccb446055d6"
+  },
+  "focal_primary_fraction": [
+    {"venue": "XNAS.ITCH", "grid_shift_ms": 0, "session": "AFTER_HOURS", "G": 0.0011478965454302381, "ci_low": 0.0004073739646962, "ci_high": 0.0044907166211334},
+    {"venue": "XNAS.ITCH", "grid_shift_ms": 500, "session": "AFTER_HOURS", "G": -0.000010341618513098894, "ci_low": -0.00006723798561236727, "ci_high": 0.0000824902096864671},
+    {"venue": "ARCX.PILLAR", "grid_shift_ms": 0, "session": "AFTER_HOURS", "G": 0.0021002827649964084, "ci_low": -0.000700597216292, "ci_high": 0.0067342610983079},
+    {"venue": "ARCX.PILLAR", "grid_shift_ms": 500, "session": "AFTER_HOURS", "G": 0.00031682043984315733, "ci_low": -0.0000016928986158515335, "ci_high": 0.0008355081087517},
+    {"venue": "XNAS.ITCH", "grid_shift_ms": 0, "session": "PREMARKET", "G": -0.000023449823940646652, "ci_low": -0.0001442690119088, "ci_high": 0.0009943591920193},
+    {"venue": "XNAS.ITCH", "grid_shift_ms": 500, "session": "PREMARKET", "G": 0.000003185714995246336, "ci_low": -0.0000012852807141305876, "ci_high": 0.000019304453009882905},
+    {"venue": "ARCX.PILLAR", "grid_shift_ms": 0, "session": "PREMARKET", "G": -0.00013335640239442448, "ci_low": -0.0006673337496707, "ci_high": 0.0006254674099736},
+    {"venue": "ARCX.PILLAR", "grid_shift_ms": 500, "session": "PREMARKET", "G": 0.000054503036443831476, "ci_low": -0.00003547801577509224, "ci_high": 0.0001901859207819}
+  ],
+  "path_checks": {
+    "intended_rows": 2688,
+    "valid_response_rows": 2544,
+    "no_source_panel_rows": 77,
+    "invalid_baseline_or_endpoint_rows": 67,
+    "legacy_anchor_finite_rows": 2548,
+    "fixed_minus_one_second_persistence": {
+      "comparable": 726,
+      "nonzero_comparable": 608,
+      "same_direction_nonzero": 385,
+      "zero_to_zero": 48
+    },
+    "legacy_anchor_persistence": {
+      "comparable": 728,
+      "nonzero_comparable": 603,
+      "same_direction_nonzero": 383,
+      "zero_to_zero": 54
+    }
+  },
+  "figure_checks": {
+    "status": "PASS_WITH_DOCUMENTED_FIGURE_1_AGGREGATION_LIMIT",
+    "final_figure_job": 7702054,
+    "final_figure_job_exit_status": 0,
+    "figure_1_scope": "TEST EVENT XNAS issuer paths aggregated to session medians; fixed t=-1 baseline; not per-event paths",
+    "figure_2_scope": "TEST EVENT A2_TO_A5, own lambda, 1 second, POST_0_60S; four separate venue/grid panels",
+    "figure_3_scope": "TEST EVENT A2_TO_A5, own lambda, POST_0_60S; venue/grid/session horizon sensitivity",
+    "build_earnings_final_tables_figures.py_sha256": "2f2451befaa35f4a6d743e66dbf84fbbd134979f6f48adcc9eb7102479df28ea",
+    "FIGURE_EVENT_PATHS.png_sha256": "56fbe3040b904876aa88d469082e7151a96c72665a6fc8e1c6561a0c687f4c1c",
+    "FIGURE_ISSUER_GAINS.png_sha256": "f1811e35c89609a5503c143b5527a0fd8b9ed3c18173155af0a8e9ec21185d61",
+    "FIGURE_SESSION_HORIZON.png_sha256": "d48ddf91af38c149c7e24892f18399822bd0a91796565e1b5786083a5d3747cd",
+    "ENGINEERING_FINAL_RECEIPT.json_sha256": "69d8c1221c884f5eb6d0614cb9bd3c042b57bef20048d3c6ac848fe21cc81657"
+  },
+  "source_hashes_sha256": {
+    "EVENT_MANIFEST.csv": "9fa4212ab8d10ac61d0ea153066bce66009eed1484d66eeff499d14f369200f7",
+    "CONTROL_MANIFEST.csv": "595113de2be1ec1e9e4fd1a95c59b0ec6d4c5b4e4bb8278bd6a730dffe3594ca",
+    "REQUEST_MANIFEST.json": "77f60d2e807473c8c28de9901e35218b4c4da03ed9a2c0f9d859062f0c77b57c",
+    "run_earnings_models.py": "0e14afcf30ac64fedcf59fea80abe88bd65a42e46b639bb15838cdbb13b22b5c",
+    "summarize_earnings_models.py": "055945937770b639e457493e7acdf90157899c9f33304d6baf377803c1dc4c06",
+    "summarize_earnings_paths.py": "d78b92ac14e8c1e0033f52d10f5962ade2906a6ebfa9e2607ce2aec679ff3170",
+    "combine_earnings_paths.py": "7266b3d3277d756136b2c2b76e6eaca3739b69a94adcb085f98582686bbb46e3"
+  },
+  "corrected_model_input_hashes_sha256": {
+    "ARCX_PILLAR_0": "e7cd3262f7a1c2e89ec81e63f83dd4837a43752e27aa4bbd8c15706f66350d3a",
+    "ARCX_PILLAR_500": "d7c95ce2e10c30a6d2d9fdbbc79dac8fff7ac477d189cf63b81cad9f8b75ab09",
+    "XNAS_ITCH_0": "8d4f4d9fa2ee06b0b06702c0bf9b2bb41f619b1bb980501f68ccd5794fda5685",
+    "XNAS_ITCH_500": "cf8d9d7df64614f5fa02398e8589f6bca49c3ddba9a406ad727b2f891ee4afd6"
+  },
+  "corrected_summary_hashes_sha256": {
+    "PREDICTION_RESULTS.csv": "aa2a376a42f754c15bd97003955b37a0763edecd9b6deef082e97143ebb344a6",
+    "LOO.csv": "5ffffc9f3e358b404df24c015aa57c3f001e4132e14519bc2110017a02b074df",
+    "DEPENDENCE_AND_SUPPORT.csv": "1717d21f39ac24e44d1b958615c1aa06c19d06b7cd5814548f49bc77d0f89b0e",
+    "SUMMARY_RECEIPT.json": "92d4ea00a285d330af4db71698596309843585bbf0e190bfecceb91a6bd016c9"
+  },
+  "corrected_path_hashes_sha256": {
+    "EVENT_PATH_SUMMARY.csv": "cdd2a7b152fed86ee04fd2fa099ae5e0837baade37ad4afc394b1178d1d1af20",
+    "PERSISTENCE_SUMMARY.csv": "1c5d43545e417a25812f4e4492342ab24093615b3845c17622d26b3f3722dac2",
+    "PATH_COVERAGE.csv": "81cbc0862eeae79534a3a004b105908e3f98f6f4d43cba461365553c48e60a24",
+    "PATH_RECEIPT.json": "04d7583b55e9a3d51aaa941bf6f75938645221693ab38154b695133ee476af61"
+  },
+  "numerical_conclusion": "Corrected aggregate estimates, support, deletion sensitivities, selected intervals, path coverage and persistence reproduce independently.",
+  "scientific_conclusion": "The fixed pilot does not show a distinct SPY increment reproducible across venue, grid and issuer sensitivities; a localized positive XNAS integer-grid after-hours result remains and must be reported.",
+  "scientific_nonclaims": [
+    "no claim that SPY contains no company information",
+    "no causal ETF leadership or structural information share",
+    "no verified first-public or precisely timed announcement absorption",
+    "no SIP NBBO, permanent price discovery or fundamental-value result",
+    "component bootstrap does not separately cluster repeated-issuer dependence across dates"
+  ]
+}

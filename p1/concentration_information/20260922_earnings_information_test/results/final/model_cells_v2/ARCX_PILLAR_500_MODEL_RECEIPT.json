@@ -1,0 +1,50 @@
+{
+  "code_sha256": "0e14afcf30ac64fedcf59fea80abe88bd65a42e46b639bb15838cdbb13b22b5c",
+  "external_test_refit_or_rescale": false,
+  "fitted_objects_stay_on_scc": true,
+  "grid_shifts_ms": [
+    500
+  ],
+  "horizons_seconds": [
+    1,
+    5,
+    30
+  ],
+  "loss_rows": 6300,
+  "models": [
+    "A0",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+  ],
+  "skipped_sample_horizon_count": 12,
+  "status": "COMPLETE_EARNINGS_MODELS_ON_SCC",
+  "validation_rows": 108,
+  "venues": [
+    "ARCX.PILLAR"
+  ],
+  "weighting": {
+    "event_masses": {
+      "('I', 'E1')": 0.5,
+      "('I', 'E2')": 0.5
+    },
+    "pass": true,
+    "toy": "one issuer, two events; E1 has two samples and E2 one"
+  },
+  "windows": {
+    "POST_0_60S": [
+      0,
+      60
+    ],
+    "POST_60_600S": [
+      60,
+      600
+    ],
+    "PRE_600S": [
+      -600,
+      0
+    ]
+  }
+}

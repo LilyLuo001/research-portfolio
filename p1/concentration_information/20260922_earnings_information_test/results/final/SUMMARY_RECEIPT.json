@@ -1,0 +1,26 @@
+{
+  "bootstrap_draws": 2000,
+  "dependency_cluster": "connected components of event_ids sharing any event/control economic date",
+  "inputs": [
+    {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922/model_parts_v2/XNAS_ITCH_0/SAMPLE_MODEL_LOSSES.csv",
+      "sha256": "8d4f4d9fa2ee06b0b06702c0bf9b2bb41f619b1bb980501f68ccd5794fda5685"
+    },
+    {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922/model_parts_v2/XNAS_ITCH_500/SAMPLE_MODEL_LOSSES.csv",
+      "sha256": "cf8d9d7df64614f5fa02398e8589f6bca49c3ddba9a406ad727b2f891ee4afd6"
+    },
+    {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922/model_parts_v2/ARCX_PILLAR_0/SAMPLE_MODEL_LOSSES.csv",
+      "sha256": "e7cd3262f7a1c2e89ec81e63f83dd4837a43752e27aa4bbd8c15706f66350d3a"
+    },
+    {
+      "path": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922/model_parts_v2/ARCX_PILLAR_500/SAMPLE_MODEL_LOSSES.csv",
+      "sha256": "d7c95ce2e10c30a6d2d9fdbbc79dac8fff7ac477d189cf63b81cad9f8b75ab09"
+    }
+  ],
+  "loo_rows": 3372,
+  "primary_comparison": "A2_TO_A5",
+  "result_rows": 2880,
+  "status": "COMPLETE_SAFE_EARNINGS_MODEL_SUMMARY"
+}

@@ -1,0 +1,41 @@
+{
+  "code_sha256": "80bbb3370d3cb69fe99d0e5549748d023e03302fa5cef253935cecb67b7b467f",
+  "external_test_refit_or_rescale": false,
+  "fitted_objects_stay_on_scc": true,
+  "grid_shifts_ms": [
+    500
+  ],
+  "horizons_seconds": [
+    1,
+    5,
+    30
+  ],
+  "loss_rows": 6300,
+  "models": [
+    "A0",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+  ],
+  "status": "COMPLETE_EARNINGS_MODELS_ON_SCC",
+  "validation_rows": 108,
+  "venues": [
+    "ARCX.PILLAR"
+  ],
+  "windows": {
+    "POST_0_60S": [
+      0,
+      60
+    ],
+    "POST_60_600S": [
+      60,
+      600
+    ],
+    "PRE_600S": [
+      -600,
+      0
+    ]
+  }
+}

@@ -43,6 +43,9 @@ def target_panel(frame: pd.DataFrame, roster: pd.DataFrame, cols: list[str], iss
     spy = frame[frame.symbol == "SPY"].copy()
     stocks = frame[frame.symbol != "SPY"].copy()
     weights = roster.set_index("symbol").report_weight.astype(float)
+    fixed_symbols = [str(x).upper() for x in roster.symbol if str(x).upper() not in {"BF", "SPY"}]
+    if len(fixed_symbols) != 23 or len(set(fixed_symbols)) != 23:
+        raise RuntimeError("requires the fixed 23-stock inherited panel roster, excluding BF")
     stocks["report_weight"] = stocks.symbol.map(weights)
     if issuer not in set(stocks.symbol):
         raise RuntimeError(f"issuer {issuer} absent from feature sample")
@@ -50,7 +53,11 @@ def target_panel(frame: pd.DataFrame, roster: pd.DataFrame, cols: list[str], iss
     one_raw = stocks[stocks.symbol == issuer].copy()
     panel = prefix(one_raw, cols, "stock", target).merge(prefix(spy, cols, "spy", target), on=keys, validate="one_to_one")
     own_weight = float(weights.loc[issuer])
-    total_other_weight = float(weights.loc[stocks.symbol.unique()].sum() - own_weight)
+    # Coverage is against the approved fixed rest-of-22, including members
+    # with no source rows in this sample.  The observed weighted mean remains
+    # normalized over available members only; its coverage exposes the gap.
+    other_symbols = [symbol for symbol in fixed_symbols if symbol != issuer]
+    total_other_weight = float(weights.loc[other_symbols].sum())
     own = one_raw.set_index(keys)
     for col in cols:
         valid = np.isfinite(stocks[col].to_numpy(float))
@@ -108,9 +115,36 @@ def prepared(raw: np.ndarray, median: np.ndarray) -> np.ndarray:
 def hierarchical_weights(frame: pd.DataFrame) -> np.ndarray:
     issuer_n = frame.issuer.nunique()
     events_per = frame[["issuer", "event_id"]].drop_duplicates().groupby("issuer").size()
+    # An event may retain one EVENT/CONTROL sample while another retains both.
+    # Equal issuer/event weighting therefore must divide its event mass over
+    # the *available* samples before dividing within a sample's target rows.
+    samples_per_event = frame[["issuer", "event_id", "sample_id"]].drop_duplicates().groupby(["issuer", "event_id"]).size()
     rows_per = frame.groupby("sample_id").size()
-    weight = np.asarray([1.0 / issuer_n / events_per.loc[i] / rows_per.loc[s] for i, s in zip(frame.issuer, frame.sample_id)], float)
+    weight = np.asarray([1.0 / issuer_n / events_per.loc[i] / samples_per_event.loc[(i, e)] / rows_per.loc[s] for i, e, s in zip(frame.issuer, frame.event_id, frame.sample_id)], float)
     return weight / weight.sum()
+
+
+def weight_audit(frame: pd.DataFrame, horizon: int, venue: str, shift: int) -> list[dict]:
+    """Record finite training support and confirm equal event mass by fold."""
+    out = []
+    for scope, mask in (("TRAIN", frame.split.eq("TRAIN")), ("TRAIN_VALID", frame.split.isin(["TRAIN", "VALID"]))):
+        part = frame.loc[mask & np.isfinite(frame.target.to_numpy(float))].copy()
+        if part.empty:
+            continue
+        part["weight"] = hierarchical_weights(part)
+        mass = part.groupby(["issuer", "event_id"], as_index=False).weight.sum()
+        support = part.groupby(["issuer", "event_id"], as_index=False).agg(available_samples=("sample_id", "nunique"), target_rows=("sample_id", "size"))
+        for row in support.merge(mass, on=["issuer", "event_id"], validate="one_to_one").itertuples(index=False):
+            out.append({"venue": venue, "grid_shift_ms": int(shift), "horizon_seconds": horizon, "fit_scope": scope, "issuer": row.issuer, "event_id": row.event_id, "available_samples": int(row.available_samples), "target_rows": int(row.target_rows), "event_weight_mass": float(row.weight)})
+    return out
+
+
+def toy_weight_check() -> dict:
+    toy = pd.DataFrame({"issuer": ["I"] * 8, "event_id": ["E1"] * 4 + ["E2"] * 4, "sample_id": ["E1A"] * 2 + ["E1B"] * 2 + ["E2A"] * 4})
+    mass = pd.Series(hierarchical_weights(toy)).groupby([toy.issuer, toy.event_id]).sum()
+    if not np.allclose(mass.to_numpy(float), [0.5, 0.5]):
+        raise RuntimeError("hierarchical weight toy check failed")
+    return {"toy": "one issuer, two events; E1 has two samples and E2 one", "event_masses": {str(k): float(v) for k, v in mass.items()}, "pass": True}
 
 
 def fit_ridge(x: np.ndarray, y: np.ndarray, weights: np.ndarray, mean: np.ndarray, scale: np.ndarray, lam: float):
@@ -182,15 +216,24 @@ def main() -> None:
     ap.add_argument("--grid-shift-ms", type=int, choices=(0, 500))
     args = ap.parse_args()
     base = load(args.base_code, "earnings_base")
-    raw = pd.read_parquet(args.features)
-    es = pd.read_parquet(args.es_features)
+    # Predicate pushdown is material here: each array task needs one of four
+    # venue/grid cells, not the whole 12-shard panel.  The filters preserve the
+    # exact rows subsequently selected by the former in-memory filters.
+    raw_filters = []
+    if args.venue:
+        raw_filters.append(("venue", "==", args.venue))
+    if args.grid_shift_ms is not None:
+        raw_filters.append(("grid_shift_ms", "==", args.grid_shift_ms))
+    raw = pd.read_parquet(args.features, filters=raw_filters or None)
+    es_filters = [("grid_shift_ms", "==", args.grid_shift_ms)] if args.grid_shift_ms is not None else None
+    es = pd.read_parquet(args.es_features, filters=es_filters)
     roster = pd.read_csv(args.roster)
     if args.venue:
         raw = raw[raw.venue == args.venue].copy()
     if args.grid_shift_ms is not None:
         raw = raw[raw.grid_shift_ms == args.grid_shift_ms].copy(); es = es[es.grid_shift_ms == args.grid_shift_ms].copy()
     es = es_transform(es, base.QUOTE, base.TRADE)
-    output, validation, artifacts = [], [], {}
+    output, validation, artifacts, skipped, weight_support = [], [], {}, [], []
     for venue in sorted(raw.venue.unique()):
         for shift in sorted(raw.grid_shift_ms.unique()):
             source = raw[(raw.venue == venue) & (raw.grid_shift_ms == shift)].copy()
@@ -204,7 +247,8 @@ def main() -> None:
                     issuer = str(sample.issuer.iloc[0])
                     try:
                         panel = target_panel(sample, roster, base.QUOTE + base.TRADE, issuer, target_name)
-                    except (RuntimeError, KeyError, ValueError, pd.errors.MergeError):
+                    except (RuntimeError, KeyError, ValueError, pd.errors.MergeError) as error:
+                        skipped.append({"venue": venue, "grid_shift_ms": int(shift), "horizon_seconds": horizon, "sample_id": sample_id, "issuer": issuer, "exception_type": type(error).__name__, "exception_message": str(error)})
                         continue
                     for col in ("sample_id", "event_id", "issuer", "sample_kind", "split", "anchor_utc", "anchor_et"):
                         panel[col] = sample[col].iloc[0]
@@ -218,6 +262,7 @@ def main() -> None:
                 renamed = es.loc[es.grid_shift_ms == shift, es_cols].rename(columns={x: "es__" + x for x in base.QUOTE + base.TRADE})
                 panel = panel.merge(renamed, on=["sample_id", "grid_shift_ms", "second_index"], how="left", validate="many_to_one") if "grid_shift_ms" in panel else panel.assign(grid_shift_ms=shift).merge(renamed, on=["sample_id", "grid_shift_ms", "second_index"], how="left", validate="many_to_one")
                 panel["target"] = panel["stock__target"]
+                weight_support.extend(weight_audit(panel, horizon, venue, int(shift)))
                 control_frame, control_cols = controls(panel)
                 panel = pd.concat([panel, control_frame], axis=1)
                 model_cols = blocks(base, control_cols, base.TRADE)
@@ -236,9 +281,11 @@ def main() -> None:
     args.out.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(output).to_csv(args.out / "SAMPLE_MODEL_LOSSES.csv", index=False)
     pd.DataFrame(validation).to_csv(args.out / "VALIDATION_TRACE.csv", index=False)
+    pd.DataFrame(skipped).to_csv(args.out / "SKIPPED_SAMPLE_SUPPORT.csv", index=False)
+    pd.DataFrame(weight_support).to_csv(args.out / "WEIGHT_SUPPORT.csv", index=False)
     with (args.out / "FITTED_OBJECTS.pkl").open("wb") as handle:
         pickle.dump(artifacts, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    receipt = {"status": "COMPLETE_EARNINGS_MODELS_ON_SCC", "code_sha256": digest(Path(__file__)), "loss_rows": len(output), "validation_rows": len(validation), "models": list(MODELS), "horizons_seconds": list(HORIZONS), "windows": WINDOWS, "venues": sorted(raw.venue.unique().tolist()), "grid_shifts_ms": sorted(int(x) for x in raw.grid_shift_ms.unique()), "external_test_refit_or_rescale": False, "fitted_objects_stay_on_scc": True}
+    receipt = {"status": "COMPLETE_EARNINGS_MODELS_ON_SCC", "code_sha256": digest(Path(__file__)), "loss_rows": len(output), "validation_rows": len(validation), "skipped_sample_horizon_count": len(skipped), "weighting": toy_weight_check(), "models": list(MODELS), "horizons_seconds": list(HORIZONS), "windows": WINDOWS, "venues": sorted(raw.venue.unique().tolist()), "grid_shifts_ms": sorted(int(x) for x in raw.grid_shift_ms.unique()), "external_test_refit_or_rescale": False, "fitted_objects_stay_on_scc": True}
     (args.out / "MODEL_RECEIPT.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
     print(json.dumps(receipt, sort_keys=True))
 

@@ -1,0 +1,24 @@
+{
+  "status": "COMPLETE_WITH_DOCUMENTED_FIGURE_SCOPE_LIMITATION",
+  "corrected_model_array": "7701972.1-4",
+  "corrected_model_code_sha256": "0e14afcf30ac64fedcf59fea80abe88bd65a42e46b639bb15838cdbb13b22b5c",
+  "final_figure_job": "7702054",
+  "final_figure_job_exit_status": 0,
+  "row_level_data_exported": false,
+  "aggregate_artifacts_sha256": {
+    "PREDICTION_RESULTS.csv": "aa2a376a42f754c15bd97003955b37a0763edecd9b6deef082e97143ebb344a6",
+    "EVENT_PATH_SUMMARY.csv": "cdd2a7b152fed86ee04fd2fa099ae5e0837baade37ad4afc394b1178d1d1af20",
+    "PRIMARY_TEST_SUMMARY.csv": "9ebd2e739c4c23a104baa2f4e9da68427c9b175ddde1b6a9317e409c4f85e3a2",
+    "FIGURE_EVENT_PATHS.png": "56fbe3040b904876aa88d469082e7151a96c72665a6fc8e1c6561a0c687f4c1c",
+    "FIGURE_ISSUER_GAINS.png": "f1811e35c89609a5503c143b5527a0fd8b9ed3c18173155af0a8e9ec21185d61",
+    "FIGURE_SESSION_HORIZON.png": "d48ddf91af38c149c7e24892f18399822bd0a91796565e1b5786083a5d3747cd"
+  },
+  "path_coverage": {
+    "intended_cells": 2688,
+    "observed_source_panel_cells": 2611,
+    "valid_response_cells": 2544,
+    "no_source_panel_cells": 77,
+    "invalid_baseline_or_endpoint_cells": 67
+  },
+  "figure_scope_limit": "Figure 1 is a TEST EVENT XNAS issuer-path session-median aggregate from permitted output, not a per-event path plot; the local replacement corrects the stale SCC title."
+}

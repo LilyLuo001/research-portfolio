@@ -1,0 +1,13 @@
+# Event-level licensed/derived detail remains authoritative on SCC.
+raw/
+features/
+**/*.dbn*
+**/*.parquet
+results/model_parts/*/SAMPLE_MODEL_LOSSES.csv
+results/path_summary/EVENT_PATH_DETAIL.csv
+results/**/SAMPLE_MODEL_LOSSES.csv
+results/**/EVENT_PATH_DETAIL.csv
+results/**/PAIRED_MODEL_LOSSES.csv.gz
+**/FITTED_OBJECTS.pkl
+__pycache__/
+code/__pycache__/

@@ -1,0 +1,83 @@
+{
+  "date": "2026-09-23",
+  "status": "COMPLETE_WITH_DOCUMENTED_MEASUREMENT_AND_FIGURE_SCOPE_LIMITATIONS",
+  "scientific_decision": "NO_REPRODUCIBLE_DISTINCT_SPY_SIGNAL",
+  "source_prompt": "NEXT_EXECUTION_PROMPT.md",
+  "closure_scope": "CLOSURE_EXECUTION_SCOPE.md",
+  "repository_branch": "task/p1-feasibility-adjudication-20260913",
+  "scc_root": "/project/econdept/qluo/bidirectional_information_20260922/earnings_information_test_20260922",
+  "roles": {
+    "coordinator": {"requested_model": "gpt-5.6-sol", "requested_effort": "medium", "existing_coordinator_retained": true, "actual_model": "NOT_OBSERVED", "actual_effort": "NOT_OBSERVED"},
+    "engineer": {"agent": "earnings_engineer_retry", "requested_model": "gpt-5.6-terra", "requested_effort": "medium", "actual_model": "NOT_OBSERVED", "actual_effort": "NOT_OBSERVED"},
+    "reviewer": {"agent": "earnings_independent_reviewer", "requested_model": "gpt-5.6-sol", "requested_effort": "high", "actual_model": "NOT_OBSERVED", "actual_effort": "NOT_OBSERVED"},
+    "nested_delegation": false,
+    "configuration_or_authentication_changes": false
+  },
+  "data": {
+    "issuers": 6,
+    "candidate_announcements": 48,
+    "controls": 48,
+    "logical_windows": 96,
+    "raw_requests_completed": 288,
+    "raw_bytes": 482455014,
+    "first_public_clocks_verified": 0,
+    "first_public_clocks_not_yet_verified": 48,
+    "equity_feature_rows": 12611040,
+    "es_feature_rows": 299520,
+    "quoted_original_request_total_usd": "3.555638104673",
+    "actual_billing_debit": "NOT_VERIFIED",
+    "new_purchases_during_closure": 0,
+    "raw_and_detailed_data_location": "SCC_ONLY",
+    "verified_local_detail_cleanup": "LOCAL_STORAGE_CLEANUP.json"
+  },
+  "corrected_models": {
+    "source_directory": "model_parts_v2",
+    "cells_complete": 4,
+    "model_code_sha256": "0e14afcf30ac64fedcf59fea80abe88bd65a42e46b639bb15838cdbb13b22b5c",
+    "job_array": "7701972.1-4",
+    "duplicate_array_cancelled_before_execution": "7701966",
+    "corrections": ["equal issuer/event/available-sample/row weights", "fixed rest-of-22 coverage denominator"],
+    "old_outputs_preserved_as_superseded": true,
+    "no_external_test_selection_or_refit": true
+  },
+  "summary": {
+    "prediction_rows": 2880,
+    "independently_recomputed_A2_to_A5_cells": 288,
+    "independently_recomputed_LOO_rows": 3372,
+    "independently_recomputed_support_rows": 288,
+    "bootstrap_draws": 2000,
+    "path_cells_expected": 2688,
+    "path_cells_valid": 2544,
+    "path_cells_no_source": 77,
+    "path_cells_invalid_baseline_or_endpoint": 67,
+    "paths_source_directory": "path_summary/final_engineering",
+    "models_source_directory": "model_summary/final_engineering",
+    "safe_local_output_directory": "results/final",
+    "numerical_review": "PASS",
+    "review_receipt": "results/REVIEW_RECEIPT.json"
+  },
+  "output_jobs": {
+    "7701989": "SUMMARY_COMPLETE_FIGURE_FAILED_DEFAULT_FONT_CACHE_QUOTA",
+    "7702038": "SUMMARY_COMPLETE_FIGURE_FAILED_COMPUTE_TMPDIR_QUOTA",
+    "7702054": "COMPLETE_EXIT_0_32_SECONDS_543MB_MAXVMEM"
+  },
+  "figures": {
+    "png_count": 3,
+    "root_visual_inspection": "PASS_LABELS_AND_SCOPE",
+    "engineering_receipt": "results/final/ENGINEERING_FINAL_RECEIPT.json",
+    "documented_deviation": "Figure 1 is the TEST EVENT XNAS session-median issuer path, not the originally requested per-event path chart. Event-level detailed paths remain on SCC."
+  },
+  "task_jobs_remaining_after_completion": 0,
+  "unrelated_held_job_not_modified": "7488095",
+  "interpretation": {
+    "localized_positive_after_hours_integer_grid_signal_retained": true,
+    "causal_ETF_leadership_established": false,
+    "permanent_information_share_estimated": false,
+    "fundamental_value_or_EPS_analyzed": false,
+    "research_GO": false,
+    "price_sources_are_SIP_NBBO": false,
+    "forecast_gain_is_return_basis_points": false
+  },
+  "one_next_action": "Present the completed ordinary-day/FOMC/earnings packet to the adviser for a research-direction decision; stop automatic expansion of this one-second conditional-lead route.",
+  "git": {"preceding_acquisition_commit_pushed": "73bf982", "final_closure_push": "Verify remote ref after committing this receipt; final user handoff records the confirmed commit. No merge to main."}
+}

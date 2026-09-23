@@ -1,9 +1,9 @@
 #!/bin/bash -l
 #$ -P econdept
-#$ -l h_rt=08:00:00
-#$ -l mem_per_core=16G
+#$ -l h_rt=01:00:00
+#$ -l mem_per_core=8G
 #$ -j y
-#$ -N p1_earn_model
+#$ -N p1_earn_model_wfix
 #$ -t 1-4
 
 set -euo pipefail
@@ -15,8 +15,9 @@ case "$SGE_TASK_ID" in
   3) VENUE=ARCX.PILLAR; SHIFT=0 ;;
   4) VENUE=ARCX.PILLAR; SHIFT=500 ;;
 esac
-OUT="$ROOT/model_parts/${VENUE//./_}_${SHIFT}"
+OUT="$ROOT/model_parts_v2/${VENUE//./_}_${SHIFT}"
 mkdir -p "$OUT" "$ROOT/logs"
+export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
 "$PY" "$ROOT/code/run_earnings_models.py" \
   --features "$ROOT/features/equity_parts" \
   --es-features "$ROOT/features/es_parts" \
