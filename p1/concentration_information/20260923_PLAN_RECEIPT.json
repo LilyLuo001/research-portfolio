@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-23",
+  "status": "PLANS_AND_PROMPT_PREPARED_NOT_EXECUTED",
+  "authorization": "User requested two research plans in Git, a separate second-paper folder, directory choice for first paper, push, and first-paper next execution prompt.",
+  "history_commit": "d7a61b096e707cfdc24c10481e62b0fbc6b9c040",
+  "directories": {
+    "paper1": "p1/concentration_information/20260923_price_discovery_resilience",
+    "paper2": "p1/concentration_information/20260923_liquidity_diversification"
+  },
+  "directory_decision": "Both new directories within the existing P1 research line; preserve old pilots as history because measurement and estimands change.",
+  "current_turn": {
+    "subagents_started": 0,
+    "new_scc_access": false,
+    "new_computation": false,
+    "data_purchase": false,
+    "raw_inputs_modified": false,
+    "authentication_modified": false,
+    "merged_main": false,
+    "actual_model": "NOT_OBSERVED",
+    "actual_effort": "NOT_OBSERVED",
+    "openai_docs_skill_used_for": "Future prompt model/effort routing and honest actual-setting disclosure."
+  },
+  "future_routing": {
+    "coordinator": "gpt-5.6-sol / medium; retain current coordinator if switching unsupported",
+    "sources_and_engineering": "gpt-5.6-terra / medium",
+    "named_method_issue": "gpt-6-astra / high",
+    "independent_numeric_review": "gpt-5.6-sol / high; after concrete outputs",
+    "nested_delegation": false
+  },
+  "review": {
+    "type": "COORDINATOR_INTERNAL_CHECK_ONLY",
+    "independent_referee_pass": false,
+    "local_links_and_secret_check": "PASS",
+    "scientific_novelty": "CANDIDATE_NOT_CERTIFIED"
+  },
+  "file_sha256": {
+    "p1/concentration_information/20260923_RESEARCH_SERIES.md": "65f39a56507b90ed750018d210238e765ead7c3ab60954e25167d6267359b085",
+    "p1/concentration_information/20260923_price_discovery_resilience/LITERATURE_AND_DATA.md": "15e191aa4ed02655732e840a6fd1b018bb0e4a05eed7e8bd84dd43f020c8adb2",
+    "p1/concentration_information/20260923_price_discovery_resilience/NEXT_EXECUTION_PROMPT.md": "35ee01df2570a605bdd682c7a33d654a01dea0db2a4f6c48b35e299d4313615f",
+    "p1/concentration_information/20260923_price_discovery_resilience/RESEARCH_PLAN.md": "6ef96987f63be7b482487be0b0062c5c6832235feae77c59f5f383277b47a695",
+    "p1/concentration_information/20260923_liquidity_diversification/RESEARCH_PLAN.md": "2b82934dd136e47f36a3b0fff9a06139343173d450545894d694078e8de38398"
+  },
+  "git": {
+    "branch": "task/p1-feasibility-adjudication-20260913",
+    "delivery": "This receipt precedes its own commit; verify remote ref and report confirmed SHA in final handoff."
+  }
+}

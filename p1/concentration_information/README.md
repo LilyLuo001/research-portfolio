@@ -4,6 +4,8 @@
 
 ## 最新状态（2026-09-23）
 
+- **新的优先方向：两篇研究计划已保存，实证尚未启动。** [系列始末与总入口](20260923_RESEARCH_SERIES.md)说明为何从一秒条件预测转向“价格发现的集中化与风险承接韧性”。[第一篇：价格发现中心与跨市场替代](20260923_price_discovery_resilience/RESEARCH_PLAN.md)优先推进，下一轮使用[有终点的设计落地与真实测量原型prompt](20260923_price_discovery_resilience/NEXT_EXECUTION_PROMPT.md)。[第二篇：持仓分散与共同退出风险](20260923_liquidity_diversification/RESEARCH_PLAN.md)独立建目录，已规划但不自动开跑。用户允许完整TAQ与商业数据，不受旧23股/已购窗口限制；本轮仅保存计划和prompt，没有新计算或购买。下方旧结果的“下一行动”保留历史地位，以本条及系列入口为当前方向；旧数值结论不改写。
+
 - **已完成 earnings 跨年试点：[综合结果](20260922_earnings_information_test/RESULTS.md)、[一页导师摘要](20260922_earnings_information_test/ADVISER_BRIEF.md)**。固定六发行人、48个候选公告及48个对照、288个原生请求已完成；事件权重及固定22股覆盖分母修复后四单元重拟合，并完成独立数值复算。决定 `NO_REPRODUCIBLE_DISTINCT_SPY_SIGNAL`：整数秒盘后局部为正，但跨网格/场所/发行人没有一致独立SPY信号。XNAS盘后相对MSE增量为+0.1148%，平移500ms后−0.0010%，删除AAPL后也翻负；不把这解释为ETF无信息或股票已赢。48个首次公开时钟仍未充分验证，结果相对候选锚点。下一行动为将普通日/FOMC/earnings证据交导师作方向决定，停止同路线自动购数。本轮关闭后不自动启动新分析。
 
 - **本轮已执行规格：[固定 earnings 公司信息检验 prompt](20260922_earnings_information_test/NEXT_EXECUTION_PROMPT.md)**。原文件保留准备时状态；用户随后授权并已实际执行，最终结论以上一条为准。请求Sol/medium协调、Terra/medium工程、Sol/high复核；保留当前协调器，实际可观察路由与限制记录于任务scope/receipt。时段差异不当消息类型效应，宏观/独有信息区分不自动称新贡献。
