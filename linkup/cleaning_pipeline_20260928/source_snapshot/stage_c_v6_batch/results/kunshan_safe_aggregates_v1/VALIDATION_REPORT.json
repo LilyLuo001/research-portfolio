@@ -1,0 +1,72 @@
+{
+  "status": "PASS_WITH_MEASUREMENT_LIMITS",
+  "jobs": {
+    "initial": {
+      "job_id": "123163082",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:04:38",
+      "cause": "Missing remote compact-v2 base module after the deterministic sample completed; no parser, data, or sampling failure."
+    },
+    "recovery": {
+      "job_id": "123163300",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:07:21",
+      "max_rss_kb": 2009596,
+      "scope": "Compact parse and first tables only from the unchanged selected sample; no rescan or reselection."
+    }
+  },
+  "freeze": {
+    "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+    "compact_v2_base_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+    "focused_v6_tests_passed": 7,
+    "existing_tests_passed": 61
+  },
+  "sample": {
+    "projected_description_rows": 3922532,
+    "unique_description_keys": 3922532,
+    "duplicate_description_rows": 0,
+    "record_unmatched": 340,
+    "eligible_unique_usa": 2691376,
+    "selected_rows": 100000,
+    "selected_unique_keys": 100000,
+    "selection_rule": "Bottom SHA-256 of seed plus NUL plus JOB_HASH among unique Records-matched USA keys, independent of text and parser prediction.",
+    "selected_empty_description": 0,
+    "selected_company_id_mismatch": 0
+  },
+  "compact": {
+    "processed_rows": 100000,
+    "evidence_rows": 494194,
+    "relation_rows": 47219,
+    "parse_errors": 0,
+    "truncated_or_v6_incomplete_rows": 3,
+    "persistent_bytes": 57010263,
+    "output_cap_bytes": 500000000
+  },
+  "conservation": {
+    "candidate_ad_level_rows": 100000,
+    "candidate_ad_level_unique_keys": 100000,
+    "coverage_table_ads_sum": 100000,
+    "education_experience_joint_ads_sum": 100000,
+    "technology_experience_cross_ads_sum": 100000,
+    "primary_complete_queue_rows_through_2026q2": 96144,
+    "primary_complete_queue_semantic_eligible_rows": 96141,
+    "partial_2026q3_rows": 2043,
+    "date_outside_primary_rows": 1813,
+    "date_partition_sum": 100000
+  },
+  "remote_private_outputs": {
+    "sample": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1",
+    "compact": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_compact_v1",
+    "tables": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_tables_v1"
+  },
+  "limits": [
+    "Regional 32-shard Kunshan-held frame; not national or population representative.",
+    "Delivery snapshot text grouped by Records CREATED queue; not historical text at CREATED.",
+    "Candidate-no-detection does not mean no employer requirement.",
+    "Education and joint counts are measurement-audit candidate detections, not true prevalence.",
+    "No-experience phrases are unvalidated candidates, not true absence rates.",
+    "Occupation was not joined and AI roles remain unknown/unvalidated."
+  ]
+}

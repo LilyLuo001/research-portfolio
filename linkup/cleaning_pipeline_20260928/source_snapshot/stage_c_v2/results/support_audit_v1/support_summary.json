@@ -1,0 +1,252 @@
+{
+  "elapsed": "00:20:11",
+  "interpretation": {
+    "multiple_labels": "jobs_with_multiple_labels can reflect changes across disjoint dates; overlapping different-label pairs are not established by this audit",
+    "onet_code": "format conformity is not validation against an O*NET release; O*NET version timing is unconfirmed and codes are not treated as historical classifications",
+    "overlap": "strict overlap uses next_start < prior_max_end; touching uses equality and is reported separately; open ends are not forced closed",
+    "remote": "membership coverage only; remote intervals are not assumed to be historical label validity; REMOTE_STATUS=false means not tagged remote and does not confirm onsite work"
+  },
+  "job_id": "123126482",
+  "onet": {
+    "conflicting_code_jobs": 0,
+    "distinct_job_hashes": 356299258,
+    "duplicate_job_hashes": 0,
+    "jobs_with_format_conforming_code": 356294607,
+    "jobs_without_nonempty_code": 4651,
+    "raw_rows": 356299258
+  },
+  "onet_annual": {
+    "2007": {
+      "denominator": 463106,
+      "matched": 463106,
+      "matched_percent": 100.0
+    },
+    "2008": {
+      "denominator": 5014196,
+      "matched": 5014196,
+      "matched_percent": 100.0
+    },
+    "2009": {
+      "denominator": 3764872,
+      "matched": 3764872,
+      "matched_percent": 100.0
+    },
+    "2010": {
+      "denominator": 4488754,
+      "matched": 4488754,
+      "matched_percent": 100.0
+    },
+    "2011": {
+      "denominator": 5235218,
+      "matched": 5235218,
+      "matched_percent": 100.0
+    },
+    "2012": {
+      "denominator": 6059967,
+      "matched": 6059967,
+      "matched_percent": 100.0
+    },
+    "2013": {
+      "denominator": 7177570,
+      "matched": 7177570,
+      "matched_percent": 100.0
+    },
+    "2014": {
+      "denominator": 10022964,
+      "matched": 10022964,
+      "matched_percent": 100.0
+    },
+    "2015": {
+      "denominator": 11338670,
+      "matched": 11338670,
+      "matched_percent": 100.0
+    },
+    "2016": {
+      "denominator": 11280900,
+      "matched": 11280900,
+      "matched_percent": 100.0
+    },
+    "2017": {
+      "denominator": 14741748,
+      "matched": 14741748,
+      "matched_percent": 100.0
+    },
+    "2018": {
+      "denominator": 15252192,
+      "matched": 15252192,
+      "matched_percent": 100.0
+    },
+    "2019": {
+      "denominator": 16742466,
+      "matched": 16742466,
+      "matched_percent": 100.0
+    },
+    "2020": {
+      "denominator": 14728302,
+      "matched": 14728302,
+      "matched_percent": 100.0
+    },
+    "2021": {
+      "denominator": 24461581,
+      "matched": 24461581,
+      "matched_percent": 100.0
+    },
+    "2022": {
+      "denominator": 25082680,
+      "matched": 25082680,
+      "matched_percent": 100.0
+    },
+    "2023": {
+      "denominator": 22267905,
+      "matched": 22267905,
+      "matched_percent": 100.0
+    },
+    "2024": {
+      "denominator": 20526445,
+      "matched": 20526444,
+      "matched_percent": 99.9999951282358
+    },
+    "2025": {
+      "denominator": 19063571,
+      "matched": 19062815,
+      "matched_percent": 99.99603432116679
+    },
+    "2026": {
+      "denominator": 15496940,
+      "matched": 15414902,
+      "matched_percent": 99.47061807040616
+    }
+  },
+  "onet_usa_coverage": {
+    "denominator": 253210047,
+    "format_conforming": 253123825,
+    "matched_job_hash": 253127252,
+    "matched_percent": 99.96730185038827,
+    "nonempty_code": 253123825,
+    "nonempty_percent": 99.96594842857874,
+    "unique_code": 253123825
+  },
+  "remote": {
+    "distinct_job_hashes": 295654306,
+    "duplicate_job_hashes": 9183333,
+    "invalid_end_rows": 0,
+    "invalid_start_rows": 0,
+    "jobs_with_multiple_labels": 8888797,
+    "negative_interval_rows": 0,
+    "open_end_rows": 295654306,
+    "open_end_with_later_start_rows": 0,
+    "raw_rows": 304916642,
+    "strict_overlap_rows": 0,
+    "touching_interval_rows": 79003
+  },
+  "remote_annual_membership": {
+    "2007": {
+      "denominator": 463106,
+      "matched": 115,
+      "matched_percent": 0.024832327804001676
+    },
+    "2008": {
+      "denominator": 5014196,
+      "matched": 714,
+      "matched_percent": 0.01423957100998844
+    },
+    "2009": {
+      "denominator": 3764872,
+      "matched": 633,
+      "matched_percent": 0.016813320612227987
+    },
+    "2010": {
+      "denominator": 4488754,
+      "matched": 3388,
+      "matched_percent": 0.07547751558673076
+    },
+    "2011": {
+      "denominator": 5235218,
+      "matched": 32904,
+      "matched_percent": 0.6285125089346805
+    },
+    "2012": {
+      "denominator": 6059967,
+      "matched": 56009,
+      "matched_percent": 0.924245957114948
+    },
+    "2013": {
+      "denominator": 7177570,
+      "matched": 245235,
+      "matched_percent": 3.416685591363094
+    },
+    "2014": {
+      "denominator": 10022964,
+      "matched": 3273271,
+      "matched_percent": 32.6577148236789
+    },
+    "2015": {
+      "denominator": 11338670,
+      "matched": 6284167,
+      "matched_percent": 55.42243490638673
+    },
+    "2016": {
+      "denominator": 11280900,
+      "matched": 10599611,
+      "matched_percent": 93.96068576088787
+    },
+    "2017": {
+      "denominator": 14741748,
+      "matched": 14619537,
+      "matched_percent": 99.17098704983968
+    },
+    "2018": {
+      "denominator": 15252192,
+      "matched": 14807810,
+      "matched_percent": 97.08643846077993
+    },
+    "2019": {
+      "denominator": 16742466,
+      "matched": 16286342,
+      "matched_percent": 97.27564625187233
+    },
+    "2020": {
+      "denominator": 14728302,
+      "matched": 14549913,
+      "matched_percent": 98.78880131599692
+    },
+    "2021": {
+      "denominator": 24461581,
+      "matched": 24235957,
+      "matched_percent": 99.07763933982844
+    },
+    "2022": {
+      "denominator": 25082680,
+      "matched": 23685143,
+      "matched_percent": 94.42827879636467
+    },
+    "2023": {
+      "denominator": 22267905,
+      "matched": 21411590,
+      "matched_percent": 96.1544878155354
+    },
+    "2024": {
+      "denominator": 20526445,
+      "matched": 19128556,
+      "matched_percent": 93.18981440770673
+    },
+    "2025": {
+      "denominator": 19063571,
+      "matched": 18236326,
+      "matched_percent": 95.66059790162085
+    },
+    "2026": {
+      "denominator": 15496940,
+      "matched": 15431718,
+      "matched_percent": 99.57912981530548
+    }
+  },
+  "remote_usa_membership": {
+    "denominator": 253210047,
+    "matched_job_hash": 202888939,
+    "matched_percent": 80.12673328084806,
+    "nonempty_label": 202888939
+  },
+  "status": "complete",
+  "usa_records_denominator": 253210047
+}

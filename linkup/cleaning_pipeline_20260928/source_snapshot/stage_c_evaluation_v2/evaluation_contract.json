@@ -1,0 +1,33 @@
+{
+  "version": "stage-c-evaluation-v2-evaluation-contract-20260927",
+  "frozen_before_annotations": true,
+  "release_status": "not_released_human_labels_pending",
+  "automatic_release_allowed": false,
+  "reporting_units": ["overall", "time_stratum", "source_shard", "selection_component"],
+  "time_strata": ["2015", "2016-17", "2018-19", "2020-22", "2023", "2024", "2025", "2026_partial"],
+  "metrics": {
+    "presence": ["false_positive_count", "false_negative_count", "true_positive_count", "true_negative_count", "precision", "recall", "wilson_95_interval"],
+    "strength": ["required_preferred_expected_unspecified_conflict_confusion_matrix", "unknown_rate"],
+    "numeric_binding": ["exact_value_match", "unit_match", "bound_type_match", "object_binding_match", "path_assignment_match"],
+    "experience_object": ["multilabel_per_class_precision", "multilabel_per_class_recall", "unresolved_rate"],
+    "technology_role": ["multilabel_per_class_precision", "multilabel_per_class_recall", "unresolved_rate"],
+    "task_family": ["multilabel_per_class_precision", "multilabel_per_class_recall", "unresolved_rate"]
+  },
+  "uncertainty": "Report counts and uncertainty intervals. Do not describe model agreement as human gold accuracy.",
+  "provisional_engineering_gate": {
+    "status": "proposal_to_be_accepted_before_scoring_not_universal_truth",
+    "presence_recall_min": 0.90,
+    "presence_precision_min": 0.90,
+    "numeric_binding_exact_min": 0.90,
+    "max_absolute_period_error_gap": 0.05,
+    "rule": "A module can be proposed for a named descriptive use only if its own gate passes overall and no reported period has a material systematic failure. Complex unresolved paths remain unknown."
+  },
+  "comparative_release_rule": "In addition to the provisional module gate, estimated measurement-error changes across compared periods must be small relative to a minimum detectable effect frozen before parser results; the MDE cannot be chosen after seeing results.",
+  "cohort_separation": {
+    "descriptive_candidate": "All unvalidated parser candidate output.",
+    "formally_validated": "Only variables passing human/adjudicated sealed-test criteria for the named use and period.",
+    "historical_time": "Not released; delivery text has no verified historical effective timestamp."
+  },
+  "quarter_rule": "2026Q2 is the last complete natural quarter; 2026Q3 is partial.",
+  "sealed_test_rule": "Do not inspect sealed-test text or predictions until calibration-driven changes are frozen. This is workflow separation, not a cryptographic seal."
+}

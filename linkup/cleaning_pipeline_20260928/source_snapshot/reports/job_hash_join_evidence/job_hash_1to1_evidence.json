@@ -1,0 +1,88 @@
+{
+  "conclusion": {
+    "description_left_join_relationship": "one output row per description JOB_HASH: matched rows plus unmatched/orphan description rows; no fanout",
+    "matched_key_relationship": "one-to-one for every matched JOB_HASH in the audited 269 Records files and 1,358 Kunshan description files",
+    "records_coverage_relationship": "not every Records key has a description in this subset"
+  },
+  "description_side": {
+    "distinct_job_hashes": 164581116,
+    "duplicate_excess_occurrences": 0,
+    "duplicate_job_hash_groups": 0,
+    "files": 1358,
+    "malformed_job_hash_rows": 0,
+    "non_null_job_hash_rows": 164581116,
+    "null_job_hash_rows": 0,
+    "raw_rows_or_occurrences": 164581116,
+    "validation_status": "PASS"
+  },
+  "evidence_files": {
+    "description_grouping": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reports/job_hash_join_evidence/description_grouping_validation.json",
+      "sha256": "e0f8bddf3bd32240df0dd8d43f5b410b602591205fa0c5e26e096b787f029d15"
+    },
+    "description_projection": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reports/job_hash_join_evidence/description_projection_report.json",
+      "sha256": "0bef4f15dff2412311c8341d554136b5db6e208e253bae5c1b3dd99b97138eee"
+    },
+    "final_join": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reports/temporal_risk_20260925/temporal_risk_report.json",
+      "sha256": "8b223a3a93c4708e738c9ae62d32fa77a20962e1d94538402721ffc097e5490c"
+    },
+    "records_footer_audit": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/parquet_metadata_audit.json",
+      "sha256": "2f34f7b418c0393dc4c497ddee098421d098be8d35fb6c903c01026920afc6fd"
+    },
+    "records_index": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reports/temporal_risk_20260925/index_manifest.json",
+      "sha256": "662bcf2e65bab18118ecfa48ead415236d7d269955183e16d3ed3ee94b72512d"
+    },
+    "records_multiplicity": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/job_hash_multiplicity.json",
+      "sha256": "f8106fef752867b5cc9bec8a05fe451bdcab3328d398b7da60c2548fb6b0c74b"
+    },
+    "records_scan": {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/scan_report.json",
+      "sha256": "14e2d299f2c3ff9d42478f9bf3da43f9d9012a373e7a07655a107c7b642abe70"
+    }
+  },
+  "join": {
+    "conservation_checks": {
+      "description_occurrences_equal_distinct_keys": true,
+      "matched_occurrences_equal_matched_keys": true,
+      "matched_plus_orphan_equals_description_keys": true,
+      "orphan_occurrences_equal_orphan_keys": true,
+      "records_rows_equal_distinct_keys": true
+    },
+    "joined_rows": 164581116,
+    "left_input_description_keys": 164581116,
+    "matched_keys": 164566138,
+    "matched_occurrences": 164566138,
+    "matched_share_of_description_keys": 0.9999089932042994,
+    "orphan_description_keys": 14978,
+    "orphan_occurrences": 14978,
+    "orphan_share_of_description_keys": 9.100679570066836e-05,
+    "record_company_id_conflict_keys": 0,
+    "records_with_description_share": 0.46168186528810806,
+    "records_without_description_keys": 191883076,
+    "records_without_description_share": 0.5383181347118919
+  },
+  "records_side": {
+    "distinct_job_hashes": 356449214,
+    "duplicate_excess_rows": 0,
+    "duplicate_job_hash_groups": 0,
+    "files": 269,
+    "globally_unique_within_snapshot": true,
+    "index_footer_rows": 356449214,
+    "index_manifest_signature": "83fa946ab09b9a96cecd0b92f7b844fd94a9efa70308ffd78da735e40e03ea78",
+    "non_null_job_hash_rows": 356449214,
+    "null_job_hash_rows": 0,
+    "raw_rows": 356449214
+  },
+  "scope_limits": [
+    "The conclusion is exact for the audited 269-file Records snapshot and the 1,358 complete Kunshan description files.",
+    "The 14,978 orphan description keys remain in a description-left join and have no Records match; they are not matched 1:1 rows.",
+    "Only 164,566,138 of 356,449,214 Records keys are covered by this description subset.",
+    "Cross-region/global uniqueness after combining additional Huazhong description files is not established until a combined key-only grouping audit is completed.",
+    "JOB_HASH identifies the vendor URL/posting-location key; 1:1 key linkage does not prove a unique economic vacancy or text-version history."
+  ]
+}

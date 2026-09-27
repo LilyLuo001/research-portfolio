@@ -1,0 +1,13 @@
+{
+  "dates_and_evidence_time_status": "unknown",
+  "formal_semantic_release": false,
+  "interpretation": "Outputs are bounded V4 parser candidates and performance measurements, not validated requirements, binary labels, precision estimates, probability samples, national samples, or economic measures.",
+  "parser_limitations_source": "../stage_c_v4/known_limitations_v4.json",
+  "performance_limits": [
+    "Only four lexically selected provider files and the first at most 4000 physical rows per file are read in each region.",
+    "Whole-file audited byte size is storage context; selected-row Arrow and UTF-8 byte counts are the logical input-byte measures and do not measure filesystem or compressed Parquet I/O exactly.",
+    "Peak RSS is process ru_maxrss on Linux and is reported per worker; it is not simultaneous node-wide peak memory.",
+    "The Wuzhen Python 3.8 PyArrow location remains a read-only deployment discovery item; the wrapper fails rather than installing a package."
+  ],
+  "qualification_fields": "qualification_expected, context_conflict, qualification_relation_unresolved, and all other parser fields remain in full CANDIDATE_JSON and are not collapsed into validated outcomes."
+}

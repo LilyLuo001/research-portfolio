@@ -1,0 +1,24 @@
+{
+  "ad_rows": 100000,
+  "ai_role_status": "unknown_unvalidated",
+  "evidence_rows": 494194,
+  "interpretation": "Exploratory delivery-snapshot candidate tables; not historical text, population estimates, validated accuracy, vacancies, or hires.",
+  "measurement_audit_limits": "NEW48 model diagnostic found education candidate detection in 17/30 model-positive rows and experience detection in 32/35; education/joint counts are measurement-audit candidate detections, not true prevalence. Parser no-experience phrases are unvalidated candidates, not true absence rates.",
+  "occupation_status": "unknown_not_joined",
+  "outputs": [
+    "candidate_ad_level.parquet",
+    "coverage_by_created_queue.csv",
+    "coverage_by_created_queue.parquet",
+    "education_experience_joint.csv",
+    "education_experience_joint.parquet",
+    "qualification_strength_multivalued.csv",
+    "qualification_strength_multivalued.parquet",
+    "technology_experience_cross.csv",
+    "technology_experience_cross.parquet"
+  ],
+  "parse_errors": 0,
+  "partial_2026q3_ads": 2043,
+  "primary_complete_queue_ads": 96144,
+  "status": "complete",
+  "truncated_or_incomplete": 3
+}

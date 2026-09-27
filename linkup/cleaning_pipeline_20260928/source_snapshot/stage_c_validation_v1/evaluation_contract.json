@@ -1,0 +1,12 @@
+{
+  "frozen_before_reviewer_results": true,
+  "created_local": "2026-09-27T20:08:14.257383",
+  "purpose": "Bounded holdout diagnostic against independent model readings, not human gold or population accuracy",
+  "education_detected": "Any education evidence flagged is_applicant_requirement or is_applicant_qualification_candidate, excluding negated_or_optional and ambiguous_abbreviation. Covers qualified degree signals, including accepted alternatives; does not claim mandatory degree.",
+  "experience_detected": "Same qualification flags in experience module; exclude negated_or_optional and explicit_no_experience.",
+  "explicit_no_experience_detected": "Any explicit_no_experience flag in experience evidence outside company/benefits/duties/equal_opportunity/application_policy contexts; conditional role applicability remains unresolved.",
+  "unsupported_strength": "unknown or context_conflict not silently set mandatory; unresolved qualification paths not collapsed",
+  "reference": "Primary counts only where two reviewers agree yes/no; unclear/disagreement reported separately; root adjudication documented explicitly. Full-text exact quotes checked.",
+  "scoring": "TP/FP/FN/TN at ad level vs agreed labels; precision/recall and Wilson95 intervals only for this finite selected pack; not weighted population inference. Numeric duration/path errors separately reviewed.",
+  "release_gate": "Zero parsing errors is insufficient. Any systematic context/path failure blocks using that broad module as a validated outcome. Performance-only batch may proceed with candidate-only=true even when semantics fails. No full-corpus semantic release on24 ads regardless of observed accuracy."
+}

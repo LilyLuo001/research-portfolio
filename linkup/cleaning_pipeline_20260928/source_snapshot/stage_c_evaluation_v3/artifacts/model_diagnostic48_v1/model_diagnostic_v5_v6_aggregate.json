@@ -1,0 +1,255 @@
+{
+  "comparisons": {
+    "v5": {
+      "education": {
+        "binary_diagnostic": {
+          "not_mentioned_with_candidate": 0,
+          "not_mentioned_without_candidate": 17,
+          "positive_with_candidate": 16,
+          "positive_without_candidate": 14,
+          "support_explicit_positive_plus_not_mentioned": 47
+        },
+        "parser_explicit_absence": {
+          "available": false
+        },
+        "reference_state_matrix": {
+          "explicit_negative": {
+            "candidate": 0,
+            "no_candidate": 0,
+            "support": 0
+          },
+          "explicit_positive": {
+            "candidate": 16,
+            "no_candidate": 14,
+            "support": 30
+          },
+          "insufficient_text": {
+            "candidate": 0,
+            "no_candidate": 1,
+            "support": 1
+          },
+          "not_mentioned": {
+            "candidate": 0,
+            "no_candidate": 17,
+            "support": 17
+          },
+          "unresolved": {
+            "candidate": 0,
+            "no_candidate": 0,
+            "support": 0
+          }
+        }
+      },
+      "experience": {
+        "binary_diagnostic": {
+          "not_mentioned_with_candidate": 1,
+          "not_mentioned_without_candidate": 9,
+          "positive_with_candidate": 31,
+          "positive_without_candidate": 4,
+          "support_explicit_positive_plus_not_mentioned": 45
+        },
+        "parser_explicit_absence": {
+          "available": true,
+          "count": 0,
+          "reference_presence_counts": {}
+        },
+        "reference_state_matrix": {
+          "explicit_negative": {
+            "candidate": 1,
+            "no_candidate": 1,
+            "support": 2
+          },
+          "explicit_positive": {
+            "candidate": 31,
+            "no_candidate": 4,
+            "support": 35
+          },
+          "insufficient_text": {
+            "candidate": 0,
+            "no_candidate": 1,
+            "support": 1
+          },
+          "not_mentioned": {
+            "candidate": 1,
+            "no_candidate": 9,
+            "support": 10
+          },
+          "unresolved": {
+            "candidate": 0,
+            "no_candidate": 0,
+            "support": 0
+          }
+        }
+      }
+    },
+    "v6": {
+      "education": {
+        "binary_diagnostic": {
+          "not_mentioned_with_candidate": 0,
+          "not_mentioned_without_candidate": 17,
+          "positive_with_candidate": 17,
+          "positive_without_candidate": 13,
+          "support_explicit_positive_plus_not_mentioned": 47
+        },
+        "parser_explicit_absence": {
+          "available": false
+        },
+        "reference_state_matrix": {
+          "explicit_negative": {
+            "candidate": 0,
+            "no_candidate": 0,
+            "support": 0
+          },
+          "explicit_positive": {
+            "candidate": 17,
+            "no_candidate": 13,
+            "support": 30
+          },
+          "insufficient_text": {
+            "candidate": 0,
+            "no_candidate": 1,
+            "support": 1
+          },
+          "not_mentioned": {
+            "candidate": 0,
+            "no_candidate": 17,
+            "support": 17
+          },
+          "unresolved": {
+            "candidate": 0,
+            "no_candidate": 0,
+            "support": 0
+          }
+        }
+      },
+      "experience": {
+        "binary_diagnostic": {
+          "not_mentioned_with_candidate": 1,
+          "not_mentioned_without_candidate": 9,
+          "positive_with_candidate": 32,
+          "positive_without_candidate": 3,
+          "support_explicit_positive_plus_not_mentioned": 45
+        },
+        "parser_explicit_absence": {
+          "available": true,
+          "count": 0,
+          "reference_presence_counts": {}
+        },
+        "reference_state_matrix": {
+          "explicit_negative": {
+            "candidate": 1,
+            "no_candidate": 1,
+            "support": 2
+          },
+          "explicit_positive": {
+            "candidate": 32,
+            "no_candidate": 3,
+            "support": 35
+          },
+          "insufficient_text": {
+            "candidate": 0,
+            "no_candidate": 1,
+            "support": 1
+          },
+          "not_mentioned": {
+            "candidate": 1,
+            "no_candidate": 9,
+            "support": 10
+          },
+          "unresolved": {
+            "candidate": 0,
+            "no_candidate": 0,
+            "support": 0
+          }
+        }
+      }
+    }
+  },
+  "design": {
+    "current_enrollment_interpretation": "Exploratory eligibility mention; not an attained degree or unconditional general eligibility statement.",
+    "explicit_negative_reported_separately": true,
+    "human_annotations": false,
+    "inference_limit": "No full-corpus or per-period inference; n=48 is a calibration diagnostic.",
+    "insufficient_text_reported_separately": true,
+    "negative_reference": "not_mentioned",
+    "parsers": {
+      "v5": {
+        "path": "stage_c_v5/requirement_candidates.py",
+        "sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd"
+      },
+      "v6": {
+        "path": "stage_c_v6/requirement_candidates.py",
+        "sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744"
+      }
+    },
+    "positive_reference": "explicit_positive",
+    "reference_requested_effort": "medium",
+    "reference_requested_model": "gpt-5.6-terra",
+    "reference_type": "blind_model_assisted_diagnostic",
+    "rows": 48,
+    "runtime_identity_note": "Exact runtime build identity was not independently exposed; self-described persona is not used as provenance.",
+    "sealed_test_accessed": false,
+    "target": "is_applicant_qualification_candidate",
+    "truncated_payloads_accepted": false,
+    "unresolved_reported_separately": true
+  },
+  "missed_education_reference_audit": {
+    "audit_interpretation_counts": {
+      "scope_boundary": 2,
+      "underlying_cause_unadjudicated": 11
+    },
+    "basis": "existing model-reference education quote only",
+    "economic_type_counts": {
+      "degree_or_attainment": 11,
+      "license_training_or_certification": 2
+    },
+    "human_adjudication": false,
+    "new_annotation": false,
+    "quotes_published": false,
+    "row_identifiers_published": false,
+    "support": 13
+  },
+  "quote_validation": {
+    "errors": 0,
+    "method": "nonempty literal substring of mapped source raw_text"
+  },
+  "reference_presence_counts": {
+    "education": {
+      "explicit_negative": 0,
+      "explicit_positive": 30,
+      "insufficient_text": 1,
+      "not_mentioned": 17,
+      "unresolved": 0
+    },
+    "experience": {
+      "explicit_negative": 2,
+      "explicit_positive": 35,
+      "insufficient_text": 1,
+      "not_mentioned": 10,
+      "unresolved": 0
+    }
+  },
+  "root_decision": {
+    "education_use": "Measurement-audit candidate counts and joint-table diagnostics only; non-detection is not no education and supports no subgroup prevalence or ranking.",
+    "experience_use": "Exploratory explicit-clause patterns only; no formal accuracy or causal claim.",
+    "next_research_priority": "After the bounded 100k batch, characterize explicit experience clauses and software/AI co-mentions within supported contexts, preserving unknowns and small-cell support; do not start another all-corpus parse.",
+    "prevalence_release": "No experience/no education prevalence is released; all batch columns are detected-candidate flags, with explicit-negative diagnostic failure noted.",
+    "second_parser_iteration": false,
+    "technology_role_and_experience_object": "unvalidated"
+  },
+  "status": "complete",
+  "v5_to_v6_transitions": {
+    "education": {
+      "candidate_to_candidate": 16,
+      "candidate_to_no_candidate": 0,
+      "no_candidate_to_candidate": 1,
+      "no_candidate_to_no_candidate": 31
+    },
+    "experience": {
+      "candidate_to_candidate": 33,
+      "candidate_to_no_candidate": 0,
+      "no_candidate_to_candidate": 1,
+      "no_candidate_to_no_candidate": 14
+    }
+  }
+}

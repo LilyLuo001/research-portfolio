@@ -1,0 +1,21 @@
+{
+  "evidence": "sacct and remote report.json read via SSH; bytewise output hash is reported by both remote jobs",
+  "kunshan": {
+    "job_id": "123129476",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 31
+  },
+  "wuzhen": {
+    "job_id": "45380261",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 11
+  },
+  "rows": 2926,
+  "parse_error_rows": 0,
+  "parser_sha256": "19da310725580bc0ff12c2088e0c5b969558474eda5f7b92d5ab37a3bd92bfbc",
+  "reported_canonical_output_sha256_both_regions": "53dadc92bcf6e2d9387c47821df5bf2c6ea4b3fd84aef80d574f56a501b3d091",
+  "bulk_result_copy": "SSH/SCP retrieval timed out; server originals retained; local reproduction stored separately",
+  "semantic_accuracy_estimated": false
+}

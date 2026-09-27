@@ -1,0 +1,19 @@
+{
+  "algorithm": "one representative per observed Records.COMPANY_ID company-scrape key, exact V5-normalized SHA256, and conservative masked-token signature",
+  "algorithm_limit": "The masked signature catches some near-identical boilerplate with changed long numerals/simple addresses. It is a conservative approximation, not exhaustive near-duplicate or semantic similarity detection.",
+  "cross_split_employer_overlap": 0,
+  "cross_split_exact_template_overlap": 0,
+  "cross_split_near_signature_overlap": 0,
+  "eligible_after_grouping": 2084,
+  "eligible_before_grouping": 3556,
+  "group_unit": "Records.COMPANY_ID is a company-scrape identifier; parent employer/subsidiary/site harmonization is unverified.",
+  "quality_status": "algorithmic grouping audit only; no human duplicate-pair review completed",
+  "removals": {
+    "dedup_exact_template": 2,
+    "dedup_same_employer": 1470
+  },
+  "residual_leakage": "Related parent/subsidiary/site entities with different company-scrape IDs and paraphrased/cross-employer templates may remain across splits.",
+  "selected_unique_employers": 1000,
+  "selected_unique_exact_templates": 1000,
+  "selected_unique_near_signatures": 1000
+}

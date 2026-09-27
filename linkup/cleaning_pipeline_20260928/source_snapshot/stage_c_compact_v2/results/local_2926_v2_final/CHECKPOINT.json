@@ -1,0 +1,52 @@
+{
+  "created_utc": "2026-09-27T13:23:53.034212+00:00",
+  "evidence_rows": 11489,
+  "next_source_row": 2926,
+  "output_bytes": 1783846,
+  "output_cap_bytes": 250000000,
+  "outputs": {
+    "ad_status.parquet": {
+      "bytes": 524251,
+      "rows": 2926,
+      "sha256": "28593a8b127ea544c8ff161d0d6e41e52c717af51bbb4f13f702f11270dbd478"
+    },
+    "evidence.parquet": {
+      "bytes": 610907,
+      "rows": 11489,
+      "sha256": "2cd91ad6e03fd9e2be3ff8e452eb909568dc4febe6a4831535ef630b6645846c"
+    },
+    "relations.parquet": {
+      "bytes": 78865,
+      "rows": 808,
+      "sha256": "314b7c394623c877b3483f56004a5474192e60bd564c6c9fc714c2e1026649f8"
+    },
+    "source_index.parquet": {
+      "bytes": 569823,
+      "rows": 2926,
+      "sha256": "9224f012174743493b157d7482c53ebbb86ba14d7fb6c5e4440b2c8a35f20ee3"
+    }
+  },
+  "parser_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+  "pending_rows": 0,
+  "persistent_bytes_including_checkpoint": 1785488,
+  "processed_rows": 2926,
+  "receipt_version": 1,
+  "relation_rows": 808,
+  "requested_rows": 2926,
+  "rows_per_wall_second": 100.86217062382352,
+  "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+  "runner_version": "bounded-v5-compact-v2",
+  "source_path": "../reports/stage_c_pilot_review/sample_ads.parquet",
+  "source_stat_mtime_ns": 1790330021000000000,
+  "source_stat_size": 4173518,
+  "start_source_row": 0,
+  "status": "complete",
+  "status_counts": {
+    "candidate": 2265,
+    "no_candidate": 661,
+    "parse_error": 0
+  },
+  "stop_reason": null,
+  "truncated_rows": 0,
+  "wall_seconds": 29.0098844160093
+}

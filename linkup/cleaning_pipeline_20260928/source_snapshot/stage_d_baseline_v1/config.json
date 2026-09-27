@@ -1,0 +1,14 @@
+{
+  "onet_glob": "/public/home/lilysharp/dewey_downloads/data/dewey_ONET_tables/onet-taxonomy/*.parquet",
+  "records_index": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1",
+  "records_complete": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1/COMPLETE",
+  "output_dir": "/public/home/lilysharp/linkup_analysis_v1/stage_d_baseline_v1/output",
+  "tmp_root": "/tmp/lilysharp",
+  "threads": 32,
+  "memory_limit": "88GB",
+  "expected_onet_rows": 356299258,
+  "expected_usa_records": 253210047,
+  "min_tmp_free_bytes": 30000000000,
+  "max_scratch_bytes": 20000000000,
+  "max_output_bytes": 1000000000
+}

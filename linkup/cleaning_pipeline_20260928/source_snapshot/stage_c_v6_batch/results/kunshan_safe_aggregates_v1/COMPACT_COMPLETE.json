@@ -1,0 +1,430 @@
+{
+  "chunk_receipts": [
+    {
+      "created_utc": "2026-09-27T23:16:46.043811+00:00",
+      "evidence_rows": 61202,
+      "next_source_row": 12500,
+      "output_bytes": 7062567,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1833744,
+          "rows": 12500,
+          "sha256": "979b7b454ed4f8ce91813154d733bc9be883e4c95e88f9463881d234df28645e"
+        },
+        "evidence.parquet": {
+          "bytes": 2560664,
+          "rows": 61202,
+          "sha256": "f0d9f073d5d2eb9b7413df2b544416b06c80507bf4574247c33337bdcb331537"
+        },
+        "relations.parquet": {
+          "bytes": 316831,
+          "rows": 5647,
+          "sha256": "54351089ae5c3a4745224da9773cc54e51c2eaf13f527886e443287a866ce170"
+        },
+        "source_index.parquet": {
+          "bytes": 2351328,
+          "rows": 12500,
+          "sha256": "0da79f557344779df216f3e14d7af518fcbfa8370f536d79d26f544c720b6ca6"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7064289,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5647,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 33.99788155943317,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 0,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 11047,
+        "no_candidate": 1453,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 367.66996605694294
+    },
+    {
+      "created_utc": "2026-09-27T23:17:05.112533+00:00",
+      "evidence_rows": 61812,
+      "next_source_row": 25000,
+      "output_bytes": 7140921,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1862763,
+          "rows": 12500,
+          "sha256": "1c0c7c84e16ac6ab317f447bd011562df7e4681763652795d50b138b86e7316f"
+        },
+        "evidence.parquet": {
+          "bytes": 2594055,
+          "rows": 61812,
+          "sha256": "26e8c9adcbf0fbb61126c122e6031d862db0ef8138175cc62f41f8aff8649013"
+        },
+        "relations.parquet": {
+          "bytes": 322653,
+          "rows": 5876,
+          "sha256": "572a4b2077afd9a08ca3fcc440b6d3735b66062c568e29c410fb445de3b0c1c8"
+        },
+        "source_index.parquet": {
+          "bytes": 2361450,
+          "rows": 12500,
+          "sha256": "ed168772bc6f1d50d0a162a056ab7a856bcd83dac30566ceb7896f42cb8e673f"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7142648,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5876,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 32.320237676702874,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 12500,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 10996,
+        "no_candidate": 1504,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 1,
+      "wall_seconds": 386.75458017364144
+    },
+    {
+      "created_utc": "2026-09-27T23:16:56.183663+00:00",
+      "evidence_rows": 62973,
+      "next_source_row": 37500,
+      "output_bytes": 7172939,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1864829,
+          "rows": 12500,
+          "sha256": "acc104a50e7cd28d95b10f1f47886d931d6a98e11537542cea7cd0c3cac13b4e"
+        },
+        "evidence.parquet": {
+          "bytes": 2624409,
+          "rows": 62973,
+          "sha256": "4d1cec27d54a58226a6aa939572782405132b0d52e8097db21b80974b45ba6b0"
+        },
+        "relations.parquet": {
+          "bytes": 326259,
+          "rows": 6069,
+          "sha256": "a4a8245b3eb594898f6dc61c54aceba4229ae2d20b9f5f0857c411d31286e508"
+        },
+        "source_index.parquet": {
+          "bytes": 2357442,
+          "rows": 12500,
+          "sha256": "a6701e91ce282feab4ab3fb77ea5c0061c84f47ed71a90380bd47a306af70645"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7174665,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 6069,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 33.08604281372856,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 25000,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 10960,
+        "no_candidate": 1540,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 377.80281019955873
+    },
+    {
+      "created_utc": "2026-09-27T23:16:56.641781+00:00",
+      "evidence_rows": 61479,
+      "next_source_row": 50000,
+      "output_bytes": 7139729,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1863789,
+          "rows": 12500,
+          "sha256": "67de8d1d31c5b495d3643a5f89378981f05c20d0ecca9f082fe715e9dce893ab"
+        },
+        "evidence.parquet": {
+          "bytes": 2591535,
+          "rows": 61479,
+          "sha256": "4113a9ce0adc0dc7890a9c10ce1f95246372f3bec32be39af95ee752770de06e"
+        },
+        "relations.parquet": {
+          "bytes": 325670,
+          "rows": 5996,
+          "sha256": "a781fdb0ca785fb6e12d219733b71df57c93719b10491d4840b8bac57d1a3ea0"
+        },
+        "source_index.parquet": {
+          "bytes": 2358735,
+          "rows": 12500,
+          "sha256": "41f00b0902173c57c7820003b893b6ac90e8c79497cb258873e97969544b96c0"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7141454,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5996,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 33.04565354527498,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 37500,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 11047,
+        "no_candidate": 1453,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 1,
+      "wall_seconds": 378.2645705677569
+    },
+    {
+      "created_utc": "2026-09-27T23:17:04.871996+00:00",
+      "evidence_rows": 62028,
+      "next_source_row": 62500,
+      "output_bytes": 7142684,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1864008,
+          "rows": 12500,
+          "sha256": "c5ffef5a312c1328d4825aa51b3632c8d40c7e444312ba60ea2cd15659a88322"
+        },
+        "evidence.parquet": {
+          "bytes": 2592538,
+          "rows": 62028,
+          "sha256": "a2ae13686d684f620e40d76c5a5a007f7208c99893a0dda0fe4e53890151ccdc"
+        },
+        "relations.parquet": {
+          "bytes": 323536,
+          "rows": 5863,
+          "sha256": "57618aca94ae973881f60a8c136b095d4d05f9dabd5e567128931a38c4fde347"
+        },
+        "source_index.parquet": {
+          "bytes": 2362602,
+          "rows": 12500,
+          "sha256": "847a551c594379f5c3cac3bd7b023b356caee6390698f7a95b2fb1f1a1f57368"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7144410,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5863,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 32.340654713938456,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 50000,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 11067,
+        "no_candidate": 1433,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 1,
+      "wall_seconds": 386.5104179009795
+    },
+    {
+      "created_utc": "2026-09-27T23:16:42.253820+00:00",
+      "evidence_rows": 61061,
+      "next_source_row": 75000,
+      "output_bytes": 7058937,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1833002,
+          "rows": 12500,
+          "sha256": "87d52b89e22681d24970d8cd17c2ad2fb0893d9847dda3daa4670c033aeffff3"
+        },
+        "evidence.parquet": {
+          "bytes": 2553567,
+          "rows": 61061,
+          "sha256": "18a083319ca0cbf6b9e4e35c2b1f401e55149cd3f2d9fd496edf315430aa88a4"
+        },
+        "relations.parquet": {
+          "bytes": 319349,
+          "rows": 5913,
+          "sha256": "98e24e07a2126ecb64a133d775d4a0b1f2a956ebb9c54e58da060b379870b4a3"
+        },
+        "source_index.parquet": {
+          "bytes": 2353019,
+          "rows": 12500,
+          "sha256": "17616c919896cb9e9c4d7555de5b1e9f3fd85c0e49b0ec2570b52247ef3c4159"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7060663,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5913,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 34.34899923343108,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 62500,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 10990,
+        "no_candidate": 1510,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 363.91162008047104
+    },
+    {
+      "created_utc": "2026-09-27T23:16:57.001353+00:00",
+      "evidence_rows": 62466,
+      "next_source_row": 87500,
+      "output_bytes": 7150450,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1864064,
+          "rows": 12500,
+          "sha256": "bc4a824671808cfeee3c9703ce460a4279aa35def2726fb961922717e8886980"
+        },
+        "evidence.parquet": {
+          "bytes": 2606567,
+          "rows": 62466,
+          "sha256": "c6e5520ac2585ef2b56abc2f2eb7632308d14122491e810a04fe0909f8be10a7"
+        },
+        "relations.parquet": {
+          "bytes": 324196,
+          "rows": 5995,
+          "sha256": "168aa3636006d84b5a87b5b9d3841c2daa165a3639087125d429953367d3b226"
+        },
+        "source_index.parquet": {
+          "bytes": 2355623,
+          "rows": 12500,
+          "sha256": "766a8873bcf648422f2847aa07096f1edf020695844a09e8f881c7312511ad30"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7152175,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5995,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 33.01311986648608,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 75000,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 11060,
+        "no_candidate": 1440,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 378.6373418942094
+    },
+    {
+      "created_utc": "2026-09-27T23:16:45.765642+00:00",
+      "evidence_rows": 61173,
+      "next_source_row": 100000,
+      "output_bytes": 7128233,
+      "output_cap_bytes": 62500000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 1859869,
+          "rows": 12500,
+          "sha256": "b60696347c6c67c1c4938aa59900504fc324906ed9a25e8838bc721d5f833cac"
+        },
+        "evidence.parquet": {
+          "bytes": 2578455,
+          "rows": 61173,
+          "sha256": "dca35b37da95dde707be6fab2f9203e8c15c02bc94242e35d23d10b97ec6ad44"
+        },
+        "relations.parquet": {
+          "bytes": 323117,
+          "rows": 5860,
+          "sha256": "3ce47ce5f316d8323839e375ebbb70eff6ee6c4b3a8a16f89d09676458b3c589"
+        },
+        "source_index.parquet": {
+          "bytes": 2366792,
+          "rows": 12500,
+          "sha256": "9206c535ceff0bf42b6148e94e57b6556d30435eb85ef82e83b4659d07962d48"
+        }
+      },
+      "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+      "pending_rows": 0,
+      "persistent_bytes_including_checkpoint": 7129959,
+      "processed_rows": 12500,
+      "receipt_version": 1,
+      "relation_rows": 5860,
+      "requested_rows": 12500,
+      "rows_per_wall_second": 34.02264080058252,
+      "runner_sha256": "27278f9246c18299ff6a48a42884ff827555c4c925a45ed9a15b58a56487a2c8",
+      "runner_version": "bounded-v6-compact-v2",
+      "source_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_v6_batch/outputs/kunshan_sample_v1/selected_ads_with_text.parquet",
+      "source_stat_mtime_ns": 1790550416000000000,
+      "source_stat_size": 156127990,
+      "start_source_row": 87500,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 10991,
+        "no_candidate": 1509,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 367.4024020880461
+    }
+  ],
+  "evidence_rows": 494194,
+  "output_cap_bytes": 500000000,
+  "parse_errors": 0,
+  "persistent_bytes": 57010263,
+  "processed_rows": 100000,
+  "relation_rows": 47219,
+  "sample_rows": 100000,
+  "status": "complete",
+  "truncated_rows": 3,
+  "workers": 8
+}

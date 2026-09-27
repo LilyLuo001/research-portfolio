@@ -1,0 +1,26 @@
+{
+  "status": "bounded_storage_candidate_not_production_release",
+  "runner_sha256": "b131da9a4fc708cff3332b9b762d25f4e79b74c8b59268cd22187a49f713987d",
+  "limitations": [
+    {
+      "id": "caught_exception_source_fingerprint_roundtrip",
+      "scope": "runner-caught parser exceptions only",
+      "effect": "The compact source index correctly retains the raw input fingerprint, but the synthetic error payload originally has a null source_fingerprint_sha256. Reconstruction currently inserts the raw fingerprint, so exact full-payload equality is not guaranteed on this exceptional path.",
+      "trial_observation": "The 2,926-row local fixture had zero parse-error rows, so its 2,926/2,926 equality result does not exercise this path.",
+      "release_consequence": "Repair and add a forced-exception regression before production use. The bounded storage trial remains interpretable for its observed zero-error inputs."
+    },
+    {
+      "id": "sub_footer_cap_values",
+      "scope": "artificial caps smaller than fixed empty-Parquet footer overhead",
+      "effect": "A cap stop before the first row still creates four empty Parquet files. The test cap of one byte therefore demonstrates pending-row checkpoint behavior, not a literal one-byte directory bound.",
+      "trial_observation": "The real trial partitions 249 MB across four inputs and separately checks aggregate persistent bytes against 250 MB.",
+      "release_consequence": "Add an explicit minimum-cap/footer reserve invariant before exposing arbitrary cap values."
+    },
+    {
+      "id": "small_row_groups",
+      "scope": "storage efficiency",
+      "effect": "The bounded trial uses 128 or 256 row groups, so Parquet metadata overhead is higher than a later production layout may require.",
+      "release_consequence": "Benchmark larger row groups before population-scale planning; do not extrapolate the bounded ratio as a formal full-corpus forecast."
+    }
+  ]
+}

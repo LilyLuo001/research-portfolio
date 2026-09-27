@@ -1,0 +1,66 @@
+{
+  "created_utc": "2026-09-27T11:27:10.285891+00:00",
+  "eligible_usa_rows": 994,
+  "frame_by_cohort": {
+    "2015": {
+      "eligible_ads_after_known_exclusion": 107,
+      "globally_unique_templates_assigned_to_cohort": 102,
+      "selected_templates": 20,
+      "usa_ads_before_known_exclusion": 110
+    },
+    "2016-17": {
+      "eligible_ads_after_known_exclusion": 196,
+      "globally_unique_templates_assigned_to_cohort": 173,
+      "selected_templates": 20,
+      "usa_ads_before_known_exclusion": 202
+    },
+    "2018-19": {
+      "eligible_ads_after_known_exclusion": 192,
+      "globally_unique_templates_assigned_to_cohort": 150,
+      "selected_templates": 20,
+      "usa_ads_before_known_exclusion": 202
+    },
+    "2020-22": {
+      "eligible_ads_after_known_exclusion": 293,
+      "globally_unique_templates_assigned_to_cohort": 291,
+      "selected_templates": 20,
+      "usa_ads_before_known_exclusion": 300
+    },
+    "2023-latest": {
+      "eligible_ads_after_known_exclusion": 95,
+      "globally_unique_templates_assigned_to_cohort": 95,
+      "selected_templates": 20,
+      "usa_ads_before_known_exclusion": 103
+    },
+    "other": {
+      "eligible_ads_after_known_exclusion": 111,
+      "globally_unique_templates_assigned_to_cohort": 108,
+      "selected_templates": 20,
+      "usa_ads_before_known_exclusion": 113
+    }
+  },
+  "global_template_representatives": 919,
+  "holdout_status": "development review pack; independence is not established because unrecorded prior inspection or development contamination cannot be ruled out",
+  "input": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reports/stage_c_pilot_review/sample_ads.parquet",
+  "input_rows": 2926,
+  "input_sha256": "d19a17c544b6dae9d985653453c620e7f8b8054be92b26f6bfd03535d9540a3a",
+  "known_development_hashes_excluded_from_usa": 36,
+  "normalized_template_groups": 919,
+  "onet_status": "not joined; occupation stratification is absent from this first pack",
+  "parser_predictions_used_for_selection": false,
+  "probability_scope": "Recorded probabilities are conditional on the 1,030-ad USA portion of the existing deterministic 64-shard Kunshan pilot, known-case exclusions, realized global template representative assignment, and cohort. They are not national/full-corpus inclusion probabilities.",
+  "seed": "linkup-usa-validation-pack-v1-20260927",
+  "selected_by_cohort": {
+    "2015": 20,
+    "2016-17": 20,
+    "2018-19": 20,
+    "2020-22": 20,
+    "2023-latest": 20,
+    "other": 20
+  },
+  "selected_rows": 120,
+  "selection_design": "Known development/regression hashes excluded. Normalize all eligible USA text; form global exact normalized-template groups; choose one fixed-hash representative per group; assign that group to the representative cohort; select the 20 lowest independent fixed-seed template hashes per cohort.",
+  "status": "complete",
+  "text_time_status": "effective time of delivered DESCRIPTION is unknown; cohort is Records CREATED and must not be treated as text vintage",
+  "usa_rows": 1030
+}

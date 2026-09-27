@@ -1,0 +1,163 @@
+{
+  "actual_rows": 16000,
+  "candidate_only": true,
+  "created_utc": "2026-09-27T12:28:45.733511+00:00",
+  "evidence_time_status": "unknown",
+  "formal_semantic_release": false,
+  "job_hash": "5c7817f81f4b617e514ad41ac17d229179b43aa41ba789276d6cbd36e969cb35",
+  "max_worker_peak_rss_mb": 265.6796875,
+  "parse_error_rows": 0,
+  "persistent_output_cap_bytes_decimal": 250000000,
+  "persistent_parquet_bytes": 59488322,
+  "projected_arrow_bytes_for_selected_rows": 62523472,
+  "raw_text_utf8_bytes_for_selected_rows": 61883472,
+  "receipt_version": 1,
+  "sample_design": "computational/performance trial; selected source rows are not a probability or national sample",
+  "selected_files": 4,
+  "status_counts": {
+    "candidate": 13235,
+    "no_candidate": 2765,
+    "parse_error": 0
+  },
+  "sum_worker_cpu_seconds": 383.847973624,
+  "truncated_rows": 0,
+  "wall_seconds": 107.47894034162164,
+  "workers": [
+    {
+      "arrow_batches": 16,
+      "bytes_unit_note": "file and projected/raw text sizes are bytes; MB RSS is 1024^2 bytes; whole-file bytes are storage context, selected-row byte metrics are actual logical/projected inputs",
+      "cpu_seconds": 95.195367037,
+      "created_utc": "2026-09-27T12:28:43.323249+00:00",
+      "input_logical_bytes": 264667063,
+      "job_hash": "5c7817f81f4b617e514ad41ac17d229179b43aa41ba789276d6cbd36e969cb35",
+      "output_bytes": 14674223,
+      "output_file": "00_job-descriptions_0_0_0.candidates.parquet",
+      "output_rows": 4000,
+      "output_sha256": "2f882f8001195d9b6d569408e4097609d1484f21e4eaa729e7f1f71e7badabd7",
+      "parse_error_rows": 0,
+      "projected_arrow_bytes_for_selected_rows": 15482352,
+      "raw_text_utf8_bytes_for_selected_rows": 15322352,
+      "receipt_version": 1,
+      "rows_per_cpu_second": 42.01880042958428,
+      "rows_per_wall_second": 38.15288970475909,
+      "source": {
+        "file_name": "job-descriptions_0_0_0.snappy.parquet",
+        "manifest_bytes": 264667063,
+        "manifest_sha256": "2b68b1733ccffe74a346158bb3a37ac44fdf9569a2f5fc7fbb90f464b60cd819",
+        "path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_0.snappy.parquet",
+        "stat_mtime_ns": 1790231872000000000,
+        "stat_size": 264667063
+      },
+      "status_counts": {
+        "candidate": 3291,
+        "no_candidate": 709,
+        "parse_error": 0
+      },
+      "truncated_rows": 0,
+      "wall_seconds": 104.84122219309211,
+      "worker_peak_rss_mb": 129.49609375
+    },
+    {
+      "arrow_batches": 16,
+      "bytes_unit_note": "file and projected/raw text sizes are bytes; MB RSS is 1024^2 bytes; whole-file bytes are storage context, selected-row byte metrics are actual logical/projected inputs",
+      "cpu_seconds": 97.793938166,
+      "created_utc": "2026-09-27T12:28:45.650821+00:00",
+      "input_logical_bytes": 272631755,
+      "job_hash": "5c7817f81f4b617e514ad41ac17d229179b43aa41ba789276d6cbd36e969cb35",
+      "output_bytes": 15094860,
+      "output_file": "01_job-descriptions_0_0_1.candidates.parquet",
+      "output_rows": 4000,
+      "output_sha256": "4b2004fc09307231cb36d6d25f90d9eb5dfeffd71d39c807d70496229eb1c77f",
+      "parse_error_rows": 0,
+      "projected_arrow_bytes_for_selected_rows": 15984181,
+      "raw_text_utf8_bytes_for_selected_rows": 15824181,
+      "receipt_version": 1,
+      "rows_per_cpu_second": 40.90227550845137,
+      "rows_per_wall_second": 37.32332548045339,
+      "source": {
+        "file_name": "job-descriptions_0_0_1.snappy.parquet",
+        "manifest_bytes": 272631755,
+        "manifest_sha256": "ce4e9b3255d6e278a86a5f09c25168df317fb123e872a75550af89e8120fe27a",
+        "path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_1.snappy.parquet",
+        "stat_mtime_ns": 1790231886000000000,
+        "stat_size": 272631755
+      },
+      "status_counts": {
+        "candidate": 3332,
+        "no_candidate": 668,
+        "parse_error": 0
+      },
+      "truncated_rows": 0,
+      "wall_seconds": 107.17145677283406,
+      "worker_peak_rss_mb": 265.6796875
+    },
+    {
+      "arrow_batches": 16,
+      "bytes_unit_note": "file and projected/raw text sizes are bytes; MB RSS is 1024^2 bytes; whole-file bytes are storage context, selected-row byte metrics are actual logical/projected inputs",
+      "cpu_seconds": 93.56160458500001,
+      "created_utc": "2026-09-27T12:28:42.823713+00:00",
+      "input_logical_bytes": 272693997,
+      "job_hash": "5c7817f81f4b617e514ad41ac17d229179b43aa41ba789276d6cbd36e969cb35",
+      "output_bytes": 14749259,
+      "output_file": "02_job-descriptions_0_0_10.candidates.parquet",
+      "output_rows": 4000,
+      "output_sha256": "be9f4ec3a14d6cceec9c816c68cbbba75cf3c2fc269ae1eee3f5348e0219d7ce",
+      "parse_error_rows": 0,
+      "projected_arrow_bytes_for_selected_rows": 15335201,
+      "raw_text_utf8_bytes_for_selected_rows": 15175201,
+      "receipt_version": 1,
+      "rows_per_cpu_second": 42.752500120571426,
+      "rows_per_wall_second": 38.33553944097187,
+      "source": {
+        "file_name": "job-descriptions_0_0_10.snappy.parquet",
+        "manifest_bytes": 272693997,
+        "manifest_sha256": "3d8620881c57ff29d02bb195507baaa78ccef28da0275c0f80cea4e0b644a6e8",
+        "path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_10.snappy.parquet",
+        "stat_mtime_ns": 1790231857000000000,
+        "stat_size": 272693997
+      },
+      "status_counts": {
+        "candidate": 3284,
+        "no_candidate": 716,
+        "parse_error": 0
+      },
+      "truncated_rows": 0,
+      "wall_seconds": 104.34164889901876,
+      "worker_peak_rss_mb": 128.8203125
+    },
+    {
+      "arrow_batches": 16,
+      "bytes_unit_note": "file and projected/raw text sizes are bytes; MB RSS is 1024^2 bytes; whole-file bytes are storage context, selected-row byte metrics are actual logical/projected inputs",
+      "cpu_seconds": 97.29706383599999,
+      "created_utc": "2026-09-27T12:28:45.636502+00:00",
+      "input_logical_bytes": 265846636,
+      "job_hash": "5c7817f81f4b617e514ad41ac17d229179b43aa41ba789276d6cbd36e969cb35",
+      "output_bytes": 14969980,
+      "output_file": "03_job-descriptions_0_0_11.candidates.parquet",
+      "output_rows": 4000,
+      "output_sha256": "51a73b5dd42afc78282524c8e082b6e1285c49d9e03ae8a86844afc15ed8deaa",
+      "parse_error_rows": 0,
+      "projected_arrow_bytes_for_selected_rows": 15721738,
+      "raw_text_utf8_bytes_for_selected_rows": 15561738,
+      "receipt_version": 1,
+      "rows_per_cpu_second": 41.11114009560686,
+      "rows_per_wall_second": 37.328495106537304,
+      "source": {
+        "file_name": "job-descriptions_0_0_11.snappy.parquet",
+        "manifest_bytes": 265846636,
+        "manifest_sha256": "3b6d57328eb4fcfdc417f742a8d9782d1662314b01525b89e601f6f23ec4b484",
+        "path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_11.snappy.parquet",
+        "stat_mtime_ns": 1790231928000000000,
+        "stat_size": 265846636
+      },
+      "status_counts": {
+        "candidate": 3328,
+        "no_candidate": 672,
+        "parse_error": 0
+      },
+      "truncated_rows": 0,
+      "wall_seconds": 107.15658201277256,
+      "worker_peak_rss_mb": 231.60546875
+    }
+  ]
+}

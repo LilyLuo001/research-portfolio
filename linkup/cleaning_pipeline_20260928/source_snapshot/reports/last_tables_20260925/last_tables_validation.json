@@ -1,0 +1,126 @@
+{
+  "created_utc": "2026-09-25T09:31:52.356946+00:00",
+  "datasets": {
+    "onet-taxonomy": {
+      "path": "/public/home/lilysharp/dewey_final_tables/onet-taxonomy",
+      "file_count": 62,
+      "total_bytes": 11190962194,
+      "footer_readable": 62,
+      "total_rows": 356299258,
+      "schemas": [
+        {
+          "schema": "JOB_HASH: string\nONET_OCCUPATION_CODE: string",
+          "files": 62
+        }
+      ],
+      "sample_5_sanitized": [
+        {
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "ONET_OCCUPATION_CODE": "21-1012.00"
+        },
+        {
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "ONET_OCCUPATION_CODE": "31-2022.00"
+        },
+        {
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "ONET_OCCUPATION_CODE": "17-2141.00"
+        },
+        {
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "ONET_OCCUPATION_CODE": "37-2012.00"
+        },
+        {
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "ONET_OCCUPATION_CODE": "31-9099.00"
+        }
+      ]
+    },
+    "remote-tag": {
+      "path": "/public/home/lilysharp/dewey_last_table/remote-tag",
+      "file_count": 64,
+      "total_bytes": 8651347781,
+      "footer_readable": 64,
+      "total_rows": 304916642,
+      "schemas": [
+        {
+          "schema": "END_DATE: string\nJOB_HASH: string\nREMOTE_DETAIL: string\nREMOTE_STATUS: bool\nSTART_DATE: string",
+          "files": 64
+        }
+      ],
+      "sample_5_sanitized": [
+        {
+          "END_DATE": null,
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "REMOTE_DETAIL": null,
+          "REMOTE_STATUS": false,
+          "START_DATE": "2024-06-11"
+        },
+        {
+          "END_DATE": null,
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "REMOTE_DETAIL": null,
+          "REMOTE_STATUS": false,
+          "START_DATE": "2025-08-20"
+        },
+        {
+          "END_DATE": null,
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "REMOTE_DETAIL": null,
+          "REMOTE_STATUS": false,
+          "START_DATE": "2024-06-11"
+        },
+        {
+          "END_DATE": null,
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "REMOTE_DETAIL": null,
+          "REMOTE_STATUS": false,
+          "START_DATE": "2026-07-01"
+        },
+        {
+          "END_DATE": null,
+          "JOB_HASH": {
+            "length": 32,
+            "hex32": true
+          },
+          "REMOTE_DETAIL": null,
+          "REMOTE_STATUS": false,
+          "START_DATE": "2024-06-11"
+        }
+      ]
+    }
+  },
+  "remote_tag_manifest_expectation": {
+    "file_count": 64,
+    "total_bytes": 8651347781,
+    "count_match": true,
+    "bytes_match": true
+  }
+}

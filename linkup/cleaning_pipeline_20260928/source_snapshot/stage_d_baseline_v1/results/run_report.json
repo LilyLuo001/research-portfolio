@@ -1,0 +1,38 @@
+{
+  "completed_utc": "2026-09-27T11:42:35.194183+00:00",
+  "full_code_rows": 74810,
+  "inputs": {
+    "onet_files": 62,
+    "onet_rows": 356299258,
+    "records_manifest": {
+      "columns": [
+        "JOB_HASH",
+        "COMPANY_ID",
+        "COUNTRY",
+        "STATE",
+        "CREATED",
+        "LAST_UPDATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "RECORD_SOURCE_ROW"
+      ],
+      "complete_sha256": "77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+      "manifest_sha256": "662bcf2e65bab18118ecfa48ead415236d7d269955183e16d3ed3ee94b72512d",
+      "rows": 356449214
+    }
+  },
+  "job_id": "123129172",
+  "major_group_rows": 1861,
+  "output_bytes": 203340,
+  "quarter_rows": 77,
+  "semantics": "Counts are USA job-ad records by Records.CREATED first-observed cohort and current delivered snapshot O*NET code. They are not historical point-in-time occupations, vacancies, adoption, or AI effects.",
+  "status": "complete",
+  "totals": {
+    "blank_code": 3427,
+    "invalid_format": 0,
+    "matched_onet_key": 253127252,
+    "missing_onet_key": 82795,
+    "usa_records": 253210047,
+    "valid_code": 253123825
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "seed": "linkup-stage-c-evaluation-v2-final-20260927",
+  "candidate_pool": "/public/home/lilysharp/linkup_analysis_v1/stage_c_evaluation_v2/frame_kunshan_v1/candidate_pool.parquet",
+  "exclusion_bundle": "/public/home/lilysharp/linkup_analysis_v1/stage_c_evaluation_v2/development_and_prior120_exclusions.json",
+  "parser_path": "/public/home/lilysharp/linkup_analysis_v1/stage_c_evaluation_v2/requirement_candidates_v5.py",
+  "output_dir": "/public/home/lilysharp/linkup_analysis_v1/stage_c_evaluation_v2/annotation_pack_v1",
+  "target_total": 1000,
+  "target_by_time": {"2015": 100, "2016-17": 130, "2018-19": 130, "2020-22": 160, "2023": 120, "2024": 120, "2025": 120, "2026_partial": 120},
+  "supplemental_by_time": {"2015": 20, "2016-17": 26, "2018-19": 26, "2020-22": 32, "2023": 24, "2024": 24, "2025": 24, "2026_partial": 24},
+  "calibration_by_time": {"2015": 60, "2016-17": 78, "2018-19": 78, "2020-22": 96, "2023": 72, "2024": 72, "2025": 72, "2026_partial": 72},
+  "scope_warning": "Kunshan regional shard frame only; not national or full-corpus representative. Time is Records.CREATED cohort attached to delivery-snapshot text."
+}

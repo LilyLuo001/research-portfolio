@@ -1,0 +1,21 @@
+{
+  "version": "research-audit-20260927",
+  "raw_record_key": "JOB_HASH",
+  "raw_record_key_unique": true,
+  "onet_key_unique": true,
+  "onet_code_version": "unconfirmed",
+  "onet_semantics": "classification mapping, not complete O*NET tasks/skills database",
+  "remote_key_unique": false,
+  "remote_exact_end_boundary": "unconfirmed",
+  "remote_false_meaning": "not tagged remote; may be explicit onsite or absent keywords",
+  "missing_remote_meaning": "unknown; never automatically false",
+  "current_allowed_remote_usage": "key/date quality audit and membership coverage",
+  "not_released": "unrestricted JOB_HASH left join or backward filling current label",
+  "required_before_temporal_panel": [
+    "confirm endpoint convention",
+    "validate event date lies within effective interval",
+    "handle no applicable/multiple applicable separately",
+    "conserve record denominator"
+  ],
+  "text_version_time": "unconfirmed; CREATED/LAST_UPDATED not asserted as text-version dates"
+}
