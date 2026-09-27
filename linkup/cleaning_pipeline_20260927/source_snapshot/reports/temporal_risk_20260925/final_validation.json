@@ -1,0 +1,36 @@
+{
+  "artifacts_sha256": {
+    "checkpoint.json": "0521e2ea1d4d9288430c7b6da8bd0b94c2221eea041929b2b00042d85f551101",
+    "index_manifest.json": "662bcf2e65bab18118ecfa48ead415236d7d269955183e16d3ed3ee94b72512d",
+    "temporal_from_index_submission_20260925.txt": "aa015747d8ad59fc072315a7f559818e5426803329eaa4ba87d858ef1ea680d6",
+    "temporal_risk_report.json": "8b223a3a93c4708e738c9ae62d32fa77a20962e1d94538402721ffc097e5490c"
+  },
+  "boundary_fractions": {
+    "delete_cross_jan_conditional_prestart": 0.026519866056507132,
+    "delete_cross_nov_conditional_prestart": 0.02815174047527455,
+    "last_cross_jan_conditional_prestart": 0.026429940220203677,
+    "last_cross_nov_conditional_prestart": 0.02703493477176375
+  },
+  "checks": {
+    "actual_cpus_16": true,
+    "checkpoint_complete": true,
+    "delete_denominator_partition": true,
+    "delete_interval_partition": true,
+    "fixture_passed": true,
+    "index_complete": true,
+    "index_footer_conservation": true,
+    "key_conservation": true,
+    "last_denominator_partition": true,
+    "last_interval_partition": true
+  },
+  "important_limits": [
+    "observation-span quantiles overall and by CREATED cohort",
+    "occupation mapping pending",
+    "description history semantics unconfirmed"
+  ],
+  "jobs": {
+    "index": 122991944,
+    "temporal": 122992124
+  },
+  "status": "validated"
+}

@@ -1,0 +1,16 @@
+{
+  "region": "wuzhen",
+  "seed": "linkup-stage-c-v1-2026-09-25",
+  "description_manifest": "SET_WUZHEN_COMPLETE_DESCRIPTION_MANIFEST",
+  "records_index": "SET_WUZHEN_RECORDS_INDEX",
+  "records_index_complete": "SET_WUZHEN_RECORDS_INDEX_COMPLETE",
+  "destination_sha_validation": "SET_WUZHEN_VALIDATED_TRANSFER_RECEIPT",
+  "output_dir": "SET_WUZHEN_NEW_OUTPUT_DIRECTORY",
+  "selected_source_files": 64,
+  "batch_rows": 131072,
+  "join_workers": 16,
+  "per_prefix_per_stratum": 100,
+  "final_per_stratum": 100,
+  "max_output_bytes": 1000000000,
+  "scope_warning": "Wuzhen source shards must be manifest-disjoint from Kunshan; this regional sample is not a national prevalence estimate."
+}

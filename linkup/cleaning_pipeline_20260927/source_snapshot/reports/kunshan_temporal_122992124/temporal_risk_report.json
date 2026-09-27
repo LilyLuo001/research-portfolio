@@ -1,0 +1,119 @@
+{
+  "cutoffs_utc": {
+    "main": "2022-11-30 00:00:00+00",
+    "sensitivity": "2023-01-01 00:00:00+00",
+    "snapshot_upper_bound": "2026-09-06 23:59:59+00"
+  },
+  "description_text_read": false,
+  "elapsed_seconds": 174.857696,
+  "finished_utc": "2026-09-25T05:28:39.847030+00:00",
+  "firm_weighted_summary_min_valid_100": {
+    "firm_median_delete_cross_jan": 0.02030456852791878,
+    "firm_median_delete_cross_nov": 0.0228310502283105,
+    "firm_median_last_cross_jan": 0.01994186836547386,
+    "firm_median_last_cross_nov": 0.02133479237792367,
+    "firms_last_below100": 32391,
+    "firms_last_ge100": 26963,
+    "records_last_below100": 788893.0
+  },
+  "fixture": {
+    "counts": {
+      "jan1": 2,
+      "missing": 1,
+      "negative": 1,
+      "nov30": 2,
+      "quarter": 3,
+      "valid": 6,
+      "year": 3
+    },
+    "description_duplicate_membership_keys": 2,
+    "passed": true,
+    "snapshot_upper_bound_test": true
+  },
+  "global_key_match": {
+    "ambiguous_description_company_keys": 0,
+    "company_id_conflict_keys": 0,
+    "description_distinct_keys": 164581116,
+    "job_records_rows_denominator": 356449214,
+    "matched_keys": 164566138,
+    "matched_occurrences": 164566138,
+    "orphan_keys": 14978,
+    "orphan_occurrences": 14978
+  },
+  "guards": {
+    "cpus": 16,
+    "memory_limit": "18GB",
+    "observed_peak_bytes": 24082589027,
+    "persistent_free_floor_bytes": 15000000000,
+    "record_projection_bytes": 15415414453,
+    "stage_b_plus_scratch_cap_bytes": 50000000000,
+    "tmp_free_at_start": 122871558144
+  },
+  "history_evidence": {
+    "description_has_independent_timestamp": false,
+    "description_history_evidence_status": "unconfirmed",
+    "interpretation": "Intervals are vendor-observed envelopes, not text-validity intervals; reopening/gaps are unobservable.",
+    "supplier_questions_pending": [
+      "first versus latest captured text",
+      "post-close rewrites",
+      "URL reuse/reappearance",
+      "LAST_UPDATED trigger and null meaning",
+      "availability of historical snapshots"
+    ]
+  },
+  "job_records_snapshot": {
+    "files": 269,
+    "footer_rows": 356449214,
+    "manifest_sha256": "83fa946ab09b9a96cecd0b92f7b844fd94a9efa70308ffd78da735e40e03ea78",
+    "projected_null_job_hash": 0
+  },
+  "overall_usa": {
+    "created_after_snapshot": 0.0,
+    "created_missing": 0.0,
+    "created_quarter": null,
+    "created_year": null,
+    "delete_after_snapshot": 0.0,
+    "delete_cross_jan": 1878066.0,
+    "delete_cross_nov": 1967389.0,
+    "delete_cross_quarter_same_year": 28426775.0,
+    "delete_cross_year": 15139876.0,
+    "delete_interval_negative": 453.0,
+    "delete_interval_valid": 110909604.0,
+    "delete_missing": 1926408.0,
+    "delete_pre_jan_valid": 70817326.0,
+    "delete_pre_nov_valid": 69885164.0,
+    "delete_same_quarter": 67342953.0,
+    "description_company_conflict": 0.0,
+    "description_occurrences": 112836465.0,
+    "last_after_snapshot": 0.0,
+    "last_checked_missing": 0.0,
+    "last_cross_jan": 1872500.0,
+    "last_cross_nov": 1890130.0,
+    "last_cross_quarter_same_year": 27249036.0,
+    "last_cross_year": 15057786.0,
+    "last_interval_negative": 83.0,
+    "last_interval_valid": 112836382.0,
+    "last_pre_jan_valid": 70847682.0,
+    "last_pre_nov_valid": 69914354.0,
+    "last_same_quarter": 70529560.0,
+    "last_updated_after_last_checked": 105200.0,
+    "last_updated_after_snapshot": 0.0,
+    "last_updated_before_created": 375.0,
+    "last_updated_cross_jan": 670473.0,
+    "last_updated_cross_nov": 664077.0,
+    "last_updated_missing": 97983834.0,
+    "level": "overall",
+    "record_company_id": null,
+    "records": 112836465.0,
+    "state": null
+  },
+  "pending_outputs": [
+    "observation-span quantiles overall and by CREATED cohort"
+  ],
+  "raw_records_scans": 0,
+  "record_unit": "unique JOB_HASH; description multiplicity collapsed by validated key grouping",
+  "records_index_scans": "one prefix at a time",
+  "scope": "unique matched USA Job Records among all 1,358 Kunshan description files",
+  "started_utc": "2026-09-25T05:25:44.989334+00:00",
+  "status": "complete"
+}

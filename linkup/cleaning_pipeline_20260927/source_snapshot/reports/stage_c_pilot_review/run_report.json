@@ -1,0 +1,16 @@
+{
+  "completed_utc": "2026-09-25T09:53:41.977927+00:00",
+  "output_bytes": 477456972,
+  "raw_description_scope": "only row groups containing final sampled rows are decoded; only final sampled descriptions are persisted",
+  "records_index": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1",
+  "region": "kunshan",
+  "sample_rows": 2926,
+  "scope_warning": "Deterministic sample from 64 of the 1,358 available Kunshan shards. Shard acquisition order is not known to be random; results describe this selected regional frame and must not be interpreted as national or full-corpus prevalence.",
+  "selected_source_files": 64,
+  "selected_source_rows": 7845036,
+  "source_fingerprint": "887d571fc2581fad2c85bb053ced214396ea332ece196ca6bc5a0f0e2ef7b974",
+  "status": "complete",
+  "strata": 39,
+  "temporal_interpretation": "CREATED-to-LAST_CHECKED is an observed vendor envelope; description text has no validated effective timestamp.",
+  "weight_interpretation": "Denominator/sample_n describes only the deterministic selected-shard frame; it is not a full-corpus representative weight."
+}

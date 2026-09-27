@@ -1,0 +1,73 @@
+{
+  "allowed_values": {
+    "context": [
+      "required",
+      "preferred",
+      "duties",
+      "company",
+      "benefits",
+      "ambiguous",
+      "multiple"
+    ],
+    "education_label": [
+      "required",
+      "preferred",
+      "alternative_path",
+      "not_mentioned",
+      "unknown"
+    ],
+    "explicit_no_experience_label": [
+      "yes",
+      "no",
+      "unknown"
+    ],
+    "general_experience_label": [
+      "required",
+      "preferred",
+      "explicit_none",
+      "not_mentioned",
+      "unknown"
+    ],
+    "qualification_or_label": [
+      "explicit_or",
+      "equivalent",
+      "including",
+      "and",
+      "unresolved",
+      "not_present",
+      "unknown"
+    ],
+    "relevant_experience_label": [
+      "required",
+      "preferred",
+      "explicit_none",
+      "not_mentioned",
+      "unknown"
+    ],
+    "review_status": [
+      "unreviewed",
+      "first_review_complete",
+      "independent_review_complete",
+      "adjudicated"
+    ],
+    "text_usable": [
+      "yes",
+      "no",
+      "uncertain"
+    ],
+    "tool_experience_label": [
+      "required",
+      "preferred",
+      "explicit_none",
+      "not_mentioned",
+      "unknown"
+    ],
+    "unknown_or_ambiguous": [
+      "yes",
+      "no"
+    ]
+  },
+  "evidence_rule": "Copy exact supporting or contradicting text from DESCRIPTION. Empty parser output must still receive full-text human review.",
+  "not_gold_standard": "Rows are blank until independent human review and adjudication.",
+  "status": "unlabeled_template"
+}

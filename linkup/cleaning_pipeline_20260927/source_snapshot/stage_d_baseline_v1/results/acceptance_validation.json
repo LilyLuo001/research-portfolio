@@ -1,0 +1,70 @@
+{
+  "artifacts": {
+    "quarter_coverage.parquet": {
+      "bytes": 2191,
+      "rows": 77,
+      "sha256": "1d5516a3017396ffd708b8c954d1cbf99b2ebb3ebc001a3e24a6f40dac822b35"
+    },
+    "quarter_full_code.parquet": {
+      "bytes": 176160,
+      "rows": 74810,
+      "sha256": "68655406db35d34787277b1595e92ad78931e07a6eef533fa6c5e5726c5a448e"
+    },
+    "quarter_major_group.parquet": {
+      "bytes": 20933,
+      "rows": 1861,
+      "sha256": "21f17aac5ec1e023a5c7f5dadee4c7e6e466c3d03130658311e214c115e43cb8"
+    }
+  },
+  "conservation": {
+    "coverage_total": 253210047,
+    "full_code_total": 253210047,
+    "major_group_total": 253210047,
+    "null_created_records": 0,
+    "quarter_counts_equal": true,
+    "quarter_key_sets_equal": true,
+    "quarter_keys": 77,
+    "usa_records": 253210047
+  },
+  "future_implementation": {
+    "change": "quarter denominator uses a window partition and preserves null CREATED groups",
+    "code_file": "build_occupation_baseline.py",
+    "code_sha256": "7d749df1695a8443eab8c7776d1b9dae06a58b3fdd6194836356fc07eade42ec"
+  },
+  "interpretation": {
+    "comparison_guard": "2026 totals must not be compared directly with full-year 2025; annual shares cover only each year observable interval",
+    "not_established": [
+      "historical point-in-time occupation",
+      "vacancy counts",
+      "technology adoption",
+      "AI causal effects"
+    ],
+    "time_bounds": "2007 begins in Q3; 2026 Q3 is partial through approximately 2026-09-06",
+    "unit": "USA job-ad record by Records.CREATED first-observed cohort and current delivered snapshot O*NET assignment"
+  },
+  "job_id": "123129172",
+  "nullsafe_fixture": {
+    "blank_code": 1,
+    "engine": "DuckDB 0.9.2",
+    "invalid_format": 1,
+    "matched_onet_key": 16,
+    "missing_onet_key": 1,
+    "null_created_records_preserved": 1,
+    "records": 17,
+    "scope": "left-join conservation, missing/blank/invalid codes, and null CREATED preservation",
+    "status": "PASS",
+    "valid_code": 14
+  },
+  "production": {
+    "completed_utc": "2026-09-27T11:42:35.194183+00:00",
+    "exit_code": "0:0",
+    "frozen_code_file": "build_occupation_baseline_job123129172.py",
+    "frozen_code_sha256": "95aa9e7c09cabc01f10d45a567f726b96468ae49cbdb562c99b115b422a3118b",
+    "queue": "kshctest02",
+    "requested_cpus": 32,
+    "requested_memory": "96GB",
+    "state": "COMPLETED",
+    "submitted_utc": "2026-09-27T11:37:46Z"
+  },
+  "status": "PASS"
+}

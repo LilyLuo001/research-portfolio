@@ -1,0 +1,116 @@
+{
+  "contract_version": "common-measurement-v1-20260927",
+  "status": "measurement_design_not_validated_variables",
+  "technology_class": [
+    "software_information_system",
+    "predictive_ml_ai",
+    "generative_ai",
+    "ai_unspecified",
+    "technology_unspecified"
+  ],
+  "technology_role": [
+    "develop_train",
+    "implement_integrate",
+    "use_operate",
+    "evaluate_govern",
+    "role_unspecified"
+  ],
+  "experience_object": [
+    "general_work",
+    "occupation_task",
+    "industry_domain",
+    "specific_tool",
+    "object_unspecified"
+  ],
+  "task_family": [
+    "execution_information_processing",
+    "analysis_judgment",
+    "verification_accountability",
+    "coordination_communication",
+    "task_other_or_unknown"
+  ],
+  "strength": [
+    "required",
+    "preferred",
+    "expected",
+    "unspecified",
+    "conflict"
+  ],
+  "presence": [
+    "explicit_positive",
+    "explicit_negative",
+    "not_mentioned",
+    "insufficient_text",
+    "unresolved"
+  ],
+  "binding_status": [
+    "explicit",
+    "cooccurrence_only",
+    "binding_unresolved"
+  ],
+  "relation": [
+    "AND",
+    "OR",
+    "INCLUDING",
+    "EQUIVALENT",
+    "UNRESOLVED"
+  ],
+  "time_evidence": [
+    "verified_historical_observation",
+    "verified_terminal_text",
+    "delivery_snapshot_only",
+    "unknown"
+  ],
+  "common_cell": [
+    "harmonized_employer_id",
+    "harmonized_occupation_family",
+    "harmonized_region",
+    "calendar_quarter"
+  ],
+  "required_evidence_fields": [
+    "source_region",
+    "source_file",
+    "source_row",
+    "job_hash",
+    "raw_text_sha256",
+    "normalized_text_sha256",
+    "normalization_version",
+    "parser_sha256",
+    "contract_version",
+    "span_start",
+    "span_end",
+    "context",
+    "uncertainty_reason"
+  ],
+  "duration_fields": [
+    "clause_id",
+    "min_value",
+    "max_value",
+    "unit",
+    "bound_type",
+    "object_span_id",
+    "binding_status",
+    "relation_group_id"
+  ],
+  "revelio_status": "not_uploaded_actual_schema_unverified",
+  "revelio_event_types": [
+    "external_employer_entry",
+    "internal_occupation_transition",
+    "same_occupation_employer_change"
+  ],
+  "revelio_prior_experience_rules": [
+    "strictly_pre_event",
+    "union_overlapping_intervals_within_dimension",
+    "no_current_skill_backfill",
+    "left_censoring_not_zero",
+    "education_known_by_event_only",
+    "internships_separate",
+    "month_precision_intervals",
+    "no_predicted_salary_premium"
+  ],
+  "last_complete_calendar_quarter": "2026Q2",
+  "data_snapshot_cutoff": "2026-09-06",
+  "full_semantic_release": false,
+  "historical_text_use_released": false,
+  "model_diagnostic_only": true
+}

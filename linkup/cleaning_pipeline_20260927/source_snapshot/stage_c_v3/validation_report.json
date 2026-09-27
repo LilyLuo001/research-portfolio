@@ -1,0 +1,93 @@
+{
+  "validation_kind": "bounded_v3_candidate_parser_validation",
+  "not_precision_or_recall_estimate": true,
+  "sample_rows": 2926,
+  "full_sample_errors": 0,
+  "offset_validation_errors": 0,
+  "fingerprint_errors": 0,
+  "json_serialization_errors": 0,
+  "normalization_text_changed_from_v2_ads": 0,
+  "evidence_truncated_ads": 0,
+  "module_counts_all": {
+    "software": {
+      "v2_positive_ads": 221,
+      "v3_positive_ads": 222,
+      "positive_transition_0_to_1": 2,
+      "positive_transition_1_to_0": 1,
+      "changed_requirement_count_ads": 3
+    },
+    "ai": {
+      "v2_positive_ads": 7,
+      "v3_positive_ads": 7,
+      "positive_transition_0_to_1": 0,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 0
+    },
+    "experience": {
+      "v2_positive_ads": 923,
+      "v3_positive_ads": 944,
+      "positive_transition_0_to_1": 27,
+      "positive_transition_1_to_0": 6,
+      "changed_requirement_count_ads": 121
+    },
+    "education": {
+      "v2_positive_ads": 308,
+      "v3_positive_ads": 429,
+      "positive_transition_0_to_1": 121,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 134
+    },
+    "tasks": {
+      "v2_positive_ads": 0,
+      "v3_positive_ads": 0,
+      "positive_transition_0_to_1": 0,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 0
+    }
+  },
+  "module_counts_usa": {
+    "software": {
+      "v2_positive_ads": 75,
+      "v3_positive_ads": 77,
+      "positive_transition_0_to_1": 2,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 2
+    },
+    "ai": {
+      "v2_positive_ads": 2,
+      "v3_positive_ads": 2,
+      "positive_transition_0_to_1": 0,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 0
+    },
+    "experience": {
+      "v2_positive_ads": 442,
+      "v3_positive_ads": 449,
+      "positive_transition_0_to_1": 12,
+      "positive_transition_1_to_0": 5,
+      "changed_requirement_count_ads": 86
+    },
+    "education": {
+      "v2_positive_ads": 141,
+      "v3_positive_ads": 233,
+      "positive_transition_0_to_1": 92,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 100
+    },
+    "tasks": {
+      "v2_positive_ads": 0,
+      "v3_positive_ads": 0,
+      "positive_transition_0_to_1": 0,
+      "positive_transition_1_to_0": 0,
+      "changed_requirement_count_ads": 0
+    }
+  },
+  "elapsed_seconds": 18.417,
+  "normalization_version": "recruitment-html-text-v3",
+  "known_limits": [
+    "Candidate extraction only; counts are not validated precision, recall, or economic measures.",
+    "Local punctuation, parenthesis, and credential-comma scopes do not form a complete qualification relation graph.",
+    "Long flattened prose and unconventional headings can remain unspecified or attach to a nearby explicit cue.",
+    "The bounded dictionaries omit unlisted tools, degrees, tasks, and AI systems."
+  ]
+}

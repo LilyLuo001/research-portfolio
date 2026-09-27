@@ -1,0 +1,34 @@
+{
+  "arrow_batches": 16,
+  "bytes_unit_note": "file and projected/raw text sizes are bytes; MB RSS is 1024^2 bytes; whole-file bytes are storage context, selected-row byte metrics are actual logical/projected inputs",
+  "cpu_seconds": 95.195367037,
+  "created_utc": "2026-09-27T12:28:43.323249+00:00",
+  "input_logical_bytes": 264667063,
+  "job_hash": "5c7817f81f4b617e514ad41ac17d229179b43aa41ba789276d6cbd36e969cb35",
+  "output_bytes": 14674223,
+  "output_file": "00_job-descriptions_0_0_0.candidates.parquet",
+  "output_rows": 4000,
+  "output_sha256": "2f882f8001195d9b6d569408e4097609d1484f21e4eaa729e7f1f71e7badabd7",
+  "parse_error_rows": 0,
+  "projected_arrow_bytes_for_selected_rows": 15482352,
+  "raw_text_utf8_bytes_for_selected_rows": 15322352,
+  "receipt_version": 1,
+  "rows_per_cpu_second": 42.01880042958428,
+  "rows_per_wall_second": 38.15288970475909,
+  "source": {
+    "file_name": "job-descriptions_0_0_0.snappy.parquet",
+    "manifest_bytes": 264667063,
+    "manifest_sha256": "2b68b1733ccffe74a346158bb3a37ac44fdf9569a2f5fc7fbb90f464b60cd819",
+    "path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_0.snappy.parquet",
+    "stat_mtime_ns": 1790231872000000000,
+    "stat_size": 264667063
+  },
+  "status_counts": {
+    "candidate": 3291,
+    "no_candidate": 709,
+    "parse_error": 0
+  },
+  "truncated_rows": 0,
+  "wall_seconds": 104.84122219309211,
+  "worker_peak_rss_mb": 129.49609375
+}

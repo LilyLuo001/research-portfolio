@@ -1,0 +1,16 @@
+{
+  "region": "kunshan",
+  "seed": "linkup-stage-c-v1-2026-09-25",
+  "description_manifest": "/public/home/lilysharp/linkup_analysis_v1/stage_b/metadata/description_files.txt",
+  "records_index": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1",
+  "records_index_complete": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1/COMPLETE",
+  "destination_sha_validation": "/public/home/lilysharp/linkup_analysis_v1/stage_b/metadata/destination_sha_validation.json",
+  "output_dir": "/public/home/lilysharp/linkup_analysis_v1/stage_c/kunshan_sample_v1_20260925",
+  "selected_source_files": 64,
+  "batch_rows": 131072,
+  "join_workers": 16,
+  "per_prefix_per_stratum": 100,
+  "final_per_stratum": 100,
+  "max_output_bytes": 1000000000,
+  "scope_warning": "Deterministic sample from 64 of the 1,358 available Kunshan shards. Shard acquisition order is not known to be random; results describe this selected regional frame and must not be interpreted as national or full-corpus prevalence."
+}

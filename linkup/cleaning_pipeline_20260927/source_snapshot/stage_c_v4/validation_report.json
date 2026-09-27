@@ -1,0 +1,116 @@
+{
+  "validation_kind": "bounded_v4_candidate_parser_development_validation",
+  "development_set_notice": "The 12 reviewed ads informed V4 and are no longer independent validation.",
+  "not_precision_or_recall_estimate": true,
+  "sample_rows": 2926,
+  "full_sample_errors": 0,
+  "offset_validation_errors": 0,
+  "qualification_scope_offset_errors": 0,
+  "fingerprint_errors": 0,
+  "json_serialization_errors": 0,
+  "evidence_truncated_ads": 0,
+  "module_counts_all": {
+    "software": {
+      "positive_ads": 239,
+      "requirement_candidates": 490,
+      "qualification_candidates": 499,
+      "context_conflicts": 32,
+      "relation_unresolved": 0
+    },
+    "ai": {
+      "positive_ads": 7,
+      "requirement_candidates": 18,
+      "qualification_candidates": 19,
+      "context_conflicts": 1,
+      "relation_unresolved": 0
+    },
+    "experience": {
+      "positive_ads": 996,
+      "requirement_candidates": 2131,
+      "qualification_candidates": 2409,
+      "context_conflicts": 274,
+      "relation_unresolved": 8
+    },
+    "education": {
+      "positive_ads": 477,
+      "requirement_candidates": 675,
+      "qualification_candidates": 845,
+      "context_conflicts": 95,
+      "relation_unresolved": 6
+    },
+    "tasks": {
+      "positive_ads": 0,
+      "requirement_candidates": 0,
+      "qualification_candidates": 0,
+      "context_conflicts": 21,
+      "relation_unresolved": 0
+    }
+  },
+  "module_counts_usa": {
+    "software": {
+      "positive_ads": 82,
+      "requirement_candidates": 158,
+      "qualification_candidates": 162,
+      "context_conflicts": 16,
+      "relation_unresolved": 0
+    },
+    "ai": {
+      "positive_ads": 2,
+      "requirement_candidates": 5,
+      "qualification_candidates": 6,
+      "context_conflicts": 1,
+      "relation_unresolved": 0
+    },
+    "experience": {
+      "positive_ads": 465,
+      "requirement_candidates": 964,
+      "qualification_candidates": 1107,
+      "context_conflicts": 133,
+      "relation_unresolved": 2
+    },
+    "education": {
+      "positive_ads": 268,
+      "requirement_candidates": 372,
+      "qualification_candidates": 456,
+      "context_conflicts": 58,
+      "relation_unresolved": 2
+    },
+    "tasks": {
+      "positive_ads": 0,
+      "requirement_candidates": 0,
+      "qualification_candidates": 0,
+      "context_conflicts": 15,
+      "relation_unresolved": 0
+    }
+  },
+  "v3_positive_ads_reference_all": {
+    "software": 222,
+    "ai": 7,
+    "experience": 944,
+    "education": 429,
+    "tasks": 0
+  },
+  "v3_positive_ads_reference_usa": {
+    "software": 77,
+    "ai": 2,
+    "experience": 449,
+    "education": 233,
+    "tasks": 0
+  },
+  "elapsed_seconds": 19.501,
+  "normalization_version": "recruitment-html-text-v4",
+  "bounded_changes": [
+    "Embedded and standalone qualification headings reset inherited company, benefits, and policy context.",
+    "Candidates/applicants should have is an expected qualification candidate with unspecified mandatoriness.",
+    "Common bounded education forms and immediate Experience-heading duration clauses are retained.",
+    "Local OR-of-degree-plus-experience combinations are flagged unresolved and non-unconditional.",
+    "Qualification scope text offsets are trim-consistent."
+  ],
+  "known_limits": [
+    "Candidate extraction only; counts are not validated precision, recall, or economic measures.",
+    "The parser does not construct a complete qualification or grade-specific relation graph.",
+    "Expected, acceptable, post-hire, and conditional language beyond the bounded patterns can remain unresolved.",
+    "Long flattened prose and unconventional headings can still attach to the wrong section.",
+    "The bounded dictionaries omit unlisted tools, credentials, tasks, and AI systems."
+  ]
+}

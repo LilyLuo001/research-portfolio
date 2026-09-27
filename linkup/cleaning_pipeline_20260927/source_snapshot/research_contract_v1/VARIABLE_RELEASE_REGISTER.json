@@ -1,0 +1,27 @@
+{
+  "register_version": "1.0",
+  "date": "2026-09-27",
+  "user_constraint": "Only model-assisted diagnosis currently available; human-reviewed gold labels unavailable.",
+  "release_unit": "variable x sample_scope x intended_use",
+  "interpretation": "Model-assisted exploratory use can proceed with disclosed uncertainty; this is not human-validated accuracy. Historical time evidence is a separate gate.",
+  "modules": [
+    {"variable": "records_first_observed_count", "scope": "USA Records, complete calendar quarters through 2026Q2", "use": "descriptive observed-ad counts with coverage controls", "status": "available", "not": "hires or economic vacancies"},
+    {"variable": "snapshot_occupation", "scope": "official 2019 members; missing and nonmembers retained in denominators", "use": "common-taxonomy descriptive stratification", "status": "available", "not": "classification accuracy or contemporaneous coding proof"},
+    {"variable": "qualification_presence", "scope": "frozen V5 calibration samples", "use": "model-assisted diagnosis", "status": "candidate_only", "not": "absence means no requirement"},
+    {"variable": "qualification_strength", "scope": "explicit clauses with unknown retained", "use": "model-assisted diagnosis", "status": "candidate_only", "not": "all qualifications mandatory"},
+    {"variable": "experience_duration_binding", "scope": "clause and specific experience object", "use": "model-assisted diagnosis", "status": "candidate_only", "not": "minimum across whole advertisement"},
+    {"variable": "technology_role_and_experience_object", "scope": "explicit relations defined in common_measurement.json", "use": "annotation design", "status": "contract_ready_extractor_not_validated", "not": "cooccurrence proves binding or actual adoption"},
+    {"variable": "joint_qualification_paths", "scope": "AND/OR/includes/equivalent local relations", "use": "retain unresolved evidence", "status": "not_released_as_eligibility", "not": "complete applicant eligibility"},
+    {"variable": "historical_text_requirement", "scope": "historical first-observed periods", "use": "point-in-time or causal changes", "status": "not_released_time_evidence_missing", "not": "delivery snapshot equals initial text"},
+    {"variable": "revelio_prior_experience", "scope": "pre-event observed career history", "use": "future realized-entry comparison", "status": "interface_only_data_not_uploaded", "not": "implemented panel"}
+  ],
+  "model_evaluation_rules": [
+    "Fix calibration/test split and evaluation contract before scoring; no sealed-test text or labels during development.",
+    "Report model identities, blinded information, model disagreements, adjudication rules, unresolved cases and evidence-span checks.",
+    "Separate precision/recall versus model reference from human accuracy; model agreement may share systematic error.",
+    "Report false positives, false negatives, strength errors, numeric/object-binding errors by cohort/source and support counts.",
+    "Do not infer zero error from no disagreements or zero parse failures.",
+    "No fixed sample count or threshold alone establishes comparability; assess period-specific measurement sensitivity before substantive trend interpretation."
+  ],
+  "full_semantic_release": false
+}

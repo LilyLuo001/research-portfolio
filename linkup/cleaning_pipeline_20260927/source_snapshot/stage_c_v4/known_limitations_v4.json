@@ -1,0 +1,18 @@
+{
+  "release_status": "bounded_candidate_parser_development_only",
+  "formal_semantic_release": false,
+  "independent_validation_status": "not_available",
+  "development_set_note": "The 12 reviewed ads informed V4 and therefore cannot independently validate it.",
+  "resolved_root_examples": [
+    "A local OR of two degree-plus-experience combinations is retained with qualification_relation_unresolved=true and unconditional=false.",
+    "An immediate duration clause after a standalone Experience heading is retained even when the duration line omits the word experience."
+  ],
+  "remaining_limits": [
+    "The parser does not build a complete qualification or grade-specific relation graph; multi-sentence and semicolon-separated alternatives can remain unresolved.",
+    "Acceptable, conditional, post-hire, and timing language outside the bounded patterns can retain inherited section context.",
+    "Candidates or applicants should have is marked expected with unspecified mandatoriness, not mandatory required.",
+    "Unconventional headings embedded in long flattened prose can still fail to reset section context.",
+    "Education and tool dictionaries remain deliberately bounded."
+  ],
+  "interpretation": "All outputs remain candidates for validation, not validated requirements, precision estimates, or economic measures."
+}
