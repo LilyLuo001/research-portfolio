@@ -1,0 +1,17 @@
+{
+  "version": "stage-c-evaluation-v2-frame-extension-20260927",
+  "initial_pool_per_time_stratum": 260,
+  "initial_pool_rows": 2080,
+  "trigger": "Any post-exclusion conservative employer/template group count below its frozen time target, or any frozen supplemental path allocation shortfall.",
+  "observed_trigger": {
+    "stage": "post-exclusion conservative grouping",
+    "time_stratum": "2020-22",
+    "eligible_groups": 157,
+    "target": 160
+  },
+  "extension_pool_per_time_stratum": 520,
+  "extension_method": "Continue the same deterministic bottom-k order within every time stratum using the cached projection and compact Records index. Do not change period targets or borrow from another period.",
+  "maximum_extensions": 1,
+  "failure_rule": "If the 520-per-period frame still has any frozen target/path shortfall, stop and report the actual shortfall; do not publish a nominal 1000-row pack.",
+  "preservation": "The initial 2080-row candidate pool, frame report, and failed empty pack directory are retained with pool260/failed260 names for audit."
+}

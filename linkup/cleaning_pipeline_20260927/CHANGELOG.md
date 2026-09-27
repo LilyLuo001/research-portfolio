@@ -11,9 +11,16 @@
   model diagnostics do not constitute human validation.
 - Added the bounded batch runner with per-file receipts and aggregate completion
   evidence.
+- Added Compact v1 code, the measured 16,000-row cluster summary, and explicit
+  storage/exception limitations.
+- Added Compact v2 as the active bounded correction with its 2,926-row local
+  validation; no Compact v2 cluster result is claimed.
+- Added the 1,000-ad regional evaluation-frame contract, code, and aggregate
+  coverage/grouping reports while excluding every record-level evaluation
+  artifact.
 - Added the Stage D occupation-time baseline builder and aggregate validation.
 - Added the current common-measurement, text-time, and variable-release
-  contracts.
+  contracts, the execution register, and the unsent vendor-question draft.
 - Added a strict Git-snapshot allowlist, content hashes, and a filename-only
   release scanner.
 

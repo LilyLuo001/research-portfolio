@@ -1,0 +1,31 @@
+{
+  "version": "stage-c-evaluation-v2-codebook-20260927",
+  "status": "frozen_before_annotation",
+  "unit": "one delivered job-ad text; multiple evidence rows may be recorded per ad",
+  "human_fields_initial_state": "blank",
+  "presence": ["explicit_positive", "explicit_negative", "not_mentioned", "insufficient_text", "unresolved"],
+  "strength": ["required", "preferred", "expected", "unspecified", "conflict"],
+  "experience_object": ["general_work", "occupation_task", "industry_domain", "specific_tool", "object_unspecified"],
+  "technology_class": ["software_information_system", "predictive_ml_ai", "generative_ai", "ai_unspecified", "technology_unspecified"],
+  "technology_role": ["develop_train", "implement_integrate", "use_operate", "evaluate_govern", "role_unspecified"],
+  "task_family": ["execution_information_processing", "analysis_judgment", "verification_accountability", "coordination_communication", "task_other_or_unknown"],
+  "binding_status": ["explicit", "cooccurrence_only", "binding_unresolved"],
+  "relation": ["AND", "OR", "INCLUDING", "EQUIVALENT", "UNRESOLVED"],
+  "instructions": {
+    "absence": "Use not_mentioned when the supplied text contains no explicit statement. Do not convert silence into an explicit negative.",
+    "strength": "Code wording attached to the clause. A qualification mention without required/preferred/expected wording is unspecified.",
+    "duration_binding": "Record duration and object separately. Link them only when syntax or a bounded list makes the link explicit; paragraph co-occurrence is not an explicit binding.",
+    "technology": "Python, SQL, and ordinary software names do not by themselves imply AI. Company descriptions and recruiting-process AI are not applicant technology requirements.",
+    "roles": "Code a role only when the text states an action relation to the technology. Multiple roles may coexist.",
+    "tasks": "Describe stated work content; do not infer automation, replacement, or causal effects.",
+    "relations": "Preserve each qualification path. Do not collapse OR paths to a single minimum and do not sum INCLUDING durations.",
+    "evidence": "Use zero-based, half-open character offsets into raw_text and copy a short evidence_quote. Record uncertainty_reason for unresolved judgments."
+  },
+  "independence": {
+    "calibration": "May be opened and used for codebook calibration. Parser predictions remain hidden from annotators.",
+    "sealed_test": "Do not inspect texts or predictions until codebook/parser changes are frozen. Convention seal only; no cryptographic access control is claimed.",
+    "human_review": "Formal labels require human review and adjudication. Model or parser output must never be entered as a human label."
+  },
+  "time_interpretation": "Text is a delivery snapshot attached to a Records.CREATED cohort. It is not verified historical point-in-time text.",
+  "source_contract": "research_contract_v1/common_measurement.json"
+}

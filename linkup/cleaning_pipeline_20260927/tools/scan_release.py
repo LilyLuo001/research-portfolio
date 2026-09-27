@@ -11,6 +11,14 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".csv", ".json", ".md", ".py", ".sh", ".sbatch", ".txt"}
 FORBIDDEN_SUFFIXES = {".parquet", ".gz", ".zip", ".tar", ".env", ".pem", ".key"}
+FORBIDDEN_NAMES = {
+    "annotations_blank.csv",
+    "development_and_prior120_exclusions.json",
+    "hidden_mapping.jsonl",
+    "sample_manifest.json",
+    "source_selection_manifest.json",
+    "texts.jsonl",
+}
 RULES = {
     "private-key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "credential-assignment": re.compile(
@@ -33,6 +41,9 @@ def main() -> int:
         if not path.is_file() or ".git" in path.parts:
             continue
         rel = path.relative_to(PROJECT_DIR).as_posix()
+        if path.name in FORBIDDEN_NAMES:
+            findings.append((rel, "record-level-evaluation-artifact"))
+            continue
         if path.suffix.lower() in FORBIDDEN_SUFFIXES:
             findings.append((rel, "forbidden-extension"))
             continue

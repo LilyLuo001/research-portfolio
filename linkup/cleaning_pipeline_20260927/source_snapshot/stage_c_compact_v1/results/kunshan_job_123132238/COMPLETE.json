@@ -1,0 +1,227 @@
+{
+  "actual_rows": 16000,
+  "created_utc": "2026-09-27T13:14:48.837891+00:00",
+  "evidence_rows": 73613,
+  "job_hash": "f54f3d48d08a72b8c31bac9be077cb6a4b04b16c3853555ca77c60f620a59e65",
+  "pending_rows": 0,
+  "persistent_bytes_including_receipts": 7672134,
+  "persistent_output_cap_bytes": 250000000,
+  "relation_rows": 6116,
+  "roundtrip_checked_rows": 16000,
+  "roundtrip_failure_count": 0,
+  "rows_per_wall_second": 67.73264636419738,
+  "status": "complete",
+  "status_counts": {
+    "candidate": 13284,
+    "no_candidate": 2716,
+    "parse_error": 0
+  },
+  "truncated_rows": 0,
+  "wall_seconds": 236.2228631041944,
+  "workers": [
+    {
+      "created_utc": "2026-09-27T13:12:52.128584+00:00",
+      "evidence_rows": 17763,
+      "next_source_row": 4000,
+      "output_bytes": 1898938,
+      "output_cap_bytes": 62250000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 593458,
+          "rows": 4000,
+          "sha256": "75443dd5bc236b7544e24d72ff3d5004abe4340157b6aa7d2142a0f1ff2a739a"
+        },
+        "evidence.parquet": {
+          "bytes": 763815,
+          "rows": 17763,
+          "sha256": "4a7e795850484f52590dbe361c9fe933c4d3330b7b4945f589f691590f13f222"
+        },
+        "relations.parquet": {
+          "bytes": 94553,
+          "rows": 1495,
+          "sha256": "15f025789907affd99970f410acf8a09f30b577fcd79f08d0cfa66bc24b70437"
+        },
+        "source_index.parquet": {
+          "bytes": 447112,
+          "rows": 4000,
+          "sha256": "f2b5bb024b2b34ecde0a44e55707314fdbc4dbd8f22f015c1d949fe5450bc06d"
+        }
+      },
+      "parser_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+      "pending_rows": 0,
+      "processed_rows": 4000,
+      "receipt_version": 1,
+      "relation_rows": 1495,
+      "requested_rows": 4000,
+      "rows_per_wall_second": 33.5650492187497,
+      "runner_sha256": "b131da9a4fc708cff3332b9b762d25f4e79b74c8b59268cd22187a49f713987d",
+      "runner_version": "bounded-v5-compact-v1",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_0.snappy.parquet",
+      "source_stat_mtime_ns": 1790231872000000000,
+      "source_stat_size": 264667063,
+      "start_source_row": 0,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 3301,
+        "no_candidate": 699,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 119.17158032208681
+    },
+    {
+      "created_utc": "2026-09-27T13:12:55.552408+00:00",
+      "evidence_rows": 18868,
+      "next_source_row": 4000,
+      "output_bytes": 1929608,
+      "output_cap_bytes": 62250000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 595578,
+          "rows": 4000,
+          "sha256": "d49b5c4f7c3a90f94ba2cd217da02a8b613bae4a09fccb4252cbeb903e8538da"
+        },
+        "evidence.parquet": {
+          "bytes": 790924,
+          "rows": 18868,
+          "sha256": "d171fdd84e48418649155d511f33a82ad965479813763ba196f6acea3eeb708c"
+        },
+        "relations.parquet": {
+          "bytes": 96801,
+          "rows": 1602,
+          "sha256": "a67567808358f06fb0780df10285d94b7e82d04066fbbfc18e4af984d5fa5678"
+        },
+        "source_index.parquet": {
+          "bytes": 446305,
+          "rows": 4000,
+          "sha256": "ca3e801c5d280384d5bd4155ff6ed43380fcf4bf492f788ec7678905be67857a"
+        }
+      },
+      "parser_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+      "pending_rows": 0,
+      "processed_rows": 4000,
+      "receipt_version": 1,
+      "relation_rows": 1602,
+      "requested_rows": 4000,
+      "rows_per_wall_second": 32.63007881482117,
+      "runner_sha256": "b131da9a4fc708cff3332b9b762d25f4e79b74c8b59268cd22187a49f713987d",
+      "runner_version": "bounded-v5-compact-v1",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_1.snappy.parquet",
+      "source_stat_mtime_ns": 1790231886000000000,
+      "source_stat_size": 272631755,
+      "start_source_row": 0,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 3347,
+        "no_candidate": 653,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 122.58627937361598
+    },
+    {
+      "created_utc": "2026-09-27T13:12:51.442250+00:00",
+      "evidence_rows": 18284,
+      "next_source_row": 4000,
+      "output_bytes": 1908409,
+      "output_cap_bytes": 62250000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 595241,
+          "rows": 4000,
+          "sha256": "d43a4b54a00c710d310ad3c0458136d11af271378fe558a629cc156c5c313e89"
+        },
+        "evidence.parquet": {
+          "bytes": 770777,
+          "rows": 18284,
+          "sha256": "945425e974b1cd737040baaff1335f70658a47eee4021df3fb8d95f9c31635e4"
+        },
+        "relations.parquet": {
+          "bytes": 95558,
+          "rows": 1501,
+          "sha256": "25db10dcb20935c896a333e73b2f0ba57f762db3e8db5bf273056b8df879b286"
+        },
+        "source_index.parquet": {
+          "bytes": 446833,
+          "rows": 4000,
+          "sha256": "4dcfa1c9943a4f582f5212e5c4418fbedc13e27957d761f88428658b2e81c666"
+        }
+      },
+      "parser_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+      "pending_rows": 0,
+      "processed_rows": 4000,
+      "receipt_version": 1,
+      "relation_rows": 1501,
+      "requested_rows": 4000,
+      "rows_per_wall_second": 33.759711715559106,
+      "runner_sha256": "b131da9a4fc708cff3332b9b762d25f4e79b74c8b59268cd22187a49f713987d",
+      "runner_version": "bounded-v5-compact-v1",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_10.snappy.parquet",
+      "source_stat_mtime_ns": 1790231857000000000,
+      "source_stat_size": 272693997,
+      "start_source_row": 0,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 3298,
+        "no_candidate": 702,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 118.4844227693975
+    },
+    {
+      "created_utc": "2026-09-27T13:12:55.293175+00:00",
+      "evidence_rows": 18698,
+      "next_source_row": 4000,
+      "output_bytes": 1926432,
+      "output_cap_bytes": 62250000,
+      "outputs": {
+        "ad_status.parquet": {
+          "bytes": 594921,
+          "rows": 4000,
+          "sha256": "cfc8d217e69237badb73d0c1e8e5e7d8c2a6982621e9fdc3b2105e74f0e1939a"
+        },
+        "evidence.parquet": {
+          "bytes": 784787,
+          "rows": 18698,
+          "sha256": "38e0d17fdab6fde13f6fda170a09aa7d613000007d5d55307f9d8996dbba9d07"
+        },
+        "relations.parquet": {
+          "bytes": 96942,
+          "rows": 1518,
+          "sha256": "0fdafe095dade44d8b21e4bf09dd7e7534c3b3701fbe80f6df2f6fda65120ea8"
+        },
+        "source_index.parquet": {
+          "bytes": 449782,
+          "rows": 4000,
+          "sha256": "4c17533675e45fc468fa587f22cbc117d647ac36db4b587d6e3b53621e002b11"
+        }
+      },
+      "parser_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+      "pending_rows": 0,
+      "processed_rows": 4000,
+      "receipt_version": 1,
+      "relation_rows": 1518,
+      "requested_rows": 4000,
+      "rows_per_wall_second": 32.697858111041775,
+      "runner_sha256": "b131da9a4fc708cff3332b9b762d25f4e79b74c8b59268cd22187a49f713987d",
+      "runner_version": "bounded-v5-compact-v1",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_11.snappy.parquet",
+      "source_stat_mtime_ns": 1790231928000000000,
+      "source_stat_size": 265846636,
+      "start_source_row": 0,
+      "status": "complete",
+      "status_counts": {
+        "candidate": 3338,
+        "no_candidate": 662,
+        "parse_error": 0
+      },
+      "stop_reason": null,
+      "truncated_rows": 0,
+      "wall_seconds": 122.332170791924
+    }
+  ]
+}

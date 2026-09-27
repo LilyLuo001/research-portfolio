@@ -1,0 +1,14 @@
+{
+  "seed": "linkup-stage-c-evaluation-v2-frame-20260927",
+  "description_manifest": "/public/home/lilysharp/linkup_analysis_v1/stage_b/metadata/description_files.txt",
+  "prior_source_selection_manifest": "/public/home/lilysharp/linkup_analysis_v1/stage_c/kunshan_sample_v1_20260925/selection_manifest.json",
+  "records_index": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1",
+  "records_index_complete": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1/COMPLETE",
+  "output_dir": "/public/home/lilysharp/linkup_analysis_v1/stage_c_evaluation_v2/frame_kunshan_v1",
+  "selected_source_files": 32,
+  "batch_rows": 131072,
+  "join_workers": 8,
+  "pool_per_stratum": 520,
+  "max_output_bytes": 1000000000,
+  "scope_warning": "Deterministic sample frame from 32 previously unused shards among the 1,358 Kunshan-held description shards. Shard acquisition is not known to be random. The pack is not a national or full-corpus probability sample."
+}

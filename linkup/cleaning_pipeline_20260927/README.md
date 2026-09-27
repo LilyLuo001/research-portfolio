@@ -22,7 +22,16 @@ one current snapshot; they are not presented as separate Git history.
    validation.
 5. **Bounded execution.** `stage_c_batch_v1` records the memory-bounded batch
    runner and per-file receipts.
-6. **Aggregate baseline.** `stage_d_baseline_v1` constructs occupation-by-time
+6. **Compact candidate artifacts.** `stage_c_compact_v1` records the measured
+   16,000-row cluster run and its documented limitations. The active
+   `stage_c_compact_v2` correction is supported by a 2,926-row local round-trip
+   check and has not been run on the cluster.
+7. **Evaluation-frame preparation.** `stage_c_evaluation_v2` defines the
+   regional 1,000-ad annotation frame. It combines an 800-record probability
+   core with a 200-record diagnostic supplement across 32 selected shards. The
+   Git snapshot contains aggregate coverage/grouping reports only; it makes no
+   national or full-corpus prevalence claim.
+8. **Aggregate baseline.** `stage_d_baseline_v1` constructs occupation-by-time
    summaries from cleaned inputs.
 
 The current measurement contract is under
@@ -63,6 +72,11 @@ contain production-derived job hashes or advertisement-like prose are also
 excluded. Running the omitted integration tests requires authorized private
 fixtures; their absence does not change the published parser code or aggregate
 receipts.
+
+The evaluation archive also excludes sample/source-selection manifests,
+calibration and sealed-test records, annotation rows, model-diagnostic mappings,
+and exclusion lists containing record identifiers. Only aggregate frame counts,
+coverage, grouping checks, and completion hashes are retained.
 
 The permitted outputs are code, contracts, plans, aggregate reports, validation
 summaries, and bounded execution receipts. They support a detailed paper-methods
