@@ -18,6 +18,9 @@
 - Added the 1,000-ad regional evaluation-frame contract, code, and aggregate
   coverage/grouping reports while excluding every record-level evaluation
   artifact.
+- Added the aggregate 32-record primary and fixed 8-record independent-model
+  diagnostic. It records exploratory qualification-presence errors and no
+  semantic-release claim; all row-level comparisons remain outside Git.
 - Added the Stage D occupation-time baseline builder and aggregate validation.
 - Added the current common-measurement, text-time, and variable-release
   contracts, the execution register, and the unsent vendor-question draft.

@@ -1,0 +1,182 @@
+{
+  "design": {
+    "explicit_negative_reported_separately": true,
+    "human_annotations": false,
+    "inference_limit": "No full-corpus or per-period inference; n=32 is insufficient.",
+    "model_identity_note": "Requested model-family identities; exact runtime build identifiers were not emitted with the label artifacts.",
+    "negative_reference": "not_mentioned",
+    "parser": "frozen stage_c_v5/requirement_candidates.py",
+    "positive_reference": "explicit_positive",
+    "primary_model": "gpt-5.6-terra",
+    "primary_rows": 32,
+    "reference_type": "blind_model_labels",
+    "sealed_test_accessed": false,
+    "secondary_model": "gpt-5.6-sol",
+    "secondary_rows": 8,
+    "target": "is_applicant_qualification_candidate",
+    "unknown_or_conflict_excluded_from_binary_confusion": true
+  },
+  "primary32": {
+    "confusion": {
+      "education": {
+        "binary_support": 31,
+        "excluded_unknown_or_conflict": {
+          "insufficient_text": 1
+        },
+        "fn": 4,
+        "fp": 0,
+        "reference_explicit_absence": {
+          "support": 0,
+          "v5_candidate": 0,
+          "v5_no_candidate": 0
+        },
+        "tn": 8,
+        "tp": 19,
+        "v5_predicted_explicit_absence": {
+          "available": false,
+          "count": 0,
+          "reference_presence_counts": {}
+        }
+      },
+      "experience": {
+        "binary_support": 30,
+        "excluded_unknown_or_conflict": {
+          "insufficient_text": 1
+        },
+        "fn": 3,
+        "fp": 1,
+        "reference_explicit_absence": {
+          "support": 1,
+          "v5_candidate": 0,
+          "v5_no_candidate": 1
+        },
+        "tn": 3,
+        "tp": 23,
+        "v5_predicted_explicit_absence": {
+          "available": true,
+          "count": 1,
+          "reference_presence_counts": {
+            "explicit_negative": 1
+          }
+        }
+      }
+    }
+  },
+  "protocol_diagnosis": {
+    "not_v5_accuracy": true,
+    "primary32": {
+      "experience_object_evidence_counts": {
+        "general_work": 7,
+        "industry_domain": 10,
+        "object_unspecified": 1,
+        "occupation_task": 29,
+        "specific_tool": 3
+      },
+      "presence_counts": {
+        "education": {
+          "explicit_positive": 23,
+          "insufficient_text": 1,
+          "not_mentioned": 8
+        },
+        "experience": {
+          "explicit_negative": 1,
+          "explicit_positive": 26,
+          "insufficient_text": 1,
+          "not_mentioned": 4
+        }
+      },
+      "rows": 32,
+      "technology_role_evidence_counts": {
+        "develop_train": 1,
+        "implement_integrate": 1,
+        "use_operate": 21
+      }
+    },
+    "secondary8": {
+      "experience_object_evidence_counts": {
+        "general_work": 2,
+        "industry_domain": 1,
+        "occupation_task": 12,
+        "specific_tool": 13
+      },
+      "presence_counts": {
+        "education": {
+          "explicit_positive": 7,
+          "insufficient_text": 1
+        },
+        "experience": {
+          "explicit_positive": 7,
+          "insufficient_text": 1
+        }
+      },
+      "rows": 8,
+      "technology_role_evidence_counts": {
+        "develop_train": 3,
+        "role_unspecified": 1,
+        "use_operate": 14
+      }
+    },
+    "unit": "labeled evidence objects (multiple per ad possible)"
+  },
+  "quote_validation": {
+    "errors": 0,
+    "method": "nonempty literal substring of source raw_text"
+  },
+  "secondary8": {
+    "agreed_only_confusion": {
+      "education": {
+        "binary_support": 7,
+        "excluded_unknown_or_conflict": {
+          "insufficient_text": 1
+        },
+        "fn": 1,
+        "fp": 0,
+        "reference_explicit_absence": {
+          "support": 0,
+          "v5_candidate": 0,
+          "v5_no_candidate": 0
+        },
+        "tn": 0,
+        "tp": 6,
+        "v5_predicted_explicit_absence": {
+          "available": false,
+          "count": 0,
+          "reference_presence_counts": {}
+        }
+      },
+      "experience": {
+        "binary_support": 6,
+        "excluded_unknown_or_conflict": {
+          "insufficient_text": 1
+        },
+        "fn": 0,
+        "fp": 0,
+        "reference_explicit_absence": {
+          "support": 0,
+          "v5_candidate": 0,
+          "v5_no_candidate": 0
+        },
+        "tn": 0,
+        "tp": 6,
+        "v5_predicted_explicit_absence": {
+          "available": true,
+          "count": 0,
+          "reference_presence_counts": {}
+        }
+      }
+    },
+    "primary_secondary_disagreement": {
+      "education": {
+        "agreements": 8,
+        "disagreements": 0,
+        "support": 8
+      },
+      "experience": {
+        "agreements": 7,
+        "disagreements": 1,
+        "support": 8
+      }
+    }
+  },
+  "status": "complete"
+}

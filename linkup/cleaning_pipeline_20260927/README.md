@@ -30,7 +30,9 @@ one current snapshot; they are not presented as separate Git history.
    regional 1,000-ad annotation frame. It combines an 800-record probability
    core with a 200-record diagnostic supplement across 32 selected shards. The
    Git snapshot contains aggregate coverage/grouping reports only; it makes no
-   national or full-corpus prevalence claim.
+   national or full-corpus prevalence claim. A completed calibration-only model
+   diagnostic uses 32 primary references and an independent 8-record subset;
+   it is not human validation and does not establish semantic release.
 8. **Aggregate baseline.** `stage_d_baseline_v1` constructs occupation-by-time
    summaries from cleaned inputs.
 
