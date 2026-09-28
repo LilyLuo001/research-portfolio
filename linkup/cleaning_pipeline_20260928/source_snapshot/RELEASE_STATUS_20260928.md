@@ -102,3 +102,16 @@ assume that within-shard checks prove global JOB_HASH uniqueness. A synthetic
 test covers ad-level evidence deduplication, missing/empty/error denominators,
 the 2026Q3 partial-period label, and additive cross-shard conservation. This
 tool is not connected to the running preparation or semantic pipeline.
+
+The initial sequential consolidation job 123213048 was stopped after it sealed
+three Kunshan sidecars because repeated full-tree scans yielded about two
+sidecars in the first five minutes and used only a small fraction of one CPU.
+The replacement loads frozen inventory and expected-row metadata once, assigns
+each shard exactly once, and runs 16 single-threaded worker processes inside a
+32-CPU/96-GB Kunshan allocation. It maintains the 17 GB intermediate cap from
+known fragment and sidecar byte changes and validates only the bounded batch;
+sealed receipts resume safely, while an unsealed generated orphan is rebuilt
+only while its source fragments remain complete. Target Python 3.8 tests passed
+2/2. Unique job 123213590 was submitted to `kshctest02` and was pending at this
+checkpoint. The frozen disposition core, parser, enrichment, and configuration
+were not changed.
