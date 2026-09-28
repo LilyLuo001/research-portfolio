@@ -12,6 +12,9 @@ set -euo pipefail
 export PYTHONPATH=/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38
 R=/public/home/lilysharp/linkup_analysis_v1/stage_c_release_v1
 S=/public/home/lilysharp/linkup_release_v1/semantic_v1/kunshan
+for required in prepare_shard_input.py regional_runner.py enrichment.py lean_writer.py; do
+  test -r "${R}/${required}" || { echo "missing release dependency: ${R}/${required}" >&2; exit 2; }
+done
 /public/software/apps/python/3.8.10/bin/python3 "${R}/regional_runner.py" \
   --transfer-mode queue --partition-id part0 --plan "${S}/plan.part0.jsonl" --buffer-root "${S}/buffer/part0" \
   --checkpoint-root "${S}/checkpoints" --parser /public/home/lilysharp/linkup_analysis_v1/stage_c_v6/requirement_candidates.py \

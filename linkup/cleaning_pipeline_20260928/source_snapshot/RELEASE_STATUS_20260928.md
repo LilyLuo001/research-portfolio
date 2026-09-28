@@ -136,3 +136,15 @@ initial Kunshan-part-1 job 123214472 and Wuzhen job 45464008 ended immediately
 with `BadConstraints`; their audit records remain. The reproducible fix adds
 `--gres-flags=disable-binding` for the accelerator-backed CPU queues. No shard
 was processed by those zero-second failed submissions.
+
+Kunshan part 0 job 123214471 later exited after two seconds, before any shard
+began, because the server release directory lacked the already frozen
+`prepare_shard_input.py` helper. The authoritative helper (SHA-256
+`d43914ca1bde75ff6372b32da6d516441434662db0f3b237d9e02e4f6d6b2c18`)
+was deployed without changing parser, enrichment, writer, or schema. The exact
+Python 3.8 environment then passed both the helper import and regional-runner
+argument smoke checks. Recovery job **123218160** was pending for resources at
+23:45:53 +08:00; its canonical submission receipt replaces the failed job for
+part 0 while retaining the old audit record. Part 1 job 123214693 and the
+Wuzhen run were left unchanged. Both Kunshan submission scripts now fail early
+with a clear message unless all four required release modules are readable.
