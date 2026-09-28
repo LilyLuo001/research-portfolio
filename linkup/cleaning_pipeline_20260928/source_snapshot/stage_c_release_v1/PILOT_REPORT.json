@@ -1,0 +1,55 @@
+{
+  "bytes_per_ad": 134.63321,
+  "cpu_seconds_per_ad": 0.02849494,
+  "effective_cpu_utilization": 0.9447924403183025,
+  "enrichment_incomplete_rows": 3,
+  "enrichment_sha256": "cf0cf8fae3451d463430c14ebe6bf2a6dcc72b8239589ed2fbeb20ef0c4451c6",
+  "experience_rows": 205849,
+  "failed_pilot": {
+    "cause": "one-row Parquet row groups inflated output",
+    "elapsed_seconds": 129,
+    "fix": "buffer 512 rows per table before each Parquet write",
+    "generated_partial_remote": "stage_c_release_v1/failed/kunshan_100k_job123196300",
+    "job_id": 123196300,
+    "state": "cancelled_by_owner"
+  },
+  "final_production_writer_sha256": "67c22e5db1d61f7a909235150a0254f9af9bd2ccd6f1958aa6d7a555e32b99d5",
+  "output_bytes": 13463321,
+  "parse_errors": 0,
+  "parser_sha256": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744",
+  "pilot_job_id": 123196678,
+  "pilot_schema_note": "Pilot size excludes the post-pilot sparse v6_audit table and DESCRIPTION_EMPTY field; final writer retention change passed 21-row and zero-row serialization smokes and does not change enrichment semantics.",
+  "pilot_writer_sha256": "56b4c1daaff2a6015a64ebe91f3541fb65858c1a196d62998868b569ea8cf450",
+  "processed_rows": 100000,
+  "projected_cpu_hours_at_pilot_rate": 2004.2236379617166,
+  "projected_output_bytes_at_pilot_rate": 34090481431.860867,
+  "projected_usa_rows": 253210047,
+  "slurm_elapsed_seconds": 377,
+  "slurm_max_rss_kb": 1192984,
+  "slurm_total_cpu_seconds": 2849.494,
+  "status": "complete",
+  "technology_rows": 40237,
+  "truncated_rows": 3,
+  "validation": {
+    "ad_count_sums": {
+      "experience": 205849,
+      "technology": 40237
+    },
+    "evidence_key_subsets": {
+      "experience": true,
+      "technology": true
+    },
+    "file_hashes_ok": true,
+    "observed_rows": {
+      "ad_status": 100000,
+      "experience": 205849,
+      "technology": 40237
+    },
+    "parquet_metadata_rows_ok": true,
+    "processed_rows": 100000,
+    "status": "pass",
+    "unique_ad_keys": 100000
+  },
+  "validation_job_id": 123198421,
+  "wall_seconds": 369.6223921664059
+}

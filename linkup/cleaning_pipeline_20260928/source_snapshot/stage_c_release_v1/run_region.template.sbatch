@@ -5,7 +5,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=96G
-#SBATCH --time=3-00:00:00
+#SBATCH --time=2-00:00:00
 set -euo pipefail
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
@@ -16,7 +16,7 @@ python3 "${RELEASE_ROOT}/regional_runner.py" \
   --enrichment "${RELEASE_ROOT}/enrichment.py" \
   --lean-writer "${RELEASE_ROOT}/lean_writer.py" \
   --transfer "${RELEASE_ROOT}/verified_transfer.py" \
-  --workers 8 --per-shard-output-cap-bytes "${PER_SHARD_OUTPUT_CAP_BYTES}" \
+  --workers 32 --per-shard-output-cap-bytes "${PER_SHARD_OUTPUT_CAP_BYTES}" \
   --buffer-cap-bytes "${BUFFER_CAP_BYTES}" --free-reserve-bytes "${FREE_RESERVE_BYTES}" \
   --transfer-host zzeshell.scnet.cn --transfer-port 65032 \
   --transfer-user lilysharp --transfer-key "${HZ_TRANSFER_KEY}" \

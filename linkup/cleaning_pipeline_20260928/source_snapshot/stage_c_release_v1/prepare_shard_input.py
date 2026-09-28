@@ -16,6 +16,7 @@ DISPOSITIONS = {
     "matched_usa_canonical",
     "matched_usa_duplicate_quarantine",
     "matched_non_usa",
+    "matched_country_unknown",
     "record_unmatched",
 }
 OUTPUT_SCHEMA = pa.schema([
@@ -62,8 +63,8 @@ def prepare(raw_path: Path, sidecar_path: Path, output_path: Path) -> dict:
             raise ValueError("matched disposition/RECORD_SOURCE_ROW inconsistency")
         if disposition in {"matched_usa_canonical", "matched_usa_duplicate_quarantine"} and not is_usa(row["COUNTRY"]):
             raise ValueError("USA disposition has non-USA COUNTRY")
-        if disposition == "matched_non_usa" and is_usa(row["COUNTRY"]):
-            raise ValueError("matched_non_usa disposition has USA COUNTRY")
+        if disposition in {"matched_non_usa", "matched_country_unknown"} and is_usa(row["COUNTRY"]):
+            raise ValueError("non-USA/unknown disposition has USA COUNTRY")
         by_row[source_row] = row
         dispositions[disposition] += 1
         sidecar_source_files.add(row["SOURCE_FILE"])

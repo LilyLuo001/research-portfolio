@@ -46,21 +46,34 @@ def main() -> None:
     parser.add_argument("--parser", type=Path, required=True)
     parser.add_argument("--enrichment", type=Path, required=True)
     parser.add_argument("--lean-writer", type=Path, required=True)
-    parser.add_argument("--transfer", type=Path, required=True)
+    parser.add_argument("--transfer-mode", choices=("direct", "queue"), default="direct")
+    parser.add_argument("--transfer", type=Path)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--per-shard-output-cap-bytes", type=int, required=True)
     parser.add_argument("--buffer-cap-bytes", type=int, required=True)
     parser.add_argument("--free-reserve-bytes", type=int, required=True)
-    parser.add_argument("--transfer-host", required=True); parser.add_argument("--transfer-port", required=True)
-    parser.add_argument("--transfer-user", required=True); parser.add_argument("--transfer-key", required=True)
-    parser.add_argument("--transfer-known-hosts", required=True)
+    parser.add_argument("--transfer-host"); parser.add_argument("--transfer-port")
+    parser.add_argument("--transfer-user"); parser.add_argument("--transfer-key")
+    parser.add_argument("--transfer-known-hosts")
     parser.add_argument("--transfer-control-path")
-    parser.add_argument("--remote-root", required=True)
+    parser.add_argument("--remote-root")
     parser.add_argument("--remote-cap-bytes", type=int, default=420_000_000_000)
     parser.add_argument("--transfer-attempts", type=int, default=3)
     parser.add_argument("--transfer-command-timeout-seconds", type=int, default=75)
     parser.add_argument("--transfer-attempt-timeout-seconds", type=int, default=90)
     args = parser.parse_args()
+
+    if args.transfer_mode == "direct":
+        direct_required = {
+            "transfer": args.transfer, "transfer_host": args.transfer_host,
+            "transfer_port": args.transfer_port, "transfer_user": args.transfer_user,
+            "transfer_key": args.transfer_key,
+            "transfer_known_hosts": args.transfer_known_hosts,
+            "remote_root": args.remote_root,
+        }
+        missing = sorted(name for name, value in direct_required.items() if value is None)
+        if missing:
+            parser.error("direct transfer mode requires: " + ", ".join(missing))
 
     buffer_root = args.buffer_root.resolve(); checkpoint_root = args.checkpoint_root.resolve()
     buffer_root.mkdir(parents=True, exist_ok=True); checkpoint_root.mkdir(parents=True, exist_ok=True)
@@ -90,6 +103,7 @@ def main() -> None:
                 and accounting.get("source_bytes") == row["source_bytes"]
                 and accounting.get("source_sha256_cached") == row["source_sha256_cached"]
                 and accounting.get("sidecar_sha256") == row["sidecar_sha256"]
+                and accounting.get("raw_rows") == row["raw_rows"]
             ):
                 raise RuntimeError(f"{shard_id}: published receipt does not match frozen plan/code")
             continue
@@ -99,14 +113,11 @@ def main() -> None:
             raise ValueError(f"{shard_id}: source size/path differs from cached verified inventory")
         if not sidecar.is_file():
             raise FileNotFoundError(f"{shard_id}: disposition sidecar missing")
+        if sidecar.stat().st_size != row["sidecar_bytes"]:
+            raise RuntimeError(f"{shard_id}: disposition sidecar size differs from frozen plan")
         sidecar_sha256 = sha256(sidecar)
         if sidecar_sha256 != row["sidecar_sha256"]:
             raise RuntimeError(f"{shard_id}: disposition sidecar SHA differs from frozen plan")
-        if tree_bytes(buffer_root) > args.buffer_cap_bytes:
-            raise RuntimeError("local generated buffer cap reached; resume after successful transfers")
-        if shutil.disk_usage(buffer_root).free < args.free_reserve_bytes:
-            raise RuntimeError("local free-space reserve reached")
-
         work = buffer_root / (shard_id + ".work")
         output = buffer_root / shard_id
         if output.exists() and not (output / "SHARD_COMPLETE.json").exists():
@@ -120,13 +131,20 @@ def main() -> None:
                 and prior_accounting.get("source_bytes") == row["source_bytes"]
                 and prior_accounting.get("source_sha256_cached") == row["source_sha256_cached"]
                 and prior_accounting.get("sidecar_sha256") == sidecar_sha256
+                and prior_accounting.get("raw_rows") == row["raw_rows"]
             ):
                 raise RuntimeError(f"{shard_id}: retained output differs from frozen plan/code")
         if not output.exists():
+            if tree_bytes(buffer_root) > args.buffer_cap_bytes:
+                raise RuntimeError("local generated buffer cap reached; resume after successful transfers")
+            if shutil.disk_usage(buffer_root).free < args.free_reserve_bytes:
+                raise RuntimeError("local free-space reserve reached")
             if work.exists(): shutil.rmtree(work)
             work.mkdir()
             staged = work / "canonical_usa.parquet"
             accounting = prepare(raw, sidecar, staged)
+            if accounting["raw_rows"] != row["raw_rows"]:
+                raise RuntimeError(f"{shard_id}: raw row count differs from frozen plan")
             if accounting["sidecar_source_files"] != [row["source_file"]]:
                 raise RuntimeError(f"{shard_id}: sidecar SOURCE_FILE differs from frozen plan")
             accounting.update({
@@ -152,6 +170,32 @@ def main() -> None:
                 "code_sha256": code_sha256,
             })
             shutil.rmtree(work)
+
+        if args.transfer_mode == "queue":
+            complete_path = output / "SHARD_COMPLETE.json"
+            queued = checkpoint_root / (shard_id + ".queued.json")
+            queue_receipt = {
+                "status": "sealed_for_transfer",
+                "schema_version": 1,
+                "shard_id": shard_id,
+                "region": row["region"],
+                "generated_output": str(output),
+                "generated_output_bytes": tree_bytes(output),
+                "shard_complete": str(complete_path),
+                "shard_complete_sha256": sha256(complete_path),
+                "source_file": row["source_file"],
+                "source_bytes": row["source_bytes"],
+                "source_sha256_cached": row["source_sha256_cached"],
+                "sidecar_sha256": row["sidecar_sha256"],
+                "raw_rows": row["raw_rows"],
+                "code_sha256": code_sha256,
+                "compute_waited_for_transfer": False,
+            }
+            if queued.exists() and json.loads(queued.read_text()) != queue_receipt:
+                raise RuntimeError(f"{shard_id}: queued receipt differs from sealed output/plan/code")
+            if not queued.exists():
+                atomic_json(queued, queue_receipt)
+            continue
 
         transfer_args = [
             sys.executable, str(args.transfer), "--source", str(output),
@@ -185,10 +229,18 @@ def main() -> None:
             print(json.dumps({"status": "paused_transfer_unavailable", "shard_id": shard_id}, sort_keys=True))
             raise SystemExit(75) from last_error
         (checkpoint_root / "REGION_PAUSED.json").unlink(missing_ok=True)
-    atomic_json(checkpoint_root / "REGION_COMPLETE.json", {
-        "status": "complete", "planned_shards": len(rows),
-        "published_receipts": len(list(checkpoint_root.glob("*.published.json"))),
-    })
+    if args.transfer_mode == "queue":
+        atomic_json(checkpoint_root / "REGION_QUEUE_COMPLETE.json", {
+            "status": "compute_queue_complete", "planned_shards": len(rows),
+            "queued_receipts": len(list(checkpoint_root.glob("*.queued.json"))),
+            "published_receipts": len(list(checkpoint_root.glob("*.published.json"))),
+            "final_publication_complete": False,
+        })
+    else:
+        atomic_json(checkpoint_root / "REGION_COMPLETE.json", {
+            "status": "complete", "planned_shards": len(rows),
+            "published_receipts": len(list(checkpoint_root.glob("*.published.json"))),
+        })
 
 
 if __name__ == "__main__":
