@@ -153,7 +153,7 @@ def job_state(job_id: str) -> str:
         raise RuntimeError("sacct state lookup failed closed for job %s: %s" %
                            (job_id, history.stdout[-1000:]))
     states = [x.strip().split("+")[0] for x in history.stdout.splitlines() if x.strip()]
-    return states[0] if states else "UNKNOWN"
+    return states[0].split()[0] if states else "UNKNOWN"
 
 
 def wait_for_receipt(job_id: str, receipt: Path, label: str) -> dict:
@@ -269,12 +269,12 @@ def main() -> None:
     CONTROL.mkdir(parents=True, exist_ok=True)
     # v1 may remain held by the superseded controller that only polls the
     # known-failed initial job on another load-balanced login node.
-    lock_handle = (CONTROL / "continuation_v2.lock").open("w")
+    lock_handle = (CONTROL / "continuation_v3.lock").open("w")
     try:
         fcntl.flock(lock_handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
     except BlockingIOError:
         raise RuntimeError("another disposition continuation is already running")
-    atomic_json(CONTROL / "controller_v2.instance.json", {
+    atomic_json(CONTROL / "controller_v3.instance.json", {
         "status": "running", "pid": os.getpid(), "host": socket.gethostname(),
         "controller_sha256": digest(Path(__file__).resolve()),
     })
@@ -309,9 +309,17 @@ def main() -> None:
     wait_for_receipt(remaining_job, remaining_receipt, "remaining_prefixes")
     cleanup_generated_wz_stage()
     consolidate_receipt = OUTPUT / "CONSOLIDATION_COMPLETE.json"
-    job_id = submit_once("consolidate", "linkup-disp-consolidate-v1",
-                         ["sbatch", "--parsable", str(CONSOLIDATE_SCRIPT)])
-    result = wait_for_receipt(job_id, consolidate_receipt, "consolidate")
+    parallel_submission = CONTROL / "parallel_consolidation.submission.json"
+    if parallel_submission.exists():
+        adopted = json.loads(parallel_submission.read_text())
+        job_id = str(adopted.get("job_id", ""))
+        if not job_id.isdigit() or adopted.get("status") != "submitted":
+            raise RuntimeError("invalid parallel consolidation submission receipt")
+        result = wait_for_receipt(job_id, consolidate_receipt, "parallel_consolidation")
+    else:
+        job_id = submit_once("consolidate", "linkup-disp-consolidate-v1",
+                             ["sbatch", "--parsable", str(CONSOLIDATE_SCRIPT)])
+        result = wait_for_receipt(job_id, consolidate_receipt, "consolidate")
     atomic_json(CONTROL / "COMPLETE.json", {"status": "complete", "storage_gate": gate,
                                              "consolidation": result})
     (CONTROL / "PAUSED.json").unlink(missing_ok=True)

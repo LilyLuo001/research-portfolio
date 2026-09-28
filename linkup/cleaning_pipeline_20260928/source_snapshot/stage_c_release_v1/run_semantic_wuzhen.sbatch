@@ -2,6 +2,7 @@
 #SBATCH --job-name=linkup-semantic-wz
 #SBATCH --partition=wzhdtest
 #SBATCH --gres=dcu:Hygon:1
+#SBATCH --gres-flags=disable-binding
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32

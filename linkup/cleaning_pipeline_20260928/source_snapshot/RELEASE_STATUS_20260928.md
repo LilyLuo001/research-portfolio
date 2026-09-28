@@ -115,3 +115,24 @@ only while its source fragments remain complete. Target Python 3.8 tests passed
 2/2. Unique job 123213590 was submitted to `kshctest02` and was pending at this
 checkpoint. The frozen disposition core, parser, enrichment, and configuration
 were not changed.
+
+## Consolidation completion and live semantic jobs
+
+Parallel consolidation job 123213590 completed all 2,464 sidecars in about
+eight minutes: three sealed sidecars resumed and 2,461 were newly sealed. Its
+tracked intermediate size was 12,412,154,703 bytes and no error was reported.
+`PARALLEL_CONSOLIDATION_PROGRESS.json` is the authoritative progress record;
+the older `CONSOLIDATION_PROGRESS.json` belongs to the canceled sequential job
+and is stale. Finalization and the preparation completion gate passed.
+
+The sealed Kunshan plan is a disjoint, complete split: part 0 has 684 shards
+and 82,290,424 raw rows; part 1 has 674 shards and 82,290,692 raw rows, totaling
+1,358 shards and 164,581,116 raw rows. All 1,106 Wuzhen sidecars were
+distributed before submission. At 21:56:49 +08:00 the three actual semantic
+jobs were: Kunshan part 0 job **123214471** (`kshctest02`, pending for priority),
+Kunshan part 1 recovery job **123214693** (`kshdtest`, pending for priority),
+and Wuzhen recovery job **45464212** (`wzhdtest`, running on `b02r4n07`). The
+initial Kunshan-part-1 job 123214472 and Wuzhen job 45464008 ended immediately
+with `BadConstraints`; their audit records remain. The reproducible fix adds
+`--gres-flags=disable-binding` for the accelerator-backed CPU queues. No shard
+was processed by those zero-second failed submissions.
