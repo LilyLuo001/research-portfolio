@@ -1,7 +1,7 @@
 {
-  "snapshot_created_utc": "2026-09-28T11:33:59.428944+00:00",
+  "snapshot_created_utc": "2026-09-28T13:06:36.180290+00:00",
   "source": "local private working tree; paths are relative and content-addressed",
-  "file_count": 233,
+  "file_count": 235,
   "files": [
     {
       "path": "CLEANING_PROGRESS_20260927.md",
@@ -47,9 +47,9 @@
     },
     {
       "path": "RELEASE_STATUS_20260928.md",
-      "source_sha256": "d2cc9ea67bc1c2212ea4b62ccc09dbea0e103d1fcd9a0092cedb351d6a1f50ea",
-      "snapshot_sha256": "d2cc9ea67bc1c2212ea4b62ccc09dbea0e103d1fcd9a0092cedb351d6a1f50ea",
-      "size_bytes": 5682
+      "source_sha256": "0aab26dabebdade168b3af893e11b0ad16d28b31664246754ba609b84a42e8c3",
+      "snapshot_sha256": "0aab26dabebdade168b3af893e11b0ad16d28b31664246754ba609b84a42e8c3",
+      "size_bytes": 6369
     },
     {
       "path": "STAGE_B_RESEARCH_ALIGNED_PLAN.md",
@@ -575,9 +575,9 @@
     },
     {
       "path": "stage_c_release_v1/FULL_RUN_DAG.md",
-      "source_sha256": "8fc1732d45794fd92b91d2f052ac121be22c456607408f44062afd38eaefde52",
-      "snapshot_sha256": "8fc1732d45794fd92b91d2f052ac121be22c456607408f44062afd38eaefde52",
-      "size_bytes": 3462
+      "source_sha256": "495b9fa80bda9b1b221aba0657b978a58c4ad15978b035c39807365adf274cb8",
+      "snapshot_sha256": "495b9fa80bda9b1b221aba0657b978a58c4ad15978b035c39807365adf274cb8",
+      "size_bytes": 3753
     },
     {
       "path": "stage_c_release_v1/PILOT_REPORT.json",
@@ -623,9 +623,9 @@
     },
     {
       "path": "stage_c_release_v1/prep_server_continuation.py",
-      "source_sha256": "07b1bd1a88e1f2e23b3fc54c5328ab372ce46996b3051d05fa8b85b6e2708ef0",
-      "snapshot_sha256": "07b1bd1a88e1f2e23b3fc54c5328ab372ce46996b3051d05fa8b85b6e2708ef0",
-      "size_bytes": 15704
+      "source_sha256": "eede0cac637ee4adeac830c577a9fb65a6138008c805a42ba041fb5452420b1c",
+      "snapshot_sha256": "eede0cac637ee4adeac830c577a9fb65a6138008c805a42ba041fb5452420b1c",
+      "size_bytes": 16459
     },
     {
       "path": "stage_c_release_v1/prepare_shard_input.py",
@@ -647,9 +647,9 @@
     },
     {
       "path": "stage_c_release_v1/run_disposition_consolidate.sbatch",
-      "source_sha256": "e25385b32b4331d3fd1e68f509985398f34ae0d2e25cbaf910bddf424562f902",
-      "snapshot_sha256": "e25385b32b4331d3fd1e68f509985398f34ae0d2e25cbaf910bddf424562f902",
-      "size_bytes": 745
+      "source_sha256": "fe8265b24198e6185c8f81611c9fc4663bbfafde605ae5318f4f0b2f8599f545",
+      "snapshot_sha256": "fe8265b24198e6185c8f81611c9fc4663bbfafde605ae5318f4f0b2f8599f545",
+      "size_bytes": 746
     },
     {
       "path": "stage_c_release_v1/run_disposition_remaining.sbatch",
@@ -1376,6 +1376,18 @@
       "source_sha256": "b5171aac21b2372d116a120eabe290e4b8c261dea68044257f940719086c03c0",
       "snapshot_sha256": "b5171aac21b2372d116a120eabe290e4b8c261dea68044257f940719086c03c0",
       "size_bytes": 3528
+    },
+    {
+      "path": "stage_c_release_v1/build_release_first_tables.py",
+      "source_sha256": "2758ca5716591c6a3aa97cc96fb71c09e24bd031912eba702ec8ad23fc069657",
+      "snapshot_sha256": "2758ca5716591c6a3aa97cc96fb71c09e24bd031912eba702ec8ad23fc069657",
+      "size_bytes": 13147
+    },
+    {
+      "path": "stage_c_release_v1/test_build_release_first_tables.py",
+      "source_sha256": "1fe8dcd944e5e47cae5c5621dc00255b54024668876de3cf9784ff0ebeab9b0e",
+      "snapshot_sha256": "1fe8dcd944e5e47cae5c5621dc00255b54024668876de3cf9784ff0ebeab9b0e",
+      "size_bytes": 7276
     },
     {
       "path": "stage_c_release_v1/run_disposition_fixture.sbatch",

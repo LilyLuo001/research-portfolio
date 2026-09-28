@@ -92,3 +92,13 @@ consumes the two-part completion marker and writes the canonical regional
 publication marker. At this checkpoint, disposition job 123204704 remains
 running untouched and the semantic controller is waiting for preparation to
 complete.
+
+An independent first-table builder is prepared for the later aggregate stage.
+It reads one sealed or published typed shard plus its receipt and writes an
+anonymous additive summary; a separate merge produces the release funnel,
+candidate technology/experience cells, the CREATED delivery-snapshot queue
+distribution, and a conservation report. It does not read description text or
+assume that within-shard checks prove global JOB_HASH uniqueness. A synthetic
+test covers ad-level evidence deduplication, missing/empty/error denominators,
+the 2026Q3 partial-period label, and additive cross-shard conservation. This
+tool is not connected to the running preparation or semantic pipeline.

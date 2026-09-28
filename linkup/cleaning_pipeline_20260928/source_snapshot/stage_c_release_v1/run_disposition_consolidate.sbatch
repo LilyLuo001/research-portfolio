@@ -3,7 +3,7 @@
 #SBATCH --partition=kshctest02
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=12
 #SBATCH --mem=32G
 #SBATCH --time=1-00:00:00
 #SBATCH --output=/public/home/lilysharp/linkup_analysis_v1/stage_c_release_v1/logs/disposition-consolidate-%j.out

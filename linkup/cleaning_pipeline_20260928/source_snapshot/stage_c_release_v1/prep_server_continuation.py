@@ -104,6 +104,20 @@ def submit_once(label: str, name: str, argv: list[str]) -> str:
         result = command(argv, timeout=90)
     except subprocess.TimeoutExpired:
         result = None
+    if result is not None:
+        atomic_json(CONTROL / (label + ".submission_attempt.json"), {
+            "status": "accepted" if result.returncode == 0 else "rejected",
+            "job_name": name, "returncode": result.returncode,
+            "stdout": result.stdout, "stderr": result.stderr,
+            "finished_at": time.time(),
+        })
+    if result is not None and result.returncode != 0:
+        atomic_json(CONTROL / "PAUSED.json", {
+            "status": "known_submission_rejected", "label": label,
+            "job_name": name, "returncode": result.returncode,
+            "stdout": result.stdout[-2000:], "stderr": result.stderr[-2000:],
+        })
+        raise RuntimeError("known sbatch rejection for %s; no job submitted" % label)
     if result is not None and result.returncode == 0:
         job_id = parse_job_id(result.stdout)
         if job_id:
