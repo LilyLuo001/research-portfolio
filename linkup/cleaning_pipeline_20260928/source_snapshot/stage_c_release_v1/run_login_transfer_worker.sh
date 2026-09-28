@@ -6,6 +6,9 @@ case "${REGION}" in
     HOME_ROOT=/public/home/lilysharp
     RUNTIME=/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38
     PYTHON_BIN=/public/software/apps/python/3.8.10/bin/python3
+    BUFFER_ARGS=(--buffer-subdirs part0 part1 --lock-name login-transfer-partitions.lock \
+      --status-name PARTITION_TRANSFER_WORKER_STATUS.json \
+      --compute-complete-name REGION_PARTS_QUEUE_COMPLETE.json)
     ;;
   wuzhen)
     HOME_ROOT=/work/home/lilysharp
@@ -15,6 +18,7 @@ case "${REGION}" in
     module load python/3.8.10
     set -u
     PYTHON_BIN=$(command -v python3)
+    BUFFER_ARGS=()
     ;;
   *) echo "invalid region" >&2; exit 2 ;;
 esac
@@ -24,6 +28,7 @@ mkdir -p "${STATE}/buffer" "${STATE}/checkpoints" "${STATE}/logs"
 export PYTHONPATH=${RUNTIME}
 exec "${PYTHON_BIN}" "${RELEASE}/login_transfer_worker.py" \
   --buffer-root "${STATE}/buffer" --checkpoint-root "${STATE}/checkpoints" \
+  "${BUFFER_ARGS[@]}" \
   --transfer "${RELEASE}/verified_transfer.py" \
   --host zzeshell.scnet.cn --port 65032 --user lilysharp \
   --key "${HOME_ROOT}/.ssh/hz_transfer_20260928" \

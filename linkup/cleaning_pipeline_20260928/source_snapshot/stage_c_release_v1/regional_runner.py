@@ -43,6 +43,7 @@ def main() -> None:
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--buffer-root", type=Path, required=True)
     parser.add_argument("--checkpoint-root", type=Path, required=True)
+    parser.add_argument("--partition-id")
     parser.add_argument("--parser", type=Path, required=True)
     parser.add_argument("--enrichment", type=Path, required=True)
     parser.add_argument("--lean-writer", type=Path, required=True)
@@ -50,6 +51,7 @@ def main() -> None:
     parser.add_argument("--transfer", type=Path)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--per-shard-output-cap-bytes", type=int, required=True)
+    parser.add_argument("--per-shard-buffer-reserve-bytes", type=int)
     parser.add_argument("--buffer-cap-bytes", type=int, required=True)
     parser.add_argument("--free-reserve-bytes", type=int, required=True)
     parser.add_argument("--transfer-host"); parser.add_argument("--transfer-port")
@@ -62,6 +64,9 @@ def main() -> None:
     parser.add_argument("--transfer-command-timeout-seconds", type=int, default=75)
     parser.add_argument("--transfer-attempt-timeout-seconds", type=int, default=90)
     args = parser.parse_args()
+    shard_reserve = args.per_shard_buffer_reserve_bytes or args.per_shard_output_cap_bytes
+    if shard_reserve <= 0 or shard_reserve > args.buffer_cap_bytes:
+        parser.error("per-shard buffer reserve must be positive and no larger than buffer cap")
 
     if args.transfer_mode == "direct":
         direct_required = {
@@ -78,6 +83,8 @@ def main() -> None:
     buffer_root = args.buffer_root.resolve(); checkpoint_root = args.checkpoint_root.resolve()
     buffer_root.mkdir(parents=True, exist_ok=True); checkpoint_root.mkdir(parents=True, exist_ok=True)
     rows = read_jsonl(args.plan.resolve())
+    if args.partition_id and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", args.partition_id):
+        raise ValueError("unsafe partition_id")
     code_sha256 = {
         "parser": sha256(args.parser.resolve()),
         "enrichment": sha256(args.enrichment.resolve()),
@@ -135,14 +142,16 @@ def main() -> None:
             ):
                 raise RuntimeError(f"{shard_id}: retained output differs from frozen plan/code")
         if not output.exists():
-            if tree_bytes(buffer_root) > args.buffer_cap_bytes:
-                raise RuntimeError("local generated buffer cap reached; resume after successful transfers")
+            if tree_bytes(buffer_root) + shard_reserve > args.buffer_cap_bytes:
+                raise RuntimeError("local generated buffer lacks the reserved capacity for one shard")
             if shutil.disk_usage(buffer_root).free < args.free_reserve_bytes:
                 raise RuntimeError("local free-space reserve reached")
             if work.exists(): shutil.rmtree(work)
             work.mkdir()
             staged = work / "canonical_usa.parquet"
             accounting = prepare(raw, sidecar, staged)
+            if tree_bytes(buffer_root) > args.buffer_cap_bytes:
+                raise RuntimeError("staged shard exceeded its bounded buffer")
             if accounting["raw_rows"] != row["raw_rows"]:
                 raise RuntimeError(f"{shard_id}: raw row count differs from frozen plan")
             if accounting["sidecar_source_files"] != [row["source_file"]]:
@@ -160,6 +169,8 @@ def main() -> None:
                  "--parser", str(args.parser), "--enrichment", str(args.enrichment),
                  "--output-dir", str(lean), "--workers", str(args.workers),
                  "--output-cap-bytes", str(args.per_shard_output_cap_bytes)])
+            if tree_bytes(buffer_root) > args.buffer_cap_bytes:
+                raise RuntimeError("generated shard exceeded its bounded buffer")
             complete = json.loads((lean / "COMPLETE.json").read_text())
             if complete["processed_rows"] != accounting["canonical_usa_rows"]:
                 raise RuntimeError(f"{shard_id}: canonical input/lean output conservation failure")
@@ -230,10 +241,20 @@ def main() -> None:
             raise SystemExit(75) from last_error
         (checkpoint_root / "REGION_PAUSED.json").unlink(missing_ok=True)
     if args.transfer_mode == "queue":
-        atomic_json(checkpoint_root / "REGION_QUEUE_COMPLETE.json", {
+        marker_name = ("REGION_QUEUE_COMPLETE.%s.json" % args.partition_id
+                       if args.partition_id else "REGION_QUEUE_COMPLETE.json")
+        completed = sum(
+            (checkpoint_root / (row["shard_id"] + ".queued.json")).is_file()
+            or (checkpoint_root / (row["shard_id"] + ".published.json")).is_file()
+            for row in rows
+        )
+        if completed != len(rows):
+            raise RuntimeError("partition completion receipts do not cover its plan")
+        atomic_json(checkpoint_root / marker_name, {
             "status": "compute_queue_complete", "planned_shards": len(rows),
-            "queued_receipts": len(list(checkpoint_root.glob("*.queued.json"))),
-            "published_receipts": len(list(checkpoint_root.glob("*.published.json"))),
+            "completed_plan_shards": completed,
+            "partition_id": args.partition_id,
+            "plan_sha256": sha256(args.plan.resolve()),
             "final_publication_complete": False,
         })
     else:

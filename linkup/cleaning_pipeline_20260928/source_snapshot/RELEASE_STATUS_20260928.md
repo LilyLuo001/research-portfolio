@@ -79,3 +79,16 @@ The frozen preparation core and input configuration hashes were unchanged.
 The supervisor is intended to continue through consolidation and regional
 semantic submission; neither that future submission nor full completion is
 claimed as achieved here.
+
+The three-way semantic execution path is deployed but has not submitted its
+semantic jobs. Kunshan's complete 1,358-shard plan will be split into two
+deterministic, disjoint, raw-row-balanced plans, each using 32 CPUs and a 2 GB
+buffer subdirectory; Wuzhen will run concurrently with 32 CPUs. Target Python
+3.8 checks passed all three focused partition/publication tests and compiled
+the changed modules. The legacy Kunshan publisher and the partition publisher
+hold separate locks and scan disjoint buffer levels, so the legacy lock does
+not block or compete with partition outputs. Only the partition publisher
+consumes the two-part completion marker and writes the canonical regional
+publication marker. At this checkpoint, disposition job 123204704 remains
+running untouched and the semantic controller is waiting for preparation to
+complete.

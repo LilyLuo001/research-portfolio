@@ -1,7 +1,7 @@
 {
-  "snapshot_created_utc": "2026-09-28T10:08:35.780531+00:00",
+  "snapshot_created_utc": "2026-09-28T11:33:59.428944+00:00",
   "source": "local private working tree; paths are relative and content-addressed",
-  "file_count": 231,
+  "file_count": 233,
   "files": [
     {
       "path": "CLEANING_PROGRESS_20260927.md",
@@ -47,9 +47,9 @@
     },
     {
       "path": "RELEASE_STATUS_20260928.md",
-      "source_sha256": "c83db348f472353a0c4df133e36df052dbbad96af06c34fec6d84515cbacb025",
-      "snapshot_sha256": "c83db348f472353a0c4df133e36df052dbbad96af06c34fec6d84515cbacb025",
-      "size_bytes": 4834
+      "source_sha256": "d2cc9ea67bc1c2212ea4b62ccc09dbea0e103d1fcd9a0092cedb351d6a1f50ea",
+      "snapshot_sha256": "d2cc9ea67bc1c2212ea4b62ccc09dbea0e103d1fcd9a0092cedb351d6a1f50ea",
+      "size_bytes": 5682
     },
     {
       "path": "STAGE_B_RESEARCH_ALIGNED_PLAN.md",
@@ -575,9 +575,9 @@
     },
     {
       "path": "stage_c_release_v1/FULL_RUN_DAG.md",
-      "source_sha256": "6ab85751a1f072fc2d65985302deba8907a19eefcf0fb434fec01c1496fd1bbe",
-      "snapshot_sha256": "6ab85751a1f072fc2d65985302deba8907a19eefcf0fb434fec01c1496fd1bbe",
-      "size_bytes": 3031
+      "source_sha256": "8fc1732d45794fd92b91d2f052ac121be22c456607408f44062afd38eaefde52",
+      "snapshot_sha256": "8fc1732d45794fd92b91d2f052ac121be22c456607408f44062afd38eaefde52",
+      "size_bytes": 3462
     },
     {
       "path": "stage_c_release_v1/PILOT_REPORT.json",
@@ -617,9 +617,9 @@
     },
     {
       "path": "stage_c_release_v1/login_transfer_worker.py",
-      "source_sha256": "66d628af6268337ceb2d88be178cd5c1a0a33aa569a9d39286f51b9b1b4597d2",
-      "snapshot_sha256": "66d628af6268337ceb2d88be178cd5c1a0a33aa569a9d39286f51b9b1b4597d2",
-      "size_bytes": 4362
+      "source_sha256": "28677e5d35327c267c406c31574b43b9175279f5050e660eb0a12354b73dd7fb",
+      "snapshot_sha256": "28677e5d35327c267c406c31574b43b9175279f5050e660eb0a12354b73dd7fb",
+      "size_bytes": 5578
     },
     {
       "path": "stage_c_release_v1/prep_server_continuation.py",
@@ -635,9 +635,9 @@
     },
     {
       "path": "stage_c_release_v1/regional_runner.py",
-      "source_sha256": "6b3fde9f2dd481198a5a1c17507250f3fc708bae82ce94e16ba8224c093804d7",
-      "snapshot_sha256": "6b3fde9f2dd481198a5a1c17507250f3fc708bae82ce94e16ba8224c093804d7",
-      "size_bytes": 12504
+      "source_sha256": "bed0a8aa6641791fbce1211d0aa27a9ce1f19c0a429859be77a2dd7c5aad392f",
+      "snapshot_sha256": "bed0a8aa6641791fbce1211d0aa27a9ce1f19c0a429859be77a2dd7c5aad392f",
+      "size_bytes": 13780
     },
     {
       "path": "stage_c_release_v1/run_controller_supervisors.sh",
@@ -677,9 +677,15 @@
     },
     {
       "path": "stage_c_release_v1/run_semantic_kunshan.sbatch",
-      "source_sha256": "6360832fbc5377e2697f9d40aa2142f5746ecb886c9961f6dc3a1fc4a340cc50",
-      "snapshot_sha256": "6360832fbc5377e2697f9d40aa2142f5746ecb886c9961f6dc3a1fc4a340cc50",
-      "size_bytes": 1083
+      "source_sha256": "eaae0465c060de00ea3be1f393aece588e9c5f73b744fc6220509400a4052e55",
+      "snapshot_sha256": "eaae0465c060de00ea3be1f393aece588e9c5f73b744fc6220509400a4052e55",
+      "size_bytes": 1164
+    },
+    {
+      "path": "stage_c_release_v1/run_semantic_kunshan_second.sbatch",
+      "source_sha256": "5eb2bd669e3e86ed0446e5629a8120e2c01ed696414945f7e19caf1ff734fb32",
+      "snapshot_sha256": "5eb2bd669e3e86ed0446e5629a8120e2c01ed696414945f7e19caf1ff734fb32",
+      "size_bytes": 1207
     },
     {
       "path": "stage_c_release_v1/run_semantic_wuzhen.sbatch",
@@ -689,15 +695,15 @@
     },
     {
       "path": "stage_c_release_v1/run_login_transfer_worker.sh",
-      "source_sha256": "cb3d15bff625106fc38d93ba403142c1ffc05f8444fb6ae71a9f2bfe42b0d53f",
-      "snapshot_sha256": "cb3d15bff625106fc38d93ba403142c1ffc05f8444fb6ae71a9f2bfe42b0d53f",
-      "size_bytes": 1391
+      "source_sha256": "5c8e38ebb1887405b3cc41e517682c41f15b420658ac6602a7ed12b19cb82e80",
+      "snapshot_sha256": "5c8e38ebb1887405b3cc41e517682c41f15b420658ac6602a7ed12b19cb82e80",
+      "size_bytes": 1649
     },
     {
       "path": "stage_c_release_v1/semantic_server_controller.py",
-      "source_sha256": "04d0cd4c4438568d40ae5fe3315b9f91cb217718b56148123cd4a119ab387c5b",
-      "snapshot_sha256": "04d0cd4c4438568d40ae5fe3315b9f91cb217718b56148123cd4a119ab387c5b",
-      "size_bytes": 10031
+      "source_sha256": "f7c7df98487e4adf06bfa77f1f89521e80046107346f190ed406c56d3ca6eaf8",
+      "snapshot_sha256": "f7c7df98487e4adf06bfa77f1f89521e80046107346f190ed406c56d3ca6eaf8",
+      "size_bytes": 14838
     },
     {
       "path": "stage_c_release_v1/validate_pilot.py",
@@ -1364,6 +1370,12 @@
       "source_sha256": "211f523e61afbe7ff724149d783b684be9b82dad5d2f5274acf876fcfa79e345",
       "snapshot_sha256": "211f523e61afbe7ff724149d783b684be9b82dad5d2f5274acf876fcfa79e345",
       "size_bytes": 5453
+    },
+    {
+      "path": "stage_c_release_v1/test_semantic_partitioning.py",
+      "source_sha256": "b5171aac21b2372d116a120eabe290e4b8c261dea68044257f940719086c03c0",
+      "snapshot_sha256": "b5171aac21b2372d116a120eabe290e4b8c261dea68044257f940719086c03c0",
+      "size_bytes": 3528
     },
     {
       "path": "stage_c_release_v1/run_disposition_fixture.sbatch",

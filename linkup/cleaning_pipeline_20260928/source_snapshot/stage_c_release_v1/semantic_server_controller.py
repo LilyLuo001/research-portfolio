@@ -42,12 +42,26 @@ def parse_job_id(stdout):
     return found[0] if len(set(found)) == 1 else None
 
 
+def parse_named_jobs(text, name):
+    jobs = set()
+    for line in text.splitlines():
+        fields = line.strip().split("|")
+        if len(fields) >= 2 and fields[0].isdigit() and fields[1] == name:
+            jobs.add(fields[0])
+    return jobs
+
+
 def local_jobs(name):
-    return [x.strip() for x in run(["squeue", "-h", "-n", name, "-o", "%A"], check=True).stdout.splitlines() if x.strip().isdigit()]
+    active = run(["squeue", "-h", "-n", name, "-o", "%A|%.128j"], check=True).stdout
+    history = run(["sacct", "-nX", "-P", "-S", "2026-09-28",
+                   "-o", "JobIDRaw,JobName%128"], check=True).stdout
+    return sorted(parse_named_jobs(active, name) | parse_named_jobs(history, name), key=int)
 
 
 def wz_jobs(name):
-    return [x.strip() for x in wz("squeue -h -n %s -o '%%A'" % name).stdout.splitlines() if x.strip().isdigit()]
+    active = wz("squeue -h -n %s -o '%%A|%%.128j'" % name).stdout
+    history = wz("sacct -nX -P -S 2026-09-28 -o JobIDRaw,JobName%128").stdout
+    return sorted(parse_named_jobs(active, name) | parse_named_jobs(history, name), key=int)
 
 
 def prep_active():
@@ -83,6 +97,25 @@ def sha256(path):
     return h.hexdigest()
 
 
+def write_jsonl(path, rows):
+    path.write_text("".join(json.dumps(x, sort_keys=True) + "\n" for x in rows))
+
+
+def split_balanced(rows, count=2):
+    """Deterministic raw-row-balanced, mutually exclusive plan split."""
+    parts = [[] for _ in range(count)]; totals = [0] * count
+    for row in sorted(rows, key=lambda x: (-int(x["raw_rows"]), x["shard_id"])):
+        target = min(range(count), key=lambda i: (totals[i], i))
+        parts[target].append(row); totals[target] += int(row["raw_rows"])
+    full_ids = {x["shard_id"] for x in rows}
+    part_ids = [{x["shard_id"] for x in part} for part in parts]
+    if len(full_ids) != len(rows) or set().union(*part_ids) != full_ids:
+        raise RuntimeError("partition union differs from full plan")
+    if any(part_ids[i] & part_ids[j] for i in range(count) for j in range(i + 1, count)):
+        raise RuntimeError("partition plans overlap")
+    return parts
+
+
 def prepare_plans():
     combined = PREP / "regional_runner_plan.jsonl"
     rows = [json.loads(line) for line in combined.read_text().splitlines() if line.strip()]
@@ -95,13 +128,60 @@ def prepare_plans():
     if len(by_region["kunshan"]) != 1358 or len(by_region["wuzhen"]) != 1106:
         raise RuntimeError("regional plan shard counts differ")
     KS.mkdir(parents=True, exist_ok=True)
-    (KS / "plan.jsonl").write_text("".join(json.dumps(x, sort_keys=True) + "\n" for x in by_region["kunshan"]));
+    full_plan = KS / "plan.jsonl"; write_jsonl(full_plan, by_region["kunshan"])
+    ks_parts = split_balanced(by_region["kunshan"], 2)
+    part_paths = []
+    for index, part in enumerate(ks_parts):
+        path = KS / ("plan.part%d.jsonl" % index); write_jsonl(path, part); part_paths.append(path)
+    manifest = {
+        "status": "complete", "full_plan": str(full_plan),
+        "full_plan_sha256": sha256(full_plan), "full_shards": len(by_region["kunshan"]),
+        "full_raw_rows": sum(int(x["raw_rows"]) for x in by_region["kunshan"]),
+        "partitions": [{"partition_id": "part%d" % i, "path": str(path),
+                        "sha256": sha256(path), "shards": len(ks_parts[i]),
+                        "raw_rows": sum(int(x["raw_rows"]) for x in ks_parts[i])}
+                       for i, path in enumerate(part_paths)],
+    }
+    atomic_json(KS / "partition_manifest.json", manifest)
     wz_rows = []
     for row in by_region["wuzhen"]:
         row = dict(row); row["sidecar_path"] = WZ_STATE + "/sidecars/" + Path(row["sidecar_path"]).name; wz_rows.append(row)
     local_wz_plan = STATE / "wuzhen_plan.jsonl"
     local_wz_plan.write_text("".join(json.dumps(x, sort_keys=True) + "\n" for x in wz_rows))
-    return by_region["kunshan"], wz_rows, local_wz_plan
+    return by_region["kunshan"], part_paths, wz_rows, local_wz_plan
+
+
+def promote_ks_compute_complete(full_plan, part_paths, checkpoints):
+    """Publish one global compute marker only after both disjoint parts finish."""
+    full_rows = [json.loads(x) for x in Path(full_plan).read_text().splitlines() if x.strip()]
+    full_ids = {x["shard_id"] for x in full_rows}
+    observed = set(); markers = []
+    for index, plan_path in enumerate(part_paths):
+        marker_path = Path(checkpoints) / ("REGION_QUEUE_COMPLETE.part%d.json" % index)
+        if not marker_path.is_file(): return False
+        rows = [json.loads(x) for x in Path(plan_path).read_text().splitlines() if x.strip()]
+        ids = {x["shard_id"] for x in rows}; marker = json.loads(marker_path.read_text())
+        if observed & ids: raise RuntimeError("completed KS partition plans overlap")
+        observed.update(ids)
+        if (marker.get("status") != "compute_queue_complete"
+                or marker.get("partition_id") != "part%d" % index
+                or marker.get("planned_shards") != len(rows)
+                or marker.get("completed_plan_shards") != len(rows)
+                or marker.get("plan_sha256") != sha256(plan_path)):
+            raise RuntimeError("KS partition completion marker mismatch")
+        for sid in ids:
+            if not ((Path(checkpoints) / (sid + ".queued.json")).is_file()
+                    or (Path(checkpoints) / (sid + ".published.json")).is_file()):
+                raise RuntimeError("KS partition marker lacks a shard receipt")
+        markers.append(marker)
+    if observed != full_ids or len(full_ids) != len(full_rows):
+        raise RuntimeError("completed KS partition union differs from full plan")
+    atomic_json(Path(checkpoints) / "REGION_PARTS_QUEUE_COMPLETE.json", {
+        "status": "compute_queue_complete", "planned_shards": len(full_rows),
+        "partition_count": len(part_paths), "partition_markers": markers,
+        "full_plan_sha256": sha256(full_plan), "final_publication_complete": False,
+    })
+    return True
 
 
 def distribute_wz(wz_rows, local_plan):
@@ -123,11 +203,13 @@ def distribute_wz(wz_rows, local_plan):
 def submit_once_local(label, name, script):
     receipt = STATE / (label + ".submission.json")
     if receipt.exists(): return json.loads(receipt.read_text())["job_id"]
+    intent = STATE / (label + ".intent.json")
     found = local_jobs(name)
     if len(found) > 1: raise RuntimeError("ambiguous local jobs")
     if found: job_id = found[0]
     else:
-        atomic_json(STATE / (label + ".intent.json"), {"status": "intent", "job_name": name})
+        if intent.exists(): raise RuntimeError("prior local submission intent unresolved; refusing retry")
+        atomic_json(intent, {"status": "intent", "job_name": name})
         result = run(["sbatch", "--parsable", "--job-name=" + name, str(script)], 90, check=False)
         job_id = parse_job_id(result.stdout)
         if not job_id:
@@ -141,11 +223,13 @@ def submit_once_local(label, name, script):
 def submit_once_wz():
     receipt = STATE / "wuzhen_semantic.submission.json"; name = "linkup-semantic-wz-v1"
     if receipt.exists(): return json.loads(receipt.read_text())["job_id"]
+    intent = STATE / "wuzhen_semantic.intent.json"
     found = wz_jobs(name)
     if len(found) > 1: raise RuntimeError("ambiguous Wuzhen jobs")
     if found: job_id = found[0]
     else:
-        atomic_json(STATE / "wuzhen_semantic.intent.json", {"status": "intent", "job_name": name})
+        if intent.exists(): raise RuntimeError("prior Wuzhen submission intent unresolved; refusing retry")
+        atomic_json(intent, {"status": "intent", "job_name": name})
         result = wz("cd %s && sbatch --parsable --job-name=%s run_semantic_wuzhen.sbatch" % (WZ_RELEASE, name), 90, check=False)
         job_id = parse_job_id(result.stdout)
         if not job_id:
@@ -156,9 +240,10 @@ def submit_once_wz():
     return job_id
 
 
-def wait_publication(ks_count, wz_count):
+def wait_publication(ks_count, ks_part_paths, wz_count):
     deadline = time.time() + 3 * 24 * 3600
     while time.time() < deadline:
+        promote_ks_compute_complete(KS / "plan.jsonl", ks_part_paths, KS / "checkpoints")
         ks_marker = KS / "checkpoints" / "REGION_PUBLISHED_COMPLETE.json"
         remote = wz("test -f %s/checkpoints/REGION_PUBLISHED_COMPLETE.json && cat %s/checkpoints/REGION_PUBLISHED_COMPLETE.json || true" % (WZ_STATE, WZ_STATE), 60).stdout.strip()
         if ks_marker.exists() and remote:
@@ -176,13 +261,16 @@ def main():
     lock = (STATE / "semantic-controller.lock").open("a+")
     try: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except BlockingIOError: raise SystemExit("semantic controller already active")
-    wait_prep(); ks_rows, wz_rows, wz_plan = prepare_plans(); distribute_wz(wz_rows, wz_plan)
-    ks_job = submit_once_local("kunshan_semantic", "linkup-semantic-ks-v1", KS_RELEASE / "run_semantic_kunshan.sbatch")
+    wait_prep(); ks_rows, ks_parts, wz_rows, wz_plan = prepare_plans(); distribute_wz(wz_rows, wz_plan)
+    ks_jobs = [
+        submit_once_local("kunshan_semantic_part0", "linkup-semantic-ks-part0-v1", KS_RELEASE / "run_semantic_kunshan.sbatch"),
+        submit_once_local("kunshan_semantic_part1", "linkup-semantic-ks-part1-v1", KS_RELEASE / "run_semantic_kunshan_second.sbatch"),
+    ]
     wz_job = submit_once_wz()
     atomic_json(STATE / "SEMANTIC_JOBS_SUBMITTED.json",
-                {"status": "submitted", "kunshan_job": ks_job, "wuzhen_job": wz_job,
+                {"status": "submitted", "kunshan_jobs": ks_jobs, "wuzhen_job": wz_job,
                  "final_publication_complete": False})
-    wait_publication(len(ks_rows), len(wz_rows))
+    wait_publication(len(ks_rows), ks_parts, len(wz_rows))
 
 
 if __name__ == "__main__":
