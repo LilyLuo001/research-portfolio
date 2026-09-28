@@ -1,7 +1,7 @@
 {
-  "snapshot_created_utc": "2026-09-27T23:26:38.842613+00:00",
+  "snapshot_created_utc": "2026-09-28T08:44:25.469678+00:00",
   "source": "local private working tree; paths are relative and content-addressed",
-  "file_count": 198,
+  "file_count": 210,
   "files": [
     {
       "path": "CLEANING_PROGRESS_20260927.md",
@@ -38,6 +38,18 @@
       "source_sha256": "30233b69e388a7115d96d520bfcdc1078c5c6b6200691e04adb4e24f3e953645",
       "snapshot_sha256": "30233b69e388a7115d96d520bfcdc1078c5c6b6200691e04adb4e24f3e953645",
       "size_bytes": 3986
+    },
+    {
+      "path": "FINAL_CLEANING_CONTRACT_20260928.md",
+      "source_sha256": "8c111e66769a1c722e41ca4e5a3afc713d6229598890a535e4c6caf1d276d112",
+      "snapshot_sha256": "8c111e66769a1c722e41ca4e5a3afc713d6229598890a535e4c6caf1d276d112",
+      "size_bytes": 4973
+    },
+    {
+      "path": "RELEASE_STATUS_20260928.md",
+      "source_sha256": "665fe0203abe3dddae5f1ad246ec396fb025ad4fff6d7f0dc569b3f4f4b2f793",
+      "snapshot_sha256": "665fe0203abe3dddae5f1ad246ec396fb025ad4fff6d7f0dc569b3f4f4b2f793",
+      "size_bytes": 1542
     },
     {
       "path": "STAGE_B_RESEARCH_ALIGNED_PLAN.md",
@@ -554,6 +566,66 @@
       "source_sha256": "d5d97869102849084dc9e8b7947bb09e515a30c423627c45fecdd39cebcce6f8",
       "snapshot_sha256": "d5d97869102849084dc9e8b7947bb09e515a30c423627c45fecdd39cebcce6f8",
       "size_bytes": 3854
+    },
+    {
+      "path": "stage_c_release_v1/DECISION.md",
+      "source_sha256": "c13f9d8976b932a52d82562b0eec0f9a70973c508d2e7b7560c0e5c3f2172bab",
+      "snapshot_sha256": "c13f9d8976b932a52d82562b0eec0f9a70973c508d2e7b7560c0e5c3f2172bab",
+      "size_bytes": 3638
+    },
+    {
+      "path": "stage_c_release_v1/FULL_RUN_DAG.md",
+      "source_sha256": "de876db7f4896236127184c2ca4712619d40da738e14cc16d9cca72de1579fb8",
+      "snapshot_sha256": "de876db7f4896236127184c2ca4712619d40da738e14cc16d9cca72de1579fb8",
+      "size_bytes": 2663
+    },
+    {
+      "path": "stage_c_release_v1/enrichment.py",
+      "source_sha256": "cf0cf8fae3451d463430c14ebe6bf2a6dcc72b8239589ed2fbeb20ef0c4451c6",
+      "snapshot_sha256": "cf0cf8fae3451d463430c14ebe6bf2a6dcc72b8239589ed2fbeb20ef0c4451c6",
+      "size_bytes": 16342
+    },
+    {
+      "path": "stage_c_release_v1/lean_writer.py",
+      "source_sha256": "67c22e5db1d61f7a909235150a0254f9af9bd2ccd6f1958aa6d7a555e32b99d5",
+      "snapshot_sha256": "67c22e5db1d61f7a909235150a0254f9af9bd2ccd6f1958aa6d7a555e32b99d5",
+      "size_bytes": 16000
+    },
+    {
+      "path": "stage_c_release_v1/prepare_shard_input.py",
+      "source_sha256": "2b158366da816173b2e40ebce90200ac875e90738d04da524415a44dd6260648",
+      "snapshot_sha256": "2b158366da816173b2e40ebce90200ac875e90738d04da524415a44dd6260648",
+      "size_bytes": 5365
+    },
+    {
+      "path": "stage_c_release_v1/regional_runner.py",
+      "source_sha256": "0e64659c133d74561ed136cbc0a583298a5e5ac497a46b4796ca630d6e9e27e1",
+      "snapshot_sha256": "0e64659c133d74561ed136cbc0a583298a5e5ac497a46b4796ca630d6e9e27e1",
+      "size_bytes": 9761
+    },
+    {
+      "path": "stage_c_release_v1/run_pilot_kunshan.sbatch",
+      "source_sha256": "ba46956435501ec22c682580bc81399e82641c466d44b7073b9eebb4ad43d8c9",
+      "snapshot_sha256": "ba46956435501ec22c682580bc81399e82641c466d44b7073b9eebb4ad43d8c9",
+      "size_bytes": 1050
+    },
+    {
+      "path": "stage_c_release_v1/run_region.template.sbatch",
+      "source_sha256": "5dcec64d03491d1b64f6cd0bff1f7ed56e1b2c989be0183cbe30932b542f98b1",
+      "snapshot_sha256": "5dcec64d03491d1b64f6cd0bff1f7ed56e1b2c989be0183cbe30932b542f98b1",
+      "size_bytes": 1156
+    },
+    {
+      "path": "stage_c_release_v1/validate_pilot.py",
+      "source_sha256": "c31b394d497468c3ca797af764ccb66963a458bb0367023b5bf2a1344d00318d",
+      "snapshot_sha256": "c31b394d497468c3ca797af764ccb66963a458bb0367023b5bf2a1344d00318d",
+      "size_bytes": 3528
+    },
+    {
+      "path": "stage_c_release_v1/verified_transfer.py",
+      "source_sha256": "6e19b043271082fe3d64a2d3cdbbd10f8ab5d84d9ac6f3112568420d293e43a0",
+      "snapshot_sha256": "6e19b043271082fe3d64a2d3cdbbd10f8ab5d84d9ac6f3112568420d293e43a0",
+      "size_bytes": 10398
     },
     {
       "path": "stage_c_v6_batch/build_first_tables.py",
