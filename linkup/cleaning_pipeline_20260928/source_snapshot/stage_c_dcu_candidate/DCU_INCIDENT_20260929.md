@@ -48,3 +48,23 @@ intervals overlap and must not be added. The single HIP call reported 740.410
 kernel milliseconds. One device sample observed 100% busy, 1.97% VRAM use,
 and 99 W, which confirms activity at that instant but cannot establish
 continuous saturation. CPU parsing remains the dominant measured stage.
+
+## Two-node continuation
+
+After six of the 757 DCU-version shards were sealed, the remaining 751 were
+frozen into two disjoint plans: 378 shards representing 45,432,289 raw rows
+and 373 shards representing 45,432,965 raw rows. Jobs **45493551** and
+**45493552** then ran concurrently on different Wuzhen nodes, each with 32
+CPUs, 96 GB, and one DCU. Their first sealed shards contained 84,059 and
+83,318 rows respectively; the first partition subsequently sealed a second
+shard.
+
+Each partition writes to its own 3.5 GB buffer under a shared checkpoint
+namespace. Together with the measured 0.748 GB preserved root backlog, this
+stays below the existing 8 GB regional buffer limit. The publisher for the two
+new subdirectories and the existing root publisher scan disjoint directory
+levels, so they cannot consume the same sealed shard. A separate controller
+accepts completion only when the frozen sets reconcile as 6 + 378 + 373 = 757,
+then applies the existing mixed-version 349 + 757 = 1,106 code, provenance,
+and receipt gate. These observations establish concurrent execution and valid
+first outputs; they do not establish continuous DCU saturation or a speedup.

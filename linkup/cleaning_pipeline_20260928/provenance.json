@@ -1,7 +1,7 @@
 {
-  "snapshot_created_utc": "2026-09-29T04:46:06.146993+00:00",
+  "snapshot_created_utc": "2026-09-29T05:06:48.812976+00:00",
   "source": "local private working tree; paths are relative and content-addressed",
-  "file_count": 253,
+  "file_count": 257,
   "files": [
     {
       "path": "CLEANING_PROGRESS_20260927.md",
@@ -718,6 +718,24 @@
       "size_bytes": 5353
     },
     {
+      "path": "stage_c_release_v1/wz_dcu_split_controller.py",
+      "source_sha256": "dbdad84eecde83057049b2ce40eeeb9595c0ddecc13dc1af0480c79fca2d0316",
+      "snapshot_sha256": "dbdad84eecde83057049b2ce40eeeb9595c0ddecc13dc1af0480c79fca2d0316",
+      "size_bytes": 3319
+    },
+    {
+      "path": "stage_c_release_v1/run_wz_dcu_split_publisher.sh",
+      "source_sha256": "4d869a2f5ba6360cc4d3ac8bc0624537cd8f18a24e4ee6d0100a50a3f4b573ca",
+      "snapshot_sha256": "4d869a2f5ba6360cc4d3ac8bc0624537cd8f18a24e4ee6d0100a50a3f4b573ca",
+      "size_bytes": 1206
+    },
+    {
+      "path": "stage_c_release_v1/run_wz_dcu_split_controller.sh",
+      "source_sha256": "130d43431d75fa48edfb4b5eb78aa3b5a6c8eb6bd9e6ab6760084a5e66b6e7cb",
+      "snapshot_sha256": "130d43431d75fa48edfb4b5eb78aa3b5a6c8eb6bd9e6ab6760084a5e66b6e7cb",
+      "size_bytes": 761
+    },
+    {
       "path": "stage_c_release_v1/semantic_server_controller.py",
       "source_sha256": "f7c7df98487e4adf06bfa77f1f89521e80046107346f190ed406c56d3ca6eaf8",
       "snapshot_sha256": "f7c7df98487e4adf06bfa77f1f89521e80046107346f190ed406c56d3ca6eaf8",
@@ -778,6 +796,12 @@
       "size_bytes": 9445
     },
     {
+      "path": "stage_c_dcu_candidate/run_wuzhen_dcu_split.sbatch",
+      "source_sha256": "d19fac116dbcb3c70d4bf5226c2a651d81e5cdecbfc02837ff9b4d0f68ae4bbe",
+      "snapshot_sha256": "d19fac116dbcb3c70d4bf5226c2a651d81e5cdecbfc02837ff9b4d0f68ae4bbe",
+      "size_bytes": 7967
+    },
+    {
       "path": "stage_c_dcu_candidate/submit_wuzhen_dcu_remaining.sh",
       "source_sha256": "afe5c9c821cc96c7ff6714260eb65e086815afe29853451e2028927e9122653d",
       "snapshot_sha256": "afe5c9c821cc96c7ff6714260eb65e086815afe29853451e2028927e9122653d",
@@ -803,9 +827,9 @@
     },
     {
       "path": "stage_c_dcu_candidate/DCU_INCIDENT_20260929.md",
-      "source_sha256": "8dbe0c1a265f1fbb2c364cac3497fcb81a03f9b83d541db994be9b518ca61034",
-      "snapshot_sha256": "8dbe0c1a265f1fbb2c364cac3497fcb81a03f9b83d541db994be9b518ca61034",
-      "size_bytes": 2976
+      "source_sha256": "d6754d92041e94ae244313a72f51f36bd8497d9a014cc9b1057c1e2ae3d824de",
+      "snapshot_sha256": "d6754d92041e94ae244313a72f51f36bd8497d9a014cc9b1057c1e2ae3d824de",
+      "size_bytes": 4146
     },
     {
       "path": "stage_c_v6_batch/build_first_tables.py",
