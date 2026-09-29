@@ -3,7 +3,8 @@
 Wuzhen job 45489216 was canceled at 12:18:33 +08:00 after 5,174 seconds,
 accounting for 1.4372 card-hours. It completed no new shards. The previously
 completed 349 shards remain preserved: 270 are published and 79 are sealed.
-Production remains stopped, and no replacement job has been submitted.
+At that incident checkpoint, production was stopped and no replacement job
+had been submitted.
 
 A 113-second observation containing 15 samples identified the assigned device
 as `renderD128`; Slurm device index 0 and the process-visible device agreed.
@@ -23,3 +24,17 @@ This note records the incident and bounded accounting evidence only. Raw logs,
 private paths, credentials, and private shard manifests are excluded. The
 separate work to improve stage logging and timeouts was incomplete at this
 checkpoint and is not claimed as a fix.
+
+## Recovery status
+
+After the single-owner 8,192-row run completed its writer path, the writer was
+updated to reuse one 32-process pool for parallel normalization and subsequent
+authoritative CPU parsing/writing, with one coordinator-owned DCU batch scan
+between those phases. Stage wall times and HIP-event kernel milliseconds are
+now included in the lean completion receipt.
+
+Recovery job **45492940** started at 12:43:48 +08:00 on `b01r3n14` with 32
+CPUs, 96 GB, one DCU, and a 48-hour limit. At the first recorded checkpoint it
+was running, but its first new shard output had not yet been validated. This is
+not evidence of continuous accelerator saturation or an end-to-end speedup.
+The preserved 349 shards remain outside the 757-shard recovery plan.

@@ -7,9 +7,14 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import fcntl
+import os
+import re
 import struct
 import subprocess
+import sys
 import tempfile
+import time
 from pathlib import Path
 from typing import Iterable, List, Sequence
 
@@ -149,18 +154,55 @@ def _read_output(path: Path, expected: int) -> List[int]:
     return list(struct.unpack_from("<%dI" % count, raw, header))
 
 
-def gpu_masks(texts: Sequence[str], executable: Path) -> List[int]:
-    """Run one batched HIP invocation; the executable performs no regex logic."""
+def gpu_masks_with_metrics(texts: Sequence[str], executable: Path):
+    """Run one batched HIP invocation and return masks plus measured timings."""
+    run_timeout = int(os.environ.get("LINKUP_DCU_SCAN_TIMEOUT_SECONDS", "120"))
+    lock_timeout = int(os.environ.get("LINKUP_DCU_LOCK_TIMEOUT_SECONDS", "180"))
+    lock_path = Path(os.environ.get("LINKUP_DCU_LOCK_PATH", "/tmp/linkup-dcu-owner.lock"))
+    if not 5 <= run_timeout <= 600 or not 5 <= lock_timeout <= 600:
+        raise RuntimeError("DCU scan/lock timeout must be 5..600 seconds")
     with tempfile.TemporaryDirectory(prefix="linkup-dcu-mask.") as temp:
         input_path = Path(temp) / "input.bin"
         output_path = Path(temp) / "output.bin"
         _write_input(input_path, texts)
-        subprocess.run([str(executable), str(input_path), str(output_path)], check=True)
+        with lock_path.open("a+") as lock:
+            deadline = time.monotonic() + lock_timeout
+            while True:
+                try:
+                    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    break
+                except BlockingIOError:
+                    if time.monotonic() >= deadline:
+                        raise TimeoutError("timed out waiting for the single DCU scanner owner")
+                    time.sleep(0.1)
+            try:
+                started = time.monotonic()
+                completed = subprocess.run(
+                    [str(executable), str(input_path), str(output_path)],
+                    check=True, timeout=run_timeout, text=True,
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                )
+                wall_seconds = time.monotonic() - started
+                if completed.stdout:
+                    sys.stdout.write(completed.stdout); sys.stdout.flush()
+                if completed.stderr:
+                    sys.stderr.write(completed.stderr); sys.stderr.flush()
+            finally:
+                fcntl.flock(lock, fcntl.LOCK_UN)
         masks = _read_output(output_path, len(texts))
     invalid = [value for value in masks if value & ~ALL_MASK]
     if invalid:
         raise RuntimeError("DCU returned unknown mask bits")
-    return masks
+    matches = re.findall(r"dcu_scan kernel_ms=([0-9]+(?:\.[0-9]+)?)", completed.stderr)
+    if len(matches) != 1:
+        raise RuntimeError("DCU scanner did not report exactly one kernel timing")
+    return masks, {"subprocess_wall_seconds": wall_seconds,
+                   "kernel_milliseconds": float(matches[0]), "rows": len(texts)}
+
+
+def gpu_masks(texts: Sequence[str], executable: Path) -> List[int]:
+    """Compatibility wrapper returning only the conservative mask."""
+    return gpu_masks_with_metrics(texts, executable)[0]
 
 
 def enrich_with_mask(enrichment, payload: dict, mask: int) -> dict:

@@ -80,6 +80,18 @@ def extract_enrich_batch(texts: Sequence[str], v6, enrichment,
             # Preserve the authoritative row-level error wording through V6.
             normalized.append(""); flags.append({}); valid.append(False)
     masks = gpu_masks(normalized, gpu_executable) if gpu_executable else cpu_masks(normalized)
+    return extract_enrich_prepared_batch(
+        texts, normalized, flags, valid, masks, v6, enrichment
+    )
+
+
+def extract_enrich_prepared_batch(texts: Sequence[str], normalized: Sequence[str],
+                                  flags: Sequence[dict], valid: Sequence[bool],
+                                  masks: Sequence[int], v6, enrichment):
+    """Use coordinator-normalized text and masks without another GPU context."""
+    lengths = {len(texts), len(normalized), len(flags), len(valid), len(masks)}
+    if len(lengths) != 1:
+        raise ValueError("prepared batch lengths differ")
     payloads = []
     for text, value, value_flags, is_valid, mask in zip(texts, normalized, flags, valid, masks):
         if not isinstance(text, str):
@@ -95,5 +107,4 @@ def extract_enrich_batch(texts: Sequence[str], v6, enrichment,
         payloads.append(_apply_v6(payload, text, v6))
     results = [enrich_with_mask(enrichment, payload, mask)
                for payload, mask in zip(payloads, masks)]
-    return payloads, results, masks
-
+    return payloads, results, list(masks)

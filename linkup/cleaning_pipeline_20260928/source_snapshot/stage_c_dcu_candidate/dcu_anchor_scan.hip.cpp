@@ -130,6 +130,7 @@ int main(int argc, char** argv) {
     std::fprintf(stderr, "usage: dcu_anchor_scan INPUT.bin OUTPUT.bin\n");
     return 2;
   }
+  std::fprintf(stderr, "dcu_scan stage=input_open\n"); std::fflush(stderr);
   std::ifstream input(argv[1], std::ios::binary);
   char magic[8]; input.read(magic, 8);
   if (!input || std::string(magic, 8) != std::string(MAGIC, 8)) {
@@ -148,18 +149,35 @@ int main(int argc, char** argv) {
   if (static_cast<size_t>(input.gcount()) != bytes.size()) {
     std::fprintf(stderr, "truncated text payload\n"); return 2;
   }
+  std::fprintf(stderr, "dcu_scan stage=input_loaded rows=%u bytes=%llu\n", count,
+               static_cast<unsigned long long>(bytes.size())); std::fflush(stderr);
 
   unsigned char* d_bytes = nullptr; uint64_t* d_offsets = nullptr; uint32_t* d_masks = nullptr;
+  std::fprintf(stderr, "dcu_scan stage=runtime_alloc_begin\n"); std::fflush(stderr);
   check(hipMalloc(&d_bytes, bytes.size() ? bytes.size() : 1), "hipMalloc bytes");
   check(hipMalloc(&d_offsets, offsets.size() * sizeof(uint64_t)), "hipMalloc offsets");
   check(hipMalloc(&d_masks, (count ? count : 1) * sizeof(uint32_t)), "hipMalloc masks");
+  std::fprintf(stderr, "dcu_scan stage=runtime_alloc_done\n"); std::fflush(stderr);
   if (!bytes.empty()) check(hipMemcpy(d_bytes, bytes.data(), bytes.size(), hipMemcpyHostToDevice), "copy bytes");
   check(hipMemcpy(d_offsets, offsets.data(), offsets.size() * sizeof(uint64_t), hipMemcpyHostToDevice), "copy offsets");
   check(hipMemset(d_masks, 0, count * sizeof(uint32_t)), "clear masks");
+  float kernel_ms = 0.0f;
   if (count) {
+    hipEvent_t kernel_start, kernel_stop;
+    check(hipEventCreate(&kernel_start), "create kernel start event");
+    check(hipEventCreate(&kernel_stop), "create kernel stop event");
+    std::fprintf(stderr, "dcu_scan stage=kernel_launch\n"); std::fflush(stderr);
+    check(hipEventRecord(kernel_start, 0), "record kernel start");
     hipLaunchKernelGGL(scan, dim3(count), dim3(64), 0, 0, d_bytes, d_offsets, d_masks, count);
     check(hipGetLastError(), "launch scan");
+    check(hipEventRecord(kernel_stop, 0), "record kernel stop");
+    check(hipEventSynchronize(kernel_stop), "synchronize scan event");
+    check(hipEventElapsedTime(&kernel_ms, kernel_start, kernel_stop), "measure scan event");
+    check(hipEventDestroy(kernel_stop), "destroy kernel stop event");
+    check(hipEventDestroy(kernel_start), "destroy kernel start event");
+    std::fprintf(stderr, "dcu_scan stage=kernel_complete\n"); std::fflush(stderr);
   }
+  std::fprintf(stderr, "dcu_scan kernel_ms=%.6f\n", kernel_ms); std::fflush(stderr);
   std::vector<uint32_t> masks(count);
   if (count) check(hipMemcpy(masks.data(), d_masks, count * sizeof(uint32_t), hipMemcpyDeviceToHost), "copy masks");
   hipFree(d_masks); hipFree(d_offsets); hipFree(d_bytes);
@@ -169,5 +187,6 @@ int main(int argc, char** argv) {
   output.write(reinterpret_cast<const char*>(&count), sizeof(count));
   output.write(reinterpret_cast<const char*>(masks.data()), masks.size() * sizeof(uint32_t));
   if (!output) { std::fprintf(stderr, "failed to write output\n"); return 2; }
+  std::fprintf(stderr, "dcu_scan stage=output_written rows=%u\n", count); std::fflush(stderr);
   return 0;
 }

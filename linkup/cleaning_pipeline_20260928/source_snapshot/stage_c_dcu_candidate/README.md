@@ -46,10 +46,20 @@ Any frozen-module change fails closed until the anchor proof is reviewed.
 ## Remaining-shard production entrypoint
 
 `lean_writer_dcu.py` is a drop-in writer CLI. It normalizes batches once, sends
-up to 4,096 normalized texts to the HIP scanner (4,096 independent blocks of
-64 threads), then runs the unchanged CPU authority for all retained families.
+up to 131,072 normalized texts to one coordinator-owned HIP scanner (one block
+of 64 threads per text), then runs the unchanged CPU authority for all retained
+families. CPU workers never create HIP contexts.
 It fails if the compiled scanner is missing, so a run cannot silently fall back
 to CPU-only behavior.
+
+The first production attempt used one scanner subprocess per CPU worker. On
+2026-09-29, 22 scanners remained CPU-running for 84 minutes while device busy
+stayed at zero; the job was canceled with no new shard. The exact DTK/HSA cause
+was not proven. The replacement has one scanner owner, a 120-second subprocess
+deadline, a lock deadline, and stage-only logs around input, runtime allocation,
+kernel launch/completion, and output. It must pass a short startup check before
+any long job is reopened. `hipconfig --version` and `ldd` are captured to locate
+runtime-library mismatches without logging source text.
 
 The entrypoint also fixes an independent input bottleneck: the coordinator
 decodes each source Parquet row group once and writes the original 32 equal row
