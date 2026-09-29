@@ -161,3 +161,15 @@ buffer, 32-CPU/96-GB request, and dependency preflight while requesting no
 accelerator resource. At the 09:42:34 checkpoint, Kunshan part 0 job 123218160
 and Wuzhen job 45464212 continued running unchanged. No completed shard was
 recomputed or discarded.
+
+## Wuzhen publication pause — 2026-09-29
+
+Intermittent SSH key-exchange failures prevented the Wuzhen publisher from
+reliably reaching the Huazhong E-shell. The publisher remained fail-closed:
+generated outputs were retained unless byte, SHA-256, manifest, and target
+publication checks passed, and no raw input was deleted. At 10:25 +08:00 the
+user authorized stopping Wuzhen semantic compute before its bounded local
+buffer filled. The stop preserved 349 completed shards: 97 published and 252
+sealed locally. The remaining 757 of 1,106 shards were not completed. Kunshan
+part 0 and part 1 continued on their CPU jobs unchanged. Recovery must reuse
+the existing published and sealed receipts rather than recomputing them.
