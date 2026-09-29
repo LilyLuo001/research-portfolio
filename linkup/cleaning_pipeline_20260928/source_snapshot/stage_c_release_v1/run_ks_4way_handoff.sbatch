@@ -21,7 +21,7 @@ export PYTHONPATH=${ROOT}/stage_b/runtime_py38
 PY=/public/software/apps/python/3.8.10/bin/python3
 timeout --signal=TERM 300s "${PY}" "${RELEASE}/ks_4way_handoff.py" \
   --full-plan "${STATE}/plan.jsonl" --checkpoint-root "${STATE}/checkpoints" \
-  --output-root "${CONTROL}" --old-job-ids 123218160 123251951 --max-prepare-seconds 300
+  --output-root "${CONTROL}" --old-job-ids 123218160 123271262 --max-prepare-seconds 300
 status=$("${PY}" -c 'import json,sys; print(json.load(open(sys.argv[1]))["status"])' "${CONTROL}/KS_4WAY_HANDOFF.json")
 test "${status}" != already_complete || exit 0
 

@@ -23,7 +23,22 @@ def read_jsonl(path: Path) -> list[dict]:
 
 
 def tree_bytes(path: Path) -> int:
-    return sum(p.stat().st_size for p in path.rglob("*") if p.is_file()) if path.exists() else 0
+    """Measure a buffer while the publisher may remove sealed files."""
+    if not path.exists():
+        return 0
+    total = 0
+    try:
+        for item in path.rglob("*"):
+            try:
+                if item.is_file():
+                    total += item.stat().st_size
+            except FileNotFoundError:
+                # A verified publisher removed this file between discovery and
+                # stat.  That is normal progress, not a compute failure.
+                continue
+    except FileNotFoundError:
+        pass
+    return total
 
 
 def run(argv: list[str], timeout: Optional[int] = None) -> None:
