@@ -148,3 +148,16 @@ argument smoke checks. Recovery job **123218160** was pending for resources at
 part 0 while retaining the old audit record. Part 1 job 123214693 and the
 Wuzhen run were left unchanged. Both Kunshan submission scripts now fail early
 with a clear message unless all four required release modules are readable.
+
+## Queue update — 2026-09-29
+
+Kunshan part 1 job 123214693 remained pending for its entire lifetime and was
+canceled at zero runtime after the CPU queue was projected to start earlier.
+Its audit record is retained. The otherwise identical CPU recovery job
+**123251951** (`linkup-semantic-ks-part1-v1-r2-cpu`) started on `kshctest02`
+at 09:42:17 +08:00 on `j05r4n18`; the canonical part-1 receipt and semantic-job
+manifest now point to it. The CPU script preserves the sealed part-1 plan,
+buffer, 32-CPU/96-GB request, and dependency preflight while requesting no
+accelerator resource. At the 09:42:34 checkpoint, Kunshan part 0 job 123218160
+and Wuzhen job 45464212 continued running unchanged. No completed shard was
+recomputed or discarded.
