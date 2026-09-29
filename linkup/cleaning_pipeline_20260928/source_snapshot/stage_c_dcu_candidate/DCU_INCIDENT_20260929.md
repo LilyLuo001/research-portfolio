@@ -38,3 +38,13 @@ CPUs, 96 GB, one DCU, and a 48-hour limit. At the first recorded checkpoint it
 was running, but its first new shard output had not yet been validated. This is
 not evidence of continuous accelerator saturation or an end-to-end speedup.
 The preserved 349 shards remain outside the 757-shard recovery plan.
+
+At 12:45:06 +08:00, the first recovery shard completed, sealed, and queued:
+83,544 rows in 105.541 seconds. Measured stages were 10.982 seconds for
+normalization, 2.327 seconds for the GPU-call phase, and 86.613 seconds for the
+parallel CPU parse/write phase. Within the latter phase, the worker interval
+unions were 85.875 seconds for parsing and 6.966 seconds for writing; those
+intervals overlap and must not be added. The single HIP call reported 740.410
+kernel milliseconds. One device sample observed 100% busy, 1.97% VRAM use,
+and 99 W, which confirms activity at that instant but cannot establish
+continuous saturation. CPU parsing remains the dominant measured stage.
