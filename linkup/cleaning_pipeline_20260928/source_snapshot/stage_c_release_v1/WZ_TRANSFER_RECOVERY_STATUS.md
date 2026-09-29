@@ -17,3 +17,18 @@ remaining 757 shards had not completed. Raw input was not deleted. Kunshan
 part 0 and part 1 continued on their CPU jobs and were not changed.
 
 Unresolved operational dependency: new SSH sessions from Wuzhen to the Huazhong E-shell must become available, or an approved persistent relay must be deployed. Final publication timing cannot be estimated while this connection-layer failure continues. Any recovery must resume from the existing published and sealed receipts rather than recomputing those 349 shards.
+
+## DCU remaining-shard recovery
+
+The first DCU submission, job 45489052, was canceled. The login environment
+had exported `SBATCH_GRES_FLAGS` / `SLURM_GRES_FLAGS=enforce-binding`, which
+overrode the reviewed batch directive and constrained the CPU request. The
+fail-closed submission wrapper now removes both inherited variables and passes
+`--gres-flags=disable-binding` explicitly on the `sbatch` command line.
+
+Authoritative recovery job **45489216** started at 10:52:19 +08:00 on
+`b01r3n14` with 32 CPUs, 96 GB, and one DCU. At 10:53:22 the 32-worker regional
+runner and an actual `dcu_anchor_scan` process were observed. The run retains
+the original 349 completed shards and addresses only the remaining 757. This
+is execution evidence, not a claim of continuous 100% accelerator utilization
+or improved end-to-end speed. No new test suite or performance gate was run.

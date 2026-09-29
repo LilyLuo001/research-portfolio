@@ -5,8 +5,8 @@
 #SBATCH --gres-flags=disable-binding
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=24G
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=96G
 #SBATCH --time=2-00:00:00
 #SBATCH --output=/work/home/lilysharp/linkup_release_v1/semantic_v1/wuzhen/logs/compute-dcu-%j.out
 #SBATCH --error=/work/home/lilysharp/linkup_release_v1/semantic_v1/wuzhen/logs/compute-dcu-%j.err
@@ -64,7 +64,7 @@ python3 "${RELEASE}/regional_runner.py" \
   --buffer-root "${SEMANTIC}/buffer" --checkpoint-root "${SEMANTIC}/checkpoints" \
   --parser "${ROOT}/stage_c_v6/requirement_candidates.py" \
   --enrichment "${RELEASE}/enrichment.py" --lean-writer "${CANDIDATE}/lean_writer_dcu.py" \
-  --workers 8 --per-shard-output-cap-bytes 500000000 \
+  --workers 32 --per-shard-output-cap-bytes 500000000 \
   --buffer-cap-bytes 8000000000 --free-reserve-bytes 8000000000
 
 python3 - "${SEMANTIC}" "${RELEASE}" "${CANDIDATE}" "${LINKUP_DCU_EXECUTABLE_SHA256}" <<'PY'
