@@ -32,7 +32,7 @@ def load_plan(path):
     return [json.loads(x) for x in Path(path).read_text().splitlines() if x.strip()]
 
 
-def validate_region(plan, checkpoints, marker, region):
+def validate_region(plan, checkpoints, marker, region, expectations=None):
     published = json.loads(Path(marker).read_text())
     if published.get("status") != "complete" or published.get("published_receipts") != len(plan):
         raise RuntimeError(region + " publication marker mismatch")
@@ -43,7 +43,12 @@ def validate_region(plan, checkpoints, marker, region):
         if sid in seen or receipt.get("status") != "published_verified" or receipt.get("shard_id") != sid:
             raise RuntimeError(region + " receipt identity mismatch")
         seen.add(sid)
-        if complete.get("code_sha256") != CODE: raise RuntimeError(region + " code identity mismatch")
+        expected = CODE if expectations is None else expectations[sid]
+        if complete.get("code_sha256") != expected["code_sha256"]:
+            raise RuntimeError(region + " code identity mismatch")
+        if "dcu_provenance" in expected:
+            if complete.get("lean_complete", {}).get("dcu_provenance") != expected["dcu_provenance"]:
+                raise RuntimeError(region + " DCU provenance mismatch")
         for key in ("source_file", "source_bytes", "source_sha256_cached", "sidecar_sha256", "raw_rows"):
             if accounting.get(key) != row[key]: raise RuntimeError(region + " accounting mismatch: " + key)
         if sum(accounting["disposition_counts"].values()) != row["raw_rows"] or not accounting.get("row_conservation"):
@@ -51,6 +56,24 @@ def validate_region(plan, checkpoints, marker, region):
         raw += row["raw_rows"]; canonical += accounting["canonical_usa_rows"]
     return {"region": region, "shards": len(plan), "raw_rows": raw,
             "canonical_usa_singleton_rows": canonical, "published_receipts": len(seen)}
+
+
+def load_wz_expectations(checkpoints, plan):
+    path = Path(checkpoints) / "WZ_CODE_EXPECTATIONS.json"
+    value = json.loads(path.read_text())
+    expected = {}
+    for group in value.get("groups", []):
+        item = {"code_sha256": group["code_sha256"]}
+        if "dcu_provenance" in group: item["dcu_provenance"] = group["dcu_provenance"]
+        for sid in group["shard_ids"]:
+            if sid in expected: raise RuntimeError("Wuzhen expectation groups overlap")
+            expected[sid] = item
+    plan_ids = {row["shard_id"] for row in plan}
+    if set(expected) != plan_ids: raise RuntimeError("Wuzhen expectation groups do not cover frozen plan")
+    queue = json.loads((Path(checkpoints) / "REGION_QUEUE_COMPLETE.json").read_text())
+    if queue.get("code_expectations_sha256") != hashlib.sha256(path.read_bytes()).hexdigest():
+        raise RuntimeError("Wuzhen expectation digest mismatch")
+    return expected
 
 
 def main():
@@ -71,8 +94,11 @@ def main():
     run(scp + ["lilysharp@wuzh02.hpccube.com:" + WZ + "/plan.jsonl", str(archive / "plan.jsonl")], 600)
     os.replace(archive / "checkpoints.partial", archive / "checkpoints")
     ks_result = validate_region(load_plan(KS / "plan.jsonl"), KS / "checkpoints", ks_marker, "kunshan")
-    wz_result = validate_region(load_plan(archive / "plan.jsonl"), archive / "checkpoints",
-                                archive / "checkpoints" / "REGION_PUBLISHED_COMPLETE.json", "wuzhen")
+    wz_plan = load_plan(archive / "plan.jsonl")
+    wz_expectations = load_wz_expectations(archive / "checkpoints", wz_plan)
+    wz_result = validate_region(wz_plan, archive / "checkpoints",
+                                archive / "checkpoints" / "REGION_PUBLISHED_COMPLETE.json",
+                                "wuzhen", wz_expectations)
     gate = {"status": "complete", "code_sha256": CODE, "regions": [ks_result, wz_result],
             "total_shards": ks_result["shards"] + wz_result["shards"],
             "total_raw_description_rows": ks_result["raw_rows"] + wz_result["raw_rows"],
