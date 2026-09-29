@@ -173,3 +173,28 @@ buffer filled. The stop preserved 349 completed shards: 97 published and 252
 sealed locally. The remaining 757 of 1,106 shards were not completed. Kunshan
 part 0 and part 1 continued on their CPU jobs unchanged. Recovery must reuse
 the existing published and sealed receipts rather than recomputing them.
+
+## Kunshan four-way handoff — 2026-09-29
+
+The two existing Kunshan 32-CPU jobs remain running while the bounded handoff
+allocation waits. Job **123263819** was submitted to `kshctest02` for two nodes,
+two tasks, 32 CPUs per task, and 96 GB per node; it was pending for priority at
+the recorded checkpoint. Only after this allocation starts does the handoff
+take its lock, stop the two old jobs, wait for terminal states, and freeze
+their already valid shard receipts. It then divides only the remaining shards
+into four mutually exclusive, raw-row-balanced plans. Two plans run as
+one-node steps inside the allocation and two use one-node 32-CPU jobs, keeping
+the intended active ceiling at 128 CPUs.
+
+Each partition has its own 1 GB buffer and completion marker. A separate
+publisher scans only the four new buffer subdirectories. The completion
+controller validates that the frozen completed set plus all four partitions
+is an exact, disjoint cover of the 1,358-shard plan before emitting the shared
+regional completion marker. Parser, enrichment, writer, and output schema are
+unchanged. Because job 123263819 was still pending, this records deployment
+and queue state rather than a completed handoff.
+
+Visible Kunshan accounting from 2026-09-07 showed 665.171 CPU-hours across
+101 jobs, with the earliest returned row dated 2026-09-25. Subtracting that
+from 1,265.771 gives 600.600 CPU-hours arithmetically, but this is not an
+official balance and may omit earlier usage outside the query window.

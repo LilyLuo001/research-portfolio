@@ -1,7 +1,7 @@
 {
-  "snapshot_created_utc": "2026-09-29T05:06:48.812976+00:00",
+  "snapshot_created_utc": "2026-09-29T05:23:24.185837+00:00",
   "source": "local private working tree; paths are relative and content-addressed",
-  "file_count": 257,
+  "file_count": 263,
   "files": [
     {
       "path": "CLEANING_PROGRESS_20260927.md",
@@ -47,9 +47,9 @@
     },
     {
       "path": "RELEASE_STATUS_20260928.md",
-      "source_sha256": "540fb8f3769d01e35dac1d1e377d734e3309047770addc9d0ce28c87ed1cf013",
-      "snapshot_sha256": "540fb8f3769d01e35dac1d1e377d734e3309047770addc9d0ce28c87ed1cf013",
-      "size_bytes": 10893
+      "source_sha256": "321ae5c35a73e6ed141db360e7677da420c31d3afee9d673c8533bae1b092b1c",
+      "snapshot_sha256": "321ae5c35a73e6ed141db360e7677da420c31d3afee9d673c8533bae1b092b1c",
+      "size_bytes": 12397
     },
     {
       "path": "STAGE_B_RESEARCH_ALIGNED_PLAN.md",
@@ -1544,6 +1544,42 @@
       "source_sha256": "c78333317ddcad9680e95a5b849916197ced151dd02e63de0df27a4d66940e6b",
       "snapshot_sha256": "c78333317ddcad9680e95a5b849916197ced151dd02e63de0df27a4d66940e6b",
       "size_bytes": 1179
+    },
+    {
+      "path": "stage_c_release_v1/ks_4way_handoff.py",
+      "source_sha256": "18b2bd47c545d8792253d0bf4209b847b22e11939b2fe742bfdff24166b534cf",
+      "snapshot_sha256": "18b2bd47c545d8792253d0bf4209b847b22e11939b2fe742bfdff24166b534cf",
+      "size_bytes": 7659
+    },
+    {
+      "path": "stage_c_release_v1/run_ks_split_worker.sbatch",
+      "source_sha256": "c9ce8b099971fe45bf4c6b80084618e138be3ceb4f479e8c2c78dabb28ed5fa7",
+      "snapshot_sha256": "c9ce8b099971fe45bf4c6b80084618e138be3ceb4f479e8c2c78dabb28ed5fa7",
+      "size_bytes": 1354
+    },
+    {
+      "path": "stage_c_release_v1/run_ks_4way_handoff.sbatch",
+      "source_sha256": "86f36b22450cba3be8494f801f7fb3549dc42643a48f32e16d6ca5f0c32b7ccf",
+      "snapshot_sha256": "86f36b22450cba3be8494f801f7fb3549dc42643a48f32e16d6ca5f0c32b7ccf",
+      "size_bytes": 3575
+    },
+    {
+      "path": "stage_c_release_v1/ks_4way_completion_controller.py",
+      "source_sha256": "698edc30e2e151c38d132d592ddb6339cf6732c2e8aacf6cc6dccb8ba2ef17fc",
+      "snapshot_sha256": "698edc30e2e151c38d132d592ddb6339cf6732c2e8aacf6cc6dccb8ba2ef17fc",
+      "size_bytes": 3311
+    },
+    {
+      "path": "stage_c_release_v1/run_ks_4way_publisher.sh",
+      "source_sha256": "57e5672df78680786eaf0e9a3898cfe07c9cebc3be623ce8642435709e4b3a0e",
+      "snapshot_sha256": "57e5672df78680786eaf0e9a3898cfe07c9cebc3be623ce8642435709e4b3a0e",
+      "size_bytes": 1099
+    },
+    {
+      "path": "stage_c_release_v1/run_ks_4way_completion_controller.sh",
+      "source_sha256": "6d9d9a39ed7722062ec2ae7c21eaa1afb4d24d22158fbd6c928a3fa51777a78c",
+      "snapshot_sha256": "6d9d9a39ed7722062ec2ae7c21eaa1afb4d24d22158fbd6c928a3fa51777a78c",
+      "size_bytes": 447
     }
   ]
 }
