@@ -129,6 +129,35 @@ def main() -> None:
             ):
                 raise RuntimeError(f"{shard_id}: published receipt does not match frozen plan/code")
             continue
+        queued_existing = checkpoint_root / (shard_id + ".queued.json")
+        if queued_existing.exists():
+            receipt = json.loads(queued_existing.read_text())
+            if not (
+                receipt.get("status") == "sealed_for_transfer"
+                and receipt.get("shard_id") == shard_id
+                and receipt.get("source_file") == row["source_file"]
+                and receipt.get("source_bytes") == row["source_bytes"]
+                and receipt.get("source_sha256_cached") == row["source_sha256_cached"]
+                and receipt.get("sidecar_sha256") == row["sidecar_sha256"]
+                and receipt.get("raw_rows") == row["raw_rows"]
+                and receipt.get("code_sha256") == code_sha256
+            ):
+                raise RuntimeError(f"{shard_id}: queued receipt does not match frozen plan/code")
+            complete_path = Path(receipt.get("shard_complete", ""))
+            if complete_path.is_file():
+                if sha256(complete_path) != receipt.get("shard_complete_sha256"):
+                    raise RuntimeError(f"{shard_id}: queued sealed receipt hash mismatch")
+                continue
+            # Publication atomically replaces the queued state after removing
+            # verified local output.  Give that short transition time to
+            # finish instead of recomputing and colliding with the old receipt.
+            for _ in range(60):
+                if done.is_file():
+                    break
+                time.sleep(1)
+            if done.is_file():
+                continue
+            raise RuntimeError(f"{shard_id}: queued output missing while publication is pending")
         raw = Path(row["source_path"])
         sidecar = Path(row["sidecar_path"])
         if not raw.is_file() or raw.stat().st_size != row["source_bytes"]:
