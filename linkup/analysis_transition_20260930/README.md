@@ -1,5 +1,12 @@
 # First-wave analysis handoff
 
+The October 2/5/7 delivery schedule is in
+[`EXECUTION_ADDENDUM_OCT02_07.md`](EXECUTION_ADDENDUM_OCT02_07.md).
+It adds execution milestones without replacing `NEXT_ANALYSIS_AGENDA.md`.
+The first linkage coverage report establishes a reproducible engineering
+baseline, not historical panel validity. The user or RA has confirmed human
+review participation; the blind pack is due October 5.
+
 This directory turns the frozen Stage C release into analysis inputs without
 rerunning or changing the parser. `analysis_spec.json` is the variable-use and
 output contract. It gives the 2026-09-28 final cleaning contract, release-v1

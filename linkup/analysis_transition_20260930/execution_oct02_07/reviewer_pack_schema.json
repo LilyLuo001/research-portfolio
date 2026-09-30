@@ -1,0 +1,25 @@
+{
+  "version": "blind_human_review_pack_v1",
+  "maximum_rows": 40,
+  "initially_visible_columns": [
+    "anonymous_review_id", "original_text", "first_observation_stratum",
+    "occupation_availability_stratum", "core_or_challenge", "sampling_probability",
+    "human_experience_presence", "human_experience_object", "human_duration_min",
+    "human_duration_max", "human_duration_unit", "human_requirement_strength",
+    "human_experience_binding", "human_technology_class", "human_technology_role",
+    "human_applicant_context", "human_evidence_quote", "human_insufficient_text",
+    "human_uncertainty_note", "reviewer_id", "review_round"
+  ],
+  "hidden_until_human_lock": [
+    "JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW", "extractor_prediction",
+    "extractor_evidence_span", "model_judgment", "aggregate_result"
+  ],
+  "enums": {
+    "presence": ["explicit_positive", "explicit_negative", "not_mentioned", "unknown", "insufficient_text"],
+    "strength": ["required", "preferred", "allowed", "unknown"],
+    "binding": ["explicit", "unknown"],
+    "technology_class": ["software_information_system", "predictive_ml_ai", "generative_ai", "ai_unspecified", "technology_unspecified", "none", "unknown"],
+    "technology_role": ["develop_train", "implement_integrate", "use_operate", "evaluate_govern", "role_unspecified", "none", "unknown"]
+  },
+  "prohibitions": ["no heldout-400 text", "no model label counted as human", "no extractor prediction shown before label lock", "no raw text in Git"]
+}

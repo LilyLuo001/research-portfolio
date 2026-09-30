@@ -1,0 +1,42 @@
+{
+  "version": "first_linkage_rules_coverage_v1",
+  "deliverable_name": "首版关联规则与覆盖报告",
+  "status": "contract_only_not_executed",
+  "observed_schemas": {
+    "lean_keys": ["JOB_HASH:string", "SOURCE_FILE:string", "SOURCE_ROW:int64", "RECORD_SOURCE_ROW:int64"],
+    "records_actual": ["BASE_HASH:string", "CITY:string", "COMPANY_ID:decimal128(10,0)", "COMPANY_NAME:string", "COUNTRY:string", "CREATED:timestamp", "DELETE_DATE:timestamp", "JOB_HASH:string", "LAST_CHECKED:timestamp", "LAST_UPDATED:timestamp", "STATE:string", "TITLE:string", "UNMAPPED_LOCATION:string", "URL:string", "ZIP:string"],
+    "records_production_projection_also_carries": ["RECORD_SOURCE_ROW:uint64"],
+    "onet_actual": ["JOB_HASH:string", "ONET_OCCUPATION_CODE:string"],
+    "remote_actual": ["JOB_HASH:string", "START_DATE:string", "END_DATE:string", "FULLTIME_PARTTIME:string"]
+  },
+  "join_unit": "one canonical semantic ad identified by JOB_HASH + SOURCE_FILE + SOURCE_ROW + RECORD_SOURCE_ROW",
+  "records_join": {
+    "keys": ["JOB_HASH", "RECORD_SOURCE_ROW"],
+    "required_cardinality": "exactly 0 or 1 Records row per canonical semantic ad; report 0, 1, and >1 before analysis",
+    "projection": ["JOB_HASH", "RECORD_SOURCE_ROW", "COMPANY_ID", "BASE_HASH", "TITLE", "CREATED", "COUNTRY", "STATE"],
+    "company_interpretation": "COMPANY_ID is a company-scrape entity identifier. It is not assumed to be a stable economic firm, ultimate parent, establishment, or employer entity across time.",
+    "base_hash_interpretation": "BASE_HASH is a vendor multi-location grouping key, not a vacancy or hiring count."
+  },
+  "onet_join": {
+    "key": "JOB_HASH",
+    "precondition": "O*NET source has 356299258 unique JOB_HASH values with no duplicate keys or multi-code conflicts in the completed audit",
+    "membership": "Attach the official O*NET-SOC 2019 membership flag; retain missing key, blank code, 99-9999.00 placeholder, other nonmember, and official member as separate states.",
+    "prohibition": "Snapshot assignment is not contemporaneous occupation evidence or classification accuracy."
+  },
+  "remote_policy": {
+    "beta_action": "do not join remote rows",
+    "reason": "Remote has multiple rows per JOB_HASH and concentrated 2024 starts; a direct join multiplies ads and lacks a frozen endpoint/as-of convention.",
+    "future_requirement": "Preaggregate to one declared ad-level status with explicit interval convention and report zero/one/multiple input rows before any left join."
+  },
+  "coverage_receipt": [
+    "canonical semantic ads", "Records matches 0/1/>1", "JOB_HASH disagreement after RECORD_SOURCE_ROW match",
+    "null COMPANY_ID", "null/placeholder BASE_HASH", "null/blank TITLE", "O*NET missing/blank/placeholder/nonmember/member",
+    "joined rows equal canonical semantic denominator", "multi-label outcome cells declared nonadditive"
+  ],
+  "validity_separation": {
+    "identity_and_coverage": "Report join cardinality, denominator conservation, missingness and taxonomy-membership coverage as engineering facts.",
+    "text_time": "JOB_HASH uniqueness and Records dates do not establish historical description versions. Until vendor/version evidence is verified, describe snapshot text by first-observation cohort only.",
+    "not_frozen": "Historical panel validity remains unresolved and is not a condition silently inferred from successful joins."
+  },
+  "privacy": "Release only aggregate coverage and analysis cells; no URL, company name, raw title, raw text, row-level mapping, or credentials."
+}

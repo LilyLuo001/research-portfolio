@@ -1,0 +1,27 @@
+{
+  "version": "execution_oct02_07_v1",
+  "status": "prepared_not_submitted",
+  "deadlines": [
+    {"date": "2026-10-02", "deliverable": "Global receipt gate plus fixed three-shard real pilot receipt", "gate": "ALL_REGIONS_VERIFIED_COMPLETE status=complete and final_publication_complete=true; pre-gate run only with an explicit diagnostic label"},
+    {"date": "2026-10-05", "deliverable": "All-library release-first tables, 首版关联规则与覆盖报告 (versioned engineering baseline), and a blind human-review pack of at most 40 ads", "dependencies": ["global gate", "2464 exact frozen-plan IDs", "published receipt/SHARD_COMPLETE identity", "narrow join schema contract", "frozen first-linkage-supported sampling groups"]},
+    {"date": "2026-10-07", "deliverable": "Comparable work-experience comparisons, returned human-review results or an honest unreturned-status report, text-time status, and one-page learned/cannot-say note", "dependencies": ["Oct 5 tables", "reviewer return status"]}
+  ],
+  "owners": [
+    {"task": "Global gate and three-shard pilot", "input": "published lean shards and receipts", "output": "pilot aggregate tables and PILOT_RUN_RECEIPT.json"},
+    {"task": "All-library first tables", "input": "frozen plans and global gate", "output": "existing build_release_first_tables.py outputs; no parser rerun"},
+    {"task": "首版关联规则与覆盖报告", "input": "lean keys, Records projection, O*NET projection, official membership mapping", "output": "versioned engineering baseline with identity cardinality separate from text-time validity; no remote temporal join or historical panel claim"},
+    {"task": "Limited human review", "input": "blind pack of at most 40 ads prepared by Oct 5", "output": "human review results by Oct 7 with disagreement/adjudication and support counts; models are never human reviewers"}
+  ],
+  "reviewer_pack": {
+    "maximum_ads": 40,
+    "selection": "After first-linkage-supported groups are frozen: 32-record core selected deterministically without extractor results, plus at most 8 separately flagged prespecified challenge records. Challenge sampling may use frozen text-complexity or candidate flags but never effect estimates or post-review outcomes.",
+    "exclusions": ["sealed 400-test keys/text", "prior diagnostic32", "prior diagnostic48", "closure32", "parser development examples"],
+    "minimum_fields": ["anonymous_review_id", "original source text made available only to authorized human reviewer", "time stratum", "occupation availability stratum", "core_or_challenge", "sampling probability", "exclusion-set digest"],
+    "labels": ["experience presence", "experience object", "duration and unit", "required/preferred/unknown", "binding explicit/unknown", "technology class", "technology role", "applicant context", "insufficient text"],
+    "reporting": ["human reviewer count and availability", "independent duplicate-review count", "adjudication rule", "unresolved cases", "per-label support", "model comparison explicitly called model-versus-human"],
+    "blinding": "Initial pack shows original source evidence and reviewer fields only; it omits extractor predictions, model judgments, evidence spans and aggregate results until labels are locked.",
+    "release_rule": "User or RA human review is confirmed. Lock initial labels before any extractor comparison. Do not reopen the heldout 400 or count model judgments as human labels."
+  },
+  "preparation_scope": "This delegated attachment prepares and locally validates commands; overall execution and cluster submission are authorized and scheduled by the root execution plan.",
+  "hard_limits": ["No parser edits or raw-text reparse", "No Revelio movement or result claims", "No historical-text or causal interpretation of CREATED"]
+}
