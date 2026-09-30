@@ -1,0 +1,25 @@
+{
+  "observed_at": "2026-09-30T16:01:30+08:00",
+  "compute_complete": true,
+  "published_complete": false,
+  "final_acceptance_complete": false,
+  "planned_shards": 2464,
+  "computed_shards": 2464,
+  "published_shards": 2392,
+  "unpublished_sealed_shards": 72,
+  "regions": {
+    "kunshan": {
+      "planned": 1358,
+      "published": 1312,
+      "awaiting_publication": 46
+    },
+    "wuzhen": {
+      "planned": 1106,
+      "published": 1080,
+      "awaiting_publication": 26
+    }
+  },
+  "analysis_state": "specification and resumable driver prepared; production analysis not submitted",
+  "next_operational_action": "resume existing verified publication and final receipt gate; no semantic recomputation",
+  "restriction": "Counts are a bounded audit checkpoint, not a final validation certificate."
+}

@@ -1,10 +1,7 @@
 # LinkUp Research
 
-The active Git methods snapshot is
-[`cleaning_pipeline_20260927/`](cleaning_pipeline_20260927/). It documents the
-job-ad cleaning and measurement pipeline separately from the repository's older
-research projects.
+The active next-analysis agenda is [analysis_transition_20260930/NEXT_ANALYSIS_AGENDA.md](analysis_transition_20260930/NEXT_ANALYSIS_AGENDA.md). It separates release acceptance from exploratory analysis and the later computerization–AI comparison.
 
-The directory contains executable code, configuration contracts, aggregate
-validation outputs, bounded job receipts, and research-method decisions. Raw
-or licensed job-ad text and bulk derived data are deliberately absent.
+The frozen cleaning implementation and method history are in [cleaning_pipeline_20260928/](cleaning_pipeline_20260928/). The earlier `cleaning_pipeline_20260927/` directory is retained as historical documentation.
+
+Only methods, code, and non-sensitive aggregate evidence belong here. Raw or licensed text, individual rows, private manifests, credentials, and bulk derived data are excluded.

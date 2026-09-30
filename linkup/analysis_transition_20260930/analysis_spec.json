@@ -1,0 +1,95 @@
+{
+  "spec_version": "analysis_transition_20260930_v1",
+  "status": "executable_plan_not_empirical_result",
+  "precedence": [
+    "FINAL_CLEANING_CONTRACT_20260928.md",
+    "stage_c_release_v1/DECISION.md",
+    "stage_c_evaluation_v3/artifacts/targeted_closure32_v1/CLOSURE32_ENRICHMENT_DIAGNOSTIC.md",
+    "RESEARCH_REVISION_20260927.md",
+    "research_contract_v1/COMMON_MEASUREMENT.md",
+    "research_contract_v1/MEASUREMENT_EVALUATION.md"
+  ],
+  "superseded_metadata_warning": "research_contract_v1/VARIABLE_RELEASE_REGISTER.json is a 2026-09-27 V5-era registry. Its full_semantic_release=false flag is not the engineering status of the frozen V6 plus release-v1 production, but production completion does not establish empirical validity.",
+  "execution_gate": {
+    "required_marker": "ALL_REGIONS_VERIFIED_COMPLETE.json",
+    "required_values": {"status": "complete", "final_publication_complete": true, "total_shards": 2464},
+    "fail_closed": true,
+    "builder": "stage_c_release_v1/build_release_first_tables.py",
+    "builder_version": "release_first_tables_v1",
+    "rule": "Do not summarize a shard until its completed sealed/published receipt passes the builder's row-conservation and canonical-ad_status checks. Merge exactly one anonymous summary per frozen-plan shard."
+  },
+  "variable_use_register": [
+    {"variable": "Records first-observed counts", "status": "usable_descriptive", "scope": "USA Records; complete calendar quarters through 2026Q2", "limits": "advertisement records, not vacancies or hires"},
+    {"variable": "snapshot O*NET occupation", "status": "usable_descriptive_after_narrow_join", "scope": "official 2019 members with missing, blank, placeholder and nonmember retained", "limits": "not present in lean semantic tables; snapshot classification is not historical classification accuracy"},
+    {"variable": "experience evidence", "status": "candidate_exploratory", "scope": "applicant-context candidate clauses from frozen V6/release-v1; explicit and unknown binding separate", "limits": "non-detection is not absence; closure32 is targeted model diagnosis, not accuracy or prevalence"},
+    {"variable": "technology type and role", "status": "candidate_exploratory", "scope": "applicant-context candidates; multi-label; explicit, candidate-local and unknown relations separate", "limits": "mention is not adoption; generic AI remains unspecified where applicable"},
+    {"variable": "education and explicit no-experience", "status": "audit_only", "scope": "sparse v6_audit candidate counts", "limits": "no subgroup prevalence, ranking or eligibility inference"},
+    {"variable": "firm identifiers/title/BASE_HASH", "status": "requires_later_narrow_records_join", "scope": "only after real Records schema and key cardinality are verified", "limits": "absent from lean ad_status; do not reparse raw text"},
+    {"variable": "historical text requirements", "status": "not_released", "scope": "none", "limits": "CREATED defines a delivery-snapshot first-observed queue, not point-in-time text or a causal event"},
+    {"variable": "Revelio prior experience/flows", "status": "blocked_data_unavailable", "scope": "interface only", "limits": "approximately 1TB is unavailable; no transfer, schema claim, or worker result is authorized"}
+  ],
+  "first_wave_outputs": [
+    {
+      "id": "A1_release_funnel",
+      "implementation": "reuse input_match_canonical_usable_funnel.csv",
+      "denominator": "all raw description rows, then mutually exclusive receipt dispositions, then canonical matched-USA ads",
+      "unknown_failure": "record_unmatched, matched_country_unknown, duplicate_quarantine, empty_description, parse_error, input_evidence_truncated and enrichment_incomplete are shown separately",
+      "multilabel": false
+    },
+    {
+      "id": "A2_queue_coverage",
+      "implementation": "reuse created_first_observed_queue_distribution.csv",
+      "denominator": "canonical USA and usable nonempty complete-parse ads, separately, by CREATED month/quarter",
+      "unknown_failure": "date_unknown and outside_primary_window retained; 2026Q3 partial labeled",
+      "multilabel": false
+    },
+    {
+      "id": "A3_candidate_technology_experience_joint",
+      "implementation": "reuse technology_experience_candidate_evidence.csv",
+      "denominator": "canonical USA ads, with all_canonical/usable/failure denominator-status rows",
+      "unknown_failure": "no_detection, no_applicant_context_candidate, insufficient_* and all unknown binding/type/context values remain cells",
+      "multilabel": true,
+      "counting_rule": "ADS are ad-level deduplicated memberships; cells are nonexclusive and must not be summed to recover the ad denominator"
+    },
+    {
+      "id": "A4_experience_duration_distribution",
+      "implementation": "derive later from existing typed experience table without text, grouped by object, strength, binding, relation, optional and duration bins",
+      "denominator": "usable canonical USA ads plus a separately reported candidate-clause denominator",
+      "unknown_failure": "unknown object/binding/strength, missing duration and no-detection retained; do not turn missing duration into zero",
+      "multilabel": true,
+      "execution_status": "specified_not_implemented_in_v1_builder"
+    },
+    {
+      "id": "A5_snapshot_occupation_composition",
+      "implementation": "reuse stage_d_baseline_v1 results and taxonomy_audit/quarter_full_code_flagged.parquet; later join semantic summaries through a verified narrow JOB_HASH mapping",
+      "denominator": "253210047 USA Records overall; official-member coverage 253078004 with 82795 missing keys, 3427 blanks, 45752 placeholder 99-9999.00 and 69 other nonmembers retained",
+      "unknown_failure": "taxonomy membership and missing classes remain explicit",
+      "multilabel": false,
+      "execution_status": "baseline_exists_semantic_joint_pending_narrow_join"
+    },
+    {
+      "id": "A6_firm_occupation_queue_joint",
+      "implementation": "later narrow Records/ONET projection using actual verified columns and key cardinalities; no raw-text reparse",
+      "denominator": "canonical semantic ads joined with explicit matched/unmatched accounting",
+      "unknown_failure": "missing firm, title, occupation and join failures retained",
+      "multilabel": "technology and experience outcomes remain nonexclusive",
+      "execution_status": "blocked_until_narrow_schema_and_join_plan_verified"
+    }
+  ],
+  "existing_results_to_reuse": [
+    {"artifact": "phase_a/month_panel/run_report.json", "fact": "356449214 total Records and 253210047 USA Records; 2007-08 through 2026-09 with partial endpoints"},
+    {"artifact": "stage_d_baseline_v1/results/RESULTS.md", "fact": "quarterly snapshot O*NET baseline conserves 253210047 USA Records"},
+    {"artifact": "stage_d_baseline_v1/taxonomy_audit/quarter_full_code_flagged.parquet", "fact": "official-2019-membership-aware occupation aggregate; no raw-text rescan needed"},
+    {"artifact": "stage_c_release_v1/build_release_first_tables.py", "fact": "receipt-gated additive anonymous shard summaries and three first-release tables"}
+  ],
+  "time_semantics": {
+    "allowed": "delivery-snapshot text grouped by Records CREATED first-observed queue; descriptive coverage through complete 2026Q2 queues",
+    "partial": "2026Q3 is partial and separately labeled",
+    "forbidden": ["historical posting text", "technology adoption date", "AI shock timing", "causal trend", "point-in-time requirement change"]
+  },
+  "privacy_and_scope": [
+    "No raw text, evidence strings, person rows, credentials or private mappings in analysis outputs.",
+    "No parser edits, cluster submission, data movement or Revelio access in this transition.",
+    "All proposed joint analyses must expose denominator, unknown/failure classes, and nonexclusive multi-label counting."
+  ]
+}
