@@ -1,0 +1,52 @@
+{
+  "status": "complete",
+  "validation_date": "2026-10-03",
+  "scope": "public code and bounded-fixture validation only; no private keys, text, paths, credentials, or production-result claims",
+  "t4_space_guard": {
+    "runtime": "Kunshan Python 3.8.10 with DuckDB 0.9.2",
+    "script_sha256": "c180a675398c23c2021d1189649d8fc0bdc3b620a095be74d2fe00a005fb29ae",
+    "test_sha256": "ba18589a89e7157e24121e8c40f8c62e72ca5a35776e4c875db26a6d8b289d26",
+    "result": "pass",
+    "checks": {
+      "unsupported_native_temp_limit_uses_monitor": true,
+      "synthetic_temp_limit_interrupts_connection": true,
+      "monitor_thread_stops_with_connection": true,
+      "annual_sql_binds_and_global_group_year_cap_retains_rows": 3
+    },
+    "soft_limits": {
+      "poll_interval_seconds_approximately": 1,
+      "temp_directory_bytes": 4294967296,
+      "work_directory_growth_bytes": 21474836480,
+      "minimum_filesystem_free_bytes": 8589934592
+    },
+    "qualification": "Soft monitoring can overshoot within one polling interval; the 16 GiB annual aggregate check is post-write acceptance."
+  },
+  "comparison_records_semijoin": {
+    "script_sha256": "388118d0c0c006b2a721ef1b4cc84d1c2db6d84482255ed1c175b25f9bb9c2de",
+    "result": "pass",
+    "scope": "one prefix from the retained one-shard real pilot; not a full-library estimate",
+    "prior_output_sha256": "2d16e9a6cf3d59fd3f4d176736a45ca4c962f9fa0c9fc14b31e293b5192d060f",
+    "semijoin_output_sha256": "3f1df6c8c7c85f5554d20396e8015cfbc9cc9ff5d95dd45c4aece8bacb15288a",
+    "prior_rows": 142,
+    "semijoin_rows": 142,
+    "all_fields_equal_after_sort_by_canonical_four_key": true,
+    "linkage": {
+      "records_0": 0,
+      "records_1": 142,
+      "records_gt1": 0,
+      "onet_0": 0,
+      "onet_1": 142,
+      "onet_gt1": 0,
+      "created_disagreement": 0
+    }
+  },
+  "selected_text_locator": {
+    "script_sha256": "4dbd0c81d4b9dc670f093dfc72904fe3a195a28e65745170d51a846115873af6",
+    "test_sha256": "55b74cef933186ce583b54fc99f7ae9296d7caf07f452b53ca9604c3d28cadc6",
+    "result": "pass",
+    "fixture_rows": 1,
+    "row_groups_read": 1,
+    "exact_job_hash_match": true,
+    "mapping_requirement": "Explicit unique SOURCE_FILE basename to existing absolute path; production map must come from a verified original-source inventory."
+  }
+}

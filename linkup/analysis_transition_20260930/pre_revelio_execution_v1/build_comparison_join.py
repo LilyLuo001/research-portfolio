@@ -210,7 +210,7 @@ def run_prefix(args,prefix,identity,code_field):
     if not records: raise RuntimeError(prefix+": Records index partition absent")
     con=connect(1,"1200MB",args.work_dir/"duckdb_tmp"/prefix)
     con.execute("CREATE TEMP VIEW n AS SELECT * EXCLUDE(hash_prefix) FROM read_parquet([%s],union_by_name=true,hive_partitioning=true)"%sql_files(narrow))
-    con.execute("CREATE TEMP VIEW r AS SELECT JOB_HASH,RECORD_SOURCE_ROW,COMPANY_ID,try_cast(CREATED AS TIMESTAMP) CREATED,try_cast(LAST_CHECKED AS TIMESTAMP) LAST_CHECKED,try_cast(DELETE_DATE AS TIMESTAMP) DELETE_DATE,STATE FROM read_parquet([%s],union_by_name=true)"%sql_files(records))
+    con.execute("CREATE TEMP VIEW r AS SELECT rr.JOB_HASH,rr.RECORD_SOURCE_ROW,rr.COMPANY_ID,try_cast(rr.CREATED AS TIMESTAMP) CREATED,try_cast(rr.LAST_CHECKED AS TIMESTAMP) LAST_CHECKED,try_cast(rr.DELETE_DATE AS TIMESTAMP) DELETE_DATE,rr.STATE FROM read_parquet([%s],union_by_name=true) rr SEMI JOIN n USING(JOB_HASH,RECORD_SOURCE_ROW)"%sql_files(records))
     if onet: con.execute("CREATE TEMP VIEW o AS SELECT JOB_HASH,ONET_OCCUPATION_CODE FROM read_parquet([%s],union_by_name=true,hive_partitioning=true)"%sql_files(onet))
     else: con.execute("CREATE TEMP VIEW o AS SELECT NULL::VARCHAR JOB_HASH,NULL::VARCHAR ONET_OCCUPATION_CODE WHERE false")
     con.execute("CREATE TEMP TABLE official AS SELECT trim(cast(\"%s\" AS VARCHAR)) code FROM read_csv_auto('%s',header=true)"%(q(code_field),q(args.official_codes)))

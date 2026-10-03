@@ -1,0 +1,14 @@
+{
+  "status": "passed_for_regional_additive_counts",
+  "checks": [
+    "T2 rates, required/preferred union inequalities, main<=broad<=denominator, unmeasured NA",
+    "T2 each duration classification exhausts identical clause denominator; distinct ads bounded; ad and clause denominators separate",
+    "T3 role subsets and within-ad cooccurrence bounded by both marginals"
+  ],
+  "aggregate_receipt_sha256": "358be9ac7be20247fe8bc8ccb2fa78839720f8b2126a84d3425d7e4fd5103aa2",
+  "limitations": [
+    "Global JOB_HASH audit pending; these checks do not establish global ad uniqueness.",
+    "Numeric consistency does not validate semantic accuracy.",
+    "Predictive AI zero and general-work narrow coverage under targeted frozen-parser diagnosis; no prevalence inference."
+  ]
+}

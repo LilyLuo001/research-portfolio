@@ -45,3 +45,13 @@ D13–D15 的字段依据：[LinkUp 官方数据字典](https://data.support.lin
 ## D19：BASE_HASH 的解释（2026-10-03 集中代码审阅）
 
 [LinkUp 官方字典](https://data.support.linkup.com/kb/article/56-data-dictionary-raw-data-package-feeds/) 将 BASE_HASH 定义为雇主网站职位对象的标识；按不同地点拆分时，一个 BASE_HASH 可以对应多个 JOB_HASH。它不是正文内容摘要，也不能证明两个正文相同或不同。年度对照保留父职位键共享情况；正文相似或改写仅能用实际入选正文做有限比较，未读取则标未测。此裁定修正 T4 实现草案中的错误解释，不改变两个核心比较或重跑语义提取。
+
+## D20：已完成窄表与全局聚合解耦（2026-10-03）
+
+2,464 个窄表分片与年限明细全部完成后，可用独立的 `PROJECTION_INPUT_RECEIPT.json` 放行连接、时间诊断和人工抽样，无需等待另一路全局聚合。该回执必须按原 runner 的 `complete_valid` 规则验证精确分片集合、冻结运行身份、来源回执、两种 Parquet 的 SHA-256／行数及批次标记；跨区副本还必须与已验证的传输清单一致。回执类型明确为 `validated_projection_inputs`，`status=complete` 仅表示输入完成，`aggregate_status=pending` 明示聚合状态。不得提前写入或伪造原 `BATCH_RECEIPT.json`，不得把输入完成称作 T2／T3 聚合完成。此调整仅解除无依赖的工程串行等待，不改变样本、变量或全局重复键门槛。
+
+## D21：全库零值与经验对象的测量边界（2026-10-03）
+
+实际 V6 与冻结 enrichment 合成输入证实：`predictive models` 可产生显式技术角色，但上游没有对应的重叠 AI/software 证据，导致 applicant-context 标记为 false，进而被现行窄表排除。因此，预测型 AI 的聚合零值属于这一测量链条的结构性限制，不可解读为总体没有此类招聘。原始聚合 CSV 保留不变供追溯；对外研究表须结合 `results/MEASUREMENT_STATUS.csv`，将该维度标为 NA／不可解释，不从其零值提出实质结论。C1/C2 仍依照冻结的“未检出 AI”规则，不能将比较组称为已证实不使用 AI；不临时扩充词典或重跑语义。
+
+一般工作经验仅覆盖 `_GENERAL` 与现有对象规则匹配的明确表达，未分类对象远大于该组；不得将 general_work 比例解释为所有工作经验要求的普及率，不把 object_unspecified 自动归入一般经验。职业/任务经验继续标未测。各组均需有限人工诊断，尚未获真人标签不称语义验证完成。详见 [测量限制说明](PREDICTIVE_AI_MEASUREMENT_LIMITATION.md)。

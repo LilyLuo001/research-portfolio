@@ -1,6 +1,6 @@
 {
   "as_of": "2026-10-03",
-  "purpose": "有限交付审计：记录已有真实聚合可复用范围，不生成新统计、不将 pilot 升级为全库",
+  "purpose": "有限交付审计：记录已有真实聚合可复用范围；T2/T3 已有全 2,464 分片聚合并通过数值验收，T4/T5/T6 全量产物仍 pending；不生成新统计、不将 pilot 升级为全库",
   "global_scope": {
     "records_index": {
       "source": {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/index_manifest.json","repository_path":null},
@@ -24,6 +24,16 @@
       "status": "accepted_and_relayed",
       "p1_first_wave": "complete; full 2,464-shard funnel, candidate diagnostic, and CREATED queue outputs available",
       "p2_comparisons": "pending downstream comparison outputs"
+    },
+    "measurement_overlay": {
+      "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/MEASUREMENT_STATUS.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/PREDICTIVE_AI_MEASUREMENT_LIMITATION.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md (D21)"
+      ],
+      "predictive_ai": "not_interpretable_structural_context_gate; raw zero is not absence",
+      "occupation_task": "unmeasured/NA",
+      "general_work": "narrow explicit-object candidate measure; not all work experience"
     }
   },
   "tables": {
@@ -49,35 +59,49 @@
       "missing_or_blocked": "Do not label 204,774,035 as globally distinct JOB_HASH until the combined key-only audit passes; comparison eligibility still requires downstream P1/P2 outputs."
     },
     "T2_02_experience_profiles": {
-      "status": "pilot_only_pending_full",
+      "status": "full_aggregate_numeric_acceptance_passed_semantic_interpretation_limited",
       "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T2_EXPERIENCE_AD_RATES.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T2_DURATION_BOUND_DISTRIBUTION.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/AGGREGATE_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T2_T3_NUMERIC_ACCEPTANCE.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/MEASUREMENT_STATUS.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/PREDICTIVE_AI_MEASUREMENT_LIMITATION.md",
         {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/RESULTS.md","repository_path":null},
         {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/TABLE_REPORT.json","repository_path":null},
         {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json","repository_path":null}
       ],
       "denominators_and_ranges": [
-        "Fixed bottom-hash Kunshan frame: 2,691,376 eligible unique USA keys; selected 100,000 ads.",
-        "Complete CREATED queues through 2026Q2: 96,144 ads; semantic eligible after 3 incomplete rows: 96,141.",
-        "Experience candidate detections: 56,332; candidate non-detections: 38,067; no-experience phrase candidates: 1,742; all are candidate detections, not validated prevalence."
+        "Full 2,464-shard aggregate: canonical USA 204,774,035; usable nonempty complete parse 204,768,752.",
+        "T2 numeric acceptance passed for rates, required/preferred inequalities, duration clause exhaustiveness, and ad/clause denominator separation.",
+        "occupation_task is unmeasured/NA; general_work is a narrow explicit-object candidate measure; predictive_ai raw zero is structurally uninterpretable. Global JOB_HASH uniqueness remains pending.",
+        "Historical fixed bottom-hash Kunshan frame (2,691,376 eligible keys; 100,000 selected ads; 96,141 semantic eligible) remains pilot context only."
       ],
-      "direct_reuse": "Use as bounded pilot evidence for table structure, conservation, and measurement limits only.",
-      "missing_or_blocked": "Full 2,464-shard experience profiles, required/preferred split, explicit duration denominator, and occupation_task (frozen taxonomy unavailable) await P1."
+      "direct_reuse": "Reuse full aggregate additive rates and duration distributions with numeric-acceptance and measurement-overlay limits attached.",
+      "missing_or_blocked": "Semantic accuracy/human diagnostic, global JOB_HASH audit, and occupation_task measurement remain pending; no prevalence claim from candidate non-detection or predictive_ai zero."
     },
     "T3_03_technology_role_overlap": {
-      "status": "full_candidate_diagnostic_pending_semantic_validation",
+      "status": "full_aggregate_numeric_acceptance_passed_semantic_interpretation_limited",
       "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T3_TECHNOLOGY_ROLE.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T3_TECHNOLOGY_PAIR_OVERLAP.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/AGGREGATE_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T2_T3_NUMERIC_ACCEPTANCE.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/MEASUREMENT_STATUS.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/PREDICTIVE_AI_MEASUREMENT_LIMITATION.md",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/03_candidate_diagnostic_receipt.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/03_technology_experience_candidate_diagnostic.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/technology_experience_candidate_evidence.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/CONSERVATION_REPORT.json"
       ],
       "denominators_and_ranges": [
-        "Current full-wave denominator_status: 204,774,035 canonical USA ads; 4,438 enrichment-incomplete and 4,438 input-truncated flags; 845 empty descriptions.",
-        "Current full-wave evidence rows: technology 82,379,739; experience 421,992,351; V6 audit 260,639,343.",
-        "Rows marked evidence_cross are within-ad candidate co-occurrences; multi-label cells are nonexclusive and cannot be summed into technology prevalence."
+        "Full 2,464-shard denominator: canonical USA 204,774,035; usable nonempty complete parse 204,768,752.",
+        "T3 numeric acceptance passed for role subsets and within-ad cooccurrence bounds by both marginals.",
+        "Rows are candidate/explicit-binding diagnostics; multi-label cells are nonexclusive and cannot be summed into technology prevalence. predictive_ai zero is structurally uninterpretable and occupation_task is unmeasured/NA. Global JOB_HASH uniqueness remains pending."
       ],
-      "direct_reuse": "Reuse as a full-wave candidate diagnostic with nonexclusive-cell and candidate-status limits.",
-      "missing_or_blocked": "Technology×role/experience claims require binding-aware semantic validation; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding."
+      "direct_reuse": "Reuse full aggregate role, pair-overlap, and within-ad cooccurrence outputs with numeric-acceptance and measurement-overlay limits attached.",
+      "missing_or_blocked": "Binding-aware semantic accuracy/human diagnostic and global JOB_HASH audit remain pending; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding."
     },
     "T4_04_cohort_and_time_risk": {
       "status": "current_created_queue_complete_time_risk_pending",
@@ -97,17 +121,17 @@
       "missing_or_blocked": "LAST_CHECKED/DELETE_DATE time-risk, company-title-city annual comparison, and global JOB_HASH de-duplication remain pending."
     },
     "T5_05_comparable_experience_contrasts": {
-      "status": "blocked_pending_p1_p2",
+      "status": "pilot_85376_rows_validated_pending_full",
       "sources": [
-        "analysis_transition_20260930/linkage_v1/results/PILOT_COVERAGE.json",
+        {"availability":"local_project_reference","local_relative":"../../../linkage_v1/results/PILOT_COVERAGE.json","repository_path":null},
         "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md"
       ],
       "denominators_and_ranges": [
-        "Linkage pilot: 15,254 canonical ads selected from a fixed lower-hex-0 pilot; 15,248 official O*NET codes, 3 placeholder, 3 missing; Records matches exactly one per key.",
-        "Pilot is not full-library coverage and does not establish comparison support."
+        "Validated comparison pilot: 85,376 rows; candidate subset 2,394; Records 1:1 connection 2,394; official O*NET 2,393 and missing 1. This is pilot evidence, not full-library coverage.",
+        "Older 15,254-key linkage pilot remains a valid historical reference but is not the current pilot denominator and must not stand alone."
       ],
-      "direct_reuse": "Reuse linkage acceptance rule and pilot-only linkage diagnostic.",
-      "missing_or_blocked": "No T5 values until full frozen join and P1 output; C1/C2 support, common cells, raw/standardized differences, and four experience objects remain unavailable."
+      "direct_reuse": "Reuse the 85,376-row pilot validation and linkage acceptance rule as bounded pilot diagnostic.",
+      "missing_or_blocked": "Full frozen join, C1/C2 support, common cells, raw/standardized differences, and four experience objects remain unavailable; private comparison outputs are not packaged here."
     },
     "T6_06_sensitivity_and_claim_status": {
       "status": "limited_reusable_pending_results",
