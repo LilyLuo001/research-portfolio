@@ -24,5 +24,5 @@ python "${ROOT}/code/pre_revelio_execution_v1/build_full_time_risk.py" \
   --raw-records-glob '/public/home/lilysharp/dewey_downloads/data/linkup_job_records/*.parquet' \
   --onet-glob '/public/home/lilysharp/dewey_downloads/data/dewey_ONET_tables/onet-taxonomy/*.parquet' \
   --official-codes "${ROOT}/private/official_onet2019_occupations.csv" \
-  --work-dir "${ROOT}/private/full_time_risk_v1" \
-  --output-dir "${ROOT}/results/T4_full_v1" --threads 8 --memory-limit 12GB
+  --work-dir "${ROOT}/private/full_time_risk_v2" \
+  --output-dir "${ROOT}/results/T4_full_v2" --threads 8 --memory-limit 12GB

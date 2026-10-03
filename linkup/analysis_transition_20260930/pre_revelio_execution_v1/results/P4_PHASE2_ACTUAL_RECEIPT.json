@@ -1,0 +1,36 @@
+{
+  "actual_script_sha256": "414a3f0d6f58c55eb5aa4d259f8a3cc268721ade2af0fc93213a38c47dcab8cc",
+  "bounded_extraction": {
+    "kunshan": {
+      "row_groups_read": 22,
+      "rows": 22
+    },
+    "wuzhen": {
+      "row_groups_read": 18,
+      "rows": 18
+    }
+  },
+  "counts": {
+    "challenge_selected": 8,
+    "core_dual_review": 8,
+    "core_selected": 32,
+    "unique_ads": 40
+  },
+  "delivery_file_sha256": {
+    "REVIEW_INSTRUCTIONS_zh.md": "c334d1b6790ec414922bead0c854bbd1974daad8afcfc04fc170c6a05df150a5",
+    "review_assignments.csv": "3c6157bbacb0a62da90b55831b1b718c9fea8b2b513c18d8d1f751a7e2c8da8b",
+    "reviewer_pack.csv": "c4e7e64dfe1ac8f0364478ca030f596ee5c21953087e852572109ddb2d0588f3",
+    "reviewer_pack_preview.html": "6c3bb58e797a3e5ce14eb5308f3cc44efa28fc33851c24fc6ab44556984bae1e"
+  },
+  "fixed_version_test_proof": {
+    "command": "python3 test_materialize_selected_text.py",
+    "result": "PASS: two selected rows across two Parquet row groups were materialized in selected-key order",
+    "test_script_sha256": "54b58766462e2e9d9e6f5740b782ee21329a97053a82af007c36cd5e9204642d"
+  },
+  "frozen_manifest_sha256": "30e814cffa2457e92d81cab7c31c3ef64a7470058321710b475245ca4c74af66",
+  "full_frame_rescanned": false,
+  "human_validation_status": "not started",
+  "privacy": "No raw text, canonical keys, private paths, model predictions, answer key, or human judgments are included.",
+  "status": "complete",
+  "union_check": "40 selected canonical keys materialized exactly once across the two bounded regional extractions"
+}

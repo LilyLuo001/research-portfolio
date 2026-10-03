@@ -1,0 +1,98 @@
+{
+  "coverage": {
+    "outside_or_unusable_or_unmapped": 1048183,
+    "primary_eligible": 4962792
+  },
+  "input": "<private comparison joined parquet>",
+  "input_columns": [
+    "CENSUS_REGION",
+    "COMPANY_ID",
+    "CREATED",
+    "CROSSES_2022_11_30",
+    "DATE_COMPLETE",
+    "DESCRIPTION_EMPTY",
+    "ENRICHMENT_INCOMPLETE",
+    "INPUT_EVIDENCE_TRUNCATED",
+    "JOB_HASH",
+    "OBSERVATION_CLOSED",
+    "OBSERVATION_END",
+    "OCCUPATION_MAJOR",
+    "PARSE_ERROR",
+    "RECORD_SOURCE_ROW",
+    "SOURCE_FILE",
+    "SOURCE_ROW",
+    "STALE_DELETE_OR_REAPPEARANCE",
+    "exp_general_work_broad",
+    "exp_general_work_exact_or_unspecified",
+    "exp_general_work_main",
+    "exp_general_work_preferred",
+    "exp_general_work_required",
+    "exp_industry_domain_broad",
+    "exp_industry_domain_exact_or_unspecified",
+    "exp_industry_domain_main",
+    "exp_industry_domain_preferred",
+    "exp_industry_domain_required",
+    "exp_object_unspecified_broad",
+    "exp_object_unspecified_exact_or_unspecified",
+    "exp_object_unspecified_main",
+    "exp_object_unspecified_preferred",
+    "exp_object_unspecified_required",
+    "exp_occupation_task_available",
+    "exp_occupation_task_main",
+    "exp_specific_tool_broad",
+    "exp_specific_tool_exact_or_unspecified",
+    "exp_specific_tool_main",
+    "exp_specific_tool_preferred",
+    "exp_specific_tool_required",
+    "tech_generative_ai_detected",
+    "tech_generative_ai_develop_explicit",
+    "tech_generative_ai_implement_explicit",
+    "tech_generative_ai_use_explicit",
+    "tech_predictive_ai_detected",
+    "tech_predictive_ai_develop_explicit",
+    "tech_predictive_ai_implement_explicit",
+    "tech_predictive_ai_use_explicit",
+    "tech_traditional_software_detected",
+    "tech_traditional_software_develop_explicit",
+    "tech_traditional_software_implement_explicit",
+    "tech_traditional_software_use_explicit",
+    "tech_unspecified_ai_detected",
+    "tech_unspecified_ai_develop_explicit",
+    "tech_unspecified_ai_implement_explicit",
+    "tech_unspecified_ai_use_explicit",
+    "usable"
+  ],
+  "input_provenance": {
+    "join_manifest": "JOIN_MANIFEST_PUBLIC.json",
+    "join_manifest_sha256": "3fb96eb5f15b55ce5bc050244dfcf6b3cf9dab31401632bc5c67e30e871de837",
+    "mode": "join_manifest_sha256"
+  },
+  "outputs": {
+    "FIXED_COMPARISONS.csv": {
+      "rows": 56,
+      "sha256": "54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb"
+    },
+    "T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv": {
+      "rows": 8,
+      "sha256": "452c9c264eedc4c8db3eff0e950cc610c52e74ff300147447b82f4ef23dba0a1"
+    },
+    "T6_SENSITIVITY_AND_CLAIM_STATUS.csv": {
+      "rows": 56,
+      "sha256": "54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb"
+    }
+  },
+  "rows": 56,
+  "rules": {
+    "cell": "occupation major x Census region x CREATED year",
+    "inference": "none; descriptive counts and proportions",
+    "occupation_task": "unmeasured/NA under D10",
+    "primary_window": "2018-01-01 through 2026-06-30 inclusive",
+    "retention_boundary": "below 70% => limited",
+    "standardization": "same pooled common-support record distribution q(x) for both arms; raw proportions use valid measured booleans within common support; all-classifiable raw summaries are also reported",
+    "support": "each arm >=20 per cell; retained total each arm >=200; >=5 occupation majors"
+  },
+  "same_company_occupation_pairs_with_both_arms": 1418,
+  "script_sha256": "6db1343cc59f9c2bfbb793fceb4875a105f7ae32c43192633490c2948319174c",
+  "status": "complete_with_possible_blocked_or_canceled_variants",
+  "version": "fixed_c1_c2_descriptive_v1"
+}

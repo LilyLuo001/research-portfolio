@@ -1,0 +1,74 @@
+{
+  "status": "accepted_with_frozen_support_limits",
+  "validated_at": "2026-10-03",
+  "scope": "Arithmetic, denominators, hashes, support statuses, and interpretation flags for actual T5/T6 outputs; no rerun or specification change.",
+  "input_join": {
+    "candidate_rows": 6010975,
+    "records_matches": {"0": 0, "1": 6010975, ">1": 0},
+    "onet_matches": {"0": 2842, "1": 6008133, ">1": 0},
+    "global_job_hash_rows": 204774035,
+    "global_job_hash_distinct": 204774035,
+    "created_disagreement": 0,
+    "join_manifest_sha256": "3fb96eb5f15b55ce5bc050244dfcf6b3cf9dab31401632bc5c67e30e871de837"
+  },
+  "output_hashes": {
+    "COMPARISON_RECEIPT.json": "0ca55582adbd53ba106dc65aea20f2909bbed2ceb5a3f07eef9d9d7e435cf1d8",
+    "FIXED_COMPARISONS.csv": "54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb",
+    "T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv": "452c9c264eedc4c8db3eff0e950cc610c52e74ff300147447b82f4ef23dba0a1",
+    "T6_SENSITIVITY_AND_CLAIM_STATUS.csv": "54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb"
+  },
+  "numeric_checks": {
+    "fixed_rows": 56,
+    "main_rows": 8,
+    "numeric_rows_checked": 21,
+    "retention_identities_pass": true,
+    "raw_numerator_denominator_identities_pass": true,
+    "raw_difference_identities_pass": true,
+    "standardized_difference_identities_pass": true,
+    "raw_minus_standardized_identities_pass": true,
+    "probability_ranges_pass": true,
+    "measured_unknown_boolean_total": 0,
+    "T5_is_exact_main_subset": true,
+    "T6_is_byte_identical_to_fixed_56_row_output": true
+  },
+  "main_support": {
+    "C1_use": {
+      "full_A": 10719,
+      "full_B": 4795101,
+      "retained_A": 10075,
+      "retained_B": 1064428,
+      "retention_A": 0.9399197686351338,
+      "retention_B": 0.22198239411432627,
+      "support_cells": 69,
+      "support_occupation_majors": 9,
+      "status": "limited_retention_below_70_percent"
+    },
+    "C2_develop": {
+      "full_A": 871,
+      "full_B": 10982,
+      "retained_A": 801,
+      "retained_B": 1637,
+      "support_cells": 16,
+      "support_occupation_majors": 2,
+      "status": "canceled_support",
+      "failed_rule": "fewer than 5 occupation majors"
+    }
+  },
+  "C1_main_differences_A_minus_B": {
+    "general_work": {"raw": 0.05201451111276616, "standardized": 0.05706486158558462},
+    "industry_domain": {"raw": 0.020808426927950513, "standardized": -0.026898762509758388},
+    "specific_tool": {"raw": -0.112729621877041, "standardized": -0.17341851776693443},
+    "occupation_task": {"status": "unmeasured_D10"}
+  },
+  "interpretation_flags": {
+    "descriptive_not_causal": true,
+    "no_significance_claim": true,
+    "industry_domain_sign_reversal_shows_composition_importance": true,
+    "specific_tool_is_diagnostic_restricted_vocabulary": true,
+    "specific_tool_is_selection_coupled_to_traditional_software_arm": true,
+    "specific_tool_is_not_general_AI_tool_experience_threshold": true,
+    "s2_include_2016_2017_retained_counts_and_effects_identical_to_main": true,
+    "s3_exclude_cross_2022_11_30_retained_counts_and_effects_identical_to_main": true,
+    "identical_sensitivity_outputs_are_not_independent_robustness_proofs": true
+  }
+}

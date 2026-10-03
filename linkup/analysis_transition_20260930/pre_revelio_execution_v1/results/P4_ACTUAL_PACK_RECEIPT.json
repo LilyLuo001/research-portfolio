@@ -1,0 +1,163 @@
+{
+  "status": "blind_pack_keys_selected_pending_text",
+  "seed": "20261003",
+  "inputs": {
+    "frame_input_kind": "parquet",
+    "frame_input_fingerprint": "91fe777c46359f5400dd16c3445fa938e2c3b797aa35599e1d30ecd2f4b0661e",
+    "duplicate_job_hash_input_fingerprint": "81cd553c6637264891d720e14c94843844f0d906ceffd9f5bacd77856093e6ff",
+    "frame_metadata_sha256": "e9216e780c444aa4b3ffc02ba2cd501ec156931b2b6f00525f1b6c2a44df262d",
+    "heldout_key_manifest_sha256": null,
+    "known_used_key_manifest_sha256": "732586bcdcdbd4f435b570b5183c1a63f4d0dc3ef2e29e6d9f83b7e192dc9afe",
+    "reviewer_schema_sha256": "817feba036d57241a115f684241a9c5182d9f2fdeb6d966bb6382eb08347667e",
+    "selected_text_sha256": null,
+    "predictions_sha256": null
+  },
+  "key_contract": {
+    "key_namespace": "linkup_job_source_record_tuple_json_v1",
+    "stable_key_type": "string",
+    "frame_source_provenance": "full 2464-shard semantic narrow, usable=true, after completed global JOB_HASH audit",
+    "source_receipts": [
+      "narrow:ec029eac81a8c7cde50a0d4dd56660328d1db38a77e86f9fc25f8d9361b5f4f5",
+      "global_job_hash_audit:b2e73be7607e7378dc6847ff22096522f4f38e4577182dec6946a21c4c1aa53f"
+    ],
+    "heldout_source_provenance": null,
+    "known_used_source_provenance": "targeted_closure32_v1 hidden_mapping.jsonl: only prior cases with all four canonical tuple fields; earlier artifacts lacking RECORD_SOURCE_ROW are not asserted excluded"
+  },
+  "counts": {
+    "verified_full_frame_rows": 204768752,
+    "global_duplicate_job_hashes_excluded": 0,
+    "heldout_key_count": 0,
+    "known_used_key_count": 32,
+    "prior_review_matches_excluded": 32,
+    "eligible_after_exclusion": 204768720,
+    "core_selected": 32,
+    "challenge_selected": 8,
+    "unique_ads": 40,
+    "core_dual_review": 8
+  },
+  "core_strata": {
+    "genAI-develop|general_work": {
+      "frame_size": 554,
+      "selected": 1,
+      "sampling_probability": 0.0018050541516245488
+    },
+    "genAI-develop|industry_domain": {
+      "frame_size": 3,
+      "selected": 1,
+      "sampling_probability": 0.3333333333333333
+    },
+    "genAI-develop|none": {
+      "frame_size": 304,
+      "selected": 1,
+      "sampling_probability": 0.003289473684210526
+    },
+    "genAI-develop|specific_tool": {
+      "frame_size": 2,
+      "selected": 1,
+      "sampling_probability": 0.5
+    },
+    "genAI-use|general_work": {
+      "frame_size": 648,
+      "selected": 1,
+      "sampling_probability": 0.0015432098765432098
+    },
+    "genAI-use|industry_domain": {
+      "frame_size": 385,
+      "selected": 1,
+      "sampling_probability": 0.0025974025974025974
+    },
+    "genAI-use|none": {
+      "frame_size": 9946,
+      "selected": 1,
+      "sampling_probability": 0.00010054293183189222
+    },
+    "genAI-use|specific_tool": {
+      "frame_size": 1452,
+      "selected": 1,
+      "sampling_probability": 0.0006887052341597796
+    },
+    "other|general_work": {
+      "frame_size": 871949,
+      "selected": 1,
+      "sampling_probability": 1.1468560661231332e-06
+    },
+    "other|industry_domain": {
+      "frame_size": 9103231,
+      "selected": 2,
+      "sampling_probability": 2.1970221342290446e-07
+    },
+    "other|none": {
+      "frame_size": 188219756,
+      "selected": 12,
+      "sampling_probability": 6.375526275785843e-08
+    },
+    "other|specific_tool": {
+      "frame_size": 740248,
+      "selected": 1,
+      "sampling_probability": 1.3508986177605344e-06
+    },
+    "software-develop-no-AI|general_work": {
+      "frame_size": 106,
+      "selected": 1,
+      "sampling_probability": 0.009433962264150943
+    },
+    "software-develop-no-AI|industry_domain": {
+      "frame_size": 297,
+      "selected": 1,
+      "sampling_probability": 0.003367003367003367
+    },
+    "software-develop-no-AI|none": {
+      "frame_size": 7878,
+      "selected": 1,
+      "sampling_probability": 0.00012693577050012695
+    },
+    "software-develop-no-AI|specific_tool": {
+      "frame_size": 1050,
+      "selected": 1,
+      "sampling_probability": 0.0009523809523809524
+    },
+    "software-use-no-AI|general_work": {
+      "frame_size": 67562,
+      "selected": 1,
+      "sampling_probability": 1.4801219620496728e-05
+    },
+    "software-use-no-AI|industry_domain": {
+      "frame_size": 322212,
+      "selected": 1,
+      "sampling_probability": 3.1035467332067087e-06
+    },
+    "software-use-no-AI|none": {
+      "frame_size": 4083341,
+      "selected": 1,
+      "sampling_probability": 2.448974993761236e-07
+    },
+    "software-use-no-AI|specific_tool": {
+      "frame_size": 1337796,
+      "selected": 1,
+      "sampling_probability": 7.474981237797093e-07
+    }
+  },
+  "challenge_strata": {
+    "binding_broad_not_explicit": {
+      "eligible_size_after_core": 3033024,
+      "selected": 4,
+      "sampling_probability": 1.3188158089088646e-06
+    },
+    "exact_or_unspecified_duration": {
+      "eligible_size_after_core": 3075618,
+      "selected": 4,
+      "sampling_probability": 1.300551628973429e-06
+    }
+  },
+  "blinding": {
+    "model_predictions_in_reviewer_pack": false,
+    "private_key_in_reviewer_pack": false,
+    "raw_text_written_to_public_receipt": false,
+    "challenge_excluded_from_prevalence_estimates": true
+  },
+  "heldout_exclusion_unverified": true,
+  "scope": "limited_human_diagnostic_only",
+  "private_outputs": [
+    "selected_key_manifest.json"
+  ]
+}

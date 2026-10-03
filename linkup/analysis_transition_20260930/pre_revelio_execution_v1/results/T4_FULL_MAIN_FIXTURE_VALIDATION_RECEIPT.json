@@ -1,0 +1,45 @@
+{
+  "status": "complete",
+  "validated_at": "2026-10-03",
+  "runtime": "Kunshan Python 3.8.10 with DuckDB 0.9.2",
+  "validation_scope": "fixture_override",
+  "production_result": false,
+  "script_sha256": "975ed23dd6daafb1fdcd0ed492760e058e0ec7ab6e75fca785e2de67bd6dd1ce",
+  "full_main_test_sha256": "dcc6e1f8389b90f8f12d00766653d76cd2521fd73d1b7ed6110f49759778d0bf",
+  "space_and_annual_sql_test_sha256": "ba18589a89e7157e24121e8c40f8c62e72ca5a35776e4c875db26a6d8b289d26",
+  "production_defaults": {
+    "expected_shards": 2464,
+    "expected_canonical_rows": 204774035
+  },
+  "fixture": {
+    "expected_shards": 1,
+    "expected_canonical_rows": 16,
+    "hash_prefix_partitions": 16,
+    "records_1_to_1_prefixes": 16,
+    "onet_1_to_1_prefixes": 16,
+    "prefix_receipts": 16,
+    "public_csv_outputs": 6,
+    "selected_annual_groups": 1,
+    "selected_annual_keys": 9,
+    "created_years_in_selected_group": 3
+  },
+  "stages_exercised": [
+    "argument and receipt gates",
+    "all-prefix key, Records, and O*NET audits",
+    "joined_rows risk view",
+    "cohort and concentration prefix outputs",
+    "annual group aggregation",
+    "deterministic group and key selection",
+    "narrow and occupation enrichment",
+    "all public CSV outputs",
+    "private bounded-key output",
+    "final hash-bound T4 receipt"
+  ],
+  "compatibility_checks": {
+    "recursive_external_view_name_removed": true,
+    "duckdb_0_9_2_reserved_years_alias_removed": true,
+    "soft_space_monitor_active_interrupts_and_stops": true,
+    "annual_group_year_global_cap_fixture_rows": 3
+  },
+  "result": "Full tiny main pipeline and separate soft-guard fixture both exited zero. Fixture overrides are explicit in the final receipt and cannot be presented as production output."
+}

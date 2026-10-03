@@ -60,8 +60,8 @@ def main():
   if not {'JOB_HASH',a.text_column}<=schema:raise RuntimeError(name+' lacks JOB_HASH or requested text column')
   row,rg=locate_row(pf,int(selected_row['SOURCE_ROW']),['JOB_HASH',a.text_column])
   if str(row['JOB_HASH'])!=str(selected_row['JOB_HASH']):raise RuntimeError('JOB_HASH mismatch at '+name+':'+str(selected_row['SOURCE_ROW']))
- key=json.dumps([selected_row[k] for k in KEYS],separators=(',',':'))
- output.append({'private_key':key,'original_text':row[a.text_column],**{k:selected_row[k] for k in KEYS},'ORIGINAL_TEXT':row[a.text_column]});rowgroups.add((name,rg))
+  key=json.dumps([selected_row[k] for k in KEYS],separators=(',',':'))
+  output.append({'private_key':key,'original_text':row[a.text_column],**{k:selected_row[k] for k in KEYS},'ORIGINAL_TEXT':row[a.text_column]});rowgroups.add((name,rg))
  a.output.parent.mkdir(parents=True,exist_ok=True);tmp=Path(str(a.output)+'.tmp')
  with tmp.open('w',encoding='utf-8',newline='') as f:
   w=csv.DictWriter(f,fieldnames=['private_key','original_text']+list(KEYS)+['ORIGINAL_TEXT']);w.writeheader();w.writerows(output)

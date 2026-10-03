@@ -52,6 +52,16 @@
       "predictive_ai": "not_interpretable_structural_context_gate; raw zero is not absence",
       "occupation_task": "unmeasured/NA",
       "general_work": "narrow explicit-object candidate measure; not all work experience"
+    },
+    "p4_human_review": {
+      "status": "actual_40_texts_delivered_pending_human_labels",
+      "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_ACTUAL_PACK_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_PHASE2_ACTUAL_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_PHASE2_LOCATOR_VALIDATION_RECEIPT.json"
+      ],
+      "counts": {"unique_ads": 40, "core_selected": 32, "challenge_selected": 8, "core_dual_review": 8},
+      "interpretation": "bounded human diagnostic pack delivered; human labels not received; heldout exclusion remains unverified"
     }
   },
   "tables": {
@@ -124,7 +134,7 @@
       "missing_or_blocked": "Binding-aware semantic accuracy/human diagnostic remains pending; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding. T2/T3 unique usable ads are 204,768,752 after content-usability filtering."
     },
     "T4_04_cohort_and_time_risk": {
-      "status": "current_created_queue_complete_time_risk_pending",
+      "status": "pending_full_computation_after_full_main_fixture_pass",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_first_observed_queue_distribution.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_queue_receipt.json",
@@ -138,35 +148,49 @@
         "Historical 112,836,465-row Kunshan time-risk aggregation remains a subset diagnostic only; it is not current full-library USA coverage."
       ],
       "direct_reuse": "Reuse the current queue denominator sums and time interpretation; reuse old temporal aggregates only as historical diagnostics.",
-      "missing_or_blocked": "LAST_CHECKED/DELETE_DATE time-risk, company-title-city annual comparison, and global JOB_HASH de-duplication remain pending."
+      "missing_or_blocked": "T4 compatibility fix, LAST_CHECKED/DELETE_DATE time-risk, and company-title-city annual comparison remain pending; do not mark T4 complete."
     },
     "T5_05_comparable_experience_contrasts": {
-      "status": "pilot_85376_rows_validated_pending_full",
+      "status": "computed_numeric_acceptance_passed_with_frozen_support_limits",
       "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/COMPARISON_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/JOIN_MANIFEST_PUBLIC.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_T6_FULL_ACCEPTANCE.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/FIXED_COMPARISONS.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_NUMERIC_ACCEPTANCE_RECEIPT.json",
         {"availability":"local_project_reference","local_relative":"../../../linkage_v1/results/PILOT_COVERAGE.json","repository_path":null},
         "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md"
       ],
       "denominators_and_ranges": [
+        "Production candidate rows: 6,010,975; Records matches exactly one per row; O*NET matches 6,008,133 and missing 2,842; global JOB_HASH rows/distinct both 204,774,035.",
+        "C1_use is limited: retained B=1,064,428 / full B=4,795,101 = 0.2219823941; A retention 0.9399197686; 9 occupation majors and 69 support cells.",
+        "C2_develop is canceled under the frozen support rule: only 2 occupation majors (<5); retained A=801, B=1,637.",
         "Validated comparison pilot: 85,376 rows; candidate subset 2,394; Records 1:1 connection 2,394; official O*NET 2,393 and missing 1. This is pilot evidence, not full-library coverage.",
         "Older 15,254-key linkage pilot remains a valid historical reference but is not the current pilot denominator and must not stand alone."
       ],
-      "direct_reuse": "Reuse the 85,376-row pilot validation and linkage acceptance rule as bounded pilot diagnostic.",
-      "missing_or_blocked": "Full frozen join, C1/C2 support, common cells, raw/standardized differences, and four experience objects remain unavailable; private comparison outputs are not packaged here."
+      "direct_reuse": "Reuse computed T5 main outputs as descriptive C1 limited results and C2 canceled status with frozen support limits; retain the 85,376-row pilot as prior validation context.",
+      "missing_or_blocked": "Human semantic diagnostic is pending; specific_tool is restricted-vocabulary and selection-coupled to the traditional-software arm; no causal or significance claim."
     },
     "T6_06_sensitivity_and_claim_status": {
-      "status": "limited_reusable_pending_results",
+      "status": "computed_numeric_acceptance_passed_with_interpretation_limits",
       "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T6_SENSITIVITY_AND_CLAIM_STATUS.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/COMPARISON_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/JOIN_MANIFEST_PUBLIC.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_T6_FULL_ACCEPTANCE.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_NUMERIC_ACCEPTANCE_RECEIPT.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/PRE_REVELIO_EXECUTION_PLAN.md",
         "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md",
         {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json","repository_path":null},
         {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/final_validation.json","repository_path":null}
       ],
       "denominators_and_ranges": [
-        "Existing evidence supports current full-wave conservation, claim-status rules, candidate limits, and historical time-risk warnings, not final sensitivity estimates.",
+        "T6 rows are computed and numerically accepted; S2 and S3 retained counts/effects are identical to main and therefore are not independent robustness proofs.",
         "Current full-wave canonical USA is 204,774,035 and usable is 204,768,752; global JOB_HASH audit is complete with 0 duplicates."
       ],
-      "direct_reuse": "Reuse pre-specified S1/S2/S3 definitions, pilot limitations, and temporal-history unconfirmed status.",
-      "missing_or_blocked": "Actual S1/S2/S3 rows and per-comparison claim states await P1/P2; no significance-driven or substitute comparison is permitted."
+      "direct_reuse": "Reuse T6 descriptive sensitivity rows and claim statuses under D22 vocabulary-coupling and common-support limits.",
+      "missing_or_blocked": "Human semantic diagnostic and T4 compatibility fix remain pending; no causal or significance claim."
     }
   },
   "delivery_rule": "Pilot evidence is explicitly labeled pilot and cannot be used as full-library prevalence. No raw text, URL/key lists, credentials, or private source contents are included."
