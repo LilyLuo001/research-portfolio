@@ -1,0 +1,40 @@
+{
+  "accepted_gate_sha256": "89ccab6366c920d450bdd39acb08310b3da53466b52f026ed0d60e2061233991",
+  "archive_manifest": {
+    "receipt_digest": "100dd7090d8f8f132191778f9180e0b339478b8fd4933e9d855c6cf894f80842",
+    "status": "complete",
+    "total_receipts": 2464
+  },
+  "as_of": "2026-10-03T16:57:38+08:00",
+  "handoff": {
+    "atomically_published": true,
+    "destination": "Huazhong",
+    "remote_revalidation": "passed"
+  },
+  "inputs": {
+    "body_data_reread": false,
+    "kunshan_plan_rows": 1358,
+    "kunshan_receipts": 1358,
+    "total_receipts": 2464,
+    "wuzhen_plan_rows": 1106,
+    "wuzhen_receipts": 1106
+  },
+  "status": "accepted_and_relayed",
+  "validation": {
+    "checks": [
+      "known parser/enrichment/lean_writer SHA256",
+      "regional receipt-to-SHARD_COMPLETE binding",
+      "regional accounting and row conservation",
+      "exact disjoint frozen-plan ID union",
+      "flat receipt archive count and per-file digest"
+    ],
+    "elapsed_seconds": 3.5,
+    "parameters": {
+      "gate_module": "frozen final_receipt_gate.py",
+      "root": "private metadata snapshot"
+    },
+    "runtime": "CPython local metadata-only validation",
+    "validator_sha256": "8f07006a0c125c036063a1a7c8132d9a11731376eb8edaf71cb62d5a7173d839"
+  },
+  "version": "isolated_gate_v2_20261003"
+}

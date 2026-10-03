@@ -168,7 +168,9 @@ def main():
     last_error = None
     for attempt in range(1, 6):
         archive_dir = ROOT / "final_gate_wuzhen"
-        if archive_dir.exists():
+        prestaged_wuzhen = ((archive_dir / "plan.jsonl").is_file() and
+                            (archive_dir / "checkpoints" / "REGION_PUBLISHED_COMPLETE.json").is_file())
+        if archive_dir.exists() and not prestaged_wuzhen:
             shutil.move(str(archive_dir), str(archive_dir) + ".previous.%d.attempt%d" % (int(time.time()), attempt))
         result = subprocess.run([PYTHON, str(RELEASE / "final_receipt_gate.py")], universal_newlines=True,
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

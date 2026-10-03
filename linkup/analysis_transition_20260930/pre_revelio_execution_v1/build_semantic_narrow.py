@@ -12,6 +12,23 @@ OBJECTS = ("general_work", "specific_tool", "industry_domain", "object_unspecifi
 TECHNOLOGIES = ("traditional_software", "generative_ai", "predictive_ai", "unspecified_ai")
 ROLES = ("use", "develop", "implement", "unknown")
 
+AD_OUTPUT_SCHEMA = pa.schema(
+    [("JOB_HASH", pa.string()), ("SOURCE_FILE", pa.string()),
+     ("SOURCE_ROW", pa.int64()), ("RECORD_SOURCE_ROW", pa.int64()),
+     ("CREATED", pa.timestamp("ms")), ("STATE", pa.string()),
+     ("usable", pa.bool_()), ("DESCRIPTION_EMPTY", pa.bool_()),
+     ("PARSE_ERROR", pa.bool_()), ("INPUT_EVIDENCE_TRUNCATED", pa.bool_()),
+     ("ENRICHMENT_INCOMPLETE", pa.bool_())]
+    + [("exp_%s_%s" % (obj, suffix), pa.bool_())
+       for obj in OBJECTS
+       for suffix in ("main", "required", "broad", "exact_or_unspecified")]
+    + [("tech_%s_detected" % tech, pa.bool_()) for tech in TECHNOLOGIES]
+    + [("tech_%s_%s_explicit" % (tech, role), pa.bool_())
+       for tech in TECHNOLOGIES for role in ("use", "develop", "implement")]
+    + [("exp_occupation_task_main", pa.bool_()),
+       ("exp_occupation_task_available", pa.bool_())]
+)
+
 def sha256(path):
     h=hashlib.sha256()
     with Path(path).open("rb") as f:
@@ -88,7 +105,7 @@ def build(shard,output,receipt,threads,memory,gate=None):
             target["exp_%s_main"%obj]=True
             target["exp_%s_required"%obj] |= item["REQUIREMENT_STRENGTH"]=="required"
             target["exp_%s_exact_or_unspecified"%obj] |= item["BOUND_TYPE"]=="exact_or_unspecified"
-            if item["MIN_YEARS"] is not None:
+            if target["usable"] and item["MIN_YEARS"] is not None:
                 durations.append({**dict(zip(KEYS,k)),"EVIDENCE_ORDINAL":item["EVIDENCE_ORDINAL"],"OBJECT_TYPE":obj,
                     "MIN_YEARS":item["MIN_YEARS"],"MAX_YEARS":item["MAX_YEARS"],"DURATION_UNIT":item["DURATION_UNIT"],
                     "BOUND_TYPE":item["BOUND_TYPE"],"REQUIREMENT_STRENGTH":item["REQUIREMENT_STRENGTH"]})
@@ -110,7 +127,7 @@ def build(shard,output,receipt,threads,memory,gate=None):
     for name,values in observed.items():
         if values-allowed[name]: raise RuntimeError("unexpected frozen enum %s: %s"%(name,sorted(values-allowed[name])))
     output.parent.mkdir(parents=True,exist_ok=True); temp=Path(str(output)+".tmp")
-    pq.write_table(pa.Table.from_pylist([ads[x] for x in order]),temp,compression="zstd",row_group_size=65536)
+    pq.write_table(pa.Table.from_pylist([ads[x] for x in order], schema=AD_OUTPUT_SCHEMA),temp,compression="zstd",row_group_size=65536)
     if pq.ParquetFile(temp).metadata.num_rows!=len(ads): temp.unlink(missing_ok=True); raise RuntimeError("output conservation failed")
     os.replace(temp,output)
     duration_output=output.with_suffix(".durations.parquet"); duration_temp=Path(str(duration_output)+".tmp")
