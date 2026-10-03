@@ -1,0 +1,29 @@
+{
+  "contract": {
+    "locator_output": [
+      "private_key",
+      "original_text",
+      "JOB_HASH",
+      "SOURCE_FILE",
+      "SOURCE_ROW",
+      "RECORD_SOURCE_ROW",
+      "ORIGINAL_TEXT"
+    ],
+    "phase2": "materialize_frozen_review_selection.py calls build_blind_review_pack.materialize directly; full_frame_rescanned=false",
+    "selection": "existing selected_key_manifest.json only; maximum 40"
+  },
+  "files": {
+    "build_selected_source_map.py": "3cb468c6a96174929cfb0e939e205da10cfe674c03c864e7749b0ebdde3f4699",
+    "materialize_frozen_review_selection.py": "fb31c53d4820797916264751b4ee2a7b72e03bff36563d33a4f90c97ee9157d6",
+    "materialize_selected_text.py": "2d31e8c32d0eeca87aa17d5b1ce8063e298b5ccdb0563fcb0e5976e587cc1b88",
+    "test_materialize_selected_text.py": "fa3ede1736f228977377a587d9f9420c23a04903d585b48c28bf223d4b787c28"
+  },
+  "privacy": "fixture only; no production key or text",
+  "scope": "frozen selected_key_manifest JSON to bounded source locator output and direct no-rescan phase2 handoff",
+  "status": "PASS",
+  "test": {
+    "command": "python3 test_materialize_selected_text.py",
+    "result": "ok: frozen JSON selection, one selected row, one row group, exact hash, phase2-compatible columns"
+  },
+  "validated_at": "2026-10-03T20:00:00+08:00"
+}

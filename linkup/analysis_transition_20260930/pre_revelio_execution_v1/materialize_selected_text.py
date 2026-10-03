@@ -14,6 +14,18 @@ def load_rows(path):
  p=Path(path)
  if p.suffix.lower()=='.csv':
   with p.open(encoding='utf-8-sig',newline='') as f:return list(csv.DictReader(f))
+ if p.suffix.lower()=='.json':
+  value=json.loads(p.read_text())
+  rows=value.get('selected') if isinstance(value,dict) else value
+  if not isinstance(rows,list):raise RuntimeError('JSON selection requires a selected list')
+  result=[]
+  for row in rows:
+   key=row.get('private_key') if isinstance(row,dict) else None
+   try: parts=json.loads(key)
+   except (TypeError,json.JSONDecodeError):raise RuntimeError('selection contains invalid private_key JSON')
+   if not isinstance(parts,list) or len(parts)!=4:raise RuntimeError('private_key must encode the four-field canonical tuple')
+   result.append(dict(zip(KEYS,parts)))
+  return result
  return pq.read_table(p).to_pylist()
 def load_map(path):
  rows=[json.loads(x) for x in Path(path).read_text().splitlines() if x.strip()];result={}
@@ -48,10 +60,11 @@ def main():
   if not {'JOB_HASH',a.text_column}<=schema:raise RuntimeError(name+' lacks JOB_HASH or requested text column')
   row,rg=locate_row(pf,int(selected_row['SOURCE_ROW']),['JOB_HASH',a.text_column])
   if str(row['JOB_HASH'])!=str(selected_row['JOB_HASH']):raise RuntimeError('JOB_HASH mismatch at '+name+':'+str(selected_row['SOURCE_ROW']))
-  output.append({**{k:selected_row[k] for k in KEYS},'ORIGINAL_TEXT':row[a.text_column]});rowgroups.add((name,rg))
+ key=json.dumps([selected_row[k] for k in KEYS],separators=(',',':'))
+ output.append({'private_key':key,'original_text':row[a.text_column],**{k:selected_row[k] for k in KEYS},'ORIGINAL_TEXT':row[a.text_column]});rowgroups.add((name,rg))
  a.output.parent.mkdir(parents=True,exist_ok=True);tmp=Path(str(a.output)+'.tmp')
  with tmp.open('w',encoding='utf-8',newline='') as f:
-  w=csv.DictWriter(f,fieldnames=list(KEYS)+['ORIGINAL_TEXT']);w.writeheader();w.writerows(output)
+  w=csv.DictWriter(f,fieldnames=['private_key','original_text']+list(KEYS)+['ORIGINAL_TEXT']);w.writeheader();w.writerows(output)
  os.replace(tmp,a.output)
  value={'status':'complete','rows':len(output),'max_rows':a.max_rows,'selection_sha256':sha(a.selection),'source_map_sha256':sha(a.source_map),'output_sha256':sha(a.output),'source_files_opened':len(cache),'row_groups_read':len(rowgroups),'verification':'exact SOURCE_FILE basename mapping + SOURCE_ROW footer bound + JOB_HASH match','privacy':'private original text; do not commit'}
  t=Path(str(a.receipt)+'.tmp');t.write_text(json.dumps(value,indent=2,sort_keys=True)+'\n');os.replace(t,a.receipt)
