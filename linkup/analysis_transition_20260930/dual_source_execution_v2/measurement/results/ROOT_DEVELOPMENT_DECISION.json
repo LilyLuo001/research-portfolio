@@ -1,0 +1,53 @@
+{
+  "version": "development_gate_decision_v1",
+  "created_at_utc": "2026-10-03T18:00:09.039485+00:00",
+  "decision": "close_this_diagnostic_wave_do_not_promote_either_configuration_to_unattended_production",
+  "reviewer": "gpt-6-astra root",
+  "actual_scope": {
+    "paired_records": 20,
+    "distinct_texts": 19,
+    "independent_model_readings": 40,
+    "root_full_text_targeted_cases": 4,
+    "remaining_config80_records_unread": 60,
+    "evaluation_labels_read": 0,
+    "external_batch_api_calls": 0
+  },
+  "accepted_outputs": [
+    "Corrected 40300 unique-key sample, 69 support cells and weighting receipt",
+    "Exact-locator materialization of 200 development records; fixed 80-key subset",
+    "Versioned input, independent labels, first-pass failures and aggregate comparison receipts"
+  ],
+  "configuration_decisions": {
+    "gpt-5.6-terra/medium": "Reject this prompt/workflow configuration for the core semantic task: pervasive missing explicit duration, wrong scope/strength, and semantic changes during purported quote-only repair. This is not a claim about the model in general.",
+    "gpt-5.6-sol/medium": "Retain only as a diagnostic candidate. It preserves more explicit durations and distinctions in the inspected cases, but shared omissions and scope/strength errors prevent unattended-production acceptance. No general accuracy estimate."
+  },
+  "material_rulings": [
+    "A duration tied to an occupation, task, domain or tool stays attached to that object. Do not infer unrestricted total career tenure from it.",
+    "Required and preferred remain distinct, including section boundaries; ambiguous scope stays unresolved.",
+    "Education-or-work-experience clauses retain actual conditional work-year branches. A degree is not years of employment, and conditional years are not a universal minimum. Never add alternative branches.",
+    "Proficiency, knowledge and unclear exposure are distinct from stated prior experience. Split clauses with genuinely different modes instead of collapsing them.",
+    "Deployment/maintenance alone does not establish model development or training; preserve supported role evidence and leave unsupported roles unresolved.",
+    "Repairing quotes must not alter semantic labels invisibly. Report initial annotation and repaired serialization separately."
+  ],
+  "cost_control": {
+    "stop_reason": "Material core failures already identified in the first paired 20. Spending on another 60 paired records would not remove those failures.",
+    "further_semantic_repair_or_rerun_this_wave": false,
+    "further_full_corpus_processing_this_wave": false,
+    "formal_40300_model_extraction_started": false
+  },
+  "research_use": {
+    "existing_engineering_and_coverage_results": "Retain with existing scope and source-time caveats. Sampling correction does not invalidate raw data or frozen old T1-T6.",
+    "experience_role_year_semantics": "Candidate measurements and development diagnostics only; not accepted economic estimates.",
+    "historical_current_description": "Current body cannot be interpreted as the original historical wording merely from a unique URL hash or observed dates.",
+    "individual_histories": "Deferred: Revelio Individual is not acquired."
+  },
+  "next_bounded_action": "Use these retained artifacts and rulings for the next authorized measurement execution; do not re-clean the full corpus, purchase API/data access, or rerun 40300 records automatically. Existing aggregate work can be reported at its candidate-measurement status.",
+  "limitations": [
+    "Nonrandom early stopping and four targeted adjudications do not estimate population accuracy.",
+    "No human validation occurred; all readings and adjudication were by AI.",
+    "No full-record all-dimension agreement cases were available in the paired 20; shared omissions were checked directly against sources.",
+    "Evaluation remains unrevealed and not finally text-deduplicated against unavailable historical review texts."
+  ],
+  "private_adjudication_sha256": "47f7857988a0c9383745ad076945b26d315a68312fcb63d92207e8d4d3d06924",
+  "privacy": "No source text, record IDs, credentials or row-level labels in this public decision."
+}

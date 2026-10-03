@@ -1,33 +1,69 @@
 {
-  "observed_at": "2026-10-04T00:58:16+08:00",
-  "status": "repair_submitted_pending",
-  "active_job": {
+  "observed_at": "2026-10-04T01:41:52+08:00",
+  "status": "development_200_text_materialized_and_handed_off",
+  "active_jobs": 0,
+  "accepted_core": {
     "cluster": "kunshan",
-    "slurm_job_id": "123582600",
-    "state": "PENDING",
-    "reason": "Priority",
-    "elapsed_compute": "00:00:00",
-    "resources": "4 CPU, 8 GiB, 8 hour limit",
-    "stdout": "/public/home/lilysharp/linkup_analysis_execution_oct02/logs/l1-sample-123582600.out",
-    "stderr": "/public/home/lilysharp/linkup_analysis_execution_oct02/logs/l1-sample-123582600.err",
-    "private_output": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-123582600"
+    "slurm_job_id": "123584403",
+    "state": "COMPLETED",
+    "elapsed": "00:00:48",
+    "exit_code": "0:0",
+    "resources": "4 CPU, 8 GiB",
+    "private_output": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-123584403",
+    "counts": {
+      "support_cells": 69,
+      "frame_A": 10075,
+      "frame_B": 1064428,
+      "selected_A": 10075,
+      "selected_B": 30225,
+      "selected_total": 40300,
+      "development": 200,
+      "evaluation": 200,
+      "config_compare": 80,
+      "development_evaluation_overlap": 0,
+      "formal_distinct_JOB_HASH": 40300,
+      "cell_arm_count_mismatches": 0,
+      "max_B_weighted_cell_reconstruction_error": 7.967173587530851e-10
+    }
   },
-  "superseded_submission": {
-    "slurm_job_id": "123581674",
-    "state": "CANCELLED before allocation",
-    "elapsed_compute": "00:00:00",
-    "reason": "replaced by bounded broad Top-N and early core checkpoint"
+  "development_text": {
+    "kunshan": {
+      "rows": 122,
+      "output_sha256": "50a9386f1cb2513ff6be41712f92d76661c9251e790ba42f36efcf72504ca286",
+      "source_files_opened": 115,
+      "row_groups_read": 121,
+      "verification": "exact SOURCE_FILE basename mapping + SOURCE_ROW footer bound + JOB_HASH match"
+    },
+    "wuzhen": {
+      "rows": 78,
+      "slurm_job_id": "45867338",
+      "state": "COMPLETED",
+      "elapsed": "00:02:19",
+      "exit_code": "0:0",
+      "output_sha256": "5b51d89074c6d77ea600ce1a74fdf1e19165c245cc8879237a7f93d931402915",
+      "source_files_opened": 74,
+      "row_groups_read": 76,
+      "verification": "exact SOURCE_FILE basename mapping + SOURCE_ROW footer bound + JOB_HASH match"
+    },
+    "local_private_directory": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/linkup_sample/private/run-123584403/dev_text_adapter",
+    "text_column": "original_text",
+    "locator_fields": ["JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"]
   },
-  "failed_attempt": {
-    "slurm_job_id": "123581861",
-    "state": "FAILED",
-    "elapsed_compute": "00:00:04",
-    "reason": "DuckDB output-file lock on shared predecessor output"
+  "diagnostic_600": {
+    "source_run": "123582600",
+    "status": "retained_from_completed_run; unaffected by later C1 B-sampling identifier fix",
+    "main_core_from_that_run": "invalid_superseded"
   },
-  "core_checkpoint": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-123582600/L1_CORE_RECEIPT_PRIVATE.json",
-  "core_checkpoint_present": false,
-  "repair": "Replacement job uses a distinct run-${SLURM_JOB_ID} private output directory and a job-specific DuckDB temporary database. Old directories were preserved. No old build_l1_sample or DuckDB writer process was found before submission.",
-  "next_manual_action": "After the run-specific L1_CORE_RECEIPT_PRIVATE.json exists, run prepare_dev_text_adapter.py, then execute the generated regional materializer commands. Do not scan original text separately for the nested 80.",
-  "background_automation": false,
-  "claim_limit": "No key list or original-text sample is complete while repair job 123582600 remains pending. The future provisional 200/200/80 lists also require full-text digest exclusion before they can be called final or locked."
+  "prior_attempts": {
+    "123581674": "cancelled before allocation",
+    "123581861": "failed after four seconds on shared DuckDB lock",
+    "123582600": "completed; diagnostic 600 retained, core invalid because DuckDB case-insensitive N_B/n_B collision selected all frame B"
+  },
+  "historical_review_exclusion": {
+    "known_JOB_HASH_excluded": 72,
+    "complete_historical_text_set_supplied": false,
+    "text_digest_crosscheck_status": "not_checked_no_complete_historical_text_set_supplied"
+  },
+  "handoff": "Measurement owner has received the two regional text CSVs and two exact regional config-80 manifests. Merge, full-text digest handling, and limited model diagnostics are outside this sample task.",
+  "background_automation": false
 }

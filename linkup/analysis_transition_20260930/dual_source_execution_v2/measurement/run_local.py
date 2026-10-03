@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import math
+import os
 import statistics
 import sys
 from datetime import datetime, timezone
@@ -47,6 +49,9 @@ def read_rows(path: Path) -> list[dict[str, Any]]:
                         raise ValueError(f"line {line_number} is not an object")
                     rows.append(value)
         return rows
+    if suffix == ".csv":
+        with path.open(encoding="utf-8-sig", newline="") as handle:
+            return list(csv.DictReader(handle))
     if suffix == ".parquet":
         try:
             import pyarrow.parquet as pq
@@ -123,12 +128,67 @@ def private_output_guard(output_dir: Path) -> None:
         raise ValueError("raw-text packs cannot be written inside measurement/; choose a private output directory")
 
 
-def comparison_ids(path: Path) -> list[str]:
-    rows = read_rows(path)
-    ids = [str(row.get("JOB_HASH", row.get("record_id", ""))) for row in rows]
-    if len(ids) != 80 or any(not value for value in ids) or len(set(ids)) != 80:
-        raise ValueError("L1 comparison manifest must contain exactly 80 unique JOB_HASH/record_id values")
-    return ids
+def as_paths(value: Path | list[Path] | None) -> list[Path]:
+    if value is None:
+        return []
+    return value if isinstance(value, list) else [value]
+
+
+def comparison_keys(paths: list[Path]) -> list[tuple[str, str, str, str]]:
+    keys: list[tuple[str, str, str, str]] = []
+    for path in paths:
+        if path.suffix.lower() == ".json":
+            value = json.loads(path.read_text(encoding="utf-8"))
+            selected = value.get("selected") if isinstance(value, dict) else None
+            if not isinstance(selected, list):
+                raise ValueError(f"{path}: expected selected[] manifest")
+            for item in selected:
+                try:
+                    parts = json.loads(item["private_key"])
+                except (KeyError, TypeError, json.JSONDecodeError) as exc:
+                    raise ValueError(f"{path}: invalid selected[].private_key") from exc
+                if not isinstance(parts, list) or len(parts) != 4:
+                    raise ValueError(f"{path}: private_key must encode four canonical fields")
+                keys.append(tuple(str(part) for part in parts))
+        else:
+            for row in read_rows(path):
+                if not all(field in row for field in LOCATOR_FIELDS):
+                    raise ValueError(f"{path}: comparison rows require all four canonical locator fields")
+                keys.append(tuple(str(row[field]) for field in LOCATOR_FIELDS))
+    if len(keys) != 80 or len(set(keys)) != 80:
+        raise ValueError("L1 comparison manifests must contain exactly 80 unique canonical keys in total")
+    return keys
+
+
+def text_duplicate_audit(pack: list[dict[str, Any]], known_review_paths: list[Path]) -> dict[str, Any]:
+    counts: dict[str, int] = {}
+    for row in pack:
+        digest = row["source_text_sha256"]
+        counts[digest] = counts.get(digest, 0) + 1
+    duplicate_groups = {digest: count for digest, count in counts.items() if count > 1}
+    review_hashes: set[str] = set()
+    review_files = []
+    for path in known_review_paths:
+        rows = read_rows(path)
+        text_column = resolve_text_column(rows, None)
+        review_hashes.update(sha256_text(row[text_column]) for row in rows if isinstance(row.get(text_column), str))
+        review_files.append({"path": str(path.resolve()), "sha256": file_sha256(path), "rows": len(rows), "text_column": text_column})
+    overlaps = sorted(set(counts) & review_hashes)
+    return {
+        "normalization": "exact UTF-8 decoded original_text; no whitespace or case normalization",
+        "within_development": {
+            "unique_text_hashes": len(counts),
+            "duplicate_groups": len(duplicate_groups),
+            "rows_in_duplicate_groups": sum(duplicate_groups.values()),
+        },
+        "historical_known_review_text": {
+            "status": "checked_supplied_files" if known_review_paths else "not_checked_no_complete_historical_text_set_supplied",
+            "files": review_files,
+            "unique_review_text_hashes": len(review_hashes) if known_review_paths else None,
+            "overlap_groups": len(overlaps) if known_review_paths else None,
+            "overlap_development_rows": sum(counts[digest] for digest in overlaps) if known_review_paths else None,
+        },
+    }
 
 
 def validate_evaluation_lock(path: Path, input_path: Path, pack: list[dict[str, Any]]) -> dict[str, Any]:
@@ -154,9 +214,14 @@ def validate_evaluation_lock(path: Path, input_path: Path, pack: list[dict[str, 
 
 def command_prepare(args: argparse.Namespace) -> int:
     private_output_guard(args.output_dir)
-    if args.mode == "evaluation" and args.comparison_manifest:
+    input_paths = as_paths(args.input)
+    comparison_manifests = as_paths(args.comparison_manifest)
+    known_review_paths = as_paths(getattr(args, "known_review_text", None))
+    if args.mode == "evaluation" and comparison_manifests:
         raise ValueError("configuration comparison manifest is development-only")
-    rows = read_rows(args.input)
+    if args.mode == "evaluation" and len(input_paths) != 1:
+        raise ValueError("evaluation preparation requires one locked input file")
+    rows = [row for path in input_paths for row in read_rows(path)]
     if len(rows) != args.expected_count:
         raise ValueError(f"expected {args.expected_count} rows, found {len(rows)}")
     text_column = resolve_text_column(rows, args.text_column)
@@ -167,26 +232,46 @@ def command_prepare(args: argparse.Namespace) -> int:
     if args.mode == "evaluation":
         if args.evaluation_lock_receipt is None:
             raise ValueError("evaluation preparation refused: --evaluation-lock-receipt is required")
-        evaluation_lock = validate_evaluation_lock(args.evaluation_lock_receipt, args.input, pack)
+        evaluation_lock = validate_evaluation_lock(args.evaluation_lock_receipt, input_paths[0], pack)
+    duplicate_audit = text_duplicate_audit(pack, known_review_paths)
+    historical_overlap_detected = (duplicate_audit["historical_known_review_text"]["overlap_groups"] or 0) > 0
     comparison_rows: list[dict[str, Any]] | None = None
     comparison_manifest_sha256 = None
-    if args.mode == "development" and args.comparison_manifest:
-        selected_ids = comparison_ids(args.comparison_manifest)
-        pack_by_id = {row["record_id"]: row for row in pack}
-        missing_ids = [record_id for record_id in selected_ids if record_id not in pack_by_id]
-        if missing_ids:
-            raise ValueError(f"L1 comparison manifest contains IDs outside development pack: {missing_ids[:5]}")
-        comparison_rows = [pack_by_id[record_id] for record_id in selected_ids]
-        comparison_manifest_sha256 = file_sha256(args.comparison_manifest)
+    if args.mode == "development" and comparison_manifests and not historical_overlap_detected:
+        selected_keys = comparison_keys(comparison_manifests)
+        pack_by_key = {tuple(str(row[field]) for field in LOCATOR_FIELDS): row for row in pack}
+        missing_keys = [key for key in selected_keys if key not in pack_by_key]
+        if missing_keys:
+            raise ValueError(f"L1 comparison manifest contains canonical keys outside development pack: {missing_keys[:3]}")
+        comparison_rows = [pack_by_key[key] for key in selected_keys]
+        comparison_manifest_sha256 = {str(path.resolve()): file_sha256(path) for path in comparison_manifests}
+        config_hash_counts: dict[str, int] = {}
+        for row in comparison_rows:
+            digest = row["source_text_sha256"]
+            config_hash_counts[digest] = config_hash_counts.get(digest, 0) + 1
+        config_duplicates = [count for count in config_hash_counts.values() if count > 1]
+        duplicate_audit["within_config80"] = {
+            "unique_text_hashes": len(config_hash_counts),
+            "duplicate_groups": len(config_duplicates),
+            "rows_in_duplicate_groups": sum(config_duplicates),
+        }
     args.output_dir.mkdir(parents=True, exist_ok=False)
+    os.chmod(args.output_dir, 0o700)
     pack_name = f"{args.mode}_{len(pack)}.pack.jsonl"
     pack_path = args.output_dir / pack_name
     write_jsonl(pack_path, pack)
+    os.chmod(pack_path, 0o600)
     comparison_path: Path | None = None
     comparison_count = 0
     if comparison_rows is not None:
         comparison_path = args.output_dir / "development_config_compare_80.pack.jsonl"
         write_jsonl(comparison_path, comparison_rows)
+        os.chmod(comparison_path, 0o400)
+        for chunk_index in range(4):
+            chunk_path = args.output_dir / f"agent_readonly_config80_part_{chunk_index + 1:02d}_of_04.jsonl"
+            start = chunk_index * 20
+            write_jsonl(chunk_path, ({"record_id": row["record_id"], "original_text": row["original_text"]} for row in comparison_rows[start:start + 20]))
+            os.chmod(chunk_path, 0o400)
         comparison_count = 80
     lengths = [len(row["original_text"]) for row in pack]
     receipt = {
@@ -194,7 +279,7 @@ def command_prepare(args: argparse.Namespace) -> int:
         "created_at_utc": utc_now(),
         "mode": args.mode,
         "route": "agent_assisted_bounded_development" if args.mode == "development" else "locked_offline_evaluation",
-        "input": {"path": str(args.input.resolve()), "sha256": file_sha256(args.input), "text_column": text_column},
+        "input": {"files": [{"path": str(path.resolve()), "sha256": file_sha256(path)} for path in input_paths], "text_column": text_column},
         "counts": {"records": len(pack), "unique_job_hash": len({r["record_id"] for r in pack}), "comparison_records": comparison_count},
         "text_readability": {
             "all_nonempty_unicode_strings": True,
@@ -208,7 +293,10 @@ def command_prepare(args: argparse.Namespace) -> int:
             "comparison_path": str(comparison_path) if comparison_path else None,
             "comparison_sha256": file_sha256(comparison_path) if comparison_path else None,
             "comparison_manifest_sha256": comparison_manifest_sha256,
+            "agent_readonly_chunks": [str(args.output_dir / f"agent_readonly_config80_part_{index:02d}_of_04.jsonl") for index in range(1, 5)] if comparison_rows is not None else [],
         },
+        "text_duplicate_audit": duplicate_audit,
+        "development_readiness": "historical_overlap_detected_stop" if historical_overlap_detected else ("bounded_diagnostic_ready_historical_text_checked" if known_review_paths else "bounded_diagnostic_provisional_cross_key_historical_text_and_heldout400_unverified"),
         "evaluation_lock": {
             "receipt_path": str(args.evaluation_lock_receipt.resolve()) if args.evaluation_lock_receipt else None,
             "receipt_sha256": file_sha256(args.evaluation_lock_receipt) if args.evaluation_lock_receipt else None,
@@ -220,6 +308,7 @@ def command_prepare(args: argparse.Namespace) -> int:
     }
     receipt_path = args.output_dir / f"{args.mode}_pack_receipt.json"
     write_json(receipt_path, receipt)
+    os.chmod(receipt_path, 0o600)
     print(receipt_path)
     return 0
 
@@ -298,10 +387,11 @@ def parser() -> argparse.ArgumentParser:
     sub = root.add_subparsers(dest="command", required=True)
     prepare = sub.add_parser("prepare", help="audit actual local text and prepare a private bounded pack")
     prepare.add_argument("--mode", choices=("development", "evaluation"), required=True)
-    prepare.add_argument("--input", type=Path, required=True)
+    prepare.add_argument("--input", type=Path, action="append", required=True)
     prepare.add_argument("--output-dir", type=Path, required=True)
     prepare.add_argument("--expected-count", type=int, default=200)
-    prepare.add_argument("--comparison-manifest", type=Path)
+    prepare.add_argument("--comparison-manifest", type=Path, action="append")
+    prepare.add_argument("--known-review-text", type=Path, action="append")
     prepare.add_argument("--evaluation-lock-receipt", type=Path)
     prepare.add_argument("--text-column")
     prepare.set_defaults(func=command_prepare)

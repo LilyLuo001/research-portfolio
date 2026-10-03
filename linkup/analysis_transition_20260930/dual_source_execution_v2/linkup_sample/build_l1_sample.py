@@ -94,6 +94,7 @@ def main():
     p.add_argument("--threads", type=int, default=8)
     p.add_argument("--memory-limit", default="24GB")
     p.add_argument("--temp-dir", type=Path)
+    p.add_argument("--core-only", action="store_true", help="stop after formal/dev/evaluation/config outputs; do not rescan broad diagnostic frame")
     a = p.parse_args()
 
     joined = sorted(a.joined_dir.glob("*.parquet"))
@@ -143,28 +144,29 @@ def main():
     con.execute("""
       CREATE TABLE cell_counts_all AS
       SELECT OCCUPATION_MAJOR, CENSUS_REGION, created_year,
-        count(*) FILTER (WHERE old_c1_arm='A')::BIGINT AS N_A,
-        count(*) FILTER (WHERE old_c1_arm='B')::BIGINT AS N_B
+        count(*) FILTER (WHERE old_c1_arm='A')::BIGINT AS frame_count_a,
+        count(*) FILTER (WHERE old_c1_arm='B')::BIGINT AS frame_count_b
       FROM eligible GROUP BY 1,2,3
     """)
     con.execute("""
       CREATE TABLE support_cells AS
-      SELECT *, least(N_B, 3*N_A)::BIGINT AS n_B,
-        1.0::DOUBLE AS pi_A,
-        least(N_B,3*N_A)::DOUBLE/N_B AS pi_B,
-        (N_A+N_B)::DOUBLE/sum(N_A+N_B) OVER () AS W_h
-      FROM cell_counts_all WHERE N_A >= 20 AND N_B >= 20
+      SELECT *, least(frame_count_b, 3*frame_count_a)::BIGINT AS sample_count_b,
+        1.0::DOUBLE AS inclusion_probability_a,
+        least(frame_count_b,3*frame_count_a)::DOUBLE/frame_count_b AS inclusion_probability_b,
+        (frame_count_a+frame_count_b)::DOUBLE/sum(frame_count_a+frame_count_b) OVER () AS W_h
+      FROM cell_counts_all WHERE frame_count_a >= 20 AND frame_count_b >= 20
     """)
     if q(con, "SELECT count(*) FROM support_cells") != 69:
         raise RuntimeError("old C1 support does not reproduce 69 cells")
-    if q(con, "SELECT sum(N_A) FROM support_cells") != 10075:
+    if q(con, "SELECT sum(frame_count_a) FROM support_cells") != 10075:
         raise RuntimeError("old C1 support does not reproduce A=10,075")
-    if q(con, "SELECT sum(N_B) FROM support_cells") != 1064428:
+    if q(con, "SELECT sum(frame_count_b) FROM support_cells") != 1064428:
         raise RuntimeError("old C1 support does not reproduce B=1,064,428")
 
     con.execute(f"""
       CREATE TABLE formal_ranked AS
-      SELECT e.*, s.N_A, s.N_B, s.n_B, s.pi_A, s.pi_B, s.W_h,
+      SELECT e.*, s.frame_count_a, s.frame_count_b, s.sample_count_b,
+        s.inclusion_probability_a, s.inclusion_probability_b, s.W_h,
         row_number() OVER (
           PARTITION BY e.OCCUPATION_MAJOR,e.CENSUS_REGION,e.created_year,e.old_c1_arm
           ORDER BY md5({sql_string(SEED)} || '|formal|' || e.JOB_HASH), e.JOB_HASH
@@ -176,12 +178,13 @@ def main():
       CREATE TABLE formal_sample AS
       SELECT JOB_HASH,SOURCE_FILE,SOURCE_ROW,RECORD_SOURCE_ROW,
         OCCUPATION_MAJOR,CENSUS_REGION,created_year,old_c1_arm AS arm,
-        N_A,N_B,CASE WHEN old_c1_arm='A' THEN N_A ELSE n_B END AS selected_cell_arm_n,
-        CASE WHEN old_c1_arm='A' THEN pi_A ELSE pi_B END AS inclusion_probability,
-        CASE WHEN old_c1_arm='A' THEN 1.0 ELSE 1.0/pi_B END AS design_weight,
+        frame_count_a,frame_count_b,
+        CASE WHEN old_c1_arm='A' THEN frame_count_a ELSE sample_count_b END AS selected_cell_arm_n,
+        CASE WHEN old_c1_arm='A' THEN inclusion_probability_a ELSE inclusion_probability_b END AS inclusion_probability,
+        CASE WHEN old_c1_arm='A' THEN 1.0 ELSE 1.0/inclusion_probability_b END AS design_weight,
         W_h,stable_rank_in_cell_arm
       FROM formal_ranked
-      WHERE old_c1_arm='A' OR stable_rank_in_cell_arm <= n_B
+      WHERE old_c1_arm='A' OR stable_rank_in_cell_arm <= sample_count_b
     """)
 
     # Operational near frame: existing T5 candidate-joined rows in the old 69 cells,
@@ -259,11 +262,40 @@ def main():
         "evaluation": q(con, "SELECT count(*) FROM evaluation_keys"),
         "config_compare": q(con, "SELECT count(*) FROM config_compare_keys"),
         "development_evaluation_overlap": q(con, "SELECT count(*) FROM development_keys JOIN evaluation_keys USING(JOB_HASH)"),
+        "expected_formal_B_sum_sample_count_b": q(con, "SELECT sum(sample_count_b) FROM support_cells"),
     }
     if core_counts["development"] != 200 or core_counts["evaluation"] != 200 or core_counts["config_compare"] != 80:
         raise RuntimeError("development/evaluation/config counts failed")
     if core_counts["development_evaluation_overlap"]:
         raise RuntimeError("development/evaluation overlap invariant failed")
+    if core_counts["formal_B"] != core_counts["expected_formal_B_sum_sample_count_b"]:
+        raise RuntimeError("formal B count differs from sum(sample_count_b)")
+    cell_mismatches = q(con, """
+      SELECT count(*) FROM (
+        SELECT s.OCCUPATION_MAJOR,s.CENSUS_REGION,s.created_year,
+          s.frame_count_a,s.sample_count_b,
+          count(*) FILTER (WHERE f.arm='A') AS selected_a,
+          count(*) FILTER (WHERE f.arm='B') AS selected_b
+        FROM support_cells s LEFT JOIN formal_sample f
+          USING (OCCUPATION_MAJOR,CENSUS_REGION,created_year)
+        GROUP BY 1,2,3,4,5
+      ) x WHERE selected_a<>frame_count_a OR selected_b<>sample_count_b
+    """)
+    if cell_mismatches:
+        raise RuntimeError(f"formal sample has {cell_mismatches} cell-arm count mismatches")
+    max_b_weight_error = q(con, """
+      SELECT max(abs(weighted_b-frame_count_b)) FROM (
+        SELECT s.OCCUPATION_MAJOR,s.CENSUS_REGION,s.created_year,s.frame_count_b,
+          sum(f.design_weight) FILTER (WHERE f.arm='B') AS weighted_b
+        FROM support_cells s LEFT JOIN formal_sample f
+          USING (OCCUPATION_MAJOR,CENSUS_REGION,created_year)
+        GROUP BY 1,2,3,4
+      ) x
+    """)
+    if max_b_weight_error is None or max_b_weight_error > 1e-7:
+        raise RuntimeError(f"B inverse-probability weights do not recover frame cells: {max_b_weight_error}")
+    core_counts["cell_arm_count_mismatches"] = cell_mismatches
+    core_counts["max_B_weighted_cell_reconstruction_error"] = max_b_weight_error
     if abs(q(con, "SELECT sum(W_h) FROM support_cells") - 1.0) > 1e-12:
         raise RuntimeError("W_h does not sum to one")
     core_receipt = {
@@ -276,6 +308,9 @@ def main():
     }
     atomic_json(a.output_dir / "L1_CORE_RECEIPT_PRIVATE.json", core_receipt)
     os.chmod(a.output_dir / "L1_CORE_RECEIPT_PRIVATE.json", 0o600)
+    if a.core_only:
+        con.close()
+        return
 
     # Broad frame last: all usable semantic-narrow keys outside the entire T5 joined table.
     # ORDER BY ... LIMIT is a bounded Top-N plan, not a 204.8m-row window materialization.
@@ -343,8 +378,8 @@ def main():
         "seed": SEED,
         "counts": counts,
         "sampling": {
-            "formal": "old C1 69 support cells; all A; B bottom stable MD5 ranks by cell with n_B=min(N_B,3*N_A)",
-            "old_weight": "W_h=(N_Ah+N_Bh)/sum_h(N_Ah+N_Bh) over the 69 old support cells",
+            "formal": "old C1 69 support cells; all A; B bottom stable MD5 ranks by cell with sample_count_b=min(frame_count_b,3*frame_count_a)",
+            "old_weight": "W_h=(frame_count_a+frame_count_b)/sum_h(frame_count_a+frame_count_b) over the 69 old support cells",
             "near": "SRS-by-frozen-hash from existing T5 joined candidates in the 69 cells but outside both C1 arms",
             "broad": "SRS-by-frozen-hash from usable semantic narrow, excluding every key in existing T5 joined input",
             "diagnostic_overlap": "frames are disjoint because broad excludes the entire T5 joined input",

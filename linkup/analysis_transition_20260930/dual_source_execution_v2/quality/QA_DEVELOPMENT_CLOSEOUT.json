@@ -1,0 +1,52 @@
+{
+  "review": {
+    "name": "QA_DEVELOPMENT_CLOSEOUT",
+    "date": "2026-10-04",
+    "scope": "Bounded closeout of the paired 20-record development comparison and root targeted adjudication only.",
+    "status": "passed_diagnostic_closeout",
+    "evaluation": "not_read_or_reviewed",
+    "formal_measurement": "not_claimed"
+  },
+  "coverage": {
+    "terra_review_records": 20,
+    "sol_review_records": 20,
+    "same_unique_ids": true,
+    "same_id_count": 20,
+    "distinct_texts": 19,
+    "duplicate_text_groups": 1,
+    "source_hashes_match_record_text": {"terra": true, "sol": true},
+    "final_expanded_records": {"terra": 20, "sol": 20},
+    "first_pass_records": {"terra": 20, "sol": 20},
+    "first_pass_quote_valid_records": {"terra": 12, "sol": 17},
+    "sol_preflight_sha_zero_excluded_from_first_pass_validity": true
+  },
+  "hashes": {
+    "terra_public_receipt_file_sha256_matches_private_expanded": true,
+    "terra_private_expanded_sha256": "796db9a3d38befe11e1cb03e73cf11183f65afe8b9c44505c1c1d1878f8261d5",
+    "sol_public_receipt_file_sha256_matches_private_expanded": true,
+    "sol_private_expanded_sha256": "55865f1f7dcfd9fd0a68a2d3a7344dc13f32311fb88a45de00f82e9fd83e6bb4",
+    "root_private_adjudication_sha256_matches_public_decision": true,
+    "root_private_adjudication_sha256": "47f7857988a0c9383745ad076945b26d315a68312fcb63d92207e8d4d3d06924"
+  },
+  "root_adjudication": {
+    "cases": 4,
+    "exact_quote_and_offset_checks": 4,
+    "source_hash_checks": 4,
+    "assessment": "PASS: all four targeted cases reproduce the quoted source substring at the recorded offsets and match the recorded private source SHA."
+  },
+  "privacy_and_scope": {
+    "aggregate_contains_original_text": false,
+    "aggregate_contains_actual_record_ids": false,
+    "root_decision_contains_original_text": false,
+    "root_decision_contains_actual_record_ids": false,
+    "evaluation_labels_read": 0,
+    "external_batch_api_calls": 0,
+    "assessment": "PASS: public outputs contain aggregate metadata only; mentions of record_id/JOB_HASH are field/limitation text, not row identifiers."
+  },
+  "decision": {
+    "close_this_diagnostic_wave": true,
+    "promote_model_to_formal_measurement": false,
+    "formal_indicator_claim": false,
+    "reason": "The requested paired development diagnostics, private SHA links, and four source-grounded adjudications are internally consistent. The result remains a model-versus-model development diagnostic with no truth accuracy, population error rate, formal 40300 extraction, or evaluation conclusion."
+  }
+}

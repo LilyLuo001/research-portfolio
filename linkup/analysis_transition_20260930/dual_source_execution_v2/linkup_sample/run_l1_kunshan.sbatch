@@ -27,4 +27,4 @@ python "${CODE}/build_l1_sample.py" \
   --known-used "${ROOT}/private/human_review_pack_20261003/known_prior_review_keys_d18.json" \
   --known-used "${ROOT}/private/human_review_pack_20261003/selected_key_manifest.json" \
   --output-dir "${OUT}" --threads 4 --memory-limit 6GB \
-  --temp-dir "${JOB_TMP}"
+  --temp-dir "${JOB_TMP}" --core-only

@@ -16,8 +16,8 @@ After the core checkpoint exists, generate the executable regional materializer 
 python prepare_dev_text_adapter.py \
   --development /public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-JOB_ID/L1_DEVELOPMENT_200_KEYS_PROVISIONAL.parquet \
   --config-compare /public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-JOB_ID/L1_CONFIG_COMPARE_80_KEYS_PROVISIONAL.parquet \
-  --source-plan /public/home/lilysharp/linkup_analysis_execution_oct02/private/gate_v2_20261003/plans/kunshan.plan.jsonl \
-  --source-plan /public/home/lilysharp/linkup_analysis_execution_oct02/private/gate_v2_20261003/plans/wuzhen.plan.jsonl \
+  --source-plan /public/home/lilysharp/linkup_release_v1/semantic_v1/kunshan/plan.jsonl \
+  --source-plan /public/home/lilysharp/linkup_release_v1/semantic_v1/final_gate_wuzhen/plan.jsonl \
   --output-dir /public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-JOB_ID/dev_text_adapter
 ```
 

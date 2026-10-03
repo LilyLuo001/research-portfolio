@@ -1,0 +1,45 @@
+{
+  "observed_at": "2026-10-04T01:39:38+08:00",
+  "status": "accepted_core_keys_pending_text_digest_finalization",
+  "source_job": {
+    "cluster": "kunshan",
+    "slurm_job_id": "123584403",
+    "state": "COMPLETED",
+    "elapsed": "00:00:48",
+    "exit_code": "0:0"
+  },
+  "runtime": {
+    "python": "/public/software/apps/python/3.8.10/bin/python3",
+    "pythonpath": "/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38",
+    "sampling_script_sha256": "217fd4edcf9d2a8376065e9f95707c15a2d13618fb256e2f5b4b8c0f113926a7",
+    "toy_regression": "PASS: distinct identifiers, min(B,3A) cell counts, inverse-probability frame recovery"
+  },
+  "frame": {
+    "support_cells": 69,
+    "frame_A": 10075,
+    "frame_B": 1064428,
+    "selected_A": 10075,
+    "selected_B": 30225,
+    "selected_total": 40300,
+    "selected_B_rule": "sum_h min(frame_count_b,3*frame_count_a)",
+    "sum_W_h": 1.0000000000000002,
+    "cell_arm_count_mismatches": 0,
+    "max_B_weighted_cell_reconstruction_error": 7.967173587530851e-10
+  },
+  "key_audit": {
+    "formal_rows": 40300,
+    "formal_distinct_JOB_HASH": 40300,
+    "formal_duplicate_JOB_HASH_rows": 0,
+    "development_rows": 200,
+    "development_distinct_JOB_HASH": 200,
+    "evaluation_rows": 200,
+    "evaluation_distinct_JOB_HASH": 200,
+    "development_evaluation_overlap": 0,
+    "config_compare_rows": 80,
+    "config_compare_distinct_JOB_HASH": 80,
+    "config_compare_not_in_development": 0,
+    "known_prior_review_JOB_HASH_excluded": 72,
+    "heldout_400_status": "unavailable_not_claimed_excluded"
+  },
+  "privacy": "aggregate counts and hashes only; no JOB_HASH, locator, or text"
+}

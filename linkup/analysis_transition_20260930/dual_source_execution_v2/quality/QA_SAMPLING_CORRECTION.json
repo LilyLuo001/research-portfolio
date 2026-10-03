@@ -1,0 +1,60 @@
+{
+  "review": {
+    "name": "QA_SAMPLING_CORRECTION",
+    "date": "2026-10-04",
+    "scope": "Targeted verification of the corrected L1 count aliases and required sampling invariants.",
+    "status": "passed_targeted_sampling_acceptance",
+    "job": "123584403",
+    "large_run": "not rerun locally"
+  },
+  "independent_public_aggregate_check": {
+    "source": "linkup_sample/private/run-123584403/core/L1_CELL_COUNTS_PRIVATE.parquet plus L1_CORE_RECEIPT_PRIVATE.json",
+    "cells": 69,
+    "frame_count_a_sum": 10075,
+    "frame_count_b_sum": 1064428,
+    "sample_count_b_sum": 30225,
+    "formula_mismatches": 0,
+    "w_h_sum": 1.0000000000000002,
+    "max_b_weighted_cell_reconstruction_error": 7.967173587530851e-10,
+    "assessment": "PASS for corrected frame/sample alias and aggregate weighting invariants; W_h tolerance and B IPW reconstruction pass."
+  },
+  "toy_check": {
+    "fixture": "one cell with frame_count_a=20 and frame_count_b=100",
+    "expected_sample_count_b": 60,
+    "expected_selected_b": 60,
+    "expected_inverse_probability": 100.0,
+    "expected_weighted_frame_b": 100.0,
+    "status": "PASS_remote_runtime",
+    "supporting_fixture": "linkup_sample/test_sampling_identifier_case.py:14-43",
+    "runtime_command": "/public/software/apps/python/3.8.10/bin/python3 test_sampling_identifier_case.py",
+    "runtime_result": "PASS: distinct identifiers, min(B,3A) cell counts, inverse-probability frame recovery"
+  },
+  "subset_receipt_check": {
+    "formal_a": 10075,
+    "formal_b": 30225,
+    "formal_total": 40300,
+    "development": 200,
+    "evaluation": 200,
+    "development_evaluation_overlap": 0,
+    "config_compare": 80,
+    "formal_unique_job_hash": 40300,
+    "formal_duplicate_job_hash": 0,
+    "development_unique_job_hash": 200,
+    "evaluation_unique_job_hash": 200,
+    "config_unique_job_hash": 80,
+    "config_subset_development": true,
+    "config_outside_development": 0,
+    "arm_counts": {"development": {"A": 100, "B": 100}, "evaluation": {"A": 100, "B": 100}, "config_compare": {"A": 40, "B": 40}},
+    "assessment": "PASS: reported counts, formal uniqueness, development/evaluation disjointness, and config subset membership all independently verified from local Parquet."
+  },
+  "decision": {
+    "pass": true,
+    "scope": "targeted sampling correction acceptance only",
+    "reason": "Corrected aliases, toy behavior, aggregate cell invariants, inverse-probability recovery, formal uniqueness, and subset relationships pass. The core receipt remains provisional for text deduplication, which is outside this sampling correction gate."
+  },
+  "old_run": {
+    "job": "123582600",
+    "status": "rejected_after_case_collision",
+    "reason": "Its B sample count used collided N_B/n_B identifiers and cannot support acceptance."
+  }
+}

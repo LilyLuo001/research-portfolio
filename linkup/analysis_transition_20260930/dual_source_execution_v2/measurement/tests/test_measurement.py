@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 import sys
@@ -13,6 +14,7 @@ MEASUREMENT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(MEASUREMENT))
 from validate_extraction import SCHEMA, SCHEMA_VALIDATOR, validate_record  # noqa: E402
 from run_local import command_cost, command_prepare  # noqa: E402
+from expand_compact_labels import expand_record, locate_quote  # noqa: E402
 
 
 TEXT = (
@@ -154,15 +156,21 @@ class MeasurementValidationTest(unittest.TestCase):
     def test_config80_uses_l1_manifest_order_without_redrawing(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            source = root / "development.jsonl"
-            manifest = root / "config80.jsonl"
+            source = root / "development.csv"
+            manifest = root / "config80.json"
             rows = [
                 {"JOB_HASH": f"job-{number:02d}", "SOURCE_FILE": "source.parquet", "SOURCE_ROW": number,
                  "RECORD_SOURCE_ROW": number, "original_text": TEXT + f" {number}"}
                 for number in range(80)
             ]
-            source.write_text("".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8")
-            manifest.write_text("".join(json.dumps({"JOB_HASH": row["JOB_HASH"]}) + "\n" for row in reversed(rows)), encoding="utf-8")
+            with source.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+                writer.writeheader()
+                writer.writerows(rows)
+            manifest.write_text(json.dumps({"selected": [
+                {"private_key": json.dumps([row[key] for key in ("JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW")], separators=(",", ":"))}
+                for row in reversed(rows)
+            ]}), encoding="utf-8")
             output = root / "private-pack"
             self.assertEqual(0, command_prepare(Namespace(
                 mode="development", input=source, output_dir=output, expected_count=80,
@@ -171,6 +179,35 @@ class MeasurementValidationTest(unittest.TestCase):
             comparison = (output / "development_config_compare_80.pack.jsonl").read_text().splitlines()
             self.assertEqual("job-79", json.loads(comparison[0])["record_id"])
             self.assertEqual("job-00", json.loads(comparison[-1])["record_id"])
+
+    def test_compact_expansion_fills_hash_offsets_and_binding_only(self) -> None:
+        formal = valid_record()
+        compact = {
+            "record_id": formal["record_id"], "record_text_state": formal["record_text_state"],
+            "record_note": formal["record_note"], "experience_findings": [], "technology_findings": []
+        }
+        for finding in formal["experience_findings"]:
+            short = {key: value for key, value in finding.items() if key not in {"state_evidence", "mentions"}}
+            short["quote"] = finding["state_evidence"][0]["text"] if finding["state_evidence"] else None
+            short["mentions"] = []
+            for mention in finding["mentions"]:
+                item = {key: value for key, value in mention.items() if key != "evidence"}
+                item["quote"] = mention["evidence"][0]["text"]
+                if item["duration"] is not None:
+                    item["duration"] = {key: value for key, value in item["duration"].items() if key != "evidence_span_id"}
+                short["mentions"].append(item)
+            compact["experience_findings"].append(short)
+        for finding in formal["technology_findings"]:
+            short = {key: value for key, value in finding.items() if key != "evidence"}
+            short["quote"] = finding["evidence"][0]["text"] if finding["evidence"] else None
+            compact["technology_findings"].append(short)
+        expanded = expand_record(compact, TEXT)
+        self.assertEqual([], validate_record(expanded, TEXT, formal["record_id"]))
+        self.assertEqual(formal["source_text_sha256"], expanded["source_text_sha256"])
+
+    def test_repeated_quote_requires_occurrence(self) -> None:
+        with self.assertRaisesRegex(ValueError, "supply zero-based occurrence"):
+            locate_quote("Python then Python", "Python", "span")
 
 
 if __name__ == "__main__":

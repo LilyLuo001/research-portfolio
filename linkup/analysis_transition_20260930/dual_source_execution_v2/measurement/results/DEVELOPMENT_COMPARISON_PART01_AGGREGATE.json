@@ -1,0 +1,723 @@
+{
+  "version": "development_comparison_aggregate_v1.0.0",
+  "created_at_utc": "2026-10-03T17:55:49.413280+00:00",
+  "scope": "partial_completed_same_record_set",
+  "configurations": {
+    "terra": "gpt-5.6-terra/medium",
+    "sol": "gpt-5.6-sol/medium"
+  },
+  "coverage": {
+    "records_each": 20,
+    "exact_unique_record_ids_each": true,
+    "same_record_id_set": true,
+    "distinct_texts": 19,
+    "duplicate_text_groups": 1,
+    "rows_in_duplicate_text_groups": 2
+  },
+  "validation": {
+    "terra_frozen_schema_and_evidence_valid": 20,
+    "sol_frozen_schema_and_evidence_valid": 20
+  },
+  "first_pass_diagnostics": {
+    "quote_expansion_validity": {
+      "terra": {
+        "valid_records": 12,
+        "total_records": 20,
+        "fraction": 0.6
+      },
+      "sol": {
+        "valid_records": 17,
+        "total_records": 20,
+        "fraction": 0.85
+      }
+    },
+    "model_agreement_before_quote_repair": {
+      "experience_state": {
+        "general_work": {
+          "record_level": {
+            "agree": 9,
+            "total": 20,
+            "fraction": 0.45
+          },
+          "distinct_text_level": {
+            "agree": 9,
+            "total": 19,
+            "fraction": 0.47368421052631576
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "occupation_task": {
+          "record_level": {
+            "agree": 20,
+            "total": 20,
+            "fraction": 1.0
+          },
+          "distinct_text_level": {
+            "agree": 19,
+            "total": 19,
+            "fraction": 1.0
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "industry_domain": {
+          "record_level": {
+            "agree": 18,
+            "total": 20,
+            "fraction": 0.9
+          },
+          "distinct_text_level": {
+            "agree": 17,
+            "total": 19,
+            "fraction": 0.8947368421052632
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "specific_tool": {
+          "record_level": {
+            "agree": 19,
+            "total": 20,
+            "fraction": 0.95
+          },
+          "distinct_text_level": {
+            "agree": 18,
+            "total": 19,
+            "fraction": 0.9473684210526315
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        }
+      },
+      "prior_experience_vs_other_modes": {
+        "general_work": {
+          "record_level": {
+            "agree": 9,
+            "total": 20,
+            "fraction": 0.45
+          },
+          "distinct_text_level": {
+            "agree": 9,
+            "total": 19,
+            "fraction": 0.47368421052631576
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "occupation_task": {
+          "record_level": {
+            "agree": 18,
+            "total": 20,
+            "fraction": 0.9
+          },
+          "distinct_text_level": {
+            "agree": 17,
+            "total": 19,
+            "fraction": 0.8947368421052632
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "industry_domain": {
+          "record_level": {
+            "agree": 18,
+            "total": 20,
+            "fraction": 0.9
+          },
+          "distinct_text_level": {
+            "agree": 17,
+            "total": 19,
+            "fraction": 0.8947368421052632
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "specific_tool": {
+          "record_level": {
+            "agree": 15,
+            "total": 20,
+            "fraction": 0.75
+          },
+          "distinct_text_level": {
+            "agree": 14,
+            "total": 19,
+            "fraction": 0.7368421052631579
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        }
+      },
+      "duration_and_branch": {
+        "general_work": {
+          "record_level": {
+            "agree": 11,
+            "total": 20,
+            "fraction": 0.55
+          },
+          "distinct_text_level": {
+            "agree": 10,
+            "total": 19,
+            "fraction": 0.5263157894736842
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "occupation_task": {
+          "record_level": {
+            "agree": 2,
+            "total": 20,
+            "fraction": 0.1
+          },
+          "distinct_text_level": {
+            "agree": 2,
+            "total": 19,
+            "fraction": 0.10526315789473684
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "industry_domain": {
+          "record_level": {
+            "agree": 18,
+            "total": 20,
+            "fraction": 0.9
+          },
+          "distinct_text_level": {
+            "agree": 17,
+            "total": 19,
+            "fraction": 0.8947368421052632
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "specific_tool": {
+          "record_level": {
+            "agree": 16,
+            "total": 20,
+            "fraction": 0.8
+          },
+          "distinct_text_level": {
+            "agree": 15,
+            "total": 19,
+            "fraction": 0.7894736842105263
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        }
+      },
+      "mention_granularity": {
+        "general_work": {
+          "record_level": {
+            "agree": 9,
+            "total": 20,
+            "fraction": 0.45
+          },
+          "distinct_text_level": {
+            "agree": 9,
+            "total": 19,
+            "fraction": 0.47368421052631576
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "occupation_task": {
+          "record_level": {
+            "agree": 2,
+            "total": 20,
+            "fraction": 0.1
+          },
+          "distinct_text_level": {
+            "agree": 2,
+            "total": 19,
+            "fraction": 0.10526315789473684
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "industry_domain": {
+          "record_level": {
+            "agree": 18,
+            "total": 20,
+            "fraction": 0.9
+          },
+          "distinct_text_level": {
+            "agree": 17,
+            "total": 19,
+            "fraction": 0.8947368421052632
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        },
+        "specific_tool": {
+          "record_level": {
+            "agree": 5,
+            "total": 20,
+            "fraction": 0.25
+          },
+          "distinct_text_level": {
+            "agree": 4,
+            "total": 19,
+            "fraction": 0.21052631578947367
+          },
+          "within_model_duplicate_text_inconsistency_groups": {
+            "terra": 0,
+            "sol": 0
+          }
+        }
+      },
+      "technology_class_role": {
+        "record_level": {
+          "agree": 3,
+          "total": 20,
+          "fraction": 0.15
+        },
+        "distinct_text_level": {
+          "agree": 2,
+          "total": 19,
+          "fraction": 0.10526315789473684
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      }
+    },
+    "semantic_changes_during_quote_repair": {
+      "terra": {
+        "experience_state_records": {
+          "general_work": 0,
+          "occupation_task": 0,
+          "industry_domain": 2,
+          "specific_tool": 0
+        },
+        "condition_mode_records": {
+          "general_work": 0,
+          "occupation_task": 0,
+          "industry_domain": 2,
+          "specific_tool": 0
+        },
+        "duration_branch_records": {
+          "general_work": 0,
+          "occupation_task": 0,
+          "industry_domain": 0,
+          "specific_tool": 0
+        },
+        "technology_class_role_records": 1
+      },
+      "sol": {
+        "experience_state_records": {
+          "general_work": 0,
+          "occupation_task": 0,
+          "industry_domain": 0,
+          "specific_tool": 0
+        },
+        "condition_mode_records": {
+          "general_work": 0,
+          "occupation_task": 0,
+          "industry_domain": 0,
+          "specific_tool": 0
+        },
+        "duration_branch_records": {
+          "general_work": 0,
+          "occupation_task": 0,
+          "industry_domain": 0,
+          "specific_tool": 0
+        },
+        "technology_class_role_records": 0
+      }
+    },
+    "interpretation": "Quote repair is mechanical only; any nonzero semantic-change count is a protocol deviation and is not used to improve first-pass agreement."
+  },
+  "agreement_diagnostics": {
+    "experience_state": {
+      "general_work": {
+        "record_level": {
+          "agree": 9,
+          "total": 20,
+          "fraction": 0.45
+        },
+        "distinct_text_level": {
+          "agree": 9,
+          "total": 19,
+          "fraction": 0.47368421052631576
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "occupation_task": {
+        "record_level": {
+          "agree": 20,
+          "total": 20,
+          "fraction": 1.0
+        },
+        "distinct_text_level": {
+          "agree": 19,
+          "total": 19,
+          "fraction": 1.0
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "industry_domain": {
+        "record_level": {
+          "agree": 20,
+          "total": 20,
+          "fraction": 1.0
+        },
+        "distinct_text_level": {
+          "agree": 19,
+          "total": 19,
+          "fraction": 1.0
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "specific_tool": {
+        "record_level": {
+          "agree": 19,
+          "total": 20,
+          "fraction": 0.95
+        },
+        "distinct_text_level": {
+          "agree": 18,
+          "total": 19,
+          "fraction": 0.9473684210526315
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      }
+    },
+    "prior_experience_vs_other_modes": {
+      "general_work": {
+        "record_level": {
+          "agree": 9,
+          "total": 20,
+          "fraction": 0.45
+        },
+        "distinct_text_level": {
+          "agree": 9,
+          "total": 19,
+          "fraction": 0.47368421052631576
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "occupation_task": {
+        "record_level": {
+          "agree": 18,
+          "total": 20,
+          "fraction": 0.9
+        },
+        "distinct_text_level": {
+          "agree": 17,
+          "total": 19,
+          "fraction": 0.8947368421052632
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "industry_domain": {
+        "record_level": {
+          "agree": 20,
+          "total": 20,
+          "fraction": 1.0
+        },
+        "distinct_text_level": {
+          "agree": 19,
+          "total": 19,
+          "fraction": 1.0
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "specific_tool": {
+        "record_level": {
+          "agree": 15,
+          "total": 20,
+          "fraction": 0.75
+        },
+        "distinct_text_level": {
+          "agree": 14,
+          "total": 19,
+          "fraction": 0.7368421052631579
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      }
+    },
+    "duration_and_branch": {
+      "general_work": {
+        "record_level": {
+          "agree": 11,
+          "total": 20,
+          "fraction": 0.55
+        },
+        "distinct_text_level": {
+          "agree": 10,
+          "total": 19,
+          "fraction": 0.5263157894736842
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "occupation_task": {
+        "record_level": {
+          "agree": 2,
+          "total": 20,
+          "fraction": 0.1
+        },
+        "distinct_text_level": {
+          "agree": 2,
+          "total": 19,
+          "fraction": 0.10526315789473684
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "industry_domain": {
+        "record_level": {
+          "agree": 18,
+          "total": 20,
+          "fraction": 0.9
+        },
+        "distinct_text_level": {
+          "agree": 17,
+          "total": 19,
+          "fraction": 0.8947368421052632
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "specific_tool": {
+        "record_level": {
+          "agree": 16,
+          "total": 20,
+          "fraction": 0.8
+        },
+        "distinct_text_level": {
+          "agree": 15,
+          "total": 19,
+          "fraction": 0.7894736842105263
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      }
+    },
+    "mention_granularity": {
+      "general_work": {
+        "record_level": {
+          "agree": 9,
+          "total": 20,
+          "fraction": 0.45
+        },
+        "distinct_text_level": {
+          "agree": 9,
+          "total": 19,
+          "fraction": 0.47368421052631576
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "occupation_task": {
+        "record_level": {
+          "agree": 2,
+          "total": 20,
+          "fraction": 0.1
+        },
+        "distinct_text_level": {
+          "agree": 2,
+          "total": 19,
+          "fraction": 0.10526315789473684
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "industry_domain": {
+        "record_level": {
+          "agree": 20,
+          "total": 20,
+          "fraction": 1.0
+        },
+        "distinct_text_level": {
+          "agree": 19,
+          "total": 19,
+          "fraction": 1.0
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      },
+      "specific_tool": {
+        "record_level": {
+          "agree": 5,
+          "total": 20,
+          "fraction": 0.25
+        },
+        "distinct_text_level": {
+          "agree": 4,
+          "total": 19,
+          "fraction": 0.21052631578947367
+        },
+        "within_model_duplicate_text_inconsistency_groups": {
+          "terra": 0,
+          "sol": 0
+        }
+      }
+    },
+    "technology_class_role": {
+      "record_level": {
+        "agree": 3,
+        "total": 20,
+        "fraction": 0.15
+      },
+      "distinct_text_level": {
+        "agree": 2,
+        "total": 19,
+        "fraction": 0.10526315789473684
+      },
+      "within_model_duplicate_text_inconsistency_groups": {
+        "terra": 0,
+        "sol": 0
+      }
+    }
+  },
+  "unknown_diagnostics": {
+    "terra": {
+      "experience_by_object": {
+        "general_work": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        },
+        "occupation_task": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        },
+        "industry_domain": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        },
+        "specific_tool": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        }
+      },
+      "records_with_any_technology_unknown": 0
+    },
+    "sol": {
+      "experience_by_object": {
+        "general_work": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        },
+        "occupation_task": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        },
+        "industry_domain": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        },
+        "specific_tool": {
+          "records": 0,
+          "fraction": 0.0,
+          "distinct_text_groups": 0
+        }
+      },
+      "records_with_any_technology_unknown": 0
+    }
+  },
+  "adjudication_queue": {
+    "high_impact_disagreements": 8,
+    "agreement_common_error_checks": 0,
+    "total": 8,
+    "distinct_text_only": true,
+    "private_queue_sha256": "178ca08d1bdbdcfec0edbf7307ce32e9b94af730b7b5ca5bda3be9f0766d5b8b"
+  },
+  "privacy": {
+    "authorized_conversation_agents_received_text": true,
+    "no_separate_batch_api": true,
+    "no_microdata_or_record_ids_in_public_output": true
+  },
+  "limits": [
+    "development model-versus-model diagnostic, not truth accuracy or a population error rate",
+    "duplicate text is reported at record and distinct-text levels and is not independent evidence",
+    "72 known review JOB_HASH values were excluded upstream; cross-key historical same-text and unavailable heldout-400 contamination remain incompletely verified",
+    "no evaluation labels or formal economic results are included"
+  ],
+  "inputs": {
+    "source_sha256": "91496026145eaec1acc3f77e76ab562521428c873f5d36a6a9fe24b4ecf14975",
+    "terra_files_sha256": [
+      "796db9a3d38befe11e1cb03e73cf11183f65afe8b9c44505c1c1d1878f8261d5"
+    ],
+    "sol_files_sha256": [
+      "55865f1f7dcfd9fd0a68a2d3a7344dc13f32311fb88a45de00f82e9fd83e6bb4"
+    ]
+  }
+}
