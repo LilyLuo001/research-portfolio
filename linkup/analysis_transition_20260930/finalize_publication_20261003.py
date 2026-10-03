@@ -102,7 +102,7 @@ def stage_hz(archive, archive_sha):
                 "-o", "ProxyCommand=/public/home/lilysharp/linkup_release_v1/hz_proxy_command.sh",
                 "-o", "ControlMaster=auto", "-o", "ControlPersist=300",
                 "-o", "ControlPath=/tmp/linkup-hz-finalarchive-%r-%h-%p", "lilysharp@zzeshell.scnet.cn"]
-    remote_tar = TARGET + ".tar.gz.partial"
+    remote_tar = str(TARGET) + ".tar.gz.partial"
     preflight = "from pathlib import Path; import os,time; p=Path(%r); p.parent.mkdir(parents=True,exist_ok=True); p.exists() and os.replace(str(p),str(p)+'.stale.'+str(int(time.time())))" % remote_tar
     run(ssh_base + ["python3 -c " + shlex.quote(preflight)], 180)
     scp = ["scp", "-q", "-P", "65032", "-i", "/public/home/lilysharp/.ssh/hz_transfer_20260928",
@@ -146,7 +146,7 @@ for source_name,dest_name in (('_plans/kunshan.plan.jsonl','kunshan.plan.jsonl')
 shutil.rmtree(temp); archive.unlink()
 print(json.dumps({'status':'complete','target':str(target),'receipts':2464,'archive_sha256':expected_sha}))'''
     return json.loads(run(ssh_base + ["python3 -c %s %s" %
-                                      (shlex.quote(program), " ".join(shlex.quote(x) for x in (TARGET, remote_tar, archive_sha)))], 1800))
+                                      (shlex.quote(program), " ".join(shlex.quote(str(x)) for x in (TARGET, remote_tar, archive_sha)))], 1800))
 
 
 def main():

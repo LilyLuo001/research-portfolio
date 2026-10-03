@@ -1,0 +1,112 @@
+{
+  "interface_version": "pre-revelio-interface-v1-20261003",
+  "schema_status": "desired_fields_not_verified_against_actual_revelio_files",
+  "measurement_contract": "/Users/lilyluo/Documents/LinkUp_Research_20260924/research_contract_v1/common_measurement.json",
+  "frozen_categories": {
+    "experience_object": [
+      "general_work",
+      "occupation_task",
+      "industry_domain",
+      "specific_tool",
+      "object_unspecified"
+    ],
+    "task_family": [
+      "execution_information_processing",
+      "analysis_judgment",
+      "verification_accountability",
+      "coordination_communication",
+      "task_other_or_unknown"
+    ],
+    "event_type": [
+      "external_employer_entry",
+      "internal_occupation_transition",
+      "same_occupation_employer_change"
+    ],
+    "common_cell": [
+      "harmonized_employer_id",
+      "harmonized_occupation_family",
+      "harmonized_region",
+      "calendar_quarter"
+    ]
+  },
+  "desired_semantic_fields": {
+    "person": [
+      "stable_person_id",
+      "profile_observation_start",
+      "profile_observation_end"
+    ],
+    "position": [
+      "stable_position_id",
+      "stable_person_id",
+      "raw_employer_id",
+      "raw_title",
+      "start_date_or_month",
+      "end_date_or_month",
+      "location_at_position",
+      "industry_at_position",
+      "position_description_or_task_text",
+      "source_record_time",
+      "internship_indicator"
+    ],
+    "education": [
+      "stable_person_id",
+      "institution_or_program_id",
+      "degree_or_level",
+      "field_of_study",
+      "start_date_or_month",
+      "end_date_or_month"
+    ],
+    "time_stamped_skill_evidence": [
+      "stable_person_id",
+      "stable_position_id_if_available",
+      "skill_or_tool_text",
+      "evidence_time",
+      "evidence_source"
+    ],
+    "crosswalks": [
+      "raw_employer_id_to_harmonized_employer_id",
+      "raw_title_or_occupation_to_harmonized_occupation_family",
+      "location_to_harmonized_region",
+      "industry_at_position_to_harmonized_industry_domain"
+    ]
+  },
+  "event_time_rules": {
+    "event_date": "position start date/month for entry or transition",
+    "prior_evidence": "strictly before event time",
+    "same_month_precision": "flag interval ambiguity; do not use evidence that cannot be ordered before the event",
+    "ongoing_prior_job": "truncate at event time for duration accumulation",
+    "current_profile_skill_backfill": false,
+    "education": "count only credentials completed or known to be in progress by event time"
+  },
+  "duration_rules": {
+    "general_work": "union all observable pre-event employment intervals",
+    "occupation_task": "union pre-event intervals mapped to the same occupation family or supported related-task family",
+    "industry_domain": "union pre-event intervals carrying the same industry/domain mapping",
+    "specific_tool": "union only intervals with time-stamped, position-linked tool evidence",
+    "overlapping_jobs": "take the union of intervals within each dimension; never sum overlapping calendar time twice",
+    "internships": "calculate separately and exclude from non-internship totals unless a later specification explicitly combines them",
+    "left_censoring": "retain observed lower-bound duration and a censoring flag; never encode unobserved prior history as zero"
+  },
+  "common_support": {
+    "unit": "employer x occupation_family x region x calendar_quarter",
+    "linkup_side": "eligible deduplicated JOB_HASH/URL records with a mapped common cell",
+    "revelio_side": "eligible person entry/transition events with a mapped common cell",
+    "use": "align aggregate distributions and define overlap; do not assert advertisement-to-hire linkage",
+    "unmapped": "retain in source-specific coverage tables and exclude from common-cell contrasts",
+    "support_thresholds": "not set until actual Revelio coverage is profiled; do not invent numeric thresholds",
+    "time_gate": "Calendar-quarter matching is structural only while LinkUp text is delivery_snapshot_only. Do not treat CREATED as requirement time or correlate it with same-quarter hires as contemporaneous demand. Historical demand-flow contrasts require independent text-time evidence.",
+    "linkup_measured_object_availability": {
+      "general_work": "candidate_measured",
+      "industry_domain": "candidate_measured",
+      "specific_tool": "candidate_measured",
+      "occupation_task": "unmeasured_in_current_frozen_enrichment"
+    }
+  },
+  "denominators": {
+    "event_population": "all observed events satisfying the event definition before experience-object classification",
+    "mapped_common_cell": "event population with employer, occupation family, region, and quarter all mapped",
+    "experience_object": "mapped events with adequate pre-event observation; include verified zero only when history is not left-censored and evidence coverage is adequate",
+    "unknown_or_censored": "separate denominator category, never folded into zero experience",
+    "multiple_objects": "multi-label; object shares need not sum to 100 percent"
+  }
+}

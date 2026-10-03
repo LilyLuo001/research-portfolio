@@ -2,6 +2,13 @@
 
 ## Current execution contract — October 3
 
+Execution has begun: [October 3 execution record](pre_revelio_execution_v1/EXECUTION_REPORT_20261003.md),
+[bounded decision register](pre_revelio_execution_v1/DECISION_REGISTER.md), and
+[computed CPS benchmark](pre_revelio_execution_v1/history_interface/CPS_BENCHMARK.md).
+Actual schema inspection found occupation/task experience unavailable in the frozen
+enrichment; its planned output row is NA, not zero (decision D10). This changes
+availability, not the research objective or parser.
+
 The bounded pre-Revelio work plan is
 [PRE_REVELIO_EXECUTION_PLAN.md](pre_revelio_execution_v1/PRE_REVELIO_EXECUTION_PLAN.md).
 It incorporates the supplier-confirmed URL-derived JOB_HASH rule and the

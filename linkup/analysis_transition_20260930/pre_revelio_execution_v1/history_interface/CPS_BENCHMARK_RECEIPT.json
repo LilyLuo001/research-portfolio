@@ -1,0 +1,89 @@
+{
+  "status": "complete_descriptive_benchmark",
+  "input": {
+    "cps_path": "/Users/lilyluo/Documents/gpt_project/data/cps_00001.csv.gz",
+    "cps_sha256": "fca134b7278b66daee75f64dfbea5122a877af897381dd8a5fcdaa463e021518",
+    "mapping_path": "reproducibility_git/yax/measurement/COMPUTERIZATION_MEASURES.csv",
+    "mapping_sha256": "ae354accb99aee1185f2f62839ad3fd059dc583187305d7abe4b4dbbebbcda4c",
+    "mapping_receipt_path": "reproducibility_git/yax/measurement/COMPUTERIZATION_MEASURES_RECEIPT.json",
+    "mapping_receipt_sha256": "f7b34814bc78e3626218c0db213871c303667421d8764f1d49aff817f15615da"
+  },
+  "verified_schema": [
+    "ASECFLAG",
+    "ASECWT",
+    "EMPSTAT",
+    "OCC2010",
+    "YEAR"
+  ],
+  "sample": {
+    "annual_sample": "ASECWT nonmissing and positive",
+    "employment": "EMPSTAT in {10,12}",
+    "denominator": "ASEC-weighted employed persons, including occupations without a usable RTI score",
+    "occupation": "harmonized IPUMS OCC2010",
+    "early_years": [
+      2004,
+      2005,
+      2006
+    ],
+    "late_years": [
+      2023,
+      2024,
+      2025
+    ],
+    "asec_selection_crosscheck": {
+      "positive_ASECWT_rows": 4109155,
+      "positive_ASECWT_and_ASECFLAG_1_rows": 4109155,
+      "ASECFLAG_1_rows": 4109155
+    }
+  },
+  "mapping": {
+    "measure": "rti_autor_dorn",
+    "formula": "ln(task_routine)-ln(task_manual)-ln(task_abstract)",
+    "source": "Autor-Dorn occ1990dd_task_alm",
+    "crosswalk": "direct CPS OCC2010 to occ1990dd bridge",
+    "scored_occ2010_codes_loaded": 467,
+    "quartile_cutpoints_fixed_from_early_window_weighted_distribution": [
+      -0.5391153401322388,
+      0.6356433868154091,
+      2.082568351992104
+    ],
+    "quartile_tie_rule": "score equal to a cutpoint enters the lower quartile"
+  },
+  "observed_year_range": [
+    2004,
+    2025
+  ],
+  "asec_rows_by_year": {
+    "2004": 213241,
+    "2005": 210648,
+    "2006": 208562,
+    "2007": 206639,
+    "2008": 206404,
+    "2009": 207921,
+    "2010": 209802,
+    "2011": 204983,
+    "2012": 201398,
+    "2013": 202634,
+    "2014": 199556,
+    "2015": 199024,
+    "2016": 185487,
+    "2017": 185914,
+    "2018": 180084,
+    "2019": 180101,
+    "2020": 157959,
+    "2021": 163543,
+    "2022": 152732,
+    "2023": 146133,
+    "2024": 144265,
+    "2025": 142125
+  },
+  "outputs": {
+    "csv": "analysis_transition_20260930/pre_revelio_execution_v1/history_interface/CPS_BENCHMARK.csv"
+  },
+  "limits": [
+    "Descriptive occupation/task composition only; no causal effect.",
+    "Static historical RTI scores describe occupations, not realized worker tasks.",
+    "No workplace computer-use supplement field is present in this CPS schema.",
+    "No earnings field is read or analyzed."
+  ]
+}

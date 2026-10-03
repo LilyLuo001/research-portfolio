@@ -1,0 +1,46 @@
+{
+  "as_of": "2026-10-03T16:00:39+08:00",
+  "cutoff": "2026-10-07T18:00:00+08:00",
+  "authority": "PRE_REVELIO_EXECUTION_PLAN.md v1.1",
+  "status": "in_progress_gate_blocked",
+  "P0": {
+    "regional_publication": {
+      "kunshan": {"planned": 1358, "published": 1358, "remaining": 0, "marker_present": true},
+      "wuzhen": {"planned": 1106, "published": 1106, "remaining": 0, "marker_present": true},
+      "combined": {"planned": 2464, "published": 2464, "remaining": 0}
+    },
+    "global_gate": "running_not_yet_accepted; supervisor lock active but owner process was not visible from the sampled login node",
+    "finalizer_fix": "Path/string TypeError fixed locally and deployed to Kunshan; a direct corrected resume exited fail-closed because the existing supervisor lock was active",
+    "corrected_resume_handoff": "finite one-shot waiter deployed with the same 2026-10-07 18:00 China-time cutoff; dispatch could not be confirmed from the sampled login node",
+    "consumer_archive": "not_yet_staged",
+    "full_first_wave": "not_submitted_gate_absent",
+    "full_first_wave_main_package_submissions": 0,
+    "full_first_wave_trigger": "deployed with fixed cutoff and removal limited to its own LINKUP_FULL_FIRST_WAVE_TRIGGER cron entry",
+    "duplicate_submission": false
+  },
+  "P1": {
+    "implementation": "complete_for_frozen_semantic_narrow_projection",
+    "code": "../build_semantic_narrow.py",
+    "code_sha256": "9bb277e5be665257781d028caf9ab9283096ab381d85f365c83f0a0621080e96",
+    "test": "../test_build_semantic_narrow.py",
+    "test_sha256": "73606e911b70bd1743e8853e35e2f538f1b070d1609da6e351c756f5b05a99d7",
+    "fixture_test": "passed_locally_and_on_huazhong_runtime",
+    "production": "not_submitted_global_gate_absent",
+    "narrow_main_package_submissions": 0,
+    "controls": [
+      "production CLI requires the accepted 2464-shard global gate and a published_verified receipt bound to SHARD_COMPLETE",
+      "canonical keys must be non-null and evidence keys may not be orphaned",
+      "no ad-level duration bound is collapsed across clauses; eligible durations remain in a private evidence-level sidecar",
+      "no-evidence ads receive false for measurable booleans",
+      "occupation_task is unavailable in the frozen taxonomy and is emitted as null with availability false"
+    ],
+    "annual_company_title_location": "blocked_pending_one_bounded_raw_Records_projection_for_TITLE_CITY_BASE_HASH_URL; STATE_will_not_be_used_as_city"
+  },
+  "P2": {
+    "status": "blocked_on_P1_production_narrow_and_join",
+    "group_definitions": "frozen",
+    "substitute_comparisons_allowed": false
+  },
+  "next_automatic_chain": "existing publication supervisor may finish the global gate and unchanged first-wave trigger; newly written narrow production remains fail-closed until the accepted gate is present",
+  "privacy": "No job identifiers, credentials, raw text, URL lists, or record keys are included in this public status file."
+}

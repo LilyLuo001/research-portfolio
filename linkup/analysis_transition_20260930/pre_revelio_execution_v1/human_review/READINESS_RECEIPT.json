@@ -1,0 +1,61 @@
+{
+  "status": "ready_awaiting_full_canonical_frame_and_heldout_key_manifest",
+  "seed": "20261003",
+  "planned_unique_ads": {
+    "core": 32,
+    "challenge_maximum": 8,
+    "core_dual_review": 8
+  },
+  "actual_pack_created": false,
+  "reason": "No full canonical analysis frame or heldout-400 key manifest was found in the bounded local inventory. The existing reports/stage_c_pilot_review/sample_ads.parquet is an earlier nonrandom pilot and is not substituted for the full-library frame.",
+  "required_frame_columns": [
+    "private_key",
+    "original_text",
+    "sampling_stratum",
+    "first_observation_stratum",
+    "occupation_availability_stratum",
+    "challenge_eligible",
+    "challenge_stratum"
+  ],
+  "required_separate_inputs": [
+    "frame metadata declaring stable string key namespace and source provenance",
+    "nonempty heldout-key JSON manifest declaring the same key namespace, stable string key type, source provenance, and private_keys only; heldout text must remain unopened",
+    "optional model prediction table keyed by private_key and never shown in reviewer_pack.csv",
+    "reviewer_pack_schema.json"
+  ],
+  "sampling_design": {
+    "scope": "frame-conditional diagnostic sample; 32 is the frozen core pack size, not a global model-validation sample-size claim",
+    "core": "frame-conditional proportional stratified allocation with at least one draw per nonempty frozen sampling_stratum; deterministic SHA-256 ranking within stratum",
+    "challenge": "up to eight from frame-conditional prespecified challenge_eligible rows, stratified by challenge_stratum after removing core selections",
+    "sampling_probability": "frame-conditional selected count divided by eligible stratum size",
+    "duplicate_review": "eight core ads selected by an independent deterministic SHA-256 ranking",
+    "challenge_in_prevalence": false
+  },
+  "privacy_and_blinding": {
+    "private_outputs_must_be_outside_repository": true,
+    "private_output_permissions_attempted": "directory 0700 and files 0600",
+    "reviewer_visible_predictions": false,
+    "public_raw_text": false,
+    "heldout_text_read": false
+  },
+  "decision_d10": "Humans may label occupation_task diagnostically; the frozen main extractor's unavailable occupation_task dimension remains unmeasured/NA rather than zero.",
+  "implementation": {
+    "generator": "build_blind_review_pack.py",
+    "generator_sha256": "700b928de5c1f52d86d85795085d754954ed5b8bfd91224a48a3bfebbafd02bb",
+    "reviewer_schema_sha256": "817feba036d57241a115f684241a9c5182d9f2fdeb6d966bb6382eb08347667e"
+  },
+  "synthetic_test": {
+    "status": "PASS",
+    "test": "test_build_blind_review_pack.py",
+    "test_sha256": "97b1e2aa5fd7b8c2038e7eef0c6493307f2442ffacd59e1170c719c137d9781e",
+    "verified": [
+      "32 core rows",
+      "8 challenge rows",
+      "8 core rows assigned independent duplicate review",
+      "heldout keys excluded without heldout text",
+      "valid matching namespace with zero heldout intersection accepted and recorded",
+      "40 unique ads and 48 assignments",
+      "no private key or prediction in reviewer_pack.csv"
+    ]
+  }
+}

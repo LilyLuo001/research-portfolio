@@ -1,0 +1,164 @@
+{
+  "inventory_version": "p3-cps-input-inventory-20261003",
+  "status": "actual_local_input_verified_and_benchmark_run",
+  "inventory_scope": {
+    "roots": [
+      "/Users/lilyluo/Documents/LinkUp_Research_20260924",
+      "/Users/lilyluo/Documents"
+    ],
+    "method": "bounded filename search for CPS/IPUMS/routine-task/occupation-crosswalk artifacts, followed by header and receipt inspection of relevant matches",
+    "excluded": [
+      "remote storage",
+      "downloads",
+      "Revelio transfer",
+      "unrelated files whose names did not match the scoped inventory"
+    ]
+  },
+  "actual_cps_microdata": {
+    "path": "/Users/lilyluo/Documents/gpt_project/data/cps_00001.csv.gz",
+    "size_bytes": 175707015,
+    "sha256": "fca134b7278b66daee75f64dfbea5122a877af897381dd8a5fcdaa463e021518",
+    "rows": 8478733,
+    "years": {
+      "first": 2004,
+      "last": 2025,
+      "all_years_present": true
+    },
+    "verified_columns": [
+      "YEAR",
+      "SERIAL",
+      "MONTH",
+      "HWTFINL",
+      "CPSID",
+      "ASECFLAG",
+      "HFLAG",
+      "ASECWTH",
+      "STATEFIP",
+      "PERNUM",
+      "WTFINL",
+      "CPSIDP",
+      "CPSIDV",
+      "ASECWT",
+      "AGE",
+      "SEX",
+      "RACE",
+      "MARST",
+      "EMPSTAT",
+      "OCC",
+      "OCC2010",
+      "UHRSWORKT",
+      "EDUC",
+      "HOURWAGE",
+      "PAIDHOUR",
+      "UNION",
+      "EARNWEEK"
+    ],
+    "sample_evidence": {
+      "ASECWT_nonmissing_rows": 4109155,
+      "ASECWT_missing_rows": 4369578,
+      "ASECFLAG_weight_crosscheck": {
+        "ASECFLAG_1_rows": 4109155,
+        "positive_ASECWT_rows": 4109155,
+        "positive_ASECWT_and_ASECFLAG_1_rows": 4109155,
+        "result": "exact_match_in_actual_file"
+      },
+      "ASEC_rows_by_year": {
+        "2004": 213241,
+        "2005": 210648,
+        "2006": 208562,
+        "2007": 206639,
+        "2008": 206404,
+        "2009": 207921,
+        "2010": 209802,
+        "2011": 204983,
+        "2012": 201398,
+        "2013": 202634,
+        "2014": 199556,
+        "2015": 199024,
+        "2016": 185487,
+        "2017": 185914,
+        "2018": 180084,
+        "2019": 180101,
+        "2020": 157959,
+        "2021": 163543,
+        "2022": 152732,
+        "2023": 146133,
+        "2024": 144265,
+        "2025": 142125
+      },
+      "interpretation": "The file combines ASEC and basic monthly records. In the actual file, positive ASECWT exactly coincides with ASECFLAG=1. No extract-specific DDI or sample-definition file was found beside cps_00001.csv.gz; this exact internal crosscheck is the available verification."
+    },
+    "weights": {
+      "verified_present": [
+        "ASECWT",
+        "ASECWTH",
+        "WTFINL",
+        "HWTFINL"
+      ],
+      "benchmark_weight": "ASECWT",
+      "survey_design_gap": "No strata or PSU columns are present in the verified schema, so this deliverable does not calculate design-based standard errors."
+    },
+    "occupation_fields": {
+      "OCC": "present; vintage changes across the span and is not used for the historical benchmark",
+      "OCC2010": "present; harmonized occupation field used for the benchmark"
+    },
+    "computer_use_supplement": {
+      "status": "unavailable_in_verified_schema",
+      "evidence": "No workplace computer-use or internet-use field is present in the 27-column header."
+    },
+    "earnings_fields": {
+      "verified_present": [
+        "HOURWAGE",
+        "EARNWEEK"
+      ],
+      "use_in_p3": "not_read_or_analyzed"
+    }
+  },
+  "actual_historical_task_mapping": {
+    "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reproducibility_git/yax/measurement/COMPUTERIZATION_MEASURES.csv",
+    "sha256": "ae354accb99aee1185f2f62839ad3fd059dc583187305d7abe4b4dbbebbcda4c",
+    "rows": 522,
+    "occupation_key": "cps_occ2010",
+    "rti_field": "rti_autor_dorn",
+    "rti_scored_codes": 467,
+    "formula": "ln(task_routine)-ln(task_manual)-ln(task_abstract)",
+    "provenance": "Autor-Dorn occ1990dd task data joined through the direct Census-2010-to-occ1990dd bridge; exact upstream hashes are recorded in COMPUTERIZATION_MEASURES_RECEIPT.json.",
+    "classification": "verified_existing_input",
+    "not_interpreted_as": [
+      "workplace computer use",
+      "modern O*NET historical task observations",
+      "individual realized tasks"
+    ]
+  },
+  "other_verified_local_occupation_artifacts": [
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reproducibility_git/yax/measurement/COMPUTERIZATION_MEASURES_CENSUS2018.csv",
+      "rows": 568,
+      "role": "Census 2018 version of static computerization measures; not used in the OCC2010 benchmark"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reproducibility_git/yax/measurement/CENSUS_OCC2010_TO_2018_BRIDGE.csv",
+      "rows": 595,
+      "role": "official conversion-rate bridge with ambiguity diagnostics; not needed for the harmonized OCC2010 benchmark"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/reproducibility_git/yax/measurement/CPS_OCCUPATION_EXPOSURE_LOOKUP.csv",
+      "rows": 1576,
+      "role": "vintage-aware AI and telework exposure lookup; not a historical routine-task mapping and not used here"
+    }
+  ],
+  "verified_existing_vs_designed": {
+    "existing": [
+      "2004-2025 CPS extract with ASEC and basic weights",
+      "harmonized OCC2010",
+      "frozen Autor-Dorn RTI mapping",
+      "Census occupation bridges and separate modern exposure lookups"
+    ],
+    "designed_only": [
+      "workplace computer-use benchmark",
+      "survey-design standard errors without strata/PSU",
+      "Revelio person or position fields",
+      "historically observed LinkUp task text"
+    ]
+  }
+}
