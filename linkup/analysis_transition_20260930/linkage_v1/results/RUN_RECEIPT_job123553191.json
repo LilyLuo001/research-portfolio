@@ -1,0 +1,35 @@
+{
+  "status": "complete",
+  "version": "linkage_v1.0.0",
+  "execution": {
+    "cluster": "kunshan",
+    "scheduler_job_id": "123553191",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:57",
+    "peak_rss_kib": 142784
+  },
+  "selection": {
+    "source": "deterministic fixed-three-shard pre-gate diagnostic projection",
+    "source_projection_rows": 252301,
+    "source_projection_sha256": "520abef078a99b5b7dc0d14939fff4001ab7943af30cd89bd6717ea97383194d",
+    "pilot_rule": "lowercase JOB_HASH begins with 0",
+    "pilot_rows": 15254
+  },
+  "input_identity": {
+    "onet_files": 62,
+    "onet_footer_rows": 356299258,
+    "official_codes": 1016,
+    "official_codes_sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+    "records_index_partition": "hash_prefix=0",
+    "records_index_files": 66
+  },
+  "artifact_identity": {
+    "coverage_sha256": "0ece9830210a50e93408b5c0a084a5080a9431a8e05978ef4f6efee0bc4128d9",
+    "code_sha256": "38ff49aea4f4acc12f3805c8ba933236c22e5028ffcdb98d521459fc629b5f2c",
+    "frozen_code_file": "build_linkage_coverage_job123553191.py",
+    "rules_sha256": "3ba5dd71239d88d3558223d32c770b392213f6317937544f5840a5bc9e17d9b0"
+  },
+  "superseded_by_job": "123554098",
+  "privacy": "Aggregate artifacts only. Private row keys and source text are excluded."
+}

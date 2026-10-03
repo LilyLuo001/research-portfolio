@@ -1,0 +1,21 @@
+{
+  "version": "linkage_v1.0.0",
+  "unit": "canonical semantic ad keyed by JOB_HASH, SOURCE_FILE, SOURCE_ROW, RECORD_SOURCE_ROW",
+  "records": {
+    "join_keys": ["JOB_HASH", "RECORD_SOURCE_ROW"],
+    "cardinality": "zero_or_one",
+    "company_id_meaning": "company-scrape entity identifier; not a parent, establishment, or stable economic firm",
+    "base_hash_meaning": "vendor multi-location grouping key; not a vacancy count"
+  },
+  "occupation": {
+    "join_key": "JOB_HASH",
+    "taxonomy": "official O*NET-SOC 2019 list",
+    "states": ["missing_key", "blank_code", "placeholder_99-9999.00", "other_nonmember", "official_2019_member"],
+    "time_meaning": "current delivered snapshot assignment grouped, where used, by Records.CREATED first-observation cohort; not historical occupation evidence"
+  },
+  "remote": {
+    "joined": false,
+    "reason": "multiple rows per JOB_HASH and no frozen interval/as-of convention"
+  },
+  "release": "aggregate coverage only; no row keys, names, titles, URLs, text, or credentials"
+}

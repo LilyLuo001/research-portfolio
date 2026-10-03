@@ -1,0 +1,20 @@
+{
+  "verified_on": "2026-10-03",
+  "scheduler": "Slurm",
+  "job_id": "873446",
+  "status": "completed_partial_input_diagnostic",
+  "shards": 3,
+  "raw_rows": 367800,
+  "canonical_usa_ads": 252301,
+  "usable_ads": 252296,
+  "record_unmatched_rows": 30,
+  "wall_seconds": 31.379971742630005,
+  "conservation": {
+    "ad_level_evidence_deduplication": true,
+    "canonical_equals_ad_status": true,
+    "raw_equals_dispositions": true
+  },
+  "selection": "Fixed hash selection from published intersection; not a full-library probability sample",
+  "interpretation": "Ad-level candidate co-occurrence; not clause binding, historical requirements, causal effects or human validation",
+  "global_acceptance": false
+}

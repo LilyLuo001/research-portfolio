@@ -1,0 +1,19 @@
+{
+  "status": "global_gate_pending",
+  "checked_at": "2026-10-03T14:36:06+08:00",
+  "global_gate": "absent at exact Huazhong marker path",
+  "fixed3_job_id": "873446",
+  "fixed3_job_status": "COMPLETED",
+  "fixed3_acceptance": "pre_gate_diagnostic_not_global_acceptance",
+  "fixed3_output": "/public/home/lilysharp/linkup_analysis_execution_oct02/results/fixed3_pre_gate_v1",
+  "fixed3_scheduler": {"elapsed": "00:00:32", "max_rss_kib": 335496, "exit_code": "0:0"},
+  "fixed3_private_key_projection": {"job_id": "881340", "status": "COMPLETED", "rows": 252301, "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/results/fixed3_private_keys/fixed3_keys.parquet"},
+  "full_first_wave": "not submitted until ALL_REGIONS_VERIFIED_COMPLETE exists and 2464 published receipt wrappers are staged",
+  "full_trigger": "Installed and verified on Huazhong zz-login02: every two minutes, exact shared script path; absolute flock/python3/sbatch/crontab paths; removes itself after one successful sbatch; consumes no compute while gated",
+  "full_resources": {"workers": 8, "cpus": 8, "memory_gb": 16, "walltime": "12:00:00", "basis": "fixed3 peak RSS 335496 KiB and 31.38 seconds for 3 shards; headroom for eight concurrent shard processes and I/O"},
+  "receipt_binding": "Every published wrapper must match shard_id, embedded SHARD_COMPLETE content, and SHA-256 of the Huazhong sink SHARD_COMPLETE; global gate is additionally mandatory.",
+  "canonical_receipt_layout": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/published_receipts/<shard_id>.published.json; flat directory; exactly 2464 files; consumer does not scan nested regional directories",
+  "canonical_plan_paths": ["/public/home/lilysharp/linkup_analysis_execution_oct02/private/kunshan.plan.jsonl", "/public/home/lilysharp/linkup_analysis_execution_oct02/private/wuzhen.plan.jsonl"],
+  "old_waiter": "stopped; no wait_submit_full_hz.sh process and no full submission receipt",
+  "remaining_release_state": "Kunshan 1312/1358; Wuzhen 1106/1106; closeout agent repairing a stale local-buffer trap then transferring the 46 true missing shards"
+}

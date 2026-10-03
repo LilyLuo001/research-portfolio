@@ -1,0 +1,40 @@
+{
+  "status": "complete",
+  "version": "linkage_v1.0.0",
+  "execution": {
+    "cluster": "kunshan",
+    "scheduler_job_id": "123554098",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:01:11",
+    "peak_rss_kib": 151800
+  },
+  "selection": {
+    "source": "deterministic fixed-three-shard pre-gate diagnostic projection",
+    "source_projection_rows": 252301,
+    "source_projection_sha256": "520abef078a99b5b7dc0d14939fff4001ab7943af30cd89bd6717ea97383194d",
+    "pilot_rule": "lowercase JOB_HASH begins with 0",
+    "pilot_rows": 15254
+  },
+  "input_identity": {
+    "onet_files": 62,
+    "onet_footer_rows": 356299258,
+    "official_codes": 1016,
+    "official_codes_sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+    "records_index_partition": "hash_prefix=0",
+    "records_index_files": 66
+  },
+  "artifact_identity": {
+    "coverage_sha256": "5903e3d0ada0fff0edbd24a54befe43ca277fa1f815e1ee4c282473b206e8ba6",
+    "code_sha256": "db25fe9926f42705f93fdccfa8e78008ce83d0ffab7fdfa176f6d7bbd7dbf32a",
+    "frozen_code_file": "build_linkage_coverage_job123554098.py",
+    "records_index_builder_sha256": "ef29a208674d3963dd5bcb2af5f4f29a6cc10d1b99a8cf8715ab55255b5f05d5",
+    "rules_sha256": "3ba5dd71239d88d3558223d32c770b392213f6317937544f5840a5bc9e17d9b0"
+  },
+  "validation": {
+    "fixture": "PASS",
+    "supersedes_job": "123553191",
+    "reason": "adds exact pilot bounds, source/date coverage, and Records partition-builder identity"
+  },
+  "privacy": "Aggregate artifacts only. Private row keys and source text are excluded."
+}

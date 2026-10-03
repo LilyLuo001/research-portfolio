@@ -57,14 +57,14 @@ def validate_shard_identity(row):
     receipt_path = Path(row["receipt"])
     shard_dir = Path(row["shard_dir"])
     receipt = load_json(receipt_path)
-    if receipt.get("status") != "published_verified" or receipt.get("shard_id") != sid:
-        raise RuntimeError(sid + ": published receipt identity mismatch")
     complete_path = shard_dir / "SHARD_COMPLETE.json"
     if not complete_path.is_file():
         raise FileNotFoundError(sid + ": published SHARD_COMPLETE.json missing")
+    complete = load_json(complete_path)
+    if receipt.get("status") != "published_verified" or receipt.get("shard_id") != sid:
+        raise RuntimeError(sid + ": published receipt identity mismatch")
     if receipt.get("shard_complete_sha256") != sha256(complete_path):
         raise RuntimeError(sid + ": SHARD_COMPLETE digest differs from receipt")
-    complete = load_json(complete_path)
     if receipt.get("shard_complete") != complete or complete.get("status") != "complete":
         raise RuntimeError(sid + ": SHARD_COMPLETE content/status differs from receipt")
     accounting = complete.get("accounting", {})
