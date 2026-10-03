@@ -1,6 +1,6 @@
 {
   "as_of": "2026-10-03",
-  "purpose": "有限交付审计：T1–T3、T5–T6 的实际全量产物已完成并按测量限制作为候选结果交付；T4 的 16/16 全库时间风险分片已完成，年度案例最终产物仍等待作业 123575523；不将部分 T4 或 AI 复核升级为六表全部完成/人工验证。",
+  "purpose": "有限交付审计：T1–T6 的实际计算产物均已交付并通过相应数值/工程验收；T2/T3/T5/T6 仍按测量限制作为候选结果，T4 年度案例是固定 prefix 0 的有界诊断；D23 AI-only 复核已完成但不是人工验证或真值测试。",
   "global_scope": {
     "records_index": {
       "source": {
@@ -182,7 +182,7 @@
       "missing_or_blocked": "No pending human-label gate under D23. AI-only review is complete but does not certify binding accuracy; evidence_cross remains ad-level candidate cooccurrence, predictive_ai is NA/uninterpretable, and occupation_task is unmeasured."
     },
     "T4_04_cohort_and_time_risk": {
-      "status": "core_prefix16_time_risk_complete_annual_case_pending_job_123575523",
+      "status": "complete_actual_six_outputs_numeric_acceptance_passed_with_bounded_annual_diagnostic",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_first_observed_queue_distribution.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_queue_receipt.json",
@@ -197,16 +197,28 @@
           "local_relative": "../../../reports/temporal_risk_20260925/final_validation.json",
           "repository_path": null
         },
-        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_CORE_PREFIX16_PARTIAL.json"
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_CORE_PREFIX16_PARTIAL.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_RECEIPT_PUBLIC.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_NUMERIC_ACCEPTANCE.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_INTERPRETATION.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_CREATED_COHORT.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_TIME_RISK.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_CONCENTRATION.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_CONCENTRATION_TOP20.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_ANNUAL_COVERAGE.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_SELECTED_ANNUAL_GROUP_SUMMARY.csv"
       ],
       "denominators_and_ranges": [
-        "Current 2,464-shard CREATED queue sums independently to canonical_usa 204,774,035 and usable_nonempty_complete_parse 204,768,752.",
-        "T4 16/16 full-library time-risk prefixes completed: 204,774,035 USA matched ads; Records 1:1; valid CREATED–LAST_CHECKED intervals 204,773,879; missing/invalid 156.",
+        "Production receipt and all six public CSV hashes passed independent numeric acceptance.",
+        "Full-library time-risk scope: 204,774,035 USA matched ads; Records 1:1; valid CREATED–LAST_CHECKED intervals 204,773,879; missing/invalid 156.",
         "Among valid intervals: cross-quarter 76,769,916; cross-year 27,324,502; cross-2022-11-30 3,433,410; cross-2023-01-01 3,400,106. These are observation-interval overlaps, not text-change evidence.",
-        "Annual company-title-city case output is still pending job 123575523; T4_CORE_PREFIX16_PARTIAL is explicitly partial and does not close T4."
+        "Annual case diagnostic: fixed JOB_HASH prefix 0, seed 20261003, 12 actual groups, 200 selected keys, CREATED years 2014–2025. It is not a probability sample of all company-title-city groups.",
+        "Observation dates are not text-effective dates; new JOB_HASH is not an archived body version; BASE_HASH is not a content digest; occupation mapping is current-snapshot."
       ],
-      "direct_reuse": "Reuse the completed 16-prefix time-risk aggregates with observation-interval interpretation and mapping denominators; retain the CREATED queue. Do not treat the partial receipt as final annual-case completion.",
-      "missing_or_blocked": "Annual company-title-city case final output remains pending job 123575523. Do not mark T4 or all six tables complete until its result and receipt are accepted."
+      "direct_reuse": "Reuse all six accepted T4 outputs with the full-library interval denominators and bounded annual-case limits attached.",
+      "missing_or_blocked": "No remaining T4 computation gate. Annual examples remain a fixed-prefix bounded diagnostic and support no population, text-change, historical-body, or causal claim.",
+      "receipt_sha256": "ffadf261fff03da923425d856478e7077fdb568ea2f9ab3253c6c8c49d38594d",
+      "numeric_acceptance_sha256": "70ad44c54f79fa904bacc224dbcd1a47a1077a64961a2ad584459b567bae9569"
     },
     "T5_05_comparable_experience_contrasts": {
       "status": "complete_candidate_comparison_numeric_acceptance_and_ai_diagnostic",
@@ -271,5 +283,5 @@
       "missing_or_blocked": "No pending human-label gate under D23. AI-only review is complete but not ground truth; T4 annual-case completion remains separate and no causal or significance claim is supported."
     }
   },
-  "delivery_rule": "T1–T3 and T5–T6 are complete candidate/engineering deliveries under stated limits. T4 remains partial pending its annual case. The completed AI-only diagnostic supersedes the human-label gate under D23 but is not human validation, ground truth, or full-corpus accuracy certification. Pilot evidence stays labeled pilot; no raw text, URL/key lists, credentials, or private source contents are included."
+  "delivery_rule": "All T1–T6 computations are delivered. T2/T3/T5/T6 remain candidate measurements under stated semantic limits; C1 is limited and C2 canceled by frozen support rules. T4 annual cases are a bounded prefix-0 diagnostic. The completed D23 AI-only review supersedes the human-label gate but is not human validation, ground truth, or full-corpus accuracy certification. Pilot evidence stays labeled pilot; no raw text, URL/key lists, credentials, or private source contents are included."
 }

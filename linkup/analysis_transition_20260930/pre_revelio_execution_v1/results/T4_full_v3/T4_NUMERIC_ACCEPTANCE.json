@@ -1,0 +1,110 @@
+{
+  "status": "PASS",
+  "validation_scope": "production numeric audit",
+  "artifact_identity": {
+    "receipt_status_complete": true,
+    "csv_outputs_expected": 6,
+    "csv_sha256_matches_receipt": 6,
+    "csv_sha256_mismatches": 0
+  },
+  "time_risk": {
+    "matches_completed_16_prefix_core_counts": true,
+    "canonical_ads": 204774035,
+    "valid_main_interval": 204773879,
+    "invalid_or_incomplete_interval": 156,
+    "crosses_quarter": 76769916,
+    "crosses_quarter_rate_among_valid": 0.3749009218114191,
+    "crosses_year": 27324502,
+    "crosses_year_rate_among_valid": 0.13343743905930502,
+    "crosses_2022_11_30": 3433410,
+    "crosses_2022_11_30_rate_among_valid": 0.016766835774010024,
+    "crosses_2023_01_01": 3400106,
+    "crosses_2023_01_01_rate_among_valid": 0.01660419784302665,
+    "missing_created": 0,
+    "missing_last_checked": 0,
+    "records_matched": 204774035,
+    "stale_delete_or_reappearance": 59492
+  },
+  "conservation_checks": {
+    "created_cohort_rows_valid_plus_invalid_equal_ads": true,
+    "created_cohort_cross_counts_do_not_exceed_valid": true,
+    "created_cohort_sums_match_time_risk": true,
+    "annual_coverage_matches_created_cohort_year_sums": true,
+    "annual_coverage_sums_to_canonical_ads": true,
+    "concentration_mapped_plus_missing_equals_canonical": true,
+    "top20_rows_valid_plus_invalid_equal_ads": true,
+    "top20_cross_counts_do_not_exceed_valid": true,
+    "top20_rates_recompute_from_counts": true,
+    "top20_shares_recompute_from_mapped_denominators": true,
+    "top1_and_top10_shares_match_concentration_table": true
+  },
+  "concentration": {
+    "company_id": {
+      "categories": 61151,
+      "mapped_ads": 204774035,
+      "missing_or_unmapped_ads": 0,
+      "hhi": 0.0016519000419556384,
+      "top1_share": 0.02134553338268692,
+      "top10_share": 0.08553890145300892
+    },
+    "occupation_major": {
+      "categories": 23,
+      "mapped_ads": 204671219,
+      "missing_or_unmapped_ads": 102816,
+      "hhi": 0.07764602958353815,
+      "top1_share": 0.12394064062324268,
+      "top10_share": 0.7892434255741644,
+      "onet_absent_ads": 73609,
+      "additional_invalid_or_unrecognized_major_code_ads": 29207
+    },
+    "state": {
+      "category_semantics": "raw STATE categories; no inference that categories are U.S. states or normalized geography",
+      "categories": 79,
+      "mapped_ads": 203489321,
+      "missing_or_unmapped_ads": 1284714,
+      "hhi": 0.04102785222308722,
+      "top1_share": 0.10568801298422928,
+      "top10_share": 0.515450601950753
+    }
+  },
+  "top20_cross_period_risk": {
+    "company_id": {
+      "highest_quarter_rate": 0.5330549603738028,
+      "highest_year_rate": 0.2170897680145989,
+      "highest_2022_11_30_rate": 0.050090229667514675,
+      "highest_2023_01_01_rate": 0.05265898177380415
+    },
+    "occupation_major": {
+      "highest_quarter_rate": 0.44337656933897723,
+      "highest_year_rate": 0.16658870800776007,
+      "highest_2022_11_30_rate": 0.022271610667904267,
+      "highest_2023_01_01_rate": 0.02126779384347019
+    },
+    "state": {
+      "highest_quarter_rate": 0.4031367981640633,
+      "highest_year_rate": 0.1416120402011222,
+      "highest_2022_11_30_rate": 0.02446002569682985,
+      "highest_2023_01_01_rate": 0.024364370558774943
+    }
+  },
+  "selected_annual_diagnostic": {
+    "anonymous_groups": 12,
+    "selected_keys": 200,
+    "distinct_job_hashes": 200,
+    "distinct_canonical_keys": 200,
+    "complete_source_locators": 200,
+    "distinct_source_locators": 200,
+    "all_selected_rows_usable": true,
+    "private_key_file_sha256_matches_receipt": true,
+    "public_group_summary_matches_private_group_year_key_and_parent_listing_counts": true,
+    "selection_frame": "fixed JOB_HASH prefix 0 diagnostic frame"
+  },
+  "issues": [],
+  "interpretive_limits": [
+    "Observation intervals do not establish text-effective dates or historical body versions.",
+    "Annual coverage is canonical-ad observation coverage by CREATED year, not full-corpus annual group coverage.",
+    "The 12 annual groups are a fixed-seed diagnostic selected from JOB_HASH prefix 0, not a probability sample of all groups.",
+    "BASE_HASH links parent listings or multi-location splits and is not a content digest.",
+    "The 79 STATE values are raw categories and must not be described as 79 U.S. states."
+  ]
+}

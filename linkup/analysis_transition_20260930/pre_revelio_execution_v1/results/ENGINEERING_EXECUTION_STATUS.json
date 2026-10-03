@@ -80,17 +80,22 @@
       "status": "phase1 complete and review pack delivered through private phase2 workflow",
       "verified_full_frame_rows": 204768752
     },
-    "status": "full T5/T6 comparison complete; T4 v3 submitted after actual spill fix",
+    "status": "full T4/T5/T6 production complete",
     "substitute_comparisons_allowed": false,
     "t2_t3_numeric_acceptance": "PASS",
     "t4": {
-      "annual_selection": "fixed JOB_HASH prefix 0; seed 20261003; >=3 CREATED years; maximum 20 groups/200 keys; not a population probability sample",
+      "annual_selected_groups": 12,
+      "annual_selected_keys": 200,
+      "annual_selection": "fixed JOB_HASH prefix 0; seed 20261003; >=3 CREATED years; 12 actual groups/200 keys; not a population probability sample",
+      "canonical_ads": 204774035,
       "fixture_receipt": "T4_PREFIX0_ANNUAL_FIXTURE_VALIDATION_RECEIPT.json",
       "fixture_receipt_sha256": "6d1378668afdc173b32ef7b8b05283e1971b6b2a0155197b484033047303ad55",
       "prefix_resume": "16 prior prefix outputs retained; old receipts preserved and bound by strict identity migration receipt",
-      "resources": "32CPU/64G allocation; DuckDB threads8/memory48GB",
+      "production_receipt": "T4_full_v3/T4_RECEIPT_PUBLIC.json",
+      "production_receipt_sha256": "ffadf261fff03da923425d856478e7077fdb568ea2f9ab3253c6c8c49d38594d",
+      "resources": "8CPU/16G allocation; DuckDB threads8/memory12GB for annual resume; 16 prior prefix outputs reused",
       "script_sha256": "d496082d841a2f75b576058d2df252dd8f28c526d1f61596e0267832b22e6064",
-      "status": "prefix-0 annual diagnostic repair fixture PASS; production resume submitted and pending"
+      "status": "complete"
     },
     "t5_t6": {
       "candidate_rows": 6010975,
@@ -101,10 +106,10 @@
       "t6_rows": 56
     }
   },
-  "as_of": "2026-10-03T22:25:20+08:00",
+  "as_of": "2026-10-03T22:56:35+08:00",
   "authority": "PRE_REVELIO_EXECUTION_PLAN.md v1.1",
   "automation": "stage-specific dispatcher removed after both submission receipts were written; Oct 7 cutoff remains encoded in job launchers",
   "cutoff": "2026-10-07T18:00:00+08:00",
   "privacy": "No job identifiers, credentials, raw text, URL lists, record keys, or private filesystem paths are included in this public status file.",
-  "status": "P0_P1_T1_T2_T3_T5_T6_and_P4_complete; T4_annual_diagnostic_resume_pending"
+  "status": "P0_P1_T1_T2_T3_T4_T5_T6_and_P4_complete"
 }
