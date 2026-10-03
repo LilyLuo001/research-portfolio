@@ -11,7 +11,7 @@ with tempfile.TemporaryDirectory() as td:
  pq.write_table(pa.table({'JOB_HASH':hashes}),keys/'data.parquet');pq.write_table(pa.table({'JOB_HASH':pa.array([],type=pa.string()),'occurrences':pa.array([],type=pa.int64())}),dup);pq.write_table(pa.table({'COMPANY_ID':[1],'normalized_title':['senior engineer 2025'],'CITY':['Boston'],'years':[3]}),groups)
  con=t4.connect(2,'1GB',root/'duckdb_tmp'/'fixture');assert con.space_monitor_active is True
  rows=con.execute(t4.annual_candidate_sql([str(raw)],str(root/'keys'/'hash_prefix=*'/'*.parquet'),[str(dup)],groups,t4.SEED)).fetchall();assert len(rows)==3,len(rows);thread=con._thread;con.close();assert not thread.is_alive()
- old_gib=t4.GIB;t4.GIB=1;guard=t4.connect(1,'256MB',root/'guardcase'/'duckdb_tmp'/'fixture');(guard._temp/'spill.bin').write_bytes(b'12345');time.sleep(1.2)
+ old_gib=t4.GIB;t4.GIB=1;guard=t4.connect(1,'256MB',root/'guardcase'/'duckdb_tmp'/'fixture');(guard._temp/'spill.bin').write_bytes(b'1234567890123');time.sleep(1.2)
  try:guard.execute('SELECT 1');raise AssertionError('space monitor did not block execution')
  except RuntimeError as e:assert 'temp directory exceeded' in str(e)
  t4.GIB=old_gib;assert not guard._thread.is_alive()

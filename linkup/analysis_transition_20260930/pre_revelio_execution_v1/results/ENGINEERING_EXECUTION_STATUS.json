@@ -72,15 +72,36 @@
   "P2": {
     "global_uniqueness_gate": "passed with zero duplicate JOB_HASH",
     "group_definitions": "frozen",
-    "p4_phase1": "running from verified full frame; phase2 waits for frozen selected-key manifest",
-    "status": "full comparison/T5-T6 production running from globally unique full narrow; full T4 queued after successful comparison",
+    "p4": {
+      "challenge": 8,
+      "core": 32,
+      "public_receipt": "P4_ACTUAL_PACK_RECEIPT.json",
+      "selected_unique_ads": 40,
+      "status": "phase1 complete and review pack delivered through private phase2 workflow",
+      "verified_full_frame_rows": 204768752
+    },
+    "status": "full T5/T6 comparison complete; T4 v3 submitted after actual spill fix",
     "substitute_comparisons_allowed": false,
-    "t2_t3_numeric_acceptance": "PASS"
+    "t2_t3_numeric_acceptance": "PASS",
+    "t4": {
+      "fixture_receipt_sha256": "166f2732c07de11092cbcce9d8552cdf519ebffc6bb6b6817d5c116fc0922e50",
+      "resources": "32CPU/64G allocation; DuckDB threads8/memory48GB",
+      "script_sha256": "394eac6bf992cc6e351d896d853fec75d9d604a1f00c7f9e586a4d3b49fcef2c",
+      "status": "v3 submitted after full-main fixture PASS"
+    },
+    "t5_t6": {
+      "candidate_rows": 6010975,
+      "primary_eligible": 4962792,
+      "public_acceptance": "T5_T6_fixed_v1/T5_T6_FULL_ACCEPTANCE.json",
+      "status": "complete",
+      "t5_rows": 8,
+      "t6_rows": 56
+    }
   },
-  "as_of": "2026-10-03T20:35:00+08:00",
+  "as_of": "2026-10-03T22:05:00+08:00",
   "authority": "PRE_REVELIO_EXECUTION_PLAN.md v1.1",
   "automation": "stage-specific dispatcher removed after both submission receipts were written; Oct 7 cutoff remains encoded in job launchers",
   "cutoff": "2026-10-07T18:00:00+08:00",
   "privacy": "No job identifiers, credentials, raw text, URL lists, record keys, or private filesystem paths are included in this public status file.",
-  "status": "P0_P1_complete; P2_comparison_and_P4_selection_running; T4_queued_after_comparison"
+  "status": "P0_P1_T1_T2_T3_T5_T6_and_P4_complete; T4_v3_submitted"
 }

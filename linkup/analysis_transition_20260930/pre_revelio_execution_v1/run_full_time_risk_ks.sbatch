@@ -3,8 +3,8 @@
 #SBATCH --partition=kshctest02
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=16G
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=64G
 #SBATCH --time=12:00:00
 #SBATCH --output=/public/home/lilysharp/linkup_analysis_execution_oct02/logs/t4-full-%j.out
 #SBATCH --error=/public/home/lilysharp/linkup_analysis_execution_oct02/logs/t4-full-%j.err
@@ -24,5 +24,5 @@ python "${ROOT}/code/pre_revelio_execution_v1/build_full_time_risk.py" \
   --raw-records-glob '/public/home/lilysharp/dewey_downloads/data/linkup_job_records/*.parquet' \
   --onet-glob '/public/home/lilysharp/dewey_downloads/data/dewey_ONET_tables/onet-taxonomy/*.parquet' \
   --official-codes "${ROOT}/private/official_onet2019_occupations.csv" \
-  --work-dir "${ROOT}/private/full_time_risk_v2" \
-  --output-dir "${ROOT}/results/T4_full_v2" --threads 8 --memory-limit 12GB
+  --work-dir "${ROOT}/private/full_time_risk_v3" \
+  --output-dir "${ROOT}/results/T4_full_v3" --threads 8 --memory-limit 48GB
