@@ -2,8 +2,8 @@ dimension,research_status,raw_aggregate_preserved,interpretation
 predictive_ai,not_interpretable_structural_context_gate,true,Render research value NA; raw zero is not absence of predictive-AI hiring
 occupation_task,unmeasured,true,No frozen classifier for this dimension; NA not zero
 general_work,candidate_narrow_explicit_object,true,Not prevalence of all work-experience requirements; unresolved objects excluded from this named category
-industry_domain,candidate_awaiting_human_review,true,Frozen limited dictionary; nondetection is not no requirement
-specific_tool,candidate_awaiting_human_review,true,Frozen limited tool dictionary; nondetection is not no requirement
+industry_domain,candidate_ai_reviewed_limited,true,Frozen limited dictionary; nondetection is not no requirement
+specific_tool,candidate_ai_reviewed_limited,true,Frozen limited tool dictionary; nondetection is not no requirement
 object_unspecified,unresolved_object_diagnostic,true,Not automatically general work and not its complement
-generative_ai,candidate_awaiting_human_review,true,Measured phrases and explicit applicant roles only
-traditional_software,candidate_awaiting_human_review,true,Measured phrases and explicit applicant roles only; no detected AI does not prove no AI
+generative_ai,candidate_ai_reviewed_limited,true,Measured phrases and explicit applicant roles only
+traditional_software,candidate_ai_reviewed_limited,true,Measured phrases and explicit applicant roles only; no detected AI does not prove no AI
