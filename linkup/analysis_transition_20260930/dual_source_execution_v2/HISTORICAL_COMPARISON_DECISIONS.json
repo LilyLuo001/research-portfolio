@@ -1,0 +1,48 @@
+{
+  "version": "dual-source-v2-20261004",
+  "reviewed_date": "2026-10-04",
+  "owner": "gpt-6-astra",
+  "questions_closed": [
+    {
+      "id": "H1",
+      "question": "计算机化侧应该怎样测量",
+      "source": "Autor, Levy and Murnane (2003), The Skill Content of Recent Technological Change",
+      "url": "https://economics.mit.edu/sites/default/files/publications/the%20skill%20content%202003.pdf",
+      "source_evidence": "任务框架区分可明确编程的例行任务与非例行任务；原研究结合1960至1998年任务和就业资料。",
+      "project_decision": "保留共同任务维度；现有固定Autor-Dorn RTI为职业内容代理，现有CPS没有电脑使用补充调查字段，不能把RTI当实际采用。软件广告角色为工作类型对照，不叫早期计算机革命处理组。",
+      "status": "decided_existing_inputs_only"
+    },
+    {
+      "id": "H2",
+      "question": "AI对经验的预测能否直接写为新人录用优势",
+      "source": "Brynjolfsson, Li and Raymond, Generative AI at Work, arXiv version 2 (2024)",
+      "url": "https://arxiv.org/abs/2304.11771",
+      "source_evidence": "在客服场景的AI部署中，较低经验劳动者生产率改善较大，经验较高者改善较小；研究对象为在职工作表现。",
+      "project_decision": "拆分一般资历与任务相关经历。不得从在职生产率收益直接推断招聘门槛或跨职业进入概率，也不预设AI equalizer。",
+      "status": "decided_no_signed_entry_prediction"
+    },
+    {
+      "id": "H3",
+      "question": "AI与软件组差异是否可直接解释为技术本质",
+      "source": "Kalyani et al. (2025), The Diffusion of New Technologies, QJE 140(2),1299–1365",
+      "url": "https://academic.oup.com/qje/article/140/2/1299/7959830",
+      "source_evidence": "新技术初期招聘偏高技能，随技术成熟和岗位扩展，新增职位平均技能下降。",
+      "project_decision": "分开开发、实施、使用及治理角色；没有实际技术扩散年龄时保留未测混杂，不用CREATED队列或角色冒充技术成熟度，不称角色调整排除了扩散阶段。",
+      "status": "decided_limit_explicit"
+    }
+  ],
+  "existing_input_audit": {
+    "routine_measure": "pre_revelio_execution_v1/history_interface/build_cps_benchmark.py: fixed Autor-Dorn RTI, formula ln(routine)-ln(manual)-ln(abstract); occupation composition benchmark",
+    "workplace_computer_use": "not present in verified CPS schema per existing receipt",
+    "ai_beta": "not yet verified as actual common occupation mapping for v2; legacy macro results not automatically a reusable exposure file"
+  },
+  "operational_release": {
+    "L1": "released using old C1 frame; no beta prerequisite",
+    "L2_development": "released under RESEARCH_CONTRACT.json; no paid API assumed",
+    "R0": "released entry check only",
+    "R1_empirical": "blocked until actual input",
+    "historical_causal_comparison": "not released",
+    "joint_quarter_matching": "prohibited absent verified body version dates"
+  },
+  "literature_search_stop": "three material questions answered; no expanded literature review this wave"
+}

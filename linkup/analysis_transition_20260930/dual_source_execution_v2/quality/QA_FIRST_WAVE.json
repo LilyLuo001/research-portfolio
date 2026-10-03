@@ -1,0 +1,82 @@
+{
+  "review": {
+    "name": "QA_FIRST_WAVE",
+    "date": "2026-10-04",
+    "scope": "Bounded independent review of RESEARCH_CONTRACT, revelio_entry, and writing interfaces; no source acquisition or production run.",
+    "status": "four_revelio_findings_fixed_reference_only",
+    "revelio_state": "deferred_not_acquired",
+    "validation": {
+      "synthetic_revelio_extractor_test": "passed (4 targeted synthetic tests: full selected-person key table including zero-career person; missing eligibility mapping rejection; duplicate person-ID rejection; Git-worktree destination rejection)",
+      "large_data_or_credential_use": "not_run"
+    }
+  },
+  "findings": [
+    {
+      "id": "Q1",
+      "severity": "high",
+      "status": "fixed",
+      "file": "revelio_entry/revelio_r0_extract.py",
+      "lines": "62-75, 78-85",
+      "problem": "When mapping specifies an eligibility_column but that column is absent from the person-frame header, the extractor never validates the header. row.get(eligibility) then returns None for every row, so the run silently produces an empty eligible frame instead of failing the input audit.",
+      "impact": "Can change the person frame and sample to zero without an explicit schema error.",
+      "required_fix": "Validate the mapped eligibility column against person_header before scanning rows and fail with a mapping/schema error if absent."
+    },
+    {
+      "id": "Q2",
+      "severity": "high",
+      "status": "fixed",
+      "file": "revelio_entry/revelio_r0_extract.py",
+      "lines": "86-101, 107",
+      "problem": "The selected person keys are kept only in memory and the raw output contains career rows. A selected person with zero career rows therefore has no row-level key artifact; the receipt reports only a count of such persons.",
+      "impact": "Downstream R1/R2 cannot retain the selected-person denominator or distinguish zero visible career history from a missing extraction row, despite the contract requiring person-level sampling and zero-career persons to remain in the denominator.",
+      "required_fix": "Emit a protected sampled-person key table (including persons with zero career rows), and make downstream extraction consume that key table; leave only aggregate counts in repository receipts."
+    },
+    {
+      "id": "Q3",
+      "severity": "high",
+      "status": "fixed",
+      "file": "revelio_entry/revelio_r0_extract.py",
+      "lines": "53-55, 96-113",
+      "problem": "The code checks only that --protected-output equals mapping.output.protected_destination. It does not enforce that the destination is outside the repository or otherwise protected. The Revelio directory has no .gitignore covering such an output path.",
+      "impact": "A valid-looking mapping can write raw person identifiers and career rows into a repository path, violating the privacy contract and creating a Git exposure path.",
+      "required_fix": "Require and verify an approved non-repository destination (with an explicit protected-path check) before creating or writing raw outputs; keep repository output aggregate-only."
+    },
+    {
+      "id": "Q4",
+      "severity": "medium",
+      "status": "fixed",
+      "file": "revelio_entry/revelio_r0_extract.py",
+      "lines": "77-86",
+      "problem": "Duplicate person IDs in the person frame are silently collapsed into a set. The R0 contract requires verification of stable person-ID uniqueness, but no duplicate count or failure is emitted.",
+      "impact": "A malformed person frame can silently alter the eligible-frame size and inclusion interpretation before deterministic sampling.",
+      "required_fix": "Audit duplicate stable person IDs and fail or explicitly record the schema violation before sampling."
+    }
+  ],
+  "accepted_items": [
+    {
+      "item": "Revelio acquisition state",
+      "evidence": ["RESEARCH_CONTRACT.json:3", "revelio_entry/REVELIO_R0_INPUT_CONTRACT.json:8-13", "revelio_entry/R0_STATUS.md:3-7"],
+      "assessment": "Accepted as blocked_input / not_acquired / deferred; no upload path or model/API execution is required in this wave."
+    },
+    {
+      "item": "CSV scope",
+      "evidence": ["revelio_entry/revelio_r0_extract.py:2-7", "revelio_entry/R0_STATUS.md:5-7"],
+      "assessment": "Accepted as a portable reference implementation only. The materials do not claim it can process the approximately 1 TB Individual delivery."
+    },
+    {
+      "item": "R2 versus R3 denominators",
+      "evidence": ["writing/DUAL_SOURCE_PAPER_SKELETON.md:45-49"],
+      "assessment": "Accepted: R2 uses observed entrants as a composition denominator; R3 uses a baseline risk set only if continued observation is identifiable."
+    },
+    {
+      "item": "Historical comparison and writing evidence boundary",
+      "evidence": ["writing/DUAL_SOURCE_PAPER_SKELETON.md:5-7, 59-69", "writing/CLAIM_EVIDENCE_MATRIX.csv:C01,C03,C10-C12"],
+      "assessment": "Accepted: the computerization-versus-AI comparison remains the main question, while unsupported causal, contemporaneous, and unverified Revelio claims are withheld."
+    },
+    {
+      "item": "Privacy intent for LinkUp outputs",
+      "evidence": ["linkup_sample/.gitignore:1", "linkup_sample/README.md:11"],
+      "assessment": "Accepted for the LinkUp sample utility: private row-level outputs are directed under private/ and ignored by Git; Revelio raw-output enforcement remains Q3."
+    }
+  ]
+}

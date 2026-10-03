@@ -1,0 +1,167 @@
+{
+  "version": "dual-source-v2-20261004",
+  "status": "frozen_for_development_not_validated_measurements",
+  "owner": "gpt-6-astra",
+  "effort": "high",
+  "question": "计算机化与AI相关工作中，一般资历、任务和行业经历如何对应公开招聘要求及实际人员进入？不预设两类技术方向相反。",
+  "units": {
+    "linkup": "canonical_JOB_HASH_URL_object_not_verified_vacancy_episode",
+    "revelio": "observed_person_position_entry_event_with_pre_event_history"
+  },
+  "scope": {
+    "linkup_main": "old_C1_common_support_candidate_frame_only",
+    "revelio_main": "independent_person_frame_and_observed_careers_not_only_LinkUp_AI_employers",
+    "contribution": "two_independent_main_modules_approximately_equal_not_equal_weights_or_significance"
+  },
+  "experience_objects": {
+    "general_work": "explicit general employment experience; unresolved object remains separate",
+    "occupation_task": "explicit prior work in a named occupation or activity; responsibility alone is not evidence of prior experience",
+    "industry_domain": "explicit prior sector/domain/client-market work or required domain knowledge; knowledge without prior-work wording is a separate condition",
+    "specific_tool": "split proficiency, training/certification, and explicit prior use; proficiency alone is not tenure"
+  },
+  "condition_modes": [
+    "prior_experience",
+    "knowledge",
+    "proficiency",
+    "training_certification",
+    "unclear"
+  ],
+  "observation_states": [
+    "explicit_positive",
+    "explicit_negative",
+    "not_mentioned",
+    "insufficient_text",
+    "unresolved"
+  ],
+  "strength": [
+    "required",
+    "preferred",
+    "expected",
+    "unspecified",
+    "conflict"
+  ],
+  "technology_classes": [
+    "software_information_system",
+    "predictive_ml_ai",
+    "generative_ai",
+    "ai_unspecified",
+    "technology_unspecified"
+  ],
+  "technology_roles": [
+    "develop_train",
+    "implement_integrate",
+    "use_operate",
+    "evaluate_govern",
+    "role_unspecified"
+  ],
+  "technology_rules": [
+    "applicant-specific evidence required; company marketing is not applicant role",
+    "using AI to develop software does not alone establish developing AI",
+    "technology classes may overlap",
+    "legacy predictive-AI structural zeros remain NA; no revived C2 contrast",
+    "role labels and outcome labels audited jointly; no detected AI is not known non-adoption"
+  ],
+  "duration_rules": [
+    "bind number to explicit object and qualification branch",
+    "bare 3 years is stated value with unspecified bound unless source language defines minimum/exact/range",
+    "do not add nested/alternative requirements",
+    "education-equivalence conversion is not general tenure",
+    "retain required versus preferred and AND/OR/EQUIVALENT relationships"
+  ],
+  "common_dimensions": [
+    "general_observed_tenure_or_requested_tenure",
+    "occupation_task_relation",
+    "industry_domain_relation"
+  ],
+  "joint_cell": [
+    "harmonized_employer_id",
+    "harmonized_occupation_family",
+    "harmonized_region"
+  ],
+  "joint_time_rule": "no calendar-quarter joint key or same-period requirements without independently verified body-version dates; CREATED only first-observed cohort",
+  "source_time": {
+    "linkup": "mixed-vintage saved descriptions; no cohort historical requirement inference",
+    "revelio": "actual position dates subject to retrospective coverage/month ordering/update lag"
+  },
+  "revelio_event_axes": {
+    "employer": [
+      "internal",
+      "external",
+      "unknown"
+    ],
+    "observed_career": [
+      "first_observed",
+      "prior_observed",
+      "unknown"
+    ],
+    "destination_occupation": [
+      "first_observed_entry",
+      "return",
+      "continuation",
+      "unknown"
+    ]
+  },
+  "revelio_principles": [
+    "prior-only evidence",
+    "union overlapping intervals within each experience object",
+    "internships separate",
+    "unobserved prior careers not zero",
+    "no current skills backfilled",
+    "no predicted salary premium",
+    "risk set fixed at baseline; missing updates not automatically no transition"
+  ],
+  "linkup_estimands": {
+    "old_groups": "within-old-cell design-weighted difference standardized using original pooled cell weights",
+    "reclassified_groups": "only reclassified sampled old frame; retain original inclusion probability; recompute support once and report weight lost",
+    "tenure_conditioned": "descriptive among ads disclosing comparable general tenure; not total causal effect"
+  },
+  "frozen_sampling": {
+    "seed": 20261004,
+    "A_max": 10075,
+    "B_rule": "min(N_Bh,3*N_Ah)",
+    "main_max": 40300,
+    "diagnostic_near": 300,
+    "diagnostic_broad": 300,
+    "dev": 200,
+    "config_compare_within_dev": 80,
+    "evaluation": 200,
+    "known_prior_keys_excluded_from_evaluation": true,
+    "text_duplicate_group_exclusion_required": true
+  },
+  "gates": {
+    "development_semantic_revision_max": 1,
+    "final_evaluation_reveal_max": 1,
+    "post_test_model_reselection": false,
+    "structured_output_valid_fraction_min": 0.99,
+    "positive_used_in_analysis_requires_source_evidence": true,
+    "unknown_fraction_per_arm_over": 0.1,
+    "unknown_action": "downgrade affected comparison; show identifiable subset and conservative unknown bounds; do not imply bounds cover undetected misclassification",
+    "review_fraction": 0.02,
+    "review_min": 200,
+    "review_max": 800,
+    "gpt6_dispute_max": 40,
+    "technical_request_retries_max": 2
+  },
+  "production_prerequisites": [
+    "actual final-model batch endpoint and permitted data-processing route",
+    "development token/time/cost receipt",
+    "explicit execution budget ceiling",
+    "final model/prompt/schema versions",
+    "locked evaluation receipt",
+    "private text cache and provenance"
+  ],
+  "current_unsupported_claims": [
+    "technology causal effect from role-group differences",
+    "historical requirement changes from current body plus CREATED",
+    "hiring probabilities from entrant composition",
+    "AI-human or model-model agreement as truth accuracy",
+    "full platform/national population from old screened candidate frame"
+  ],
+  "legacy_policy": "v1 six tables immutable; v2 supersedes v1 joint time key and event partition, not historical results",
+  "execution_overlay": "USER_CLARIFICATION_D25.json",
+  "current_data_availability": {
+    "LinkUp": "existing records and descriptions processed into frozen v1 products",
+    "Revelio_Individual": "not acquired; empirical work deferred by user on 2026-10-04",
+    "model_batch_API": "none; bounded agent diagnostics only"
+  }
+}

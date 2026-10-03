@@ -1,0 +1,94 @@
+{
+  "review": {
+    "name": "QA_RELEASE",
+    "date": "2026-10-04",
+    "scope": "Targeted post-fix review of Q1-Q4, LinkUp L1 sampling, core-before-broad ordering, and the L1-to-measurement 80-key interface.",
+    "status": "findings_recorded_no_files_modified",
+    "revelio": "not_acquired_deferred",
+    "test_policy": "static targeted review; no duplicate large run"
+  },
+  "resolved_and_accepted": [
+    {
+      "item": "Q1 eligibility header validation",
+      "evidence": "revelio_entry/revelio_r0_extract.py:80-85",
+      "assessment": "Fixed: a mapped but absent eligibility column now raises before scanning."
+    },
+    {
+      "item": "Q2 selected person denominator",
+      "evidence": "revelio_entry/revelio_r0_extract.py:104-125",
+      "assessment": "Fixed: protected sampled_person_keys.csv includes selected persons with zero visible career rows."
+    },
+    {
+      "item": "Q3 raw-output Git exposure",
+      "evidence": "revelio_entry/revelio_r0_extract.py:36-63",
+      "assessment": "Fixed for Revelio: destinations nested in a Git worktree are rejected."
+    },
+    {
+      "item": "Q4 duplicate person IDs",
+      "evidence": "revelio_entry/revelio_r0_extract.py:86-103",
+      "assessment": "Fixed: duplicate person-frame IDs cause an explicit failure."
+    },
+    {
+      "item": "L1 formal support and weights",
+      "evidence": "linkup_sample/build_l1_sample.py:130-170",
+      "assessment": "Accepted: support is N_A>=20 and N_B>=20; all A are selected; B uses min(N_B,3*N_A); pi and design weights are emitted; W_h is normalized over the 69 support cells and checked."
+    },
+    {
+      "item": "L1 subset split and ordering",
+      "evidence": "linkup_sample/build_l1_sample.py:194-263, 265-298",
+      "assessment": "Accepted: development is 100 per arm, evaluation is 100 per arm after development exclusion, config comparison is nested 40 per arm, and core artifacts are written and receipted before the broad scan. Counts and overlap invariants are checked."
+    },
+    {
+      "item": "L1 output privacy guard",
+      "evidence": "linkup_sample/build_l1_sample.py:80-108",
+      "assessment": "Fixed: row-level output is rejected when the output directory is inside a Git worktree."
+    },
+    {
+      "item": "No false model/API claim",
+      "evidence": "measurement/README.md:1-11; measurement/run_local.py:152-174, 207-231",
+      "assessment": "Accepted: current materials state no API and no completed 200-record model run; local prepare/cost receipts explicitly set model/API claims false or unavailable."
+    }
+  ],
+  "findings": [
+    {
+      "id": "Q5",
+      "severity": "high",
+      "status": "resolved",
+      "file": "measurement/run_local.py",
+      "lines": "126-131, 171-190, 304",
+      "problem": "Previously, measurement prepare independently re-ranked the supplied 200-record pack to create its 80 comparison records.",
+      "impact": "Resolved: this risk would have created two incompatible 80-record lists.",
+      "required_fix": "Resolved: prepare now requires and verifies an exact 80-ID comparison manifest and does not redraw a substitute."
+    },
+    {
+      "id": "Q6",
+      "severity": "medium",
+      "status": "resolved",
+      "file": "measurement/run_local.py",
+      "lines": "134-152, 166-170, 305",
+      "problem": "Previously, evaluation preparation could be labeled locked without checking a finalized input and text-deduplication lock receipt.",
+      "impact": "Resolved: evaluation can no longer pass from a still-provisional or duplicate-text input through this interface.",
+      "required_fix": "Resolved: evaluation now requires matching input hash/count and a single-reveal lock receipt with verified zero overlap/deduplication conditions."
+    },
+    {
+      "id": "Q7",
+      "severity": "medium",
+      "status": "resolved",
+      "file": "linkup_sample/build_l1_sample.py",
+      "lines": "80-108",
+      "problem": "Previously, the L1 script accepted any caller-supplied output directory for row-level keys and locators.",
+      "impact": "Resolved: repository paths are rejected before creating the DuckDB or Parquet outputs.",
+      "required_fix": "Resolved: git_ancestor() checks the output path and fails inside a Git worktree."
+    }
+  ],
+  "deferred": [
+    {
+      "item": "Revelio acquisition and empirical R1-R3",
+      "assessment": "Deferred/not_acquired; no API, upload, credential, or source execution was performed."
+    },
+    {
+      "item": "Measurement implementation beyond the interface findings above",
+      "assessment": "Not expanded into a full code review in this pass; review remains limited to the L1 80-key and evaluation-lock interfaces requested."
+    }
+  ]
+}

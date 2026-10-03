@@ -1,0 +1,37 @@
+{
+  "mapping_version": "fill_only_after_source_schema_audit",
+  "schema_verified": false,
+  "source": {"access_location": null, "access_method": null},
+  "person_frame": {
+    "path": null,
+    "format": "csv",
+    "person_id_column": null,
+    "eligibility_column": null,
+    "eligible_value": null,
+    "inclusion_rule": null
+  },
+  "career": {
+    "path": null,
+    "format": "csv",
+    "person_id_column": null,
+    "required_columns": {
+      "stable_position_id": null,
+      "raw_employer_id": null,
+      "raw_title": null,
+      "start_date_or_month": null,
+      "end_date_or_month": null,
+      "location_at_position": null,
+      "industry_at_position": null,
+      "internship_indicator": null
+    },
+    "optional_columns": {
+      "position_description_or_task_text": null,
+      "source_record_time": null
+    }
+  },
+  "output": {
+    "protected_destination": null,
+    "allow_raw_extract": false,
+    "person_token_salt_reference": null
+  }
+}

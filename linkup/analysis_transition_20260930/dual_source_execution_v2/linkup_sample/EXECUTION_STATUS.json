@@ -1,0 +1,33 @@
+{
+  "observed_at": "2026-10-04T00:58:16+08:00",
+  "status": "repair_submitted_pending",
+  "active_job": {
+    "cluster": "kunshan",
+    "slurm_job_id": "123582600",
+    "state": "PENDING",
+    "reason": "Priority",
+    "elapsed_compute": "00:00:00",
+    "resources": "4 CPU, 8 GiB, 8 hour limit",
+    "stdout": "/public/home/lilysharp/linkup_analysis_execution_oct02/logs/l1-sample-123582600.out",
+    "stderr": "/public/home/lilysharp/linkup_analysis_execution_oct02/logs/l1-sample-123582600.err",
+    "private_output": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-123582600"
+  },
+  "superseded_submission": {
+    "slurm_job_id": "123581674",
+    "state": "CANCELLED before allocation",
+    "elapsed_compute": "00:00:00",
+    "reason": "replaced by bounded broad Top-N and early core checkpoint"
+  },
+  "failed_attempt": {
+    "slurm_job_id": "123581861",
+    "state": "FAILED",
+    "elapsed_compute": "00:00:04",
+    "reason": "DuckDB output-file lock on shared predecessor output"
+  },
+  "core_checkpoint": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/dual_source_execution_v2/linkup_sample/run-123582600/L1_CORE_RECEIPT_PRIVATE.json",
+  "core_checkpoint_present": false,
+  "repair": "Replacement job uses a distinct run-${SLURM_JOB_ID} private output directory and a job-specific DuckDB temporary database. Old directories were preserved. No old build_l1_sample or DuckDB writer process was found before submission.",
+  "next_manual_action": "After the run-specific L1_CORE_RECEIPT_PRIVATE.json exists, run prepare_dev_text_adapter.py, then execute the generated regional materializer commands. Do not scan original text separately for the nested 80.",
+  "background_automation": false,
+  "claim_limit": "No key list or original-text sample is complete while repair job 123582600 remains pending. The future provisional 200/200/80 lists also require full-text digest exclusion before they can be called final or locked."
+}

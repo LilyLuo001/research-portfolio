@@ -1,0 +1,114 @@
+{
+  "contract_version": "revelio-r0-entry-v2-20261004",
+  "status": "deferred_not_acquired",
+  "supersedes": {
+    "path": "../../pre_revelio_execution_v1/history_interface/REVELIO_INTERFACE_CONFIG.json",
+    "scope": "The v1 common-cell and support definitions only. This v2 contract removes calendar_quarter from every cross-dataset key; Revelio event time remains an internal field."
+  },
+  "data_access_status": {
+    "individual_delivery_uploaded": false,
+    "real_file_location_verified": false,
+    "vendor_schema_verified": false,
+    "credential_contents_inspected": false,
+    "r0_gate": "deferred_not_acquired"
+  },
+  "required_source_bindings": {
+    "person_frame": {
+      "purpose": "Defined eligible-person frame from which to sample; must state its inclusion rule.",
+      "semantic_fields": [
+        "stable_person_id"
+      ],
+      "optional_eligibility_field": "us_position_eligibility"
+    },
+    "career": {
+      "purpose": "All visible positions for every sampled person, including positions outside the US when eligibility was defined using a US position.",
+      "semantic_fields": [
+        "stable_person_id",
+        "stable_position_id",
+        "raw_employer_id",
+        "raw_title",
+        "start_date_or_month",
+        "end_date_or_month",
+        "location_at_position",
+        "industry_at_position",
+        "internship_indicator"
+      ],
+      "optional_semantic_fields": [
+        "position_description_or_task_text",
+        "source_record_time"
+      ]
+    },
+    "crosswalks": {
+      "required_for_next_stage": [
+        "raw_employer_id_to_harmonized_employer_id",
+        "raw_title_or_occupation_to_harmonized_occupation_family",
+        "location_to_harmonized_region"
+      ],
+      "status": "not_verified"
+    }
+  },
+  "sampling": {
+    "unit": "person",
+    "target_n": 10000,
+    "method": "sort the explicit eligible frame by a deterministic SHA-256 rank of stable_person_id plus documented non-secret seed; take the first min(target_n, distinct_eligible_persons).",
+    "prohibitions": [
+      "Do not sample career rows.",
+      "Do not restrict extraction to successful movers or only US careers after person eligibility is established.",
+      "Do not substitute an unstable row identifier for stable_person_id."
+    ],
+    "seed": "revelio_r0_v2_20261004"
+  },
+  "r0_checks": [
+    "Resolve actual file location and a read mechanism without reading credential contents into project artifacts.",
+    "Bind each required semantic field to an actual column and record only column names, table names, types, and coverage counts.",
+    "Verify stable person-ID uniqueness in the person frame and person-to-career cardinality.",
+    "Verify every sampled person has all visible career rows extracted; do not truncate history.",
+    "Report missing key rates separately; missing career keys do not create fabricated values."
+  ],
+  "event_encoding": {
+    "event_time": "position start date or month; retained only within Revelio analysis and not a cross-dataset connection key.",
+    "axes": {
+      "employer_relation": [
+        "internal",
+        "cross_employer",
+        "unresolved"
+      ],
+      "career_visibility": [
+        "first_observed",
+        "prior_visible_history",
+        "unresolved"
+      ],
+      "target_occupation_relation": [
+        "first_entry",
+        "return",
+        "continuous",
+        "unresolved"
+      ]
+    },
+    "rule": "Each axis is mutually exclusive within itself; axes are crossed, not collapsed into an old mutually exclusive three-category event type."
+  },
+  "cross_dataset_interface": {
+    "common_keys": [
+      "harmonized_employer_id",
+      "harmonized_occupation_family",
+      "harmonized_region"
+    ],
+    "forbidden_common_keys": [
+      "calendar_quarter",
+      "event_date",
+      "event_month",
+      "CREATED"
+    ],
+    "use": "Aggregate structural alignment and coverage diagnostics only; never advertisement-to-hire linkage or contemporaneous demand-flow matching."
+  },
+  "required_before_r1": [
+    "actual source entry",
+    "mapping configuration with verified column bindings",
+    "person frame definition",
+    "complete sampled careers",
+    "employer/occupation/region crosswalk availability"
+  ],
+  "privacy": "Do not store raw person identifiers, names, addresses, profile text, credentials, access tokens, or source data in this repository. Runtime extracts require an approved protected destination and may emit only aggregate receipts here.",
+  "current_user_clarification": "2026-10-04: Individual data not purchased; entry deferred, not missing upload from acquired data",
+  "execution_status": "deferred_not_acquired"
+}

@@ -1,0 +1,75 @@
+{
+  "updated_at_utc": "2026-10-03T16:59:33.503257+00:00",
+  "stage": "first_wave_execution",
+  "authoritative_user_update": "USER_CLARIFICATION_D25.json",
+  "tasks": {
+    "G0": {
+      "status": "complete",
+      "artifact": "RESEARCH_CONTRACT.json",
+      "model": "gpt-6-astra",
+      "effort": "high"
+    },
+    "G1": {
+      "status": "complete_three_material_questions",
+      "artifact": "HISTORICAL_COMPARISON_DECISIONS.json",
+      "model": "gpt-6-astra",
+      "effort": "high"
+    },
+    "L1": {
+      "status": "isolated_recovery_submitted_pending_scheduler",
+      "artifact": "linkup_sample/EXECUTION_STATUS.json",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "job_id": "123582600",
+      "actual_selected_key_count_available": false,
+      "failed_predecessor": "123581861: FAILED after 4 seconds, file lock; no key sample completed",
+      "output_isolation": "run-123582600 with its own DuckDB temporary database"
+    },
+    "L2": {
+      "status": "code_complete_8_synthetic_checks_passed_waiting_source_text",
+      "artifact": "measurement/STATUS.md",
+      "model": "gpt-5.6-sol",
+      "effort": "high",
+      "real_text_model_calls": 0,
+      "real_200_development_completed": false,
+      "real_80_comparison_completed": false
+    },
+    "L3": {
+      "status": "not_started_no_batch_channel",
+      "model_inference_calls": 0,
+      "api_spending": 0
+    },
+    "R0": {
+      "status": "reference_interface_complete_empirical_deferred_not_acquired",
+      "artifact": "revelio_entry/R0_STATUS.md",
+      "model": "gpt-5.6-terra",
+      "effort": "medium"
+    },
+    "R1_R3": {
+      "status": "deferred_not_acquired"
+    },
+    "W0": {
+      "status": "method_draft_and_17_claim_evidence_rows_complete",
+      "artifact": "writing/DUAL_SOURCE_PAPER_SKELETON.md",
+      "model": "gpt-5.6-terra",
+      "effort": "medium"
+    },
+    "Q0": {
+      "status": "bounded_review_complete_7_findings_resolved",
+      "artifact": "quality/QA_RELEASE.json",
+      "model": "gpt-5.6-luna",
+      "effort": "medium"
+    },
+    "Z0": {
+      "status": "public_code_methods_and_receipts_ready_for_git",
+      "microdata_in_git": false
+    }
+  },
+  "completion_limits": [
+    "Pending Slurm submission is not execution completion",
+    "No actual development/evaluation labels have been generated",
+    "Synthetic checks are not empirical semantic validation",
+    "No automatic text-materialization process or recurring monitor has been created"
+  ],
+  "next_action": "After L1 core receipt exists, adapt and materialize the 200 development texts by exact regional source locators; use original L1 80-key subset without re-sampling; keep evaluation provisional until text-level exclusion and lock receipt."
+}
