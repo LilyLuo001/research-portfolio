@@ -21,7 +21,7 @@ AD_OUTPUT_SCHEMA = pa.schema(
      ("ENRICHMENT_INCOMPLETE", pa.bool_())]
     + [("exp_%s_%s" % (obj, suffix), pa.bool_())
        for obj in OBJECTS
-       for suffix in ("main", "required", "broad", "exact_or_unspecified")]
+       for suffix in ("main", "required", "preferred", "broad", "exact_or_unspecified")]
     + [("tech_%s_detected" % tech, pa.bool_()) for tech in TECHNOLOGIES]
     + [("tech_%s_%s_explicit" % (tech, role), pa.bool_())
        for tech in TECHNOLOGIES for role in ("use", "develop", "implement")]
@@ -66,7 +66,7 @@ def validate_production_binding(shard,receipt,gate):
 def blank_flags():
     result={}
     for obj in OBJECTS:
-        result.update({"exp_%s_main"%obj:False,"exp_%s_required"%obj:False,
+        result.update({"exp_%s_main"%obj:False,"exp_%s_required"%obj:False,"exp_%s_preferred"%obj:False,
                        "exp_%s_broad"%obj:False,"exp_%s_exact_or_unspecified"%obj:False})
     for tech in TECHNOLOGIES:
         result["tech_%s_detected"%tech]=False
@@ -104,8 +104,9 @@ def build(shard,output,receipt,threads,memory,gate=None):
         if main:
             target["exp_%s_main"%obj]=True
             target["exp_%s_required"%obj] |= item["REQUIREMENT_STRENGTH"]=="required"
+            target["exp_%s_preferred"%obj] |= item["REQUIREMENT_STRENGTH"]=="preferred"
             target["exp_%s_exact_or_unspecified"%obj] |= item["BOUND_TYPE"]=="exact_or_unspecified"
-            if target["usable"] and item["MIN_YEARS"] is not None:
+            if target["usable"]:
                 durations.append({**dict(zip(KEYS,k)),"EVIDENCE_ORDINAL":item["EVIDENCE_ORDINAL"],"OBJECT_TYPE":obj,
                     "MIN_YEARS":item["MIN_YEARS"],"MAX_YEARS":item["MAX_YEARS"],"DURATION_UNIT":item["DURATION_UNIT"],
                     "BOUND_TYPE":item["BOUND_TYPE"],"REQUIREMENT_STRENGTH":item["REQUIREMENT_STRENGTH"]})

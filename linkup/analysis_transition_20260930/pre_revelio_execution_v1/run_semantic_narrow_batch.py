@@ -13,9 +13,10 @@ import shutil
 import subprocess
 import sys
 import tempfile
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
+import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
 EXPECTED_SHARDS = 2464
@@ -164,6 +165,25 @@ def duration_bin(bound_type, value):
     return "no_interpretable_lower_bound_other"
 
 
+def duration_form(item):
+    lower, upper, bound = item.get("MIN_YEARS"), item.get("MAX_YEARS"), item.get("BOUND_TYPE")
+    if lower is None and upper is None: return "no_numeric_bound"
+    if lower is None: return "upper_only"
+    if bound == "exact_or_unspecified": return "exact_or_unspecified"
+    if upper is not None: return "range"
+    return "minimum"
+
+
+def true_count(batch, name):
+    values = batch.column(batch.schema.get_field_index(name))
+    return int(pc.sum(pc.cast(values, "int64")).as_py() or 0)
+
+
+def and_count(batch, left, right):
+    l = batch.column(batch.schema.get_field_index(left)); r = batch.column(batch.schema.get_field_index(right))
+    return int(pc.sum(pc.cast(pc.and_(l, r), "int64")).as_py() or 0)
+
+
 def aggregate_valid(aggregate_dir, identity, shard_count):
     aggregate_dir = Path(aggregate_dir)
     try:
@@ -171,7 +191,10 @@ def aggregate_valid(aggregate_dir, identity, shard_count):
         return (receipt.get("status") == "complete" and receipt.get("shards") == shard_count
                 and receipt.get("identity") == identity
                 and receipt.get("ad_rates_sha256") == sha256(aggregate_dir / "T2_EXPERIENCE_AD_RATES.csv")
-                and receipt.get("duration_distribution_sha256") == sha256(aggregate_dir / "T2_DURATION_BOUND_DISTRIBUTION.csv"))
+                and receipt.get("duration_distribution_sha256") == sha256(aggregate_dir / "T2_DURATION_BOUND_DISTRIBUTION.csv")
+                and receipt.get("technology_role_sha256") == sha256(aggregate_dir / "T3_TECHNOLOGY_ROLE.csv")
+                and receipt.get("technology_pair_sha256") == sha256(aggregate_dir / "T3_TECHNOLOGY_PAIR_OVERLAP.csv")
+                and receipt.get("technology_experience_sha256") == sha256(aggregate_dir / "T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv"))
     except (OSError, ValueError, TypeError):
         return False
 
@@ -184,21 +207,47 @@ def aggregate(rows, output_dir, aggregate_dir, identity):
         shutil.rmtree(aggregate_dir)
     aggregate_dir.parent.mkdir(parents=True, exist_ok=True)
     temp_dir = Path(tempfile.mkdtemp(prefix="aggregate.tmp.", dir=aggregate_dir.parent))
-    counts = {obj: Counter() for obj in OBJECTS}; duration = {obj: Counter() for obj in OBJECTS}
+    counts = {obj: Counter() for obj in OBJECTS}
+    duration_clause = {obj: Counter() for obj in OBJECTS}; duration_ads = {obj: Counter() for obj in OBJECTS}
+    technologies = ("traditional_software", "generative_ai", "predictive_ai", "unspecified_ai")
+    roles = ("use", "develop", "implement")
+    tech_role = Counter(); tech_pair = Counter(); tech_exp = Counter(); usable_ads = 0
     for row in rows:
         ad_path, duration_path, _, _ = paths_for(output_dir, row["shard_id"])
         for batch in pq.ParquetFile(ad_path).iter_batches(batch_size=65536):
-            for ad in batch.to_pylist():
-                for obj in OBJECTS:
-                    available = obj != "occupation_task"
-                    counts[obj]["canonical_ads"] += 1
-                    if available and ad["usable"]:
-                        counts[obj]["usable_ads_denominator"] += 1
-                        for flag in ("main", "required", "broad", "exact_or_unspecified"):
-                            counts[obj][flag + "_ads"] += int(ad["exp_%s_%s" % (obj, flag)])
+            batch_usable = true_count(batch, "usable"); usable_ads += batch_usable
+            for obj in OBJECTS:
+                available = obj != "occupation_task"; counts[obj]["canonical_ads"] += batch.num_rows
+                if available:
+                    counts[obj]["usable_ads_denominator"] += batch_usable
+                    for flag in ("main", "required", "preferred", "broad", "exact_or_unspecified"):
+                        counts[obj][flag + "_ads"] += and_count(batch, "usable", "exp_%s_%s" % (obj, flag))
+            usable_col = batch.column(batch.schema.get_field_index("usable"))
+            for tech in technologies:
+                tech_role[(tech, "detected_any_role", "candidate_coverage")] += and_count(batch, "usable", "tech_%s_detected" % tech)
+                for role in roles:
+                    tech_col = "tech_%s_%s_explicit" % (tech, role)
+                    tech_role[(tech, role, "explicit_binding")] += and_count(batch, "usable", tech_col)
+                    usable_tech = pc.and_(usable_col, batch.column(batch.schema.get_field_index(tech_col)))
+                    for obj in OBJECTS:
+                        if obj != "occupation_task":
+                            exp_col = batch.column(batch.schema.get_field_index("exp_%s_main" % obj))
+                            tech_exp[(tech, role, obj)] += int(pc.sum(pc.cast(pc.and_(usable_tech, exp_col), "int64")).as_py() or 0)
+            for left_i, left in enumerate(technologies):
+                for right in technologies[left_i + 1:]:
+                    both_detected = pc.and_(batch.column(batch.schema.get_field_index("tech_%s_detected" % left)), batch.column(batch.schema.get_field_index("tech_%s_detected" % right)))
+                    tech_pair[("detected_any_role", left, right)] += int(pc.sum(pc.cast(pc.and_(usable_col, both_detected), "int64")).as_py() or 0)
+                    for role in roles:
+                        left_col = batch.column(batch.schema.get_field_index("tech_%s_%s_explicit" % (left, role)))
+                        right_col = batch.column(batch.schema.get_field_index("tech_%s_%s_explicit" % (right, role)))
+                        tech_pair[(role, left, right)] += int(pc.sum(pc.cast(pc.and_(usable_col, pc.and_(left_col, right_col)), "int64")).as_py() or 0)
+        local_ads = defaultdict(set)
         for batch in pq.ParquetFile(duration_path).iter_batches(batch_size=65536):
             for item in batch.to_pylist():
-                duration[item["OBJECT_TYPE"]][duration_bin(item["BOUND_TYPE"], item["MIN_YEARS"])] += 1
+                obj = item["OBJECT_TYPE"]; ad_key = tuple(item[x] for x in ("JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"))
+                for kind, category in (("bound_form", duration_form(item)), ("lower_bound_bin", duration_bin(item["BOUND_TYPE"], item["MIN_YEARS"]))):
+                    duration_clause[obj][(kind, category)] += 1; local_ads[(obj, kind, category)].add(ad_key)
+        for (obj, kind, category), keys in local_ads.items(): duration_ads[obj][(kind, category)] += len(keys)
     rate_rows = []
     for obj in OBJECTS:
         c = counts[obj]; available = obj != "occupation_task"; denom = c["usable_ads_denominator"] if available else None
@@ -208,6 +257,8 @@ def aggregate(rows, output_dir, aggregate_dir, identity):
                           "main_rate": c["main_ads"] / denom if denom else None,
                           "required_ads": c["required_ads"] if available else None,
                           "required_rate": c["required_ads"] / denom if denom else None,
+                          "preferred_ads": c["preferred_ads"] if available else None,
+                          "preferred_rate": c["preferred_ads"] / denom if denom else None,
                           "broad_ads": c["broad_ads"] if available else None,
                           "broad_rate": c["broad_ads"] / denom if denom else None,
                           "exact_or_unspecified_ads": c["exact_or_unspecified_ads"] if available else None,
@@ -218,23 +269,66 @@ def aggregate(rows, output_dir, aggregate_dir, identity):
     duration_rows = []
     for obj in OBJECTS:
         if obj == "occupation_task":
-            duration_rows.append({"experience_object": obj, "bound_category": "unmeasured_D10", "evidence_rows": "", "share_of_object_duration_evidence": "", "denominator": "unmeasured/NA"})
+            duration_rows.append({"experience_object":obj,"classification":"availability","bound_category":"unmeasured_D10",
+                "evidence_rows":"","share_of_object_duration_evidence":"","clause_rows":"","distinct_ads":"","all_main_clauses_denominator":"","main_ads_denominator":"",
+                "clause_share":"","ad_share":"","denominator":"unmeasured/NA"})
             continue
-        denom = sum(duration[obj].values())
-        if denom == 0:
-            duration_rows.append({"experience_object": obj, "bound_category": "no_eligible_duration_evidence",
-                                  "evidence_rows": 0, "share_of_object_duration_evidence": "",
-                                  "denominator": "zero usable-ad main-eligible evidence rows with MIN_YEARS"})
-        for category in sorted(duration[obj]):
-            value = duration[obj][category]
-            duration_rows.append({"experience_object": obj, "bound_category": category, "evidence_rows": value,
-                                  "share_of_object_duration_evidence": value / denom if denom else None,
-                                  "denominator": "usable-ad main-eligible evidence rows with MIN_YEARS; evidence-level, not ad-level minimum"})
+        clause_denom = sum(v for (kind, _), v in duration_clause[obj].items() if kind == "bound_form")
+        ad_denom = counts[obj]["main_ads"]
+        for kind, category in sorted(duration_clause[obj]):
+            clauses=duration_clause[obj][(kind,category)]; ads=duration_ads[obj][(kind,category)]
+            duration_rows.append({"experience_object":obj,"classification":kind,"bound_category":category,
+                "evidence_rows":clauses if kind == "bound_form" else "",
+                "share_of_object_duration_evidence":clauses/clause_denom if kind == "bound_form" and clause_denom else "",
+                "clause_rows":clauses,"distinct_ads":ads,"all_main_clauses_denominator":clause_denom,
+                "main_ads_denominator":ad_denom,"clause_share":clauses/clause_denom if clause_denom else None,
+                "ad_share":ads/ad_denom if ad_denom else None,
+                "denominator":"all usable-ad explicit required/preferred clauses; ad counts deduplicated within category; categories may overlap across an ad"})
     with (temp_dir / "T2_DURATION_BOUND_DISTRIBUTION.csv").open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(duration_rows[0])); writer.writeheader(); writer.writerows(duration_rows)
+    tech_role_rows = []
+    for tech in technologies:
+        for role, level in (("detected_any_role", "candidate_coverage"),
+                            ("use", "explicit_binding"), ("develop", "explicit_binding"),
+                            ("implement", "explicit_binding")):
+            value = tech_role[(tech, role, level)]
+            tech_role_rows.append({"technology":tech, "role":role, "measurement_level":level,
+                "ads":value, "usable_ads_denominator":usable_ads,
+                "share_of_usable_ads":value / usable_ads if usable_ads else None,
+                "interpretation":"candidate coverage diagnostic" if level == "candidate_coverage" else "explicit applicant-context technology-role detection"})
+    with (temp_dir / "T3_TECHNOLOGY_ROLE.csv").open("w", newline="") as handle:
+        writer=csv.DictWriter(handle,fieldnames=list(tech_role_rows[0])); writer.writeheader(); writer.writerows(tech_role_rows)
+    tech_pair_rows=[]
+    for role in ("detected_any_role",) + roles:
+        for left_i,left in enumerate(technologies):
+            for right in technologies[left_i+1:]:
+                value=tech_pair[(role,left,right)]
+                tech_pair_rows.append({"role":role,"technology_left":left,"technology_right":right,
+                    "intersection_ads":value,"usable_ads_denominator":usable_ads,
+                    "share_of_usable_ads":value/usable_ads if usable_ads else None,
+                    "interpretation":"same-ad candidate detection intersection" if role == "detected_any_role" else "same-ad intersection of two explicit technology-role detections"})
+    with (temp_dir / "T3_TECHNOLOGY_PAIR_OVERLAP.csv").open("w",newline="") as handle:
+        writer=csv.DictWriter(handle,fieldnames=list(tech_pair_rows[0])); writer.writeheader(); writer.writerows(tech_pair_rows)
+    tech_exp_rows=[]
+    for tech in technologies:
+        for role in roles:
+            tech_denom=tech_role[(tech,role,"explicit_binding")]
+            for obj in OBJECTS:
+                available=obj!="occupation_task"; value=tech_exp[(tech,role,obj)] if available else None
+                tech_exp_rows.append({"technology":tech,"role":role,"experience_object":obj,
+                    "measurement_available":str(available).lower(),"cooccurrence_ads":value,
+                    "technology_role_ads":tech_denom,"usable_ads_denominator":usable_ads,
+                    "share_within_technology_role":value/tech_denom if available and tech_denom else None,
+                    "share_of_usable_ads":value/usable_ads if available and usable_ads else None,
+                    "interpretation":"within-ad cooccurrence; not a direct technology-to-experience binding" if available else "unmeasured/NA under D10"})
+    with (temp_dir / "T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv").open("w",newline="") as handle:
+        writer=csv.DictWriter(handle,fieldnames=list(tech_exp_rows[0])); writer.writeheader(); writer.writerows(tech_exp_rows)
     atomic_json(temp_dir / "AGGREGATE_RECEIPT.json", {"status":"complete", "shards":len(rows), "identity":identity,
         "ad_rates_sha256":sha256(temp_dir/"T2_EXPERIENCE_AD_RATES.csv"),
         "duration_distribution_sha256":sha256(temp_dir/"T2_DURATION_BOUND_DISTRIBUTION.csv"),
+        "technology_role_sha256":sha256(temp_dir/"T3_TECHNOLOGY_ROLE.csv"),
+        "technology_pair_sha256":sha256(temp_dir/"T3_TECHNOLOGY_PAIR_OVERLAP.csv"),
+        "technology_experience_sha256":sha256(temp_dir/"T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv"),
         "limits":["descriptive additive aggregation", "no raw text", "no time-causal interpretation", "occupation_task unmeasured/NA"]})
     os.replace(temp_dir, aggregate_dir)
     if not aggregate_valid(aggregate_dir, identity, len(rows)):

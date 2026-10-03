@@ -1,0 +1,11 @@
+order,layer,metric,count,denominator,share,status,unit_note
+1,Records,all_records,356449214,,,complete,delivered Records rows; not vacancies or hires
+2,Records,usa_records,253210047,356449214,0.7103678085260134,complete,COUNTRY==USA Records rows
+3,Descriptions,raw_description_rows,298673078,,,complete,description occurrences; not asserted distinct keys
+4,Descriptions,record_matched_description_rows,298645910,298673078,0.9999090376669303,complete,description occurrences matched to Records
+5,Descriptions,record_unmatched_description_rows,27168,298673078,9.096233306973855e-05,complete,description occurrences unmatched to Records
+6,Disposition,matched_non_usa_rows,70527457,298645910,0.23615745147824058,complete,
+7,Disposition,matched_country_unknown_rows,23344418,298645910,0.07816754630927308,complete,
+8,Disposition,usa_canonical_regional_row_sum,204774035,298645910,0.6856750022124863,pending_global_job_hash_audit,sum of accepted regional canonical rows; unique JOB_HASH denominator pending global audit
+9,Semantic,usable_nonempty_complete_parse,204768752,204774035,0.9999742008306863,row_level_complete_global_job_hash_audit_pending,usable is the mutually exhaustive pass/fail complement; individual failure flags may overlap
+10,Comparison,comparison_eligible,,,,pending_full_narrow_join,"requires date, occupation, region and common-support gates"

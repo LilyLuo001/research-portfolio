@@ -1,0 +1,39 @@
+{
+  "anonymous_leaf_summaries": 2464,
+  "conservation": {
+    "ad_level_evidence_deduplication": true,
+    "canonical_equals_ad_status": true,
+    "raw_equals_dispositions": true
+  },
+  "evidence_rows": {
+    "experience": 421992351,
+    "technology": 82379739,
+    "v6_audit": 260639343
+  },
+  "funnel": {
+    "audit_only_education_candidate": 110405883,
+    "audit_only_no_experience_phrase_candidate": 3800233,
+    "canonical_ad_status": 204774035,
+    "empty_description": 845,
+    "enrichment_incomplete": 4438,
+    "input_evidence_truncated": 4438,
+    "matched_country_unknown_rows": 23344418,
+    "matched_non_usa_rows": 70527457,
+    "matched_usa_duplicate_quarantine_rows": 0,
+    "matched_usa_rows": 204774035,
+    "matched_usa_unique_canonical_rows": 204774035,
+    "raw_input_rows": 298673078,
+    "record_matched_rows": 298645910,
+    "record_unmatched_rows": 27168,
+    "usable_nonempty_complete_parse": 204768752
+  },
+  "limits": [
+    "candidate evidence; cells may be nonexclusive for multi-valued ads",
+    "education and no-experience are audit-only",
+    "CREATED is a delivery-snapshot first-observed queue, not historical text or causality",
+    "no occupation or Revelio worker-flow inference"
+  ],
+  "shards": 2464,
+  "status": "complete",
+  "version": "release_first_tables_v1"
+}

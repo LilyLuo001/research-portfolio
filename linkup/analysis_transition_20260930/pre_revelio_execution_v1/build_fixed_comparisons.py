@@ -244,6 +244,13 @@ def input_provenance(input_path, join_manifest):
             "files":[{"path":str(path),"size":path.stat().st_size,"mtime_ns":path.stat().st_mtime_ns} for path in paths]}
 
 
+def write_rows(path, rows, fieldnames):
+    path=Path(path); tmp=Path(str(path)+".tmp")
+    with tmp.open("w",newline="") as handle:
+        writer=csv.DictWriter(handle,fieldnames=fieldnames);writer.writeheader();writer.writerows(rows)
+    os.replace(tmp,path)
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument("--input",type=Path,required=True);p.add_argument("--output-dir",type=Path,required=True);p.add_argument("--join-manifest",type=Path)
     args=p.parse_args(); available=fields(args.input); missing=CORE_FIELDS-available; args.output_dir.mkdir(parents=True,exist_ok=True)
@@ -279,17 +286,21 @@ def main():
         if not needed<=available:
             output += blocked_rows(variant,needed-available); continue
         for comparison in COMPARISONS: output += evaluate(aggs[variant],comparison,measure,variant)
-    out=args.output_dir/"FIXED_COMPARISONS.csv"
     fieldnames=[]
     for row in output:
         for key in row:
             if key not in fieldnames: fieldnames.append(key)
-    with out.open("w",newline="") as handle:
-        writer=csv.DictWriter(handle,fieldnames=fieldnames);writer.writeheader();writer.writerows(output)
+    out=args.output_dir/"FIXED_COMPARISONS.csv"
+    t5=args.output_dir/"T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv"
+    t6=args.output_dir/"T6_SENSITIVITY_AND_CLAIM_STATUS.csv"
+    write_rows(out,output,fieldnames)
+    write_rows(t5,[row for row in output if row["analysis_variant"]=="main"],fieldnames)
+    write_rows(t6,output,fieldnames)
     atomic_json(args.output_dir/"COMPARISON_RECEIPT.json",{"status":"complete_with_possible_blocked_or_canceled_variants",
         "version":VERSION,"input":str(args.input),"input_columns":sorted(available),"coverage":dict(coverage),
         "script_sha256":sha256(Path(__file__)),"input_provenance":input_provenance(args.input,args.join_manifest),
         "same_company_occupation_pairs_with_both_arms":len(pair_support),"rows":len(output),
+        "outputs":{path.name:{"sha256":sha256(path),"rows":sum(1 for _ in path.open())-1} for path in (out,t5,t6)},
         "rules":{"primary_window":"2018-01-01 through 2026-06-30 inclusive","cell":"occupation major x Census region x CREATED year",
         "support":"each arm >=20 per cell; retained total each arm >=200; >=5 occupation majors",
         "standardization":"same pooled common-support record distribution q(x) for both arms; raw proportions use valid measured booleans within common support; all-classifiable raw summaries are also reported","retention_boundary":"below 70% => limited",

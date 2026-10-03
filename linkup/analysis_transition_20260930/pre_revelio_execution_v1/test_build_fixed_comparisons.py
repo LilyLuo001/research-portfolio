@@ -55,6 +55,8 @@ class FixedComparisonTest(unittest.TestCase):
             self.assertEqual(sparse["status"],"canceled_support")
             receipt=json.loads((output/"COMPARISON_RECEIPT.json").read_text())
             self.assertEqual(receipt["status"],"complete_with_possible_blocked_or_canceled_variants")
+            self.assertEqual(receipt["outputs"]["T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv"]["rows"],8)
+            self.assertEqual(receipt["outputs"]["T6_SENSITIVITY_AND_CLAIM_STATUS.csv"]["rows"],56)
             self.assertEqual(receipt["input_provenance"]["content_hash"],"not_computed")
             self.assertTrue(receipt["script_sha256"])
 

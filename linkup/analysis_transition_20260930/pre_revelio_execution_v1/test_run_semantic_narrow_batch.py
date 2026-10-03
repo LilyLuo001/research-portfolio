@@ -44,13 +44,16 @@ class BatchTest(unittest.TestCase):
                     bad_key={"JOB_HASH":"bad", "SOURCE_FILE":"f", "SOURCE_ROW":3, "RECORD_SOURCE_ROW":4}
                     ads=[blank(lean.AD_SCHEMA,{**key,"CREATED":datetime(2024,1,1),"STATE":"MA",
                         "DESCRIPTION_EMPTY":False,"PARSE_ERROR":False,"INPUT_EVIDENCE_TRUNCATED":False,
-                        "ENRICHMENT_INCOMPLETE":False,"EXPERIENCE_EVIDENCE_COUNT":1,"TECHNOLOGY_EVIDENCE_COUNT":0,"V6_AUDIT_EVIDENCE_COUNT":0}),
+                        "ENRICHMENT_INCOMPLETE":False,"EXPERIENCE_EVIDENCE_COUNT":2,"TECHNOLOGY_EVIDENCE_COUNT":0,"V6_AUDIT_EVIDENCE_COUNT":0}),
                         blank(lean.AD_SCHEMA,{**bad_key,"CREATED":datetime(2024,1,1),"STATE":"MA",
                         "DESCRIPTION_EMPTY":False,"PARSE_ERROR":True,"INPUT_EVIDENCE_TRUNCATED":False,
                         "ENRICHMENT_INCOMPLETE":False,"EXPERIENCE_EVIDENCE_COUNT":1,"TECHNOLOGY_EVIDENCE_COUNT":0,"V6_AUDIT_EVIDENCE_COUNT":0})]
                     exps=[blank(lean.EXP_SCHEMA,{**key,"EVIDENCE_ORDINAL":0,"OBJECT_TYPE":"general_work","MIN_YEARS":3.0,
                         "BOUND_TYPE":"minimum","DURATION_UNIT":"year","BINDING_STATUS":"explicit",
                         "APPLICANT_CONTEXT_CANDIDATE":True,"REQUIREMENT_STRENGTH":"required"}),
+                        blank(lean.EXP_SCHEMA,{**key,"EVIDENCE_ORDINAL":1,"OBJECT_TYPE":"general_work","MAX_YEARS":2.0,
+                        "BOUND_TYPE":"maximum","DURATION_UNIT":"year","BINDING_STATUS":"explicit",
+                        "APPLICANT_CONTEXT_CANDIDATE":True,"REQUIREMENT_STRENGTH":"preferred"}),
                         blank(lean.EXP_SCHEMA,{**bad_key,"EVIDENCE_ORDINAL":0,"OBJECT_TYPE":"general_work","MIN_YEARS":7.0,
                         "BOUND_TYPE":"minimum","DURATION_UNIT":"year","BINDING_STATUS":"explicit",
                         "APPLICANT_CONTEXT_CANDIDATE":True,"REQUIREMENT_STRENGTH":"required"})]
@@ -77,9 +80,14 @@ class BatchTest(unittest.TestCase):
                 rates={row["experience_object"]:row for row in csv.DictReader(handle)}
             self.assertEqual(rates["occupation_task"]["measurement_available"],"false")
             self.assertEqual(rates["occupation_task"]["main_rate"],"")
+            self.assertEqual(rates["general_work"]["required_ads"],"1")
+            self.assertEqual(rates["general_work"]["preferred_ads"],"1")
             with (work/"aggregate/T2_DURATION_BOUND_DISTRIBUTION.csv").open() as handle:
                 duration_rows=list(csv.DictReader(handle))
-            self.assertEqual(sum(int(row["evidence_rows"] or 0) for row in duration_rows),1)
+            self.assertEqual(sum(int(row["evidence_rows"] or 0) for row in duration_rows),2)
+            forms={row["bound_category"] for row in duration_rows if row["classification"]=="bound_form"}
+            self.assertTrue({"minimum","upper_only"} <= forms)
+            self.assertTrue((work/"aggregate/T3_TECHNOLOGY_PAIR_OVERLAP.csv").is_file())
             batch.execute(args,expected_shards=2)
             receipt=json.loads((work/"BATCH_RECEIPT.json").read_text())
             self.assertEqual(receipt["actions"],{"resumed":2})

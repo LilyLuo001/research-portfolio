@@ -1,0 +1,129 @@
+{
+  "as_of": "2026-10-03",
+  "purpose": "有限交付审计：记录已有真实聚合可复用范围，不生成新统计、不将 pilot 升级为全库",
+  "global_scope": {
+    "records_index": {
+      "source": {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/index_manifest.json","repository_path":null},
+      "unit": "Records rows / JOB_HASH index rows",
+      "rows": 356449214,
+      "source_files": 269,
+      "status": "full_records_index"
+    },
+    "usa_coverage": {
+      "source": {"availability":"local_project_reference","local_relative":"../../../phase_a/month_panel/geography_rules_and_diagnostics.json","repository_path":null},
+      "denominator": "all Records rows",
+      "usa_records": 253210047,
+      "usa_share": 0.7103678085260134,
+      "country_null_records": 23970805,
+      "other_country_records": 79268362,
+      "status": "full_records_aggregation"
+    },
+    "semantic_release_gate": {
+      "source": "analysis_transition_20260930/pre_revelio_execution_v1/results/ENGINEERING_EXECUTION_STATUS.json; analysis_transition_20260930/pre_revelio_execution_v1/results/V2_GATE_VALIDATION_RECEIPT.json",
+      "frozen_shards": 2464,
+      "status": "accepted_and_relayed",
+      "p1_first_wave": "complete; full 2,464-shard funnel, candidate diagnostic, and CREATED queue outputs available",
+      "p2_comparisons": "pending downstream comparison outputs"
+    }
+  },
+  "tables": {
+    "T1_01_population_funnel": {
+      "status": "complete_with_global_job_hash_gate_pending",
+      "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel_receipt.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel_failure_flags.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/CONSERVATION_REPORT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/FIRST_WAVE_RUN_RECEIPT.json",
+        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/index_manifest.json","repository_path":null},
+        {"availability":"local_project_reference","local_relative":"../../../phase_a/month_panel/geography_rules_and_diagnostics.json","repository_path":null}
+      ],
+      "denominators_and_ranges": [
+        "Records reverse-coverage denominator: 356,449,214 full Records rows; USA subset 253,210,047.",
+        "Current 2,464-shard first wave: raw description rows 298,673,078 = Records-matched 298,645,910 + unmatched 27,168.",
+        "Matched decomposition: 298,645,910 = USA 204,774,035 + non-USA 70,527,457 + country-unknown 23,344,418; USA duplicate quarantine 0 (regional accounting only; global JOB_HASH status pending).",
+        "Canonical USA 204,774,035; usable nonempty complete parse 204,768,752; usable shortfall 5,283. Empty/incomplete/truncated flags overlap and must not be summed.",
+        "The 204,774,035 value is a regional canonical-row sum; global distinct JOB_HASH across regions remains unverified pending combined key-only audit."
+      ],
+      "direct_reuse": "The current full-wave raw/matched/country/usable conservation can be reused with the global JOB_HASH warning attached.",
+      "missing_or_blocked": "Do not label 204,774,035 as globally distinct JOB_HASH until the combined key-only audit passes; comparison eligibility still requires downstream P1/P2 outputs."
+    },
+    "T2_02_experience_profiles": {
+      "status": "pilot_only_pending_full",
+      "sources": [
+        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/RESULTS.md","repository_path":null},
+        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/TABLE_REPORT.json","repository_path":null},
+        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json","repository_path":null}
+      ],
+      "denominators_and_ranges": [
+        "Fixed bottom-hash Kunshan frame: 2,691,376 eligible unique USA keys; selected 100,000 ads.",
+        "Complete CREATED queues through 2026Q2: 96,144 ads; semantic eligible after 3 incomplete rows: 96,141.",
+        "Experience candidate detections: 56,332; candidate non-detections: 38,067; no-experience phrase candidates: 1,742; all are candidate detections, not validated prevalence."
+      ],
+      "direct_reuse": "Use as bounded pilot evidence for table structure, conservation, and measurement limits only.",
+      "missing_or_blocked": "Full 2,464-shard experience profiles, required/preferred split, explicit duration denominator, and occupation_task (frozen taxonomy unavailable) await P1."
+    },
+    "T3_03_technology_role_overlap": {
+      "status": "full_candidate_diagnostic_pending_semantic_validation",
+      "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/03_candidate_diagnostic_receipt.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/03_technology_experience_candidate_diagnostic.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/technology_experience_candidate_evidence.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/CONSERVATION_REPORT.json"
+      ],
+      "denominators_and_ranges": [
+        "Current full-wave denominator_status: 204,774,035 canonical USA ads; 4,438 enrichment-incomplete and 4,438 input-truncated flags; 845 empty descriptions.",
+        "Current full-wave evidence rows: technology 82,379,739; experience 421,992,351; V6 audit 260,639,343.",
+        "Rows marked evidence_cross are within-ad candidate co-occurrences; multi-label cells are nonexclusive and cannot be summed into technology prevalence."
+      ],
+      "direct_reuse": "Reuse as a full-wave candidate diagnostic with nonexclusive-cell and candidate-status limits.",
+      "missing_or_blocked": "Technology×role/experience claims require binding-aware semantic validation; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding."
+    },
+    "T4_04_cohort_and_time_risk": {
+      "status": "current_created_queue_complete_time_risk_pending",
+      "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_first_observed_queue_distribution.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_queue_receipt.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/created_first_observed_queue_distribution.csv",
+        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/temporal_risk_report.json","repository_path":null},
+        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/final_validation.json","repository_path":null}
+      ],
+      "denominators_and_ranges": [
+        "Current 2,464-shard CREATED queue sums independently to canonical_usa 204,774,035 and usable_nonempty_complete_parse 204,768,752.",
+        "The queue is a delivery-snapshot first-observed queue, not historical text timing or causality; LAST_CHECKED/DELETE_DATE risk and annual company-title-city comparison remain pending.",
+        "Historical 112,836,465-row Kunshan time-risk aggregation remains a subset diagnostic only; it is not current full-library USA coverage."
+      ],
+      "direct_reuse": "Reuse the current queue denominator sums and time interpretation; reuse old temporal aggregates only as historical diagnostics.",
+      "missing_or_blocked": "LAST_CHECKED/DELETE_DATE time-risk, company-title-city annual comparison, and global JOB_HASH de-duplication remain pending."
+    },
+    "T5_05_comparable_experience_contrasts": {
+      "status": "blocked_pending_p1_p2",
+      "sources": [
+        "analysis_transition_20260930/linkage_v1/results/PILOT_COVERAGE.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md"
+      ],
+      "denominators_and_ranges": [
+        "Linkage pilot: 15,254 canonical ads selected from a fixed lower-hex-0 pilot; 15,248 official O*NET codes, 3 placeholder, 3 missing; Records matches exactly one per key.",
+        "Pilot is not full-library coverage and does not establish comparison support."
+      ],
+      "direct_reuse": "Reuse linkage acceptance rule and pilot-only linkage diagnostic.",
+      "missing_or_blocked": "No T5 values until full frozen join and P1 output; C1/C2 support, common cells, raw/standardized differences, and four experience objects remain unavailable."
+    },
+    "T6_06_sensitivity_and_claim_status": {
+      "status": "limited_reusable_pending_results",
+      "sources": [
+        "analysis_transition_20260930/pre_revelio_execution_v1/PRE_REVELIO_EXECUTION_PLAN.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md",
+        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json","repository_path":null},
+        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/final_validation.json","repository_path":null}
+      ],
+      "denominators_and_ranges": [
+        "Existing evidence supports current full-wave conservation, claim-status rules, candidate limits, and historical time-risk warnings, not final sensitivity estimates.",
+        "Current full-wave canonical USA is 204,774,035 and usable is 204,768,752; the global distinct JOB_HASH status remains pending."
+      ],
+      "direct_reuse": "Reuse pre-specified S1/S2/S3 definitions, pilot limitations, and temporal-history unconfirmed status.",
+      "missing_or_blocked": "Actual S1/S2/S3 rows and per-comparison claim states await P1/P2; no significance-driven or substitute comparison is permitted."
+    }
+  },
+  "delivery_rule": "Pilot evidence is explicitly labeled pilot and cannot be used as full-library prevalence. No raw text, URL/key lists, credentials, or private source contents are included."
+}
