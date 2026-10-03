@@ -18,6 +18,24 @@
       "other_country_records": 79268362,
       "status": "full_records_aggregation"
     },
+    "global_job_hash_audit": {
+      "source": "analysis_transition_20260930/pre_revelio_execution_v1/results/GLOBAL_JOB_HASH_AUDIT_PUBLIC.json",
+      "source_receipt_sha256": "b2e73be7607e7378dc6847ff22096522f4f38e4577182dec6946a21c4c1aa53f",
+      "status": "complete",
+      "distinct_job_hashes": 204774035,
+      "duplicate_job_hashes": 0,
+      "duplicate_occurrences": 0,
+      "resolution": "global duplicate audit passed; no duplicate JOB_HASH occurrences quarantined"
+    },
+    "usa_reverse_coverage": {
+      "source": "analysis_transition_20260930/pre_revelio_execution_v1/results/T1_USA_RECORDS_REVERSE_COVERAGE.json",
+      "records_denominator_receipt_sha256": "b1a5027c1a9b86afbd019d85251f989d53bec8cadc947ca4358f8428c4df3e84",
+      "denominator_verified_usa_records": 253210047,
+      "numerator_distinct_matched_usa_job_hashes": 204774035,
+      "reverse_coverage": 0.8087121242862847,
+      "scope": "USA-only Records reverse coverage; before content usability",
+      "status": "complete"
+    },
     "semantic_release_gate": {
       "source": "analysis_transition_20260930/pre_revelio_execution_v1/results/ENGINEERING_EXECUTION_STATUS.json; analysis_transition_20260930/pre_revelio_execution_v1/results/V2_GATE_VALIDATION_RECEIPT.json",
       "frozen_shards": 2464,
@@ -38,25 +56,27 @@
   },
   "tables": {
     "T1_01_population_funnel": {
-      "status": "complete_with_global_job_hash_gate_pending",
+      "status": "complete_global_job_hash_audit_and_reverse_coverage",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel_receipt.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel_failure_flags.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/CONSERVATION_REPORT.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/FIRST_WAVE_RUN_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/GLOBAL_JOB_HASH_AUDIT_PUBLIC.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T1_USA_RECORDS_REVERSE_COVERAGE.json",
         {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/index_manifest.json","repository_path":null},
         {"availability":"local_project_reference","local_relative":"../../../phase_a/month_panel/geography_rules_and_diagnostics.json","repository_path":null}
       ],
       "denominators_and_ranges": [
         "Records reverse-coverage denominator: 356,449,214 full Records rows; USA subset 253,210,047.",
         "Current 2,464-shard first wave: raw description rows 298,673,078 = Records-matched 298,645,910 + unmatched 27,168.",
-        "Matched decomposition: 298,645,910 = USA 204,774,035 + non-USA 70,527,457 + country-unknown 23,344,418; USA duplicate quarantine 0 (regional accounting only; global JOB_HASH status pending).",
+        "Matched decomposition: 298,645,910 = USA 204,774,035 + non-USA 70,527,457 + country-unknown 23,344,418; global duplicate JOB_HASH audit reports 0 duplicate hashes and 0 duplicate occurrences.",
         "Canonical USA 204,774,035; usable nonempty complete parse 204,768,752; usable shortfall 5,283. Empty/incomplete/truncated flags overlap and must not be summed.",
-        "The 204,774,035 value is a regional canonical-row sum; global distinct JOB_HASH across regions remains unverified pending combined key-only audit."
+        "USA Records reverse coverage is 204,774,035 / 253,210,047 = 0.8087121242862847; USA-only and before content usability."
       ],
-      "direct_reuse": "The current full-wave raw/matched/country/usable conservation can be reused with the global JOB_HASH warning attached.",
-      "missing_or_blocked": "Do not label 204,774,035 as globally distinct JOB_HASH until the combined key-only audit passes; comparison eligibility still requires downstream P1/P2 outputs."
+      "direct_reuse": "Reuse full-wave raw/matched/country/usable conservation, globally audited distinct USA count, and USA reverse coverage with scope limits attached.",
+      "missing_or_blocked": "T1 comparison eligibility still requires downstream P1/P2 outputs; reverse coverage does not infer global distinct descriptions from raw row count."
     },
     "T2_02_experience_profiles": {
       "status": "full_aggregate_numeric_acceptance_passed_semantic_interpretation_limited",
@@ -74,11 +94,11 @@
       "denominators_and_ranges": [
         "Full 2,464-shard aggregate: canonical USA 204,774,035; usable nonempty complete parse 204,768,752.",
         "T2 numeric acceptance passed for rates, required/preferred inequalities, duration clause exhaustiveness, and ad/clause denominator separation.",
-        "occupation_task is unmeasured/NA; general_work is a narrow explicit-object candidate measure; predictive_ai raw zero is structurally uninterpretable. Global JOB_HASH uniqueness remains pending.",
+        "occupation_task is unmeasured/NA; general_work is a narrow explicit-object candidate measure; predictive_ai raw zero is structurally uninterpretable. Global JOB_HASH audit is complete with 0 duplicates.",
         "Historical fixed bottom-hash Kunshan frame (2,691,376 eligible keys; 100,000 selected ads; 96,141 semantic eligible) remains pilot context only."
       ],
       "direct_reuse": "Reuse full aggregate additive rates and duration distributions with numeric-acceptance and measurement-overlay limits attached.",
-      "missing_or_blocked": "Semantic accuracy/human diagnostic, global JOB_HASH audit, and occupation_task measurement remain pending; no prevalence claim from candidate non-detection or predictive_ai zero."
+      "missing_or_blocked": "Semantic accuracy/human diagnostic and occupation_task measurement remain pending; no prevalence claim from candidate non-detection or predictive_ai zero. T2/T3 unique usable ads are 204,768,752 after content-usability filtering."
     },
     "T3_03_technology_role_overlap": {
       "status": "full_aggregate_numeric_acceptance_passed_semantic_interpretation_limited",
@@ -98,10 +118,10 @@
       "denominators_and_ranges": [
         "Full 2,464-shard denominator: canonical USA 204,774,035; usable nonempty complete parse 204,768,752.",
         "T3 numeric acceptance passed for role subsets and within-ad cooccurrence bounds by both marginals.",
-        "Rows are candidate/explicit-binding diagnostics; multi-label cells are nonexclusive and cannot be summed into technology prevalence. predictive_ai zero is structurally uninterpretable and occupation_task is unmeasured/NA. Global JOB_HASH uniqueness remains pending."
+        "Rows are candidate/explicit-binding diagnostics; multi-label cells are nonexclusive and cannot be summed into technology prevalence. predictive_ai zero is structurally uninterpretable and occupation_task is unmeasured/NA. Global JOB_HASH audit is complete with 0 duplicates."
       ],
       "direct_reuse": "Reuse full aggregate role, pair-overlap, and within-ad cooccurrence outputs with numeric-acceptance and measurement-overlay limits attached.",
-      "missing_or_blocked": "Binding-aware semantic accuracy/human diagnostic and global JOB_HASH audit remain pending; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding."
+      "missing_or_blocked": "Binding-aware semantic accuracy/human diagnostic remains pending; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding. T2/T3 unique usable ads are 204,768,752 after content-usability filtering."
     },
     "T4_04_cohort_and_time_risk": {
       "status": "current_created_queue_complete_time_risk_pending",
@@ -143,7 +163,7 @@
       ],
       "denominators_and_ranges": [
         "Existing evidence supports current full-wave conservation, claim-status rules, candidate limits, and historical time-risk warnings, not final sensitivity estimates.",
-        "Current full-wave canonical USA is 204,774,035 and usable is 204,768,752; the global distinct JOB_HASH status remains pending."
+        "Current full-wave canonical USA is 204,774,035 and usable is 204,768,752; global JOB_HASH audit is complete with 0 duplicates."
       ],
       "direct_reuse": "Reuse pre-specified S1/S2/S3 definitions, pilot limitations, and temporal-history unconfirmed status.",
       "missing_or_blocked": "Actual S1/S2/S3 rows and per-comparison claim states await P1/P2; no significance-driven or substitute comparison is permitted."

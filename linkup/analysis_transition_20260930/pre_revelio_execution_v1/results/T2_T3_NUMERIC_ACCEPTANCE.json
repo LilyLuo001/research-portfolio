@@ -1,14 +1,26 @@
 {
-  "status": "passed_for_regional_additive_counts",
+  "status": "passed_for_globally_audited_unique_usable_ads",
   "checks": [
     "T2 rates, required/preferred union inequalities, main<=broad<=denominator, unmeasured NA",
     "T2 each duration classification exhausts identical clause denominator; distinct ads bounded; ad and clause denominators separate",
     "T3 role subsets and within-ad cooccurrence bounded by both marginals"
   ],
   "aggregate_receipt_sha256": "358be9ac7be20247fe8bc8ccb2fa78839720f8b2126a84d3425d7e4fd5103aa2",
+  "global_job_hash_audit": {
+    "status": "complete",
+    "source": "GLOBAL_JOB_HASH_AUDIT_PUBLIC.json",
+    "source_receipt_sha256": "b2e73be7607e7378dc6847ff22096522f4f38e4577182dec6946a21c4c1aa53f",
+    "distinct_usa_matched_job_hashes": 204774035,
+    "duplicate_job_hashes": 0,
+    "duplicate_occurrences": 0
+  },
+  "usable_ads": {
+    "unique_usable_ads": 204768752,
+    "definition": "globally audited USA JOB_HASH rows with nonempty complete parse"
+  },
   "limitations": [
-    "Global JOB_HASH audit pending; these checks do not establish global ad uniqueness.",
     "Numeric consistency does not validate semantic accuracy.",
-    "Predictive AI zero and general-work narrow coverage under targeted frozen-parser diagnosis; no prevalence inference."
+    "Predictive AI zero and general-work narrow coverage under targeted frozen-parser diagnosis; no prevalence inference.",
+    "occupation_task is unmeasured/NA; T4/T5/T6 full outputs and P4 human review remain pending."
   ]
 }

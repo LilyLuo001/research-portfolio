@@ -4,9 +4,17 @@
     "attempt_1": "failed before data access because the non-login batch shell had not initialized the module command; retained in private operation trace",
     "consumer_archive": "2464 flat receipts plus exact 1358/1106 plans revalidated and atomically published on Huazhong",
     "duplicate_submission": false,
-    "full_first_wave": "second and final authorized attempt submitted; running at one sampled scheduler observation",
+    "full_first_wave": "complete: 2464/2464 validated shards; 204,774,035 regional canonical USA rows",
     "full_first_wave_main_package_submissions": 2,
     "global_gate": "accepted via isolated v2 metadata-only validation; exact known code hashes, receipt bindings, accounting, row conservation, and disjoint plan union passed",
+    "global_job_hash_audit": {
+      "distinct_job_hashes": 204774035,
+      "duplicate_job_hashes": 0,
+      "duplicate_occurrences": 0,
+      "public_receipt": "GLOBAL_JOB_HASH_AUDIT_PUBLIC.json",
+      "rows": 204774035,
+      "status": "complete"
+    },
     "grouped_repair": "explicitly sourced the verified modules initialization; runtime import check passed before resubmission",
     "manifest": "full_manifest_v2 contains exactly 2464 source-bound shards",
     "old_control_path": "left untouched except removal of this stage marked triggers; unknown cross-login lock was not killed",
@@ -28,13 +36,21 @@
         "published": 1106,
         "remaining": 0
       }
+    },
+    "usa_records_reverse_coverage": {
+      "denominator": 253210047,
+      "numerator": 204774035,
+      "ratio": 0.8087121242862847,
+      "receipt": "T1_USA_RECORDS_REVERSE_COVERAGE.json"
     }
   },
   "P1": {
+    "batch_receipt_sha256": "ec029eac81a8c7cde50a0d4dd56660328d1db38a77e86f9fc25f8d9361b5f4f5",
     "batch_runner": "../run_semantic_narrow_batch.py",
     "batch_runner_sha256": "0520afae9153290627b21ee3d26316234ddd8cefb7ff93cd1e11180b02592033",
+    "canonical_ads": 204774035,
     "code": "../build_semantic_narrow.py",
-    "code_sha256": "bfc3b7fdb83aeed6e43e10a6aa972e1c992abd04b70d6257531e3cdeb324635d",
+    "code_sha256": "f23b811496ef7e99fe76445c285d36dd2b5d942fae5fe6fe17b6b5d633ab6f6c",
     "controls": [
       "production CLI requires accepted 2464-shard gate and published_verified receipt bound to SHARD_COMPLETE",
       "canonical keys must be non-null and evidence keys may not be orphaned",
@@ -42,24 +58,29 @@
       "no-evidence ads receive false for measurable booleans",
       "occupation_task is unavailable in the frozen taxonomy and is emitted as null with availability false"
     ],
+    "duration_detail_rows": 131286035,
     "fixture_test": "passed_locally_and_on_huazhong_runtime",
     "implementation": "complete_for_frozen_semantic_narrow_projection",
     "narrow_main_package_submissions": 2,
-    "production": "second and final authorized attempt submitted; pending for the shared DCU allocation at one sampled scheduler observation",
+    "production": "complete: 2464/2464 main projections and duration sidecars; aggregate receipt complete",
+    "projection_input_receipt_sha256": "7e0191942876a489222bf50902c2aa0ea9cca2227fcd340fe92c85fcf2c16582",
     "sbatch": "../run_semantic_narrow_hz.sbatch",
     "sbatch_sha256": "185e66353f71ba79fd57ab35fbd9570c23083c7e8db69ee11df82ddcb8cc318b",
     "test": "../test_build_semantic_narrow.py",
     "test_sha256": "73606e911b70bd1743e8853e35e2f538f1b070d1609da6e351c756f5b05a99d7"
   },
   "P2": {
+    "global_uniqueness_gate": "passed with zero duplicate JOB_HASH",
     "group_definitions": "frozen",
-    "status": "code_prepared; production remains dependent on P1 narrow outputs and the frozen join",
-    "substitute_comparisons_allowed": false
+    "p4_phase1": "running from verified full frame; phase2 waits for frozen selected-key manifest",
+    "status": "full comparison/T5-T6 production running from globally unique full narrow; full T4 queued after successful comparison",
+    "substitute_comparisons_allowed": false,
+    "t2_t3_numeric_acceptance": "PASS"
   },
-  "as_of": "2026-10-03T16:57:38+08:00",
+  "as_of": "2026-10-03T20:35:00+08:00",
   "authority": "PRE_REVELIO_EXECUTION_PLAN.md v1.1",
   "automation": "stage-specific dispatcher removed after both submission receipts were written; Oct 7 cutoff remains encoded in job launchers",
   "cutoff": "2026-10-07T18:00:00+08:00",
   "privacy": "No job identifiers, credentials, raw text, URL lists, record keys, or private filesystem paths are included in this public status file.",
-  "status": "production_jobs_submitted"
+  "status": "P0_P1_complete; P2_comparison_and_P4_selection_running; T4_queued_after_comparison"
 }
