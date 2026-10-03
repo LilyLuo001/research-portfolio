@@ -16,6 +16,16 @@
 | D10 | 设计中的四类经验是否都被冻结代码实际测量？ | 2026-10-03 核对 `stage_c_release_v1/enrichment.py`：`_object_type` 仅返回 general_work、specific_tool、industry_domain、object_unspecified，没有 occupation_task 分支 | 职业/任务经验一行标 unmeasured/NA，不以零检出假装零要求；其余已测候选继续。文献无法替代尚未测出的字段，本轮不重解析 |
 | D11 | 设计枚举与实际字段名不同，怎样连接？ | 实际技术是 traditional_software / predictive_ai / unspecified_ai，角色为 use / develop / implement；经验年限在 enrichment 中已将月份换成年 | 使用明确的一对一概念映射，记录来源枚举；不按理想字段筛出空样本，不再除以 12；exact_or_unspecified 不称为已确认最低要求 |
 | D12 | 明确角色的严格口径是什么？ | 冻结字段区分 explicit 与 candidate_local_relation | 主比较要求实际 binding=explicit 且申请者候选标记成立；附近动作词 candidate_local_relation 只进覆盖/宽口径诊断。支持不足取消比较，不能为了结果扩大主口径 |
+| D13 | T4/S3 的日期终点如何统一？ | 官方字典区分首次观察、最后观察存在和观察不存在；已有时间风险报告分别报告 last/delete 口径 | T4 主区间 CREATED→LAST_CHECKED，要求有效有序且不超过冻结交付上界。跨分界定义 CREATED<cutoff 且 LAST_CHECKED>=cutoff；缺失/异常为未知。S3 短跨度关闭样本要求 CREATED<=LAST_CHECKED<=DELETE_DATE<=上界且三者同季度；其 OBSERVATION_END=DELETE_DATE。删除日期早于最后存在记为过期删除记录或再出现，不断言已关闭。观察区间仍不是正文有效期 |
+| D14 | required/preferred 和无下界条款如何统计？ | 同广告可同时含 required 与 preferred；已有源表保存 MIN_YEARS/MAX_YEARS 及绑定类型 | 独立提取 preferred 布尔，不以 main-required 得到优先要求。保留全部可用、主口径经验条款，含只有上界、无数值和 exact_or_unspecified；按广告去重计数与条款计数分别报告，不把缺失或上界当最低年限 |
+| D15 | company_id 是否等同经济学企业？ | 官方字典定义为 company-scrape 标识 | 同主体敏感性仍使用已匹配 company_id，但称抓取主体，不宣称已完成法人/集团统一；企业集中度随附映射限制。无需因此重做当前连接 |
+| D16 | 今天的交付与旧提交额度发生冲突怎么办？ | 用户最新明确要求今天完成 T1–T6，已知启动故障均有回执 | 已运行任务继续；必要的新窄连接/聚合后处理可以提交，保留尝试记录与失败原因。不得以旧启动次数阻断已定位的必要修复，也不得借此盲目重试或重洗全库。今天以实际六表及逐项状态交付，不将待计算项写成完成 |
+| D17 | 2,464 分片不重叠是否证明全局广告键唯一？ | gate 的 disjoint 检查对象是 shard_id；旧 JOB_HASH 1:1 审计仅涵盖昆山 1,358 分片 | 在本次窄连接中加入全局 JOB_HASH 分组审计。通过前，204,774,035 只称区域 canonical 行总和。若有重复且可信全文摘要一致才确定性折叠；不同或缺摘要的重复键隔离于主分析并在漏斗单列。全表共享此门槛，不为审计重读全部正文 |
+| D18 | 人工包没有真实 heldout-400 清单，是否一直等？ | 用户确认今天可以人工复核；有限清点只发现计划与合成检查，未找到真实 400 键清单 | 优先排除可确证的既有诊断/复核键。若仍缺真实清单，可用显式例外生成诊断盲包，receipt 必须为 heldout_exclusion_unverified，不能宣称独立留出集精度或已排除 400。冻结模型、隐藏预测、不用人类复核重训本轮。该例外不改变分母与来源核验，也不允许虚构清单 |
+
+### D18 的有限抽样实现
+
+核心层固定为五个技术角色组（GenAI 使用优先、GenAI 开发、无 AI 检出的传统软件使用、无 AI 检出的传统软件开发、其余）与四个经验组（工具主口径优先、领域主口径、一般经验主口径、未检出）交叉，最多 20 层。此优先顺序只为互斥抽样层；正式分析仍为多标签。沿用 32 核心、最多 8 难例、固定种子和既有分配方法。先对完整且核验后的键框计算层总量及有限 hash 排名，再读取最多 40 条选中文本；不得把候选池数量当全层分母。难例仅使用可核验的绑定不明、年限解释不明/区间标记，缺否定字段时不声称覆盖了否定难例。
 
 ## 本次核验的有限文献来源
 
@@ -24,6 +34,8 @@
 - [Deming 与 Noray 本人撰写的 QJE 2020 论文摘要](https://microeconomicinsights.org/earnings-dynamics-changing-job-skills-and-stem-careers/)：经验收益同时涉及学习与技能过时。其历史广告分析依赖其历史数据，不能据此认证本项目的正文时间。
 
 以上仅校准已经冻结的决策，不触发新综述或增加分析规格。文献网页核验日为 2026-10-03。
+
+D13–D15 的字段依据：[LinkUp 官方数据字典](https://data.support.linkup.com/kb/article/56-data-dictionary-raw-data-package-feeds/)，2026-10-03 核验。日期不等式、严格关闭样本和缺失处理是本项目的分析裁定；官方字段说明不保证正文版本留存。
 
 ## 追加问题的格式与次数
 
