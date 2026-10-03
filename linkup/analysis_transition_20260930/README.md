@@ -1,5 +1,18 @@
 # First-wave analysis handoff
 
+## Current execution contract — October 3
+
+The bounded pre-Revelio work plan is
+[PRE_REVELIO_EXECUTION_PLAN.md](pre_revelio_execution_v1/PRE_REVELIO_EXECUTION_PLAN.md).
+It incorporates the supplier-confirmed URL-derived JOB_HASH rule and the
+company/title/location annual diagnostic. It supersedes earlier execution
+choices where they conflict, without replacing the overall research agenda.
+Delivered text is neither verified historical text nor necessarily a set of
+simultaneously active vacancies. The plan defines six tables, two comparisons,
+three sensitivity panels, bounded human review, a conditional CPS benchmark,
+and explicit terminal states. It is a plan, not a claim that production is complete.
+
+
 The October 2/5/7 delivery schedule is in
 [`EXECUTION_ADDENDUM_OCT02_07.md`](EXECUTION_ADDENDUM_OCT02_07.md).
 It adds execution milestones without replacing `NEXT_ANALYSIS_AGENDA.md`.
