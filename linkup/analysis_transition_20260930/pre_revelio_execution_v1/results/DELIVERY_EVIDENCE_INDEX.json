@@ -1,16 +1,24 @@
 {
   "as_of": "2026-10-03",
-  "purpose": "有限交付审计：记录已有真实聚合可复用范围；T2/T3 已有全 2,464 分片聚合并通过数值验收，T4/T5/T6 全量产物仍 pending；不生成新统计、不将 pilot 升级为全库",
+  "purpose": "有限交付审计：T1–T3、T5–T6 的实际全量产物已完成并按测量限制作为候选结果交付；T4 的 16/16 全库时间风险分片已完成，年度案例最终产物仍等待作业 123575523；不将部分 T4 或 AI 复核升级为六表全部完成/人工验证。",
   "global_scope": {
     "records_index": {
-      "source": {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/index_manifest.json","repository_path":null},
+      "source": {
+        "availability": "local_project_reference",
+        "local_relative": "../../../reports/temporal_risk_20260925/index_manifest.json",
+        "repository_path": null
+      },
       "unit": "Records rows / JOB_HASH index rows",
       "rows": 356449214,
       "source_files": 269,
       "status": "full_records_index"
     },
     "usa_coverage": {
-      "source": {"availability":"local_project_reference","local_relative":"../../../phase_a/month_panel/geography_rules_and_diagnostics.json","repository_path":null},
+      "source": {
+        "availability": "local_project_reference",
+        "local_relative": "../../../phase_a/month_panel/geography_rules_and_diagnostics.json",
+        "repository_path": null
+      },
       "denominator": "all Records rows",
       "usa_records": 253210047,
       "usa_share": 0.7103678085260134,
@@ -41,7 +49,7 @@
       "frozen_shards": 2464,
       "status": "accepted_and_relayed",
       "p1_first_wave": "complete; full 2,464-shard funnel, candidate diagnostic, and CREATED queue outputs available",
-      "p2_comparisons": "pending downstream comparison outputs"
+      "p2_comparisons": "complete; T5/T6 fixed comparison outputs numerically accepted under frozen support limits"
     },
     "measurement_overlay": {
       "sources": [
@@ -53,20 +61,32 @@
       "occupation_task": "unmeasured/NA",
       "general_work": "narrow explicit-object candidate measure; not all work experience"
     },
-    "p4_human_review": {
-      "status": "actual_40_texts_delivered_pending_human_labels",
+    "p4_ai_review": {
+      "status": "ai_review_complete_not_human_validation",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_ACTUAL_PACK_RECEIPT.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_PHASE2_ACTUAL_RECEIPT.json",
-        "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_PHASE2_LOCATOR_VALIDATION_RECEIPT.json"
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/P4_PHASE2_LOCATOR_VALIDATION_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_EXPERIENCE_AGREEMENT.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md (D23)"
       ],
-      "counts": {"unique_ads": 40, "core_selected": 32, "challenge_selected": 8, "core_dual_review": 8},
-      "interpretation": "bounded human diagnostic pack delivered; human labels not received; heldout exclusion remains unverified"
+      "counts": {
+        "unique_ads": 40,
+        "core_selected": 32,
+        "challenge_selected": 8,
+        "dual_review": 8,
+        "review_records": 48,
+        "root_adjudications": 8
+      },
+      "interpretation": "User superseded the human-label gate under D23. Two Sol/medium AI readings and GPT-6 adjudication form a bounded AI-only diagnostic, not human validation or ground truth; same-family correlation, stratification, and unverified heldout exclusion remain explicit.",
+      "ai_review_receipt_sha256": "db18f59eb247049f92b8bdfe24b9c3aeb3dd738b91eb07cbb8dbd7eb271f7411"
     }
   },
   "tables": {
     "T1_01_population_funnel": {
-      "status": "complete_global_job_hash_audit_and_reverse_coverage",
+      "status": "complete_engineering_acceptance_with_interpretation_limits",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel_receipt.json",
@@ -75,8 +95,16 @@
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/FIRST_WAVE_RUN_RECEIPT.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/GLOBAL_JOB_HASH_AUDIT_PUBLIC.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T1_USA_RECORDS_REVERSE_COVERAGE.json",
-        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/index_manifest.json","repository_path":null},
-        {"availability":"local_project_reference","local_relative":"../../../phase_a/month_panel/geography_rules_and_diagnostics.json","repository_path":null}
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../reports/temporal_risk_20260925/index_manifest.json",
+          "repository_path": null
+        },
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../phase_a/month_panel/geography_rules_and_diagnostics.json",
+          "repository_path": null
+        }
       ],
       "denominators_and_ranges": [
         "Records reverse-coverage denominator: 356,449,214 full Records rows; USA subset 253,210,047.",
@@ -86,10 +114,10 @@
         "USA Records reverse coverage is 204,774,035 / 253,210,047 = 0.8087121242862847; USA-only and before content usability."
       ],
       "direct_reuse": "Reuse full-wave raw/matched/country/usable conservation, globally audited distinct USA count, and USA reverse coverage with scope limits attached.",
-      "missing_or_blocked": "T1 comparison eligibility still requires downstream P1/P2 outputs; reverse coverage does not infer global distinct descriptions from raw row count."
+      "missing_or_blocked": "No remaining T1 computation gate. Reverse coverage is USA-only and before content usability; population counts do not validate semantic labels."
     },
     "T2_02_experience_profiles": {
-      "status": "full_aggregate_numeric_acceptance_passed_semantic_interpretation_limited",
+      "status": "complete_candidate_measurement_numeric_acceptance_and_ai_diagnostic",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T2_EXPERIENCE_AD_RATES.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T2_DURATION_BOUND_DISTRIBUTION.csv",
@@ -97,9 +125,25 @@
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T2_T3_NUMERIC_ACCEPTANCE.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/MEASUREMENT_STATUS.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/PREDICTIVE_AI_MEASUREMENT_LIMITATION.md",
-        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/RESULTS.md","repository_path":null},
-        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/TABLE_REPORT.json","repository_path":null},
-        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json","repository_path":null}
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/RESULTS.md",
+          "repository_path": null
+        },
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/TABLE_REPORT.json",
+          "repository_path": null
+        },
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json",
+          "repository_path": null
+        },
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_EXPERIENCE_AGREEMENT.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md (D23)"
       ],
       "denominators_and_ranges": [
         "Full 2,464-shard aggregate: canonical USA 204,774,035; usable nonempty complete parse 204,768,752.",
@@ -108,10 +152,10 @@
         "Historical fixed bottom-hash Kunshan frame (2,691,376 eligible keys; 100,000 selected ads; 96,141 semantic eligible) remains pilot context only."
       ],
       "direct_reuse": "Reuse full aggregate additive rates and duration distributions with numeric-acceptance and measurement-overlay limits attached.",
-      "missing_or_blocked": "Semantic accuracy/human diagnostic and occupation_task measurement remain pending; no prevalence claim from candidate non-detection or predictive_ai zero. T2/T3 unique usable ads are 204,768,752 after content-usability filtering."
+      "missing_or_blocked": "No pending human-label gate under D23. AI-only review is complete but is not human validation or ground truth; occupation_task remains unmeasured, predictive_ai remains structurally uninterpretable, and prevalence claims remain candidate measurements."
     },
     "T3_03_technology_role_overlap": {
-      "status": "full_aggregate_numeric_acceptance_passed_semantic_interpretation_limited",
+      "status": "complete_candidate_measurement_numeric_acceptance_and_ai_diagnostic",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T3_TECHNOLOGY_ROLE.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_semantic_narrow_v1/aggregate/T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv",
@@ -123,7 +167,11 @@
         "analysis_transition_20260930/pre_revelio_execution_v1/results/03_candidate_diagnostic_receipt.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/03_technology_experience_candidate_diagnostic.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/technology_experience_candidate_evidence.csv",
-        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/CONSERVATION_REPORT.json"
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/CONSERVATION_REPORT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_EXPERIENCE_AGREEMENT.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md (D23)"
       ],
       "denominators_and_ranges": [
         "Full 2,464-shard denominator: canonical USA 204,774,035; usable nonempty complete parse 204,768,752.",
@@ -131,27 +179,37 @@
         "Rows are candidate/explicit-binding diagnostics; multi-label cells are nonexclusive and cannot be summed into technology prevalence. predictive_ai zero is structurally uninterpretable and occupation_task is unmeasured/NA. Global JOB_HASH audit is complete with 0 duplicates."
       ],
       "direct_reuse": "Reuse full aggregate role, pair-overlap, and within-ad cooccurrence outputs with numeric-acceptance and measurement-overlay limits attached.",
-      "missing_or_blocked": "Binding-aware semantic accuracy/human diagnostic remains pending; evidence_cross must not be presented as technology prevalence or direct technology-to-experience binding. T2/T3 unique usable ads are 204,768,752 after content-usability filtering."
+      "missing_or_blocked": "No pending human-label gate under D23. AI-only review is complete but does not certify binding accuracy; evidence_cross remains ad-level candidate cooccurrence, predictive_ai is NA/uninterpretable, and occupation_task is unmeasured."
     },
     "T4_04_cohort_and_time_risk": {
-      "status": "pending_full_computation_after_full_main_fixture_pass",
+      "status": "core_prefix16_time_risk_complete_annual_case_pending_job_123575523",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_first_observed_queue_distribution.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/04_created_queue_receipt.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/full_first_wave_v2/created_first_observed_queue_distribution.csv",
-        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/temporal_risk_report.json","repository_path":null},
-        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/final_validation.json","repository_path":null}
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../reports/temporal_risk_20260925/temporal_risk_report.json",
+          "repository_path": null
+        },
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../reports/temporal_risk_20260925/final_validation.json",
+          "repository_path": null
+        },
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/T4_CORE_PREFIX16_PARTIAL.json"
       ],
       "denominators_and_ranges": [
         "Current 2,464-shard CREATED queue sums independently to canonical_usa 204,774,035 and usable_nonempty_complete_parse 204,768,752.",
-        "The queue is a delivery-snapshot first-observed queue, not historical text timing or causality; LAST_CHECKED/DELETE_DATE risk and annual company-title-city comparison remain pending.",
-        "Historical 112,836,465-row Kunshan time-risk aggregation remains a subset diagnostic only; it is not current full-library USA coverage."
+        "T4 16/16 full-library time-risk prefixes completed: 204,774,035 USA matched ads; Records 1:1; valid CREATED–LAST_CHECKED intervals 204,773,879; missing/invalid 156.",
+        "Among valid intervals: cross-quarter 76,769,916; cross-year 27,324,502; cross-2022-11-30 3,433,410; cross-2023-01-01 3,400,106. These are observation-interval overlaps, not text-change evidence.",
+        "Annual company-title-city case output is still pending job 123575523; T4_CORE_PREFIX16_PARTIAL is explicitly partial and does not close T4."
       ],
-      "direct_reuse": "Reuse the current queue denominator sums and time interpretation; reuse old temporal aggregates only as historical diagnostics.",
-      "missing_or_blocked": "T4 compatibility fix, LAST_CHECKED/DELETE_DATE time-risk, and company-title-city annual comparison remain pending; do not mark T4 complete."
+      "direct_reuse": "Reuse the completed 16-prefix time-risk aggregates with observation-interval interpretation and mapping denominators; retain the CREATED queue. Do not treat the partial receipt as final annual-case completion.",
+      "missing_or_blocked": "Annual company-title-city case final output remains pending job 123575523. Do not mark T4 or all six tables complete until its result and receipt are accepted."
     },
     "T5_05_comparable_experience_contrasts": {
-      "status": "computed_numeric_acceptance_passed_with_frozen_support_limits",
+      "status": "complete_candidate_comparison_numeric_acceptance_and_ai_diagnostic",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/COMPARISON_RECEIPT.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/JOIN_MANIFEST_PUBLIC.json",
@@ -159,8 +217,16 @@
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/FIXED_COMPARISONS.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_NUMERIC_ACCEPTANCE_RECEIPT.json",
-        {"availability":"local_project_reference","local_relative":"../../../linkage_v1/results/PILOT_COVERAGE.json","repository_path":null},
-        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md"
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../linkage_v1/results/PILOT_COVERAGE.json",
+          "repository_path": null
+        },
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_EXPERIENCE_AGREEMENT.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md (D23)"
       ],
       "denominators_and_ranges": [
         "Production candidate rows: 6,010,975; Records matches exactly one per row; O*NET matches 6,008,133 and missing 2,842; global JOB_HASH rows/distinct both 204,774,035.",
@@ -170,10 +236,10 @@
         "Older 15,254-key linkage pilot remains a valid historical reference but is not the current pilot denominator and must not stand alone."
       ],
       "direct_reuse": "Reuse computed T5 main outputs as descriptive C1 limited results and C2 canceled status with frozen support limits; retain the 85,376-row pilot as prior validation context.",
-      "missing_or_blocked": "Human semantic diagnostic is pending; specific_tool is restricted-vocabulary and selection-coupled to the traditional-software arm; no causal or significance claim."
+      "missing_or_blocked": "No pending human-label gate under D23. AI-only review is complete but not ground truth; specific_tool remains restricted-vocabulary and selection-coupled to the traditional-software arm; no causal or significance claim."
     },
     "T6_06_sensitivity_and_claim_status": {
-      "status": "computed_numeric_acceptance_passed_with_interpretation_limits",
+      "status": "complete_candidate_sensitivity_numeric_acceptance_and_ai_diagnostic",
       "sources": [
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T6_SENSITIVITY_AND_CLAIM_STATUS.csv",
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/COMPARISON_RECEIPT.json",
@@ -182,16 +248,28 @@
         "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_NUMERIC_ACCEPTANCE_RECEIPT.json",
         "analysis_transition_20260930/pre_revelio_execution_v1/PRE_REVELIO_EXECUTION_PLAN.md",
         "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md",
-        {"availability":"local_project_reference","local_relative":"../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json","repository_path":null},
-        {"availability":"local_project_reference","local_relative":"../../../reports/temporal_risk_20260925/final_validation.json","repository_path":null}
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../stage_c_v6_batch/results/kunshan_safe_aggregates_v1/VALIDATION_REPORT.json",
+          "repository_path": null
+        },
+        {
+          "availability": "local_project_reference",
+          "local_relative": "../../../reports/temporal_risk_20260925/final_validation.json",
+          "repository_path": null
+        },
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC_RECEIPT.json",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_DIAGNOSTIC.md",
+        "analysis_transition_20260930/pre_revelio_execution_v1/results/AI_REVIEW_EXPERIENCE_AGREEMENT.csv",
+        "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md (D23)"
       ],
       "denominators_and_ranges": [
         "T6 rows are computed and numerically accepted; S2 and S3 retained counts/effects are identical to main and therefore are not independent robustness proofs.",
         "Current full-wave canonical USA is 204,774,035 and usable is 204,768,752; global JOB_HASH audit is complete with 0 duplicates."
       ],
       "direct_reuse": "Reuse T6 descriptive sensitivity rows and claim statuses under D22 vocabulary-coupling and common-support limits.",
-      "missing_or_blocked": "Human semantic diagnostic and T4 compatibility fix remain pending; no causal or significance claim."
+      "missing_or_blocked": "No pending human-label gate under D23. AI-only review is complete but not ground truth; T4 annual-case completion remains separate and no causal or significance claim is supported."
     }
   },
-  "delivery_rule": "Pilot evidence is explicitly labeled pilot and cannot be used as full-library prevalence. No raw text, URL/key lists, credentials, or private source contents are included."
+  "delivery_rule": "T1–T3 and T5–T6 are complete candidate/engineering deliveries under stated limits. T4 remains partial pending its annual case. The completed AI-only diagnostic supersedes the human-label gate under D23 but is not human validation, ground truth, or full-corpus accuracy certification. Pilot evidence stays labeled pilot; no raw text, URL/key lists, credentials, or private source contents are included."
 }

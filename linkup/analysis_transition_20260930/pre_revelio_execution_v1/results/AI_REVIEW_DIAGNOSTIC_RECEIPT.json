@@ -1,0 +1,198 @@
+{
+  "baseline": {
+    "code_sha256": {
+      "enrichment": "cf0cf8fae3451d463430c14ebe6bf2a6dcc72b8239589ed2fbeb20ef0c4451c6",
+      "narrow_projection": "f23b811496ef7e99fe76445c285d36dd2b5d942fae5fe6fe17b6b5d633ab6f6c",
+      "v5_base_parser": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+      "v6_parser": "d8df533693cb9c01f169df51cac184f144888a1595bb28207deb82952ad2f744"
+    },
+    "origin": "re-executed_40_sample",
+    "origin_note": "Re-executed the frozen V6 parser, frozen explicit-relation enrichment, and unchanged narrow projection semantics on the exact saved 40-text sample; this is not an original saved row-level prediction artifact.",
+    "sample_rows": 40,
+    "saved_sampling_stratum_matches": 40,
+    "saved_sampling_stratum_mismatches": 0,
+    "source_selected_text_sha256": "c76855525dfb546026f45186c31f87ef2f9ccc6f342b18c1a690b3674ced54df",
+    "source_selection_manifest_sha256": "30e814cffa2457e92d81cab7c31c3ef64a7470058321710b475245ca4c74af66"
+  },
+  "experience_agreement_2x2": [
+    {
+      "agreement_rate": 0.903226,
+      "candidate_negative_review_negative": 23,
+      "candidate_negative_review_positive": 3,
+      "candidate_positive_review_negative": 0,
+      "candidate_positive_review_positive": 5,
+      "experience_type": "general_work",
+      "n_evaluable": 31,
+      "sample_component": "core",
+      "uncertain_excluded": 1
+    },
+    {
+      "agreement_rate": 0.65625,
+      "candidate_negative_review_negative": 17,
+      "candidate_negative_review_positive": 9,
+      "candidate_positive_review_negative": 2,
+      "candidate_positive_review_positive": 4,
+      "experience_type": "industry_domain",
+      "n_evaluable": 32,
+      "sample_component": "core",
+      "uncertain_excluded": 0
+    },
+    {
+      "agreement_rate": 0.5,
+      "candidate_negative_review_negative": 12,
+      "candidate_negative_review_positive": 15,
+      "candidate_positive_review_negative": 1,
+      "candidate_positive_review_positive": 4,
+      "experience_type": "specific_tool",
+      "n_evaluable": 32,
+      "sample_component": "core",
+      "uncertain_excluded": 0
+    },
+    {
+      "agreement_rate": 0.28125,
+      "candidate_negative_review_negative": 8,
+      "candidate_negative_review_positive": 1,
+      "candidate_positive_review_negative": 22,
+      "candidate_positive_review_positive": 1,
+      "experience_type": "object_unspecified",
+      "n_evaluable": 32,
+      "sample_component": "core",
+      "uncertain_excluded": 0
+    },
+    {
+      "agreement_rate": 0.875,
+      "candidate_negative_review_negative": 5,
+      "candidate_negative_review_positive": 1,
+      "candidate_positive_review_negative": 0,
+      "candidate_positive_review_positive": 2,
+      "experience_type": "general_work",
+      "n_evaluable": 8,
+      "sample_component": "challenge",
+      "uncertain_excluded": 0
+    },
+    {
+      "agreement_rate": 0.25,
+      "candidate_negative_review_negative": 0,
+      "candidate_negative_review_positive": 6,
+      "candidate_positive_review_negative": 0,
+      "candidate_positive_review_positive": 2,
+      "experience_type": "industry_domain",
+      "n_evaluable": 8,
+      "sample_component": "challenge",
+      "uncertain_excluded": 0
+    },
+    {
+      "agreement_rate": 0.75,
+      "candidate_negative_review_negative": 6,
+      "candidate_negative_review_positive": 2,
+      "candidate_positive_review_negative": 0,
+      "candidate_positive_review_positive": 0,
+      "experience_type": "specific_tool",
+      "n_evaluable": 8,
+      "sample_component": "challenge",
+      "uncertain_excluded": 0
+    },
+    {
+      "agreement_rate": 0.625,
+      "candidate_negative_review_negative": 5,
+      "candidate_negative_review_positive": 0,
+      "candidate_positive_review_negative": 3,
+      "candidate_positive_review_positive": 0,
+      "experience_type": "object_unspecified",
+      "n_evaluable": 8,
+      "sample_component": "challenge",
+      "uncertain_excluded": 0
+    }
+  ],
+  "final_review_descriptive_counts": {
+    "experience_types": {
+      "general_work": 11,
+      "industry_domain": 21,
+      "object_unspecified": 2,
+      "occupation_task": 33,
+      "specific_tool": 21
+    },
+    "technology_classes": {
+      "generative_ai": 8,
+      "predictive_ai": 8,
+      "traditional_software": 30,
+      "unspecified_ai": 1
+    },
+    "uncertainty": {
+      "experience": {
+        "general_work": 1
+      },
+      "technology": {
+        "traditional_software": 1
+      }
+    }
+  },
+  "limitations": [
+    "AI-only diagnostic; no human ground truth.",
+    "Same-family reviewers can have correlated errors; GPT-6 adjudication is also model judgment.",
+    "Stratified 32-core and purpose-selected 8-challenge composition is not a simple random prevalence sample.",
+    "Held-out exclusion was unverified in the frozen pack receipt.",
+    "Occupation-task measurement is unavailable and predictive-AI classification is a structural diagnostic failure; neither is scored as accuracy.",
+    "Technology roles and up-to-six duration claims were not exhaustively annotated.",
+    "Candidate versus conceptual review disagreement includes vocabulary and object-definition differences; it is not automatically a programming error count."
+  ],
+  "merge": {
+    "b_primary_amendments_applied": 15,
+    "primary_A_items": 20,
+    "primary_B_items": 20,
+    "private_merged_sha256": "0c89b3803bac40a8b690c27d92490a7493504cc83ee916f9e1557efe3cde944c",
+    "root_adjudications_applied": 8
+  },
+  "public_outputs_sha256": {
+    "AI_REVIEW_DIAGNOSTIC.md": "a70f6b7cfa2f3033177a248281448f2fb22f127be2cda3229ec9d84e988906e8",
+    "AI_REVIEW_EXPERIENCE_AGREEMENT.csv": "7a1e45133107c9dced1f736af2dcd840442c1ba35e85825e998546942fe29a9a"
+  },
+  "raw_dual_agreement_before_amendment_or_adjudication": {
+    "experience_type_exact_set": {
+      "agree": 3,
+      "disagree": 5,
+      "n": 8
+    },
+    "presence": {
+      "agree": 8,
+      "disagree": 0,
+      "n": 8
+    },
+    "technology_class_exact_set": {
+      "agree": 6,
+      "disagree": 2,
+      "n": 8
+    }
+  },
+  "review_design": {
+    "adjudicator_model": "gpt-6",
+    "challenge_items": 8,
+    "core_items": 32,
+    "dual_review_items": 8,
+    "dual_review_source": "core_only",
+    "original_review_records_preserved": 48,
+    "primary_items": 40,
+    "reviewer_A_model": "gpt-5.6-sol",
+    "reviewer_A_reasoning_effort": "medium",
+    "reviewer_B_model": "gpt-5.6-sol",
+    "reviewer_B_reasoning_effort": "medium",
+    "same_family_error_correlation_possible": true,
+    "user_replaced_planned_human_review": true
+  },
+  "scope": "40_ad_stratified_ai_review_diagnostic_not_accuracy_certification",
+  "source_sha256": {
+    "assignment_manifest.json": "b3952b139bde39e13e14870bf663695462726ce69946c041303629aa2211b7ef",
+    "component_mapping": "fc96157d5ac6284d21a5e6d7b42468ca39dc3d13b18b86da63ea6cb2173eb724",
+    "frozen_baseline.json": "c0543b2e8d4a37ef47535ceafe959a5381c87e1538b160eb757842203234f7b5",
+    "review_A.json": "d454fee6ea6e9a63c4e9fa04beb240ea40ed0fc53eec7c53df22028ffd07a008",
+    "review_B.json": "514f72f61b377f4d4a0c0e0bfef58e274c06c2833d50eca1e54fa85115c8d91f",
+    "review_B_amendments.json": "01631b2c278293b13e52ca7f98e41f5204d8857d7917b06a1492243f19216183",
+    "root_adjudication.json": "8b34e2884c1ed389426191660ca143b4445c47563bcca8a30d5835bb6b892afb"
+  },
+  "status": "complete_limited_ai_diagnostic",
+  "verdict": {
+    "T2": "candidate_measurement",
+    "T3": "candidate_measurement",
+    "T5": "candidate_measurement"
+  }
+}

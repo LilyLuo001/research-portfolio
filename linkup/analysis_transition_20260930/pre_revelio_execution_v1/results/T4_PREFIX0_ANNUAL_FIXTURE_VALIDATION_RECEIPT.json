@@ -1,0 +1,30 @@
+{
+  "annual_diagnostic": {
+    "eligibility": "company_id x normalized_title x city with at least 3 distinct CREATED years inside prefix 0",
+    "seed": "20261003",
+    "selection_is_full_population_probability_sample": false,
+    "selection_prefix": "0"
+  },
+  "canonical_rows": 18,
+  "code_sha256": "d496082d841a2f75b576058d2df252dd8f28c526d1f61596e0267832b22e6064",
+  "cross_prefix_recovery": true,
+  "prefix_receipts": 16,
+  "prefix_resume_contract": {
+    "input_identity_must_match_except_script_sha256": true,
+    "prior_receipts_preserved": true,
+    "prior_script_sha256": "394eac6bf992cc6e351d896d853fec75d9d604a1f00c7f9e586a4d3b49fcef2c",
+    "unchanged_prefix_logic_segment_sha256": "0869fc76b3eb7e2a7f5e2f3ba98e56171ce61b6649171b739dc7378ee3c44f04"
+  },
+  "public_csv_outputs": 6,
+  "runtime": {
+    "duckdb": "0.9.2",
+    "python": "3.8.10",
+    "site": "Kunshan"
+  },
+  "selected_groups": 1,
+  "selected_keys": 9,
+  "status": "pass",
+  "stdout_summary": "all_main_stages_exercised=true; cross_prefix_recovery=true",
+  "test_sha256": "31f8cadc395c820824bd7f194908d5a0017fb862f4e5b3952522122f498b48bb",
+  "validation_scope": "fixture_override"
+}
