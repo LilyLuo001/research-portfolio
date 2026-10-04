@@ -1,0 +1,54 @@
+{
+  "qa_id": "QA_D28_AVAILABLE_WORK",
+  "date": "2026-10-04",
+  "scope": "bounded public-artifact QA for D28 available work; no semantic reread",
+  "status": "pass_with_scope_limits",
+  "checks": {
+    "design_diagnostics": {
+      "status": "pass",
+      "evidence": "analysis_design_v2/design_diagnostics.json",
+      "support_cells": 69,
+      "formal_sample_total": 40300,
+      "arm_counts": {"A": 10075, "B": 30225},
+      "sample_count_rule": "B=min(N_B,3*N_A) holds in all cells",
+      "cell_key_uniqueness": true,
+      "private_sample_key_uniqueness": true,
+      "W_h_sum": 0.9999999999999999,
+      "max_ipw_cell_reconstruction_error": 7.275957614183426e-12,
+      "max_standardized_cell_mass_error": 3.469446951953614e-18,
+      "kish_formula": "sum(w)^2/sum(w^2); descriptive concentration diagnostic only",
+      "kish_ess": {"A": 3171.804603021429, "B": 9515.413809064285}
+    },
+    "public_artifact_privacy": {
+      "status": "pass",
+      "checked": [
+        "analysis_design_v2/design_diagnostics.json",
+        "analysis_design_v2/design_diagnostics.csv",
+        "analysis_design_v2/INTERPRETATION.md",
+        "analysis_design_v2/EXECUTION_RECEIPT.json",
+        "writing/release_v2/CLAIM_EVIDENCE_MATRIX.csv",
+        "writing/release_v2/METHODS_AND_RESULTS_CN.md"
+      ],
+      "record_keys_or_source_locators": false,
+      "advertisement_text": false,
+      "credentials_or_api_secrets": false,
+      "record_level_weights": false
+    },
+    "release_claim_paths": {
+      "status": "pass",
+      "matrix": "writing/release_v2/CLAIM_EVIDENCE_MATRIX.csv",
+      "methods": "writing/release_v2/METHODS_AND_RESULTS_CN.md",
+      "d28_decision": "ops/D28_REMAINING_SCOPE_DECISIONS.json",
+      "overall_completion_claim": "explicitly rejected",
+      "revelio_empirical_completion": "explicitly deferred",
+      "semantic_production_completion": "explicitly rejected",
+      "cps_windows": ["2004-2006", "2023-2025"]
+    }
+  },
+  "limitations": [
+    "The QA covers design arithmetic, public-artifact scope, and claim wording only.",
+    "Kish ESS is not inferential effective sample size, power, or a clustering adjustment.",
+    "No text, semantic labels, evaluation outputs, Revelio data, or production extraction were inspected or inferred."
+  ],
+  "inputs_are_aggregate_or_contract_only": true
+}

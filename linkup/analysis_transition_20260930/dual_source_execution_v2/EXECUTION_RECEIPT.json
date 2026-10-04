@@ -1,7 +1,7 @@
 {
-  "updated_at_utc": "2026-10-04T01:52:30.704232+00:00",
-  "stage": "single_revision_closed_public_artifacts_ready",
-  "current_decision": "measurement/revision_v1_1/ROOT_RELEASE_DECISION.json",
+  "updated_at_utc": "2026-10-04T03:13:34.001768+00:00",
+  "stage": "available_tail_work_complete_QA_passed_publication_ready",
+  "current_decision": "ops/D28_REMAINING_SCOPE_DECISIONS.json",
   "task_ledger": "ops/TASK_LEDGER_20261004.json",
   "previous_receipt": "ops/EXECUTION_RECEIPT_BEFORE_D26.json",
   "tasks": {
@@ -10,24 +10,27 @@
       "artifact": "RESEARCH_CONTRACT.json",
       "model": "gpt-6-astra",
       "effort": "high",
-      "next_dependency": "none; do not rewrite"
+      "next_dependency": "none; do not rewrite",
+      "full_planned_delivery_complete": true
     },
     "G1": {
       "actual_status": "complete_frozen",
       "artifact": "HISTORICAL_COMPARISON_DECISIONS.json",
       "model": "gpt-6-astra",
       "effort": "high",
-      "next_dependency": "none; historical causal comparison remains unreleased"
+      "next_dependency": "none; historical causal comparison remains unreleased",
+      "full_planned_delivery_complete": true
     },
     "A0": {
       "actual_status": "complete_legacy_manifest_and_task_ledger",
       "artifact": "ops/TASK_LEDGER_20261004.json; ops/LEGACY_FREEZE_MANIFEST.json",
       "model": "gpt-5.6-luna",
       "effort": "low",
-      "next_dependency": "none; frozen inputs independently verified"
+      "next_dependency": "none; frozen inputs independently verified",
+      "full_planned_delivery_complete": true
     },
     "L1": {
-      "actual_status": "complete_accepted_sampling_and_200_materialization",
+      "actual_status": "sampling_and_development_materialization_complete_final_text_exclusion_and_evaluation_lock_pending",
       "artifact": "linkup_sample/EXECUTION_STATUS.json; quality/QA_SAMPLING_CORRECTION.json",
       "model": "gpt-5.6-sol",
       "effort": "medium",
@@ -39,7 +42,9 @@
         "config_compare": 80,
         "job_id": "123584403"
       },
-      "next_dependency": "200 evaluation keys are provisional and unrevealed, not a fully locked evaluation; text-group exclusion remains pending"
+      "next_dependency": "200 evaluation keys are provisional and unrevealed, not a fully locked evaluation; text-group exclusion remains pending",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     },
     "L2": {
       "actual_status": "single_v1_1_revision_and_new20_paired_diagnostic_complete_not_accepted_for_production",
@@ -57,7 +62,9 @@
         "new_root_full_text_cases": 6,
         "cumulative_root_full_text_cases": 10
       },
-      "next_dependency": "no more semantic revisions this wave; candidate measurements retain limitations"
+      "next_dependency": "no more semantic revisions this wave; candidate measurements retain limitations",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     },
     "L3": {
       "actual_status": "offline_import_validation_interface_complete_model_production_not_started",
@@ -68,77 +75,93 @@
         "api_calls": 0,
         "spending": 0
       },
-      "next_dependency": "actual bulk channel and separately accepted measurement gate; no spending or new run now"
+      "next_dependency": "actual bulk channel and separately accepted measurement gate; no spending or new run now",
+      "full_planned_delivery_complete": false
     },
     "L4": {
       "actual_status": "new20_dual_AI_development_review_complete_root_gate_closed_not_accepted",
       "artifact": "measurement/revision_v1_1/ROOT_RELEASE_DECISION.json; measurement/revision_v1_1/BLIND20_COMPARISON_AGGREGATE.json",
       "model": "gpt-5.6-sol; gpt-6-astra",
       "effort": "medium paired AI reads; high bounded root adjudication",
-      "next_dependency": "no extra development batch; final evaluation200 stays provisional/unrevealed"
+      "next_dependency": "no extra development batch; final evaluation200 stays provisional/unrevealed",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     },
     "L5": {
-      "actual_status": "complete_three_existing_aggregate_figures_and_interpretation",
-      "artifact": "analysis_existing_v1/EXECUTION_RECEIPT.json; analysis_existing_v1/EXISTING_DATA_CAN_SAY_CN.md",
+      "actual_status": "legacy_diagnostics_and_actual40300_design_diagnostics_complete_revised_main_estimates_not_executed",
+      "artifact": "analysis_existing_v1/EXECUTION_RECEIPT.json; analysis_existing_v1/EXISTING_DATA_CAN_SAY_CN.md; analysis_design_v2/EXECUTION_RECEIPT.json",
       "model": "gpt-5.6-sol",
       "effort": "medium",
-      "next_dependency": "revised experience estimates not released; old signal remains candidate"
+      "next_dependency": "accepted semantic production for revised main experience comparisons; actual design diagnostic does not substitute",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     },
     "R0": {
       "actual_status": "reference_interface_only_deferred_not_acquired",
       "artifact": "revelio_entry/R0_STATUS.md; revelio_entry/REVELIO_R0_INPUT_CONTRACT.json",
       "model": "gpt-5.6-terra",
       "effort": "medium",
-      "next_dependency": "user acquisition plus readable source, manifest/schema, stable person frame"
+      "next_dependency": "user acquisition plus readable source, manifest/schema, stable person frame",
+      "full_planned_delivery_complete": false
     },
     "R1": {
       "actual_status": "deferred_not_acquired",
       "artifact": null,
       "model": null,
       "effort": null,
-      "next_dependency": "actual Revelio data and accepted R0 receipt"
+      "next_dependency": "actual Revelio data and accepted R0 receipt",
+      "full_planned_delivery_complete": false
     },
     "R2": {
       "actual_status": "deferred_not_acquired",
       "artifact": null,
       "model": null,
       "effort": null,
-      "next_dependency": "actual Revelio data and R1 outputs"
+      "next_dependency": "actual Revelio data and R1 outputs",
+      "full_planned_delivery_complete": false
     },
     "R3": {
       "actual_status": "deferred_not_acquired",
       "artifact": null,
       "model": null,
       "effort": null,
-      "next_dependency": "actual Revelio data, accepted R0/R1 interval/event outputs and valid baseline observation/risk set; R2 result is not a technical prerequisite"
+      "next_dependency": "actual Revelio data, accepted R0/R1 interval/event outputs and valid baseline observation/risk set; R2 result is not a technical prerequisite",
+      "full_planned_delivery_complete": false
     },
     "J1": {
       "actual_status": "deferred_no_cross_source_empirical_join",
       "artifact": null,
       "model": null,
       "effort": null,
-      "next_dependency": "actual employer/occupation references and verified two-source inputs; does not require all R2/R3 results"
+      "next_dependency": "actual employer/occupation references and verified two-source inputs; does not require all R2/R3 results",
+      "full_planned_delivery_complete": false
     },
     "Q0": {
-      "actual_status": "structural_and_old_aggregate_checks_passed_semantic_gate_not_accepted",
-      "artifact": "quality/QA_V11_CLOSEOUT.json",
+      "actual_status": "available_artifact_QA_passed_including_real40300_design_diagnostics",
+      "artifact": "quality/QA_V11_CLOSEOUT.json; quality/QA_D28_AVAILABLE_WORK.json",
       "model": "gpt-5.6-luna",
       "effort": "medium",
-      "next_dependency": "none for bounded checks"
+      "next_dependency": "formal-production QA still unavailable; current artifacts accepted",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     },
     "W0": {
-      "actual_status": "current_result_and_boundary_memo_complete",
-      "artifact": "writing/CURRENT_RESULTS_AND_BOUNDARIES_20261004.md",
+      "actual_status": "available_evidence_methods_results_and18claim_matrix_complete",
+      "artifact": "writing/release_v2/METHODS_AND_RESULTS_CN.md; writing/release_v2/CLAIM_EVIDENCE_MATRIX.csv",
       "model": "gpt-5.6-terra",
       "effort": "medium",
-      "next_dependency": "none; current claims checked against D27"
+      "next_dependency": "future formal empirical results still unavailable; current-diagnostic writing delivered",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     },
     "Z0": {
-      "actual_status": "public_release_artifacts_ready_git_transport_reported_separately",
-      "artifact": "EXECUTION_RECEIPT.json",
+      "actual_status": "prior_release_a076091_pushed_D28_publication_ready",
+      "artifact": "ops/D28_REMAINING_SCOPE_DECISIONS.json; quality/QA_D28_AVAILABLE_WORK.json",
       "model": "gpt-5.6-luna",
       "effort": "low",
-      "next_dependency": "Git commit/push result recorded in release message and git history"
+      "next_dependency": "Git commit/push result recorded in release message and git history",
+      "full_planned_delivery_complete": false,
+      "completion_scope": "bounded_available_work_only; see actual_status and remaining_dependency"
     }
   },
   "completion_limits": [
@@ -148,5 +171,12 @@
     "No40300 model production and no actual Revelio Individual empirical work.",
     "Three figures describe accepted engineering coverage/time-risk and unvalidated old candidate sensitivities."
   ],
-  "next_action": "Publish current code, methods, aggregates and receipts; no further automatic measurement revision, bulk inference, or corpus re-cleaning."
+  "next_action": "Verify and publish actual design diagnostics and updated evidence matrix. Core semantic production and Revelio empirical modules remain incomplete; no automatic rerun.",
+  "overall_plan_completed": false,
+  "available_tail_deliverables": [
+    "analysis_design_v2/EXECUTION_RECEIPT.json",
+    "writing/release_v2/CLAIM_EVIDENCE_MATRIX.csv",
+    "writing/release_v2/METHODS_AND_RESULTS_CN.md",
+    "quality/QA_D28_AVAILABLE_WORK.json"
+  ]
 }

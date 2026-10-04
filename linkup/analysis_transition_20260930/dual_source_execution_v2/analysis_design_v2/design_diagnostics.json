@@ -1,0 +1,289 @@
+{
+  "common_support": {
+    "cells_with_sample_b_equal_3_times_a": 69,
+    "census_region_category_count": 4,
+    "common_support_cell_count": 69,
+    "created_year_category_count": 4,
+    "created_year_max": 2026,
+    "created_year_min": 2023,
+    "occupation_major_category_count": 9,
+    "pooled_frame_cell_hhi": 0.023226794419426388,
+    "pooled_frame_effective_cell_count": 43.05372415763157,
+    "pooled_frame_top_10_cell_share": 0.3425853627211837,
+    "pooled_frame_top_5_cell_share": 0.20470766484597994,
+    "pooled_frame_top_cell_share": 0.04518274960609696
+  },
+  "definitions": {
+    "ipw": "inverse inclusion probability; reconstructs arm-specific frame counts",
+    "kish_ess": "descriptive weight-concentration diagnostic (sum(w)^2/sum(w^2)); not an inferential effective sample size, clustering adjustment, or power calculation",
+    "original_pooled_cell_standardized_weight": "W_h divided by selected cell-arm n; each arm sums to one and each original common-support cell contributes the same pooled-frame mass W_h in both arms"
+  },
+  "distributions": {
+    "census_region": [
+      {
+        "CENSUS_REGION": "Midwest",
+        "common_support_cells": 12,
+        "frame_a": 1318,
+        "frame_b": 170524,
+        "frame_total": 171842,
+        "pooled_frame_share": 0.1599269615813078,
+        "selected_a": 1318,
+        "selected_b": 3954,
+        "selected_total": 5272
+      },
+      {
+        "CENSUS_REGION": "Northeast",
+        "common_support_cells": 17,
+        "frame_a": 1971,
+        "frame_b": 175168,
+        "frame_total": 177139,
+        "pooled_frame_share": 0.16485668257789882,
+        "selected_a": 1971,
+        "selected_b": 5913,
+        "selected_total": 7884
+      },
+      {
+        "CENSUS_REGION": "South",
+        "common_support_cells": 20,
+        "frame_a": 3233,
+        "frame_b": 464771,
+        "frame_total": 468004,
+        "pooled_frame_share": 0.43555392586153785,
+        "selected_a": 3233,
+        "selected_b": 9699,
+        "selected_total": 12932
+      },
+      {
+        "CENSUS_REGION": "West",
+        "common_support_cells": 20,
+        "frame_a": 3553,
+        "frame_b": 253965,
+        "frame_total": 257518,
+        "pooled_frame_share": 0.23966242997925552,
+        "selected_a": 3553,
+        "selected_b": 10659,
+        "selected_total": 14212
+      }
+    ],
+    "created_year": [
+      {
+        "common_support_cells": 4,
+        "created_year": 2023,
+        "frame_a": 144,
+        "frame_b": 80631,
+        "frame_total": 80775,
+        "pooled_frame_share": 0.07517428988099614,
+        "selected_a": 144,
+        "selected_b": 432,
+        "selected_total": 576
+      },
+      {
+        "common_support_cells": 17,
+        "created_year": 2024,
+        "frame_a": 2407,
+        "frame_b": 378132,
+        "frame_total": 380539,
+        "pooled_frame_share": 0.35415350166542114,
+        "selected_a": 2407,
+        "selected_b": 7221,
+        "selected_total": 9628
+      },
+      {
+        "common_support_cells": 23,
+        "created_year": 2025,
+        "frame_a": 4312,
+        "frame_b": 379817,
+        "frame_total": 384129,
+        "pooled_frame_share": 0.3574945812156876,
+        "selected_a": 4312,
+        "selected_b": 12936,
+        "selected_total": 17248
+      },
+      {
+        "common_support_cells": 25,
+        "created_year": 2026,
+        "frame_a": 3212,
+        "frame_b": 225848,
+        "frame_total": 229060,
+        "pooled_frame_share": 0.2131776272378951,
+        "selected_a": 3212,
+        "selected_b": 9636,
+        "selected_total": 12848
+      }
+    ],
+    "occupation_major": [
+      {
+        "OCCUPATION_MAJOR": "11",
+        "common_support_cells": 13,
+        "frame_a": 2283,
+        "frame_b": 346838,
+        "frame_total": 349121,
+        "pooled_frame_share": 0.32491393695503873,
+        "selected_a": 2283,
+        "selected_b": 6849,
+        "selected_total": 9132
+      },
+      {
+        "OCCUPATION_MAJOR": "13",
+        "common_support_cells": 11,
+        "frame_a": 772,
+        "frame_b": 277053,
+        "frame_total": 277825,
+        "pooled_frame_share": 0.25856140001470446,
+        "selected_a": 772,
+        "selected_b": 2316,
+        "selected_total": 3088
+      },
+      {
+        "OCCUPATION_MAJOR": "15",
+        "common_support_cells": 15,
+        "frame_a": 5950,
+        "frame_b": 234544,
+        "frame_total": 240494,
+        "pooled_frame_share": 0.22381882600606978,
+        "selected_a": 5950,
+        "selected_b": 17850,
+        "selected_total": 23800
+      },
+      {
+        "OCCUPATION_MAJOR": "17",
+        "common_support_cells": 7,
+        "frame_a": 292,
+        "frame_b": 48175,
+        "frame_total": 48467,
+        "pooled_frame_share": 0.04510643525425243,
+        "selected_a": 292,
+        "selected_b": 876,
+        "selected_total": 1168
+      },
+      {
+        "OCCUPATION_MAJOR": "23",
+        "common_support_cells": 2,
+        "frame_a": 45,
+        "frame_b": 898,
+        "frame_total": 943,
+        "pooled_frame_share": 0.0008776150462120627,
+        "selected_a": 45,
+        "selected_b": 135,
+        "selected_total": 180
+      },
+      {
+        "OCCUPATION_MAJOR": "25",
+        "common_support_cells": 6,
+        "frame_a": 216,
+        "frame_b": 9791,
+        "frame_total": 10007,
+        "pooled_frame_share": 0.009313142913514434,
+        "selected_a": 216,
+        "selected_b": 648,
+        "selected_total": 864
+      },
+      {
+        "OCCUPATION_MAJOR": "27",
+        "common_support_cells": 6,
+        "frame_a": 248,
+        "frame_b": 11551,
+        "frame_total": 11799,
+        "pooled_frame_share": 0.010980890700165565,
+        "selected_a": 248,
+        "selected_b": 744,
+        "selected_total": 992
+      },
+      {
+        "OCCUPATION_MAJOR": "41",
+        "common_support_cells": 4,
+        "frame_a": 147,
+        "frame_b": 41519,
+        "frame_total": 41666,
+        "pooled_frame_share": 0.03877699736529354,
+        "selected_a": 147,
+        "selected_b": 441,
+        "selected_total": 588
+      },
+      {
+        "OCCUPATION_MAJOR": "43",
+        "common_support_cells": 5,
+        "frame_a": 122,
+        "frame_b": 94059,
+        "frame_total": 94181,
+        "pooled_frame_share": 0.08765075574474897,
+        "selected_a": 122,
+        "selected_b": 366,
+        "selected_total": 488
+      }
+    ]
+  },
+  "frame_and_sample": {
+    "arms": {
+      "A": {
+        "frame_share": 0.009376427985775749,
+        "frame_total_reconstructed_by_ipw": 10075.0,
+        "inclusion_probability_max": 1.0,
+        "inclusion_probability_min": 1.0,
+        "ipw_kish_ess_descriptive": 10075.0,
+        "ipw_kish_ess_fraction_of_selected_n": 1.0,
+        "ipw_max": 1.0,
+        "ipw_min": 1.0,
+        "selected_n": 10075,
+        "selected_share_of_formal_sample": 0.25,
+        "standardized_weight_kish_ess_descriptive": 3171.804603021429,
+        "standardized_weight_kish_ess_fraction_of_selected_n": 0.31481931543637015,
+        "standardized_weight_max": 0.0011780076251743617,
+        "standardized_weight_min": 1.5275993916222903e-05,
+        "standardized_weight_sum": 1.0
+      },
+      "B": {
+        "frame_share": 0.9906235720142242,
+        "frame_total_reconstructed_by_ipw": 1064428.0,
+        "inclusion_probability_max": 0.19462698105914186,
+        "inclusion_probability_min": 0.002371967654986523,
+        "ipw_kish_ess_descriptive": 9393.00326336769,
+        "ipw_kish_ess_fraction_of_selected_n": 0.3107693387383851,
+        "ipw_max": 421.59090909090907,
+        "ipw_min": 5.138033763654419,
+        "selected_n": 30225,
+        "selected_share_of_formal_sample": 0.75,
+        "standardized_weight_kish_ess_descriptive": 9515.413809064285,
+        "standardized_weight_kish_ess_fraction_of_selected_n": 0.31481931543637004,
+        "standardized_weight_max": 0.00039266920839145395,
+        "standardized_weight_min": 5.0919979720743004e-06,
+        "standardized_weight_sum": 1.0
+      }
+    },
+    "formal_sample_total": 40300,
+    "pooled_supported_frame_total": 1074503
+  },
+  "interpretation": [
+    "The frozen formal sample contains 10,075 arm-A and 30,225 arm-B records. Those counts are deliberately balanced at 1:3 within every one of the 69 common-support cells; the unweighted 25%/75% arm split is therefore a design composition and does not represent the pooled frame, where arm A is under 1%.",
+    "Arm-B inclusion probabilities range from about 0.24% to 19.46%, producing IPWs from about 5.14 to 421.59. The IPWs exactly reconstruct the arm-specific frame counts within numerical tolerance, but their concentration means that simple unweighted summaries do not recover frame composition. No trimming, capping, or resampling is applied because that would change the frozen design and estimand.",
+    "The comparison weights serve a different purpose from IPW: they give both arms the same original pooled-frame cell distribution, with each arm summing to one. Their descriptive Kish ESS is much lower than the selected count, especially for arm A, showing concentration in the standardized comparison. These ESS values are weight-concentration summaries only; they are not statistical power and do not account for employer, occupation, or other dependence.",
+    "Composition is concentrated within the supported frame: the largest cell has about 4.52% of pooled cell mass, the ten largest have about 34.26%, and the effective cell count is about 43.1 out of 69. The three largest occupation-major categories account for about 80.73% of pooled supported-frame mass. Comparisons therefore describe the frozen supported cells and should not be generalized to occupations, years, or regions outside that support."
+  ],
+  "limitations": [
+    "Diagnostics apply only to the frozen old-C1 common-support candidate frame.",
+    "No outcome, text, evaluation flag, employer identifier, or semantic label was analyzed.",
+    "Kish ESS does not account for correlated records or identify inferential power."
+  ],
+  "scope": {
+    "analysis": "frozen_sample_design_and_weight_concentration_only",
+    "new_sample_drawn": false,
+    "record_level_output_written": false,
+    "semantic_analysis_performed": false,
+    "weights_trimmed_or_capped": false
+  },
+  "source_contract_version": "dual-source-v2-20261004",
+  "validation": {
+    "W_h_sum": 0.9999999999999999,
+    "cell_keys_unique": true,
+    "formal_private_keys_unique": true,
+    "formal_sample_n_equals_contract_main_max": true,
+    "max_W_h_definition_error": 0.0,
+    "max_inclusion_probability_definition_error": 0.0,
+    "max_ipw_cell_reconstruction_error": 7.275957614183426e-12,
+    "max_ipw_definition_error": 0.0,
+    "max_standardized_cell_mass_error": 3.469446951953614e-18,
+    "sample_count_b_rule_holds_all_cells": true,
+    "sampled_cell_arm_counts_match_design": true
+  },
+  "version": "linkup_l1_design_diagnostics_v2"
+}

@@ -1,0 +1,51 @@
+{
+  "inputs": {
+    "L1_CELL_COUNTS_PRIVATE.parquet": {
+      "bytes": 3177,
+      "sha256": "a0ca6e282b243af37c319664a67285a24fccfca275a9741663355a752780904d"
+    },
+    "L1_FORMAL_SAMPLE_KEYS_PRIVATE.parquet": {
+      "bytes": 1103160,
+      "sha256": "2c32e901d626c2c3c2f7483ccbb92b1faf451e59f55fac03919f30e6ae716a44"
+    },
+    "RESEARCH_CONTRACT.json": {
+      "bytes": 6628,
+      "sha256": "63be76254ffcd522907187b3acf645968b68ffefbf2892928e466a04da691c23"
+    }
+  },
+  "outputs": {
+    "INTERPRETATION.md": {
+      "bytes": 1818,
+      "sha256": "faa8931588d75e93d517f2a06943a27ab23ae03911ffd3c836e4b598f2b7090c"
+    },
+    "design_diagnostics.csv": {
+      "bytes": 13486,
+      "sha256": "f70983ca0d9e74b57dfc96f1267c530ed772ea823e0ccc96a5fbf9d1eb408b16"
+    },
+    "design_diagnostics.json": {
+      "bytes": 10857,
+      "sha256": "d734773547740f85f636afe3577cfc1d731925dea71dd6e5431e09087a9d63ad"
+    }
+  },
+  "script": {
+    "build_design_diagnostics.py": {
+      "bytes": 21750,
+      "sha256": "96dc8e9ab5b338763e80349d8cac79d643f389cc63e05c7fa7c02177d3afe3c9"
+    }
+  },
+  "status": "complete",
+  "validation": {
+    "W_h_sum": 0.9999999999999999,
+    "cell_keys_unique": true,
+    "formal_private_keys_unique": true,
+    "formal_sample_n_equals_contract_main_max": true,
+    "max_W_h_definition_error": 0.0,
+    "max_inclusion_probability_definition_error": 0.0,
+    "max_ipw_cell_reconstruction_error": 7.275957614183426e-12,
+    "max_ipw_definition_error": 0.0,
+    "max_standardized_cell_mass_error": 3.469446951953614e-18,
+    "sample_count_b_rule_holds_all_cells": true,
+    "sampled_cell_arm_counts_match_design": true
+  },
+  "version": "linkup_l1_design_diagnostics_v2"
+}

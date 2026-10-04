@@ -1,0 +1,19 @@
+claim_id,claim,evidence_artifact,actual_status,permitted_wording,unresolved_dependency
+C01,两源实证模块已经完成,../../RESEARCH_CONTRACT.json; ../../ops/TASK_LEDGER_20261004.json,未完成；Revelio模块未取得数据,研究设计预留LinkUp需求与Revelio进入两个模块；当前仅有LinkUp工程和诊断证据。,购得并核验Revelio Individual数据后完成R0–R3/J1。
+C02,LinkUp样本代表所有AI或所有招聘广告,../../linkup_sample/L1_CORE_NUMERIC_ACCEPTANCE_RECEIPT.json; ../../ops/TASK_LEDGER_20261004.json,不支持总体外推；候选框内的抽样工程已完成,"已在69个既定共同支持单元从旧候选框抽得40,300个唯一键；它不是平台总体、职位空缺或录用人数。",角色/语义验收及明确目标总体；即使完成也不得自动外推平台总体。
+C03,"40,300条已完成模型语义提取",../../linkup_sample/L1_CORE_NUMERIC_ACCEPTANCE_RECEIPT.json; ../../measurement/revision_v1_1/ROOT_RELEASE_DECISION.json,"错误；40,300是实际抽样键数，模型生产未启动","正式抽样键数为40,300；外部模型调用和支出均为0。",可用批量通道、预算/数据使用收据和重新通过的语义门槛。
+C04,200条开发文本等同于正式评估或生产样本,../../ops/TASK_LEDGER_20261004.json; ../../linkup_sample/L1_CORE_NUMERIC_ACCEPTANCE_RECEIPT.json,错误；开发材料化完成，evaluation 200仍暂定且未揭示,200条开发文本用于有限开发诊断；evaluation 200键仍为provisional/unrevealed，且文本组排除和历史暴露溯源未完成。,完成排除与溯源后锁定独立评估。
+C05,保存的LinkUp文本构成同期招聘需求面板,../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md; ../../analysis_existing_v1/time_risk_summary.csv,不支持；当前快照文本版本混合,CREATED用于首次观察分层；保存正文不得解释为该季度面对的原始或同期要求。,独立的历史文本版本/生效日期证据。
+C06,GenAI与传统软件在经验要求上已有正式差异估计,../../analysis_existing_v1/candidate_sensitivity_summary.csv; ../../measurement/revision_v1_1/ROOT_RELEASE_DECISION.json,仅旧候选诊断；新版正式估计未执行,旧表中的差异是未验收候选规则的敏感性诊断，不能称经验门槛差异或招聘结果。,验收的生产语义测量、锁定评估和设计一致的聚合。
+C07,旧候选指标已测得一般、职业/任务、行业、工具四类经验,../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md; ../../measurement/revision_v1_1/ROOT_RELEASE_DECISION.json,不支持；职业/任务为NA，其余也未通过语义验收,旧一般经验仅为狭义显式对象候选；职业/任务未测；行业和工具亦不得作为正式测量。,通过对象、条件分支、年限绑定的语义验收。
+C08,预测型AI在招聘广告中不存在,../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md,不可解释；零值受上游applicant-context门控影响,在冻结的旧测量下，预测型AI结果不可用。,能检测相关申请人语境的有效提取路径与评估。
+C09,v1.1双读者一致率证明模型准确,../../measurement/revision_v1_1/BLIND20_COMPARISON_AGGREGATE.json; ../../measurement/revision_v1_1/ROOT_RELEASE_DECISION.json,不支持；是有限AI辅助阅读比较，非金标准准确率,20条未用开发记录的职业/任务年限签名一致为13/20、技术类别—角色集合一致为14/20；两者都不是准确率。,独立人工金标准、随机或可定义评估设计与预注册判定规则。
+C10,两读者共同标出B组2/10条AI候选，故可估计对照组污染或总体AI率,../../measurement/revision_v1_1/BLIND20_COMPARISON_AGGREGATE.json; ../../measurement/revision_v1_1/ROOT_RELEASE_DECISION.json,不支持；开发诊断且非总体抽样估计,每位读者在原B组10条中各标出2条AI候选；这提示原软件组不能叫作已知非AI组。,经验证测量及可用于总体推断的抽样与权重设计。
+C11,v1.1可用于无人值守语义生产,../../measurement/revision_v1_1/ROOT_RELEASE_DECISION.json; ../../quality/QA_V11_CLOSEOUT.json,否；工程/结构核验通过，语义门槛拒绝,发布工程收据、覆盖和候选诊断；不得发布v1.1正式语义生产结果。,新的已授权测量方案；本波次不再修订或加读。
+C12,CPS衡量电脑采用或重建早期计算机革命,../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md; ../../analysis_existing_v1/EXISTING_DATA_CAN_SAY_CN.md,不支持,CPS仅提供2004–2025年职业构成背景和固定RTI描述。,独立电脑使用/采用数据及早期历史识别设计。
+C13,AI beta已验证并可作历史技术测量,../../analysis_existing_v1/G1_PRIMARY_SOURCE_EVIDENCE_CHECK.md; ../CLAIM_EVIDENCE_MATRIX.csv,未核验，冻结主分析不使用,AI beta尚未验证，不能据变量名称宣称可用。,实际映射收据、共同职业交叉表与定义/年份审计。
+C14,Revelio已显示进入前经历或12个月转入率,../../revelio_entry/R0_STATUS.md; ../../ops/TASK_LEDGER_20261004.json,未取得；无任何Revelio实证结果,Revelio部分仅保留接口和可执行方法草稿，不报告人员、履历、进入或流动事实。,购买数据、可读schema、稳定person frame和R0后续输出；R3另需可判定持续观察风险集。
+C15,LinkUp与Revelio可做同期需求—进入比较,../../revelio_entry/R0_STATUS.md; ../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md,不支持,未来可在职业、公司、地区结构上做覆盖/共同支持诊断；不能构造伪同期的广告—个人配对。,Revelio实证输入及LinkUp独立文本生效日期证据。
+C16,旧六张表证明实质测量有效,../../analysis_existing_v1/EXECUTION_RECEIPT.json; ../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md,仅工程与诊断事实成立,旧表支持分片聚合、键审计、覆盖和候选敏感性诊断，不验证经验或技术的实质测量。,独立语义评估与正式生产测量。
+C17,任务/职业控制、生产率文献可识别AI招聘平等化或扩散阶段,../DUAL_SOURCE_PAPER_SKELETON.md; ../CURRENT_RESULTS_AND_BOUNDARIES_20261004.md,不支持因果解释,任务框架和职业控制只描述构成；生产率证据只动机化问题，不证明录用或进入平等化。,直接扩散阶段、招聘/录用或进入数据及相应识别设计。
+C18,样本组别比例和Kish数可以代表总体AI份额或统计功效,../../analysis_design_v2/design_diagnostics.json; ../../analysis_design_v2/EXECUTION_RECEIPT.json; ../../ops/D28_REMAINING_SCOPE_DECISIONS.json,不支持；真实抽样权重与集中度诊断已完成,A/B为层内1:3抽样；IPW与比较标准化权重各有不同目的，Kish仅作权重集中诊断。,正式经验估计仍需合格测量；推断须另处理公司/岗位相关性，不能直接用Kish充当功效。
