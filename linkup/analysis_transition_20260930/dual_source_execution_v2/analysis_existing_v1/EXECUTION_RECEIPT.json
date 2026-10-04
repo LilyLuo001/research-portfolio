@@ -1,0 +1,139 @@
+{
+  "status": "complete_bounded_existing_aggregate_analysis",
+  "scope": "frozen aggregate reuse only; no row-level rescan; no new model extraction",
+  "source_files": [
+    {
+      "role": "population_funnel",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/01_population_funnel.csv",
+      "sha256": "49c98a2d2e37fdf2b09b56e6280e255b02d0efe12c28e0ca3c9659da03ef7fe8",
+      "bytes": 1371
+    },
+    {
+      "role": "reverse_coverage",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/T1_USA_RECORDS_REVERSE_COVERAGE.json",
+      "sha256": "05279a54eb409ff778b21bf8618bd617c06ecc7a34b6d86a76a6f889e20e4167",
+      "bytes": 696
+    },
+    {
+      "role": "occupation_coverage",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_CONCENTRATION.csv",
+      "sha256": "9721a560854ae76e428a6ab54e15b5e47c7adb50e79aa7cd01cabdc924257b8d",
+      "bytes": 415
+    },
+    {
+      "role": "annual_coverage",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_ANNUAL_COVERAGE.csv",
+      "sha256": "7ade2a3f112f84398a3aa2cae1f215e9169d9cc3520b9074cda3c1e5faf35665",
+      "bytes": 548
+    },
+    {
+      "role": "time_risk",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/T4_full_v3/T4_TIME_RISK.csv",
+      "sha256": "dcf7ea862828c4837872be60d6b67703158b2b53d3d61857c13f373c181c142f",
+      "bytes": 1092
+    },
+    {
+      "role": "candidate_sensitivity",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T6_SENSITIVITY_AND_CLAIM_STATUS.csv",
+      "sha256": "54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb",
+      "bytes": 14905
+    },
+    {
+      "role": "t5_t6_acceptance",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_NUMERIC_ACCEPTANCE_RECEIPT.json",
+      "sha256": "77a092512507549859d03e3a00c34a9d10164500054756bfcb704d7c4bc88d4c",
+      "bytes": 3201
+    },
+    {
+      "role": "research_contract",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/RESEARCH_CONTRACT.json",
+      "sha256": "63be76254ffcd522907187b3acf645968b68ffefbf2892928e466a04da691c23",
+      "bytes": 6628
+    },
+    {
+      "role": "historical_decisions",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/HISTORICAL_COMPARISON_DECISIONS.json",
+      "sha256": "9196cf09605febc5aba7edac07ced9e84fa84e21e1b6e48a21a6796688e2741f",
+      "bytes": 3186
+    },
+    {
+      "role": "root_development_decision",
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/measurement/results/ROOT_DEVELOPMENT_DECISION.json",
+      "sha256": "7401b46c88ef0c138d2824c79eb886fbded772eb293290ea72cf5c109ddf647a",
+      "bytes": 4186
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/fig3_candidate_measurement_sensitivity.svg",
+      "sha256": "1032c34f00539c7894abca81580401928bb4c68162f9be64f5f1f6c577a1f296",
+      "bytes": 98692
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/fig1_population_text_occupation_coverage.svg",
+      "sha256": "d633562bc10da6044185989c1816fce064ae05e1824ec7c1147f3b750695f170",
+      "bytes": 71259
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/G1_PRIMARY_SOURCE_EVIDENCE_CHECK.md",
+      "sha256": "c79391be84e3154e135593874c3c3f91491687c1d5ee812bf13f209ecef5805b",
+      "bytes": 1757
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/fig1_population_text_occupation_coverage.png",
+      "sha256": "69532a9b0c3ec0272a67aacb9cab2d07e30baad56ebc828301a4bcaf7e8a9bdd",
+      "bytes": 143131
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/build_existing_analysis.py",
+      "sha256": "226bf75d5250fc0074350acc9c23aae7292719321ecbf268fde5ae019a1935a4",
+      "bytes": 13182
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/source_sha256_receipt.csv",
+      "sha256": "d78ba5315bb83b217c471b52b77264b696dcd65a1041a0750a92eb0a1d324902",
+      "bytes": 2369
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/time_risk_summary.csv",
+      "sha256": "6223a76a3bcc911cb4120e5f88840265825e898401d488b66cf65bf53363208f",
+      "bytes": 717
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/fig3_candidate_measurement_sensitivity.png",
+      "sha256": "5902d0f99bd970c5ef470a471ee6a431f8173cf8d41d14267c66438efa6c50f9",
+      "bytes": 179525
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/candidate_sensitivity_summary.csv",
+      "sha256": "a686852d09ec8517f56adb7edcf6186c86b59751563a33a17a2eb16d31b03e36",
+      "bytes": 1858
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/fig2_first_observed_and_cross_period_risk.svg",
+      "sha256": "45e16c01e84cea2a3f5b0af8ddb67b6c822f761221b4d5feaee531686fd36dc2",
+      "bytes": 94565
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/created_year_summary.csv",
+      "sha256": "eca5a63e23b0a3b5131d6b6be4f9333b6e82fb4302c9880bdcd0f435d76a3aa1",
+      "bytes": 735
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/EXISTING_DATA_CAN_SAY_CN.md",
+      "sha256": "7baac6d50187b08c9c45dd1bfaafa0e742c826b6e0aa12f6fc77d08e01518a88",
+      "bytes": 3189
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/coverage_summary.csv",
+      "sha256": "207dac9b04c0d3e4e9a6790e5da637225727b26b2efa03ed3f9c5546dae997df",
+      "bytes": 482
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/analysis_existing_v1/fig2_first_observed_and_cross_period_risk.png",
+      "sha256": "a3c0aa0407f9571708857b548d13c000dbcefc84bf98c502a91d26ae219cc23b",
+      "bytes": 171837
+    }
+  ],
+  "immutable_inputs_modified": false
+}

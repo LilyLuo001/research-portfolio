@@ -1,0 +1,72 @@
+{
+  "qa": "Q0_v1_1_closeout",
+  "status": "bounded_structural_closeout_semantic_release_not_accepted",
+  "scope": [
+    "revision_v1_1 frozen prompt/schema and selection receipts",
+    "candidate and blind-review compact-to-expanded structural checks",
+    "legacy freeze hashes and existing aggregate arithmetic/source receipts"
+  ],
+  "privacy": {
+    "record_ids_or_raw_ad_text_in_output": false,
+    "corpus_reread_or_accuracy_claim": false
+  },
+  "frozen_revision": {
+    "version": "linkup_measurement_v1.1.0",
+    "composite_sha256": "67eb617cfff9a86841519adacc183563e0a7314f2c343038304c69eba24b13b6",
+    "prompt_sha256": "51ff8202bb519b4d4f2fc455dbc18de3f6deccc3a32abba4ca63792dfadcefb7",
+    "schema_sha256": "fd3a0add7e02ad2d37303cc1ce2e3241e5ec916723847a47581b45283917ee8c",
+    "semantic_revisions_remaining": 0,
+    "frozen_input_receipts_consistent": true
+  },
+  "fixed20_source": {
+    "source_records": 20,
+    "selected_total": 20,
+    "selected_unique_full_text": 20,
+    "source_sha256": "7fa2f9db601b89407c4143aaa449073ec38dd92077fbd469fdce46f8033af6a4",
+    "arm_counts": {"A": 10, "B": 10},
+    "exact20_set_and_source_binding": "verified privately; IDs omitted"
+  },
+  "candidate_sol": {
+    "first_pass": {"records": 20, "expanded": 4, "failed": 16},
+    "repair": {"records": 20, "expanded": 20, "failed": 0},
+    "final_structure_validation": {"records": 20, "valid": 20, "fraction": 1.0, "gate": true},
+    "repair_scope_observed": [
+      "duration bounds/stated-value normalization consistent with retained interpretation",
+      "duplicate-quote occurrence selectors",
+      "one HTML-entity exact-quote repair"
+    ],
+    "semantic_fields_changed_after_first_pass": false,
+    "semantic_gate": "closed_not_accepted_by_root_release_decision; structural QA does not certify semantic completeness"
+  },
+  "blind_review_sol": {
+    "first_pass": {"records": 20, "expanded": 18, "failed": 2},
+    "repair": {"records": 20, "expanded": 20, "failed": 0},
+    "final_structure_validation": {"records": 20, "valid": 20, "fraction": 1.0, "gate": true},
+    "repair_scope_observed": ["exact quote escaping/occurrence repairs"],
+    "semantic_fields_changed_after_first_pass": false,
+    "semantic_gate": "closed_not_accepted_by_root_release_decision; review receipt records a known relevant-experience scope issue retained without semantic repair"
+  },
+  "legacy_freeze": {
+    "manifest": "ops/LEGACY_FREEZE_MANIFEST.json",
+    "listed_public_result_hashes_match": true,
+    "source_fallback_used": false,
+    "legacy_tables_rewritten": false
+  },
+  "analysis_existing_v1": {
+    "source_receipt_hashes_match": true,
+    "coverage_rate_arithmetic": "pass",
+    "time_risk_rate_arithmetic": "pass",
+    "created_year_share_sum": 1.0,
+    "created_year_share_arithmetic": "pass",
+    "scope": "frozen aggregate reuse; no row-level rescan"
+  },
+  "root_release_reference": {
+    "path": "measurement/revision_v1_1/ROOT_RELEASE_DECISION.json",
+    "decision": "not_accepted_for_unattended_semantic_production",
+    "root_new_full_text_cases": 6,
+    "semantic_revisions_remaining": 0,
+    "further_readings_authorized_this_wave": 0,
+    "raw_labels_modified": false
+  },
+  "interpretation_boundary": "The candidate first-pass 4/20 and reviewer 18/20 are structural expansion outcomes dominated by duration-bound/interpretation consistency and exact-quote mechanics; they are not a claim that only four or eighteen records contain valid quotations. This QA verifies structure and arithmetic, not extraction accuracy or semantic truth."
+}

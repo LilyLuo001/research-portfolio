@@ -1,9 +1,19 @@
 {
-  "updated_at_utc": "2026-10-04T01:52:30.704232+00:00",
-  "stage": "single_revision_closed_public_artifacts_ready",
-  "current_decision": "measurement/revision_v1_1/ROOT_RELEASE_DECISION.json",
-  "task_ledger": "ops/TASK_LEDGER_20261004.json",
-  "previous_receipt": "ops/EXECUTION_RECEIPT_BEFORE_D26.json",
+  "ledger_date": "2026-10-04",
+  "purpose": "actual execution ledger; preparation is not execution",
+  "authorities": [
+    "../RESEARCH_CONTRACT.json",
+    "../EXECUTION_RECEIPT.json",
+    "../USER_CLARIFICATION_D25.json",
+    "D26_EXECUTION_DECISIONS.json",
+    "../measurement/results/ROOT_DEVELOPMENT_DECISION.json",
+    "../HISTORICAL_COMPARISON_DECISIONS.json"
+  ],
+  "frozen": {
+    "G0": "complete_frozen",
+    "G1": "complete_frozen",
+    "legacy_v1_T1_T6": "immutable"
+  },
   "tasks": {
     "G0": {
       "actual_status": "complete_frozen",
@@ -141,12 +151,13 @@
       "next_dependency": "Git commit/push result recorded in release message and git history"
     }
   },
-  "completion_limits": [
-    "New20 are a bounded development diagnostic, not the evaluation set or random accuracy sample.",
-    "40 total paired advertisement objects across two waves,80 independent readings; source-grounded root adjudication10 total.",
-    "Final20/20 structural/evidence validity does not imply semantic acceptance.",
-    "No40300 model production and no actual Revelio Individual empirical work.",
-    "Three figures describe accepted engineering coverage/time-risk and unvalidated old candidate sensitivities."
+  "global_stops": [
+    "Revelio not purchased; do not simulate R0-R3/J1",
+    "no external model API; L3 not executable",
+    "40300 is candidate upper bound, not full LLM execution",
+    "no private source text, keys, or raw sea scan",
+    "G0/G1 frozen"
   ],
-  "next_action": "Publish current code, methods, aggregates and receipts; no further automatic measurement revision, bulk inference, or corpus re-cleaning."
+  "legacy_manifest": "ops/LEGACY_FREEZE_MANIFEST.json",
+  "updated_at_utc": "2026-10-04T01:52:30.704232+00:00"
 }

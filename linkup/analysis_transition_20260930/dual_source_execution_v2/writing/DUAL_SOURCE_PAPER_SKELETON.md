@@ -62,7 +62,7 @@ R1 在所有事件之前计算可观察的总工作时长、同目标职业、�
 
 任务框架以 Autor, Levy and Murnane (2003) 对例行／非例行任务的分析为背景，而非个人技能或电脑采用的直接测量。[作者 PDF](https://economics.mit.edu/sites/default/files/publications/the%20skill%20content%202003.pdf) 支持这种任务层面的解释边界。
 
-企业内生成式 AI 研究可提示低经验员工生产率可能出现异质性收益，但该证据不能外推为招聘均等化或真实录用门槛变化；本稿不会作此跳跃。[Brynjolfsson, Li and Raymond (2023), arXiv v2](https://arxiv.org/abs/2304.11771)。技术扩散成熟也可伴随平均技能构成变化，因此职业控制本身不等于控制扩散阶段。[Kalyani et al. (2025), QJE](https://academic.oup.com/qje/article/140/2/1299/7959830)。
+企业内生成式 AI 研究可提示低经验员工生产率可能出现异质性收益，但该证据不能外推为招聘均等化或真实录用门槛变化；本稿不会作此跳跃。[Brynjolfsson, Li and Raymond（2023初稿；2024年11月6日v2）](https://arxiv.org/abs/2304.11771v2)。技术扩散成熟也可伴随平均技能构成变化，因此职业控制本身不等于控制扩散阶段。[Kalyani et al. (2025), QJE](https://academic.oup.com/qje/article/140/2/1299/7959830)。
 
 AI beta 在本轮目录中尚无实际映射回执时标为**未验证**，不因变量名存在而冻结为可用历史指标。计算机化与AI的比较继续是研究主线。当前先比较共同任务与经验维度；各项历史实证比较须有对应的技术度量、职业分类和时间覆盖。未满足的具体历史规格暂不运行，不因此把整个比较目标改成背景。
 

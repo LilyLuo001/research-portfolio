@@ -1,0 +1,16 @@
+{
+  "manifest_date":"2026-10-04",
+  "policy":"legacy v1 six tables immutable; hashes are public result files only; source is ../pre_revelio_execution_v1/results",
+  "source_fallback_used":false,
+  "files":[
+    {"table":"T1","path":"../pre_revelio_execution_v1/results/T1_USA_RECORDS_REVERSE_COVERAGE.json","sha256":"05279a54eb409ff778b21bf8618bd617c06ecc7a34b6d86a76a6f889e20e4167"},
+    {"table":"T2/T3","path":"../pre_revelio_execution_v1/results/T2_T3_NUMERIC_ACCEPTANCE.json","sha256":"824eed78c2f51bd6c423a7560844270bd72b3d01f3d9e6a6c205f124bc85da61"},
+    {"table":"T4","path":"../pre_revelio_execution_v1/results/T4_full_v3/T4_NUMERIC_ACCEPTANCE.json","sha256":"70ad44c54f79fa904bacc224dbcd1a47a1077a64961a2ad584459b567bae9569"},
+    {"table":"T4","path":"../pre_revelio_execution_v1/results/T4_full_v3/T4_RECEIPT_PUBLIC.json","sha256":"ffadf261fff03da923425d856478e7077fdb568ea2f9ab3253c6c8c49d38594d"},
+    {"table":"T5/T6","path":"../pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_T6_FULL_ACCEPTANCE.json","sha256":"8d1cb1769d092f1cab04fa7e103dc2599246b11678af5ef1ec13acfc4b3a4cb5"},
+    {"table":"T5/T6","path":"../pre_revelio_execution_v1/results/T5_T6_fixed_v1/FIXED_COMPARISONS.csv","sha256":"54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb"},
+    {"table":"T5","path":"../pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_MAIN_COMPARABLE_EXPERIENCE_CONTRASTS.csv","sha256":"452c9c264eedc4c8db3eff0e950cc610c52e74ff300147447b82f4ef23dba0a1"},
+    {"table":"T6","path":"../pre_revelio_execution_v1/results/T5_T6_fixed_v1/T6_SENSITIVITY_AND_CLAIM_STATUS.csv","sha256":"54f86ae1bd8087d8263d6e0560556813b70a18e2e2a6316249241f9e6cdf15eb"}
+  ],
+  "exclusions":"No raw/private files scanned; no historical result rewritten; T1-T6 remain candidate/legacy scope under current contract."
+}

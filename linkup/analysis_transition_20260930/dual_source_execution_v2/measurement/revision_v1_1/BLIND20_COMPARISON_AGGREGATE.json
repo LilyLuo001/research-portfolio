@@ -1,0 +1,243 @@
+{
+  "version": "blind20_comparison_aggregate_v1.1.0",
+  "status": "bounded_L4_development_comparison_not_truth_accuracy",
+  "coverage": {
+    "source_records": 20,
+    "candidate_records": 20,
+    "reviewer_records": 20,
+    "exact_same_record_set": true,
+    "first_pass_structurally_valid_records": {
+      "candidate": 4,
+      "reviewer": 18
+    },
+    "final_structurally_valid_records": {
+      "candidate": 20,
+      "reviewer": 20
+    },
+    "structural_counts_provenance": "Previously completed frozen v1.1 expansion receipts; this script does not rerun QA."
+  },
+  "agreements": {
+    "experience_state_by_object": {
+      "general_work": {
+        "agree_records": 18,
+        "total_records": 20,
+        "fraction": 0.9,
+        "reader_pair_counts": {
+          "explicit_positive | explicit_positive": 2,
+          "explicit_positive | not_mentioned": 1,
+          "not_mentioned | explicit_positive": 1,
+          "not_mentioned | not_mentioned": 16
+        }
+      },
+      "occupation_task": {
+        "agree_records": 19,
+        "total_records": 20,
+        "fraction": 0.95,
+        "reader_pair_counts": {
+          "explicit_positive | explicit_positive": 18,
+          "explicit_positive | not_mentioned": 1,
+          "not_mentioned | not_mentioned": 1
+        }
+      },
+      "industry_domain": {
+        "agree_records": 17,
+        "total_records": 20,
+        "fraction": 0.85,
+        "reader_pair_counts": {
+          "explicit_positive | explicit_positive": 8,
+          "not_mentioned | explicit_positive": 3,
+          "not_mentioned | not_mentioned": 9
+        }
+      },
+      "specific_tool": {
+        "agree_records": 20,
+        "total_records": 20,
+        "fraction": 1.0,
+        "reader_pair_counts": {
+          "explicit_positive | explicit_positive": 20
+        }
+      }
+    },
+    "numeric_duration_signature_by_object": {
+      "general_work": {
+        "agree_records": 16,
+        "total_records": 20,
+        "fraction": 0.8,
+        "candidate_records_with_numeric_duration": 3,
+        "reviewer_records_with_numeric_duration": 3
+      },
+      "occupation_task": {
+        "agree_records": 13,
+        "total_records": 20,
+        "fraction": 0.65,
+        "candidate_records_with_numeric_duration": 14,
+        "reviewer_records_with_numeric_duration": 13
+      },
+      "industry_domain": {
+        "agree_records": 18,
+        "total_records": 20,
+        "fraction": 0.9,
+        "candidate_records_with_numeric_duration": 2,
+        "reviewer_records_with_numeric_duration": 4
+      },
+      "specific_tool": {
+        "agree_records": 18,
+        "total_records": 20,
+        "fraction": 0.9,
+        "candidate_records_with_numeric_duration": 5,
+        "reviewer_records_with_numeric_duration": 5
+      }
+    },
+    "numeric_duration_signature_definition": [
+      "object",
+      "mode",
+      "strength",
+      "scope",
+      "unit",
+      "interpretation",
+      "value",
+      "bounds",
+      "branch_relation"
+    ],
+    "numeric_duration_signature_note": "Only duration-bearing mentions with at least one numeric value/bound are compared. Local branch IDs are excluded.",
+    "technology_unique_class_role_set": {
+      "agree_records": 14,
+      "total_records": 20,
+      "fraction": 0.7
+    },
+    "technology_signature_note": "Per-record sets deduplicate identical explicit-positive applicant-context class/role mentions."
+  },
+  "nonduration_mention_granularity": {
+    "comparison": {
+      "general_work": {
+        "agree_records": 20,
+        "total_records": 20,
+        "fraction": 1.0,
+        "candidate_mentions": 0,
+        "reviewer_mentions": 0
+      },
+      "occupation_task": {
+        "agree_records": 9,
+        "total_records": 20,
+        "fraction": 0.45,
+        "candidate_mentions": 22,
+        "reviewer_mentions": 18
+      },
+      "industry_domain": {
+        "agree_records": 17,
+        "total_records": 20,
+        "fraction": 0.85,
+        "candidate_mentions": 9,
+        "reviewer_mentions": 11
+      },
+      "specific_tool": {
+        "agree_records": 10,
+        "total_records": 20,
+        "fraction": 0.5,
+        "candidate_mentions": 58,
+        "reviewer_mentions": 35
+      }
+    },
+    "definition": "Per-object counts of mentions without a duration, kept separate from numeric-duration agreement."
+  },
+  "original_A10_B10_ai_presence": {
+    "computed": true,
+    "original_group_counts": {
+      "A": 10,
+      "B": 10
+    },
+    "candidate": {
+      "A": {
+        "records": 10,
+        "records_with_any_explicit_positive_ai_class_role": 10,
+        "class_presence_records": {
+          "ai_unspecified": 2,
+          "generative_ai": 8,
+          "predictive_ml_ai": 2
+        },
+        "role_presence_records": {
+          "develop_train": 4,
+          "implement_integrate": 4,
+          "use_operate": 7
+        },
+        "unique_class_role_pair_presence_records": {
+          "ai_unspecified | implement_integrate": 2,
+          "generative_ai | develop_train": 2,
+          "generative_ai | implement_integrate": 1,
+          "generative_ai | use_operate": 7,
+          "predictive_ml_ai | develop_train": 2,
+          "predictive_ml_ai | implement_integrate": 1
+        }
+      },
+      "B": {
+        "records": 10,
+        "records_with_any_explicit_positive_ai_class_role": 2,
+        "class_presence_records": {
+          "ai_unspecified": 1,
+          "predictive_ml_ai": 1
+        },
+        "role_presence_records": {
+          "implement_integrate": 2
+        },
+        "unique_class_role_pair_presence_records": {
+          "ai_unspecified | implement_integrate": 1,
+          "predictive_ml_ai | implement_integrate": 1
+        }
+      }
+    },
+    "reviewer": {
+      "A": {
+        "records": 10,
+        "records_with_any_explicit_positive_ai_class_role": 10,
+        "class_presence_records": {
+          "ai_unspecified": 4,
+          "generative_ai": 7,
+          "predictive_ml_ai": 2
+        },
+        "role_presence_records": {
+          "develop_train": 4,
+          "implement_integrate": 6,
+          "use_operate": 7
+        },
+        "unique_class_role_pair_presence_records": {
+          "ai_unspecified | implement_integrate": 4,
+          "ai_unspecified | use_operate": 1,
+          "generative_ai | develop_train": 2,
+          "generative_ai | implement_integrate": 2,
+          "generative_ai | use_operate": 6,
+          "predictive_ml_ai | develop_train": 2
+        }
+      },
+      "B": {
+        "records": 10,
+        "records_with_any_explicit_positive_ai_class_role": 2,
+        "class_presence_records": {
+          "ai_unspecified": 2,
+          "generative_ai": 1
+        },
+        "role_presence_records": {
+          "implement_integrate": 2
+        },
+        "unique_class_role_pair_presence_records": {
+          "ai_unspecified | implement_integrate": 2,
+          "generative_ai | implement_integrate": 1
+        }
+      }
+    },
+    "interpretation": "Presence counts use per-record unique explicit-positive applicant-context AI class/role pairs; categories may overlap."
+  },
+  "closeout": {
+    "root_full_text_verdicts_already_completed": 6,
+    "root_verdicts_applied_to_reader_labels": false,
+    "D27_decision": "not_accepted_for_unattended_semantic_production",
+    "new_diff_queue_created": false,
+    "new_semantic_review_or_label_change": false
+  },
+  "inputs": {
+    "source_sha256": "7fa2f9db601b89407c4143aaa449073ec38dd92077fbd469fdce46f8033af6a4",
+    "candidate_sha256": "1aad8890c24068d1d36cfb0b7267b4c48a88a96529906f259ef90eb3d81258d3",
+    "reviewer_sha256": "d196113baf4bfb81cedd90af33f01b4842c37816d3a58200aba860d99ad110b5",
+    "armmanifest_sha256": "0e4941e5c35a37ee2e2ce030adbf7ae4bbcc17d8d9c5a00fb22751f320e46c0a"
+  },
+  "privacy": "Aggregate only: no record IDs, source text, evidence text, locators, or row-level arm assignments."
+}

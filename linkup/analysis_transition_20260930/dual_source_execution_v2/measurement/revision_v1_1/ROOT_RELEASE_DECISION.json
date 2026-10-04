@@ -1,0 +1,55 @@
+{
+  "decision_id": "D27_v1_1_bounded_closeout",
+  "date": "2026-10-04T01:46:47.880225+00:00",
+  "owner": "gpt-6-astra/high",
+  "decision": "not_accepted_for_unattended_semantic_production; release_engineering_and_candidate_diagnostics",
+  "scope": "One authorized revision and new20 paired development diagnostic complete. Do not start another prompt/parser revision or expand chat-based extraction.",
+  "new_paired_records": 20,
+  "new_independent_AI_readings": 40,
+  "prior_paired_records": 20,
+  "cumulative_independent_AI_readings": 80,
+  "root_new_full_text_cases": 6,
+  "root_cumulative_full_text_cases": 10,
+  "root_case_cap": 40,
+  "root_private_receipt_sha256": "4313b6d92dd2364badad2cc71ad803458183f050cbcd20b1f87cde39db267c7b",
+  "evidence_type": "AI-assisted source adjudication; neither gold truth nor a random accuracy estimate",
+  "dimension_decisions": {
+    "experience_object": "candidate_only; general vs relevant and domain vs task still misclassified",
+    "explicit_years": "scalar thresholds not accepted; repeated unsupported task-to-tool propagation, formula ratios and exact-value assumptions",
+    "qualification_substitution": "conditional/unconditional statistics not accepted; both readers missed a preferred work-or-training condition",
+    "technology_role": "retain overlapping candidate findings, no exclusive role assignment; omitted applicant AI use/integration evidence remains",
+    "cross_technology_class": "not accepted as complete inventory; traditional software findings omitted despite explicit evidence",
+    "missingness": "absence of extracted finding not validated absence of requirement"
+  },
+  "accepted_releases": [
+    "frozen coverage and valid-date time-risk descriptives",
+    "old candidate sensitivity figures, explicitly nonvalidated measurements",
+    "sampling/provenance and exact-evidence validator receipts",
+    "v1.1 AI comparison and error diagnoses, not population estimates",
+    "L3 offline cached-output validation interface, not model execution"
+  ],
+  "substantive_rulings": [
+    "Relevant job experience is not unrestricted total employment tenure.",
+    "Task-experience years do not automatically attach to every tool named in the same sentence.",
+    "An experience-to-education conversion ratio is not an absolute number of required work years.",
+    "An experience-or-training branch is not unconditional work experience even under a preferred heading.",
+    "AI use, implementation, and development can overlap; report multiple supported roles.",
+    "Software/AI contrasts need comparable applicant-role evidence; empty extracted software arrays are not evidence of no software demand."
+  ],
+  "next_execution_state": {
+    "L3": "not_run_no_external_bulk_channel; no spending",
+    "evaluation200": "provisional_keys_unrevealed_not_locked",
+    "R0_empirical_R1_R2_R3_J1": "deferred_Revelio_Individual_not_acquired",
+    "semantic_revisions_remaining": 0,
+    "further_readings_authorized_this_wave": 0,
+    "next_action": "Release current reproducible results and task-specific limitations. Keep existing data available; do not requeue full cleaning or API-dependent tasks."
+  },
+  "raw_labels_modified": false,
+  "paired_comparison_artifact": "BLIND20_COMPARISON_AGGREGATE.json",
+  "comparison_interpretation": {
+    "occupation_task_duration_signature_agreement": "13/20 including jointly empty cases, not extraction accuracy",
+    "unique_technology_class_role_set_agreement": "14/20, not accuracy",
+    "original_B_AI_candidate_presence": "Each reader marks AI presence in 2/10 original B records; development diagnostic only, not population contamination estimate. Original software grouping must not be relabeled known non-AI.",
+    "role_and_class_presence": "Overlapping categories; do not force exhaustive mutually exclusive AI groups."
+  }
+}

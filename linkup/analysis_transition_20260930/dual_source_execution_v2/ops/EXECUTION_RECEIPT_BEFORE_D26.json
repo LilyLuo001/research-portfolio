@@ -1,0 +1,118 @@
+{
+  "updated_at_utc": "2026-10-03T18:05:43.579032+00:00",
+  "stage": "bounded_development_wave_closed",
+  "authoritative_user_update": "USER_CLARIFICATION_D25.json",
+  "tasks": {
+    "G0": {
+      "status": "complete",
+      "artifact": "RESEARCH_CONTRACT.json",
+      "model": "gpt-6-astra",
+      "effort": "high"
+    },
+    "G1": {
+      "status": "complete_three_material_questions",
+      "artifact": "HISTORICAL_COMPARISON_DECISIONS.json",
+      "model": "gpt-6-astra",
+      "effort": "high"
+    },
+    "L1": {
+      "status": "corrected_core_sampling_and_200_source_materialization_complete",
+      "artifact": "linkup_sample/EXECUTION_STATUS.json",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "job_id": "123584403",
+      "actual_selected_key_count_available": true,
+      "failed_predecessor": "123581861: FAILED after 4 seconds, file lock; no key sample completed",
+      "output_isolation": "run-123584403; rejected predecessor preserved",
+      "accepted_sample_available": true,
+      "rejected_counts": {
+        "A_selected": 10075,
+        "B_selected": 1064428,
+        "reason": "DuckDB identifier case-insensitivity caused N_B/n_B collision; B sample target resolved as frame size"
+      },
+      "recovery": "Different names for frame counts and sample targets; toy and per-cell IPW conservation required before release; reuse unaffected 600 diagnostic records",
+      "counts": {
+        "A_selected": 10075,
+        "B_selected": 30225,
+        "total": 40300,
+        "unique_JOB_HASH": 40300,
+        "support_cells": 69,
+        "development": 200,
+        "evaluation": 200,
+        "development_evaluation_overlap": 0,
+        "config_compare": 80
+      },
+      "sampling_qa": "quality/QA_SAMPLING_CORRECTION.json",
+      "original_text_materialization": {
+        "kunshan": 122,
+        "wuzhen": 78,
+        "wuzhen_job": "45867338",
+        "wuzhen_elapsed": "00:02:19",
+        "status": "complete_local_sha_and_exact_locator_verified"
+      },
+      "accepted_development_text_lock": false,
+      "development_texts": {
+        "records": 200,
+        "distinct_texts": 185,
+        "config_records": 80,
+        "config_distinct_texts": 76,
+        "status": "usable_for_development_diagnostics; evaluation_not_locked"
+      }
+    },
+    "L2": {
+      "status": "bounded_first20_comparison_closed_core_semantics_not_accepted_for_production",
+      "artifact": "measurement/STATUS.md",
+      "model": "gpt-5.6-sol",
+      "effort": "high",
+      "real_text_model_calls": 40,
+      "real_200_development_completed": false,
+      "real_80_comparison_completed": false,
+      "real_200_materialized": true,
+      "paired_records_completed": 20,
+      "independent_readings_completed": 40,
+      "root_full_text_adjudications": 4,
+      "remaining_config80_intentionally_unread": 60,
+      "aggregate_artifact": "measurement/results/DEVELOPMENT_COMPARISON_PART01_AGGREGATE.json",
+      "gate_decision": "measurement/results/ROOT_DEVELOPMENT_DECISION.json",
+      "scope_note": "40 is advertisement-model readings, not an external API request count. All 200 texts were materialized; only first20 were semantically read by each of two models."
+    },
+    "L3": {
+      "status": "not_started_no_batch_channel",
+      "model_inference_calls": 0,
+      "api_spending": 0
+    },
+    "R0": {
+      "status": "reference_interface_complete_empirical_deferred_not_acquired",
+      "artifact": "revelio_entry/R0_STATUS.md",
+      "model": "gpt-5.6-terra",
+      "effort": "medium"
+    },
+    "R1_R3": {
+      "status": "deferred_not_acquired"
+    },
+    "W0": {
+      "status": "method_draft_and_17_claim_evidence_rows_complete",
+      "artifact": "writing/DUAL_SOURCE_PAPER_SKELETON.md",
+      "model": "gpt-5.6-terra",
+      "effort": "medium"
+    },
+    "Q0": {
+      "status": "passed_sampling_and_bounded_diagnostic_closeout_not_semantic_production",
+      "artifact": "quality/QA_DEVELOPMENT_CLOSEOUT.json",
+      "model": "gpt-5.6-luna",
+      "effort": "medium"
+    },
+    "Z0": {
+      "status": "public_outputs_sanitized_staged_for_commit",
+      "microdata_in_git": false
+    }
+  },
+  "completion_limits": [
+    "This diagnostic wave closes without accepting either tested semantic configuration for unattended production",
+    "Only 20 records were independently read by each model; 60 of the fixed80 remain unread",
+    "AI source-grounded adjudication is not human ground truth or an accuracy estimate",
+    "No final evaluation was revealed, no Revelio Individual data is available, and no external model API is configured",
+    "No formal40300 model extraction or new economic inference was executed"
+  ],
+  "next_action": "No automatic expansion: this diagnostic wave is closed. Preserve candidate status of semantic measurements and use root decision before any future extraction."
+}

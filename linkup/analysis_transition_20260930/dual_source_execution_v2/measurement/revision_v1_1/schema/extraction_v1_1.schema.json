@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/dual-source-v2/measurement/revision-v1_1/extraction_v1_1.schema.json",
+  "title": "Dual-source v2 LinkUp structured extraction v1.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "prompt_version", "record_id", "source_text_sha256", "record_text_state", "experience_findings", "technology_findings"],
+  "properties": {
+    "schema_version": {"const": "linkup_measurement_v1.1.0"},
+    "prompt_version": {"const": "linkup_extraction_prompt_v1.1.0"},
+    "record_id": {"type": "string", "minLength": 1},
+    "source_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "record_text_state": {"enum": ["readable", "insufficient_text"]},
+    "experience_findings": {
+      "type": "array", "minItems": 4, "maxItems": 4,
+      "items": {"$ref": "#/$defs/experience_finding"}
+    },
+    "technology_findings": {"type": "array", "items": {"$ref": "#/$defs/technology_finding"}},
+    "record_note": {"type": ["string", "null"], "maxLength": 1000}
+  },
+  "$defs": {
+    "state": {"enum": ["explicit_positive", "explicit_negative", "not_mentioned", "insufficient_text", "unresolved"]},
+    "span": {
+      "type": "object", "additionalProperties": false,
+      "required": ["span_id", "start", "end", "text"],
+      "properties": {
+        "span_id": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$"},
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1},
+        "text": {"type": "string", "minLength": 1}
+      }
+    },
+    "duration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["unit", "interpretation", "stated_value", "lower", "upper", "evidence_span_id"],
+      "properties": {
+        "unit": {"const": "years"},
+        "interpretation": {"enum": ["minimum", "maximum", "exact", "range", "stated_unspecified"]},
+        "stated_value": {"type": ["number", "null"], "minimum": 0},
+        "lower": {"type": ["number", "null"], "minimum": 0},
+        "upper": {"type": ["number", "null"], "minimum": 0},
+        "evidence_span_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "mention": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mention_id", "condition_mode", "strength", "applicant_context", "branch_id", "branch_relation", "alternative_group", "qualification_scope", "condition_quote", "evidence", "duration"],
+      "properties": {
+        "mention_id": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$"},
+        "condition_mode": {"enum": ["prior_experience", "knowledge", "proficiency", "training_certification", "unclear"]},
+        "strength": {"enum": ["required", "preferred", "expected", "unspecified", "conflict"]},
+        "applicant_context": {"type": "boolean"},
+        "branch_id": {"type": "string", "minLength": 1},
+        "branch_relation": {"enum": ["standalone", "and", "or", "equivalent"]},
+        "alternative_group": {"type": ["string", "null"]},
+        "qualification_scope": {"enum": ["unconditional", "education_substitution", "other_conditional", "unresolved"]},
+        "condition_quote": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/span"}]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/span"}},
+        "duration": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/duration"}]}
+      }
+    },
+    "experience_finding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["object", "state", "state_applicant_context", "state_evidence", "mentions", "note"],
+      "properties": {
+        "object": {"enum": ["general_work", "occupation_task", "industry_domain", "specific_tool"]},
+        "state": {"$ref": "#/$defs/state"},
+        "state_applicant_context": {"type": "boolean"},
+        "state_evidence": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "mentions": {"type": "array", "items": {"$ref": "#/$defs/mention"}},
+        "note": {"type": ["string", "null"], "maxLength": 1000}
+      }
+    },
+    "technology_finding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["finding_id", "state", "technology_class", "technology_role", "ai_role_basis", "applicant_context", "evidence", "note"],
+      "properties": {
+        "finding_id": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$"},
+        "state": {"$ref": "#/$defs/state"},
+        "technology_class": {"enum": ["software_information_system", "predictive_ml_ai", "generative_ai", "ai_unspecified", "technology_unspecified"]},
+        "technology_role": {"enum": ["develop_train", "implement_integrate", "use_operate", "evaluate_govern", "role_unspecified"]},
+        "ai_role_basis": {"enum": ["develop_or_train_ai", "implement_or_integrate_ai", "use_ai_to_write_software", "use_ai_other", "evaluate_or_govern_ai", "not_ai", "unspecified"]},
+        "applicant_context": {"type": "boolean"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "note": {"type": ["string", "null"], "maxLength": 1000}
+      }
+    }
+  }
+}

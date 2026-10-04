@@ -1,0 +1,43 @@
+{
+  "version": "fixed80_unused20_selection_v1.1.0",
+  "selection_seed": "D26-single-revision-unused20-v1",
+  "selection_rule": "Within the fixed80 only, remove the already-read 20 and all exact full-text matches to them; rank canonical four-field keys by SHA-256(seed|key), scan globally, take 10 per original A/B arm, and skip exact full-text repeats within the new batch.",
+  "inputs": {
+    "fixed80_metadata_sha256": "0e4941e5c35a37ee2e2ce030adbf7ae4bbcc17d8d9c5a00fb22751f320e46c0a",
+    "fixed80_text_pack_sha256": "91496026145eaec1acc3f77e76ab562521428c873f5d36a6a9fe24b4ecf14975",
+    "previous20_blind_pack_sha256": "895975dddecc81403695148d28e07295c7c681095bab734701b9c5ffb7203048"
+  },
+  "counts": {
+    "fixed80": 80,
+    "previously_read": 20,
+    "remaining_unread_by_arm": {
+      "A": 20,
+      "B": 40
+    },
+    "excluded_same_text_as_previous20_by_arm": {
+      "A": 2,
+      "B": 0
+    },
+    "within_new_batch_duplicate_skips_by_arm": {
+      "A": 0,
+      "B": 0
+    },
+    "selected_by_arm": {
+      "A": 10,
+      "B": 10
+    },
+    "selected_total": 20,
+    "selected_unique_full_text": 20
+  },
+  "private_output": {
+    "columns": [
+      "record_id",
+      "original_text"
+    ],
+    "sha256": "7fa2f9db601b89407c4143aaa449073ec38dd92077fbd469fdce46f8033af6a4",
+    "mode": "0400"
+  },
+  "privacy": "No record IDs, source text, arm assignments, locators, row-level ranks, or labels are present in this public receipt.",
+  "evaluation_read": false,
+  "labels_read": false
+}

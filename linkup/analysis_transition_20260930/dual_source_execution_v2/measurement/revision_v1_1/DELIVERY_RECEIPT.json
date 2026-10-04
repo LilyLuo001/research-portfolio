@@ -1,0 +1,48 @@
+{
+  "version": "measurement_v1.1_delivery_receipt",
+  "date": "2026-10-04",
+  "status": "frozen_and_ready_for_two_blind_sol_medium_readings",
+  "authority": [
+    "RESEARCH_CONTRACT.json development_semantic_revision_max=1",
+    "ops/D26_EXECUTION_DECISIONS.json",
+    "measurement/results/ROOT_DEVELOPMENT_DECISION.json"
+  ],
+  "revision": {
+    "schema_version": "linkup_measurement_v1.1.0",
+    "prompt_version": "linkup_extraction_prompt_v1.1.0",
+    "composite_sha256": "67eb617cfff9a86841519adacc183563e0a7314f2c343038304c69eba24b13b6",
+    "prompt_sha256": "51ff8202bb519b4d4f2fc455dbc18de3f6deccc3a32abba4ca63792dfadcefb7",
+    "schema_sha256": "fd3a0add7e02ad2d37303cc1ce2e3241e5ec916723847a47581b45283917ee8c",
+    "semantic_revisions_remaining": 0
+  },
+  "private_blind_pack": {
+    "path": "linkup_sample/private/run-123584403/measurement_dev_revision_v1_1/blind_unused20_A10_B10.jsonl",
+    "sha256": "7fa2f9db601b89407c4143aaa449073ec38dd92077fbd469fdce46f8033af6a4",
+    "records": 20,
+    "columns": ["record_id", "original_text"],
+    "original_arm_counts": {"A": 10, "B": 10},
+    "unique_full_texts": 20,
+    "mode": "0400"
+  },
+  "selection_receipt": {
+    "path": "measurement/revision_v1_1/BLIND20_SELECTION_AGGREGATE.json",
+    "sha256": "c8df754308b8da8a9ce7ad97eb488d8f7f4e2f9ae5d6125b304fbe094bd62f3e"
+  },
+  "checks": {
+    "python_compile": "pass",
+    "json_schema_meta_validation": "pass",
+    "deterministic_blind_pack_rebuild": "pass",
+    "fixed80_only": true,
+    "previous20_ids_excluded": true,
+    "previous20_full_text_matches_excluded": true,
+    "new_batch_full_text_duplicates": 0,
+    "v1_files_modified": 0,
+    "labels_read": false,
+    "evaluation_text_read": false,
+    "evaluation_status": "provisional_keys_unrevealed_not_locked",
+    "production_40300_run": false,
+    "api_calls": 0
+  },
+  "measurement_rule": "The candidate unconditional-prior-experience duration bucket uses only unconditional prior_experience durations. It is not an accepted formal production metric. Education substitutions and other conditional paths are separate; missing or unresolved is never zero.",
+  "limitation": "The schema and validator enforce structure and exact evidence but cannot prove semantic completeness, including detection of every numeric or spelled-out duration."
+}
