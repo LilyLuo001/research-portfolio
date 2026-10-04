@@ -1,0 +1,9 @@
+﻿阶段,数量,分母,比例,状态,口径/限制
+交付 Records 行,"356,449,214",NA,NA,完成,delivered Records rows; not vacancies or hires
+美国 Records 行,"253,210,047","356,449,214",71.037%,完成,COUNTRY==USA Records rows
+原始描述出现次数,"298,673,078",NA,NA,完成,description occurrences; not asserted distinct keys
+成功连接 Records 的描述次数,"298,645,910","298,673,078",99.991%,完成,description occurrences matched to Records
+未连接 Records 的描述次数,"27,168","298,673,078",0.009%,完成,description occurrences unmatched to Records
+美国规范广告对象,"204,774,035","298,645,910",68.568%,完成；全局唯一键审计已在后续冻结回执完成,全局唯一键已审计的美国规范广告对象；由描述出现次数转为规范对象，单位变化，不是同单位通过率
+正文非空且完整解析,"204,768,752","204,774,035",99.997%,完成,usable is the mutually exhaustive pass/fail complement; individual failure flags may overlap
+美国 Records 反向覆盖,"204,774,035","253,210,047",80.871%,完成,全局审计规范 JOB_HASH / 美国 Records；不是职位空缺或录用人数
