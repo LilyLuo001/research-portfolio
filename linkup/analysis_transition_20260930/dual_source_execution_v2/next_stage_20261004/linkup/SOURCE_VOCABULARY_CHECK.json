@@ -1,0 +1,9 @@
+{
+  "representative_sidecar": "../../../private_runtime/semantic_narrow_validation_v2/002a097793879d9475a6a7d41c055ee18edd519e22a6ae01fb240d494a686018.durations.parquet",
+  "sha256": "0a5aba8f83a08abfc735c27d5e10dad664b32559d1d95c9e897baa05e7c63efc",
+  "rows": 54406,
+  "canonical_key_null_rows": 0,
+  "duration_unit_counts": {"<NULL>": 32106, "months": 3210, "years": 19090},
+  "bound_type_counts": {"duration_unspecified": 32106, "exact_or_unspecified": 13201, "minimum": 5730, "range": 3369},
+  "code_policy": "accept singular/plural year tokens; preserve bound type; count missing/non-year/invalid/unknown-bound rows; join all four canonical occurrence fields"
+}

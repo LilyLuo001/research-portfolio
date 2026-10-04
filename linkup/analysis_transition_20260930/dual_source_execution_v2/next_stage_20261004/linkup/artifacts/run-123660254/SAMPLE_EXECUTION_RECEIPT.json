@@ -1,0 +1,31 @@
+{
+  "allocation": "capped proportional Hamilton allocation with minimum one selected record in every positive supported cell; fixed MD5 order",
+  "arms": {
+    "A": "old C1 explicit generative-AI use arm, nested in accepted 40,300 sample",
+    "B": "old C1 explicit traditional-software use with no detected AI, nested in accepted 40,300 sample",
+    "C": "Residual within explicitly technology-screened candidate frame, not occupation-wide background"
+  },
+  "counts": {
+    "A": 4000,
+    "B": 4000,
+    "C": 2000
+  },
+  "frame": "usable ads in the original 69 OCCUPATION_MAJOR x CENSUS_REGION x CREATED-year support cells, 2018-01-01 through 2026-06-30",
+  "frozen_formal_sha256": "2c32e901d626c2c3c2f7483ccbb92b1faf451e59f55fac03919f30e6ae716a44",
+  "model_extraction": "not_run",
+  "privacy": "row-level keys and any later ad text remain private and excluded from Git",
+  "private_key_output": {
+    "bytes": 354400,
+    "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/next_stage_20261004/linkup/run-123660254/FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet",
+    "sha256": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426"
+  },
+  "probabilities": "total_inclusion_probability = original_inclusion_probability * conditional_inclusion_probability; nested_design_weight is its inverse",
+  "public_allocation_sha256": "bad5965d982ddb3f81efa43ccca52e14b34684458976370e2dbe4a3949f77ca9",
+  "raw_vs_weighted": "raw sample counts must not be presented as weighted estimates",
+  "seed": 20261004,
+  "standardization": "pooled_cell_standardization_weight is the original pooled A+B frame W_h and is stored separately from design weights",
+  "status": "complete",
+  "version": "linkup_next_stage_fixed_sample_v1",
+  "source_lineage_limitation": "C is a residual within a prefiltered technology-candidate frame: any explicit GenAI use/develop or traditional-software use/develop (build_comparison_join.py line96). It does not cover all other advertisements in those occupations or ads screened out by the original technology rules. The proposed broad-background C target remains unmet; retain these2000 as a separate restricted diagnostic, without redraw.",
+  "upstream_filter": "tech_generative_ai_use_explicit OR tech_generative_ai_develop_explicit OR tech_traditional_software_use_explicit OR tech_traditional_software_develop_explicit"
+}

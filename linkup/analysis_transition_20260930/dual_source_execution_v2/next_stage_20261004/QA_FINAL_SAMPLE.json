@@ -1,0 +1,68 @@
+{
+  "qa_version": "final-sample-bounded-20261005",
+  "status": "pass_with_material_scope_limit",
+  "scope": "final fixed sample only; duration job remains running and no duration results are asserted",
+  "execution": {
+    "job_id": "123660254",
+    "sample_rows": 10000,
+    "arm_counts": {"A": 4000, "B": 4000, "C": 2000},
+    "support_cells": {"A": 69, "B": 69, "C": 69},
+    "union_cells": 69,
+    "allocation_rows": 207,
+    "allocation_selected_totals": {"A": 4000, "B": 4000, "C": 2000},
+    "allocation_frame_totals": {"A": 10075, "B": 30225, "C": 83070},
+    "zero_selected_cell_arms": 0
+  },
+  "checks": {
+    "unique_keys": {"pass": true, "rows": 10000, "unique_JOB_HASH": 10000, "duplicate_JOB_HASH": 0},
+    "nested_probability": {
+      "pass": true,
+      "max_abs_error_total_pi_minus_product": 0.0,
+      "max_abs_error_nested_weight_minus_inverse_pi": 7.105427357601002e-15,
+      "all_arms_positive_pi": true,
+      "pi_gt_one": 0
+    },
+    "C_frame_and_probability": {
+      "pass": true,
+      "definition": "exact old CASE classification ELSE NULL within the joined technology-candidate frame",
+      "source_scope": "build_comparison_join.py prefilters joined16parts to GenAI/software-use/develop candidates before residual C classification",
+      "scope_limit": "C is a narrow residual technology-candidate diagnostic, not all non-A/B ads and not coverage of screened-out occupation ads; broad C target not achieved",
+      "support_cells": 69,
+      "frame_cell_arm_N_min": 23,
+      "frame_cell_arm_N_max": 6360,
+      "next_selected_cell_arm_n_min": 2,
+      "next_selected_cell_arm_n_max": 149,
+      "original_pi_min": 1.0,
+      "original_pi_max": 1.0,
+      "conditional_pi_min": 0.023397939584424654,
+      "conditional_pi_max": 0.08695652173913043,
+      "total_pi_min": 0.023397939584424654,
+      "total_pi_max": 0.08695652173913043,
+      "dedicated_C_pi_fields_complete": true
+    },
+    "W_h": {"pass": true, "distinct_cells": 69, "max_unique_W_h_per_cell": 1, "max_unique_pooled_weight_per_cell": 1},
+    "arm_specific_nulls": {"pass": true, "C_old_AB_frame_fields_null": 2000, "interpretation": "expected legacy A/B-only fields; C dedicated nested frame and probability fields are complete"},
+    "public_privacy": {
+      "pass": true,
+      "public_columns": ["OCCUPATION_MAJOR", "CENSUS_REGION", "created_year", "arm", "frame_cell_arm_N", "selected_cell_arm_n", "original_inclusion_probability", "conditional_inclusion_probability", "total_inclusion_probability", "pooled_cell_standardization_weight"],
+      "raw_ids_or_text_present": false
+    },
+    "semantic_scope": {
+      "pass": true,
+      "model_extraction": "not_run",
+      "C_not_untreated": true,
+      "duration_results": "not asserted; job 123660260 running",
+      "revelio_claims": false
+    }
+  },
+  "artifacts": {
+    "private_sample": "linkup/private/run-123660254/FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet",
+    "private_sample_sha256": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426",
+    "public_receipt": "linkup/artifacts/run-123660254/SAMPLE_EXECUTION_RECEIPT.json",
+    "public_allocation": "linkup/artifacts/run-123660254/cell_allocation.csv",
+    "receipt_status": "complete"
+  },
+  "material_errors": [
+    "C frame is narrower than the proposed broad all-non-A/B target because source construction prefilters technology candidates; preserve as a conditional-frame residual diagnostic and do not generalize to all occupation ads."
+  ]
+}

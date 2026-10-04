@@ -1,0 +1,29 @@
+{
+  "qa_version": "local-ab-bounded-20261004",
+  "status": "pass_with_scope",
+  "scope": {
+    "sample": "local A/B subset only",
+    "counts": {"A": 4000, "B": 4000, "C": 0, "total": 8000},
+    "completion": "partial_8000_of_10000",
+    "c_status": "pending_remote_joined_frame; C null-handling not assessed by this local A/B QA"
+  },
+  "checks": {
+    "actual_sample_counts": {"pass": true, "A": 4000, "B": 4000, "C": 0},
+    "common_support_cells": {"pass": true, "A_cells": 69, "B_cells": 69, "union_cells": 69, "allocation_rows": 138},
+    "cell_allocation_reconciliation": {"pass": true, "selected_totals": {"A": 4000, "B": 4000}, "frame_totals": {"A": 10075, "B": 30225}, "positive_selected_cell_arms": 138, "zero_selected_cell_arms": 0},
+    "unique_keys": {"pass": true, "rows": 8000, "unique_JOB_HASH": 8000, "duplicate_JOB_HASH": 0, "null_fields": 0},
+    "source_probability": {"pass": true, "original_pi_min": 0.002371967654986523, "original_pi_max": 1.0, "conditional_pi_min": 0.13075140681893413, "conditional_pi_max": 0.43478260869565216, "total_pi_min": 0.00032345013477088946, "total_pi_max": 0.43478260869565216, "nonpositive_pi_cells": 0, "pi_gt_one": 0},
+    "nested_probability": {"pass": true, "max_abs_error_total_pi_minus_product": 0.0, "max_abs_error_nested_weight_minus_inverse_pi": 0.0},
+    "W_h_distinct": {"pass": true, "distinct_cells": 69, "max_unique_W_h_per_cell": 1, "max_unique_W_h_per_cell_arm": 1, "pooled_weight_field_present": true},
+    "public_privacy": {"pass": true, "public_columns": ["OCCUPATION_MAJOR", "CENSUS_REGION", "created_year", "arm", "frame_cell_arm_N", "selected_cell_arm_n", "original_inclusion_probability", "conditional_inclusion_probability", "total_inclusion_probability", "pooled_cell_standardization_weight"], "raw_text_or_row_identifiers_present": false},
+    "semantic_scope": {"pass": true, "model_extraction": "not_run", "revelio_individual": "not_acquired", "false_semantic_inference_or_revelio_claim": false, "duration_interpretation": "not claimed by local A/B sample QA"}
+  },
+  "artifacts": {
+    "private_sample": "linkup/private/local-ab/FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet",
+    "private_sample_sha256": "cc46bcb6c756632c3f821c61e8e7891444312f858f6e267d2e6c49263625ef4c",
+    "public_allocation": "linkup/artifacts/local-ab/cell_allocation.csv",
+    "public_allocation_sha256": "309a3e5208f45865fcd1297ec801ed52e3769ab4c99561c93c004f956d2ba760",
+    "receipt_status": "ab_complete_c_pending_no_joined_frame"
+  },
+  "material_errors": []
+}
