@@ -59,6 +59,16 @@ run = pathlib.Path(os.environ["RECEIPT_RUN"])
 public = pathlib.Path(os.environ["RECEIPT_PUBLIC"])
 model_revision_path = run / "model_revision.txt"
 model_revision = model_revision_path.read_text().strip() if model_revision_path.is_file() else None
+inference_started = (run / "inference_started_epoch.txt").is_file()
+inference_ended = (run / "inference_ended_epoch.txt").is_file()
+route_validated = (
+    os.environ["RECEIPT_STATUS"] == "PASS"
+    and os.environ["RECEIPT_STAGE"] == "complete"
+    and inference_ended
+    and (run / "response.json").is_file()
+)
+documents_attempted = 1 if inference_started else 0
+documents_completed = 1 if route_validated else 0
 payload = {
     "schema_version": "linkup-local-inference-route-receipt-v1",
     "status": os.environ["RECEIPT_STATUS"],
@@ -88,12 +98,14 @@ payload = {
         "schema": digest(run / "schema.json"),
         "source_text": digest(run / "source.txt"),
         "record_id": "route-synthetic-001",
-        "documents_processed": 1,
+        "documents_attempted": documents_attempted,
+        "documents_completed": documents_completed,
+        "partial_inference_status": "possible_unknown_after_start" if documents_attempted and not documents_completed else None,
         "purpose": "routeability and throughput only; no quality certification",
     },
     "inference": {
-        "started_epoch": int((run / "inference_started_epoch.txt").read_text()) if (run / "inference_started_epoch.txt").is_file() else None,
-        "ended_epoch": int((run / "inference_ended_epoch.txt").read_text()) if (run / "inference_ended_epoch.txt").is_file() else None,
+        "started_epoch": int((run / "inference_started_epoch.txt").read_text()) if inference_started else None,
+        "ended_epoch": int((run / "inference_ended_epoch.txt").read_text()) if inference_ended else None,
         "response": digest(run / "response.json"),
         "stderr": digest(run / "inference.stderr"),
     },

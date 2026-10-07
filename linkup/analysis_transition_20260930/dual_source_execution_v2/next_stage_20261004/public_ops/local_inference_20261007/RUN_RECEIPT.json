@@ -18,13 +18,14 @@
     "maximum_authorized_core_hours": 16
   },
   "submitted_code": {
-    "file": "run_qwen3_8b_cpu.sbatch",
-    "sha256": "38d3d329977b72e5e79a91163ee8351174e3b9d5beaefb87072a5f2644c41677"
+    "file": "submitted_failed.sbatch",
+    "sha256": "38d3d329977b72e5e79a91163ee8351174e3b9d5beaefb87072a5f2644c41677",
+    "provenance": "Exact byte-for-byte copy retrieved from the remote submission path after job 123914627; 9806 bytes."
   },
   "corrected_unexecuted_code": {
     "file": "run_qwen3_8b_cpu.sbatch",
-    "sha256": "b7acf8bdb7f6aeda5522f5fe25482e0a790922a201cd0fd566ac315e50ae29e1",
-    "correction": "Load python/3.8.10 before installing the EXIT receipt trap and use that module's python executable.",
+    "sha256": "bbd8f8fbac5223bd1b78f5c33fb70f9f67d14201b6e10ed63a2035f604d38d6f",
+    "correction": "Load python/3.8.10 before installing the EXIT receipt trap; use that module's python executable; derive documents_attempted from the inference-start marker; count documents_completed only after a PASS at the validated complete stage; and retain a possible-unknown partial-inference state.",
     "executed": false
   },
   "completed_stage": "verify_inputs",
@@ -61,7 +62,8 @@
     {
       "role": "synthetic_source_copy",
       "bytes": 125,
-      "sha256": "eb3c8a2bdfad32a887dc08982c9faddca2fc6f077aa029e21928af25b49dabea"
+      "sha256": "eb3c8a2bdfad32a887dc08982c9faddca2fc6f077aa029e21928af25b49dabea",
+      "provenance": "Invented non-sensitive fixture written for this routeability test; contains no real advertisement text and is included as synthetic_source.txt for reproducibility."
     }
   ],
   "scheduler_logs": {
