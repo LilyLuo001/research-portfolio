@@ -1,0 +1,84 @@
+{
+  "qa_version": "bounded-results-20261007",
+  "status": "pass_with_material_scope_limit",
+  "scope": "QA of public result CSVs and RESULTS_AND_DECISION_CN.md against duration job 123910178 receipt and aggregate CSVs only; raw text was not accessed.",
+  "execution": {
+    "job_id": "123910178",
+    "sample_sha256_match": true,
+    "sample_rows": 10000,
+    "arm_counts": {
+      "A": 4000,
+      "B": 4000,
+      "C": 2000
+    },
+    "matched_numeric_clause_rows": 744,
+    "matched_distinct_ads": 545,
+    "canonical_join": "JOB_HASH + SOURCE_FILE + SOURCE_ROW + RECORD_SOURCE_ROW"
+  },
+  "checks": {
+    "source_hashes": {
+      "pass": true,
+      "duration_receipt_and_six_source_csv_sha256_match": true,
+      "public_result_output_sha256_match": true
+    },
+    "counts_and_denominators": {
+      "pass": true,
+      "total_clause_rows_recomputed": 744,
+      "distinct_ads_taken_from_receipt": 545,
+      "no_cross_stratum_ad_sum_used_as_distinct_ads": true,
+      "multiple_clauses_retained": true
+    },
+    "sample_allocation": {
+      "pass": true,
+      "A": 4000,
+      "B": 4000,
+      "C": 2000
+    },
+    "standardization": {
+      "pass": true,
+      "detection_uses_pooled_cell_standardization": true,
+      "year_tables_keep_raw_and_nested_design_weighted_clause_results": true,
+      "standardization_not_substituted_for_ipw": true,
+      "supported_cells": 69
+    },
+    "weighted_year_strata": {
+      "pass": true,
+      "strata": 30,
+      "pooled_across_created_year_cohorts": true,
+      "independent_recomputed_max_abs_error": 0.0,
+      "weighted_means_are_clause_mass_weighted": true
+    },
+    "scope_and_claims": {
+      "pass": true,
+      "A_industry_domain_detected_ads": 3,
+      "C_is_explicitly_narrow_prefiltered_candidate_frame": true,
+      "C_not_broad_occupation_background": true,
+      "no_historical_claim": true,
+      "no_causal_claim": true,
+      "no_semantic_acceptance_claim": true,
+      "legacy_rule_diagnostics_are_labeled_as_such": true
+    },
+    "text_handoff": {
+      "pass": true,
+      "kunshan_records": 5495,
+      "wuzhen_records": 4505,
+      "total_records": 10000,
+      "declared_preparation_only": true,
+      "declared_no_text_read": true,
+      "declared_no_model_production": true
+    }
+  },
+  "correction_pass": {
+    "performed": false,
+    "reason": "No factual or material presentation error requiring correction was found."
+  },
+  "artifacts_checked": {
+    "results": "linkup/results_20261007",
+    "duration_artifacts": "linkup/artifacts/duration-from-123660254-123910178",
+    "text_handoff_receipt": "text_handoff_20261007/FIXED10000_TEXT_HANDOFF_RECEIPT.json"
+  },
+  "material_scope_limits": [
+    "C remains a narrow residual within the prefiltered technology-candidate frame; preserve the stated scope limit and do not generalize it to all non-A/B or all occupation ads."
+  ],
+  "material_errors": []
+}

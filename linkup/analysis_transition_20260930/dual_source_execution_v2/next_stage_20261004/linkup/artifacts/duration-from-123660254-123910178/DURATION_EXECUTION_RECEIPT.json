@@ -1,0 +1,37 @@
+{
+  "absence": "no matched duration sidecar row means no legacy-rule numeric duration detected; it is not zero experience",
+  "accepted_year_units": [
+    "year",
+    "years"
+  ],
+  "arm_counts": {
+    "A": 4000,
+    "B": 4000,
+    "C": 2000
+  },
+  "canonical_join": "JOB_HASH + SOURCE_FILE + SOURCE_ROW + RECORD_SOURCE_ROW",
+  "denominators": "detection tables use ads; clause-year tables retain every valid numeric clause and also report distinct ads; quality table counts missing, non-year, invalid, and unknown-bound rows",
+  "interpretation": "legacy-rule numeric clause summaries, not validated semantic measurements",
+  "matched_distinct_ads": 545,
+  "matched_numeric_clause_rows": 744,
+  "multiple_durations": "retained as separate clause rows; no cross-clause ad-level minimum/maximum collapse; BOUND_TYPE remains a grouping column",
+  "objects_executed": [
+    "general_work",
+    "industry_domain"
+  ],
+  "occupation_task": "unavailable in frozen legacy duration sidecars; no values fabricated",
+  "outputs": {
+    "design_weighted_numeric_clause_years.csv": "73e6b1eaf32f9600c1f9792346ae055be305f6bd426c7a30fb09712f480dfe77",
+    "design_weighted_numeric_detection.csv": "b62a46bd32552ce656c865af07c6b6203ed35ee5a465309912dded22a1d19d07",
+    "duration_numeric_quality_counts.csv": "17154b5c9eafc28d2195593eb5c7fca5a2dc0d085f7ea9a00cd5388ff7a53f69",
+    "pooled_cell_standardized_numeric_detection.csv": "dd394ef53b7cc092a67df89b804844a334ec7e1da330ece46df8cf62dc769192",
+    "raw_numeric_clause_years.csv": "e3128f54093d6fe7977464943193068c09712bc151fb00e0ee5564a2b043df14",
+    "raw_numeric_detection.csv": "a52fcc589dc77f8bfd4a87466aaf3885717c98bf9939fd4905552a213aeb5a9f"
+  },
+  "sample_receipt_sha256": "7f161b658ecdd0917e4f6fa4672c0c126a0f20e86d327242430f11a9750fb9fa",
+  "sample_rows": 10000,
+  "sample_sha256": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426",
+  "status": "complete",
+  "stored_bound_value_semantics": "coalesce(MIN_YEARS,MAX_YEARS): stored value for exact_or_unspecified, lower endpoint for minimum/range, and upper endpoint for maximum-only; BOUND_TYPE stays explicit",
+  "weights": "design-weighted files use nested inverse inclusion probability; standardized file separately applies original pooled-cell W_h"
+}

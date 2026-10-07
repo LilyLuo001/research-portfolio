@@ -1,0 +1,31 @@
+{
+  "recorded_at_utc": "2026-10-07T08:47:59.688444+00:00",
+  "status": "submitted_last_verified_running_not_materialization_complete",
+  "jobs": [
+    {
+      "region": "kunshan",
+      "job_id": "123910578",
+      "partition": "kshctest02",
+      "cpus": 4,
+      "memory": "10G",
+      "expected_rows": 5495,
+      "last_verified_state": "RUNNING",
+      "elapsed_at_last_snapshot": "00:01:21"
+    },
+    {
+      "region": "wuzhen",
+      "job_id": "46027883",
+      "partition": "wzhdtest",
+      "cpus": 4,
+      "memory": "10G",
+      "expected_rows": 4505,
+      "last_verified_state": "RUNNING",
+      "elapsed_at_last_snapshot": "00:02:10"
+    }
+  ],
+  "materialized_rows_verified": null,
+  "completion_receipts_retrieved": false,
+  "partial_output": "Materializer accumulates selected rows and writes atomically after locator reads; no useful partial byte count at snapshot.",
+  "model_calls": 0,
+  "no_new_sample": true
+}

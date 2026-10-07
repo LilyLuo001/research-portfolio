@@ -98,7 +98,7 @@ def main() -> None:
       FROM denom d CROSS JOIN {objects} o
       LEFT JOIN numer n ON d.arm=n.arm AND o.OBJECT_TYPE=n.OBJECT_TYPE AND d.scope=n.scope
        AND d.created_year IS NOT DISTINCT FROM n.created_year
-      ORDER BY arm,OBJECT_TYPE,scope,created_year
+      ORDER BY d.arm,o.OBJECT_TYPE,d.scope,d.created_year
     """
     weighted_detection = f"""
       WITH denom AS (
@@ -114,7 +114,7 @@ def main() -> None:
       FROM denom d CROSS JOIN {objects} o
       LEFT JOIN numer n ON d.arm=n.arm AND o.OBJECT_TYPE=n.OBJECT_TYPE AND d.scope=n.scope
        AND d.created_year IS NOT DISTINCT FROM n.created_year
-      ORDER BY arm,OBJECT_TYPE,scope,created_year
+      ORDER BY d.arm,o.OBJECT_TYPE,d.scope,d.created_year
     """
     standardized_detection = f"""
       WITH cells AS (

@@ -1,0 +1,27 @@
+{
+  "input_hashes": {
+    "sample_sha256": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426",
+    "source_plan_sha256": [
+      "273712b0e46d354f1f5628aecfd5d4312d4abf683bb00545477839fdead44d19",
+      "b70cc3875862b2e195e58616e0fb8fe51feae6152888998a247ff853b2eb3bc6"
+    ]
+  },
+  "invariants": {
+    "canonical_key_unique": true,
+    "regional_partition_key_conservation": true,
+    "unknown_region_is_error": true
+  },
+  "privacy": "regional selections, source maps, raw paths, and all later text remain private; this receipt contains only counts and cryptographic hashes",
+  "region_counts": {
+    "kunshan": {
+      "records": 5495,
+      "source_files": 1314
+    },
+    "wuzhen": {
+      "records": 4505,
+      "source_files": 1078
+    }
+  },
+  "sample_rows": 10000,
+  "status": "regional_materializer_inputs_prepared_no_text_read"
+}

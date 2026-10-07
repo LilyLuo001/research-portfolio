@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-10-05T00:04:00+08:00",
-  "status": "fixed_10000_sample_complete_duration_running",
+  "as_of": "2026-10-07T16:39:16+08:00",
+  "status": "fixed_10000_sample_and_legacy_duration_complete",
   "actual_sample": {
     "private_path": "private/run-123660254/FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet",
     "public_receipt": "artifacts/run-123660254/SAMPLE_EXECUTION_RECEIPT.json",
@@ -37,6 +37,12 @@
         "state": "FAILED",
         "elapsed": "00:00:22",
         "reason": "Python 3.8 does not support dictionary union operator"
+      },
+      {
+        "job_id": "123660260",
+        "state": "FAILED",
+        "elapsed": "00:02:36",
+        "reason": "DuckDB ambiguous ORDER BY arm after detection-table join; no aggregate output files written"
       }
     ],
     "sample_job": {
@@ -48,17 +54,23 @@
       "requested_memory": "10G"
     },
     "duration_job": {
-      "job_id": "123660260",
-      "dependency_satisfied": "afterok:123660254",
-      "state_at_receipt": "RUNNING",
-      "elapsed_at_receipt": "00:01:58",
+      "job_id": "123910178",
+      "sample_run": "123660254",
+      "state": "COMPLETED",
+      "elapsed": "00:03:41",
+      "exit_code": "0:0",
       "resources": "4 CPU, 10G, 1 hour hard cap",
       "scope": "semijoin completed 10,000 keys against existing duration sidecars; no raw-text or model extraction",
-      "receipt_gate": "requires complete 4,000/4,000/2,000 sample receipt and matching private-sample SHA-256"
+      "receipt_gate": "passed complete 4,000/4,000/2,000 sample receipt and matching private-sample SHA-256",
+      "public_artifacts": "artifacts/duration-from-123660254-123910178",
+      "compact_results": "results_20261007",
+      "matched_numeric_clause_rows": 744,
+      "matched_distinct_ads": 545
     }
   },
   "duration_code_acceptance": {
     "focused_fixture": "PASS: overall NULL-year numerator survives; bound types remain separate; year/years accepted; maximum-only value retained; four-field canonical occurrence join enforced",
+    "end_to_end_smoke": "PASS on cluster Python 3.8 runtime: actual summarizer created all six CSVs and receipt from synthetic A=4000/B=4000/C=2000 input; nonzero overall numerator, bound separation, four-key exclusion, and receipt hashes verified",
     "occupation_task": "unavailable in frozen legacy sidecars; no values fabricated",
     "semantic_status": "legacy-rule numerics, not validated semantic results",
     "denominators": "ad detection and clause-year summaries separate; multiple clauses retained; missing/invalid/non-year/unknown-bound counts emitted",

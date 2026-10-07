@@ -1,0 +1,9 @@
+topic,note
+sample,"Fixed actual sample: A=4,000; B=4,000; C=2,000."
+C_scope,"C is a residual within the prefiltered technology-candidate frame, not broad occupation background."
+detection_denominator,Detection rows use advertisement denominators; absence of a matched valid numeric clause is not zero experience.
+year_denominator,Year rows use valid numeric clause denominators; multiple clauses are retained and are not summed within advertisements.
+interpretation,"OBJECT_TYPE, REQUIREMENT_STRENGTH, and BOUND_TYPE remain separate; means are never averaged across these interpretations."
+stored_bound_value,"Stored value is coalesce(MIN_YEARS,MAX_YEARS): exact value, lower endpoint for minimum/range, or upper endpoint for maximum-only, with BOUND_TYPE explicit."
+measurement_status,"These are legacy-rule numeric diagnostics, not a model upgrade or validated semantic extraction."
+standardization,Pooled-cell standardization is available for detection only; year summaries report raw and nested-design-weighted clause results.
