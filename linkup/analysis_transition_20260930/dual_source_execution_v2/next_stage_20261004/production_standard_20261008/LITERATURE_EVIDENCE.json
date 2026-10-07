@@ -1,0 +1,207 @@
+{
+  "document_type": "bounded_primary_literature_evidence",
+  "created_on": "2026-10-07",
+  "research_question": "What does the primary literature support as practical acceptance logic for LLM-generated economic-research labels, while distinguishing production labeling from downstream inferential acceptance?",
+  "bottom_line": {
+    "universal_threshold": "None of the reviewed papers supplies a universal accuracy, F1, agreement, or correlation cutoff at which LLM labels become acceptable. Grimmer and Stewart explicitly make validation problem-specific and show that researchers decide whether observed performance is sufficient for the application.",
+    "researcher_decision": "Acceptance must be tied to the research construct, target population, error costs, and downstream quantity of interest. Numeric gates therefore require a documented project decision; they should not be presented as literature-mandated constants.",
+    "agreement_is_not_accuracy": "Repeated-model or AI-AI agreement is evidence of stability only. Gilardi et al. define accuracy and intercoder agreement as different metrics, while Asirvatham et al. distinguish agreement with human judgments from external/ground-truth validity. Two systems can agree and still be wrong in the same way.",
+    "generation_vs_inference": "A stable pipeline may be ready to generate provisional production labels before those labels are acceptable as plug-in measurements for causal or descriptive inference. Ludwig et al. require validation data to assess and correct measurement error for downstream estimation; absent reliable reference labels, AI-only agreement cannot supply that guarantee.",
+    "no_human_review_no_api_constraint": "Because this project declines human review and currently has no API, the reviewed human-benchmark and API-scale results cannot be treated as project validation or proof of deployable throughput. They support a design for later validation, not a claim that current labels are human-validated. Prediction-powered or debiasing methods also cannot repair inference without reliable validation measurements."
+  },
+  "practical_acceptance_logic_supported_by_the_sources": [
+    {
+      "stage": "1_label_specification",
+      "supported_standard": "Define each construct and label rule before scaling; freeze the operational codebook/prompt version and record any examples, model, generation settings, and post-processing. Treat a changed prompt or model as a changed measurement procedure that must be re-evaluated.",
+      "status": "literature-supported workflow principle; no universal numeric gate",
+      "basis": [
+        "Grimmer and Stewart: research questions and quantities of interest imply different models and validation methods.",
+        "Ludwig, Mullainathan, and Rambachan: seemingly innocuous prompt/model choices can change downstream estimates.",
+        "Gilardi et al.: all annotator groups received the same task instructions, making the codebook part of the evaluated procedure."
+      ]
+    },
+    {
+      "stage": "2_production_label_generation",
+      "supported_standard": "Use a held-out or otherwise out-of-sample evaluation design for the exact target population and report field/class-specific confusion information rather than relying on one aggregate agreement score. Stratification by field, class prevalence, source, time, or other consequential slices is a defensible project design when those slices may have different error patterns.",
+      "status": "held-out evaluation is direct guidance; the particular stratification variables and thresholds are researcher decisions",
+      "basis": [
+        "Grimmer and Stewart: separate training, validation, and test roles; cross-validation keeps predictions out of sample; confusion matrices reveal class-specific precision and recall hidden by overall accuracy.",
+        "Ludwig, Mullainathan, and Rambachan: researchers must define the target population and sampling procedure for evaluation.",
+        "Asirvatham, Mokski, and Shleifer: broad evaluation spans many topics and task types, so broad claims rest on cross-domain testing rather than a single aggregate example."
+      ]
+    },
+    {
+      "stage": "3_staged_production_decision",
+      "supported_standard": "Production can be staged when the frozen procedure is operationally stable and its observed failure profile is documented, with labels explicitly treated as provisional measurements. Escalate or quarantine fields/slices whose errors are unknown or material to the intended use. The literature supports application-specific sufficiency rather than perfection, but it does not authorize a particular pass number.",
+      "status": "synthesis from the sources; project owners must choose loss-based gates",
+      "basis": [
+        "Grimmer and Stewart present a 0.65-accuracy example and state that scholars may judge it sufficient depending on the application or take steps to improve it; this is an illustration of decision dependence, not a recommended threshold.",
+        "Asirvatham, Mokski, and Shleifer explicitly say their goal is not to claim flawless measurement and test multiple threats to validity."
+      ]
+    },
+    {
+      "stage": "4_downstream_inference_acceptance",
+      "supported_standard": "Before using labels as measured outcomes or covariates in economic estimation, quantify remaining misclassification/measurement error against reliable validation measurements and propagate or sensitivity-test its effect on the reported estimand. Label-generation readiness alone does not satisfy this inference gate.",
+      "status": "direct econometric requirement in Ludwig et al.; implementation requires reliable validation data",
+      "basis": [
+        "Ludwig, Mullainathan, and Rambachan: absent validation data, the magnitude and pattern of LLM errors and their effect on downstream parameters cannot be assessed; a small validation sample can be used for bias correction and valid inference.",
+        "Grimmer and Stewart: uncertainty in text-derived measurements should be carried into downstream models."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "grimmer_stewart_2013",
+      "citation": "Justin Grimmer and Brandon M. Stewart (2013), Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts, Political Analysis 21(3):267-297.",
+      "primary_url": "https://web.stanford.edu/~jgrimmer/tad2.pdf",
+      "claims": [
+        {
+          "claim": "Automated text methods require extensive, problem-specific validation; performance on a new dataset is not guaranteed.",
+          "locator": "Abstract; Section 1, pp. 1-2; Section 2.4, p. 5",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "There is no globally best method: the research question and quantity of interest determine useful models and validation methods.",
+          "locator": "Section 2.3, pp. 4-5",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "For supervised classification, an ideal workflow separates training, validation, and test roles; V-fold cross-validation approximates this while keeping evaluated predictions out of sample.",
+          "locator": "Section 5.2.3, pp. 12-13",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "Overall accuracy can conceal category-specific behavior; confusion matrices, precision, and recall diagnose the error profile. Whether demonstrated performance is sufficient depends on the application.",
+          "locator": "Section 5.2.4, pp. 13-14",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "A reported 0.65 accuracy in the worked example is not a recommended gate; the authors use it to show that sufficiency is application-dependent.",
+          "locator": "Section 5.2.4, p. 14",
+          "claim_type": "interpretive caution"
+        }
+      ]
+    },
+    {
+      "id": "ludwig_mullainathan_rambachan_2025_2026_revision",
+      "citation": "Jens Ludwig, Sendhil Mullainathan, and Ashesh Rambachan, Large Language Models: An Applied Econometric Framework, NBER Working Paper 33344; arXiv revision v4 dated December 5, 2025, later Annual Review of Economics 2026.",
+      "primary_url": "https://arxiv.org/html/2412.07031",
+      "claims": [
+        {
+          "claim": "The paper separates prediction from estimation. Prediction evaluation requires no training leakage; estimation using LLM labels as measurements requires validation data for valid downstream inference.",
+          "locator": "Abstract; Section 1; Sections 3 and 4; Section 6 checklist",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "For evaluation, researchers must define the target population and sampling procedure; an evaluation sample reflects out-of-sample performance only under the required no-leakage condition.",
+          "locator": "Sections 3.1-3.3",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "In estimation, prompt/model choices can yield materially different coefficients, signs, and significance. Without a validation sample, researchers cannot assess the magnitude or pattern of errors or their downstream effect.",
+          "locator": "Section 1, especially the discussion corresponding to HTML lines 109-115; Sections 4.2 and 4.4",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "A small validation sample can support empirical bias correction and consistent/asymptotically normal inference, but the method presupposes a reliable target measurement procedure in that validation sample.",
+          "locator": "Section 4.3; Appendix C",
+          "claim_type": "direct plus explicit applicability condition"
+        },
+        {
+          "claim": "For this project, AI-AI agreement without reliable validation labels does not meet the paper's estimation safeguard and cannot by itself justify plug-in inferential use.",
+          "locator": "Derived from Sections 4.1-4.4",
+          "claim_type": "application-specific inference"
+        }
+      ]
+    },
+    {
+      "id": "asirvatham_mokski_shleifer_2026",
+      "citation": "Hemanth Asirvatham, Elliott Mokski, and Andrei Shleifer (2026), GPT as a Measurement Tool, NBER Working Paper 34834.",
+      "primary_url": "https://cdn.openai.com/pdf/7517a586-5bfa-4b87-bd3d-6ea0e9e844c7/GPT-as-a-measurement-tool.pdf",
+      "claims": [
+        {
+          "claim": "Measurement validity is assessed through distinct threats: agreement with human judgments, external validity against ground truth, prompt brittleness/noise, and whether measurement is direct rather than driven by contamination or shortcuts.",
+          "locator": "Section 4.1, threats to validity, approximately pp. 17-19",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "Human labels are not necessarily ground truth. Agreement with humans is a first-pass validation, while external outcomes can test whether a measure captures real signal.",
+          "locator": "Sections 4.1 and 4.2.1-4.2.2, beginning around p. 19",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "The authors evaluate more than 1,000 classification tasks across more than 300 text datasets and examine performance across topic/task types; this supports their broad empirical claim but does not create a universal acceptance threshold for a new project.",
+          "locator": "Section 4.2.1; Figures 12-14, approximately pp. 25-27",
+          "claim_type": "direct evidence plus interpretive caution"
+        },
+        {
+          "claim": "Semantically equivalent prompt formulations should yield stable measurements, while substantively different attribute definitions should change results where relevant.",
+          "locator": "Section 4.1, item 3, prompt brittleness and noise",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "The authors explicitly do not claim flawless LLM measurement; their API-based GABRIEL evidence is not a substitute for validating this project's no-human-review, no-API workflow.",
+          "locator": "Opening of Section 4 and GABRIEL implementation description",
+          "claim_type": "direct limitation plus application-specific inference"
+        }
+      ]
+    },
+    {
+      "id": "gilardi_alizadeh_kubli_2023",
+      "citation": "Fabrizio Gilardi, Meysam Alizadeh, and Mael Kubli (2023), ChatGPT Outperforms Crowd-Workers for Text-Annotation Tasks, Proceedings of the National Academy of Sciences 120(30):e2305016120.",
+      "primary_url": "https://www.pnas.org/doi/10.1073/pnas.2305016120",
+      "claims": [
+        {
+          "claim": "Accuracy and intercoder agreement are separate metrics: accuracy is correctness against an agreed trained-human reference, while intercoder agreement measures whether two annotators in a group return the same class.",
+          "locator": "Materials and Methods, Evaluation Metrics",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "The study's accuracy calculations use trained-human annotations as a gold standard only on items where both trained annotators agreed. Therefore its evidence does not justify treating model-model agreement alone as accuracy.",
+          "locator": "Materials and Methods, Trained Annotators and Evaluation Metrics",
+          "claim_type": "direct plus interpretive implication"
+        },
+        {
+          "claim": "The exact same annotation instructions were given to ChatGPT, trained annotators, and crowd workers. This makes the task definition/codebook an integral part of the evaluated labeling procedure.",
+          "locator": "Materials and Methods, Annotation Tasks, Trained Annotators, Crowd Workers, and ChatGPT",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "The study used the gpt-3.5-turbo API and repeated calls. Its cost and scale findings do not establish feasibility for a project with no API.",
+          "locator": "Materials and Methods, ChatGPT",
+          "claim_type": "direct limitation plus application-specific inference"
+        }
+      ]
+    },
+    {
+      "id": "hansen_2026",
+      "citation": "Anne Lundgaard Hansen (2026), Validating Large Language Model Annotations, FEDS 2026-020, March 11 draft.",
+      "primary_url": "https://www.federalreserve.gov/econres/feds/files/2026020pap.pdf",
+      "claims": [
+        {
+          "claim": "Proposes annotation backtranslation, separation, and reconstruction tests when reliable external benchmark labels are unavailable.",
+          "locator": "Sections 2–3",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "Opposing systematic errors can evade the framework; results depend on simulation prompts and semantic embeddings.",
+          "locator": "Section 2.1, pp.9–10; Section6, pp.26–27",
+          "claim_type": "direct"
+        },
+        {
+          "claim": "This is a recent working-paper proposal, not a universal professional acceptance standard. We do not reproduce its tests; exact evidence checking and boundary cases do not establish that its prerequisites passed.",
+          "locator": "Project decision D43",
+          "claim_type": "application boundary"
+        }
+      ]
+    }
+  ],
+  "non_claims": [
+    "No reviewed source mandates a universal 80%, 90%, 0.8 kappa, or other numeric acceptance threshold.",
+    "AI-AI agreement is not evidence of truth unless connected to an independently credible reference or external outcome.",
+    "Few-shot examples or a detailed codebook do not eliminate the need to evaluate the final frozen procedure; they are components of that procedure.",
+    "Production generation of labels does not by itself authorize their use as error-free regressors, outcomes, treatments, or controls.",
+    "Prediction-powered inference, debiasing, or measurement-error correction cannot identify and fix bias without reliable validation measurements.",
+    "Results from API-based studies do not solve the current project's lack of an API or create a validated human benchmark when human review is refused."
+  ]
+}

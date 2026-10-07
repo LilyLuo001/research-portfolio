@@ -1,0 +1,79 @@
+{
+  "batch001": {
+    "arm_counts": {
+      "A": 8,
+      "B": 8,
+      "C": 8
+    },
+    "blocks": 6,
+    "eligible_unique_texts_after_exclusion_by_arm": {
+      "A": 1900,
+      "B": 3824,
+      "C": 1809
+    },
+    "exact_text_unique": true,
+    "excluded_all_discoverable_reviewed_exact_texts": true,
+    "records_per_block": 4,
+    "selection_seed": "production-standard-20261008-batch001-v1",
+    "unique_exact_texts": 24
+  },
+  "created_at": "2026-10-07T23:34:00+08:00",
+  "execution": {
+    "git_action": false,
+    "llm_called": false,
+    "remote_cluster_called": false
+  },
+  "full_queue": {
+    "all_keys_join_to_queue": true,
+    "duplicate_members_beyond_unique": 2365,
+    "queue_key": "exact UTF-8 text SHA-256",
+    "queue_seed": "production-standard-20261008-full7635-v1",
+    "resume_contract": "Process stable queue_position_1based order and checkpoint completed exact_text_sha256 values; restart skips completed hashes without relabeling duplicate sample rows.",
+    "represented_fixed_sample_keys": 10000,
+    "unique_exact_texts": 7635
+  },
+  "input_sha256": {
+    "merged_fixed10000": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+    "unique_exact_text_cache": "7d8e6922c8b63f1936fc59dabc48ce983d28d618ea07dc64dcedb61cd6c2e16a"
+  },
+  "output_sha256": {
+    "batch_label_pack_private": "255d91586f2e086f48ae792e3a43d2cde49a62b5b64dd3a849ffc6b56ff1d78e",
+    "batch_unblind_manifest_private": "8349d8334b61a4258ec12b5fafe95c630c5a2188a7c9888e9a4b29f29d6b5061",
+    "blocks_private": [
+      "f492c3d5d458536cc265eb4ab74e28782f601ccdb17356eb4cb306af45903030",
+      "0cc93fa933af9d94b2ae4e989750e75f3b559ee9197861d2e77b272397a2a26d",
+      "e56ebc7db7ef2e53ed629a8dc30a01356ad6339509dd9217955f9cac5d824991",
+      "106b30a44b4c78b422af5b75aa55568036b64c35b6d1aa25a5a09f8ff763d801",
+      "89c602f0e76755e2a36f11266b7ce275db757b49a9ce8b510e2fcae440fec916",
+      "812b1a59dfdec6a7b8b26935161bab0f0910bb67f1d1c715e8aed929d39f1258"
+    ],
+    "full_unique_queue_private": "5ea54b141e18ebef4468fff8dfff3e81a196679e7caaece138303cf995f25a4e",
+    "represented_fixed10000_keys_private": "987f4369643bdd353b7e881f7ccf58dcf7be0f29853b9f118a92b4076833b04d"
+  },
+  "privacy": "Public receipt contains aggregate counts, methods, and whole-file hashes only. Source text, record IDs, canonical keys, cells, arms, and weights remain in private artifacts.",
+  "review_exclusion": {
+    "artifact_sha256": [
+      "178ca08d1bdbdcfec0edbf7307ce32e9b94af730b7b5ca5bda3be9f0766d5b8b",
+      "2f06c0dea827e26d50bfb897bdca1cd57d3a2eb0598374a84b2106c33825064e",
+      "50a9386f1cb2513ff6be41712f92d76661c9251e790ba42f36efcf72504ca286",
+      "585a460b699be71737714269d0c73e77f6e5540a0a7ff8265016670f4aa60d8c",
+      "5b51d89074c6d77ea600ce1a74fdf1e19165c245cc8879237a7f93d931402915",
+      "6551439c7ebadcffb499cd32aa3ee8ba087f22a6e54854872a683b3e3457694b",
+      "6551439c7ebadcffb499cd32aa3ee8ba087f22a6e54854872a683b3e3457694b",
+      "7fa2f9db601b89407c4143aaa449073ec38dd92077fbd469fdce46f8033af6a4",
+      "81b851557e4c52cc1dcb0292d70d5ca8016cb7d145b733088204fa660e9911f5",
+      "895975dddecc81403695148d28e07295c7c681095bab734701b9c5ffb7203048",
+      "91496026145eaec1acc3f77e76ab562521428c873f5d36a6a9fe24b4ecf14975",
+      "c3d6e11d9a122446e4c80934df90a89882df4835ee12db12252a6274c4d2e577",
+      "ca5a2f741af57efa57739caf296169bdd9abc90b7e20503ed75d1b9406f92f95",
+      "ca5a2f741af57efa57739caf296169bdd9abc90b7e20503ed75d1b9406f92f95"
+    ],
+    "artifacts_discovered": 30,
+    "artifacts_with_original_text": 14,
+    "review_rows_seen": 848,
+    "unique_exact_text_hashes": 201
+  },
+  "scope": "processing order only; not a new inferential sample and no fixed-10000 probabilities, weights, cells, arms, or source rows were changed",
+  "stage_name": "production_standard_20261008",
+  "status": "staged"
+}

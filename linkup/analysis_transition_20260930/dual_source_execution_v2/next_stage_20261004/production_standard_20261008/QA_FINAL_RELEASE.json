@@ -1,0 +1,38 @@
+{
+  "status": "PASS_SCOPED_FINAL_CANDIDATE_QA",
+  "eligible_rows": 24,
+  "eligible_object_fields": 72,
+  "candidate_rows": 22,
+  "partial_rows": 2,
+  "decision_count": 8,
+  "changed_main_count": 2,
+  "independent_audit6": {
+    "rows": 6,
+    "agreement_by_object": {
+      "general_work": 5,
+      "occupation_task": 6,
+      "industry_domain": 6
+    },
+    "joint": 5,
+    "raw_semantic_comparison_separate_from_validation_errors": true,
+    "accuracy_claim": false,
+    "blinding": "Primary-label blind; reviewer previously prepared source pack and may have seen arm metadata."
+  },
+  "raw_outputs_byte_unchanged": "Exported-bound raw unchanged; primary had two logged quote-encoding repairs before binding. First-output bytes were not independently captured.",
+  "exact_root_quote_hash_binding_checked": true,
+  "semantic_accuracy_claim": false,
+  "private_outputs_excluded": true,
+  "queue": {
+    "done": 24,
+    "remaining": 7611,
+    "completed_batch_represented_original_rows": 44,
+    "represented_original_sample_rows": 10000,
+    "immutable_unique_exact_text_queue": 7635,
+    "status": "bounded_batch_complete_no_unattended_job_claim"
+  },
+  "scope": "Mechanical finalization and raw-versus-final presence/error accounting; final values remain candidate measurements, not accuracy claims.",
+  "final_field_status_counts": {
+    "candidate": 69,
+    "unknown": 3
+  }
+}

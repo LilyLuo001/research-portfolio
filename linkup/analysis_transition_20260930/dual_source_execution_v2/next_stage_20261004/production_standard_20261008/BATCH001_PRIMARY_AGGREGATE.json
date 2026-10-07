@@ -1,0 +1,69 @@
+{
+  "absence_rule": "A not_mentioned state is the model's absence claim and is not asserted as objective truth.",
+  "denominator_rule": "Every bound source row remains in every object denominator; unknown and error outcomes are null, never zero or omitted.",
+  "normalization_counts": {},
+  "objects": {
+    "general_work": {
+      "duration_assessment_counts": {
+        "candidate": 6,
+        "error": 1
+      },
+      "eligible_denominator_rows": 24,
+      "main_prior_required_unconditional_counts": {
+        "0": 21,
+        "1": 2,
+        "null": 1
+      },
+      "outcome_status_counts": {
+        "candidate": 23,
+        "error": 0,
+        "unknown": 1
+      }
+    },
+    "industry_domain": {
+      "duration_assessment_counts": {
+        "candidate": 11,
+        "error": 0
+      },
+      "eligible_denominator_rows": 24,
+      "main_prior_required_unconditional_counts": {
+        "0": 20,
+        "1": 4,
+        "null": 0
+      },
+      "outcome_status_counts": {
+        "candidate": 24,
+        "error": 0,
+        "unknown": 0
+      }
+    },
+    "occupation_task": {
+      "duration_assessment_counts": {
+        "candidate": 99,
+        "error": 3
+      },
+      "eligible_denominator_rows": 24,
+      "main_prior_required_unconditional_counts": {
+        "0": 4,
+        "1": 19,
+        "null": 1
+      },
+      "outcome_status_counts": {
+        "candidate": 23,
+        "error": 0,
+        "unknown": 1
+      }
+    }
+  },
+  "privacy": "Aggregate receipt contains no record IDs, source text, evidence quotes, raw model output, or record-level results.",
+  "private_export_sha256": "5fb041a5b0995362db40c0c206f2f4ce8d73f0cd26928379836402011c42511f",
+  "raw_output_jsonl_sha256": "bb52d69d4a975ae81e499a9124067831f9192729ee78abd5a3af031b1c8bd502",
+  "row_count": 24,
+  "row_status_counts": {
+    "candidate": 23,
+    "partial": 1
+  },
+  "schema_version": "linkup_field_candidate_public_receipt_v1.0.0",
+  "source_jsonl_sha256": "255d91586f2e086f48ae792e3a43d2cde49a62b5b64dd3a849ffc6b56ff1d78e",
+  "status": "exported_with_unresolved_or_quarantined_fields"
+}

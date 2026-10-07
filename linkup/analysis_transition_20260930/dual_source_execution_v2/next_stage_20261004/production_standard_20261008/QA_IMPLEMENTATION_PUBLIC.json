@@ -1,0 +1,17 @@
+{
+  "status": "PASS_SCOPED_IMPLEMENTATION_QA",
+  "tests": {"test_export_candidates": 10, "passed": 10},
+  "batch001": {
+    "private_export_rows": 24,
+    "aggregate_row_count": 24,
+    "object_denominators": {"general_work": 24, "occupation_task": 24, "industry_domain": 24},
+    "aggregate_unknown_rows": {"general_work": 1, "occupation_task": 1, "industry_domain": 0},
+    "aggregate_error_rows": {"general_work": 0, "occupation_task": 0, "industry_domain": 0},
+    "aggregate_null_required_counts": {"general_work": 1, "occupation_task": 1, "industry_domain": 0},
+    "private_record_level_errors_or_unknowns": 0,
+    "source_rows": 24
+  },
+  "scope": "Export implementation and denominator/error/unknown preservation only; no semantic-validity or accuracy claim.",
+  "known_boundary": "Targeted review covers insufficient-context duration cases; no parser broadening was performed.",
+  "privacy": {"raw_text_excluded": true, "record_ids_excluded": true, "secrets_excluded": true, "private_outputs_excluded": true}
+}
