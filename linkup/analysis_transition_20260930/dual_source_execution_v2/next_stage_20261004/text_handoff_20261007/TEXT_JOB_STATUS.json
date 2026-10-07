@@ -1,5 +1,5 @@
 {
-  "recorded_at_utc": "2026-10-07T08:47:59.688444+00:00",
+  "recorded_at_utc": "2026-10-07T10:21:00+00:00",
   "status": "submitted_last_verified_running_not_materialization_complete",
   "jobs": [
     {
@@ -9,8 +9,15 @@
       "cpus": 4,
       "memory": "10G",
       "expected_rows": 5495,
+      "source_file_packs": 1314,
       "last_verified_state": "RUNNING",
-      "elapsed_at_last_snapshot": "00:01:21"
+      "elapsed_at_last_snapshot": "01:36:05",
+      "node": "g01r2n16",
+      "average_cpu_time": "01:04:35",
+      "maximum_rss_kib": 1279132,
+      "maximum_disk_read_bytes": 254314460754,
+      "maximum_disk_write_bytes": 3537,
+      "scheduler_reason": "None"
     },
     {
       "region": "wuzhen",
@@ -19,13 +26,22 @@
       "cpus": 4,
       "memory": "10G",
       "expected_rows": 4505,
+      "source_file_packs": 1078,
       "last_verified_state": "RUNNING",
-      "elapsed_at_last_snapshot": "00:02:10"
+      "elapsed_at_last_snapshot": "01:37:11",
+      "node": "b01r3n17",
+      "average_cpu_time": "01:22:59",
+      "maximum_rss_kib": 1212148,
+      "maximum_disk_read_bytes": 334081608668,
+      "maximum_disk_write_bytes": 18972,
+      "scheduler_reason": "None"
     }
   ],
   "materialized_rows_verified": null,
   "completion_receipts_retrieved": false,
   "partial_output": "Materializer accumulates selected rows and writes atomically after locator reads; no useful partial byte count at snapshot.",
+  "health_interpretation": "Both jobs were actively reading source packs with nonzero CPU and disk-read counters; neither was pending, failed, or idle at the snapshot.",
+  "collector_ready": "collect_and_build_exact_text_cache.py retrieves files only after both Slurm states are COMPLETED and then runs exact locator/hash verification before building private outputs.",
   "model_calls": 0,
   "no_new_sample": true
 }

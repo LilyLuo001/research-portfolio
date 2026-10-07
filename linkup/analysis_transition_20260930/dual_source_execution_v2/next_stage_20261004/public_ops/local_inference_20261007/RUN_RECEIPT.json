@@ -1,0 +1,86 @@
+{
+  "schema_version": "linkup-local-inference-route-receipt-v1",
+  "status": "FAILED_BOUNDED_ATTEMPT",
+  "slurm": {
+    "job_id": "123914627",
+    "partition": "kshctest02",
+    "state": "FAILED",
+    "started_at": "2026-10-07T18:26:04+08:00",
+    "ended_at": "2026-10-07T18:26:11+08:00",
+    "elapsed": "00:00:07",
+    "exit_code": "127:0",
+    "allocated_cpus": 16,
+    "requested_memory": "32G",
+    "walltime_limit": "01:00:00",
+    "batch_max_rss": "4588K",
+    "allocated_core_seconds": 112,
+    "allocated_core_hours": 0.0311111111,
+    "maximum_authorized_core_hours": 16
+  },
+  "submitted_code": {
+    "file": "run_qwen3_8b_cpu.sbatch",
+    "sha256": "38d3d329977b72e5e79a91163ee8351174e3b9d5beaefb87072a5f2644c41677"
+  },
+  "corrected_unexecuted_code": {
+    "file": "run_qwen3_8b_cpu.sbatch",
+    "sha256": "b7acf8bdb7f6aeda5522f5fe25482e0a790922a201cd0fd566ac315e50ae29e1",
+    "correction": "Load python/3.8.10 before installing the EXIT receipt trap and use that module's python executable.",
+    "executed": false
+  },
+  "completed_stage": "verify_inputs",
+  "failure_stage": "install_pinned_cmake",
+  "primary_failure": {
+    "operation": "download official Kitware CMake SHA-256 manifest through the compute-only cluster proxy",
+    "curl_exit_code": 7,
+    "message": "Failed connect to 10.15.2.115:3000; No route to host",
+    "interpretation": "The configured compute-node proxy endpoint was unreachable during the single authorized setup attempt."
+  },
+  "secondary_failure": {
+    "operation": "write the job-native failure receipt from the EXIT trap",
+    "exit_code": 127,
+    "message": "python3: command not found",
+    "interpretation": "The submitted job did not load the available python/3.8.10 module before invoking its receipt writer. This explains the scheduler exit code but did not cause the earlier network failure."
+  },
+  "downloaded_artifacts": {
+    "runtime_bytes": 0,
+    "model_bytes": 0,
+    "model_revision": null,
+    "model_sha256": null
+  },
+  "remote_files_created": [
+    {
+      "role": "unchanged_prompt_copy",
+      "bytes": 5076,
+      "sha256": "51ff8202bb519b4d4f2fc455dbc18de3f6deccc3a32abba4ca63792dfadcefb7"
+    },
+    {
+      "role": "unchanged_schema_copy",
+      "bytes": 5119,
+      "sha256": "fd3a0add7e02ad2d37303cc1ce2e3241e5ec916723847a47581b45283917ee8c"
+    },
+    {
+      "role": "synthetic_source_copy",
+      "bytes": 125,
+      "sha256": "eb3c8a2bdfad32a887dc08982c9faddca2fc6f077aa029e21928af25b49dabea"
+    }
+  ],
+  "scheduler_logs": {
+    "stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "bytes": 782,
+      "sha256": "27414da9fc5bc34964cbc4f3fd05fa6852cd379efd59ac6e0f6bf70f9c91200d"
+    }
+  },
+  "measurement_result": {
+    "documents_attempted": 0,
+    "documents_completed": 0,
+    "synthetic_response": null,
+    "route_operational": false,
+    "quality_certified": false
+  },
+  "inference_limits": "The network-routing failure occurred before runtime build, model download, and inference. It is not evidence about CPU inference feasibility, model throughput, semantic accuracy, or measurement quality.",
+  "decision": "Stop after the one bounded runtime/model setup attempt. Do not launch a second model stack or the 10,000-record run. A future attempt requires a working compute-node egress route and an explicit Python module load before setup begins."
+}

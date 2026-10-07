@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-07",
+  "owner": "GPT-6/high",
+  "decisions": [
+    {
+      "id": "D33",
+      "issue": "No configured paid model API; whether to keep waiting or establish a local route",
+      "decision": "One isolated official Qwen3-8B-GGUF Q4_K_M / llama.cpp feasibility attempt on existing authorized CPU compute; no bulk deployment until measured runtime and evidence. Hygon GPU compatibility not assumed.",
+      "limits": {
+        "compute_hours_max": 1,
+        "cpu_max": 16,
+        "memory_gb_max": 32,
+        "download_gb_max": 8,
+        "benchmark_documents_max": 4,
+        "paid_api_calls": 0
+      },
+      "basis": "Implementation decision by GPT-6, supported by official model license/runtime docs, not a research finding.",
+      "sources": [
+        "https://huggingface.co/Qwen/Qwen3-8B-GGUF",
+        "https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md"
+      ],
+      "execution_update": {
+        "probe_job": "123914479",
+        "probe_status": "COMPLETED",
+        "main_trial_job": "123914627",
+        "main_trial_status": "FAILED",
+        "elapsed_seconds": 7,
+        "primary_blocker": "Compute-node configured proxy unreachable during CMake bootstrap download.",
+        "secondary_defect": "Failure-receipt trap referenced python3 before loading compute Python module; patched script requires separate future execution.",
+        "model_downloaded": false,
+        "inference_run": false,
+        "interpretation": "Network failure provides no evidence about model speed or semantic quality. No bulk run or automatic retry."
+      }
+    },
+    {
+      "id": "D34",
+      "issue": "What AI-only review can establish",
+      "decision": "Continue bounded AI-assisted evidence checking per user preference. Report agreement and source-span validity, not truth accuracy or measurement-error-corrected inference. Prior failed semantic checks stay recorded; successful local runtime is not semantic acceptance.",
+      "basis": "Ludwig et al. distinguish estimating economic concepts from prediction and show the importance of validation for downstream inference. GABRIEL reports strong performance benchmarked against human annotations; its results do not validate this task or the proposed smaller local model.",
+      "sources": [
+        "https://www.nber.org/papers/w33344",
+        "https://shleifer.scholars.harvard.edu/sites/g/files/omnuum10626/files/2026-02/Paper%20PDF%20%28February%202026%29.pdf"
+      ]
+    },
+    {
+      "id": "D35",
+      "issue": "Reduce inference cost without changing sample weights",
+      "decision": "After exact text retrieval, cache extraction only for byte-identical decoded original-text SHA256 groups. Retain all10000 canonical keys and their individual sample weights. No fuzzy/near-template merging. Group shared text in review reporting; duplicate observations are not independent model validations.",
+      "basis": "Engineering and sampling decision by GPT-6; no claim that duplicates have equal labour-market histories.",
+      "sources": []
+    },
+    {
+      "id": "D36",
+      "issue": "How to interpret current numeric results",
+      "decision": "Keep general numeric-expression contrast7.529%vs1.928% as legacy-rule descriptive statistic. Do not infer industry-year differences from only3A ads, do not pool incompatible bounds into an overall tenure requirement, and do not read current body as a historical requirements panel.",
+      "basis": "Actual10000sample duration results; vendor correspondence states job hash tracksURL and description may update.",
+      "sources": [
+        "../linkup/results_20261007/RESULTS_AND_DECISION_CN.md",
+        "User-supplied LinkUp correspondence (date not supplied)"
+      ]
+    }
+  ],
+  "status_note": "Operational actions require actual execution receipts; this ledger is not a completion claim."
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "linkup-local-inference-compute-probe-v1",
+  "status": "COMPLETED",
+  "slurm_job_id": "123914479",
+  "partition": "kshctest02",
+  "host": "h17r2n00",
+  "elapsed": "00:00:04",
+  "exit_code": "0:0",
+  "requested_resources": {
+    "cpus": 1,
+    "memory": "1G",
+    "walltime": "00:05:00"
+  },
+  "observed": {
+    "cpu": "Hygon C86 7185 32-core Processor",
+    "operating_system": "CentOS Linux 7 (Core)",
+    "llama_cli": null,
+    "llama_server": null,
+    "cmake": "2.8.12.2",
+    "gcc": "7.3.1",
+    "git": "1.8.3.1",
+    "compute_only_proxy_script": "present",
+    "qwen3_8b_gguf_cache": null
+  },
+  "interpretation": "No existing llama.cpp runtime or cached Qwen3-8B-GGUF model was found at the bounded paths tested. The system CMake is below llama.cpp's documented 3.14 minimum, so the single trial uses an isolated pinned CMake binary and the observed GCC 7.3 CPU toolchain. Hygon DCU compatibility is not assumed."
+}
