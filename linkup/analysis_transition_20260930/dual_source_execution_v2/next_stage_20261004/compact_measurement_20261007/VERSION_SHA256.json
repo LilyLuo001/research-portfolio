@@ -1,0 +1,41 @@
+{
+  "contract_version": "linkup_compact_measurement_v1.0.0",
+  "prompt_version": "linkup_compact_extraction_v1.0.0",
+  "date_frozen": "2026-10-07",
+  "status": "READY_NO_SUBMISSION",
+  "files": {
+    "COMPACT_CONTRACT.md": "2df793196a6abd26e1360fa978d9664e270be2ba6fa343aba93770cec88b8c8d",
+    "prompts/compact_extraction_v1.md": "dd9188e396a9c991cb516a4086e0df565da7dce2ad151ee76f80af549d1c5b98",
+    "schema/compact_model_output.schema.json": "7c329bf55ff6e26c50cfa3346cf43d7e80f2237fec9423051b276e03718345a8",
+    "expand_and_validate.py": "4adf4f585646c3fc3775ad80cd1c993ea7d854f6d4f0705ae70bbfeae56f601f",
+    "expand_and_validate_frozen_20261007.py": "b1481846523c308c8e401923811ab3d0d980a071b19d7fafff6a6368c4d01b58",
+    "test_expand_and_validate.py": "f22e79e8b6d0b6ce3fb92d9d64833ccfc9c0b83c4ba3dc2492ec78bc0e267622",
+    "RUN_PLAN.md": "ba636579a7f6a37ac47ecf10066316dd116fe6d32f81032058e2ccd5ef39737d",
+    "README.md": "e6e30587b822f772506d0dc19b6c18a32170a481e4ae3b8d9c5c132e690afdde",
+    "compare_readers.py": "631891b2971d2cb99154ef5ff57c7499129e3d033d794c7c7ec9835ec3918eaa",
+    "test_compare_readers.py": "391ad20eb61af87f5b76da26e1956a7c0a6421547e4a39909868813bbc9627b5",
+    "CAPACITY_DECISION.json": "f4171ef3c06ffd7373c25d9bd0ea8429b5679ab1814cd049f69ba689985c2e88"
+  },
+  "runtime_pin": {
+    "llama_cpp_commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+    "llama_completion_sha256": "66c94c83f239a97c458e772295c9fc556ca8ea743dbb7c704e20ffb758bd533a",
+    "model_revision": "7c41481f57cb95916b40956ab2f0b139b296d974",
+    "model_file_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785"
+  },
+  "verification": {
+    "unit_tests": 10,
+    "unit_test_result": "PASS",
+    "schema_check": "PASS",
+    "python_compile_check": "PASS"
+  },
+  "validation_patch": {
+    "reason": "Before reader outputs, two deterministic false-positive paths were found: nonnumeric infinitive 'to' was treated as a range cue, and unrelated number-plus-year text forced a duration label.",
+    "scope": "Range cues now require adjacent numeric bounds. Duration omission is left to semantic review. Exact quote matching, unique offsets, model-supplied duration value support, range order, schema, and state-shape checks remain strict.",
+    "original_validator_copy": "expand_and_validate_frozen_20261007.py",
+    "original_validator_sha256": "b1481846523c308c8e401923811ab3d0d980a071b19d7fafff6a6368c4d01b58",
+    "prompt_changed": false,
+    "economic_definitions_changed": false
+  },
+  "submission": null,
+  "note": "This manifest freezes the compact implementation, deterministic validation correction, comparison code, and plan. It excludes private samples, blind review, root decision files, and generated runtime artifacts."
+}

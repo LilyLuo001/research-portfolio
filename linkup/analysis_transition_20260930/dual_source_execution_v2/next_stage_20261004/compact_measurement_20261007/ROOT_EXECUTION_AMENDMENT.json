@@ -1,0 +1,22 @@
+{
+  "decision_id": "D41",
+  "date": "2026-10-07",
+  "owner": "GPT-6/high",
+  "timing": "Before either reader output was available",
+  "reason": "The preliminary currentCPU route scale conversion already exceeds historical totalcardhours. No additional compute job is justified merely to repeat this known capacity gap.",
+  "change_from_precommit": "Run one compact semantic reading per source per reader with existing authorized conversation agents: Sol/medium primary and Terra/medium independent blind reader. The20sourcepack is read concurrently, including4development and16unusedA/B diagnostics. Total40source-readings; root adjudication separate. No paidAPI or remotecompute.",
+  "unchanged": [
+    "Frozen fixed10000 sample, originalweights and oldT1T6",
+    "Three-objecteconomicdefinitions and compactprompt/schema",
+    "No source replacement basedonoutputs",
+    "Rawfirstlabels retained; mechanicalcorrectionslogged",
+    "No repeated semantic generation/promptor modelsearch",
+    "No formalbulk without bothquality and actualcapacity"
+  ],
+  "adjudication_policy": {
+    "maximum_unique_documents_for_root_source_review": 10,
+    "selection": "Four prior development cases, then up to four heldout cases with substantive main-estimand disagreements in sourceorder, then up to two agreed heldoutcases with distinctarms when available. Unreviewed substantive discrepancies remain unresolved, not silentlyaccepted.",
+    "acceptance_scope": "AI-only source-consistency diagnosis; no estimated truthaccuracy. Remaining substantive core errors preclude unattendedproduction."
+  },
+  "capacity_scope": "Conversation agents can finish bounded diagnostics but do not supply an independently configured bulk API or prove 7635-text feasibility. No production route is accepted for formal10000 extraction."
+}

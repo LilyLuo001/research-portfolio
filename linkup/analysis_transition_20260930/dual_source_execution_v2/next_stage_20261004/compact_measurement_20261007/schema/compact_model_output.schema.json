@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/linkup/compact_measurement_v1/model_output.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["findings"],
+  "properties": {
+    "findings": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"$ref": "#/$defs/finding"}
+    }
+  },
+  "$defs": {
+    "duration": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "minimum"},
+            "value": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "lower", "upper"],
+          "properties": {
+            "kind": {"const": "range"},
+            "lower": {"type": "number", "exclusiveMinimum": 0},
+            "upper": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "exact"},
+            "value": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "stated_unspecified"},
+            "value": {"type": "number", "exclusiveMinimum": 0}
+          }
+        }
+      ]
+    },
+    "mention": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition_mode", "strength", "qualification_scope", "quote", "duration"],
+      "properties": {
+        "condition_mode": {"enum": ["prior_experience", "knowledge_proficiency", "unknown"]},
+        "strength": {"enum": ["required", "preferred", "unknown"]},
+        "qualification_scope": {"enum": ["unconditional", "education_substitution", "other_conditional", "unknown"]},
+        "quote": {"type": "string", "minLength": 1},
+        "duration": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/duration"}]}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object", "state", "state_quote", "mentions"],
+      "properties": {
+        "object": {"enum": ["general_work", "occupation_task", "industry_domain"]},
+        "state": {"enum": ["positive", "no_experience", "not_mentioned", "unknown"]},
+        "state_quote": {"type": ["string", "null"]},
+        "mentions": {"type": "array", "items": {"$ref": "#/$defs/mention"}}
+      }
+    }
+  }
+}

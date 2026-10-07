@@ -1,0 +1,23 @@
+{
+  "decision_date": "2026-10-07",
+  "status": "NO_FURTHER_QWEN_CPU_RUN_THIS_ROUND",
+  "production_authorized": false,
+  "basis": {
+    "route": "existing pinned Qwen3-8B Q4_K_M llama.cpp CPU route",
+    "prior_observation": "One deliberately difficult full-contract record used 148.9 seconds of prompt evaluation and 289.4 seconds of generation on 16 CPU cores.",
+    "compact_per_record_planning_range_minutes": [2.5, 4.0],
+    "unique_texts_for_scale_projection": 7635,
+    "rough_scheduler_hours_before_overhead": [318, 509],
+    "scheduler_required_dcu_cards_per_job": 2,
+    "rough_dcu_card_hours_before_overhead": [636, 1018],
+    "historical_total_entitlement_card_hours": 200,
+    "current_remaining_quota_verified": false
+  },
+  "interpretation": "The compact figures are a rough projection from prior timing, not a new benchmark. The projected CPU allocation exceeds the historical total entitlement, and the current remaining balance is unknown.",
+  "external_api": {
+    "available_for_this_work": false,
+    "paid_api_authorized": false
+  },
+  "quality_route": "Use the two already-authorized independent chat-agent readings for the capped 20-document diagnostic comparison.",
+  "limits": "This decision does not establish that GPU inference is infeasible overall and does not authorize production or bulk inference."
+}

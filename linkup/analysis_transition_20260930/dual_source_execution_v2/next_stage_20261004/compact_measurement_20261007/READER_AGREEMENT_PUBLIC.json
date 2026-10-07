@@ -1,0 +1,350 @@
+{
+  "binding": {
+    "reader_order_sidecars_match_source_positions": true,
+    "reader_rows_each": 20,
+    "reader_transport_modes": {
+      "blind_terra": {
+        "positional": 20
+      },
+      "primary_sol": {
+        "positional": 20
+      }
+    },
+    "source_exact_texts_unique": true,
+    "source_manifest_order_and_hash_match": true,
+    "source_record_ids_unique": true,
+    "source_records": 20
+  },
+  "groups": {
+    "heldout_A": {
+      "exact_validator": {
+        "blind_terra": {
+          "error_category_counts": {
+            "state_shape": 11
+          },
+          "failed": 8,
+          "records": 8,
+          "valid": 0
+        },
+        "primary_sol": {
+          "error_category_counts": {},
+          "failed": 0,
+          "records": 8,
+          "valid": 8
+        }
+      },
+      "reader_agreement_counts": {
+        "duration_bound_signature": {
+          "all_objects": {
+            "agree": 0,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 1,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 1,
+              "comparable": 8
+            }
+          }
+        },
+        "label_signature": {
+          "all_objects": {
+            "agree": 0,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 1,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 1,
+              "comparable": 8
+            }
+          }
+        },
+        "main_estimand_presence": {
+          "all_objects": {
+            "agree": 6,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 8,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 8,
+              "comparable": 8
+            }
+          }
+        },
+        "object_state": {
+          "all_objects": {
+            "agree": 3,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 4,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 8,
+              "comparable": 8
+            }
+          }
+        }
+      },
+      "records": 8
+    },
+    "heldout_B": {
+      "exact_validator": {
+        "blind_terra": {
+          "error_category_counts": {
+            "quote_missing": 2,
+            "state_shape": 13
+          },
+          "failed": 8,
+          "records": 8,
+          "valid": 0
+        },
+        "primary_sol": {
+          "error_category_counts": {},
+          "failed": 0,
+          "records": 8,
+          "valid": 8
+        }
+      },
+      "reader_agreement_counts": {
+        "duration_bound_signature": {
+          "all_objects": {
+            "agree": 0,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 5,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 1,
+              "comparable": 8
+            }
+          }
+        },
+        "label_signature": {
+          "all_objects": {
+            "agree": 0,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 5,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 1,
+              "comparable": 8
+            }
+          }
+        },
+        "main_estimand_presence": {
+          "all_objects": {
+            "agree": 6,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 7,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 7,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 6,
+              "comparable": 8
+            }
+          }
+        },
+        "object_state": {
+          "all_objects": {
+            "agree": 5,
+            "comparable": 8
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "industry_domain": {
+              "agree": 6,
+              "comparable": 8
+            },
+            "occupation_task": {
+              "agree": 5,
+              "comparable": 8
+            }
+          }
+        }
+      },
+      "records": 8
+    },
+    "overall": {
+      "exact_validator": {
+        "blind_terra": {
+          "error_category_counts": {
+            "duration_support": 1,
+            "quote_missing": 2,
+            "state_shape": 31
+          },
+          "failed": 20,
+          "records": 20,
+          "valid": 0
+        },
+        "primary_sol": {
+          "error_category_counts": {
+            "duration_support": 1
+          },
+          "failed": 1,
+          "records": 20,
+          "valid": 19
+        }
+      },
+      "reader_agreement_counts": {
+        "duration_bound_signature": {
+          "all_objects": {
+            "agree": 0,
+            "comparable": 20
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 12,
+              "comparable": 20
+            },
+            "industry_domain": {
+              "agree": 9,
+              "comparable": 20
+            },
+            "occupation_task": {
+              "agree": 2,
+              "comparable": 20
+            }
+          }
+        },
+        "label_signature": {
+          "all_objects": {
+            "agree": 0,
+            "comparable": 20
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 12,
+              "comparable": 20
+            },
+            "industry_domain": {
+              "agree": 9,
+              "comparable": 20
+            },
+            "occupation_task": {
+              "agree": 2,
+              "comparable": 20
+            }
+          }
+        },
+        "main_estimand_presence": {
+          "all_objects": {
+            "agree": 13,
+            "comparable": 20
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 17,
+              "comparable": 20
+            },
+            "industry_domain": {
+              "agree": 16,
+              "comparable": 20
+            },
+            "occupation_task": {
+              "agree": 17,
+              "comparable": 20
+            }
+          }
+        },
+        "object_state": {
+          "all_objects": {
+            "agree": 8,
+            "comparable": 20
+          },
+          "by_object": {
+            "general_work": {
+              "agree": 13,
+              "comparable": 20
+            },
+            "industry_domain": {
+              "agree": 13,
+              "comparable": 20
+            },
+            "occupation_task": {
+              "agree": 17,
+              "comparable": 20
+            }
+          }
+        }
+      },
+      "records": 20
+    }
+  },
+  "input_sha256": {
+    "private_unblind_manifest": "054795b5c5efbb122e88513f31efb262d95bd7b865a11d5bdf02454b6a549c8a",
+    "reader_order_sidecars": {
+      "blind_terra": "330e75a2c96a5986b185fa22d5db7858f55be669a2983d17d63192b8450bdc9e",
+      "primary_sol": "73620419f77c6e9377764e36f4fe0d211b302f81adc7eb58c2266b04411f9696"
+    },
+    "readers": {
+      "blind_terra": "dc2b07493185383e512237bcf6ed1ad6bbe02526ea3eb55af3868d0b2710f360",
+      "primary_sol": "709f0f385008aa05a31e9145bb9552210dcc666d2bd0d313204999b98e4954a6"
+    },
+    "source20": "585a460b699be71737714269d0c73e77f6e5540a0a7ff8265016670f4aa60d8c"
+  },
+  "metric_definitions": {
+    "duration_bound_signature": "multiset equality of label tuples plus duration kind/value(s), still bound to each object",
+    "exact_validator": "strict source-quote and duration validation reported separately from semantic-label agreement",
+    "label_signature": "multiset equality of strength, condition_mode, and qualification_scope tuples for mentions bound to each object",
+    "main_estimand_presence": "presence of at least one required, unconditional, prior_experience mention, compared separately by bound object",
+    "object_state": "exact state equality for each economic object"
+  },
+  "privacy": "No source text, review ID, canonical key, or record-level result appears in this public aggregate.",
+  "scope": "two-reader descriptive diagnostic agreement; not accuracy, a population rate, or technology-arm validation",
+  "status": "complete"
+}

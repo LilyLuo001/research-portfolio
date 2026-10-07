@@ -1,0 +1,75 @@
+{
+  "counts": {
+    "development": 4,
+    "heldout_A": 8,
+    "heldout_B": 8,
+    "source20": 20
+  },
+  "development4": "byte-for-byte copy of the prior pilot4 SOURCE_PRIVATE.jsonl; reference labels are separate and absent from source files",
+  "development4_current_fixed10000_canonical_key_overlap": 1,
+  "exclusion_scope": {
+    "artifacts_discovered": 30,
+    "artifacts_with_original_text": 14,
+    "current_sample_additionally_excluded_by_exact_text": {
+      "A": 665,
+      "B": 7
+    },
+    "current_sample_excluded_by_key": {
+      "A": 42,
+      "B": 11
+    },
+    "eligible_candidates_after_exclusions": {
+      "A": 3293,
+      "B": 3982
+    },
+    "review_roots_supplied": 2,
+    "reviewed_artifact_sha256": [
+      "13f8176385a73539d184e93db76c232b2ae80ce70c9827a46ff1b42450a2a8a4",
+      "178ca08d1bdbdcfec0edbf7307ce32e9b94af730b7b5ca5bda3be9f0766d5b8b",
+      "2f06c0dea827e26d50bfb897bdca1cd57d3a2eb0598374a84b2106c33825064e",
+      "50a9386f1cb2513ff6be41712f92d76661c9251e790ba42f36efcf72504ca286",
+      "5b51d89074c6d77ea600ce1a74fdf1e19165c245cc8879237a7f93d931402915",
+      "6551439c7ebadcffb499cd32aa3ee8ba087f22a6e54854872a683b3e3457694b",
+      "6551439c7ebadcffb499cd32aa3ee8ba087f22a6e54854872a683b3e3457694b",
+      "7fa2f9db601b89407c4143aaa449073ec38dd92077fbd469fdce46f8033af6a4",
+      "81b851557e4c52cc1dcb0292d70d5ca8016cb7d145b733088204fa660e9911f5",
+      "895975dddecc81403695148d28e07295c7c681095bab734701b9c5ffb7203048",
+      "91496026145eaec1acc3f77e76ab562521428c873f5d36a6a9fe24b4ecf14975",
+      "c3d6e11d9a122446e4c80934df90a89882df4835ee12db12252a6274c4d2e577",
+      "ca5a2f741af57efa57739caf296169bdd9abc90b7e20503ed75d1b9406f92f95",
+      "ca5a2f741af57efa57739caf296169bdd9abc90b7e20503ed75d1b9406f92f95"
+    ],
+    "reviewed_rows_seen_with_original_text": 832,
+    "unique_canonical_keys": 200,
+    "unique_exact_text_hashes": 185
+  },
+  "input_sha256": {
+    "merged_fixed10000": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+    "prior_development4_key_parquet": "0e4941e5c35a37ee2e2ce030adbf7ae4bbcc17d8d9c5a00fb22751f320e46c0a",
+    "prior_development4_key_source": "91496026145eaec1acc3f77e76ab562521428c873f5d36a6a9fe24b4ecf14975",
+    "prior_development4_source": "13f8176385a73539d184e93db76c232b2ae80ce70c9827a46ff1b42450a2a8a4"
+  },
+  "invariants": {
+    "C_included": false,
+    "development4_byte_identical": true,
+    "fixed_sample_rows_or_weights_modified": false,
+    "heldout_arm_counts_exact": true,
+    "source20_exact_text_unique": true
+  },
+  "output_sha256": {
+    "development4_source": "13f8176385a73539d184e93db76c232b2ae80ce70c9827a46ff1b42450a2a8a4",
+    "heldout16_source": "f6655f376e7acd883b06ce9ad84ad21b4875c00f5ddc3546295d6bd162ba7f27",
+    "private_unblind_manifest": "054795b5c5efbb122e88513f31efb262d95bd7b865a11d5bdf02454b6a549c8a",
+    "source20": "585a460b699be71737714269d0c73e77f6e5540a0a7ff8265016670f4aa60d8c"
+  },
+  "privacy": "public receipt contains counts, method, and whole-file hashes only; source text, review IDs, arms, keys, locators, and unblind mappings remain private",
+  "reader_blinding": "opaque review ID plus exact untruncated source text only; no arm, source filename, canonical locator, or reference label",
+  "reader_schema": [
+    "record_id",
+    "original_text"
+  ],
+  "scope": "diagnostic source pack only; not a redraw of the formal sample, not a main estimator, and not population-precision evidence",
+  "seed": 20261007,
+  "selection_algorithm": "within each A/B arm, exclude discoverable prior canonical keys and exact UTF-8 text SHA-256 values, rank remaining canonical four-field keys by SHA-256(seed|heldout16|arm|key), take first eight while enforcing exact-text uniqueness across development4 and heldout16",
+  "status": "complete"
+}

@@ -1,0 +1,61 @@
+{
+  "decision_id": "D42",
+  "date": "2026-10-07",
+  "owner": "GPT-6/high",
+  "status": "BOUNDED_DIAGNOSTIC_COMPLETE_NO_UNATTENDED_PRODUCTION",
+  "source_documents": 20,
+  "readers": {
+    "primary": "gpt-5.6-sol/medium",
+    "independent_blind": "gpt-5.6-terra/medium"
+  },
+  "source_readings": 40,
+  "root_targeted_review": {
+    "documents": 10,
+    "development": 4,
+    "heldout_main_disagreements": 4,
+    "heldout_main_agreements": 2,
+    "selection_follows_precommitted_order": true,
+    "not_accuracy_sample": true
+  },
+  "rulings": [
+    {
+      "topic": "unrestricted_vs_relevant_experience",
+      "decision": "Relevant or job-related work is occupation_task, not general_work, even if many roles qualify. Duration stays attached to its actual object."
+    },
+    {
+      "topic": "industry_business_domain_vs_technical_subject",
+      "decision": "For this project’s sector/domain comparison, generic AI, IT, software, algorithms or named tools alone do not establish industry, customer-segment or business-application-domain experience. Task methods remain task evidence and tools remain outside this three-object test. Without a resolvable business context, retain ambiguity/out-of-scope status rather than promote a technology topic to industry history.",
+      "qualification": "This narrows the ambiguous subject-area wording of the compact contract for interpretation and future operationalization; it is a research-design decision, not a newly validated classifier. Frozen prompt and reader outputs are not rewritten and the rule is not applied silently to unreviewed records."
+    },
+    {
+      "topic": "education_alternatives",
+      "decision": "Preserve the explicit work branch and its number when present, mark the qualification path conditional; a ratio of workyears to educationyears is not an absolute workyear requirement."
+    },
+    {
+      "topic": "corrections_and_validation",
+      "decision": "Quote encoding can be mechanically repaired with source evidence. Deleting evidence, changing duration kinds, or nulling numerical fields is not evidence of an uncorrected blindpass. Initial semanticvalues remain the agreement inputs."
+    }
+  ],
+  "findings": {
+    "known_core_confusions_remain": true,
+    "shared_technical_vs_industry_ambiguity_observed_in_agreed_case": true,
+    "allmention_completeness_differs": true,
+    "strict_validator_not_semantic_accuracy": true,
+    "binary_agreement_can_use_different_or_wrong_evidence": true
+  },
+  "limits": [
+    "Only20diagnostic records; heldout16belongs to existing screened A/B candidate groups.",
+    "No inference about actualtechnologyadoption or historicalrequirementdates.",
+    "Full-signature disagreement is sensitive to mentioncoverage; zeroexactmultisetmatches does not mean all labels are wrong.",
+    "Unreviewed records and unadjudicated clauses are not promoted to accepted labels."
+  ],
+  "resource_decision": {
+    "new_cluster_jobs": 0,
+    "new_allocated_card_hours": 0,
+    "paid_api_calls": 0,
+    "current_cpu_projection": "Scenario636–1018cardhours from earlier throughput and assumed150–240secondspertext; not measured compact throughput or an ETA.",
+    "production_route": "No accepted affordable and resumable production route is established. Conversation agents supplied40bounded readings, not a bulkAPI.",
+    "bulk_7635_started": false
+  },
+  "closure": "One bounded round closed. No furtherprompt/modelsearch or fullcorpusrerun authorized by this result. Fixed10000corpus and frozenT1T6 remain unchanged; no new population experience-comparison estimates produced."
+}

@@ -1,0 +1,36 @@
+{
+  "decision_id": "D40",
+  "date": "2026-10-07",
+  "owner": "GPT-6/high",
+  "authorization": "User approved the next capped compact-extraction plan after D39; old results and old failed route remain unchanged.",
+  "economic_target": "Applicant-facing general_work, occupation_task and industry_domain experience requirements, with prior experience distinct from knowledge, proficiency and education substitution.",
+  "scope": {
+    "development_source_documents": 4,
+    "heldout_source_documents": 16,
+    "heldout_arm_counts": {
+      "A": 8,
+      "B": 8
+    },
+    "maximum_unique_source_documents_this_round": 20,
+    "fresh_semantic_generation_attempts_per_document": 1,
+    "maximum_new_compute_allocation_wall_hours": 1,
+    "automatic_bulk_authorization": false
+  },
+  "implementation_change": "Compact model labels and exact quotations only. Code supplies identity, hashes, offsets and structural fields. No silent quote editing, condition deletion, arbitrary duration combination, sample redraw or weight change.",
+  "gates": [
+    {
+      "name": "development",
+      "rule": "Known core object, requirement strength and education-alternative errors must not recur; exact-quote checks must pass. Stop after a decisive repeated core error. Any mechanical correction must preserve raw outputs and not rerun semantic generation."
+    },
+    {
+      "name": "heldout",
+      "rule": "Only after development passes, run16previously unused diagnostic texts and independent blinded AI reading. Root adjudicates substantive differences once. No unresolved systematic object/strength/scope error may be promoted to unattended production. This is AI agreement/source consistency, not truth accuracy."
+    },
+    {
+      "name": "resource",
+      "rule": "Report measured duration/tokens and projections for7635unique texts with overhead and scheduler-required cards. Reject obviously unaffordable scale-out. Historical200card-hours is a total entitlement, not verified remaining quota; projection below200does not by itself authorize production. No paidAPI or new model purchase."
+    }
+  ],
+  "analysis_boundary": "A/B remain original technology-screening candidates. This round does not validate the technology-arm classifier or establish technology adoption. Heldout20or16diagnostics do not replace fixed10000or estimate its population prevalence.",
+  "stop_rule": "One frozen compact contract and one generation per attempted document. Failure closes the current configured route; no automatic further prompt/model search. If production cannot be supported, deliver actual labels, error categories and the specific quality/capacity gap."
+}
