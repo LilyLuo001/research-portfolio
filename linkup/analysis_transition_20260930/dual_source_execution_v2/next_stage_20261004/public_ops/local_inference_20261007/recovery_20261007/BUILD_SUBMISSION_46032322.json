@@ -1,0 +1,43 @@
+{
+  "as_of": "2026-10-07T19:20:26+08:00",
+  "configuration_correction": {
+    "cause_in_pinned_source": "tools/CMakeLists.txt adds the cli subdirectory only when LLAMA_BUILD_SERVER is enabled; the completion and tokenize subdirectories are unconditional when tools are built.",
+    "cmake": {
+      "LLAMA_BUILD_APP": "OFF",
+      "LLAMA_BUILD_SERVER": "OFF",
+      "LLAMA_BUILD_TOOLS": "ON"
+    },
+    "intended_executable": "llama-completion",
+    "secondary_executable": "llama-tokenize",
+    "target_definitions_verified_in": [
+      "tools/completion/CMakeLists.txt",
+      "tools/tokenize/CMakeLists.txt"
+    ]
+  },
+  "inference": {
+    "documents_attempted": 0,
+    "documents_completed": 0,
+    "model_downloaded": false
+  },
+  "resources": {
+    "cpus": 16,
+    "memory": "32G",
+    "requested_dcus": 2,
+    "walltime_limit": "01:00:00"
+  },
+  "runtime": {
+    "commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+    "repository": "https://github.com/ggml-org/llama.cpp",
+    "source_archive_sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e"
+  },
+  "scheduler": {
+    "alloc_tres": "billing=16,cpu=16,gres/dcu=2,mem=32G,node=1",
+    "elapsed_at_observation": "00:00:18",
+    "state": "RUNNING"
+  },
+  "schema_version": "linkup-pinned-llama-build-submission-v1",
+  "slurm_job_id": "46032322",
+  "status": "SUBMITTED_RUNNING",
+  "submitted_script": "build_pinned_llama_wuzhen.sbatch",
+  "submitted_script_sha256": "9bf44e7c078669536c39a204266244f41ae67ebb755b9e6bb310b7ae15ef6982"
+}

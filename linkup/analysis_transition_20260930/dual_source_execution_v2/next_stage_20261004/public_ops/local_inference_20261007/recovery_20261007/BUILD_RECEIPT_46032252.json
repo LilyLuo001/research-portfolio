@@ -1,0 +1,47 @@
+{
+  "elapsed_seconds": 47,
+  "exit_code": 2,
+  "host": "b01r3n14",
+  "inference": {
+    "documents_attempted": 0,
+    "documents_completed": 0,
+    "model_downloaded": false
+  },
+  "purpose": "Pinned CPU runtime build gate before any multi-gigabyte model transfer; no semantic result.",
+  "resources": {
+    "cpus": 16,
+    "memory": "32G",
+    "requested_dcus": 2,
+    "walltime_limit": "01:00:00"
+  },
+  "runtime": {
+    "binary": null,
+    "commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+    "repository": "https://github.com/ggml-org/llama.cpp",
+    "source_archive": {
+      "bytes": 37922604,
+      "sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e"
+    },
+    "version": null
+  },
+  "scheduler": {
+    "alloc_tres": "billing=16,cpu=16,gres/dcu=2,mem=32G,node=1",
+    "batch_max_rss": "23988K",
+    "state": "FAILED"
+  },
+  "schema_version": "linkup-pinned-llama-build-receipt-v1",
+  "slurm_job_id": "46032252",
+  "stage": "build_cpu_runtime",
+  "status": "FAILED",
+  "submitted_script": "submitted_build_46032252.sbatch",
+  "submitted_script_sha256": "d82abdf39f8da67932dc38e1c4a9010325dbbca8bafa0e237b989e1ce2fea3b9",
+  "toolchain": {
+    "cmake_archive": {
+      "bytes": 55010959,
+      "sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf"
+    },
+    "cmake_version": "3.31.6",
+    "gcc_version": "g++ (GCC) 11.2.1 20220127 (Red Hat 11.2.1-9)"
+  },
+  "failure": "CMake configured successfully, but the generated build tree had no target named llama-cli; gmake exited 2. No executable was produced."
+}

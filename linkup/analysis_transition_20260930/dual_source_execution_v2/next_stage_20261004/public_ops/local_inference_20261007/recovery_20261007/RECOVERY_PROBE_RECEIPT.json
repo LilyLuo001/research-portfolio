@@ -1,7 +1,7 @@
 {
   "schema_version": "linkup-local-inference-recovery-probes-v1",
-  "as_of": "2026-10-07T19:05:00+08:00",
-  "scope": "Wuzhen compute/network/compiler compatibility only; no model download, runtime build, or inference",
+  "as_of": "2026-10-07T19:20:26+08:00",
+  "scope": "Wuzhen compute/network/compiler compatibility and one pinned CPU runtime build gate; no model download or inference",
   "cluster": {
     "region": "Wuzhen",
     "partition": "wzhdtest",
@@ -52,6 +52,7 @@
       "batch_max_rss": "2432K",
       "submitted_script": "probe_gcc11_private.sbatch",
       "submitted_script_sha256": "84e2765888b3aed5c09f420dffe7acaf9c6570a3d8f52a64af753d78aa58f03c",
+      "submitted_script_availability": "Historical SHA-256 only. That exact submitted version was not preserved; the current file does not represent this job.",
       "result": "The first locally downloaded CentOS7 devtoolset-11 RPM passed the script's pinned SHA-256 check, then rpm -K stopped because the cluster RPM database lacked the CentOS SCLo signing key. No RPM was extracted and no compiler was executed.",
       "next_bounded_repair": "Import the official CentOS SCLo public key into a private RPM database, authenticate the same pinned RPM files there, then rerun the one-file C++17 compatibility test."
     },
@@ -63,22 +64,81 @@
       "resources": "1 CPU, 1G, 5 minute hard limit",
       "submitted_script": "probe_gcc11_private.sbatch",
       "submitted_script_sha256": "02d95790135081c207716d96be28e3bbd6b16930042e4277815abece46fe90c9",
+      "submitted_script_availability": "Historical SHA-256 only. That exact submitted version was not preserved; the current file does not represent this job.",
       "result": "A private RPM database imported the official CentOS SCLo key and authenticated all five pinned devtoolset-11 RPMs. Extraction then stopped because the runtime RPM's read-only filesystem skeleton prevented later payload directories from being created in the private staging tree. No compiler binary was executed.",
       "authenticated_rpms": 5,
       "compiler_compatibility_proved": false,
       "next_bounded_repair": "Use a fresh private staging tree and extract only the compiler, C++, libstdc++-devel, and binutils payloads; the runtime skeleton is not needed for direct private PATH/LD_LIBRARY_PATH use."
+    },
+    {
+      "job_id": "46032062",
+      "state": "FAILED",
+      "elapsed": "00:00:14",
+      "exit_code": "1:0",
+      "resources": "1 CPU, 1G, 1 requested DCU, 5 minute hard limit",
+      "batch_max_rss": "8372K",
+      "submitted_script": "probe_gcc11_private.sbatch",
+      "submitted_script_sha256": "c09d1e6fb1da0ff2c2e506cd26d3c938afaf6e796884e2c91dc0a35a2b5e0460",
+      "submitted_script_availability": "Historical SHA-256 only. That exact submitted version was not preserved; the current file does not represent this job.",
+      "result": "The private payload extraction and authenticated RPM checks succeeded. The compile test then inherited cluster CPATH values that selected GCC 7 headers before the relocated GCC 11 headers, so the probe failed before proving compiler compatibility."
+    },
+    {
+      "job_id": "46032122",
+      "state": "COMPLETED",
+      "elapsed": "00:00:14",
+      "exit_code": "0:0",
+      "resources": "1 CPU, 1G, 1 requested DCU, 5 minute hard limit",
+      "batch_max_rss": "8336K",
+      "submitted_script": "probe_gcc11_private.sbatch",
+      "submitted_script_sha256": "40623dfe15c8c9f4a22b922299d94a13bb53ec08ca9509ecdb7ef99527c3c351",
+      "submitted_script_availability": "Exact submitted source is preserved by the current file with the matching SHA-256.",
+      "authenticated_rpms": 5,
+      "private_toolchain_bytes": 162016700,
+      "compiler": "g++ (GCC) 11.2.1 20220127 (Red Hat 11.2.1-9)",
+      "cxx17_std_filesystem": "PASS",
+      "result": "The official-key-authenticated private GCC 11 payload compiled and ran the one-file C++17 std::filesystem check after cluster include-path variables were cleared."
+    },
+    {
+      "job_id": "46032252",
+      "state": "FAILED",
+      "elapsed": "00:00:47",
+      "exit_code": "2:0",
+      "resources": "16 CPU, 32G, 2 requested DCUs, 1 hour hard limit",
+      "batch_max_rss": "23988K",
+      "submitted_script": "submitted_build_46032252.sbatch",
+      "submitted_script_sha256": "d82abdf39f8da67932dc38e1c4a9010325dbbca8bafa0e237b989e1ce2fea3b9",
+      "submitted_script_availability": "Exact submitted source is preserved separately with the matching SHA-256. build_pinned_llama_wuzhen.sbatch is a corrected, unexecuted receipt-only revision.",
+      "pinned_source_commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+      "configure": "PASS with private GCC 11.2.1 and CMake 3.31.6",
+      "result": "The generated build tree had no target named llama-cli, so gmake exited 2 before producing an executable. No model was downloaded and no inference was attempted.",
+      "build_receipt": "BUILD_RECEIPT_46032252.json"
+    },
+    {
+      "job_id": "46032322",
+      "state": "RUNNING",
+      "elapsed_at_observation": "00:00:18",
+      "resources": "16 CPU, 32G, 2 requested DCUs, 1 hour hard limit",
+      "submitted_script": "build_pinned_llama_wuzhen.sbatch",
+      "submitted_script_sha256": "9bf44e7c078669536c39a204266244f41ae67ebb755b9e6bb310b7ae15ef6982",
+      "pinned_source_commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+      "intended_executable": "llama-completion",
+      "secondary_executable": "llama-tokenize",
+      "configuration_correction": "The pinned source gates tools/cli behind LLAMA_BUILD_SERVER. This submission leaves LLAMA_BUILD_SERVER=OFF and LLAMA_BUILD_APP=OFF, and builds the verified unconditional llama-completion and llama-tokenize targets.",
+      "submission_receipt": "BUILD_SUBMISSION_46032322.json"
     }
   ],
   "local_official_downloads_bytes": {
     "complete_devtoolset_11_rpms": 57316136,
     "complete_pinned_llama_source_archive": 37922604,
     "partial_pinned_llama_source_first_attempt": 19231020,
+    "complete_cmake_3_31_6_archive": 55010959,
     "centos_sclo_signing_key": 1057,
-    "total": 114470817,
+    "total": 169481776,
     "model": 0
   },
   "download_hashes": {
     "pinned_llama_source_archive_sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e",
+    "cmake_3_31_6_archive_sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf",
     "centos_sclo_signing_key_sha256": "1402b1ea263cd0e51e7fe77c89ab98d64dd08fdc54e7a4afe27b2782ddfc351c"
   },
   "limits": {
@@ -86,7 +146,7 @@
     "main_job_max": "16 CPU, 32G, 1 hour",
     "bulk_10000_started": false
   },
-  "recovery_status": "PRIVATE_GCC11_AUTHENTICATED_EXTRACTION_NOT_YET_WORKING_NO_MAIN_JOB",
-  "main_job_id": null,
-  "interpretation": "Corpus readiness is separate from runtime readiness. These probes do not assess semantic quality, supported context for real advertisements, or throughput. No model transfer or inference job was launched because compiler compatibility was not proved."
+  "recovery_status": "CORRECTED_PINNED_RUNTIME_BUILD_RUNNING_NO_MODEL_NO_INFERENCE",
+  "main_job_id": "46032322",
+  "interpretation": "The private compiler route is viable. The first pinned-runtime build failed because its requested llama-cli target is gated behind the disabled server option in this exact pinned source. A corrected same-stack job is building the verified llama-completion and llama-tokenize targets. This is not evidence about model feasibility or semantic quality. Corpus readiness remains separate from runtime readiness. No model transfer, document processing, throughput measurement, or inference has occurred."
 }
