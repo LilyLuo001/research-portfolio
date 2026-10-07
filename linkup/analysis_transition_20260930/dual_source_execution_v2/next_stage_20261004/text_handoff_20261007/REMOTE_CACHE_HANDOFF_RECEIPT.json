@@ -1,0 +1,26 @@
+{
+  "completed_at_utc": "2026-10-07T12:12:54Z",
+  "counts": {
+    "private_parquet_files": 3,
+    "sample_rows": 10000,
+    "unique_exact_texts_for_inference": 7635
+  },
+  "files": {
+    "EXACT_TEXT_SHA_CACHE_MANIFEST_PRIVATE.parquet": {
+      "bytes": 604550,
+      "sha256": "ac47fc954dbc8d45df2f7948d71930711b02f37a096674acda2719b95e93d3ca"
+    },
+    "MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet": {
+      "bytes": 16448319,
+      "sha256": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35"
+    },
+    "UNIQUE_EXACT_TEXT_INFERENCE_CACHE_PRIVATE.parquet": {
+      "bytes": 16306668,
+      "sha256": "7d8e6922c8b63f1936fc59dabc48ce983d28d618ea07dc64dcedb61cd6c2e16a"
+    }
+  },
+  "permissions": "private files mode 0600; containing directory mode 0700",
+  "privacy": "counts, byte sizes, and whole-file hashes only; no text, quotations, locators, row-level identifiers, or private paths",
+  "status": "complete_remote_sha256_verified_atomic_handoff",
+  "transfer": "hash-named partial upload, remote SHA-256 verification, then atomic rename"
+}

@@ -11,6 +11,7 @@ from collections import Counter
 from pathlib import Path
 
 import pyarrow as pa
+import pyarrow.csv as pacsv
 import pyarrow.parquet as pq
 
 KEYS = ("JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW")
@@ -84,16 +85,21 @@ def main() -> None:
             if receipt.get(field) != actual:
                 raise RuntimeError(f"{region} {field} mismatch")
         actual_keys = set()
-        with output.open(encoding="utf-8", newline="") as handle:
-            for row in csv.DictReader(handle):
-                key = identity(row)
-                if json.loads(row["private_key"]) != [row[k] if k in ("JOB_HASH", "SOURCE_FILE") else int(row[k]) for k in KEYS]:
-                    raise RuntimeError(f"{region} private_key does not match locator columns")
-                if key in actual_keys or key in text_by_key:
-                    raise RuntimeError("materialized output repeats a canonical key")
-                actual_keys.add(key)
-                text_by_key[key] = row["original_text"]
-                region_by_key[key] = region
+        materialized_table = pacsv.read_csv(
+            output,
+            read_options=pacsv.ReadOptions(block_size=1 << 24),
+            parse_options=pacsv.ParseOptions(newlines_in_values=True),
+            convert_options=pacsv.ConvertOptions(column_types={"SOURCE_ROW": pa.int64(), "RECORD_SOURCE_ROW": pa.int64()}),
+        )
+        for row in materialized_table.to_pylist():
+            key = identity(row)
+            if json.loads(row["private_key"]) != [row[k] if k in ("JOB_HASH", "SOURCE_FILE") else int(row[k]) for k in KEYS]:
+                raise RuntimeError(f"{region} private_key does not match locator columns")
+            if key in actual_keys or key in text_by_key:
+                raise RuntimeError("materialized output repeats a canonical key")
+            actual_keys.add(key)
+            text_by_key[key] = row["original_text"]
+            region_by_key[key] = region
         if actual_keys != selected:
             raise RuntimeError(f"{region} materialized locator set differs from selection")
         regional_inputs[region] = {"rows": expected, **checks, "receipt_sha256": sha256_file(receipt_path)}

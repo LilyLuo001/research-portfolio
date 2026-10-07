@@ -1,0 +1,49 @@
+{
+  "deduplication": "exact UTF-8 text SHA-256 only; no trimming, normalization, or fuzzy matching; all 10,000 sample rows and probability/weight fields retained",
+  "duplicate_sample_rows_beyond_unique": 2365,
+  "empty_exact_text_rows": 0,
+  "exact_text_duplicate_groups": 697,
+  "maximum_exact_text_group_size": 79,
+  "privacy": "receipt contains counts and file hashes only; exact text, locators, keys, probabilities, and weights remain private and excluded from Git",
+  "private_output_sha256": {
+    "EXACT_TEXT_SHA_CACHE_MANIFEST_PRIVATE.parquet": "ac47fc954dbc8d45df2f7948d71930711b02f37a096674acda2719b95e93d3ca",
+    "MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+    "UNIQUE_EXACT_TEXT_INFERENCE_CACHE_PRIVATE.parquet": "7d8e6922c8b63f1936fc59dabc48ce983d28d618ea07dc64dcedb61cd6c2e16a"
+  },
+  "private_outputs_excluded": true,
+  "probability_weight_fields_retained": [
+    "inclusion_probability",
+    "design_weight",
+    "W_h",
+    "original_inclusion_probability",
+    "conditional_inclusion_probability",
+    "total_inclusion_probability",
+    "nested_design_weight",
+    "pooled_cell_standardization_weight"
+  ],
+  "region_rows": {
+    "kunshan": 5495,
+    "wuzhen": 4505
+  },
+  "regional_inputs": {
+    "kunshan": {
+      "output_sha256": "665f9c28c26670a72aad97c2f2dc39b0800d17763fcff6fd6aeefdd723d805b1",
+      "receipt_sha256": "88bcad62d06b77d3e821d1beba0c6b6711a571098a85a1f4226148c6ae1356cd",
+      "rows": 5495,
+      "selection_sha256": "aa03d704d8262addcf8d724b965bbc0aef86dc607ebc3e0af252d14a738030a0",
+      "source_map_sha256": "74b6dea4e1de07347330f9d4d29abf3f357999f7b4c686e8cac763682a916d7a"
+    },
+    "wuzhen": {
+      "output_sha256": "563c119e2d61872de668a89151320cdfeb75e119e33fee8af7e320f74fee541a",
+      "receipt_sha256": "6cb54be14e6c2c9fa7d54fcf9230b8207ec7b1862edaec15b7c1568e9b98a644",
+      "rows": 4505,
+      "selection_sha256": "cceb6a3bfb74b58bd0cc9d983d58f6c12cf3fd45fd83b595dda6fd5d3bcadaa4",
+      "source_map_sha256": "96ade5d5e3f63d548d0ae9d28f27ff40f545cb6e5764a75c41058af4f9164dc5"
+    }
+  },
+  "sample_arrow_schema_preserved": true,
+  "sample_rows": 10000,
+  "sample_sha256": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426",
+  "status": "complete",
+  "unique_exact_texts_for_inference": 7635
+}

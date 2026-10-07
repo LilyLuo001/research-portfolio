@@ -1,6 +1,6 @@
 {
-  "recorded_at_utc": "2026-10-07T11:05:56Z",
-  "status": "wuzhen_collected_verified_kunshan_running_merge_pending",
+  "recorded_at_utc": "2026-10-07T12:03:09Z",
+  "status": "both_regions_collected_verified_merged_exact_cache_complete",
   "jobs": [
     {
       "region": "kunshan",
@@ -10,8 +10,8 @@
       "memory": "10G",
       "expected_rows": 5495,
       "source_file_packs": 1314,
-      "last_verified_state": "RUNNING",
-      "elapsed_at_last_snapshot": "02:21:53",
+      "last_verified_state": "COMPLETED",
+      "elapsed_at_last_snapshot": "03:04:59",
       "node": "g01r2n16",
       "average_cpu_time": "01:36:33",
       "maximum_rss_kib": 1322840,
@@ -39,7 +39,13 @@
   ],
   "materialized_rows_verified": {
     "wuzhen": 4505,
-    "kunshan": null
+    "kunshan": 5495
+  },
+  "kunshan_verification": {
+    "locator_set_equal": true,
+    "selection_sha256": "aa03d704d8262addcf8d724b965bbc0aef86dc607ebc3e0af252d14a738030a0",
+    "source_map_sha256": "74b6dea4e1de07347330f9d4d29abf3f357999f7b4c686e8cac763682a916d7a",
+    "output_sha256": "665f9c28c26670a72aad97c2f2dc39b0800d17763fcff6fd6aeefdd723d805b1"
   },
   "wuzhen_verification": {
     "locator_set_equal": true,
@@ -47,9 +53,17 @@
     "source_map_sha256": "96ade5d5e3f63d548d0ae9d28f27ff40f545cb6e5764a75c41058af4f9164dc5",
     "output_sha256": "563c119e2d61872de668a89151320cdfeb75e119e33fee8af7e320f74fee541a"
   },
-  "completion_receipts_retrieved": false,
+  "completion_receipts_retrieved": true,
   "partial_output": "Materializer accumulates selected rows and writes atomically after locator reads; no useful partial byte count at snapshot.",
-  "health_interpretation": "Wuzhen completed and its 4,505-row output was collected and verified. Kunshan remained actively reading source packs with nonzero CPU and disk-read counters; it was not pending, failed, or idle at the snapshot.",
+  "health_interpretation": "Both bounded regional materialization jobs completed with exit code 0; 5,495 Kunshan and 4,505 Wuzhen rows were collected and verified against exact locator sets and receipt hashes.",
+  "merged_cache": {
+    "status": "complete",
+    "sample_rows": 10000,
+    "unique_exact_texts_for_inference": 7635,
+    "duplicate_sample_rows_beyond_unique": 2365,
+    "public_receipt": "FIXED10000_EXACT_TEXT_CACHE_RECEIPT.json",
+    "workload_aggregate": "FIXED10000_CORPUS_READINESS_AGGREGATE.json"
+  },
   "collector_ready": "collect_and_build_exact_text_cache.py retrieves files only after both Slurm states are COMPLETED and then runs exact locator/hash verification before building private outputs.",
   "model_calls": 0,
   "no_new_sample": true

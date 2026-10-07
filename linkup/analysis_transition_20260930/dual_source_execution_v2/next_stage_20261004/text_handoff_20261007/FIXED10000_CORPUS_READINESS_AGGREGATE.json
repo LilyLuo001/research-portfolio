@@ -1,0 +1,39 @@
+{
+  "diagnostic_scope": "fixed 10,000-row research sample corpus; workload diagnostic only, not an arm comparison or substantive research result",
+  "empty_exact_text_count": 0,
+  "exact_text_duplicate_group_count": 697,
+  "exact_text_duplicate_rows_beyond_unique": 2365,
+  "exact_text_sha256_unique_count": 7635,
+  "hash_provenance": {
+    "input_sha256": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+    "provenance_receipt_sha256": "573021faa3b66de973813d064ad40b5c394a3bfb5cdde1d946cb9fc4d4354102",
+    "regional_materialized_output_sha256": {
+      "kunshan": "665f9c28c26670a72aad97c2f2dc39b0800d17763fcff6fd6aeefdd723d805b1",
+      "wuzhen": "563c119e2d61872de668a89151320cdfeb75e119e33fee8af7e320f74fee541a"
+    },
+    "sample_sha256": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426"
+  },
+  "maximum_exact_text_duplicate_group_size": 79,
+  "privacy": "aggregate counts only; no text, quotations, locators, private identifiers, or per-text hashes",
+  "purpose": "workload and corpus-readiness diagnostic only; no sample alteration",
+  "quantile_definition": "exact empirical nearest-rank quantile using rank ceil(p*n), one-indexed",
+  "rows": 10000,
+  "status": "complete",
+  "unicode_character_count": {
+    "greater_than_4096_characters": 8374,
+    "greater_than_8192_characters": 1879,
+    "max": 41482,
+    "p50": 6060,
+    "p90": 9456,
+    "p95": 11066,
+    "p99": 13490
+  },
+  "units_note": "Unicode character counts are Python Unicode code-point counts and are not tokens. UTF-8 byte counts are encoded bytes. No tokenization or token estimate was performed.",
+  "utf8_byte_count": {
+    "max": 41482,
+    "p50": 6063,
+    "p90": 9461,
+    "p95": 11071,
+    "p99": 13490
+  }
+}

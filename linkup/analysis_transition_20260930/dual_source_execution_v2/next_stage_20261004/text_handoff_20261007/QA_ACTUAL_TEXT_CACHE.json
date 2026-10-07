@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "sample_rows": 10000,
+  "arm_counts": {"A": 4000, "B": 4000, "C": 2000},
+  "unique_exact_text_rows": 7635,
+  "empty_exact_text_rows": 0,
+  "original_arrow_columns_values_equal": true,
+  "exact_text_sha_join_complete": true,
+  "manifest_key_count": 10000,
+  "private_file_sha256": {
+    "FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet": "292463f40107cdb344e81dcc25bb9b946383a460fa6785a75fea0f9db52e3426",
+    "MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+    "UNIQUE_EXACT_TEXT_INFERENCE_CACHE_PRIVATE.parquet": "7d8e6922c8b63f1936fc59dabc48ce983d28d618ea07dc64dcedb61cd6c2e16a",
+    "EXACT_TEXT_SHA_CACHE_MANIFEST_PRIVATE.parquet": "ac47fc954dbc8d45df2f7948d71930711b02f37a096674acda2719b95e93d3ca"
+  },
+  "private_outputs_excluded": true
+}

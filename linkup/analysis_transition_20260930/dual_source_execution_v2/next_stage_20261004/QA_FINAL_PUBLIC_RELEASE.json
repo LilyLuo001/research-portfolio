@@ -1,6 +1,6 @@
 {
-  "status": "PASS",
-  "text_cache": {"sample_rows": 10000, "unique_exact_texts": 7635, "empty_exact_text_rows": 0},
+  "status": "PASS_SCOPED_PUBLIC_RECEIPT_SYNC",
+  "text_cache": {"sample_rows": 10000, "unique_exact_texts": 7635, "empty_exact_text_rows": 0, "public_receipts_byte_synced": true},
   "pilot": {"planned": 4, "attempted": 2, "completed": 1, "partial": 1, "unattempted": 2, "semantic_pass": false},
   "executed_script_sha256": "6c5321e801dc0552e10fa048776750a8b2754817d97747a1bd29968511e7ecd2",
   "validation_scope": "Envelope removal and exact offset repair only; no semantic correction or deletion of evidence.",
