@@ -1,0 +1,92 @@
+{
+  "schema_version": "linkup-local-inference-recovery-probes-v1",
+  "as_of": "2026-10-07T19:05:00+08:00",
+  "scope": "Wuzhen compute/network/compiler compatibility only; no model download, runtime build, or inference",
+  "cluster": {
+    "region": "Wuzhen",
+    "partition": "wzhdtest",
+    "compute_host": "b01r3n14",
+    "cpu": "Hygon C86 7285 32-core Processor",
+    "glibc": "2.17"
+  },
+  "jobs": [
+    {
+      "job_id": "46031719",
+      "state": "FAILED",
+      "elapsed": "00:00:00",
+      "exit_code": "13:0",
+      "resources": "1 CPU, 1G, 5 minute hard limit",
+      "batch_max_rss": "2424K",
+      "result": "Probe exited after the glibc line because `ldd --version | head -1` produced SIGPIPE under pipefail; this was a probe-script error, not an environment incompatibility.",
+      "submitted_script_sha256": null,
+      "submitted_script_availability": "The scheduler had already purged the submitted batch source when retrieval was attempted. The source is not represented as an exact preserved artifact."
+    },
+    {
+      "job_id": "46031757",
+      "state": "COMPLETED",
+      "elapsed": "00:01:18",
+      "exit_code": "0:0",
+      "resources": "1 CPU, 1G, 5 minute hard limit",
+      "batch_max_rss": "9876K",
+      "submitted_script": "probe_wuzhen_compute.sbatch",
+      "submitted_script_sha256": "ebab26f37defd19da13d08609b1efc33c619d4ab06acaf6b1972eb31442aec4b",
+      "observed": {
+        "llama_cli": null,
+        "cmake": "2.8.12.2",
+        "gcc": "7.3.1",
+        "private_python": "3.8.10 module available",
+        "newer_gcc_module": null,
+        "cxx17_std_filesystem": "FAIL",
+        "network_official_cmake_sha_http": "000 timeout",
+        "network_pinned_llama_source_http": "200 with curl timeout after partial transfer",
+        "network_qwen_model_api_http": "000 timeout"
+      },
+      "compatibility_conclusion": "The pinned llama.cpp source uses std::filesystem in llama-cli and common runtime files. The observed GCC 7.3 toolchain cannot build that source; do not begin a multi-gigabyte model transfer until a private compatible compiler passes."
+    },
+    {
+      "job_id": "46031866",
+      "state": "FAILED",
+      "elapsed": "00:00:01",
+      "exit_code": "1:0",
+      "resources": "1 CPU, 1G, 5 minute hard limit",
+      "batch_max_rss": "2432K",
+      "submitted_script": "probe_gcc11_private.sbatch",
+      "submitted_script_sha256": "84e2765888b3aed5c09f420dffe7acaf9c6570a3d8f52a64af753d78aa58f03c",
+      "result": "The first locally downloaded CentOS7 devtoolset-11 RPM passed the script's pinned SHA-256 check, then rpm -K stopped because the cluster RPM database lacked the CentOS SCLo signing key. No RPM was extracted and no compiler was executed.",
+      "next_bounded_repair": "Import the official CentOS SCLo public key into a private RPM database, authenticate the same pinned RPM files there, then rerun the one-file C++17 compatibility test."
+    },
+    {
+      "job_id": "46031930",
+      "state": "FAILED",
+      "elapsed": "00:00:14",
+      "exit_code": "1:0",
+      "resources": "1 CPU, 1G, 5 minute hard limit",
+      "submitted_script": "probe_gcc11_private.sbatch",
+      "submitted_script_sha256": "02d95790135081c207716d96be28e3bbd6b16930042e4277815abece46fe90c9",
+      "result": "A private RPM database imported the official CentOS SCLo key and authenticated all five pinned devtoolset-11 RPMs. Extraction then stopped because the runtime RPM's read-only filesystem skeleton prevented later payload directories from being created in the private staging tree. No compiler binary was executed.",
+      "authenticated_rpms": 5,
+      "compiler_compatibility_proved": false,
+      "next_bounded_repair": "Use a fresh private staging tree and extract only the compiler, C++, libstdc++-devel, and binutils payloads; the runtime skeleton is not needed for direct private PATH/LD_LIBRARY_PATH use."
+    }
+  ],
+  "local_official_downloads_bytes": {
+    "complete_devtoolset_11_rpms": 57316136,
+    "complete_pinned_llama_source_archive": 37922604,
+    "partial_pinned_llama_source_first_attempt": 19231020,
+    "centos_sclo_signing_key": 1057,
+    "total": 114470817,
+    "model": 0
+  },
+  "download_hashes": {
+    "pinned_llama_source_archive_sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e",
+    "centos_sclo_signing_key_sha256": "1402b1ea263cd0e51e7fe77c89ab98d64dd08fdc54e7a4afe27b2782ddfc351c"
+  },
+  "limits": {
+    "download_total_max_bytes": 8000000000,
+    "main_job_max": "16 CPU, 32G, 1 hour",
+    "bulk_10000_started": false
+  },
+  "recovery_status": "PRIVATE_GCC11_AUTHENTICATED_EXTRACTION_NOT_YET_WORKING_NO_MAIN_JOB",
+  "main_job_id": null,
+  "interpretation": "Corpus readiness is separate from runtime readiness. These probes do not assess semantic quality, supported context for real advertisements, or throughput. No model transfer or inference job was launched because compiler compatibility was not proved."
+}

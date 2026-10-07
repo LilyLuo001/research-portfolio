@@ -1,0 +1,36 @@
+{
+  "diagnostic_scope": "wuzhen regional file partition only; not a representative arm subsample and not a substantive research result",
+  "empty_exact_text_count": 0,
+  "exact_text_duplicate_group_count": 285,
+  "exact_text_duplicate_rows_beyond_unique": 839,
+  "exact_text_sha256_unique_count": 3666,
+  "hash_provenance": {
+    "materialization_receipt_sha256": "6cb54be14e6c2c9fa7d54fcf9230b8207ec7b1862edaec15b7c1568e9b98a644",
+    "materialized_csv_sha256": "563c119e2d61872de668a89151320cdfeb75e119e33fee8af7e320f74fee541a",
+    "selection_sha256": "cceb6a3bfb74b58bd0cc9d983d58f6c12cf3fd45fd83b595dda6fd5d3bcadaa4",
+    "source_map_sha256": "96ade5d5e3f63d548d0ae9d28f27ff40f545cb6e5764a75c41058af4f9164dc5"
+  },
+  "maximum_exact_text_duplicate_group_size": 38,
+  "privacy": "aggregate counts only; no text, quotations, locators, private identifiers, or per-text hashes",
+  "purpose": "workload and corpus-readiness diagnostic only; no sample alteration",
+  "quantile_definition": "exact empirical nearest-rank quantile using rank ceil(p*n), one-indexed",
+  "rows": 4505,
+  "status": "complete",
+  "unicode_character_count": {
+    "greater_than_4096_characters": 3769,
+    "greater_than_8192_characters": 849,
+    "max": 40426,
+    "p50": 6066,
+    "p90": 9520,
+    "p95": 11071,
+    "p99": 13645
+  },
+  "units_note": "Unicode character counts are Python Unicode code-point counts and are not tokens. UTF-8 byte counts are encoded bytes. No tokenization or token estimate was performed.",
+  "utf8_byte_count": {
+    "max": 40426,
+    "p50": 6070,
+    "p90": 9532,
+    "p95": 11101,
+    "p99": 13645
+  }
+}

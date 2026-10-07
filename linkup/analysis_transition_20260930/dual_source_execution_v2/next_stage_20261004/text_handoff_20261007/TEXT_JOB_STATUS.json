@@ -1,6 +1,6 @@
 {
-  "recorded_at_utc": "2026-10-07T10:21:00+00:00",
-  "status": "submitted_last_verified_running_not_materialization_complete",
+  "recorded_at_utc": "2026-10-07T11:05:56Z",
+  "status": "wuzhen_collected_verified_kunshan_running_merge_pending",
   "jobs": [
     {
       "region": "kunshan",
@@ -11,11 +11,11 @@
       "expected_rows": 5495,
       "source_file_packs": 1314,
       "last_verified_state": "RUNNING",
-      "elapsed_at_last_snapshot": "01:36:05",
+      "elapsed_at_last_snapshot": "02:21:53",
       "node": "g01r2n16",
-      "average_cpu_time": "01:04:35",
-      "maximum_rss_kib": 1279132,
-      "maximum_disk_read_bytes": 254314460754,
+      "average_cpu_time": "01:36:33",
+      "maximum_rss_kib": 1322840,
+      "maximum_disk_read_bytes": 376001233343,
       "maximum_disk_write_bytes": 3537,
       "scheduler_reason": "None"
     },
@@ -27,8 +27,8 @@
       "memory": "10G",
       "expected_rows": 4505,
       "source_file_packs": 1078,
-      "last_verified_state": "RUNNING",
-      "elapsed_at_last_snapshot": "01:37:11",
+      "last_verified_state": "COMPLETED",
+      "elapsed_at_last_snapshot": "01:59:10",
       "node": "b01r3n17",
       "average_cpu_time": "01:22:59",
       "maximum_rss_kib": 1212148,
@@ -37,10 +37,19 @@
       "scheduler_reason": "None"
     }
   ],
-  "materialized_rows_verified": null,
+  "materialized_rows_verified": {
+    "wuzhen": 4505,
+    "kunshan": null
+  },
+  "wuzhen_verification": {
+    "locator_set_equal": true,
+    "selection_sha256": "cceb6a3bfb74b58bd0cc9d983d58f6c12cf3fd45fd83b595dda6fd5d3bcadaa4",
+    "source_map_sha256": "96ade5d5e3f63d548d0ae9d28f27ff40f545cb6e5764a75c41058af4f9164dc5",
+    "output_sha256": "563c119e2d61872de668a89151320cdfeb75e119e33fee8af7e320f74fee541a"
+  },
   "completion_receipts_retrieved": false,
   "partial_output": "Materializer accumulates selected rows and writes atomically after locator reads; no useful partial byte count at snapshot.",
-  "health_interpretation": "Both jobs were actively reading source packs with nonzero CPU and disk-read counters; neither was pending, failed, or idle at the snapshot.",
+  "health_interpretation": "Wuzhen completed and its 4,505-row output was collected and verified. Kunshan remained actively reading source packs with nonzero CPU and disk-read counters; it was not pending, failed, or idle at the snapshot.",
   "collector_ready": "collect_and_build_exact_text_cache.py retrieves files only after both Slurm states are COMPLETED and then runs exact locator/hash verification before building private outputs.",
   "model_calls": 0,
   "no_new_sample": true

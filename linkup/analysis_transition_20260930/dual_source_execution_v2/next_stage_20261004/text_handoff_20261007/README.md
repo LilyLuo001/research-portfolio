@@ -18,3 +18,9 @@ Run the generated `RUN_MATERIALIZE_FIXED10000_KUNSHAN_PRIVATE.sh` only on Kunsha
 ## Submitted jobs (2026-10-07)
 
 Kunshan `123910578` and Wuzhen `46027883` were both verified RUNNING in the last bounded snapshot (elapsed 1m21s / 2m10s). These are raw-text materialization jobs, not model inference. Final text and receipts had not yet been retrieved; selection counts are not processed-row counts. See [TEXT_JOB_STATUS.json](TEXT_JOB_STATUS.json).
+
+## Verified partial retrieval, 2026-10-07
+
+Wuzhen job `46027883` completed successfully. Its 4,505 exact source texts were collected privately and checked against the selected canonical keys and materialization hashes. `WUZHEN_CORPUS_READINESS_AGGREGATE.json` reports workload only: 3,666 unique exact texts, 839 repeated rows beyond those unique texts, and no empty texts. The regional file partition is not a representative analytic subgroup. Character lengths are Unicode code points, not model tokens.
+
+Kunshan job `123910578` was still running at the most recent recorded check. The full 10,000-row merge/cache has not yet been produced. All rows and weights will remain in the analysis even where model output is cached for identical text. See `TEXT_JOB_STATUS.json` for the timestamped evidence and `summarize_corpus_readiness.py` for the reproducible workload calculation.
