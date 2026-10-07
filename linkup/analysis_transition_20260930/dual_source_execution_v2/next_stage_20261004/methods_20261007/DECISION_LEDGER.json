@@ -47,7 +47,18 @@
       "issue": "Reduce inference cost without changing sample weights",
       "decision": "After exact text retrieval, cache extraction only for byte-identical decoded original-text SHA256 groups. Retain all10000 canonical keys and their individual sample weights. No fuzzy/near-template merging. Group shared text in review reporting; duplicate observations are not independent model validations.",
       "basis": "Engineering and sampling decision by GPT-6; no claim that duplicates have equal labour-market histories.",
-      "sources": []
+      "sources": [],
+      "execution_update": {
+        "status": "actual_text_preparation_complete",
+        "sample_rows": 10000,
+        "unique_exact_texts": 7635,
+        "repeated_rows_beyond_unique": 2365,
+        "all_original_columns_values_preserved": true,
+        "empty_text_rows": 0,
+        "remote_private_handoff": "verified_on_Wuzhen",
+        "model_outputs_cached": false,
+        "evidence": "../text_handoff_20261007/FIXED10000_EXACT_TEXT_CACHE_RECEIPT.json"
+      }
     },
     {
       "id": "D36",
@@ -101,7 +112,43 @@
           "model_downloaded": false,
           "inference_run": false
         }
+      },
+      "final_execution": {
+        "runtime_build": "COMPLETED",
+        "model_downloaded_and_remote_sha_verified": true,
+        "pilot": {
+          "planned": 4,
+          "attempted": 2,
+          "completed": 1,
+          "partial_on_early_stop": 1,
+          "unattempted": 2,
+          "context_overflow": 0
+        },
+        "pilot_job": "46035182",
+        "pilot_final_state": "CANCELLED_ON_ROOT_DECISION",
+        "wuzhen_total_allocation_card_hours": 0.7969444444,
+        "bulk_started": false,
+        "verdict": "CURRENT_LOCAL_ROUTE_NOT_ACCEPTED_FOR_BULK",
+        "receipt": "../public_ops/local_inference_20261007/RUN_COMPLETION_RECEIPT.json"
       }
+    },
+    {
+      "id": "D38",
+      "issue": "Whether contradictory model fields may be deleted to pass the schema",
+      "decision": "No. Only the known runtime end marker and uniquely located exact-quote start/end offsets may be mechanically repaired for acceptance. Conflicting state evidence, mentions, and condition quotations remain validation failures; deleting them privileges one model field over another and can change measured content. Preserve exploratory canonicalization results privately as nonaccepted, and revalidate identical raw outputs without new inference.",
+      "basis": "Root inspection of actual synthetic output postprocessing; bounded scientific acceptance decision.",
+      "sources": [
+        "../public_ops/local_inference_20261007/recovery_20261007/validate_private_outputs.py"
+      ]
+    },
+    {
+      "id": "D39",
+      "issue": "Whether to finish all four hard cases or launch bulk after a decisive core-content failure",
+      "decision": "Early-stop pilot46035182 after root source inspection of its first completed case demonstrated object-binding, knowledge-versus-experience, and technology-coverage errors. Preserve completed and partial outputs separately. No bulk or additional model/prompt search in this wave. Formal10000 semantic extraction remains unfinished.",
+      "basis": "Actual completed raw prediction compared with the unchanged source and existing adjudication; not a representative accuracy test.",
+      "sources": [
+        "ROOT_PILOT_DECISION.json"
+      ]
     }
   ],
   "status_note": "Operational actions require actual execution receipts; this ledger is not a completion claim."

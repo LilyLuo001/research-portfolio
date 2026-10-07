@@ -1,0 +1,47 @@
+{
+  "decision_id": "D39",
+  "date": "2026-10-07",
+  "owner": "GPT-6/high",
+  "status": "CURRENT_LOCAL_ROUTE_NOT_ACCEPTED_FOR_BULK",
+  "planned_real_pilot_records": 4,
+  "completed_records_inspected_by_root": 1,
+  "root_inspection_selection": "First completed member of four preselected previously adjudicated difficult cases; not a random or independent validation sample.",
+  "trigger": "Core content errors appeared in the first completed real prediction; root ordered early cancellation of remaining pilot to conserve compute.",
+  "observed_core_errors": [
+    {
+      "type": "experience_object_binding",
+      "finding": "A numerical requirement tied explicitly to a task-specific role was assigned to general_work; the task-specific finding lost its duration."
+    },
+    {
+      "type": "knowledge_vs_prior_experience",
+      "finding": "Required domain understanding was treated as required prior domain work experience. The separate domain-work experience statement occurred in a preferred section."
+    },
+    {
+      "type": "technology_class_and_coverage",
+      "finding": "Generic AI-tool text was labeled predictive AI while an explicit generative-AI-use requirement elsewhere was not represented."
+    }
+  ],
+  "root_action": [
+    "Preserve raw outputs, completed prediction, and any partial output separately.",
+    "Stop the remaining pilot and do not launch the 7635-text production run.",
+    "Keep the fixed10000 source corpus and weights unchanged.",
+    "Keep frozen T1-T6 and published legacy numeric diagnostics unchanged.",
+    "Do not retry prompts, change the schema, or search additional models in this wave."
+  ],
+  "strict_validation_policy": "Known runtime-envelope removal and unique exact-quote offset repair only; conflicting fields are not deleted to manufacture validity.",
+  "performance_scope": "One completed hard case establishes observed runtime only. Linear extrapolation is a scenario, not an estimated representative full-corpus ETA.",
+  "research_scope": "These failures reject this configured route for unattended production; they do not estimate population error rates or establish that all local models are unsuitable.",
+  "completion_scope": "Corpus preparation is complete; formal fixed10000 semantic extraction and resulting new experience comparisons are not complete.",
+  "raw_evidence_location": "Private pilot4 run-46035182; raw text, identifiers and model weights excluded from Git.",
+  "execution_counts": {
+    "planned": 4,
+    "attempted": 2,
+    "completed": 1,
+    "partial_on_early_stop": 1,
+    "unattempted": 2,
+    "context_overflow": 0
+  },
+  "actual_pilot_job_state": "CANCELLED",
+  "pilot_elapsed_seconds": 657,
+  "accepted_completed_predictions": 0
+}

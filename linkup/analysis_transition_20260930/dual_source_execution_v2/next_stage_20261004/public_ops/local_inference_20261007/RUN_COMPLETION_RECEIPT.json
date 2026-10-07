@@ -1,0 +1,152 @@
+{
+  "schema_version": "linkup-local-inference-completion-v1",
+  "as_of": "2026-10-07T20:53:22+08:00",
+  "status": "ROOT_EARLY_STOP_CORE_SEMANTIC_FAILURE",
+  "scope": "One pinned no-paid-API CPU route, one invented fixture, and a stopped nonrandom pilot from four previously reviewed records. This is routeability evidence, not accuracy estimation or independent validation.",
+  "stack": {
+    "runtime_repository": "https://github.com/ggml-org/llama.cpp",
+    "runtime_commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+    "runtime_executable": "llama-completion",
+    "runtime_executable_sha256": "66c94c83f239a97c458e772295c9fc556ca8ea743dbb7c704e20ffb758bd533a",
+    "tokenizer_sha256": "9a99d1ce09401f920894dac9cd2135b1b5fe79d696a1ea6052a7e3562e1d59d2",
+    "model_repository": "Qwen/Qwen3-8B-GGUF",
+    "model_revision": "7c41481f57cb95916b40956ab2f0b139b296d974",
+    "model_file": "Qwen3-8B-Q4_K_M.gguf",
+    "model_bytes": 5027783488,
+    "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "runtime_build": "CPU-only GCC 11.2.1/CMake 3.31.6 build; scheduler-required DCUs were allocated but not used as CPU cores or as an accelerator backend.",
+    "executed_phase_script": "recovery_20261007/run_private_phase_qwen3_wuzhen.sbatch",
+    "executed_phase_script_sha256": "6c5321e801dc0552e10fa048776750a8b2754817d97747a1bd29968511e7ecd2"
+  },
+  "download_budget": {
+    "limit_bytes": 8000000000,
+    "model_bytes": 5027783488,
+    "prior_complete_and_partial_runtime_setup_bytes": 169481776,
+    "total_bytes": 5197265264,
+    "within_limit": true
+  },
+  "execution_contract": {
+    "prompt_version": "linkup_extraction_prompt_v1.1.0",
+    "schema_version": "linkup_measurement_v1.1.0",
+    "context_size": 16384,
+    "output_token_budget": 4096,
+    "context_shift": false,
+    "maximum_accepted_input_tokens": 12000,
+    "temperature": 0,
+    "seed": 424242,
+    "reasoning": "off",
+    "json_schema_constrained": true,
+    "pilot_source_nul_counts": [0, 0, 0, 0],
+    "nul_transport_note": "The executed shell argument transport cannot preserve embedded NUL. The fixed pilot had none. A separate unexecuted submission guard rejects future prompt files containing NUL rather than stripping them."
+  },
+  "documents": {
+    "synthetic": {"planned": 1, "attempted": 1, "completed": 1, "context_overflow": 0},
+    "pilot": {"planned": 4, "attempted": 2, "completed": 1, "partial_on_early_stop": 1, "unattempted": 2, "context_overflow": 0},
+    "bulk_10000_started": false,
+    "bulk_unique_7635_started": false
+  },
+  "validation": {
+    "synthetic": {
+      "strict_raw_json_parse": "0/1 due solely to the preserved llama.cpp trailing runtime marker",
+      "runtime_envelope_removed_then_strict_v1_1": "0/1",
+      "runtime_envelope_plus_unique_quote_offset_only": "0/1",
+      "remaining_error_categories": [
+        "unconditional mention carried non-null condition evidence",
+        "not-mentioned finding asserted applicant context"
+      ],
+      "exploratory_note": "A discarded exploratory canonicalization produced a structurally valid object by clearing conflicting fields. It is not accepted because that repair was not lossless."
+    },
+    "completed_pilot_records": {
+      "count": 1,
+      "strict_raw_json_parse": "0/1 due solely to the preserved llama.cpp trailing runtime marker",
+      "runtime_envelope_removed_then_strict_v1_1": "0/1",
+      "runtime_envelope_plus_unique_quote_offset_only": "0/1",
+      "remaining_error_categories": [
+        "unconditional mention carried non-null condition evidence"
+      ],
+      "offset_repair_rule": "Exact quote text was unchanged; unique source matches alone supplied offsets; ambiguous or absent matches were refused. No conflicting field was cleared or overwritten."
+    }
+  },
+  "root_semantic_adjudication": {
+    "completed_records_reviewed": 1,
+    "decision": "stop remaining pilot and reject current unattended route",
+    "failure_categories": [
+      "experience duration bound to the wrong experience object",
+      "qualification strength or scope misclassified",
+      "knowledge or understanding misclassified as prior experience",
+      "generic AI wording assigned an unsupported AI class",
+      "explicit generative-AI-use evidence omitted"
+    ],
+    "note": "These categories paraphrase private adjudication and disclose no record identity or source quotation."
+  },
+  "measured_performance": {
+    "synthetic": {
+      "input_tokens_plain": 2564,
+      "prompt_eval_tokens_with_chat_template": 2571,
+      "prompt_eval_seconds": 95.26984,
+      "prompt_tokens_per_second": 26.99,
+      "generation_tokens": 754,
+      "generation_seconds": 127.46313,
+      "generation_tokens_per_second": 5.92,
+      "internal_elapsed_seconds": 242
+    },
+    "completed_pilot_record": {
+      "input_tokens_plain": 3884,
+      "prompt_eval_tokens_with_chat_template": 3891,
+      "prompt_eval_seconds": 148.93792,
+      "prompt_tokens_per_second": 26.12,
+      "generation_tokens": 1414,
+      "generation_seconds": 289.43073,
+      "generation_tokens_per_second": 4.89,
+      "process_wall_seconds": 450.35,
+      "maximum_resident_kib": 10735136
+    },
+    "partial_second_pilot_record": {
+      "input_tokens_plain": 4203,
+      "output_bytes_preserved": 220,
+      "completed": false
+    },
+    "mechanical_projection_current_per_record_path": {
+      "unique_texts": 7635,
+      "serial_wall_hours": 955.1,
+      "cpu_core_hours_at_16_cores": 15281.9,
+      "scheduler_dcu_card_hours_at_2_required_dcus": 1910.2,
+      "caveat": "A scale conversion from one deliberately difficult, nonrandom, longer selected case under the current reload-per-record path; it is not an ETA or a population throughput estimate."
+    }
+  },
+  "scheduler_jobs": [
+    {"cluster": "Kunshan", "job_id": "123914479", "purpose": "initial environment probe", "state": "COMPLETED", "elapsed_seconds": 4, "cpus": 1, "requested_dcus": 0},
+    {"cluster": "Kunshan", "job_id": "123914627", "purpose": "initial route trial", "state": "FAILED", "elapsed_seconds": 7, "cpus": 16, "requested_dcus": 0},
+    {"cluster": "Wuzhen", "job_id": "46031719", "purpose": "compute probe with script SIGPIPE", "state": "FAILED", "elapsed_seconds": 0, "cpus": 1, "requested_dcus": 1},
+    {"cluster": "Wuzhen", "job_id": "46031757", "purpose": "corrected compute and network probe", "state": "COMPLETED", "elapsed_seconds": 78, "cpus": 1, "requested_dcus": 1},
+    {"cluster": "Wuzhen", "job_id": "46031866", "purpose": "private compiler authentication probe", "state": "FAILED", "elapsed_seconds": 1, "cpus": 1, "requested_dcus": 1},
+    {"cluster": "Wuzhen", "job_id": "46031930", "purpose": "private compiler extraction probe", "state": "FAILED", "elapsed_seconds": 14, "cpus": 1, "requested_dcus": 1},
+    {"cluster": "Wuzhen", "job_id": "46032062", "purpose": "private compiler include-path probe", "state": "FAILED", "elapsed_seconds": 14, "cpus": 1, "requested_dcus": 1},
+    {"cluster": "Wuzhen", "job_id": "46032122", "purpose": "private GCC 11 C++17 proof", "state": "COMPLETED", "elapsed_seconds": 14, "cpus": 1, "requested_dcus": 1},
+    {"cluster": "Wuzhen", "job_id": "46032252", "purpose": "incorrect runtime target build gate", "state": "FAILED", "elapsed_seconds": 47, "cpus": 16, "requested_dcus": 2},
+    {"cluster": "Wuzhen", "job_id": "46032322", "purpose": "corrected pinned runtime build", "state": "COMPLETED", "elapsed_seconds": 352, "cpus": 16, "requested_dcus": 2},
+    {"cluster": "Wuzhen", "job_id": "46034670", "purpose": "synthetic invocation transport probe", "state": "CANCELLED", "elapsed_seconds": 69, "cpus": 16, "requested_dcus": 2},
+    {"cluster": "Wuzhen", "job_id": "46034741", "purpose": "corrected synthetic route", "state": "COMPLETED", "elapsed_seconds": 249, "cpus": 16, "requested_dcus": 2},
+    {"cluster": "Wuzhen", "job_id": "46035182", "purpose": "fixed pilot stopped after decisive semantic failure", "state": "CANCELLED", "elapsed_seconds": 657, "cpus": 16, "requested_dcus": 2}
+  ],
+  "allocation_totals": {
+    "infrastructure_and_synthetic_before_pilot": {
+      "wuzhen_dcu_card_hours": 0.4319444444,
+      "wuzhen_cpu_core_hours": 3.2202777778,
+      "kunshan_cpu_core_hours": 0.0322222222
+    },
+    "stopped_pilot": {
+      "wuzhen_dcu_card_hours": 0.365,
+      "wuzhen_cpu_core_hours": 2.92
+    },
+    "all_jobs": {
+      "wuzhen_dcu_card_hours": 0.7969444444,
+      "cpu_core_hours_across_both_clusters": 6.1725
+    }
+  },
+  "private_artifacts": {
+    "raw_outputs_and_full_validator_errors": "next_stage_20261004/public_ops/local_inference_20261007/private/runtime_eval",
+    "public_data_excluded": true
+  },
+  "production_decision": "NO_BULK_RUN_CURRENT_ROUTE"
+}
