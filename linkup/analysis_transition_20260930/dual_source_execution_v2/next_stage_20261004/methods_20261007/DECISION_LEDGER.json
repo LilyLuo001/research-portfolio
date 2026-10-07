@@ -86,7 +86,21 @@
         "cxx17_filesystem_check": "PASS",
         "system_install_modified": false,
         "semantic_results_produced": false,
-        "runtime_build": "separate gate; actual state in recovery receipt"
+        "runtime_build": {
+          "job_id": "46032322",
+          "state_at_handoff": "SUBMITTED",
+          "targets": [
+            "llama-completion",
+            "llama-tokenize"
+          ],
+          "cpus": 16,
+          "memory_gb": 32,
+          "scheduler_required_dcus": 2,
+          "walltime_limit_hours": 1,
+          "gpu_compute_used": false,
+          "model_downloaded": false,
+          "inference_run": false
+        }
       }
     }
   ],
