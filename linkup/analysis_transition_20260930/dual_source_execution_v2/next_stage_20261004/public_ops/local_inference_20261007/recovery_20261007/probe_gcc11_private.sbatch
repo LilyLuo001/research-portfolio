@@ -14,7 +14,7 @@ set -euo pipefail
 
 BASE=/work/home/lilysharp/private/next_stage_20261004/local_inference_20261007/recovery
 RPMS=${BASE}/toolchain_rpms
-STAGE=${BASE}/toolchain_gcc11
+STAGE=${BASE}/toolchain_gcc11_payload_v2
 KEY=${BASE}/keys/RPM-GPG-KEY-CentOS-SIG-SCLo
 RPMDB=${BASE}/rpmdb
 mkdir -p "${STAGE}"
@@ -36,13 +36,18 @@ verify 7049c0fdcee4412cf0e2570e2ed90e4879019aa58b9c7d1112e85260ead0ec30 "${RPMS}
 verify adbf4b0743fa1227da7d93ef8236e20aa7ea5bda67965baadf782095bfee540f "${RPMS}/devtoolset-11-gcc-c++-11.2.1-9.1.el7.x86_64.rpm"
 verify b42d3c7ff9f4da0f7fedd354051b002fe68dbb56dc59c713c61bdf92773b3d9c "${RPMS}/devtoolset-11-libstdc++-devel-11.2.1-9.1.el7.x86_64.rpm"
 
-for rpm_file in "${RPMS}"/*.rpm; do
+for rpm_file in \
+  "${RPMS}/devtoolset-11-binutils-2.36.1-1.el7.2.x86_64.rpm" \
+  "${RPMS}/devtoolset-11-gcc-11.2.1-9.1.el7.x86_64.rpm" \
+  "${RPMS}/devtoolset-11-gcc-c++-11.2.1-9.1.el7.x86_64.rpm" \
+  "${RPMS}/devtoolset-11-libstdc++-devel-11.2.1-9.1.el7.x86_64.rpm"; do
   (cd "${STAGE}" && rpm2cpio "${rpm_file}" | cpio -idmu --quiet)
 done
 
 TOOLROOT=${STAGE}/opt/rh/devtoolset-11/root/usr
 export PATH=${TOOLROOT}/bin:${PATH}
 export LD_LIBRARY_PATH=${TOOLROOT}/lib64:${TOOLROOT}/lib:${LD_LIBRARY_PATH:-}
+unset CPATH CPLUS_INCLUDE_PATH C_INCLUDE_PATH INCLUDE LIBRARY_PATH
 printf 'gxx_path=%s\n' "$(command -v g++)"
 g++ --version | sed -n '1p'
 
