@@ -1,0 +1,367 @@
+{
+  "type": "object",
+  "properties": {
+    "document_status": {
+      "type": "string",
+      "enum": [
+        "reviewed_full",
+        "reviewed_partial",
+        "unresolved"
+      ]
+    },
+    "experience_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": [
+              "general_work",
+              "occupation_task",
+              "industry_domain",
+              "tool_specific",
+              "unresolved"
+            ]
+          },
+          "object_detail": {
+            "type": "string"
+          },
+          "strength": {
+            "type": "string",
+            "enum": [
+              "required",
+              "preferred",
+              "explicitly_waived",
+              "unspecified",
+              "unresolved"
+            ]
+          },
+          "years_min": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "years_max": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "years_relation": {
+            "type": "string",
+            "enum": [
+              "at_least",
+              "range",
+              "exact",
+              "at_most",
+              "not_stated",
+              "unresolved"
+            ]
+          },
+          "alternative_group": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "alternative_branch": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "integer"
+                },
+                "end": {
+                  "type": "integer"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "ambiguity": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "object",
+          "object_detail",
+          "strength",
+          "years_min",
+          "years_max",
+          "years_relation",
+          "alternative_group",
+          "alternative_branch",
+          "evidence",
+          "ambiguity"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "qualification_alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "OR",
+              "AND",
+              "unresolved"
+            ]
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "type": "string"
+                },
+                "condition": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "integer"
+                      },
+                      "end": {
+                        "type": "integer"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "start",
+                      "end",
+                      "quote"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "branch",
+                "condition",
+                "evidence"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "group",
+          "relation",
+          "branches"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "experience_nonmention_status": {
+      "type": "string",
+      "enum": [
+        "explicit_no_experience_required",
+        "not_mentioned_in_full_document",
+        "not_observed_in_partial_context",
+        "experience_present",
+        "unresolved"
+      ]
+    },
+    "entry_target": {
+      "type": "string",
+      "enum": [
+        "explicit_new_graduate_or_no_experience",
+        "explicit_experienced_hire",
+        "mixed_or_conditional",
+        "not_stated",
+        "unresolved"
+      ]
+    },
+    "entry_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "integer"
+          },
+          "end": {
+            "type": "integer"
+          },
+          "quote": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unresolved_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "technology_roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "technology": {
+            "type": "string"
+          },
+          "family": {
+            "type": "string",
+            "enum": [
+              "traditional_software_system",
+              "predictive_ml_ai",
+              "generative_ai",
+              "unresolved"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "develop_technology",
+              "implement_deploy_technology",
+              "use_tool_for_work",
+              "background_mention",
+              "unresolved"
+            ]
+          },
+          "developed_object": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "integer"
+                },
+                "end": {
+                  "type": "integer"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "technology",
+          "family",
+          "role",
+          "developed_object",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "task_responsibilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "routine_execution",
+              "independent_judgment_verification",
+              "client_ownership",
+              "people_leadership_supervision",
+              "training_mentoring",
+              "other"
+            ]
+          },
+          "advertised_worker_responsibility": {
+            "type": "string",
+            "enum": [
+              "explicit",
+              "conditional",
+              "unresolved"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "integer"
+                },
+                "end": {
+                  "type": "integer"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "dimension",
+          "advertised_worker_responsibility",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "document_status",
+    "experience_requirements",
+    "qualification_alternatives",
+    "experience_nonmention_status",
+    "entry_target",
+    "entry_evidence",
+    "unresolved_notes",
+    "technology_roles",
+    "task_responsibilities"
+  ],
+  "additionalProperties": false
+}

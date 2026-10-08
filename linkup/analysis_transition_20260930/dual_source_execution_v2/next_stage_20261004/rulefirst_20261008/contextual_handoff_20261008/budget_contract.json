@@ -1,0 +1,23 @@
+{
+  "scenarios": {
+    "A_experience_context": {
+      "prompt_path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/EXPERIENCE_PROMPT.txt",
+      "schema_path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/EXPERIENCE_SCHEMA.json",
+      "text_source": "context",
+      "selector": "anchored"
+    },
+    "B_full_joint": {
+      "prompt_path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/JOINT_PROMPT.txt",
+      "schema_path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/JOINT_SCHEMA.json",
+      "text_source": "full",
+      "selector": "all"
+    }
+  },
+  "C_duplicate_diagnostic": "Sum A+B costs; A does not replace full task/role adjudication. A no-anchor cases remain unresolved.",
+  "output_caps": [
+    1024,
+    4096,
+    8192,
+    25000
+  ]
+}

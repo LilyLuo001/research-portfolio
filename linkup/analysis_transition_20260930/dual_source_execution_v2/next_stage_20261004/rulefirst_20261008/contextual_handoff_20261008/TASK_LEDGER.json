@@ -1,0 +1,35 @@
+{
+  "stage": "contextual_handoff_20261008",
+  "status": "results_recorded_pending_archive_qacct",
+  "baseline": {
+    "rulefirst_version": "rulefirst-20261008-v1.2",
+    "public_git_commit": "ec38d28149fceb439e739eee2b536657dff0564a",
+    "frozen_outputs_unchanged": true
+  },
+  "scope": {
+    "purpose": "Prepare existing public rule-first outputs for a bounded contextual review decision",
+    "inputs": "Existing public aggregate outputs and receipts only; private context remains on scheduled cluster storage",
+    "not_authorized": ["bulk model rerun", "local research computation"],
+    "frozen_source_scope": {"unique_texts": 7635, "represented_rows": 10000},
+    "contract_distinction": "Experience-only A and joint full B are separate estimands and must not be compared as equivalent outputs."
+  },
+  "measurement_summary": {"current_rule_coverage": "7359/7635", "current_rule_coverage_percent": 96.4, "context_candidate_coverage": "45770/46319", "context_candidate_coverage_percent": 98.8, "interpretation": "coverage and routing records, not accuracy"},
+  "budget_scenarios_usd": {"1024": [295, 362], "4096": [882, 948], "8192": [1663, 1730], "25000": [4872, 4938], "caveat": "scenarios, not forecasts or guarantees"},
+  "execution": {"job_id": "7963223", "runner": "Sol", "qa": "independent QA", "publication_gate": "archive status and qacct must be verified-cleaned or explicitly blocked"},
+  "future_candidate": {"decision": "D52", "route": "medium Astra", "status": "planning_only", "estimate_caveat": "Includes output tokens, hidden reasoning, context, and caps; not a performance or cost assurance."},
+  "pending_root_inputs": [
+    "approved contextual review contract",
+    "approved budget and token-cost ceiling",
+    "selection and denominator rules",
+    "Sol scheduled execution receipt",
+    "independent QA receipt"
+  ],
+  "public_delivery_plan": [
+    "sanitized execution receipt",
+    "aggregate counts and token/cost accounting",
+    "public QA summary",
+    "provenance and archive verification receipt"
+  ],
+  "exclusions": ["private identifiers", "raw advertisements", "context windows", "row-level model outputs", "credentials", "unverified archive payloads"],
+  "gate": "Do not publish or modify frozen v1.2 artifacts until root contract, budget, and receipts are complete."
+}

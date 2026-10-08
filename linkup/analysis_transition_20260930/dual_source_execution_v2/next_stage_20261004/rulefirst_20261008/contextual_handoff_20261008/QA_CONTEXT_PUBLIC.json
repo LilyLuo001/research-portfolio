@@ -1,0 +1,97 @@
+{
+  "checks": {
+    "budget_arithmetic": {
+      "C_equals_A_plus_B": true,
+      "model": "gpt-6-astra",
+      "output_fee_includes_reasoning_budget": true,
+      "pass": true,
+      "reasoning_effort": "medium",
+      "rows": 72,
+      "scenarios": {
+        "A_experience_context": {
+          "max_request_serialized_utf8_bytes": 43542,
+          "potential_long_context_request_count": 0,
+          "request_count": 7634,
+          "serialized_utf8_bytes": 83081064
+        },
+        "B_full_joint": {
+          "max_request_serialized_utf8_bytes": 45622,
+          "potential_long_context_request_count": 0,
+          "request_count": 7635,
+          "serialized_utf8_bytes": 99747908
+        },
+        "C_additive_A_plus_B_diagnostic": {
+          "max_request_serialized_utf8_bytes": 45622,
+          "potential_long_context_request_count": 0,
+          "request_count": 15269,
+          "serialized_utf8_bytes": 182828972
+        }
+      }
+    },
+    "code_contract_prompt_schema_sha256": {
+      "mismatches": [],
+      "pass": true
+    },
+    "experience_context_selection": {
+      "counts": {
+        "anchored_context_requests": 7634,
+        "full_text_fallback": 7359,
+        "no_anchor_unknown": 1,
+        "unique_texts": 7635
+      },
+      "pass": true
+    },
+    "prior_public_provenance_chain": {
+      "matches": {
+        "full_v1_2_results": true,
+        "queue": true,
+        "represented": true
+      },
+      "pass": true
+    },
+    "public_csv_sha256": {
+      "matched": 3,
+      "mismatches": [],
+      "pass": true,
+      "total": 3
+    },
+    "rows_and_bindings": {
+      "boundary": "Private row-level pack and binding were not opened; counts and integrity are verified from the BU public receipt and public aggregates.",
+      "pass": true,
+      "positions_ordered_unique_1_to_10000": true,
+      "represented_binding": 10000,
+      "sha_sets_aligned": true,
+      "unique_context_pack": 7635
+    },
+    "token_and_semantic_boundaries": {
+      "no_model_api_calls": "BU receipt status is complete_no_model_calls and the reviewed builder contains no model/API call path.",
+      "pass": true,
+      "semantic_certification": "Not performed.",
+      "token_measure": "UTF-8 byte divisors 5/4/3 are planning approximations, not true token counts or guaranteed bounds."
+    }
+  },
+  "qa_created_utc": "2026-10-08T15:53:30.727163+00:00",
+  "scope": "Public artifacts and public code/contracts only; no private research data were read or computed locally.",
+  "source_receipt": {
+    "path": "cloud_execution_20261008/rulefirst_20261008/contextual_handoff_public/CONTEXT_HANDOFF_RECEIPT_PUBLIC.json",
+    "sha256": "170fb1b96e7fe410e297e16ab923e05a4c8d8663a881ef86380574b29bfc25ec"
+  },
+  "status": "pass",
+  "verification_layers": {
+    "actual_bu_public_receipt": {
+      "job_id": "7963223",
+      "represented_binding": 10000,
+      "status": "pass",
+      "status_claim": "complete_no_model_calls",
+      "unique_context_pack": 7635
+    },
+    "semantic_validation": {
+      "meaning": "Pack construction and public aggregates do not certify contextual labels, precision, recall, or semantic accuracy.",
+      "status": "not_performed"
+    },
+    "static_builder_review": {
+      "meaning": "SHA alignment, normalized-source fairness, heading/offset construction, all-anchor retrieval, no-anchor unknown handling, budgeting boundaries, and no-API code path were reviewed.",
+      "status": "pass"
+    }
+  }
+}

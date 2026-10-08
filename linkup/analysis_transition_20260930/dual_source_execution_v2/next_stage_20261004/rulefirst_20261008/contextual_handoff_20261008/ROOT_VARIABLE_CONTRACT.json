@@ -1,0 +1,28 @@
+{
+  "decision_id": "D52",
+  "date": "2026-10-08",
+  "baseline": "rulefirst-20261008-v1.2",
+  "action": "preserve_frozen_outputs_prepare_context_and_budget_only",
+  "reusable_now": [
+    "sample identity and 7635-to-10000 binding",
+    "literal numeric strings and evidence spans as candidate evidence",
+    "bounded technology dictionary matches",
+    "created-year snapshot metadata"
+  ],
+  "requires_contextual_adjudication": [
+    "experience object and requirement strength",
+    "conditional degree/experience alternatives",
+    "advertised entry eligibility",
+    "technology developer vs implementer vs user",
+    "judgment, client ownership, supervision and mentoring responsibilities"
+  ],
+  "future_recommended_model": "gpt-6-astra",
+  "future_initial_effort": "medium",
+  "no_model_call_authorized": true,
+  "qualification_of_budget": "Planning assumptions, not actual usage or a validated output-token cap",
+  "absence_rule": "No rule hit is unknown; full-document nonmention is still not actual absence of requirement or task",
+  "validation": "Reuse existing fixed eval80 for an independently reviewed bounded check; no new sample loop. Agreement/quote consistency is not human gold or population accuracy. Contextual output remains candidate until this check.",
+  "time_rule": "URL MD5 identifies a URL, not a historical text version; no claim current wording existed at first-seen date.",
+  "population_rule": "Frozen technology-prefiltered 2023-2026 sample; arm C is not a general untreated control; US-only and employer mapping not established.",
+  "stop_rule": "No keyword retuning, no new inference model, no API spending, no bulk semantic labels from conversation agents this turn."
+}

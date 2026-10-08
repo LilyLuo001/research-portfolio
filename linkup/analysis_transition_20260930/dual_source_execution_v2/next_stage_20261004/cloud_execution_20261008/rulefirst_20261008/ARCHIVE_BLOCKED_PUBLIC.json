@@ -1,0 +1,61 @@
+{
+  "schema_version": "rulefirst_archive_blocked_receipt_v1",
+  "recorded_utc": "2026-10-08T16:02:02Z",
+  "status": "blocked_network_transfer_preserved_source",
+  "source": {
+    "cluster": "BU SCC",
+    "root": "/projectnb/econdept/qluo/linkup_rulefirst_20261008",
+    "preserved": true,
+    "current_research_jobs": [],
+    "unrelated_job_7488095": "untouched"
+  },
+  "manifest": {
+    "path_on_source": "return/WZ_RESULTS_MANIFEST_PRIVATE.tsv",
+    "sha256": "7f9eabdf4745d46650a8aa2e6f2d14041066c608b86848663fb3b324e3a40054",
+    "file_count": 90,
+    "total_bytes": 281194155,
+    "scope": [
+      "code",
+      "contextual_contract",
+      "control",
+      "logs",
+      "run"
+    ],
+    "omitted_reused_inputs": true
+  },
+  "reused_input_source": {
+    "cluster": "Wuzhen",
+    "path": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/payload",
+    "note": "Original input payload already existed on Wuzhen and was not retransferred."
+  },
+  "fallback_destination": {
+    "cluster": "Wuzhen",
+    "root": "/work/home/lilysharp/linkup_rulefirst_20261008",
+    "verification_status": "partial_unverified_do_not_use_as_complete_archive",
+    "matched_files": 43,
+    "matched_bytes": 292350,
+    "missing_or_mismatch_files": 47,
+    "remaining_manifest_bytes": 280901805,
+    "observed_directory_bytes": 5713406,
+    "action": "stream interrupted after ineffective throughput; partial retained"
+  },
+  "kunshan_destination": {
+    "root": "/public/home/lilysharp/linkup_rulefirst_20261008",
+    "verification_status": "partial_unverified_preserved",
+    "action": "no additional changes in this closure attempt"
+  },
+  "contextual_job": {
+    "job_id": "7963223",
+    "queue": "econ",
+    "hostname": "scc-gr4.scc.bu.edu",
+    "slots": 4,
+    "wallclock_seconds": 21,
+    "failed": 0,
+    "exit_status": 0,
+    "maxvmem": "757.742M"
+  },
+  "cleanup": {
+    "performed": false,
+    "reason": "No archive destination passed complete file-by-file size and SHA-256 verification."
+  }
+}

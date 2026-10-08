@@ -1,0 +1,47 @@
+{
+  "created_utc": "2026-10-08T15:51:56.272006+00:00",
+  "input_sha256": {
+    "budget_contract": "c14a23db999c316417c5f5f1effa78fae99d0fbe1ddaf5522c21263efe15de62",
+    "builder": "4e9dc9fe08485b6b8034415d61b6d56edde4b01e08a52a9edc6b93f3f9b8eaa1",
+    "full_v1_2_results": "82b3063c7e48e1f63f2e94a73a9c3b6226585550c893722b61fd51d436933d19",
+    "legacy_v5": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "pricing": "4ab1ba8e19f16837794003c22f024a91bb50e79f36f5b8313dffa6f6b9fe73fa",
+    "queue": "5ea54b141e18ebef4468fff8dfff3e81a196679e7caaece138303cf995f25a4e",
+    "represented": "987f4369643bdd353b7e881f7ccf58dcf7be0f29853b9f118a92b4076833b04d",
+    "variable_contract": "dcd906e4d6402237484dac4599e94eebf5a52d2e54958ab4ad0dd56655daa876"
+  },
+  "integrity": {
+    "represented_positions_ordered_unique_1_to_10000": true,
+    "unique_sha_sets_aligned": true
+  },
+  "job_id": "7963223",
+  "model": "gpt-6-astra",
+  "outputs_sha256": {
+    "BUDGET_SCENARIOS_PUBLIC.csv": "9d4e9e2554a4032aec583d22a5d8be9d1b2a039c2d00809f116acc666e27a9eb",
+    "CONTEXT_COUNTS_BY_ARM_PUBLIC.csv": "6513f9277972ecda86dd8af2c62a580565c137ff03df43e1ce8e5810428857bb",
+    "CONTEXT_PACK_7635_PRIVATE.jsonl": "d14327b2d9db65111041bc9f6d2765016eb45f7c7caa423452b2b80a31997644",
+    "CONTEXT_TO_FIXED10000_BINDING_PRIVATE.jsonl": "4a8099b13313cdd6153362f7c7c8405ad2b858f3126e82bc324b3c86cd5cdfc7",
+    "SCOPE_COUNTS_BY_ARM_PUBLIC.csv": "37957d0b4207f3eb1437259d5207729eed1ea667d90e584decb582a972746dd7"
+  },
+  "prompt_schema_sha256": {
+    "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/EXPERIENCE_PROMPT.txt": "8287ea90a27ea8e01e3eea0a2b8441c098ed8f16090f88592bda378adf2f503d",
+    "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/EXPERIENCE_SCHEMA.json": "6a5d331cf330ad7f4d9c70513478e18d692b6fba6d0d5751bda5da805e501f79",
+    "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/JOINT_PROMPT.txt": "bd0daca0b19e53aa3515842f29497c038f057b228ba75097111d7ccf9fb40f2c",
+    "/projectnb/econdept/qluo/linkup_rulefirst_20261008/contextual_contract/JOINT_SCHEMA.json": "2b711a5e528bbbf61179d6a4cf9316b3ebb1b71e7cf61a1f1d7fdb5753f5007b"
+  },
+  "reasoning_effort": "medium",
+  "request_size_summary": {
+    "max_request_serialized_utf8_bytes": 45622,
+    "potential_long_context_request_count_by_scenario": {
+      "A_experience_context": 0,
+      "B_full_joint": 0
+    }
+  },
+  "rows": {
+    "represented_binding": 10000,
+    "unique_context_pack": 7635
+  },
+  "semantic_boundary": "Pack construction does not adjudicate experience relationships, qualification scope, technology role, or task responsibility. No-hit is unknown, not false/pass.",
+  "status": "complete_no_model_calls",
+  "token_boundary": "UTF-8 bytes divided by 5, 4, or 3 is planning approximation, not tokenizer measurement or guaranteed bounds. Serialized prompt, schema, and input text are included; no cache discount assumed."
+}

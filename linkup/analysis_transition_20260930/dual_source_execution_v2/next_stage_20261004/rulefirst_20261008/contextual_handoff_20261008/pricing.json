@@ -1,0 +1,29 @@
+{
+  "checked_date": "2026-10-08",
+  "model": "gpt-6-astra",
+  "services": {
+    "standard": {
+      "input_usd_per_million": 10,
+      "output_usd_per_million": 50
+    },
+    "batch": {
+      "input_usd_per_million": 5,
+      "output_usd_per_million": 25
+    }
+  },
+  "sources": [
+    "https://developers.openai.com/api/docs/pricing",
+    "https://developers.openai.com/api/docs/models/gpt-6-astra",
+    "https://developers.openai.com/api/docs/guides/batch",
+    "https://developers.openai.com/api/docs/guides/reasoning"
+  ],
+  "assumptions": [
+    "No cached-input discount",
+    "Output scenario includes visible output and hidden reasoning",
+    "No API service access or spending authorized",
+    "Input above 272000 tokens has different rates; flag any potentially oversized request",
+    "Bytes/token divisors are approximations, not true tokenization or guaranteed bounds",
+    "Caps are cost scenarios, not demonstrated sufficient response limits; 25000 included as initial reserve sensitivity",
+    "No retries, tax or additional audits included in base prices"
+  ]
+}

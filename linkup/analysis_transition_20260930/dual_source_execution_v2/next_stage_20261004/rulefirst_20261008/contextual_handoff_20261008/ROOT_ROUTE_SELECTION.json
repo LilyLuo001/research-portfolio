@@ -1,0 +1,30 @@
+{
+  "decision_id": "D53",
+  "date": "2026-10-08",
+  "evidence_job_id": "7963223",
+  "scope": "Existing 7635 unique normalized documents representing 10000 frozen sample rows; not all LinkUp",
+  "selected_future_route": "B_full_joint",
+  "authorization": "Recommendation only; no API inference, purchase or spending authorized",
+  "model_candidate": "gpt-6-astra",
+  "reasoning_effort_candidate": "medium",
+  "observations": {
+    "full_document_fallback_under_current_conservative_context_policy": 7359,
+    "unique_documents": 7635,
+    "experience_no_anchor_unknown": 1,
+    "experience_context_characters": 45770100,
+    "full_source_characters": 46319767,
+    "A_serialized_request_bytes": 83081064,
+    "B_serialized_request_bytes": 99747908
+  },
+  "reason": "Under this retrieval policy, 96.4% of documents fall back to full text and retained text is 98.8% of full-source characters. Experience-only A omits task/technology-role adjudication, while B supplies all core measurements in one request per unique text. No practical justification to run A then B; the additive diagnostic nearly doubles cost. This does not prove every possible compression policy would fail; we choose not to reopen truncation optimization.",
+  "batch_budget_scenarios_usd": {
+    "1024_total_output_tokens_per_document": [295.22,361.71],
+    "4096_total_output_tokens_per_document": [881.59,948.08],
+    "8192_total_output_tokens_per_document": [1663.41,1729.91],
+    "25000_total_output_tokens_per_document": [4871.64,4938.13]
+  },
+  "budget_interpretation": "Each interval varies input bytes/token planning divisor from 5 to 3 and assumes EVERY document consumes the stated total output budget, including hidden reasoning. These are illustrative scenarios, not a quote, forecast, guaranteed range or validated output cap. Standard service is twice the Batch price in the verified rate schedule. No cache savings, retries, additional audits or taxes included.",
+  "central_4096_scenario": {"approx_input_tokens":24939814,"total_output_budget_tokens":31272960,"batch_usd":906.52307},
+  "next_gate": "When an authorized model channel and budget exist, apply the locked prompts to existing eval80, assess scope/object/alternatives/role/evidence and actual billed tokens once. Then a single acceptance decision; do not begin with all 7635 or silently substitute a smaller model. Do not claim validation before execution.",
+  "current_deliverable_status": "Rule outputs preserved; context packs, bindings, semantic contract and budget complete. New semantic labels and substantive experience-combination results remain pending."
+}
