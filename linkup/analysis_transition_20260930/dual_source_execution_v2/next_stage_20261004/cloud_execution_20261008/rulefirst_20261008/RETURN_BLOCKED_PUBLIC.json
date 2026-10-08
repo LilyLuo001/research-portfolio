@@ -1,0 +1,25 @@
+{
+  "bu_source_preserved": true,
+  "bu_source_root": "/projectnb/econdept/qluo/linkup_rulefirst_20261008",
+  "cleanup_performed": false,
+  "completed_research_job": {
+    "elapsed_seconds": 36,
+    "exit_status": 0,
+    "failed": 0,
+    "job_id": "7960837"
+  },
+  "events": [
+    "initial uncompressed stream too slow and was replaced before completion",
+    "compressed stream made progress then failed with No route to host",
+    "one subsequent Kunshan short SSH check succeeded",
+    "subsequent BU SCC SSH checks timed out, preventing manifest-driven resume or Wuzhen fallback source read"
+  ],
+  "kunshan_completion_marker": false,
+  "kunshan_last_observed_bytes": 20937186,
+  "kunshan_target": "/public/home/lilysharp/linkup_rulefirst_20261008",
+  "kunshan_target_status": "partial_unverified_do_not_use",
+  "public_results_local": "cloud_execution_20261008/rulefirst_20261008/{dev120_v1.2_public,full_public,eval80_public}",
+  "recorded_utc": "2026-10-08T15:25:03.818855+00:00",
+  "resume_guard": "Do not delete BU root. Resume only after BU SSH returns; verify every returned file against BU manifest before marking Kunshan/Wuzhen archive complete.",
+  "status": "blocked_external_connectivity_no_cleanup"
+}

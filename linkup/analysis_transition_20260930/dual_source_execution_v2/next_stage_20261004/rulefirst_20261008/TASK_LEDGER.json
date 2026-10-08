@@ -1,6 +1,6 @@
 {
   "stage": "rulefirst_20261008",
-  "status": "planning_only_no_new_inference",
+  "status": "completed_research_blocked_archive_cleanup",
   "authorization": "User-approved rule-first plan; all new data computation scheduled at BU",
   "owners": {
     "core_rules_and_review": "GPT-6/high",
@@ -56,5 +56,6 @@
   ],
   "orchestration": "../cloud_execution_20261008/rulefirst_20261008/",
   "engine": "v1.1 plus 19 synthetic cases; pending Sol public receipt",
-  "next_gate": "Root acceptance of core rule/schema files and a bounded BU scheduler plan"
+  "next_gate": "Restore BU/Kunshan connectivity, verify every returned file against the BU manifest, then decide cleanup; no inference rerun is authorized",
+  "archive_status": {"status": "blocked_external_connectivity_no_cleanup", "bu_source_preserved": true, "cleanup_performed": false, "kunshan_completion_marker": false, "kunshan_last_observed_bytes": 20937186, "receipt": "../cloud_execution_20261008/rulefirst_20261008/RETURN_BLOCKED_PUBLIC.json"}
 }
