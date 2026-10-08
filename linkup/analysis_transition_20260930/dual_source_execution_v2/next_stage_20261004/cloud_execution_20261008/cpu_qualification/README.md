@@ -1,24 +1,11 @@
-# Kunshan CPU qualification controls and receipts
+# Kunshan CPU fixed-32 qualification
 
-This directory records the D47 CPU-only qualification control plane. It is a
-32-record diagnostic comparison against the accepted Batch002 reference, not
-production inference and not a new accuracy estimate. No DCU or HIP route is
-used. The runner requests 8 CPUs per task, 16 GiB, and a 20-minute limit; two
-waves use array concurrency 4, keeping maximum concurrent inference at 32
-CPUs.
+This directory contains public control code and receipts for a bounded 32-record reproduction qualification. Private source text, accepted candidates, raw model output, and record identifiers remain on the clusters.
 
-The frozen D43 exporter compares field-level values for `general_work`,
-`occupation_task`, and `industry_domain`. Missing, unknown, or invalid fields
-remain null/error values. The reference is an accepted model-assisted output,
-not human gold. Full source text is passed to the pinned runtime without
-truncation; the token cap fails a task when the input is too long.
+The runtime is pinned llama.cpp commit `42b021b4dc42be573f1e1463528532fc8294c650` with Qwen3-8B Q4_K_M revision `7c41481f57cb95916b40956ab2f0b139b296d974`. Runtime, model, Batch002 inputs, frozen D43 prompt/schema/exporter, and validator dependencies were streamed directly from Wuzhen or copied as public control code to Kunshan. Scheduled prep job `123978572` verified the frozen checksum manifest, executed the binaries on a compute node, resolved shared libraries, imported Python dependencies, and bound Batch002 processing positions 1–32 to the adjudicated `FINAL_CANDIDATES_PRIVATE.jsonl` reference.
 
-Preparation first failed on the scheduled node because the JSON-schema
-dependency was unavailable. The recorded follow-up chain therefore has
-`production_started=false`; the finalizer also failed for the same missing
-`jsonschema` dependency. These receipts preserve actual scheduler outcomes.
-No successful inference or qualification acceptance is claimed.
+Inference uses CPU-only `kshctest02` tasks with 8 CPUs, 16 GiB, a 20-minute limit, and no GRES. Concurrency is four tasks (32 CPUs maximum). The partition limits each user to 20 submitted jobs, so the 32 records are split into arrays `0-15%4` and `16-31%4`. A scheduled quota controller submits the second half when the first leaves the quota and retargets the existing finalizer dependency.
 
-The scripts bind the pinned runtime, model, prompt, schema, and archived
-source/reference paths by SHA-256. Raw inputs and model outputs remain in the
-cluster run directory and are not part of this Git publication.
+`run_fixed32_cpu_array.sbatch` preserves stdout and stderr, writes an EXIT receipt, records actual process exit and generated-token count, and rejects output that reaches the 2,048-token cap or lacks a measurable stop count. `finalize_fixed32_cpu.py` treats failed or incomplete processes as transport errors even if partial stdout happens to parse. It uses the frozen D43 field-level exporter, applies no semantic repairs, retains all 32 rows in status/missing denominators, and reports eligible comparable coverage separately for state, main, and years. Agreement with the archived adjudicated candidates is a reproduction diagnostic, not an accuracy claim or production gate.
+
+See `QUALIFICATION_DEPLOYMENT_RECEIPT.json` for current job IDs and the running snapshot. `ROOT_CPU_DECISION.json` records the authorized scope.

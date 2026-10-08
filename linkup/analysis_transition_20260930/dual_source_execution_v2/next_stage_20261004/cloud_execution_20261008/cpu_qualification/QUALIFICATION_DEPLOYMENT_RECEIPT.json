@@ -1,0 +1,62 @@
+{
+  "schema_version": "linkup-cpu-fixed32-deployment-v1",
+  "as_of_utc": "2026-10-08T08:29:19Z",
+  "status": "qualification_running",
+  "scope": "Fixed 32-record reproduction qualification against accepted adjudicated Batch002 candidates; agreement diagnostic, not accuracy certification and not production launch.",
+  "cluster": "Kunshan",
+  "partition": "kshctest02",
+  "accelerator_requested": false,
+  "run_root": "/public/home/lilysharp/linkup_cpu_qualification_20261008/runs/run-20261008T1630Z",
+  "transport": {
+    "route": "direct Wuzhen-to-Kunshan SSH pipe; no private data or model persisted on the local control host",
+    "model_bytes": 5027783488,
+    "model_sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "manifest": "cloud_execution_20261008/cpu_qualification/TRANSPORT_SHA256.txt",
+    "scheduled_full_manifest_verification": "passed"
+  },
+  "preparation": {
+    "job_id": "123978572",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:33",
+    "node": "a13r3n12",
+    "resources": {"cpus": 2, "memory": "4G", "gres": null},
+    "checks": [
+      "all frozen transport hashes passed",
+      "pinned llama-completion executed on the allocated node",
+      "llama-tokenize executed on the allocated node",
+      "all runtime shared libraries resolved",
+      "Python 3.8 validator dependencies imported on the allocated node",
+      "fixed32 source and adjudicated reference bindings passed"
+    ],
+    "source32_sha256": "fc48f91cca944e54c0a319bed944e336521a414f746294fd0c3fd5db8b9e7d57",
+    "reference32_sha256": "dfb98eb1aae9f1ea2ffabc422544ec3a7515237522ba9bfb4b38c07e4a56120a"
+  },
+  "inference": {
+    "first_half_array_job_id": "123978573",
+    "array_range": "0-15%4",
+    "running_snapshot": {
+      "tasks": ["123978573_0", "123978573_1", "123978573_2", "123978573_3"],
+      "state": "RUNNING",
+      "elapsed_at_snapshot": "00:00:55",
+      "nodes": ["a02r3n04", "a13r3n09", "a16r1n18"]
+    },
+    "resources_per_task": {"cpus": 8, "memory": "16G", "wall_limit": "00:20:00", "gres": null},
+    "maximum_concurrent_tasks": 4,
+    "second_half_submission": "quota controller submits array 16-31%4 after the first half leaves the 20-job QOS limit",
+    "quota_controller_job_id": "123978576"
+  },
+  "finalization": {
+    "job_id": "123978579",
+    "dependency": "controller initially; controller retargets it to afterany of the second array",
+    "failure_accounting": "raw stdout presence alone is never completion; task process exit, generated token count, token-cap exhaustion, and missing/failed tasks are retained",
+    "comparison": "frozen D43 field-level exporter; all 32 rows remain in status/missing denominators; state, main, and years report eligible comparable coverage; null-to-null main is not agreement",
+    "semantic_repairs": 0
+  },
+  "superseded_preflight": {
+    "job_id": "123977314",
+    "result": "failed after hashes and runtime execution because the base Python module lacked jsonschema",
+    "corrective_action": "vendored an existing Python-3.8-compatible pure-Python dependency set, excluded Mac native extensions, and verified import in successful scheduled prep 123978572",
+    "inference_started": false
+  }
+}
