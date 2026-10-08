@@ -1,0 +1,45 @@
+{
+  "decision_id": "D48",
+  "date": "2026-10-08",
+  "status": "plan_frozen_no_new_inference_submitted",
+  "purpose": "One bounded execution-contract correction after failed fixed32 CPU qualification",
+  "evidence": {
+    "completed_records": 32,
+    "json_parse_success": 32,
+    "main_comparable_records": 0,
+    "proven_contract_gaps": [
+      "Active D43 prompt does not fully expose schema and state branches; -jf is decoder constraint, not schema prompt injection",
+      "Active prompt omits unique-occurrence quote requirement enforced downstream",
+      "Generation schema allows state/quote/mentions combinations rejected by frozen validator"
+    ],
+    "caveat": "These are real contract gaps, not proof they cause every rejection or that model semantics are otherwise correct."
+  },
+  "action": {
+    "owner_code": "Sol/high",
+    "owner_remote_execution": "Sol/medium",
+    "owner_independent_code_qa": "Sol/medium",
+    "owner_provenance": "Luna/low",
+    "owner_decision": "GPT-6/high",
+    "change": [
+      "Explicit model-visible fields, enums and four state branches",
+      "Synthetic full-output examples with no research sample labels",
+      "Exact contiguous uniquely located evidence requirement",
+      "Generation grammar encodes state branches while existing acceptance validator stays unchanged",
+      "Count rendered prompt or bound full template plus output to prevent context overflow"
+    ],
+    "fixed": [
+      "32 existing diagnostic records and original reference provenance",
+      "Economic definitions and acceptance validator",
+      "Qwen3-8B-Q4_K_M model/runtime",
+      "Temperature seed and reasoning settings"
+    ],
+    "rounds": 1,
+    "execution": "Scheduled authorized SCNet CPU job; no Mac research compute; BU fixed32 old task remains subject to cleanup. Any further BU use needs scope extension.",
+    "release": "If fixed32 passes existing field-level operational rules, enter first128 candidate batch with16 blind random audit plus max8 triggered cases, no full corpus auto-launch.",
+    "stop": "If corrected contract still fails operational gate, stop this 8B route. No second prompt-repair round or lowered validator. Decide stronger-model bounded qualification separately based on resource/budget, not automatic downloads or bulk.",
+    "claims": "Agreement with model-assisted reference is not accuracy. Fixed32 reused diagnostics are not held-out validation. Null/error remain denominator; no selective easy-case acceptance."
+  },
+  "sources": [
+    "https://github.com/ggml-org/llama.cpp/blob/master/grammars/README.md#json-schemas--gbnf"
+  ]
+}
