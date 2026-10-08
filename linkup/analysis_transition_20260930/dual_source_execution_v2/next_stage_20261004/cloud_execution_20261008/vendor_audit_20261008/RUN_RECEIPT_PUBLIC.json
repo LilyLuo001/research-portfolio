@@ -1,0 +1,44 @@
+{
+  "schema_version": "linkup-revelio-job-postings-schema-run-receipt-v1",
+  "purpose": "Scheduled Wuzhen metadata-only audit of delivered Revelio Job Postings Parquet footers",
+  "attempts": [
+    {
+      "job_id": "46102007",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:00:03",
+      "node": "b05r4n07",
+      "failure": "The default python/3.8.10 module did not provide pyarrow; no footer result was produced."
+    },
+    {
+      "job_id": "46102097",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:16",
+      "node": "b05r4n07",
+      "runtime_correction": "Used the existing Wuzhen PyArrow runtime at /work/home/lilysharp/linkup_release_v1/runtime_py38; no package installation."
+    }
+  ],
+  "resources": {
+    "partition": "wzhdtest",
+    "cpus": 1,
+    "memory": "1G",
+    "time_limit": "00:10:00",
+    "scheduler_required_dcu": 1,
+    "accelerator_computation_performed": false
+  },
+  "completed_script_sha256": "f5a40cdeac622047868af0971bff4c5fbce2a4a165772f2030a248707bba174f",
+  "output": {
+    "file": "REVELIO_JOB_POSTINGS_SCHEMA_PUBLIC.json",
+    "sha256": "4e384817d87db28d42b4b5520120211889799762c9cdc5f964f1e53f5a807d0d",
+    "annual_files": 19,
+    "years": "2008-2026",
+    "schema_variants": 1,
+    "columns": 28,
+    "footer_reported_rows": 2632851187,
+    "file_bytes": 95857646722
+  },
+  "read_scope": "Parquet footer metadata and filesystem sizes only; no row columns or text values read",
+  "inference_performed": false,
+  "historical_representation_claim_authorized": false
+}

@@ -1,0 +1,3068 @@
+{
+  "annual_file_count": 19,
+  "annual_metadata": [
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1393137,
+      "file_name": "Job_Postings_2008.parquet",
+      "row_groups": 12,
+      "rows": 51607,
+      "year": 2008
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1099590,
+      "file_name": "Job_Postings_2009.parquet",
+      "row_groups": 12,
+      "rows": 42761,
+      "year": 2009
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 904936,
+      "file_name": "Job_Postings_2010.parquet",
+      "row_groups": 12,
+      "rows": 31325,
+      "year": 2010
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 816255,
+      "file_name": "Job_Postings_2011.parquet",
+      "row_groups": 12,
+      "rows": 27927,
+      "year": 2011
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 882568,
+      "file_name": "Job_Postings_2012.parquet",
+      "row_groups": 12,
+      "rows": 28065,
+      "year": 2012
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1088431,
+      "file_name": "Job_Postings_2013.parquet",
+      "row_groups": 12,
+      "rows": 33646,
+      "year": 2013
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1249115,
+      "file_name": "Job_Postings_2014.parquet",
+      "row_groups": 12,
+      "rows": 36559,
+      "year": 2014
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 11739313,
+      "file_name": "Job_Postings_2015.parquet",
+      "row_groups": 22,
+      "rows": 352783,
+      "year": 2015
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1485185907,
+      "file_name": "Job_Postings_2016.parquet",
+      "row_groups": 1607,
+      "rows": 40027842,
+      "year": 2016
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1301778750,
+      "file_name": "Job_Postings_2017.parquet",
+      "row_groups": 1364,
+      "rows": 33893960,
+      "year": 2017
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1967613640,
+      "file_name": "Job_Postings_2018.parquet",
+      "row_groups": 2055,
+      "rows": 51256715,
+      "year": 2018
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 1801887954,
+      "file_name": "Job_Postings_2019.parquet",
+      "row_groups": 1796,
+      "rows": 44739584,
+      "year": 2019
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 2200509587,
+      "file_name": "Job_Postings_2020.parquet",
+      "row_groups": 2079,
+      "rows": 51852013,
+      "year": 2020
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 8429820656,
+      "file_name": "Job_Postings_2021.parquet",
+      "row_groups": 8589,
+      "rows": 214558881,
+      "year": 2021
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 15140854207,
+      "file_name": "Job_Postings_2022.parquet",
+      "row_groups": 15951,
+      "rows": 398653542,
+      "year": 2022
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 13387383014,
+      "file_name": "Job_Postings_2023.parquet",
+      "row_groups": 13449,
+      "rows": 336072280,
+      "year": 2023
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 13097136734,
+      "file_name": "Job_Postings_2024.parquet",
+      "row_groups": 13362,
+      "rows": 333901702,
+      "year": 2024
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 25372740661,
+      "file_name": "Job_Postings_2025.parquet",
+      "row_groups": 31377,
+      "rows": 784286517,
+      "year": 2025
+    },
+    {
+      "columns": 28,
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "file_bytes": 11653562267,
+      "file_name": "Job_Postings_2026.parquet",
+      "row_groups": 13723,
+      "rows": 343003478,
+      "year": 2026
+    }
+  ],
+  "audited_at_utc": "2026-10-08T13:26:45.287023+00:00",
+  "execution_location": "Wuzhen scheduled compute node",
+  "historical_representation_claim_authorized": false,
+  "inference_performed": false,
+  "interpretation": "File years are delivery partitions. This audit does not establish posting-time representativeness, version history, or historical text validity.",
+  "job_id": "46102097",
+  "node": "b05r4n07",
+  "partition": "wzhdtest",
+  "purpose": "scheduled metadata-only audit of delivered Revelio Job Postings Parquet footers",
+  "pyarrow_version": "11.0.0",
+  "python_version": "3.8.10",
+  "read_scope": "Parquet footer metadata and filesystem sizes only; no row columns or text values read",
+  "resources": {
+    "accelerator_computation_performed": false,
+    "cpus": 1,
+    "memory_mb": 1024,
+    "scheduler_required_dcu": 1,
+    "wall_limit": "00:10:00"
+  },
+  "schema_variant_count": 1,
+  "schema_variants": [
+    {
+      "fields": [
+        {
+          "name": "job_id",
+          "nullable": true,
+          "type": "int64"
+        },
+        {
+          "name": "rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "company",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k1500_v2",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "role_k17000_v3",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "onet_code",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "state",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "metro_area",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "salary",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_min",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_max",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "salary_predicted",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "post_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "remove_date",
+          "nullable": true,
+          "type": "date32[day]"
+        },
+        {
+          "name": "ultimate_parent_rcid",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "ultimate_parent_company_name",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "remote_type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "expected_hires",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "source_company_sites",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_linkedin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_indeed",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_zhaopin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_51job",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_liepin",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_other_aggregators",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_staffingfirms",
+          "nullable": true,
+          "type": "bool"
+        },
+        {
+          "name": "source_regional_aggregators",
+          "nullable": true,
+          "type": "bool"
+        }
+      ],
+      "years": [
+        2008,
+        2009,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ]
+    }
+  ],
+  "schema_version": "linkup-revelio-job-postings-footer-audit-v1",
+  "source_root": "/work/home/lilysharp/Revelio_Job_Postings",
+  "status": "complete",
+  "total_file_bytes": 95857646722,
+  "total_rows_across_annual_files": 2632851187,
+  "years": [
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ]
+}

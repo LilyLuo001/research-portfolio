@@ -1,0 +1,20 @@
+{
+  "supplement_id": "D49-vendor-evidence-20261008",
+  "date": "2026-10-08",
+  "authoritative_receipt": "RUN_RECEIPT_PUBLIC.json",
+  "status": "verified_metadata_audit",
+  "finding": {
+    "annual_files": 19,
+    "years": "2008-2026",
+    "schema_variants": 1,
+    "columns": 28,
+    "footer_reported_rows": 2632851187,
+    "file_bytes": 95857646722,
+    "fields_present": ["job_id", "rcid", "company", "role_k1500_v2", "role_k17000_v3", "onet_code", "country", "state", "metro_area", "salary", "salary_min", "salary_max", "salary_predicted", "post_date", "remove_date"],
+    "requested_research_fields_present": false,
+    "missing_requested_field_groups": ["description", "skills", "experience", "years", "qualification"]
+  },
+  "interpretation": "The delivered Job Postings schema does not provide the requested text, skills, experience, years, or qualification fields. Role fields are occupational role labels and are not treated as skill or experience measures.",
+  "limits": ["Footer metadata only; no row values or text were read.", "No inference or historical representation claim was made.", "This supplement updates the D49 vendor evidence without changing D49's no-new-inference decision."],
+  "jobs": {"initial_failed": "46102007", "corrected_completed": "46102097"}
+}
