@@ -9,7 +9,7 @@ User decision, 2026-10-08: all new research data processing runs in cloud/cluste
 - Preserve historical execution provenance: conversation-hosted labels and Mac validations remain identified as such even after transfer to cloud. Do not rewrite history to imply cloud computation.
 - After cloud transport verification, remove only explicitly inventoried active local private-data working copies and generated caches. Never delete an unverified unique artifact, original user attachment or repository history.
 - Git contains code, methods, sanitized run receipts and aggregate results only. No credentials, private advertisement text, individual record IDs, raw model outputs or private sampling maps.
-- Use the existing authorized SCNet resources first. Do not allocate Azure/AWS resources or resume cloud-provider investigations without a new user request. The optional future credits mentioned by the user are Azure, not AWS.
+- Use the existing authorized SCNet resources; the user additionally authorized BU SCC on 2026-10-08 for the fixed-32 CPU qualification. Preserve completed Kunshan outputs, run only unfinished samples at BU, return and verify the results at Kunshan, then remove the unique BU task directory including uploaded inputs and model/runtime artifacts. Do not touch unrelated BU projects or jobs. Do not allocate Azure/AWS resources without a new user request.
 - Preserve efficient delegation: use appropriate bounded engineering tasks, root decisions and acceptance. Do not restart open-ended measurement development or reprocess finished work without a concrete correctness reason.
 
 Authoritative correction and migration receipts are under:
