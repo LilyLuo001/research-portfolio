@@ -1,0 +1,67 @@
+{
+  "as_of_utc": "2026-10-08T05:20:42.547489+00:00",
+  "observed_batches": [
+    {
+      "batch": "batch003",
+      "staged_rows": 128,
+      "primary_raw_rows": 128,
+      "root_accepted_rows": 0,
+      "groups": [
+        {
+          "group": "group_01",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        },
+        {
+          "group": "group_02",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        },
+        {
+          "group": "group_03",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        },
+        {
+          "group": "group_04",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        }
+      ]
+    },
+    {
+      "batch": "batch004",
+      "staged_rows": 128,
+      "primary_raw_rows": 128,
+      "root_accepted_rows": 0,
+      "groups": [
+        {
+          "group": "group_01",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        },
+        {
+          "group": "group_02",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        },
+        {
+          "group": "group_03",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        },
+        {
+          "group": "group_04",
+          "raw_rows": 32,
+          "state": "full_row_count_not_semantic_acceptance"
+        }
+      ]
+    }
+  ],
+  "previously_completed_unique": 152,
+  "new_root_accepted_unique": 0,
+  "cumulative_root_accepted_unique": 152,
+  "raw_primary_rows_this_run": 256,
+  "remaining_not_root_accepted": 7483,
+  "limitation": "Durable file progress only. This is not a live worker/cluster scheduler state; staged files do not mean inference is running. Raw rows do not mean accepted or accurate measurements."
+}

@@ -1,0 +1,244 @@
+{
+  "schema_version": "linkup-wuzhen-runtime-probe-v1",
+  "as_of_utc": "2026-10-08T05:40:00Z",
+  "purpose": "Bounded scheduled Wuzhen compute-node DCU, DTK/HIP, installed-runtime inspection and one authorized pinned llama.cpp HIP build gate. No model was loaded and no advertisement or other text reached inference.",
+  "execution_location": {
+    "cluster": "Wuzhen",
+    "partition": "wzhdtest",
+    "scheduler_account": "lilysharp",
+    "ssh_endpoint": "excluded from public receipt",
+    "credential_paths": "excluded from public receipt"
+  },
+  "policy": {
+    "compute_node_only_for_device_and_runtime_probes": true,
+    "local_actions": [
+      "code editing",
+      "SSH control",
+      "file transport",
+      "receipt authoring"
+    ],
+    "model_downloads": 0,
+    "model_inference": false,
+    "production_started": false
+  },
+  "jobs": [
+    {
+      "job_id": "46065149",
+      "purpose": "initial device/runtime probe",
+      "submission_time": "2026-10-08T13:26:54+08:00",
+      "start_time": "2026-10-08T13:26:57+08:00",
+      "end_time": "2026-10-08T13:30:44+08:00",
+      "node": "b01r3n14",
+      "requested": {
+        "nodes": 1,
+        "cpus": 1,
+        "memory": "1G",
+        "accelerators": {
+          "type": "Hygon DCU",
+          "count": 1
+        },
+        "time_limit": "00:08:00"
+      },
+      "observed_state": "CANCELLED",
+      "exit_code": "0:15 batch step",
+      "elapsed": "00:03:47",
+      "max_rss": "10712K",
+      "code_sha256": "3d225b2f8a851652463b7f0ec2db5299cd825baaeeae7be600c7eb3ac2119b15",
+      "reason": "The probe reached shared-library discovery, then its broad shared-filesystem traversal stalled. It was cancelled before the hard limit and replaced with per-find timeouts.",
+      "outputs": {
+        "stdout": "$REMOTE_HOME/private/next_stage_20261004/cloud_execution_20261008/runtime/runtime-probe-46065149.out",
+        "stdout_sha256": "e8854a0f5c7cca560eb3adb28ead91f78900ea55d57b2d5e5db354df4f523e34",
+        "stderr_sha256": "dfea8cf28421dd4810610b7f0b8ca3a82a7d92fabe35739af031d01951428a04"
+      }
+    },
+    {
+      "job_id": "46065477",
+      "purpose": "corrected device/runtime probe with bounded filesystem discovery",
+      "submission_time": "2026-10-08T13:31:33+08:00",
+      "start_time": "2026-10-08T13:31:34+08:00",
+      "end_time": "2026-10-08T13:32:00+08:00",
+      "node": "b01r3n14",
+      "requested": {
+        "nodes": 1,
+        "cpus": 1,
+        "memory": "1G",
+        "accelerators": {
+          "type": "Hygon DCU",
+          "count": 1
+        },
+        "time_limit": "00:08:00"
+      },
+      "allocated_tres": "billing=1,cpu=1,gres/dcu=1,mem=1G,node=1",
+      "observed_state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:26",
+      "max_rss": "11328K",
+      "code_sha256": "72d0f4b787aedd4a4d8ab855a2b3e4ebc9176c73d765fd5e4f6dd232432577e2",
+      "outputs": {
+        "stdout": "$REMOTE_HOME/private/next_stage_20261004/cloud_execution_20261008/runtime/runtime-probe-46065477.out",
+        "stdout_sha256": "89abf67452f140b2875289a45ac982e1dd38b449b638195028a004b8e0bdd82e",
+        "stderr_sha256": "58c487e512b50d5f8c1a161a22d679bc0728a653f3793f364fc2dcbe8dc93a0e"
+      },
+      "limitations": [
+        "The Python package-discovery snippet had a syntax error after all device, module, library, and native-runtime linkage checks completed. No Python runtime-readiness claim is made.",
+        "The job requested one DCU. hy-smi displayed four node devices because GRES binding was disabled; this is visibility, not allocation or use. All displayed DCUs were at 0% utilization."
+      ]
+    },
+    {
+      "job_id": "46065929",
+      "purpose": "single authorized pinned llama.cpp HIP backend build and device-enumeration gate",
+      "submission_time": "2026-10-08T13:38:22+08:00",
+      "start_time": "2026-10-08T13:38:24+08:00",
+      "end_time": "2026-10-08T13:39:07+08:00",
+      "node": "b01r3n14",
+      "requested": {
+        "nodes": 1,
+        "cpus": 8,
+        "memory": "16G",
+        "accelerators": {
+          "type": "Hygon DCU",
+          "count": 1
+        },
+        "time_limit": "00:30:00",
+        "compile_parallelism": 8
+      },
+      "allocated_tres": "billing=8,cpu=8,gres/dcu=1,mem=16G,node=1",
+      "observed_state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:00:43",
+      "max_rss": "61964K",
+      "code_sha256": "fa6b238d7d2c0bfdeb16c88433445a93ac5b6f624c57672a073d030d46d1ec40",
+      "input_manifest": {
+        "model_inputs": null,
+        "pinned_llama_source_commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+        "source_archive_bytes": 37922604,
+        "source_archive_sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e",
+        "cmake_archive_sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf"
+      },
+      "outputs": {
+        "run_directory": "$REMOTE_HOME/private/next_stage_20261004/cloud_execution_20261008/runtime/hip-build-run-46065929",
+        "remote_receipt": "HIP_BUILD_RECEIPT.json",
+        "remote_receipt_sha256": "10f752fe32096352bc49d87c430d4e9e132905a52805fa96d49ced421144611e",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "949f3a5561f0120221468e025c0993aa070921bcdc9194ebbc53c9b53402a0cd"
+      },
+      "result": {
+        "stage": "configure_hip_runtime",
+        "compiler": "GCC 11.2.1 host; HIP Clang 17.0.0",
+        "cmake": "3.31.6",
+        "dtk_module": "compiler/dtk/26.04",
+        "hip_version": "6.3.26113",
+        "device_target_from_rocminfo": "gfx906",
+        "pinned_source_minimum_hip": "6.1",
+        "configure_started": true,
+        "compile_started": false,
+        "binary_produced": false,
+        "device_enumeration_attempted": false,
+        "accelerator_compute_observed": false,
+        "error": "CMake HIP compiler ABI configuration failed because find_package could not locate amd_comgrConfig.cmake or amd_comgr-config.cmake, requested by DTK 26.04's hip-lang-config.cmake."
+      }
+    }
+  ],
+  "scheduler_rejection": {
+    "job_id": null,
+    "request": {
+      "cpus": 16,
+      "memory": "32G",
+      "accelerators": {
+        "type": "Hygon DCU",
+        "count": 1
+      },
+      "time_limit": "00:30:00"
+    },
+    "message": "Batch job submission failed: Requested node configuration is not available",
+    "resolution": "No allocation was created. Scheduler geometry showed one DCU paired with eight CPUs and 16G on the mixed node, so the accepted build request used 8 CPUs and 16G, within the authorized cap."
+  },
+  "observed_environment": {
+    "node": "b01r3n14",
+    "cpu": "Hygon C86 7285 32-core Processor",
+    "glibc": "2.17",
+    "device_nodes": [
+      "/dev/kfd",
+      "/dev/dri/renderD128",
+      "/dev/dri/renderD129",
+      "/dev/dri/renderD130",
+      "/dev/dri/renderD131"
+    ],
+    "hy_smi": "Four node DCUs visible; 0% DCU utilization during the inventory snapshot.",
+    "available_dtk_modules": [
+      "21.04",
+      "21.10",
+      "21.10.1",
+      "22.04.1",
+      "22.04.2",
+      "22.10",
+      "22.10.0",
+      "22.10.1",
+      "23.04",
+      "23.04.1",
+      "23.10",
+      "24.04",
+      "24.04.1",
+      "24.04.3",
+      "25.04",
+      "25.04.1",
+      "26.04"
+    ],
+    "selected_toolchain": {
+      "dtk": "26.04",
+      "hip": "6.3.26113",
+      "hip_compiler": "Clang 17.0.0",
+      "gpu_target": "gfx906",
+      "host_compiler": "GCC 11.2.1",
+      "cmake": "3.31.6"
+    },
+    "shared_libraries_observed": [
+      "libamdhip64",
+      "libhsa-runtime64",
+      "librocblas",
+      "libhipblas",
+      "libMIOpen",
+      "librccl"
+    ],
+    "existing_llama_runtime": {
+      "executable": "$REMOTE_HOME/private/next_stage_20261004/local_inference_20261007/recovery/build-run-46032322/build/bin/llama-completion",
+      "linkage": [
+        "libggml-cpu.so.0",
+        "libllama.so.0",
+        "libggml.so.0"
+      ],
+      "accelerator_linkage_observed": false,
+      "interpretation": "Existing executable remains CPU-only."
+    }
+  },
+  "source_requirements_reviewed": {
+    "file": "pinned llama.cpp ggml/src/ggml-hip/CMakeLists.txt",
+    "requirements": [
+      "GGML_HIP=ON",
+      "HIP >= 6.1",
+      "find_package(hip)",
+      "find_package(hipblas)",
+      "find_package(rocblas)",
+      "GPU_TARGETS forwarded to CMAKE_HIP_ARCHITECTURES"
+    ],
+    "documentation_command_pattern": "HIPCXX=$(hipconfig -l)/clang HIP_PATH=$(hipconfig -R) cmake -S . -B build -DGGML_HIP=ON -DGPU_TARGETS=<observed target> -DCMAKE_BUILD_TYPE=Release"
+  },
+  "readiness": {
+    "dcu_hardware_visible": true,
+    "compatible_hip_version_visible": true,
+    "explicit_device_target_observed": true,
+    "ready_accelerated_llama_runtime": false,
+    "production_inference_started": false,
+    "reason": "The only existing llama executable is CPU-only. The one HIP build gate failed before compilation because the DTK CMake package dependency amd_comgr was not discoverable."
+  },
+  "concrete_blocker_and_next_command": {
+    "blocker": "Provide a discoverable amd_comgr CMake package for the DTK 26.04 toolchain, either by adding its actual installation prefix to CMAKE_PREFIX_PATH or setting amd_comgr_DIR to the directory containing amd_comgrConfig.cmake. No path was guessed and no second build was submitted.",
+    "command_after_blocker_resolution": "HIPCXX=\"$(hipconfig -l)/clang\" HIP_PATH=\"$(hipconfig -R)\" ROCM_PATH=\"$(hipconfig -R)\" cmake -S <pinned-source> -B <fresh-build> -DGGML_HIP=ON -DGPU_TARGETS=gfx906 -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=<prefix-containing-amd_comgr-config> -DCMAKE_C_COMPILER=<gcc-11> -DCMAKE_CXX_COMPILER=<g++-11> -DLLAMA_CURL=OFF -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_SERVER=OFF -DLLAMA_BUILD_APP=OFF -DLLAMA_BUILD_TOOLS=ON && cmake --build <fresh-build> -j 8 --target llama-completion",
+    "status": "UNEXECUTED_PENDING_ROOT_DECISION"
+  },
+  "public_artifacts": [
+    "cloud_execution_20261008/runtime/probe_wuzhen_dcu_runtime.sbatch",
+    "cloud_execution_20261008/runtime/build_wuzhen_llama_hip.sbatch",
+    "cloud_execution_20261008/runtime/RUNTIME_PROBE_RECEIPT.json"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "status": "completed",
+  "completed_at_utc": "2026-10-08T05:39:36.331956+00:00",
+  "authorization": "User explicitly requested removal of local working data after moving execution to cloud.",
+  "scope": "Four active private-data directories, their generated Python caches, and verified transport staging; no original user attachments or repository history removed.",
+  "cloud_root": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z",
+  "cloud_verification_job": "46065786",
+  "cloud_manifest_sha256": "a1c711553ca9938ce9b97720f8b0e5e4b6fe90e0d1d37e3196e50535b851ab6b",
+  "remote_sacct_independently_observed": "COMPLETED|0:0",
+  "deleted_targets": [
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/production_standard_20261008/private",
+      "file_count": 30,
+      "bytes": 59800744,
+      "kind": "verified_cloud_copy"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/production_standard_20261008/__pycache__",
+      "file_count": 5,
+      "bytes": 69849,
+      "kind": "regenerable_python_cache"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/batch002_execution/private",
+      "file_count": 69,
+      "bytes": 54664729,
+      "kind": "verified_cloud_copy"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/batch002_execution/__pycache__",
+      "file_count": 1,
+      "bytes": 28189,
+      "kind": "regenerable_python_cache"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/continuous_production_20261008/private",
+      "file_count": 2019,
+      "bytes": 166644385,
+      "kind": "verified_cloud_copy"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/continuous_production_20261008/__pycache__",
+      "file_count": 3,
+      "bytes": 13191,
+      "kind": "regenerable_python_cache"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/compact_measurement_20261007/private",
+      "file_count": 25,
+      "bytes": 678785,
+      "kind": "verified_cloud_copy"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/compact_measurement_20261007/__pycache__",
+      "file_count": 5,
+      "bytes": 49572,
+      "kind": "regenerable_python_cache"
+    },
+    {
+      "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/transport",
+      "file_count": 14,
+      "bytes": 87805333,
+      "kind": "verified_transport_archives_and_local_transport_metadata"
+    }
+  ],
+  "deleted_bytes": 369754777,
+  "deleted_file_count": 2171,
+  "local_research_computation_performed_by_cleanup": false
+}

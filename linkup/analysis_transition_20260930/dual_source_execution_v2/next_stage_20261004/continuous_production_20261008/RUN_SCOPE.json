@@ -1,0 +1,42 @@
+{
+  "decision_id": "D45",
+  "recorded_at_utc": "2026-10-08T05:16:40.653305+00:00",
+  "scope": "Continuous production of the remaining frozen fixed-sample unique texts; no new preproduction research cycle.",
+  "current_route": "Two foreground Sol/medium readers, disjoint primary batches, cross-batch independent blind audits.",
+  "initial_dispatch": {
+    "reader_a": {
+      "primary": [
+        "batch003",
+        "batch005",
+        "batch007"
+      ],
+      "blind_audit": [
+        "batch004",
+        "batch006",
+        "batch008"
+      ]
+    },
+    "reader_b": {
+      "primary": [
+        "batch004",
+        "batch006",
+        "batch008"
+      ],
+      "blind_audit": [
+        "batch003",
+        "batch005",
+        "batch007"
+      ]
+    }
+  },
+  "primary_rows_initial_dispatch": 768,
+  "maximum_audit_rows_per_batch": 16,
+  "maximum_triggered_cases_per_batch": 8,
+  "unknowns_preserved": true,
+  "no_semantic_prompt_changes": true,
+  "no_raw_text_or_model_output_in_git": true,
+  "no_external_model_api_configured": true,
+  "cloud_correction": "User clarified optional future cloud is Azure, not AWS. Cloud planning and information requests stopped; current execution does not depend on Azure.",
+  "cluster_compute_decision": "No idle accelerator allocation solely to consume card hours. Existing rejected CPU-only Qwen route not restarted.",
+  "current_progress_source": "PROGRESS.json reports durable output counts only; staged work is not reported as running."
+}

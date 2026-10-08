@@ -1,0 +1,77 @@
+{
+  "schema_version": "linkup-cloud-migration-job-audit-v1",
+  "authoritative_job": {
+    "purpose": "complete active-set migration integrity verification",
+    "job_id": "46065786",
+    "job_name": "linkup-cloud-complete-verify",
+    "submission_time_cst": "2026-10-08T13:35:26+08:00",
+    "start_time_cst": "2026-10-08T13:35:27+08:00",
+    "end_time_cst": "2026-10-08T13:35:50+08:00",
+    "partition": "wzhdtest",
+    "account": "lilysharp",
+    "requested_resources": {
+      "nodes": 1,
+      "tasks": 1,
+      "cpus": 1,
+      "memory": "1G",
+      "time_limit": "00:10:00",
+      "gres": "dcu:Hygon:1"
+    },
+    "observed_state": "COMPLETED",
+    "elapsed": "00:00:23",
+    "exit_code": "0:0",
+    "allocated_tres": "billing=1,cpu=1,gres/dcu=1,mem=1G,node=1",
+    "accelerator_use_observation": "One DCU was scheduler-allocated because wzhdtest requires it; the integrity script performed no accelerator computation or inference.",
+    "job_script_sha256": "96ebd5d46f2718106c9154a7ff8b7663be74b0dd412094750dff1264eeb75293",
+    "combined_manifest_sha256": "a1c711553ca9938ce9b97720f8b0e5e4b6fe90e0d1d37e3196e50535b851ab6b",
+    "verified_files": 2206,
+    "failed_hash_checks": 0,
+    "remote_run_root": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z",
+    "remote_receipt": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/COMPLETE_MIGRATION_INTEGRITY_RECEIPT.json",
+    "remote_check_log": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/combined_manifest_check.log",
+    "model": "not applicable",
+    "runtime": "coreutils sha256sum plus Python 3.8.10 for receipt serialization",
+    "inference_performed": false,
+    "production_claim": false
+  },
+  "archives": [
+    {
+      "name": "active_artifacts.tar.gz",
+      "bytes": 19586303,
+      "sha256_local_and_remote": "b42024490474db06a3020a88e7605c741c631e988424be8338e8e5db1b55edf5"
+    },
+    {
+      "name": "active_source_supplement.tar.gz",
+      "bytes": 67417578,
+      "sha256_local_and_remote": "7a97f0ff55971789cf02da7d3b65e728033d15eee542cb41e0c1404814c4d7c1"
+    }
+  ],
+  "provenance": {
+    "historical_labels_and_predictions": "preserved local/Codex artifacts; not cloud inference",
+    "active_text_queues_and_mappings": "preserved active inputs; not new cloud inference",
+    "cloud_job_output": "transport integrity verification only"
+  },
+  "prior_attempts_retained": [
+    {
+      "remote_path": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T052813Z",
+      "state": "incomplete control-plane extraction; no Slurm job submitted"
+    },
+    {
+      "remote_path": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053013Z",
+      "job_id": "46065397",
+      "state": "FAILED",
+      "elapsed": "00:00:32",
+      "exit_code": "127:0",
+      "reason": "payload hashes passed; receipt serialization called unavailable bare python3"
+    },
+    {
+      "remote_path": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z",
+      "job_id": "46065510",
+      "state": "COMPLETED",
+      "elapsed": "00:02:19",
+      "exit_code": "0:0",
+      "classification": "partial_preservation because active queue/source-map supplement was not yet present"
+    }
+  ],
+  "deletion_authorized_by_this_receipt": false
+}

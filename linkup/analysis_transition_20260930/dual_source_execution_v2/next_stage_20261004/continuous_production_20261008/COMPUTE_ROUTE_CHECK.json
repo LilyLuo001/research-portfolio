@@ -1,0 +1,90 @@
+{
+  "schema_version": "linkup-compute-route-check-v1",
+  "as_of": "2026-10-08T13:08:00+08:00",
+  "scope": "Bounded read-only audit of already-configured local and cluster compute. No model download, installation, job submission, cloud allocation, or inference was performed.",
+  "decision": {
+    "existing_gpu_or_dcu_route_ready_for_frozen_extraction": false,
+    "existing_cpu_route_executable": true,
+    "existing_cpu_route_approved_for_production": false,
+    "reason": "Wuzhen still holds the pinned Qwen3-8B Q4_K_M artifact and llama.cpp executable, but the executable is CPU-only and has no HIP/CUDA/HSA linkage. The prior bounded pilot was stopped after a core semantic failure and did not pass the frozen validator. Scheduler-visible DCUs therefore do not constitute a working LLM extraction route. Kunshan's direct SSH authentication could not be refreshed in this audit, and the latest sealed Kunshan probe found neither a runtime nor cached model there."
+  },
+  "observations": [
+    {
+      "environment": "Wuzhen",
+      "check_kind": "live read-only SSH and Slurm/runtime inspection",
+      "reachable": true,
+      "scheduler": {
+        "active_user_jobs_observed": 0,
+        "partition_summary": "wzhdtest is up and advertises four Hygon DCUs per node"
+      },
+      "login_node": {
+        "hy_smi_command_present": true,
+        "dev_kfd_present": false,
+        "nvidia_smi_present": false,
+        "interpretation": "The login node does not expose an accelerator device. DCUs require a scheduled compute allocation."
+      },
+      "qwen_route": {
+        "model_artifact_present": true,
+        "llama_completion_executable_present": true,
+        "accelerator_libraries_linked": false,
+        "runtime_build": "CPU-only GCC 11.2.1/CMake 3.31.6 llama.cpp build",
+        "last_pilot_state": "CANCELLED after 00:10:57 with 16 CPUs, 32 GB, and two scheduler-required DCUs",
+        "last_measured_completed_record_wall_seconds": 450.35,
+        "last_measured_generation_tokens_per_second": 4.89,
+        "production_gate": "rejected after semantic adjudication and strict-validator failure",
+        "gpu_or_dcu_can_execute_frozen_extraction_now": false
+      }
+    },
+    {
+      "environment": "Kunshan",
+      "check_kind": "current bounded SSH attempt plus latest sealed probe",
+      "reachable": false,
+      "current_check_result": "The documented key endpoint rejected public-key authentication; no retry loop was performed.",
+      "latest_sealed_probe": {
+        "date": "2026-10-07",
+        "runtime_present": false,
+        "qwen3_8b_model_cache_present": false,
+        "hardware": "Hygon C86 7185 CPU; GCC 7.3.1; system CMake 2.8.12.2",
+        "interpretation": "No existing Kunshan model service or ready local inference runtime is evidenced."
+      },
+      "gpu_or_dcu_can_execute_frozen_extraction_now": false
+    },
+    {
+      "environment": "local_mac",
+      "check_kind": "handoff review",
+      "ready_model_service_observed": false,
+      "gpu_or_dcu_can_execute_frozen_extraction_now": false
+    }
+  ],
+  "frozen_route_constraints": {
+    "model": "Qwen3-8B-GGUF Q4_K_M, 5,027,783,488 bytes",
+    "context_size": 16384,
+    "output_token_budget": 4096,
+    "current_executable_backend": "CPU only",
+    "hardware_constraint": "Wuzhen advertises Hygon DCUs, but the existing llama.cpp binary was not built with an accelerator backend and prior logs explicitly reported no usable GPU.",
+    "quality_constraint": "The completed pilot bound experience duration to the wrong object and had other material classification/omission errors. Faster hardware would not remove this production-quality failure.",
+    "conclusion": "Existing cluster accelerators cannot presently execute the frozen extraction through a verified, approved runtime."
+  },
+  "minimal_aws_information_if_a_new_route_is_authorized": {
+    "accelerator": "Existing service/instance type, GPU model and usable VRAM; no instance-size recommendation or purchase yet.",
+    "runtime": "Existing model endpoint or installed inference runtime, if any; frozen extraction quality must not be assumed to transfer across models.",
+    "access": "SSH command and local key path, or existing service configuration location; no credentials in Git.",
+    "cost_control": "Existing resource/credit constraints and intended region; quantify additional use before requesting a new paid allocation.",
+    "quality_gate": "Do not recreate the rejected Qwen8B baseline. A materially different model route needs a bounded comparison using already available validation sources, not a new corpus-cleaning cycle."
+  },
+  "provenance": [
+    "public_ops/local_inference_20261007/RUN_COMPLETION_RECEIPT.json",
+    "public_ops/local_inference_20261007/PROBE_RECEIPT.json",
+    "public_ops/local_inference_20261007/private/runtime_eval/pilot4/run-46035182/device_inventory.txt",
+    "2026-10-08 bounded live Wuzhen SSH/Slurm/runtime inspection",
+    "2026-10-08 single bounded Kunshan SSH authentication attempt"
+  ],
+  "disclaimer": "GPT/Sol execution is an OpenAI-hosted service path and is not running on, or attributed to, these cluster DCUs or any rented AWS GPU.",
+  "root_route_decision": {
+    "continue_approved_foreground_extraction": true,
+    "relaunch_failed_qwen8b_route": false,
+    "reason": "A GPU does not remedy the previously observed measurement errors. Do not consume remaining DCU hours reproducing a failed extraction route. First identify the user existing AWS service/hardware and available model runtime; no capacity or cost promise before inspection.",
+    "aws_allocation_started": false,
+    "cluster_allocation_started": false
+  }
+}
