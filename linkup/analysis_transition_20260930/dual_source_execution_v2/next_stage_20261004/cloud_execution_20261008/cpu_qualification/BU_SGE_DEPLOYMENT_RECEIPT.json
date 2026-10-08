@@ -1,0 +1,48 @@
+{
+  "schema_version": "linkup-bu-sge-deployment-v1",
+  "as_of_utc": "2026-10-08T08:59:00Z",
+  "status": "inference_running",
+  "scope": "Resume the same fixed32 qualification using verified Kunshan-complete task outputs and BU CPU execution only for noncomplete records; no new sample, model, prompt, or measurement change.",
+  "scheduler": "SGE",
+  "project": "econdept",
+  "queue": "econ",
+  "parallel_environment": "omp",
+  "bu_root": "/projectnb/econdept/qluo/linkup_cpu_qualification_20261008_bu",
+  "bu_root_mode": "0700",
+  "jobs": {
+    "prep": {"job_id": "7952803", "state": "completed_or_released", "slots": 1, "h_rt": "00:25:00", "user_hold": false},
+    "array": {"job_id": "7952804", "state": "running_observed", "observed_tasks": ["7952804.1", "7952804.2", "7952804.3", "7952804.4"], "task_range": "1-32", "task_concurrency": 4, "slots_per_task": 8, "memory_per_core": "2G", "h_rt": "00:20:00", "no_gpu": true, "observation": "Root qstat snapshot at 2026-10-08T09:01:59Z; only first four tasks were running; remaining tasks were not claimed complete."},
+    "finalizer": {"job_id": "7952840", "state": "hqw_dependency", "h_rt": "00:15:00", "no_gpu": true}
+  },
+  "existing_unrelated_job": {"job_id": "7488095", "name": "yax_g2_INVALID_receipt", "preserved_untouched": true},
+  "model": {
+    "repository": "Qwen/Qwen3-8B-GGUF",
+    "revision": "7c41481f57cb95916b40956ab2f0b139b296d974",
+    "file": "Qwen3-8B-Q4_K_M.gguf",
+    "bytes": 5027783488,
+    "sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785",
+    "route": "one scheduled-node official Hugging Face download, shell-wide 1200-second timeout, retry limit two; atomic publish only after byte-size and SHA verification"
+  },
+  "frozen_inputs": {
+    "source32_sha256": "fc48f91cca944e54c0a319bed944e336521a414f746294fd0c3fd5db8b9e7d57",
+    "accepted_reference32_sha256": "dfb98eb1aae9f1ea2ffabc422544ec3a7515237522ba9bfb4b38c07e4a56120a",
+    "prompt_sha256": "d1bd81eefc355d91cbb1ca8292b3b76f36060d859cb67787dfe80f11a7622b06",
+    "schema_sha256": "7c329bf55ff6e26c50cfa3346cf43d7e80f2237fec9423051b276e03718345a8"
+  },
+  "resume_rule": "Scheduled prep reuses a Kunshan record only when its task receipt is complete, process exit is zero, token cap is false, raw bytes match the receipt byte count, and raw SHA matches. All other records execute on BU and retain per-record execution provenance.",
+  "return": {
+    "archive": "/projectnb/econdept/qluo/linkup_cpu_qualification_20261008_bu/return/BU_RETURN_PRIVATE.tar",
+    "private_manifest": "/projectnb/econdept/qluo/linkup_cpu_qualification_20261008_bu/return/RETURN_MANIFEST_PRIVATE.json",
+    "receipt": "/projectnb/econdept/qluo/linkup_cpu_qualification_20261008_bu/return/BU_RETURN_RECEIPT.json",
+    "contents": "results, all existing task directories with missing-index list, prep/import/submission receipts, SGE logs, code, and pinned transport manifest"
+  },
+  "deletion": {
+    "script": "cloud_execution_20261008/cpu_qualification/delete_bu_after_verified_return.sh",
+    "submitted": false,
+    "guard": "requires status=verified_on_kunshan and exact returned archive SHA before deleting only the unique BU root"
+  },
+  "followup": {"automation_id": "bu", "status": "ACTIVE", "interval_minutes": 30, "scope": "verify returned archive on Kunshan, then authorize deletion of the unique BU root only"},
+  "provenance": {"kunshan_previous_stage": "preserved; existing completed task outputs may be reused only under the receipt/hash rule", "bu_stage": "new scheduled SGE execution for records not proven complete on Kunshan"},
+  "production_started": false,
+  "accuracy_claim": false
+}
