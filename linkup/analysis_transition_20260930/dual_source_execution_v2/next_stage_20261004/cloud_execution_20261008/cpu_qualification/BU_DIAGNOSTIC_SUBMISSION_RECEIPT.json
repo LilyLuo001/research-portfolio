@@ -1,0 +1,57 @@
+{
+  "schema_version": "linkup-bu-diagnostic-submission-receipt-v1",
+  "recorded_utc": "2026-10-08T12:51:38Z",
+  "execution_location": "BU SCC scheduled compute node",
+  "scheduler": "SGE",
+  "job_id": "7958482",
+  "job_name": "linkup_q32_diag",
+  "project": "econdept",
+  "queue": "econ",
+  "resources": {
+    "slots": 1,
+    "memory_per_core": "2G",
+    "walltime_seconds": 600,
+    "no_gpu": true
+  },
+  "last_observed_state": "completed",
+  "last_observed_host": "scc-tb4.scc.bu.edu",
+  "observed_scheduler_timing": {"submitted_at": "2026-10-08T08:46:09Z", "started_at": "2026-10-08T08:50:02Z", "ended_at": "2026-10-08T08:50:04Z", "queue_wait_seconds": 233, "runtime_seconds": 2, "exit_code": 0},
+  "inference_performed": false,
+  "records_diagnosed": 32,
+  "public_findings": {
+    "parse_mode_counts": {
+      "current_marker": 32
+    },
+    "object_outcome_counts": {
+      "general_work.error": 20,
+      "general_work.unknown": 12,
+      "industry_domain.error": 21,
+      "industry_domain.unknown": 11,
+      "occupation_task.error": 22,
+      "occupation_task.unknown": 10
+    },
+    "object_error_category_counts": {
+      "general_work.state_quote": 13,
+      "general_work.state_shape": 7,
+      "industry_domain.state_quote": 14,
+      "industry_domain.state_shape": 8,
+      "occupation_task.state_quote": 14,
+      "occupation_task.state_shape": 9
+    },
+    "first_systematic_causes": [],
+    "adapter_decision": "no_uniform_lossless_transport_adapter_proven",
+    "lossless_adapter_reexport_performed": false,
+    "raw_outputs_changed": false,
+    "semantic_repairs": 0
+  },
+  "supplemental_archive": {
+    "remote_path": "/projectnb/econdept/qluo/linkup_cpu_qualification_20261008_bu/diagnostic/BU_DIAGNOSTIC_RETURN_PRIVATE.tar",
+    "bytes": 20480,
+    "sha256": "d1aa6214ddeac000fbaff811a90e61950c8603cb3503607823f4a56b76214c26"
+  },
+  "notes": [
+    "The sanitized diagnostic and supplemental archive were published while SGE still reported the job running.",
+    "No adapter correction was applied because the failures were not a uniform allowlisted transport-token defect.",
+    "The unrelated held job 7488095 was not modified."
+  ]
+}
