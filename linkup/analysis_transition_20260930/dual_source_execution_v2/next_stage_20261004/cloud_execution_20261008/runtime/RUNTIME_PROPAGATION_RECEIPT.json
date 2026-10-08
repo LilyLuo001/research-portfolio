@@ -1,0 +1,93 @@
+{
+  "schema_version": "linkup-wuzhen-runtime-propagation-fix-v1",
+  "as_of_utc": "2026-10-08T05:49:00Z",
+  "purpose": "One root-authorized deterministic CMake propagation repair for the pinned llama.cpp HIP build. No dependency exploration, model load, or inference.",
+  "job": {
+    "job_id": "46066660",
+    "scheduler_account": "lilysharp",
+    "partition": "wzhdtest",
+    "submission_time": "2026-10-08T13:47:48+08:00",
+    "start_time": "2026-10-08T13:47:50+08:00",
+    "end_time": "2026-10-08T13:48:31+08:00",
+    "node": "b01r3n14",
+    "requested": {
+      "nodes": 1,
+      "cpus": 8,
+      "memory": "16G",
+      "accelerators": {
+        "type": "Hygon DCU",
+        "count": 1
+      },
+      "time_limit": "00:20:00",
+      "compile_parallelism": 4
+    },
+    "allocated_tres": "billing=8,cpu=8,gres/dcu=1,mem=16G,node=1",
+    "observed_state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:00:41",
+    "max_rss": "17404K"
+  },
+  "code": {
+    "public_script": "cloud_execution_20261008/runtime/repair2_wuzhen_llama_hip_comgr_propagation.sbatch",
+    "sha256": "acb44acb1ec8b07c3a1a95c79c5af8bcb8e546ba45844488adad3c32ceba6437"
+  },
+  "inputs": {
+    "model": null,
+    "advertisements": null,
+    "pinned_llama_source": {
+      "commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+      "archive_bytes": 37922604,
+      "archive_sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e"
+    },
+    "cmake_archive_sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf"
+  },
+  "propagation_fix": {
+    "environment_cmake_prefix_path_format": "colon-separated",
+    "cmake_cache_prefix_path_format": "semicolon-separated",
+    "try_compile_platform_variables": [
+      "amd_comgr_DIR",
+      "CMAKE_PREFIX_PATH"
+    ],
+    "amd_comgr_config": "$DTK_ROOT/dcc/comgr/lib64/cmake/amd_comgr/amd_comgr-config.cmake",
+    "amd_comgr_library": "$DTK_ROOT/dcc/comgr/lib64/libamd_comgr.so.2.6.0",
+    "result": "PASS: CMake completed HIP compiler ABI detection and HIP compile-feature detection."
+  },
+  "outputs": {
+    "run_directory": "$REMOTE_HOME/private/next_stage_20261004/cloud_execution_20261008/runtime/hip-propagate-run-46066660",
+    "remote_receipt": "HIP_PROPAGATION_RECEIPT.json",
+    "remote_receipt_sha256": "0fb52b43e400a59cc78f8ce156f015c4e857428d7dbc960300d9e7aaa0fe5cee",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "949f3a5561f0120221468e025c0993aa070921bcdc9194ebbc53c9b53402a0cd",
+    "configure_tail_preserved": true,
+    "build_tail": null
+  },
+  "toolchain": {
+    "module": "compiler/dtk/26.04",
+    "hipconfig_version": "6.3.26113",
+    "cmake_hip_compiler": "Clang 17.0.0",
+    "device_target_from_rocminfo": "gfx906",
+    "host_compiler": "GCC 11.2.1",
+    "cmake": "3.31.6"
+  },
+  "result": {
+    "stage": "configure_comgr_propagation",
+    "configure_started": true,
+    "hip_compiler_abi_detection": "PASS",
+    "hip_compile_features_detection": "PASS",
+    "compile_started": false,
+    "binary_produced": false,
+    "hip_linkage_verification_attempted": false,
+    "device_enumeration_attempted": false,
+    "model_loaded": false,
+    "inference_started": false,
+    "final_error": "Pinned source stopped at ggml/src/ggml-hip/CMakeLists.txt:55 with 'At least ROCM/HIP V6.1 is required'. DTK 26.04's hipconfig reports 6.3.26113, so the CMake hip package exposes a hip_VERSION value that compares below 6.1."
+  },
+  "readiness": {
+    "ready_accelerated_llama_runtime": false,
+    "existing_cpu_runtime_preserved": true,
+    "production_started": false,
+    "reason": "The comgr propagation blocker is resolved, but the vendor DTK CMake HIP package reports version metadata incompatible with the pinned source's minimum check."
+  },
+  "exact_platform_ask": "The cluster platform owner should correct or provide a coherent DTK HIP development package whose CMake find_package(hip) metadata reports HIP >= 6.1 consistently with hipconfig 6.3.26113. Do not bypass the pinned source's version check or fabricate package metadata.",
+  "authorization_boundary": "Stopped at the new vendor toolchain blocker. No further job was submitted."
+}

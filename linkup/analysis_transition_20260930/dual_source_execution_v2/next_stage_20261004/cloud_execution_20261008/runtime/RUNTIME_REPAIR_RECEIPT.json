@@ -1,0 +1,88 @@
+{
+  "schema_version": "linkup-wuzhen-runtime-repair-v1",
+  "as_of_utc": "2026-10-08T05:44:30Z",
+  "purpose": "One root-authorized narrow scheduled repair of the DTK 26.04 amd_comgr CMake discovery blocker for the pinned llama.cpp HIP backend. No model load or inference.",
+  "job": {
+    "job_id": "46066209",
+    "scheduler_account": "lilysharp",
+    "partition": "wzhdtest",
+    "submission_time": "2026-10-08T13:43:11+08:00",
+    "start_time": "2026-10-08T13:43:13+08:00",
+    "end_time": "2026-10-08T13:43:54+08:00",
+    "node": "b01r3n14",
+    "requested": {
+      "nodes": 1,
+      "cpus": 8,
+      "memory": "16G",
+      "accelerators": {
+        "type": "Hygon DCU",
+        "count": 1
+      },
+      "time_limit": "00:20:00",
+      "compile_parallelism": 4
+    },
+    "allocated_tres": "billing=8,cpu=8,gres/dcu=1,mem=16G,node=1",
+    "observed_state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:00:41",
+    "max_rss": "21020K"
+  },
+  "code": {
+    "public_script": "cloud_execution_20261008/runtime/repair_wuzhen_llama_hip_comgr.sbatch",
+    "sha256": "de6075624e8d2f02dfed0bbd626e9da036822c5b1b630d584279cab562e9903a"
+  },
+  "inputs": {
+    "model": null,
+    "advertisements": null,
+    "pinned_llama_source": {
+      "commit": "42b021b4dc42be573f1e1463528532fc8294c650",
+      "archive_bytes": 37922604,
+      "archive_sha256": "0ebbca14b5d5db9d236ed72e15fe6be9f97755136126d04196bfbc5130e77c6e"
+    },
+    "cmake_archive_sha256": "5a1133ff103c71eb5120e2cc3de922733e7d8a26a98ae716397e8676adb367bf"
+  },
+  "outputs": {
+    "run_directory": "$REMOTE_HOME/private/next_stage_20261004/cloud_execution_20261008/runtime/hip-repair-run-46066209",
+    "remote_receipt": "HIP_REPAIR_RECEIPT.json",
+    "remote_receipt_sha256": "abe30f7cececf4208737c251209459d297b0e4607601fb16ab6322af974f65e4",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "949f3a5561f0120221468e025c0993aa070921bcdc9194ebbc53c9b53402a0cd"
+  },
+  "toolchain": {
+    "module": "compiler/dtk/26.04",
+    "hip_version": "6.3.26113",
+    "hip_compiler": "Clang 17.0.0",
+    "device_target_from_rocminfo": "gfx906",
+    "host_compiler": "GCC 11.2.1",
+    "cmake": "3.31.6"
+  },
+  "bounded_vendor_discovery": {
+    "root": "DTK 26.04 prefix only",
+    "timeout_seconds_per_find": 30,
+    "config_found": "$DTK_ROOT/dcc/comgr/lib64/cmake/amd_comgr/amd_comgr-config.cmake",
+    "matching_library_found": "$DTK_ROOT/dcc/comgr/lib64/libamd_comgr.so.2.6.0",
+    "development_config_absent": false,
+    "vendor_files_modified": false,
+    "package_config_fabricated": false
+  },
+  "result": {
+    "stage": "configure_hip_runtime",
+    "configure_started": true,
+    "compile_started": false,
+    "binary_produced": false,
+    "hip_linkage_verification_attempted": false,
+    "device_enumeration_attempted": false,
+    "model_loaded": false,
+    "inference_started": false,
+    "error": "During CMake's nested HIP compiler ABI try_compile, hip-lang-config.cmake called find_dependency(amd_comgr), but the child project did not see the parent configure's -Damd_comgr_DIR and -DCMAKE_PREFIX_PATH values. It therefore repeated the error that amd_comgrConfig.cmake or amd_comgr-config.cmake could not be found, even though the bounded search had proved the vendor config and matching shared library exist under DTK 26.04."
+  },
+  "readiness": {
+    "ready_accelerated_llama_runtime": false,
+    "existing_cpu_runtime_preserved": true,
+    "production_started": false,
+    "reason": "The repair did not progress past HIP compiler ABI configuration."
+  },
+  "exact_platform_fix": "Update the compiler/dtk/26.04 module environment so its dcc/comgr prefix is exported in CMAKE_PREFIX_PATH for nested CMake try_compile projects, or otherwise ensure amd_comgr_DIR propagates through CMAKE_TRY_COMPILE_PLATFORM_VARIABLES. The vendor config and library already exist; no package download or fabricated config is needed.",
+  "unexecuted_next_configuration": "export CMAKE_PREFIX_PATH=\"$DTK_ROOT/dcc/comgr;$DTK_ROOT/dcc/comgr/lib64/cmake/amd_comgr:$DTK_ROOT/lib/cmake:$DTK_ROOT/lib64/cmake\"; cmake -S <pinned-source> -B <fresh-build> -DGGML_HIP=ON -DGPU_TARGETS=gfx906 -Damd_comgr_DIR=\"$DTK_ROOT/dcc/comgr/lib64/cmake/amd_comgr\" -DCMAKE_TRY_COMPILE_PLATFORM_VARIABLES=\"amd_comgr_DIR;CMAKE_PREFIX_PATH\" <same pinned build flags>",
+  "authorization_boundary": "No further build job submitted. A new attempt requires a new root decision."
+}
