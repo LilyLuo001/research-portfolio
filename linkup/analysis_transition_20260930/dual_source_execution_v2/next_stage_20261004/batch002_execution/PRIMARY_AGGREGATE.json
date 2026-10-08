@@ -1,0 +1,219 @@
+{
+  "absence_rule": "A not_mentioned state is the model's absence claim and is not asserted as objective truth.",
+  "accuracy_claim": false,
+  "audit_status": "integrated",
+  "denominator_rule": "Every bound source row remains in every object denominator; unknown and error outcomes are null, never zero or omitted.",
+  "independent_audit16": {
+    "adapter": {
+      "absence_rule": "A not_mentioned state is the model's absence claim and is not asserted as objective truth.",
+      "denominator_rule": "Every bound source row remains in every object denominator; unknown and error outcomes are null, never zero or omitted.",
+      "normalization_counts": {},
+      "objects": {
+        "general_work": {
+          "duration_assessment_counts": {
+            "candidate": 0,
+            "error": 0
+          },
+          "eligible_denominator_rows": 16,
+          "main_prior_required_unconditional_counts": {
+            "0": 16,
+            "1": 0,
+            "null": 0
+          },
+          "outcome_status_counts": {
+            "candidate": 16,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        "industry_domain": {
+          "duration_assessment_counts": {
+            "candidate": 19,
+            "error": 0
+          },
+          "eligible_denominator_rows": 16,
+          "main_prior_required_unconditional_counts": {
+            "0": 13,
+            "1": 2,
+            "null": 1
+          },
+          "outcome_status_counts": {
+            "candidate": 15,
+            "error": 1,
+            "unknown": 0
+          }
+        },
+        "occupation_task": {
+          "duration_assessment_counts": {
+            "candidate": 106,
+            "error": 5
+          },
+          "eligible_denominator_rows": 16,
+          "main_prior_required_unconditional_counts": {
+            "0": 2,
+            "1": 12,
+            "null": 2
+          },
+          "outcome_status_counts": {
+            "candidate": 14,
+            "error": 2,
+            "unknown": 0
+          }
+        }
+      },
+      "privacy": "Aggregate receipt contains no record IDs, source text, evidence quotes, raw model output, or record-level results.",
+      "private_export_sha256": "0cb60505d78f5c629621de8f91ede30dd1660124ce5d61737afe667d94e8ba91",
+      "raw_output_jsonl_sha256": "51d1e527aea13299a95ef1c46188c596179c914a8b85cd967e2a5d6b4259ca64",
+      "row_count": 16,
+      "row_status_counts": {
+        "candidate": 14,
+        "partial": 2
+      },
+      "schema_version": "linkup_field_candidate_public_receipt_v1.0.0",
+      "source_jsonl_sha256": "87fa417ba2a0388267db3b99ba0ecfc065defd0ad759c92cb7034c6674fec580",
+      "status": "exported_with_unresolved_or_quarantined_fields"
+    },
+    "audit_rows": 16,
+    "main_agreement_resolved_only": {
+      "all_three_objects": {
+        "agreement": 0.8571428571428571,
+        "resolved_denominator_rows": 14,
+        "resolved_full_match_rows": 12,
+        "rows_with_any_joint_null": 1,
+        "rows_with_any_one_sided_unresolved": 1
+      },
+      "by_object": {
+        "general_work": {
+          "agreement": 1.0,
+          "joint_null": 0,
+          "one_sided_unresolved": 0,
+          "resolved_denominator": 16,
+          "resolved_matches": 16,
+          "resolved_mismatches": 0
+        },
+        "industry_domain": {
+          "agreement": 0.9333333333333333,
+          "joint_null": 1,
+          "one_sided_unresolved": 0,
+          "resolved_denominator": 15,
+          "resolved_matches": 14,
+          "resolved_mismatches": 1
+        },
+        "occupation_task": {
+          "agreement": 0.9285714285714286,
+          "joint_null": 1,
+          "one_sided_unresolved": 1,
+          "resolved_denominator": 14,
+          "resolved_matches": 13,
+          "resolved_mismatches": 1
+        }
+      },
+      "definition": "Agreement uses only pairs where both primary and audit main values are resolved as 0 or 1. Joint-null and one-sided unresolved pairs are reported separately."
+    },
+    "raw_main_equality_rows_including_null_equality": 13,
+    "raw_main_inequality_counts_by_object": {
+      "general_work": 0,
+      "industry_domain": 1,
+      "occupation_task": 2
+    },
+    "rows_with_quote_or_state_errors_by_object": {
+      "general_work": 0,
+      "industry_domain": 1,
+      "occupation_task": 2
+    },
+    "state_mismatch_counts_by_object": {
+      "general_work": 0,
+      "industry_domain": 3,
+      "occupation_task": 0
+    },
+    "unknown_is_null_not_zero": true
+  },
+  "normalization": {
+    "accepted_encoding_only_normalized_copies": 1,
+    "groups_with_normalized_copy": 2,
+    "rejected_normalized_copies": 1,
+    "rejection_rule": "Quote/state_quote path restriction is necessary but not sufficient; only exact logged, reversible Unicode-escape encoding changes are accepted. HTML and semantic content are not normalized."
+  },
+  "normalization_counts": {},
+  "objects": {
+    "general_work": {
+      "duration_assessment_counts": {
+        "candidate": 5,
+        "error": 1
+      },
+      "eligible_denominator_rows": 128,
+      "main_prior_required_unconditional_counts": {
+        "0": 127,
+        "1": 1,
+        "null": 0
+      },
+      "outcome_status_counts": {
+        "candidate": 128,
+        "error": 0,
+        "unknown": 0
+      }
+    },
+    "industry_domain": {
+      "duration_assessment_counts": {
+        "candidate": 120,
+        "error": 2
+      },
+      "eligible_denominator_rows": 128,
+      "main_prior_required_unconditional_counts": {
+        "0": 104,
+        "1": 20,
+        "null": 4
+      },
+      "outcome_status_counts": {
+        "candidate": 124,
+        "error": 3,
+        "unknown": 1
+      }
+    },
+    "occupation_task": {
+      "duration_assessment_counts": {
+        "candidate": 494,
+        "error": 24
+      },
+      "eligible_denominator_rows": 128,
+      "main_prior_required_unconditional_counts": {
+        "0": 19,
+        "1": 104,
+        "null": 5
+      },
+      "outcome_status_counts": {
+        "candidate": 123,
+        "error": 4,
+        "unknown": 1
+      }
+    }
+  },
+  "population_or_causal_claim": false,
+  "privacy": "Aggregate receipt contains no record IDs, source text, evidence quotes, raw model output, or record-level results.",
+  "private_export_sha256": "8386b75cc3f6746f2e8857e55bd834e08826943edc52b8809e1a7f7d9f0fa194",
+  "processing_order": "ascending exact-text SHA among not-yet-completed texts, first 128; not original randomized queue order",
+  "raw_output_jsonl_sha256": "af6fbc2d79e65127feeae13f2be0e54d78ea6b5a1acd535c59119c6076a89046",
+  "risk_indicators": {
+    "conditional_mentions_by_object": {
+      "general_work": 5,
+      "industry_domain": 7,
+      "occupation_task": 46
+    },
+    "numeric_duration_errors_by_object": {
+      "general_work": 1,
+      "industry_domain": 2,
+      "occupation_task": 24
+    },
+    "rows_with_any_indicator": 42
+  },
+  "row_count": 128,
+  "row_status_counts": {
+    "candidate": 121,
+    "partial": 7
+  },
+  "schema_version": "batch002_primary_aggregate_v1",
+  "source_jsonl_sha256": "967d3bfbb9405a843b95a989e727b95d072537e082773ffc937a34c6dc25ceda",
+  "status": "exported_with_unresolved_or_quarantined_fields",
+  "strict_main_interpretation": "1 means an explicit prior-experience, required, unconditional clause. A 0 means that strict clause was not encoded; it does not mean the job requires no experience. Conditional degree/year paths remain preserved outside the strict main indicator.",
+  "targeted_review_candidate_count": 8
+}

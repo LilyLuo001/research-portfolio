@@ -1,0 +1,21 @@
+{
+  "decision_id": "D44_RUN_SCOPE",
+  "recorded_at_utc": "2026-10-08T04:27:23.098714+00:00",
+  "task_start_observed_utc": "2026-10-08T04:20:11Z",
+  "primary": "4groups32 Sol medium; atmost3simultaneous childslots",
+  "audit": "16preselected independent source readings plusatmost8triggeredreviews",
+  "primary_prompt_sha256": "d1bd81eefc355d91cbb1ca8292b3b76f36060d859cb67787dfe80f11a7622b06",
+  "schema_sha256": "7c329bf55ff6e26c50cfa3346cf43d7e80f2237fec9423051b276e03718345a8",
+  "source_text_or_inferential_sample_changed": false,
+  "staging_corrections_before_label_acceptance": [
+    "Accepted actualascendingSHAprocessingorder instead of original queueposition; do not claimoriginalqueueorder.",
+    "Preserved hashsidecars separately; ORDER nowactualblockrecordIDs. Sourceorderunchanged.",
+    "Restored ALL canonical keys,cells andsamplingweights fromauthoritativemap. Initialpartialmanifest preserved."
+  ],
+  "division_of_labor_decision": "Sampling/mapping and computed QA need Sol-level implementation or root verification; Luna limitedto mechanical filecopy/release.",
+  "exact_inference_tokens_available": false,
+  "cost_measurement": "Measure UTCwalltime, source/outputcharacters, numberofinferences; do notlabelcharactersastokens or attribute accountwideusage tothisbatch.",
+  "restarts_of_full_corpus": 0,
+  "human_validation": false,
+  "economic_claims": "Candidate measurements only. Partialprocessing order is not a substitute probabilitysample; no population/cause conclusion fromthisbatch."
+}

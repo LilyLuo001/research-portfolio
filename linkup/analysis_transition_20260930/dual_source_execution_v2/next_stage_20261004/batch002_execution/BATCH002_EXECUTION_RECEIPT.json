@@ -1,0 +1,36 @@
+{
+  "schema_version": "batch002_execution_receipt_v1",
+  "status": "staged_for_labeling",
+  "unique_texts": 128,
+  "groups": 4,
+  "group_size": 32,
+  "blocks_per_group": 4,
+  "block_size": 8,
+  "audit_preselection": 16,
+  "completed_overlap": 0,
+  "completed_batch001_unique": 24,
+  "source_cache_rows": 7635,
+  "private_artifact_sha256": {
+    "COMBINED_SOURCE_PRIVATE.jsonl": "967d3bfbb9405a843b95a989e727b95d072537e082773ffc937a34c6dc25ceda",
+    "UNBLIND_MANIFEST_PRIVATE.jsonl": "165c5191e47d7edb2d4660b80fc133bcdaf638f597eeadc397883b66f52d6b5a",
+    "AUDIT_SELECTION_PRIVATE.json": "627f19d81edc9da4f48e1e2ff6fbfc6ea4a774e306e62de5796e59401bde36ca",
+    "audit/SOURCE16_PRIVATE.jsonl": "87fa417ba2a0388267db3b99ba0ecfc065defd0ad759c92cb7034c6674fec580"
+  },
+  "source_character_counts": {
+    "total": 871064,
+    "groups": [
+      264857,
+      216085,
+      190852,
+      199270
+    ]
+  },
+  "validated_at_utc": "2026-10-08T04:26:13.510114+00:00",
+  "actual_processing_order": "ascending exact-text SHA among not-yet-completed texts, first128; NOT original randomized queue order",
+  "processing_order_amendment": "Root accepts prepared SHA-order batch before label inspection to avoid discarding ongoing work; inferential sample unchanged.",
+  "private_alias_ids": "Frozen in staged sources; verified unique; not claimed original queue IDs.",
+  "source_metadata": "Full authoritative canonical keys, cells and ALL original weights restored in unblind manifest; initial partial metadata retained privately.",
+  "represented_original_rows": 154,
+  "audit_algorithm": "Python random.Random(seed).sample(range(128),16), then sorted",
+  "audit_seed": "D44-batch002-audit-v1"
+}

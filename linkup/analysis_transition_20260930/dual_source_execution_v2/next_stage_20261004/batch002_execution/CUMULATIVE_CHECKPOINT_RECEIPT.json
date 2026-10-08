@@ -1,0 +1,47 @@
+{
+  "counts": {
+    "completed_duplicate_members_beyond_unique": 46,
+    "completed_unique_exact_texts": 152,
+    "immutable_unique_exact_text_queue": 7635,
+    "remaining_unique_exact_texts": 7483,
+    "represented_original_ads_completed": 198,
+    "represented_original_ads_remaining": 9802,
+    "represented_original_ads_total": 10000
+  },
+  "execution": {
+    "git_action": false,
+    "llm_called": false,
+    "remote_cluster_called": false
+  },
+  "finalized_candidate_rows_by_batch": {
+    "batch001": 24,
+    "batch002": 128
+  },
+  "input_file_sha256": {
+    "batch002_execution/private/batch002/FINAL_CANDIDATES_PRIVATE.jsonl": "d662e42e8ba067d209c48c35ce4f26154f5dd3349628f9eeacf7581849fb6c8b",
+    "production_standard_20261008/private/batch001/FINAL_CANDIDATES_PRIVATE.jsonl": "c6949465ad8fab1bd3c1b881d48b13f1d04979a4de87a288f4136459c14ac856",
+    "production_standard_20261008/private/full_queue/REPRESENTED_FIXED10000_KEYS_PRIVATE.jsonl": "987f4369643bdd353b7e881f7ccf58dcf7be0f29853b9f118a92b4076833b04d",
+    "production_standard_20261008/private/full_queue/UNIQUE_EXACT_TEXT_QUEUE_PRIVATE.jsonl": "5ea54b141e18ebef4468fff8dfff3e81a196679e7caaece138303cf995f25a4e"
+  },
+  "ordering": {
+    "completed_ledger": "immutable queue_position_1based order",
+    "remaining_queue": "immutable queue_position_1based order with completed hashes removed",
+    "represented_mapping": "immutable fixed_sample_position_1based order with incomplete hashes removed"
+  },
+  "output_file_sha256": {
+    "private/cumulative_checkpoint/COMPLETED_SOURCE_HASH_LEDGER_PRIVATE.jsonl": "075a1c9daac3452d5f247b9d902fe895eca41eeb55155ff8587813ffa655d7d0",
+    "private/cumulative_checkpoint/REMAINING_UNIQUE_EXACT_TEXT_QUEUE_PRIVATE.jsonl": "a75e9409f9bb7c50603a62d18edc72d62957f3ea2709fdfcd13585d0a242a68e",
+    "private/cumulative_checkpoint/REPRESENTED_ORIGINAL_AD_TO_FINAL_CANDIDATE_PRIVATE.jsonl": "4fb117ccf1c2e5bfbba3258cda2b34648249e7933a69ce53e59967838c23c89d"
+  },
+  "privacy": "Public receipt contains derived counts, methods, paths, and whole-file hashes only. Source text, source hashes, record IDs, canonical keys, arms, cells, and weights remain in private artifacts.",
+  "scope": "mechanical cumulative checkpoint by immutable exact-text SHA-256; no label inference, population estimate, or source mutation",
+  "status": "complete",
+  "validation": {
+    "every_finalized_hash_matches_queue": true,
+    "every_queue_original_text_matches_exact_text_sha256": true,
+    "finalized_source_hashes_unique": true,
+    "immutable_input_file_hashes_unchanged_during_run": true,
+    "queue_duplicate_counts_match_represented_rows": true,
+    "represented_member_metadata_preserved": true
+  }
+}

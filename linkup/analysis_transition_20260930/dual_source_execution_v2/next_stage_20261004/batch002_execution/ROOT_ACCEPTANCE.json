@@ -1,0 +1,43 @@
+{
+  "schema_version": "batch002_root_acceptance_v1",
+  "status": "accepted_candidate_batch_not_accuracy_certification",
+  "accepted_at_utc": "2026-10-08T04:45:02.677331+00:00",
+  "task_start_utc": "2026-10-08T04:20:11+00:00",
+  "pre_git_end_to_end_wall_seconds": 1491.7,
+  "primary_inference_wall_seconds": 406,
+  "primary_rows": 128,
+  "candidate_core_fields": 381,
+  "unknown_core_fields": 3,
+  "independently_audited_rows": 16,
+  "targeted_case_count": 8,
+  "root_object_decisions": 11,
+  "changed_main_values": 9,
+  "final_field_counts_independently_recomputed": true,
+  "raw_primary_outputs_preserved": true,
+  "cumulative_unique_completed": 152,
+  "cumulative_original_ads_represented": 198,
+  "unique_remaining": 7483,
+  "public_private_scan_passed": true,
+  "public_files_scanned": [
+    "BATCH002_EXECUTION_RECEIPT.json",
+    "BATCH002_RUN_RECEIPT.json",
+    "CUMULATIVE_CHECKPOINT_RECEIPT.json",
+    "FINAL_AGGREGATE.json",
+    "PRIMARY_AGGREGATE.json",
+    "QA_INDEPENDENT.json",
+    "RESULTS_AND_DECISION_CN.md",
+    "ROOT_RUN_SCOPE.json",
+    "build_batch002.py",
+    "build_cumulative_checkpoint.py",
+    "process_batch002.py"
+  ],
+  "execution_route": "foreground delegated models; no unattended full-queue inference started",
+  "candidate_acceptance_does_not_certify_accuracy": true,
+  "all_four_experience_categories_validated": false,
+  "year_analysis_status": "unresolved and error duration entries excluded; conditional branches retained separately",
+  "source_and_final_hashes": {
+    "source": "967d3bfbb9405a843b95a989e727b95d072537e082773ffc937a34c6dc25ceda",
+    "final_candidates": "d662e42e8ba067d209c48c35ce4f26154f5dd3349628f9eeacf7581849fb6c8b"
+  },
+  "immutable_prompt_and_schema_maintained": true
+}

@@ -1,0 +1,141 @@
+{
+  "candidate_jsonl_sha256": "8386b75cc3f6746f2e8857e55bd834e08826943edc52b8809e1a7f7d9f0fa194",
+  "changed_main_count": 9,
+  "decision_count": 11,
+  "decision_reason_sha256_counts": {
+    "0345ff8ebdf66c5edc61f27c0c2c0d52afbbd43134fe105c64dc0ad0f051e18f": 1,
+    "738d2f6367191625cb10a6ceaf638b0929b89c7fe920a35d8868e8c61c9f11dd": 1,
+    "7b3aac1411eba9ec102cacea55dbffb2dab35629519908a1598fb9e78a6bac36": 1,
+    "885932aeca3185097b4f7c1d50bfcc10bcab81e45ca841bc6f7a05e73d518ec3": 1,
+    "abb3c3a31e3d3b4227ce1172c3cd1dd78ef77ebc14d77e286ee436d6e37f0458": 1,
+    "b6dfd81f04551210e8c567ac5da3bc678453a0f0d5d8a33ffcee97c8e7fb0153": 1,
+    "c3e28abb4f3a800df60c64092f22dcd4ef64a30fc00f20f518eafb788afd2d98": 1,
+    "c86abb55b386f166b381eed5d861b542e990371849ae138115514345dfcdde68": 1,
+    "d128a25528e08da0569dd4a3aa9f4e58d371b27e441047421e059cd956ecfc62": 1,
+    "f0467ffdde42148fd599fe688813bb48b90552bfc01d252f417c1ddd8e9c1a33": 1,
+    "f0738577977f19e001e6a9befcc2e6f5ace1500852d0bb66e480c0015319d841": 1
+  },
+  "denominator_rule": "All 128 source rows remain in each of the three object denominators; unknown and error remain null rather than being removed.",
+  "duration_override_reason_sha256_counts": {
+    "ca57dddcef322951ac7bd11a6e8c193344827efe9a78e961631e72504994096a": 5,
+    "e559357b751ba982e4c062757075df05b7ee40e84c4f91630af271dc347f18af": 4
+  },
+  "eligible_object_fields": 384,
+  "eligible_rows": 128,
+  "final_private_jsonl_sha256": "d662e42e8ba067d209c48c35ce4f26154f5dd3349628f9eeacf7581849fb6c8b",
+  "objects": {
+    "general_work": {
+      "changed_main_count": 0,
+      "eligible_denominator_rows": 128,
+      "final_duration_status_counts": {
+        "candidate": 5,
+        "error": 1,
+        "unknown": 0
+      },
+      "final_main_counts": {
+        "0": 127,
+        "1": 1,
+        "null": 0
+      },
+      "final_outcome_status_counts": {
+        "candidate": 128,
+        "error": 0,
+        "unknown": 0
+      },
+      "raw_duration_status_counts": {
+        "candidate": 5,
+        "error": 1,
+        "unknown": 0
+      },
+      "raw_main_counts": {
+        "0": 127,
+        "1": 1,
+        "null": 0
+      },
+      "raw_outcome_status_counts": {
+        "candidate": 128,
+        "error": 0,
+        "unknown": 0
+      }
+    },
+    "industry_domain": {
+      "changed_main_count": 4,
+      "eligible_denominator_rows": 128,
+      "final_duration_status_counts": {
+        "candidate": 119,
+        "error": 0,
+        "unknown": 3
+      },
+      "final_main_counts": {
+        "0": 106,
+        "1": 20,
+        "null": 2
+      },
+      "final_outcome_status_counts": {
+        "candidate": 126,
+        "error": 0,
+        "unknown": 2
+      },
+      "raw_duration_status_counts": {
+        "candidate": 120,
+        "error": 2,
+        "unknown": 0
+      },
+      "raw_main_counts": {
+        "0": 104,
+        "1": 20,
+        "null": 4
+      },
+      "raw_outcome_status_counts": {
+        "candidate": 124,
+        "error": 3,
+        "unknown": 1
+      }
+    },
+    "occupation_task": {
+      "changed_main_count": 5,
+      "eligible_denominator_rows": 128,
+      "final_duration_status_counts": {
+        "candidate": 498,
+        "error": 18,
+        "unknown": 2
+      },
+      "final_main_counts": {
+        "0": 22,
+        "1": 105,
+        "null": 1
+      },
+      "final_outcome_status_counts": {
+        "candidate": 127,
+        "error": 0,
+        "unknown": 1
+      },
+      "raw_duration_status_counts": {
+        "candidate": 494,
+        "error": 24,
+        "unknown": 0
+      },
+      "raw_main_counts": {
+        "0": 19,
+        "1": 104,
+        "null": 5
+      },
+      "raw_outcome_status_counts": {
+        "candidate": 123,
+        "error": 4,
+        "unknown": 1
+      }
+    }
+  },
+  "privacy": "Aggregate receipt contains no record IDs, source text, evidence quotes, raw model output, or record-level results.",
+  "root_decisions_json_sha256": "86a7b3836ea2b5cf9301b841df04d6d28751efe8ef7e5338aa2bae28dc8509e9",
+  "root_notes": [
+    "This is an explicit root adjudication layer over preserved model outputs, not an external ground-truth validation.",
+    "A final candidate value remains a candidate measurement and does not establish objective truth or an economic conclusion.",
+    "Analysts must use a model_duration only when its final duration status is candidate; retained error or unknown model_duration content is provenance, not an analysis value.",
+    "The immutable full queue is outside this finalizer and is not modified."
+  ],
+  "schema_version": "linkup_batch001_final_aggregate_v1.0.0",
+  "source_jsonl_sha256": "967d3bfbb9405a843b95a989e727b95d072537e082773ffc937a34c6dc25ceda",
+  "status": "finalized_explicit_adjudication_layer"
+}

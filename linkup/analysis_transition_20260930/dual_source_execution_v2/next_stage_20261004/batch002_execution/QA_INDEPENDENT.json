@@ -1,0 +1,167 @@
+{
+  "schema_version": "batch002_independent_qa_v1",
+  "checked_at_utc": "2026-10-08T04:41:39Z",
+  "status": "complete_independent_and_root_final_checks_passed",
+  "aggregate_only": true,
+  "source_and_queue_binding": {
+    "passed": true,
+    "source_rows": 128,
+    "unique_exact_text_hashes": 128,
+    "ascending_exact_text_sha_order": true,
+    "exact_first_128_remaining_queue_rows": true,
+    "batch001_completed_rows": 24,
+    "overlap_with_batch001": 0,
+    "group_blocks_and_order_sidecars_bind_exactly": true
+  },
+  "fixed10000_representation": {
+    "passed": true,
+    "map_rows": 10000,
+    "positions_complete_1_through_10000": true,
+    "distinct_exact_text_hashes": 7635,
+    "distinct_hash_set_equals_full_queue": true,
+    "batch002_represented_rows": 154,
+    "minimum_represented_rows_per_selected_text": 1,
+    "maximum_represented_rows_per_selected_text": 16,
+    "manifest_counts_and_full_metadata_equal_authoritative_map": true
+  },
+  "fixed_audit_selection": {
+    "passed": true,
+    "selected_rows": 16,
+    "indices_match_seeded_algorithm": true,
+    "hashes_match_selected_primary_sources": true,
+    "audit_source_text_and_order_match_primary": true
+  },
+  "normalization_selection": {
+    "passed": true,
+    "group03": {
+      "selected_normalized_copy": true,
+      "encoding_only_differences": 4,
+      "difference_log_exact": true
+    },
+    "group04": {
+      "selected_first_raw_copy": true,
+      "rejected_normalized_copy": true,
+      "non_encoding_quote_replacements": 1,
+      "difference_log_exact": true
+    }
+  },
+  "failure_preservation": {
+    "passed": true,
+    "eligible_denominator_rows_per_object": 128,
+    "main_status_by_object": {
+      "general_work": {
+        "zero": 127,
+        "one": 1,
+        "null": 0,
+        "unknown": 0,
+        "error": 0
+      },
+      "occupation_task": {
+        "zero": 19,
+        "one": 104,
+        "null": 5,
+        "unknown": 1,
+        "error": 4
+      },
+      "industry_domain": {
+        "zero": 104,
+        "one": 20,
+        "null": 4,
+        "unknown": 1,
+        "error": 3
+      }
+    },
+    "main_null_exactly_tracks_unknown_or_error": true,
+    "duration_status_by_object": {
+      "general_work": {
+        "candidate": 5,
+        "error": 1
+      },
+      "occupation_task": {
+        "candidate": 494,
+        "error": 24
+      },
+      "industry_domain": {
+        "candidate": 120,
+        "error": 2
+      }
+    },
+    "duration_errors_retained_as_explicit_errors": true
+  },
+  "audit_main_agreement_corrected": {
+    "general_work": {
+      "jointly_resolved": 16,
+      "resolved_matches": 16,
+      "resolved_mismatches": 0,
+      "jointly_null_errors": 0,
+      "one_sided_null_error": 0,
+      "resolved_agreement": 1.0
+    },
+    "occupation_task": {
+      "jointly_resolved": 14,
+      "resolved_matches": 13,
+      "resolved_mismatches": 1,
+      "jointly_null_errors": 1,
+      "one_sided_null_error": 1,
+      "resolved_agreement": 0.9285714285714286
+    },
+    "industry_domain": {
+      "jointly_resolved": 15,
+      "resolved_matches": 14,
+      "resolved_mismatches": 1,
+      "jointly_null_errors": 1,
+      "one_sided_null_error": 0,
+      "resolved_agreement": 0.9333333333333333
+    },
+    "all_three_objects": {
+      "jointly_resolved_rows": 14,
+      "jointly_resolved_full_match_rows": 12,
+      "resolved_full_agreement": 0.8571428571428571,
+      "rows_with_any_joint_null_error": 1,
+      "rows_with_any_one_sided_null_error": 1
+    }
+  },
+  "critical_findings": [
+    {
+      "severity": "high",
+      "component": "process_batch002.py compare_audit",
+      "finding": "The published joint_main_match_rows treats null equal to null as a match and the published occupation_task mismatch count includes a one-sided audit error. It therefore is not a resolved-only agreement statistic.",
+      "disposition": "resolved",
+      "code_evidence": "compare_audit now labels the old all-object count raw_main_equality_rows_including_null_equality and computes main_agreement_resolved_only with resolved denominators, matches, mismatches, joint-null, and one-sided-unresolved counts.",
+      "output_evidence": "PRIMARY_AGGREGATE.json matches the corrected code output: all-three resolved 12/14; general_work 16/16; occupation_task 13/14 with one joint-null and one one-sided unresolved; industry_domain 14/15 with one joint-null.",
+      "preservation_evidence": "The pre-fix aggregate is retained as private/batch002/PRIMARY_AGGREGATE_PRE_AGREEMENT_FIX_PRIVATE.json; primary exports and BATCH002_RUN_RECEIPT were not regenerated or overwritten."
+    }
+  ],
+  "final_artifact_verification": {
+    "passed": true,
+    "final_rows": 128,
+    "eligible_object_fields": 384,
+    "three_objects_per_row_in_fixed_order": true,
+    "status_values_valid": true,
+    "source_order_and_hash_binding_exact": true,
+    "raw_output_and_candidate_before_adjudication_preserved": true,
+    "source_hash_in_final_aggregate_exact": true,
+    "primary_candidate_hash_in_final_aggregate_exact": true,
+    "final_candidate_hash_in_final_aggregate_exact": true,
+    "root_decisions_hash_in_final_aggregate_exact": true,
+    "decision_count": 11,
+    "distinct_decision_pairs": 11,
+    "distinct_review_cases": 8,
+    "all_decisions_bind_to_source_and_apply_exactly_once": true,
+    "final_aggregate_recounts_exact": true,
+    "unknown_main_values_preserved_as_null": true,
+    "final_unknown_counts": {
+      "general_work": 0,
+      "occupation_task": 1,
+      "industry_domain": 2
+    }
+  },
+  "final_stage": {
+    "pending": false,
+    "root_independent_final_count_check_required": false,
+    "independent_final_artifact_verification_passed": true,
+    "labels_or_parser_rewritten_by_this_qa": false,
+    "root_independent_final_count_check_passed": true,
+    "root_acceptance_receipt": "ROOT_ACCEPTANCE.json"
+  }
+}
