@@ -1,0 +1,50 @@
+{
+  "decision_id": "D50-rulefirst-development-20261008",
+  "reviewer": "root GPT-6; AI review, not human ground truth",
+  "status": "semantic_rules_frozen_production_authorized_pending_scheduled_validation",
+  "research_purpose": "Measure explicit employer language about entrance opportunities, experience objects and task responsibility with auditable text evidence; do not manufacture a latent seniority score.",
+  "reuse": "Reuse normalization, exact-text deduplication and the frozen 10000-record sample. Do not restart full-corpus cleaning or Qwen inference.",
+  "development_review": {
+    "available_documents": 120,
+    "root_main_text_documents_read": 12,
+    "additional_compact_development_rows_read": 6,
+    "review_packet_identifiers": [1,2,3,4,41,42,43,44,81,82,83,84],
+    "coverage_note": "Read the twelve full-document packet entries across tool outputs; approximately one recruitment-disclaimer sentence in document 2 was truncated by the tool. This is not a claim to have semantically reviewed all 120 documents.",
+    "material_findings": [
+      "Document 42 has degree-specific years on separate bullet lines separated by standalone OR. Those year amounts cannot be treated as universally required.",
+      "The same document appends an application questionnaire. Entry Level is one software-proficiency answer option, not an entry-level vacancy classification.",
+      "Document 41 states years of ability and proficiency without the word experience. A literal experience rule will miss those: diagnose this limitation, do not silently claim complete years coverage.",
+      "Document 44 mentions mentoring junior resources in a senior role: junior text presence is not the advertised job's seniority.",
+      "Document 83 explicitly describes a Canada-based role. The current sample must not be labeled a verified US-only sample.",
+      "Technical requirements, client contact and responsibility are separate dimensions; explicit phrase matches cannot establish seniorization or actual technology adoption."
+    ]
+  },
+  "one_concentrated_development_revision": {
+    "engine_version": "rulefirst-20261008-v1.2",
+    "changes": [
+      "Flag multiline OR/education/year documents conservatively and withhold unconditional experience classifications, while retaining original clause evidence.",
+      "Exclude the tail beginning with a specific application-questionnaire marker; retain an exclusion flag.",
+      "Do not interpret professional experience followed by an unrecognized specialty as unrestricted general experience.",
+      "Withhold object classifications for unqualified business prose such as experience design without a candidate-experience assertion.",
+      "Add four synthetic regression cases to the existing 17, for 21 total."
+    ],
+    "accepted_limitations": [
+      "The technology and task lexicons are intentionally bounded. A no-match is not validated absence.",
+      "Multiline alternatives are flagged, not fully parsed; document-level caution may overflag otherwise clear clauses.",
+      "The questionnaire-tail exclusion is conservative and can omit later genuine prose.",
+      "Conditional alternatives and ambiguous objects require separate interpretation; no universally required years are imputed."
+    ]
+  },
+  "production_contract": {
+    "unique_texts": 7635,
+    "represented_records": 10000,
+    "execution": "BU SCC scheduled CPU jobs only; no new inference model or API",
+    "validation": "Source SHA, complete row mapping, unchanged weights, exact evidence offsets and held-out diagnostic review; synthetic success does not prove semantic accuracy. Prior v1.1 scheduled job 7960588 completed 120/120 with 2645 exact evidence coordinates and zero processing errors; v1.2 must rerun all 21 tests before production.",
+    "outputs": "Six descriptive tables for the frozen sample plus evidence, unknowns and processing receipts. These are not all-LinkUp population estimates.",
+    "weights": "Preserve existing weights; report unweighted sample descriptions until a distinct estimator contract is justified.",
+    "arms": "A/B/C are pre-existing sampling strata, not newly validated technology roles. C is residual within a technology-prefiltered frame, not a general untreated control.",
+    "time": "Created year describes posting cohorts attached to the current text snapshot. It does not verify the text historically observed in that year.",
+    "revelio": "No individual work histories are available. Vendor schema audit does not establish a row-level join."
+  },
+  "stop_rule": "Freeze after this development pass and scheduled mechanical checks. Do not tune against the 80 held-out documents. Restrict or withhold a field if evaluation exposes a material semantic failure."
+}

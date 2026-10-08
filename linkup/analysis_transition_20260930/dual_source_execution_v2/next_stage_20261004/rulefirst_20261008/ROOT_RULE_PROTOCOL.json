@@ -1,0 +1,53 @@
+{
+  "version": "rulefirst-20261008-v1",
+  "owner": "GPT-6 root",
+  "scope": "frozen10000 research sample,7635 unique exact texts; not fullpopulation or causal analysis",
+  "economic_question": "Comparable work: entry signals, experience objects and explicit task/responsibility language in software- and AI-related recruitment. No seniority score inferred from a single word.",
+  "reuse": "Original text/key linkage, frozen sample weights, dedup and V5 visible-text normalization preserved; normalization/heading helpers reused, old semantic labels not imported as truth.",
+  "outputs": [
+    "explicit entry/newgraduate/noexperience cues",
+    "experience object, strength, qualification path and explicit duration",
+    "explicit assistance, independent responsibility, people supervision, client ownership vs contact",
+    "technology mentions and locally supported role cues"
+  ],
+  "interpretation": {
+    "flag0": "No rule hit, NOT proof of absent requirement",
+    "missing_years": "Null, never zero",
+    "unknown_object": "Null/unresolved, not general experience",
+    "multiobject": "Preserved ambiguous joint clause, not automatically assigning same years to every object",
+    "conditional": "Do not convert education alternatives into universally required years",
+    "seniorization": "Separate observed dimensions, not blackbox composite",
+    "technology": "Mention/role cue, NOT actual adoption or exposure",
+    "time": "created_year is observed metadata, not proof currenttext valid then; no taskdeleted/added claim from snapshot",
+    "entry": "Do not define entry sample anew eachyear based on outcome requirements"
+  },
+  "sample_review": {
+    "development": 120,
+    "validation": 80,
+    "selection": "Deterministic seed, strataA/B/C; prioritize exposedtexts fordevelopment, evaluation excludes all previously model-exposed exactSHAs and development. Preserve selectionreceipt.",
+    "root_review": "Read verbatim contextual packets with originaltext accessible; record actual review coverage and any truncated documents. Never report fulltext manualvalidation when only contexts read.",
+    "freeze": "Lock code before evaluating80; no iterative tuning against validation. At most one development correctionpass.",
+    "human_gold": false
+  },
+  "operational_gate": {
+    "required": [
+      "Code synthetic checks passed; sourcebinding and quoteoffset integrity",
+      "Every represented ad retained and null/unknowns reported",
+      "Review falsepositives and no-match omissions across technology strata",
+      "Report empirical exception workload before anyadvancedmodelspend"
+    ],
+    "failure": "Failed or unreviewed fields remain candidate/exploratory; no automatic acceptance from schema or consensus",
+    "budget_boundary": "20% exception share is planning trigger only, not literature accuracy standard"
+  },
+  "execution": {
+    "cluster": "BU SCC",
+    "root": "/projectnb/econdept/qluo/linkup_rulefirst_20261008",
+    "model_inference": false,
+    "local_compute": false,
+    "core_model": "GPT-6/high",
+    "orchestration": "Sol/medium",
+    "qa": "independent agent code review and scheduled synthetic tests",
+    "bookkeeping": "Luna/low",
+    "return": "Return verified artifacts toKunshan; removeuniqueBUstagingafterverification; preserveprovenance"
+  }
+}

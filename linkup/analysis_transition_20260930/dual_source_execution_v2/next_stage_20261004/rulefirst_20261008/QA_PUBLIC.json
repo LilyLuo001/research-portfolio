@@ -1,0 +1,84 @@
+{
+  "checks": {
+    "T1_all_represented_complete": {
+      "arm_denominators": {
+        "A": 4000,
+        "B": 4000,
+        "C": 2000
+      },
+      "complete": 10000,
+      "pass": true,
+      "processing_errors": 0,
+      "represented_total": 10000
+    },
+    "T2_clause_status_explicit": {
+      "ambiguous_multiobject_statuses": [
+        "needs_review"
+      ],
+      "blank_status_rows": 0,
+      "pass": true,
+      "row_count": 1868,
+      "statuses": [
+        "NO_MATCH",
+        "explicit_rule_candidate",
+        "needs_review"
+      ]
+    },
+    "T6_every_sensitivity_retains_arm_denominator": {
+      "arm_denominators": {
+        "A": 4000,
+        "B": 4000,
+        "C": 2000
+      },
+      "arm_sensitivity_groups": 18,
+      "nonusable_evidence_counts_zero": true,
+      "pass": true,
+      "sensitivity_count": 6
+    },
+    "evidence_coordinates": {
+      "eval80_checks": 1739,
+      "eval80_errors": 0,
+      "full_checks": 225838,
+      "full_errors": 0,
+      "interpretation": "Zero coordinate errors verifies quote/span coordinate consistency only; it is not a semantic accuracy measure."
+    },
+    "public_csv_sha256": {
+      "eval80_csv_matched": 6,
+      "full_csv_matched": 7,
+      "mismatches": [],
+      "pass": true
+    },
+    "receipts_complete_and_same_run": {
+      "pass": true
+    }
+  },
+  "qa_created_utc": "2026-10-08T14:52:34.212217+00:00",
+  "scope": "Public artifacts only; no private research data read or executed locally.",
+  "source_receipts": {
+    "eval80_public": {
+      "path": "cloud_execution_20261008/rulefirst_20261008/eval80_public/RUN_RECEIPT_PUBLIC.json",
+      "sha256": "95283c43aabcb91febdca724bdf101556f234ebb60632cb233d3b52b8ecf7311"
+    },
+    "full_public": {
+      "path": "cloud_execution_20261008/rulefirst_20261008/full_public/FULL_RUN_RECEIPT_PUBLIC.json",
+      "sha256": "5772f1bef333ee04976dffefc3c4d289ef5accab2e3250f1e3457d25fbc29185"
+    }
+  },
+  "status": "pass",
+  "verification_layers": {
+    "actual_bu_run_public_verification": {
+      "engine_version": "rulefirst-20261008-v1.2",
+      "host": "scc-tb4",
+      "job_id": "7960837",
+      "status": "pass"
+    },
+    "semantic_accuracy_validation": {
+      "meaning": "Public aggregate checks do not validate semantic precision or recall against source text or human labels.",
+      "status": "not_performed"
+    },
+    "static_code_review": {
+      "meaning": "Runner mapping, denominator, boolean-boundary, years-scope, and public/private separation were reviewed before execution.",
+      "status": "pass"
+    }
+  }
+}

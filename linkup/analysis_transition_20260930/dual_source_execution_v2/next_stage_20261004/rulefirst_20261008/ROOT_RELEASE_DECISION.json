@@ -1,0 +1,62 @@
+{
+  "decision_id": "D51-rulefirst-batch-release-20261008",
+  "reviewer": "root GPT-6",
+  "status": "batch_execution_accepted_semantic_use_restricted",
+  "job_id": "7960837",
+  "engine_version": "rulefirst-20261008-v1.2",
+  "engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+  "completed": {
+    "unique_texts": 7635,
+    "represented_records": 10000,
+    "processing_errors": 0,
+    "evidence_coordinate_checks": 225838,
+    "evidence_coordinate_errors": 0,
+    "development_documents_processed": 120,
+    "held_out_documents_processed": 80,
+    "synthetic_tests": 21,
+    "six_table_groups": true,
+    "public_csv_files_in_full_release": 7,
+    "public_independent_qa": "QA_PUBLIC.json"
+  },
+  "root_semantic_review": {
+    "type": "AI diagnostic review, not human gold labels or a statistical accuracy estimate",
+    "held_out_full_documents_read": 6,
+    "selection": "First two documents within each frozen evaluation arm, selected before seeing outputs; evaluation positions 1,2,28,29,55,56",
+    "coverage": "Read all six source texts, all displayed experience/task/entry evidence, and detailed technology evidence for the first two. Eighty documents received mechanical checks, not eighty full semantic reviews.",
+    "findings": [
+      {"evaluation_position":1,"finding":"An unrecognized mandatory heading leaves many requirements unspecified. Building a dashboard using a software package is assigned a development cue; this does not establish development of that software. Some explicit supervisory responsibility is missed."},
+      {"evaluation_position":2,"finding":"A minimum total work-experience amount with a preferred industry background is classified as a preferred occupation/task requirement. This is a material scope/object error even though the year value and quote are correct. An unrecognized preference heading and benefits heading also allow required-section inheritance."},
+      {"evaluation_position":28,"finding":"The explicit related-experience minimum is captured numerically, but required strength is unspecified. Promotional experience wording is retained as unresolved rather than accepted as an experience object."},
+      {"evaluation_position":29,"finding":"Two distinct minimum year amounts are retained in separate clauses. Required strength is missed; independent-work wording is retrieved. Some management duties are not covered by the bounded dictionary."},
+      {"evaluation_position":55,"finding":"Junior appears as the people to mentor, not the advertised role. The literal junior flag is correct only as a text cue. A non-degree alternative to experience is not recognized as conditional; an explicit three-year value is captured."},
+      {"evaluation_position":56,"finding":"Source text has concatenated headings and duties. The extractor conservatively marks multiobject/multiple-clause risks; it does not resolve all year amounts or object relations. Broad senior-role content is not fully retrieved."}
+    ],
+    "no_holdout_tuning": true
+  },
+  "per_output_use": {
+    "T1": "Accepted for this frozen sample's processing and mapping completeness; not all-LinkUp or US-population coverage.",
+    "T2": "Release as evidence-bearing candidate inventory. Numeric strings and quotes are inspectable; object, required/preferred and conditional relations are not accepted as validated research outcomes.",
+    "T3": "Release bounded technology text-match counts as descriptive retrieval output. Development/implementation/use cues remain diagnostic, not actual technology-role labels or adoption.",
+    "T4": "Accepted as created-year metadata composition attached to current text. Not a historical-text panel.",
+    "T5": "Candidate cooccurrence diagnostic only. Do not interpret as entry-level shares, general-versus-related experience effects, seniorization or technology effects.",
+    "T6": "Accepted as parser sensitivity/availability accounting. The CSV value usable means passing that rule filter, not semantically validated. Required-only remains a diagnostic because strength errors were observed."
+  },
+  "sample_descriptive_counts": {
+    "represented_denominator": 10000,
+    "observed_created_year_range": [2023,2026],
+    "legacy_B_records_with_genai_text_matches": 61,
+    "legacy_B_denominator": 4000,
+    "at_least_one_rule_bound_numeric_experience_clause": 7031,
+    "at_least_one_numeric_clause_without_engine_review_flag": 4999,
+    "at_least_one_rule_required_clear_numeric_clause": 3241,
+    "interpretation": "These counts describe rule outputs. Neither clear nor required is a certified semantic label; no-match is not no experience requirement."
+  },
+  "decision": [
+    "The CPU rule-first batch route is operational and inexpensive for the frozen sample. Keep its outputs, exact evidence and row links; no need to regenerate them.",
+    "Do not expand keyword lists indefinitely or tune against this holdout. Freeze v1.2 and publish the observed limitations.",
+    "For substantive experience-combination comparisons, a stronger contextual adjudicator or reliable alternative labels are still needed for requirement scope, experience object and role relationships. Do not declare that stage completed.",
+    "If a model service becomes available, reuse extracted clauses plus section and surrounding context for targeted qualification review. Do not send the whole corpus automatically. Separately sample full documents to evaluate missed content; absence of a rule flag cannot route a document to a confident negative.",
+    "No new inference model, API spending, or Revelio individual-data claim is authorized or executed in this release."
+  ],
+  "artifact_handling": "Public code, aggregate tables and receipts go to Git. Private texts/evidence and row-level links return to a new Kunshan directory with file size and SHA checks before deletion of this unique BU staging directory."
+}

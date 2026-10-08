@@ -1,0 +1,68 @@
+{
+  "boundaries": [
+    "A/B/C are legacy sampling arms, not current rule-defined technology roles",
+    "C is residual within a technology-prefiltered frame, not ordinary jobs",
+    "created_year is snapshot metadata, not historical-text proof",
+    "flag omission is not validated absence",
+    "multiobject duration clauses remain ambiguous_multiobject and are not assigned to each object",
+    "no within-employer claim; canonical metadata is not used as a verified employer key"
+  ],
+  "created_utc": "2026-10-08T14:48:03.467195+00:00",
+  "elapsed_seconds": 30.516,
+  "engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+  "engine_version": "rulefirst-20261008-v1.2",
+  "estimator": "none; public tables are unweighted descriptions of the frozen fixed sample",
+  "evidence_coordinate_checks": 225838,
+  "evidence_coordinate_errors": 0,
+  "host": "scc-tb4",
+  "input_sha256": {
+    "represented_fixed10000": "987f4369643bdd353b7e881f7ccf58dcf7be0f29853b9f118a92b4076833b04d",
+    "unique_queue": "5ea54b141e18ebef4468fff8dfff3e81a196679e7caaece138303cf995f25a4e"
+  },
+  "job_id": "7960837",
+  "legacy_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+  "one_arm_per_exact_sha": true,
+  "outputs_sha256": {
+    "EXPANDED10000_BINDING_PRIVATE.jsonl": "9c442a665b8242991fd83b23d7bc02fc3f1296524794f63c11378233713ba100",
+    "FULL7635_RULE_OUTPUTS_PRIVATE.jsonl": "82b3063c7e48e1f63f2e94a73a9c3b6226585550c893722b61fd51d436933d19",
+    "T1_EXPANSION_COMPLETENESS.csv": "3020b8aa6a539426da0b79c4fce937783f83fd5f0c23fc079daa2bfc0f66b69d",
+    "T2_EXPERIENCE_OBJECT_STRENGTH_SCOPE_YEARS.csv": "bb94ef6920ddc8fcdc23f964c5841582b545f916262e4c3ff0ee85a218ee64b1",
+    "T3_TECH_OVERLAP.csv": "9b3cd09b966a59acc6caf8527a95fada18a643899e0fa99b7e82f45a92610ecb",
+    "T3_TECH_ROLE_CUES.csv": "02fde6860eaf1aa8fa5ee1a7619144fd9cf08112ae53826fd5833149f1bb7c24",
+    "T4_CREATED_YEAR_SNAPSHOT.csv": "f6a0219b4faca265727bfab93cebf5a9beacf974135a9aa4c99e4e86fde3d3c6",
+    "T5_ENTRY_EXPERIENCE_TASK_COOCCURRENCE.csv": "4d78bbe829dccf2d052b8587fc193dec23caaddb548ef7e250d78eab8d41bf07",
+    "T6_SENSITIVITY_AVAILABILITY.csv": "48a816f86dcf2475f79f780b434f7c907f3850a256ef4ebf19fe3b695b2ea85c"
+  },
+  "represented_arms": {
+    "A": 4000,
+    "B": 4000,
+    "C": 2000
+  },
+  "represented_positions_ordered_unique_1_to_10000": true,
+  "represented_rows": 10000,
+  "sensitivity_denominator": "Every sensitivity retains all represented postings by arm; usable means at least one explicit numeric duration clause survives that sensitivity.",
+  "status": "complete",
+  "synthetic_test_sha256": "e9202f284a11ba40868dfdc594d32eb06de89dff539487fdc7a48e0bbf4a922a",
+  "unique_rows": 7635,
+  "unique_sha_set_matches_represented": true,
+  "unique_status": {
+    "complete": 7635
+  },
+  "weight_fields_preserved": [
+    "frame_count_a",
+    "frame_count_b",
+    "selected_cell_arm_n",
+    "inclusion_probability",
+    "design_weight",
+    "W_h",
+    "stable_rank_in_cell_arm",
+    "sample_rank_in_cell_arm",
+    "nested_frame_cell_arm_N",
+    "next_selected_cell_arm_n",
+    "original_inclusion_probability",
+    "conditional_inclusion_probability",
+    "total_inclusion_probability",
+    "nested_design_weight",
+    "pooled_cell_standardization_weight"
+  ]
+}

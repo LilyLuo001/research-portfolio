@@ -1,0 +1,32 @@
+{
+  "accelerator": "none",
+  "elapsed_seconds": 36,
+  "end_time": "Thu Oct 8 10:48:05 2026",
+  "engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+  "engine_version": "rulefirst-20261008-v1.2",
+  "exit_status": 0,
+  "failed": 0,
+  "job_id": "7960837",
+  "maxvmem": "1.365G",
+  "memory_per_core": "2G",
+  "node": "scc-tb4",
+  "parallel_environment": "omp",
+  "private_data_local": "none",
+  "project": "econdept",
+  "queue": "econ",
+  "recorded_utc": "2026-10-08T14:51:38.392017+00:00",
+  "scheduler": "SGE",
+  "slots": 4,
+  "stages": [
+    "development120 rerun preserving v1.1",
+    "full7635",
+    "expand10000",
+    "six public table families",
+    "evaluation80",
+    "fixed evaluation6 review packet"
+  ],
+  "start_time": "Thu Oct 8 10:47:29 2026",
+  "static_review": "passed after mechanical denominator/mapping fixes; reviewer did not read private data",
+  "synthetic_tests": 21,
+  "walltime_limit": "00:30:00"
+}

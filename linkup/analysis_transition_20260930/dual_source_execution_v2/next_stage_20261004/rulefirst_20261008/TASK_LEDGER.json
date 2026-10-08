@@ -1,0 +1,60 @@
+{
+  "stage": "rulefirst_20261008",
+  "status": "planning_only_no_new_inference",
+  "authorization": "User-approved rule-first plan; all new data computation scheduled at BU",
+  "owners": {
+    "core_rules_and_review": "GPT-6/high",
+    "remote_runner": "Sol/medium",
+    "independent_qa": "Sol/medium",
+    "git_and_provenance": "Luna/low"
+  },
+  "reusable_public_artifacts": [
+    "../cloud_execution_20261008/vendor_audit_20261008/REVELIO_JOB_POSTINGS_SCHEMA_PUBLIC.json",
+    "../cloud_execution_20261008/vendor_audit_20261008/RUN_RECEIPT_PUBLIC.json",
+    "../cloud_execution_20261008/vendor_audit_20261008/D49_VENDOR_EVIDENCE_SUPPLEMENT_20261008.json",
+    "../text_handoff_20261007/FIXED10000_CORPUS_READINESS_AGGREGATE.json",
+    "../text_handoff_20261007/FIXED10000_TEXT_HANDOFF_RECEIPT.json",
+    "../linkup/artifacts/duration-from-123660254-123910178/design_weighted_numeric_detection.csv",
+    "../linkup/artifacts/duration-from-123660254-123910178/design_weighted_numeric_clause_years.csv"
+  ],
+  "frozen_sample_receipt": {
+    "rows": 10000,
+    "unique_exact_texts": 7635,
+    "duplicate_groups": 697,
+    "duplicate_rows_beyond_unique": 2365,
+    "regional_counts": {"kunshan": 5495, "wuzhen": 4505},
+    "use": "workload and provenance only; no new local computation"
+  },
+  "sample_metadata": {
+    "available_for_existing_weighted_tables": ["arm_A_B_C", "occupation_major", "census_region", "created_year", "design_weights"],
+    "sample_mapping": {"arm_A": 4000, "arm_B": 4000, "arm_C": 2000},
+    "development_rows": 120,
+    "evaluation_rows": 80,
+    "development_note": "One 42-row cross-line OR/education/application-questionnaire contamination was corrected; other uncovered semantics remain unknown.",
+    "coverage_note": "Root review read 11 complete documents and the first half of one additional document from 12 packages; this does not certify all 120 development rows as fully read."
+  },
+  "vendor_schema_metadata_not_joined_to_sample": {
+    "available_for_stratification": [
+      "job_id", "rcid", "company", "role_k1500_v2", "role_k17000_v3",
+      "onet_code", "country", "state", "metro_area", "salary",
+      "salary_min", "salary_max", "salary_predicted", "post_date",
+      "remove_date"
+    ],
+    "additional_available_fields": "See the authoritative public schema receipt; schema has 28 columns.",
+    "valid_uses": ["schema inventory and future linkage design only"],
+    "unavailable_for_direct_measurement": [
+      "description", "skills", "experience", "years", "qualification"
+    ],
+    "interpretation_boundary": "The vendor schema is not implicitly joined to the fixed sample. Role fields are occupational labels, not skill or experience measures. No technology comparison may be claimed from role labels alone."
+  },
+  "rule_first_requirements": [
+    "Define technology comparison categories independently of model limitations.",
+    "Specify heading, qualification, negation, duration, and exception rules before scheduled evaluation.",
+    "Preserve unknown and error outcomes in denominators.",
+    "Use separated development and unused evaluation texts with rule negatives.",
+    "Do not launch inference or paid APIs from this ledger."
+  ],
+  "orchestration": "../cloud_execution_20261008/rulefirst_20261008/",
+  "engine": "v1.1 plus 19 synthetic cases; pending Sol public receipt",
+  "next_gate": "Root acceptance of core rule/schema files and a bounded BU scheduler plan"
+}
