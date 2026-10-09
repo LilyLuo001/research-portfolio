@@ -1,0 +1,49 @@
+{
+  "candidate_counts_before_cross_group_deduplication": {
+    "degree_experience_alternative": 85,
+    "heading_strength_scope": 72,
+    "junior_referent": 20,
+    "mentorship_vs_receiving_training": 4,
+    "required_general_plus_preferred_industry": 0,
+    "software_use_vs_development": 46
+  },
+  "constraints": {
+    "development_only": true,
+    "eval80_read": false,
+    "maximum_rows": 24,
+    "model_calls": 0,
+    "new_extraction": false,
+    "unique_source_sha_required": true
+  },
+  "created_utc": "2026-10-09T06:34:21.083084+00:00",
+  "host": "scc-tb4",
+  "inputs": {
+    "frozen_rule_output": {
+      "path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/run/dev120/RULE_OUTPUTS_PRIVATE.jsonl",
+      "rows": 120,
+      "sha256": "e7a6a325a3779ff1c5ad71acdd56e6d41e75c2db3c43f7d1b624b00edb88d65a"
+    },
+    "source": {
+      "path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/run/prep/DEV120_SOURCE_PRIVATE.jsonl",
+      "rows": 120,
+      "sha256": "ea7d641dee0fc4760de974b3f875f5cc43d7849302e9ac2ea702ac1a1f6ecd8e"
+    }
+  },
+  "interpretation_boundary": "Mechanical candidates for bounded root review; selection predicates and frozen rule evidence are not semantic adjudication or gold labels.",
+  "job_id": "7976859",
+  "packet": {
+    "bytes": 372683,
+    "path": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/hybrid_production_20261009/run/dev24_relation_decisions/DEV24_RELATION_DECISIONS_PRIVATE.jsonl",
+    "sha256": "4c3121398c7a95d12f38461211215c00895640f883e9b46040c5b338c7175328"
+  },
+  "schema_version": "dev24_relation_packet_v1",
+  "selected_counts": {
+    "degree_experience_alternative": 4,
+    "heading_strength_scope": 4,
+    "junior_referent": 4,
+    "mentorship_vs_receiving_training": 3,
+    "software_use_vs_development": 4
+  },
+  "selected_rows": 19,
+  "status": "complete_selection_only_no_new_semantic_labels"
+}

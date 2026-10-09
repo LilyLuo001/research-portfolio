@@ -1,0 +1,75 @@
+{
+  "api_calls": 0,
+  "baseline_sha256": {
+    "dev120": "e7a6a325a3779ff1c5ad71acdd56e6d41e75c2db3c43f7d1b624b00edb88d65a",
+    "full7635": "82b3063c7e48e1f63f2e94a73a9c3b6226585550c893722b61fd51d436933d19",
+    "represented10000": "9c442a665b8242991fd83b23d7bc02fc3f1296524794f63c11378233713ba100"
+  },
+  "boundaries": [
+    "Outputs are deterministic candidate markers over immutable frozen evidence, not model inference or semantic gold.",
+    "No candidate marker means unknown under this bounded overlay, not a validated zero or absence.",
+    "The 10,000-row binding preserves sample positions without duplicating normalized or raw text.",
+    "Public counts are unweighted fixed-sample descriptions by legacy sampling arm."
+  ],
+  "code_sha256": {
+    "overlay": "1a888cbdaf11f4f8e97dd71c84f4af723491597825fe3b1427b2e64c773bc626",
+    "runner": "c25a3e9d2cd079119a1645f6c2a0c5a1b71e6473f140d250af8acc28a0990fa5",
+    "synthetic_test": "4099c1d742e6938a71b54a013a2784dae7b705d6d995f7316c21d9d64aedf871"
+  },
+  "created_utc": "2026-10-09T06:53:23.960715+00:00",
+  "dev_gate": {
+    "failed": 0,
+    "rows": 120,
+    "span_checks": 2645,
+    "span_errors": 0
+  },
+  "elapsed_seconds": 9.959,
+  "full": {
+    "annotation_counts": {
+      "experience_strength_components": 47836,
+      "explicit_degree_or_equivalent_experience": 485,
+      "explicit_training_for_applicant": 12,
+      "explicit_using_named_tool": 2366,
+      "general_and_preference_may_have_different_scope": 159,
+      "junior_mention_without_applicant_binding": 510,
+      "junior_refers_to_people_assisted": 330,
+      "mentoring_other_people": 1246,
+      "preceding_background_heading": 871
+    },
+    "documents_with_candidate_marker": 7578,
+    "documents_with_no_candidate_marker": 57,
+    "failed": 0,
+    "rows": 7635,
+    "span_checks": 151010,
+    "span_errors": 0
+  },
+  "host": "scc-tb4",
+  "job_id": "7977038",
+  "mapping": {
+    "one_arm_per_exact_sha": true,
+    "represented_positions_ordered_1_to_10000": true,
+    "represented_posting_denominators": {
+      "A": 4000,
+      "B": 4000,
+      "C": 2000
+    },
+    "represented_rows": 10000,
+    "unique_document_denominators": {
+      "A": 1978,
+      "B": 3848,
+      "C": 1809
+    },
+    "unique_rows": 7635,
+    "unique_sha_set_matches_represented": true
+  },
+  "model_calls": 0,
+  "outputs_sha256": {
+    "DEV120_RELATION_OVERLAY_PRIVATE.jsonl": "55b1bf68ae60342d6e340b01e653811d7c27985b815c1c02c4d76f841542fcdc",
+    "FIXED10000_RELATION_OVERLAY_BINDING_PRIVATE.jsonl": "cc25119b5c092b0af6b4f61b587dea1ef85d02d93990d8e2a51964840d7c26af",
+    "FULL7635_RELATION_OVERLAY_PRIVATE.jsonl": "8c614c4624c922164f61df98fd81f9a074992c483b281148379f4310787a69e2",
+    "RELATION_ANNOTATION_COUNTS_PUBLIC.csv": "d84a507d9041def1c0dc2770fc54860c84fafdd13d9103b165f586a747ca566f"
+  },
+  "overlay_version": "relation-overlay-20261009-v1",
+  "schema_version": "relation_overlay_run_receipt_v1",
+  "status": "complete_candidate_markers_only"
+}

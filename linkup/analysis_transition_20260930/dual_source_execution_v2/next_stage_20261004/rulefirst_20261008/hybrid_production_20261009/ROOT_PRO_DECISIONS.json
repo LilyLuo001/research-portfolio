@@ -1,0 +1,16 @@
+{
+ "decision_id":"D55-no-paid-api",
+ "user_constraint":"Only existing Pro subscription models for bounded decisions; no paid model API",
+ "supersedes":"D54 midrange API production and D53 Astra fullbatch recommendation",
+ "review_scope":{"selected_dev_documents":19,"root_full_documents_read":[1,5,13,17],"root_partial_document_read":[9],"all_19_reviewed":false,"eval80_used_for_new_development":false},
+ "decisions":[
+  {"development_document":1,"finding":"Degree-or-equivalent-experience is one alternative; a separate eight-year experience requirement remains a separate constraint. Search-result navigation and other job titles are present, so whole-document keyword counts are unsafe as applicant requirements."},
+  {"development_document":5,"finding":"Mentoring junior engineers refers to others. Required and preferred requirement sections are separate. Employer product AI description is not a stated AI requirement for this applicant."},
+  {"development_document":9,"finding":"Visible text distinguishes developing solutions using LLMs from developing LLMs. Only partial source viewed; qualification part not adjudicated."},
+  {"development_document":13,"finding":"What You Will Need and What Would Be Nice to Have establish separate candidate strengths; years attached to alternative solution/domain wording must not become unrestricted total experience."},
+  {"development_document":17,"finding":"Leading/mentoring engineers is a worker duty. Professional-development boilerplate mentioning entry-level employees does not target this vacancy to entry-level applicants. Degree substitution does not waive a separate eight-plus-year requirement."}
+ ],
+ "implementation":"New immutable relation_overlay.py over frozen v1.2 evidence; keep baseline unchanged. Report recognized headings as candidates, not exhaustive segmentation. General-plus-preferred clauses remain unresolved unless independently adjudicated. Zero API calls.",
+ "production_limit":"Overlay is a bounded reusable framework, not proof all semantic variables can be accurately filled by code. Unresolved/unsupported cases retained; code only counts candidates with source evidence.",
+ "next_execution":"Static QA and cloud-only synthetic/dev120 smoke run; production of accepted fields after a single root acceptance. Do not launch repetitive parser-development cycles or silently lower variable definitions."
+}
