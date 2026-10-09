@@ -1,0 +1,45 @@
+{
+  "attempts": [
+    {
+      "exit_status": 1,
+      "job_id": "7978657",
+      "maxvmem": "585.207M",
+      "reason": "BU PyArrow 4.0.0 Table has no to_pylist; no complete output published",
+      "rows_processed": 0,
+      "status": "failed_runtime_compatibility",
+      "wall_seconds": 12
+    },
+    {
+      "complete_output_published": false,
+      "job_id": "7978718",
+      "last_observed_progress": {
+        "canonical_rows_written": 26361,
+        "evidence_rows_written": 133462,
+        "raw_rows_scanned": 38656
+      },
+      "reason": "held then cancelled during runtime provenance correction; must not be counted as complete",
+      "status": "cancelled_incomplete_superseded"
+    },
+    {
+      "canonical_rows": 82880,
+      "evidence_rows": 421154,
+      "exit_status": 0,
+      "job_id": "7978776",
+      "maxvmem": "4.152G",
+      "receipt_sha256": "4ad77cbcf84b71cd95cb31da7a4754d89c83de30430a7b68bde9caed983447ce",
+      "status": "complete",
+      "wall_seconds": 181
+    },
+    {
+      "exit_status": 0,
+      "job_id": "7978883",
+      "maxvmem": "568.383M",
+      "qa_sha256": "8a8a948871a44888cd0a1d043161ea26f741a855baed1c46e072af438356f2ed",
+      "status": "qa_pass",
+      "wall_seconds": 21
+    }
+  ],
+  "created_utc": "2026-10-09T09:13:31.547040+00:00",
+  "scope": "public scheduler and aggregate progress provenance; no private text",
+  "status": "first_shard_complete_with_prior_attempts_preserved"
+}

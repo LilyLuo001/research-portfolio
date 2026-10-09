@@ -1,0 +1,51 @@
+{
+  "concurrency_cap_cpus": 16,
+  "created_utc": "2026-10-09T09:13:31.547040+00:00",
+  "dependent_qa": {
+    "hold_job_ids": [
+      "7979088",
+      "7979089",
+      "7979111",
+      "7979090"
+    ],
+    "job_id": "7979461",
+    "manifest_sha256": "64c9e35d845cedc24b8a66aedf05482ef63e3daf32e8a754820c5722db387de5",
+    "state": "held_queued_on_dependencies",
+    "verifier_sha256": "63afeccb19afdddb25bd30faaa93fd4cd715f3c8e5c83aa70856e91ba46c3381"
+  },
+  "jobs": [
+    {
+      "index": 1,
+      "job_id": "7979088",
+      "last_observed_state": "complete_exit0",
+      "source_file": "job-descriptions_0_0_1.snappy.parquet"
+    },
+    {
+      "index": 2,
+      "job_id": "7979089",
+      "last_observed_state": "running",
+      "source_file": "job-descriptions_0_0_10.snappy.parquet"
+    },
+    {
+      "index": 3,
+      "job_id": "7979111",
+      "last_observed_state": "queued",
+      "source_file": "job-descriptions_0_0_11.snappy.parquet"
+    },
+    {
+      "index": 4,
+      "job_id": "7979090",
+      "last_observed_state": "running",
+      "source_file": "job-descriptions_0_0_12.snappy.parquet"
+    }
+  ],
+  "resource_per_job": {
+    "cpus": 4,
+    "gpu": false,
+    "memory_gb": 8,
+    "queue": "econ",
+    "walltime": "02:00:00"
+  },
+  "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+  "status": "submitted"
+}

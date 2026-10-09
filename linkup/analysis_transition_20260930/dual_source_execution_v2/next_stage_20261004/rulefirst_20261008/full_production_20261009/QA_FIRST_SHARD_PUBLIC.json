@@ -1,0 +1,111 @@
+{
+  "audit_id": "D58-first-real-shard-independent-acceptance",
+  "completed_utc": "2026-10-09T09:08:38Z",
+  "status": "pass",
+  "scope": "Static production-wrapper review plus public receipt, scheduler accounting and independently scheduled mechanical output verification. No source text was read, no rule was rerun locally and no semantic accuracy is certified.",
+  "static_review": {
+    "status": "pass",
+    "production_runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "production_wrapper_sha256": "e6226d8dd9a8ba676a78d42ee797648ea79280259c6883a782719c977e38ff2b",
+    "one_shard_verifier_sha256": "e8d79735b492fe61f9b04d6a2d7fe2717e067d889e0950919b69640cd4ef99d5",
+    "future_shard_set_verifier_sha256": "63afeccb19afdddb25bd30faaa93fd4cd715f3c8e5c83aa70856e91ba46c3381",
+    "checks": [
+      "bounded 256-row extraction batches",
+      "raw-sidecar row and JOB_HASH alignment",
+      "canonical locator and JOB_HASH uniqueness",
+      "disposition and canonical-output conservation",
+      "frozen rule, legacy and overlay hash binding",
+      "D57 current-duty gate and prior/referent branch preservation",
+      "normalization flags, excluded-context counts, review and unknown statuses preserved",
+      "normalized Unicode coordinate and exact-quote validation before write",
+      "idempotent resume and terminal progress/failure receipts",
+      "runtime capability and version reporting"
+    ]
+  },
+  "actual_production_run": {
+    "job_id": "7978776",
+    "scheduler": "BU SCC SGE",
+    "exit_status": 0,
+    "failed": 0,
+    "wall_seconds": 181,
+    "slots": 4,
+    "maxvmem": "4.152G",
+    "runtime": {
+      "python": "3.8.10",
+      "pyarrow": "4.0.0"
+    },
+    "raw_rows": 121451,
+    "disposition_rows": 121451,
+    "canonical_posting_rows": 82880,
+    "evidence_rows": 421154,
+    "posting_bytes": 16232833,
+    "evidence_bytes": 28824818,
+    "combined_output_bytes": 45057651,
+    "row_conservation": true,
+    "api_calls": 0,
+    "model_calls": 0,
+    "metadata_join_status": "pending_no_verified_metadata_join"
+  },
+  "actual_independent_verification": {
+    "job_id": "7978883",
+    "scheduler": "BU SCC SGE",
+    "exit_status": 0,
+    "failed": 0,
+    "wall_seconds": 21,
+    "slots": 1,
+    "maxvmem": "568.383M",
+    "canonical_locator_unique": true,
+    "canonical_job_hash_unique": true,
+    "evidence_locator_index_and_count_consistent": true,
+    "evidence_span_structure_errors": 0,
+    "posting_rows_match_receipt": true,
+    "evidence_rows_match_receipt": true,
+    "processing_status_denominator_equals_postings": true,
+    "experience_status_denominator_equals_postings": true,
+    "metadata_status_denominator_equals_postings": true,
+    "created_year_denominator_equals_postings": true,
+    "evidence_group_counts_sha256": "f7b082cf340544a62c22f83224d0dbbd063adcae0400ccc87710ccb73818e30d"
+  },
+  "public_artifacts": {
+    "production_receipt": {
+      "path": "public/SHARD_b605d84d410013b1_RECEIPT_PUBLIC.json",
+      "sha256": "4ad77cbcf84b71cd95cb31da7a4754d89c83de30430a7b68bde9caed983447ce"
+    },
+    "independent_output_qa": {
+      "path": "public/SHARD_b605d84d410013b1_QA_PUBLIC.json",
+      "sha256": "8a8a948871a44888cd0a1d043161ea26f741a855baed1c46e072af438356f2ed"
+    },
+    "production_qacct": {
+      "path": "public/PRODUCTION_JOB_7978776_QACCT_PUBLIC.txt",
+      "sha256": "0148195c90b67ff793ac0ffba2a985058d7f3d60f2757f399917c32eeac95383"
+    },
+    "verification_qacct": {
+      "path": "public/QA_JOB_7978883_QACCT_PUBLIC.txt",
+      "sha256": "1aa4741a015a38d5c5a77c34e1a2d3234f652120f52e2a93aaa65cc3e04acd30"
+    },
+    "mapping_reuse_audit": {
+      "path": "MAPPING_REUSE_AUDIT.json",
+      "sha256": "d42e04d2759bac7f84fbcc607afabc6f07b63dcc503972d072169800dd99db29"
+    }
+  },
+  "attempt_history": [
+    {
+      "job_id": "7978657",
+      "status": "failed_before_processing",
+      "accepted": false,
+      "reason": "BU PyArrow 4.0.0 lacks Table.to_pylist; zero rows processed"
+    },
+    {
+      "job_id": "7978718",
+      "status": "cancelled_during_processing",
+      "accepted": false,
+      "last_reported_progress": {
+        "raw_rows": 33280,
+        "canonical_rows": 22652,
+        "evidence_rows": 114858
+      },
+      "reason": "superseded to add explicit runtime provenance; partial outputs are not a release"
+    }
+  ],
+  "claim_boundary": "This accepts the first-shard mechanical production release and its deterministic observable counts. It does not certify latent job semantics, historical wording, causal effects or completed metadata linkage."
+}
