@@ -1,0 +1,52 @@
+{
+  "api_calls": 0,
+  "claim_level": "Reproducible observed-text statistics at their explicit operational definitions. Do not relabel these as semantically validated latent requirements, entry-job shares, employer preferences, actual adoption or effects.",
+  "code_sha256": "b368b75ebd37344f24ad6435a84af65561af9f4158e34c1430abb781f1774cb2",
+  "created_utc": "2026-10-09T07:57:53.272434+00:00",
+  "denominators": {
+    "represented_posting": {
+      "A": 4000,
+      "ALL": 10000,
+      "B": 4000,
+      "C": 2000
+    },
+    "unique_exact_text": {
+      "A": 1978,
+      "ALL": 7635,
+      "B": 3848,
+      "C": 1809
+    }
+  },
+  "elapsed_seconds": 9.069,
+  "estimator": "Unweighted finite-sample description; legacy arms are not treatment-control; no inference to US or all LinkUp",
+  "host": "scc-gd4",
+  "input_sha256": {
+    "baseline_full7635": "82b3063c7e48e1f63f2e94a73a9c3b6226585550c893722b61fd51d436933d19",
+    "measurement_contract": "d89cf484da3b2e562c16e61c6fe8f15d759d001923a01eda1781ed6d68d50a15",
+    "overlay_full7635": "8c614c4624c922164f61df98fd81f9a074992c483b281148379f4310787a69e2",
+    "represented10000": "9c442a665b8242991fd83b23d7bc02fc3f1296524794f63c11378233713ba100"
+  },
+  "job_id": "7977882",
+  "model_calls": 0,
+  "outputs_sha256": {
+    "SUMMARY_PUBLIC.json": "be2300b48c3b34c139b7e41fc563e9dd0c6ec74dee7652f0d9ae9a31a683bc0a",
+    "T1_SAMPLE_COVERAGE_FUNNEL_PUBLIC.csv": "403888d5d361342df9b4111a9ada169b9c940a967b1569fcdb20cb020284a7a5",
+    "T2_EXPERIENCE_DIMENSIONS_PUBLIC.csv": "47d1210384a9258436c473f0c1db8a26f34d3e2c504fa076bb3a2a6a7d0cdfa5",
+    "T3_TECHNOLOGY_ROLE_OVERLAP_PUBLIC.csv": "8c97970bce51984fc5dc70dc2836dee08b2810015afa557ce6593eab273add7d",
+    "T4_CREATED_YEAR_LIMITATIONS_PUBLIC.csv": "bbf6d4977f72086a5027c308dedbf0d301af75bd6bdb45d0f6f5f5192413739d",
+    "T5_CORE_COOCCURRENCES_PUBLIC.csv": "5e9995ebda4824fa187ac940819508f3c31f05f791dcfb87b3c0066f093560db",
+    "T6_SENSITIVITY_CLAIM_STATUS_PUBLIC.csv": "03ef0cd95fe0051bd79bda2f65e6a14327a47de994301814341fa4e0b724fb72"
+  },
+  "overlay_index_checks": 52173,
+  "overlay_index_errors": 0,
+  "rows": {
+    "represented": 10000,
+    "unique": 7635
+  },
+  "schema_version": "d56_final_tables_receipt_v1",
+  "span_checks": 151010,
+  "span_errors": 0,
+  "status": "complete_aggregation_only",
+  "substantive_variable_acceptance": "separate root review; successful aggregation and span checks are not semantic acceptance",
+  "whole_corpus_coverage": "not_estimated; no new inventory scan or join"
+}

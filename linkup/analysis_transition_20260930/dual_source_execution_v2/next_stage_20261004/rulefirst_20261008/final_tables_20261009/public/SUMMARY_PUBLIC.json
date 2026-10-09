@@ -1,0 +1,51 @@
+{
+  "T5_represented_general_related": {
+    "broad": {
+      "both": 371,
+      "general_only": 6,
+      "neither_observed": 361,
+      "related_only": 9262
+    },
+    "narrow": {
+      "both": 220,
+      "general_only": 14,
+      "neither_observed": 1557,
+      "related_only": 8209
+    }
+  },
+  "aggregation_release_version": "d56-final-tables-v2",
+  "denominators": {
+    "represented_posting": {
+      "A": 4000,
+      "ALL": 10000,
+      "B": 4000,
+      "C": 2000
+    },
+    "unique_exact_text": {
+      "A": 1978,
+      "ALL": 7635,
+      "B": 3848,
+      "C": 1809
+    }
+  },
+  "limitations": [
+    "Observed-text candidates are not semantically validated latent requirements or preferences.",
+    "No-match/not-observed is unknown, not confirmed absence.",
+    "created_year is snapshot cohort metadata, not historical wording evidence.",
+    "Legacy A/B/C arms are sampling groups, not treatments or current technology roles."
+  ],
+  "represented_key_counts": {
+    "entry_broad_text_cue": 961,
+    "entry_narrow_explicit_eligibility_cue": 58,
+    "experience_evidence_observed": 9925,
+    "experience_not_observed_by_rules_unknown": 75,
+    "numeric_duration_evidence_observed": 7031,
+    "overlay_relation_candidate_observed": 9939,
+    "responsibility_candidate": 869
+  },
+  "schema_version": "d56_summary_v1",
+  "scope": "unweighted frozen fixed sample; not all LinkUp or US postings",
+  "status": "complete_observed_text_statistics",
+  "supersedes_job_id": "7977882",
+  "supersedes_output_dir": "final_tables_v1"
+}

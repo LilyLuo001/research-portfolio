@@ -1,0 +1,27 @@
+{
+ "decision_id":"D57-six-table-claim-acceptance",
+ "date":"2026-10-09",
+ "reviewer":"root GPT-6 using existing Pro conversation; no paid API",
+ "scope":"Frozen7635 unique texts representing10000 sampled postings, not all LinkUp",
+ "review_provenance":{"reused_existing_eval_positions":[1,2,28,29,55,56],"new_full_source_reads_this_turn":[3,4,30,31,57,58],"new_positions_numeric_extraction_inspected":[3,4,30,31,57,58],"new_sample_drawn":false,"parser_tuned_on_these_cases":false,"review_type":"Targeted AI diagnostic, neither independent human gold nor statistical accuracy estimate"},
+ "actual_findings":[
+  {"position":3,"finding":"RPA and AI integration experience is required in wording; no numeric duration is stated. Lack of a numeric hit cannot be zero years."},
+  {"position":4,"finding":"Six-plus years of creative/design experience with a preferred business environment; mentoring junior designers concerns other employees. Generative AI use is an explicit content requirement."},
+  {"position":30,"finding":"Bachelor-level and master-level duration clauses differ. Literal12 and6-to10 values are captured, but the master branch is incorrectly marked unconditional. Accept numeric text inventory; reject collapsing to a job-wide unconditional minimum."},
+  {"position":31,"finding":"Six-plus years of marketing experience and a separate year of supervision experience coexist. The role starts as an individual contributor; past supervision does not establish present supervisory duties."},
+  {"position":57,"finding":"Three-plus years of applicable AI-workflow experience is numeric and substantively related, but rule object is unresolved. Narrow object filters select what the dictionary recognizes, not all genuine related experience."},
+  {"position":58,"finding":"Preferred experience mentoring junior analysts is past experience, not a current duty. The aggregate v1 responsibility union is therefore superseded by v2's explicit-duty and evidence-kind gate."}
+ ],
+ "accepted_observables":{
+  "T1":"Processing and mapping coverage in this fixed sample; not semantic success or total-corpus coverage",
+  "T2":"Rule-defined experience wording and literal duration inventory, with unresolved/conditional states and denominators. Four object classes remain algorithmic text categories, not fully validated economic experience requirements",
+  "T3":"Specified technology lexicon matches, overlaps and explicitly defined proximity/use-language indicators. Not actual deployment/developer occupation labels",
+  "T4":"Created-year metadata composition and stated availability limits. Raw text sometimes contains dates; those are not a universal verified version/date field in this release",
+  "T5":"Finite-sample document-level wording cooccurrence, BOTH general and related retained; eligibility and responsibility indicators have explicit broad/narrow definitions. Not entrant share or seniorization",
+  "T6":"Sensitivity of those operational statistics and explicit claim-availability status; narrow selection is not an accuracy guarantee"
+ },
+ "not_accepted_as_substantive_conclusions":["AI changes experience requirements causally","AI versus computerization historical effect comparison","current seniorization trend","true entry-level vacancy share","unconditional minimum experience per ad","all-US or population generalization","same-company/same-job comparisons without verified mappings"],
+ "finite_stop_decision":"Publish six corrected descriptive tables and a findings/limitations page. Close this processing-and-measurement-evaluation release. Do not launch another parser, model, sampling or API cycle just to remove the remaining unknowns.",
+ "aggregation_correction":"Only v2 qualifies for this acceptance: prior mentoring experience excluded from added current-duty union; v1 and its arithmetic QA preserved as superseded.",
+ "result_integrity":"Receipt/index/quote checks verify engineering consistency only. This decision does not convert them into a semantic accuracy rate."
+}

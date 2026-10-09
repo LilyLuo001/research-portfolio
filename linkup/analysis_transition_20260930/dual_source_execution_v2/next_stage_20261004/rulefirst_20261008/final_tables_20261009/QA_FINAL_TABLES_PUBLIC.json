@@ -1,0 +1,143 @@
+{
+  "aggregation_release_version": "d56-final-tables-v2",
+  "checks": {
+    "T1_through_T4_and_T6": {
+      "ALL_equals_arm_sum": true,
+      "T3_overlap_partitions": true,
+      "T4_cohorts_and_unavailable_fields": true,
+      "T6_numerator_plus_not_observed_equals_denominator": true,
+      "fractions_and_denominators": true,
+      "pass": true
+    },
+    "T3_explicit_using_boundary": {
+      "pass": true,
+      "status": "tool_use_relation_language_not_current_duty_or_adoption"
+    },
+    "T5_entry_responsibility": {
+      "all_cubes_partition_full_denominator": true,
+      "narrow_eligibility_is_subset_of_broad_entry": true,
+      "pass": true,
+      "represented_broad_entry_count": 961,
+      "represented_narrow_entry_count": 58,
+      "represented_responsibility_candidate_count": 869
+    },
+    "T5_general_related": {
+      "ALL_equals_arm_sum": true,
+      "both_state_retained": true,
+      "broad_and_narrow_four_state_partitions": true,
+      "pass": true
+    },
+    "T5_mentoring_scope": {
+      "boundary": "Current-duty candidate is a gated aggregate marker, not semantic gold.",
+      "pass": true,
+      "represented_posting_ALL": {
+        "both_marker_types": 24,
+        "current_duty_candidate_only": 135,
+        "no_mentoring_marker": 9221,
+        "referent_or_prior_experience_marker_not_current_duty": 620
+      },
+      "sum": 10000
+    },
+    "claim_scope": {
+      "accepted_level": "Reproducible observed-text statistics at their explicit operational definitions. Do not relabel these as semantically validated latent requirements, entry-job shares, employer preferences, actual adoption or effects.",
+      "estimator": "Unweighted finite-sample description; legacy arms are not treatment-control; no inference to US or all LinkUp",
+      "pass": true,
+      "whole_corpus_coverage": "not_estimated; no new inventory scan or join"
+    },
+    "coordinates_and_overlay_indices": {
+      "overlay_index_checks": 52173,
+      "overlay_index_errors": 0,
+      "pass": true,
+      "span_checks": 151010,
+      "span_errors": 0
+    },
+    "denominators": {
+      "ALL_equals_A_plus_B_plus_C": true,
+      "pass": true,
+      "values": {
+        "represented_posting": {
+          "A": 4000,
+          "ALL": 10000,
+          "B": 4000,
+          "C": 2000
+        },
+        "unique_exact_text": {
+          "A": 1978,
+          "ALL": 7635,
+          "B": 3848,
+          "C": 1809
+        }
+      }
+    },
+    "input_code_contract_provenance": {
+      "aggregation_code": true,
+      "baseline_full7635": true,
+      "measurement_contract": true,
+      "overlay_full7635": true,
+      "pass": true,
+      "represented10000": true
+    },
+    "public_output_sha256": {
+      "matched": 7,
+      "mismatches": [],
+      "pass": true,
+      "total": 7
+    },
+    "table_rows": {
+      "data_rows": {
+        "T1_SAMPLE_COVERAGE_FUNNEL_PUBLIC.csv": 64,
+        "T2_EXPERIENCE_DIMENSIONS_PUBLIC.csv": 7604,
+        "T3_TECHNOLOGY_ROLE_OVERLAP_PUBLIC.csv": 388,
+        "T4_CREATED_YEAR_LIMITATIONS_PUBLIC.csv": 27,
+        "T5_CORE_COOCCURRENCES_PUBLIC.csv": 210,
+        "T6_SENSITIVITY_CLAIM_STATUS_PUBLIC.csv": 176
+      },
+      "pass": true
+    },
+    "version_and_supersession": {
+      "pass": true,
+      "receipt_summary_execution_identify_v2": true,
+      "supersedes_job_7977882": true
+    }
+  },
+  "qa_created_utc": "2026-10-09T08:20:04.873325+00:00",
+  "scope": "Public v2 tables, public receipts, and public aggregation code only; no private research data read or computed locally.",
+  "source_receipts": {
+    "execution": {
+      "path": "rulefirst_20261008/final_tables_20261009/public/FINAL_TABLES_EXECUTION_PUBLIC.json",
+      "sha256": "7194cbaec8d9ce8c5acbc3eaa268384a8b8dee5f204955d46279ee2953d69d2d"
+    },
+    "run": {
+      "path": "rulefirst_20261008/final_tables_20261009/public/FINAL_TABLES_RUN_RECEIPT_PUBLIC.json",
+      "sha256": "ca7134b28e848fd43914a568d89a76f7f425c3cec99c3dc67166b6e274487367"
+    }
+  },
+  "status": "pass",
+  "supersession": {
+    "supersedes_job_id": "7977882",
+    "supersedes_output_dir": "final_tables_v1",
+    "v1_publication_status": "superseded; do not use as final release",
+    "v1_qa_path": "rulefirst_20261008/final_tables_20261009/QA_FINAL_TABLES_V1_SUPERSEDED_PUBLIC.json",
+    "v1_qa_sha256": "581867969b86e75bc55e61dd51f00d0479378eac21727781728003d889eb7c7c"
+  },
+  "verification_layers": {
+    "actual_bu_v2_public_verification": {
+      "api_calls": 0,
+      "exit_status": 0,
+      "failed": 0,
+      "gpu_requested": false,
+      "host": "scc-tb4",
+      "job_id": "7978196",
+      "model_calls": 0,
+      "status": "pass"
+    },
+    "semantic_validation": {
+      "meaning": "These remain explicit-definition observed-text statistics, not semantic gold, latent employer requirements, population estimates, or effects.",
+      "status": "not_performed"
+    },
+    "static_v2_correction_review": {
+      "meaning": "Mentoring counts as a current-duty candidate only under a duties heading, without co-spanning experience/knowledge/education evidence, and outside qualification/background sections. Other mentoring markers remain separately reported.",
+      "status": "pass"
+    }
+  }
+}
