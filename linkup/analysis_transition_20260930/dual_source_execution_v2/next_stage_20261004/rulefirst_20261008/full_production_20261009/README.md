@@ -8,4 +8,4 @@
 
 - 主决策：[ROOT_PRODUCTION_DECISION.json](ROOT_PRODUCTION_DECISION.json)
 - 映射复用审计：[MAPPING_REUSE_AUDIT.json](MAPPING_REUSE_AUDIT.json)
-- 状态：BU 首批 shard 传输及首个生产作业待回执；归档、清理和全量扩展均未宣称完成。
+- 状态：首分片已验收；后续四个作业已提交。集合校验作业 `7979461` 已设置四个生产作业依赖，将检查新输出及五分片跨分片键唯一性。全库处理、补充元数据连接和研究比较尚未完成。
