@@ -1,0 +1,65 @@
+{
+  "canonical_job_hash_unique_across_shards": true,
+  "canonical_locator_unique_across_shards": true,
+  "completed_utc": "2026-10-09T09:20:13.369311+00:00",
+  "distinct_source_file_count": 5,
+  "manifest_sha256": "64c9e35d845cedc24b8a66aedf05482ef63e3daf32e8a754820c5722db387de5",
+  "posting_rows": 424226,
+  "runtime": {
+    "pyarrow": "4.0.0",
+    "python": "3.8.10"
+  },
+  "scope": "mechanical new-output QA plus cross-shard key uniqueness; no source text read, extraction rerun or semantic certification",
+  "shard_count": 5,
+  "shards": [
+    {
+      "evidence_rows": 421154,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 82880,
+      "posting_sha256": "e0a7b5c57704b5462a3635c17124236f39f9d84158a1cf9d1025a4bc3f66ee25",
+      "production_job_id": "7978776",
+      "shard_id": "b605d84d410013b1",
+      "shard_qa_sha256": "8a8a948871a44888cd0a1d043161ea26f741a855baed1c46e072af438356f2ed"
+    },
+    {
+      "evidence_rows": 438843,
+      "newly_verified_in_this_job": true,
+      "posting_rows": 85934,
+      "posting_sha256": "662be7e8158d8db3a21a9e9e8a98e7f1aeeb8c7c25c19fef83db960afebff216",
+      "production_job_id": "7979088",
+      "shard_id": "b9376a87ec3e8b7c",
+      "shard_qa_sha256": "23c5d9788b83f78ecb9d652fcbcaa38a27f933b2faa9ba55ede62a8f521f2409"
+    },
+    {
+      "evidence_rows": 434980,
+      "newly_verified_in_this_job": true,
+      "posting_rows": 85598,
+      "posting_sha256": "a121adeeaa2a09170e9b99efdc15541a05c6c3f09905c2307b15c49cbb2c5e74",
+      "production_job_id": "7979089",
+      "shard_id": "fc4fc3a546b62738",
+      "shard_qa_sha256": "92b424fa3a586361b455eb97eea6d83e09cc4a0be4fe741492698465e6c80e86"
+    },
+    {
+      "evidence_rows": 425848,
+      "newly_verified_in_this_job": true,
+      "posting_rows": 83560,
+      "posting_sha256": "620666f12a0a0067461b339b299b4fe9b2d80a1095ab3570cb6cb6ebcf90e42e",
+      "production_job_id": "7979111",
+      "shard_id": "3d07a85fc3160eed",
+      "shard_qa_sha256": "65e83f19d2e3a7382cd3aaee0293b7bddddc839d2ec70f7c20721d3cc4248c67"
+    },
+    {
+      "evidence_rows": 441812,
+      "newly_verified_in_this_job": true,
+      "posting_rows": 86254,
+      "posting_sha256": "819a9c4f1a3115ff878b149d426dc05a4d3b9f5e732bcfae9ce0d62dee31e02b",
+      "production_job_id": "7979090",
+      "shard_id": "41305ab79b0f9fcd",
+      "shard_qa_sha256": "2d2731a2b7664d8ad644a4b674585d47631e000bc0632605e9d7f8e0849ba7d8"
+    }
+  ],
+  "started_utc": "2026-10-09T09:19:16.669286+00:00",
+  "status": "pass",
+  "verifier_sha256": "e8d79735b492fe61f9b04d6a2d7fe2717e067d889e0950919b69640cd4ef99d5",
+  "version": "d58-shard-set-output-verifier-v1"
+}
