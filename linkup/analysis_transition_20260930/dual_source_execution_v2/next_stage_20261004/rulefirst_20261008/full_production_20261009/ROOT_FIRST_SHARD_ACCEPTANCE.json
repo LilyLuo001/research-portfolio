@@ -1,0 +1,48 @@
+{
+  "decision_id": "D58-first-real-shard-acceptance",
+  "date": "2026-10-09",
+  "status": "accepted_for_disjoint_continuation",
+  "production_job_id": "7978776",
+  "independent_readback_job_id": "7978883",
+  "accepted_counts": {
+    "raw_rows": 121451,
+    "canonical_usa_rows": 82880,
+    "evidence_rows": 421154,
+    "processed_rows": 82880,
+    "evidence_span_structure_errors": 0
+  },
+  "measurement_scope": "Frozen rule-observed candidates, not semantic certification or population estimates. Unresolved and no-match remain explicit states.",
+  "engineering_evidence": [
+    "Input cached SHA matched",
+    "Source-row disposition conservation",
+    "Canonical locator and JOB_HASH unique within shard",
+    "Output Parquet hashes, schema and evidence indexes/counts independently reread on BU",
+    "Frozen semantic code and recorded Python3.8.10/PyArrow4.0.0 runtime"
+  ],
+  "resource_observation": {
+    "workers": 4,
+    "production_elapsed_seconds": 179.693,
+    "canonical_rows_per_second": 461.23,
+    "combined_output_bytes": 45057651
+  },
+  "continuation": "Admit the next four disjoint manifest shards only after each input pair passes expected size and SHA. Up to four concurrent 4-CPU tasks; same frozen runner, distinct output paths. No extra user approval needed within approved scope.",
+  "metadata_decision": "Do not confuse the old6,010,975 candidate join with metadata coverage for all newly extracted USA ads. First extraction remains metadata_join_pending. Full Records index15,415,489,237bytes and ONET source11,190,966,290bytes exceed current10GB stagingcap together and separately; metadata routing requires a bounded follow-on, not silent full transfer.",
+  "execution_corrections": [
+    {
+      "job_id": "7978657",
+      "status": "failed_before_ad_processing",
+      "reason": "PyArrow Table.to_pylist unavailable; reader/writer compatibility changed only"
+    },
+    {
+      "job_id": "7978718",
+      "status": "cancelled_after_actual_processing",
+      "observed_progress": {
+        "canonical_rows": 22652,
+        "evidence_rows": 114858
+      },
+      "reason": "Operator mistook running-held scheduler state while adding runtime provenance; not a semantic failure. Completed-count reporting excludes this attempt."
+    }
+  ],
+  "further_rule_changes_authorized": false,
+  "api_calls_authorized": false
+}

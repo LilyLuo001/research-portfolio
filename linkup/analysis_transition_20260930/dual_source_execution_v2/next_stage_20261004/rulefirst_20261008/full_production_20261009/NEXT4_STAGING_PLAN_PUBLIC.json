@@ -1,0 +1,57 @@
+{
+  "status": "staged_pending_first_shard_gate",
+  "selection": "next four rows after the first shard in frozen regional_runner_plan.jsonl; deterministic, disjoint, not a statistical sample",
+  "manifest_path": "/public/home/lilysharp/linkup_release_v1/disposition_prep_v1/regional_runner_plan.jsonl",
+  "staging_cap_bytes": 10000000000,
+  "total_raw_rows": 497755,
+  "total_source_bytes": 1085379677,
+  "total_sidecar_bytes": 20685778,
+  "total_staged_bytes": 1106065455,
+  "entries": [
+    {
+      "raw_rows": 125171,
+      "shard_id": "b9376a87ec3e8b7c72d028e376524926a10980d849cb84cc3c34e5ef2e254102",
+      "source_file": "job-descriptions_0_0_1.snappy.parquet",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_1.snappy.parquet",
+      "source_bytes": 272631755,
+      "source_sha256_cached": "ce4e9b3255d6e278a86a5f09c25168df317fb123e872a75550af89e8120fe27a",
+      "sidecar_path": "/public/home/lilysharp/linkup_release_v1/disposition_prep_v1/sidecars/kunshan/b9376a87ec3e8b7c72d028e376524926a10980d849cb84cc3c34e5ef2e254102.parquet",
+      "sidecar_bytes": 5206974,
+      "sidecar_sha256": "d4e02c11e83139597e6df4990262af987f7934b018226e1fc21a5ded7f804973"
+    },
+    {
+      "raw_rows": 124997,
+      "shard_id": "fc4fc3a546b62738be0ed236bb15399906a678796d0cbb08f26c2dfca6ea28aa",
+      "source_file": "job-descriptions_0_0_10.snappy.parquet",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_10.snappy.parquet",
+      "source_bytes": 272693997,
+      "source_sha256_cached": "3d8620881c57ff29d02bb195507baaa78ccef28da0275c0f80cea4e0b644a6e8",
+      "sidecar_path": "/public/home/lilysharp/linkup_release_v1/disposition_prep_v1/sidecars/kunshan/fc4fc3a546b62738be0ed236bb15399906a678796d0cbb08f26c2dfca6ea28aa.parquet",
+      "sidecar_bytes": 5189267,
+      "sidecar_sha256": "4829e4646b44d33d3f9648ae13d9e3a9fcb61fe2b94f1a9d4ea83d471a5f5bb6"
+    },
+    {
+      "raw_rows": 121968,
+      "shard_id": "3d07a85fc3160eed1d085e92ec5d7ba2be42240429c786b68b6b1ad62533f0fe",
+      "source_file": "job-descriptions_0_0_11.snappy.parquet",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_11.snappy.parquet",
+      "source_bytes": 265846636,
+      "source_sha256_cached": "3b6d57328eb4fcfdc417f742a8d9782d1662314b01525b89e601f6f23ec4b484",
+      "sidecar_path": "/public/home/lilysharp/linkup_release_v1/disposition_prep_v1/sidecars/kunshan/3d07a85fc3160eed1d085e92ec5d7ba2be42240429c786b68b6b1ad62533f0fe.parquet",
+      "sidecar_bytes": 5070213,
+      "sidecar_sha256": "e9143f18c642d8f83666d99e46cb4733cd40500cb0a70b128166a84d4dcfa129"
+    },
+    {
+      "raw_rows": 125619,
+      "shard_id": "41305ab79b0f9fcd190f6cbd169bb7f15d05babf7c1e2fe54f17d64a3b0394be",
+      "source_file": "job-descriptions_0_0_12.snappy.parquet",
+      "source_path": "/public/home/lilysharp/dewey_downloads/data/linkup_job_descriptions/job-descriptions_0_0_12.snappy.parquet",
+      "source_bytes": 274207289,
+      "source_sha256_cached": "d5a22dc28350af5f77de0749403dff180f686322b8eae060ebd7ba15193ddcde",
+      "sidecar_path": "/public/home/lilysharp/linkup_release_v1/disposition_prep_v1/sidecars/kunshan/41305ab79b0f9fcd190f6cbd169bb7f15d05babf7c1e2fe54f17d64a3b0394be.parquet",
+      "sidecar_bytes": 5219324,
+      "sidecar_sha256": "a730fa676145e067404d0737e502984e986c646c903dab02c3f18ce54483c219"
+    }
+  ]
+}
+

@@ -1,0 +1,156 @@
+{
+  "audit_id": "D58-mapping-reuse-independent-public-audit",
+  "date": "2026-10-09",
+  "status": "accepted_for_reuse_with_scope_limits",
+  "review_mode": "public manifests, reports and source code only; no raw text read, local research computation or join rerun",
+  "recommended_existing_release": {
+    "source_cluster_path_namespace": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/{0..f}.parquet",
+    "location_note": "This /public/home path is the source-cluster namespace used by run_comparison_join_ks.sbatch; it is not a BU /projectnb path.",
+    "public_manifest": "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/JOIN_MANIFEST_PUBLIC.json",
+    "release_version": "comparison_join_v1",
+    "candidate_rows": 6010975,
+    "output_rows": 6010975,
+    "output_shards": 16,
+    "record_unit_key": [
+      "JOB_HASH",
+      "SOURCE_FILE",
+      "SOURCE_ROW",
+      "RECORD_SOURCE_ROW"
+    ],
+    "records_join_key": [
+      "JOB_HASH",
+      "RECORD_SOURCE_ROW"
+    ],
+    "onet_join_key": [
+      "JOB_HASH"
+    ],
+    "records_match_counts": {
+      "zero": 0,
+      "one": 6010975,
+      "more_than_one": 0
+    },
+    "onet_match_counts": {
+      "zero": 2842,
+      "one": 6008133,
+      "more_than_one": 0
+    },
+    "created_disagreement": 0
+  },
+  "mapping_fields": {
+    "employer": {
+      "field": "COMPANY_ID",
+      "source": "Records",
+      "missing_candidate_rows": 0,
+      "scope": "company-scrape entity; not verified legal firm or consolidated corporate parent",
+      "recommended_use": "optional nested comparison only where realized overlap supports it"
+    },
+    "occupation": {
+      "field": "OCCUPATION_MAJOR",
+      "source": "officially validated current-delivery O*NET occupation code",
+      "missing_or_unofficial_candidate_rows": 3450,
+      "scope": "current delivered snapshot; not historical occupation evidence"
+    },
+    "geography": {
+      "field": "CENSUS_REGION",
+      "source": "deterministic mapping from Records STATE",
+      "missing_state_candidate_rows": 40800,
+      "nonmissing_unmapped_region_candidate_rows": 4126,
+      "scope": "retain missing_state and unmapped_region as distinct branches"
+    },
+    "time": {
+      "field": "CREATED year",
+      "source": "Records CREATED",
+      "missing_candidate_rows": 0,
+      "scope": "observation metadata; not advertisement-body publication or text-effective time"
+    }
+  },
+  "recommended_comparison": {
+    "primary_strata": [
+      "OCCUPATION_MAJOR",
+      "CENSUS_REGION"
+    ],
+    "descriptive_cohort": "CREATED year",
+    "optional_nested_key": "COMPANY_ID",
+    "support_rule": "Report realized retained and dropped counts; skip unsupported or sparse contrasts without redefining groups.",
+    "missing_rule": "Preserve occupation missing/unofficial, state missing and region unmapped statuses; do not infer joint complete-case counts from marginal counts."
+  },
+  "authoritative_denominators": {
+    "candidate_join_rows": 6010975,
+    "prior_primary_eligible_rows": 4962792,
+    "whole_usa_semantic_narrow_rows": 204774035,
+    "usa_records_reverse_coverage_denominator": 253210047,
+    "whole_corpus_onet_missing": 73609,
+    "whole_corpus_official_major_valid": 204671219,
+    "whole_corpus_official_major_missing_or_unofficial": 102816,
+    "warning": "Candidate, prior eligible and whole-corpus denominators are distinct and must not be combined. The 10,000-row sample T4 not-available status does not supersede verified whole-corpus mapping."
+  },
+  "existing_support_evidence": {
+    "company_id_by_occupation_major_pairs_with_both_arms": 1418,
+    "scope": "Demonstrates employer-occupation overlap only; it does not establish geography-complete support."
+  },
+  "whole_corpus_row_level_materialization": {
+    "status": "not_found_in_verified_T4_outputs",
+    "finding": "T4 verified all 204,774,035 canonical USA keys against Records and O*NET, but its per-prefix joined_rows tables were temporary. The retained prefix artifacts are cohort and concentration aggregates, not a reusable row-level company/occupation/state/date table.",
+    "retained_private_T4_outputs": [
+      "private/full_time_risk_v3/prefix_summaries/{0..f}.cohort.parquet",
+      "private/full_time_risk_v3/prefix_summaries/{0..f}.concentration.parquet",
+      "private/full_time_risk_v3/T4_ANNUAL_GROUP_COUNTS_PRIVATE.parquet",
+      "private/full_time_risk_v3/T4_SELECTED_ANNUAL_KEYS_PRIVATE.csv"
+    ],
+    "retention_scope": "The 16 prefix summaries preserve aggregate counts by CREATED cohort and separately by company_id, STATE and occupation_major. They do not preserve JOB_HASH-level metadata or joint employer-by-occupation-by-region cells.",
+    "implication": "Existing full-corpus T4 summaries remain authoritative for marginal mapping and time-risk counts. New row-level within-work comparisons cannot use them as a metadata universe without a separately authorized key reconciliation; until then, joined comparisons remain conditional on the 6,010,975-row candidate release."
+  },
+  "bounded_incremental_lookup_inputs": {
+    "records_index": {
+      "source_cluster_glob": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1/hash_prefix=*/*.parquet",
+      "completion_marker_sha256": "77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+      "join_key": [
+        "JOB_HASH",
+        "RECORD_SOURCE_ROW"
+      ],
+      "verified_columns_used_by_prior_join": [
+        "JOB_HASH",
+        "RECORD_SOURCE_ROW",
+        "COMPANY_ID",
+        "CREATED",
+        "LAST_CHECKED",
+        "DELETE_DATE",
+        "STATE"
+      ]
+    },
+    "onet_snapshot": {
+      "source_cluster_glob": "/public/home/lilysharp/dewey_downloads/data/dewey_ONET_tables/onet-taxonomy/*.parquet",
+      "inventory_sha256": "d144a16e58df06bf608821d83a2a8c33534ecf36fc1993d48c88d2d917587e8d",
+      "join_key": [
+        "JOB_HASH"
+      ],
+      "verified_columns_used_by_prior_join": [
+        "JOB_HASH",
+        "ONET_OCCUPATION_CODE"
+      ]
+    },
+    "official_code_table": {
+      "source_cluster_path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/official_onet2019_occupations.csv",
+      "sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+      "use": "validate current-snapshot O*NET code before deriving two-digit occupation major"
+    },
+    "size_evidence": {
+      "full_source_index_bytes": "not reported in the reviewed public manifests",
+      "first_raw_shard_rows_upper_bound": 121451,
+      "minimum_unencoded_lookup_key_payload_bytes_upper_bound": 4858040,
+      "calculation": "121,451 rows x (32 JOB_HASH bytes + 8 RECORD_SOURCE_ROW bytes); excludes Parquet/Arrow overhead and nullable representation",
+      "metadata_result_size": "unknown until bounded extraction receipt; variable-width COMPANY_ID prevents a defensible exact pre-run byte count",
+      "feasibility_boundary": "Stage exact first-shard keys by hash prefix and materialize only matching Records/O*NET columns. Do not copy all 16 full index partitions merely because the first-shard keys span all prefixes. Hash, row-count and one-to-many gates must precede deletion of generated staging; source indexes remain untouched."
+    }
+  },
+  "provenance": [
+    "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/JOIN_MANIFEST_PUBLIC.json",
+    "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/COMPARISON_RECEIPT.json",
+    "analysis_transition_20260930/pre_revelio_execution_v1/results/T5_T6_fixed_v1/T5_T6_FULL_ACCEPTANCE.json",
+    "analysis_transition_20260930/pre_revelio_execution_v1/results/T1_USA_RECORDS_REVERSE_COVERAGE.json",
+    "analysis_transition_20260930/pre_revelio_execution_v1/EXECUTION_REPORT_20261003.md",
+    "analysis_transition_20260930/pre_revelio_execution_v1/COMPARISON_JOIN_RUNBOOK.md",
+    "analysis_transition_20260930/pre_revelio_execution_v1/run_comparison_join_ks.sbatch",
+    "analysis_transition_20260930/pre_revelio_execution_v1/build_comparison_join.py"
+  ]
+}

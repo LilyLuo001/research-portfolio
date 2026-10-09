@@ -1,0 +1,51 @@
+{
+  "decision_id": "D58-incremental-narrow-production",
+  "date": "2026-10-09",
+  "authorization": "User approved next production-and-comparison plan; no paid API; all research processing scheduled on BU SCC.",
+  "scope": "Incremental application of frozen rulefirst-v1.2, frozen relation overlay and D57 v2 responsibility gate to actual corpus shards; do not label fixed7635 cache as corpus production.",
+  "reuse": [
+    "Existing global canonical US disposition and source-row locators",
+    "Existing Records and O*NET verified joins, subject to precise key reconciliation",
+    "Prior whole-corpus T1 and T4 records-lifecycle outputs remain valid within documented scope; sample T4 N/A does not supersede them"
+  ],
+  "first_batch": {
+    "selection": "Deterministic first available canonical shard from existing manifest; not a new statistical sample",
+    "admission": "Verified source path, cached receipt/size, canonical selectors, available BU quota and bounded transport; preserve raw sources",
+    "staging_cap_bytes": 10000000000,
+    "execution": "BU scheduled CPU job; start bounded, measure actual throughput before expanding concurrency",
+    "gate": [
+      "Actual scheduler exit0 and complete output receipt",
+      "Input row conservation and canonical key uniqueness within shard",
+      "Source/evidence offsets and schema match frozen code",
+      "Unresolved, conditional, empty and failed statuses retained",
+      "Idempotent resume uses code+input hashes; no append duplicates"
+    ]
+  },
+  "outputs": {
+    "posting_private": "Canonical JOB_HASH/source_file/source_row, metadata key availability, text hash and normalizer version, broad and narrow candidate flags, unknown/review states, completion status",
+    "evidence_private": "Literal numeric bounds with object candidates, strength, scope, coordinates and evidence; no fabricated job-level minimum",
+    "metadata": "Keep COMPANY_ID as source company identity, current-delivery O*NET and Records lifecycle dates; not corporate-parent identity or historical body time",
+    "public": "Counts, status, throughput, code/input provenance, aggregate comparisons; no private keys or advertisement text"
+  },
+  "measurement_boundary": [
+    "No semantic rule changes or new model runtime",
+    "Current duty mentoring uses D57 gate; prior mentoring remains separate",
+    "No-match is not verified absence; role labels remain lexical indicators",
+    "Do not collapse degree branches to unconditional job minima",
+    "Fulltext and time evidence do not establish historical wording; no causal comparisons"
+  ],
+  "comparison_design": {
+    "primary": "Current saved text within verified O*NET major x Census region support; add source company only if key and overlap actually support it",
+    "technology": "Nonnegated lexical-family categories with explicit overlap; software-only means no AI detected by frozen lexicon, not no adoption",
+    "outcomes": "General/related both-four-states; broad/narrow entry wording x responsibility candidates; literal numeric clauses separately",
+    "cohorts": "CREATED-year stratification descriptive only; never body publication time",
+    "support": "Report retained/dropped counts before any standardized contrast; skip sparse contrasts rather than redefine groups for significance"
+  },
+  "execution_roles": {
+    "root": "Core decisions and one first-batch acceptance",
+    "Sol_medium": "Source/transfer orchestration, wrapper implementation and scheduled run",
+    "independent_QA": "Keys, conservation, evidence and mapping evidence",
+    "Luna_low": "Public methods, receipts, Git"
+  },
+  "stop_rule": "Do not launch blind full204m reprocessing. First actual shard must demonstrate correct output and measured resource/storage needs. Continue disjoint admitted shards after acceptance; external transport blocker must be stated, not masked by rerunning sample."
+}

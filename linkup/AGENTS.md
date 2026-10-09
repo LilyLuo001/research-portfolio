@@ -1,5 +1,7 @@
 # LinkUp project execution rules
 
+User-approved scope update, 2026-10-08 (rule-first plan): the user explicitly authorizes processing the frozen LinkUp research sample on BU SCC in a NEW task directory, reusing existing texts and joins. GPT-6/root may personally read a bounded development and evaluation sample to design and audit rules, as explicitly requested; this exception does not authorize bulk conversation-agent labeling. Core extraction rules and economic decisions belong to root. Delegated agents handle cloud orchestration, independent synthetic code QA and provenance. All batch extraction, sampling and analysis remain scheduled cloud jobs. Do not launch Qwen repairs or any new model inference/API spend. Preserve the previous BU task closure. Return and verify new results before deleting this new task's staged data; never delete unrelated BU data.
+
 User decision, 2026-10-08: all new research data processing runs in cloud/cluster jobs.
 
 - Do not run advertisement extraction, cleaning, matching, model evaluation or analytical computations on the Mac or through conversation-model labeling agents. Agents may plan, write code, review methods and coordinate scheduled jobs.
@@ -14,3 +16,11 @@ User decision, 2026-10-08: all new research data processing runs in cloud/cluste
 
 Authoritative correction and migration receipts are under:
 `analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/`.
+
+User-approved scope update, 2026-10-09 (scheme 2): use code plus a qualified midrange model for production, with root limited examples, acceptance and critical adjudication. Supersedes D53's Astra-all-documents recommendation. Authorized now: hybrid implementation, static/synthetic QA, public research/provenance records. Actual API credentials and first-run budget remain unresolved; do not spend or run paid inference until these exist. Preserve scheduled-cloud-only research computation, existing frozen samples, no bulk conversation-agent labeling, no silent model substitution, and no archive deletion without verification. See rulefirst_20261008/hybrid_production_20261009/RESEARCH_ALIGNMENT.md.
+
+Latest explicit user correction, 2026-10-09: NO paid API or additional model-inference spending. Use Pro subscription for bounded decisions brought back from BU, not an API proxy or bulk conversation labeling. BU scheduled CPU code may apply reviewed reusable patterns to frozen data, preserve unknowns, and produce evidence-bearing outputs. Candidate relation overlay is not automatically a semantic gold standard. Earlier API-channel preparation is superseded. Root decisions D55 and PRO_DECISION_WORKFLOW.json control this phase.
+
+## D58 full-production follow-on (2026-10-09)
+
+The user authorizes a bounded incremental production run on BU SCC: apply the frozen rulefirst-v1.2, frozen relation overlay, and D57 v2 responsibility gate to admitted actual-corpus shards. This is scheduled CPU processing with no paid API and no new model inference. The first shard must pass scheduler exit, row conservation, canonical-key uniqueness, source/evidence offset and schema checks, preserved unresolved/conditional/empty/failed states, and idempotent resume checks before additional shards are admitted. Do not call the fixed 7,635/10,000 sample a corpus-production result, do not launch blind full-corpus reprocessing, and do not make semantic-accuracy or causal claims. BU-to-BU transport may be used; no raw/private text, keys, row-level outputs, or credentials may enter Git. Public records may contain only aggregate counts, status, throughput, code/input provenance, and sanitized receipts. External transport blockers must be reported and must not be masked by reruns.
