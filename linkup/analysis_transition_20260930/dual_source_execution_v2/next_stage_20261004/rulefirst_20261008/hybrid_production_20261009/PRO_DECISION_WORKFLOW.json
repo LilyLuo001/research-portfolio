@@ -1,0 +1,71 @@
+{
+  "schema_version": "pro_decision_workflow_v1",
+  "decision_date": "2026-10-09",
+  "status": "approved_workflow_pending_root_rule_decisions",
+  "route": "scheduled_cpu_code_plus_bounded_pro_decision_review",
+  "supersedes": [
+    "full_document_astra_batch_route",
+    "midrange_api_batch_proposal"
+  ],
+  "prohibitions": {
+    "openai_api_calls": true,
+    "proxy_api_calls": true,
+    "paid_model_inference": true,
+    "bulk_conversation_labeling": true,
+    "eval80_prompt_or_rule_tuning": true,
+    "self_confidence_as_automatic_adjudication": true
+  },
+  "workflow": [
+    {
+      "step": 1,
+      "owner": "scheduled_bu_cpu_code",
+      "action": "Produce deterministic candidate decisions, exact evidence and empty review templates from frozen development inputs.",
+      "semantic_status": "candidate_only"
+    },
+    {
+      "step": 2,
+      "owner": "root_pro_review",
+      "action": "Review no more than 24 development documents in one pass and decide only relations that can be stated as general rules.",
+      "maximum_documents_per_pass": 24,
+      "semantic_status": "bounded_decision_review"
+    },
+    {
+      "step": 3,
+      "owner": "root",
+      "action": "Write accepted decisions as a versioned public rule specification without source text or individual record identifiers; mark non-generalizable cases unknown.",
+      "semantic_status": "versioned_rule_decision"
+    },
+    {
+      "step": 4,
+      "owner": "scheduled_bu_cpu_code",
+      "action": "Run one fixed diagnostic after the rule version is frozen. Do not use diagnostic records for repeated rule tuning.",
+      "semantic_status": "single_fixed_diagnostic"
+    },
+    {
+      "step": 5,
+      "owner": "scheduled_bu_cpu_code",
+      "action": "Batch only fields accepted by the fixed diagnostic; preserve unknown, processing failure and field-level nonacceptance separately.",
+      "semantic_status": "accepted_fields_only"
+    }
+  ],
+  "acceptance": {
+    "unit": "feature_level",
+    "document_level_quality_not_assumed": true,
+    "unknown_required_when_rule_not_generalizable": true,
+    "quote_and_coordinate_validation_is_consistency_not_semantic_proof": true
+  },
+  "current_development_review": {
+    "candidate_packet_rows": 19,
+    "fully_reviewed_documents": 4,
+    "partially_reviewed_documents": 1,
+    "unreviewed_documents": 14,
+    "all_19_reviewed": false,
+    "note": "The partial review was truncated and cannot be counted as a full-document decision review. No private source identifiers are recorded in this public contract."
+  },
+  "resource_accounting": {
+    "api_calls": 0,
+    "api_spend": 0,
+    "bu_scheduled_cpu_allocations_used": true,
+    "boundary": "No API calls does not mean that all computation used zero resources."
+  }
+}
