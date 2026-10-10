@@ -1,0 +1,26 @@
+{
+  "batch_id": "batch_0002_stage_lane_3",
+  "cap_bytes": 10000000000,
+  "created_utc": "2026-10-10T02:32:50.203257+00:00",
+  "credential_policy": "private identities outside code/release; no secret values logged",
+  "expected_file_bytes": 550956818,
+  "job_id": "8005069",
+  "manifest_sha256": "146c8a86c4bb27996a0290ba958aa424d5460a2157b5c05c7b5a6e89f4ac84cc",
+  "results": [
+    {
+      "bytes": 279163081,
+      "shard_id": "490b01005eca443b",
+      "status": "staged"
+    },
+    {
+      "bytes": 271793737,
+      "shard_id": "1a621775dd1d60e3",
+      "status": "staged"
+    }
+  ],
+  "shard_count": 2,
+  "stage_script_sha256": "41d78ff060bb403b1a861793d95ff9ea8a0136fb81d168c6032163b4c99fc1fb",
+  "stage_tree_bytes": 1888464135,
+  "status": "complete",
+  "version": "d59-cloud-staging-v1"
+}

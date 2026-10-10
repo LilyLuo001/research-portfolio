@@ -1,0 +1,65 @@
+{
+  "api_calls": 0,
+  "canonical_job_hash_unique_within_shard": true,
+  "canonical_locator_unique_within_shard": true,
+  "canonical_usa_rows": 83285,
+  "claim_boundary": "rule-observed candidates; no-match remains unknown; metadata linkage pending",
+  "counts": {
+    "canonical_rows": 83285,
+    "d57_current_duty_mentoring_candidate": 102,
+    "evidence_rows": 423256,
+    "experience_explicit_rule_candidate": 5675,
+    "experience_needs_review": 61995,
+    "experience_no_explicit_rule_match": 15615,
+    "mentoring_referent_or_prior_experience_marker": 1073,
+    "processing_processed": 83285
+  },
+  "created_utc": "2026-10-10T02:42:53.059538+00:00",
+  "decision": "D58-incremental-narrow-production",
+  "disposition_counts": {
+    "matched_country_unknown": 9517,
+    "matched_non_usa": 28932,
+    "matched_usa_canonical": 83285,
+    "record_unmatched": 14
+  },
+  "elapsed_seconds": 185.314,
+  "evidence_coordinate_system": "normalized_unicode_codepoints",
+  "host": "scc-ei3",
+  "identity": {
+    "legacy_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "overlay_sha256": "1a888cbdaf11f4f8e97dd71c84f4af723491597825fe3b1427b2e64c773bc626",
+    "raw_sha256": "faccec124730ea371b543f4f7d7e740faa915637991a8f7b1e7694607076c624",
+    "rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+    "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "sidecar_sha256": "5be964c2b74a3b1155372bfd4f90cbb8442c93d0e0628026da8f0201df42410b"
+  },
+  "job_id": "8004875",
+  "metadata_join_status": "pending_no_verified_metadata_join",
+  "model_calls": 0,
+  "outputs": {
+    "evidence_bytes": 29148440,
+    "evidence_rows": 423256,
+    "evidence_sha256": "c1ca36f0409fae70f9b35c3d29260196917d277ab6af477a7d4e119cb7638a98",
+    "posting_bytes": 16290869,
+    "posting_rows": 83285,
+    "posting_sha256": "e90cd87d448d7230ac9bc8b5073224c7db8e42ad24c656fbb6e779b992531e34"
+  },
+  "raw_rows": 121748,
+  "requested_workers": 4,
+  "row_conservation": true,
+  "rows_per_second": 449.426,
+  "runtime": {
+    "capabilities": {
+      "parquetfile_iter_batches": true,
+      "table_from_arrays": true,
+      "table_to_pydict": true,
+      "zstd_codec": true
+    },
+    "pyarrow_version": "4.0.0",
+    "python_version": "3.8.10"
+  },
+  "scope": "one deterministic real corpus shard; not fixed7635 and not full corpus",
+  "source_file": "job-descriptions_0_0_13.snappy.parquet",
+  "status": "complete",
+  "version": "full-production-one-shard-v1"
+}

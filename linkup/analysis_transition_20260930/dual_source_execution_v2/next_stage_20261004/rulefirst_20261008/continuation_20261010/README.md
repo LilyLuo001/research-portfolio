@@ -13,3 +13,6 @@
 
 
 D60 handoff closure：已尝试将现有约 15 MB key artifact 从 BU 传至昆山目标目录；传输目标已写入，但 30 秒 checksum readback 超时，因此状态为 unverified，未发布 KEY_TRANSPORT_RECEIPT_PUBLIC.json。BU 原件保留。当前没有国内 preflight、join 或 production job 已提交；本记录不声称中国 SCNet 已开始运行。
+
+
+BU wave closeout：BU8 已完成 672,976 postings、3,440,595 evidence rows、366,822,166 bytes，QA job 8004985 通过。该数字与已验收的前五 shard 不能直接相加为 unique 总量；跨集合 key audit 仍待中国侧完成。当前中国侧 agents 正在处理 Kunshan metadata 与 Wuzhen 四生产任务，实际 job 尚未由公共回执确认。

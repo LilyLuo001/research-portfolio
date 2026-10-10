@@ -1,0 +1,70 @@
+{
+  "api_calls": 0,
+  "bu_future_controller_cancelled": true,
+  "created_utc": "2026-10-10T04:27:23.294361+00:00",
+  "model_calls": 0,
+  "production": {
+    "canonical_rows": 672976,
+    "completed_shards": 8,
+    "evidence_rows": 3440595,
+    "failed_shards": 0,
+    "job_id": "8004875",
+    "output_bytes": 366822166,
+    "posting_rows": 672976,
+    "raw_rows": 981073
+  },
+  "public_artifacts": {
+    "production_receipt_count": 8,
+    "production_receipt_sha256": {
+      "SHARD_1a621775dd1d60e3_RECEIPT_PUBLIC.json": "41c091bdf3c9dc892a145162cef7a1310a3514df9c7cc199ee25de704bf97088",
+      "SHARD_21327c4753b5c705_RECEIPT_PUBLIC.json": "cb6337dc598d68a4e57fc8d7ede73fd37d7192fd8619e56f47dc92a86620dabc",
+      "SHARD_3a5821214a93eaed_RECEIPT_PUBLIC.json": "e550400e42f5a7743c92fffec2019f0cf6045b02c23be3cdbcc41f503a959568",
+      "SHARD_490b01005eca443b_RECEIPT_PUBLIC.json": "a7f6db00c20d570c5b99e7f2909aa67f3d54c0dd0d093f98bb00c0d6a1102389",
+      "SHARD_57dbc228e4b8bff0_RECEIPT_PUBLIC.json": "7eb7cdf2fe5faebe1ea0573a54c6db2d5de1ac5061cf7672db7a1d0655c8b4aa",
+      "SHARD_9a7d5005d87cf506_RECEIPT_PUBLIC.json": "37b391fdf62e6fdef8020e5ce9448fa16ea25b79cee0d4dcb75c154a2b13b804",
+      "SHARD_c1dee80f1524505f_RECEIPT_PUBLIC.json": "cbb0c74a9dd3905a917748c37fe8b3617f6313a0668d95f43a9c509dfeeb0897",
+      "SHARD_d6cf6da84b73ed60_RECEIPT_PUBLIC.json": "605b9e27f8ae8616add2e7ced0b532678314f78d42059de2dceedb2e6b5defcf"
+    },
+    "shard_qa_count": 8,
+    "shard_qa_sha256": {
+      "SHARD_1a621775dd1d60e3_QA_PUBLIC.json": "b541aa64c3d160137018f613e277077c282a1c1abee7b9ddcda93df1c1d45cce",
+      "SHARD_21327c4753b5c705_QA_PUBLIC.json": "9d72e4e5b3ef08b31faf9a05e2c9b3c8b5aa3163820291cda5d276ba03297d0e",
+      "SHARD_3a5821214a93eaed_QA_PUBLIC.json": "d65ba9502fb92ebe13ac73a0bd17627110367a1d95d2a4a448f5d6475c43ad26",
+      "SHARD_490b01005eca443b_QA_PUBLIC.json": "b7215eed4e2ddbefc8d0835e16f9da21a3c7a77188d11a672cfd334f0c9a50ef",
+      "SHARD_57dbc228e4b8bff0_QA_PUBLIC.json": "0346f5103ac70deb7433ffad81c4fb089e712e53d2579f634627b299afd74f85",
+      "SHARD_9a7d5005d87cf506_QA_PUBLIC.json": "b80cca07b463f9a252e8cb299d30466778064a9473a0d3302bf764fe0997cfd1",
+      "SHARD_c1dee80f1524505f_QA_PUBLIC.json": "770784fb5dddf5ec9737f777fee13b18db8e2079b414d7ad26edac2037bde552",
+      "SHARD_d6cf6da84b73ed60_QA_PUBLIC.json": "61f8e23da155dbf2821c1b604510b46a49bf86e174d2cda99aee48f243a90de8"
+    },
+    "staging_receipt_count": 4
+  },
+  "qa": {
+    "accepted5_plus_final8_cross_shard_audit": "pending_domestic; no further BU research jobs under D60",
+    "batch_qa_sha256": "8223db85fbcf052ae16ce2ecb90ac0e30f4a91d9f6141f8380043aaec4ad0c59",
+    "job_id": "8004985",
+    "per_shard_readback": true,
+    "shards_failed": 0,
+    "shards_passed": 8,
+    "status": "pass",
+    "within_batch_cross_shard_key_uniqueness": "not_checked_by_d59_wave_verifier"
+  },
+  "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+  "scope": "last authorized BU production batch: eight fixed shards only",
+  "semantic_changes": false,
+  "source_deletion": false,
+  "staging": {
+    "completed_lanes": 4,
+    "failed_lanes": 0,
+    "input_bytes": 2180308411,
+    "jobs": [
+      "8005067",
+      "8005068",
+      "8005069",
+      "8005070"
+    ],
+    "shards": 8
+  },
+  "status": "complete",
+  "unrelated_7488095_untouched": true,
+  "version": "d60-final-bu8-closeout-v1"
+}

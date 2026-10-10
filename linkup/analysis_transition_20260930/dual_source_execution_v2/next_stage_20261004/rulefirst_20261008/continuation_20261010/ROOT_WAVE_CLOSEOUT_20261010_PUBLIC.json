@@ -1,0 +1,28 @@
+{
+  "decision": "Complete bounded D60 wave without reopening measurement development",
+  "created_utc": "2026-10-10T04:25:39.365157+00:00",
+  "workstreams": {
+    "BU_last8": "Finish previously authorized staging, frozen extraction and readback. No new wave or metadata compute.",
+    "KS_metadata_first5": "Verify transferred key bundle; scheduled in-place Records and ONET join for all 424226 accepted keys.",
+    "WZ_next4": "Scheduled runtime preflight then four disjoint local raw shards using identical frozen runner.",
+    "publication": "Public code, aggregate receipts, scheduler status and qualified interpretation only."
+  },
+  "acceptance": [
+    "Actual scheduler exit and output receipt, not absence from queue",
+    "Frozen input/code identity, row conservation and evidence linkage",
+    "Canonical shard disjointness and no rerun of five accepted or eight reserved BU shards",
+    "Metadata preserves missing and ambiguous states; no historical body date inference",
+    "No raw text, private identifiers or credentials in Git"
+  ],
+  "limits": {
+    "paid_model_calls": 0,
+    "new_BU_batches": 0,
+    "domestic_production_concurrency": 4,
+    "domestic_cores_per_task": 4,
+    "domestic_gib_per_task": 8,
+    "initial_domestic_new_output_bytes_cap": 1000000000,
+    "minimum_free_bytes": 10000000000
+  },
+  "claim_boundary": "Rule-observed candidate measurements; engineering QA does not establish semantic accuracy or AI causal effects. Current-body text is not historical-body text.",
+  "status": "execution_in_progress_no_domestic_completion_claim"
+}
