@@ -1,0 +1,86 @@
+{
+  "api_calls": 0,
+  "checks": {
+    "current_key_unique": true,
+    "fixed_current_group_used": true,
+    "metadata_exact_key_set": true,
+    "old_key_unique": true,
+    "old_occupation_task_all_null_and_unavailable": true,
+    "private_row_conservation": true,
+    "same_population_and_weights_within_each_outcome_version": true
+  },
+  "claim_boundary": "wording candidates in accepted first-five shards; no causal, adoption, seniority, authority, semantic-gold, or accuracy claim",
+  "counts": {
+    "current_evidence_rows": 2162637,
+    "current_rows": 424226,
+    "exact_key_matches": 424226,
+    "old_experience_rows": 872022,
+    "old_only_rows": 0,
+    "old_rows": 424226,
+    "old_usable_matches": 424219,
+    "old_v6_audit_rows": 541170
+  },
+  "created_utc": "2026-10-10T12:45:44.557517+00:00",
+  "full_text_reads": 0,
+  "inputs": {
+    "contract_sha256": "43abbee75cdade21ed2aa52664e2ca84fa22d606dc0774273a95a100fbd85503",
+    "current_manifest_sha256": "6f86ed6c36bf55c1e3db3446ec9ca31fad8d3043146f8ef652f50f642ddcc91e",
+    "metadata_sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029",
+    "old_staged_bytes": 76786360,
+    "old_staged_files": 325
+  },
+  "model_calls": 0,
+  "private_evidence_locator_output": {
+    "bytes": 92281149,
+    "path": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/reuse_analysis_20261010/private/FIRST5_OLD_CURRENT_EVIDENCE_LOCATORS_PRIVATE.parquet",
+    "rows": 2485756,
+    "sha256": "f101ae0d7387ba67a2b693f038b52afd75bc2b6d77d2cc469fa4a8e01ae24507"
+  },
+  "private_output": {
+    "bytes": 12955456,
+    "path": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/reuse_analysis_20261010/private/FIRST5_OLD_CURRENT_OVERLAY_PRIVATE.parquet",
+    "sha256": "aab7db0501836c74ecb47d8b0b1bb5ce086e315749c4e76679527bb04ef9b7e5"
+  },
+  "public_outputs": {
+    "COMMON_SUPPORT_PUBLIC.csv": {
+      "bytes": 527,
+      "sha256": "c9a141b14aca6150db0263fc2e90b6448eef043a2372beb4ef728b9d51774a14"
+    },
+    "CORE_EXPERIENCE_COMPARISON_PUBLIC.csv": {
+      "bytes": 10725,
+      "sha256": "51ba5e62bf16fdb0906453793586c36209593e81afef3eb1bb74b553405a71fc"
+    },
+    "DISAGREEMENT_2X2_PUBLIC.csv": {
+      "bytes": 1145,
+      "sha256": "b46137ec3b485a4e5b246fbdce72f4b14eaa878151528107d357114993c9c0d5"
+    },
+    "ENTRY_RESPONSIBILITY_COOCCURRENCE_PUBLIC.csv": {
+      "bytes": 8611,
+      "sha256": "992679a1be2d32a636ca7541e8bc43cb8888c88114176543aba9b0e9cce182b1"
+    },
+    "FIELD_REUSE_MAP_PUBLIC.csv": {
+      "bytes": 1425,
+      "sha256": "974852115279fb1697ebc146252aad6a3097b12aeb02c4994586cce078812ee8"
+    },
+    "OVERLAP_COVERAGE_PUBLIC.csv": {
+      "bytes": 620,
+      "sha256": "d6c8134b35854c13152a635256860200229affa7476d78050c60f331fa6625c9"
+    },
+    "SUMMARY_PUBLIC.json": {
+      "bytes": 872,
+      "sha256": "59da6492fbb72760b827661d445d28b77f4af97e0262130de4f24a7f08e96ef4"
+    }
+  },
+  "rules_changed": false,
+  "runtime": {
+    "pyarrow": "11.0.0",
+    "python": "3.8.10"
+  },
+  "scheduler": {
+    "cpus": "4",
+    "host": "b01r1n00",
+    "job_id": "46238402"
+  },
+  "status": "pass",
+  "version": "d66-reuse-first5-overlap-v1"
+}

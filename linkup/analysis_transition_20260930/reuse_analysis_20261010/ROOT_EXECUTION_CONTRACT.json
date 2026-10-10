@@ -1,0 +1,27 @@
+{
+  "decision": "D66-reuse-first-field-comparison",
+  "date": "2026-10-10",
+  "objective": "Make existing full-corpus extraction useful for the experience-combination and newcomer/responsibility questions. Reuse completed outputs and measure only the incremental value of the already produced new-rule results.",
+  "authorized_scope": "No restart of the D64 full-corpus controller. No new full-text extraction, model deployment, paid API or local research computation. Scheduled cloud projection, exact-key joins and aggregation of retained tables are authorized. BU available for bounded small jobs if necessary; prefer in-place SCNet inputs.",
+  "pilot_population": "The already completed first-five production shards with 424226 canonical advertisement rows and pinned metadata. No new sample draw. This is a source-shard subset, not a representative probability sample of the old full corpus.",
+  "required_outputs": [
+    "Field reuse map tied to the frozen old typed schemas and current research definitions",
+    "Exact-key old/new overlap and engineering-status coverage; preserve missing old matches rather than silently excluding them",
+    "Private analysis narrow table with original keys and distinct old/current versioned candidate indicators; no merged pseudo-gold label",
+    "Same-population old/current indicator counts and 2x2 disagreement tables for actually comparable dimensions; occupational/task experience unavailable in old output remains NA",
+    "Common-occupation software-only versus any-AI wording comparison using fixed current-rule technical groups, with old and current outcome versions side by side",
+    "Newcomer-wording and responsibility-wording cooccurrence, splitting old explicit no-experience candidates from current graduate/no-experience cues and splitting broad responsibility from duty-context-restricted cues",
+    "Literal numeric-experience and qualification-uncertainty coverage, not a fabricated minimum-experience scalar",
+    "Independent checks of key uniqueness, row conservation, old/new marginal reconciliation and common-support arithmetic; report exact limits of each check"
+  ],
+  "comparison_design": {
+    "technology_groups": "Hold the existing D63 current-rule software-only / any-AI lexical grouping fixed while comparing old/current outcomes. This isolates measurement changes from changes in group membership; it does not establish adoption or causal effects.",
+    "common_support": "Official detailed occupation codes, at least 20 analyzable ads in each arm, occupation weights proportional to min(n_left,n_right), identical across arms and outcome versions. Declare coverage for old-matched and engineering-usable intersection separately.",
+    "old_objects": "general_work, specific_tool and industry_domain are versioned candidate dimensions; object_unspecified cannot be mapped to general or occupation_task. Old occupation_task is unmeasured.",
+    "uncertainty": "No hit means not observed under that rule. Old usable is engineering completeness, not semantic truth. Known conflicting/alternative/unresolved qualification flags must remain visible and cannot certify a universal experience minimum.",
+    "entry": "Old NO_EXPERIENCE_EXPLICIT is a candidate only; retain applicant-context, negation, mixed/unresolved and alternative flags where present. New graduate phrase presence is not unconditional eligibility. Report unions/intersections without equating old and new definitions.",
+    "responsibility": "Report frozen current independent-work/responsibility, supervision, client responsibility and D57 mentoring indicators. A stricter duty-context diagnostic may require existing task evidence with section=duties and recognized heading_scope=duties; this is still a context filter, not confirmed authority/seniority. If fields unavailable mark the stricter statistic unavailable rather than infer it."
+  },
+  "reuse_decision_rule": "Where the same locators, status, dates, literal bounds or candidate clauses exist, reuse them. Where a core dimension is absent, name it as an incremental measurement gap. Do not use old/new disagreement alone as proof either version is correct, or increase full-corpus scale before a specific missing-field decision.",
+  "stop_rule": "One bounded executed comparison and a root interpretation. No additional sampling, parser vocabulary expansion or classifier qualification this wave. Operational fixes only when needed for actual execution or numerical correctness. Preserve existing old full-corpus tables and current new-rule outputs."
+}

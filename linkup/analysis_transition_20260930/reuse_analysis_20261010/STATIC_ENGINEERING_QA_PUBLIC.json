@@ -1,0 +1,67 @@
+{
+  "version": "d66-reuse-overlap-static-engineering-qa-v1",
+  "date": "2026-10-10",
+  "status": "pass_static_pending_executed_independent_qa",
+  "scope": "Independent static code review only. No private data were read and no aggregation was executed locally.",
+  "reviewed_sha256": {
+    "code/build_reuse_overlap.py": "e4305af8bac9f36f282e4269238a510462064b06c16765c39c7f526db619cbeb",
+    "code/qa_reuse_overlap.py": "377b897b953139f9c17d4bb28916cbb9a7c365d3f3fcd3bbe7fe3cbdb3a2298e",
+    "FIELD_REUSE_MAP_PUBLIC.json": "0127bcf981a110a0edafb66cfa7ddebd9d516c117e841af70a50c9d5fbfc1817"
+  },
+  "checks": {
+    "canonical_key_unique_and_row_conservation": {
+      "status": "pass_static",
+      "evidence": [
+        "code/build_reuse_overlap.py:21-32",
+        "code/build_reuse_overlap.py:249-275",
+        "code/build_reuse_overlap.py:312-324",
+        "code/build_reuse_overlap.py:383-389",
+        "code/qa_reuse_overlap.py:52-89"
+      ],
+      "execution_gate": "Independent QA must observe 424226 unique non-null four-part keys, exact metadata key equality, and private overlay row conservation."
+    },
+    "old_occupation_task_na_never_zero": {
+      "status": "pass_static",
+      "evidence": [
+        "code/build_reuse_overlap.py:180-195",
+        "code/build_reuse_overlap.py:400-401",
+        "code/build_reuse_overlap.py:454-457",
+        "code/qa_reuse_overlap.py:71-89",
+        "code/qa_reuse_overlap.py:148-158"
+      ],
+      "execution_gate": "All private old occupation_task values must remain null with availability=false; public old occupation_task rates and disagreement cells must remain unavailable/null."
+    },
+    "same_support_same_weights": {
+      "status": "pass_static",
+      "evidence": [
+        "code/build_reuse_overlap.py:162-230",
+        "code/build_reuse_overlap.py:459-461",
+        "code/qa_reuse_overlap.py:102-177"
+      ],
+      "execution_gate": "Within each declared overlap population, old/current outcomes must use the same fixed current-rule arms, official occupation cells, threshold 20 and normalized min-arm cell weights; independent QA recomputes every published rate."
+    },
+    "versions_units_and_wording": {
+      "status": "pass_static",
+      "evidence": [
+        "code/build_reuse_overlap.py:293-303",
+        "code/build_reuse_overlap.py:330-380",
+        "code/build_reuse_overlap.py:463-498",
+        "code/qa_reuse_overlap.py:90-101",
+        "code/qa_reuse_overlap.py:178-211"
+      ],
+      "execution_gate": "Old/current measurement versions remain separate; literal years are candidate evidence rather than a universal minimum; old no-experience unconditional is not published because its frozen source flag is structurally false; broad qualification alternative and equivalent-experience branches remain separate; duty-context responsibility uses only the three named responsibility task families."
+    }
+  },
+  "blocking_findings_resolved_before_pass": [
+    "Removed old_explicit_noexperience_unconditional_candidate from public entry comparisons and retained the frozen field only as source_flag_not_applicable.",
+    "Restricted duty-context responsibility to independent_responsibility, client_ownership and people_supervision task families with duties section and recognized duties heading.",
+    "Added per-shard staging existence gates for all five old experience and v6_audit inputs.",
+    "Kept EQUIVALENT_EXPERIENCE separate from the broad qualification-alternative union."
+  ],
+  "not_checked_here": [
+    "Semantic accuracy or gold labels",
+    "Population representativeness",
+    "Any result value before the cloud run",
+    "Any new sampling, parser expansion or full-corpus scan"
+  ]
+}

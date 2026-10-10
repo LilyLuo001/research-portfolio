@@ -1,0 +1,12 @@
+JobID|JobName|State|ExitCode|Elapsed|MaxRSS|MaxVMSize|ReqMem|AllocCPUS|Reason
+46238301|d66_reuse_overlap|FAILED|1:0|00:00:00|||32G|16|None
+46238402|d66_reuse_overlap|COMPLETED|0:0|00:08:25|||8G|4|None
+46238402.batch|batch|COMPLETED|0:0|00:08:25|4151304K|6382992K||4|
+46238402.extern|extern|COMPLETED|0:0|00:08:26|2524K|497744K||4|
+46239067|d66_measure_cov|COMPLETED|0:0|00:00:50|||8G|4|None
+46239067.batch|batch|COMPLETED|0:0|00:00:50|149692K|813404K||4|
+
+The failed 46238301 allocation never entered the script.  `scontrol show job
+46238301` reported `Reason=BadConstraints`, an empty NodeList, identical start
+and end timestamps, and enforced GRES binding.  The successful recipe used
+4 CPUs, 8 GB, one Hygon DCU, and `--gres-flags=disable-binding`.

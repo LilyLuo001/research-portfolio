@@ -1,0 +1,140 @@
+{
+  "decision_id": "D66-reuse-first-results-and-incremental-scope",
+  "date": "2026-10-10",
+  "core_status": "accepted_engineering_and_bounded_descriptive_comparison",
+  "promised_analysis_deliverables_status": "complete; published with this Git commit",
+  "research_question": "比较传统软件与AI相关广告的经验组合，并观察面向新人措辞是否与责任措辞同时出现；使用完整正文留下的证据，而非单凭标题或供应商seniority标签。",
+  "execution": {
+    "failed_job": "46238301",
+    "failure_evidence": "Slurm scontrol Reason=BadConstraints; NodeList empty; runtime zero; GresEnforceBind=Yes. Resource/binding request was incompatible; no evidence that the data-processing code ran in this attempt.",
+    "successful_job": "46238402",
+    "successful_job_state": "COMPLETED 0:0",
+    "elapsed": "00:08:25",
+    "max_rss_reported_kib": 4151304,
+    "successful_allocation": "wzhdtest; 4 CPU; 8G memory; dcu:Hygon:1; disable-binding. CPU computation; no claimed DCU acceleration.",
+    "input_reuse": "Existing old narrow/typed outputs and existing current-rule posting/evidence outputs; no new full-text extraction or model/API calls.",
+    "private_outputs": "12,955,456-byte advertising overlay and 92,281,149-byte evidence-locator sidecar remain on Wuzhen; no private research computation or private-table download to Mac.",
+    "qa": "Independent engineering QA passed all ten checks, with no arithmetic errors. This does not establish semantic accuracy."
+  },
+  "observed_coverage": {
+    "current_canonical_advertisements": 424226,
+    "exact_four_key_old_matches": 424226,
+    "old_only_advertisements": 0,
+    "current_processed": 424225,
+    "old_usable_and_current_processed": 424219,
+    "old_selected_audit_row_present": 248180,
+    "old_selected_audit_coverage_percent": 58.5018362853762,
+    "old_experience_evidence_rows": 872022,
+    "scope_warning": "These are five existing production source shards, not a representative probability sample. Old engineering usable is not a measure of semantic accuracy."
+  },
+  "comparison_design": {
+    "arms": "Fixed current-rule software-only versus any-AI wording; AI includes generative, predictive or unspecified AI wording, with or without software wording.",
+    "population": "Same old-engineering-usable/current-processed keys for both measurement versions.",
+    "occupations": 74,
+    "minimum_per_arm_per_occupation": 20,
+    "weights": "The same normalized minimum-arm-count occupation weights for both groups and both outcome versions.",
+    "software_supported_n": 54533,
+    "ai_supported_n": 6429,
+    "software_support_share_among_official_occupation_ads": 0.5562945658937661,
+    "ai_support_share_among_official_occupation_ads": 0.790872186000738,
+    "warning": "The old and current 'main' definitions differ. Equal keys and weights isolate a measurement-version comparison, not a validation against ground truth. No causal or historical change claim."
+  },
+  "findings": [
+    {
+      "field": "tool_experience_main_candidates",
+      "old_ai_minus_software_pp": -2.0459777167653708,
+      "current_ai_minus_software_pp": -2.711832858829086,
+      "decision": "Direction is stable across these two versions and is a descriptive lead worth retaining; magnitude and validity remain definition-dependent. This is not evidence that AI causes substitution of tool experience."
+    },
+    {
+      "field": "general_work_experience",
+      "old_main_ai_minus_software_pp": 0.8262816274401619,
+      "current_main_ai_minus_software_pp": 0.30477162330170143,
+      "old_broad_ai_minus_software_pp": 1.002564098435996,
+      "current_broad_ai_minus_software_pp": -0.24627427519347336,
+      "decision": "Retain the version/scope sensitivity; no stable overall directional conclusion about general experience."
+    },
+    {
+      "field": "industry_domain_experience_main_candidates",
+      "old_ai_minus_software_pp": -1.5825457137309218,
+      "current_ai_minus_software_pp": 0.13256582840434628,
+      "decision": "Direction changes with the measurement version; do not promote this to a substantive finding."
+    },
+    {
+      "field": "occupation_task_experience_main_candidates",
+      "old_measure": null,
+      "current_ai_minus_software_pp": 6.0365945838782515,
+      "decision": "A genuinely missing old dimension. Current-only wording candidate; do not interpret old NA as zero or claim an improvement in accuracy."
+    },
+    {
+      "field": "newcomer_wording_and_broad_responsibility_wording",
+      "newcomer_wording_n": 11889,
+      "cooccurrence_n": 449,
+      "cooccurrence_percent": 3.776600218689545,
+      "decision": "An auditable co-occurrence result in the five-shard subset. Neither unconditional entry eligibility nor task seniorization over time is established."
+    },
+    {
+      "field": "duty_context_diagnostic",
+      "all_processed_advertisements_passing_named_family_and_dual_duty_context": 107,
+      "newcomer_cooccurrences": 0,
+      "decision": "The filter retains very little coverage. Zero is a diagnostic result, not evidence that newcomer jobs have no responsibilities. Do not adopt it as a full-population primary eligibility filter."
+    },
+    {
+      "field": "old_noexperience_scope_flags",
+      "old_explicit_noexperience_n": 7985,
+      "old_applicant_context_affirmative_n": 0,
+      "decision": "Keep explicit-wording candidates. The old unconditional flag is structurally invalid for no-experience clauses and was excluded from published estimation; the applicant-context subset has no affirmative observations here and cannot establish that no clauses concern applicants."
+    }
+  ],
+  "measurement_coverage_addendum": {
+    "job": "46239067",
+    "state": "COMPLETED 0:0",
+    "elapsed": "00:00:50",
+    "qa": "pass; all six checks true; original producer outputs and receipt hashes unchanged",
+    "denominator_current_processed": 424225,
+    "old_literal_numeric_candidate_advertisements": 181448,
+    "current_literal_numeric_candidate_advertisements": 163037,
+    "old_qualification_alternative_candidate_advertisements": 120694,
+    "old_equivalent_experience_candidate_advertisements": 12619,
+    "old_unresolved_qualification_advertisements": 6286,
+    "old_mixed_qualification_advertisements": 22626,
+    "old_context_conflict_advertisements": 30527,
+    "current_conditional_or_alternative_advertisements": 74253,
+    "current_experience_unknown_flag_advertisements": 293448,
+    "interpretation": "These are overlapping candidate/uncertainty flags, not mutually exclusive quality classes. An ad with an ambiguous clause may also contain usable explicit evidence; do not discard all flagged ads or label the remainder semantically validated. Literal numeric evidence is not a certified universal minimum for the job."
+  },
+  "reuse_decision": {
+    "reuse_existing": [
+      "Canonical identities, metadata joins, posting observation dates and engineering status, with their existing time/provenance limitations.",
+      "Old explicit experience clauses, literal bounds, strength/binding labels and qualification audit evidence, as versioned candidates.",
+      "Existing completed current-rule results, joined by canonical keys rather than re-extracted."
+    ],
+    "genuine_missing_dimensions": [
+      "Occupational/task-specific prior experience not measured in the old release.",
+      "Complete graduate/junior/newcomer wording inventory absent from the sparse old audit.",
+      "Current responsibility wording and its relationship to newcomer/requirement clauses."
+    ],
+    "next_execution_scope": "First consume already completed newer shards as additive versioned columns on the old base. Only if a required column is unavailable in both old and completed new outputs may a keyed, named-field incremental pass be considered. Do not restart the full base extraction, original joins, or the held D64 full-corpus controller.",
+    "no_new_validation_loop": "This wave closes after the promised measurement-coverage addendum and Git publication. No new sample, model, dictionary expansion or repeated whole-corpus run."
+  },
+  "claim_boundaries": [
+    "JOB_HASH identifies a tracked URL, not a text version. The supplier confirms same-URL text updates; cross-year hashes alone cannot certify historical text validity.",
+    "All reported semantic outcomes remain explicit rule-derived wording candidates; no-hit is not semantic absence.",
+    "The prior whole-corpus engineering release remains reusable, but this five-shard overlap does not independently validate every full-corpus semantic field.",
+    "No Revelio Individual analysis was performed; those data are not available."
+  ],
+  "evidence_files": [
+    "FIELD_REUSE_MAP_PUBLIC.json",
+    "STATIC_ENGINEERING_QA_PUBLIC.json",
+    "public/OVERLAP_COVERAGE_PUBLIC.csv",
+    "public/DISAGREEMENT_2X2_PUBLIC.csv",
+    "public/CORE_EXPERIENCE_COMPARISON_PUBLIC.csv",
+    "public/COMMON_SUPPORT_PUBLIC.csv",
+    "public/ENTRY_RESPONSIBILITY_COOCCURRENCE_PUBLIC.csv",
+    "public/QA_PUBLIC.json",
+    "public/RUN_RECEIPT_PUBLIC.json",
+    "public/MEASUREMENT_COVERAGE_PUBLIC.csv",
+    "public/MEASUREMENT_COVERAGE_RECEIPT_PUBLIC.json",
+    "public/MEASUREMENT_COVERAGE_QA_PUBLIC.json"
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "version": "d65-field-reuse-map-public-v1",
+  "date": "2026-10-10",
+  "scope": "Public field/code audit only. No private row content was read, no local data analysis was run, and no job was submitted.",
+  "status_vocabulary": {
+    "direct_reuse": "Frozen field is suitable for the stated bounded use without semantic relabeling.",
+    "candidate_existing": "Existing candidate evidence can support conservative descriptive/audit statistics, but is not semantic gold and non-detection is not absence.",
+    "targeted_delta_required": "The research construct is absent or materially incomplete in the old release; only a keyed additive field/context pass is justified."
+  },
+  "accepted_base": {
+    "canonical_key": [
+      "JOB_HASH",
+      "SOURCE_FILE",
+      "SOURCE_ROW",
+      "RECORD_SOURCE_ROW"
+    ],
+    "old_release": "2464-shard typed ad_status/experience/technology/v6_audit plus semantic_narrow and duration sidecars",
+    "new_bounded_release": "D63/D64 rulefirst first-five shards, 424226 canonical postings, metadata joined and comparison outputs QA-passed",
+    "evidence": [
+      "analysis_transition_20260930/reuse_audit_20261010/ROOT_REUSE_DECISION.json:6-18",
+      "analysis_transition_20260930/reuse_audit_20261010/CLOUD_INVENTORY_PUBLIC.json:9-46",
+      "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:204-209",
+      "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:245-247",
+      "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:292-301"
+    ]
+  },
+  "comparisons": [
+    {
+      "comparison_id": "experience_composition",
+      "question": "Compare experience-object composition and duration/strength/scope patterns across fixed technology groups while preserving old and new measurement versions.",
+      "field_map": [
+        {
+          "construct": "canonical posting identity and join",
+          "old_fields": ["JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"],
+          "new_fields": ["JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"],
+          "status": "direct_reuse",
+          "use": "Exact-key left join only; require uniqueness and exact set/denominator accounting before comparison.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:21-22",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/full_production_20261009/run_one_shard.py:51-66"
+          ]
+        },
+        {
+          "construct": "old literal experience evidence",
+          "old_fields": ["OBJECT_TYPE", "MIN_YEARS", "MAX_YEARS", "DURATION_UNIT", "BOUND_TYPE", "BINDING_STATUS", "RELATION", "OPTIONAL", "APPLICANT_CONTEXT_CANDIDATE", "REQUIREMENT_STRENGTH"],
+          "new_fields": ["objects_json", "duration_kind", "lower_years", "upper_years", "strict_lower", "strength", "scope", "outcome_status", "review_reasons_json"],
+          "status": "candidate_existing",
+          "use": "Reuse old clause candidates and durations for old-version descriptive rates. Map general_work to general_work, specific_tool to tool, and industry_domain to industry_domain. Keep object_unspecified unresolved. Do not pool old and rulefirst rows as one taxonomy.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:31-39",
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/enrichment.py:90-98",
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:95-112",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/full_production_20261009/run_one_shard.py:51-65"
+          ]
+        },
+        {
+          "construct": "old ad-level experience flags and duration sidecar",
+          "old_fields": ["exp_{general_work,specific_tool,industry_domain,object_unspecified}_{main,required,preferred,broad,exact_or_unspecified}", "duration sidecar"],
+          "new_fields": ["broad_*", "narrow_*", "numeric_duration_observed", "conditional_or_alternative_experience_observed", "experience_scope_unknown", "unresolved_experience_observed"],
+          "status": "direct_reuse",
+          "use": "Reuse already projected old-version flags and clause-duration sidecar; preserve main/broad definitions and do not collapse multiple clause bounds into an ad-level minimum.",
+          "evidence": [
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:15-30",
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:101-112",
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:134-147"
+          ]
+        },
+        {
+          "construct": "occupation/task prior experience",
+          "old_fields": ["exp_occupation_task_main", "exp_occupation_task_available"],
+          "new_fields": ["objects_json contains occupation_task", "broad_occupation_task", "narrow_occupation_task"],
+          "status": "targeted_delta_required",
+          "use": "Old values are structurally NA/unavailable and must never be converted to zero or inferred from general_work/object_unspecified. Rulefirst candidates may be joined as a separate measurement version; a corpus claim requires a keyed additive old-base delta or an explicitly bounded first-five result.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/enrichment.py:90-98",
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:84-89",
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:142-146",
+            "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md:16-18",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:92-104"
+          ]
+        },
+        {
+          "construct": "technology grouping",
+          "old_fields": ["TECHNOLOGY_TYPE", "TECHNOLOGY_NAME", "ROLE", "BINDING_STATUS", "APPLICANT_CONTEXT_CANDIDATE"],
+          "new_fields": ["technology", "role_cue", "negated", "tech_group"],
+          "status": "candidate_existing",
+          "use": "Reuse old frozen technology candidates and old published comparisons within their taxonomy. For rulefirst comparisons derive groups only from non-negated new evidence. Report versions separately because role and taxonomy semantics differ.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:40-47",
+            "analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py:113-127",
+            "analysis_transition_20260930/reuse_audit_20261010/ROOT_REUSE_DECISION.json:22-32",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:259-265"
+          ]
+        },
+        {
+          "construct": "common-support estimator inputs",
+          "old_fields": ["existing old C1 fixed denominators/weights and retained cells"],
+          "new_fields": ["ONET_OCCUPATION_CODE", "COMPANY_ID", "official_occupation_status", "company_status", "fixed arm denominators", "min(left_cell_n,right_cell_n)_normalized"],
+          "status": "direct_reuse",
+          "use": "Keep the already published old T5 estimates and denominators unchanged. For the new D66 overlap estimand, start from all 424226 first-five postings, report old-match and engineering-usable coverage, then compare old/current outcomes on one explicitly shared valid-key population with the same fixed current-rule arms, occupation threshold and min(left_cell_n,right_cell_n) weights. Do not substitute this overlap estimand for old T5 or mix old T5 weights into it.",
+          "evidence": [
+            "analysis_transition_20260930/pre_revelio_execution_v1/DECISION_REGISTER.md:59-65",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:133-189",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:303-325"
+          ]
+        }
+      ]
+    },
+    {
+      "comparison_id": "entry_responsibility",
+      "question": "Describe co-occurrence of explicit newcomer/waiver wording with current-duty responsibility wording, without treating wording as verified entry-level status.",
+      "field_map": [
+        {
+          "construct": "explicit no-experience waiver",
+          "old_fields": ["MODULE=experience", "NO_EXPERIENCE_EXPLICIT", "APPLICANT_CONTEXT_CANDIDATE", "NEGATED_OR_OPTIONAL", "QUALIFICATION_SCOPE_START", "QUALIFICATION_SCOPE_END"],
+          "new_fields": ["kind=entry", "rule=explicit_no_experience", "objects_json", "scope", "explicit_no_experience flag"],
+          "status": "candidate_existing",
+          "use": "Old v6_audit supports explicit and applicant-context candidate counts plus retained uncertainty flags. The old IS_UNCONDITIONAL_EXPERIENCE_REQUIREMENT field is structurally set false for explicit-no-experience candidates by the frozen parser, so it is unavailable for an old unconditional-no-experience partition and its zero is not an observed zero. New unrestricted eligibility requires objects_json exactly [general_work]; specific-tool or other waivers stay separate. Never interpret absence of a sparse audit row as no waiver.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:48-74",
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:79-95",
+            "cleaning_pipeline_20260927/source_snapshot/stage_c_v5/requirement_candidates.py:775-789",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:140-155",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:274-288"
+          ]
+        },
+        {
+          "construct": "broad qualification alternative candidate and equivalent-experience branch",
+          "old_fields": ["EQUIVALENCE_TYPE", "EQUIVALENT_EXPERIENCE", "EQUIVALENT_CREDENTIAL", "ALTERNATIVE_TRAINING_OR_EXPERIENCE", "ALTERNATIVE_TRAINING_OR_EDUCATION", "QUALIFICATION_RELATION_UNRESOLVED", "LOCAL_PATH_SCOPE_APPLIED"],
+          "new_fields": ["scope=education_alternative", "education_experience_alternative flag", "scope=document_multiline_alternative_unresolved"],
+          "status": "candidate_existing",
+          "use": "There is no single old DEGREE_OR gold field. Define a broad qualification-alternative candidate from affirmative credential/training/education alternative fields, and report the EQUIVALENT_EXPERIENCE branch separately. Keep unresolved/multiline branches separate and do not convert education equivalence into general tenure.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:61-70",
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:114-124",
+            "analysis_transition_20260930/dual_source_execution_v2/RESEARCH_CONTRACT.json:64-69",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:87-90",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:166-190"
+          ]
+        },
+        {
+          "construct": "mixed/unresolved qualification",
+          "old_fields": ["MIXED_REQUIREMENT_SCOPE", "QUALIFICATION_RELATION_UNRESOLVED", "CONTEXT_CONFLICT", "AMBIGUOUS_DEGREE_ABBREVIATION"],
+          "new_fields": ["strength=mixed", "review_reasons_json", "outcome_status=needs_review", "scope"],
+          "status": "candidate_existing",
+          "use": "Old mixed and unresolved flags exist and can define exclusion/sensitivity strata. They are not semantic gold and must not be folded into unconditional eligibility.",
+          "evidence": [
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:65-73",
+            "cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py:119-127",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:80-90",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:179-197"
+          ]
+        },
+        {
+          "construct": "graduate / junior newcomer wording",
+          "old_fields": [],
+          "new_fields": ["graduate_language", "entry_junior_text", "entry evidence rows"],
+          "status": "targeted_delta_required",
+          "use": "Old sparse v6_audit does not provide a complete graduate/junior cue inventory. Use the new first-five fields only as a separate candidate version; any old-base comparison needs a narrowly keyed additive derivation.",
+          "evidence": [
+            "analysis_transition_20260930/reuse_audit_20261010/ROOT_REUSE_DECISION.json:24-32",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:147-155"
+          ]
+        },
+        {
+          "construct": "current-duty responsibility",
+          "old_fields": [],
+          "new_fields": ["task_independent_responsibility", "task_client_ownership", "task_people_supervision", "d57_current_duty_mentoring_candidate", "task evidence rows"],
+          "status": "targeted_delta_required",
+          "use": "This is the principal true gap in the old release. The new fields are candidate wording only and distinguish duties from prior experience. A corpus result requires a keyed additive responsibility pass or must remain bounded to the first-five release.",
+          "evidence": [
+            "analysis_transition_20260930/reuse_audit_20261010/ROOT_REUSE_DECISION.json:29-32",
+            "analysis_transition_20260930/dual_source_execution_v2/RESEARCH_CONTRACT.json:16-20",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/rule_engine.py:207-215",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/full_production_20261009/run_one_shard.py:42-48",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:337-360"
+          ]
+        },
+        {
+          "construct": "entry-by-responsibility co-occurrence",
+          "old_fields": ["no-experience/education audit candidates only"],
+          "new_fields": ["entry marker x responsibility marker 2x2 counts"],
+          "status": "candidate_existing",
+          "use": "The first-five table is already computable as ad-level wording co-occurrence. Keep its 424225 processed denominator and its explicit claim boundary; do not backfill old missing responsibility flags with false or combine old/new cue definitions in one unlabeled series.",
+          "evidence": [
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/first5_analysis/build_first5_comparison.py:327-360",
+            "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/domestic_expansion_20261010/D64_ENGINEERING_PATCH_20261010/public/FIRST5_QA_PUBLIC.json:2-20"
+          ]
+        }
+      ]
+    }
+  ],
+  "conservative_existing_statistics": [
+    "Old no-experience: count distinct canonical keys with an affirmative NO_EXPERIENCE_EXPLICIT audit row; optionally partition by applicant-context and negated-or-optional fields. Do not report an old unconditional partition: the frozen parser structurally set IS_UNCONDITIONAL_EXPERIENCE_REQUIREMENT=false for explicit-no-experience candidates. On the full processable-ad denominator, no retained row is candidate_not_detected rather than true absence; report audit-row coverage separately.",
+    "Old broad qualification-alternative candidate: count distinct keys in an explicitly labeled broad union of EQUIVALENT_CREDENTIAL, ALTERNATIVE_TRAINING_OR_EXPERIENCE, or ALTERNATIVE_TRAINING_OR_EDUCATION. Report EQUIVALENT_EXPERIENCE as its own branch; report QUALIFICATION_RELATION_UNRESOLVED and MIXED_REQUIREMENT_SCOPE separately and allow overlap. On the full processable-ad denominator, no retained row is candidate_not_detected rather than true absence.",
+    "Old experience composition: reuse semantic_narrow main/required/preferred/broad flags and the duration sidecar for measured objects only; occupation_task remains NA.",
+    "New experience composition: report broad and narrow rulefirst candidates separately, with conditional/unresolved and numeric-duration indicators. No-observed stays unknown.",
+    "New entry-responsibility: preserve the existing 2x2 wording-cooccurrence construction and 424225 processed denominator; report every entry and responsibility marker version explicitly."
+  ],
+  "true_gaps_after_reuse": [
+    "Old occupation_task prior-experience object: structurally unmeasured.",
+    "Old complete current-duty responsibility inventory, including newcomer-role binding: absent/incomplete.",
+    "Old complete graduate/junior newcomer wording: not retained in sparse v6_audit.",
+    "Full normalized text is not stored in lean tables; any justified delta must reconstruct bounded context from an existing retained source using frozen normalization and exact keys.",
+    "A harmonized semantic gold label set does not exist. Old V6/enrichment and new rulefirst outputs must remain versioned candidate measurements."
+  ],
+  "do_not_do": [
+    "Do not rerun raw-to-record matching, the 2464-shard base extraction, semantic_narrow projection, or duration construction.",
+    "Do not treat v6_audit candidate rows as semantic gold or treat missing sparse rows as negative labels.",
+    "Do not infer occupation_task from general_work or object_unspecified.",
+    "Do not merge old and new technology, experience, entry, or responsibility fields without an explicit measurement-version column.",
+    "Do not change common-support denominators, thresholds, cell weights, or arm definitions while adding fields."
+  ]
+}

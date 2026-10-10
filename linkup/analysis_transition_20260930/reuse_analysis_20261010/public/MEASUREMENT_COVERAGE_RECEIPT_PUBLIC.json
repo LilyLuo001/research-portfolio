@@ -1,0 +1,36 @@
+{
+  "api_calls": 0,
+  "checks": {
+    "not_detected_conservation": true,
+    "numerators_not_above_denominator": true,
+    "overlay_424226_rows": true,
+    "protected_original_public_hashes_unchanged": true
+  },
+  "claim_boundary": "candidate and engineering coverage only; false means not detected under the named rule, not semantic absence",
+  "created_utc": "2026-10-10T12:52:27.110846+00:00",
+  "full_text_reads": 0,
+  "input": {
+    "overlay_rows": 424226,
+    "overlay_sha256": "aab7db0501836c74ecb47d8b0b1bb5ce086e315749c4e76679527bb04ef9b7e5",
+    "producer_receipt_sha256": "09ba7ec62c8d8b60ec7217a2aa4895ff6e986aa6399a872fd6e6bd4105871e2a"
+  },
+  "metric_count": 20,
+  "model_calls": 0,
+  "output": {
+    "bytes": 10185,
+    "path": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/reuse_analysis_20261010/public/MEASUREMENT_COVERAGE_PUBLIC.csv",
+    "sha256": "6b97753aeae75ac562c8968d03953a8ae9ffcd1f2703f41a69e0493801f984e8"
+  },
+  "output_rows": 40,
+  "population_denominators": {
+    "current_processed": 424225,
+    "old_usable_current_processed": 424219
+  },
+  "scheduler": {
+    "cpus": "4",
+    "host": "b01r1n00",
+    "job_id": "46239067"
+  },
+  "status": "pass",
+  "version": "d66-first5-measurement-coverage-v1"
+}
