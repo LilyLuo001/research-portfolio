@@ -1,8 +1,10 @@
 {
   "api_calls": 0,
   "bootstrap": {
+    "estimated_completion_utc_approx": "2026-10-10T03:10Z",
+    "estimated_remaining_seconds_at_average_rate": 3392,
     "expected_input_bytes": 2180308411,
-    "observed_aggregate_bytes_per_second_approx": 370000,
+    "observed_aggregate_bytes_per_second_approx": 420000,
     "production_array_job_id": "8004875",
     "production_concurrency": 4,
     "production_resources_each": {
@@ -14,7 +16,9 @@
     "production_tasks": 8,
     "qa_job_id": "8004985",
     "qa_state": "dependency_held",
-    "snapshot_staged_bytes": 295657472,
+    "ready_shards": 0,
+    "recent_20s_bytes_per_second": 597811,
+    "snapshot_staged_bytes": 755830784,
     "stage_job_ids": [
       "8005067",
       "8005068",
@@ -33,7 +37,7 @@
       "running"
     ]
   },
-  "created_utc": "2026-10-10T01:56:36Z",
+  "created_utc": "2026-10-10T02:13:21Z",
   "frozen_runtime": {
     "controller_sha256": "0c04cf66e871e0b7b9be87689321ecc6bf16d2d7ad669f363f85fe0193c90a98",
     "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
@@ -46,17 +50,23 @@
     "hash_mismatch_retry": false,
     "job_id": "8005004",
     "max_transient_ssh_attempts": 3,
+    "released_after_static_qa": true,
     "state": "dependency_held_only_on_8004985"
   },
   "route_status": {
     "alternate_kunshan_ipv4_probe": {
-      "bytes_requested": 16777216,
+      "bytes_received": 0,
+      "canonical_alias_remains_trusted": true,
+      "corrected_elapsed_seconds": 48,
+      "corrected_exit_status": 255,
       "corrected_job_id": "8005327",
-      "corrected_status": "queued",
+      "corrected_status": "failed_closed_timeout",
+      "decision": "no route change; no further alternate-IP probe",
       "initial_job_id": "8005160",
       "initial_status": "failed_closed_host_alias_configuration",
-      "trusted_alias_precheck": "exact_nondefault_port_alias_present",
-      "walltime_minutes": 10
+      "probe_added_ip_mapping_removed_after_failure": true,
+      "requested_bytes": 16777216,
+      "trusted_alias_verified_before_probe": true
     },
     "kunshan": "active_strict_host_key",
     "wuzhen": "blocked_after_single_ipv4_timeout"

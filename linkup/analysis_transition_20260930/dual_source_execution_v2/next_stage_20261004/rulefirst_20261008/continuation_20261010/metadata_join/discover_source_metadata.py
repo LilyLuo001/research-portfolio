@@ -50,7 +50,7 @@ def main():
         "-o", "ConnectTimeout=20", "-o", "ServerAliveInterval=20",
         "-o", "ServerAliveCountMax=3",
         "-o", "UserKnownHostsFile=" + str(cred / "known_hosts"),
-        "cancon.hpccube.com",
+        "lilysharp@cancon.hpccube.com",
     ]
     private.mkdir(parents=True, exist_ok=True)
     os.chmod(private, 0o700)

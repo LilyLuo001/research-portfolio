@@ -1,0 +1,15 @@
+{
+  "scope": "bounded SSH control-plane connectivity only, no data processing",
+  "route": "BU via KS to WZ",
+  "created_utc": "2026-10-10T02:13:44.449522+00:00",
+  "status": "failed",
+  "authentication_success": false,
+  "exit_status": 255,
+  "elapsed_seconds": 8.02,
+  "error": "Connection timed out during banner exchange",
+  "strict_host_key_checking": true,
+  "identities": "existing protected user-authorized keys; no values recorded",
+  "temporary_config_removed": true,
+  "source_data_modified": false,
+  "decision": "WZ remains excluded from active production; no further retry without new routing evidence"
+}

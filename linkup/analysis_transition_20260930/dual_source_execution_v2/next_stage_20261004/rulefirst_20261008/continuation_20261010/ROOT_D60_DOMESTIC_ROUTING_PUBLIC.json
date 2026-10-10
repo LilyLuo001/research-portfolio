@@ -1,0 +1,41 @@
+{
+  "decision_id": "D60-domestic-inplace-after-final-BU-batch",
+  "created_utc": "2026-10-10T02:17:43.470442+00:00",
+  "authority": "User explicitly states current approximately2GB batch is last BU batch; future processing stays in domestic supercomputing centers",
+  "supersedes": "D59 automatic future source transfers to BU and BU metadata source cache",
+  "BU_allow_to_finish": {
+    "staging_jobs": [
+      "8005067",
+      "8005068",
+      "8005069",
+      "8005070"
+    ],
+    "production_array": "8004875",
+    "production_QA": "8004985",
+    "shards": 8,
+    "input_bytes": 2180308411
+  },
+  "cancel_scope": {
+    "rolling_controller": "8005004",
+    "metadata_discovery": "8005585",
+    "status": "requested_pending_receipts"
+  },
+  "future_processing": "SCNet in-place scheduled processing where original inputs already reside; no further raw-data transfer to BU",
+  "domestic_initial_budget": {
+    "production_concurrency_max": 4,
+    "cores_per_task": 4,
+    "memory_gib_per_task": 8,
+    "prefer": "already authorized Kunshan CPU resources; inspect real scheduler/runtime/storage before submission",
+    "accelerators": "No new paid allocation or unverified accelerator billing; frozen code is CPU extraction"
+  },
+  "identity_rules": [
+    "Keep completed first5 and final8 BU assignments distinct from domestic pending shards",
+    "Do not rerun accepted first5; reserve final8 until actual QA outcome",
+    "Use same frozen runner/rules and source identity checks",
+    "Record all output locations and public scheduler receipts; no silent source/output deletion"
+  ],
+  "metadata": "Join existing Records and O*NET source indices in China; retain all target keys and full-denominator missing states",
+  "frozen_runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+  "paid_model_api_calls": 0,
+  "unrelated_BU_job_preserved": "7488095"
+}

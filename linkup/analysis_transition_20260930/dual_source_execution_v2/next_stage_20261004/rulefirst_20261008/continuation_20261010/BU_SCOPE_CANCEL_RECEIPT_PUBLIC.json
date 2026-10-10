@@ -1,0 +1,23 @@
+{
+  "api_calls": 0,
+  "cancelled_job_id": "8005004",
+  "cancelled_job_role": "future rolling controller",
+  "created_utc": "2026-10-10T02:17:11.038946+00:00",
+  "model_calls": 0,
+  "preserved_jobs": {
+    "independent_qa": "8004985",
+    "production_array": "8004875",
+    "staging": [
+      "8005067",
+      "8005068",
+      "8005069",
+      "8005070"
+    ]
+  },
+  "source_originals_untouched": true,
+  "status": "scope_boundary_applied",
+  "unrelated_job_7488095_untouched": true,
+  "user_constraint": "current 2.18GB bootstrap is the last BU production batch; future bulk processing remains in China",
+  "verified_no_other_future_production_controller_in_qluo_qstat": true,
+  "version": "d60-bu-stop-after-bootstrap-v1"
+}
