@@ -1,0 +1,87 @@
+{
+  "status": "complete_qa_pass",
+  "version": "d60-wuzhen-bounded-four-v1",
+  "scope": "four disjoint Wuzhen shards processed in place with the frozen D58 rule runner",
+  "boundary": "No BU compute or transfer was launched. No expansion beyond these four Wuzhen shards is authorized by this receipt.",
+  "runtime": {
+    "python": "3.8.10",
+    "pyarrow": "11.0.0",
+    "module": "python/3.8.10",
+    "runtime_site_packages": "/work/home/lilysharp/linkup_release_v1/runtime_py38"
+  },
+  "frozen_code": {
+    "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+    "legacy_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "relation_overlay_sha256": "1a888cbdaf11f4f8e97dd71c84f4af723491597825fe3b1427b2e64c773bc626"
+  },
+  "scheduler_attempts": [
+    {
+      "purpose": "CPU-only preflight submission",
+      "accepted_job": false,
+      "result": "rejected_before_job_creation",
+      "reason": "wzhdtest QOSMinGRES requires one DCU reservation"
+    },
+    {
+      "purpose": "five-minute input/runtime preflight",
+      "job_id": "46208814",
+      "partition": "wzhdtest",
+      "requested": {"cpus": 4, "memory_gib": 8, "dcu": 1, "time_limit": "00:05:00"},
+      "observed": {"state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:00:08"}
+    },
+    {
+      "purpose": "initial production wrapper attempt",
+      "job_id": "46208826",
+      "partition": "wzhdtest",
+      "array_tasks": 4,
+      "observed": {"state": "FAILED", "exit_code": "1:0", "elapsed_each": "00:00:01", "output_created": false},
+      "reason": "wrapper invoked python3 before initializing its module; frozen runner was not entered"
+    },
+    {
+      "purpose": "corrected frozen production array",
+      "job_id": "46208844",
+      "partition": "wzhdtest",
+      "array_tasks": 4,
+      "concurrency": 4,
+      "requested_per_task": {"cpus": 4, "memory_gib": 8, "dcu": 1, "time_limit": "02:00:00"},
+      "dcu_use": "QOS-required reservation; unused by CPU rule execution",
+      "observed_tasks": [
+        {"task": 0, "state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:06:15", "max_rss_kib": 1491480},
+        {"task": 1, "state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:06:17", "max_rss_kib": 1608948},
+        {"task": 2, "state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:06:27", "max_rss_kib": 1766600},
+        {"task": 3, "state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:06:22", "max_rss_kib": 1760668}
+      ]
+    },
+    {
+      "purpose": "mechanical per-shard and cross-four QA with idempotent resume check",
+      "job_id": "46209816",
+      "partition": "wzhdtest",
+      "requested": {"cpus": 4, "memory_gib": 8, "dcu": 1, "time_limit": "00:10:00"},
+      "dcu_use": "QOS-required reservation; unused by CPU verifier",
+      "observed": {"state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:02:23", "max_rss_kib": 231524}
+    }
+  ],
+  "aggregate_result": {
+    "shards": 4,
+    "raw_rows": 498480,
+    "canonical_posting_rows": 342546,
+    "evidence_rows": 1753539,
+    "output_bytes": 186863325,
+    "output_budget_max_bytes": 1000000000,
+    "row_conservation": true,
+    "canonical_key_uniqueness": true,
+    "evidence_span_and_index_structure": true,
+    "frozen_schema": true,
+    "idempotent_resume": true
+  },
+  "storage_after_completion": {
+    "task_root_bytes": 187196159,
+    "filesystem_available_bytes": 48752066560,
+    "minimum_reserve_bytes": 10000000000,
+    "reserve_satisfied": true
+  },
+  "api_calls": 0,
+  "model_calls": 0,
+  "semantic_changes": false,
+  "claim_boundary": "Mechanical rule execution and QA only; rule-observed candidates are not semantic gold labels, no-match remains unknown, and metadata linkage remains pending."
+}

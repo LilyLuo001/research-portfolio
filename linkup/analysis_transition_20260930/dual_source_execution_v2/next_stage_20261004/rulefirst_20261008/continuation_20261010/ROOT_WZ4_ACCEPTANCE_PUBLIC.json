@@ -1,0 +1,23 @@
+{
+  "decision": "Accept four Wuzhen in-place frozen-rule shards as mechanically verified candidate outputs",
+  "created_utc": "2026-10-10T04:44:56.462616+00:00",
+  "production_job": "46208844",
+  "qa_job": "46209816",
+  "qa_receipt_sha256": "04c4fdddade8b38eca26f44c54fd594ceb10b48828d9d919c0d9b44410ea9da2",
+  "posting_rows": 342546,
+  "evidence_rows": 1753539,
+  "output_bytes": 186863325,
+  "measurement_rules_changed": false,
+  "paid_model_calls": 0,
+  "resources_note": "4 CPU and 8 GiB per production task; one DCU reserved per task only because QOS required it, with no DCU acceleration claim. This bounded wave is finished; no automatic expansion.",
+  "remaining": [
+    "First-five Records/ONET in-place join job124116745",
+    "BU13 output return and cross-shard global-key QA",
+    "Final Git execution ledger"
+  ],
+  "limitations": [
+    "Mechanical acceptance does not establish semantic accuracy",
+    "Regional wave is not a representative full-corpus estimate",
+    "No claim of timestamped historical descriptions"
+  ]
+}

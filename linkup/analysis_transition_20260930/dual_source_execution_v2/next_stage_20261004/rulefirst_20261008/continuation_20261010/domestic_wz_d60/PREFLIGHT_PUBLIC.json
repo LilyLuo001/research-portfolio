@@ -1,0 +1,30 @@
+{
+  "api_calls": 0,
+  "capabilities": {
+    "parquetfile_iter_batches": true,
+    "table_from_arrays": true,
+    "table_to_pydict": true,
+    "zstd_codec": true
+  },
+  "created_utc": "2026-10-10T04:31:41.741119+00:00",
+  "disjoint": true,
+  "full_sha256_verified": true,
+  "host": "b01r3n14",
+  "input_bytes_verified": 1110675419,
+  "job_id": "46208814",
+  "model_calls": 0,
+  "plan_rows": 1106,
+  "pyarrow_version": "11.0.0",
+  "python_version": "3.8.10",
+  "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+  "scheduler": {
+    "cpus": 4,
+    "dcu_requested": 1,
+    "dcu_use": "scheduler-QOS-minimum; CPU-only submission rejected",
+    "memory_gib": 8,
+    "partition": "wzhdtest",
+    "time_limit": "00:05:00"
+  },
+  "selected_shards": 4,
+  "status": "passed"
+}

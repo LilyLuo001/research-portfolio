@@ -1,0 +1,24 @@
+{
+  "decision_id": "D61-exact-inplace-source-inventory",
+  "created_utc": "2026-10-10T04:33:12.274774+00:00",
+  "trigger": {
+    "preflight_job": "124115956",
+    "result": "failed before metadata scan on byte assertion",
+    "verified_first": "16 key files; 424226 posting rows; key/code hashes; PyArrow runtime",
+    "old_records_byte_constant": 15415489237,
+    "observed_parquet_bytes": 15415146010,
+    "difference_bytes": 343227
+  },
+  "decision": "Bind exact admitted regular Parquet inventory and content SHA-256s on scheduled compute node; correct mechanical byte constants to that inventory; retain prior constants as discrepant historical inputs.",
+  "required_provenance": [
+    "Sorted relative paths, exact bytes, file SHA-256s, source file count and readable Parquet footer",
+    "Existing Records COMPLETE marker SHA remains 77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+    "Exclude temporary or partial files; record actual O*NET inventory the same way",
+    "Document discrepancies without inventing their cause"
+  ],
+  "statistical_denominator": 424226,
+  "statistical_denominator_changed": false,
+  "semantic_rules_changed": false,
+  "next_action": "One scheduled inventory-to-join-to-QA chain; no repeated standalone preflight cycle",
+  "claim_boundary": "Inventory correction is not proof of broader source completeness beyond supplied source snapshot."
+}

@@ -16,3 +16,6 @@ D60 handoff closure：已尝试将现有约 15 MB key artifact 从 BU 传至昆�
 
 
 BU wave closeout：BU8 已完成 672,976 postings、3,440,595 evidence rows、366,822,166 bytes，QA job 8004985 通过。该数字与已验收的前五 shard 不能直接相加为 unique 总量；跨集合 key audit 仍待中国侧完成。当前中国侧 agents 正在处理 Kunshan metadata 与 Wuzhen 四生产任务，实际 job 尚未由公共回执确认。
+
+
+D61 当前状态：WZ production job 46208844 的四个任务完成，QA 46209816 通过，342546 postings、1753539 evidence rows、186863325 bytes；wrapper 初次失败 job 46208826（exit 1、无数据）保留为历史事实，随后修复 load order。昆山 metadata join/initial inventory job 124116745 仍运行中，未完成。BU 13-shard 回传约 598 MB 仍进行且未验证，cross-13 QA 尚未通过。
