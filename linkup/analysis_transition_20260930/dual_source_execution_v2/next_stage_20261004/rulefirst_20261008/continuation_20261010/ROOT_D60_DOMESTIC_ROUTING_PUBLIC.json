@@ -18,7 +18,7 @@
   "cancel_scope": {
     "rolling_controller": "8005004",
     "metadata_discovery": "8005585",
-    "status": "requested_pending_receipts"
+    "status": "cancelled_verified_no_longer_in_BU_qstat"
   },
   "future_processing": "SCNet in-place scheduled processing where original inputs already reside; no further raw-data transfer to BU",
   "domestic_initial_budget": {
@@ -26,7 +26,10 @@
     "cores_per_task": 4,
     "memory_gib_per_task": 8,
     "prefer": "already authorized Kunshan CPU resources; inspect real scheduler/runtime/storage before submission",
-    "accelerators": "No new paid allocation or unverified accelerator billing; frozen code is CPU extraction"
+    "accelerators": "No new paid allocation or unverified accelerator billing; frozen code is CPU extraction",
+    "kunshan_observed_free_gb_approx": 23,
+    "minimum_free_gb": 10,
+    "initial_new_outputs_max_bytes": 1000000000
   },
   "identity_rules": [
     "Keep completed first5 and final8 BU assignments distinct from domestic pending shards",
@@ -37,5 +40,6 @@
   "metadata": "Join existing Records and O*NET source indices in China; retain all target keys and full-denominator missing states",
   "frozen_runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
   "paid_model_api_calls": 0,
-  "unrelated_BU_job_preserved": "7488095"
+  "unrelated_BU_job_preserved": "7488095",
+  "domestic_submission_status": "pending_bounded_runtime_and_SSH_preflight_not_yet_claimed_running"
 }

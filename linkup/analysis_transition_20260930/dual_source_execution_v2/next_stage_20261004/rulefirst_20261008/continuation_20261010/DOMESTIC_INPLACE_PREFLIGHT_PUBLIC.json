@@ -1,0 +1,87 @@
+{
+  "api_calls": 0,
+  "bu": {
+    "cancelled_future_controller_job_id": "8005004",
+    "controller_absent_from_qstat": true,
+    "preserved_staging_jobs_running": [
+      "8005068",
+      "8005069",
+      "8005070"
+    ],
+    "production_array_job_id": "8004875",
+    "qa_job_id": "8004985",
+    "snapshot_utc": "2026-10-10T02:24:09Z",
+    "staged_bytes": 1251158684,
+    "staging_job_8005067": "left_queue_likely_complete_pending_receipt_check",
+    "unrelated_7488095_untouched": true
+  },
+  "created_utc": "2026-10-10T02:24:26.006930+00:00",
+  "frozen_runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+  "kunshan": {
+    "blocker": "control route became unresponsive and PyArrow runtime was not verified; no guessed production submission",
+    "host": "login03",
+    "initial_control_status": "reachable_then_later_serveralive_timeout",
+    "production_job_submitted": false,
+    "runtime": {
+      "candidate_import_verified": false,
+      "candidate_runtime_py38_exists": true,
+      "pyarrow_in_module_env": false,
+      "python_module": "python/3.8.10"
+    },
+    "scheduler": {
+      "partitions": {
+        "kshctest02": "99 mixed, 335 allocated; 32 CPUs/node, 126.5GB/node",
+        "kshdtest": "2 mixed, 74 allocated; 32 CPUs/node, 126.5GB/node"
+      },
+      "user_jobs_at_initial_check": 0
+    },
+    "storage": {
+      "available_gb": 23,
+      "filesystem": "/public",
+      "total_gb": 499,
+      "use_percent": 96,
+      "used_gb": 477
+    }
+  },
+  "model_calls": 0,
+  "policy": "current BU 2.18GB is final BU production batch; future bulk processing China only",
+  "semantic_changes": false,
+  "source_deletion": false,
+  "status": "prepared_not_submitted",
+  "version": "d60-domestic-inplace-preflight-v1",
+  "wuzhen": {
+    "blocker": "runtime shared libraries and canonical raw/manifest binding unresolved",
+    "canonical_input_status": "Wuzhen sidecars present, but frozen regional manifest/raw locator was not verified in bounded preflight",
+    "control_status": "reachable",
+    "host": "login04",
+    "production_job_submitted": false,
+    "runtime": {
+      "import_status": "blocked",
+      "missing_shared_libraries": [
+        "libimf.so",
+        "libsvml.so",
+        "libirng.so",
+        "libintlc.so.5"
+      ],
+      "pyarrow_version_metadata": "11.0.0",
+      "python_module": "python/3.8.10",
+      "runtime_py38": "present"
+    },
+    "scheduler": {
+      "allocated_nodes": 20,
+      "cpus_per_node": 32,
+      "idle_nodes": 26,
+      "memory_mb_per_node": 126536,
+      "mixed_nodes": 2,
+      "partition": "wzhdtest",
+      "user_jobs": 0
+    },
+    "storage": {
+      "available_gb": 46,
+      "filesystem": "/work",
+      "total_gb": 499,
+      "use_percent": 91,
+      "used_gb": 454
+    }
+  }
+}
