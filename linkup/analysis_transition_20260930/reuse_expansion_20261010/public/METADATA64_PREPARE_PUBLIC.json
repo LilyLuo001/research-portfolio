@@ -1,0 +1,35 @@
+{
+  "version": "d67-metadata64-prepare-public-v1",
+  "status": "complete",
+  "job": {
+    "job_id": "124152737",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:03:52",
+    "partition": "kshctest02",
+    "cpus": 4,
+    "memory_gib": 8,
+    "time_limit": "01:00:00"
+  },
+  "target_shards": 64,
+  "posting_rows": 5380710,
+  "canonical_job_hash_unique": true,
+  "canonical_locator_unique": true,
+  "prefix_files": 16,
+  "prefix_rows_conserve_target": true,
+  "source_scan_batches": [
+    {"array_index": 0, "kind": "records", "source_files": 768, "source_bytes": 9995527118},
+    {"array_index": 1, "kind": "records", "source_files": 392, "source_bytes": 5419618892},
+    {"array_index": 2, "kind": "onet", "source_files": 55, "source_bytes": 9795327314},
+    {"array_index": 3, "kind": "onet", "source_files": 7, "source_bytes": 1395634880}
+  ],
+  "checks": {
+    "four_nonoverlapping_batches": true,
+    "each_batch_under_10GB": true,
+    "retained_cache_not_migrated": true,
+    "no_per_shard_cache_scan": true
+  },
+  "cloud_receipt": "/public/home/lilysharp/linkup_rulefirst_20261008/reuse_expansion_20261010/metadata_69/public/KEYS64_RECEIPT_PUBLIC.json",
+  "pipeline_code_sha256": "7d9c3a960b8bcee8718ab32ed08e01123ef2a5ff6cec3265998317d49342b4e6",
+  "claim_boundary": "Key preparation and source-batch planning only; no metadata match or research estimate is claimed."
+}

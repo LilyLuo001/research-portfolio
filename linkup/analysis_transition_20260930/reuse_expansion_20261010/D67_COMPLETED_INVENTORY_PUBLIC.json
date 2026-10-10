@@ -1,0 +1,117 @@
+{
+  "version": "d67-completed-inventory-v1",
+  "decision_date": "2026-10-10",
+  "status": "frozen_for_one_incremental_release",
+  "frozen_completed_shards": {
+    "total": 69,
+    "kunshan": 13,
+    "wuzhen": 56,
+    "posting_rows_total": 5804936,
+    "posting_rows_kunshan": 1097202,
+    "posting_rows_wuzhen": 4707734,
+    "evidence_rows_total": 29664560,
+    "evidence_rows_kunshan": 5603232,
+    "evidence_rows_wuzhen": 24061328,
+    "metadata_present_verified": 5,
+    "metadata_absent_before_targeted_join": 64
+  },
+  "frozen_private_inventory": {
+    "path": "private_input/D67_69_BASE_INVENTORY_PRIVATE.json",
+    "sha256": "8064928e8e4e050bd932448a2bdb8020d2ddff276450725028717974386ed1bb",
+    "rows": 69,
+    "full_shard_ids_unique": true,
+    "short_shard_ids_unique": true,
+    "source_files_unique": true,
+    "all_status_complete": true,
+    "all_qa_status_pass": true,
+    "all_required_current_paths_hashes_and_row_counts_present": true
+  },
+  "accepted_manifest_identity": {
+    "kunshan_13_sha256": "1a4c84395d9bca60c19ef5a8cd216fabc6dcf405c4816c0520c88b21bedca440",
+    "wuzhen_56_qa_manifest_sha256": "bc8282cc8f251336148720b1cfb4b16d276ead4568c89a1e2a1d833ee54e5774",
+    "wuzhen_56_inventory_sha256": "a3315e5a474f17d8db9736c3502a770d6b65fbbaff158efb7dd984c6c37cc613"
+  },
+  "completion_classes": {
+    "accepted_into_d67": "Production completed and the corresponding shard-set QA has status pass.",
+    "running": 0,
+    "failed": 0,
+    "held_controller": {
+      "count": 1,
+      "job_id": "46227986",
+      "effect": "No effect on the 16 wave-4 outputs already completed and accepted by QA; the controller remains held and no successor wave is admitted."
+    }
+  },
+  "accepted_sources": [
+    {
+      "execution_site": "KS",
+      "shards": 13,
+      "qa_status": "pass",
+      "posting_rows": 1097202,
+      "evidence_rows": 5603232,
+      "manifest": "/public/home/lilysharp/linkup_rulefirst_20261008/returned_BU13_d60/BU13_SET_MANIFEST_PRIVATE.json",
+      "local_evidence": "continuation_20261010/SHARD_SET_13_QA_PUBLIC.json:2-13"
+    },
+    {
+      "execution_site": "WZ",
+      "shards": 8,
+      "qa_status": "pass",
+      "combined_manifest": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0001/private/QA_MANIFEST_8_PRIVATE.json",
+      "local_evidence": "domestic_expansion_20261010/WAVE_0001_QA_PUBLIC.json:3-38"
+    },
+    {
+      "execution_site": "WZ",
+      "wave": 2,
+      "new_shards": 16,
+      "combined_shards": 24,
+      "production_job": "46222162",
+      "qa_job": "46222165",
+      "qa_status": "pass",
+      "combined_manifest": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0002/private/QA_MANIFEST_24_PRIVATE.json",
+      "local_evidence": "domestic_expansion_20261010/D64_ENGINEERING_PATCH_20261010/DEPLOYMENT_RECEIPT_PUBLIC.json:6-15"
+    },
+    {
+      "execution_site": "WZ",
+      "wave": 3,
+      "new_shards": 16,
+      "combined_shards": 40,
+      "posting_rows_new": 1341942,
+      "evidence_rows_new": 6859527,
+      "production_job": "46225241",
+      "qa_job": "46225249",
+      "qa_status": "pass",
+      "manifest": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0003/private/WAVE_0003_MANIFEST_PRIVATE.json",
+      "combined_manifest": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0003/private/QA_MANIFEST_40_PRIVATE.json",
+      "qa": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0003/public/WAVE_0003_QA_PUBLIC.json"
+    },
+    {
+      "execution_site": "WZ",
+      "wave": 4,
+      "new_shards": 16,
+      "combined_shards": 56,
+      "posting_rows_new": 1347392,
+      "evidence_rows_new": 6883269,
+      "production_job": "46227980",
+      "qa_job": "46227983",
+      "qa_status": "pass",
+      "combined_manifest": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0004/private/QA_MANIFEST_56_PRIVATE.json",
+      "qa": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/wz_wave_0004/public/WAVE_0004_QA_PUBLIC.json"
+    }
+  ],
+  "metadata": {
+    "present_verified_path": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/first5_analysis/private_source/continuation_20261010/metadata_join_first5_d60/output_fast/FIRST5_METADATA_FAST_PRIVATE.parquet",
+    "present_verified_rows": 424226,
+    "present_verified_sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029",
+    "evidence": "continuation_20261010/ROOT_WAVE_COMPLETION_PUBLIC.json:18-28",
+    "remaining_policy": "Project the other 64 shards once against the retained KS metadata cache using one grouped target-key wave; do not scan the cache separately per shard."
+  },
+  "old_base_policy": {
+    "required": "Corresponding HZ semantic_narrow_v1 shard only, with receipt-bound SHA and row count.",
+    "excluded": [
+      "old typed experience restaging",
+      "old duration restaging",
+      "old full text restaging"
+    ],
+    "conditional": "Old v6 audit may be projected at its existing cloud site only when required for the frozen entry comparison; transfer only the bounded additive projection or cell aggregates."
+  },
+  "claim_boundary": "Inventory and provenance only. Completion does not make the outputs semantic gold, and metadata absence is not a negative substantive value."
+}

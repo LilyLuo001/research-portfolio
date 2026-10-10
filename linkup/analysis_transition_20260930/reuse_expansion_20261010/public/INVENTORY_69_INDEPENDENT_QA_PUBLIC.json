@@ -1,0 +1,40 @@
+{
+  "version": "d67-inventory-independent-qa-v1",
+  "status": "pass",
+  "scope": "Independent metadata-only QA of the frozen 69-shard control manifest; no Parquet rows were read and no research computation ran locally.",
+  "private_manifest_sha256": "4374659120a71c188fd8aeebafc533b5435a141638f3ffaf4a5f9a8af0b02bad",
+  "checks": {
+    "exactly_69_shards": true,
+    "full_shard_ids_unique": true,
+    "short_shard_ids_unique": true,
+    "source_files_unique": true,
+    "kunshan_13_plus_wuzhen_56": true,
+    "all_current_status_complete": true,
+    "all_current_qa_status_pass": true,
+    "all_current_paths_hashes_rows_present": true,
+    "all_old_narrow_paths_receipts_hashes_rows_versions_present": true,
+    "current_posting_rows_reconcile_to_5804936": true,
+    "current_evidence_rows_reconcile_to_29664560": true,
+    "old_narrow_receipt_rows_reconcile_to_5804936": true,
+    "per_shard_current_and_old_row_counts_equal_but_exact_key_join_still_required": true,
+    "metadata_status_5_present_plus_64_pending_equals_69": true,
+    "running_failed_partial_unverified_excluded": true,
+    "held_successor_controller_does_not_change_frozen_wave": true
+  },
+  "denominators": {
+    "shards": 69,
+    "current_posting_rows": 5804936,
+    "current_evidence_rows": 29664560,
+    "old_narrow_receipt_rows": 5804936,
+    "metadata_present_verified_shards": 5,
+    "metadata_pending_targeted_projection_shards": 64
+  },
+  "runtime_qa_required": [
+    "global canonical-key uniqueness across all 69 projected shards",
+    "exact old-key match and unmatched-old missing-state denominator",
+    "metadata matched and missing-state denominator",
+    "identical common-support cells and normalized minimum-arm-count weights for old and current outcomes",
+    "old occupation-task outcome remains null and unavailable rather than false",
+    "independent recomputation of published additive aggregates and hash bindings"
+  ]
+}

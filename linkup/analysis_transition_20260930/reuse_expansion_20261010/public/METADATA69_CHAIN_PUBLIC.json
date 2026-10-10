@@ -1,0 +1,136 @@
+{
+  "aggregate_code_sha256": "e01405caadf749a381b90366e6bf79da56c7b02b9090e9ac6ce8e145c0b11408",
+  "aggregate_independent_qa_code_sha256": "e8671b0dcb15de63d05ea2dc9e4f97e74232aa4e9649c56a5d6e872fa69f264e",
+  "aggregate_independent_qa_wrapper_sha256": "da474e19cf713a736cff139b05b755435f89134d26aca3a83a7939a8d870d7cd",
+  "aggregate_runtime_gates": [
+    "metadata receipt status complete",
+    "metadata rows equal 5804936",
+    "metadata parquet sha256 equals receipt",
+    "metadata independent QA status pass and all checks",
+    "69 overlay receipts and output hashes",
+    "old occupation_task available=false and values null for every row",
+    "metadata status denominators conserve by region and field"
+  ],
+  "aggregate_wrapper_sha256": "b62a81902da1d04c0c3b6d3e728384e9c14594fc09659c54df8d6730eab4ccdb",
+  "completed": [
+    {
+      "array_tasks": 8,
+      "exit_code": "0:0",
+      "job_id": "124152405",
+      "stage": "ks_final8_key_projection",
+      "state": "COMPLETED"
+    },
+    {
+      "elapsed": "00:03:52",
+      "exit_code": "0:0",
+      "job_id": "124152737",
+      "stage": "metadata64_prepare",
+      "state": "COMPLETED"
+    }
+  ],
+  "failure_policy": "Any failed stage blocks every dependent stage; no automatic rerun or scope expansion.",
+  "final_denominator_contract": {
+    "metadata69_rows": 5804936,
+    "new64_rows": 5380710,
+    "reused_first5_rows": 424226
+  },
+  "independent_qa_code_sha256": "bb7e4bcd01853b0a1223f47d52923a3762890b13a3793170f2b9be4f052b24ad",
+  "premetadata_global_manifest": {
+    "dependency_for_aggregate": true,
+    "job_id": "124153130",
+    "output_status": "pending_scheduled_public_artifacts",
+    "state_at_snapshot": "RUNNING"
+  },
+  "replaced_attempt": {
+    "cache_scan_job_id": "124153205",
+    "cancelled_dependents": [
+      {
+        "exit_code": "0:0",
+        "job_id": "124153277",
+        "stage": "finalize",
+        "state": "CANCELLED"
+      },
+      {
+        "exit_code": "0:0",
+        "job_id": "124153280",
+        "stage": "metadata_qa",
+        "state": "CANCELLED"
+      }
+    ],
+    "failure_reason": "Records COMPANY_ID or STATE could arrive as decimal.Decimal; the replacement restores the accepted clean_string conversion before writing the frozen string schema.",
+    "onet_tasks": [
+      {
+        "raw_job_id": "124153290",
+        "state": "CANCELLED_BY_USER"
+      },
+      {
+        "raw_job_id": "124153205",
+        "state": "CANCELLED_BY_USER"
+      }
+    ],
+    "records_tasks": [
+      {
+        "exit_code": "1:0",
+        "raw_job_id": "124153287",
+        "state": "FAILED"
+      },
+      {
+        "exit_code": "1:0",
+        "raw_job_id": "124153289",
+        "state": "FAILED"
+      }
+    ],
+    "replacement_pipeline_code_sha256": "19375cb12f1df2f854e1b1d0442703b9c689989be12c091cbf4d57cec95eb8d4"
+  },
+  "scheduled": [
+    {
+      "array": "0-3%4",
+      "cpus_per_task": 4,
+      "dependency": "afterok:124152737",
+      "job_id": "124153457",
+      "memory_gib_per_task": 8,
+      "stage": "metadata64_cache_scan",
+      "state_at_snapshot": "RUNNING_ALL_4_TASKS",
+      "time_limit": "02:00:00"
+    },
+    {
+      "cpus": 4,
+      "dependency": "afterok:124153457_*",
+      "job_id": "124153469",
+      "memory_gib": 8,
+      "stage": "metadata64_finalize_and_union_first5",
+      "state_at_snapshot": "PENDING_DEPENDENCY",
+      "time_limit": "02:00:00"
+    },
+    {
+      "cpus": 4,
+      "dependency": "afterok:124153469",
+      "job_id": "124153482",
+      "memory_gib": 8,
+      "stage": "metadata69_independent_qa",
+      "state_at_snapshot": "PENDING_DEPENDENCY",
+      "time_limit": "02:00:00"
+    },
+    {
+      "cpus": 4,
+      "dependency": "afterok:124153482:124153130",
+      "job_id": "124153490",
+      "memory_gib": 8,
+      "stage": "aggregate",
+      "state_at_snapshot": "PENDING_DEPENDENCY",
+      "time_limit": "02:00:00"
+    },
+    {
+      "cpus": 4,
+      "dependency": "afterok:124153490",
+      "job_id": "124153520",
+      "memory_gib": 8,
+      "stage": "aggregate_independent_qa",
+      "state_at_snapshot": "PENDING_DEPENDENCY",
+      "time_limit": "02:00:00"
+    }
+  ],
+  "snapshot_utc": "2026-10-10T14:03:31.717283+00:00",
+  "status": "active_replacement_afterok_chain",
+  "version": "d67-metadata69-chain-v1"
+}

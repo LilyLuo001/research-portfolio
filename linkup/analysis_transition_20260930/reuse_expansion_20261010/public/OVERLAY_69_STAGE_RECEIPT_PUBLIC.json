@@ -1,0 +1,92 @@
+{
+  "checks": {
+    "all_69_receipts_complete": true,
+    "api_calls_zero": true,
+    "metadata_fields_pending_until_targeted_join": true,
+    "model_calls_zero": true,
+    "no_full_text_reads": true,
+    "old_occupation_task_typed_null_gate_in_projection": true,
+    "posting_rows_conserve_frozen_denominator": true
+  },
+  "claim_boundary": "Completed-output convenience wave, not a probability sample or full-corpus prevalence estimate.",
+  "code_sha256": {
+    "ks_project_additive.sbatch": "067c36e759d06486ce5cf83f7f8bdce07c3b035cbff89cfa679c7952f5aa488c",
+    "project_one_shard.py": "355d08820d4e15cd2136836c4fef757149b7bf0b268312ed64a2e663a352d945",
+    "wz_project_additive.sbatch": "3999a08b010ea621098c992fc1c513c12a7ee348e46eb43a77214a7a8afc0863"
+  },
+  "coverage": {
+    "kunshan": {
+      "output_bytes": 32584059,
+      "rows": 1097202,
+      "shards": 13
+    },
+    "posting_rows": 5804936,
+    "shards": 69,
+    "wuzhen": {
+      "output_bytes": 139854956,
+      "rows": 4707734,
+      "shards": 56
+    }
+  },
+  "created_utc": "2026-10-10T14:02:38.322252+00:00",
+  "frozen_manifest_sha256": "4374659120a71c188fd8aeebafc533b5435a141638f3ffaf4a5f9a8af0b02bad",
+  "global_manifest_stage": {
+    "job_id": "124153130",
+    "note": "Pending scheduled global hash binding; overlay completion totals above are final.",
+    "output": "public/preaggregate",
+    "state_at_snapshot": "RUNNING"
+  },
+  "jobs": [
+    {
+      "array_tasks": 13,
+      "exit_code": "0:0",
+      "job_id": "124152251",
+      "region": "kunshan",
+      "state": "COMPLETED"
+    },
+    {
+      "array_tasks": 14,
+      "exit_code": "0:0",
+      "job_id": "46240710",
+      "offset": 0,
+      "region": "wuzhen",
+      "state": "COMPLETED"
+    },
+    {
+      "array_tasks": 14,
+      "exit_code": "0:0",
+      "job_id": "46240859",
+      "offset": 14,
+      "region": "wuzhen",
+      "state": "COMPLETED"
+    },
+    {
+      "array_tasks": 14,
+      "exit_code": "0:0",
+      "job_id": "46241274",
+      "offset": 28,
+      "region": "wuzhen",
+      "state": "COMPLETED"
+    },
+    {
+      "array_tasks": 14,
+      "exit_code": "0:0",
+      "job_id": "46241468",
+      "offset": 42,
+      "region": "wuzhen",
+      "state": "COMPLETED"
+    }
+  ],
+  "scope": "Frozen 69 QA-passed completed-output shards; additive projection only, no full-text read, classifier, model, or API.",
+  "staged_inputs": {
+    "old_narrow_bytes": 208748977,
+    "old_narrow_shards": 69,
+    "old_v6_audit_shards": 69,
+    "old_v6_bytes": 423526859,
+    "old_v6_files": 2208,
+    "old_v6_rows": 7388749,
+    "old_v6_stage_identity_gate": "per-file path, bytes, and sha256"
+  },
+  "status": "complete",
+  "version": "d67-overlay69-stage-public-v1"
+}

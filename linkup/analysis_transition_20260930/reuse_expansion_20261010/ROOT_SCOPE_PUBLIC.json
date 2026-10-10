@@ -1,0 +1,42 @@
+{
+  "decision_id": "D67-existing-output-incremental-release",
+  "date": "2026-10-10",
+  "objective": "Turn already completed newer rule outputs into additive research columns on the completed old extraction base, extending the D66 worked comparison without repeating base cleaning or raw-text extraction.",
+  "required_inventory": "Freeze one manifest of already completed shards and their rule/overlay versions, engineering QA status, metadata coverage and old-base correspondence. Select one verified copy of duplicate regional outputs. Do not count running, failed, partial or receipt-only shards as completed data.",
+  "frozen_wave": {
+    "completed_qa_pass_shards": 69,
+    "kunshan": 13,
+    "wuzhen": 56,
+    "verified_metadata_shards_before_this_wave": 5,
+    "metadata_targets": 64,
+    "evidence": "WZ wave3 and wave4 production plus QA were verified completed; successor controller 46227986 remains held. The earlier 37-shard quick subtotal is superseded before execution by this frozen 69-shard manifest.",
+    "targeted_metadata_decision": "Reuse a retained cloud narrow-column cache and the existing successful targeted join for one shared scheduled pass over the frozen targets. Do not scan the cache once per shard, transfer the large cache to Mac/BU, or rebuild metadata from raw files. If existing cache cannot supply a field, retain missing status and quantify the supported comparison subset."
+  },
+  "execution": {
+    "engineering": "Sol high: adapt retained code, orchestrate scheduled shard joins and aggregation; no new parser or model.",
+    "inventory_and_independent_qa": "Sol medium: manifest/coverage verification and independent numerical checks.",
+    "interpretation": "GPT-6: scope, claim boundaries and one acceptance decision.",
+    "publication": "Luna low: code, public aggregates, receipts and decisions to the existing research Git directory.",
+    "compute": "SCNet scheduled compute near existing inputs. The successful Wuzhen binding recipe may be reused. At most four concurrent bounded-memory tasks; accelerator reservation does not imply accelerated execution.",
+    "local_machine": "Code, transport, provenance and Git only; no research-data computation.",
+    "excluded": "No model/API calls, full-text extraction, new raw-data downloads, full-corpus controller restart or deletion of existing outputs."
+  },
+  "required_products": [
+    "Cloud-only, versioned per-shard additive advertisement tables with exact canonical keys, source/version/status, retained old measured columns and newer occupation/task, newcomer and responsibility candidates.",
+    "Completed-shard, exact-old-match, engineering and metadata-coverage funnel, explicitly distinguishing this expansion from the completed old full corpus.",
+    "Same-occupation software-only versus any-AI candidate experience comparisons with fixed groups and normalized minimum-arm-count weights, using identical support for old/current outcome versions.",
+    "Newcomer wording by responsibility-wording cooccurrence and qualification/unknown coverage; preserve evidence locators to existing source tables.",
+    "Independent key, denominator, missing-state and aggregate reconciliation checks plus scheduler/input/code/output receipts."
+  ],
+  "metadata_policy": "Retain available COMPANY_ID, official occupation code, CREATED and geography plus missing/unverified states. Incomplete metadata never deletes an ad from the release. Use a retained cache for bounded target lookups where economical; do not block the release by recreating the full metadata pipeline. Company-by-occupation comparison is a sensitivity only if supported by existing reliable fields.",
+  "measurement_policy": [
+    "Preserve old/current meanings from D66. Old occupation/task is NA, not zero. Sparse audit non-detection is not proof of no requirement.",
+    "Experience-object indicators measure expressions classified by the named rules, not latent human capital. In particular, current general_work is a fallback when no specific object is assigned to a clause; its rate is not the share of jobs requiring any work experience, and its difference from related-experience rates is not an identified substitution between general and specific human capital.",
+    "Literal numeric bounds remain clause-level evidence; do not invent a universal minimum experience requirement.",
+    "Unknown or conditional clauses can coexist with usable clauses; do not remove every ad with any ambiguity flag.",
+    "Newcomer and responsibility indicators describe wording, not verified entry eligibility or seniority. The dual duty-context diagnostic is too sparse to use as the sole primary filter.",
+    "CREATED describes a posting observation, not a dated text version. No historical text-change or causal technology-effect conclusion.",
+    "This completed-shard set is not a representative probability sample; no full-corpus semantic prevalence claim."
+  ],
+  "stop_rule": "One frozen completed-output manifest, one incremental release, one necessary QA pass and one root interpretation. Fix operational or numerical failures only; do not expand measurement definitions, redraw samples or restart full-corpus extraction."
+}

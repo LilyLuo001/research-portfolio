@@ -1,0 +1,42 @@
+{
+  "version": "d67-root-stage-acceptance-v1",
+  "date": "2026-10-10",
+  "status": "additive_projection_complete; final_metadata_and_analysis_not_yet_accepted",
+  "accepted_stage": {
+    "shards": 69,
+    "posting_rows": 5804936,
+    "kunshan_rows": 1097202,
+    "wuzhen_rows": 4707734,
+    "basis": "OVERLAY_69_STAGE_RECEIPT_PUBLIC.json; completed array exits and per-shard receipts",
+    "scope": "Existing completed outputs projected as additive measurements; no new full-text extraction or model inference"
+  },
+  "metadata_preparation": {
+    "job_id": "124152737",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "new_keys": 5380710,
+    "reused_first5_keys": 424226
+  },
+  "operational_correction": {
+    "cause": "Records COMPANY_ID and STATE values required string normalization before Arrow output",
+    "old_scan_array": "124153205",
+    "old_dependents_cancelled": ["124153277", "124153280"],
+    "replacement_chain": ["124153457", "124153469", "124153482", "124153490", "124153520"],
+    "policy": "Keep failure provenance; successful predecessor and runtime receipt gates required; no repeat submission solely because of queue priority"
+  },
+  "remaining_acceptance": [
+    "Global output manifest binding and row conservation",
+    "Metadata join and explicit missing-state coverage",
+    "Same-occupation comparison with fixed common support and weights",
+    "Independent final numerical and engineering QA"
+  ],
+  "interpretation_limits": [
+    "The 69-shard wave is not a probability sample or a full-corpus prevalence estimate",
+    "General-work is an operational wording category for clauses without a specific experience object, not a measure of general human capital",
+    "Old occupation/task is unmeasured NA; sparse audit non-detection is not semantic absence",
+    "D67 old numeric coverage is audit-only and must not be called the full old numeric union",
+    "Posting dates do not establish historical versions of the current text",
+    "Company-by-occupation sensitivity is not yet delivered",
+    "Engineering acceptance does not establish semantic accuracy or causal effects"
+  ]
+}
