@@ -1,0 +1,70 @@
+{
+  "decision_id": "D59-root-operational-acceptance",
+  "status": "accepted_to_continue_not_whole_corpus_complete",
+  "as_of_utc": "2026-10-10T01:56:36Z",
+  "frozen_runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+  "accepted_previous_production": {
+    "shards": 5,
+    "postings": 424226,
+    "evidence_rows": 2162637
+  },
+  "new_completed_step": {
+    "name": "first5_metadata_key_preparation",
+    "job_id": 8004986,
+    "postings": 424226,
+    "prefix_partitions": 16,
+    "qa_status": "pass",
+    "scope": "Prepared and checked linkage keys; employer/occupation join is not yet complete"
+  },
+  "deployed_controller_sha256": "0c04cf66e871e0b7b9be87689321ecc6bf16d2d7ad669f363f85fe0193c90a98",
+  "controller_review": "Independent static review passed; root verified deployed SHA; receipt/identity gates before staging cleanup; previously accepted shards skipped",
+  "current_bootstrap": {
+    "expected_input_bytes": 2180308411,
+    "observed_aggregate_bytes_per_second_approx": 370000,
+    "production_array_job_id": "8004875",
+    "production_concurrency": 4,
+    "production_resources_each": {
+      "cpu": 4,
+      "memory_gb": 8,
+      "walltime_hours": 2
+    },
+    "production_state": "dependency_held",
+    "production_tasks": 8,
+    "qa_job_id": "8004985",
+    "qa_state": "dependency_held",
+    "snapshot_staged_bytes": 295657472,
+    "stage_job_ids": [
+      "8005067",
+      "8005068",
+      "8005069",
+      "8005070"
+    ],
+    "stage_resources_each": {
+      "cpu": 1,
+      "memory_gb": 4,
+      "walltime_hours": 8
+    },
+    "stage_states": [
+      "running",
+      "running",
+      "running",
+      "running"
+    ]
+  },
+  "automatic_continuation": {
+    "controller_job_id": "8005004",
+    "depends_on_qa_job_id": "8004985",
+    "scope": "KS admissible remaining manifest entries only",
+    "original_sources_deleted": false,
+    "local_computer_required_for_runtime": false,
+    "actual_next_wave_execution_proven": false
+  },
+  "remaining": [
+    "Current 8-shard transfer, frozen extraction and independent readback",
+    "KS rolling next-wave execution after successful bootstrap QA",
+    "Metadata source per-file inventory retrieval and verified cache transfer, followed by targeted join",
+    "WZ connectivity remains blocked; its shards are not counted as active"
+  ],
+  "claim_boundary": "Operational integrity and rule-observed text candidates only; no new semantic accuracy, historical-body time or causal claim",
+  "new_model_inference_or_api_calls": 0
+}

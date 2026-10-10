@@ -1,0 +1,65 @@
+{
+  "decision_id": "D59-cloud-rolling-production-and-metadata",
+  "date": "2026-10-10",
+  "status": "static_implementation_ready_awaiting_frozen_per_file_source_inventories",
+  "implementation": {
+    "path": "metadata_join/targeted_metadata_join.py",
+    "sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+    "runtime": "Python 3.8+ and PyArrow streaming; DuckDB not required",
+    "execution": "all research-data reads and joins scheduled on BU"
+  },
+  "target": {
+    "accepted_initial_posting_rows": 424226,
+    "join_type": "denominator-preserving left linkage",
+    "records_key": [
+      "JOB_HASH",
+      "RECORD_SOURCE_ROW"
+    ],
+    "onet_key": [
+      "JOB_HASH"
+    ],
+    "canonical_locator_retained": [
+      "JOB_HASH",
+      "SOURCE_FILE",
+      "SOURCE_ROW",
+      "RECORD_SOURCE_ROW"
+    ],
+    "old_candidate_frame_filter_applied": false
+  },
+  "source_cache": {
+    "records_index_path": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1/hash_prefix=*/*.parquet",
+    "records_index_bytes": 15415489237,
+    "records_complete_sha256_from_prior_verified_release": "77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+    "onet_path": "/public/home/lilysharp/dewey_downloads/data/dewey_ONET_tables/onet-taxonomy/*.parquet",
+    "onet_bytes": 11190966290,
+    "onet_inventory_sha256_from_prior_verified_release": "d144a16e58df06bf608821d83a2a8c33534ecf36fc1993d48c88d2d917587e8d",
+    "combined_records_onet_bytes": 26606455527,
+    "retained_cache_cap_bytes": 35000000000,
+    "remaining_before_official_codes_hits_and_receipts_bytes": 8393544473,
+    "per_extraction_batch_cap_bytes": 10000000000,
+    "transport_owner": "Sol; one credential owner and no competing writer",
+    "frozen_per_file_size_sha_inventories": "required before large transfer"
+  },
+  "states_and_gates": {
+    "preserved": [
+      "record missing",
+      "company missing",
+      "O*NET row missing",
+      "occupation code blank",
+      "occupation placeholder 99-9999.00",
+      "occupation code unofficial",
+      "state missing",
+      "state unmapped"
+    ],
+    "blocking": [
+      "Records one-to-many",
+      "O*NET one-to-many",
+      "posting versus Records CREATED calendar-date disagreement",
+      "posting denominator loss or expansion",
+      "source inventory SHA or byte mismatch"
+    ],
+    "arbitrary_deduplication": false
+  },
+  "reuse_policy": "Retain the verified 26.6 GB source cache. Group newly verified posting keys into metadata waves and scan the cache once per wave, rather than once per small production shard.",
+  "claim_boundary": "Current-delivery O*NET and Records observation metadata attached to frozen posting keys; no semantic relabeling, historical wording inference, population claim or causal interpretation."
+}

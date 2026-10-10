@@ -1,0 +1,68 @@
+{
+  "api_calls": 0,
+  "bootstrap": {
+    "expected_input_bytes": 2180308411,
+    "observed_aggregate_bytes_per_second_approx": 370000,
+    "production_array_job_id": "8004875",
+    "production_concurrency": 4,
+    "production_resources_each": {
+      "cpu": 4,
+      "memory_gb": 8,
+      "walltime_hours": 2
+    },
+    "production_state": "dependency_held",
+    "production_tasks": 8,
+    "qa_job_id": "8004985",
+    "qa_state": "dependency_held",
+    "snapshot_staged_bytes": 295657472,
+    "stage_job_ids": [
+      "8005067",
+      "8005068",
+      "8005069",
+      "8005070"
+    ],
+    "stage_resources_each": {
+      "cpu": 1,
+      "memory_gb": 4,
+      "walltime_hours": 8
+    },
+    "stage_states": [
+      "running",
+      "running",
+      "running",
+      "running"
+    ]
+  },
+  "created_utc": "2026-10-10T01:56:36Z",
+  "frozen_runtime": {
+    "controller_sha256": "0c04cf66e871e0b7b9be87689321ecc6bf16d2d7ad669f363f85fe0193c90a98",
+    "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "stage_sha256": "46967f1a84fd9f3ca6636544af2bf19d59f8e5044e8853f3f4f7fd72d3b4e359",
+    "wave_verifier_sha256": "b4d162fd1ebecaf8fbf376476128baf9306d1c2d70a98ff65a3f443120fec84c"
+  },
+  "model_calls": 0,
+  "rolling_controller": {
+    "chain": "prior QA/hash gate -> cleanup task-created staging -> quota admission -> 4 staging lanes -> production array -> independent QA -> next controller",
+    "hash_mismatch_retry": false,
+    "job_id": "8005004",
+    "max_transient_ssh_attempts": 3,
+    "state": "dependency_held_only_on_8004985"
+  },
+  "route_status": {
+    "alternate_kunshan_ipv4_probe": {
+      "bytes_requested": 16777216,
+      "corrected_job_id": "8005327",
+      "corrected_status": "queued",
+      "initial_job_id": "8005160",
+      "initial_status": "failed_closed_host_alias_configuration",
+      "trusted_alias_precheck": "exact_nondefault_port_alias_present",
+      "walltime_minutes": 10
+    },
+    "kunshan": "active_strict_host_key",
+    "wuzhen": "blocked_after_single_ipv4_timeout"
+  },
+  "scope": "KS-only rolling production while WZ route is blocked; no claim all 2464 shards are active",
+  "source_deletion": false,
+  "status": "active",
+  "version": "d59-continuation-live-ledger-v1"
+}

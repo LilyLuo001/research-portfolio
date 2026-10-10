@@ -1,0 +1,33 @@
+{
+  "checks": {
+    "canonical_job_hash_unique": true,
+    "canonical_locator_unique": true,
+    "key_file_bytes_match_receipt": true,
+    "key_file_rows_partition_denominator": true,
+    "posting_denominator_424226": true,
+    "prefix_counts_partition_denominator": true,
+    "receipt_complete": true,
+    "runtime_capabilities_all_true": true,
+    "scheduler_exit_zero": true
+  },
+  "created_utc": "2026-10-10T01:47:22.608840+00:00",
+  "identity": {
+    "key_receipt_sha256": "008b2e3d4efa8e68dbbc23fef530e33973c685566387a99283a4fd141ac9f2ac",
+    "metadata_join_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+    "postings_manifest_sha256": "5136d832a1073a58dccb3bda15fd5a8ef336f513f8f5644145978fdf9545d615",
+    "qacct_sha256": "e3f4adbed0413cac59c6cd6a3494111fc9cef9a7795223a2747b217ef24132c3"
+  },
+  "job_id": 8004986,
+  "observed": {
+    "key_output_bytes": 15144315,
+    "maxvmem": "1.107G",
+    "posting_rows": 424226,
+    "prefix_files": 16,
+    "pyarrow": "4.0.0",
+    "python": "3.8.10",
+    "wallclock_seconds": 34
+  },
+  "scope": "public receipt and scheduler-accounting consistency only; no private rows read locally",
+  "status": "pass",
+  "version": "d59-first5-key-prep-qa-v1"
+}

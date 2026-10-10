@@ -1,0 +1,57 @@
+{
+  "approved_sources": {
+    "combined_records_onet_bytes": 26606455527,
+    "metadata_cache_cap_bytes": 35000000000,
+    "official_codes": {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/official_onet2019_occupations.csv",
+      "sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba"
+    },
+    "onet": {
+      "collection_inventory_sha256": "d144a16e58df06bf608821d83a2a8c33534ecf36fc1993d48c88d2d917587e8d",
+      "glob": "/public/home/lilysharp/dewey_downloads/data/dewey_ONET_tables/onet-taxonomy/*.parquet",
+      "total_bytes": 11190966290
+    },
+    "records": {
+      "collection_marker_sha256": "77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+      "glob": "/public/home/lilysharp/linkup_analysis_v1/stage_b/records_index_v1/hash_prefix=*/*.parquet",
+      "total_bytes": 15415489237
+    }
+  },
+  "automatic_chain_after_cache": [
+    "Validate every cached file bytes/SHA against frozen per-file inventory and exact combined source bytes under 35GB cap.",
+    "Run extract-batch in <=10GB source batches against the existing 424226-key cache.",
+    "Run finalize as denominator-preserving left join; block on Records/O*NET multiplicity, CREATED date disagreement, inventory mismatch, or denominator change.",
+    "Publish public extraction/finalization receipts and scheduler accounting; retain source cache."
+  ],
+  "completed": {
+    "join_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+    "key_output_bytes": 15144315,
+    "key_prep_job_id": 8004986,
+    "key_qa": "FIRST5_KEY_PREP_QA_PUBLIC.json",
+    "key_qa_sha256": "04f1e9e66e21550e19da4e7d91916688ca35e7dbcaaee88b84632afc03a84568",
+    "key_receipt": "FIRST5_KEY_PREP_RECEIPT_PUBLIC.json",
+    "key_receipt_sha256": "008b2e3d4efa8e68dbbc23fef530e33973c685566387a99283a4fd141ac9f2ac",
+    "posting_keys": 424226,
+    "prefix_files": 16
+  },
+  "created_utc": "2026-10-10T01:58:02.547542+00:00",
+  "missing_prerequisite": {
+    "admission": "Totals must equal 15415489237 and 11190966290 bytes and the frozen collection identities must be recorded before cache transfer.",
+    "finding": "No retained per-file path/size/SHA inventory was found in reviewed public artifacts; collection-level digests are insufficient for per-file resumable transfer admission.",
+    "required_artifact": "Source-side scheduled, canonically sorted JSONL with stable source_id, absolute source path, bytes, SHA256 and source_kind for every Records/O*NET file, plus public receipt binding inventory SHA and exact byte totals."
+  },
+  "not_done": [
+    "No metadata source cache transfer was submitted.",
+    "No metadata extraction or final join was run.",
+    "No private research rows were read locally."
+  ],
+  "status": "blocked_pending_source_side_per_file_inventory",
+  "transfer_handoff": {
+    "destination": "/projectnb/econdept/qluo/linkup_rulefirst_20261008/continuation_20261010/metadata_join/source_cache",
+    "measured_aggregate_rate_mib_per_second_approx": 0.37,
+    "minimum_elapsed_hours_at_measured_rate_approx": 20.0,
+    "owner": "Sol is sole source-credential and cache writer owner",
+    "requirement": "Resumable scheduled transfer with per-file partial/atomic-ready publication, disjoint lanes, realistic >=24-36h walltime, and no competing writers."
+  },
+  "version": "d59-metadata-cache-handoff-v1"
+}

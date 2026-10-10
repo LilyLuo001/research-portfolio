@@ -1,0 +1,72 @@
+{
+  "decision_id": "D59-cloud-rolling-production-and-metadata",
+  "date": "2026-10-10",
+  "authorization": "User directs continuation after accepted five actual corpus shards. Reuse frozen measurement; no API or model inference.",
+  "accepted_previous": {
+    "postings": 424226,
+    "evidence": 2162637,
+    "processed": 424225,
+    "invalid_text_retained": 1,
+    "set_qa_job": "7979461"
+  },
+  "production": {
+    "target": "Admissible remaining shards in existing frozen2464-source manifest; skip already verified5 by exact identity",
+    "concurrent_cpu_tasks_max": 4,
+    "cores_per_task": 4,
+    "memory_gib_per_task": 8,
+    "semantic_code_change": false,
+    "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "execution": "Durable BU controller with scheduled research workers and automated integrity QA; no login-node research processing.",
+    "admission_checks": [
+      "Exact cached source+sidecar bytes/SHA",
+      "Exclusive per-input writer lock, .partial transfer, atomic publication",
+      "Per-shard isolated output and bounded retries",
+      "Resume only matching input/code and independently verified completion",
+      "Stop admission on quota reserve breach or unresolved repeated failure"
+    ]
+  },
+  "transport": {
+    "preferred": "BU directly pulls source files using user-provided existing source identities",
+    "credentials": "Only necessary identities in0700 private directory and0600 files outside code/Git; existing trusted host keys, strict host verification; no secrets in logs or public artifacts",
+    "offline": "Controller and input staging must remain on BU; no dependence on Mac being online",
+    "delete_scope": "Never delete or modify SCNet raw sources. Only task-created redundant BU staging may be removed after corresponding output/checkpoint is verified and original source retained; no unique outputs deleted."
+  },
+  "storage": {
+    "project_quota_gb_observed": 30000,
+    "project_usage_gb_observed": 28766.52,
+    "task_total_cap_bytes": 200000000000,
+    "raw_staging_cap_bytes": 10000000000,
+    "metadata_stage_cap_bytes": 35000000000,
+    "output_budget_bytes": 125000000000,
+    "other_buffers_reserve_bytes": 30000000000,
+    "minimum_project_remaining_bytes": 200000000000,
+    "minimum_global_remaining_bytes": 300000000000,
+    "note": "Observed shared availability is not exclusive reservation; enforce admission limits during operation."
+  },
+  "metadata": {
+    "target": "Attach employer/current-delivery occupation to all new canonicalUSA output keys; do not restrict to old6,010,975 candidates",
+    "existing_source_bytes": {
+      "records_index": 15415489237,
+      "onet_source": 11190966290
+    },
+    "method": "Stage26.606GB of existing narrow source indices once under35GB metadata cap. Scan for the accepted424226 target keys first, then grouped production waves rather than each shard; materialize only matched metadata and full-denominator left-joined outputs. Do not duplicate a second full metadata lookup within35GB cap.",
+    "keys": [
+      "JOB_HASH",
+      "RECORD_SOURCE_ROW where applicable",
+      "SOURCE_FILE/SOURCE_ROW retained as canonical description locator"
+    ],
+    "checks": [
+      "Left join preserves target denominator",
+      "Detect multiplicity before selection; no arbitrary deduplication",
+      "Separate no-match, missing code, unofficial occupation and unmapped geography",
+      "COMPANY_ID is scraper company identity; CREATED is observation metadata, not body version time"
+    ]
+  },
+  "claim_boundary": "Operational rule-observed text indicators; not semantic accuracy, population representativeness or causal AI/computerization effects.",
+  "delegation": {
+    "root": "D59 routing, scope and final acceptance",
+    "Sol": "Production transport/controller and actual scheduler tasks",
+    "independent_agent": "Metadata join logic and independent integrity review",
+    "Luna": "Sanitized methods, receipts and Git after verified runtime facts"
+  }
+}
