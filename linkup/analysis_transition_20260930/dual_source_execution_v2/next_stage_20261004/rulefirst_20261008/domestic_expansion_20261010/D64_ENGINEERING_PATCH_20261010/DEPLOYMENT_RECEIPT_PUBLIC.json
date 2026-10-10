@@ -1,0 +1,45 @@
+{
+  "version": "d64-wuzhen-bounded-repair-deployment-v1",
+  "status": "active_bounded_rolling_chain",
+  "cloud_root": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/d64_engineering_patch_20261010",
+  "measurement_contract_sha256": "62d56fbef87ecf0afd8479fee95101668aec0ffed23ea39cacc0ac39e966526f",
+  "wave2": {
+    "production_job_id": "46222162",
+    "production_state": "COMPLETED",
+    "qa_job_id": "46222165",
+    "qa_state": "COMPLETED",
+    "qa_exit_code": "0:0",
+    "qa_status": "pass",
+    "new_shard_count": 16,
+    "combined_shard_count": 24,
+    "output_bytes": 730775894
+  },
+  "controller_replacement": {
+    "old_controller_job_id": "46222400",
+    "old_controller_final_state": "CANCELLED",
+    "replacement_controller_job_id": "46225194",
+    "replacement_controller_state": "COMPLETED",
+    "replacement_controller_exit_code": "0:0"
+  },
+  "wave3_submitted": {
+    "production_array_job_id": "46225241",
+    "production_state_at_receipt": "RUNNING_3_OF_3",
+    "qa_job_id": "46225249",
+    "qa_state_at_receipt": "PENDING_AFTEROK_PRODUCTION",
+    "next_controller_job_id": "46225251",
+    "controller_state_at_receipt": "PENDING_AFTEROK_QA",
+    "selected_shards": 16
+  },
+  "rolling_limit": {
+    "target_new_shards_waves_2_5": 64,
+    "target_last_wave": 5,
+    "no_additional_expansion_authorized": true
+  },
+  "first5_public_qa": {
+    "job_id": "46225195",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "status": "pass",
+    "scope": "exact public row keys, uniqueness and public arithmetic; no independent semantic recomputation"
+  }
+}

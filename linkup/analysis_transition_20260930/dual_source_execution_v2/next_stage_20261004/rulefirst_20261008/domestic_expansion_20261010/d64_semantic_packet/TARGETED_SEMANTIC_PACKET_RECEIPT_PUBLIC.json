@@ -1,0 +1,90 @@
+{
+  "context_match_counts": {
+    "general_experience": 2,
+    "graduate_no_experience": 2,
+    "independent_supervision": 2,
+    "related_experience": 1,
+    "technology_genai": 1,
+    "tool_numeric_condition": 2
+  },
+  "created_utc": "2026-10-10T07:43:53.746079+00:00",
+  "evidence_files": 4,
+  "interpretation": "Directed retrieval buckets only; bucket membership is not a validated feature label and this packet is not an accuracy estimate.",
+  "private_packet_path": "/work/home/lilysharp/linkup_rulefirst_20261008/domestic_expansion_20261010/d64_semantic_packet/private/TARGETED_SEMANTIC_PACKET_PRIVATE.json",
+  "private_packet_sha256": "194657d91bceb379e1b6bd2e96aa761e14b6c6abb224cad93553f02a5a79a262",
+  "purpose": "directed diagnostic sample; not an accuracy estimate",
+  "retrieval_bucket_counts": {
+    "general_experience": 2,
+    "graduate_no_experience": 2,
+    "independent_supervision": 2,
+    "related_experience": 2,
+    "technology_genai": 2,
+    "tool_numeric_condition": 2
+  },
+  "retrieved_kind_rule": [
+    {
+      "kind": "experience",
+      "retrieval_bucket": "general_experience",
+      "rule": "experience_clause"
+    },
+    {
+      "kind": "experience",
+      "retrieval_bucket": "general_experience",
+      "rule": "experience_clause"
+    },
+    {
+      "kind": "education",
+      "retrieval_bucket": "graduate_no_experience",
+      "rule": "degree_phrase"
+    },
+    {
+      "kind": "education",
+      "retrieval_bucket": "graduate_no_experience",
+      "rule": "degree_phrase"
+    },
+    {
+      "kind": "task",
+      "retrieval_bucket": "independent_supervision",
+      "rule": "explicit_people_supervision"
+    },
+    {
+      "kind": "task",
+      "retrieval_bucket": "independent_supervision",
+      "rule": "explicit_independent_responsibility"
+    },
+    {
+      "kind": "experience",
+      "retrieval_bucket": "related_experience",
+      "rule": "experience_clause"
+    },
+    {
+      "kind": "experience",
+      "retrieval_bucket": "related_experience",
+      "rule": "experience_clause"
+    },
+    {
+      "kind": "technology",
+      "retrieval_bucket": "technology_genai",
+      "rule": "lexical_genai"
+    },
+    {
+      "kind": "technology",
+      "retrieval_bucket": "technology_genai",
+      "rule": "lexical_genai"
+    },
+    {
+      "kind": "experience",
+      "retrieval_bucket": "tool_numeric_condition",
+      "rule": "experience_clause"
+    },
+    {
+      "kind": "experience",
+      "retrieval_bucket": "tool_numeric_condition",
+      "rule": "experience_clause"
+    }
+  ],
+  "rows_scanned_until_complete_or_eof": 8192,
+  "source_wave": 1,
+  "status": "retrieval_complete_not_semantically_validated",
+  "version": "d64-targeted-semantic-diagnostic-receipt-v1"
+}

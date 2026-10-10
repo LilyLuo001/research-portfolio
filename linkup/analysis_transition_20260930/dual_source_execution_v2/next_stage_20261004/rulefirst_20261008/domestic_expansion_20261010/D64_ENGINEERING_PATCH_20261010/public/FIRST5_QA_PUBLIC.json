@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "entry_2x2_denominators": true,
+    "exact_unique_table_keys": {
+      "company_occupation": 22,
+      "entry_cooccurrence": 48,
+      "occupation_standardized": 44,
+      "raw_outcomes": 132,
+      "technology_groups": 4
+    },
+    "output_hashes": true,
+    "raw_denominators": true,
+    "standardized_public_bounds_and_delta": true,
+    "technology_partition_424225": true
+  },
+  "created_utc": "2026-10-10T07:49:18.289191+00:00",
+  "producer_receipt_sha256": "d82e78759d5238f3f0b9cafd0562426a289bde23c99d1beee266ffb96e55be71",
+  "scope": "public aggregates only; validates exact row keys, uniqueness and public arithmetic; does not independently recompute common-support cells, weights, stratified rates or semantics",
+  "status": "pass",
+  "version": "d64-first5-public-output-qa-v2"
+}

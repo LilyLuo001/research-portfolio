@@ -6,6 +6,10 @@ The current accepted metadata result covers only the first five-shard keys (424,
 
 See `FIELD_DICTIONARY_PUBLIC.json` for the stable field meanings and missing-state rules.
 
+## D64 bounded continuation
+
+D64 records the necessary core-priority ruling, minimal engineering repair, and continuation of the existing candidate expansion under the same 64-shard bound. It does not establish semantic pass-through. Candidate expansion is approved as an evidence-bearing layer; the first-five QA did not independently recompute weights or common-support rates, and the 12 targeted evidence items were root review rather than 12 full documents or an accuracy estimate. General and graduate retrieval buckets are not verified feature labels. See [`d64_acceptance/CORE_PRIORITY_DECISION.json`](d64_acceptance/CORE_PRIORITY_DECISION.json), [`d64_acceptance/ROOT_MEASUREMENT_USE_CONTRACT.json`](d64_acceptance/ROOT_MEASUREMENT_USE_CONTRACT.json), [`d64_semantic_packet/TARGETED_SEMANTIC_PACKET_RECEIPT_PUBLIC.json`](d64_semantic_packet/TARGETED_SEMANTIC_PACKET_RECEIPT_PUBLIC.json), and [`D64_ENGINEERING_PATCH_20261010/PATCH_README_PUBLIC.md`](D64_ENGINEERING_PATCH_20261010/PATCH_README_PUBLIC.md).
+
 
 WZ wave 0001 已完成：production `46220171` 四个子任务成功，QA `46220172` 成功；335,958 postings、1,715,007 evidence rows，旧 4 + 新 4 cross-8 keys unique。此为工程覆盖验收，不是语义 gold 或全库结论。下一波若仅已提交仍保持 pending。
 
