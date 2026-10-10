@@ -1,0 +1,65 @@
+{
+  "claim_boundary": "metadata mapping for frozen posting keys; current O*NET snapshot and Records observation metadata; no semantic relabeling or historical-text inference",
+  "counts": {
+    "company_observed_company_scrape_entity": 424226,
+    "complete_company_occ_region": 421114,
+    "complete_occ_region": 421114,
+    "created_same_calendar_date": 424226,
+    "geography_mapped_region": 421323,
+    "geography_state_missing": 2663,
+    "geography_state_unmapped": 240,
+    "occupation_blank_code": 4,
+    "occupation_no_onet_row": 154,
+    "occupation_official_code": 424014,
+    "occupation_placeholder_99-9999.00": 54,
+    "onet_matched_one": 424072,
+    "onet_missing": 154,
+    "records_matched_one": 424226
+  },
+  "created_utc": "2026-10-10T06:12:39.407437+00:00",
+  "identity": {
+    "code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+    "expected_onet_bytes": 11190962194,
+    "expected_records_bytes": 15415146010,
+    "expected_rows": 424226,
+    "key_receipt_sha256": "008b2e3d4efa8e68dbbc23fef530e33973c685566387a99283a4fd141ac9f2ac",
+    "official_codes_sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+    "onet_manifest_sha256": "30989a0e007d9834d5d5611f912d21f239cea88cd3ab9182ec9b308e41360acb",
+    "onet_source_inventory_sha256": "ad19d7cdb535a084a414ee8e920d680791cca12a75e2bf8fdff4444134929e9b",
+    "records_manifest_sha256": "c1efcb6c7334a5b78e8cc098b8e34fc8e5bd97a417d6869d6313e03ea139e3bf",
+    "records_source_inventory_sha256": "ff7d9d7567282308472e944b2ff2bdf10698f428d98ffc41534ffd623a86ffb9",
+    "version": "d58-targeted-metadata-join-v1"
+  },
+  "output_bytes": 26941119,
+  "output_rows": 424226,
+  "output_sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029",
+  "posting_denominator": 424226,
+  "row_conservation": true,
+  "runtime": {
+    "capabilities": {
+      "parquetfile_iter_batches": true,
+      "table_from_arrays": true,
+      "table_to_pydict": true,
+      "zstd_codec": true
+    },
+    "duckdb": "not_required_by_this_pyarrow_streaming_implementation",
+    "pyarrow": "11.0.0",
+    "python": "3.8.10"
+  },
+  "source_inventory": {
+    "maximum_staged_batch_bytes": 9995527118,
+    "official_codes_bytes": 267048,
+    "onet_bytes": 11190962194,
+    "onet_files": 62,
+    "onet_hit_bytes": 10043049,
+    "records_bytes": 15415146010,
+    "records_files": 1160,
+    "records_hit_bytes": 24644705,
+    "retained_source_cache_bytes": 26606375252,
+    "retained_source_cache_cap_bytes": 35000000000,
+    "rolling_extraction_batch_cap_bytes": 10000000000
+  },
+  "stage": "finalize",
+  "status": "complete",
+  "version": "d58-targeted-metadata-join-v1"
+}

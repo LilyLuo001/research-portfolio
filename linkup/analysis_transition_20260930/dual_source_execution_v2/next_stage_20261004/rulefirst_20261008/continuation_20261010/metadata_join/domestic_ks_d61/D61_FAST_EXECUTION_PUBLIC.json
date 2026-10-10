@@ -1,0 +1,106 @@
+{
+  "accepted_chain": {
+    "array_job_id": "124124922",
+    "finalizer_job_id": "124124933",
+    "prepare_job_id": "124124920",
+    "states": {
+      "array_1": "COMPLETED 0:0",
+      "array_2": "COMPLETED 0:0",
+      "array_3": "COMPLETED 0:0",
+      "array_4": "COMPLETED 0:0",
+      "finalizer": "COMPLETED 0:0",
+      "prepare": "COMPLETED 0:0"
+    }
+  },
+  "aggregate_checks": {
+    "all_six_partition_sums_equal_denominator": true,
+    "final_qa_status": "pass",
+    "onet_hit_rows": 424072,
+    "onet_source_rows_scanned": 356299258,
+    "output_rows": 424226,
+    "posting_denominator": 424226,
+    "records_hit_rows": 424226,
+    "records_source_rows_scanned": 356449214
+  },
+  "artifacts": {
+    "D61_FAST_JOBS_SACCT_PUBLIC.txt": {
+      "bytes": 1285,
+      "sha256": "a672b7788ce3ba55baa715c9de2bb624ab89d7fe8f15bdc9d2068603d900eb36"
+    },
+    "FAST_EXTRACT_QUALIFICATION_PUBLIC.json": {
+      "bytes": 1903,
+      "sha256": "eb94ab0866c8a9d9bb1c7365bd41c1e1d5c6098285b53392d0a86999158a1350"
+    },
+    "FAST_SPECS_RECEIPT_PUBLIC.json": {
+      "bytes": 1786,
+      "sha256": "0284963c1b7b2d688639c1acb7c73eb1020e76590fa2e079ddf83a05bb0a0820"
+    },
+    "FIRST5_METADATA_FAST_QA_PUBLIC.json": {
+      "bytes": 1746,
+      "sha256": "add8bb22ec135d6ea8329c11c4cb5ecf573db839f4fd7d921292694746c3b281"
+    },
+    "FIRST5_METADATA_FAST_RECEIPT_PUBLIC.json": {
+      "bytes": 2680,
+      "sha256": "a04c447eb8cab2155debdc45a2f0ce2d00249f0dfaa829c7e69ed2d7f4382227"
+    }
+  },
+  "batch_aggregates": [
+    {
+      "batch": "records_01",
+      "hit_rows": 274587,
+      "post_key_filter_rows": 274587,
+      "source_bytes": 9995527118,
+      "source_rows_scanned": 231145755
+    },
+    {
+      "batch": "records_02",
+      "hit_rows": 149639,
+      "post_key_filter_rows": 149639,
+      "source_bytes": 5419618892,
+      "source_rows_scanned": 125303459
+    },
+    {
+      "batch": "onet_01",
+      "hit_rows": 371175,
+      "post_key_filter_rows": 371175,
+      "source_bytes": 9795327314,
+      "source_rows_scanned": 311871955
+    },
+    {
+      "batch": "onet_02",
+      "hit_rows": 52897,
+      "post_key_filter_rows": 52897,
+      "source_bytes": 1395634880,
+      "source_rows_scanned": 44427303
+    }
+  ],
+  "claim_boundary": "metadata mapping for frozen posting keys; current O*NET snapshot and Records observation metadata; no semantic relabeling or historical-text inference",
+  "created_utc": "2026-10-10T06:15:18.580347+00:00",
+  "output_private_artifact": {
+    "bytes": 26941119,
+    "rows": 424226,
+    "sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029"
+  },
+  "status": "pass",
+  "superseded_attempts": [
+    {
+      "job_id": "124116745",
+      "reason": "Serial implementation was mechanically superseded after qualified Arrow prefilter; no accepted R1 receipt; partial retained and never merged.",
+      "state": "CANCELLED"
+    },
+    {
+      "job_id": "124124467",
+      "reason": "Prepare wrapper referenced unavailable module initialization path and failed before research-data processing.",
+      "state": "FAILED 1:0"
+    },
+    {
+      "job_ids": [
+        "124124470",
+        "124124478"
+      ],
+      "reason": "Dependencies of failed prepare; replaced by accepted chain with verified module initialization.",
+      "state": "CANCELLED before start"
+    }
+  ],
+  "version": "d61-fast-execution-public-v1"
+}

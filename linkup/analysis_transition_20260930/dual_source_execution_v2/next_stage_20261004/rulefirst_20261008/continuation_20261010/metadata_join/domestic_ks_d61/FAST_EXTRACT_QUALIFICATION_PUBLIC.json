@@ -1,0 +1,52 @@
+{
+  "base_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+  "batch_size": 262144,
+  "claim": "mechanical extraction equivalence only; no semantic certification",
+  "created_utc": "2026-10-10T05:42:12.913166+00:00",
+  "fast_code_sha256": "598615d8d93c3c14cfbab8869508949ebeab61fcae5adc91281acad4a37dd161",
+  "qualification_code_sha256": "2117bcbdc2ca66cb14ec3c229695468271fceee77f1a997e760baa23be1fdc2c",
+  "real_files": [
+    {
+      "exact_ordered_equality": true,
+      "fast_seconds": 0.08283090591430664,
+      "kind": "records",
+      "old_seconds": 0.0029833316802978516,
+      "ordered_selected_rows_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "qualification_batches": 2,
+      "scanned_rows": 82,
+      "selected_rows": 0,
+      "source_bytes": 7775,
+      "source_id": "job-records_1_7_3.snappy.parquet",
+      "speedup_ratio": 0.036017132100236604
+    },
+    {
+      "exact_ordered_equality": true,
+      "fast_seconds": 0.47898101806640625,
+      "kind": "onet",
+      "old_seconds": 3.162914276123047,
+      "ordered_selected_rows_sha256": "89ddbadfdc454c039dfb025439f81e1515e0e6a63730904552f3781e3812dea3",
+      "qualification_batches": 2,
+      "scanned_rows": 524288,
+      "selected_rows": 602,
+      "source_bytes": 41353294,
+      "source_id": "onet-taxonomy_4_0_1.snappy.parquet",
+      "speedup_ratio": 6.603423010146382
+    }
+  ],
+  "status": "pass",
+  "synthetic": {
+    "covers": [
+      "null_job_hash",
+      "duplicate_match",
+      "wrong_record_source_row",
+      "no_hit",
+      "null_metadata"
+    ],
+    "onet_input": 5,
+    "onet_selected": 3,
+    "records_input": 6,
+    "records_selected": 3
+  },
+  "timing_note": "old pass ran first and fast pass may benefit from filesystem cache; ratio is diagnostic, equivalence is the acceptance gate",
+  "version": "d61-arrow-prefilter-qualification-v1"
+}

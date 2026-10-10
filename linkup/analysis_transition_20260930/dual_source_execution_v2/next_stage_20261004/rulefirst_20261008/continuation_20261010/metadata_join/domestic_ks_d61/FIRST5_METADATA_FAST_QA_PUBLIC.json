@@ -1,0 +1,45 @@
+{
+  "array_map_sha256": "152bf32d95e5975da86ee4b28d9237aed87d5b635accc49d16bae0659273ab3f",
+  "base_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+  "checks": {
+    "all_status_partitions": true,
+    "no_created_disagreement": true,
+    "no_multiplicity_failures": true,
+    "output_hash": true,
+    "row_conservation": true
+  },
+  "claim_boundary": "metadata mapping for frozen posting keys; current O*NET snapshot and Records observation metadata; no semantic relabeling or historical-text inference",
+  "counts": {
+    "company_observed_company_scrape_entity": 424226,
+    "complete_company_occ_region": 421114,
+    "complete_occ_region": 421114,
+    "created_same_calendar_date": 424226,
+    "geography_mapped_region": 421323,
+    "geography_state_missing": 2663,
+    "geography_state_unmapped": 240,
+    "occupation_blank_code": 4,
+    "occupation_no_onet_row": 154,
+    "occupation_official_code": 424014,
+    "occupation_placeholder_99-9999.00": 54,
+    "onet_matched_one": 424072,
+    "onet_missing": 154,
+    "records_matched_one": 424226
+  },
+  "created_utc": "2026-10-10T06:12:40.069867+00:00",
+  "fast_code_sha256": "598615d8d93c3c14cfbab8869508949ebeab61fcae5adc91281acad4a37dd161",
+  "output_bytes": 26941119,
+  "output_rows": 424226,
+  "output_sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029",
+  "partition_sums": {
+    "company_": 424226,
+    "created_": 424226,
+    "geography_": 424226,
+    "occupation_": 424226,
+    "onet_": 424226,
+    "records_": 424226
+  },
+  "posting_denominator": 424226,
+  "qualification_receipt_sha256": "eb94ab0866c8a9d9bb1c7365bd41c1e1d5c6098285b53392d0a86999158a1350",
+  "status": "pass",
+  "version": "d61-fast-first5-metadata-qa-v1"
+}

@@ -1,0 +1,40 @@
+{
+  "version": "d62-root-wave-completion-v1",
+  "decision_date": "2026-10-10",
+  "status": "accepted_with_documented_scope",
+  "completed": {
+    "bu13_return_and_qa": {
+      "postings": 1097202,
+      "evidence_rows": 5603232,
+      "qa_job": "124118871",
+      "verified_temporary_bu_cleanup": true
+    },
+    "wuzhen_four_shards": {
+      "postings": 342546,
+      "evidence_rows": 1753539,
+      "production_job": "46208844",
+      "qa_job": "46209816"
+    },
+    "first_five_shards_metadata": {
+      "posting_denominator": 424226,
+      "records_one_to_one": 424226,
+      "onet_one_to_one": 424072,
+      "onet_missing": 154,
+      "official_occupation_code": 424014,
+      "company_occupation_region_complete": 421114,
+      "array_job": "124124922",
+      "finalizer_job": "124124933",
+      "qa_receipt_sha256": "add8bb22ec135d6ea8329c11c4cb5ecf573db839f4fd7d921292694746c3b281",
+      "output_sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029"
+    }
+  },
+  "root_acceptance": "Read final scheduler accounting and public QA; all four extraction tasks and finalizer completed with exit 0. Row conservation, six exhaustive status partitions, multiplicity, calendar-date agreement and artifact identity gates passed. Accept this bounded execution wave without reopening measurement development.",
+  "limits": [
+    "BU13 and Wuzhen4 passed their own QA; no direct cross-17 output-key scan was performed.",
+    "Metadata coverage is for the first five shards, not all 17 shards or the full corpus.",
+    "Outputs are frozen-rule candidate measures with evidence, not a new semantic gold standard.",
+    "Records dates describe observations; current descriptions and O*NET mappings do not establish historical text versions.",
+    "No population representativeness or causal conclusion is granted by engineering completion."
+  ],
+  "next_analysis_use": "Use the accepted first-five metadata-linked candidate outputs for occupation/company/region-stratified descriptive analysis with explicit missingness and text-time boundaries. Do not silently extrapolate this pilot denominator to the full database."
+}

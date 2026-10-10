@@ -1,0 +1,39 @@
+{
+  "version": "d61-fast-integration-static-qa-v1",
+  "status": "static_pass_awaiting_final_runtime_receipts",
+  "scope": "Static control/provenance review only; no research-data computation or job submission.",
+  "code_sha256": {
+    "prepare_fast_specs": "51ec80bf8b7375587eaf3a3cd466f57702949c86a25e277dac1dc9b8aadf1b90",
+    "fast_array_wrapper": "878d4feb6caa5b920cd66e2ca06917ef3320b6290bb9935fad48bbda4ec45b08",
+    "finalize_fast_metadata": "e6a76696c04a5131f5866dcddb06b8f050712a4fafab26bd4dbc07b5b385275f",
+    "fast_finalize_wrapper": "2bfcaff7fc46abe95e9b33da7b309bbac94d2c43752e21e4d024863dd7f40935"
+  },
+  "pinned_identity": {
+    "qualification_receipt_sha256": "eb94ab0866c8a9d9bb1c7365bd41c1e1d5c6098285b53392d0a86999158a1350",
+    "base_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+    "fast_code_sha256": "598615d8d93c3c14cfbab8869508949ebeab61fcae5adc91281acad4a37dd161",
+    "key_receipt_sha256": "008b2e3d4efa8e68dbbc23fef530e33973c685566387a99283a4fd141ac9f2ac"
+  },
+  "checks": {
+    "qualification_receipt_literal_pin": true,
+    "records_inventory_files_bytes_digest_pin": true,
+    "onet_inventory_files_bytes_digest_pin": true,
+    "source_id_and_path_unique": true,
+    "four_batch_exact_once_union": true,
+    "per_batch_10gb_cap": true,
+    "isolated_specs_outputs_and_locks": true,
+    "receipt_spec_and_key_hash_binding": true,
+    "per_batch_scanned_rows_and_bytes_gate": true,
+    "full_inventory_scanned_row_gate": true,
+    "frozen_left_join_denominator_424226": true,
+    "six_status_partitions_each_sum_to_denominator": true,
+    "multiplicity_and_created_date_failure_gates": true
+  },
+  "observed_chain": {
+    "prepare_job": "124124920",
+    "array_job": "124124922",
+    "finalizer_job": "124124933",
+    "runtime_acceptance": "pending final public receipts and scheduler accounting"
+  },
+  "material_static_blockers": []
+}

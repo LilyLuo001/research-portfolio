@@ -1,0 +1,77 @@
+{
+  "version": "d61-fast-first5-independent-acceptance-v1",
+  "status": "pass",
+  "scope": "Independent receipt and scheduler-accounting review of the frozen first-five metadata linkage only.",
+  "accepted_chain": {
+    "prepare_job": "124124920 COMPLETED 0:0",
+    "array_tasks": {
+      "124124922_1": "COMPLETED 0:0",
+      "124124922_2": "COMPLETED 0:0",
+      "124124922_3": "COMPLETED 0:0",
+      "124124922_4": "COMPLETED 0:0"
+    },
+    "finalizer_job": "124124933 COMPLETED 0:0",
+    "finalizer_elapsed": "00:00:53"
+  },
+  "source_accounting": {
+    "records": {
+      "files": 1160,
+      "bytes": 15415146010,
+      "inventory_sha256": "ff7d9d7567282308472e944b2ff2bdf10698f428d98ffc41534ffd623a86ffb9",
+      "rows_scanned": 356449214,
+      "hit_rows": 424226
+    },
+    "onet": {
+      "files": 62,
+      "bytes": 11190962194,
+      "inventory_sha256": "ad19d7cdb535a084a414ee8e920d680791cca12a75e2bf8fdff4444134929e9b",
+      "rows_scanned": 356299258,
+      "hit_rows": 424072
+    },
+    "four_batches_exactly_accounted": true
+  },
+  "output": {
+    "posting_denominator": 424226,
+    "rows": 424226,
+    "bytes": 26941119,
+    "sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029",
+    "row_conservation": true
+  },
+  "status_counts": {
+    "records_matched_one": 424226,
+    "onet_matched_one": 424072,
+    "onet_missing": 154,
+    "occupation_official_code": 424014,
+    "occupation_blank_code": 4,
+    "occupation_placeholder_99_9999_00": 54,
+    "geography_mapped_region": 421323,
+    "geography_state_missing": 2663,
+    "geography_state_unmapped": 240,
+    "created_same_calendar_date": 424226,
+    "complete_company_occ_region": 421114
+  },
+  "checks": {
+    "all_six_status_partitions_sum_to_424226": true,
+    "records_one_to_many_unresolved_zero": true,
+    "onet_one_to_many_unresolved_zero": true,
+    "created_calendar_date_disagreement_zero": true,
+    "output_hash_matches_receipt": true,
+    "qualification_and_frozen_code_hashes_bound": true,
+    "superseded_partial_output_not_merged": true
+  },
+  "artifact_sha256": {
+    "fast_specs_receipt": "0284963c1b7b2d688639c1acb7c73eb1020e76590fa2e079ddf83a05bb0a0820",
+    "metadata_receipt": "a04c447eb8cab2155debdc45a2f0ce2d00249f0dfaa829c7e69ed2d7f4382227",
+    "metadata_qa": "add8bb22ec135d6ea8329c11c4cb5ecf573db839f4fd7d921292694746c3b281",
+    "execution_receipt": "56ef4bdb26efbd48c63cbea78b62956224d61dc4edfc9e4d0fbe5dc426127d93",
+    "scheduler_accounting": "a672b7788ce3ba55baa715c9de2bb624ab89d7fe8f15bdc9d2068603d900eb36",
+    "static_integration_qa": "0bc00d28c3eef14bf8b9201e57079d840bb8772528b0747c884e8063f0aec739"
+  },
+  "claim_boundary": {
+    "first_five_frozen_posting_keys_only": true,
+    "semantic_validation": false,
+    "full_corpus_validation": false,
+    "population_or_historical_text_claim": false,
+    "description": "Accepted as a denominator-preserving current-delivery Records/O*NET metadata linkage for 424226 frozen first-five posting keys."
+  }
+}
