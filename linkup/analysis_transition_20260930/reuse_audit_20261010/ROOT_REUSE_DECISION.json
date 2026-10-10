@@ -1,0 +1,50 @@
+{
+  "decision_id": "D65-reuse-existing-industrial-extraction",
+  "date": "2026-10-10",
+  "trigger": "User correctly recalled an already completed industrial full-corpus extraction and requested a historical/Git/cloud audit before further duplication.",
+  "correction": "D63/D64 counts tracked a NEW rulefirst extractor, not the project's overall unprocessed corpus. Describing those remaining shards as unfinished basic extraction was incorrect. D64 candidate-expansion permission is superseded: no further automatic waves until a field-level reuse/delta justification exists.",
+  "historical_completion": {
+    "source": "pre_revelio_execution_v1/results/full_semantic_narrow_v1/BATCH_RECEIPT.json",
+    "git_commit": "a0ed226",
+    "status": "complete",
+    "source_shards": 2464,
+    "canonical_usa_ads": 204774035,
+    "usable_nonempty_complete_parse_ads": 204768752,
+    "duration_detail_rows": 131286035,
+    "raw_description_rows": 298673078,
+    "definition_of_usable": "No DESCRIPTION_EMPTY, PARSE_ERROR, INPUT_EVIDENCE_TRUNCATED or ENRICHMENT_INCOMPLETE flag; not a semantic accuracy measure.",
+    "six_table_release": "T1-T6 computation and bounded AI diagnostic completed by 2026-10-03; T5 eligible subset and cancelled C2 comparison retain their original limitations.",
+    "final_checklist_commit": "f0df6b5",
+    "seventy_two_note": "The October execution addendum calls 72 the then-pending publication shards; it is not evidence that only 72 total corpus shards were extracted."
+  },
+  "reuse_inventory_from_pinned_writer_and_projection": [
+    {"product": "ad_status and canonical match/disposition", "action": "Reuse locators, dates, normalization/version and engineering status; do not redo raw-to-record matching."},
+    {"product": "experience", "action": "Reuse clause/object offsets, candidate objects, literal duration bounds, units, strength and relation outputs; semantic flags remain candidate outputs."},
+    {"product": "technology", "action": "Reuse named technology/role offsets and candidate tags with original taxonomy; do not silently relabel old and new groups as equivalent."},
+    {"product": "v6_audit", "action": "Reuse retained education, explicit-no-experience and selected ambiguous/alternative qualification evidence. This is a selected audit table, not a complete task-evidence inventory."},
+    {"product": "full semantic narrow and durations", "action": "Reuse all 2464 ad-level and clause-duration shards, published summaries and receipts rather than reconstructing a new corpus denominator."},
+    {"product": "T1-T6", "action": "Preserve existing outputs; current new-rule pilot results are distinct measurements and must not be presented as the first completed full-corpus results."}
+  ],
+  "real_remaining_gaps": [
+    "Old occupation/task experience explicitly unmeasured/NA. Do not invent it from general-work or object_unspecified booleans.",
+    "Current-duty responsibility and newcomer-role binding are not completely stored by the sparse old v6_audit table. Evaluate existing evidence first, then request only specifically missing fields/context.",
+    "Lean tables store offsets, not complete normalized text. When needed, reconstruct bounded context from retained raw source and pinned normalization; absence of old candidate evidence cannot be treated as absence of a requirement.",
+    "Old versus new role/taxonomy/conditional semantics differ. Reuse identity and literal evidence while keeping measurement versions separate; no silent row-level substitution."
+  ],
+  "twenty_percent_recollection": {
+    "not_found": "No verified statement establishes that only 20% of all extracted data are usable.",
+    "documented_nearby_number": "2026-10-03 C1 software-arm common-support retention is 22.2%; it is a comparison-sample retention rate, not corpus parsing quality.",
+    "other_documented_twenty": "2026-10-08 conversation uses 10-20% as a hypothetical model-exception budget scenario and 20% as a cost-planning trigger, explicitly not a measured usability/accuracy rate.",
+    "uncertainty": "Cannot establish which of these, if any, the user remembers."
+  },
+  "next_action": "Use the old complete extraction as the default base. Preserve current new-rule outputs as a bounded diagnostic/delta resource. Before any new corpus-wide work, name the missing research field, show why existing typed evidence cannot supply it, and implement only that increment. Do not discard the old corpus or start another end-to-end cleaning/matching/extraction pass.",
+  "cloud_verification": {
+    "status": "live_paths_archived_completion_receipts_and_sample_nonempty_files_confirmed",
+    "typed_evidence_root": "/public/home/lilysharp/linkup_release_v1/full_semantic_v1",
+    "narrow_and_durations_root": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/semantic_narrow_v1",
+    "existing_final_gate": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/gate_v2_20261003/ALL_REGIONS_VERIFIED_COMPLETE.json",
+    "checks": "Archived final gate complete/exact union 2464; batch/projection/aggregate receipts complete; sampled typed and narrow/duration files present and nonempty. Not a new full-file checksum audit.",
+    "gate_location_note": "Final-gate copy at canonical sink root absent; verified archived final gate remains present. No claim that every historical pathname is unchanged.",
+    "operational_action": "Controller 46225251 had already completed and spawned another wave. Held its pending successor 46227986 (JobHeldUser). Running production 46227980_[0-2] and dependent QA 46227983 left intact. No new tasks submitted for this audit."
+  }
+}

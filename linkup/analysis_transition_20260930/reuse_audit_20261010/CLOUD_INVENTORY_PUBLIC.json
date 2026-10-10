@@ -1,0 +1,95 @@
+{
+  "audit_time": "2026-10-10T16:51:19+08:00",
+  "scope": "Bounded read-only cloud inventory using directory metadata, frozen receipts, and one sample shard; no full-data scan, parquet read, recomputation, or full rehash.",
+  "privacy": {
+    "sample_shard_inspected": true,
+    "sample_shard_id_recorded": false,
+    "record_level_content_inspected": false
+  },
+  "accepted_release": {
+    "published_root": "/public/home/lilysharp/linkup_release_v1/full_semantic_v1",
+    "published_root_exists": true,
+    "published_root_mtime": "2026-10-03T15:40:31+08:00",
+    "storage_ledger_exists": true,
+    "archived_gate": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/gate_v2_20261003/ALL_REGIONS_VERIFIED_COMPLETE.json",
+    "archived_gate_exists": true,
+    "archived_gate_mtime": "2026-10-03T16:41:36+08:00",
+    "archived_gate_status": "complete",
+    "final_publication_complete": true,
+    "exact_disjoint_id_union": true,
+    "total_shards": 2464,
+    "regional_shards": {
+      "kunshan": 1358,
+      "wuzhen": 1106
+    },
+    "canonical_usa_singleton_rows": {
+      "kunshan": 112836465,
+      "wuzhen": 91937570,
+      "total": 204774035
+    },
+    "root_gate_copy_observation": "The gate copy at the published-root top level was not present during this bounded audit; the accepted archived gate remains present under gate_v2_20261003.",
+    "sample_leaf_metadata": {
+      "shard_complete_receipts_exist_and_nonzero": true,
+      "chunk_complete_receipt_exists_and_nonzero": true,
+      "ad_status_parquet_exists_and_nonzero": true,
+      "experience_parquet_exists_and_nonzero": true,
+      "technology_parquet_exists_and_nonzero": true,
+      "v6_audit_parquet_exists_and_nonzero": true,
+      "status": "complete"
+    },
+    "reusable_evidence_contract": {
+      "ad_status": "Canonical row locator, date/geography metadata, parse/quality flags, and evidence counts.",
+      "experience": "Evidence offsets, object type, duration bounds, binding/relation, optionality, context, applicant-context flag, and requirement strength.",
+      "technology": "Evidence offsets, technology type/name, role, binding, ambiguity, context, and applicant-context flag.",
+      "v6_audit": "Education, qualification-scope, equivalence, negation, applicant-requirement, and related audit fields.",
+      "complete_cleaned_text_column_observed": false,
+      "cleaned_text_note": "The inspected frozen schemas retain evidence context and exact offsets but do not expose a full cleaned-text column. Work requiring full cleaned text may need a separate existing source or a narrowly scoped derivation; this does not justify repeating the existing semantic extraction."
+    }
+  },
+  "semantic_narrow_release": {
+    "root": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/semantic_narrow_v1",
+    "root_exists": true,
+    "batch_receipt_exists": true,
+    "projection_input_receipt_exists": true,
+    "aggregate_receipt_exists": true,
+    "batch_status": "complete",
+    "batch_shards": 2464,
+    "batch_action": "built",
+    "projection_status": "complete",
+    "canonical_ads": 204774035,
+    "duration_detail_rows": 131286035,
+    "aggregate_status": "complete",
+    "aggregate_tables_present": [
+      "T2_DURATION_BOUND_DISTRIBUTION.csv",
+      "T2_EXPERIENCE_AD_RATES.csv",
+      "T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv",
+      "T3_TECHNOLOGY_PAIR_OVERLAP.csv",
+      "T3_TECHNOLOGY_ROLE.csv"
+    ],
+    "sample_narrow_shard_exists_and_nonzero": true,
+    "sample_duration_shard_exists_and_nonzero": true,
+    "sample_receipt_exists_and_nonzero": true
+  },
+  "reuse_decision": {
+    "can_reuse_narrow_tables": true,
+    "can_reuse_duration_tables": true,
+    "can_reuse_semantic_evidence": true,
+    "should_repeat_existing_base_extraction": false,
+    "qualification": "A genuinely new engineering-patch field may require a narrow additive pass only if it cannot be derived from the frozen evidence, offsets, audit fields, or another retained text source."
+  },
+  "d64_scheduler_action": {
+    "known_controller_job_id": "46225251",
+    "known_controller_observed_state": "COMPLETED",
+    "known_controller_exit_code": "0:0",
+    "held_successor_controller_job_id": "46227986",
+    "held_successor_state": "PENDING",
+    "held_successor_reason": "JobHeldUser",
+    "hold_succeeded": true,
+    "running_production_job": "46227980_[0-2]",
+    "running_production_untouched": true,
+    "pending_qa_job_id": "46227983",
+    "pending_qa_untouched": true,
+    "jobs_cancelled": false,
+    "new_jobs_submitted": false
+  }
+}
