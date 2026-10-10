@@ -12,4 +12,4 @@
 用户已明确：当前 8 个 shard 的 staging→production→QA 可以完成；这次 approximately 2.18 GB BU 使用是最后一次。后续所有 bulk extraction 和 metadata joins 改在中国 SCNet 原地运行，不把 26.6 GB metadata cache 转移到 BU。BU controller 8005004 与 metadata discovery 8005585 正在取消流程中；在收到实际 cancellation receipt 前不宣称已取消。D60 只限制未来权限，保留 D59 已有 BU 输出和 SCNet 原始数据，不改写历史运行事实。
 
 
-最新状态：BU lane1 job 8005067 已完成（exit 0，2 shards，541,205,581 bytes，wall 2305 秒）；其余 lanes/生产波次仍在运行或等待，不能称为整个八 shard 批次完成。国内原地 preflight 已公开：昆山连通性/runtime 尚未验证，乌镇可达但需要 Intel shared libraries；尚无国内 production job。保留初始约 23 GB 可用空间与不超过 1 GB 新输出的 routing 约束。
+D60 handoff closure：已尝试将现有约 15 MB key artifact 从 BU 传至昆山目标目录；传输目标已写入，但 30 秒 checksum readback 超时，因此状态为 unverified，未发布 KEY_TRANSPORT_RECEIPT_PUBLIC.json。BU 原件保留。当前没有国内 preflight、join 或 production job 已提交；本记录不声称中国 SCNet 已开始运行。
