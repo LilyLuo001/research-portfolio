@@ -22,3 +22,6 @@ D61 当前状态：WZ production job 46208844 的四个任务完成，QA 4620981
 
 
 BU13 传输与 QA 已解决：作业 124118871 完成（exit 0，37 秒，54 files，597,922,077 bytes，hash 全通过）；13 shards 合计 1,097,202 postings、5,603,232 evidence，global JOB_HASH/locator unique。失败 124117556、重复取消 124117634、以及 124118220/124118472 的启动问题均保留为历史故障记录，修复为 module-only bootstrap，不归因于平台。metadata job 124116745 仍运行，正在 extracting records_01，未宣称完成。
+
+
+BU13 cleanup 已核验完成：删除 26 个已回传私有 Parquet（597,842,064 bytes）、16 个临时 staging 文件（2,180,308,411 bytes）及 3 个专用凭据文件；公共 receipts/code/logs、SCNet 原始数据和无关 job 均保留。metadata job 124116745 仍运行，不能宣称完整 metadata/full wave 完成。

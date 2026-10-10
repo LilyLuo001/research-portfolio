@@ -1,0 +1,30 @@
+{
+  "scope": "verified BU13 return cleanup only",
+  "completed_utc": "2026-10-10T05:08:31.309841+00:00",
+  "deleted_aggregate": {
+    "returned_private_parquet_files": 26,
+    "returned_private_parquet_bytes": 597842064,
+    "temporary_staging_files": 16,
+    "temporary_staging_bytes": 2180308411,
+    "dedicated_credential_files": 3,
+    "dedicated_credential_bytes": 4513
+  },
+  "post_delete": {
+    "returned_private_absent": true,
+    "temporary_staging_absent": true,
+    "dedicated_credentials_absent": true,
+    "public_receipts_present": true
+  },
+  "preserved": {
+    "metadata_join_keys": true,
+    "public_receipts_code_logs": true,
+    "source_scnet_originals": true,
+    "unrelated_job_7488095": true
+  },
+  "status": "complete",
+  "verified_return": {
+    "qa_job_id": "124118871",
+    "verified_bytes": 597922077,
+    "verified_file_count": 54
+  }
+}
