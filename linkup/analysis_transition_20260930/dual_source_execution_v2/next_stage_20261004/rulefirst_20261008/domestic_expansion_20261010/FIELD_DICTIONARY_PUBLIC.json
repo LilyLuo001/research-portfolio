@@ -1,0 +1,185 @@
+{
+  "schema_version": "D57/D61 frozen public meanings; D63 narrow-table skeleton",
+  "scope": "first-five accepted metadata plus future domestic expansion outputs when independently receipted",
+  "fields": [
+    {
+      "name": "JOB_HASH",
+      "meaning": "canonical job identity; public aggregate use only",
+      "status": "frozen"
+    },
+    {
+      "name": "RECORD_SOURCE_ROW",
+      "meaning": "Records-side join locator; preserve multiplicity and missingness",
+      "status": "frozen"
+    },
+    {
+      "name": "COMPANY_ID",
+      "meaning": "scraper company identity, not legal parent",
+      "status": "frozen"
+    },
+    {
+      "name": "OCCUPATION_MAJOR",
+      "meaning": "current-delivery O*NET major occupation; missing/unofficial retained",
+      "status": "frozen"
+    },
+    {
+      "name": "CENSUS_REGION",
+      "meaning": "deterministic region from Records STATE; missing/unmapped retained separately",
+      "status": "frozen"
+    },
+    {
+      "name": "CREATED_YEAR",
+      "meaning": "observation metadata, not body publication/effective time",
+      "status": "frozen"
+    },
+    {
+      "name": "metadata_join_state",
+      "meaning": "1:1, no-match, missing code, unofficial occupation, unmapped geography and other failures remain explicit",
+      "status": "frozen"
+    },
+    {
+      "name": "evidence_state",
+      "meaning": "candidate rule-observed evidence with unknown/conditional/empty/failed states; not semantic gold",
+      "status": "frozen"
+    },
+    {
+      "name": "entry_junior_text",
+      "meaning": "cannot distinguish title from body; report as combined text indicator only",
+      "status": "restricted"
+    },
+    {
+      "name": "graduate_evidence",
+      "meaning": "evidence scope is not recorded; cannot be treated as an unconditional requirement",
+      "status": "restricted"
+    },
+    {
+      "name": "explicit_no_experience",
+      "meaning": "scope is available and must be reported separately by scope",
+      "status": "restricted"
+    },
+    {
+      "name": "processing_status",
+      "meaning": "posting processing partition; processed and invalid_text are retained separately",
+      "status": "frozen"
+    },
+    {
+      "name": "flags_json",
+      "meaning": "posting frozen-rule flag bundle; public aggregates only",
+      "status": "frozen"
+    },
+    {
+      "name": "experience_status",
+      "meaning": "posting-level derived experience state; unknown remains explicit",
+      "status": "frozen"
+    },
+    {
+      "name": "rule_version",
+      "meaning": "frozen extraction rule version",
+      "status": "frozen"
+    },
+    {
+      "name": "overlay_version",
+      "meaning": "frozen relation-overlay version",
+      "status": "frozen"
+    },
+    {
+      "name": "text_sha256",
+      "meaning": "text integrity hash; no text content",
+      "status": "frozen"
+    },
+    {
+      "name": "evidence_kind",
+      "meaning": "evidence category such as experience, technology or entry",
+      "status": "frozen"
+    },
+    {
+      "name": "evidence_rule",
+      "meaning": "frozen rule identifier",
+      "status": "frozen"
+    },
+    {
+      "name": "start_offset",
+      "meaning": "private evidence coordinate; aggregate use only",
+      "status": "restricted"
+    },
+    {
+      "name": "end_offset",
+      "meaning": "private evidence coordinate; aggregate use only",
+      "status": "restricted"
+    },
+    {
+      "name": "quote",
+      "meaning": "private evidence text; never enters Git",
+      "status": "private_excluded"
+    },
+    {
+      "name": "coordinate_system",
+      "meaning": "coordinate convention for evidence offsets",
+      "status": "frozen"
+    },
+    {
+      "name": "objects_json",
+      "meaning": "candidate object list; four experience objects are general_work, occupation_task, industry_domain, tool",
+      "status": "frozen"
+    },
+    {
+      "name": "strength",
+      "meaning": "literal evidence strength field; not a job minimum",
+      "status": "frozen"
+    },
+    {
+      "name": "scope",
+      "meaning": "evidence scope; unknown remains separate",
+      "status": "frozen"
+    },
+    {
+      "name": "duration_kind",
+      "meaning": "literal duration clause indicator",
+      "status": "frozen"
+    },
+    {
+      "name": "lower_years",
+      "meaning": "literal lower-years value; not a job minimum",
+      "status": "frozen"
+    },
+    {
+      "name": "upper_years",
+      "meaning": "literal upper-years value; not a job maximum",
+      "status": "frozen"
+    },
+    {
+      "name": "outcome_status",
+      "meaning": "rule outcome status; unresolved retained",
+      "status": "frozen"
+    },
+    {
+      "name": "technology",
+      "meaning": "non-negated technology family indicator",
+      "status": "frozen"
+    },
+    {
+      "name": "role_cue",
+      "meaning": "role cue indicator",
+      "status": "frozen"
+    },
+    {
+      "name": "negated",
+      "meaning": "negation marker for evidence",
+      "status": "frozen"
+    },
+    {
+      "name": "d57_current_duty_mentoring_candidate",
+      "meaning": "D57 current-duty mentoring candidate; candidate marker, not semantic gold",
+      "status": "frozen"
+    }
+  ],
+  "boundaries": [
+    "No direct global-key claim until cross-set audit receipt",
+    "No semantic accuracy, population, historical-text or causal claim",
+    "Do not use old 6,010,975 candidate frame as D63 denominator"
+  ],
+  "derived_public_metrics": {
+    "count": 23,
+    "meaning": "Public metrics are derived only from the frozen posting/evidence fields above; no additional private columns are invented. Literal clause years are not job minimums. Evidence quotes and coordinates remain private."
+  }
+}

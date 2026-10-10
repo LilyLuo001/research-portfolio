@@ -1,0 +1,62 @@
+{
+  "decision": "D63-first-substantive-descriptive-results-accepted",
+  "date": "2026-10-10",
+  "engineering_acceptance": "Root inspected scheduled accounting, final public tables and QA. Producer 46222688 completed 0:0 in 5m59s; public QA 46222690 completed 0:0. Accept the final complete artifacts, not superseded partial CSVs.",
+  "qa_sha256": "423a42fae464327e6d9d3cd8cf5cb9a9e3b6b77529c2e47ce7d31cfcfad65a67",
+  "sample": {
+    "coverage_ads": 424226,
+    "analyzable_ads": 424225,
+    "invalid_text_retained_outside_analysis": 1,
+    "software_only": 98069,
+    "ai_only": 2883,
+    "software_and_ai": 5261,
+    "neither_lexicon_observed": 318012
+  },
+  "primary_comparison": {
+    "meaning": "Software-only versus any-AI wording, standardized to the same common-occupation weights. These are lexical groups, not measured adoption states or historical technology waves.",
+    "occupations": 74,
+    "retained_software_ads": 54533,
+    "retained_any_ai_ads": 6429,
+    "valid_occupation_software_ads": 98029,
+    "valid_occupation_any_ai_ads": 8129,
+    "rates_percent_software_then_ai_rounded": {
+      "general_experience_wording": [4.84, 4.60],
+      "related_experience_wording": [82.62, 83.65],
+      "tool_experience_wording": [31.51, 31.13],
+      "literal_experience_duration_observed": [61.43, 60.36]
+    },
+    "assessment": "The primary standardized differences are modest in these rule-observed measures. They do not establish that AI lowers experience requirements, replaces general experience with related experience, or increases seniority. Recognition coverage differs across experience dictionaries; low general-wording frequency is not evidence that general experience is unimportant."
+  },
+  "sensitivity_assessment": {
+    "company_occupation_cells": 108,
+    "retained_software_ads": 3309,
+    "retained_any_ai_ads": 1409,
+    "related_experience_difference_ai_minus_software_pp": -1.600,
+    "tool_experience_difference_ai_minus_software_pp": -4.367,
+    "assessment": "The related-experience difference changes sign in the much narrower company-by-occupation support. AI-only comparisons also change both the population and results. Do not present one direction as robust. Tool measures and technology groups share lexicon features, so their association is partly mechanical and cannot identify skill substitution."
+  },
+  "entry_and_responsibility": {
+    "explicit_general_noexperience_or_graduate_wording_ads": 11889,
+    "any_frozen_responsibility_wording_cooccurrences": 449,
+    "cooccurrence_percent_rounded": 3.78,
+    "independent_work_or_responsibility_wording": 323,
+    "people_supervision_wording": 122,
+    "client_responsibility_wording": 3,
+    "current_duty_mentoring_candidate": 3,
+    "assessment": "These components overlap and must not be summed as unique ads. Independent-work/responsibility wording includes work independently and project/budget ownership; it is not uniformly advanced judgment. Ad-level cooccurrence is observed, but the evidence does not establish unconditional novice eligibility, actual hires or historical seniorization."
+  },
+  "production_status_at_inventory": {
+    "production_source_file_shards": 2464,
+    "accepted": 21,
+    "remaining": 2443,
+    "newly_accepted_this_wave": 4,
+    "newly_accepted_postings": 335958,
+    "newly_accepted_evidence_rows": 1715007,
+    "next_wave_shards": 16,
+    "bounded_follow_on_total_shards": 64,
+    "bounded_follow_on_status": "submitted_or_running_not_yet_accepted",
+    "controller_job": "46222400",
+    "guards": "3 production lanes, per-wave QA dependency, 10GB free-space reserve, no source deletion. First-five analysis and production are distinct scopes."
+  },
+  "release_boundary": "Publish code, dictionary, full production-input inventory, these descriptive comparison tables, execution failures/corrections and QA. Do not claim full-corpus completion, a semantic gold standard, restored historical text versions, population representativeness or causal effects."
+}

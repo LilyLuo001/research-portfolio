@@ -1,0 +1,32 @@
+{
+  "decision": "D63-current-text-comparison-and-domestic-expansion",
+  "date": "2026-10-10",
+  "scope": "Reuse frozen rules, accepted first-five outputs and verified metadata; expand remaining domestic shards separately. No paid API, model inference, BU work, parser redevelopment or historical-text inference.",
+  "analysis_unit": "One admitted canonical US advertisement. Known first-five denominator is 424226: 424225 processed and 1 invalid_text. Retain all in the coverage and metadata funnel; use only 424225 processed advertisements for wording comparisons, excluding invalid text from neither-observed and all feature denominators.",
+  "technology_groups": ["software_only", "ai_only", "software_and_ai", "neither_observed"],
+  "primary_contrast": "Any AI wording (AI-only plus both) versus software-only wording, with all four exclusive groups also reported separately.",
+  "comparison_1": {
+    "outcomes": "Frozen general, occupational/task, industry/domain and tool experience wording; general/related cooccurrence; literal duration and conditional/unknown states. Related is occupational/task OR industry/domain. Categories remain non-exclusive.",
+    "main_strata": "Validated current O*NET detailed occupation code.",
+    "common_support": "At least 20 analyzable ads per comparison arm in an occupation.",
+    "standardization": "Give each eligible occupation weight proportional to min(n_software_only,n_any_ai), normalized across eligible occupations; use identical weights for both arms. Report raw rates, standardized rates, percentage-point differences, cell counts and retained sample shares.",
+    "sensitivity": "AI-only versus software-only with its own disclosed overlap population; frozen narrow versus broad wording; company-by-occupation comparison where each arm has at least 5 ads, otherwise explicitly unavailable.",
+    "threshold_rationale": "Predeclared practical cell-size thresholds for a descriptive pilot, not a semantic-accuracy standard or causal identification strategy. No iterative threshold tuning to improve results."
+  },
+  "comparison_2": {
+    "population": "General-work no-experience or graduate-eligibility wording under frozen rules. The no-experience component must match frozen explicit_no_experience flag (waiver objects exactly general_work), not every tool/industry-specific waiver. Retain separate component counts and broader junior wording.",
+    "outcomes": "Frozen current-duty candidates for independent judgment, client responsibility, supervision/mentoring when represented by existing evidence; do not infer missing components or count prior mentoring experience as present duties.",
+    "interpretation": "Ad-level wording cooccurrence, not proof of the same clause, unconditional eligibility, actual novice hiring or seniorization over time.",
+    "field_limits": "Junior title versus body cannot be separated. Graduate evidence scope is not recorded. No-experience missing scope remains unknown, separate from conditional and unconditional scopes. Tool/industry waivers cannot imply zero general work experience."
+  },
+  "quality_gates": [
+    "Pin accepted input/code receipts and verify exact 424226 left-join denominator with unique canonical keys.",
+    "No-to-many joins; preserve missing/unofficial/placeholder occupation and unmapped geography categories.",
+    "Each technology partition sums to its stated denominator; rates, component unions and common-support weights reconcile.",
+    "Fail required checks on inconsistent evidence links or unexpected processing states; no silent zero filling of unknown meaning.",
+    "Cloud scheduled execution only; export public aggregates and code, not row IDs or evidence text."
+  ],
+  "claims": "Conditional descriptive differences in delivered text for the admitted first-five shard population. No probability-sample, employer-adoption, historical computerization, semantic-gold or causal claim. No p-value-driven selection.",
+  "production": "Inventory all frozen domestic input manifests against accepted shard receipts; process only pending admitted shards in bounded resumable batches, with capacity checks and QA gates. Preserve existing accepted outputs and report actual remaining scope.",
+  "delegation": "Sol engineering for inventory/production and analysis; Luna documentation/release; root economic definitions, one-off decisions and acceptance."
+}

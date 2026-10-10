@@ -1,0 +1,37 @@
+{
+  "api_calls": 0,
+  "attempts": [
+    {
+      "dependent_job_ids": [
+        "46220095",
+        "46220097"
+      ],
+      "dependent_state": "cancelled before compute",
+      "elapsed": "00:00:01",
+      "prep_job_id": "46220094",
+      "reason": "source path prefix gate used a stale template prefix; failed before rule execution",
+      "state": "FAILED 1:0"
+    },
+    {
+      "correction": "path gate aligned to the actual frozen Wuzhen manifest root; no rule or semantic change",
+      "prep_job_id": "46220170",
+      "production_array_job_id": "46220171",
+      "qa_job_id": "46220172",
+      "state": "COMPLETED 0:0 and QA PASS"
+    }
+  ],
+  "claim_boundary": "mechanical frozen-rule execution and QA only",
+  "created_utc": "2026-10-10T07:07:47.900537+00:00",
+  "model_calls": 0,
+  "production": {
+    "evidence_rows": 1715007,
+    "new_shards": 4,
+    "output_bytes": 183177104,
+    "posting_rows": 335958,
+    "raw_rows": 490237
+  },
+  "qa_sha256": "98f5f46cb27631e74799937c604e89c33c6fe1ed1c01694e528243e2c94f6e6a",
+  "semantic_changes": false,
+  "status": "accepted",
+  "version": "d63-wave-0001-launch-public-v1"
+}

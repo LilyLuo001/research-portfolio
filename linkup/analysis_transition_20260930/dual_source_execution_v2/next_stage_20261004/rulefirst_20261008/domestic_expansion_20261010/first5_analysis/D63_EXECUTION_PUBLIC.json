@@ -1,0 +1,86 @@
+{
+  "accepted_jobs": [
+    {
+      "cpus": 4,
+      "dcu_reserved_due_qos": 1,
+      "dcu_used_by_analysis": false,
+      "elapsed": "00:05:59",
+      "exit_code": "0:0",
+      "job_id": "46222688",
+      "memory": "8G",
+      "partition": "wzhdtest",
+      "purpose": "descriptive aggregate",
+      "state": "COMPLETED"
+    },
+    {
+      "cpus": 1,
+      "dcu_reserved_due_qos": 1,
+      "dcu_used_by_analysis": false,
+      "elapsed": "00:00:01",
+      "exit_code": "0:0",
+      "job_id": "46222690",
+      "memory": "2G",
+      "partition": "wzhdtest",
+      "purpose": "public arithmetic/hash QA",
+      "state": "COMPLETED"
+    }
+  ],
+  "api_calls": 0,
+  "claim_boundary": "Observed frozen-rule wording in the admitted first-five shard population; neither_observed and other no-observed cells are unknown, not semantic absence. No probability-sample, employer-adoption, historical, semantic-gold, or causal claim.",
+  "code": {
+    "producer_sha256": "fa08c4fef81588ab089cab81cdb24f1ed754b3d28ea0192a823aa2e192d4b0cf",
+    "producer_wrapper_sha256": "cf17ca93088045e1fc693e9fd3cb509a7f338a3fd4491543e41a6af7f0dc3fb2",
+    "public_qa_sha256": "3430e2fe8be105d9ba38d140aa75add714f6151782675590dbdc519c805ed78d",
+    "qa_wrapper_sha256": "a4bb94fff4cc24c6124416f0f506b1931604ecd9c8cc4bd4bec0993b6f52852a"
+  },
+  "created_utc": "2026-10-10T07:20:22.736305+00:00",
+  "model_calls": 0,
+  "results": {
+    "analysis_denominator": 424225,
+    "coverage_denominator": 424226,
+    "invalid_text": 1,
+    "producer_receipt_sha256": "d82e78759d5238f3f0b9cafd0562426a289bde23c99d1beee266ffb96e55be71",
+    "qa_sha256": "423a42fae464327e6d9d3cd8cf5cb9a9e3b6b77529c2e47ce7d31cfcfad65a67"
+  },
+  "rules_changed": false,
+  "scope": "accepted first-five canonical US advertisements only; descriptive frozen-rule wording comparisons",
+  "status": "complete_public_qa_pass",
+  "superseded_attempts": [
+    {
+      "elapsed": "00:00:00",
+      "job_id": "124131331",
+      "reason": "scope/waiver denominator correction before execution",
+      "site": "Kunshan",
+      "state": "CANCELLED"
+    },
+    {
+      "elapsed": "00:00:00",
+      "job_id": "124131497",
+      "reason": "remained pending Priority; replaced by authorized domestic Wuzhen route",
+      "site": "Kunshan",
+      "state": "CANCELLED"
+    },
+    {
+      "elapsed": "00:00:00",
+      "job_id": "46221846",
+      "reason": "wrapper sourced /etc/profile after set -u; HISTCONTROL was unset; producer Python not entered",
+      "site": "Wuzhen",
+      "state": "FAILED"
+    },
+    {
+      "elapsed": "00:06:02",
+      "job_id": "46222115",
+      "reason": "mechanical dynamic CSV fieldname mismatch after aggregation; partial files superseded and excluded from release",
+      "site": "Wuzhen",
+      "state": "FAILED"
+    }
+  ],
+  "transport": {
+    "parquet_bytes": 257961017,
+    "private_payload_persisted_on_control_host": false,
+    "route": "Kunshan_to_Wuzhen_SSH_tar_stream_via_control_host",
+    "target_file_gate": true,
+    "transferred_file_count": 21
+  },
+  "version": "d63-first5-execution-v1"
+}

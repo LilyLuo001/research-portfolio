@@ -1,0 +1,46 @@
+{
+  "accepted_entries": 21,
+  "accepted_provenance": {
+    "bu13_count": 13,
+    "bu13_qa_sha256": "cd9ea56a38b795e7cf519f17d3156ceb4732705ddcfdd42c7a35c2f5f32722e5",
+    "wz4_count": 4,
+    "wz4_qa_sha256": "04c4fdddade8b38eca26f44c54fd594ceb10b48828d9d919c0d9b44410ea9da2",
+    "wz_wave_0001_count": 4,
+    "wz_wave_0001_qa_sha256": "98f5f46cb27631e74799937c604e89c33c6fe1ed1c01694e528243e2c94f6e6a"
+  },
+  "claim_boundary": "inventory and resume state only; no semantic certification",
+  "created_utc": "2026-10-10T07:00:57.944503+00:00",
+  "master": {
+    "bytes": 1745574,
+    "entries": 2464,
+    "sha256": "cb51c600574eccbd8a0bedfa0906a19cbe006f468a5713a2c4df88e90463d476"
+  },
+  "master_shard_exclusions": 0,
+  "raw_advertisement_exclusions": "not_assessed_by_inventory",
+  "regions": {
+    "kunshan": {
+      "entries": 1358,
+      "raw_rows": 164581116,
+      "remaining_entries": 1345,
+      "sidecar_bytes": 6839535501,
+      "source_bytes": 359263299118
+    },
+    "wuzhen": {
+      "entries": 1106,
+      "raw_rows": 134091962,
+      "remaining_entries": 1098,
+      "sidecar_bytes": 5572619202,
+      "source_bytes": 292764399310
+    }
+  },
+  "remaining_entries": 2443,
+  "remaining_private_manifest_sha256": "043419b9492dd387724effab1609351d7c21a9ea3dd2c32528a2afba899ee1d3",
+  "rules": {
+    "api_calls": 0,
+    "model_calls": 0,
+    "runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "semantic_changes": false
+  },
+  "status": "complete",
+  "version": "d63-master-inventory-public-v1"
+}
