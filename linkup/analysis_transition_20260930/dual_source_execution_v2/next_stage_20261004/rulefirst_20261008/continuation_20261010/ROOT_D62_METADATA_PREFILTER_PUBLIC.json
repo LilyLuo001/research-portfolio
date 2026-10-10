@@ -1,0 +1,42 @@
+{
+  "decision_id": "D62-mechanical-metadata-prefilter",
+  "created_utc": "2026-10-10T05:36:14.353269+00:00",
+  "problem": "Frozen metadata implementation converts all source fields to Python for 712748472 source rows before selecting 424226 target keys; measured remaining serial estimate 3-4 hours.",
+  "change": "Arrow exact JOB_HASH membership filter before Python row conversion; retain existing composite Records key membership, string cleanup, schemas, missing states, multiplicity and date gates. Count all input rows before filtering.",
+  "qualification": "One scheduled bounded old-versus-new exact selected-row comparison plus null, duplicates and wrong RECORD_SOURCE_ROW edge cases; measure speed before replacing old job.",
+  "execution": "Separate versioned module, specs and output paths; four disjoint source batches after qualification; no concurrent writers to old paths.",
+  "stop_old_job_condition": "Root acceptance of exact equivalence and material measured speed improvement. Preserve partial old outputs as unaccepted; never mix them into completed receipts.",
+  "unchanged": [
+    "All 424226 target keys retained in final left join",
+    "All supplied Records and ONET source files accounted for",
+    "No new model or API calls",
+    "No text measurement rule or historical-time interpretation change",
+    "Actual content hashes and job provenance recorded"
+  ],
+  "status": "qualified_production_authorized_after_wrapper_review",
+  "qualification_decision": {
+    "status": "accepted_for_mechanical_production",
+    "job_id": "124122881",
+    "fast_code_sha256": "598615d8d93c3c14cfbab8869508949ebeab61fcae5adc91281acad4a37dd161",
+    "qualification_code_sha256": "2117bcbdc2ca66cb14ec3c229695468271fceee77f1a997e760baa23be1fdc2c",
+    "onet_real_rows": 524288,
+    "onet_matching_rows": 602,
+    "onet_exact_ordered_equality": true,
+    "onet_diagnostic_speedup": 6.603423010146382,
+    "records_real_rows": 82,
+    "records_real_matches": 0,
+    "synthetic_records_matching_rows": 3,
+    "basis": "Exact predicate equivalence confirmed by independent code review, synthetic edge cases and ordered real-file comparison; this is not a semantic-label accuracy evaluation.",
+    "limitations": [
+      "Records real qualification slice has no matches and is not a meaningful throughput benchmark",
+      "Timing ran old first; cache may benefit new pass",
+      "No further semantic or sampling-development round is authorized"
+    ],
+    "production_gates": [
+      "All source files accounted for and full source-row counts equal captured footer inventory",
+      "Exact key receipt, base and qualified fast code hashes",
+      "Final 424226-row left-join conservation, missing-status partitions, multiplicity and date alignment gates"
+    ]
+  },
+  "old_job_stop": "Cancel only124116745 after replacement scheduled chain accepted; preserve old partials as unaccepted, never merge"
+}

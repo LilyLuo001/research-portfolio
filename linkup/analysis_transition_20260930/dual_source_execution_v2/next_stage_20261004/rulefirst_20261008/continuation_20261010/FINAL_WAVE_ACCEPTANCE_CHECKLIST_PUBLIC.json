@@ -1,0 +1,49 @@
+{
+  "version": "d61-final-wave-independent-checklist-v1",
+  "status": "pending_first5_metadata_final_receipts",
+  "scope": "Read-only acceptance audit of existing BU13 return, Wuzhen four-shard wave, and first-five metadata join; no new compute or semantic certification.",
+  "bu13": {
+    "status": "accepted_mechanical_output",
+    "target_transport_verified": true,
+    "transport_file_count": 54,
+    "transport_bytes": 597922077,
+    "shards": 13,
+    "posting_rows": 1097202,
+    "evidence_rows": 5603232,
+    "canonical_locator_unique_within_wave": true,
+    "canonical_job_hash_unique_within_wave": true,
+    "transport_verification_sha256": "8618c9e1c6247df07c276af772db501a2b17fd855958ce6635774b7703b83c64",
+    "qa_sha256": "cd9ea56a38b795e7cf519f17d3156ceb4732705ddcfdd42c7a35c2f5f32722e5"
+  },
+  "wuzhen4": {
+    "status": "accepted_mechanical_output",
+    "shards": 4,
+    "raw_rows": 498480,
+    "posting_rows": 342546,
+    "evidence_rows": 1753539,
+    "output_bytes": 186863325,
+    "canonical_locator_unique_within_wave": true,
+    "canonical_job_hash_unique_within_wave": true,
+    "frozen_runner_sha256": "3826142b6cddb549e831c8302be1d460ba3e85ee96bb7736af5549f878b3bf44",
+    "qa_receipt_sha256": "04c4fdddade8b38eca26f44c54fd594ceb10b48828d9d919c0d9b44410ea9da2"
+  },
+  "cross_wave_identity": {
+    "expected_shards": 17,
+    "arithmetic_posting_rows": 1439748,
+    "arithmetic_evidence_rows": 7356771,
+    "source_assignment_disjointness": "supported by the frozen regional disposition design: BU13 uses Kunshan entries, Wuzhen4 uses Wuzhen entries, and shard_id is SHA-256(region + NUL + source_file)",
+    "master_canonical_mapping_evidence": "The frozen global disposition design quarantines every repeated matched-USA JOB_HASH occurrence before regional output and admits only globally canonical occurrences.",
+    "direct_cross_17_output_key_scan": false,
+    "acceptance_boundary": "The two waves are accepted separately and their source assignments are disjoint by frozen-plan construction. Do not describe the 17-shard union as directly key-verified unless a cross-17 output QA or a public receipt binding both wave manifests to the same completed global disposition receipt is supplied."
+  },
+  "first5_metadata_required_final_checks": [
+    "Slurm job 124116745 terminal state COMPLETED with exit code 0:0",
+    "FIRST5_METADATA_RECEIPT_PUBLIC.json status complete, posting_denominator and output_rows both 424226, row_conservation true",
+    "FIRST5_METADATA_QA_PUBLIC.json status pass and output SHA/bytes agree with the receipt",
+    "records, O*NET, company, geography, and occupation state partitions each sum independently to 424226",
+    "source identity remains Records 1160 files / 15415146010 bytes / inventory ff7d9d75...ffb9 and O*NET 62 files / 11190962194 bytes / inventory ad19d7cd...e9b",
+    "duplicate multiplicity, created-date disagreement, missing, blank, unofficial, placeholder, and unmapped states remain explicit",
+    "no semantic relabeling, population claim, API call, or model call"
+  ],
+  "release_recommendation": "Accept BU13 and Wuzhen4 as separate mechanically verified frozen-rule waves. Hold metadata acceptance until its final public receipt, QA receipt, and scheduler accounting arrive. Treat direct global 17-output uniqueness as not computed."
+}

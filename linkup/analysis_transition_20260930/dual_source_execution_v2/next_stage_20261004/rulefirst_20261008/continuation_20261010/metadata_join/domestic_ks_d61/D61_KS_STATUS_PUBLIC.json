@@ -1,0 +1,24 @@
+{
+  "completion_receipts_present_at_last_verified_status": false,
+  "control_plane_note": "A later bounded direct-SSH status probe timed out without output; this is not evidence that the autonomous scheduled job failed.",
+  "created_utc": "2026-10-10T05:12:48.614318+00:00",
+  "inventory_complete": true,
+  "job_id": 124116745,
+  "last_verified_elapsed": "00:31:34",
+  "last_verified_node": "a16r3n13",
+  "last_verified_stage": "records_01 extraction",
+  "last_verified_state": "RUNNING",
+  "last_verified_stderr_empty": true,
+  "last_verified_temp_output_bytes": 7738864,
+  "no_additional_jobs_submitted": true,
+  "resume_rule": "Inspect existing job 124116745 and its receipts; do not resubmit unless scheduler accounting proves terminal failure and root authorizes a replacement.",
+  "source_inventory": {
+    "onet_files": 62,
+    "onet_inventory_sha256": "ad19d7cdb535a084a414ee8e920d680791cca12a75e2bf8fdff4444134929e9b",
+    "onet_parquet_bytes": 11190962194,
+    "records_files": 1160,
+    "records_inventory_sha256": "ff7d9d7567282308472e944b2ff2bdf10698f428d98ffc41534ffd623a86ffb9",
+    "records_parquet_bytes": 15415146010
+  },
+  "version": "d61-ks-first5-status-public-v1"
+}

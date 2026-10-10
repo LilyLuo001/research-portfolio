@@ -25,3 +25,6 @@ BU13 传输与 QA 已解决：作业 124118871 完成（exit 0，37 秒，54 fil
 
 
 BU13 cleanup 已核验完成：删除 26 个已回传私有 Parquet（597,842,064 bytes）、16 个临时 staging 文件（2,180,308,411 bytes）及 3 个专用凭据文件；公共 receipts/code/logs、SCNet 原始数据和无关 job 均保留。metadata job 124116745 仍运行，不能宣称完整 metadata/full wave 完成。
+
+
+D62 runtime optimization is prepared while the replacement wave runs: `ROOT_D62_METADATA_PREFILTER_PUBLIC.json` and the independent acceptance checklist define the Arrow exact-hash prefilter and fixed semantic gates. Qualification job 124122881 passed the synthetic O*NET/Records checks, but its cache and synthetic Records predicate caveats do not establish real Records accuracy or performance. Replacement chain 124124467→124124470[1–4]→124124478 is queued/dependency-pending; the full wave remains pending final PASS. The prior 124116745 chain stopped; its partial R1 receipt is preserved but unaccepted and not merged.
