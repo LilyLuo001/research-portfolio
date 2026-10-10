@@ -1,0 +1,50 @@
+{
+  "claim_boundary": "Operational metadata linkage for frozen 424226 posting keys; no semantic relabeling, old-candidate filtering, or population claim.",
+  "created_utc": "2026-10-10T05:05:23.774330+00:00",
+  "driver_sha256": "7adcd8a831d97e25986cce52e38df9b7128e1fcf1605a6ed8096f692c331c8a1",
+  "execution_location": "Kunshan SCNet scheduled compute node a16r3n13",
+  "frozen_join_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+  "historical_constant_corrections": {
+    "onet_actual_parquet": 11190962194,
+    "onet_difference": 4096,
+    "onet_origin_not_claimed": true,
+    "onet_rejected": 11190966290,
+    "records_actual_parquet": 15415146010,
+    "records_difference": 343227,
+    "records_origin_not_claimed": true,
+    "records_rejected": 15415489237
+  },
+  "job_id": 124116745,
+  "job_name": "d61-meta-join",
+  "partition": "kshctest02",
+  "posting_denominator": 424226,
+  "progress": {
+    "latest_elapsed": "00:24:22",
+    "latest_temp_output_bytes": 4420161,
+    "records_01_input_bytes": 9995527118,
+    "records_01_input_files": 768,
+    "stage": "records_01 extraction"
+  },
+  "resources": {
+    "cpus_per_task": 4,
+    "memory_gib": 8,
+    "nodes": 1,
+    "tasks": 1,
+    "walltime": "12:00:00"
+  },
+  "sbatch_sha256": "878cc0b3425f39309a2cc9ee23f99515118c331855df2790d1fb591bcab619d1",
+  "scheduler": "Slurm",
+  "source_inventory": {
+    "official_codes_sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+    "onet_files": 62,
+    "onet_inventory_sha256": "ad19d7cdb535a084a414ee8e920d680791cca12a75e2bf8fdff4444134929e9b",
+    "onet_parquet_bytes": 11190962194,
+    "records_complete_sha256": "77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+    "records_files": 1160,
+    "records_inventory_sha256": "ff7d9d7567282308472e944b2ff2bdf10698f428d98ffc41534ffd623a86ffb9",
+    "records_parquet_bytes": 15415146010
+  },
+  "status": "running",
+  "submission_cwd_label": "metadata_join_first5_d60",
+  "version": "d61-ks-first5-submission-public-v1"
+}

@@ -19,3 +19,6 @@ BU wave closeout：BU8 已完成 672,976 postings、3,440,595 evidence rows、36
 
 
 D61 当前状态：WZ production job 46208844 的四个任务完成，QA 46209816 通过，342546 postings、1753539 evidence rows、186863325 bytes；wrapper 初次失败 job 46208826（exit 1、无数据）保留为历史事实，随后修复 load order。昆山 metadata join/initial inventory job 124116745 仍运行中，未完成。BU 13-shard 回传约 598 MB 仍进行且未验证，cross-13 QA 尚未通过。
+
+
+BU13 传输与 QA 已解决：作业 124118871 完成（exit 0，37 秒，54 files，597,922,077 bytes，hash 全通过）；13 shards 合计 1,097,202 postings、5,603,232 evidence，global JOB_HASH/locator unique。失败 124117556、重复取消 124117634、以及 124118220/124118472 的启动问题均保留为历史故障记录，修复为 module-only bootstrap，不归因于平台。metadata job 124116745 仍运行，正在 extracting records_01，未宣称完成。

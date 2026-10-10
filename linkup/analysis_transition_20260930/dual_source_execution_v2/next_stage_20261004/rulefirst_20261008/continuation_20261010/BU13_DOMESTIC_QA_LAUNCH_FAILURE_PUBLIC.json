@@ -1,0 +1,29 @@
+{
+  "status": "resolved",
+  "recorded_utc": "2026-10-10T04:54:52Z",
+  "resolved_job_id": "124118871",
+  "destination": "/public/home/lilysharp/linkup_rulefirst_20261008/returned_BU13_d60",
+  "transport": {
+    "file_count": 54,
+    "expected_bytes": 597922077,
+    "target_content_verification_complete": true,
+    "source_originals_retained_on_bu": true
+  },
+  "attempts": [
+    {"job_id": "124117556", "state": "FAILED", "exit_code": "0:53", "elapsed": "00:00:05", "node": "h17r2n17", "scheduler_reason": "JobLaunchFailure", "verifier_started": false},
+    {"job_id": "124118220", "state": "FAILED", "exit_code": "0:53", "elapsed": "00:00:03", "node": "a14r3n02", "scheduler_reason": "JobLaunchFailure", "verifier_started": false},
+    {"job_id": "124118472", "state": "FAILED", "exit_code": "1:0", "elapsed": "00:00:02", "node": "a14r3n02", "failure": "/etc/profile.d/256term.sh referenced unset COLORTERM under nounset", "verifier_started": false},
+    {"job_id": "124118871", "state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:00:37", "node": "h17r2n17", "max_rss_kib": 433332, "verifier_started": true}
+  ],
+  "concrete_repairs": [
+    "created the previously missing destination public log directory with mode 0700",
+    "set the destination root as the Slurm working directory",
+    "used the known-working modules initialization file instead of re-sourcing /etc/profile under nounset"
+  ],
+  "cancelled_duplicate": {"job_id": "124117634", "state": "CANCELLED", "elapsed": "00:00:00", "ran_verifier": false},
+  "final_qa_script_sha256": "78ff3b3ac83f2bb80d7fd3aa57857e30d91d0716b0a255bc88403a883da3b76b",
+  "transport_verification_sha256": "8618c9e1c6247df07c276af772db501a2b17fd855958ce6635774b7703b83c64",
+  "shard_set_13_qa_sha256": "cd9ea56a38b795e7cf519f17d3156ceb4732705ddcfdd42c7a35c2f5f32722e5",
+  "domestic_run_receipt_sha256": "2b3e442e4e1faf0a079d45c2b4c6b37fdc3c36b61902d561a5d5516c5eb19dfe",
+  "deletion_authorized_by_this_receipt": false
+}

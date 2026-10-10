@@ -1,0 +1,137 @@
+{
+  "canonical_job_hash_unique_across_shards": true,
+  "canonical_locator_unique_across_shards": true,
+  "completed_utc": "2026-10-10T05:01:51.930032+00:00",
+  "distinct_source_file_count": 13,
+  "manifest_sha256": "1a4c84395d9bca60c19ef5a8cd216fabc6dcf405c4816c0520c88b21bedca440",
+  "posting_rows": 1097202,
+  "runtime": {
+    "pyarrow": "11.0.0",
+    "python": "3.8.10"
+  },
+  "scope": "mechanical new-output QA plus cross-shard key uniqueness; no source text read, extraction rerun or semantic certification",
+  "shard_count": 13,
+  "shards": [
+    {
+      "evidence_rows": 421154,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 82880,
+      "posting_sha256": "e0a7b5c57704b5462a3635c17124236f39f9d84158a1cf9d1025a4bc3f66ee25",
+      "production_job_id": "7978776",
+      "shard_id": "b605d84d410013b1",
+      "shard_qa_sha256": "8a8a948871a44888cd0a1d043161ea26f741a855baed1c46e072af438356f2ed"
+    },
+    {
+      "evidence_rows": 438843,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 85934,
+      "posting_sha256": "662be7e8158d8db3a21a9e9e8a98e7f1aeeb8c7c25c19fef83db960afebff216",
+      "production_job_id": "7979088",
+      "shard_id": "b9376a87ec3e8b7c",
+      "shard_qa_sha256": "23c5d9788b83f78ecb9d652fcbcaa38a27f933b2faa9ba55ede62a8f521f2409"
+    },
+    {
+      "evidence_rows": 434980,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 85598,
+      "posting_sha256": "a121adeeaa2a09170e9b99efdc15541a05c6c3f09905c2307b15c49cbb2c5e74",
+      "production_job_id": "7979089",
+      "shard_id": "fc4fc3a546b62738",
+      "shard_qa_sha256": "92b424fa3a586361b455eb97eea6d83e09cc4a0be4fe741492698465e6c80e86"
+    },
+    {
+      "evidence_rows": 425848,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83560,
+      "posting_sha256": "620666f12a0a0067461b339b299b4fe9b2d80a1095ab3570cb6cb6ebcf90e42e",
+      "production_job_id": "7979111",
+      "shard_id": "3d07a85fc3160eed",
+      "shard_qa_sha256": "65e83f19d2e3a7382cd3aaee0293b7bddddc839d2ec70f7c20721d3cc4248c67"
+    },
+    {
+      "evidence_rows": 441812,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 86254,
+      "posting_sha256": "819a9c4f1a3115ff878b149d426dc05a4d3b9f5e732bcfae9ce0d62dee31e02b",
+      "production_job_id": "7979090",
+      "shard_id": "41305ab79b0f9fcd",
+      "shard_qa_sha256": "2d2731a2b7664d8ad644a4b674585d47631e000bc0632605e9d7f8e0849ba7d8"
+    },
+    {
+      "evidence_rows": 428052,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83818,
+      "posting_sha256": "ed0a24cb592cbcad4c9e7c233e9afc2686f473849bfcbd5bde9a62b216547ba0",
+      "production_job_id": "8004875",
+      "shard_id": "1a621775dd1d60e3",
+      "shard_qa_sha256": "b541aa64c3d160137018f613e277077c282a1c1abee7b9ddcda93df1c1d45cce"
+    },
+    {
+      "evidence_rows": 427901,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83297,
+      "posting_sha256": "a3558c3e7586a3b59de0e50ca492974bb24e39e3eadf4bcb83cc6a5b76d48bed",
+      "production_job_id": "8004875",
+      "shard_id": "21327c4753b5c705",
+      "shard_qa_sha256": "9d72e4e5b3ef08b31faf9a05e2c9b3c8b5aa3163820291cda5d276ba03297d0e"
+    },
+    {
+      "evidence_rows": 426690,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83361,
+      "posting_sha256": "c7af49202fa8f6cdb58f1dff16ee37ba65b82dac891ce0c8a744b69fb889daf3",
+      "production_job_id": "8004875",
+      "shard_id": "3a5821214a93eaed",
+      "shard_qa_sha256": "d65ba9502fb92ebe13ac73a0bd17627110367a1d95d2a4a448f5d6475c43ad26"
+    },
+    {
+      "evidence_rows": 442022,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 86407,
+      "posting_sha256": "f34b8ab67d15183fd120181db5384aa66d71e4a0acdad497e13ab8e5f85c2caf",
+      "production_job_id": "8004875",
+      "shard_id": "490b01005eca443b",
+      "shard_qa_sha256": "b7215eed4e2ddbefc8d0835e16f9da21a3c7a77188d11a672cfd334f0c9a50ef"
+    },
+    {
+      "evidence_rows": 423558,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83184,
+      "posting_sha256": "622d21dacd90858fc36374f369ba4a78284d7ed3c12371a4519f76b7a5362c68",
+      "production_job_id": "8004875",
+      "shard_id": "57dbc228e4b8bff0",
+      "shard_qa_sha256": "0346f5103ac70deb7433ffad81c4fb089e712e53d2579f634627b299afd74f85"
+    },
+    {
+      "evidence_rows": 423256,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83285,
+      "posting_sha256": "e90cd87d448d7230ac9bc8b5073224c7db8e42ad24c656fbb6e779b992531e34",
+      "production_job_id": "8004875",
+      "shard_id": "9a7d5005d87cf506",
+      "shard_qa_sha256": "b80cca07b463f9a252e8cb299d30466778064a9473a0d3302bf764fe0997cfd1"
+    },
+    {
+      "evidence_rows": 426962,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 83293,
+      "posting_sha256": "e2358c2c79bb165bbfca8b2a2c126f1b165cb21c5cc1cc08d66fa6d736f5b0dc",
+      "production_job_id": "8004875",
+      "shard_id": "c1dee80f1524505f",
+      "shard_qa_sha256": "770784fb5dddf5ec9737f777fee13b18db8e2079b414d7ad26edac2037bde552"
+    },
+    {
+      "evidence_rows": 442154,
+      "newly_verified_in_this_job": false,
+      "posting_rows": 86331,
+      "posting_sha256": "fb121454b26d1dfbd69540725266b120c595152fc6e51c84993c19a5fc356ea4",
+      "production_job_id": "8004875",
+      "shard_id": "d6cf6da84b73ed60",
+      "shard_qa_sha256": "61f8e23da155dbf2821c1b604510b46a49bf86e174d2cda99aee48f243a90de8"
+    }
+  ],
+  "started_utc": "2026-10-10T05:01:38.371565+00:00",
+  "status": "pass",
+  "verifier_sha256": "e8d79735b492fe61f9b04d6a2d7fe2717e067d889e0950919b69640cd4ef99d5",
+  "version": "d58-shard-set-output-verifier-v1"
+}

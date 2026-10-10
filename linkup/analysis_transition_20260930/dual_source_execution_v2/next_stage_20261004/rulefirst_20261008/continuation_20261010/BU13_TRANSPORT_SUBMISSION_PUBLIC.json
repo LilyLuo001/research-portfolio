@@ -1,0 +1,25 @@
+{
+  "api_calls": 0,
+  "created_utc": "2026-10-10T04:48:17.835354+00:00",
+  "destination": "/public/home/lilysharp/linkup_rulefirst_20261008/returned_BU13_d60",
+  "expected_posting_rows_before_uniqueness_gate": 1097202,
+  "file_count": 54,
+  "model_calls": 0,
+  "raw_inputs_transferred": false,
+  "remaining_bytes": 0,
+  "semantic_rerun": false,
+  "source": "BU accepted5 plus final8 narrow/evidence and receipts only",
+  "source_originals_retained": true,
+  "status": "transport_complete_target_verification_queued",
+  "total_bytes": 597922077,
+  "verification_job_id": "124117556",
+  "verification_job_state": "pending_priority",
+  "verification_resources": {
+    "cpus": 1,
+    "memory_gb": 2,
+    "partition": "kshctest02",
+    "walltime_minutes": 30
+  },
+  "verification_scope": "target size+SHA for all54 files then existing verifier cross-shard canonical locator/JOB_HASH uniqueness across13",
+  "version": "d60-bu13-transport-submission-v1"
+}

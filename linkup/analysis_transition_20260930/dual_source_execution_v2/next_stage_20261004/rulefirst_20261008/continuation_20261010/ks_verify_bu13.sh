@@ -1,16 +1,16 @@
-#!/bin/bash -l
+#!/bin/bash
 #SBATCH --job-name=lk_bu13qa
 #SBATCH --partition=kshctest02
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=4G
+#SBATCH --mem=2G
 #SBATCH --time=00:30:00
 #SBATCH --output=/public/home/lilysharp/linkup_rulefirst_20261008/returned_BU13_d60/public/verify.%j.log
 set -euo pipefail
 umask 077
 ROOT=/public/home/lilysharp/linkup_rulefirst_20261008/returned_BU13_d60
-source /etc/profile
+source /etc/profile.d/modules.sh
 module load python/3.8.10
 export PYTHONPATH=/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38:$ROOT/code${PYTHONPATH:+:$PYTHONPATH}
 python3 "$ROOT/code/verify_return_manifest.py" --root "$ROOT" --manifest "$ROOT/control/RETURN_MANIFEST_PRIVATE.json" --output "$ROOT/public/TRANSPORT_VERIFICATION_PUBLIC.json"
