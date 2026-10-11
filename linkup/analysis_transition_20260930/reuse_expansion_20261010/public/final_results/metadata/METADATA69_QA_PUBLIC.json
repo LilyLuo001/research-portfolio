@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "all_status_partitions_conserve_denominator": true,
+    "canonical_keys_unique_and_exact_target": true,
+    "no_created_calendar_disagreement": true,
+    "no_unresolved_one_to_many": true,
+    "output_hash_bound": true,
+    "row_conservation_5804936": true
+  },
+  "errors": [],
+  "rows": 5804936,
+  "scope": "Engineering metadata linkage QA; no semantic validation or historical-text claim.",
+  "status": "pass",
+  "status_partition_sums": {
+    "company_status": 5804936,
+    "created_alignment_status": 5804936,
+    "geography_status": 5804936,
+    "official_occupation_status": 5804936,
+    "onet_join_status": 5804936,
+    "records_join_status": 5804936
+  },
+  "version": "d67-metadata69-independent-qa-v1"
+}

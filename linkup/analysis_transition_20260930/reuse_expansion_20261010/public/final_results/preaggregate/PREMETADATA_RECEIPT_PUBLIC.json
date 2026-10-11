@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "69_shards": true,
+    "matrix_conservation": true,
+    "old_occupation_task_NA": true,
+    "row_conservation": true
+  },
+  "claim_boundary": "candidate wording in frozen completed-output wave; metadata-dependent occupation comparisons pending",
+  "counts": {
+    "current_processed": 5804916,
+    "current_rows": 5804936,
+    "exact_old_matches": 5804936,
+    "old_matched_current_processed": 5804916,
+    "old_occupation_task_verified_NA_rows": 5804936,
+    "old_usable_matches": 5804788
+  },
+  "created_utc": "2026-10-10T14:04:44.874676+00:00",
+  "global_private_manifest_sha256": "a333daf626c401d7f947d3ee0da37caad35ab898cd89045e9f9a204e25340bd0",
+  "public_outputs": {
+    "PREMETADATA_COVERAGE_PUBLIC.csv": "6fe870f1b97d33ea405c0164bf3cc7443f6c2172dd33537289fcd4b1669c5a1f",
+    "PREMETADATA_ENTRY_RESPONSIBILITY_PUBLIC.csv": "0e151d5d3014acd213e49fb689a82f8c8862cdc26ada0a998cd3f510ea4bf425",
+    "PREMETADATA_MEASUREMENT_COVERAGE_PUBLIC.csv": "0e8621fd08011bbac4a643cb3c81e8a843ff5f87a38a21f778ddb157067f5715"
+  },
+  "scheduler": {
+    "host": "a18r4n11",
+    "job_id": "124153130"
+  },
+  "status": "pass",
+  "version": "d67-overlay-preaggregate-v1"
+}

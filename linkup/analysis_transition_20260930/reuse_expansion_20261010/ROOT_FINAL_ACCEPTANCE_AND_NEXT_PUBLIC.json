@@ -1,0 +1,68 @@
+{
+  "version": "d67-root-final-acceptance-v1",
+  "date": "2026-10-11",
+  "status": "D67_completed_and_accepted_for_descriptive_candidate_measurement_analysis",
+  "basis": {
+    "scheduler_receipt": "public/final_results/SCHEDULER_CHAIN_FINAL_PUBLIC.json",
+    "numerical_qa": "public/final_results/final/INDEPENDENT_QA_PUBLIC.json",
+    "summary": "public/final_results/final/SUMMARY_PUBLIC.json",
+    "all_scheduled_stages": "COMPLETED 0:0",
+    "independent_qa": "pass; arithmetic_errors=[]"
+  },
+  "coverage": {
+    "shards": 69,
+    "canonical_ads": 5804936,
+    "exact_old_matches": 5804936,
+    "old_usable_current_processed": 5804788,
+    "official_occupation": 5801980,
+    "common_support_occupations": 332,
+    "software_only_retained": 1230436,
+    "any_ai_retained": 109497
+  },
+  "interpretation": {
+    "primary_population": "old_usable_current_processed",
+    "contrast": "Any AI wording minus software-only wording, standardized to common occupation weights",
+    "tool_experience": "Negative difference under both old/current and broad/main rules; a descriptive lead, not demonstrated substitution",
+    "occupation_task_experience": "Current main +4.914442 percentage points; current broad +1.172307; old version unmeasured",
+    "general_work": "Scope-sensitive and operational fallback wording category; do not infer general human-capital substitution",
+    "industry_domain": "Direction differs between versions; not accepted as a stable substantive finding",
+    "entry_responsibility": "160380 no-experience/graduate wording candidates; 6263 broad responsibility co-occurrences. A candidate co-occurrence finding, not evidence of seniorization",
+    "composition_warning": "Tool main raw common-support rates are higher for any-AI while occupation-standardized rates are lower; composition materially affects the comparison"
+  },
+  "next_bounded_analysis": [
+    {
+      "task": "Company-by-occupation composition check",
+      "execution": "Reuse enriched narrow tables on scheduled SCNet CPU; freeze supported company-occupation cells with at least 20 observations in each arm; use identical cells/weights across outcomes and versions",
+      "deliverable": "Support funnel and within-company-occupation comparisons alongside existing occupation-only results; explicitly report unsupported comparisons",
+      "model": "gpt-5.6-sol",
+      "effort": "medium"
+    },
+    {
+      "task": "Technology overlap and entry-language sensitivities",
+      "execution": "Reuse existing flags; separate software-only, AI-only and overlapping wording, and separate no-experience from graduate wording. Preserve conditional/unknown states. No new text extraction",
+      "deliverable": "Bounded sensitivity tables with explicit denominators and supported comparisons",
+      "model": "gpt-5.6-sol",
+      "effort": "medium"
+    },
+    {
+      "task": "Acceptance and concise research interpretation",
+      "execution": "Independent denominator/weight/output-binding checks; root adjudicates findings once and records stable versus measurement-sensitive leads",
+      "models": "gpt-5.6-luna/medium engineering QA; GPT-6/high final judgment; gpt-5.6-luna/low Git publication"
+    }
+  ],
+  "stop_rules": [
+    "Do not restart full-corpus cleaning or raw-text extraction",
+    "Do not tune thresholds or measurement rules to recover a desired result",
+    "If company-occupation support is inadequate, report this rather than opening an indefinite matching project",
+    "No paid API, additional model inference, or new cloud provider",
+    "No new jobs are implied to have been submitted by this planning document"
+  ],
+  "limits": [
+    "Completed-shard convenience wave, not a probability sample or full-corpus prevalence estimate",
+    "AI wording is not observed AI adoption and a cross-sectional contrast is not a historical computer-revolution comparison",
+    "Posting dates do not date the current text; no historical text change or causal effect is identified",
+    "Engineering and numerical QA does not prove semantic accuracy",
+    "Old task fields remain NA and D67 old numeric coverage is audit-only",
+    "Strict-duty zero detection must not be interpreted as zero substantive responsibility"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "aggregate_status": "pass",
+  "created_utc": "2026-10-11T10:59:56.794924+00:00",
+  "files": {
+    "final/COMMON_SUPPORT_PUBLIC.csv": {
+      "bytes": 426,
+      "sha256": "f37dc32792f47d26e77e2a23ebb43fc05d4a01ba0ebcdec890b85a90082c8608"
+    },
+    "final/CORE_EXPERIENCE_COMPARISON_PUBLIC.csv": {
+      "bytes": 9776,
+      "sha256": "972b8734f3733b1b6a9b674de8894a1ddb82aa14ac378e285eb1b6013ce3807f"
+    },
+    "final/COVERAGE_FUNNEL_PUBLIC.csv": {
+      "bytes": 522,
+      "sha256": "8248c3fd6baa7e372e33b28786ff63b6d62e9295fe970af0ad64fa9f59d68bf2"
+    },
+    "final/ENTRY_RESPONSIBILITY_COOCCURRENCE_PUBLIC.csv": {
+      "bytes": 8556,
+      "sha256": "70de1514dbc0af2d01bae935649c4cc284229fb71e1a2dc6849eaa548c9d3a8b"
+    },
+    "final/INDEPENDENT_QA_PUBLIC.json": {
+      "bytes": 582,
+      "sha256": "3b32f10f51a584048710bdaced257032b7015c31453706280e6c925c2f60a746"
+    },
+    "final/METADATA_COVERAGE_PUBLIC.csv": {
+      "bytes": 405,
+      "sha256": "15642982c9ce5d3590b6f56f9748e40086ed87dea0704605d36d71ba7174d4ec"
+    },
+    "final/METADATA_STATUS_COUNTS_PUBLIC.csv": {
+      "bytes": 2674,
+      "sha256": "21d827270d347eef7bf7371f27698029d322ec589cb8e212681dcb12c8b4eeb5"
+    },
+    "final/QUALIFICATION_UNKNOWN_COVERAGE_PUBLIC.csv": {
+      "bytes": 4909,
+      "sha256": "376e27a447bef4a04f42d954f2ca289dcf324e49fb513390a45f3a76ad60fdc5"
+    },
+    "final/RUN_RECEIPT_PUBLIC.json": {
+      "bytes": 2737,
+      "sha256": "78e07867c856cd079fd5f39b3ca170c92e7881dbf3c4ed618e7e314bc7c1fced"
+    },
+    "final/SHARD_VERSION_COVERAGE_PUBLIC.csv": {
+      "bytes": 587,
+      "sha256": "ac8c8800fe090ff812d684a2982130122a1233963163d92ae220f2db3597618c"
+    },
+    "final/SUMMARY_PUBLIC.json": {
+      "bytes": 973,
+      "sha256": "274bf95c8f568625ee6a54120edc6c9a589c1c3991fa39c000bdea9a1faf8f32"
+    },
+    "metadata/KEYS64_RECEIPT_PUBLIC.json": {
+      "bytes": 3094,
+      "sha256": "e74fe98817a0ba3db22f2b8fe06cf4d9a58d13272c318b7ee2b1a31fdb21dd5e"
+    },
+    "metadata/METADATA69_QA_PUBLIC.json": {
+      "bytes": 733,
+      "sha256": "ef1b4fc58d99cc51aadceb42b41412d37027946b3a7b84ce93cc85cb1846873d"
+    },
+    "metadata/METADATA69_RECEIPT_PUBLIC.json": {
+      "bytes": 1848,
+      "sha256": "98e143d084cc5926ff9c1ae0bf4d0957a10a5b5f4a2b85c7860ddbb788912a9c"
+    },
+    "preaggregate/PREMETADATA_COVERAGE_PUBLIC.csv": {
+      "bytes": 412,
+      "sha256": "6fe870f1b97d33ea405c0164bf3cc7443f6c2172dd33537289fcd4b1669c5a1f"
+    },
+    "preaggregate/PREMETADATA_ENTRY_RESPONSIBILITY_PUBLIC.csv": {
+      "bytes": 8370,
+      "sha256": "0e151d5d3014acd213e49fb689a82f8c8862cdc26ada0a998cd3f510ea4bf425"
+    },
+    "preaggregate/PREMETADATA_MEASUREMENT_COVERAGE_PUBLIC.csv": {
+      "bytes": 5983,
+      "sha256": "0e8621fd08011bbac4a643cb3c81e8a843ff5f87a38a21f778ddb157067f5715"
+    },
+    "preaggregate/PREMETADATA_RECEIPT_PUBLIC.json": {
+      "bytes": 1180,
+      "sha256": "42252b0a2c4f45686b8effcbb1c159c9b953909f6301ffd87246068c400b1b68"
+    }
+  },
+  "final_rows": 5804936,
+  "final_shards": 69,
+  "independent_qa_status": "pass",
+  "jobs": [
+    {
+      "elapsed": "00:13:13",
+      "exit_code": "0:0",
+      "job_id": "124153130",
+      "max_rss_kb": 148200,
+      "stage": "premetadata_global_manifest",
+      "state": "COMPLETED"
+    },
+    {
+      "exit_code": "0:0",
+      "job_id": "124153457",
+      "max_task_rss_kb": 1501468,
+      "stage": "metadata64_extract_array",
+      "state": "COMPLETED",
+      "task_elapsed": [
+        "00:09:39",
+        "00:04:55",
+        "00:28:19",
+        "00:04:20"
+      ],
+      "tasks": 4
+    },
+    {
+      "elapsed": "00:41:10",
+      "exit_code": "0:0",
+      "job_id": "124153469",
+      "max_rss_kb": 676448,
+      "stage": "metadata64_finalize_union_first5",
+      "state": "COMPLETED"
+    },
+    {
+      "elapsed": "00:06:10",
+      "exit_code": "0:0",
+      "job_id": "124153482",
+      "max_rss_kb": 487848,
+      "stage": "metadata69_independent_qa",
+      "state": "COMPLETED"
+    },
+    {
+      "elapsed": "00:33:57",
+      "exit_code": "0:0",
+      "job_id": "124153490",
+      "max_rss_kb": 470580,
+      "stage": "final_aggregate",
+      "state": "COMPLETED"
+    },
+    {
+      "elapsed": "00:14:04",
+      "exit_code": "0:0",
+      "job_id": "124153520",
+      "max_rss_kb": 238220,
+      "stage": "final_independent_qa",
+      "state": "COMPLETED"
+    }
+  ],
+  "local_public_output_hashes_match_cloud_receipt": true,
+  "status": "pass",
+  "version": "d67-final-scheduler-and-local-sync-v1"
+}

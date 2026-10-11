@@ -1,0 +1,76 @@
+{
+  "api_calls": 0,
+  "checks": {
+    "fixed_current_technology_groups": true,
+    "frozen_69": true,
+    "metadata_exact_join": true,
+    "metadata_independent_qa_pass": true,
+    "metadata_receipt_status_row_sha": true,
+    "metadata_status_denominators_conserve": true,
+    "old_occupation_task_NA": true,
+    "row_conservation": true,
+    "same_common_support_and_weights": true
+  },
+  "claim_boundary": "completed-output candidate wording; no full-corpus prevalence, semantic accuracy, causal, seniority or authority claim",
+  "counts": {
+    "current_processed": 5804916,
+    "current_rows": 5804936,
+    "exact_old_matches": 5804936,
+    "metadata_company_and_official_occupation": 5801980,
+    "metadata_official_occupation": 5801980,
+    "old_occupation_task_verified_NA_rows": 5804936,
+    "old_usable_matches": 5804788
+  },
+  "created_utc": "2026-10-10T22:12:01.332222+00:00",
+  "full_text_reads": 0,
+  "global_private_manifest": {
+    "path": "/public/home/lilysharp/linkup_rulefirst_20261008/reuse_expansion_20261010/private/final/GLOBAL_OUTPUT_MANIFEST_PRIVATE.json",
+    "rows": 5804936,
+    "sha256": "eef8a7f2833714d3b68eb74726f5255187b0d7ccdbe69ff4313372de992520af"
+  },
+  "model_calls": 0,
+  "public_outputs": {
+    "COMMON_SUPPORT_PUBLIC.csv": {
+      "bytes": 426,
+      "sha256": "f37dc32792f47d26e77e2a23ebb43fc05d4a01ba0ebcdec890b85a90082c8608"
+    },
+    "CORE_EXPERIENCE_COMPARISON_PUBLIC.csv": {
+      "bytes": 9776,
+      "sha256": "972b8734f3733b1b6a9b674de8894a1ddb82aa14ac378e285eb1b6013ce3807f"
+    },
+    "COVERAGE_FUNNEL_PUBLIC.csv": {
+      "bytes": 522,
+      "sha256": "8248c3fd6baa7e372e33b28786ff63b6d62e9295fe970af0ad64fa9f59d68bf2"
+    },
+    "ENTRY_RESPONSIBILITY_COOCCURRENCE_PUBLIC.csv": {
+      "bytes": 8556,
+      "sha256": "70de1514dbc0af2d01bae935649c4cc284229fb71e1a2dc6849eaa548c9d3a8b"
+    },
+    "METADATA_COVERAGE_PUBLIC.csv": {
+      "bytes": 405,
+      "sha256": "15642982c9ce5d3590b6f56f9748e40086ed87dea0704605d36d71ba7174d4ec"
+    },
+    "METADATA_STATUS_COUNTS_PUBLIC.csv": {
+      "bytes": 2674,
+      "sha256": "21d827270d347eef7bf7371f27698029d322ec589cb8e212681dcb12c8b4eeb5"
+    },
+    "QUALIFICATION_UNKNOWN_COVERAGE_PUBLIC.csv": {
+      "bytes": 4909,
+      "sha256": "376e27a447bef4a04f42d954f2ca289dcf324e49fb513390a45f3a76ad60fdc5"
+    },
+    "SHARD_VERSION_COVERAGE_PUBLIC.csv": {
+      "bytes": 587,
+      "sha256": "ac8c8800fe090ff812d684a2982130122a1233963163d92ae220f2db3597618c"
+    },
+    "SUMMARY_PUBLIC.json": {
+      "bytes": 973,
+      "sha256": "274bf95c8f568625ee6a54120edc6c9a589c1c3991fa39c000bdea9a1faf8f32"
+    }
+  },
+  "scheduler": {
+    "host": "a08r1n08",
+    "job_id": "124153490"
+  },
+  "status": "pass",
+  "version": "d67-expansion-final-v1"
+}

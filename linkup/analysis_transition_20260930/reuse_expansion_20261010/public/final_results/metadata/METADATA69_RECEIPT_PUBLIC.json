@@ -1,0 +1,39 @@
+{
+  "claim_boundary": "current-delivery metadata mapping with explicit missing states; no historical-text or semantic relabeling claim",
+  "counts64": {
+    "company_observed_company_scrape_entity": 5380710,
+    "created_same_calendar_date": 5380710,
+    "geography_mapped_region": 5344048,
+    "geography_state_missing": 33547,
+    "geography_state_unmapped": 3115,
+    "occupation_blank_code": 77,
+    "occupation_no_onet_row": 1959,
+    "occupation_official_code": 5377966,
+    "occupation_placeholder_99-9999.00": 704,
+    "occupation_unofficial_code": 4,
+    "onet_matched_one": 5378751,
+    "onet_missing": 1959,
+    "records_matched_one": 5380710
+  },
+  "created_utc": "2026-10-10T18:04:59.309204+00:00",
+  "identity": {
+    "array_map_sha256": "06dcbf0edd54b25838cd5e96ef98ba700b6b144032f4f5dd30995fefe1bbe638",
+    "base_code_sha256": "d44ee0be0f8f3c7b93fd5d5ff72aa375d92a257c0481ab7978b29637cbd2ded2",
+    "first5_metadata_sha256": "0d8319aa9221522f4c4ee52fddce5a7576987f891dcfa589efdac8f0630e3029",
+    "official_codes_sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+    "onet_inventory_sha256": "23c8abcaf1c2f9c0ba7cdfdeaec216f935aeb2861120f9b4f53e754271295c7d",
+    "pipeline_code_sha256": "19375cb12f1df2f854e1b1d0442703b9c689989be12c091cbf4d57cec95eb8d4",
+    "records_inventory_sha256": "93cbc6efc2c152e7680fa786ca3dc8efac6dafcc6e0594e8070876947165e82f"
+  },
+  "new64_rows": 5380710,
+  "output64_bytes": 338882208,
+  "output64_sha256": "2760167baa1b72a04aa353baf55e96f85d31ea8ecefd922c74415543acd1798f",
+  "output_bytes": 358109896,
+  "output_rows": 5804936,
+  "output_sha256": "058ab850fb88fe9497933771ffdc6b7a010d5ab0828ca6b6de269ff4d3866cb5",
+  "reused_first5_rows": 424226,
+  "row_conservation": true,
+  "stage": "finalize64_union_first5",
+  "status": "complete",
+  "version": "d67-metadata64-v1"
+}
