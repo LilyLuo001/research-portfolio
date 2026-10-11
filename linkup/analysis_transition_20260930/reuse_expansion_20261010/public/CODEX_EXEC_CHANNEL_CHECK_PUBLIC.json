@@ -1,0 +1,69 @@
+{
+  "actions_taken": {
+    "auth_files_read": false,
+    "jobs_submitted": 0,
+    "model_calls": 0,
+    "software_installed": false,
+    "tokens_or_environment_secrets_printed": false
+  },
+  "checks": [
+    {
+      "codex_path": "/opt/homebrew/bin/codex",
+      "login_status": "Logged in using ChatGPT",
+      "reason": "Project contract keeps research computation on scheduled cloud jobs.",
+      "site": "local_mac",
+      "usable_for_research_compute": false,
+      "version": "codex-cli 0.143.0"
+    },
+    {
+      "codex_present": false,
+      "login_status": "unavailable_command_absent",
+      "paths_checked": [
+        "regular PATH",
+        "$HOME/bin/codex",
+        "$HOME/.local/bin/codex"
+      ],
+      "site": "SCNet_Kunshan",
+      "version": null
+    },
+    {
+      "codex_present": false,
+      "login_status": "unavailable_command_absent",
+      "paths_checked": [
+        "regular PATH",
+        "$HOME/bin/codex",
+        "$HOME/.local/bin/codex"
+      ],
+      "site": "SCNet_Wuzhen",
+      "version": null
+    }
+  ],
+  "date": "2026-10-11",
+  "fixed_old32_assessment": {
+    "exact_missing_steps": [
+      "Install or expose a compatible official Codex CLI on the chosen SCNet execution site.",
+      "Complete an authorized ChatGPT login on that same site and verify only `codex login status`.",
+      "Run one bounded non-research/non-data execution check for `codex exec --output-schema` under the scheduler before the fixed old32 evaluation is authorized."
+    ],
+    "possible_via_official_subscription_cli_in_principle": true,
+    "prohibited_shortcuts": [
+      "Do not copy local auth files or tokens to SCNet.",
+      "Do not treat the logged-in Mac CLI as authorization for local research computation.",
+      "Do not infer million-row or other production capacity from CLI availability or subscription login."
+    ],
+    "ready_now_on_SCNet": false
+  },
+  "official_capability_basis": {
+    "boundary": "Documented CLI support does not establish that either cluster has the CLI/login, and does not promise capacity for a large corpus.",
+    "capabilities": [
+      "codex exec non-interactive operation",
+      "output schema support",
+      "reuse of saved login state",
+      "ChatGPT-managed automation"
+    ],
+    "source": "learn.chatgpt.com/docs/non-interactive-mode lines 982-1033, as supplied and verified by root"
+  },
+  "scope": "Read-only checks of regular PATH and known user bins only; no installation, authentication transfer, model call, research compute, or scheduler submission.",
+  "status": "cloud_channel_not_ready",
+  "version": "codex-exec-channel-readonly-check-v1"
+}

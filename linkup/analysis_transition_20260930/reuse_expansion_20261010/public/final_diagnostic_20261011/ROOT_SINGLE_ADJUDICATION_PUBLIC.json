@@ -1,0 +1,50 @@
+{
+  "version": "d68-root-single-adjudication-v1",
+  "date": "2026-10-11",
+  "status": "adjudication_complete; no_parser_change_required_for_bounded_wording_release",
+  "evidence": {
+    "case_pack_sha256": "9feb370fd78169d07d5221823a4ad70250a74e8aabd769ca8d346a3a497c0de4",
+    "frozen_rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+    "direct_same_version_cases_reviewed": 8,
+    "direct_cases_with_matching_context": 7,
+    "historical_adjudication_precedents_reused": 14,
+    "new_model_inference_jobs": 0,
+    "new_accuracy_evaluation": false,
+    "note": "Root read eight supplied current evidence rows and their available contexts plus fourteen prior decision summaries. Prior original documents were not independently reread this round. Retrieval bucket labels are not production feature labels."
+  },
+  "direct_case_decisions": [
+    {"case": "A01", "decision": "Prior aerospace and material-review experience is explicit, with domain/task ambiguity already flagged. Retain multi-object wording and unresolved binding; do not infer a single exclusive experience type or years."},
+    {"case": "A02", "decision": "An education/experience heading is not a substantive positive experience requirement. This evidence has empty objects and unresolved status, so its presence does not establish a false general-work positive. Nearby explicit no-experience wording is a separate clause."},
+    {"case": "A03", "decision": "Relevant engineering experience stated as a plus supports a preferred occupation/task wording candidate. Do not attach the preceding bullet's five-year threshold to this clause."},
+    {"case": "A04", "decision": "The supplied clause contains related/supervisory experience and a qualification alternative. Multiple-experience warning and null duration must remain. The stored unconditional scope is not sufficient to claim universal tenure. Missing wider context prevents confirming inherited preferred strength. Keep broad evidence exploratory, exclude unresolved clauses from any clean unconditional-years interpretation."},
+    {"case": "B01", "decision": "Graduate-program wording is an education reference, not newcomer targeting. The supplied row is education evidence and does not establish a graduate-targeting production false positive."},
+    {"case": "B02", "decision": "Graduation from nursing school is an education credential; surrounding text separately requests prior clinical experience. This retrieved education row does not prove a newcomer flag. Do not replace the actual frozen entry-rule output with retrieval-category membership."},
+    {"case": "B03", "decision": "Team leadership appears in an applicant-ability context for the advertised role. Retain leadership/supervision wording, but do not equate it with a verified current reporting hierarchy, a prior-experience requirement, or seniority."},
+    {"case": "B04", "decision": "Independent decisions appear under job requirements, supporting a current-role independent-judgment wording interpretation in this example. No inference about seniority or entry-level eligibility follows."}
+  ],
+  "corrections_to_prior_root_descriptions": {
+    "general_work": "The current engine requires explicit total/overall/general/professional/work/working/employment-experience wording, no recognized specific object, and a restricted trailing context. It is not an arbitrary fallback for every unclassified experience clause. Earlier root descriptions calling it a fallback were imprecise. It still does not measure all general human capital.",
+    "graduate_language": "The frozen NEWGRAD rule targets new/recent/fresh graduates or graduates welcome/encouraged to apply. Bare graduate program and graduate of a school are not sufficient matches. The diagnostic packet alone does not establish that those examples were wrongly counted as entry candidates.",
+    "unknown_heading": "An extracted heading with empty objects and needs_review status must not be described as a confirmed positive experience-type label."
+  },
+  "historical_lessons_retained": [
+    "Restricted professional/role experience is not unrestricted total tenure",
+    "Educational alternatives and conversion ratios are not universal scalar years",
+    "A duration modifying task experience must not be copied to each mentioned tool",
+    "Proficiency or exposure is not automatically prior employment",
+    "Mentoring junior colleagues and employer-wide entry-level boilerplate do not identify the advertised role's seniority",
+    "Employer product AI wording does not automatically establish applicant AI skill requirements"
+  ],
+  "release_decisions": {
+    "comparison_1": "Release old/current experience wording and literal-clause summaries with separate versions, unresolved states and fixed comparison support. These are descriptive candidates, not established experience substitution or historical AI effects.",
+    "comparison_2": "Release no-experience/graduate wording by responsibility-wording co-occurrence. Do not label the population verified entry-level vacancies or the result seniorization. Strict-duty zero detection is not zero substantive responsibility.",
+    "patch": "No new extraction or vocabulary change. Correct documentation and restrict interpretations; preserve existing uncertainty guards in the final clause summaries.",
+    "stop": "No additional sample or repeated semantic development cycle in this closeout. Remaining uncertainty is recorded as a research limitation."
+  },
+  "limits": [
+    "Only eight same-version evidence rows; not a representative sample",
+    "Entry and responsibility direct examples are not paired co-occurrence cases",
+    "No precision, recall, group-specific error rates or measurement invariance are established",
+    "Engineering/numerical acceptance and this bounded diagnostic are distinct"
+  ]
+}

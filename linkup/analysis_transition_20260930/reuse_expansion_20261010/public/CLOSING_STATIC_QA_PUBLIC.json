@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "empty_or_unrecognized_object_numeric_clause_retained_as_unknown": true,
+    "fixed_5804788_population_and_332_common_support_binding": true,
+    "frozen_engine_interpretation_corrected": true,
+    "multiobject_numeric_clause_not_copied_to_each_object": true,
+    "needs_review_not_promoted_to_clear_strength_or_condition": true,
+    "old_occupation_task_remains_unmeasured": true,
+    "old_sparse_audit_coverage_explicit_and_nondetection_not_absence": true,
+    "python_compile_and_shell_syntax": true,
+    "required_preferred_mixed_and_unknown_states_preserved": true,
+    "same_min_count_occupation_weights_for_both_technology_arms": true,
+    "wuzhen_array_split_by_required_offsets_under_qos_limit": true
+  },
+  "claim_boundary": "Static engineering acceptance only; no semantic accuracy, causal, seniority, authority, job-level minimum, or completed-run claim.",
+  "code_sha256": {
+    "aggregate_closing_package.py": "2e8448ebb779c0272c20d597f0ab99e4fa756d64398f4e002513514dc4ea4c87",
+    "ks_aggregate_closing.sbatch": "5c81b1dc32a1cbc641be2cdd81b3be61f66b01c1c68501dd6b6b16b7c89bcada",
+    "ks_project_closing.sbatch": "8737d857795a76867c3763cce6c323dc4cdd5f604531521dd53d5a648066f7ed",
+    "project_closing_evidence.py": "b5a4b98a3dcdaf860d16165977e5d4d65881b474ead379bc715c730630cbc4e0",
+    "wz_project_closing.sbatch": "cfaa962b77719a0bec3cdd3135e0d4dec370548a403978be10a37f02e596ff64"
+  },
+  "date": "2026-10-11",
+  "errors": [],
+  "frozen_rule_findings": {
+    "diagnostic_cases": "A02 is objects=[] needs_review; A04 bound is null and unresolved; B03/B04 are current responsibility wording and do not establish seniority.",
+    "general_work": "Explicit GENERAL cue plus no specific object and restricted tail; not a no-object fallback.",
+    "graduate_language": "Only new/recent/fresh graduates or graduates welcome/encouraged; ordinary education uses of graduate are not NEWGRAD positives."
+  },
+  "scheduler_context": {
+    "accepted_actual_submissions": [
+      {
+        "array": "0-13%4",
+        "batch_offset": 0,
+        "job_id": "46294017",
+        "resources": "4 CPU, 8G, dcu:Hygon:1, disable-binding",
+        "site": "Wuzhen"
+      },
+      {
+        "array": "0-12%4",
+        "job_id": "124222640",
+        "resources": "4 CPU, 8G",
+        "site": "Kunshan"
+      }
+    ],
+    "boundary": "Job submission is recorded for provenance and is not runtime acceptance.",
+    "invalid_gres_attempt": "Rejected by sbatch validation before job creation; no data read."
+  },
+  "scope": "Independent static review of the bounded closing projection and aggregation. Runtime results remain subject to scheduler exit and receipt conservation.",
+  "status": "pass_static_only",
+  "version": "d68-closing-static-qa-v1"
+}

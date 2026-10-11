@@ -1,0 +1,485 @@
+{
+  "actual_method": "rule-only extraction reuse plus bounded qualitative adjudication",
+  "ad_population": 5804788,
+  "api_calls": 0,
+  "checks": {
+    "ad_population": true,
+    "any_ai_retained": true,
+    "eligible_occupation_count": true,
+    "min_count_weight": true,
+    "software_retained": true
+  },
+  "claim_boundary": "existing-field wording candidates on fixed current technology groups and common occupation support; no accuracy, causal, job-minimum, seniority or authority claim",
+  "code_sha256": "2e8448ebb779c0272c20d597f0ab99e4fa756d64398f4e002513514dc4ea4c87",
+  "created_utc": "2026-10-11T12:02:05.771394+00:00",
+  "eligible_occupations": 332,
+  "frozen_shards": 69,
+  "full_text_extractions": 0,
+  "inputs": {
+    "frozen_manifest_sha256": "4374659120a71c188fd8aeebafc533b5435a141638f3ffaf4a5f9a8af0b02bad",
+    "global_manifest_sha256": "eef8a7f2833714d3b68eb74726f5255187b0d7ccdbe69ff4313372de992520af",
+    "published_common_support_sha256": "f37dc32792f47d26e77e2a23ebb43fc05d4a01ba0ebcdec890b85a90082c8608"
+  },
+  "model_calls": 0,
+  "projection_receipts": [
+    {
+      "evidence_sha256": "7d1aff35311e0fc9f83f2f811f562183ef1e8bb66ae4b7b710b60701acb58031",
+      "receipt_sha256": "174386683000bc98ca70ceace2737d5fc83e1ca40bbe0398bd65a19c2721053a",
+      "region": "kunshan",
+      "shard_id": "b605d84d410013b172391b85e09af6012057c75aaf85003a43d4847379931e38"
+    },
+    {
+      "evidence_sha256": "d0efae6f4c10538708f1f645cb8b0c415c4d40c88a5765aea724ecd71119a1d1",
+      "receipt_sha256": "a268b8f4c67320aff847a968cbba65c5afae5b4c3841dcc7f5a159460ce12d73",
+      "region": "kunshan",
+      "shard_id": "b9376a87ec3e8b7c72d028e376524926a10980d849cb84cc3c34e5ef2e254102"
+    },
+    {
+      "evidence_sha256": "a9b3e014e729e0ae9b89a5479236b003061ead72f3df2cb96b4c3e9d8f293c29",
+      "receipt_sha256": "4d4624608f621ae4fe1f1d7edce982987876139fd552a4867722513e89c4145f",
+      "region": "kunshan",
+      "shard_id": "fc4fc3a546b62738be0ed236bb15399906a678796d0cbb08f26c2dfca6ea28aa"
+    },
+    {
+      "evidence_sha256": "85a1265edecdacb06c0f4f9b948829606bd3c6dd86a3506dc6a9ad600161ca73",
+      "receipt_sha256": "3cc5ddc32b688b0b2c215dea3092948281b9c6ca09f8bd81efb5819311d9d9b0",
+      "region": "kunshan",
+      "shard_id": "3d07a85fc3160eed1d085e92ec5d7ba2be42240429c786b68b6b1ad62533f0fe"
+    },
+    {
+      "evidence_sha256": "a644efafc7a26f65d2197c2c2866b4b75dfe09b5ea2573a895ab4a01ee392ada",
+      "receipt_sha256": "c86e8eac04589702c86ad096b76164872fe236e2c2c297b1a837a610dfe8d311",
+      "region": "kunshan",
+      "shard_id": "41305ab79b0f9fcd190f6cbd169bb7f15d05babf7c1e2fe54f17d64a3b0394be"
+    },
+    {
+      "evidence_sha256": "0274da3e77354a6f89bf4514b0a690bc5e27b964c3bfca07f649ce071e2f4159",
+      "receipt_sha256": "7c54071ce72e14f03bccdd6bd322f13adf588a0d3db23f204431e884821c266b",
+      "region": "kunshan",
+      "shard_id": "1a621775dd1d60e37baa8f5a6c1de676586cff84511827e9854ed517bbe73f7d"
+    },
+    {
+      "evidence_sha256": "c79552f12b80fb6f688afd24ebcfd24a047a72ad66220449290b8e7294b6c618",
+      "receipt_sha256": "28b7f8a01538c28216b3deff1867247f2f65759e0d705722362e2dbb47259223",
+      "region": "kunshan",
+      "shard_id": "21327c4753b5c705aa11a1d2442e7fc67a78ef74361f76ca8aef03ec4f5426f4"
+    },
+    {
+      "evidence_sha256": "90edead7bb036a7ed241f670ef38eb4e4fc211a27884ae9518f3e23b2187b0aa",
+      "receipt_sha256": "9b5496c63a9ab77867dd0c548aa41da49418c0a85e9fa44b28b6816787091859",
+      "region": "kunshan",
+      "shard_id": "3a5821214a93eaedaa6a83db934e553c48c649b0bcd31ca21af0ee70c6d2598d"
+    },
+    {
+      "evidence_sha256": "8fd78806e16177cbf890756369e6f4e7ceb9a9674eeff86daa90589c6b658008",
+      "receipt_sha256": "1d3d993565c8465d0989bfdda6302fe4887e092081d81ca8bb8f91322e8ad83c",
+      "region": "kunshan",
+      "shard_id": "490b01005eca443bb2f0cd72d438f1d6187eca1f8c38bc960fefb62becee172b"
+    },
+    {
+      "evidence_sha256": "815ff1aeec26275a28c36e5dabb4596ff0d44df2b95241ca9c29018a6970cab4",
+      "receipt_sha256": "faab85c4d6ea2c55afdf9df062a1d1228562d14f6f4d92cbedb552e83f0ee801",
+      "region": "kunshan",
+      "shard_id": "57dbc228e4b8bff0067ed2723ec8e7a441ea15147e57da37d0a28b1b1af64d9d"
+    },
+    {
+      "evidence_sha256": "c1ca36f0409fae70f9b35c3d29260196917d277ab6af477a7d4e119cb7638a98",
+      "receipt_sha256": "a65a4b7f513535e66f13b216113b15b6718aedd01912957ca55349cce2ca9f12",
+      "region": "kunshan",
+      "shard_id": "9a7d5005d87cf5062c7c5d578a59761cb76831389e70371166445db885ad3017"
+    },
+    {
+      "evidence_sha256": "b3752a776166f56d90100d30124a73b74f8ee2bd6227a09923147786c4dd5ac7",
+      "receipt_sha256": "e564b54d932673db80af4331c6172f4bb9c3fdc4f0ed53caeb64ff94a1c7e2a6",
+      "region": "kunshan",
+      "shard_id": "c1dee80f1524505fd51d690a84c39bfb9062d703dd6220b882fe29cd324c4f87"
+    },
+    {
+      "evidence_sha256": "24d1af75aa26e00eaaf74e4c2b57a91bed7350d74aff4dd81d49a7e846bff3bb",
+      "receipt_sha256": "c125143947a0b6f89e459ebc637cdc8ceb8fc47bdde707c8852b578c48b58670",
+      "region": "kunshan",
+      "shard_id": "d6cf6da84b73ed6037273c3afd22574a4e49a6373d4eb84552b349b49e5e87dc"
+    },
+    {
+      "evidence_sha256": "34b1d1a464882d7c833dcee044f47e9d02bd87c606187be19f57cb5c6ce9099a",
+      "receipt_sha256": "67e37b6fe56bd39b9b62de74d344c05ea399409153a010652a4cd620a08ec890",
+      "region": "wuzhen",
+      "shard_id": "692068598485e26b2b472443bfa9cc25ceb33d767e22c0f9960e54d206c1ff11"
+    },
+    {
+      "evidence_sha256": "2a8dbf98dbf6bd6cf91848c9ac294b60e0869b1266e437b8613e443e57671a69",
+      "receipt_sha256": "a6c64350dfb1e42f06466dbe62b3c79fa62cda7c47a5a24ba6e663d1921f23fb",
+      "region": "wuzhen",
+      "shard_id": "938414521dba435ca1b47b5a68348c076c028d3c2bf14280936c314d24a0140b"
+    },
+    {
+      "evidence_sha256": "26ab7a1e2991a3322378a74143edf479e60621955cb9447cc58a565e4a55fc16",
+      "receipt_sha256": "e06220523376ae045b310dee226aebc20aed769764fd04ab470bf0299a2461a6",
+      "region": "wuzhen",
+      "shard_id": "b5c35346379ecd8875011c77d5d42feae95105d113e932187d19a69fa006f7f1"
+    },
+    {
+      "evidence_sha256": "b224348a3ed2ac9ca5ac33166128033c7666cee4b9b2087fe2af464b2343885f",
+      "receipt_sha256": "62bb1d907bc4ff46994e9960c41c193097c287d7f84969579e77a41ba67c0657",
+      "region": "wuzhen",
+      "shard_id": "e55adc791e235c74d4095fe2217bc903f6b5a6e75e5feb5840bdd1b81dd45f9b"
+    },
+    {
+      "evidence_sha256": "aa53ab6b802bb03a60bd53717b646026cd4f0fdf3cd84728aeb4fd7c7490efb2",
+      "receipt_sha256": "c46ca072e31f959b4535b58fa7dbc3bfc06d8d22cf895da3a6da19992850a417",
+      "region": "wuzhen",
+      "shard_id": "fb5eb7f4be0cc15d70e163584ec27ea787415f927632d3c306267586ca26d82e"
+    },
+    {
+      "evidence_sha256": "b60f6166e6914e4cda41e7d2b8551ad8308cc57fe0ba79a0116aa44508df6d2d",
+      "receipt_sha256": "86888a73c381a81838047acb1ed05909956259d6334ef396174385dcbe5a920e",
+      "region": "wuzhen",
+      "shard_id": "5bf69ed6504fd41e9d781b28dc3b645f42ad827c8229451d0df3f84e629823d9"
+    },
+    {
+      "evidence_sha256": "279d2138e53393c7ea6920884268fa9cd3b983ecdf6ef1126203efb3d7f9031c",
+      "receipt_sha256": "2cbd79c7764eca29639e88d849702acedd6c3c76674fffcaff4a6180b9ff5f95",
+      "region": "wuzhen",
+      "shard_id": "a53c4bec91ea724d436943393476468d7d4689b42446f418096468981cdf7009"
+    },
+    {
+      "evidence_sha256": "ae3af3cd8704d70e5e4ff0d95dcf220e5d4b9aed23f38ef7df58c3d1a64d02ed",
+      "receipt_sha256": "eaa06c769693ab3b146c9c30d3e8ec26b0db179315fff25e40f77390f7bbb27a",
+      "region": "wuzhen",
+      "shard_id": "ec350ded835aaf6bb7bb6f5ad4f443514e7e42dfab6705ef00140e682d62b45a"
+    },
+    {
+      "evidence_sha256": "3ae24669967458f75bc354070f9f4719208b449a8c90c1756f56a03f47afa7a2",
+      "receipt_sha256": "8589d31f2ae8bff760a2d32683b1a7a470e2388d2d1104aafa30111da205619e",
+      "region": "wuzhen",
+      "shard_id": "706b3b717ae045422c67e43aa0eaa09a9095941af59924a9b7efdf7e9c4f80de"
+    },
+    {
+      "evidence_sha256": "0cf84a394b920e04cb9e38434cc7a8ff209e94af157a7e0037a294b68acd7a24",
+      "receipt_sha256": "ab4ab9d61dba14e1502ab4a96a36d9276c145b03d6987d4c09eb547eddfc4ccb",
+      "region": "wuzhen",
+      "shard_id": "28169332125f21c75efa8b8f90a51446f5845ca54d6bd1b723162da84686d3aa"
+    },
+    {
+      "evidence_sha256": "1fcf1185fc1fde8d1dcc9117e4ae08f7d0c81270405e9f5136a310da79e6c105",
+      "receipt_sha256": "318398a65f0379a4b6ec5de124621f0bfcbf7436cc82df662f38433857c98c8c",
+      "region": "wuzhen",
+      "shard_id": "ac7e00744bbadeeb8bf50b2b9a39ebf1064c57b313b5233b4c56d722bd42beb8"
+    },
+    {
+      "evidence_sha256": "2b40e9291db61db8810e0887700ed84261711808f131b09fa2ce29c2aa5484c6",
+      "receipt_sha256": "3db1bc75d86804b80a71cb86bdfd49598f74d0cd3f11ed2eb06d77717d380a16",
+      "region": "wuzhen",
+      "shard_id": "ed75656867e5cf6ca0eeecfe9dc2eb14db0984877c93f437fe1e0111a5b209cd"
+    },
+    {
+      "evidence_sha256": "fa1b945380039127f0cff36c02498d6933eda0c1b202e611cc73dabbf6bbfd3c",
+      "receipt_sha256": "45fd4689212adcde59d5e6907d1b43d9920e8b032aadf9d1c3974b31eef0ff2a",
+      "region": "wuzhen",
+      "shard_id": "79e489108412063d0012c7ba7ca3a96a042e26e7df04df19e1926df7d0e0cba9"
+    },
+    {
+      "evidence_sha256": "d7bd363a8d10a12bc5d98e8fcb7879adfa16f57fa96679a9276fc791fd960f5d",
+      "receipt_sha256": "40b97e31b2e3db249cf2c4462701e0d1e8a1ce90f2d7468452865089d08c6496",
+      "region": "wuzhen",
+      "shard_id": "185d509f69bfeec4b1a89d87e90bcd01892b389f5d710da1df4c4477c8b94fa6"
+    },
+    {
+      "evidence_sha256": "e0e49f00154de5540dba5b9c1e73def910c958673c62894c5a7469a6908e5262",
+      "receipt_sha256": "041f3600a60a07e45f2df508e0df6059e0088f197235f0e086a12a6ed95d9ac4",
+      "region": "wuzhen",
+      "shard_id": "fcf5b41f4da4c7d1b0a3e7ab6b08cef851a16c6e8433271d058c125911c56754"
+    },
+    {
+      "evidence_sha256": "9f5bc5f9fee1ac262df39df758ece919ac0369663cb2d670f2360e4e11cafd86",
+      "receipt_sha256": "162a1931036e9a08188462b3ff7695e252f9686b5b14dd60a25acf425714988d",
+      "region": "wuzhen",
+      "shard_id": "611383cb7fdfd32341a9191fbdc3e0d8f4063a8fc44f33aadff8c14b8e21d1e0"
+    },
+    {
+      "evidence_sha256": "e5b19e0562aa7439cc7caecfe886ef8dbe640064f2eeef61414899704b41a0ff",
+      "receipt_sha256": "006c2f7db34b68a17640fd2f2c2931654e4607ad63880260190b509cb2df7fff",
+      "region": "wuzhen",
+      "shard_id": "a833e0dc39b8bb4f046a3d728d290b0326ffffe74f0a8d966aaf970dc9c064db"
+    },
+    {
+      "evidence_sha256": "10154dd2273857f4641ed19e7fbbe806a8aafa741975bcfbab97ac3091bb82c9",
+      "receipt_sha256": "64f3b9ea18aa7ae6cc1bf804fc390ee8a8d0d5a63ff23e5a725d7070ddadbbaa",
+      "region": "wuzhen",
+      "shard_id": "cee21c3e6aec8c4c99a4972b9ab278eb05ee04e60d94f4e3d8e74bd2e202c95e"
+    },
+    {
+      "evidence_sha256": "eb7536b646150372ac9d77014515d733a8707b8b3adb57fdbf08f1140f0441be",
+      "receipt_sha256": "4d3b7696c16c1cfabe507ce2f5172dc66262eb389b367e15830126379f98af82",
+      "region": "wuzhen",
+      "shard_id": "c9d7c7e9a1787deac4a5f24efa254e586cbaf72fb0d7b10a95933981cca57737"
+    },
+    {
+      "evidence_sha256": "683109150e706d36e6c75905265a9f9d4f3780532d4909e79a59313b5665603c",
+      "receipt_sha256": "9e7df3530db14a4060f0ba7a61ab1f6a7e7ea2cfa288993a13bafcd314051e71",
+      "region": "wuzhen",
+      "shard_id": "ff893d0b4ba1935e076abb81600500b948be70cf85ba8a224ef90f68b8b68196"
+    },
+    {
+      "evidence_sha256": "66bfdb20479d02137ee900ddcce46712370fa4ce9525f6968b80e03e8f52dd25",
+      "receipt_sha256": "4912dff5eb40ae8cbe1f6f008cd11bfda4866efd57ffc86b54a8b2ecbde89774",
+      "region": "wuzhen",
+      "shard_id": "56015528ccdebd015325ba0bd970ae7f4c7fc0804d18097030bb8dea73f98cd9"
+    },
+    {
+      "evidence_sha256": "f848c4488002411357f1bf4703001d5f119edac625fdd0005f48a2537eb8f110",
+      "receipt_sha256": "cff50d2347228e0328036c27935a3e39edde74e74914242c393add1c94b4a5a3",
+      "region": "wuzhen",
+      "shard_id": "033fa686eb2b797c6b6927ff834a36d0d3b76a6a2884dad96d98df0e5eee6666"
+    },
+    {
+      "evidence_sha256": "3719c938eaa8986a7e8d181fd0c1ef630cf4b5e3d4112be82e79d4883bf1cea1",
+      "receipt_sha256": "2739fe59d43e2d4c67d3e9d37cbf7f94a7dfde8197661116d944fd1022be7feb",
+      "region": "wuzhen",
+      "shard_id": "41ee7f3b922fa96d50671240af7dfa31189c701a1e75eefffcf2055069c77a0e"
+    },
+    {
+      "evidence_sha256": "68ed505af1e9e0cf2d31b06ccc64b20d77b1f860e3695d5344432fad10e7e391",
+      "receipt_sha256": "30c478c24b21c562bb3718975960e693aa62d9ea3ebe5a4645cc064690ee1f60",
+      "region": "wuzhen",
+      "shard_id": "928736dbf9400a33505978518fc258ef25db84eb131ad38a4402f16f2100d230"
+    },
+    {
+      "evidence_sha256": "a3cb018b7af862cacea41733b18492069cdfe7b2a4137c7e80a0672fae42ff15",
+      "receipt_sha256": "68618d55bab8a24df6217da214b741459c40dc73212717e4de6dfd57e0b8d468",
+      "region": "wuzhen",
+      "shard_id": "19e46b312cabf1f16565cfe1f4e4094cc093efda223dec7931fd86978a209a24"
+    },
+    {
+      "evidence_sha256": "c4cb813f7bf4ce423441038f555bd68d82f7e9e91631943e987c82e471dee9c1",
+      "receipt_sha256": "e60a2dc86615a25d9a46d8299103aa81049c4c93bc999530293e6d7f4b695995",
+      "region": "wuzhen",
+      "shard_id": "3d8bba4e18f17d8f48b82622a90704878dcc6d99dc43cf5dc0c9c1079cc3e809"
+    },
+    {
+      "evidence_sha256": "bc454d5dbfd8af334a801c8722e0781b1ec302a43f635f29c154d386aaa88e20",
+      "receipt_sha256": "234d1a9b518db019638adf04ccec3d8d121ec5e40be712a97fd408abed5d4a66",
+      "region": "wuzhen",
+      "shard_id": "54b2978e8ecffcbb6eef0a31d1b7f5373bc70ceda55f151c0462f73837947714"
+    },
+    {
+      "evidence_sha256": "27a34f1427533bf9743c1ba64c1e49c95f45f593d0650ba8141e15df520bacaa",
+      "receipt_sha256": "c608697cc0eaa462d260dae8a896c06e2e0d6df0eefa217f4273a15f3c3102ac",
+      "region": "wuzhen",
+      "shard_id": "2c93a22b91bacf006de96abd2d25ee10195acb3c5361c67892c0f63f72207bf7"
+    },
+    {
+      "evidence_sha256": "e6639c8d54b56470b463689d1ee7fe05fdef56e1e6851a1e63fb5ae389525ebe",
+      "receipt_sha256": "21b8b174334e079451cf7a3167df6e174a675c9f88d1ba7e713ac5262c0c14e2",
+      "region": "wuzhen",
+      "shard_id": "425fdc759384a6b33fd3958a55e9818f57ad21d50f107d0983b32f0fd4a7bdeb"
+    },
+    {
+      "evidence_sha256": "a16a7c401e0007b84276b072f6e4720b9a26333dc49352db11b4324986b9c964",
+      "receipt_sha256": "cdc89cd5fc09bd7765cf2226e693afb07c890509a9415bf6e13aca9c91a1bbdc",
+      "region": "wuzhen",
+      "shard_id": "1209cf1e598e8c74951cd15f8f0b1f81d8aaa1ee73705d5146ec520760b3c9e6"
+    },
+    {
+      "evidence_sha256": "5a1b4d1d414b163d874039bddfcd1dfb3abb3cdb3f96c2c21ebc401baa00e49d",
+      "receipt_sha256": "65dc92a38c7a786275a95ab7dde5cae6f30f35ed377e4da400d80e42a7144275",
+      "region": "wuzhen",
+      "shard_id": "4c564d14c579d7cfb62d48ef069cd6cf4fe0d3515e9133508e7d9ab50424ce17"
+    },
+    {
+      "evidence_sha256": "4573ce36dfbd03aa733cbd0a433026fb485b613ce25df980f950e0ed6139497e",
+      "receipt_sha256": "0e348dd87ea3f0a6625accf526cbf0f31f6396cc7189d1899b3b13fc7570ce56",
+      "region": "wuzhen",
+      "shard_id": "d4d4d43b7fc36ed0e2bc051750d2ea762631081cfe68e037f5af786a29562ffe"
+    },
+    {
+      "evidence_sha256": "cd48b31ad48d3880bf49eb6c9adc296d86b84f6830cf9d956a1274883664f41e",
+      "receipt_sha256": "7a1391fb12f76f749cf489b6c164d6fa198eca3cc6f6cd2c0eda64856d8307f0",
+      "region": "wuzhen",
+      "shard_id": "435976d9183ffb204fe1fe8a468c6000164197a20e3586cd056bd1a9fbd10b3c"
+    },
+    {
+      "evidence_sha256": "10593ccabcfc94b7781bdd8a9f7af0804e65eb5dbebc5b31f5e8ccb376f4cc11",
+      "receipt_sha256": "3c0f12f32789ea9263798dc87d9e80d92142e93042a4324963a139447022499d",
+      "region": "wuzhen",
+      "shard_id": "91d4666a021ecbe8334bee70bcb40703f718e3471a08d531639f84ac8b63201a"
+    },
+    {
+      "evidence_sha256": "e2b3b6386c00660af5933dda5160cf807190fd61e6147287bf22337f66feda76",
+      "receipt_sha256": "d0fc2a5797d8f35d84bb6d2b0ae04d5945191dcbcea20b8e2e87271048391f82",
+      "region": "wuzhen",
+      "shard_id": "f60b8bdb5c429181e27ed3644c662da9798753b3c6c0bb84fa52c886c4b85fa1"
+    },
+    {
+      "evidence_sha256": "527e308dbaa5c40e3da1cd6a23240c5475aba84738f1fc5c73d609f64ed231c8",
+      "receipt_sha256": "8c12f3c5ae2456546711538169d329205df94fe305e5eb6355d0d04aae18d6bb",
+      "region": "wuzhen",
+      "shard_id": "effa172796d18f340e4e573b5deb71eeae1e3aea3a3dd670ee86ad79b9f49017"
+    },
+    {
+      "evidence_sha256": "4d289cde470db85628af4ac70073d37f8634f47e20f38c039c6f2b2740a9176b",
+      "receipt_sha256": "440b5f1f47e35ed8e7356b6e4d95a30c2eddfdb4e7a4eea379c199230ea85784",
+      "region": "wuzhen",
+      "shard_id": "82bdd7a1228d39cc5e797d71b83c4207128ee9d73ac71d2aaf5c52af49fcbce0"
+    },
+    {
+      "evidence_sha256": "d7a77f8dac475ebc8bb564eab806e522c48884ea9deeca2a754fed33c9dba02c",
+      "receipt_sha256": "8430630c233f97719332b4ab70f3cb38c5d91d559433bf4f46b0497b53672e08",
+      "region": "wuzhen",
+      "shard_id": "e6fb0bd3a8844f9dfcbfac81910bdc9099cf82f023a067dd098d1d77eae96692"
+    },
+    {
+      "evidence_sha256": "bcfb327d036c2bdb5ccc38bdb25f83977c1db32d32425b4789fabf79d31623c8",
+      "receipt_sha256": "ec0b832a63abcbc6e4a99d0f1b08d140afe7731c3e6e5e7da213de3b915f04eb",
+      "region": "wuzhen",
+      "shard_id": "939e67c148a928f20d9faa005cb746d31684bce21a3f44d28bb3b3b52c1a4a4f"
+    },
+    {
+      "evidence_sha256": "8eb45659f7eb3ad866942f342438f9d4c15dd88f71a392dfc938809cc00999d3",
+      "receipt_sha256": "47805516440d41ea5aef3bf18ac9da21139a8ac152489ad1a818d6de1baf0f0d",
+      "region": "wuzhen",
+      "shard_id": "c55643d212e0498ae0cb140f4780ca5ff156089c4a58678b5de5f964aea130a1"
+    },
+    {
+      "evidence_sha256": "2f5a17d31163874e9e071d1087a24db9f12e6a6562c6d06cd218854044cf0862",
+      "receipt_sha256": "28672c11f8bcc27c775cc96810de82ce35cda7c696bc613b3b900118582f5bdf",
+      "region": "wuzhen",
+      "shard_id": "01fa2e801f1441a211d4743034e01a981f39b7580bc1e401c3a4ae7a7a62b154"
+    },
+    {
+      "evidence_sha256": "b1fae35e88f86598882a078a29a7167aea4fb3b80b8cec8f1c3926302080f303",
+      "receipt_sha256": "eb3b72471770fdd9c684930e82c58907c33e1f014b216e35830066e32be824dc",
+      "region": "wuzhen",
+      "shard_id": "f1725e3a9f8de058e873430f52ff23e5b724e336774e09b553feffa55cba69f6"
+    },
+    {
+      "evidence_sha256": "987f88ebafcecde2fa265ab69ecc87ea9ae2434237a6a15719da065cb0603687",
+      "receipt_sha256": "771a5dc6694945a92806b678d4c19e97fc56613ce95c2e964132759f33a73069",
+      "region": "wuzhen",
+      "shard_id": "cbf8d1409ca7b9058669b0e81c81c5bdc5f5cbd9aa783d7ca61b9c2b235af05a"
+    },
+    {
+      "evidence_sha256": "7b15a2c54c8f6ac010731b53a148219dc003f22305257cd88304f554a82502c8",
+      "receipt_sha256": "dc55b1eac8f7fba58aa64b1a8731142e205ca2f85a0db56cd48db7765ddb1f94",
+      "region": "wuzhen",
+      "shard_id": "c0c1666d5a28c868572a4dcf4660d8065d80e5b87ec5dc27d2f26aec7ad8e22d"
+    },
+    {
+      "evidence_sha256": "3ebedcbe6d66745e5de928463c88ed20e71d3cb385db853fad449a3d04e6f0a8",
+      "receipt_sha256": "73f3e781c4b598fe809ec2b89eb904324c35b75f3114edee9a9e8ec62225ece5",
+      "region": "wuzhen",
+      "shard_id": "949b506b6bc7ad8c18619160603ff0cf6d59421bad22508290dc3e7572b2ded0"
+    },
+    {
+      "evidence_sha256": "534997cfe8a777e07dec315ff5640e41120ed5cd58683e0289bf7b6b2ca0fdf8",
+      "receipt_sha256": "5caf464e5aecd8b38826541b74c026b6b800887a68fba06b4319642089bd046c",
+      "region": "wuzhen",
+      "shard_id": "6650fe793b793a8262b874d49805ce418073d6b5400226e8f784c28738ce9b14"
+    },
+    {
+      "evidence_sha256": "0d0ff9f53c811f5b072be094d230a08aa22cf9e0a7efa0de83808c9b00d23920",
+      "receipt_sha256": "5c60a0810a19fbf9dcf86e36f0e202539b2f05c2c1e6bc667ced49824df020d9",
+      "region": "wuzhen",
+      "shard_id": "2b3dd21a8117d591bf25702373d7ff425cfd0826ec614539d69e7b24d597445b"
+    },
+    {
+      "evidence_sha256": "841ff2ddac56199041fff61aab6a1bc96be38b60733189ba3978a97bc6f432d9",
+      "receipt_sha256": "bf580fef8e5dcda643110c1fd9dd3d4c7a1a703f9648590ba3f4c86a3fcedad4",
+      "region": "wuzhen",
+      "shard_id": "a5b37464835c65ea8bf31930189dfc8b5a6f3ca6a85235cf8c2cc09f02bf2f4c"
+    },
+    {
+      "evidence_sha256": "c5637ca7ba4d00629b427899cece08236a87db583716eeabd41477661239bc5a",
+      "receipt_sha256": "305db3e521dbe51519a94d692bf6143b3a0fcc8309a86eaea9288d016ec95bc2",
+      "region": "wuzhen",
+      "shard_id": "aba1215ce19494512b5cd76b633f80cb3f4e779355944c182270693bbe43b00d"
+    },
+    {
+      "evidence_sha256": "07e1ab8c922825538132769ab218353d35451ea4962b410846dd8c95490c1eb0",
+      "receipt_sha256": "5b4afc24cf33b7d7d74833e08ff5a96e3534237ae125b939c8788e8ee036c27b",
+      "region": "wuzhen",
+      "shard_id": "e5b94458c891a8942fef6f577b3c5c0d3f932432b5183a8462d9466ba642b78e"
+    },
+    {
+      "evidence_sha256": "d28e9075cbb11d6cbceb0e07c2aab432d5c494304d6b2716bc9cc41b7cb4e469",
+      "receipt_sha256": "f54fbc7506dbf0866e8a62f16c14b0331df2a9244c5bbbdef4487fac7520e5da",
+      "region": "wuzhen",
+      "shard_id": "9167728fea9a34a7cbf99c69639e2d298a01093e4056fce92ed7a2c7f3647adb"
+    },
+    {
+      "evidence_sha256": "5136909e32841457bad10c5557fd36a42a0f81f10ef25a9fff81eb58242ac390",
+      "receipt_sha256": "9e60de3806142faae8ff7c48d46c4866edf27de94287eb5e55911da3618ff0fb",
+      "region": "wuzhen",
+      "shard_id": "2c92dd6cd9b27c68738db66429eba00ee63e0583f49a88896af68ca7011b94a5"
+    },
+    {
+      "evidence_sha256": "6391e2fb9248e7ed12c2f1b8bf546a3813fdcc792933823bc0dfc65618a84cb0",
+      "receipt_sha256": "332da4bb886c41bbd0b77dc6032c112fcc6b916b55ea08addc259f66e01ce810",
+      "region": "wuzhen",
+      "shard_id": "d5edf7c704702bce07424be213449896be5cb2f2ca44be8e695bddab27013d7b"
+    },
+    {
+      "evidence_sha256": "573861fb16415ff9bd64ac6a514bf0d42a887e85c74bca91867d306dd7af89ae",
+      "receipt_sha256": "0652e07a8db9ded94c44ae6fdd80a3331664672b8f76737b168951a68a170399",
+      "region": "wuzhen",
+      "shard_id": "de16d9bb2e22cd1b0d8a30af20d69aca80c3b5f5c1a4f1624061cc90049a59ac"
+    },
+    {
+      "evidence_sha256": "ffebc9f9442ee3fa9d2c3cb16ea0e6590b1c2b0af8b3e066c7d4872e37c2793f",
+      "receipt_sha256": "e321b9a5906240d1220507db7ccf36c1d99ceb3349d556398b43e3feff0a00c0",
+      "region": "wuzhen",
+      "shard_id": "451d8bda896347f6cb146696c7e4940d9d2a1f47d4e6e76abcc023392af0f7b6"
+    },
+    {
+      "evidence_sha256": "f1a24ac41c1f9df517933f412fbc9147a967fcbedfd549007dbb1f6ab4f8a919",
+      "receipt_sha256": "36a7ca650fda01fd725ae3f0df6eaa600d3cd3b04ccae82dee07a428dec22469",
+      "region": "wuzhen",
+      "shard_id": "f0b302c18c9bbdcfd911ae406d956ef720654d7f46abd5390c02b29459943283"
+    }
+  ],
+  "public_outputs": {
+    "ALTERNATIVE_UNKNOWN_COMPARISON_PUBLIC.csv": {
+      "bytes": 1867,
+      "rows": 8,
+      "sha256": "a49f7c780790e744eda6382988944467842e6e6fbeef50e6f5d6331d1e8c4304"
+    },
+    "CLOSING_PACKAGE_SUMMARY_PUBLIC.json": {
+      "bytes": 852,
+      "rows": 1,
+      "sha256": "4af4e329eed208a8e168f276c9b197bcfabb0aacc1c1fe6f2ac0f397e2e77b36"
+    },
+    "DENOMINATORS_PUBLIC.csv": {
+      "bytes": 941,
+      "rows": 7,
+      "sha256": "f7e4b4a6e4b28a8678504af965ef0ea6e8b6e2c6f87d1403789d08326dec4d70"
+    },
+    "DURATION_CLAUSE_DISTRIBUTION_PUBLIC.csv": {
+      "bytes": 2714365,
+      "rows": 6395,
+      "sha256": "7de8b55fa6f646c067a31232d250db551c20830b8854c1b6d48ee382f50367e1"
+    },
+    "INTERPRETATION_NOTES_PUBLIC.csv": {
+      "bytes": 888,
+      "rows": 4,
+      "sha256": "92bc2fd938c79b529bc0c89d364df48b004531f0257fadbf775ed7369f6122b1"
+    },
+    "STRENGTH_COMPARISON_PUBLIC.csv": {
+      "bytes": 14037,
+      "rows": 68,
+      "sha256": "8c7c3579c6da1b98fe8d7db42466e7a6ca129352425141425b0617514ed8b928"
+    },
+    "UNAVAILABLE_MEASURES_PUBLIC.csv": {
+      "bytes": 653,
+      "rows": 4,
+      "sha256": "6ef7b3955f55a899cdde75de565d9a6aa9612730f24970892d32d4ed68eb2fce"
+    }
+  },
+  "scheduler": {
+    "host": "a16r1n10",
+    "job_id": "124223042"
+  },
+  "semantic_validation_status": "not_performed; no medium-model item-by-item semantic decision and no production semantic validation",
+  "status": "pass",
+  "total_min_count_weight": 103820,
+  "version": "d67-closing-package-v1"
+}

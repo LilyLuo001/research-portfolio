@@ -1,0 +1,8 @@
+population,denominator_type,count,unit,reference_denominator,note
+old_usable_current_processed,all_ads,5804788,ads,5804788,ad denominator
+old_usable_current_processed,old_v6_audit_rows_present,3395511,ads_with_selected_audit_row,5804788,sparse selected-audit coverage; no audit row is not a semantic negative
+common_support,eligible_occupations,332,occupations,332,same fixed support as D67 final
+common_support,software_only_ads,1230436,ads,1230436,ad denominator for software-only rates
+common_support,any_ai_ads,109497,ads,109497,ad denominator for any-AI rates
+common_support_numeric_evidence,numeric_experience_clauses,1251746,clauses,NA,current numeric clauses attached to common-support ads; distinct from ad denominator
+common_support_numeric_evidence,duration_measurement_instances,1251746,clause_measurement_instances,NA,one per numeric clause; multi-object and empty/unresolved objects remain single unresolved categories

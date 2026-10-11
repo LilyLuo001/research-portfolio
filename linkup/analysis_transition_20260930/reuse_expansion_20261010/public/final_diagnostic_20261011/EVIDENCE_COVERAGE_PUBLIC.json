@@ -1,0 +1,64 @@
+{
+  "coverage": {
+    "A_occupation_task_scope": {
+      "cases": 12,
+      "direct_D67_same_version": 4,
+      "direct_context_match": 3,
+      "prior_source_adjudication_precedents": 8
+    },
+    "B_entry_responsibility_referent": {
+      "cases": 10,
+      "direct_D67_same_version": 4,
+      "direct_context_match": 4,
+      "same_engine_external_precedents": 6
+    },
+    "case_cap": 24,
+    "new_cloud_jobs": 0,
+    "new_model_calls": 0,
+    "total_cases": 22
+  },
+  "coverage_judgment": {
+    "covers_D67_same_version_key_outputs": false,
+    "direct_D67_limit": "The A cases are directed evidence retrievals, not observations selected from AI-versus-software comparison cells. B01/B02 are education rows selected by a diagnostic substring heuristic and are not frozen NEWGRAD positives; B03/B04 are responsibility wording rows, so these are not verified entry-plus-responsibility co-occurrences.",
+    "not_usable_for": [
+      "accuracy estimate",
+      "false-negative rate",
+      "population prevalence",
+      "changing parser thresholds",
+      "certifying occupation_task or entry/responsibility semantics"
+    ],
+    "reason": "Only four direct D67 rows per question are available, selected by directed retrieval rather than an accuracy design. They expose failure modes but cannot validate aggregate semantic accuracy or prevalence.",
+    "usable_for": "One bounded root judgment on whether the reported D67 findings must remain candidate wording and which examples explain the boundary."
+  },
+  "created_utc": "2026-10-11T11:26:47.781330+00:00",
+  "evidence_versions": {
+    "D64_packet_sha256": "194657d91bceb379e1b6bd2e96aa761e14b6c6abb224cad93553f02a5a79a262",
+    "D64_wave1_membership": "4/4 source shards are complete, QA-pass members of D67 frozen69",
+    "D67_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+    "D67_final_run_receipt_sha256": "78e07867c856cd079fd5f39b3ca170c92e7881dbf3c4ed618e7e314bc7c1fced",
+    "D67_frozen_manifest_sha256": "4374659120a71c188fd8aeebafc533b5435a141638f3ffaf4a5f9a8af0b02bad",
+    "D67_overlay_sha256": "1a888cbdaf11f4f8e97dd71c84f4af723491597825fe3b1427b2e64c773bc626"
+  },
+  "frozen_rule_corrections": {
+    "general_work": "Requires explicit total/overall/general/professional/work/working/employment experience, no specific tool/domain/task match, and a restricted tail; it is not a no-object fallback.",
+    "graduate_language": "Matches new/recent/fresh graduates or graduates welcome/encouraged to apply; ordinary graduate program or graduate-of-school education language is outside this flag.",
+    "needs_review": "Raw scope and strength strings remain evidence attributes; needs_review clauses are not promoted to clear unconditional/required outcomes.",
+    "responsibility": "Current-duty responsibility wording does not establish job seniority or authority."
+  },
+  "private_case_packet": {
+    "contains_private_identifiers_and_context": true,
+    "git_policy": "exclude",
+    "path": "/Users/lilyluo/Documents/LinkUp_Research_20260924/analysis_transition_20260930/reuse_expansion_20261010/private/final_diagnostic_20261011/FINAL_DIAGNOSTIC_CASES_PRIVATE.json",
+    "rows": 22,
+    "sha256": "9feb370fd78169d07d5221823a4ad70250a74e8aabd769ca8d346a3a497c0de4"
+  },
+  "root_static_corrections": [
+    "A02 has objects=[] and outcome_status=needs_review; it is not a positive general_work flag. Frozen general_work requires an explicit GENERAL cue, no recognized specific object, and an allowed bounded tail.",
+    "A04 retains occupation_task wording but its numeric bound is null because multiple experience/duration clauses require review. Its raw scope string does not establish a substantively unconditional minimum.",
+    "B01/B02 are degree_phrase education evidence retrieved by the diagnostic packet heuristic. Frozen NEWGRAD matches only new/recent/fresh graduates or graduates welcome/encouraged to apply, so these rows do not demonstrate graduate_language false positives.",
+    "B03 is team-lead wording in a current-skill/duty context and B04 is independent-decision wording under Specific Job Requirements. They support responsibility wording candidates, not seniority."
+  ],
+  "status": "root_static_corrections_confirmed_closing_code_QA_pending",
+  "stop_rule": "Use this packet once; record the decision without new sampling, parser changes, or full-corpus work.",
+  "version": "d67-final-diagnostic-coverage-v1"
+}
