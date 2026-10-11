@@ -1,0 +1,96 @@
+{
+  "version": "pro-review-private-archive-verification-v1",
+  "date": "2026-10-12",
+  "status": "pass_all_task_private_sources_archived_and_hash_matched",
+  "remote_archive_root": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_20261012/private",
+  "source_files": [
+    {
+      "name": "DEV24_RELATION_DECISIONS_PRIVATE.jsonl",
+      "bytes": 372683,
+      "sha256": "4c3121398c7a95d12f38461211215c00895640f883e9b46040c5b338c7175328",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "REVIEW_SOL_A.jsonl",
+      "bytes": 46616,
+      "sha256": "b3177760e7b3d92459c02f0c938b16bd0f4f2189b52dc725b9be9038ac13c768",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "REVIEW_SOL_A_REVISED.jsonl",
+      "bytes": 49914,
+      "sha256": "79b515d81ea7a9a0835eb192de31ec4f6ff81812909120d93d22c7092d755563",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "REVIEW_SOL_B.jsonl",
+      "bytes": 44688,
+      "sha256": "18fb4a8f4e0f7319a12ff1a532dc50437c8230a99deeeca35c2c3737411c22d9",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "REVIEW_SOL_B_REVISED.jsonl",
+      "bytes": 46188,
+      "sha256": "14c0d6b4f766d8252fb6c6827052e3dd65cd1c7a2106f6a7493b49b3e6930457",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "ROOT_REQUESTED_CHANGES_A_PRIVATE.json",
+      "bytes": 26238,
+      "sha256": "ca6dddb8e9f311be2748f3b21390dead2c9eb9e59fa2ecf9cf22a24111fb3f00",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "ROOT_REQUESTED_CHANGES_B_PRIVATE.json",
+      "bytes": 15806,
+      "sha256": "cf97b473b4e66d1ac5c8543e9572568ac02937934e826dc264b93d7019f65a76",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    },
+    {
+      "name": "ROOT_INDEPENDENT_SPOTCHECK_PRIVATE.json",
+      "bytes": 3586,
+      "sha256": "df17f201713c3b19c2b6ca6990a38a347d7bd28078d01d1cabfea94dd02907a6",
+      "local_remote_match": true,
+      "remote_mode": "600"
+    }
+  ],
+  "remote_generated_private_outputs": [
+    {
+      "name": "PRO_REVIEW_BATCH01_PRIVATE.jsonl",
+      "rows": 14,
+      "bytes": 96102,
+      "sha256": "87c88150c98960f9d6399d6d6fb4e022912c98a48bce4f431438f2e9ba441339",
+      "remote_mode": "600"
+    },
+    {
+      "name": "PRO_SEMANTIC_REVIEW_OVERLAY_PRIVATE.jsonl",
+      "rows": 14,
+      "bytes": 266980,
+      "sha256": "f2571238fdcdb3d5fa9eee6afc6f8ff2cb88f3616addaee5dbc0ff5dc865e049",
+      "remote_mode": "600"
+    },
+    {
+      "name": "PRO_REVIEW_BATCH_COVERAGE_PRIVATE.jsonl",
+      "rows": 19,
+      "bytes": 7883,
+      "sha256": "64e8c50063c679a14f2f9728ad00965d0a0407dcf6b844af11ebce47de438b42",
+      "remote_mode": "600"
+    },
+    {
+      "name": "PRO_REVIEW_BATCH_SUMMARY_PRIVATE.json",
+      "bytes": 1922,
+      "sha256": "4d02bfb1872141337449093ce0827e282ee46fa664369e2e0821cfa554de5409",
+      "remote_mode": "600"
+    }
+  ],
+  "cleanup_status": "eight inventoried local task-created private copies removed after verified remote archival; cloud originals and generated overlays preserved",
+  "cleanup_utc": "2026-10-11T22:51:22.550143+00:00",
+  "local_private_files_removed": 8
+}

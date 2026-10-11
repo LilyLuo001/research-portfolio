@@ -1,0 +1,40 @@
+{
+  "version": "pro-review-batch01-submission-v1",
+  "date": "2026-10-12",
+  "status": "complete",
+  "scheduler": {
+    "cluster": "kunshan",
+    "job_id": "124250182",
+    "partition": "kshctest02",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:02",
+    "max_rss_kib": 2876,
+    "resources": {"cpus": 1, "memory": "2G", "time_limit": "00:20:00"}
+  },
+  "submission_observations": [
+    {
+      "sequence": 1,
+      "result": "client_command_returned_no_stdout_after_30_seconds",
+      "follow_up": "a subsequent queue query found no matching job and no scheduler job id had been observed",
+      "classification": "ambiguous_client_or_connection_attempt; not classified as a scheduler failure"
+    },
+    {
+      "sequence": 2,
+      "result": "submitted",
+      "job_id": "124250182",
+      "submission_command_timeout_seconds": 20
+    }
+  ],
+  "code": {
+    "validate_append_pro_review.py": "9c0d1f956b21c0dc84d1cb6e4c1d513946d74fd05c44ff22e8d4d0bc2c0448bc",
+    "ks_validate_append_pro_review.sbatch": "032fc6f28c58825b15411eaba432d36c62e0c4645783f2ef4db406b67ff96273"
+  },
+  "root_acceptance_sha256": "51705f18f526cfb895850bc44cdf05c8732bc19c9e88e7a8ffd5843552eddd75",
+  "public_outputs": {
+    "PRO_REVIEW_VALIDATION_RECEIPT_PUBLIC.json": "231bfcd171fb9ea5dafd9539a721eab7728a259f08f81a60db909ba575f21bf5",
+    "PRO_REVIEW_BATCH01_SUMMARY_PUBLIC.json": "e91d233c106b6ee95a00ff3290cad9c5268750c78ed294bb6249372662a28ebd"
+  },
+  "method": "scheduled evidence/schema validation and additive overlay assembly; no cluster model inference",
+  "claim_boundary": "bounded Pro conversation reviews after root-directed revisions; not population certification"
+}
