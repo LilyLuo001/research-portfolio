@@ -1,0 +1,40 @@
+{
+  "actions": {
+    "api_calls": 0,
+    "auth_files_read": false,
+    "credentials_or_tokens_printed": false,
+    "model_calls": 0,
+    "research_data_reads": 0,
+    "scheduler_jobs": 0,
+    "software_installed": false
+  },
+  "attempt": {
+    "connect_timeout_seconds": 10,
+    "installed_version": null,
+    "installer_executed": false,
+    "installer_present_nonempty": false,
+    "installer_sha256": null,
+    "login_help_checked": false,
+    "observed": "0 bytes received before bounded command timeout",
+    "scope": "one bounded user-local installation attempt",
+    "transfer_timeout_seconds": 30
+  },
+  "auth_procedure_when_install_is_available": {
+    "boundary": "Do not copy auth.json, tokens, or the Mac login cache to the cluster.",
+    "command": "codex login --device-auth",
+    "not_performed": true,
+    "steps": [
+      "Enable device-code login in ChatGPT security settings.",
+      "Run the device-auth command on KS.",
+      "Open the displayed verification URL in the user browser and enter the one-time code.",
+      "Verify with codex login status on KS."
+    ]
+  },
+  "date": "2026-10-11",
+  "network_status": "Official installer endpoint was not reachable within the bounded attempt from the KS login session. No longer workaround or alternate distribution route was attempted.",
+  "next_exact_step": "Resolve outbound access to the official installer URL or make the inspected official installer available through an approved user-local channel, then repeat one bounded inspect-before-execute installation attempt.",
+  "official_installer_url": "https://chatgpt.com/codex/install.sh",
+  "site": "SCNet_Kunshan",
+  "status": "blocked_download_timeout_no_install",
+  "version": "ks-codex-cli-install-attempt-v1"
+}

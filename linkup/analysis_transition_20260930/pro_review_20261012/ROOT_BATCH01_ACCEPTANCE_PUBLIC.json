@@ -1,0 +1,32 @@
+{
+  "version": "pro-semantic-review-batch01-root-acceptance-v1",
+  "date": "2026-10-12",
+  "status": "accepted_for_bounded_overlay_not_population_certification",
+  "expected_records": 14,
+  "reviewer_model": "gpt-5.6-sol",
+  "reviewer_effort": "medium",
+  "review_execution": "Pro conversation; not cluster model inference",
+  "root_spotcheck_records": 4,
+  "root_review_timing": "complete source text read and judgments recorded before seeing the corresponding Sol labels",
+  "schemas_unchanged": true,
+  "originals_preserved": true,
+  "root_decisions": [
+    "Keep grade-specific experience intervals and education alternatives separate; do not invent an unconditional job minimum.",
+    "A current-student internship is not evidence for the frozen explicit-new-graduate-or-no-experience flag; retain student-internship evidence and scope notes separately.",
+    "Named technology-delivery or software-engineering experience is occupation/task experience, not unrestricted general work.",
+    "Applicant skill exposure is not employer background; leave technology role unresolved when the text does not establish a role.",
+    "Developing an application using a named tool does not mean developing that tool. Generic AI/ML does not establish a predictive-versus-generative family.",
+    "Owning customer data, client-facing conversation and technical oversight do not by themselves establish client-account ownership or people supervision.",
+    "A technical support or programming task is not automatically routine execution.",
+    "One reviewed development advertisement explicitly targets Canada; this packet is not a verified US analysis population."
+  ],
+  "claim_boundary": [
+    "This is actual row-bound AI semantic review of a selected development packet, not a new full-corpus extraction.",
+    "First-pass AI outputs required substantive root-directed corrections; original and revised versions must remain distinguishable.",
+    "Schema and quote-offset success establish engineering consistency, not semantic accuracy.",
+    "No population error rate, prevalence estimate or whole-corpus semantic certification follows from these 14 directed cases.",
+    "No automatic propagation to the 69-shard comparison sample or 2464-shard base.",
+    "No paid API, CLI setup, locked-evaluation tuning or parser redevelopment."
+  ],
+  "next_stage": "approved for scheduled cloud evidence validation and private additive overlay; semantic population certification is not approved"
+}

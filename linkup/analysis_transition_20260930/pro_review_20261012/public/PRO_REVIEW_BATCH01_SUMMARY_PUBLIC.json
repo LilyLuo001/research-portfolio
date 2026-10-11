@@ -1,0 +1,77 @@
+{
+  "candidate_disposition_counts": {
+    "confirmed": 21,
+    "corrected": 32,
+    "unresolved": 2
+  },
+  "evidence_spans_validated": 288,
+  "interpretation": "aggregate counts from actual bounded Pro reviews after root-directed revisions; not accuracy or population prevalence",
+  "method": "bounded Pro conversation semantic decisions validated and assembled by scheduled code",
+  "propagation_status": "not_propagated_to_69_shards_or_full_corpus",
+  "reviewed_records": 14,
+  "root_attention_items": 22,
+  "root_spotcheck_records": 4,
+  "schema_version": "pro-semantic-review-batch01-summary-v1",
+  "semantic_label_counts": {
+    "document_status": {
+      "reviewed_full": 14
+    },
+    "entry_target": {
+      "explicit_experienced_hire": 11,
+      "mixed_or_conditional": 2,
+      "not_stated": 1
+    },
+    "experience_nonmention_status": {
+      "experience_present": 14
+    },
+    "experience_object": {
+      "general_work": 1,
+      "industry_domain": 8,
+      "occupation_task": 37,
+      "tool_specific": 15,
+      "unresolved": 5
+    },
+    "experience_strength": {
+      "explicitly_waived": 1,
+      "preferred": 26,
+      "required": 36,
+      "unspecified": 3
+    },
+    "experience_years_relation": {
+      "at_least": 13,
+      "exact": 10,
+      "not_stated": 40,
+      "range": 3
+    },
+    "qualification_relation": {
+      "OR": 9,
+      "unresolved": 1
+    },
+    "task_dimension": {
+      "client_ownership": 1,
+      "independent_judgment_verification": 11,
+      "other": 9,
+      "people_leadership_supervision": 5,
+      "routine_execution": 2,
+      "training_mentoring": 6
+    },
+    "task_responsibility_status": {
+      "conditional": 4,
+      "explicit": 30
+    },
+    "technology_family": {
+      "generative_ai": 6,
+      "predictive_ml_ai": 5,
+      "traditional_software_system": 23,
+      "unresolved": 2
+    },
+    "technology_role": {
+      "background_mention": 2,
+      "develop_technology": 13,
+      "implement_deploy_technology": 4,
+      "unresolved": 8,
+      "use_tool_for_work": 9
+    }
+  },
+  "status": "accepted_for_bounded_overlay_not_population_certification"
+}

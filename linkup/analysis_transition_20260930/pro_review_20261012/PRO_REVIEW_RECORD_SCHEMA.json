@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Locked Pro semantic review batch-01 record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["selection_index_1based", "exact_text_sha256", "decision_group", "frozen_rule_version", "reviewer", "review_scope", "review", "candidate_resolutions", "root_attention"],
+  "properties": {
+    "selection_index_1based": {"type": "integer", "minimum": 1},
+    "exact_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "decision_group": {"type": "string", "minLength": 1},
+    "frozen_rule_version": {"type": "string", "minLength": 1},
+    "reviewer": {"const": {"model": "gpt-5.6-sol", "effort": "medium", "execution": "Pro_conversation"}},
+    "review_scope": {"const": "five_core_dimensions_not_exhaustive_task_inventory"},
+    "review": {"description": "Must validate against frozen contextual_handoff_20261008/JOINT_SCHEMA.json"},
+    "candidate_resolutions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["frozen_evidence_index_0based", "disposition", "reason"],
+        "properties": {
+          "frozen_evidence_index_0based": {"type": "integer", "minimum": 0},
+          "disposition": {"enum": ["confirmed", "corrected", "unresolved"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "root_attention": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}

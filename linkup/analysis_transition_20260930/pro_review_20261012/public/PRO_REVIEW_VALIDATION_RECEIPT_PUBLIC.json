@@ -1,0 +1,149 @@
+{
+  "candidate_disposition_counts": {
+    "confirmed": 21,
+    "corrected": 32,
+    "unresolved": 2
+  },
+  "checks": {
+    "asserted_items_have_evidence": true,
+    "candidate_resolution_indices_in_range": true,
+    "exact_source_binding": true,
+    "expected_selection_set_exact": true,
+    "frozen_joint_schema": true,
+    "old_candidate_labels_preserved": true,
+    "unicode_quote_offsets_exact": true
+  },
+  "compute_model_calls": 0,
+  "created_utc": "2026-10-11T22:48:08.439634+00:00",
+  "document_status_counts": {
+    "reviewed_full": 14
+  },
+  "evidence_spans_validated": 288,
+  "inputs": {
+    "lane_A": {
+      "changefile_sha256": "ca6dddb8e9f311be2748f3b21390dead2c9eb9e59fa2ecf9cf22a24111fb3f00",
+      "first_sha256": "b3177760e7b3d92459c02f0c938b16bd0f4f2189b52dc725b9be9038ac13c768",
+      "revised_sha256": "79b515d81ea7a9a0835eb192de31ec4f6ff81812909120d93d22c7092d755563"
+    },
+    "lane_B": {
+      "changefile_sha256": "cf97b473b4e66d1ac5c8543e9572568ac02937934e826dc264b93d7019f65a76",
+      "first_sha256": "18fb4a8f4e0f7319a12ff1a532dc50437c8230a99deeeca35c2c3737411c22d9",
+      "revised_sha256": "14c0d6b4f766d8252fb6c6827052e3dd65cd1c7a2106f6a7493b49b3e6930457"
+    },
+    "packet": {
+      "rows": 19,
+      "sha256": "4c3121398c7a95d12f38461211215c00895640f883e9b46040c5b338c7175328"
+    },
+    "review_schema": {
+      "sha256": "2b711a5e528bbbf61179d6a4cf9316b3ebb1b71e7cf61a1f1d7fdb5753f5007b"
+    },
+    "reviews_combined_final": {
+      "rows": 14,
+      "sha256": "87c88150c98960f9d6399d6d6fb4e022912c98a48bce4f431438f2e9ba441339"
+    },
+    "root_acceptance": {
+      "sha256": "51705f18f526cfb895850bc44cdf05c8732bc19c9e88e7a8ffd5843552eddd75",
+      "status": "accepted_for_bounded_overlay_not_population_certification"
+    },
+    "root_independent_spotcheck": {
+      "rows": 4,
+      "sha256": "df17f201713c3b19c2b6ca6990a38a347d7bd28078d01d1cabfea94dd02907a6"
+    }
+  },
+  "limits": [
+    "conversation-model reviews are not human gold labels",
+    "development-selected records are not a population accuracy sample",
+    "the overlay is additive and does not rewrite frozen candidate labels",
+    "no review is propagated to the 69-shard or full-corpus population",
+    "one reviewed development advertisement explicitly targets Canada and is not a US research observation",
+    "first-pass outputs required root-directed corrections; revised outputs are used"
+  ],
+  "method": "bounded Pro conversation semantic decisions validated and assembled by scheduled code",
+  "output_coverage": {
+    "bytes": 7883,
+    "rows": 19,
+    "sha256": "64e8c50063c679a14f2f9728ad00965d0a0407dcf6b844af11ebce47de438b42"
+  },
+  "output_overlay": {
+    "bytes": 266980,
+    "rows": 14,
+    "sha256": "f2571238fdcdb3d5fa9eee6afc6f8ff2cb88f3616addaee5dbc0ff5dc865e049"
+  },
+  "overlay_rows": 14,
+  "packet_rows_not_reviewed_in_this_batch": 5,
+  "review_scope": "five_core_dimensions_not_exhaustive_task_inventory",
+  "reviewed_rows": 14,
+  "reviewer": {
+    "effort": "medium",
+    "execution": "Pro_conversation",
+    "model": "gpt-5.6-sol"
+  },
+  "root_attention_items": 22,
+  "scheduler": {
+    "host": "a08r1n16",
+    "job_id": "124250182"
+  },
+  "schema_version": "pro-semantic-review-validation-receipt-v1",
+  "semantic_label_counts": {
+    "document_status": {
+      "reviewed_full": 14
+    },
+    "entry_target": {
+      "explicit_experienced_hire": 11,
+      "mixed_or_conditional": 2,
+      "not_stated": 1
+    },
+    "experience_nonmention_status": {
+      "experience_present": 14
+    },
+    "experience_object": {
+      "general_work": 1,
+      "industry_domain": 8,
+      "occupation_task": 37,
+      "tool_specific": 15,
+      "unresolved": 5
+    },
+    "experience_strength": {
+      "explicitly_waived": 1,
+      "preferred": 26,
+      "required": 36,
+      "unspecified": 3
+    },
+    "experience_years_relation": {
+      "at_least": 13,
+      "exact": 10,
+      "not_stated": 40,
+      "range": 3
+    },
+    "qualification_relation": {
+      "OR": 9,
+      "unresolved": 1
+    },
+    "task_dimension": {
+      "client_ownership": 1,
+      "independent_judgment_verification": 11,
+      "other": 9,
+      "people_leadership_supervision": 5,
+      "routine_execution": 2,
+      "training_mentoring": 6
+    },
+    "task_responsibility_status": {
+      "conditional": 4,
+      "explicit": 30
+    },
+    "technology_family": {
+      "generative_ai": 6,
+      "predictive_ml_ai": 5,
+      "traditional_software_system": 23,
+      "unresolved": 2
+    },
+    "technology_role": {
+      "background_mention": 2,
+      "develop_technology": 13,
+      "implement_deploy_technology": 4,
+      "unresolved": 8,
+      "use_tool_for_work": 9
+    }
+  },
+  "status": "pass"
+}

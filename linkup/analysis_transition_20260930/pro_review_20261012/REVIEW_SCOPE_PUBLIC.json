@@ -1,0 +1,18 @@
+{
+  "version": "pro-semantic-review-batch01-v1",
+  "date": "2026-10-12",
+  "status": "fourteen_actual_reviews_completed_root_revisions_accepted_cloud_validation_pending",
+  "method": "actual bounded semantic decisions by conversation subscription models, followed by scheduled cloud evidence validation and additive overlay",
+  "base": "reuse completed 2464-shard extraction; no full-corpus re-extraction",
+  "source_packet_sha256": "4c3121398c7a95d12f38461211215c00895640f883e9b46040c5b338c7175328",
+  "previously_unreviewed_selection_numbers": [2,3,4,6,7,8,10,11,12,14,15,16,18,19],
+  "excluded_previously_fully_reviewed": [1,5,13,17],
+  "excluded_partially_reviewed": [9],
+  "first_pass_model": "gpt-5.6-sol",
+  "first_pass_effort": "medium",
+  "root_role": "bounded independent spot checks and consequential semantic adjudication",
+  "focus": ["experience object and numeric scope", "required versus preferred", "qualification alternatives", "entry-target and responsibility subject", "applicant technology role versus background mention"],
+  "limits": ["development-selected cases, not a population accuracy sample", "AI review is not human gold", "no implied labels on unreviewed records", "no parser changes or unlocked evaluation tuning", "no causal or historical text-change inference"],
+  "api_spend_authorized": false,
+  "cli_setup": "stopped at user direction"
+}
