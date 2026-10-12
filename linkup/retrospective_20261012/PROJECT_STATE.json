@@ -93,7 +93,7 @@
     "unique_audit_contexts": 153,
     "primary_model": "gpt-5.6-sol/medium",
     "blind_audit_model": "gpt-5.6-sol/high",
-    "completed_semantic_packets": 0,
+    "completed_semantic_packets": null,
     "main_weight": "1/pi3",
     "parent_frame_inference": false,
     "public_freeze_receipt": "linkup/formal800_20261012/receipts/FORMAL800_FREEZE_RECEIPT_PUBLIC.json",
@@ -122,7 +122,14 @@
       21,
       22,
       23,
-      24
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
     ],
     "authored_audit_packets": [
       1,
@@ -136,9 +143,9 @@
     ],
     "accepted_full_release": false,
     "current_primary_agents": {
-      "/root/formal800_primary_t": "024 and exact022/023 repairs",
-      "/root/formal800_primary_u": "025",
-      "/root/formal800_primary_v": "026"
+      "/root/formal800_primary_ac": "032",
+      "/root/formal800_primary_ad": "033",
+      "/root/formal800_repair31": "eight exact031 source repairs"
     },
     "current_audit_agent": "all153 authored and mechanically validated; independent audit reading closed",
     "validation_latest": {
@@ -190,7 +197,17 @@
       "primary021_pass": "46386358",
       "primary022_rejected": "46387706:2 records",
       "primary023_rejected": "46387708:5 records",
-      "primary024_pass": "46387936"
+      "primary024_pass": "46387936",
+      "primary022_pass": "46388197",
+      "primary023_pass": "46388200",
+      "primary025_pass": "46388439",
+      "primary026_rejected": "46388946:5 records",
+      "primary026_pass": "46389467",
+      "primary027_pass": "46390425",
+      "primary028_pass": "46390798",
+      "primary029_pass": "46390601",
+      "primary030_pass": "46390602",
+      "primary031_rejected": "46390603:8 records"
     },
     "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs.",
     "accepted_audit_slices": [
@@ -226,11 +243,20 @@
       19,
       20,
       21,
-      24
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
     ],
-    "accepted_primary_contexts": 440,
-    "capacity_note": "Sol023 and024 bounded retries recovered; all primary semantic reviewers remain Sol/medium."
+    "accepted_primary_contexts": 600,
+    "capacity_note": "Sol023 and024 bounded retries recovered; all primary semantic reviewers remain Sol/medium.",
+    "completed_semantic_packets_note": "Superseded ambiguous counter; use accepted_primary_packets for mechanical checks and accepted_full_release for final semantic release."
   },
-  "last_pushed_checkpoint": "5ef1a05",
+  "last_pushed_checkpoint": "6f5d61c",
   "git_main_authorization": "User explicitly allowed push to main on2026-10-12 after automatic-review rejection."
 }

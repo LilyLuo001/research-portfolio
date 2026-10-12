@@ -11,7 +11,7 @@ Current status: sample freeze completed in Wuzhen job46364888; finite Pro primar
 - Prohibitions: no BU work, paid API, new model deployment, full-base re-extraction, private Git data, raw text, record IDs, row-level review outputs, credentials, or `private_history`.
 - Historical record: retrospective `ROOT_HISTORY_AND_DECISION.md` remains unchanged; this ledger records the later approval and engineering status.
 
-## Planned artifact statuses
+## Historical preparation artifact statuses (superseded by actual freeze)
 
 | Artifact | Status |
 |---|---|
@@ -92,3 +92,13 @@ Primary021 passed46386358 (2s);020 passed46387704 (2s) after five source-bound r
 Runtime preflight46386283 completed0 in5s with Python3.8.10, pyarrow11.0.0 and matplotlib3.5.2. It checked runtime/import/syntax readiness without research data, not production inference. Independent export/figure QA found missing explicit-graduate/private-entry columns, which are now included; upstream missing weights remain null.
 
 The user explicitly authorized sanitized publication to main. Push5ef1a05 succeeded; no renewed Git permission is needed.
+
+## Primary001–025 accepted:500 contexts
+
+Primary022/023 repaired seven exact failed records and passed46388197/46388200 (2s/3s). Primary024 passed46387936 (6s). Primary025 saved all20 individually authored full-review records before its final capacity error; root recovered the transport/provenance sidecar without relabeling and cloud46388439 passed20/20 (5s). Both reading history and final-turn failure are disclosed. Primary026 job46388946 rejected5 records; bounded source repairs only. Primary027–029 continue;028 preserves one saved row by its previous reader and assigns only19 missing records to the next reader. Final analysis has not run.
+
+## Primary001–030 accepted:600 contexts
+
+Passing jobs026:46389467,027:46390425,028:46390798,029:46390601,030:46390602 all completed0 in1–2s. These certify frozen source/ID/schema/evidence consistency, not semantic accuracy. Primary031 is authored; validation46390603 rejected8 quotation/alternative-reference records, assigned to a fresh independent Sol/medium repairing reader. Primary032/033 proceed;034–036 remain unassigned.
+
+A private root bundle now packages only the already selected maximum40 contexts with complete original text and both existing decisions. Selection, rubric and labels are unchanged; this reduces transport/retrieval work for actual root adjudication. No final estimates have been computed.

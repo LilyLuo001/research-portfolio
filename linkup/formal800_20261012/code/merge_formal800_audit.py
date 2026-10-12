@@ -233,6 +233,13 @@ def main() -> None:
                        "assignment": {"packet_id": "root-%s" % context[:16],
                                       "reviewer_role": "primary", "provenance": "root_selected_audit"}})
     write_jsonl(out / "ROOT_REVIEW_PACKET.jsonl", packet)
+    # Bundle only the already selected bounded cases for actual root reading.
+    # This is private transport, not a second selection or a new semantic label.
+    write_jsonl(out / "ROOT_REVIEW_BUNDLE_PRIVATE.jsonl", [
+        {"packet": item, "primary_review": primary[item["context_sha256"]],
+         "audit_review": audit[item["context_sha256"]],
+         "difference_fields": field_differences(primary[item["context_sha256"]], audit[item["context_sha256"]])}
+        for item in packet])
     (out / "AUDIT_AGGREGATE.json").write_text(json.dumps({
         "status": "ready_for_root_review", "audited_contexts": len(common),
         "disagreement_contexts": len(differences), "agreement_contexts": len(agreements),
