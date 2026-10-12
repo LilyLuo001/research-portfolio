@@ -79,7 +79,8 @@ PY
    --public-receipt "$F/validation_receipt.json" --expected-records 719
   python3 "$C/analyze_formal800.py" --validated-reviews "$F/validated_reviews.jsonl" \
    --validation-receipt "$F/validation_receipt.json" --sampled-ad-map "$W/private/freeze/HIDDEN_LINKAGE_PRIVATE.jsonl" \
-   --output-dir "$W/public/results" --old-t1-reference prior/T1_coverage_funnel.csv \
+   --output-dir "$W/public/results" --private-ad-output "$W/private/final/AD_LEVEL_MEASURES.parquet" \
+   --old-t1-reference prior/T1_coverage_funnel.csv \
    --old-t4-reference prior/T4_time_and_annual_diagnostics.csv
   ;;
  *) echo 'Expected prepare-root, validate-root, or finalize' >&2; exit 2;;

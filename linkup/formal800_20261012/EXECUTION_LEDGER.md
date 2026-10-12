@@ -72,3 +72,9 @@ Static finish-wrapper QA's schema-location concern was checked against the actua
 WZ46383927 completed0 in2s and passed final audit008; all153 independent audit contexts now have passing slice receipts. WZ46383930 completed0 in3s and passed primary001–011,220contexts,zero errors. This is identity/evidence/schema acceptance; semantic agreement/root review and final analysis remain pending. Primary014 is authored and validator46384192 is pending; primary015/016 are active. Packet012's13 rejected rows are repaired with preserved originals; packet013's10 rejected rows are assigned separately. The independent audit reading scope is closed.
 
 Final delivery retains the advertisement-level measured dataset privately onSCNet, linked to validated evidence; only aggregate tables/code/methods/receipts enterGit.
+
+## Recovered packet and additional40 accepted
+
+WZ46384738 completed0 in2s and accepted all40 primary012–013 contexts; primary001–013 now260 mechanically accepted. The014 writer had accidentally overwritten20 authored records with2; exact original authored records were recovered from that reviewer’s task history, broken output preserved. Recheck46384739 confirms20 records with one literal quote reject; the invented prefix is removed with source evidence and unchanged labels. Primary015 check46384741 rejects one clause/outcome inconsistency for a bounded source-based repair. Primary016 is submitted46384815. No rejected data enters final analysis.
+
+The optional private 800-ad Parquet exporter now links canonical keys, context hashes, validated-review file hash, strata, main1/pi3 weights and existing measures. Upstream pi12/nested weights stay null where unavailable; no parent-frame inference is introduced. Final aggregate analysis remains unrun.

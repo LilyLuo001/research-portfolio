@@ -88,6 +88,54 @@ def atomic_json(path: Path, value: Any) -> None:
     os.replace(temporary, path)
 
 
+def write_private_ad_parquet(path: Path, rows: list[dict[str, Any]],
+                             validated_reviews_sha256: str) -> None:
+    """Write private ad-level measures without copying review text or evidence."""
+    try:
+        import pyarrow as pa
+        import pyarrow.parquet as pq
+    except ImportError as exc:
+        raise RuntimeError("pyarrow is required for --private-ad-output") from exc
+    output_rows = []
+    for row in rows:
+        review = row["review"]
+        output_rows.append({
+            **{name: row[name] for name in CANONICAL},
+            "blind_context_id": row["record_id"],
+            "blind_context_sha256": review["context_sha256"],
+            "validated_nested_review_jsonl_sha256": validated_reviews_sha256,
+            "validated_nested_review_record_id": review["record_id"],
+            "validated_nested_review_context_sha256": review["context_sha256"],
+            "formal_arm": row["formal_arm"],
+            "entry_stratum": row["entry_stratum"],
+            "N_h": row["N_h"],
+            "n_h": row["n_h"],
+            "pi12": None if row["pi12"] is None else as_float(row["pi12"], "pi12"),
+            "pi3": row["pi3"],
+            "nested_design_weight": (None if row["nested_design_weight"] is None else
+                                     as_float(row["nested_design_weight"], "nested_design_weight")),
+            "w3": row["w3"],
+            "occupation_major": row["occupation_major"],
+            "semantic_technology_group": row["semantic_technology_group"],
+            "analysis_technology_group": row["analysis_technology_group"],
+            **{f"experience_{dimension}": outcome_value(review, "experience_outcomes", dimension)
+               for dimension in EXP_DIMS},
+            "entry_core_including_conditional": core_entry(review, False),
+            "entry_core_unconditional": core_entry(review, True),
+            "entry_current_student_internship": outcome_value(
+                review, "entry_outcomes", "current_student_internship"),
+            "entry_junior_or_entry_label": outcome_value(
+                review, "entry_outcomes", "explicit_junior_or_entry_label"),
+            **{f"strict_current_duty_{dimension}": strict_duty(review, dimension)
+               for dimension in RESP_DIMS},
+            "strict_current_duty_any": strict_duty_any(review),
+        })
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(str(path) + ".tmp")
+    pq.write_table(pa.Table.from_pylist(output_rows), temporary)
+    os.replace(temporary, path)
+
+
 def require_passing_validation(receipt_path: Path, validated_path: Path) -> dict[str, Any]:
     """Bind analysis to a successful validator receipt, never a partial output."""
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
@@ -465,6 +513,8 @@ def main() -> None:
                         help="required passing receipt when --resolved-overlay is supplied")
     parser.add_argument("--eligible-occupation-composition", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--private-ad-output", type=Path,
+                        help="optional private 800-ad Parquet; must be outside --output-dir")
     parser.add_argument("--old-t1-reference", default="accepted prior full-base T1; not recomputed")
     parser.add_argument("--old-t4-reference", default="accepted prior timing-risk T4; not recomputed")
     args = parser.parse_args()
@@ -482,6 +532,19 @@ def main() -> None:
     if len(rows) > 800:
         raise RuntimeError("sampled-ad map exceeds approved 800-ad cap")
     output = args.output_dir
+    if args.private_ad_output:
+        if args.private_ad_output.suffix.lower() not in {".parquet", ".pq"}:
+            raise RuntimeError("--private-ad-output must be a Parquet path")
+        try:
+            args.private_ad_output.resolve().relative_to(output.resolve())
+        except ValueError:
+            pass
+        else:
+            raise RuntimeError("--private-ad-output must be outside --output-dir")
+        if len(rows) != 800:
+            raise RuntimeError("--private-ad-output requires the complete 800-ad sampled map")
+        write_private_ad_parquet(
+            args.private_ad_output, rows, sha256_file(args.validated_reviews))
     output.mkdir(parents=True, exist_ok=True)
 
     tech_counts = collections.Counter(row["semantic_technology_group"] for row in rows)
@@ -666,6 +729,11 @@ def main() -> None:
         "validator": {"version": validation_receipt.get("version"), "status": validation_receipt.get("status")},
         "claim_boundary": "descriptive delivered-text comparison in the eligible finite frame; no historical, causal, global-accuracy, or full-corpus claim",
         "outputs": {path.name: sha256_file(path) for path in sorted(output.glob("*.csv"))},
+        "private_ad_export": (None if not args.private_ad_output else {
+            "rows": len(rows), "sha256": sha256_file(args.private_ad_output),
+            "contains_raw_text": False, "published_in_git": False,
+            "nested_evidence_link": "validated review file hash plus record/context identifiers",
+        }),
     }
     atomic_json(output / "ANALYSIS_RECEIPT.json", receipt)
 
