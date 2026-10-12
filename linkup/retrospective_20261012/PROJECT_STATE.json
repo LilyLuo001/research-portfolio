@@ -114,7 +114,11 @@
       13,
       14,
       15,
-      16
+      16,
+      17,
+      18,
+      19,
+      21
     ],
     "authored_audit_packets": [
       1,
@@ -128,9 +132,9 @@
     ],
     "accepted_full_release": false,
     "current_primary_agents": {
-      "/root/formal800_primary_m": "017 plus rejected015 record",
-      "/root/formal800_primary_n": "018",
-      "/root/formal800_primary_o": "019"
+      "/root/formal800_primary_p": "020",
+      "/root/formal800_primary_r": "022",
+      "/root/formal800_primary_s": "023"
     },
     "current_audit_agent": "all153 authored and mechanically validated; independent audit reading closed",
     "validation_latest": {
@@ -170,7 +174,14 @@
       "primary012_013_pass": "46384738",
       "primary014_recovery_checked": "46384739;20 rows restored,1 quote reject",
       "primary015_first": "46384741;19/20 pass",
-      "primary016_pending": "46384815"
+      "primary016_pending": "46384815",
+      "primary014_pass": "46384870",
+      "primary015_pass": "46385544",
+      "primary016_pass": "46384815",
+      "primary017_pass": "46385911",
+      "primary018_pass": "46385912",
+      "primary019_pass": "46385916",
+      "final_runtime_preflight": "46386283"
     },
     "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs.",
     "accepted_audit_slices": [
@@ -197,9 +208,15 @@
       10,
       11,
       12,
-      13
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
     ],
-    "accepted_primary_contexts": 260
+    "accepted_primary_contexts": 380
   },
-  "last_pushed_checkpoint": "2c4a943"
+  "last_pushed_checkpoint": "0877331"
 }

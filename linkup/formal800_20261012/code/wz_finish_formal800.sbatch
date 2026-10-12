@@ -83,5 +83,8 @@ PY
    --old-t1-reference prior/T1_coverage_funnel.csv \
    --old-t4-reference prior/T4_time_and_annual_diagnostics.csv
   ;;
- *) echo 'Expected prepare-root, validate-root, or finalize' >&2; exit 2;;
+ figures)
+  python3 "$C/render_comparison_figures.py" --results-dir "$W/public/results" --output-dir "$W/public/results/figures"
+  ;;
+ *) echo 'Expected prepare-root, validate-root, finalize, or figures' >&2; exit 2;;
 esac

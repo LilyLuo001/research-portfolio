@@ -477,8 +477,13 @@ def entry_conditioned_duties(rows: list[dict[str, Any]], scopes: list) -> list[d
     for scope_name, scope in scopes:
         for group in ("all_technology_groups", *MAIN_GROUPS):
             in_domain = lambda r, g=group: scope(r) and (g == "all_technology_groups" or r["analysis_technology_group"] == g)
-            for unconditional in (False, True):
-                entry = lambda r, u=unconditional: core_entry(r["review"], u)
+            entry_definitions = [
+                ("including_conditional", lambda r: core_entry(r["review"], False)),
+                ("unconditional_only", lambda r: core_entry(r["review"], True)),
+                ("explicit_new_graduate_only", lambda r: outcome_value(
+                    r["review"], "entry_outcomes", "explicit_new_graduate")),
+            ]
+            for entry_definition, entry in entry_definitions:
                 eligible = lambda r: in_domain(r) and entry(r) == 1
                 for name, duty in measures:
                     defined = ratio_result(rows, lambda r: int(eligible(r) and duty(r) is not None),
@@ -486,16 +491,17 @@ def entry_conditioned_duties(rows: list[dict[str, Any]], scopes: list) -> list[d
                     lower = ratio_result(rows, lambda r: int(eligible(r)), lambda r: int(eligible(r) and duty(r) == 1))
                     upper = ratio_result(rows, lambda r: int(eligible(r)), lambda r: int(eligible(r) and duty(r) != 0))
                     output.append({
-                        "estimand": "current_duty_wording_among_explicit_entry_ads_eligible_fixed10k_w3",
+                        "estimand": "current_duty_wording_among_entry_wording_ads_eligible_fixed10k_w3",
                         "scope": scope_name, "technology_scope": group,
-                        "entry_definition": "unconditional_only" if unconditional else "including_conditional",
+                        "entry_definition": entry_definition,
                         "duty_dimension": name, "sampled_entry_ads": sum(eligible(r) for r in rows),
                         "sampled_entry_ads_with_duty_unknown": sum(eligible(r) and duty(r) is None for r in rows),
                         "weighted_entry_ads": sum(r["w3"] for r in rows if eligible(r)),
                         "weighted_entry_membership_unknown": sum(r["w3"] for r in rows if in_domain(r) and entry(r) is None),
                         **defined, "unknown_duty_lower_bound": lower["estimate"],
                         "unknown_duty_upper_bound": upper["estimate"],
-                        "bounds_condition": "among_explicit_entry_ads_only; unresolved_entry_membership_excluded_and_reported",
+                        "bounds_condition": "among_positive_wording_ads_only; unresolved_wording_membership_excluded_and_reported",
+                        "entry_claim_boundary": "experience-type waivers do not establish zero total experience eligibility; graduate wording is separately reported",
                         "model_error_included_in_ci": False,
                     })
     return output
@@ -708,6 +714,7 @@ def main() -> None:
 
     receipt = {
         "version": VERSION, "status": "complete",
+        "code_sha256": sha256_file(Path(__file__)),
         "created_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "inputs": {"validated_reviews_sha256": sha256_file(args.validated_reviews),
                    "validation_receipt_sha256": sha256_file(args.validation_receipt),

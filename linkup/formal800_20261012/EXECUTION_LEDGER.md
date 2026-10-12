@@ -78,3 +78,9 @@ Final delivery retains the advertisement-level measured dataset privately onSCNe
 WZ46384738 completed0 in2s and accepted all40 primary012–013 contexts; primary001–013 now260 mechanically accepted. The014 writer had accidentally overwritten20 authored records with2; exact original authored records were recovered from that reviewer’s task history, broken output preserved. Recheck46384739 confirms20 records with one literal quote reject; the invented prefix is removed with source evidence and unchanged labels. Primary015 check46384741 rejects one clause/outcome inconsistency for a bounded source-based repair. Primary016 is submitted46384815. No rejected data enters final analysis.
 
 The optional private 800-ad Parquet exporter now links canonical keys, context hashes, validated-review file hash, strata, main1/pi3 weights and existing measures. Upstream pi12/nested weights stay null where unavailable; no parent-frame inference is introduced. Final aggregate analysis remains unrun.
+
+## Primary001–019 accepted:380 contexts
+
+Primary014 passed46384870 after exact quote recovery;015 passed46385544;016 passed46384815;017/018/019 passed46385911/46385912/46385916. All completed0 in1–4s. These receipts bring primary mechanical acceptance to380 of719 contexts. Primary021 is authored;020/022/023 continue. The original800-ad selection and153-context independent audit remain unchanged. Scoped failures and pre-repair files are retained privately.
+
+Rootdecision14 narrows Q2 claims for type-specific experience waivers and adds a graduate-wording-only sensitivity from an existing field before final estimates. Figure code renders existing aggregate estimates only; ad-level labels and evidence remain private. No final analysis or semantic accuracy claim is made at this checkpoint.
