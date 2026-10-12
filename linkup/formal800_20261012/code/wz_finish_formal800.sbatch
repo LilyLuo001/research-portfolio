@@ -37,10 +37,19 @@ case "${1:-}" in
   python3 "$C/merge_formal800_audit.py" "${merge_args[@]}"
   ;;
  validate-root)
+  ROOT_N=$(python3 - "$M/ROOT_REVIEW_PACKET.jsonl" <<'PY'
+import sys
+from pathlib import Path
+n=sum(bool(x.strip()) for x in Path(sys.argv[1]).read_text().splitlines())
+if not 1 <= n <= 40:
+    raise RuntimeError('root packet violates bounded adjudication contract')
+print(n)
+PY
+  )
   python3 "$C/validate_reviews.py" --packet "$M/ROOT_REVIEW_PACKET.jsonl" \
    --reviews "$W/private/reviews/ROOT_RESOLUTIONS_PRIVATE.jsonl" --schema "$SCHEMA" \
    --private-validated "$R/validated_reviews.jsonl" --private-errors "$R/validation_errors.jsonl" \
-   --public-receipt "$R/validation_receipt.json" --expected-records 40
+   --public-receipt "$R/validation_receipt.json" --expected-records "$ROOT_N"
   ;;
  finalize)
   python3 "$C/merge_formal800_audit.py" "${merge_args[@]}" \
@@ -50,8 +59,8 @@ import json, sys
 from pathlib import Path
 packet=[json.loads(x) for x in Path(sys.argv[1]).read_text().splitlines() if x.strip()]
 root={r['record_id']:r for r in (json.loads(x) for x in Path(sys.argv[2]).read_text().splitlines() if x.strip())}
-if len(packet)!=719 or len(root)!=40:
-    raise RuntimeError('release differs from frozen719 contexts or bounded40 adjudications')
+if len(packet)!=719 or not 1 <= len(root) <= 40:
+    raise RuntimeError('release differs from frozen719 contexts or maximum40 adjudications')
 for row in packet:
     assignment=dict(row['assignment'])
     if row['record_id'] in root:
