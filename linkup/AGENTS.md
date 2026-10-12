@@ -1,5 +1,9 @@
 # LinkUp project execution rules
 
+
+## Retrospective plan pointer (2026-10-12)
+
+The full 2,464-shard base extraction is complete and retained. The proposed finite 800-context formal semantic sample, with its transparent resource cap and nominal precision caveat, has not started and is not approval for execution. Do not restart the old extraction from superseded plans. See `retrospective_20261012/ROOT_HISTORY_AND_DECISION.md` and `retrospective_20261012/PROJECT_STATE.json`.
 User-approved scope update, 2026-10-08 (rule-first plan): the user explicitly authorizes processing the frozen LinkUp research sample on BU SCC in a NEW task directory, reusing existing texts and joins. GPT-6/root may personally read a bounded development and evaluation sample to design and audit rules, as explicitly requested; this exception does not authorize bulk conversation-agent labeling. Core extraction rules and economic decisions belong to root. Delegated agents handle cloud orchestration, independent synthetic code QA and provenance. All batch extraction, sampling and analysis remain scheduled cloud jobs. Do not launch Qwen repairs or any new model inference/API spend. Preserve the previous BU task closure. Return and verify new results before deleting this new task's staged data; never delete unrelated BU data.
 
 User decision, 2026-10-08: all new research data processing runs in cloud/cluster jobs.
@@ -37,6 +41,3 @@ User correction: the current eight-shard BU staging→production→QA sequence m
 The completed old 2,464-shard extraction is the base; incomplete coverage by a newer rule version is not evidence that base cleaning is unfinished. D66 job 46238402 verified exact old/current overlap for 424,226 canonical records and preserved distinct measurement versions; engineering pass is not semantic validation. The D64 successor controller 46227986 was held. Do not resume full-corpus re-extraction by default.
 
 The user authorized D67 to assemble already completed newer results as additive columns on the old base. The frozen wave is 69 QA-passed shards (KS13 + WZ56). Reuse retained metadata and successful targeted joins on scheduled compute; retain missing states. No new model/API calls, vocabulary changes, or raw-text extraction are authorized by this continuation. Old occupation/task is NA, sparse audit non-detection is not absence, and posting dates do not establish historical text versions. Use bounded cloud jobs with necessary independent checks and publish only code, aggregates, receipts and decisions. Core contracts are in analysis_transition_20260930/reuse_analysis_20261010 and reuse_expansion_20261010.
-## Retrospective plan pointer (2026-10-12)
-
-The full 2,464-shard base extraction is complete and retained. The proposed finite 800-context formal semantic sample, with its transparent resource cap and nominal precision caveat, has not started and is not approval for execution. Do not restart the old extraction from superseded plans. See `retrospective_20261012/ROOT_HISTORY_AND_DECISION.md` and `retrospective_20261012/PROJECT_STATE.json`.
