@@ -108,7 +108,11 @@
       7,
       8,
       9,
-      10
+      10,
+      11,
+      12,
+      13,
+      14
     ],
     "authored_audit_packets": [
       1,
@@ -116,14 +120,17 @@
       3,
       4,
       5,
-      6
+      6,
+      7,
+      8
     ],
     "accepted_full_release": false,
     "current_primary_agents": {
-      "/root/formal800_primary_d": "ten exactrejections including009–010, then013",
-      "/root/formal800_primary_e": "011–012"
+      "/root/formal800_primary_j": "015",
+      "/root/formal800_primary_k": "016",
+      "/root/formal800_finish_l": "rejected013 only plus necessary private ad-level export"
     },
-    "current_audit_agent": "/root/formal800_audit_b: frozen final records121–153",
+    "current_audit_agent": "all153 authored and mechanically validated; independent audit reading closed",
     "validation_latest": {
       "primary_job": "46382193",
       "primary_scope_contexts": 100,
@@ -148,7 +155,16 @@
       "audit006_pass": "46382521",
       "primary009_010_job": "46382523",
       "primary009_010_valid": 39,
-      "primary009_010_rejected": 1
+      "primary009_010_rejected": 1,
+      "audit007_pass": "46383553",
+      "audit008_repair_pending": "46383927",
+      "primary001_011_repair_pending": "46383930",
+      "primary012_013_job": "46383612",
+      "primary012_013_errors": 23,
+      "audit008_pass": "46383927",
+      "primary001_011_pass": "46383930",
+      "primary014_pending": "46384192",
+      "primary012_repairs": "authored/staged, awaiting combined013 repair recheck"
     },
     "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs.",
     "accepted_audit_slices": [
@@ -157,9 +173,25 @@
       3,
       4,
       5,
-      6
+      6,
+      7,
+      8
     ],
-    "accepted_audit_contexts": 120
+    "accepted_audit_contexts": 153,
+    "accepted_primary_packets": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "accepted_primary_contexts": 220
   },
-  "last_pushed_checkpoint": "e5b3997"
+  "last_pushed_checkpoint": "168a594"
 }

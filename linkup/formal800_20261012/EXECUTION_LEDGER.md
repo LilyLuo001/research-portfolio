@@ -58,3 +58,17 @@ The freeze stage is intentionally still pending the separate SHA-only transfer r
 WZ46382515/46382517/46382521 completed0 in2s/5s/2s and passed audit004/005/006, each20/20. Together audit001–006 have120 mechanically valid contexts; semantic disagreement is assessed only after independent primary coverage is complete. Primary009–010 job46382523 accepted39/40 and rejected one missing supporting experience clause. Fresh independent Sol/high audit_b owns the final33 frozen audit contexts; its identity is passed explicitly to the slice validation wrapper.
 
 The validation orchestration now permits distinct transport slices of the same frozen global audit packet ID. Duplicate packet/file assignments are rejected; the unchanged core validator still rejects duplicate/missing records. No semantic schema or acceptance rule changed.
+
+## Frozen blind reading complete; remaining primary packets continue
+
+All153 audit contexts are authored, audit007 validation46383553 passes20/20, final13 repaired audit008 validation46383927 is pending. Generic ability to work independently was rejected as insufficient evidence of explicit judgment under the unchanged rubric; the independent auditor preserved its intermediate correction and final source-grounded decision. No primary/audit comparisons were disclosed during repairs.
+
+Primary001–013 are authored. Consolidated001–011 validation46382806 rejected4 records, all in011, for literal year/quote/tool-clause consistency; Sol/medium repair_i corrected them against originals. Revalidation46383930 is pending. Primary012–013 validation46383612 rejected23 records, mainly unmatched branch IDs and exact quotation characters; rejected012 and013 records are separate bounded repair tasks. No source, sample, definition or core validator change. Primary014/015 continue.
+
+Static finish-wrapper QA's schema-location concern was checked against the actual server: code/FORMAL800_REVIEW_SCHEMA.json exists,11586bytes, SHA256 fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e, identical to accepted receipts. The repository root location differs from the deliberate deployed code path. Final analysis remains unrun until all required reviews and bounded adjudications pass.
+
+## First220 primary and all153 audit contexts pass mechanical checks
+
+WZ46383927 completed0 in2s and passed final audit008; all153 independent audit contexts now have passing slice receipts. WZ46383930 completed0 in3s and passed primary001–011,220contexts,zero errors. This is identity/evidence/schema acceptance; semantic agreement/root review and final analysis remain pending. Primary014 is authored and validator46384192 is pending; primary015/016 are active. Packet012's13 rejected rows are repaired with preserved originals; packet013's10 rejected rows are assigned separately. The independent audit reading scope is closed.
+
+Final delivery retains the advertisement-level measured dataset privately onSCNet, linked to validated evidence; only aggregate tables/code/methods/receipts enterGit.
