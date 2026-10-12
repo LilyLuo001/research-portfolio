@@ -153,6 +153,10 @@ def main() -> None:
             raise SystemExit(result.returncode)
         if json.loads(receipt.read_text())["status"] != "pass":
             raise RuntimeError("validator did not pass")
+        # Retain the exact private source/assignment binding for final overlay
+        # validation. This contains source text and must never enter Git.
+        (args.output_dir / "BOUND_PACKET_PRIVATE.jsonl").write_text(
+            combined_packet.read_text(encoding="utf-8"), encoding="utf-8")
 
     public = {
         "version": "formal800-review-validation-orchestration-v1",
