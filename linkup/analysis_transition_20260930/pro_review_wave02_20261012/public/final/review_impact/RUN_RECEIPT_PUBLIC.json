@@ -1,0 +1,33 @@
+{
+  "api_calls": 0,
+  "checks": {
+    "core_fields_only": true,
+    "entry_responsibility_reviewed_records_36": true,
+    "packet_overlay_exact_key_match": true,
+    "unknown_retains_before": true,
+    "validated_exact_96": true
+  },
+  "created_utc": "2026-10-12T05:37:45.352743+00:00",
+  "model_calls": 0,
+  "outputs": {
+    "DIRECT_CORE_FIELD_CHANGES_PUBLIC.csv": {
+      "bytes": 7272,
+      "sha256": "a0894bf685ef19c631c5bb1cc8bc6d1c3cde1532560ae1366fadaa320cbae778"
+    },
+    "ENTRY_RESPONSIBILITY_REVIEWED36_CROSSTAB_PUBLIC.csv": {
+      "bytes": 1331,
+      "sha256": "eb854859dfe9e2bf0dd0125cfeb17beb6ea9ba97ca63d19f1e8beadf722e722b"
+    },
+    "REVIEW_COVERAGE_BY_STRATUM_PUBLIC.csv": {
+      "bytes": 2351,
+      "sha256": "54f18859dc5d3751ca1d76bc20232d9c18e19398de7928eb399f0d88f6426e27"
+    },
+    "REVIEW_IMPACT_SUMMARY_PUBLIC.json": {
+      "bytes": 1202,
+      "sha256": "249d25b0b0ace083c3b7c31a183826e1a1eec2276e5c90671a4020e8f6159e94"
+    }
+  },
+  "scheduler_job_id": "124267010",
+  "status": "pass",
+  "version": "wave02-reviewed-record-impact-v1"
+}

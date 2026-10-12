@@ -1,0 +1,13 @@
+{
+  "status": "failed_replaced",
+  "job_id": "124251525",
+  "state": "FAILED",
+  "exit_code": "1:0",
+  "elapsed": "00:07:59",
+  "max_rss_kib": 919252,
+  "dependent_job_id": "124251644",
+  "dependent_state": "CANCELLED_afterok_not_satisfied",
+  "cause": "purposeful mutually exclusive selection assigned conditional candidates to the earlier unresolved stratum, leaving the software conditional quota at 0/6",
+  "fix": "assign conditional_or_alternative before remaining unresolved uncertainty; inputs, denominators, quotas, and semantic fields unchanged",
+  "research_outputs_produced": false
+}

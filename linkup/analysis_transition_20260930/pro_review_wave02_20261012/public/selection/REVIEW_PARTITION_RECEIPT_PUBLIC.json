@@ -1,0 +1,48 @@
+{
+  "claim_boundary": "purposeful review input; no decisions, accuracy estimates, or population propagation",
+  "created_utc": "2026-10-11T23:47:58.365808+00:00",
+  "instructions_sha256": "4ffbd782df8fad2e1ee96663b3c73d29eb71912f50f6b2fd72ea7fb237b1aac8",
+  "method": "odd/even deterministic interleave; each reviewer receives 24 per arm, 30 experience and 18 entry-responsibility",
+  "outputs": {
+    "ROOT_BLIND4_PRIVATE.jsonl": {
+      "contents": "review text and question only; no arm, frozen fields, evidence labels, or rule outputs",
+      "path": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_wave02_20261012/private/review_partitions/ROOT_BLIND4_PRIVATE.jsonl",
+      "rows": 4,
+      "sha256": "8b09f6cfdece01ed13641ecb00a22926b1a4870b3885da8eda28341eee64079d"
+    },
+    "WAVE02_REVIEW_A_PRIVATE.jsonl": {
+      "arm_counts": {
+        "any_ai": 24,
+        "software_only": 24
+      },
+      "path": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_wave02_20261012/private/review_partitions/WAVE02_REVIEW_A_PRIVATE.jsonl",
+      "question_counts": {
+        "entry_responsibility_4dims": 18,
+        "experience_4dims": 30
+      },
+      "rows": 48,
+      "sha256": "fcc7e49c1a90127a4b599ecff9012ffc5804570af3e8ca60916b0a2f09a66ea4"
+    },
+    "WAVE02_REVIEW_B_PRIVATE.jsonl": {
+      "arm_counts": {
+        "any_ai": 24,
+        "software_only": 24
+      },
+      "path": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_wave02_20261012/private/review_partitions/WAVE02_REVIEW_B_PRIVATE.jsonl",
+      "question_counts": {
+        "entry_responsibility_4dims": 18,
+        "experience_4dims": 30
+      },
+      "rows": 48,
+      "sha256": "55481a5f1a18edcd4bc2f923312f896921c8ba92bc604c7813c110fe26404cb8"
+    }
+  },
+  "scheduler": {
+    "host": "a08r1n16",
+    "job_id": "124252022"
+  },
+  "schema_sha256": "3b2ac49081e61e41c163211b41876258fe514ee99b5c35bc2de5c66eaa15eda0",
+  "selector_packet_sha256": "fb2707e854c526846fb4495afeab39856d3b8e4697d4fa1c74e0824980d88020",
+  "status": "pass",
+  "version": "pro-wave02-review-partitions-v1"
+}

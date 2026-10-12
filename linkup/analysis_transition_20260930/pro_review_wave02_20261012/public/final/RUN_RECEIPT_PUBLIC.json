@@ -1,0 +1,51 @@
+{
+  "api_calls": 0,
+  "checks": {
+    "all_review_keys_in_same_KS_support_universe": true,
+    "exact_keys_unique": true,
+    "frozen_332_weights_reproduced": true,
+    "review_count_96": true,
+    "unknown_retains_before": true,
+    "unreviewed_unchanged": true
+  },
+  "created_utc": "2026-10-12T00:25:44.559034+00:00",
+  "inputs": {
+    "global_manifest_sha256": "eef8a7f2833714d3b68eb74726f5255187b0d7ccdbe69ff4313372de992520af",
+    "review_overlay_sha256": "8201f4bb29bc8d7147a0ece4cfcaef52a008e57b7930842b0343da5fd6708ad0",
+    "selection_receipt_sha256": "004a016e02734361fe0fe6c2f744c8b6cc2e167992d11a0b6358868fad2d6d68",
+    "validation_receipt_sha256": "28333b5ed87cdd1fd13c92671f3354a8b2f2085aa051bdb5ff751cc28ccbaedd"
+  },
+  "model_calls": 0,
+  "outputs": {
+    "BEFORE_AFTER_FIELDS_PUBLIC.csv": {
+      "bytes": 24292,
+      "sha256": "35ae8b11c4a302163920cff679a50607c35d84ca7917c0b168c3ca61081174af"
+    },
+    "ENTRY_COHORT_FIELDS_PUBLIC.csv": {
+      "bytes": 42598,
+      "sha256": "596c32d06c21aa78bd709157cfa03c95de4ac7e7b0ec1bd22d61501e540b0bb6"
+    },
+    "ENTRY_RESPONSIBILITY_CROSSTAB_PUBLIC.csv": {
+      "bytes": 1276,
+      "sha256": "6fb224e5539c905050a23a7d39685828a101ac2244df42a1c311d55aebb19e9b"
+    },
+    "REVIEW_ONLY_OUTCOMES_PUBLIC.csv": {
+      "bytes": 4915,
+      "sha256": "a0fc413b736881e2701f6fefc3fc7879bfc92cd854691a70edb2d5c6966c06bc"
+    },
+    "RUN_RECEIPT_PUBLIC.json": {
+      "bytes": 1672,
+      "sha256": "d545f5378ca56fac1b28a53c06a9725cd87af28f0a671f89b10aa6cdaa1e446f"
+    },
+    "SUMMARY_PUBLIC.json": {
+      "bytes": 1559,
+      "sha256": "31c4f74233e493c6f180aeddcad796835c75ad0acf1ca695e35e5fff60777481"
+    }
+  },
+  "scheduler": {
+    "host": "h18r1n10",
+    "job_id": "124253432"
+  },
+  "status": "pass",
+  "version": "pro-wave02-ks13-before-after-v1"
+}

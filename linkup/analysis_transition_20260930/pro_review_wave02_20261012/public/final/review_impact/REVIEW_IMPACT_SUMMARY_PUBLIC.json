@@ -1,0 +1,23 @@
+{
+  "claim_boundary": "direct effects on exact reviewed records; purposeful selection is not a population error rate and no change is propagated",
+  "entry_responsibility_crosstab_scope": "the 36 reviewed entry/responsibility records only",
+  "inputs": {
+    "packet_sha256": "fb2707e854c526846fb4495afeab39856d3b8e4697d4fa1c74e0824980d88020",
+    "selection_counts_sha256": "48dcef5f174d1662712c7704c2cc5b00ab60b47c18becadc3ad4599eec860e22",
+    "validated_overlay_sha256": "8201f4bb29bc8d7147a0ece4cfcaef52a008e57b7930842b0343da5fd6708ad0",
+    "validation_receipt_sha256": "28333b5ed87cdd1fd13c92671f3354a8b2f2085aa051bdb5ff751cc28ccbaedd"
+  },
+  "reviewed_by_question_and_arm": {
+    "any_ai|entry_responsibility_4dims": 18,
+    "any_ai|experience_4dims": 30,
+    "software_only|entry_responsibility_4dims": 18,
+    "software_only|experience_4dims": 30
+  },
+  "reviewed_direct_core_field_instances_changed": 71,
+  "reviewed_records": 96,
+  "reviewed_records_with_any_direct_core_change": 49,
+  "status": "pass",
+  "strength_auxiliary_changes_counted": false,
+  "unknown_policy": "unknown retains the frozen before value and is counted separately",
+  "version": "wave02-reviewed-record-impact-v1"
+}

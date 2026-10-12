@@ -1,0 +1,41 @@
+{
+  "checks": {
+    "canonical_key_and_question_unique": true,
+    "exact_four_target_statuses": true,
+    "exact_selected_96_only": true,
+    "manual_critical_checks": true,
+    "no_missing_reviews_filled": true,
+    "partial_context_cannot_negate": true,
+    "positive_requires_evidence": true,
+    "question_matches_packet": true,
+    "quote_offsets_exact": true,
+    "schema_validated": true,
+    "source_and_context_hashes_exact": true
+  },
+  "claim_boundary": "review validation and additive row overlay only; no population aggregation or automatic labels",
+  "counts": {
+    "by_question_status": {
+      "entry_responsibility_4dims|resolved": 36,
+      "experience_4dims|resolved": 60
+    },
+    "review_records": 96,
+    "selected_records": 96
+  },
+  "created_utc": "2026-10-12T00:20:52.320279+00:00",
+  "environment": {
+    "jsonschema_available": true
+  },
+  "inputs": {
+    "packet_sha256": "fb2707e854c526846fb4495afeab39856d3b8e4697d4fa1c74e0824980d88020",
+    "review_a_sha256": "ddfb0d8c61d03359f6a27e1b3094ed60470df47ba02085ebccd54eae5c3e0709",
+    "review_b_sha256": "73676fb3cd025b406bab1a6b2be4da9e283af74ab4566b2018f64b864408e500",
+    "schema_sha256": "3b2ac49081e61e41c163211b41876258fe514ee99b5c35bc2de5c66eaa15eda0"
+  },
+  "private_overlay": {
+    "path": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_wave02_20261012/private/WAVE02_REVIEW_OVERLAY_PRIVATE.jsonl",
+    "rows": 96,
+    "sha256": "8201f4bb29bc8d7147a0ece4cfcaef52a008e57b7930842b0343da5fd6708ad0"
+  },
+  "status": "pass",
+  "version": "wave02-compact-review-validation-v1"
+}

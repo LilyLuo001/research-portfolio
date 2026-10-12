@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-12",
+  "status": "accepted_bounded_wave_deliverables",
+  "scope": "KS13 existing sample; 96 purposively selected unique contexts, exact-record corrections only",
+  "delivered": ["unresolved candidate scale and review coverage", "96-row validated private review overlay", "two same-sample before/after comparisons", "direct correction impact and claim boundaries"],
+  "reviewed_records": 96,
+  "records_with_core_changes": 49,
+  "core_field_values_changed": 71,
+  "accepted_jobs": {"selection": "124252012", "schema_validation": "124253314", "aggregate_final_writer": "124253432", "impact_and_independent_hash_verification": "124267010"},
+  "review_overlay_sha256": "8201f4bb29bc8d7147a0ece4cfcaef52a008e57b7930842b0343da5fd6708ad0",
+  "provenance_resolution": "Both aggregate submissions completed. The original receipt contains a stale predecessor self-hash, explicitly rejected by independent verification; all five numerical artifacts match the receipt. No numerical rerun was required.",
+  "decision": "Accept the exact reviewed corrections and descriptive candidate comparisons. Do not certify unreviewed labels or claim population semantic accuracy, historical task changes, or causal seniorization.",
+  "quality_limits": ["Purposive review cannot estimate population error rates", "Frozen technology arms can contain acronym or contextual false positives", "Graduate eligibility does not identify first-career entrants", "Rare AI entry/responsibility candidates changed from 7 to 5; this comparison is sensitive to individual records", "Unchanged directions for experience candidates do not establish robustness to unreviewed error"],
+  "stop_rule": "This bounded review-and-impact wave is complete; no new parser development or full-corpus extraction is required for its release."
+}

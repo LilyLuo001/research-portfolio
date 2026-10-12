@@ -1,0 +1,31 @@
+{
+  "entry_boundary": "explicit graduate wording is an explicit entry-target wording candidate, not validated first-career or entry-level status; conditionality is reported separately",
+  "full69_baseline_is_separate": true,
+  "limits": [
+    "purposeful 96 is not an accuracy sample",
+    "unreviewed rule candidates remain candidates",
+    "small changes do not establish robustness",
+    "no propagation beyond exact reviewed key",
+    "frozen any-AI group can include law-degree LLM wording and employer/recruiting technology background",
+    "current-text descriptions do not establish historical change, AI causality, or a seniorization trend"
+  ],
+  "method": "exact reviewed-row updates only; unknown review outcomes retain frozen candidate state and are separately counted",
+  "responsibility_mapping": {
+    "broad": "present for advertised worker with relation current_duty or required_capability",
+    "strict": "present for advertised worker with relation current_duty only"
+  },
+  "reviewed_exact_records": 96,
+  "scope": "KS13 subset of frozen69",
+  "status": "pass",
+  "support": {
+    "entry_removed_support_weight": 38408,
+    "fixed_common_entry_support_occupations": 86,
+    "fixed_common_entry_weight_sum": 65412,
+    "full69_occupations": 332,
+    "full69_weight_sum": 103820,
+    "ks_local_both_arm_occupations": 332,
+    "retained_weight_sum": 103820
+  },
+  "technology_group_boundary": "software_only and any_ai are frozen rule-classified technology groups, not verified AI adoption",
+  "version": "pro-wave02-ks13-before-after-v1"
+}

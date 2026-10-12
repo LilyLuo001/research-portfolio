@@ -1,0 +1,56 @@
+{
+  "checks": {
+    "canonical_join_conservation": true,
+    "evidence_unicode_slices": true,
+    "full69_rows": true,
+    "full_text_sha_and_job_hash": true,
+    "global_manifest_69": true,
+    "ks13_rows": true,
+    "locked_eval80_excluded": true,
+    "posting_evidence_sha": true,
+    "prior_review_hashes_excluded": true,
+    "published_332_support_reproduced": true,
+    "published_weight_sum_reproduced": true,
+    "source_text_unique": true
+  },
+  "claim_boundary": "KS13 actual comparison subset; selection is not an accuracy sample and is not the 5.8m full69 estimate",
+  "created_utc": "2026-10-11T23:47:52.055077+00:00",
+  "method": "rule-only frozen-field counting and purposeful selection; no model/API/CLI inference",
+  "outputs": {
+    "KS13_FIELD_SPECIFIC_COUNTS_PUBLIC.csv": {
+      "bytes": 3607,
+      "sha256": "48dcef5f174d1662712c7704c2cc5b00ab60b47c18becadc3ad4599eec860e22"
+    },
+    "SELECTION_QUOTAS_PUBLIC.csv": {
+      "bytes": 1683,
+      "sha256": "8d40fd04a10cd49f486a4f656c1d50496b8e79d4d3fa7b4458765884ddb8ec2e"
+    },
+    "SUPPORT_SCOPE_PUBLIC.csv": {
+      "bytes": 450,
+      "sha256": "4b2f2bcef1a120134d7ac6d6a0504650d63934e07622b0c439f955008c749cea"
+    },
+    "WAVE02_ACTUAL96_PACKET_PRIVATE.jsonl": {
+      "path": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_wave02_20261012/private/selection/WAVE02_ACTUAL96_PACKET_PRIVATE.jsonl",
+      "rows": 96,
+      "sha256": "fb2707e854c526846fb4495afeab39856d3b8e4697d4fa1c74e0824980d88020"
+    },
+    "WAVE02_SELECTION_MANIFEST_PRIVATE.json": {
+      "path": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_wave02_20261012/private/selection/WAVE02_SELECTION_MANIFEST_PRIVATE.json",
+      "sha256": "710c407798d88b25542bf4156ba2df33a464e33af845a89e115fd213d00e4dfd"
+    }
+  },
+  "scheduler": {
+    "host": "g04r3n07",
+    "job_id": "124252012"
+  },
+  "scope": {
+    "eligible_support": "full69 332 support restricted to occupations with both KS arms",
+    "frozen_rows": 1097202,
+    "purposeful_review_contexts": 96,
+    "region": "kunshan",
+    "shards": 13
+  },
+  "status": "pass",
+  "unresolved_policy": "unknown/no-rule is not semantic absence or an unusable ad; before/after can change only exact reviewed rows",
+  "version": "pro-wave02-ks13-purposeful-v1"
+}

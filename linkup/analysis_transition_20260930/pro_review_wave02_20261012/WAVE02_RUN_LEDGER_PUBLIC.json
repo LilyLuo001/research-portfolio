@@ -1,0 +1,22 @@
+{
+  "version": "pro-wave02-run-ledger-public-v1",
+  "status": "complete_public_provenance_verified",
+  "method_boundary": "Pro semantic review occurred in bounded conversation sessions; scheduled cloud jobs validated and aggregated records. No CLI/API inference or whole-corpus semantic certification.",
+  "jobs": [
+    {"job_id": "124252012", "role": "KS13 purposeful selection", "status": "COMPLETED", "receipt": "public/selection/RUN_RECEIPT_PUBLIC.json"},
+    {"job_id": "124252022", "role": "review partition", "status": "COMPLETED", "receipt": "public/selection/REVIEW_PARTITION_RECEIPT_PUBLIC.json"},
+    {"job_id": "124252906", "role": "partial validation predecessor", "status": "REJECTED_PARTIAL", "exit_code": "0:0", "schema_validated": false, "authoritative": false, "receipt": "public/validation/WAVE02_REVIEW_VALIDATION_RECEIPT_PARTIAL_SCHEMA_UNCHECKED_124252906_PUBLIC.json"},
+    {"job_id": "124253291", "role": "validator runtime preparation", "status": "COMPLETED", "receipt": "public/runtime/runtime-124253291.out"},
+    {"job_id": "124253314", "role": "full-schema validation", "status": "COMPLETED_PASS", "receipt": "public/validation/WAVE02_REVIEW_VALIDATION_RECEIPT_PUBLIC.json"},
+    {"job_id": "124253429", "role": "aggregate attempt A", "status": "COMPLETED", "note": "Duplicate aggregate execution after SSH ambiguity."},
+    {"job_id": "124253432", "role": "aggregate attempt B", "status": "COMPLETED", "note": "Duplicate aggregate execution; final writer bound here, with five non-self outputs independently verified."},
+    {"job_id": "124260742", "role": "impact attempt", "status": "FAILED_MISSING_RUNTIME", "authoritative": false, "receipt": "public/impact_failures/impact-124260742.out"},
+    {"job_id": "124263976", "role": "impact attempt", "status": "FAILED_TUPLE_ORDER_BUG", "authoritative": false},
+    {"job_id": "124267010", "role": "impact_and_independent_hash_verification", "status": "COMPLETED_PASS", "receipt": "public/final/review_impact/RUN_RECEIPT_PUBLIC.json"}
+  ],
+  "claim_boundary": [
+    "Five non-self aggregate outputs match their receipt hashes; the original self-referential receipt hash is explicitly rejected.",
+    "Archive receipt confirms 14 local private files matched remote hashes/sizes before deletion; 15 remote archived files remain mode 600.",
+    "The purposeful review is not an accuracy sample; unknowns and unreviewed candidates remain distinct."
+  ]
+}

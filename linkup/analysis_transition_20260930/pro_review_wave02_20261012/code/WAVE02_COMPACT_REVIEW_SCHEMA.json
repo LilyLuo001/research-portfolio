@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wave02-compact-semantic-review-v1",
+  "title": "Wave02 compact question-specific semantic review",
+  "type": "object",
+  "required": [
+    "record_id",
+    "canonical_key",
+    "source_exact_text_sha256",
+    "context_sha256",
+    "question",
+    "coverage_scope",
+    "frozen_before",
+    "decision",
+    "reviewer"
+  ],
+  "properties": {
+    "record_id": {"type": "string", "minLength": 1},
+    "canonical_key": {
+      "type": "object",
+      "required": ["JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"],
+      "properties": {
+        "JOB_HASH": {"type": "string", "minLength": 1},
+        "SOURCE_FILE": {"type": "string", "minLength": 1},
+        "SOURCE_ROW": {"type": "integer", "minimum": 0},
+        "RECORD_SOURCE_ROW": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "source_exact_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "context_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "question": {"enum": ["experience_4dims", "entry_responsibility_4dims"]},
+    "coverage_scope": {
+      "type": "object",
+      "required": ["level", "exhaustiveness_certification", "description"],
+      "properties": {
+        "level": {"enum": ["full_document", "exhaustive_target_context", "partial_context"]},
+        "exhaustiveness_certification": {"enum": ["full_document", "packet_generator_certified_exhaustive", "none"]},
+        "description": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "frozen_before": {
+      "type": "object",
+      "required": ["field_snapshot", "candidate_evidence_indices_0based"],
+      "properties": {
+        "field_snapshot": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["field", "value"],
+            "properties": {
+              "field": {"type": "string", "minLength": 1},
+              "value": {}
+            },
+            "additionalProperties": false
+          }
+        },
+        "candidate_evidence_indices_0based": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 0},
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "oneOf": [
+        {"$ref": "#/$defs/experienceDecision"},
+        {"$ref": "#/$defs/entryResponsibilityDecision"}
+      ]
+    },
+    "reviewer": {
+      "type": "object",
+      "required": ["model", "effort", "execution"],
+      "properties": {
+        "model": {"type": "string", "minLength": 1},
+        "effort": {"enum": ["low", "medium", "high", "xhigh", "max", "ultra"]},
+        "execution": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "root_attention": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {"properties": {"question": {"const": "experience_4dims"}}},
+      "then": {"properties": {"decision": {"$ref": "#/$defs/experienceDecision"}}}
+    },
+    {
+      "if": {"properties": {"question": {"const": "entry_responsibility_4dims"}}},
+      "then": {"properties": {"decision": {"$ref": "#/$defs/entryResponsibilityDecision"}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "coverage_scope": {
+            "properties": {"level": {"const": "partial_context"}},
+            "required": ["level"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "decision": {
+            "oneOf": [
+              {
+                "properties": {
+                  "question": {"const": "experience_4dims"},
+                  "dimension_outcomes": {
+                    "items": {
+                      "properties": {"ad_level_presence": {"enum": ["present", "unknown"]}}
+                    }
+                  }
+                },
+                "required": ["question", "dimension_outcomes"]
+              },
+              {
+                "properties": {
+                  "question": {"const": "entry_responsibility_4dims"},
+                  "entry": {
+                    "properties": {"ad_level_presence": {"enum": ["present", "unknown"]}}
+                  },
+                  "responsibilities": {
+                    "items": {
+                      "properties": {"ad_level_presence": {"enum": ["present", "unknown"]}}
+                    }
+                  }
+                },
+                "required": ["question", "entry", "responsibilities"]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"coverage_scope": {"properties": {"level": {"const": "full_document"}}}}},
+      "then": {"properties": {"coverage_scope": {"properties": {"exhaustiveness_certification": {"const": "full_document"}}}}}
+    },
+    {
+      "if": {"properties": {"coverage_scope": {"properties": {"level": {"const": "exhaustive_target_context"}}}}},
+      "then": {"properties": {"coverage_scope": {"properties": {"exhaustiveness_certification": {"const": "packet_generator_certified_exhaustive"}}}}}
+    },
+    {
+      "if": {"properties": {"coverage_scope": {"properties": {"level": {"const": "partial_context"}}}}},
+      "then": {"properties": {"coverage_scope": {"properties": {"exhaustiveness_certification": {"const": "none"}}}}}
+    }
+  ],
+  "$defs": {
+    "span": {
+      "type": "object",
+      "required": ["start", "end", "quote"],
+      "properties": {
+        "start": {"type": "integer", "minimum": 0},
+        "end": {"type": "integer", "minimum": 1},
+        "quote": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "experienceClause": {
+      "type": "object",
+      "required": [
+        "candidate_resolution",
+        "resulting_dimension",
+        "strength",
+        "conditionality",
+        "years_min",
+        "years_max",
+        "years_relation",
+        "alternative_group",
+        "alternative_branch",
+        "spans",
+        "reason"
+      ],
+      "properties": {
+        "candidate_resolution": {"enum": ["confirmed", "corrected", "unresolved"]},
+        "resulting_dimension": {"enum": ["general_work", "occupation_task", "industry_domain", "tool_specific", "unresolved"]},
+        "strength": {"enum": ["required", "preferred", "unspecified", "unresolved"]},
+        "conditionality": {"enum": ["unconditional", "conditional", "unspecified", "unresolved"]},
+        "years_min": {"type": ["number", "null"], "minimum": 0},
+        "years_max": {"type": ["number", "null"], "minimum": 0},
+        "years_relation": {"enum": ["at_least", "range", "exact", "at_most", "not_stated", "unresolved"]},
+        "alternative_group": {"type": ["string", "null"]},
+        "alternative_branch": {"type": ["string", "null"]},
+        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "dimensionOutcome": {
+      "type": "object",
+      "required": ["dimension", "ad_level_presence", "reason"],
+      "properties": {
+        "dimension": {"enum": ["general_work", "occupation_task", "industry_domain", "tool_specific"]},
+        "ad_level_presence": {"enum": ["present", "absent_after_exhaustive_review", "unknown"]},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "experienceDecision": {
+      "type": "object",
+      "required": ["question", "dimension_outcomes", "clauses", "question_status"],
+      "properties": {
+        "question": {"const": "experience_4dims"},
+        "dimension_outcomes": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/dimensionOutcome"}, {"properties": {"dimension": {"const": "general_work"}}}]},
+            {"allOf": [{"$ref": "#/$defs/dimensionOutcome"}, {"properties": {"dimension": {"const": "occupation_task"}}}]},
+            {"allOf": [{"$ref": "#/$defs/dimensionOutcome"}, {"properties": {"dimension": {"const": "industry_domain"}}}]},
+            {"allOf": [{"$ref": "#/$defs/dimensionOutcome"}, {"properties": {"dimension": {"const": "tool_specific"}}}]}
+          ],
+          "items": false
+        },
+        "clauses": {"type": "array", "items": {"$ref": "#/$defs/experienceClause"}},
+        "question_status": {"enum": ["resolved", "partially_resolved", "unresolved"]}
+      },
+      "additionalProperties": false
+    },
+    "responsibilityItem": {
+      "type": "object",
+      "required": ["dimension", "ad_level_presence", "subject", "relation", "conditionality", "spans", "reason"],
+      "properties": {
+        "dimension": {"enum": ["independent_judgment", "client_ownership", "people_supervision", "training_mentoring"]},
+        "ad_level_presence": {"enum": ["present", "absent_after_exhaustive_review", "unknown"]},
+        "subject": {"enum": ["advertised_worker", "other_employee", "employer_general", "unresolved"]},
+        "relation": {"enum": ["current_duty", "required_capability", "prior_experience", "other_person", "employer_description", "unresolved"]},
+        "conditionality": {"enum": ["unconditional", "conditional", "unspecified", "unresolved"]},
+        "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "entryResponsibilityDecision": {
+      "type": "object",
+      "required": ["question", "entry", "responsibilities", "question_status"],
+      "properties": {
+        "question": {"const": "entry_responsibility_4dims"},
+        "entry": {
+          "type": "object",
+          "required": ["target", "ad_level_presence", "conditionality", "spans", "reason"],
+          "properties": {
+            "target": {"enum": ["explicit_no_experience", "explicit_new_graduate", "current_student_internship", "other", "not_stated", "unresolved"]},
+            "ad_level_presence": {"enum": ["present", "absent_after_exhaustive_review", "unknown"]},
+            "conditionality": {"enum": ["unconditional", "conditional", "unspecified", "unresolved"]},
+            "spans": {"type": "array", "items": {"$ref": "#/$defs/span"}},
+            "reason": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        },
+        "responsibilities": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            {"allOf": [{"$ref": "#/$defs/responsibilityItem"}, {"properties": {"dimension": {"const": "independent_judgment"}}}]},
+            {"allOf": [{"$ref": "#/$defs/responsibilityItem"}, {"properties": {"dimension": {"const": "client_ownership"}}}]},
+            {"allOf": [{"$ref": "#/$defs/responsibilityItem"}, {"properties": {"dimension": {"const": "people_supervision"}}}]},
+            {"allOf": [{"$ref": "#/$defs/responsibilityItem"}, {"properties": {"dimension": {"const": "training_mentoring"}}}]}
+          ],
+          "items": false
+        },
+        "question_status": {"enum": ["resolved", "partially_resolved", "unresolved"]}
+      },
+      "additionalProperties": false
+    }
+  }
+}
