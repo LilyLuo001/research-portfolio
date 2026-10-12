@@ -122,6 +122,10 @@ def write_private_ad_parquet(path: Path, rows: list[dict[str, Any]],
                for dimension in EXP_DIMS},
             "entry_core_including_conditional": core_entry(review, False),
             "entry_core_unconditional": core_entry(review, True),
+            "entry_explicit_no_experience": outcome_value(
+                review, "entry_outcomes", "explicit_no_experience"),
+            "entry_explicit_new_graduate": outcome_value(
+                review, "entry_outcomes", "explicit_new_graduate"),
             "entry_current_student_internship": outcome_value(
                 review, "entry_outcomes", "current_student_internship"),
             "entry_junior_or_entry_label": outcome_value(

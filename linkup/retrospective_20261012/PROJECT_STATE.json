@@ -118,7 +118,11 @@
       17,
       18,
       19,
-      21
+      20,
+      21,
+      22,
+      23,
+      24
     ],
     "authored_audit_packets": [
       1,
@@ -132,9 +136,9 @@
     ],
     "accepted_full_release": false,
     "current_primary_agents": {
-      "/root/formal800_primary_p": "020",
-      "/root/formal800_primary_r": "022",
-      "/root/formal800_primary_s": "023"
+      "/root/formal800_primary_t": "024 and exact022/023 repairs",
+      "/root/formal800_primary_u": "025",
+      "/root/formal800_primary_v": "026"
     },
     "current_audit_agent": "all153 authored and mechanically validated; independent audit reading closed",
     "validation_latest": {
@@ -181,7 +185,12 @@
       "primary017_pass": "46385911",
       "primary018_pass": "46385912",
       "primary019_pass": "46385916",
-      "final_runtime_preflight": "46386283"
+      "final_runtime_preflight": "46386283",
+      "primary020_pass": "46387704",
+      "primary021_pass": "46386358",
+      "primary022_rejected": "46387706:2 records",
+      "primary023_rejected": "46387708:5 records",
+      "primary024_pass": "46387936"
     },
     "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs.",
     "accepted_audit_slices": [
@@ -214,9 +223,14 @@
       16,
       17,
       18,
-      19
+      19,
+      20,
+      21,
+      24
     ],
-    "accepted_primary_contexts": 380
+    "accepted_primary_contexts": 440,
+    "capacity_note": "Sol023 and024 bounded retries recovered; all primary semantic reviewers remain Sol/medium."
   },
-  "last_pushed_checkpoint": "0877331"
+  "last_pushed_checkpoint": "5ef1a05",
+  "git_main_authorization": "User explicitly allowed push to main on2026-10-12 after automatic-review rejection."
 }

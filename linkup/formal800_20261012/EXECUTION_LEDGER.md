@@ -84,3 +84,11 @@ The optional private 800-ad Parquet exporter now links canonical keys, context h
 Primary014 passed46384870 after exact quote recovery;015 passed46385544;016 passed46384815;017/018/019 passed46385911/46385912/46385916. All completed0 in1–4s. These receipts bring primary mechanical acceptance to380 of719 contexts. Primary021 is authored;020/022/023 continue. The original800-ad selection and153-context independent audit remain unchanged. Scoped failures and pre-repair files are retained privately.
 
 Rootdecision14 narrows Q2 claims for type-specific experience waivers and adds a graduate-wording-only sensitivity from an existing field before final estimates. Figure code renders existing aggregate estimates only; ad-level labels and evidence remain private. No final analysis or semantic accuracy claim is made at this checkpoint.
+
+## Primary001–021 accepted:420 contexts
+
+Primary021 passed46386358 (2s);020 passed46387704 (2s) after five source-bound repairs. Primary022/023 validation46387706/46387708 rejected2/5 records, respectively; only these named records are being repaired. Full153-context independent audit remains sealed. A transient Sol capacity error interrupted023/024; the bounded023 retry completed without changing model, while024 resumes only saved-missing rows. Primary025/026 are assigned to fresh Sol/medium readers. Final comparisons remain pending.
+
+Runtime preflight46386283 completed0 in5s with Python3.8.10, pyarrow11.0.0 and matplotlib3.5.2. It checked runtime/import/syntax readiness without research data, not production inference. Independent export/figure QA found missing explicit-graduate/private-entry columns, which are now included; upstream missing weights remain null.
+
+The user explicitly authorized sanitized publication to main. Push5ef1a05 succeeded; no renewed Git permission is needed.
