@@ -1,9 +1,10 @@
 # LinkUp project execution rules
 
-
 ## Retrospective plan pointer (2026-10-12)
 
-The full 2,464-shard base extraction is complete and retained. The proposed finite 800-context formal semantic sample, with its transparent resource cap and nominal precision caveat, has not started and is not approval for execution. Do not restart the old extraction from superseded plans. See `retrospective_20261012/ROOT_HISTORY_AND_DECISION.md` and `retrospective_20261012/PROJECT_STATE.json`.
+User approval now authorizes preparation and execution of the finite review of up to 800 ads (at most 800 unique contexts): 20% independent blind review and at most 40 root adjudications. Execution has started as preparation only; no sample or job is complete until a receipt names it. Preserve scheduled SCNet calculations and historical constraints; do not use BU, paid API, new models, full-base redo, or private Git data. See `retrospective_20261012/PROJECT_STATE.json` and `formal800_20261012/EXECUTION_LEDGER.md`.
+
+
 User-approved scope update, 2026-10-08 (rule-first plan): the user explicitly authorizes processing the frozen LinkUp research sample on BU SCC in a NEW task directory, reusing existing texts and joins. GPT-6/root may personally read a bounded development and evaluation sample to design and audit rules, as explicitly requested; this exception does not authorize bulk conversation-agent labeling. Core extraction rules and economic decisions belong to root. Delegated agents handle cloud orchestration, independent synthetic code QA and provenance. All batch extraction, sampling and analysis remain scheduled cloud jobs. Do not launch Qwen repairs or any new model inference/API spend. Preserve the previous BU task closure. Return and verify new results before deleting this new task's staged data; never delete unrelated BU data.
 
 User decision, 2026-10-08: all new research data processing runs in cloud/cluster jobs.
