@@ -1,7 +1,7 @@
 {
   "as_of": "2026-10-12",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "approved_preparing_frozen_sample",
+  "phase": "formal800_frozen_review_in_progress",
   "verified_remote_commit": "356564eb61e4c01bd81647641c8fab4b0b2dc719",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
@@ -70,7 +70,7 @@
     "new_parser_development": false,
     "full_corpus_semantic_certification": false,
     "started": true,
-    "status": "preparation_started; WZ preflight 46362837 completed; KS2 CPU sanitizer 124276150 completed; freeze pending SHA-only transfer and not submitted",
+    "status": "sample_frozen_actual_primary_and_blind_reading_in_progress",
     "approval": "user_approved_2026-10-12"
   },
   "execution_location": {
@@ -78,5 +78,25 @@
     "bounded_semantic_reading": "authorized Pro conversation models",
     "local_allowed": "code/docs, bounded reading, transport, provenance and Git"
   },
-  "resume_rule": "Read this state, entry document, and the latest completed receipt first. Claim completion only for named scope and artifact. Dispatch only missing packages; never silently reopen superseded routes."
+  "resume_rule": "Read this state, entry document, and the latest completed receipt first. Claim completion only for named scope and artifact. Dispatch only missing packages; never silently reopen superseded routes.",
+  "formal800_execution": {
+    "freeze_job": "46364888",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:03:33",
+    "eligible_fixed10k_ads": 9282,
+    "excluded_ads": 718,
+    "sampled_ads": 800,
+    "unique_primary_contexts": 719,
+    "primary_packets": 36,
+    "audit_ads": 160,
+    "unique_audit_contexts": 153,
+    "primary_model": "gpt-5.6-sol/medium",
+    "blind_audit_model": "gpt-5.6-sol/high",
+    "completed_semantic_packets": 0,
+    "main_weight": "1/pi3",
+    "parent_frame_inference": false,
+    "public_freeze_receipt": "linkup/formal800_20261012/receipts/FORMAL800_FREEZE_RECEIPT_PUBLIC.json",
+    "next_action": "finish assigned Pro packets; scheduled evidence validation; fixed blind audit and bounded root adjudication; final T1-T6"
+  }
 }

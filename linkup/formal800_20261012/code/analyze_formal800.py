@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 VERSION = "formal800-finite-eligible10k-analysis-v1"
-MAIN_GROUPS = ("genai_use_only", "traditional_software_use_no_ai")
+MAIN_GROUPS = ("genai_use_with_or_without_software", "traditional_software_use_no_ai")
 EXP_DIMS = ("general_work", "occupation_task", "industry_domain", "tool_specific")
 ENTRY_TARGETS = ("explicit_no_experience", "explicit_new_graduate")
 RESP_DIMS = ("independent_judgment", "client_ownership", "people_supervision", "training_mentoring")
@@ -215,7 +215,7 @@ def semantic_technology(review: dict[str, Any]) -> str:
 def analysis_technology_group(detail_group: str) -> str:
     """Map detailed T3 labels to the two frozen main comparison groups."""
     if detail_group in {"genai_use_only", "genai_traditional_overlap"}:
-        return "genai_use_only"
+        return "genai_use_with_or_without_software"
     return detail_group
 
 

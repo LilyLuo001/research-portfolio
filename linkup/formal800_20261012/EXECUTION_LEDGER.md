@@ -23,3 +23,12 @@ Status: preparation started under explicit user approval. No sample, semantic re
 | Public acceptance receipt | pending all named outputs |
 
 The freeze stage is intentionally still pending the separate SHA-only transfer receipt; this commit does not claim a frozen sample or semantic completion.
+
+## Actual freeze and reading start
+
+- WZ freeze46364558 failed after 2m48s on null legacy upstream weights before sample selection. Root decision12 keeps these ads eligible for the finite fixed10k target; no imputed upstream weights and no parent-frame inference.
+- WZ freeze46364888 completed, exit0, 3m33s: 9,282 eligible ads,718 excluded;800 sampled ads,719 distinct contexts;160 audit ads,153 distinct contexts. All37 primary/audit transport files passed SHA-256 verification.
+- Historical raw manifests were not transferred after automatic review rejected that route. Scheduled KS124276150 emitted a hashes-only file (no text or ad keys), whose SHA agrees on KS, local protected staging, and WZ.
+- All54 existing entry-candidate ads were included; shortages reallocated within arm by the predeclared rule. No outcome-based replenishment.
+- Sol/medium primary packet001 and independent Sol/high blind audit records1–20 are now actually dispatched. No semantic packet is yet accepted; outputs require scheduled validation. The conditional Terra/GPT-6 fallback was not used.
+- Final comparison tables remain pending the finite reading/audit/validation work. Existing full-corpus outputs remain intact.

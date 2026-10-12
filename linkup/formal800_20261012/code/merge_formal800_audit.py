@@ -11,6 +11,7 @@ import argparse
 import collections
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -60,10 +61,8 @@ def signature(review: dict[str, Any]) -> dict[str, Any]:
     entries = key_set(review.get("entry_items", []), ("target", "conditionality"))
     duties = key_set(review.get("responsibility_items", []), ("dimension", "subject", "relation"))
     tech = key_set(review.get("technology_items", []), ("family", "role"))
-    alternatives = tuple(sorted([(
-        item.get("relation"), len(item.get("branches", [])),
-        tuple(sorted(str(branch.get("branch")) for branch in item.get("branches", [])))
-    ) for item in review.get("qualification_alternatives", [])], key=repr))
+    alternatives = tuple(sorted([(item.get("relation"), len(item.get("branches", [])))
+        for item in review.get("qualification_alternatives", [])], key=repr))
     return {
         "experience_outcomes": tuple(review.get("experience_outcomes", {}).get(k) for k in EXP),
         "experience_clauses": tuple(sorted(clauses, key=repr)),
@@ -108,9 +107,36 @@ def load_audit_packet(path: Path) -> dict[str, dict[str, Any]]:
     return out
 
 
-def mask_unresolved(review: dict[str, Any]) -> dict[str, Any]:
-    """Remove evidence governed by fields explicitly left unresolved by root."""
+def mask_unresolved(review: dict[str, Any], other=None) -> dict[str, Any]:
+    """Keep unresolved blind disagreements unknown; originals remain archived."""
     result = json.loads(json.dumps(review))
+    if other is not None:
+        conflicts = []
+        contracts = (
+            ("experience_outcomes", EXP, "experience_clauses", "object", ("strength", "conditionality", "years_min", "years_max", "years_relation")),
+            ("entry_outcomes", ENTRY, "entry_items", "target", ("conditionality",)),
+            ("responsibility_outcomes", RESP, "responsibility_items", "dimension", ("subject", "relation")),
+        )
+        for outcomes, dims, inventory, selector, attributes in contracts:
+            for dim in dims:
+                a = key_set([x for x in review[inventory] if x.get(selector) == dim], attributes)
+                b = key_set([x for x in other[inventory] if x.get(selector) == dim], attributes)
+                if review[outcomes][dim] != other[outcomes][dim] or a != b:
+                    result[outcomes][dim] = "unknown"
+                    conflicts.append(outcomes + "." + dim)
+        a, b = signature(review), signature(other)
+        if a["technology_items"] != b["technology_items"] or a["technology_inventory_status"] != b["technology_inventory_status"]:
+            result["technology_inventory_status"] = "unknown"
+            conflicts.append("technology")
+        if a["qualification_alternatives"] != b["qualification_alternatives"]:
+            for group in result["qualification_alternatives"]:
+                group["relation"] = "unresolved"
+            affected = {x["object"] for r in (review, other) for x in r["experience_clauses"] if x.get("alternative_group")}
+            for dim in affected & set(EXP):
+                result["experience_outcomes"][dim] = "unknown"
+            conflicts.append("qualification_alternatives")
+        if conflicts:
+            result["unresolved_notes"].append("Unadjudicated blind-review disagreement: " + ", ".join(conflicts))
     unknown_exp = {k for k, v in result.get("experience_outcomes", {}).items() if v == "unknown"}
     if unknown_exp:
         result["experience_clauses"] = [c for c in result.get("experience_clauses", []) if c.get("object") not in unknown_exp]
@@ -135,6 +161,7 @@ def write_jsonl(path: Path, values: list[dict[str, Any]]) -> None:
 
 
 def main() -> None:
+    os.umask(0o077)
     p = argparse.ArgumentParser()
     p.add_argument("--primary-validated", type=Path, required=True)
     p.add_argument("--primary-receipt", type=Path, required=True)
@@ -142,7 +169,7 @@ def main() -> None:
     p.add_argument("--audit-receipt", type=Path, required=True)
     p.add_argument("--audit-packet", type=Path, required=True,
                    help="frozen BLIND_AUDIT_PACKET_PRIVATE.jsonl carrying exact audit text")
-    p.add_argument("--hidden-linkage-audit", type=Path, required=True)
+    p.add_argument("--hidden-linkage-audit", type=Path, help="optional redundant audit-ID map; full ad linkage is not this file")
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument("--root-resolutions", type=Path,
                    help="explicit complete replacement reviews; without this, no final overlay is emitted")
@@ -159,13 +186,15 @@ def main() -> None:
     audit_packet = load_audit_packet(args.audit_packet)
     if set(audit_packet) != set(audit):
         raise RuntimeError("audit validated contexts must exactly equal frozen audit packet contexts")
-    linkage = load_linkage(args.hidden_linkage_audit)
-    packet_blind_ids = {row.get("assignment", {}).get("packet_id") for row in audit_packet.values()}
-    if None in packet_blind_ids or packet_blind_ids != set(linkage):
-        raise RuntimeError("hidden linkage blind IDs do not exactly match audit packet assignments")
-    linked_contexts = {row["context_sha256"] for row in linkage.values()}
-    if linked_contexts != set(audit_packet):
-        raise RuntimeError("hidden linkage contexts do not exactly match frozen audit packet")
+    if not set(audit_packet) <= set(primary):
+        raise RuntimeError("every audit context must have a primary review")
+    for context, source in audit_packet.items():
+        if source["record_id"] != audit[context]["record_id"]:
+            raise RuntimeError("audit blind ID differs from its frozen packet")
+    if args.hidden_linkage_audit:
+        linkage = load_linkage(args.hidden_linkage_audit)
+        if {r["record_id"]: r["context_sha256"] for r in audit_packet.values()} != {k:r["context_sha256"] for k,r in linkage.items()}:
+            raise RuntimeError("optional audit linkage differs from frozen packet")
     common = sorted(set(primary) & set(audit_packet))
     if not common:
         raise RuntimeError("no exact audited contexts match primary validated input")
@@ -222,7 +251,7 @@ def main() -> None:
             raise RuntimeError("root replacements must exactly match the selected root packet set")
         seen = set()
         overlay = []
-        final_by_context = dict(primary)
+        final_by_context = {c: mask_unresolved(r, audit.get(c)) for c,r in primary.items()}
         for review in replacements:
             rid, context = review.get("record_id"), review.get("context_sha256")
             if rid in seen or not isinstance(rid, str) or not isinstance(context, str) or context not in primary:

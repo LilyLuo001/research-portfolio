@@ -1,0 +1,122 @@
+{
+  "created_utc": "2026-10-12T08:12:49.530432+00:00",
+  "exclusions": {
+    "eligible_ads": 9282,
+    "excluded_ads": {
+      "prior_exposed_exact_context": 718
+    },
+    "excluded_ads_by_source_arm_and_reason": {
+      "A|prior_exposed_exact_context": 339,
+      "B|prior_exposed_exact_context": 239,
+      "C|prior_exposed_exact_context": 140
+    },
+    "excluded_ads_without_verified_upstream_weights": 140,
+    "excluded_unique_exact_contexts": 505,
+    "excluded_weight_mass_nested_known_only": 69076.50061149544,
+    "manifests": [
+      {
+        "normalized_hash_rows": 176,
+        "path": "/work/home/lilysharp/private/formal800_20261012/private/exclusions/EXCLUSION_HASHES_ONLY_PRIVATE.jsonl",
+        "raw_hash_rows": 602,
+        "rows": 778,
+        "sha256": "76609078e02d11e37ecaa3b82dbd6dab037b77830d086be51d9285eabc887104"
+      }
+    ]
+  },
+  "frame": {
+    "path": "/work/home/lilysharp/private/next_stage_20261004/text_handoff_20261007/verified_fixed10000/MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet",
+    "rows": 10000,
+    "sha256": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35"
+  },
+  "frozen_rule": {
+    "entry_predicate": "graduate_language OR explicit_no_experience",
+    "legacy_normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526",
+    "version": "rulefirst-20261008-v1.2"
+  },
+  "hash_scopes": {
+    "raw_exact_source": "exact_text_sha256 is SHA-256 of cached original text",
+    "review_context": "context_sha256 is SHA-256 of rulefirst-v1.2 normalized_text; packet full_document is that exact normalized text"
+  },
+  "main_estimand": "eligible_fixed10k_using_third_stage_pi3_only",
+  "parent_frame_inference_enabled": false,
+  "privacy": "private packets/linkage contain text and row identities; this receipt contains aggregates and hashes only",
+  "sample": {
+    "ads": 800,
+    "arm_quotas": {
+      "A": 320,
+      "B": 320,
+      "C": 160
+    },
+    "audit_ads": 160,
+    "context_reuse": {},
+    "eligible_strata": {
+      "A|candidate": 11,
+      "A|nohit": 3650,
+      "B|candidate": 22,
+      "B|nohit": 3739,
+      "C|candidate": 21,
+      "C|nohit": 1839
+    },
+    "pi3": "selected_ads / eligible_ads within arm x entry stratum",
+    "redistribution": [
+      {
+        "arm": "A",
+        "rule": "short stratum taken in full; remainder to other same-arm stratum",
+        "selected": {
+          "candidate": 11,
+          "nohit": 309
+        },
+        "targets": {
+          "candidate": 160,
+          "nohit": 160
+        }
+      },
+      {
+        "arm": "B",
+        "rule": "short stratum taken in full; remainder to other same-arm stratum",
+        "selected": {
+          "candidate": 22,
+          "nohit": 298
+        },
+        "targets": {
+          "candidate": 160,
+          "nohit": 160
+        }
+      },
+      {
+        "arm": "C",
+        "rule": "short stratum taken in full; remainder to other same-arm stratum",
+        "selected": {
+          "candidate": 21,
+          "nohit": 139
+        },
+        "targets": {
+          "candidate": 80,
+          "nohit": 80
+        }
+      }
+    ],
+    "selected_strata": {
+      "A|candidate": 11,
+      "A|nohit": 309,
+      "B|candidate": 22,
+      "B|nohit": 298,
+      "C|candidate": 21,
+      "C|nohit": 139
+    },
+    "unique_audit_contexts": 153,
+    "unique_review_contexts": 719,
+    "unit": "ad"
+  },
+  "scheduler": {
+    "host": "b01r3n14",
+    "job_id": "46364888"
+  },
+  "status": "pass",
+  "upstream_probability_status": {
+    "missing": 2000,
+    "verified": 8000
+  },
+  "version": "formal800-ad-sample-v1"
+}

@@ -80,15 +80,21 @@ def main():
  needed=set(KEY)|{"arm","exact_text_sha256","original_text","total_inclusion_probability","nested_design_weight"}
  pf=pq.ParquetFile(a.frame)
  if not needed<=set(pf.schema_arrow.names):raise RuntimeError("frame lacks required fixed10k fields: "+repr(sorted(needed-set(pf.schema_arrow.names))))
- prepared=[]; rows=[]; excluded=collections.Counter(); excluded_weight=0.0; excluded_contexts=set(); excluded_by_arm=collections.Counter(); seen_keys=set()
+ prepared=[]; rows=[]; excluded=collections.Counter(); excluded_weight=0.0; excluded_missing_weight=0; upstream_status=collections.Counter(); excluded_contexts=set(); excluded_by_arm=collections.Counter(); seen_keys=set()
  for batch in pf.iter_batches(batch_size=4096):
   for row in batch.to_pylist():
    source=row["exact_text_sha256"]; result=rule.extract(row["original_text"])
    ck=canonical(row)
    if ck in seen_keys:raise RuntimeError("fixed10k repeats canonical ad key")
    seen_keys.add(ck)
-   for prob,weight in ((row["inclusion_probability"],row["design_weight"]),(row["total_inclusion_probability"],row["nested_design_weight"])):
-    if not math.isfinite(float(prob)) or float(prob)<=0 or not math.isfinite(float(weight)) or float(weight)<=0 or not math.isclose(float(prob)*float(weight),1.0,rel_tol=1e-8,abs_tol=1e-10):raise RuntimeError("invalid probability/weight reciprocity")
+   probability_status="verified"
+   for prob,weight in ((row.get("inclusion_probability"),row.get("design_weight")),(row["total_inclusion_probability"],row["nested_design_weight"])):
+    if prob is None or weight is None:
+     probability_status="missing";break
+    if not math.isfinite(float(prob)) or not (0<float(prob)<=1) or not math.isfinite(float(weight)) or float(weight)<=0 or not math.isclose(float(prob)*float(weight),1.0,rel_tol=1e-8,abs_tol=1e-10):
+     probability_status="invalid";break
+   upstream_status[probability_status]+=1
+   row["upstream_probability_status"]=probability_status
    if result.get("source_text_sha256")!=source:raise RuntimeError("source hash mismatch for fixed cache row")
    norm=result.get("normalized_text_sha256"); normalized=result.get("normalized_text")
    if not isinstance(normalized,str) or hashlib.sha256(normalized.encode()).hexdigest()!=norm: raise RuntimeError("frozen normalized context hash mismatch")
@@ -101,7 +107,10 @@ def main():
  norm_ex.update(r["context_sha256"] for r in prepared if r["raw_exact_text_sha256"] in raw_ex)
  for r in prepared:
   if r["raw_exact_text_sha256"] in raw_ex or r["context_sha256"] in norm_ex:
-   excluded["prior_exposed_exact_context"]+=1;excluded_weight+=float(r["nested_design_weight"]);excluded_contexts.add((r["raw_exact_text_sha256"],r["context_sha256"]));excluded_by_arm[str(r["arm"])+"|prior_exposed_exact_context"]+=1
+   excluded["prior_exposed_exact_context"]+=1
+   if r["upstream_probability_status"]=="verified":excluded_weight+=float(r["nested_design_weight"])
+   else:excluded_missing_weight+=1
+   excluded_contexts.add((r["raw_exact_text_sha256"],r["context_sha256"]));excluded_by_arm[str(r["arm"])+"|prior_exposed_exact_context"]+=1
   else: rows.append(r)
  if len(rows)+sum(excluded.values())!=pf.metadata.num_rows:raise RuntimeError("frame conservation failure")
  groups=collections.Counter((r["formal_arm"],r["entry_stratum"]) for r in rows); take,redistribution=allocate(groups)
@@ -135,7 +144,7 @@ def main():
  blind=[{"record_id":"audit-"+hashlib.sha256((SEED+"|audit|"+h).encode()).hexdigest()[:20],"context_sha256":h,"full_document":contexts[h]["full_document"],"assignment":{"packet_id":"formal800-blind-audit-v1","reviewer_role":"blind_audit","provenance":"formal800-cloud-freeze-v1"}} for h in sorted(audit_contexts,key=lambda h:hashlib.sha256((SEED+"|audit-packet-order|"+h).encode()).hexdigest())]
  hidden=[]
  for r in selected:
-   h=r["context_sha256"]; k=(r["formal_arm"],r["entry_stratum"]); hidden.append({"record_id":contexts[h]["record_id"],**{x:r[x] for x in KEY},"formal_arm":r["formal_arm"],"entry_stratum":r["entry_stratum"],"N_h":groups[k],"n_h":take[k],"audit_selected":canonical(r) in {canonical(x) for x in audit},"pi12":r["total_inclusion_probability"],"pi3":take[k]/groups[k],"nested_design_weight":r["nested_design_weight"],"occupation_major":r.get("OCCUPATION_MAJOR"),"raw_exact_text_sha256":r["raw_exact_text_sha256"],"normalized_context_sha256":h,"normalization_flags":r["normalization_flags"]})
+   h=r["context_sha256"]; k=(r["formal_arm"],r["entry_stratum"]); hidden.append({"record_id":contexts[h]["record_id"],**{x:r[x] for x in KEY},"formal_arm":r["formal_arm"],"entry_stratum":r["entry_stratum"],"N_h":groups[k],"n_h":take[k],"audit_selected":canonical(r) in {canonical(x) for x in audit},"pi12":r["total_inclusion_probability"],"pi3":take[k]/groups[k],"nested_design_weight":r["nested_design_weight"],"upstream_probability_status":r["upstream_probability_status"],"occupation_major":r.get("OCCUPATION_MAJOR"),"raw_exact_text_sha256":r["raw_exact_text_sha256"],"normalized_context_sha256":h,"normalization_flags":r["normalization_flags"]})
  private=Path(a.private_output)
  for packet_id in sorted({x["assignment"]["packet_id"] for x in primary}):
   dump(private/(packet_id.upper().replace("-","_")+"_PRIVATE.jsonl"),[x for x in primary if x["assignment"]["packet_id"]==packet_id])
@@ -144,6 +153,6 @@ def main():
  for h in contexts:
   uses={(r["formal_arm"],r["entry_stratum"]) for r in selected if r["context_sha256"]==h}
   if len(uses)>1:cross["cross_arm_or_stratum_contexts"]+=1
- receipt={"version":"formal800-ad-sample-v1","status":"pass","scheduler":{"job_id":os.getenv("SLURM_JOB_ID"),"host":platform.node()},"created_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"frame":{"path":a.frame,"sha256":sha(a.frame),"rows":pf.metadata.num_rows},"frozen_rule":{"version":rule.VERSION,"rule_engine_sha256":sha(Path(a.frozen_rule_dir)/"rule_engine.py"),"legacy_normalizer_sha256":sha(Path(a.frozen_rule_dir)/"legacy_v5_frozen.py"),"entry_predicate":"graduate_language OR explicit_no_experience"},"exclusions":{"manifests":ex_audit,"excluded_ads":dict(excluded),"excluded_unique_exact_contexts":len(excluded_contexts),"excluded_ads_by_source_arm_and_reason":dict(excluded_by_arm),"excluded_weight_mass_nested":excluded_weight,"eligible_ads":len(rows)},"sample":{"unit":"ad","ads":800,"unique_review_contexts":len(primary),"arm_quotas":QUOTA,"eligible_strata":{"|".join(k):v for k,v in groups.items()},"selected_strata":{"|".join(k):v for k,v in take.items()},"redistribution":redistribution,"pi3":"selected_ads / eligible_ads within arm x entry stratum","audit_ads":160,"unique_audit_contexts":len(blind),"context_reuse":dict(cross)},"hash_scopes":{"raw_exact_source":"exact_text_sha256 is SHA-256 of cached original text","review_context":"context_sha256 is SHA-256 of rulefirst-v1.2 normalized_text; packet full_document is that exact normalized text"},"privacy":"private packets/linkage contain text and row identities; this receipt contains aggregates and hashes only"}
+ receipt={"version":"formal800-ad-sample-v1","status":"pass","scheduler":{"job_id":os.getenv("SLURM_JOB_ID"),"host":platform.node()},"created_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"frame":{"path":a.frame,"sha256":sha(a.frame),"rows":pf.metadata.num_rows},"frozen_rule":{"version":rule.VERSION,"rule_engine_sha256":sha(Path(a.frozen_rule_dir)/"rule_engine.py"),"legacy_normalizer_sha256":sha(Path(a.frozen_rule_dir)/"legacy_v5_frozen.py"),"entry_predicate":"graduate_language OR explicit_no_experience"},"exclusions":{"manifests":ex_audit,"excluded_ads":dict(excluded),"excluded_unique_exact_contexts":len(excluded_contexts),"excluded_ads_by_source_arm_and_reason":dict(excluded_by_arm),"excluded_weight_mass_nested_known_only":excluded_weight,"excluded_ads_without_verified_upstream_weights":excluded_missing_weight,"eligible_ads":len(rows)},"upstream_probability_status":dict(upstream_status),"parent_frame_inference_enabled":False,"main_estimand":"eligible_fixed10k_using_third_stage_pi3_only","sample":{"unit":"ad","ads":800,"unique_review_contexts":len(primary),"arm_quotas":QUOTA,"eligible_strata":{"|".join(k):v for k,v in groups.items()},"selected_strata":{"|".join(k):v for k,v in take.items()},"redistribution":redistribution,"pi3":"selected_ads / eligible_ads within arm x entry stratum","audit_ads":160,"unique_audit_contexts":len(blind),"context_reuse":dict(cross)},"hash_scopes":{"raw_exact_source":"exact_text_sha256 is SHA-256 of cached original text","review_context":"context_sha256 is SHA-256 of rulefirst-v1.2 normalized_text; packet full_document is that exact normalized text"},"privacy":"private packets/linkage contain text and row identities; this receipt contains aggregates and hashes only"}
  dump(a.public_receipt,receipt)
 if __name__=="__main__":main()

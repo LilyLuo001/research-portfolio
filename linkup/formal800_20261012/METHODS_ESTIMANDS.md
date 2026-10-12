@@ -22,7 +22,7 @@ A strict responsibility positive requires `subject=advertised_worker` and `relat
 
 Technology groups are derived only from validated explicit inventory:
 
-- `genai_use_only`: generative-AI use for work, with or without traditional-software-use overlap, and without active predictive-AI activity, AI development/implementation, or unresolved family/role. The detailed overlap label remains separate in T3; main comparisons map it into this GenAI arm.
+- `genai_use_only`: generative-AI use for work, without traditional-software-use overlap, predictive-AI activity, AI development/implementation, or unresolved family/role.
 - `traditional_software_use_no_ai`: traditional-software use for work and no generative/predictive AI use, development, or implementation, without unresolved family/role.
 - `genai_traditional_overlap`, `predictive_ai_or_mixed`, `ai_develop_implement_other`, `background_only`, and `uncertain_technology` remain separate. A nonempty inventory is not itself work-technology evidence.
 
