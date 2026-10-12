@@ -97,32 +97,69 @@
     "main_weight": "1/pi3",
     "parent_frame_inference": false,
     "public_freeze_receipt": "linkup/formal800_20261012/receipts/FORMAL800_FREEZE_RECEIPT_PUBLIC.json",
-    "next_action": "finish assigned readings, repair only cloud-rejected records, validate completed packets; finish remaining packets once; frozen audit, at most40 root readings, then final T1-T6",
+    "next_action": "finish remaining frozen readings; repair only exact cloud rejects; full frozen audit and at most40 rootcases; cloud final T1–T6",
     "authored_primary_packets": [
       1,
       2,
-      3
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
     ],
     "authored_audit_packets": [
       1,
-      2
+      2,
+      3,
+      4,
+      5,
+      6
     ],
     "accepted_full_release": false,
     "current_primary_agents": {
-      "/root/formal800_primary_b": "packet007",
-      "/root/formal800_primary_c": "packet004 and specific rejected packet003 repairs"
+      "/root/formal800_primary_d": "ten exactrejections including009–010, then013",
+      "/root/formal800_primary_e": "011–012"
     },
-    "current_audit_agent": "/root/formal800_audit_sol: packet003 and audit001 error repair",
+    "current_audit_agent": "/root/formal800_audit_b: frozen final records121–153",
     "validation_latest": {
-      "primary_job": "46368747",
-      "primary_scope_contexts": 60,
-      "primary_valid_contexts": 50,
-      "primary_rejected_contexts": 10,
-      "audit_job": "46368752",
-      "audit_scope_contexts": 20,
-      "audit_valid_contexts": 17,
-      "audit_rejected_contexts": 3
+      "primary_job": "46382193",
+      "primary_scope_contexts": 100,
+      "primary_valid_contexts": 91,
+      "primary_rejected_contexts": 9,
+      "audit_passing_slices": [
+        1,
+        2,
+        3
+      ],
+      "audit_passing_jobs": [
+        "46370420",
+        "46382210",
+        "46370425"
+      ],
+      "audit004_job": "46382212",
+      "audit005_job": "46382213",
+      "audit004_errors": 2,
+      "audit005_errors": 1,
+      "audit004_repair_pass": "46382515",
+      "audit005_repair_pass": "46382517",
+      "audit006_pass": "46382521",
+      "primary009_010_job": "46382523",
+      "primary009_010_valid": 39,
+      "primary009_010_rejected": 1
     },
-    "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs."
-  }
+    "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs.",
+    "accepted_audit_slices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "accepted_audit_contexts": 120
+  },
+  "last_pushed_checkpoint": "e5b3997"
 }

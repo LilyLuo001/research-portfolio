@@ -19,11 +19,14 @@ set -u
 umask 077
 # These consecutive file slices are transport/reading units of the frozen audit;
 # they do not select any new advertisements or change the fixed audit sample.
-python3 - "$1" "${2:-r1}" <<'PY'
+python3 - "$1" "${2:-r1}" "${3:-/root/formal800_audit_sol}" <<'PY'
 import json, subprocess, sys
 from pathlib import Path
 w=Path('/work/home/lilysharp/private/formal800_20261012')
 n=int(sys.argv[1]); revision=sys.argv[2]
+actor=sys.argv[3]
+if actor not in {'/root/formal800_audit_sol', '/root/formal800_audit_b'}:
+    raise RuntimeError('unassigned audit actor')
 if n not in range(1,9) or not revision.isalnum():
     raise RuntimeError('expected audit slice1..8 and alphanumeric revision')
 frozen=[json.loads(x) for x in (w/'private/freeze/BLIND_AUDIT_PACKET_PRIVATE.jsonl').read_text().splitlines() if x.strip()]
@@ -35,7 +38,7 @@ packet=out/'AUDIT_ASSIGNED_SLICE_PRIVATE.jsonl'
 packet.write_text(''.join(json.dumps(x,ensure_ascii=False)+'\n' for x in selected))
 assignment={'packet_id':'formal800-blind-audit-v1','packet_filename':packet.name,
  'review_filename':'AUDIT_%03d_SOL_HIGH.jsonl'%n,'model':'gpt-5.6-sol','effort':'high',
- 'agent_id':'/root/formal800_audit_sol','role':'blind_audit'}
+ 'agent_id':actor,'role':'blind_audit'}
 assign=out/'ASSIGNMENT_PRIVATE.jsonl';assign.write_text(json.dumps(assignment)+'\n')
 subprocess.run([sys.executable,str(w/'code/run_review_validation.py'),'--assignments',str(assign),
  '--packet-dir',str(out),'--review-dir',str(w/'private/reviews'),

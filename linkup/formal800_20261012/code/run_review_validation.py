@@ -90,14 +90,20 @@ def main() -> None:
         if set(assignment) != ASSIGNMENT_FIELDS:
             raise RuntimeError("assignment rows must contain exactly the seven required fields")
         packet_id = assignment["packet_id"]
-        if not isinstance(packet_id, str) or not packet_id or packet_id in seen_ids:
-            raise RuntimeError("assignment packet_id is empty or duplicated")
+        if not isinstance(packet_id, str) or not packet_id:
+            raise RuntimeError("assignment packet_id is empty")
         if assignment["role"] not in ROLES:
             raise RuntimeError("assignment role must be primary or blind_audit")
         for field in ("packet_filename", "review_filename", "model", "effort", "agent_id"):
             if not isinstance(assignment[field], str) or not assignment[field]:
                 raise RuntimeError("assignment %s is empty" % field)
-        seen_ids.add(packet_id)
+        # Frozen audit slices share one global packet_id. Their transport
+        # files must differ; validate_reviews still rejects any repeated ID
+        # or missing review across the combined frozen records.
+        unit = (packet_id, assignment["packet_filename"])
+        if unit in seen_ids:
+            raise RuntimeError("assignment packet/file unit is duplicated")
+        seen_ids.add(unit)
         packet_path = contained(args.packet_dir, args.packet_dir / assignment["packet_filename"])
         review_path = contained(args.review_dir, args.review_dir / assignment["review_filename"])
         packet_paths.append(packet_path)

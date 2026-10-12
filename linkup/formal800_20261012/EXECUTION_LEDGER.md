@@ -39,3 +39,22 @@ The freeze stage is intentionally still pending the separate SHA-only transfer r
 - Validation46366447 rejected2 of20 initial primary001 records; originals retained and corrected. Validation46367639 rejected2 of40 combined001–002 records, both in002; originals retained and corrected. Validation46368747 accepted50 of60 records and rejected10 in003 for outcome/explicit-clause inconsistency. This is a finite record repair, not rubric development.
 - Independent audit validation46368752 accepted17 of20 and rejected3 for branch/evidence/field consistency. It did not compare audit labels with primary decisions. Only audit-specific errors are returned to the blind reviewer.
 - No formal800 semantic acceptance or aggregate result is yet claimed. The full sample, definitions, exclusions, and weights remain frozen.
+
+## Frozen review continuation and first passing audit packages
+
+- WZ46370420 (5s) passed repaired audit001:20/20 records, zero errors. WZ46370425 (3s) passed audit003:20/20 records, zero errors. These certify mechanical identity/evidence consistency only.
+- WZ46370126 examined100 primary review rows and retained92 valid records. It rejected six semantic-output/evidence inconsistencies plus two duplicated IDs, which also left two frozen records without reviews. Packet007 was preserved, its two missing originals were actually read and authored, and identity order was rebuilt; packet004 quote/field inconsistencies were repaired. No rejected or missing record enters aggregation.
+- Complete authored primary files now cover001–008; audit files001–004 are written. Cloud acceptance remains separately tracked. Sol/medium primary_b continues009; a fresh Sol/medium primary_d owns010 because the prior reviewer reached context capacity before saving010 output. Sol/high audit continues005. Read-but-unwritten work is never counted.
+
+## 19:15 checkpoint: fixed packets and scheduled validation
+
+- Complete authored primary001–010 and blind audit001–006 are preserved privately; authoring is separate from acceptance. Primary011–012 and specific rejected004–008 repairs are assigned; primary013 is reserved to the repairing reader only if capacity permits. Blind audit007–008 remain the frozen final audit units.
+- Stalled local SSH submission was terminated only after scheduler history showed that its three jobs had not submitted. Replacement WZ46382193 validated primary004–008:91/100 valid,9 record rejections. WZ46382210 passed repaired audit002:20/20. WZ46382212 rejected2/20 audit004 records; WZ46382213 rejected1/20 audit005 records. These exact records are returned to their appropriate reviewers; no sample, definitions or validator changes.
+- Audit001/002/003 each have a passing scheduled evidence/identity receipt (60 contexts). This is mechanical validation, not a claim of semantic accuracy. Full release and comparisons remain pending.
+- QA jobs request2CPU,4GB,10min and the Wuzhen partition-mandated oneDCU; code executes onCPU. Observed QA runtimes1–4s. No accelerator utilization claim.
+
+## Audit through120: mechanical acceptance checkpoint
+
+WZ46382515/46382517/46382521 completed0 in2s/5s/2s and passed audit004/005/006, each20/20. Together audit001–006 have120 mechanically valid contexts; semantic disagreement is assessed only after independent primary coverage is complete. Primary009–010 job46382523 accepted39/40 and rejected one missing supporting experience clause. Fresh independent Sol/high audit_b owns the final33 frozen audit contexts; its identity is passed explicitly to the slice validation wrapper.
+
+The validation orchestration now permits distinct transport slices of the same frozen global audit packet ID. Duplicate packet/file assignments are rejected; the unchanged core validator still rejects duplicate/missing records. No semantic schema or acceptance rule changed.
