@@ -1,0 +1,30 @@
+{
+  "assigned_packet_rows": 20,
+  "assigned_packets": 1,
+  "assigned_review_rows": 20,
+  "assignment_sha256": "8967e69028a89055f538d14b5cd826bc2d8f4dcc98fc58dc2bfccc16177d18fa",
+  "assignments": [
+    {
+      "agent_id": "/root/formal800_primary_ae",
+      "effort": "medium",
+      "model": "gpt-5.6-sol",
+      "packet_filename": "FORMAL800_PRIMARY_034_PRIVATE.jsonl",
+      "packet_id": "formal800-primary-034",
+      "packet_rows": 20,
+      "packet_sha256": "d44910d7a1c6a6be3cac0d3dc487218c701415d525cb5f0eeb2efd70be70da7e",
+      "review_filename": "PRIMARY_034_SOL_MEDIUM.jsonl",
+      "review_rows": 20,
+      "review_sha256": "60abe1b4327870643ffe92e1e7058edec6cea3a723f852e791e7175ed3ffe29d",
+      "role": "primary"
+    }
+  ],
+  "complete_formal800_coverage": false,
+  "coverage_note": "Context rows are not ads; full coverage requires a separate join to the frozen 800-ad map.",
+  "coverage_scope": "assigned_packets_only",
+  "created_utc": "2026-10-12T14:20:57.592869+00:00",
+  "runtime_job_id": "46392417",
+  "status": "pass",
+  "validator_receipt": "/work/home/lilysharp/private/formal800_20261012/private/validation/primary034_r2/validation_receipt.json",
+  "validator_receipt_sha256": "6429824a2ff1d93525255b8321276bcc6355faace47da303fb36526e9c6cd4cd",
+  "version": "formal800-review-validation-orchestration-v1"
+}

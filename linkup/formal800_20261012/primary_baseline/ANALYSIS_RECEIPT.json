@@ -1,0 +1,73 @@
+{
+  "audit_provenance": null,
+  "ci_limitation": "sampling uncertainty only, conditional on reported semantic groups/support cells; model and support-selection uncertainty excluded",
+  "claim_boundary": "descriptive delivered-text comparison in the eligible finite frame; no historical, causal, global-accuracy, or full-corpus claim",
+  "code_sha256": "4a8dabef5d3052efb2e291e665e1e0316a8f4716e4a1e5709a55810c4700e97e",
+  "common_support_rule": "at least 5 sampled ads in each main semantic group per occupation_major",
+  "composition_status": "not_supplied_restricted_pooled_and_within_major_only",
+  "counts": {
+    "audited_ads": 160,
+    "common_support_occupation_majors": 4,
+    "eligible_frame_ads": 9282,
+    "sampled_ads": 800,
+    "semantic_technology_groups": {
+      "ai_develop_implement_other": 232,
+      "background_or_mixed": 8,
+      "genai_traditional_overlap": 66,
+      "genai_use_only": 18,
+      "other_explicit_technology": 31,
+      "predictive_ai_or_mixed": 23,
+      "traditional_software_use_no_ai": 286,
+      "uncertain_technology": 136
+    },
+    "validated_context_records": 719
+  },
+  "created_utc": "2026-10-12T14:57:44.810736+00:00",
+  "embedded_root_resolution": {
+    "embedded": false,
+    "resolved_contexts": 0
+  },
+  "estimand": "post-exclusion eligible fixed10k advertisements",
+  "inputs": {
+    "eligible_occupation_composition_sha256": null,
+    "sampled_ad_map_sha256": "cf53aba379963c6bf72c509333da0ce9157d4dd3736ef20e688e19a80420049e",
+    "validated_reviews_sha256": "bb384ee1e2a33df390012b835ce52167a32aeda6142d041e9aad380da6cc9be3",
+    "validation_receipt_sha256": "ce53007898ca3c1a934e449dba12fab271b7dc1bc32f907d07e7dcb86aa3f260"
+  },
+  "main_weight": "1/pi3 only",
+  "outputs": {
+    "COMPARISON_1_EXPERIENCE.csv": "87ca7ab54689fc29118feb5ea6f17c78dd75125245368c15df80149881e77c0f",
+    "COMPARISON_2_ENTRY_DUTY.csv": "1b06ed9196a1e32d58e7585e4e3ee7250ed62d55135742c9325d1ca1ef6e5c1c",
+    "SUPPLEMENT_TECH_GROUP_ENTRY_DUTY_DIFFERENCES.csv": "a096eb9c01cc7aaa9bf4126ea27ce79f8895d96845e9936a578881328c39e298",
+    "T1_FORMAL_SAMPLE.csv": "d4f6113c1ba946d7cbf1401d14a7f2621f2b19ae3580e61f282bb0e0840d809e",
+    "T1_OCCUPATION_SUPPORT.csv": "dbe3d27ccbc6d7d68103737894e359c031ffc4d3924a2d126bd5fb6a405ae699",
+    "T2_CLAUSE_SUMMARY.csv": "498ac00355d6d413e498d99110ebe1f3befbd3c585584a62e37b83a2dc87c46e",
+    "T2_EXPERIENCE_AND_OTHER_RATES.csv": "c06d9868692f5add2ffff8123af5130a34ce7bc82d915c9645b32842fd889ad6",
+    "T3_OLD_ARM_TO_SEMANTIC_TRANSITION.csv": "08050e8fab011b9f6b0cf3174dd897bf1f22b0f0d19b7a559c4fd99ae5a160e5",
+    "T4_PRIOR_TABLE_REFERENCE.csv": "c99f722386f44e4c28e2fdd48e31d4db86414f1eb6cfbfc45dc214aaf8d326f5",
+    "T5_ENTRY_BY_STRICT_DUTY.csv": "1dc8bc00a1029f0d4ee29ccf36a24b70936dd30dde4e628ab441fc1c19a711a0",
+    "T5_EXPERIENCE_COMBINATIONS.csv": "327176197dc28d3a2b189699e4a2af96f545b45b9013e6e5e437535d859530e5",
+    "T6_SENSITIVITY_AND_BOUNDS.csv": "c06d9868692f5add2ffff8123af5130a34ce7bc82d915c9645b32842fd889ad6"
+  },
+  "parent_candidate_estimates_in_main": false,
+  "private_ad_export": {
+    "contains_raw_text": false,
+    "nested_evidence_link": "validated review file hash plus record/context identifiers",
+    "published_in_git": false,
+    "rows": 800,
+    "sha256": "28551f8116c715d563554d8d5029e893507a0eae3f2b88f6630d540c3e20c809"
+  },
+  "resolution_overlay": {
+    "applied": false,
+    "receipt_status": null,
+    "resolved_contexts": 0
+  },
+  "status": "complete",
+  "unknown_policy": "field-level unknown, no majority vote or unreviewed propagation; bounds do not cover undetected model error",
+  "validator": {
+    "status": "pass",
+    "version": "formal800-review-validation-v1.1-shared-condition"
+  },
+  "variance": "stratified SRS delta-ratio linearization with FPC; NA for non-census n_h<2",
+  "version": "formal800-finite-eligible10k-analysis-v2"
+}

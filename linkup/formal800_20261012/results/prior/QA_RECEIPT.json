@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "independent final release acceptance for T1-T6",
+  "checks": {
+    "source_sha256_unchanged": true,
+    "source_aggregate_numeric_equality": true,
+    "ratios_and_percentage_points_recomputed": true,
+    "denominators_and_units_reviewed": true,
+    "na_preserved_and_predictive_ai_unavailable_marked_na": true,
+    "t2_object_unspecified": "56538521/204768752",
+    "t2_occupation_task": "NA",
+    "t3_sections": ["A", "B", "C"],
+    "t4_invalid_date_intervals": 156,
+    "t4_annual_diagnostic": "200 keys in 12 groups; not a representative probability sample",
+    "t5_c2": "cancelled; NA retained",
+    "t6": "7 variants x 3 experience dimensions",
+    "privacy_review": "no raw text, company IDs, or sample-level identifiers present"
+  },
+  "validation": {
+    "release_builder": "PASS",
+    "targeted_pytest": "14 passed, 2 subtests passed",
+    "full_pytest": "not runnable in base Python: duckdb dependency unavailable during collection"
+  }
+}

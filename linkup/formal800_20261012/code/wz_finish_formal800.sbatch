@@ -6,7 +6,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=8G
+#SBATCH --mem=4G
 #SBATCH --time=00:15:00
 #SBATCH --output=/work/home/lilysharp/private/formal800_20261012/public/finish-%j.out
 #SBATCH --error=/work/home/lilysharp/private/formal800_20261012/public/finish-%j.err
@@ -50,27 +50,52 @@ PY
    --reviews "$W/private/reviews/ROOT_RESOLUTIONS_PRIVATE.jsonl" --schema "$SCHEMA" \
    --private-validated "$R/validated_reviews.jsonl" --private-errors "$R/validation_errors.jsonl" \
    --public-receipt "$R/validation_receipt.json" --expected-records "$ROOT_N"
-  ;;
+ ;;
  finalize)
+  # A failed finalization must not leave a prior run looking current.
+  rm -f "$W/public/results/ANALYSIS_RECEIPT.json"
   python3 "$C/merge_formal800_audit.py" "${merge_args[@]}" \
    --root-resolutions "$R/validated_reviews.jsonl" --resolution-receipt "$R/validation_receipt.json"
-  python3 - "$P/BOUND_PACKET_PRIVATE.jsonl" "$R/validated_reviews.jsonl" "$F/FINAL_BOUND_PACKET_PRIVATE.jsonl" <<'PY'
+  python3 - "$P/BOUND_PACKET_PRIVATE.jsonl" "$R/validated_reviews.jsonl" \
+   "$A/validated_reviews.jsonl" "$M/AUDIT_DIFFERENCES_PRIVATE.jsonl" \
+   "$M/AUDIT_AGGREGATE.json" "$F/FINAL_BOUND_PACKET_PRIVATE.jsonl" <<'PY'
 import json, sys
 from pathlib import Path
 packet=[json.loads(x) for x in Path(sys.argv[1]).read_text().splitlines() if x.strip()]
 root={r['record_id']:r for r in (json.loads(x) for x in Path(sys.argv[2]).read_text().splitlines() if x.strip())}
-if len(packet)!=719 or not 1 <= len(root) <= 40:
-    raise RuntimeError('release differs from frozen719 contexts or maximum40 adjudications')
+audit_rows=[json.loads(x) for x in Path(sys.argv[3]).read_text().splitlines() if x.strip()]
+differences={r['record_id']:r for r in (json.loads(x) for x in Path(sys.argv[4]).read_text().splitlines() if x.strip())}
+aggregate=json.loads(Path(sys.argv[5]).read_text())
+primary_by_context={r['context_sha256']:r['record_id'] for r in packet}
+audit={primary_by_context[r['context_sha256']] for r in audit_rows}
+if len(packet)!=719 or len(root)!=40:
+    raise RuntimeError('release differs from frozen719 contexts or fixed40 adjudications')
+if not set(root) <= set(audit) or not set(differences) <= set(audit):
+    raise RuntimeError('root/audit-difference provenance sets are inconsistent')
+if (len(audit)!=aggregate.get('audited_contexts') or
+        len(differences)!=aggregate.get('disagreement_contexts') or
+        len(audit)-len(differences)!=aggregate.get('agreement_contexts') or
+        len(root)!=aggregate.get('selected_root_records')):
+    raise RuntimeError('audit provenance sets differ from audit aggregate')
 for row in packet:
     assignment=dict(row['assignment'])
     if row['record_id'] in root:
         if row['context_sha256']!=root[row['record_id']]['context_sha256']:
             raise RuntimeError('root source binding mismatch')
-        assignment['provenance']='GPT-6/root; bounded Pro adjudication; exact context binding'
+        source=('audited_disagreement' if row['record_id'] in differences
+                else 'audited_complete_signature_agreement')
+        assignment['provenance']=('final_status=root_adjudicated; source=%s; '
+                                  'GPT-6/root bounded Pro adjudication; exact context binding' % source)
+    elif row['record_id'] in differences:
+        assignment['provenance']+=('; final_status=audited_unadjudicated_field_masked; '
+                                   'independent blind conflict; original retained privately')
+    elif row['record_id'] in audit:
+        assignment['provenance']+=('; final_status=audited_complete_signature_agreement; '
+                                   'primary review retained')
     else:
-        assignment['provenance']+='; final frozen blind-conflict masking; originals retained'
+        assignment['provenance']+='; final_status=primary_unaudited; no blind-conflict masking applied'
     row['assignment']=assignment
-out=Path(sys.argv[3]);out.parent.mkdir(parents=True,exist_ok=True)
+out=Path(sys.argv[6]);out.parent.mkdir(parents=True,exist_ok=True)
 out.write_text(''.join(json.dumps(x,ensure_ascii=False)+'\n' for x in packet))
 PY
   python3 "$C/validate_reviews.py" --packet "$F/FINAL_BOUND_PACKET_PRIVATE.jsonl" \
@@ -79,6 +104,11 @@ PY
    --public-receipt "$F/validation_receipt.json" --expected-records 719
   python3 "$C/analyze_formal800.py" --validated-reviews "$F/validated_reviews.jsonl" \
    --validation-receipt "$F/validation_receipt.json" --sampled-ad-map "$W/private/freeze/HIDDEN_LINKAGE_PRIVATE.jsonl" \
+   --embedded-resolved-overlay "$M/RESOLVED_OVERLAY.jsonl" \
+   --embedded-resolved-overlay-receipt "$M/RESOLVED_OVERLAY_RECEIPT.json" \
+   --audit-aggregate "$M/AUDIT_AGGREGATE.json" \
+   --primary-validation-receipt "$P/validation_receipt.json" \
+   --audit-validation-receipt "$A/validation_receipt.json" \
    --output-dir "$W/public/results" --private-ad-output "$W/private/final/AD_LEVEL_MEASURES.parquet" \
    --old-t1-reference prior/T1_coverage_funnel.csv \
    --old-t4-reference prior/T4_time_and_annual_diagnostics.csv

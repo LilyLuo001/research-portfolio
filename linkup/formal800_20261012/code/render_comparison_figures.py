@@ -69,15 +69,25 @@ def main():
     parser.add_argument("--results-dir", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    figure_receipt = args.output_dir / "FIGURE_RECEIPT.json"
+    if figure_receipt.exists():
+        figure_receipt.unlink()
     receipt = json.loads((args.results_dir / "ANALYSIS_RECEIPT.json").read_text())
     if receipt.get("status") != "complete":
         raise RuntimeError("analysis receipt not complete")
     inputs = [args.results_dir / "COMPARISON_1_EXPERIENCE.csv",
-              args.results_dir / "COMPARISON_2_ENTRY_DUTY.csv"]
+              args.results_dir / "COMPARISON_2_ENTRY_DUTY.csv",
+              args.results_dir / "T6_SENSITIVITY_AND_BOUNDS.csv"]
     for path in inputs:
         if digest(path) != receipt["outputs"].get(path.name):
             raise RuntimeError("aggregate does not bind analysis receipt")
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    figure_names = ("FIGURE_1_EXPERIENCE.pdf", "FIGURE_1_EXPERIENCE.png",
+                    "FIGURE_2_ENTRY_DUTIES.pdf", "FIGURE_2_ENTRY_DUTIES.png")
+    for name in figure_names:
+        path = args.output_dir / name
+        if path.exists():
+            path.unlink()
     experience = ["experience_general_work", "experience_occupation_task",
                   "experience_industry_domain", "experience_tool_specific"]
     fig, ax = plt.subplots(figsize=(9.2, 4.5))
@@ -91,7 +101,8 @@ def main():
     ax.set_title("Experience wording in saved job descriptions")
     save(fig, args.output_dir, "FIGURE_1_EXPERIENCE", 
          "Finite eligible fixed10k frame; 1/pi3 weights. Shared majors are pooled, not composition-standardized.\n"
-         "95% intervals cover sampling uncertainty only; unknown labels excluded. Missing estimates are not plotted.")
+         "95% intervals cover sampling uncertainty only; uncertain technology and unknown outcomes are excluded.\n"
+         "Defined coverage and recorded-unknown bounds are in T6_SENSITIVITY_AND_BOUNDS.csv; group-membership/model error is not bounded.")
     duties = ["independent_judgment", "client_ownership", "people_supervision",
               "training_mentoring", "any_strict_current_duty"]
     fig, ax = plt.subplots(figsize=(9.2, 4.8))
@@ -109,7 +120,7 @@ def main():
     save(fig, args.output_dir, "FIGURE_2_ENTRY_DUTIES",
          "All technology groups; current advertised-worker duties. Waiver of one experience type is not global entry eligibility.\n"
          "95% intervals cover sampling uncertainty only. Unknown membership excluded; unknown-duty bounds are in the comparison table.")
-    artifacts = {p.name: digest(p) for p in sorted(args.output_dir.iterdir()) if p.suffix in {".pdf", ".png"}}
+    artifacts = {name: digest(args.output_dir / name) for name in figure_names}
     (args.output_dir / "FIGURE_RECEIPT.json").write_text(json.dumps({
         "status": "complete", "code_sha256": digest(Path(__file__)),
         "inputs": {p.name: digest(p) for p in inputs}, "outputs": artifacts,

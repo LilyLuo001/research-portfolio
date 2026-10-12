@@ -1,0 +1,88 @@
+{
+  "audit_provenance": {
+    "aggregate_sha256": "b5cb9c1b0e9614dafbb3192cf6286f864be4a9bcc7e2df76a63046208595a98b",
+    "agreement_contexts": 9,
+    "audit_receipt_sha256": "76e1567ce83be67179abd2f44a20309cf74de01e747701d2b818a06e08b5dfd6",
+    "audited_contexts": 153,
+    "disagreement_contexts": 144,
+    "primary_receipt_sha256": "ce53007898ca3c1a934e449dba12fab271b7dc1bc32f907d07e7dcb86aa3f260",
+    "selected_root_records": 40
+  },
+  "ci_limitation": "sampling uncertainty only, conditional on reported semantic groups/support cells; model and support-selection uncertainty excluded",
+  "claim_boundary": "descriptive delivered-text comparison in the eligible finite frame; no historical, causal, global-accuracy, or full-corpus claim",
+  "code_sha256": "4a8dabef5d3052efb2e291e665e1e0316a8f4716e4a1e5709a55810c4700e97e",
+  "common_support_rule": "at least 5 sampled ads in each main semantic group per occupation_major",
+  "composition_status": "not_supplied_restricted_pooled_and_within_major_only",
+  "counts": {
+    "audited_ads": 160,
+    "common_support_occupation_majors": 4,
+    "eligible_frame_ads": 9282,
+    "sampled_ads": 800,
+    "semantic_technology_groups": {
+      "ai_develop_implement_other": 192,
+      "background_or_mixed": 5,
+      "genai_traditional_overlap": 57,
+      "genai_use_only": 14,
+      "other_explicit_technology": 21,
+      "predictive_ai_or_mixed": 18,
+      "traditional_software_use_no_ai": 271,
+      "uncertain_technology": 222
+    },
+    "validated_context_records": 719
+  },
+  "created_utc": "2026-10-12T14:55:50.051399+00:00",
+  "embedded_root_resolution": {
+    "embedded": true,
+    "overlay_sha256": "93e119cc5c5312fe72cb14d6df3f2ed80848f1acbd036de004ec6885ef6e2f53",
+    "receipt_sha256": "370201fc535c14c58dc106054aac4a3d85c49bc4047623c2b281692bc8da1eb7",
+    "receipt_status": "pass",
+    "resolved_contexts": 40
+  },
+  "estimand": "post-exclusion eligible fixed10k advertisements",
+  "inputs": {
+    "eligible_occupation_composition_sha256": null,
+    "sampled_ad_map_sha256": "cf53aba379963c6bf72c509333da0ce9157d4dd3736ef20e688e19a80420049e",
+    "validated_reviews_sha256": "2939a5846cb6d40f42af94465e764fedcad51b86fc3d387d04d142c51ff63860",
+    "validation_receipt_sha256": "56977dbcf7533cc27720fd074dbc951e9c925996d63ce8c46461c700c3b4ce07"
+  },
+  "main_weight": "1/pi3 only",
+  "outputs": {
+    "COMPARISON_1_EXPERIENCE.csv": "f813954b8e367701efd1a02dcffc59e3afa5523ecd3aff2a4922ee681acfc176",
+    "COMPARISON_2_ENTRY_DUTY.csv": "17593beee17b418c6e12727c56869370b885c6d28083331e25db43ac0ff8a979",
+    "SUPPLEMENT_TECH_GROUP_ENTRY_DUTY_DIFFERENCES.csv": "b649137ba3fccf54d57f1bbdaf0f4816b77c6f69b490cea795c56533f24bdfe2",
+    "T1_FORMAL_SAMPLE.csv": "d4f6113c1ba946d7cbf1401d14a7f2621f2b19ae3580e61f282bb0e0840d809e",
+    "T1_OCCUPATION_SUPPORT.csv": "5e13ac6d95368deae0c61522830b3538b707d40ff8592cfabcb86dc89abe5064",
+    "T2_CLAUSE_SUMMARY.csv": "b106fd58eb8e729df7bfc56a817f65c6fb44df5c0246b2fb52e3c0667da3c956",
+    "T2_EXPERIENCE_AND_OTHER_RATES.csv": "b7a1e9c0b54a7c90d8696910c1c1e1b7ee8514e455ae61242e80f40f4438e83b",
+    "T3_OLD_ARM_TO_SEMANTIC_TRANSITION.csv": "6c1637eecf8bbbb64cab64c72cc301efc4783626b2c2d3c7346e10727ef9351b",
+    "T4_PRIOR_TABLE_REFERENCE.csv": "c99f722386f44e4c28e2fdd48e31d4db86414f1eb6cfbfc45dc214aaf8d326f5",
+    "T5_ENTRY_BY_STRICT_DUTY.csv": "127a4317d4814e117e774224ddba9810d0fc2a7f64ada95233480d9ab46f5632",
+    "T5_EXPERIENCE_COMBINATIONS.csv": "47ceb05e0943942700794d7004abcb4ae6be91fc288f3b89478d1dd0c9ed73c1",
+    "T6_SENSITIVITY_AND_BOUNDS.csv": "b7a1e9c0b54a7c90d8696910c1c1e1b7ee8514e455ae61242e80f40f4438e83b"
+  },
+  "parent_candidate_estimates_in_main": false,
+  "private_ad_export": {
+    "contains_raw_text": false,
+    "nested_evidence_link": "validated review file hash plus record/context identifiers",
+    "published_in_git": false,
+    "rows": 800,
+    "sha256": "c3cfbc13db0186b209c7a5a18a33c743b17262c02f46899852e8927e8aaa4f8b"
+  },
+  "resolution_overlay": {
+    "application_stage": "embedded_before_final_validation_not_reapplied",
+    "applied": true,
+    "embedded": true,
+    "overlay_sha256": "93e119cc5c5312fe72cb14d6df3f2ed80848f1acbd036de004ec6885ef6e2f53",
+    "receipt_sha256": "370201fc535c14c58dc106054aac4a3d85c49bc4047623c2b281692bc8da1eb7",
+    "receipt_status": "pass",
+    "resolved_contexts": 40
+  },
+  "status": "complete",
+  "unknown_policy": "field-level unknown, no majority vote or unreviewed propagation; bounds do not cover undetected model error",
+  "validator": {
+    "status": "pass",
+    "version": "formal800-review-validation-v1.1-shared-condition"
+  },
+  "variance": "stratified SRS delta-ratio linearization with FPC; NA for non-census n_h<2",
+  "version": "formal800-finite-eligible10k-analysis-v2"
+}

@@ -1,0 +1,52 @@
+{
+  "code_sha256": "bf364adbf6b1dfc4ca4efe22f137d750000fcc5b51deaeeeb17d47105b5a968c",
+  "created_utc": "2026-10-12T14:57:45.120773+00:00",
+  "inputs": {
+    "baseline_analysis_receipt_sha256": "056b7aeff6a508d4478591101f9e3235a24d7d0b5e89e869b72e9fd8abb84cfa",
+    "final_analysis_receipt_sha256": "2fc0d7d65bb41d22a7d92eb499badf8f10eb160c8cc31feaa47e7567c880c1f4"
+  },
+  "interpretation": "Same-sample descriptive changes after bounded root adjudication and field-level masking of observed blind-review conflicts. Deltas are not error-correction estimates or accuracy measures. Technology classification, comparison membership, and common-support cells may change.",
+  "missing_cell_policy": "outer join; baseline_only and final_only rows retained; missing values are never zero-filled",
+  "outputs": {
+    "Q1_PRIMARY_VS_FINAL.csv": "86bcbb706131b49722b1f9affe9f6ba1c022861a2ed6acba9c42e54b7fd0b938",
+    "Q2_PRIMARY_VS_FINAL.csv": "f39629405984029acb6bd9c5d11308e45136cef229c343a3fe11aad2f2137efd",
+    "SUPPORT_PRIMARY_VS_FINAL.csv": "f97bdd6ac8374e25de7279a6d4536c72d690e4587f4066b09822233be494fc57",
+    "T3_PRIMARY_VS_FINAL.csv": "e37368eb45b7ff3d1b886c6a189f3458ecce50c5d0473730cba2ed9821443cd6"
+  },
+  "same_sample_contract": {
+    "analysis_code_sha256": "4a8dabef5d3052efb2e291e665e1e0316a8f4716e4a1e5709a55810c4700e97e",
+    "eligible_frame_ads": 9282,
+    "main_weight": "1/pi3 only",
+    "sampled_ad_map_sha256": "cf53aba379963c6bf72c509333da0ce9157d4dd3736ef20e688e19a80420049e",
+    "sampled_ads": 800,
+    "validated_context_records": 719
+  },
+  "status": "complete",
+  "tables": {
+    "Q1_PRIMARY_VS_FINAL.csv": {
+      "baseline_only": 0,
+      "both": 24,
+      "final_only": 0,
+      "rows": 24
+    },
+    "Q2_PRIMARY_VS_FINAL.csv": {
+      "baseline_only": 0,
+      "both": 270,
+      "final_only": 0,
+      "rows": 270
+    },
+    "SUPPORT_PRIMARY_VS_FINAL.csv": {
+      "baseline_only": 0,
+      "both": 17,
+      "final_only": 0,
+      "rows": 17
+    },
+    "T3_PRIMARY_VS_FINAL.csv": {
+      "baseline_only": 1,
+      "both": 20,
+      "final_only": 0,
+      "rows": 21
+    }
+  },
+  "version": "formal800-primary-vs-final-summary-v1"
+}

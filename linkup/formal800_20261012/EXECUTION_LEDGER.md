@@ -102,3 +102,29 @@ Primary022/023 repaired seven exact failed records and passed46388197/46388200 (
 Passing jobs026:46389467,027:46390425,028:46390798,029:46390601,030:46390602 all completed0 in1–2s. These certify frozen source/ID/schema/evidence consistency, not semantic accuracy. Primary031 is authored; validation46390603 rejected8 quotation/alternative-reference records, assigned to a fresh independent Sol/medium repairing reader. Primary032/033 proceed;034–036 remain unassigned.
 
 A private root bundle now packages only the already selected maximum40 contexts with complete original text and both existing decisions. Selection, rubric and labels are unchanged; this reduces transport/retrieval work for actual root adjudication. No final estimates have been computed.
+
+## Current checkpoint: primary001–035 accepted; primary036 exact repair pending
+
+- Primary001–035 are authored and mechanically accepted across all700 contexts. Passing jobs031–035 are46391861,46391906,46391988,46392417, and46392423; shared-condition QA6cases passed on46391861 and independent QA passed. Acceptance certifies frozen source/ID/schema/evidence consistency, not semantic accuracy.
+- All153 independent blind-audit contexts remain authored and mechanically accepted. The frozen sample remains800 ads/719 distinct contexts; the audit remains160 ads/153 distinct contexts. No sample or arm allocation changed.
+- Primary036 has19 authored records. Cloud46392427 rejected exactly2 literal year-bound records; same-reader repair job46392568 is submitted. Its result is pending and no pass is claimed.
+- Root prepare job46392632 was submitted after the final package with an afterok dependency. The first2CPU/8GB submission was rejected by the scheduler without a job ID; the resubmission uses the verified2CPU/4GB queue configuration. No result is claimed yet.
+- Root adjudication capacity remains at most40; current root use is0/≤40. Final analysis and T1–T6 have not run. Git main authorization remains active; latest pushed checkpoint is351ed36.
+
+## Full consolidation and bounded root-review preparation
+
+- Full primary consolidation job46392632 accepted all719 frozen primary contexts; full audit consolidation accepted all153 independent audit contexts. These are validation/provenance receipts and do not constitute semantic accuracy certification.
+- Root review documentation is prepared for at most40 selected cases:36 selected differences and4 agreements. The composite comparison covers144/153 contexts; its discordance is a bounded comparison result and must not be reported as a population error rate.
+- Root validation job46393703 accepted39/40. One record (case29) has a quotation-location issue in qualification alternatives; the same root reader is repairing the provenance/record with no semantic label change. Final root receipt and final tables remain pending.
+
+## Root40 complete and private archive checkpoint
+
+- Root40 validation job46393877 completed0:0 in2 seconds. The bounded root review is complete:40 actual full reads, documented as36 selected differences and4 agreements. This remains a bounded comparison; composite144/153 discordance is not a population error rate.
+- The authorized local private assignments, reviews, repair provenance, and root authoring outputs were archived remotely without deletion. Archive SHA-256 is `7885c50ab41957c2584422d8fe24aea23e92ab59216f4911232482deca936ae2`; remote path is `/work/home/lilysharp/private/formal800_20261012/archive_bounded_20261012/formal800_private_bounded_20261012.tar`.
+- Final tables and final analysis remain pending separate results.
+
+## Final finite release checkpoint
+
+- Finalize46394029 completed0:0 in32s; figures46394097 completed0:0 in7s; baseline+summary46394098 completed0:0 in27s. Public T1–T6 tables, two figures, primary-baseline comparison, and primary-vs-final assets are present under `results/`, `primary_baseline/`, and `primary_vs_final/`.
+- Root40 is complete:36 selected differences and4 agreements. Provenance counts are719 total primary contexts =566 unaudited primary +5 audited agreements +108 masked disagreements +40 root contexts. The composite144/153 discordance is not a population error rate.
+- No active jobs remain. No new jobs, re-extraction, or global-corpus claim is authorized. Final state is a bounded finite800 release.

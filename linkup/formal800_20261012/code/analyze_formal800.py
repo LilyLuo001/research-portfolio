@@ -17,7 +17,9 @@ import os
 from pathlib import Path
 from typing import Any, Callable
 
-VERSION = "formal800-finite-eligible10k-analysis-v1"
+VERSION = "formal800-finite-eligible10k-analysis-v2"
+EXPECTED_ELIGIBLE_FRAME_ADS = 9282
+EXPECTED_ROOT_RESOLUTIONS = 40
 MAIN_GROUPS = ("genai_use_with_or_without_software", "traditional_software_use_no_ai")
 EXP_DIMS = ("general_work", "occupation_task", "industry_domain", "tool_specific")
 ENTRY_TARGETS = ("explicit_no_experience", "explicit_new_graduate")
@@ -30,6 +32,15 @@ MAP_REQUIRED = {
     "pi3", "nested_design_weight", "occupation_major", "audit_selected",
     "raw_exact_text_sha256", "normalized_context_sha256",
 }
+GENERATED_CSVS = (
+    "T1_FORMAL_SAMPLE.csv", "T1_OCCUPATION_SUPPORT.csv",
+    "T2_EXPERIENCE_AND_OTHER_RATES.csv", "T2_CLAUSE_SUMMARY.csv",
+    "T3_OLD_ARM_TO_SEMANTIC_TRANSITION.csv", "T4_PRIOR_TABLE_REFERENCE.csv",
+    "T5_EXPERIENCE_COMBINATIONS.csv", "T5_ENTRY_BY_STRICT_DUTY.csv",
+    "COMPARISON_1_EXPERIENCE.csv", "COMPARISON_2_ENTRY_DUTY.csv",
+    "SUPPLEMENT_TECH_GROUP_ENTRY_DUTY_DIFFERENCES.csv",
+    "T6_SENSITIVITY_AND_BOUNDS.csv", "T6_COMMON_MAJOR_STANDARDIZED.csv",
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -166,6 +177,64 @@ def require_overlay_receipt(receipt_path: Path, overlay_path: Path) -> dict[str,
     if private.get("error_entries", 0) != 0:
         raise RuntimeError("resolved overlay receipt reports errors")
     return receipt
+
+
+def semantic_payload(review: dict[str, Any]) -> dict[str, Any]:
+    """Drop validator-added provenance fields for embedded-overlay identity checks."""
+    payload = dict(review)
+    for key in ("trusted_assignment", "evidence_resolution", "validation_version", "resolution_status"):
+        payload.pop(key, None)
+    return payload
+
+
+def verify_embedded_resolution(reviews: list[dict[str, Any]], overlay_path: Path,
+                               receipt_path: Path) -> dict[str, Any]:
+    """Bind already-merged root replacements without applying them a second time."""
+    receipt = require_overlay_receipt(receipt_path, overlay_path)
+    by_id = {row["record_id"]: row for row in reviews}
+    overlays = read_rows(overlay_path)
+    seen = set()
+    for item in overlays:
+        if set(item) != {"record_id", "context_sha256", "resolved_review", "resolution_id"}:
+            raise RuntimeError("embedded resolution overlay has an invalid row contract")
+        record_id = item["record_id"]
+        resolved = item["resolved_review"]
+        if record_id in seen or record_id not in by_id or not isinstance(resolved, dict):
+            raise RuntimeError("embedded resolution overlay has duplicate or unknown records")
+        final = by_id[record_id]
+        if (item["context_sha256"] != final.get("context_sha256") or
+                resolved.get("record_id") != record_id or
+                resolved.get("context_sha256") != item["context_sha256"] or
+                semantic_payload(resolved) != semantic_payload(final)):
+            raise RuntimeError("embedded root resolution does not match final validated review")
+        seen.add(record_id)
+    if len(seen) != EXPECTED_ROOT_RESOLUTIONS:
+        raise RuntimeError(
+            f"embedded root resolution count is {len(seen)}, expected {EXPECTED_ROOT_RESOLUTIONS}")
+    return {"embedded": True, "resolved_contexts": len(seen),
+            "overlay_sha256": sha256_file(overlay_path),
+            "receipt_sha256": sha256_file(receipt_path), "receipt_status": receipt.get("status")}
+
+
+def verify_audit_aggregate(aggregate_path: Path, primary_receipt_path: Path,
+                           audit_receipt_path: Path) -> dict[str, Any]:
+    aggregate = json.loads(aggregate_path.read_text(encoding="utf-8"))
+    if aggregate.get("status") != "ready_for_root_review":
+        raise RuntimeError("audit aggregate is not ready_for_root_review")
+    if (aggregate.get("primary_receipt") != sha256_file(primary_receipt_path) or
+            aggregate.get("audit_receipt") != sha256_file(audit_receipt_path)):
+        raise RuntimeError("audit aggregate does not bind supplied primary/audit receipts")
+    if aggregate.get("selected_root_records") != EXPECTED_ROOT_RESOLUTIONS:
+        raise RuntimeError("audit aggregate does not contain the fixed root adjudication count")
+    return {
+        "aggregate_sha256": sha256_file(aggregate_path),
+        "primary_receipt_sha256": sha256_file(primary_receipt_path),
+        "audit_receipt_sha256": sha256_file(audit_receipt_path),
+        "audited_contexts": aggregate.get("audited_contexts"),
+        "disagreement_contexts": aggregate.get("disagreement_contexts"),
+        "agreement_contexts": aggregate.get("agreement_contexts"),
+        "selected_root_records": aggregate.get("selected_root_records"),
+    }
 
 
 def apply_resolved_overlay(reviews: list[dict[str, Any]], overlay_path: Path | None) -> tuple[list[dict[str, Any]], dict[str, Any]]:
@@ -413,15 +482,33 @@ def ratio_result(rows: list[dict[str, Any]], x_fn: Callable, y_fn: Callable) -> 
 
 def difference_result(rows: list[dict[str, Any]], measure: Callable, scope: Callable) -> dict[str, Any]:
     components = {}
+    context = {}
     for group in MAIN_GROUPS:
         x_fn = lambda row, g=group: int(scope(row) and row["analysis_technology_group"] == g and measure(row) is not None)
         y_fn = lambda row, g=group: int(scope(row) and row["analysis_technology_group"] == g and measure(row) == 1)
-        components[group] = (*ratio_components(rows, x_fn, y_fn), x_fn, y_fn)
+        rate, defined_mass, positive_mass = ratio_components(rows, x_fn, y_fn)
+        sampled_ads = sum(scope(row) and row["analysis_technology_group"] == group for row in rows)
+        all_mass = sum(row["w3"] for row in rows
+                       if scope(row) and row["analysis_technology_group"] == group)
+        components[group] = (rate, defined_mass, positive_mass, x_fn, y_fn)
+        context[group] = {
+            "sampled_ads": sampled_ads,
+            "weighted_defined_denominator": defined_mass,
+            "defined_coverage": None if all_mass <= 0 else defined_mass / all_mass,
+            "unknown_lower_bound": None if all_mass <= 0 else positive_mass / all_mass,
+            "unknown_upper_bound": (None if all_mass <= 0 else
+                                    (positive_mass + all_mass - defined_mass) / all_mass),
+        }
     a, b = MAIN_GROUPS
     ra, xa, _, xfa, yfa = components[a]
     rb, xb, _, xfb, yfb = components[b]
+    public_context = {
+        "group_a": a, "group_b": b,
+        **{"group_a_" + key: value for key, value in context[a].items()},
+        **{"group_b_" + key: value for key, value in context[b].items()},
+    }
     if ra is None or rb is None:
-        return {"group_a_rate": ra, "group_b_rate": rb, "difference_a_minus_b": None,
+        return {**public_context, "group_a_rate": ra, "group_b_rate": rb, "difference_a_minus_b": None,
                 "se": None, "ci_low": None, "ci_high": None, "variance_status": "no_denominator"}
     variance = 0.0
     for h in sorted({stratum_key(row) for row in rows}):
@@ -430,7 +517,7 @@ def difference_result(rows: list[dict[str, Any]], measure: Callable, scope: Call
         if n_h == N_h:
             continue
         if n_h < 2:
-            return {"group_a_rate": ra, "group_b_rate": rb, "difference_a_minus_b": ra-rb,
+            return {**public_context, "group_a_rate": ra, "group_b_rate": rb, "difference_a_minus_b": ra-rb,
                     "se": None, "ci_low": None, "ci_high": None,
                     "variance_status": "NA_n_h_lt_2_non_census"}
         u = [
@@ -443,7 +530,7 @@ def difference_result(rows: list[dict[str, Any]], measure: Callable, scope: Call
         variance += N_h * N_h * (1.0 - n_h / N_h) * s2 / n_h
     delta = ra - rb
     se = math.sqrt(max(0.0, variance))
-    return {"group_a_rate": ra, "group_b_rate": rb, "difference_a_minus_b": delta,
+    return {**public_context, "group_a_rate": ra, "group_b_rate": rb, "difference_a_minus_b": delta,
             "se": se, "ci_low": delta - 1.96*se, "ci_high": delta + 1.96*se,
             "variance_status": "design_linearized"}
 
@@ -521,6 +608,12 @@ def main() -> None:
                         help="private, explicit root-resolution overlay; optional only when no root resolution exists")
     parser.add_argument("--resolved-overlay-receipt", type=Path,
                         help="required passing receipt when --resolved-overlay is supplied")
+    parser.add_argument("--embedded-resolved-overlay", type=Path,
+                        help="root overlay already embedded in --validated-reviews; verify but do not reapply")
+    parser.add_argument("--embedded-resolved-overlay-receipt", type=Path)
+    parser.add_argument("--audit-aggregate", type=Path)
+    parser.add_argument("--primary-validation-receipt", type=Path)
+    parser.add_argument("--audit-validation-receipt", type=Path)
     parser.add_argument("--eligible-occupation-composition", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--private-ad-output", type=Path,
@@ -528,20 +621,49 @@ def main() -> None:
     parser.add_argument("--old-t1-reference", default="accepted prior full-base T1; not recomputed")
     parser.add_argument("--old-t4-reference", default="accepted prior timing-risk T4; not recomputed")
     args = parser.parse_args()
+    output = args.output_dir
+    output.mkdir(parents=True, exist_ok=True)
+    receipt_path = output / "ANALYSIS_RECEIPT.json"
+    if receipt_path.exists():
+        receipt_path.unlink()
 
     validation_receipt = require_passing_validation(args.validation_receipt, args.validated_reviews)
     if args.resolved_overlay and not args.resolved_overlay_receipt:
         raise RuntimeError("--resolved-overlay requires --resolved-overlay-receipt")
     if args.resolved_overlay_receipt and not args.resolved_overlay:
         raise RuntimeError("--resolved-overlay-receipt requires --resolved-overlay")
+    embedded_args = (args.embedded_resolved_overlay, args.embedded_resolved_overlay_receipt)
+    if any(embedded_args) and not all(embedded_args):
+        raise RuntimeError("embedded resolved overlay and receipt must be supplied together")
+    audit_args = (args.audit_aggregate, args.primary_validation_receipt, args.audit_validation_receipt)
+    if any(audit_args) and not all(audit_args):
+        raise RuntimeError("audit aggregate and both source validation receipts must be supplied together")
     overlay_receipt = (require_overlay_receipt(args.resolved_overlay_receipt, args.resolved_overlay)
                        if args.resolved_overlay and args.resolved_overlay_receipt else None)
     reviews, overlay_info = apply_resolved_overlay(read_rows(args.validated_reviews), args.resolved_overlay)
+    embedded_info = (verify_embedded_resolution(
+        reviews, args.embedded_resolved_overlay, args.embedded_resolved_overlay_receipt)
+        if all(embedded_args) else {"embedded": False, "resolved_contexts": 0})
+    audit_info = (verify_audit_aggregate(
+        args.audit_aggregate, args.primary_validation_receipt, args.audit_validation_receipt)
+        if all(audit_args) else None)
     mapping = read_rows(args.sampled_ad_map)
     rows = validate_and_join(reviews, mapping)
     if len(rows) > 800:
         raise RuntimeError("sampled-ad map exceeds approved 800-ad cap")
-    output = args.output_dir
+    stratum_population = {
+        stratum_key(row): row["N_h"] for row in rows
+    }
+    eligible_frame_ads = sum(stratum_population.values())
+    if eligible_frame_ads != EXPECTED_ELIGIBLE_FRAME_ADS:
+        raise RuntimeError(
+            f"eligible finite-frame size is {eligible_frame_ads}, expected {EXPECTED_ELIGIBLE_FRAME_ADS}")
+    # Invalidate only files owned by this analyzer. Archives, figures, logs, and
+    # unrelated prior outputs are deliberately untouched.
+    owned_outputs = [output / name for name in GENERATED_CSVS]
+    for path in owned_outputs:
+        if path.exists():
+            path.unlink()
     if args.private_ad_output:
         if args.private_ad_output.suffix.lower() not in {".parquet", ".pq"}:
             raise RuntimeError("--private-ad-output must be a Parquet path")
@@ -555,8 +677,6 @@ def main() -> None:
             raise RuntimeError("--private-ad-output requires the complete 800-ad sampled map")
         write_private_ad_parquet(
             args.private_ad_output, rows, sha256_file(args.validated_reviews))
-    output.mkdir(parents=True, exist_ok=True)
-
     tech_counts = collections.Counter(row["semantic_technology_group"] for row in rows)
     support_counts = collections.Counter(
         (str(row["occupation_major"]), row["analysis_technology_group"]) for row in rows
@@ -724,7 +844,8 @@ def main() -> None:
                    "validation_receipt_sha256": sha256_file(args.validation_receipt),
                    "sampled_ad_map_sha256": sha256_file(args.sampled_ad_map),
                    "eligible_occupation_composition_sha256": None if not args.eligible_occupation_composition else sha256_file(args.eligible_occupation_composition)},
-        "counts": {"sampled_ads": len(rows), "validated_context_records": len(reviews),
+        "counts": {"eligible_frame_ads": eligible_frame_ads,
+                   "sampled_ads": len(rows), "validated_context_records": len(reviews),
                    "audited_ads": sum(bool(row["audit_selected"]) for row in rows),
                    "semantic_technology_groups": dict(sorted(tech_counts.items())),
                    "common_support_occupation_majors": len(common_majors)},
@@ -736,10 +857,18 @@ def main() -> None:
         "variance": "stratified SRS delta-ratio linearization with FPC; NA for non-census n_h<2",
         "ci_limitation": "sampling uncertainty only, conditional on reported semantic groups/support cells; model and support-selection uncertainty excluded",
         "unknown_policy": "field-level unknown, no majority vote or unreviewed propagation; bounds do not cover undetected model error",
-        "resolution_overlay": {**overlay_info, "receipt_status": None if overlay_receipt is None else overlay_receipt.get("status")},
+        "resolution_overlay": (
+            {"applied": True, "application_stage": "embedded_before_final_validation_not_reapplied",
+             **embedded_info}
+            if embedded_info.get("embedded") else
+            {**overlay_info, "receipt_status": None if overlay_receipt is None else overlay_receipt.get("status")}
+        ),
+        "embedded_root_resolution": embedded_info,
+        "audit_provenance": audit_info,
         "validator": {"version": validation_receipt.get("version"), "status": validation_receipt.get("status")},
         "claim_boundary": "descriptive delivered-text comparison in the eligible finite frame; no historical, causal, global-accuracy, or full-corpus claim",
-        "outputs": {path.name: sha256_file(path) for path in sorted(output.glob("*.csv"))},
+        "outputs": {name: sha256_file(output / name) for name in GENERATED_CSVS
+                    if (output / name).is_file()},
         "private_ad_export": (None if not args.private_ad_output else {
             "rows": len(rows), "sha256": sha256_file(args.private_ad_output),
             "contains_raw_text": False, "published_in_git": False,

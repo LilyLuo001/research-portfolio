@@ -1,8 +1,7 @@
 {
   "as_of": "2026-10-12",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "formal800_frozen_review_in_progress",
-  "verified_remote_commit": "356564eb61e4c01bd81647641c8fab4b0b2dc719",
+  "phase": "formal800_finite_review_complete_bounded_release",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -23,13 +22,18 @@
     "wave02_reviews": 96
   },
   "latest_completed_wave": {
-    "name": "pro_review_wave02_20261012",
-    "reviewed_ads": 96,
-    "changed_ads": 49,
-    "changed_core_field_values": 71,
-    "scope": "purposive exact-record corrections",
-    "verification_job": "124267010",
-    "status": "published"
+    "name": "formal800_20261012",
+    "sampled_ads": 800,
+    "reviewed_contexts": 719,
+    "blind_audit_ads": 160,
+    "blind_audit_contexts": 153,
+    "root_adjudicated_contexts": 40,
+    "scope": "post-exclusion eligible finite9282-ad frame; current delivered-text wording",
+    "status": "analysis_and_independent_QA_complete",
+    "finalize_job": "46394029",
+    "figures_job": "46394097",
+    "same_sample_comparison_job": "46394098",
+    "report": "linkup/formal800_20261012/RESULTS_ZH.md"
   },
   "not_available": [
     "Revelio Individual data",
@@ -70,7 +74,7 @@
     "new_parser_development": false,
     "full_corpus_semantic_certification": false,
     "started": true,
-    "status": "sample_frozen_actual_primary_and_blind_reading_in_progress",
+    "status": "finite800_complete_bounded_release",
     "approval": "user_approved_2026-10-12"
   },
   "execution_location": {
@@ -93,11 +97,11 @@
     "unique_audit_contexts": 153,
     "primary_model": "gpt-5.6-sol/medium",
     "blind_audit_model": "gpt-5.6-sol/high",
-    "completed_semantic_packets": null,
+    "completed_semantic_packets": "finite800 primary719 and audit153 mechanically consolidated; root40 complete",
     "main_weight": "1/pi3",
     "parent_frame_inference": false,
     "public_freeze_receipt": "linkup/formal800_20261012/receipts/FORMAL800_FREEZE_RECEIPT_PUBLIC.json",
-    "next_action": "finish remaining frozen readings; repair only exact cloud rejects; full frozen audit and at most40 rootcases; cloud final T1–T6",
+    "next_action": "review RESULTS_ZH.md and public T1–T6/figure/baseline assets; no new jobs, re-extraction, or global-corpus claim",
     "authored_primary_packets": [
       1,
       2,
@@ -129,7 +133,11 @@
       28,
       29,
       30,
-      31
+      31,
+      32,
+      33,
+      34,
+      35
     ],
     "authored_audit_packets": [
       1,
@@ -142,17 +150,11 @@
       8
     ],
     "accepted_full_release": false,
-    "current_primary_agents": {
-      "/root/formal800_primary_ac": "032",
-      "/root/formal800_primary_ad": "033",
-      "/root/formal800_repair31": "eight exact031 source repairs"
-    },
-    "current_audit_agent": "all153 authored and mechanically validated; independent audit reading closed",
     "validation_latest": {
-      "primary_job": "46382193",
-      "primary_scope_contexts": 100,
-      "primary_valid_contexts": 91,
-      "primary_rejected_contexts": 9,
+      "primary_job": "46392423",
+      "primary_scope_contexts": 700,
+      "primary_valid_contexts": 700,
+      "primary_rejected_contexts": 0,
       "audit_passing_slices": [
         1,
         2,
@@ -207,7 +209,14 @@
       "primary028_pass": "46390798",
       "primary029_pass": "46390601",
       "primary030_pass": "46390602",
-      "primary031_rejected": "46390603:8 records"
+      "primary031_rejected": "46390603:8 records; repaired and passed46391861",
+      "primary032_pass": "46391906",
+      "primary033_pass": "46391988",
+      "primary034_pass": "46392417",
+      "primary035_pass": "46392423",
+      "primary036_authored": "19 records; cloud46392427 rejected2 literal year-bound records",
+      "primary036_repair_submitted": "46392568; pass not yet checked",
+      "prepare_root_submitted": "46392632 afterok final package; pass not yet checked"
     },
     "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs.",
     "accepted_audit_slices": [
@@ -251,12 +260,53 @@
       27,
       28,
       29,
-      30
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
     ],
-    "accepted_primary_contexts": 600,
-    "capacity_note": "Sol023 and024 bounded retries recovered; all primary semantic reviewers remain Sol/medium.",
-    "completed_semantic_packets_note": "Superseded ambiguous counter; use accepted_primary_packets for mechanical checks and accepted_full_release for final semantic release."
+    "accepted_primary_contexts": 719,
+    "accepted_primary_packet_count": 36,
+    "accepted_audit_packet_count": 8,
+    "capacity_note": "Full consolidation46392632 accepted719 primary contexts; root40 validation46393877 passed after case29 repair. Final jobs46394029,46394097,46394098 completed0:0. This is a bounded finite release, not global-corpus certification.",
+    "completed_semantic_packets_note": "Finite release complete; use public results and receipts for T1–T6. No global-corpus semantic certification is claimed.",
+    "provenance_context_counts": {
+      "total_primary_contexts": 719,
+      "unaudited_primary_contexts": 566,
+      "audited_agreement_contexts": 5,
+      "masked_disagreement_contexts": 108,
+      "root_contexts": 40
+    },
+    "final_jobs": {
+      "finalize": "46394029",
+      "figures": "46394097",
+      "baseline_summary": "46394098"
+    },
+    "active_jobs": [],
+    "reextraction": "not authorized; no new re-extraction",
+    "local_private_cache": "archive coverage verified remotely; cleanup pending environment destructive review"
   },
-  "last_pushed_checkpoint": "6f5d61c",
-  "git_main_authorization": "User explicitly allowed push to main on2026-10-12 after automatic-review rejection."
+  "git_main_authorization": "User explicitly allowed push to main on2026-10-12 after automatic-review rejection.",
+  "historical_completed_waves": [
+    {
+      "name": "pro_review_wave02_20261012",
+      "reviewed_ads": 96,
+      "changed_ads": 49,
+      "changed_core_field_values": 71,
+      "scope": "purposive exact-record corrections",
+      "verification_job": "124267010",
+      "status": "historical_wave02_published; superseded by finite800 release"
+    }
+  ],
+  "historical_remote_anchor": "356564eb61e4c01bd81647641c8fab4b0b2dc719",
+  "preceding_published_checkpoint": "351ed36",
+  "publication": {
+    "repository": "LilyLuo001/research-portfolio",
+    "branch": "main",
+    "release_directory": "linkup/formal800_20261012",
+    "commit_binding": "Use the Git commit containing this release and compare with origin/main; do not treat a historical checkpoint as current HEAD."
+  }
 }
