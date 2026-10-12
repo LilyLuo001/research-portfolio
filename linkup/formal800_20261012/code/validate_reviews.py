@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-VERSION = "formal800-review-validation-v1"
+VERSION = "formal800-review-validation-v1.1-shared-condition"
 EXP_DIMS = ("general_work", "occupation_task", "industry_domain", "tool_specific")
 ENTRY_DIMS = (
     "explicit_no_experience", "explicit_new_graduate",
@@ -235,12 +235,14 @@ def validate_cross_fields(review: dict[str, Any]) -> list[str]:
         declared[name] = set(branch_names)
     for index, clause in enumerate(clauses):
         group, branch = clause["alternative_group"], clause["alternative_branch"]
-        add_error(errors, (group is None) != (branch is None),
-                  f"experience_clauses[{index}]: alternative group and branch must be jointly null or nonnull")
-        if group is not None and branch is not None:
+        # A shared condition can govern a genuine alternative group without
+        # being another option in it. A branch still requires a declared group.
+        add_error(errors, group is None and branch is not None,
+                  f"experience_clauses[{index}]: alternative branch requires a group")
+        if group is not None:
             add_error(errors, group not in declared,
                       f"experience_clauses[{index}]: undeclared alternative group")
-            if group in declared:
+            if group in declared and branch is not None:
                 add_error(errors, branch not in declared[group],
                           f"experience_clauses[{index}]: undeclared alternative branch")
     return errors
