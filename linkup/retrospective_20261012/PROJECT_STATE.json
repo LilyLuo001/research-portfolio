@@ -97,6 +97,32 @@
     "main_weight": "1/pi3",
     "parent_frame_inference": false,
     "public_freeze_receipt": "linkup/formal800_20261012/receipts/FORMAL800_FREEZE_RECEIPT_PUBLIC.json",
-    "next_action": "finish assigned Pro packets; scheduled evidence validation; fixed blind audit and bounded root adjudication; final T1-T6"
+    "next_action": "finish assigned readings, repair only cloud-rejected records, validate completed packets; finish remaining packets once; frozen audit, at most40 root readings, then final T1-T6",
+    "authored_primary_packets": [
+      1,
+      2,
+      3
+    ],
+    "authored_audit_packets": [
+      1,
+      2
+    ],
+    "accepted_full_release": false,
+    "current_primary_agents": {
+      "/root/formal800_primary_b": "packet007",
+      "/root/formal800_primary_c": "packet004 and specific rejected packet003 repairs"
+    },
+    "current_audit_agent": "/root/formal800_audit_sol: packet003 and audit001 error repair",
+    "validation_latest": {
+      "primary_job": "46368747",
+      "primary_scope_contexts": 60,
+      "primary_valid_contexts": 50,
+      "primary_rejected_contexts": 10,
+      "audit_job": "46368752",
+      "audit_scope_contexts": 20,
+      "audit_valid_contexts": 17,
+      "audit_rejected_contexts": 3
+    },
+    "validation_note": "Failed checks reject particular records; these are not production completion receipts. Preserve initial decisions and repair only named evidence/schema inconsistencies on unchanged inputs."
   }
 }

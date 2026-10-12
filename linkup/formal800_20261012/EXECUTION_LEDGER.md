@@ -1,6 +1,6 @@
 # Formal 800 review execution ledger — 2026-10-12
 
-Status: preparation started under explicit user approval. No sample, semantic review, or scheduler job is complete until a public receipt names the artifact and status.
+Current status: sample freeze completed in Wuzhen job46364888; finite Pro primary reading and independent blind review are in progress. No final semantic comparison is complete yet. Earlier preparation entries below are retained as history and are superseded by the actual freeze section.
 
 - Scope: existing fixed 10,000 exact-text sample with nested probability metadata; maximum 800 ads (duplicate contexts may be read once but remain ad-level records).
 - Arms: A 320, B 320, C 160; remaining capacity is reserved by the documented review design and does not expand the cap.
@@ -32,3 +32,10 @@ The freeze stage is intentionally still pending the separate SHA-only transfer r
 - All54 existing entry-candidate ads were included; shortages reallocated within arm by the predeclared rule. No outcome-based replenishment.
 - Sol/medium primary packet001 and independent Sol/high blind audit records1–20 are now actually dispatched. No semantic packet is yet accepted; outputs require scheduled validation. The conditional Terra/GPT-6 fallback was not used.
 - Final comparison tables remain pending the finite reading/audit/validation work. Existing full-corpus outputs remain intact.
+
+## Reading and cloud QA checkpoint (16:55 China time)
+
+- Authored primary001–003:60 contexts; blind audit001–002:40 contexts. Authored does not mean accepted. Current parallel work: Sol/medium primary_b packet007; Sol/medium primary_c packet004 plus specifically rejected003 records; independent Sol/high audit003.
+- Validation46366447 rejected2 of20 initial primary001 records; originals retained and corrected. Validation46367639 rejected2 of40 combined001–002 records, both in002; originals retained and corrected. Validation46368747 accepted50 of60 records and rejected10 in003 for outcome/explicit-clause inconsistency. This is a finite record repair, not rubric development.
+- Independent audit validation46368752 accepted17 of20 and rejected3 for branch/evidence/field consistency. It did not compare audit labels with primary decisions. Only audit-specific errors are returned to the blind reviewer.
+- No formal800 semantic acceptance or aggregate result is yet claimed. The full sample, definitions, exclusions, and weights remain frozen.

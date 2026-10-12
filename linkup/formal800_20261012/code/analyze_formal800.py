@@ -398,7 +398,7 @@ def difference_result(rows: list[dict[str, Any]], measure: Callable, scope: Call
 
 def measure_rows(rows: list[dict[str, Any]], name: str, measure: Callable,
                  group: str, scope_name: str, scope: Callable) -> dict[str, Any]:
-    in_group = lambda row: scope(row) and row["analysis_technology_group"] == group
+    in_group = lambda row: scope(row) and (group == "all_technology_groups" or row["analysis_technology_group"] == group)
     defined_x = lambda row: int(in_group(row) and measure(row) is not None)
     positive_y = lambda row: int(in_group(row) and measure(row) == 1)
     all_x = lambda row: int(in_group(row))
@@ -419,6 +419,38 @@ def measure_rows(rows: list[dict[str, Any]], name: str, measure: Callable,
         "weighted_defined_denominator": defined["weighted_denominator"],
         "model_error_included_in_ci": False,
     }
+
+
+def entry_conditioned_duties(rows: list[dict[str, Any]], scopes: list) -> list[dict[str, Any]]:
+    """Answer Q2 directly: current duties among ads explicitly welcoming entrants."""
+    output = []
+    measures = [(d, lambda r, d=d: strict_duty(r["review"], d)) for d in RESP_DIMS]
+    measures.append(("any_strict_current_duty", lambda r: strict_duty_any(r["review"])))
+    for scope_name, scope in scopes:
+        for group in ("all_technology_groups", *MAIN_GROUPS):
+            in_domain = lambda r, g=group: scope(r) and (g == "all_technology_groups" or r["analysis_technology_group"] == g)
+            for unconditional in (False, True):
+                entry = lambda r, u=unconditional: core_entry(r["review"], u)
+                eligible = lambda r: in_domain(r) and entry(r) == 1
+                for name, duty in measures:
+                    defined = ratio_result(rows, lambda r: int(eligible(r) and duty(r) is not None),
+                                           lambda r: int(eligible(r) and duty(r) == 1))
+                    lower = ratio_result(rows, lambda r: int(eligible(r)), lambda r: int(eligible(r) and duty(r) == 1))
+                    upper = ratio_result(rows, lambda r: int(eligible(r)), lambda r: int(eligible(r) and duty(r) != 0))
+                    output.append({
+                        "estimand": "current_duty_wording_among_explicit_entry_ads_eligible_fixed10k_w3",
+                        "scope": scope_name, "technology_scope": group,
+                        "entry_definition": "unconditional_only" if unconditional else "including_conditional",
+                        "duty_dimension": name, "sampled_entry_ads": sum(eligible(r) for r in rows),
+                        "sampled_entry_ads_with_duty_unknown": sum(eligible(r) and duty(r) is None for r in rows),
+                        "weighted_entry_ads": sum(r["w3"] for r in rows if eligible(r)),
+                        "weighted_entry_membership_unknown": sum(r["w3"] for r in rows if in_domain(r) and entry(r) is None),
+                        **defined, "unknown_duty_lower_bound": lower["estimate"],
+                        "unknown_duty_upper_bound": upper["estimate"],
+                        "bounds_condition": "among_explicit_entry_ads_only; unresolved_entry_membership_excluded_and_reported",
+                        "model_error_included_in_ci": False,
+                    })
+    return output
 
 
 def main() -> None:
@@ -462,10 +494,12 @@ def main() -> None:
         occupation for occupation in {key[0] for key in support_counts}
         if all(support_counts[(occupation, group)] >= 5 for group in MAIN_GROUPS)
     }
-    scopes = (
+    scopes = [
         ("all_reviewed_sample", lambda row: True),
         ("common_occupation_major_ge5_each_group", lambda row: usable_occupation_major(row["occupation_major"]) and str(row["occupation_major"]) in common_majors),
-    )
+    ]
+    scopes.extend(("occupation_major_" + occupation, lambda row, o=occupation: str(row["occupation_major"]) == o)
+                  for occupation in sorted(common_majors))
 
     stratum_rows = []
     for h in sorted({stratum_key(row) for row in rows}):
@@ -478,6 +512,11 @@ def main() -> None:
             "unique_review_records": len({row["record_id"] for row in sample}),
         })
     write_csv(output / "T1_FORMAL_SAMPLE.csv", stratum_rows)
+    write_csv(output / "T1_OCCUPATION_SUPPORT.csv", [
+        {"occupation_major": occupation, "semantic_group": group, "sampled_ads": count,
+         "in_common_support": occupation in common_majors}
+        for (occupation, group), count in sorted(support_counts.items())
+    ])
 
     measures: list[tuple[str, Callable]] = []
     for dimension in EXP_DIMS:
@@ -494,7 +533,7 @@ def main() -> None:
 
     rate_rows = [
         measure_rows(rows, name, measure, group, scope_name, scope)
-        for scope_name, scope in scopes for group in MAIN_GROUPS for name, measure in measures
+        for scope_name, scope in scopes for group in ("all_technology_groups", *MAIN_GROUPS) for name, measure in measures
     ]
     write_csv(output / "T2_EXPERIENCE_AND_OTHER_RATES.csv", rate_rows)
 
@@ -503,9 +542,11 @@ def main() -> None:
                                                    "weighted_years_max_sum": 0.0, "weighted_years_max_mass": 0.0})
     for row in rows:
         group = row["semantic_technology_group"]
+        alternative_relations = {a["group"]: a["relation"] for a in row["review"]["qualification_alternatives"]}
         for clause in row["review"]["experience_clauses"]:
             key = (group, clause["object"], clause["strength"], clause["conditionality"],
-                   clause["years_relation"], clause["alternative_group"], clause["alternative_branch"])
+                   clause["years_relation"], alternative_relations.get(clause["alternative_group"], "no_alternative_group"),
+                   bool(clause["alternative_branch"]))
             acc = clause_acc[key]; acc["sampled_clause_rows"] += 1; acc["weighted_clause_rows"] += row["w3"]
             if clause["years_min"] is not None:
                 acc["weighted_years_min_sum"] += row["w3"] * clause["years_min"]; acc["weighted_years_min_mass"] += row["w3"]
@@ -516,7 +557,7 @@ def main() -> None:
         clause_rows.append({
             "estimand": "clause_level_not_unique_job_minimum", "semantic_group": key[0], "object": key[1],
             "strength": key[2], "conditionality": key[3], "years_relation": key[4],
-            "alternative_group": key[5], "alternative_branch": key[6],
+            "alternative_relation": key[5], "branch_conditioned": key[6],
             "sampled_clause_rows": acc["sampled_clause_rows"], "weighted_clause_rows": acc["weighted_clause_rows"],
             "weighted_mean_years_min": None if not acc["weighted_years_min_mass"] else acc["weighted_years_min_sum"]/acc["weighted_years_min_mass"],
             "weighted_mean_years_max": None if not acc["weighted_years_max_mass"] else acc["weighted_years_max_sum"]/acc["weighted_years_max_mass"],
@@ -571,9 +612,9 @@ def main() -> None:
                                     "scope": scope_name, "measure": name, **result,
                                     "model_error_included_in_ci": False})
     experience_comparison = [row for row in comparison_rows if row["measure"].startswith("experience_")]
-    entry_duty_comparison = [row for row in comparison_rows if not row["measure"].startswith("experience_")]
     write_csv(output / "COMPARISON_1_EXPERIENCE.csv", experience_comparison)
-    write_csv(output / "COMPARISON_2_ENTRY_DUTY.csv", entry_duty_comparison)
+    write_csv(output / "COMPARISON_2_ENTRY_DUTY.csv", entry_conditioned_duties(rows, scopes))
+    write_csv(output / "SUPPLEMENT_TECH_GROUP_ENTRY_DUTY_DIFFERENCES.csv", [row for row in comparison_rows if not row["measure"].startswith("experience_")])
     write_csv(output / "T6_SENSITIVITY_AND_BOUNDS.csv", rate_rows)
 
     composition_status = "not_supplied_restricted_pooled_and_within_major_only"
@@ -619,7 +660,7 @@ def main() -> None:
         "common_support_rule": "at least 5 sampled ads in each main semantic group per occupation_major",
         "composition_status": composition_status,
         "variance": "stratified SRS delta-ratio linearization with FPC; NA for non-census n_h<2",
-        "ci_limitation": "sampling uncertainty only; undetected semantic model error excluded",
+        "ci_limitation": "sampling uncertainty only, conditional on reported semantic groups/support cells; model and support-selection uncertainty excluded",
         "unknown_policy": "field-level unknown, no majority vote or unreviewed propagation; bounds do not cover undetected model error",
         "resolution_overlay": {**overlay_info, "receipt_status": None if overlay_receipt is None else overlay_receipt.get("status")},
         "validator": {"version": validation_receipt.get("version"), "status": validation_receipt.get("status")},

@@ -8,7 +8,7 @@ The probability unit is an advertisement in the post-exclusion eligible fixed10k
 
 The semantic reading unit is a byte-identical complete context. Identical contexts selected for several advertisements may be read once, but the validated decision maps only to sampled ads. Advertisement counts, probabilities, weights, audit indicators, and uncertainty calculations remain ad-level.
 
-The main analysis weight is `w3 = 1/pi3 = N_h/n_h`, where `h` is the frozen arm-by-entry stratum after exclusions. This estimates finite eligible fixed10k quantities. `nested_design_weight/pi3` belongs to an optional parent candidate-frame estimand and is excluded from all main tables unless upstream probability lineage is separately verified. Pooled-cell standardization weights remain a separate estimand and are never mixed with design weights.
+The main analysis weight is `w3 = 1/pi3 = N_h/n_h`, where `h` is the frozen arm-by-entry stratum after exclusions. This estimates finite eligible fixed10k quantities. `nested_design_weight/pi3` belongs to an optional parent candidate-frame estimand and is excluded from all main tables unless upstream probability lineage is separately verified. Pooled-cell standardization weights remain a separate estimand and are never mixed with design weights. In the actual frozen input, upstream weights are missing for2,000 C-arm ads. Root decision12 therefore disables parent-frame inference for this release; no upstream weight is imputed.
 
 Analysis accepts only a validated-context JSONL whose validator receipt has `status=pass` and whose recorded SHA-256 matches the submitted file. It joins that JSONL to the private selected-ad map on the frozen opaque record ID and exact normalized-context hash. The map retains `N_h`, `n_h`, `pi3`, arm, frozen entry stratum, occupation major, ad-level audit flag, canonical ad key, and the raw exact-text hash; it contains one row per sampled ad even when several sampled ads share a context. A root resolution, if any, is an explicit, complete validator-produced replacement record bound by record ID and context hash in a private overlay. Analysis never infers a resolution from audit agreement, copies a decision to an unsampled ad, or fills missing fields.
 
@@ -26,7 +26,7 @@ Technology groups are derived only from validated explicit inventory:
 - `traditional_software_use_no_ai`: traditional-software use for work and no generative/predictive AI use, development, or implementation, without unresolved family/role.
 - `genai_traditional_overlap`, `predictive_ai_or_mixed`, `ai_develop_implement_other`, `background_only`, and `uncertain_technology` remain separate. A nonempty inventory is not itself work-technology evidence.
 
-The main technology comparison is `genai_use_only` versus `traditional_software_use_no_ai`. Frozen old candidate arms are reported separately, with an old-arm-to-semantic-group transition matrix. Uncertain technology is excluded from the main comparison with its weighted and unweighted coverage reported. Labels are never changed after viewing outcomes.
+The main technology comparison is `genai_use_with_or_without_software` (combining `genai_use_only` and `genai_traditional_overlap`) versus `traditional_software_use_no_ai`. This implements prereview root decision10; exclusive GenAI use remains a separate inventory/sensitivity category. Frozen old candidate arms are reported separately, with an old-arm-to-semantic-group transition matrix. Uncertain technology is excluded from the main comparison with its weighted and unweighted coverage reported. Labels are never changed after viewing outcomes.
 
 ## Support and reported statistics
 
@@ -60,3 +60,7 @@ If a verified eligible-fixed10k occupation composition file is supplied, common-
 - T6: defined-value, unknown-bound, conditionality, and support sensitivities.
 
 All comparisons describe wording in the delivered current text. They do not identify historical change, technology effects, employer adoption, full-corpus prevalence, human-gold accuracy, or semantic correctness of unreviewed advertisements.
+
+## Q2 execution clarification (root decision13)
+
+The second core comparison directly reports strict current-duty wording among explicitly entrant-positive advertisements. It includes all semantic technology categories in the primary eligible-frame description; clean software/GenAI groups are supplementary strata. Unknown entrant membership is excluded and its weighted mass reported, while bounds address unknown duty values among the explicitly positive entrant domain only. A difference between technology groups in unconditional duty rates does not answer this question and is supplementary. Actual within-major rows are emitted for common-support majors. Clause summaries aggregate meaningful alternative relations and branch-conditioned status, never arbitrary within-record group/branch identifiers. Design intervals condition on the reported groups and support cells; they do not incorporate model error or uncertainty from selecting support cells.

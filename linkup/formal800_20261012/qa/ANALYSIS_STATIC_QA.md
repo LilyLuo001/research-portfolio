@@ -10,9 +10,9 @@ Technology precedence was also corrected so only active predictive-AI roles excl
 
 ## Limitations / follow-up
 
-The optional resolution overlay is identity-bound to the primary record and requires validator-shaped metadata, but the analysis interface has no separate validator-receipt argument for the replacement payload. A future production overlay should carry a validator receipt hash (or be validated in a separate mandatory step) before acceptance; this was not changed in the bounded pass because it would alter the frozen overlay interface.
+The original optional resolution-overlay receipt gap has been closed by root: any overlay now requires its own passing validator receipt and matching validated-file SHA. Production will use a final revalidated merged review file, preserving unresolved blind disagreements as unknown.
 
-The composition-file branch checks required columns but does not reject duplicate occupation rows or negative/non-finite composition counts. It is outside the two core comparisons and remains a delivery-time validation item.
+The composition-file branch checks required columns but does not reject duplicate occupation rows or negative/non-finite composition counts. It is outside the two core comparisons. The optional composition branch will not be invoked in this release; within-major estimates and common-support pooled descriptions retain the composition caveat.
 
 `validate_reviews.py` correctly enforces schema, trusted packet identity, cross-field consistency, exact quote presence, and no partial-review nonmention. It does not and should not infer semantic accuracy or aggregate estimates.
 
