@@ -1,0 +1,22 @@
+{
+  "decision": "retain_published_finite_estimand",
+  "parent_inference_enabled": false,
+  "published_estimand": "post-exclusion eligible fixed10k, 9282 ads, third-stage w3=1/pi3",
+  "reason": "Upstream lineage recovery does not resolve post-draw prior-exposure exclusions or the restricted technology-screened parent frame.",
+  "weight_wording_update": "Allowed only after a passing scheduled record-level audit confirms complete dedicated total inclusion probabilities and nested design weights for all arms.",
+  "prohibited_by_this_audit": [
+    "resampling",
+    "new semantic reviews",
+    "outcome computation",
+    "reweighting the published tables",
+    "parent-frame estimates"
+  ],
+  "scheduled_audit": {
+    "job_id": "46396281",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:02",
+    "receipt_sha256": "0ba9f498227ce6c57334505f73d862a1b5a294b3d305f59ce23a60f16b65a0bb"
+  },
+  "status": "verified_pass"
+}

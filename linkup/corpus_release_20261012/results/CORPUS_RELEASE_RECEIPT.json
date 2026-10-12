@@ -1,0 +1,79 @@
+{
+  "coverage": {
+    "canonical_us_ads": 204774035,
+    "duration_evidence_rows": 131286035,
+    "engineering_usable_ads": 204768752,
+    "engineering_usable_rate": 0.9999742008306863
+  },
+  "created_utc": "2026-10-12T15:53:50.770276+00:00",
+  "execution_environment": "SCNet China scheduled job",
+  "job_id": "124293534",
+  "limits": [
+    "engineering parse state, not semantic accuracy",
+    "old-version candidate measures, not semantic gold",
+    "structurally unavailable; retain NA, never zero",
+    "observation metadata, not historical text-version proof",
+    "frozen all-zero/unmeasurable under the old vocabulary",
+    "candidate false or non-detection does not establish semantic absence"
+  ],
+  "metadata_scope": {
+    "candidate_metadata_join": {
+      "onet_match_exactly_one": 6008133,
+      "onet_missing": 2842,
+      "onet_multiple": 0,
+      "records_match_exactly_one": 6010975,
+      "rows": 6010975,
+      "separate_view": "linkup_candidate_metadata_join_v1",
+      "verification": "manifest-recorded SHA-256 required; files freshly size/footer/schema checked, not freshly SHA-rehashed"
+    },
+    "candidate_only_join_excluded_from_corpus_denominator": true,
+    "full_row_level_records_onet_join_included": false,
+    "reason": "T4 retained full-corpus aggregates but not its temporary full row-level joined tables"
+  },
+  "method": "receipt_and_parquet_footer_verification_only; no column data read",
+  "outputs": {
+    "private_catalog_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+    "private_views_sql_sha256": "d068580ad939c6fb1b26ac2915fb5fc912752b6a8298dfeebbcadfe15a4f1d0f",
+    "reused_aggregate_sha256": {
+      "T2_DURATION_BOUND_DISTRIBUTION.csv": "0a1deec2c03ec39a0873a1f7766645b72a2ced2b9a9e6375e757fa3a2e24a8b5",
+      "T2_EXPERIENCE_AD_RATES.csv": "4071eabfd0b737eb89557e26f5d15616bcedab390f86473ecf216c40aaa8b835",
+      "T3_TECHNOLOGY_EXPERIENCE_COOCCURRENCE.csv": "f5fe7340dbbd7b249a093b19e5be454b3113f31343656d8b4dc148262f8bf474",
+      "T3_TECHNOLOGY_PAIR_OVERLAP.csv": "3a1f30fe134e4791f7adb8962b6df6e824fdf92d0f8d9864d9e7d44d81487bda",
+      "T3_TECHNOLOGY_ROLE.csv": "f001d2ff0d4eae2d4d0034a285d00ff1336de3304a36f5089eed5e0cdcad37fa"
+    },
+    "reused_t1_sha256": {
+      "CONSERVATION_REPORT.json": "28ca13d37e19fc2f030129c0af0c1ff33eaa7ce556f32bcfd88d62682fc7c732",
+      "FIRST_WAVE_RUN_RECEIPT.json": "31ec1f3525ad1f3ef11d13435f79cc784f59cf1b8c8688368a3a750e65d40369",
+      "created_first_observed_queue_distribution.csv": "1f5985e20479b3c273930c7362759dcd04fa88eb539a63e29615b23784710cd0",
+      "input_match_canonical_usable_funnel.csv": "876382f27dfea7fcb613e89b1516e331ac75a4288eab2a8bd7c9edc95149e148",
+      "technology_experience_candidate_evidence.csv": "ba8816dbe553b34d894fff6b84be16855622474fe4b5e3a1a7c57064ce04623b"
+    },
+    "reused_t4_sha256": {
+      "T4_ANNUAL_COVERAGE.csv": "7ade2a3f112f84398a3aa2cae1f215e9169d9cc3520b9074cda3c1e5faf35665",
+      "T4_CONCENTRATION.csv": "9721a560854ae76e428a6ab54e15b5e47c7adb50e79aa7cd01cabdc924257b8d",
+      "T4_CONCENTRATION_TOP20.csv": "e0e46de5305f12511d0baeb55288cc31b0983ed63b6c4f34454c1a631f85b24b",
+      "T4_CREATED_COHORT.csv": "294a848c485df2fd23bbb5c39d3d3ba0727605ec9cf5e4901de094fc94d8c9f7",
+      "T4_SELECTED_ANNUAL_GROUP_SUMMARY.csv": "28ccef751abf3d78d36615fde7684004f6c104846418d6f23c8bc9f2afa91f46",
+      "T4_TIME_RISK.csv": "dcf7ea862828c4837872be60d6b67703158b2b53d3d61857c13f373c181c142f"
+    },
+    "schema_public_sha256": "a779d31376c1774a5b3c6be5963ea37ea1f8d35a016eb0ffe042282cf73fb2e0"
+  },
+  "release_version": "whole-corpus-old-narrow-v1",
+  "source": {
+    "aggregate_receipt_sha256": "358be9ac7be20247fe8bc8ccb2fa78839720f8b2126a84d3425d7e4fd5103aa2",
+    "batch_receipt_sha256": "ec029eac81a8c7cde50a0d4dd56660328d1db38a77e86f9fc25f8d9361b5f4f5",
+    "candidate_join_manifest_sha256": "3fb96eb5f15b55ce5bc050244dfcf6b3cf9dab31401632bc5c67e30e871de837",
+    "receipt_versions": {
+      "pre_revelio_semantic_narrow_v1": 2464
+    },
+    "shards": 2464,
+    "t4_receipt_sha256": "3153f169c3d36a9859d98ba67ce930257d890fa0f1ad83424b58f5f7276bb712"
+  },
+  "status": "complete",
+  "storage": {
+    "ad_parquet_bytes": 7364262618,
+    "duration_parquet_bytes": 2198211906,
+    "new_row_level_data_bytes": 0,
+    "zero_copy_views": true
+  }
+}

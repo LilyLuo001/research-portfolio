@@ -1,0 +1,102 @@
+{
+  "created_utc": "2026-10-12T15:54:01.355378+00:00",
+  "decision": {
+    "c_weight_claim": "correct prior missing-weight wording only if this receipt status is pass",
+    "parent_inference": "disabled; recovered lineage does not resolve post-draw exclusions or the restricted technology-screened frame",
+    "published_estimand": "retain finite post-exclusion 9282-ad fixed10k estimand using w3=1/pi3 unchanged"
+  },
+  "failures": [],
+  "fixed10k": {
+    "allocation_cells_by_arm": {
+      "A": 69,
+      "B": 69,
+      "C": 69
+    },
+    "allocation_rows": 207,
+    "arm_counts": {
+      "A": 4000,
+      "B": 4000,
+      "C": 2000
+    },
+    "fixed_stage_frame_counts": {
+      "A": 10075,
+      "B": 30225,
+      "C": 83070
+    },
+    "null_canonical_key_rows": 0,
+    "reconstructed_parent_candidate_counts": {
+      "A": {
+        "absolute_error": 0.0,
+        "expected": 10075,
+        "reconstructed": 10075.0
+      },
+      "B": {
+        "absolute_error": 0.0,
+        "expected": 1064428,
+        "reconstructed": 1064428.0
+      },
+      "C": {
+        "absolute_error": 0.0,
+        "expected": 83070,
+        "reconstructed": 83070.0
+      }
+    },
+    "rows": 10000,
+    "unique_canonical_keys": 10000
+  },
+  "formal800_linkage": {
+    "arm_counts": {
+      "A": 320,
+      "B": 320,
+      "C": 160
+    },
+    "missing_legacy_pi12_or_weight_by_arm": {},
+    "null_canonical_key_rows": 0,
+    "reconciliation_errors": {},
+    "rows": 800,
+    "unique_canonical_keys": 800
+  },
+  "prior_exposure_exclusions": {
+    "eligible_fixed10k_rows": 9282,
+    "excluded_weight_mass": "not audited: no retained full excluded-key map was used",
+    "unweighted_by_arm": {
+      "A": 339,
+      "B": 239,
+      "C": 140
+    },
+    "unweighted_total": 718,
+    "verification_scope": "attributed to hashed frozen Formal800 receipt; not recomputed in this metadata audit"
+  },
+  "privacy": "aggregate counts, weight masses, tolerances, and cryptographic hashes only; no record keys, text, contexts, or outcomes",
+  "probability_lineage": {
+    "dedicated_missing_by_arm": {},
+    "interpretation": "legacy inclusion_probability/design_weight are A/B-only; dedicated total probability and nested weight govern all three arms",
+    "legacy_null_by_arm": {
+      "C": 2000
+    },
+    "max_absolute_errors": {
+      "row_N_minus_allocation_N": 0.0,
+      "row_conditional_pi_minus_allocation": 0.0,
+      "row_n_minus_allocation_n": 0.0,
+      "row_original_pi_minus_allocation": 0.0,
+      "row_total_pi_minus_allocation": 3.469446951953614e-18,
+      "total_pi_minus_product": 0.0,
+      "weight_times_pi_minus_one": 2.220446049250313e-16
+    },
+    "tolerance": 1e-08
+  },
+  "scheduler": {
+    "cpus": "2",
+    "environment": "WZ_SCNet_scheduled_compute",
+    "job_id": "46396281"
+  },
+  "scope": "metadata-only verification; no resampling, review, semantic outcome calculation, reweighting, or parent estimate",
+  "source_hashes": {
+    "accepted_cell_allocation_csv": "bad5965d982ddb3f81efa43ccca52e14b34684458976370e2dbe4a3949f77ca9",
+    "fixed10k_parquet": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+    "formal800_freeze_receipt": "520e0f1b6f2e31fc43af6a608b026ee478b3fbf551640db706086f51ed779306",
+    "formal800_hidden_linkage": "cf53aba379963c6bf72c509333da0ce9157d4dd3736ef20e688e19a80420049e"
+  },
+  "status": "pass",
+  "version": "formal800-weight-lineage-audit-v1"
+}

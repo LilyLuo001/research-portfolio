@@ -1,5 +1,9 @@
 # LinkUp project execution rules
 
+## Current execution pointer (2026-10-12, after Formal800)
+
+Formal800 is complete and published; do not restart its 800/160/40 reviews. The user approved a reuse-release phase: bind the existing 2,464-shard narrow base and retained candidate-only metadata join through a scheduled file/footer audit and query catalog. A separate scheduled audit may check existing sampling probability columns; it must not read or re-extract advertisement text, resample, reweight the published semantic estimates, or automatically enable parent-frame inference. See `corpus_release_20261012/ROOT_DECISIONS.md` and the latest `retrospective_20261012/PROJECT_STATE.json`. The separate request to delete four local private cache directories is still pending and is not part of this approval.
+
 ## Retrospective plan pointer (2026-10-12)
 
 User approval now authorizes preparation and execution of the finite review of up to 800 ads (at most 800 unique contexts): 20% independent blind review and at most 40 root adjudications. Execution has started as preparation only; no sample or job is complete until a receipt names it. Preserve scheduled SCNet calculations and historical constraints; do not use BU, paid API, new models, full-base redo, or private Git data. See `retrospective_20261012/PROJECT_STATE.json` and `formal800_20261012/EXECUTION_LEDGER.md`.

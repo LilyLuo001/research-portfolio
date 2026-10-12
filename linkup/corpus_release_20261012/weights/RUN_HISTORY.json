@@ -1,0 +1,53 @@
+{
+  "version": "formal800-weight-lineage-run-history-v1",
+  "runs": [
+    {
+      "job_id": "46395696",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:00:02",
+      "result": "No Python execution and no receipt. The shell used set -u before Wuzhen module initialization."
+    },
+    {
+      "job_id": "46395790",
+      "state": "CANCELLED by 411455",
+      "elapsed_before_cancel": "00:01:21",
+      "result": "No receipt. This superseded attempt could invoke frozen rule parsing of text and was cancelled when its scope was found broader than the authorized metadata-only audit. It is not evidence for any audit finding."
+    },
+    {
+      "job_id": "46396032",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:03",
+      "resources": {
+        "partition": "wzhdtest",
+        "cpus": 2,
+        "memory": "4G",
+        "time_limit": "00:15:00"
+      },
+      "scope": "Strict metadata-only fixed10k, cell-allocation, frozen-800-linkage, and receipt-hash audit; no text column, parser, normalization, outcomes, resampling, reweighting, or parent estimate.",
+      "code_sha256": "31e8c213d3b8ea3e24b1fab2608d64872f6bce96d8598a4bdd12849868beb67b",
+      "sbatch_sha256": "ac3b6c9461f36e2db4206eac70f0bd7949b9c73170048c8579bfc505e4e6484a",
+      "receipt": "WEIGHT_LINEAGE_AUDIT_RECEIPT_INITIAL.json",
+      "receipt_sha256": "9ed0a757e043f2aaa9becabdd1b07c4644024903e7d42edbd0a93e133e71423c"
+    },
+    {
+      "job_id": "46396281",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:02",
+      "resources": {
+        "partition": "wzhdtest",
+        "cpus": 2,
+        "memory": "4G",
+        "time_limit": "00:15:00"
+      },
+      "scope": "Same strict metadata-only audit with essential entrypoint assertions added after independent static QA: accepted freeze status/version and exact frame binding, non-null canonical keys, per-record hidden/source arm identity, and sanitized environment label.",
+      "code_sha256": "050b3217f814a9c9fb1b43fe9ff0e6d94281b704df90cf66a897c3df6c7fa340",
+      "sbatch_sha256": "ac3b6c9461f36e2db4206eac70f0bd7949b9c73170048c8579bfc505e4e6484a",
+      "static_qa": "pass",
+      "receipt": "WEIGHT_LINEAGE_AUDIT_RECEIPT.json",
+      "receipt_sha256": "0ba9f498227ce6c57334505f73d862a1b5a294b3d305f59ce23a60f16b65a0bb"
+    }
+  ]
+}

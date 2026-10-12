@@ -1,0 +1,56 @@
+{
+  "status": "complete",
+  "execution_environment": "SCNet China scheduled jobs on Kunshan",
+  "final_job": {
+    "job_id": "124293534",
+    "partition": "kshctest02",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:08",
+    "allocated_cpus": 1,
+    "requested_memory": "3G",
+    "time_limit": "00:30:00"
+  },
+  "runtime": {
+    "python": "3.8.10",
+    "pyarrow": "11.0.0"
+  },
+  "deployed_code": {
+    "build_corpus_release_py_sha256": "c0cf851d5b9e1cb27008de715df5794bbe21d0ce16d53f91cda0514f9b574268",
+    "run_corpus_release_ks_sbatch_sha256": "dc8d9a579e93b34b5a23204a8cfd5aee58750a416d1f4c8d133f99209b790c46",
+    "local_and_deployed_hashes_match": true
+  },
+  "release_receipt": {
+    "path": "results/CORPUS_RELEASE_RECEIPT.json",
+    "sha256": "75e3afd8720ff8b174d0fe3a3b52fb7f8367c45305edecbcef78cc115181c921"
+  },
+  "prior_attempts": [
+    {
+      "job_id": "124293240",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:00:01",
+      "allocated_cpus": 1,
+      "requested_memory": "3G",
+      "reason": "launcher referenced an unavailable Anaconda module and fell through to an incompatible system Python; no release receipt was produced"
+    },
+    {
+      "job_id": "124293285",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:07:46",
+      "allocated_cpus": 1,
+      "requested_memory": "3G",
+      "reason": "footer verification reached packaging, then failed closed because retained T1 public CSV copies were absent from the documented Kunshan results path; no final release receipt was produced; the existing public artifacts were transported and the attempt was superseded"
+    }
+  ],
+  "pre_submission_rejection": {
+    "job_id": null,
+    "reason": "the scheduler rejected 4G with one CPU because it exceeded the partition memory-per-CPU limit; no job ran"
+  },
+  "limits": [
+    "No advertisement columns or raw text were read.",
+    "No new row-level table was materialized.",
+    "Initial failures are preserved and are not production results."
+  ]
+}

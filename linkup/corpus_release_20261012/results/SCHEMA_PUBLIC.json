@@ -1,0 +1,597 @@
+{
+  "ad_schema": [
+    {
+      "name": "JOB_HASH",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "SOURCE_FILE",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "SOURCE_ROW",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "RECORD_SOURCE_ROW",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "CREATED",
+      "nullable": true,
+      "type": "timestamp[ms]"
+    },
+    {
+      "name": "STATE",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "usable",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "DESCRIPTION_EMPTY",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "PARSE_ERROR",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "INPUT_EVIDENCE_TRUNCATED",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "ENRICHMENT_INCOMPLETE",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_occupation_task_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_occupation_task_available",
+      "nullable": true,
+      "type": "bool"
+    }
+  ],
+  "candidate_metadata_join_schema": [
+    {
+      "name": "JOB_HASH",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "SOURCE_FILE",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "SOURCE_ROW",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "RECORD_SOURCE_ROW",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "usable",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "DESCRIPTION_EMPTY",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "PARSE_ERROR",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "INPUT_EVIDENCE_TRUNCATED",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "ENRICHMENT_INCOMPLETE",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_general_work_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_specific_tool_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_industry_domain_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_required",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_preferred",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_broad",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_object_unspecified_exact_or_unspecified",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_detected",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_traditional_software_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_generative_ai_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_predictive_ai_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_use_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_develop_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "tech_unspecified_ai_implement_explicit",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_occupation_task_main",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "exp_occupation_task_available",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "COMPANY_ID",
+      "nullable": true,
+      "type": "decimal128(10, 0)"
+    },
+    {
+      "name": "CREATED",
+      "nullable": true,
+      "type": "timestamp[us]"
+    },
+    {
+      "name": "OCCUPATION_MAJOR",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "CENSUS_REGION",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "CROSSES_2022_11_30",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "OBSERVATION_END",
+      "nullable": true,
+      "type": "timestamp[us]"
+    },
+    {
+      "name": "OBSERVATION_CLOSED",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "DATE_COMPLETE",
+      "nullable": true,
+      "type": "bool"
+    },
+    {
+      "name": "STALE_DELETE_OR_REAPPEARANCE",
+      "nullable": true,
+      "type": "bool"
+    }
+  ],
+  "duration_schema": [
+    {
+      "name": "JOB_HASH",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "SOURCE_FILE",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "SOURCE_ROW",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "RECORD_SOURCE_ROW",
+      "nullable": true,
+      "type": "int64"
+    },
+    {
+      "name": "EVIDENCE_ORDINAL",
+      "nullable": true,
+      "type": "int32"
+    },
+    {
+      "name": "OBJECT_TYPE",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "MIN_YEARS",
+      "nullable": true,
+      "type": "double"
+    },
+    {
+      "name": "MAX_YEARS",
+      "nullable": true,
+      "type": "double"
+    },
+    {
+      "name": "DURATION_UNIT",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "BOUND_TYPE",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "name": "REQUIREMENT_STRENGTH",
+      "nullable": true,
+      "type": "string"
+    }
+  ],
+  "field_limits": {
+    "dates": "observation metadata, not historical text-version proof",
+    "experience_and_technology": "old-version candidate measures, not semantic gold",
+    "non_detection": "candidate false or non-detection does not establish semantic absence",
+    "occupation_task": "structurally unavailable; retain NA, never zero",
+    "predictive_ai": "frozen all-zero/unmeasurable under the old vocabulary",
+    "usable": "engineering parse state, not semantic accuracy"
+  },
+  "release_version": "whole-corpus-old-narrow-v1"
+}
