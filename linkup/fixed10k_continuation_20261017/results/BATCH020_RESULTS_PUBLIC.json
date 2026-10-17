@@ -1,0 +1,230 @@
+{
+  "batch": {
+    "required_family_cells": 700,
+    "source": "fixed10k_batch020",
+    "trusted_contexts": 100,
+    "validated_contexts": 100
+  },
+  "claim_boundary": "validated full-document judgments applied only to frozen required field whitelist; isolated contexts remain separately unfinished and are not written as final reviewed unknown",
+  "delta": {
+    "blocked_contexts": 5,
+    "covered_ads": 114,
+    "final_unknown_contexts_in_batch": 5,
+    "newly_isolated_contexts": 0,
+    "remaining_reviewed_uncertainty_contexts": 430,
+    "remaining_unfinished_contexts": 4904,
+    "remaining_work_contexts": 4899,
+    "reused_prior_family_cells": 0,
+    "reviewed_contexts": 100,
+    "updated_ad_field_rows": 798,
+    "updated_context_family_cells": 700,
+    "updated_contexts": 100
+  },
+  "field_status_ad_counts": [
+    {
+      "ad_count": 5635,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 3575,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "known"
+    },
+    {
+      "ad_count": 435,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 14,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "partial"
+    },
+    {
+      "ad_count": 341,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 5635,
+      "field_family": "entry_wording_and_scope",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 217,
+      "field_family": "entry_wording_and_scope",
+      "status": "known"
+    },
+    {
+      "ad_count": 4121,
+      "field_family": "entry_wording_and_scope",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 14,
+      "field_family": "entry_wording_and_scope",
+      "status": "partial"
+    },
+    {
+      "ad_count": 13,
+      "field_family": "entry_wording_and_scope",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 5511,
+      "field_family": "experience_literal_years",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 3781,
+      "field_family": "experience_literal_years",
+      "status": "known"
+    },
+    {
+      "ad_count": 47,
+      "field_family": "experience_literal_years",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 118,
+      "field_family": "experience_literal_years",
+      "status": "partial"
+    },
+    {
+      "ad_count": 543,
+      "field_family": "experience_literal_years",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 5511,
+      "field_family": "experience_object",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 3889,
+      "field_family": "experience_object",
+      "status": "known"
+    },
+    {
+      "ad_count": 47,
+      "field_family": "experience_object",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 118,
+      "field_family": "experience_object",
+      "status": "partial"
+    },
+    {
+      "ad_count": 435,
+      "field_family": "experience_object",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 5511,
+      "field_family": "experience_strength",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 3844,
+      "field_family": "experience_strength",
+      "status": "known"
+    },
+    {
+      "ad_count": 47,
+      "field_family": "experience_strength",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 130,
+      "field_family": "experience_strength",
+      "status": "partial"
+    },
+    {
+      "ad_count": 468,
+      "field_family": "experience_strength",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 5511,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 3843,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "known"
+    },
+    {
+      "ad_count": 47,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 130,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "partial"
+    },
+    {
+      "ad_count": 469,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 5635,
+      "field_family": "technology_category_and_role",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 3457,
+      "field_family": "technology_category_and_role",
+      "status": "known"
+    },
+    {
+      "ad_count": 1,
+      "field_family": "technology_category_and_role",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 8,
+      "field_family": "technology_category_and_role",
+      "status": "partial"
+    },
+    {
+      "ad_count": 899,
+      "field_family": "technology_category_and_role",
+      "status": "unknown_or_conflict"
+    }
+  ],
+  "isolation": {
+    "blocked_contexts": 5,
+    "register_sha256": "7b456f80998c1b94dac89527303db3e6649fc1a93d59ca8bd16f4e3897c9d6a3"
+  },
+  "record_batch": {
+    "batch_number": 20,
+    "contexts": 100,
+    "work_queue_positions_in_predecessor": [
+      1,
+      100
+    ]
+  },
+  "validation": {
+    "receipt_sha256s": [
+      "b32ad38163ff0812ddcea6fe7bc5023d2d7af7e2651a26ce25cfd5c96c18c86c",
+      "afc53e1e6c8a08bf499e522c49e3e671439c24409cacc7d0900398cf4b158be6",
+      "204d8d81a4814a9432f3099d785200aabebd097790e62daf9f0a827f35287f6d",
+      "ffef4e82641f97c8a81584c3eafa055886b1abb2727645e20ec8cccedb8e6686",
+      "2f7dd24c50af692362881027c98d33ae2968d198bbbe422556b48eb9ceaee895"
+    ],
+    "validated_reviews_sha256": "1f54b4ed3410cef258ecefe696613331183623d3e4af081abcdb82d380c60361",
+    "validator_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ]
+  },
+  "version": "fixed10k-semantic-production-batch020-v1"
+}
