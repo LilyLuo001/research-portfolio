@@ -38,7 +38,7 @@ def main():
  controller={"version":"fixed10k-continuation-controller-v1","started_utc":now(),"status":"running","range":[a.first_batch,a.last_batch],"controller_code_sha256":sha(__file__),"finalizer_code_sha256":sha(c/"code/finalize_continuation.py"),"wrapper_sha256":sha(c/"code/wz_finalize_continuation.sbatch"),"events":events}
  idle_start=time.monotonic()
  for batch in range(a.first_batch,a.last_batch+1):
-  b="{:03d}".format(batch);final_receipt=c/("receipts/BATCH%s_FINALIZE_RECEIPT.json"%b);expected=99 if batch==69 else 100;expected_remaining=6500-sum(99 if x==69 else 100 for x in range(5,batch+1))
+  b="{:03d}".format(batch);final_receipt=c/("receipts/BATCH%s_FINALIZE_RECEIPT.json"%b);expected=99 if batch==69 else 100;expected_remaining=None
   if resume_batch==batch and not final_receipt.exists():
    while True:
     job_state,exit_code=state(resume_job)
@@ -48,9 +48,12 @@ def main():
     controller.update(status="paused_batch_failure",paused_batch=batch,failed_job=resume_job,scheduler_state=job_state,exit_code=exit_code,resumed_existing_job=True,updated_utc=now());atomic(receipt_path,controller);raise RuntimeError("resumed validator/backfill batch failed")
    events.append({"utc":now(),"batch":batch,"action":"resumed_existing_validator_backfill","job_id":resume_job,"scheduler_state":job_state,"exit_code":exit_code})
    resume_batch=None;resume_job=None
+  prior_counts={} if batch==5 else json.load(open(c/("receipts/BATCH%03d_FINALIZE_RECEIPT.json"%(batch-1)),encoding="utf-8"))["counts"]
+  prior_remaining=6500 if batch==5 else prior_counts["remaining_unfinished_contexts"]
   if final_receipt.exists():
    final=json.load(open(final_receipt,encoding="utf-8"))
-   if final.get("status")!="pass" or final.get("counts",{}).get("blocked_contexts")!=1 or final.get("counts",{}).get("remaining_unfinished_contexts")!=expected_remaining:
+   cnt=final.get("counts",{}); counts=cnt; expected_remaining=prior_remaining-cnt.get("updated_contexts",expected)
+   if final.get("status")!="pass" or cnt.get("remaining_unfinished_contexts")!=expected_remaining or cnt.get("remaining_work_contexts",0)+cnt.get("blocked_contexts",0)!=expected_remaining:
     controller.update(status="paused_conservation_failure",paused_batch=batch,updated_utc=now());atomic(receipt_path,controller);raise RuntimeError("existing finalize receipt fails conservation")
    events.append({"utc":now(),"batch":batch,"action":"skip_already_successful","finalize_receipt_sha256":sha(final_receipt),"remaining_unfinished_contexts":expected_remaining});atomic(receipt_path,controller);continue
   batchdir=c/("prepared/batch%s"%b);packets=[batchdir/("packets/PACKET_%02d_PRIVATE.jsonl"%n) for n in range(1,6)];reviews=[batchdir/("reviews/REVIEW_PACKET_%02d_PRIVATE.jsonl"%n) for n in range(1,6)]
@@ -82,9 +85,10 @@ def main():
   if job_state!="COMPLETED" or exit_code!="0:0" or not final_receipt.exists():
    controller.update(status="paused_batch_failure",paused_batch=batch,failed_job=job,scheduler_state=job_state,exit_code=exit_code,updated_utc=now());atomic(receipt_path,controller);raise RuntimeError("validator/backfill batch failed")
   final=json.load(open(final_receipt,encoding="utf-8"));counts=final.get("counts",{})
-  if final.get("status")!="pass" or counts.get("updated_contexts")!=expected or counts.get("blocked_contexts")!=1 or counts.get("remaining_unfinished_contexts")!=expected_remaining:
+  expected_remaining=prior_remaining-counts.get("updated_contexts",expected)
+  if final.get("status")!="pass" or counts.get("reviewed_contexts",counts.get("updated_contexts"))!=expected or counts.get("updated_contexts",0)+counts.get("newly_isolated_contexts",0)!=expected or counts.get("remaining_unfinished_contexts")!=expected_remaining or counts.get("remaining_work_contexts",0)+counts.get("blocked_contexts",0)!=expected_remaining:
    controller.update(status="paused_conservation_failure",paused_batch=batch,failed_job=job,observed_counts=counts,expected_remaining_unfinished=expected_remaining,updated_utc=now());atomic(receipt_path,controller);raise RuntimeError("post-backfill conservation failed")
-  event.update(finalize_receipt_sha256=sha(final_receipt),remaining_work_contexts=counts["remaining_work_contexts"],blocked_contexts=1,remaining_unfinished_contexts=counts["remaining_unfinished_contexts"])
+  event.update(finalize_receipt_sha256=sha(final_receipt),remaining_work_contexts=counts["remaining_work_contexts"],blocked_contexts=counts["blocked_contexts"],remaining_unfinished_contexts=counts["remaining_unfinished_contexts"])
   controller.update(status="checkpoint_pass",last_completed_batch=batch,updated_utc=now());atomic(receipt_path,controller)
- controller.update(status="complete",completed_utc=now(),last_completed_batch=a.last_batch,remaining_unfinished_contexts=1,blocked_contexts=1);atomic(receipt_path,controller)
+ controller.update(status="all_available_packets_backfilled_with_isolated_unfinished",completed_utc=now(),last_completed_batch=a.last_batch,remaining_unfinished_contexts=counts["remaining_unfinished_contexts"],blocked_contexts=counts["blocked_contexts"]);atomic(receipt_path,controller)
 if __name__=="__main__":main()

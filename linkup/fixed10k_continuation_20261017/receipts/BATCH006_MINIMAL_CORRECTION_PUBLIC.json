@@ -1,0 +1,23 @@
+{
+  "event": "Batch006 continuation",
+  "minimal_implementation_fix": "Permit newly isolated unreadable sources without changing frozen packet order or counting them as final unknown/completed.",
+  "source_recovery": {
+    "job": "46777423",
+    "attempts_for_new_context": 1,
+    "outcome": "source basename absent from frozen locator; no original source row read",
+    "total_isolated_unfinished": 2
+  },
+  "review_corrections": {
+    "scope": "only exact validator-identified records and a named-experience object contradiction observed in the same record",
+    "new_taxonomy": false,
+    "reopened_old_complete_batches": false,
+    "new_review_count_for_corrections": 0
+  },
+  "backfill": {
+    "job": "46777452",
+    "new_full_contexts": 99,
+    "reviewed_contexts": 100,
+    "new_isolated_unfinished": 1
+  },
+  "acceptance_boundary": "Engineering and source integrity checks are not independent semantic accuracy evidence."
+}
