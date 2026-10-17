@@ -16,6 +16,8 @@ summary["A"].update(new_contexts_backfilled_this_turn=new,actual_reviewed_contex
  required_context_family_cells=sum(x["counts"]["updated_context_family_cells"] for x in rr),
  prior_family_cells_reused_within_new_batch=sum(x["counts"]["reused_prior_family_cells"] for x in rr),
  new_batch_final_unknown_contexts=sum(x["counts"]["final_unknown_contexts_in_batch"] for x in rr),
+ newly_added_uncertainty_contexts_since_batch004=d["remaining_reviewed_uncertainty_contexts"]-334,
+ uncertainty_count_note="Final-unknown counts among processed contexts may include prior unknown families preserved by the whitelist; net new registry entries are reported separately.",
  cumulative_reviewed_uncertainty_contexts=d["remaining_reviewed_uncertainty_contexts"],
  remaining_unfinished_contexts=d["remaining_unfinished_contexts"],remaining_work_contexts=d["remaining_work_contexts"],
  isolated_unfinished_contexts=d["blocked_contexts"],elapsed_wall_seconds_including_preparation_and_corrections=elapsed,

@@ -67,10 +67,12 @@ def finalize(a):
   if prior.get("record_batch",{}).get("batch_number")!=batch-1:raise RuntimeError("nonsequential prior receipt")
  names={"ledger":"private_ledger_sha256","queue":"private_queue_sha256","uncertainty":"private_uncertainty_sha256"}
  if any(prior.get("outputs",{}).get(v)!=sha(paths[k]) for k,v in names.items()):raise RuntimeError("prior hash chain mismatch")
- isolation=rows(a.isolation_register);blocked={x["normalized_context_sha256"] for x in isolation}
+ isolation=[x for x in rows(a.isolation_register) if x.get("isolation_batch",4)<=batch];blocked={x["normalized_context_sha256"] for x in isolation}
  if not blocked or len(blocked)!=len(isolation) or any(not x.get("work_queue_excluded") for x in isolation):raise RuntimeError("blocked register mismatch")
  packet_contexts={x["context_sha256"] for x in packet.values()}
  newly_blocked=packet_contexts & blocked
+ partial={x["context_sha256"] for x in reviews if x["document_status"]=="reviewed_partial"}
+ if partial!=newly_blocked:raise RuntimeError("partial source requires one recovery/isolation before backfill; no unknown completion allowed")
  if any(x.get("isolation_batch")!=batch or x.get("recovery_attempts")!=1 for x in isolation if x["normalized_context_sha256"] in newly_blocked):raise RuntimeError("current isolation lacks one recovery attempt")
  old_ledger,raw_queue,old_uncertainty=(rows(paths[k]) for k in ("ledger","queue","uncertainty"));old_queue=[x for x in raw_queue if x["normalized_context_sha256"] not in (blocked-newly_blocked)]
  expected={x["normalized_context_sha256"] for x in old_queue[:expected_records]}
