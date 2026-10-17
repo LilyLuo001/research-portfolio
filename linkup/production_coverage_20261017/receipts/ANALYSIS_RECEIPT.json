@@ -1,0 +1,190 @@
+{
+  "accepted_source_binding": [
+    {
+      "bound_source_rows": 719,
+      "source": "formal800_final",
+      "source_rows": 719,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 24,
+      "source": "legacy_batch001",
+      "source_rows": 24,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 128,
+      "source": "legacy_batch002",
+      "source_rows": 128,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 14,
+      "source": "wave01_final",
+      "source_rows": 14,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 0,
+      "source": "wave02_final",
+      "source_rows": 96,
+      "unbound_source_rows": 96
+    }
+  ],
+  "adapter_counts": [
+    {
+      "count": 113,
+      "measure": "duration_candidate",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 1,
+      "measure": "duration_error",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 6,
+      "measure": "duration_unknown",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 3,
+      "measure": "object_outcome_unknown",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 24,
+      "measure": "strict_positive_objects",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 622,
+      "measure": "duration_candidate",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 19,
+      "measure": "duration_error",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 5,
+      "measure": "duration_unknown",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 3,
+      "measure": "object_outcome_unknown",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 126,
+      "measure": "strict_positive_objects",
+      "source": "legacy_batch002"
+    }
+  ],
+  "checks": {
+    "field_family_conservation": true,
+    "formal_final_mask_precedence": true,
+    "frame_ads_10000": true,
+    "ledger_rows_70000": true,
+    "legacy_zero_not_absence": true,
+    "no_text_or_quotes_in_outputs": true,
+    "raw_exact_texts_7635": true,
+    "required_and_uncertainty_contexts_unique": true
+  },
+  "claim_boundary": "coverage/provenance inventory only; no new semantic reading, accuracy certification, prevalence estimate, or label replacement",
+  "code": {
+    "path": "/work/home/lilysharp/private/production_coverage_20261017/code/reconcile_coverage.py",
+    "sha256": "4697d56d9660cdd7ea5c26505ab3d917466c6f67d2552c5d39a0a7ceee1e9110"
+  },
+  "counts": {
+    "ads": 10000,
+    "ledger_rows": 70000,
+    "normalized_full_inputs": 7617,
+    "raw_exact_texts": 7635,
+    "required_new_review_contexts": 6899,
+    "reviewed_uncertainty_contexts": 308
+  },
+  "created_utc": "2026-10-17T04:54:40.247853+00:00",
+  "inputs": {
+    "batch001": {
+      "path": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/payload/production_standard_20261008/private/batch001/FINAL_CANDIDATES_PRIVATE.jsonl",
+      "sha256": "c6949465ad8fab1bd3c1b881d48b13f1d04979a4de87a288f4136459c14ac856"
+    },
+    "batch002": {
+      "path": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/payload/batch002_execution/private/batch002/FINAL_CANDIDATES_PRIVATE.jsonl",
+      "sha256": "d662e42e8ba067d209c48c35ce4f26154f5dd3349628f9eeacf7581849fb6c8b"
+    },
+    "exclusion_hashes": {
+      "path": "/work/home/lilysharp/private/formal800_20261012/private/exclusions/EXCLUSION_HASHES_ONLY_PRIVATE.jsonl",
+      "sha256": "76609078e02d11e37ecaa3b82dbd6dab037b77830d086be51d9285eabc887104"
+    },
+    "formal_linkage": {
+      "path": "/work/home/lilysharp/private/formal800_20261012/private/freeze/HIDDEN_LINKAGE_PRIVATE.jsonl",
+      "sha256": "cf53aba379963c6bf72c509333da0ce9157d4dd3736ef20e688e19a80420049e"
+    },
+    "formal_packet": {
+      "path": "/work/home/lilysharp/private/formal800_20261012/private/validation/final/FINAL_BOUND_PACKET_PRIVATE.jsonl",
+      "sha256": "c012761f8ae9e5b3d5974744d5ff9caf42531b84253e46ee2ab21a73ffd64d5c"
+    },
+    "formal_reviews": {
+      "path": "/work/home/lilysharp/private/formal800_20261012/private/validation/final/validated_reviews.jsonl",
+      "sha256": "2939a5846cb6d40f42af94465e764fedcad51b86fc3d387d04d142c51ff63860"
+    },
+    "frame": {
+      "path": "/work/home/lilysharp/private/next_stage_20261004/text_handoff_20261007/verified_fixed10000/MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet",
+      "sha256": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35"
+    },
+    "normalizer": {
+      "path": "/work/home/lilysharp/private/formal800_20261012/code/frozen_rulefirst_v1_2/legacy_v5_frozen.py",
+      "sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd"
+    },
+    "wave01_overlay": {
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/input/wave01/PRO_SEMANTIC_REVIEW_OVERLAY_PRIVATE.jsonl",
+      "sha256": "f2571238fdcdb3d5fa9eee6afc6f8ff2cb88f3616addaee5dbc0ff5dc865e049"
+    },
+    "wave01_packet": {
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/input/wave01/DEV24_RELATION_DECISIONS_PRIVATE.jsonl",
+      "sha256": "4c3121398c7a95d12f38461211215c00895640f883e9b46040c5b338c7175328"
+    },
+    "wave02_overlay": {
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/input/wave02/WAVE02_REVIEW_OVERLAY_PRIVATE.jsonl",
+      "sha256": "8201f4bb29bc8d7147a0ece4cfcaef52a008e57b7930842b0343da5fd6708ad0"
+    },
+    "wave02_packet": {
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/input/wave02/WAVE02_ACTUAL96_PACKET_PRIVATE.jsonl",
+      "sha256": "fb2707e854c526846fb4495afeab39856d3b8e4697d4fa1c74e0824980d88020"
+    }
+  },
+  "normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+  "outputs": {
+    "private_ledger": {
+      "bytes": 60091272,
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/private/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+      "sha256": "481cf6f844cae9377d3be4d1ce51a25fdcab277e1d9e8280957615946d1e3756"
+    },
+    "private_queue": {
+      "bytes": 12796852,
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/private/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
+      "sha256": "42741690264ada733f19da8991db5617d64b5d75577db260476cf9f0c1803428"
+    },
+    "private_uncertainty": {
+      "bytes": 543544,
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/private/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl",
+      "sha256": "46d439f8ddd3b9d67d4ab5fe178667602d5da5257d3e6e0246b38f6bdafb2b27"
+    },
+    "public_coverage": {
+      "bytes": 13997,
+      "path": "/work/home/lilysharp/private/production_coverage_20261017/public/COVERAGE_AGGREGATES_PUBLIC.json",
+      "sha256": "53dcf3edbb9a4c5a1e64e331f8ff4f85d41fe841987022440f8296f00d125531"
+    }
+  },
+  "public_coverage_sha256": "53dcf3edbb9a4c5a1e64e331f8ff4f85d41fe841987022440f8296f00d125531",
+  "scheduler": {
+    "host": "b01r3n17",
+    "job_id": "46764737"
+  },
+  "status": "pass",
+  "version": "fixed10k-production-coverage-reconciliation-v1"
+}

@@ -1,0 +1,555 @@
+{
+  "accepted_source_binding": [
+    {
+      "bound_source_rows": 719,
+      "source": "formal800_final",
+      "source_rows": 719,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 24,
+      "source": "legacy_batch001",
+      "source_rows": 24,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 128,
+      "source": "legacy_batch002",
+      "source_rows": 128,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 14,
+      "source": "wave01_final",
+      "source_rows": 14,
+      "unbound_source_rows": 0
+    },
+    {
+      "bound_source_rows": 0,
+      "source": "wave02_final",
+      "source_rows": 96,
+      "unbound_source_rows": 96
+    }
+  ],
+  "binding_ad_counts": [
+    {
+      "ads": 800,
+      "mode": "direct_ad_assignment",
+      "source": "formal800_final"
+    },
+    {
+      "ads": 21,
+      "mode": "identical_normalized_input_reuse",
+      "source": "formal800_final"
+    },
+    {
+      "ads": 1160,
+      "mode": "raw_exact_reuse",
+      "source": "formal800_final"
+    },
+    {
+      "ads": 44,
+      "mode": "raw_exact_reuse",
+      "source": "legacy_batch001"
+    },
+    {
+      "ads": 154,
+      "mode": "raw_exact_reuse",
+      "source": "legacy_batch002"
+    },
+    {
+      "ads": 16,
+      "mode": "raw_exact_reuse",
+      "source": "wave01_final"
+    }
+  ],
+  "field_status_ad_counts": [
+    {
+      "ad_count": 8003,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1511,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "known"
+    },
+    {
+      "ad_count": 136,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 16,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "partial"
+    },
+    {
+      "ad_count": 334,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 8003,
+      "field_family": "entry_wording_and_scope",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 86,
+      "field_family": "entry_wording_and_scope",
+      "status": "known"
+    },
+    {
+      "ad_count": 1888,
+      "field_family": "entry_wording_and_scope",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 15,
+      "field_family": "entry_wording_and_scope",
+      "status": "partial"
+    },
+    {
+      "ad_count": 8,
+      "field_family": "entry_wording_and_scope",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7817,
+      "field_family": "experience_literal_years",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1465,
+      "field_family": "experience_literal_years",
+      "status": "known"
+    },
+    {
+      "ad_count": 13,
+      "field_family": "experience_literal_years",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 176,
+      "field_family": "experience_literal_years",
+      "status": "partial"
+    },
+    {
+      "ad_count": 529,
+      "field_family": "experience_literal_years",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7817,
+      "field_family": "experience_object",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1562,
+      "field_family": "experience_object",
+      "status": "known"
+    },
+    {
+      "ad_count": 13,
+      "field_family": "experience_object",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 179,
+      "field_family": "experience_object",
+      "status": "partial"
+    },
+    {
+      "ad_count": 429,
+      "field_family": "experience_object",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7817,
+      "field_family": "experience_strength",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1519,
+      "field_family": "experience_strength",
+      "status": "known"
+    },
+    {
+      "ad_count": 13,
+      "field_family": "experience_strength",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 193,
+      "field_family": "experience_strength",
+      "status": "partial"
+    },
+    {
+      "ad_count": 458,
+      "field_family": "experience_strength",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7817,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1518,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "known"
+    },
+    {
+      "ad_count": 13,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 193,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "partial"
+    },
+    {
+      "ad_count": 459,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 8003,
+      "field_family": "technology_category_and_role",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1226,
+      "field_family": "technology_category_and_role",
+      "status": "known"
+    },
+    {
+      "ad_count": 6,
+      "field_family": "technology_category_and_role",
+      "status": "partial"
+    },
+    {
+      "ad_count": 765,
+      "field_family": "technology_category_and_role",
+      "status": "unknown_or_conflict"
+    }
+  ],
+  "frame_ads": 10000,
+  "historical_development_evaluation_exposed_ads": 717,
+  "historical_development_evaluation_exposed_contexts": 504,
+  "legacy_adapter_counts": [
+    {
+      "count": 113,
+      "measure": "duration_candidate",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 1,
+      "measure": "duration_error",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 6,
+      "measure": "duration_unknown",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 3,
+      "measure": "object_outcome_unknown",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 24,
+      "measure": "strict_positive_objects",
+      "source": "legacy_batch001"
+    },
+    {
+      "count": 622,
+      "measure": "duration_candidate",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 19,
+      "measure": "duration_error",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 5,
+      "measure": "duration_unknown",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 3,
+      "measure": "object_outcome_unknown",
+      "source": "legacy_batch002"
+    },
+    {
+      "count": 126,
+      "measure": "strict_positive_objects",
+      "source": "legacy_batch002"
+    }
+  ],
+  "normalized_full_inputs": 7617,
+  "raw_exact_texts": 7635,
+  "required_contexts_by_family_and_status": [
+    {
+      "contexts": 6884,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 14,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "partial"
+    },
+    {
+      "contexts": 6884,
+      "field_family": "entry_wording_and_scope",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 13,
+      "field_family": "entry_wording_and_scope",
+      "status": "partial"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "experience_literal_years",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 130,
+      "field_family": "experience_literal_years",
+      "status": "partial"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "experience_object",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 135,
+      "field_family": "experience_object",
+      "status": "partial"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "experience_strength",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 147,
+      "field_family": "experience_strength",
+      "status": "partial"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 147,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "partial"
+    },
+    {
+      "contexts": 6884,
+      "field_family": "technology_category_and_role",
+      "status": "candidate_only"
+    },
+    {
+      "contexts": 6,
+      "field_family": "technology_category_and_role",
+      "status": "partial"
+    }
+  ],
+  "required_new_review_contexts": 6899,
+  "resolution_rule_context_counts": [
+    {
+      "contexts": 719,
+      "field_family": "current_responsibility_subject_and_relation",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6884,
+      "field_family": "current_responsibility_subject_and_relation",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 14,
+      "field_family": "current_responsibility_subject_and_relation",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 1,
+      "field_family": "entry_wording_and_scope",
+      "resolution_rule": "compatible_complete_source"
+    },
+    {
+      "contexts": 719,
+      "field_family": "entry_wording_and_scope",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6884,
+      "field_family": "entry_wording_and_scope",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 13,
+      "field_family": "entry_wording_and_scope",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 719,
+      "field_family": "experience_literal_years",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "experience_literal_years",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 130,
+      "field_family": "experience_literal_years",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 24,
+      "field_family": "experience_literal_years",
+      "resolution_rule": "reviewed_unresolved"
+    },
+    {
+      "contexts": 12,
+      "field_family": "experience_object",
+      "resolution_rule": "compatible_complete_source"
+    },
+    {
+      "contexts": 719,
+      "field_family": "experience_object",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "experience_object",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 135,
+      "field_family": "experience_object",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 7,
+      "field_family": "experience_object",
+      "resolution_rule": "reviewed_unresolved"
+    },
+    {
+      "contexts": 719,
+      "field_family": "experience_strength",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "experience_strength",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 147,
+      "field_family": "experience_strength",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 7,
+      "field_family": "experience_strength",
+      "resolution_rule": "reviewed_unresolved"
+    },
+    {
+      "contexts": 719,
+      "field_family": "qualification_conditions_and_alternatives",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6744,
+      "field_family": "qualification_conditions_and_alternatives",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 147,
+      "field_family": "qualification_conditions_and_alternatives",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 7,
+      "field_family": "qualification_conditions_and_alternatives",
+      "resolution_rule": "reviewed_unresolved"
+    },
+    {
+      "contexts": 719,
+      "field_family": "technology_category_and_role",
+      "resolution_rule": "formal_final_absolute_including_mask"
+    },
+    {
+      "contexts": 6884,
+      "field_family": "technology_category_and_role",
+      "resolution_rule": "never_semantically_reviewed"
+    },
+    {
+      "contexts": 5,
+      "field_family": "technology_category_and_role",
+      "resolution_rule": "partial_review_only"
+    },
+    {
+      "contexts": 9,
+      "field_family": "technology_category_and_role",
+      "resolution_rule": "reviewed_unresolved"
+    }
+  ],
+  "reviewed_uncertainty_contexts": 308,
+  "reviewed_uncertainty_contexts_by_family": [
+    {
+      "contexts": 72,
+      "field_family": "current_responsibility_subject_and_relation"
+    },
+    {
+      "contexts": 7,
+      "field_family": "entry_wording_and_scope"
+    },
+    {
+      "contexts": 150,
+      "field_family": "experience_literal_years"
+    },
+    {
+      "contexts": 103,
+      "field_family": "experience_object"
+    },
+    {
+      "contexts": 115,
+      "field_family": "experience_strength"
+    },
+    {
+      "contexts": 116,
+      "field_family": "qualification_conditions_and_alternatives"
+    },
+    {
+      "contexts": 189,
+      "field_family": "technology_category_and_role"
+    }
+  ],
+  "rules": {
+    "conflict": "Formal final mask absolute; otherwise incompatible complete values unresolved without latest/majority rule",
+    "exact_binding": "raw exact or identical frozen normalized full input only; no fuzzy/JOB_HASH reuse",
+    "legacy": "strict positive contributes partial atoms only; zero has no negative semantic value; technology/tools/tasks uncovered"
+  },
+  "source_unavailable_assignment_count": 0,
+  "source_unavailable_documented_sources": [
+    "paired_early_development_diagnostic",
+    "D42_source20",
+    "D50_D55_root_diagnostics",
+    "D51_D57_targeted_diagnostic"
+  ],
+  "uncertainty_contexts_also_needing_other_fields": 37,
+  "version": "fixed10k-production-coverage-reconciliation-v1"
+}

@@ -1,0 +1,126 @@
+{
+  "version": "production-coverage-source-inventory-v1",
+  "scope": "Documentary inventory of completed pre-Formal800 semantic-review evidence and explicitly nonqualifying neighboring artifacts. Aggregate provenance only; no advertisements, keys, quotations, row labels, or credentials.",
+  "cloud_archive": {
+    "documented_root": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/payload",
+    "verification_receipt": "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/COMPLETE_MIGRATION_INTEGRITY_RECEIPT.json",
+    "boundary": "The verification job established transport integrity only. It did not perform cloud inference or convert historical conversation-model labels into cloud-produced labels."
+  },
+  "sources": [
+    {
+      "name": "Batch001 bounded candidate production",
+      "counts": {"unique_texts_completed": 24, "eligible_object_fields": 72, "candidate_fields": 69, "unknown_fields": 3, "main_field_changes": 2},
+      "completion_status": "completed_legacy_candidate_run",
+      "research_status": "legacycandidate",
+      "semantic_scope": "legacy_partial_three_experience_objects",
+      "schema_scope": "Full-document candidate run for the legacy strict three experience objects, with candidate clauses, literal years, unknowns, and errors retained. It does not provide completed tool, technology, or task/responsibility semantic coverage.",
+      "zero_interpretation": "A strict three-object output of zero is not a finding of no experience: nonmatching, unresolved, conditional, or out-of-scope experience language remains outside that strict object total.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/production_standard_20261008/ROOT_RELEASE_DECISION.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/production_standard_20261008/BATCH001_AND_QUEUE_RECEIPT.json"
+      ],
+      "documented_cloud_locator": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/payload/production_standard_20261008/private/batch001/FINAL_CANDIDATES_PRIVATE.jsonl",
+      "final_private_sha256": "c6949465ad8fab1bd3c1b881d48b13f1d04979a4de87a288f4136459c14ac856",
+      "claim_boundary": "Historical conversation-hosted candidate measurement; neither human gold nor an accuracy certification."
+    },
+    {
+      "name": "Batch002 bounded candidate production",
+      "counts": {"unique_texts_completed": 128, "primary_readings": 128, "independently_audited_rows": 16, "targeted_cases": 8, "root_object_decisions": 11, "changed_main_values": 9, "cumulative_unique_completed_with_batch001": 152, "cumulative_original_ads_represented_with_batch001": 198},
+      "completion_status": "completed_legacy_candidate_run",
+      "research_status": "legacycandidate",
+      "semantic_scope": "legacy_partial_three_experience_objects",
+      "schema_scope": "Full-document candidate run for the legacy strict three experience objects, with bounded independent audit, root object decisions, candidate clauses, literal years, unknowns, and errors retained. It does not provide completed tool, technology, or task/responsibility semantic coverage.",
+      "zero_interpretation": "A strict three-object output of zero is not a finding of no experience: the schema preserves unknown and unresolved states, and strict object categories do not exhaust all experience wording.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/batch002_execution/BATCH002_RUN_RECEIPT.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/batch002_execution/ROOT_ACCEPTANCE.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/batch002_execution/CUMULATIVE_CHECKPOINT_RECEIPT.json"
+      ],
+      "documented_cloud_locator": "/work/home/lilysharp/linkup_cloud_execution_20261008/run-20261008T053138Z/payload/batch002_execution/private/batch002/FINAL_CANDIDATES_PRIVATE.jsonl",
+      "final_private_sha256": "d662e42e8ba067d209c48c35ce4f26154f5dd3349628f9eeacf7581849fb6c8b",
+      "claim_boundary": "Historical conversation-hosted candidate measurement; independent audit and root decisions do not yield a population accuracy estimate."
+    },
+    {
+      "name": "Paired early development diagnostic",
+      "counts": {"records": 20, "distinct_texts": 19, "model_readings": 40, "root_targeted_cases": 4},
+      "completion_status": "actual_fulljoint",
+      "research_status": "diagnostic_notstructured",
+      "schema_scope": "Two-reader full-text comparison of candidate semantic outputs, plus targeted root adjudication; closed without unattended-production acceptance.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/measurement/results/ROOT_DEVELOPMENT_DECISION.json",
+        "analysis_transition_20260930/dual_source_execution_v2/quality/QA_DEVELOPMENT_CLOSEOUT.json"
+      ],
+      "documented_cloud_locator": null,
+      "claim_boundary": "Public records expose aggregate counts and private-file hashes, not a documented row-level archive locator suitable for reuse as a completed label file."
+    },
+    {
+      "name": "D42 compact source20 diagnostic",
+      "counts": {"source_documents": 20, "development_documents": 4, "heldout_documents": 16, "source_readings": 40, "root_targeted_reviews": 10},
+      "completion_status": "actual_fulljoint",
+      "research_status": "diagnostic_notstructured",
+      "schema_scope": "Bounded two-reader full-document diagnostic with precommitted root review order; no unattended production and no accuracy estimate.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/compact_measurement_20261007/SOURCE20_SELECTION_RECEIPT.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/compact_measurement_20261007/ROOT_FINAL_DECISION.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/compact_measurement_20261007/QA_FINAL_PUBLIC_RELEASE.json"
+      ],
+      "documented_cloud_locator": null,
+      "claim_boundary": "Diagnostic readings are real but are not a released, reusable structured-label panel. They may overlap other development materials."
+    },
+    {
+      "name": "D50 and D55 root development decisions",
+      "counts": {"D50_full_documents_read": 12, "D50_additional_compact_rows_read": 6, "D55_full_documents_read": 4, "D55_partial_documents_read": 1},
+      "completion_status": "question-specific",
+      "research_status": "diagnostic_notstructured",
+      "schema_scope": "Root decisions about qualification alternatives, experience-object scope, responsibility referents, and technology-role interpretation; D55 contains four full reads and one explicitly partial read.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/ROOT_DEVELOPMENT_DECISION.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/hybrid_production_20261009/ROOT_PRO_DECISIONS.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/hybrid_production_20261009/PRO_DECISION_WORKFLOW.json"
+      ],
+      "documented_cloud_locator": null,
+      "claim_boundary": "Actual decision evidence for rules, not an exhaustive document-level semantic label set; overlap with other development sources is not resolved by the public summaries."
+    },
+    {
+      "name": "D51/D57 frozen-evaluation targeted root diagnostic",
+      "counts": {"full_documents_read_total": 12, "reused_positions": 6, "new_positions": 6, "mechanical_eval80_rows": 80},
+      "completion_status": "question-specific",
+      "research_status": "diagnostic_notstructured",
+      "schema_scope": "Twelve targeted full-document readings of named evaluation positions for bounded diagnostic acceptance; the other evaluation rows have deterministic rule processing and evidence-coordinate checks, not full Pro semantic review.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/ROOT_RELEASE_DECISION.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/final_tables_20261009/ROOT_FIELD_ACCEPTANCE.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/rulefirst_20261008/eval80_public/RUN_RECEIPT_PUBLIC.json"
+      ],
+      "documented_cloud_locator": null,
+      "claim_boundary": "The presence of an eval80 manifest or its exclusion from a later selection is not proof that all 80 records were judged."
+    },
+    {
+      "name": "DEV24 relation packet",
+      "counts": {"selected_rows": 19, "fully_reviewed_documents": 4, "partially_reviewed_documents": 1, "model_calls": 0},
+      "completion_status": "unaccepted",
+      "research_status": "unaccepted",
+      "schema_scope": "Mechanical candidate packet for bounded root review, not a completed 19-document semantic label set.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/hybrid_production_20261009/DEV24_SELECTION_RECEIPT_PUBLIC.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/rulefirst_20261008/hybrid_production_20261009/PRO_DECISION_WORKFLOW.json"
+      ],
+      "documented_cloud_locator": "/public/home/lilysharp/linkup_rulefirst_20261008/pro_review_20261012/private/DEV24_RELATION_DECISIONS_PRIVATE.jsonl",
+      "claim_boundary": "Packet existence is not evidence that all selected rows were semantically judged."
+    },
+    {
+      "name": "Stopped Qwen pilot and later incomplete conversation batches",
+      "counts": {"completed_Qwen_pilot_records": 1, "partial_Qwen_pilot_records": 1, "unattempted_Qwen_pilot_records": 2, "later_raw_conversation_outputs": 256},
+      "completion_status": "unaccepted",
+      "research_status": "unaccepted",
+      "schema_scope": "A stopped routeability pilot with one completed record and later raw conversation outputs that had not passed full batch acceptance.",
+      "receipt_paths": [
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/public_ops/local_inference_20261007/RUN_COMPLETION_RECEIPT.json",
+        "analysis_transition_20260930/dual_source_execution_v2/next_stage_20261004/cloud_execution_20261008/EXECUTION_POLICY.md"
+      ],
+      "documented_cloud_locator": null,
+      "claim_boundary": "Do not count as completed semantic review evidence."
+    }
+  ],
+  "counting_rule": "Counts are not additive. Development, diagnostic, Batch001/002, and later review sources may share documents or text hashes; public receipts do not provide a cross-source deduplication map. An exposed manifest, selected packet, deterministic rule output, archival checksum, or exclusion list is not evidence of a completed semantic judgment."
+}

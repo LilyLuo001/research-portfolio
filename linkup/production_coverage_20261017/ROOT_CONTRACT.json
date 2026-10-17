@@ -1,0 +1,60 @@
+{
+  "version": "fixed10k-production-coverage-v1",
+  "date": "2026-10-17",
+  "authorization": "User approved reconciliation of original fixed10k frame with all existing semantic reviews; this is not new semantic reading or a new sample.",
+  "target": {
+    "ads": 10000,
+    "reported_unique_exact_texts": 7635,
+    "source": "existing frozen exact-text cache; verify actual frame conservation in scheduled job",
+    "full_corpus_reprocessing": false
+  },
+  "questions": [
+    "Which field-level judgments already exist with exact provenance?",
+    "Which reviewed outcomes remain explicitly unknown or conflicted?",
+    "Which fields were never semantically judged?",
+    "How many unique full contexts require new work, separately from unresolved reviewed cases?"
+  ],
+  "source_priority": [
+    "Final Formal800 consolidated artifact (including root and conflict masking); never reapply superseded primary/audit labels",
+    "Final accepted Wave02 question-specific artifacts",
+    "Final accepted Wave01 and earlier actual Pro judgments, preserving their field and context scope"
+  ],
+  "reuse_rules": [
+    "Keep all target ads and their source keys; keep context-level and ad-level counts separate.",
+    "Reuse only an exact verified complete judgment-input/context match, including relevant title or metadata if the reviewer used it; raw JOB_HASH alone, fuzzy text and rule similarity are insufficient.",
+    "Record direct-ad assignments separately from newly identified exact-context reuse; do not overwrite published Formal800 results or transfer its inference weights to the full frame.",
+    "Partial or question-specific reviews cover only expressly judged fields; they cannot establish other fields or full-document nonmention.",
+    "Authoritative final masking/unknowns cannot be resurrected from retained primary clauses.",
+    "Root supersedes a source only within explicitly adjudicated scope. Other genuine conflicts remain unresolved; do not silently choose newest or majority.",
+    "Historical development/evaluation exposure remains a provenance flag; it does not automatically imply a valid semantic label and is not silently discarded from production inventory.",
+    "No rule flags, failed model outputs, empty label templates or engineering validator passes count as AI semantic judgments."
+  ],
+  "required_field_families": [
+    "technology_category_and_role",
+    "experience_object",
+    "experience_strength",
+    "experience_literal_years",
+    "qualification_conditions_and_alternatives",
+    "entry_wording_and_scope",
+    "current_responsibility_subject_and_relation"
+  ],
+  "coverage_policy": {
+    "known": "Existing supported assignment under its exact field contract; not semantic accuracy certification.",
+    "not_applicable": "Only where existing complete judgment establishes no applicable clause; not a replacement for missing work.",
+    "unknown_or_conflict": "Reviewed but unresolved or masked; separate from never reviewed.",
+    "partial": "Only some relevant clauses/context were judged, or source schema lacks required distinctions.",
+    "candidate_only": "Rule extraction exists but no compatible semantic judgment.",
+    "source_unavailable": "A completed source is documented but unavailable or cannot be bound; disclose, do not presume coverage.",
+    "multi_clause": "Do not call a family complete when an applicable constituent is unresolved; preserve known components privately."
+  },
+  "deliverables": [
+    "Private ad-level per-field provenance/status table without changing original labels",
+    "Private deterministic unique-context work queue with required field families and source locators; reviewed-unknown cases distinguished from never-reviewed work",
+    "Public field coverage, source coverage, duplicate reuse/conflict/exposure accounting, and exact remaining-context totals",
+    "Input/code/output hashes, scheduler receipt, independent QA, concise result report and Git record"
+  ],
+  "conflict_decision": "Formal final masked values dominate its own superseded primary/audit versions and cannot be resurrected. An independent complete historical source overlapping a Formal context is flagged for compatibility/uncertainty rather than silently overridden; source precedence is not a substitute for semantic equivalence. Lower partial evidence does not override a complete judgment. No new semantic arbitration in this inventory.",
+  "execution": "Scheduled SCNet compute only; local code/docs/control-plane/aggregate reading allowed; no API, CLI, BU or new model.",
+  "stop_rule": "Finish one reconciled coverage inventory and queue. No fresh sampling, parser development, semantic review or manuscript transition in this task.",
+  "normalization_binding": "Formal800 full reviewer input is exactly the pinned legacy_v5 normalized full text, without semantic title/company metadata. Exact equality of this complete input permits inventory reuse, with raw-identical and normalized-only-identical counts reported separately. Use normalization-only helper; no fresh rule extraction."
+}

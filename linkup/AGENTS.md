@@ -1,5 +1,13 @@
 # LinkUp project execution rules
 
+## Latest accepted inventory: fixed10k coverage (2026-10-17)
+
+Job46764737 completed0:0; independent QA and root acceptance are in production_coverage_20261017. All10000 ads are preserved, corresponding to7635 raw texts and7617 frozen normalized complete inputs. The private required-field queue contains6899 contexts; a separate reviewed-uncertainty register contains308, with37 overlapping because of other missing fields. Formal719 judgments bind to1981 ads by verified complete-input identity. This is coverage reconciliation, not new semantic production or whole-corpus completion. Use the existing private queue and completed fields; do not repeat this inventory, sample again, re-extract the corpus or switch to manuscript writing. PROJECT_STATE.json contains exact output locations and remaining scope.
+
+## Active authorized task: fixed10k coverage reconciliation (2026-10-17)
+
+The user approved production_coverage_20261017/ROOT_CONTRACT.json: bind all existing final semantic judgments to the original10000-ad frame, report field-level coverage/unknown/conflicts and produce a private deduplicated work queue. This permits verified exact-context reuse for this new inventory beyond Formal800 sampled ads, without modifying that published branch. All joining/counting is scheduled SCNet work. No new semantic reading, sample, extraction, API/CLI/model deployment or manuscript task is authorized by this reconciliation.
+
 ## User correction: original Scheme 2 remains incomplete (2026-10-17)
 
 Formal800 and its follow-up comparisons are a completed bounded branch, not completion of the original coarse-results plus contextual-AI production objective. The prepared fixed10k/7635-text frame is not fully contextually judged. The user rejected an automatic transition to manuscript writing. Read PROJECT_STATE.json overall_scheme2_status before older completion pointers. Reuse finished coarse data and exact-bound judgments; do not imply 800 reviews certify or replace production. No new sample, parser loop, paid API, CLI or unapproved model is implied by this correction.

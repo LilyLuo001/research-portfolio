@@ -1,0 +1,39 @@
+{
+  "version": "production-coverage-scheduler-receipt-v1",
+  "accepted_job": {
+    "job_id": "46764737",
+    "state": "COMPLETED",
+    "elapsed": "00:00:55",
+    "exit_code": "0:0",
+    "allocated_cpus": 2,
+    "requested_memory": "4G",
+    "node": "b01r3n17",
+    "analyzer_sha256": "4697d56d9660cdd7ea5c26505ab3d917466c6f67d2552c5d39a0a7ceee1e9110",
+    "wrapper_sha256": "4bc6d75190087c1f5208ee1ed580b5051b24165f93802973d8c2cac87e83c10d"
+  },
+  "prior_attempts_excluded_from_results": [
+    {
+      "job_id": "46764472",
+      "state": "CANCELLED by 411455",
+      "elapsed": "00:00:06",
+      "exit_code": "0:0",
+      "reason": "cancelled immediately after late QA hold; outputs excluded"
+    },
+    {
+      "job_id": "46764510",
+      "state": "FAILED",
+      "elapsed": "00:00:47",
+      "exit_code": "1:0",
+      "reason": "Wave01 overlay field-name runtime error; no outputs accepted"
+    },
+    {
+      "job_id": "46764596",
+      "state": "COMPLETED",
+      "elapsed": "00:00:51",
+      "exit_code": "0:0",
+      "reason": "rejected by post-run binding audit because Wave02 rows were unbound; outputs quarantined"
+    }
+  ],
+  "source": "WZ sacct control-plane query on 2026-10-17",
+  "status": "pass"
+}

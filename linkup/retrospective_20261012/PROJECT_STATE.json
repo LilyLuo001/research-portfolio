@@ -1,7 +1,7 @@
 {
   "as_of": "2026-10-17",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "bounded_formal800_complete_original_scheme2_not_complete",
+  "phase": "fixed10k_coverage_reconciled_semantic_production_incomplete",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -22,13 +22,13 @@
     "wave02_reviews": 96
   },
   "latest_completed_wave": {
-    "name": "research_results_20261013",
+    "name": "production_coverage_20261017",
     "status": "cloud_complete_independent_QA_and_root_accepted",
-    "job": "46700531",
-    "scope": "frozen800 equal-major experience and explicit-new-graduate duty/experience co-occurrence",
+    "job": "46764737",
+    "scope": "existing fixed10000 field-level semantic coverage and private continuation queues",
     "new_ads_extracted": 0,
     "new_ads_semantically_reviewed": 0,
-    "report": "linkup/research_results_20261013/RESULTS_DRAFT_ZH.md"
+    "report": "linkup/production_coverage_20261017/COVERAGE_RESULTS_ZH.md"
   },
   "not_available": [
     "Revelio Individual data",
@@ -60,7 +60,7 @@
     "bounded_semantic_reading": "authorized Pro conversation models",
     "local_allowed": "code/docs, bounded reading, transport, provenance and Git"
   },
-  "resume_rule": "Read overall_scheme2_status as well as active_scope: the latter describes only the completed bounded branch. Do not infer original hybrid production is complete from finite800 closure. Preserve completed data; identify only actual missing contextual work.",
+  "resume_rule": "Read overall_scheme2_status and the accepted production_coverage_20261017 inventory. Do not rerun completed extraction or coverage reconciliation. Continue from the private required-field queue, keeping reviewed unknowns separate. Finite800 closure is not original Scheme2 completion.",
   "formal800_execution": {
     "freeze_job": "46364888",
     "state": "COMPLETED",
@@ -288,11 +288,12 @@
   "publication": {
     "repository": "LilyLuo001/research-portfolio",
     "branch": "main",
-    "release_directory": "linkup/research_results_20261013",
+    "release_directory": "linkup/production_coverage_20261017",
     "commit_binding": "Use the Git commit containing this release and compare with origin/main; do not treat a historical checkpoint as current HEAD.",
     "semantic_release_directory": "linkup/formal800_20261012",
-    "status": "accepted_release; verify containing commit against origin/main",
-    "qa": "research_results_20261013/qa/RESEARCH_QA.md"
+    "status": "accepted_inventory; verify containing commit against origin/main",
+    "qa": "production_coverage_20261017/qa/COVERAGE_QA.md",
+    "previous_analysis_directory": "linkup/research_results_20261013"
   },
   "completed_formal800_scope": {
     "source": "existing fixed10000 exact text cache with nested probability metadata",
@@ -312,27 +313,32 @@
     "approval": "user_approved_2026-10-12"
   },
   "active_scope": {
-    "name": "research_results_20261013",
-    "status": "complete_accepted_release",
-    "approval": "User approved two substantive comparisons and results draft2026-10-13",
-    "root_decisions": "linkup/research_results_20261013/ANALYSIS_DECISIONS.md",
-    "input": "frozen800 labels and bound719 structured reviews",
-    "estimand": "finite9282 eligible fixed10k; third-stage weight only",
-    "standardization": "equal0.25 across existing occupation majors11,13,15,17",
-    "new_text_extraction": false,
+    "name": "production_coverage_20261017",
+    "status": "complete_accepted_inventory",
+    "approval": "User approved fixed10k coverage reconciliation2026-10-17",
+    "root_contract": "linkup/production_coverage_20261017/ROOT_CONTRACT.json",
+    "input": "Existing fixed10000ads/7635texts plus final historical semantic artifacts",
     "new_semantic_review": false,
     "new_sample": false,
-    "old_estimates_overwritten": false,
     "remaining": [],
-    "job": "46700531",
-    "resumed": "2026-10-16",
     "active_jobs": [],
-    "report": "linkup/research_results_20261013/RESULTS_DRAFT_ZH.md",
-    "qa": "linkup/research_results_20261013/qa/RESEARCH_QA.md",
-    "root_acceptance": "linkup/research_results_20261013/ROOT_ACCEPTANCE.md",
+    "job": "46764737",
     "job_state": "COMPLETED",
     "exit_code": "0:0",
-    "elapsed": "00:00:13"
+    "elapsed": "00:00:55",
+    "report": "linkup/production_coverage_20261017/COVERAGE_RESULTS_ZH.md",
+    "qa": "linkup/production_coverage_20261017/qa/COVERAGE_QA.md",
+    "root_acceptance": "linkup/production_coverage_20261017/ROOT_ACCEPTANCE.md",
+    "counts": {
+      "ads": 10000,
+      "raw_exact_texts": 7635,
+      "normalized_full_inputs": 7617,
+      "ad_field_ledger_rows": 70000,
+      "required_new_review_contexts": 6899,
+      "reviewed_uncertainty_contexts": 308,
+      "overlap_contexts": 37
+    },
+    "private_output_directory": "/work/home/lilysharp/private/production_coverage_20261017/private/"
   },
   "latest_completed_semantic_wave": {
     "name": "formal800_20261012",
@@ -382,7 +388,35 @@
     "completed_bounded_review_contexts": 719,
     "coarse_corpus_is_semantically_complete": false,
     "full_fixed10k_contextual_judgment_complete": false,
-    "remaining_exact_context_count": "not yet reconciled across existing historical reviews, exclusions and duplicate context bindings; do not infer by subtracting headline counts",
-    "next_action": "Reconcile existing production-frame coverage and reusable exact-bound judgments, then state the remaining contextual-production work. No new sample, fresh parser, silent model substitution or automatic manuscript transition."
+    "remaining_exact_context_count": 6899,
+    "next_action": "Use the accepted existing private REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl for field-specific contextual production. Preserve completed judgments, keep REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl separate, and do not restart sampling, parser development, corpus extraction or a manuscript transition. This inventory did not perform new semantic judgments.",
+    "remaining_count_definition": "Distinct frozen normalized complete inputs with at least one partial or unfilled field; not all require all seven families from zero. Reviewed unknowns are separately registered.",
+    "reviewed_uncertainty_context_count": 308,
+    "uncertainty_contexts_also_needing_other_fields": 37,
+    "existing_formal_judgment_reused_ad_count": 1981,
+    "coverage_receipt": "linkup/production_coverage_20261017/receipts/ANALYSIS_RECEIPT.json"
+  },
+  "completed_formal800_followup_scope": {
+    "name": "research_results_20261013",
+    "status": "complete_accepted_release",
+    "approval": "User approved two substantive comparisons and results draft2026-10-13",
+    "root_decisions": "linkup/research_results_20261013/ANALYSIS_DECISIONS.md",
+    "input": "frozen800 labels and bound719 structured reviews",
+    "estimand": "finite9282 eligible fixed10k; third-stage weight only",
+    "standardization": "equal0.25 across existing occupation majors11,13,15,17",
+    "new_text_extraction": false,
+    "new_semantic_review": false,
+    "new_sample": false,
+    "old_estimates_overwritten": false,
+    "remaining": [],
+    "job": "46700531",
+    "resumed": "2026-10-16",
+    "active_jobs": [],
+    "report": "linkup/research_results_20261013/RESULTS_DRAFT_ZH.md",
+    "qa": "linkup/research_results_20261013/qa/RESEARCH_QA.md",
+    "root_acceptance": "linkup/research_results_20261013/ROOT_ACCEPTANCE.md",
+    "job_state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:13"
   }
 }
