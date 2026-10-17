@@ -1,0 +1,12 @@
+{
+  "affected_packet": "batch020/P02",
+  "affected_context_count": 1,
+  "affected_field_families": 7,
+  "evidence": "The reviewer and root both read the complete provided text. It concatenates five different jobs without an unambiguous target-job binding.",
+  "error": "Pooling clauses from the five jobs into one advertised-worker result would mix distinct requirements and duties.",
+  "decision": "Use the existing unresolved-document mask for this context only; preserve the source and prior output privately. All seven families remain reviewed unknown, rather than pooled semantic facts.",
+  "scope": "One-record correction before batch020 backfill; no taxonomy, parser, sampling, or corpus-wide change.",
+  "source_truncated": false,
+  "unprocessed_reclassified_as_unknown": false,
+  "private_details": "Stored with the corrected packet; no source text or ad identity in Git."
+}

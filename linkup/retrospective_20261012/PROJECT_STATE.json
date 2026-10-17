@@ -319,11 +319,11 @@
     "entry": "linkup/fixed10k_continuation_20261017/CONTINUOUS_EXECUTION_LOCK.json",
     "source_commit": "4ed88d3",
     "remaining_at_start": 6500,
-    "current_backfilled_remaining": 5304,
-    "work_queue": 5299,
+    "current_backfilled_remaining": 5104,
+    "work_queue": 5099,
     "isolated_unfinished": 5,
-    "latest_backfilled_batch": 16,
-    "next_batch": 17,
+    "latest_backfilled_batch": 18,
+    "next_batch": 19,
     "checkpoint_not_finish": 100,
     "new_paid_channel": "declined; existing Pro only",
     "B_engineering_job": "46773912",
@@ -331,21 +331,21 @@
     "full_corpus_formal_shards_submitted": 0,
     "execution_results": "linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json",
     "latest_private_artifacts": {
-      "ledger": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch016/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
-      "queue": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch016/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
-      "uncertainty": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch016/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl"
+      "ledger": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch018/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+      "queue": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch018/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
+      "uncertainty": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch018/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl"
     },
     "latest_artifact_hashes": {
-      "private_ledger_sha256": "51991eb2eefaf87ef16d0ae0ed92506c376a72f4146b644bc3bfc5e4225af394",
-      "private_queue_sha256": "e2637653f41e950487238bcdc0c12589b8073a92c3c4c600a3d9d368afd409ca",
-      "private_uncertainty_sha256": "d35da31a7099ca02200fe74654614af38a448af0814c832472c6e241ab27cd35",
-      "public_counts_sha256": "064d6ae6222b0cc801ba21e831cc466228fdd0453ca99cc67dfb3db7152bfddd"
+      "private_ledger_sha256": "8c2f6e631bc3d36d7ff5f2f556156242c561277372bb10d6535773ab0109b546",
+      "private_queue_sha256": "cb0597a16c923a8993fd7e5699a31a164d79e6ea632a57c132b1ab8fac7f21b2",
+      "private_uncertainty_sha256": "76dcd5ae8ec057a791c7cbe6c648f0d233e3946fde91de10355373193877d596",
+      "public_counts_sha256": "5baa5b042381325a695c051cb78945a4ec1b09a7729c5c5f0ae915f7b5aa15a8"
     }
   },
   "latest_completed_semantic_wave": {
-    "name": "fixed10k_continuation_20261017/batch016",
+    "name": "fixed10k_continuation_20261017/batch018",
     "reviewed_contexts": 100,
-    "covered_ads": 111,
+    "covered_ads": 119,
     "status": "saved_backfilled_continues_next_batch",
     "report": "linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json"
   },
