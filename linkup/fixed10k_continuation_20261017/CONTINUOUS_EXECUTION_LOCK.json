@@ -16,7 +16,7 @@
     "no_retraining_now": true,
     "balanced_weight_already_present_not_new": true,
     "final_training": "once after reference annotation closure, freeze latest compatible ledger and code hashes",
-    "final_holdout": "existing context-hash split restricted to Batch004 unprocessed work queue; no exposed old baseline cases used as final evaluation",
+    "final_holdout": "Existing context-hash split restricted to Batch004 work queue, 1331 frozen contexts. Exclude all 1331 from every final training target. Metadata finds 97 with prior development/evaluation exposure; preserve membership and report prior-exposed versus unexposed separately, without calling the full set blind. Final evaluation is never used for model selection.",
     "report": "positive/negative metrics and existing research-group metrics; no aggregate metric concealing one-class behavior"
   },
   "unsupported_semantic_tasks": [

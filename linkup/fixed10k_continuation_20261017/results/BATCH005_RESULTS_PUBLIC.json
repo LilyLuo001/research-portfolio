@@ -1,0 +1,228 @@
+{
+  "batch": {
+    "required_family_cells": 700,
+    "source": "fixed10k_batch005",
+    "trusted_contexts": 100,
+    "validated_contexts": 100
+  },
+  "claim_boundary": "validated full-document judgments applied only to frozen required field whitelist; one isolated context remains separately unfinished",
+  "delta": {
+    "blocked_contexts": 1,
+    "covered_ads": 109,
+    "final_unknown_contexts_in_batch": 6,
+    "remaining_reviewed_uncertainty_contexts": 340,
+    "remaining_unfinished_contexts": 6400,
+    "remaining_work_contexts": 6399,
+    "reused_prior_family_cells": 0,
+    "updated_ad_field_rows": 763,
+    "updated_context_family_cells": 700,
+    "updated_contexts": 100
+  },
+  "field_status_ad_counts": [
+    {
+      "ad_count": 7428,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 2018,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "known"
+    },
+    {
+      "ad_count": 198,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 16,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "partial"
+    },
+    {
+      "ad_count": 340,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7428,
+      "field_family": "entry_wording_and_scope",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 116,
+      "field_family": "entry_wording_and_scope",
+      "status": "known"
+    },
+    {
+      "ad_count": 2429,
+      "field_family": "entry_wording_and_scope",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 15,
+      "field_family": "entry_wording_and_scope",
+      "status": "partial"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "entry_wording_and_scope",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7257,
+      "field_family": "experience_literal_years",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 2017,
+      "field_family": "experience_literal_years",
+      "status": "known"
+    },
+    {
+      "ad_count": 27,
+      "field_family": "experience_literal_years",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 162,
+      "field_family": "experience_literal_years",
+      "status": "partial"
+    },
+    {
+      "ad_count": 537,
+      "field_family": "experience_literal_years",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7257,
+      "field_family": "experience_object",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 2117,
+      "field_family": "experience_object",
+      "status": "known"
+    },
+    {
+      "ad_count": 27,
+      "field_family": "experience_object",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 165,
+      "field_family": "experience_object",
+      "status": "partial"
+    },
+    {
+      "ad_count": 434,
+      "field_family": "experience_object",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7257,
+      "field_family": "experience_strength",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 2074,
+      "field_family": "experience_strength",
+      "status": "known"
+    },
+    {
+      "ad_count": 27,
+      "field_family": "experience_strength",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 179,
+      "field_family": "experience_strength",
+      "status": "partial"
+    },
+    {
+      "ad_count": 463,
+      "field_family": "experience_strength",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7257,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 2073,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "known"
+    },
+    {
+      "ad_count": 27,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 179,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "partial"
+    },
+    {
+      "ad_count": 464,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 7428,
+      "field_family": "technology_category_and_role",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 1772,
+      "field_family": "technology_category_and_role",
+      "status": "known"
+    },
+    {
+      "ad_count": 1,
+      "field_family": "technology_category_and_role",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 9,
+      "field_family": "technology_category_and_role",
+      "status": "partial"
+    },
+    {
+      "ad_count": 790,
+      "field_family": "technology_category_and_role",
+      "status": "unknown_or_conflict"
+    }
+  ],
+  "isolation": {
+    "blocked_contexts": 1,
+    "register_sha256": "d5ba0c405aba4c7037be3114d58c00630ad7c5dbdb4d83adf395f4aec93693fd"
+  },
+  "record_batch": {
+    "batch_number": 5,
+    "contexts": 100,
+    "work_queue_positions_in_predecessor": [
+      1,
+      100
+    ]
+  },
+  "validation": {
+    "receipt_sha256s": [
+      "a65801b60762044fdd873c26d00be8ac18c52e417f3c0a02bfdbc6b92f989b35",
+      "5dd79de74aa523e8971991e93d8ba3c455a4c5bbcc116dbfc63d2bdfbe19a568",
+      "8f887d31c424ad195acc49af1fa50361b478293b40921e0c0dc112a2a3376641",
+      "00b74ab6b5a59a6130984bd2b9713a1be6d37b138e8566eb5209b7d5de7f0937",
+      "38395b3685ce28624e284b64f450c2bcc91f7e27d630026dd63098542f150da4"
+    ],
+    "validated_reviews_sha256": "d040133def55f7fbd4648da443610dd4b5816067d7288b53b80a81f92d0d03bd",
+    "validator_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ]
+  },
+  "version": "fixed10k-semantic-production-batch005-v1"
+}
