@@ -1,0 +1,52 @@
+{
+  "decision": "bounded_baseline_execution_complete; predictions_remain_candidates_not_reference_labels",
+  "basis": "Actual fixed holdout errors, support, real-shard output and measured speed; scheduler success is execution evidence only.",
+  "baseline_commit": "e224d52",
+  "field_quality_findings": [
+    {
+      "target": "technology_family.generative_ai",
+      "finding": "Positive precision and recall each48/57=0.8421; useful baseline signal in this selected reference frame, not validated population measurement."
+    },
+    {
+      "target": "experience_presence.general_work",
+      "finding": "Positive recall12/40=0.30; substantial missed general-experience statements."
+    },
+    {
+      "target": "experience_presence.occupation_task",
+      "finding": "Positive recall146/146 but negative recall1/13; high positive F1 does not establish reliable absence classification."
+    },
+    {
+      "target": "strict_current_duty.people_supervision",
+      "finding": "Positive recall7/31=0.2258; misses most reference-positive supervision duties."
+    },
+    {
+      "target": "technology_family.traditional_software_system",
+      "finding": "Negative recall0/6 and macroF1 below majority baseline; not reliable software-vs-other separation."
+    },
+    {
+      "target": "six_sparse_holdout_targets",
+      "finding": "At least one holdout class below5; insufficient support, no quality-pass claim."
+    }
+  ],
+  "scope": "Exact frozen normalized-context split. No employer/time-held-out test. Full-reading AI references are not human gold labels. Reference frame is selected and cannot establish full-corpus error rates.",
+  "unsupported": [
+    "experience_strength_required_or_preferred",
+    "experience_conditionality_and_logical_branch",
+    "literal_numeric_years",
+    "open_ended_named_object",
+    "verbatim_evidence",
+    "qualification_branch_relation_reconstruction"
+  ],
+  "prediction_usage": "Private independent candidate sidecar only. Do not use as completed semantic judgments or replace references. No all-corpus production authorized or launched.",
+  "new_review_contexts_from_B": 0,
+  "semantic_queue_reduction_from_B": 0,
+  "performance_interpretation": {
+    "measured_rows_per_second": 34.87193806925882,
+    "timer": "raw DESCRIPTION parquet read, frozen normalization, vectorization, prediction, and sidecar writer close/atomic rename",
+    "model_loading_included": false,
+    "single_job_days_if_extrapolated": 67.96495924114869,
+    "limits": "One contiguous20000-row prefix of one raw LinkUp shard; not representative US production timing. 27 targets vectorized serially. Eight allocated CPUs do not imply eightfold speedup. Queue time, model load and preprocessing outside timer not included."
+  },
+  "scope_changes": false,
+  "retraining_or_new_sampling_in_this_wave": false
+}

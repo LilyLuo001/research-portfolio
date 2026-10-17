@@ -1,0 +1,44 @@
+{
+  "checks": {
+    "draft202012_schema": true,
+    "exact_quotes_all_unicode_offsets": true,
+    "missing_quotes_rejected": true,
+    "no_semantic_fill_or_aggregation": true,
+    "partial_nonmention_prohibited": true,
+    "positive_item_consistency": true,
+    "trusted_assignment_not_model_authored": true,
+    "trusted_packet_binding": true,
+    "years_and_alternative_references": true
+  },
+  "claim_boundary": "identity, schema, cross-field, and exact-evidence validation only; no semantic accuracy or population claim",
+  "counts": {
+    "ambiguous_quote_instances": 13,
+    "error_entries": 0,
+    "quote_instances": 220,
+    "quote_occurrences": 233,
+    "submitted_review_rows": 20,
+    "trusted_packet_records": 20,
+    "valid_blind_audit_records": 0,
+    "valid_primary_records": 20,
+    "validated_records": 20
+  },
+  "created_utc": "2026-10-17T08:07:14.910487+00:00",
+  "inputs": {
+    "packet_sha256": "e2395684a9aa08113a4c69f4d453014647de343c8a92dd765050a26d1651d43c",
+    "review_inputs": [
+      {
+        "name": "REVIEW_PACKET_03_PRIVATE.jsonl",
+        "sha256": "cd8cf4ca3dd1d70c91272db61ad594f4ac95e2c26b8f3574e5239f0217eb308d"
+      }
+    ],
+    "schema_sha256": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e"
+  },
+  "private_outputs": {
+    "error_entries": 0,
+    "errors_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validated_rows": 20,
+    "validated_sha256": "f23fa657c429b5627a3e2d6b83d0a85f9eacd70d0d2396dd7ae7c4a28c76bae8"
+  },
+  "status": "pass",
+  "version": "formal800-review-validation-v1.1-shared-condition"
+}

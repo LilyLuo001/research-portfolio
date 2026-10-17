@@ -1,0 +1,82 @@
+{
+  "bounded_review_repairs": [
+    {
+      "exit_code": "0:0",
+      "job_id": "46770811",
+      "scope": "packet 02 exact-year upper bounds only",
+      "state": "COMPLETED"
+    },
+    {
+      "exit_code": "0:0",
+      "job_id": "46770907",
+      "scope": "packet 04 exact-year upper bounds only",
+      "state": "COMPLETED"
+    }
+  ],
+  "final_acceptance": {
+    "acceptance_location": "WZ finalizer with five packet validation receipts",
+    "elapsed_seconds": 12,
+    "ended_local_scheduler_time": "2026-10-17T15:39:15",
+    "exit_code": "0:0",
+    "job_id": "46770954",
+    "receipt": "receipts/BATCH002_FINALIZE_RECEIPT.json",
+    "started_local_scheduler_time": "2026-10-17T15:39:03",
+    "state": "COMPLETED"
+  },
+  "final_validation": {
+    "finalizer_receipt": "receipts/BATCH002_FINALIZE_RECEIPT.json",
+    "five_packets_passed": true
+  },
+  "frozen_contract": {
+    "formal800_changed": false,
+    "parser_changed": false,
+    "sample_changed": false,
+    "taxonomy_changed": false
+  },
+  "infrastructure_attempts": [
+    {
+      "cause": "Slurm output directory did not yet exist; job body did not run",
+      "exit_code": "0:53",
+      "job_id": "46770513",
+      "state": "FAILED"
+    },
+    {
+      "cause": "site profile module conflict before validation",
+      "exit_code": "2:0",
+      "job_id": "46770539",
+      "state": "FAILED"
+    },
+    {
+      "cause": "site profile module conflict before validation",
+      "exit_code": "2:0",
+      "job_id": "46770572",
+      "state": "FAILED"
+    }
+  ],
+  "packet_preparation": {
+    "elapsed_seconds": 7,
+    "ended_local_scheduler_time": "2026-10-17T15:06:20",
+    "exit_code": "0:0",
+    "job_id": "46769592",
+    "receipt": "../receipts/BATCH002_004_PREP_RECEIPT.json",
+    "started_local_scheduler_time": "2026-10-17T15:06:13",
+    "state": "COMPLETED"
+  },
+  "review_execution": {
+    "all_final_acceptance_on_wz": true,
+    "direct_semantic_judgments": 100,
+    "packet_distribution": {
+      "primary_reader_packets": [
+        "01",
+        "03",
+        "05"
+      ],
+      "second_reader_packets": [
+        "02",
+        "04"
+      ]
+    }
+  },
+  "scope": "anonymous execution receipt; no review text or record-level material",
+  "version": "fixed10k-semantic-production-batch002-scheduler-v1"
+}

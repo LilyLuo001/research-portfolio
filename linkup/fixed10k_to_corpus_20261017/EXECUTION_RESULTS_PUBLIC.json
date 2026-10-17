@@ -1,0 +1,165 @@
+{
+  "scope": "authorized Batch002-004 plus one CPU supervised baseline",
+  "started_utc": "2026-10-17T07:02:23Z",
+  "last_A_backfill_completed_utc": "2026-10-17T08:08:40Z",
+  "review_and_backfill_wall_seconds": 3977,
+  "A": {
+    "counts": {
+      "new_reviewed_contexts": 300,
+      "new_context_family_cells": 2096,
+      "covered_ads": 354,
+      "updated_ad_field_rows": 2474,
+      "preserved_prior_unknown_family_cells": 4,
+      "contexts_with_final_unknown_in_this_wave": 23,
+      "newly_added_uncertainty_contexts": 21,
+      "total_reviewed_uncertainty_contexts": 334,
+      "remaining_required_contexts": 6500,
+      "newly_reviewed_contexts_still_partial": 1,
+      "queue_reduction": 299
+    },
+    "batch_deltas": [
+      {
+        "batch_number": 2,
+        "covered_ads": 115,
+        "final_unknown_contexts_in_batch": 8,
+        "remaining_required_contexts": 6699,
+        "remaining_reviewed_uncertainty_contexts": 320,
+        "reused_prior_family_cells": 3,
+        "updated_ad_field_rows": 802,
+        "updated_context_family_cells": 697,
+        "updated_contexts": 100
+      },
+      {
+        "batch_number": 3,
+        "covered_ads": 132,
+        "final_unknown_contexts_in_batch": 6,
+        "remaining_required_contexts": 6599,
+        "remaining_reviewed_uncertainty_contexts": 326,
+        "reused_prior_family_cells": 0,
+        "updated_ad_field_rows": 924,
+        "updated_context_family_cells": 700,
+        "updated_contexts": 100
+      },
+      {
+        "batch_number": 4,
+        "covered_ads": 107,
+        "final_unknown_contexts_in_batch": 9,
+        "remaining_required_contexts": 6500,
+        "remaining_reviewed_uncertainty_contexts": 334,
+        "reused_prior_family_cells": 1,
+        "updated_ad_field_rows": 748,
+        "updated_context_family_cells": 699,
+        "updated_contexts": 100
+      }
+    ],
+    "private_outputs": {
+      "ledger": {
+        "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+        "sha256": "527b4f6ec11fadde96ed66484f6d2578184d6ef9035069fbbd0db1d78320ba60"
+      },
+      "queue": {
+        "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
+        "sha256": "ad8d5687a34e5f9ea11a4ea5db77615ca128face9502a35b027abbaf946b9a51"
+      },
+      "uncertainty": {
+        "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl",
+        "sha256": "60b146ca296f800262c7ddcc189efc654584ed90b6913d8d8b8320b7a8edcdce"
+      }
+    },
+    "Formal800_and_Batch001_changed": false,
+    "classification_predictions_counted_as_reviews": 0,
+    "partial_record": "Batch004 context084 input is truncated; preserved partial/unknown and not forced complete",
+    "jobs": {
+      "batch002": "46770954",
+      "batch003": "46772369",
+      "batch004": "46772431"
+    }
+  },
+  "B": {
+    "job": "46770303",
+    "training_and_limited_inference_executed": true,
+    "wall_seconds": 651,
+    "targets_fit": 27,
+    "holdout_class_supported_targets": 21,
+    "insufficient_holdout_targets": 6,
+    "rows_predicted": 20000,
+    "reference_reviews_added": 0,
+    "semantic_queue_reduction": 0,
+    "artifacts": {
+      "private_model": {
+        "bytes": 142685753,
+        "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline/artifacts/tfidf_linearsvc_holdout_frozen.pkl",
+        "sha256": "48dec600da433aa22dd5f9bb4e256af4ce9de92d5e81d2a0e46c71602dba1e4d"
+      },
+      "private_prediction_sidecar": {
+        "bytes": 828756,
+        "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline/sidecar/first_linkup_shard_first20000_predictions.parquet",
+        "sha256": "f232c017bf1ff67fec33ca058a9fd2d62da45c3a86f7f788f84ffb22967dc4ee"
+      }
+    },
+    "run_command": "sbatch /work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline/code/wz_train_evaluate_infer.sbatch",
+    "speed": {
+      "elapsed_seconds": 573.5270566344261,
+      "includes_model_load": false,
+      "input_status_counts": {
+        "valid": 20000
+      },
+      "invalid_text_definition": "DESCRIPTION is null or frozen-normalized text is empty/whitespace",
+      "invalid_text_remediation": {
+        "required": false,
+        "sidecar_rewritten": false
+      },
+      "invalid_text_rows": 0,
+      "limit": 20000,
+      "model_state": "freshly_fitted_models_already_in_memory",
+      "rows": 20000,
+      "rows_per_second": 34.87193806925882,
+      "rows_read": 20000,
+      "sidecar_only": true,
+      "source_total_rows": 124855,
+      "timer_scope": "raw DESCRIPTION parquet read, frozen normalization, vectorization, prediction, and sidecar writer close/atomic rename",
+      "trained_targets_predicted": 27
+    },
+    "conditional_corpus_projection": {
+      "conditions": "One comparable scheduled job; same 27 targets, schema, text-length mix, storage throughput and serial per-target vectorization; model loading excluded as in measured timer; no claim of linear scaling or authorized full-corpus inference.",
+      "corpus_rows": 204774035,
+      "days": 67.96495924114869,
+      "observed_rows_per_second": 34.87193806925882,
+      "seconds": 5872172.478435247
+    },
+    "quality_decision": "Candidate baseline only; important experience and duty targets have substantial errors, see BASELINE_ROOT_ASSESSMENT.json",
+    "per_field_metrics": "baseline/results/BASELINE_RESULTS_PUBLIC.json"
+  },
+  "unexecuted": {
+    "requested_instruction_file": "FIXED10K_TO_CORPUS_NEXT_EXECUTION_PROMPT.md not located; not read. Explicit current user authorization governs completed work.",
+    "full_corpus_inference": "not authorized; not executed",
+    "new_API_weights_software": "not used",
+    "Formal800_economic_recalculation": "not executed"
+  },
+  "blockers": "No outstanding dependency or permission blocker. One provided context has truncated text; prediction quality does not justify replacing semantic references.",
+  "incidents": {
+    "initial_B_probe": "Resolved using already installed anaconda runtime and pickle; no installation.",
+    "A003_failed_jobs": [
+      "46771760",
+      "46771800",
+      "46771923",
+      "46772105"
+    ],
+    "A003_cause": "Frozen validators rejected exact-evidence, one experience-object clause, and exact-year-bound representations. Early environment diagnosis was incorrect; added startup logging exposed validator failure.",
+    "A003_minimal_repairs": "10 distinct contexts:4 quote-only records,1 occupation/task clause correction,5 exact-year-bound representation corrections. No other records changed.",
+    "affected_record_ids": [
+      "b003-014",
+      "b003-017",
+      "b003-026",
+      "b003-034",
+      "b003-035",
+      "b003-038",
+      "b003-039",
+      "b003-053",
+      "b003-094",
+      "b003-098"
+    ],
+    "resolution": "Original readers repaired specified fields only; no sample, taxonomy or validator relaxation. Same five validators collected in one pass; no new audit scheme.",
+    "A004_validation_only_job": "46772274"
+  }
+}

@@ -2,6 +2,8 @@
 
 作业 46770303 在 WZ `wzhdtest` 完成（0:0）。模型仅在固定训练 contexts 上拟合，holdout 不参与词表或模型拟合，也未用于调参。指标是对既有兼容语义标签的预测评估，不称为人工准确率。
 
+主代理验收：本轮有真实训练与推断产出，但仍只接受为候选基线。一般经验的正类召回率为30%，监督职责约22.6%；职业／任务经验虽正类F1较高，负类召回率仅1/13；传统软件类别负类召回率0/6。不能用这些预测替代完整阅读的参考标签或直接启动全库正式测量。逐项依据见 `../../BASELINE_ROOT_ASSESSMENT.json`。回执中的 pass 只指工程执行，不是语义质量通过。
+
 真实输入为字典序第一份 LinkUp parquet（总 124,855 行）的原序前 20,000 行；20,000 条正文均有效。读取原文、冻结 normalizer、27 个目标逐模型 vectorize/predict、writer close/原子改名共 573.527 秒，即 34.872 行/秒。模型已在内存，计时不含 pickle 加载。
 
 | target | fit/eval | train 0/1 | holdout 0/1 | TN/FP/FN/TP | class0 P/R/F1 | class1 P/R/F1 | macro F1 | majority class/macro F1 |

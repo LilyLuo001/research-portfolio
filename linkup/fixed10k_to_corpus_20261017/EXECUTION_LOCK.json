@@ -1,0 +1,75 @@
+{
+  "authorized_utc": "2026-10-17T07:02:23Z",
+  "base_commit": "4ca089a5dc92980aba8f89b7ddb0e54a9d0aa5d6",
+  "requested_instruction_file": {
+    "name": "FIXED10K_TO_CORPUS_NEXT_EXECUTION_PROMPT.md",
+    "status": "not_found_in_local_workspace_or_fetched_origin_main; path_requested; explicit_user_message_governs_work"
+  },
+  "A": {
+    "batches": [
+      2,
+      3,
+      4
+    ],
+    "maximum_new_contexts": 300,
+    "contexts_per_checkpoint": 100,
+    "source": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch001/final/",
+    "initial_required_contexts": 6799,
+    "initial_reviewed_uncertainty_contexts": 313,
+    "selection": "first existing queue positions, no new draw",
+    "fill": "missing_or_partial_only",
+    "primary_models": "existing authorized Pro Sol/medium",
+    "unchanged": [
+      "Formal800",
+      "Batch001",
+      "completed_fields"
+    ],
+    "never_auto_requeue": "reviewed_unknown_or_conflict"
+  },
+  "B": {
+    "execution": "scheduled_existing_SCNet_resources_installed_dependencies_only",
+    "objective": "one_CPU_supervised_baseline_train_holdout_and_actual_shard_run",
+    "labels": "compatible bound full_document_reference_labels_from_final_Formal800_and_Batch001_latest_ledger",
+    "exclude_as_negative": [
+      "unprocessed",
+      "partial",
+      "reviewed_unknown_or_conflict",
+      "legacy_rule_candidate"
+    ],
+    "unit": "unique_frozen_normalized_complete_context",
+    "split": "fixed_context_group_hash_80_20_no_resplitting",
+    "baseline": "fixed_TFIDF_linear_if_existing_dependencies_available",
+    "selection_or_tuning_on_holdout": false,
+    "supported_candidates": [
+      "existing_experience_outcome_fields",
+      "existing_entry_outcome_fields",
+      "strict_current_duty_responsibility_fields",
+      "existing_technology_family_and_role_fields_with_support"
+    ],
+    "unsupported": [
+      "literal_numeric_years",
+      "open_ended_named_object",
+      "verbatim_evidence",
+      "qualification_branch_relation_reconstruction"
+    ],
+    "fit_minimum_training_count_per_class": 5,
+    "holdout_less_than_5_in_either_class": "report_insufficient_support_not_semantic_pass",
+    "real_input": "one_existing_real_shard_first_up_to_20000_rows_fixed_before_evaluation",
+    "timer": "read_to_written_sidecar_end_to_end",
+    "sidecar_only": true,
+    "reference_labels_overwritten": false,
+    "reduces_semantic_queue": false,
+    "full_corpus_inference_authorized": false
+  },
+  "prohibited": [
+    "paid_API",
+    "model_weights_download",
+    "software_install",
+    "new_taxonomy",
+    "new_sample",
+    "reopening_whole_corpus_cleaning",
+    "recomputing_Formal800_economic_comparisons",
+    "final_manuscript"
+  ],
+  "publication": "code_aggregate_metrics_sanitized_receipts_to_existing_main; all_models_text_labels_predictions_private"
+}

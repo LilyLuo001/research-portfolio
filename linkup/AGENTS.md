@@ -1,5 +1,14 @@
 # LinkUp project execution rules
 
+## Completed Batch002–004 and bounded CPU baseline (2026-10-17)
+
+The authorized A/B wave is complete:300 newly read contexts,2096 required context-family cells,354 ads/2474 ad-field rows saved;4 previously reviewed unknown family cells preserved. Batch final unknown contexts23 (21 newly added); total uncertainty334. Remaining required queue6500 includes1 newly read but still partial context with truncated input. Continue ONLY from `/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/`, with hashes in PROJECT_STATE.json. Do not reread Batch001–004 or Formal800. CPU baseline job46770303 actually trained27 binary targets and predicted20000 real-shard rows into an independent private sidecar; these are0 new semantic reviews and remove0 queue items. Per-field holdout errors preclude treating predictions as reference labels; no whole-corpus inference was authorized/launched. Results and exact continuation artifacts: `linkup/fixed10k_to_corpus_20261017/EXECUTION_RESULTS_PUBLIC.json`. The named FIXED10K_TO_CORPUS_NEXT_EXECUTION_PROMPT.md was not located/read; explicit user instructions governed this wave.
+
+
+## Authorized parallel continuation A/B (2026-10-17)
+
+User now authorizes Batch002–004: at most300 existing queued contexts from Batch001 final state, each100 persisted, missing/partial fields only. In parallel, train one CPU supervised text baseline using existing installed dependencies and compatible reference labels, perform a fixed grouped holdout and a limited real-shard inference. No API, downloaded weights, software installation, or full-corpus inference. Predictions are private separate sidecars, never reference labels or queue completion. Formal800 and Batch001 remain unchanged. Details are in fixed10k_to_corpus_20261017/EXECUTION_LOCK.json; explicit current user scope supersedes older no-training restrictions.
+
 ## Completed production batch001 and current continuation (2026-10-17)
 
 WZ job46767649 completed0:0 after actual Pro primary reading of100 original queued contexts. These judgments cover112 ads and784 ad-field rows. Batch unknown5; total uncertainty313; next required queue6799. Formal800 and whole-corpus base remain unchanged. The next source is `/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch001/final/`, using the ledger, queue, and uncertainty SHA bindings in PROJECT_STATE.json. Do not restart from the original6899 queue or count this batch as fixed10k completion. Only100 new contexts were read; the2 root adjudications are included in100.
