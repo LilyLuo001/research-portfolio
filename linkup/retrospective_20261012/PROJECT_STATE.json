@@ -1,7 +1,7 @@
 {
   "as_of": "2026-10-17",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "fixed10k_batch002_004_and_cpu_baseline",
+  "phase": "fixed10k_continuous_from_4ed88d3",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -61,7 +61,7 @@
     "bounded_semantic_reading": "authorized Pro conversation models",
     "local_allowed": "code/docs, bounded reading, transport, provenance and Git"
   },
-  "resume_rule": "Read active A/B scope and newest saved batch receipts. Preserve existing assignments and completed judgments. Continue incomplete work only; no new sample/taxonomy/deployment, no manuscript transition.",
+  "resume_rule": "Read current continuous execution lock and latest successful continuation batch receipt. Continue required missing fields from latest chained private ledger/queue; preserve prior reference and final unknowns. Do not stop at arbitrary 100/300/1000 batch, no re-review/resampling/paid API/new model. Save actual quota blocker only if it occurs.",
   "formal800_execution": {
     "freeze_job": "46364888",
     "state": "COMPLETED",
@@ -315,87 +315,20 @@
     "approval": "user_approved_2026-10-12"
   },
   "active_scope": {
-    "name": "fixed10k_to_corpus_20261017",
-    "status": "authorized_A_B_wave_completed_fixed10k_not_complete",
-    "started_utc": "2026-10-17T07:02:23Z",
-    "base_commit": "4ca089a5dc92980aba8f89b7ddb0e54a9d0aa5d6",
-    "execution_lock": "linkup/fixed10k_to_corpus_20261017/EXECUTION_LOCK.json",
-    "A": {
-      "prepared_contexts": 300,
-      "batches": [
-        2,
-        3,
-        4
-      ],
-      "prepare_job": "46769592",
-      "prepare_state": "COMPLETED",
-      "prepare_elapsed_seconds": 7,
-      "new_reviews_finalized": 300,
-      "ledger_remaining_before": 6799,
-      "required_context_family_cells": 2096,
-      "preserved_preexisting_unknown_family_cells": 4,
-      "status": "batch002_003_004_saved_and_backfilled",
-      "latest_remaining_queue": 6500,
-      "latest_uncertainty_count": 334,
-      "batch002_finalize_job": "46770954",
-      "counts": {
-        "new_reviewed_contexts": 300,
-        "new_context_family_cells": 2096,
-        "covered_ads": 354,
-        "updated_ad_field_rows": 2474,
-        "preserved_prior_unknown_family_cells": 4,
-        "contexts_with_final_unknown_in_this_wave": 23,
-        "newly_added_uncertainty_contexts": 21,
-        "total_reviewed_uncertainty_contexts": 334,
-        "remaining_required_contexts": 6500,
-        "newly_reviewed_contexts_still_partial": 1,
-        "queue_reduction": 299
-      },
-      "private_outputs": {
-        "ledger": {
-          "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
-          "sha256": "527b4f6ec11fadde96ed66484f6d2578184d6ef9035069fbbd0db1d78320ba60"
-        },
-        "queue": {
-          "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
-          "sha256": "ad8d5687a34e5f9ea11a4ea5db77615ca128face9502a35b027abbaf946b9a51"
-        },
-        "uncertainty": {
-          "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl",
-          "sha256": "60b146ca296f800262c7ddcc189efc654584ed90b6913d8d8b8320b7a8edcdce"
-        }
-      },
-      "final_jobs": {
-        "batch002": "46770954",
-        "batch003": "46772369",
-        "batch004": "46772431"
-      },
-      "review_and_backfill_wall_seconds": 3977
-    },
-    "B": {
-      "status": "bounded_baseline_completed_predictions_not_semantically_accepted_as_references",
-      "first_probe_job": "46769664",
-      "first_probe_state": "FAILED",
-      "reported_error": "Initial probe lacked joblib in selected runtime; resolved with already installed apps/anaconda3/2023.09 and pickle, no installation.",
-      "new_model_weights_or_installs": false,
-      "sidecar_only": true,
-      "actual_training_completed": true,
-      "actual_shard_inference_completed": true,
-      "job": "46770303",
-      "rows_inferred": 20000,
-      "trained_targets": 27,
-      "holdout_targets_with_class_support": 21,
-      "holdout_targets_with_insufficient_class_support": 6,
-      "report": "linkup/fixed10k_to_corpus_20261017/baseline/results/BASELINE_RESULTS_PUBLIC.md",
-      "assessment": "linkup/fixed10k_to_corpus_20261017/BASELINE_ROOT_ASSESSMENT.json",
-      "new_review_count": 0,
-      "queue_reduction": 0
-    },
-    "overall_fixed10k_complete": false,
-    "prior_Formal800_and_Batch001_immutable": true,
-    "next_action": "This authorized300-context wave is complete. Any continuation must use Batch004 final ledger/queue. Do not rerun Batch001-004 or count predictions as reviewed; no full-corpus inference authorized.",
-    "completed_utc": "2026-10-17T08:08:40Z",
-    "active_jobs": []
+    "authority": "current user authorization supersedes old 300 stop",
+    "entry": "linkup/fixed10k_continuation_20261017/CONTINUOUS_EXECUTION_LOCK.json",
+    "source_commit": "4ed88d3",
+    "remaining_at_start": 6500,
+    "current_backfilled_remaining": 6500,
+    "work_queue": 6499,
+    "isolated_unfinished": 1,
+    "latest_backfilled_batch": 4,
+    "next_batch": 5,
+    "checkpoint_not_finish": 100,
+    "new_paid_channel": "declined; existing Pro only",
+    "B_engineering_job": "46773912",
+    "B_status": "shared features equivalent, 117.922s/20000 rows; frozen baseline, not formal full corpus measurement",
+    "full_corpus_formal_shards_submitted": 0
   },
   "latest_completed_semantic_wave": {
     "name": "fixed10k_semantic_production_20261017/batch002_004",

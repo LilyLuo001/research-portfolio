@@ -1,0 +1,390 @@
+{
+  "claim_boundary": "Engineering equivalence and speed only. The 27 outputs remain binary presence predictions and do not implement complete seven-family semantics.",
+  "class_weight_note": "class_weight='balanced' is inherited unchanged from the frozen model and is not an optimization or new correction.",
+  "code_sha256": "715ff32baf169fe3fe9d4b06cad9a9a5883d62a04a09d1df2c10d1f1289b8bf9",
+  "cpu_usage": {
+    "mean_cores_used_over_pre_result_wall": 0.994305579698675,
+    "process_system_seconds": 1.4533939999999999,
+    "process_total_seconds": 125.99209100000002,
+    "process_user_seconds": 124.538697,
+    "requested_cpus": 8
+  },
+  "created_utc": "2026-10-17T08:42:41.070538+00:00",
+  "equivalence": {
+    "identity_columns_compared": [
+      "source_row_0based",
+      "JOB_HASH"
+    ],
+    "prediction_cell_mismatches": 0,
+    "prediction_columns_compared": 27,
+    "rows": 20000,
+    "status": "exact_match"
+  },
+  "frozen_inputs": {
+    "model": {
+      "bytes": 142685753,
+      "sha256": "48dec600da433aa22dd5f9bb4e256af4ce9de92d5e81d2a0e46c71602dba1e4d"
+    },
+    "normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "real_shard": {
+      "selection": "lexicographically_first_existing_recursive_parquet",
+      "sha256": "ce8293e5d7c919ceaef00c68544f0201cb6ae275efe24f82b3652149b8db2c1a",
+      "source_total_rows": 124855
+    },
+    "reference_sidecar": {
+      "bytes": 828756,
+      "sha256": "f232c017bf1ff67fec33ca058a9fd2d62da45c3a86f7f788f84ffb22967dc4ee"
+    },
+    "training_ledger_sha256": "435c7262700a42c4571160e772158f1344a58d39ee387be4436172b8053f5403"
+  },
+  "output": {
+    "prediction_columns": 27,
+    "private_sidecar_bytes": 828756,
+    "private_sidecar_sha256": "f232c017bf1ff67fec33ca058a9fd2d62da45c3a86f7f788f84ffb22967dc4ee",
+    "unsupported_status_columns": 4
+  },
+  "runtime": {
+    "numpy": "1.24.3",
+    "pyarrow": "11.0.0",
+    "python": "3.11.5",
+    "scipy": "1.11.1",
+    "sklearn": "1.3.0"
+  },
+  "scheduler": {
+    "host": "b01r1n00",
+    "job_id": "46773912",
+    "partition": "wzhdtest",
+    "requested_cpus": 8
+  },
+  "scope": "frozen-model engineering optimization on the same first 20,000 original-order rows; no fitting, evaluation, model selection, or corpus production",
+  "sharing": {
+    "avoided_duplicate_transforms": 23,
+    "effective_parameters_independently_hashed": true,
+    "groups": [
+      {
+        "complete_fitted_state_sha256": "d0183719c3061e161690099f1df3b48b917edd3576a67dc2751a6311bfec70b0",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "feature_columns": 55607,
+        "feature_nonzero": 9092600,
+        "feature_rows": 20000,
+        "group": 1,
+        "target_count": 4,
+        "targets": [
+          "experience_presence.general_work",
+          "experience_presence.occupation_task",
+          "experience_presence.industry_domain",
+          "experience_presence.tool_specific"
+        ],
+        "training_input_sha256": "52b1b4797ec15c2407d7acb1f7c898a4cc7ca4df62ce99cb7d289fda8b831a05",
+        "training_rows": 562,
+        "transform_seconds": 19.704195104539394
+      },
+      {
+        "complete_fitted_state_sha256": "611af846f714aab9c28679ad39e806df424442c644504464685bf7336fd72690",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "feature_columns": 60954,
+        "feature_nonzero": 9210581,
+        "feature_rows": 20000,
+        "group": 2,
+        "target_count": 4,
+        "targets": [
+          "entry_presence.explicit_no_experience",
+          "entry_presence.explicit_new_graduate",
+          "entry_presence.current_student_internship",
+          "entry_presence.explicit_junior_or_entry_label"
+        ],
+        "training_input_sha256": "06ac8ab55279e25bc1159ea123b13360bb0fe89674f6b73489644bb5c136faf6",
+        "training_rows": 627,
+        "transform_seconds": 19.96245327591896
+      },
+      {
+        "complete_fitted_state_sha256": "46077a87b2ad6adcae04501d677ebe69787f65a8b827ae7f6e9eef69bc23f272",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "feature_columns": 57225,
+        "feature_nonzero": 9123448,
+        "feature_rows": 20000,
+        "group": 3,
+        "target_count": 4,
+        "targets": [
+          "strict_current_duty.independent_judgment",
+          "strict_current_duty.client_ownership",
+          "strict_current_duty.people_supervision",
+          "strict_current_duty.training_mentoring"
+        ],
+        "training_input_sha256": "e5da20e94b99317db7199949c33ff421f1c021c6b97051bb46e33edb9201f788",
+        "training_rows": 584,
+        "transform_seconds": 19.935680590569973
+      },
+      {
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "feature_columns": 49448,
+        "feature_nonzero": 8982943,
+        "feature_rows": 20000,
+        "group": 4,
+        "target_count": 15,
+        "targets": [
+          "technology_family.traditional_software_system",
+          "technology_family.predictive_ml_ai",
+          "technology_family.generative_ai",
+          "technology_family_role.traditional_software_system.develop_technology",
+          "technology_family_role.traditional_software_system.implement_deploy_technology",
+          "technology_family_role.traditional_software_system.use_tool_for_work",
+          "technology_family_role.traditional_software_system.background_mention",
+          "technology_family_role.predictive_ml_ai.develop_technology",
+          "technology_family_role.predictive_ml_ai.implement_deploy_technology",
+          "technology_family_role.predictive_ml_ai.use_tool_for_work",
+          "technology_family_role.predictive_ml_ai.background_mention",
+          "technology_family_role.generative_ai.develop_technology",
+          "technology_family_role.generative_ai.implement_deploy_technology",
+          "technology_family_role.generative_ai.use_tool_for_work",
+          "technology_family_role.generative_ai.background_mention"
+        ],
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transform_seconds": 19.775446712970734
+      }
+    ],
+    "key": "sha256(sorted frozen training context identities) plus sha256(pickle of complete fitted transformer state)",
+    "target_fingerprints": {
+      "entry_presence.current_student_internship": {
+        "complete_fitted_state_bytes": 5451413,
+        "complete_fitted_state_sha256": "611af846f714aab9c28679ad39e806df424442c644504464685bf7336fd72690",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "06ac8ab55279e25bc1159ea123b13360bb0fe89674f6b73489644bb5c136faf6",
+        "training_rows": 627,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "entry_presence.explicit_junior_or_entry_label": {
+        "complete_fitted_state_bytes": 5451413,
+        "complete_fitted_state_sha256": "611af846f714aab9c28679ad39e806df424442c644504464685bf7336fd72690",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "06ac8ab55279e25bc1159ea123b13360bb0fe89674f6b73489644bb5c136faf6",
+        "training_rows": 627,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "entry_presence.explicit_new_graduate": {
+        "complete_fitted_state_bytes": 5451413,
+        "complete_fitted_state_sha256": "611af846f714aab9c28679ad39e806df424442c644504464685bf7336fd72690",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "06ac8ab55279e25bc1159ea123b13360bb0fe89674f6b73489644bb5c136faf6",
+        "training_rows": 627,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "entry_presence.explicit_no_experience": {
+        "complete_fitted_state_bytes": 5451413,
+        "complete_fitted_state_sha256": "611af846f714aab9c28679ad39e806df424442c644504464685bf7336fd72690",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "06ac8ab55279e25bc1159ea123b13360bb0fe89674f6b73489644bb5c136faf6",
+        "training_rows": 627,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "experience_presence.general_work": {
+        "complete_fitted_state_bytes": 5018090,
+        "complete_fitted_state_sha256": "d0183719c3061e161690099f1df3b48b917edd3576a67dc2751a6311bfec70b0",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "52b1b4797ec15c2407d7acb1f7c898a4cc7ca4df62ce99cb7d289fda8b831a05",
+        "training_rows": 562,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "experience_presence.industry_domain": {
+        "complete_fitted_state_bytes": 5018090,
+        "complete_fitted_state_sha256": "d0183719c3061e161690099f1df3b48b917edd3576a67dc2751a6311bfec70b0",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "52b1b4797ec15c2407d7acb1f7c898a4cc7ca4df62ce99cb7d289fda8b831a05",
+        "training_rows": 562,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "experience_presence.occupation_task": {
+        "complete_fitted_state_bytes": 5018090,
+        "complete_fitted_state_sha256": "d0183719c3061e161690099f1df3b48b917edd3576a67dc2751a6311bfec70b0",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "52b1b4797ec15c2407d7acb1f7c898a4cc7ca4df62ce99cb7d289fda8b831a05",
+        "training_rows": 562,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "experience_presence.tool_specific": {
+        "complete_fitted_state_bytes": 5018090,
+        "complete_fitted_state_sha256": "d0183719c3061e161690099f1df3b48b917edd3576a67dc2751a6311bfec70b0",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "52b1b4797ec15c2407d7acb1f7c898a4cc7ca4df62ce99cb7d289fda8b831a05",
+        "training_rows": 562,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "strict_current_duty.client_ownership": {
+        "complete_fitted_state_bytes": 5173623,
+        "complete_fitted_state_sha256": "46077a87b2ad6adcae04501d677ebe69787f65a8b827ae7f6e9eef69bc23f272",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "e5da20e94b99317db7199949c33ff421f1c021c6b97051bb46e33edb9201f788",
+        "training_rows": 584,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "strict_current_duty.independent_judgment": {
+        "complete_fitted_state_bytes": 5173623,
+        "complete_fitted_state_sha256": "46077a87b2ad6adcae04501d677ebe69787f65a8b827ae7f6e9eef69bc23f272",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "e5da20e94b99317db7199949c33ff421f1c021c6b97051bb46e33edb9201f788",
+        "training_rows": 584,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "strict_current_duty.people_supervision": {
+        "complete_fitted_state_bytes": 5173623,
+        "complete_fitted_state_sha256": "46077a87b2ad6adcae04501d677ebe69787f65a8b827ae7f6e9eef69bc23f272",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "e5da20e94b99317db7199949c33ff421f1c021c6b97051bb46e33edb9201f788",
+        "training_rows": 584,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "strict_current_duty.training_mentoring": {
+        "complete_fitted_state_bytes": 5173623,
+        "complete_fitted_state_sha256": "46077a87b2ad6adcae04501d677ebe69787f65a8b827ae7f6e9eef69bc23f272",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "e5da20e94b99317db7199949c33ff421f1c021c6b97051bb46e33edb9201f788",
+        "training_rows": 584,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family.generative_ai": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family.predictive_ml_ai": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family.traditional_software_system": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.generative_ai.background_mention": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.generative_ai.develop_technology": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.generative_ai.implement_deploy_technology": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.generative_ai.use_tool_for_work": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.predictive_ml_ai.background_mention": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.predictive_ml_ai.develop_technology": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.predictive_ml_ai.implement_deploy_technology": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.predictive_ml_ai.use_tool_for_work": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.traditional_software_system.background_mention": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.traditional_software_system.develop_technology": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.traditional_software_system.implement_deploy_technology": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      },
+      "technology_family_role.traditional_software_system.use_tool_for_work": {
+        "complete_fitted_state_bytes": 4575182,
+        "complete_fitted_state_sha256": "99eed34c028d53730bdc86295c6bdcec1d8ba926c756830a3af1ea89f06a09cc",
+        "effective_params_sha256": "e0645731cff1db7f642f0fadd11cb51c7f7c6d494453d21304bcff7a63dc4ae4",
+        "training_input_sha256": "02c579baf222bad73ec40eccb0e487c386cf57b31bdc97e0cee427648a779568",
+        "training_rows": 497,
+        "transformer_class": "sklearn.feature_extraction.text.TfidfVectorizer"
+      }
+    },
+    "targets": 27,
+    "unique_feature_matrices": 4
+  },
+  "status": "pass",
+  "throughput": {
+    "full_payload_pre_result_rows_per_second": 157.83618984443632,
+    "inference_e2e_rows_per_second": 169.60305504131247,
+    "rows": 20000
+  },
+  "timing_seconds": {
+    "equivalence_check": 0.034942880272865295,
+    "feature_transform": 79.37777568399906,
+    "fingerprint_and_group_setup": 5.727886751294136,
+    "frozen_input_hash_validation": 1.123990260064602,
+    "full_payload_pre_result_write": 126.71365179121494,
+    "inference_e2e_read_through_atomic_write": 117.922404140234,
+    "model_load": 1.873690664768219,
+    "normalize": 36.67348054796457,
+    "predict": 0.4817713499069214,
+    "read": 0.7441681772470474,
+    "write_close_atomic_rename": 0.03751085698604584
+  },
+  "version": "fixed10k-cpu-tfidf-linearsvc-shared-feature-inference-v1"
+}

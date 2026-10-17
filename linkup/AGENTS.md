@@ -1,5 +1,10 @@
 # LinkUp project execution rules
 
+## Continuous fixed10k execution from4ed88d3 (2026-10-17)
+
+Latest user authorization supersedes the old300-stop cap: finish the remaining6500 missing/partial contexts using Batch004 final artifacts; every100 is a checkpoint, not a stopping point. Preserve existing judgments and final unknowns. Attempt one minimal recovery of the single truncated context, then quarantine if unresolvable while preserving unfinished accounting. Optimize identical-transform feature sharing and stage timings without retraining/overwriting frozen baseline. Final compatible labels and held-out evaluation remain frozen until reference completion. Full corpus production remains conditional on field-specific quality and approved semantic resources. New work: `linkup/fixed10k_continuation_20261017/CONTINUOUS_EXECUTION_LOCK.json`. No new sample/taxonomy, paid API, weights or unapproved installs.
+
+
 ## Completed Batch002–004 and bounded CPU baseline (2026-10-17)
 
 The authorized A/B wave is complete:300 newly read contexts,2096 required context-family cells,354 ads/2474 ad-field rows saved;4 previously reviewed unknown family cells preserved. Batch final unknown contexts23 (21 newly added); total uncertainty334. Remaining required queue6500 includes1 newly read but still partial context with truncated input. Continue ONLY from `/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch002_004/batch004/final/`, with hashes in PROJECT_STATE.json. Do not reread Batch001–004 or Formal800. CPU baseline job46770303 actually trained27 binary targets and predicted20000 real-shard rows into an independent private sidecar; these are0 new semantic reviews and remove0 queue items. Per-field holdout errors preclude treating predictions as reference labels; no whole-corpus inference was authorized/launched. Results and exact continuation artifacts: `linkup/fixed10k_to_corpus_20261017/EXECUTION_RESULTS_PUBLIC.json`. The named FIXED10K_TO_CORPUS_NEXT_EXECUTION_PROMPT.md was not located/read; explicit user instructions governed this wave.

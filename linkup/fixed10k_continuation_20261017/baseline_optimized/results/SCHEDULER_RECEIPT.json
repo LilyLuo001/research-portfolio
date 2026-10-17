@@ -1,0 +1,36 @@
+{
+  "job_id": "46773912",
+  "job_name": "fx10k-b-opt",
+  "partition": "wzhdtest",
+  "state": "COMPLETED",
+  "exit_code": "0:0",
+  "node": "b01r1n00",
+  "elapsed": "00:02:09",
+  "elapsed_seconds": 129,
+  "allocated_cpus": 8,
+  "allocated_cpu_time_seconds": 1032,
+  "total_cpu": "00:02:07.473",
+  "total_cpu_seconds": 127.473,
+  "user_cpu": "00:02:05.512",
+  "user_cpu_seconds": 125.512,
+  "system_cpu": "00:00:01.960",
+  "system_cpu_seconds": 1.960,
+  "batch_max_rss_kib": 1230652,
+  "batch_max_vm_size_kib": 2410684,
+  "logs": {
+    "stdout_bytes": 365,
+    "stdout_sha256": "1d47ad5040652f30e8080705d1399b3b0628563f0216e5f136e322c87f7665a6",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "requested_resources": {
+    "nodes": 1,
+    "tasks": 1,
+    "cpus_per_task": 8,
+    "memory": "16G",
+    "time_limit": "00:30:00",
+    "gres": "dcu:Hygon:1",
+    "compute_path": "CPU only; DCU requested solely because wzhdtest requires the generic resource"
+  },
+  "sacct_command": "sacct -j 46773912 -n -P -o JobID,JobName,Partition,State,ExitCode,Elapsed,ElapsedRaw,AllocCPUS,CPUTimeRAW,TotalCPU,UserCPU,SystemCPU,MaxRSS,MaxVMSize,AveRSS,NodeList"
+}
