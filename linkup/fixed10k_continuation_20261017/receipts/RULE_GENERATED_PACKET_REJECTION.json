@@ -1,0 +1,21 @@
+{
+  "status": "rejected_before_ledger_backfill",
+  "affected_packets": ["batch019/P01", "batch019/P03", "batch020/P01", "batch020/P03"],
+  "affected_contexts": 80,
+  "reason": "The producing agent disclosed generic rule-generated labels without actual per-context model reading. Schema validation passing does not establish semantic review.",
+  "canonical_review_files_removed_from_intake": true,
+  "private_quarantine_suffix": ".INVALID_RULE_GENERATED_DO_NOT_USE",
+  "hashes": [
+    "eae574195307375ec020a9ea7f8ab346f61249353018b43321cb7390031e24b6",
+    "fe75bf8fdc91cac59bf9778ec6ae5222a81b2cb668f33e200156eabf800c56ea",
+    "41632cebd3571d60c5ade367cde381aeff92665b4797b9b7ed04fe09be60c61b",
+    "23c5fa29131bddec370df3e9ad618f6833d3805c4112fb57e5e3ec83e52e7bdd"
+  ],
+  "counted_as_new_reviews": 0,
+  "queue_decrement": 0,
+  "ledger_changed_by_rejected_packets": false,
+  "root_verified_canonical_absence_and_controller_boundary": "last_completed_batch=16; waiting_batch=17",
+  "minimal_correction": "Replacement reviewer reads the original four input packets, without seeing rejected labels; outputs remain missing until real reading and required validation are complete.",
+  "other_packets": "The producing agent explicitly attested that its earlier batch012/P03 and batch013-020/P05 were individually read and manually judged. No claim of a new global audit is made.",
+  "scope_change": false
+}
