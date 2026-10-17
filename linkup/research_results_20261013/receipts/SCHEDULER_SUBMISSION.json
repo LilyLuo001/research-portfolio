@@ -1,0 +1,18 @@
+{
+  "submitted_date": "2026-10-16",
+  "job_id": "46700531",
+  "partition": "wzhdtest",
+  "cpus": 2,
+  "memory": "4G",
+  "gres": "dcu:Hygon:1",
+  "time_limit": "00:30:00",
+  "computation": "CPU aggregate analysis of frozen800; no GPU acceleration claim",
+  "code_sha256": "602d509b9839484cfc3a1733a13d2d7a93561090be146275a135b1bca4b94a29",
+  "wrapper_sha256": "65f758312118bcf83f5e36ed278c215d069016d7ab5bb4983205d6e2f38cca26",
+  "pre_job_rejection": {
+    "requested_memory": "8G",
+    "reason": "memory per CPU exceeded DefMemPerCPU",
+    "job_created": false
+  },
+  "status": "submitted"
+}

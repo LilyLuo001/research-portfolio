@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-10-13",
+  "as_of": "2026-10-17",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "corpus_reuse_release_complete_finite_semantic_results_frozen",
+  "phase": "frozen_semantic_results_substantive_comparisons_complete",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -22,15 +22,13 @@
     "wave02_reviews": 96
   },
   "latest_completed_wave": {
-    "name": "corpus_release_20261012",
-    "status": "cloud_complete_independent_QA_pass",
-    "corpus_job": "124293534",
-    "weight_job": "46396281",
-    "scope": "existing2464-shard narrow base catalog and original fixed10k probability lineage",
+    "name": "research_results_20261013",
+    "status": "cloud_complete_independent_QA_and_root_accepted",
+    "job": "46700531",
+    "scope": "frozen800 equal-major experience and explicit-new-graduate duty/experience co-occurrence",
     "new_ads_extracted": 0,
     "new_ads_semantically_reviewed": 0,
-    "new_row_level_data_bytes": 0,
-    "report": "linkup/corpus_release_20261012/RESULTS_ZH.md"
+    "report": "linkup/research_results_20261013/RESULTS_DRAFT_ZH.md"
   },
   "not_available": [
     "Revelio Individual data",
@@ -290,11 +288,11 @@
   "publication": {
     "repository": "LilyLuo001/research-portfolio",
     "branch": "main",
-    "release_directory": "linkup/corpus_release_20261012",
+    "release_directory": "linkup/research_results_20261013",
     "commit_binding": "Use the Git commit containing this release and compare with origin/main; do not treat a historical checkpoint as current HEAD.",
     "semantic_release_directory": "linkup/formal800_20261012",
-    "status": "release_manifest_finalized; verify containing Git commit against origin/main",
-    "qa": "corpus_release_20261012/qa/RELEASE_QA.md and qa/PUBLICATION_CHECK.md"
+    "status": "accepted_release; verify containing commit against origin/main",
+    "qa": "research_results_20261013/qa/RESEARCH_QA.md"
   },
   "completed_formal800_scope": {
     "source": "existing fixed10000 exact text cache with nested probability metadata",
@@ -314,6 +312,43 @@
     "approval": "user_approved_2026-10-12"
   },
   "active_scope": {
+    "name": "research_results_20261013",
+    "status": "complete_accepted_release",
+    "approval": "User approved two substantive comparisons and results draft2026-10-13",
+    "root_decisions": "linkup/research_results_20261013/ANALYSIS_DECISIONS.md",
+    "input": "frozen800 labels and bound719 structured reviews",
+    "estimand": "finite9282 eligible fixed10k; third-stage weight only",
+    "standardization": "equal0.25 across existing occupation majors11,13,15,17",
+    "new_text_extraction": false,
+    "new_semantic_review": false,
+    "new_sample": false,
+    "old_estimates_overwritten": false,
+    "remaining": [],
+    "job": "46700531",
+    "resumed": "2026-10-16",
+    "active_jobs": [],
+    "report": "linkup/research_results_20261013/RESULTS_DRAFT_ZH.md",
+    "qa": "linkup/research_results_20261013/qa/RESEARCH_QA.md",
+    "root_acceptance": "linkup/research_results_20261013/ROOT_ACCEPTANCE.md",
+    "job_state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:13"
+  },
+  "latest_completed_semantic_wave": {
+    "name": "formal800_20261012",
+    "sampled_ads": 800,
+    "reviewed_contexts": 719,
+    "blind_audit_ads": 160,
+    "blind_audit_contexts": 153,
+    "root_adjudicated_contexts": 40,
+    "scope": "post-exclusion eligible finite9282-ad frame; current delivered-text wording",
+    "status": "analysis_and_independent_QA_complete",
+    "finalize_job": "46394029",
+    "figures_job": "46394097",
+    "same_sample_comparison_job": "46394098",
+    "report": "linkup/formal800_20261012/RESULTS_ZH.md"
+  },
+  "completed_reuse_release_scope": {
     "name": "corpus_release_20261012",
     "status": "complete_accepted_release",
     "approval": "user approved next phase after Formal800; 2026-10-12",
@@ -337,19 +372,5 @@
       "parent_inference_enabled": false,
       "reason_parent_remains_off": "post-draw prior-exposure exclusions and restricted technology-screened target"
     }
-  },
-  "latest_completed_semantic_wave": {
-    "name": "formal800_20261012",
-    "sampled_ads": 800,
-    "reviewed_contexts": 719,
-    "blind_audit_ads": 160,
-    "blind_audit_contexts": 153,
-    "root_adjudicated_contexts": 40,
-    "scope": "post-exclusion eligible finite9282-ad frame; current delivered-text wording",
-    "status": "analysis_and_independent_QA_complete",
-    "finalize_job": "46394029",
-    "figures_job": "46394097",
-    "same_sample_comparison_job": "46394098",
-    "report": "linkup/formal800_20261012/RESULTS_ZH.md"
   }
 }

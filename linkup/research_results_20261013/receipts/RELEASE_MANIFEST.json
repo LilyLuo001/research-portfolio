@@ -1,0 +1,40 @@
+{
+  "created_date": "2026-10-16",
+  "design_date": "2026-10-13",
+  "execution_date": "2026-10-16",
+  "job_id": "46700531",
+  "scope": "sanitized frozen code, analysis decisions, returned aggregate results, and scheduler receipts only",
+  "excluded": [
+    "RELEASE_MANIFEST.json",
+    "README.md",
+    "QA work products",
+    "draft documents",
+    "private data",
+    "credentials"
+  ],
+  "files": [
+    {"path": "ANALYSIS_DECISIONS.md", "sha256": "32a58bf10efe684fdf8c57a8b8adfdba50272c00efc0f4bbf9c19ba336e1e1d9", "size_bytes": 5483},
+    {"path": "code/analyze_research_comparisons.py", "sha256": "602d509b9839484cfc3a1733a13d2d7a93561090be146275a135b1bca4b94a29", "size_bytes": 33845},
+    {"path": "code/wz_run_research_comparisons.sbatch", "sha256": "65f758312118bcf83f5e36ed278c215d069016d7ab5bb4983205d6e2f38cca26", "size_bytes": 1131},
+    {"path": "receipts/SCHEDULER_COMPLETION.json", "sha256": "c983072e3317349e104a54b14d123b01235d6796cb3de37e5bed74f35d2491ce", "size_bytes": 505},
+    {"path": "receipts/SCHEDULER_SUBMISSION.json", "sha256": "d00f66dd8dc3398eda7bad837217babd4624352e5ef2324f3580cd327128b26b", "size_bytes": 592},
+    {"path": "results/ANALYSIS_RECEIPT.json", "sha256": "082044381fba09622ee349204c40d5273cb29bcf1d9f34ecdf4c7a1a5d6eaa45", "size_bytes": 4958},
+    {"path": "results/EXISTING_RESULTS_MANIFEST.json", "sha256": "9bc15e220d9011f1a142770a2cc6b0f8ad24703b5cfa74299cc1a5257854b3c2", "size_bytes": 1459},
+    {"path": "results/FIG1_Q1_EQUAL_MAJOR.pdf", "sha256": "aa9ad2316d62c670d27b658293979d70532eef33c5e63f9890d06ced00ad3cc4", "size_bytes": 14442},
+    {"path": "results/FIG1_Q1_EQUAL_MAJOR.png", "sha256": "2b5f244235f00925ffffa13a42e1a20ea80e77c054fedc6da4bbf0e1e43db3f6", "size_bytes": 42625},
+    {"path": "results/FIG2_Q2_NEW_GRAD_DUTIES.pdf", "sha256": "0a4746fbda1f613589bb02bc75376028683eea006f63365208dfbfe4bf771cdb", "size_bytes": 13992},
+    {"path": "results/FIG2_Q2_NEW_GRAD_DUTIES.png", "sha256": "a1eca54d1d5def16670c2667387bf9ba1f749924f0dfb777a634d056066ea0d2", "size_bytes": 44923},
+    {"path": "results/FIG3_Q2_NEW_GRAD_EXPERIENCE.pdf", "sha256": "ea923465fce5de5714447102e2c08b7c62de432390731895e03462e103431274", "size_bytes": 13687},
+    {"path": "results/FIG3_Q2_NEW_GRAD_EXPERIENCE.png", "sha256": "acd6613b87df0c88ac3f72a1041934927c9912c6efe8bca2bd166cbf6614e955", "size_bytes": 42386},
+    {"path": "results/Q1_EQUAL_MAJOR_STANDARDIZED.csv", "sha256": "0231e0e0d7b2186d7f66eb4bb7edb3c0cced032148e7234bed7b8946c98fbf63", "size_bytes": 2017},
+    {"path": "results/Q1_WITHIN_MAJOR_AND_POOLED.csv", "sha256": "9cde254f7c5ee3ddff4664857a1b28e396400bd22fc1e2d36c9bdf8b7b40f642", "size_bytes": 15108},
+    {"path": "results/Q2_DUTIES_AMONG_ELIGIBLE.csv", "sha256": "d69808178d2db59e4bf8281500d4a75661c9d73ec2881a38d9e82e6246e82e59", "size_bytes": 7331},
+    {"path": "results/Q2_ELIGIBILITY_SENSITIVITY.csv", "sha256": "3713726bfeabfe1f44812c236b7e7e6e35f52b5e0d98f42b1e9dccfbc25c1279", "size_bytes": 1553},
+    {"path": "results/Q2_EXISTING_CLAUSE_COOCCURRENCES_AMONG_NEW_GRAD.csv", "sha256": "35b8a6a5842e5a66d27afd5f0fc7871580d0877efc74c44cd6c237aa5317fa3b", "size_bytes": 4175},
+    {"path": "results/Q2_EXPERIENCE_AMONG_ELIGIBLE.csv", "sha256": "af843902f1db4c5bb87d6e5a9e4937f13f76381766e6ccf9174f349dedeebb13", "size_bytes": 6058},
+    {"path": "results/Q2_EXPERIENCE_COMBINATIONS.csv", "sha256": "b9d5942f1df9eec232812d7dea6c9711cf35d040f81e82d60fc22a08043b7be9", "size_bytes": 2993}
+  ],
+  "file_count": 20,
+  "analysis_receipt_output_hashes_verified": true,
+  "analysis_code_hash_verified": true
+}

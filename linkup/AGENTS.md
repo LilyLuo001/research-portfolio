@@ -1,5 +1,13 @@
 # LinkUp project execution rules
 
+## Latest completed analysis (2026-10-16)
+
+The frozen800 substantive comparisons are complete: Wuzhen job46700531 COMPLETED0:0, independent QA and root figure/claim review passed. Use research_results_20261013/RESULTS_DRAFT_ZH.md, ROOT_ACCEPTANCE.md and the current PROJECT_STATE.json. Do not resubmit this calculation, repeat reviews or re-extract the corpus by default. A new step needs a new research deliverable; no ongoing analysis job remains.
+
+## Current analysis pointer (2026-10-13)
+
+The corpus reuse release is complete. The user approved substantive analysis of the frozen Formal800 labels: equal25% composition across existing support majors11/13/15/17, within-major and original pooled comparisons, and graduate-wording/current-duty/experience co-occurrence. New derived tables do not replace old estimates or change sample/labels/weights. Root contract: `research_results_20261013/ANALYSIS_DECISIONS.md`. Use scheduled SCNet only, essential independent QA, and sanitized Git publication; no new extraction, sampling, review or parent-frame inference. The pending local private-cache deletion is separate and remains unauthorized.
+
 ## Current execution pointer (2026-10-12, after Formal800)
 
 Formal800 is complete and published; do not restart its 800/160/40 reviews. The user approved a reuse-release phase: bind the existing 2,464-shard narrow base and retained candidate-only metadata join through a scheduled file/footer audit and query catalog. A separate scheduled audit may check existing sampling probability columns; it must not read or re-extract advertisement text, resample, reweight the published semantic estimates, or automatically enable parent-frame inference. See `corpus_release_20261012/ROOT_DECISIONS.md` and the latest `retrospective_20261012/PROJECT_STATE.json`. The separate request to delete four local private cache directories is still pending and is not part of this approval.
