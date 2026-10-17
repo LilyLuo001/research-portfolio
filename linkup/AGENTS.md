@@ -1,5 +1,9 @@
 # LinkUp project execution rules
 
+## User correction: original Scheme 2 remains incomplete (2026-10-17)
+
+Formal800 and its follow-up comparisons are a completed bounded branch, not completion of the original coarse-results plus contextual-AI production objective. The prepared fixed10k/7635-text frame is not fully contextually judged. The user rejected an automatic transition to manuscript writing. Read PROJECT_STATE.json overall_scheme2_status before older completion pointers. Reuse finished coarse data and exact-bound judgments; do not imply 800 reviews certify or replace production. No new sample, parser loop, paid API, CLI or unapproved model is implied by this correction.
+
 ## Latest completed analysis (2026-10-16)
 
 The frozen800 substantive comparisons are complete: Wuzhen job46700531 COMPLETED0:0, independent QA and root figure/claim review passed. Use research_results_20261013/RESULTS_DRAFT_ZH.md, ROOT_ACCEPTANCE.md and the current PROJECT_STATE.json. Do not resubmit this calculation, repeat reviews or re-extract the corpus by default. A new step needs a new research deliverable; no ongoing analysis job remains.
