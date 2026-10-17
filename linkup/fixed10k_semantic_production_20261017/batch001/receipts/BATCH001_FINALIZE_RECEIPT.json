@@ -1,0 +1,44 @@
+{
+  "checks": {
+    "all100_validated": true,
+    "all7_family_replacement": true,
+    "each_family_ads_10000": true,
+    "ledger_rows_70000": true,
+    "no_prior_known_not_applicable_or_unknown_overwritten": true,
+    "non_batch_rows_copied_through": true
+  },
+  "code_sha256": "fd1d32e9a3efcda276f93e7178669b3c4358ec37ca155808a7d0aa76a927191e",
+  "counts": {
+    "covered_ads": 112,
+    "final_unknown_contexts_in_batch": 5,
+    "remaining_required_contexts": 6799,
+    "remaining_reviewed_uncertainty_contexts": 313,
+    "reused_prior_family_cells": 0,
+    "updated_ad_field_rows": 784,
+    "updated_context_family_cells": 700,
+    "updated_contexts": 100
+  },
+  "created_utc": "2026-10-17T06:03:01.894083+00:00",
+  "inputs": {
+    "enriched_packet_sha256": "146ca03f6817ab0a5ce6baff2073260c7b677fc823634b7859869177632cfdfc",
+    "existing_ledger_sha256": "481cf6f844cae9377d3be4d1ce51a25fdcab277e1d9e8280957615946d1e3756",
+    "existing_queue_sha256": "42741690264ada733f19da8991db5617d64b5d75577db260476cf9f0c1803428",
+    "existing_uncertainty_sha256": "46d439f8ddd3b9d67d4ab5fe178667602d5da5257d3e6e0246b38f6bdafb2b27",
+    "validated_reviews_sha256": "77eea08d377b287182820d909d548e1db955abe772a40f8d2804e9850d5bfdb0",
+    "validation_receipt_sha256s": [
+      "b67053b250ca3f188be890ff742c004835fd7a809846f9b9b66a5ae2f0961f80",
+      "448665761741958e22dfc662cd003832dd057e954584dc205c9d52c181a0ba96",
+      "5fccab9598d11205ebb4b8f7dc0300f2c3bc172ce4b39016edb161851de1be7e",
+      "e7a4741e4bd5e98e12a95297f9a3a8b3f1b3e6884a1a38bab8c89c4ffbd2dd43",
+      "ae7e95db2755d8f0102eff3d98afc31677eb3c238143ee9720f8299755ba3a4c"
+    ]
+  },
+  "outputs": {
+    "private_ledger_sha256": "435c7262700a42c4571160e772158f1344a58d39ee387be4436172b8053f5403",
+    "private_queue_sha256": "902f21c05dac1b02c37bda034f035c4a21b12a69ba893fb6088a7ed5a24bd0f4",
+    "private_uncertainty_sha256": "41d7e50153aa99bebd51d2cd1634a8eb2457512367234ba34e9c4fa142991254",
+    "public_counts_sha256": "0fb2f9c65b875f341aa288d8918350f07f19688067f414b7b8365ab78e08b4ea"
+  },
+  "status": "pass",
+  "version": "fixed10k-semantic-production-batch001-v1"
+}

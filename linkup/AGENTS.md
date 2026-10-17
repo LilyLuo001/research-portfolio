@@ -1,5 +1,13 @@
 # LinkUp project execution rules
 
+## Completed production batch001 and current continuation (2026-10-17)
+
+WZ job46767649 completed0:0 after actual Pro primary reading of100 original queued contexts. These judgments cover112 ads and784 ad-field rows. Batch unknown5; total uncertainty313; next required queue6799. Formal800 and whole-corpus base remain unchanged. The next source is `/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/batch001/final/`, using the ledger, queue, and uncertainty SHA bindings in PROJECT_STATE.json. Do not restart from the original6899 queue or count this batch as fixed10k completion. Only100 new contexts were read; the2 root adjudications are included in100.
+
+## Active production batch: original fixed10k first100 (2026-10-17)
+
+The user explicitly authorized the first100 contexts in the already accepted production_coverage_20261017 private queue, in existing order and packets. This is continued production, not a new pilot or sample. Fill only missing/partial families; preserve completed families and do not automatically requeue308 reviewed-unknown contexts. Specific conflicts receive one root decision and remain unknown if unresolved. No taxonomy/parser/literature/audit project/model deployment or scope change. Existing authorized Pro models perform actual reading; scheduled SCNet code prepares and backfills. Unread work stays unprocessed. Report only new/reused/unknown/remaining counts, artifacts, elapsed time and concrete blockers. State and batch receipts govern continuation.
+
 ## Latest accepted inventory: fixed10k coverage (2026-10-17)
 
 Job46764737 completed0:0; independent QA and root acceptance are in production_coverage_20261017. All10000 ads are preserved, corresponding to7635 raw texts and7617 frozen normalized complete inputs. The private required-field queue contains6899 contexts; a separate reviewed-uncertainty register contains308, with37 overlapping because of other missing fields. Formal719 judgments bind to1981 ads by verified complete-input identity. This is coverage reconciliation, not new semantic production or whole-corpus completion. Use the existing private queue and completed fields; do not repeat this inventory, sample again, re-extract the corpus or switch to manuscript writing. PROJECT_STATE.json contains exact output locations and remaining scope.

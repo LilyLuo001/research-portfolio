@@ -1,0 +1,74 @@
+{
+  "version": "fixed10k-semantic-production-batch001-scheduler-v1",
+  "scope": "anonymous execution receipt; no review text or record-level material",
+  "production_window_utc": {
+    "started": "2026-10-17T05:32:31Z",
+    "completed": "2026-10-17T06:03:02Z",
+    "elapsed_seconds": 1831
+  },
+  "review_execution": {
+    "direct_semantic_judgments": 100,
+    "primary_review_engine": "Sol medium",
+    "root_adjudications": 2,
+    "root_adjudications_not_additional_reviews": true
+  },
+  "precheck": {
+    "packets_02_04": "Reviewer reported preliminary local checks against the frozen validator; these are not final scheduled acceptance. All five packets were validated again within the final WZ job.",
+    "not_final_acceptance": true
+  },
+  "root_correction_validation_jobs": [
+    {
+      "job_id": "46767298",
+      "state": "FAILED",
+      "exit_code": "2:0"
+    },
+    {
+      "job_id": "46767299",
+      "state": "COMPLETED",
+      "exit_code": "0:0"
+    },
+    {
+      "job_id": "46767468",
+      "state": "COMPLETED",
+      "exit_code": "0:0"
+    }
+  ],
+  "final_acceptance": {
+    "job_id": "46767649",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "started_local_scheduler_time": "2026-10-17T14:02:52",
+    "ended_local_scheduler_time": "2026-10-17T14:03:02",
+    "elapsed_seconds": 10,
+    "receipt": "receipts/BATCH001_FINALIZE_RECEIPT.json",
+    "acceptance_location": "WZ finalizer with five packet validation receipts"
+  },
+  "final_validation": {
+    "five_packets_passed": true,
+    "finalizer_receipt": "receipts/BATCH001_FINALIZE_RECEIPT.json"
+  },
+  "packet_preparation": {
+    "job_id": "46766762",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 5,
+    "receipt": "receipts/BATCH001_PREP_RECEIPT.json"
+  },
+  "failed_finalizer_attempt": {
+    "job_id": "46767563",
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed_seconds": 14,
+    "cause": "unknown-count summary omitted queue_row argument",
+    "minimal_repair": "count existing unknown_or_conflict statuses directly; semantic inputs and schema unchanged",
+    "final_outputs_written": false
+  },
+  "root_acceptance": {
+    "public_artifact_hash_bindings_checked": true,
+    "all_five_validation_receipts_bound_to_finalizer": true,
+    "new_context_count": 100,
+    "fixed10k_complete": false,
+    "base_and_Formal800_unchanged": true,
+    "counts_and_continuation_saved_to_PROJECT_STATE": true
+  }
+}
