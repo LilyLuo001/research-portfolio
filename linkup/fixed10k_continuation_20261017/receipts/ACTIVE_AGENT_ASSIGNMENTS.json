@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-18T13:26:04.032052+00:00",
+  "updated_utc": "2026-10-18T13:44:09.666281+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v10",
+      "task": "a_reader1_v11",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
@@ -18,17 +18,17 @@
         "owned_residue": 0,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "batch040/P01 saved020 awaiting only old006/014 mechanical repairs; then040/P04"
+      "handoff": "040/P04 canonical complete; continue041/P02/P05"
     },
     {
-      "task": "a_reader2_v11",
+      "task": "a_reader2_v12",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
         "batch040/P02",
         "batch040/P05"
       ],
-      "handoff": "batch041/P03 saved010; next051",
+      "handoff": "042/P01 checkpoint005 preserved; continuing006 onward",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -38,7 +38,7 @@
       }
     },
     {
-      "task": "a_reader3_v9",
+      "task": "a_reader3_v10",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
@@ -52,7 +52,7 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "batch043/P03 saved015; next056"
+      "handoff": "044/P01 canonical complete;044/P04 checkpoint005 saved, next066"
     }
   ],
   "unassigned": [],

@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-10-18T13:35:15.011020+00:00",
+  "scope": "bounded contradictions already identified during packet validation; no new taxonomy, rereading cycle or corpus run",
+  "new_review_credit": 0,
+  "decisions": [
+    {
+      "batch": 40,
+      "packet": 2,
+      "affected_records": 1,
+      "changed_fields": [
+        "experience_outcomes.industry_domain"
+      ],
+      "decision": "explicit prior subject-matter-domain experience is present; does not imply an employer business-sector history",
+      "private_decision_sha256": "b790631729aacb918a9ad6ad8aba8421a698c8a16b07149cc71000a00ee91b0a"
+    },
+    {
+      "batch": 41,
+      "packet": 3,
+      "affected_records": 2,
+      "changed_fields": [
+        "experience_outcomes.industry_domain",
+        "experience_clauses.object",
+        "unresolved_notes"
+      ],
+      "decision": "explicit functional business-data experience retained as domain experience; matrixed organizational setting does not identify sector/customer/subject-matter domain and remains unresolved as an experience object",
+      "private_decision_sha256": "0986f7d50bd5f42402263c3483d8b5bf90f44586f680a238a60bb66742211899",
+      "evidence_scope": "root adjudication of supplied conflict evidence; not a newly credited full-document reread"
+    }
+  ],
+  "prior_private_references_preserved": true,
+  "classification_mechanism": "Pro reference decisions, not classifier predictions"
+}
