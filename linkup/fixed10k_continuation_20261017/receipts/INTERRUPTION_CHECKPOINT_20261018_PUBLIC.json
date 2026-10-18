@@ -1,0 +1,46 @@
+{
+  "created_utc": "2026-10-18T12:56:27.642756+00:00",
+  "status": "turn_interrupted_checkpoints_preserved",
+  "latest_finalized_batch": 38,
+  "latest_backfill_job": "46842944",
+  "resumed_session_new_references_finalized": 1599,
+  "reused_saved_references": 201,
+  "reused_prior_family_cells": 18,
+  "final_unknown_among_processed": 136,
+  "original_unfinished_queue_remaining": 3108,
+  "isolated_unfinished": 9,
+  "elapsed_seconds_to_latest_backfill": 13304.65316,
+  "unfinalized_work_not_credited_as_complete": true,
+  "handoff": [
+    {
+      "batch": 39,
+      "packet": 3,
+      "checkpoint": "checkpoint_020.jsonl",
+      "rows": 20,
+      "sha256": "bca53f2b9dc370cc2b9171470a0897196a2fe4270166113acffa1d0e74906d2e",
+      "next": "check existing private validation and publish complete raw only after requirements pass; do not reread saved judgments"
+    },
+    {
+      "batch": 40,
+      "packet": 2,
+      "checkpoint": "checkpoint_015.jsonl",
+      "rows": 15,
+      "sha256": "ca908ccc1c90ca88dada526557254b3904dcdc775eaeedd778196f9f35388122",
+      "new_rows_checkpoint": "checkpoint_036_040_new005.jsonl",
+      "new_rows": 5,
+      "new_rows_sha256": "b08c6b71864fc4334ad2bbac335dfb7839c94287bac98d60b0705f703154df1b",
+      "next": "root adjudication of one preserved experience clause/outcome conflict before merge and full-packet validation; literal quote escape repair already saved in new5"
+    },
+    {
+      "batch": 42,
+      "packet": 2,
+      "checkpoint": "REVIEW_WORKING_PACKET_02_015_PRIVATE.jsonl",
+      "rows": 15,
+      "sha256": "b19631f82f3229c02fda1617adab04645ad80e07b540980cfe2cd89a0bb96a85",
+      "next": "continue last5 only; full20 required before canonical publication"
+    }
+  ],
+  "baseline": "optimized real execution already recorded; final fit prepared but not run; no accepted formal full-corpus fields or formal corpus semantic jobs",
+  "new_paid_channel": "declined; no new paid calls or model deployment",
+  "blocker": "active turn interrupted; references preserved; one local semantic conflict awaits root decision;9 source-isolated contexts remain unavailable"
+}

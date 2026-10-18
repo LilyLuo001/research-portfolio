@@ -1,14 +1,15 @@
 {
-  "updated_utc": "2026-10-18T11:42:31.514908+00:00",
+  "updated_utc": "2026-10-18T12:56:27.642756+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v8",
+      "task": "a_reader1_v9",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch038/P05",
-        "batch039/P03"
+        "batch039/P03",
+        "batch040/P01",
+        "batch040/P04"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -17,17 +18,17 @@
         "owned_residue": 0,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "Preserve038/P05 checkpoint010 SHA c573acf0181aef7dbf51d381b6f22b4b7d3116df9e3907fcbb1a85f3101a5c69; start091. Full20 only may publish canonical."
+      "handoff": "039/P03 checkpoint020 saved, canonical not published; verify existing validation before publication; then040/P01/P04."
     },
     {
-      "task": "a_reader2_v9",
+      "task": "a_reader2_v10",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch039/P01",
-        "batch039/P04"
+        "batch040/P02",
+        "batch040/P05"
       ],
-      "handoff": "Preserve039/P01 checkpoint005; next006 at handoff.",
+      "handoff": "040/P02 old15 + separate new5 saved; root adjudication of025 experience object/outcome conflict pending; no canonical.",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -37,12 +38,12 @@
       }
     },
     {
-      "task": "a_reader3_v8",
+      "task": "a_reader3_v9",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch041/P01",
-        "batch041/P04"
+        "batch042/P02",
+        "batch042/P05"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -51,10 +52,10 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "040/P03 ROOTFINALpublished;041/P01 fetchedbutnojudgments at handoff."
+      "handoff": "042/P02 checkpoint015 saved; next036."
     }
   ],
   "unassigned": [],
   "note": "All original remaining packet ownership assigned without overlap. Canonical/private saved judgments supersede this snapshot; checkpoints are saves, not scope endpoints.",
-  "execution_note": "Three Pro Sol-medium lanes continue original residue assignments from saved cursors; no extra model/API channels."
+  "execution_note": "Turn interrupted; all durable cloud checkpoints preserved. Resume exact unfinished cursors from INTERRUPTION_CHECKPOINT_20261018_PUBLIC.json; no automatic new reading remains active."
 }
