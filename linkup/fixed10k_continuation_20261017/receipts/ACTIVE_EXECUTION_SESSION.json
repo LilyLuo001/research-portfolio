@@ -12,5 +12,11 @@
   },
   "preexisting_contexts_explanation": "At resumed-turn start:039 all100 saved (P03 unpublished checkpoint20);040/P02 saved20 plusP03 canonical20;041/P01 andP04 canonical40;042/P02 saved15. These195 saved references are reused, not new readings. Publication and a one-record root correction do not create new-review credit.",
   "prior_interruption": "Previous active turn interrupted; durable private checkpoints preserved. User requested continue.",
-  "accounting_scope": "Finalized-batch new readings exclude the195 preexisting saved references. Unfinalized readings are separate. Wall time starts at13:06:56UTC and excludes prior paused interval."
+  "accounting_scope": "Finalized-batch new readings exclude the195 preexisting saved references. Unfinalized readings are separate. Wall time starts at13:06:56UTC and excludes prior paused interval.",
+  "user_quota_policy": {
+    "requested_utc": "2026-10-18T14:26:31.091040+00:00",
+    "pause_at_remaining_percent_approximately": 10,
+    "free_reset_authorized": false,
+    "instruction": "Stop taking new contexts near10% remaining; preserve current judgments and resumable cursor; no scope reduction."
+  }
 }

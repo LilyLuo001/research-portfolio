@@ -1,16 +1,11 @@
 {
-  "updated_utc": "2026-10-18T14:07:35.856520+00:00",
+  "updated_utc": "2026-10-18T14:39:29.299063+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v13",
+      "task": "a_reader1_v14",
       "model": "gpt-5.6-sol",
       "effort": "medium",
-      "assigned": [
-        "batch039/P03",
-        "batch040/P01",
-        "batch040/P04"
-      ],
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -18,17 +13,13 @@
         "owned_residue": 0,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "042/P03 saved015; next056"
+      "handoff": "044/P02 next021;043/P04 canonical complete"
     },
     {
-      "task": "a_reader2_v14",
+      "task": "a_reader2_v15",
       "model": "gpt-5.6-sol",
       "effort": "medium",
-      "assigned": [
-        "batch040/P02",
-        "batch040/P05"
-      ],
-      "handoff": "043/P05 next081 unread",
+      "handoff": "044/P03 saved19;060 isolated after one recovery;canonical publication pending;then045/P01",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -38,13 +29,9 @@
       }
     },
     {
-      "task": "a_reader3_v12",
+      "task": "a_reader3_v14",
       "model": "gpt-5.6-sol",
       "effort": "medium",
-      "assigned": [
-        "batch042/P02",
-        "batch042/P05"
-      ],
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -52,10 +39,11 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "045/P02 saved005; next026"
+      "handoff": "046/P03 saved010;next051"
     }
   ],
   "unassigned": [],
   "note": "All original remaining packet ownership assigned without overlap. Canonical/private saved judgments supersede this snapshot; checkpoints are saves, not scope endpoints.",
-  "execution_note": "Three assigned Sol/medium lanes resumed at2026-10-18T13:06:56Z. Root handles bounded conflicts and backfill acceptance; original queue remains the scope."
+  "execution_note": "Three assigned Sol/medium lanes resumed at2026-10-18T13:06:56Z. Root handles bounded conflicts and backfill acceptance; original queue remains the scope.",
+  "quota_policy": "User directs pause at approximately10% remaining; no free reset. Root will issue stop-new-reads and preserve active units."
 }
