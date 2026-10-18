@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-18T08:48:57.183095+00:00",
+  "updated_utc": "2026-10-18T08:53:19.864767+00:00",
   "rule": "Canonical review files and private saved judgments take precedence over this dispatch snapshot. Never reread completed judgments.",
   "agents": [
     {
@@ -17,24 +17,25 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch025/P02",
-        "batch025/P04",
+        "batch025/P04:071-080",
         "batch026/P02",
         "batch026/P04"
-      ]
+      ],
+      "handoff_saved_judgments": "batch025/working/P04/checkpoint_10.jsonl"
     },
     {
-      "task": "a_reader3_v2",
+      "task": "a_reader3_v3",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
         "batch025/P01",
         "batch025/P03",
-        "batch027/P01",
-        "batch027/P03"
-      ]
+        "batch027/P01"
+      ],
+      "handoff_saved_judgments": "batch025/working/P01/semantic_notes_001_005.txt"
     }
   ],
   "unassigned_next_batch": 28,
-  "note": "Batch027/P02/P04 remain unassigned. Canonical and private saved judgments govern completed work."
+  "note": "Batch027/P02/P03/P04 remain unassigned. Reuse within-session handoff judgments without counting duplicate review.",
+  "execution_note": "Fresh reader2 spawn rejected by agent thread limit; existing Sol-medium reader2 resumed, all existing judgments preserved."
 }
