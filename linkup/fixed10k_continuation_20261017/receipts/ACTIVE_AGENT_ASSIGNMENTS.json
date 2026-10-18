@@ -1,14 +1,15 @@
 {
-  "updated_utc": "2026-10-18T08:38:12.068738+00:00",
+  "updated_utc": "2026-10-18T08:48:57.183095+00:00",
   "rule": "Canonical review files and private saved judgments take precedence over this dispatch snapshot. Never reread completed judgments.",
   "agents": [
     {
-      "task": "a_close021_p05",
+      "task": "a_reader1_v4",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch025/P05",
-        "batch026/P05"
+        "batch026/P01",
+        "batch026/P03",
+        "batch027/P05"
       ]
     },
     {
@@ -16,9 +17,10 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch024/P04",
         "batch025/P02",
-        "batch025/P04"
+        "batch025/P04",
+        "batch026/P02",
+        "batch026/P04"
       ]
     },
     {
@@ -26,12 +28,13 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch023/P03",
-        "batch024/P01",
-        "batch024/P03"
+        "batch025/P01",
+        "batch025/P03",
+        "batch027/P01",
+        "batch027/P03"
       ]
     }
   ],
-  "unassigned_next_batch": 27,
-  "note": "Batch025/P01/P03 and Batch026/P01/P02/P03/P04 remain unassigned."
+  "unassigned_next_batch": 28,
+  "note": "Batch027/P02/P04 remain unassigned. Canonical and private saved judgments govern completed work."
 }
