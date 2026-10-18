@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-18T09:50:36.485085+00:00",
+  "updated_utc": "2026-10-18T10:09:37.786862+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
@@ -21,15 +21,14 @@
       }
     },
     {
-      "task": "a_reader2_recovery",
+      "task": "a_reader2_v5",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch031/P04",
-        "batch032/P02",
-        "batch032/P04"
+        "batch034/P02",
+        "batch034/P05"
       ],
-      "handoff": "Old reader2 completed031/P02;031/P04 had zero judgments. No rereview.",
+      "handoff": "Preserve034/P02 records021-035 in REVIEW_PACKET_02_WORKING.jsonl; start unread036. Prior reader reached actual context limit.",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -39,15 +38,11 @@
       }
     },
     {
-      "task": "a_reader3_v3",
+      "task": "a_reader3_v4",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch032/P01",
-        "batch032/P03",
-        "batch033/P02",
-        "batch033/P04",
-        "batch033/P05"
+        "batch034/P03"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -55,10 +50,11 @@
         "rule": "((batch - 34) * 5 + packet - 1) % 3",
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
-      }
+      },
+      "handoff": "Preserve034/P03 records041-055 checkpoint_15.jsonl; start unread056. Prior reader reached actual context limit."
     }
   ],
   "unassigned": [],
   "note": "All original remaining packet ownership assigned without overlap. Canonical/private saved judgments supersede this snapshot; checkpoints are saves, not scope endpoints.",
-  "execution_note": "Old reader2 reached actual context boundary. New Sol-medium recovery agent successfully started with only unread packets."
+  "execution_note": "Readers2/3 replaced after actual context boundaries; original assignments and saved judgments preserved. Reader1 continues."
 }
