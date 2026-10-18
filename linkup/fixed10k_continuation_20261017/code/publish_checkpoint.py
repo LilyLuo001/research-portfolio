@@ -23,6 +23,16 @@ summary["A"].update(new_contexts_backfilled_this_turn=new,actual_reviewed_contex
  isolated_unfinished_contexts=d["blocked_contexts"],elapsed_wall_seconds_including_preparation_and_corrections=elapsed,
  backfilled_contexts_per_hour_since_turn_start=new*3600/elapsed,
  active_continuation="Batch%03d onward; packets are checkpoints, not stopping limits"%(batch+1))
+summary["A"]["cumulative_backfilled_since_batch004"]=new
+summary["A"]["legacy_turn_counter_note"]="Legacy this_turn/since_turn_start counters cover the entire continuation since Batch004, including any pause. Use current_session for resumed-run readings and active-session wall time."
+session_path=base/"receipts/ACTIVE_EXECUTION_SESSION.json"
+if session_path.exists():
+ session=json.loads(session_path.read_text())
+ sr=[x for x in rr if x["record_batch"]["batch_number"]>session["starting_finalized_batch"]]
+ reused=sum(session["preexisting_reference_contexts_by_pending_batch"].get(str(x["record_batch"]["batch_number"]),0) for x in sr)
+ newly_read=sum(x["counts"].get("reviewed_contexts",x["counts"]["updated_contexts"]) for x in sr)-reused
+ session_elapsed=max(0,(dt.datetime.fromisoformat(r["created_utc"])-dt.datetime.fromisoformat(session["started_utc"])).total_seconds())
+ summary["A"]["current_session"]={"session_id":session["session_id"],"started_utc":session["started_utc"],"newly_read_contexts_in_finalized_batches":newly_read,"reused_saved_reference_contexts":reused,"contexts_backfilled":sum(x["counts"]["updated_contexts"] for x in sr),"reused_prior_family_cells":sum(x["counts"]["reused_prior_family_cells"] for x in sr),"final_unknown_contexts_among_processed":sum(x["counts"]["final_unknown_contexts_in_batch"] for x in sr),"net_new_uncertainty_contexts":d["remaining_reviewed_uncertainty_contexts"]-session["starting_reviewed_uncertainty_contexts"],"elapsed_seconds_to_latest_backfill":session_elapsed,"newly_read_contexts_per_hour":newly_read*3600/session_elapsed if session_elapsed else None,"scope":session["accounting_scope"]}
 t="/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch%03d/final/"%batch
 summary["latest_private_artifacts"]={"ledger":t+"FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl","queue":t+"REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl","uncertainty":t+"REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl"}
 summary["artifact_sha256"]=r["outputs"]
