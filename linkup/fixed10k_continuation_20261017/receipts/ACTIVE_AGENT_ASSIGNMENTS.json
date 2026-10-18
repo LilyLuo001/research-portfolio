@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-18T09:03:52.039439+00:00",
+  "updated_utc": "2026-10-18T09:20:27.330586+00:00",
   "rule": "Canonical review files and private saved judgments take precedence over this dispatch snapshot. Never reread completed judgments.",
   "agents": [
     {
@@ -7,11 +7,10 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch026/P01",
-        "batch026/P03",
-        "batch027/P05",
-        "batch028/P05",
-        "batch029/P05"
+        "batch029/P05",
+        "batch029/P02",
+        "batch029/P04",
+        "batch030/P05"
       ]
     },
     {
@@ -19,12 +18,11 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch026/P02",
-        "batch026/P04",
-        "batch027/P02",
         "batch027/P04",
         "batch028/P02",
-        "batch028/P04"
+        "batch028/P04",
+        "batch030/P02",
+        "batch030/P04"
       ],
       "handoff_saved_judgments": "batch025/working/P04/checkpoint_10.jsonl"
     },
@@ -33,14 +31,15 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch027/P03",
-        "batch028/P01",
-        "batch028/P03"
+        "batch029/P01",
+        "batch029/P03",
+        "batch030/P01",
+        "batch030/P03"
       ],
       "handoff_saved_judgments": "batch025/working/P01/semantic_notes_001_005.txt"
     }
   ],
-  "unassigned_next_batch": 30,
-  "note": "Batch029/P01/P02/P03/P04 remain unassigned. Canonical and working files govern completed work; within-session reused handoffs are not duplicate new readings.",
+  "unassigned_next_batch": 31,
+  "note": "All packets through Batch030 have a unique owner. Canonical and private working files govern completion; handoff reuse never creates duplicate new counts.",
   "execution_note": "Fresh reader2 spawn rejected by agent thread limit; existing Sol-medium reader2 resumed, all existing judgments preserved."
 }

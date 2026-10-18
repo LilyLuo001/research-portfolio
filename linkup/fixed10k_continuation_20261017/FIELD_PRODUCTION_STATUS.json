@@ -30,7 +30,13 @@
       "membership_not_reselected": true,
       "all_fields_of_all_heldout_contexts_excluded_from_final_training": true,
       "reporting": "exposure subsets separate; complete holdout is not described as historically blind"
-    }
+    },
+    "required_final_reporting": [
+      "per-target positive and negative class precision/recall with confusion counts",
+      "predicted-positive share alongside eligible true class counts",
+      "performance within frozen existing research comparison groups, reporting group source and denominators",
+      "prior-exposed holdout contexts reported separately; no final evaluation for model selection"
+    ]
   },
   "additional_channel": {
     "request_count": 1,
