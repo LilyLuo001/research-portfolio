@@ -1,13 +1,14 @@
 {
-  "updated_utc": "2026-10-18T11:18:50.238513+00:00",
+  "updated_utc": "2026-10-18T11:42:31.514908+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v6",
+      "task": "a_reader1_v8",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch037/P04"
+        "batch038/P05",
+        "batch039/P03"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -16,16 +17,17 @@
         "owned_residue": 0,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "Start037/P04 record061, no savedjudgment at handoff;037/P01 canonicalcomplete."
+      "handoff": "Preserve038/P05 checkpoint010 SHA c573acf0181aef7dbf51d381b6f22b4b7d3116df9e3907fcbb1a85f3101a5c69; start091. Full20 only may publish canonical."
     },
     {
-      "task": "a_reader2_v8",
+      "task": "a_reader2_v9",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch037/P05"
+        "batch039/P01",
+        "batch039/P04"
       ],
-      "handoff": "Preserve037/P05 checkpoint_after_086 six judgments; continue087. Finalfit code review completed; no training.",
+      "handoff": "Preserve039/P01 checkpoint005; next006 at handoff.",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -35,12 +37,12 @@
       }
     },
     {
-      "task": "a_reader3_v7",
+      "task": "a_reader3_v8",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch039/P02",
-        "batch039/P05"
+        "batch041/P01",
+        "batch041/P04"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -49,7 +51,7 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "Preserve039/P02 checkpoint010; continue011.038/P04 canonicalcomplete."
+      "handoff": "040/P03 ROOTFINALpublished;041/P01 fetchedbutnojudgments at handoff."
     }
   ],
   "unassigned": [],
