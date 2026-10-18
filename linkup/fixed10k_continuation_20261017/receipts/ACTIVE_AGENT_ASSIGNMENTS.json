@@ -1,0 +1,37 @@
+{
+  "updated_utc": "2026-10-18T08:38:12.068738+00:00",
+  "rule": "Canonical review files and private saved judgments take precedence over this dispatch snapshot. Never reread completed judgments.",
+  "agents": [
+    {
+      "task": "a_close021_p05",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "assigned": [
+        "batch025/P05",
+        "batch026/P05"
+      ]
+    },
+    {
+      "task": "a_reader2_v3",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "assigned": [
+        "batch024/P04",
+        "batch025/P02",
+        "batch025/P04"
+      ]
+    },
+    {
+      "task": "a_reader3_v2",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "assigned": [
+        "batch023/P03",
+        "batch024/P01",
+        "batch024/P03"
+      ]
+    }
+  ],
+  "unassigned_next_batch": 27,
+  "note": "Batch025/P01/P03 and Batch026/P01/P02/P03/P04 remain unassigned."
+}
