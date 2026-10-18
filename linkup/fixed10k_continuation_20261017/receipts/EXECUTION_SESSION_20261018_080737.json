@@ -1,0 +1,15 @@
+{
+  "session_id": "pro_resume_20261018",
+  "started_utc": "2026-10-18T08:07:37+00:00",
+  "starting_finalized_batch": 20,
+  "starting_remaining_unfinished_contexts": 4904,
+  "starting_reviewed_uncertainty_contexts": 430,
+  "preexisting_reference_contexts_by_pending_batch": {
+    "21": 91,
+    "22": 95,
+    "23": 15
+  },
+  "preexisting_contexts_explanation": "Batch021 P01-04 (80) plus 11 real saved decisions for P05; Batch022 P01-04 (80) plus prior checkpoint_15 for P05; Batch023/P02 prior checkpoint_15. Reviewers confirmed the last two partial checkpoints on resumption. Total 201 saved judgments reused without re-reading; not new readings in this session.",
+  "prior_interruption": "Three active agents returned the actual usage-limit error. User reports quota restored; current usage tool ordinaryUsageAllowed=true, usedPercent=0.",
+  "accounting_scope": "New readings and reused saved judgments are counted in finalized batches only; unfinalized private checkpoints are reported separately. Elapsed session time excludes the overnight pause."
+}

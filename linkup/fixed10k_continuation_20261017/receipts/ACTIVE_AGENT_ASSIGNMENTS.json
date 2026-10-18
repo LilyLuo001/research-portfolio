@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-18T12:56:27.642756+00:00",
+  "updated_utc": "2026-10-18T13:26:04.032052+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v9",
+      "task": "a_reader1_v10",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
@@ -18,17 +18,17 @@
         "owned_residue": 0,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "039/P03 checkpoint020 saved, canonical not published; verify existing validation before publication; then040/P01/P04."
+      "handoff": "batch040/P01 saved020 awaiting only old006/014 mechanical repairs; then040/P04"
     },
     {
-      "task": "a_reader2_v10",
+      "task": "a_reader2_v11",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
         "batch040/P02",
         "batch040/P05"
       ],
-      "handoff": "040/P02 old15 + separate new5 saved; root adjudication of025 experience object/outcome conflict pending; no canonical.",
+      "handoff": "batch041/P03 saved010; next051",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -52,10 +52,10 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "042/P02 checkpoint015 saved; next036."
+      "handoff": "batch043/P03 saved015; next056"
     }
   ],
   "unassigned": [],
   "note": "All original remaining packet ownership assigned without overlap. Canonical/private saved judgments supersede this snapshot; checkpoints are saves, not scope endpoints.",
-  "execution_note": "Turn interrupted; all durable cloud checkpoints preserved. Resume exact unfinished cursors from INTERRUPTION_CHECKPOINT_20261018_PUBLIC.json; no automatic new reading remains active."
+  "execution_note": "Three assigned Sol/medium lanes resumed at2026-10-18T13:06:56Z. Root handles bounded conflicts and backfill acceptance; original queue remains the scope."
 }
