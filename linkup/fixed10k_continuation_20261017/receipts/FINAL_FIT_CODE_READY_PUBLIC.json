@@ -1,0 +1,24 @@
+{
+  "created_utc": "2026-10-18T11:18:50.230717+00:00",
+  "status": "prepared_not_executed",
+  "code_sha256": "acf8110bab8f482f01768bf60f7305152c379e8568f4835dfb5052563d3263c5",
+  "sbatch_sha256": "18bbda70e6402ff6db37b0d530438be8242cc6f2f625ca48f627041d72fb411d",
+  "review": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "scope": "implementation and leakage review against frozen baseline",
+    "material_issues_reported": 0,
+    "claim": "code review only; no model training, measurement quality or acceptance claimed"
+  },
+  "preconditions": [
+    "Batch069 finalizer receipt and latest ledger/queue hashes agree",
+    "processable original continuation queue empty; isolated unfinished contexts explicitly excluded",
+    "latest compatible labels and all training/evaluation memberships frozen before fit",
+    "all final1331 and legacy hash holdouts excluded from every target fit"
+  ],
+  "settings": "original TF-IDF and LinearSVC settings unchanged, including class_weight balanced",
+  "shared_features": "one fitted transformer and training matrix per identical ordered training input; one evaluation transform per transformer and ordered evaluation input",
+  "evaluation": "positive and negative class metrics, true and predicted positive shares, existing frame arms and prior-exposure subsets",
+  "training_executed": false,
+  "full_corpus_inference_executed": false
+}

@@ -1,14 +1,13 @@
 {
-  "updated_utc": "2026-10-18T11:02:23.737128+00:00",
+  "updated_utc": "2026-10-18T11:18:50.238513+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v5",
+      "task": "a_reader1_v6",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch034/P01",
-        "batch034/P04"
+        "batch037/P04"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -17,17 +16,16 @@
         "owned_residue": 0,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "Preserve034/P01 records001-005 REVIEW_WORKING_005_PRIVATE.jsonl; startunread006. B034/P02 rootcorrection completed, do not touch."
+      "handoff": "Start037/P04 record061, no savedjudgment at handoff;037/P01 canonicalcomplete."
     },
     {
-      "task": "a_reader2_v7",
+      "task": "a_reader2_v8",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch037/P02",
         "batch037/P05"
       ],
-      "handoff": "Preserve037/P02 record021 rawcheckpoint; startunread022. Prior036/P01/P04 canonicalcomplete.",
+      "handoff": "Preserve037/P05 checkpoint_after_086 six judgments; continue087. Finalfit code review completed; no training.",
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
@@ -41,8 +39,8 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch038/P01",
-        "batch038/P04"
+        "batch039/P02",
+        "batch039/P05"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -51,7 +49,7 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "Preserve038/P01 checkpoint005;006-010 previouslyretrieved butunjudged. Startunprocessed006."
+      "handoff": "Preserve039/P02 checkpoint010; continue011.038/P04 canonicalcomplete."
     }
   ],
   "unassigned": [],
