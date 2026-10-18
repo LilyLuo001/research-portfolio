@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-18T10:26:47.440383+00:00",
+  "updated_utc": "2026-10-18T10:49:25.989796+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
@@ -36,12 +36,11 @@
       }
     },
     {
-      "task": "a_reader3_v5",
+      "task": "a_reader3_v6",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch036/P02",
-        "batch036/P05"
+        "batch037/P03"
       ],
       "continuous_assignment": {
         "first_batch": 34,
@@ -50,7 +49,7 @@
         "owned_residue": 2,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "handoff": "Prior035/P01 andP04 canonical complete. Start036/P02 unread021; residue2continues."
+      "handoff": "Preserve037/P03 checkpoint010 records041-050; startunjudged051. Priorreaderformednonewjudgmentsafterlastcheckpoint."
     }
   ],
   "unassigned": [],
