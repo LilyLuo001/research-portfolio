@@ -1,49 +1,45 @@
 {
-  "updated_utc": "2026-10-18T09:28:25.945260+00:00",
-  "rule": "Canonical review files and private saved judgments take precedence over this dispatch snapshot. Never reread completed judgments.",
+  "updated_utc": "2026-10-18T09:49:22.332549+00:00",
+  "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
       "task": "a_reader1_v4",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch029/P02",
-        "batch029/P04",
-        "batch030/P05",
-        "batch031/P05"
+        "batch031/P05",
+        "batch032/P05",
+        "batch033/P01",
+        "batch033/P03"
       ]
     },
     {
-      "task": "a_reader2_v3",
+      "task": "a_reader2_recovery",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch028/P04",
-        "batch030/P02",
-        "batch030/P04",
-        "batch031/P02",
         "batch031/P04",
         "batch032/P02",
         "batch032/P04"
       ],
-      "handoff_saved_judgments": "batch025/working/P04/checkpoint_10.jsonl"
+      "handoff": "Old reader2 completed031/P02;031/P04 had zero judgments. No rereview."
     },
     {
       "task": "a_reader3_v3",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "assigned": [
-        "batch030/P01",
-        "batch030/P03",
-        "batch031/P01",
-        "batch031/P03",
         "batch032/P01",
-        "batch032/P03"
-      ],
-      "handoff_saved_judgments": "batch025/working/P01/semantic_notes_001_005.txt"
+        "batch032/P03",
+        "batch033/P02",
+        "batch033/P04"
+      ]
     }
   ],
-  "unassigned_next_batch": 33,
-  "note": "Batch032/P05 is unassigned; all031 packetsassigned. Canonical/privateworking files govern completedwork. Turn endpoints resume, not terminate overallscope.",
-  "execution_note": "Fresh reader2 spawn rejected by agent thread limit; existing Sol-medium reader2 resumed, all existing judgments preserved."
+  "unassigned": [
+    "batch033/P05",
+    "batch034 onward"
+  ],
+  "note": "Original fixed10k queue only; packet boundaries are saves, not scope endpoints. Finalize and publish only after five validated atomic canonical packets.",
+  "execution_note": "Old reader2 reached actual context boundary. New Sol-medium recovery agent successfully started with only unread packets."
 }
