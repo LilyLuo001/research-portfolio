@@ -1,0 +1,133 @@
+{
+  "created_utc": "2026-10-18T14:46:16.789346+00:00",
+  "status": "semantic_review_paused_by_user_quota_policy",
+  "quota_remaining_percent_last_observed": 11,
+  "free_reset_used": false,
+  "latest_finalized_batch": 43,
+  "saved_unfinalized_contexts": 134,
+  "preexisting_reference_contexts_by_pending_batch_for_next_resume": {
+    "44": 69,
+    "45": 50,
+    "46": 15
+  },
+  "private_saved_artifacts": [
+    {
+      "batch": 44,
+      "packet": 1,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch044/reviews/REVIEW_PACKET_01_PRIVATE.jsonl",
+      "rows": 20,
+      "sha256": "e5198f280f3fe3e66d8d244520f85c765aea453fa57883df4cee9b6a955800ad"
+    },
+    {
+      "batch": 44,
+      "packet": 2,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch044/working/P02/checkpoint_005.jsonl",
+      "rows": 5,
+      "sha256": "e4fa6d9d731f382c7be7b39642a90655d2a7edce06045f72b7eea707905b9eb0"
+    },
+    {
+      "batch": 44,
+      "packet": 2,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch044/working/P02/checkpoint_010.jsonl",
+      "rows": 5,
+      "sha256": "dfb1172aa01ab5b3c7829dff8f96d11122158ee16328e82bea392d20abd6016c"
+    },
+    {
+      "batch": 44,
+      "packet": 3,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch044/reviews/REVIEW_PACKET_03_PRIVATE.jsonl",
+      "rows": 19,
+      "sha256": "f71cf28c2580e9497b3686392b8cb50683b46ee78b7d97b1e0ec621fafa3f486"
+    },
+    {
+      "batch": 44,
+      "packet": 4,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch044/reviews/REVIEW_PACKET_04_PRIVATE.jsonl",
+      "rows": 20,
+      "sha256": "2e2e70a7ec91547a06e050f734d107dbc63038853efa494729c6ae4f91f1e5ad"
+    },
+    {
+      "batch": 45,
+      "packet": 1,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch045/working/P01/checkpoint_001.jsonl",
+      "rows": 5,
+      "sha256": "f597a29fa42c7abe807797f5007e59263fc9ca28c724f3743bbdf06255347511"
+    },
+    {
+      "batch": 45,
+      "packet": 1,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch045/working/P01/checkpoint_002.jsonl",
+      "rows": 5,
+      "sha256": "506206dc9f9f6d56e1874d5f7b50090dcdeb8872580e916f3f93eaad97beddfd"
+    },
+    {
+      "batch": 45,
+      "packet": 2,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch045/reviews/REVIEW_PACKET_02_PRIVATE.jsonl",
+      "rows": 20,
+      "sha256": "ddd7b421fa8d467550913d47056edbd8719e6d7b8a3127130f5e4abe20a183e2"
+    },
+    {
+      "batch": 45,
+      "packet": 5,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch045/reviews/REVIEW_PACKET_05_PRIVATE.jsonl",
+      "rows": 20,
+      "sha256": "f13e71802353e8c46fb8bd142a6d3a23341323929539ccbadd8e088abb8aee89"
+    },
+    {
+      "batch": 46,
+      "packet": 3,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch046/working/P03/checkpoint_055.jsonl",
+      "rows": 15,
+      "sha256": "3d4125cea0239e943e337622a0a51272ef4221bb7aab052bcf6c9dbcb2291bcc"
+    }
+  ],
+  "latest_isolation_count": 10,
+  "isolation_register_sha256": "cfa82bfd43f8954e02f57f6fcc570f2159771e9f69089e6c261e437cc3229e52",
+  "controller_last_observed_status": "waiting_for_reviews",
+  "controller_waiting_batch": 44,
+  "controller_process_stop_verified": false,
+  "controller_note": "PID file not present on current login host; no active semantic/backfill Slurm job; batch044 incomplete. No restart or new job submitted at pause.",
+  "session_id": "pro_resume_20261018_130656",
+  "new_reference_contexts_saved_this_session": 439,
+  "new_reference_contexts_backfilled_this_session": 305,
+  "reused_saved_reference_contexts_this_session": 195,
+  "reused_prior_family_cells": 4,
+  "final_unknown_among_processed_backfilled_contexts": 65,
+  "net_new_uncertainty_contexts": 63,
+  "original_queue_remaining_in_latest_ledger": 2608,
+  "remaining_breakdown": {
+    "saved_unfinalized": 134,
+    "unreviewed_processable": 2464,
+    "source_isolated_unfinished": 10
+  },
+  "elapsed_wall_seconds_to_pause": 5960.789346,
+  "new_saved_contexts_per_wall_hour": 265.1326709038176,
+  "scope_unchanged": true,
+  "free_reset_authorized": false,
+  "reference_quality_note": "Schema/evidence validation is not independent semantic accuracy certification.",
+  "handoff": [
+    {
+      "lane": 0,
+      "batch": 44,
+      "packet": 2,
+      "next_unread_ordinal": 31,
+      "saved_rows_in_packet": 10
+    },
+    {
+      "lane": 1,
+      "batch": 45,
+      "packet": 1,
+      "next_unread_ordinal": 11,
+      "saved_rows_in_packet": 10
+    },
+    {
+      "lane": 2,
+      "batch": 46,
+      "packet": 3,
+      "next_unread_ordinal": 56,
+      "saved_rows_in_packet": 15
+    }
+  ],
+  "B": "Frozen optimized baseline unchanged; no final fit or full-corpus formal semantic production executed."
+}

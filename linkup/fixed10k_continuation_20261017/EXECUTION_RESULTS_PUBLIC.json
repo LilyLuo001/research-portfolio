@@ -15,7 +15,7 @@
     "isolated_unfinished_contexts": 9,
     "elapsed_wall_seconds_including_preparation_and_corrections": 108082.39867,
     "backfilled_contexts_per_hour_since_turn_start": 129.63442866196337,
-    "active_continuation": "Batch044 onward; packets are checkpoints, not stopping limits",
+    "active_continuation": "Paused per user quota policy; next original packet cursor in quota pause checkpoint; do not reread saved judgments.",
     "actual_reviewed_contexts_in_finalized_batches": 3900,
     "newly_added_uncertainty_contexts_since_batch004": 287,
     "uncertainty_count_note": "Final-unknown counts among processed contexts may include prior unknown families preserved by the whitelist; net new registry entries are reported separately.",
@@ -32,8 +32,17 @@
       "net_new_uncertainty_contexts": 63,
       "elapsed_seconds_to_latest_backfill": 5379.39867,
       "newly_read_contexts_per_hour": 204.1120332135562,
-      "scope": "Finalized-batch new readings exclude the195 preexisting saved references. Unfinalized readings are separate. Wall time starts at13:06:56UTC and excludes prior paused interval."
-    }
+      "scope": "Finalized-batch new readings exclude the195 preexisting saved references. Unfinalized readings are separate. Wall time starts at13:06:56UTC and excludes prior paused interval.",
+      "new_reference_contexts_saved": 439,
+      "new_reference_contexts_saved_unfinalized": 134,
+      "elapsed_seconds_to_pause": 5960.789346,
+      "new_saved_contexts_per_wall_hour": 265.1326709038176,
+      "paused_utc": "2026-10-18T14:46:16.789346+00:00"
+    },
+    "execution_status": "paused_at_user_quota_threshold",
+    "quota_pause_checkpoint": "receipts/QUOTA_PAUSE_20261018_1445_PUBLIC.json",
+    "live_isolation_count_at_pause": 10,
+    "isolation_count_note": "Batch043 ledger/receipt retains9 isolated; one additional batch044 isolation is in current registry, to propagate in next normal backfill. Total remaining unchanged."
   },
   "latest_private_artifacts": {
     "ledger": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch043/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
