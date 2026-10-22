@@ -12,7 +12,7 @@
     "wz_finalize_continuation.sbatch": "df3ea5d492b12666e3a1103fe05787613eb427bf11c2bb4983e051bda7665137"
   },
   "backup": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/code/archive_before_isolation_fix_20261022",
-  "controller_reload_pending": true,
+  "controller_reload_pending": false,
   "root_acceptance": "Read diff; accept exact registered-identity omission, preserve raw packet and isolated ledger, keep99 reference +1 unfinished accounting. No new semantic decisions.",
   "verification": {
     "agent": "Sol/high isolation_backfill_fix",
@@ -21,6 +21,15 @@
     "unregistered_missing_review": "rejected",
     "normal_packet": "20 records preserved",
     "cloud_readonly_existing_isolation_register": "10 historical entries compatible; exact batch044 match",
-    "real_batch044_backfill": "pending"
+    "real_batch044_backfill": {
+      "job_id": "47175930",
+      "reviewed": 99,
+      "updated": 99,
+      "newly_isolated": 1,
+      "remaining_work": 2499,
+      "isolated_unfinished": 10,
+      "remaining_total": 2509,
+      "prior_family_and_isolated_rows_preserved": true
+    }
   }
 }
