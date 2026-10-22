@@ -319,11 +319,11 @@
     "entry": "linkup/fixed10k_continuation_20261017/CONTINUOUS_EXECUTION_LOCK.json",
     "source_commit": "4ed88d3",
     "remaining_at_start": 6500,
-    "current_backfilled_remaining": 1911,
-    "work_queue": 1899,
+    "current_backfilled_remaining": 1811,
+    "work_queue": 1799,
     "isolated_unfinished": 12,
-    "latest_backfilled_batch": 50,
-    "next_batch": 51,
+    "latest_backfilled_batch": 51,
+    "next_batch": 52,
     "checkpoint_not_finish": 100,
     "new_paid_channel": "declined; existing Pro only",
     "B_engineering_job": "46773912",
@@ -331,15 +331,15 @@
     "full_corpus_formal_shards_submitted": 0,
     "execution_results": "linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json",
     "latest_private_artifacts": {
-      "ledger": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch050/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
-      "queue": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch050/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
-      "uncertainty": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch050/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl"
+      "ledger": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch051/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+      "queue": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch051/final/REQUIRED_NEW_CONTEXT_QUEUE_PRIVATE.jsonl",
+      "uncertainty": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch051/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl"
     },
     "latest_artifact_hashes": {
-      "private_ledger_sha256": "75bdc083e7837c66a16f692942536f3de52f0516cbfcd776644d1c5dc1ab36cf",
-      "private_queue_sha256": "4819856172b3a622c2bd3389e38040cd2183261d8ac42eb077815eda8994b74d",
-      "private_uncertainty_sha256": "402af8f5e4cc1797d518050e282b6c2904befd4471fb42d479488f7eff7f1478",
-      "public_counts_sha256": "9fbffde471b823cfbdb47008c2a184f1cc02836b84897ca8a9368366c538d013"
+      "private_ledger_sha256": "303cd07e6a9d44c3eff4df5c06cfa4de7022510599ea5341e520a430a0fb35a3",
+      "private_queue_sha256": "4dec71b8137b16bb46a5682220cd2cce894d804e1f247896298ac6b2036c0399",
+      "private_uncertainty_sha256": "0f5d5a80c4834ea22d7c620129db67b1a2ae7bf5e300a5b8f8fac0a649d8bdf4",
+      "public_counts_sha256": "27a39c7ad29bfd0f19fa34ccc96a73976f58be89cad8516eb5dea4c1591307d9"
     },
     "execution_status": "running",
     "quota_pause_checkpoint": "linkup/fixed10k_continuation_20261017/receipts/QUOTA_PAUSE_20261018_1445_PUBLIC.json",
@@ -353,9 +353,9 @@
     "saved_work_note": "Saved unfinalized counts in prior quota checkpoint describe pause time only; current private canonicals/checkpoints and session receipts govern current progress."
   },
   "latest_completed_semantic_wave": {
-    "name": "fixed10k_continuation_20261017/batch050",
-    "reviewed_contexts": 99,
-    "covered_ads": 110,
+    "name": "fixed10k_continuation_20261017/batch051",
+    "reviewed_contexts": 100,
+    "covered_ads": 113,
     "status": "saved_backfilled_continues_next_batch",
     "report": "linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json"
   },
