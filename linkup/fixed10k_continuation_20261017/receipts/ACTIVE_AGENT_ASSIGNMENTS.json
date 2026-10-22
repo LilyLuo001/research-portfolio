@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-18T14:46:16.789346+00:00",
+  "updated_utc": "2026-10-22T15:20:02+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_v14",
+      "task": "a_reader1_oct22_v1",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -20,10 +20,10 @@
         "next_unread_ordinal": 31,
         "saved_rows_in_packet": 10
       },
-      "status": "paused"
+      "status": "running"
     },
     {
-      "task": "a_reader2_v15",
+      "task": "a_reader2_oct22_v1",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
@@ -40,10 +40,10 @@
         "owned_residue": 1,
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
-      "status": "paused"
+      "status": "running"
     },
     {
-      "task": "a_reader3_v14",
+      "task": "a_reader3_oct22_v1",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -60,12 +60,12 @@
         "next_unread_ordinal": 56,
         "saved_rows_in_packet": 15
       },
-      "status": "paused"
+      "status": "running"
     }
   ],
   "unassigned": [],
   "note": "All original remaining packet ownership assigned without overlap. Canonical/private saved judgments supersede this snapshot; checkpoints are saves, not scope endpoints.",
   "execution_note": "Three assigned Sol/medium lanes resumed at2026-10-18T13:06:56Z. Root handles bounded conflicts and backfill acceptance; original queue remains the scope.",
   "quota_policy": "User directs pause at approximately10% remaining; no free reset. Root will issue stop-new-reads and preserve active units.",
-  "execution_status": "paused_user_quota"
+  "execution_status": "running"
 }

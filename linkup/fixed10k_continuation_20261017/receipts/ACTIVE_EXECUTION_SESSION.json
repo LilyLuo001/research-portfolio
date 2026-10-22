@@ -1,25 +1,19 @@
 {
-  "session_id": "pro_resume_20261018_130656",
-  "started_utc": "2026-10-18T13:06:56+00:00",
-  "starting_finalized_batch": 38,
-  "starting_remaining_unfinished_contexts": 3108,
-  "starting_reviewed_uncertainty_contexts": 558,
+  "session_id": "pro_resume_20261022_152002",
+  "started_utc": "2026-10-22T15:20:02+00:00",
+  "starting_finalized_batch": 43,
+  "starting_remaining": 2608,
   "preexisting_reference_contexts_by_pending_batch": {
-    "39": 100,
-    "40": 40,
-    "41": 40,
-    "42": 15
+    "44": 69,
+    "45": 50,
+    "46": 15
   },
-  "preexisting_contexts_explanation": "At resumed-turn start:039 all100 saved (P03 unpublished checkpoint20);040/P02 saved20 plusP03 canonical20;041/P01 andP04 canonical40;042/P02 saved15. These195 saved references are reused, not new readings. Publication and a one-record root correction do not create new-review credit.",
-  "prior_interruption": "Previous active turn interrupted; durable private checkpoints preserved. User requested continue.",
-  "accounting_scope": "Finalized-batch new readings exclude the195 preexisting saved references. Unfinalized readings are separate. Wall time starts at13:06:56UTC and excludes prior paused interval.",
+  "status": "running",
+  "accounting_scope": "Newly read contexts exclude134 preexisting references. Saved unfinalized context counts remain separate from ledger completion. No rereview of old judgments.",
   "user_quota_policy": {
-    "requested_utc": "2026-10-18T14:26:31.091040+00:00",
     "pause_at_remaining_percent_approximately": 10,
-    "free_reset_authorized": false,
-    "instruction": "Stop taking new contexts near10% remaining; preserve current judgments and resumable cursor; no scope reduction."
+    "free_reset_authorized": false
   },
-  "status": "paused_user_quota",
-  "paused_utc": "2026-10-18T14:46:16.789346+00:00",
-  "pause_checkpoint": "receipts/QUOTA_PAUSE_20261018_1445_PUBLIC.json"
+  "source_commit": "0827f0d",
+  "starting_reviewed_uncertainty_contexts": 621
 }
