@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-22T19:27:54.214349+00:00",
+  "updated_utc": "2026-10-22T19:47:35.062625+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct23_v2",
+      "task": "a_reader1_oct23_v3",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -14,32 +14,50 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 57,
+        "batch": 56,
         "packet": 3,
-        "assignment_start_ordinal": 51
+        "assignment_start_ordinal": 41
       },
-      "status": "running"
+      "status": "running",
+      "active_reassigned_packet": {
+        "batch": 56,
+        "packet": 3,
+        "then_resume": {
+          "batch": 58,
+          "packet": 4
+        }
+      }
     },
     {
-      "task": "a_reader2_oct23_v4",
+      "task": "a_reader2_oct23_v5",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
-        "batch": 55,
-        "packet": 2,
-        "assignment_start_ordinal": 31
+        "batch": 57,
+        "packet": 4,
+        "assignment_start_ordinal": 61
       },
       "continuous_assignment": {
         "first_batch": 34,
         "last_batch": 69,
         "rule": "((batch - 34) * 5 + packet - 1) % 3",
         "owned_residue": 1,
-        "packet_size": "use frozen template membership; final packet may contain fewer than20"
+        "packet_size": "use frozen template membership; final packet may contain fewer than20",
+        "skip_reassigned_packets": [
+          [
+            56,
+            3
+          ],
+          [
+            57,
+            1
+          ]
+        ]
       },
       "status": "running"
     },
     {
-      "task": "a_reader3_oct23_v5",
+      "task": "a_reader3_oct23_v7",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -50,16 +68,40 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 57,
-        "packet": 5,
-        "assignment_start_ordinal": 86
+        "batch": 58,
+        "packet": 3,
+        "assignment_start_ordinal": 51
       },
-      "status": "running"
+      "status": "running",
+      "one_time_priority_after_current": {
+        "batch": 57,
+        "packet": 1,
+        "then_resume": {
+          "batch": 59,
+          "packet": 1
+        }
+      }
     }
   ],
   "unassigned": [],
   "note": "Cursors above are assignment starts, not claims that later checkpointed records remain unread. Cloud canonical and saved working checkpoint identities supersede this metadata snapshot.",
   "execution_note": "Three Sol/medium lanes continue from durable private checkpoints; fresh agents replace exhausted contexts without rereading saved judgments. Root handles bounded conflicts and backfill acceptance.",
   "quota_policy": "User directs pause at approximately10% remaining; no free reset. Root will issue stop-new-reads and preserve active units.",
-  "execution_status": "running"
+  "execution_status": "running",
+  "packet_reassignments": [
+    {
+      "batch": 56,
+      "packet": 3,
+      "from_residue": 1,
+      "to_residue": 0,
+      "status": "in_progress"
+    },
+    {
+      "batch": 57,
+      "packet": 1,
+      "from_residue": 1,
+      "to_residue": 2
+    }
+  ],
+  "reassignment_note": "Reader2 confirmed both packets unstarted with no reads/writes/checkpoints; receiving readers acknowledge. Existing frozen packet membership, required-field whitelist, schema, scope, and completion criteria unchanged. Rebalance only the longer saved work queue."
 }
