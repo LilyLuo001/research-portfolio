@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-22T19:56:07.785633+00:00",
+  "updated_utc": "2026-10-22T20:04:26.234345+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
@@ -60,19 +60,11 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 57,
+        "batch": 59,
         "packet": 1,
-        "assignment_start_ordinal": 11
+        "assignment_start_ordinal": 1
       },
-      "status": "running",
-      "active_reassigned_packet": {
-        "batch": 57,
-        "packet": 1,
-        "then_resume": {
-          "batch": 59,
-          "packet": 1
-        }
-      }
+      "status": "running"
     }
   ],
   "unassigned": [],
@@ -92,7 +84,8 @@
       "batch": 57,
       "packet": 1,
       "from_residue": 1,
-      "to_residue": 2
+      "to_residue": 2,
+      "status": "canonical_published"
     }
   ],
   "reassignment_note": "Reader2 confirmed both packets unstarted with no reads/writes/checkpoints; receiving readers acknowledge. Existing frozen packet membership, required-field whitelist, schema, scope, and completion criteria unchanged. Rebalance only the longer saved work queue."
