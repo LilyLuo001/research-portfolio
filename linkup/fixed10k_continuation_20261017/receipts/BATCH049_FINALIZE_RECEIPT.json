@@ -1,0 +1,67 @@
+{
+  "checks": {
+    "all_batch_records_accounted_for": true,
+    "all_batch_records_validated": false,
+    "all_expected_review_records_validated": true,
+    "blocked_context_excluded_from_work_queue": true,
+    "each_family_ads_conserved": true,
+    "ledger_rows_conserved": true,
+    "non_required_rows_copied_through": true,
+    "prior_receipt_chain_bound": true,
+    "registered_isolated_records_omitted_from_reviews": true,
+    "required_field_whitelist_only": true,
+    "unfinished_conserved_with_separate_blocked_count": true
+  },
+  "code_sha256": "da82c8789e4d36619391f6ac8a999918244ca9ab777a8fe5bd9dd1ec5fb69f08",
+  "counts": {
+    "blocked_contexts": 11,
+    "covered_ads": 122,
+    "final_unknown_contexts_in_batch": 12,
+    "newly_isolated_contexts": 1,
+    "remaining_reviewed_uncertainty_contexts": 716,
+    "remaining_unfinished_contexts": 2010,
+    "remaining_work_contexts": 1999,
+    "reused_prior_family_cells": 1,
+    "reviewed_contexts": 99,
+    "updated_ad_field_rows": 853,
+    "updated_context_family_cells": 692,
+    "updated_contexts": 99
+  },
+  "created_utc": "2026-10-22T17:35:25.038991+00:00",
+  "inputs": {
+    "enriched_packet_sha256": "64097e46009c70cac719c5b4fba5c16bb64cc4230e88906cc558543f1dda540f",
+    "existing_ledger_sha256": "782e51c7218546d72ecbf95829502ad53281b76483ddf51157543c29498ec644",
+    "existing_queue_sha256": "0d475cd05488efc4582f0dbe67fe45dbe8e6068c0a192f7bda277ebde3215ba1",
+    "existing_uncertainty_sha256": "911ad64dceffe5d9e2525a104d7b660010120a26fa221193a3622d57af5b0227",
+    "isolation_register_sha256": "cad0df56a78dc300c154475beeaf0f1c8bc02ea0c9144b995b8912c8721f8312",
+    "validated_reviews_sha256": "62dbf7916a5ffdc29c548565bc85464454c7c1dae028fd3f9f98c73d559b2f48",
+    "validation_receipt_sha256s": [
+      "bfc9adf46bfb97316547174471215b247e95839f458cba513cd8a12ebc03de77",
+      "dfef947f99cc22ba12f507d665b69b61333f10ea5874ca772fb0690c338fa6b0",
+      "39dd75e96ed0bbfcf78efdf29658c4b7214e485e7bb8f5d4c71181e22ec4de8d",
+      "88a4c129125f2b1c4d46c0ba51d815a8e46979c08d64abe391dd790536e565db",
+      "84f4a831660a15654a05addbe38cad9d685cc04202f22d67a3e0911cd5696fd6"
+    ]
+  },
+  "outputs": {
+    "private_ledger_sha256": "652a8f48b5b6bc4d05542adb9b73ddf41dce702ff3faee82a12e32d1bbb831cb",
+    "private_queue_sha256": "6a811a2984f4830fd1726d745f90039826c6c6b7a0db6b4c39c6995df4badae6",
+    "private_uncertainty_sha256": "4f9dce1545772457bf226f715806833da0ad26870d1c45d7004d6242fc6055f8",
+    "public_counts_sha256": "df6f83b8de2dc7403da9cfb83f04c1963542656c5ddeb4ea4ee66a532a26a521"
+  },
+  "prior_receipt": {
+    "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/receipts/BATCH048_FINALIZE_RECEIPT.json",
+    "sha256": "e3847718030ef0b22427cdea507820d18b84c1eb2361b3f465b3d25b9f824e28",
+    "version": "fixed10k-semantic-production-batch048-v1"
+  },
+  "record_batch": {
+    "batch_number": 49,
+    "contexts": 100,
+    "work_queue_positions_in_predecessor": [
+      1,
+      100
+    ]
+  },
+  "status": "pass",
+  "version": "fixed10k-semantic-production-batch049-v1"
+}
