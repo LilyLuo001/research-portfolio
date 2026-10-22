@@ -1,0 +1,14 @@
+{
+  "created_utc": "2026-10-22T15:31:28.987661+00:00",
+  "scope": "public counters only",
+  "problem": "Some historical finalized receipts use reviewed_contexts for packet slots including source-isolated placeholders. This is not a full-reading count.",
+  "minimal_fix": "Use updated_contexts, which excludes isolated inputs, for actual_reviewed_contexts_in_finalized_batches and current-session newly_read_contexts_in_finalized_batches. Preserve old receipts and all reference labels.",
+  "affected_totals_as_of_batch043": {
+    "prior_packet_slot_count": 3900,
+    "complete_reference_contexts_backfilled": 3892,
+    "difference_isolated_slots": 8
+  },
+  "prior_session_20261018_130656_counts_changed": false,
+  "new_semantic_reviews": 0,
+  "private_labels_or_ledger_changed": false
+}

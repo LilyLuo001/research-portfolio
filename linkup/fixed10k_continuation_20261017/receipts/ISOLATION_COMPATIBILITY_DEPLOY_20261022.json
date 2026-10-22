@@ -1,0 +1,26 @@
+{
+  "created_utc": "2026-10-22T15:46:44.473449+00:00",
+  "reason": "exact isolation identity omission compatibility; no semantic label changes",
+  "before": {
+    "continuation_controller.py": "ec9ed9085b034163edbeec416a21d73a28140f3b5261dfa40a18b752b5af7e90",
+    "finalize_continuation.py": "34ce91fb59814c5f105fdfeafb60538970712060ad3388720ba9ada18a14754e",
+    "wz_finalize_continuation.sbatch": "797cc7a9872521a99327ec66a650aca880cfa76cdb78f2ac79b432a1c3e9a28c"
+  },
+  "deployed": {
+    "continuation_controller.py": "cc2772cc4450ce825eb47ee45e56648664e981786dc7fb469bb14b3341a3a20e",
+    "finalize_continuation.py": "da82c8789e4d36619391f6ac8a999918244ca9ab777a8fe5bd9dd1ec5fb69f08",
+    "wz_finalize_continuation.sbatch": "df3ea5d492b12666e3a1103fe05787613eb427bf11c2bb4983e051bda7665137"
+  },
+  "backup": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/code/archive_before_isolation_fix_20261022",
+  "controller_reload_pending": true,
+  "root_acceptance": "Read diff; accept exact registered-identity omission, preserve raw packet and isolated ledger, keep99 reference +1 unfinished accounting. No new semantic decisions.",
+  "verification": {
+    "agent": "Sol/high isolation_backfill_fix",
+    "static_syntax_and_diff_checks": "pass",
+    "synthetic_finalization": "100input/99reference/1isolated; remaining conserved; isolated ledger unchanged",
+    "unregistered_missing_review": "rejected",
+    "normal_packet": "20 records preserved",
+    "cloud_readonly_existing_isolation_register": "10 historical entries compatible; exact batch044 match",
+    "real_batch044_backfill": "pending"
+  }
+}

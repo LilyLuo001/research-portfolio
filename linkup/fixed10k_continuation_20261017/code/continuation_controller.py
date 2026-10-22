@@ -10,15 +10,23 @@ def sha(path):
  with open(path,"rb") as f:
   for b in iter(lambda:f.read(1<<20),b""):h.update(b)
  return h.hexdigest()
-def jsonl_count(path):
- count=0
+def jsonl_rows(path):
+ values=[]
  with open(path,encoding="utf-8") as f:
   for line in f:
    if not line.strip():raise RuntimeError("blank JSONL line in "+str(path))
    value=json.loads(line)
    if not isinstance(value,dict):raise RuntimeError("non-object JSONL in "+str(path))
-   count+=1
- return count
+   values.append(value)
+ return values
+def record_identities(values,path,context_key):
+ identities=[]
+ for value in values:
+  pair=(value.get("record_id"),value.get(context_key))
+  if not all(isinstance(x,str) and x for x in pair):raise RuntimeError("missing record/context identity in "+str(path))
+  identities.append(pair)
+ if len(identities)!=len(set(identities)) or len({x[0] for x in identities})!=len(identities) or len({x[1] for x in identities})!=len(identities):raise RuntimeError("duplicate record/context identity in "+str(path))
+ return set(identities)
 def atomic(path,value):
  path=Path(path);path.parent.mkdir(parents=True,exist_ok=True);tmp=Path(str(path)+".tmp");tmp.write_text(json.dumps(value,indent=2,sort_keys=True)+"\n",encoding="utf-8");os.chmod(str(tmp),0o600);os.replace(str(tmp),str(path))
 def state(job):
@@ -38,7 +46,7 @@ def main():
  controller={"version":"fixed10k-continuation-controller-v1","started_utc":now(),"status":"running","range":[a.first_batch,a.last_batch],"controller_code_sha256":sha(__file__),"finalizer_code_sha256":sha(c/"code/finalize_continuation.py"),"wrapper_sha256":sha(c/"code/wz_finalize_continuation.sbatch"),"events":events}
  idle_start=time.monotonic()
  for batch in range(a.first_batch,a.last_batch+1):
-  b="{:03d}".format(batch);final_receipt=c/("receipts/BATCH%s_FINALIZE_RECEIPT.json"%b);expected=99 if batch==69 else 100;expected_remaining=None
+  b="{:03d}".format(batch);final_receipt=c/("receipts/BATCH%s_FINALIZE_RECEIPT.json"%b);expected=99 if batch==69 else 100;expected_remaining=None;expected_review_records=expected;registered_isolated=0
   if resume_batch==batch and not final_receipt.exists():
    while True:
     job_state,exit_code=state(resume_job)
@@ -64,8 +72,20 @@ def main():
     controller.update(status="waiting_for_prepared_packets",waiting_batch=batch,missing=packet_missing,updated_utc=now());atomic(receipt_path,controller)
    elif not missing:
     try:
-     packet_counts=[jsonl_count(x) for x in packets];review_counts=[jsonl_count(x) for x in reviews]
-     if packet_counts!=review_counts or sum(packet_counts)!=expected:raise RuntimeError("review/packet row counts differ or batch size wrong")
+     packet_rows=[jsonl_rows(x) for x in packets];review_rows=[jsonl_rows(x) for x in reviews];packet_counts=list(map(len,packet_rows));review_counts=list(map(len,review_rows))
+     if sum(packet_counts)!=expected:raise RuntimeError("packet batch size wrong")
+     isolation_path=c/"isolation/BLOCKED_CONTEXTS_PRIVATE.jsonl";isolation=jsonl_rows(isolation_path)
+     current=[x for x in isolation if x.get("isolation_batch",4)==batch]
+     if any(x.get("status")!="source_truncated_unrecoverable" or not x.get("work_queue_excluded") or x.get("recovery_attempts")!=1 for x in current):raise RuntimeError("current isolation status mismatch")
+     isolated={(x.get("record_id"),x.get("normalized_context_sha256")) for x in current}
+     if len(isolated)!=len(current) or any(not all(isinstance(y,str) and y for y in x) for x in isolated):raise RuntimeError("current isolation identity mismatch")
+     all_packet=set().union(*(record_identities(x,p,"context_sha256") for x,p in zip(packet_rows,packets)))
+     if len(all_packet)!=expected or not isolated<=all_packet:raise RuntimeError("registered isolation does not exactly match current packet")
+     for packet_path,review_path,packet_values,review_values in zip(packets,reviews,packet_rows,review_rows):
+      packet_ids=record_identities(packet_values,packet_path,"context_sha256");review_ids=record_identities(review_values,review_path,"context_sha256")
+      if review_ids!=packet_ids-isolated:raise RuntimeError("reviews do not exactly cover non-isolated packet records")
+     registered_isolated=len(isolated);expected_review_records=expected-registered_isolated
+     if sum(review_counts)!=expected_review_records:raise RuntimeError("review batch size wrong after registered isolation")
      break
     except Exception as exc:
      controller.update(status="paused_readiness_validation_failure",paused_batch=batch,error=str(exc),updated_utc=now());atomic(receipt_path,controller);raise
@@ -76,7 +96,7 @@ def main():
    time.sleep(a.poll_seconds)
   idle_start=time.monotonic();cmd=["sbatch","--parsable",str(c/"code/wz_finalize_continuation.sbatch"),str(batch)]+[str(x) for x in reviews]
   submit=subprocess.run(cmd,universal_newlines=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True);job=submit.stdout.strip().split(";")[0]
-  event={"utc":now(),"batch":batch,"action":"submitted_validator_backfill","job_id":job,"review_sha256s":[sha(x) for x in reviews],"expected_records":expected};events.append(event);controller.update(status="validator_backfill_running",running_batch=batch,running_job=job,updated_utc=now());atomic(receipt_path,controller)
+  event={"utc":now(),"batch":batch,"action":"submitted_validator_backfill","job_id":job,"review_sha256s":[sha(x) for x in reviews],"expected_records":expected,"expected_review_records":expected_review_records,"registered_isolated_records":registered_isolated};events.append(event);controller.update(status="validator_backfill_running",running_batch=batch,running_job=job,updated_utc=now());atomic(receipt_path,controller)
   while True:
    job_state,exit_code=state(job)
    if job_state in TERMINAL:break
@@ -86,7 +106,7 @@ def main():
    controller.update(status="paused_batch_failure",paused_batch=batch,failed_job=job,scheduler_state=job_state,exit_code=exit_code,updated_utc=now());atomic(receipt_path,controller);raise RuntimeError("validator/backfill batch failed")
   final=json.load(open(final_receipt,encoding="utf-8"));counts=final.get("counts",{})
   expected_remaining=prior_remaining-counts.get("updated_contexts",expected)
-  if final.get("status")!="pass" or counts.get("reviewed_contexts",counts.get("updated_contexts"))!=expected or counts.get("updated_contexts",0)+counts.get("newly_isolated_contexts",0)!=expected or counts.get("remaining_unfinished_contexts")!=expected_remaining or counts.get("remaining_work_contexts",0)+counts.get("blocked_contexts",0)!=expected_remaining:
+  if final.get("status")!="pass" or counts.get("reviewed_contexts")!=expected_review_records or counts.get("updated_contexts")!=expected_review_records or counts.get("newly_isolated_contexts")!=registered_isolated or counts.get("updated_contexts",0)+counts.get("newly_isolated_contexts",0)!=expected or counts.get("remaining_unfinished_contexts")!=expected_remaining or counts.get("remaining_work_contexts",0)+counts.get("blocked_contexts",0)!=expected_remaining:
    controller.update(status="paused_conservation_failure",paused_batch=batch,failed_job=job,observed_counts=counts,expected_remaining_unfinished=expected_remaining,updated_utc=now());atomic(receipt_path,controller);raise RuntimeError("post-backfill conservation failed")
   event.update(finalize_receipt_sha256=sha(final_receipt),remaining_work_contexts=counts["remaining_work_contexts"],blocked_contexts=counts["blocked_contexts"],remaining_unfinished_contexts=counts["remaining_unfinished_contexts"])
   controller.update(status="checkpoint_pass",last_completed_batch=batch,updated_utc=now());atomic(receipt_path,controller)

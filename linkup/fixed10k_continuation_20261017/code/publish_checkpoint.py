@@ -9,7 +9,9 @@ rr=[r for r in rr if r["record_batch"]["batch_number"]>=5]
 r=rr[-1]; batch=r["record_batch"]["batch_number"]; d=r["counts"]
 summary=json.loads((base/"EXECUTION_RESULTS_PUBLIC.json").read_text())
 new=sum(x["counts"]["updated_contexts"] for x in rr)
-reviewed=sum(x["counts"].get("reviewed_contexts",x["counts"]["updated_contexts"]) for x in rr)
+# Older receipts call all packet slots reviewed_contexts, including isolated inputs.
+# Only updated_contexts received complete reference judgments and ledger backfill.
+reviewed=sum(x["counts"]["updated_contexts"] for x in rr)
 elapsed=(dt.datetime.fromisoformat(r["created_utc"])-dt.datetime.fromisoformat("2026-10-17T08:35:13+00:00")).total_seconds()
 summary.update(as_of_utc=r["created_utc"],last_backfilled_batch=batch)
 summary["A"].update(new_contexts_backfilled_this_turn=new,actual_reviewed_contexts_in_finalized_batches=reviewed,
@@ -30,7 +32,7 @@ if session_path.exists():
  session=json.loads(session_path.read_text())
  sr=[x for x in rr if x["record_batch"]["batch_number"]>session["starting_finalized_batch"]]
  reused=sum(session["preexisting_reference_contexts_by_pending_batch"].get(str(x["record_batch"]["batch_number"]),0) for x in sr)
- newly_read=sum(x["counts"].get("reviewed_contexts",x["counts"]["updated_contexts"]) for x in sr)-reused
+ newly_read=sum(x["counts"]["updated_contexts"] for x in sr)-reused
  session_elapsed=max(0,(dt.datetime.fromisoformat(r["created_utc"])-dt.datetime.fromisoformat(session["started_utc"])).total_seconds())
  summary["A"]["current_session"]={"session_id":session["session_id"],"started_utc":session["started_utc"],"newly_read_contexts_in_finalized_batches":newly_read,"reused_saved_reference_contexts":reused,"contexts_backfilled":sum(x["counts"]["updated_contexts"] for x in sr),"reused_prior_family_cells":sum(x["counts"]["reused_prior_family_cells"] for x in sr),"final_unknown_contexts_among_processed":sum(x["counts"]["final_unknown_contexts_in_batch"] for x in sr),"net_new_uncertainty_contexts":d["remaining_reviewed_uncertainty_contexts"]-session["starting_reviewed_uncertainty_contexts"],"elapsed_seconds_to_latest_backfill":session_elapsed,"newly_read_contexts_per_hour":newly_read*3600/session_elapsed if session_elapsed else None,"scope":session["accounting_scope"]}
 t="/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch%03d/final/"%batch

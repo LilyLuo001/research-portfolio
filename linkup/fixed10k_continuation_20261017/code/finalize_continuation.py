@@ -31,10 +31,29 @@ def packet_map(path,expected,batch):
   projections=row.get("existing_family_projections");projected={x.get("field_family"):x for x in projections} if isinstance(projections,list) else {}
   if set(projected)!=set(FAMILIES) or any(projected[x].get("status") not in REQUIRED for x in required):raise RuntimeError("invalid frozen projections")
   result[row["record_id"]]=row
- if len(result)!=expected:raise RuntimeError("packet row count mismatch")
+ if len(result)!=expected or len({x["context_sha256"] for x in result.values()})!=expected:raise RuntimeError("packet row count/identity mismatch")
  return result
+def isolation_rows(path,batch):
+ isolation=[x for x in rows(path) if x.get("isolation_batch",4)<=batch]
+ contexts=[x.get("normalized_context_sha256") for x in isolation];record_ids=[x.get("record_id") for x in isolation]
+ if len(contexts)!=len(set(contexts)) or len(record_ids)!=len(set(record_ids)) or any(not x for x in contexts+record_ids):raise RuntimeError("blocked register identity mismatch")
+ if any(x.get("status")!="source_truncated_unrecoverable" or not x.get("work_queue_excluded") or x.get("recovery_attempts")!=1 for x in isolation):raise RuntimeError("blocked register status mismatch")
+ return isolation
+def isolated_packet_ids(packet,isolation,batch,require_all):
+ current=[x for x in isolation if x.get("isolation_batch",4)==batch]
+ registered={(x["record_id"],x["normalized_context_sha256"]) for x in current};by_id={x[0]:x for x in registered};by_context={x[1]:x for x in registered};matched=set()
+ for record_id,row in packet.items():
+  context=row["context_sha256"];pair=(record_id,context)
+  if record_id in by_id or context in by_context:
+   if pair not in registered:raise RuntimeError("isolated packet identity mismatch")
+   matched.add(record_id)
+ if require_all and len(matched)!=len(registered):raise RuntimeError("registered current isolation missing from packet")
+ return matched
 def make_core(a):
- packet=packet_map(a.enriched_packet,a.expected_records,a.batch_number);write_jsonl(a.output,[{k:x[k] for k in CORE} for _,x in sorted(packet.items())])
+ packet=packet_map(a.enriched_packet,a.expected_records,a.batch_number);isolated=set()
+ if a.isolation_register:
+  isolated=isolated_packet_ids(packet,isolation_rows(a.isolation_register,a.batch_number),a.batch_number,False)
+ write_jsonl(a.output,[{k:x[k] for k in CORE} for record_id,x in sorted(packet.items()) if record_id not in isolated])
 def load_module(path):
  spec=importlib.util.spec_from_file_location("coverage",path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 def validate_receipts(receipts,validated,all_reviews,expected):
@@ -57,8 +76,10 @@ def finalize(a):
  if batch<5:raise RuntimeError("continuation finalizer requires Batch >= 005")
  expected_records=a.expected_records
  if expected_records<1 or expected_records>100:raise RuntimeError("batch size must be 1..100")
- packet=packet_map(a.enriched_packet,expected_records,batch);validation=validate_receipts(a.validation_receipts,a.validated_packets,a.validated_reviews,expected_records);reviews=rows(a.validated_reviews)
- if {x.get("record_id") for x in reviews}!=set(packet):raise RuntimeError("reviews do not cover trusted batch")
+ packet=packet_map(a.enriched_packet,expected_records,batch);isolation=isolation_rows(a.isolation_register,batch);blocked={x["normalized_context_sha256"] for x in isolation}
+ isolated_ids=isolated_packet_ids(packet,isolation,batch,True);expected_review_ids=set(packet)-isolated_ids;expected_reviews=len(expected_review_ids)
+ validation=validate_receipts(a.validation_receipts,a.validated_packets,a.validated_reviews,expected_reviews);reviews=rows(a.validated_reviews)
+ if {x.get("record_id") for x in reviews}!=expected_review_ids or len(reviews)!=expected_reviews:raise RuntimeError("reviews do not exactly cover non-isolated batch records")
  paths={"ledger":Path(a.existing_ledger),"queue":Path(a.existing_queue),"uncertainty":Path(a.existing_uncertainty)};prior=json.load(open(a.prior_receipt,encoding="utf-8"))
  if prior.get("status")!="pass":raise RuntimeError("prior receipt failed")
  if batch==5:
@@ -67,13 +88,11 @@ def finalize(a):
   if prior.get("record_batch",{}).get("batch_number")!=batch-1:raise RuntimeError("nonsequential prior receipt")
  names={"ledger":"private_ledger_sha256","queue":"private_queue_sha256","uncertainty":"private_uncertainty_sha256"}
  if any(prior.get("outputs",{}).get(v)!=sha(paths[k]) for k,v in names.items()):raise RuntimeError("prior hash chain mismatch")
- isolation=[x for x in rows(a.isolation_register) if x.get("isolation_batch",4)<=batch];blocked={x["normalized_context_sha256"] for x in isolation}
- if not blocked or len(blocked)!=len(isolation) or any(not x.get("work_queue_excluded") for x in isolation):raise RuntimeError("blocked register mismatch")
  packet_contexts={x["context_sha256"] for x in packet.values()}
- newly_blocked=packet_contexts & blocked
+ newly_blocked={packet[x]["context_sha256"] for x in isolated_ids}
+ if packet_contexts & blocked!=newly_blocked:raise RuntimeError("packet contains blocked context outside current registered isolation")
  partial={x["context_sha256"] for x in reviews if x["document_status"]=="reviewed_partial"}
- if partial!=newly_blocked:raise RuntimeError("partial source requires one recovery/isolation before backfill; no unknown completion allowed")
- if any(x.get("isolation_batch")!=batch or x.get("recovery_attempts")!=1 for x in isolation if x["normalized_context_sha256"] in newly_blocked):raise RuntimeError("current isolation lacks one recovery attempt")
+ if partial:raise RuntimeError("partial review cannot backfill; isolated source must be omitted from reviews")
  old_ledger,raw_queue,old_uncertainty=(rows(paths[k]) for k in ("ledger","queue","uncertainty"));old_queue=[x for x in raw_queue if x["normalized_context_sha256"] not in (blocked-newly_blocked)]
  expected={x["normalized_context_sha256"] for x in old_queue[:expected_records]}
  if packet_contexts!=expected:raise RuntimeError("packet is not exact next work contexts")
@@ -112,14 +131,16 @@ def finalize(a):
  new_queue.sort(key=lambda x:x["normalized_context_sha256"]);new_unc.sort(key=lambda x:x["normalized_context_sha256"])
  counts=collections.Counter((x["field_family"],x["status"]) for x in new);ledger_rows=len(old_ledger);ads=ledger_rows//7
  if len(new)!=ledger_rows or any(sum(n for (f,_),n in counts.items() if f==family)!=ads for family in FAMILIES):raise RuntimeError("ledger conservation failed")
- cells=sum(map(len,required.values()));covered={tuple(sorted(x["canonical_key"].items())) for x in new if x["normalized_context_sha256"] in target};delta={"updated_contexts":len(target),"reviewed_contexts":expected_records,"newly_isolated_contexts":len(newly_blocked),"updated_context_family_cells":cells,"updated_ad_field_rows":updated,"covered_ads":len(covered),"reused_prior_family_cells":len(target)*7-cells,"final_unknown_contexts_in_batch":sum(any(x["status"]=="unknown_or_conflict" for x in new_by[c]) for c in target),"remaining_work_contexts":len(new_queue),"blocked_contexts":len(blocked),"remaining_unfinished_contexts":len(new_queue)+len(blocked),"remaining_reviewed_uncertainty_contexts":len(new_unc)}
- public={"version":"fixed10k-semantic-production-batch{:03d}-v1".format(batch),"record_batch":{"batch_number":batch,"contexts":expected_records,"work_queue_positions_in_predecessor":[1,expected_records]},"claim_boundary":"validated full-document judgments applied only to frozen required field whitelist; isolated contexts remain separately unfinished and are not written as final reviewed unknown","batch":{"trusted_contexts":expected_records,"validated_contexts":expected_records,"source":source,"required_family_cells":cells},"delta":delta,"isolation":{"register_sha256":sha(a.isolation_register),"blocked_contexts":len(blocked)},"field_status_ad_counts":[{"field_family":f,"status":s,"ad_count":n} for (f,s),n in sorted(counts.items())],"validation":{"receipt_sha256s":[sha(x) for x in a.validation_receipts],"validated_reviews_sha256":review_sha,"validator_statuses":[x["status"] for x in validation]}}
+ cells=sum(map(len,required.values()));covered={tuple(sorted(x["canonical_key"].items())) for x in new if x["normalized_context_sha256"] in target};delta={"updated_contexts":len(target),"reviewed_contexts":len(reviews),"newly_isolated_contexts":len(newly_blocked),"updated_context_family_cells":cells,"updated_ad_field_rows":updated,"covered_ads":len(covered),"reused_prior_family_cells":len(target)*7-cells,"final_unknown_contexts_in_batch":sum(any(x["status"]=="unknown_or_conflict" for x in new_by[c]) for c in target),"remaining_work_contexts":len(new_queue),"blocked_contexts":len(blocked),"remaining_unfinished_contexts":len(new_queue)+len(blocked),"remaining_reviewed_uncertainty_contexts":len(new_unc)}
+ if delta["updated_contexts"]+delta["newly_isolated_contexts"]!=expected_records or delta["reviewed_contexts"]!=delta["updated_contexts"]:raise RuntimeError("batch review/isolation accounting mismatch")
+ public={"version":"fixed10k-semantic-production-batch{:03d}-v1".format(batch),"record_batch":{"batch_number":batch,"contexts":expected_records,"work_queue_positions_in_predecessor":[1,expected_records]},"claim_boundary":"validated full-document judgments applied only to frozen required field whitelist; isolated contexts remain separately unfinished and are not written as final reviewed unknown","batch":{"trusted_contexts":expected_records,"validated_contexts":len(reviews),"source":source,"required_family_cells":cells},"delta":delta,"isolation":{"register_sha256":sha(a.isolation_register),"blocked_contexts":len(blocked),"newly_isolated_contexts":len(newly_blocked)},"field_status_ad_counts":[{"field_family":f,"status":s,"ad_count":n} for (f,s),n in sorted(counts.items())],"validation":{"expected_packet_records":expected_records,"expected_review_records":expected_reviews,"receipt_sha256s":[sha(x) for x in a.validation_receipts],"validated_reviews_sha256":review_sha,"validator_statuses":[x["status"] for x in validation]}}
  write_jsonl(a.private_ledger,new);write_jsonl(a.private_queue,new_queue);write_jsonl(a.private_uncertainty,new_unc);write_json(a.public_counts,public)
- receipt={"version":public["version"],"record_batch":public["record_batch"],"status":"pass","created_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"code_sha256":sha(__file__),"prior_receipt":{"path":a.prior_receipt,"sha256":sha(a.prior_receipt),"version":prior.get("version")},"inputs":{"enriched_packet_sha256":sha(a.enriched_packet),"validated_reviews_sha256":review_sha,"validation_receipt_sha256s":[sha(x) for x in a.validation_receipts],"existing_ledger_sha256":sha(paths["ledger"]),"existing_queue_sha256":sha(paths["queue"]),"existing_uncertainty_sha256":sha(paths["uncertainty"]),"isolation_register_sha256":sha(a.isolation_register)},"outputs":{"private_ledger_sha256":sha(a.private_ledger),"private_queue_sha256":sha(a.private_queue),"private_uncertainty_sha256":sha(a.private_uncertainty),"public_counts_sha256":sha(a.public_counts)},"counts":delta,"checks":{"all_batch_records_validated":True,"required_field_whitelist_only":True,"non_required_rows_copied_through":True,"blocked_context_excluded_from_work_queue":True,"unfinished_conserved_with_separate_blocked_count":True,"prior_receipt_chain_bound":True,"ledger_rows_conserved":True,"each_family_ads_conserved":True}}
+ receipt={"version":public["version"],"record_batch":public["record_batch"],"status":"pass","created_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"code_sha256":sha(__file__),"prior_receipt":{"path":a.prior_receipt,"sha256":sha(a.prior_receipt),"version":prior.get("version")},"inputs":{"enriched_packet_sha256":sha(a.enriched_packet),"validated_reviews_sha256":review_sha,"validation_receipt_sha256s":[sha(x) for x in a.validation_receipts],"existing_ledger_sha256":sha(paths["ledger"]),"existing_queue_sha256":sha(paths["queue"]),"existing_uncertainty_sha256":sha(paths["uncertainty"]),"isolation_register_sha256":sha(a.isolation_register)},"outputs":{"private_ledger_sha256":sha(a.private_ledger),"private_queue_sha256":sha(a.private_queue),"private_uncertainty_sha256":sha(a.private_uncertainty),"public_counts_sha256":sha(a.public_counts)},"counts":delta,"checks":{"all_batch_records_validated":not newly_blocked,"all_expected_review_records_validated":True,"all_batch_records_accounted_for":True,"registered_isolated_records_omitted_from_reviews":bool(newly_blocked),"required_field_whitelist_only":True,"non_required_rows_copied_through":True,"blocked_context_excluded_from_work_queue":True,"unfinished_conserved_with_separate_blocked_count":True,"prior_receipt_chain_bound":True,"ledger_rows_conserved":True,"each_family_ads_conserved":True}}
  write_json(a.receipt,receipt)
 def main():
  p=argparse.ArgumentParser();sub=p.add_subparsers(dest="command",required=True);core=sub.add_parser("core-packet")
  for n in ("enriched_packet","output"):core.add_argument("--"+n.replace("_","-"),required=True)
+ core.add_argument("--isolation-register")
  core.add_argument("--expected-records",type=int,required=True);core.add_argument("--batch-number",type=int,required=True)
  final=sub.add_parser("finalize")
  for n in ("enriched_packet","validated_reviews","coverage_module","prior_receipt","existing_ledger","existing_queue","existing_uncertainty","isolation_register","private_ledger","private_queue","private_uncertainty","public_counts","receipt"):final.add_argument("--"+n.replace("_","-"),required=True)
