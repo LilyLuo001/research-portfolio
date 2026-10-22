@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-22T16:12:56.597383+00:00",
+  "updated_utc": "2026-10-22T16:32:40.060652+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct22_v4",
+      "task": "a_reader1_v14",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -15,19 +15,19 @@
       },
       "handoff": {
         "batch": 46,
-        "packet": 1,
-        "assignment_start_ordinal": 6
+        "packet": 4,
+        "assignment_start_ordinal": 66
       },
       "status": "running"
     },
     {
-      "task": "a_reader2_oct22_v4",
+      "task": "a_reader2_v15",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
-        "batch": 46,
-        "packet": 5,
-        "assignment_start_ordinal": 86
+        "batch": 47,
+        "packet": 3,
+        "assignment_start_ordinal": 46
       },
       "continuous_assignment": {
         "first_batch": 34,
@@ -39,7 +39,7 @@
       "status": "running"
     },
     {
-      "task": "a_reader3_oct22_v3",
+      "task": "a_reader3_v14",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -51,15 +51,15 @@
       },
       "handoff": {
         "batch": 48,
-        "packet": 2,
-        "assignment_start_ordinal": 21
+        "packet": 5,
+        "assignment_start_ordinal": 86
       },
       "status": "running"
     }
   ],
   "unassigned": [],
   "note": "Cursors above are assignment starts, not claims that later checkpointed records remain unread. Cloud canonical and saved working checkpoint identities supersede this metadata snapshot.",
-  "execution_note": "Three assigned Sol/medium lanes resumed at2026-10-18T13:06:56Z. Root handles bounded conflicts and backfill acceptance; original queue remains the scope.",
+  "execution_note": "Three Sol/medium lanes resumed2026-10-22. Existing idle agent reused after thread creation limit; saved private checkpoints govern continuation. Root handles bounded conflicts and backfill acceptance.",
   "quota_policy": "User directs pause at approximately10% remaining; no free reset. Root will issue stop-new-reads and preserve active units.",
   "execution_status": "running"
 }
