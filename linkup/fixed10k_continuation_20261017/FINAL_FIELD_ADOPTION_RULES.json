@@ -1,0 +1,27 @@
+{
+  "version": "one_time_pre_result_decision_20261023",
+  "root_decision": "Frozen before reading final scores and before submitting final training. Operational research adoption minima chosen once by the principal agent; these are not universal or literature-certified standards.",
+  "reference": "Compatible, known Pro full-context reference labels, not human ground truth. Unknowns excluded per target; isolated contexts excluded; no rule values or predictions admitted as reference.",
+  "permitted_use": "Binary wording-presence measurement only, in the existing candidate frame with reproducible eligibility. Not requirement relations, causal effects, historical text change, or certification of advertisements outside the candidate frame.",
+  "formal_adoption": {
+    "training_min_each_class": 50,
+    "overall_and_no_recorded_prior_exposure": {
+      "minimum_each_true_class": 50,
+      "minimum_precision_and_recall_each_class": 0.8,
+      "minimum_wilson_95_lower_precision_and_recall_each_class": 0.7,
+      "maximum_absolute_predicted_minus_reference_positive_fraction": 0.05
+    },
+    "each_existing_research_frame_arm": {
+      "minimum_each_true_class": 20,
+      "minimum_precision_and_recall_each_class": 0.7,
+      "maximum_absolute_predicted_minus_reference_positive_fraction": 0.1
+    },
+    "scope_and_execution": "Requires an existing reproducible candidate eligibility join/filter and fixed-model independent sidecar execution. Passing numeric gates alone does not authorize all-corpus interpretation. No post-result subgroup fishing or subset adoption to evade a failed existing-arm gate. Prior-exposed metrics reported separately, never called blind testing.",
+    "interpretation": "Even an adopted binary field denotes predicted wording presence relative to Pro references. Negative output does not establish absence of an employer requirement. Research contrasts must show group-specific errors and unknown coverage; this run does not recompute economic comparisons. Independent marginal gates do not validate joint experience bundles or responsibility relationships."
+  },
+  "candidate_only": "If a model fits and has at least 20 eligible evaluation examples in each true class, each-class precision and recall at least 0.60 overall, but fails any formal gate or scope gate, retain solely as an auxiliary candidate. No formal corpus production for candidate-only fields in this run.",
+  "not_adopted": "Failed performance gates, insufficient positive/negative support, unfitted targets, or unimplemented tasks. State the exact reason, not just evaluated or Exit0.",
+  "unsupported_tasks": ["year-to-experience-object and branch binding", "required versus preferred", "qualification alternatives and conditions", "responsibility subject and relation reconstruction", "verbatim evidence span extraction"],
+  "fixed_stop": "One frozen fit and evaluation, then one field decision. No model search, new annotation, threshold relaxation, replacement sample, or automatic retry for poor scores. Engineering failures retain evidence and permit only the specific execution repair. If no field qualifies, close the baseline experiment without corpus inference.",
+  "quota_override": "Latest user authorizes continuing beyond the former 10 percent pause until actual quota exhaustion. No reset redemption or paid channel."
+}
