@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-22T20:04:26.234345+00:00",
+  "updated_utc": "2026-10-23T04:01:09.182097+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct23_v4",
+      "task": "a_reader1_oct23_v5",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -14,9 +14,9 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 58,
-        "packet": 4,
-        "assignment_start_ordinal": 61
+        "batch": 59,
+        "packet": 2,
+        "assignment_start_ordinal": 26
       },
       "status": "running"
     },
@@ -25,9 +25,9 @@
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
-        "batch": 58,
-        "packet": 2,
-        "assignment_start_ordinal": 21
+        "batch": 59,
+        "packet": 3,
+        "assignment_start_ordinal": 41
       },
       "continuous_assignment": {
         "first_batch": 34,
@@ -88,5 +88,20 @@
       "status": "canonical_published"
     }
   ],
-  "reassignment_note": "Reader2 confirmed both packets unstarted with no reads/writes/checkpoints; receiving readers acknowledge. Existing frozen packet membership, required-field whitelist, schema, scope, and completion criteria unchanged. Rebalance only the longer saved work queue."
+  "reassignment_note": "Reader2 confirmed both packets unstarted with no reads/writes/checkpoints; receiving readers acknowledge. Existing frozen packet membership, required-field whitelist, schema, scope, and completion criteria unchanged. Rebalance only the longer saved work queue.",
+  "runtime_note": {
+    "observed_utc": "2026-10-23T03:50:07.215976+00:00",
+    "interruption": "Host sleep observed in macOS logs during continuation; wall elapsed time includes inactivity. Do not report wall time as uninterrupted model inference.",
+    "stale_local_ssh": "Two obsolete validation SSH clients terminated after durable newer artifacts confirmed; remote Slurm jobs unchanged.",
+    "connection_change": "ServerAliveInterval=15 and ServerAliveCountMax=2 added; check remote artifacts before retrying writes.",
+    "temporary_awake_assertion": "6-hour idle-sleep prevention during active Pro reading; release on completion or quota pause."
+  },
+  "routing_correction": {
+    "batch": 59,
+    "packet": 1,
+    "duplicate_read_count": 5,
+    "duplicate_reads_counted_as_new": false,
+    "writes": 0,
+    "minimal_fix": "Reader2 corrected to P03; no change to reader3 owned P01 labels. Remaining route computed rather than mentally assigned."
+  }
 }
