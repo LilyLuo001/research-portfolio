@@ -4,16 +4,16 @@
   "automation_id": "linkup",
   "cadence": "hourly, current-thread heartbeat; quiet on normal progress or unchanged state",
   "baseline_commit": "0c5d699",
-  "last_checked_utc": "2026-10-23T08:06:46.829386+00:00",
-  "last_finalized_batch": 63,
-  "remaining_work_contexts": 599,
+  "last_checked_utc": "2026-10-23T09:04:51.806317+00:00",
+  "last_finalized_batch": 64,
+  "remaining_work_contexts": 499,
   "isolated_unfinished_contexts": 14,
-  "remaining_unfinished_contexts": 613,
-  "cumulative_reviewed_uncertainty_contexts": 920,
-  "session_new_reference_contexts_backfilled": 1861,
+  "remaining_unfinished_contexts": 513,
+  "cumulative_reviewed_uncertainty_contexts": 930,
+  "session_new_reference_contexts_backfilled": 1961,
   "session_preexisting_saved_contexts_reused": 134,
-  "session_final_unknown_contexts_among_processed": 310,
-  "session_reused_prior_family_cells": 17,
+  "session_final_unknown_contexts_among_processed": 321,
+  "session_reused_prior_family_cells": 21,
   "saved_unfinalized_contexts": "Not inferred from finalized counts; check current private packet metadata only if needed to confirm a suspected stall.",
   "consecutive_eligible_no_progress_observations": 0,
   "last_notified_signature": "initial_moving_with_downstream_delivery_risk_batch063",
@@ -92,5 +92,10 @@
     "Respect the user-directed quota pause near10% remaining; no reset, paid service or automatic resumption against that pause.",
     "Pause this monitor after the current processable-reference closure, single evaluation and field decision have been reported. Report remaining isolates and resource blockers rather than claim the whole project finished."
   ],
-  "runtime_limit": "Current-thread local heartbeat requires the computer and Codex app to be available; not an independent always-on cloud service."
+  "runtime_limit": "Current-thread local heartbeat requires the computer and Codex app to be available; not an independent always-on cloud service.",
+  "latest_monitor_check": {
+    "progress_since_previous_check": 100,
+    "decision": "moving; no repeated production restart",
+    "minimal_correction": "B065/P02 handoff ordinal corrected from81 to21 using frozen metadata; zero wrong-cursor reads/writes; no label or scope change"
+  }
 }
