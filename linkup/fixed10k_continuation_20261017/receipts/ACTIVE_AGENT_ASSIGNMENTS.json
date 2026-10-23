@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-23T09:04:51.806317+00:00",
+  "updated_utc": "2026-10-23T10:08:29.526954+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct23_v15",
+      "task": "a_reader1_oct23_v17",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -14,20 +14,20 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 65,
-        "packet": 2,
-        "assignment_start_ordinal": 21
+        "batch": 66,
+        "packet": 3,
+        "assignment_start_ordinal": 41
       },
       "status": "running"
     },
     {
-      "task": "a_reader2_oct23_v15",
+      "task": "a_reader2_oct23_v16",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
-        "batch": 64,
-        "packet": 5,
-        "assignment_start_ordinal": 86
+        "batch": 67,
+        "packet": 2,
+        "assignment_start_ordinal": 21
       },
       "continuous_assignment": {
         "first_batch": 34,
@@ -49,7 +49,7 @@
       "status": "running"
     },
     {
-      "task": "a_reader3_oct23_v16",
+      "task": "a_reader3_oct23_v19",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -60,9 +60,9 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 65,
-        "packet": 1,
-        "assignment_start_ordinal": 16
+        "batch": 66,
+        "packet": 5,
+        "assignment_start_ordinal": 86
       },
       "status": "running"
     }
@@ -94,7 +94,12 @@
     "interruption": "Host sleep observed in macOS logs during continuation; wall elapsed time includes inactivity. Do not report wall time as uninterrupted model inference.",
     "stale_local_ssh": "Two obsolete validation SSH clients terminated after durable newer artifacts confirmed; remote Slurm jobs unchanged.",
     "connection_change": "ServerAliveInterval=15 and ServerAliveCountMax=2 added; check remote artifacts before retrying writes.",
-    "temporary_awake_assertion": "6-hour idle-sleep prevention during active Pro reading; release on completion or quota pause."
+    "temporary_awake_assertion": "6-hour idle-sleep prevention during active Pro reading; release on completion or quota pause.",
+    "temporary_awake_renewal": {
+      "utc": "2026-10-23T09:23:46Z",
+      "expires_utc": "2026-10-23T13:23:46Z",
+      "policy": "Idle system sleep prevention only during ongoing work; release at completion or quota pause."
+    }
   },
   "routing_correction": {
     "batch": 59,
