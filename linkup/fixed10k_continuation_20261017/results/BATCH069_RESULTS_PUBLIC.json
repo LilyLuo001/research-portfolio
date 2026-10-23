@@ -1,0 +1,203 @@
+{
+  "batch": {
+    "required_family_cells": 691,
+    "source": "fixed10k_batch069",
+    "trusted_contexts": 99,
+    "validated_contexts": 99
+  },
+  "claim_boundary": "validated full-document judgments applied only to frozen required field whitelist; isolated contexts remain separately unfinished and are not written as final reviewed unknown",
+  "delta": {
+    "blocked_contexts": 14,
+    "covered_ads": 105,
+    "final_unknown_contexts_in_batch": 11,
+    "newly_isolated_contexts": 0,
+    "remaining_reviewed_uncertainty_contexts": 1002,
+    "remaining_unfinished_contexts": 14,
+    "remaining_work_contexts": 0,
+    "reused_prior_family_cells": 2,
+    "reviewed_contexts": 99,
+    "updated_ad_field_rows": 733,
+    "updated_context_family_cells": 691,
+    "updated_contexts": 99
+  },
+  "field_status_ad_counts": [
+    {
+      "ad_count": 12,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 8718,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "known"
+    },
+    {
+      "ad_count": 916,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 354,
+      "field_family": "current_responsibility_subject_and_relation",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "entry_wording_and_scope",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 587,
+      "field_family": "entry_wording_and_scope",
+      "status": "known"
+    },
+    {
+      "ad_count": 9387,
+      "field_family": "entry_wording_and_scope",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 14,
+      "field_family": "entry_wording_and_scope",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "experience_literal_years",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 9241,
+      "field_family": "experience_literal_years",
+      "status": "known"
+    },
+    {
+      "ad_count": 124,
+      "field_family": "experience_literal_years",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 623,
+      "field_family": "experience_literal_years",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "experience_object",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 9418,
+      "field_family": "experience_object",
+      "status": "known"
+    },
+    {
+      "ad_count": 123,
+      "field_family": "experience_object",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 447,
+      "field_family": "experience_object",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "experience_strength",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 9343,
+      "field_family": "experience_strength",
+      "status": "known"
+    },
+    {
+      "ad_count": 123,
+      "field_family": "experience_strength",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 522,
+      "field_family": "experience_strength",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 9308,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "known"
+    },
+    {
+      "ad_count": 123,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 557,
+      "field_family": "qualification_conditions_and_alternatives",
+      "status": "unknown_or_conflict"
+    },
+    {
+      "ad_count": 12,
+      "field_family": "technology_category_and_role",
+      "status": "candidate_only"
+    },
+    {
+      "ad_count": 8482,
+      "field_family": "technology_category_and_role",
+      "status": "known"
+    },
+    {
+      "ad_count": 32,
+      "field_family": "technology_category_and_role",
+      "status": "not_applicable"
+    },
+    {
+      "ad_count": 4,
+      "field_family": "technology_category_and_role",
+      "status": "partial"
+    },
+    {
+      "ad_count": 1470,
+      "field_family": "technology_category_and_role",
+      "status": "unknown_or_conflict"
+    }
+  ],
+  "isolation": {
+    "blocked_contexts": 14,
+    "newly_isolated_contexts": 0,
+    "register_sha256": "641f2d3204a8f65f2483be485815ede04b57920227af4b867afd41cbd6de62b6"
+  },
+  "record_batch": {
+    "batch_number": 69,
+    "contexts": 99,
+    "work_queue_positions_in_predecessor": [
+      1,
+      99
+    ]
+  },
+  "validation": {
+    "expected_packet_records": 99,
+    "expected_review_records": 99,
+    "receipt_sha256s": [
+      "3f50d41a13148487331f8004a4ded395f8fd6a08249c50ae5a262e11d2474b49",
+      "71c393f4ebd827634b079625e53c238da0b8db80ae9d1898e47f3990e7a5fd77",
+      "7aa871ab606fa9d72bbc9debbeefc0c20b92de5c39e353e5c75127a177c1f030",
+      "a63c7dbc20d7b930193ae47ade5a4938b8afc7b23a92084f455cf362d0128814",
+      "f2ef2e3174161a974a1b4035c78397809f14c70faa94c4d90fe6fb0e97b64bc8"
+    ],
+    "validated_reviews_sha256": "4b2ba5ec7bce83f059f1f00cc2c87d351358b55e53492e2448530a9568f9e9b4",
+    "validator_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ]
+  },
+  "version": "fixed10k-semantic-production-batch069-v1"
+}

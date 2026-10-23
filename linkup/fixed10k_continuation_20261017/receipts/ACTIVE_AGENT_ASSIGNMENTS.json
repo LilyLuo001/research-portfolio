@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-23T11:26:27.673363+00:00",
+  "updated_utc": "2026-10-23T12:27:27.806118+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct23_v20",
+      "task": "a_reader1_oct23_v23",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -15,19 +15,20 @@
       },
       "handoff": {
         "batch": 68,
-        "packet": 2,
-        "assignment_start_ordinal": 26
+        "packet": 5,
+        "assignment_start_ordinal": 96
       },
-      "status": "running"
+      "status": "completed_assigned_reference_route",
+      "unread_owned_contexts": 0
     },
     {
-      "task": "a_reader2_oct23_v19",
+      "task": "a_reader2_oct23_v20",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
         "batch": 69,
-        "packet": 1,
-        "assignment_start_ordinal": 1
+        "packet": 5,
+        "assignment_start_ordinal": 81
       },
       "continuous_assignment": {
         "first_batch": 34,
@@ -44,12 +45,19 @@
             57,
             1
           ]
+        ],
+        "extra_owned_packets": [
+          [
+            69,
+            5
+          ]
         ]
       },
-      "status": "running"
+      "status": "completed_assigned_reference_route",
+      "unread_owned_contexts": 0
     },
     {
-      "task": "a_reader3_oct23_v22",
+      "task": "a_reader3_oct23_v24",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -57,21 +65,28 @@
         "last_batch": 69,
         "rule": "((batch - 34) * 5 + packet - 1) % 3",
         "owned_residue": 2,
-        "packet_size": "use frozen template membership; final packet may contain fewer than20"
+        "packet_size": "use frozen template membership; final packet may contain fewer than20",
+        "skip_reassigned_packets": [
+          [
+            69,
+            5
+          ]
+        ]
       },
       "handoff": {
-        "batch": 68,
-        "packet": 1,
-        "assignment_start_ordinal": 16
+        "batch": 69,
+        "packet": 2,
+        "assignment_start_ordinal": 21
       },
-      "status": "running"
+      "status": "completed_assigned_reference_route",
+      "unread_owned_contexts": 0
     }
   ],
   "unassigned": [],
   "note": "Cursors above are assignment starts, not claims that later checkpointed records remain unread. Cloud canonical and saved working checkpoint identities supersede this metadata snapshot.",
   "execution_note": "Three Sol/medium lanes continue from durable private checkpoints; fresh agents replace exhausted contexts without rereading saved judgments. Root handles bounded conflicts and backfill acceptance.",
   "quota_policy": "User directs pause at approximately10% remaining; no free reset. Root will issue stop-new-reads and preserve active units.",
-  "execution_status": "running",
+  "execution_status": "all_assigned_reference_packets_complete__quota_paused",
   "packet_reassignments": [
     {
       "batch": 56,
@@ -86,6 +101,15 @@
       "from_residue": 1,
       "to_residue": 2,
       "status": "canonical_published"
+    },
+    {
+      "batch": 69,
+      "packet": 5,
+      "from_residue": 2,
+      "to_residue": 1,
+      "status": "canonical_published_19_contexts",
+      "contexts": 19,
+      "reason": "Lane2 completed original route; parallelize final untouched packet without altering frozen membership or fields."
     }
   ],
   "reassignment_note": "Reader2 confirmed both packets unstarted with no reads/writes/checkpoints; receiving readers acknowledge. Existing frozen packet membership, required-field whitelist, schema, scope, and completion criteria unchanged. Rebalance only the longer saved work queue.",
@@ -94,7 +118,7 @@
     "interruption": "Host sleep observed in macOS logs during continuation; wall elapsed time includes inactivity. Do not report wall time as uninterrupted model inference.",
     "stale_local_ssh": "Two obsolete validation SSH clients terminated after durable newer artifacts confirmed; remote Slurm jobs unchanged.",
     "connection_change": "ServerAliveInterval=15 and ServerAliveCountMax=2 added; check remote artifacts before retrying writes.",
-    "temporary_awake_assertion": "6-hour idle-sleep prevention during active Pro reading; release on completion or quota pause.",
+    "temporary_awake_assertion": "Released own idle-sleep prevention at quota pause; no permanent power-setting change.",
     "temporary_awake_renewal": {
       "utc": "2026-10-23T09:23:46Z",
       "expires_utc": "2026-10-23T13:23:46Z",
@@ -139,5 +163,18 @@
   "user_resume_20261023": {
     "utc": "2026-10-23T11:11:19Z",
     "action": "Resumed same three interrupted agents after user requested continuation. Durable private checkpoints checked before writes; no completed judgments reread."
+  },
+  "bounded_semantic_correction": {
+    "batch": 69,
+    "packet": 4,
+    "field": "occupation_task outcome",
+    "decision": "Align not_mentioned outcome with reader already-explicit positive experience clause; root confirmed task-experience interpretation. No other records reopened."
+  },
+  "quota_pause": {
+    "used_percent": 90,
+    "stop_new_reads_issued": true,
+    "no_post_stop_new_document_opened_reported": true,
+    "final_inflight_five_already_read_before_stop": true,
+    "reset_used": false
   }
 }
