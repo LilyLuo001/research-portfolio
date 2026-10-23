@@ -4,16 +4,16 @@
   "automation_id": "linkup",
   "cadence": "hourly, current-thread heartbeat; quiet on normal progress or unchanged state",
   "baseline_commit": "0c5d699",
-  "last_checked_utc": "2026-10-23T10:38:54.128400+00:00",
-  "last_finalized_batch": 66,
-  "remaining_work_contexts": 299,
+  "last_checked_utc": "2026-10-23T11:26:27.673363+00:00",
+  "last_finalized_batch": 67,
+  "remaining_work_contexts": 199,
   "isolated_unfinished_contexts": 14,
-  "remaining_unfinished_contexts": 313,
-  "cumulative_reviewed_uncertainty_contexts": 967,
-  "session_new_reference_contexts_backfilled": 2161,
+  "remaining_unfinished_contexts": 213,
+  "cumulative_reviewed_uncertainty_contexts": 984,
+  "session_new_reference_contexts_backfilled": 2261,
   "session_preexisting_saved_contexts_reused": 134,
-  "session_final_unknown_contexts_among_processed": 359,
-  "session_reused_prior_family_cells": 23,
+  "session_final_unknown_contexts_among_processed": 378,
+  "session_reused_prior_family_cells": 28,
   "saved_unfinalized_contexts": "Not inferred from finalized counts; check current private packet metadata only if needed to confirm a suspected stall.",
   "consecutive_eligible_no_progress_observations": 0,
   "last_notified_signature": "initial_moving_with_downstream_delivery_risk_batch063",
@@ -95,7 +95,7 @@
   "runtime_limit": "Current-thread local heartbeat requires the computer and Codex app to be available; not an independent always-on cloud service.",
   "latest_monitor_check": {
     "progress_since_previous_check": 100,
-    "decision": "moving; no production restart or sample/taxonomy change",
-    "minimal_correction": "None; ordinary frozen packet validation and exact cursor handoffs."
+    "decision": "moving; unchanged frozen scope and isolated count",
+    "minimal_correction": "One reported years-relation serialization inconsistency clarified with reader: stated minimum-two-years interpretation retained; no taxonomy or broader rereview."
   }
 }
