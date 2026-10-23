@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-23T04:47:54.578187+00:00",
+  "updated_utc": "2026-10-23T05:19:37.809193+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct23_v7",
+      "task": "a_reader1_oct23_v9",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -14,20 +14,20 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 60,
-        "packet": 3,
-        "assignment_start_ordinal": 41
+        "batch": 61,
+        "packet": 1,
+        "assignment_start_ordinal": 6
       },
       "status": "running"
     },
     {
-      "task": "a_reader2_oct23_v8",
+      "task": "a_reader2_oct23_v9",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
-        "batch": 60,
-        "packet": 4,
-        "assignment_start_ordinal": 71
+        "batch": 61,
+        "packet": 5,
+        "assignment_start_ordinal": 81
       },
       "continuous_assignment": {
         "first_batch": 34,
@@ -49,7 +49,7 @@
       "status": "running"
     },
     {
-      "task": "a_reader3_oct23_v9",
+      "task": "a_reader3_oct23_v11",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -60,9 +60,9 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 60,
-        "packet": 2,
-        "assignment_start_ordinal": 36
+        "batch": 61,
+        "packet": 3,
+        "assignment_start_ordinal": 41
       },
       "status": "running"
     }
