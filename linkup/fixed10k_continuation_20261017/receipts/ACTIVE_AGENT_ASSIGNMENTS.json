@@ -1,9 +1,9 @@
 {
-  "updated_utc": "2026-10-23T05:19:37.809193+00:00",
+  "updated_utc": "2026-10-23T06:14:27.952348+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
-      "task": "a_reader1_oct23_v9",
+      "task": "a_reader1_oct23_v10",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -14,20 +14,20 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 61,
-        "packet": 1,
-        "assignment_start_ordinal": 6
+        "batch": 62,
+        "packet": 2,
+        "assignment_start_ordinal": 21
       },
       "status": "running"
     },
     {
-      "task": "a_reader2_oct23_v9",
+      "task": "a_reader2_oct23_v10",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "handoff": {
-        "batch": 61,
-        "packet": 5,
-        "assignment_start_ordinal": 81
+        "batch": 62,
+        "packet": 3,
+        "assignment_start_ordinal": 41
       },
       "continuous_assignment": {
         "first_batch": 34,
@@ -49,7 +49,7 @@
       "status": "running"
     },
     {
-      "task": "a_reader3_oct23_v11",
+      "task": "a_reader3_oct23_v12",
       "model": "gpt-5.6-sol",
       "effort": "medium",
       "continuous_assignment": {
@@ -60,9 +60,9 @@
         "packet_size": "use frozen template membership; final packet may contain fewer than20"
       },
       "handoff": {
-        "batch": 61,
-        "packet": 3,
-        "assignment_start_ordinal": 41
+        "batch": 62,
+        "packet": 1,
+        "assignment_start_ordinal": 3
       },
       "status": "running"
     }
@@ -114,5 +114,13 @@
       "responsibility subject/relation not explicitly recorded"
     ],
     "decision": "Receiving reader completes only missing judgments with original context; preserved explicit experience/years/conditions not re-adjudicated. Not mechanical mapping, not counted complete until validated; contexts counted once."
+  },
+  "pro_channel_retry": {
+    "utc": "2026-10-23T06:00:07.531700+00:00",
+    "trigger": "User requested retry after all three readers received backend HTTP403",
+    "result": "All three existing readers responded and resumed; cloud checkpoint identities checked before new work.",
+    "new_channel": false,
+    "quota_remaining_percent": 47,
+    "retry_policy": "No repeated blind retries if error recurs"
   }
 }
