@@ -15,10 +15,10 @@
     "artifact": "frozen TF-IDF + LinearSVC",
     "implemented": "27 binary presence predictions only",
     "full_corpus_formal_measurement_accepted_fields": [],
-    "current_status": "baseline only; several targets have known poor positive or negative class performance",
+    "current_status": "final_baseline_closed_no_formal_fields",
     "optimization_acceptance": "shared-feature inference gives identical predictions; engineering acceptance does not imply semantic acceptance",
     "class_weight_balanced": "already inherited, not a correction",
-    "future_training": "one fixed final fit on a frozen latest-compatible reference ledger after annotation closure; freeze code, memberships and input hashes before fit",
+    "future_training": "None authorized automatically; fixed final fit is complete",
     "final_evaluation": "1331 unfinished work-queue contexts frozen by the existing hash rule before continuation labels; exclude every held-out context from all final training targets, do not use final results for model selection, and report prior exposure and field-specific eligible positive/negative counts rather than presume all contexts are historically unseen",
     "unsupported_semantic_tasks": [
       "binding literal years to the correct experience object and branch",
@@ -41,7 +41,12 @@
       "performance within frozen existing research comparison groups, reporting group source and denominators",
       "prior-exposed holdout contexts reported separately; no final evaluation for model selection"
     ],
-    "final_fit_execution": "Code and cloud submission script prepared and independently reviewed; not executed, waiting for original processable reference queue closure."
+    "final_fit_execution": "Job47251408 completed once; final adjudication47251980 completed;0formal/10candidate/17not_adopted",
+    "final_model": {
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline_optimized/final_fit/run/FINAL_PRESENCE_BASELINE_PRIVATE.pkl",
+      "sha256": "d30ee5527e82d2980680e64ae16614c371a8fa26367582d21a139f20b16f2f49"
+    },
+    "final_decision_file": "final_results/FINAL_FIELD_ADJUDICATION_PUBLIC.json"
   },
   "additional_channel": {
     "request_count": 1,
@@ -51,6 +56,6 @@
     "server_bulk_semantic_channel": "none currently authorized and demonstrated",
     "full_corpus_semantic_shards_submitted": 0
   },
-  "future_full_manifest_execution": "requires field-specific acceptance plus an authorized working channel and budget; once those exist, use complete manifest continuously without per-shard approval",
+  "future_full_manifest_execution": "Not started: no field meets frozen final adoption gates. Do not run failed fields or automatically restart development.",
   "counts_separation": "classifier predictions do not count as reviewed contexts and do not reduce the fixed10k semantic queue"
 }

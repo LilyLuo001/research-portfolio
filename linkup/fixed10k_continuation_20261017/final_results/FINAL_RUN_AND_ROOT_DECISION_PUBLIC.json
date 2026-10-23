@@ -1,0 +1,107 @@
+{
+  "status": "single_final_baseline_experiment_closed_no_formal_fields",
+  "root_accepted_utc": "2026-10-23T15:22:45.072871+00:00",
+  "reference_phase": {
+    "latest_batch": 69,
+    "completed_of_remaining6500": 6486,
+    "processable_remaining": 0,
+    "isolated_unfinished": 14,
+    "contexts_with_field_unknowns": 1002,
+    "new_reviews_this_run": 0
+  },
+  "pre_result_rules_commit": "3e76a62",
+  "rules_sha256": "31f4207ac953d01863af4bb58e344883d73b134def3f890846cf744f05036039",
+  "final_fit": {
+    "job_id": "47251408",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 180,
+    "cpus": 8,
+    "max_rss_kb": 1354716,
+    "freeze_sha256": "51f313ad1b3cb9aa5d1ac8cb73cf242aaf7cd4c4144226e442966b95d67bdfee",
+    "membership_sha256": "d1dcd36ceef95a6f5b90b881407539f8b6b8ab196e3e345e71590db1f3f4c4bb",
+    "final_holdout_contexts": 1331,
+    "previously_exposed_final_contexts": 97,
+    "all_final_and_legacy_holdout_excluded_from_training": true,
+    "matrix_groups": 4,
+    "stage_seconds": {
+      "read": 1.6321259140968323,
+      "normalize": 22.53100582305342,
+      "feature_transform": 64.25006521679461,
+      "fit": 69.82103038066998,
+      "predict": 0.10873844427987933,
+      "model_write": 2.816834246274084,
+      "end_to_end_through_model_write": 162.24116404587403
+    }
+  },
+  "adjudication": {
+    "job_id": "47251980",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 1,
+    "cpus": 2,
+    "max_rss_kb": 2776,
+    "initial_request_rejected_before_job_creation": "1CPU4G exceeded partition memory-per-CPU cap; allocation-only repair to2CPU4G, threads remain1; no model rerun"
+  },
+  "model": {
+    "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline_optimized/final_fit/run/FINAL_PRESENCE_BASELINE_PRIVATE.pkl",
+    "sha256": "d30ee5527e82d2980680e64ae16614c371a8fa26367582d21a139f20b16f2f49"
+  },
+  "evaluation": {
+    "job_id": "47251408",
+    "sha256": "6564ec8e43d3b3a3b1275a9a98bbe66db99bd38cae2366f66959916864f704d4"
+  },
+  "decisions": {
+    "candidate_only": 10,
+    "eligible_pending_execution": 0,
+    "not_adopted": 17
+  },
+  "root_code_review": "Rules SHA, class confusion/support reconciliation, Wilson denominators, exposure and A/B/C gates inspected; no score-dependent changes. Confirmed GenAI overall passes but A/B minority classes fail support/performance; core experience/duty examples inspected.",
+  "formal_production": {
+    "submitted_jobs": [],
+    "submitted_shards": 0,
+    "reason": "No target satisfies the frozen quality and group-support gates; this is the immediate blocker, not queue delay or a new resource request",
+    "final_model_real_shard_inference": "not_executed_because_no_qualified_fields",
+    "final_model_inference_speed": null,
+    "full_corpus_duration_estimate": null,
+    "old_benchmark_is_not_final_model_forecast": true,
+    "candidate_only_production": false
+  },
+  "scope": "Existing technology-screened69-cell candidate frame only; no out-of-frame certification.27binary targets do not implement7complete semantic families.",
+  "unsupported_tasks": [
+    {
+      "decision": "not_adopted",
+      "reason": "unimplemented_task",
+      "task": "year-to-experience-object and branch binding"
+    },
+    {
+      "decision": "not_adopted",
+      "reason": "unimplemented_task",
+      "task": "required versus preferred"
+    },
+    {
+      "decision": "not_adopted",
+      "reason": "unimplemented_task",
+      "task": "qualification alternatives and conditions"
+    },
+    {
+      "decision": "not_adopted",
+      "reason": "unimplemented_task",
+      "task": "responsibility subject and relation reconstruction"
+    },
+    {
+      "decision": "not_adopted",
+      "reason": "unimplemented_task",
+      "task": "verbatim evidence span extraction"
+    }
+  ],
+  "constraints": {
+    "reset_used": false,
+    "paid_calls": 0,
+    "new_software_or_models": 0,
+    "batch070_started": false,
+    "reference_labels_overwritten": false,
+    "latest_quota_authorization": "former10percent pause lifted; actual exhaustion checkpoint only"
+  },
+  "next_action": "No automatic new labels, fitting, parameter search or production of failed targets; preserve references/model and deliver this final decision."
+}

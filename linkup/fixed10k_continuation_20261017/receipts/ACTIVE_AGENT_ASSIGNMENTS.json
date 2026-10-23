@@ -1,5 +1,5 @@
 {
-  "updated_utc": "2026-10-23T12:27:27.806118+00:00",
+  "updated_utc": "2026-10-23T15:26:54.169284+00:00",
   "rule": "Canonical review files and private saved judgments take precedence; never reread completed judgments.",
   "agents": [
     {
@@ -84,9 +84,9 @@
   ],
   "unassigned": [],
   "note": "Cursors above are assignment starts, not claims that later checkpointed records remain unread. Cloud canonical and saved working checkpoint identities supersede this metadata snapshot.",
-  "execution_note": "Three Sol/medium lanes continue from durable private checkpoints; fresh agents replace exhausted contexts without rereading saved judgments. Root handles bounded conflicts and backfill acceptance.",
-  "quota_policy": "User directs pause at approximately10% remaining; no free reset. Root will issue stop-new-reads and preserve active units.",
-  "execution_status": "all_assigned_reference_packets_complete__quota_paused",
+  "execution_note": "Batch069 remains final. Fit47251408/adjudication47251980 completed;0formal fields. No active reference packets or automatic new baseline.",
+  "quota_policy": "Former10percent pause lifted; no reset",
+  "execution_status": "closed_reference_and_final_baseline_delivery",
   "packet_reassignments": [
     {
       "batch": 56,

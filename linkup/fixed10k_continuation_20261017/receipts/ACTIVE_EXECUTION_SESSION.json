@@ -8,17 +8,15 @@
     "45": 50,
     "46": 15
   },
-  "status": "paused_at_quota_after_processable_reference_closure",
+  "status": "reference_phase_closed_final_baseline_adjudicated",
   "accounting_scope": "Newly read contexts exclude134 preexisting references. Saved unfinalized context counts remain separate from ledger completion. No rereview of old judgments.",
-  "user_quota_policy": {
-    "pause_at_remaining_percent_approximately": 10,
-    "free_reset_authorized": false
-  },
+  "user_quota_policy": "Latest user lifted10percent pause; no reset or paid channel",
   "source_commit": "0827f0d",
   "starting_reviewed_uncertainty_contexts": 621,
   "paused_utc": "2026-10-23T12:27:27.806118+00:00",
   "latest_finalized_batch": 69,
   "remaining_work_contexts": 0,
   "isolated_unfinished_contexts": 14,
-  "next_authorized_action": "one frozen final fit/evaluation and field-level decision, after quota resume"
+  "next_authorized_action": "No automatic new baseline or labeling; final delivery recorded in final_results",
+  "delivery_updated_utc": "2026-10-23T15:26:54.169284+00:00"
 }

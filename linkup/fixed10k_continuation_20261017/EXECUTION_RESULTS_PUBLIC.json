@@ -1,6 +1,6 @@
 {
-  "as_of_utc": "2026-10-23T12:27:27.806118+00:00",
-  "status": "processable_reference_queue_closed_with_14_isolates__quota_paused_before_final_fit",
+  "as_of_utc": "2026-10-23T15:22:45.072871+00:00",
+  "status": "final_baseline_experiment_closed_no_formal_fields",
   "base_commit": "4ed88d3",
   "last_backfilled_batch": 69,
   "A": {
@@ -64,17 +64,28 @@
     "rows_per_second": 169.60305504131247,
     "speedup": 4.864,
     "formal_semantic_production": false,
-    "final_training_executed": false
+    "final_training_executed": true,
+    "final_training_job": "47251408",
+    "final_adjudication_job": "47251980",
+    "final_decision_counts": {
+      "candidate_only": 10,
+      "eligible_pending_execution": 0,
+      "not_adopted": 17
+    },
+    "final_run_receipt": "final_results/FINAL_RUN_AND_ROOT_DECISION_PUBLIC.json",
+    "old_benchmark_only": true
   },
   "full_corpus_semantic_shards_submitted": 0,
-  "resource_status": "Additional paid channel declined; existing Pro annotation continues, no authorized unattended semantic service. Final field acceptance also remains outstanding.",
+  "resource_status": "No new resources requested; immediate formal-production blocker is field quality and comparison-group support. Full relational semantics remains unimplemented.",
   "quota_pause": {
     "at_utc": "2026-10-23T12:27:27.806118+00:00",
     "used_percent": 90,
     "remaining_percent": 10,
     "user_directed": true,
     "reset_used": false,
-    "monitor_status": "PAUSED",
-    "new_final_training_submitted": false
+    "monitor_status": "PAUSED_AFTER_FINAL_DELIVERY",
+    "new_final_training_submitted": false,
+    "active": false,
+    "lifted_by_latest_user": true
   }
 }

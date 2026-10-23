@@ -4,7 +4,7 @@
   "automation_id": "linkup",
   "cadence": "hourly, current-thread heartbeat; quiet on normal progress or unchanged state",
   "baseline_commit": "0c5d699",
-  "last_checked_utc": "2026-10-23T13:53:50.174906+00:00",
+  "last_checked_utc": "2026-10-23T15:22:45.072871+00:00",
   "last_finalized_batch": 69,
   "remaining_work_contexts": 0,
   "isolated_unfinished_contexts": 14,
@@ -20,7 +20,7 @@
   "assessment": {
     "current_execution": "processable_reference_queue_closed_with_isolated_unfinished",
     "perfectionism_loop": "not_established; frozen queue decreased to zero processable contexts",
-    "downstream_delivery": "single final fit/evaluation and field decision pending because of explicit quota pause; full relational semantics channel still unavailable",
+    "downstream_delivery": "Completed one final fit and one adjudication; no target meets formal gates; not a queue delay or quota pause",
     "evidence_limit": "Metadata checks establish execution and conservation, not semantic validity of all labels."
   },
   "bounded_independent_check": {
@@ -79,18 +79,12 @@
     "paid_channel": "declined; existing authorized Pro only"
   },
   "monitor_rules": [
-    "Compare durable reference progress and finalized queue reduction, separating new readings, reuse, unknown, isolation and unprocessed status. Check saved checkpoints once before calling unchanged public metadata a stall.",
-    "After two consecutive eligible hourly observations with neither durable new references nor progress toward the next required deliverable, flag suspected stall and identify one concrete cause. Quota/network/auth/source/Slurm blockers are reported separately.",
-    "Alert on unauthorized sample, taxonomy, scope, completion-definition or model/channel changes; no broad historical rereview.",
-    "Alert on rereading completed judgments, repeating an already-exhausted source recovery, or repeated cosmetic work that prevents production. Necessary exact-quote corrections and context handoffs alone are not loops.",
-    "At processable queue closure, advance to the already-approved single final fit/evaluation and field decision. Do not substitute new development, model search or holdout reselection.",
-    "Never equate Formal800 completion with fixed10k completion, predictions with reference labels, presence with full semantics, validator success with semantic accuracy, or A closure with full-corpus research completion."
+    "Do not restart reference labeling, final fit, model search or failed-field production.",
+    "Final baseline delivery closes this monitor; new scope requires user decision."
   ],
   "root_decisions": [
-    "Reject a blanket stop after two formatting fixes or two metadata-only commits: those counts alone do not establish unproductive repetition. Require unchanged durable progress plus concrete evidence.",
-    "The monitor is read-only for production artifacts. It may update this small anonymous state/log and propose a bounded correction, not restart completed work or introduce approval gates for normal packets.",
-    "Respect the user-directed quota pause near10% remaining; no reset, paid service or automatic resumption against that pause.",
-    "Pause this monitor after the current processable-reference closure, single evaluation and field decision have been reported. Report remaining isolates and resource blockers rather than claim the whole project finished."
+    "Latest user lifted former10% pause; no reset.",
+    "Close baseline and monitor after zero-field final decision; retain project incompleteness explicitly."
   ],
   "runtime_limit": "Current-thread local heartbeat requires the computer and Codex app to be available; not an independent always-on cloud service.",
   "latest_monitor_check": {
@@ -98,8 +92,15 @@
     "decision": "Reference stage reached its bounded endpoint; do not reopen production or invent Batch070. Final evaluation not run at quota threshold."
   },
   "automation_status": "PAUSED",
-  "pause_reason": "Fresh quota check91%used/9%remaining; original pause condition has not cleared.",
-  "monitored_stage": "fixed_final_training__field_adjudication__qualified_continuous_production",
-  "progress_measure": "Actual training/freeze/evaluation/adjudication/production and delivery; reference queue is closed.",
-  "execution_authorization": "receipts/FINAL_EXECUTION_AUTHORIZATION_20261023.json"
+  "pause_reason": "Final fit and field decision delivered; no qualified production fields; fixed-stop baseline closure",
+  "monitored_stage": "closed_final_baseline",
+  "progress_measure": "Final fit and adjudication; no reference requeue",
+  "execution_authorization": "receipts/FINAL_EXECUTION_AUTHORIZATION_20261023.json",
+  "quota_override": "Continue until actual exhaustion; no reset",
+  "final_fit_job_id": "47251408",
+  "final_decision_counts": {
+    "candidate_only": 10,
+    "eligible_pending_execution": 0,
+    "not_adopted": 17
+  }
 }

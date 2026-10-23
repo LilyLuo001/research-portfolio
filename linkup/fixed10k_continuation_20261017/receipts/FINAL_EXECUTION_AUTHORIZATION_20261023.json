@@ -1,7 +1,7 @@
 {
   "recorded_utc": "2026-10-23T13:53:50.174906+00:00",
   "authorized_start_commit": "b3b3a25",
-  "status": "not_executed_existing_quota_pause",
+  "status": "executed_and_closed_no_qualified_fields",
   "quota_check": {
     "checked_utc": "2026-10-23T13:51:04Z",
     "used_percent": 91,
@@ -26,7 +26,7 @@
     "If none qualifies, explicitly close this baseline experiment; no automatic relabeling or tuning."
   ],
   "final_fit_script": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline_optimized/code/wz_final_fit.sbatch",
-  "pre_result_principles_status": "Not executed in this quota-paused turn; must precede viewing final results.",
+  "pre_result_principles_status": "Frozen in commit3e76a62 before final job submission and scores",
   "evaluation_requirements": [
     "Keep final1331 and all other existing holdout members out of training.",
     "Report previously exposed and no-recorded-exposure groups separately; not all-blind.",
@@ -54,7 +54,11 @@
     "Frozen model and run records",
     "Actual production jobs and measured speed-based duration, or precise field-level blockers"
   ],
-  "monitor_policy": "Track training, production and delivery; do not monitor reference-queue decline as progress. Remains paused at9% remaining.",
-  "new_training_submitted_this_turn": false,
-  "new_production_submitted_this_turn": false
+  "monitor_policy": "Pause after final delivery; no automatic new research/model loop",
+  "new_training_submitted_this_turn": true,
+  "new_production_submitted_this_turn": false,
+  "latest_user_override": "Continue until actual quota exhaustion; no reset or paid channel",
+  "override_recorded_utc": "2026-10-23T14:52:16.181147+00:00",
+  "final_fit_job_id": "47251408",
+  "completed_utc": "2026-10-23T15:22:45.072871+00:00"
 }
