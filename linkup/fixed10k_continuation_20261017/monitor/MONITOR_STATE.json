@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "monitor_authorization": "User requested direction and perfectionism monitoring on 2026-10-23; no study-scope change authorized.",
+  "automation_id": "linkup",
+  "cadence": "hourly, current-thread heartbeat; quiet on normal progress or unchanged state",
+  "baseline_commit": "0c5d699",
+  "last_checked_utc": "2026-10-23T08:06:46.829386+00:00",
+  "last_finalized_batch": 63,
+  "remaining_work_contexts": 599,
+  "isolated_unfinished_contexts": 14,
+  "remaining_unfinished_contexts": 613,
+  "cumulative_reviewed_uncertainty_contexts": 920,
+  "session_new_reference_contexts_backfilled": 1861,
+  "session_preexisting_saved_contexts_reused": 134,
+  "session_final_unknown_contexts_among_processed": 310,
+  "session_reused_prior_family_cells": 17,
+  "saved_unfinalized_contexts": "Not inferred from finalized counts; check current private packet metadata only if needed to confirm a suspected stall.",
+  "consecutive_eligible_no_progress_observations": 0,
+  "last_notified_signature": "initial_moving_with_downstream_delivery_risk_batch063",
+  "assessment": {
+    "current_execution": "moving_along_frozen_scope",
+    "perfectionism_loop": "not_established_by_current_evidence",
+    "downstream_delivery": "unresolved: final fit and field acceptance not executed; corpus-scale relational semantic channel remains unavailable",
+    "evidence_limit": "Metadata checks establish execution and conservation, not semantic validity of all labels."
+  },
+  "bounded_independent_check": {
+    "model": "gpt-5.6-sol",
+    "effort": "medium",
+    "inputs": [
+      "EXECUTION_RESULTS_PUBLIC.json",
+      "FIELD_PRODUCTION_STATUS.json",
+      "receipts/ACTIVE_EXECUTION_SESSION.json",
+      "receipts/ACTIVE_AGENT_ASSIGNMENTS.json",
+      "receipts/BATCH061_FINALIZE_RECEIPT.json",
+      "receipts/BATCH062_FINALIZE_RECEIPT.json",
+      "receipts/BATCH063_FINALIZE_RECEIPT.json",
+      "latest eight Git subjects"
+    ],
+    "no_raw_text_read": true,
+    "no_research_computation": true,
+    "observed_sequence": {
+      "batches": [
+        61,
+        62,
+        63
+      ],
+      "unique_context_updates": [
+        100,
+        100,
+        100
+      ],
+      "remaining_work": [
+        799,
+        699,
+        599
+      ],
+      "isolated": [
+        14,
+        14,
+        14
+      ],
+      "same_backfill_code_hash": true,
+      "required_field_whitelist_preserved": true,
+      "receipt_chain_bound": true
+    }
+  },
+  "fixed_direction": {
+    "purpose": "Auditable experience requirements and entry-level responsibilities from full descriptions; preserve the two approved software/AI experience and entry-level responsibility comparisons.",
+    "current_execution_scope": "Original fixed10k missing/partial families only; completed corpus processing, Formal800 and existing final unknown judgments remain unchanged.",
+    "next_transition": "Close the processable original queue, freeze latest compatible labels and original holdout, run one fixed final fit/evaluation, make one field-level acceptance decision. Isolated unfinished records remain explicit.",
+    "not_implemented_by_presence_baseline": [
+      "years-to-object/branch binding",
+      "required versus preferred strength",
+      "conditional alternatives",
+      "responsibility subject and relation reconstruction",
+      "open-ended objects and verbatim evidence"
+    ],
+    "formal_corpus_semantic_shards": 0,
+    "paid_channel": "declined; existing authorized Pro only"
+  },
+  "monitor_rules": [
+    "Compare durable reference progress and finalized queue reduction, separating new readings, reuse, unknown, isolation and unprocessed status. Check saved checkpoints once before calling unchanged public metadata a stall.",
+    "After two consecutive eligible hourly observations with neither durable new references nor progress toward the next required deliverable, flag suspected stall and identify one concrete cause. Quota/network/auth/source/Slurm blockers are reported separately.",
+    "Alert on unauthorized sample, taxonomy, scope, completion-definition or model/channel changes; no broad historical rereview.",
+    "Alert on rereading completed judgments, repeating an already-exhausted source recovery, or repeated cosmetic work that prevents production. Necessary exact-quote corrections and context handoffs alone are not loops.",
+    "At processable queue closure, advance to the already-approved single final fit/evaluation and field decision. Do not substitute new development, model search or holdout reselection.",
+    "Never equate Formal800 completion with fixed10k completion, predictions with reference labels, presence with full semantics, validator success with semantic accuracy, or A closure with full-corpus research completion."
+  ],
+  "root_decisions": [
+    "Reject a blanket stop after two formatting fixes or two metadata-only commits: those counts alone do not establish unproductive repetition. Require unchanged durable progress plus concrete evidence.",
+    "The monitor is read-only for production artifacts. It may update this small anonymous state/log and propose a bounded correction, not restart completed work or introduce approval gates for normal packets.",
+    "Respect the user-directed quota pause near10% remaining; no reset, paid service or automatic resumption against that pause.",
+    "Pause this monitor after the current processable-reference closure, single evaluation and field decision have been reported. Report remaining isolates and resource blockers rather than claim the whole project finished."
+  ],
+  "runtime_limit": "Current-thread local heartbeat requires the computer and Codex app to be available; not an independent always-on cloud service."
+}
