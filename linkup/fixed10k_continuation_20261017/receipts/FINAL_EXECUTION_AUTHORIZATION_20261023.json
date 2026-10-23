@@ -1,0 +1,60 @@
+{
+  "recorded_utc": "2026-10-23T13:53:50.174906+00:00",
+  "authorized_start_commit": "b3b3a25",
+  "status": "not_executed_existing_quota_pause",
+  "quota_check": {
+    "checked_utc": "2026-10-23T13:51:04Z",
+    "used_percent": 91,
+    "remaining_percent": 9,
+    "reset_authorized": false
+  },
+  "reference_phase": {
+    "authoritative_batch": 69,
+    "backfilled_of_prior6500": 6486,
+    "processable_queue": 0,
+    "isolated_unfinished": 14,
+    "reviewed_uncertainty_contexts": 1002,
+    "reopen": false,
+    "unknown_policy": "Preserve by field; other usable fields remain usable; no blanket requeue."
+  },
+  "authorized_sequence": [
+    "Check queued/running final-fit jobs, frozen manifest and final outputs before any submission.",
+    "If executable adjudication principles are absent, freeze once before viewing final results; retain existing research use and quality requirements.",
+    "Submit existing Wuzhen wz_final_fit.sbatch once, with fixed inputs, settings and memberships.",
+    "Evaluate every target and issue formal-use, candidate-only or ineligible/unsupported/unimplemented decision.",
+    "For qualified fields with declared scope and existing resource conditions, run continuous resumable independent sidecars over the complete production manifest and measure actual final-model read-to-write speed.",
+    "If none qualifies, explicitly close this baseline experiment; no automatic relabeling or tuning."
+  ],
+  "final_fit_script": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/baseline_optimized/code/wz_final_fit.sbatch",
+  "pre_result_principles_status": "Not executed in this quota-paused turn; must precede viewing final results.",
+  "evaluation_requirements": [
+    "Keep final1331 and all other existing holdout members out of training.",
+    "Report previously exposed and no-recorded-exposure groups separately; not all-blind.",
+    "Unknown/rule-candidate/prediction values are not known reference labels.",
+    "Per target: effective train/eval class supports, confusion matrix, both-class metrics, predicted-positive fraction, existing research comparison groups and exposure groups.",
+    "Evaluation is relative to Pro references; Exit0/evaluated/minimum5perclass are not scientific acceptance criteria.",
+    "Do not certify outside the reference candidate frame or relax standards after seeing results."
+  ],
+  "unsupported_relation_tasks": [
+    "years binding",
+    "required/preferred",
+    "conditional alternatives",
+    "responsibility subject relations",
+    "evidence extraction"
+  ],
+  "constraints": [
+    "No Batch070, rereview or full-corpus recleaning.",
+    "No new paid channel, unapproved model/software deployment or quota overrun.",
+    "Retain execution-failure evidence and duplicate-run guards; repair only concrete execution errors.",
+    "Predictions are separate sidecars; untested scope stays untested; non-detection is not absence."
+  ],
+  "delivery_endpoint": [
+    "Final evaluation",
+    "Per-target adjudication",
+    "Frozen model and run records",
+    "Actual production jobs and measured speed-based duration, or precise field-level blockers"
+  ],
+  "monitor_policy": "Track training, production and delivery; do not monitor reference-queue decline as progress. Remains paused at9% remaining.",
+  "new_training_submitted_this_turn": false,
+  "new_production_submitted_this_turn": false
+}

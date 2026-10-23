@@ -4,7 +4,7 @@
   "automation_id": "linkup",
   "cadence": "hourly, current-thread heartbeat; quiet on normal progress or unchanged state",
   "baseline_commit": "0c5d699",
-  "last_checked_utc": "2026-10-23T12:27:27.806118+00:00",
+  "last_checked_utc": "2026-10-23T13:53:50.174906+00:00",
   "last_finalized_batch": 69,
   "remaining_work_contexts": 0,
   "isolated_unfinished_contexts": 14,
@@ -98,5 +98,8 @@
     "decision": "Reference stage reached its bounded endpoint; do not reopen production or invent Batch070. Final evaluation not run at quota threshold."
   },
   "automation_status": "PAUSED",
-  "pause_reason": "User-directed quota threshold reached; no reset. Resume monitoring only when work/quota resume is authorized."
+  "pause_reason": "Fresh quota check91%used/9%remaining; original pause condition has not cleared.",
+  "monitored_stage": "fixed_final_training__field_adjudication__qualified_continuous_production",
+  "progress_measure": "Actual training/freeze/evaluation/adjudication/production and delivery; reference queue is closed.",
+  "execution_authorization": "receipts/FINAL_EXECUTION_AUTHORIZATION_20261023.json"
 }
