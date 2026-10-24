@@ -1,0 +1,449 @@
+{
+  "candidate_inventory_counts_by_split": {
+    "final_previously_exposed": {
+      "global_year_candidates": 2744,
+      "primary_old_experience_candidates": 2325,
+      "primary_old_experience_compatible_candidates": 1868
+    },
+    "previous_holdout_reserved_not_final": {
+      "global_year_candidates": 574,
+      "primary_old_experience_candidates": 492,
+      "primary_old_experience_compatible_candidates": 375
+    },
+    "train": {
+      "global_year_candidates": 12860,
+      "primary_old_experience_candidates": 10783,
+      "primary_old_experience_compatible_candidates": 8730
+    }
+  },
+  "candidate_supervision_states_by_split": {
+    "final_previously_exposed": {
+      "ambiguous_multiple_original_items": 24,
+      "ambiguous_or_unaccepted_original_binding": 49,
+      "compatible_unique_reference": 2002,
+      "conflicting_original_objects": 146,
+      "unlabeled_candidate_no_negative": 523
+    },
+    "previous_holdout_reserved_not_final": {
+      "ambiguous_multiple_original_items": 5,
+      "ambiguous_or_unaccepted_original_binding": 8,
+      "compatible_unique_reference": 405,
+      "conflicting_original_objects": 18,
+      "unlabeled_candidate_no_negative": 138
+    },
+    "train": {
+      "ambiguous_multiple_original_items": 81,
+      "ambiguous_or_unaccepted_original_binding": 201,
+      "compatible_unique_reference": 9399,
+      "conflicting_original_objects": 584,
+      "unlabeled_candidate_no_negative": 2595
+    }
+  },
+  "code_sha256": "ec4741051cce3940e75a5881672150acf158ecd95e9908474c7adb4ab31d59bd",
+  "compatible_context_membership_by_split": {
+    "final_previously_exposed": {
+      "count": 981,
+      "sorted_context_membership_sha256": "1032024f38ef47de3aeac42b71a1327dc4784eea2a0cd0aef05057c84e93e725"
+    },
+    "previous_holdout_reserved_not_final": {
+      "count": 173,
+      "sorted_context_membership_sha256": "985305fd8c0393ef020df35f1813dc1ce9ce71724d04ac2ecd06e2824577317a"
+    },
+    "train": {
+      "count": 4481,
+      "sorted_context_membership_sha256": "9a8f0a73d89bb9b640f77252411b92340c314ca2da797e43da510812bb1a9126"
+    }
+  },
+  "context_membership_by_split": {
+    "final_previously_exposed": {
+      "count": 1328,
+      "sorted_context_membership_sha256": "7d047cbd5e39e9dafaae2eb49b8433e7d019ee21376434b3b5037de2920c4d97"
+    },
+    "previous_holdout_reserved_not_final": {
+      "count": 238,
+      "sorted_context_membership_sha256": "bfacf4965965d11c2696ad730601b693f242d3ab8aced1bb5533a9d1d656aa09"
+    },
+    "train": {
+      "count": 6012,
+      "sorted_context_membership_sha256": "d94ce5be4238080b85f2664b2d5d455af9f8adb07a90b8a2ede9569fda96c19a"
+    }
+  },
+  "context_states": {
+    "frozen_normalization_not_idempotent": 12,
+    "processed": 7566
+  },
+  "eval_compatible_candidates": 2407,
+  "frozen_support_gate": [
+    {
+      "final_unique_contexts": 170,
+      "object": "general_work",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 702
+    },
+    {
+      "final_unique_contexts": 97,
+      "object": "industry_domain",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 540
+    },
+    {
+      "final_unique_contexts": 752,
+      "object": "occupation_task",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 3526
+    },
+    {
+      "final_unique_contexts": 272,
+      "object": "tool_specific",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1204
+    }
+  ],
+  "generated_negative_examples": 0,
+  "global_year_candidates": 16178,
+  "gold_no_relation_available": false,
+  "group_metadata": {
+    "conflicting_group_contexts": 0,
+    "frozen_technology_flags": "existing_rule_observed_mention_flags_attached_per_candidate; nondetection_not_semantic_absence",
+    "inventory_eligible_contexts": 7367,
+    "inventory_provenance": {
+      "ad_rows": 10000,
+      "sha256": "70ab7ed24697cf456e738497de4eec02531205294a626a0dab66bb779a0db1a6",
+      "source": "approved_analysis_frame_four_metadata_columns_only"
+    },
+    "original_group_exposure": "approved_analysis_frame_context_group_if_supplied; same_context_conflicts_unknown",
+    "recovered_context_metadata": "context_sha256_and_complete_context_only",
+    "reference_group_counts": {
+      "GA": 581,
+      "GB": 2945,
+      "other": 3303,
+      "unknown": 749
+    },
+    "reference_group_labels": {
+      "GA": "genai_use_with_or_without_software",
+      "GB": "traditional_software_use_no_ai"
+    }
+  },
+  "input_manifest_sha256": "48e8b0d01884424e286cd836bb37f198b9d52d3b74b029180994a5e0349c745e",
+  "input_scheme": {
+    "candidate_windows_reference_independent": true,
+    "frozen_version": "rulefirst-20261008-v1.2",
+    "markers": [
+      "[YEAR]",
+      "[/YEAR]"
+    ],
+    "numeric_match": "all_scalar_or_range_values_conserved_in_year_units; explicit_relation_contradictions_rejected",
+    "old_object_filter_used": false,
+    "radius_unicode_codepoints": 192
+  },
+  "inputs": {
+    "contexts_sha256": "e76b1cc9b8ede15ba11fcba8fb026517a8c18b2c9bc69139c254fb5d6e4039ed",
+    "items_sha256": "8a28fa07361c4eb56c6630941a8517c4a25f9766412e7519c34e43c76f71797e",
+    "legacy_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526"
+  },
+  "label_classes": [
+    "general_work",
+    "industry_domain",
+    "occupation_task",
+    "tool_specific"
+  ],
+  "limitations": [
+    "Support floor is necessary, not quality acceptance.",
+    "Final is previously exposed; final1331 and every legacy holdout are excluded from training.",
+    "Every original year-family item is retained; not_stated has no literal-year relation and is never negative.",
+    "Unknown and unlabeled candidates never become negatives; no gold no_relation exists.",
+    "Repeated evidence, candidate-to-multiple-items and item-to-multiple-candidates are not forced.",
+    "Only accepted same-original-item object/year masks bind; old predicted object does not filter gold.",
+    "Unmatched numeric references remain in numeric candidate coverage denominators.",
+    "No corpus inference, new labels, parser changes, dictionary growth, sampling or model search."
+  ],
+  "original_final_holdout_contexts": 1331,
+  "original_final_holdout_membership_sha256": "245a346bea54cff8334d310fc06355072f04c67b2a3ec900b027efe4e3decdde",
+  "original_year_reference_items": 38535,
+  "outputs": {
+    "CANDIDATES_PRIVATE.jsonl": "f331e446648b0842fa04860efa170ba58eb9eba0a01444623b83fe7af2f11ac7",
+    "CANDIDATE_SUPERVISION_PRIVATE.jsonl": "8227c3a784c330f18f14cb4e0a1f08d0a56a0ef59926a2d1b68a5c3ad21637ed",
+    "CONTEXT_STATES_PRIVATE.jsonl": "b774fb5927c23fd22a9cd79aa7de683ec9f3ae979b749b6626ef4730aa8ea6f3",
+    "EVAL_COMPATIBLE_PRIVATE.jsonl": "214a34f0e953a8eca6fd96117a585768be15858781b496b4907d3e3fe467f0d7",
+    "LABEL_DICTIONARY.json": "26351ff76a39ff7777a3414943ee5e7a7020a9939884a91f66c3e682954005f6",
+    "REFERENCE_COVERAGE_PRIVATE.jsonl": "eb23a682540f46f72994d6be81c54cd10a2a33fdb4f45ee322835a50dec0ec3f",
+    "TRAIN_COMPATIBLE_PRIVATE.jsonl": "da590a7127f0ad47940b32205c9d9779621af465d096c445a019b9ece102adce"
+  },
+  "primary_old_experience_candidates": 13600,
+  "production_candidates": 16178,
+  "reference_localization_states": {
+    "accepted_object_family_binding_unavailable_or_conflicting": 21,
+    "ambiguous_multiple_numeric_matches": 125,
+    "ambiguous_repeated_reference_quote": 99,
+    "candidate_generation_context_unavailable": 29,
+    "matched_unique": 13438,
+    "nonliteral_or_numeric_binding_mismatch": 292,
+    "original_no_literal_year_not_a_negative": 24097,
+    "true_frozen_candidate_absence_in_reference_evidence": 434
+  },
+  "scheduler_job_id": "47321914",
+  "support_by_split_object": [
+    {
+      "candidate_covered_items": 971,
+      "compatible_candidates": 909,
+      "compatible_unique_contexts": 702,
+      "numeric_reference_items": 1067,
+      "numeric_reference_unique_contexts": 799,
+      "object": "general_work",
+      "primary_old_experience_compatible_candidates": 849,
+      "primary_old_experience_compatible_unique_contexts": 655,
+      "reference_items": 1442,
+      "reference_localization_states": {
+        "accepted_object_family_binding_unavailable_or_conflicting": 3,
+        "ambiguous_multiple_numeric_matches": 10,
+        "ambiguous_repeated_reference_quote": 14,
+        "candidate_generation_context_unavailable": 1,
+        "matched_unique": 944,
+        "nonliteral_or_numeric_binding_mismatch": 54,
+        "original_no_literal_year_not_a_negative": 375,
+        "true_frozen_candidate_absence_in_reference_evidence": 41
+      },
+      "reference_unique_contexts": 1126,
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 1042,
+      "compatible_candidates": 607,
+      "compatible_unique_contexts": 540,
+      "numeric_reference_items": 1105,
+      "numeric_reference_unique_contexts": 984,
+      "object": "industry_domain",
+      "primary_old_experience_compatible_candidates": 563,
+      "primary_old_experience_compatible_unique_contexts": 504,
+      "reference_items": 3384,
+      "reference_localization_states": {
+        "accepted_object_family_binding_unavailable_or_conflicting": 2,
+        "ambiguous_multiple_numeric_matches": 12,
+        "ambiguous_repeated_reference_quote": 11,
+        "candidate_generation_context_unavailable": 1,
+        "matched_unique": 1017,
+        "nonliteral_or_numeric_binding_mismatch": 25,
+        "original_no_literal_year_not_a_negative": 2279,
+        "true_frozen_candidate_absence_in_reference_evidence": 37
+      },
+      "reference_unique_contexts": 2680,
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 6412,
+      "compatible_candidates": 5691,
+      "compatible_unique_contexts": 3526,
+      "numeric_reference_items": 6734,
+      "numeric_reference_unique_contexts": 4145,
+      "object": "occupation_task",
+      "primary_old_experience_compatible_candidates": 5266,
+      "primary_old_experience_compatible_unique_contexts": 3335,
+      "reference_items": 13433,
+      "reference_localization_states": {
+        "accepted_object_family_binding_unavailable_or_conflicting": 4,
+        "ambiguous_multiple_numeric_matches": 55,
+        "ambiguous_repeated_reference_quote": 49,
+        "candidate_generation_context_unavailable": 16,
+        "matched_unique": 6304,
+        "nonliteral_or_numeric_binding_mismatch": 123,
+        "original_no_literal_year_not_a_negative": 6699,
+        "true_frozen_candidate_absence_in_reference_evidence": 183
+      },
+      "reference_unique_contexts": 5242,
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 2430,
+      "compatible_candidates": 2192,
+      "compatible_unique_contexts": 1204,
+      "numeric_reference_items": 2554,
+      "numeric_reference_unique_contexts": 1393,
+      "object": "tool_specific",
+      "primary_old_experience_compatible_candidates": 2052,
+      "primary_old_experience_compatible_unique_contexts": 1144,
+      "reference_items": 12139,
+      "reference_localization_states": {
+        "accepted_object_family_binding_unavailable_or_conflicting": 1,
+        "ambiguous_multiple_numeric_matches": 14,
+        "ambiguous_repeated_reference_quote": 5,
+        "candidate_generation_context_unavailable": 7,
+        "matched_unique": 2410,
+        "nonliteral_or_numeric_binding_mismatch": 20,
+        "original_no_literal_year_not_a_negative": 9585,
+        "true_frozen_candidate_absence_in_reference_evidence": 97
+      },
+      "reference_unique_contexts": 4854,
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 241,
+      "compatible_candidates": 228,
+      "compatible_unique_contexts": 170,
+      "numeric_reference_items": 259,
+      "numeric_reference_unique_contexts": 191,
+      "object": "general_work",
+      "primary_old_experience_compatible_candidates": 216,
+      "primary_old_experience_compatible_unique_contexts": 161,
+      "reference_items": 356,
+      "reference_localization_states": {
+        "ambiguous_multiple_numeric_matches": 3,
+        "ambiguous_repeated_reference_quote": 2,
+        "matched_unique": 236,
+        "nonliteral_or_numeric_binding_mismatch": 14,
+        "original_no_literal_year_not_a_negative": 97,
+        "true_frozen_candidate_absence_in_reference_evidence": 4
+      },
+      "reference_unique_contexts": 280,
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 216,
+      "compatible_candidates": 109,
+      "compatible_unique_contexts": 97,
+      "numeric_reference_items": 237,
+      "numeric_reference_unique_contexts": 216,
+      "object": "industry_domain",
+      "primary_old_experience_compatible_candidates": 103,
+      "primary_old_experience_compatible_unique_contexts": 91,
+      "reference_items": 737,
+      "reference_localization_states": {
+        "ambiguous_multiple_numeric_matches": 7,
+        "ambiguous_repeated_reference_quote": 1,
+        "candidate_generation_context_unavailable": 2,
+        "matched_unique": 208,
+        "nonliteral_or_numeric_binding_mismatch": 9,
+        "original_no_literal_year_not_a_negative": 500,
+        "true_frozen_candidate_absence_in_reference_evidence": 10
+      },
+      "reference_unique_contexts": 588,
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 1383,
+      "compatible_candidates": 1200,
+      "compatible_unique_contexts": 752,
+      "numeric_reference_items": 1448,
+      "numeric_reference_unique_contexts": 902,
+      "object": "occupation_task",
+      "primary_old_experience_compatible_candidates": 1120,
+      "primary_old_experience_compatible_unique_contexts": 713,
+      "reference_items": 2978,
+      "reference_localization_states": {
+        "accepted_object_family_binding_unavailable_or_conflicting": 10,
+        "ambiguous_multiple_numeric_matches": 14,
+        "ambiguous_repeated_reference_quote": 9,
+        "candidate_generation_context_unavailable": 2,
+        "matched_unique": 1350,
+        "nonliteral_or_numeric_binding_mismatch": 37,
+        "original_no_literal_year_not_a_negative": 1530,
+        "true_frozen_candidate_absence_in_reference_evidence": 26
+      },
+      "reference_unique_contexts": 1170,
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 530,
+      "compatible_candidates": 465,
+      "compatible_unique_contexts": 272,
+      "numeric_reference_items": 557,
+      "numeric_reference_unique_contexts": 321,
+      "object": "tool_specific",
+      "primary_old_experience_compatible_candidates": 429,
+      "primary_old_experience_compatible_unique_contexts": 258,
+      "reference_items": 2867,
+      "reference_localization_states": {
+        "accepted_object_family_binding_unavailable_or_conflicting": 1,
+        "ambiguous_multiple_numeric_matches": 7,
+        "ambiguous_repeated_reference_quote": 4,
+        "matched_unique": 518,
+        "nonliteral_or_numeric_binding_mismatch": 5,
+        "original_no_literal_year_not_a_negative": 2310,
+        "true_frozen_candidate_absence_in_reference_evidence": 22
+      },
+      "reference_unique_contexts": 1100,
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 44,
+      "compatible_candidates": 38,
+      "compatible_unique_contexts": 24,
+      "numeric_reference_items": 45,
+      "numeric_reference_unique_contexts": 29,
+      "object": "general_work",
+      "primary_old_experience_compatible_candidates": 38,
+      "primary_old_experience_compatible_unique_contexts": 24,
+      "reference_items": 64,
+      "reference_localization_states": {
+        "ambiguous_multiple_numeric_matches": 1,
+        "ambiguous_repeated_reference_quote": 2,
+        "matched_unique": 41,
+        "nonliteral_or_numeric_binding_mismatch": 1,
+        "original_no_literal_year_not_a_negative": 19
+      },
+      "reference_unique_contexts": 45,
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "candidate_covered_items": 37,
+      "compatible_candidates": 25,
+      "compatible_unique_contexts": 23,
+      "numeric_reference_items": 38,
+      "numeric_reference_unique_contexts": 36,
+      "object": "industry_domain",
+      "primary_old_experience_compatible_candidates": 24,
+      "primary_old_experience_compatible_unique_contexts": 22,
+      "reference_items": 136,
+      "reference_localization_states": {
+        "matched_unique": 37,
+        "nonliteral_or_numeric_binding_mismatch": 1,
+        "original_no_literal_year_not_a_negative": 98
+      },
+      "reference_unique_contexts": 106,
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "candidate_covered_items": 278,
+      "compatible_candidates": 251,
+      "compatible_unique_contexts": 142,
+      "numeric_reference_items": 286,
+      "numeric_reference_unique_contexts": 160,
+      "object": "occupation_task",
+      "primary_old_experience_compatible_candidates": 231,
+      "primary_old_experience_compatible_unique_contexts": 134,
+      "reference_items": 547,
+      "reference_localization_states": {
+        "ambiguous_multiple_numeric_matches": 2,
+        "ambiguous_repeated_reference_quote": 1,
+        "matched_unique": 275,
+        "nonliteral_or_numeric_binding_mismatch": 3,
+        "original_no_literal_year_not_a_negative": 261,
+        "true_frozen_candidate_absence_in_reference_evidence": 5
+      },
+      "reference_unique_contexts": 200,
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "candidate_covered_items": 99,
+      "compatible_candidates": 91,
+      "compatible_unique_contexts": 54,
+      "numeric_reference_items": 108,
+      "numeric_reference_unique_contexts": 59,
+      "object": "tool_specific",
+      "primary_old_experience_compatible_candidates": 82,
+      "primary_old_experience_compatible_unique_contexts": 50,
+      "reference_items": 452,
+      "reference_localization_states": {
+        "ambiguous_repeated_reference_quote": 1,
+        "matched_unique": 98,
+        "original_no_literal_year_not_a_negative": 344,
+        "true_frozen_candidate_absence_in_reference_evidence": 9
+      },
+      "reference_unique_contexts": 187,
+      "split": "previous_holdout_reserved_not_final"
+    }
+  ],
+  "total_contexts": 7578,
+  "train_compatible_candidates": 9399,
+  "version": "year-object-original-same-item-binding-v1"
+}

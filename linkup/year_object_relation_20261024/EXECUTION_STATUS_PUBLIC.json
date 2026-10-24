@@ -1,0 +1,56 @@
+{
+  "as_of_utc": "2026-10-24T15:03:00.260001+00:00",
+  "status": "inputs_prepared_same_weight_transport_repair",
+  "input_preparation_job": "47321914",
+  "preparation_state": "COMPLETED0:0",
+  "preparation_seconds": 137,
+  "reference_contexts_reused": 7578,
+  "train_compatible_candidates": 9399,
+  "final_compatible_candidates": 2002,
+  "reserved_compatible_candidates": 405,
+  "class_support_train_final": {
+    "general_work": [
+      702,
+      170
+    ],
+    "industry_domain": [
+      540,
+      97
+    ],
+    "occupation_task": [
+      3526,
+      752
+    ],
+    "tool_specific": [
+      1204,
+      272
+    ]
+  },
+  "new_reviews": 0,
+  "reference_changes": 0,
+  "training_runs": 0,
+  "quality_status": "Not evaluated. Conservative one-to-one confirmation diagnostics will be affected by unresolved bindings and are not true error rates.",
+  "private_root": "/work/home/lilysharp/private/year_object_relation_20261024",
+  "next_action": "Oneboundedrangedtransfer ofsamefixedweight, officialdigestrequired, thenonefit. No newmodel orsemanticchanges.",
+  "model_stage_jobs": [
+    {
+      "job": "47322236",
+      "state": "FAILED",
+      "elapsed_seconds": 1,
+      "cause": "curl35 TLS beforetraining"
+    },
+    {
+      "job": "47323306",
+      "state": "CANCELLED_BY_ROOT_PRESERVE_PARTIAL",
+      "purpose": "same pinnedmodel officialsha mirror fallback",
+      "cause": "Singleconnection approximately0.13MB/s cannotfinish withinfixedcurltimeout; onlypublicweighttransport stopped"
+    }
+  ],
+  "network_probe": {
+    "job": "47322979",
+    "state": "COMPLETED",
+    "elapsed_seconds": 11,
+    "official_host": "timeout",
+    "same_revision_mirror": "HTTP200"
+  }
+}
