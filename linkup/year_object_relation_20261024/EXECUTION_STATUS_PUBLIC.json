@@ -1,6 +1,6 @@
 {
-  "as_of_utc": "2026-10-24T16:18:43.095737+00:00",
-  "status": "fixed_contextual_fit_running_after_zero_step_startup_repair",
+  "as_of_utc": "2026-10-24T16:36:31.336950+00:00",
+  "status": "FINAL_FIXED_ATTEMPT_COMPLETED_AND_STOPPED_NOT_QUALIFIED",
   "input_preparation_job": "47321914",
   "preparation_state": "COMPLETED0:0",
   "preparation_seconds": 137,
@@ -29,9 +29,9 @@
   "new_reviews": 0,
   "reference_changes": 0,
   "training_runs": 1,
-  "quality_status": "Not evaluated. Conservative one-to-one confirmation diagnostics will be affected by unresolved bindings and are not true error rates.",
+  "quality_status": "Notqualifiedunderprefrozenrules; conditionalclassmetricsfail; primaryconfirmationboundsalsobelowfloors; nottrueendtoenderrorrate.",
   "private_root": "/work/home/lilysharp/private/year_object_relation_20261024",
-  "next_action": "Waitoneactualfixed3epochfitandfinalevaluation, applyfrozenfielddecision; no modelsearch/labels/thresholdchanges.",
+  "next_action": "STOPthisfixedattempt; preserveprivatefittedartifacts/reference andpublishfinaldecision. Noautomaticfit/labels/models/corpusinference.",
   "model_stage_jobs": [
     {
       "job": "47322236",
@@ -97,13 +97,26 @@
     },
     {
       "job": "47326569",
-      "state": "RUNNING",
+      "state": "COMPLETED0:0",
       "resources": "8CPU16G1DCU",
       "time_limit_seconds": 7200,
       "output": "fit001_startup_recovery",
       "input_manifest_written": true,
       "model_initialized": true,
-      "evaluated": false
+      "evaluated": true
     }
-  ]
+  ],
+  "fit_final": {
+    "job": "47326569",
+    "state": "COMPLETED0:0",
+    "elapsed_seconds": 626,
+    "epochs": 3,
+    "optimizer_steps": 882,
+    "evaluation_items": 2002,
+    "evaluation_contexts": 981,
+    "accuracy": 0.8451548451548452,
+    "macro_f1": 0.7580352935015364
+  },
+  "formal_production_fields": 0,
+  "real_shard_inference": "NOT_EXECUTED_QUALITY_NOT_QUALIFIED"
 }

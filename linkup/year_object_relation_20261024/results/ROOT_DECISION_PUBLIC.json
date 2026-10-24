@@ -1,0 +1,184 @@
+{
+  "as_of_utc": "2026-10-24T16:36:31.336950+00:00",
+  "status": "FINAL_FIXED_ATTEMPT_COMPLETED_AND_STOPPED_NOT_QUALIFIED",
+  "authority": "Approved one fixed year-to-experience-object fit; pre-result rules unchanged from commit7d57ea0.",
+  "root_decision": "NO formal production and NO real-shard verification: fixed quality rules failed. Preserve actual fitted artifacts; no automatic labels, tuning, model substitution or corpus inference.",
+  "scheduler_job": "47326569",
+  "scheduler_state": "COMPLETED0:0",
+  "scheduler_elapsed_seconds": 626,
+  "fit_epochs": 3,
+  "optimizer_steps": 882,
+  "true_training_runs": 1,
+  "zero_step_startup_failure_job": "47326233",
+  "fixed_model_repo": "FacebookAI/xlm-roberta-base",
+  "fixed_model_revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "fixed_config": {
+    "batch_size": 4,
+    "class_weights": null,
+    "epochs": 3,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 2e-05,
+    "max_length": 256,
+    "model_selection": "final_epoch_only",
+    "optimizer": "AdamW",
+    "precision": "fp32",
+    "scheduler": null,
+    "seed": 1729,
+    "warmup_steps": 0,
+    "weight_decay": 0.01
+  },
+  "final_evaluation": {
+    "items": 2002,
+    "unique_contexts": 981,
+    "accuracy": 0.8451548451548452,
+    "macro_f1": 0.7580352935015364,
+    "confusion_matrix": [
+      [
+        110,
+        8,
+        109,
+        1
+      ],
+      [
+        1,
+        74,
+        30,
+        4
+      ],
+      [
+        20,
+        31,
+        1107,
+        42
+      ],
+      [
+        0,
+        3,
+        61,
+        401
+      ]
+    ],
+    "scope": "conditional on frozen candidate and compatible unique original reference; previously exposed final"
+  },
+  "field_decisions": [
+    {
+      "target": "literal_year_to_general_work",
+      "reference_items": 228,
+      "predicted_items": 131,
+      "precision": 0.8396946564885496,
+      "recall": 0.4824561403508772,
+      "f1": 0.6128133704735376,
+      "precision_gate_pass": false,
+      "recall_gate_pass": false,
+      "decision": "3_NOT_QUALIFIED_FOR_FORMAL_PRODUCTION",
+      "permitted_use": "Retained diagnostic candidate output only; not adopted measurement"
+    },
+    {
+      "target": "literal_year_to_industry_domain",
+      "reference_items": 109,
+      "predicted_items": 116,
+      "precision": 0.6379310344827587,
+      "recall": 0.6788990825688074,
+      "f1": 0.6577777777777778,
+      "precision_gate_pass": false,
+      "recall_gate_pass": false,
+      "decision": "3_NOT_QUALIFIED_FOR_FORMAL_PRODUCTION",
+      "permitted_use": "Retained diagnostic candidate output only; not adopted measurement"
+    },
+    {
+      "target": "literal_year_to_occupation_task",
+      "reference_items": 1200,
+      "predicted_items": 1307,
+      "precision": 0.8469778117827085,
+      "recall": 0.9225,
+      "f1": 0.8831272437175908,
+      "precision_gate_pass": false,
+      "recall_gate_pass": true,
+      "decision": "3_NOT_QUALIFIED_FOR_FORMAL_PRODUCTION",
+      "permitted_use": "Retained diagnostic candidate output only; not adopted measurement"
+    },
+    {
+      "target": "literal_year_to_tool_specific",
+      "reference_items": 465,
+      "predicted_items": 448,
+      "precision": 0.8950892857142857,
+      "recall": 0.8623655913978494,
+      "f1": 0.87842278203724,
+      "precision_gate_pass": false,
+      "recall_gate_pass": true,
+      "decision": "3_NOT_QUALIFIED_FOR_FORMAL_PRODUCTION",
+      "permitted_use": "Retained diagnostic candidate output only; not adopted measurement"
+    }
+  ],
+  "macro_f1_gate": {
+    "threshold": 0.85,
+    "observed": 0.7580352935015364,
+    "passed": false
+  },
+  "primary_confirmed_link_bounds": {
+    "overall": {
+      "confirmed_true_positive_links": 1578,
+      "all_frozen_predictions": 2278,
+      "all_original_explicit_numeric_references": 2501,
+      "pessimistic_verified_link_precision_bound": 0.6927129060579456,
+      "verified_reference_recall_bound": 0.6309476209516194
+    },
+    "GA": {
+      "confirmed_true_positive_links": 97,
+      "all_frozen_predictions": 142,
+      "all_original_explicit_numeric_references": 153,
+      "pessimistic_verified_link_precision_bound": 0.6830985915492958,
+      "verified_reference_recall_bound": 0.6339869281045751
+    },
+    "GB": {
+      "confirmed_true_positive_links": 461,
+      "all_frozen_predictions": 726,
+      "all_original_explicit_numeric_references": 787,
+      "pessimistic_verified_link_precision_bound": 0.6349862258953168,
+      "verified_reference_recall_bound": 0.5857687420584498
+    }
+  },
+  "confirmed_bound_interpretation": "Verified links divided by all frozen predictions/all original numeric references within accepted family-mask contexts. Unconfirmed are not invented false positives; these are confirmation bounds, not true end-to-end precision, recall or error rates.",
+  "formal_production_fields": 0,
+  "real_shard_inference": "NOT_EXECUTED_QUALITY_GATES_FAILED",
+  "whole_corpus_inference": "NOT_EXECUTED",
+  "all_frozen_candidates_predicted": 16178,
+  "model_private_path": "/work/home/lilysharp/private/year_object_relation_20261024/fit001_startup_recovery/FINAL_MODEL_PRIVATE",
+  "model_weight_sha256": "45fef011e46f3b4e577ab062ee3b4844f6c1c9ae69e380455d4b2c521543b1ab",
+  "prediction_private_path": "/work/home/lilysharp/private/year_object_relation_20261024/fit001_startup_recovery/PREDICTIONS_PRIVATE.jsonl",
+  "prediction_sha256": "ba66af0835e0e519f6b7fbf423ec01beb26143881ee56b350548da5acc6ef63c",
+  "timings": {
+    "model_load_seconds": 9.132271216003573,
+    "predict_seconds": 77.46689367599902,
+    "read_and_verify_seconds": 7.870884270014358,
+    "save_final_checkpoint_seconds": 1.777671386997099,
+    "tokenize_seconds": 7.611923482007114,
+    "tokenizer_load_seconds": 0.7567825720034307,
+    "train_seconds": 502.9669599839981,
+    "write_seconds": 2.250337153993314
+  },
+  "throughput_limit": "Fixed candidates only; no real-shard advertisement throughput or corpus completion estimate measured.",
+  "unimplemented": [
+    "required_preferred_exemption_binding",
+    "alternative_condition_branches",
+    "responsibility_subject_relations",
+    "production_evidence_extraction",
+    "gold_no_relation_detection"
+  ],
+  "reference_limitations": [
+    "Retained Pro operational reference, not independent human gold.",
+    "Previously exposed final; no blind-test claim.",
+    "Conditional compatible candidate evaluation does not certify missing/ambiguous/out-of-frame records.",
+    "Different target from old27presence baseline; no comparable before/after accuracy gain asserted."
+  ],
+  "new_reviews": 0,
+  "new_labels": 0,
+  "reference_changes": 0,
+  "software_installs": 0,
+  "paid_API_calls": 0,
+  "formal800_changed": false,
+  "old_base_reprocessed": false,
+  "evaluation_report_sha256": "6d4908379b6c819021be17fafa747f870ec70dff68448c17a3fb80a28e7cc4b6",
+  "independent_acceptance": "results/INDEPENDENT_ACCEPTANCE_PUBLIC.json",
+  "next_action": "Bounded attempt stopped; do not automatically restart this method or change gates. Existing fixed reference/statistical deliveries remain available; whole-corpus fine semantics remains unfinished."
+}

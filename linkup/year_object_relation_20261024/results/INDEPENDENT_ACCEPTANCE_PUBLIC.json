@@ -1,0 +1,175 @@
+{
+  "aggregate_arithmetic_and_inventory_checks": {
+    "checked": "All split conditional confusion arithmetic and four-class macro F1; Pro group conditional item totals; conservative class/group count conservation, bound ratios, identical primary/global reference denominators and subset counts.",
+    "concrete_report_issues": [],
+    "status": "PASS"
+  },
+  "compatible_attribute_acceptance": {
+    "accuracy": 0.8451548451548452,
+    "final_items": 2002,
+    "final_unique_contexts": 981,
+    "macro_f1": 0.7580352935015364,
+    "macro_f1_ge_0_85": false,
+    "per_class": {
+      "general_work": {
+        "precision": 0.8396946564885496,
+        "precision_ge_0_90": false,
+        "recall": 0.4824561403508772,
+        "recall_ge_0_80": false
+      },
+      "industry_domain": {
+        "precision": 0.6379310344827587,
+        "precision_ge_0_90": false,
+        "recall": 0.6788990825688074,
+        "recall_ge_0_80": false
+      },
+      "occupation_task": {
+        "precision": 0.8469778117827085,
+        "precision_ge_0_90": false,
+        "recall": 0.9225,
+        "recall_ge_0_80": true
+      },
+      "tool_specific": {
+        "precision": 0.8950892857142857,
+        "precision_ge_0_90": false,
+        "recall": 0.8623655913978494,
+        "recall_ge_0_80": true
+      }
+    },
+    "specific_failure": "All four class precisions are below 0.90; general_work and industry_domain recall are below 0.80; macro F1 is below 0.85. All four classes remain represented; general_work is underpredicted (131 predictions against 228 references), so aggregate accuracy does not establish balanced class quality.",
+    "status": "FAIL"
+  },
+  "decision_reason": "Frozen rules require compatible attribute gates and primary confirmed relation precision >=0.90 / recall >=0.80 overall and separately for GA and GB. Attribute gates fail; primary overall 1578/2278 precision and 1578/2501 recall fail, as do both sufficiently supported GA and GB groups. Stop this field implementation; no real-shard sidecar or production inference is authorized under these rules.",
+  "field_status": "FAIL_FROZEN_QUALITY_RULES_STOP",
+  "frozen_rule_nature": "Root-set engineering acceptance rules for this bounded field attempt; not universal literature standards or proof of human truth.",
+  "global_diagnostic_final": {
+    "GA": {
+      "all_frozen_predictions": 161,
+      "all_original_explicit_numeric_references": 153,
+      "confirmed_true_positive_links": 106,
+      "pessimistic_verified_link_precision_bound": 0.6583850931677019,
+      "unconfirmed_numeric_references": 47,
+      "unconfirmed_predictions": 55,
+      "verified_link_f1_bound": 0.6751592356687899,
+      "verified_reference_recall_bound": 0.6928104575163399
+    },
+    "GB": {
+      "all_frozen_predictions": 898,
+      "all_original_explicit_numeric_references": 787,
+      "confirmed_true_positive_links": 490,
+      "pessimistic_verified_link_precision_bound": 0.5456570155902004,
+      "unconfirmed_numeric_references": 297,
+      "unconfirmed_predictions": 408,
+      "verified_link_f1_bound": 0.5816023738872403,
+      "verified_reference_recall_bound": 0.6226175349428208
+    },
+    "overall": {
+      "all_frozen_predictions": 2685,
+      "all_original_explicit_numeric_references": 2501,
+      "confirmed_true_positive_links": 1692,
+      "pessimistic_verified_link_precision_bound": 0.6301675977653631,
+      "unconfirmed_numeric_references": 809,
+      "unconfirmed_predictions": 993,
+      "verified_link_f1_bound": 0.652526031623602,
+      "verified_reference_recall_bound": 0.6765293882447021
+    }
+  },
+  "group_definition": {
+    "GA": "genai_use_with_or_without_software",
+    "GB": "traditional_software_use_no_ai"
+  },
+  "inputs_sha256": {
+    "EXECUTION_LOCK_PUBLIC.json": "f7620ed306bbe9574375884eb84f02b76f5e18bff1613797dc52edd01388f9ad",
+    "FIT_EVALUATION_PUBLIC.json": "6d4908379b6c819021be17fafa747f870ec70dff68448c17a3fb80a28e7cc4b6"
+  },
+  "next_action": "Preserve completed fit and evidence; report quality/linkage gap. No automatic label/model/parser changes or reruns.",
+  "one_real_shard_sidecar_verification_permitted": false,
+  "primary_confirmed_relation_acceptance": {
+    "denominator_policy": "Primary predictions are all numeric spans covered by actual frozen experience evidence, including needs_review and unresolved old objects, in accepted year/object contexts. Both inventories retain all original explicit numeric references in those contexts. Missing, ambiguous and unmatched references remain unconfirmed; no reference unknown is converted to a negative.",
+    "final_overall_and_required_groups": {
+      "GA": {
+        "all_frozen_predictions": 142,
+        "all_original_explicit_numeric_references": 153,
+        "confirmed_true_positive_links": 97,
+        "pessimistic_verified_link_precision_bound": 0.6830985915492958,
+        "precision_ge_0_90": false,
+        "recall_ge_0_80": false,
+        "status": "FAIL",
+        "support_ge_50": true,
+        "unconfirmed_numeric_references": 56,
+        "unconfirmed_predictions": 45,
+        "verified_link_f1_bound": 0.6576271186440678,
+        "verified_reference_recall_bound": 0.6339869281045751
+      },
+      "GB": {
+        "all_frozen_predictions": 726,
+        "all_original_explicit_numeric_references": 787,
+        "confirmed_true_positive_links": 461,
+        "pessimistic_verified_link_precision_bound": 0.6349862258953168,
+        "precision_ge_0_90": false,
+        "recall_ge_0_80": false,
+        "status": "FAIL",
+        "support_ge_50": true,
+        "unconfirmed_numeric_references": 326,
+        "unconfirmed_predictions": 265,
+        "verified_link_f1_bound": 0.6093853271645736,
+        "verified_reference_recall_bound": 0.5857687420584498
+      },
+      "overall": {
+        "all_frozen_predictions": 2278,
+        "all_original_explicit_numeric_references": 2501,
+        "confirmed_true_positive_links": 1578,
+        "pessimistic_verified_link_precision_bound": 0.6927129060579456,
+        "precision_ge_0_90": false,
+        "recall_ge_0_80": false,
+        "status": "FAIL",
+        "support_ge_50": true,
+        "unconfirmed_numeric_references": 923,
+        "unconfirmed_predictions": 700,
+        "verified_link_f1_bound": 0.6603892027620841,
+        "verified_reference_recall_bound": 0.6309476209516194
+      }
+    },
+    "status": "FAIL"
+  },
+  "real_shard_production_permitted": false,
+  "reported_execution_status": "completed_fixed_fit_and_all_candidate_prediction",
+  "retained_classes": [
+    "general_work",
+    "industry_domain",
+    "occupation_task",
+    "tool_specific"
+  ],
+  "review_scope": "One final acceptance of completed public aggregate report against pre-result execution lock; no private rows or new fitting.",
+  "scheduler_job_id": "47326569",
+  "schema": "independent-year-object-acceptance-v1",
+  "support_floor": {
+    "meaning": "Necessary support only.",
+    "per_class": {
+      "general_work": {
+        "final_unique_contexts": 170,
+        "train_unique_contexts": 702
+      },
+      "industry_domain": {
+        "final_unique_contexts": 97,
+        "train_unique_contexts": 540
+      },
+      "occupation_task": {
+        "final_unique_contexts": 752,
+        "train_unique_contexts": 3526
+      },
+      "tool_specific": {
+        "final_unique_contexts": 272,
+        "train_unique_contexts": 1204
+      }
+    },
+    "status": "PASS"
+  },
+  "unsupported_claims": [
+    "Independent human-truth accuracy: retained Pro operational references are not independent human gold.",
+    "Blind final validation: final was previously exposed.",
+    "Full end-to-end relation precision or complete same-item chain accuracy: only contextual object classification plus frozen numeric binding was evaluated; unconfirmed predictions are not proven false positives.",
+    "Advertisement-weighted or whole-corpus quality: metrics use normalized complete contexts without ad weights.",
+    "Quality of all original final1331 contexts: recovered context inventory includes 1328, while original holdout membership is retained; no quality claim fills the missing contexts."
+  ]
+}
