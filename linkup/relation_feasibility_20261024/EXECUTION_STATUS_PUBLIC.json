@@ -1,6 +1,6 @@
 {
   "version": "bounded-relation-recoverability-checkpoint-v1",
-  "created_utc": "2026-10-24T07:15:29.713178+00:00",
+  "created_utc": "2026-10-24T07:24:05.823646+00:00",
   "status": "blocked_before_scheduler_submission",
   "authorization": "User approved starting the bounded proposal after its confidence assessment",
   "new_semantic_reviews": 0,
@@ -14,9 +14,11 @@
   "transport": {
     "initial_authentication": "publickey authentication and original private artifact paths confirmed",
     "four_code_files_uploaded": true,
-    "uploaded_materializer_sha256": "25af73b0c9bb9dde2aeda481bf8291b75026b86b7bf08df1ef315cf88e85e55f",
-    "latest_materializer_after_minimal_binding_mode_fix_not_uploaded": true,
-    "remote_hash_verification_completed": false
+    "uploaded_materializer_sha256": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
+    "latest_materializer_after_minimal_binding_mode_fix_not_uploaded": false,
+    "remote_hash_verification_completed": false,
+    "latest_materializer_upload_acknowledged": true,
+    "new_key_authentication": "succeeded after file permission correction"
   },
   "concrete_blocker": {
     "host": "wuzh02.hpccube.com",
@@ -62,5 +64,6 @@
     "Existing final and historical holdout membership",
     "Closed TF-IDF decision: zero formal fields",
     "Whole-corpus fine semantic production remains unfinished"
-  ]
+  ],
+  "latest_connection_retry": "CONNECTION_RETRY_PUBLIC.json"
 }
