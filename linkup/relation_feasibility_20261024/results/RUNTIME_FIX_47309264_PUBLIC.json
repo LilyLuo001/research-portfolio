@@ -1,0 +1,68 @@
+{
+  "actual_scheduler_environment": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "HIP_VISIBLE_DEVICES": "0",
+    "SLURM_CPUS_PER_TASK": "2",
+    "SLURM_JOB_GPUS": "0",
+    "SLURM_JOB_NODELIST": "b01r1n00",
+    "SLURM_JOB_PARTITION": "wzhdtest",
+    "SLURM_MEM_PER_NODE": "4096",
+    "SLURM_STEP_GPUS": null
+  },
+  "model_loading_training_inference": false,
+  "new_model_weights_downloaded": 0,
+  "new_software_installed": 0,
+  "packages": {
+    "sentencepiece": {
+      "file": "/public/software/apps/DeepLearning/PyTorch_Lib/llama_py38/lib/python3.8/site-packages/sentencepiece/__init__.py",
+      "importable": true,
+      "version": "0.1.99"
+    },
+    "tokenizers": {
+      "file": "/public/software/apps/DeepLearning/PyTorch_Lib/llama_py38/lib/python3.8/site-packages/tokenizers/__init__.py",
+      "importable": true,
+      "version": "0.13.3"
+    },
+    "torch": {
+      "file": "/public/software/apps/DeepLearning/PyTorch_Lib/llama_py38/lib/python3.8/site-packages/torch/__init__.py",
+      "importable": true,
+      "version": "1.10.0a0+git2040069-dtk2210"
+    },
+    "transformers": {
+      "file": "/public/software/apps/DeepLearning/PyTorch_Lib/llama_py38/lib/python3.8/site-packages/transformers/__init__.py",
+      "importable": true,
+      "version": "4.28.0.dev0"
+    }
+  },
+  "purpose": "Existing runtime imports and synthetic tensor execution only",
+  "python_executable": "/public/software/apps/DeepLearning/PyTorch_Lib/llama_py38/bin/python3.8",
+  "python_version": "3.8.17",
+  "requested_resources": {
+    "cpus": 2,
+    "dcu": 1,
+    "memory": "4G",
+    "partition": "wzhdtest",
+    "time_limit": "00:05:00"
+  },
+  "research_inputs_read": 0,
+  "runtime_qualified": true,
+  "scheduler_job_id": "47309264",
+  "tensor": {
+    "accelerator_available": true,
+    "accelerator_count": 1,
+    "cpu": {
+      "passed": true,
+      "result_sum": 54.0
+    },
+    "dcu": {
+      "device": "cuda:0",
+      "name": "Z100SM",
+      "passed": true,
+      "result_sum": 54.0
+    }
+  },
+  "torch_backend": {
+    "cuda": null,
+    "hip": "5.2.22451-8f78d635"
+  }
+}

@@ -1,73 +1,73 @@
 {
-  "version": "bounded-relation-recoverability-checkpoint-v1",
-  "created_utc": "2026-10-24T09:00:28.308934+00:00",
-  "status": "supervision_recovered_runtime_not_qualified_no_training",
-  "authorization": "User approved starting the bounded proposal after its confidence assessment",
+  "version": "bounded-relation-feasibility-closed-v2",
+  "created_utc": "2026-10-24T10:02:43.338631+00:00",
+  "status": "closed_no_fit_due_to_compatible_support_gate",
   "new_semantic_reviews": 0,
   "recovered_supervision_counts": {
     "unique_contexts": 7578,
     "complete_experience_chain_train_contexts": 5719,
     "complete_experience_chain_final_contexts": 1272
   },
+  "runtime_qualified": true,
+  "runtime_job": "47309264",
+  "runtime_job_elapsed_seconds": 18,
+  "candidate_preparation_job": "47311586",
+  "candidate_job_elapsed_seconds": 113,
+  "candidate_input_executed": true,
   "training_executed": false,
   "final_evaluation_executed": false,
   "corpus_inference_executed": false,
-  "scheduler_job_id": "47304085",
-  "scheduler_runtime_seconds": 277,
+  "compatible_candidate_support": [
+    {
+      "role": "background_mention",
+      "train_compatible_contexts": 79,
+      "final_compatible_contexts": 18,
+      "support_50_each_met": false
+    },
+    {
+      "role": "develop_technology",
+      "train_compatible_contexts": 181,
+      "final_compatible_contexts": 34,
+      "support_50_each_met": false
+    },
+    {
+      "role": "implement_deploy_technology",
+      "train_compatible_contexts": 40,
+      "final_compatible_contexts": 12,
+      "support_50_each_met": false
+    },
+    {
+      "role": "use_tool_for_work",
+      "train_compatible_contexts": 595,
+      "final_compatible_contexts": 139,
+      "support_50_each_met": true
+    }
+  ],
+  "concrete_blocker": "Three original roles lack >=50 compatible unique final contexts; deploy also lacks50train. These are verified linkage counts, not original reference scarcity or measured semantic accuracy.",
+  "support_gate": "Original fixed train50/final50 per original class; retained without relaxation.",
   "private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024",
-  "transport": {
-    "initial_authentication": "publickey authentication and original private artifact paths confirmed",
-    "four_code_files_uploaded": true,
-    "uploaded_materializer_sha256": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
-    "latest_materializer_after_minimal_binding_mode_fix_not_uploaded": false,
-    "remote_hash_verification_completed": true,
-    "latest_materializer_upload_acknowledged": true,
-    "new_key_authentication": "succeeded after file permission correction"
-  },
-  "concrete_blocker": {
-    "training_runtime": "Loaded installed PyTorch module did not provide a python3 executable; compatible interpreter not established",
-    "production_input": "Non-oracle candidate inputs not yet validated",
-    "later_ssh_metadata_query": "exec request failed on channel 0"
-  },
-  "static_checks": {
-    "original_source_and_context_binding": "independent review passed",
-    "final_and_legacy_holdout_exclusions": "reuse frozen final_fit legacy adapter",
-    "unknown_masks_preserved": true,
-    "family_specific_accepted_labels_only": true,
-    "no_generated_pair_negatives": true,
-    "same_original_item_bindings_preserved": true,
-    "dedicated_qualification_group_inventory": true,
-    "syntax_checks": "Python AST and bash syntax passed",
-    "latest_minimal_patch": "Ignore only transport/direct-versus-context provenance.binding_mode when comparing duplicate same-context family signatures; retain all semantic and source conflict checks"
-  },
-  "runtime_metadata_only": {
-    "anaconda": "apps/anaconda3/2023.09",
-    "base_torch_present": false,
-    "base_transformers_version": "4.32.1",
-    "installed_pytorch_module_found": "apps/Pytorch/1.10.0",
-    "module_actual_import_and_device_probe": "not_run"
-  },
-  "code_sha256": {
-    "materialize_supervision.py": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
-    "prepare_manifest.py": "35f1bed07b1a782b092dc60aebba70e8d8d3c8a3b820979984c63afd611769f3",
-    "runtime_probe.py": "775018370bfe180ce62f4ddc2bffcefb5b30687528d93e29d7358ca36bd292ad",
-    "wz_recover_supervision.sbatch": "716dddf61f9d8b747c77c069b9aa840906d8aaf4d5977ad87fe2eef349dc8c1c"
-  },
-  "resume": [
-    "Preserve successful recovered data; do not rerun recovery, Batch069 or Formal800.",
-    "Read actual root decision and runtime logs.",
-    "Establish an existing compatible interpreter/runtime and non-oracle production input before a single fixed contextual fit.",
-    "No rare-label deletion, model search, new annotation or paid channel."
+  "preserve": [
+    "Batch069 labels/unknowns/isolation",
+    "All recovered same-item supervision",
+    "Final1331 and all legacy holdout exclusions",
+    "Formal800 and old full-corpus base",
+    "All cancelled D64 existing files"
   ],
-  "unchanged": [
-    "Batch069 reference labels and final unknowns",
-    "Formal800",
-    "Existing final and historical holdout membership",
-    "Closed TF-IDF decision: zero formal fields",
-    "Whole-corpus fine semantic production remains unfinished"
-  ],
-  "latest_connection_retry": "CONNECTION_RETRY_PUBLIC.json",
-  "actual_execution_receipt": "results/RUN_RECEIPT_PUBLIC.json",
+  "new_software_installed": 0,
+  "model_weights_downloaded": 0,
+  "paid_calls": 0,
+  "automatic_next_action": "None. Bounded no-go endpoint reached; do not launch fit, re-label, alias expansion, parser changes or model search without explicit new scope.",
   "root_decision": "results/ROOT_DECISION_PUBLIC.json",
-  "d64_user_stop": "results/D64_CANCELLATION_PUBLIC.json"
+  "execution_receipts": [
+    "results/RUN_RECEIPT_PUBLIC.json",
+    "results/RUNTIME_FIX_EXECUTION_PUBLIC.json",
+    "results/TECHNOLOGY_INPUT_EXECUTION_PUBLIC.json",
+    "results/D64_CANCELLATION_PUBLIC.json"
+  ],
+  "previous_failed_probes": [
+    "47304085 failed only after saved recovery",
+    "47305678",
+    "47306339"
+  ],
+  "remaining": "Whole-corpus fine relational semantics unfinished; no production field approved by this experiment."
 }

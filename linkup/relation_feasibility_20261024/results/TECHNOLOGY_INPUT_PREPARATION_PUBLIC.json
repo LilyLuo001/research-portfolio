@@ -1,0 +1,252 @@
+{
+  "candidate_supervision_states_by_split": {
+    "final_previously_exposed": {
+      "ambiguous_reference_occurrences": 30,
+      "compatible_unique_reference": 226,
+      "unlabeled_candidate_no_negative": 12107
+    },
+    "previous_holdout_reserved_not_final": {
+      "ambiguous_reference_occurrences": 25,
+      "compatible_unique_reference": 59,
+      "unlabeled_candidate_no_negative": 2574
+    },
+    "train": {
+      "ambiguous_reference_occurrences": 155,
+      "compatible_unique_reference": 969,
+      "conflicting_reference_roles": 1,
+      "unlabeled_candidate_no_negative": 56013
+    }
+  },
+  "code_sha256": "ed9ea4bbdd805546401ecd0bdb4e6568b1a43b35211cdefe0ae6653241e09038",
+  "context_states": {
+    "frozen_normalization_not_idempotent": 12,
+    "processed": 7566
+  },
+  "generated_negative_examples": 0,
+  "input_manifest_sha256": "48e8b0d01884424e286cd836bb37f198b9d52d3b74b029180994a5e0349c745e",
+  "input_scheme": {
+    "entity_markers": [
+      "[TECH]",
+      "[/TECH]"
+    ],
+    "frozen_version": "rulefirst-20261008-v1.2",
+    "radius_unicode_codepoints": 192,
+    "scope": "recovered_contexts_only_attribute_classification",
+    "supervised_name_match": "casefold_exact_literal"
+  },
+  "inputs": {
+    "contexts_sha256": "e76b1cc9b8ede15ba11fcba8fb026517a8c18b2c9bc69139c254fb5d6e4039ed",
+    "items_sha256": "8a28fa07361c4eb56c6630941a8517c4a25f9766412e7519c34e43c76f71797e",
+    "legacy_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "rule_engine_sha256": "e429463ddfe947587c5d1afaea2aa87ab287bf91144496e09c7819bb53f71526"
+  },
+  "limitations": [
+    "Every original technology reference, including unmatched items, remains in candidate-recall denominator.",
+    "Coverage is reported on recovered bounded contexts only, not corpus/frame accuracy.",
+    "Reference names/evidence associate supervision only; production candidate inputs precede teacher reads.",
+    "Exact literal matching is conservative: no alias inference, label repairs, or dictionary additions.",
+    "Repeated, duplicate, conflicting and unlabeled candidates retain explicit states and are excluded from fit.",
+    "This is technology role attribute classification, not entity-pair or end-to-end relation extraction.",
+    "Final was previously exposed. Original 1331 final and all legacy holdouts remain excluded from training."
+  ],
+  "original_final_holdout_contexts": 1331,
+  "original_technology_reference_items": 18619,
+  "outputs": {
+    "CANDIDATES_PRIVATE.jsonl": "4060654fb27ff19924f88bbc66bdde3df34dc30cd7e97fe102180d76c28d841b",
+    "CANDIDATE_SUPERVISION_PRIVATE.jsonl": "184aad58414b89027d0db7e25c350d881738a7d5a86de1b46c2c5e12c59ed294",
+    "CONTEXT_STATES_PRIVATE.jsonl": "1a0fc24d421cd9aca0df8685fa8ea075ad75354ceb8bc4ed7f1cec5d6c4e250d",
+    "LABEL_DICTIONARY.json": "2f162f783d70a1cf3cc8a66b4d201c7843a10032cea8bebe8240023979211cd3",
+    "REFERENCE_COVERAGE_PRIVATE.jsonl": "d58ede0d63d3897acfeb971c4d3d75d699da94fc6930dbb630869e37fa82c930",
+    "TRAIN_COMPATIBLE_PRIVATE.jsonl": "42ea1bdf1c589bd1ef8fee239e485c6026e2ecdcd41320ee6c223ff2e8a450b6"
+  },
+  "production_candidates": 72159,
+  "reference_localization_states": {
+    "ambiguous_reference_evidence_occurrences": 225,
+    "matched_multiple_occurrences": 66,
+    "matched_unique": 1255,
+    "unmatched_frozen_candidate": 17073
+  },
+  "scheduler_job_id": "47311586",
+  "support_by_split_role": [
+    {
+      "candidate_covered_items": 89,
+      "candidate_covered_unique_contexts": 82,
+      "compatible_unique_contexts": 79,
+      "reference_items": 922,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 13,
+        "matched_multiple_occurrences": 3,
+        "matched_unique": 85,
+        "unmatched_frozen_candidate": 821
+      },
+      "reference_unique_contexts": 627,
+      "role": "background_mention",
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 220,
+      "candidate_covered_unique_contexts": 203,
+      "compatible_unique_contexts": 181,
+      "reference_items": 4511,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 40,
+        "matched_multiple_occurrences": 22,
+        "matched_unique": 197,
+        "unmatched_frozen_candidate": 4252
+      },
+      "reference_unique_contexts": 2737,
+      "role": "develop_technology",
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 45,
+      "candidate_covered_unique_contexts": 43,
+      "compatible_unique_contexts": 40,
+      "reference_items": 1986,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 26,
+        "matched_multiple_occurrences": 2,
+        "matched_unique": 43,
+        "unmatched_frozen_candidate": 1915
+      },
+      "reference_unique_contexts": 1445,
+      "role": "implement_deploy_technology",
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 683,
+      "candidate_covered_unique_contexts": 625,
+      "compatible_unique_contexts": 595,
+      "reference_items": 7223,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 91,
+        "matched_multiple_occurrences": 22,
+        "matched_unique": 645,
+        "unmatched_frozen_candidate": 6465
+      },
+      "reference_unique_contexts": 3872,
+      "role": "use_tool_for_work",
+      "split": "train"
+    },
+    {
+      "candidate_covered_items": 20,
+      "candidate_covered_unique_contexts": 19,
+      "compatible_unique_contexts": 18,
+      "reference_items": 217,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 3,
+        "matched_multiple_occurrences": 1,
+        "matched_unique": 19,
+        "unmatched_frozen_candidate": 194
+      },
+      "reference_unique_contexts": 143,
+      "role": "background_mention",
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 42,
+      "candidate_covered_unique_contexts": 37,
+      "compatible_unique_contexts": 34,
+      "reference_items": 1020,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 19,
+        "matched_multiple_occurrences": 2,
+        "matched_unique": 37,
+        "unmatched_frozen_candidate": 962
+      },
+      "reference_unique_contexts": 626,
+      "role": "develop_technology",
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 15,
+      "candidate_covered_unique_contexts": 14,
+      "compatible_unique_contexts": 12,
+      "reference_items": 447,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 12,
+        "matched_multiple_occurrences": 2,
+        "matched_unique": 13,
+        "unmatched_frozen_candidate": 420
+      },
+      "reference_unique_contexts": 339,
+      "role": "implement_deploy_technology",
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 163,
+      "candidate_covered_unique_contexts": 142,
+      "compatible_unique_contexts": 139,
+      "reference_items": 1670,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 13,
+        "matched_multiple_occurrences": 3,
+        "matched_unique": 157,
+        "unmatched_frozen_candidate": 1497
+      },
+      "reference_unique_contexts": 856,
+      "role": "use_tool_for_work",
+      "split": "final_previously_exposed"
+    },
+    {
+      "candidate_covered_items": 7,
+      "candidate_covered_unique_contexts": 7,
+      "compatible_unique_contexts": 6,
+      "reference_items": 18,
+      "reference_localization_states": {
+        "matched_multiple_occurrences": 1,
+        "matched_unique": 6,
+        "unmatched_frozen_candidate": 11
+      },
+      "reference_unique_contexts": 16,
+      "role": "background_mention",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "candidate_covered_items": 18,
+      "candidate_covered_unique_contexts": 17,
+      "compatible_unique_contexts": 12,
+      "reference_items": 180,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 1,
+        "matched_multiple_occurrences": 6,
+        "matched_unique": 12,
+        "unmatched_frozen_candidate": 161
+      },
+      "reference_unique_contexts": 100,
+      "role": "develop_technology",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "candidate_covered_items": 4,
+      "candidate_covered_unique_contexts": 4,
+      "compatible_unique_contexts": 4,
+      "reference_items": 78,
+      "reference_localization_states": {
+        "matched_unique": 4,
+        "unmatched_frozen_candidate": 74
+      },
+      "reference_unique_contexts": 57,
+      "role": "implement_deploy_technology",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "candidate_covered_items": 40,
+      "candidate_covered_unique_contexts": 36,
+      "compatible_unique_contexts": 35,
+      "reference_items": 347,
+      "reference_localization_states": {
+        "ambiguous_reference_evidence_occurrences": 7,
+        "matched_multiple_occurrences": 2,
+        "matched_unique": 37,
+        "unmatched_frozen_candidate": 301
+      },
+      "reference_unique_contexts": 175,
+      "role": "use_tool_for_work",
+      "split": "previous_holdout_reserved_not_final"
+    }
+  ],
+  "total_contexts": 7578,
+  "train_compatible_candidates": 969,
+  "version": "fixed-nonoracle-technology-attribute-input-v1"
+}

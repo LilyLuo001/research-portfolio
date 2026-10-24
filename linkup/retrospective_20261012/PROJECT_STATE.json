@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-10-24T09:00:28.308934+00:00",
+  "as_of": "2026-10-24T10:02:43.338631+00:00",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "relation_supervision_recovered_runtime_not_qualified_no_training",
+  "phase": "bounded_relation_gate_closed_compatible_support_insufficient",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -61,7 +61,7 @@
     "bounded_semantic_reading": "authorized Pro conversation models",
     "local_allowed": "code/docs, bounded reading, transport, provenance and Git"
   },
-  "resume_rule": "Read relation_feasibility_20261024 actual run receipt and root decision. Recovery job47304085 produced accepted supervision despite failing later at runtime probe; do not rerun recovery. Runtime remains unqualified and no model fit has started. All five accidental D64 jobs were cancelled with explicit user approval; never resume that chain. Preserve reference, unknowns, isolates, splits, Formal800 and existing results.",
+  "resume_rule": "The bounded relation gate is CLOSED after successful runtime47309264 and candidate preparation47311586: three of four actual compatible role classes fail the fixed train50/final50 support requirement. No model downloaded/fitted/evaluated. Preserve recovery47304085, all reference and holdouts. Do not rerun or expand automatically; no-go is not a model accuracy result. Never resume explicitly cancelled D64 chain.",
   "formal800_execution": {
     "freeze_job": "46364888",
     "state": "COMPLETED",
@@ -315,10 +315,10 @@
     "approval": "user_approved_2026-10-12"
   },
   "active_scope": {
-    "authority": "Latest user Team SOP",
-    "execution_status": "completed_then_stopped",
-    "entry": "linkup/fixed10k_empirical_20261024/RESULTS_BRIEF_ZH.md",
-    "next_action": "None automatic; user decides next stage. Do not reopen reference/model/parser/corpusprocessing."
+    "authority": "User approved one bounded context-relation feasibility attempt",
+    "execution_status": "closed_at_predeclared_support_stop_no_fit",
+    "entry": "linkup/relation_feasibility_20261024/EXECUTION_STATUS_PUBLIC.json",
+    "next_action": "None automatic. Preserve outputs and report the concrete verified binding gap; no silent re-labeling, alias/parser changes or new fit."
   },
   "latest_completed_semantic_wave": {
     "name": "fixed10k_continuation_20261017/batch069",
@@ -579,7 +579,7 @@
     "global_T4": "reused unchanged, separately scoped"
   },
   "bounded_relation_feasibility_20261024": {
-    "status": "supervision_recovered_runtime_not_qualified_no_training",
+    "status": "closed_no_fit_due_to_compatible_support_gate",
     "entry": "linkup/relation_feasibility_20261024/EXECUTION_STATUS_PUBLIC.json",
     "root_decision": "linkup/relation_feasibility_20261024/results/ROOT_DECISION_PUBLIC.json",
     "recovery_job": "47304085",
@@ -601,6 +601,36 @@
     ],
     "D64_artifacts_deleted": false,
     "private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/recovered",
-    "next_action": "Preserve recovered data. Establish existing compatible runtime and non-oracle candidate input before any one fixed fit."
+    "next_action": "None. Bounded no-go endpoint reached; do not launch fit, re-label, alias expansion, parser changes or model search without explicit new scope.",
+    "runtime_qualified": true,
+    "runtime_success_job": "47309264",
+    "candidate_preparation_job": "47311586",
+    "compatible_candidate_support": [
+      {
+        "role": "background_mention",
+        "train_compatible_contexts": 79,
+        "final_compatible_contexts": 18,
+        "support_50_each_met": false
+      },
+      {
+        "role": "develop_technology",
+        "train_compatible_contexts": 181,
+        "final_compatible_contexts": 34,
+        "support_50_each_met": false
+      },
+      {
+        "role": "implement_deploy_technology",
+        "train_compatible_contexts": 40,
+        "final_compatible_contexts": 12,
+        "support_50_each_met": false
+      },
+      {
+        "role": "use_tool_for_work",
+        "train_compatible_contexts": 595,
+        "final_compatible_contexts": 139,
+        "support_50_each_met": true
+      }
+    ],
+    "production_inputs_private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/production_inputs_v1"
   }
 }

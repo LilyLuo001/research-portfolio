@@ -1,0 +1,21 @@
+{
+  "status": "unexecuted_draft_stopped_before_support_qualification",
+  "root_stop_date": "2026-10-24",
+  "reason": "Actual scheduled candidate preparation job 47311586 failed the frozen minimum 50 compatible train contexts and 50 compatible final contexts for every existing class. Root prohibited fitting or lowering the threshold.",
+  "role_order": ["background_mention", "develop_technology", "implement_deploy_technology", "use_tool_for_work"],
+  "compatible_train_unique_contexts": [79, 181, 40, 595],
+  "compatible_final_unique_contexts": [18, 34, 12, 139],
+  "compatible_train_candidates": 969,
+  "compatible_final_candidates": 226,
+  "retained_code": "fit_context_role.py.disabled",
+  "draft_warning": "Retained disabled draft only; not syntax/static checked and not authorized to run.",
+  "code_is_execution_authorization": false,
+  "syntax_or_static_check_performed": false,
+  "sbatch_wrapper_prepared": false,
+  "ssh_calls_for_fit_task": 0,
+  "submitted_fit_jobs": 0,
+  "downloaded_model_checkpoints": 0,
+  "model_training_runs": 0,
+  "model_evaluation_runs": 0,
+  "runtime_gate": "Previously passed by independent synthetic runtime job 47309264; this does not establish model quality."
+}

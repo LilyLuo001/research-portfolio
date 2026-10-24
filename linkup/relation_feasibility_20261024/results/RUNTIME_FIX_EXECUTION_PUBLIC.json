@@ -1,0 +1,56 @@
+{
+  "version": "existing-wuzhen-runtime-fix-v1",
+  "created_utc": "2026-10-24T09:26:33.346881+00:00",
+  "status": "existing_runtime_qualified_by_scheduled_import_and_dcu_tensor",
+  "job_id": "47309264",
+  "scheduler_state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed_seconds": 18,
+  "partition": "wzhdtest",
+  "cpus": 2,
+  "memory": "4G",
+  "allocated_tres": "billing=2,cpu=2,gres/dcu=1,mem=4G,node=1",
+  "time_limit": "00:05:00",
+  "compute_node": "b01r1n00",
+  "module_load_order": [
+    "compiler/devtoolset/7.3.1",
+    "compiler/dtk/22.10.1",
+    "mpi/hpcx/gcc-7.3.1",
+    "apps/Pytorch/llama_py38"
+  ],
+  "interpreter": "/public/software/apps/DeepLearning/PyTorch_Lib/llama_py38/bin/python3.8",
+  "python_version": "3.8.17",
+  "packages": {
+    "sentencepiece": "0.1.99",
+    "tokenizers": "0.13.3",
+    "torch": "1.10.0a0+git2040069-dtk2210",
+    "transformers": "4.28.0.dev0"
+  },
+  "torch_backend": {
+    "cuda": null,
+    "hip": "5.2.22451-8f78d635"
+  },
+  "device": {
+    "device": "cuda:0",
+    "name": "Z100SM",
+    "passed": true,
+    "result_sum": 54.0
+  },
+  "root_cause": "apps/Pytorch/1.10.0 and 1.8.0 point to absent public directories; a complete existing environment is available through apps/Pytorch/llama_py38 and its explicit Python3.8 interpreter.",
+  "qualification_boundary": "Imports and CPU/DCU synthetic 2x2 tensor multiplication passed. No model, weights, research inputs, training, inference throughput or semantic quality was tested.",
+  "new_software_installed": 0,
+  "new_model_weights_downloaded": 0,
+  "supervision_recovery_reruns": 0,
+  "new_model_training_runs": 0,
+  "research_inputs_read": 0,
+  "public_outputs": {
+    "probe": "RUNTIME_FIX_47309264_PUBLIC.json"
+  },
+  "code_and_receipt_sha256": {
+    "code/runtime_fix/probe_runtime.py": "87f495368b546f0f376b4992501bed7d4b77948c08b93098a67fede4941b99ae",
+    "code/runtime_fix/wz_runtime_fix.sbatch": "f0b9f18a53c4a9c4464f4120292ca7b6e49eab185c42f2c5a7c7cd73ed93ce2e",
+    "results/RUNTIME_FIX_47309264_PUBLIC.json": "a02b98ccc366f0149fc76229971ff5e354867fab43434d42b98125b2bcb0b078"
+  },
+  "gateway_transport": "Initial scp and tar/SSH connections closed before submission; a delayed bounded retry succeeded. No duplicate scheduler jobs were submitted.",
+  "older_jobs": "Original recovery and failed probes preserved. Old D64 cancelled jobs were not resumed."
+}

@@ -1,0 +1,30 @@
+{
+  "created_utc": "2026-10-24T10:10:31.312607+00:00",
+  "control_plane_resumption_start_utc": "2026-10-24T09:47:20+00:00",
+  "control_plane_resumption_elapsed_seconds": 1391,
+  "timing_scope": "This resumption only, excludes earlier recovery/runtime engineering and historical project work.",
+  "new_semantic_reviews": 0,
+  "review_queue_change": 0,
+  "existing_fixed10k_reference_state": "Closed Batch069; zero processable contexts,14isolated retained,1002contexts contain field-level final unknowns. No requeue.",
+  "reused_materialized_contexts": 7578,
+  "new_candidate_preparation_job": "47311586",
+  "candidate_preparation_elapsed_seconds": 113,
+  "runtime_probe_job": "47309264",
+  "runtime_probe_elapsed_seconds": 18,
+  "final_scheduler_checks": "Both jobs COMPLETED0:0. Wuzhen squeue for lilysharp empty at closing check. D64 chain never resumed.",
+  "remote_public_checkpoint": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/public/execution_close_v2",
+  "remote_private_candidates": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/production_inputs_v1",
+  "public_checkpoint_transport": "Initial exec-request failure; one bounded delayed retry succeeded. No duplicate scheduler submission.",
+  "transport_verified_sha256": {
+    "results/ROOT_DECISION_PUBLIC.json": "8669505086d4731d3976fbbb8bdaa33bcc2baefe4dc13a32b8bc0f03975af9f8",
+    "EXECUTION_STATUS_PUBLIC.json": "bd6edb701155362e823fb193324bd9310d667d325173e403c53fb546a84b1187"
+  },
+  "independent_checks": [
+    "Sol/medium confirms compatible-support NO-GO; unmatched literal links are not true candidate recall or corpus error.",
+    "Luna/low publication review found no blocking disclosure or current-state contradiction."
+  ],
+  "bounded_gate_outcome": "No fit, model evaluation or corpus production; compatible-link support insufficient under unchanged original gate.",
+  "new_software_or_weights": 0,
+  "paid_calls": 0,
+  "next_automatic_compute_action": "None; bounded gate stopped. Full-corpus fine semantics remains unresolved."
+}
