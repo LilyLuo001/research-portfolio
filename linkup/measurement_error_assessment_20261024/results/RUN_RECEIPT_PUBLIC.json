@@ -1,0 +1,37 @@
+{
+  "corpus_shards_processed": 0,
+  "elapsed_seconds": 0.31202102452516556,
+  "inputs": {
+    "baseline": "ed31431979ef40c83923d2a7bce0c12b9e551231771503a700061db9057076d4",
+    "joined": "70ab7ed24697cf456e738497de4eec02531205294a626a0dab66bb779a0db1a6",
+    "old_diagnostic": "7a1e45133107c9dced1f736af2dcd840442c1ba35e85825e998546942fe29a9a",
+    "q1": "fac71349d23c2b7f75720dceb5e18d2be4da4adef5cf3b3d8c49706047a41fb8"
+  },
+  "new_model_runs": 0,
+  "new_reviews": 0,
+  "old_full_corpus_error": "not_estimated: no frozen old-rule-to-Batch069 probability-weighted validation assembled in this job; historical core32 only",
+  "outputs": {
+    "OLD_RULE_DIAGNOSTIC_ERRORS.csv": "3720f28b17fca0c58f4cad1847d08aba8bc299a6d839b9ccb657a2ed68244c9b",
+    "Q1_CELL_COUNTS.csv": "d8dacf00fb438080a09bf6b436edf969b0b14df535a78b3b288880e591581097",
+    "Q1_LATENT_ERROR_SENSITIVITY.csv": "7e3644cfd8eea382d6200e60e565975eeda03fd8480d20f2cb338fe0fcd17a28",
+    "Q1_SIGN_TIPPING_THRESHOLDS.csv": "5c29140e2c35912ef26c70c4e2c486bf90db27872067f5c9528f469c8110bb6c",
+    "Q1_UNKNOWN_MEMBERSHIP_ENVELOPES.csv": "08d17bb939d141eaa941e66044270dbaeac5ce4255371c046eb2dfed01af883d",
+    "Q2_ELIGIBILITY_AND_DUTY_UNKNOWNS.csv": "bd2dee11f66db06c32e0f1b5370ec4f6996b253cb0ac9e5ac3210c666e1b23b0",
+    "RARE_ENTRY_FPR_SCENARIOS.csv": "c865ecd05acc0f8ed7f52fccb3a9c742228adcdf0bb6aef3dfce24e50d08bba0",
+    "REFERENCE_AVAILABILITY.csv": "e7e5bc9ce636d685a9ab03d43d415958a5ae8297c7db8ebb57932caf3d20127f",
+    "TFIDF_REFERENCE_ERRORS.csv": "a6a6d371d57fe68c00c9868c7d2057c94002b7ce98d5ed5e46c5621a12a273f2"
+  },
+  "python": "3.11.5",
+  "reference": "frozen Batch069 accepted Pro; not human ground truth",
+  "rows": 10000,
+  "sensitivity_assumptions": [
+    "four majors each0.25 unchanged",
+    "known group memberships fixed except separately named membership envelope",
+    "hypothetical corruption cap applies independently within each known major/group outcome cell",
+    "conservative continuous-mass envelope; correlated context and semantic constraints may tighten it",
+    "uncertainty bounds are not sampling confidence intervals or estimates of hidden error",
+    "no certification outside fixed technology candidate frame"
+  ],
+  "status": "complete_bounded_error_assessment",
+  "unchanged_historical_adoption_rules": true
+}
