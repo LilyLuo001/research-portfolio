@@ -1,0 +1,29 @@
+{
+  "as_of_utc": "2026-10-24T12:43:46.074222+00:00",
+  "status": "completed_accepted_statistical_delivery",
+  "analysis_job": "125471977",
+  "analysis_seconds": 85,
+  "numeric_qa_job": "125474405",
+  "private_root": "/public/home/lilysharp/linkup_design_correction_20261024/run001",
+  "reference_ads_reused": 10000,
+  "parent_ads": 1157573,
+  "new_reviews": 0,
+  "new_models": 0,
+  "reference_labels_changed": 0,
+  "rate_rows": 2484,
+  "contrast_rows": 900,
+  "acceptance": "ROOT_ACCEPTANCE_PUBLIC.json",
+  "remaining": "Whole-corpus precise semantic labels and contextual model remain unfinished; Q2 lacks a compatible old comparator in the selected narrow source.",
+  "execution_history": [
+    "125470198 KS metadata COMPLETE26s",
+    "47315832 WZ metadata COMPLETE2s",
+    "47316215 WZ import FAILED3s",
+    "125471977 KS calculation COMPLETE85s",
+    "125472505 QA assertion FAILED2s",
+    "125472912 QA Python3.8 compatibility FAILED1s",
+    "125474405 numerical QA COMPLETE3s"
+  ],
+  "elapsed_wall_from_first_tool_seconds": 6769,
+  "timing_scope": "Full current execution including orchestration/code/transport/QA; actual statistical calculation85seconds separately.",
+  "automatic_compute": "STOP after publication; no ongoing production claim"
+}

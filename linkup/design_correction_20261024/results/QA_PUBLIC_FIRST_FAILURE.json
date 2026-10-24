@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "CORRECTED_COMPONENT_TOTALS.csv_rows": 4140,
+    "CORRECTED_CONTRASTS.csv_rows": 900,
+    "CORRECTED_DOMAIN_PROPORTIONS.csv_rows": 2484,
+    "OLD_207_CELL_CENSUS.csv_rows": 207,
+    "OLD_NEW_DISCREPANCIES.csv_rows": 90,
+    "OLD_NEW_TECHNOLOGY_TRANSITION.csv_rows": 24,
+    "assertions": 54119,
+    "negative_raw_component_totals": 0,
+    "valid_points_missing_se": 0
+  },
+  "created_utc": "2026-10-24T11:47:02.208095+00:00",
+  "issues": {
+    "zero_auxiliary": 270
+  },
+  "limitations": [
+    "SE checks cover availability and nonnegativity only; row-level residual variance is covered by separate static design QA.",
+    "No sample-cell n or singleton counts are published here; no singleton claims are inferred from parent-cell census.",
+    "HT unknown envelopes are missingness sensitivity summaries, not confidence intervals."
+  ],
+  "qa_code_sha256": "fae7370acba167f951f1fdf6783416df4bdef5976be0ab37be552e10de3de7b2",
+  "run_receipt_sha256": "dd785a0689edb730e288f4c37faf586cf9ff7f841d5be254a93ae4483a064f52",
+  "scope": "Public aggregate arithmetic, output hashes and receipt scope only; no semantic gold claim or independent variance recomputation.",
+  "status": "fail"
+}

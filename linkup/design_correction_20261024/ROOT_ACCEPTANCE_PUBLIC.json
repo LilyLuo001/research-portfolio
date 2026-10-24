@@ -1,0 +1,153 @@
+{
+  "created_utc": "2026-10-24T12:43:46.074222+00:00",
+  "status": "accepted_bounded_statistical_delivery_not_semantic_production",
+  "authority": "User approved preceding four-step alignment/correction/comparison/publication plan.",
+  "actual_analysis": {
+    "job": "125471977",
+    "cluster": "Kunshan SCNet",
+    "state": "COMPLETED",
+    "exit": "0:0",
+    "elapsed_seconds": 85,
+    "cpus": 8,
+    "memory": "16G",
+    "dcu": 0
+  },
+  "actual_numeric_qa": {
+    "job": "125474405",
+    "state": "COMPLETED",
+    "elapsed_seconds": 3,
+    "assertions": 54119,
+    "scope": "Aggregate arithmetic, output hashes and accounting; not semantic accuracy and not an independent variance recomputation."
+  },
+  "input_scope": {
+    "ads": 10000,
+    "prior_exposed_ads_retained": 718,
+    "isolated_contexts_retained": 14,
+    "isolated_ads_retained": 16,
+    "arm_cells": 207,
+    "original_parent_ads": 1157573,
+    "parent_frame": "69-cell technology-screened candidate frame, not all US vacancies",
+    "reference": "Unchanged Batch069 Pro operational reference, not independent human truth"
+  },
+  "outputs": {
+    "private_ad_bridge": "/public/home/lilysharp/linkup_design_correction_20261024/run001/private/AD_LEVEL_DESIGN_BRIDGE_PRIVATE.parquet",
+    "cloud_public": "/public/home/lilysharp/linkup_design_correction_20261024/run001/public",
+    "aggregate_rate_rows": 2484,
+    "contrast_rows": 900,
+    "q1_core_rows": 72,
+    "q2_core_rows": 240,
+    "primary_files": [
+      "CORE_Q1.csv",
+      "CORE_Q2.csv",
+      "OLD_NEW_DISCREPANCIES.csv",
+      "OLD_NEW_TECHNOLOGY_TRANSITION.csv",
+      "CORRECTED_COMPONENT_TOTALS.csv",
+      "REFERENCE_FAMILY_STATUS_COUNTS.csv"
+    ]
+  },
+  "q1_equal_major_decisions": [
+    {
+      "measure": "general_work",
+      "old_proxy_GenAI_minus_software": 0.0768023026205598,
+      "reference_corrected_difference": -0.0037996436383408,
+      "approximate_design95": [
+        -0.049760405114879946,
+        0.04216111783819834
+      ],
+      "full_unknown_envelope": [
+        -0.1670745279753429,
+        0.8442782725497802
+      ],
+      "use": "Report no clear difference within known-reference domain; old positive proxy difference is not robust."
+    },
+    {
+      "measure": "industry_domain",
+      "old_proxy_GenAI_minus_software": -0.011534037774503805,
+      "reference_corrected_difference": -0.016972664050384,
+      "approximate_design95": [
+        -0.11485848776385911,
+        0.08091315966309111
+      ],
+      "full_unknown_envelope": [
+        -0.5046674220148099,
+        0.4581978605928422
+      ],
+      "use": "Descriptive known-domain estimate; no clear directional difference."
+    },
+    {
+      "measure": "tool_specific",
+      "old_proxy_GenAI_minus_software": -0.1660086316406253,
+      "reference_corrected_difference": 0.2342166624012818,
+      "approximate_design95": [
+        0.1534553598549545,
+        0.3149779649476091
+      ],
+      "full_unknown_envelope": [
+        -0.547042784062569,
+        0.3857342689084803
+      ],
+      "use": "Positive difference conditional on known Pro-reference domain; full-frame sign remains unidentified once unresolved membership/outcomes are allowed."
+    },
+    {
+      "measure": "occupation_task",
+      "old_proxy_GenAI_minus_software": null,
+      "reference_weighted_difference": 0.0996362784052697,
+      "approximate_design95": [
+        0.05898813407038542,
+        0.14028442274015399
+      ],
+      "full_unknown_envelope": [
+        -0.7116892308304793,
+        0.21595009256123
+      ],
+      "use": "Reference-weighted conditional comparison only; selected old narrow source has no compatible outcome comparator. No before-after correction claim."
+    }
+  ],
+  "q2_decisions": {
+    "main_eligibility": "Explicit new-graduate OR no-experience wording, retaining original conditional/unconditional distinctions.",
+    "all_parent_known_eligible_sample_ads": 186,
+    "duty_any_positive_sample_ads": 110,
+    "pooled_reference_weighted_cooccurrence": 0.5142220957696507,
+    "equal_major_reference_weighted_cooccurrence": 0.5108422773608033,
+    "equal_major_approximate_design95": [
+      0.3421603454958257,
+      0.6795242092257809
+    ],
+    "equal_major_full_unknown_envelope": [
+      0.3967522003413253,
+      0.633739436700537
+    ],
+    "unconditional_entry_equal_major_cooccurrence": 0.4772469651680631,
+    "old_comparator": "Not available in selected frozen parent narrow source. Q2 uses explicitly named reference-only HT estimation, not an old-rule error-correction success. This does not assert that no richer historical artifact ever contained entry/duty evidence.",
+    "GenAI_vs_software": "Not adopted for a directional conclusion: only14known GenAI eligible-duty ads pooled, and zero in one required major; equal-major point unavailable without renormalization.",
+    "use": "Report coexistence of explicit entry eligibility and current responsibilities in this restricted target. Do not infer seniorization over time, required-versus-preferred duty strength, or an AI causal effect."
+  },
+  "inference_limitations": [
+    "All main points are reference-known-domain ratios; full-target unknown envelopes are separate conservative HT sensitivity summaries, not CIs or sharp joint bounds.",
+    "Approximate normal design intervals condition on independently salted MD5 ordering being exchangeable SRS; they do not account for common Pro reference error.",
+    "Sparse or boundary Q2 domains, including a single supporting advertisement with observed SE0, are descriptive only. A zero plug-in delta SE is not certainty; do not use its zero-width interval as inferential evidence.",
+    "For Q1 unavailable OLD outcomes, only numerator auxiliary is zero; a valid old A/B denominator remains. It is constant within arm-cell and census-minus-HT calibrated; Q2 both auxiliaries are zero.",
+    "Old proxy versus Pro reference differences can include measurement-definition differences, not solely extraction mistakes.",
+    "No old table, labels, weights or relation-model stop decision changed."
+  ],
+  "execution_failures_preserved": [
+    {
+      "job": "47316215",
+      "reason": "Existing Wuzhen Anaconda lacked duckdb before research calculation; five synthetic method checks passed. Used already installed Kunshan runtime, no installation."
+    },
+    {
+      "job": "125472505",
+      "reason": "Independent verifier incorrectly required zero denominator auxiliary for Q1 zero-outcome auxiliary. Fixed component-specific assertion only; original estimates unchanged."
+    },
+    {
+      "job": "125472912",
+      "reason": "Verifier str.removeprefix unavailable on existing Python3.8; string-slicing compatibility fix only."
+    }
+  ],
+  "new_reviews": 0,
+  "new_training_runs": 0,
+  "new_software": 0,
+  "paid_API_calls": 0,
+  "formal_corpus_semantic_production": "Still unfinished. This wave estimates statistics; it does not repair individual corpus labels.",
+  "automatic_next_action": "None. Authorized bounded statistical delivery stops after publication; no annotation, parser, model or corpus rerun."
+}

@@ -1,0 +1,3862 @@
+{
+  "utc": "2026-10-24T11:14:43.373730Z",
+  "python": "3.8.10 (default, Mar 10 2023, 11:55:25) \n[GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]",
+  "executable": "/public/software/apps/python/3.8.10/bin/python",
+  "host": "a02r3n04",
+  "slurm_job_id": "125470198",
+  "scope": "Parquet footer/schema only; no row values, IDs or advertisement text read",
+  "dependencies": {
+    "duckdb": {
+      "version": "0.9.2",
+      "module_file": "/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38/duckdb/__init__.py"
+    },
+    "pandas": {
+      "version": "2.0.3",
+      "module_file": "/public/software/apps/python/3.8.10/lib/python3.8/site-packages/pandas/__init__.py"
+    },
+    "pyarrow": {
+      "version": "11.0.0",
+      "module_file": "/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38/pyarrow/__init__.py"
+    }
+  },
+  "parents": [
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/0.parquet",
+      "exists": true,
+      "bytes": 15385608,
+      "rows": 374320,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/1.parquet",
+      "exists": true,
+      "bytes": 15471340,
+      "rows": 376154,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/2.parquet",
+      "exists": true,
+      "bytes": 15416718,
+      "rows": 374933,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/3.parquet",
+      "exists": true,
+      "bytes": 15453003,
+      "rows": 375870,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/4.parquet",
+      "exists": true,
+      "bytes": 15436449,
+      "rows": 375421,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/5.parquet",
+      "exists": true,
+      "bytes": 15432980,
+      "rows": 376154,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/6.parquet",
+      "exists": true,
+      "bytes": 15458931,
+      "rows": 376508,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/7.parquet",
+      "exists": true,
+      "bytes": 15463750,
+      "rows": 375791,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/8.parquet",
+      "exists": true,
+      "bytes": 15407906,
+      "rows": 375281,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/9.parquet",
+      "exists": true,
+      "bytes": 15408216,
+      "rows": 375657,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/a.parquet",
+      "exists": true,
+      "bytes": 15457857,
+      "rows": 375967,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/b.parquet",
+      "exists": true,
+      "bytes": 15391575,
+      "rows": 374653,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/c.parquet",
+      "exists": true,
+      "bytes": 15446391,
+      "rows": 375595,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/d.parquet",
+      "exists": true,
+      "bytes": 15441815,
+      "rows": 375520,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/e.parquet",
+      "exists": true,
+      "bytes": 15444608,
+      "rows": 375617,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/comparison_join_v1/joined/f.parquet",
+      "exists": true,
+      "bytes": 15513861,
+      "rows": 377534,
+      "row_groups": 6,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "usable",
+          "type": "bool"
+        },
+        {
+          "name": "DESCRIPTION_EMPTY",
+          "type": "bool"
+        },
+        {
+          "name": "PARSE_ERROR",
+          "type": "bool"
+        },
+        {
+          "name": "INPUT_EVIDENCE_TRUNCATED",
+          "type": "bool"
+        },
+        {
+          "name": "ENRICHMENT_INCOMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_general_work_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_specific_tool_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_industry_domain_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_required",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_preferred",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_broad",
+          "type": "bool"
+        },
+        {
+          "name": "exp_object_unspecified_exact_or_unspecified",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_detected",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_traditional_software_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_generative_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_predictive_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_use_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_develop_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "tech_unspecified_ai_implement_explicit",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_main",
+          "type": "bool"
+        },
+        {
+          "name": "exp_occupation_task_available",
+          "type": "bool"
+        },
+        {
+          "name": "COMPANY_ID",
+          "type": "decimal128(10, 0)"
+        },
+        {
+          "name": "CREATED",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "CROSSES_2022_11_30",
+          "type": "bool"
+        },
+        {
+          "name": "OBSERVATION_END",
+          "type": "timestamp[us]"
+        },
+        {
+          "name": "OBSERVATION_CLOSED",
+          "type": "bool"
+        },
+        {
+          "name": "DATE_COMPLETE",
+          "type": "bool"
+        },
+        {
+          "name": "STALE_DELETE_OR_REAPPEARANCE",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "fixed_keys": [
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/next_stage_20261004/linkup/run-123660254/FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet",
+      "exists": true,
+      "bytes": 354400,
+      "rows": 10000,
+      "row_groups": 1,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "created_year",
+          "type": "int64"
+        },
+        {
+          "name": "arm",
+          "type": "string"
+        },
+        {
+          "name": "frame_count_a",
+          "type": "int64"
+        },
+        {
+          "name": "frame_count_b",
+          "type": "int64"
+        },
+        {
+          "name": "selected_cell_arm_n",
+          "type": "int64"
+        },
+        {
+          "name": "inclusion_probability",
+          "type": "double"
+        },
+        {
+          "name": "design_weight",
+          "type": "double"
+        },
+        {
+          "name": "W_h",
+          "type": "double"
+        },
+        {
+          "name": "stable_rank_in_cell_arm",
+          "type": "int64"
+        },
+        {
+          "name": "sample_rank_in_cell_arm",
+          "type": "int64"
+        },
+        {
+          "name": "nested_frame_cell_arm_N",
+          "type": "int64"
+        },
+        {
+          "name": "next_selected_cell_arm_n",
+          "type": "int64"
+        },
+        {
+          "name": "original_inclusion_probability",
+          "type": "double"
+        },
+        {
+          "name": "conditional_inclusion_probability",
+          "type": "double"
+        },
+        {
+          "name": "total_inclusion_probability",
+          "type": "double"
+        },
+        {
+          "name": "nested_design_weight",
+          "type": "double"
+        },
+        {
+          "name": "pooled_cell_standardization_weight",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "path": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/next_stage_20261004/linkup/run-123584403/FIXED_RESEARCH_SAMPLE_KEYS_PRIVATE.parquet",
+      "exists": false
+    }
+  ],
+  "parent_files": 16,
+  "parent_rows": 6010975,
+  "parent_schema_identical": true
+}

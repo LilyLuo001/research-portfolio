@@ -1,0 +1,144 @@
+{
+  "assumptions": {
+    "enabled_design_se": true,
+    "invalid_totals": "raw retained; rate unavailable; no clipping",
+    "standardization": "four fixed SOC majors 11/13/15/17 at .25 each; no missing-cell renormalization",
+    "target": "original 69-cell technology-screened candidate parent frame; neither all jobs nor causal comparison",
+    "unknowns": "main known-reference-domain ratio; separate nonnegative HT unknown/membership envelopes, no MAR imputation",
+    "unsupported_old": "explicit zero auxiliary yields HT reference mass; raw old missing retained and no comparator/error-rate claim",
+    "variance": "stratified SRSWOR conditional on treating independent salted MD5 orderings as exchangeable draws; all sample rows and 207 cells enter residual variance"
+  },
+  "checks": {
+    "arm_cells": 207,
+    "canonical_bridge_unique": true,
+    "dedicated_probability_reciprocity": true,
+    "exposed_ads_preserved": 718,
+    "formal800_w3_used": false,
+    "isolated_ads_preserved": 16,
+    "isolated_contexts_preserved": 14,
+    "no_body_or_quote_columns_read": true,
+    "parent_ads": 1157573,
+    "parent_cell_census_matches": true,
+    "sample_ads": 10000
+  },
+  "code_sha256": {
+    "correction_core.py": "3946c868d9684218e55d5822dfe16f1340966a1a10ca97cb330f022717803a8a",
+    "metadata_probe_ks.py": "4d8834b2ae28455fe3a043b9f079d85edbb51b912ae6d4bdfa85380a4f23e3ab",
+    "prepare_delivery_summary.py": "3c3a9bfc4015114ba28850d2df905eca365f07358fa34152f07e118c6d410a85",
+    "run_design_correction.py": "a704b8de8fbe566be190cb762bcca7ead6099084cb0859dd7167fed8d9b57fac",
+    "test_correction_core.py": "bb8463fd7dfcfafc0476be6ad2335e3ea408360f28331de74b9759521d8ab03d",
+    "wz_prepare_metadata_handoff.py": "80bd48c2b890605cd0fe85ae209eaab3e259415157b6759b97f5fd322bdd77f4"
+  },
+  "created_utc": "2026-10-24T11:41:09.424539+00:00",
+  "input_sha256": {
+    "allocation": "bad5965d982ddb3f81efa43ccca52e14b34684458976370e2dbe4a3949f77ca9",
+    "fixed": "c6ea50f39fdc2901a81f484429e1c030256fcbe016c0a22282238ed732e01be8",
+    "isolation_register": "641f2d3204a8f65f2483be485815ede04b57920227af4b867afd41cbd6de62b6",
+    "parent_files": [
+      {
+        "bytes": 15385608,
+        "ordinal": 0,
+        "sha256": "df2c84f4237d823a30e94e6591b90d37b106fe07538a6c9919d1aa29ba0d9c46"
+      },
+      {
+        "bytes": 15471340,
+        "ordinal": 1,
+        "sha256": "50de786ae0f94485695050a244c75b07ef143ff2538b182a43b94145be45cf4f"
+      },
+      {
+        "bytes": 15416718,
+        "ordinal": 2,
+        "sha256": "485b18181e3aafc3bd6f5a7aab0446cc4be346d702289c3937a5244af7727fe4"
+      },
+      {
+        "bytes": 15453003,
+        "ordinal": 3,
+        "sha256": "91175e5a057a5cc40bc00bb18f12ebb33bbf44166a9ee266fcf8df1aadb61c4c"
+      },
+      {
+        "bytes": 15436449,
+        "ordinal": 4,
+        "sha256": "d6d9fff9ade5a66b5b8d0339dc3e9e347a8f2e83af8c693b146ffbd634e5ded5"
+      },
+      {
+        "bytes": 15432980,
+        "ordinal": 5,
+        "sha256": "5e56442ca63c099d83491c98fdb3517e6bc6b86cf9859bec70ccf86fc44ef7fb"
+      },
+      {
+        "bytes": 15458931,
+        "ordinal": 6,
+        "sha256": "148812b90a5ac59ba2f1059a8ffcc18438758375f4e70509b17d6f76168265c0"
+      },
+      {
+        "bytes": 15463750,
+        "ordinal": 7,
+        "sha256": "c87e10d1cbc9026b5be397e91c0934236566b7048d96882cd6efecd16fcc11ed"
+      },
+      {
+        "bytes": 15407906,
+        "ordinal": 8,
+        "sha256": "cc2a6d08a550ebdd3c9766ff51462e78f6e00dbcbc671ba5b581039eea076278"
+      },
+      {
+        "bytes": 15408216,
+        "ordinal": 9,
+        "sha256": "653049cdca1acf872f82aa6ec65618d1a5df774f28d49291d286ac7fe1f1d568"
+      },
+      {
+        "bytes": 15457857,
+        "ordinal": 10,
+        "sha256": "db0fb5fe28fa4701994aaafc0cb3c11bfe4d0ab153f9093b3fc1574aec0cedaa"
+      },
+      {
+        "bytes": 15391575,
+        "ordinal": 11,
+        "sha256": "7c2eade39b76f3ab9cd3883c41fc553a8a86f23ec1a0ede7d73c124daa207f27"
+      },
+      {
+        "bytes": 15446391,
+        "ordinal": 12,
+        "sha256": "d33e2f8cad3c77d6516ea34ed84a0b0e2d7b77a39bdd65ea492c33fdd1942226"
+      },
+      {
+        "bytes": 15441815,
+        "ordinal": 13,
+        "sha256": "8159db66961ffea8dd39824bd8b516b5ccd2b8aaaa290af8e53f85748fbea14f"
+      },
+      {
+        "bytes": 15444608,
+        "ordinal": 14,
+        "sha256": "0ab8185f84b9589606c300b5ef156dfe71247c9d454d6d8fa78e9d5c374911d7"
+      },
+      {
+        "bytes": 15513861,
+        "ordinal": 15,
+        "sha256": "2915aa7cd28f517fd50071ada476fa4c2e3d0e69db9ddb056b58dbe7377bd374"
+      }
+    ],
+    "reference": "70ab7ed24697cf456e738497de4eec02531205294a626a0dab66bb779a0db1a6",
+    "reference_receipt": "929bf6970e12f1512df9485ac933ff1bd8a03d5a90c43bb308c7810a31c1db65",
+    "spec": null
+  },
+  "output_sha256": {
+    "CORRECTED_COMPONENT_TOTALS.csv": "d9b61611052d1bf200e7c5201f2a8e2a87a7483cfc87de92113108b49b7fcb5b",
+    "CORRECTED_CONTRASTS.csv": "f0172d1d2be215a147ddb346ca9ebfe121ab159b9cb4089338c2cc31df1b35a6",
+    "CORRECTED_DOMAIN_PROPORTIONS.csv": "4b812dd32276c02b646b2adf996c9a07cfe019d9c9dfe1d7fd47b3db27e26025",
+    "OLD_207_CELL_CENSUS.csv": "37a4bba79a52cdfd05530f724029159688abc9a0b96693842e801688d88ce18e",
+    "OLD_NEW_DISCREPANCIES.csv": "fbe6547180249a93c6c80f7db88e83e1c8a359544f0f23af212a0926163842ad",
+    "OLD_NEW_TECHNOLOGY_TRANSITION.csv": "489fbfceb23f3a188950b37155f18ea4958676a332aef851f96f15fc80ee53ed",
+    "REFERENCE_FAMILY_STATUS_COUNTS.csv": "7b425999efb1d82686cba3fb409d21f5f4699c46a8c13470f2bd414590444015"
+  },
+  "private_bridge": {
+    "rows": 10000,
+    "sha256": "b7bda1d20a5f93fcd4fa85f963a7aa5744cc0ccb8766f1e504e7d5170d0fc603"
+  },
+  "runtime": {
+    "duckdb": "0.9.2",
+    "numpy": "1.24.4",
+    "pandas": "2.0.3",
+    "python": "3.8.10"
+  },
+  "status": "pass",
+  "version": "frozen-fixed10k-design-correction-v1"
+}

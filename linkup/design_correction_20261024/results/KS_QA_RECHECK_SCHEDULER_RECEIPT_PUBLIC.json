@@ -1,0 +1,12 @@
+{
+  "cluster": "Kunshan SCNet",
+  "partition": "kshctest02",
+  "cpus": 2,
+  "requested_memory": "4G",
+  "time_limit": "00:05:00",
+  "first_job": {"job_id": "125472505", "state": "FAILED", "exit_code": "1:0", "elapsed": "00:00:02", "reason": "verifier zero_auxiliary assertion bug; first QA preserved"},
+  "recheck_job": {"job_id": "125472912", "state": "FAILED", "exit_code": "1:0", "elapsed": "00:00:01", "reason": "AttributeError: str.removeprefix unavailable in Python3.8; verifier line104; failed before writing new QA"},
+  "aggregate_outputs_modified": false,
+  "main_rerun": false,
+  "qa_public_is_stale_first_failure": true
+}

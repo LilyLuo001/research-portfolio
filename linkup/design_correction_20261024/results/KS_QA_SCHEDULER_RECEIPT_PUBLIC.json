@@ -1,0 +1,22 @@
+{
+  "cluster": "Kunshan SCNet",
+  "job_id": "125472505",
+  "partition": "kshctest02",
+  "job_name": "lk-corr-qa",
+  "state": "FAILED",
+  "exit_code": "1:0",
+  "elapsed": "00:00:02",
+  "cpus": 2,
+  "requested_memory": "4G",
+  "time_limit": "00:05:00",
+  "python_module": "python/3.8.10",
+  "pythonpath": "/public/home/lilysharp/linkup_analysis_v1/stage_b/runtime_py38",
+  "scope": "Public aggregate outputs only; no row data or main rerun",
+  "qa_status": "fail",
+  "assertions": 54119,
+  "issues": {"zero_auxiliary": 270},
+  "negative_raw_component_totals": 0,
+  "valid_points_missing_se": 0,
+  "stdout": "/public/home/lilysharp/linkup_design_correction_20261024/logs/qa-125472505.out",
+  "stderr": "/public/home/lilysharp/linkup_design_correction_20261024/logs/qa-125472505.err"
+}
