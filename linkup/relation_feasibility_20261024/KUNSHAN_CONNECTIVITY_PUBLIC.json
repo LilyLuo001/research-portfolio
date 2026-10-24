@@ -1,0 +1,26 @@
+{
+  "version": "kunshan-connectivity-check-v1",
+  "created_utc": "2026-10-24T07:40:43.163834+00:00",
+  "requested_region_interpretation": "East China zone 1 Kunshan",
+  "host": "cancon.hpccube.com",
+  "port": 65023,
+  "username": "lilysharp",
+  "two_independent_connections": "authenticated and remote commands exited 0",
+  "remote_hostnames": [
+    "login04",
+    "login09"
+  ],
+  "home": "/public/home/lilysharp",
+  "scheduler": "Both squeue calls returned normally and showed no current user jobs",
+  "existing_analysis_root": "/public/home/lilysharp/linkup_analysis_execution_oct02 exists",
+  "latest_batch069_ledger_checked_paths_present": false,
+  "checked_paths_only": [
+    "/public/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+    "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl"
+  ],
+  "scope": "Read-only connectivity, scheduler query and known-path existence checks; no whole-filesystem inventory, data movement, rebuild or job submission",
+  "claim_boundary": "SSH and scheduler reachability confirmed. Does not demonstrate job start, installed relation runtime or availability of the latest reference ledger at other unexamined paths.",
+  "new_jobs": 0,
+  "new_reviews": 0,
+  "new_training": 0
+}
