@@ -1,0 +1,66 @@
+{
+  "version": "bounded-relation-recoverability-checkpoint-v1",
+  "created_utc": "2026-10-24T07:15:29.713178+00:00",
+  "status": "blocked_before_scheduler_submission",
+  "authorization": "User approved starting the bounded proposal after its confidence assessment",
+  "new_semantic_reviews": 0,
+  "recovered_supervision_counts": "not_computed",
+  "training_executed": false,
+  "final_evaluation_executed": false,
+  "corpus_inference_executed": false,
+  "scheduler_job_id": null,
+  "scheduler_runtime_seconds": 0,
+  "private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024",
+  "transport": {
+    "initial_authentication": "publickey authentication and original private artifact paths confirmed",
+    "four_code_files_uploaded": true,
+    "uploaded_materializer_sha256": "25af73b0c9bb9dde2aeda481bf8291b75026b86b7bf08df1ef315cf88e85e55f",
+    "latest_materializer_after_minimal_binding_mode_fix_not_uploaded": true,
+    "remote_hash_verification_completed": false
+  },
+  "concrete_blocker": {
+    "host": "wuzh02.hpccube.com",
+    "port": 65091,
+    "phase": "SSH key exchange before authentication",
+    "error": "kex_exchange_identification: read: Connection reset by peer",
+    "interpretation": "Gateway subsequently rejected repeated new connections. No scheduler acknowledgment was received; cause not established. No continued retries or alternative cloud reconstruction."
+  },
+  "static_checks": {
+    "original_source_and_context_binding": "independent review passed",
+    "final_and_legacy_holdout_exclusions": "reuse frozen final_fit legacy adapter",
+    "unknown_masks_preserved": true,
+    "family_specific_accepted_labels_only": true,
+    "no_generated_pair_negatives": true,
+    "same_original_item_bindings_preserved": true,
+    "dedicated_qualification_group_inventory": true,
+    "syntax_checks": "Python AST and bash syntax passed",
+    "latest_minimal_patch": "Ignore only transport/direct-versus-context provenance.binding_mode when comparing duplicate same-context family signatures; retain all semantic and source conflict checks"
+  },
+  "runtime_metadata_only": {
+    "anaconda": "apps/anaconda3/2023.09",
+    "base_torch_present": false,
+    "base_transformers_version": "4.32.1",
+    "installed_pytorch_module_found": "apps/Pytorch/1.10.0",
+    "module_actual_import_and_device_probe": "not_run"
+  },
+  "code_sha256": {
+    "materialize_supervision.py": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
+    "prepare_manifest.py": "35f1bed07b1a782b092dc60aebba70e8d8d3c8a3b820979984c63afd611769f3",
+    "runtime_probe.py": "775018370bfe180ce62f4ddc2bffcefb5b30687528d93e29d7358ca36bd292ad",
+    "wz_recover_supervision.sbatch": "716dddf61f9d8b747c77c069b9aa840906d8aaf4d5977ad87fe2eef349dc8c1c"
+  },
+  "resume": [
+    "Original Wuzhen SSH gateway must become reachable.",
+    "Re-upload latest code and verify hashes; do not assume previous upload has the latest materializer.",
+    "Check squeue and RECOVER_STARTED and outputs to avoid duplicate submission.",
+    "Submit the existing wz_recover_supervision.sbatch once.",
+    "Use actual recoverability and production-input facts to make the bounded go/no-go decision; no automatic relabeling, model search or full-corpus inference."
+  ],
+  "unchanged": [
+    "Batch069 reference labels and final unknowns",
+    "Formal800",
+    "Existing final and historical holdout membership",
+    "Closed TF-IDF decision: zero formal fields",
+    "Whole-corpus fine semantic production remains unfinished"
+  ]
+}

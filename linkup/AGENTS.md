@@ -1,5 +1,10 @@
 # LinkUp project execution rules
 
+## Latest bounded relation feasibility authorization (2026-10-24)
+
+The user approved starting a single bounded contextual-relation feasibility attempt. Entry: `linkup/relation_feasibility_20261024/EXECUTION_LOCK.json` and `EXECUTION_STATUS_PUBLIC.json`. Two independently checked recovery scripts preserve Batch069 acceptance masks, exact original review source SHA/id/context, same-item field bindings, and final/legacy holdouts. Initial Wuzhen authentication and code transport succeeded, but the gateway then reset SSH key exchange before scheduler submission. Actual recovered counts, training and evaluation are NOT executed; no job ID exists. Latest binding-mode-only code correction remains local and must be re-synced and hashed before submission. Resume only on original SCNet access: check queue and start guard, run the existing supervision recovery job, then decide from real support and production-input evidence. No new reviews/samples, TF-IDF refit, model search, paid API, quota reset or automatic corpus run. Clause-level evidence is not atomic entity-pair supervision; oracle-reference-quote classification is not end-to-end production accuracy.
+
+
 ## Continuous fixed10k execution from4ed88d3 (2026-10-17)
 
 Latest user authorization supersedes the old300-stop cap: finish the remaining6500 missing/partial contexts using Batch004 final artifacts; every100 is a checkpoint, not a stopping point. Preserve existing judgments and final unknowns. Attempt one minimal recovery of the single truncated context, then quarantine if unresolvable while preserving unfinished accounting. Optimize identical-transform feature sharing and stage timings without retraining/overwriting frozen baseline. Final compatible labels and held-out evaluation remain frozen until reference completion. Full corpus production remains conditional on field-specific quality and approved semantic resources. New work: `linkup/fixed10k_continuation_20261017/CONTINUOUS_EXECUTION_LOCK.json`. No new sample/taxonomy, paid API, weights or unapproved installs.
