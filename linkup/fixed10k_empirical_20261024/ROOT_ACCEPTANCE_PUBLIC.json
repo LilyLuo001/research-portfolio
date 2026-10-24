@@ -1,0 +1,41 @@
+{
+  "recorded_utc": "2026-10-24T04:40:34.210400+00:00",
+  "authority": "User Batch069 fixed-scope empirical SOP",
+  "status": "accepted_bounded_midterm_delivery_with_explicit_unavailable_items",
+  "analysis_job": "47290008",
+  "render_job": "47290252",
+  "reference_new_review_count": 0,
+  "frames": {
+    "complete_fixed10k": 10000,
+    "original9282eligible": 9282,
+    "published_Formal800": 800
+  },
+  "isolated_contexts": 14,
+  "isolated_ads": 16,
+  "reviewed_uncertainty_contexts_preserved": 1002,
+  "technology_membership_uncertain_ads_full10k": 1486,
+  "input_ledger_sha256": "794d76b2a6e913d7d08adab7e99bc96a3f57f8553c73518ae27b966a8fad86fb",
+  "independent_qa": "qa/ESSENTIAL_QA.md",
+  "root_checks": [
+    "4coreQ1standardizeddifferences inspected against publicCSV",
+    "Q2exactcounts67known33positiveoutof71graduatepositive inspected",
+    "Threepanel table compares unitweight directframes with originalpublishedw3, not reweighting",
+    "Finalplots visually inspected:points andrecordedunknownboundslegible",
+    "Unimplemented dutystrength and fixed10kexact-date/companytitlemetadata explicitlyNA",
+    "Aggregate reference analysis accepted, no claim of classifier success or human semantic truth"
+  ],
+  "unavailable_items": {
+    "fixed10k_exactdate_crossperiod": "No exact observation dates in verified fixed10k metadata; created_yearcohorts available; existingglobaldate-risk results reused with originalscope",
+    "fixed10k_same_company_similar_job_annual": "No company/title fields in retained fixed10k metadata; existingglobalannualdiagnostics copied and separatelyscoped",
+    "duty_required_preferred": "Not present inreference schema; experience strength and dutyconditionality retained",
+    "cross_family_joint_clause_binding": "No reliablejointclauseID in ledger; do not fabricate positional binding or uniquejobminimum"
+  },
+  "production_status": {
+    "full_corpus_precise_semantics": "not_complete",
+    "classifier_route": "closed_no_formal_fields",
+    "new_corpus_prediction_shards": 0,
+    "new_paid_calls": 0,
+    "new_models_or_software": 0
+  },
+  "stop_rule": "This boundedwaveends with six tables,threepanelpresentation,twocomparisons,figures,receipts andbriefreport. No automatic nextwave."
+}

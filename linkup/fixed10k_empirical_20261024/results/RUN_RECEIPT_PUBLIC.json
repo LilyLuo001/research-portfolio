@@ -1,0 +1,183 @@
+{
+  "checks": {
+    "fixed10k_ads": true,
+    "no_text_columns_read": true,
+    "original_eligible_ads": true,
+    "published_formal800": "copied byte-for-byte; w3 unchanged",
+    "rich7_rows": true,
+    "standardization_fail_closed": "implemented; any missing required cell => NA",
+    "weight_10k_panels": "1"
+  },
+  "code_sha256": "15c391cf66703d90d8329c5d2bd6eea5f7f6e4f85b2c7c7942da7c40448b6d58",
+  "created_utc": "2026-10-24T04:31:00.106932+00:00",
+  "inputs": {
+    "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/isolation/BLOCKED_CONTEXTS_PRIVATE.jsonl": {
+      "bytes": 4015,
+      "sha256": "641f2d3204a8f65f2483be485815ede04b57920227af4b867afd41cbd6de62b6"
+    },
+    "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl": {
+      "bytes": 125168523,
+      "sha256": "794d76b2a6e913d7d08adab7e99bc96a3f57f8553c73518ae27b966a8fad86fb"
+    },
+    "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/REVIEWED_UNCERTAINTY_REGISTER_PRIVATE.jsonl": {
+      "bytes": 1766467,
+      "sha256": "355e4ee49d35d4974a4fe3af4027136303116e578a4ef2a6e29bf3f9deb8e612"
+    },
+    "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/receipts/BATCH069_FINALIZE_RECEIPT.json": {
+      "bytes": 3081,
+      "sha256": "a7ea3c8c4a96172c0d32227240f324598f496479d82c24a17aaf1956aa70b65c"
+    },
+    "/work/home/lilysharp/private/formal800_20261012/private/exclusions/EXCLUSION_HASHES_ONLY_PRIVATE.jsonl": {
+      "bytes": 82644,
+      "sha256": "76609078e02d11e37ecaa3b82dbd6dab037b77830d086be51d9285eabc887104"
+    },
+    "/work/home/lilysharp/private/next_stage_20261004/text_handoff_20261007/verified_fixed10000/MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet": {
+      "bytes": 16448319,
+      "sha256": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35"
+    },
+    "global_T4_reuse": {
+      "files": {
+        "T4_CREATED_COHORT.csv": "294a848c485df2fd23bbb5c39d3d3ba0727605ec9cf5e4901de094fc94d8c9f7",
+        "T4_RECEIPT_PUBLIC.json": "ffadf261fff03da923425d856478e7077fdb568ea2f9ab3253c6c8c49d38594d",
+        "T4_SELECTED_ANNUAL_GROUP_SUMMARY.csv": "28ccef751abf3d78d36615fde7684004f6c104846418d6f23c8bc9f2afa91f46",
+        "T4_TIME_RISK.csv": "dcf7ea862828c4837872be60d6b67703158b2b53d3d61857c13f373c181c142f"
+      },
+      "scope": "existing global results; no reconstruction"
+    }
+  },
+  "limits": {
+    "T4": "fixed10k created_year only; exact dates/company/title unavailable; global T4 copied unchanged and separately scoped",
+    "clauses": "literal family rows; no unique job minimum; no cross-family positional binding",
+    "duty_strength": "NA; schema has no field",
+    "finite_sample": "descriptive points/bounds; no census10k sampling CI",
+    "technology_membership_unknown": "separate from outcome bounds"
+  },
+  "outputs": {
+    "PUBLISHED_FORMAL800_LATEST_MANIFEST.csv": {
+      "bytes": 1255,
+      "sha256": "5622696850de377234fb3721c5fa9ee62ffa678b1b097ba9989b2a9e776298e1"
+    },
+    "PUBLISHED_FORMAL800_MANIFEST.csv": {
+      "bytes": 554,
+      "sha256": "927da1ac2f4a2a5fc2f73cf6d51578f6c0216a8f08b1b725f3e6ca3e0345e590"
+    },
+    "T1_COVERAGE_AND_ACCOUNTING.csv": {
+      "bytes": 6343,
+      "sha256": "706a0a85af42529c5550804e40b0ac81005e4f6f74ea6a6f75f5e9e6e0c6ea4d"
+    },
+    "T2_EXPERIENCE_CLAUSES.csv": {
+      "bytes": 997710,
+      "sha256": "926bb39224033112af3668389eca9cbf8810356e77bdbcd1e07c3b29ef8317f0"
+    },
+    "T3_TECHNOLOGY_AND_EXPERIENCE_COMBINATIONS.csv": {
+      "bytes": 37405,
+      "sha256": "a84db57a012bdd04a09b789beb82891a2172e88421aed46b4e54fdcf99e95723"
+    },
+    "T4_GLOBAL_REUSE_MANIFEST.csv": {
+      "bytes": 597,
+      "sha256": "80ffa5a820b6a41260ffd6a878840a79a8d55039faa5038d71309f9cecd08fb3"
+    },
+    "T4_TIME_COHORT_DIAGNOSTICS.csv": {
+      "bytes": 8471,
+      "sha256": "bf80fc1da87880a99e08ad702acf740cd76e24ffb2e8a17634909ae27d589ffb"
+    },
+    "T5_Q1_DIRECT_COMPARISONS.csv": {
+      "bytes": 274557,
+      "sha256": "fac71349d23c2b7f75720dceb5e18d2be4da4adef5cf3b3d8c49706047a41fb8"
+    },
+    "T5_Q2_DIRECT_COMPARISONS.csv": {
+      "bytes": 118253,
+      "sha256": "242aa1adb5a91378ef779d582f2da35d5f23e345f8ae133875cd11d590cc2561"
+    },
+    "T5_Q2_DUTY_EXPERIENCE_COOCCURRENCES.csv": {
+      "bytes": 38605,
+      "sha256": "dc0c1aa1248e477bb671def7081bf0eee8880b891ed0aad9ecdbef43f6bd6bdb"
+    },
+    "T6_SENSITIVITY_BOUNDS_AND_CLAIMS.csv": {
+      "bytes": 5028,
+      "sha256": "edf11ebbdff6361aa865698533041a1bd93f5780077c87974c4cce7f341e8a46"
+    },
+    "figures/FIG1_Q1_POINT_AND_UNKNOWN_BOUNDS.png": {
+      "bytes": 671913,
+      "sha256": "4c679203d659cb4e188f4d2e647d725b754d327553a837762738302504621fc7"
+    },
+    "figures/FIG2_Q2_POINT_AND_UNKNOWN_BOUNDS.png": {
+      "bytes": 339558,
+      "sha256": "ec124cc548814f260116facfa28e1018759d993c00c5dfce8bf6819ed89104dd"
+    },
+    "global_T4_reused_unchanged/T4_CREATED_COHORT.csv": {
+      "bytes": 13078,
+      "sha256": "294a848c485df2fd23bbb5c39d3d3ba0727605ec9cf5e4901de094fc94d8c9f7"
+    },
+    "global_T4_reused_unchanged/T4_RECEIPT_PUBLIC.json": {
+      "bytes": 3761,
+      "sha256": "ffadf261fff03da923425d856478e7077fdb568ea2f9ab3253c6c8c49d38594d"
+    },
+    "global_T4_reused_unchanged/T4_SELECTED_ANNUAL_GROUP_SUMMARY.csv": {
+      "bytes": 2502,
+      "sha256": "28ccef751abf3d78d36615fde7684004f6c104846418d6f23c8bc9f2afa91f46"
+    },
+    "global_T4_reused_unchanged/T4_TIME_RISK.csv": {
+      "bytes": 1092,
+      "sha256": "dcf7ea862828c4837872be60d6b67703158b2b53d3d61857c13f373c181c142f"
+    },
+    "published_Formal800_latest_unchanged/ANALYSIS_RECEIPT.json": {
+      "bytes": 4958,
+      "sha256": "082044381fba09622ee349204c40d5273cb29bcf1d9f34ecdf4c7a1a5d6eaa45"
+    },
+    "published_Formal800_latest_unchanged/EXISTING_RESULTS_MANIFEST.json": {
+      "bytes": 1459,
+      "sha256": "9bc15e220d9011f1a142770a2cc6b0f8ad24703b5cfa74299cc1a5257854b3c2"
+    },
+    "published_Formal800_latest_unchanged/Q1_EQUAL_MAJOR_STANDARDIZED.csv": {
+      "bytes": 2017,
+      "sha256": "0231e0e0d7b2186d7f66eb4bb7edb3c0cced032148e7234bed7b8946c98fbf63"
+    },
+    "published_Formal800_latest_unchanged/Q1_WITHIN_MAJOR_AND_POOLED.csv": {
+      "bytes": 15108,
+      "sha256": "9cde254f7c5ee3ddff4664857a1b28e396400bd22fc1e2d36c9bdf8b7b40f642"
+    },
+    "published_Formal800_latest_unchanged/Q2_DUTIES_AMONG_ELIGIBLE.csv": {
+      "bytes": 7331,
+      "sha256": "d69808178d2db59e4bf8281500d4a75661c9d73ec2881a38d9e82e6246e82e59"
+    },
+    "published_Formal800_latest_unchanged/Q2_ELIGIBILITY_SENSITIVITY.csv": {
+      "bytes": 1553,
+      "sha256": "3713726bfeabfe1f44812c236b7e7e6e35f52b5e0d98f42b1e9dccfbc25c1279"
+    },
+    "published_Formal800_latest_unchanged/Q2_EXISTING_CLAUSE_COOCCURRENCES_AMONG_NEW_GRAD.csv": {
+      "bytes": 4175,
+      "sha256": "35b8a6a5842e5a66d27afd5f0fc7871580d0877efc74c44cd6c237aa5317fa3b"
+    },
+    "published_Formal800_latest_unchanged/Q2_EXPERIENCE_AMONG_ELIGIBLE.csv": {
+      "bytes": 6058,
+      "sha256": "af843902f1db4c5bb87d6e5a9e4937f13f76381766e6ccf9174f349dedeebb13"
+    },
+    "published_Formal800_latest_unchanged/Q2_EXPERIENCE_COMBINATIONS.csv": {
+      "bytes": 2993,
+      "sha256": "b9d5942f1df9eec232812d7dea6c9711cf35d040f81e82d60fc22a08043b7be9"
+    },
+    "published_Formal800_unchanged/ANALYSIS_RECEIPT.json": {
+      "bytes": 4755,
+      "sha256": "2fc0d7d65bb41d22a7d92eb499badf8f10eb160c8cc31feaa47e7567c880c1f4"
+    },
+    "published_Formal800_unchanged/COMPARISON_1_EXPERIENCE.csv": {
+      "bytes": 10859,
+      "sha256": "f813954b8e367701efd1a02dcffc59e3afa5523ecd3aff2a4922ee681acfc176"
+    },
+    "published_Formal800_unchanged/COMPARISON_2_ENTRY_DUTY.csv": {
+      "bytes": 129835,
+      "sha256": "17593beee17b418c6e12727c56869370b885c6d28083331e25db43ac0ff8a979"
+    },
+    "published_Formal800_unchanged/T6_SENSITIVITY_AND_BOUNDS.csv": {
+      "bytes": 67365,
+      "sha256": "b7a1e9c0b54a7c90d8696910c1c1e1b7ee8514e455ae61242e80f40f4438e83b"
+    }
+  },
+  "private_output": {
+    "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/empirical_20261024/private/AD_LEVEL_JOINED_ANALYSIS_PRIVATE.parquet",
+    "sha256": "70ab7ed24697cf456e738497de4eec02531205294a626a0dab66bb779a0db1a6"
+  },
+  "status": "pass",
+  "version": "fixed10k-empirical-batch069-v1"
+}

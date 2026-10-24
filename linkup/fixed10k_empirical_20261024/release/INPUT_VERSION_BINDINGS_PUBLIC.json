@@ -1,0 +1,46 @@
+{
+  "release": "fixed10k_empirical_20261024",
+  "recorded_utc": "2026-10-24T04:19:31.879138+00:00",
+  "starting_head": "22665e3",
+  "scope": "Public provenance bindings for the Batch069 empirical SOP wave; repository paths and verified hashes only.",
+  "bindings": [
+    {
+      "role": "execution_contract",
+      "path": "linkup/fixed10k_empirical_20261024/EXECUTION_CONTRACT_PUBLIC.json",
+      "sha256": "1644c1192f93f92e28cee51c60469e6b9278a5497da7a3c64ec4c8183efd0dac"
+    },
+    {
+      "role": "batch069_finalize_receipt",
+      "path": "linkup/fixed10k_continuation_20261017/receipts/BATCH069_FINALIZE_RECEIPT.json",
+      "sha256": "a7ea3c8c4a96172c0d32227240f324598f496479d82c24a17aaf1956aa70b65c"
+    },
+    {
+      "role": "final_run_and_root_decision_public",
+      "path": "linkup/fixed10k_continuation_20261017/final_results/FINAL_RUN_AND_ROOT_DECISION_PUBLIC.json",
+      "sha256": "c23c8b6ab6f5ce5f84e5305930b21aa752bb8afb3b79c1318a48694be1a32a09"
+    },
+    {
+      "role": "final_field_adjudication_public_json",
+      "path": "linkup/fixed10k_continuation_20261017/final_results/FINAL_FIELD_ADJUDICATION_PUBLIC.json",
+      "sha256": "5bee15db4815a305536afcc8abc5225e42a58a0703a3a400bfad24202422c41b"
+    },
+    {
+      "role": "final_field_adjudication_public_csv",
+      "path": "linkup/fixed10k_continuation_20261017/final_results/FINAL_FIELD_ADJUDICATION_PUBLIC.csv",
+      "sha256": "ed31431979ef40c83923d2a7bce0c12b9e551231771503a700061db9057076d4"
+    },
+    {
+      "role": "delivery_qa_public",
+      "path": "linkup/fixed10k_continuation_20261017/final_results/DELIVERY_QA_PUBLIC.json",
+      "sha256": "d24b48ca6d8db9eec3863ca94a207926f230afe75f63b3549e3c84a9312524f7"
+    }
+  ],
+  "exclusions": [
+    "raw text",
+    "record IDs",
+    "private labels",
+    "model artifacts",
+    "membership artifacts",
+    "credentials and secrets"
+  ]
+}

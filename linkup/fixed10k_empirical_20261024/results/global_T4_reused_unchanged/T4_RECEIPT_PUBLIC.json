@@ -1,0 +1,65 @@
+{
+  "annual_diagnostic": {
+    "all_prefixes_used_only_for_selected_group_case_recovery": true,
+    "eligibility": "company_id x normalized_title x city with at least 3 distinct CREATED years inside prefix 0",
+    "maximum_groups": 20,
+    "maximum_selected_keys": 200,
+    "seed": "20261003",
+    "selected_groups": 12,
+    "selected_keys": 200,
+    "selection_frame": "job_hash_prefix_0",
+    "selection_prefix": "0"
+  },
+  "identity": {
+    "batch_receipt_sha256": "ec029eac81a8c7cde50a0d4dd56660328d1db38a77e86f9fc25f8d9361b5f4f5",
+    "expected_canonical_rows": 204774035,
+    "expected_shards": 2464,
+    "global_key_audit_sha256": "b2e73be7607e7378dc6847ff22096522f4f38e4577182dec6946a21c4c1aa53f",
+    "global_key_inventory_sha256": "b801b40ab69fb2a9f489410453c54fbdbedbbb748e5b3043fe64b3367418ee5d",
+    "official_codes_sha256": "8b02868be11d5b55c60b0ab42ac14eb1c0b241dbdff523627c6f10a8ebe184ba",
+    "onet_inventory_sha256": "d144a16e58df06bf608821d83a2a8c33534ecf36fc1993d48c88d2d917587e8d",
+    "raw_inventory_sha256": "84a08c2c404b5ec0d952b3d8628473c07bff684ea48965b8ca6f6d1d58bd4fdf",
+    "records_complete_sha256": "77e6c971de21440d059ae20d20d21f84af28423a1f884da180aeb7388156afd2",
+    "script_sha256": "d496082d841a2f75b576058d2df252dd8f28c526d1f61596e0267832b22e6064",
+    "validation_scope": "production"
+  },
+  "limits": [
+    "fixture_override receipts are test evidence, never production results",
+    "annual 20-group diagnostic selection frame is fixed JOB_HASH prefix 0, not a probability sample of all company-title-city groups",
+    "T4_ANNUAL_COVERAGE is canonical ad observation coverage by CREATED year, not all-group-year coverage",
+    "16GiB annual-aggregate check is post-write acceptance, not a filesystem quota",
+    "DuckDB 0.9.2 soft monitor interrupts at temp>12GiB, workdir growth>20GiB, or filesystem free<8GiB; sampling interval permits bounded overshoot",
+    "observation dates are not text-effective dates",
+    "new JOB_HASH is not an archived historical body version",
+    "BASE_HASH is not a content digest",
+    "current snapshot occupation mapping"
+  ],
+  "outputs": {
+    "T4_ANNUAL_COVERAGE.csv": "7ade2a3f112f84398a3aa2cae1f215e9169d9cc3520b9074cda3c1e5faf35665",
+    "T4_CONCENTRATION.csv": "9721a560854ae76e428a6ab54e15b5e47c7adb50e79aa7cd01cabdc924257b8d",
+    "T4_CONCENTRATION_TOP20.csv": "e0e46de5305f12511d0baeb55288cc31b0983ed63b6c4f34454c1a631f85b24b",
+    "T4_CREATED_COHORT.csv": "294a848c485df2fd23bbb5c39d3d3ba0727605ec9cf5e4901de094fc94d8c9f7",
+    "T4_SELECTED_ANNUAL_GROUP_SUMMARY.csv": "28ccef751abf3d78d36615fde7684004f6c104846418d6f23c8bc9f2afa91f46",
+    "T4_TIME_RISK.csv": "dcf7ea862828c4837872be60d6b67703158b2b53d3d61857c13f373c181c142f"
+  },
+  "prefix_identity_binding": {
+    "path": "PREFIX_IDENTITY_MIGRATION.json",
+    "sha256": "fa89c4e5e5c6f17185bde2a8982f687913909feb52561586264af50ead8c45cd",
+    "source_receipts_preserved": true
+  },
+  "private_annual_counts": {
+    "path": "T4_ANNUAL_GROUP_COUNTS_PRIVATE.parquet",
+    "post_write_acceptance_gate_bytes": 17179869184,
+    "selection_frame": "fixed JOB_HASH prefix 0 only",
+    "sha256": "e32049824cb04929857dde7982687eefb50ef108a61f25bd225208fd93bacc2b"
+  },
+  "private_selected_keys": {
+    "path": "T4_SELECTED_ANNUAL_KEYS_PRIVATE.csv",
+    "rows": 200,
+    "sha256": "75d571b916e3c4c16c34885abd33b2a7925db43b70e68e66033554db4191cd91"
+  },
+  "space_plan": "reuse global key and Records partitions; materialize each audited prefix join once; annual diagnostic groups selected from fixed JOB_HASH prefix 0 before bounded all-prefix key selection; unsupported DuckDB temp quota uses an in-process 1-second soft-limit monitor",
+  "status": "complete",
+  "validation_scope": "production",
+  "version": "full_time_risk_v2"
+}

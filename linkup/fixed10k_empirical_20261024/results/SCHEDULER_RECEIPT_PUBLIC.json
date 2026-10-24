@@ -1,0 +1,27 @@
+{
+  "version": "fixed10k-empirical-batch069-scheduler-v1",
+  "status": "pass",
+  "accepted_job": {
+    "job_id": "47290008",
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "node": "b03r4n18",
+    "elapsed": "00:00:12",
+    "max_rss_kib": 406372,
+    "submit": "2026-10-24T12:30:46+08:00",
+    "start": "2026-10-24T12:30:48+08:00",
+    "end": "2026-10-24T12:31:00+08:00",
+    "resources": "wzhdtest; 8 CPU; 16G; dcu:Hygon:1; disable-binding",
+    "code_sha256": "15c391cf66703d90d8329c5d2bd6eea5f7f6e4f85b2c7c7942da7c40448b6d58"
+  },
+  "failed_attempts_retained": [
+    {"job_id":"47289536","state":"FAILED","exit_code":"1:0","reason":"/etc/profile HISTCONTROL unset under set -u"},
+    {"job_id":"47289564","state":"FAILED","exit_code":"1:0","reason":"ledger canonical key is nested"},
+    {"job_id":"47289583","state":"FAILED","exit_code":"1:0","reason":"original eligible-frame guard exposed incomplete exclusion-scope implementation"},
+    {"job_id":"47289603","state":"FAILED","exit_code":"1:0","reason":"original eligible-frame guard exposed missing raw-exposure normalized-context closure"},
+    {"job_id":"47289897","state":"FAILED","exit_code":"2:0","reason":"updated sbatch arguments had not yet been staged"},
+    {"job_id":"47289946","state":"FAILED","exit_code":"1:0","reason":"occupation major alias missing in derived row"}
+  ],
+  "logs": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/empirical_20261024/logs",
+  "claim": "Only job 47290008 produced the accepted pass receipt; failed attempt logs are retained."
+}
