@@ -12,7 +12,7 @@
 #SBATCH --error=/work/home/lilysharp/private/linkup_relation_feasibility_20261024/logs/recover-%j.err
 set -eo pipefail
 set +u
-source /etc/profile >/dev/null 2>&1
+source /etc/profile >/dev/null 2>&1 || true
 module load apps/anaconda3/2023.09
 set -u
 umask 077
@@ -34,9 +34,9 @@ cp "$W/recovered/RECOVERABILITY_PUBLIC.json" "$W/public/RECOVERABILITY_PUBLIC.js
 # Probe exactly one preinstalled PyTorch module after supervision recovery.
 set +u
 module purge
-if module load compiler/dtk/22.04.1 mpi/hpcx/gcc-7.3.1 compiler/devtoolset/7.3.1 apps/Pytorch/1.10.0; then
+if module load compiler/devtoolset/7.3.1 && module load compiler/dtk/22.04.1 && module load mpi/hpcx/gcc-7.3.1 && module load apps/Pytorch/1.10.0; then
   set -u
-  python "$W/code/runtime_probe.py" "$W/public/INSTALLED_RUNTIME_PUBLIC.json"
+  python3 "$W/code/runtime_probe.py" "$W/public/INSTALLED_RUNTIME_PUBLIC.json"
 else
   printf '{"module":"apps/Pytorch/1.10.0","module_load_succeeded":false}\n' > "$W/public/INSTALLED_RUNTIME_PUBLIC.json"
 fi

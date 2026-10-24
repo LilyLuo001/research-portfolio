@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-10-24T07:40:43.163834+00:00",
+  "as_of": "2026-10-24T09:00:28.308934+00:00",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "bounded_relation_supervision_feasibility_blocked_before_submission",
+  "phase": "relation_supervision_recovered_runtime_not_qualified_no_training",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -61,7 +61,7 @@
     "bounded_semantic_reading": "authorized Pro conversation models",
     "local_allowed": "code/docs, bounded reading, transport, provenance and Git"
   },
-  "resume_rule": "Resume bounded_relation_feasibility_20261024 from its execution status. No review Batch070, resampling or old baseline retraining. First regain original Wuzhen access, re-sync latest code, and inspect queue/start guard before submitting the existing recoverability script once. Root then decides feasibility from actual outputs; preserve all old labels, unknowns, splits and results.",
+  "resume_rule": "Read relation_feasibility_20261024 actual run receipt and root decision. Recovery job47304085 produced accepted supervision despite failing later at runtime probe; do not rerun recovery. Runtime remains unqualified and no model fit has started. All five accidental D64 jobs were cancelled with explicit user approval; never resume that chain. Preserve reference, unknowns, isolates, splits, Formal800 and existing results.",
   "formal800_execution": {
     "freeze_job": "46364888",
     "state": "COMPLETED",
@@ -579,22 +579,28 @@
     "global_T4": "reused unchanged, separately scoped"
   },
   "bounded_relation_feasibility_20261024": {
-    "status": "blocked_before_scheduler_submission",
+    "status": "supervision_recovered_runtime_not_qualified_no_training",
     "entry": "linkup/relation_feasibility_20261024/EXECUTION_STATUS_PUBLIC.json",
-    "root_contract": "linkup/relation_feasibility_20261024/EXECUTION_LOCK.json",
+    "root_decision": "linkup/relation_feasibility_20261024/results/ROOT_DECISION_PUBLIC.json",
+    "recovery_job": "47304085",
+    "recovered_contexts": 7578,
+    "complete_chain_train_contexts": 5719,
+    "complete_chain_final_contexts": 1272,
+    "runtime_only_repair_jobs": [
+      "47305678",
+      "47306339"
+    ],
     "new_reviews": 0,
-    "scheduler_jobs": 0,
-    "supervision_recovery_and_training": "not_executed",
-    "blocker": "Original Wuzhen gateway resets SSH key exchange after initial successful metadata access and code transport",
-    "next_action": "When original gateway access is stable, verify uploaded code hashes and check jobs/start guard before one existing scheduled recovery submission.",
-    "latest_retry": "linkup/relation_feasibility_20261024/CONNECTION_RETRY_PUBLIC.json",
-    "latest_code_uploaded": true,
-    "new_key_authentication": "succeeded",
-    "kunshan_connectivity": {
-      "receipt": "linkup/relation_feasibility_20261024/KUNSHAN_CONNECTIVITY_PUBLIC.json",
-      "ssh_and_scheduler": "two successful checks",
-      "latest_ledger_at_known_paths": "not_found",
-      "migration_or_job_submission": "not_performed"
-    }
+    "new_training_runs": 0,
+    "D64_cancelled_on_explicit_user_request": [
+      "47303497_0",
+      "47303497_1",
+      "47303497_2",
+      "47303502",
+      "47303503"
+    ],
+    "D64_artifacts_deleted": false,
+    "private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/recovered",
+    "next_action": "Preserve recovered data. Establish existing compatible runtime and non-oracle candidate input before any one fixed fit."
   }
 }

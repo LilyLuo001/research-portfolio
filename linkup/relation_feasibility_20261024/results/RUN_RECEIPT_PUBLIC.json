@@ -1,0 +1,67 @@
+{
+  "version": "relation-supervision-actual-execution-v1",
+  "created_utc": "2026-10-24T09:00:28.308934+00:00",
+  "status": "supervision_recovered_runtime_not_qualified_no_training",
+  "jobs": [
+    {
+      "job_id": "47304085",
+      "purpose": "Recover accepted original supervision, then probe installed runtime",
+      "scheduler_state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed_seconds": 277,
+      "cpus": 8,
+      "memory": "16G",
+      "requested_dcu": 1,
+      "successful_phase": "Supervision materialized and public inventory copied before runtime failure",
+      "failure": "Incorrect module dependency order followed by fallback Python lacking pathlib"
+    },
+    {
+      "job_id": "47305678",
+      "purpose": "Runtime-only repair; no repeated supervision recovery",
+      "scheduler_state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed_seconds": 0,
+      "cpus": 2,
+      "failure": "Exited before phase logging; exact source/startup failure not established"
+    },
+    {
+      "job_id": "47306339",
+      "purpose": "Runtime-only repair with explicit module-loading diagnostics",
+      "scheduler_state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed_seconds": 1,
+      "cpus": 2,
+      "observed": "profile_rc=0, purge_rc=0, four module loads reached; command -v python3 then failed",
+      "failure": "No python3 executable on the resulting module PATH; no model or torch import was reached"
+    }
+  ],
+  "private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/recovered",
+  "recovered_contexts": 7578,
+  "complete_same_item_experience_chain_contexts": {
+    "train": 5719,
+    "final_previously_exposed_split": 1272,
+    "previous_holdout_reserved_not_final": 213
+  },
+  "counting_boundary": "Unique contexts, not ads. Recovered item rows repeat across field families and are not independent examples or new reviews. The finalized fixed10k ledger still has 10000 ads and its existing unknowns.",
+  "new_semantic_reviews": 0,
+  "reference_labels_changed": 0,
+  "new_model_training_runs": 0,
+  "new_model_weights_downloaded": 0,
+  "new_software_installed": 0,
+  "corpus_production_shards": 0,
+  "input_manifest_sha256": "48e8b0d01884424e286cd836bb37f198b9d52d3b74b029180994a5e0349c745e",
+  "materializer_code_sha256": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
+  "executed_initial_wrapper_sha256": "716dddf61f9d8b747c77c069b9aa840906d8aaf4d5977ad87fe2eef349dc8c1c",
+  "original_executed_wrapper_in_git": "8bb0e4e:linkup/relation_feasibility_20261024/code/wz_recover_supervision.sbatch",
+  "current_recovery_wrapper_is_repaired_but_not_rerun": true,
+  "outputs_sha256": {
+    "RECOVERABILITY_PUBLIC.json": "42e7cf3fa38f86fb4491f70866111533e8b22a8194f2803aadef5f215a1fd2f2",
+    "CONTEXTS_PRIVATE.jsonl": "e76b1cc9b8ede15ba11fcba8fb026517a8c18b2c9bc69139c254fb5d6e4039ed",
+    "RECOVERED_ORIGINAL_ITEMS_PRIVATE.jsonl": "8a28fa07361c4eb56c6630941a8517c4a25f9766412e7519c34e43c76f71797e",
+    "QUALIFICATION_GROUPS_PRIVATE.jsonl": "132a6c5c870301b7bee736b66f942a187d7c408eaad466b6ae7cfffc382f11eb"
+  },
+  "runtime_result_json": "not_created; original diagnostic logs retained on cluster",
+  "last_metadata_command": "subsequent SSH authentication reached but exec request failed on channel 0; no further retry loop",
+  "model_inference_speed": "not measured; no model loaded",
+  "next_checkpoint": "Do not recover or annotate again. Resolve an existing matching Python/PyTorch interpreter and required runtime once; separately establish non-oracle candidate inputs before any fixed fit."
+}

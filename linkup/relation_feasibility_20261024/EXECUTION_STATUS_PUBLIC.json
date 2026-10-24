@@ -1,31 +1,33 @@
 {
   "version": "bounded-relation-recoverability-checkpoint-v1",
-  "created_utc": "2026-10-24T07:24:05.823646+00:00",
-  "status": "blocked_before_scheduler_submission",
+  "created_utc": "2026-10-24T09:00:28.308934+00:00",
+  "status": "supervision_recovered_runtime_not_qualified_no_training",
   "authorization": "User approved starting the bounded proposal after its confidence assessment",
   "new_semantic_reviews": 0,
-  "recovered_supervision_counts": "not_computed",
+  "recovered_supervision_counts": {
+    "unique_contexts": 7578,
+    "complete_experience_chain_train_contexts": 5719,
+    "complete_experience_chain_final_contexts": 1272
+  },
   "training_executed": false,
   "final_evaluation_executed": false,
   "corpus_inference_executed": false,
-  "scheduler_job_id": null,
-  "scheduler_runtime_seconds": 0,
+  "scheduler_job_id": "47304085",
+  "scheduler_runtime_seconds": 277,
   "private_root": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024",
   "transport": {
     "initial_authentication": "publickey authentication and original private artifact paths confirmed",
     "four_code_files_uploaded": true,
     "uploaded_materializer_sha256": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
     "latest_materializer_after_minimal_binding_mode_fix_not_uploaded": false,
-    "remote_hash_verification_completed": false,
+    "remote_hash_verification_completed": true,
     "latest_materializer_upload_acknowledged": true,
     "new_key_authentication": "succeeded after file permission correction"
   },
   "concrete_blocker": {
-    "host": "wuzh02.hpccube.com",
-    "port": 65091,
-    "phase": "SSH key exchange before authentication",
-    "error": "kex_exchange_identification: read: Connection reset by peer",
-    "interpretation": "Gateway subsequently rejected repeated new connections. No scheduler acknowledgment was received; cause not established. No continued retries or alternative cloud reconstruction."
+    "training_runtime": "Loaded installed PyTorch module did not provide a python3 executable; compatible interpreter not established",
+    "production_input": "Non-oracle candidate inputs not yet validated",
+    "later_ssh_metadata_query": "exec request failed on channel 0"
   },
   "static_checks": {
     "original_source_and_context_binding": "independent review passed",
@@ -52,11 +54,10 @@
     "wz_recover_supervision.sbatch": "716dddf61f9d8b747c77c069b9aa840906d8aaf4d5977ad87fe2eef349dc8c1c"
   },
   "resume": [
-    "Original Wuzhen SSH gateway must become reachable.",
-    "Re-upload latest code and verify hashes; do not assume previous upload has the latest materializer.",
-    "Check squeue and RECOVER_STARTED and outputs to avoid duplicate submission.",
-    "Submit the existing wz_recover_supervision.sbatch once.",
-    "Use actual recoverability and production-input facts to make the bounded go/no-go decision; no automatic relabeling, model search or full-corpus inference."
+    "Preserve successful recovered data; do not rerun recovery, Batch069 or Formal800.",
+    "Read actual root decision and runtime logs.",
+    "Establish an existing compatible interpreter/runtime and non-oracle production input before a single fixed contextual fit.",
+    "No rare-label deletion, model search, new annotation or paid channel."
   ],
   "unchanged": [
     "Batch069 reference labels and final unknowns",
@@ -65,5 +66,8 @@
     "Closed TF-IDF decision: zero formal fields",
     "Whole-corpus fine semantic production remains unfinished"
   ],
-  "latest_connection_retry": "CONNECTION_RETRY_PUBLIC.json"
+  "latest_connection_retry": "CONNECTION_RETRY_PUBLIC.json",
+  "actual_execution_receipt": "results/RUN_RECEIPT_PUBLIC.json",
+  "root_decision": "results/ROOT_DECISION_PUBLIC.json",
+  "d64_user_stop": "results/D64_CANCELLATION_PUBLIC.json"
 }

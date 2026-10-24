@@ -1,0 +1,2726 @@
+{
+  "code_sha256": "76b2a8d05b709fb81564ff61ce444da6138da7cae658b5d3eb9b5adcc7ccbd92",
+  "complete_experience_chain_item_support": [
+    {
+      "object": "general_work",
+      "original_items": 355,
+      "split": "final_previously_exposed",
+      "unique_contexts": 279
+    },
+    {
+      "object": "industry_domain",
+      "original_items": 731,
+      "split": "final_previously_exposed",
+      "unique_contexts": 584
+    },
+    {
+      "object": "occupation_task",
+      "original_items": 2947,
+      "split": "final_previously_exposed",
+      "unique_contexts": 1160
+    },
+    {
+      "object": "tool_specific",
+      "original_items": 2842,
+      "split": "final_previously_exposed",
+      "unique_contexts": 1090
+    },
+    {
+      "object": "general_work",
+      "original_items": 64,
+      "split": "previous_holdout_reserved_not_final",
+      "unique_contexts": 45
+    },
+    {
+      "object": "industry_domain",
+      "original_items": 136,
+      "split": "previous_holdout_reserved_not_final",
+      "unique_contexts": 106
+    },
+    {
+      "object": "occupation_task",
+      "original_items": 539,
+      "split": "previous_holdout_reserved_not_final",
+      "unique_contexts": 199
+    },
+    {
+      "object": "tool_specific",
+      "original_items": 450,
+      "split": "previous_holdout_reserved_not_final",
+      "unique_contexts": 186
+    },
+    {
+      "object": "general_work",
+      "original_items": 1432,
+      "split": "train",
+      "unique_contexts": 1117
+    },
+    {
+      "object": "industry_domain",
+      "original_items": 3352,
+      "split": "train",
+      "unique_contexts": 2657
+    },
+    {
+      "object": "occupation_task",
+      "original_items": 13327,
+      "split": "train",
+      "unique_contexts": 5211
+    },
+    {
+      "object": "tool_specific",
+      "original_items": 12051,
+      "split": "train",
+      "unique_contexts": 4826
+    }
+  ],
+  "counts": {
+    "accepted_document_nonmention_not_pair_negative|current_responsibility_subject_and_relation": 825,
+    "accepted_document_nonmention_not_pair_negative|entry_wording_and_scope": 7034,
+    "accepted_document_nonmention_not_pair_negative|experience_literal_years": 118,
+    "accepted_document_nonmention_not_pair_negative|experience_object": 117,
+    "accepted_document_nonmention_not_pair_negative|experience_strength": 117,
+    "accepted_document_nonmention_not_pair_negative|qualification_conditions_and_alternatives": 117,
+    "accepted_document_nonmention_not_pair_negative|technology_category_and_role": 29,
+    "complete_experience_chain_unique_context|final_previously_exposed": 1272,
+    "complete_experience_chain_unique_context|previous_holdout_reserved_not_final": 213,
+    "complete_experience_chain_unique_context|train": 5719,
+    "family_state|current_responsibility_subject_and_relation|candidate_only": 12,
+    "family_state|current_responsibility_subject_and_relation|known": 6692,
+    "family_state|current_responsibility_subject_and_relation|not_applicable": 825,
+    "family_state|current_responsibility_subject_and_relation|unknown_or_conflict": 88,
+    "family_state|entry_wording_and_scope|candidate_only": 12,
+    "family_state|entry_wording_and_scope|known": 559,
+    "family_state|entry_wording_and_scope|not_applicable": 7035,
+    "family_state|entry_wording_and_scope|unknown_or_conflict": 11,
+    "family_state|experience_literal_years|candidate_only": 12,
+    "family_state|experience_literal_years|known": 7252,
+    "family_state|experience_literal_years|not_applicable": 118,
+    "family_state|experience_literal_years|unknown_or_conflict": 235,
+    "family_state|experience_object|candidate_only": 12,
+    "family_state|experience_object|known": 7369,
+    "family_state|experience_object|not_applicable": 117,
+    "family_state|experience_object|unknown_or_conflict": 119,
+    "family_state|experience_strength|candidate_only": 12,
+    "family_state|experience_strength|known": 7316,
+    "family_state|experience_strength|not_applicable": 117,
+    "family_state|experience_strength|unknown_or_conflict": 172,
+    "family_state|qualification_conditions_and_alternatives|candidate_only": 12,
+    "family_state|qualification_conditions_and_alternatives|known": 7288,
+    "family_state|qualification_conditions_and_alternatives|not_applicable": 117,
+    "family_state|qualification_conditions_and_alternatives|unknown_or_conflict": 200,
+    "family_state|technology_category_and_role|candidate_only": 12,
+    "family_state|technology_category_and_role|known": 6800,
+    "family_state|technology_category_and_role|not_applicable": 29,
+    "family_state|technology_category_and_role|partial": 2,
+    "family_state|technology_category_and_role|unknown_or_conflict": 774,
+    "recovered_original_item|current_responsibility_subject_and_relation|final_previously_exposed": 2237,
+    "recovered_original_item|current_responsibility_subject_and_relation|previous_holdout_reserved_not_final": 394,
+    "recovered_original_item|current_responsibility_subject_and_relation|train": 10249,
+    "recovered_original_item|entry_wording_and_scope|final_previously_exposed": 111,
+    "recovered_original_item|entry_wording_and_scope|previous_holdout_reserved_not_final": 21,
+    "recovered_original_item|entry_wording_and_scope|train": 582,
+    "recovered_original_item|experience_literal_years|final_previously_exposed": 6938,
+    "recovered_original_item|experience_literal_years|previous_holdout_reserved_not_final": 1199,
+    "recovered_original_item|experience_literal_years|train": 30398,
+    "recovered_original_item|experience_object|final_previously_exposed": 7010,
+    "recovered_original_item|experience_object|previous_holdout_reserved_not_final": 1217,
+    "recovered_original_item|experience_object|train": 30990,
+    "recovered_original_item|experience_strength|final_previously_exposed": 7012,
+    "recovered_original_item|experience_strength|previous_holdout_reserved_not_final": 1210,
+    "recovered_original_item|experience_strength|train": 30739,
+    "recovered_original_item|qualification_conditions_and_alternatives|final_previously_exposed": 6966,
+    "recovered_original_item|qualification_conditions_and_alternatives|previous_holdout_reserved_not_final": 1200,
+    "recovered_original_item|qualification_conditions_and_alternatives|train": 30591,
+    "recovered_original_item|technology_category_and_role|final_previously_exposed": 3354,
+    "recovered_original_item|technology_category_and_role|previous_holdout_reserved_not_final": 623,
+    "recovered_original_item|technology_category_and_role|train": 14642,
+    "repeated_quote_items": 1880,
+    "unique_quote_items": 185803
+  },
+  "decision": "inventory_only_no_model_authorized_by_this_script",
+  "entity_pair_ready_rows": 0,
+  "explicit_branch_items": 4574,
+  "frozen_support_gate": [
+    {
+      "class": "\"conditional\"",
+      "final_unique_contexts": 41,
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 128
+    },
+    {
+      "class": "\"unconditional\"",
+      "final_unique_contexts": 1183,
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5303
+    },
+    {
+      "class": "\"client_ownership\"",
+      "final_unique_contexts": 326,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1542
+    },
+    {
+      "class": "\"independent_judgment\"",
+      "final_unique_contexts": 1064,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4809
+    },
+    {
+      "class": "\"people_supervision\"",
+      "final_unique_contexts": 244,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1127
+    },
+    {
+      "class": "\"training_mentoring\"",
+      "final_unique_contexts": 508,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2325
+    },
+    {
+      "class": "\"current_duty\"",
+      "final_unique_contexts": 1092,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4902
+    },
+    {
+      "class": "\"employer_description\"",
+      "final_unique_contexts": 2,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 6
+    },
+    {
+      "class": "\"other_person\"",
+      "final_unique_contexts": 2,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 13
+    },
+    {
+      "class": "\"prior_experience\"",
+      "final_unique_contexts": 69,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 333
+    },
+    {
+      "class": "\"required_capability\"",
+      "final_unique_contexts": 187,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 931
+    },
+    {
+      "class": "\"advertised_worker\"",
+      "final_unique_contexts": 1185,
+      "task": "current_responsibility_subject_and_relation:subject",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5316
+    },
+    {
+      "class": "\"employer_general\"",
+      "final_unique_contexts": 2,
+      "task": "current_responsibility_subject_and_relation:subject",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 5
+    },
+    {
+      "class": "\"other_employee\"",
+      "final_unique_contexts": 2,
+      "task": "current_responsibility_subject_and_relation:subject",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 10
+    },
+    {
+      "class": "\"conditional\"",
+      "final_unique_contexts": 13,
+      "task": "entry_wording_and_scope:conditionality",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 97
+    },
+    {
+      "class": "\"unconditional\"",
+      "final_unique_contexts": 78,
+      "task": "entry_wording_and_scope:conditionality",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 383
+    },
+    {
+      "class": "\"unspecified\"",
+      "final_unique_contexts": 1,
+      "task": "entry_wording_and_scope:conditionality",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "\"current_student_internship\"",
+      "final_unique_contexts": 52,
+      "task": "entry_wording_and_scope:target",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 238
+    },
+    {
+      "class": "\"explicit_junior_or_entry_label\"",
+      "final_unique_contexts": 33,
+      "task": "entry_wording_and_scope:target",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 175
+    },
+    {
+      "class": "\"explicit_new_graduate\"",
+      "final_unique_contexts": 10,
+      "task": "entry_wording_and_scope:target",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 55
+    },
+    {
+      "class": "\"explicit_no_experience\"",
+      "final_unique_contexts": 14,
+      "task": "entry_wording_and_scope:target",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 101
+    },
+    {
+      "class": "\"general_work\"",
+      "final_unique_contexts": 280,
+      "task": "experience_literal_years:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1126
+    },
+    {
+      "class": "\"industry_domain\"",
+      "final_unique_contexts": 588,
+      "task": "experience_literal_years:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2680
+    },
+    {
+      "class": "\"occupation_task\"",
+      "final_unique_contexts": 1170,
+      "task": "experience_literal_years:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5242
+    },
+    {
+      "class": "\"tool_specific\"",
+      "final_unique_contexts": 1100,
+      "task": "experience_literal_years:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4854
+    },
+    {
+      "class": "0",
+      "final_unique_contexts": 2,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 25
+    },
+    {
+      "class": "0.25",
+      "final_unique_contexts": 2,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 0
+    },
+    {
+      "class": "0.5",
+      "final_unique_contexts": 1,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 6
+    },
+    {
+      "class": "0.75",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "1",
+      "final_unique_contexts": 33,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 92
+    },
+    {
+      "class": "10",
+      "final_unique_contexts": 28,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 135
+    },
+    {
+      "class": "11",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 5
+    },
+    {
+      "class": "12",
+      "final_unique_contexts": 6,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 21
+    },
+    {
+      "class": "13",
+      "final_unique_contexts": 2,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 7
+    },
+    {
+      "class": "14",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 3
+    },
+    {
+      "class": "15",
+      "final_unique_contexts": 4,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 26
+    },
+    {
+      "class": "16",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 3
+    },
+    {
+      "class": "17",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 2
+    },
+    {
+      "class": "18",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 2
+    },
+    {
+      "class": "19",
+      "final_unique_contexts": 1,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 0
+    },
+    {
+      "class": "2",
+      "final_unique_contexts": 54,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 243
+    },
+    {
+      "class": "20",
+      "final_unique_contexts": 1,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 4
+    },
+    {
+      "class": "24",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 2
+    },
+    {
+      "class": "25",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 2
+    },
+    {
+      "class": "3",
+      "final_unique_contexts": 50,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 278
+    },
+    {
+      "class": "4",
+      "final_unique_contexts": 29,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 147
+    },
+    {
+      "class": "46",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "5",
+      "final_unique_contexts": 78,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 336
+    },
+    {
+      "class": "6",
+      "final_unique_contexts": 18,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 95
+    },
+    {
+      "class": "7",
+      "final_unique_contexts": 28,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 125
+    },
+    {
+      "class": "8",
+      "final_unique_contexts": 31,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 114
+    },
+    {
+      "class": "9",
+      "final_unique_contexts": 2,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 16
+    },
+    {
+      "class": "null",
+      "final_unique_contexts": 1265,
+      "task": "experience_literal_years:years_max",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5661
+    },
+    {
+      "class": "0",
+      "final_unique_contexts": 12,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 80
+    },
+    {
+      "class": "0.25",
+      "final_unique_contexts": 3,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 3
+    },
+    {
+      "class": "0.5",
+      "final_unique_contexts": 6,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 28
+    },
+    {
+      "class": "1",
+      "final_unique_contexts": 168,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 729
+    },
+    {
+      "class": "1.5",
+      "final_unique_contexts": 1,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 0
+    },
+    {
+      "class": "10",
+      "final_unique_contexts": 92,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 446
+    },
+    {
+      "class": "11",
+      "final_unique_contexts": 2,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 18
+    },
+    {
+      "class": "12",
+      "final_unique_contexts": 36,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 140
+    },
+    {
+      "class": "13",
+      "final_unique_contexts": 3,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 15
+    },
+    {
+      "class": "14",
+      "final_unique_contexts": 4,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 11
+    },
+    {
+      "class": "15",
+      "final_unique_contexts": 16,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 82
+    },
+    {
+      "class": "16",
+      "final_unique_contexts": 1,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 4
+    },
+    {
+      "class": "18",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 5
+    },
+    {
+      "class": "19",
+      "final_unique_contexts": 1,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 0
+    },
+    {
+      "class": "2",
+      "final_unique_contexts": 277,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1271
+    },
+    {
+      "class": "2.5",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "20",
+      "final_unique_contexts": 2,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 7
+    },
+    {
+      "class": "24",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 2
+    },
+    {
+      "class": "25",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "3",
+      "final_unique_contexts": 307,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1471
+    },
+    {
+      "class": "4",
+      "final_unique_contexts": 167,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 697
+    },
+    {
+      "class": "46",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "5",
+      "final_unique_contexts": 366,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1705
+    },
+    {
+      "class": "6",
+      "final_unique_contexts": 104,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 451
+    },
+    {
+      "class": "60",
+      "final_unique_contexts": 0,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 1
+    },
+    {
+      "class": "7",
+      "final_unique_contexts": 117,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 468
+    },
+    {
+      "class": "8",
+      "final_unique_contexts": 117,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 540
+    },
+    {
+      "class": "9",
+      "final_unique_contexts": 14,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 50
+    },
+    {
+      "class": "null",
+      "final_unique_contexts": 1187,
+      "task": "experience_literal_years:years_min",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5268
+    },
+    {
+      "class": "\"at_least\"",
+      "final_unique_contexts": 914,
+      "task": "experience_literal_years:years_relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4153
+    },
+    {
+      "class": "\"at_most\"",
+      "final_unique_contexts": 7,
+      "task": "experience_literal_years:years_relation",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 14
+    },
+    {
+      "class": "\"exact\"",
+      "final_unique_contexts": 119,
+      "task": "experience_literal_years:years_relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 549
+    },
+    {
+      "class": "\"not_stated\"",
+      "final_unique_contexts": 1186,
+      "task": "experience_literal_years:years_relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5265
+    },
+    {
+      "class": "\"range\"",
+      "final_unique_contexts": 167,
+      "task": "experience_literal_years:years_relation",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 771
+    },
+    {
+      "class": "\"general_work\"",
+      "final_unique_contexts": 285,
+      "task": "experience_object:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1147
+    },
+    {
+      "class": "\"industry_domain\"",
+      "final_unique_contexts": 591,
+      "task": "experience_object:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2731
+    },
+    {
+      "class": "\"occupation_task\"",
+      "final_unique_contexts": 1181,
+      "task": "experience_object:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5331
+    },
+    {
+      "class": "\"tool_specific\"",
+      "final_unique_contexts": 1110,
+      "task": "experience_object:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4927
+    },
+    {
+      "class": "\"general_work\"",
+      "final_unique_contexts": 286,
+      "task": "experience_strength:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1145
+    },
+    {
+      "class": "\"industry_domain\"",
+      "final_unique_contexts": 591,
+      "task": "experience_strength:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2713
+    },
+    {
+      "class": "\"occupation_task\"",
+      "final_unique_contexts": 1180,
+      "task": "experience_strength:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5293
+    },
+    {
+      "class": "\"tool_specific\"",
+      "final_unique_contexts": 1110,
+      "task": "experience_strength:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4895
+    },
+    {
+      "class": "\"explicitly_waived\"",
+      "final_unique_contexts": 4,
+      "task": "experience_strength:strength",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 49
+    },
+    {
+      "class": "\"preferred\"",
+      "final_unique_contexts": 952,
+      "task": "experience_strength:strength",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4325
+    },
+    {
+      "class": "\"required\"",
+      "final_unique_contexts": 1242,
+      "task": "experience_strength:strength",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5568
+    },
+    {
+      "class": "\"unspecified\"",
+      "final_unique_contexts": 6,
+      "task": "experience_strength:strength",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 50
+    },
+    {
+      "class": "\"conditional\"",
+      "final_unique_contexts": 381,
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1493
+    },
+    {
+      "class": "\"unconditional\"",
+      "final_unique_contexts": 1275,
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5703
+    },
+    {
+      "class": "\"unspecified\"",
+      "final_unique_contexts": 1,
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "train50_final50_pass": false,
+      "train_unique_contexts": 0
+    },
+    {
+      "class": "\"general_work\"",
+      "final_unique_contexts": 285,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1139
+    },
+    {
+      "class": "\"industry_domain\"",
+      "final_unique_contexts": 588,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2699
+    },
+    {
+      "class": "\"occupation_task\"",
+      "final_unique_contexts": 1173,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 5275
+    },
+    {
+      "class": "\"tool_specific\"",
+      "final_unique_contexts": 1103,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4881
+    },
+    {
+      "class": "\"generative_ai\"",
+      "final_unique_contexts": 416,
+      "task": "technology_category_and_role:family",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1876
+    },
+    {
+      "class": "\"predictive_ml_ai\"",
+      "final_unique_contexts": 351,
+      "task": "technology_category_and_role:family",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1408
+    },
+    {
+      "class": "\"traditional_software_system\"",
+      "final_unique_contexts": 1070,
+      "task": "technology_category_and_role:family",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 4836
+    },
+    {
+      "class": "\"background_mention\"",
+      "final_unique_contexts": 143,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 627
+    },
+    {
+      "class": "\"develop_technology\"",
+      "final_unique_contexts": 626,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2737
+    },
+    {
+      "class": "\"implement_deploy_technology\"",
+      "final_unique_contexts": 339,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1445
+    },
+    {
+      "class": "\"use_tool_for_work\"",
+      "final_unique_contexts": 856,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 3872
+    }
+  ],
+  "gap_counts": {
+    "non_single_compatible_original_source": 13,
+    "unresolved_original_item": 58
+  },
+  "generated_no_relation_rows": 0,
+  "limitations": [
+    "Original clause-level labels are preserved, not entity spans or new annotations.",
+    "Within-item field bindings are real; explicit entity endpoint span supervision is absent from this original schema.",
+    "Entity-pair route remains unsupported; no_relation pair supervision is absent.",
+    "No cross-family positional joins; no unknown or document nonmention pair negatives.",
+    "Final 1331 and all old hash holdout members remain excluded from training."
+  ],
+  "manifest_sha256": "48e8b0d01884424e286cd836bb37f198b9d52d3b74b029180994a5e0349c745e",
+  "qualification_group_support_by_split_relation": [
+    {
+      "branches": 22,
+      "groups": 13,
+      "groups_not_referenced_by_experience": 1,
+      "relation": "AND",
+      "split": "final_previously_exposed",
+      "unique_contexts": 13
+    },
+    {
+      "branches": 1279,
+      "groups": 685,
+      "groups_not_referenced_by_experience": 54,
+      "relation": "OR",
+      "split": "final_previously_exposed",
+      "unique_contexts": 506
+    },
+    {
+      "branches": 201,
+      "groups": 89,
+      "groups_not_referenced_by_experience": 8,
+      "relation": "OR",
+      "split": "previous_holdout_reserved_not_final",
+      "unique_contexts": 74
+    },
+    {
+      "branches": 77,
+      "groups": 44,
+      "groups_not_referenced_by_experience": 1,
+      "relation": "AND",
+      "split": "train",
+      "unique_contexts": 40
+    },
+    {
+      "branches": 5617,
+      "groups": 2942,
+      "groups_not_referenced_by_experience": 349,
+      "relation": "OR",
+      "split": "train",
+      "unique_contexts": 2153
+    }
+  ],
+  "scheduler_job_id": "47304085",
+  "shared_condition_group_items": 440,
+  "support_by_task_class_split": [
+    {
+      "class": "\"conditional\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 41
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 6
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 128
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 1183
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 190
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 5303
+    },
+    {
+      "class": "\"client_ownership\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 326
+    },
+    {
+      "class": "\"client_ownership\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 47
+    },
+    {
+      "class": "\"client_ownership\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 1542
+    },
+    {
+      "class": "\"independent_judgment\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 1064
+    },
+    {
+      "class": "\"independent_judgment\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 180
+    },
+    {
+      "class": "\"independent_judgment\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 4809
+    },
+    {
+      "class": "\"people_supervision\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 244
+    },
+    {
+      "class": "\"people_supervision\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 48
+    },
+    {
+      "class": "\"people_supervision\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 1127
+    },
+    {
+      "class": "\"training_mentoring\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 508
+    },
+    {
+      "class": "\"training_mentoring\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 90
+    },
+    {
+      "class": "\"training_mentoring\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 2325
+    },
+    {
+      "class": "\"current_duty\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 1092
+    },
+    {
+      "class": "\"current_duty\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 182
+    },
+    {
+      "class": "\"current_duty\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 4902
+    },
+    {
+      "class": "\"employer_description\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"employer_description\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 1
+    },
+    {
+      "class": "\"employer_description\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 6
+    },
+    {
+      "class": "\"other_person\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"other_person\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 13
+    },
+    {
+      "class": "\"prior_experience\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 69
+    },
+    {
+      "class": "\"prior_experience\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 21
+    },
+    {
+      "class": "\"prior_experience\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 333
+    },
+    {
+      "class": "\"required_capability\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 187
+    },
+    {
+      "class": "\"required_capability\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 26
+    },
+    {
+      "class": "\"required_capability\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 931
+    },
+    {
+      "class": "\"advertised_worker\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 1185
+    },
+    {
+      "class": "\"advertised_worker\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 191
+    },
+    {
+      "class": "\"advertised_worker\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 5316
+    },
+    {
+      "class": "\"employer_general\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"employer_general\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 1
+    },
+    {
+      "class": "\"employer_general\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 5
+    },
+    {
+      "class": "\"other_employee\"",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"other_employee\"",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 10
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 13
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 97
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 78
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 15
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 383
+    },
+    {
+      "class": "\"unspecified\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 1
+    },
+    {
+      "class": "\"unspecified\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:conditionality",
+      "unique_contexts": 1
+    },
+    {
+      "class": "\"current_student_internship\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 52
+    },
+    {
+      "class": "\"current_student_internship\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 10
+    },
+    {
+      "class": "\"current_student_internship\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 238
+    },
+    {
+      "class": "\"explicit_junior_or_entry_label\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 33
+    },
+    {
+      "class": "\"explicit_junior_or_entry_label\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 4
+    },
+    {
+      "class": "\"explicit_junior_or_entry_label\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 175
+    },
+    {
+      "class": "\"explicit_new_graduate\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 10
+    },
+    {
+      "class": "\"explicit_new_graduate\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 3
+    },
+    {
+      "class": "\"explicit_new_graduate\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 55
+    },
+    {
+      "class": "\"explicit_no_experience\"",
+      "split": "final_previously_exposed",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 14
+    },
+    {
+      "class": "\"explicit_no_experience\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 4
+    },
+    {
+      "class": "\"explicit_no_experience\"",
+      "split": "train",
+      "task": "entry_wording_and_scope:target",
+      "unique_contexts": 101
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 280
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 45
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "train",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 1126
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 588
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 106
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "train",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 2680
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 1170
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 200
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "train",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 5242
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 1100
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 187
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "train",
+      "task": "experience_literal_years:object",
+      "unique_contexts": 4854
+    },
+    {
+      "class": "0",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "0",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "0",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 25
+    },
+    {
+      "class": "0.25",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "0.5",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "0.5",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 6
+    },
+    {
+      "class": "0.75",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "1",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 33
+    },
+    {
+      "class": "1",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 4
+    },
+    {
+      "class": "1",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 92
+    },
+    {
+      "class": "10",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 28
+    },
+    {
+      "class": "10",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 4
+    },
+    {
+      "class": "10",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 135
+    },
+    {
+      "class": "11",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 5
+    },
+    {
+      "class": "12",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 6
+    },
+    {
+      "class": "12",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "12",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 21
+    },
+    {
+      "class": "13",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "13",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 7
+    },
+    {
+      "class": "14",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 3
+    },
+    {
+      "class": "15",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 4
+    },
+    {
+      "class": "15",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 26
+    },
+    {
+      "class": "16",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 3
+    },
+    {
+      "class": "17",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "18",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "19",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "2",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 54
+    },
+    {
+      "class": "2",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 4
+    },
+    {
+      "class": "2",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 243
+    },
+    {
+      "class": "20",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "20",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 4
+    },
+    {
+      "class": "24",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "25",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "3",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 50
+    },
+    {
+      "class": "3",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 7
+    },
+    {
+      "class": "3",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 278
+    },
+    {
+      "class": "4",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 29
+    },
+    {
+      "class": "4",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 7
+    },
+    {
+      "class": "4",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 147
+    },
+    {
+      "class": "46",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "5",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 78
+    },
+    {
+      "class": "5",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 8
+    },
+    {
+      "class": "5",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 336
+    },
+    {
+      "class": "6",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 18
+    },
+    {
+      "class": "6",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1
+    },
+    {
+      "class": "6",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 95
+    },
+    {
+      "class": "7",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 28
+    },
+    {
+      "class": "7",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 3
+    },
+    {
+      "class": "7",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 125
+    },
+    {
+      "class": "8",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 31
+    },
+    {
+      "class": "8",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "8",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 114
+    },
+    {
+      "class": "9",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 2
+    },
+    {
+      "class": "9",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 16
+    },
+    {
+      "class": "null",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 1265
+    },
+    {
+      "class": "null",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 213
+    },
+    {
+      "class": "null",
+      "split": "train",
+      "task": "experience_literal_years:years_max",
+      "unique_contexts": 5661
+    },
+    {
+      "class": "0",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 12
+    },
+    {
+      "class": "0",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "0",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 80
+    },
+    {
+      "class": "0.25",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 3
+    },
+    {
+      "class": "0.25",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 3
+    },
+    {
+      "class": "0.5",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 6
+    },
+    {
+      "class": "0.5",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "0.5",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 28
+    },
+    {
+      "class": "1",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 168
+    },
+    {
+      "class": "1",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 32
+    },
+    {
+      "class": "1",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 729
+    },
+    {
+      "class": "1.5",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "10",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 92
+    },
+    {
+      "class": "10",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 15
+    },
+    {
+      "class": "10",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 446
+    },
+    {
+      "class": "11",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 2
+    },
+    {
+      "class": "11",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 18
+    },
+    {
+      "class": "12",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 36
+    },
+    {
+      "class": "12",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 9
+    },
+    {
+      "class": "12",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 140
+    },
+    {
+      "class": "13",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 3
+    },
+    {
+      "class": "13",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "13",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 15
+    },
+    {
+      "class": "14",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 4
+    },
+    {
+      "class": "14",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "14",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 11
+    },
+    {
+      "class": "15",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 16
+    },
+    {
+      "class": "15",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 3
+    },
+    {
+      "class": "15",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 82
+    },
+    {
+      "class": "16",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "16",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 3
+    },
+    {
+      "class": "16",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 4
+    },
+    {
+      "class": "18",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 5
+    },
+    {
+      "class": "19",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "2",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 277
+    },
+    {
+      "class": "2",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 49
+    },
+    {
+      "class": "2",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1271
+    },
+    {
+      "class": "2.5",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "20",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 2
+    },
+    {
+      "class": "20",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 3
+    },
+    {
+      "class": "20",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 7
+    },
+    {
+      "class": "24",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 2
+    },
+    {
+      "class": "25",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "3",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 307
+    },
+    {
+      "class": "3",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 43
+    },
+    {
+      "class": "3",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1471
+    },
+    {
+      "class": "4",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 167
+    },
+    {
+      "class": "4",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 32
+    },
+    {
+      "class": "4",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 697
+    },
+    {
+      "class": "46",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "5",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 366
+    },
+    {
+      "class": "5",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 70
+    },
+    {
+      "class": "5",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1705
+    },
+    {
+      "class": "6",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 104
+    },
+    {
+      "class": "6",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 22
+    },
+    {
+      "class": "6",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 451
+    },
+    {
+      "class": "60",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1
+    },
+    {
+      "class": "7",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 117
+    },
+    {
+      "class": "7",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 16
+    },
+    {
+      "class": "7",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 468
+    },
+    {
+      "class": "8",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 117
+    },
+    {
+      "class": "8",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 22
+    },
+    {
+      "class": "8",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 540
+    },
+    {
+      "class": "9",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 14
+    },
+    {
+      "class": "9",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 50
+    },
+    {
+      "class": "null",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 1187
+    },
+    {
+      "class": "null",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 199
+    },
+    {
+      "class": "null",
+      "split": "train",
+      "task": "experience_literal_years:years_min",
+      "unique_contexts": 5268
+    },
+    {
+      "class": "\"at_least\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 914
+    },
+    {
+      "class": "\"at_least\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 166
+    },
+    {
+      "class": "\"at_least\"",
+      "split": "train",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 4153
+    },
+    {
+      "class": "\"at_most\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 7
+    },
+    {
+      "class": "\"at_most\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"at_most\"",
+      "split": "train",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 14
+    },
+    {
+      "class": "\"exact\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 119
+    },
+    {
+      "class": "\"exact\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 15
+    },
+    {
+      "class": "\"exact\"",
+      "split": "train",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 549
+    },
+    {
+      "class": "\"not_stated\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 1186
+    },
+    {
+      "class": "\"not_stated\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 199
+    },
+    {
+      "class": "\"not_stated\"",
+      "split": "train",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 5265
+    },
+    {
+      "class": "\"range\"",
+      "split": "final_previously_exposed",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 167
+    },
+    {
+      "class": "\"range\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 17
+    },
+    {
+      "class": "\"range\"",
+      "split": "train",
+      "task": "experience_literal_years:years_relation",
+      "unique_contexts": 771
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "final_previously_exposed",
+      "task": "experience_object:object",
+      "unique_contexts": 285
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object:object",
+      "unique_contexts": 47
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "train",
+      "task": "experience_object:object",
+      "unique_contexts": 1147
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "final_previously_exposed",
+      "task": "experience_object:object",
+      "unique_contexts": 591
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object:object",
+      "unique_contexts": 107
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "train",
+      "task": "experience_object:object",
+      "unique_contexts": 2731
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "final_previously_exposed",
+      "task": "experience_object:object",
+      "unique_contexts": 1181
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object:object",
+      "unique_contexts": 202
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "train",
+      "task": "experience_object:object",
+      "unique_contexts": 5331
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "final_previously_exposed",
+      "task": "experience_object:object",
+      "unique_contexts": 1110
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object:object",
+      "unique_contexts": 189
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "train",
+      "task": "experience_object:object",
+      "unique_contexts": 4927
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 286
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 47
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 1145
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 591
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 107
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 2713
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 1180
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 202
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 5293
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 1110
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 188
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 4895
+    },
+    {
+      "class": "\"explicitly_waived\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 4
+    },
+    {
+      "class": "\"explicitly_waived\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 2
+    },
+    {
+      "class": "\"explicitly_waived\"",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 49
+    },
+    {
+      "class": "\"preferred\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 952
+    },
+    {
+      "class": "\"preferred\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 163
+    },
+    {
+      "class": "\"preferred\"",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 4325
+    },
+    {
+      "class": "\"required\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 1242
+    },
+    {
+      "class": "\"required\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 205
+    },
+    {
+      "class": "\"required\"",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 5568
+    },
+    {
+      "class": "\"unspecified\"",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 6
+    },
+    {
+      "class": "\"unspecified\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 4
+    },
+    {
+      "class": "\"unspecified\"",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 50
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 381
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 62
+    },
+    {
+      "class": "\"conditional\"",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 1493
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 1275
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 211
+    },
+    {
+      "class": "\"unconditional\"",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 5703
+    },
+    {
+      "class": "\"unspecified\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 1
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 285
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 47
+    },
+    {
+      "class": "\"general_work\"",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 1139
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 588
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 107
+    },
+    {
+      "class": "\"industry_domain\"",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 2699
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 1173
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 201
+    },
+    {
+      "class": "\"occupation_task\"",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 5275
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 1103
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 187
+    },
+    {
+      "class": "\"tool_specific\"",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 4881
+    },
+    {
+      "class": "\"generative_ai\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 416
+    },
+    {
+      "class": "\"generative_ai\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 83
+    },
+    {
+      "class": "\"generative_ai\"",
+      "split": "train",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 1876
+    },
+    {
+      "class": "\"predictive_ml_ai\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 351
+    },
+    {
+      "class": "\"predictive_ml_ai\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 47
+    },
+    {
+      "class": "\"predictive_ml_ai\"",
+      "split": "train",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 1408
+    },
+    {
+      "class": "\"traditional_software_system\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 1070
+    },
+    {
+      "class": "\"traditional_software_system\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 187
+    },
+    {
+      "class": "\"traditional_software_system\"",
+      "split": "train",
+      "task": "technology_category_and_role:family",
+      "unique_contexts": 4836
+    },
+    {
+      "class": "\"background_mention\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 143
+    },
+    {
+      "class": "\"background_mention\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 16
+    },
+    {
+      "class": "\"background_mention\"",
+      "split": "train",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 627
+    },
+    {
+      "class": "\"develop_technology\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 626
+    },
+    {
+      "class": "\"develop_technology\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 100
+    },
+    {
+      "class": "\"develop_technology\"",
+      "split": "train",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 2737
+    },
+    {
+      "class": "\"implement_deploy_technology\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 339
+    },
+    {
+      "class": "\"implement_deploy_technology\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 57
+    },
+    {
+      "class": "\"implement_deploy_technology\"",
+      "split": "train",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 1445
+    },
+    {
+      "class": "\"use_tool_for_work\"",
+      "split": "final_previously_exposed",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 856
+    },
+    {
+      "class": "\"use_tool_for_work\"",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 175
+    },
+    {
+      "class": "\"use_tool_for_work\"",
+      "split": "train",
+      "task": "technology_category_and_role:role",
+      "unique_contexts": 3872
+    }
+  ],
+  "unique_materialized_contexts": 7578,
+  "version": "relation-supervision-recoverability-v1"
+}

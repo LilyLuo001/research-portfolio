@@ -1,0 +1,88 @@
+{
+  "version": "root-supervision-feasibility-decision-v1",
+  "created_utc": "2026-10-24T09:00:28.308934+00:00",
+  "decision": "Existing accepted supervision is materially recoverable; several item tasks have support. Training has not started because execution runtime and production-input gates are not satisfied.",
+  "supported_for_bounded_item_experiment_not_production": [
+    "technology role (all four existing classes)",
+    "technology family (three classes)",
+    "experience object (four classes)",
+    "responsibility dimension (four classes)"
+  ],
+  "first_fixed_contextual_candidate": "technology role, retaining all four original classes",
+  "role_support": [
+    {
+      "class": "\"background_mention\"",
+      "final_unique_contexts": 143,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 627
+    },
+    {
+      "class": "\"develop_technology\"",
+      "final_unique_contexts": 626,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 2737
+    },
+    {
+      "class": "\"implement_deploy_technology\"",
+      "final_unique_contexts": 339,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 1445
+    },
+    {
+      "class": "\"use_tool_for_work\"",
+      "final_unique_contexts": 856,
+      "task": "technology_category_and_role:role",
+      "train50_final50_pass": true,
+      "train_unique_contexts": 3872
+    }
+  ],
+  "not_supported_as_complete_original_label_tasks": {
+    "experience_strength": {
+      "explicitly_waived_train_final": [
+        49,
+        4
+      ],
+      "unspecified_train_final": [
+        50,
+        6
+      ]
+    },
+    "experience_conditionality": {
+      "unspecified_train_final": [
+        0,
+        1
+      ]
+    },
+    "years_relation": {
+      "at_most_train_final": [
+        14,
+        7
+      ]
+    },
+    "qualification_group_logic": {
+      "AND_train_final_inventory_contexts": [
+        40,
+        13
+      ]
+    },
+    "entry_scope": "Several classes have insufficient final support",
+    "responsibility_subject_and_relation": "Other-person/employer classes and conditional duty have insufficient support"
+  },
+  "support_gate_not_quality": "Train50/final50 only establishes minimum support. No semantic model field is qualified by these counts.",
+  "boundaries": [
+    "All original classes remain; no rare-class dropping or merging to pass.",
+    "Same-original-item fields have genuine bindings; atomic entity-pair argument spans and explicit no-relation supervision are not present.",
+    "Reference quote conditioned item classification is possible but is an oracle input unless the same candidates can be generated from frozen old outputs without reference labels.",
+    "Candidate recall, repeated/missing entity localization, end-to-end evaluation and group performance remain unexecuted.",
+    "Final split was used in earlier work and is not newly blind; preserve all old exclusions.",
+    "Unknowns and isolated contexts unchanged; no new batch070.",
+    "This is not completion of all precise semantics or T1-T6 reanalysis."
+  ],
+  "independent_review": "Sol/medium inspected actual public support results and confirmed scope and insufficient classes",
+  "runtime_gate": "Existing PyTorch module points to py37 libraries but its loaded PATH did not provide python3; no compatible runtime imported or model loaded. Matching interpreter and transformers compatibility remain unverified.",
+  "production_input_gate": "Not yet validated; do not claim oracle reference quotes are a production candidate generator.",
+  "stop_decision": "Preserve recovered artifacts. Do not start a model fit until both execution and non-oracle input conditions are genuinely met. No repeated labels, model search, paid API or full-corpus job."
+}

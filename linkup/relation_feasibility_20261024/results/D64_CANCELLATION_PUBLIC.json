@@ -1,0 +1,18 @@
+{
+  "version": "user-authorized-d64-stop-v1",
+  "created_utc": "2026-10-24T09:00:28.308934+00:00",
+  "authorization": "User explicitly replied: 不是，请停下旧链并保留已有产物",
+  "jobs": {
+    "47303497_0": "CANCELLED",
+    "47303497_1": "CANCELLED",
+    "47303497_2": "CANCELLED",
+    "47303502": "CANCELLED",
+    "47303503": "CANCELLED"
+  },
+  "command": "scancel 47303503 47303502 47303497",
+  "verified_by": "sacct after cancellation; subsequent squeue showed no remaining user jobs",
+  "running_child_elapsed_each": "00:23:21",
+  "file_deletion_performed": false,
+  "outputs": "All existing and partial files preserved in their existing D64 wave directories",
+  "current_relation_task": "Not included in cancellation; recovery outputs retained"
+}
