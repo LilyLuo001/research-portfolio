@@ -1,5 +1,10 @@
 # LinkUp project execution rules
 
+## Latest readiness checkpoint — permission pending (2026-10-25)
+
+Read `linkup/relation_channel_20261025/ROOT_READINESS_DECISION_PUBLIC.json`. Scheduled Wuzhen jobs 47330115 (20 s) and 47330532 (2 s) checked existing relation metadata and froze a metadata-only permission queue. They did not annotate, train or infer. Existing same-item labels are usable assets; candidate-specific rejection labels remain missing. The proposed supplemental queue is 2,736 existing candidates / 1,659 contexts, with 520 unaccepted year/object-mask candidates excluded and original splits preserved. New semantic judgments are zero. A question requesting explicit permission for this new relation-level annotation has been sent; no answer is recorded yet. Do not start annotation before permission, reopen the closed fit, change sample/unknowns, or claim corpus production. Prior model quality failure below remains in force.
+
+
 ## Latest year-object result — fixed attempt COMPLETE and STOPPED (2026-10-25)
 
 Read `linkup/year_object_relation_20261024/results/ROOT_DECISION_PUBLIC.json` and RESULTS_ZH.md. Actual Wuzhen47326569 COMPLETED0:0 in626seconds: fixed3epochs/882steps,9399train relations,2002compatible finalrelations/981contexts,16178candidate predictions. Conditional retained-Pro agreement84.515percent,macroF1 .758035; all4precisions<.90 andgeneral recall .482456. Primary confirmationbounds .692713 precision/.630948recall are NOT true end-to-end errorrates. Prefrozenqualityrules FAILED,0formalfields; no realshardtest/corpusinference. One actual parameter fit; earlier47326233failedstartup with0steps/epochs, preservedfit001; recoveryonlypurgedinheritedmodules, nohyperparameter/label/splitchanges. Fixed officialcheckpoint and fittedprivateartifact retained. Root/independentacceptance agreeSTOP: noautomaticrelabels/refit/models/parsersearch. ExistingBatch069/Formal800/base/statisticaldeliveries unchanged; wholecorpusfinesemantics remainsunfinished. Do not resurrect prior active-step instructions below as pending work.

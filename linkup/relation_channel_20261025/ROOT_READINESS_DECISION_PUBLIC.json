@@ -1,0 +1,57 @@
+{
+  "as_of_utc": "2026-10-24T18:11:36.508990+00:00",
+  "status": "METADATA_EXECUTED_NEW_RELATION_LABEL_AUTHORIZATION_NEEDED",
+  "authority": "Usersaidstartaddressingfirstremainingproductiongate. Existingreference/code/metadatareadiness executed; no blanketwaiverof priorno-newlabelsconstraintassumed.",
+  "jobs": [
+    {
+      "job": "47330115",
+      "purpose": "existing same-item andbranch labelmetadata readiness",
+      "state": "COMPLETED0:0",
+      "elapsed_seconds": 20,
+      "resources": "2CPU4G1DCU"
+    },
+    {
+      "job": "47330532",
+      "purpose": "existing-unlabeled candidate metadata-only permission queue",
+      "state": "COMPLETED0:0",
+      "elapsed_seconds": 2,
+      "resources": "2CPU4G1DCU"
+    }
+  ],
+  "reused_supervision": {
+    "accepted_object_strength_condition_same_item_train": 30528,
+    "accepted_object_strength_condition_same_item_final": 6928,
+    "explicit_branch_binding_train": 3583,
+    "explicit_branch_binding_final": 867
+  },
+  "gaps": [
+    "Candidate-level explicit rejection/no_relation annotations are missing; document nonmention/unknown cannot supply them.",
+    "Original sparse retained classes lack prespecified train/final support; marginals are not fullchain accuracy.",
+    "Priorfixedyearobjectmodelstillfailsquality; newnegative labels alone do not prove remedy for general-v-occupation confusion.",
+    "Fullrelations required/preferred/alternatives/subject production notimplemented."
+  ],
+  "request_candidate_counts": {
+    "train": 2179,
+    "final_previously_exposed": 464,
+    "previous_holdout_reserved_not_final": 93,
+    "total": 2736,
+    "unique_contexts": 1659,
+    "unaccepted_mask_candidates_excluded": 520
+  },
+  "scope": "Only existing unlabeled numeric candidates in accepted year/object contexts; this request addresses year-relation rejection gap, not completion of all four relations or corpus semantics.",
+  "proposed_permission": "Existing Pro agents may explicitly review relation/no_relation/unknown+evidence for these original candidates, writing a new independent private sidecar with original split membership. No automatic rejection labels; old references/unknowns remain unchanged.",
+  "new_semantic_judgments": 0,
+  "labels_created": 0,
+  "training_runs": 0,
+  "predictions_created": 0,
+  "sample_changed": false,
+  "new_models": 0,
+  "software_installs": 0,
+  "paid_API_calls": 0,
+  "closed_model_unchanged": true,
+  "corpus_inference_submitted": false,
+  "private_root": "/work/home/lilysharp/private/relation_channel_20261025",
+  "review_queue_private_path": "/work/home/lilysharp/private/relation_channel_20261025/review_request_v1",
+  "automatic_review_launched": false,
+  "next_action": "Await explicit permission for new relation-level annotation under prior no-newlabels constraint; no further model fitting or corpus inference claimed."
+}

@@ -1,0 +1,8 @@
+JobID|JobName|State|ExitCode|ElapsedRaw|AllocCPUS|ReqMem
+47330115|lk-relation-inputs|COMPLETED|0:0|20|2|4G
+47330532|lk-relation-request|COMPLETED|0:0|2|2|4G
+
+Purpose: existing-label metadata inventory and metadata-only proposed review queue.
+Both job templates requested one DCU because of the Wuzhen partition configuration;
+the work was CPU metadata processing, not model training or inference.
+No semantic judgments were created by either job.

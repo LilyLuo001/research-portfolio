@@ -1,0 +1,4130 @@
+{
+  "body_or_context_files_opened": 0,
+  "code_sha256": "afe834afd557cd07588a77597c682b1d7431dfa982458c1f7da5b685a86fc75b",
+  "counts": [
+    {
+      "count": 867,
+      "kind": "branch_binding",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "explicit_branch_bound"
+    },
+    {
+      "count": 124,
+      "kind": "branch_binding",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "explicit_branch_bound"
+    },
+    {
+      "count": 3583,
+      "kind": "branch_binding",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "explicit_branch_bound"
+    },
+    {
+      "count": 6038,
+      "kind": "branch_binding",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "null_group_not_negative"
+    },
+    {
+      "count": 1075,
+      "kind": "branch_binding",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "null_group_not_negative"
+    },
+    {
+      "count": 26630,
+      "kind": "branch_binding",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "null_group_not_negative"
+    },
+    {
+      "count": 61,
+      "kind": "branch_binding",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "count": 1,
+      "kind": "branch_binding",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "count": 378,
+      "kind": "branch_binding",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "candidate_only"
+    },
+    {
+      "count": 9,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "candidate_only"
+    },
+    {
+      "count": 1185,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "known"
+    },
+    {
+      "count": 191,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "known"
+    },
+    {
+      "count": 5316,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "known"
+    },
+    {
+      "count": 142,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "not_applicable"
+    },
+    {
+      "count": 32,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "not_applicable"
+    },
+    {
+      "count": 651,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "not_applicable"
+    },
+    {
+      "count": 1,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 23,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 64,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_object",
+      "value": "candidate_only"
+    },
+    {
+      "count": 9,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_object",
+      "value": "candidate_only"
+    },
+    {
+      "count": 1300,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_object",
+      "value": "known"
+    },
+    {
+      "count": 217,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object",
+      "value": "known"
+    },
+    {
+      "count": 5852,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_object",
+      "value": "known"
+    },
+    {
+      "count": 23,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_object",
+      "value": "not_applicable"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object",
+      "value": "not_applicable"
+    },
+    {
+      "count": 91,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_object",
+      "value": "not_applicable"
+    },
+    {
+      "count": 5,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_object",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 26,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 88,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_object",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "candidate_only"
+    },
+    {
+      "count": 9,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "candidate_only"
+    },
+    {
+      "count": 1293,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "known"
+    },
+    {
+      "count": 216,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "known"
+    },
+    {
+      "count": 5807,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "known"
+    },
+    {
+      "count": 23,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "not_applicable"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "not_applicable"
+    },
+    {
+      "count": 91,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "not_applicable"
+    },
+    {
+      "count": 12,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 27,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 133,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "candidate_only"
+    },
+    {
+      "count": 9,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "candidate_only"
+    },
+    {
+      "count": 1286,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "known"
+    },
+    {
+      "count": 215,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "known"
+    },
+    {
+      "count": 5787,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "known"
+    },
+    {
+      "count": 23,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "not_applicable"
+    },
+    {
+      "count": 3,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "not_applicable"
+    },
+    {
+      "count": 91,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "not_applicable"
+    },
+    {
+      "count": 19,
+      "kind": "family_mask",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 28,
+      "kind": "family_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 153,
+      "kind": "family_mask",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "unknown_or_conflict"
+    },
+    {
+      "count": 44,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "value": "conditional"
+    },
+    {
+      "count": 6,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "value": "conditional"
+    },
+    {
+      "count": 140,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "value": "conditional"
+    },
+    {
+      "count": 2193,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "value": "unconditional"
+    },
+    {
+      "count": 388,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "value": "unconditional"
+    },
+    {
+      "count": 10109,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "value": "unconditional"
+    },
+    {
+      "count": 334,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "client_ownership"
+    },
+    {
+      "count": 48,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "client_ownership"
+    },
+    {
+      "count": 1578,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "client_ownership"
+    },
+    {
+      "count": 1115,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "independent_judgment"
+    },
+    {
+      "count": 193,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "independent_judgment"
+    },
+    {
+      "count": 5050,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "independent_judgment"
+    },
+    {
+      "count": 261,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "people_supervision"
+    },
+    {
+      "count": 60,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "people_supervision"
+    },
+    {
+      "count": 1199,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "people_supervision"
+    },
+    {
+      "count": 527,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "training_mentoring"
+    },
+    {
+      "count": 93,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "training_mentoring"
+    },
+    {
+      "count": 2422,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "value": "training_mentoring"
+    },
+    {
+      "count": 1950,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "current_duty"
+    },
+    {
+      "count": 340,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "current_duty"
+    },
+    {
+      "count": 8870,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "current_duty"
+    },
+    {
+      "count": 2,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "employer_description"
+    },
+    {
+      "count": 1,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "employer_description"
+    },
+    {
+      "count": 6,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "employer_description"
+    },
+    {
+      "count": 2,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "other_person"
+    },
+    {
+      "count": 13,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "other_person"
+    },
+    {
+      "count": 80,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "prior_experience"
+    },
+    {
+      "count": 24,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "prior_experience"
+    },
+    {
+      "count": 363,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "prior_experience"
+    },
+    {
+      "count": 203,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "required_capability"
+    },
+    {
+      "count": 29,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "required_capability"
+    },
+    {
+      "count": 997,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "value": "required_capability"
+    },
+    {
+      "count": 2233,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "advertised_worker"
+    },
+    {
+      "count": 393,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "advertised_worker"
+    },
+    {
+      "count": 10234,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "advertised_worker"
+    },
+    {
+      "count": 2,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "employer_general"
+    },
+    {
+      "count": 1,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "employer_general"
+    },
+    {
+      "count": 5,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "employer_general"
+    },
+    {
+      "count": 2,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "other_employee"
+    },
+    {
+      "count": 10,
+      "kind": "field",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "value": "other_employee"
+    },
+    {
+      "count": 366,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "value": "general_work"
+    },
+    {
+      "count": 66,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "value": "general_work"
+    },
+    {
+      "count": 1467,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:object",
+      "value": "general_work"
+    },
+    {
+      "count": 741,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "value": "industry_domain"
+    },
+    {
+      "count": 137,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "value": "industry_domain"
+    },
+    {
+      "count": 3427,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:object",
+      "value": "industry_domain"
+    },
+    {
+      "count": 3002,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "value": "occupation_task"
+    },
+    {
+      "count": 553,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "value": "occupation_task"
+    },
+    {
+      "count": 13577,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:object",
+      "value": "occupation_task"
+    },
+    {
+      "count": 2903,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "value": "tool_specific"
+    },
+    {
+      "count": 454,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "value": "tool_specific"
+    },
+    {
+      "count": 12268,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:object",
+      "value": "tool_specific"
+    },
+    {
+      "count": 4,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "value": "explicitly_waived"
+    },
+    {
+      "count": 2,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "value": "explicitly_waived"
+    },
+    {
+      "count": 56,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "value": "explicitly_waived"
+    },
+    {
+      "count": 2432,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "value": "preferred"
+    },
+    {
+      "count": 421,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "value": "preferred"
+    },
+    {
+      "count": 10872,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "value": "preferred"
+    },
+    {
+      "count": 4562,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "value": "required"
+    },
+    {
+      "count": 780,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "value": "required"
+    },
+    {
+      "count": 19722,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "value": "required"
+    },
+    {
+      "count": 14,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "value": "unspecified"
+    },
+    {
+      "count": 7,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "value": "unspecified"
+    },
+    {
+      "count": 89,
+      "kind": "field",
+      "split": "train",
+      "task": "experience_strength:strength",
+      "value": "unspecified"
+    },
+    {
+      "count": 6099,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "value": "original_null_not_negative"
+    },
+    {
+      "count": 1076,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "value": "original_null_not_negative"
+    },
+    {
+      "count": 27008,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "value": "original_null_not_negative"
+    },
+    {
+      "count": 867,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "value": "present"
+    },
+    {
+      "count": 124,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "value": "present"
+    },
+    {
+      "count": 3583,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "value": "present"
+    },
+    {
+      "count": 6038,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "value": "original_null_not_negative"
+    },
+    {
+      "count": 1075,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "value": "original_null_not_negative"
+    },
+    {
+      "count": 26630,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "value": "original_null_not_negative"
+    },
+    {
+      "count": 928,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "value": "present"
+    },
+    {
+      "count": 125,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "value": "present"
+    },
+    {
+      "count": 3961,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "value": "present"
+    },
+    {
+      "count": 727,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "conditional"
+    },
+    {
+      "count": 115,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "conditional"
+    },
+    {
+      "count": 3100,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "conditional"
+    },
+    {
+      "count": 6235,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "unconditional"
+    },
+    {
+      "count": 1085,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "unconditional"
+    },
+    {
+      "count": 27491,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "unconditional"
+    },
+    {
+      "count": 4,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "value": "unspecified"
+    },
+    {
+      "count": 365,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "general_work"
+    },
+    {
+      "count": 66,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "general_work"
+    },
+    {
+      "count": 1460,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "general_work"
+    },
+    {
+      "count": 737,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "industry_domain"
+    },
+    {
+      "count": 137,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "industry_domain"
+    },
+    {
+      "count": 3411,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "industry_domain"
+    },
+    {
+      "count": 2984,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "occupation_task"
+    },
+    {
+      "count": 545,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "occupation_task"
+    },
+    {
+      "count": 13505,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "occupation_task"
+    },
+    {
+      "count": 2880,
+      "kind": "field",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "tool_specific"
+    },
+    {
+      "count": 452,
+      "kind": "field",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "tool_specific"
+    },
+    {
+      "count": 12215,
+      "kind": "field",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "value": "tool_specific"
+    },
+    {
+      "count": 22,
+      "kind": "group_branches",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "AND"
+    },
+    {
+      "count": 77,
+      "kind": "group_branches",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "AND"
+    },
+    {
+      "count": 1279,
+      "kind": "group_branches",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "OR"
+    },
+    {
+      "count": 201,
+      "kind": "group_branches",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "OR"
+    },
+    {
+      "count": 5617,
+      "kind": "group_branches",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "OR"
+    },
+    {
+      "count": 13,
+      "kind": "groups",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "AND"
+    },
+    {
+      "count": 44,
+      "kind": "groups",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "AND"
+    },
+    {
+      "count": 685,
+      "kind": "groups",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "OR"
+    },
+    {
+      "count": 89,
+      "kind": "groups",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "OR"
+    },
+    {
+      "count": 2942,
+      "kind": "groups",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "OR"
+    },
+    {
+      "count": 1328,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "False"
+    },
+    {
+      "count": 246,
+      "kind": "isolated_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "False"
+    },
+    {
+      "count": 6029,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "False"
+    },
+    {
+      "count": 3,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "True"
+    },
+    {
+      "count": 11,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "True"
+    },
+    {
+      "count": 1328,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_object",
+      "value": "False"
+    },
+    {
+      "count": 246,
+      "kind": "isolated_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_object",
+      "value": "False"
+    },
+    {
+      "count": 6029,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "experience_object",
+      "value": "False"
+    },
+    {
+      "count": 3,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_object",
+      "value": "True"
+    },
+    {
+      "count": 11,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "experience_object",
+      "value": "True"
+    },
+    {
+      "count": 1328,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "False"
+    },
+    {
+      "count": 246,
+      "kind": "isolated_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "False"
+    },
+    {
+      "count": 6029,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "False"
+    },
+    {
+      "count": 3,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "True"
+    },
+    {
+      "count": 11,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "True"
+    },
+    {
+      "count": 1328,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "False"
+    },
+    {
+      "count": 246,
+      "kind": "isolated_mask",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "False"
+    },
+    {
+      "count": 6029,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "False"
+    },
+    {
+      "count": 3,
+      "kind": "isolated_mask",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "True"
+    },
+    {
+      "count": 11,
+      "kind": "isolated_mask",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "True"
+    },
+    {
+      "count": 2237,
+      "kind": "items",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "accepted"
+    },
+    {
+      "count": 394,
+      "kind": "items",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "accepted"
+    },
+    {
+      "count": 10249,
+      "kind": "items",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "accepted"
+    },
+    {
+      "count": 7012,
+      "kind": "items",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "accepted"
+    },
+    {
+      "count": 1210,
+      "kind": "items",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "accepted"
+    },
+    {
+      "count": 30739,
+      "kind": "items",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "accepted"
+    },
+    {
+      "count": 6966,
+      "kind": "items",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "accepted"
+    },
+    {
+      "count": 1200,
+      "kind": "items",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "accepted"
+    },
+    {
+      "count": 30591,
+      "kind": "items",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "accepted"
+    },
+    {
+      "count": 2237,
+      "kind": "pair_endpoint_readiness",
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "False"
+    },
+    {
+      "count": 394,
+      "kind": "pair_endpoint_readiness",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "False"
+    },
+    {
+      "count": 10249,
+      "kind": "pair_endpoint_readiness",
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation",
+      "value": "False"
+    },
+    {
+      "count": 7012,
+      "kind": "pair_endpoint_readiness",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "False"
+    },
+    {
+      "count": 1210,
+      "kind": "pair_endpoint_readiness",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "False"
+    },
+    {
+      "count": 30739,
+      "kind": "pair_endpoint_readiness",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "False"
+    },
+    {
+      "count": 6966,
+      "kind": "pair_endpoint_readiness",
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "False"
+    },
+    {
+      "count": 1200,
+      "kind": "pair_endpoint_readiness",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "False"
+    },
+    {
+      "count": 30591,
+      "kind": "pair_endpoint_readiness",
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives",
+      "value": "False"
+    },
+    {
+      "count": 6928,
+      "kind": "same_item_scope",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "accepted_object_and_qualification"
+    },
+    {
+      "count": 1200,
+      "kind": "same_item_scope",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "accepted_object_and_qualification"
+    },
+    {
+      "count": 30528,
+      "kind": "same_item_scope",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "accepted_object_and_qualification"
+    },
+    {
+      "count": 84,
+      "kind": "same_item_scope",
+      "split": "final_previously_exposed",
+      "task": "experience_strength",
+      "value": "incomplete_binding"
+    },
+    {
+      "count": 10,
+      "kind": "same_item_scope",
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength",
+      "value": "incomplete_binding"
+    },
+    {
+      "count": 211,
+      "kind": "same_item_scope",
+      "split": "train",
+      "task": "experience_strength",
+      "value": "incomplete_binding"
+    }
+  ],
+  "decision": "inventory_only_no_training_or_production_qualification",
+  "generated_labels": 0,
+  "generated_negatives": 0,
+  "input_manifest_sha256": "48e8b0d01884424e286cd836bb37f198b9d52d3b74b029180994a5e0349c745e",
+  "limitations": [
+    "Known/not_applicable/null/unlabeled are never pair negatives.",
+    "Schema key counts and explicit no_relation enum counts do not manufacture pair endpoints.",
+    "Marginal and same-item supports are not candidate binding or end-to-end accuracy.",
+    "All noncore original enum values are retained privately in inputs, aggregated as other_original_value_private."
+  ],
+  "original_item_schema_key_counts": [
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 2237,
+      "key": "conditionality",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 394,
+      "key": "conditionality",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 10249,
+      "key": "conditionality",
+      "split": "train"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 2237,
+      "key": "dimension",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 394,
+      "key": "dimension",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 10249,
+      "key": "dimension",
+      "split": "train"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 2237,
+      "key": "quotes",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 394,
+      "key": "quotes",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 10249,
+      "key": "quotes",
+      "split": "train"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 2237,
+      "key": "relation",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 394,
+      "key": "relation",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 10249,
+      "key": "relation",
+      "split": "train"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 2237,
+      "key": "subject",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 394,
+      "key": "subject",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "current_responsibility_subject_and_relation",
+      "items": 10249,
+      "key": "subject",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "alternative_branch",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "alternative_branch",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "alternative_branch",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "alternative_group",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "alternative_group",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "alternative_group",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "conditionality",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "conditionality",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "conditionality",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "object",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "object",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "object",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "object_detail",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "object_detail",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "object_detail",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "quotes",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "quotes",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "quotes",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "strength",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "strength",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "strength",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "years_max",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "years_max",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "years_max",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "years_min",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "years_min",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "years_min",
+      "split": "train"
+    },
+    {
+      "family": "experience_strength",
+      "items": 7012,
+      "key": "years_relation",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "experience_strength",
+      "items": 1210,
+      "key": "years_relation",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "experience_strength",
+      "items": 30739,
+      "key": "years_relation",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "alternative_branch",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "alternative_branch",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "alternative_branch",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "alternative_group",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "alternative_group",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "alternative_group",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "conditionality",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "conditionality",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "conditionality",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "object",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "object",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "object",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "object_detail",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "object_detail",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "object_detail",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "quotes",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "quotes",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "quotes",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "strength",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "strength",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "strength",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "years_max",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "years_max",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "years_max",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "years_min",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "years_min",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "years_min",
+      "split": "train"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 6966,
+      "key": "years_relation",
+      "split": "final_previously_exposed"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 1200,
+      "key": "years_relation",
+      "split": "previous_holdout_reserved_not_final"
+    },
+    {
+      "family": "qualification_conditions_and_alternatives",
+      "items": 30591,
+      "key": "years_relation",
+      "split": "train"
+    }
+  ],
+  "original_schema_pair_negative_annotation_field": false,
+  "qualification_groups_sha256": "132a6c5c870301b7bee736b66f942a187d7c408eaad466b6ae7cfffc382f11eb",
+  "recovered_items_sha256": "8a28fa07361c4eb56c6630941a8517c4a25f9766412e7519c34e43c76f71797e",
+  "scheduler_job_id": "47330115",
+  "support": [
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 41,
+      "value": "conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 6,
+      "value": "conditional"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 128,
+      "value": "conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 1183,
+      "value": "unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 190,
+      "value": "unconditional"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "unique_contexts": 5303,
+      "value": "unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 326,
+      "value": "client_ownership"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 47,
+      "value": "client_ownership"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 1542,
+      "value": "client_ownership"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 1064,
+      "value": "independent_judgment"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 180,
+      "value": "independent_judgment"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 4809,
+      "value": "independent_judgment"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 244,
+      "value": "people_supervision"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 48,
+      "value": "people_supervision"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 1127,
+      "value": "people_supervision"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 508,
+      "value": "training_mentoring"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 90,
+      "value": "training_mentoring"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "unique_contexts": 2325,
+      "value": "training_mentoring"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 1092,
+      "value": "current_duty"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 182,
+      "value": "current_duty"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 4902,
+      "value": "current_duty"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 2,
+      "value": "employer_description"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 1,
+      "value": "employer_description"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 6,
+      "value": "employer_description"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 2,
+      "value": "other_person"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 13,
+      "value": "other_person"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 69,
+      "value": "prior_experience"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 21,
+      "value": "prior_experience"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 333,
+      "value": "prior_experience"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 187,
+      "value": "required_capability"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 26,
+      "value": "required_capability"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:relation",
+      "unique_contexts": 931,
+      "value": "required_capability"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 1185,
+      "value": "advertised_worker"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 191,
+      "value": "advertised_worker"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 5316,
+      "value": "advertised_worker"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 2,
+      "value": "employer_general"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 1,
+      "value": "employer_general"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 5,
+      "value": "employer_general"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 2,
+      "value": "other_employee"
+    },
+    {
+      "split": "train",
+      "task": "current_responsibility_subject_and_relation:subject",
+      "unique_contexts": 10,
+      "value": "other_employee"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 437,
+      "value": "explicit_branch_bound"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 66,
+      "value": "explicit_branch_bound"
+    },
+    {
+      "split": "train",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 1704,
+      "value": "explicit_branch_bound"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 1270,
+      "value": "null_group_not_negative"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 211,
+      "value": "null_group_not_negative"
+    },
+    {
+      "split": "train",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 5683,
+      "value": "null_group_not_negative"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 34,
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 1,
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "split": "train",
+      "task": "existing_branch_binding_state",
+      "unique_contexts": 200,
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 286,
+      "value": "general_work"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 47,
+      "value": "general_work"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 1145,
+      "value": "general_work"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 591,
+      "value": "industry_domain"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 107,
+      "value": "industry_domain"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 2713,
+      "value": "industry_domain"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 1180,
+      "value": "occupation_task"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 202,
+      "value": "occupation_task"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 5293,
+      "value": "occupation_task"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:object",
+      "unique_contexts": 1110,
+      "value": "tool_specific"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:object",
+      "unique_contexts": 188,
+      "value": "tool_specific"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:object",
+      "unique_contexts": 4895,
+      "value": "tool_specific"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 4,
+      "value": "explicitly_waived"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 2,
+      "value": "explicitly_waived"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 49,
+      "value": "explicitly_waived"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 952,
+      "value": "preferred"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 163,
+      "value": "preferred"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 4325,
+      "value": "preferred"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 1242,
+      "value": "required"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 205,
+      "value": "required"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 5568,
+      "value": "required"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "experience_strength:strength",
+      "unique_contexts": 6,
+      "value": "unspecified"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "experience_strength:strength",
+      "unique_contexts": 4,
+      "value": "unspecified"
+    },
+    {
+      "split": "train",
+      "task": "experience_strength:strength",
+      "unique_contexts": 50,
+      "value": "unspecified"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "original_group_relation",
+      "unique_contexts": 13,
+      "value": "AND"
+    },
+    {
+      "split": "train",
+      "task": "original_group_relation",
+      "unique_contexts": 40,
+      "value": "AND"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "original_group_relation",
+      "unique_contexts": 506,
+      "value": "OR"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "original_group_relation",
+      "unique_contexts": 74,
+      "value": "OR"
+    },
+    {
+      "split": "train",
+      "task": "original_group_relation",
+      "unique_contexts": 2153,
+      "value": "OR"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "unique_contexts": 1271,
+      "value": "original_null_not_negative"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "unique_contexts": 211,
+      "value": "original_null_not_negative"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "unique_contexts": 5699,
+      "value": "original_null_not_negative"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "unique_contexts": 437,
+      "value": "present"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "unique_contexts": 66,
+      "value": "present"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "unique_contexts": 1704,
+      "value": "present"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "unique_contexts": 1270,
+      "value": "original_null_not_negative"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "unique_contexts": 211,
+      "value": "original_null_not_negative"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "unique_contexts": 5683,
+      "value": "original_null_not_negative"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "unique_contexts": 462,
+      "value": "present"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "unique_contexts": 67,
+      "value": "present"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "unique_contexts": 1867,
+      "value": "present"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 381,
+      "value": "conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 62,
+      "value": "conditional"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 1493,
+      "value": "conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 1275,
+      "value": "unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 211,
+      "value": "unconditional"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 5703,
+      "value": "unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "unique_contexts": 1,
+      "value": "unspecified"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 285,
+      "value": "general_work"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 47,
+      "value": "general_work"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 1139,
+      "value": "general_work"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 588,
+      "value": "industry_domain"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 107,
+      "value": "industry_domain"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 2699,
+      "value": "industry_domain"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 1173,
+      "value": "occupation_task"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 201,
+      "value": "occupation_task"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 5275,
+      "value": "occupation_task"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 1103,
+      "value": "tool_specific"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 187,
+      "value": "tool_specific"
+    },
+    {
+      "split": "train",
+      "task": "qualification_conditions_and_alternatives:object",
+      "unique_contexts": 4881,
+      "value": "tool_specific"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "client_ownership|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "client_ownership|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 309,
+      "value": "client_ownership|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 44,
+      "value": "client_ownership|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1473,
+      "value": "client_ownership|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "client_ownership|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 7,
+      "value": "client_ownership|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 2,
+      "value": "client_ownership|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 32,
+      "value": "client_ownership|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 8,
+      "value": "client_ownership|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "client_ownership|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 41,
+      "value": "client_ownership|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 3,
+      "value": "independent_judgment|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "independent_judgment|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 11,
+      "value": "independent_judgment|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 911,
+      "value": "independent_judgment|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 159,
+      "value": "independent_judgment|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4051,
+      "value": "independent_judgment|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "independent_judgment|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 17,
+      "value": "independent_judgment|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 2,
+      "value": "independent_judgment|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 66,
+      "value": "independent_judgment|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "independent_judgment|advertised_worker|required_capability|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 158,
+      "value": "independent_judgment|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 22,
+      "value": "independent_judgment|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 793,
+      "value": "independent_judgment|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "independent_judgment|employer_general|employer_description|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 19,
+      "value": "people_supervision|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "people_supervision|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 58,
+      "value": "people_supervision|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 197,
+      "value": "people_supervision|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 38,
+      "value": "people_supervision|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 929,
+      "value": "people_supervision|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "people_supervision|advertised_worker|other_person|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "people_supervision|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 6,
+      "value": "people_supervision|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 28,
+      "value": "people_supervision|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 16,
+      "value": "people_supervision|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 149,
+      "value": "people_supervision|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 9,
+      "value": "people_supervision|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "people_supervision|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 48,
+      "value": "people_supervision|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "people_supervision|other_employee|other_person|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 14,
+      "value": "training_mentoring|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "training_mentoring|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 50,
+      "value": "training_mentoring|advertised_worker|current_duty|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 453,
+      "value": "training_mentoring|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 81,
+      "value": "training_mentoring|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 2096,
+      "value": "training_mentoring|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "training_mentoring|advertised_worker|other_person|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 3,
+      "value": "training_mentoring|advertised_worker|other_person|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 2,
+      "value": "training_mentoring|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 24,
+      "value": "training_mentoring|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "training_mentoring|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 106,
+      "value": "training_mentoring|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "training_mentoring|advertised_worker|required_capability|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 25,
+      "value": "training_mentoring|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 5,
+      "value": "training_mentoring|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 109,
+      "value": "training_mentoring|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 2,
+      "value": "training_mentoring|employer_general|employer_description|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "training_mentoring|employer_general|employer_description|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 4,
+      "value": "training_mentoring|employer_general|employer_description|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "training_mentoring|other_employee|current_duty|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 1,
+      "value": "training_mentoring|other_employee|employer_description|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 2,
+      "value": "training_mentoring|other_employee|other_person|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "unique_contexts": 7,
+      "value": "training_mentoring|other_employee|other_person|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "general_work|explicitly_waived|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 15,
+      "value": "general_work|explicitly_waived|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "general_work|explicitly_waived|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 13,
+      "value": "general_work|preferred|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 4,
+      "value": "general_work|preferred|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 48,
+      "value": "general_work|preferred|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 22,
+      "value": "general_work|preferred|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 3,
+      "value": "general_work|preferred|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 78,
+      "value": "general_work|preferred|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 130,
+      "value": "general_work|required|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 29,
+      "value": "general_work|required|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 460,
+      "value": "general_work|required|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 136,
+      "value": "general_work|required|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 13,
+      "value": "general_work|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 602,
+      "value": "general_work|required|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "general_work|unspecified|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "general_work|unspecified|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "general_work|unspecified|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 5,
+      "value": "general_work|unspecified|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 9,
+      "value": "industry_domain|explicitly_waived|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 23,
+      "value": "industry_domain|preferred|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "industry_domain|preferred|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 75,
+      "value": "industry_domain|preferred|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 348,
+      "value": "industry_domain|preferred|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 68,
+      "value": "industry_domain|preferred|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1673,
+      "value": "industry_domain|preferred|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 29,
+      "value": "industry_domain|required|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 4,
+      "value": "industry_domain|required|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 145,
+      "value": "industry_domain|required|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 256,
+      "value": "industry_domain|required|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 48,
+      "value": "industry_domain|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1136,
+      "value": "industry_domain|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 5,
+      "value": "industry_domain|unspecified|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "industry_domain|unspecified|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "industry_domain|unspecified|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 6,
+      "value": "industry_domain|unspecified|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "industry_domain|unspecified|unspecified"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|explicitly_waived|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 17,
+      "value": "occupation_task|explicitly_waived|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 2,
+      "value": "occupation_task|explicitly_waived|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|explicitly_waived|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|explicitly_waived|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 47,
+      "value": "occupation_task|preferred|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|preferred|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 138,
+      "value": "occupation_task|preferred|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 507,
+      "value": "occupation_task|preferred|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 86,
+      "value": "occupation_task|preferred|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 2287,
+      "value": "occupation_task|preferred|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 187,
+      "value": "occupation_task|required|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 25,
+      "value": "occupation_task|required|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 868,
+      "value": "occupation_task|required|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 978,
+      "value": "occupation_task|required|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 168,
+      "value": "occupation_task|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 4361,
+      "value": "occupation_task|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|unspecified|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|unspecified|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|unspecified|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 21,
+      "value": "occupation_task|unspecified|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "occupation_task|unspecified|unspecified"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "tool_specific|explicitly_waived|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 3,
+      "value": "tool_specific|explicitly_waived|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 3,
+      "value": "tool_specific|explicitly_waived|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 36,
+      "value": "tool_specific|preferred|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 3,
+      "value": "tool_specific|preferred|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 131,
+      "value": "tool_specific|preferred|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 626,
+      "value": "tool_specific|preferred|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 120,
+      "value": "tool_specific|preferred|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 2877,
+      "value": "tool_specific|preferred|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 40,
+      "value": "tool_specific|required|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 2,
+      "value": "tool_specific|required|conditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 178,
+      "value": "tool_specific|required|conditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 827,
+      "value": "tool_specific|required|unconditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 143,
+      "value": "tool_specific|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 3577,
+      "value": "tool_specific|required|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 2,
+      "value": "tool_specific|unspecified|conditional"
+    },
+    {
+      "split": "previous_holdout_reserved_not_final",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "tool_specific|unspecified|unconditional"
+    },
+    {
+      "split": "train",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 23,
+      "value": "tool_specific|unspecified|unconditional"
+    },
+    {
+      "split": "final_previously_exposed",
+      "task": "same_item_object_strength_conditionality",
+      "unique_contexts": 1,
+      "value": "tool_specific|unspecified|unspecified"
+    }
+  ],
+  "support_gate": [
+    {
+      "final_previously_exposed": 41,
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "train": 128,
+      "train50_final50_pass": false,
+      "value": "conditional"
+    },
+    {
+      "final_previously_exposed": 1183,
+      "task": "current_responsibility_subject_and_relation:conditionality",
+      "train": 5303,
+      "train50_final50_pass": true,
+      "value": "unconditional"
+    },
+    {
+      "final_previously_exposed": 326,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train": 1542,
+      "train50_final50_pass": true,
+      "value": "client_ownership"
+    },
+    {
+      "final_previously_exposed": 1064,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train": 4809,
+      "train50_final50_pass": true,
+      "value": "independent_judgment"
+    },
+    {
+      "final_previously_exposed": 244,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train": 1127,
+      "train50_final50_pass": true,
+      "value": "people_supervision"
+    },
+    {
+      "final_previously_exposed": 508,
+      "task": "current_responsibility_subject_and_relation:dimension",
+      "train": 2325,
+      "train50_final50_pass": true,
+      "value": "training_mentoring"
+    },
+    {
+      "final_previously_exposed": 1092,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train": 4902,
+      "train50_final50_pass": true,
+      "value": "current_duty"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train": 6,
+      "train50_final50_pass": false,
+      "value": "employer_description"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train": 13,
+      "train50_final50_pass": false,
+      "value": "other_person"
+    },
+    {
+      "final_previously_exposed": 69,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train": 333,
+      "train50_final50_pass": true,
+      "value": "prior_experience"
+    },
+    {
+      "final_previously_exposed": 187,
+      "task": "current_responsibility_subject_and_relation:relation",
+      "train": 931,
+      "train50_final50_pass": true,
+      "value": "required_capability"
+    },
+    {
+      "final_previously_exposed": 1185,
+      "task": "current_responsibility_subject_and_relation:subject",
+      "train": 5316,
+      "train50_final50_pass": true,
+      "value": "advertised_worker"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "current_responsibility_subject_and_relation:subject",
+      "train": 5,
+      "train50_final50_pass": false,
+      "value": "employer_general"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "current_responsibility_subject_and_relation:subject",
+      "train": 10,
+      "train50_final50_pass": false,
+      "value": "other_employee"
+    },
+    {
+      "final_previously_exposed": 437,
+      "task": "existing_branch_binding_state",
+      "train": 1704,
+      "train50_final50_pass": true,
+      "value": "explicit_branch_bound"
+    },
+    {
+      "final_previously_exposed": 1270,
+      "task": "existing_branch_binding_state",
+      "train": 5683,
+      "train50_final50_pass": true,
+      "value": "null_group_not_negative"
+    },
+    {
+      "final_previously_exposed": 34,
+      "task": "existing_branch_binding_state",
+      "train": 200,
+      "train50_final50_pass": false,
+      "value": "shared_condition_null_branch_not_negative"
+    },
+    {
+      "final_previously_exposed": 286,
+      "task": "experience_strength:object",
+      "train": 1145,
+      "train50_final50_pass": true,
+      "value": "general_work"
+    },
+    {
+      "final_previously_exposed": 591,
+      "task": "experience_strength:object",
+      "train": 2713,
+      "train50_final50_pass": true,
+      "value": "industry_domain"
+    },
+    {
+      "final_previously_exposed": 1180,
+      "task": "experience_strength:object",
+      "train": 5293,
+      "train50_final50_pass": true,
+      "value": "occupation_task"
+    },
+    {
+      "final_previously_exposed": 1110,
+      "task": "experience_strength:object",
+      "train": 4895,
+      "train50_final50_pass": true,
+      "value": "tool_specific"
+    },
+    {
+      "final_previously_exposed": 4,
+      "task": "experience_strength:strength",
+      "train": 49,
+      "train50_final50_pass": false,
+      "value": "explicitly_waived"
+    },
+    {
+      "final_previously_exposed": 952,
+      "task": "experience_strength:strength",
+      "train": 4325,
+      "train50_final50_pass": true,
+      "value": "preferred"
+    },
+    {
+      "final_previously_exposed": 1242,
+      "task": "experience_strength:strength",
+      "train": 5568,
+      "train50_final50_pass": true,
+      "value": "required"
+    },
+    {
+      "final_previously_exposed": 6,
+      "task": "experience_strength:strength",
+      "train": 50,
+      "train50_final50_pass": false,
+      "value": "unspecified"
+    },
+    {
+      "final_previously_exposed": 13,
+      "task": "original_group_relation",
+      "train": 40,
+      "train50_final50_pass": false,
+      "value": "AND"
+    },
+    {
+      "final_previously_exposed": 506,
+      "task": "original_group_relation",
+      "train": 2153,
+      "train50_final50_pass": true,
+      "value": "OR"
+    },
+    {
+      "final_previously_exposed": 1271,
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "train": 5699,
+      "train50_final50_pass": true,
+      "value": "original_null_not_negative"
+    },
+    {
+      "final_previously_exposed": 437,
+      "task": "qualification_conditions_and_alternatives:alternative_branch",
+      "train": 1704,
+      "train50_final50_pass": true,
+      "value": "present"
+    },
+    {
+      "final_previously_exposed": 1270,
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "train": 5683,
+      "train50_final50_pass": true,
+      "value": "original_null_not_negative"
+    },
+    {
+      "final_previously_exposed": 462,
+      "task": "qualification_conditions_and_alternatives:alternative_group",
+      "train": 1867,
+      "train50_final50_pass": true,
+      "value": "present"
+    },
+    {
+      "final_previously_exposed": 381,
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "train": 1493,
+      "train50_final50_pass": true,
+      "value": "conditional"
+    },
+    {
+      "final_previously_exposed": 1275,
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "train": 5703,
+      "train50_final50_pass": true,
+      "value": "unconditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "qualification_conditions_and_alternatives:conditionality",
+      "train": 0,
+      "train50_final50_pass": false,
+      "value": "unspecified"
+    },
+    {
+      "final_previously_exposed": 285,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train": 1139,
+      "train50_final50_pass": true,
+      "value": "general_work"
+    },
+    {
+      "final_previously_exposed": 588,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train": 2699,
+      "train50_final50_pass": true,
+      "value": "industry_domain"
+    },
+    {
+      "final_previously_exposed": 1173,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train": 5275,
+      "train50_final50_pass": true,
+      "value": "occupation_task"
+    },
+    {
+      "final_previously_exposed": 1103,
+      "task": "qualification_conditions_and_alternatives:object",
+      "train": 4881,
+      "train50_final50_pass": true,
+      "value": "tool_specific"
+    },
+    {
+      "final_previously_exposed": 4,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 4,
+      "train50_final50_pass": false,
+      "value": "client_ownership|advertised_worker|current_duty|conditional"
+    },
+    {
+      "final_previously_exposed": 309,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1473,
+      "train50_final50_pass": true,
+      "value": "client_ownership|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "client_ownership|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "final_previously_exposed": 7,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 32,
+      "train50_final50_pass": false,
+      "value": "client_ownership|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "final_previously_exposed": 8,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 41,
+      "train50_final50_pass": false,
+      "value": "client_ownership|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "final_previously_exposed": 3,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 11,
+      "train50_final50_pass": false,
+      "value": "independent_judgment|advertised_worker|current_duty|conditional"
+    },
+    {
+      "final_previously_exposed": 911,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 4051,
+      "train50_final50_pass": true,
+      "value": "independent_judgment|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "independent_judgment|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "final_previously_exposed": 17,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 66,
+      "train50_final50_pass": false,
+      "value": "independent_judgment|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "independent_judgment|advertised_worker|required_capability|conditional"
+    },
+    {
+      "final_previously_exposed": 158,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 793,
+      "train50_final50_pass": true,
+      "value": "independent_judgment|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "independent_judgment|employer_general|employer_description|unconditional"
+    },
+    {
+      "final_previously_exposed": 19,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 58,
+      "train50_final50_pass": false,
+      "value": "people_supervision|advertised_worker|current_duty|conditional"
+    },
+    {
+      "final_previously_exposed": 197,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 929,
+      "train50_final50_pass": true,
+      "value": "people_supervision|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "people_supervision|advertised_worker|other_person|unconditional"
+    },
+    {
+      "final_previously_exposed": 4,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 6,
+      "train50_final50_pass": false,
+      "value": "people_supervision|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "final_previously_exposed": 28,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 149,
+      "train50_final50_pass": false,
+      "value": "people_supervision|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "final_previously_exposed": 9,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 48,
+      "train50_final50_pass": false,
+      "value": "people_supervision|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "people_supervision|other_employee|other_person|unconditional"
+    },
+    {
+      "final_previously_exposed": 14,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 50,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|current_duty|conditional"
+    },
+    {
+      "final_previously_exposed": 453,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 2096,
+      "train50_final50_pass": true,
+      "value": "training_mentoring|advertised_worker|current_duty|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|other_person|conditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 3,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|other_person|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 2,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|prior_experience|conditional"
+    },
+    {
+      "final_previously_exposed": 24,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 106,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|prior_experience|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 4,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|required_capability|conditional"
+    },
+    {
+      "final_previously_exposed": 25,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 109,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|advertised_worker|required_capability|unconditional"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 4,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|employer_general|employer_description|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|other_employee|current_duty|conditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|other_employee|employer_description|unconditional"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "same_item_dimension_subject_relation_conditionality",
+      "train": 7,
+      "train50_final50_pass": false,
+      "value": "training_mentoring|other_employee|other_person|unconditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 15,
+      "train50_final50_pass": false,
+      "value": "general_work|explicitly_waived|conditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "general_work|explicitly_waived|unconditional"
+    },
+    {
+      "final_previously_exposed": 13,
+      "task": "same_item_object_strength_conditionality",
+      "train": 48,
+      "train50_final50_pass": false,
+      "value": "general_work|preferred|conditional"
+    },
+    {
+      "final_previously_exposed": 22,
+      "task": "same_item_object_strength_conditionality",
+      "train": 78,
+      "train50_final50_pass": false,
+      "value": "general_work|preferred|unconditional"
+    },
+    {
+      "final_previously_exposed": 130,
+      "task": "same_item_object_strength_conditionality",
+      "train": 460,
+      "train50_final50_pass": true,
+      "value": "general_work|required|conditional"
+    },
+    {
+      "final_previously_exposed": 136,
+      "task": "same_item_object_strength_conditionality",
+      "train": 602,
+      "train50_final50_pass": true,
+      "value": "general_work|required|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "general_work|unspecified|conditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 5,
+      "train50_final50_pass": false,
+      "value": "general_work|unspecified|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 9,
+      "train50_final50_pass": false,
+      "value": "industry_domain|explicitly_waived|unconditional"
+    },
+    {
+      "final_previously_exposed": 23,
+      "task": "same_item_object_strength_conditionality",
+      "train": 75,
+      "train50_final50_pass": false,
+      "value": "industry_domain|preferred|conditional"
+    },
+    {
+      "final_previously_exposed": 348,
+      "task": "same_item_object_strength_conditionality",
+      "train": 1673,
+      "train50_final50_pass": true,
+      "value": "industry_domain|preferred|unconditional"
+    },
+    {
+      "final_previously_exposed": 29,
+      "task": "same_item_object_strength_conditionality",
+      "train": 145,
+      "train50_final50_pass": false,
+      "value": "industry_domain|required|conditional"
+    },
+    {
+      "final_previously_exposed": 256,
+      "task": "same_item_object_strength_conditionality",
+      "train": 1136,
+      "train50_final50_pass": true,
+      "value": "industry_domain|required|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 5,
+      "train50_final50_pass": false,
+      "value": "industry_domain|unspecified|conditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 6,
+      "train50_final50_pass": false,
+      "value": "industry_domain|unspecified|unconditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 0,
+      "train50_final50_pass": false,
+      "value": "industry_domain|unspecified|unspecified"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 17,
+      "train50_final50_pass": false,
+      "value": "occupation_task|explicitly_waived|conditional"
+    },
+    {
+      "final_previously_exposed": 2,
+      "task": "same_item_object_strength_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "occupation_task|explicitly_waived|unconditional"
+    },
+    {
+      "final_previously_exposed": 47,
+      "task": "same_item_object_strength_conditionality",
+      "train": 138,
+      "train50_final50_pass": false,
+      "value": "occupation_task|preferred|conditional"
+    },
+    {
+      "final_previously_exposed": 507,
+      "task": "same_item_object_strength_conditionality",
+      "train": 2287,
+      "train50_final50_pass": true,
+      "value": "occupation_task|preferred|unconditional"
+    },
+    {
+      "final_previously_exposed": 187,
+      "task": "same_item_object_strength_conditionality",
+      "train": 868,
+      "train50_final50_pass": true,
+      "value": "occupation_task|required|conditional"
+    },
+    {
+      "final_previously_exposed": 978,
+      "task": "same_item_object_strength_conditionality",
+      "train": 4361,
+      "train50_final50_pass": true,
+      "value": "occupation_task|required|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 1,
+      "train50_final50_pass": false,
+      "value": "occupation_task|unspecified|conditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 21,
+      "train50_final50_pass": false,
+      "value": "occupation_task|unspecified|unconditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 0,
+      "train50_final50_pass": false,
+      "value": "occupation_task|unspecified|unspecified"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 3,
+      "train50_final50_pass": false,
+      "value": "tool_specific|explicitly_waived|conditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 3,
+      "train50_final50_pass": false,
+      "value": "tool_specific|explicitly_waived|unconditional"
+    },
+    {
+      "final_previously_exposed": 36,
+      "task": "same_item_object_strength_conditionality",
+      "train": 131,
+      "train50_final50_pass": false,
+      "value": "tool_specific|preferred|conditional"
+    },
+    {
+      "final_previously_exposed": 626,
+      "task": "same_item_object_strength_conditionality",
+      "train": 2877,
+      "train50_final50_pass": true,
+      "value": "tool_specific|preferred|unconditional"
+    },
+    {
+      "final_previously_exposed": 40,
+      "task": "same_item_object_strength_conditionality",
+      "train": 178,
+      "train50_final50_pass": false,
+      "value": "tool_specific|required|conditional"
+    },
+    {
+      "final_previously_exposed": 827,
+      "task": "same_item_object_strength_conditionality",
+      "train": 3577,
+      "train50_final50_pass": true,
+      "value": "tool_specific|required|unconditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 2,
+      "train50_final50_pass": false,
+      "value": "tool_specific|unspecified|conditional"
+    },
+    {
+      "final_previously_exposed": 0,
+      "task": "same_item_object_strength_conditionality",
+      "train": 23,
+      "train50_final50_pass": false,
+      "value": "tool_specific|unspecified|unconditional"
+    },
+    {
+      "final_previously_exposed": 1,
+      "task": "same_item_object_strength_conditionality",
+      "train": 0,
+      "train50_final50_pass": false,
+      "value": "tool_specific|unspecified|unspecified"
+    }
+  ],
+  "version": "relation-channel-metadata-inventory-v1"
+}

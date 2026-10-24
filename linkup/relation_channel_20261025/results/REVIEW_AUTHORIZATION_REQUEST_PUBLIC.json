@@ -1,0 +1,72 @@
+{
+  "authority_status": "AWAITING_EXPLICIT_NEW_RELATION_LABEL_AUTHORIZATION",
+  "batch070_queue": false,
+  "candidate_input_sha256": "8227c3a784c330f18f14cb4e0a1f08d0a56a0ef59926a2d1b68a5c3ad21637ed",
+  "code_sha256": "eec575518788dbeecfab8550d0617af51c44dd2bd1bf330455bd92ca2946f551",
+  "context_input_sha256": "b774fb5927c23fd22a9cd79aa7de683ec9f3ae979b749b6626ef4730aa8ea6f3",
+  "counts_by_original_split": {
+    "final_previously_exposed": {
+      "all_existing_candidates": 2744,
+      "all_original_unlabeled": 523,
+      "eligible_request": 464,
+      "excluded_unaccepted_masks": 59,
+      "other_existing_supervision_states_not_requested": 2221
+    },
+    "previous_holdout_reserved_not_final": {
+      "all_existing_candidates": 574,
+      "all_original_unlabeled": 138,
+      "eligible_request": 93,
+      "excluded_unaccepted_masks": 45,
+      "other_existing_supervision_states_not_requested": 436
+    },
+    "train": {
+      "all_existing_candidates": 12860,
+      "all_original_unlabeled": 2595,
+      "eligible_request": 2179,
+      "excluded_unaccepted_masks": 416,
+      "other_existing_supervision_states_not_requested": 10265
+    }
+  },
+  "exact_original_unlabeled_state": "unlabeled_candidate_no_negative",
+  "labels_created": 0,
+  "negatives_inferred": 0,
+  "new_semantic_judgments": 0,
+  "purpose": "Concrete existing-membership permission request only; no automatic review or training.",
+  "queue_files": {
+    "final_previously_exposed": {
+      "candidates": 464,
+      "filename": "REQUEST_final_previously_exposed_PRIVATE.jsonl",
+      "sha256": "27e033003a6455bf91e93a82ed3b0ac9d1248db5969a6831712f2ef0d629a63c"
+    },
+    "previous_holdout_reserved_not_final": {
+      "candidates": 93,
+      "filename": "REQUEST_previous_holdout_reserved_not_final_PRIVATE.jsonl",
+      "sha256": "6a25444c32c63f5b7d5bb8b2b969f83ff9de5d8b0eaa5a7313208e2b36705174"
+    },
+    "train": {
+      "candidates": 2179,
+      "filename": "REQUEST_train_PRIVATE.jsonl",
+      "sha256": "22c265ffe0daea6a28ae6a72821fc2600f6f42aaa17b6dfff9586f9d2e756de4"
+    }
+  },
+  "review_launched": false,
+  "sample_changed": false,
+  "scheduler_job_id": "47330532",
+  "unique_contexts_by_original_split": {
+    "final_previously_exposed": {
+      "all_original_unlabeled": 294,
+      "eligible_request": 274,
+      "excluded_unaccepted_masks": 20
+    },
+    "previous_holdout_reserved_not_final": {
+      "all_original_unlabeled": 68,
+      "eligible_request": 49,
+      "excluded_unaccepted_masks": 19
+    },
+    "train": {
+      "all_original_unlabeled": 1496,
+      "eligible_request": 1336,
+      "excluded_unaccepted_masks": 160
+    }
+  }
+}
