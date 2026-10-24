@@ -2,6 +2,20 @@
 
 日期：2026-10-24。性质：用户授权的文献调查；不是新训练、模型部署或生产启动授权。Batch069、Formal800、已发布六表及关闭的 TF-IDF 基线保持不动。
 
+## 历史核对后的限定：不是全新的研究路线
+
+用户要求纳入八月、九月及后续全部版本。已补齐当前Git克隆此前缺少的历史，核对八月DAX/YAX代码、回执及本地八月归档，并核对九月起LinkUp快照与留存会话。留存的本任务逐字会话始于9月13日；不能声称已读到未找到的八月逐字对话。
+
+| 历史阶段 | 可核验的实际方法 | 与本建议的关系 |
+|---|---|---|
+| 8月18日DAX Mapping A | 固定`all-MiniLM-L6-v2`编码器，O*NET/GDPval语义相似度与检索；代码加载后`eval()`、`no_grad()` | 已用过神经文本编码器；不是招聘条款片段/关系监督训练。证据：`dax/mapping/mapA_ex_ante_model_choice.md`、`run_mapA.py`、`mapA_run_receipt.json`；提交`b76e999`、`d274cd9`、`48cfdca`。 |
+| 9月Stage C各版 | 规则/词典定位片段、年限与局部关系；Pro模型诊断后修规则 | 已做证据定位与关系表示，不能重新说这些资产从未做过；未找到上下文编码器关系训练。证据：`stage_c/requirement_candidates.py`、`stage_c_v5/DECISION.md`、`stage_c_v6/DECISION.md`（位于9月28日source_snapshot）。 |
+| 10月初Qwen与compact | 提示词驱动的结构化生成及两模型分包阅读；未微调 | 已尝试让模型判断相同语义问题，但不是用参考标签拟合专用关系分类器。固定32输出可解析不等于质量通过；见`cloud_execution_20261008/cpu_qualification/ROOT_CONTRACT_CORRECTION_DECISION.json`。 |
+| 原方案二与方案四 | 代码候选＋中档模型判语境；另曾明确提出强模型示范后训练专用分类器 | 大方向已提出，上一条将其称为新思路过宽。实际relation overlay是正则和有限Pro审查，非训练模型；见`hybrid_production_20261009/relation_overlay.py`与`RESEARCH_ALIGNMENT.md`。 |
+| 10月17–23日CPU监督基线 | 实际拟合TF-IDF＋LinearSVC，27个文档级presence目标；最终0正式采用 | 已做“参考标签训练便宜模型”；未实现片段预测、年限绑定或关系重建。见`fixed10k_continuation_20261017/baseline_optimized/code/final_fit.py`与`final_results/FINAL_DECISION_ZH.md`。 |
+
+准确结论：**整体思想与多项组件早已存在；未找到实际编码、训练或验收GOJA式“片段＋带实体标记的上下文关系分类器”的记录。** 这是此前方案的具体实现候选，不是全新方向，也不是已经证明能成功的生产方法。当前证据不支持重建全部定位/解析流程；已有定位和关系资产须优先复用，训练标签是否确有可用绑定仍需据实判断。此次历史核对不启动训练、补标或生产。
+
 ## 结论
 
 建议的下一种方法是GOJA式有监督的“原文片段提取＋带实体标记的上下文关系分类”。首选固定XLM-RoBERTa-base作为编码器候选，分别承担片段与关系任务；复用已有语义定义与保留证据的Pro参考成果。文献支持这种任务表达与监督方式；尚无证据证明现成权重已满足本项目字段要求。
