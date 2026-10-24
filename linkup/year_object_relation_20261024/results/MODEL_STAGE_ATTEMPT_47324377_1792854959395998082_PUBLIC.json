@@ -1,0 +1,306 @@
+{
+  "code_sha256": "b2f4037ef77e722e7538c39e0b71024c7a068fe129b8785de475643a1e48cc61",
+  "created_utc": "2026-10-24T15:15:59.397308+00:00",
+  "elapsed_seconds": 899.4211472420138,
+  "failure_type": "RuntimeError",
+  "installed_software": 0,
+  "job_id": "47324377",
+  "official_weight_sha256": "9d83baaafea92d36de26002c8135a427d55ee6fdc4faaa6e400be4c47724a07e",
+  "paid_API_calls": 0,
+  "per_file": {
+    "config.json": {
+      "attempts": [],
+      "bytes": 615,
+      "elapsed_seconds": 0.0017469240119680762,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "d66ed8cd4f2a93b358c245e50736fa389ed4f35c0bae7aad0b32abb20c62b579",
+      "status": "reused_existing_local_file"
+    },
+    "pytorch_model.bin": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "attempts_per_part": 1,
+          "failure_type": "ParallelRangeFailedNoFallback",
+          "max_parallel_parts": 16,
+          "max_transport_seconds": 900,
+          "parallel_parts": 16,
+          "parts": [
+            {
+              "bytes": 69724402,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 8.269648760964628,
+              "end": 69724401,
+              "expected_bytes": 69724402,
+              "http_status": 206,
+              "part": "part00",
+              "sha256": "41d9ba28fae59a5f5413f423a376e47b9e6987f70e11a6d660d2493464b94e98",
+              "start": 0,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 9.791247254994232,
+              "end": 139448804,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part01",
+              "sha256": "81f80fa13eb48203b62edb5d19fce62011d9be67730ed1fac9d25d20e4693e82",
+              "start": 69724402,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 895.5939683120232,
+              "end": 209173207,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part02",
+              "sha256": "b0bcde3b3ce1acfe4698880fddc00f03d53ebfdc68d151ad3ec74ae93943eedd",
+              "start": 139448805,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 68.19542564899893,
+              "end": 278897610,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part03",
+              "sha256": "c7ec912bbf999b55fb6a73485b3885d476d66df41001cb255ed4bb82778cd87a",
+              "start": 209173208,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 40.010371420998126,
+              "end": 348622013,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part04",
+              "sha256": "1d0b53435a5f4c8e50afbcda54da909470572d479b1478810a1bcab88138ad11",
+              "start": 278897611,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 9.240614930982701,
+              "end": 418346416,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part05",
+              "sha256": "4ec2bb185989e1cda3aff294bc715e79ddc3d38ef81e6f1cefc12b36f3b54641",
+              "start": 348622014,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 71.52121875202283,
+              "end": 488070819,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part06",
+              "sha256": "eee07558ffd090222fd8118ef4a823233bf9ba97037c735dcc964322de89bb76",
+              "start": 418346417,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 64.57324635796249,
+              "end": 557795222,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part07",
+              "sha256": "fad3875636a198730f80355433f0b889929474b32d75a2b4006fb252f51dff6d",
+              "start": 488070820,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724402,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 8.096161096997093,
+              "end": 627519624,
+              "expected_bytes": 69724402,
+              "http_status": 206,
+              "part": "part08",
+              "sha256": "dc6ae866786bb4c893916924b00fd019fa3a07de248cc7ae25fc7f6ce1771a0d",
+              "start": 557795223,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 7.168465866998304,
+              "end": 697244027,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part09",
+              "sha256": "14fd2605817b33bb3341761f26d84efa8558abf0fbf8c4ce6a0fb0d3fa95662e",
+              "start": 627519625,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 271.0504393489682,
+              "end": 766968430,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part10",
+              "sha256": "0929ed7d8d01274348c3c5776b7cfd1a08da6c1f11b9130d7b86cd2df7a1f4be",
+              "start": 697244028,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 9.211533471010625,
+              "end": 836692833,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part11",
+              "sha256": "f6001a5750873249e2f5c3ee0e3a1da5802a99b23f8164b4138af4518bf09e23",
+              "start": 766968431,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 8.27098923700396,
+              "end": 906417236,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part12",
+              "sha256": "0ad1023212b751fa6f0d9f30fec23cf5315b8686e555e00452645eb000697ac6",
+              "start": 836692834,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 8.176307685964275,
+              "end": 976141639,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part13",
+              "sha256": "bc96bd92cca14b67e10d32016bab41c9b0c446adf4376932e186a889f1bda6a6",
+              "start": 906417237,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 69724403,
+              "curl_exit_code": 0,
+              "elapsed_seconds": 8.234894252032973,
+              "end": 1045866042,
+              "expected_bytes": 69724403,
+              "http_status": 206,
+              "part": "part14",
+              "sha256": "8f9000f4a600bf1920c5fe70e614b22eb249b0120056c5f742beb0c7ce17fd7c",
+              "start": 976141640,
+              "status": "validated_206_exact_range",
+              "total_bytes": 1115590446
+            },
+            {
+              "bytes": 63959640,
+              "curl_exit_code": 28,
+              "elapsed_seconds": 897.0949187609949,
+              "end": 1115590445,
+              "expected_bytes": 69724403,
+              "failure_type": "CurlExit28",
+              "http_status": 206,
+              "part": "part15",
+              "start": 1045866043
+            }
+          ],
+          "range_probe": {
+            "bytes": 1,
+            "curl_exit_code": 0,
+            "elapsed_seconds": 2.141186289023608,
+            "end": 0,
+            "expected_bytes": 1,
+            "http_status": 206,
+            "part": "probe",
+            "sha256": "76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71",
+            "start": 0,
+            "status": "validated_206_exact_range",
+            "total_bytes": 1115590446
+          },
+          "requested_transport_origin": "https://hf-mirror.com",
+          "strategy": "pinned_mirror_http_ranges",
+          "total_bytes": 1115590446,
+          "transport_elapsed_seconds": 899.3491578789544
+        }
+      ],
+      "elapsed_seconds": 899.3493526079692
+    },
+    "sentencepiece.bpe.model": {
+      "attempts": [],
+      "bytes": 5069051,
+      "elapsed_seconds": 0.007802039966918528,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "status": "reused_existing_local_file"
+    },
+    "tokenizer.json": {
+      "attempts": [],
+      "bytes": 9096718,
+      "elapsed_seconds": 0.010970813978929073,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+      "status": "reused_existing_local_file"
+    },
+    "tokenizer_config.json": {
+      "attempts": [],
+      "bytes": 25,
+      "elapsed_seconds": 0.001311965985223651,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+      "status": "reused_existing_local_file"
+    }
+  },
+  "repo_id": "FacebookAI/xlm-roberta-base",
+  "required_files": [
+    "config.json",
+    "tokenizer_config.json",
+    "sentencepiece.bpe.model",
+    "tokenizer.json",
+    "pytorch_model.bin"
+  ],
+  "revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "status": "staging_failed_no_training",
+  "transport_policy": {
+    "attempts_per_origin": 1,
+    "origins": [
+      "https://huggingface.co",
+      "https://hf-mirror.com"
+    ],
+    "per_attempt_max_seconds": 1200,
+    "total_transport_budget_seconds": 1650,
+    "weight_strategy": "same_pinned_mirror_only_206_probe_then_up_to16_parts_once_max900seconds"
+  }
+}

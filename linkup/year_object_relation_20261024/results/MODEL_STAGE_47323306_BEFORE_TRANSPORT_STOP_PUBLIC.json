@@ -1,0 +1,147 @@
+{
+  "code_sha256": "7e10c011bd49afe96b554b36580cf133669d4c4b9d73a0cfdcb06f85553705f2",
+  "created_utc": "2026-10-24T14:47:05.306494+00:00",
+  "elapsed_seconds": 15.134922835975885,
+  "installed_software": 0,
+  "job_id": "47323306",
+  "official_weight_sha256": "9d83baaafea92d36de26002c8135a427d55ee6fdc4faaa6e400be4c47724a07e",
+  "paid_API_calls": 0,
+  "per_file": {
+    "config.json": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "curl_exit_code": 35,
+          "elapsed_seconds": 0.35501233098329976,
+          "failure_type": "CurlExit35",
+          "final_transport_origin": "https://huggingface.co",
+          "requested_transport_origin": "https://huggingface.co"
+        },
+        {
+          "attempt": 2,
+          "curl_exit_code": 0,
+          "elapsed_seconds": 0.44850172696169466,
+          "final_transport_origin": "https://hf-mirror.com",
+          "requested_transport_origin": "https://hf-mirror.com",
+          "status": "downloaded_same_pinned_revision"
+        }
+      ],
+      "bytes": 615,
+      "elapsed_seconds": 0.813906485971529,
+      "final_transport_origin": "https://hf-mirror.com",
+      "requested_transport_origin": "https://hf-mirror.com",
+      "sha256": "d66ed8cd4f2a93b358c245e50736fa389ed4f35c0bae7aad0b32abb20c62b579",
+      "status": "staged"
+    },
+    "pytorch_model.bin": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "curl_exit_code": 35,
+          "elapsed_seconds": 0.07148796605179086,
+          "failure_type": "CurlExit35",
+          "final_transport_origin": "https://huggingface.co",
+          "requested_transport_origin": "https://huggingface.co"
+        }
+      ],
+      "elapsed_seconds": 0.07247014797758311
+    },
+    "sentencepiece.bpe.model": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "curl_exit_code": 35,
+          "elapsed_seconds": 0.35818693501641974,
+          "failure_type": "CurlExit35",
+          "final_transport_origin": "https://huggingface.co",
+          "requested_transport_origin": "https://huggingface.co"
+        },
+        {
+          "attempt": 2,
+          "curl_exit_code": 0,
+          "elapsed_seconds": 4.3564029459957965,
+          "final_transport_origin": "https://hf-mirror.com",
+          "requested_transport_origin": "https://hf-mirror.com",
+          "status": "downloaded_same_pinned_revision"
+        }
+      ],
+      "bytes": 5069051,
+      "elapsed_seconds": 4.727610811009072,
+      "final_transport_origin": "https://hf-mirror.com",
+      "requested_transport_origin": "https://hf-mirror.com",
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "status": "staged"
+    },
+    "tokenizer.json": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "curl_exit_code": 35,
+          "elapsed_seconds": 0.253258136974182,
+          "failure_type": "CurlExit35",
+          "final_transport_origin": "https://huggingface.co",
+          "requested_transport_origin": "https://huggingface.co"
+        },
+        {
+          "attempt": 2,
+          "curl_exit_code": 0,
+          "elapsed_seconds": 7.414389858022332,
+          "final_transport_origin": "https://hf-mirror.com",
+          "requested_transport_origin": "https://hf-mirror.com",
+          "status": "downloaded_same_pinned_revision"
+        }
+      ],
+      "bytes": 9096718,
+      "elapsed_seconds": 7.679454784025438,
+      "final_transport_origin": "https://hf-mirror.com",
+      "requested_transport_origin": "https://hf-mirror.com",
+      "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+      "status": "staged"
+    },
+    "tokenizer_config.json": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "curl_exit_code": 35,
+          "elapsed_seconds": 0.29249857302056625,
+          "failure_type": "CurlExit35",
+          "final_transport_origin": "https://huggingface.co",
+          "requested_transport_origin": "https://huggingface.co"
+        },
+        {
+          "attempt": 2,
+          "curl_exit_code": 0,
+          "elapsed_seconds": 1.450765359972138,
+          "final_transport_origin": "https://hf-mirror.com",
+          "requested_transport_origin": "https://hf-mirror.com",
+          "status": "downloaded_same_pinned_revision"
+        }
+      ],
+      "bytes": 25,
+      "elapsed_seconds": 1.7619163600029424,
+      "final_transport_origin": "https://hf-mirror.com",
+      "requested_transport_origin": "https://hf-mirror.com",
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+      "status": "staged"
+    }
+  },
+  "repo_id": "FacebookAI/xlm-roberta-base",
+  "required_files": [
+    "config.json",
+    "tokenizer_config.json",
+    "sentencepiece.bpe.model",
+    "tokenizer.json",
+    "pytorch_model.bin"
+  ],
+  "revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "status": "staging_not_trained",
+  "transport_policy": {
+    "attempts_per_origin": 1,
+    "origins": [
+      "https://huggingface.co",
+      "https://hf-mirror.com"
+    ],
+    "per_attempt_max_seconds": 1200,
+    "total_transport_budget_seconds": 1650
+  }
+}

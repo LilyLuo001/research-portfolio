@@ -1,0 +1,21 @@
+{
+  "automatic_reruns": false,
+  "code_sha256": "be76cfe9da1d22c9d7477bf7c26b4c130be3b78e850681214e4ca741c79b76fd",
+  "fixed_config": {
+    "batch_size": 4,
+    "class_weights": null,
+    "epochs": 3,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": 2e-05,
+    "max_length": 256,
+    "model_selection": "final_epoch_only",
+    "optimizer": "AdamW",
+    "precision": "fp32",
+    "scheduler": null,
+    "seed": 1729,
+    "warmup_steps": 0,
+    "weight_decay": 0.01
+  },
+  "scheduler_job_id": "47326233",
+  "started_unix": 1792857428.128135
+}

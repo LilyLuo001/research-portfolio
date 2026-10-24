@@ -3,6 +3,10 @@
 import hashlib
 import json
 import os
+import re
+import shutil
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import subprocess
 import time
 from pathlib import Path
@@ -38,6 +42,124 @@ def origin_only(url):
     return parsed.scheme + '://' + parsed.hostname if parsed.hostname else None
 
 
+def range_headers(path):
+    """Read only the final response block; raw headers stay private."""
+    status, headers = None, {}
+    for line in path.read_text(encoding='iso-8859-1').splitlines():
+        if line.startswith('HTTP/'):
+            words = line.split()
+            status, headers = int(words[1]), {}
+        elif ':' in line:
+            key, value = line.split(':', 1)
+            headers.setdefault(key.lower().strip(), []).append(value.strip())
+    return status, headers
+
+
+def parallel_mirror_weight(url, partial, evidence, entry, persist, seconds):
+    """One 206 probe, then at most16 one-attempt ranges; no transport search."""
+    began = time.monotonic()
+    deadline = began + min(900, seconds)
+    folder = evidence/'weight_ranges'
+    folder.mkdir(mode=0o700)
+    abort, lock, active = threading.Event(), threading.Lock(), {}
+    entry.update(strategy='pinned_mirror_http_ranges', max_parallel_parts=16,
+        attempts_per_part=1, max_transport_seconds=min(900, seconds), parts=[])
+
+    def transfer(index, lo, hi, total=None):
+        started = time.monotonic()
+        body, header = folder/(index+'.part'), folder/(index+'.headers.private')
+        expected, process, written = hi-lo+1, None, 0
+        result = dict(part=index, start=lo, end=hi, expected_bytes=expected)
+        try:
+            remaining = int(deadline-time.monotonic())
+            if remaining < 1 or abort.is_set(): raise TimeoutError()
+            process = subprocess.Popen(['curl', '-4', '--fail', '--location', '--silent',
+                '--connect-timeout', '15', '--max-time', str(min(45 if index == 'probe' else 900, remaining)),
+                '--range', '%d-%d' % (lo, hi), '--header', 'Accept-Encoding: identity',
+                '--max-filesize', str(max(expected, 65536)), '--dump-header', str(header), '--output', '-', url],
+                stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+            with lock: active[index] = process
+            with open(body, 'xb') as stream:
+                while True:
+                    if abort.is_set(): raise InterruptedError()
+                    # Keep at most expected bytes even if a server ignores Range.
+                    block = process.stdout.read(min(1 << 20, expected-written+1))
+                    if not block: break
+                    if len(block) > expected-written:
+                        result['failure_type'] = 'ResponseBodyExceedsRequestedRange'
+                        raise ValueError()
+                    stream.write(block)
+                    written += len(block)
+            result['curl_exit_code'] = process.wait(timeout=5)
+            status, headers = range_headers(header)
+            result['http_status'] = status
+            ranges = headers.get('content-range', [])
+            match = re.fullmatch(r'bytes (\d+)-(\d+)/(\d+)', ranges[0]) if len(ranges) == 1 else None
+            if result['curl_exit_code']:
+                result['failure_type'] = 'CurlExit%d' % result['curl_exit_code']
+            elif status != 206:
+                result['failure_type'] = 'HTTP206Required'
+            elif not match or tuple(map(int, match.groups()[:2])) != (lo, hi):
+                result['failure_type'] = 'ExactContentRangeRequired'
+            elif not hi < int(match.group(3)) <= (2 << 30) or (total is not None and int(match.group(3)) != total):
+                result['failure_type'] = 'ContentRangeTotalMismatchOrCapExceeded'
+            elif written != expected:
+                result['failure_type'] = 'ExactRangeByteCountRequired'
+            elif headers.get('content-encoding', ['identity']) != ['identity']:
+                result['failure_type'] = 'UnexpectedContentEncoding'
+            else:
+                result.update(status='validated_206_exact_range', total_bytes=int(match.group(3)), sha256=sha(body))
+        except BaseException as exc:
+            result.setdefault('failure_type', type(exc).__name__)
+        finally:
+            if process is not None:
+                if process.poll() is None: process.kill()
+                process.wait()
+                process.stdout.close()
+            with lock: active.pop(index, None)
+            result.update(bytes=written, elapsed_seconds=time.monotonic()-started)
+        return result
+
+    probe = transfer('probe', 0, 0)
+    entry['range_probe'] = probe
+    persist()
+    if probe.get('status') != 'validated_206_exact_range':
+        entry['failure_type'] = 'RangeProbeFailedNoFallback'
+        return False
+    total = probe['total_bytes']
+    count = min(16, total)
+    entry.update(total_bytes=total, parallel_parts=count)
+    spans = [(i*total//count, (i+1)*total//count-1) for i in range(count)]
+    with ThreadPoolExecutor(max_workers=count) as pool:
+        futures = [pool.submit(transfer, 'part%02d' % i, lo, hi, total) for i, (lo, hi) in enumerate(spans)]
+        for future in as_completed(futures):
+            result = future.result()
+            entry['parts'].append(result)
+            if result.get('status') != 'validated_206_exact_range':
+                abort.set()
+                with lock:
+                    for process in active.values():
+                        if process.poll() is None: process.kill()
+            persist()
+    entry['parts'].sort(key=lambda x: x['part'])
+    entry['transport_elapsed_seconds'] = time.monotonic()-began
+    if len(entry['parts']) != count or any(p.get('status') != 'validated_206_exact_range' for p in entry['parts']):
+        entry['failure_type'] = 'ParallelRangeFailedNoFallback'
+        return False
+    # Every range is checked before assembly; originals and private headers remain.
+    with open(partial, 'xb') as stream:
+        for i in range(count):
+            with open(folder/('part%02d.part' % i), 'rb') as source:
+                shutil.copyfileobj(source, stream, 1 << 20)
+    entry.update(assembled_bytes=partial.stat().st_size, assembled_sha256=sha(partial))
+    entry['official_sha256_match'] = entry['assembled_sha256'] == WEIGHT_SHA
+    if entry['assembled_bytes'] != total or not entry['official_sha256_match']:
+        entry['failure_type'] = 'AssembledOfficialWeightIntegrityFailed'
+        return False
+    entry['elapsed_seconds'] = time.monotonic()-began
+    return True
+
+
 def main():
     if not os.environ.get('SLURM_JOB_ID'): raise RuntimeError('scheduler required')
     os.umask(0o077)
@@ -52,7 +174,8 @@ def main():
         created_utc=datetime.now(timezone.utc).isoformat(), code_sha256=sha(__file__),
         status='staging_not_trained', per_file={}, installed_software=0, paid_API_calls=0,
         transport_policy=dict(origins=list(ORIGINS), attempts_per_origin=1,
-            total_transport_budget_seconds=TRANSPORT_BUDGET_SECONDS, per_attempt_max_seconds=1200))
+            total_transport_budget_seconds=TRANSPORT_BUDGET_SECONDS, per_attempt_max_seconds=1200,
+            weight_strategy="same_pinned_mirror_only_206_probe_then_up_to16_parts_once_max900seconds"))
 
     def persist():
         public['elapsed_seconds'] = time.monotonic() - started
@@ -83,6 +206,25 @@ def main():
                     origin_status='not_recorded_by_prior_stage_code', sha256=sha(target), bytes=target.stat().st_size,
                     elapsed_seconds=time.monotonic()-file_started)
                 persist()
+                continue
+            if name == 'pytorch_model.bin':
+                origin = 'https://hf-mirror.com'
+                entry = dict(requested_transport_origin=origin, attempt=1)
+                item['attempts'].append(entry)
+                remaining = int(TRANSPORT_BUDGET_SECONDS-(time.monotonic()-started))
+                if remaining < 1: raise TimeoutError('bounded staging budget exhausted')
+                url = origin+'/FacebookAI/xlm-roberta-base/resolve/'+REVISION+'/'+name
+                success = parallel_mirror_weight(url, partial, evidence, entry, persist, remaining)
+                if success:
+                    partial.rename(target)
+                    os.chmod(target, 0o600)
+                    item.update(status='staged', requested_transport_origin=origin,
+                        strategy='pinned_mirror_http_ranges', sha256=sha(target), bytes=target.stat().st_size)
+                elif partial.exists():
+                    partial.rename(evidence/(name+'.assembled.failed.part'))
+                item['elapsed_seconds'] = time.monotonic()-file_started
+                persist()
+                if not success: raise RuntimeError('bounded mirror ranges failed; no other transport search')
                 continue
             for attempt, origin in enumerate(ORIGINS, 1):
                 remaining = int(TRANSPORT_BUDGET_SECONDS - (time.monotonic()-started))

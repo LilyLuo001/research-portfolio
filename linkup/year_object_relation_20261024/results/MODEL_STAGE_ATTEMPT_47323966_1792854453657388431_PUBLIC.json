@@ -1,0 +1,95 @@
+{
+  "code_sha256": "3b9180f39a3de8b4b385ef4168b4f6bcc402c0d87b993d0c2d4e4f02ff363d2f",
+  "created_utc": "2026-10-24T15:07:33.658837+00:00",
+  "elapsed_seconds": 0.5796450919588096,
+  "failure_type": "RuntimeError",
+  "installed_software": 0,
+  "job_id": "47323966",
+  "official_weight_sha256": "9d83baaafea92d36de26002c8135a427d55ee6fdc4faaa6e400be4c47724a07e",
+  "paid_API_calls": 0,
+  "per_file": {
+    "config.json": {
+      "attempts": [],
+      "bytes": 615,
+      "elapsed_seconds": 0.0010321830050088465,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "d66ed8cd4f2a93b358c245e50736fa389ed4f35c0bae7aad0b32abb20c62b579",
+      "status": "reused_existing_local_file"
+    },
+    "pytorch_model.bin": {
+      "attempts": [
+        {
+          "attempt": 1,
+          "attempts_per_part": 1,
+          "failure_type": "RangeProbeFailedNoFallback",
+          "max_parallel_parts": 16,
+          "max_transport_seconds": 900,
+          "parts": [],
+          "range_probe": {
+            "bytes": 0,
+            "curl_exit_code": 63,
+            "elapsed_seconds": 0.4725041220081039,
+            "end": 0,
+            "expected_bytes": 1,
+            "failure_type": "CurlExit63",
+            "http_status": 302,
+            "part": "probe",
+            "start": 0
+          },
+          "requested_transport_origin": "https://hf-mirror.com",
+          "strategy": "pinned_mirror_http_ranges"
+        }
+      ],
+      "elapsed_seconds": 0.48846108600264415,
+      "prior_partial_preserved": true
+    },
+    "sentencepiece.bpe.model": {
+      "attempts": [],
+      "bytes": 5069051,
+      "elapsed_seconds": 0.007511646952480078,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "status": "reused_existing_local_file"
+    },
+    "tokenizer.json": {
+      "attempts": [],
+      "bytes": 9096718,
+      "elapsed_seconds": 0.010751863999757916,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "a898ea75433890f6610f4e470b8ebeb0c21dce5c8dd61f892eb09eb5919d2e2c",
+      "status": "reused_existing_local_file"
+    },
+    "tokenizer_config.json": {
+      "attempts": [],
+      "bytes": 25,
+      "elapsed_seconds": 0.0007969840080477297,
+      "origin_status": "not_recorded_by_prior_stage_code",
+      "requested_transport_origin": null,
+      "sha256": "994f46754c5bf4014f1aa92d34b1374319c3a6b3f702105cd5b742beaecd18ce",
+      "status": "reused_existing_local_file"
+    }
+  },
+  "repo_id": "FacebookAI/xlm-roberta-base",
+  "required_files": [
+    "config.json",
+    "tokenizer_config.json",
+    "sentencepiece.bpe.model",
+    "tokenizer.json",
+    "pytorch_model.bin"
+  ],
+  "revision": "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089",
+  "status": "staging_failed_no_training",
+  "transport_policy": {
+    "attempts_per_origin": 1,
+    "origins": [
+      "https://huggingface.co",
+      "https://hf-mirror.com"
+    ],
+    "per_attempt_max_seconds": 1200,
+    "total_transport_budget_seconds": 1650,
+    "weight_strategy": "same_pinned_mirror_only_206_probe_then_up_to16_parts_once_max900seconds"
+  }
+}

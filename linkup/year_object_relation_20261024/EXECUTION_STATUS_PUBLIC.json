@@ -1,6 +1,6 @@
 {
-  "as_of_utc": "2026-10-24T15:03:00.260001+00:00",
-  "status": "inputs_prepared_same_weight_transport_repair",
+  "as_of_utc": "2026-10-24T16:18:43.095737+00:00",
+  "status": "fixed_contextual_fit_running_after_zero_step_startup_repair",
   "input_preparation_job": "47321914",
   "preparation_state": "COMPLETED0:0",
   "preparation_seconds": 137,
@@ -28,10 +28,10 @@
   },
   "new_reviews": 0,
   "reference_changes": 0,
-  "training_runs": 0,
+  "training_runs": 1,
   "quality_status": "Not evaluated. Conservative one-to-one confirmation diagnostics will be affected by unresolved bindings and are not true error rates.",
   "private_root": "/work/home/lilysharp/private/year_object_relation_20261024",
-  "next_action": "Oneboundedrangedtransfer ofsamefixedweight, officialdigestrequired, thenonefit. No newmodel orsemanticchanges.",
+  "next_action": "Waitoneactualfixed3epochfitandfinalevaluation, applyfrozenfielddecision; no modelsearch/labels/thresholdchanges.",
   "model_stage_jobs": [
     {
       "job": "47322236",
@@ -44,6 +44,24 @@
       "state": "CANCELLED_BY_ROOT_PRESERVE_PARTIAL",
       "purpose": "same pinnedmodel officialsha mirror fallback",
       "cause": "Singleconnection approximately0.13MB/s cannotfinish withinfixedcurltimeout; onlypublicweighttransport stopped"
+    },
+    {
+      "job": "47323966",
+      "state": "FAILED",
+      "elapsed_seconds": 2,
+      "cause": "Probe maxfilesize rejected302; concretecodefix retained"
+    },
+    {
+      "job": "47324377",
+      "state": "FAILED",
+      "elapsed_seconds": 900,
+      "cause": "Last range timedout;15ranges andprefix preserved"
+    },
+    {
+      "job": "47325092",
+      "state": "FAILED",
+      "elapsed_seconds": 10,
+      "cause": "Single tailrequest connectiontimeout; originalparts preserved"
     }
   ],
   "network_probe": {
@@ -52,5 +70,40 @@
     "elapsed_seconds": 11,
     "official_host": "timeout",
     "same_revision_mirror": "HTTP200"
-  }
+  },
+  "model_stage_final": {
+    "job": "47325669",
+    "state": "COMPLETED0:0",
+    "elapsed_seconds": 18,
+    "official_weight_sha256_match": true,
+    "model_weight_bytes": 1115590446
+  },
+  "fit_events": [
+    {
+      "job": "47325298",
+      "state": "CANCELLED",
+      "optimizer_steps": 0,
+      "reason": "Failed stagingdependency; neverstarted"
+    },
+    {
+      "job": "47326233",
+      "state": "FAILED",
+      "elapsed_seconds": 2,
+      "stage": "startup",
+      "error": "Inheritedmodules conflict; importlibgalaxyhip failed",
+      "optimizer_steps": 0,
+      "completed_epochs": 0,
+      "output": "fit001"
+    },
+    {
+      "job": "47326569",
+      "state": "RUNNING",
+      "resources": "8CPU16G1DCU",
+      "time_limit_seconds": 7200,
+      "output": "fit001_startup_recovery",
+      "input_manifest_written": true,
+      "model_initialized": true,
+      "evaluated": false
+    }
+  ]
 }
