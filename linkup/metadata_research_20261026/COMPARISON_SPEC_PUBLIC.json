@@ -1,0 +1,36 @@
+{
+  "version": "fixed10k-vendor-company-soc-major-descriptive-v1",
+  "frozen_before_new_comparison_results": true,
+  "unit": "Original canonical advertisement; preserve all10000 original members and labels.",
+  "frame": "complete_fixed10k; prior9282 and Formal800 estimates unchanged",
+  "weight": "1 per advertisement for this observed-sample descriptive extension. Store original nested-design weights unchanged but do not use them to claim population inference for sample-selected company support.",
+  "groups": {"A":"genai_use_with_or_without_software","B":"traditional_software_use_no_ai"},
+  "company": "Unique nonmissing vendor COMPANY_ID, exact decimal/string identity; do not consolidate names or ultimate parents.",
+  "metadata_eligibility_column": "metadata_company_valid",
+  "metadata_conflict_column": "metadata_conflict",
+  "occupation": "Existing verified SOC major only; retain fixed majors11,13,15,17. No title classifier or new occupational mapping.",
+  "cell": ["metadata_company_id", "OCCUPATION_MAJOR"],
+  "structural_support": "Valid unconflicted company and occupation, at least one known-group A ad and one known-group B ad. Unknown groups and metadata remain in the coverage ledger, not negative labels.",
+  "Q1": {
+    "outcomes": ["experience_general_work","experience_occupation_task","experience_industry_domain","experience_tool_specific"],
+    "usable_cell": "Structural support and at least one outcome-known ad in each group; this is availability, not a semantic quality or sample-size certification.",
+    "cell_rate": "Positive / outcome-known ads in each group; zero positives valid, zero denominators unavailable.",
+    "within_major_weight": "For each outcome-specific supported cell, pooled count of all known A+B ads in that cell, including outcome-unknown ads, divided by its sum over supported cells in that major. Same weights applied to both groups.",
+    "overall": "Average of the four within-major contrasts with .25 each; any mandatory major unavailable => overall unavailable, no renormalization.",
+    "unknown_bounds": "Optional recorded outcome-unknown bounds within exactly the retained sample cells and fixed cell weights; do not include technology-unknown or excluded cells implicitly, or label them full-target bounds.",
+    "required_counts": "Per-major structural and per-outcome usable cells, ads/contexts/companies, exclusions, positive/known/unknown in both groups, cell-size distributions and singleton/zero-positive counts."
+  },
+  "Q2": {
+    "eligibility": "Unchanged graduate_or_noexperience, preserving the existing inclusion of conditional/unconditional cases.",
+    "outcomes": ["duty_any","duty_independent_judgment","duty_client_ownership","duty_people_supervision","duty_training_mentoring"],
+    "support": "Structural common-company/major cells with at least one eligibility-positive and outcome-known ad, pooling A+B; do not require or add a two-group Q2 contrast.",
+    "cell_rate": "Duty-positive / duty-known among eligibility-positive ads.",
+    "within_major_weight": "Pooled count of eligibility-positive ads in each supported cell, including duty-unknown, divided by the sum over supported cells of that major.",
+    "overall": "Four majors .25 each; absent required major => unavailable without renormalization.",
+    "unknown_bounds": "Recorded duty-unknown bounds only among eligibility-positive ads in retained supported cells. Eligibility-unknown members separately counted and not treated as ineligible.",
+    "counts": "Eligibility-positive, eligibility-unknown, duty-known/positive/unknown and supported/excluded cells; duties may overlap."
+  },
+  "inference": "Descriptive values and recorded-field unknown bounds only, no new CIs or causal regression. One-ad cells are explicitly disclosed, not promoted to robust comparisons.",
+  "privacy": "Private cell-level tables may contain source keys/company IDs/titles; public tables aggregate by major/measure and omit all company IDs, names and raw titles.",
+  "stop": "Empty or sparse support is a result, not permission to merge companies, remap occupations, relax definitions, sample again or fit a model. Complete the specified outputs and stop."
+}

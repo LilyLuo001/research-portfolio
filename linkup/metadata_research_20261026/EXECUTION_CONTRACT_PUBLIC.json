@@ -1,0 +1,26 @@
+{
+  "date_local": "2026-10-26",
+  "authority": "Human approved the immediately preceding metadata-join, common-support and single fixed descriptive-comparison plan: OK，开始吧.",
+  "scope": "Existing fixed10k only. Reuse original canonical-key joins and append missing nonsemantic Records metadata; preserve reference judgments, masks, isolates, samples and weights.",
+  "deliverables": [
+    "Private advertisement-level research table with original labels/weights and metadata provenance",
+    "Aggregate metadata coverage/cardinality and company-identifier/occupation common-support table",
+    "One fixed descriptive comparison where supported, otherwise explicit unavailable result",
+    "Scheduled SCNet code, actual receipts, interpretation and sanitized Git release"
+  ],
+  "canonical_key": ["JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"],
+  "records_lookup_key": ["JOB_HASH", "RECORD_SOURCE_ROW"],
+  "join_rule": "Keep all10000 original ads, including isolated/unknown labels. Count lookup matches0/1/>1 before append. No arbitrary first row or deduplication of conflicting matches. Reuse accessible existing candidate join first; narrow Records lookup only for missing columns.",
+  "metadata": ["COMPANY_ID", "TITLE", "occupation fields already present", "COUNTRY", "STATE", "CENSUS_REGION", "CREATED", "DELETE_DATE", "LAST_CHECKED", "LAST_UPDATED", "existing observation-end flags"],
+  "company_boundary": "Vendor COMPANY_ID identifies a company-scrape entity, not automatically an ultimate economic firm, establishment or historically stable employer. All same-company comparisons retain this limitation.",
+  "time_boundary": "Records observation dates describe listing observation/lifecycle and composition, not the date or historical version of the currently saved description.",
+  "frozen_research_questions": [
+    "Experience combinations in GenAI-use versus traditional-software-use advertisements within supported company/occupation composition",
+    "Cooccurrence of explicit graduate/no-experience eligibility and current responsibilities"
+  ],
+  "comparison_rule": "Freeze the descriptive aggregation specification before inspecting new outcome comparisons. Sample company/occupation support must not be represented as parent-frame or all-US support. No causal regression, title-based semantic matching or label changes.",
+  "initial_job": "Scheduled metadata/footer and dependency probe to bind actual retained sources. No raw description or reference judgment reading in this probe.",
+  "execution": "Original authorized SCNet resources and installed dependencies only. Local code, control-plane transport and public receipt/document work only; no local research data processing.",
+  "forbidden": ["New semantic reviews or unknown requeue", "New samples or taxonomy", "Model deployment/training or paid API", "Whole-corpus extraction or metadata join", "Raw/private data in Git", "Unsupported cells silently dropped or required-major weights renormalized", "Paper final or claims of full fine-production completion"],
+  "stop": "Finish this bounded metadata/comparison delivery. If a specific missing source or unsupported comparison cannot be resolved within existing assets, report it and complete the other outputs; do not restart model or extraction development."
+}

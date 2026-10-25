@@ -1,0 +1,10 @@
+{
+  "status": "REJECTED_BEFORE_JOB_ALLOCATION",
+  "job_id": null,
+  "requested_cpus": 4,
+  "requested_memory": "16G",
+  "platform_message": "Too much memory was requested relative to the number of CPUs requested; memory:CPU must be no more than DefMemPerCPU.",
+  "execution_started": false,
+  "research_outputs_created": false,
+  "correction": "Use8CPU16G, matching previously accepted Kunshan design-correction resource ratio. Bind DuckDB/Arrow threads to allocated CPUs. No input, label, sample, comparison specification or model change."
+}

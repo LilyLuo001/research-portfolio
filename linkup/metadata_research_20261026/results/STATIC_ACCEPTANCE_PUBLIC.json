@@ -1,0 +1,20 @@
+{
+  "date_local": "2026-10-26",
+  "status": "STATIC_ACCEPTANCE_NOT_EXECUTION_OR_SEMANTIC_QUALITY",
+  "checks": {
+    "python38_compatible_syntax_reviewed": true,
+    "local_AST_parse_pass": true,
+    "frozen_specification_parses": true,
+    "independent_static_review": "PASS, including manifest-bound selected-row TITLE recovery",
+    "root_final_delta": "Only safe source-error reasons, blank counts, and allocated CPU binding added after independent review; static syntax rechecked",
+    "research_data_processed_locally": false
+  },
+  "sha256": {
+    "linkup/metadata_research_20261026/EXECUTION_CONTRACT_PUBLIC.json": "c79c58aa31411636c1a3e5012e5fffe76d376e53a2143b0e6710c5619eab4bb0",
+    "linkup/metadata_research_20261026/COMPARISON_SPEC_PUBLIC.json": "cb3c10a945d21b4b129de80296113eea6530071524a56dd58f7d71d65b7e8676",
+    "linkup/metadata_research_20261026/code/join_metadata.py": "7a23ebd770e2a087e0dd3022f4afa92102f0d850555af7ae3dc73f7361c8e8a4",
+    "linkup/metadata_research_20261026/code/compare_support.py": "a71ea144282cab51314413bbd2db545e18a22d7181962b6b136dd42017bb26f3",
+    "linkup/metadata_research_20261026/code/ks_run_metadata.sbatch": "2d1ec4a1b38e4426f7cab51cacc9297b565046fb25dc1d910ccdcd347741fd34"
+  },
+  "limits": "No numeric or semantic acceptance is inferred. Await actual scheduled metadata/comparison outputs."
+}
