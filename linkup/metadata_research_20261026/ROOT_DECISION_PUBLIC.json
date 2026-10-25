@@ -1,0 +1,114 @@
+{
+  "date_local": "2026-10-26",
+  "status": "COMPLETED_AND_STOPPED",
+  "scope": "Original fixed10k metadata append and one frozen observed-company/SOC-major descriptive comparison.",
+  "jobs": {
+    "probe": {
+      "id": "125613326",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 22,
+      "cpus": 2
+    },
+    "main": {
+      "id": "125615039",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 1019,
+      "cpus": 8,
+      "memory_gb": 16
+    },
+    "numeric_qa": {
+      "id": "125615844",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 13,
+      "cpus": 2
+    }
+  },
+  "pre_result_frozen_code_and_spec_commit": "634a6b2",
+  "original_ads_preserved": 10000,
+  "original_columns_labels_masks_weights_unchanged": true,
+  "new_semantic_judgments": 0,
+  "new_formal_corpus_production_fields": 0,
+  "metadata": {
+    "company_title_state_created_lastchecked_available_each": 10000,
+    "candidate_and_records_unique_matches_each": 10000,
+    "cross_source_or_bridge_conflicts": 0,
+    "delete_date_available": 9702,
+    "last_updated_available": 2081,
+    "title_original_files_selected": 267,
+    "full_raw_file_content_sha_verified": false
+  },
+  "observed_structural_support": {
+    "ads": 999,
+    "normalized_inputs": 693,
+    "vendor_company_ids": 83,
+    "company_major_cells": 108,
+    "group_A_ads": 490,
+    "group_B_ads": 509,
+    "group_A_outcome_known": 489,
+    "group_B_outcome_known": 500,
+    "fixed_major_ads": {
+      "11": 322,
+      "13": 94,
+      "15": 568,
+      "17": 15
+    }
+  },
+  "Q1": {
+    "decision": "EXPLORATORY_OBSERVED_SUPPORT_DESCRIPTION_ONLY",
+    "equal_major_contrasts": [
+      {
+        "outcome": "experience_general_work",
+        "point": 0.12609763402947355,
+        "recorded_outcome_unknown_lower": 0.12128013953557693,
+        "recorded_outcome_unknown_upper": 0.1345440444924929
+      },
+      {
+        "outcome": "experience_occupation_task",
+        "point": 0.12246371608983743,
+        "recorded_outcome_unknown_lower": 0.11507641046173753,
+        "recorded_outcome_unknown_upper": 0.1283403154186535
+      },
+      {
+        "outcome": "experience_industry_domain",
+        "point": 0.12442868667460086,
+        "recorded_outcome_unknown_lower": 0.11868841215182688,
+        "recorded_outcome_unknown_upper": 0.13195231710874283
+      },
+      {
+        "outcome": "experience_tool_specific",
+        "point": 0.2974009585788492,
+        "recorded_outcome_unknown_lower": 0.2893870939873563,
+        "recorded_outcome_unknown_upper": 0.3026509989442723
+      }
+    ],
+    "not_certified": [
+      "semantic_accuracy",
+      "sampling_precision",
+      "parent_population_direction",
+      "all_US_representation",
+      "identical_jobs",
+      "causal_effect",
+      "historical_text_change"
+    ]
+  },
+  "Q2": {
+    "decision": "STANDARDIZED_OVERALL_UNAVAILABLE_SUPPORT_INSUFFICIENT",
+    "usable_eligibility_positive_ads": 10,
+    "major13": 1,
+    "major15": 9,
+    "missing_required_majors": [
+      "11",
+      "17"
+    ],
+    "renormalized": false,
+    "new_two_group_contrast": false
+  },
+  "bound_scope": "Only recorded outcome unknowns in retained observed sample cells at fixed weights; Q2 conditional on eligibility-positive. Not CIs or full-target bounds.",
+  "private_cloud_root": "/public/home/lilysharp/linkup_metadata_research_20261026/run001",
+  "reference_quality_certified": false,
+  "fine_whole_corpus_production": "UNFINISHED_AND_DEFERRED",
+  "stop": "Delivery is complete. No automatic rereview, relabeling, retraining, inference, support relaxation, whole-corpus cleaning or manuscript final."
+}

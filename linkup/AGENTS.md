@@ -1,8 +1,8 @@
 # LinkUp project execution rules
 
-## Metadata research extension — authorized and active (2026-10-26)
+## Metadata research extension — COMPLETE and STOPPED (2026-10-26)
 
-Human approved appending missing nonsemantic Records metadata to the existing fixed10k and one fixed descriptive comparison. Read `linkup/metadata_research_20261026/EXECUTION_CONTRACT_PUBLIC.json` and `COMPARISON_SPEC_PUBLIC.json`. Original canonical-key sample, reference labels, masks, isolates and stored weights stay unchanged; observed company/SOC-major support is a sample description, not parent or all-US inference. Reuse existing joins and exact index keys; TITLE recovery is allowed only by source-manifest-bound original file and per-file row index, with row fingerprint checks and narrow column reads. Probe125613326 completed22s. Submit the bounded main SCNet job once, check actual outputs, publish metadata/support/comparisons and stop. No text interpretation, new labels/model/API, whole-corpus join or final manuscript. Earlier completed stages stay closed.
+Read `linkup/metadata_research_20261026/ROOT_DECISION_PUBLIC.json` and `RESULTS_ZH.md`. Actual Kunshan main125615039 completed1019seconds; independent numeric QA125615844 completed13seconds/pass. Original10000 ads and all original labels/masks/weights preserved; company/title/state/created/lastchecked appended for10000, conflicts0. Observed common support is999ads/693inputs/83vendor IDs/108company-major cells. Q1 is exploratory observed-support description only; SOC17 has15ads/3cells but fixed25percent weight. Q2overall unavailable:10eligibility-positive ads, missingmajors11and17; do not renormalize. No new semantic judgment, training or corpus production. Public aggregates/receipts and private cloud outputs are retained. This wave is closed: do not reopen labels/models/cleaning, relax support or turn it into a final manuscript. Whole-corpus fine semantic production remains unfinished and deferred. Earlier active instructions are historical.
 
 ## Bounded research results — COMPLETE and STOPPED (2026-10-26)
 

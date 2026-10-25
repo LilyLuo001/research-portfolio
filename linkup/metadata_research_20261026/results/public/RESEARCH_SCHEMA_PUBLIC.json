@@ -1,0 +1,642 @@
+[
+  {
+    "name": "JOB_HASH",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "SOURCE_FILE",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "SOURCE_ROW",
+    "nullable": true,
+    "type": "int64"
+  },
+  {
+    "name": "RECORD_SOURCE_ROW",
+    "nullable": true,
+    "type": "int64"
+  },
+  {
+    "name": "OCCUPATION_MAJOR",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "CENSUS_REGION",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "created_year",
+    "nullable": true,
+    "type": "int64"
+  },
+  {
+    "name": "arm",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "total_inclusion_probability",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "nested_design_weight",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "original_inclusion_probability",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "conditional_inclusion_probability",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_and_branch_general_work",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_and_branch_industry_domain",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_and_branch_occupation_task",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_and_branch_tool_specific",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_branch_general_work",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_branch_industry_domain",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_branch_occupation_task",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_branch_tool_specific",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_or_branch_general_work",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_or_branch_industry_domain",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_or_branch_occupation_task",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "alternative_or_branch_tool_specific",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "conditional_general_work",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "conditional_industry_domain",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "conditional_occupation_task",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "conditional_tool_specific",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_any",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_any_conditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_any_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_client_ownership",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_client_ownership_conditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_client_ownership_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_independent_judgment",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_independent_judgment_conditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_independent_judgment_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_people_supervision",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_people_supervision_conditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_people_supervision_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_training_mentoring",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_training_mentoring_conditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "duty_training_mentoring_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "experience_general_work",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "experience_industry_domain",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "experience_occupation_task",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "experience_tool_specific",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "explicit_new_graduate",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "explicit_new_graduate_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "explicit_no_experience",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "explicit_no_experience_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "graduate_or_noexperience",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "graduate_or_noexperience_unconditional",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "normalized_context_sha256",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "numeric_years_general_work",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "numeric_years_industry_domain",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "numeric_years_occupation_task",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "numeric_years_tool_specific",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "occupation_major",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "original9282eligible",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "status_current_responsibility_subject_and_relation",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "status_entry_wording_and_scope",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "status_experience_literal_years",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "status_experience_object",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "status_experience_strength",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "status_qualification_conditions_and_alternatives",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "status_technology_category_and_role",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "strength_general_work_explicitly_waived",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_general_work_preferred",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_general_work_required",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_industry_domain_explicitly_waived",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_industry_domain_preferred",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_industry_domain_required",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_occupation_task_explicitly_waived",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_occupation_task_preferred",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_occupation_task_required",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_tool_specific_explicitly_waived",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_tool_specific_preferred",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "strength_tool_specific_required",
+    "nullable": true,
+    "type": "double"
+  },
+  {
+    "name": "technology_group",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "CENSUS_REGION_old",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "OCCUPATION_MAJOR_old",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "exp_general_work_main",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_general_work_preferred",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_general_work_required",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_industry_domain_main",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_industry_domain_preferred",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_industry_domain_required",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_specific_tool_main",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_specific_tool_preferred",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "exp_specific_tool_required",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "created_year_old",
+    "nullable": true,
+    "type": "int32"
+  },
+  {
+    "name": "arm_old",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_company_id",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_company_id_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_title",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_title_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_country",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_country_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_state_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_census_region",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_census_region_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_created",
+    "nullable": true,
+    "type": "timestamp[us]"
+  },
+  {
+    "name": "metadata_created_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_last_checked",
+    "nullable": true,
+    "type": "timestamp[us]"
+  },
+  {
+    "name": "metadata_last_checked_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_last_updated",
+    "nullable": true,
+    "type": "timestamp[us]"
+  },
+  {
+    "name": "metadata_last_updated_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_delete_date",
+    "nullable": true,
+    "type": "timestamp[us]"
+  },
+  {
+    "name": "metadata_delete_date_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_crosses_2022_11_30",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "metadata_crosses_2022_11_30_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_observation_end",
+    "nullable": true,
+    "type": "timestamp[us]"
+  },
+  {
+    "name": "metadata_observation_end_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_observation_closed",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "metadata_observation_closed_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_date_complete",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "metadata_date_complete_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_stale_delete_or_reappearance",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "metadata_stale_delete_or_reappearance_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_candidate_matches",
+    "nullable": true,
+    "type": "int64"
+  },
+  {
+    "name": "metadata_records_matches",
+    "nullable": true,
+    "type": "int64"
+  },
+  {
+    "name": "metadata_candidate_match_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_records_match_state",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_conflict_fields",
+    "nullable": true,
+    "type": "string"
+  },
+  {
+    "name": "metadata_conflict",
+    "nullable": true,
+    "type": "bool"
+  },
+  {
+    "name": "metadata_company_valid",
+    "nullable": true,
+    "type": "bool"
+  }
+]
