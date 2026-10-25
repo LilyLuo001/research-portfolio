@@ -1,0 +1,16 @@
+{
+  "scope": "One concentrated clarification of actual candidate cases during the approved Pro review; no taxonomy, old reference, model or sample change.",
+  "original_definition": "linkup/formal800_20261012/REVIEW_INSTRUCTIONS.md",
+  "original_definition_sha256": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26",
+  "decisions": [
+    "Bare years of experience or related/relevant experience does not by itself identify one of the four original objects. Do not infer occupation from title alone; unresolved binding stays unknown.",
+    "Named occupational tasks are not unrestricted general work experience. A nearby tool or industry does not automatically inherit a numeric duration.",
+    "Explicit questionnaire answer bands are not asserted requirements or preferences. Explicit_non_experience must explain this distinction; a qualification screening question with an actual threshold is a different case.",
+    "An explicitly bound recency window can have an experience-object relation, but is not an amount of experience. Preserve the exact recency wording and explanatory reason; no synthesized minimum-years field is emitted.",
+    "Zero-year or waiver branches can retain a clearly supported object relation without becoming positive non-waived requirements. Unclear objects remain unknown.",
+    "Review only the frozen numeric candidates. No automatic nonmention-to-negative conversion, training or conversion of these judgments to full relational-semantic certification.",
+    "Experience mentioned only to define salary bands is not an asserted qualification requirement or preference. Preserve the wage/experience evidence and explain the non-requirement decision; do not claim the number has no relation to experience."
+  ],
+  "correction_policy": "Only specifically identified authoring errors were minimally corrected before cloud acceptance; private correction records retain prior decisions. Completed accepted packets are immutable. Unknowns are not requeued.",
+  "known_literal_duration_limitation": "A reported frozen numeric candidate includes an option number before a years value (Option 3 - 5 years). The supplemental object relation is not acceptance of the frozen range as literal experience years. The private review reason retains the distinction; no parser or candidate identity was changed."
+}

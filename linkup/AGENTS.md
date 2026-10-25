@@ -1,5 +1,10 @@
 # LinkUp project execution rules
 
+## Supplemental Pro relation review — COMPLETE and STOPPED (2026-10-25)
+
+Read `linkup/relation_channel_20261025/REVIEW_FINAL_DECISION_PUBLIC.json`. All 2,736 authorized existing candidates / 1,659 contexts were actually reviewed across 71 packets: 801 resolved object links, 1,644 explicit non-requirements, 291 reviewed unknown; remaining zero. Actual SCNet final checkpoint 47393594 has exact membership, original splits and evidence-offset checks; it is not model-quality certification. Private sidecars and authoring/correction archive are retained on Wuzhen and SHA verified. Batch069, Formal800 and original labels/unknowns are unchanged. No training, new model/software, paid API or corpus inference ran; zero new formal-production fields. This wave is finished: do not resume old packet assignments, reopen unknowns or retrain automatically. The prior failed model remains closed. Earlier active review sections below are historical.
+
+
 ## Approved supplemental relation review — active (2026-10-25)
 
 The human explicitly answered “允许这批关系补判（Pro，无付费）” to the frozen 2,736-candidate / 1,659-context request. Read `linkup/relation_channel_20261025/REVIEW_AUTHORIZATION_PUBLIC.json`. Actual Pro agents may now read the necessary original contexts and append candidate-specific relations, explicit non-experience or unknown with evidence to a separate private sidecar. Preserve every original label/unknown, queue membership, split and Formal800. This is an explicit bounded exception to the no-new-label rule, not a new sample or Batch070. It authorizes no retraining, corpus inference, model/software deployment or paid API. Private packets/IDs/decisions stay out of Git; code, aggregate progress and receipts may be published. Persist packages and original evidence provenance; no inferred negatives for unread candidates. Previous metadata readiness and closed model results remain historical facts.

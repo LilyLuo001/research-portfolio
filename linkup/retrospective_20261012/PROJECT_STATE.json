@@ -1,7 +1,7 @@
 {
-  "as_of": "2026-10-25T14:09:28.205882+00:00",
+  "as_of": "2026-10-25T14:38:43Z",
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "approved_existing_candidate_relation_review",
+  "phase": "approved_supplemental_pro_relation_review_completed_stopped",
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -315,20 +315,18 @@
     "approval": "user_approved_2026-10-12"
   },
   "active_scope": {
-    "authority": "Human explicitly approved frozen 2736-candidate Pro relation review; no paid API or retraining.",
-    "execution_status": "PRO_RELATION_REVIEW_RUNNING_979_CANDIDATES_CLOUD_VALIDATED",
-    "entry": "linkup/relation_channel_20261025/REVIEW_AUTHORIZATION_PUBLIC.json",
-    "next_action": "Prepare frozen packets on SCNet; perform actual Pro judgments to private sidecars; preserve original labels, unknowns and splits. No new fit or corpus inference.",
+    "authority": "Human approved frozen Pro relation review only; no retraining.",
+    "execution_status": "APPROVED_SUPPLEMENTAL_PRO_RELATION_REVIEW_COMPLETED_AND_STOPPED",
+    "entry": "linkup/relation_channel_20261025/REVIEW_FINAL_DECISION_PUBLIC.json",
     "latest_progress": {
-      "entry": "linkup/relation_channel_20261025/results/REVIEW_CHECKPOINT_47390621_PUBLIC.json",
-      "new_reviewed_candidates": 979,
-      "unique_contexts": 600,
-      "resolved": 349,
-      "explicit_non_experience": 509,
-      "reviewed_unknown": 121,
-      "remaining_candidates": 1757,
-      "training_runs": 0
-    }
+      "reviewed_candidates": 2736,
+      "contexts": 1659,
+      "resolved": 801,
+      "explicit_non_experience": 1644,
+      "reviewed_unknown": 291,
+      "remaining_candidates": 0
+    },
+    "next_action": "STOP this approved review wave; preserve all results. No additional annotation, retraining or production is automatically authorized."
   },
   "latest_completed_semantic_wave": {
     "name": "fixed10k_continuation_20261017/batch069",

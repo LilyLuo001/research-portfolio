@@ -1,0 +1,77 @@
+{
+  "status": "APPROVED_SUPPLEMENTAL_PRO_RELATION_REVIEW_COMPLETED_AND_STOPPED",
+  "authorization": "REVIEW_AUTHORIZATION_PUBLIC.json",
+  "authorization_recorded_at_utc": "2026-10-24T18:49:12Z",
+  "final_receipt_observed_at_utc": "2026-10-25T14:38:43Z",
+  "scope": "Frozen existing 2736 numeric-duration candidates on 1659 contexts; independent supplemental reference judgments only. Not full-corpus semantics, training or model production.",
+  "actual_new_reviewed_candidates": 2736,
+  "actual_reviewed_contexts": 1659,
+  "completed_packets": 71,
+  "counts_by_status": {
+    "explicit_non_experience": 1644,
+    "resolved": 801,
+    "unknown": 291
+  },
+  "counts_by_original_split": {
+    "final_previously_exposed": {
+      "candidates": 464,
+      "explicit_non_experience": 264,
+      "resolved": 142,
+      "unique_contexts": 274,
+      "unknown": 58
+    },
+    "previous_holdout_reserved_not_final": {
+      "candidates": 93,
+      "explicit_non_experience": 39,
+      "resolved": 41,
+      "unique_contexts": 49,
+      "unknown": 13
+    },
+    "train": {
+      "candidates": 2179,
+      "explicit_non_experience": 1341,
+      "resolved": 618,
+      "unique_contexts": 1336,
+      "unknown": 220
+    }
+  },
+  "remaining_candidates": 0,
+  "new_unknown_candidates": 291,
+  "new_unknown_policy": "Retain per candidate; no automatic requeue or conversion to negatives. Original field unknowns stay unchanged.",
+  "prior_reference_labels_modified": 0,
+  "prior_judgments_used_as_answers": 0,
+  "reference_source": "Actual Pro agent reading of existing numeric clauses and neighboring excerpts, with full context when needed; exact evidence and actual read scope retained per candidate. Not human gold or cluster model inference.",
+  "private_ledger": "/work/home/lilysharp/private/relation_channel_20261025/reviews_v1/snapshots/47393594/REVIEW_LEDGER_PRIVATE.jsonl",
+  "private_ledger_sha256": "9ea1fcd0f61182d2d125b19d90af820f549e77351ff1064320613c311ae0d8a9",
+  "private_author_archive": "/work/home/lilysharp/private/relation_channel_20261025/reviews_v1/PRO_AUTHORING_ARCHIVE_PRIVATE.tar.gz",
+  "private_author_archive_sha256": "4563416ee359aae0aabf48d860ec2a399763bba1bc13bddf3aff8c5455497ffd",
+  "frozen_packet_manifest_sha256": "16883e6dfee6e2c309a3c98d4c6d87a21dbcccc5029fc8f8cbce1b666c369533",
+  "structural_acceptance": true,
+  "trained_model_quality_accepted": false,
+  "new_formal_production_fields": 0,
+  "training_runs": 0,
+  "corpus_inference_runs": 0,
+  "paid_api_calls": 0,
+  "new_models_or_software_deployed": 0,
+  "original_sampling_or_split_changes": false,
+  "Formal800_and_Batch069_unchanged": true,
+  "cloud_job_ids": [
+    "47332499",
+    "47390621",
+    "47391770",
+    "47393277",
+    "47393594"
+  ],
+  "cloud_job_runtime_seconds": 59,
+  "wall_clock_between_records_seconds": 71371,
+  "timing_boundary": "Wall clock spans conversation waiting and is not active Pro reading time, CPU compute time or billed accelerator time. Only scheduler runtimes are directly measured compute durations.",
+  "known_limits": [
+    "Supplemental object links do not implement required/preferred scope, alternatives or responsibility subject production.",
+    "Recency, waivers, salary bands and questionnaire options retain literal evidence and explanations; an object link is not a synthesized minimum experience duration.",
+    "A specific frozen option-number/range ambiguity remains documented in REVIEW_INTERPRETATION_NOTES_PUBLIC.json; no parser or candidate identities were changed.",
+    "Pro review and structural pass do not establish trained-model accuracy or qualify any field for corpus inference."
+  ],
+  "next_action": "STOP this approved review wave; preserve all results. No additional annotation, retraining or production is automatically authorized.",
+  "preexisting_Batch069_Formal800_reference_judgments_relabelled": 0,
+  "new_sidecar_specific_authoring_corrections_recorded_privately": true
+}
