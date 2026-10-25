@@ -1,0 +1,109 @@
+{
+  "date_local": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "status": "COMPLETED_FIXED_SCOPE_RESEARCH_DELIVERY_NOT_CORPUS_PRODUCTION",
+  "human_authorization": {
+    "message": "行吧，按你说的来",
+    "approved_action": "Defer whole-corpus fine semantic production and do not start DeBERTa. Use already completed fixed10k and design-corrected outputs to deliver bounded substantive claims, scope and uncertainty; no repeat computation or manuscript final.",
+    "original_full_corpus_objective": "Still unfinished; not replaced or claimed completed by this delivery."
+  },
+  "report": "RESULTS_AND_LIMITS_ZH.md",
+  "reference_assets": "Unchanged Batch069 operational Pro reference, fixed10k, Formal800 and original full base. The completed 2736 supplemental numeric-candidate judgments remain a separate private sidecar and were not silently incorporated into the reused statistics.",
+  "population_and_weights": {
+    "reference_frame_ads": 10000,
+    "design_correction_target_ads": 1157573,
+    "design_correction_target": "Original 69-cell technology-screened candidate parent frame, not all US vacancies or the full corpus.",
+    "main_weights": "Original total inclusion probabilities and inverse nested design weights; not Formal800 w3.",
+    "direct_panels": "Original9282 and full10000 have ad weights1. Formal800 retains original w3. These direct panels do not estimate the same target as the main design-corrected results.",
+    "standardization": "Original four SOC majors11/13/15/17, .25 each; required missing cells remain unavailable without renormalization.",
+    "unit": "Advertisement. Context counts cannot be subtracted directly from advertisement denominators.",
+    "isolated_contexts": 14,
+    "isolated_ads_retained": 16,
+    "reference_field_unknown_contexts": 1002
+  },
+  "uncertainty": {
+    "points": "Ratios within outcome/reference-known domains, potentially different by field.",
+    "design_intervals": "Existing approximate design intervals under exchangeable independently salted hash-order / stratified sampling assumptions. No independent variance recalculation in this release.",
+    "unknown_envelopes": "Existing conservative full-target HT sensitivity summaries for unresolved outcomes/membership. Not CIs, not established sharp joint bounds and not combined sampling-plus-missingness intervals.",
+    "reference_quality": "Relative to Pro judgments, not independent human gold; common semantic reference errors are not included in design intervals."
+  },
+  "claims": [
+    {
+      "id": "Q1_GENERAL",
+      "claim_zh": "参考已知范围中，一般工作经验的GenAI减软件差异没有明确方向；不等于证明相同。",
+      "status": "DESCRIPTIVE_KNOWN_REFERENCE_DOMAIN_ONLY",
+      "full_target_sign": "UNIDENTIFIED",
+      "source": "../design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {"row_type": "GenAI_minus_software_contrast", "measure": "experience_general_work", "scope": "equal_0.25_major_standardization"}
+    },
+    {
+      "id": "Q1_OCCUPATION",
+      "claim_zh": "参考已知范围中，职业／任务经验差异为正；本次冻结旧比较源无兼容结果，不能称为旧标签纠错。",
+      "status": "DESCRIPTIVE_REFERENCE_WEIGHTED_COMPARISON_ONLY",
+      "full_target_sign": "UNIDENTIFIED",
+      "source": "../design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {"row_type": "GenAI_minus_software_contrast", "measure": "experience_occupation_task", "scope": "equal_0.25_major_standardization"}
+    },
+    {
+      "id": "Q1_INDUSTRY",
+      "claim_zh": "参考已知范围中，行业／领域经验的GenAI减软件差异没有明确方向。",
+      "status": "DESCRIPTIVE_KNOWN_REFERENCE_DOMAIN_ONLY",
+      "full_target_sign": "UNIDENTIFIED",
+      "source": "../design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {"row_type": "GenAI_minus_software_contrast", "measure": "experience_industry_domain", "scope": "equal_0.25_major_standardization"}
+    },
+    {
+      "id": "Q1_TOOL",
+      "claim_zh": "参考已知范围中，工具特定经验差异为正；完整目标方向仍未确定。",
+      "status": "DESCRIPTIVE_KNOWN_REFERENCE_DOMAIN_ONLY",
+      "full_target_sign": "UNIDENTIFIED",
+      "source": "../design_correction_20261024/results/CORE_Q1.csv",
+      "selector": {"row_type": "GenAI_minus_software_contrast", "measure": "experience_tool_specific", "scope": "equal_0.25_major_standardization"}
+    },
+    {
+      "id": "Q2_ENTRY_DUTY",
+      "claim_zh": "在限定对象和参考标准下，明确毕业生或无经验资格措辞与当前岗位职责共现。",
+      "status": "DESCRIPTIVE_COOCCURRENCE_WITH_SCOPE_AND_UNCERTAINTY",
+      "not_established": "Duty required/preferred strength, historical seniorization, AI causality, all-entry-job market prevalence.",
+      "source": "../design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {"row_type": "domain_proportion", "domain": "all_technology", "eligibility": "graduate_or_noexperience", "measure": "duty_any", "scope": "equal_0.25_major_standardization"}
+    },
+    {
+      "id": "Q2_GROUP_DIFFERENCE",
+      "claim_zh": "GenAI与软件组的资格及职责标准化差异不可得，保留缺失必需大类。",
+      "status": "UNAVAILABLE_REQUIRED_MAJOR_MISSING",
+      "source": "../design_correction_20261024/results/CORE_Q2.csv",
+      "selector": {"row_type": "GenAI_minus_software_contrast", "eligibility": "graduate_or_noexperience", "measure": "duty_any", "scope": "equal_0.25_major_standardization"}
+    }
+  ],
+  "not_established": [
+    "Whole-corpus fine semantic quality or production completion",
+    "Direction of the four Q1 contrasts over the full unknown candidate target",
+    "Unique minimum experience requirement per advertisement",
+    "Required/preferred strength of current duties from a schema that does not measure it",
+    "AI causal effects, declining entry-level vacancies or historical task seniorization",
+    "Historical computerization-versus-AI comparison from current software/GenAI wording",
+    "All-US labor-market prevalence or unavailable Revelio Individual career outcomes"
+  ],
+  "existing_analysis_receipts": {
+    "analysis_job": "125471977",
+    "analysis_elapsed_seconds": 85,
+    "numeric_qa_job": "125474405",
+    "numeric_qa_elapsed_seconds": 3,
+    "date": "2026-10-24",
+    "source": "../design_correction_20261024/ROOT_ACCEPTANCE_PUBLIC.json",
+    "boundary": "Reused historical receipts, not jobs submitted by this release."
+  },
+  "new_operations": {
+    "semantic_reviews": 0,
+    "raw_text_reads": 0,
+    "statistical_recalculations": 0,
+    "training_runs": 0,
+    "model_weight_downloads": 0,
+    "software_installs": 0,
+    "cloud_jobs": 0,
+    "corpus_inference_runs": 0,
+    "paid_API_calls": 0
+  },
+  "automatic_next_action": "NONE. This fixed-scope delivery stops after provenance/claim checking and Git publication. No annotation, model search, DeBERTa training, cleaning or final-manuscript task starts automatically."
+}

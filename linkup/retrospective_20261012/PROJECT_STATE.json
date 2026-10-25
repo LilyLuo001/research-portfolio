@@ -7,7 +7,17 @@
     "next_action": "Preserve completed results and closed failed fit. Do not launch the proposed QA model automatically; it remains a conditional unexecuted candidate with unresolved supervision, multiple-answer and scope issues."
   },
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "approved_supplemental_pro_relation_review_completed_stopped",
+  "phase": "approved_bounded_research_results_20261026_completed_stopped",
+  "latest_authorized_delivery": {
+    "name": "bounded_research_results_20261026",
+    "authority": "User explicitly accepted deferring whole-corpus fine production and delivering bounded research conclusions from completed fixed10k/design-correction results.",
+    "status": "COMPLETED_SAVED_NOT_NEW_COMPUTATION",
+    "report": "linkup/bounded_research_results_20261026/RESULTS_AND_LIMITS_ZH.md",
+    "claims": "linkup/bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json",
+    "receipt": "linkup/bounded_research_results_20261026/RELEASE_RECEIPT_PUBLIC.json",
+    "original_whole_corpus_fine_semantics": "UNFINISHED_NOT_REPLACED_BY_THIS_DELIVERY",
+    "automatic_next_action": "NONE; preserve all results. No new labels, training, model deployment, cleaning or final-manuscript task."
+  },
   "core_question": "Compare traditional software and AI in the experience and task requirements expressed in comparable work, without presupposing different directions; LinkUp full text supplies auditable employer-side content.",
   "completed_base": {
     "source_shards": 2464,
@@ -67,7 +77,7 @@
     "bounded_semantic_reading": "authorized Pro conversation models",
     "local_allowed": "code/docs, bounded reading, transport, provenance and Git"
   },
-  "resume_rule": "The supplemental2736 review is COMPLETE and the prior fixed fit is CLOSED. Latest QA proposal review does not authorize a new experiment. Do not resume labels, old fits, model search or production automatically; preserve original samples, unknowns and all artifacts.",
+  "resume_rule": "Latest authorized bounded research delivery is COMPLETE. Read bounded_research_results_20261026/CLAIMS_AND_SCOPE_PUBLIC.json before historical instructions. Whole-corpus fine semantics remains UNFINISHED and deferred; no automatic next experiment or manuscript. Supplemental2736 review and failed models remain CLOSED; preserve all samples, unknowns and artifacts.",
   "formal800_execution": {
     "freeze_job": "46364888",
     "state": "COMPLETED",
