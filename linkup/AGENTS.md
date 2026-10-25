@@ -1,5 +1,10 @@
 # LinkUp project execution rules
 
+## Approved supplemental relation review — active (2026-10-25)
+
+The human explicitly answered “允许这批关系补判（Pro，无付费）” to the frozen 2,736-candidate / 1,659-context request. Read `linkup/relation_channel_20261025/REVIEW_AUTHORIZATION_PUBLIC.json`. Actual Pro agents may now read the necessary original contexts and append candidate-specific relations, explicit non-experience or unknown with evidence to a separate private sidecar. Preserve every original label/unknown, queue membership, split and Formal800. This is an explicit bounded exception to the no-new-label rule, not a new sample or Batch070. It authorizes no retraining, corpus inference, model/software deployment or paid API. Private packets/IDs/decisions stay out of Git; code, aggregate progress and receipts may be published. Persist packages and original evidence provenance; no inferred negatives for unread candidates. Previous metadata readiness and closed model results remain historical facts.
+
+
 ## Latest readiness checkpoint — permission pending (2026-10-25)
 
 Read `linkup/relation_channel_20261025/ROOT_READINESS_DECISION_PUBLIC.json`. Scheduled Wuzhen jobs 47330115 (20 s) and 47330532 (2 s) checked existing relation metadata and froze a metadata-only permission queue. They did not annotate, train or infer. Existing same-item labels are usable assets; candidate-specific rejection labels remain missing. The proposed supplemental queue is 2,736 existing candidates / 1,659 contexts, with 520 unaccepted year/object-mask candidates excluded and original splits preserved. New semantic judgments are zero. A question requesting explicit permission for this new relation-level annotation has been sent; no answer is recorded yet. Do not start annotation before permission, reopen the closed fit, change sample/unknowns, or claim corpus production. Prior model quality failure below remains in force.
