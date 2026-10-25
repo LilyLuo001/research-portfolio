@@ -1,0 +1,108 @@
+{
+  "review_date_local": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "authority": "Human requested a critical review of the proposed method and whether it incorporates previous failures. Review only; no new model, training or annotation authorization.",
+  "status": "NO_GO_FOR_TRAINING_AS_CURRENTLY_SPECIFIED",
+  "methodological_verdict": "Question-conditioned evidence extraction with an explicit no-answer outcome is a reasonable research candidate. The proposed DeBERTa QA implementation is not yet an established, complete or production-qualified relation channel. Neither success nor superiority to the failed configuration has been demonstrated.",
+  "review_scope": [
+    "Existing public execution lock, preparation receipt and fixed XLM-R code/results",
+    "Existing supplemental-review final receipt, interpretation notes and recovered-schema contract",
+    "Previously documented August-October method history; no repeat historical reconstruction",
+    "Publisher QA model configuration and Transformers QA implementation",
+    "One bounded independent code/schema review"
+  ],
+  "completed_assets_preserved": {
+    "full_base_shards": 2464,
+    "fixed10k_Batch069": "unchanged and closed",
+    "Formal800": "unchanged",
+    "supplemental_candidates_reviewed": 2736,
+    "supplemental_reviewed_contexts": 1659,
+    "supplemental_resolved": 801,
+    "supplemental_explicit_non_requirements": 1644,
+    "supplemental_unknown": 291,
+    "supplemental_remaining": 0,
+    "failed_fixed_model": "closed, zero formally adopted fields"
+  },
+  "findings": [
+    {
+      "id": "F1_TARGET_AND_LABEL_BINDING",
+      "severity": "blocking_for_the_claimed_relation_product",
+      "evidence": "Existing original labels bind object class, years, strength and conditions within an original item. Quotes are evidence; independent object endpoint spans are not generally annotated.",
+      "consequence": "Extracting a relevant quote does not by itself certify the numeric-object edge, qualifier scope or alternative branch. Converting all quotes into object-answer spans would silently change the supervised target.",
+      "required_boundary": "Any future authorized implementation must preserve exact original item identity and the declared output meaning. Compatible evidence extraction may be supported; full relation extraction cannot be inferred from quote overlap.",
+      "source": "code/SCHEMA_MAP.md:15-25"
+    },
+    {
+      "id": "F2_NO_ANSWER_SEMANTICS",
+      "severity": "blocking_for_blanket_negative_conversion",
+      "evidence": "Supplemental explicit_non_experience includes questionnaire options and salary-band mentions, which may still associate years with experience. Recency windows and waived branches can retain an object link. Reviewed unknown remains unknown.",
+      "consequence": "These statuses cannot all become a single no-answer label for an arbitrary question. Not-mentioned at document level is not an automatically valid pair-level negative.",
+      "required_boundary": "Use only original known labels and actual supplementary decisions whose meanings match the exact question and input scope. Do not invent negative pairs or reopen unknowns.",
+      "source": "REVIEW_INTERPRETATION_NOTES_PUBLIC.json:6-15"
+    },
+    {
+      "id": "F3_SINGLE_SPAN_AND_CONTEXT",
+      "severity": "blocking_for_the_promised_multi_answer_implementation",
+      "evidence": "The proposed model config has max_position_embeddings=512. Standard DebertaV2ForQuestionAnswering learns one start and one end position per training example. Existing preparation preserves repeated quotes, multiple items and multiple numeric candidates.",
+      "consequence": "Loading the published QA head does not implement the promised multi-answer relations or long-context condition handling. Splitting context can also omit modifiers or alternative branches.",
+      "required_boundary": "A future implementation must explicitly preserve supported multi-answer targets and context coverage without oracle reference crops. Otherwise unsupported outputs remain unsupported; do not call the stock pipeline a complete solution.",
+      "sources": [
+        "https://huggingface.co/deepset/deberta-v3-large-squad2/blob/ff971b7ff7946434a93edc8271fa4de35eab29f7/config.json",
+        "https://github.com/huggingface/transformers/blob/v4.44.2/src/transformers/models/deberta_v2/modeling_deberta_v2.py"
+      ]
+    },
+    {
+      "id": "F4_CANDIDATE_RECALL_AND_SELECTION",
+      "severity": "blocking_for_end_to_end_or_corpus_certification",
+      "evidence": "Existing preparation records 434 original reference items with true_frozen_candidate_absence_in_reference_evidence, across the prepared splits. The final evaluation has prior exposure; compatible-candidate metrics are conditional diagnostics.",
+      "consequence": "Candidate-only span accuracy omits missed requirements. This count is not an overall error rate. Reusing the final members does not produce a newly blind test, and candidate-frame performance does not certify other populations.",
+      "required_boundary": "Preserve every original recall denominator, original member exclusions and exposure disclosures. Do not consume reserved members automatically or claim an unsupported full-corpus scope.",
+      "sources": [
+        "../year_object_relation_20261024/results/PREPARATION_PUBLIC.json:151-183",
+        "../year_object_relation_20261024/code/fit_year_object.py:542-560"
+      ]
+    },
+    {
+      "id": "F5_ACCEPTANCE_VS_RESEARCH_VALIDITY",
+      "severity": "blocking_for_a_guaranteed_research_or_production_claim",
+      "evidence": "Prior fixed gates require per-class precision at least .90, recall at least .80 and macro-F1 at least .85, plus scoped relation/group checks. These were engineering adoption rules relative to Pro references, not universal truth or downstream-bias guarantees.",
+      "consequence": "A QA benchmark score, point accuracy, aligned quotation or agreement between Pro models cannot replace task-specific relation evaluation, group behavior, uncertainty and usable coverage.",
+      "required_boundary": "Do not lower the old gates, treat selective rejection as population success, infer research validity from these gates alone, or promise success before task evidence exists.",
+      "source": "../year_object_relation_20261024/EXECUTION_LOCK_PUBLIC.json"
+    },
+    {
+      "id": "F6_RUNTIME_AND_SCOPE",
+      "severity": "unverified_execution_and_full_schema_coverage",
+      "evidence": "The alternate QA model has not been loaded on the actual authorized DCU runtime; no actual QA memory, training time or real-shard throughput is measured. Required/preferred scope, alternatives and responsibility subject remain separate unfinished outputs.",
+      "consequence": "The proposed eight-card-hour limit is only a suggested loss cap, not a completion estimate. One passing years-object field would not complete the fine semantic schema or authorize full-corpus inference.",
+      "required_boundary": "No new weights/software/training without explicit authorization. Do not silently fall back to another model or represent one field as completion of the original objective."
+    }
+  ],
+  "historical_lessons": {
+    "reuse_completed_base_and_reference_assets": "incorporated",
+    "presence_is_not_relation": "recognized but exact QA target still not executable",
+    "unknown_is_not_negative": "recognized but supplementary negative meanings require question-specific compatibility",
+    "forced_single_class_does_not_cover_multiple_or_absent_relations": "recognized but stock single-span QA is not the promised implementation",
+    "quoted_evidence_is_not_complete_semantic_correctness": "not sufficiently addressed by the previous proposal",
+    "heldout_membership_does_not_erase_prior_exposure": "must remain explicit",
+    "benchmark_and_job_success_do_not_certify_research_use": "must remain explicit",
+    "runtime_success_and_billing_caps_do_not_estimate_corpus_completion": "not yet established",
+    "failure_does_not_authorize_another_annotation_or_model_cycle": "binding stop condition"
+  },
+  "decision": "Retain MRC/QA only as a conditional unexecuted candidate, not an approved production method or default next training run. The submitted proposal does not clear its own start conditions. This review creates no new annotation, support audit, model search, installation or training task. Any materially revised experiment requires a concrete proposal and explicit human authorization.",
+  "current_actions": {
+    "new_semantic_judgments": 0,
+    "training_runs": 0,
+    "model_weight_downloads": 0,
+    "software_installs": 0,
+    "cloud_jobs_submitted": 0,
+    "corpus_inference_runs": 0,
+    "new_formal_production_fields": 0
+  },
+  "primary_method_sources": [
+    "https://aclanthology.org/K17-1034/",
+    "https://aclanthology.org/P18-2124/",
+    "https://huggingface.co/deepset/deberta-v3-large-squad2"
+  ],
+  "privacy": "Public code, aggregate receipts and method metadata only. No private contexts, reference rows, identifiers, credentials or predictions were added."
+}
