@@ -27,7 +27,7 @@
     "before_exact_complete_context_reuse": true,
     "not_a_measured_token_requirement": true
   },
-  "outstanding_resource_clarification": "User mentioned token API; asking whether an independently callable existing model API actually exists, rather than treating Pro allowance as API credits.",
+  "outstanding_resource_clarification": "RESOLVED: Pro subscription only. No independently callable API exists; do not wait for one or repeat the rejected paid-channel request.",
   "paid_channel_permission": "No new paid service, new model deployment, or automatic quota reset approved or used.",
   "preservation": "Original Batch069, Formal800, coarse corpus, all primary and audit authoring preserved. Mechanical patches and adjudication overlays are separate provenance-bearing records.",
   "completion": "Whole-delivery fine semantic production remains unfinished. 180 readings are not a final sample, corpus completion, or semantic-accuracy certification.",
@@ -70,5 +70,11 @@
       "reviewed_partial_contexts": 6,
       "unresolved_document_contexts": 0
     }
+  },
+  "existing_model_resource_confirmation": {
+    "date_local": "2026-10-26",
+    "human_answer": "只有 Pro 订阅额度",
+    "independently_callable_API_available": false,
+    "new_paid_channel_authorized": false
   }
 }
