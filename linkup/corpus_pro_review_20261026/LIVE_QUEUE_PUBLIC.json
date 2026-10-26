@@ -98,7 +98,7 @@
       "pending_packets": 0
     },
     "batch008": {
-      "state": "actual_reading_in_progress",
+      "state": "validated_saved",
       "job": "125710457",
       "capacity": 720,
       "prepared_contexts": 720,
@@ -117,7 +117,20 @@
       "lower_bound_source": "Cloud immutable PRIMARY file inventory130 expected5-record packages, pending full batch acceptance.",
       "exact_prior_reuse_ad_keys": 9,
       "reuse_job": "125728262",
-      "pending_prior_reuse_ad_keys": 0
+      "pending_prior_reuse_ad_keys": 0,
+      "primary_contexts_saved": 720,
+      "final_validation_job": "125735019",
+      "mechanically_accepted_contexts": 720,
+      "reviewed_full_contexts": 673,
+      "reviewed_partial_contexts": 45,
+      "unresolved_document_contexts": 2,
+      "contexts_with_any_unknown_outcome": 49,
+      "ad_keys_with_any_unknown_outcome": 50,
+      "accepted_new_context_ad_keys": 723,
+      "reused_accepted_packets": 142,
+      "failed_packets": 0,
+      "pending_packets": 0,
+      "public_receipt": "results/BATCH008_FINAL_125735019_PUBLIC.json"
     },
     "batch009": {
       "state": "actual_reading_in_progress",
@@ -137,13 +150,19 @@
         "packet_0005",
         "packet_0006"
       ],
-      "root_primary_contexts_saved": 30,
+      "root_primary_contexts_saved": 60,
       "primary_saved_package_snapshot": 51,
       "root_validation_job": "125730365",
-      "root_schema_quote_validated": 30
+      "root_schema_quote_validated": 30,
+      "lane_c_primary_contexts_saved": 240,
+      "lane_b_primary_contexts_saved_lower_bound": 150,
+      "lane_a_state": "reading_from_packet0007",
+      "lane_b_primary_contexts_saved": 240,
+      "lane_a_primary_contexts_saved_lower_bound": 130,
+      "exact_reuse_job": "125738561"
     },
     "batch012": {
-      "state": "prepared_parent_owned",
+      "state": "actual_reading_in_progress",
       "preparation_job": "125730344",
       "start_cursor": {
         "shard_ordinal": 0,
@@ -152,6 +171,12 @@
       "capacity": 720,
       "primary_dispatch": "code/DISPATCHER_batch012_PUBLIC.json",
       "count": 720
+    },
+    "batch013": {
+      "state": "actual_reading_in_independent_thread",
+      "preparation_job": "125732122",
+      "owner_thread": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "capacity": 720
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
@@ -188,7 +213,7 @@
   },
   "newly_accepted_since_continuation_authorization_through_batch007": 1260,
   "independent_threads_dispatch": "THREAD_DISPATCH_PUBLIC.json",
-  "independent_parallel_state": "Two new explicitly authorized active app chats;010 four actual reading lanes and011 three actual reading lanes, separate from parent three continuing readers plus parent30 now saved.",
+  "independent_parallel_state": "Three active independent app chats plus parent; all queues disjoint; each owner continues its explicitly reserved successor.",
   "save_snapshot": "results/ACCELERATION_SAVE_SNAPSHOT_PUBLIC.json",
   "independent_parallel_threads": [
     {
@@ -206,5 +231,25 @@
       "batch": "batch013",
       "state": "active_preparation_submitted"
     }
-  ]
+  ],
+  "accepted_totals_through_batch008": {
+    "new_contexts_processed": 2160,
+    "complete_source_contexts": 2022,
+    "partial_source_contexts": 127,
+    "unresolved_source_contexts": 11,
+    "new_context_canonical_ad_keys": 2167,
+    "additional_exact_prior_reuse_ad_keys": 14,
+    "total_bound_ad_keys": 2181,
+    "contexts_with_any_top_level_unknown_outcome": 153,
+    "ad_keys_with_any_top_level_unknown_outcome_including_reuse": 156,
+    "claim": "Source/format/evidence acceptance only; subordinate clause unknowns remain separately preserved, not all included in top-level counter."
+  },
+  "performance_snapshot": {
+    "as_of_unix": 1793039371.33389,
+    "all_primary_records_saved": 6250,
+    "new_primary_records_written_last_900_seconds": 520,
+    "observed_recent_rows_per_hour": 2080,
+    "mechanical_acceptance_separate": true,
+    "claim": "File timestamp window; reference quality and partial/unknown acceptance remain separate. Not a whole-target duration guarantee."
+  }
 }
