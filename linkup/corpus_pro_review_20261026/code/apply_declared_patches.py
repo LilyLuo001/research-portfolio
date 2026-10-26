@@ -16,9 +16,17 @@ def main():
     p.add_argument('--reviews-dir', type=Path, required=True)
     p.add_argument('--patches', type=Path, nargs='+', required=True)
     p.add_argument('--output-dir', type=Path, required=True)
+    p.add_argument('--prior-checkpoint', type=Path)
+    p.add_argument('--prior-effective-reviews-dir', type=Path)
     a = p.parse_args()
     if not os.environ.get('SLURM_JOB_ID'):
         raise RuntimeError('scheduled compute required')
+    if bool(a.prior_checkpoint) != bool(a.prior_effective_reviews_dir):
+        raise RuntimeError('prior byte-preservation inputs must be paired')
+    prior_accepted = {}
+    if a.prior_checkpoint:
+        prior_meta = json.loads((a.prior_checkpoint/'public/CHECKPOINT_RECEIPT_PUBLIC.json').read_text())
+        prior_accepted = {p['name']: p for p in prior_meta['packets'] if p['status'] == 'accepted'}
     prep = json.loads((a.batch_dir/'public/PACKET_PREPARATION_PUBLIC.json').read_text())
     originals, effective = {}, {}
     for packet in prep['packet_files']:
@@ -30,6 +38,7 @@ def main():
         originals[name] = {'sha256': sha256_file(source), 'rows': records}
         effective[name] = copy.deepcopy(records)
     applied = []
+    patched_names = set()
     for path in a.patches:
         for patch in read_jsonl(path):
             name = patch['primary_file']
@@ -51,12 +60,28 @@ def main():
                 raise RuntimeError('correction old-value mismatch')
             value[key] = patch['new']
             applied.append(patch)
+            patched_names.add(name)
     a.output_dir.mkdir(parents=True, exist_ok=False, mode=0o700)
     for name, records in effective.items():
-        write_jsonl_new(a.output_dir/name, records)
+        if name in patched_names:
+            write_jsonl_new(a.output_dir/name, records)
+        else:
+            # Preserve accepted files byte-for-byte so their immutable SHA
+            # remains valid for checkpoint reuse; reserialization is a change.
+            source = a.reviews_dir/name
+            packet_name = name[len(a.batch_dir.name)+1:].replace('_PRIMARY.jsonl', '.jsonl')
+            if packet_name in prior_accepted:
+                source = a.prior_effective_reviews_dir/name
+                if sha256_file(source) != prior_accepted[packet_name]['review_sha256']:
+                    raise RuntimeError('prior accepted byte source changed')
+                if read_jsonl(source) != originals[name]['rows']:
+                    raise RuntimeError('prior accepted values differ from original')
+            with (a.output_dir/name).open('xb') as target:
+                target.write(source.read_bytes())
     provenance = {'job': os.environ['SLURM_JOB_ID'],
                   'original_files': {name: v['sha256'] for name, v in originals.items()},
                   'patch_sources': [{'path': str(p), 'sha256': sha256_file(p)} for p in a.patches],
+                  'prior_accepted_byte_source': str(a.prior_effective_reviews_dir) if a.prior_effective_reviews_dir else None,
                   'applied': applied,
                   'policy': 'Explicit old/new corrections only; original authoring unchanged; not new review.'}
     write_json_new(a.output_dir/'PATCH_PROVENANCE_PRIVATE.json', provenance)

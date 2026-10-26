@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-26",
+  "failed_job": "125710475",
+  "reason": "Untouched accepted review files were reserialized by patch application, changing byte SHA while JSON values were unchanged; checkpoint correctly refused reuse.",
+  "minimal_repair": "Apply declared corrections only to named files; preserve unmodified original bytes. When preserving earlier normalized effective byte sources, require exact prior SHA and parsed JSON equality to unchanged originals. Immutable checkpoint checks retained.",
+  "successful_recovery_job": "125711177",
+  "reused_accepted_packets": 31,
+  "new_model_readings_due_to_repair": 0,
+  "source_reference_changes": "Only six previously declared patch operations in five unaccepted packets; original PRIMARY files preserved.",
+  "semantic_quality_claim": false
+}
