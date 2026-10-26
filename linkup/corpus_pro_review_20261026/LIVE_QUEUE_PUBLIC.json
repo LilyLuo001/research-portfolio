@@ -189,5 +189,22 @@
   "newly_accepted_since_continuation_authorization_through_batch007": 1260,
   "independent_threads_dispatch": "THREAD_DISPATCH_PUBLIC.json",
   "independent_parallel_state": "Two new explicitly authorized active app chats;010 four actual reading lanes and011 three actual reading lanes, separate from parent three continuing readers plus parent30 now saved.",
-  "save_snapshot": "results/ACCELERATION_SAVE_SNAPSHOT_PUBLIC.json"
+  "save_snapshot": "results/ACCELERATION_SAVE_SNAPSHOT_PUBLIC.json",
+  "independent_parallel_threads": [
+    {
+      "thread_id": "01a17908-dbb4-7953-8029-96b600f388a4",
+      "batch": "batch010",
+      "state": "active_actual_reading"
+    },
+    {
+      "thread_id": "01a17909-9995-7b41-a496-52bac348af59",
+      "batch": "batch011",
+      "state": "active_actual_reading"
+    },
+    {
+      "thread_id": "01a17939-17c4-7811-963f-e48ab4f4b843",
+      "batch": "batch013",
+      "state": "active_preparation_submitted"
+    }
+  ]
 }
