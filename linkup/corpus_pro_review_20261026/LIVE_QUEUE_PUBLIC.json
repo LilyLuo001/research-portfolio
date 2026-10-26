@@ -1,0 +1,83 @@
+{
+  "as_of": "2026-10-26",
+  "model_channel": "Pro gpt-6-sol medium",
+  "completion_unit": "canonical advertisement; complete normalized inputs read once with exact bindings",
+  "batches": {
+    "batch001_to003": {
+      "state": "validated_saved",
+      "new_contexts": 180,
+      "public_receipt": "results/MERGED_125703514_PUBLIC.json"
+    },
+    "batch004": {
+      "state": "validated_saved",
+      "primary_contexts_saved": 180,
+      "checkpoint_job": "125707992",
+      "mechanically_accepted_contexts": 180,
+      "reviewed_full_contexts": 171,
+      "reviewed_partial_contexts": 9,
+      "contexts_with_any_unknown_outcome": 12,
+      "public_receipt": "results/BATCH004_FINAL_125707992_PUBLIC.json"
+    },
+    "batch005": {
+      "state": "primary_saved_final_validation_submitted",
+      "prepared_contexts": 180,
+      "prepared_new_context_adkeys": 182,
+      "prepared_prior_reuse_bindings": 2,
+      "next_cursor": {
+        "shard_ordinal": 1,
+        "row_offset": 544
+      },
+      "primary_contexts_saved": 180,
+      "checkpoint_job": "125709003",
+      "mechanically_accepted_contexts": 155,
+      "remaining_validation_packet_names": [
+        "packet_0003",
+        "packet_0019",
+        "packet_0023",
+        "packet_0033",
+        "packet_0036"
+      ],
+      "exact_prior_reuse_ad_keys": 2,
+      "reuse_job": "125709529",
+      "final_validation_job": "125710475",
+      "primary_reviewed_full": 162,
+      "primary_reviewed_partial": 18
+    },
+    "batch006": {
+      "state": "primary_saved_validation_submitted",
+      "prepared_contexts": 180,
+      "prepared_prior_reuse_bindings": 1,
+      "next_cursor": {
+        "shard_ordinal": 0,
+        "row_offset": 181
+      },
+      "primary_contexts_saved": 180,
+      "primary_reviewed_full": 167,
+      "primary_reviewed_partial": 12,
+      "primary_document_unresolved": 1,
+      "checkpoint_job": "125710508"
+    },
+    "batch007": {
+      "state": "prepared_actual_reading_in_progress",
+      "job": "125706036",
+      "capacity": 720,
+      "prepared_contexts": 720,
+      "prepared_new_context_adkeys": 722,
+      "prepared_prior_reuse_bindings": 2,
+      "next_cursor": {
+        "shard_ordinal": 0,
+        "row_offset": 905
+      }
+    },
+    "batch008": {
+      "state": "preparation_submitted",
+      "job": "125710457",
+      "capacity": 720
+    }
+  },
+  "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
+  "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:905 are separate; these are preparation frontiers, not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
+  "waiting_for_API": false,
+  "new_paid_channel_or_model_deployment": false,
+  "as_of_utc": "2026-10-26T13:00:07.707366+00:00"
+}

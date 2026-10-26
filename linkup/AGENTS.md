@@ -1,5 +1,9 @@
 # LinkUp project execution rules
 
+## Pro continuation explicitly approved (2026-10-26)
+
+The human accepts incremental Pro-only reading and will replenish allowance if needed. Read `linkup/corpus_pro_review_20261026/PRO_CONTINUATION_AUTHORIZATION_PUBLIC.json`. Resume prepared Batch004 unread packets using the same schema and deterministic cursor, preserve all completed judgments and unknowns, and continue saving batches without treating them as final scope. Do not wait for an API or restart proposals/development. No paid service, new model/software, automatic reset, or completion-date guarantee. The400-million-plus full target is not replaced by the attached204774035-US-ad catalog. Report actual newly read, reused, partial/unknown, remaining and checkpoints; no claim of background reading after a turn ends. This explicit continuation supersedes the prior instruction to stop issuing new Pro packets for throughput reasons only.
+
 ## Full-delivery scope correction and actual channel limit (2026-10-26)
 
 The human clarified every row of the400-million-plus delivery is the target. The attached2464-shard catalog covers204774035 canonical-US ads only; do not call it the full requested delivery. Read `linkup/corpus_pro_review_20261026/SCOPE_AND_SCALE_PUBLIC.json`.180 new primary contexts are saved,12 blind audit rereads are QA, and180 next contexts are prepared but unread. Pro interactive throughput is not a feasible whole-delivery production channel; do not imply continuous small batches establish such capacity. Preserve actual work and finish existing mechanical corrections/adjudication checkpoint. The human has now confirmed only Pro subscription allowance exists: no independently callable API is available. Do not await an API or repeat rejected paid-channel requests. No new payment, deployment, training or reset is authorized. Do not silently replace the full target with180/fixed10k/US subset or revive failed models.

@@ -7,7 +7,7 @@
     "next_action": "Preserve completed results and closed failed fit. Do not launch the proposed QA model automatically; it remains a conditional unexecuted candidate with unresolved supervision, multiple-answer and scope issues."
   },
   "entry_document": "ROOT_HISTORY_AND_DECISION.md",
-  "phase": "corpus_pro_reading_20261026_full_delivery_scale_gap",
+  "phase": "corpus_pro_reading_20261026_incremental_continuation_active",
   "metadata_research_extension": {
     "authority": "Human approved original-key metadata append, common-support reporting and one fixed descriptive comparison: OK，开始吧.",
     "contract": "linkup/metadata_research_20261026/EXECUTION_CONTRACT_PUBLIC.json",
@@ -723,22 +723,22 @@
   "corpus_pro_reading": {
     "authority": "User authorizes real per-record Pro agent reading and use of remaining allowance; not only sample overlay.",
     "authorization": "linkup/corpus_pro_review_20261026/AUTHORIZATION_PUBLIC.json",
-    "status": "180_PRIMARY_READINGS_PRESERVED_AND_VALIDATED_FULL_DELIVERY_CAPACITY_UNAVAILABLE",
+    "status": "ACTUAL_PRO_INCREMENTAL_READING_ACTIVE",
     "scope_ads": 204774035,
     "scope_shards": 2464,
     "channel": "Pro agents gpt-6-sol/medium, not cluster CLI or paid API",
     "first_packet_capacity_contexts": 60,
-    "completed_new_reads": 180,
+    "completed_new_reads": 360,
     "old_reference_preserved": true,
     "scope_not_reduced_to_batch": true,
     "user_target": "All400-million-plus delivery, exact full count not yet verified; existing attached204774035-US-ad catalog is only a subset.",
-    "prepared_unread_contexts": 180,
+    "prepared_unread_contexts": null,
     "scope_and_scale_record": "linkup/corpus_pro_review_20261026/SCOPE_AND_SCALE_PUBLIC.json",
     "actual_channel_scale_sufficient": false,
     "independent_API_resource_clarification_pending": false,
-    "reviewed_full": 174,
-    "reviewed_partial": 6,
-    "contexts_with_final_unknown_outcomes": 9,
+    "reviewed_full": 345,
+    "reviewed_partial": 15,
+    "contexts_with_final_unknown_outcomes": 21,
     "final_merged_job": "125703514",
     "final_cloud_private_ledger": "/public/home/lilysharp/linkup_corpus_pro_review_20261026/merged_checkpoints/125703514/private/CONTEXT_LEDGER_PRIVATE.jsonl",
     "public_final_receipt": "linkup/corpus_pro_review_20261026/results/MERGED_125703514_PUBLIC.json",
@@ -746,6 +746,13 @@
     "new_formal_full_delivery_production_started": false,
     "independent_API_available": false,
     "available_model_resource": "Pro subscription only, explicitly confirmed by human on2026-10-26.",
-    "next_action_boundary": "Preserve180 readings and original assets. Full400-million-plus per-record semantic target remains unfinished and not feasible through the current interactive Pro channel. Do not silently shrink scope, await a nonexistent API, repeat paid-channel requests, or revive failed models."
+    "next_action_boundary": "Continue actual unread Pro packets with frozen definitions; completed work not reopened. No paid API/newmodel/software/reset; no promise of months-to-completion or replacement of full target by USsubset.",
+    "active_batch": "batch005_to007",
+    "continuation_authority": "linkup/corpus_pro_review_20261026/PRO_CONTINUATION_AUTHORIZATION_PUBLIC.json",
+    "last_complete_batch_job": "125707992",
+    "live_queue": "linkup/corpus_pro_review_20261026/LIVE_QUEUE_PUBLIC.json",
+    "completed_count_definition": "Mechanically accepted new context readings through Batch004 only; later saved PRIMARY counted in per-batch live queue until validated.",
+    "exact_prior_reused_ad_keys": 2,
+    "reuse_job": "125709529"
   }
 }
