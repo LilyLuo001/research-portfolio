@@ -1,0 +1,176 @@
+{
+  "schema": "reference-overlay-relation-interface-public-v1",
+  "scope": "Existing frozen numeric-duration candidates and completed supplemental Pro judgments only; separate additive enhancement to old coarse production. No new review, model, labels, parser, sample or statistics.",
+  "public_sources": [
+    "linkup/relation_channel_20261025/REVIEW_FINAL_DECISION_PUBLIC.json",
+    "linkup/relation_channel_20261025/results/REVIEW_CHECKPOINT_47393594_PUBLIC.json",
+    "linkup/relation_channel_20261025/results/PACKET_MANIFEST_PUBLIC.json",
+    "linkup/relation_channel_20261025/code/prepare_pro_packets.py",
+    "linkup/relation_channel_20261025/code/validate_review_sidecars.py",
+    "linkup/relation_channel_20261025/code/validate_and_checkpoint.py",
+    "linkup/year_object_relation_20261024/code/prepare_year_object.py",
+    "linkup/year_object_relation_20261024/code/INPUT_BINDING_CONTRACT.md"
+  ],
+  "frozen_membership": {
+    "candidates": 2736,
+    "unique_complete_contexts": 1659,
+    "packets": 71,
+    "split_counts": {
+      "train": 2179,
+      "final_previously_exposed": 464,
+      "previous_holdout_reserved_not_final": 93
+    },
+    "ledger_status_counts": {
+      "resolved": 801,
+      "explicit_non_experience": 1644,
+      "unknown": 291
+    },
+    "remaining": 0
+  },
+  "cloud_inputs": {
+    "review_ledger": {
+      "path": "/work/home/lilysharp/private/relation_channel_20261025/reviews_v1/snapshots/47393594/REVIEW_LEDGER_PRIVATE.jsonl",
+      "sha256": "9ea1fcd0f61182d2d125b19d90af820f549e77351ff1064320613c311ae0d8a9"
+    },
+    "packet_root": "/work/home/lilysharp/private/relation_channel_20261025/pro_packets_v1",
+    "packet_manifest": {
+      "path": "/work/home/lilysharp/private/relation_channel_20261025/pro_packets_v1/PACKET_MANIFEST_PUBLIC.json",
+      "sha256": "16883e6dfee6e2c309a3c98d4c6d87a21dbcccc5029fc8f8cbce1b666c369533"
+    },
+    "candidate_packet_map": {
+      "path": "/work/home/lilysharp/private/relation_channel_20261025/pro_packets_v1/CANDIDATE_PACKET_MAP_PRIVATE.jsonl",
+      "sha256": "e360ea8f03be6db0ca30eba490e9eb605ca0f27c3965dc3d6433f7595517bd95"
+    },
+    "original_candidate_file": {
+      "path": "/work/home/lilysharp/private/year_object_relation_20261024/inputs_v1/CANDIDATES_PRIVATE.jsonl",
+      "sha256": "f331e446648b0842fa04860efa170ba58eb9eba0a01444623b83fe7af2f11ac7"
+    },
+    "original_candidate_supervision": {
+      "path": "/work/home/lilysharp/private/year_object_relation_20261024/inputs_v1/CANDIDATE_SUPERVISION_PRIVATE.jsonl",
+      "sha256": "8227c3a784c330f18f14cb4e0a1f08d0a56a0ef59926a2d1b68a5c3ad21637ed"
+    },
+    "original_context_states": {
+      "path": "/work/home/lilysharp/private/year_object_relation_20261024/inputs_v1/CONTEXT_STATES_PRIVATE.jsonl",
+      "sha256": "b774fb5927c23fd22a9cd79aa7de683ec9f3ae979b749b6626ef4730aa8ea6f3"
+    },
+    "complete_contexts": {
+      "path": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/recovered/CONTEXTS_PRIVATE.jsonl",
+      "sha256": "e76b1cc9b8ede15ba11fcba8fb026517a8c18b2c9bc69139c254fb5d6e4039ed"
+    },
+    "existing_ad_analysis_frame": {
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/empirical_20261024/private/AD_LEVEL_JOINED_ANALYSIS_PRIVATE.parquet",
+      "sha256": "70ab7ed24697cf456e738497de4eec02531205294a626a0dab66bb779a0db1a6",
+      "known_join_column": "normalized_context_sha256"
+    },
+    "accepted_ks_10000_ad_bridge": {
+      "path": "/public/home/lilysharp/linkup_metadata_research_20261026/run001/private/AD_LEVEL_RESEARCH_PRIVATE.parquet",
+      "sha256": "733875307de475a296e3da4531ad64ba99351f5e2dff109b757ad80b80b34adb",
+      "join_column": "normalized_context_sha256",
+      "canonical_ad_key_columns": [
+        "JOB_HASH",
+        "SOURCE_FILE",
+        "SOURCE_ROW",
+        "RECORD_SOURCE_ROW"
+      ],
+      "source_receipt": "linkup/metadata_research_20261026/results/public/METADATA_JOIN_RECEIPT_PUBLIC.json",
+      "schema_receipt": "linkup/metadata_research_20261026/results/public/RESEARCH_SCHEMA_PUBLIC.json"
+    }
+  },
+  "expected_existing_schemas": {
+    "review_ledger_row": {
+      "required_binding": [
+        "candidate_id",
+        "context_sha256",
+        "split",
+        "review_status",
+        "relations"
+      ],
+      "status_specific": {
+        "resolved": "Nonempty relations list. Each relation has object in general_work/industry_domain/occupation_task/tool_specific and nonempty evidence list of {start,end,quote}; at least one evidence span contains this candidate numeric mention. Optional row-level evidence is checked if present.",
+        "explicit_non_experience": "relations=[]; nonblank reason; nonempty row evidence list with at least one span containing this candidate numeric mention.",
+        "unknown": "relations=[]; nonblank unknown_reason; optional row evidence list."
+      },
+      "provenance_checked_at_checkpoint": [
+        "reviewer",
+        "model",
+        "actual_read_scope.kind",
+        "actual_read_scope.source"
+      ]
+    },
+    "candidate_packet_map_row": [
+      "candidate_id",
+      "context_sha256",
+      "split",
+      "original_queue_index",
+      "packet_id",
+      "entity_start",
+      "entity_end",
+      "full_context_file"
+    ],
+    "original_candidate_row": [
+      "candidate_id",
+      "context_sha256",
+      "split",
+      "entity_start",
+      "entity_end",
+      "term",
+      "clause_start",
+      "clause_end",
+      "clause_state",
+      "numeric_value_start",
+      "numeric_unit_end",
+      "section",
+      "window_start",
+      "window_end",
+      "frozen_duration",
+      "frozen_experience_evidence",
+      "primary_old_experience_candidate"
+    ],
+    "original_candidate_supervision_row": [
+      "candidate_id",
+      "context_sha256",
+      "split",
+      "supervision_state",
+      "reference_ids"
+    ],
+    "complete_context_row": [
+      "context_sha256",
+      "complete_context"
+    ],
+    "context_state_row": [
+      "context_sha256",
+      "split",
+      "year_family_status",
+      "object_family_status",
+      "inventory_eligible",
+      "analysis_frame_ad_rows"
+    ],
+    "advertisement_frame_known_column": [
+      "normalized_context_sha256",
+      "JOB_HASH",
+      "SOURCE_FILE",
+      "SOURCE_ROW",
+      "RECORD_SOURCE_ROW"
+    ]
+  },
+  "binding_rules": [
+    "Verify all pinned file SHA256 values before reading and require exactly 2736 unique ledger candidate_id values; join ledger to original candidates and immutable packet map one-to-one on candidate_id while checking context_sha256 and split equality.",
+    "Candidate ID is SHA256 UTF-8 of context_sha256 + \"|\" + decimal entity_start + \"|\" + decimal entity_end. Offsets are zero-based Python Unicode character indices, half-open. Verify complete_context SHA256 UTF-8 equals context_sha256 and complete_context[entity_start:entity_end] equals original term.",
+    "Every {start,end,quote} evidence object must be an exact substring of the same complete_context; resolved relation evidence and explicit_non_experience evidence must contain the original numeric mention. Preserve relation object and exact evidence per candidate. Do not transfer evidence from a different mention or context.",
+    "Use context_sha256=normalized_context_sha256 only as a complete-normalized-context join to existing advertisement rows. Multiple ads can share one context. Keep each ad original identity, labels, masks and unknowns unchanged; no ad-level status is derived by taking one candidate status.",
+    "The accepted original-item tuple (context_sha256, source_sha256, source_record_id, original_item_path) belongs to recovered original-item supervision; the supplemental review ledger is bound to frozen numeric candidate_id and does not itself assert an original-item ID. Do not fabricate that link."
+  ],
+  "status_semantics": {
+    "resolved": "Pro-reviewed candidate-specific applicant-experience object relation(s), possibly multiple, supported by exact evidence. It does not alone establish a required/preferred amount, full same-item chain, or model-quality qualification.",
+    "explicit_non_experience": "Pro-reviewed judgment that this particular frozen numeric duration does not constrain applicant experience, with exact evidence and reason. It can reject this candidate as an experience-duration relation only; it cannot reject another candidate, every experience mention, or the entire advertisement. It is not an automatic training negative.",
+    "unknown": "Reviewed but unresolved candidate-specific relation; preserve unknown and its insufficiency reason. No relation or negative may be inferred from an empty relations list.",
+    "old_labels_and_unknowns": "Preserve unchanged. Overlay is separately named and does not replace Batch069, Formal800, old coarse outputs or their unknowns."
+  },
+  "probe_required_before_attachment": [
+    "Verify actual remote existence, byte SHA256 and JSONL row schema of ledger, candidate map, original candidates, context states, contexts and advertisement frame; public code establishes expected structures but no local private rows were inspected.",
+    "Check whether the original complete normalized context string and old coarse advertisement text use identical coordinates. If not, retain review offsets only against the pinned recovered complete_context and do not project them to ad-local offsets without an exact verified map.",
+    "Check any duplicated ad rows, context collisions, missing joins, and candidate membership conservation without inferring an advertisement-wide negative or changing old outputs.",
+    "Verify the accepted KS bridge currently exists with receipt SHA733875..., exactly 10000 unique four-part original ad keys, valid nonnull canonical key values, and exact normalized_context_sha256 values. The old coarse production path and ad coordinate system remain a separate interface check; attachment does not require projecting candidate offsets into that text."
+  ],
+  "integration_limit": "A candidate-level additive reference overlay for the frozen reviewed subset only; no whole-corpus or out-of-frame generalization, no new field certification, and no relabeling of old production."
+}

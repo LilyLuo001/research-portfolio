@@ -1,0 +1,130 @@
+{
+  "accepted_scope": {
+    "canonical_us_ads": 204774035,
+    "catalog_shards": 2464
+  },
+  "counts": {
+    "canonical_ads_scanned": 60,
+    "prepared_contexts": 60
+  },
+  "coverage": {
+    "full_scope_canonical_ads": 204774035,
+    "full_scope_shards": 2464,
+    "quarantined_canonical_ads": 0,
+    "scanned_canonical_ads": 60
+  },
+  "created_utc": "2026-10-26T08:35:10.384023+00:00",
+  "cursor_exhausted": false,
+  "input_sha256": {
+    "catalog": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+    "normalizer": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "prepare_code": "0042a3677377c22850a1c099dae54575887149f2e959103a057a978f4d9165ae",
+    "prior_manifests": [
+      "02c2c75caf6aa5d22b501cb0e4b97ca68beceb3eb9a2ba4d1b218c2b85a1f91d"
+    ],
+    "reference": "733875307de475a296e3da4531ad64ba99351f5e2dff109b757ad80b80b34adb"
+  },
+  "next_cursor": {
+    "row_offset": 120,
+    "shard_ordinal": 1
+  },
+  "output_sha256": {
+    "packet_manifest_private": "fb85720a6538cc76e9ff829209c459f51eb48b40fd6d9a618918753c74b284a3",
+    "reuse_ad_bindings_private": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unreadable_ads_private": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "packet_capacity": 60,
+  "packet_files": [
+    {
+      "name": "packet_0001.jsonl",
+      "records": 5,
+      "sha256": "37002612c6467b9d3ed1e1b54158131f8f8910f1bda280ba2f13fd585e6509ea"
+    },
+    {
+      "name": "packet_0002.jsonl",
+      "records": 5,
+      "sha256": "e9793426db0f97e8eae7559b9981a4c838dce092fedaa94a6a74cb70bcfd3204"
+    },
+    {
+      "name": "packet_0003.jsonl",
+      "records": 5,
+      "sha256": "00c54cd551f21d0697edb073ab7ef893bd9712e48cc847da056116575f6bb1e5"
+    },
+    {
+      "name": "packet_0004.jsonl",
+      "records": 5,
+      "sha256": "380ebbe5424977fa5a6eca0bd0e1ca208fcf1a80619aeef8b4f1a9d392c14600"
+    },
+    {
+      "name": "packet_0005.jsonl",
+      "records": 5,
+      "sha256": "d7d3cd73c16889f631f49be6452f7b68bb2e8d46af49cc773d1ea22504ba6e2e"
+    },
+    {
+      "name": "packet_0006.jsonl",
+      "records": 5,
+      "sha256": "825ea3a29e977f2427d2f7431abb527b67cdc52586e8459e2fc4359aa7ce91ab"
+    },
+    {
+      "name": "packet_0007.jsonl",
+      "records": 5,
+      "sha256": "e6c913e88175da24d18a7a8e0bedd56f8dd9cc7bc284d3456f3127b1108bbd10"
+    },
+    {
+      "name": "packet_0008.jsonl",
+      "records": 5,
+      "sha256": "1970fc3b288a102107c0ab16690204b57e8ea7f155bc02ea54c976b8c250ef7f"
+    },
+    {
+      "name": "packet_0009.jsonl",
+      "records": 5,
+      "sha256": "49c1f6733bc827812b2467b9833eec7090f9229d9bb89f7cfb03ae5fbe173f8c"
+    },
+    {
+      "name": "packet_0010.jsonl",
+      "records": 5,
+      "sha256": "958b05bc339a395703adba3d6033e5f4b5b1c20fab4afd0113f05b81afde8cf0"
+    },
+    {
+      "name": "packet_0011.jsonl",
+      "records": 5,
+      "sha256": "e7efd7e92d3a0865931cc88cf97715b450a368c0928469e4fbe1fc60e1712444"
+    },
+    {
+      "name": "packet_0012.jsonl",
+      "records": 5,
+      "sha256": "098bc6afcbed6e6cc1b1ac2136d49ca7181c1bf488567902e3b89f00a1e75373"
+    }
+  ],
+  "packet_manifest_sha256": "fb85720a6538cc76e9ff829209c459f51eb48b40fd6d9a618918753c74b284a3",
+  "packet_size": 5,
+  "prepare_code_sha256": "0042a3677377c22850a1c099dae54575887149f2e959103a057a978f4d9165ae",
+  "prepared_ad_keys": 60,
+  "prepared_contexts": 60,
+  "prior_contexts_indexed": 60,
+  "quarantined_shards": [],
+  "reuse_ad_bindings": 0,
+  "review_contract": {
+    "all_fields_pending_new_read": true,
+    "field_families": [
+      "experience",
+      "entry",
+      "responsibility",
+      "technology",
+      "qualification_alternatives",
+      "conditionality",
+      "numeric_years"
+    ],
+    "instructions": "linkup/formal800_20261012/REVIEW_INSTRUCTIONS.md",
+    "schema": "linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json"
+  },
+  "reviewed_contexts_this_run": 0,
+  "scheduled_job_id": "125690491",
+  "start_cursor": {
+    "row_offset": 60,
+    "shard_ordinal": 1
+  },
+  "status": "prepared_not_reviewed",
+  "unreadable_ads": 0,
+  "version": "corpus-pro-full-context-packets-v1"
+}

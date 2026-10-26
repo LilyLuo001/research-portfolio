@@ -1,0 +1,58 @@
+{
+  "version": "reference-overlay-base-interface-public-v1",
+  "date": "2026-10-26",
+  "scope": "Public-code-and-receipt inventory only; no live cloud inspection or row-level verification in this file.",
+  "verified_from_public_evidence": {
+    "old_full_base": {
+      "typed_root_reported": "/public/home/lilysharp/linkup_release_v1/full_semantic_v1",
+      "archived_completion_gate_reported": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/gate_v2_20261003/ALL_REGIONS_VERIFIED_COMPLETE.json",
+      "shards": 2464,
+      "canonical_us_ads": 204774035,
+      "typed_leaf_pattern": "<typed_root>/<shard_id>/chunk_*/{ad_status,experience,technology,v6_audit}.parquet",
+      "typed_leaf_semantics": "ad_status has canonical locator and engineering state; experience and technology contain sparse candidate evidence; v6_audit is selected sparse qualification/education audit evidence. None is a complete normalized-text or certified fine-semantic table.",
+      "evidence": ["linkup/analysis_transition_20260930/reuse_audit_20261010/CLOUD_INVENTORY_PUBLIC.json", "linkup/analysis_transition_20260930/reuse_audit_20261010/ROOT_REUSE_DECISION.json", "linkup/cleaning_pipeline_20260928/source_snapshot/stage_c_release_v1/lean_writer.py"]
+    },
+    "old_full_narrow": {
+      "reported_root": "/public/home/lilysharp/linkup_analysis_execution_oct02/private/semantic_narrow_v1",
+      "private_query_package_reported": "/public/home/lilysharp/linkup_analysis_execution_oct02/corpus_release_20261012/private/release_v1",
+      "assets": ["CORPUS_RELEASE_CATALOG_PRIVATE.jsonl", "CORPUS_RELEASE_VIEWS_PRIVATE.sql", "2464 ad-level <shard_id>.parquet files", "2464 <shard_id>.durations.parquet sidecars"],
+      "views": ["linkup_corpus_narrow_v1", "linkup_corpus_duration_evidence_v1"],
+      "canonical_key": ["JOB_HASH", "SOURCE_FILE", "SOURCE_ROW", "RECORD_SOURCE_ROW"],
+      "receipt_identity": {"private_catalog_sha256": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e", "source_batch_receipt_sha256": "ec029eac81a8c7cde50a0d4dd56660328d1db38a77e86f9fc25f8d9361b5f4f5"},
+      "boundary": "Old-version candidate measurements; engineering usable does not mean semantic accuracy. Occupation/task prior experience is structurally unavailable, and nondetection is not a semantic negative.",
+      "evidence": ["linkup/corpus_release_20261012/README.md", "linkup/corpus_release_20261012/results/CORPUS_RELEASE_RECEIPT.json", "linkup/analysis_transition_20260930/pre_revelio_execution_v1/build_semantic_narrow.py", "linkup/corpus_release_20261012/build_corpus_release.py"]
+    },
+    "fixed10k_reference": {
+      "original_frame_reported": "/work/home/lilysharp/private/next_stage_20261004/text_handoff_20261007/verified_fixed10000/MERGED_FIXED10000_EXACT_TEXT_PRIVATE.parquet",
+      "frame_sha256": "e6083ccacbdfe5a64548168a22ceb11fdce9d6d4bb89943a11f4bae54a17de35",
+      "original_ads": 10000,
+      "raw_exact_texts": 7635,
+      "normalized_full_inputs": 7617,
+      "latest_reported_field_ledger": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/continuation/prepared/batch069/final/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+      "initial_reconciliation_ledger": "/work/home/lilysharp/private/production_coverage_20261017/private/FIELD_PROVENANCE_LEDGER_PRIVATE.jsonl",
+      "initial_reconciliation_ledger_sha256": "481cf6f844cae9377d3be4d1ce51a25fdcab277e1d9e8280957615946d1e3756",
+      "hash_meanings": {"exact_text_sha256": "SHA-256 of original full advertisement text, UTF-8", "normalized_context_sha256": "SHA-256 of the complete frozen-normalized text, UTF-8; normalization must use the pinned legacy_v5_frozen.py implementation", "normalizer_sha256": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd"},
+      "exact_reuse_rule": "Join a canonical ad directly on the full four-part key only for its own reference; transfer a field judgment to another ad only after exact raw full-text equality or identical complete frozen-normalized input, preserving field-specific status, provenance, and unknown/conflict mask. Hash equality is a candidate identity check; compare full input when available. JOB_HASH alone and similar/partial text are insufficient.",
+      "evidence": ["linkup/production_coverage_20261017/code/reconcile_coverage.py", "linkup/production_coverage_20261017/receipts/ANALYSIS_RECEIPT.json", "linkup/production_coverage_20261017/ROOT_ACCEPTANCE.md", "linkup/fixed10k_continuation_20261017/EXECUTION_RESULTS_PUBLIC.json"]
+    },
+    "existing_exact_key_bridge": {
+      "code": "linkup/analysis_transition_20260930/reuse_expansion_20261010/code/project_one_shard.py",
+      "manifest_code": "linkup/analysis_transition_20260930/reuse_expansion_20261010/code/assemble_frozen_manifest.py",
+      "meaning": "A previous additive pass joined old V6 audit, old narrow and newer rule outputs by the four-part canonical key, checked manifest-listed file hashes, and kept version-specific fields separate.",
+      "scope_boundary": "That frozen 69-shard convenience wave is evidence of an interface, not a complete 2464-shard overlay or fine-semantic coverage."
+    },
+    "failed_prediction_status": {
+      "formal_full_corpus_fields": 0,
+      "full_corpus_semantic_shards_submitted": 0,
+      "rule": "Frozen CPU predictions are candidate sidecars only and cannot fill reference fields or unknowns.",
+      "evidence": ["linkup/fixed10k_continuation_20261017/FIELD_PRODUCTION_STATUS.json", "linkup/fixed10k_continuation_20261017/final_results/FINAL_RUN_AND_ROOT_DECISION_PUBLIC.json"]
+    }
+  },
+  "not_verified_here": [
+    "Current cloud existence, accessibility and SHA-256 of every reported private asset, including the latest Batch069 ledger and the old typed-root files.",
+    "A row-level exact correspondence between all fixed10k keys and the 2464-shard old V6/narrow base; public receipts do not provide a complete map.",
+    "Whether the old V6 typed rows retain a raw or complete-normalized text hash: the published frozen typed and narrow schemas list the four-part key but no such hash. A valid text-identity bridge would need the retained source text and pinned normalization, checked against the fixed10k frame.",
+    "Any overlay coverage count, correctness rate, or compatibility of old candidate values with new reference field semantics."
+  ],
+  "overlay_boundary": "Keep old V6 and narrow files immutable. Write independently versioned, field-specific corrections only for verified exact ads or complete-input matches. Preserve all original values and unknown states; leave unmatched ads unchanged and disable failed prediction fields."
+}

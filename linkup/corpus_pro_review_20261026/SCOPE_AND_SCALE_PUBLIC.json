@@ -1,0 +1,58 @@
+{
+  "as_of_utc": "2026-10-26T10:47:25Z",
+  "user_target": "Every advertisement in the full 400-million-plus delivery; no batch or sample as the completion target.",
+  "exact_full_delivery_row_denominator": "not verified in this execution",
+  "currently_attached_catalog": {
+    "shards": 2464,
+    "canonical_US_ads": 204774035,
+    "relation_to_target": "US subset only; not the entire user-requested delivery"
+  },
+  "actual_new_primary_contexts_saved": 180,
+  "new_ad_keys_in_first_three_packets": 180,
+  "blind_rereads_for_QA_not_new_production": 12,
+  "new_exact_reference_reuse_ad_keys_in_batches001_to003": 0,
+  "batch004": {
+    "prepared_not_read_contexts": 180,
+    "preparation_job": "125699571",
+    "claim": "transport preparation only, zero new semantic reads"
+  },
+  "actual_channel": "Pro subagents gpt-6-sol / medium, at most three concurrent child agents with root occupying the fourth slot",
+  "full_scope_capacity": "NOT_ESTABLISHED; this interactive Pro route cannot reasonably complete hundreds of millions of model readings",
+  "illustrative_input_budget_only": {
+    "assumed_ads": 400000000,
+    "assumed_input_tokens_per_ad": 1000,
+    "total_input_tokens": 400000000000,
+    "actual_usage_or_quote": false,
+    "output_and_reasoning_excluded": true,
+    "before_exact_complete_context_reuse": true,
+    "not_a_measured_token_requirement": true
+  },
+  "outstanding_resource_clarification": "User mentioned token API; asking whether an independently callable existing model API actually exists, rather than treating Pro allowance as API credits.",
+  "paid_channel_permission": "No new paid service, new model deployment, or automatic quota reset approved or used.",
+  "preservation": "Original Batch069, Formal800, coarse corpus, all primary and audit authoring preserved. Mechanical patches and adjudication overlays are separate provenance-bearing records.",
+  "completion": "Whole-delivery fine semantic production remains unfinished. 180 readings are not a final sample, corpus completion, or semantic-accuracy certification.",
+  "verified_mechanical_per_batch_checkpoints": {
+    "batch001": "125702921",
+    "batch002": "125702926",
+    "batch003": "125702928"
+  },
+  "verified_document_status_before_audit_overlay": {
+    "reviewed_full": 174,
+    "reviewed_partial": 6,
+    "pending_or_failed_packets": 0
+  },
+  "audit_adjudication": {
+    "job": "125703154",
+    "private_sidecar_sha256": "c2a2a1c01b9569c656a1593fd58b7a06f9ee5ffddf7ace4278ec9b6e7c52b1e8",
+    "existing_compared_records": 5,
+    "patch_operations": 7,
+    "new_readings": 0,
+    "private_only": true
+  },
+  "batch001_final_adjudicated_checkpoint": "125703347",
+  "final_merged_checkpoint_job": {
+    "job": "125703514",
+    "last_observed_state": "PENDING",
+    "receipt_not_yet_available": true
+  }
+}

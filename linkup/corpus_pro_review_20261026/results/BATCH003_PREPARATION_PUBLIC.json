@@ -1,0 +1,131 @@
+{
+  "accepted_scope": {
+    "canonical_us_ads": 204774035,
+    "catalog_shards": 2464
+  },
+  "counts": {
+    "canonical_ads_scanned": 60,
+    "prepared_contexts": 60
+  },
+  "coverage": {
+    "full_scope_canonical_ads": 204774035,
+    "full_scope_shards": 2464,
+    "quarantined_canonical_ads": 0,
+    "scanned_canonical_ads": 60
+  },
+  "created_utc": "2026-10-26T09:28:18.686307+00:00",
+  "cursor_exhausted": false,
+  "input_sha256": {
+    "catalog": "4265e2469a8d3d35a769faad9c163823b0df32364f88061db5ecc5e131b1eb1e",
+    "normalizer": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "prepare_code": "0042a3677377c22850a1c099dae54575887149f2e959103a057a978f4d9165ae",
+    "prior_manifests": [
+      "02c2c75caf6aa5d22b501cb0e4b97ca68beceb3eb9a2ba4d1b218c2b85a1f91d",
+      "fb85720a6538cc76e9ff829209c459f51eb48b40fd6d9a618918753c74b284a3"
+    ],
+    "reference": "733875307de475a296e3da4531ad64ba99351f5e2dff109b757ad80b80b34adb"
+  },
+  "next_cursor": {
+    "row_offset": 180,
+    "shard_ordinal": 1
+  },
+  "output_sha256": {
+    "packet_manifest_private": "62c303553c26c14dbc7ae822334c0ff2239c018678d6b1555a84544a161b6ecc",
+    "reuse_ad_bindings_private": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unreadable_ads_private": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "packet_capacity": 60,
+  "packet_files": [
+    {
+      "name": "packet_0001.jsonl",
+      "records": 5,
+      "sha256": "b33beeaf89f0b66c55aee68d383a6f15c9316e9c6700ec666d6369f244041900"
+    },
+    {
+      "name": "packet_0002.jsonl",
+      "records": 5,
+      "sha256": "e028c53615de85cbde17a3b7883bfb4c65047ea04bd9d4ff8fa0bf1dea48dd42"
+    },
+    {
+      "name": "packet_0003.jsonl",
+      "records": 5,
+      "sha256": "eb152aea72ed492bead68875c3886bced46ff9be2a119fedd78c94fe387fcf5b"
+    },
+    {
+      "name": "packet_0004.jsonl",
+      "records": 5,
+      "sha256": "ed8c0e6f76a2999472a64f3bdc571af24aee42b502466393da46476ba7dcf62b"
+    },
+    {
+      "name": "packet_0005.jsonl",
+      "records": 5,
+      "sha256": "f7b712cd4431d90788023eabd0f337d99305c00c5d6aacaa9c0dbace43d8c933"
+    },
+    {
+      "name": "packet_0006.jsonl",
+      "records": 5,
+      "sha256": "1bcf45098c0680fd964495809ba7f97493dff22975292a4233622d7903ba78cc"
+    },
+    {
+      "name": "packet_0007.jsonl",
+      "records": 5,
+      "sha256": "b3d89b160fec6811ac8e67a9c4efcf611cd64f8b4b686363e0e64ed5162fea39"
+    },
+    {
+      "name": "packet_0008.jsonl",
+      "records": 5,
+      "sha256": "fad311e37c1bb21d59731405f5fa29c80eba5648eb8e7bfef1b8435ce52dac29"
+    },
+    {
+      "name": "packet_0009.jsonl",
+      "records": 5,
+      "sha256": "889dde85a9d1f37a329159119b6cfad4fe56ae3c0638ededaa40a294195254b8"
+    },
+    {
+      "name": "packet_0010.jsonl",
+      "records": 5,
+      "sha256": "f6f225ba30b1b47cffd02aeff48616688683856f5b27e15099cf79092695f8ab"
+    },
+    {
+      "name": "packet_0011.jsonl",
+      "records": 5,
+      "sha256": "84e8783c03afee7548f43bb0a63644cd43d1de7c6882ea990ae1a3f44c1944c4"
+    },
+    {
+      "name": "packet_0012.jsonl",
+      "records": 5,
+      "sha256": "e2b6f8f709a75f6342f7322935c5a5715b208638700e76454db2f83a0b046e83"
+    }
+  ],
+  "packet_manifest_sha256": "62c303553c26c14dbc7ae822334c0ff2239c018678d6b1555a84544a161b6ecc",
+  "packet_size": 5,
+  "prepare_code_sha256": "0042a3677377c22850a1c099dae54575887149f2e959103a057a978f4d9165ae",
+  "prepared_ad_keys": 60,
+  "prepared_contexts": 60,
+  "prior_contexts_indexed": 120,
+  "quarantined_shards": [],
+  "reuse_ad_bindings": 0,
+  "review_contract": {
+    "all_fields_pending_new_read": true,
+    "field_families": [
+      "experience",
+      "entry",
+      "responsibility",
+      "technology",
+      "qualification_alternatives",
+      "conditionality",
+      "numeric_years"
+    ],
+    "instructions": "linkup/formal800_20261012/REVIEW_INSTRUCTIONS.md",
+    "schema": "linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json"
+  },
+  "reviewed_contexts_this_run": 0,
+  "scheduled_job_id": "125695559",
+  "start_cursor": {
+    "row_offset": 120,
+    "shard_ordinal": 1
+  },
+  "status": "prepared_not_reviewed",
+  "unreadable_ads": 0,
+  "version": "corpus-pro-full-context-packets-v1"
+}

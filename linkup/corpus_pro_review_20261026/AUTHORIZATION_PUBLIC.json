@@ -1,0 +1,27 @@
+{
+  "date_local": "2026-10-26",
+  "authority": "User explicitly authorized actual per-record reading by Pro agents, using available subscription allowance, including continued use toward month end.",
+  "scope": "Original completed full-corpus canonical-US catalog: 2464 shards, 204774035 advertisements. Fixed deterministic traversal, not a new probability sample or fixed10k rerun.",
+  "channel": "Actual Pro subagents in this chat. Current callable Sol model gpt-6-sol, medium effort; GPT-5.0 Sol is not in the callable model list and is not claimed used. No paid API or new model deployment.",
+  "schema_source": "linkup/formal800_20261012/FORMAL800_REVIEW_SCHEMA.json",
+  "instructions_source": "linkup/formal800_20261012/REVIEW_INSTRUCTIONS.md",
+  "scope_guards": [
+    "Read complete normalized descriptions for unprocessed contexts; no partial excerpts passed as full.",
+    "Existing fixed10k known/unknown judgments reused only for verified identical full inputs; do not reopen final unknowns.",
+    "Deduplicate identical complete inputs; keep separate canonical ad identities.",
+    "Existing coarse candidates, actual Pro judgments and unresolved states remain distinct.",
+    "First60 contexts are a production/save batch, not a sample-size cap or corpus completion.",
+    "No inference from a candidate rejection to whole-ad absence; no synthesized unconditional minimum years."
+  ],
+  "cloud_compute": "SCNet scheduled packet preparation and evidence/key/schema validation; actual semantic reading occurs in Pro agents, not Slurm/cluster CLI.",
+  "quota": "Use available Pro allowance as authorized, checkpoint when exhausted; no unapproved paid API, purchases or automatic reset. Actual account usage tool unavailable at start; no invented percentage.",
+  "original_assets": "Batch069/Formal800 and old full base remain unchanged; new production writes independent private sidecars.",
+  "frozen_existing_code_sha256": {
+    "legacy_v5_frozen.py": "336242bed5372e446dbdc2b2d02944e906024ee90138a2fa424b866aee7293dd",
+    "prepare_packets.py": "19fffd5d2692a160cd7b732f581a0fe11f4ac52135e4cd9779a9e846dfc2bc39",
+    "REVIEW_INSTRUCTIONS.md": "f13e1c431b4018fb7d1e2f1dc985dece69f092a8713c7ef673497a0fbd728d26",
+    "FORMAL800_REVIEW_SCHEMA.json": "fdc5b0d653bd8f1c98a3e6cd20970156621403154a7ad073e977ea14ddfb310e",
+    "validate_reviews.py": "f7737143004374f9391a16ad2d1bab2fa47950c589232510045d1eee93bc2c20",
+    "ks_prepare.sbatch": "90055962bb43200ccd0260792ebe59c732e66e2ef2e6d066daf1f18c05a765ad"
+  }
+}

@@ -1,0 +1,497 @@
+{
+  "type": "object",
+  "properties": {
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "context_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "document_status": {
+      "type": "string",
+      "enum": [
+        "reviewed_full",
+        "reviewed_partial",
+        "unresolved"
+      ]
+    },
+    "experience_outcomes": {
+      "type": "object",
+      "properties": {
+        "general_work": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "occupation_task": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "industry_domain": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "tool_specific": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "general_work",
+        "occupation_task",
+        "industry_domain",
+        "tool_specific"
+      ],
+      "additionalProperties": false
+    },
+    "experience_clauses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "string",
+            "enum": [
+              "general_work",
+              "occupation_task",
+              "industry_domain",
+              "tool_specific",
+              "unresolved"
+            ]
+          },
+          "object_detail": {
+            "type": "string"
+          },
+          "strength": {
+            "type": "string",
+            "enum": [
+              "required",
+              "preferred",
+              "explicitly_waived",
+              "unspecified",
+              "unresolved"
+            ]
+          },
+          "conditionality": {
+            "type": "string",
+            "enum": [
+              "unconditional",
+              "conditional",
+              "unspecified",
+              "unresolved"
+            ]
+          },
+          "years_min": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "years_max": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "years_relation": {
+            "type": "string",
+            "enum": [
+              "at_least",
+              "range",
+              "exact",
+              "at_most",
+              "not_stated",
+              "unresolved"
+            ]
+          },
+          "alternative_group": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "alternative_branch": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "object",
+          "object_detail",
+          "strength",
+          "conditionality",
+          "years_min",
+          "years_max",
+          "years_relation",
+          "alternative_group",
+          "alternative_branch",
+          "quotes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "qualification_alternatives": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "OR",
+              "AND",
+              "unresolved"
+            ]
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "branch": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "condition": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "quotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "branch",
+                "condition",
+                "quotes"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "group",
+          "relation",
+          "branches"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "entry_outcomes": {
+      "type": "object",
+      "properties": {
+        "explicit_no_experience": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "explicit_new_graduate": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "current_student_internship": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "explicit_junior_or_entry_label": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "explicit_no_experience",
+        "explicit_new_graduate",
+        "current_student_internship",
+        "explicit_junior_or_entry_label"
+      ],
+      "additionalProperties": false
+    },
+    "entry_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "enum": [
+              "explicit_no_experience",
+              "explicit_new_graduate",
+              "current_student_internship",
+              "explicit_junior_or_entry_label"
+            ]
+          },
+          "conditionality": {
+            "type": "string",
+            "enum": [
+              "unconditional",
+              "conditional",
+              "unspecified",
+              "unresolved"
+            ]
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "target",
+          "conditionality",
+          "quotes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "responsibility_outcomes": {
+      "type": "object",
+      "properties": {
+        "independent_judgment": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "client_ownership": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "people_supervision": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        },
+        "training_mentoring": {
+          "type": "string",
+          "enum": [
+            "present",
+            "not_mentioned",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "independent_judgment",
+        "client_ownership",
+        "people_supervision",
+        "training_mentoring"
+      ],
+      "additionalProperties": false
+    },
+    "responsibility_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "independent_judgment",
+              "client_ownership",
+              "people_supervision",
+              "training_mentoring"
+            ]
+          },
+          "subject": {
+            "type": "string",
+            "enum": [
+              "advertised_worker",
+              "other_employee",
+              "employer_general",
+              "unresolved"
+            ]
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "current_duty",
+              "required_capability",
+              "prior_experience",
+              "other_person",
+              "employer_description",
+              "unresolved"
+            ]
+          },
+          "conditionality": {
+            "type": "string",
+            "enum": [
+              "unconditional",
+              "conditional",
+              "unspecified",
+              "unresolved"
+            ]
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "dimension",
+          "subject",
+          "relation",
+          "conditionality",
+          "quotes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "technology_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "technology": {
+            "type": "string",
+            "minLength": 1
+          },
+          "family": {
+            "type": "string",
+            "enum": [
+              "traditional_software_system",
+              "predictive_ml_ai",
+              "generative_ai",
+              "unresolved"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "develop_technology",
+              "implement_deploy_technology",
+              "use_tool_for_work",
+              "background_mention",
+              "unresolved"
+            ]
+          },
+          "developed_object": {
+            "type": "string"
+          },
+          "context_note": {
+            "type": "string"
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "technology",
+          "family",
+          "role",
+          "developed_object",
+          "context_note",
+          "quotes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "technology_inventory_status": {
+      "type": "string",
+      "enum": [
+        "explicit_mentions_recorded",
+        "not_mentioned_after_full_review",
+        "unknown"
+      ]
+    },
+    "unresolved_notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "record_id",
+    "context_sha256",
+    "document_status",
+    "experience_outcomes",
+    "experience_clauses",
+    "qualification_alternatives",
+    "entry_outcomes",
+    "entry_items",
+    "responsibility_outcomes",
+    "responsibility_items",
+    "technology_items",
+    "technology_inventory_status",
+    "unresolved_notes"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "formal800-joint-review-v1",
+  "title": "Finite formal800 joint semantic reading v1"
+}

@@ -1,0 +1,492 @@
+{
+  "job": "47436166",
+  "mode": "wz",
+  "no_body_or_row_values_emitted": true,
+  "sources": [
+    {
+      "bytes": 3580361,
+      "exists": true,
+      "first_record_shape": {
+        "actual_read_scope": {
+          "kind": "str",
+          "source": "str"
+        },
+        "candidate_id": "str",
+        "context_sha256": "str",
+        "evidence": {
+          "first_item_shape": {
+            "end": "int",
+            "quote": "str",
+            "start": "int"
+          },
+          "type": "list"
+        },
+        "model": "str",
+        "reason": "str",
+        "relations": {
+          "first_item_shape": null,
+          "type": "list"
+        },
+        "review_status": "str",
+        "reviewer": "str",
+        "split": "str"
+      },
+      "path": "/work/home/lilysharp/private/relation_channel_20261025/reviews_v1/snapshots/47393594/REVIEW_LEDGER_PRIVATE.jsonl",
+      "sha256": "9ea1fcd0f61182d2d125b19d90af820f549e77351ff1064320613c311ae0d8a9"
+    },
+    {
+      "bytes": 1101414,
+      "exists": true,
+      "first_record_shape": {
+        "candidate_id": "str",
+        "context_sha256": "str",
+        "entity_end": "int",
+        "entity_start": "int",
+        "full_context_file": "str",
+        "original_queue_index": "int",
+        "packet_id": "str",
+        "split": "str"
+      },
+      "path": "/work/home/lilysharp/private/relation_channel_20261025/pro_packets_v1/CANDIDATE_PACKET_MAP_PRIVATE.jsonl",
+      "sha256": "e360ea8f03be6db0ca30eba490e9eb605ca0f27c3965dc3d6433f7595517bd95"
+    },
+    {
+      "bytes": 30270556,
+      "exists": true,
+      "first_record_shape": {
+        "candidate_id": "str",
+        "candidate_source": "str",
+        "clause_end": "int",
+        "clause_start": "int",
+        "clause_state": "str",
+        "context_sha256": "str",
+        "entity_end": "int",
+        "entity_start": "int",
+        "frozen_duration": {
+          "kind": "str",
+          "lower_years": "float",
+          "original_unit": "str",
+          "strict_lower": "bool",
+          "upper_years": "NoneType"
+        },
+        "frozen_experience_evidence": {
+          "first_item_shape": {
+            "duration": {
+              "kind": "str",
+              "lower_years": "float",
+              "original_unit": "str",
+              "strict_lower": "bool",
+              "upper_years": "NoneType"
+            },
+            "end": "int",
+            "kind": "str",
+            "objects": {
+              "first_item_shape": null,
+              "type": "list"
+            },
+            "outcome_status": "str",
+            "quote": "str",
+            "review_reasons": {
+              "first_item_shape": "str",
+              "type": "list"
+            },
+            "rule": "str",
+            "scope": "str",
+            "section": "str",
+            "start": "int",
+            "strength": "str"
+          },
+          "type": "list"
+        },
+        "frozen_numeric_groups": {
+          "hi": "NoneType",
+          "lo": "str",
+          "plus": "str",
+          "prefix": "NoneType",
+          "unit": "str"
+        },
+        "frozen_technology_flags": {
+          "tech_software": "bool"
+        },
+        "model_input": "str",
+        "numeric_unit_end": "int",
+        "numeric_value_start": "int",
+        "primary_old_experience_candidate": "bool",
+        "section": "str",
+        "split": "str",
+        "term": "str",
+        "window_end": "int",
+        "window_start": "int"
+      },
+      "path": "/work/home/lilysharp/private/year_object_relation_20261024/inputs_v1/CANDIDATES_PRIVATE.jsonl",
+      "sha256": "f331e446648b0842fa04860efa170ba58eb9eba0a01444623b83fe7af2f11ac7"
+    },
+    {
+      "bytes": 3046351,
+      "exists": true,
+      "first_record_shape": {
+        "analysis_frame_ad_rows": "int",
+        "candidates": "int",
+        "context_sha256": "str",
+        "inventory_eligible": "bool",
+        "metadata_granularity": "str",
+        "object_family_status": "str",
+        "reference_group": "str",
+        "reference_group_conflict": "bool",
+        "split": "str",
+        "state": "str",
+        "year_family_status": "str"
+      },
+      "path": "/work/home/lilysharp/private/year_object_relation_20261024/inputs_v1/CONTEXT_STATES_PRIVATE.jsonl",
+      "sha256": "b774fb5927c23fd22a9cd79aa7de683ec9f3ae979b749b6626ef4730aa8ea6f3"
+    },
+    {
+      "bytes": 19014,
+      "exists": true,
+      "path": "/work/home/lilysharp/private/linkup_relation_feasibility_20261024/INPUT_MANIFEST_PRIVATE.json",
+      "sha256": "48e8b0d01884424e286cd836bb37f198b9d52d3b74b029180994a5e0349c745e",
+      "top_level_shape": {
+        "freeze": {
+          "path": "str",
+          "sha256": "str"
+        },
+        "missing_expected_sources": {
+          "first_item_shape": null,
+          "type": "list"
+        },
+        "packets": {
+          "first_item_shape": null,
+          "type": "list"
+        },
+        "sources": {
+          "first_item_shape": {
+            "path": "str",
+            "sha256": "str"
+          },
+          "type": "list"
+        },
+        "use_frozen_frame_contexts": "bool"
+      }
+    },
+    {
+      "bytes": 1732740,
+      "columns": [
+        {
+          "name": "JOB_HASH",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_FILE",
+          "type": "string"
+        },
+        {
+          "name": "SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "RECORD_SOURCE_ROW",
+          "type": "int64"
+        },
+        {
+          "name": "OCCUPATION_MAJOR",
+          "type": "string"
+        },
+        {
+          "name": "CENSUS_REGION",
+          "type": "string"
+        },
+        {
+          "name": "created_year",
+          "type": "int64"
+        },
+        {
+          "name": "arm",
+          "type": "string"
+        },
+        {
+          "name": "exact_text_sha256",
+          "type": "string"
+        },
+        {
+          "name": "normalized_context_sha256",
+          "type": "string"
+        },
+        {
+          "name": "occupation_major",
+          "type": "string"
+        },
+        {
+          "name": "original9282eligible",
+          "type": "bool"
+        },
+        {
+          "name": "status_technology_category_and_role",
+          "type": "string"
+        },
+        {
+          "name": "status_experience_object",
+          "type": "string"
+        },
+        {
+          "name": "status_experience_strength",
+          "type": "string"
+        },
+        {
+          "name": "status_experience_literal_years",
+          "type": "string"
+        },
+        {
+          "name": "status_qualification_conditions_and_alternatives",
+          "type": "string"
+        },
+        {
+          "name": "status_entry_wording_and_scope",
+          "type": "string"
+        },
+        {
+          "name": "status_current_responsibility_subject_and_relation",
+          "type": "string"
+        },
+        {
+          "name": "technology_detail",
+          "type": "string"
+        },
+        {
+          "name": "technology_group",
+          "type": "string"
+        },
+        {
+          "name": "experience_general_work",
+          "type": "double"
+        },
+        {
+          "name": "experience_occupation_task",
+          "type": "double"
+        },
+        {
+          "name": "experience_industry_domain",
+          "type": "double"
+        },
+        {
+          "name": "experience_tool_specific",
+          "type": "double"
+        },
+        {
+          "name": "explicit_new_graduate",
+          "type": "double"
+        },
+        {
+          "name": "explicit_new_graduate_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "explicit_no_experience",
+          "type": "double"
+        },
+        {
+          "name": "explicit_no_experience_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "graduate_or_noexperience",
+          "type": "double"
+        },
+        {
+          "name": "graduate_or_noexperience_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_independent_judgment",
+          "type": "double"
+        },
+        {
+          "name": "duty_independent_judgment_conditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_independent_judgment_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_client_ownership",
+          "type": "double"
+        },
+        {
+          "name": "duty_client_ownership_conditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_client_ownership_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_people_supervision",
+          "type": "double"
+        },
+        {
+          "name": "duty_people_supervision_conditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_people_supervision_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_training_mentoring",
+          "type": "double"
+        },
+        {
+          "name": "duty_training_mentoring_conditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_training_mentoring_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_any",
+          "type": "double"
+        },
+        {
+          "name": "duty_any_conditional",
+          "type": "double"
+        },
+        {
+          "name": "duty_any_unconditional",
+          "type": "double"
+        },
+        {
+          "name": "strength_general_work_required",
+          "type": "double"
+        },
+        {
+          "name": "strength_general_work_preferred",
+          "type": "double"
+        },
+        {
+          "name": "strength_general_work_explicitly_waived",
+          "type": "double"
+        },
+        {
+          "name": "numeric_years_general_work",
+          "type": "double"
+        },
+        {
+          "name": "conditional_general_work",
+          "type": "double"
+        },
+        {
+          "name": "alternative_branch_general_work",
+          "type": "double"
+        },
+        {
+          "name": "alternative_or_branch_general_work",
+          "type": "double"
+        },
+        {
+          "name": "alternative_and_branch_general_work",
+          "type": "double"
+        },
+        {
+          "name": "strength_occupation_task_required",
+          "type": "double"
+        },
+        {
+          "name": "strength_occupation_task_preferred",
+          "type": "double"
+        },
+        {
+          "name": "strength_occupation_task_explicitly_waived",
+          "type": "double"
+        },
+        {
+          "name": "numeric_years_occupation_task",
+          "type": "double"
+        },
+        {
+          "name": "conditional_occupation_task",
+          "type": "double"
+        },
+        {
+          "name": "alternative_branch_occupation_task",
+          "type": "double"
+        },
+        {
+          "name": "alternative_or_branch_occupation_task",
+          "type": "double"
+        },
+        {
+          "name": "alternative_and_branch_occupation_task",
+          "type": "double"
+        },
+        {
+          "name": "strength_industry_domain_required",
+          "type": "double"
+        },
+        {
+          "name": "strength_industry_domain_preferred",
+          "type": "double"
+        },
+        {
+          "name": "strength_industry_domain_explicitly_waived",
+          "type": "double"
+        },
+        {
+          "name": "numeric_years_industry_domain",
+          "type": "double"
+        },
+        {
+          "name": "conditional_industry_domain",
+          "type": "double"
+        },
+        {
+          "name": "alternative_branch_industry_domain",
+          "type": "double"
+        },
+        {
+          "name": "alternative_or_branch_industry_domain",
+          "type": "double"
+        },
+        {
+          "name": "alternative_and_branch_industry_domain",
+          "type": "double"
+        },
+        {
+          "name": "strength_tool_specific_required",
+          "type": "double"
+        },
+        {
+          "name": "strength_tool_specific_preferred",
+          "type": "double"
+        },
+        {
+          "name": "strength_tool_specific_explicitly_waived",
+          "type": "double"
+        },
+        {
+          "name": "numeric_years_tool_specific",
+          "type": "double"
+        },
+        {
+          "name": "conditional_tool_specific",
+          "type": "double"
+        },
+        {
+          "name": "alternative_branch_tool_specific",
+          "type": "double"
+        },
+        {
+          "name": "alternative_or_branch_tool_specific",
+          "type": "double"
+        },
+        {
+          "name": "alternative_and_branch_tool_specific",
+          "type": "double"
+        }
+      ],
+      "exists": true,
+      "path": "/work/home/lilysharp/private/fixed10k_semantic_production_20261017/private/empirical_20261024/private/AD_LEVEL_JOINED_ANALYSIS_PRIVATE.parquet",
+      "rows": 10000
+    }
+  ]
+}

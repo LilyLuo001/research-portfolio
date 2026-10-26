@@ -1,0 +1,51 @@
+{
+  "version": "corpus-pro-batch001-dispatch-v1",
+  "batch": "batch001",
+  "primary": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "medium",
+    "independent_agent_count": 3,
+    "records_per_agent": 20,
+    "packet_assignments": [
+      {
+        "reviewer_slot": "primary_1",
+        "packets": [
+          "packet_0001",
+          "packet_0002",
+          "packet_0003",
+          "packet_0004"
+        ],
+        "agent_id": "/root/corpus_read_001_a"
+      },
+      {
+        "reviewer_slot": "primary_2",
+        "packets": [
+          "packet_0005",
+          "packet_0006",
+          "packet_0007",
+          "packet_0008"
+        ],
+        "agent_id": "/root/corpus_read_001_b"
+      },
+      {
+        "reviewer_slot": "primary_3",
+        "agent_id": "/root/corpus_read_001_c",
+        "packets": [
+          "packet_0009",
+          "packet_0010",
+          "packet_0011",
+          "packet_0012"
+        ]
+      }
+    ]
+  },
+  "blind_audit": {
+    "independent_from_primary": true,
+    "reviewed_contexts": 12,
+    "agent_id": "/root/corpus_audit_001",
+    "model": "gpt-6-sol",
+    "reasoning_effort": "medium"
+  },
+  "batch001_manifest_sha256": "02c2c75caf6aa5d22b501cb0e4b97ca68beceb3eb9a2ba4d1b218c2b85a1f91d",
+  "batch001_manifest_sha_source": "Read-only sha256sum of batch001/private/PACKET_MANIFEST_PRIVATE.jsonl on SCNet, independently frozen here because the legacy preparation receipt omitted this hash."
+}
