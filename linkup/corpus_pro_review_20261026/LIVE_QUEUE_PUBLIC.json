@@ -74,14 +74,19 @@
         "shard_ordinal": 0,
         "row_offset": 905
       },
-      "primary_contexts_saved_lower_bound": 480,
-      "lower_bound_source": "Primary reports A120/B150/C210; full-batch validation still pending.",
+      "primary_contexts_saved_lower_bound": 630,
+      "lower_bound_source": "Primary reports A180/B210/C240; full-batch acceptance pending.",
       "exact_prior_reuse_ad_keys": 2,
       "pending_prior_reuse_ad_keys": 0,
-      "reuse_job": "125714721"
+      "reuse_job": "125714721",
+      "last_agent_reported_packet_by_lane": {
+        "a": "packet_0036",
+        "b": "packet_0090",
+        "c": "packet_0144"
+      }
     },
     "batch008": {
-      "state": "prepared_not_yet_read",
+      "state": "actual_reading_in_progress",
       "job": "125710457",
       "capacity": 720,
       "prepared_contexts": 720,
@@ -90,14 +95,30 @@
       "next_cursor": {
         "row_offset": 1637,
         "shard_ordinal": 0
+      },
+      "active_lanes": [
+        "c"
+      ],
+      "primary_contexts_saved_lower_bound": 30,
+      "lower_bound_source": "C reports packet0097–0102 saved; A/B still finish007."
+    },
+    "batch009": {
+      "state": "prepared_not_yet_read",
+      "preparation_job": "125717395",
+      "prepared_contexts": 720,
+      "prepared_new_context_adkeys": 725,
+      "prepared_prior_reuse_bindings": 16,
+      "next_cursor": {
+        "row_offset": 2378,
+        "shard_ordinal": 0
       }
     }
   },
   "scope": "Original whole-target task continues. Batches are persistence units only; old fixed10k, Formal800 and coarse assets remain unchanged.",
-  "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:905 are separate; these are preparation frontiers, not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
+  "resume": "Inspect saved PRIMARY and validation receipts; do not reread completed contexts. Main preparation cursor1:544 and recovered-shard preparation cursor0:2378 are separate; preparation frontiers are not semantic completion. Resume lowest incomplete packet. After recovered shard0 is exhausted resume main at1:544.",
   "waiting_for_API": false,
   "new_paid_channel_or_model_deployment": false,
-  "as_of_utc": "2026-10-26T14:11:55.093056+00:00",
+  "as_of_utc": "2026-10-26T14:43:23.154054+00:00",
   "accepted_totals_through_batch006": {
     "new_contexts_processed": 720,
     "complete_source_contexts": 673,
